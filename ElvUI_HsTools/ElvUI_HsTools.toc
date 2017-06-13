@@ -1,0 +1,39 @@
+## Interface: 72500
+## Title: !ElvUI 小代码
+## Notes: 一个简单的ElvUI增强工具箱。部分取材于NGA插件区，Twitch插件站。
+## Author: houshuu @ NGA
+
+## 不需要的插件只要在那个lua文件前添上两个#就行了哦！
+
+## 已学配方染色
+AlreadyKnown.lua
+
+## 人物面板神器按鈕
+ArtifactButton.lua
+
+## 快速查看其他专精神器
+ArtifactTab.lua
+
+## 萨血交易
+BloodTrader.lua
+
+## Tab智能切换频道
+ChatMod.lua
+
+## 聊天链接增强
+ChatLinkLevel.lua
+
+## 定制Masque美化
+HsShadow.lua
+
+## 修复姓名版缩放带来的FPS骤降
+FixFPSDrop.lua
+
+## 好友列表職業上色
+FriendColor.lua
+
+## 巅峰声望取代崇拜
+ParagonReputation.lua
+
+## 任务标题上色+任务等级
+QuestBetter.lua

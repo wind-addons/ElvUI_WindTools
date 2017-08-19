@@ -1,0 +1,67 @@
+## Interface: 70250
+## Title:!|cff00b3ffWindTools|r
+## Title-zhCN:!|cff00b3ffWind工具箱|r
+## Title-zhTW:!|cff00b3ffWind百寶箱|r
+## Notes: Useful Tools
+## Notes-zhCN: 实用的功能增强包。
+## Notes-zhTW: 實用的功能增強包。
+## Author: houshuu
+## Last Update: 8.5.2017
+
+## ===================
+## 通用庫
+## -------------------
+libs.xml
+
+## ===================
+## 各种小功能
+## ~~~~~~~~~~~~~~~~~~~
+## 在lua文件名前添加 兩個# 即可不載入該文件。
+## -------------------
+## 已學配方染色
+AlreadyKnown.lua
+## 人物面板神兵按鈕
+ArtifactButton.lua
+## 其他專精神兵切換
+ArtifactTab.lua
+## 聊天鏈接增強
+ChatLinkLevel.lua
+## Tab鍵切換聊天頻道
+ChatMod.lua
+## 快速拾取
+FastLoot.lua
+## 好友列表按職業上色
+FriendColor.lua
+## 屏幕陰影
+iShadow.lua
+## 關閉畫面效果（如死亡灰色畫面等）
+NoEffects.lua
+## 任務標題上色
+QuestBetter.lua
+## 任務完成提示
+QuestNotifier.lua
+## 追蹤增強
+SimpleObjectiveProgress.lua
+## 通告系统（復活感謝，發糖提示等等）
+SpecialAnnounce.lua
+## 快速刪除物品
+SpeedDel.lua
+## 載入加速
+SpeedyLoad.lua
+## 增强素材包
+WindMedia.lua
+
+## ===================
+## Masque美化外觀
+## -------------------
+MasqueSkin\WindShadow.lua
+MasqueSkin\Imoen.lua
+MasqueSkin\Caith.lua
+
+## ===================
+## ElvUI专用合集
+## -------------------
+## 鼠标提示显示Raid进度
+ElvUI\Progression.lua
+## Tag取消小數點
+ElvUI\ShortTags.lua

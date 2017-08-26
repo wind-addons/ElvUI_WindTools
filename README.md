@@ -2,36 +2,36 @@
 THIS ADDON CUSTOMIZED FOR CHINESE PLAYER!
 
 ## 1. 简介
-不是只有ElvUI能用，其他也行，但是有些功能可能会冲突，需要自己手动去关闭。
-我自己用的是ElvUI，然后配几个单体插件，但是有些独特功能是别的UI包里的，我觉得好用也会去扒一扒。
-时间长了，也积累下了不少小功能，都汇集在这个工具箱里了。
-功能的开关都是通过插件文件夹里的toc文件控制的，用记事本软件打开WindTools.toc修改即可。
+不是只有ElvUI能用，其他也行，但是有些功能可能会冲突，需要自己手动去关闭。<br>
+我自己用的是ElvUI，然后配几个单体插件，但是有些独特功能是别的UI包里的，我觉得好用也会去扒一扒。<br>
+时间长了，也积累下了不少小功能，都汇集在这个工具箱里了。<br>
+功能的开关都是通过插件文件夹里的toc文件控制的，用记事本软件打开WindTools.toc修改即可。<br>
 感谢所有插件，材质及库的作者，扒的地方太多，也不好一一感谢，见谅。
 
 ## 2. 素材说明
-文件有点大，因为我字体加了18个，材质加了20多个。
-字体部分除了游戏内中文名的字体，都是只含英文的，自己注意。
+文件有点大，因为我字体加了18个，材质加了20多个。<br>
+字体部分除了游戏内中文名的字体，都是只含英文的，自己注意。<br>
 需要自己加材质或是字体的，也可以修改Windmedia.lua添加。
 
 ## 3. 附加说明
-台服完美支持，国服理论上应该无错。
-基本上我扒的时候都在文件内留了出处，自己也可以跟进最新版本。
-你自己找来的lua也可以放进来一起管理，EUI使用者可能需要手动关闭一些来防止冲突。
+台服完美支持，国服理论上应该无错。<br>
+基本上我扒的时候都在文件内留了出处，自己也可以跟进最新版本。<br>
+你自己找来的lua也可以放进来一起管理，EUI使用者可能需要手动关闭一些来防止冲突。<br>
 目前工具箱功能基础占用在400k左右。
 
 ## 4. 更新日志
-17.08.05
-修复通告系统中的代码错误，支持简体。
-在SpecialAnnounce中添加打断通告。
-添加进阶的任务进度追踪功能。
-来源于SimpleObjectiveProgress
-添加ElvUI鼠标提示Raid进度功能。
-来源于ElvUI Enhanced (Legion)，个人修复了萨墓部分并添加了汉化(简/繁)。
-添加[health:current-percent-short], [power:current-percent-short], [health:percent-short], [power:percent-short]四个不会附带小数部分的百分比Tag。
+17.08.05<br>
+修复通告系统中的代码错误，支持简体。<br>
+在SpecialAnnounce中添加打断通告。<br>
+添加进阶的任务进度追踪功能。<br>
+来源于SimpleObjectiveProgress<br>
+添加ElvUI鼠标提示Raid进度功能。<br>
+来源于ElvUI Enhanced (Legion)，个人修复了萨墓部分并添加了汉化(简/繁)。<br>
+添加[health:current-percent-short], [power:current-percent-short], [health:percent-short], [power:percent-short]四个不会附带小数部分的百分比Tag。<br>
 为喜欢用“亿”和“万”作为单位的玩家添加了自动汉化(简/繁)，原为W, Y。
 
 ## 5. 功能列表
-功能对应的文件名
+功能对应的文件名<br>
 <table>
 <tr>
 <td>AlreadyKnown</td>

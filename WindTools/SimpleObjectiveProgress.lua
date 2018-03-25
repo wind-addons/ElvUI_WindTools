@@ -1,6 +1,6 @@
 --[[
 SimpleObjectiveProgress
-Developed by: Simca@Malfurion-US (MMOSimca)
+作者: Simca@Malfurion-US (MMOSimca)
 ]]--
 
 

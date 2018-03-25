@@ -1,4 +1,4 @@
--- 關閉部分效果
+-- 关闭部分效果
 -- 原作者：Leatrix
 -- 修改：houshuu
 
@@ -6,11 +6,10 @@
 -- Manage effects
 ----------------------------------------------------------------------
 
--- 效果開關
+-- 效果开关
 local NoEffectsGlow = "On"
 local NoEffectsDeath = "On"
 local NoEffectsNether = "On"
-
 
 -- Function to set effects
 local function SetEffects()

@@ -93,9 +93,9 @@ if strsub(tostring(self:GetText()), 1, 1) == "/" then return end
        self:SetAttribute("chatType", "SAY"); 
        ChatEdit_UpdateHeader(self); 
 --密语切换开始 不需要的请从这删除 
---   elseif (self:GetAttribute("chatType") == "WHISPER") then 
---       self:SetAttribute("chatType", "SAY"); 
---       ChatEdit_UpdateHeader(self); 
+  elseif (self:GetAttribute("chatType") == "WHISPER") then 
+      self:SetAttribute("chatType", "SAY"); 
+      ChatEdit_UpdateHeader(self); 
 --密语切换结束 删除到这里 
    elseif (self:GetAttribute("chatType") == "CHANNEL") then 
       if (GetNumSubgroupMembers()>0) then 

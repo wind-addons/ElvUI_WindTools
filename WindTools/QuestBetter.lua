@@ -12,7 +12,7 @@ local class = select(2, UnitClass("player"))
 local colour = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
 
 hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", function(_, block)
-		block.HeaderText:SetFont(STANDARD_TEXT_FONT, 14,"OUTLINE")
+		block.HeaderText:SetFont(STANDARD_TEXT_FONT, 13,"OUTLINE")
         block.HeaderText:SetShadowOffset(.7, -.7)
         block.HeaderText:SetShadowColor(0, 0, 0, 1)
         block.HeaderText:SetTextColor(colour.r, colour.g, colour.b)
@@ -49,7 +49,7 @@ hooksecurefunc(ACHIEVEMENT_TRACKER_MODULE, "SetBlockHeader", function(_, block)
 	    end
 	    
         if showAchievement then
-            block.HeaderText:SetFont(STANDARD_TEXT_FONT, 14,"OUTLINE")
+            block.HeaderText:SetFont(STANDARD_TEXT_FONT, 13,"OUTLINE")
             block.HeaderText:SetShadowOffset(.7, -.7)
             block.HeaderText:SetShadowColor(0, 0, 0, 1)
             block.HeaderText:SetTextColor(colour.r, colour.g, colour.b)
@@ -88,9 +88,11 @@ for i = 1, GetNumQuestWatches() do
 		if questLevel ~= 110 then
 			newTitle = "["..questLevel.."] "..title
 		end
+			newTitle = string.gsub(newTitle, "，燃烧王座", "")
+			newTitle = string.gsub(newTitle, "，燃燒王座", "")
 		local newHeight = QUEST_TRACKER_MODULE:SetStringText(oldBlock.HeaderText, newTitle, nil, OBJECTIVE_TRACKER_COLOR["Header"])
-
 	end
+
 end
 end
 hooksecurefunc(QUEST_TRACKER_MODULE, "Update", SetBlockHeader_hook)

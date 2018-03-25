@@ -1,58 +1,58 @@
-## Interface: 70250
+## Interface: 70300
 ## Title:!|cff00b3ffWindTools|r
 ## Title-zhCN:!|cff00b3ffWind工具箱|r
 ## Title-zhTW:!|cff00b3ffWind百寶箱|r
 ## Notes: Useful Tools
 ## Notes-zhCN: 实用的功能增强包。
 ## Notes-zhTW: 實用的功能增強包。
-## Author: houshuu
-## Last Update: 8.5.2017
+## Author: houshuu@NGA
+## Last Update: 3.25.2018
 
 ## ===================
-## 通用庫
+## 通用库
 ## -------------------
 libs.xml
 
 ## ===================
 ## 各种小功能
 ## ~~~~~~~~~~~~~~~~~~~
-## 在lua文件名前添加 兩個# 即可不載入該文件。
+## 在 lua 文件名前添加两个#即可取消载入该功能。
 ## -------------------
-## 已學配方染色
+## 已学配方染色
 AlreadyKnown.lua
-## 人物面板神兵按鈕
+## 人物面板神兵按钮
 ArtifactButton.lua
-## 其他專精神兵切換
+## 其他专精神兵切换
 ArtifactTab.lua
-## 聊天鏈接增強
+## 聊天链接增强
 ChatLinkLevel.lua
-## Tab鍵切換聊天頻道
+## Tab切换聊天频道
 ChatMod.lua
 ## 快速拾取
 FastLoot.lua
-## 好友列表按職業上色
+## 好友列表按职业上色
 FriendColor.lua
-## 屏幕陰影
+## 屏幕阴影
 iShadow.lua
-## 關閉畫面效果（如死亡灰色畫面等）
+## 关闭画面效果（如死亡灰色画面等）
 NoEffects.lua
-## 任務標題上色
+## 任务标题上色
 QuestBetter.lua
-## 任務完成提示
+## 任务完成提示
 QuestNotifier.lua
-## 追蹤增強
+## 追踪增強
 SimpleObjectiveProgress.lua
-## 通告系统（復活感謝，發糖提示等等）
+## 通告系统（复活感谢，发糖提示等等）
 SpecialAnnounce.lua
-## 快速刪除物品
+## 快速删除物品
 SpeedDel.lua
-## 載入加速
+## 载入加速
 SpeedyLoad.lua
 ## 增强素材包
 WindMedia.lua
 
 ## ===================
-## Masque美化外觀
+## Masque美化皮肤
 ## -------------------
 MasqueSkin\WindShadow.lua
 MasqueSkin\Imoen.lua
@@ -61,7 +61,9 @@ MasqueSkin\Caith.lua
 ## ===================
 ## ElvUI专用合集
 ## -------------------
+## 小地图阴影
+ElvUI\EasyShadow.lua
 ## 鼠标提示显示Raid进度
 ElvUI\Progression.lua
-## Tag取消小數點
+## 数据Tag增强+取消小数点
 ElvUI\ShortTags.lua

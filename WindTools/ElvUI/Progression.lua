@@ -5,7 +5,7 @@
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 local TT = E:GetModule('Tooltip')
 
-local tiers = { "EmN", "NH", "ToV","ToS",}
+local tiers = { "EmN","NH","ToV","ToS","ABT"}
 local levels = { 
 	"Mythic", 
 	"Heroic", 
@@ -14,7 +14,7 @@ local levels = {
 }
 
 if GetLocale() == 'zhTW' then
-	tiers = { "翡翠", "暗夜", "勇氣","薩墓",}
+	tiers = { "翡翠","暗夜", "勇氣","薩墓","王座"}
 	levels = { 
 		"傳奇", 
 		"英雄", 
@@ -24,7 +24,7 @@ if GetLocale() == 'zhTW' then
 end
 
 if GetLocale() == 'zhCN' then
-	tiers = { "翡翠", "暗夜", "勇气","萨墓",}
+	tiers = { "翡翠","暗夜", "勇气","萨墓","王座"}
 	levels = { 
 		"史诗", 
 		"英雄", 
@@ -90,6 +90,20 @@ local bosses = {
 			11877, 11881, 11885, 11889, 11893, 11897, 11901, 11905, 11909,
 		},
 	},
+	{ -- 安托鲁斯，燃烧王座
+		{ -- 傳奇
+			11956, 11959, 11962, 11965, 11968, 11971, 11974, 11977, 11980, 11983, 11986,
+		},
+		{ -- 英雄
+			11955, 11958, 11961, 11964, 11967, 11970, 11973, 11976, 11979, 11982, 11985,
+		},
+		{ -- 普通
+			11954, 11957, 11960, 11963, 11966, 11969, 11972, 11975, 11978, 11981, 11984,
+		},
+		{ -- 團隊搜尋器
+			12117, 12118, 12119, 12120, 12121, 12122, 12123, 12124, 12125, 12126, 12127,
+		},
+	},
 }
 
 local playerGUID = UnitGUID("player")
@@ -100,7 +114,7 @@ local function GetProgression(guid)
 	local kills, complete, pos = 0, false, 0
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 	
-	for tier = 1, 4 do
+	for tier = 4, 5 do
 		progressCache[guid].header[tier] = {}
 		progressCache[guid].info[tier] = {}
 		for level = 1, 4 do
@@ -137,7 +151,7 @@ local function SetProgressionInfo(guid, tt)
 		local updated = 0
 		for i=1, tt:NumLines() do
 			local leftTipText = _G["GameTooltipTextLeft"..i]	
-			for tier = 1, 4 do
+			for tier = 4, 5 do
 				for level = 1, 4 do
 					if (leftTipText:GetText() and leftTipText:GetText():find(tiers[tier]) and leftTipText:GetText():find(levels[level])) then
 						-- update found tooltip text line
@@ -152,7 +166,7 @@ local function SetProgressionInfo(guid, tt)
 		if updated == 1 then return end
 		-- add progression tooltip line
 		if highest > 0 then tt:AddLine(" ") end
-		for tier = 1, 4 do
+		for tier = 4, 5 do
 			for level = 1, 4 do
 				tt:AddDoubleLine(progressCache[guid].header[tier][level], progressCache[guid].info[tier][level], nil, nil, nil, 1, 1, 1)
 			end

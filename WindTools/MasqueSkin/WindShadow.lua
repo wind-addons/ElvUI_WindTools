@@ -6,8 +6,8 @@ local MSQ = LibStub("Masque", true)
 if not MSQ then return end
 MSQ:AddSkin("WindShadow", 
 {
-	Author = "Fang2hou",
-	Version = "7.2.5",
+	Author = "houshuu",
+	Version = "7.3.5",
 	Shape = "Square",
 	Masque_Version = 60200,
 	Backdrop = {

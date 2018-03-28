@@ -20,7 +20,7 @@ f.tex:SetAllPoints(f)
 function 
 f:SetShadowLevel(n)
 	n = tonumber(n)
-	if not n then error("The level must be a number between 100 and 0.") return 
+	if not n then error("请输入一个数字介于 0 ~ 100。") return 
 
 end
 	

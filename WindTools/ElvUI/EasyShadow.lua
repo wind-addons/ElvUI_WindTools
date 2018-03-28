@@ -6,7 +6,8 @@ local borderr, borderg, borderb = 0, 0, 0
 local backdropr, backdropg, backdropb = 0, 0, 0
 
 -- 阴影函数
-local function CreateMyShadow(frame, size)
+
+function CreateMyShadow(frame, size)
 	local shadow = CreateFrame("Frame", nil, frame)
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(frame:GetFrameStrata())
@@ -21,9 +22,24 @@ local function CreateMyShadow(frame, size)
 end
 
 -- 创建阴影
-local minimapFrame = _G["MMHolder"]
-local gameTooltipFrame = _G["GameTooltip"]
-local gameMenuFrame = _G["GameMenuFrame"]
-CreateMyShadow(minimapFrame, 5)
-CreateMyShadow(gameTooltipFrame, 3)
-CreateMyShadow(gameMenuFrame, 5)
+FrameListSize3 = {
+	"GameTooltip", -- 鼠标提示
+}
+
+for i, frameName in ipairs(FrameListSize3) do
+    local tempFrame = _G[frameName]
+    CreateMyShadow(tempFrame, 3)
+end
+
+FrameListSize5 = {
+	"MMHolder", -- 小地图
+	"GameMenuFrame", -- 游戏菜单
+	"SplashFrame", -- 全新特色
+	"InterfaceOptionsFrame", -- 界面选项
+	"VideoOptionsFrame", -- 系统选项
+}
+
+for i, frameName in ipairs(FrameListSize5) do
+    local tempFrame = _G[frameName]
+    CreateMyShadow(tempFrame, 5)
+end

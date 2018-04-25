@@ -238,11 +238,11 @@ function AnnounceSystem:RaidUsefulSpells()
 			elseif PortalSpells[spellID] then
 				SendChatMessage(format(ASL["PutPortal"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			end
-		elseif subEvent == "SPELL_AURA_APPLIED" then
-			-- 火鷄羽毛 及 派對手榴彈
-			if spellID == 61781 or ((spellID == 51508 or spellID == 51510)) then
-				SendChatMessage(format(ASL["UseSpellNoTarget"], srcName, GetSpellLink(spellID)), CheckChat())
-			end
+		-- elseif subEvent == "SPELL_AURA_APPLIED" then
+		-- 	-- 火鷄羽毛 及 派對手榴彈
+		-- 	if spellID == 61781 or ((spellID == 51508 or spellID == 51510)) then
+		-- 		SendChatMessage(format(ASL["UseSpellNoTarget"], srcName, GetSpellLink(spellID)), CheckChat())
+		-- 	end
 		end
 	end)
 end

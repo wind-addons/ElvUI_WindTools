@@ -1,0 +1,20 @@
+-- 原作：SpeedDel
+-- 原作者：bulleet (https://wow.curseforge.com/projects/speeddel)
+-- 修改：houshuu
+-------------------
+-- 主要修改条目：
+-- 模块化
+
+local E, L, V, P, G = unpack(ElvUI)
+local Panel = StaticPopupDialogs["DELETE_GOOD_ITEM"]
+
+P["WindTools"]["Auto Delete"] = {
+	["enabled"] = true,
+}
+
+local function AddText(boxEditor)
+	if not E.db.WindTools["Auto Delete"]["enabled"] then return end
+	boxEditor.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
+end
+
+hooksecurefunc(Panel, "OnShow", AddText)

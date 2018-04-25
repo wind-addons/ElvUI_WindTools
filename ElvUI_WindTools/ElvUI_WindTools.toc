@@ -1,0 +1,51 @@
+## Interface: 70300
+## Author: houshuu
+## Version: 1.0
+## Title: |cff1784d1ElvUI|r |cfff1c40fWindTools|r
+## Title-zhTW: |cff1784d1ElvUI|r |cfff1c40fWind百寶箱|r
+## Title-zhCN: |cff1784d1ElvUI|r |cfff1c40fWind工具箱|r
+## Notes: Collection of useful tools
+## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
+## Notes-zhCN: 适用于 ElvUI 的各种小功能集合。
+## RequiredDeps: ElvUI
+## DefaultState: enabled
+
+# 通用库
+libs.xml
+
+# 导入材质字体
+media.lua
+
+# 导入Masque美化皮肤
+MasqueSkin\WindShadow.lua
+MasqueSkin\Imoen.lua
+MasqueSkin\Caith.lua
+
+# 语言文件
+locales.lua
+
+# 核心控制台
+# 在ElvUI设定内禁用功能就可以了，在这里禁用控制台会出错。
+core.lua
+Modules\Chat\ChatMod.lua
+Modules\Chat\ChatLinkLevel.lua
+Modules\Chat\FriendColor.lua
+Modules\Interface\RaidProgression.lua
+Modules\Interface\MinimapButtons.lua
+Modules\Interface\ArtifactTab.lua
+Modules\Interface\ArtifactButton.lua
+Modules\Quest\QuestProgress.lua
+Modules\Quest\QuestAnnouncment.lua
+Modules\Quest\QuestListEnhanced.lua
+## Modules\Quest\BeQuiet.lua 待修复
+Modules\Trade\AutoDelete.lua
+Modules\Trade\AlreadyKnown.lua
+Modules\Visual\iShadow.lua
+Modules\Visual\NoEffects.lua
+Modules\Visual\EasyShadow.lua
+Modules\More\FastLoot.lua
+Modules\More\TagEnhanced.lua
+Modules\More\AnnounceSystem.lua
+Modules\More\CombatNotification.lua
+
+## X-Tukui-ProjectFolders: ElvUI_WindTools

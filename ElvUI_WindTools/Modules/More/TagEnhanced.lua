@@ -94,6 +94,7 @@ local textFormatStyles = {
 	["CURRENT_PERCENT"] =  "%s - %.1f%%",
 	["CURRENT_MAX_PERCENT"] = "%s - %s | %.1f%%",
 	["PERCENT"] = "%.1f%%",
+	["PERCENT_NO_SYMBOL"] = "%.1f",
 	["DEFICIT"] = "-%s"
 }
 
@@ -103,6 +104,7 @@ local textFormatStylesNoDecimal = {
 	["CURRENT_PERCENT"] =  "%s - %.0f%%",
 	["CURRENT_MAX_PERCENT"] = "%s - %s | %.0f%%",
 	["PERCENT"] = "%.0f%%",
+	["PERCENT_NO_SYMBOL"] = "%.0f",
 	["DEFICIT"] = "-%s"
 }
 
@@ -161,7 +163,7 @@ local function GetFormattedText(min, max, style, noDecimal)
 		else
 			return format(chosenFormat, ShortValue(deficit, noDecimal))
 		end
-	elseif style == "PERCENT" then
+	elseif style == "PERCENT" orstyle == "PERCENT_NO_SYMBOL" then
 		return format(chosenFormat, min / max * 100)
 	elseif style == "CURRENT" or ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max) then
 		if noDecimal then
@@ -285,6 +287,27 @@ ElvUF.Tags.Methods["classcolor:rogue"] = function()
 	return Hex(_COLORS.class["ROGUE"])
 end
 
+-- 取消百分号
+-- 血量 100
+ElvUF.Tags.Events["health:percent-nosymbol"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+ElvUF.Tags.Methods["health:percent-nosymbol"] = function(unit)
+	local min, max = UnitHealth(unit), UnitHealthMax(unit)
+	local deficit = max - min
+	local String
+
+	if UnitIsDead(unit) then
+		String = L["Dead"]
+	elseif UnitIsGhost(unit) then
+		String = L["Ghost"]
+	elseif not UnitIsConnected(unit) then
+		String = L["Offline"]
+	else
+		String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+	end
+	
+	return String
+end
+
 -- 取消小数点
 -- 血量 100%
 ElvUF.Tags.Events["health:percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
@@ -332,6 +355,14 @@ ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
 	local String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
 	return String
 end
+-- 能量 100
+ElvUF.Tags.Events["power:percent-nosymbol"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+ElvUF.Tags.Methods["power:percent-nosymbol"] = function(unit)
+	local pType = UnitPowerType(unit)
+	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+	local String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+	return String
+end
 -- 能量 100%
 ElvUF.Tags.Events["power:percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
 ElvUF.Tags.Methods["power:percent-short"] = function(unit)
@@ -353,6 +384,7 @@ local function InsertOptions()
 		type = "description",
 		name = "\n",
 	}
+
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc1"] = {
 		order = 6,
 		type = "description",
@@ -361,20 +393,30 @@ local function InsertOptions()
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc2"] = {
 		order = 7,
 		type = "description",
-		name = "[health:current-percent-short] "..L["Example:"].."1120 - 10%",
+		name = "[health:percent-nosymbol] "..L["Example:"].."10",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc3"] = {
 		order = 8,
 		type = "description",
-		name = "[power:percent-short] "..L["Example:"].."10%",
+		name = "[health:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc4"] = {
 		order = 9,
 		type = "description",
+		name = "[power:percent-short] "..L["Example:"].."10%",
+	}
+	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc5"] = {
+		order = 10,
+		type = "description",
+		name = "[power:percent-nosymbol] "..L["Example:"].."10",
+	}
+	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc6"] = {
+		order = 11,
+		type = "description",
 		name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"] = {
-		order = 10,
+		order = 12,
 		type = "description",
 		name = "\n"..L["The chinese prefix style will be translated automatically."],
 	}

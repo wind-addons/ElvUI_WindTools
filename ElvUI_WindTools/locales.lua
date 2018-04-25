@@ -131,6 +131,8 @@ L["Include Pet"] = true
 L["Res And Threat"] = true
 L["Res Thanks"] = true
 L["Raid Useful Spells"] = true
+L["Ignore high level"] = true
+L["Tracker width"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -268,6 +270,8 @@ if L then
 	L["Res And Threat"] = "戰復及誤導"
 	L["Res Thanks"] = "復活感謝"
 	L["Raid Useful Spells"] = "副本常用技能（機器人等）"
+	L["Ignore high level"] = "忽略最高等級顯示"
+	L["Tracker width"] = "任務追蹤寬度"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -401,4 +405,6 @@ if L then
 	L["Res And Threat"] = "战复及误导"
 	L["Res Thanks"] = "复活感谢"
 	L["Raid Useful Spells"] = "副本常用技能（机器人等）"
+	L["Ignore high level"] = "忽略最高等级提示"
+	L["Tracker width"] = "任务追踪宽度"
 end

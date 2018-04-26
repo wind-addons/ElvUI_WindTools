@@ -115,7 +115,6 @@ L['The size of the minimap buttons.'] = true
 L['No Anchor Bar'] = true
 L['Horizontal Anchor Bar'] = true
 L['Vertical Anchor Bar'] = true
-L["The chinese prefix style will be translated automatically."] = true
 L["Instance"] = true
 L["Raid"] = true
 L["Party"] = true
@@ -133,6 +132,7 @@ L["Res Thanks"] = true
 L["Raid Useful Spells"] = true
 L["Ignore high level"] = true
 L["Tracker width"] = true
+L["Chinese W/Y"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -254,7 +254,6 @@ if L then
 	L['No Anchor Bar'] = "不對齊"
 	L['Horizontal Anchor Bar'] = "水平對齊"
 	L['Vertical Anchor Bar'] = "垂直對齊"
-	L["The chinese prefix style will be translated automatically."] = "中式單位現在將會自動被翻譯為中文字。"
 	L["Instance"] = "副本"
 	L["Raid"] = "團隊副本"
 	L["Party"] = "隊伍"
@@ -272,6 +271,7 @@ if L then
 	L["Raid Useful Spells"] = "副本常用技能（機器人等）"
 	L["Ignore high level"] = "忽略最高等級顯示"
 	L["Tracker width"] = "任務追蹤寬度"
+	L["Chinese W/Y"] = "中文 萬/億 單位"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -389,7 +389,6 @@ if L then
 	L['No Anchor Bar'] = "不对齐"
 	L['Horizontal Anchor Bar'] = "水平对齐"
 	L['Vertical Anchor Bar'] = "垂直对齐"
-	L["The chinese prefix style will be translated automatically."] = "中式单位现在将会自动转换为汉字。"
 	L["Instance"] = "副本"
 	L["Raid"] = "团队副本"
 	L["Party"] = "队伍"
@@ -407,4 +406,5 @@ if L then
 	L["Raid Useful Spells"] = "副本常用技能（机器人等）"
 	L["Ignore high level"] = "忽略最高等级提示"
 	L["Tracker width"] = "任务追踪宽度"
+	L["Chinese W/Y"] = "中文 万/亿 單位"
 end

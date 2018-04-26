@@ -48,12 +48,22 @@ function E:ShortValue(v)
 			return format("%s", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
-		if abs(v) >= 1e8 then
-			return format(shortValueDec..L["Y"], v / 1e8)
-		elseif abs(v) >= 1e4 then
-			return format(shortValueDec..L["W"], v / 1e4)
+		if E.db.WindTools["Tag Enhanced"]["enabled"] then
+			if abs(v) >= 1e8 then
+				return format(shortValueDec..L["Y"], v / 1e8)
+			elseif abs(v) >= 1e4 then
+				return format(shortValueDec..L["W"], v / 1e4)
+			else
+				return format("%s", v)
+			end
 		else
-			return format("%s", v)
+			if abs(v) >= 1e8 then
+				return format(shortValueDec.."Y", v / 1e8)
+			elseif abs(v) >= 1e4 then
+				return format(shortValueDec.."W", v / 1e4)
+			else
+				return format("%s", v)
+			end
 		end
 	elseif E.db.general.numberPrefixStyle == "KOREAN" then
 		if abs(v) >= 1e8 then
@@ -374,52 +384,41 @@ end
 
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"] = {
-		order = 4,
-		type = "description",
-		name = L["Automatically Loaded."],
-	}
+	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"].name = L["Chinese W/Y"]
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc0"] = {
-		order = 5,
+		order = 6,
 		type = "description",
 		name = "\n",
 	}
-
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc1"] = {
-		order = 6,
+		order = 7,
 		type = "description",
 		name = "[health:percent-short] "..L["Example:"].."10%",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc2"] = {
-		order = 7,
+		order = 8,
 		type = "description",
 		name = "[health:percent-nosymbol] "..L["Example:"].."10",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc3"] = {
-		order = 8,
+		order = 9,
 		type = "description",
 		name = "[health:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc4"] = {
-		order = 9,
+		order = 10,
 		type = "description",
 		name = "[power:percent-short] "..L["Example:"].."10%",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc5"] = {
-		order = 10,
+		order = 11,
 		type = "description",
 		name = "[power:percent-nosymbol] "..L["Example:"].."10",
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc6"] = {
-		order = 11,
+		order = 12,
 		type = "description",
 		name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"] = {
-		order = 12,
-		type = "description",
-		name = "\n"..L["The chinese prefix style will be translated automatically."],
-	}
 end
-
 WT.ToolConfigs["Tag Enhanced"] = InsertOptions

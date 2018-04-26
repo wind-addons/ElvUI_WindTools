@@ -37,8 +37,10 @@ P["WindTools"]["Announce System"] = {
 }
 
 local myName = UnitName("player")
+local simpleline = "|cffe84393----------------------|r"
 
 local ASL = {
+	["AS"] = "通告系統",
 	["UseSpellNoTarget"] = "%s 使用了 %s",
 	["UseSpellTarget"] = "%s 使用了 %s -> %s",
 	["PutNormal"] = "%s 放置了 %s",
@@ -48,10 +50,12 @@ local ASL = {
 	["RitualOfSummoning"] = "%s 正在進行 %s，請配合點門哦！",
 	["SoulWell"] = "%s 發糖了，快點拿喲！",
 	["Interrupt"] = "我打斷了 %s 的 >%s<！",
+	["InterruptInChat"] = "|cffd63031通告系統：|r |cff00ff00成功打斷|r -> |cfffdcb6e%s|r >%s<！",
 	["Thanks"] = "%s，謝謝你復活我:)",
 }
 if GetLocale() == "zhCN" then
 	local ASL = {
+		["AS"] = "通告系统",
 		["UseSpellNoTarget"] = "%s 使用了 %s",
 		["UseSpellTarget"] = "%s 使用了 %s -> %s",
 		["PutNormal"] = "%s 放置了 %s",
@@ -61,6 +65,7 @@ if GetLocale() == "zhCN" then
 		["RitualOfSummoning"] = "%s 正在进行 %s，请配合点门哦！",
 		["SoulWell"] = "%s 发糖了，快点拿哟！",
 		["Interrupt"] = "我打断了 %s 的 >%s<！",
+		["InterruptInChat"] = "|cffd63031通告系统：|r |cff00ff00成功打断|r -> |cfffdcb6e%s|r >%s<！",
 		["Thanks"] = "%s，谢谢你复活我:)",
 	}
 end
@@ -292,19 +297,30 @@ function AnnounceSystem:Interrupt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self, _, ...)
-		local _, event, _, subEvent, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = ...
+		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = ...
+		-- 打断
 		
-		if E.db.WindTools["Announce System"]["Interrupt"]["enabled"] then
-			-- 打断
-			if event == "SPELL_INTERRUPT" and (sourceGUID == UnitGUID("player") or (sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"])) then
-				local destChannel = CheckChatInterrupt()
-				if destChannel == "ChatFrame" then
-					-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
-					ChatFrame1:AddMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)))
-				else
-					-- 智能检测频道并发送信息
-					SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
-				end
+		if not (event == "SPELL_INTERRUPT" and spellID) then return end
+		local canAnnounce = false
+
+		if sourceGUID == UnitGUID("player") then
+			canAnnounce = true
+		elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"] then
+			canAnnounce = true
+		else
+			canAnnounce = false
+		end
+
+		if canAnnounce then
+			local destChannel = CheckChatInterrupt()
+			if destChannel == "ChatFrame" then
+				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
+				ChatFrame1:AddMessage(simpleline)
+				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
+				ChatFrame1:AddMessage(simpleline)
+			else
+				-- 智能检测频道并发送信息
+				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
 			end
 		end
 	end)

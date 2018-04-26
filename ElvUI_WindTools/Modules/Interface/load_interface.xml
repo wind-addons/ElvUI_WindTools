@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='RaidProgression.lua'/>
+	<Script file='MinimapButtons.lua'/>
+	<Script file='ArtifactTab.lua'/>
+	<Script file='ArtifactButton.lua'/>
+</Ui>

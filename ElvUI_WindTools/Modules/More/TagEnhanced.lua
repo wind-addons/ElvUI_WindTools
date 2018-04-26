@@ -163,7 +163,7 @@ local function GetFormattedText(min, max, style, noDecimal)
 		else
 			return format(chosenFormat, ShortValue(deficit, noDecimal))
 		end
-	elseif style == "PERCENT" orstyle == "PERCENT_NO_SYMBOL" then
+	elseif style == "PERCENT" or style == "PERCENT_NO_SYMBOL" then
 		return format(chosenFormat, min / max * 100)
 	elseif style == "CURRENT" or ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max) then
 		if noDecimal then

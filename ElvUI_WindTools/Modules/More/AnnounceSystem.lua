@@ -161,6 +161,7 @@ local Bots = {
 	[67826] = true,		-- 吉福斯
 	[126459] = true,	-- 布靈登4000型
 	[161414] = true,	-- 布靈登5000型
+	[198989] = true,	-- (Test)布靈登66000型
 	[199109] = true,	-- 自動鐵錘
 	[226241] = true,	-- 靜心寶典
 }
@@ -199,6 +200,23 @@ local PortalSpells = {
 	[120146] = true,	-- 遠古達拉然
 }
 
+local taunts = {
+	[355] = true,    -- Warrior
+	--  [114198] = true, -- Warrior (Mocking Banner)
+	[2649] = true,   -- Hunter (Pet)
+	[20736] = true,  -- Hunter (Distracting Shot)
+	[123588] = true, -- Hunter (Distracting Shot - glyphed)
+	[6795] = true,   -- Druid
+	[17735] = true,  -- Warlock (Voidwalker)
+	[97827] = true,  -- Warlock (Provocation (Metamorphosis))
+	[49560] = true,  -- Death Knight (Death Grip (aura))
+	[56222] = true,  -- Death Knight
+	[73684] = true,  -- Shaman (Unleash Earth)
+	[62124] = true,  -- Paladin
+	[116189] = true, -- Monk (Provoke (aura))
+	[118585] = true, -- Monk (Leer of the Ox)
+	[118635] = true, -- Monk (Black Ox Provoke)
+}
 
 
 ----------------------------------------------------------------------------------------
@@ -337,6 +355,42 @@ function AnnounceSystem:ResThanks()
 			if spell == key and value == true and player == myName and buffer ~= myName and subEvent == "SPELL_CAST_SUCCESS" then
 				local thanksTargetName = buffer:gsub("%-[^|]+", "") -- 去除服务器名
 				SendChatMessage(format(ASL["Thanks"], thanksTargetName), "WHISPER", nil, buffer)
+			end
+		end
+	end)
+end
+
+----------------------------------------------------------------------------------------
+--	嘲讽
+----------------------------------------------------------------------------------------
+function AnnounceSystem:Taunt()
+	local frame = CreateFrame("Frame")
+	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	frame:SetScript("OnEvent", function(self, _, ...)
+		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = ...
+		-- 嘲讽
+		-- TODO
+		if not (event == "SPELL_INTERRUPT" and spellID) then return end
+		local canAnnounce = false
+
+		if sourceGUID == UnitGUID("player") then
+			canAnnounce = true
+		elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"] then
+			canAnnounce = true
+		else
+			canAnnounce = false
+		end
+
+		if canAnnounce then
+			local destChannel = CheckChatInterrupt()
+			if destChannel == "ChatFrame" then
+				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
+				ChatFrame1:AddMessage(simpleline)
+				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
+				ChatFrame1:AddMessage(simpleline)
+			else
+				-- 智能检测频道并发送信息
+				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
 			end
 		end
 	end)

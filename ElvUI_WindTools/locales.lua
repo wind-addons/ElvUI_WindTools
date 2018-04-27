@@ -133,6 +133,12 @@ L["Raid Useful Spells"] = true
 L["Ignore high level"] = true
 L["Tracker width"] = true
 L["Chinese W/Y"] = true
+L["Enable Miss"] = true
+L["Player Smart"] = true
+L["Pet Smart"] = true
+L["Other Tank Smart"] = true
+L["Include Pet"] = true
+L["Include Other Tank"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -272,6 +278,12 @@ if L then
 	L["Ignore high level"] = "忽略最高等級顯示"
 	L["Tracker width"] = "任務追蹤寬度"
 	L["Chinese W/Y"] = "中文 萬/億 單位"
+	L["Enable Miss"] = "開啟 Miss 通告"
+	L["Player Smart"] = "玩家智能通告"
+	L["Pet Smart"] = "寵物智能通告"
+	L["Other Tank Smart"] = "其他坦克智能通告"
+	L["Include Pet"] = "包括寵物"
+	L["Include Other Tank"] = "包括其他坦克"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -406,5 +418,11 @@ if L then
 	L["Raid Useful Spells"] = "副本常用技能（机器人等）"
 	L["Ignore high level"] = "忽略最高等级提示"
 	L["Tracker width"] = "任务追踪宽度"
-	L["Chinese W/Y"] = "中文 万/亿 單位"
+	L["Chinese W/Y"] = "中文 万/亿 单位"
+	L["Enable Miss"] = "开启 Miss 通告"
+	L["Player Smart"] = "玩家智能通告"
+	L["Pet Smart"] = "宠物智能通告"
+	L["Other Tank Smart"] = "其他坦克智能通告"
+	L["Include Pet"] = "包括宠物"
+	L["Include Other Tank"] = "包括其他坦克"
 end

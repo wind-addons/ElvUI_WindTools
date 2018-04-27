@@ -4,10 +4,12 @@
 -------------------
 -- 主要修改条目：
 -- 模块化
+-- 职业染色
 -- 修改函数判定参数
 -- 修正宠物打断不通告问题
+-- 添加嘲讽模块
 -- 增减了部分光环通告
--- 汉化使其更加适合中文语法（明明是早期技能名翻译不规则的锅）
+-- 汉化使其更加适合中文语法
 -- 频道检测更加多样化
 -- 添加了一些可设置项
 
@@ -52,6 +54,7 @@ local ASL = {
 	["AS"] = "通告系統",
 	["UseSpellNoTarget"] = "%s 使用了 %s",
 	["UseSpellTarget"] = "%s 使用了 %s -> %s",
+	["UseSpellTargetInChat"] = "|cffd63031通告系統：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
 	["PutNormal"] = "%s 放置了 %s",
 	["PutFeast"] = "天啊，土豪 %s 竟然擺出了 %s！",
 	["PutPortal"] = "%s 開啟了 %s",
@@ -67,7 +70,7 @@ local ASL = {
 	["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
 	["OtherTankTaunt"] = "%s 成功嘲諷了 %s",
 	["OtherTankTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
-	["TauntMiss"] = "我嘲諷 %s 失敗！"
+	["TauntMiss"] = "我嘲諷 %s 失敗！",
 	["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
 	["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
 	["PetTauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000寵物嘲諷失敗|r -> |cfffdcb6e%s|r！",
@@ -79,6 +82,7 @@ if GetLocale() == "zhCN" then
 		["AS"] = "通告系统",
 		["UseSpellNoTarget"] = "%s 使用了 %s",
 		["UseSpellTarget"] = "%s 使用了 %s -> %s",
+		["UseSpellTargetInChat"] = "|cffd63031通告系统：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
 		["PutNormal"] = "%s 放置了 %s",
 		["PutFeast"] = "天啊，土豪 %s 竟然摆出了 %s！",
 		["PutPortal"] = "%s 开启了 %s",
@@ -88,20 +92,30 @@ if GetLocale() == "zhCN" then
 		["Interrupt"] = "我打断了 %s 的 >%s<！",
 		["InterruptInChat"] = "|cffd63031通告系统：|r |cff00ff00成功打断|r -> |cfffdcb6e%s|r >%s<！",
 		["Thanks"] = "%s，谢谢你复活我:)",
-			["Taunt"] = "我成功嘲讽了 %s！",
+		["Taunt"] = "我成功嘲讽了 %s！",
 		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
 		["PetTaunt"] = "我的寵物成功嘲讽了 %s！",
 		["PetTauntInChat"] = "|cffd63031通告系统：|r |cff00ff00宠物成功嘲讽|r -> |cfffdcb6e%s|r！",
 		["OtherTankTaunt"] = "%s 成功嘲讽了 %s",
 		["OtherTankTauntInChat"] = "|cffd63031通告系统：|r %s |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
-		["TauntMiss"] = "我嘲讽 %s 失败！"
+		["TauntMiss"] = "我嘲讽 %s 失败！",
 		["TauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
 		["PetTauntMiss"] = "我的宠物嘲讽了 %s 失败！",
 		["PetTauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000宠物嘲讽失败|r -> |cfffdcb6e%s|r！",
 		["OtherTankTauntMiss"] = "%s 嘲讽 %s 失败！",
 		["OtherTankTauntMissInChat"] = "|cffd63031通告系统：|r %s |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
+	}
 end
 
+----------------------------------------------------------------------------------------
+--	名字染色
+----------------------------------------------------------------------------------------
+local function AddClassColor(playerID)
+	local _, englishClass, _, _, _, playerName = GetPlayerInfoByGUID(playerID)
+	local colorString = RAID_CLASS_COLORS[englishClass].colorStr
+
+	return "|c"..colorString..playerName.."|r"
+end
 ----------------------------------------------------------------------------------------
 --	智能頻道檢測
 ----------------------------------------------------------------------------------------
@@ -150,11 +164,8 @@ local function CheckChatTaunt ()
 		return "RAID"
 	elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
 		return "PARTY"
-	elseif E.db.WindTools["Announce System"]["Taunt"]["Yell"] then
-		return "YELL"
 	end
-
-	return "ChatFrame"
+	return "YELL"
 end
 
 local ThanksSpells = {
@@ -328,10 +339,12 @@ function AnnounceSystem:ResAndThreat()
 	frame:SetScript("OnEvent", function(self, _, ...)	
 		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID = ...
 		local _, _, difficultyID = GetInstanceInfo()
+		
 		if event ~= "SPELL_CAST_SUCCESS" then return end
-		if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") end
+		
 		if destName then destName = destName:gsub("%-[^|]+", "") end
-		if not sourceName then return end
+		if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") else return end
+		
 		-- 在副本里启用战复技能提示
 		if difficultyID ~= 0 then
 			if CombatResSpells[spellID] then
@@ -350,7 +363,7 @@ function AnnounceSystem:ResAndThreat()
 				-- 其他时候则显示在聊天框
 				SendChatMessage(format(": "..ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName), "EMOTE")
 			else
-				ChatFrame1:AddMessage(format(ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName))
+				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID),  destNameColored))
 			end
 		end
 
@@ -412,19 +425,19 @@ end
 ----------------------------------------------------------------------------------------
 --	嘲讽
 ----------------------------------------------------------------------------------------
-function AnnounceSystem:Interrupt()
+function AnnounceSystem:Taunt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self, _, ...)
-		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, _, _, _, spellID = ...
+		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = ...
 		-- 嘲讽
 		if event == "SPELL_AURA_APPLIED" and TauntSpells[spellID] then
 			-- 如果施放嘲讽技能成功
-			if sourceGUID == UnitGUID("player")
+			if sourceGUID == UnitGUID("player") then
 				-- 玩家嘲讽
 				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
 					-- 玩家嘲讽智能喊话
-					SendChatMessage(format(ASL["Taunt"], destName,), CheckChatTaunt())
+					SendChatMessage(format(ASL["Taunt"], destName), CheckChatTaunt())
 				else
 					-- 玩家嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
@@ -435,16 +448,15 @@ function AnnounceSystem:Interrupt()
 				-- 宠物嘲讽
 				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
 					-- 宠物嘲讽智能喊话
-					SendChatMessage(format(ASL["PetTaunt"], destName,), CheckChatTaunt())
+					SendChatMessage(format(ASL["PetTaunt"], destName), CheckChatTaunt())
 				else
 					-- 宠物嘲讽信息显示于综合
-					ChatFrame1:AddMessage(simpleline)
 					ChatFrame1:AddMessage(format(ASL["PetTauntInChat"], destName))
-					ChatFrame1:AddMessage(simpleline)
 				end
-			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOthers"] then
+			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
 				-- 他人嘲讽
 				-- 去除服务器信息
+				local oriSourceName = sourceName
 				sourceName = sourceName:gsub("%-[^|]+", "")
 				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
@@ -452,20 +464,20 @@ function AnnounceSystem:Interrupt()
 				else
 					-- 他人嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
-					ChatFrame1:AddMessage(format(ASL["OtherTankTauntInChat"], sourceName, destName))
+					ChatFrame1:AddMessage(format(ASL["OtherTankTauntInChat"], AddClassColor(sourceGUID), destName))
 					ChatFrame1:AddMessage(simpleline)
 				end
 			end
 		end
 
 		if not E.db.WindTools["Announce System"]["Taunt"]["missenabled"] then return end
-		if event == "SPELL_MISSED" and TauntSpells[spellID] and then
+		if event == "SPELL_MISSED" and TauntSpells[spellID] then
 			-- 如果施放嘲讽技能失败
-			if sourceGUID == UnitGUID("player")
+			if sourceGUID == UnitGUID("player") then
 				-- 玩家嘲讽
 				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
 					-- 玩家嘲讽智能喊话
-					SendChatMessage(format(ASL["TauntMiss"], destName,), CheckChatTaunt())
+					SendChatMessage(format(ASL["TauntMiss"], destName), CheckChatTaunt())
 				else
 					-- 玩家嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
@@ -476,16 +488,15 @@ function AnnounceSystem:Interrupt()
 				-- 宠物嘲讽
 				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
 					-- 宠物嘲讽智能喊话
-					SendChatMessage(format(ASL["PetTauntMiss"], destName,), CheckChatTaunt())
+					SendChatMessage(format(ASL["PetTauntMiss"], destName), CheckChatTaunt())
 				else
 					-- 宠物嘲讽信息显示于综合
-					ChatFrame1:AddMessage(simpleline)
 					ChatFrame1:AddMessage(format(ASL["PetTauntMissInChat"], destName))
-					ChatFrame1:AddMessage(simpleline)
 				end
 			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
 				-- 他坦嘲讽
 				-- 去除服务器信息
+				local oriSourceName = sourceName
 				sourceName = sourceName:gsub("%-[^|]+", "")
 				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
@@ -493,7 +504,7 @@ function AnnounceSystem:Interrupt()
 				else
 					-- 他人嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
-					ChatFrame1:AddMessage(format(ASL["OtherTankTauntMissInChat"], sourceName, destName))
+					ChatFrame1:AddMessage(format(ASL["OtherTankTauntMissInChat"], AddClassColor(sourceGUID), destName))
 					ChatFrame1:AddMessage(simpleline)
 				end
 			end

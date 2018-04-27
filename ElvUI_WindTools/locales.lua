@@ -139,6 +139,7 @@ L["Pet Smart"] = true
 L["Other Tank Smart"] = true
 L["Include Pet"] = true
 L["Include Other Tank"] = true
+L["Taunt"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -284,6 +285,7 @@ if L then
 	L["Other Tank Smart"] = "其他坦克智能通告"
 	L["Include Pet"] = "包括寵物"
 	L["Include Other Tank"] = "包括其他坦克"
+	L["Taunt"] = "嘲諷"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -425,4 +427,5 @@ if L then
 	L["Other Tank Smart"] = "其他坦克智能通告"
 	L["Include Pet"] = "包括宠物"
 	L["Include Other Tank"] = "包括其他坦克"
+	L["Taunt"] = "嘲讽"
 end

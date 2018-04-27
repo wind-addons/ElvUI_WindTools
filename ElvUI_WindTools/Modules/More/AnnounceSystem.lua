@@ -65,8 +65,8 @@ local ASL = {
 	["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
 	["PetTaunt"] = "我的寵物成功嘲諷了 %s！",
 	["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
-	["OthersTaunt"] = "%s 成功嘲諷了 %s",
-	["OthersTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
+	["OtherTankTaunt"] = "%s 成功嘲諷了 %s",
+	["OtherTankTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
 	["TauntMiss"] = "我嘲諷 %s 失敗！"
 	["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
 	["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
@@ -88,19 +88,18 @@ if GetLocale() == "zhCN" then
 		["Interrupt"] = "我打断了 %s 的 >%s<！",
 		["InterruptInChat"] = "|cffd63031通告系统：|r |cff00ff00成功打断|r -> |cfffdcb6e%s|r >%s<！",
 		["Thanks"] = "%s，谢谢你复活我:)",
-		["Taunt"] = "我成功嘲諷了 %s！",
-		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
-		["PetTaunt"] = "我的寵物成功嘲諷了 %s！",
-		["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
-		["OthersTaunt"] = "%s 成功嘲諷了 %s",
-		["OthersTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
-		["TauntMiss"] = "我嘲諷 %s 失敗！"
-		["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
-		["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
-		["PetTauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000寵物嘲諷失敗|r -> |cfffdcb6e%s|r！",
-		["OtherTankTauntMiss"] = "%s 嘲諷 %s 失敗！",
-		["OtherTankTauntMissInChat"] = "|cffd63031通告系統：|r %s |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
-		}
+			["Taunt"] = "我成功嘲讽了 %s！",
+		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["PetTaunt"] = "我的寵物成功嘲讽了 %s！",
+		["PetTauntInChat"] = "|cffd63031通告系统：|r |cff00ff00宠物成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["OtherTankTaunt"] = "%s 成功嘲讽了 %s",
+		["OtherTankTauntInChat"] = "|cffd63031通告系统：|r %s |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["TauntMiss"] = "我嘲讽 %s 失败！"
+		["TauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
+		["PetTauntMiss"] = "我的宠物嘲讽了 %s 失败！",
+		["PetTauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000宠物嘲讽失败|r -> |cfffdcb6e%s|r！",
+		["OtherTankTauntMiss"] = "%s 嘲讽 %s 失败！",
+		["OtherTankTauntMissInChat"] = "|cffd63031通告系统：|r %s |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
 end
 
 ----------------------------------------------------------------------------------------
@@ -447,13 +446,13 @@ function AnnounceSystem:Interrupt()
 				-- 他人嘲讽
 				-- 去除服务器信息
 				sourceName = sourceName:gsub("%-[^|]+", "")
-				if E.db.WindTools["Announce System"]["Taunt"]["OthersSmart"] then
+				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
-					SendChatMessage(format(ASL["OthersTaunt"], sourceName, destName), CheckChatTaunt())
+					SendChatMessage(format(ASL["OtherTankTaunt"], sourceName, destName), CheckChatTaunt())
 				else
 					-- 他人嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
-					ChatFrame1:AddMessage(format(ASL["OthersTauntInChat"], sourceName, destName))
+					ChatFrame1:AddMessage(format(ASL["OtherTankTauntInChat"], sourceName, destName))
 					ChatFrame1:AddMessage(simpleline)
 				end
 			end
@@ -484,17 +483,17 @@ function AnnounceSystem:Interrupt()
 					ChatFrame1:AddMessage(format(ASL["PetTauntMissInChat"], destName))
 					ChatFrame1:AddMessage(simpleline)
 				end
-			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOthers"] then
-				-- 他人嘲讽
+			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
+				-- 他坦嘲讽
 				-- 去除服务器信息
 				sourceName = sourceName:gsub("%-[^|]+", "")
-				if E.db.WindTools["Announce System"]["Taunt"]["OthersSmart"] then
+				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
-					SendChatMessage(format(ASL["OthersTauntMiss"], sourceName, destName), CheckChatTaunt())
+					SendChatMessage(format(ASL["OtherTankTauntMiss"], sourceName, destName), CheckChatTaunt())
 				else
 					-- 他人嘲讽信息显示于综合
 					ChatFrame1:AddMessage(simpleline)
-					ChatFrame1:AddMessage(format(ASL["OthersTauntMissInChat"], sourceName, destName))
+					ChatFrame1:AddMessage(format(ASL["OtherTankTauntMissInChat"], sourceName, destName))
 					ChatFrame1:AddMessage(simpleline)
 				end
 			end

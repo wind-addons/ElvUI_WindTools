@@ -4,10 +4,12 @@
 -------------------
 -- 主要修改条目：
 -- 模块化
+-- 职业染色
 -- 修改函数判定参数
 -- 修正宠物打断不通告问题
+-- 添加嘲讽模块
 -- 增减了部分光环通告
--- 汉化使其更加适合中文语法（明明是早期技能名翻译不规则的锅）
+-- 汉化使其更加适合中文语法
 -- 频道检测更加多样化
 -- 添加了一些可设置项
 
@@ -20,6 +22,15 @@ local pairs = pairs
 
 P["WindTools"]["Announce System"] = {
 	["enabled"] = true,
+	["Taunt"] = {
+		["enabled"] = true,
+		["missenabled"] = true,
+		["PlayerSmart"] = false,
+		["PetSmart"] = false,
+		["OtherTankSmart"] = false,
+		["IncludePet"] = true,
+		["IncludeOtherTank"] = true,
+	},
 	["Interrupt"] = {
 		["enabled"] = true,
 		["SoloYell"] = false,
@@ -38,11 +49,13 @@ P["WindTools"]["Announce System"] = {
 
 local myName = UnitName("player")
 local simpleline = "|cffe84393----------------------|r"
+local simplestart = "|cffe84393|--|r"
 
 local ASL = {
 	["AS"] = "通告系統",
 	["UseSpellNoTarget"] = "%s 使用了 %s",
 	["UseSpellTarget"] = "%s 使用了 %s -> %s",
+	["UseSpellTargetInChat"] = "|cffd63031通告系統：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
 	["PutNormal"] = "%s 放置了 %s",
 	["PutFeast"] = "天啊，土豪 %s 竟然擺出了 %s！",
 	["PutPortal"] = "%s 開啟了 %s",
@@ -52,12 +65,25 @@ local ASL = {
 	["Interrupt"] = "我打斷了 %s 的 >%s<！",
 	["InterruptInChat"] = "|cffd63031通告系統：|r |cff00ff00成功打斷|r -> |cfffdcb6e%s|r >%s<！",
 	["Thanks"] = "%s，謝謝你復活我:)",
+	["Taunt"] = "我成功嘲諷了 %s！",
+	["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
+	["PetTaunt"] = "我的寵物成功嘲諷了 %s！",
+	["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
+	["OtherTankTaunt"] = "%s 成功嘲諷了 %s",
+	["OtherTankTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
+	["TauntMiss"] = "我嘲諷 %s 失敗！",
+	["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
+	["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
+	["PetTauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000寵物嘲諷失敗|r -> |cfffdcb6e%s|r！",
+	["OtherTankTauntMiss"] = "%s 嘲諷 %s 失敗！",
+	["OtherTankTauntMissInChat"] = "|cffd63031通告系統：|r %s |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
 }
 if GetLocale() == "zhCN" then
 	local ASL = {
 		["AS"] = "通告系统",
 		["UseSpellNoTarget"] = "%s 使用了 %s",
 		["UseSpellTarget"] = "%s 使用了 %s -> %s",
+		["UseSpellTargetInChat"] = "|cffd63031通告系统：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
 		["PutNormal"] = "%s 放置了 %s",
 		["PutFeast"] = "天啊，土豪 %s 竟然摆出了 %s！",
 		["PutPortal"] = "%s 开启了 %s",
@@ -67,9 +93,30 @@ if GetLocale() == "zhCN" then
 		["Interrupt"] = "我打断了 %s 的 >%s<！",
 		["InterruptInChat"] = "|cffd63031通告系统：|r |cff00ff00成功打断|r -> |cfffdcb6e%s|r >%s<！",
 		["Thanks"] = "%s，谢谢你复活我:)",
+		["Taunt"] = "我成功嘲讽了 %s！",
+		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["PetTaunt"] = "我的寵物成功嘲讽了 %s！",
+		["PetTauntInChat"] = "|cffd63031通告系统：|r |cff00ff00宠物成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["OtherTankTaunt"] = "%s 成功嘲讽了 %s",
+		["OtherTankTauntInChat"] = "|cffd63031通告系统：|r %s |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
+		["TauntMiss"] = "我嘲讽 %s 失败！",
+		["TauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
+		["PetTauntMiss"] = "我的宠物嘲讽了 %s 失败！",
+		["PetTauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000宠物嘲讽失败|r -> |cfffdcb6e%s|r！",
+		["OtherTankTauntMiss"] = "%s 嘲讽 %s 失败！",
+		["OtherTankTauntMissInChat"] = "|cffd63031通告系统：|r %s |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
 	}
 end
 
+----------------------------------------------------------------------------------------
+--	名字染色
+----------------------------------------------------------------------------------------
+local function AddClassColor(playerID)
+	local _, englishClass, _, _, _, playerName = GetPlayerInfoByGUID(playerID)
+	local colorString = RAID_CLASS_COLORS[englishClass].colorStr
+
+	return "|c"..colorString..playerName.."|r"
+end
 ----------------------------------------------------------------------------------------
 --	智能頻道檢測
 ----------------------------------------------------------------------------------------
@@ -106,6 +153,20 @@ local function CheckChatInterrupt ()
 	end
 
 	return "ChatFrame"
+end
+
+----------------------------------------------------------------------------------------
+--	嘲讽频道检测
+----------------------------------------------------------------------------------------
+local function CheckChatTaunt ()
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		return "INSTANCE_CHAT"
+	elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
+		return "RAID"
+	elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+		return "PARTY"
+	end
+	return "YELL"
 end
 
 local ThanksSpells = {
@@ -161,6 +222,7 @@ local Bots = {
 	[67826] = true,		-- 吉福斯
 	[126459] = true,	-- 布靈登4000型
 	[161414] = true,	-- 布靈登5000型
+	[198989] = true,	-- (Test)布靈登66000型
 	[199109] = true,	-- 自動鐵錘
 	[226241] = true,	-- 靜心寶典
 }
@@ -199,6 +261,23 @@ local PortalSpells = {
 	[120146] = true,	-- 遠古達拉然
 }
 
+local TauntSpells = {
+	[355] = true,    -- Warrior
+	--  [114198] = true, -- Warrior (Mocking Banner)
+	[2649] = true,   -- Hunter (Pet)
+	[20736] = true,  -- Hunter (Distracting Shot)
+	[123588] = true, -- Hunter (Distracting Shot - glyphed)
+	[6795] = true,   -- Druid
+	[17735] = true,  -- Warlock (Voidwalker)
+	[97827] = true,  -- Warlock (Provocation (Metamorphosis))
+	[49560] = true,  -- Death Knight (Death Grip (aura))
+	[56222] = true,  -- Death Knight
+	[73684] = true,  -- Shaman (Unleash Earth)
+	[62124] = true,  -- Paladin
+	[116189] = true, -- Monk (Provoke (aura))
+	[118585] = true, -- Monk (Leer of the Ox)
+	[118635] = true, -- Monk (Black Ox Provoke)
+}
 
 
 ----------------------------------------------------------------------------------------
@@ -259,12 +338,14 @@ function AnnounceSystem:ResAndThreat()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self, _, ...)	
-		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID = ...
+		local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellID = ...
 		local _, _, difficultyID = GetInstanceInfo()
+		
 		if event ~= "SPELL_CAST_SUCCESS" then return end
-		if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") end
+		
 		if destName then destName = destName:gsub("%-[^|]+", "") end
-		if not sourceName then return end
+		if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") else return end
+		
 		-- 在副本里启用战复技能提示
 		if difficultyID ~= 0 then
 			if CombatResSpells[spellID] then
@@ -283,10 +364,26 @@ function AnnounceSystem:ResAndThreat()
 				-- 其他时候则显示在聊天框
 				SendChatMessage(format(": "..ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName), "EMOTE")
 			else
-				ChatFrame1:AddMessage(format(ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName))
+				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID),  AddClassColor(destGUID)))
 			end
 		end
 
+	end)
+end
+
+----------------------------------------------------------------------------------------
+--	复活感谢
+----------------------------------------------------------------------------------------
+function AnnounceSystem:ResThanks()
+	local frame = CreateFrame("Frame")
+	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	frame:SetScript("OnEvent", function(_, event, _, subEvent, _, _, buffer, _, _, _, player, _, _, spell, ...)
+		for key, value in pairs(ThanksSpells) do
+			if spell == key and value == true and player == myName and buffer ~= myName and subEvent == "SPELL_CAST_SUCCESS" then
+				local thanksTargetName = buffer:gsub("%-[^|]+", "") -- 去除服务器名
+				SendChatMessage(format(ASL["Thanks"], thanksTargetName), "WHISPER", nil, buffer)
+			end
+		end
 	end)
 end
 
@@ -315,9 +412,8 @@ function AnnounceSystem:Interrupt()
 			local destChannel = CheckChatInterrupt()
 			if destChannel == "ChatFrame" then
 				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
-				ChatFrame1:AddMessage(simpleline)
+				ChatFrame1:AddMessage(simplestart)
 				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
-				ChatFrame1:AddMessage(simpleline)
 			else
 				-- 智能检测频道并发送信息
 				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
@@ -327,16 +423,88 @@ function AnnounceSystem:Interrupt()
 end
 
 ----------------------------------------------------------------------------------------
---	复活感谢
+--	嘲讽
 ----------------------------------------------------------------------------------------
-function AnnounceSystem:ResThanks()
+function AnnounceSystem:Taunt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(_, event, _, subEvent, _, _, buffer, _, _, _, player, _, _, spell, ...)
-		for key, value in pairs(ThanksSpells) do
-			if spell == key and value == true and player == myName and buffer ~= myName and subEvent == "SPELL_CAST_SUCCESS" then
-				local thanksTargetName = buffer:gsub("%-[^|]+", "") -- 去除服务器名
-				SendChatMessage(format(ASL["Thanks"], thanksTargetName), "WHISPER", nil, buffer)
+	frame:SetScript("OnEvent", function(self, _, ...)
+		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = ...
+		-- 嘲讽
+		if event == "SPELL_AURA_APPLIED" and TauntSpells[spellID] then
+			-- 如果施放嘲讽技能成功
+			if sourceGUID == UnitGUID("player") then
+				-- 玩家嘲讽
+				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
+					-- 玩家嘲讽智能喊话
+					SendChatMessage(format(ASL["Taunt"], destName), CheckChatTaunt())
+				else
+					-- 玩家嘲讽信息显示于综合
+					ChatFrame1:AddMessage(simpleline)
+					ChatFrame1:AddMessage(format(ASL["TauntInChat"], destName))
+					ChatFrame1:AddMessage(simpleline)
+				end
+			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] then
+				-- 宠物嘲讽
+				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
+					-- 宠物嘲讽智能喊话
+					SendChatMessage(format(ASL["PetTaunt"], destName), CheckChatTaunt())
+				else
+					-- 宠物嘲讽信息显示于综合
+					ChatFrame1:AddMessage(format(ASL["PetTauntInChat"], destName))
+				end
+			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
+				-- 他人嘲讽
+				-- 去除服务器信息
+				local oriSourceName = sourceName
+				sourceName = sourceName:gsub("%-[^|]+", "")
+				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
+					-- 他人嘲讽智能喊话
+					SendChatMessage(format(ASL["OtherTankTaunt"], sourceName, destName), CheckChatTaunt())
+				else
+					-- 他人嘲讽信息显示于聊天框架
+					ChatFrame1:AddMessage(simplestart..format(ASL["OtherTankTauntInChat"], AddClassColor(sourceGUID), destName))
+				end
+			end
+		end
+
+		if not E.db.WindTools["Announce System"]["Taunt"]["missenabled"] then return end
+		if event == "SPELL_MISSED" and TauntSpells[spellID] then
+			-- 如果施放嘲讽技能失败
+			if sourceGUID == UnitGUID("player") then
+				-- 玩家嘲讽
+				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
+					-- 玩家嘲讽智能喊话
+					SendChatMessage(format(ASL["TauntMiss"], destName), CheckChatTaunt())
+				else
+					-- 玩家嘲讽信息显示于综合
+					ChatFrame1:AddMessage(simpleline)
+					ChatFrame1:AddMessage(format(ASL["TauntMissInChat"], destName))
+					ChatFrame1:AddMessage(simpleline)
+				end
+			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] then
+				-- 宠物嘲讽
+				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
+					-- 宠物嘲讽智能喊话
+					SendChatMessage(format(ASL["PetTauntMiss"], destName), CheckChatTaunt())
+				else
+					-- 宠物嘲讽信息显示于综合
+					ChatFrame1:AddMessage(format(ASL["PetTauntMissInChat"], destName))
+				end
+			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
+				-- 他坦嘲讽
+				-- 去除服务器信息
+				local oriSourceName = sourceName
+				sourceName = sourceName:gsub("%-[^|]+", "")
+				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
+					-- 他人嘲讽智能喊话
+					SendChatMessage(format(ASL["OtherTankTauntMiss"], sourceName, destName), CheckChatTaunt())
+				else
+					-- 他人嘲讽信息显示于综合
+					ChatFrame1:AddMessage(simpleline)
+					ChatFrame1:AddMessage(format(ASL["OtherTankTauntMissInChat"], AddClassColor(sourceGUID), destName))
+					ChatFrame1:AddMessage(simpleline)
+				end
 			end
 		end
 	end)
@@ -348,6 +516,9 @@ function AnnounceSystem:Initialize()
 	
 	if E.db.WindTools["Announce System"]["Interrupt"]["enabled"] then
 		AnnounceSystem:Interrupt()
+	end
+	if E.db.WindTools["Announce System"]["Taunt"]["enabled"] then
+		AnnounceSystem:Taunt()
 	end
 	if E.db.WindTools["Announce System"]["ResAndThreat"]["enabled"] then
 		AnnounceSystem:ResAndThreat()
@@ -389,8 +560,64 @@ local function InsertOptions()
 			},
 		}
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["ResAndThreat"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["Taunt"] = {
 		order = 11,
+		type = "group",
+		name = L["Taunt"],
+		args = {
+			Enable = {
+				order = 0,
+				type = "toggle",
+				name = L["Enable"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["enabled"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			Enable = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable Miss"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["missenabled"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["missenabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			PlayerSmart = {
+				order = 2,
+				type = "toggle",
+				name = L["Player Smart"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			PetSmart = {
+				order = 3,
+				type = "toggle",
+				name = L["Pet Smart"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			OtherTankSmart = {
+				order = 4,
+				type = "toggle",
+				name = L["Other Tank Smart"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			IncludePet = {
+				order = 5,
+				type = "toggle",
+				name = L["Include Pet"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+			IncludeOthers = {
+				order = 5,
+				type = "toggle",
+				name = L["Include Other Tank"],
+				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] end,
+				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+			},
+		}
+	}
+	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["ResAndThreat"] = {
+		order = 12,
 		type = "group",
 		name = L["Res And Threat"],
 		args = {
@@ -404,7 +631,7 @@ local function InsertOptions()
 		}
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["ResThanks"] = {
-		order = 12,
+		order = 13,
 		type = "group",
 		name = L["Res Thanks"],
 		args = {
@@ -418,7 +645,7 @@ local function InsertOptions()
 		}
 	}
 	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["RaidUsefulSpells"] = {
-		order = 13,
+		order = 14,
 		type = "group",
 		name = L["Raid Useful Spells"],
 		args = {

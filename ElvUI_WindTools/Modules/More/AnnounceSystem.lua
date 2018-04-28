@@ -49,6 +49,7 @@ P["WindTools"]["Announce System"] = {
 
 local myName = UnitName("player")
 local simpleline = "|cffe84393----------------------|r"
+local simplestart = "|cffe84393|--|r"
 
 local ASL = {
 	["AS"] = "通告系統",
@@ -337,7 +338,7 @@ function AnnounceSystem:ResAndThreat()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self, _, ...)	
-		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID = ...
+		local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellID = ...
 		local _, _, difficultyID = GetInstanceInfo()
 		
 		if event ~= "SPELL_CAST_SUCCESS" then return end
@@ -363,7 +364,7 @@ function AnnounceSystem:ResAndThreat()
 				-- 其他时候则显示在聊天框
 				SendChatMessage(format(": "..ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName), "EMOTE")
 			else
-				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID),  destNameColored))
+				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID),  AddClassColor(destGUID)))
 			end
 		end
 
@@ -411,9 +412,8 @@ function AnnounceSystem:Interrupt()
 			local destChannel = CheckChatInterrupt()
 			if destChannel == "ChatFrame" then
 				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
-				ChatFrame1:AddMessage(simpleline)
+				ChatFrame1:AddMessage(simplestart)
 				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
-				ChatFrame1:AddMessage(simpleline)
 			else
 				-- 智能检测频道并发送信息
 				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
@@ -462,10 +462,8 @@ function AnnounceSystem:Taunt()
 					-- 他人嘲讽智能喊话
 					SendChatMessage(format(ASL["OtherTankTaunt"], sourceName, destName), CheckChatTaunt())
 				else
-					-- 他人嘲讽信息显示于综合
-					ChatFrame1:AddMessage(simpleline)
-					ChatFrame1:AddMessage(format(ASL["OtherTankTauntInChat"], AddClassColor(sourceGUID), destName))
-					ChatFrame1:AddMessage(simpleline)
+					-- 他人嘲讽信息显示于聊天框架
+					ChatFrame1:AddMessage(simplestart..format(ASL["OtherTankTauntInChat"], AddClassColor(sourceGUID), destName))
 				end
 			end
 		end

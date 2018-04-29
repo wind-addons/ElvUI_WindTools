@@ -358,20 +358,18 @@ function AnnounceSystem:ResAndThreat()
 		end
 
 		-- 仇恨转移技能提示
-		-- 如果确认转移目标是玩家的话，进行职业染色
-		if strsplit("-", destGUID) == "Player" then
-			local destNameColored = AddClassColor(destGUID)
-		else
-			local destNameColored = destName
-		end
-
 		if TransferThreatSpells[spellID] then
 			if destName == myName or sourceName == myName then
 				-- 如果自己被误导或者自己误导别人，用表情进行通告
 				-- 其他时候则显示在聊天框
 				SendChatMessage(format(": "..ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName), "EMOTE")
 			else
-				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID), destNameColored))
+				-- 如果确认转移目标是玩家的话，进行职业染色
+				if strsplit("-", destGUID) == "Player" then
+					ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID), AddClassColor(destGUID)))
+				else
+					ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID), destName))
+				end
 			end
 		end
 

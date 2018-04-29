@@ -2,6 +2,6 @@
 	<Script file='Caith.lua'/>
 	<Script file='Imoen.lua'/>
 	<Script file='WindShadow.lua'/>
-	<Script file='Kenzo.lua'/>
+	<Script file='WindKenzo.lua'/>
 	<Script file='FlatSquares.lua'/>
 </Ui>

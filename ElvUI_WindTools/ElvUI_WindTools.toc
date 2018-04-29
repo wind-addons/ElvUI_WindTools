@@ -17,9 +17,7 @@ libs.xml
 media.lua
 
 # 导入Masque美化皮肤
-MasqueSkin\WindShadow.lua
-MasqueSkin\Imoen.lua
-MasqueSkin\Caith.lua
+MasqueSkin\load_masqueskin.xml
 
 # 语言文件
 locales.lua

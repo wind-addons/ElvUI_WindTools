@@ -358,13 +358,20 @@ function AnnounceSystem:ResAndThreat()
 		end
 
 		-- 仇恨转移技能提示
+		-- 如果确认转移目标是玩家的话，进行职业染色
+		if strsplit("-", destGUID) == "Player" then
+			local destNameColored = AddClassColor(destGUID)
+		else
+			local destNameColored = destName
+		end
+
 		if TransferThreatSpells[spellID] then
 			if destName == myName or sourceName == myName then
 				-- 如果自己被误导或者自己误导别人，用表情进行通告
 				-- 其他时候则显示在聊天框
 				SendChatMessage(format(": "..ASL["UseSpellTarget"], sourceName, GetSpellLink(spellID), destName), "EMOTE")
 			else
-				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID),  AddClassColor(destGUID)))
+				ChatFrame1:AddMessage(format(ASL["UseSpellTargetInChat"], AddClassColor(sourceGUID), GetSpellLink(spellID), destNameColored))
 			end
 		end
 
@@ -412,8 +419,7 @@ function AnnounceSystem:Interrupt()
 			local destChannel = CheckChatInterrupt()
 			if destChannel == "ChatFrame" then
 				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
-				ChatFrame1:AddMessage(simplestart)
-				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
+				ChatFrame1:AddMessage(simplestart..format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
 			else
 				-- 智能检测频道并发送信息
 				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)

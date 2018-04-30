@@ -61,7 +61,6 @@ local ToolsOrder = {
 }
 local Tools = {
 	["Visual"] = {
-		--{"Masque Skin", L["Masque Skin enhanced."], "Masque", "houshuu"},
 		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
 		{"No Effect", L["Disable some effect."], "Leatrix", "houshuu"},
@@ -82,7 +81,7 @@ local Tools = {
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
 	},
 	["Quest"] = {
-	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "hboushuu", "houshuu"},
+	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
@@ -92,8 +91,6 @@ local Tools = {
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
 		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
-		-- 待修复
-		--{"Speedy Load", L["Load world quickly."]},
 	},
 }
 

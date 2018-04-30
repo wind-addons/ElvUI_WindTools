@@ -140,6 +140,8 @@ L["Other Tank Smart"] = true
 L["Include Pet"] = true
 L["Include Other Tank"] = true
 L["Taunt"] = true
+L["World Map Scale"] = true
+L["Scale your world map."] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -286,6 +288,8 @@ if L then
 	L["Include Pet"] = "包括寵物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲諷"
+	L["World Map Scale"] = "世界地圖縮放"
+	L["Scale your world map."] = "調整世界地圖的大小"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -428,4 +432,6 @@ if L then
 	L["Include Pet"] = "包括宠物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲讽"
+	L["World Map Scale"] = "世界地图缩放"
+	L["Scale your world map."] = "调整你的世界地图大小"
 end

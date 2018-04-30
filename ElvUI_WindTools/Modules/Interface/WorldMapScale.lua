@@ -1,4 +1,8 @@
+-- 作者：houshuu
 local E, L, V, P, G = unpack(ElvUI)
+local WT = E:GetModule("WindTools")
+local WMS = E:NewModule('WorldMapScale', 'AceHook-3.0');
+local _G = _G
 -- 默认开启
 P["WindTools"]["World Map Scale"] = {
 	["enabled"] = true,
@@ -27,5 +31,9 @@ local function InsertOptions()
 	}
 end
 
-if E.db.WindTools["World Map Scale"]["enabled"] then setMapScale() end
+function WMS:Initialize()
+	if E.db.WindTools["World Map Scale"]["enabled"] then setMapScale() end
+end
+
 WT.ToolConfigs["World Map Scale"] = InsertOptions
+E:RegisterModule(WMS:GetName())

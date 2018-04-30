@@ -75,14 +75,14 @@ local Tools = {
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
 		{"Artifact Frame Tab", L["Add tab to your artifact frame."], "ArtifactTab", "houshuu"},
 		{"Artifact Button", L["Add a button to your character information frame."], "ArtifactButton", "houshuu"},
+		{"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
 		{"Chat Link Level", L["Add a tiny icon and basic information to chat link."], "TinyChat", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
 	},
 	["Quest"] = {
-		-- 待修复
-	    --{"BeQuiet", L["Disable TalkingHeadFrame."], "BeQuiet", "houshuu"},
+	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "hboushuu", "houshuu"},
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},

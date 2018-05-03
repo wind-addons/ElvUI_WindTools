@@ -61,7 +61,6 @@ local ToolsOrder = {
 }
 local Tools = {
 	["Visual"] = {
-		--{"Masque Skin", L["Masque Skin enhanced."], "Masque", "houshuu"},
 		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
 		{"No Effect", L["Disable some effect."], "Leatrix", "houshuu"},
@@ -75,14 +74,14 @@ local Tools = {
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
 		{"Artifact Frame Tab", L["Add tab to your artifact frame."], "ArtifactTab", "houshuu"},
 		{"Artifact Button", L["Add a button to your character information frame."], "ArtifactButton", "houshuu"},
+		{"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
 		{"Chat Link Level", L["Add a tiny icon and basic information to chat link."], "TinyChat", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
 	},
 	["Quest"] = {
-		-- 待修复
-	    --{"BeQuiet", L["Disable TalkingHeadFrame."], "BeQuiet", "houshuu"},
+	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
@@ -92,8 +91,6 @@ local Tools = {
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
 		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
-		-- 待修复
-		--{"Speedy Load", L["Load world quickly."]},
 	},
 }
 

@@ -119,7 +119,7 @@ L["Instance"] = true
 L["Raid"] = true
 L["Party"] = true
 L["Solo"] = true
-L["BeQuiet"] = true
+L["Close Quest Voice"] = true
 L["Disable TalkingHeadFrame."] = true
 L["Display level info in quest title (Tracker)"] = true
 L["Display level info in quest title (Quest details)"] = true
@@ -140,6 +140,8 @@ L["Other Tank Smart"] = true
 L["Include Pet"] = true
 L["Include Other Tank"] = true
 L["Taunt"] = true
+L["World Map Scale"] = true
+L["Scale your world map."] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -265,7 +267,7 @@ if L then
 	L["Raid"] = "團隊副本"
 	L["Party"] = "隊伍"
 	L["Solo"] = "個人"
-	L["BeQuiet"] = "關閉視訊"
+	L["Close Quest Voice"] = "關閉視訊"
 	L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
 	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
 	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
@@ -286,6 +288,8 @@ if L then
 	L["Include Pet"] = "包括寵物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲諷"
+	L["World Map Scale"] = "世界地圖縮放"
+	L["Scale your world map."] = "調整世界地圖的大小"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -407,7 +411,7 @@ if L then
 	L["Raid"] = "团队副本"
 	L["Party"] = "队伍"
 	L["Solo"] = "个人"
-	L["BeQuiet"] = "关闭视频通话"
+	L["Close Quest Voice"] = "关闭视频通话"
 	L["Disable TalkingHeadFrame."] = "关闭任务的视频通话功能。"
 	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
 	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
@@ -428,4 +432,6 @@ if L then
 	L["Include Pet"] = "包括宠物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲讽"
+	L["World Map Scale"] = "世界地图缩放"
+	L["Scale your world map."] = "调整你的世界地图大小"
 end

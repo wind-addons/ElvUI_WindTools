@@ -7,22 +7,22 @@ P["WindTools"]["Close Quest Voice"] = {
 	["enabled"] = false,
 }
 
-local function CloseVoice(event, addon)
-	--Check if the talkinghead addon is being loaded
-	if addon == "Blizzard_TalkingHeadUI" then
-		hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
-				TalkingHeadFrame_CloseImmediately()
-		end)
-		self:UnregisterEvent(event)
-	end
+local function CloseVoice()
+	hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
+		TalkingHeadFrame_CloseImmediately()
+	end)
 end
 
 function CQV:Initialize()
+
 	if not E.db.WindTools["Close Quest Voice"]["enabled"] then return end
 
-	local f = CreateFrame("Frame")
-	f:RegisterEvent("ADDON_LOADED")
-	f:SetScript("OnEvent", CloseVoice)
+	if TalkingHeadFrame then
+    	CloseVoice()
+	else
+	    hooksecurefunc('TalkingHead_LoadUI', CloseVoice)
+	end
+	
 end
 
 E:RegisterModule(CQV:GetName())

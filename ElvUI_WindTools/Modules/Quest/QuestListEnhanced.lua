@@ -36,8 +36,8 @@ local function SetBlockHeader_hook()
 			local oldHeight = QUEST_TRACKER_MODULE:SetStringText(oldBlock.HeaderText, title, nil, OBJECTIVE_TRACKER_COLOR["Header"])
 			local questLevel = select(2, GetQuestLogTitle(questLogIndex))
 			local newTitle = title
-			-- 除去110等级的任务等级提示
-			if questLevel ~= 110 or not E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] then
+			-- 除去120等级的任务等级提示
+			if questLevel ~= 120 or not E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] then
 				newTitle = "["..questLevel.."] "..title
 			end
 				-- 燃烧王座任务名缩短

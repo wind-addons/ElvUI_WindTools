@@ -70,15 +70,13 @@ local Tools = {
 		{"Already Known", L["Change item color if learned before."], "ahak", "houshuu"},
 	},
 	["Interface"] = {
-		{"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
-		{"Artifact Frame Tab", L["Add tab to your artifact frame."], "ArtifactTab", "houshuu"},
-		{"Artifact Button", L["Add a button to your character information frame."], "ArtifactButton", "houshuu"},
-		{"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
+		-- {"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
-		{"Chat Link Level", L["Add a tiny icon and basic information to chat link."], "TinyChat", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
+		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
 	},
 	["Quest"] = {
 	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
@@ -90,7 +88,6 @@ local Tools = {
 		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
-		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
 	},
 }
 
@@ -228,6 +225,7 @@ function WT:InsertOptions()
 		end
 	end
 	-- 加载功能内部函数设定
+	-- TODO: 变更为性能更佳的载入方式
 	for _, func in pairs(WT.ToolConfigs) do func() end
 end
 ---------------------------------------------------

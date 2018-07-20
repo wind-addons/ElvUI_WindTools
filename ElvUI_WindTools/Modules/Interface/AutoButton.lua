@@ -195,13 +195,7 @@ end
 
 local function GetWorldQuestItemList(toggle)
 	local mapID = GetCurrentMapAreaID("player");
-	local taskInfo
-
-	if mapID == 1014 then
-		taskInfo = GetQuestsForPlayerByMapID(mapID)
-	else
-		taskInfo = GetQuestsForPlayerByMapID(mapID, mapID)
-	end
+	local taskInfo = GetQuestsForPlayerByMapID(mapID);
 
 	if (taskInfo and #taskInfo > 0) then
 		for i, info in pairs(taskInfo) do

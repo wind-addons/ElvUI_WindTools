@@ -51,7 +51,7 @@ end
 --PrivateDB
 P["WindTools"]["Auto Buttons"] = {
 	["enabled"] = true,
-	["questNum"] = 6,
+	["questNum"] = 5,
 	["itemList"] = {},
 	["slotNum"] = 5,
 	["AptifactItem"] = true,

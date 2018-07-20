@@ -286,7 +286,8 @@ local TauntSpells = {
 function AnnounceSystem:RaidUsefulSpells()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(self, event, _, subEvent, _, _, srcName, _, _, _, destName, _, _, spellID, ...)
+	frame:SetScript("OnEvent", function(self, event)
+		local _, subEvent, _, _, _, srcName, srcName2, _, _, destName, destName2, _, spellID = CombatLogGetCurrentEventInfo() 
 		if not IsInGroup() or InCombatLockdown() or not subEvent or not spellID or not srcName then return end
 		if not UnitInRaid(srcName) and not UnitInParty(srcName) then return end
 
@@ -337,8 +338,8 @@ end
 function AnnounceSystem:ResAndThreat()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(self, _, ...)	
-		local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellID = ...
+	frame:SetScript("OnEvent", function(self, event)	
+		local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
 		local _, _, difficultyID = GetInstanceInfo()
 		
 		if event ~= "SPELL_CAST_SUCCESS" then return end
@@ -382,7 +383,8 @@ end
 function AnnounceSystem:ResThanks()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(_, event, _, subEvent, _, _, buffer, _, _, _, player, _, _, spell, ...)
+	frame:SetScript("OnEvent", function(self,event)
+		local _, event, _, subEvent, _, _, buffer, _, _, _, player, _, _, spell = CombatLogGetCurrentEventInfo()
 		for key, value in pairs(ThanksSpells) do
 			if spell == key and value == true and player == myName and buffer ~= myName and subEvent == "SPELL_CAST_SUCCESS" then
 				local thanksTargetName = buffer:gsub("%-[^|]+", "") -- 去除服务器名
@@ -398,11 +400,12 @@ end
 function AnnounceSystem:Interrupt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(self, _, ...)
-		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = ...
+	frame:SetScript("OnEvent", function(self,event)
+		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = CombatLogGetCurrentEventInfo()
 		-- 打断
-		
+
 		if not (event == "SPELL_INTERRUPT" and spellID) then return end
+
 		local canAnnounce = false
 
 		if sourceGUID == UnitGUID("player") then
@@ -434,8 +437,8 @@ end
 function AnnounceSystem:Taunt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	frame:SetScript("OnEvent", function(self, _, ...)
-		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = ...
+	frame:SetScript("OnEvent", function(self, event)
+		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = CombatLogGetCurrentEventInfo()
 		-- 嘲讽
 		if event == "SPELL_AURA_APPLIED" and TauntSpells[spellID] then
 			-- 如果施放嘲讽技能成功

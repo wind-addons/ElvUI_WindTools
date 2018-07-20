@@ -142,6 +142,23 @@ L["Include Other Tank"] = true
 L["Taunt"] = true
 L["World Map Scale"] = true
 L["Scale your world map."] = true
+--*locales for autobutton*--
+L["Auto Buttons"] = true
+L["Add two bars to contain questitem buttons and inventoryitem buttons."] = true
+L["Auto QuestItem Button"] = true
+L["Auto InventoryItem Button"] = true
+L["Keybind Text"] = true
+L["Font Size"] = true
+L["Quset Button Number"] = true
+L["Buttons Per Row"] = true
+L["Size"] = true
+L["Slot Button Number"] = true
+L["Item-ID"] = "物品ID";
+L["Add ItemID"] = true
+L["Delete ItemID"] = true
+L["Must is itemID!"] = true
+L["Blacklist"] = true
+--*end*--
 
 if GetLocale() == "enUS" then return end
 
@@ -290,6 +307,23 @@ if L then
 	L["Taunt"] = "嘲諷"
 	L["World Map Scale"] = "世界地圖縮放"
 	L["Scale your world map."] = "調整世界地圖的大小"
+	--*locales for autobutton*--
+	L["Auto Buttons"] = "任務物品按鍵"
+	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加兩行動作條來顯示任務物品和裝備中的飾品";
+	L["Auto QuestItem Button"] = "自動任務物品按鍵";
+	L["Auto InventoryItem Button"] = "自動裝備飾品按鍵";
+	L["Keybind Text"] = "快捷列文字";
+	L["Font Size"] = "字體大小";
+	L["Quset Button Number"] = "任務物品按鈕數量";
+	L["Buttons Per Row"] = "每行按鈕個數";
+	L["Size"] = "大小";
+	L["Slot Button Number"] = "裝備按鈕數量";
+	L["Item-ID"] = "物品ID";
+	L["Add ItemID"] = "添加物品ID";
+	L["Delete ItemID"] = "刪除物品ID";
+	L["Must is itemID!"] = "必須是物品的ID";
+	L["Blacklist"] = "黑名單";
+	--*end*--
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -434,4 +468,21 @@ if L then
 	L["Taunt"] = "嘲讽"
 	L["World Map Scale"] = "世界地图缩放"
 	L["Scale your world map."] = "调整你的世界地图大小"
+	--*locales for autobutton*--
+	L["Auto Buttons"] = "自动物品按键"
+	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品";
+	L["Auto QuestItem Button"] = "自动任务物品按键";
+	L["Auto InventoryItem Button"] = "自动装备饰品按键";
+	L["Keybind Text"] = "键位文字";
+	L["Font Size"] = "字体尺寸";
+	L["Quset Button Number"] = "任务物品按钮数量";
+	L["Buttons Per Row"] = "每行按钮数";
+	L["Size"] = "尺寸";
+	L["Slot Button Number"] = "装备按钮数量";
+	L["Item-ID"] = "物品ID";
+	L["Add ItemID"] = "添加物品ID";
+	L["Delete ItemID"] = "删除物品ID";
+	L["Must is itemID!"] = "必需是物品的ID编号";
+	L["Blacklist"] = "黑名单";
+	--*end*--
 end

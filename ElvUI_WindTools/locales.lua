@@ -434,4 +434,21 @@ if L then
 	L["Taunt"] = "嘲讽"
 	L["World Map Scale"] = "世界地图缩放"
 	L["Scale your world map."] = "调整你的世界地图大小"
+	--*locales for autobutton*--
+	L["Auto Buttons"] = "自动物品按键"
+	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品";
+	L["Auto QuestItem Button"] = "自动任务物品按键";
+	L["Auto InventoryItem Button"] = "自动装备饰品按键";
+	L["Keybind Text"] = "键位文字";
+	L["Font Size"] = "字体尺寸";
+	L["Quset Button Number"] = "任务物品按钮数量";
+	L["Buttons Per Row"] = "每行按钮数";
+	L["Size"] = "尺寸";
+	L["Slot Button Number"] = "装备按钮数量";
+	L["Item-ID"] = "物品ID";
+	L["Add ItemID"] = "添加物品ID";
+	L["Delete ItemID"] = "删除物品ID";
+	L["Must is itemID!"] = "必需是物品的ID编号";
+	L["Blacklist"] = "黑名单";
+	--*end*--
 end

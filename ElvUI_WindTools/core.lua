@@ -71,6 +71,7 @@ local Tools = {
 	},
 	["Interface"] = {
 		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
 		-- {"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
 	},

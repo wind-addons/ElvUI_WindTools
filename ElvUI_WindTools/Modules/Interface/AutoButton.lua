@@ -206,8 +206,7 @@ local function GetWorldQuestItemList(toggle)
 	if (taskInfo and #taskInfo > 0) then
 		for i, info in pairs(taskInfo) do
 			local questID = info.questID
-			--local questLogIndex = GetQuestLogIndexByID(questID);
-			local questLogIndex = 0
+			local questLogIndex = GetQuestLogIndexByID(questID);
 			if questLogIndex then
 				local link, item, charges, showItemWhenComplete = GetQuestLogSpecialItemInfo(questLogIndex);
 				if link then

@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='ChatLinkLevel.lua'/>
 	<Script file='ChatMod.lua'/>
 	<Script file='FriendColor.lua'/>
 </Ui>

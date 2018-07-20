@@ -24,6 +24,7 @@ if region == 4 then
 	LSM:Register("font", "思源黑体 Bold", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_Siyuan_Bold.ttf]], region)
 	LSM:Register("font", "思源黑体 Medium", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_Siyuan_Medium.ttf]], region)
 	LSM:Register("font", "微软雅黑Myriad", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_YaHei_myriadpro.ttf]], region)
+	LSM:Register("font", "方正准圆", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_FZZhunyuan.ttf]], region)
 end
 -- 正體
 if region == 8 then
@@ -35,6 +36,7 @@ if region == 8 then
 	LSM:Register("font", "王漢宗粗圓", [[Interface\Addons\ElvUI_WindTools\Fonts\TW_Yuan_Bold.ttf]], region)
 	LSM:Register("font", "王漢宗顏楷", [[Interface\Addons\ElvUI_WindTools\Fonts\TW_Yankai_Bold.ttf]], region)
 	LSM:Register("font", "王漢宗粗鋼", [[Interface\Addons\ElvUI_WindTools\Fonts\TW_Gang_Bold.ttf]], region)
+	LSM:Register("font", "方正準圓", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_FZZhunyuan.ttf]], region)
 end
 
 -- 状态条材质
@@ -64,3 +66,5 @@ LSM:Register("statusbar", "ElvUI_21", [[Interface\Addons\ElvUI_WindTools\Statusb
 LSM:Register("statusbar", "ElvUI_22", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Lisa.tga]])
 LSM:Register("statusbar", "ElvUI_23", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Sam.tga]])
 LSM:Register("statusbar", "ElvUI_24", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Stella.tga]])
+-- 自作
+LSM:Register("statusbar", "WindTools_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_Half_1.tga]])

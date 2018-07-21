@@ -194,7 +194,7 @@ local function GetQuestItemList()
 end
 
 local function GetWorldQuestItemList(toggle)
-	local mapID = GetCurrentMapAreaID("player");
+	local mapID = GetCurrentMapAreaID("player") or 0;
 	local taskInfo = GetQuestsForPlayerByMapID(mapID);
 
 	if (taskInfo and #taskInfo > 0) then

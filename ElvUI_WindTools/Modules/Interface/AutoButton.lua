@@ -767,7 +767,7 @@ local function InsertOptions()
 			itemID = {
 				order = 12,
 				type = "input",
-				name = L["Item-ID"],
+				name = L["Whitelist"]..L["Item-ID"],
 				get = function() return whiteItemID or "" end,
 				set = function(info, value) whiteItemID = value end,
 			},
@@ -828,7 +828,7 @@ local function InsertOptions()
 			blackitemID = {
 				order = 17,
 				type = "input",
-				name = L["Item-ID"],
+				name = L["Blacklist"]..L["Item-ID"],
 				get = function() return blackItemID or "" end,
 				set = function(info, value) blackItemID = value end,
 			},

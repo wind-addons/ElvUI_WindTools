@@ -50,8 +50,8 @@ end
 
 --PrivateDB
 P["WindTools"]["Auto Buttons"] = {
-	["enable"] = true,
-	["questNum"] = 6,
+	["enabled"] = true,
+	["questNum"] = 5,
 	["itemList"] = {},
 	["slotNum"] = 5,
 	["AptifactItem"] = true,
@@ -195,19 +195,12 @@ end
 
 local function GetWorldQuestItemList(toggle)
 	local mapID = GetCurrentMapAreaID("player");
-	local taskInfo
-
-	if mapID == 1014 then
-		taskInfo = GetQuestsForPlayerByMapID(mapID)
-	else
-		taskInfo = GetQuestsForPlayerByMapID(mapID, mapID)
-	end
+	local taskInfo = GetQuestsForPlayerByMapID(mapID);
 
 	if (taskInfo and #taskInfo > 0) then
 		for i, info in pairs(taskInfo) do
 			local questID = info.questID
-			--local questLogIndex = GetQuestLogIndexByID(questID);
-			local questLogIndex = 0
+			local questLogIndex = GetQuestLogIndexByID(questID);
 			if questLogIndex then
 				local link, item, charges, showItemWhenComplete = GetQuestLogSpecialItemInfo(questLogIndex);
 				if link then
@@ -612,7 +605,7 @@ function AB:UpdateBind()
 end
 
 function AB:ToggleAutoButton()
-	if E.db.WindTools["Auto Buttons"].enable then
+	if E.db.WindTools["Auto Buttons"].enabled then
 		self:RegisterEvent("BAG_UPDATE_DELAYED", "ScanItem")
 		self:RegisterEvent("UNIT_INVENTORY_CHANGED", "ScanItem")
 		self:RegisterEvent("ZONE_CHANGED", "ScanItem")
@@ -906,7 +899,7 @@ local function InsertOptions()
 end
 
 function AB:Initialize()
-	if not E.db.WindTools["Auto Buttons"].enable then return end
+	if not E.db.WindTools["Auto Buttons"].enabled then return end
 	
 	local db = E.db.WindTools["Auto Buttons"]
 	
@@ -921,14 +914,14 @@ function AB:Initialize()
 	AutoButtonAnchor:SetClampedToScreen(true)
 	AutoButtonAnchor:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 4)
 	AutoButtonAnchor:Size(db.questNum > 0 and db.questSize * db.questNum or 260, db.questNum > 0 and db.questSize or 40)
-	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Auto Buttons"].enable; end)
+	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Auto Buttons"].enabled; end)
 	
 	-- Create anchor2
 	local AutoButtonAnchor2 = CreateFrame("Frame", "AutoButtonAnchor2", UIParent)
 	AutoButtonAnchor2:SetClampedToScreen(true)
 	AutoButtonAnchor2:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 48)
 	AutoButtonAnchor2:Size(db.slotNum > 0 and db.slotSize * db.slotNum or 260, db.slotNum > 0 and db.slotSize or 40)
-	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Auto Buttons"].enable; end)
+	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Auto Buttons"].enabled; end)
 	
 	self:UpdateAutoButton()
 end

@@ -51,7 +51,7 @@ end
 --PrivateDB
 P["WindTools"]["Auto Buttons"] = {
 	["enabled"] = true,
-	["questNum"] = 6,
+	["questNum"] = 5,
 	["itemList"] = {},
 	["slotNum"] = 5,
 	["AptifactItem"] = true,
@@ -194,20 +194,13 @@ local function GetQuestItemList()
 end
 
 local function GetWorldQuestItemList(toggle)
-	local mapID = GetCurrentMapAreaID("player");
-	local taskInfo
-
-	if mapID == 1014 then
-		taskInfo = GetQuestsForPlayerByMapID(mapID)
-	else
-		taskInfo = GetQuestsForPlayerByMapID(mapID, mapID)
-	end
+	local mapID = GetCurrentMapAreaID("player") or 0;
+	local taskInfo = GetQuestsForPlayerByMapID(mapID);
 
 	if (taskInfo and #taskInfo > 0) then
 		for i, info in pairs(taskInfo) do
-			local questID = info.questID
-			--local questLogIndex = GetQuestLogIndexByID(questID);
-			local questLogIndex = 0
+			local questID = info.questId
+			local questLogIndex = GetQuestLogIndexByID(questID);
 			if questLogIndex then
 				local link, item, charges, showItemWhenComplete = GetQuestLogSpecialItemInfo(questLogIndex);
 				if link then
@@ -774,7 +767,7 @@ local function InsertOptions()
 			itemID = {
 				order = 12,
 				type = "input",
-				name = L["Item-ID"],
+				name = L["Whitelist"]..L["Item-ID"],
 				get = function() return whiteItemID or "" end,
 				set = function(info, value) whiteItemID = value end,
 			},
@@ -835,7 +828,7 @@ local function InsertOptions()
 			blackitemID = {
 				order = 17,
 				type = "input",
-				name = L["Item-ID"],
+				name = L["Blacklist"]..L["Item-ID"],
 				get = function() return blackItemID or "" end,
 				set = function(info, value) blackItemID = value end,
 			},

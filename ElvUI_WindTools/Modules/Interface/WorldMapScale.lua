@@ -6,11 +6,13 @@ local _G = _G
 -- 默认开启
 P["WindTools"]["World Map Scale"] = {
 	["enabled"] = true,
-	["scale"] = 1.3,
+	["scale"] = 1.2,
 }
 
-local function setMapScale()
+local function SetMapScale()
 	_G["WorldMapFrame"]:SetScale(E.db.WindTools["World Map Scale"]["scale"])
+	-- 修复指针错误 方案来源 NDui
+	RunScript("WorldMapFrame.ScrollContainer.GetCursorPosition=function(f) local x,y=MapCanvasScrollControllerMixin.GetCursorPosition(f);local s=WorldMapFrame:GetScale();return x/s,y/s;end")
 end
 
 local function InsertOptions()
@@ -32,7 +34,7 @@ local function InsertOptions()
 end
 
 function WMS:Initialize()
-	if E.db.WindTools["World Map Scale"]["enabled"] then setMapScale() end
+	if E.db.WindTools["World Map Scale"]["enabled"] then SetMapScale() end
 end
 
 WT.ToolConfigs["World Map Scale"] = InsertOptions

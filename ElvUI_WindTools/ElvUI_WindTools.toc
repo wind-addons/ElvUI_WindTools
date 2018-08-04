@@ -1,6 +1,6 @@
-## Interface: 80100
+## Interface: 80000
 ## Author: houshuu
-## Version: 1.1
+## Version: 1.1.2
 ## Title: |cff1784d1ElvUI|r |cfff1c40fWindTools|r
 ## Title-zhTW: |cff1784d1ElvUI|r |cfff1c40fWind百寶箱|r
 ## Title-zhCN: |cff1784d1ElvUI|r |cfff1c40fWind工具箱|r

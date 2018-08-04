@@ -2,5 +2,5 @@
 	<!-- <Script file='RaidProgression.lua'/> -->
 	<Script file='AutoButton.lua'/>
 	<Script file='MinimapButtons.lua'/>
-	<!-- <Script file='WorldMapScale.lua'/> -->
+	<Script file='WorldMapScale.lua'/>
 </Ui>

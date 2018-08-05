@@ -9,8 +9,8 @@ if not Masque then return end
 -- kenzo -- basic
 Masque:AddSkin("WindKenzo", {
 	Author = "icw82, houshuu",
-	Version = "1.0.0",
-	Masque_Version = 60000,
+	Version = "1.0.1",
+	Masque_Version = 80000,
 	Shape = "Square",
 	Icon = {
 		Width = 32,
@@ -32,7 +32,7 @@ Masque:AddSkin("WindKenzo", {
 		--Color = {0.5, 0.5, 0.5, 1},
 		Texture = [[Interface\AddOns\ElvUI_WindTools\MasqueSkin\WindKenzo\Normal]],
 	},
-	-- Блеск
+	-- пїЅпїЅпїЅпїЅ?
 	Gloss = {
 		Width = 64,
 		Height = 64,
@@ -105,8 +105,8 @@ Masque:AddSkin("WindKenzo", {
 		JustifyV = "TOP",
 		Width = 36,
 		Height = 10,
-		OffsetX = 2,
-		OffsetY = 3,
+		OffsetX = 1,
+		OffsetY = 5,
 	},
 	AutoCast = {
 		Width = 32,

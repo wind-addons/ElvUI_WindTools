@@ -89,6 +89,7 @@ local Tools = {
 		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
+		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
 	},
 }
 

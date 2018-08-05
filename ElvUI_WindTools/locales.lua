@@ -169,7 +169,11 @@ L["Default is 0.65"] = true
 L["Enter Combat"] = true
 L["Leave Combat"] = true
 -- END 进入战斗提示功能
-
+-- 右键菜单增强
+L["Right-click Menu"] = true
+L["Enhanced right-click menu"] = true
+L["Features"] = true
+-- END 右键菜单增强
 
 if GetLocale() == "enUS" then return end
 
@@ -345,6 +349,7 @@ if L then
 	L["Enter Combat"] = "進入戰鬥"
 	L["Leave Combat"] = "離開戰鬥"
 	-- END 进入战斗提示功能
+	
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")

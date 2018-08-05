@@ -95,6 +95,7 @@ local UnitPopupButtonsExtra = {
 	["GUILD_ADD"] = L["Guild Invite"],
 	["FRIEND_ADD"] = L["Add Friend"],
 	["MYSTATS"] = L["Report MyStats"],
+	["INVITE"] = L["Invite"],
 }
 
 function EnhancedRCMenu:Initialize()
@@ -186,22 +187,64 @@ function EnhancedRCMenu:Initialize()
 end
 
 local function InsertOptions()
+	-- 初始化空设定
 	E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"] = {
 		order = 10,
 		type = "group",
 		name = L["Features"],
 		disabled = function() return not E.db.WindTools["Right-click Menu"]["enabled"] end,
 		args = {
-			custom_text = {
+			friend = {
 				order = 1,
-				type = "toggle",
-				name = L["Use feature 1"],
-				
-				get = function(info) return E.db.WindTools["Right-click Menu"]["feature1"] end,
-				set = function(info, value) E.db.WindTools["Right-click Menu"]["feature1"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+				type = "group",
+				name = L["Friend Menu"],
+				args = {}
+			},
+			chat_roster = {
+				order = 2,
+				type = "group",
+				name = L["Chat Roster Menu"],
+				args = {}
+			},
+			guild = {
+				order = 3,
+				type = "group",
+				name = L["Guild Menu"],
+				args = {}
 			},
 		}
 	}
+	-- 循环载入设定
+	for k, v in pairs(friend_features) do
+		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["friend"].args[v] = {
+			order = k + 1,
+			type = "toggle",
+			name = UnitPopupButtonsExtra[v],
+			
+			get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
+			set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		}
+	end
+	for k, v in pairs(cr_features) do
+		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["chat_roster"].args[v] = {
+			order = k + 1,
+			type = "toggle",
+			name = UnitPopupButtonsExtra[v],
+			
+			get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
+			set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		}
+	end
+	for k, v in pairs(guild_features) do
+		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["guild"].args[v] = {
+			order = k + 1,
+			type = "toggle",
+			name = UnitPopupButtonsExtra[v],
+			
+			get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
+			set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		}
+	end
 end
 WT.ToolConfigs["Right-click Menu"] = InsertOptions
 E:RegisterModule(EnhancedRCMenu:GetName())

@@ -179,6 +179,10 @@ L["Get Name"] = true
 L["Guild Invite"] = true
 L["Add Friend"] = true
 L["Report MyStats"] = true
+L["Invite"] = true
+L["Friend Menu"] = true
+L["Chat Roster Menu"] = true
+L["Guild Menu"] = true
 -- END 右键菜单增强
 
 if GetLocale() == "enUS" then return end
@@ -365,6 +369,10 @@ if L then
 	L["Guild Invite"] = "公會邀請"
 	L["Add Friend"] = "添加好友"
 	L["Report MyStats"] = "報告裝等"
+	L["Invite"] = "邀請"
+	L["Friend Menu"] = "好友右鍵菜單"
+	L["Chat Roster Menu"] = "聊天右鍵菜單"
+	L["Guild Menu"] = "公會右鍵菜單"
 	-- END 右键菜单增强
 end
 
@@ -547,5 +555,9 @@ if L then
 	L["Guild Invite"] = "公会邀请"
 	L["Add Friend"] = "添加好友"
 	L["Report MyStats"] = "报告装等"
+	L["Invite"] = "邀请"
+	L["Friend Menu"] = "好友右键菜单"
+	L["Chat Roster Menu"] = "聊天右键菜单"
+	L["Guild Menu"] = "公会右键菜单"
 	-- END 右键菜单增强
 end

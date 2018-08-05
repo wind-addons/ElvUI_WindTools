@@ -68,63 +68,62 @@ local function popupClick(self, info)
 	end
 end
 
+local friend_features = {
+	"ARMORY",
+	"MYSTATS",
+	"NAME_COPY",
+	"SEND_WHO",
+	"FRIEND_ADD",
+	"GUILD_ADD",
+}
+local cr_features = {
+	"NAME_COPY",
+	"SEND_WHO",
+	"FRIEND_ADD",
+	"INVITE",
+}
+local guild_features = {
+	"ARMORY",
+	"NAME_COPY",
+	"FRIEND_ADD",
+}
+
+local UnitPopupButtonsExtra = {
+	["ARMORY"] = L["Armory"],
+	["SEND_WHO"] = L["Query Detail"],
+	["NAME_COPY"] = L["Get Name"],
+	["GUILD_ADD"] = L["Guild Invite"],
+	["FRIEND_ADD"] = L["Add Friend"],
+	["MYSTATS"] = L["Report MyStats"],
+}
+
 function EnhancedRCMenu:Initialize()
 	if not E.db.WindTools["Right-click Menu"]["enabled"] then return end
 
 	local locale = GetLocale()
-
-	local UnitPopupButtonsExtra = {
-		["ARMORY"] = L["Armory"],
-		["SEND_WHO"] = L["Query Detail"],
-		["NAME_COPY"] = L["Get Name"],
-		["GUILD_ADD"] = L["Guild Invite"],
-		["FRIEND_ADD"] = L["Add Friend"],
-		["MYSTATS"] = L["Report MyStats"],
-	}
-
+	-- 加入右键
 	for k, v in pairs(UnitPopupButtonsExtra) do
 		UnitPopupButtons[k] = {}
 		UnitPopupButtons[k].text = v
 	end
-
-	-- 好友功能
-	local friend_features = {
-		"ARMORY",
-		"MYSTATS",
-		"NAME_COPY",
-		"SEND_WHO",
-		"FRIEND_ADD",
-		"GUILD_ADD",
-	}
+	-- 好友功能 载入
 	for _, v in pairs(friend_features) do
 		if E.db.WindTools["Right-click Menu"]["friend"][v] then
 			tinsert(UnitPopupMenus["FRIEND"], 1, v)
 		end
 	end
-	-- 聊天名单功能
-	local cr_features = {
-		"NAME_COPY",
-		"SEND_WHO",
-		"FRIEND_ADD",
-		"INVITE",
-	}
+	-- 聊天名单功能 载入
 	for _, v in pairs(cr_features) do
 		if E.db.WindTools["Right-click Menu"]["chat_roster"][v] then
 			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
 		end
 	end
-	-- 公会功能
-	local guild_features = {
-		"ARMORY",
-		"NAME_COPY",
-		"FRIEND_ADD",
-	}
+	-- 公会功能 载入
 	for _, v in pairs(guild_features) do
 		if E.db.WindTools["Right-click Menu"]["guild"][v] then
 			tinsert(UnitPopupMenus["GUILD"], 1, v)
 		end
 	end
-
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
 		if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
 		if (unit and (unit == "target" or string.find(unit, "party"))) then

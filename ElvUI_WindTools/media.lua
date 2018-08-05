@@ -70,6 +70,7 @@ LSM:Register("statusbar", "FXGG_1", [[Interface\Addons\ElvUI_WindTools\Statusbar
 LSM:Register("statusbar", "FXGG_2", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_002.tga]])
 LSM:Register("statusbar", "FXGG_3", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_003.tga]])
 LSM:Register("statusbar", "FXGG_4", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_004.tga]])
-LSM:Register("statusbar", "FXGG_5", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_005.tga]])
 -- 自作
-LSM:Register("statusbar", "WindTools_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_Half_1.tga]])
+LSM:Register("statusbar", "WindTools_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_1.tga]])
+-- 随便收集的
+LSM:Register("statusbar", "WindTools_2", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_2.tga]])

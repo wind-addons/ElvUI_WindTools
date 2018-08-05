@@ -1,13 +1,27 @@
 -- 作者：houshuu
-
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local A = E:GetModule('Auras')
-local EasyShadow = E:NewModule('EasyShadow', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local EasyShadow = E:NewModule('EasyShadow')
 local ElvUF = ElvUF
 local LSM = LibStub("LibSharedMedia-3.0")
 local addonName, addonTable = ...
 local _G = _G
+
+-- Default options
+P["WindTools"]["EasyShadow"] = {
+	["enabled"] = true,
+	["Bar1"] = false,
+	["Bar2"] = false,
+	["Bar3"] = false,
+	["Bar4"] = false,
+	["Bar5"] = false,
+	["Bar6"] = false,
+	["GameTooltip"] = true,
+	["MiniMap"] = true,
+	["GameMenu"] = true,
+	["InterfaceOptions"] = true,
+	["VideoOptions"] = true,
+}
 
 -- 选择你喜欢的颜色
 local borderr, borderg, borderb = 0, 0, 0
@@ -26,22 +40,6 @@ function EasyShadow:CreateMyShadow(frame, size)
 	shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.8)
 	frame.shadow = shadow
 end
-
--- Default options
-P["WindTools"]["EasyShadow"] = {
-	["enabled"] = true,
-	["Bar1"] = false,
-	["Bar2"] = false,
-	["Bar3"] = false,
-	["Bar4"] = false,
-	["Bar5"] = false,
-	["Bar6"] = false,
-	["GameTooltip"] = true,
-	["MiniMap"] = true,
-	["GameMenu"] = true,
-	["InterfaceOptions"] = true,
-	["VideoOptions"] = true,
-}
 
 local function InsertOptions()
 	E.Options.args.WindTools.args["Visual"].args["EasyShadow"].args["framesetting"] = {
@@ -186,7 +184,6 @@ local function InsertOptions()
 end
 
 function EasyShadow:Update()
-
 	if E.db.WindTools["EasyShadow"]["GameTooltip"] then
 		local frame = _G["GameTooltip"]
 		self:CreateMyShadow(frame, 3)

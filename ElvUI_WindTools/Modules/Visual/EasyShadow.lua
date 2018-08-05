@@ -2,6 +2,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
+local A = E:GetModule('Auras')
 local EasyShadow = E:NewModule('EasyShadow', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local ElvUF = ElvUF
 local LSM = LibStub("LibSharedMedia-3.0")
@@ -256,7 +257,7 @@ end
 
 function EasyShadow:Initialize()
 	if not E.db.WindTools["EasyShadow"]["enabled"] then return end
-	EasyShadow:Update()
+	self:Update()
 end
 
 WT.ToolConfigs["EasyShadow"] = InsertOptions

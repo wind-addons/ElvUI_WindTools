@@ -1,4 +1,5 @@
 # ElvUI_WindTools
+![](https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat)  
 Includes many useful features such as AlreadyKnown, AutoDelete.  
 And several addons I developed also be included.  
 This addon is developed for ElvUI users.  
@@ -11,7 +12,7 @@ Enhanced. Configurable. Better performance.
 
 # Download 下载
 [稳定版(Stable)](https://github.com/fang2hou/ElvUI_WindTools/archive/master.zip)  
-[测试版(Nightly)](https://github.com/fang2hou/ElvUI_WindTools/archive/master.zip)  
+[测试版(Nightly)](https://github.com/fang2hou/ElvUI_WindTools/archive/beta.zip)  
 
 # Support 支持
 ElvUI 10.78 + 8.0.1 (Live)  

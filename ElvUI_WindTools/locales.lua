@@ -173,6 +173,12 @@ L["Leave Combat"] = true
 L["Right-click Menu"] = true
 L["Enhanced right-click menu"] = true
 L["Features"] = true
+L["Armory"] = true
+L["Query Detail"] = true
+L["Get Name"] = true
+L["Guild Invite"] = true
+L["Add Friend"] = true
+L["Report MyStats"] = true
 -- END 右键菜单增强
 
 if GetLocale() == "enUS" then return end
@@ -349,7 +355,17 @@ if L then
 	L["Enter Combat"] = "進入戰鬥"
 	L["Leave Combat"] = "離開戰鬥"
 	-- END 进入战斗提示功能
-	
+	-- 右键菜单增强
+	L["Right-click Menu"] = "右鍵菜單"
+	L["Enhanced right-click menu"] = "增強的右鍵菜單"
+	L["Features"] = "功能"
+	L["Armory"] = "英雄榜"
+	L["Query Detail"] = "查詢玩家"
+	L["Get Name"] = "獲取名字"
+	L["Guild Invite"] = "公會邀請"
+	L["Add Friend"] = "添加好友"
+	L["Report MyStats"] = "報告裝等"
+	-- END 右键菜单增强
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -521,4 +537,15 @@ if L then
 	L["Enter Combat"] = "进入战斗"
 	L["Leave Combat"] = "离开战斗"
 	-- END 进入战斗提示功能
+	-- 右键菜单增强
+	L["Right-click Menu"] = "右键菜单"
+	L["Enhanced right-click menu"] = "增强的右键菜单"
+	L["Features"] = "功能"
+	L["Armory"] = "英雄榜"
+	L["Query Detail"] = "查询玩家"
+	L["Get Name"] = "获取名字"
+	L["Guild Invite"] = "公会邀请"
+	L["Add Friend"] = "添加好友"
+	L["Report MyStats"] = "报告装等"
+	-- END 右键菜单增强
 end

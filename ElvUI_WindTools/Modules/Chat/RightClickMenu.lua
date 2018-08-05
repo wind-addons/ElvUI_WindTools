@@ -12,6 +12,25 @@ local EnhancedRCMenu = E:NewModule('EnhancedRCMenu');
 
 P["WindTools"]["Right-click Menu"] = {
 	["enabled"] = true,
+	["friend"] = {
+		["ARMORY"] = true,
+		["SEND_WHO"] = true,
+		["NAME_COPY"] = true,
+		["GUILD_ADD"] = true,
+		["FRIEND_ADD"] = true,
+		["MYSTATS"] = true,
+	},
+	["chat_roster"] = {
+		["NAME_COPY"]  = true,
+		["SEND_WHO"] = true,
+		["FRIEND_ADD"] = true,
+		["INVITE"] = true,
+	},
+	["guild"] = {
+		["ARMORY"] = true,
+		["NAME_COPY"] = true,
+		["FRIEND_ADD"] = true,
+	}
 }
 
 local function urlencode(s)
@@ -55,34 +74,56 @@ function EnhancedRCMenu:Initialize()
 	local locale = GetLocale()
 
 	local UnitPopupButtonsExtra = {
-		["ARMORY"] = { enUS ="Armory",          zhCN = "英雄榜",   zhTW = "英雄榜" },
-		["SEND_WHO"] = { enUS ="Query Detail",  zhCN = "查询玩家", zhTW = "查詢玩家" },
-		["NAME_COPY"] = { enUS ="Get Name",     zhCN = "获取名字", zhTW = "獲取名字" },
-		["GUILD_ADD"] = { enUS ="Guild Invite", zhCN = "公会邀请", zhTW = "公會邀請" },
-		["FRIEND_ADD"] = { enUS ="Add Friend",  zhCN = "添加好友", zhTW = "添加好友" },
-		["MYSTATS"] = { enUS ="Report MyStats",  zhCN = "报告装等", zhTW = "報告裝等" },
+		["ARMORY"] = L["Armory"],
+		["SEND_WHO"] = L["Query Detail"],
+		["NAME_COPY"] = L["Get Name"],
+		["GUILD_ADD"] = L["Guild Invite"],
+		["FRIEND_ADD"] = L["Add Friend"],
+		["MYSTATS"] = L["Report MyStats"],
 	}
 
 	for k, v in pairs(UnitPopupButtonsExtra) do
-		v.text = v[locale] or k
-		UnitPopupButtons[k] = v
+		UnitPopupButtons[k] = {}
+		UnitPopupButtons[k].text = v
 	end
 
-	tinsert(UnitPopupMenus["FRIEND"], 1, "ARMORY")
-	tinsert(UnitPopupMenus["FRIEND"], 1, "MYSTATS")
-	tinsert(UnitPopupMenus["FRIEND"], 1, "NAME_COPY")
-	tinsert(UnitPopupMenus["FRIEND"], 1, "SEND_WHO")
-	tinsert(UnitPopupMenus["FRIEND"], 1, "FRIEND_ADD")
-	tinsert(UnitPopupMenus["FRIEND"], 1, "GUILD_ADD")
-
-	tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, "NAME_COPY")
-	tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, "SEND_WHO")
-	tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, "FRIEND_ADD")
-	tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, "INVITE")
-
-	tinsert(UnitPopupMenus["GUILD"], 1, "ARMORY")
-	tinsert(UnitPopupMenus["GUILD"], 1, "NAME_COPY")
-	tinsert(UnitPopupMenus["GUILD"], 1, "FRIEND_ADD")
+	-- 好友功能
+	local friend_features = {
+		"ARMORY",
+		"MYSTATS",
+		"NAME_COPY",
+		"SEND_WHO",
+		"FRIEND_ADD",
+		"GUILD_ADD",
+	}
+	for _, v in pairs(friend_features) do
+		if E.db.WindTools["Right-click Menu"]["friend"][v] then
+			tinsert(UnitPopupMenus["FRIEND"], 1, v)
+		end
+	end
+	-- 聊天名单功能
+	local cr_features = {
+		"NAME_COPY",
+		"SEND_WHO",
+		"FRIEND_ADD",
+		"INVITE",
+	}
+	for _, v in pairs(cr_features) do
+		if E.db.WindTools["Right-click Menu"]["chat_roster"][v] then
+			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
+		end
+	end
+	-- 公会功能
+	local guild_features = {
+		"ARMORY",
+		"NAME_COPY",
+		"FRIEND_ADD",
+	}
+	for _, v in pairs(guild_features) do
+		if E.db.WindTools["Right-click Menu"]["guild"][v] then
+			tinsert(UnitPopupMenus["GUILD"], 1, v)
+		end
+	end
 
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
 		if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
@@ -90,14 +131,14 @@ function EnhancedRCMenu:Initialize()
 			local info
 			if (UnitIsPlayer(unit)) then
 				info = UIDropDownMenu_CreateInfo()
-				info.text = UnitPopupButtonsExtra["ARMORY"].text
+				info.text = UnitPopupButtonsExtra["ARMORY"]
 				info.arg1 = {value="ARMORY",unit=unit}
 				info.func = popupClick
 				info.notCheckable = true
 				UIDropDownMenu_AddButton(info)
 			end
 			info = UIDropDownMenu_CreateInfo()
-			info.text = UnitPopupButtonsExtra["NAME_COPY"].text
+			info.text = UnitPopupButtonsExtra["NAME_COPY"]
 			info.arg1 = {value="NAME_COPY",unit=unit}
 			info.func = popupClick
 			info.notCheckable = true

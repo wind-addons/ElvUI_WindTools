@@ -37,6 +37,7 @@ if region == 8 then
 	LSM:Register("font", "王漢宗粗鋼", [[Interface\Addons\ElvUI_WindTools\Fonts\TW_Gang_Bold.ttf]], region)
 	LSM:Register("font", "方正準圓", [[Interface\Addons\ElvUI_WindTools\Fonts\CN_FZZhunyuan.ttf]], region)
 end
+
 -- 状态条材质
 -- ElvUI_CustomMedia
 LSM:Register("statusbar", "ElvUI_01", [[Interface\Addons\ElvUI_WindTools\Statusbar\ElvUI A.tga]]) 

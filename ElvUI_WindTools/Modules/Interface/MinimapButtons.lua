@@ -260,7 +260,7 @@ function MB:UpdateLayout()
 	local lastFrame, anchor1, anchor2, offsetX, offsetY
 	
 	for i = 1, #moveButtons do
-		local frame =	_G[moveButtons[i]]
+		local frame = _G[moveButtons[i]]
 		
 		if E.db.WindTools["Minimap Buttons"].skinStyle == 'NOANCHOR' then
 			frame:SetParent(frame.original.Parent)
@@ -312,7 +312,7 @@ function MB:UpdateLayout()
 				frame:SetPoint(anchor1, lastFrame, anchor2, offsetX, offsetY)
 			end
 		end
-		lastFrame = frame	
+		lastFrame = frame
 	end
 	
 	if E.db.WindTools["Minimap Buttons"].skinStyle ~= 'NOANCHOR' and #moveButtons > 0 then
@@ -364,12 +364,7 @@ end
 
 function MB:CreateFrames()
 	minimapButtonBarAnchor = CreateFrame("Frame", "MinimapButtonBarAnchor", E.UIParent)
-	
-	--if E.db.auras.consolidatedBuffs.enable then
-	--	minimapButtonBarAnchor:Point("TOPRIGHT", ElvConfigToggle, "BOTTOMRIGHT", 0, -2)
-	--else
 	minimapButtonBarAnchor:Point("TOPRIGHT", RightMiniPanel, "BOTTOMRIGHT", 0, -2)
-	--end
 	minimapButtonBarAnchor:Size(200, 32)
 	minimapButtonBarAnchor:SetFrameStrata("BACKGROUND")
 	
@@ -474,7 +469,6 @@ local function InsertOptions()
 		}
 	}
 end
-
 
 WT.ToolConfigs["Minimap Buttons"] = InsertOptions
 E:RegisterModule(MB:GetName())

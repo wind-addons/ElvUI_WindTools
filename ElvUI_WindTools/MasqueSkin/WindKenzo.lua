@@ -32,7 +32,7 @@ Masque:AddSkin("WindKenzo", {
 		--Color = {0.5, 0.5, 0.5, 1},
 		Texture = [[Interface\AddOns\ElvUI_WindTools\MasqueSkin\WindKenzo\Normal]],
 	},
-	-- ����?
+	-- ?????
 	Gloss = {
 		Width = 64,
 		Height = 64,

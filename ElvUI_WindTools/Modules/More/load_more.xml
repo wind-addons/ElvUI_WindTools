@@ -2,4 +2,5 @@
 	<Script file='FastLoot.lua'/>
 	<Script file='TagEnhanced.lua'/>
 	<Script file='AnnounceSystem.lua'/>
+	<Script file='EnterCombatAlert.lua'/>
 </Ui>

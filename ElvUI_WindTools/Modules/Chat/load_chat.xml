@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='ChatMod.lua'/>
 	<Script file='FriendColor.lua'/>
+	<Script file='RightClickMenu.lua'/>
 </Ui>

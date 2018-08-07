@@ -10,7 +10,7 @@ if not Masque then return end
 Masque:AddSkin("imoen", {
 	Author = "ImoenDK",
 	Version = "1.0.1",
-	Masque_Version = 60000,
+	Masque_Version = 80000,
 	Shape = "Square",
 	Icon = {
 		Width = 32,
@@ -32,7 +32,6 @@ Masque:AddSkin("imoen", {
 		--Color = {0.5, 0.5, 0.5, 1},
 		Texture = [[Interface\AddOns\ElvUI_WindTools\MasqueSkin\Imoen\Normal]],
 	},
-	-- Αλερκ
 	Gloss = {
 		Width = 64,
 		Height = 64,

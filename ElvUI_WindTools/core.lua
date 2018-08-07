@@ -76,6 +76,7 @@ local Tools = {
 		{"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
+		{"Right-click Menu", L["Enhanced right-click menu"], "loudsoul", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
 		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
 	},
@@ -89,6 +90,7 @@ local Tools = {
 		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
+		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
 	},
 }
 

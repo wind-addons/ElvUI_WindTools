@@ -338,7 +338,7 @@ ElvUF.Tags.Methods["health:percent-short"] = function(unit)
 	
 	return String
 end
--- 血量 100 - 100%
+-- 血量 120 - 100%
 ElvUF.Tags.Events["health:current-percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
 ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
 	local min, max = UnitHealth(unit), UnitHealthMax(unit)
@@ -357,7 +357,7 @@ ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
 
 	return String
 end
--- 能量 100 - 100%
+-- 能量 120 - 100%
 ElvUF.Tags.Events["power:current-percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
 ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
 	local pType = UnitPowerType(unit)

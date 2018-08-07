@@ -6,7 +6,6 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local region = 128
 if GetLocale() == 'zhCN' then region = 4 end
 if GetLocale() == 'zhTW' then region = 8 end
-
 -- English
 LSM:Register("font", "Vistor", [[Interface\Addons\ElvUI_WindTools\Fonts\EN_Vistor.ttf]], region) 
 LSM:Register("font", "BigNoodle", [[Interface\Addons\ElvUI_WindTools\Fonts\EN_BigNoodle.ttf]], region) 
@@ -66,5 +65,12 @@ LSM:Register("statusbar", "ElvUI_21", [[Interface\Addons\ElvUI_WindTools\Statusb
 LSM:Register("statusbar", "ElvUI_22", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Lisa.tga]])
 LSM:Register("statusbar", "ElvUI_23", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Sam.tga]])
 LSM:Register("statusbar", "ElvUI_24", [[Interface\Addons\ElvUI_WindTools\Statusbar\FF_Stella.tga]])
+-- 风行丨GG @ NGA
+LSM:Register("statusbar", "FXGG_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_001.tga]])
+LSM:Register("statusbar", "FXGG_2", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_002.tga]])
+LSM:Register("statusbar", "FXGG_3", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_003.tga]])
+LSM:Register("statusbar", "FXGG_4", [[Interface\Addons\ElvUI_WindTools\Statusbar\FX_004.tga]])
 -- 自作
-LSM:Register("statusbar", "WindTools_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_Half_1.tga]])
+LSM:Register("statusbar", "WindTools_1", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_1.tga]])
+-- 随便收集的
+LSM:Register("statusbar", "WindTools_2", [[Interface\Addons\ElvUI_WindTools\Statusbar\WindTools_2.tga]])

@@ -12,6 +12,7 @@ local E, L, V, P, G = unpack(ElvUI)
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local QuestListEnhanced = E:NewModule('QuestListEnhanced', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local _G = _G
 
 P["WindTools"]["Quest List Enhanced"] = {
 	["enabled"] = true,
@@ -26,6 +27,10 @@ P["WindTools"]["Quest List Enhanced"] = {
 	["infofontflag"] = "OUTLINE",
 	["ignorehightlevel"] = true,
 	["width"] = 240,
+	["iconshadow"] = true,
+	["frametitle"] = true,
+	["leftside"] = true,
+	["leftsidesize"] = 18,
 }
 
 -- 追踪栏显示任务等级
@@ -68,6 +73,19 @@ local function QuestInfo_hook(template, parentFrame, acceptButton, material, map
 				QuestInfoTitleHeader:SetText(newTitle)
 			end
 		end
+	end
+end
+
+local function shadowQuestIcon(_, block)
+	local itemButton = block.itemButton
+	if itemButton and not itemButton.styled then
+		itemButton:CreateShadow()
+		itemButton.styled = true
+	end
+	local rightButton = block.rightButton
+	if rightButton and not rightButton.styled then
+		rightButton:CreateShadow()
+		rightButton.styled = true
 	end
 end
 
@@ -154,6 +172,24 @@ function QuestListEnhanced:Initialize()
 	end
 	hooksecurefunc(QUEST_TRACKER_MODULE, "Update", SetBlockHeader_hook)
 	hooksecurefunc("QuestInfo_Display", QuestInfo_hook)
+
+	if E.db.WindTools["Quest List Enhanced"]["iconshadow"] then
+		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
+		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
+	end
+
+	if not E.db.WindTools["Quest List Enhanced"]["frametitle"] then
+		_G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide()
+		_G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide()
+		hooksecurefunc("ObjectiveTracker_Collapse", function() _G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide() end)
+		hooksecurefunc("ObjectiveTracker_Expand", function() _G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide() end)
+		if E.db.WindTools["Quest List Enhanced"]["leftside"] then
+			local HM = _G["ObjectiveTrackerFrame"].HeaderMenu
+			local ofx = -E.db.WindTools["Quest List Enhanced"]["leftsidesize"]-E.db.WindTools["Quest List Enhanced"]["width"]+8
+			HM.MinimizeButton:SetPoint("TOPRIGHT", ofx, 0)
+			HM.MinimizeButton:SetSize(E.db.WindTools["Quest List Enhanced"]["leftsidesize"], E.db.WindTools["Quest List Enhanced"]["leftsidesize"])
+		end
+	end
 end
 
 local function InsertOptions()
@@ -248,20 +284,61 @@ local function InsertOptions()
 				},
 			},
 		},
-		other = {
+		leftsidemode = {
 			order = 13,
 			type = 'group',
-			name = L['Other'],
+			name = L["Left Side Minimize Button"],
+			guiInline = true,
+			disabled = E.db.WindTools["Quest List Enhanced"]["frametitle"],
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
+			args = {
+				leftside = {
+					order = 4,
+					type  = "toggle",
+					name  = L["Enable"],
+					get = function(info)
+						if not E.db.WindTools["Quest List Enhanced"]["frametitle"] then
+							return E.db.WindTools["Quest List Enhanced"]["leftside"]
+						else
+							return false
+						end
+					end,
+				},
+				leftsidesize = {
+					order = 5,
+					type  = 'range',
+					name  = L["Size"],
+					get = function(info) return E.db.WindTools["Quest List Enhanced"]["leftsidesize"] end,
+					min   = 10,
+					max   = 30,
+					step  = 1,
+				},
+			}
+		},
+		other = {
+			order = 14,
+			type = 'group',
+			name = L['Others'],
 			guiInline = true,
 			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
 				width = {
-					order = 16,
+					order = 1,
 					type = 'range',
 					name = L["Tracker width"],
 					min = 200, max = 300, step = 1,
-				}
+				},
+				iconshadow = {
+					order = 2,
+					type = "toggle",
+					name = L["Icon with Shadow"],
+				},
+				frametitle = {
+					order = 4,
+					type = "toggle",
+					name = L["Frame Title"],
+				},
 			},
 		},
 	}

@@ -64,11 +64,11 @@ local Tools = {
 		{"Already Known", L["Change item color if learned before."], "ahak", "houshuu"},
 	},
 	["Interface"] = {
-		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
-		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
 		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
+		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
@@ -77,17 +77,17 @@ local Tools = {
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
 	},
 	["Quest"] = {
-	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
-		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
+	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
+		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 	},
 	["More Tools"] = {
+		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
+		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
+		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
 		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
-		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
-		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
 	}
 }
 
@@ -108,9 +108,9 @@ function WT:InsertOptions()
 	}
 	E.Options.args.WindTools = {
 		-- 插件基本信息
-		order = 1,
+		order = 2,
 		type = "group",
-		name = "WindTools",
+		name = WT.Title,
 		args = {
 			titleimage = {
 				order = 1,

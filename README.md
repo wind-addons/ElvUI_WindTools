@@ -1,5 +1,6 @@
 # ElvUI_WindTools
-![](https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat)  
+![image]( https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png)  
+![](https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat) ![](https://img.shields.io/badge/Version-1.1.4-green.svg?longCache=true&style=flat)  
 Includes many useful features such as AlreadyKnown, AutoDelete.  
 And several addons I developed also be included.  
 This addon is developed for ElvUI users.  

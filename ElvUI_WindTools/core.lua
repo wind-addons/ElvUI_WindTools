@@ -78,7 +78,7 @@ local Tools = {
 	["Chat"] = {
 		{"Right-click Menu", L["Enhanced right-click menu"], "loudsoul", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
-		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
+		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},
 	},
 	["Quest"] = {
 	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},

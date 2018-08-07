@@ -27,7 +27,6 @@ L["Quest List Enhanced"] = true
 L["Quest Announcment"] = true
 L["Fast Loot"] = true
 L["Announce System"] = true
-L["Friend Color"] = true
 L["Speedy Load"] = true
 L["Masque Skin enhanced."] = true
 L["Movie effect for WoW."] = true
@@ -42,7 +41,6 @@ L["Add quest progress to tooltip."] = true
 L["Let you know quest is completed."] = true
 L["Loot items quickly."] = true
 L["A simply announce system."] = true
-L["Add the class color to friend frame."] = true
 L["Load world quickly."] = true
 L["Battle.net Tag: %s"] = true
 L["Main character in Taiwan Server: %s"] = true
@@ -184,6 +182,10 @@ L["Friend Menu"] = true
 L["Chat Roster Menu"] = true
 L["Guild Menu"] = true
 -- END 右键菜单增强
+-- 增强好友菜单
+L["Enhanced Friend List"] = true
+L["Customize friend frame."] = true
+-- END 增强好友菜单
 
 if GetLocale() == "enUS" then return end
 
@@ -218,7 +220,6 @@ if L then
 	L["Quest Announcment"] = "任務通告"
 	L["Fast Loot"] = "光速拾取"
 	L["Announce System"] = "技能通告"
-	L["Friend Color"] = "好友上色"
 	L["Speedy Load"] = "加速載入"
 	L["Masque Skin enhanced."] = "一些自己修改或是覺得不錯的Masque皮膚。"
 	L["Movie effect for WoW."] = "讓魔獸世界看起來有電影般的效果。"
@@ -233,7 +234,6 @@ if L then
 	L["Let you know quest is completed."] = "當任務完成之時會通告。"
 	L["Loot items quickly."] = "進一步加快拾取物品的速度。"
 	L["A simply announce system."] = "一個很簡單的通告系統"
-	L["Add the class color to friend frame."] = "為好友名單中上線的好友添加職業顏色。"
 	L["Load world quickly."] = "加速載入的速度。"
 	L["Enable"] = "開啟"
 	L["Information"] = "簡介"
@@ -404,7 +404,6 @@ if L then
 	L["Quest Announcment"] = "任务通告"
 	L["Fast Loot"] = "光速拾取"
 	L["Announce System"] = "技能通告"
-	L["Friend Color"] = "好友上色"
 	L["Speedy Load"] = "加速载入"
 	L["Masque Skin enhanced."] = "一些自己修改或是觉得不错的Masque皮肤。"
 	L["Movie effect for WoW."] = "让魔兽世界看起来有电影般的效果。"
@@ -419,7 +418,6 @@ if L then
 	L["Let you know quest is completed."] = "当任务完成之时会通告。"
 	L["Loot items quickly."] = "进一步加快拾取物品的速度。"
 	L["A simply announce system."] = "一个很简单的通告系统"
-	L["Add the class color to friend frame."] = "为好友名单中上线的好友添加职业颜色。"
 	L["Load world quickly."] = "加速载入的速度。"
 	L["Enable"] = "开启"
 	L["Information"] = "简介"

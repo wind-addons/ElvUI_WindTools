@@ -1,7 +1,7 @@
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("ElvUI", "enUS", true);
 if not L then return; end
-L["WindTools"] = true
+L["WindTools"] = "|cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r"
 L["%s version: %s"] = true
 L["%s is a collection of useful tools."] = true
 L["Release / Update Link"] = true
@@ -230,7 +230,7 @@ if L then
 	-- zhTW Translation Fixed
 	L["Class Totems"] = "職業圖騰"
 	-- Main
-	L["WindTools"] = "Wind百寶箱"
+	L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa百|r|cffb3e5fc寶|r|cffe1f5fe箱|r"
 	L["%s version: %s"] = "%s 版本：%s"
 	L["%s is a collection of useful tools."] = "%s 是一個易用功能的整合包。\n整合包內的插件大部分為網路上搜集而來。\n在中文化之余，還進行了多次自定義修改。\n部分功能和設置項可能和原版功能存在較大出入。\n\n十分感謝所有的魔獸世界插件開發者！"
 	L["Release / Update Link"] = "發佈 / 更新鏈接"
@@ -454,7 +454,7 @@ end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
 if L then
-	L["WindTools"] = "Wind工具箱"
+	L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r"
 	L["%s version: %s"] = "%s 版本：%s"
 	L["%s is a collection of useful tools."] = "%s 是一个易用功能的整合包。\n整合包内的插件大部分为网络上搜集而来。\n在中文化之余，还进行了多次自定义修改。\n部分功能和设置项可能和原版功能存在较大出入。\n\n十分感谢所有的魔兽世界插件开发者！"
 	L["Release / Update Link"] = "发布 / 更新链接"

@@ -18,7 +18,7 @@ local gsub = string.gsub
 -- 获取版本信息
 WT.Version = GetAddOnMetadata(addonName, "Version")
 -- 根据语言获取插件名
-WT.Title = "|cff2980b9"..L["WindTools"].."|r";
+WT.Title = L["WindTools"]
 -- 初始化设定
 WT.ToolConfigs = {}
 P["WindTools"] = {}

@@ -178,7 +178,7 @@ local function InsertOptions()
 	}
 
 	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["Visual"].args["EasyShadow"].args[k] = v
+		E.Options.args.WindTools.args["Interface"].args["EasyShadow"].args[k] = v
 	end
 end
 

@@ -3,4 +3,5 @@
 	<Script file='TagEnhanced.lua'/>
 	<Script file='AnnounceSystem.lua'/>
 	<Script file='EnterCombatAlert.lua'/>
+	<Script file='CVarsTool.lua'/>
 </Ui>

@@ -36,7 +36,7 @@ end
 
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Visual"].args["iShadow"].args["setlevel"] = {
+	E.Options.args.WindTools.args["Interface"].args["iShadow"].args["setlevel"] = {
 		order = 10,
 		type = "range",
 		name = L["Shadow Level"],
@@ -44,7 +44,7 @@ local function InsertOptions()
 		get = function(info) return E.db.WindTools["iShadow"]["level"] end,
 		set = function(info, value) E.db.WindTools["iShadow"]["level"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 	}
-	E.Options.args.WindTools.args["Visual"].args["iShadow"].args["setleveldesc"] = {
+	E.Options.args.WindTools.args["Interface"].args["iShadow"].args["setleveldesc"] = {
 		order = 11,
 		type = "description",
 		name = L["Default is 50."],

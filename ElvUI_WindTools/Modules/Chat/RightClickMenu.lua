@@ -217,7 +217,6 @@ local function InsertOptions()
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
@@ -227,7 +226,6 @@ local function InsertOptions()
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
@@ -237,7 +235,6 @@ local function InsertOptions()
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}

@@ -20,8 +20,9 @@ local function InsertOptions()
 		order = 10,
 		type = "group",
 		name = L["Setting"],
+		guiInline = true,
 		args = {
-			EmN = {
+			scale = {
 				order = 1,
 				type = "range",
 				name = L["Scale"],

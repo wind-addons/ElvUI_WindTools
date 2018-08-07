@@ -172,28 +172,22 @@ function AlreadyKnown:Initialize()
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Trade"].args["Already Known"].args["featureconfig"] = {
+	E.Options.args.WindTools.args["Trade"].args["Already Known"].args["color"] = {
 		order = 10,
-		type = "group",
-		name = L["Setting"],
-		args = {
-			color = {
-				order = 1,
-				type = "color",
-				name = L["Color"],
-				hasAlpha = true,
-				get = function(info)
-					local t = E.db.WindTools["Already Known"]["color"]
-					return t.r, t.g, t.b
-				end,
-				set = function(info, r, g, b, a)
-					E.db.WindTools["Already Known"]["color"] = {}
-					local t = E.db.WindTools["Already Known"]["color"]
-					t.r, t.g, t.b = r, g, b
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-		}
+		type = "color",
+		name = L["Color"],
+		disabled = not E.db.WindTools["Already Known"]["enabled"],
+		hasAlpha = true,
+		get = function(info)
+			local t = E.db.WindTools["Already Known"]["color"]
+			return t.r, t.g, t.b
+		end,
+		set = function(info, r, g, b, a)
+			E.db.WindTools["Already Known"]["color"] = {}
+			local t = E.db.WindTools["Already Known"]["color"]
+			t.r, t.g, t.b = r, g, b
+			E:StaticPopup_Show("PRIVATE_RL")
+		end,
 	}
 end
 

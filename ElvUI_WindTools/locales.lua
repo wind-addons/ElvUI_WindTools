@@ -140,7 +140,7 @@ L["Include Other Tank"] = true
 L["Taunt"] = true
 L["World Map Scale"] = true
 L["Scale your world map."] = true
---*locales for autobutton*--
+-- 自动任务物品按键
 L["Auto Buttons"] = true
 L["Add two bars to contain questitem buttons and inventoryitem buttons."] = true
 L["Auto QuestItem Button"] = true
@@ -156,7 +156,6 @@ L["Add ItemID"] = true
 L["Delete ItemID"] = true
 L["Must is itemID!"] = true
 L["Blacklist"] = true
---*end*--
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = true
 L["Enter Combat Alert"] = true
@@ -166,7 +165,6 @@ L["Custom text (Leave)"] = true
 L["Default is 0.65"] = true
 L["Enter Combat"] = true
 L["Leave Combat"] = true
--- END 进入战斗提示功能
 -- 右键菜单增强
 L["Right-click Menu"] = true
 L["Enhanced right-click menu"] = true
@@ -181,7 +179,6 @@ L["Invite"] = true
 L["Friend Menu"] = true
 L["Chat Roster Menu"] = true
 L["Guild Menu"] = true
--- END 右键菜单增强
 -- 增强好友菜单
 L["Enhanced Friend List"] = true
 L["Customize friend frame."] = true
@@ -225,7 +222,6 @@ L["OUTLINE"] = true
 L["MONOCHROME"] = true
 L["MONOCROMEOUTLINE"] = true
 L["THICKOUTLINE"] = true
--- END 增强好友菜单
 
 if GetLocale() == "enUS" then return end
 
@@ -372,7 +368,7 @@ if L then
 	L["Taunt"] = "嘲諷"
 	L["World Map Scale"] = "世界地圖縮放"
 	L["Scale your world map."] = "調整世界地圖的大小"
-	--*locales for autobutton*--
+	-- 自动任务物品按键
 	L["Auto Buttons"] = "任務物品按鍵"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加兩行動作條來顯示任務物品和裝備中的飾品"
 	L["Auto QuestItem Button"] = "自動任務物品按鍵"
@@ -388,7 +384,6 @@ if L then
 	L["Delete ItemID"] = "刪除物品ID"
 	L["Must is itemID!"] = "必須是物品的ID"
 	L["Blacklist"] = "黑名單"
-	--*end*--
 	-- 进入战斗提示功能
 	L["Alert you after enter or leave combat."] = "在進出戰鬥時彈出提示訊息"
 	L["Enter Combat Alert"] = "進出戰鬥提示"
@@ -398,7 +393,6 @@ if L then
 	L["Default is 0.65"] = "預設為 0.65"
 	L["Enter Combat"] = "進入戰鬥"
 	L["Leave Combat"] = "離開戰鬥"
-	-- END 进入战斗提示功能
 	-- 右键菜单增强
 	L["Right-click Menu"] = "右鍵菜單"
 	L["Enhanced right-click menu"] = "增強的右鍵菜單"
@@ -413,7 +407,6 @@ if L then
 	L["Friend Menu"] = "好友右鍵菜單"
 	L["Chat Roster Menu"] = "聊天右鍵菜單"
 	L["Guild Menu"] = "公會右鍵菜單"
-	-- END 右键菜单增强
 	-- 增强好友菜单
 	L["Enhanced Friend List"] = "增强好友列表"
 	L["Customize friend frame."] = "自定义你的好友列表"
@@ -457,7 +450,6 @@ if L then
 	L["MONOCHROME"] = "黑白"
 	L["MONOCROMEOUTLINE"] = "黑白轮廓"
 	L["THICKOUTLINE"] = "厚轮廓"
-	-- END 增强好友菜单
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -600,7 +592,7 @@ if L then
 	L["Taunt"] = "嘲讽"
 	L["World Map Scale"] = "世界地图缩放"
 	L["Scale your world map."] = "调整你的世界地图大小"
-	--*locales for autobutton*--
+	-- 自动任务物品按键
 	L["Auto Buttons"] = "自动物品按键"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品"
 	L["Auto QuestItem Button"] = "自动任务物品按键"
@@ -616,7 +608,6 @@ if L then
 	L["Delete ItemID"] = "删除物品ID"
 	L["Must is itemID!"] = "必需是物品的ID编号"
 	L["Blacklist"] = "黑名单"
-	--*end*--
 	-- 进入战斗提示功能
 	L["Alert you after enter or leave combat."] = "在进出战斗时提示信息"
 	L["Enter Combat Alert"] = "进出战斗提示"
@@ -626,7 +617,6 @@ if L then
 	L["Default is 0.65"] = "默认为 0.65"
 	L["Enter Combat"] = "进入战斗"
 	L["Leave Combat"] = "离开战斗"
-	-- END 进入战斗提示功能
 	-- 右键菜单增强
 	L["Right-click Menu"] = "右键菜单"
 	L["Enhanced right-click menu"] = "增强的右键菜单"
@@ -641,7 +631,6 @@ if L then
 	L["Friend Menu"] = "好友右键菜单"
 	L["Chat Roster Menu"] = "聊天右键菜单"
 	L["Guild Menu"] = "公会右键菜单"
-	-- END 右键菜单增强
 	-- 增强好友菜单
 	L["Enhanced Friend List"] = "增强好友列表"
 	L["Customize friend frame."] = "自定义你的好友列表"
@@ -685,5 +674,4 @@ if L then
 	L["MONOCHROME"] = "黑白"
 	L["MONOCROMEOUTLINE"] = "黑白轮廓"
 	L["THICKOUTLINE"] = "厚轮廓"
-	-- END 增强好友菜单
 end

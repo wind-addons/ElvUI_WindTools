@@ -437,7 +437,7 @@ if L then
 	L["The font flag that the RealID / Character Name / Level uses."] = "用在 RealID / 角色名 / 等級的字型描邊"
 	L["Info Font"] = "訊息字型"
 	L["The font that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型"
-	L["Info Font Size"] = "訊息字体大小"
+	L["Info Font Size"] = "訊息字型大小"
 	L["The font size that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型大小"
 	L["Info Font Outline"] = "訊息字型描邊"
 	L["The font flag that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型描邊"

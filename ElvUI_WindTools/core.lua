@@ -219,6 +219,7 @@ function WT:InsertOptions()
 					enablebtn = {
 						order = 4,
 						type = "toggle",
+						width = "full",
 						name = WT:ColorStr(L["Enable"]),
 						get = function(info) return E.db.WindTools[tName]["enabled"] end,
 						set = function(info, value) E.db.WindTools[tName]["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end,

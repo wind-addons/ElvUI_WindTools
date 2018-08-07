@@ -42,145 +42,144 @@ function EasyShadow:CreateMyShadow(frame, size)
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Visual"].args["EasyShadow"].args["framesetting"] = {
-		order = 10,
-		type = "group",
-		name = L["Frame Setting"],
-		args = {
-			Bar1 = {
-				order = 1,
-				type = "toggle",
-				name = L["Bar 1"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar1"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar1"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			Bar2 = {
-				order = 2,
-				type = "toggle",
-				name = L["Bar 2"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar2"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar2"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			Bar3 = {
-				order = 3,
-				type = "toggle",
-				name = L["Bar 3"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar3"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar3"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			Bar4 = {
-				order = 4,
-				type = "toggle",
-				name = L["Bar 4"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar4"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar4"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			Bar5 = {
-				order = 5,
-				type = "toggle",
-				name = L["Bar 5"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar5"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar5"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			Bar6 = {
-				order = 6,
-				type = "toggle",
-				name = L["Bar 6"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["Bar6"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["Bar6"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			GameTooltip = {
-				order = 7,
-				type = "toggle",
-				name = L["Game Tooltip"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["GameTooltip"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["GameTooltip"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			MiniMap = {
-				order = 8,
-				type = "toggle",
-				name = L["MiniMap"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["MiniMap"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["MiniMap"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			GameMenu = {
-				order = 9,
-				type = "toggle",
-				name = L["Game Menu"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["GameMenu"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["GameMenu"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			InterfaceOptions = {
-				order = 10,
-				type = "toggle",
-				name = L["Interface Options"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["InterfaceOptions"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["InterfaceOptions"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
-			VideoOptions = {
-				order = 11,
-				type = "toggle",
-				name = L["Video Options"],
-				get = function(info)
-					return E.db.WindTools["EasyShadow"]["VideoOptions"]
-				end,
-				set = function(info, value)
-					E.db.WindTools["EasyShadow"]["VideoOptions"] = value
-					E:StaticPopup_Show("PRIVATE_RL")
-				end,
-			},
+	local Options = {
+		Bar1 = {
+			order = 11,
+			type = "toggle",
+			name = L["Bar 1"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar1"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar1"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
 		},
+		Bar2 = {
+			order = 12,
+			type = "toggle",
+			name = L["Bar 2"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar2"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar2"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		Bar3 = {
+			order = 13,
+			type = "toggle",
+			name = L["Bar 3"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar3"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar3"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		Bar4 = {
+			order = 14,
+			type = "toggle",
+			name = L["Bar 4"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar4"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar4"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		Bar5 = {
+			order = 15,
+			type = "toggle",
+			name = L["Bar 5"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar5"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar5"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		Bar6 = {
+			order = 16,
+			type = "toggle",
+			name = L["Bar 6"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["Bar6"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["Bar6"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		GameTooltip = {
+			order = 17,
+			type = "toggle",
+			name = L["Game Tooltip"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["GameTooltip"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["GameTooltip"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		MiniMap = {
+			order = 18,
+			type = "toggle",
+			name = L["MiniMap"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["MiniMap"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["MiniMap"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		GameMenu = {
+			order = 19,
+			type = "toggle",
+			name = L["Game Menu"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["GameMenu"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["GameMenu"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		InterfaceOptions = {
+			order = 20,
+			type = "toggle",
+			name = L["Interface Options"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["InterfaceOptions"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["InterfaceOptions"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		VideoOptions = {
+			order = 21,
+			type = "toggle",
+			name = L["Video Options"],
+			get = function(info)
+				return E.db.WindTools["EasyShadow"]["VideoOptions"]
+			end,
+			set = function(info, value)
+				E.db.WindTools["EasyShadow"]["VideoOptions"] = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		}
 	}
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Visual"].args["EasyShadow"].args[k] = v
+	end
 end
 
 function EasyShadow:Update()

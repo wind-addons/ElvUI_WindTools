@@ -212,6 +212,19 @@ L["Blizzard Chat"] = true
 L["Flat Style"] = true
 L["Glossy"] = true
 L["Launcher"] = true
+L["Overwatch"] = true
+L["StarCraft"] = true
+L["StarCraft 2"] = true
+L["App"] = true
+L["Mobile"] = true
+L["Hearthstone"] = true
+L["Destiny 2"] = true
+L["Hero of the Storm"] = true
+L["None"] = true
+L["OUTLINE"] = true
+L["MONOCHROME"] = true
+L["MONOCROMEOUTLINE"] = true
+L["THICKOUTLINE"] = true
 -- END 增强好友菜单
 
 if GetLocale() == "enUS" then return end
@@ -423,7 +436,7 @@ if L then
 	L["Different Status Icons."] = "不同的状态图标"
 	L["Default"] = "默认"
 	L["Square"] = "方块风格"
-	L["Diablo 3"] = "暗黑破坏神 3"
+	L["Diablo 3"] = "暗黑破坏神 III"
 	L["Game Icons"] = "游戏图标"
 	L["Game Icon Preview"] = "游戏图标预览"
 	L["Status Icon Preview"] = "状态图标预览"
@@ -431,6 +444,19 @@ if L then
 	L["Flat Style"] = "扁平风格"
 	L["Glossy"] = "光泽风格"
 	L["Launcher"] = "战网风格"
+	L["Overwatch"] = "守望先锋"
+	L["StarCraft"] = "星际争霸"
+	L["StarCraft 2"] = "星际争霸 II"
+	L["App"] = "应用"
+	L["Mobile"] = "手机"
+	L["Hearthstone"] = "炉石传说"
+	L["Destiny 2"] = "命运 2"
+	L["Hero of the Storm"] = "风暴英雄"
+	L["None"] = "无"
+	L["OUTLINE"] = "轮廓"
+	L["MONOCHROME"] = "黑白"
+	L["MONOCROMEOUTLINE"] = "黑白轮廓"
+	L["THICKOUTLINE"] = "厚轮廓"
 	-- END 增强好友菜单
 end
 
@@ -638,7 +664,7 @@ if L then
 	L["Different Status Icons."] = "不同的状态图标"
 	L["Default"] = "默认"
 	L["Square"] = "方块风格"
-	L["Diablo 3"] = "暗黑破坏神 3"
+	L["Diablo 3"] = "暗黑破坏神 III"
 	L["Game Icons"] = "游戏图标"
 	L["Game Icon Preview"] = "游戏图标预览"
 	L["Status Icon Preview"] = "状态图标预览"
@@ -646,5 +672,18 @@ if L then
 	L["Flat Style"] = "扁平风格"
 	L["Glossy"] = "光泽风格"
 	L["Launcher"] = "战网风格"
+	L["Overwatch"] = "守望先锋"
+	L["StarCraft"] = "星际争霸"
+	L["StarCraft 2"] = "星际争霸 II"
+	L["App"] = "应用"
+	L["Mobile"] = "手机"
+	L["Hearthstone"] = "炉石传说"
+	L["Destiny 2"] = "命运 2"
+	L["Hero of the Storm"] = "风暴英雄"
+	L["None"] = "无"
+	L["OUTLINE"] = "轮廓"
+	L["MONOCHROME"] = "黑白"
+	L["MONOCROMEOUTLINE"] = "黑白轮廓"
+	L["THICKOUTLINE"] = "厚轮廓"
 	-- END 增强好友菜单
 end

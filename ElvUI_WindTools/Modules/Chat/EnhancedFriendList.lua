@@ -483,7 +483,7 @@ local function InsertOptions()
 
 	for Key, Value in pairs(GameIconsOptions) do
 		Options.GameIcons.args[Key] = {
-			name = Value.." "..L['Icon'],
+			name = L[Value].." "..L['Icon'],
 			order = GameIconOrder[Key],
 			type = 'select',
 			values = {
@@ -497,7 +497,7 @@ local function InsertOptions()
 		Options.GameIconsPreview.args[Key] = {
 			order = GameIconOrder[Key],
 			type = 'execute',
-			name = Value,
+			name = L[Value],
 			func = function() return end,
 			image = function(info) return EFL.GameIcons[info[#info]][EFL.db.GameIcon[Key]], 32, 32 end,
 		}
@@ -506,7 +506,7 @@ local function InsertOptions()
 		Options.StatusIcons.args[Key] = {
 			order = StatusIconsOrder[Key],
 			type = 'execute',
-			name = Value,
+			name = L[Value],
 			func = function() return end,
 			image = function(info) return EFL.StatusIcons[EFL.db.StatusIconPack][info[#info]], 16, 16 end,
 		}

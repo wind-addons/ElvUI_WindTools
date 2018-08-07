@@ -188,35 +188,32 @@ end
 
 local function InsertOptions()
 	-- 初始化空设定
-	E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Features"],
-		disabled = function() return not E.db.WindTools["Right-click Menu"]["enabled"] end,
-		args = {
-			friend = {
-				order = 1,
-				type = "group",
-				name = L["Friend Menu"],
-				args = {}
-			},
-			chat_roster = {
-				order = 2,
-				type = "group",
-				name = L["Chat Roster Menu"],
-				args = {}
-			},
-			guild = {
-				order = 3,
-				type = "group",
-				name = L["Guild Menu"],
-				args = {}
-			},
-		}
+	local Options = {
+		friend = {
+			order = 11,
+			type = "group",
+			name = L["Friend Menu"],
+			guiInline = true,
+			args = {}
+		},
+		chat_roster = {
+			order = 12,
+			type = "group",
+			name = L["Chat Roster Menu"],
+			guiInline = true,
+			args = {}
+		},
+		guild = {
+			order = 13,
+			type = "group",
+			name = L["Guild Menu"],
+			guiInline = true,
+			args = {}
+		},
 	}
 	-- 循环载入设定
 	for k, v in pairs(friend_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["friend"].args[v] = {
+		Options["friend"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
@@ -226,7 +223,7 @@ local function InsertOptions()
 		}
 	end
 	for k, v in pairs(cr_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["chat_roster"].args[v] = {
+		Options["chat_roster"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
@@ -236,7 +233,7 @@ local function InsertOptions()
 		}
 	end
 	for k, v in pairs(guild_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["guild"].args[v] = {
+		Options["guild"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
@@ -244,6 +241,10 @@ local function InsertOptions()
 			get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
+	end
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args[k] = v
 	end
 end
 WT.ToolConfigs["Right-click Menu"] = InsertOptions

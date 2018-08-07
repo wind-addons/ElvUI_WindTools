@@ -57,9 +57,6 @@ L["Auto Delete"] = true
 L["Enter DELETE automatically."] = true
 L["Shadow Level"] = true
 L["Default is 50."] = true
-L["Glow Effect"] = true
-L["Death Effect"] = true
-L["Nether Effect"] = true
 L["Whisper Cycle"] = true
 L["Officer Channel"] = true
 L["Raid Progression"] = true
@@ -113,15 +110,19 @@ L['The size of the minimap buttons.'] = true
 L['No Anchor Bar'] = true
 L['Horizontal Anchor Bar'] = true
 L['Vertical Anchor Bar'] = true
-L["Instance"] = true
-L["Raid"] = true
-L["Party"] = true
-L["Solo"] = true
 L["Close Quest Voice"] = true
 L["Disable TalkingHeadFrame."] = true
 L["Display level info in quest title (Tracker)"] = true
 L["Display level info in quest title (Quest details)"] = true
+-- 任务通告
+L["No Detail"] = true
+L["Instance"] = true
+L["Raid"] = true
+L["Party"] = true
+L["Solo"] = true
+-- 已学配方染色
 L["Color"] = true
+-- 通告系统
 L["Interrupt"] = true
 L["Solo Yell"] = true
 L["Include Pet"] = true
@@ -138,8 +139,10 @@ L["Other Tank Smart"] = true
 L["Include Pet"] = true
 L["Include Other Tank"] = true
 L["Taunt"] = true
-L["World Map Scale"] = true
-L["Scale your world map."] = true
+-- 增强世界地图
+L["Enhanced World Map"] = true
+L["Customize your world map."] = true
+L["World Map Frame Size"] = true
 -- 自动任务物品按键
 L["Auto Buttons"] = true
 L["Add two bars to contain questitem buttons and inventoryitem buttons."] = true
@@ -222,6 +225,14 @@ L["OUTLINE"] = true
 L["MONOCHROME"] = true
 L["MONOCROMEOUTLINE"] = true
 L["THICKOUTLINE"] = true
+-- CVar编辑器
+L["CVarsTool"] = true
+L["Setting CVars easily."] = true
+L["Glow Effect"] = true
+L["Death Effect"] = true
+L["Nether Effect"] = true
+L["Convenient Setting"] = true
+L["Auto Compare"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -285,9 +296,6 @@ if L then
 	L["Enter DELETE automatically."] = "在摧毀物品時自動填入DELETE。"
 	L["Shadow Level"] = "陰影等級"
 	L["Default is 50."] = "預設值為50。"
-	L["Glow Effect"] = "全屏泛光"
-	L["Death Effect"] = "死亡畫面"
-	L["Nether Effect"] = "隱身術特效"
 	L["Whisper Cycle"] = "密語獨立循環"
 	L["Officer Channel"] = "幹部頻道"
 	L["Raid Progression"] = "團本進度提示"
@@ -341,15 +349,19 @@ if L then
 	L['No Anchor Bar'] = "不對齊"
 	L['Horizontal Anchor Bar'] = "水平對齊"
 	L['Vertical Anchor Bar'] = "垂直對齊"
-	L["Instance"] = "副本"
-	L["Raid"] = "團隊副本"
-	L["Party"] = "隊伍"
-	L["Solo"] = "個人"
 	L["Close Quest Voice"] = "關閉視訊"
 	L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
 	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
 	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
+	-- 任务通告
+	L["No Detail"] = "非詳細通報"
+	L["Instance"] = "副本"
+	L["Raid"] = "團隊副本"
+	L["Party"] = "隊伍"
+	L["Solo"] = "個人"
+	-- 已学配方染色
 	L["Color"] = "顏色"
+	-- 通告系统
 	L["Interrupt"] = "斷法"
 	L["Solo Yell"] = "單人的時候大喊"
 	L["Include Pet"] = "包括寵物斷法"
@@ -366,8 +378,10 @@ if L then
 	L["Include Pet"] = "包括寵物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲諷"
-	L["World Map Scale"] = "世界地圖縮放"
-	L["Scale your world map."] = "調整世界地圖的大小"
+	-- 增强世界地图
+	L["Enhanced World Map"] ="世界地圖增強"
+	L["Customize your world map."] = "增強你的世界地圖"
+	L["World Map Frame Size"] = "世界地圖大小"
 	-- 自动任务物品按键
 	L["Auto Buttons"] = "任務物品按鍵"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加兩行動作條來顯示任務物品和裝備中的飾品"
@@ -450,6 +464,14 @@ if L then
 	L["MONOCHROME"] = "黑白"
 	L["MONOCROMEOUTLINE"] = "黑白輪廓"
 	L["THICKOUTLINE"] = "厚輪廓"
+	-- CVar编辑器
+	L["CVarsTool"] = "CVar工具"
+	L["Setting CVars easily."] = "更加便捷地設定 CVars。"
+	L["Glow Effect"] = "全屏泛光"
+	L["Death Effect"] = "死亡畫面"
+	L["Nether Effect"] = "隱身術特效"
+	L["Convenient Setting"] = "便利性設定"
+	L["Auto Compare"] = "自動比對裝備"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -509,9 +531,6 @@ if L then
 	L["Enter DELETE automatically."] = "在摧毁物品时自动填入DELETE。"
 	L["Shadow Level"] = "阴影等级"
 	L["Default is 50."] = "预设值为50。"
-	L["Glow Effect"] = "全屏泛光"
-	L["Death Effect"] = "死亡画面"
-	L["Nether Effect"] = "隐身术特效"
 	L["Whisper Cycle"] = "密语独立循环"
 	L["Officer Channel"] = "干部频道"
 	L["Raid Progression"] = "团本进度提示"
@@ -565,15 +584,19 @@ if L then
 	L['No Anchor Bar'] = "不对齐"
 	L['Horizontal Anchor Bar'] = "水平对齐"
 	L['Vertical Anchor Bar'] = "垂直对齐"
-	L["Instance"] = "副本"
-	L["Raid"] = "团队副本"
-	L["Party"] = "队伍"
-	L["Solo"] = "个人"
 	L["Close Quest Voice"] = "关闭视频通话"
 	L["Disable TalkingHeadFrame."] = "关闭任务的视频通话功能。"
 	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
 	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
+	-- 任务通告
+	L["No Detail"] = "非详细通报"
+	L["Instance"] = "副本"
+	L["Raid"] = "团队副本"
+	L["Party"] = "队伍"
+	L["Solo"] = "单人"
+	-- 已学配方染色
 	L["Color"] = "颜色"
+	-- 通告系统
 	L["Interrupt"] = "打断"
 	L["Solo Yell"] = "单人的时候大喊"
 	L["Include Pet"] = "包含宠物打断"
@@ -590,8 +613,10 @@ if L then
 	L["Include Pet"] = "包括宠物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲讽"
-	L["World Map Scale"] = "世界地图缩放"
-	L["Scale your world map."] = "调整你的世界地图大小"
+	-- 增强世界地图
+	L["Enhanced World Map"] ="世界地图增强"
+	L["Customize your world map."] = "增强你的世界地图"
+	L["World Map Frame Size"] = "世界地图大小"
 	-- 自动任务物品按键
 	L["Auto Buttons"] = "自动物品按键"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品"
@@ -674,4 +699,12 @@ if L then
 	L["MONOCHROME"] = "黑白"
 	L["MONOCROMEOUTLINE"] = "黑白轮廓"
 	L["THICKOUTLINE"] = "厚轮廓"
+	-- CVar编辑器
+	L["CVarsTool"] = "CVar工具"
+	L["Setting CVars easily."] = "更加便捷地设置 CVars。"
+	L["Glow Effect"] = "全屏泛光"
+	L["Death Effect"] = "死亡画面"
+	L["Nether Effect"] = "隐身术特效"
+	L["Convenient Setting"] = "便利设置"
+	L["Auto Compare"] = "自动对比装备"
 end

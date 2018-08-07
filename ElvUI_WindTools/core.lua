@@ -113,30 +113,36 @@ function WT:InsertOptions()
 		-- 插件基本信息
 		order = 1,
 		type = "group",
-		name = WT.Title,
+		name = "WindTools",
 		args = {
-			header1 = {
+			titleimage = {
 				order = 1,
+				type = "description",
+				name = "",
+				image = function(info) return "Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools", 512, 128 end,
+			},
+			header1 = {
+				order = 2,
 				type = "header",
 				name = format(L["%s version: %s"], WT.Title, WT.Version),
 			},		
 			description1 = {
-				order = 2,
+				order = 3,
 				type = "description",
 				name = format(L["%s is a collection of useful tools."], WT.Title),
 			},
 			spacer1 = {
-				order = 3,
+				order = 4,
 				type = "description",
 				name = "\n",
 			},
 			header2 = {
-				order = 4,
+				order = 5,
 				type = "header",
 				name = L["Release / Update Link"],
 			},
 			ngapage = {
-				order = 5,
+				order = 6,
 				type = "input",
 				width = "full",
 				name = L["You can use the following link to get more information (in Chinese)"],
@@ -144,17 +150,17 @@ function WT:InsertOptions()
 				set = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
 			},
 			spacer2 = {
-				order = 6,
+				order = 7,
 				type = "description",
 				name = "\n",
 			},
 			header3 = {
-				order = 7,
+				order = 8,
 				type = "header",
 				name = WT:ColorStr(L["Author Info"]),
 			},
 			authorinfo = {
-				order = 8,
+				order = 9,
 				type = "description",
 				name = "|cffC79C6Ehoushuu @ NGA|r(|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
 			},

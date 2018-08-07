@@ -330,14 +330,14 @@ local function InsertOptions()
 					type = "toggle",
 					name = L['Name color & Level'],
 					get = function(info) return E.db.WindTools["Enhanced Friend List"]["color_name"] end,
-					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["color_name"] = value; FriendsFrame_Update() end
+					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["color_name"] = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
-				color_name = {
+				enhanced_enable = {
 					order = 2,
 					type = "toggle",
 					name = L['Enhanced Texuture'],
-					get = function(info) return E.db.WindTools["Enhanced Friend List"]["color_name"] end,
-					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["color_name"] = value; FriendsFrame_Update() end
+					get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] end,
+					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
 			}
 		},
@@ -409,9 +409,9 @@ local function InsertOptions()
 					order = 8,
 					type = 'select',
 					values = {
-						['Default'] = 'Default',
-						['Square'] = 'Square',
-						['D3'] = 'Diablo 3',
+						['Default'] = L['Default'],
+						['Square'] = L['Square'],
+						['D3'] = L['Diablo 3'],
 					},
 				},
 			},

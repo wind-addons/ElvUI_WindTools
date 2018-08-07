@@ -185,6 +185,33 @@ L["Guild Menu"] = true
 -- 增强好友菜单
 L["Enhanced Friend List"] = true
 L["Customize friend frame."] = true
+L["Features"] = true
+L["Name color & Level"] = true
+L["Enhanced Texuture"] = true
+L["Name Font"] = true
+L["The font that the RealID / Character Name / Level uses."] = true
+L["Name Font Size"] = true
+L["The font size that the RealID / Character Name / Level uses."] = true
+L["Name Font Flag"] = true
+L["The font flag that the RealID / Character Name / Level uses."] = true
+L["Info Font"] = true
+L["The font that the Zone / Server uses."] = true
+L["Info Font Size"] = true
+L["The font size that the Zone / Server uses."] = true
+L["Info Font Outline"] = true
+L["The font flag that the Zone / Server uses."] = true
+L["Status Icon Pack"] = true
+L["Different Status Icons."] = true
+L["Default"] = true
+L["Square"] = true
+L["Diablo 3"] = true
+L["Game Icons"] = true
+L["Game Icon Preview"] = true
+L["Status Icon Preview"] = true
+L["Blizzard Chat"] = true
+L["Flat Style"] = true
+L["Glossy"] = true
+L["Launcher"] = true
 -- END 增强好友菜单
 
 if GetLocale() == "enUS" then return end
@@ -374,6 +401,37 @@ if L then
 	L["Chat Roster Menu"] = "聊天右鍵菜單"
 	L["Guild Menu"] = "公會右鍵菜單"
 	-- END 右键菜单增强
+	-- 增强好友菜单
+	L["Enhanced Friend List"] = "增强好友列表"
+	L["Customize friend frame."] = "自定义你的好友列表"
+	L["Features"] = "功能"
+	L["Name color & Level"] = "姓名染色 & 等级"
+	L["Enhanced Texuture"] = "材质增强"
+	L["Name Font"] = "名字字体"
+	L["The font that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体"
+	L["Name Font Size"] = "名字字体大小"
+	L["The font size that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体大小"
+	L["Name Font Flag"] = "名字描边"
+	L["The font flag that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体描边"
+	L["Info Font"] = "信息字体"
+	L["The font that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体"
+	L["Info Font Size"] = "信息字体大小"
+	L["The font size that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体大小"
+	L["Info Font Outline"] = "信息字体描边"
+	L["The font flag that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体描边"
+	L["Status Icon Pack"] = "状态图标包"
+	L["Different Status Icons."] = "不同的状态图标"
+	L["Default"] = "默认"
+	L["Square"] = "方块风格"
+	L["Diablo 3"] = "暗黑破坏神 3"
+	L["Game Icons"] = "游戏图标"
+	L["Game Icon Preview"] = "游戏图标预览"
+	L["Status Icon Preview"] = "状态图标预览"
+	L["Blizzard Chat"] = "暴雪聊天风格"
+	L["Flat Style"] = "扁平风格"
+	L["Glossy"] = "光泽风格"
+	L["Launcher"] = "战网风格"
+	-- END 增强好友菜单
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -558,4 +616,35 @@ if L then
 	L["Chat Roster Menu"] = "聊天右键菜单"
 	L["Guild Menu"] = "公会右键菜单"
 	-- END 右键菜单增强
+	-- 增强好友菜单
+	L["Enhanced Friend List"] = "增强好友列表"
+	L["Customize friend frame."] = "自定义你的好友列表"
+	L["Features"] = "功能"
+	L["Name color & Level"] = "姓名染色 & 等级"
+	L["Enhanced Texuture"] = "材质增强"
+	L["Name Font"] = "名字字体"
+	L["The font that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体"
+	L["Name Font Size"] = "名字字体大小"
+	L["The font size that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体大小"
+	L["Name Font Flag"] = "名字描边"
+	L["The font flag that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体描边"
+	L["Info Font"] = "信息字体"
+	L["The font that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体"
+	L["Info Font Size"] = "信息字体大小"
+	L["The font size that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体大小"
+	L["Info Font Outline"] = "信息字体描边"
+	L["The font flag that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体描边"
+	L["Status Icon Pack"] = "状态图标包"
+	L["Different Status Icons."] = "不同的状态图标"
+	L["Default"] = "默认"
+	L["Square"] = "方块风格"
+	L["Diablo 3"] = "暗黑破坏神 3"
+	L["Game Icons"] = "游戏图标"
+	L["Game Icon Preview"] = "游戏图标预览"
+	L["Status Icon Preview"] = "状态图标预览"
+	L["Blizzard Chat"] = "暴雪聊天风格"
+	L["Flat Style"] = "扁平风格"
+	L["Glossy"] = "光泽风格"
+	L["Launcher"] = "战网风格"
+	-- END 增强好友菜单
 end

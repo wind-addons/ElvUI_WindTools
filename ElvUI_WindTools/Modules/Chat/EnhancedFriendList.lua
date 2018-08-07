@@ -369,11 +369,11 @@ local function InsertOptions()
 					order = 3,
 					type = 'select',
 					values = {
-						['NONE'] = 'None',
-						['OUTLINE'] = 'OUTLINE',
-						['MONOCHROME'] = 'MONOCHROME',
-						['MONOCHROMEOUTLINE'] = 'MONOCROMEOUTLINE',
-						['THICKOUTLINE'] = 'THICKOUTLINE',
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
 				InfoFont = {
@@ -396,11 +396,11 @@ local function InsertOptions()
 					desc = L['The font flag that the Zone / Server uses.'],
 					type = 'select',
 					values = {
-						['NONE'] = 'None',
-						['OUTLINE'] = 'OUTLINE',
-						['MONOCHROME'] = 'MONOCHROME',
-						['MONOCHROMEOUTLINE'] = 'MONOCROMEOUTLINE',
-						['THICKOUTLINE'] = 'THICKOUTLINE',
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
 				StatusIconPack = {

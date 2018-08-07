@@ -139,59 +139,58 @@ function QuestListEnhanced:Initialize()
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Quest"].args["Quest List Enhanced"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Setting"],
-		args = {
-			setfont = {
-				order = 1,
-				type = "range",
-				name = L["Title fontsize"],
-				min = 8, max = 19, step = 1,
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlefontsize"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlefontsize"] = value;end
-			},
-			titlecolor = {
-				order = 2,
-				type = "toggle",
-				name = L["Class Color"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlecolor"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlecolor"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			titlelevel = {
-				order = 3,
-				type = "toggle",
-				name = L["Tracker Level"],
-				desc = L["Display level info in quest title (Tracker)"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlelevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlelevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			detaillevel = {
-				order = 4,
-				type = "toggle",
-				name = L["Quest details level"],
-				desc = L["Display level info in quest title (Quest details)"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["detaillevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["detaillevel"] = value;end
-			},
-			ignorehighlevel = {
-				order = 4,
-				type = "toggle",
-				name = L["Ignore high level"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			framewidth = {
-				order = 5,
-				type = 'range',
-				name = L["Tracker width"],
-				min = 200, max = 300, step = 1,
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["width"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["width"] = value;end
-			},
+	local Options = {
+		setfont = {
+			order = 11,
+			type = "range",
+			name = L["Title fontsize"],
+			min = 8, max = 19, step = 1,
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlefontsize"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlefontsize"] = value;end
+		},
+		titlecolor = {
+			order = 12,
+			type = "toggle",
+			name = L["Class Color"],
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlecolor"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlecolor"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		titlelevel = {
+			order = 13,
+			type = "toggle",
+			name = L["Tracker Level"],
+			desc = L["Display level info in quest title (Tracker)"],
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlelevel"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlelevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		detaillevel = {
+			order = 14,
+			type = "toggle",
+			name = L["Quest details level"],
+			desc = L["Display level info in quest title (Quest details)"],
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["detaillevel"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["detaillevel"] = value;end
+		},
+		ignorehighlevel = {
+			order = 15,
+			type = "toggle",
+			name = L["Ignore high level"],
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		framewidth = {
+			order = 16,
+			type = 'range',
+			name = L["Tracker width"],
+			min = 200, max = 300, step = 1,
+			get = function(info) return E.db.WindTools["Quest List Enhanced"]["width"] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"]["width"] = value;end
 		}
 	}
+	
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Quest"].args["Quest List Enhanced"].args[k] = v
+	end
 end
 WT.ToolConfigs["Quest List Enhanced"] = InsertOptions
 E:RegisterModule(QuestListEnhanced:GetName())

@@ -543,6 +543,7 @@ local function InsertOptions()
 		order = 10,
 		type = "group",
 		name = L["Interrupt"],
+		guiInline = true,
 		args = {
 			Enable = {
 				order = 1,
@@ -571,6 +572,7 @@ local function InsertOptions()
 		order = 11,
 		type = "group",
 		name = L["Taunt"],
+		guiInline = true,
 		args = {
 			Enable = {
 				order = 0,
@@ -627,6 +629,7 @@ local function InsertOptions()
 		order = 12,
 		type = "group",
 		name = L["Res And Threat"],
+		guiInline = true,
 		args = {
 			Enable = {
 				order = 1,
@@ -641,6 +644,7 @@ local function InsertOptions()
 		order = 13,
 		type = "group",
 		name = L["Res Thanks"],
+		guiInline = true,
 		args = {
 			Enable = {
 				order = 1,
@@ -655,6 +659,7 @@ local function InsertOptions()
 		order = 14,
 		type = "group",
 		name = L["Raid Useful Spells"],
+		guiInline = true,
 		args = {
 			Enable = {
 				order = 1,

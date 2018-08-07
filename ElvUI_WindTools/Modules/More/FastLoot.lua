@@ -34,26 +34,25 @@ function FastLoot:Initialize()
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Fast Loot"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Speed Setting"],
-		args = {
-			setspeed = {
-				order = 1,
-				type = "range",
-				name = L["Fast Loot Speed"],
-				min = 0.1, max = 0.5, step = 0.1,
-				get = function(info) return E.db.WindTools["Fast Loot"]["speed"] end,
-				set = function(info, value) E.db.WindTools["Fast Loot"]["speed"] = value;end
-			},
-			setspeeddesc = {
-				order = 2,
-				type = "description",
-				name = L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."],
-			}
+	local Options = {
+		setspeed = {
+			order = 11,
+			type = "range",
+			name = L["Fast Loot Speed"],
+			min = 0.1, max = 0.5, step = 0.1,
+			get = function(info) return E.db.WindTools["Fast Loot"]["speed"] end,
+			set = function(info, value) E.db.WindTools["Fast Loot"]["speed"] = value;end
+		},
+		setspeeddesc = {
+			order = 12,
+			type = "description",
+			name = L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."],
 		}
 	}
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["More Tools"].args["Fast Loot"].args[k] = v
+	end
 end
 WT.ToolConfigs["Fast Loot"] = InsertOptions
 E:RegisterModule(FastLoot:GetName())

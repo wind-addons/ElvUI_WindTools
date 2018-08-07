@@ -1,9 +1,6 @@
 -- CVars 快速编辑
 -- 作者：houshuu
 -------------------
--- 主要修改条目：
--- 模块化
--- 增加设定项，且绑定于 ElvUI 配置
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")

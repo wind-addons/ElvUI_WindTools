@@ -143,6 +143,7 @@ L["Taunt"] = true
 L["Enhanced World Map"] = true
 L["Customize your world map."] = true
 L["World Map Frame Size"] = true
+L["Reveal"] = true
 -- 自动任务物品按键
 L["Auto Buttons"] = true
 L["Add two bars to contain questitem buttons and inventoryitem buttons."] = true
@@ -382,6 +383,7 @@ if L then
 	L["Enhanced World Map"] ="世界地圖增強"
 	L["Customize your world map."] = "增強你的世界地圖"
 	L["World Map Frame Size"] = "世界地圖大小"
+	L["Reveal"] = "去除迷霧"
 	-- 自动任务物品按键
 	L["Auto Buttons"] = "任務物品按鍵"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加兩行動作條來顯示任務物品和裝備中的飾品"
@@ -617,6 +619,7 @@ if L then
 	L["Enhanced World Map"] ="世界地图增强"
 	L["Customize your world map."] = "增强你的世界地图"
 	L["World Map Frame Size"] = "世界地图大小"
+	L["Reveal"] = "去除迷雾"
 	-- 自动任务物品按键
 	L["Auto Buttons"] = "自动物品按键"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品"

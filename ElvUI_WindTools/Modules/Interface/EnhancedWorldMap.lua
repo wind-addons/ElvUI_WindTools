@@ -7,8 +7,9 @@ local _G = _G
 
 P["WindTools"]["Enhanced World Map"] = {
 	-- 默认开启
-	["enabled"] = true,
+	["enabled"] = false,
 	["scale"] = 1.2,
+	["reveal"] = true,
 }
 
 function EWM:SetMapScale()
@@ -16,87 +17,6 @@ function EWM:SetMapScale()
 	-- 修复指针错误 方案来源 NDui
 	RunScript("WorldMapFrame.ScrollContainer.GetCursorPosition=function(f) local x,y=MapCanvasScrollControllerMixin.GetCursorPosition(f);local s=WorldMapFrame:GetScale();return x/s,y/s;end")
 end
-
-local function InsertOptions()
-	E.Options.args.WindTools.args["Interface"].args["Enhanced World Map"].args["settings"] = {
-		order = 10,
-		type = "group",
-		name = L["Scale"],
-		guiInline = true,
-		args = {
-			scale = {
-				order = 1,
-				type = "range",
-				name = L["World Map Frame Size"],
-				min = 0.5, max = 2, step = 0.1,
-				get = function(info) return E.db.WindTools["Enhanced World Map"]["scale"] end,
-				set = function(info, value) E.db.WindTools["Enhanced World Map"]["scale"] = value; EWM:SetMapScale() end
-			},
-		}
-	}
-end
-
-function EWM:Initialize()
-	if not E.db.WindTools["Enhanced World Map"]["enabled"] then return end
-	self:SetMapScale()
-end
-
-WT.ToolConfigs["Enhanced World Map"] = InsertOptions
-E:RegisterModule(EWM:GetName())
-
--------------------------------------------------------
-local LeaMapsLC = {
-	RevealMap = "On",
-	ShowRevBtn = "On",
-}
-
-
--- Create reveal button before reveal data loads
-local revBtn = CreateFrame("Button", nil, WorldMapFrame.BorderFrame)
-revBtn:SetSize(1, 24)
-revBtn:SetPoint("TOPRIGHT", -60, 0)
-revBtn:SetHitRectInsets(0, 0, 0, 0)
-
--- Create fontstring
-revBtn.f = revBtn:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
-revBtn.f:SetAllPoints()
-revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Red:0|t" .. L["Rev"])
-revBtn.f:SetJustifyH("RIGHT")
-
--- Set button width
-revBtn:SetWidth(revBtn.f:GetStringWidth() + 40)
-
--- Function to set button texture
-local function SetRevBtn()
-	revBtn:Hide()
-	if LeaMapsLC["RevealMap"] == "On" then
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Green:0|t" .. L["Rev"])
-	else
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Red:0|t" .. L["Rev"])
-	end
-	if LeaMapsLC["ShowRevBtn"] == "On" then
-		revBtn:Show()
-	end
-end
-
-revBtn:HookScript("OnEnter", function()
-	if LeaMapsLC["RevealMap"] == "On" then
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Green:0|t|cffffffaa" .. L["Rev"])
-	else
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Red:0|t|cffffffaa" .. L["Rev"])
-	end
-end)
-
-revBtn:HookScript("OnLeave", function()
-	if LeaMapsLC["RevealMap"] == "On" then
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Green:0|t|cffffd100" .. L["Rev"])
-	else
-		revBtn.f:SetText("|TInterface\\BUTTONS\\UI-MicroStream-Red:0|t|cffffd100" .. L["Rev"])
-	end
-end)
-
--- Set button texture on startup
-SetRevBtn()
 
 -- Map data
 local LeaMapsData = {
@@ -335,10 +255,8 @@ local LeaMapsData = {
 	},
 
 }
-
 -- Create table to store revealed overlays
 local overlayTextures = {}
-
 -- Function to refresh overlays (Blizzard_SharedMapDataProviders\MapExplorationDataProvider)
 local function RefMap(self)
 	overlayTextures = {}
@@ -406,11 +324,7 @@ local function RefMap(self)
 					texture:SetPoint("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k-1)), -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
 					texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
 					texture:SetDrawLayer("ARTWORK", -1)
-					if LeaMapsLC["RevealMap"] == "On" then 
-						texture:Show()
-					else
-						texture:Hide()
-					end
+					texture:Show()
 					tinsert(overlayTextures, texture)
 				end
 			end
@@ -418,23 +332,45 @@ local function RefMap(self)
 	end
 end
 
--- Show overlays on startup
-for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-	hooksecurefunc(pin, "RefreshOverlays", RefMap)
+local function InsertOptions()
+	local Options = {
+		scale = {
+			order = 10,
+			type = "range",
+			name = L["World Map Frame Size"],
+			min = 0.5, max = 2, step = 0.1,
+			disabled = function() return not E.db.WindTools["Enhanced World Map"]["enabled"] end,
+			get = function(info) return E.db.WindTools["Enhanced World Map"]["scale"] end,
+			set = function(info, value) E.db.WindTools["Enhanced World Map"]["scale"] = value; EWM:SetMapScale() end
+		},
+		usereveal = {
+			order = 11,
+			type = "toggle",
+			name = L["Reveal"],
+			disabled = function() return not E.db.WindTools["Enhanced World Map"]["enabled"] end,
+			get = function(info) return E.db.WindTools["Enhanced World Map"]["reveal"] end,
+			set = function(info, value) E.db.WindTools["Enhanced World Map"]["reveal"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		},
+	}
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Interface"].args["Enhanced World Map"].args[k] = v
+	end
 end
 
--- Toggle overlays if reveal button is clicked
-revBtn:HookScript("OnClick", function()
-	if LeaMapsLC["RevealMap"] == "On" then 
-		for i = 1, #overlayTextures  do
-			overlayTextures[i]:Hide()
+function EWM:Initialize()
+	self.db = E.db.WindTools["Enhanced World Map"]
+
+	if not self.db["enabled"] then return end
+
+	self:SetMapScale()
+
+	if self.db["reveal"] then
+		for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
+			hooksecurefunc(pin, "RefreshOverlays", RefMap)
 		end
-		LeaMapsLC["RevealMap"] = "Off"
-	else
-		for i = 1, #overlayTextures  do
-			overlayTextures[i]:Show()
-		end	
-		LeaMapsLC["RevealMap"] = "On"
 	end
-	SetRevBtn()
-end)
+end
+
+WT.ToolConfigs["Enhanced World Map"] = InsertOptions
+E:RegisterModule(EWM:GetName())

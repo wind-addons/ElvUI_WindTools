@@ -243,7 +243,6 @@ local function OnDragStop(self)
 	end
 end
 
-
 function EBF:MakeMovable(Name)
 	local frame = _G[Name]
 	if not frame then

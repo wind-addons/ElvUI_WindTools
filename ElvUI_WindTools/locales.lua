@@ -72,20 +72,7 @@ L["Normal"] = true
 L["LFR"] = true
 L["Raid Setting"] = true
 L["Disable"] = true
-L["EasyShadow"] = true
-L["Add shadow to frames."] = true
 L["Frame Setting"] = true
-L["Bar 1"] = true
-L["Bar 2"] = true
-L["Bar 3"] = true
-L["Bar 4"] = true
-L["Bar 5"] = true
-L["Bar 6"] = true
-L["Game Tooltip"] = true
-L["MiniMap"] = true
-L["Game Menu"] = true
-L["Interface Options"] = true
-L["Video Options"] = true
 L["W"] = true
 L["Y"] = true
 L["Tag Enhanced"] = true
@@ -250,10 +237,18 @@ L['Quest Level'] = true
 L["Tracker Level"] = true
 L["Quest details level"] = true
 L["Left Side Minimize Button"] = true
-L["Icon with Shadow"] = true
 L["Frame Title"] = true
 L["Display level info in quest title (Tracker)"] = true
 L["Display level info in quest title (Quest details)"] = true
+-- 简单阴影
+L["EasyShadow"] = true
+L["Add shadow to frames."] = true
+L["Game Tooltip"] = true
+L["MiniMap"] = true
+L["Game Menu"] = true
+L["Interface Options"] = true
+L["Video Options"] = true
+L["Quest Icon"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -331,19 +326,6 @@ if L then
 	L["LFR"] =  "隨團"
 	L["Disable"] = "關閉"
 	L["Frame Setting"] = "框架設定"
-	L["EasyShadow"] = "簡單陰影"
-	L["Add shadow to frames."] = "為框架添加陰影效果。"
-	L["Bar 1"] = "快捷列 1"
-	L["Bar 2"] = "快捷列 2"
-	L["Bar 3"] = "快捷列 3"
-	L["Bar 4"] = "快捷列 4"
-	L["Bar 5"] = "快捷列 5"
-	L["Bar 6"] = "快捷列 6"
-	L["Game Tooltip"] = "滑鼠提示"
-	L["MiniMap"] = "小地圖"
-	L["Game Menu"] = "遊戲菜單"
-	L["Interface Options"] = "介面選項"
-	L["Video Options"] = "視頻設定"
 	L["W"] = "萬"
 	L["Y"] = "億"
 	L["Tag Enhanced"] = "Tag增強"
@@ -507,6 +489,15 @@ if L then
 	L["Frame Title"] = "框架名"
 	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
 	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
+	-- 简单阴影
+	L["EasyShadow"] = "簡單陰影"
+	L["Add shadow to frames."] = "為框架添加陰影效果。"
+	L["Game Tooltip"] = "滑鼠提示"
+	L["MiniMap"] = "小地圖"
+	L["Game Menu"] = "遊戲菜單"
+	L["Interface Options"] = "介面選項"
+	L["Video Options"] = "顯示設定（系統）"
+	L["Quest Icon"] = "任務物品圖標"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -582,19 +573,6 @@ if L then
 	L["LFR"] =  "随团"
 	L["Disable"] = "关闭"
 	L["Frame Setting"] = "框架设定"
-	L["EasyShadow"] = "简单阴影"
-	L["Add shadow to frames."] = "为框架添加阴影效果。"
-	L["Bar 1"] = "技能栏 1"
-	L["Bar 2"] = "技能栏 2"
-	L["Bar 3"] = "技能栏 3"
-	L["Bar 4"] = "技能栏 4"
-	L["Bar 5"] = "技能栏 5"
-	L["Bar 6"] = "技能栏 6"
-	L["Game Tooltip"] = "鼠标提示"
-	L["MiniMap"] = "小地图"
-	L["Game Menu"] = "游戏菜单"
-	L["Interface Options"] = "界面选项"
-	L["Video Options"] = "视频设定"
 	L["W"] = "万"
 	L["Y"] = "亿"
 	L["Tag Enhanced"] = "Tag增强"
@@ -758,4 +736,13 @@ if L then
 	L["Frame Title"] = "框体名"
 	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
 	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
+	-- 简单阴影
+	L["EasyShadow"] = "简单阴影"
+	L["Add shadow to frames."] = "为框架添加阴影效果。"
+	L["Game Tooltip"] = "鼠标提示"
+	L["MiniMap"] = "小地图"
+	L["Game Menu"] = "游戏菜单"
+	L["Interface Options"] = "界面选项"
+	L["Video Options"] = "视频设定"
+	L["Quest Icon"] = "任务物品图标"
 end

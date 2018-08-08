@@ -27,7 +27,6 @@ P["WindTools"]["Quest List Enhanced"] = {
 	["infofontflag"] = "OUTLINE",
 	["ignorehightlevel"] = true,
 	["width"] = 240,
-	["iconshadow"] = true,
 	["frametitle"] = true,
 	["leftside"] = true,
 	["leftsidesize"] = 18,
@@ -73,19 +72,6 @@ local function QuestInfo_hook(template, parentFrame, acceptButton, material, map
 				QuestInfoTitleHeader:SetText(newTitle)
 			end
 		end
-	end
-end
-
-local function shadowQuestIcon(_, block)
-	local itemButton = block.itemButton
-	if itemButton and not itemButton.styled then
-		itemButton:CreateShadow()
-		itemButton.styled = true
-	end
-	local rightButton = block.rightButton
-	if rightButton and not rightButton.styled then
-		rightButton:CreateShadow()
-		rightButton.styled = true
 	end
 end
 
@@ -172,11 +158,6 @@ function QuestListEnhanced:Initialize()
 	end
 	hooksecurefunc(QUEST_TRACKER_MODULE, "Update", SetBlockHeader_hook)
 	hooksecurefunc("QuestInfo_Display", QuestInfo_hook)
-
-	if E.db.WindTools["Quest List Enhanced"]["iconshadow"] then
-		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
-		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
-	end
 
 	if not E.db.WindTools["Quest List Enhanced"]["frametitle"] then
 		_G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide()
@@ -328,11 +309,6 @@ local function InsertOptions()
 					type = 'range',
 					name = L["Tracker width"],
 					min = 200, max = 300, step = 1,
-				},
-				iconshadow = {
-					order = 2,
-					type = "toggle",
-					name = L["Icon with Shadow"],
 				},
 				frametitle = {
 					order = 4,

@@ -1,15 +1,18 @@
 -- 作者：houshuu
 local E, L, V, P, G = unpack(ElvUI)
-local WT = E:GetModule("WindTools")
+local WT         = E:GetModule("WindTools")
+local A          = E:GetModule('Auras')
 local EasyShadow = E:NewModule('EasyShadow')
-local ElvUF = ElvUF
-local LSM = LibStub("LibSharedMedia-3.0")
-local addonName, addonTable = ...
-local _G = _G
+local ElvUF      = ElvUF
+local LSM        = LibStub("LibSharedMedia-3.0")
+local addonName,  addonTable = ...
+local _G         = _G
 
 -- Default options
 P["WindTools"]["EasyShadow"] = {
 	["enabled"] = true,
+	["AuraShadow"] = true,
+	["QuestIconShadow"] = true,
 	["Bar1"] = false,
 	["Bar2"] = false,
 	["Bar3"] = false,
@@ -27,7 +30,7 @@ P["WindTools"]["EasyShadow"] = {
 local borderr, borderg, borderb = 0, 0, 0
 local backdropr, backdropg, backdropb = 0, 0, 0
 
-function EasyShadow:CreateMyShadow(frame, size)
+local function CreateMyShadow(frame, size)
 	local shadow = CreateFrame("Frame", nil, frame)
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(frame:GetFrameStrata())
@@ -43,137 +46,100 @@ end
 
 local function InsertOptions()
 	local Options = {
-		Bar1 = {
+		Actionbar = {
 			order = 11,
-			type = "toggle",
-			name = L["Bar 1"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar1"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar1"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
+			type = "group",
+			name = L["ActionBars"],
+			guiInline = true,
+			get = function(info) return E.db.WindTools["EasyShadow"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["EasyShadow"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				Bar1 = {
+					order = 1,
+					type = "toggle",
+					name = L["ActionBars"].."1",
+				},
+				Bar2 = {
+					order = 2,
+					type = "toggle",
+					name = L["ActionBars"].."2",
+				},
+				Bar3 = {
+					order = 1,
+					type = "toggle",
+					name = L["ActionBars"].."3",
+				},
+				Bar4 = {
+					order = 4,
+					type = "toggle",
+					name = L["ActionBars"].."4",
+				},
+				Bar5 = {
+					order = 5,
+					type = "toggle",
+					name = L["ActionBars"].."5",
+				},
+				Bar6 = {
+					order = 6,
+					type = "toggle",
+					name = L["ActionBars"].."6",
+				},
+			}
 		},
-		Bar2 = {
+		Menus = {
 			order = 12,
-			type = "toggle",
-			name = L["Bar 2"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar2"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar2"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		Bar3 = {
-			order = 13,
-			type = "toggle",
-			name = L["Bar 3"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar3"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar3"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		Bar4 = {
-			order = 14,
-			type = "toggle",
-			name = L["Bar 4"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar4"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar4"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		Bar5 = {
-			order = 15,
-			type = "toggle",
-			name = L["Bar 5"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar5"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar5"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		Bar6 = {
-			order = 16,
-			type = "toggle",
-			name = L["Bar 6"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["Bar6"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["Bar6"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		GameTooltip = {
-			order = 17,
-			type = "toggle",
-			name = L["Game Tooltip"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["GameTooltip"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["GameTooltip"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		MiniMap = {
-			order = 18,
-			type = "toggle",
-			name = L["MiniMap"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["MiniMap"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["MiniMap"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		GameMenu = {
-			order = 19,
-			type = "toggle",
+			type = "group",
 			name = L["Game Menu"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["GameMenu"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["GameMenu"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
+			guiInline = true,
+			get = function(info) return E.db.WindTools["EasyShadow"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["EasyShadow"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				GameTooltip = {
+					order = 1,
+					type = "toggle",
+					name = L["Game Tooltip"],
+				},
+				MiniMap = {
+					order = 2,
+					type = "toggle",
+					name = L["MiniMap"],
+				},
+				GameMenu = {
+					order = 3,
+					type = "toggle",
+					name = L["Game Menu"],
+				},
+				InterfaceOptions = {
+					order = 4,
+					type = "toggle",
+					name = L["Interface Options"],
+				},
+				VideoOptions = {
+					order = 5,
+					type = "toggle",
+					name = L["Video Options"],
+				}
+			}
 		},
-		InterfaceOptions = {
-			order = 20,
-			type = "toggle",
-			name = L["Interface Options"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["InterfaceOptions"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["InterfaceOptions"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-		},
-		VideoOptions = {
-			order = 21,
-			type = "toggle",
-			name = L["Video Options"],
-			get = function(info)
-				return E.db.WindTools["EasyShadow"]["VideoOptions"]
-			end,
-			set = function(info, value)
-				E.db.WindTools["EasyShadow"]["VideoOptions"] = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
+		Others = {
+			order = 13,
+			type = "group",
+			name = L["Other Setting"],
+			guiInline = true,
+			get = function(info) return E.db.WindTools["EasyShadow"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["EasyShadow"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				AuraShadow = {
+					order = 1,
+					type = "toggle",
+					name = L["Auras"],
+				},
+				QuestIconShadow = {
+					order = 2,
+					type = "toggle",
+					name = L["Quest Icon"],
+				},
+			}
 		}
 	}
 
@@ -185,75 +151,107 @@ end
 function EasyShadow:Update()
 	if E.db.WindTools["EasyShadow"]["GameTooltip"] then
 		local frame = _G["GameTooltip"]
-		self:CreateMyShadow(frame, 3)
+		CreateMyShadow(frame, 3)
 	end
 
 	if E.db.WindTools["EasyShadow"]["MiniMap"] then
 		local frame = _G["MMHolder"]
-		self:CreateMyShadow(frame, 5)
+		CreateMyShadow(frame, 5)
 	end
 
 	if E.db.WindTools["EasyShadow"]["GameMenu"] then
 		local frame = _G["GameMenuFrame"]
-		self:CreateMyShadow(frame, 5)
+		CreateMyShadow(frame, 5)
 	end
 
 	if E.db.WindTools["EasyShadow"]["InterfaceOptions"] then
 		local frame = _G["InterfaceOptionsFrame"]
-		self:CreateMyShadow(frame, 5)
+		CreateMyShadow(frame, 5)
 	end
 
 	if E.db.WindTools["EasyShadow"]["VideoOptions"] then
 		local frame = _G["VideoOptionsFrame"]
-		self:CreateMyShadow(frame, 5)
+		CreateMyShadow(frame, 5)
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar1"] then
 		for i = 1, 12 do
 			local frame = _G["ElvUI_Bar1Button"..i]
-			self:CreateMyShadow(frame, 4)
+			CreateMyShadow(frame, 4)
 		end
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar2"] then
 		for i = 1, 12 do
 			local frame = _G["ElvUI_Bar2Button"..i]
-			self:CreateMyShadow(frame, 4)
+			CreateMyShadow(frame, 4)
 		end
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar3"] then
 		for i = 1, 12 do
 			local frame = _G["ElvUI_Bar3Button"..i]
-			self:CreateMyShadow(frame, 4)
+			CreateMyShadow(frame, 4)
 		end
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar4"] then
 		for i = 1, 12 do
 			local shadowframe = _G["ElvUI_Bar4Button"..i]
-			self:CreateMyShadow(shadowframe, 4)
+			CreateMyShadow(shadowframe, 4)
 		end
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar5"] then
 		for i = 1, 12 do
 			local shadowframe = _G["ElvUI_Bar5Button"..i]
-			self:CreateMyShadow(shadowframe, 4)
+			CreateMyShadow(shadowframe, 4)
 		end
 	end
 
 	if E.db.WindTools["EasyShadow"]["Bar6"] then
 		for i = 1, 12 do
 			local shadowframe = _G["ElvUI_Bar6Button"..i]
-			self:CreateMyShadow(shadowframe, 4)
+			CreateMyShadow(shadowframe, 4)
 		end
+	end
+end
+
+local function shadowQuestIcon(_, block)
+	local itemButton = block.itemButton
+	if itemButton and not itemButton.styled then
+		itemButton:CreateShadow()
+		itemButton.styled = true
+	end
+	local rightButton = block.rightButton
+	if rightButton and not rightButton.styled then
+		rightButton:CreateShadow()
+		rightButton.styled = true
 	end
 end
 
 function EasyShadow:Initialize()
 	if not E.db.WindTools["EasyShadow"]["enabled"] then return end
 	self:Update()
+	if E.db.WindTools["EasyShadow"]["AuraShadow"] then
+		hooksecurefunc(A, "CreateIcon", function(self, button)
+			if not button.shadowed then
+				button:CreateShadow()
+				button.shadowed = true
+			end
+		end)
+		hooksecurefunc(A, "UpdateAura", function(self, button, index)
+			if not button.shadowed then
+				button:CreateShadow()
+				button.shadowed = true
+			end
+		end)
+	end
+
+	if E.db.WindTools["EasyShadow"]["QuestIconShadow"] then
+		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
+		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
+	end
 end
 
 WT.ToolConfigs["EasyShadow"] = InsertOptions

@@ -253,14 +253,14 @@ local function InsertOptions()
 				titlecolor = {
 					order = 7,
 					type = "toggle",
-					name = L["Class Color"],
+					name = L["Title Class Color"],
 				},
 			},
 		},
 		level = {
 			order = 12,
 			type = 'group',
-			name = L['Level'],
+			name = L['Quest Level'],
 			guiInline = true,
 			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
@@ -318,7 +318,7 @@ local function InsertOptions()
 		other = {
 			order = 14,
 			type = 'group',
-			name = L['Others'],
+			name = L['Other Setting'],
 			guiInline = true,
 			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,

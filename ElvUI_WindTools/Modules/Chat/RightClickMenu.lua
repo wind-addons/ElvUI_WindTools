@@ -19,13 +19,13 @@ P["WindTools"]["Right-click Menu"] = {
 		["GUILD_ADD"] = true,
 		["FRIEND_ADD"] = true,
 		["MYSTATS"] = true,
+		["ignoreReport"] = false,
 	},
 	["chat_roster"] = {
 		["NAME_COPY"]  = true,
 		["SEND_WHO"] = true,
 		["FRIEND_ADD"] = true,
 		["INVITE"] = true,
-		["ignoreReport"] = false,
 	},
 	["guild"] = {
 		["ARMORY"] = true,
@@ -255,12 +255,12 @@ local function InsertOptions()
 		}
 	end
 
-	Options["chat_roster"].args.ignoreReport = {
+	Options["friend"].args.ignoreReport = {
 		order = -1,
 		type = "toggle",
 		name = L["Disable REPORT to fix bug"],
-		get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] end,
-		set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] end,
+		set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 	}
 
 	for k, v in pairs(Options) do

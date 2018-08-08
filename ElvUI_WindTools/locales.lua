@@ -92,8 +92,6 @@ L["Tag Enhanced"] = true
 L["Add some customized tags."] = true
 L["Automatically Loaded."] = true
 L["Example:"] = true
-L["Quest details level"] = true
-L["Tracker Level"] = true
 L["Class Color"] = true
 L["Title fontsize"] = true
 L["Link Enhance"] = true
@@ -112,8 +110,6 @@ L['Horizontal Anchor Bar'] = true
 L['Vertical Anchor Bar'] = true
 L["Close Quest Voice"] = true
 L["Disable TalkingHeadFrame."] = true
-L["Display level info in quest title (Tracker)"] = true
-L["Display level info in quest title (Quest details)"] = true
 -- 任务通告
 L["No Detail"] = true
 L["Instance"] = true
@@ -246,6 +242,18 @@ L["Error Frame"] = true
 L["Other Setting"] = true
 L["Raid Utility Mouse Over"] = true
 L["Vehicle Seat Scale"] = true
+-- 任务列表增强
+L["Quest List Enhanced"] = true
+L["Add the level information in front of the quest name."] = true
+L["Title Class Color"] = true
+L['Quest Level'] = true
+L["Tracker Level"] = true
+L["Quest details level"] = true
+L["Left Side Minimize Button"] = true
+L["Icon with Shadow"] = true
+L["Frame Title"] = true
+L["Display level info in quest title (Tracker)"] = true
+L["Display level info in quest title (Quest details)"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -275,7 +283,6 @@ if L then
 	L["Artifact Button"] = "神兵按鈕"
 	L["Chat Link Level"] = "聊天鏈接"
 	L["Tab Chat Mod"] = "頻道切換"
-	L["Quest List Enhanced"] = "任務列表"
 	L["Quest Progress"] = "任務進度"
 	L["Quest Announcment"] = "任務通告"
 	L["Fast Loot"] = "光速拾取"
@@ -289,7 +296,6 @@ if L then
 	L["Add a button to your character information frame."] = "在人物信息框架上添加一個神兵按鈕"
 	L["Add a tiny icon and basic information to chat link."] = "為聊天鏈接添加一個小圖標，并提示部位。"
 	L["Use tab to switch channel."] = "可以使用 Tab 來快速切換頻道。"
-	L["Add the level information in front of the quest name."] = "讓任務列表有等級提示功能并自動縮短部分任務名。"
 	L["Add quest progress to tooltip."] = "添加任務進度到鼠標提示。"
 	L["Let you know quest is completed."] = "當任務完成之時會通告。"
 	L["Loot items quickly."] = "進一步加快拾取物品的速度。"
@@ -344,13 +350,6 @@ if L then
 	L["Add some customized tags."] = "添加一些自定義Tags。"
 	L["Automatically Loaded."] = "已自動載入。"
 	L["Example:"] = "範例："
-	L["Quest details level"] = "任務詳細顯示等級"
-	L["Tracker Level"] = "任務追蹤顯示等級"
-	L["Class Color"] = "標題職業顏色"
-	L["Title fontsize"] = "標題字體大小"
-	L["Link Enhance"] = "鏈接增強"
-	L["Keystone Enhance"] = "傳奇鑰石等級"
-	L["Link Icon"] = "鏈接圖標"
 	L["Add a bar to contain minimap buttons."] = "添加一個條來管理小地圖按鈕。"
 	L["Minimap Button Bar"] = "小地圖按鈕條"
 	L['Skin Style'] = "美化風格"
@@ -364,8 +363,6 @@ if L then
 	L['Vertical Anchor Bar'] = "垂直對齊"
 	L["Close Quest Voice"] = "關閉視訊"
 	L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
-	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
-	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
 	-- 任务通告
 	L["No Detail"] = "非詳細通報"
 	L["Instance"] = "副本"
@@ -498,7 +495,18 @@ if L then
 	L["Other Setting"] = "其他設定"
 	L["Raid Utility Mouse Over"] = "團隊工具鼠標顯示"
 	L["Vehicle Seat Scale"] = "載具座位縮放"
-
+	-- 任务列表增强
+	L["Quest List Enhanced"] = "任務列表"
+	L["Add the level information in front of the quest name."] = "讓任務列表有等級提示功能，上色，自動縮短任務名。"
+	L["Title Class Color"] = "標題職業顏色"
+	L['Quest Level'] = "任務等級"
+	L["Tracker Level"] = "任務追蹤顯示等級"
+	L["Quest details level"] = "任務詳細顯示等級"
+	L["Left Side Minimize Button"] = "左側收起按鈕"
+	L["Icon with Shadow"] = "物品圖標陰影"
+	L["Frame Title"] = "框架名"
+	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
+	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -593,13 +601,6 @@ if L then
 	L["Add some customized tags."] = "添加一些自定义Tags。"
 	L["Automatically Loaded."] = "已自动载入。"
 	L["Example:"] = "范例："
-	L["Quest details level"] = "任务详细显示等级"
-	L["Tracker Level"] = "任务追踪显示等级"
-	L["Class Color"] = "标题职业颜色"
-	L["Title fontsize"] = "标题字体大小"
-	L["Link Enhance"] = "链接增强"
-	L["Keystone Enhance"] = "传奇钥石等级"
-	L["Link Icon"] = "链接图标"
 	L["Add a bar to contain minimap buttons."] = "添加一个条来管理小地图按钮。"
 	L["Minimap Button Bar"] = "小地图按钮条"
 	L['Skin Style'] = "美化风格"
@@ -613,8 +614,6 @@ if L then
 	L['Vertical Anchor Bar'] = "垂直对齐"
 	L["Close Quest Voice"] = "关闭视频通话"
 	L["Disable TalkingHeadFrame."] = "关闭任务的视频通话功能。"
-	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
-	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
 	-- 任务通告
 	L["No Detail"] = "非详细通报"
 	L["Instance"] = "副本"
@@ -747,4 +746,16 @@ if L then
 	L["Other Setting"] = "其他设置"
 	L["Raid Utility Mouse Over"] = "团队工具鼠标显示"
 	L["Vehicle Seat Scale"] = "载具座位缩放"
+	-- 任务列表增强
+	L["Quest List Enhanced"] = "任务列表"
+	L["Add the level information in front of the quest name."] = "让任务列表有等级提示功能，上色，自动缩短任务名。"
+	L["Title Class Color"] = "标题职业色"
+	L['Quest Level'] = "任务等级"
+	L["Tracker Level"] = "任务追踪显示等级"
+	L["Quest details level"] = "任务详细显示等级"
+	L["Left Side Minimize Button"] = "左侧收起按钮"
+	L["Icon with Shadow"] = "物品按键阴影"
+	L["Frame Title"] = "框体名"
+	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
+	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
 end

@@ -87,6 +87,7 @@ local Tools = {
 		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
 		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
 		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
+		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI_S&L", "houshuu"},
 		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 	}
 }

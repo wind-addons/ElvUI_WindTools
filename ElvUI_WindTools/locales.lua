@@ -234,6 +234,17 @@ L["Death Effect"] = true
 L["Nether Effect"] = true
 L["Convenient Setting"] = true
 L["Auto Compare"] = true
+-- 增强暴雪框体
+L["Enhanced Blizzard Frame"] = true
+L["Move frames and set scale of buttons."] = true
+L["Move Frames"] = true
+L["Move Blizzard Frame"] = true
+L["Move ElvUI Bag"] = true
+L["Remember Position"] = true
+L["Error Frame"] = true
+L["Other Setting"] = true
+L["Raid Utility Mouse Over"] = true
+L["Vehicle Seat Scale"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -474,6 +485,18 @@ if L then
 	L["Nether Effect"] = "隱身術特效"
 	L["Convenient Setting"] = "便利性設定"
 	L["Auto Compare"] = "自動比對裝備"
+	-- 增强暴雪框体
+	L["Enhanced Blizzard Frame"] = "暴雪框架增強"
+	L["Move frames and set scale of buttons."] = "移動框架，設定按鈕大小。"
+	L["Move Frames"] = "移動框架"
+	L["Move Blizzard Frame"] = "移動暴雪框架"
+	L["Move ElvUI Bag"] = "移動 ElvUI 背包"
+	L["Remember Position"] = "記憶移動位置"
+	L["Error Frame"] = "錯誤框架"
+	L["Other Setting"] = "其他設定"
+	L["Raid Utility Mouse Over"] = "團隊工具鼠標顯示"
+	L["Vehicle Seat Scale"] = "載具座位縮放"
+
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
@@ -710,4 +733,15 @@ if L then
 	L["Nether Effect"] = "隐身术特效"
 	L["Convenient Setting"] = "便利设置"
 	L["Auto Compare"] = "自动对比装备"
+	-- 增强暴雪框体
+	L["Enhanced Blizzard Frame"] = "暴雪框体增强"
+	L["Move frames and set scale of buttons."] = "移动框体，设置按钮大小。"
+	L["Move Frames"] = "移动框体"
+	L["Move Blizzard Frame"] = "移动暴雪框体"
+	L["Move ElvUI Bag"] = "移动 ElvUI 背包"
+	L["Remember Position"] = "记住移动位置"
+	L["Error Frame"] = "错误框体"
+	L["Other Setting"] = "其他设置"
+	L["Raid Utility Mouse Over"] = "团队工具鼠标显示"
+	L["Vehicle Seat Scale"] = "载具座位缩放"
 end

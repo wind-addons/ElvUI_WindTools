@@ -227,7 +227,6 @@ L["Move ElvUI Bag"] = true
 L["Remember Position"] = true
 L["Error Frame"] = true
 L["Other Setting"] = true
-L["Raid Utility Mouse Over"] = true
 L["Vehicle Seat Scale"] = true
 -- 任务列表增强
 L["Quest List Enhanced"] = true
@@ -475,7 +474,6 @@ if L then
 	L["Remember Position"] = "記憶移動位置"
 	L["Error Frame"] = "錯誤框架"
 	L["Other Setting"] = "其他設定"
-	L["Raid Utility Mouse Over"] = "團隊工具鼠標顯示"
 	L["Vehicle Seat Scale"] = "載具座位縮放"
 	-- 任务列表增强
 	L["Quest List Enhanced"] = "任務列表"
@@ -722,7 +720,6 @@ if L then
 	L["Remember Position"] = "记住移动位置"
 	L["Error Frame"] = "错误框体"
 	L["Other Setting"] = "其他设置"
-	L["Raid Utility Mouse Over"] = "团队工具鼠标显示"
 	L["Vehicle Seat Scale"] = "载具座位缩放"
 	-- 任务列表增强
 	L["Quest List Enhanced"] = "任务列表"

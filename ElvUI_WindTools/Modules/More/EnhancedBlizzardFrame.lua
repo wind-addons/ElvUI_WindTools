@@ -20,7 +20,6 @@ P["WindTools"]["Enhanced Blizzard Frame"] = {
 	["moveelvbag"] = false,
 	["remember"] = true,
 	["points"] = {},
-	["rumouseover"] = false,
 	["errorframe"] = {
 		["height"] = 60,
 		["width"] = 512,
@@ -86,15 +85,8 @@ local function InsertOptions()
 			name = L["Other Setting"],
 			guiInline = true,
 			args = {
-				rumouseover = {
-					order = 1,
-					type = "toggle",
-					name = L["Raid Utility Mouse Over"],
-					get = function(info) return E.db.WindTools["Enhanced Blizzard Frame"].rumouseover end,
-					set = function(info, value) E.db.WindTools["Enhanced Blizzard Frame"].rumouseover = value; M:RUReset() end,
-				},
 				vehicleSeatScale = {
-					order = 2,
+					order = 1,
 					type = 'range',
 					name = L["Vehicle Seat Scale"],
 					min = 0.1, max = 3, step = 0.01,

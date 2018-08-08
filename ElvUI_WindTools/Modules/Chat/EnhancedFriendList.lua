@@ -346,8 +346,8 @@ local function InsertOptions()
 			type = 'group',
 			name = L['General'],
 			guiInline = true,
-			get = function(info) return EFL.db[info[#info]] end,
-			set = function(info, value) EFL.db[info[#info]] = value FriendsFrame_Update() end,
+			get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"][info[#info]] = value FriendsFrame_Update() end,
 			args = {
 				NameFont = {
 					type = 'select', dialogControl = 'LSM30_Font',
@@ -406,7 +406,7 @@ local function InsertOptions()
 				StatusIconPack = {
 					name = L['Status Icon Pack'],
 					desc = L['Different Status Icons.'],
-					order = 8,
+					order = 7,
 					type = 'select',
 					values = {
 						['Default'] = L['Default'],
@@ -421,8 +421,8 @@ local function InsertOptions()
 			type = 'group',
 			name = L['Game Icons'],
 			guiInline = true,
-			get = function(info) return EFL.db.GameIcon[info[#info]] end,
-			set = function(info, value) EFL.db.GameIcon[info[#info]] = value FriendsFrame_Update() end,
+			get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"]["GameIcon"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"]["GameIcon"][info[#info]] = value FriendsFrame_Update() end,
 			args = {},
 		},
 		GameIconsPreview = {

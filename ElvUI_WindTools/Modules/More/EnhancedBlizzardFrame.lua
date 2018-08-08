@@ -247,7 +247,7 @@ end
 function EBF:MakeMovable(Name)
 	local frame = _G[Name]
 	if not frame then
-		SLE:ErrorPrint("Frame to move doesn't exist: "..(frameName or "Unknown"))
+		print("Frame to move doesn't exist: "..(frameName or "Unknown"))
 		return
 	end
 

@@ -25,6 +25,7 @@ P["WindTools"]["Right-click Menu"] = {
 		["SEND_WHO"] = true,
 		["FRIEND_ADD"] = true,
 		["INVITE"] = true,
+		["ignoreReport"] = false,
 	},
 	["guild"] = {
 		["ARMORY"] = true,
@@ -119,12 +120,26 @@ function EnhancedRCMenu:Initialize()
 			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
 		end
 	end
+
 	-- 公会功能 载入
 	for _, v in pairs(guild_features) do
 		if E.db.WindTools["Right-click Menu"]["guild"][v] then
 			tinsert(UnitPopupMenus["GUILD"], 1, v)
+			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], 1, v)
 		end
 	end
+
+	-- 关闭回报功能解决错误
+	if E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] then
+		for k, v in pairs(UnitPopupMenus["FRIEND"]) do
+			if v == "REPORT_PLAYER" then
+				tremove(UnitPopupMenus["FRIEND"], k)
+				break
+			end
+		end
+	end
+
+
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
 		if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
 		if (unit and (unit == "target" or string.find(unit, "party"))) then
@@ -239,6 +254,14 @@ local function InsertOptions()
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
 	end
+
+	Options["chat_roster"].args.ignoreReport = {
+		order = -1,
+		type = "toggle",
+		name = L["Disable REPORT to fix bug"],
+		get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] end,
+		set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+	}
 
 	for k, v in pairs(Options) do
 		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args[k] = v

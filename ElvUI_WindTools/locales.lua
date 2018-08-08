@@ -183,6 +183,7 @@ L["Invite"] = true
 L["Friend Menu"] = true
 L["Chat Roster Menu"] = true
 L["Guild Menu"] = true
+L["Disable REPORT to fix bug"] = true
 -- 增强好友菜单
 L["Enhanced Friend List"] = true
 L["Customize friend frame."] = true
@@ -434,6 +435,7 @@ if L then
 	L["Friend Menu"] = "好友右鍵菜單"
 	L["Chat Roster Menu"] = "聊天右鍵菜單"
 	L["Guild Menu"] = "公會右鍵菜單"
+	L["Disable REPORT to fix bug"] = "關閉回報來解決錯誤"
 	-- 增强好友菜单
 	L["Enhanced Friend List"] = "增強好友列表"
 	L["Customize friend frame."] = "自定美化你的好友列表"
@@ -682,6 +684,7 @@ if L then
 	L["Friend Menu"] = "好友右键菜单"
 	L["Chat Roster Menu"] = "聊天右键菜单"
 	L["Guild Menu"] = "公会右键菜单"
+	L["Disable REPORT to fix bug"] = "关闭举报来解决错误"
 	-- 增强好友菜单
 	L["Enhanced Friend List"] = "增强好友列表"
 	L["Customize friend frame."] = "自定义你的好友列表"

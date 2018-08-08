@@ -115,12 +115,11 @@ EBF.Frames = {
 	"DressUpFrame",
 	"FriendsFrame",
 	"FriendsFriendsFrame",
-	"GameMenuFrame",
 	"GossipFrame",
 	"GuildInviteFrame",
 	"GuildRegistrarFrame",
 	"HelpFrame",
-	"InterfaceOptionsFrame",
+	--"InterfaceOptionsFrame",
 	"ItemTextFrame",
 	"LFDRoleCheckPopup",
 	"LFGDungeonReadyDialog",
@@ -153,7 +152,7 @@ EBF.Frames = {
 	"TimeManagerFrame",
 	"TradeFrame",
 	"TutorialFrame",
-	"VideoOptionsFrame",
+	--"VideoOptionsFrame",
 	"WorldMapFrame",
 }
 EBF.AddonsList = {

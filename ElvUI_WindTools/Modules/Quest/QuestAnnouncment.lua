@@ -210,48 +210,46 @@ function QuestAnnouncment:Initialize()
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Quest"].args["Quest Announcment"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Setting"],
-		args = {
-			NoDetail = {
-				order = 0,
-				type = "toggle",
-				name = L["No Detail"],
-				get = function(info) return E.db.WindTools["Quest Announcment"]["NoDetail"] end,
-				set = function(info, value) E.db.WindTools["Quest Announcment"]["NoDetail"] = value;end
-			},
-			Instance = {
-				order = 1,
-				type = "toggle",
-				name = L["Instance"],
-				get = function(info) return E.db.WindTools["Quest Announcment"]["Instance"] end,
-				set = function(info, value) E.db.WindTools["Quest Announcment"]["Instance"] = value;end
-			},
-			Raid = {
-				order = 2,
-				type = "toggle",
-				name = L["Raid"],
-				get = function(info) return E.db.WindTools["Quest Announcment"]["Raid"] end,
-				set = function(info, value) E.db.WindTools["Quest Announcment"]["Raid"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			Party = {
-				order = 3,
-				type = "toggle",
-				name = L["Party"],
-				get = function(info) return E.db.WindTools["Quest Announcment"]["Party"] end,
-				set = function(info, value) E.db.WindTools["Quest Announcment"]["Party"] = value;end
-			},
-			Solo = {
-				order = 4,
-				type = "toggle",
-				name = L["Solo"],
-				get = function(info) return E.db.WindTools["Quest Announcment"]["Solo"] end,
-				set = function(info, value) E.db.WindTools["Quest Announcment"]["Solo"] = value;end
-			},
+	local Options = {
+		NoDetail = {
+			order = 10,
+			type = "toggle",
+			name = L["No Detail"],
+			get = function(info) return E.db.WindTools["Quest Announcment"]["NoDetail"] end,
+			set = function(info, value) E.db.WindTools["Quest Announcment"]["NoDetail"] = value;end
+		},
+		Instance = {
+			order = 11,
+			type = "toggle",
+			name = L["Instance"],
+			get = function(info) return E.db.WindTools["Quest Announcment"]["Instance"] end,
+			set = function(info, value) E.db.WindTools["Quest Announcment"]["Instance"] = value;end
+		},
+		Raid = {
+			order = 12,
+			type = "toggle",
+			name = L["Raid"],
+			get = function(info) return E.db.WindTools["Quest Announcment"]["Raid"] end,
+			set = function(info, value) E.db.WindTools["Quest Announcment"]["Raid"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		Party = {
+			order = 13,
+			type = "toggle",
+			name = L["Party"],
+			get = function(info) return E.db.WindTools["Quest Announcment"]["Party"] end,
+			set = function(info, value) E.db.WindTools["Quest Announcment"]["Party"] = value;end
+		},
+		Solo = {
+			order = 14,
+			type = "toggle",
+			name = L["Solo"],
+			get = function(info) return E.db.WindTools["Quest Announcment"]["Solo"] end,
+			set = function(info, value) E.db.WindTools["Quest Announcment"]["Solo"] = value;end
 		}
 	}
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Quest"].args["Quest Announcment"].args[k] = v
+	end
 end
 WT.ToolConfigs["Quest Announcment"] = InsertOptions
 E:RegisterModule(QuestAnnouncment:GetName())

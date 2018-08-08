@@ -9,17 +9,28 @@
 -- 不显示最高等级（110）的任务等级
 
 local E, L, V, P, G = unpack(ElvUI)
+local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local QuestListEnhanced = E:NewModule('QuestListEnhanced', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local _G = _G
 
 P["WindTools"]["Quest List Enhanced"] = {
 	["enabled"] = true,
 	["titlecolor"] = true,
 	["titlelevel"] = true,
 	["detaillevel"] = true,
-	["titlefontsize"] = 13,
+	["titlefont"] = E.db.general.font,
+	["titlefontsize"] = 14,
+	["titlefontflag"] = "OUTLINE",
+	["infofont"] = E.db.general.font,
+	["infofontsize"] = 12,
+	["infofontflag"] = "OUTLINE",
 	["ignorehightlevel"] = true,
 	["width"] = 240,
+	["iconshadow"] = true,
+	["frametitle"] = true,
+	["leftside"] = true,
+	["leftsidesize"] = 18,
 }
 
 -- 追踪栏显示任务等级
@@ -41,8 +52,8 @@ local function SetBlockHeader_hook()
 				newTitle = "["..questLevel.."] "..title
 			end
 				-- 燃烧王座任务名缩短
-				newTitle = string.gsub(newTitle, "，燃烧王座", "")
-				newTitle = string.gsub(newTitle, "，燃燒王座", "")
+				-- newTitle = string.gsub(newTitle, "，燃烧王座", "")
+				-- newTitle = string.gsub(newTitle, "，燃燒王座", "")
 			local newHeight = QUEST_TRACKER_MODULE:SetStringText(oldBlock.HeaderText, newTitle, nil, OBJECTIVE_TRACKER_COLOR["Header"])
 		end
 	end
@@ -65,6 +76,19 @@ local function QuestInfo_hook(template, parentFrame, acceptButton, material, map
 	end
 end
 
+local function shadowQuestIcon(_, block)
+	local itemButton = block.itemButton
+	if itemButton and not itemButton.styled then
+		itemButton:CreateShadow()
+		itemButton.styled = true
+	end
+	local rightButton = block.rightButton
+	if rightButton and not rightButton.styled then
+		rightButton:CreateShadow()
+		rightButton.styled = true
+	end
+end
+
 function QuestListEnhanced:Initialize()
 	if not E.db.WindTools["Quest List Enhanced"]["enabled"] then return end
 
@@ -75,7 +99,11 @@ function QuestListEnhanced:Initialize()
 	local class = select(2, UnitClass("player"))
 	local colour = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
 	hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", function(_, block)
-		block.HeaderText:SetFont(STANDARD_TEXT_FONT, E.db.WindTools["Quest List Enhanced"]["titlefontsize"], "OUTLINE")
+		local fontname = E.db.WindTools["Quest List Enhanced"]["titlefont"]
+		local fontsize = E.db.WindTools["Quest List Enhanced"]["titlefontsize"]
+		local fontflag = E.db.WindTools["Quest List Enhanced"]["titlefontflag"]
+
+		block.HeaderText:SetFont(LSM:Fetch('font', fontname), fontsize, fontflag)
 		block.HeaderText:SetShadowOffset(.7, -.7)
 		block.HeaderText:SetShadowColor(0, 0, 0, 1)
 		if E.db.WindTools["Quest List Enhanced"]["titlecolor"] then
@@ -87,6 +115,14 @@ function QuestListEnhanced:Initialize()
 		if heightcheck == 2 then
 			local height = block:GetHeight()   
 			block:SetHeight(height + 2)
+		end
+
+		fontname = E.db.WindTools["Quest List Enhanced"]["infofont"]
+		fontsize = E.db.WindTools["Quest List Enhanced"]["infofontsize"]
+		fontflag = E.db.WindTools["Quest List Enhanced"]["infofontflag"]
+
+		for objectiveKey, line in pairs(block.lines) do
+			line.Text:SetFont(LSM:Fetch('font', fontname), fontsize, fontflag)
 		end
 	end)
 
@@ -136,62 +172,180 @@ function QuestListEnhanced:Initialize()
 	end
 	hooksecurefunc(QUEST_TRACKER_MODULE, "Update", SetBlockHeader_hook)
 	hooksecurefunc("QuestInfo_Display", QuestInfo_hook)
+
+	if E.db.WindTools["Quest List Enhanced"]["iconshadow"] then
+		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
+		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
+	end
+
+	if not E.db.WindTools["Quest List Enhanced"]["frametitle"] then
+		_G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide()
+		_G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide()
+		hooksecurefunc("ObjectiveTracker_Collapse", function() _G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide() end)
+		hooksecurefunc("ObjectiveTracker_Expand", function() _G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide() end)
+		if E.db.WindTools["Quest List Enhanced"]["leftside"] then
+			local HM = _G["ObjectiveTrackerFrame"].HeaderMenu
+			local ofx = -E.db.WindTools["Quest List Enhanced"]["leftsidesize"]-E.db.WindTools["Quest List Enhanced"]["width"]+8
+			HM.MinimizeButton:SetPoint("TOPRIGHT", ofx, 0)
+			HM.MinimizeButton:SetSize(E.db.WindTools["Quest List Enhanced"]["leftsidesize"], E.db.WindTools["Quest List Enhanced"]["leftsidesize"])
+		end
+	end
 end
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["Quest"].args["Quest List Enhanced"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Setting"],
-		args = {
-			setfont = {
-				order = 1,
-				type = "range",
-				name = L["Title fontsize"],
-				min = 8, max = 19, step = 1,
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlefontsize"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlefontsize"] = value;end
+	local Options = {
+		general = {
+			order = 11,
+			type = 'group',
+			name = L['General'],
+			guiInline = true,
+			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
+			args = {
+				titlefont = {
+					type = 'select', dialogControl = 'LSM30_Font',
+					order = 1,
+					name = L['Name Font'],
+					values = LSM:HashTable('font'),
+				},
+				titlefontsize = {
+					order = 2,
+					name = L['Name Font Size'],
+					type = 'range',
+					min = 6, max = 22, step = 1,
+				},
+				titlefontflag = {
+					name = L["Name Font Flag"],
+					order = 3,
+					type = 'select',
+					values = {
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
+					},
+				},
+				infofont = {
+					type = 'select', dialogControl = 'LSM30_Font',
+					order = 4,
+					name = L['Info Font'],
+					values = LSM:HashTable('font'),
+				},
+				infofontsize = {
+					order = 5,
+					name = L["Info Font Size"],
+					type = 'range',
+					min = 6, max = 22, step = 1,
+				},
+				infofontflag = {
+					name = L["Info Font Outline"],
+					order = 6,
+					type = 'select',
+					values = {
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
+					},
+				},
+				titlecolor = {
+					order = 7,
+					type = "toggle",
+					name = L["Title Class Color"],
+				},
 			},
-			titlecolor = {
-				order = 2,
-				type = "toggle",
-				name = L["Class Color"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlecolor"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlecolor"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		level = {
+			order = 12,
+			type = 'group',
+			name = L['Quest Level'],
+			guiInline = true,
+			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
+			args = {
+				titlelevel = {
+					order = 1,
+					type = "toggle",
+					name = L["Tracker Level"],
+					desc = L["Display level info in quest title (Tracker)"],
+				},
+				detaillevel = {
+					order = 2,
+					type = "toggle",
+					name = L["Quest details level"],
+					desc = L["Display level info in quest title (Quest details)"],
+				},
+				ignorehighlevel = {
+					order = 3,
+					type = "toggle",
+					name = L["Ignore high level"],
+				},
 			},
-			titlelevel = {
-				order = 3,
-				type = "toggle",
-				name = L["Tracker Level"],
-				desc = L["Display level info in quest title (Tracker)"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["titlelevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["titlelevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+		},
+		leftsidemode = {
+			order = 13,
+			type = 'group',
+			name = L["Left Side Minimize Button"],
+			guiInline = true,
+			disabled = E.db.WindTools["Quest List Enhanced"]["frametitle"],
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
+			args = {
+				leftside = {
+					order = 4,
+					type  = "toggle",
+					name  = L["Enable"],
+					get = function(info)
+						if not E.db.WindTools["Quest List Enhanced"]["frametitle"] then
+							return E.db.WindTools["Quest List Enhanced"]["leftside"]
+						else
+							return false
+						end
+					end,
+				},
+				leftsidesize = {
+					order = 5,
+					type  = 'range',
+					name  = L["Size"],
+					get = function(info) return E.db.WindTools["Quest List Enhanced"]["leftsidesize"] end,
+					min   = 10,
+					max   = 30,
+					step  = 1,
+				},
+			}
+		},
+		other = {
+			order = 14,
+			type = 'group',
+			name = L['Other Setting'],
+			guiInline = true,
+			get = function(info) return E.db.WindTools["Quest List Enhanced"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
+			args = {
+				width = {
+					order = 1,
+					type = 'range',
+					name = L["Tracker width"],
+					min = 200, max = 300, step = 1,
+				},
+				iconshadow = {
+					order = 2,
+					type = "toggle",
+					name = L["Icon with Shadow"],
+				},
+				frametitle = {
+					order = 4,
+					type = "toggle",
+					name = L["Frame Title"],
+				},
 			},
-			detaillevel = {
-				order = 4,
-				type = "toggle",
-				name = L["Quest details level"],
-				desc = L["Display level info in quest title (Quest details)"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["detaillevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["detaillevel"] = value;end
-			},
-			ignorehighlevel = {
-				order = 4,
-				type = "toggle",
-				name = L["Ignore high level"],
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["ignorehightlevel"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			framewidth = {
-				order = 5,
-				type = 'range',
-				name = L["Tracker width"],
-				min = 200, max = 300, step = 1,
-				get = function(info) return E.db.WindTools["Quest List Enhanced"]["width"] end,
-				set = function(info, value) E.db.WindTools["Quest List Enhanced"]["width"] = value;end
-			},
-		}
+		},
 	}
+	
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Quest"].args["Quest List Enhanced"].args[k] = v
+	end
 end
 WT.ToolConfigs["Quest List Enhanced"] = InsertOptions
 E:RegisterModule(QuestListEnhanced:GetName())

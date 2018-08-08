@@ -10,15 +10,15 @@ local addonName, addonTable = ...
 -- 缓存及提高代码可读性
 ---------------------------------------------------
 local linebreak = "\n"
-local format = format
-local gsub = string.gsub
+local format    = format
+local gsub      = string.gsub
 ---------------------------------------------------
 -- 初始化
 ---------------------------------------------------
 -- 获取版本信息
 WT.Version = GetAddOnMetadata(addonName, "Version")
 -- 根据语言获取插件名
-WT.Title = "|cff2980b9"..L["WindTools"].."|r";
+WT.Title = L["WindTools"]
 -- 初始化设定
 WT.ToolConfigs = {}
 P["WindTools"] = {}
@@ -52,46 +52,44 @@ function WT:ColorStr(str, r, g, b)
 end
 -- 功能列表
 local ToolsOrder = {
-	["Visual"] = 1,
-	["Trade"] = 2,
-	["Interface"] = 3,
-	["Chat"] = 4,
-	["Quest"] = 5,
-	["More Tools"] = 6,
+	["Interface"]  = 1,
+	["Trade"]      = 2,
+	["Chat"]       = 3,
+	["Quest"]      = 4,
+	["More Tools"] = 5,
 }
 local Tools = {
-	["Visual"] = {
-		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
-		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		{"No Effect", L["Disable some effect."], "Leatrix", "houshuu"},
-	},
 	["Trade"] = {
 		{"Auto Delete", L["Enter DELETE automatically."], "bulleet", "houshuu"},
 		{"Already Known", L["Change item color if learned before."], "ahak", "houshuu"},
 	},
 	["Interface"] = {
-		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
 		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
-		{"World Map Scale", L["Scale your world map."], "houshuu", "houshuu"},
+		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
+		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
+		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 	},
 	["Chat"] = {
+		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},
 		{"Right-click Menu", L["Enhanced right-click menu"], "loudsoul", "houshuu"},
 		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
-		{"Friend Color", L["Add the class color to friend frame."], "FriendColor", "houshuu"},
 	},
 	["Quest"] = {
-	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
-		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
+	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
+		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
 	},
 	["More Tools"] = {
-		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
-		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
+		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
 		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-	},
+		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
+		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI_S&L", "houshuu"},
+		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
+	}
 }
 
 function WT:InsertOptions()
@@ -111,58 +109,64 @@ function WT:InsertOptions()
 	}
 	E.Options.args.WindTools = {
 		-- 插件基本信息
-		order = 1,
+		order = 2,
 		type = "group",
 		name = WT.Title,
 		args = {
-			header1 = {
+			titleimage = {
 				order = 1,
+				type = "description",
+				name = "",
+				image = function(info) return "Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp", 512, 128 end,
+			},
+			header1 = {
+				order = 2,
 				type = "header",
 				name = format(L["%s version: %s"], WT.Title, WT.Version),
 			},		
 			description1 = {
-				order = 2,
-				type = "description",
-				name = format(L["%s is a collection of useful tools."], WT.Title),
+				order = 3,
+				type  = "description",
+				name  = format(L["%s is a collection of useful tools."], WT.Title),
 			},
 			spacer1 = {
-				order = 3,
-				type = "description",
-				name = "\n",
+				order = 4,
+				type  = "description",
+				name  = "\n",
 			},
 			header2 = {
-				order = 4,
-				type = "header",
-				name = L["Release / Update Link"],
+				order = 5,
+				type  = "header",
+				name  = L["Release / Update Link"],
 			},
 			ngapage = {
-				order = 5,
-				type = "input",
+				order = 6,
+				type  = "input",
 				width = "full",
-				name = L["You can use the following link to get more information (in Chinese)"],
-				get = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
-				set = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
+				name  = L["You can use the following link to get more information (in Chinese)"],
+				get   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
+				set   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
 			},
 			spacer2 = {
-				order = 6,
-				type = "description",
-				name = "\n",
+				order = 7,
+				type  = "description",
+				name  = "\n",
 			},
 			header3 = {
-				order = 7,
-				type = "header",
-				name = WT:ColorStr(L["Author Info"]),
+				order = 8,
+				type  = "header",
+				name  = WT:ColorStr(L["Author Info"]),
 			},
 			authorinfo = {
-				order = 8,
-				type = "description",
-				name = "|cffC79C6Ehoushuu @ NGA|r(|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
+				order = 9,
+				type  = "description",
+				name  = "|cffC79C6Ehoushuu @ NGA|r(|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
 			},
 			credit = {
 				order = -1,
-				type = "group",
-				name = L["Credit List"],
-				args = {},
+				type  = "group",
+				name  = L["Credit List"],
+				args  = {},
 			},
 		},
 	}
@@ -171,18 +175,18 @@ function WT:InsertOptions()
 		local cname = WindToolsCreditList[i]
 		E.Options.args.WindTools.args.credit.args[cname] = {
 			order = i,
-			type = "description",
-			name = WindToolsCreditList[i],
+			type  = "description",
+			name  = WindToolsCreditList[i],
 		}
 	end
 	-- 生成功能相关设定列表
 	for cat, tools in pairs(Tools) do
 		E.Options.args.WindTools.args[cat] = {
-			order = ToolsOrder[cat],
-			type = "group",
-			name = L[cat],
+			order       = ToolsOrder[cat],
+			type        = "group",
+			name        = L[cat],
 			childGroups = "tab",
-			args = {}
+			args        = {}
 		}
 		local n = 0
 		for _, tool in pairs(tools) do
@@ -193,35 +197,36 @@ function WT:InsertOptions()
 			n = n + 1
 			E.Options.args.WindTools.args[cat].args[tName] = {
 				order = n,
-				type = "group",
-				name = L[tName],
-				args = {
+				type  = "group",
+				name  = L[tName],
+				args  = {
 					header1 = {
 						order = 0,
-						type = "header",
-						name = L["Information"],
+						type  = "header",
+						name  = L["Information"],
 					},
 					oriauthor = {
 						order = 1,
-						type = "description",
-						name = format(L["Author: %s, Edited by %s"], oAuthor, cAuthor)
+						type  = "description",
+						name  = format(L["Author: %s, Edited by %s"], oAuthor, cAuthor)
 					},
 					tooldesc = {
 						order = 2,
-						type = "description",
-						name = tDesc
+						type  = "description",
+						name  = tDesc
 					},
 					header2 = {
 						order = 3,
-						type = "header",
-						name = L["Setting"],
+						type  = "header",
+						name  = L["Setting"],
 					},
 					enablebtn = {
 						order = 4,
-						type = "toggle",
-						name = WT:ColorStr(L["Enable"]),
-						get = function(info) return E.db.WindTools[tName]["enabled"] end,
-						set = function(info, value) E.db.WindTools[tName]["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+						type  = "toggle",
+						width = "full",
+						name  = WT:ColorStr(L["Enable"]),
+						get   = function(info) return E.db.WindTools[tName]["enabled"] end,
+						set   = function(info, value) E.db.WindTools[tName]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
 					}
 				}
 			}

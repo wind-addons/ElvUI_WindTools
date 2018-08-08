@@ -1,5 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='iShadow.lua'/>
-	<Script file='NoEffects.lua'/>
-	<Script file='EasyShadow.lua'/>
-</Ui>

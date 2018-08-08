@@ -4,5 +4,4 @@
 	<Include file="More\load_more.xml"/>
 	<Include file="Quest\load_quest.xml"/>
 	<Include file="Trade\load_trade.xml"/>
-	<Include file="Visual\load_visual.xml"/>
 </Ui>

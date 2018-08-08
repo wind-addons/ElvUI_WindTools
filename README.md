@@ -1,21 +1,24 @@
-# ElvUI_WindTools
-![](https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat)  
-Includes many useful features such as AlreadyKnown, AutoDelete.  
-And several addons I developed also be included.  
-This addon is developed for ElvUI users.  
-Enhanced. Configurable. Better performance.  
-
-包含了许多实用的功能，如已知配方染色，自动填入Delete。  
-当然，也整合了许多我自己开发的功能和插件。  
-这个插件是为 ElvUI 玩家开发的。  
-增强，可设置，更佳的性能。
+<div align=center>
+<img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
+<img src="https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat"/>
+<img src="https://img.shields.io/badge/Version-1.1.4-green.svg?longCache=true&style=flat"/>
+</div>
+Includes many useful features such as AlreadyKnown, AutoDelete.<br>
+And several addons I developed also be included.<br>
+This addon is developed for ElvUI users.<br>
+Enhanced. Configurable. Better performance.<br><br>
+包含了许多实用的功能，如已知配方染色，自动填入Delete。<br>
+当然，也整合了许多我自己开发的功能和插件。<br>
+这个插件是为 ElvUI 玩家开发的。<br>
+增强，可设置，更佳的性能。<br>
 
 # Download 下载
-[稳定版(Stable)](https://github.com/fang2hou/ElvUI_WindTools/archive/master.zip)  
+[稳定版(Stable)](https://github.com/fang2hou/ElvUI_WindTools/archive/master.zip)
+
 [测试版(Nightly)](https://github.com/fang2hou/ElvUI_WindTools/archive/beta.zip)  
 
 # Support 支持
-ElvUI 10.78 + 8.0.1 (Live)  
+ElvUI 10.78 + 8.0.1 (Live)<br>
 ElvUI 10.78 + 8.0.1 (Beta)
 
 ## More info 更多信息

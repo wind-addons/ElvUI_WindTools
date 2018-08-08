@@ -19,6 +19,7 @@ P["WindTools"]["Right-click Menu"] = {
 		["GUILD_ADD"] = true,
 		["FRIEND_ADD"] = true,
 		["MYSTATS"] = true,
+		["ignoreReport"] = false,
 	},
 	["chat_roster"] = {
 		["NAME_COPY"]  = true,
@@ -119,12 +120,26 @@ function EnhancedRCMenu:Initialize()
 			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
 		end
 	end
+
 	-- 公会功能 载入
 	for _, v in pairs(guild_features) do
 		if E.db.WindTools["Right-click Menu"]["guild"][v] then
 			tinsert(UnitPopupMenus["GUILD"], 1, v)
+			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], 1, v)
 		end
 	end
+
+	-- 关闭回报功能解决错误
+	if E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] then
+		for k, v in pairs(UnitPopupMenus["FRIEND"]) do
+			if v == "REPORT_PLAYER" then
+				tremove(UnitPopupMenus["FRIEND"], k)
+				break
+			end
+		end
+	end
+
+
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
 		if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
 		if (unit and (unit == "target" or string.find(unit, "party"))) then
@@ -188,62 +203,68 @@ end
 
 local function InsertOptions()
 	-- 初始化空设定
-	E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"] = {
-		order = 10,
-		type = "group",
-		name = L["Features"],
-		disabled = function() return not E.db.WindTools["Right-click Menu"]["enabled"] end,
-		args = {
-			friend = {
-				order = 1,
-				type = "group",
-				name = L["Friend Menu"],
-				args = {}
-			},
-			chat_roster = {
-				order = 2,
-				type = "group",
-				name = L["Chat Roster Menu"],
-				args = {}
-			},
-			guild = {
-				order = 3,
-				type = "group",
-				name = L["Guild Menu"],
-				args = {}
-			},
-		}
+	local Options = {
+		friend = {
+			order = 11,
+			type = "group",
+			name = L["Friend Menu"],
+			guiInline = true,
+			args = {}
+		},
+		chat_roster = {
+			order = 12,
+			type = "group",
+			name = L["Chat Roster Menu"],
+			guiInline = true,
+			args = {}
+		},
+		guild = {
+			order = 13,
+			type = "group",
+			name = L["Guild Menu"],
+			guiInline = true,
+			args = {}
+		},
 	}
 	-- 循环载入设定
 	for k, v in pairs(friend_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["friend"].args[v] = {
+		Options["friend"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
 	end
 	for k, v in pairs(cr_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["chat_roster"].args[v] = {
+		Options["chat_roster"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
 	end
 	for k, v in pairs(guild_features) do
-		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args["additionalconfig"].args["guild"].args[v] = {
+		Options["guild"].args[v] = {
 			order = k + 1,
 			type = "toggle",
 			name = UnitPopupButtonsExtra[v],
-			
 			get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
 			set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		}
+	end
+
+	Options["friend"].args.ignoreReport = {
+		order = -1,
+		type = "toggle",
+		name = L["Disable REPORT to fix bug"],
+		get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] end,
+		set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+	}
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["Chat"].args["Right-click Menu"].args[k] = v
 	end
 end
 WT.ToolConfigs["Right-click Menu"] = InsertOptions

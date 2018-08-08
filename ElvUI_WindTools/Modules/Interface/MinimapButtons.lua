@@ -394,6 +394,7 @@ local function InsertOptions()
 	E.Options.args.WindTools.args["Interface"].args["Minimap Buttons"].args["featureconfig"] = {
 		order = 10,
 		type = "group",
+		guiInline = true,
 		get = function(info) return E.db.WindTools["Minimap Buttons"][ info[#info] ] end,
 		set = function(info, value) E.db.WindTools["Minimap Buttons"][ info[#info] ] = value; MB:UpdateLayout() end,
 		name = L["Minimap Button Bar"],

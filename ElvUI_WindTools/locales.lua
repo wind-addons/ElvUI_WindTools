@@ -1,7 +1,7 @@
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("ElvUI", "enUS", true);
 if not L then return; end
-L["WindTools"] = true
+L["WindTools"] = "|cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r"
 L["%s version: %s"] = true
 L["%s is a collection of useful tools."] = true
 L["Release / Update Link"] = true
@@ -27,7 +27,6 @@ L["Quest List Enhanced"] = true
 L["Quest Announcment"] = true
 L["Fast Loot"] = true
 L["Announce System"] = true
-L["Friend Color"] = true
 L["Speedy Load"] = true
 L["Masque Skin enhanced."] = true
 L["Movie effect for WoW."] = true
@@ -42,7 +41,6 @@ L["Add quest progress to tooltip."] = true
 L["Let you know quest is completed."] = true
 L["Loot items quickly."] = true
 L["A simply announce system."] = true
-L["Add the class color to friend frame."] = true
 L["Load world quickly."] = true
 L["Battle.net Tag: %s"] = true
 L["Main character in Taiwan Server: %s"] = true
@@ -59,9 +57,6 @@ L["Auto Delete"] = true
 L["Enter DELETE automatically."] = true
 L["Shadow Level"] = true
 L["Default is 50."] = true
-L["Glow Effect"] = true
-L["Death Effect"] = true
-L["Nether Effect"] = true
 L["Whisper Cycle"] = true
 L["Officer Channel"] = true
 L["Raid Progression"] = true
@@ -97,8 +92,6 @@ L["Tag Enhanced"] = true
 L["Add some customized tags."] = true
 L["Automatically Loaded."] = true
 L["Example:"] = true
-L["Quest details level"] = true
-L["Tracker Level"] = true
 L["Class Color"] = true
 L["Title fontsize"] = true
 L["Link Enhance"] = true
@@ -115,15 +108,17 @@ L['The size of the minimap buttons.'] = true
 L['No Anchor Bar'] = true
 L['Horizontal Anchor Bar'] = true
 L['Vertical Anchor Bar'] = true
+L["Close Quest Voice"] = true
+L["Disable TalkingHeadFrame."] = true
+-- 任务通告
+L["No Detail"] = true
 L["Instance"] = true
 L["Raid"] = true
 L["Party"] = true
 L["Solo"] = true
-L["Close Quest Voice"] = true
-L["Disable TalkingHeadFrame."] = true
-L["Display level info in quest title (Tracker)"] = true
-L["Display level info in quest title (Quest details)"] = true
+-- 已学配方染色
 L["Color"] = true
+-- 通告系统
 L["Interrupt"] = true
 L["Solo Yell"] = true
 L["Include Pet"] = true
@@ -140,9 +135,12 @@ L["Other Tank Smart"] = true
 L["Include Pet"] = true
 L["Include Other Tank"] = true
 L["Taunt"] = true
-L["World Map Scale"] = true
-L["Scale your world map."] = true
---*locales for autobutton*--
+-- 增强世界地图
+L["Enhanced World Map"] = true
+L["Customize your world map."] = true
+L["World Map Frame Size"] = true
+L["Reveal"] = true
+-- 自动任务物品按键
 L["Auto Buttons"] = true
 L["Add two bars to contain questitem buttons and inventoryitem buttons."] = true
 L["Auto QuestItem Button"] = true
@@ -158,7 +156,6 @@ L["Add ItemID"] = true
 L["Delete ItemID"] = true
 L["Must is itemID!"] = true
 L["Blacklist"] = true
---*end*--
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = true
 L["Enter Combat Alert"] = true
@@ -168,7 +165,6 @@ L["Custom text (Leave)"] = true
 L["Default is 0.65"] = true
 L["Enter Combat"] = true
 L["Leave Combat"] = true
--- END 进入战斗提示功能
 -- 右键菜单增强
 L["Right-click Menu"] = true
 L["Enhanced right-click menu"] = true
@@ -183,7 +179,81 @@ L["Invite"] = true
 L["Friend Menu"] = true
 L["Chat Roster Menu"] = true
 L["Guild Menu"] = true
--- END 右键菜单增强
+L["Disable REPORT to fix bug"] = true
+-- 增强好友菜单
+L["Enhanced Friend List"] = true
+L["Customize friend frame."] = true
+L["Features"] = true
+L["Name color & Level"] = true
+L["Enhanced Texuture"] = true
+L["Name Font"] = true
+L["The font that the RealID / Character Name / Level uses."] = true
+L["Name Font Size"] = true
+L["The font size that the RealID / Character Name / Level uses."] = true
+L["Name Font Flag"] = true
+L["The font flag that the RealID / Character Name / Level uses."] = true
+L["Info Font"] = true
+L["The font that the Zone / Server uses."] = true
+L["Info Font Size"] = true
+L["The font size that the Zone / Server uses."] = true
+L["Info Font Outline"] = true
+L["The font flag that the Zone / Server uses."] = true
+L["Status Icon Pack"] = true
+L["Different Status Icons."] = true
+L["Default"] = true
+L["Square"] = true
+L["Diablo 3"] = true
+L["Game Icons"] = true
+L["Game Icon Preview"] = true
+L["Status Icon Preview"] = true
+L["Blizzard Chat"] = true
+L["Flat Style"] = true
+L["Glossy"] = true
+L["Launcher"] = true
+L["Overwatch"] = true
+L["Starcraft"] = true
+L["Starcraft 2"] = true
+L["App"] = true
+L["Mobile"] = true
+L["Hearthstone"] = true
+L["Destiny 2"] = true
+L["Hero of the Storm"] = true
+L["None"] = true
+L["OUTLINE"] = true
+L["MONOCHROME"] = true
+L["MONOCROMEOUTLINE"] = true
+L["THICKOUTLINE"] = true
+-- CVar编辑器
+L["CVarsTool"] = true
+L["Setting CVars easily."] = true
+L["Glow Effect"] = true
+L["Death Effect"] = true
+L["Nether Effect"] = true
+L["Convenient Setting"] = true
+L["Auto Compare"] = true
+-- 增强暴雪框体
+L["Enhanced Blizzard Frame"] = true
+L["Move frames and set scale of buttons."] = true
+L["Move Frames"] = true
+L["Move Blizzard Frame"] = true
+L["Move ElvUI Bag"] = true
+L["Remember Position"] = true
+L["Error Frame"] = true
+L["Other Setting"] = true
+L["Raid Utility Mouse Over"] = true
+L["Vehicle Seat Scale"] = true
+-- 任务列表增强
+L["Quest List Enhanced"] = true
+L["Add the level information in front of the quest name."] = true
+L["Title Class Color"] = true
+L['Quest Level'] = true
+L["Tracker Level"] = true
+L["Quest details level"] = true
+L["Left Side Minimize Button"] = true
+L["Icon with Shadow"] = true
+L["Frame Title"] = true
+L["Display level info in quest title (Tracker)"] = true
+L["Display level info in quest title (Quest details)"] = true
 
 if GetLocale() == "enUS" then return end
 
@@ -192,7 +262,7 @@ if L then
 	-- zhTW Translation Fixed
 	L["Class Totems"] = "職業圖騰"
 	-- Main
-	L["WindTools"] = "Wind百寶箱"
+	L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa百|r|cffb3e5fc寶|r|cffe1f5fe箱|r"
 	L["%s version: %s"] = "%s 版本：%s"
 	L["%s is a collection of useful tools."] = "%s 是一個易用功能的整合包。\n整合包內的插件大部分為網路上搜集而來。\n在中文化之余，還進行了多次自定義修改。\n部分功能和設置項可能和原版功能存在較大出入。\n\n十分感謝所有的魔獸世界插件開發者！"
 	L["Release / Update Link"] = "發佈 / 更新鏈接"
@@ -213,12 +283,10 @@ if L then
 	L["Artifact Button"] = "神兵按鈕"
 	L["Chat Link Level"] = "聊天鏈接"
 	L["Tab Chat Mod"] = "頻道切換"
-	L["Quest List Enhanced"] = "任務列表"
 	L["Quest Progress"] = "任務進度"
 	L["Quest Announcment"] = "任務通告"
 	L["Fast Loot"] = "光速拾取"
 	L["Announce System"] = "技能通告"
-	L["Friend Color"] = "好友上色"
 	L["Speedy Load"] = "加速載入"
 	L["Masque Skin enhanced."] = "一些自己修改或是覺得不錯的Masque皮膚。"
 	L["Movie effect for WoW."] = "讓魔獸世界看起來有電影般的效果。"
@@ -228,12 +296,10 @@ if L then
 	L["Add a button to your character information frame."] = "在人物信息框架上添加一個神兵按鈕"
 	L["Add a tiny icon and basic information to chat link."] = "為聊天鏈接添加一個小圖標，并提示部位。"
 	L["Use tab to switch channel."] = "可以使用 Tab 來快速切換頻道。"
-	L["Add the level information in front of the quest name."] = "讓任務列表有等級提示功能并自動縮短部分任務名。"
 	L["Add quest progress to tooltip."] = "添加任務進度到鼠標提示。"
 	L["Let you know quest is completed."] = "當任務完成之時會通告。"
 	L["Loot items quickly."] = "進一步加快拾取物品的速度。"
 	L["A simply announce system."] = "一個很簡單的通告系統"
-	L["Add the class color to friend frame."] = "為好友名單中上線的好友添加職業顏色。"
 	L["Load world quickly."] = "加速載入的速度。"
 	L["Enable"] = "開啟"
 	L["Information"] = "簡介"
@@ -249,9 +315,6 @@ if L then
 	L["Enter DELETE automatically."] = "在摧毀物品時自動填入DELETE。"
 	L["Shadow Level"] = "陰影等級"
 	L["Default is 50."] = "預設值為50。"
-	L["Glow Effect"] = "全屏泛光"
-	L["Death Effect"] = "死亡畫面"
-	L["Nether Effect"] = "隱身術特效"
 	L["Whisper Cycle"] = "密語獨立循環"
 	L["Officer Channel"] = "幹部頻道"
 	L["Raid Progression"] = "團本進度提示"
@@ -287,13 +350,6 @@ if L then
 	L["Add some customized tags."] = "添加一些自定義Tags。"
 	L["Automatically Loaded."] = "已自動載入。"
 	L["Example:"] = "範例："
-	L["Quest details level"] = "任務詳細顯示等級"
-	L["Tracker Level"] = "任務追蹤顯示等級"
-	L["Class Color"] = "標題職業顏色"
-	L["Title fontsize"] = "標題字體大小"
-	L["Link Enhance"] = "鏈接增強"
-	L["Keystone Enhance"] = "傳奇鑰石等級"
-	L["Link Icon"] = "鏈接圖標"
 	L["Add a bar to contain minimap buttons."] = "添加一個條來管理小地圖按鈕。"
 	L["Minimap Button Bar"] = "小地圖按鈕條"
 	L['Skin Style'] = "美化風格"
@@ -305,15 +361,17 @@ if L then
 	L['No Anchor Bar'] = "不對齊"
 	L['Horizontal Anchor Bar'] = "水平對齊"
 	L['Vertical Anchor Bar'] = "垂直對齊"
+	L["Close Quest Voice"] = "關閉視訊"
+	L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
+	-- 任务通告
+	L["No Detail"] = "非詳細通報"
 	L["Instance"] = "副本"
 	L["Raid"] = "團隊副本"
 	L["Party"] = "隊伍"
 	L["Solo"] = "個人"
-	L["Close Quest Voice"] = "關閉視訊"
-	L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
-	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
-	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
+	-- 已学配方染色
 	L["Color"] = "顏色"
+	-- 通告系统
 	L["Interrupt"] = "斷法"
 	L["Solo Yell"] = "單人的時候大喊"
 	L["Include Pet"] = "包括寵物斷法"
@@ -330,9 +388,12 @@ if L then
 	L["Include Pet"] = "包括寵物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲諷"
-	L["World Map Scale"] = "世界地圖縮放"
-	L["Scale your world map."] = "調整世界地圖的大小"
-	--*locales for autobutton*--
+	-- 增强世界地图
+	L["Enhanced World Map"] ="世界地圖增強"
+	L["Customize your world map."] = "增強你的世界地圖"
+	L["World Map Frame Size"] = "世界地圖大小"
+	L["Reveal"] = "去除迷霧"
+	-- 自动任务物品按键
 	L["Auto Buttons"] = "任務物品按鍵"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加兩行動作條來顯示任務物品和裝備中的飾品"
 	L["Auto QuestItem Button"] = "自動任務物品按鍵"
@@ -348,7 +409,6 @@ if L then
 	L["Delete ItemID"] = "刪除物品ID"
 	L["Must is itemID!"] = "必須是物品的ID"
 	L["Blacklist"] = "黑名單"
-	--*end*--
 	-- 进入战斗提示功能
 	L["Alert you after enter or leave combat."] = "在進出戰鬥時彈出提示訊息"
 	L["Enter Combat Alert"] = "進出戰鬥提示"
@@ -358,7 +418,6 @@ if L then
 	L["Default is 0.65"] = "預設為 0.65"
 	L["Enter Combat"] = "進入戰鬥"
 	L["Leave Combat"] = "離開戰鬥"
-	-- END 进入战斗提示功能
 	-- 右键菜单增强
 	L["Right-click Menu"] = "右鍵菜單"
 	L["Enhanced right-click menu"] = "增強的右鍵菜單"
@@ -373,12 +432,86 @@ if L then
 	L["Friend Menu"] = "好友右鍵菜單"
 	L["Chat Roster Menu"] = "聊天右鍵菜單"
 	L["Guild Menu"] = "公會右鍵菜單"
-	-- END 右键菜单增强
+	L["Disable REPORT to fix bug"] = "關閉回報來解決錯誤"
+	-- 增强好友菜单
+	L["Enhanced Friend List"] = "增強好友列表"
+	L["Customize friend frame."] = "自定美化你的好友列表"
+	L["Features"] = "功能"
+	L["Name color & Level"] = "姓名染色 & 等級"
+	L["Enhanced Texuture"] = "材質增強"
+	L["Name Font"] = "名字字型"
+	L["The font that the RealID / Character Name / Level uses."] = "用在 RealID / 角色名 / 等級的字型"
+	L["Name Font Size"] = "名字字型大小"
+	L["The font size that the RealID / Character Name / Level uses."] = "用在 RealID / 角色名 / 等級的字型大小"
+	L["Name Font Flag"] = "名字描邊"
+	L["The font flag that the RealID / Character Name / Level uses."] = "用在 RealID / 角色名 / 等級的字型描邊"
+	L["Info Font"] = "訊息字型"
+	L["The font that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型"
+	L["Info Font Size"] = "訊息字型大小"
+	L["The font size that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型大小"
+	L["Info Font Outline"] = "訊息字型描邊"
+	L["The font flag that the Zone / Server uses."] = "用在 地區 / 伺服器名 的字型描邊"
+	L["Status Icon Pack"] = "狀態圖標包"
+	L["Different Status Icons."] = "不同的狀態圖標"
+	L["Default"] = "預設"
+	L["Square"] = "方塊風格"
+	L["Diablo 3"] = "暗黑破壞神 III"
+	L["Game Icons"] = "遊戲圖標"
+	L["Game Icon Preview"] = "遊戲圖標預覽"
+	L["Status Icon Preview"] = "狀態圖標預覽"
+	L["Blizzard Chat"] = "暴雪聊天風格"
+	L["Flat Style"] = "扁平風格"
+	L["Glossy"] = "光澤風格"
+	L["Launcher"] = "戰網風格"
+	L["Overwatch"] = "鬥陣特攻"
+	L["Starcraft"] = "星海爭霸"
+	L["Starcraft 2"] = "星海爭霸 II"
+	L["App"] = "軟體"
+	L["Mobile"] = "行動裝置"
+	L["Hearthstone"] = "爐石戰記"
+	L["Destiny 2"] = "天命 2"
+	L["Hero of the Storm"] = "暴雪英霸"
+	L["None"] = "無"
+	L["OUTLINE"] = "輪廓"
+	L["MONOCHROME"] = "黑白"
+	L["MONOCROMEOUTLINE"] = "黑白輪廓"
+	L["THICKOUTLINE"] = "厚輪廓"
+	-- CVar编辑器
+	L["CVarsTool"] = "CVar工具"
+	L["Setting CVars easily."] = "更加便捷地設定 CVars。"
+	L["Glow Effect"] = "全屏泛光"
+	L["Death Effect"] = "死亡畫面"
+	L["Nether Effect"] = "隱身術特效"
+	L["Convenient Setting"] = "便利性設定"
+	L["Auto Compare"] = "自動比對裝備"
+	-- 增强暴雪框体
+	L["Enhanced Blizzard Frame"] = "暴雪框架增強"
+	L["Move frames and set scale of buttons."] = "移動框架，設定按鈕大小。"
+	L["Move Frames"] = "移動框架"
+	L["Move Blizzard Frame"] = "移動暴雪框架"
+	L["Move ElvUI Bag"] = "移動 ElvUI 背包"
+	L["Remember Position"] = "記憶移動位置"
+	L["Error Frame"] = "錯誤框架"
+	L["Other Setting"] = "其他設定"
+	L["Raid Utility Mouse Over"] = "團隊工具鼠標顯示"
+	L["Vehicle Seat Scale"] = "載具座位縮放"
+	-- 任务列表增强
+	L["Quest List Enhanced"] = "任務列表"
+	L["Add the level information in front of the quest name."] = "讓任務列表有等級提示功能，上色，自動縮短任務名。"
+	L["Title Class Color"] = "標題職業顏色"
+	L['Quest Level'] = "任務等級"
+	L["Tracker Level"] = "任務追蹤顯示等級"
+	L["Quest details level"] = "任務詳細顯示等級"
+	L["Left Side Minimize Button"] = "左側收起按鈕"
+	L["Icon with Shadow"] = "物品圖標陰影"
+	L["Frame Title"] = "框架名"
+	L["Display level info in quest title (Tracker)"] = "在任務追蹤標題上顯示等級信息"
+	L["Display level info in quest title (Quest details)"] = "在任務詳細訊息的標題上顯示等級信息"
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("ElvUI", "zhCN")
 if L then
-	L["WindTools"] = "Wind工具箱"
+	L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r"
 	L["%s version: %s"] = "%s 版本：%s"
 	L["%s is a collection of useful tools."] = "%s 是一个易用功能的整合包。\n整合包内的插件大部分为网络上搜集而来。\n在中文化之余，还进行了多次自定义修改。\n部分功能和设置项可能和原版功能存在较大出入。\n\n十分感谢所有的魔兽世界插件开发者！"
 	L["Release / Update Link"] = "发布 / 更新链接"
@@ -404,7 +537,6 @@ if L then
 	L["Quest Announcment"] = "任务通告"
 	L["Fast Loot"] = "光速拾取"
 	L["Announce System"] = "技能通告"
-	L["Friend Color"] = "好友上色"
 	L["Speedy Load"] = "加速载入"
 	L["Masque Skin enhanced."] = "一些自己修改或是觉得不错的Masque皮肤。"
 	L["Movie effect for WoW."] = "让魔兽世界看起来有电影般的效果。"
@@ -419,7 +551,6 @@ if L then
 	L["Let you know quest is completed."] = "当任务完成之时会通告。"
 	L["Loot items quickly."] = "进一步加快拾取物品的速度。"
 	L["A simply announce system."] = "一个很简单的通告系统"
-	L["Add the class color to friend frame."] = "为好友名单中上线的好友添加职业颜色。"
 	L["Load world quickly."] = "加速载入的速度。"
 	L["Enable"] = "开启"
 	L["Information"] = "简介"
@@ -435,9 +566,6 @@ if L then
 	L["Enter DELETE automatically."] = "在摧毁物品时自动填入DELETE。"
 	L["Shadow Level"] = "阴影等级"
 	L["Default is 50."] = "预设值为50。"
-	L["Glow Effect"] = "全屏泛光"
-	L["Death Effect"] = "死亡画面"
-	L["Nether Effect"] = "隐身术特效"
 	L["Whisper Cycle"] = "密语独立循环"
 	L["Officer Channel"] = "干部频道"
 	L["Raid Progression"] = "团本进度提示"
@@ -473,13 +601,6 @@ if L then
 	L["Add some customized tags."] = "添加一些自定义Tags。"
 	L["Automatically Loaded."] = "已自动载入。"
 	L["Example:"] = "范例："
-	L["Quest details level"] = "任务详细显示等级"
-	L["Tracker Level"] = "任务追踪显示等级"
-	L["Class Color"] = "标题职业颜色"
-	L["Title fontsize"] = "标题字体大小"
-	L["Link Enhance"] = "链接增强"
-	L["Keystone Enhance"] = "传奇钥石等级"
-	L["Link Icon"] = "链接图标"
 	L["Add a bar to contain minimap buttons."] = "添加一个条来管理小地图按钮。"
 	L["Minimap Button Bar"] = "小地图按钮条"
 	L['Skin Style'] = "美化风格"
@@ -491,15 +612,17 @@ if L then
 	L['No Anchor Bar'] = "不对齐"
 	L['Horizontal Anchor Bar'] = "水平对齐"
 	L['Vertical Anchor Bar'] = "垂直对齐"
+	L["Close Quest Voice"] = "关闭视频通话"
+	L["Disable TalkingHeadFrame."] = "关闭任务的视频通话功能。"
+	-- 任务通告
+	L["No Detail"] = "非详细通报"
 	L["Instance"] = "副本"
 	L["Raid"] = "团队副本"
 	L["Party"] = "队伍"
-	L["Solo"] = "个人"
-	L["Close Quest Voice"] = "关闭视频通话"
-	L["Disable TalkingHeadFrame."] = "关闭任务的视频通话功能。"
-	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
-	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
+	L["Solo"] = "单人"
+	-- 已学配方染色
 	L["Color"] = "颜色"
+	-- 通告系统
 	L["Interrupt"] = "打断"
 	L["Solo Yell"] = "单人的时候大喊"
 	L["Include Pet"] = "包含宠物打断"
@@ -516,9 +639,12 @@ if L then
 	L["Include Pet"] = "包括宠物"
 	L["Include Other Tank"] = "包括其他坦克"
 	L["Taunt"] = "嘲讽"
-	L["World Map Scale"] = "世界地图缩放"
-	L["Scale your world map."] = "调整你的世界地图大小"
-	--*locales for autobutton*--
+	-- 增强世界地图
+	L["Enhanced World Map"] ="世界地图增强"
+	L["Customize your world map."] = "增强你的世界地图"
+	L["World Map Frame Size"] = "世界地图大小"
+	L["Reveal"] = "去除迷雾"
+	-- 自动任务物品按键
 	L["Auto Buttons"] = "自动物品按键"
 	L["Add two bars to contain questitem buttons and inventoryitem buttons."] = "添加两行动作条来显示任务物品和装备饰品"
 	L["Auto QuestItem Button"] = "自动任务物品按键"
@@ -534,7 +660,6 @@ if L then
 	L["Delete ItemID"] = "删除物品ID"
 	L["Must is itemID!"] = "必需是物品的ID编号"
 	L["Blacklist"] = "黑名单"
-	--*end*--
 	-- 进入战斗提示功能
 	L["Alert you after enter or leave combat."] = "在进出战斗时提示信息"
 	L["Enter Combat Alert"] = "进出战斗提示"
@@ -544,7 +669,6 @@ if L then
 	L["Default is 0.65"] = "默认为 0.65"
 	L["Enter Combat"] = "进入战斗"
 	L["Leave Combat"] = "离开战斗"
-	-- END 进入战斗提示功能
 	-- 右键菜单增强
 	L["Right-click Menu"] = "右键菜单"
 	L["Enhanced right-click menu"] = "增强的右键菜单"
@@ -559,5 +683,79 @@ if L then
 	L["Friend Menu"] = "好友右键菜单"
 	L["Chat Roster Menu"] = "聊天右键菜单"
 	L["Guild Menu"] = "公会右键菜单"
-	-- END 右键菜单增强
+	L["Disable REPORT to fix bug"] = "关闭举报来解决错误"
+	-- 增强好友菜单
+	L["Enhanced Friend List"] = "增强好友列表"
+	L["Customize friend frame."] = "自定义你的好友列表"
+	L["Features"] = "功能"
+	L["Name color & Level"] = "姓名染色 & 等级"
+	L["Enhanced Texuture"] = "材质增强"
+	L["Name Font"] = "名字字体"
+	L["The font that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体"
+	L["Name Font Size"] = "名字字体大小"
+	L["The font size that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体大小"
+	L["Name Font Flag"] = "名字描边"
+	L["The font flag that the RealID / Character Name / Level uses."] = "用于 RealID / 角色名 / 等级的字体描边"
+	L["Info Font"] = "信息字体"
+	L["The font that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体"
+	L["Info Font Size"] = "信息字体大小"
+	L["The font size that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体大小"
+	L["Info Font Outline"] = "信息字体描边"
+	L["The font flag that the Zone / Server uses."] = "用于 地区 / 服务器名 的字体描边"
+	L["Status Icon Pack"] = "状态图标包"
+	L["Different Status Icons."] = "不同的状态图标"
+	L["Default"] = "默认"
+	L["Square"] = "方块风格"
+	L["Diablo 3"] = "暗黑破坏神 III"
+	L["Game Icons"] = "游戏图标"
+	L["Game Icon Preview"] = "游戏图标预览"
+	L["Status Icon Preview"] = "状态图标预览"
+	L["Blizzard Chat"] = "暴雪聊天风格"
+	L["Flat Style"] = "扁平风格"
+	L["Glossy"] = "光泽风格"
+	L["Launcher"] = "战网风格"
+	L["Overwatch"] = "守望先锋"
+	L["Starcraft"] = "星际争霸"
+	L["Starcraft 2"] = "星际争霸 II"
+	L["App"] = "应用"
+	L["Mobile"] = "手机"
+	L["Hearthstone"] = "炉石传说"
+	L["Destiny 2"] = "命运 2"
+	L["Hero of the Storm"] = "风暴英雄"
+	L["None"] = "无"
+	L["OUTLINE"] = "轮廓"
+	L["MONOCHROME"] = "黑白"
+	L["MONOCROMEOUTLINE"] = "黑白轮廓"
+	L["THICKOUTLINE"] = "厚轮廓"
+	-- CVar编辑器
+	L["CVarsTool"] = "CVar工具"
+	L["Setting CVars easily."] = "更加便捷地设置 CVars。"
+	L["Glow Effect"] = "全屏泛光"
+	L["Death Effect"] = "死亡画面"
+	L["Nether Effect"] = "隐身术特效"
+	L["Convenient Setting"] = "便利设置"
+	L["Auto Compare"] = "自动对比装备"
+	-- 增强暴雪框体
+	L["Enhanced Blizzard Frame"] = "暴雪框体增强"
+	L["Move frames and set scale of buttons."] = "移动框体，设置按钮大小。"
+	L["Move Frames"] = "移动框体"
+	L["Move Blizzard Frame"] = "移动暴雪框体"
+	L["Move ElvUI Bag"] = "移动 ElvUI 背包"
+	L["Remember Position"] = "记住移动位置"
+	L["Error Frame"] = "错误框体"
+	L["Other Setting"] = "其他设置"
+	L["Raid Utility Mouse Over"] = "团队工具鼠标显示"
+	L["Vehicle Seat Scale"] = "载具座位缩放"
+	-- 任务列表增强
+	L["Quest List Enhanced"] = "任务列表"
+	L["Add the level information in front of the quest name."] = "让任务列表有等级提示功能，上色，自动缩短任务名。"
+	L["Title Class Color"] = "标题职业色"
+	L['Quest Level'] = "任务等级"
+	L["Tracker Level"] = "任务追踪显示等级"
+	L["Quest details level"] = "任务详细显示等级"
+	L["Left Side Minimize Button"] = "左侧收起按钮"
+	L["Icon with Shadow"] = "物品按键阴影"
+	L["Frame Title"] = "框体名"
+	L["Display level info in quest title (Tracker)"] = "在任务追踪的标题上显示等级信息"
+	L["Display level info in quest title (Quest details)"] = "在任务详细信息的标题上显示等级信息"
 end

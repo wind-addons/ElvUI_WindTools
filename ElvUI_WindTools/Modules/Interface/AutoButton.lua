@@ -685,6 +685,7 @@ local function InsertOptions()
 	E.Options.args.WindTools.args.Interface.args["Auto Buttons"].args.featureconfig = {
 		order = 6,
 		type = "group",
+		guiInline = true,
 		get = function(info) return E.db.WindTools["Auto Buttons"][ info[#info] ] end,
 		set = function(info, value) E.db.WindTools["Auto Buttons"][ info[#info] ] = value; E:GetModule("AutoButton"):UpdateAutoButton() end,
 		name = L["Auto QuestItem Button"],

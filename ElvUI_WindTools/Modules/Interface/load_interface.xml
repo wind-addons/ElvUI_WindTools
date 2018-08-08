@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<!-- <Script file='RaidProgression.lua'/> -->
 	<Script file='AutoButton.lua'/>
 	<Script file='MinimapButtons.lua'/>
-	<Script file='WorldMapScale.lua'/>
+	<Script file='EasyShadow.lua'/>
+	<Script file='iShadow.lua'/>
+	<Script file='EnhancedWorldMap.lua'/>
 </Ui>

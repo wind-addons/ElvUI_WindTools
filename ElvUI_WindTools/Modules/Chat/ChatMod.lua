@@ -138,6 +138,7 @@ local function InsertOptions()
 		order = 10,
 		type = "group",
 		name = L["Whisper Cycle"],
+		guiInline = true,
 		args = {
 			seteffect = {
 				order = 1,
@@ -152,6 +153,7 @@ local function InsertOptions()
 		order = 11,
 		type = "group",
 		name = L["Officer Channel"],
+		guiInline = true,
 		args = {
 			seteffect = {
 				order = 1,

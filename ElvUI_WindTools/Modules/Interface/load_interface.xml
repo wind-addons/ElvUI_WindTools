@@ -4,4 +4,5 @@
 	<Script file='EasyShadow.lua'/>
 	<Script file='iShadow.lua'/>
 	<Script file='EnhancedWorldMap.lua'/>
+	<Script file='RaidProgression.lua'/>
 </Ui>

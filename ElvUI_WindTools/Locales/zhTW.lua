@@ -3,7 +3,7 @@ local L = AceLocale:NewLocale("ElvUI", "zhTW")
 if not L then return end
 -- zhTW
 -- 设置主界面
-L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa百|r|cffb3e5fc寶|r|cffe1f5fe箱|r"
+L["WindTools"] = "|cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r"
 L["%s version: %s"] = "%s 版本：%s"
 L["%s is a collection of useful tools."] = "%s 是一個易用功能的整合包。\n整合包內的插件大部分為網路上搜集而來。\n在中文化之余，還進行了多次自定義修改。\n部分功能和設置項可能和原版功能存在較大出入。\n\n十分感謝所有的魔獸世界插件開發者！"
 L["Release / Update Link"] = "發佈 / 更新鏈接"
@@ -212,11 +212,7 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = "預設�
 -- 团本进度提示
 L["Raid Progression"] = "團本進度提示"
 L["Add progression info to tooltip."] = "添加團隊副本進度到滑鼠提示。"
-L["EmN"] = "翡翠"
-L["NH"] = "暗夜" 
-L["ToV"] = "勇氣"
-L["ToS"] = "薩墓"
-L["ABT"] = "王座"
+L["Uldir"] = "奧迪爾"
 L["Raid Setting"] = "副本設置"
 L["Mythic"] = "傳奇"
 L["Heroic"] = "英雄"

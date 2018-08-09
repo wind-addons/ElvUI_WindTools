@@ -212,11 +212,7 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = true
 -- 团本进度提示
 L["Raid Progression"] = true
 L["Add progression info to tooltip."] = true
-L["EmN"] = true
-L["NH"] = true 
-L["ToV"] = true
-L["ToS"] = true
-L["ABT"] = true
+L["Uldir"] = true
 L["Mythic"] = true 
 L["Heroic"] = true 
 L["Normal"] = true

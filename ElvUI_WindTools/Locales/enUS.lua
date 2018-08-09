@@ -259,6 +259,7 @@ L["Heavenly Crimson"] = true
 L["Heavenly Golden"] = true
 L["Heavenly Jade"] = true
 L["Heavenly Onyx"] = true
+L["Classic Elite"] = true
 L["Classic Rare Elite"] = true
 L["Classic Rare"] = true
 L["Classic Boss"] = true

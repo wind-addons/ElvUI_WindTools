@@ -2,7 +2,7 @@
 <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
 <img src="https://img.shields.io/badge/ElvUI-10.78-blue.svg?longCache=true&style=flat"/>
 <img src="https://img.shields.io/badge/Version-1.1.6-green.svg?longCache=true&style=flat"/>
-</div>
+</div><br>
 Includes many useful features such as AlreadyKnown, AutoDelete.<br>
 And several addons I developed also be included.<br>
 This addon is developed for ElvUI users.<br>
@@ -18,8 +18,8 @@ Enhanced. Configurable. Better performance.<br><br>
 [测试版(Nightly)](https://github.com/fang2hou/ElvUI_WindTools/archive/beta.zip)  
 
 # Support 支持
-ElvUI 10.78 + 8.0.1.27219 (Live)<br>
-ElvUI 10.78 + 8.0.1.27219 (Beta)
+ElvUI 10.78 + 8.0.1.27291 (Live)<br>
+ElvUI 10.78 + 8.0.1.27291 (Beta)
 
 ## More info 更多信息
 CHINESE 中文 → [NGA](http://bbs.ngacn.cc/read.php?tid=12142815)

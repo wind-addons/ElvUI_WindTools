@@ -143,7 +143,7 @@ EBF.Frames = {
 	"SpellBookFrame",
 	"SplashFrame",
 	"StackSplitFrame",
-	"StaticPopup1",
+	-- "StaticPopup1",
 	"StaticPopup2",
 	"StaticPopup3",
 	"StaticPopup4",

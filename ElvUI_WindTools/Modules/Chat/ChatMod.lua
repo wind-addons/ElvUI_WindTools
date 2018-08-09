@@ -152,7 +152,7 @@ local function InsertOptions()
 	E.Options.args.WindTools.args["Chat"].args["Tab Chat Mod"].args["addofficer"] = {
 		order = 11,
 		type = "group",
-		name = L["Officer Channel"],
+		name = L["Include Officer Channel"],
 		guiInline = true,
 		args = {
 			seteffect = {

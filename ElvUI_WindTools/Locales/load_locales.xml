@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="Chat\load_chat.xml"/>
+	<Include file="Interface\load_interface.xml"/>
+	<Include file="More\load_more.xml"/>
+	<Include file="Quest\load_quest.xml"/>
+	<Include file="Trade\load_trade.xml"/>
+</Ui>

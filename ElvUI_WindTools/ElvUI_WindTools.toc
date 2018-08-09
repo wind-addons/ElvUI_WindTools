@@ -17,7 +17,7 @@ libs.xml
 MasqueSkin\load_masqueskin.xml
 
 # 语言文件
-locales.lua
+Locales\load_locales.xml
 
 # 核心控制台
 core.lua

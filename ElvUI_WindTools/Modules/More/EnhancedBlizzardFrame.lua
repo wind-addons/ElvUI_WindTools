@@ -47,13 +47,13 @@ local function InsertOptions()
 					order = 12,
 					type = "toggle",
 					name = L["Move ElvUI Bag"],
-					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].moveframe,
+					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["Enhanced Blizzard Frame"]["moveframe"],
 				},
 				remember = {
 					order = 13,
 					type = "toggle",
 					name = L["Remember Position"],
-					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].moveframe,
+					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["Enhanced Blizzard Frame"]["moveframe"],
 				},
 			}
 		},
@@ -62,6 +62,7 @@ local function InsertOptions()
 			type = "group",
 			name = L["Error Frame"],
 			guiInline = true,
+			disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled,
 			get = function(info) return E.db.WindTools["Enhanced Blizzard Frame"].errorframe[ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; EBF:ErrorFrameSize() end,
 			args = {
@@ -83,6 +84,7 @@ local function InsertOptions()
 			order = 13,
 			type = "group",
 			name = L["Other Setting"],
+			disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled,
 			guiInline = true,
 			args = {
 				vehicleSeatScale = {

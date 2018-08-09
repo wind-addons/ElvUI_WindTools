@@ -65,9 +65,9 @@ local Tools = {
 	},
 	["Interface"] = {
 		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
-		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced", "houshuu"},
 		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced", "houshuu"},
 		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 	},

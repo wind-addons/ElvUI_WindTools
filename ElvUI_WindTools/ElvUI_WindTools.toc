@@ -7,22 +7,17 @@
 ## Notes: Collection of useful tools
 ## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
 ## Notes-zhCN: 适用于 ElvUI 的各种小功能集合。
-## RequiredDeps: ElvUI
+## RequiredDeps: ElvUI, ElvUI_Config
 ## DefaultState: enabled
 
 # 通用库
-libs.xml
-
+Libs\load_libs.xml
 # 导入Masque美化皮肤
 MasqueSkin\load_masqueskin.xml
-
 # 语言文件
 Locales\load_locales.xml
-
 # 核心控制台
 core.lua
-
 # 功能载入
 Modules\load_modules.xml
-
 ## X-Tukui-ProjectFolders: ElvUI_WindTools

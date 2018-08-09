@@ -1,10 +1,10 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: LibObjectiveProgress-1.0
 ## Author: Simca
 ## Notes: LibObjectiveProgress is a library designed to provide an API for quest objective progress weight information.
-## Version: r27
+## Version: @project-version@
 ## X-Category: Library
-## X-Date: 2017-09-10T15:47:28Z
+## X-Date: @project-date-iso@
 ## X-License: BSD
 
 LibStub\LibStub.lua

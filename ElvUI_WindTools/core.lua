@@ -81,7 +81,7 @@ local Tools = {
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
 	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
-		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
+		{"Objective Progress", L["Add quest/mythic+ dungeon progress to tooltip."], "Simca", "houshuu"},
 	},
 	["More Tools"] = {
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},

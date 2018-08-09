@@ -6,11 +6,11 @@
 -- 模块化
 
 local E, L, V, P, G = unpack(ElvUI);
-local SimpleObjectiveProgress = E:NewModule('SimpleObjectiveProgress', 'AceHook-3.0', 'AceEvent-3.0');
+local SOP = E:NewModule('SOP', 'AceHook-3.0', 'AceEvent-3.0');
 -- Localized function references
 local LOP = _G.LibStub("LibObjectiveProgress-1.0")
 
-P["WindTools"]["Quest Progress"] = {
+P["WindTools"]["Objective Progress"] = {
     ["enabled"] = true,
 }
 
@@ -41,9 +41,9 @@ local function SOP_Hook_OnTooltipSetUnit(self)
 end
 
 -- Set our hook function
-function SimpleObjectiveProgress:Initialize()
-    if E.db.WindTools["Quest Progress"]["enable"] then return end
+function SOP:Initialize()
+    if E.db.WindTools["Objective Progress"]["enable"] then return end
     GameTooltip:HookScript("OnTooltipSetUnit", SOP_Hook_OnTooltipSetUnit)
 end
 
-E:RegisterModule(SimpleObjectiveProgress:GetName())
+E:RegisterModule(SOP:GetName())

@@ -230,9 +230,9 @@ L["Let you know quest is completed."] = "當任務完成之時會通告。"
 -- 自动摧毁
 L["Auto Delete"] = "自動填入DELETE"
 L["Enter DELETE automatically."] = "在摧毀物品時自動填入DELETE。"
--- 任务进度
-L["Quest Progress"] = "任務進度"
-L["Add quest progress to tooltip."] = "添加任務進度到鼠標提示。"
+-- 目标进度
+L["Objective Progress"] = "目標進度"
+L["Add quest/mythic+ dungeon progress to tooltip."] = "添加任務或是傳奇鑰石地城怪物進度到滑鼠提示。"
 -- 单位框体精英龙
 L["Dragon Overlay"] = "單位框架精英龍"
 L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"] = "提供一個覆蓋層在王，精英，稀有及稀有精英怪的框架上。"

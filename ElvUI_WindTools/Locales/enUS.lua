@@ -230,9 +230,9 @@ L["Let you know quest is completed."] = true
 -- 自动摧毁
 L["Auto Delete"] = true
 L["Enter DELETE automatically."] = true
--- 任务进度
-L["Quest Progress"] = true
-L["Add quest progress to tooltip."] = true
+-- 目标进度
+L["Objective Progress"] = true
+L["Add quest/mythic+ dungeon progress to tooltip."] = true
 -- 单位框体精英龙
 L["Dragon Overlay"] = true
 L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"] = true

@@ -51,7 +51,7 @@ local function InsertOptions()
 		CVarsTool = {
 			order = 11,
 			type = "group",
-			name = L["No Effect"],
+			name = L["Effect Control"],
 			guiInline = true,
 			args = {
 				GlowEffect = {

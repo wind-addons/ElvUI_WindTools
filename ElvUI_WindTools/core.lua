@@ -86,9 +86,9 @@ local Tools = {
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
 		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
 		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
-		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI_S&L", "houshuu"},
-		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
+		{"Fast Loot", L["Let auto-loot quickly."], "Leatrix", "houshuu"},
+		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI S&L", "houshuu"},
+		{"Enhanced Tag", L["Add some tags."], "houshuu", "houshuu"},
 	}
 }
 
@@ -155,12 +155,12 @@ function WT:InsertOptions()
 			header3 = {
 				order = 8,
 				type  = "header",
-				name  = WT:ColorStr(L["Author Info"]),
+				name  = WT:ColorStr(L["Author"]),
 			},
-			authorinfo = {
+			author = {
 				order = 9,
 				type  = "description",
-				name  = "|cffC79C6Ehoushuu @ NGA|r(|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
+				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
 			},
 			credit = {
 				order = -1,

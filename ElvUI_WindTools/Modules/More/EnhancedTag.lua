@@ -1,5 +1,4 @@
--- 一部分代码灵感来自 ElvUI_Enhanced (Legion)
--- 哪天有时间再继续强化一下
+-- 部分代码灵感来自 ElvUI_Enhanced (Legion)
 -- 作者：houshuu
 
 --Add access to ElvUI engine and unitframe framework
@@ -29,10 +28,10 @@ local UnitPowerMax = UnitPowerMax
 local UnitClass = UnitClass
 local UnitName = UnitName
 
-
-P["WindTools"]["Tag Enhanced"] = {
+P["WindTools"]["Enhanced Tag"] = {
 	["enabled"] = true,
 }
+
 --GLOBALS: _TAGS, Hex, _COLORS
 
 function E:ShortValue(v)
@@ -48,7 +47,7 @@ function E:ShortValue(v)
 			return format("%s", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
-		if E.db.WindTools["Tag Enhanced"]["enabled"] then
+		if E.db.WindTools["Enhanced Tag"]["enabled"] then
 			if abs(v) >= 1e8 then
 				return format(shortValueDec..L["Y"], v / 1e8)
 			elseif abs(v) >= 1e4 then
@@ -384,41 +383,41 @@ end
 
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"].name = L["Chinese W/Y"]
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc0"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["enablebtn"].name = L["Chinese W/Y"]
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc0"] = {
 		order = 6,
 		type = "description",
 		name = "\n",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc1"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc1"] = {
 		order = 7,
 		type = "description",
 		name = "[health:percent-short] "..L["Example:"].."10%",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc2"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc2"] = {
 		order = 8,
 		type = "description",
 		name = "[health:percent-nosymbol] "..L["Example:"].."10",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc3"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc3"] = {
 		order = 9,
 		type = "description",
 		name = "[health:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc4"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc4"] = {
 		order = 10,
 		type = "description",
 		name = "[power:percent-short] "..L["Example:"].."10%",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc5"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc5"] = {
 		order = 11,
 		type = "description",
 		name = "[power:percent-nosymbol] "..L["Example:"].."10",
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc6"] = {
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["desc6"] = {
 		order = 12,
 		type = "description",
 		name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
 	}
 end
-WT.ToolConfigs["Tag Enhanced"] = InsertOptions
+WT.ToolConfigs["Enhanced Tag"] = InsertOptions

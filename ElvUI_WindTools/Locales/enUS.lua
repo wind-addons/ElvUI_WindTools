@@ -147,6 +147,7 @@ L["Death Effect"] = true
 L["Nether Effect"] = true
 L["Convenient Setting"] = true
 L["Auto Compare"] = true
+L["Tooltips quest info"] = true
 -- 增强暴雪框体
 L["Enhanced Blizzard Frame"] = true
 L["Move frames and set scale of buttons."] = true

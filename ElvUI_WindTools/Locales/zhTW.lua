@@ -147,6 +147,7 @@ L["Death Effect"] = "死亡畫面"
 L["Nether Effect"] = "隱身術特效"
 L["Convenient Setting"] = "便利性設定"
 L["Auto Compare"] = "自動比對裝備"
+L["Tooltips quest info"] = "滑鼠訊息任務追蹤"
 -- 增强暴雪框体
 L["Enhanced Blizzard Frame"] = "暴雪框架增強"
 L["Move frames and set scale of buttons."] = "移動框架，設定按鈕大小。"

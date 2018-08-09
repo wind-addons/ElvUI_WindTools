@@ -61,7 +61,7 @@ local function InsertOptions()
 			name = L["Effect Control"],
 			guiInline = true,
 			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end
+			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {
 				GlowEffect = {
 					order = 1,
@@ -86,13 +86,13 @@ local function InsertOptions()
 			name = L["Convenient Setting"],
 			guiInline = true,
 			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end
+			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {
 				AutoCompare = {
 					order = 1,
 					type = "toggle",
 					name = L["Auto Compare"],
-				}
+				},
 				TooltipsTrack = {
 					order = 2,
 					type = "toggle",

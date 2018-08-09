@@ -70,6 +70,7 @@ local Tools = {
 		{"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced", "houshuu"},
 		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
+		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
 	},
 	["Chat"] = {
 		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},

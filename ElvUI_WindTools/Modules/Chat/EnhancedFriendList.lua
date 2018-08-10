@@ -529,7 +529,6 @@ function EFL:Initialize()
 
 	if E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] then
 		-- 检查是否要进行增强
-		E.db.WindTools["Enhanced Friend List"] = E.db.WindTools["Enhanced Friend List"]["enhanced"]
 		EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 	end
 end

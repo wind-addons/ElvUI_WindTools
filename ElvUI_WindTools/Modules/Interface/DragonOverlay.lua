@@ -15,7 +15,7 @@ local MediaPath = 'Interface\\AddOns\\ElvUI_WindTools\\Texture\\DragonOverlay\\'
 
 P["WindTools"]["Dragon Overlay"] = {
 	['enabled'] = false,
-	['Strata'] = 'MEDIUM',
+	['Strata'] = '3-MEDIUM',
 	['Level'] = 12,
 	['IconSize'] = 32,
 	['Width'] = 128,

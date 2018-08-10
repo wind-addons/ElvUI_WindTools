@@ -120,7 +120,7 @@ EBF.Frames = {
 	"GossipFrame",
 	"GuildInviteFrame",
 	"GuildRegistrarFrame",
-	"HelpFrame",
+	-- "HelpFrame",
 	--"InterfaceOptionsFrame",
 	"ItemTextFrame",
 	"LFDRoleCheckPopup",

@@ -238,12 +238,12 @@ function EFL:UpdateFriends(button)
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
 		broadcastText = nil
 		if connected then
-			button.status:SetTexture(EFL.StatusIcons[EFL.db.StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
+			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
 			nameText = format('%s%s - (%s - %s %s)', EFL:ClassColorCode(class), name, class, LEVEL, level)
 			nameColor = FRIENDS_WOW_NAME_COLOR
 			Cooperate = true
 		else
-			button.status:SetTexture(EFL.StatusIcons[EFL.db.StatusIconPack].Offline)
+			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack].Offline)
 			nameText = name
 			nameColor = FRIENDS_GRAY_COLOR
 		end
@@ -276,7 +276,7 @@ function EFL:UpdateFriends(button)
 		end
 
 		if isOnline then
-			button.status:SetTexture(EFL.StatusIcons[EFL.db.StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
+			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
 			if client == BNET_CLIENT_WOW then
 				if not zoneName or zoneName == '' then
 					infoText = UNKNOWN
@@ -287,14 +287,14 @@ function EFL:UpdateFriends(button)
 						infoText = format('%s - %s', zoneName, realmName)
 					end
 				end
-				button.gameIcon:SetTexture(EFL.GameIcons[faction][EFL.db.GameIcon[faction]])
+				button.gameIcon:SetTexture(EFL.GameIcons[faction][E.db.WindTools["Enhanced Friend List"].GameIcon[faction]])
 			else
 				infoText = gameText
-				button.gameIcon:SetTexture(EFL.GameIcons[client][EFL.db.GameIcon[client]])
+				button.gameIcon:SetTexture(EFL.GameIcons[client][E.db.WindTools["Enhanced Friend List"].GameIcon[client]])
 			end
 			nameColor = FRIENDS_BNET_NAME_COLOR
 		else
-			button.status:SetTexture(EFL.StatusIcons[EFL.db.StatusIconPack].Offline)
+			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack].Offline)
 			nameColor = FRIENDS_GRAY_COLOR
 			infoText = lastOnline == 0 and FRIENDS_LIST_OFFLINE or format(BNET_LAST_ONLINE_TIME, FriendsFrame_GetLastOnline(lastOnline))
 		end
@@ -311,8 +311,8 @@ function EFL:UpdateFriends(button)
 		button.name:SetTextColor(nameColor.r, nameColor.g, nameColor.b)
 		button.info:SetText(infoText)
 		button.info:SetTextColor(unpack(Cooperate and {1, .96, .45} or {.49, .52, .54}))
-		button.name:SetFont(LSM:Fetch('font', EFL.db.NameFont), EFL.db.NameFontSize, EFL.db.NameFontFlag)
-		button.info:SetFont(LSM:Fetch('font', EFL.db.InfoFont), EFL.db.InfoFontSize, EFL.db.InfoFontFlag)
+		button.name:SetFont(LSM:Fetch('font', E.db.WindTools["Enhanced Friend List"].NameFont), E.db.WindTools["Enhanced Friend List"].NameFontSize, E.db.WindTools["Enhanced Friend List"].NameFontFlag)
+		button.info:SetFont(LSM:Fetch('font', E.db.WindTools["Enhanced Friend List"].InfoFont), E.db.WindTools["Enhanced Friend List"].InfoFontSize, E.db.WindTools["Enhanced Friend List"].InfoFontFlag)
 	end
 end
 
@@ -499,7 +499,7 @@ local function InsertOptions()
 			type = 'execute',
 			name = L[Value],
 			func = function() return end,
-			image = function(info) return EFL.GameIcons[info[#info]][EFL.db.GameIcon[Key]], 32, 32 end,
+			image = function(info) return EFL.GameIcons[info[#info]][E.db.WindTools["Enhanced Friend List"].GameIcon[Key]], 32, 32 end,
 		}
 	end
 	for Key, Value in pairs(StatusIconsOptions) do
@@ -508,7 +508,7 @@ local function InsertOptions()
 			type = 'execute',
 			name = L[Value],
 			func = function() return end,
-			image = function(info) return EFL.StatusIcons[EFL.db.StatusIconPack][info[#info]], 16, 16 end,
+			image = function(info) return EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][info[#info]], 16, 16 end,
 		}
 	end
 
@@ -529,7 +529,7 @@ function EFL:Initialize()
 
 	if E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] then
 		-- 检查是否要进行增强
-		EFL.db = E.db.WindTools["Enhanced Friend List"]["enhanced"]
+		E.db.WindTools["Enhanced Friend List"] = E.db.WindTools["Enhanced Friend List"]["enhanced"]
 		EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 	end
 end

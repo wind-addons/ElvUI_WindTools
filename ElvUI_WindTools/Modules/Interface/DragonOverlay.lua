@@ -202,7 +202,7 @@ local function InsertOptions()
 	local MenuItems = {
 		['elite'] = L['Elite'],
 		['rare'] = L['Rare'],
-		['rareelite'] = L['Rare Elite'],
+		['rareelite'] = L['RareElite'],
 		['worldboss'] = L['World Boss'],
 	}
 

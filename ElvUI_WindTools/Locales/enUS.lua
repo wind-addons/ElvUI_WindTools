@@ -179,8 +179,8 @@ L["Interface Options"] = true
 L["Video Options"] = true
 L["Quest Icon"] = true
 -- Tag 增强
-L["W"] = true
-L["Y"] = true
+L["Wan"] = true
+L["Yi"]  = true
 L["Enhanced Tag"] = true
 L["Add some tags."] = true
 L["Chinese W/Y"] = true

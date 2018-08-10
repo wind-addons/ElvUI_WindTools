@@ -179,8 +179,8 @@ L["Interface Options"] = "介面選項"
 L["Video Options"] = "顯示設定（系統）"
 L["Quest Icon"] = "任務物品圖標"
 -- Tag 增强
-L["W"] = "萬"
-L["Y"] = "億"
+L["Wan"] = "萬"
+L["Yi"]  = "億"
 L["Enhanced Tag"] = "Tag 增強"
 L["Add some tags."] = "添加一些自定義 Tag。"
 L["Chinese W/Y"] = "中文 萬/億 單位"
@@ -208,6 +208,7 @@ L["Default is 50."] = "預設值為50。"
 -- 光速拾取
 L["Fast Loot"] = "光速拾取"
 L["Let auto-loot quickly."] = "加快自动拾取物品的速度。"
+L["Speed Setting"] = "速度設定"
 L["Fast Loot Speed"] = "光速拾取速度"
 L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = "預設數值為0.3，除非光速拾取功能出錯，你不用修改它。"
 -- 团本进度提示

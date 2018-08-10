@@ -49,9 +49,9 @@ function E:ShortValue(v)
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
 		if E.db.WindTools["Enhanced Tag"]["enabled"] then
 			if abs(v) >= 1e8 then
-				return format(shortValueDec..L["Y"], v / 1e8)
+				return format(shortValueDec..L["Yi"], v / 1e8)
 			elseif abs(v) >= 1e4 then
-				return format(shortValueDec..L["W"], v / 1e4)
+				return format(shortValueDec..L["Wan"], v / 1e4)
 			else
 				return format("%s", v)
 			end
@@ -132,9 +132,9 @@ local function ShortValue(number, noDecimal)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
 		if abs(number) >= 1e8 then
-			return format("%.1f%s", number / 1e8, L["Y"])
+			return format("%.1f%s", number / 1e8, L["Yi"])
 		elseif abs(number) >= 1e4 then
-			return format("%.1f%s", number / 1e4, L["W"])
+			return format("%.1f%s", number / 1e4, L["Wan"])
 		else
 			return format("%d", number)
 		end

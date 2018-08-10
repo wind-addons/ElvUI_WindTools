@@ -7,7 +7,7 @@ local WT = E:GetModule("WindTools")
 local CVarsTool = E:NewModule('CVarsTool', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 P["WindTools"]["CVarsTool"] = {
-	["enabled"] = true,
+	["enabled"] = false,
 	["GlowEffect"] = false,
 	["DeathEffect"] = false,
 	["NetherEffect"] = false,

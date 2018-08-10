@@ -6,51 +6,63 @@ local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local CVarsTool = E:NewModule('CVarsTool', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
-P["WindTools"]["CVarsTool"] = {
-	["enabled"] = false,
-	["GlowEffect"] = false,
-	["DeathEffect"] = false,
-	["NetherEffect"] = false,
-	["AutoCompare"] = true,
-	["TooltipsTrack"] = true,
-}
-
-function CVarsTool:Update()
-	if E.db.WindTools["CVarsTool"]["GlowEffect"] then
-		SetCVar("ffxGlow", "1")
+-- 将部分值为 0/1 的 CVar 查询结果转换为布尔值
+local function GetCVarBool(cvar)
+	local current = GetCVar(cvar)
+	if current == "1" then
+		return true
+	elseif current == "0" then
+		return false
 	else
-		SetCVar("ffxGlow", "0")
+		return nil
 	end
-
-	if E.db.WindTools["CVarsTool"]["DeathEffect"] then
-		SetCVar("ffxDeath", "1")
+end
+-- 将布尔值转换为部分值为 0/1 的 CVar，并设定
+local function SetCVarBool(cvar, value)
+	if value then
+		SetCVar(cvar, 1)
 	else
-		SetCVar("ffxDeath", "0")
+		SetCVar(cvar, 0)
 	end
-
-	if E.db.WindTools["CVarsTool"]["NetherEffect"] then
-		SetCVar("ffxNether", "1")
-	else
-		SetCVar("ffxNether", "0")
-	end
-
-	if E.db.WindTools["CVarsTool"]["AutoCompare"] then
-		SetCVar("alwaysCompareItems", "1")
-	else
-		SetCVar("alwaysCompareItems", "0")
-	end
-
-	if E.db.WindTools["CVarsTool"]["TooltipsTrack"] then
-		SetCVar("showQuestTrackingTooltips", "1")
-	else
-		SetCVar("showQuestTrackingTooltips", "0")
-	end
-
 end
 
+
+-- function CVarsTool:Update()
+-- 	if E.db.WindTools["CVarsTool"]["GlowEffect"] then
+-- 		SetCVar("ffxGlow", "1")
+-- 	else
+-- 		SetCVar("ffxGlow", "0")
+-- 	end
+
+-- 	if E.db.WindTools["CVarsTool"]["DeathEffect"] then
+-- 		SetCVar("ffxDeath", "1")
+-- 	else
+-- 		SetCVar("ffxDeath", "0")
+-- 	end
+
+-- 	if E.db.WindTools["CVarsTool"]["NetherEffect"] then
+-- 		SetCVar("ffxNether", "1")
+-- 	else
+-- 		SetCVar("ffxNether", "0")
+-- 	end
+
+-- 	if E.db.WindTools["CVarsTool"]["AutoCompare"] then
+-- 		SetCVar("alwaysCompareItems", "1")
+-- 	else
+-- 		SetCVar("alwaysCompareItems", "0")
+-- 	end
+
+-- 	if E.db.WindTools["CVarsTool"]["TooltipsTrack"] then
+-- 		SetCVar("showQuestTrackingTooltips", "1")
+-- 	else
+-- 		SetCVar("showQuestTrackingTooltips", "0")
+-- 	end
+
+-- end
+
 function CVarsTool:Initialize()
-	if not E.db.WindTools["CVarsTool"]["enabled"] then return end
-	self.Update()
+	-- if not E.db.WindTools["CVarsTool"]["enabled"] then return end
+	-- self.Update()
 end
 
 local function InsertOptions()
@@ -60,21 +72,20 @@ local function InsertOptions()
 			type = "group",
 			name = L["Effect Control"],
 			guiInline = true,
-			disabled = not E.db.WindTools["CVarsTool"]["enabled"],
-			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
+			get = function(info) return GetCVarBool(info[#info]) end,
+			set = function(info, value) SetCVarBool(info[#info], value) end,
 			args = {
-				GlowEffect = {
+				ffxGlow = {
 					order = 1,
 					type = "toggle",
 					name = L["Glow Effect"],
 				},
-				DeathEffect = {
+				ffxDeath = {
 					order = 2,
 					type = "toggle",
 					name = L["Death Effect"],
 				},
-				NetherEffect = {
+				ffxNether = {
 					order = 3,
 					type = "toggle",
 					name = L["Nether Effect"],
@@ -82,23 +93,42 @@ local function InsertOptions()
 			}
 		},
 		convenience = {
-			order = 11,
+			order = 12,
 			type = "group",
 			name = L["Convenient Setting"],
 			guiInline = true,
-			disabled = not E.db.WindTools["CVarsTool"]["enabled"],
-			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
+			get = function(info) return GetCVarBool(info[#info]) end,
+			set = function(info, value) SetCVarBool(info[#info], value) end,
 			args = {
-				AutoCompare = {
+				alwaysCompareItems = {
 					order = 1,
 					type = "toggle",
 					name = L["Auto Compare"],
 				},
-				TooltipsTrack = {
+				showQuestTrackingTooltips = {
 					order = 2,
 					type = "toggle",
 					name = L["Tooltips quest info"],
+				}
+			}
+		},
+		fix = {
+			order = 13,
+			type = "group",
+			name = L["Fix Problem"],
+			guiInline = true,
+			get = function(info) return GetCVarBool(info[#info]) end,
+			set = function(info, value) SetCVarBool(info[#info], value) end,
+			args = {
+				rawMouseEnable = {
+					order = 1,
+					type = "toggle",
+					name = L["Raw Mouse"],
+				},
+				rawMouseAccelerationEnable  = {
+					order = 2,
+					type = "toggle",
+					name = L["Raw Mouse Acceleration"],
 				}
 			}
 		},
@@ -107,6 +137,12 @@ local function InsertOptions()
 	for k, v in pairs(Options) do
 		E.Options.args.WindTools.args["More Tools"].args["CVarsTool"].args[k] = v
 	end
+
+	E.Options.args.WindTools.args["More Tools"].args["CVarsTool"].args["enablebtn"] = {
+		order = 4,
+		type = "description",
+		name = "\n",
+	}
 end
 
 WT.ToolConfigs["CVarsTool"] = InsertOptions

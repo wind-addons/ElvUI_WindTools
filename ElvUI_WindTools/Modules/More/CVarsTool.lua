@@ -55,11 +55,12 @@ end
 
 local function InsertOptions()
 	local Options = {
-		CVarsTool = {
+		EffectControl = {
 			order = 11,
 			type = "group",
 			name = L["Effect Control"],
 			guiInline = true,
+			disabled = not E.db.WindTools["CVarsTool"]["enabled"],
 			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {
@@ -85,6 +86,7 @@ local function InsertOptions()
 			type = "group",
 			name = L["Convenient Setting"],
 			guiInline = true,
+			disabled = not E.db.WindTools["CVarsTool"]["enabled"],
 			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {

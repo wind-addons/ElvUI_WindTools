@@ -14,7 +14,7 @@ local UnitIsPlayer, UnitClass, UnitClassification = UnitIsPlayer, UnitClass, Uni
 local MediaPath = 'Interface\\AddOns\\ElvUI_WindTools\\Texture\\DragonOverlay\\'
 
 P["WindTools"]["Dragon Overlay"] = {
-	['enabled'] = true,
+	['enabled'] = false,
 	['Strata'] = 'MEDIUM',
 	['Level'] = 12,
 	['IconSize'] = 32,

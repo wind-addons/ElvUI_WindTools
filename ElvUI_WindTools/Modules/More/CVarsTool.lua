@@ -17,6 +17,7 @@ local function GetCVarBool(cvar)
 		return nil
 	end
 end
+
 -- 将布尔值转换为部分值为 0/1 的 CVar，并设定
 local function SetCVarBool(cvar, value)
 	if value then
@@ -24,45 +25,6 @@ local function SetCVarBool(cvar, value)
 	else
 		SetCVar(cvar, 0)
 	end
-end
-
-
--- function CVarsTool:Update()
--- 	if E.db.WindTools["CVarsTool"]["GlowEffect"] then
--- 		SetCVar("ffxGlow", "1")
--- 	else
--- 		SetCVar("ffxGlow", "0")
--- 	end
-
--- 	if E.db.WindTools["CVarsTool"]["DeathEffect"] then
--- 		SetCVar("ffxDeath", "1")
--- 	else
--- 		SetCVar("ffxDeath", "0")
--- 	end
-
--- 	if E.db.WindTools["CVarsTool"]["NetherEffect"] then
--- 		SetCVar("ffxNether", "1")
--- 	else
--- 		SetCVar("ffxNether", "0")
--- 	end
-
--- 	if E.db.WindTools["CVarsTool"]["AutoCompare"] then
--- 		SetCVar("alwaysCompareItems", "1")
--- 	else
--- 		SetCVar("alwaysCompareItems", "0")
--- 	end
-
--- 	if E.db.WindTools["CVarsTool"]["TooltipsTrack"] then
--- 		SetCVar("showQuestTrackingTooltips", "1")
--- 	else
--- 		SetCVar("showQuestTrackingTooltips", "0")
--- 	end
-
--- end
-
-function CVarsTool:Initialize()
-	-- if not E.db.WindTools["CVarsTool"]["enabled"] then return end
-	-- self.Update()
 end
 
 local function InsertOptions()
@@ -107,6 +69,7 @@ local function InsertOptions()
 				},
 				showQuestTrackingTooltips = {
 					order = 2,
+					width = "double",
 					type = "toggle",
 					name = L["Tooltips quest info"],
 				}
@@ -122,11 +85,13 @@ local function InsertOptions()
 			args = {
 				rawMouseEnable = {
 					order = 1,
+					width = "double",
 					type = "toggle",
 					name = L["Raw Mouse"],
 				},
 				rawMouseAccelerationEnable  = {
 					order = 2,
+					width = "double",
 					type = "toggle",
 					name = L["Raw Mouse Acceleration"],
 				}
@@ -138,11 +103,9 @@ local function InsertOptions()
 		E.Options.args.WindTools.args["More Tools"].args["CVarsTool"].args[k] = v
 	end
 
-	E.Options.args.WindTools.args["More Tools"].args["CVarsTool"].args["enablebtn"] = {
-		order = 4,
-		type = "description",
-		name = "\n",
-	}
+	-- 替換原有的開關位置
+	E.Options.args.WindTools.args["More Tools"].args["CVarsTool"].args["enablebtn"] = nil
+
 end
 
 WT.ToolConfigs["CVarsTool"] = InsertOptions

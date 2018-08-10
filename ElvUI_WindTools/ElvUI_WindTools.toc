@@ -1,8 +1,8 @@
 ## Interface: 80000
 ## Author: houshuu
-## Version: 1.1.5
+## Version: 1.1.6
 ## Title: |cfffe7b2cElvUI|r |cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r
-## Title-zhTW: |cfffe7b2cElvUI|r |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa百|r|cffb3e5fc寶|r|cffe1f5fe箱|r
+## Title-zhTW: |cfffe7b2cElvUI|r |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r
 ## Title-zhCN: |cfffe7b2cElvUI|r |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r
 ## Notes: Collection of useful tools
 ## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
@@ -10,19 +10,18 @@
 ## RequiredDeps: ElvUI
 ## DefaultState: enabled
 
-# 通用库
-libs.xml
-
-# 导入Masque美化皮肤
-MasqueSkin\load_masqueskin.xml
-
-# 语言文件
-locales.lua
-
-# 核心控制台
-core.lua
-
-# 功能载入
-Modules\load_modules.xml
+## X-Website: http://bbs.ngacn.cc/read.php?tid=12142815
+## X-Feedback: https://github.com/fang2hou/ElvUI_WindTools/issues
 
 ## X-Tukui-ProjectFolders: ElvUI_WindTools
+
+# 通用库
+Libs\load_libs.xml
+# 导入Masque美化皮肤
+MasqueSkin\load_masqueskin.xml
+# 语言文件
+Locales\load_locales.xml
+# 核心控制台
+core.lua
+# 功能载入
+Modules\load_modules.xml

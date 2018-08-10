@@ -1,5 +1,4 @@
--- 一部分代码灵感来自 ElvUI_Enhanced (Legion)
--- 哪天有时间再继续强化一下
+-- 部分代码灵感来自 ElvUI_Enhanced (Legion)
 -- 作者：houshuu
 
 --Add access to ElvUI engine and unitframe framework
@@ -29,10 +28,10 @@ local UnitPowerMax = UnitPowerMax
 local UnitClass = UnitClass
 local UnitName = UnitName
 
-
-P["WindTools"]["Tag Enhanced"] = {
+P["WindTools"]["Enhanced Tag"] = {
 	["enabled"] = true,
 }
+
 --GLOBALS: _TAGS, Hex, _COLORS
 
 function E:ShortValue(v)
@@ -48,7 +47,7 @@ function E:ShortValue(v)
 			return format("%s", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
-		if E.db.WindTools["Tag Enhanced"]["enabled"] then
+		if E.db.WindTools["Enhanced Tag"]["enabled"] then
 			if abs(v) >= 1e8 then
 				return format(shortValueDec..L["Y"], v / 1e8)
 			elseif abs(v) >= 1e4 then
@@ -317,6 +316,25 @@ ElvUF.Tags.Methods["health:percent-nosymbol"] = function(unit)
 	
 	return String
 end
+-- 血量 100 无状态提示
+ElvUF.Tags.Events["health:percent-nosymbol-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+ElvUF.Tags.Methods["health:percent-nosymbol-nostatus"] = function(unit)
+	local min, max = UnitHealth(unit), UnitHealthMax(unit)
+	local deficit = max - min
+	local String
+
+	if UnitIsDead(unit) then
+		String = "0"
+	elseif UnitIsGhost(unit) then
+		String = "0"
+	elseif not UnitIsConnected(unit) then
+		String = "-"
+	else
+		String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+	end
+	
+	return String
+end
 
 -- 取消小数点
 -- 血量 100%
@@ -338,6 +356,27 @@ ElvUF.Tags.Methods["health:percent-short"] = function(unit)
 	
 	return String
 end
+
+-- 血量 100% 无状态提示
+ElvUF.Tags.Events["health:percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+ElvUF.Tags.Methods["health:percent-short-nostatus"] = function(unit)
+	local min, max = UnitHealth(unit), UnitHealthMax(unit)
+	local deficit = max - min
+	local String
+
+	if UnitIsDead(unit) then
+		String = "0%"
+	elseif UnitIsGhost(unit) then
+		String = "0%"
+	elseif not UnitIsConnected(unit) then
+		String = "-"
+	else
+		String = GetFormattedText(min, max, "PERCENT", true)
+	end
+	
+	return String
+end
+
 -- 血量 120 - 100%
 ElvUF.Tags.Events["health:current-percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
 ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
@@ -357,6 +396,7 @@ ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
 
 	return String
 end
+
 -- 能量 120 - 100%
 ElvUF.Tags.Events["power:current-percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
 ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
@@ -384,41 +424,74 @@ end
 
 
 local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["enablebtn"].name = L["Chinese W/Y"]
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc0"] = {
-		order = 6,
-		type = "description",
-		name = "\n",
+	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["enablebtn"].name = L["Chinese W/Y"]
+
+	local Options = {
+		desc0 = {
+			order = 6,
+			type = "description",
+			name = "\n",
+		},
+		health = {
+			order = 11,
+			type = "group",
+			name = L["Health"],
+			guiInline = true,
+			args = {
+				percentshort = {
+					order = 1,
+					type = "description",
+					name = "[health:percent-short] "..L["Example:"].."10% / "..L["Dead"],
+				},
+				percentshortnostatus = {
+					order = 2,
+					type = "description",
+					name = "[health:percent-short-nostatus] "..L["Example:"].."10% / 0%",
+				},
+				percentnosymbol = {
+					order = 3,
+					type = "description",
+					name = "[health:percent-nosymbol] "..L["Example:"].."10 / "..L["Dead"],
+				},
+				percentnosymbolnostatus = {
+					order = 4,
+					type = "description",
+					name = "[health:percent-nosymbol-nostatus] "..L["Example:"].."10 / 0",
+				},
+				currentpercentshort = {
+					order = 5,
+					type = "description",
+					name = "[health:current-percent-short] "..L["Example:"].."1120 - 10% / "..L["Dead"],
+				},
+			}
+		},
+		power = {
+			order = 12,
+			type = "group",
+			name = L["Power"],
+			guiInline = true,
+			args = {
+				desc4 = {
+					order = 1,
+					type = "description",
+					name = "[power:percent-short] "..L["Example:"].."10%",
+				},
+				desc5 = {
+					order = 2,
+					type = "description",
+					name = "[power:percent-nosymbol] "..L["Example:"].."10",
+				},
+				desc6 = {
+					order = 3,
+					type = "description",
+					name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
+				},
+			}
+		}
 	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc1"] = {
-		order = 7,
-		type = "description",
-		name = "[health:percent-short] "..L["Example:"].."10%",
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc2"] = {
-		order = 8,
-		type = "description",
-		name = "[health:percent-nosymbol] "..L["Example:"].."10",
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc3"] = {
-		order = 9,
-		type = "description",
-		name = "[health:current-percent-short] "..L["Example:"].."1120 - 10%",
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc4"] = {
-		order = 10,
-		type = "description",
-		name = "[power:percent-short] "..L["Example:"].."10%",
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc5"] = {
-		order = 11,
-		type = "description",
-		name = "[power:percent-nosymbol] "..L["Example:"].."10",
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Tag Enhanced"].args["desc6"] = {
-		order = 12,
-		type = "description",
-		name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
-	}
+
+	for k, v in pairs(Options) do
+		E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args[k] = v
+	end
 end
-WT.ToolConfigs["Tag Enhanced"] = InsertOptions
+WT.ToolConfigs["Enhanced Tag"] = InsertOptions

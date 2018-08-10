@@ -7,11 +7,12 @@ local WT = E:GetModule("WindTools")
 local CVarsTool = E:NewModule('CVarsTool', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 P["WindTools"]["CVarsTool"] = {
-	["enabled"] = true,
+	["enabled"] = false,
 	["GlowEffect"] = false,
 	["DeathEffect"] = false,
 	["NetherEffect"] = false,
 	["AutoCompare"] = true,
+	["TooltipsTrack"] = true,
 }
 
 function CVarsTool:Update()
@@ -39,6 +40,12 @@ function CVarsTool:Update()
 		SetCVar("alwaysCompareItems", "0")
 	end
 
+	if E.db.WindTools["CVarsTool"]["TooltipsTrack"] then
+		SetCVar("showQuestTrackingTooltips", "1")
+	else
+		SetCVar("showQuestTrackingTooltips", "0")
+	end
+
 end
 
 function CVarsTool:Initialize()
@@ -51,29 +58,25 @@ local function InsertOptions()
 		CVarsTool = {
 			order = 11,
 			type = "group",
-			name = L["No Effect"],
+			name = L["Effect Control"],
 			guiInline = true,
+			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {
 				GlowEffect = {
 					order = 1,
 					type = "toggle",
 					name = L["Glow Effect"],
-					get = function(info) return E.db.WindTools["CVarsTool"]["GlowEffect"] end,
-					set = function(info, value) E.db.WindTools["CVarsTool"]["GlowEffect"] = value; CVarsTool:Update() end
 				},
 				DeathEffect = {
 					order = 2,
 					type = "toggle",
 					name = L["Death Effect"],
-					get = function(info) return E.db.WindTools["CVarsTool"]["DeathEffect"] end,
-					set = function(info, value) E.db.WindTools["CVarsTool"]["DeathEffect"] = value; CVarsTool:Update() end
 				},
 				NetherEffect = {
 					order = 3,
 					type = "toggle",
 					name = L["Nether Effect"],
-					get = function(info) return E.db.WindTools["CVarsTool"]["NetherEffect"] end,
-					set = function(info, value) E.db.WindTools["CVarsTool"]["NetherEffect"] = value; CVarsTool:Update() end
 				},
 			}
 		},
@@ -82,13 +85,18 @@ local function InsertOptions()
 			type = "group",
 			name = L["Convenient Setting"],
 			guiInline = true,
+			get = function(info) return E.db.WindTools["CVarsTool"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["CVarsTool"][info[#info]] = value; CVarsTool:Update() end,
 			args = {
 				AutoCompare = {
 					order = 1,
 					type = "toggle",
 					name = L["Auto Compare"],
-					get = function(info) return E.db.WindTools["CVarsTool"]["AutoCompare"] end,
-					set = function(info, value) E.db.WindTools["CVarsTool"]["AutoCompare"] = value; CVarsTool:Update() end
+				},
+				TooltipsTrack = {
+					order = 2,
+					type = "toggle",
+					name = L["Tooltips quest info"],
 				}
 			}
 		},

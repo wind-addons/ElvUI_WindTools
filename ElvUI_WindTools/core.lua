@@ -65,11 +65,12 @@ local Tools = {
 	},
 	["Interface"] = {
 		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
-		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced", "houshuu"},
 		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		-- {"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced (Legion)", "houshuu"},
+		{"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced", "houshuu"},
 		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
+		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
 	},
 	["Chat"] = {
 		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},
@@ -80,15 +81,15 @@ local Tools = {
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
 	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
-		{"Quest Progress", L["Add quest progress to tooltip."], "Simca", "houshuu"},
+		{"Objective Progress", L["Add quest/mythic+ dungeon progress to tooltip."], "Simca", "houshuu"},
 	},
 	["More Tools"] = {
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
 		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
 		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-		{"Fast Loot", L["Loot items quickly."], "Leatrix", "houshuu"},
-		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI_S&L", "houshuu"},
-		{"Tag Enhanced", L["Add some customized tags."], "houshuu", "houshuu"},
+		{"Fast Loot", L["Let auto-loot quickly."], "Leatrix", "houshuu"},
+		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI S&L", "houshuu"},
+		{"Enhanced Tag", L["Add some tags."], "houshuu", "houshuu"},
 	}
 }
 
@@ -155,12 +156,12 @@ function WT:InsertOptions()
 			header3 = {
 				order = 8,
 				type  = "header",
-				name  = WT:ColorStr(L["Author Info"]),
+				name  = WT:ColorStr(L["Author"]),
 			},
-			authorinfo = {
+			author = {
 				order = 9,
 				type  = "description",
-				name  = "|cffC79C6Ehoushuu @ NGA|r(|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
+				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96雲遊僧|r-語風)\nSomeBlu @ Github"
 			},
 			credit = {
 				order = -1,

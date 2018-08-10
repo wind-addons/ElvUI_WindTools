@@ -1,0 +1,16 @@
+package-as: ElvUI_WindTools
+enable-nolib-creation: no
+
+move-folders:
+    KillerCupcakes/Modules/Fire: KillerCupcakesOnFire # This moves KillerCupcakes/Modules/Fire to the same level as KillerCupcakes, as KillerCupCakesOnFire
+    KillerCupcakes/Modules/Sky: KillerCupcakesInTheSky
+
+ignore: # Files and directories beginning with a dot (such as .git) are automatically ignored, as is the pgkmeta file itself.
+    - .gitignore
+    - LICENSE
+    - README.md
+    - Title.png
+
+manual-changelog: CHANGELOG.txt
+
+license-output: LICENSE.txt

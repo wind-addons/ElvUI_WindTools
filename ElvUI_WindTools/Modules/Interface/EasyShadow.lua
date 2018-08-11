@@ -2,6 +2,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT         = E:GetModule("WindTools")
 local A          = E:GetModule('Auras')
+local UF         = E:GetModule('UnitFrames');
 local EasyShadow = E:NewModule('EasyShadow')
 local ElvUF      = ElvUF
 local LSM        = LibStub("LibSharedMedia-3.0")
@@ -31,16 +32,19 @@ local borderr, borderg, borderb = 0, 0, 0
 local backdropr, backdropg, backdropb = 0, 0, 0
 
 local function CreateMyShadow(frame, size)
+	if f.shadow then return end
+
 	local shadow = CreateFrame("Frame", nil, frame)
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(frame:GetFrameStrata())
 	shadow:SetOutside(frame, size, size)
 	shadow:SetBackdrop({
-		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(5),
-		insets = {left = E:Scale(5), right = E:Scale(5), top = E:Scale(5), bottom = E:Scale(5)},
+		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size),
+		insets = {left = E:Scale(size), right = E:Scale(size), top = E:Scale(size), bottom = E:Scale(size)},
 	})
 	shadow:SetBackdropColor(backdropr, backdropg, backdropb, 0)
 	shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.8)
+	
 	frame.shadow = shadow
 end
 
@@ -235,16 +239,14 @@ function EasyShadow:Initialize()
 	self:Update()
 	if E.db.WindTools["EasyShadow"]["AuraShadow"] then
 		hooksecurefunc(A, "CreateIcon", function(self, button)
-			if not button.shadowed then
-				button:CreateShadow()
-				button.shadowed = true
-			end
+			if button.shadowed then return end
+			button:CreateShadow()
+			button.shadowed = true
 		end)
 		hooksecurefunc(A, "UpdateAura", function(self, button, index)
-			if not button.shadowed then
-				button:CreateShadow()
-				button.shadowed = true
-			end
+			if button.shadowed then return end
+			button:CreateShadow()
+			button.shadowed = true
 		end)
 	end
 
@@ -252,6 +254,13 @@ function EasyShadow:Initialize()
 		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
 		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
 	end
+
+	hooksecurefunc(UF, "Configure_Castbar", function(self, frame)
+		if frame.Castbar.shadowed then return end
+		CreateMyShadow(frame.Castbar, 10)
+		-- frame.Castbar:CreateShadow()
+		frame.Castbar.shadowed = true
+	end)
 end
 
 WT.ToolConfigs["EasyShadow"] = InsertOptions

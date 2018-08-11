@@ -397,6 +397,26 @@ ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
 	return String
 end
 
+-- 血量 120 - 100% 无状态提示
+ElvUF.Tags.Events["health:current-percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
+ElvUF.Tags.Methods["health:current-percent-short-nostatus"] = function(unit)
+	local min, max = UnitHealth(unit), UnitHealthMax(unit)
+	local deficit = max - min
+	local String
+
+	if UnitIsDead(unit) then
+		String = "0 - 0%"
+	elseif UnitIsGhost(unit) then
+		String = "0 - 0%"
+	elseif not UnitIsConnected(unit) then
+		String = "-"
+	else
+		String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+	end
+
+	return String
+end
+
 -- 能量 120 - 100%
 ElvUF.Tags.Events["power:current-percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
 ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
@@ -462,6 +482,11 @@ local function InsertOptions()
 					order = 5,
 					type = "description",
 					name = "[health:current-percent-short] "..L["Example:"].."1120 - 10% / "..L["Dead"],
+				},
+				currentpercentshortnostatus = {
+					order = 6,
+					type = "description",
+					name = "[health:current-percent-short-nostatus] "..L["Example:"].."1120 - 10% / 0 - 0%",
 				},
 			}
 		},

@@ -233,17 +233,18 @@ function EFL:ClassColorCode(class)
 	return format('|cFF%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
 end
 function EFL:UpdateFriends(button)
+	self.db = E.db.WindTools["Enhanced Friend List"]["enhanced"]
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
 		broadcastText = nil
 		if connected then
-			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
+			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
 			nameText = format('%s%s - (%s - %s %s)', EFL:ClassColorCode(class), name, class, LEVEL, level)
 			nameColor = FRIENDS_WOW_NAME_COLOR
 			Cooperate = true
 		else
-			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack].Offline)
+			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack].Offline)
 			nameText = name
 			nameColor = FRIENDS_GRAY_COLOR
 		end
@@ -276,7 +277,7 @@ function EFL:UpdateFriends(button)
 		end
 
 		if isOnline then
-			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
+			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
 			if client == BNET_CLIENT_WOW then
 				if not zoneName or zoneName == '' then
 					infoText = UNKNOWN
@@ -287,14 +288,14 @@ function EFL:UpdateFriends(button)
 						infoText = format('%s - %s', zoneName, realmName)
 					end
 				end
-				button.gameIcon:SetTexture(EFL.GameIcons[faction][E.db.WindTools["Enhanced Friend List"].GameIcon[faction]])
+				button.gameIcon:SetTexture(EFL.GameIcons[faction][self.db.GameIcon[faction]])
 			else
 				infoText = gameText
-				button.gameIcon:SetTexture(EFL.GameIcons[client][E.db.WindTools["Enhanced Friend List"].GameIcon[client]])
+				button.gameIcon:SetTexture(EFL.GameIcons[client][self.db.GameIcon[client]])
 			end
 			nameColor = FRIENDS_BNET_NAME_COLOR
 		else
-			button.status:SetTexture(EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack].Offline)
+			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack].Offline)
 			nameColor = FRIENDS_GRAY_COLOR
 			infoText = lastOnline == 0 and FRIENDS_LIST_OFFLINE or format(BNET_LAST_ONLINE_TIME, FriendsFrame_GetLastOnline(lastOnline))
 		end
@@ -311,13 +312,14 @@ function EFL:UpdateFriends(button)
 		button.name:SetTextColor(nameColor.r, nameColor.g, nameColor.b)
 		button.info:SetText(infoText)
 		button.info:SetTextColor(unpack(Cooperate and {1, .96, .45} or {.49, .52, .54}))
-		button.name:SetFont(LSM:Fetch('font', E.db.WindTools["Enhanced Friend List"].NameFont), E.db.WindTools["Enhanced Friend List"].NameFontSize, E.db.WindTools["Enhanced Friend List"].NameFontFlag)
-		button.info:SetFont(LSM:Fetch('font', E.db.WindTools["Enhanced Friend List"].InfoFont), E.db.WindTools["Enhanced Friend List"].InfoFontSize, E.db.WindTools["Enhanced Friend List"].InfoFontFlag)
+		button.name:SetFont(LSM:Fetch('font', self.db.NameFont), self.db.NameFontSize, self.db.NameFontFlag)
+		button.info:SetFont(LSM:Fetch('font', self.db.InfoFont), self.db.InfoFontSize, self.db.InfoFontFlag)
 	end
 end
 
 local function InsertOptions()
 	if not E.db.WindTools["Enhanced Friend List"]["enabled"] then return end
+	local profile = E.db.WindTools["Enhanced Friend List"]
 	local Options = {
 		colorName = {
 			order = 9,
@@ -329,15 +331,15 @@ local function InsertOptions()
 					order = 1,
 					type = "toggle",
 					name = L['Name color & Level'],
-					get = function(info) return E.db.WindTools["Enhanced Friend List"]["color_name"] end,
-					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["color_name"] = value; E:StaticPopup_Show("PRIVATE_RL") end
+					get = function(info) return profile.color_name end,
+					set = function(info, value) profile.color_name = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
 				enhanced_enable = {
 					order = 2,
 					type = "toggle",
 					name = L['Enhanced Texuture'],
-					get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end
+					get = function(info) return profile.enhanced["enabled"] end,
+					set = function(info, value) profile.enhanced["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
 			}
 		},
@@ -346,8 +348,8 @@ local function InsertOptions()
 			type = 'group',
 			name = L['General'],
 			guiInline = true,
-			get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"][info[#info]] = value FriendsFrame_Update() end,
+			get = function(info) return profile.enhanced[info[#info]] end,
+			set = function(info, value) profile.enhanced[info[#info]] = value FriendsFrame_Update() end,
 			args = {
 				NameFont = {
 					type = 'select', dialogControl = 'LSM30_Font',
@@ -421,8 +423,8 @@ local function InsertOptions()
 			type = 'group',
 			name = L['Game Icons'],
 			guiInline = true,
-			get = function(info) return E.db.WindTools["Enhanced Friend List"]["enhanced"]["GameIcon"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Enhanced Friend List"]["enhanced"]["GameIcon"][info[#info]] = value FriendsFrame_Update() end,
+			get = function(info) return profile.enhanced.GameIcon[info[#info]] end,
+			set = function(info, value) profile.enhanced.GameIcon[info[#info]] = value FriendsFrame_Update() end,
 			args = {},
 		},
 		GameIconsPreview = {
@@ -499,16 +501,21 @@ local function InsertOptions()
 			type = 'execute',
 			name = L[Value],
 			func = function() return end,
-			image = function(info) return EFL.GameIcons[info[#info]][E.db.WindTools["Enhanced Friend List"].GameIcon[Key]], 32, 32 end,
+			image = function(info) return EFL.GameIcons[info[#info]][profile.enhanced.GameIcon[Key]], 32, 32 end,
 		}
 	end
+	
+	-- 排除缺少的 SC1 图标
+	Options.GameIcons.args["S1"].values["Flat"] = nil
+	Options.GameIcons.args["S1"].values["Gloss"] = nil
+
 	for Key, Value in pairs(StatusIconsOptions) do
 		Options.StatusIcons.args[Key] = {
 			order = StatusIconsOrder[Key],
 			type = 'execute',
 			name = L[Value],
 			func = function() return end,
-			image = function(info) return EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].StatusIconPack][info[#info]], 16, 16 end,
+			image = function(info) return EFL.StatusIcons[profile.enhanced.StatusIconPack][info[#info]], 16, 16 end,
 		}
 	end
 

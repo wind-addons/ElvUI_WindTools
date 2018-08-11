@@ -180,6 +180,12 @@ L["MiniMap"] = true
 L["Game Menu"] = true
 L["Interface Options"] = true
 L["Video Options"] = true
+L["Action Bar"] = true
+L["Unit Frames"] = true
+L["Cast Bar"] = true
+L["Cast Bar Icon"] = true
+L["Class Bar"] = true
+L["Unit Frame Aura"] = true
 L["Quest Icon"] = true
 -- Tag 增强
 L["Wan"] = true

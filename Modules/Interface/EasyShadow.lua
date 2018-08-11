@@ -205,7 +205,7 @@ function EasyShadow:ShadowElvUIFrames()
 
 	if self.db.ElvUIFrames.UnitFrames then
 		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
-			CreateMyShadow(frame, 2)
+			CreateMyShadow(frame, 4)
 		end)
 	end
 
@@ -231,7 +231,7 @@ function EasyShadow:ShadowElvUIFrames()
 		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
 			local bars = frame[frame.ClassBar]
 			if not bars then return end
-			CreateMyShadow(bars, 3)
+			CreateMyShadow(bars, 4)
 		end)
 	end	
 end

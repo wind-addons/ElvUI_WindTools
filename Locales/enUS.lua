@@ -166,6 +166,7 @@ L["Add the level information in front of the quest name."] = true
 L["Title Class Color"] = true
 L['Quest Level'] = true
 L["Tracker Level"] = true
+L["Tracker width"] = true
 L["Quest details level"] = true
 L["Ignore high Level"] = true
 L["Left Side Minimize Button"] = true

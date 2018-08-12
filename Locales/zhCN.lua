@@ -166,6 +166,7 @@ L["Add the level information in front of the quest name."] = "让任务列表有
 L["Title Class Color"] = "标题职业色"
 L['Quest Level'] = "任务等级"
 L["Tracker Level"] = "任务追踪显示等级"
+L["Tracker width"] = "追踪框体宽度"
 L["Quest details level"] = "任务详细显示等级"
 L["Ignore high Level"] = "忽略最高等级"
 L["Left Side Minimize Button"] = "左侧收起按钮"

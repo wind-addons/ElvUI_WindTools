@@ -120,8 +120,8 @@ EBF.Frames = {
 	"GossipFrame",
 	"GuildInviteFrame",
 	"GuildRegistrarFrame",
-	-- "HelpFrame",
-	--"InterfaceOptionsFrame",
+	"HelpFrame",
+	"InterfaceOptionsFrame",
 	"ItemTextFrame",
 	"LFDRoleCheckPopup",
 	"LFGDungeonReadyDialog",
@@ -154,8 +154,9 @@ EBF.Frames = {
 	"TimeManagerFrame",
 	"TradeFrame",
 	"TutorialFrame",
-	--"VideoOptionsFrame",
+	"VideoOptionsFrame",
 	"WorldMapFrame",
+	"GameMenuFrame",
 }
 EBF.AddonsList = {
 	["Blizzard_AchievementUI"] = { "AchievementFrame" },
@@ -188,6 +189,8 @@ EBF.AddonsList = {
 	["Blizzard_TradeSkillUI"] = { "TradeSkillFrame" },
 	["Blizzard_TrainerUI"] = { "ClassTrainerFrame" },
 	["Blizzard_VoidStorageUI"] = { "VoidStorageFrame" },
+	["Blizzard_ScrappingMachineUI"] = { "ScrappingMachineFrame" },
+	["Blizzard_GuildUI"] = { "GuildFrame" },
 }
 
 local function LoadPosition(self)
@@ -207,7 +210,22 @@ local function LoadPosition(self)
 	elseif Name == "GossipFrame" then
 		_G["QuestFrame"]:Hide()
 	end
+
+	local NeedFixFrames = {
+		"HelpFrame",
+		"VideoOptionsFrame",
+		"InterfaceOptionsFrame",
+	}
+
+	for _, v in pairs(NeedFixFrames) do
+		if v == Name then
+			_G["GameMenuFrame"]:Hide()
+		end
+	end
+	
 end
+
+
 
 local function OnDragStart(self)
 	self.IsMoving = true

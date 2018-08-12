@@ -82,8 +82,8 @@ local function CreateMyShadow(frame, size)
 		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size),
 		insets = {left = E:Scale(size), right = E:Scale(size), top = E:Scale(size), bottom = E:Scale(size)},
 	})
-	shadow:SetBackdropColor(backdropr, backdropg, backdropb, 0)
-	shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.8)
+	shadow:SetBackdropColor(backdropr, backdropg, backdropb, .5)
+	shadow:SetBackdropBorderColor(borderr, borderg, borderb, .6)
 
 	frame.shadow = shadow
 end

@@ -72,8 +72,10 @@ EasyShadow.ElvUIFrames = {
 	["Tooltip"] = L["Game Tooltip"],
 }
 
-local function CreateMyShadow(frame, size)
+local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	if frame.shadow then return end
+	local back = backalpha or 0.5
+	local border = backalpha or 0.6
 
 	local shadow = CreateFrame("Frame", nil, frame)
 	shadow:SetFrameLevel(1)
@@ -83,8 +85,8 @@ local function CreateMyShadow(frame, size)
 		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size),
 		insets = {left = E:Scale(size), right = E:Scale(size), top = E:Scale(size), bottom = E:Scale(size)},
 	})
-	shadow:SetBackdropColor(backdropr, backdropg, backdropb, .5)
-	shadow:SetBackdropBorderColor(borderr, borderg, borderb, .6)
+	shadow:SetBackdropColor(backdropr, backdropg, backdropb, back)
+	shadow:SetBackdropBorderColor(borderr, borderg, borderb, border)
 
 	frame.shadow = shadow
 end
@@ -240,6 +242,11 @@ function EasyShadow:ShadowElvUIFrames()
 	if self.db.ElvUIFrames.Tooltip then
 		hooksecurefunc(TT, "SetStyle", function(_, tt)
 			CreateMyShadow(tt, 4)
+		end)
+		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
+			if tt:IsForbidden() then return end
+			if E.private.tooltip.enable ~= true then return end
+			CreateMyShadow(_G["GameTooltipStatusBar"], 4, 0.8, 0)
 		end)
 	end
 end

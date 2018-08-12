@@ -4,7 +4,8 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT         = E:GetModule("WindTools")
 local A          = E:GetModule('Auras')
-local UF         = E:GetModule('UnitFrames');
+local UF         = E:GetModule('UnitFrames')
+local TT         = E:GetModule('Tooltip')
 local EasyShadow = E:NewModule('EasyShadow')
 local ElvUF      = ElvUF
 local LSM        = LibStub("LibSharedMedia-3.0")
@@ -14,7 +15,6 @@ local _G         = _G
 P["WindTools"]["EasyShadow"] = {
 	["enabled"] = true,
 	["BlzFrames"] = {
-		["GameTooltip"] = true,
 		["MMHolder"] = true,
 		["GameMenuFrame"] = true,
 		["InterfaceOptionsFrame"] = true,
@@ -36,6 +36,7 @@ P["WindTools"]["EasyShadow"] = {
 		["UnitFrameAura"] = false,
 		["UnitFrames"] = false,
 		["QuestIconShadow"] = true,
+		["Tooltip"] = true,
 	}
 }
 
@@ -45,7 +46,6 @@ local backdropr, backdropg, backdropb = 0, 0, 0
 
 -- 不需要检测插件载入即可上阴影的框体
 EasyShadow.BlzFrames = {
-	["GameTooltip"] = L["Game Tooltip"],
 	["MMHolder"] = L["MiniMap"],
 	["GameMenuFrame"] = L["Game Menu"],
 	["InterfaceOptionsFrame"] = L["Interface Options"],
@@ -69,6 +69,7 @@ EasyShadow.ElvUIFrames = {
 	["Classbar"] = L["Class Bar"],
 	["UnitFrameAura"] = L["Unit Frame Aura"],
 	["QuestIconShadow"] = L["Quest Icon"],
+	["Tooltip"] = L["Game Tooltip"],
 }
 
 local function CreateMyShadow(frame, size)
@@ -174,12 +175,7 @@ end
 function EasyShadow:ShadowBlzFrames()
 	if not self.db then return end
 	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then
-			CreateMyShadow(_G[k], 5)
-			-- 鼠标提示信息存在多个框体
-			-- TODO: 目前还少一个对比装备的框体
-			if k == "GameTooltip" then CreateMyShadow(_G["ItemRefTooltip"], 5) end
-		end
+		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 5) end
 	end
 	
 end
@@ -223,7 +219,7 @@ function EasyShadow:ShadowElvUIFrames()
 
 	if self.db.ElvUIFrames.CastbarIcon then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 2)
+			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 4)
 		end)	
 	end
 
@@ -239,7 +235,13 @@ function EasyShadow:ShadowElvUIFrames()
 			if not bars then return end
 			CreateMyShadow(bars, 4)
 		end)
-	end	
+	end
+	
+	if self.db.ElvUIFrames.Tooltip then
+		hooksecurefunc(TT, "SetStyle", function(_, tt)
+			CreateMyShadow(tt, 4)
+		end)
+	end
 end
 
 function EasyShadow:Initialize()

@@ -16,8 +16,8 @@ Enhanced. Configurable. Better performance.<br><br>
 [Curse](https://www.curseforge.com/wow/addons/elvui_windtools)
 
 # Support 支持
-ElvUI 10.78 + 8.0.1.27291 (Live)<br>
-ElvUI 10.78 + 8.0.1.27291 (Beta)
+ElvUI 10.78 + 8.0.1.27326 (Live)<br>
+ElvUI 10.78 + 8.0.1.27326 (Beta)
 
 ## More info 更多信息
 CHINESE 中文 → [NGA](http://bbs.ngacn.cc/read.php?tid=12142815)

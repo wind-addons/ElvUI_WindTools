@@ -90,7 +90,7 @@ local function InsertOptions()
 		custom_leave_combat = {
 			order = 13,
 			type = "input",
-			disabled = function() return not E.db.WindTools["Enter Combat Alert"]["customtext"] end,
+			disabled = function() return not E.db.WindTools["Enter Combat Alert"]["custom_text"] end,
 			name = L["Custom text (Leave)"],
 			width = 'full',
 			get = function(info) return E.db.WindTools["Enter Combat Alert"]["custom_text_leave"] end,

@@ -174,8 +174,14 @@ end
 function EasyShadow:ShadowBlzFrames()
 	if not self.db then return end
 	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 5) end
+		if self.db.BlzFrames[k] then
+			CreateMyShadow(_G[k], 5)
+			-- 鼠标提示信息存在多个框体
+			-- TODO: 目前还少一个对比装备的框体
+			if k == "GameTooltip" then CreateMyShadow(_G["ItemRefTooltip"], 5) end
+		end
 	end
+	
 end
 
 function EasyShadow:ShadowElvUIActionbars()

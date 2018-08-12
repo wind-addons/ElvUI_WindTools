@@ -97,7 +97,7 @@ local function shadowQuestIcon(_, block)
 	end
 	local rightButton = block.rightButton
 	if rightButton and not rightButton.styled then
-		CreateMyShadow(itemButton, 3)
+		CreateMyShadow(rightButton, 3)
 		rightButton.styled = true
 	end
 end

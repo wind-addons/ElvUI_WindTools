@@ -9,6 +9,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local EnhancedRCMenu = E:NewModule('EnhancedRCMenu');
+local locale = GetLocale()
 
 P["WindTools"]["Right-click Menu"] = {
 	["enabled"] = true,
@@ -102,7 +103,6 @@ local UnitPopupButtonsExtra = {
 function EnhancedRCMenu:Initialize()
 	if not E.db.WindTools["Right-click Menu"]["enabled"] then return end
 
-	local locale = GetLocale()
 	-- 加入右键
 	for k, v in pairs(UnitPopupButtonsExtra) do
 		UnitPopupButtons[k] = {}
@@ -139,27 +139,12 @@ function EnhancedRCMenu:Initialize()
 		end
 	end
 
-
-	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
-		if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
-		if (unit and (unit == "target" or string.find(unit, "party"))) then
-			local info
-			if (UnitIsPlayer(unit)) then
-				info = UIDropDownMenu_CreateInfo()
-				info.text = UnitPopupButtonsExtra["ARMORY"]
-				info.arg1 = {value="ARMORY",unit=unit}
-				info.func = popupClick
-				info.notCheckable = true
-				UIDropDownMenu_AddButton(info)
-			end
-			info = UIDropDownMenu_CreateInfo()
-			info.text = UnitPopupButtonsExtra["NAME_COPY"]
-			info.arg1 = {value="NAME_COPY",unit=unit}
-			info.func = popupClick
-			info.notCheckable = true
-			UIDropDownMenu_AddButton(info)
+	-- 人物右键菜单
+	for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
+		for _, value in pairs{"ARMORY","NAME_COPY"} do
+			tinsert(UnitPopupMenus[unit], 4, value)
 		end
-	end)
+	end
 
 	hooksecurefunc("UnitPopup_OnClick", function(self)
 		local unit = UIDROPDOWNMENU_INIT_MENU.unit

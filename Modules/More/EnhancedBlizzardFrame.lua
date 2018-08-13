@@ -191,6 +191,7 @@ EBF.AddonsList = {
 	["Blizzard_VoidStorageUI"] = { "VoidStorageFrame" },
 	["Blizzard_ScrappingMachineUI"] = { "ScrappingMachineFrame" },
 	["Blizzard_GuildUI"] = { "GuildFrame" },
+	["Blizzard_AzeriteUI"] = { "AzeriteEmpoweredItemUI" },
 }
 
 local function LoadPosition(self)

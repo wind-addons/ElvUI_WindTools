@@ -4,7 +4,8 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT         = E:GetModule("WindTools")
 local A          = E:GetModule('Auras')
-local UF         = E:GetModule('UnitFrames');
+local UF         = E:GetModule('UnitFrames')
+local TT         = E:GetModule('Tooltip')
 local EasyShadow = E:NewModule('EasyShadow')
 local ElvUF      = ElvUF
 local LSM        = LibStub("LibSharedMedia-3.0")
@@ -14,7 +15,6 @@ local _G         = _G
 P["WindTools"]["EasyShadow"] = {
 	["enabled"] = true,
 	["BlzFrames"] = {
-		["GameTooltip"] = true,
 		["MMHolder"] = true,
 		["GameMenuFrame"] = true,
 		["InterfaceOptionsFrame"] = true,
@@ -36,6 +36,7 @@ P["WindTools"]["EasyShadow"] = {
 		["UnitFrameAura"] = false,
 		["UnitFrames"] = false,
 		["QuestIconShadow"] = true,
+		["Tooltip"] = true,
 	}
 }
 
@@ -45,7 +46,6 @@ local backdropr, backdropg, backdropb = 0, 0, 0
 
 -- 不需要检测插件载入即可上阴影的框体
 EasyShadow.BlzFrames = {
-	["GameTooltip"] = L["Game Tooltip"],
 	["MMHolder"] = L["MiniMap"],
 	["GameMenuFrame"] = L["Game Menu"],
 	["InterfaceOptionsFrame"] = L["Interface Options"],
@@ -69,10 +69,13 @@ EasyShadow.ElvUIFrames = {
 	["Classbar"] = L["Class Bar"],
 	["UnitFrameAura"] = L["Unit Frame Aura"],
 	["QuestIconShadow"] = L["Quest Icon"],
+	["Tooltip"] = L["Game Tooltip"],
 }
 
-local function CreateMyShadow(frame, size)
+local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	if frame.shadow then return end
+	local back = backalpha or 0.5
+	local border = backalpha or 0.6
 
 	local shadow = CreateFrame("Frame", nil, frame)
 	shadow:SetFrameLevel(1)
@@ -82,8 +85,8 @@ local function CreateMyShadow(frame, size)
 		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size),
 		insets = {left = E:Scale(size), right = E:Scale(size), top = E:Scale(size), bottom = E:Scale(size)},
 	})
-	shadow:SetBackdropColor(backdropr, backdropg, backdropb, 0)
-	shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.8)
+	shadow:SetBackdropColor(backdropr, backdropg, backdropb, back)
+	shadow:SetBackdropBorderColor(borderr, borderg, borderb, border)
 
 	frame.shadow = shadow
 end
@@ -97,7 +100,7 @@ local function shadowQuestIcon(_, block)
 	end
 	local rightButton = block.rightButton
 	if rightButton and not rightButton.styled then
-		CreateMyShadow(itemButton, 3)
+		CreateMyShadow(rightButton, 3)
 		rightButton.styled = true
 	end
 end
@@ -176,6 +179,7 @@ function EasyShadow:ShadowBlzFrames()
 	for k, v in pairs(self.BlzFrames) do
 		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 5) end
 	end
+	
 end
 
 function EasyShadow:ShadowElvUIActionbars()
@@ -205,7 +209,7 @@ function EasyShadow:ShadowElvUIFrames()
 
 	if self.db.ElvUIFrames.UnitFrames then
 		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
-			CreateMyShadow(frame, 4)
+			CreateMyShadow(frame, 4, 0.5, 0.8)
 		end)
 	end
 
@@ -217,13 +221,13 @@ function EasyShadow:ShadowElvUIFrames()
 
 	if self.db.ElvUIFrames.CastbarIcon then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 2)
+			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 4)
 		end)	
 	end
 
 	if self.db.ElvUIFrames.UnitFrameAura then
 		hooksecurefunc(UF, "AuraIconUpdate", function(_, _, _, button)
-			CreateMyShadow(button, 2)
+			CreateMyShadow(button, 2, 0.5, 1)
 		end)	
 	end
 
@@ -231,9 +235,20 @@ function EasyShadow:ShadowElvUIFrames()
 		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
 			local bars = frame[frame.ClassBar]
 			if not bars then return end
-			CreateMyShadow(bars, 4)
+			CreateMyShadow(bars, 4, 0.5, 0.8)
 		end)
-	end	
+	end
+	
+	if self.db.ElvUIFrames.Tooltip then
+		hooksecurefunc(TT, "SetStyle", function(_, tt)
+			CreateMyShadow(tt, 4)
+		end)
+		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
+			if tt:IsForbidden() then return end
+			if E.private.tooltip.enable ~= true then return end
+			CreateMyShadow(_G["GameTooltipStatusBar"], 4, 0.8, 0)
+		end)
+	end
 end
 
 function EasyShadow:Initialize()

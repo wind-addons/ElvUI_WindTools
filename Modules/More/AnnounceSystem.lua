@@ -79,7 +79,7 @@ local ASL = {
 	["OtherTankTauntMissInChat"] = "|cffd63031通告系統：|r %s |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
 }
 if GetLocale() == "zhCN" then
-	local ASL = {
+	ASL = {
 		["AS"] = "通告系统",
 		["UseSpellNoTarget"] = "%s 使用了 %s",
 		["UseSpellTarget"] = "%s 使用了 %s -> %s",
@@ -95,7 +95,7 @@ if GetLocale() == "zhCN" then
 		["Thanks"] = "%s，谢谢你复活我:)",
 		["Taunt"] = "我成功嘲讽了 %s！",
 		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",
-		["PetTaunt"] = "我的寵物成功嘲讽了 %s！",
+		["PetTaunt"] = "我的宠物成功嘲讽了 %s！",
 		["PetTauntInChat"] = "|cffd63031通告系统：|r |cff00ff00宠物成功嘲讽|r -> |cfffdcb6e%s|r！",
 		["OtherTankTaunt"] = "%s 成功嘲讽了 %s",
 		["OtherTankTauntInChat"] = "|cffd63031通告系统：|r %s |cff00ff00成功嘲讽|r -> |cfffdcb6e%s|r！",

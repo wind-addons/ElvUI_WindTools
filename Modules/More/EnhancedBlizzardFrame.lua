@@ -13,6 +13,7 @@ local SetClampedToScreen = SetClampedToScreen
 local RegisterForDrag = RegisterForDrag
 local StartMoving = StartMoving
 local StopMovingOrSizing = StopMovingOrSizing
+local InCombatLockdown = InCombatLockdown
 
 P["WindTools"]["Enhanced Blizzard Frame"] = {
 	["enabled"] = true,
@@ -195,6 +196,14 @@ EBF.AddonsList = {
 }
 
 local function LoadPosition(self)
+	if InCombatLockdown() then
+		self:RegisterEvent('PLAYER_REGEN_ENABLED');
+		self.PLAYER_REGEN_ENABLED = function(self)
+			LoadPosition(self)
+			self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+		end
+		return
+	end
 	if self.IsMoving == true then return end
 	local Name = self:GetName()
 	if not self:GetPoint() then
@@ -271,7 +280,7 @@ function EBF:MakeMovable(Name)
 	frame:HookScript("OnShow", LoadPosition)
 	frame:HookScript("OnDragStart", OnDragStart)
 	frame:HookScript("OnDragStop", OnDragStop)
-	frame:HookScript("OnHide", OnDragStop)
+	--frame:HookScript("OnHide", OnDragStop)
 
 	if E.db.WindTools["Enhanced Blizzard Frame"].remember then
 		frame.ignoreFramePositionManager = true

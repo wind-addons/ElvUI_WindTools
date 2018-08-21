@@ -197,11 +197,13 @@ EBF.AddonsList = {
 
 local function LoadPosition(self)
 	if InCombatLockdown() then
-		self:RegisterEvent('PLAYER_REGEN_ENABLED');
-		self.PLAYER_REGEN_ENABLED = function(self)
-			LoadPosition(self)
-			self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-		end
+		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		self:SetScript("OnEvent", function(self, event)
+			if(event == "PLAYER_REGEN_ENABLED") then
+				LoadPosition(self)
+				self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+			end
+		end)
 		return
 	end
 	if self.IsMoving == true then return end

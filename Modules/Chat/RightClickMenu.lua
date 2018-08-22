@@ -140,11 +140,27 @@ function EnhancedRCMenu:Initialize()
 	end
 
 	-- 人物右键菜单
-	for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
-		for _, value in pairs{"ARMORY","NAME_COPY"} do
-			tinsert(UnitPopupMenus[unit], 4, value)
+	-- for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
+	-- 	for _, value in pairs{"ARMORY","NAME_COPY"} do
+	-- 		tinsert(UnitPopupMenus[unit], 4, value)
+	-- 	end
+	-- end
+	-- need to fix position problems
+	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
+		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and unit and (unit == "target" or string.find(unit, "party"))) then
+			local info = UIDropDownMenu_CreateInfo()
+			info.func = popupClick
+			info.notCheckable = true
+			if (UnitIsPlayer(unit)) then
+				info.text = UnitPopupButtonsExtra["ARMORY"]
+				info.arg1 = {value="ARMORY",unit=unit}
+				UIDropDownMenu_AddButton(info)
+			end
+			info.text = UnitPopupButtonsExtra["NAME_COPY"]
+			info.arg1 = {value="NAME_COPY",unit=unit}
+			UIDropDownMenu_AddButton(info)
 		end
-	end
+	end)
 
 	hooksecurefunc("UnitPopup_OnClick", function(self)
 		local unit = UIDROPDOWNMENU_INIT_MENU.unit

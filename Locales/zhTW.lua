@@ -94,7 +94,7 @@ L["Invite"] = "邀請"
 L["Friend Menu"] = "好友右鍵菜單"
 L["Chat Roster Menu"] = "聊天右鍵菜單"
 L["Guild Menu"] = "公會右鍵菜單"
-L["Disable REPORT to fix bug"] = "關閉回報來解決錯誤"
+L["Fix REPORT"] = "修復回報功能"
 -- 增强好友菜单
 L["Enhanced Friend List"] = "增強好友列表"
 L["Customize friend frame."] = "自定美化你的好友列表"

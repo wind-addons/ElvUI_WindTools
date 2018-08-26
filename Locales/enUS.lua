@@ -94,7 +94,7 @@ L["Invite"] = true
 L["Friend Menu"] = true
 L["Chat Roster Menu"] = true
 L["Guild Menu"] = true
-L["Disable REPORT to fix bug"] = true
+L["Fix REPORT"] = true
 -- 增强好友菜单
 L["Enhanced Friend List"] = true
 L["Customize friend frame."] = true

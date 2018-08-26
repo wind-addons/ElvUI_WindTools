@@ -20,7 +20,7 @@ P["WindTools"]["Right-click Menu"] = {
 		["GUILD_ADD"] = true,
 		["FRIEND_ADD"] = true,
 		["MYSTATS"] = true,
-		["ignoreReport"] = false,
+		["Fix_Report"] = false,
 	},
 	["chat_roster"] = {
 		["NAME_COPY"]  = true,
@@ -129,22 +129,36 @@ function EnhancedRCMenu:Initialize()
 		end
 	end
 
-	-- 关闭回报功能解决错误
-	if E.db.WindTools["Right-click Menu"]["chat_roster"]["ignoreReport"] then
-		for k, v in pairs(UnitPopupMenus["FRIEND"]) do
-			if v == "REPORT_PLAYER" then
-				tremove(UnitPopupMenus["FRIEND"], k)
-				break
-			end
+	-- 修复回报功能错误
+	if E.db.WindTools["Right-click Menu"]["chat_roster"]["Fix_Report"] then
+		local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
+		C_ChatInfo.CanReportPlayer = function(...)
+			return true
 		end
 	end
 
 	-- 人物右键菜单
-	for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
-		for _, value in pairs{"ARMORY","NAME_COPY"} do
-			tinsert(UnitPopupMenus[unit], 4, value)
+	-- for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
+	-- 	for _, value in pairs{"ARMORY","NAME_COPY"} do
+	-- 		tinsert(UnitPopupMenus[unit], 4, value)
+	-- 	end
+	-- end
+	-- need to fix position problems
+	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
+		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and unit and (unit == "target" or string.find(unit, "party"))) then
+			local info = UIDropDownMenu_CreateInfo()
+			info.func = popupClick
+			info.notCheckable = true
+			if (UnitIsPlayer(unit)) then
+				info.text = UnitPopupButtonsExtra["ARMORY"]
+				info.arg1 = {value="ARMORY",unit=unit}
+				UIDropDownMenu_AddButton(info)
+			end
+			info.text = UnitPopupButtonsExtra["NAME_COPY"]
+			info.arg1 = {value="NAME_COPY",unit=unit}
+			UIDropDownMenu_AddButton(info)
 		end
-	end
+	end)
 
 	hooksecurefunc("UnitPopup_OnClick", function(self)
 		local unit = UIDROPDOWNMENU_INIT_MENU.unit
@@ -240,12 +254,12 @@ local function InsertOptions()
 		}
 	end
 
-	Options["friend"].args.ignoreReport = {
+	Options["friend"].args.Fix_Report = {
 		order = -1,
 		type = "toggle",
-		name = L["Disable REPORT to fix bug"],
-		get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] end,
-		set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["ignoreReport"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+		name = L["Fix REPORT"],
+		get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] end,
+		set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 	}
 
 	for k, v in pairs(Options) do

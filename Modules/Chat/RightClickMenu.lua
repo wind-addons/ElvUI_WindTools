@@ -130,7 +130,7 @@ function EnhancedRCMenu:Initialize()
 	end
 
 	-- 修复回报功能错误
-	if E.db.WindTools["Right-click Menu"]["chat_roster"]["Fix_Report"] then
+	if E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] then
 		local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
 		C_ChatInfo.CanReportPlayer = function(...)
 			return true

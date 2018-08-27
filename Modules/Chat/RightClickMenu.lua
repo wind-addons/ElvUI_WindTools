@@ -145,7 +145,7 @@ function EnhancedRCMenu:Initialize()
 	-- end
 	-- need to fix position problems
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
-		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and unit and (unit == "target" or string.find(unit, "party"))) then
+		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER")) then
 			local info = UIDropDownMenu_CreateInfo()
 			info.func = popupClick
 			info.notCheckable = true

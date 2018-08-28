@@ -52,23 +52,23 @@ local function gethost()
 	return host
 end
 
-local function popupClick(self, info)
-	local editBox
-	local name, server = UnitName(info.unit)
-	if (info.value == "ARMORY") then
-		local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
-		editBox = ChatEdit_ChooseBoxForSend()
-		ChatEdit_ActivateChat(editBox)
-		editBox:SetText(armory)
-		editBox:HighlightText()
-	elseif (info.value == "NAME_COPY") then
-		editBox = ChatEdit_ChooseBoxForSend()
-		local hasText = (editBox:GetText() ~= "")
-		ChatEdit_ActivateChat(editBox)
-		editBox:Insert(name)
-		if (not hasText) then editBox:HighlightText() end
-	end
-end
+-- local function popupClick(self, info)
+-- 	local editBox
+-- 	local name, server = UnitName(info.unit)
+-- 	if (info.value == "ARMORY") then
+-- 		local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
+-- 		editBox = ChatEdit_ChooseBoxForSend()
+-- 		ChatEdit_ActivateChat(editBox)
+-- 		editBox:SetText(armory)
+-- 		editBox:HighlightText()
+-- 	elseif (info.value == "NAME_COPY") then
+-- 		editBox = ChatEdit_ChooseBoxForSend()
+-- 		local hasText = (editBox:GetText() ~= "")
+-- 		ChatEdit_ActivateChat(editBox)
+-- 		editBox:Insert(name)
+-- 		if (not hasText) then editBox:HighlightText() end
+-- 	end
+-- end
 
 local friend_features = {
 	"ARMORY",
@@ -146,17 +146,14 @@ function EnhancedRCMenu:Initialize()
 	-- need to fix position problems
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
 		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER")) then
+			local titleText = "|cfffe7b2cElvUI|r |cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r"
 			local info = UIDropDownMenu_CreateInfo()
-			info.func = popupClick
-			info.notCheckable = true
+			UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
+			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = titleText, isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")
 			if (UnitIsPlayer(unit)) then
-				info.text = UnitPopupButtonsExtra["ARMORY"]
-				info.arg1 = {value="ARMORY",unit=unit}
-				UIDropDownMenu_AddButton(info)
+				UnitPopup_AddDropDownButton(info, dropdownMenu, { text = UnitPopupButtonsExtra["ARMORY"], }, "ARMORY")
 			end
-			info.text = UnitPopupButtonsExtra["NAME_COPY"]
-			info.arg1 = {value="NAME_COPY",unit=unit}
-			UIDropDownMenu_AddButton(info)
+			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = UnitPopupButtonsExtra["NAME_COPY"], }, "NAME_COPY")
 		end
 	end)
 

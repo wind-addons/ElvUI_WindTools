@@ -3,35 +3,6 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
 local _G = _G
-local friend_features = {
-	"ARMORY",
-	"MYSTATS",
-	"NAME_COPY",
-	"SEND_WHO",
-	"FRIEND_ADD",
-	"GUILD_ADD",
-}
-local cr_features = {
-	"NAME_COPY",
-	"SEND_WHO",
-	"FRIEND_ADD",
-	"INVITE",
-}
-local guild_features = {
-	"ARMORY",
-	"NAME_COPY",
-	"FRIEND_ADD",
-}
-
-local UnitPopupButtonsExtra = {
-	["ARMORY"] = L["Armory"],
-	["SEND_WHO"] = L["Query Detail"],
-	["NAME_COPY"] = L["Get Name"],
-	["GUILD_ADD"] = L["Guild Invite"],
-	["FRIEND_ADD"] = L["Add Friend"],
-	["MYSTATS"] = L["Report MyStats"],
-	["INVITE"] = L["Invite"],
-}
 
 P["WindTools"] = {
 	["Tab Chat Mod"] = {

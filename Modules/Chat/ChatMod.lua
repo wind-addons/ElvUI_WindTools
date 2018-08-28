@@ -26,12 +26,6 @@ local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 local format = string.format
 local hooksecurefunc = hooksecurefunc
 
-P["WindTools"]["Tab Chat Mod"] = {
-	["enabled"] = true,
-	["whispercycle"] = false,
-	["useofficer"] = false,
-}
-
 function TabChatMod:Initialize()
 	if not E.db.WindTools["Tab Chat Mod"]["enabled"] then return end
 
@@ -133,38 +127,4 @@ function TabChatMod:Initialize()
 	end
 end
 
-local function InsertOptions()
-	E.Options.args.WindTools.args["Chat"].args["Tab Chat Mod"].args["addwhisper"] = {
-		order = 10,
-		type = "group",
-		name = L["Whisper Cycle"],
-		guiInline = true,
-		args = {
-			seteffect = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Tab Chat Mod"]["whispercycle"] end,
-				set = function(info, value) E.db.WindTools["Tab Chat Mod"]["whispercycle"] = value;end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["Chat"].args["Tab Chat Mod"].args["addofficer"] = {
-		order = 11,
-		type = "group",
-		name = L["Include Officer Channel"],
-		guiInline = true,
-		args = {
-			seteffect = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Tab Chat Mod"]["useofficer"] end,
-				set = function(info, value) E.db.WindTools["Tab Chat Mod"]["useofficer"] = value;end
-			},
-		}
-	}
-end
-
-WT.ToolConfigs["Tab Chat Mod"] = InsertOptions
 E:RegisterModule(TabChatMod:GetName())

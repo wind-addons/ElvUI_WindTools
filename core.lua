@@ -233,9 +233,30 @@ function WT:InsertOptions()
 			}
 		end
 	end
+	local function check_attributes(feature) -- check type and guiInline attributes
+		for arg_name, arg in pairs(feature) do
+			if arg.args then
+				arg.type = arg.type or "group"
+				arg.guiInline = true
+				check_attributes(arg.args)
+			else
+				arg.type = arg.type or "toggle"
+			end
+		end
+	end
 	-- 加载功能内部函数设定
-	-- TODO: 变更为性能更佳的载入方式
-	for _, func in pairs(WT.ToolConfigs) do func() end
+	for module_name, module in pairs(WT.ToolConfigs) do
+		for feature_name, feature in pairs(module) do
+			local func = feature.func
+			func()
+			feature.func = nil
+			check_attributes(feature, 5)
+			for arg_name, arg in pairs(feature) do
+				E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
+			end
+			feature.func = func
+		end
+	end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

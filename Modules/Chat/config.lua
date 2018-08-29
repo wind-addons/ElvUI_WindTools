@@ -279,60 +279,59 @@ WT.ToolConfigs["Chat"] = {
 			end
 		end,
 	},
-}
-
-WT.ToolConfigs["Chat"]["Right-click Menu"] = {
-	["friend"] = {
-		name = L["Friend Menu"],
-		order = 5,
-		args = {}
-	},
-	["chat_roster"] = {
-		name = L["Chat Roster Menu"],
-		order = 6,
-		args = {}
-	},
-	["guild"] = {
-		name = L["Guild Menu"],
-		order = 7,
-		args = {}
-	},
-	func = function()
-		-- 循环载入设定
-		for k, v in pairs(E:GetModule("EnhancedRCMenu").friend_features) do
-			WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args[v] = {
-				order = k + 1,
+	["Right-click Menu"] = {
+		["friend"] = {
+			name = L["Friend Menu"],
+			order = 5,
+			args = {}
+		},
+		["chat_roster"] = {
+			name = L["Chat Roster Menu"],
+			order = 6,
+			args = {}
+		},
+		["guild"] = {
+			name = L["Guild Menu"],
+			order = 7,
+			args = {}
+		},
+		func = function()
+			-- 循环载入设定
+			for k, v in pairs(E:GetModule("EnhancedRCMenu").friend_features) do
+				WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args[v] = {
+					order = k + 1,
+					type = "toggle",
+					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
+					set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+				}
+			end
+			for k, v in pairs(E:GetModule("EnhancedRCMenu").cr_features) do
+				WT.ToolConfigs["Chat"]["Right-click Menu"]["chat_roster"].args[v] = {
+					order = k + 1,
+					type = "toggle",
+					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
+					set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+				}
+			end
+			for k, v in pairs(E:GetModule("EnhancedRCMenu").guild_features) do
+				WT.ToolConfigs["Chat"]["Right-click Menu"]["guild"].args[v] = {
+					order = k + 1,
+					type = "toggle",
+					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
+					set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+				}
+			end
+		
+			WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args.Fix_Report = {
+				order = -1,
 				type = "toggle",
-				name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
-				get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
-				set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+				name = L["Fix REPORT"],
+				get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] end,
+				set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 			}
-		end
-		for k, v in pairs(E:GetModule("EnhancedRCMenu").cr_features) do
-			WT.ToolConfigs["Chat"]["Right-click Menu"]["chat_roster"].args[v] = {
-				order = k + 1,
-				type = "toggle",
-				name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
-				get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
-				set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-			}
-		end
-		for k, v in pairs(E:GetModule("EnhancedRCMenu").guild_features) do
-			WT.ToolConfigs["Chat"]["Right-click Menu"]["guild"].args[v] = {
-				order = k + 1,
-				type = "toggle",
-				name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
-				get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
-				set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-			}
-		end
-	
-		WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args.Fix_Report = {
-			order = -1,
-			type = "toggle",
-			name = L["Fix REPORT"],
-			get = function(info) return E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] end,
-			set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-		}
-	end,
+		end,
+	},
 }

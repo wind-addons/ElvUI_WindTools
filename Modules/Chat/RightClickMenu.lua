@@ -124,7 +124,7 @@ function EnhancedRCMenu:Initialize()
 		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER")) then
 			local info = UIDropDownMenu_CreateInfo()
 			UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
-			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = L["WindTools"], isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")
+			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = WT.Title, isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")
 			if (UnitIsPlayer(unit)) then
 				UnitPopup_AddDropDownButton(info, dropdownMenu, { text = EnhancedRCMenu.UnitPopupButtonsExtra["ARMORY"], }, "ARMORY")
 			end

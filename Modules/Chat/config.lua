@@ -65,6 +65,9 @@ P["WindTools"] = {
 
 WT.ToolConfigs["Chat"] = {
 	["Tab Chat Mod"] = {
+		tDesc   = L["Use tab to switch channel."],
+		oAuthor = "EUI",
+		cAuthor = "houshuu",
 		["addwhisper"] = {
 			name = L["Whisper Cycle"],
 			order = 5,
@@ -91,6 +94,9 @@ WT.ToolConfigs["Chat"] = {
 		},
 	},
 	["Enhanced Friend List"] = {
+		tDesc   = L["Customize friend frame."],
+		oAuthor = "ProjectAzilroka",
+		cAuthor = "houshuu",
 		["colorName"] = {
 			name = L['Features'],
 			order = 5,
@@ -279,6 +285,9 @@ WT.ToolConfigs["Chat"] = {
 		end,
 	},
 	["Right-click Menu"] = {
+		tDesc   = L["Enhanced right-click menu"],
+		oAuthor = "loudsoul",
+		cAuthor = "houshuu",
 		["friend"] = {
 			name = L["Friend Menu"],
 			order = 5,

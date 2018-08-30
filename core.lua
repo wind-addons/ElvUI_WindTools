@@ -72,11 +72,6 @@ local Tools = {
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
 	},
-	["Chat"] = {
-		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},
-		{"Right-click Menu", L["Enhanced right-click menu"], "loudsoul", "houshuu"},
-		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
-	},
 	["Quest"] = {
 	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
 		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
@@ -180,59 +175,7 @@ function WT:InsertOptions()
 			name  = WindToolsCreditList[i],
 		}
 	end
-	-- 生成功能相关设定列表
-	for cat, tools in pairs(Tools) do
-		E.Options.args.WindTools.args[cat] = {
-			order       = ToolsOrder[cat],
-			type        = "group",
-			name        = L[cat],
-			childGroups = "tab",
-			args        = {}
-		}
-		local n = 0
-		for _, tool in pairs(tools) do
-			local tName   = tool[1]
-			local tDesc   = tool[2]
-			local oAuthor = tool[3]
-			local cAuthor = tool[4]
-			n = n + 1
-			E.Options.args.WindTools.args[cat].args[tName] = {
-				order = n,
-				type  = "group",
-				name  = L[tName],
-				args  = {
-					header1 = {
-						order = 0,
-						type  = "header",
-						name  = L["Information"],
-					},
-					oriauthor = {
-						order = 1,
-						type  = "description",
-						name  = format(L["Author: %s, Edited by %s"], oAuthor, cAuthor)
-					},
-					tooldesc = {
-						order = 2,
-						type  = "description",
-						name  = tDesc
-					},
-					header2 = {
-						order = 3,
-						type  = "header",
-						name  = L["Setting"],
-					},
-					enablebtn = {
-						order = 4,
-						type  = "toggle",
-						width = "full",
-						name  = WT:ColorStr(L["Enable"]),
-						get   = function(info) return E.db.WindTools[tName]["enabled"] end,
-						set   = function(info, value) E.db.WindTools[tName]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
-					}
-				}
-			}
-		end
-	end
+
 	local function check_attributes(feature) -- check type and guiInline attributes
 		for arg_name, arg in pairs(feature) do
 			if arg.args then
@@ -244,15 +187,65 @@ function WT:InsertOptions()
 			end
 		end
 	end
-	-- 加载功能内部函数设定
+	
 	for module_name, module in pairs(WT.ToolConfigs) do
+		E.Options.args.WindTools.args[module_name] = {
+			order       = ToolsOrder[module_name],
+			type        = "group",
+			name        = L[module_name],
+			childGroups = "tab",
+			args        = {}
+		}
+		local n = 0
 		for feature_name, feature in pairs(module) do
-			if feature.func then
-				feature.func()
-				feature.func = nil
+			n = n + 1
+			-- 生成功能相关设定列表
+			if feature.tDesc then
+				E.Options.args.WindTools.args[module_name].args[feature_name] = {
+					order = n,
+					type  = "group",
+					name  = L[feature_name],
+					args  = {
+						header1 = {
+							order = 0,
+							type  = "header",
+							name  = L["Information"],
+						},
+						oriauthor = {
+							order = 1,
+							type  = "description",
+							name  = format(L["Author: %s, Edited by %s"], feature.oAuthor, feature.cAuthor)
+						},
+						tooldesc = {
+							order = 2,
+							type  = "description",
+							name  = feature.tDesc
+						},
+						header2 = {
+							order = 3,
+							type  = "header",
+							name  = L["Setting"],
+						},
+						enablebtn = {
+							order = 4,
+							type  = "toggle",
+							width = "full",
+							name  = WT:ColorStr(L["Enable"]),
+							get   = function(info) return E.db.WindTools[feature_name]["enabled"] end,
+							set   = function(info, value) E.db.WindTools[feature_name]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
+						}
+					}
+				}
+				feature.tDesc, feature.oAuthor, feature.cAuthor = nil, nil, nil
+				
+				-- 加载功能内部函数设定
+				if feature.func then
+					feature.func()
+					feature.func = nil
+				end
+				check_attributes(feature)
+				E.Options.args.WindTools.args[module_name].args[feature_name].args = feature
 			end
-			check_attributes(feature, 5)
-			E.Options.args.WindTools.args[module_name].args[feature_name].args = feature
 		end
 	end
 end

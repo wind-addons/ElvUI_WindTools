@@ -89,7 +89,6 @@ WT.ToolConfigs["Chat"] = {
 				},
 			}
 		},
-		func = function() end,
 	},
 	["Enhanced Friend List"] = {
 		["colorName"] = {

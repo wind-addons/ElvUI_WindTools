@@ -247,14 +247,12 @@ function WT:InsertOptions()
 	-- 加载功能内部函数设定
 	for module_name, module in pairs(WT.ToolConfigs) do
 		for feature_name, feature in pairs(module) do
-			local func = feature.func
-			func()
-			feature.func = nil
-			check_attributes(feature, 5)
-			for arg_name, arg in pairs(feature) do
-				E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
+			if feature.func then
+				feature.func()
+				feature.func = nil
 			end
-			feature.func = func
+			check_attributes(feature, 5)
+			E.Options.args.WindTools.args[module_name].args[feature_name].args = feature
 		end
 	end
 end

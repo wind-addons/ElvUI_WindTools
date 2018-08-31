@@ -77,7 +77,7 @@ EnhancedRCMenu.UnitPopupButtonsExtra = {
 }
 
 function EnhancedRCMenu:Initialize()
-	if not E.db.WindTools["Right-click Menu"]["enabled"] then return end
+	if not E.db.WindTools["Chat"]["Right-click Menu"]["enabled"] then return end
 
 	-- 加入右键
 	for k, v in pairs(EnhancedRCMenu.UnitPopupButtonsExtra) do
@@ -86,27 +86,27 @@ function EnhancedRCMenu:Initialize()
 	end
 	-- 好友功能 载入
 	for _, v in pairs(EnhancedRCMenu.friend_features) do
-		if E.db.WindTools["Right-click Menu"]["friend"][v] then
+		if E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] then
 			tinsert(UnitPopupMenus["FRIEND"], 1, v)
 		end
 	end
 	-- 聊天名单功能 载入
 	for _, v in pairs(EnhancedRCMenu.cr_features) do
-		if E.db.WindTools["Right-click Menu"]["chat_roster"][v] then
+		if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
 			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
 		end
 	end
 
 	-- 公会功能 载入
 	for _, v in pairs(EnhancedRCMenu.guild_features) do
-		if E.db.WindTools["Right-click Menu"]["guild"][v] then
+		if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
 			tinsert(UnitPopupMenus["GUILD"], 1, v)
 			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], 1, v)
 		end
 	end
 
 	-- 修复回报功能错误
-	if E.db.WindTools["Right-click Menu"]["friend"]["Fix_Report"] then
+	if E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] then
 		local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
 		C_ChatInfo.CanReportPlayer = function(...)
 			return true

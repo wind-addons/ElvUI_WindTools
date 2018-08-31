@@ -205,7 +205,7 @@ function EFL:ClassColorCode(class)
 	return format('|cFF%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
 end
 function EFL:UpdateFriends(button)
-	self.db = E.db.WindTools["Enhanced Friend List"]["enhanced"]
+	self.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
@@ -291,15 +291,15 @@ end
 
 function EFL:Initialize()
 	-- 总开关
-	if not E.db.WindTools["Enhanced Friend List"]["enabled"] then return end
+	if not E.db.WindTools["Chat"]["Enhanced Friend List"]["enabled"] then return end
 	
-	if E.db.WindTools["Enhanced Friend List"]["color_name"] then
+	if E.db.WindTools["Chat"]["Enhanced Friend List"]["color_name"] then
 		-- 检查是否要染色
 		hooksecurefunc("FriendsList_Update", FriendColorInit)
 		hooksecurefunc("HybridScrollFrame_Update", FriendColorInit)
 	end
 
-	if E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] then
+	if E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]["enabled"] then
 		-- 检查是否要进行增强
 		EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 	end

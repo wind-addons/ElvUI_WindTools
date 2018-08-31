@@ -27,7 +27,7 @@ local format = string.format
 local hooksecurefunc = hooksecurefunc
 
 function TabChatMod:Initialize()
-	if not E.db.WindTools["Tab Chat Mod"]["enabled"] then return end
+	if not E.db.WindTools["Chat"]["Tab Chat Mod"]["enabled"] then return end
 
 	function ChatEdit_CustomTabPressed(self)
 		if strsub(tostring(self:GetText()), 1, 1) == "/" then return end
@@ -44,7 +44,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -60,7 +60,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -71,7 +71,7 @@ function TabChatMod:Initialize()
 			if (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -82,7 +82,7 @@ function TabChatMod:Initialize()
 			if (IsInGuild) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -90,17 +90,17 @@ function TabChatMod:Initialize()
 				ChatEdit_UpdateHeader(self);
 			end
 		elseif (self:GetAttribute("chatType") == "GUILD") then
-			if (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			if (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
 				self:SetAttribute("chatType", "SAY");
 				ChatEdit_UpdateHeader(self);
 			end
-		elseif (self:GetAttribute("chatType") == "OFFICER" and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+		elseif (self:GetAttribute("chatType") == "OFFICER" and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 			self:SetAttribute("chatType", "SAY");
 			ChatEdit_UpdateHeader(self);
-		elseif (self:GetAttribute("chatType") == "WHISPER" and not E.db.WindTools["Tab Chat Mod"]["whispercycle"]) then
+		elseif (self:GetAttribute("chatType") == "WHISPER" and not E.db.WindTools["Chat"]["Tab Chat Mod"]["whispercycle"]) then
 			self:SetAttribute("chatType", "SAY");
 			ChatEdit_UpdateHeader(self);
 		elseif (self:GetAttribute("chatType") == "CHANNEL") then
@@ -116,7 +116,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else

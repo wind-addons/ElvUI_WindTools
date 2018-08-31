@@ -59,10 +59,6 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 local Tools = {
-	["Trade"] = {
-		{"Auto Delete", L["Enter DELETE automatically."], "bulleet", "houshuu"},
-		{"Already Known", L["Change item color if learned before."], "ahak", "houshuu"},
-	},
 	["Interface"] = {
 		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
 		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced", "houshuu"},
@@ -231,8 +227,8 @@ function WT:InsertOptions()
 							type  = "toggle",
 							width = "full",
 							name  = WT:ColorStr(L["Enable"]),
-							get   = function(info) return E.db.WindTools[feature_name]["enabled"] end,
-							set   = function(info, value) E.db.WindTools[feature_name]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
+							get   = function(info) return E.db.WindTools[module_name][feature_name]["enabled"] end,
+							set   = function(info, value) E.db.WindTools[module_name][feature_name]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
 						}
 					}
 				}
@@ -246,6 +242,7 @@ function WT:InsertOptions()
 				check_attributes(feature)
 				for arg_name, arg in pairs(feature) do
 					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
+					--E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name].disabled = not E.db.WindTools[module_name][feature_name]["enabled"]
 				end
 			end
 		end

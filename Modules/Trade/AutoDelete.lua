@@ -8,12 +8,8 @@
 local E, L, V, P, G = unpack(ElvUI)
 local Panel = StaticPopupDialogs["DELETE_GOOD_ITEM"]
 
-P["WindTools"]["Auto Delete"] = {
-	["enabled"] = true,
-}
-
 local function AddText(boxEditor)
-	if not E.db.WindTools["Auto Delete"]["enabled"] then return end
+	if not E.db.WindTools["Trade"]["Auto Delete"]["enabled"] then return end
 	boxEditor.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
 end
 

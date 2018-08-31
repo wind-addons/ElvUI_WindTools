@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local EnhancedRCMenu = E:NewModule('EnhancedRCMenu');
+local EnhancedRCMenu = E:NewModule('Wind_EnhancedRCMenu')
 local locale = GetLocale()
 
 local function urlencode(s)

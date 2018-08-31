@@ -10,7 +10,7 @@
 local E, L, V, P, G = unpack(ElvUI);
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
-local EFL = E:NewModule('EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
+local EFL = E:NewModule('Wind_EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
 
 -- Friend Color
 local function Hex(r, g, b)

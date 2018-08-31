@@ -206,6 +206,7 @@ WT.ToolConfigs["Chat"] = {
 			args = {},
 		},
 		func = function()
+			local EFL = E:GetModule("Wind_EnhancedFriendsList")
 			local GameIconsOptions = {
 				Alliance = FACTION_ALLIANCE,
 				Horde = FACTION_HORDE,
@@ -265,7 +266,7 @@ WT.ToolConfigs["Chat"] = {
 					type = 'execute',
 					name = L[Value],
 					func = function() return end,
-					image = function(info) return E:GetModule("EnhancedFriendsList").GameIcons[info[#info]][E.db.WindTools["Enhanced Friend List"].enhanced.GameIcon[Key]], 32, 32 end,
+					image = function(info) return EFL.GameIcons[info[#info]][E.db.WindTools["Enhanced Friend List"].enhanced.GameIcon[Key]], 32, 32 end,
 				}
 			end
 			
@@ -279,7 +280,7 @@ WT.ToolConfigs["Chat"] = {
 					type = 'execute',
 					name = L[Value],
 					func = function() return end,
-					image = function(info) return E:GetModule("EnhancedFriendsList").StatusIcons[E.db.WindTools["Enhanced Friend List"].enhanced.StatusIconPack][info[#info]], 16, 16 end,
+					image = function(info) return EFL.StatusIcons[E.db.WindTools["Enhanced Friend List"].enhanced.StatusIconPack][info[#info]], 16, 16 end,
 				}
 			end
 		end,
@@ -304,30 +305,31 @@ WT.ToolConfigs["Chat"] = {
 			args = {}
 		},
 		func = function()
+			local EnhancedRCMenu = E:GetModule("Wind_EnhancedRCMenu")
 			-- 循环载入设定
-			for k, v in pairs(E:GetModule("EnhancedRCMenu").friend_features) do
+			for k, v in pairs(EnhancedRCMenu.friend_features) do
 				WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args[v] = {
 					order = k + 1,
 					type = "toggle",
-					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
 					get = function(info) return E.db.WindTools["Right-click Menu"]["friend"][v] end,
 					set = function(info, value) E.db.WindTools["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 				}
 			end
-			for k, v in pairs(E:GetModule("EnhancedRCMenu").cr_features) do
+			for k, v in pairs(EnhancedRCMenu.cr_features) do
 				WT.ToolConfigs["Chat"]["Right-click Menu"]["chat_roster"].args[v] = {
 					order = k + 1,
 					type = "toggle",
-					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
 					get = function(info) return E.db.WindTools["Right-click Menu"]["chat_roster"][v] end,
 					set = function(info, value) E.db.WindTools["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 				}
 			end
-			for k, v in pairs(E:GetModule("EnhancedRCMenu").guild_features) do
+			for k, v in pairs(EnhancedRCMenu.guild_features) do
 				WT.ToolConfigs["Chat"]["Right-click Menu"]["guild"].args[v] = {
 					order = k + 1,
 					type = "toggle",
-					name = E:GetModule("EnhancedRCMenu").UnitPopupButtonsExtra[v],
+					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
 					get = function(info) return E.db.WindTools["Right-click Menu"]["guild"][v] end,
 					set = function(info, value) E.db.WindTools["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 				}

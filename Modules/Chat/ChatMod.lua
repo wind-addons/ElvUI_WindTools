@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local TabChatMod = E:NewModule('TabChatMod', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local TabChatMod = E:NewModule('Wind_TabChatMod', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 local _G = _G
 local CreateFrame = CreateFrame

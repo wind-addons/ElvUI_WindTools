@@ -244,7 +244,9 @@ function WT:InsertOptions()
 					feature.func = nil
 				end
 				check_attributes(feature)
-				E.Options.args.WindTools.args[module_name].args[feature_name].args = feature
+				for arg_name, arg in pairs(feature) do
+					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
+				end
 			end
 		end
 	end

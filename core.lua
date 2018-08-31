@@ -244,6 +244,12 @@ function WT:InsertOptions()
 					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
 					--E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name].disabled = not E.db.WindTools[module_name][feature_name]["enabled"]
 				end
+
+				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除
+				if E.db.WindTools[feature_name] then
+					E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
+					E.db.WindTools[feature_name] = nil
+				end
 			end
 		end
 	end

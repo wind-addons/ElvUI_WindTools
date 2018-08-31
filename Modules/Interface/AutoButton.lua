@@ -913,12 +913,6 @@ function AB:Initialize()
 	
 	local db = E.db.WindTools["Auto Buttons"]
 	
-	--Convert old ver.
-	if E.db.WindTools.auto_quest_button == false then
-		db.enable = false
-		E.db.WindTools.auto_quest_button = nil
-	end
-	
 	-- Create anchor
 	local AutoButtonAnchor = CreateFrame("Frame", "AutoButtonAnchor", UIParent)
 	AutoButtonAnchor:SetClampedToScreen(true)

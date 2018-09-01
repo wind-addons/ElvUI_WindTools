@@ -68,14 +68,6 @@ local Tools = {
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
 	},
-	["More Tools"] = {
-		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
-		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
-		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-		{"Fast Loot", L["Let auto-loot quickly."], "Leatrix", "houshuu"},
-		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI S&L", "houshuu"},
-		{"Enhanced Tag", L["Add some tags."], "houshuu", "houshuu"},
-	}
 }
 
 function WT:InsertOptions()

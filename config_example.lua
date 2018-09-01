@@ -4,7 +4,7 @@ local WT = E:GetModule("WindTools")
 
 local _G = _G
 
-P["WindTools"] = {
+P["WindTools"][module_name] = {
 	[feature_name] = {
 		["enabled"] = true,
 	},

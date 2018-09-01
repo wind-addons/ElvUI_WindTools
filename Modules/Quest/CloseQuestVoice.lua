@@ -3,9 +3,6 @@ local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local CQV = E:NewModule('CloseQuestVoice', 'AceHook-3.0');
 
-P["WindTools"]["Close Quest Voice"] = {
-	["enabled"] = false,
-}
 
 local function CloseVoice()
 	hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
@@ -15,7 +12,7 @@ end
 
 function CQV:Initialize()
 
-	if not E.db.WindTools["Close Quest Voice"]["enabled"] then return end
+	if not E.db.WindTools["Quest"]["Close Quest Voice"]["enabled"] then return end
 
 	if TalkingHeadFrame then
     	CloseVoice()

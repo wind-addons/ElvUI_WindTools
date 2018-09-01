@@ -68,12 +68,6 @@ local Tools = {
 		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
 		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
 	},
-	["Quest"] = {
-	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
-		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
-	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
-		{"Objective Progress", L["Add quest/mythic+ dungeon progress to tooltip."], "Simca", "houshuu"},
-	},
 	["More Tools"] = {
 		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
 		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},

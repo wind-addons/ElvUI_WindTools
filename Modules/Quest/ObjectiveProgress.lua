@@ -10,9 +10,6 @@ local SOP = E:NewModule('SOP', 'AceHook-3.0', 'AceEvent-3.0');
 -- Localized function references
 local LOP = _G.LibStub("LibObjectiveProgress-1.0")
 
-P["WindTools"]["Objective Progress"] = {
-    ["enabled"] = true,
-}
 
 -- OnTooltipSetUnit hook function
 local function SOP_Hook_OnTooltipSetUnit(self)
@@ -42,7 +39,7 @@ end
 
 -- Set our hook function
 function SOP:Initialize()
-    if E.db.WindTools["Objective Progress"]["enable"] then return end
+    if E.db.WindTools["Quest"]["Objective Progress"]["enable"] then return end
     GameTooltip:HookScript("OnTooltipSetUnit", SOP_Hook_OnTooltipSetUnit)
 end
 

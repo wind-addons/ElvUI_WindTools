@@ -150,6 +150,7 @@ WT.ToolConfigs["Quest"] = {
 					order = 2,
 					type  = 'range',
 					name  = L["Size"],
+					disabled = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] end,
 					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"] end,
 					min   = 10,
 					max   = 30,
@@ -176,9 +177,6 @@ WT.ToolConfigs["Quest"] = {
 				},
 			},
 		},
-		func = function()
-			WT.ToolConfigs["Quest"]["Quest List Enhanced"].leftsidemode.disabled = E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"]
-		end,
 	},
 	["Quest Announcment"] = {
 		tDesc   = L["Let you know quest is completed."],

@@ -43,25 +43,25 @@ WT.ToolConfigs["Quest"] = {
 		tDesc   = L["Add the level information in front of the quest name."],
 		oAuthor = "wandercga",
 		cAuthor = "houshuu",
-		general = {
+		["general"] = {
 			order = 5,
 			name = L['General'],
 			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
-				titlefont = {
+				["titlefont"] = {
 					type = 'select', dialogControl = 'LSM30_Font',
 					order = 1,
 					name = L['Name Font'],
 					values = LSM:HashTable('font'),
 				},
-				titlefontsize = {
+				["titlefontsize"] = {
 					order = 2,
 					name = L['Name Font Size'],
 					type = 'range',
 					min = 6, max = 22, step = 1,
 				},
-				titlefontflag = {
+				["titlefontflag"] = {
 					name = L["Name Font Flag"],
 					order = 3,
 					type = 'select',
@@ -73,19 +73,19 @@ WT.ToolConfigs["Quest"] = {
 						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
-				infofont = {
+				["infofont"] = {
 					type = 'select', dialogControl = 'LSM30_Font',
 					order = 4,
 					name = L['Info Font'],
 					values = LSM:HashTable('font'),
 				},
-				infofontsize = {
+				["infofontsize"] = {
 					order = 5,
 					name = L["Info Font Size"],
 					type = 'range',
 					min = 6, max = 22, step = 1,
 				},
-				infofontflag = {
+				["infofontflag"] = {
 					name = L["Info Font Outline"],
 					order = 6,
 					type = 'select',
@@ -97,44 +97,44 @@ WT.ToolConfigs["Quest"] = {
 						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
-				titlecolor = {
+				["titlecolor"] = {
 					order = 7,
 					type = "toggle",
 					name = L["Title Class Color"],
 				},
 			},
 		},
-		level = {
+		["level"] = {
 			order = 6,
 			name = L['Quest Level'],
 			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
-				titlelevel = {
+				["titlelevel"] = {
 					order = 1,
 					type = "toggle",
 					name = L["Tracker Level"],
 					desc = L["Display level info in quest title (Tracker)"],
 				},
-				detaillevel = {
+				["detaillevel"] = {
 					order = 2,
 					type = "toggle",
 					name = L["Quest details level"],
 					desc = L["Display level info in quest title (Quest details)"],
 				},
-				ignorehighlevel = {
+				["ignorehighlevel"] = {
 					order = 3,
 					type = "toggle",
 					name = L["Ignore high level"],
 				},
 			},
 		},
-		leftsidemode = {
+		["leftsidemode"] = {
 			order = 7,
 			name = L["Left Side Minimize Button"],
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
-				leftside = {
+				["leftside"] = {
 					order = 1,
 					type  = "toggle",
 					name  = L["Enable"],
@@ -146,7 +146,7 @@ WT.ToolConfigs["Quest"] = {
 						end
 					end,
 				},
-				leftsidesize = {
+				["leftsidesize"] = {
 					order = 2,
 					type  = 'range',
 					name  = L["Size"],
@@ -158,19 +158,19 @@ WT.ToolConfigs["Quest"] = {
 				},
 			}
 		},
-		other = {
+		["other"] = {
 			order = 8,
 			name = L['Other Setting'],
 			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
-				width = {
+				["width"] = {
 					order = 1,
 					type = 'range',
 					name = L["Tracker width"],
 					min = 200, max = 300, step = 1,
 				},
-				frametitle = {
+				["frametitle"] = {
 					order = 2,
 					type = "toggle",
 					name = L["Frame Title"],
@@ -182,31 +182,31 @@ WT.ToolConfigs["Quest"] = {
 		tDesc   = L["Let you know quest is completed."],
 		oAuthor = "EUI",
 		cAuthor = "houshuu",
-		NoDetail = {
+		["NoDetail"] = {
 			order = 5,
 			name = L["No Detail"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] = value;end
 		},
-		Instance = {
+		["Instance"] = {
 			order = 6,
 			name = L["Instance"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Instance"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Instance"] = value;end
 		},
-		Raid = {
+		["Raid"] = {
 			order = 7,
 			name = L["Raid"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] = value; E:StaticPopup_Show("PRIVATE_RL")end
 		},
-		Party = {
+		["Party"] = {
 			order = 8,
 			name = L["Party"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Party"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Party"] = value;end
 		},
-		Solo = {
+		["Solo"] = {
 			order = 9,
 			name = L["Solo"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] end,

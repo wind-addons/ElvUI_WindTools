@@ -72,7 +72,7 @@ WT.ToolConfigs["Chat"] = {
 			name = L["Whisper Cycle"],
 			order = 5,
 			args = {
-				seteffect = {
+				["seteffect"] = {
 					name = L["Enable"],
 					order = 1,
 					get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"]["whispercycle"] end,
@@ -84,7 +84,7 @@ WT.ToolConfigs["Chat"] = {
 			name = L["Include Officer Channel"],
 			order = 6,
 			args = {
-				seteffect = {
+				["seteffect"] = {
 					name = L["Enable"],
 					order = 1,
 					get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"] end,
@@ -101,13 +101,13 @@ WT.ToolConfigs["Chat"] = {
 			name = L['Features'],
 			order = 5,
 			args = {
-				color_name = {
+				["color_name"] = {
 					name = L['Name color & Level'],
 					order = 1,
 					get = function(info) return E.db.WindTools["Chat"]["Enhanced Friend List"].color_name end,
 					set = function(info, value) E.db.WindTools["Chat"]["Enhanced Friend List"].color_name = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
-				enhanced_enable = {
+				["enhanced_enable"] = {
 					name = L['Enhanced Texuture'],
 					order = 2,
 					get = function(info) return E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced["enabled"] end,
@@ -121,21 +121,21 @@ WT.ToolConfigs["Chat"] = {
 			get = function(info) return E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced[info[#info]] end,
 			set = function(info, value) E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced[info[#info]] = value FriendsFrame_Update() end,
 			args = {
-				NameFont = {
+				["NameFont"] = {
 					name = L['Name Font'],
 					order = 1,
 					type = 'select', dialogControl = 'LSM30_Font',
 					desc = L['The font that the RealID / Character Name / Level uses.'],
 					values = LSM:HashTable('font'),
 				},
-				NameFontSize = {
+				["NameFontSize"] = {
 					name = L['Name Font Size'],
 					order = 2,
 					type = 'range',
 					desc = L['The font size that the RealID / Character Name / Level uses.'],
 					min = 6, max = 22, step = 1,
 				},
-				NameFontFlag = {
+				["NameFontFlag"] = {
 					name = L['Name Font Flag'],
 					order = 3,
 					type = 'select',
@@ -148,21 +148,21 @@ WT.ToolConfigs["Chat"] = {
 						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
-				InfoFont = {
+				["InfoFont"] = {
 					type = 'select', dialogControl = 'LSM30_Font',
 					name = L['Info Font'],
 					order = 4,
 					desc = L['The font that the Zone / Server uses.'],
 					values = LSM:HashTable('font'),
 				},
-				InfoFontSize = {
+				["InfoFontSize"] = {
 					name = L['Info Font Size'],
 					order = 5,
 					desc = L['The font size that the Zone / Server uses.'],
 					type = 'range',
 					min = 6, max = 22, step = 1,
 				},
-				InfoFontFlag = {
+				["InfoFontFlag"] = {
 					name = L['Info Font Outline'],
 					order = 6,
 					desc = L['The font flag that the Zone / Server uses.'],
@@ -175,7 +175,7 @@ WT.ToolConfigs["Chat"] = {
 						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
-				StatusIconPack = {
+				["StatusIconPack"] = {
 					name = L['Status Icon Pack'],
 					order = 7,
 					desc = L['Different Status Icons.'],

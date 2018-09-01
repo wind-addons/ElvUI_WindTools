@@ -71,19 +71,19 @@ WT.ToolConfigs["More Tools"] = {
 			order = 5,
 			name = L["Interrupt"],
 			args = {
-				Enable = {
+				["Enable"] = {
 					order = 1,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				SoloYell = {
+				["SoloYell"] = {
 					order = 2,
 					name = L["Solo Yell"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["SoloYell"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["SoloYell"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				IncludePet = {
+				["IncludePet"] = {
 					order = 3,
 					name = L["Include Pet"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["IncludePet"] end,
@@ -95,43 +95,43 @@ WT.ToolConfigs["More Tools"] = {
 			order = 6,
 			name = L["Taunt"],
 			args = {
-				Enable = {
+				["Enable"] = {
 					order = 0,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["enabled"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				Enable = {
+				["Enable"] = {
 					order = 1,
 					name = L["Enable Miss"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["missenabled"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["missenabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				PlayerSmart = {
+				["PlayerSmart"] = {
 					order = 2,
 					name = L["Player Smart"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				PetSmart = {
+				["PetSmart"] = {
 					order = 3,
 					name = L["Pet Smart"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				OtherTankSmart = {
+				["OtherTankSmart"] = {
 					order = 4,
 					name = L["Other Tank Smart"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				IncludePet = {
+				["IncludePet"] = {
 					order = 5,
 					name = L["Include Pet"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				IncludeOthers = {
+				["IncludeOthers"] = {
 					order = 5,
 					name = L["Include Other Tank"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludeOtherTank"] end,
@@ -143,7 +143,7 @@ WT.ToolConfigs["More Tools"] = {
 			order = 7,
 			name = L["Res And Threat"],
 			args = {
-				Enable = {
+				["Enable"] = {
 					order = 1,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["ResAndThreat"]["enabled"] end,
@@ -155,7 +155,7 @@ WT.ToolConfigs["More Tools"] = {
 			order = 8,
 			name = L["Res Thanks"],
 			args = {
-				Enable = {
+				["Enable"] = {
 					order = 1,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["ResThanks"]["enabled"] end,
@@ -167,7 +167,7 @@ WT.ToolConfigs["More Tools"] = {
 			order = 9,
 			name = L["Raid Useful Spells"],
 			args = {
-				Enable = {
+				["Enable"] = {
 					order = 1,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["RaidUsefulSpells"]["enabled"] end,
@@ -180,55 +180,55 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Setting CVars easily."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		EffectControl = {
+		["EffectControl"] = {
 			order = 5,
 			name = L["Effect Control"],
 			get = function(info) return GetCVarBool(info[#info]) end,
 			set = function(info, value) SetCVarBool(info[#info], value) end,
 			args = {
-				ffxGlow = {
+				["ffxGlow"] = {
 					order = 1,
 					name = L["Glow Effect"],
 				},
-				ffxDeath = {
+				["ffxDeath"] = {
 					order = 2,
 					name = L["Death Effect"],
 				},
-				ffxNether = {
+				["ffxNether"] = {
 					order = 3,
 					name = L["Nether Effect"],
 				},
 			},
 		},
-		convenience = {
+		["convenience"] = {
 			order = 6,
 			name = L["Convenient Setting"],
 			get = function(info) return GetCVarBool(info[#info]) end,
 			set = function(info, value) SetCVarBool(info[#info], value) end,
 			args = {
-				alwaysCompareItems = {
+				["alwaysCompareItems"] = {
 					order = 1,
 					name = L["Auto Compare"],
 				},
-				showQuestTrackingTooltips = {
+				["showQuestTrackingTooltips"] = {
 					order = 2,
 					width = "double",
 					name = L["Tooltips quest info"],
 				},
 			},
 		},
-		fix = {
+		["fix"] = {
 			order = 7,
 			name = L["Fix Problem"],
 			get = function(info) return GetCVarBool(info[#info]) end,
 			set = function(info, value) SetCVarBool(info[#info], value) end,
 			args = {
-				rawMouseEnable = {
+				["rawMouseEnable"] = {
 					order = 1,
 					width = "double",
 					name = L["Raw Mouse"],
 				},
-				rawMouseAccelerationEnable  = {
+				["rawMouseAccelerationEnable"]  = {
 					order = 2,
 					width = "double",
 					name = L["Raw Mouse Acceleration"],
@@ -244,13 +244,13 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Alert you after enter or leave combat."],
 		oAuthor = "loudsoul",
 		cAuthor = "houshuu",
-		custom_text = {
+		["custom_text"] = {
 			order = 5,
 			name = L["Use custom text"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		},
-		custom_enter_combat = {
+		["custom_enter_combat"] = {
 			order = 6,
 			type = "input",
 			name = L["Custom text (Enter)"],
@@ -259,7 +259,7 @@ WT.ToolConfigs["More Tools"] = {
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 		},
-		custom_leave_combat = {
+		["custom_leave_combat"] = {
 			order = 7,
 			type = "input",
 			disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
@@ -268,7 +268,7 @@ WT.ToolConfigs["More Tools"] = {
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 		},
-		setscale = {
+		["setscale"] = {
 			order = 8,
 			type = "range",
 			name = L["Scale"],
@@ -282,7 +282,7 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Let auto-loot quickly."],
 		oAuthor = "Leatrix",
 		cAuthor = "houshuu",
-		setspeed = {
+		["setspeed"] = {
 			order = 5,
 			type = "range",
 			name = L["Fast Loot Speed"],
@@ -290,7 +290,7 @@ WT.ToolConfigs["More Tools"] = {
 			get = function(info) return E.db.WindTools["More Tools"]["Fast Loot"]["speed"] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Fast Loot"]["speed"] = value;end
 		},
-		setspeeddesc = {
+		["setspeeddesc"] = {
 			order = 6,
 			type = "description",
 			name = L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."],
@@ -300,41 +300,41 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Move frames and set scale of buttons."],
 		oAuthor = "ElvUI S&L",
 		cAuthor = "houshuu",
-		moveframes = {
+		["moveframes"] = {
 			order = 5,
 			name = L["Move Frames"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {
-				moveframe = {
+				["moveframe"] = {
 					order = 1,
 					name = L["Move Blizzard Frame"],
 				},
-				moveelvbag = {
+				["moveelvbag"] = {
 					order = 2,
 					name = L["Move ElvUI Bag"],
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["moveframe"] end,
 				},
-				remember = {
+				["remember"] = {
 					order = 3,
 					name = L["Remember Position"],
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["moveframe"] end,
 				},
 			},
 		},
-		errorframe = {
+		["errorframe"] = {
 			order = 6,
 			name = L["Error Frame"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; EBF:ErrorFrameSize() end,
 			args = {
-				width = {
+				["width"] = {
 					order = 1,
 					name = L["Width"],
 					type = "range",
 					min = 100, max = 1000, step = 1,
 				},
-				height = {
+				["height"] = {
 					order = 2,
 					name = L["Height"],
 					type = "range",
@@ -342,11 +342,11 @@ WT.ToolConfigs["More Tools"] = {
 				},
 			},
 		},
-		others = {
+		["others"] = {
 			order = 7,
 			name = L["Other Setting"],
 			args = {
-				vehicleSeatScale = {
+				["vehicleSeatScale"] = {
 					order = 1,
 					type = 'range',
 					name = L["Vehicle Seat Scale"],
@@ -362,64 +362,64 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Add some tags."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		desc0 = {
+		["desc0"] = {
 			order = 5,
 			type = "description",
 			name = "\n",
 		},
-		health = {
+		["health"] = {
 			order = 6,
 			type = "group",
 			name = L["Health"],
 			guiInline = true,
 			args = {
-				percentshort = {
+				["percentshort"] = {
 					order = 1,
 					type = "description",
 					name = "[health:percent-short] "..L["Example:"].."10% / "..L["Dead"],
 				},
-				percentshortnostatus = {
+				["percentshortnostatus"] = {
 					order = 2,
 					type = "description",
 					name = "[health:percent-short-nostatus] "..L["Example:"].."10% / 0%",
 				},
-				percentnosymbol = {
+				["percentnosymbol"] = {
 					order = 3,
 					type = "description",
 					name = "[health:percent-nosymbol] "..L["Example:"].."10 / "..L["Dead"],
 				},
-				percentnosymbolnostatus = {
+				["percentnosymbolnostatus"] = {
 					order = 4,
 					type = "description",
 					name = "[health:percent-nosymbol-nostatus] "..L["Example:"].."10 / 0",
 				},
-				currentpercentshort = {
+				["currentpercentshort"] = {
 					order = 5,
 					type = "description",
 					name = "[health:current-percent-short] "..L["Example:"].."1120 - 10% / "..L["Dead"],
 				},
-				currentpercentshortnostatus = {
+				["currentpercentshortnostatus"] = {
 					order = 6,
 					type = "description",
 					name = "[health:current-percent-short-nostatus] "..L["Example:"].."1120 - 10% / 0 - 0%",
 				},
 			},
 		},
-		power = {
+		["power"] = {
 			order = 7,
 			name = L["Power"],
 			args = {
-				desc4 = {
+				["desc4"] = {
 					order = 1,
 					type = "description",
 					name = "[power:percent-short] "..L["Example:"].."10%",
 				},
-				desc5 = {
+				["desc5"] = {
 					order = 2,
 					type = "description",
 					name = "[power:percent-nosymbol] "..L["Example:"].."10",
 				},
-				desc6 = {
+				["desc6"] = {
 					order = 3,
 					type = "description",
 					name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",

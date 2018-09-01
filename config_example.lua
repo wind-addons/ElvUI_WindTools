@@ -19,6 +19,7 @@ WT.ToolConfigs[module_name] = {
 			name = , -- necessary
 			order = 5, -- necessary, start from 5
 			type = , -- optional, determined by WindTools itself if not set
+			disabled = , -- optional, determined by WindTools itself if not set
 			-- guiInline = , -- useless, always determined by WindTools itself
 			-- get = ,
 			-- set = ,

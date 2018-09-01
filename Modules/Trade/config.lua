@@ -32,7 +32,6 @@ WT.ToolConfigs["Trade"] = {
 			order = 5,
 			type = "color",
 			name = L["Color"],
-			disabled = function(info) return not E.db.WindTools["Trade"]["Already Known"]["enabled"] end,
 			hasAlpha = true,
 			get = function(info)
 				local t = E.db.WindTools["Trade"]["Already Known"]["color"]

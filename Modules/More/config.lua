@@ -31,6 +31,9 @@ P["WindTools"]["More Tools"] = {
 			["enabled"] = true,
 		},
 	},
+	["CVarsTool"] = {
+		["enabled"] = true,
+	},
 	["Enhanced Blizzard Frame"] = {
 		["enabled"] = true,
 		["moveframe"] = true,
@@ -244,7 +247,6 @@ WT.ToolConfigs["More Tools"] = {
 		custom_text = {
 			order = 5,
 			name = L["Use custom text"],
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["enabled"] end,
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 		},
@@ -301,7 +303,6 @@ WT.ToolConfigs["More Tools"] = {
 		moveframes = {
 			order = 5,
 			name = L["Move Frames"],
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled end,
 			get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {
@@ -324,7 +325,6 @@ WT.ToolConfigs["More Tools"] = {
 		errorframe = {
 			order = 6,
 			name = L["Error Frame"],
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled end,
 			get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; EBF:ErrorFrameSize() end,
 			args = {
@@ -345,7 +345,6 @@ WT.ToolConfigs["More Tools"] = {
 		others = {
 			order = 7,
 			name = L["Other Setting"],
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled end,
 			args = {
 				vehicleSeatScale = {
 					order = 1,

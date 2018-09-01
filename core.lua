@@ -228,7 +228,7 @@ function WT:InsertOptions()
 				check_attributes(feature)
 				for arg_name, arg in pairs(feature) do
 					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
-					--E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name].disabled = not E.db.WindTools[module_name][feature_name]["enabled"]
+					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name].disabled = arg.disabled or function(info) return not E.db.WindTools[module_name][feature_name]["enabled"] end
 				end
 
 				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除

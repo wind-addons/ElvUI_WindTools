@@ -58,17 +58,6 @@ local ToolsOrder = {
 	["Quest"]      = 4,
 	["More Tools"] = 5,
 }
-local Tools = {
-	["Interface"] = {
-		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
-		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced", "houshuu"},
-		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		{"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced", "houshuu"},
-		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
-		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
-		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
-	},
-}
 
 function WT:InsertOptions()
 	-- 感谢名单

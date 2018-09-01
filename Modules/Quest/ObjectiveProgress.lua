@@ -6,7 +6,7 @@
 -- 模块化
 
 local E, L, V, P, G = unpack(ElvUI);
-local SOP = E:NewModule('SOP', 'AceHook-3.0', 'AceEvent-3.0');
+local SOP = E:NewModule('Wind_SOP', 'AceHook-3.0', 'AceEvent-3.0');
 -- Localized function references
 local LOP = _G.LibStub("LibObjectiveProgress-1.0")
 

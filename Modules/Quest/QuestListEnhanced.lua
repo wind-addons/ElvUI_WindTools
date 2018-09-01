@@ -11,7 +11,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
-local QuestListEnhanced = E:NewModule('QuestListEnhanced', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local QuestListEnhanced = E:NewModule('Wind_QuestListEnhanced', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local _G = _G
 
 -- 追踪栏显示任务等级

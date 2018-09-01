@@ -1,7 +1,7 @@
 -- 作者：houshuu
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local CQV = E:NewModule('CloseQuestVoice', 'AceHook-3.0');
+local CQV = E:NewModule('Wind_CloseQuestVoice', 'AceHook-3.0');
 
 
 local function CloseVoice()

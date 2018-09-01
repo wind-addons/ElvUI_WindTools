@@ -9,7 +9,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local QuestAnnouncment = E:NewModule('QuestAnnouncment', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local QuestAnnouncment = E:NewModule('Wind_QuestAnnouncment', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 local GetQuestLogTitle = GetQuestLogTitle
 local GetQuestLink = GetQuestLink

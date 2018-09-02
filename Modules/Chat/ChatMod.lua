@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local TabChatMod = E:NewModule('TabChatMod', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local TabChatMod = E:NewModule('Wind_TabChatMod', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 local _G = _G
 local CreateFrame = CreateFrame
@@ -26,14 +26,8 @@ local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 local format = string.format
 local hooksecurefunc = hooksecurefunc
 
-P["WindTools"]["Tab Chat Mod"] = {
-	["enabled"] = true,
-	["whispercycle"] = false,
-	["useofficer"] = false,
-}
-
 function TabChatMod:Initialize()
-	if not E.db.WindTools["Tab Chat Mod"]["enabled"] then return end
+	if not E.db.WindTools["Chat"]["Tab Chat Mod"]["enabled"] then return end
 
 	function ChatEdit_CustomTabPressed(self)
 		if strsub(tostring(self:GetText()), 1, 1) == "/" then return end
@@ -50,7 +44,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -66,7 +60,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -77,7 +71,7 @@ function TabChatMod:Initialize()
 			if (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -88,7 +82,7 @@ function TabChatMod:Initialize()
 			if (IsInGuild) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -96,17 +90,17 @@ function TabChatMod:Initialize()
 				ChatEdit_UpdateHeader(self);
 			end
 		elseif (self:GetAttribute("chatType") == "GUILD") then
-			if (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			if (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
 				self:SetAttribute("chatType", "SAY");
 				ChatEdit_UpdateHeader(self);
 			end
-		elseif (self:GetAttribute("chatType") == "OFFICER" and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+		elseif (self:GetAttribute("chatType") == "OFFICER" and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 			self:SetAttribute("chatType", "SAY");
 			ChatEdit_UpdateHeader(self);
-		elseif (self:GetAttribute("chatType") == "WHISPER" and not E.db.WindTools["Tab Chat Mod"]["whispercycle"]) then
+		elseif (self:GetAttribute("chatType") == "WHISPER" and not E.db.WindTools["Chat"]["Tab Chat Mod"]["whispercycle"]) then
 			self:SetAttribute("chatType", "SAY");
 			ChatEdit_UpdateHeader(self);
 		elseif (self:GetAttribute("chatType") == "CHANNEL") then
@@ -122,7 +116,7 @@ function TabChatMod:Initialize()
 			elseif (IsInGuild()) then
 				self:SetAttribute("chatType", "GUILD");
 				ChatEdit_UpdateHeader(self);
-			elseif (CanEditOfficerNote() and E.db.WindTools["Tab Chat Mod"]["useofficer"]) then
+			elseif (CanEditOfficerNote() and E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"]) then
 				self:SetAttribute("chatType", "OFFICER");
 				ChatEdit_UpdateHeader(self);
 			else
@@ -133,38 +127,4 @@ function TabChatMod:Initialize()
 	end
 end
 
-local function InsertOptions()
-	E.Options.args.WindTools.args["Chat"].args["Tab Chat Mod"].args["addwhisper"] = {
-		order = 10,
-		type = "group",
-		name = L["Whisper Cycle"],
-		guiInline = true,
-		args = {
-			seteffect = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Tab Chat Mod"]["whispercycle"] end,
-				set = function(info, value) E.db.WindTools["Tab Chat Mod"]["whispercycle"] = value;end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["Chat"].args["Tab Chat Mod"].args["addofficer"] = {
-		order = 11,
-		type = "group",
-		name = L["Include Officer Channel"],
-		guiInline = true,
-		args = {
-			seteffect = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Tab Chat Mod"]["useofficer"] end,
-				set = function(info, value) E.db.WindTools["Tab Chat Mod"]["useofficer"] = value;end
-			},
-		}
-	}
-end
-
-WT.ToolConfigs["Tab Chat Mod"] = InsertOptions
 E:RegisterModule(TabChatMod:GetName())

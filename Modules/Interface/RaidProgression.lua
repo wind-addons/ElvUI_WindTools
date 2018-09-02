@@ -11,11 +11,6 @@ local E, L, V, P, G = unpack(ElvUI);
 local TT = E:GetModule('Tooltip')
 local WT = E:GetModule("WindTools")
 
-P["WindTools"]["Raid Progression"] = {
-	["enabled"] = true,
-	["Uldir"] = true,
-}
-
 local tiers = { "Uldir" }
 local levels = { 
 	L["Mythic"], 
@@ -50,7 +45,7 @@ local function GetProgression(guid)
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 	
 	for tier, tierName in pairs(tiers) do
-		if E.db.WindTools["Raid Progression"][tierName] then
+		if E.db.WindTools["Interface"]["Raid Progression"][tierName] then
 			progressCache[guid].header[tier] = {}
 			progressCache[guid].info[tier] = {}
 			for level = 1, 4 do
@@ -89,7 +84,7 @@ local function SetProgressionInfo(guid, tt)
 		for i=1, tt:NumLines() do
 			local leftTipText = _G["GameTooltipTextLeft"..i]	
 			for tier, tierName in pairs(tiers) do
-				if E.db.WindTools["Raid Progression"][tierName] then
+				if E.db.WindTools["Interface"]["Raid Progression"][tierName] then
 					for level = 1, 4 do
 						if (leftTipText:GetText() and leftTipText:GetText():find(L[tierName]) and leftTipText:GetText():find(levels[level])) then
 							-- update found tooltip text line
@@ -106,7 +101,7 @@ local function SetProgressionInfo(guid, tt)
 		-- add progression tooltip line
 		if highest > 0 then tt:AddLine(" ") end
 		for tier, tierName in pairs(tiers) do
-			if E.db.WindTools["Raid Progression"][tierName] then
+			if E.db.WindTools["Interface"]["Raid Progression"][tierName] then
 				for level = 1, 4 do
 					tt:AddDoubleLine(progressCache[guid].header[tier][level], progressCache[guid].info[tier][level], nil, nil, nil, 1, 1, 1)
 				end
@@ -129,7 +124,7 @@ end
 
 hooksecurefunc(TT, 'ShowInspectInfo', function(self, tt, unit, level, r, g, b, numTries)
 	if InCombatLockdown() then return end
-	if not E.db.WindTools["Raid Progression"]["enabled"] then return end
+	if not E.db.WindTools["Interface"]["Raid Progression"]["enabled"] then return end
 	if not level or level < MAX_PLAYER_LEVEL then return end
 	if not (unit and CanInspect(unit)) then return end
 	
@@ -156,23 +151,3 @@ hooksecurefunc(TT, 'ShowInspectInfo', function(self, tt, unit, level, r, g, b, n
 
 	SetProgressionInfo(guid, tt)
 end)
-
-local function InsertOptions()
-	E.Options.args.WindTools.args["Interface"].args["Raid Progression"].args["raidsetting"] = {
-		order = 11,
-		type = "group",
-		name = L["Raid Setting"],
-		guiInline = true,
-		get = function(info) return E.db.WindTools["Raid Progression"][info[#info]] end,
-		set = function(info, value) E.db.WindTools["Raid Progression"][info[#info]] = value end,
-		args = {
-			Uldir = {
-				order = 1,
-				type = "toggle",
-				name = L["Uldir"],
-			},
-		}
-	}
-end
-
-WT.ToolConfigs["Raid Progression"] = InsertOptions

@@ -8,19 +8,14 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local iShadow = E:NewModule('iShadow', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
-
-P["WindTools"]["iShadow"] = {
-	["enabled"] = true,
-	["level"] = 50,
-}
+local iShadow = E:NewModule('Wind_iShadow', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 function iShadow:SetShadowLevel(n)
 	self.f:SetAlpha(n/100)
 end
 
 function iShadow:Initialize()
-	if not E.db.WindTools["iShadow"]["enabled"] then return end
+	if not E.db.WindTools["Interface"]["iShadow"]["enabled"] then return end
 
 	self.f = CreateFrame("Frame", "ShadowBackground")
 	self.f:SetPoint("TOPLEFT")
@@ -31,25 +26,7 @@ function iShadow:Initialize()
 	self.f.tex:SetTexture([[Interface\Addons\ElvUI_WindTools\Texture\shadow.tga]])
 	self.f.tex:SetAllPoints(f)
 
-	self:SetShadowLevel((E.db.WindTools["iShadow"]["level"] or 50))
+	self:SetShadowLevel((E.db.WindTools["Interface"]["iShadow"]["level"] or 50))
 end
 
-
-local function InsertOptions()
-	E.Options.args.WindTools.args["Interface"].args["iShadow"].args["setlevel"] = {
-		order = 10,
-		type = "range",
-		name = L["Shadow Level"],
-		min = 1, max = 100, step = 1,
-		get = function(info) return E.db.WindTools["iShadow"]["level"] end,
-		set = function(info, value) E.db.WindTools["iShadow"]["level"] = value; iShadow:SetShadowLevel(value) end
-	}
-	E.Options.args.WindTools.args["Interface"].args["iShadow"].args["setleveldesc"] = {
-		order = 11,
-		type = "description",
-		name = L["Default is 50."],
-	}
-end
-
-WT.ToolConfigs["iShadow"] = InsertOptions
 E:RegisterModule(iShadow:GetName())

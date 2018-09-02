@@ -58,40 +58,6 @@ local ToolsOrder = {
 	["Quest"]      = 4,
 	["More Tools"] = 5,
 }
-local Tools = {
-	["Trade"] = {
-		{"Auto Delete", L["Enter DELETE automatically."], "bulleet", "houshuu"},
-		{"Already Known", L["Change item color if learned before."], "ahak", "houshuu"},
-	},
-	["Interface"] = {
-		{"Auto Buttons", L["Add two bars to contain questitem buttons and inventoryitem buttons."], "EUI", "SomeBlu"},
-		{"Minimap Buttons", L["Add a bar to contain minimap buttons."], "ElvUI Enhanced", "houshuu"},
-		{"iShadow", L["Movie effect for WoW."], "iShadow", "houshuu"},
-		{"Raid Progression", L["Add progression info to tooltip."], "ElvUI Enhanced", "houshuu"},
-		{"EasyShadow", L["Add shadow to frames."], "houshuu", "houshuu"},
-		{"Enhanced World Map", L["Customize your world map."], "houshuu", "houshuu"},
-		{"Dragon Overlay", L["Provides an overlay on UnitFrames for Boss, Elite, Rare and RareElite"], "Azilroka", "houshuu"},
-	},
-	["Chat"] = {
-		{"Enhanced Friend List", L["Customize friend frame."], "ProjectAzilroka", "houshuu"},
-		{"Right-click Menu", L["Enhanced right-click menu"], "loudsoul", "houshuu"},
-		{"Tab Chat Mod", L["Use tab to switch channel."], "EUI", "houshuu"},
-	},
-	["Quest"] = {
-	    {"Quest List Enhanced", L["Add the level information in front of the quest name."], "wandercga", "houshuu"},
-		{"Quest Announcment", L["Let you know quest is completed."], "EUI", "houshuu"},
-	    {"Close Quest Voice", L["Disable TalkingHeadFrame."], "houshuu", "houshuu"},
-		{"Objective Progress", L["Add quest/mythic+ dungeon progress to tooltip."], "Simca", "houshuu"},
-	},
-	["More Tools"] = {
-		{"Announce System", L["A simply announce system."], "Shestak", "houshuu"},
-		{"CVarsTool", L["Setting CVars easily."], "houshuu", "houshuu"},
-		{"Enter Combat Alert", L["Alert you after enter or leave combat."], "loudsoul", "houshuu"},
-		{"Fast Loot", L["Let auto-loot quickly."], "Leatrix", "houshuu"},
-		{"Enhanced Blizzard Frame", L["Move frames and set scale of buttons."], "ElvUI S&L", "houshuu"},
-		{"Enhanced Tag", L["Add some tags."], "houshuu", "houshuu"},
-	}
-}
 
 function WT:InsertOptions()
 	-- 感谢名单
@@ -180,62 +146,88 @@ function WT:InsertOptions()
 			name  = WindToolsCreditList[i],
 		}
 	end
-	-- 生成功能相关设定列表
-	for cat, tools in pairs(Tools) do
-		E.Options.args.WindTools.args[cat] = {
-			order       = ToolsOrder[cat],
+
+	local function check_attributes(feature) -- check type and guiInline attributes
+		for arg_name, arg in pairs(feature) do
+			if arg.args then
+				arg.type = arg.type or "group"
+				arg.guiInline = true
+				check_attributes(arg.args)
+			else
+				arg.type = arg.type or "toggle"
+			end
+		end
+	end
+	
+	for module_name, module in pairs(WT.ToolConfigs) do
+		E.Options.args.WindTools.args[module_name] = {
+			order       = ToolsOrder[module_name],
 			type        = "group",
-			name        = L[cat],
+			name        = L[module_name],
 			childGroups = "tab",
 			args        = {}
 		}
 		local n = 0
-		for _, tool in pairs(tools) do
-			local tName   = tool[1]
-			local tDesc   = tool[2]
-			local oAuthor = tool[3]
-			local cAuthor = tool[4]
+		for feature_name, feature in pairs(module) do
 			n = n + 1
-			E.Options.args.WindTools.args[cat].args[tName] = {
-				order = n,
-				type  = "group",
-				name  = L[tName],
-				args  = {
-					header1 = {
-						order = 0,
-						type  = "header",
-						name  = L["Information"],
-					},
-					oriauthor = {
-						order = 1,
-						type  = "description",
-						name  = format(L["Author: %s, Edited by %s"], oAuthor, cAuthor)
-					},
-					tooldesc = {
-						order = 2,
-						type  = "description",
-						name  = tDesc
-					},
-					header2 = {
-						order = 3,
-						type  = "header",
-						name  = L["Setting"],
-					},
-					enablebtn = {
-						order = 4,
-						type  = "toggle",
-						width = "full",
-						name  = WT:ColorStr(L["Enable"]),
-						get   = function(info) return E.db.WindTools[tName]["enabled"] end,
-						set   = function(info, value) E.db.WindTools[tName]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			-- 生成功能相关设定列表
+			if feature.tDesc then
+				E.Options.args.WindTools.args[module_name].args[feature_name] = {
+					order = n,
+					type  = "group",
+					name  = L[feature_name],
+					args  = {
+						header1 = {
+							order = 0,
+							type  = "header",
+							name  = L["Information"],
+						},
+						oriauthor = {
+							order = 1,
+							type  = "description",
+							name  = format(L["Author: %s, Edited by %s"], feature.oAuthor, feature.cAuthor)
+						},
+						tooldesc = {
+							order = 2,
+							type  = "description",
+							name  = feature.tDesc
+						},
+						header2 = {
+							order = 3,
+							type  = "header",
+							name  = L["Setting"],
+						},
+						enablebtn = {
+							order = 4,
+							type  = "toggle",
+							width = "full",
+							name  = WT:ColorStr(L["Enable"]),
+							get   = function(info) return E.db.WindTools[module_name][feature_name]["enabled"] end,
+							set   = function(info, value) E.db.WindTools[module_name][feature_name]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
+						}
 					}
 				}
-			}
+				feature.tDesc, feature.oAuthor, feature.cAuthor = nil, nil, nil
+				
+				-- 加载功能内部函数设定
+				if feature.func then
+					feature.func()
+					feature.func = nil
+				end
+				check_attributes(feature)
+				for arg_name, arg in pairs(feature) do
+					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name] = arg
+					E.Options.args.WindTools.args[module_name].args[feature_name].args[arg_name].disabled = arg.disabled or function(info) return not E.db.WindTools[module_name][feature_name]["enabled"] end
+				end
+
+				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除
+				if E.db.WindTools[feature_name] then
+					E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
+					E.db.WindTools[feature_name] = nil
+				end
+			end
 		end
 	end
-	-- 加载功能内部函数设定
-	-- TODO: 变更为性能更佳的载入方式
-	for _, func in pairs(WT.ToolConfigs) do func() end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

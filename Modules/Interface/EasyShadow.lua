@@ -11,35 +11,6 @@ local ElvUF      = ElvUF
 local LSM        = LibStub("LibSharedMedia-3.0")
 local _G         = _G
 
--- Default options
-P["WindTools"]["EasyShadow"] = {
-	["enabled"] = true,
-	["BlzFrames"] = {
-		["MMHolder"] = true,
-		["GameMenuFrame"] = true,
-		["InterfaceOptionsFrame"] = true,
-		["VideoOptionsFrame"] = true,
-	},
-	["ElvUIActionbars"] = {
-		["ElvUI_Bar1Button"] = false,
-		["ElvUI_Bar2Button"] = false,
-		["ElvUI_Bar3Button"] = false,
-		["ElvUI_Bar4Button"] = false,
-		["ElvUI_Bar5Button"] = false,
-		["ElvUI_Bar6Button"] = false,
-	},
-	["ElvUIFrames"] = {
-		["Aura"] = true,
-		["Castbar"] = false,
-		["CastbarIcon"] = false,
-		["Classbar"] = false,
-		["UnitFrameAura"] = false,
-		["UnitFrames"] = false,
-		["QuestIconShadow"] = true,
-		["Tooltip"] = true,
-	}
-}
-
 -- 初始化颜色
 local borderr, borderg, borderb = 0, 0, 0
 local backdropr, backdropg, backdropb = 0, 0, 0
@@ -102,75 +73,6 @@ local function shadowQuestIcon(_, block)
 	if rightButton and not rightButton.styled then
 		CreateMyShadow(rightButton, 3)
 		rightButton.styled = true
-	end
-end
-
-local function InsertOptions()
-	local profile = E.db.WindTools["EasyShadow"]
-
-	local Options = {
-		BlzFrames = {
-			order = 11,
-			type = "group",
-			name = L["Game Menu"],
-			guiInline = true,
-			disabled = not profile.enabled,
-			get = function(info) return profile.BlzFrames[info[#info]] end,
-			set = function(info, value) profile.BlzFrames[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-			args = {}
-		},
-		ElvUIActionbars = {
-			order = 12,
-			type = "group",
-			name = L["ActionBars"],
-			guiInline = true,
-			disabled = not profile.enabled,
-			get = function(info) return profile.ElvUIActionbars[info[#info]] end,
-			set = function(info, value) profile.ElvUIActionbars[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-			args = {}
-		},
-		ElvUIFrames = {
-			order = 13,
-			type = "group",
-			name = "ElvUI"..L["Frame Setting"],
-			guiInline = true,
-			disabled = not profile.enabled,
-			get = function(info) return profile.ElvUIFrames[info[#info]] end,
-			set = function(info, value) profile.ElvUIFrames[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-			args = {}
-		}
-	}
-
-	local optOrder = 1
-	for k, v in pairs(EasyShadow.BlzFrames) do
-		Options.BlzFrames.args[k]={
-			order = optOrder,
-			type = "toggle",
-			name = v,
-		}
-		optOrder = optOrder + 1
-	end
-
-	for i = 1, 6 do
-		Options.ElvUIActionbars.args["ElvUI_Bar"..i.."Button"] = {
-			order = i,
-			type = "toggle",
-			name = L["Action Bar"]..i,
-		}
-	end
-
-	optOrder = 1
-	for k, v in pairs(EasyShadow.ElvUIFrames) do
-		Options.ElvUIFrames.args[k]={
-			order = optOrder,
-			type = "toggle",
-			name = v,
-		}
-		optOrder = optOrder + 1
-	end
-
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["Interface"].args["EasyShadow"].args[k] = v
 	end
 end
 
@@ -259,5 +161,4 @@ function EasyShadow:Initialize()
 	self:ShadowElvUIFrames()
 end
 
-WT.ToolConfigs["EasyShadow"] = InsertOptions
 E:RegisterModule(EasyShadow:GetName())

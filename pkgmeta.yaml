@@ -5,3 +5,4 @@ ignore:
     - .gitignore
     - README.md
     - Title.png
+    - config_example.lua

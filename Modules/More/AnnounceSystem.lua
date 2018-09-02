@@ -15,37 +15,10 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local AnnounceSystem = E:NewModule('AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local AnnounceSystem = E:NewModule('Wind_AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 local format = string.format
 local pairs = pairs
-
-P["WindTools"]["Announce System"] = {
-	["enabled"] = true,
-	["Taunt"] = {
-		["enabled"] = true,
-		["missenabled"] = true,
-		["PlayerSmart"] = false,
-		["PetSmart"] = false,
-		["OtherTankSmart"] = false,
-		["IncludePet"] = true,
-		["IncludeOtherTank"] = true,
-	},
-	["Interrupt"] = {
-		["enabled"] = true,
-		["SoloYell"] = false,
-		["IncludePet"] = true,
-	},
-	["ResAndThreat"] = {
-		["enabled"] = true,
-	},
-	["ResThanks"] = {
-		["enabled"] = true,
-	},
-	["RaidUsefulSpells"] = {
-		["enabled"] = true,
-	},
-}
 
 local myName = UnitName("player")
 local simpleline = "|cffe84393----------------------|r"
@@ -148,7 +121,7 @@ local function CheckChatInterrupt ()
 		return "RAID"
 	elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
 		return "PARTY"
-	elseif E.db.WindTools["Announce System"]["Interrupt"]["SoloYell"] then
+	elseif E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["SoloYell"] then
 		return "YELL"
 	end
 
@@ -410,7 +383,7 @@ function AnnounceSystem:Interrupt()
 
 		if sourceGUID == UnitGUID("player") then
 			canAnnounce = true
-		elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"] then
+		elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["IncludePet"] then
 			canAnnounce = true
 		else
 			canAnnounce = false
@@ -444,28 +417,28 @@ function AnnounceSystem:Taunt()
 			-- 如果施放嘲讽技能成功
 			if sourceGUID == UnitGUID("player") then
 				-- 玩家嘲讽
-				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] then
 					-- 玩家嘲讽智能喊话
 					SendChatMessage(format(ASL["Taunt"], destName), CheckChatTaunt())
 				else
 					-- 玩家嘲讽信息显示于综合
 					ChatFrame1:AddMessage(format(ASL["TauntInChat"], destName))
 				end
-			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] then
+			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] then
 				-- 宠物嘲讽
-				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] then
 					-- 宠物嘲讽智能喊话
 					SendChatMessage(format(ASL["PetTaunt"], destName), CheckChatTaunt())
 				else
 					-- 宠物嘲讽信息显示于综合
 					ChatFrame1:AddMessage(format(ASL["PetTauntInChat"], destName))
 				end
-			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
+			elseif E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
 				-- 他人嘲讽
 				-- 去除服务器信息
 				local oriSourceName = sourceName
 				sourceName = sourceName:gsub("%-[^|]+", "")
-				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
 					SendChatMessage(format(ASL["OtherTankTaunt"], sourceName, destName), CheckChatTaunt())
 				else
@@ -477,33 +450,33 @@ function AnnounceSystem:Taunt()
 			end
 		end
 
-		if not E.db.WindTools["Announce System"]["Taunt"]["missenabled"] then return end
+		if not E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["missenabled"] then return end
 		if event == "SPELL_MISSED" and TauntSpells[spellID] then
 			-- 如果施放嘲讽技能失败
 			if sourceGUID == UnitGUID("player") then
 				-- 玩家嘲讽
-				if E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] then
 					-- 玩家嘲讽智能喊话
 					SendChatMessage(format(ASL["TauntMiss"], destName), CheckChatTaunt())
 				else
 					-- 玩家嘲讽信息显示于综合
 					ChatFrame1:AddMessage(format(ASL["TauntMissInChat"], destName))
 				end
-			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] then
+			elseif sourceGUID == UnitGUID("pet") and E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] then
 				-- 宠物嘲讽
-				if E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] then
 					-- 宠物嘲讽智能喊话
 					SendChatMessage(format(ASL["PetTauntMiss"], destName), CheckChatTaunt())
 				else
 					-- 宠物嘲讽信息显示于综合
 					ChatFrame1:AddMessage(format(ASL["PetTauntMissInChat"], destName))
 				end
-			elseif E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
+			elseif E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludeOtherTank"] and UnitGroupRolesAssigned(sourceName) == "TANK" then
 				-- 他坦嘲讽
 				-- 去除服务器信息
 				local oriSourceName = sourceName
 				sourceName = sourceName:gsub("%-[^|]+", "")
-				if E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] then
+				if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] then
 					-- 他人嘲讽智能喊话
 					SendChatMessage(format(ASL["OtherTankTauntMiss"], sourceName, destName), CheckChatTaunt())
 				else
@@ -519,158 +492,23 @@ end
 
 function AnnounceSystem:Initialize()
 	if not (GetLocale() == "zhCN" or GetLocale() == "zhTW") then return end
-	if not E.db.WindTools["Announce System"]["enabled"] then return end
+	if not E.db.WindTools["More Tools"]["Announce System"]["enabled"] then return end
 	
-	if E.db.WindTools["Announce System"]["Interrupt"]["enabled"] then
+	if E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] then
 		AnnounceSystem:Interrupt()
 	end
-	if E.db.WindTools["Announce System"]["Taunt"]["enabled"] then
+	if E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["enabled"] then
 		AnnounceSystem:Taunt()
 	end
-	if E.db.WindTools["Announce System"]["ResAndThreat"]["enabled"] then
+	if E.db.WindTools["More Tools"]["Announce System"]["ResAndThreat"]["enabled"] then
 		AnnounceSystem:ResAndThreat()
 	end
-	if E.db.WindTools["Announce System"]["ResThanks"]["enabled"] then
+	if E.db.WindTools["More Tools"]["Announce System"]["ResThanks"]["enabled"] then
 		AnnounceSystem:ResThanks()
 	end
-	if E.db.WindTools["Announce System"]["RaidUsefulSpells"]["enabled"] then
+	if E.db.WindTools["More Tools"]["Announce System"]["RaidUsefulSpells"]["enabled"] then
 		AnnounceSystem:RaidUsefulSpells()
 	end
 end
 
-local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["Interrupt"] = {
-		order = 10,
-		type = "group",
-		name = L["Interrupt"],
-		guiInline = true,
-		args = {
-			Enable = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Announce System"]["Interrupt"]["enabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Interrupt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			SoloYell = {
-				order = 2,
-				type = "toggle",
-				name = L["Solo Yell"],
-				get = function(info) return E.db.WindTools["Announce System"]["Interrupt"]["SoloYell"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Interrupt"]["SoloYell"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			IncludePet = {
-				order = 3,
-				type = "toggle",
-				name = L["Include Pet"],
-				get = function(info) return E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Interrupt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["Taunt"] = {
-		order = 11,
-		type = "group",
-		name = L["Taunt"],
-		guiInline = true,
-		args = {
-			Enable = {
-				order = 0,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["enabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			Enable = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable Miss"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["missenabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["missenabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			PlayerSmart = {
-				order = 2,
-				type = "toggle",
-				name = L["Player Smart"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["PlayerSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			PetSmart = {
-				order = 3,
-				type = "toggle",
-				name = L["Pet Smart"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["PetSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			OtherTankSmart = {
-				order = 4,
-				type = "toggle",
-				name = L["Other Tank Smart"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["OtherTankSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			IncludePet = {
-				order = 5,
-				type = "toggle",
-				name = L["Include Pet"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-			IncludeOthers = {
-				order = 5,
-				type = "toggle",
-				name = L["Include Other Tank"],
-				get = function(info) return E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["Taunt"]["IncludeOtherTank"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["ResAndThreat"] = {
-		order = 12,
-		type = "group",
-		name = L["Res And Threat"],
-		guiInline = true,
-		args = {
-			Enable = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Announce System"]["ResAndThreat"]["enabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["ResAndThreat"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["ResThanks"] = {
-		order = 13,
-		type = "group",
-		name = L["Res Thanks"],
-		guiInline = true,
-		args = {
-			Enable = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Announce System"]["ResThanks"]["enabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["ResThanks"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-		}
-	}
-	E.Options.args.WindTools.args["More Tools"].args["Announce System"].args["RaidUsefulSpells"] = {
-		order = 14,
-		type = "group",
-		name = L["Raid Useful Spells"],
-		guiInline = true,
-		args = {
-			Enable = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				get = function(info) return E.db.WindTools["Announce System"]["RaidUsefulSpells"]["enabled"] end,
-				set = function(info, value) E.db.WindTools["Announce System"]["RaidUsefulSpells"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-			},
-		}
-	}
-end
-
-WT.ToolConfigs["Announce System"] = InsertOptions
 E:RegisterModule(AnnounceSystem:GetName())

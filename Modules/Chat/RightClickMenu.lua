@@ -121,7 +121,7 @@ function EnhancedRCMenu:Initialize()
 	-- end
 	-- need to fix position problems
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
-		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER")) then
+		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER" or which == "TARGET")) then
 			local info = UIDropDownMenu_CreateInfo()
 			UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
 			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = WT.Title, isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")

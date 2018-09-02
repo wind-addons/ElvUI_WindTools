@@ -66,4 +66,7 @@ function DO:Initialize()
 	DO:RegisterEvent('PLAYER_TARGET_CHANGED', 'SetOverlay')
 end
 
-E:RegisterModule(DO:GetName())
+local function InitializeCallback()
+	DO:Initialize()
+end
+E:RegisterModule(DO:GetName(), InitializeCallback)

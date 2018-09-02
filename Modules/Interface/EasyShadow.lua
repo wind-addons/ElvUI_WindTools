@@ -161,4 +161,7 @@ function EasyShadow:Initialize()
 	self:ShadowElvUIFrames()
 end
 
-E:RegisterModule(EasyShadow:GetName())
+local function InitializeCallback()
+	EasyShadow:Initialize()
+end
+E:RegisterModule(EasyShadow:GetName(), InitializeCallback)

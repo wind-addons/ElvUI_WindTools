@@ -22,4 +22,7 @@ function CQV:Initialize()
 	
 end
 
-E:RegisterModule(CQV:GetName())
+local function InitializeCallback()
+	CQV:Initialize()
+end
+E:RegisterModule(CQV:GetName(), InitializeCallback)

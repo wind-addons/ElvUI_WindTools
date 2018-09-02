@@ -28,4 +28,7 @@ function FastLoot:Initialize()
 	end)
 end
 
-E:RegisterModule(FastLoot:GetName())
+local function InitializeCallback()
+	FastLoot:Initialize()
+end
+E:RegisterModule(FastLoot:GetName(), InitializeCallback)

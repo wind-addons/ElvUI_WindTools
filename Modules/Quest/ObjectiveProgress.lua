@@ -43,4 +43,7 @@ function SOP:Initialize()
     GameTooltip:HookScript("OnTooltipSetUnit", SOP_Hook_OnTooltipSetUnit)
 end
 
-E:RegisterModule(SOP:GetName())
+local function InitializeCallback()
+	SOP:Initialize()
+end
+E:RegisterModule(SOP:GetName(), InitializeCallback)

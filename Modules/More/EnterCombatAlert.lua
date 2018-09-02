@@ -60,4 +60,7 @@ function EnterCombatAlert:Initialize()
 	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 end
 
-E:RegisterModule(EnterCombatAlert:GetName())
+local function InitializeCallback()
+	EnterCombatAlert:Initialize()
+end
+E:RegisterModule(EnterCombatAlert:GetName(), InitializeCallback)

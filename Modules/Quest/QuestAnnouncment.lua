@@ -200,4 +200,7 @@ function QuestAnnouncment:Initialize()
 	end)
 end
 
-E:RegisterModule(QuestAnnouncment:GetName())
+local function InitializeCallback()
+	QuestAnnouncment:Initialize()
+end
+E:RegisterModule(QuestAnnouncment:GetName(), InitializeCallback)

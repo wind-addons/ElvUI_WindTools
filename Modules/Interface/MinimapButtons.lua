@@ -379,4 +379,7 @@ function MB:Initialize()
 	self:CreateFrames()
 end
 
-E:RegisterModule(MB:GetName())
+local function InitializeCallback()
+	MB:Initialize()
+end
+E:RegisterModule(MB:GetName(), InitializeCallback)

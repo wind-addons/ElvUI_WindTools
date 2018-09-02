@@ -280,4 +280,7 @@ function EBF:Initialize()
 	end
 end
 
-E:RegisterModule(EBF:GetName())
+local function InitializeCallback()
+	EBF:Initialize()
+end
+E:RegisterModule(EBF:GetName(), InitializeCallback)

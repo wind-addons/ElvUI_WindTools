@@ -339,4 +339,7 @@ function EWM:Initialize()
 	end
 end
 
-E:RegisterModule(EWM:GetName())
+local function InitializeCallback()
+	EWM:Initialize()
+end
+E:RegisterModule(EWM:GetName(), InitializeCallback)

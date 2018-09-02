@@ -511,4 +511,7 @@ function AnnounceSystem:Initialize()
 	end
 end
 
-E:RegisterModule(AnnounceSystem:GetName())
+local function InitializeCallback()
+	AnnounceSystem:Initialize()
+end
+E:RegisterModule(AnnounceSystem:GetName(), InitializeCallback)

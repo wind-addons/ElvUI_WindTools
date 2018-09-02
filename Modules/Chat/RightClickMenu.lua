@@ -172,4 +172,7 @@ function EnhancedRCMenu:Initialize()
 	end)
 end
 
-E:RegisterModule(EnhancedRCMenu:GetName())
+local function InitializeCallback()
+	EnhancedRCMenu:Initialize()
+end
+E:RegisterModule(EnhancedRCMenu:GetName(), InitializeCallback)

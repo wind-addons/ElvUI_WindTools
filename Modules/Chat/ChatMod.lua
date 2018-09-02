@@ -127,4 +127,7 @@ function TabChatMod:Initialize()
 	end
 end
 
-E:RegisterModule(TabChatMod:GetName())
+local function InitializeCallback()
+	TabChatMod:Initialize()
+end
+E:RegisterModule(TabChatMod:GetName(), InitializeCallback)

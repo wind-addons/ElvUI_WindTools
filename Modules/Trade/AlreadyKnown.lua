@@ -164,4 +164,7 @@ function AlreadyKnown:Initialize()
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 end
 
-E:RegisterModule(AlreadyKnown:GetName())
+local function InitializeCallback()
+	AlreadyKnown:Initialize()
+end
+E:RegisterModule(AlreadyKnown:GetName(), InitializeCallback)

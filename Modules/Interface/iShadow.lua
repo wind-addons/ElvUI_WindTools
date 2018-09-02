@@ -29,4 +29,7 @@ function iShadow:Initialize()
 	self:SetShadowLevel((E.db.WindTools["Interface"]["iShadow"]["level"] or 50))
 end
 
-E:RegisterModule(iShadow:GetName())
+local function InitializeCallback()
+	iShadow:Initialize()
+end
+E:RegisterModule(iShadow:GetName(), InitializeCallback)

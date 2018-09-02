@@ -155,4 +155,7 @@ function QuestListEnhanced:Initialize()
 	end
 end
 
-E:RegisterModule(QuestListEnhanced:GetName())
+local function InitializeCallback()
+	QuestListEnhanced:Initialize()
+end
+E:RegisterModule(QuestListEnhanced:GetName(), InitializeCallback)

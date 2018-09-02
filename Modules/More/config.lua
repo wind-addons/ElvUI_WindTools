@@ -326,7 +326,7 @@ WT.ToolConfigs["More Tools"] = {
 			order = 6,
 			name = L["Error Frame"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; EBF:ErrorFrameSize() end,
+			set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; E:GetModule("Wind_EnhancedBlizzardFrame"):ErrorFrameSize() end,
 			args = {
 				["width"] = {
 					order = 1,
@@ -353,7 +353,7 @@ WT.ToolConfigs["More Tools"] = {
 					min = 0.1, max = 3, step = 0.01,
 					isPercent = true,
 					get = function(info) return E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] = value; EBF:VehicleScale() end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"][ info[#info] ] = value; E:GetModule("Wind_EnhancedBlizzardFrame"):VehicleScale() end,
 				},
 			},
 		},

@@ -635,7 +635,7 @@ WT.ToolConfigs["Interface"] = {
 			min = 0.5, max = 2, step = 0.1,
 			disabled = function() return not E.db.WindTools["Interface"]["Enhanced World Map"]["enabled"] end,
 			get = function(info) return E.db.WindTools["Interface"]["Enhanced World Map"]["scale"] end,
-			set = function(info, value) E.db.WindTools["Interface"]["Enhanced World Map"]["scale"] = value; EWM:SetMapScale() end
+			set = function(info, value) E.db.WindTools["Interface"]["Enhanced World Map"]["scale"] = value; E:GetModule("Wind_EnhancedWorldMap"):SetMapScale() end
 		},
 		["usereveal"] = {
 			order = 6,
@@ -655,7 +655,7 @@ WT.ToolConfigs["Interface"] = {
 			name = L["Shadow Level"],
 			min = 1, max = 100, step = 1,
 			get = function(info) return E.db.WindTools["Interface"]["iShadow"]["level"] end,
-			set = function(info, value) E.db.WindTools["Interface"]["iShadow"]["level"] = value; iShadow:SetShadowLevel(value) end
+			set = function(info, value) E.db.WindTools["Interface"]["iShadow"]["level"] = value; E:GetModule("Wind_iShadow"):SetShadowLevel(value) end
 		},
 		["setleveldesc"] = {
 			order = 6,
@@ -670,7 +670,7 @@ WT.ToolConfigs["Interface"] = {
 		["featureconfig"] = {
 			order = 5,
 			get = function(info) return E.db.WindTools["Interface"]["Minimap Buttons"][ info[#info] ] end,
-			set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"][ info[#info] ] = value; MB:UpdateLayout() end,
+			set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"][ info[#info] ] = value; E:GetModule("Wind_MinimapButtons"):UpdateLayout() end,
 			name = L["Minimap Button Bar"],
 			args = {
 				["skinStyle"] = {
@@ -678,7 +678,7 @@ WT.ToolConfigs["Interface"] = {
 					type = 'select',
 					name = L['Skin Style'],
 					desc = L['Change settings for how the minimap buttons are skinned.'],
-					set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"][ info[#info] ] = value; MB:UpdateSkinStyle() end,
+					set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"][ info[#info] ] = value; E:GetModule("Wind_MinimapButtons"):UpdateSkinStyle() end,
 					values = {
 						['NOANCHOR'] = L['No Anchor Bar'],
 						['HORIZONTAL'] = L['Horizontal Anchor Bar'],
@@ -713,7 +713,7 @@ WT.ToolConfigs["Interface"] = {
 					name = L['Mouse Over'],
 					desc = L['The frame is not shown unless you mouse over the frame.'],
 					disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
-					set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"]["mouseover"] = value; MB:ChangeMouseOverSetting() end,
+					set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"]["mouseover"] = value; E:GetModule("Wind_MinimapButtons"):ChangeMouseOverSetting() end,
 				},
 				["mmbuttons"] = {
 					order = 6,

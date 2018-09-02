@@ -56,7 +56,7 @@ function DO:SetOverlay()
 end
 
 function DO:Initialize()
-	self.db = E.db.WindTools["Dragon Overlay"]
+	self.db = E.db.WindTools["Interface"]["Dragon Overlay"]
 	if not self.db["enabled"] then return end
 
 	local frame = CreateFrame("Frame", 'DragonOverlayFrame', UIParent)

@@ -154,8 +154,9 @@ function EasyShadow:ShadowElvUIFrames()
 end
 
 function EasyShadow:Initialize()
-	self.db = E.db.WindTools["EasyShadow"]
-	if not E.db.WindTools["EasyShadow"]["enabled"] then return end
+	self.db = E.db.WindTools["Interface"]["EasyShadow"]
+	if not self.db["enabled"] then return end
+	
 	self:ShadowBlzFrames()
 	self:ShadowElvUIActionbars()
 	self:ShadowElvUIFrames()

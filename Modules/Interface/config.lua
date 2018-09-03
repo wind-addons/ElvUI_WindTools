@@ -583,7 +583,7 @@ WT.ToolConfigs["Interface"] = {
 		},
 		["ElvUIActionbars"] = {
 			order = 6,
-			name = L["ActionBars"],
+			name = L["Action Bar"],
 			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].ElvUIActionbars[info[#info]] end,
 			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].ElvUIActionbars[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}

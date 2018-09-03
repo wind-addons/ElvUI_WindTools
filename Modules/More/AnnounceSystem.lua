@@ -526,7 +526,7 @@ function AnnounceSystem:Taunt()
 end
 
 function AnnounceSystem:Initialize()
-	if not (GetLocale() == "zhCN" or GetLocale() == "zhTW") then return end
+	--if not (GetLocale() == "zhCN" or GetLocale() == "zhTW") then return end
 	if not E.db.WindTools["More Tools"]["Announce System"]["enabled"] then return end
 	
 	if E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] then

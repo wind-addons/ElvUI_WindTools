@@ -369,7 +369,6 @@ WT.ToolConfigs["More Tools"] = {
 		},
 		["health"] = {
 			order = 6,
-			type = "group",
 			name = L["Health"],
 			guiInline = true,
 			args = {

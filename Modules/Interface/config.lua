@@ -722,14 +722,12 @@ WT.ToolConfigs["Interface"] = {
 						["mbgarrison"] = {
 							order = 1,
 							name = GARRISON_LOCATION_TOOLTIP,
-							desc = L['TOGGLESKIN_DESC'],
 							disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
 							set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"]["mbgarrison"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 						},
 						["mbcalendar"] = {
 							order = 2,
 							name = L['Calendar'],
-							desc = L['TOGGLESKIN_DESC'],
 							disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
 							set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"]["mbcalendar"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 						}

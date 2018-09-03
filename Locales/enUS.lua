@@ -9,6 +9,7 @@ L["%s is a collection of useful tools."] = true
 L["Release / Update Link"] = true
 L["You can use the following link to get more information (in Chinese)"] = true
 L["Author"] = true
+L["General"] = true
 -- 功能界面
 L["Enable"] = true
 L["Disable"] = true
@@ -205,6 +206,7 @@ L['Reversed'] = true
 L['Layout Direction'] = true
 L['Change settings for how the minimap buttons are skinned.'] = true
 L['Normal is right to left or top to bottom, or select reversed to switch directions.'] = true
+L['The frame is not shown unless you mouse over the frame.'] = true
 L['The size of the minimap buttons.'] = true
 L['No Anchor Bar'] = true
 L['Horizontal Anchor Bar'] = true

@@ -9,6 +9,7 @@ L["%s is a collection of useful tools."] = "%s 是一個易用功能的整合包
 L["Release / Update Link"] = "發佈 / 更新鏈接"
 L["You can use the following link to get more information (in Chinese)"] = "你可以用下方的鏈接查看更多相關訊息（簡體中文）"
 L["Author"] = "作者"
+L["General"] = "通用"
 -- 功能界面
 L["Enable"] = "開啟"
 L["Disable"] = "關閉"
@@ -205,6 +206,7 @@ L['Reversed'] = "翻轉"
 L['Layout Direction'] = "佈局方向"
 L['Change settings for how the minimap buttons are skinned.'] = "修改小地圖按鈕的風格"
 L['Normal is right to left or top to bottom, or select reversed to switch directions.'] = "普通的話會自右向左或者從上至下， 選擇翻轉的話將倒過來放置。"
+L['The frame is not shown unless you mouse over the frame.'] = "在滑鼠未經過時不會顯示"
 L['The size of the minimap buttons.'] = "小地圖按鈕的大小"
 L['No Anchor Bar'] = "不對齊"
 L['Horizontal Anchor Bar'] = "水平對齊"
@@ -224,7 +226,6 @@ L["Default is 50."] = "預設值為50。"
 -- 光速拾取
 L["Fast Loot"] = "光速拾取"
 L["Let auto-loot quickly."] = "加快自动拾取物品的速度。"
-L["Speed Setting"] = "速度設定"
 L["Fast Loot Speed"] = "光速拾取速度"
 L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = "預設數值為0.3，除非光速拾取功能出錯，你不用修改它。"
 -- 团本进度提示

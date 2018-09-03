@@ -232,8 +232,8 @@ end
 local function CreateButton(name, size)
 	if _G[name] then
 		_G[name]:Size(size)
-		_G[name].c:FontTemplate(nil, E.db.WindTools["Interface"]["Interface"]["Auto Buttons"].countFontSize, 'OUTLINE')
-		_G[name].k:FontTemplate(nil, E.db.WindTools["Interface"]["Interface"]["Auto Buttons"].bindFontSize, 'OUTLINE')
+		_G[name].c:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].countFontSize, 'OUTLINE')
+		_G[name].k:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].bindFontSize, 'OUTLINE')
 		return _G[name]
 	end
 	

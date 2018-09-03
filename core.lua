@@ -235,10 +235,11 @@ end
 function WT:Initialize()
 	EP:RegisterPlugin(addonName, WT.InsertOptions)
 end
-local function InitializeCallback()
-	WT:Initialize()
-end
+
 ---------------------------------------------------
 -- 注册 ElvUI 模块
 ---------------------------------------------------
+local function InitializeCallback()
+	WT:Initialize()
+end
 E:RegisterModule(WT:GetName(), InitializeCallback)

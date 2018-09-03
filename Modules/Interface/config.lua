@@ -290,7 +290,7 @@ WT.ToolConfigs["Interface"] = {
 							return;
 						end
 						E.db.WindTools["Interface"]["Auto Buttons"].whiteList[id] = true;
-						WT.ToolConfigs["Interface"]["Auto Buttons"].args.featureconfig.args.whiteList.values[id] = GetItemInfo(id);
+						WT.ToolConfigs["Interface"]["Auto Buttons"].featureconfig.args.whiteList.values[id] = GetItemInfo(id);
 						E:GetModule('Wind_AutoButton'):UpdateAutoButton();
 					end,
 				},
@@ -310,7 +310,7 @@ WT.ToolConfigs["Interface"] = {
 						end
 						if E.db.WindTools["Interface"]["Auto Buttons"].whiteList[id] == true or E.db.WindTools["Interface"]["Auto Buttons"].whiteList[id] == false then
 							E.db.WindTools["Interface"]["Auto Buttons"].whiteList[id] = nil;
-							WT.ToolConfigs["Interface"]["Auto Buttons"].args.featureconfig.args.whiteList.values[id] = nil;
+							WT.ToolConfigs["Interface"]["Auto Buttons"].featureconfig.args.whiteList.values[id] = nil;
 						end
 						E:GetModule('Wind_AutoButton'):UpdateAutoButton();
 					end,
@@ -351,7 +351,7 @@ WT.ToolConfigs["Interface"] = {
 							return;
 						end
 						E.db.WindTools["Interface"]["Auto Buttons"].blankList[id] = true;
-						WT.ToolConfigs["Interface"]["Auto Buttons"].args.featureconfig.args.blankList.values[id] = GetItemInfo(id);
+						WT.ToolConfigs["Interface"]["Auto Buttons"].featureconfig.args.blankList.values[id] = GetItemInfo(id);
 						E:GetModule('Wind_AutoButton'):UpdateAutoButton();
 					end,
 				},
@@ -371,7 +371,7 @@ WT.ToolConfigs["Interface"] = {
 						end
 						if E.db.WindTools["Interface"]["Auto Buttons"].blankList[id] == true or E.db.WindTools["Interface"]["Auto Buttons"].blankList[id] == false then
 							E.db.WindTools["Interface"]["Auto Buttons"].blankList[id] = nil;
-							WT.ToolConfigs["Interface"]["Auto Buttons"].args.featureconfig.args.blankList.values[id] = nil;
+							WT.ToolConfigs["Interface"]["Auto Buttons"].featureconfig.args.blankList.values[id] = nil;
 						end
 						E:GetModule('Wind_AutoButton'):UpdateAutoButton();
 					end,

@@ -294,6 +294,7 @@ L['Height'] = "高度"
 -- 信息文字
 L['Distance'] = "距離"
 L['Target Range'] = "目標距離"
+L["MicroMenu"] = "遊戲選項"
 -- 艾泽里特特质提示
 L["Azerite Tooltip"] = "艾澤里特特質提示"
 L["Show azerite traits in the tooltip when you mouseover an azerite item."] = "在你的滑鼠提示訊息中顯示艾澤里特特質。"

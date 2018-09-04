@@ -176,6 +176,7 @@ P["WindTools"]["Interface"] = {
 		['mouseover'] = false,
 		['mbcalendar'] =  false,
 		['mbgarrison'] = false,
+		['buttonsPerRow'] = 5,
 	},
 	["Raid Progression"] = {
 		["enabled"] = true,
@@ -703,20 +704,28 @@ WT.ToolConfigs["Interface"] = {
 					min = 16, max = 40, step = 1,
 					disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
 				},
-				["backdrop"] = {
+				["buttonsPerRow"] = {
 					order = 4,
+					type = 'range',
+					name = L['Buttons per row'],
+					desc = L['The max number of buttons when a new row starts.'],
+					min = 2, max = 20, step = 1,
+					--disabled = function() return not E.db.WindTools["Interface"]["Minimap Buttons"]["skinButtons"] or E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
+				},
+				["backdrop"] = {
+					order = 5,
 					name = L["Backdrop"],
 					disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
 				},			
 				["mouseover"] = {
-					order = 5,
+					order = 6,
 					name = L['Mouse Over'],
 					desc = L['The frame is not shown unless you mouse over the frame.'],
 					disabled = function() return E.db.WindTools["Interface"]["Minimap Buttons"]["skinStyle"] == 'NOANCHOR' end,
 					set = function(info, value) E.db.WindTools["Interface"]["Minimap Buttons"]["mouseover"] = value; E:GetModule("Wind_MinimapButtons"):ChangeMouseOverSetting() end,
 				},
 				["mmbuttons"] = {
-					order = 6,
+					order = 7,
 					name = L["Minimap Buttons"],
 					args = {
 						["mbgarrison"] = {

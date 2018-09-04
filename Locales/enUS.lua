@@ -198,6 +198,8 @@ L["Enhanced Tag"] = true
 L["Add some tags."] = true
 L["Chinese W/Y"] = true
 L["Example:"] = true
+L["Health"] = true
+L["Power"] = true
 -- 小地图按钮
 L["Minimap Button Bar"] = true
 L["Add a bar to contain minimap buttons."] = true
@@ -215,6 +217,8 @@ L['Button Size'] = true
 L["Backdrop"] = true
 L['Mouse Over'] = true
 L["Minimap Buttons"] = true
+L['Buttons per row'] = true
+L['The max number of buttons when a new row starts.'] = true
 -- 关闭视频通话
 L["Close Quest Voice"] = true
 L["Disable TalkingHeadFrame."] = true

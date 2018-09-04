@@ -10,6 +10,7 @@ L["Release / Update Link"] = true
 L["You can use the following link to get more information (in Chinese)"] = true
 L["Author"] = true
 L["General"] = true
+L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."] = true
 -- 功能界面
 L["Enable"] = true
 L["Disable"] = true

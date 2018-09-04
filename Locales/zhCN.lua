@@ -10,6 +10,7 @@ L["Release / Update Link"] = "发布 / 更新链接"
 L["You can use the following link to get more information (in Chinese)"] = "你可以用下方的链接查看更多相关讯息"
 L["Author"] = "作者"
 L["General"] = "通用"
+L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."] = "ElvUI Wind工具箱 已经升级，同时插件配置的数据结构也发生了巨大的改变。 为了使这些改变生效，你可能不得不重载你的用户界面。"
 -- 功能界面
 L["Enable"] = "开启"
 L["Disable"] = "关闭"

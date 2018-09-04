@@ -59,6 +59,16 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 
+E.PopupDialogs["WIND_UPDATE_RL"] = {
+	text = L["ElvUI WindTools has been updated and the structure of the stored config data has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ReloadUI,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = false,
+}
+
 function WT:InsertOptions()
 	-- 感谢名单
 	local WindToolsCreditList = {
@@ -159,6 +169,7 @@ function WT:InsertOptions()
 		end
 	end
 	
+	local rl_popup = false
 	for module_name, module in pairs(WT.ToolConfigs) do
 		E.Options.args.WindTools.args[module_name] = {
 			order       = ToolsOrder[module_name],
@@ -231,10 +242,12 @@ function WT:InsertOptions()
 				if E.db.WindTools[feature_name] then
 					E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
 					E.db.WindTools[feature_name] = nil
+					rl_popup = true
 				end
 			end
 		end
 	end
+	if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

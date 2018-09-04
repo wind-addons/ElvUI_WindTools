@@ -99,7 +99,6 @@ WT.ToolConfigs["Quest"] = {
 				},
 				["titlecolor"] = {
 					order = 7,
-					type = "toggle",
 					name = L["Title Class Color"],
 				},
 			},
@@ -112,19 +111,16 @@ WT.ToolConfigs["Quest"] = {
 			args = {
 				["titlelevel"] = {
 					order = 1,
-					type = "toggle",
 					name = L["Tracker Level"],
 					desc = L["Display level info in quest title (Tracker)"],
 				},
 				["detaillevel"] = {
 					order = 2,
-					type = "toggle",
 					name = L["Quest details level"],
 					desc = L["Display level info in quest title (Quest details)"],
 				},
 				["ignorehighlevel"] = {
 					order = 3,
-					type = "toggle",
 					name = L["Ignore high level"],
 				},
 			},
@@ -132,25 +128,18 @@ WT.ToolConfigs["Quest"] = {
 		["leftsidemode"] = {
 			order = 7,
 			name = L["Left Side Minimize Button"],
+			disabled = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
 				["leftside"] = {
 					order = 1,
-					type  = "toggle",
 					name  = L["Enable"],
-					get = function(info)
-						if not E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] then
-							return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"]
-						else
-							return false
-						end
-					end,
+					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"] end,
 				},
 				["leftsidesize"] = {
 					order = 2,
 					type  = 'range',
 					name  = L["Size"],
-					disabled = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] end,
 					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"] end,
 					min   = 10,
 					max   = 30,
@@ -172,7 +161,6 @@ WT.ToolConfigs["Quest"] = {
 				},
 				["frametitle"] = {
 					order = 2,
-					type = "toggle",
 					name = L["Frame Title"],
 				},
 			},

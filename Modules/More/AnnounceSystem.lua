@@ -24,34 +24,36 @@ local myName = UnitName("player")
 local simpleline = "|cffe84393----------------------|r"
 local simplestart = "|cffe84393|--|r"
 
-local ASL = {
-	["AS"] = "通告系統",
-	["UseSpellNoTarget"] = "%s 使用了 %s",
-	["UseSpellTarget"] = "%s 使用了 %s -> %s",
-	["UseSpellTargetInChat"] = "|cffd63031通告系統：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
-	["PutNormal"] = "%s 放置了 %s",
-	["PutFeast"] = "天啊，土豪 %s 竟然擺出了 %s！",
-	["PutPortal"] = "%s 開啟了 %s",
-	["PutRefreshmentTable"] = "%s 使用了 %s，各位快來領餐包哦！",
-	["RitualOfSummoning"] = "%s 正在進行 %s，請配合點門哦！",
-	["SoulWell"] = "%s 發糖了，快點拿喲！",
-	["Interrupt"] = "我打斷了 %s 的 >%s<！",
-	["InterruptInChat"] = "|cffd63031通告系統：|r |cff00ff00成功打斷|r -> |cfffdcb6e%s|r >%s<！",
-	["Thanks"] = "%s，謝謝你復活我:)",
-	["Taunt"] = "我成功嘲諷了 %s！",
-	["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
-	["PetTaunt"] = "我的寵物成功嘲諷了 %s！",
-	["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
-	["OtherTankTaunt"] = "%s 成功嘲諷了 %s",
-	["OtherTankTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
-	["TauntMiss"] = "我嘲諷 %s 失敗！",
-	["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
-	["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
-	["PetTauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000寵物嘲諷失敗|r -> |cfffdcb6e%s|r！",
-	["OtherTankTauntMiss"] = "%s 嘲諷 %s 失敗！",
-	["OtherTankTauntMissInChat"] = "|cffd63031通告系統：|r %s |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
-}
-if GetLocale() == "zhCN" then
+local ASL = {}
+if GetLocale() == "zhTW" then
+	ASL = {
+		["AS"] = "通告系統",
+		["UseSpellNoTarget"] = "%s 使用了 %s",
+		["UseSpellTarget"] = "%s 使用了 %s -> %s",
+		["UseSpellTargetInChat"] = "|cffd63031通告系統：|r %s |cff00ff00使用了|r %s -> |cfffdcb6e%s|r",
+		["PutNormal"] = "%s 放置了 %s",
+		["PutFeast"] = "天啊，土豪 %s 竟然擺出了 %s！",
+		["PutPortal"] = "%s 開啟了 %s",
+		["PutRefreshmentTable"] = "%s 使用了 %s，各位快來領餐包哦！",
+		["RitualOfSummoning"] = "%s 正在進行 %s，請配合點門哦！",
+		["SoulWell"] = "%s 發糖了，快點拿喲！",
+		["Interrupt"] = "我打斷了 %s 的 >%s<！",
+		["InterruptInChat"] = "|cffd63031通告系統：|r |cff00ff00成功打斷|r -> |cfffdcb6e%s|r >%s<！",
+		["Thanks"] = "%s，謝謝你復活我:)",
+		["Taunt"] = "我成功嘲諷了 %s！",
+		["TauntInChat"] = "|cffd63031通告系統：|r |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
+		["PetTaunt"] = "我的寵物成功嘲諷了 %s！",
+		["PetTauntInChat"] = "|cffd63031通告系統：|r |cff00ff00寵物成功嘲諷|r -> |cfffdcb6e%s|r！",
+		["OtherTankTaunt"] = "%s 成功嘲諷了 %s",
+		["OtherTankTauntInChat"] = "|cffd63031通告系統：|r %s |cff00ff00成功嘲諷|r -> |cfffdcb6e%s|r！",
+		["TauntMiss"] = "我嘲諷 %s 失敗！",
+		["TauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
+		["PetTauntMiss"] = "我的寵物嘲諷了 %s 失敗！",
+		["PetTauntMissInChat"] = "|cffd63031通告系統：|r |cffff0000寵物嘲諷失敗|r -> |cfffdcb6e%s|r！",
+		["OtherTankTauntMiss"] = "%s 嘲諷 %s 失敗！",
+		["OtherTankTauntMissInChat"] = "|cffd63031通告系統：|r %s |cffff0000嘲諷失敗|r -> |cfffdcb6e%s|r！",
+	}
+elseif GetLocale() == "zhCN" then
 	ASL = {
 		["AS"] = "通告系统",
 		["UseSpellNoTarget"] = "%s 使用了 %s",
@@ -78,6 +80,34 @@ if GetLocale() == "zhCN" then
 		["PetTauntMissInChat"] = "|cffd63031通告系统：|r |cffff0000宠物嘲讽失败|r -> |cfffdcb6e%s|r！",
 		["OtherTankTauntMiss"] = "%s 嘲讽 %s 失败！",
 		["OtherTankTauntMissInChat"] = "|cffd63031通告系统：|r %s |cffff0000嘲讽失败|r -> |cfffdcb6e%s|r！",
+	}
+else
+	ASL = {
+		["AS"] = "Announce System",
+		["UseSpellNoTarget"] = "%s casted %s",
+		["UseSpellTarget"] = "%s casted %s -> %s",
+		["UseSpellTargetInChat"] = "|cffd63031Announce System:|r %s |cff00ff00casted|r %s -> |cfffdcb6e%s|r",
+		["PutNormal"] = "%s puts %s",
+		["PutFeast"] = "OMG, wealthy %s puts %s!",
+		["PutPortal"] = "%s opened %s",
+		["PutRefreshmentTable"] = "%s casted %s, today's special is Anchovy Pie!",
+		["RitualOfSummoning"] = "%s is casting %s, please assist!",
+		["SoulWell"] = "%s is handing out cookies, go and get one!",
+		["Interrupt"] = "I interrupted %s 's >%s<!",
+		["InterruptInChat"] = "|cffd63031Announce System:|r |cff00ff00interrupted|r -> |cfffdcb6e%s|r >%s<!",
+		["Thanks"] = "%s, thank you for reviving me:)",
+		["Taunt"] = "I taunted %s successfully!",
+		["TauntInChat"] = "|cffd63031Announce System:|r |cff00ff00taunted|r -> |cfffdcb6e%s|rsuccessfully!",
+		["PetTaunt"] = "My pet taunted %s successfully!",
+		["PetTauntInChat"] = "|cffd63031Announce System:|r |cff00ff00My pet taunted|r -> |cfffdcb6e%s|rsuccessfully!",
+		["OtherTankTaunt"] = "%s taunted %s successfully",
+		["OtherTankTauntInChat"] = "|cffd63031Announce System:|r %s |cff00ff00taunted|r -> |cfffdcb6e%s|rsuccessfully!",
+		["TauntMiss"] = "I failed on taunting %s!",
+		["TauntMissInChat"] = "|cffd63031Announce System:|r |cffff0000failed on taunting|r -> |cfffdcb6e%s|r!",
+		["PetTauntMiss"] = "My pet failed on taunting %s!",
+		["PetTauntMissInChat"] = "|cffd63031Announce System:|r |cffff0000My pet failed on taunting|r -> |cfffdcb6e%s|r!",
+		["OtherTankTauntMiss"] = "%s failed on taunting %s!",
+		["OtherTankTauntMissInChat"] = "|cffd63031Announce System:|r %s |cffff0000failed on taunting|r -> |cfffdcb6e%s|r!",
 	}
 end
 
@@ -183,8 +213,12 @@ local FeastSpells = {
 	[145166] = true,  -- 拉麵推車
 	[145169] = true,  -- 豪華拉麵推車
 	[145196] = true,  -- 熊貓人國寶級拉麵推車
-	[188036] = true,  -- 靈魂大鍋
-	[201352] = true,  -- 蘇拉瑪爾豪宴
+	[127851] = true,  -- 灵魂药锅
+	[133578] = true,  -- 丰盛大餐
+	[133579] = true,  -- 苏拉玛奢华大餐
+	[156525] = true,  -- 海帆盛宴
+	[156526] = true,  -- 船长盛宴佳肴
+	[162519] = true,  -- 秘法药锅
 }
 
 local Bots = {
@@ -195,9 +229,10 @@ local Bots = {
 	[67826] = true,		-- 吉福斯
 	[126459] = true,	-- 布靈登4000型
 	[161414] = true,	-- 布靈登5000型
-	[198989] = true,	-- (Test)布靈登66000型
-	[199109] = true,	-- 自動鐵錘
-	[226241] = true,	-- 靜心寶典
+	[198989] = true,	-- (Test)布靈登6000型
+	[132514] = true,	-- 自動鐵錘
+	[141333] = true,	-- 宁神圣典
+	[153646] = true,	-- 静心圣典
 }
 
 
@@ -491,7 +526,7 @@ function AnnounceSystem:Taunt()
 end
 
 function AnnounceSystem:Initialize()
-	if not (GetLocale() == "zhCN" or GetLocale() == "zhTW") then return end
+	--if not (GetLocale() == "zhCN" or GetLocale() == "zhTW") then return end
 	if not E.db.WindTools["More Tools"]["Announce System"]["enabled"] then return end
 	
 	if E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] then

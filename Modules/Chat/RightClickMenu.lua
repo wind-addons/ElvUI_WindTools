@@ -76,6 +76,14 @@ EnhancedRCMenu.UnitPopupButtonsExtra = {
 	["INVITE"] = L["Invite"],
 }
 
+EnhancedRCMenu.dropdownmenu_show = {
+	["SELF"] = true,
+	["PLAYER"] = true,
+	["PARTY"] = true,
+	["RAID_PLAYER"] = true,
+	["TARGET"] = true,
+}
+
 function EnhancedRCMenu:Initialize()
 	if not E.db.WindTools["Chat"]["Right-click Menu"]["enabled"] then return end
 
@@ -121,7 +129,7 @@ function EnhancedRCMenu:Initialize()
 	-- end
 	-- need to fix position problems
 	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
-		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and which and (which == "SELF" or which == "PLAYER" or which == "PARTY" or which == "RAID_PLAYER" or which == "TARGET")) then
+		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and EnhancedRCMenu.dropdownmenu_show[which]) then
 			local info = UIDropDownMenu_CreateInfo()
 			UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
 			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = WT.Title, isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")

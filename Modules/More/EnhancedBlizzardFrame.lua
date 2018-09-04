@@ -103,14 +103,24 @@ EBF.AddonsList = {
 	["Blizzard_GuildUI"] = { "GuildFrame" },
 	["Blizzard_AzeriteUI"] = { "AzeriteEmpoweredItemUI" },
 }
+EBF.CombatLockFrames = {
+	["SpellBookFrame"] = true,
+}
+EBF.NeedFixFrames = {
+	["HelpFrame"] = true,
+	["VideoOptionsFrame"] = true,
+	["InterfaceOptionsFrame"] = true,
+}
 
 local function LoadPosition(self)
-	if InCombatLockdown() then
+	if self.IsMoving == true then return end
+
+	local Name = self:GetName()
+	if EBF.CombatLockFrames[Name] and InCombatLockdown() then
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return
 	end
-	if self.IsMoving == true then return end
-	local Name = self:GetName()
+
 	if not self:GetPoint() then
 		self:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116)
 	end
@@ -126,21 +136,10 @@ local function LoadPosition(self)
 		_G["QuestFrame"]:Hide()
 	end
 
-	local NeedFixFrames = {
-		"HelpFrame",
-		"VideoOptionsFrame",
-		"InterfaceOptionsFrame",
-	}
-
-	for _, v in pairs(NeedFixFrames) do
-		if v == Name then
-			_G["GameMenuFrame"]:Hide()
-		end
+	if EBF.NeedFixFrames[Name] then
+		_G["GameMenuFrame"]:Hide()
 	end
-	
 end
-
-
 
 local function OnDragStart(self)
 	self.IsMoving = true
@@ -185,17 +184,20 @@ function EBF:MakeMovable(Name)
 	frame:HookScript("OnShow", LoadPosition)
 	frame:HookScript("OnDragStart", OnDragStart)
 	frame:HookScript("OnDragStop", OnDragStop)
-	frame:HookScript("OnHide", function(self)
-		self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	end)
-	frame:HookScript("OnEvent", function(self, event)
-		if event == "PLAYER_REGEN_ENABLED" then
-			if self:IsVisible() then
-				LoadPosition(self)
-			end
+
+	if EBF.CombatLockFrames[Name] then
+		frame:HookScript("OnHide", function(self)
 			self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-		end
-	end)
+		end)
+		frame:HookScript("OnEvent", function(self, event)
+			if event == "PLAYER_REGEN_ENABLED" then
+				if self:IsVisible() then
+					LoadPosition(self)
+				end
+				self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+			end
+		end)
+	end
 
 	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember then
 		frame.ignoreFramePositionManager = true
@@ -219,7 +221,6 @@ function EBF:MakeMovable(Name)
 			frame:SetPoint(unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name]))
 		end
 	end)
-
 end
 
 function EBF:Addons(event, addon)

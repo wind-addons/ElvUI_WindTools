@@ -67,6 +67,7 @@ EBF.Frames = {
 	"VideoOptionsFrame",
 	"WorldMapFrame",
 	"GameMenuFrame",
+	"PVPReadyDialog",
 }
 EBF.AddonsList = {
 	["Blizzard_AchievementUI"] = { "AchievementFrame" },

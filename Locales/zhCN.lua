@@ -290,3 +290,6 @@ L['Frame Level'] = "框架等级"
 L['Icon Size'] = "图标尺寸"
 L['Width'] = "宽度"
 L['Height'] = "高度"
+-- 信息文字
+L['Distance'] = "距离"
+L['Target Range'] = "目标距离"

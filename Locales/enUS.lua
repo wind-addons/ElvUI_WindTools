@@ -290,3 +290,6 @@ L['Frame Level'] = true
 L['Icon Size'] = true
 L['Width'] = true
 L['Height'] = true
+-- 信息文字
+L['Distance'] = true
+L['Target Range'] = true

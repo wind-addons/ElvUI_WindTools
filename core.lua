@@ -60,7 +60,7 @@ local ToolsOrder = {
 }
 
 E.PopupDialogs["WIND_UPDATE_RL"] = {
-	text = L["ElvUI WindTools has been updated and the structure of the stored config data has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
 	button1 = ACCEPT,
 	button2 = CANCEL,
 	OnAccept = ReloadUI,

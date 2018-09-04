@@ -16,6 +16,12 @@ P["WindTools"]["Trade"] = {
 			b = 0,
 		},
 	},
+	["Azerite Tooltip"] = {
+		["enabled"] = true,
+		["RemoveBlizzard"]= true,
+		["Compact"] = false,
+		["OnlySpec"] = false,
+	},
 }
 
 WT.ToolConfigs["Trade"] = {
@@ -44,5 +50,32 @@ WT.ToolConfigs["Trade"] = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 		},
+	},
+	["Azerite Tooltip"] = {
+		tDesc   = L["Show azerite traits in the tooltip when you mouseover an azerite item."],
+		oAuthor = "jokair9",
+		cAuthor = "houshuu",
+		["general"] = {
+			name = L['General'],
+			order = 6,
+			get = function(info) return E.db.WindTools["Trade"]["Azerite Tooltip"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Trade"]["Azerite Tooltip"][info[#info]] = value end,
+			args = {
+				["RemoveBlizzard"] = {
+					order = 5,
+					name = L["Replace Blizzard Azerite Text"],
+				},
+				["OnlySpec"] = {
+					order = 6,
+					name = L["Current Spec Only"],
+					desc = L["Show traits for your current specialization only"],
+				},
+				["Compact"] = {
+					order = 7,
+					name = L["Compact Mode"],
+					desc = L["Only icons"],
+				},	
+			}
+		}
 	},
 }

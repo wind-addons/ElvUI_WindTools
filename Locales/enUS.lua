@@ -293,3 +293,12 @@ L['Height'] = true
 -- 信息文字
 L['Distance'] = true
 L['Target Range'] = true
+-- 艾泽里特特质提示
+L["Azerite Tooltip"] = true
+L["Show azerite traits in the tooltip when you mouseover an azerite item."] = true
+L["Level"] = true
+L["Replace Blizzard Azerite Text"] = true
+L["Current Spec Only"] = true
+L["Show traits for your current specialization only"] = true
+L["Compact Mode"] = true
+L["Only icons"] = true

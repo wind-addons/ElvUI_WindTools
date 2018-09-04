@@ -281,10 +281,6 @@ local function CreateButton(name, size)
 	return AutoButton
 end
 
-function AB:InsertOpt()
-	
-end
-
 function AB:ScanItem(event)
 	local db = E.db.WindTools["Interface"]["Auto Buttons"]
 

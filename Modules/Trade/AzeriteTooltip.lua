@@ -9,6 +9,9 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local AzeriteTooltip = E:NewModule('Wind_AzeriteTooltip')
+
+local addText = ""
+
 function AzeriteTooltip:GetSpellID(powerID)
 	local powerInfo = C_AzeriteEmpoweredItem.GetPowerInfo(powerID)
   	if (powerInfo) then
@@ -18,16 +21,26 @@ function AzeriteTooltip:GetSpellID(powerID)
 end
 
 function AzeriteTooltip:ScanSelectedTraits(tooltip, powerName)
-	for i = 10, tooltip:NumLines() do
+	for i = 8, tooltip:NumLines() do
 		local left = _G[tooltip:GetName().."TextLeft"..i]
 		local text = left:GetText()
-        if text and text:find(powerName) then
-        	return true
-        end
-    end
-end
+		if text and text:find(powerName) then return true end
+	end
+end    
+
+function AzeriteTooltip:GetAzeriteLevel()
+	local level
+	local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
+	if azeriteItemLocation then
+	   level = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
+	else
+	   level = 0
+	end
+	return level
+ end      
+
 -- Thanks muxxon@Curse for help
-function AzeriteTooltip:ClearBlizzardText(tooltip, powerName)
+function AzeriteTooltip:ClearBlizzardText(tooltip)
 	local textLeft = tooltip.textLeft
 	if not textLeft then
 		local tooltipName = tooltip:GetName()
@@ -38,7 +51,7 @@ function AzeriteTooltip:ClearBlizzardText(tooltip, powerName)
 		end })
 		tooltip.textLeft = textLeft
 	end
-	for i = 8, tooltip:NumLines() do
+	for i = 7, tooltip:NumLines() do
 		if textLeft then
 			local line = textLeft[i]		
 			local text = line:GetText()
@@ -59,18 +72,6 @@ function AzeriteTooltip:ClearBlizzardText(tooltip, powerName)
 
 				if text:find(AzeriteUnlock) or text:find(NEW_AZERITE_POWER_AVAILABLE) then
 					line:SetText("")
-					textLeft[i+1]:SetText("")
-				end
-
-				if powerName then
-					if text:find("- "..powerName) then
-						line:SetText("")
-						textLeft[i+1]:SetText("")
-					end
-					if r < 0.1 and g > 0.9 and b < 0.1 and not text:match(ITEM_AZERITE_EMPOWERED_VIEWABLE) then
-						line:SetText("")
-						textLeft[i+1]:SetText("")
-					end
 				end
 
 				if text:find(Durability) then
@@ -81,18 +82,46 @@ function AzeriteTooltip:ClearBlizzardText(tooltip, powerName)
 	end
 end
 
+function AzeriteTooltip:RemovePowerText(tooltip, powerName)
+	local textLeft = tooltip.textLeft
+	if not textLeft then
+		local tooltipName = tooltip:GetName()
+		textLeft = setmetatable({}, { __index = function(t, i)
+			local line = _G[tooltipName .. "TextLeft" .. i]
+			t[i] = line
+			return line
+		end })
+		tooltip.textLeft = textLeft
+	end
+	for i = 7, tooltip:NumLines() do
+		if textLeft then
+			local line = textLeft[i]		
+			local text = line:GetText()
+			local r, g, b = line:GetTextColor()
+			if text then				
+				if text:match(CURRENTLY_SELECTED_AZERITE_POWERS_INSPECT) then return end
+
+				if text:find("- "..powerName) then
+					line:SetText("")
+				end
+				if r < 0.1 and g > 0.9 and b < 0.1 and not text:match(ITEM_AZERITE_EMPOWERED_VIEWABLE) then
+					line:SetText("")
+				end
+			end
+		end
+	end
+end
+
+
 local function BuildTooltip(self)
-	addText = ""
 	local name, link = self:GetItem()
   	if not name then return end
 
   	if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(link) then
 
-		-- Current Azerite Level
-		local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
-		if azeriteItemLocation then
-			currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
-		end
+  		addText = ""
+		
+		local currentLevel = AzeriteTooltip:GetAzeriteLevel()
 
 		local specID = GetSpecializationInfo(GetSpecialization())
 		local allTierInfo = C_AzeriteEmpoweredItem.GetAllTierInfoByItemID(link)
@@ -109,6 +138,8 @@ local function BuildTooltip(self)
 
 				if azeritePowerID == 13 then break end -- Ignore +5 item level tier
 
+				if not allTierInfo[1]["azeritePowerIDs"][1] then return end
+
 				local azeriteTooltipText = " "
 				for i, _ in pairs(allTierInfo[j]["azeritePowerIDs"]) do
 					local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
@@ -118,7 +149,7 @@ local function BuildTooltip(self)
 					if tierLevel <= currentLevel then
 						if AzeriteTooltip:ScanSelectedTraits(self, azeritePowerName) then
 							local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:255:255:255|t'
-							azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+							azeriteTooltipText = azeriteTooltipText.."  >"..azeriteIcon.."<"
 
 							tinsert(activePowers, {name = azeritePowerName})
 							activeAzeriteTrait = true
@@ -129,7 +160,10 @@ local function BuildTooltip(self)
 							local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
 							azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
 						end
-					else
+					elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then						
+						local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
+						azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+					elseif not AzeriteTooltip.db.OnlySpec then
 						local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
 						azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
 					end				
@@ -137,15 +171,15 @@ local function BuildTooltip(self)
 
 				if tierLevel <= currentLevel then
 					if j > 1 then 
-						addText = addText.."\n \n|cFFffcc00"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n \n|cFFffcc00"..L["Level"]..tierLevel..azeriteTooltipText.."|r"
 					else
-						addText = addText.."\n|cFFffcc00"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n|cFFffcc00"..L["Level"]..tierLevel..azeriteTooltipText.."|r"
 					end
 				else
 					if j > 1 then 
-						addText = addText.."\n \n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n \n|cFF7a7a7a"..L["Level"]..tierLevel..azeriteTooltipText.."|r"
 					else
-						addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n|cFF7a7a7a"..L["Level"]..tierLevel..azeriteTooltipText.."|r"
 					end
 				end
 				
@@ -161,15 +195,15 @@ local function BuildTooltip(self)
 
 				if tierLevel <= currentLevel then
 					if j > 1 then 
-                        addText = addText.."\n \n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
+						addText = addText.."\n \n|cFFffcc00 "..L["Level"]..tierLevel.."|r\n"
 					else
-						addText = addText.."\n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
+						addText = addText.."\n|cFFffcc00 "..L["Level"]..tierLevel.."|r\n"
 					end
 				else
 					if j > 1 then 
-						addText = addText.."\n \n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
+						addText = addText.."\n \n|cFF7a7a7a "..L["Level"]..tierLevel.."|r\n"
 					else
-						addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
+						addText = addText.."\n|cFF7a7a7a "..L["Level"]..tierLevel.."|r\n"
 					end
 				end
 
@@ -192,29 +226,27 @@ local function BuildTooltip(self)
 						elseif not AzeriteTooltip.db.OnlySpec then
 							addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
 						end
-					else
+					elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
+						addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
+					elseif not AzeriteTooltip.db.OnlySpec then
 						addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
 					end		
 				end	
-				if azeritePowerID == 13 and j == 3 then
-					break 
-				end 
 			end
 		end
 
 		if AzeriteTooltip.db.RemoveBlizzard then
 			if activeAzeriteTrait then
 				for k, v in pairs(activePowers) do
-					AzeriteTooltip:ClearBlizzardText(self, v.name)
+					AzeriteTooltip:RemovePowerText(self, v.name)
 				end
-			else
-				AzeriteTooltip:ClearBlizzardText(self, nil)
 			end
+			AzeriteTooltip:ClearBlizzardText(self)
 		else
 			self:AddLine(addText)
 			self:AddLine(" ")
 		end
-		wipe(activePowers)	
+		wipe(activePowers)
 	end
 end
 

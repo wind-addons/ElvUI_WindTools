@@ -178,10 +178,18 @@ P["WindTools"]["Interface"] = {
 		['mbgarrison'] = false,
 		['buttonsPerRow'] = 5,
 	},
-	["Raid Progression"] = {
-		["enabled"] = true,
-		["Uldir"] = true,
-	},
+	["Enhanced Tooltip"] = {
+		["Offset"] = {
+			["mouseOffsetX"] = 0,
+			["mouseOffsetY"] = 0,
+			["overrideCombat"] = false,
+		},
+		["Raid Progression"] = {
+			["enabled"] = true,
+			["Uldir"] = true,
+		},
+	}
+	
 }
 
 WT.ToolConfigs["Interface"] = {
@@ -597,7 +605,7 @@ WT.ToolConfigs["Interface"] = {
 			args = {}
 		},
 		func = function()
-			local EasyShadow = E:GetModule('EasyShadow')
+			local EasyShadow = E:GetModule('Wind_EasyShadow')
 			local Options = WT.ToolConfigs["Interface"]["EasyShadow"]
 			local optOrder = 1
 			for k, v in pairs(EasyShadow.BlzFrames) do
@@ -745,21 +753,45 @@ WT.ToolConfigs["Interface"] = {
 			}
 		},
 	},
-	["Raid Progression"] = {
-		tDesc   = L["Add progression info to tooltip."],
-		oAuthor = "ElvUI Enhanced",
+	["Enhanced Tooltip"] = {
+		tDesc   = L["Useful tooltip tweaks."],
+		oAuthor = "Nick Bockmeulen, Marcel Menzel",
 		cAuthor = "houshuu",
-		["raidsetting"] = {
+		["offset"] = {
 			order = 5,
-			name = L["Raid Setting"],
-			get = function(info) return E.db.WindTools["Interface"]["Raid Progression"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["Raid Progression"][info[#info]] = value end,
+			name = L["Offset"],
+			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Offset"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Offset"][info[#info]] = value end,
+			args = {
+				mouseOffsetX = {
+					order = 31,
+					type = "range",
+					name = L["Tooltip X-offset"],
+					desc = L["Offset the tooltip on the X-axis."],
+					min = -300, max = 200, step = 1,
+				},
+				mouseOffsetY = {
+					order = 32,
+					type = "range",
+					name = L["Tooltip Y-offset"],
+					desc = L["Offset the tooltip on the Y-axis."],
+					min = -200, max = 200, step = 1,
+					
+				},
+			},
+		},
+		["raidsetting"] = {
+			order = 6,
+			name = L["Raid Progression"],
+			desc  = L["Add progression info to tooltip."],
+			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Raid Progression"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Raid Progression"][info[#info]] = value end,
 			args = {
 				["Uldir"] = {
 					order = 1,
 					name = L["Uldir"],
 				},
 			}
-		}
-	},
+		},
+	}
 }

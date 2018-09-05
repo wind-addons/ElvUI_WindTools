@@ -233,15 +233,21 @@ L["Fast Loot"] = true
 L["Let auto-loot quickly."] = true
 L["Fast Loot Speed"] = true
 L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = true
--- 团本进度提示
+-- 鼠标提示增强
+L["Enhanced Tooltip"] = true
+L["Useful tooltip tweaks."] = true
+L["Offset"] = true
+L["Tooltip X-offset"] = true
+L["Offset the tooltip on the X-axis."] = true
+L["Tooltip Y-offset"] = true
+L["Offset the tooltip on the Y-axis."] = true
 L["Raid Progression"] = true
 L["Add progression info to tooltip."] = true
-L["Uldir"] = true
 L["Mythic"] = true 
 L["Heroic"] = true 
 L["Normal"] = true
 L["LFR"] = true
-L["Raid Setting"] = true
+L["Uldir"] = true
 -- 频道切换
 L["Tab Chat Mod"] = true
 L["Use tab to switch channel."] = true

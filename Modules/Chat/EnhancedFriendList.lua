@@ -10,36 +10,8 @@
 local E, L, V, P, G = unpack(ElvUI);
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
-local EFL = E:NewModule('EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
+local EFL = E:NewModule('Wind_EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
 
-P["WindTools"]["Enhanced Friend List"] = {
-	["enabled"] = true,
-	["color_name"] = true,
-	["enhanced"] = {
-		["enabled"] = true,
-		["NameFont"] = E.db.general.font,
-		["NameFontSize"] = 13,
-		["NameFontFlag"] = "OUTLINE",
-		["InfoFont"] = E.db.general.font,
-		["InfoFontSize"] = 12,
-		["InfoFontFlag"] = "OUTLINE",
-		["StatusIconPack"] = "D3",
-		["GameIcon"] = {
-			["App"] = "Launcher",
-			["Alliance"] = "Launcher",
-			["Horde"] = "Launcher",
-			["Neutral"] = "Launcher",
-			["D3"] = "Launcher",
-			["WTCG"] = "Launcher",
-			["S1"] = "Launcher",
-			["S2"] = "Launcher",
-			["BSAp"] = "Launcher",
-			["Hero"] = "Launcher",
-			["Pro"] = "Launcher",
-			["DST2"] = "Launcher",
-		}
-	}
-}
 -- Friend Color
 local function Hex(r, g, b)
     if(type(r) == 'table') then
@@ -233,7 +205,7 @@ function EFL:ClassColorCode(class)
 	return format('|cFF%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
 end
 function EFL:UpdateFriends(button)
-	self.db = E.db.WindTools["Enhanced Friend List"]["enhanced"]
+	self.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
@@ -317,228 +289,23 @@ function EFL:UpdateFriends(button)
 	end
 end
 
-local function InsertOptions()
-	if not E.db.WindTools["Enhanced Friend List"]["enabled"] then return end
-	local profile = E.db.WindTools["Enhanced Friend List"]
-	local Options = {
-		colorName = {
-			order = 9,
-			type = 'group',
-			name = L['Features'],
-			guiInline = true,
-			args = {
-				color_name = {
-					order = 1,
-					type = "toggle",
-					name = L['Name color & Level'],
-					get = function(info) return profile.color_name end,
-					set = function(info, value) profile.color_name = value; E:StaticPopup_Show("PRIVATE_RL") end
-				},
-				enhanced_enable = {
-					order = 2,
-					type = "toggle",
-					name = L['Enhanced Texuture'],
-					get = function(info) return profile.enhanced["enabled"] end,
-					set = function(info, value) profile.enhanced["enabled"] = value; E:StaticPopup_Show("PRIVATE_RL") end
-				},
-			}
-		},
-		general = {
-			order = 10,
-			type = 'group',
-			name = L['General'],
-			guiInline = true,
-			get = function(info) return profile.enhanced[info[#info]] end,
-			set = function(info, value) profile.enhanced[info[#info]] = value FriendsFrame_Update() end,
-			args = {
-				NameFont = {
-					type = 'select', dialogControl = 'LSM30_Font',
-					order = 1,
-					name = L['Name Font'],
-					desc = L['The font that the RealID / Character Name / Level uses.'],
-					values = LSM:HashTable('font'),
-				},
-				NameFontSize = {
-					order = 2,
-					name = L['Name Font Size'],
-					desc = L['The font size that the RealID / Character Name / Level uses.'],
-					type = 'range',
-					min = 6, max = 22, step = 1,
-				},
-				NameFontFlag = {
-					name = L['Name Font Flag'],
-					desc = L['The font flag that the RealID / Character Name / Level uses.'],
-					order = 3,
-					type = 'select',
-					values = {
-						['NONE'] = L['None'],
-						['OUTLINE'] = L['OUTLINE'],
-						['MONOCHROME'] = L['MONOCHROME'],
-						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
-						['THICKOUTLINE'] = L['THICKOUTLINE'],
-					},
-				},
-				InfoFont = {
-					type = 'select', dialogControl = 'LSM30_Font',
-					order = 4,
-					name = L['Info Font'],
-					desc = L['The font that the Zone / Server uses.'],
-					values = LSM:HashTable('font'),
-				},
-				InfoFontSize = {
-					order = 5,
-					name = L['Info Font Size'],
-					desc = L['The font size that the Zone / Server uses.'],
-					type = 'range',
-					min = 6, max = 22, step = 1,
-				},
-				InfoFontFlag = {
-					order = 6,
-					name = L['Info Font Outline'],
-					desc = L['The font flag that the Zone / Server uses.'],
-					type = 'select',
-					values = {
-						['NONE'] = L['None'],
-						['OUTLINE'] = L['OUTLINE'],
-						['MONOCHROME'] = L['MONOCHROME'],
-						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
-						['THICKOUTLINE'] = L['THICKOUTLINE'],
-					},
-				},
-				StatusIconPack = {
-					name = L['Status Icon Pack'],
-					desc = L['Different Status Icons.'],
-					order = 7,
-					type = 'select',
-					values = {
-						['Default'] = L['Default'],
-						['Square'] = L['Square'],
-						['D3'] = L['Diablo 3'],
-					},
-				},
-			},
-		},
-		GameIcons = {
-			order = 11,
-			type = 'group',
-			name = L['Game Icons'],
-			guiInline = true,
-			get = function(info) return profile.enhanced.GameIcon[info[#info]] end,
-			set = function(info, value) profile.enhanced.GameIcon[info[#info]] = value FriendsFrame_Update() end,
-			args = {},
-		},
-		GameIconsPreview = {
-			order = 12,
-			type = 'group',
-			name = L['Game Icon Preview'],
-			guiInline = true,
-			args = {},
-		},
-		StatusIcons = {
-			order = 13,
-			type = 'group',
-			name = L['Status Icon Preview'],
-			guiInline = true,
-			args = {},
-		},
-	}
-	local GameIconsOptions = {
-		Alliance = FACTION_ALLIANCE,
-		Horde = FACTION_HORDE,
-		Neutral = FACTION_STANDING_LABEL4,
-		D3 = L['Diablo 3'],
-		WTCG = L['Hearthstone'],
-		S1 = L['Starcraft'],
-		S2 = L['Starcraft 2'],
-		App = L['App'],
-		BSAp = L['Mobile'],
-		Hero = L['Hero of the Storm'],
-		Pro = L['Overwatch'],
-		DST2 = L['Destiny 2'],
-	}
-	local GameIconOrder = {
-		Alliance = 1,
-		Horde = 2,
-		Neutral = 3,
-		D3 = 4,
-		WTCG = 5,
-		S1 = 6,
-		S2 = 7,
-		App = 8,
-		BSAp = 9,
-		Hero = 10,
-		Pro = 11,
-		DST2 = 12,
-	}
-	local StatusIconsOptions = {
-		Online = FRIENDS_LIST_ONLINE,
-		Offline = FRIENDS_LIST_OFFLINE,
-		DND = DEFAULT_DND_MESSAGE,
-		AFK = DEFAULT_AFK_MESSAGE,
-	}
-	local StatusIconsOrder = {
-		Online = 1,
-		Offline = 2,
-		DND = 3,
-		AFK = 4,
-	}
-
-	for Key, Value in pairs(GameIconsOptions) do
-		Options.GameIcons.args[Key] = {
-			name = L[Value].." "..L['Icon'],
-			order = GameIconOrder[Key],
-			type = 'select',
-			values = {
-				['Default'] = L['Default'],
-				['BlizzardChat'] = L['Blizzard Chat'],
-				['Flat'] = L['Flat Style'],
-				['Gloss'] = L['Glossy'],
-				['Launcher'] = L['Launcher'],
-			},
-		}
-		Options.GameIconsPreview.args[Key] = {
-			order = GameIconOrder[Key],
-			type = 'execute',
-			name = L[Value],
-			func = function() return end,
-			image = function(info) return EFL.GameIcons[info[#info]][profile.enhanced.GameIcon[Key]], 32, 32 end,
-		}
-	end
-	
-	-- 排除缺少的 SC1 图标
-	Options.GameIcons.args["S1"].values["Flat"] = nil
-	Options.GameIcons.args["S1"].values["Gloss"] = nil
-
-	for Key, Value in pairs(StatusIconsOptions) do
-		Options.StatusIcons.args[Key] = {
-			order = StatusIconsOrder[Key],
-			type = 'execute',
-			name = L[Value],
-			func = function() return end,
-			image = function(info) return EFL.StatusIcons[profile.enhanced.StatusIconPack][info[#info]], 16, 16 end,
-		}
-	end
-
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["Chat"].args["Enhanced Friend List"].args[k] = v
-	end
-end
-
 function EFL:Initialize()
 	-- 总开关
-	if not E.db.WindTools["Enhanced Friend List"]["enabled"] then return end
+	if not E.db.WindTools["Chat"]["Enhanced Friend List"]["enabled"] then return end
 	
-	if E.db.WindTools["Enhanced Friend List"]["color_name"] then
+	if E.db.WindTools["Chat"]["Enhanced Friend List"]["color_name"] then
 		-- 检查是否要染色
 		hooksecurefunc("FriendsList_Update", FriendColorInit)
 		hooksecurefunc("HybridScrollFrame_Update", FriendColorInit)
 	end
 
-	if E.db.WindTools["Enhanced Friend List"]["enhanced"]["enabled"] then
+	if E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]["enabled"] then
 		-- 检查是否要进行增强
 		EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 	end
 end
 
-WT.ToolConfigs["Enhanced Friend List"] = InsertOptions
-E:RegisterModule(EFL:GetName())
+local function InitializeCallback()
+	EFL:Initialize()
+end
+E:RegisterModule(EFL:GetName(), InitializeCallback)

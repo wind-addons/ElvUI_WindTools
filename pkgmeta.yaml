@@ -1,7 +1,13 @@
 package-as: ElvUI_WindTools
 enable-nolib-creation: no
-
+externals:
+    Libs/LibStub-1.0: https://repos.wowace.com/wow/libstub/trunk/
+    Libs/CallbackHandler-1.0: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+    Libs/LibObjectiveProgress-1.0: https://repos.curseforge.com/wow/libobjectiveprogress-1-0
+    Libs/LibRangeCheck-2.0: https://repos.wowace.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
 ignore:
     - .gitignore
     - README.md
     - Title.png
+    - config_example.lua
+    - Libs/LibStub/tests

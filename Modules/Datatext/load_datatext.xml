@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="range.lua"/>
+	<Include file="micromenu.lua"/>
+</Ui>

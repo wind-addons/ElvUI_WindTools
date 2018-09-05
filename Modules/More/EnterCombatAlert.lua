@@ -8,31 +8,23 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local EnterCombatAlert = E:NewModule('EnterCombatAlert');
-
-P["WindTools"]["Enter Combat Alert"] = {
-	["enabled"] = true,
-	["custom_text"] = false,
-	["custom_text_enter"] = "",
-	["custom_text_leave"] = "",
-	["scale"] = 0.65,
-}
+local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
 
 function EnterCombatAlert:Initialize()
-	if not E.db.WindTools["Enter Combat Alert"]["enabled"] then return end
+	if not E.db.WindTools["More Tools"]["Enter Combat Alert"]["enabled"] then return end
 	local locale = GetLocale()
 	local enterCombat = L["Enter Combat"]
 	local leaveCombat = L["Leave Combat"]
 	
-	if E.db.WindTools["Enter Combat Alert"]["custom_text"] then
-		enterCombat = E.db.WindTools["Enter Combat Alert"]["custom_text_enter"]
-		leaveCombat = E.db.WindTools["Enter Combat Alert"]["custom_text_leave"]
+	if E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] then
+		enterCombat = E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"]
+		leaveCombat = E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"]
 	end
 
 	local alertFrame = CreateFrame("Frame")
 	alertFrame:SetSize(400, 65)
 	alertFrame:SetPoint("TOP", 0, -280)
-	alertFrame:SetScale(E.db.WindTools["Enter Combat Alert"]["scale"])
+	alertFrame:SetScale(E.db.WindTools["More Tools"]["Enter Combat Alert"]["scale"])
 	alertFrame:Hide()
 	alertFrame.Bg = alertFrame:CreateTexture(nil, "BACKGROUND")
 	alertFrame.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
@@ -68,48 +60,7 @@ function EnterCombatAlert:Initialize()
 	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 end
 
-local function InsertOptions()
-	local Options = {
-		custom_text = {
-			order = 11,
-			type = "toggle",
-			name = L["Use custom text"],
-			disabled = function() return not E.db.WindTools["Enter Combat Alert"]["enabled"] end,
-			get = function(info) return E.db.WindTools["Enter Combat Alert"]["custom_text"] end,
-			set = function(info, value) E.db.WindTools["Enter Combat Alert"]["custom_text"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-		},
-		custom_enter_combat = {
-			order = 12,
-			type = "input",
-			name = L["Custom text (Enter)"],
-			width = 'full',
-			disabled = function() return not E.db.WindTools["Enter Combat Alert"]["custom_text"] end,
-			get = function(info) return E.db.WindTools["Enter Combat Alert"]["custom_text_enter"] end,
-			set = function(info, value) E.db.WindTools["Enter Combat Alert"]["custom_text_enter"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-		},
-		custom_leave_combat = {
-			order = 13,
-			type = "input",
-			disabled = function() return not E.db.WindTools["Enter Combat Alert"]["custom_text"] end,
-			name = L["Custom text (Leave)"],
-			width = 'full',
-			get = function(info) return E.db.WindTools["Enter Combat Alert"]["custom_text_leave"] end,
-			set = function(info, value) E.db.WindTools["Enter Combat Alert"]["custom_text_leave"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-		},
-		setscale = {
-			order = 14,
-			type = "range",
-			name = L["Scale"],
-			desc = L["Default is 0.65"],
-			min = 0.1, max = 1.0, step = 0.01,
-			get = function(info) return E.db.WindTools["Enter Combat Alert"]["scale"] end,
-			set = function(info, value) E.db.WindTools["Enter Combat Alert"]["scale"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-		}
-	}
-
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["More Tools"].args["Enter Combat Alert"].args[k] = v
-	end
+local function InitializeCallback()
+	EnterCombatAlert:Initialize()
 end
-WT.ToolConfigs["Enter Combat Alert"] = InsertOptions
-E:RegisterModule(EnterCombatAlert:GetName())
+E:RegisterModule(EnterCombatAlert:GetName(), InitializeCallback)

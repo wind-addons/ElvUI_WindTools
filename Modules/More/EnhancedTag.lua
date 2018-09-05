@@ -28,10 +28,6 @@ local UnitPowerMax = UnitPowerMax
 local UnitClass = UnitClass
 local UnitName = UnitName
 
-P["WindTools"]["Enhanced Tag"] = {
-	["enabled"] = true,
-}
-
 --GLOBALS: _TAGS, Hex, _COLORS
 
 function E:ShortValue(v)
@@ -47,7 +43,7 @@ function E:ShortValue(v)
 			return format("%s", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
-		if E.db.WindTools["Enhanced Tag"]["enabled"] then
+		if E.db.WindTools["More Tools"]["Enhanced Tag"]["enabled"] then
 			if abs(v) >= 1e8 then
 				return format(shortValueDec..L["Yi"], v / 1e8)
 			elseif abs(v) >= 1e4 then
@@ -441,82 +437,3 @@ ElvUF.Tags.Methods["power:percent-short"] = function(unit)
 	local String = GetFormattedText(min, max, "PERCENT", true)
 	return String
 end
-
-
-local function InsertOptions()
-	E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["enablebtn"].name = L["Chinese W/Y"]
-
-	local Options = {
-		desc0 = {
-			order = 6,
-			type = "description",
-			name = "\n",
-		},
-		health = {
-			order = 11,
-			type = "group",
-			name = L["Health"],
-			guiInline = true,
-			args = {
-				percentshort = {
-					order = 1,
-					type = "description",
-					name = "[health:percent-short] "..L["Example:"].."10% / "..L["Dead"],
-				},
-				percentshortnostatus = {
-					order = 2,
-					type = "description",
-					name = "[health:percent-short-nostatus] "..L["Example:"].."10% / 0%",
-				},
-				percentnosymbol = {
-					order = 3,
-					type = "description",
-					name = "[health:percent-nosymbol] "..L["Example:"].."10 / "..L["Dead"],
-				},
-				percentnosymbolnostatus = {
-					order = 4,
-					type = "description",
-					name = "[health:percent-nosymbol-nostatus] "..L["Example:"].."10 / 0",
-				},
-				currentpercentshort = {
-					order = 5,
-					type = "description",
-					name = "[health:current-percent-short] "..L["Example:"].."1120 - 10% / "..L["Dead"],
-				},
-				currentpercentshortnostatus = {
-					order = 6,
-					type = "description",
-					name = "[health:current-percent-short-nostatus] "..L["Example:"].."1120 - 10% / 0 - 0%",
-				},
-			}
-		},
-		power = {
-			order = 12,
-			type = "group",
-			name = L["Power"],
-			guiInline = true,
-			args = {
-				desc4 = {
-					order = 1,
-					type = "description",
-					name = "[power:percent-short] "..L["Example:"].."10%",
-				},
-				desc5 = {
-					order = 2,
-					type = "description",
-					name = "[power:percent-nosymbol] "..L["Example:"].."10",
-				},
-				desc6 = {
-					order = 3,
-					type = "description",
-					name = "[power:current-percent-short] "..L["Example:"].."1120 - 10%",
-				},
-			}
-		}
-	}
-
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args[k] = v
-	end
-end
-WT.ToolConfigs["Enhanced Tag"] = InsertOptions

@@ -8,15 +8,8 @@
 
 local E, L, V, P, G = unpack(ElvUI);
 local WT = E:GetModule("WindTools")
-local AlreadyKnown = E:NewModule('AlreadyKnown', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
-P["WindTools"]["Already Known"] = {
-	["enabled"] = true,
-	["color"] = {
-		r = 0,
-		g = 1,
-		b = 0,
-	},
-}
+local AlreadyKnown = E:NewModule('Wind_AlreadyKnown', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+
 local knownTable = {} -- Save known items for later use
 local db
 local questItems = { -- Quest items and matching quests
@@ -153,7 +146,7 @@ local function _hookMerchant() -- Most of this found from FrameXML/MerchantFrame
 end
 
 function AlreadyKnown:Initialize()
-	if not E.db.WindTools["Already Known"]["enabled"] then return end
+	if not E.db.WindTools["Trade"]["Already Known"]["enabled"] then return end
 	local f = CreateFrame("Frame")
 	if IsAddOnLoaded("Blizzard_AuctionUI") then
 		if IsAddOnLoaded("Auc-Advanced") and _G.AucAdvanced.Settings.GetSetting("util.compactui.activated") then
@@ -163,33 +156,15 @@ function AlreadyKnown:Initialize()
 		end
 	end
 	db = {
-		r = E.db.WindTools["Already Known"]["color"].r,
-		g = E.db.WindTools["Already Known"]["color"].g,
-		b = E.db.WindTools["Already Known"]["color"].b,
+		r = E.db.WindTools["Trade"]["Already Known"]["color"].r,
+		g = E.db.WindTools["Trade"]["Already Known"]["color"].g,
+		b = E.db.WindTools["Trade"]["Already Known"]["color"].b,
 		monochrome = false,
 	}
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 end
 
-local function InsertOptions()
-	E.Options.args.WindTools.args["Trade"].args["Already Known"].args["color"] = {
-		order = 10,
-		type = "color",
-		name = L["Color"],
-		disabled = not E.db.WindTools["Already Known"]["enabled"],
-		hasAlpha = true,
-		get = function(info)
-			local t = E.db.WindTools["Already Known"]["color"]
-			return t.r, t.g, t.b
-		end,
-		set = function(info, r, g, b, a)
-			E.db.WindTools["Already Known"]["color"] = {}
-			local t = E.db.WindTools["Already Known"]["color"]
-			t.r, t.g, t.b = r, g, b
-			E:StaticPopup_Show("PRIVATE_RL")
-		end,
-	}
+local function InitializeCallback()
+	AlreadyKnown:Initialize()
 end
-
-WT.ToolConfigs["Already Known"] = InsertOptions
-E:RegisterModule(AlreadyKnown:GetName())
+E:RegisterModule(AlreadyKnown:GetName(), InitializeCallback)

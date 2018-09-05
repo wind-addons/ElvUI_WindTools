@@ -4,7 +4,7 @@
 -------------------
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local EBF = E:NewModule("EnhancedBlizzardFrame", 'AceHook-3.0', 'AceEvent-3.0')
+local EBF = E:NewModule("Wind_EnhancedBlizzardFrame", 'AceHook-3.0', 'AceEvent-3.0')
 local _G = _G
 
 local EnableMouse = EnableMouse
@@ -14,97 +14,6 @@ local RegisterForDrag = RegisterForDrag
 local StartMoving = StartMoving
 local StopMovingOrSizing = StopMovingOrSizing
 local InCombatLockdown = InCombatLockdown
-
-P["WindTools"]["Enhanced Blizzard Frame"] = {
-	["enabled"] = true,
-	["moveframe"] = true,
-	["moveelvbag"] = false,
-	["remember"] = true,
-	["points"] = {},
-	["errorframe"] = {
-		["height"] = 60,
-		["width"] = 512,
-	},
-	["vehicleSeatScale"] = 1,
-}
-
-local function InsertOptions()
-	local Options = {
-		moveframes = {
-			order = 11,
-			type = "group",
-			name = L["Move Frames"],
-			guiInline = true,
-			disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled,
-			get = function(info) return E.db.WindTools["Enhanced Blizzard Frame"][ info[#info] ] end,
-			set = function(info, value) E.db.WindTools["Enhanced Blizzard Frame"][ info[#info] ] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-			args = {
-				moveframe = {
-					order = 10,
-					type = "toggle",
-					name = L["Move Blizzard Frame"],
-				},
-				moveelvbag = {
-					order = 12,
-					type = "toggle",
-					name = L["Move ElvUI Bag"],
-					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["Enhanced Blizzard Frame"]["moveframe"],
-				},
-				remember = {
-					order = 13,
-					type = "toggle",
-					name = L["Remember Position"],
-					disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["Enhanced Blizzard Frame"]["moveframe"],
-				},
-			}
-		},
-		errorframe = {
-			order = 12,
-			type = "group",
-			name = L["Error Frame"],
-			guiInline = true,
-			disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled,
-			get = function(info) return E.db.WindTools["Enhanced Blizzard Frame"].errorframe[ info[#info] ] end,
-			set = function(info, value) E.db.WindTools["Enhanced Blizzard Frame"].errorframe[ info[#info] ] = value; EBF:ErrorFrameSize() end,
-			args = {
-				width = {
-					order = 1,
-					name = L["Width"],
-					type = "range",
-					min = 100, max = 1000, step = 1,
-				},
-				height = {
-					order = 2,
-					name = L["Height"],
-					type = "range",
-					min = 30, max = 300, step = 15,
-				},
-			},
-		},
-		others = {
-			order = 13,
-			type = "group",
-			name = L["Other Setting"],
-			disabled = not E.db.WindTools["Enhanced Blizzard Frame"].enabled,
-			guiInline = true,
-			args = {
-				vehicleSeatScale = {
-					order = 1,
-					type = 'range',
-					name = L["Vehicle Seat Scale"],
-					min = 0.1, max = 3, step = 0.01,
-					isPercent = true,
-					get = function(info) return E.db.WindTools["Enhanced Blizzard Frame"][ info[#info] ] end,
-					set = function(info, value) E.db.WindTools["Enhanced Blizzard Frame"][ info[#info] ] = value; EBF:VehicleScale() end,
-				},
-			}
-		}
-	}
-
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["More Tools"].args["Enhanced Blizzard Frame"].args[k] = v
-	end
-end
 
 EBF.Frames = {
 	"AddonList",
@@ -158,6 +67,7 @@ EBF.Frames = {
 	"VideoOptionsFrame",
 	"WorldMapFrame",
 	"GameMenuFrame",
+	"PVPReadyDialog",
 }
 EBF.AddonsList = {
 	["Blizzard_AchievementUI"] = { "AchievementFrame" },
@@ -194,29 +104,31 @@ EBF.AddonsList = {
 	["Blizzard_GuildUI"] = { "GuildFrame" },
 	["Blizzard_AzeriteUI"] = { "AzeriteEmpoweredItemUI" },
 }
+EBF.CombatLockFrames = {
+	["SpellBookFrame"] = true,
+}
+EBF.NeedFixFrames = {
+	["HelpFrame"] = true,
+	["VideoOptionsFrame"] = true,
+	["InterfaceOptionsFrame"] = true,
+}
 
 local function LoadPosition(self)
-	if InCombatLockdown() then
+	if self.IsMoving == true then return end
+
+	local Name = self:GetName()
+	if EBF.CombatLockFrames[Name] and InCombatLockdown() then
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
-		self:HookScript("OnEvent", function(self, event)
-			if event == "PLAYER_REGEN_ENABLED" then
-				if self:IsVisible() then
-					LoadPosition(self)
-				end
-				self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-			end
-		end)
 		return
 	end
-	if self.IsMoving == true then return end
-	local Name = self:GetName()
+
 	if not self:GetPoint() then
 		self:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116)
 	end
 
-	if E.db.WindTools["Enhanced Blizzard Frame"].remember and E.db.WindTools["Enhanced Blizzard Frame"].points[Name] then
+	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
 		self:ClearAllPoints()
-		self:SetPoint(unpack(E.db.WindTools["Enhanced Blizzard Frame"].points[Name]))
+		self:SetPoint(unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name]))
 	end
 	
 	if Name == "QuestFrame" then
@@ -225,21 +137,10 @@ local function LoadPosition(self)
 		_G["QuestFrame"]:Hide()
 	end
 
-	local NeedFixFrames = {
-		"HelpFrame",
-		"VideoOptionsFrame",
-		"InterfaceOptionsFrame",
-	}
-
-	for _, v in pairs(NeedFixFrames) do
-		if v == Name then
-			_G["GameMenuFrame"]:Hide()
-		end
+	if EBF.NeedFixFrames[Name] then
+		_G["GameMenuFrame"]:Hide()
 	end
-	
 end
-
-
 
 local function OnDragStart(self)
 	self.IsMoving = true
@@ -250,7 +151,7 @@ local function OnDragStop(self)
 	self:StopMovingOrSizing()
 	self.IsMoving = false
 	local Name = self:GetName()
-	if E.db.WindTools["Enhanced Blizzard Frame"].remember then
+	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember then
 		local a, b, c, d, e = self:GetPoint()
 		if self:GetParent() then 
 			b = self:GetParent():GetName() or UIParent
@@ -258,10 +159,10 @@ local function OnDragStop(self)
 			b = UIParent
 		end
 		if Name == "QuestFrame" or Name == "GossipFrame" then
-			E.db.WindTools["Enhanced Blizzard Frame"].points["GossipFrame"] = {a, b, c, d, e}
-			E.db.WindTools["Enhanced Blizzard Frame"].points["QuestFrame"] = {a, b, c, d, e}
+			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points["GossipFrame"] = {a, b, c, d, e}
+			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points["QuestFrame"] = {a, b, c, d, e}
 		else
-			E.db.WindTools["Enhanced Blizzard Frame"].points[Name] = {a, b, c, d, e}
+			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] = {a, b, c, d, e}
 		end
 	else
 		self:SetUserPlaced(false)
@@ -284,11 +185,22 @@ function EBF:MakeMovable(Name)
 	frame:HookScript("OnShow", LoadPosition)
 	frame:HookScript("OnDragStart", OnDragStart)
 	frame:HookScript("OnDragStop", OnDragStop)
-	-- frame:HookScript("OnHide", function(self)
-	-- 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	-- end)
 
-	if E.db.WindTools["Enhanced Blizzard Frame"].remember then
+	if EBF.CombatLockFrames[Name] then
+		frame:HookScript("OnHide", function(self)
+			self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+		end)
+		frame:HookScript("OnEvent", function(self, event)
+			if event == "PLAYER_REGEN_ENABLED" then
+				if self:IsVisible() then
+					LoadPosition(self)
+				end
+				self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+			end
+		end)
+	end
+
+	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember then
 		frame.ignoreFramePositionManager = true
 		if UIPanelWindows[Name] then
 			for Key in pairs(UIPanelWindows[Name]) do
@@ -301,16 +213,15 @@ function EBF:MakeMovable(Name)
 	end
 
 	C_Timer.After(0, function()
-		if E.db.WindTools["Enhanced Blizzard Frame"].remember and E.db.WindTools["Enhanced Blizzard Frame"].points[Name] then
+		if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
 			if not frame:GetPoint() then
 				frame:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116)
 			end
 
 			frame:ClearAllPoints()
-			frame:SetPoint(unpack(E.db.WindTools["Enhanced Blizzard Frame"].points[Name]))
+			frame:SetPoint(unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name]))
 		end
 	end)
-
 end
 
 function EBF:Addons(event, addon)
@@ -329,7 +240,7 @@ end
 
 function EBF:VehicleScale()
 	local frame = _G["VehicleSeatIndicator"]
-	local frameScale = E.db.WindTools["Enhanced Blizzard Frame"]["vehicleSeatScale"]
+	local frameScale = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["vehicleSeatScale"]
 	frame:SetScale(frameScale)
 	if frame.mover then
 		frame.mover:SetSize(frameScale * frame:GetWidth(), frameScale * frame:GetHeight())
@@ -341,9 +252,9 @@ function EBF:ErrorFrameSize()
 end
 
 function EBF:Initialize()
-	if not E.db.WindTools["Enhanced Blizzard Frame"]["enabled"] then return end
+	if not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["enabled"] then return end
 	
-	self.db = E.db.WindTools["Enhanced Blizzard Frame"]
+	self.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
 	EBF.addonCount = 0
 	if self.db.moveframe then
 		for i = 1, #EBF.Frames do
@@ -371,5 +282,7 @@ function EBF:Initialize()
 	end
 end
 
-WT.ToolConfigs["Enhanced Blizzard Frame"] = InsertOptions
-E:RegisterModule(EBF:GetName())
+local function InitializeCallback()
+	EBF:Initialize()
+end
+E:RegisterModule(EBF:GetName(), InitializeCallback)

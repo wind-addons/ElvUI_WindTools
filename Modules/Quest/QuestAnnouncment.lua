@@ -9,16 +9,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local QuestAnnouncment = E:NewModule('QuestAnnouncment', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
-
-P["WindTools"]["Quest Announcment"] = {
-	["enabled"] = true,
-	["NoDetail"] = false,
-	["Instance"] = false,
-	["Raid"] = false,
-	["Party"] = false,
-	["Solo"] = true,
-}
+local QuestAnnouncment = E:NewModule('Wind_QuestAnnouncment', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
 local GetQuestLogTitle = GetQuestLogTitle
 local GetQuestLink = GetQuestLink
@@ -116,26 +107,26 @@ end
 
 local function PrtChatMsg(msg)
 	if (not IsInGroup(LE_PARTY_CATEGORY_HOME) or IsInRaid(LE_PARTY_CATEGORY_HOME)) and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-		if E.db.WindTools["Quest Announcment"]["Instance"] then
+		if E.db.WindTools["Quest"]["Quest Announcment"]["Instance"] then
 			SendChatMessage(msg, "instance_chat", nil)
 		end
 	elseif UnitInRaid("player") then
-		if E.db.WindTools["Quest Announcment"]["Raid"] then
+		if E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] then
 			SendChatMessage(msg, "raid", nil)
 		end
 	elseif UnitInParty("Party1") then
-		if E.db.WindTools["Quest Announcment"]["Party"] then
+		if E.db.WindTools["Quest"]["Quest Announcment"]["Party"] then
 			SendChatMessage(msg, "party", nil)
 		end
 	else
-		if E.db.WindTools["Quest Announcment"]["Solo"] then
+		if E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] then
 			ChatFrame1:AddMessage(msg)
 		end
 	end
 end
 
 function QuestAnnouncment:Initialize()
-	if not E.db.WindTools["Quest Announcment"]["enabled"] then return end
+	if not E.db.WindTools["Quest"]["Quest Announcment"]["enabled"] then return end
 	local QN = CreateFrame("Frame")
 	QN:RegisterEvent("QUEST_LOG_UPDATE")
 	QN:SetScript("OnEvent", function(self, event)
@@ -170,7 +161,7 @@ function QuestAnnouncment:Initialize()
 									--QN_ItemMsg = QN_Locale["Quest"]..currList[i].Link..QN_Progress ..": ".. currList[i][j].NeedItem ..":".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
 									QN_ItemMsg = QN_Progress ..":" .. currList[i][j].NeedItem ..": ".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
 									QN_ItemColorMsg = RGBStr.G..QN_Locale["Quest"].."|r".. RGBStr.P .. "["..currList[i].Level.."]|r "..currList[i].Link..RGBStr.G..QN_Progress..":|r"..RGBStr.K..currList[i][j].NeedItem..":|r"..RGBStr.Y..currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum .."|r"
-									if not E.db.WindTools["Quest Announcment"]["NoDetail"] then
+									if not E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] then
 										PrtChatMsg(QN_ItemMsg)
 									end
 								end
@@ -209,47 +200,7 @@ function QuestAnnouncment:Initialize()
 	end)
 end
 
-local function InsertOptions()
-	local Options = {
-		NoDetail = {
-			order = 10,
-			type = "toggle",
-			name = L["No Detail"],
-			get = function(info) return E.db.WindTools["Quest Announcment"]["NoDetail"] end,
-			set = function(info, value) E.db.WindTools["Quest Announcment"]["NoDetail"] = value;end
-		},
-		Instance = {
-			order = 11,
-			type = "toggle",
-			name = L["Instance"],
-			get = function(info) return E.db.WindTools["Quest Announcment"]["Instance"] end,
-			set = function(info, value) E.db.WindTools["Quest Announcment"]["Instance"] = value;end
-		},
-		Raid = {
-			order = 12,
-			type = "toggle",
-			name = L["Raid"],
-			get = function(info) return E.db.WindTools["Quest Announcment"]["Raid"] end,
-			set = function(info, value) E.db.WindTools["Quest Announcment"]["Raid"] = value; E:StaticPopup_Show("PRIVATE_RL")end
-		},
-		Party = {
-			order = 13,
-			type = "toggle",
-			name = L["Party"],
-			get = function(info) return E.db.WindTools["Quest Announcment"]["Party"] end,
-			set = function(info, value) E.db.WindTools["Quest Announcment"]["Party"] = value;end
-		},
-		Solo = {
-			order = 14,
-			type = "toggle",
-			name = L["Solo"],
-			get = function(info) return E.db.WindTools["Quest Announcment"]["Solo"] end,
-			set = function(info, value) E.db.WindTools["Quest Announcment"]["Solo"] = value;end
-		}
-	}
-	for k, v in pairs(Options) do
-		E.Options.args.WindTools.args["Quest"].args["Quest Announcment"].args[k] = v
-	end
+local function InitializeCallback()
+	QuestAnnouncment:Initialize()
 end
-WT.ToolConfigs["Quest Announcment"] = InsertOptions
-E:RegisterModule(QuestAnnouncment:GetName())
+E:RegisterModule(QuestAnnouncment:GetName(), InitializeCallback)

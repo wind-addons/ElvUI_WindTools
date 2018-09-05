@@ -1,9 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='config.lua'/>
 	<Script file='AutoButton.lua'/>
 	<Script file='MinimapButtons.lua'/>
 	<Script file='EasyShadow.lua'/>
 	<Script file='iShadow.lua'/>
 	<Script file='EnhancedWorldMap.lua'/>
-	<Script file='RaidProgression.lua'/>
+	<Script file='EnhancedTooltip.lua'/>
 	<Script file='DragonOverlay.lua'/>
 </Ui>

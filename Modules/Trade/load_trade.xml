@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='config.lua'/>
 	<Script file='AlreadyKnown.lua'/>
 	<Script file='AutoDelete.lua'/>
+	<Script file='AzeriteTooltip.lua'/>
 </Ui>

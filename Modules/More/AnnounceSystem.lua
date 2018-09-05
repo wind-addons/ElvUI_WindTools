@@ -409,7 +409,10 @@ function AnnounceSystem:Interrupt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self,event)
-		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
+		-- 回復原版本，待查看
+		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID = CombatLogGetCurrentEventInfo()
+		-- 1.3.0 @Someblu 貌似改錯了 
+		-- local _, event, _, sourceGUID, _, _, _, _, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
 		-- 打断
 
 		if not (event == "SPELL_INTERRUPT" and spellID) then return end
@@ -446,7 +449,10 @@ function AnnounceSystem:Taunt()
 	local frame = CreateFrame("Frame")
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	frame:SetScript("OnEvent", function(self, event)
-		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
+		-- 回復原版本，待查看
+		local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = CombatLogGetCurrentEventInfo()
+		-- 1.3.0 @Someblu 貌似改錯了 
+		-- local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellID = CombatLogGetCurrentEventInfo()
 		-- 嘲讽
 		if event == "SPELL_AURA_APPLIED" and TauntSpells[spellID] then
 			-- 如果施放嘲讽技能成功

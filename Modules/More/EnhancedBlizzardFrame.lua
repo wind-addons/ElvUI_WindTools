@@ -23,6 +23,7 @@ EBF.Frames = {
 	"BonusRollLootWonFrame",
 	"BonusRollMoneyWonFrame",
 	"CharacterFrame",
+	"ChannelFrame",
 	"ChatConfigFrame",
 	"DressUpFrame",
 	"FriendsFrame",

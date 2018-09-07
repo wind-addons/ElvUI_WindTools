@@ -431,9 +431,7 @@ function AnnounceSystem:Interrupt()
 			local destChannel = CheckChatInterrupt()
 			if destChannel == "ChatFrame" then
 				-- 如果没有设定个人情况发送到大喊频道，就在聊天框显示一下（就自己能看到）
-				ChatFrame1:AddMessage(simpleline)
 				ChatFrame1:AddMessage(format(ASL["InterruptInChat"], destName, GetSpellLink(spellID)))
-				ChatFrame1:AddMessage(simpleline)
 			else
 				-- 智能检测频道并发送信息
 				SendChatMessage(format(ASL["Interrupt"], destName, GetSpellLink(spellID)), destChannel)
@@ -484,9 +482,7 @@ function AnnounceSystem:Taunt()
 					SendChatMessage(format(ASL["OtherTankTaunt"], sourceName, destName), CheckChatTaunt())
 				else
 					-- 他人嘲讽信息显示于聊天框架
-					ChatFrame1:AddMessage(simpleline)
 					ChatFrame1:AddMessage(format(ASL["OtherTankTauntInChat"], AddClassColor(sourceGUID), destName))
-					ChatFrame1:AddMessage(simpleline)
 				end
 			end
 		end
@@ -522,9 +518,7 @@ function AnnounceSystem:Taunt()
 					SendChatMessage(format(ASL["OtherTankTauntMiss"], sourceName, destName), CheckChatTaunt())
 				else
 					-- 他人嘲讽信息显示于综合
-					ChatFrame1:AddMessage(simpleline)
 					ChatFrame1:AddMessage(format(ASL["OtherTankTauntMissInChat"], AddClassColor(sourceGUID), destName))
-					ChatFrame1:AddMessage(simpleline)
 				end
 			end
 		end

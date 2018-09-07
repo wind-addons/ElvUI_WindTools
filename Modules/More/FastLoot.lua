@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local FastLoot = E:NewModule('Wind_FastLoot', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local FastLoot = E:NewModule('Wind_FastLoot');
 
 function FastLoot:Initialize()
 	if not E.db.WindTools["More Tools"]["Fast Loot"]["enabled"] then return end
@@ -31,4 +31,5 @@ end
 local function InitializeCallback()
 	FastLoot:Initialize()
 end
+
 E:RegisterModule(FastLoot:GetName(), InitializeCallback)

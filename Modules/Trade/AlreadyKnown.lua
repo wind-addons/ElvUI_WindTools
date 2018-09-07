@@ -7,8 +7,8 @@
 -- 增加颜色设定
 
 local E, L, V, P, G = unpack(ElvUI);
-local WT = E:GetModule("WindTools")
-local AlreadyKnown = E:NewModule('Wind_AlreadyKnown', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local AK = E:NewModule('Wind_AlreadyKnown');
+local _G = _G
 
 local knownTable = {} -- Save known items for later use
 local db
@@ -24,6 +24,9 @@ local specialItems = { -- Items needing special treatment
 	-- Krokul Flute -> Flight Master's Whistle
 	[152964] = { 141605, 11, 269 } -- 269 for Flute applied Whistle, 257 (or anything else than 269) for pre-apply Whistle
 }
+
+-- Tooltip and scanning by Phanx @ http://www.wowinterface.com/forums/showthread.php?p=271406
+-- Search string by Phanx @ https://github.com/Phanx/BetterBattlePetTooltip/blob/master/Addon.lua
 local S_PET_KNOWN = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
 
 local scantip = CreateFrame("GameTooltip", "AKScanningTooltip", nil, "GameTooltipTemplate")
@@ -77,6 +80,7 @@ local function _checkIfKnown(itemLink)
 				knownTable[itemLink] = true -- Mark as known for later use
 			end
 		elseif text == _G.TOY and _G["AKScanningTooltipTextLeft"..i + 2] and _G["AKScanningTooltipTextLeft"..i + 2]:GetText() == _G.ITEM_SPELL_KNOWN then
+			-- Check if items is Toy already known
 			knownTable[itemLink] = true
 		end
 	end
@@ -98,17 +102,9 @@ local function _hookAH() -- Most of this found from AddOns/Blizzard_AuctionUI/Bl
 
 			if itemLink and _checkIfKnown(itemLink) then
 				if _G["BrowseButton"..i].id then
-					_G["BrowseButton"..i].Icon:SetVertexColor(db.r, db.g, db.b)
+					_G["BrowseButton"..i].Icon:SetVertexColor(AK.db.color.r, AK.db.color.g, AK.db.color.b)
 				else
-					_G["BrowseButton"..i.."ItemIconTexture"]:SetVertexColor(db.r, db.g, db.b)
-				end
-
-				if db.monochrome then
-					if _G["BrowseButton"..i].id then
-						_G["BrowseButton"..i].Icon:SetDesaturated(true)
-					else
-						_G["BrowseButton"..i.."ItemIconTexture"]:SetDesaturated(true)
-					end
+					_G["BrowseButton"..i.."ItemIconTexture"]:SetVertexColor(AK.db.color.r, AK.db.color.g, AK.db.color.b)
 				end
 			else
 				if _G["BrowseButton"..i].id then
@@ -130,41 +126,47 @@ local function _hookMerchant() -- Most of this found from FrameXML/MerchantFrame
 		local merchantButton = _G["MerchantItem"..i]
 		local itemLink = GetMerchantItemLink(index)
 
+		local r, g, b = AK.db.color.r, AK.db.color.g, AK.db.color.b
 		if itemLink and _checkIfKnown(itemLink) then
-			SetItemButtonNameFrameVertexColor(merchantButton, db.r, db.g, db.b)
-			SetItemButtonSlotVertexColor(merchantButton, db.r, db.g, db.b)
-			SetItemButtonTextureVertexColor(itemButton, 0.9*db.r, 0.9*db.g, 0.9*db.b)
-			SetItemButtonNormalTextureVertexColor(itemButton, 0.9*db.r, 0.9*db.g, 0.9*db.b)
-
-			if db.monochrome then
-				_G["MerchantItem"..i.."ItemButtonIconTexture"]:SetDesaturated(true)
-			end
+			SetItemButtonNameFrameVertexColor(merchantButton, r, g, b)
+			SetItemButtonSlotVertexColor(merchantButton, r, g, b)
+			SetItemButtonTextureVertexColor(itemButton, .8*r, .8*g, .8*b)
+			SetItemButtonNormalTextureVertexColor(itemButton, .8*r, .8*g, .8*b)
 		else
 			_G["MerchantItem"..i.."ItemButtonIconTexture"]:SetDesaturated(false)
 		end
 	end
 end
 
-function AlreadyKnown:Initialize()
-	if not E.db.WindTools["Trade"]["Already Known"]["enabled"] then return end
-	local f = CreateFrame("Frame")
+function AK:Initialize()
+	self.db = E.db.WindTools["Trade"]["Already Known"]
+	if not self.db.enabled then return end
+	-- 商店頁面
+	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
+	-- AH載入
 	if IsAddOnLoaded("Blizzard_AuctionUI") then
 		if IsAddOnLoaded("Auc-Advanced") and _G.AucAdvanced.Settings.GetSetting("util.compactui.activated") then
 			hooksecurefunc("GetNumAuctionItems", _hookAH)
 		else
 			hooksecurefunc("AuctionFrameBrowse_Update", _hookAH)
 		end
+	else
+		local f = CreateFrame("Frame")
+		f:RegisterEvent("ADDON_LOADED")
+		f:SetScript("OnEvent", function(self, event, ...)
+			if event == "ADDON_LOADED" and (...) == "Blizzard_AuctionUI" then
+				self:UnregisterEvent(event)
+				if IsAddOnLoaded("Auc-Advanced") and _G.AucAdvanced.Settings.GetSetting("util.compactui.activated") then
+					hooksecurefunc("GetNumAuctionItems", _hookAH)
+				else
+					hooksecurefunc("AuctionFrameBrowse_Update", _hookAH)
+				end
+			end
+		end)
 	end
-	db = {
-		r = E.db.WindTools["Trade"]["Already Known"]["color"].r,
-		g = E.db.WindTools["Trade"]["Already Known"]["color"].g,
-		b = E.db.WindTools["Trade"]["Already Known"]["color"].b,
-		monochrome = false,
-	}
-	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 end
 
 local function InitializeCallback()
-	AlreadyKnown:Initialize()
+	AK:Initialize()
 end
-E:RegisterModule(AlreadyKnown:GetName(), InitializeCallback)
+E:RegisterModule(AK:GetName(), InitializeCallback)

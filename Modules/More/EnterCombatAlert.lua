@@ -11,20 +11,21 @@ local WT = E:GetModule("WindTools")
 local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
 
 function EnterCombatAlert:Initialize()
-	if not E.db.WindTools["More Tools"]["Enter Combat Alert"]["enabled"] then return end
-	local locale = GetLocale()
+	self.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+	if not self.db.enabled then return end
+
 	local enterCombat = L["Enter Combat"]
 	local leaveCombat = L["Leave Combat"]
 	
-	if E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] then
-		enterCombat = E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"]
-		leaveCombat = E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"]
+	if self.db.custom_text then
+		enterCombat = self.db.custom_text_enter
+		leaveCombat = self.db.custom_text_leave
 	end
 
 	local alertFrame = CreateFrame("Frame")
 	alertFrame:SetSize(400, 65)
 	alertFrame:SetPoint("TOP", 0, -280)
-	alertFrame:SetScale(E.db.WindTools["More Tools"]["Enter Combat Alert"]["scale"])
+	alertFrame:SetScale(self.db.scale)
 	alertFrame:Hide()
 	alertFrame.Bg = alertFrame:CreateTexture(nil, "BACKGROUND")
 	alertFrame.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
@@ -40,11 +41,11 @@ function EnterCombatAlert:Initialize()
 		if (self.timer <= 0.5) then
 			self:SetAlpha(self.timer * 2)
 		elseif (self.timer > 2) then
-			self:SetAlpha(1-self.timer/self.totalTime)
+			self:SetAlpha(1 - self.timer/self.totalTime)
 		end
 	end)
 	alertFrame:SetScript("OnShow", function(self)
-		self.totalTime = 3.2
+		self.totalTime = 2.5
 		self.timer = 0
 	end)
 	alertFrame:SetScript("OnEvent", function(self, event, ...)
@@ -63,4 +64,5 @@ end
 local function InitializeCallback()
 	EnterCombatAlert:Initialize()
 end
+
 E:RegisterModule(EnterCombatAlert:GetName(), InitializeCallback)

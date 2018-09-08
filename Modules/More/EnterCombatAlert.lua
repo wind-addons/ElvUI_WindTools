@@ -22,19 +22,20 @@ function EnterCombatAlert:Initialize()
 		leaveCombat = self.db.custom_text_leave
 	end
 
-	local alertFrame = CreateFrame("Frame")
-	alertFrame:SetSize(400, 65)
+	local alertFrame = CreateFrame("Frame", "alertFrame", UIParent)
+	alertFrame:SetClampedToScreen(true)
+	alertFrame:SetSize(300, 65)
 	alertFrame:SetPoint("TOP", 0, -280)
 	alertFrame:SetScale(self.db.scale)
 	alertFrame:Hide()
 	alertFrame.Bg = alertFrame:CreateTexture(nil, "BACKGROUND")
 	alertFrame.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
 	alertFrame.Bg:SetPoint("TOP")
-	alertFrame.Bg:SetSize(400, 67)
+	alertFrame.Bg:SetSize(400, 60)
 	alertFrame.Bg:SetTexCoord(0, 400/512, 341/512, 407/512)
 	alertFrame.Bg:SetVertexColor(1, 1, 1, 0.4)
 	alertFrame.text = alertFrame:CreateFontString(nil, "ARTWORK", "GameFont_Gigantic")
-	alertFrame.text:SetPoint("CENTER")
+	alertFrame.text:SetPoint("CENTER", 0, -1)
 	alertFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.timer = self.timer + elapsed
 		if (self.timer > self.totalTime) then self:Hide() end
@@ -59,6 +60,8 @@ function EnterCombatAlert:Initialize()
 	end)
 	alertFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+
+	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return E.db.WindTools["Interface"]["Enter Combat Alert"].enabled; end)
 end
 
 local function InitializeCallback()

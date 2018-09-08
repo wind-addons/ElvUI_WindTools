@@ -55,7 +55,7 @@ P["WindTools"]["More Tools"] = {
 		["custom_text"] = false,
 		["custom_text_enter"] = "",
 		["custom_text_leave"] = "",
-		["scale"] = 0.65,
+		["scale"] = 0.8,
 	},
 	["Fast Loot"] = {
 		["enabled"] = true,

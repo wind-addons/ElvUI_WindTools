@@ -41,7 +41,7 @@ function EnterCombatAlert:Initialize()
 		if (self.timer <= 0.5) then
 			self:SetAlpha(self.timer * 2)
 		elseif (self.timer > 2) then
-			self:SetAlpha(1 - self.timer/self.totalTime)
+			self:SetAlpha(1 - (self.timer - 2) /(self.totalTime - 2))
 		end
 	end)
 	alertFrame:SetScript("OnShow", function(self)

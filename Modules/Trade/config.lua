@@ -14,7 +14,9 @@ P["WindTools"]["Trade"] = {
 			r = 0,
 			g = 1,
 			b = 0,
+			a = 0.9,
 		},
+		["monochrome"] = false,
 	},
 	["Azerite Tooltip"] = {
 		["enabled"] = true,
@@ -38,7 +40,7 @@ WT.ToolConfigs["Trade"] = {
 			order = 5,
 			type = "color",
 			name = L["Color"],
-			hasAlpha = true,
+			hasAlpha = false,
 			get = function(info)
 				local t = E.db.WindTools["Trade"]["Already Known"]["color"]
 				return t.r, t.g, t.b
@@ -46,8 +48,7 @@ WT.ToolConfigs["Trade"] = {
 			set = function(info, r, g, b, a)
 				E.db.WindTools["Trade"]["Already Known"]["color"] = {}
 				local t = E.db.WindTools["Trade"]["Already Known"]["color"]
-				t.r, t.g, t.b = r, g, b
-				E:StaticPopup_Show("PRIVATE_RL")
+				t.r, t.g, t.b, t.a = r, g, b
 			end,
 		},
 	},
@@ -74,7 +75,7 @@ WT.ToolConfigs["Trade"] = {
 					order = 7,
 					name = L["Compact Mode"],
 					desc = L["Only icons"],
-				},	
+				},
 			}
 		}
 	},

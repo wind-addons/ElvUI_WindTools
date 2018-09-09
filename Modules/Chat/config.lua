@@ -39,7 +39,7 @@ P["WindTools"]["Chat"] = {
 		}
 	},
 	["Right-click Menu"] = {
-		["enabled"] = true,
+		["enabled"] = false,
 		["friend"] = {
 			["ARMORY"] = true,
 			["SEND_WHO"] = true,

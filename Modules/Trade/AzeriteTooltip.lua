@@ -64,7 +64,7 @@ function AzeriteTooltip:ClearBlizzardText(tooltip)
 
 				if text:match(CURRENTLY_SELECTED_AZERITE_POWERS_INSPECT) then return end
 
-				if text:find(ActiveAzeritePowers) or text:find(AzeritePowers) then
+				if text:find(ActiveAzeritePowers) then
 					textLeft[i-1]:SetText("")
 					line:SetText("")
 					textLeft[i+1]:SetText(addText)

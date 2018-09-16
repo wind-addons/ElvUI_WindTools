@@ -116,9 +116,13 @@ end
 ----------------------------------------------------------------------------------------
 local function AddClassColor(playerID)
 	local _, englishClass, _, _, _, playerName = GetPlayerInfoByGUID(playerID)
-	local colorString = RAID_CLASS_COLORS[englishClass].colorStr
-
-	return "|c"..colorString..playerName.."|r"
+	if englishClass then
+		local color = RAID_CLASS_COLORS[englishClass]
+		local colorString = string.format("ff%02x%02x%02x", color.r*255, color.g*255, color.b*255)
+		return "|c"..colorString..playerName.."|r"
+	else
+		return playerName
+	end
 end
 ----------------------------------------------------------------------------------------
 --	智能頻道檢測

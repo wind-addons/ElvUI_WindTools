@@ -42,6 +42,7 @@ function AzeriteTooltip:GetAzeriteLevel()
 -- Thanks muxxon@Curse for help
 function AzeriteTooltip:ClearBlizzardText(tooltip)
 	local textLeft = tooltip.textLeft
+	local added = false
 	if not textLeft then
 		local tooltipName = tooltip:GetName()
 		textLeft = setmetatable({}, { __index = function(t, i)
@@ -64,10 +65,13 @@ function AzeriteTooltip:ClearBlizzardText(tooltip)
 
 				if text:match(CURRENTLY_SELECTED_AZERITE_POWERS_INSPECT) then return end
 
-				if text:find(ActiveAzeritePowers) then
-					textLeft[i-1]:SetText("")
-					line:SetText("")
-					textLeft[i+1]:SetText(addText)
+				if text:find(ActiveAzeritePowers) or text:find(AzeritePowers) then
+					if not added then
+						line:SetText(addText)
+						added = true
+					else
+						line:SetText("")
+					end
 				end
 
 				if text:find(AzeriteUnlock) or text:find(NEW_AZERITE_POWER_AVAILABLE) then

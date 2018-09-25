@@ -14,9 +14,9 @@ P["WindTools"]["Trade"] = {
 			r = 0,
 			g = 1,
 			b = 0,
-			a = 0.9,
+			--a = 0.9,
 		},
-		["monochrome"] = false,
+		--["monochrome"] = false,
 	},
 	["Azerite Tooltip"] = {
 		["enabled"] = true,

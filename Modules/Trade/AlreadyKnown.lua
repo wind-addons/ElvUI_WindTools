@@ -11,6 +11,7 @@ local AK = E:NewModule('Wind_AlreadyKnown');
 local _G = _G
 
 local knownTable = {} -- Save known items for later use
+local db
 local questItems = { -- Quest items and matching quests
 	-- Equipment Blueprint: Tuskarr Fishing Net
 	[128491] = 39359, -- Alliance
@@ -101,9 +102,9 @@ local function _hookAH() -- Most of this found from AddOns/Blizzard_AuctionUI/Bl
 
 			if itemLink and _checkIfKnown(itemLink) then
 				if _G["BrowseButton"..i].id then
-					_G["BrowseButton"..i].Icon:SetVertexColor(r, g, b)
+					_G["BrowseButton"..i].Icon:SetVertexColor(AK.db.color.r, AK.db.color.g, AK.db.color.b)
 				else
-					_G["BrowseButton"..i.."ItemIconTexture"]:SetVertexColor(r, g, b)
+					_G["BrowseButton"..i.."ItemIconTexture"]:SetVertexColor(AK.db.color.r, AK.db.color.g, AK.db.color.b)
 				end
 			else
 				if _G["BrowseButton"..i].id then
@@ -125,6 +126,7 @@ local function _hookMerchant() -- Most of this found from FrameXML/MerchantFrame
 		local merchantButton = _G["MerchantItem"..i]
 		local itemLink = GetMerchantItemLink(index)
 
+		local r, g, b = AK.db.color.r, AK.db.color.g, AK.db.color.b
 		if itemLink and _checkIfKnown(itemLink) then
 			SetItemButtonNameFrameVertexColor(merchantButton, r, g, b)
 			SetItemButtonSlotVertexColor(merchantButton, r, g, b)
@@ -139,7 +141,6 @@ end
 function AK:Initialize()
 	self.db = E.db.WindTools["Trade"]["Already Known"]
 	if not self.db.enabled then return end
-	local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 	-- 商店頁面
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 	-- AH載入

@@ -10,6 +10,7 @@ local E, L, V, P, G = unpack(ElvUI);
 local AK = E:NewModule('Wind_AlreadyKnown');
 local _G = _G
 
+local r, g, b
 local knownTable = {} -- Save known items for later use
 local questItems = { -- Quest items and matching quests
 	-- Equipment Blueprint: Tuskarr Fishing Net
@@ -139,7 +140,7 @@ end
 function AK:Initialize()
 	self.db = E.db.WindTools["Trade"]["Already Known"]
 	if not self.db.enabled then return end
-	local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+	r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 	-- 商店頁面
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 	-- AH載入

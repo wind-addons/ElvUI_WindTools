@@ -217,12 +217,12 @@ local FeastSpells = {
 	[145166] = true,  -- 拉麵推車
 	[145169] = true,  -- 豪華拉麵推車
 	[145196] = true,  -- 熊貓人國寶級拉麵推車
-	[127851] = true,  -- 灵魂药锅
-	[133578] = true,  -- 丰盛大餐
-	[133579] = true,  -- 苏拉玛奢华大餐
-	[156525] = true,  -- 海帆盛宴
-	[156526] = true,  -- 船长盛宴佳肴
-	[162519] = true,  -- 秘法药锅
+	[188036] = true,  -- 灵魂药锅
+	[201351] = true,  -- 丰盛大餐
+	[201352] = true,  -- 苏拉玛奢华大餐
+	[259409] = true,  -- 海帆盛宴
+	[259410] = true,  -- 船长盛宴佳肴
+	[276972] = true,  -- 秘法药锅
 }
 
 local Bots = {
@@ -305,16 +305,15 @@ function AnnounceSystem:RaidUsefulSpells()
 
 		local srcName = srcName:gsub("%-[^|]+", "")
 		if subEvent == "SPELL_CAST_SUCCESS" then
-			-- 大餐
-			if FeastSpells[spellID] then 
-				SendChatMessage(format(ASL["PutFeast"], srcName, GetSpellLink(spellID)), CheckChat(true))
-			end
 			-- 召喚餐點桌
 			if spellID == 43987 then
 				SendChatMessage(format(ASL["PutRefreshmentTable"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			-- 召喚儀式
 			elseif spellID == 698 then
 				SendChatMessage(format(ASL["RitualOfSummoning"], srcName, GetSpellLink(spellID)), CheckChat(true))
+			-- 大餐
+			elseif FeastSpells[spellID] then 
+				SendChatMessage(format(ASL["PutFeast"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			end
 		elseif subEvent == "SPELL_SUMMON" then
 			-- 修理機器人

@@ -29,6 +29,18 @@ local function gethost()
 	return host
 end
 
+local function getfullname()
+	local unit = UIDROPDOWNMENU_INIT_MENU.unit
+	local name = UIDROPDOWNMENU_INIT_MENU.name
+	local server = UIDROPDOWNMENU_INIT_MENU.server
+
+	if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+		return name .. "-" .. server
+	else
+		return name
+	end
+end
+
 EnhancedRCMenu.friend_features = {
 	"ARMORY",
 	"MYSTATS",
@@ -81,13 +93,7 @@ UnitPopupButtons["WINDTOOLS"] = {
 UnitPopupButtons["ARMORY"] = {
 	text = L["Armory"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
@@ -102,13 +108,7 @@ UnitPopupButtons["ARMORY"] = {
 UnitPopupButtons["SEND_WHO"] = {
 	text = L["Query Detail"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			SendWho(fullname)
@@ -119,13 +119,7 @@ UnitPopupButtons["SEND_WHO"] = {
 UnitPopupButtons["GUILD_ADD"] = {
 	text = L["Guild Invite"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			GuildInvite(fullname)
@@ -136,13 +130,7 @@ UnitPopupButtons["GUILD_ADD"] = {
 UnitPopupButtons["FRIEND_ADD"] = {
 	text = L["Add Friend"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			AddFriend(fullname)
@@ -153,13 +141,7 @@ UnitPopupButtons["FRIEND_ADD"] = {
 UnitPopupButtons["MYSTATS"] = {
 	text = L["Report MyStats"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			local CRITICAL = TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE
@@ -190,13 +172,7 @@ StaticPopupDialogs["NAME_COPY"] = {
 UnitPopupButtons["NAME_COPY"] = {
 	text = L["Get Name"],
 	func = function()
-		local unit = UIDROPDOWNMENU_INIT_MENU.unit
-		local name = UIDROPDOWNMENU_INIT_MENU.name
-		local server = UIDROPDOWNMENU_INIT_MENU.server
-		local fullname = name
-		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
-			fullname = name .. "-" .. server
-		end
+		local fullname = getfullname()
 
 		if fullname then
 			local dialog = StaticPopup_Show("NAME_COPY")
@@ -222,23 +198,23 @@ function EnhancedRCMenu:Initialize()
 		end
 	end
 
-	-- 聊天名单功能 载入
-	tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, "WINDTOOLS")
-	for _, v in pairs(EnhancedRCMenu.cr_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
-			tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, v)
-		end
-	end
+	-- -- 聊天名单功能 载入
+	-- tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, "WINDTOOLS")
+	-- for _, v in pairs(EnhancedRCMenu.cr_features) do
+	-- 	if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
+	-- 		tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, v)
+	-- 	end
+	-- end
 
-	-- 公会功能 载入
-	tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, "WINDTOOLS")
-	tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, "WINDTOOLS")
-	for _, v in pairs(EnhancedRCMenu.guild_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
-			tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, v)
-			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, v)
-		end
-	end
+	-- -- 公会功能 载入
+	-- tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, "WINDTOOLS")
+	-- tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, "WINDTOOLS")
+	-- for _, v in pairs(EnhancedRCMenu.guild_features) do
+	-- 	if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
+	-- 		tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, v)
+	-- 		tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, v)
+	-- 	end
+	-- end
 
 	-- 修复回报功能错误
 	-- if E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] then

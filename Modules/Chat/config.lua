@@ -47,18 +47,18 @@ P["WindTools"]["Chat"] = {
 			["SEND_WHO"] = true,
 			["FRIEND_ADD"] = true,
 			["GUILD_ADD"] = true,
-			--["Fix_Report"] = false,
+			-- ["Fix_Report"] = false,
 		},
-		["chat_roster"] = {
-			["NAME_COPY"]  = true,
-			["SEND_WHO"] = true,
-			["FRIEND_ADD"] = true,
-		},
-		["guild"] = {
-			["ARMORY"] = true,
-			["NAME_COPY"] = true,
-			["FRIEND_ADD"] = true,
-		}
+		-- ["chat_roster"] = {
+		-- 	["NAME_COPY"]  = true,
+		-- 	["SEND_WHO"] = true,
+		-- 	["FRIEND_ADD"] = true,
+		-- },
+		-- ["guild"] = {
+		-- 	["ARMORY"] = true,
+		-- 	["NAME_COPY"] = true,
+		-- 	["FRIEND_ADD"] = true,
+		-- }
 	}
 }
 

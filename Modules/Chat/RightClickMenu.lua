@@ -81,6 +81,32 @@ EnhancedRCMenu.dropdownmenu_show = {
 	["TARGET"] = true,
 }
 
+StaticPopupDialogs["ARMORY"] = {
+	text = L["Armory"],
+	button2 = CANCEL,
+	hasEditBox = true,
+    hasWideEditBox = true,
+	timeout = 0,
+	exclusive = 1,
+	hideOnEscape = 1,
+	EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
+	whileDead = 1,
+	maxLetters = 255,
+}
+
+StaticPopupDialogs["NAME_COPY"] = {
+	text = L["Get Name"],
+	button2 = CANCEL,
+	hasEditBox = true,
+    hasWideEditBox = true,
+	timeout = 0,
+	exclusive = 1,
+	hideOnEscape = 1,
+	EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
+	whileDead = 1,
+	maxLetters = 255,
+}
+
 UnitPopupButtons["WINDTOOLS"] = {
 	text = WT.Title,
 	isTitle = true,
@@ -93,14 +119,19 @@ UnitPopupButtons["WINDTOOLS"] = {
 UnitPopupButtons["ARMORY"] = {
 	text = L["Armory"],
 	func = function()
-		local fullname = getfullname()
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
 
-		if fullname then
+		if name then
 			local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
-			local editBox = ChatEdit_ChooseBoxForSend()
-			ChatEdit_ActivateChat(editBox)
-			editBox:SetText(armory)
-			editBox:HighlightText()
+			local dialog = StaticPopup_Show("ARMORY")
+			local editbox = _G[dialog:GetName().."EditBox"]  
+			editbox:SetText(armory)
+			editbox:SetFocus()
+			editbox:HighlightText()
+			local button = _G[dialog:GetName().."Button2"]
+			button:ClearAllPoints()
+			button:SetPoint("CENTER", editbox, "CENTER", 0, -30)
 		end
 	end
 }
@@ -154,19 +185,6 @@ UnitPopupButtons["MYSTATS"] = {
 			SendChatMessage(format(" - %s:%.2f%%", STAT_VERSATILITY, GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)), "WHISPER", nil, fullname)
 		end
 	end
-}
-
-StaticPopupDialogs["NAME_COPY"] = {
-	text = L["Get Name"],
-	button2 = CANCEL,
-	hasEditBox = true,
-    hasWideEditBox = true,
-	timeout = 0,
-	exclusive = 1,
-	hideOnEscape = 1,
-	EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
-	whileDead = 1,
-	maxLetters = 255,
 }
 
 UnitPopupButtons["NAME_COPY"] = {

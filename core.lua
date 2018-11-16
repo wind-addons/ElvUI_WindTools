@@ -83,6 +83,7 @@ function WT:InsertOptions()
 		"Leatrix",
 		"iShadow",
 		"Masque",
+		"XanChat",
 	}
 	E.Options.args.WindTools = {
 		-- 插件基本信息

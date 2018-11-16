@@ -1,6 +1,7 @@
 -- 原作：TinyUntitled 的 Menu lua中的一段
+-- 参考：XanChat
 -- loudsoul (http://bbs.ngacn.cc/read.php?tid=10240957)
--- 修改：houshuu
+-- 修改：houshuu, SomeBlu
 -------------------
 -- 主要修改条目：
 -- 模块化
@@ -28,24 +29,6 @@ local function gethost()
 	return host
 end
 
--- local function popupClick(self, info)
--- 	local editBox
--- 	local name, server = UnitName(info.unit)
--- 	if (info.value == "ARMORY") then
--- 		local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
--- 		editBox = ChatEdit_ChooseBoxForSend()
--- 		ChatEdit_ActivateChat(editBox)
--- 		editBox:SetText(armory)
--- 		editBox:HighlightText()
--- 	elseif (info.value == "NAME_COPY") then
--- 		editBox = ChatEdit_ChooseBoxForSend()
--- 		local hasText = (editBox:GetText() ~= "")
--- 		ChatEdit_ActivateChat(editBox)
--- 		editBox:Insert(name)
--- 		if (not hasText) then editBox:HighlightText() end
--- 	end
--- end
-
 EnhancedRCMenu.friend_features = {
 	"ARMORY",
 	"MYSTATS",
@@ -58,22 +41,24 @@ EnhancedRCMenu.cr_features = {
 	"NAME_COPY",
 	"SEND_WHO",
 	"FRIEND_ADD",
-	"INVITE",
 }
 EnhancedRCMenu.guild_features = {
 	"ARMORY",
 	"NAME_COPY",
 	"FRIEND_ADD",
 }
+EnhancedRCMenu.player_features = {
+	"ARMORY",
+	"NAME_COPY",
+}
 
 EnhancedRCMenu.UnitPopupButtonsExtra = {
-	["ARMORY"] = L["Armory"],
-	["SEND_WHO"] = L["Query Detail"],
-	["NAME_COPY"] = L["Get Name"],
-	["GUILD_ADD"] = L["Guild Invite"],
-	["FRIEND_ADD"] = L["Add Friend"],
-	["MYSTATS"] = L["Report MyStats"],
-	["INVITE"] = L["Invite"],
+	["ARMORY"] = true,
+	["SEND_WHO"] = true,
+	["NAME_COPY"] = true,
+	["GUILD_ADD"] = true,
+	["FRIEND_ADD"] = true,
+	["MYSTATS"] = true,
 }
 
 EnhancedRCMenu.dropdownmenu_show = {
@@ -84,78 +69,99 @@ EnhancedRCMenu.dropdownmenu_show = {
 	["TARGET"] = true,
 }
 
-function EnhancedRCMenu:Initialize()
-	if not E.db.WindTools["Chat"]["Right-click Menu"]["enabled"] then return end
+UnitPopupButtons["WINDTOOLS"] = {
+	text = WT.Title,
+	isTitle = true,
+	isUninteractable = true,
+	isSubsection = true,
+	isSubsectionTitle = true,
+	isSubsectionSeparator = true,
+}
 
-	-- 加入右键
-	for k, v in pairs(EnhancedRCMenu.UnitPopupButtonsExtra) do
-		UnitPopupButtons[k] = {}
-		UnitPopupButtons[k].text = v
-	end
-	-- 好友功能 载入
-	for _, v in pairs(EnhancedRCMenu.friend_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] then
-			tinsert(UnitPopupMenus["FRIEND"], 1, v)
-		end
-	end
-	-- 聊天名单功能 载入
-	for _, v in pairs(EnhancedRCMenu.cr_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
-			tinsert(UnitPopupMenus["CHAT_ROSTER"], 1, v)
-		end
-	end
-
-	-- 公会功能 载入
-	for _, v in pairs(EnhancedRCMenu.guild_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
-			tinsert(UnitPopupMenus["GUILD"], 1, v)
-			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], 1, v)
-		end
-	end
-
-	-- 修复回报功能错误
-	if E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] then
-		local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
-		C_ChatInfo.CanReportPlayer = function(...)
-			return true
-		end
-	end
-
-	-- 人物右键菜单
-	-- for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
-	-- 	for _, value in pairs{"ARMORY","NAME_COPY"} do
-	-- 		tinsert(UnitPopupMenus[unit], 4, value)
-	-- 	end
-	-- end
-	-- need to fix position problems
-	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
-		if (UIDROPDOWNMENU_MENU_LEVEL == 1 and EnhancedRCMenu.dropdownmenu_show[which]) then
-			local info = UIDropDownMenu_CreateInfo()
-			UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
-			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = WT.Title, isTitle = true, isUninteractable = true, isSubsection = true, isSubsectionTitle = true, isSubsectionSeparator = true, }, "WINDTOOLS")
-			if (UnitIsPlayer(unit)) then
-				UnitPopup_AddDropDownButton(info, dropdownMenu, { text = EnhancedRCMenu.UnitPopupButtonsExtra["ARMORY"], }, "ARMORY")
-			end
-			UnitPopup_AddDropDownButton(info, dropdownMenu, { text = EnhancedRCMenu.UnitPopupButtonsExtra["NAME_COPY"], }, "NAME_COPY")
-		end
-	end)
-
-	hooksecurefunc("UnitPopup_OnClick", function(self)
+UnitPopupButtons["ARMORY"] = {
+	text = L["Armory"],
+	func = function()
 		local unit = UIDROPDOWNMENU_INIT_MENU.unit
 		local name = UIDROPDOWNMENU_INIT_MENU.name
 		local server = UIDROPDOWNMENU_INIT_MENU.server
 		local fullname = name
-		local editBox
 		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
 			fullname = name .. "-" .. server
 		end
-		if (self.value == "ARMORY") then
+
+		if fullname then
 			local armory = gethost() .. urlencode(server or GetRealmName()) .. "/" .. urlencode(name) .. "/advanced"
-			editBox = ChatEdit_ChooseBoxForSend()
+			local editBox = ChatEdit_ChooseBoxForSend()
 			ChatEdit_ActivateChat(editBox)
 			editBox:SetText(armory)
 			editBox:HighlightText()
-		elseif (self.value == "MYSTATS") then
+		end
+	end
+}
+
+UnitPopupButtons["SEND_WHO"] = {
+	text = L["Query Detail"],
+	func = function()
+		local unit = UIDROPDOWNMENU_INIT_MENU.unit
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
+		local fullname = name
+		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+			fullname = name .. "-" .. server
+		end
+
+		if fullname then
+			SendWho(fullname)
+		end
+	end
+}
+
+UnitPopupButtons["GUILD_ADD"] = {
+	text = L["Guild Invite"],
+	func = function()
+		local unit = UIDROPDOWNMENU_INIT_MENU.unit
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
+		local fullname = name
+		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+			fullname = name .. "-" .. server
+		end
+
+		if fullname then
+			GuildInvite(fullname)
+		end
+	end
+}
+
+UnitPopupButtons["FRIEND_ADD"] = {
+	text = L["Add Friend"],
+	func = function()
+		local unit = UIDROPDOWNMENU_INIT_MENU.unit
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
+		local fullname = name
+		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+			fullname = name .. "-" .. server
+		end
+
+		if fullname then
+			AddFriend(fullname)
+		end
+	end
+}
+
+UnitPopupButtons["MYSTATS"] = {
+	text = L["Report MyStats"],
+	func = function()
+		local unit = UIDROPDOWNMENU_INIT_MENU.unit
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
+		local fullname = name
+		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+			fullname = name .. "-" .. server
+		end
+
+		if fullname then
 			local CRITICAL = TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE
 			CRITICAL = gsub(CRITICAL, "[()]","")
 			SendChatMessage(format("%s:%.1f %s:%s", ITEM_LEVEL_ABBR, select(2,GetAverageItemLevel()), HP, AbbreviateNumbers(UnitHealthMax("player"))), "WHISPER", nil, fullname)
@@ -164,18 +170,110 @@ function EnhancedRCMenu:Initialize()
 			--SendChatMessage(format(" - %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal()), "WHISPER", nil, fullname)
 			SendChatMessage(format(" - %s:%.2f%%", CRITICAL, max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))), "WHISPER", nil, fullname)
 			SendChatMessage(format(" - %s:%.2f%%", STAT_VERSATILITY, GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)), "WHISPER", nil, fullname)
-		elseif (self.value == "NAME_COPY") then
-			editBox = ChatEdit_ChooseBoxForSend()
-			local hasText = (editBox:GetText() ~= "")
-			ChatEdit_ActivateChat(editBox)
-			editBox:Insert(fullname)
-			if (not hasText) then editBox:HighlightText() end
-		elseif (self.value == "FRIEND_ADD") then
-			AddFriend(fullname)
-		elseif (self.value == "SEND_WHO") then
-			SendWho("n-"..name)
-		elseif (self.value == "GUILD_ADD") then
-			GuildInvite(fullname)
+		end
+	end
+}
+
+StaticPopupDialogs["NAME_COPY"] = {
+	text = L["Get Name"],
+	button2 = CANCEL,
+	hasEditBox = true,
+    hasWideEditBox = true,
+	timeout = 0,
+	exclusive = 1,
+	hideOnEscape = 1,
+	EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
+	whileDead = 1,
+	maxLetters = 255,
+}
+
+UnitPopupButtons["NAME_COPY"] = {
+	text = L["Get Name"],
+	func = function()
+		local unit = UIDROPDOWNMENU_INIT_MENU.unit
+		local name = UIDROPDOWNMENU_INIT_MENU.name
+		local server = UIDROPDOWNMENU_INIT_MENU.server
+		local fullname = name
+		if (server and (not unit or UnitRealmRelationship(unit) ~= LE_REALM_RELATION_SAME)) then
+			fullname = name .. "-" .. server
+		end
+
+		if fullname then
+			local dialog = StaticPopup_Show("NAME_COPY")
+			local editbox = _G[dialog:GetName().."EditBox"]  
+			editbox:SetText(fullname or "")
+			editbox:SetFocus()
+			editbox:HighlightText()
+			local button = _G[dialog:GetName().."Button2"]
+			button:ClearAllPoints()
+			button:SetPoint("CENTER", editbox, "CENTER", 0, -30)
+		end
+	end
+}
+
+function EnhancedRCMenu:Initialize()
+	if not E.db.WindTools["Chat"]["Right-click Menu"]["enabled"] then return end
+
+	-- 好友功能 载入
+	tinsert(UnitPopupMenus["FRIEND"], #UnitPopupMenus["FRIEND"] - 1, "WINDTOOLS")
+	for _, v in pairs(EnhancedRCMenu.friend_features) do
+		if E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] then
+			tinsert(UnitPopupMenus["FRIEND"], #UnitPopupMenus["FRIEND"] - 1, v)
+		end
+	end
+
+	-- 聊天名单功能 载入
+	tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, "WINDTOOLS")
+	for _, v in pairs(EnhancedRCMenu.cr_features) do
+		if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
+			tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, v)
+		end
+	end
+
+	-- 公会功能 载入
+	tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, "WINDTOOLS")
+	tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, "WINDTOOLS")
+	for _, v in pairs(EnhancedRCMenu.guild_features) do
+		if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
+			tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, v)
+			tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, v)
+		end
+	end
+
+	-- 修复回报功能错误
+	-- if E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] then
+	-- 	local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
+	-- 	C_ChatInfo.CanReportPlayer = function(...)
+	-- 		return true
+	-- 	end
+	-- end
+
+	-- 人物右键菜单
+	-- for _, unit in pairs{"SELF","PLAYER","PARTY","RAID_PLAYER"} do
+	-- 	tinsert(UnitPopupMenus[unit], #UnitPopupMenus[unit] - 1, "WINDTOOLS")
+	-- 	for _, v in pairs(EnhancedRCMenu.player_features) do
+	-- 		tinsert(UnitPopupMenus[unit], #UnitPopupMenus[unit] - 1, v)
+	-- 	end
+	-- end
+	-- need to fix position problems
+	-- hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
+	-- 	if (UIDROPDOWNMENU_MENU_LEVEL == 1 and EnhancedRCMenu.dropdownmenu_show[which]) then
+	-- 		local info = UIDropDownMenu_CreateInfo()
+	-- 		UIDropDownMenu_AddSeparator(UIDROPDOWNMENU_MENU_LEVEL)
+	-- 		UnitPopup_AddDropDownButton(info, dropdownMenu, UnitPopupButtons["WINDTOOLS"], "WINDTOOLS")
+	-- 		if (UnitIsPlayer(unit)) then
+	-- 			UnitPopup_AddDropDownButton(info, dropdownMenu, UnitPopupButtons["ARMORY"], "ARMORY")
+	-- 		end
+	-- 		UnitPopup_AddDropDownButton(info, dropdownMenu, UnitPopupButtons["NAME_COPY"], "NAME_COPY")
+	-- 	end
+	-- end)
+
+	hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData, ...)
+		for i=1, UIDROPDOWNMENU_MAXBUTTONS do
+			local button = _G["DropDownList" .. UIDROPDOWNMENU_MENU_LEVEL .. "Button" .. i]
+			if EnhancedRCMenu.UnitPopupButtonsExtra[button.value] then
+				button.func = UnitPopupButtons[button.value].func
+			end
 		end
 	end)
 end

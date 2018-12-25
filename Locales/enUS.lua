@@ -237,11 +237,6 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = true
 -- 鼠标提示增强
 L["Enhanced Tooltip"] = true
 L["Useful tooltip tweaks."] = true
-L["Offset"] = true
-L["Tooltip X-offset"] = true
-L["Offset the tooltip on the X-axis."] = true
-L["Tooltip Y-offset"] = true
-L["Offset the tooltip on the Y-axis."] = true
 L["Raid Progression"] = true
 L["Add progression info to tooltip."] = true
 L["Mythic"] = true 

@@ -8,12 +8,9 @@
 -- 汉化
 
 local E, L, V, P, G = unpack(ElvUI);
-local TT = E:GetModule('Tooltip')
-local WT = E:GetModule("WindTools")
+local TT  = E:GetModule('Tooltip')
+local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')
-
-local r1,g1,b1,a1 = unpack(E["media"].backdropfadecolor)
-local r2,g2,b2,a2 = unpack(E["media"].bordercolor)
 
 ETT.RP = {
 	tiers = { "Uldir" },
@@ -118,18 +115,6 @@ function TT:INSPECT_ACHIEVEMENT_READY(event, GUID)
 	self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-function ETT.OnUpdate(tt)
-	if (tt.needRefresh and tt:GetAnchorType() == 'ANCHOR_CURSOR' and E.db.tooltip.anchor ~= 'CURSOR') then
-		tt:SetBackdropColor(r1,g1,b1,a1)
-		tt:SetBackdropBorderColor(r2,g2,b2,a2)
-		tt.needRefresh = nil
-	elseif tt.forceRefresh then
-		tt.forceRefresh = nil
-	else
-		ETT:AnchorFrameToMouse(tt)
-	end
-end
-
 function ETT.ShowInspectInfo(self, tt, unit, r, g, b)
 	if InCombatLockdown() then return end
 	if not ETT.db["Raid Progression"]["enabled"] then return end
@@ -160,21 +145,11 @@ function ETT.ShowInspectInfo(self, tt, unit, r, g, b)
 	ETT:SetProgressionInfo(guid, tt)
 end
 
-function ETT:AnchorFrameToMouse(frame)
-	if frame:GetAnchorType() ~= "ANCHOR_CURSOR" then return end
-	local x, y = GetCursorPosition();
-	local effScale = frame:GetEffectiveScale();
-	frame:ClearAllPoints();
-	frame:SetPoint("BOTTOMLEFT",UIParent,"BOTTOMLEFT",(x / effScale + self.db.Offset.mouseOffsetX),(y / effScale + self.db.Offset.mouseOffsetY));
-end
-
 function ETT:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
 	if not self.db.enabled then return end
 	-- 鼠标提示副本进度
 	hooksecurefunc(TT, 'ShowInspectInfo', ETT.ShowInspectInfo)
-	-- 修改鼠标指针的锚点
-	GameTooltip:HookScript("OnUpdate", ETT.OnUpdate)
 end
 
 local function InitializeCallback()

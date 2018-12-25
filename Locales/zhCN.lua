@@ -237,11 +237,6 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = "预设�
 -- 鼠标提示增强
 L["Enhanced Tooltip"] = "鼠标提示增强"
 L["Useful tooltip tweaks."] = "一些实用的鼠标提示增强功能。"
-L["Offset"] = "偏移"
-L["Tooltip X-offset"] = "鼠标提示 X 偏移"
-L["Offset the tooltip on the X-axis."] = "X 轴上鼠标提示信息的偏移量。"
-L["Tooltip Y-offset"] = "鼠标提示 Y 偏移"
-L["Offset the tooltip on the Y-axis."] = "Y 轴上鼠标提示信息的偏移量。"
 L["Raid Progression"] = "团本进度提示"
 L["Add progression info to tooltip."] = "添加团队副本进度到鼠标提示。"
 L["Mythic"] = "史诗"

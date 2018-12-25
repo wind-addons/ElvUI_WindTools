@@ -238,15 +238,15 @@ local function BuildTooltip(self)
 
 				if tierLevel <= currentLevel then
 					if j > 1 then 
-						addText = addText.."\n \n|cFFffcc00Level "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n \n|cFFffcc00"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
 					else
-						addText = addText.."\n|cFFffcc00Level "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n|cFFffcc00"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
 					end
 				else
 					if j > 1 then 
-						addText = addText.."\n \n|cFF7a7a7aLevel "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n \n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
 					else
-						addText = addText.."\n|cFF7a7a7aLevel "..tierLevel..azeriteTooltipText.."|r"
+						addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
 					end
 				end
 				
@@ -263,15 +263,15 @@ local function BuildTooltip(self)
 				if tierLevel <= currentLevel then
 					if j > 1 then 
 						--addText = format("%s \n \n|c%s %s %s |r\n" , addText, "FFffcc00", "Level", tierLevel)
-						addText = addText.."\n \n|cFFffcc00 Level "..tierLevel.."|r\n"
+						addText = addText.."\n \n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
 					else
-						addText = addText.."\n|cFFffcc00 Level "..tierLevel.."|r\n"
+						addText = addText.."\n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
 					end
 				else
 					if j > 1 then 
-						addText = addText.."\n \n|cFF7a7a7a Level "..tierLevel.."|r\n"
+						addText = addText.."\n \n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
 					else
-						addText = addText.."\n|cFF7a7a7a Level "..tierLevel.."|r\n"
+						addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
 					end
 				end
 

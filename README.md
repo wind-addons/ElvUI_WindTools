@@ -1,8 +1,9 @@
 <div align="center">
-<img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
-<img src="https://img.shields.io/badge/ElvUI-10.82-blue.svg?longCache=true&style=flat"/>
-<img src="https://img.shields.io/badge/Version-1.3.5-green.svg?longCache=true&style=flat"/>
-</div><br>
+    <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
+    <img src="https://img.shields.io/badge/ElvUI-10.82-blue.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/Version-1.3.6-green.svg?longCache=true&style=flat"/>
+</div>
+<br>
 Includes many useful features such as AlreadyKnown, AutoDelete.<br>
 And several addons I developed also be included.<br>
 This addon is developed for ElvUI users.<br>
@@ -16,7 +17,7 @@ Enhanced. Configurable. Better performance.<br><br>
 [Curse](https://www.curseforge.com/wow/addons/elvui_windtools)
 
 # Support 支持
-ElvUI 10.82 + 8.0.1.27843 (Live)
+ElvUI 10.84 + 8.1.0.28833 (Live)
 
 ## More info 更多信息
 CHINESE 中文 → [NGA](http://bbs.ngacn.cc/read.php?tid=12142815)

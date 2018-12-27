@@ -23,8 +23,8 @@ P["WindTools"]["Trade"] = {
 		["RemoveBlizzard"]= true,
 		["Compact"] = false,
 		["OnlySpec"] = false,
-		["Bags"] = false,
-		["Flyout"] = false,
+		["BLZBags"] = false,
+		["CharacterPanel"] = true,
 	},
 }
 
@@ -57,7 +57,7 @@ WT.ToolConfigs["Trade"] = {
 	["Azerite Tooltip"] = {
 		tDesc   = L["Show azerite traits in the tooltip when you mouseover an azerite item."],
 		oAuthor = "jokair9",
-		cAuthor = "houshuu",
+		cAuthor = "houshuu, Someblu",
 		["general"] = {
 			name = L['General'],
 			order = 6,
@@ -78,14 +78,14 @@ WT.ToolConfigs["Trade"] = {
 					name = L["Compact Mode"],
 					desc = L["Only icons"],
 				},
-				["Bags"] = {
+				["BLZBags"] = {
 					order = 4,
-					name = L["Bags"],
-					desc = L["Show selected traits in Bags"],
+					name = L["Blizzard bag icon"],
+					desc = L["Show selected traits in Blizzard Bags"],
 				},
-				["Flyout"] = {
+				["CharacterPanel"] = {
 					order = 5,
-					name = L["Flyout"],
+					name = L["Character panel icon"],
 					desc = L["Show selected traits in Character Frame"],
 				},
 			}

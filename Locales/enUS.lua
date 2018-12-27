@@ -306,3 +306,7 @@ L["Current Spec Only"] = true
 L["Show traits for your current specialization only"] = true
 L["Compact Mode"] = true
 L["Only icons"] = true
+L["Blizzard bag icon"] = true
+L["Show selected traits in Bags"] = true
+L["Character panel icon"] = true
+L["Show selected traits in Character Frame"] = true

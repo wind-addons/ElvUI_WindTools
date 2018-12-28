@@ -217,12 +217,12 @@ local FeastSpells = {
 	[145166] = true,  -- 拉麵推車
 	[145169] = true,  -- 豪華拉麵推車
 	[145196] = true,  -- 熊貓人國寶級拉麵推車
-	[127851] = true,  -- 灵魂药锅
-	[133578] = true,  -- 丰盛大餐
-	[133579] = true,  -- 苏拉玛奢华大餐
-	[156525] = true,  -- 海帆盛宴
-	[156526] = true,  -- 船长盛宴佳肴
-	[162519] = true,  -- 秘法药锅
+	[188036] = true,  -- 灵魂药锅
+	[201351] = true,  -- 丰盛大餐
+	[201352] = true,  -- 苏拉玛奢华大餐
+	[259409] = true,  -- 海帆盛宴
+	[259410] = true,  -- 船长盛宴佳肴
+	[276972] = true,  -- 秘法药锅
 }
 
 local Bots = {
@@ -233,10 +233,26 @@ local Bots = {
 	[67826] = true,		-- 吉福斯
 	[126459] = true,	-- 布靈登4000型
 	[161414] = true,	-- 布靈登5000型
-	[198989] = true,	-- (Test)布靈登6000型
-	[132514] = true,	-- 自動鐵錘
-	[141333] = true,	-- 宁神圣典
-	[153646] = true,	-- 静心圣典
+	[200061] = true,	-- 召唤里弗斯
+	[200204] = true,	-- 自動鐵錘模式(里弗斯)
+	[200205] = true,	-- 自動鐵錘模式(里弗斯)
+	[200210] = true,	-- 故障检测模式(里弗斯)
+	[200211] = true,	-- 故障检测模式(里弗斯)
+	[200212] = true,	-- 烟花表演模式(里弗斯)
+	[200214] = true,	-- 烟花表演模式(里弗斯)
+	[200215] = true,	-- 零食发放模式(里弗斯)
+	[200216] = true,	-- 零食发放模式(里弗斯)
+	[200217] = true,	-- 华丽模式(布靈登6000型)(里弗斯)
+	[200218] = true,	-- 华丽模式(布靈登6000型)(里弗斯)
+	[200219] = true,	-- 驾驶战斗模式(里弗斯)
+	[200220] = true,	-- 驾驶战斗模式(里弗斯)
+	[200221] = true,	-- 虫洞发生器模式(里弗斯)
+	[200222] = true,	-- 虫洞发生器模式(里弗斯)
+	[200223] = true,	-- 热砧模式(里弗斯)
+	[200225] = true,	-- 热砧模式(里弗斯)
+	[199109] = true,	-- 自動鐵錘
+	[226241] = true,	-- 宁神圣典
+	[256230] = true,	-- 静心圣典
 }
 
 
@@ -305,16 +321,15 @@ function AnnounceSystem:RaidUsefulSpells()
 
 		local srcName = srcName:gsub("%-[^|]+", "")
 		if subEvent == "SPELL_CAST_SUCCESS" then
-			-- 大餐
-			if FeastSpells[spellID] then 
-				SendChatMessage(format(ASL["PutFeast"], srcName, GetSpellLink(spellID)), CheckChat(true))
-			end
 			-- 召喚餐點桌
 			if spellID == 43987 then
 				SendChatMessage(format(ASL["PutRefreshmentTable"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			-- 召喚儀式
 			elseif spellID == 698 then
 				SendChatMessage(format(ASL["RitualOfSummoning"], srcName, GetSpellLink(spellID)), CheckChat(true))
+			-- 大餐
+			elseif FeastSpells[spellID] then 
+				SendChatMessage(format(ASL["PutFeast"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			end
 		elseif subEvent == "SPELL_SUMMON" then
 			-- 修理機器人

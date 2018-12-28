@@ -42,24 +42,23 @@ P["WindTools"]["Chat"] = {
 		["enabled"] = false,
 		["friend"] = {
 			["ARMORY"] = true,
-			["SEND_WHO"] = true,
-			["NAME_COPY"] = true,
-			["GUILD_ADD"] = true,
-			["FRIEND_ADD"] = true,
 			["MYSTATS"] = true,
-			["Fix_Report"] = false,
-		},
-		["chat_roster"] = {
-			["NAME_COPY"]  = true,
+			["NAME_COPY"] = true,
 			["SEND_WHO"] = true,
 			["FRIEND_ADD"] = true,
-			["INVITE"] = true,
+			["GUILD_ADD"] = true,
+			-- ["Fix_Report"] = false,
 		},
-		["guild"] = {
-			["ARMORY"] = true,
-			["NAME_COPY"] = true,
-			["FRIEND_ADD"] = true,
-		}
+		-- ["chat_roster"] = {
+		-- 	["NAME_COPY"]  = true,
+		-- 	["SEND_WHO"] = true,
+		-- 	["FRIEND_ADD"] = true,
+		-- },
+		-- ["guild"] = {
+		-- 	["ARMORY"] = true,
+		-- 	["NAME_COPY"] = true,
+		-- 	["FRIEND_ADD"] = true,
+		-- }
 	}
 }
 
@@ -294,50 +293,50 @@ WT.ToolConfigs["Chat"] = {
 			order = 5,
 			args = {}
 		},
-		["chat_roster"] = {
-			name = L["Chat Roster Menu"],
-			order = 6,
-			args = {}
-		},
-		["guild"] = {
-			name = L["Guild Menu"],
-			order = 7,
-			args = {}
-		},
+		-- ["chat_roster"] = {
+		-- 	name = L["Chat Roster Menu"],
+		-- 	order = 6,
+		-- 	args = {}
+		-- },
+		-- ["guild"] = {
+		-- 	name = L["Guild Menu"],
+		-- 	order = 7,
+		-- 	args = {}
+		-- },
 		func = function()
 			local EnhancedRCMenu = E:GetModule("Wind_EnhancedRCMenu")
 			-- 循环载入设定
 			for k, v in pairs(EnhancedRCMenu.friend_features) do
 				WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args[v] = {
 					order = k + 1,
-					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
+					name = UnitPopupButtons[v].text,
 					get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] end,
 					set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
 				}
 			end
-			for k, v in pairs(EnhancedRCMenu.cr_features) do
-				WT.ToolConfigs["Chat"]["Right-click Menu"]["chat_roster"].args[v] = {
-					order = k + 1,
-					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
-					get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] end,
-					set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-				}
-			end
-			for k, v in pairs(EnhancedRCMenu.guild_features) do
-				WT.ToolConfigs["Chat"]["Right-click Menu"]["guild"].args[v] = {
-					order = k + 1,
-					name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
-					get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] end,
-					set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-				}
-			end
+			-- for k, v in pairs(EnhancedRCMenu.cr_features) do
+			-- 	WT.ToolConfigs["Chat"]["Right-click Menu"]["chat_roster"].args[v] = {
+			-- 		order = k + 1,
+			-- 		name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
+			-- 		get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] end,
+			-- 		set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+			-- 	}
+			-- end
+			-- for k, v in pairs(EnhancedRCMenu.guild_features) do
+			-- 	WT.ToolConfigs["Chat"]["Right-click Menu"]["guild"].args[v] = {
+			-- 		order = k + 1,
+			-- 		name = EnhancedRCMenu.UnitPopupButtonsExtra[v],
+			-- 		get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] end,
+			-- 		set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+			-- 	}
+			-- end
 		
-			WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args.Fix_Report = {
-				order = -1,
-				name = L["Fix REPORT"],
-				get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] end,
-				set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
-			}
+			-- WT.ToolConfigs["Chat"]["Right-click Menu"]["friend"].args.Fix_Report = {
+			-- 	order = -1,
+			-- 	name = L["Fix REPORT"],
+			-- 	get = function(info) return E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] end,
+			-- 	set = function(info, value) E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+			-- }
 		end,
 	},
 }

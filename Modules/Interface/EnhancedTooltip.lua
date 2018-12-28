@@ -8,12 +8,9 @@
 -- 汉化
 
 local E, L, V, P, G = unpack(ElvUI);
-local TT = E:GetModule('Tooltip')
-local WT = E:GetModule("WindTools")
+local TT  = E:GetModule('Tooltip')
+local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')
-
-local r1,g1,b1,a1 = unpack(E["media"].backdropfadecolor)
-local r2,g2,b2,a2 = unpack(E["media"].bordercolor)
 
 ETT.RP = {
 	tiers = { "Uldir" },
@@ -31,6 +28,20 @@ ETT.RP = {
 			},
 			{ -- 團隊搜尋器
 				12786, 12790, 12794, 12798, 12802, 12808, 12813, 12817,
+			},
+		},
+		{ -- 達薩亞洛之戰 (暫定) {部落, 聯盟}
+			{ -- 傳奇
+				13331, {13336, 13353}, {13357, 13348}, {13374, 13362}, {13378, 13366}, {13382, 13370}, {13362, 13374}, {13366, 13378}, {13370, 13382},
+			},
+			{ -- 英雄
+				13330, {13334, 13351}, {13356, 13347}, {13373, 13361}, {13377, 13365}, {13381, 13369}, {13361, 13373}, {13365, 13377}, {13369, 13381},
+			},
+			{ -- 普通
+				13329, {13333, 13350}, {13355, 13346}, {13372, 13359}, {13376, 13364}, {13380, 13368}, {13359, 13372}, {13364, 13376}, {13368, 13380},
+			},
+			{ -- 團隊搜尋器
+				13328, {13332, 13349}, {13354, 13344}, {13371, 13358}, {13375, 13363}, {13379, 13367}, {13358, 13371}, {13363, 13375}, {13367, 13379},
 			},
 		},
 	}
@@ -118,18 +129,6 @@ function TT:INSPECT_ACHIEVEMENT_READY(event, GUID)
 	self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-function ETT.OnUpdate(tt)
-	if (tt.needRefresh and tt:GetAnchorType() == 'ANCHOR_CURSOR' and E.db.tooltip.anchor ~= 'CURSOR') then
-		tt:SetBackdropColor(r1,g1,b1,a1)
-		tt:SetBackdropBorderColor(r2,g2,b2,a2)
-		tt.needRefresh = nil
-	elseif tt.forceRefresh then
-		tt.forceRefresh = nil
-	else
-		ETT:AnchorFrameToMouse(tt)
-	end
-end
-
 function ETT.ShowInspectInfo(self, tt, unit, r, g, b)
 	if InCombatLockdown() then return end
 	if not ETT.db["Raid Progression"]["enabled"] then return end
@@ -160,21 +159,11 @@ function ETT.ShowInspectInfo(self, tt, unit, r, g, b)
 	ETT:SetProgressionInfo(guid, tt)
 end
 
-function ETT:AnchorFrameToMouse(frame)
-	if frame:GetAnchorType() ~= "ANCHOR_CURSOR" then return end
-	local x, y = GetCursorPosition();
-	local effScale = frame:GetEffectiveScale();
-	frame:ClearAllPoints();
-	frame:SetPoint("BOTTOMLEFT",UIParent,"BOTTOMLEFT",(x / effScale + self.db.Offset.mouseOffsetX),(y / effScale + self.db.Offset.mouseOffsetY));
-end
-
 function ETT:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
 	if not self.db.enabled then return end
 	-- 鼠标提示副本进度
 	hooksecurefunc(TT, 'ShowInspectInfo', ETT.ShowInspectInfo)
-	-- 修改鼠标指针的锚点
-	GameTooltip:HookScript("OnUpdate", ETT.OnUpdate)
 end
 
 local function InitializeCallback()

@@ -755,33 +755,10 @@ WT.ToolConfigs["Interface"] = {
 	},
 	["Enhanced Tooltip"] = {
 		tDesc   = L["Useful tooltip tweaks."],
-		oAuthor = "Nick Bockmeulen, Marcel Menzel",
+		oAuthor = "Nick Bockmeulen, houshuu",
 		cAuthor = "houshuu",
-		["offset"] = {
-			order = 5,
-			name = L["Offset"],
-			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Offset"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Offset"][info[#info]] = value end,
-			args = {
-				mouseOffsetX = {
-					order = 31,
-					type = "range",
-					name = L["Tooltip X-offset"],
-					desc = L["Offset the tooltip on the X-axis."],
-					min = -300, max = 200, step = 1,
-				},
-				mouseOffsetY = {
-					order = 32,
-					type = "range",
-					name = L["Tooltip Y-offset"],
-					desc = L["Offset the tooltip on the Y-axis."],
-					min = -200, max = 200, step = 1,
-					
-				},
-			},
-		},
 		["raidsetting"] = {
-			order = 6,
+			order = 5,
 			name = L["Raid Progression"],
 			desc  = L["Add progression info to tooltip."],
 			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Raid Progression"][info[#info]] end,

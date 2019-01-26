@@ -322,7 +322,7 @@ function AnnounceSystem:RaidUsefulSpells()
 		local srcName = srcName:gsub("%-[^|]+", "")
 		if subEvent == "SPELL_CAST_SUCCESS" then
 			-- 召喚餐點桌
-			if spellID == 43987 then
+			if spellID == 190336 then
 				SendChatMessage(format(ASL["PutRefreshmentTable"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			-- 召喚儀式
 			elseif spellID == 698 then

@@ -35,13 +35,13 @@ function DO:SetOverlay()
 	local Points
 
 	if UnitIsPlayer('target') and self.db['ClassIcon'] then
-		self.frame:SetSize(DO.db.IconSize, DO.db.IconSize)
+		self.frame:SetSize(self.db.IconSize, self.db.IconSize)
 		self.frame.Texture:SetTexture([[Interface\WorldStateFrame\Icons-Classes]])
 		self.frame.Texture:SetTexCoord(unpack(CLASS_ICON_TCOORDS[select(2, UnitClass('target'))]))
 		Points = 'ClassIconPoints'
 	else
-		self.frame:SetSize(DO.db.Width, DO.db.Height)
-		self.frame.Texture:SetTexture(DO.Textures[self.db[UnitClassification('target')]])
+		self.frame:SetSize(self.db.Width, self.db.Height)
+		self.frame.Texture:SetTexture(self.Textures[self.db[UnitClassification('target')]])
 		self.frame.Texture:SetTexCoord(self.db['FlipDragon'] and 1 or 0, self.db['FlipDragon'] and 0 or 1, 0, 1)
 		Points = 'DragonPoints'
 	end

@@ -138,7 +138,7 @@ function WT:InsertOptions()
 			author = {
 				order = 9,
 				type  = "description",
-				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96五氣歸元|r @ TW-暗影之月)\nSomeBlu @ Github"
+				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96Weakaura|r @ TW-暗影之月)\nSomeBlu @ Github"
 			},
 			credit = {
 				order = -1,

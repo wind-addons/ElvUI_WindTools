@@ -59,15 +59,15 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 
-E.PopupDialogs["WIND_UPDATE_RL"] = {
-	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
-	button1 = ACCEPT,
-	button2 = CANCEL,
-	OnAccept = ReloadUI,
-	timeout = 0,
-	whileDead = 1,
-	hideOnEscape = false,
-}
+-- E.PopupDialogs["WIND_UPDATE_RL"] = {
+-- 	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+-- 	button1 = ACCEPT,
+-- 	button2 = CANCEL,
+-- 	OnAccept = ReloadUI,
+-- 	timeout = 0,
+-- 	whileDead = 1,
+-- 	hideOnEscape = false,
+-- }
 
 function WT:InsertOptions()
 	-- 感谢名单
@@ -138,7 +138,7 @@ function WT:InsertOptions()
 			author = {
 				order = 9,
 				type  = "description",
-				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96五氣歸元|r @ TW-暗影之月)\nSomeBlu @ Github"
+				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96Weakaura|r @ TW-暗影之月)\nSomeBlu @ Github"
 			},
 			credit = {
 				order = -1,
@@ -170,7 +170,7 @@ function WT:InsertOptions()
 		end
 	end
 	
-	local rl_popup = false
+	-- local rl_popup = false
 	for module_name, module in pairs(WT.ToolConfigs) do
 		E.Options.args.WindTools.args[module_name] = {
 			order       = ToolsOrder[module_name],
@@ -240,15 +240,15 @@ function WT:InsertOptions()
 				end
 
 				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除
-				if E.db.WindTools[feature_name] then
-					E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
-					E.db.WindTools[feature_name] = nil
-					rl_popup = true
-				end
+				-- if E.db.WindTools[feature_name] then
+				-- 	E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
+				-- 	E.db.WindTools[feature_name] = nil
+				-- 	rl_popup = true
+				-- end
 			end
 		end
 	end
-	if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
+	-- if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

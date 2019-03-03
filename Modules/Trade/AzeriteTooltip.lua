@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local AT = E:NewModule('Wind_AzeriteTooltip')
+local AT = E:NewModule("Wind_AzeriteTooltip", "AceEvent-3.0", "AceHook-3.0")
 
 local locationIDs = {
 	["Head"] = 1, 
@@ -24,8 +24,8 @@ local itemEquipLocToSlot = {
 }
 
 local rings = {
-	[1] = true,
-	[3] = true,
+	1,
+	2,
 }
 
 local point = 2
@@ -68,7 +68,7 @@ function AT:ScanSelectedTraits(tooltip, powerName)
         	return true
        	elseif (newText and newPowerName and newText:match(newPowerName)) then
        		return true
-        elseif (powerName == empowered and not AT:HasUnselectedPower(tooltip)) then
+        elseif (powerName == empowered and not self:HasUnselectedPower(tooltip)) then
          	return true
         end
     end
@@ -223,14 +223,14 @@ local function BuildTooltip(self)
 						elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
 							local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:255:255:255|t'
 							azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
-						elseif not AT.db.OnlySpec then
+						elseif not AT.db.OnlySpec or IsControlKeyDown() then
 							local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
 							azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
 						end
 					elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then						
 						local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
 						azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
-					elseif not AT.db.OnlySpec then
+					elseif not AT.db.OnlySpec or IsControlKeyDown() then
 						local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
 						azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
 					end				
@@ -291,12 +291,12 @@ local function BuildTooltip(self)
 							addText = addText.."\n|cFF00FF00"..azeriteTooltipText.."|r"			
 						elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
 							addText = addText.."\n|cFFFFFFFF"..azeriteTooltipText.."|r"
-						elseif not AT.db.OnlySpec then
+						elseif not AT.db.OnlySpec or IsControlKeyDown() then
 							addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
 						end
 					elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
 						addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
-					elseif not AT.db.OnlySpec then
+					elseif not AT.db.OnlySpec or IsControlKeyDown() then
 						addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
 					end	
 				end	
@@ -318,175 +318,23 @@ local function BuildTooltip(self)
 	end
 end
 
-local function SetContainerAzerite(self)
-	local name = self:GetName()
-
-    for i = 1, self.size do
-        local button = _G[name .. "Item" .. i];
-        local link = GetContainerItemLink(self:GetID(), button:GetID())
-
-	    if not button then
-	        return
-	    end;	    
-
-		if link then
-			local azeriteEmpoweredItemLocation = ItemLocation:CreateFromBagAndSlot(self:GetID(), button:GetID())
-
-		    if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem(azeriteEmpoweredItemLocation) then
-
-		    	if not button.azerite then
-		    		button.azerite = CreateFrame("Frame", "$parent.azerite", button)
-		    		button.azerite:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT")
-		    		button.azerite:SetSize(37, 18)
-		    	else
-		    		button.azerite:Show()
-				end;
-
-				button.azerite:SetAlpha(button:GetAlpha())
-
-				local allTierInfo = C_AzeriteEmpoweredItem.GetAllTierInfo(azeriteEmpoweredItemLocation)
-				local noneSelected = true
-
-				local ringsNumber = 0
-
-				for i=1, 5 do
-					if allTierInfo[i] then 
-						ringsNumber = ringsNumber+1
-					end
-				end
-
-				for j, k in pairs(rings) do
-					if not allTierInfo[j] then break end
-
-					if (j == 3 and ringsNumber == 5) then
-						j = 2
-						point = 1
-					else
-						point = 2
-					end
-
-					local tierLevel = allTierInfo[j]["unlockLevel"]
-					local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][1]
-
-					if not allTierInfo[1]["azeritePowerIDs"][1] then return end
-
-					if button.azerite[j] then
-						button.azerite[j]:Hide()
-						button.azerite[j].overlay:Hide()
-					end	
-
-					for i, _ in pairs(allTierInfo[j]["azeritePowerIDs"]) do
-						local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
-						local azeriteSpellID = AT:GetSpellID(azeritePowerID)				
-						local azeritePowerName, _, icon = GetSpellInfo(azeriteSpellID)	
-
-						if C_AzeriteEmpoweredItem.IsPowerSelected(azeriteEmpoweredItemLocation, azeritePowerID) then
-							noneSelected = false
-							if not button.azerite[j] then
-								if j == 1 then
-		    						button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-		    						button.azerite[j]:SetPoint("LEFT", button.azerite, "LEFT")
-		  							button.azerite[j]:SetSize(16, 16)
-		  							button.azerite[j]:SetTexture(icon)
-		  							-- Border
-							        button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
-							        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
-							        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
-							        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
-							        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
-							        button.azerite[j].overlay:SetBlendMode("ADD")
-		  						else
-		  							button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-		    						button.azerite[j]:SetPoint("BOTTOMLEFT", button.azerite[j-point], "BOTTOMRIGHT", 4, 0)
-		  							button.azerite[j]:SetSize(16, 16)
-		  							button.azerite[j]:SetTexture(icon)
-		  							-- Border
-		  							button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
-							        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
-							        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
-							        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
-							        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
-							        button.azerite[j].overlay:SetBlendMode("ADD")
-		  						end
-		  					else
-		  						button.azerite[j]:Show()
-								button.azerite[j].overlay:Show()
-		  						button.azerite[j]:SetTexture(icon)
-							end;
-						end	
-					end					
-				end
-				if noneSelected	then button.azerite:Hide() end -- Hide if no traits selected
-			else
-				if button.azerite then
-					button.azerite:Hide()
-				end
-			end
-		else
-			if button.azerite then
-				button.azerite:Hide()
-			end
-		end
-		--if not AzeriteTooltip.db.Bags then button.azerite:Hide() end
-	end
-end
-
-local function SetFlyoutAzerite(self)
-	if self.azerite then
-		self.azerite:Hide()
-	end
-
-	if ( not self.location ) then
-		return;
-	end
-
-	if ( self.location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION ) then
-		return;
-	end
-
-    local _, _, _, _, slot, bag = EquipmentManager_UnpackLocation(self.location)
-    local azeriteEmpoweredItemLocation = ItemLocation:CreateFromBagAndSlot(bag, slot)
-    local button = self
-
-    if not bag then return end
-
-    if not button then
-        return
-    end;
-
-   	if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem(azeriteEmpoweredItemLocation) then
-
-    	if not button.azerite then
-		    button.azerite = CreateFrame("Frame", "$parent.azerite", button)
-		    button.azerite:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT")
-		    button.azerite:SetSize(37, 18)
-		else
+function AT:CreateAzeriteIcons(button, azeriteEmpoweredItemLocation)
+	if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem(azeriteEmpoweredItemLocation) then
+	    if not button.azerite then
+	        button.azerite = CreateFrame("Frame", "$parent.azerite", button);
+	        button.azerite:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT")
+	        button.azerite:SetSize(37, 18)
+	    else
 			button.azerite:Show()
-		end;
+		end
 
 		local allTierInfo = C_AzeriteEmpoweredItem.GetAllTierInfo(azeriteEmpoweredItemLocation)
 		local noneSelected = true
 
-		local ringsNumber = 0
-
-		for i=1, 5 do
-			if allTierInfo[i] then 
-				ringsNumber = ringsNumber+1
-			end
-		end
-
-		for j, k in pairs(rings) do
+		for j, k in ipairs(rings) do
 			if not allTierInfo[j] then break end
 
-			if (j == 3 and ringsNumber == 5) then
-				j = 2
-				point = 1
-			else
-				point = 2
-			end
-
-			local tierLevel = allTierInfo[j]["unlockLevel"]
-			local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][1]
+			local azeritePowerID = allTierInfo[k]["azeritePowerIDs"][1]
 
 			if not allTierInfo[1]["azeritePowerIDs"][1] then return end
 
@@ -495,43 +343,43 @@ local function SetFlyoutAzerite(self)
 				button.azerite[j].overlay:Hide()
 			end	
 
-			for i, _ in pairs(allTierInfo[j]["azeritePowerIDs"]) do
-				local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
-				local azeriteSpellID = AT:GetSpellID(azeritePowerID)				
+			for i, _ in pairs(allTierInfo[k]["azeritePowerIDs"]) do
+				local azeritePowerID = allTierInfo[k]["azeritePowerIDs"][i]
+				local azeriteSpellID = self:GetSpellID(azeritePowerID)				
 				local azeritePowerName, _, icon = GetSpellInfo(azeriteSpellID)	
 
 				if C_AzeriteEmpoweredItem.IsPowerSelected(azeriteEmpoweredItemLocation, azeritePowerID) then
 					noneSelected = false
 					if not button.azerite[j] then
 						if j == 1 then
-    						button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-    						button.azerite[j]:SetPoint("LEFT", button.azerite, "LEFT")
-  							button.azerite[j]:SetSize(16, 16)
-  							button.azerite[j]:SetTexture(icon)
-  							-- Border
+							button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
+							button.azerite[j]:SetPoint("LEFT", button.azerite, "LEFT")
+							button.azerite[j]:SetSize(16, 16)
+							button.azerite[j]:SetTexture(icon)
+							-- Border
 					        button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
 					        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
 					        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
 					        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
 					        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
 					        button.azerite[j].overlay:SetBlendMode("ADD")
-  						else
-  							button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-    						button.azerite[j]:SetPoint("BOTTOMLEFT", button.azerite[j-point], "BOTTOMRIGHT", 4, 0)
-  							button.azerite[j]:SetSize(16, 16)
-  							button.azerite[j]:SetTexture(icon)
-  							-- Border
-  							button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
+						else
+							button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
+							button.azerite[j]:SetPoint("BOTTOMLEFT", button.azerite[j-1], "BOTTOMRIGHT", 4, 0)
+							button.azerite[j]:SetSize(16, 16)
+							button.azerite[j]:SetTexture(icon)
+							-- Border
+							button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
 					        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
 					        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
 					        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
 					        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
 					        button.azerite[j].overlay:SetBlendMode("ADD")
-  						end
-  					else
-		  				button.azerite[j]:Show()
+						end
+					else
+	  					button.azerite[j]:Show()
 						button.azerite[j].overlay:Show()
-		  				button.azerite[j]:SetTexture(icon)
+	  					button.azerite[j]:SetTexture(icon)
 					end;
 				end	
 			end					
@@ -544,102 +392,37 @@ local function SetFlyoutAzerite(self)
 	end
 end
 
-local function SetPaperDollAzerite(self)
-    local button = self
-    local id = self:GetID();
+function AT:SetContainerAzerite(button)
+	local name = button:GetName();
+	for i = 1, button.size or 1 do
+		local button1 = button.size and _G[name .. "Item" .. i] or button;
+		local button2 = button.size and button or button:GetParent()
+		local link = GetContainerItemLink(button2:GetID(), button1:GetID())
 
-    if (id == 1 or id == 3 or id == 5) and self.hasItem then
+		if not button1 then
+			return
+		end;	    
 
-	    local azeriteEmpoweredItemLocation = ItemLocation:CreateFromEquipmentSlot(id)
+		if link then
+			local azeriteEmpoweredItemLocation = ItemLocation:CreateFromBagAndSlot(button2:GetID(), button1:GetID())
 
-	    if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem(azeriteEmpoweredItemLocation) then
-
-		    if not button.azerite then
-		        button.azerite = CreateFrame("Frame", "$parent.azerite", button);
-		        button.azerite:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT")
-		        button.azerite:SetSize(37, 18)
-		    else
-				button.azerite:Show()
-			end
-
-			local allTierInfo = C_AzeriteEmpoweredItem.GetAllTierInfo(azeriteEmpoweredItemLocation)
-			local noneSelected = true
-
-			local ringsNumber = 0
-
-			for i=1, 5 do
-				if allTierInfo[i] then 
-					ringsNumber = ringsNumber+1
-				end
-			end
-
-			for j, k in pairs(rings) do
-				if not allTierInfo[j] then break end
-
-				if (j == 3 and ringsNumber == 5) then
-					j = 2
-					point = 1
-				else
-					point = 2
-				end
-
-				local tierLevel = allTierInfo[j]["unlockLevel"]
-				local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][1]
-
-				if not allTierInfo[1]["azeritePowerIDs"][1] then return end
-
-				if button.azerite[j] then
-					button.azerite[j]:Hide()
-					button.azerite[j].overlay:Hide()
-				end	
-
-				for i, _ in pairs(allTierInfo[j]["azeritePowerIDs"]) do
-					local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
-					local azeriteSpellID = AT:GetSpellID(azeritePowerID)				
-					local azeritePowerName, _, icon = GetSpellInfo(azeriteSpellID)	
-
-					if C_AzeriteEmpoweredItem.IsPowerSelected(azeriteEmpoweredItemLocation, azeritePowerID) then
-						noneSelected = false
-						if not button.azerite[j] then
-							if j == 1 then
-								button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-								button.azerite[j]:SetPoint("LEFT", button.azerite, "LEFT")
-								button.azerite[j]:SetSize(16, 16)
-								button.azerite[j]:SetTexture(icon)
-									-- Border
-						        button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
-						        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
-						        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
-						        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
-						        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
-						        button.azerite[j].overlay:SetBlendMode("ADD")
-							else
-								button.azerite[j] = button.azerite:CreateTexture("$parent."..j, "OVERLAY", nil, button.azerite)
-								button.azerite[j]:SetPoint("BOTTOMLEFT", button.azerite[j-point], "BOTTOMRIGHT", 4, 0)
-								button.azerite[j]:SetSize(16, 16)
-								button.azerite[j]:SetTexture(icon)
-									-- Border
-								button.azerite[j].overlay = button.azerite:CreateTexture(nil, "ARTWORK", nil, 7)
-						        button.azerite[j].overlay:SetTexture([[Interface\TargetingFrame\UI-TargetingFrame-Stealable]])
-						        button.azerite[j].overlay:SetVertexColor(0.7,0.7,0.7,0.8)
-						        button.azerite[j].overlay:SetPoint("TOPLEFT", button.azerite[j], -3, 3)
-						        button.azerite[j].overlay:SetPoint("BOTTOMRIGHT", button.azerite[j], 3, -3)
-						        button.azerite[j].overlay:SetBlendMode("ADD")
-							end
-						else
-		  					button.azerite[j]:Show()
-							button.azerite[j].overlay:Show()
-		  					button.azerite[j]:SetTexture(icon)
-						end;
-					end	
-				end					
-			end
-			if noneSelected	then button.azerite:Hide() end
+			self:CreateAzeriteIcons(button1, azeriteEmpoweredItemLocation)
 		else
-			if button.azerite then
-				button.azerite:Hide()
+			if button1.azerite then
+				button1.azerite:Hide()
 			end
 		end
+	end
+end
+
+function AT:SetPaperDollAzerite(button)
+	local id = button:GetID();
+
+	if (id == 1 or id == 3 or id == 5) and button.hasItem then
+
+		local azeriteEmpoweredItemLocation = ItemLocation:CreateFromEquipmentSlot(id)
+
+		self:CreateAzeriteIcons(button, azeriteEmpoweredItemLocation)
 	else
 		if button.azerite then
 			button.azerite:Hide()
@@ -647,24 +430,73 @@ local function SetPaperDollAzerite(self)
 	end
 end
 
+function AT:SetFlyoutAzerite(button)
+	if button.azerite then
+		button.azerite:Hide()
+	end
+
+	if ( not button.location ) then
+		return;
+	end
+
+	if ( button.location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION ) then
+		return;
+	end
+
+	local _, _, _, _, slot, bag = EquipmentManager_UnpackLocation(button.location)
+	local azeriteEmpoweredItemLocation = ItemLocation:CreateFromBagAndSlot(bag, slot)
+
+	if not bag then return end
+
+	if not button then
+		return
+	end;
+
+	self:CreateAzeriteIcons(button, azeriteEmpoweredItemLocation)
+end
+
+function AT:ContainerFrame_Update(frame)
+	if not self.db.Bags then return end
+
+	self:SetContainerAzerite(frame)
+end
+
+function AT:PaperDollItemSlotButton_Update(frame)
+	if not self.db.PaperDoll then return end
+
+	self:SetPaperDollAzerite(frame)
+end
+
+function AT:EquipmentFlyout_DisplayButton(frame)
+	if not self.db.PaperDoll then return end
+
+	self:SetFlyoutAzerite(frame)
+end
+
+function AT:OnTooltipSetItem(frame)
+	BuildTooltip(frame)
+end
+
 function AT:Initialize()
     if not E.db.WindTools["Trade"]["Azerite Tooltip"]["enabled"] then return end
     self.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
-    GameTooltip:HookScript("OnTooltipSetItem", BuildTooltip)
-	ItemRefTooltip:HookScript("OnTooltipSetItem", BuildTooltip)
-	ShoppingTooltip1:HookScript("OnTooltipSetItem", BuildTooltip)
-	WorldMapTooltip.ItemTooltip.Tooltip:HookScript('OnTooltipSetItem', BuildTooltip)
-	WorldMapCompareTooltip1:HookScript("OnTooltipSetItem", BuildTooltip)
-	EmbeddedItemTooltip.ItemTooltip.Tooltip:HookScript("OnTooltipSetItem", BuildTooltip)
+    self:SecureHook('PaperDollItemSlotButton_Update')
+    self:SecureHook('EquipmentFlyout_DisplayButton')
+    self:SecureHook('ContainerFrame_Update')
 
-	if AT.db.BLZBags then
-		hooksecurefunc("ContainerFrame_Update", SetContainerAzerite)
-	end
+    if IsAddOnLoaded("Bagnon") then
+    	hooksecurefunc(Bagnon.ItemSlot, "Update", function(self)
+    		if not self.db.Bags then return end
+    		self:SetContainerAzerite(self) 
+    	end)
+    end
 
-	if AT.db.CharacterPanel then
-		hooksecurefunc("PaperDollItemSlotButton_Update", SetPaperDollAzerite)
-		hooksecurefunc("EquipmentFlyout_DisplayButton", SetFlyoutAzerite)
-	end
+    self:SecureHookScript(GameTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
+    self:SecureHookScript(ItemRefTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
+    self:SecureHookScript(ShoppingTooltip1, 'OnTooltipSetItem', 'OnTooltipSetItem')
+    self:SecureHookScript(WorldMapTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
+    self:SecureHookScript(WorldMapCompareTooltip1, 'OnTooltipSetItem', 'OnTooltipSetItem')
+    self:SecureHookScript(EmbeddedItemTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
 end
 
 local function InitializeCallback()

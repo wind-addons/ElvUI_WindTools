@@ -23,8 +23,8 @@ P["WindTools"]["Trade"] = {
 		["RemoveBlizzard"]= true,
 		["Compact"] = false,
 		["OnlySpec"] = false,
-		["BLZBags"] = false,
-		["CharacterPanel"] = true,
+		["Bags"] = false,
+		["PaperDoll"] = true,
 	},
 }
 
@@ -78,12 +78,12 @@ WT.ToolConfigs["Trade"] = {
 					name = L["Compact Mode"],
 					desc = L["Only icons"],
 				},
-				["BLZBags"] = {
+				["Bags"] = {
 					order = 4,
-					name = L["Blizzard bag icon"],
-					desc = L["Show selected traits in Blizzard Bags"],
+					name = L["Bag icon"],
+					desc = L["Show selected traits in bags (works only with Blizzard Bags and Bagnon)"],
 				},
-				["CharacterPanel"] = {
+				["PaperDoll"] = {
 					order = 5,
 					name = L["Character panel icon"],
 					desc = L["Show selected traits in Character Frame"],

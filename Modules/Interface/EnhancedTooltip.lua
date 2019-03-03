@@ -91,7 +91,7 @@ ETT.RP = {
 			["WaycrestManor"] = 12785,
 		},
 		["Mythic+"] = {
-			["Mythic+(LEG+BFA)"] = 7399,
+			["Mythic+(LEG&BFA)"] = 7399,
 		}
 	}
 }

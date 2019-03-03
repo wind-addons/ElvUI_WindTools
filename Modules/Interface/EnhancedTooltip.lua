@@ -209,7 +209,7 @@ function ETT:SetProgressionInfo(guid, tt)
 		end
 		if self.db["Progression"]["Dungeon"]["enabled"] then -- mythic dungeons and mythic+
 			tt:AddLine(" ")
-			tt:AddLine(L["Dundeon"])
+			tt:AddLine(L["Dungeon"])
 			for k,v in pairs(self.RP["Dungeon"]) do
 				if self.db["Progression"]["Dungeon"][k] then
 					for dungeon,statId in pairs(v) do

@@ -237,7 +237,7 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = "預設�
 -- 鼠标提示增强
 L["Enhanced Tooltip"] = "浮動提示增強"
 L["Useful tooltip tweaks."] = "一些實用的浮動提示增強功能。"
-L["Raid Progression"] = "團本進度提示"
+L["Progression"] = "進度提示"
 L["Add progression info to tooltip."] = "添加團隊副本進度到滑鼠提示。"
 L["Mythic"] = "傳奇"
 L["Heroic"] = "英雄"

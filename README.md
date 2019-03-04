@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
-    <img src="https://img.shields.io/badge/ElvUI-10.85-blue.svg?longCache=true&style=flat"/>
-    <img src="https://img.shields.io/badge/Version-1.3.8-green.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/ElvUI-10.91-blue.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/Version-1.3.9-green.svg?longCache=true&style=flat"/>
 </div>
 <br>
 Includes many useful features such as AlreadyKnown, AutoDelete.<br>

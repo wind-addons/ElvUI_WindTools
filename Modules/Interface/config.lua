@@ -198,8 +198,10 @@ P["WindTools"]["Interface"] = {
 				["CrucibleOfStorms"] = false,
 			}
 		},
+	},
+	["Skip Azerite Animations"] = {
+		["enabled"] = true,
 	}
-	
 }
 
 WT.ToolConfigs["Interface"] = {
@@ -825,5 +827,10 @@ WT.ToolConfigs["Interface"] = {
 				}
 			}
 		},
+	},
+	["Skip Azerite Animations"] = {
+		tDesc   = L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."],
+		oAuthor = "Permok",
+		cAuthor = "SomeBlu",
 	}
 }

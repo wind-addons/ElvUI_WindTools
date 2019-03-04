@@ -244,8 +244,8 @@ L["Heroic"] = "英雄"
 L["Normal"] = "普通"
 L["LFR"] =  "隨團"
 L["Uldir"] = "奧迪爾"
-L["BattleOfDazaralor"] = true
-L["CrucibleOfStorms"] = true
+L["BattleOfDazaralor"] = "圍攻祖達薩"
+L["CrucibleOfStorms"] = "風暴邪淵"
 L["Dungeon"] = true
 L["MythicDungeon"] = true
 L["AtalDazar"] = true
@@ -260,6 +260,9 @@ L["TolDagor"] = true
 L["WaycrestManor"] = true
 L["Mythic+"] = true
 L["Mythic+(LEG&BFA)"] = true
+-- 跳过艾泽里特特质选择界面的渲染动画
+L["Skip Azerite Animations"] = "跳過艾澤里特動畫"
+L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = "跳過艾澤里特特質選擇界面的新護甲揭示動畫和特質選擇動畫"
 -- 频道切换
 L["Tab Chat Mod"] = "Tab 切換頻道"
 L["Use tab to switch channel."] = "可以使用 Tab 來快速切換頻道。"

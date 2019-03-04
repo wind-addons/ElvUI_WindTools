@@ -260,6 +260,9 @@ L["TolDagor"] = true
 L["WaycrestManor"] = true
 L["Mythic+"] = true
 L["Mythic+(LEG&BFA)"] = true
+-- 跳过艾泽里特特质选择界面的渲染动画
+L["Skip Azerite Animations"] = true
+L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = true
 -- 频道切换
 L["Tab Chat Mod"] = true
 L["Use tab to switch channel."] = true

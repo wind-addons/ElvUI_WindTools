@@ -97,6 +97,7 @@ ETT.RP = {
 }
 
 local playerGUID = UnitGUID("player")
+local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
 
 function ETT:UpdateProgression(guid, faction)
@@ -246,7 +247,7 @@ function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 
 	if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
 		if guid == playerGUID then
-			ETT:UpdateProgression(guid, UnitFactionGroup("player"))
+			ETT:UpdateProgression(guid, playerFaction)
 		else
 			ClearAchievementComparisonUnit()		
 			if not self.loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then

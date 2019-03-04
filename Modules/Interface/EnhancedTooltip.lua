@@ -1,5 +1,5 @@
 -- 原作者：ElvUI_Enhanced (Legion), Marcel Menzel
--- 修改：houshuu
+-- 修改：houshuu, SomeBlu
 -------------------
 -- 主要修改条目：
 -- 修复部分 boss 成就 ID
@@ -13,72 +13,133 @@ local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')
 
 ETT.RP = {
-	tiers = { "Uldir" },
-	levels = { L["Mythic"], L["Heroic"], L["Normal"], L["LFR"] },
-	bosses = {
-		{ -- 奧迪爾
-			{ -- 傳奇
+	-- sort key
+	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms" },
+	["levels"] = { "Mythic", "Heroic", "Normal", "LFR" },
+	-- stat id
+	["Raid"] = {
+		["Uldir"] = {
+			["Mythic"] = {
 				12789, 12793, 12797, 12801, 12805, 12811, 12816, 12820,
 			},
-			{ -- 英雄
+			["Heroic"] = {
 				12788, 12792, 12796, 12800, 12804, 12810, 12815, 12819,
 			},
-			{ -- 普通
+			["Normal"] = {
 				12787, 12791, 12795, 12799, 12803, 12809, 12814, 12818,
 			},
-			{ -- 團隊搜尋器
+			["LFR"] = {
 				12786, 12790, 12794, 12798, 12802, 12808, 12813, 12817,
 			},
 		},
-		{ -- 達薩亞洛之戰 (暫定) {部落, 聯盟}
-			{ -- 傳奇
-				13331, {13336, 13353}, {13357, 13348}, {13374, 13362}, {13378, 13366}, {13382, 13370}, {13362, 13374}, {13366, 13378}, {13370, 13382},
+		["BattleOfDazaralor"] = {
+			["Alliance"] = {
+				["Mythic"] = {
+					13331, 13353, 13348, 13362, 13366, 13370, 13374, 13378, 13382,
+				},
+				["Heroic"] = {
+					13330, 13351, 13347, 13361, 13365, 13369, 13373, 13377, 13381,
+				},
+				["Normal"] = {
+					13329, 13350, 13346, 13359, 13364, 13368, 13372, 13376, 13380,
+				},
+				["LFR"] = {
+					13328, 13349, 13344, 13358, 13363, 13367, 13371, 13375, 13379,
+				},
 			},
-			{ -- 英雄
-				13330, {13334, 13351}, {13356, 13347}, {13373, 13361}, {13377, 13365}, {13381, 13369}, {13361, 13373}, {13365, 13377}, {13369, 13381},
-			},
-			{ -- 普通
-				13329, {13333, 13350}, {13355, 13346}, {13372, 13359}, {13376, 13364}, {13380, 13368}, {13359, 13372}, {13364, 13376}, {13368, 13380},
-			},
-			{ -- 團隊搜尋器
-				13328, {13332, 13349}, {13354, 13344}, {13371, 13358}, {13375, 13363}, {13379, 13367}, {13358, 13371}, {13363, 13375}, {13367, 13379},
+			["Horde"] = {
+				["Mythic"] = {
+					13331, 13336, 13357, 13374, 13378, 13382, 13362, 13366, 13370,
+				},
+				["Heroic"] = {
+					13330, 13334, 13356, 13373, 13377, 13381, 13361, 13365, 13369,
+				},
+				["Normal"] = {
+					13329, 13333, 13355, 13372, 13376, 13380, 13359, 13364, 13368,
+				},
+				["LFR"] = {
+					13328, 13332, 13354, 13371, 13375, 13379, 13358, 13363, 13367,
+				},
 			},
 		},
+		["CrucibleOfStorms"] = {
+			["Mythic"] = {
+				13407, 13413,
+			},
+			["Heroic"] = {
+				13406, 13412,
+			},
+			["Normal"] = {
+				13405, 13411,
+			},
+			["LFR"] = {
+				13404, 13408,
+			},
+		},
+	},
+	["Dungeon"] = {
+		["MythicDungeon"] = {
+			["AtalDazar"] = 12749,
+			["FreeHold"] = 12752,
+			["KingsRest"] = 12763,
+			["ShrineOfTheStorm"] = 12768,
+			["SiegeOfBoralus"] = 12773,
+			["TempleOfSethrealiss"] = 12776,
+			["TheMOTHERLODE!!"] = 12779,
+			["TheUnderrot"] = 12745,
+			["TolDagor"] = 12782,
+			["WaycrestManor"] = 12785,
+		},
+		["Mythic+"] = {
+			["Mythic+(LEG&BFA)"] = 7399,
+		}
 	}
 }
 
 local playerGUID = UnitGUID("player")
+local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
-local highest = { 0, 0 }
 
-function ETT:UpdateProgression(guid)
-	local kills, complete, pos = 0, false, 0
+function ETT:UpdateProgression(guid, faction)
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 
 	progressCache[guid] = progressCache[guid] or {}
-	progressCache[guid].header = progressCache[guid].header or {}
 	progressCache[guid].info =  progressCache[guid].info or {}
 	progressCache[guid].timer = GetTime()
-		
-	for tier, tierName in pairs(self.RP.tiers) do
-		if self.db["Raid Progression"][tierName] then
-			progressCache[guid].header[tier] = {}
-			progressCache[guid].info[tier] = {}
-			for level = 1, 4 do
-				highest = 0
-				for statInfo = 1, #self.RP.bosses[tier][level] do
-					kills = tonumber((statFunc(self.RP.bosses[tier][level][statInfo])))
-					if kills and kills > 0 then
-						highest = highest + 1
+
+	if self.db["Progression"]["Raid"]["enabled"] then -- raid progress
+		progressCache[guid].info["Raid"] = {}
+		for _,tier in ipairs(self.RP.tiers) do -- arranged by tier
+			if self.db["Progression"]["Raid"][tier] then
+				progressCache[guid].info["Raid"][tier] = {}
+				local bosses = tier == "BattleOfDazaralor" and self.RP["Raid"][tier][faction] or self.RP["Raid"][tier]
+
+				for _,level in ipairs(self.RP.levels) do -- sorted by level
+					local highest = 0
+					for _,statId in ipairs(bosses[level]) do
+						local kills = tonumber(statFunc(statId),10)
+						if kills and kills > 0 then
+							highest = highest + 1
+						end
+					end
+					if (highest > 0) then
+						progressCache[guid].info["Raid"][tier][level] = ("%d/%d"):format(highest, #bosses[level])
+						if highest == #bosses[level] then
+							break
+						end
 					end
 				end
-				pos = highest
-				if (highest > 0) then
-					progressCache[guid].header[tier][level] = ("%s [%s]:"):format(L[tierName], self.RP.levels[level])
-					progressCache[guid].info[tier][level] = ("%d/%d"):format(highest, #self.RP.bosses[tier][level])
-					if highest == #self.RP.bosses[tier][level] then
-						break
-					end
+			end
+		end
+	end
+
+	if self.db["Progression"]["Dungeon"]["enabled"] then -- mythic dungeons and mythic+
+		progressCache[guid].info["Dungeon"] = {}
+		for k,v in pairs(self.RP["Dungeon"]) do
+			if self.db["Progression"]["Dungeon"][k] then
+				progressCache[guid].info["Dungeon"][k] = {}
+				for dungeon,statId in pairs(v) do
+					progressCache[guid].info["Dungeon"][k][dungeon] = tonumber(statFunc(statId),10)
 				end
 			end
 		end
@@ -87,30 +148,73 @@ end
 
 function ETT:SetProgressionInfo(guid, tt)
 	if progressCache[guid] then
-		local updated = 0
+		local updated = false
 		for i=1, tt:NumLines() do
-			local leftTipText = _G["GameTooltipTextLeft"..i]	
-			for tier, tierName in pairs(self.RP.tiers) do
-				if self.db["Raid Progression"][tierName] then
-					for level = 1, 4 do
-						if (leftTipText:GetText() and leftTipText:GetText():find(L[tierName]) and leftTipText:GetText():find(self.RP.levels[level])) then
-							-- update found tooltip text line
-							local rightTipText = _G["GameTooltipTextRight"..i]
-							leftTipText:SetText(progressCache[guid].header[tier][level])
-							rightTipText:SetText(progressCache[guid].info[tier][level])
-							updated = 1
+			local leftTip = _G["GameTooltipTextLeft"..i]
+			local leftTipText = leftTip:GetText()
+			local found = false
+			if (leftTipText) then
+				if self.db["Progression"]["Raid"]["enabled"] then -- raid progress
+					for _,tier in ipairs(self.RP.tiers) do
+						if self.db["Progression"]["Raid"][tier] then
+							for _,level in ipairs(self.RP.levels) do
+								if (leftTipText:find(L[tier]) and leftTipText:find(L[level])) then
+									-- update found tooltip text line
+									local rightTip = _G["GameTooltipTextRight"..i]
+									leftTip:SetText(("%s [%s]:"):format(L[tier], L[level]))
+									rightTip:SetText(progressCache[guid].info["Raid"][tier][level])
+									updated = true
+									found = true
+									break
+								end
+							end
+							if found then break end
+						end
+					end
+				end
+				if self.db["Progression"]["Dungeon"]["enabled"] then -- mythic dungeons and mythic+
+					for k,v in pairs(self.RP["Dungeon"]) do
+						if self.db["Progression"]["Dungeon"][k] then
+							for dungeon,statId in pairs(v) do
+								if (leftTipText:find(L[dungeon])) then
+									-- update found tooltip text line
+									local rightTip = _G["GameTooltipTextRight"..i]
+									leftTip:SetText(L[dungeon]..":")
+									rightTip:SetText(progressCache[guid].info["Dungeon"][k][dungeon])
+									updated = true
+									found = true
+									break
+								end
+							end
+							if found then break end
 						end
 					end
 				end
 			end
 		end
-		if updated == 1 then return end
+		if updated then return end
 		-- add progression tooltip line
-		if highest > 0 then tt:AddLine(" ") end
-		for tier, tierName in pairs(ETT.RP.tiers) do
-			if self.db["Raid Progression"][tierName] then
-				for level = 1, 4 do
-					tt:AddDoubleLine(progressCache[guid].header[tier][level], progressCache[guid].info[tier][level], nil, nil, nil, 1, 1, 1)
+		if self.db["Progression"]["Raid"]["enabled"] then -- raid progress
+			tt:AddLine(" ")
+			tt:AddLine(L["Raid"])
+			for _,tier in ipairs(self.RP.tiers) do -- Raid
+				if self.db["Progression"]["Raid"][tier] then
+					for _,level in ipairs(self.RP.levels) do
+						if (progressCache[guid].info["Raid"][tier][level]) then
+							tt:AddDoubleLine(("%s [%s]:"):format(L[tier], L[level]), progressCache[guid].info["Raid"][tier][level], nil, nil, nil, 1, 1, 1)
+						end
+					end
+				end
+			end
+		end
+		if self.db["Progression"]["Dungeon"]["enabled"] then -- mythic dungeons and mythic+
+			tt:AddLine(" ")
+			tt:AddLine(L["Dungeon"])
+			for k,v in pairs(self.RP["Dungeon"]) do
+				if self.db["Progression"]["Dungeon"][k] then
+					for dungeon,statId in pairs(v) do
+						tt:AddDoubleLine(L[dungeon]..":", progressCache[guid].info["Dungeon"][k][dungeon], nil, nil, nil, 1, 1, 1)
+					end
 				end
 			end
 		end
@@ -122,24 +226,28 @@ function TT:INSPECT_ACHIEVEMENT_READY(event, GUID)
 
 	local unit = "mouseover"
 	if UnitExists(unit) then
-		ETT:UpdateProgression(GUID)
-		GameTooltip:SetUnit(unit)
+		local race = select(3,UnitRace(unit))
+		local faction = race and C_CreatureInfo.GetFactionInfo(race).groupTag
+		if (faction) then
+			ETT:UpdateProgression(GUID, faction)
+			GameTooltip:SetUnit(unit)
+		end
 	end
 	ClearAchievementComparisonUnit()
 	self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-function ETT.ShowInspectInfo(self, tt, unit, r, g, b)
+function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 	if InCombatLockdown() then return end
-	if not ETT.db["Raid Progression"]["enabled"] then return end
+	if not ETT.db["Progression"]["enabled"] then return end
+	if not (unit and CanInspect(unit)) then return end
 	local level = UnitLevel(unit)
 	if not level or level < MAX_PLAYER_LEVEL then return end
-	if not (unit and CanInspect(unit)) then return end
 	local guid = UnitGUID(unit)
 
 	if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
 		if guid == playerGUID then
-			ETT:UpdateProgression(guid)
+			ETT:UpdateProgression(guid, playerFaction)
 		else
 			ClearAchievementComparisonUnit()		
 			if not self.loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then
@@ -163,7 +271,7 @@ function ETT:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
 	if not self.db.enabled then return end
 	-- 鼠标提示副本进度
-	hooksecurefunc(TT, 'ShowInspectInfo', ETT.ShowInspectInfo)
+	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
 end
 
 local function InitializeCallback()

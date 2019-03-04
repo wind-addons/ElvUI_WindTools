@@ -13,7 +13,7 @@ local LOP = _G.LibStub("LibObjectiveProgress-1.0")
 
 -- OnTooltipSetUnit hook function
 local function SOP_Hook_OnTooltipSetUnit(self)
-    if not self or not self.NumLines or self:NumLines() == 0 then return end
+    if not E.db.WindTools["Quest"]["Objective Progress"]["enable"] or not self or not self.NumLines or self:NumLines() == 0 then return end
 
     local name, unit = self:GetUnit()
     if not unit then return end
@@ -39,7 +39,6 @@ end
 
 -- Set our hook function
 function SOP:Initialize()
-    if E.db.WindTools["Quest"]["Objective Progress"]["enable"] then return end
     GameTooltip:HookScript("OnTooltipSetUnit", SOP_Hook_OnTooltipSetUnit)
 end
 

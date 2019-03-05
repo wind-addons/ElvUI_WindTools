@@ -29,6 +29,7 @@ P["WindTools"]["Quest"] = {
 		["Raid"] = false,
 		["Party"] = false,
 		["Solo"] = true,
+		["ignore_supplies"] = true,
 	},
 	["Close Quest Voice"] = {
 		["enabled"] = false,
@@ -200,6 +201,13 @@ WT.ToolConfigs["Quest"] = {
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] = value;end
 		},
+		["ignore_supplies"] = {
+			order = 10,
+			name = L["Ignore supplies quest"],
+			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] end,
+			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] = value;end
+		},
+		
 	},
 	["Close Quest Voice"] = {
 		tDesc   = L["Disable TalkingHeadFrame."],

@@ -33,6 +33,7 @@ L["Instance"] = true
 L["Raid"] = true
 L["Party"] = true
 L["Solo"] = true
+L["Ignore supplies quest"] = true
 -- 已学配方染色
 L["Already Known"] = true
 L["Change item color if learned before."] = true

@@ -33,6 +33,7 @@ L["Instance"] = "副本"
 L["Raid"] = "團隊副本"
 L["Party"] = "隊伍"
 L["Solo"] = "個人"
+L["Ignore supplies quest"] = "略過補給品任務"
 -- 已学配方染色
 L["Already Known"] = "已學配方上色"
 L["Change item color if learned before."] = "如果學習過了，那麼商品會被上色。"

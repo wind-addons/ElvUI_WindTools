@@ -100,7 +100,7 @@ local playerGUID = UnitGUID("player")
 local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
 
-function ETT:UpdateProgression(guid)
+function ETT:UpdateProgression(guid, faction)
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 
 	progressCache[guid] = progressCache[guid] or {}
@@ -112,7 +112,7 @@ function ETT:UpdateProgression(guid)
 		for _,tier in ipairs(self.RP.tiers) do -- arranged by tier
 			if self.db["Progression"]["Raid"][tier] then
 				progressCache[guid].info["Raid"][tier] = {}
-				local bosses = tier == "BattleOfDazaralor" and self.RP["Raid"][tier][playerFaction] or self.RP["Raid"][tier]
+				local bosses = tier == "BattleOfDazaralor" and self.RP["Raid"][tier][faction] or self.RP["Raid"][tier]
 
 				for _,level in ipairs(self.RP.levels) do -- sorted by level
 					local highest = 0
@@ -226,8 +226,12 @@ function TT:INSPECT_ACHIEVEMENT_READY(event, GUID)
 
 	local unit = "mouseover"
 	if UnitExists(unit) then
-		ETT:UpdateProgression(GUID)
-		GameTooltip:SetUnit(unit)
+		local race = select(3,UnitRace(unit))
+		local faction = race and C_CreatureInfo.GetFactionInfo(race).groupTag
+		if (faction) then
+			ETT:UpdateProgression(GUID, faction)
+			GameTooltip:SetUnit(unit)
+		end
 	end
 	ClearAchievementComparisonUnit()
 	self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
@@ -243,7 +247,7 @@ function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 
 	if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
 		if guid == playerGUID then
-			ETT:UpdateProgression(guid)
+			ETT:UpdateProgression(guid, playerFaction)
 		else
 			ClearAchievementComparisonUnit()		
 			if not self.loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then

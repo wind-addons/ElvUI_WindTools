@@ -261,6 +261,9 @@ L["TolDagor"] = "托尔达戈"
 L["WaycrestManor"] = "维克雷斯庄园"
 L["Mythic+"] = "挑战模式"
 L["Mythic+(LEG&BFA)"] = "挑战模式(LEG&BFA)"
+-- 跳过艾泽里特特质选择界面的渲染动画
+L["Skip Azerite Animations"] = "跳过艾泽里特动画"
+L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = "跳过艾泽里特特质选择界面的新护甲揭示动画和特质选择动画"
 -- 频道切换
 L["Tab Chat Mod"] = "Tab 切换频道"
 L["Use tab to switch channel."] = "可以使用 Tab 来快速切换频道。"

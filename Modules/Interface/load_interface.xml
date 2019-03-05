@@ -7,4 +7,5 @@
 	<Script file='EnhancedWorldMap.lua'/>
 	<Script file='EnhancedTooltip.lua'/>
 	<Script file='DragonOverlay.lua'/>
+	<Script file='SkipAzeriteAnimations.lua'/>
 </Ui>

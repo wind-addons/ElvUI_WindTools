@@ -146,13 +146,20 @@ function QuestListEnhanced:Initialize()
 		_G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide()
 		hooksecurefunc("ObjectiveTracker_Collapse", function() _G["ObjectiveTrackerFrame"].HeaderMenu.Title:Hide() end)
 		hooksecurefunc("ObjectiveTracker_Expand", function() _G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text:Hide() end)
-		if E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"] then
-			local HM = _G["ObjectiveTrackerFrame"].HeaderMenu
-			local ofx = -E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"]-E.db.WindTools["Quest"]["Quest List Enhanced"]["width"]+8
-			HM.MinimizeButton:SetPoint("TOPRIGHT", ofx, 0)
-			HM.MinimizeButton:SetSize(E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"], E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"])
-		end
 	end
+
+	if E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"] then
+			local questFrame = _G["ObjectiveTrackerFrame"]
+			local headerMenu = questFrame.HeaderMenu
+			local hederText = _G["ObjectiveTrackerBlocksFrame"].QuestHeader.Text
+			
+			headerMenu:ClearAllPoints()
+			headerMenu.Title:ClearAllPoints()
+			hederText:ClearAllPoints()
+			headerMenu:SetPoint("TOPLEFT", questFrame, "TOPLEFT", -25, 0)
+			headerMenu.Title:SetPoint("LEFT", headerMenu.MinimizeButton, "RIGHT", 3, -1)
+			hederText:SetPoint("LEFT", headerMenu.MinimizeButton, "RIGHT", 3, -1)
+		end
 end
 
 local function InitializeCallback()

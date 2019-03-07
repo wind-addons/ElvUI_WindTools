@@ -19,8 +19,7 @@ P["WindTools"]["Quest"] = {
 		["ignorehightlevel"] = true,
 		["width"] = 240,
 		["frametitle"] = true,
-		["leftside"] = true,
-		["leftsidesize"] = 18,
+		["leftside"] = false,
 	},
 	["Quest Announcment"] = {
 		["enabled"] = true,
@@ -129,22 +128,12 @@ WT.ToolConfigs["Quest"] = {
 		["leftsidemode"] = {
 			order = 7,
 			name = L["Left Side Minimize Button"],
-			disabled = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] end,
+			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
 				["leftside"] = {
 					order = 1,
 					name  = L["Enable"],
-					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"] end,
-				},
-				["leftsidesize"] = {
-					order = 2,
-					type  = 'range',
-					name  = L["Size"],
-					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"] end,
-					min   = 10,
-					max   = 30,
-					step  = 1,
 				},
 			}
 		},

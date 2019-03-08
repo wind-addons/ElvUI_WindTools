@@ -5,6 +5,10 @@
 -- 主要修改条目：
 -- 模块化
 -- 增加自定义文字设定项
+-- 增加文字风格设置
+-- 增加背景设置
+-- 改进动画效果
+-- 支持 ElvUI 移动
 
 local E, L, V, P, G = unpack(ElvUI)
 local LSM = LibStub("LibSharedMedia-3.0")
@@ -48,23 +52,24 @@ function EnterCombatAlert:Initialize()
 
 	-- Set text
 	alertFrame.text = alertFrame:CreateFontString(nil)
-	--alertFrame.text = alertFrame:CreateFontString(nil, "ARTWORK", "GameFont_Gigantic")
 	alertFrame.text:SetFont(LSM:Fetch('font', self.db.style.font_name), self.db.style.font_size, self.db.style.font_flag)
 	alertFrame.text:SetPoint("CENTER", 0, -1)
 	
 	-- Animation
+	local stay_duration = self.db.style.stay_duration
+	local animation_duration = self.db.style.animation_duration
+	local total_time = stay_duration + animation_duration*2
+
 	alertFrame:SetScript("OnShow", function(self)
-		self.totalTime = 2.5
 		self.timer = 0
 	end)
-
 	alertFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.timer = self.timer + elapsed
-		if (self.timer > self.totalTime) then self:Hide() end
-		if (self.timer <= 0.5) then
+		if (self.timer > total_time) then self:Hide() end
+		if (self.timer <= animation_duration) then
 			self:SetAlpha(self.timer * 2)
-		elseif (self.timer > 2) then
-			self:SetAlpha(1 - (self.timer - 2) /(self.totalTime - 2))
+		elseif (self.timer > (animation_duration+stay_duration)) then
+			self:SetAlpha(2-(self.timer-stay_duration)/animation_duration)
 		end
 	end)
 

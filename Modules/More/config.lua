@@ -56,7 +56,6 @@ P["WindTools"]["More Tools"] = {
 			["font_name"] = E.db.general.font,
 			["font_size"] = 28,
 			["font_flag"] = "OUTLINE",
-			["scale"] = 0.8,
 			["use_backdrop"] = true,
 			["font_color_enter"] = {
 				r = 0.91,
@@ -70,6 +69,9 @@ P["WindTools"]["More Tools"] = {
 				b = 0.44,
 				a = 1.0,
 			},
+			["stay_duration"] = 1.5,
+			["animation_duration"] = 0.5,
+			["scale"] = 0.8,
 		},
 		["custom_text"] = {
 			["enabled"] = false,
@@ -329,8 +331,20 @@ WT.ToolConfigs["More Tools"] = {
 					order = 6,
 					name = L["Use Backdrop"],
 				},
-				["scale"] = {
+				["stay_duration"] = {
 					order = 7,
+					type = "range",
+					name = L["Stay Duration"],
+					min = 0.1, max = 5.0, step = 0.01,
+				},
+				["animation_duration"] = {
+					order = 8,
+					type = "range",
+					name = L["Animation Duration (Fade In)"],
+					min = 0.1, max = 5.0, step = 0.01,
+				},
+				["scale"] = {
+					order = 9,
 					type = "range",
 					name = L["Scale"],
 					desc = L["Default is 0.8"],

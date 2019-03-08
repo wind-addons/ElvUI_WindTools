@@ -47,7 +47,7 @@ P["WindTools"]["More Tools"] = {
 		},
 		["vehicleSeatScale"] = 1,
 	},
-	["Enhanced Tag"] = {
+	["Enhanced Tags"] = {
 		["enabled"] = true,
 	},
 	["Enter Combat Alert"] = {
@@ -459,7 +459,7 @@ WT.ToolConfigs["More Tools"] = {
 			},
 		},
 	},
-	["Enhanced Tag"] = {
+	["Enhanced Tags"] = {
 		tDesc   = L["Add some tags."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
@@ -527,7 +527,7 @@ WT.ToolConfigs["More Tools"] = {
 			},
 		},
 		func = function()
-			E.Options.args.WindTools.args["More Tools"].args["Enhanced Tag"].args["enablebtn"].name = L["Chinese W/Y"]
+			E.Options.args.WindTools.args["More Tools"].args["Enhanced Tags"].args["enablebtn"].name = L["Chinese W/Y"]
 		end,
 	},
 }

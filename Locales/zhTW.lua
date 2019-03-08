@@ -203,7 +203,7 @@ L["Quest Icon"] = "任務物品圖標"
 -- Tag 增强
 L["Wan"] = "萬"
 L["Yi"]  = "億"
-L["Enhanced Tag"] = "Tag 增強"
+L["Enhanced Tags"] = "Tag 增強"
 L["Add some tags."] = "添加一些自定義 Tag。"
 L["Chinese W/Y"] = "中文 萬/億 單位"
 L["Example:"] = "範例："

@@ -43,7 +43,7 @@ function E:ShortValue(v)
 			return format("%s", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
-		if E.db.WindTools["More Tools"]["Enhanced Tag"]["enabled"] then
+		if E.db.WindTools["More Tools"]["Enhanced Tags"]["enabled"] then
 			if abs(v) >= 1e8 then
 				return format(shortValueDec..L["Yi"], v / 1e8)
 			elseif abs(v) >= 1e4 then

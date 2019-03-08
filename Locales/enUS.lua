@@ -203,7 +203,7 @@ L["Quest Icon"] = true
 -- Tag 增强
 L["Wan"] = true
 L["Yi"]  = true
-L["Enhanced Tag"] = true
+L["Enhanced Tags"] = true
 L["Add some tags."] = true
 L["Chinese W/Y"] = true
 L["Example:"] = true

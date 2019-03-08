@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='config.lua'/>
 	<Script file='FastLoot.lua'/>
-	<Script file='EnhancedTag.lua'/>
+	<Script file='EnhancedTags.lua'/>
 	<Script file='AnnounceSystem.lua'/>
 	<Script file='EnterCombatAlert.lua'/>
 	<Script file='CVarsTool.lua'/>

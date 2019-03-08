@@ -100,6 +100,24 @@ local playerGUID = UnitGUID("player")
 local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
 
+local function getLevelColorString(level, short)
+	local color = "ff8000"
+
+	if level == "Mythic" then
+		color = "a335ee"
+	elseif level == "Heroic" then
+		color = "0070dd"
+	elseif level == "Normal" then
+		color = "1eff00"
+	end
+
+	if short then
+		return "|cff"..color..string.sub(level, 1, 1).."|r"
+	else
+		return "|cff"..color..L[level].."|r"
+	end
+end
+
 function ETT:UpdateProgression(guid, faction)
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 
@@ -161,7 +179,7 @@ function ETT:SetProgressionInfo(guid, tt)
 								if (leftTipText:find(L[tier]) and leftTipText:find(L[level])) then
 									-- update found tooltip text line
 									local rightTip = _G["GameTooltipTextRight"..i]
-									leftTip:SetText(("%s [%s]:"):format(L[tier], L[level]))
+									leftTip:SetText(("%s %s:"):format(L[tier], getLevelColorString(level, false)))
 									rightTip:SetText(progressCache[guid].info["Raid"][tier][level])
 									updated = true
 									found = true
@@ -180,7 +198,7 @@ function ETT:SetProgressionInfo(guid, tt)
 									-- update found tooltip text line
 									local rightTip = _G["GameTooltipTextRight"..i]
 									leftTip:SetText(L[dungeon]..":")
-									rightTip:SetText(progressCache[guid].info["Dungeon"][k][dungeon])
+									rightTip:SetText(getLevelColorString(level, true)..progressCache[guid].info["Dungeon"][k][dungeon])
 									updated = true
 									found = true
 									break
@@ -201,7 +219,7 @@ function ETT:SetProgressionInfo(guid, tt)
 				if self.db["Progression"]["Raid"][tier] then
 					for _,level in ipairs(self.RP.levels) do
 						if (progressCache[guid].info["Raid"][tier][level]) then
-							tt:AddDoubleLine(("%s [%s]:"):format(L[tier], L[level]), progressCache[guid].info["Raid"][tier][level], nil, nil, nil, 1, 1, 1)
+							tt:AddDoubleLine(("%s %s:"):format(L[tier], getLevelColorString(level, false)), getLevelColorString(level, true).." "..progressCache[guid].info["Raid"][tier][level], nil, nil, nil, 1, 1, 1)
 						end
 					end
 				end

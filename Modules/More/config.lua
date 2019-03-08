@@ -52,16 +52,29 @@ P["WindTools"]["More Tools"] = {
 	},
 	["Enter Combat Alert"] = {
 		["enabled"] = true,
-		["custom_text"] = {
-			["enabled"] = false,
-			["custom_enter_text"] = "",
-			["custom_leave_text"] = "",
-		},
 		["style"] = {
 			["font_name"] = E.db.general.font,
 			["font_size"] = 28,
 			["font_flag"] = "OUTLINE",
 			["scale"] = 0.8,
+			["use_backdrop"] = true,
+			["font_color_enter"] = {
+				r = 0.91,
+				g = 0.3,
+				b = 0.24,
+				a = 1.0,
+			},
+			["font_color_leave"] = {
+				r = 0.18,
+				g = 0.8,
+				b = 0.44,
+				a = 1.0,
+			},
+		},
+		["custom_text"] = {
+			["enabled"] = false,
+			["custom_enter_text"] = "",
+			["custom_leave_text"] = "",
 		},
 	},
 	["Fast Loot"] = {
@@ -282,8 +295,42 @@ WT.ToolConfigs["More Tools"] = {
 					type = 'range',
 					min = 5, max = 60, step = 1,
 				},
-				["scale"] = {
+				["font_color_enter"] = {
 					order = 4,
+					type = "color",
+					name = L["Enter Combat"].." - "..L["Color"],
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_enter"]
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b, a)
+						E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_enter"] = {}
+						local t = E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_enter"]
+						t.r, t.g, t.b, t.a = r, g, b
+					end,
+				},
+				["font_color_leave"] = {
+					order = 5,
+					type = "color",
+					name = L["Leave Combat"].." - "..L["Color"],
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_leave"]
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b, a)
+						E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_leave"] = {}
+						local t = E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"]["font_color_leave"]
+						t.r, t.g, t.b, t.a = r, g, b
+					end,
+				},
+				["use_backdrop"] = {
+					order = 6,
+					name = L["Use Backdrop"],
+				},
+				["scale"] = {
+					order = 7,
 					type = "range",
 					name = L["Scale"],
 					desc = L["Default is 0.8"],

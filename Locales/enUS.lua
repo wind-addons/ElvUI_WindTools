@@ -83,6 +83,7 @@ L["Enter Combat Alert"] = true
 L["Style"] = true
 L["Font"] = true
 L["Font Outline"] = true
+L["Use Backdrop"] = true
 L["Custom Text"] = true
 L["Custom Text (Enter)"] = true
 L["Custom Text (Leave)"] = true

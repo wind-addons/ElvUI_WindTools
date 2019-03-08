@@ -80,10 +80,13 @@ L["Blacklist"] = true
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = true
 L["Enter Combat Alert"] = true
-L["Use custom text"] = true
-L["Custom text (Enter)"] = true
-L["Custom text (Leave)"] = true
-L["Default is 0.65"] = true
+L["Style"] = true
+L["Font"] = true
+L["Font Outline"] = true
+L["Custom Text"] = true
+L["Custom Text (Enter)"] = true
+L["Custom Text (Leave)"] = true
+L["Default is 0.8"] = true
 L["Enter Combat"] = true
 L["Leave Combat"] = true
 -- 右键菜单增强

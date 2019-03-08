@@ -7,6 +7,7 @@
 -- 增加自定义文字设定项
 
 local E, L, V, P, G = unpack(ElvUI)
+local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
 
@@ -17,7 +18,7 @@ function EnterCombatAlert:Initialize()
 	local enterCombat = L["Enter Combat"]
 	local leaveCombat = L["Leave Combat"]
 	
-	if self.db.custom_text then
+	if self.db.custom_text.enabled then
 		enterCombat = self.db.custom_text_enter
 		leaveCombat = self.db.custom_text_leave
 	end
@@ -26,7 +27,7 @@ function EnterCombatAlert:Initialize()
 	alertFrame:SetClampedToScreen(true)
 	alertFrame:SetSize(300, 65)
 	alertFrame:SetPoint("TOP", 0, -280)
-	alertFrame:SetScale(self.db.scale)
+	alertFrame:SetScale(self.db.style.scale)
 	alertFrame:Hide()
 	alertFrame.Bg = alertFrame:CreateTexture(nil, "BACKGROUND")
 	alertFrame.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
@@ -35,6 +36,8 @@ function EnterCombatAlert:Initialize()
 	alertFrame.Bg:SetTexCoord(0, 400/512, 341/512, 407/512)
 	alertFrame.Bg:SetVertexColor(1, 1, 1, 0.4)
 	alertFrame.text = alertFrame:CreateFontString(nil, "ARTWORK", "GameFont_Gigantic")
+	--alertFrame.text = alertFrame:CreateFontString(nil)
+	alertFrame.text:SetFont(LSM:Fetch('font', self.db.style.font_name), self.db.style.font_size, self.db.style.font_flag)
 	alertFrame.text:SetPoint("CENTER", 0, -1)
 	alertFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.timer = self.timer + elapsed

@@ -1,5 +1,5 @@
 local E, L, V, P, G = unpack(ElvUI)
---local LSM = LibStub("LibSharedMedia-3.0")
+local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
 local _G = _G
@@ -52,10 +52,17 @@ P["WindTools"]["More Tools"] = {
 	},
 	["Enter Combat Alert"] = {
 		["enabled"] = true,
-		["custom_text"] = false,
-		["custom_text_enter"] = "",
-		["custom_text_leave"] = "",
-		["scale"] = 0.8,
+		["custom_text"] = {
+			["enabled"] = false,
+			["custom_enter_text"] = "",
+			["custom_leave_text"] = "",
+		},
+		["style"] = {
+			["font_name"] = E.db.general.font,
+			["font_size"] = 28,
+			["font_flag"] = "OUTLINE",
+			["scale"] = 0.8,
+		},
 	},
 	["Fast Loot"] = {
 		["enabled"] = true,
@@ -181,7 +188,7 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Setting CVars easily."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["EffectControl"] = {
+		["effect_control"] = {
 			order = 5,
 			name = L["Effect Control"],
 			get = function(info) return GetCVarBool(info[#info]) end,
@@ -245,38 +252,70 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["Alert you after enter or leave combat."],
 		oAuthor = "loudsoul",
 		cAuthor = "houshuu",
-		["custom_text"] = {
+		["style"] = {
 			order = 5,
-			name = L["Use custom text"],
-			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] = value; E:StaticPopup_Show("PRIVATE_RL")  end,
+			name = L["Style"],
+			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				["font_name"] = {
+					order = 1,
+					type = 'select', dialogControl = 'LSM30_Font',
+					name = L['Font'],
+					values = LSM:HashTable('font'),
+				},
+				["font_flag"] = {
+					order = 2,
+					type = 'select',
+					name = L["Font Outline"],
+					values = {
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
+					},
+				},
+				["font_size"] = {
+					order = 3,
+					name = L["Size"],
+					type = 'range',
+					min = 5, max = 60, step = 1,
+				},
+				["scale"] = {
+					order = 4,
+					type = "range",
+					name = L["Scale"],
+					desc = L["Default is 0.8"],
+					min = 0.1, max = 2.0, step = 0.01,
+				},
+			},
 		},
-		["custom_enter_combat"] = {
+		["custom_text"] = {
 			order = 6,
-			type = "input",
-			name = L["Custom text (Enter)"],
-			width = 'full',
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
-			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_enter"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-		},
-		["custom_leave_combat"] = {
-			order = 7,
-			type = "input",
-			disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
-			name = L["Custom text (Leave)"],
-			width = 'full',
-			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text_leave"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-		},
-		["setscale"] = {
-			order = 8,
-			type = "range",
-			name = L["Scale"],
-			desc = L["Default is 0.65"],
-			min = 0.1, max = 1.0, step = 0.01,
-			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["scale"] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["scale"] = value; E:StaticPopup_Show("PRIVATE_RL")end
+			name = L["Custom Text"],
+			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				["enabled"] = {
+					order = 1,
+					name = L["Enable"],
+				},
+				["custom_enter_combat"] = {
+					order = 2,
+					type = "input",
+					name = L["Custom Text (Enter)"],
+					width = 'full',
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
+				},
+				["custom_leave_combat"] = {
+					order = 3,
+					type = "input",
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
+					name = L["Custom Text (Leave)"],
+					width = 'full',
+				},
+			},
 		},
 	},
 	["Fast Loot"] = {

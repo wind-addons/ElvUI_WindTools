@@ -336,6 +336,9 @@ function AnnounceSystem:RaidUsefulSpells()
 			-- 修理機器人
 			if Bots[spellID] then
 				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat(true))
+			-- 凱蒂的郵哨
+			elseif spellID == 261602 then
+				SendChatMessage(format(ASL["PutNormal"], srcName), CheckChat(true))
 			end
 		elseif subEvent == "SPELL_CREATE" then
 			-- MOLL-E 郵箱
@@ -344,9 +347,6 @@ function AnnounceSystem:RaidUsefulSpells()
 			-- 靈魂之井
 			elseif spellID == 29893 then
 				SendChatMessage(format(ASL["SoulWell"], srcName), CheckChat(true))
-			-- 凱蒂的郵哨
-			elseif spellID == 261602 then
-				SendChatMessage(format(ASL["PutNormal"], srcName), CheckChat(true))
 			-- 玩具
 			elseif Toys[spellID] then
 				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat())

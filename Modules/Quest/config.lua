@@ -19,8 +19,7 @@ P["WindTools"]["Quest"] = {
 		["ignorehightlevel"] = true,
 		["width"] = 240,
 		["frametitle"] = true,
-		["leftside"] = true,
-		["leftsidesize"] = 18,
+		["leftside"] = false,
 	},
 	["Quest Announcment"] = {
 		["enabled"] = true,
@@ -29,6 +28,7 @@ P["WindTools"]["Quest"] = {
 		["Raid"] = false,
 		["Party"] = false,
 		["Solo"] = true,
+		["ignore_supplies"] = true,
 	},
 	["Close Quest Voice"] = {
 		["enabled"] = false,
@@ -128,22 +128,12 @@ WT.ToolConfigs["Quest"] = {
 		["leftsidemode"] = {
 			order = 7,
 			name = L["Left Side Minimize Button"],
-			disabled = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["frametitle"] end,
+			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
 				["leftside"] = {
 					order = 1,
 					name  = L["Enable"],
-					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftside"] end,
-				},
-				["leftsidesize"] = {
-					order = 2,
-					type  = 'range',
-					name  = L["Size"],
-					get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"]["leftsidesize"] end,
-					min   = 10,
-					max   = 30,
-					step  = 1,
 				},
 			}
 		},
@@ -200,6 +190,13 @@ WT.ToolConfigs["Quest"] = {
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] = value;end
 		},
+		["ignore_supplies"] = {
+			order = 10,
+			name = L["Ignore supplies quest"],
+			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] end,
+			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] = value;end
+		},
+		
 	},
 	["Close Quest Voice"] = {
 		tDesc   = L["Disable TalkingHeadFrame."],

@@ -768,60 +768,63 @@ WT.ToolConfigs["Interface"] = {
 	["Enhanced Tooltip"] = {
 		tDesc   = L["Useful tooltip tweaks."],
 		oAuthor = "Nick Bockmeulen, houshuu",
-		cAuthor = "houshuu, SomeBlu",
-		["raidsetting"] = {
+		cAuthor = "SomeBlu",
+		["progression"] = {
 			order = 5,
 			name = L["Progression"],
 			desc  = L["Add progression info to tooltip."],
 			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {
-				["Dungeon"] = {
+				["enabled"] = {
 					order = 1,
+					name = L["Enable"],
+				},
+				["Dungeon"] = {
+					order = 2,
 					name = L["Dungeon"],
 					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Dungeon"][info[#info]] end,
 					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Dungeon"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+					disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Dungeon"]["enabled"] end,
 					args = {
 						["enabled"] = {
 							order = 1,
 							name = L["Enable"],
+							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] end,
 						},
 						["MythicDungeon"] = {
 							order = 2,
 							name = L["MythicDungeon"],
-							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Dungeon"]["enabled"] end,
 						},
 						["Mythic+"] = {
 							order = 3,
 							name = L["Mythic+"],
-							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Dungeon"]["enabled"] end,
 						},
 					}
 				},
 				["Raid"] = {
-					order = 2,
+					order = 3,
 					name = L["Raid"],
 					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] end,
 					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+					disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,
 					args = {
 						["enabled"] = {
 							order = 1,
 							name = L["Enable"],
+							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] end,
 						},
 						["Uldir"] = {
 							order = 2,
 							name = L["Uldir"],
-							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,
 						},
 						["BattleOfDazaralor"] = {
 							order = 3,
 							name = L["BattleOfDazaralor"],
-							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,
 						},
 						["CrucibleOfStorms"] = {
-							order = 3,
+							order = 4,
 							name = L["CrucibleOfStorms"],
-							disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,
 						},
 					}
 				}

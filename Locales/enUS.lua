@@ -33,6 +33,7 @@ L["Instance"] = true
 L["Raid"] = true
 L["Party"] = true
 L["Solo"] = true
+L["Ignore supplies quest"] = true
 -- 已学配方染色
 L["Already Known"] = true
 L["Change item color if learned before."] = true
@@ -79,10 +80,16 @@ L["Blacklist"] = true
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = true
 L["Enter Combat Alert"] = true
-L["Use custom text"] = true
-L["Custom text (Enter)"] = true
-L["Custom text (Leave)"] = true
-L["Default is 0.65"] = true
+L["Style"] = true
+L["Font"] = true
+L["Font Outline"] = true
+L["Use Backdrop"] = true
+L["Stay Duration"] = true
+L["Animation Duration (Fade In)"] = true
+L["Custom Text"] = true
+L["Custom Text (Enter)"] = true
+L["Custom Text (Leave)"] = true
+L["Default is 0.8"] = true
 L["Enter Combat"] = true
 L["Leave Combat"] = true
 -- 右键菜单增强
@@ -196,7 +203,7 @@ L["Quest Icon"] = true
 -- Tag 增强
 L["Wan"] = true
 L["Yi"]  = true
-L["Enhanced Tag"] = true
+L["Enhanced Tags"] = true
 L["Add some tags."] = true
 L["Chinese W/Y"] = true
 L["Example:"] = true

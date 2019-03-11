@@ -223,6 +223,7 @@ local FeastSpells = {
 	[259409] = true,  -- 海帆盛宴
 	[259410] = true,  -- 船长盛宴佳肴
 	[276972] = true,  -- 秘法药锅
+	[286050] = true,  -- 血潤盛宴
 }
 
 local Bots = {
@@ -334,6 +335,9 @@ function AnnounceSystem:RaidUsefulSpells()
 		elseif subEvent == "SPELL_SUMMON" then
 			-- 修理機器人
 			if Bots[spellID] then
+				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat(true))
+			-- 凱蒂的郵哨
+			elseif spellID == 261602 then
 				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			end
 		elseif subEvent == "SPELL_CREATE" then

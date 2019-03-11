@@ -20,6 +20,7 @@ local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
 local SendChatMessage = SendChatMessage
 local IsInGroup, IsInRaid, LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE, UnitInParty, UnitInRaid = IsInGroup, IsInRaid, LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE, UnitInParty, UnitInRaid
 local find, pairs = string.find, pairs
+local ClientLocale = GetLocale()
 
 local QN_Locale   = {
 	["Colon"]       = ":",
@@ -28,7 +29,7 @@ local QN_Locale   = {
 	["Complete"]    = "Completed!", 
 	["Accept"]      = "Accept Quest",
 }
-if GetLocale() == 'zhCN' then
+if ClientLocale == 'zhCN' then
 	QN_Locale = {
 		["Colon"]       = "：",
 		["Quest"]       = "任务",
@@ -36,7 +37,7 @@ if GetLocale() == 'zhCN' then
 		["Complete"]    = "已完成!",
 		["Accept"]      = "接受任务",
 	}
-elseif GetLocale() == 'zhTW' then
+elseif ClientLocale == 'zhTW' then
 	QN_Locale = {
 		["Colon"]       = ":",
 		["Quest"]       = "任務",
@@ -125,6 +126,23 @@ local function PrtChatMsg(msg)
 	end
 end
 
+local function isSuppliesQuest(title)
+	if E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] then
+		if ClientLocale == 'zhCN' then
+			if find(title, "补给需求：") then return true end
+			if find(title, "产品订单：") then return true end
+		elseif ClientLocale == 'zhTW' then
+			if find(title, "需要的補給品：") then return true end
+			if find(title, "工作訂單：") then return true end
+		elseif ClientLocale == 'enUS' then
+			if find(title, "Supplies Needed:") then return true end
+			if find(title, "Work Order:") then return true end
+		end
+	end
+
+	return false
+end
+
 function QuestAnnouncment:Initialize()
 	if not E.db.WindTools["Quest"]["Quest Announcment"]["enabled"] then return end
 	local QN = CreateFrame("Frame")
@@ -183,7 +201,7 @@ function QuestAnnouncment:Initialize()
 				end
 			end
 
-			if not lastList[i] then  -- last List have not the Quest, New Quest Accepted
+			if not lastList[i] and not isSuppliesQuest(currList[i].Title) then  -- last List have not the Quest, New Quest Accepted
 				if (currList[i].Group > 1) and currList[i].Tag then
 					QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]".."["..currList[i].Tag..currList[i].Group.."]"..currList[i].Link
 				elseif currList[i].Daily == 1 then
@@ -203,4 +221,5 @@ end
 local function InitializeCallback()
 	QuestAnnouncment:Initialize()
 end
+
 E:RegisterModule(QuestAnnouncment:GetName(), InitializeCallback)

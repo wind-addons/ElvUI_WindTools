@@ -338,7 +338,7 @@ function AnnounceSystem:RaidUsefulSpells()
 				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			-- 凱蒂的郵哨
 			elseif spellID == 261602 then
-				SendChatMessage(format(ASL["PutNormal"], srcName), CheckChat(true))
+				SendChatMessage(format(ASL["PutNormal"], srcName, GetSpellLink(spellID)), CheckChat(true))
 			end
 		elseif subEvent == "SPELL_CREATE" then
 			-- MOLL-E 郵箱

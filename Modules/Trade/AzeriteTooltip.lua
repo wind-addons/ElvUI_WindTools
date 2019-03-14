@@ -153,6 +153,7 @@ function AT:RemovePowerText(tooltip, powerName)
 	for i = 7, tooltip:NumLines() do
 		if textLeft then
 			local enchanted = strsplit("%d", ENCHANTED_TOOLTIP_LINE)
+			local use = strsplit("%d", ITEM_SPELL_TRIGGER_ONUSE)
 			local line = textLeft[i]		
 			local text = line:GetText()
 			local r, g, b = line:GetTextColor()
@@ -171,7 +172,7 @@ function AT:RemovePowerText(tooltip, powerName)
 				elseif (newText and newPowerName and newText:match(newPowerName)) then
        				line:SetText("")
 				end
-				if ( r < 0.1 and g > 0.9 and b < 0.1 and not text:find(">") and not text:find(ITEM_SPELL_TRIGGER_ONEQUIP) and not text:find(enchanted) ) then
+				if ( r < 0.1 and g > 0.9 and b < 0.1 and not text:find(">") and not text:find(ITEM_SPELL_TRIGGER_ONEQUIP) and not text:find(enchanted) and not text:find(use) ) then
 					line:SetText("")
 				end
 			end
@@ -260,20 +261,21 @@ local function BuildTooltip(self)
 
 				if not allTierInfo[1]["azeritePowerIDs"][1] then return end
 
-				if tierLevel <= currentLevel then
-					if j > 1 then 
-						--addText = format("%s \n \n|c%s %s %s |r\n" , addText, "FFffcc00", "Level", tierLevel)
-						addText = addText.."\n \n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
-					else
-						addText = addText.."\n|cFFffcc00"..L["Level"].." "..tierLevel.."|r\n"
-					end
-				else
-					if j > 1 then 
-						addText = addText.."\n \n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
-					else
-						addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel.."|r\n"
-					end
+				local r, g, b
+
+                if tierLevel <= currentLevel then
+                    r, g, b = 1, 0.8, 0
+                else
+                    r, g, b = 0.5, 0.5, 0.5
+                end
+
+				local rgbLevel = ("|cff%.2x%.2x%.2x "..L["Level"].." %d|r"):format(r*255, g*255, b*255, tierLevel)
+                
+                if j > 1 then
+					addText = addText.."\n"
 				end
+
+				addText = addText.."\n"..rgbLevel.."\n"
 
 				for i, v in pairs(allTierInfo[j]["azeritePowerIDs"]) do
 					local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
@@ -418,10 +420,8 @@ end
 function AT:SetPaperDollAzerite(button)
 	local id = button:GetID();
 
-	if (id == 1 or id == 3 or id == 5) and button.hasItem then
-
+	if (id == 1 or id == 3 or id == 5) and GetInventoryItemTexture("player", id) then
 		local azeriteEmpoweredItemLocation = ItemLocation:CreateFromEquipmentSlot(id)
-
 		self:CreateAzeriteIcons(button, azeriteEmpoweredItemLocation)
 	else
 		if button.azerite then

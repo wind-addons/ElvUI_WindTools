@@ -182,7 +182,7 @@ end
 
 
 local function BuildTooltip(self)
-	local name, link = self:GetItem()
+	local name, link = GameTooltip:GetOwner().worldQuest and GetItemInfo(GameTooltip.ItemTooltip.itemID) or self:GetItem()
   	if not name then return end
 
   	if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(link) then
@@ -263,15 +263,15 @@ local function BuildTooltip(self)
 
 				local r, g, b
 
-                if tierLevel <= currentLevel then
-                    r, g, b = 1, 0.8, 0
-                else
-                    r, g, b = 0.5, 0.5, 0.5
-                end
+				if tierLevel <= currentLevel then
+					r, g, b = 1, 0.8, 0
+				else
+					r, g, b = 0.5, 0.5, 0.5
+				end
 
 				local rgbLevel = ("|cff%.2x%.2x%.2x "..L["Level"].." %d|r"):format(r*255, g*255, b*255, tierLevel)
-                
-                if j > 1 then
+
+				if j > 1 then
 					addText = addText.."\n"
 				end
 
@@ -494,8 +494,6 @@ function AT:Initialize()
     self:SecureHookScript(GameTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
     self:SecureHookScript(ItemRefTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
     self:SecureHookScript(ShoppingTooltip1, 'OnTooltipSetItem', 'OnTooltipSetItem')
-    -- self:SecureHookScript(WorldMapTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
-    -- self:SecureHookScript(WorldMapCompareTooltip1, 'OnTooltipSetItem', 'OnTooltipSetItem')
     self:SecureHookScript(EmbeddedItemTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
 end
 

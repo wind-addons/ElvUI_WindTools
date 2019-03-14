@@ -182,7 +182,12 @@ end
 
 
 local function BuildTooltip(self)
-	local name, link = GameTooltip:GetOwner().worldQuest and GetItemInfo(GameTooltip.ItemTooltip.itemID) or self:GetItem()
+	local name, link
+	if GameTooltip:GetOwner().worldQuest then
+		name, link = GetItemInfo(GameTooltip.ItemTooltip.itemID) 
+	else
+		name, link = self:GetItem()
+	end
   	if not name then return end
 
   	if C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(link) then

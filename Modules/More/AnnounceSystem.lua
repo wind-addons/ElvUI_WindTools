@@ -51,7 +51,7 @@ function AS:Interrupt(...)
 	-- 自己打断
 	if sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet") then
 		if config.player.enabled then
-			self:SendMessage(FormatMessage(config.player.text), GetChannel(self.db.player.channel))
+			self:SendMessage(FormatMessage(config.player.text), GetChannel(config.player.channel))
 		end
 		
 		return
@@ -70,7 +70,7 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
     --timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags
     
     -- 打断
-    if event_type == "SPELL_INTERRUPT" and self.db.Interrupt.enabled then
+    if event_type == "SPELL_INTERRUPT" and self.db.interrupt.enabled then
 		self:Interrupt(CombatLogGetCurrentEventInfo())
     end
 end

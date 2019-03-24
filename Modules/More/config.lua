@@ -22,6 +22,28 @@ P["WindTools"]["More Tools"] = {
 			["SoloYell"] = false,
 			["IncludePet"] = true,
 		},
+		["interrupt"] = {
+			["enabled"] = true,
+			["player"] = {
+				["enabled"] = true,
+				["text"] = L["I interrupted %target%\'s >%target_spell%<!"],
+				["channel"] = {
+					["solo"] = "SELF",
+					["party"] = "PARTY",
+					["instance"] = "INSTANCE_CHAT",
+					["raid"] = "RAID",
+				},
+			},
+			["others"] = {
+				["enabled"] = true,
+				["text"] = L["%player% interrupted %target%\'s >%target_spell%<!"],
+				["channel"] = {
+					["party"] = "NONE",
+					["instance"] = "NONE",
+					["raid"] = "NONE",
+				},
+			},
+		},
 		["ResAndThreat"] = {
 			["enabled"] = true,
 		},

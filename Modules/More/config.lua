@@ -9,14 +9,6 @@ local function FormatDesc(code, helpText)
 	return WT:ColorStr(code).." = "..helpText
 end
 
-local function Example_FormatInterruptMessage(custom_message)
-	custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
-	custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
-	custom_message = gsub(custom_message, "%%player_spell%%", GetSpellLink(31935))
-	custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(252150))
-	return custom_message
-end
-
 P["WindTools"]["More Tools"] = {
 	["Announce System"] = {
 		["enabled"] = true,
@@ -55,50 +47,59 @@ P["WindTools"]["More Tools"] = {
 				["ritual_of_summoning"] = {
 					["enabled"] = true,
 					["id"] = 698,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% is casting %spell%, please assist!"],
 				},
 				["create_soulwell"] = {
 					["enabled"] = true,
 					["id"] = 29893,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% is handing out cookies, go and get one!"],
 				},
 				["moll_e"] = {
 					["enabled"] = true,
 					["id"] = 54710,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["katy_stampwhistle"] = {
 					["enabled"] = true,
 					["id"] = 261602,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% used %spell%"],
 				},
 				["conjure_refreshment"] = {
 					["enabled"] = true,
 					["id"] = 190336,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% casted %spell%, today's special is Anchovy Pie!"],
 				},
 				["feasts"] = {
 					["enabled"] = true,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["OMG, wealthy %player% puts %spell%!"],
 				},
 				["bots"] = {
 					["enabled"] = true,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["toys"] = {
 					["enabled"] = true,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["portals"] = {
 					["enabled"] = true,
+					["only_me"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% opened %spell%!"],
 				},
@@ -213,7 +214,14 @@ WT.ToolConfigs["More Tools"] = {
 							order = 4,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
-							name = function() return "\n"..WT:ColorStr(L["Example"])..": "..Example_FormatInterruptMessage(E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"]).."\n" end
+							name = function()
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+								custom_message = gsub(custom_message, "%%player_spell%%", GetSpellLink(31935))
+								custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(252150))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
 						},
 						channel = {
 							order = 5,
@@ -311,9 +319,15 @@ WT.ToolConfigs["More Tools"] = {
 							order = 4,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
-							name = function() return "\n"..WT:ColorStr(L["Example"])..": "..Example_FormatInterruptMessage(E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"]).."\n" end
+							name = function()
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+								custom_message = gsub(custom_message, "%%player_spell%%", GetSpellLink(31935))
+								custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(252150))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
 						},
-						
 						channel = {
 							order = 5,
 							name = L["Channel"],
@@ -383,7 +397,7 @@ WT.ToolConfigs["More Tools"] = {
 				channel = {
 					order = 2,
 					name = L["Channel"],
-					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"] end,
+					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"] end,
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"][info[#info]] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"][info[#info]] = value end,
 					args = {
@@ -444,12 +458,14 @@ WT.ToolConfigs["More Tools"] = {
 				},
 				ritual_of_summoning = {
 					order = 10,
+					type = "group",
 					name = function(info)
 						return select(1, GetSpellInfo(P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
 					end,
-					disabled = function(info)
+					hidden = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
 					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
 					end,
@@ -462,30 +478,35 @@ WT.ToolConfigs["More Tools"] = {
 					args = {
 						enabled = {
 							order = 1,
+							disabled = false,
 							name = L["Enable"],
 						},
 						use_raid_warning = {
 							order = 2,
 							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						default_text = {
+						only_me = {
 							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
 							type = "execute",
 							name = L["Use default text"],
-							
 						},
 						text = {
-							order = 4,
+							order = 5,
 							type = "input",
 							width = 'full',
-							name = L["Text for the interrupt casted by you"],
-							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%player_spell%", L["the spell link"]),
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						text_example = {
-							order = 5,
+							order = 6,
 							type = "description",
-							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"]["ritual_of_summoning"]["enabled"] end,
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 							name = function(info)
 								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
 								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
@@ -500,9 +521,10 @@ WT.ToolConfigs["More Tools"] = {
 					name = function(info)
 						return select(1, GetSpellInfo(P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
 					end,
-					disabled = function(info)
+					hidden = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
 					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
 					end,
@@ -515,28 +537,33 @@ WT.ToolConfigs["More Tools"] = {
 					args = {
 						enabled = {
 							order = 1,
+							disabled = false,
 							name = L["Enable"],
 						},
 						use_raid_warning = {
 							order = 2,
 							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						default_text = {
+						only_me = {
 							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
 							type = "execute",
 							name = L["Use default text"],
-							
 						},
 						text = {
-							order = 4,
+							order = 5,
 							type = "input",
 							width = 'full',
-							name = L["Text for the interrupt casted by you"],
-							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%player_spell%", L["the spell link"]),
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						text_example = {
-							order = 5,
+							order = 6,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 							name = function(info)
@@ -553,9 +580,10 @@ WT.ToolConfigs["More Tools"] = {
 					name = function(info)
 						return select(1, GetSpellInfo(P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
 					end,
-					disabled = function(info)
+					hidden = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
 					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
 					end,
@@ -568,28 +596,33 @@ WT.ToolConfigs["More Tools"] = {
 					args = {
 						enabled = {
 							order = 1,
+							disabled = false,
 							name = L["Enable"],
 						},
 						use_raid_warning = {
 							order = 2,
 							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						default_text = {
+						only_me = {
 							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
 							type = "execute",
 							name = L["Use default text"],
-							
 						},
 						text = {
-							order = 4,
+							order = 5,
 							type = "input",
 							width = 'full',
-							name = L["Text for the interrupt casted by you"],
-							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%player_spell%", L["the spell link"]),
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						text_example = {
-							order = 5,
+							order = 6,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 							name = function(info)
@@ -606,9 +639,10 @@ WT.ToolConfigs["More Tools"] = {
 					name = function(info)
 						return select(1, GetSpellInfo(P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
 					end,
-					disabled = function(info)
+					hidden = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
 					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
 					end,
@@ -621,28 +655,33 @@ WT.ToolConfigs["More Tools"] = {
 					args = {
 						enabled = {
 							order = 1,
+							disabled = false,
 							name = L["Enable"],
 						},
 						use_raid_warning = {
 							order = 2,
 							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						default_text = {
+						only_me = {
 							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
 							type = "execute",
 							name = L["Use default text"],
-							
 						},
 						text = {
-							order = 4,
+							order = 5,
 							type = "input",
 							width = 'full',
-							name = L["Text for the interrupt casted by you"],
-							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%player_spell%", L["the spell link"]),
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						text_example = {
-							order = 5,
+							order = 6,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 							name = function(info)
@@ -659,9 +698,10 @@ WT.ToolConfigs["More Tools"] = {
 					name = function(info)
 						return select(1, GetSpellInfo(P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
 					end,
-					disabled = function(info)
+					hidden = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
 					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
 					end,
@@ -674,34 +714,267 @@ WT.ToolConfigs["More Tools"] = {
 					args = {
 						enabled = {
 							order = 1,
+							disabled = false,
 							name = L["Enable"],
 						},
 						use_raid_warning = {
 							order = 2,
 							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						default_text = {
+						only_me = {
 							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
 							type = "execute",
 							name = L["Use default text"],
-							
 						},
 						text = {
-							order = 4,
+							order = 5,
 							type = "input",
 							width = 'full',
-							name = L["Text for the interrupt casted by you"],
-							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%player_spell%", L["the spell link"]),
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						text_example = {
-							order = 5,
+							order = 6,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
 							name = function(info)
 								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
 								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
 								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["id"]))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
+						},
+					},
+				},
+				portals = {
+					order = 15,
+					name = L["Portals"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
+					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
+						},
+						only_me = {
+							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 5,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 6,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(10059))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
+						},
+					},
+				},
+				feasts = {
+					order = 16,
+					name = L["Feasts"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
+					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
+						},
+						only_me = {
+							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 5,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 6,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(286050))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
+						},
+					},
+				},
+				bots = {
+					order = 17,
+					name = L["Bots"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
+					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
+						},
+						only_me = {
+							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 5,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 6,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(67826))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
+							end
+						},
+					},
+				},
+				toys = {
+					order = 18,
+					name = L["Toys"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["enabled"]
+					end,
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["channel"]["raid"] ~= "RAID" end,
+						},
+						only_me = {
+							order = 3,
+							name = L["Only me"],
+						},
+						default_text = {
+							order = 4,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 5,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 6,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["raid_spells"]["spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(61031))
 								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message
 							end
 						},

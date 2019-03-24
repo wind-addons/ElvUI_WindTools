@@ -183,7 +183,7 @@ function AS:Raid(...)
 	-- 通用验证函数
 	local function TryAnnounce(spell_db, spell_list)
 		if (spell_db.id and spellId == spell_db.id) or (spell_list and spell_list[spellId]) then
-			if spell_db.enabled then
+			if spell_db.enabled and (not spell_db.only_me or spell_db.only_me and sourceGUID == UnitGUID("player")) then
 				self:SendMessage(FormatMessage(spell_db.text), self:GetChannel(config.channel), spell_db.use_raid_warning)
 			end
 			return true
@@ -194,7 +194,7 @@ function AS:Raid(...)
 	-- 绑定事件
 	if event == "SPELL_CAST_SUCCESS" then
 		if TryAnnounce(config.spells.conjure_refreshment) then return end     -- 召喚餐點桌
-		if TryAnnounce(config.spells.feasts, Feasts) then return end          -- 大餐
+		if TryAnnounce(config.spells.feasts, Feasts) then return end          -- 大餐大鍋
 	elseif event == "SPELL_SUMMON" then
 		if TryAnnounce(config.spells.bots, Bots) then return end              -- 修理機器人
 		if TryAnnounce(config.spells.cmoll_e) then return end                 -- 凱蒂的郵哨

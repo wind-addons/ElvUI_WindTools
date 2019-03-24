@@ -5,23 +5,13 @@ local WT = E:GetModule("WindTools")
 local _G = _G
 local GetCVarBool = GetCVarBool
 
+local function FormatDesc(code, helpText)
+	return WT:ColorStr(code).." = "..helpText
+end
+
 P["WindTools"]["More Tools"] = {
 	["Announce System"] = {
 		["enabled"] = true,
-		["Taunt"] = {
-			["enabled"] = true,
-			["missenabled"] = true,
-			["PlayerSmart"] = false,
-			["PetSmart"] = false,
-			["OtherTankSmart"] = false,
-			["IncludePet"] = true,
-			["IncludeOtherTank"] = true,
-		},
-		["Interrupt"] = {
-			["enabled"] = true,
-			["SoloYell"] = false,
-			["IncludePet"] = true,
-		},
 		["interrupt"] = {
 			["enabled"] = true,
 			["player"] = {
@@ -38,20 +28,11 @@ P["WindTools"]["More Tools"] = {
 				["enabled"] = true,
 				["text"] = L["%player% interrupted %target%\'s >%target_spell%<!"],
 				["channel"] = {
-					["party"] = "NONE",
+					["party"] = "EMOTE",
 					["instance"] = "NONE",
 					["raid"] = "NONE",
 				},
 			},
-		},
-		["ResAndThreat"] = {
-			["enabled"] = true,
-		},
-		["ResThanks"] = {
-			["enabled"] = true,
-		},
-		["RaidUsefulSpells"] = {
-			["enabled"] = true,
 		},
 	},
 	["CVarsTool"] = {
@@ -110,113 +91,175 @@ P["WindTools"]["More Tools"] = {
 WT.ToolConfigs["More Tools"] = {
 	["Announce System"] = {
 		tDesc   = L["A simply announce system."],
-		oAuthor = "Shestak",
+		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["Interrupt"] = {
+		["interrupt"] = {
 			order = 5,
 			name = L["Interrupt"],
+			type = "group",
 			args = {
-				["Enable"] = {
+				enable = {
 					order = 1,
 					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
 				},
-				["SoloYell"] = {
+				player = {
 					order = 2,
-					name = L["Solo Yell"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["SoloYell"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["SoloYell"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+					name = L["Player(Only you)"],
+					args = {
+						enable = {
+							order = 1,
+							name = L["Enable"],
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] = value end
+						},
+						text = {
+							order = 2,
+							type = "input",
+							width = 'full',
+							name = L["Text for the interrupt casted by you"],
+							desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%player_spell%", L["Your spell link"]).."\n"..FormatDesc("%target_spell%", L["Interrupted spell link"]),
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"] = value end,
+						},
+						channel = {
+							order = 3,
+							name = L["Channel"],
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["channel"][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["channel"][info[#info]] = value end,
+							args = {
+								["solo"] = {
+									order = 1,
+									name = L["Solo"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["party"] = {
+									order = 2,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 3,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 4,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							}
+						}
+					}
 				},
-				["IncludePet"] = {
+				others = {
 					order = 3,
-					name = L["Include Pet"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["IncludePet"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Interrupt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-			},
-		},
-		["Taunt"] = {
-			order = 6,
-			name = L["Taunt"],
-			args = {
-				["Enable"] = {
-					order = 0,
-					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["Enable"] = {
-					order = 1,
-					name = L["Enable Miss"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["missenabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["missenabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["PlayerSmart"] = {
-					order = 2,
-					name = L["Player Smart"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PlayerSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["PetSmart"] = {
-					order = 3,
-					name = L["Pet Smart"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["PetSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["OtherTankSmart"] = {
-					order = 4,
-					name = L["Other Tank Smart"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["OtherTankSmart"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["IncludePet"] = {
-					order = 5,
-					name = L["Include Pet"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludePet"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-				["IncludeOthers"] = {
-					order = 5,
-					name = L["Include Other Tank"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludeOtherTank"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["Taunt"]["IncludeOtherTank"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-			},
-		},
-		["ResAndThreat"] = {
-			order = 7,
-			name = L["Res And Threat"],
-			args = {
-				["Enable"] = {
-					order = 1,
-					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["ResAndThreat"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["ResAndThreat"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-			},
-		},
-		["ResThanks"] = {
-			order = 8,
-			name = L["Res Thanks"],
-			args = {
-				["Enable"] = {
-					order = 1,
-					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["ResThanks"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["ResThanks"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
-				},
-			},
-		},
-		["RaidUsefulSpells"] = {
-			order = 9,
-			name = L["Raid Useful Spells"],
-			args = {
-				["Enable"] = {
-					order = 1,
-					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["RaidUsefulSpells"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["RaidUsefulSpells"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+					name = L["Other Players"],
+					args = {
+						enable = {
+							order = 1,
+							name = L["Enable"],
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] = value end
+						},
+						text = {
+							order = 2,
+							type = "input",
+							width = 'full',
+							name = L["Text for the interrupt casted by others"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%player_spell%", L["The spell link"]).."\n"..FormatDesc("%target_spell%", L["Interrupted spell link"]),
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"] = value end,
+						},
+						channel = {
+							order = 3,
+							name = L["Channel"],
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] = value end,
+							args = {
+								["party"] = {
+									order = 1,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 2,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 3,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							}
+						}
+
+					}
 				},
 			},
 		},

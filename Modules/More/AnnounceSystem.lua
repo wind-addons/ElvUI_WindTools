@@ -166,7 +166,7 @@ function AS:Interrupt(...)
 end
 
 function AS:Raid(...)
-	local config = self.db.raid
+	local config = self.db.raid_spells
 	if not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellId = ...
 	if InCombatLockdown() or not event or not spellId or not sourceName then return end

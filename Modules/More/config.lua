@@ -9,6 +9,14 @@ local function FormatDesc(code, helpText)
 	return WT:ColorStr(code).." = "..helpText
 end
 
+local function Example_FormatInterruptMessage(custom_message)
+	custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+	custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+	custom_message = gsub(custom_message, "%%player_spell%%", GetSpellLink(31935))
+	custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(252150))
+	return custom_message
+end
+
 P["WindTools"]["More Tools"] = {
 	["Announce System"] = {
 		["enabled"] = true,
@@ -16,7 +24,7 @@ P["WindTools"]["More Tools"] = {
 			["enabled"] = true,
 			["player"] = {
 				["enabled"] = true,
-				["text"] = L["I interrupted %target%\'s >%target_spell%<!"],
+				["text"] = L["I interrupted %target%\'s %target_spell%!"],
 				["channel"] = {
 					["solo"] = "SELF",
 					["party"] = "PARTY",
@@ -26,7 +34,7 @@ P["WindTools"]["More Tools"] = {
 			},
 			["others"] = {
 				["enabled"] = true,
-				["text"] = L["%player% interrupted %target%\'s >%target_spell%<!"],
+				["text"] = L["%player% interrupted %target%\'s %target_spell%!"],
 				["channel"] = {
 					["party"] = "EMOTE",
 					["instance"] = "NONE",
@@ -107,6 +115,7 @@ WT.ToolConfigs["More Tools"] = {
 				player = {
 					order = 2,
 					name = L["Player(Only you)"],
+					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					args = {
 						enable = {
 							order = 1,
@@ -114,20 +123,33 @@ WT.ToolConfigs["More Tools"] = {
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] = value end
 						},
-						text = {
+						default_text = {
 							order = 2,
+							type = "execute",
+							name = L["Use default text"],
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							func = function() E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"] = P["WindTools"]["More Tools"]["Announce System"]["interrupt"]["player"]["text"] end
+						},
+						text = {
+							order = 3,
 							type = "input",
 							width = 'full',
 							name = L["Text for the interrupt casted by you"],
 							desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%player_spell%", L["Your spell link"]).."\n"..FormatDesc("%target_spell%", L["Interrupted spell link"]),
-							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"] = value end,
 						},
-						channel = {
-							order = 3,
-							name = L["Channel"],
+						text_example = {
+							order = 4,
+							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
+							name = function() return "\n"..WT:ColorStr(L["Example"])..": "..Example_FormatInterruptMessage(E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["text"]).."\n" end
+						},
+						channel = {
+							order = 5,
+							name = L["Channel"],
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["enabled"] end,
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["channel"][info[#info]] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["player"]["channel"][info[#info]] = value end,
 							args = {
@@ -191,6 +213,7 @@ WT.ToolConfigs["More Tools"] = {
 				others = {
 					order = 3,
 					name = L["Other Players"],
+					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					args = {
 						enable = {
 							order = 1,
@@ -198,20 +221,34 @@ WT.ToolConfigs["More Tools"] = {
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] = value end
 						},
-						text = {
+						default_text = {
 							order = 2,
+							type = "execute",
+							name = L["Use default text"],
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							func = function() E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"] = P["WindTools"]["More Tools"]["Announce System"]["interrupt"]["others"]["text"] end
+						},
+						text = {
+							order = 3,
 							type = "input",
 							width = 'full',
 							name = L["Text for the interrupt casted by others"],
 							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%player_spell%", L["The spell link"]).."\n"..FormatDesc("%target_spell%", L["Interrupted spell link"]),
-							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"] = value end,
 						},
-						channel = {
-							order = 3,
-							name = L["Channel"],
+						text_example = {
+							order = 4,
+							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
+							name = function() return "\n"..WT:ColorStr(L["Example"])..": "..Example_FormatInterruptMessage(E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["text"]).."\n" end
+						},
+						
+						channel = {
+							order = 5,
+							name = L["Channel"],
+							disabled = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["enabled"] end,
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] = value end,
 							args = {

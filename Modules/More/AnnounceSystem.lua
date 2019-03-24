@@ -55,12 +55,11 @@ function AS:Interrupt(...)
 	-- 如果无法获取到打断法术及被打断法术ID时就终止，否则在某些情况下可能出错
 	if not (sourceSpellId and targetSpellID) then return end
 
-	-- 自己打断
+	-- 自己及宠物打断
 	if sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet") then
 		if config.player.enabled then
 			self:SendMessage(FormatMessage(config.player.text), GetChannel(config.player.channel))
 		end
-		
 		return
 	end
 
@@ -74,8 +73,8 @@ function AS:Interrupt(...)
 end
 
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
+	-- 参数信息：https://wow.gamepedia.com/COMBAT_LOG_EVENT
 	local event = select(2, CombatLogGetCurrentEventInfo())
-    --timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags
     
     -- 打断
     if event == "SPELL_INTERRUPT" and self.db.interrupt.enabled then

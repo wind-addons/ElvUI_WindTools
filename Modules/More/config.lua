@@ -22,6 +22,7 @@ P["WindTools"]["More Tools"] = {
 		["enabled"] = true,
 		["interrupt"] = {
 			["enabled"] = true,
+			["only_instance"] = true,
 			["player"] = {
 				["enabled"] = true,
 				["text"] = L["I interrupted %target%\'s %target_spell%!"],
@@ -110,10 +111,16 @@ WT.ToolConfigs["More Tools"] = {
 					order = 1,
 					name = L["Enable"],
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] = value;E:StaticPopup_Show("PRIVATE_RL")end
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] = value end
+				},
+				only_instance = {
+					order = 2,
+					name = L["Only instance / arena"],
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["only_instance"] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["only_instance"] = value end
 				},
 				player = {
-					order = 2,
+					order = 3,
 					name = L["Player(Only you)"],
 					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					args = {
@@ -211,7 +218,7 @@ WT.ToolConfigs["More Tools"] = {
 					}
 				},
 				others = {
-					order = 3,
+					order = 4,
 					name = L["Other Players"],
 					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					args = {

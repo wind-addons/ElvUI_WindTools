@@ -21,9 +21,15 @@ function AS:SendMessage(text, channel)
 end
 
 function AS:Interrupt(...)
-	local _, _, _, sourceGUID, sourceName, _, _, _, destName, _, _, _, sourceSpellId, _, targetSpellID = ...
 	local config = self.db.interrupt
+
+	-- 如果设定了仅在副本中启用，在开放世界中就直接关闭
+	if config.only_instance and select(2, IsInInstance()) == "none" then return end
+
+	-- 获取打断通告所需的信息
+	local _, _, _, sourceGUID, sourceName, _, _, _, destName, _, _, sourceSpellId, _, _, targetSpellID = ...
 	
+	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
 		custom_message = gsub(custom_message, "%%player%%", sourceName)
 		custom_message = gsub(custom_message, "%%target%%", destName)
@@ -32,8 +38,9 @@ function AS:Interrupt(...)
 		return custom_message
 	end
 
+	-- 从配置中取得频道设置
 	local function GetChannel(channel_db)
-		if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
 			return channel_db.instance
 		elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
 			return channel_db.raid
@@ -57,20 +64,21 @@ function AS:Interrupt(...)
 		return
 	end
 
-	-- 为了防止在开放世界时刷屏，在团队或是队伍中才会开启。
-	if not (IsInGroup() or IsInRaid()) then return end
 	-- 他人打断
 	if config.others.enabled then
-		self:SendMessage(FormatMessage(config.others.text), GetChannel(self.db.others.channel))
+		-- 为了防止在开放世界时刷屏，在团队或是队伍中才会开启。
+		if (IsInRaid() and UnitInRaid(sourceGUID)) or (IsInGroup() and UnitInParty(sourceGUID)) then
+			self:SendMessage(FormatMessage(config.others.text), GetChannel(self.db.others.channel))
+		end
 	end
 end
 
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
-	local event_type = select(2, CombatLogGetCurrentEventInfo())
+	local event = select(2, CombatLogGetCurrentEventInfo())
     --timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags
     
     -- 打断
-    if event_type == "SPELL_INTERRUPT" and self.db.interrupt.enabled then
+    if event == "SPELL_INTERRUPT" and self.db.interrupt.enabled then
 		self:Interrupt(CombatLogGetCurrentEventInfo())
     end
 end

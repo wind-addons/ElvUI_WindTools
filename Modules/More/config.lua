@@ -43,6 +43,67 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
+		["raid"] = {
+			["enabled"] = true,
+			["channel"] = {
+				["solo"] = "SELF",
+				["party"] = "PARTY",
+				["instance"] = "INSTANCE_CHAT",
+				["raid"] = "RAID",
+			},
+			["spells"] = {
+				["ritual_of_summoning"] = {
+					["enabled"] = true,
+					["id"] = 698,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% is casting %spell%, please assist!"],
+				},
+				["create_soulwell"] = {
+					["enabled"] = true,
+					["id"] = 29893,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% is handing out cookies, go and get one!"],
+				},
+				["moll_e"] = {
+					["enabled"] = true,
+					["id"] = 54710,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% puts %spell%"],
+				},
+				["katy_stampwhistle"] = {
+					["enabled"] = true,
+					["id"] = 261602,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% used %spell%"],
+				},
+				["conjure_refreshment"] = {
+					["enabled"] = true,
+					["id"] = 190336,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% casted %spell%, today's special is Anchovy Pie!"],
+				},
+				["feasts"] = {
+					["enabled"] = true,
+					["use_raid_warning"] = true,
+					["text"] = L["OMG, wealthy %player% puts %spell%!"],
+				},
+				["bots"] = {
+					["enabled"] = true,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% puts %spell%"],
+				},
+				["toys"] = {
+					["enabled"] = true,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% puts %spell%"],
+				},
+				["portals"] = {
+					["enabled"] = true,
+					["use_raid_warning"] = true,
+					["text"] = L["%player% opened %spell%!"],
+				},
+			}
+		}
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -116,6 +177,7 @@ WT.ToolConfigs["More Tools"] = {
 				only_instance = {
 					order = 2,
 					name = L["Only instance / arena"],
+					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["only_instance"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["only_instance"] = value end
 				},

@@ -47,64 +47,93 @@ P["WindTools"]["More Tools"] = {
 				["ritual_of_summoning"] = {
 					["enabled"] = true,
 					["id"] = 698,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% is casting %spell%, please assist!"],
 				},
 				["create_soulwell"] = {
 					["enabled"] = true,
 					["id"] = 29893,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% is handing out cookies, go and get one!"],
 				},
 				["moll_e"] = {
 					["enabled"] = true,
 					["id"] = 54710,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["katy_stampwhistle"] = {
 					["enabled"] = true,
 					["id"] = 261602,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% used %spell%"],
 				},
 				["conjure_refreshment"] = {
 					["enabled"] = true,
 					["id"] = 190336,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% casted %spell%, today's special is Anchovy Pie!"],
 				},
 				["feasts"] = {
 					["enabled"] = true,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["OMG, wealthy %player% puts %spell%!"],
 				},
 				["bots"] = {
 					["enabled"] = true,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["toys"] = {
 					["enabled"] = true,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% puts %spell%"],
 				},
 				["portals"] = {
 					["enabled"] = true,
-					["only_me"] = false,
+					["player_cast"] = false,
 					["use_raid_warning"] = true,
 					["text"] = L["%player% opened %spell%!"],
 				},
 			}
-		}
+		},
+		["combat_spells"] = {
+			["enabled"] = true,
+			["combat_resurrection"] = {
+				["enabled"] = true,
+				["player_cast"] = false,
+				["use_raid_warning"] = false,
+				["text"] = L["%player% casted %spell% -> %target%"],
+				["channel"] = {
+					["solo"] = "EMOTE",
+					["party"] = "PARTY",
+					["instance"] = "INSTANCE_CHAT",
+					["raid"] = "RAID",
+				},
+			},
+			["threat_transfer"] = {
+				["enabled"] = true,
+				["player_cast"] = true,
+				["target_is_me"] = true,
+				["only_target_is_not_tank"] = true,
+				["use_raid_warning"] = false,
+				["text"] = L["%player% casted %spell% -> %target%"],
+				["channel"] = {
+					["solo"] = "EMOTE",
+					["party"] = "PARTY",
+					["instance"] = "INSTANCE_CHAT",
+					["raid"] = "RAID",
+				},
+			},
+		},
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -487,9 +516,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -546,9 +575,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -605,9 +634,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -664,9 +693,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -723,9 +752,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -780,9 +809,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -837,9 +866,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -894,9 +923,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -951,9 +980,9 @@ WT.ToolConfigs["More Tools"] = {
 							desc = L["Use raid warning when you is raid leader or assistant."],
 							hidden = function(info) return E.db.WindTools["More Tools"]["Announce System"]["utility_spells"]["channel"]["raid"] ~= "RAID" end,
 						},
-						only_me = {
+						player_cast = {
 							order = 3,
-							name = L["Only me"],
+							name = L["Only I casted"],
 						},
 						default_text = {
 							order = 4,
@@ -979,6 +1008,278 @@ WT.ToolConfigs["More Tools"] = {
 							end
 						},
 					},
+				},
+			},
+		},
+		["combat_spells"] = {
+			order = 7,
+			name = L["Combat spells"],
+			type = "group",
+			args = {
+				enable = {
+					order = 1,
+					name = L["Enable"],
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"] = value end
+				},	
+				combat_resurrection = {
+					order = 10,
+					type = "group",
+					name = L["Combat resurrection"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"]
+					end,
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["enabled"]
+					end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"]["raid"] ~= "RAID"
+							end,
+						},
+						player_cast = {
+							order = 3,
+							name = L["Only I casted"],
+						},
+						default_text = {
+							order = 4,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 5,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 6,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", L["Sylvanas"])
+								custom_message = gsub(custom_message, "%%target%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+							end
+						},
+						channel = {
+							order = 7,
+							name = L["Channel"],
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"][info[#info]] = value end,
+							args = {
+								["solo"] = {
+									order = 1,
+									name = L["Solo"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["party"] = {
+									order = 2,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 3,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 4,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							}
+						},
+					}
+				},
+				threat_transfer = {
+					order = 11,
+					type = "group",
+					name = L["Threat transfer"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"]
+					end,
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["enabled"]
+					end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]][info[#info]] = value
+					end,
+					func = function(info)
+						E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"]
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						use_raid_warning = {
+							order = 2,
+							name = L["Use raid warning"],
+							desc = L["Use raid warning when you is raid leader or assistant."],
+							hidden = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"]["raid"] ~= "RAID"
+							end,
+						},
+						player_cast = {
+							order = 3,
+							name = L["Only I casted"],
+							desc = L["If you do not check this, the spell casted by other players will be announced."]
+						},
+						target_is_me = {
+							order = 4,
+							name = L["Target is me"],
+						},
+						only_target_is_not_tank = {
+							order = 5,
+							name = L["Only target is not tank"],
+						},
+						default_text = {
+							order = 6,
+							type = "execute",
+							name = L["Use default text"],
+						},
+						text = {
+							order = 7,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						text_example = {
+							order = 8,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", L["Sylvanas"])
+								custom_message = gsub(custom_message, "%%target%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(34477))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+							end
+						},
+						channel = {
+							order = 9,
+							name = L["Channel"],
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["combat_spells"]["enabled"] end,
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["combat_spells"][info[5]]["channel"][info[#info]] = value end,
+							args = {
+								["solo"] = {
+									order = 1,
+									name = L["Solo"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["party"] = {
+									order = 2,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 3,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 4,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							}
+						},
+					}
 				},
 			},
 		},

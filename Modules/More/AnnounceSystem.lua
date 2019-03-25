@@ -11,7 +11,6 @@ local pairs = pairs
 local PlayerName = UnitName("player")
 
 local Feasts = {
-	-- 大餐通報列表
 	[126492] = true,  -- 燒烤盛宴
 	[126494] = true,  -- 豪华燒烤盛宴
 	[126495] = true,  -- 快炒盛宴
@@ -38,7 +37,6 @@ local Feasts = {
 }
 
 local Bots = {
-	-- 機器人通報列表
 	[22700] = true,		-- 修理機器人74A型
 	[44389] = true,		-- 修理機器人110G型
 	[54711] = true,		-- 廢料機器人
@@ -68,13 +66,11 @@ local Bots = {
 }
 
 local Toys = {
-	-- 玩具
 	[61031] = true,		-- 玩具火車組
 	[49844] = true,		-- 恐酒遙控器
 }
 
 local Portals = {
-	-- 傳送門通報列表
 	-- 聯盟
 	[10059] = true,		-- 暴風城
 	[11416] = true,		-- 鐵爐堡
@@ -102,11 +98,22 @@ local Portals = {
 	[120146] = true,	-- 遠古達拉然
 }
 
+local CombatResurrection = {
+	[61999] = true,	-- 盟友復生
+	[20484] = true,	-- 復生
+	[20707] = true,	-- 靈魂石
+}
+local ThreatTransfer = {
+	[34477] = true,	-- 誤導
+	[57934] = true,	-- 偷天換日
+}
+
+
 function AS:SendMessage(text, channel, raid_warning)
 	-- 忽视不通告讯息
 	if channel == "NONE" then return end
 	-- 聊天框输出
-	if channel == "SELF" then print(text) return end
+	if channel == "SELF" then ChatFrame1:AddMessage(text) return end
 	-- 表情频道前置冒号以优化显示
 	if channel == "EMOTE" then text = ": "..text end
 	-- 如果允许团队警告
@@ -183,7 +190,7 @@ function AS:Utility(...)
 	-- 通用验证函数
 	local function TryAnnounce(spell_db, spell_list)
 		if (spell_db.id and spellId == spell_db.id) or (spell_list and spell_list[spellId]) then
-			if spell_db.enabled and (not spell_db.only_me or spell_db.only_me and sourceGUID == UnitGUID("player")) then
+			if spell_db.enabled and (not spell_db.player_cast or spell_db.player_cast and sourceGUID == UnitGUID("player")) then
 				self:SendMessage(FormatMessage(spell_db.text), self:GetChannel(config.channel), spell_db.use_raid_warning)
 			end
 			return true
@@ -207,10 +214,70 @@ function AS:Utility(...)
 	end
 end
 
+function AS:Combat(...)
+	local config = self.db.combat_spells
+	if not config.enabled then return end
+	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
+	local difficultyId = select(3, GetInstanceInfo())
+	local destNameWithServer = select(9, ...)
+
+	-- 格式化自定义字符串
+	local function FormatMessage(custom_message)
+		custom_message = gsub(custom_message, "%%player%%", sourceName)
+		custom_message = gsub(custom_message, "%%target%%", destName)
+		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
+		return custom_message
+	end
+
+	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
+	
+
+	if destName then destName = destName:gsub("%-[^|]+", "") else return end
+	if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") else return end
+	
+	-- 战斗复活
+	if CombatResurrection[spellId] then
+		if config.combat_resurrection.enabled then
+			if config.combat_resurrection.player_cast then
+				if sourceGUID == UnitGUID("player") then
+					self:SendMessage(FormatMessage(config.combat_resurrection.text), self:GetChannel(config.combat_resurrection.channel), config.combat_resurrection.use_raid_warning)
+				end
+			else
+				self:SendMessage(FormatMessage(config.combat_resurrection.text), self:GetChannel(config.combat_resurrection.channel), config.combat_resurrection.use_raid_warning)
+			end
+		end
+		return true
+	end
+	
+	-- 仇恨转移
+	if ThreatTransfer[spellId] then
+		if config.threat_transfer.enabled then
+			local needAnnounce = false
+
+			if config.threat_transfer.player_cast and sourceGUID == UnitGUID("player") then needAnnounce = true end
+			if config.threat_transfer.target_is_me and destGUID == UnitGUID("player") then needAnnounce = true end
+			if not config.threat_transfer.target_is_me and not config.threat_transfer.player_cast then needAnnounce = true end
+
+			if config.threat_transfer.only_target_is_not_tank then
+				local role = UnitGroupRolesAssigned(destNameWithServer)
+				if role == "TANK" or role == "NONE" then needAnnounce = false end
+			end
+
+			if needAnnounce then
+				self:SendMessage(FormatMessage(config.threat_transfer.text), self:GetChannel(config.threat_transfer.channel), config.threat_transfer.use_raid_warning)
+			end
+		end
+		return true
+	end
+
+	return false
+end
+
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
 	if subEvent == "SPELL_CAST_SUCCESS" then
+		if self:Combat(CombatLogGetCurrentEventInfo()) then return end
 		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_SUMMON" then
 		self:Utility(CombatLogGetCurrentEventInfo())

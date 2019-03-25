@@ -241,9 +241,13 @@ function WT:InsertOptions()
 
 				-- 通告系统的设定项太多了还是分开好点
 				if feature_name == "Announce System" then
+					-- for arg_name, arg in pairs(E.Options.args.WindTools.args[module_name].args[feature_name].args) do
+					-- 	arg.guiInline = false
+					-- end
 					E.Options.args.WindTools.args[module_name].args[feature_name].args.interrupt.guiInline = false
 					E.Options.args.WindTools.args[module_name].args[feature_name].args.utility_spells.guiInline = false
 					E.Options.args.WindTools.args[module_name].args[feature_name].args.combat_spells.guiInline = false
+					E.Options.args.WindTools.args[module_name].args[feature_name].args.taunt_spells.guiInline = false
 				end
 
 				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除

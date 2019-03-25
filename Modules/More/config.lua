@@ -394,7 +394,7 @@ WT.ToolConfigs["More Tools"] = {
 				},
 				others = {
 					order = 4,
-					name = L["Other Players"],
+					name = L["Other players"],
 					hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["enabled"] end,
 					args = {
 						enable = {
@@ -1356,6 +1356,819 @@ WT.ToolConfigs["More Tools"] = {
 							}
 						},
 					}
+				},
+			},
+		},
+		["taunt_spells"] = {
+			order = 8,
+			name = L["Taunt spells"],
+			type = "group",
+			args = {
+				enable = {
+					order = 1,
+					name = L["Enable"],
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] = value end,
+				},
+				player = {
+					order = 2,
+					name = L["Player(Only you)"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
+					end,
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"]
+					end,
+					args = {
+						player = {
+							order = 1,
+							name = L["Player"],
+							get = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									disabled = false,
+									name = L["Enable"],
+								},
+								default_sucess_text = {
+									order = 2,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+									end,
+									name = L["Use default text"].."-"..L["Success"],
+								},
+								default_failed_text = {
+									order = 3,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+									end,
+									name = L["Use default text"].."-"..L["Failed"],
+								},
+								success_text = {
+									order = 4,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Success"],
+									desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["Your spell link"]),
+								},
+								success_text_example = {
+									order = 5,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Failed"],
+									desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["Your spell link"]),
+								},
+								failed_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								success_channel = {
+									order = 8,
+									name = L["Channel"].." - "..L["Success"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+								failed_channel = {
+									order = 9,
+									name = L["Channel"].." - "..L["Failed"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+							},
+						},
+						pet = {
+							order = 2,
+							name = L["Pet"],
+							get = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									disabled = false,
+									name = L["Enable"],
+								},
+								default_sucess_text = {
+									order = 2,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+									end,
+									name = L["Use default text"].."-"..L["Success"],
+								},
+								default_failed_text = {
+									order = 3,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+									end,
+									name = L["Use default text"].."-"..L["Failed"],
+								},
+								success_text = {
+									order = 4,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Success"],
+									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								success_text_example = {
+									order = 5,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Failed"],
+									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								failed_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								success_channel = {
+									order = 8,
+									name = L["Channel"].." - "..L["Success"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+								failed_channel = {
+									order = 9,
+									name = L["Channel"].." - "..L["Failed"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				others = {
+					order = 3,
+					name = L["Other players"],
+					hidden = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
+					end,
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"]
+					end,
+					args = {
+						player = {
+							order = 1,
+							name = L["Player"],
+							get = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									disabled = false,
+									name = L["Enable"],
+								},
+								default_sucess_text = {
+									order = 2,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+									end,
+									name = L["Use default text"].."-"..L["Success"],
+								},
+								default_failed_text = {
+									order = 3,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+									end,
+									name = L["Use default text"].."-"..L["Failed"],
+								},
+								success_text = {
+									order = 4,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Success"],
+									desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								success_text_example = {
+									order = 5,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Failed"],
+									desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								failed_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								success_channel = {
+									order = 8,
+									name = L["Channel"].." - "..L["Success"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+								failed_channel = {
+									order = 9,
+									name = L["Channel"].." - "..L["Failed"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+							},
+						},
+						pet = {
+							order = 2,
+							name = L["Other players' pet"],
+							get = function(info)
+								return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]]
+							end,
+							set = function(info, value)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									disabled = false,
+									name = L["Enable"],
+								},
+								default_sucess_text = {
+									order = 2,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+									end,
+									name = L["Use default text"].."-"..L["Success"],
+								},
+								default_failed_text = {
+									order = 3,
+									type = "execute",
+									func = function(info)
+										E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+									end,
+									name = L["Use default text"].."-"..L["Failed"],
+								},
+								success_text = {
+									order = 4,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Success"],
+									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								success_text_example = {
+									order = 5,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Failed"],
+									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+								},
+								failed_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								success_channel = {
+									order = 8,
+									name = L["Channel"].." - "..L["Success"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+								failed_channel = {
+									order = 9,
+									name = L["Channel"].." - "..L["Failed"],
+									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
+									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
+									args = {
+										["solo"] = {
+											order = 1,
+											name = L["Solo"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["party"] = {
+											order = 2,
+											name = L["In party"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["instance"] = {
+											order = 3,
+											name = L["In instance"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["INSTANCE_CHAT"] = L["Instance"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+										["raid"] = {
+											order = 4,
+											name = L["In raid"],
+											type = "select",
+											values = {
+												["NONE"] = L["None"],
+												["SELF"] = L["Self(Chat Frame)"],
+												["EMOTE"] = L["Emote"],
+												["PARTY"] = L["Party"],
+												["RAID"] = L["Raid"],
+												["YELL"] = L["Yell"],
+												["SAY"] = L["Say"],
+											},
+										},
+									},
+								},
+							},
+						},
+					},
 				},
 			},
 		},

@@ -59,15 +59,15 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 
--- E.PopupDialogs["WIND_UPDATE_RL"] = {
--- 	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
--- 	button1 = ACCEPT,
--- 	button2 = CANCEL,
--- 	OnAccept = ReloadUI,
--- 	timeout = 0,
--- 	whileDead = 1,
--- 	hideOnEscape = false,
--- }
+E.PopupDialogs["WIND_UPDATE_RL"] = {
+	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ReloadUI,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = false,
+}
 
 function WT:InsertOptions()
 	-- 感谢名单
@@ -243,6 +243,16 @@ function WT:InsertOptions()
 				if feature_name == "Announce System" then
 					for arg_name, arg in pairs(E.Options.args.WindTools.args[module_name].args[feature_name].args) do
 						if arg.order > 4 then arg.guiInline = false end
+					end
+				end
+
+				-- 版本更新需要重置设置的时候使用
+				if WT.Version ~= "@project-version@" then
+					-- 非开发版下
+					if not E.db.WindTools.InstalledVersion or E.db.WindTools.InstalledVersion ~= WT.Version then
+						E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
+						E:StaticPopup_Show("WIND_UPDATE_RL")
+						E.db.WindTools.InstalledVersion = WT.Version
 					end
 				end
 

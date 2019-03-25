@@ -212,6 +212,15 @@ P["WindTools"]["More Tools"] = {
 			},
 		},
 		["thanks"] = {
+			["goodbye"] = {
+				["enabled"] = true,
+				["text"] = L["Thanks all!"],
+				["channel"] = {
+					["party"] = "PARTY",
+					["instance"] = "INSTANCE_CHAT",
+					["raid"] = "RAID",
+				},
+			},
 			["resurrection"] = {
 				["enabled"] = true,
 				["text"] = L["%target%, thank you for using %spell% to revive me. :)"],
@@ -221,8 +230,8 @@ P["WindTools"]["More Tools"] = {
 					["instance"] = "WHISPER",
 					["raid"] = "WHISPER",
 				},
-			}
-		}
+			},
+		},
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -2237,8 +2246,88 @@ WT.ToolConfigs["More Tools"] = {
 					get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] end,
 					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] = value end,
 				},
-				resurrection = {
+				goodbye = {
 					order = 2,
+					name = L["Goodbye"],
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
+					end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]] = value
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						default_text = {
+							order = 2,
+							type = "execute",
+							func = function(info)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]]["text"]
+							end,
+							name = L["Use default text"],
+						},
+						text = {
+							order = 3,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+						},
+						channel = {
+							order = 4,
+							name = L["Channel"],
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value end,
+							args = {
+								["party"] = {
+									order = 1,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 2,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 3,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							},
+						},
+					},
+				},
+				resurrection = {
+					order = 3,
 					name = L["Resurrection"],
 					disabled = function(info)
 						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
@@ -2264,14 +2353,14 @@ WT.ToolConfigs["More Tools"] = {
 							name = L["Use default text"],
 						},
 						text = {
-							order = 4,
+							order = 3,
 							type = "input",
 							width = 'full',
 							name = L["Text"],
 							desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 						},
 						example = {
-							order = 5,
+							order = 4,
 							type = "description",
 							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]]["enabled"] end,
 							name = function(info)
@@ -2283,7 +2372,7 @@ WT.ToolConfigs["More Tools"] = {
 							end
 						},
 						channel = {
-							order = 8,
+							order = 5,
 							name = L["Channel"],
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value end,
@@ -2349,6 +2438,7 @@ WT.ToolConfigs["More Tools"] = {
 						},
 					},
 				},
+				
 			},	
 		},
 	},

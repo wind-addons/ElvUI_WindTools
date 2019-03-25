@@ -468,6 +468,20 @@ function AS:SayThanks(...)
 	end
 end
 
+function AS:SayThanks_Goodbye()
+	local config = self.db.thanks
+	if not config.enabled or not config.goodbye.enabled then return end
+	self:SendMessage(config.goodbye.text, self:GetChannel(config.goodbye.channel))
+end
+
+function AS:LFG_COMPLETION_REWARD(event, ...)
+	self.SayThanks_Goodbye()
+end
+
+function AS:CHALLENGE_MODE_COMPLETED(event, ...)
+	C_Timer.After(2, AS:SayThanks_Goodbye())
+end
+
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
@@ -488,11 +502,15 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	end
 end
 
+
+
 function AS:Initialize()
 	self.db = E.db.WindTools["More Tools"]["Announce System"]
 	if not self.db.enabled then return end
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	self:RegisterEvent("LFG_COMPLETION_REWARD")
+	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 
 	self.MonkProvokeAllTimeCache = {}
 end

@@ -42,8 +42,8 @@ end
 
 -- 找到宠物的主人
 -- 参考自 https://www.wowinterface.com/forums/showthread.php?t=43082
-local tempTooltip = CreateFrame( "GameTooltip", "FindPetOwnerToolTip", nil, "GameTooltipTemplate" )
-tempTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
+local tempTooltip = CreateFrame("GameTooltip", "FindPetOwnerToolTip", nil, "GameTooltipTemplate")
+tempTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
 local tempPetDetails = _G["FindPetOwnerToolTipTextLeft2"]
 
 local function GetPetInfo(pet_name)
@@ -354,7 +354,7 @@ function AS:Taunt(...)
 	local config = self.db.taunt_spells
 	if not config.enabled then return end
 
-	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
+	local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
 	if not spellId or not sourceGUID or not destGUID or not Taunt[spellId] then return false end
 
 	local sourceType = strsplit("-", sourceGUID)
@@ -387,10 +387,26 @@ function AS:Taunt(...)
 		if sourceType == "Player" then
 			if sourceName == PlayerName then
 				if config.player.player.enabled then
-					self:SendMessage(FormatMessageWithoutPet(config.player.player.success_text), self:GetChannel(config.player.player.success_channel))
+					if spellId == 118635 then
+						-- 武僧群嘲防刷屏
+						if not self.MonkProvokeAllTimeCache[sourceGUID] or timestamp - self.MonkProvokeAllTimeCache[sourceGUID] > 1 then
+							self.MonkProvokeAllTimeCache[sourceGUID] = timestamp
+							self:SendMessage(FormatMessageWithoutPet(config.player.player.provoke_all_text), self:GetChannel(config.player.player.success_channel))
+						end
+					else
+						self:SendMessage(FormatMessageWithoutPet(config.player.player.success_text), self:GetChannel(config.player.player.success_channel))
+					end
 				end
 			elseif config.others.player.enabled then
-				self:SendMessage(FormatMessageWithoutPet(config.others.player.success_text), self:GetChannel(config.others.player.success_channel))
+				if spellId == 118635 then
+					-- 武僧群嘲防刷屏
+					if not self.MonkProvokeAllTimeCache[sourceGUID] or timestamp - self.MonkProvokeAllTimeCache[sourceGUID] > 1 then
+						self.MonkProvokeAllTimeCache[sourceGUID] = timestamp
+						self:SendMessage(FormatMessageWithoutPet(config.others.player.provoke_all_text), self:GetChannel(config.others.player.success_channel))
+					end
+				else
+					self:SendMessage(FormatMessageWithoutPet(config.others.player.success_text), self:GetChannel(config.others.player.success_channel))
+				end
 			end
 		elseif sourceType == "Pet" or sourceType == "Creature" then
 			petOwner, petRole = GetPetInfo(sourceName)
@@ -477,6 +493,8 @@ function AS:Initialize()
 	if not self.db.enabled then return end
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+
+	self.MonkProvokeAllTimeCache = {}
 end
 
 local function InitializeCallback()

@@ -140,6 +140,7 @@ P["WindTools"]["More Tools"] = {
 				["player"] = {
 					["enabled"] = true,
 					["success_text"] = L["I taunted %target% successfully!"],
+					["provoke_all_text"] = L["I taunted all enemies in 10 yards!"],
 					["failed_text"] = L["I failed on taunting %target%!"],
 					["success_channel"] = {
 						["solo"] = "EMOTE",
@@ -176,6 +177,7 @@ P["WindTools"]["More Tools"] = {
 				["player"] = {
 					["enabled"] = false,
 					["success_text"] = L["%player% taunted %target% successfully!"],
+					["provoke_all_text"] = L["%player% taunted all enemies in 10 yards!"],
 					["failed_text"] = L["%player% failed on taunting %target%!"],
 					["success_channel"] = {
 						["solo"] = "NONE",
@@ -1441,15 +1443,34 @@ WT.ToolConfigs["More Tools"] = {
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
 									end
 								},
-								failed_text = {
+								provoke_all_text = {
 									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Provoke all(Monk)"],
+									desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%spell%", L["Your spell link"]),
+								},
+								provoke_all_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["provoke_all_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 8,
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Failed"],
 									desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["Your spell link"]),
 								},
 								failed_text_example = {
-									order = 7,
+									order = 9,
 									type = "description",
 									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
 									name = function(info)
@@ -1461,7 +1482,7 @@ WT.ToolConfigs["More Tools"] = {
 									end
 								},
 								success_channel = {
-									order = 8,
+									order = 10,
 									name = L["Channel"].." - "..L["Success"],
 									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
 									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
@@ -1522,7 +1543,7 @@ WT.ToolConfigs["More Tools"] = {
 									},
 								},
 								failed_channel = {
-									order = 9,
+									order = 11,
 									name = L["Channel"].." - "..L["Failed"],
 									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
 									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
@@ -1843,15 +1864,34 @@ WT.ToolConfigs["More Tools"] = {
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
 									end
 								},
-								failed_text = {
+								provoke_all_text = {
 									order = 6,
+									type = "input",
+									width = 'full',
+									name = L["Text"].." - "..L["Provoke all(Monk)"],
+									desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%spell%", L["Your spell link"]),
+								},
+								provoke_all_text_example = {
+									order = 7,
+									type = "description",
+									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
+									name = function(info)
+										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["provoke_all_text"]
+										custom_message = gsub(custom_message, "%%player%%", UnitName("player") )
+										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
+										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+									end
+								},
+								failed_text = {
+									order = 8,
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Failed"],
 									desc = FormatDesc("%player%", L["Name of the player"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 								},
 								failed_text_example = {
-									order = 7,
+									order = 9,
 									type = "description",
 									hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["enabled"] end,
 									name = function(info)
@@ -1863,7 +1903,7 @@ WT.ToolConfigs["More Tools"] = {
 									end
 								},
 								success_channel = {
-									order = 8,
+									order = 10,
 									name = L["Channel"].." - "..L["Success"],
 									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
 									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,
@@ -1924,7 +1964,7 @@ WT.ToolConfigs["More Tools"] = {
 									},
 								},
 								failed_channel = {
-									order = 9,
+									order = 11,
 									name = L["Channel"].." - "..L["Failed"],
 									get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] end,
 									set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[7]][info[#info]] = value end,

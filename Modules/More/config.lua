@@ -136,8 +136,79 @@ P["WindTools"]["More Tools"] = {
 		},
 		["taunt_spells"] = {
 			["enabled"] = true,
-			
-		}
+			["player"] = {
+				["player"] = {
+					["enabled"] = true,
+					["success_text"] = L["I taunted %target% successfully!"],
+					["failed_text"] = L["I failed on taunting %target%!"],
+					["success_channel"] = {
+						["solo"] = "EMOTE",
+						["party"] = "PARTY",
+						["instance"] = "INSTANCE_CHAT",
+						["raid"] = "RAID",
+					},
+					["failed_channel"] = {
+						["solo"] = "EMOTE",
+						["party"] = "PARTY",
+						["instance"] = "INSTANCE_CHAT",
+						["raid"] = "RAID",
+					},
+				},
+				["pet"] = {
+					["enabled"] = true,
+					["success_text"] = L["My %pet% taunted %target% successfully!"],
+					["failed_text"] = L["My %pet% failed on taunting %target%!"],
+					["success_channel"] = {
+						["solo"] = "EMOTE",
+						["party"] = "PARTY",
+						["instance"] = "INSTANCE_CHAT",
+						["raid"] = "RAID",
+					},
+					["failed_channel"] = {
+						["solo"] = "EMOTE",
+						["party"] = "PARTY",
+						["instance"] = "INSTANCE_CHAT",
+						["raid"] = "RAID",
+					},
+				},
+			},
+			["others"] = {
+				["player"] = {
+					["enabled"] = false,
+					["success_text"] = L["%player% taunted %target% successfully!"],
+					["failed_text"] = L["%player% failed on taunting %target%!"],
+					["success_channel"] = {
+						["solo"] = "NONE",
+						["party"] = "NONE",
+						["instance"] = "NONE",
+						["raid"] = "NONE",
+					},
+					["failed_channel"] = {
+						["solo"] = "NONE",
+						["party"] = "SELF",
+						["instance"] = "SELF",
+						["raid"] = "SELF",
+					},
+				},
+				["pet"] = {
+					["enabled"] = false,
+					["success_text"] = L["%player%'s %pet% taunted %target% successfully!"],
+					["failed_text"] = L["%player%'s %pet% failed on taunting %target%!"],
+					["success_channel"] = {
+						["solo"] = "NONE",
+						["party"] = "NONE",
+						["instance"] = "NONE",
+						["raid"] = "NONE",
+					},
+					["failed_channel"] = {
+						["solo"] = "NONE",
+						["party"] = "SELF",
+						["instance"] = "SELF",
+						["raid"] = "SELF",
+					},
+				},
+			},
+		},
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,

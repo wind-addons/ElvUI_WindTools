@@ -116,11 +116,11 @@ local Taunt = {
 	[6795] = true,   -- 低吼（德魯伊 熊形態）
 	[62124] = true,  -- 清算之手（聖騎士）
 	[116189] = true, -- 嘲心嘯（武僧）
-	[118635] = true, -- 嘲心嘯（武僧圖騰 玄牛雕像）
-	[196727] = true, -- 嘲心嘯（武僧圖騰 玄牛怒兆）
+	[118635] = true, -- 嘲心嘯（武僧圖騰 玄牛雕像 算作玩家群嘲）
+	[196727] = true, -- 嘲心嘯（武僧守護者 玄牛怒兆）
 	[2649] = true,   -- 低吼（獵人寵物）
 	[17735] = true,  -- 受難 （術士寵物虛無行者）
-	[36213] = true,  -- 憤怒之土（薩滿圖騰土元素）
+	-- [36213] = true,  -- 憤怒之土（薩滿守護者 土元素）待研究
 }
 
 local CombatResurrection = {
@@ -244,21 +244,19 @@ function AS:Combat(...)
 	if not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
 	local difficultyId = select(3, GetInstanceInfo())
-	local destNameWithServer = select(9, ...)
+	if not destName or not sourceName then return end
+	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
 
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
+		destName = destName:gsub("%-[^|]+", "")
+		sourceName = sourceName:gsub("%-[^|]+", "")
 		custom_message = gsub(custom_message, "%%player%%", sourceName)
 		custom_message = gsub(custom_message, "%%target%%", destName)
 		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
 		return custom_message
 	end
 
-	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
-
-	if destName then destName = destName:gsub("%-[^|]+", "") else return end
-	if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") else return end
-	
 	-- 战斗复活
 	if CombatResurrection[spellId] then
 		if config.combat_resurrection.enabled then
@@ -283,7 +281,7 @@ function AS:Combat(...)
 			if not config.threat_transfer.target_is_me and not config.threat_transfer.player_cast then needAnnounce = true end
 
 			if config.threat_transfer.only_target_is_not_tank then
-				local role = UnitGroupRolesAssigned(destNameWithServer)
+				local role = UnitGroupRolesAssigned(destName)
 				if role == "TANK" or role == "NONE" then needAnnounce = false end
 			end
 
@@ -301,9 +299,32 @@ function AS:Taunt(...)
 	local config = self.db.taunt_spells
 	if not config.enabled then return end
 
-	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, missType = ...
-	if not spellId or not sourceGUID then return end
+	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
+	if not spellId or not sourceGUID or not destGUID or not Taunt[spellId] then return false end
+
 	local sourceType = strsplit("-", sourceGUID)
+	local petOwner
+	
+	-- 格式化自定义字符串
+	local function FormatMessageWithPet(custom_message)
+		petOwner = petOwner:gsub("%-[^|]+", "")
+		destName = destName:gsub("%-[^|]+", "")
+		sourceName = sourceName:gsub("%-[^|]+", "")
+		custom_message = gsub(custom_message, "%%player%%", petOwner)
+		custom_message = gsub(custom_message, "%%target%%", destName)
+		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
+		custom_message = gsub(custom_message, "%%pet%%", sourceName)
+		return custom_message
+	end
+
+	local function FormatMessageWithoutPet(custom_message)
+		destName = destName:gsub("%-[^|]+", "")
+		sourceName = sourceName:gsub("%-[^|]+", "")
+		custom_message = gsub(custom_message, "%%player%%", sourceName)
+		custom_message = gsub(custom_message, "%%target%%", destName)
+		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
+		return custom_message
+	end
 
 	-- 找到宠物的主人
 	-- 参考自 https://www.wowinterface.com/forums/showthread.php?t=43082
@@ -311,7 +332,7 @@ function AS:Taunt(...)
 	tempTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
 	local tempPetDetails = _G["FindPetOwnerToolTipTextLeft2"]
 
-	local function getPetOwner(pet_name)
+	local function GetPetOwner(pet_name)
 		tempTooltip:ClearLines()
 		tempTooltip:SetUnit(pet_name)
 		local details = tempPetDetails:GetText()
@@ -320,26 +341,50 @@ function AS:Taunt(...)
 		if GetLocale() == "zhCN" or GetLocale() == "zhTW" then split_word = "的" end
 		return select(1, string.split(split_word, details))
 	end
-
-	-- if sourceType == "Player" then
-	-- 	print("施法者为玩家：", sourceName, GetSpellLink(spellId))
-	-- elseif sourceType == "Pet" and sourceType == "Creature" then
-	-- 	print("施法者为宠物：", sourceName, getPetOwner(sourceName), GetSpellLink(spellId))
-	-- else 
-	-- 	print("施法者未知：", sourceType, sourceName)
-	-- end
-
-	-- if event == "SPELL_MISSED" then
-		
-	-- elseif event == "SPELL_AURA_APPLIED" then
 	
-	-- end
+	if event == "SPELL_AURA_APPLIED" then
+		-- 嘲讽成功
+		if sourceType == "Player" then
+			if sourceName == PlayerName then
+				if config.player.player.enabled then
+					self:SendMessage(FormatMessageWithoutPet(config.player.player.success_text), self:GetChannel(config.player.player.success_channel))
+				end
+			elseif config.others.player.enabled then
+				self:SendMessage(FormatMessageWithoutPet(config.others.player.success_text), self:GetChannel(config.others.player.success_channel))
+			end
+		elseif sourceType == "Pet" or sourceType == "Creature" then
+			petOwner = GetPetOwner(sourceName)
+			if petOwner == PlayerName then
+				if config.player.pet.enabled then
+					self:SendMessage(FormatMessageWithPet(config.player.pet.success_text), self:GetChannel(config.player.pet.success_channel))
+				end
+			elseif config.others.pet.enabled then
+				self:SendMessage(FormatMessageWithPet(config.others.pet.success_text), self:GetChannel(config.others.pet.success_channel))
+			end
+		end
+	elseif event == "SPELL_MISSED" then
+		-- 嘲讽失败
+		if sourceType == "Player" then
+			if sourceName == PlayerName then
+				if config.player.player.enabled then
+					self:SendMessage(FormatMessageWithoutPet(config.player.player.failed_text), self:GetChannel(config.player.player.failed_channel))
+				end
+			elseif config.others.player.enabled then
+				self:SendMessage(FormatMessageWithoutPet(config.others.player.failed_text), self:GetChannel(config.others.player.failed_channel))
+			end
+		elseif sourceType == "Pet" or sourceType == "Creature" then
+			petOwner = GetPetOwner(sourceName)
+			if petOwner == PlayerName then
+				if config.player.pet.enabled then
+					self:SendMessage(FormatMessageWithPet(config.player.pet.failed_text), self:GetChannel(config.player.pet.failed_channel))
+				end
+			elseif config.others.pet.enabled then
+				self:SendMessage(FormatMessageWithPet(config.others.pet.failed_text), self:GetChannel(config.others.pet.failed_channel))
+			end
+		end
+	end
 
-
-
-	-- if TauntSpells[spellID]
-
-
+	return true
 end
 
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)

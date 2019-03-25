@@ -165,8 +165,8 @@ function AS:Interrupt(...)
 	end
 end
 
-function AS:Raid(...)
-	local config = self.db.raid_spells
+function AS:Utility(...)
+	local config = self.db.utility_spells
 	if not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellId = ...
 	if InCombatLockdown() or not event or not spellId or not sourceName then return end
@@ -211,11 +211,11 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
 	if subEvent == "SPELL_CAST_SUCCESS" then
-		self:Raid(CombatLogGetCurrentEventInfo())
+		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_SUMMON" then
-		self:Raid(CombatLogGetCurrentEventInfo())
+		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_CREATE" then
-		self:Raid(CombatLogGetCurrentEventInfo())
+		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_INTERRUPT" then
 		self:Interrupt(CombatLogGetCurrentEventInfo())
     end

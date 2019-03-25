@@ -246,16 +246,6 @@ function WT:InsertOptions()
 					end
 				end
 
-				-- 版本更新需要重置设置的时候使用
-				if WT.Version ~= "@project-version@" then
-					-- 非开发版下
-					if not E.db.WindTools.InstalledVersion or E.db.WindTools.InstalledVersion ~= WT.Version then
-						E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
-						E:StaticPopup_Show("WIND_UPDATE_RL")
-						E.db.WindTools.InstalledVersion = WT.Version
-					end
-				end
-
 				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除
 				-- if E.db.WindTools[feature_name] then
 				-- 	E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
@@ -266,6 +256,13 @@ function WT:InsertOptions()
 		end
 	end
 	-- if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
+
+	-- 版本更新需要重置设置的时候使用
+	if not E.db.WindTools.InstalledVersion or E.db.WindTools.InstalledVersion ~= WT.Version then
+		E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
+		E.db.WindTools.InstalledVersion = WT.Version
+		E:StaticPopup_Show("WIND_UPDATE_RL")
+	end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

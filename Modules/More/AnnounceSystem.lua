@@ -110,6 +110,19 @@ local Resurrection = {
 	[265116] = true,	-- 不穩定的時間轉移器（工程學）
 }
 
+local Taunt = {
+	[355] = true,    -- 嘲諷（戰士）
+	[56222] = true,  -- 黑暗赦令（死亡騎士）
+	[6795] = true,   -- 低吼（德魯伊 熊形態）
+	[62124] = true,  -- 清算之手（聖騎士）
+	[116189] = true, -- 嘲心嘯（武僧）
+	[118635] = true, -- 嘲心嘯（武僧圖騰 玄牛雕像）
+	[196727] = true, -- 嘲心嘯（武僧圖騰 玄牛怒兆）
+	[2649] = true,   -- 低吼（獵人寵物）
+	[17735] = true,  -- 受難 （術士寵物虛無行者）
+	[36213] = true,  -- 憤怒之土（薩滿圖騰土元素）
+}
+
 local CombatResurrection = {
 	[61999] = true,	    -- 盟友復生
 	[20484] = true,	    -- 復生
@@ -156,15 +169,15 @@ function AS:Interrupt(...)
 	if not config.enabled then return end
 	if config.only_instance and select(2, IsInInstance()) == "none" then return end
 
-	local _, _, _, sourceGUID, sourceName, _, _, _, destName, _, _, sourceSpellId, _, _, targetSpellID = ...
-	if not (sourceSpellId and targetSpellID) then return end
+	local _, _, _, sourceGUID, sourceName, _, _, _, destName, _, _, sourceSpellId, _, _, targetSpellId = ...
+	if not (sourceSpellId and targetSpellId) then return end
 
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
 		custom_message = gsub(custom_message, "%%player%%", sourceName)
 		custom_message = gsub(custom_message, "%%target%%", destName)
 		custom_message = gsub(custom_message, "%%player_spell%%", GetSpellLink(sourceSpellId))
-		custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(targetSpellID))
+		custom_message = gsub(custom_message, "%%target_spell%%", GetSpellLink(targetSpellId))
 		return custom_message
 	end
 
@@ -212,20 +225,18 @@ function AS:Utility(...)
 
 	-- 绑定事件
 	if event == "SPELL_CAST_SUCCESS" then
-		if TryAnnounce(config.spells.conjure_refreshment) then return true end     -- 召喚餐點桌
-		if TryAnnounce(config.spells.feasts, Feasts) then return true end          -- 大餐大鍋
+		if TryAnnounce(config.spells.conjure_refreshment) then return end     -- 召喚餐點桌
+		if TryAnnounce(config.spells.feasts, Feasts) then return end          -- 大餐大鍋
 	elseif event == "SPELL_SUMMON" then
-		if TryAnnounce(config.spells.bots, Bots) then return true end              -- 修理機器人
-		if TryAnnounce(config.spells.cmoll_e) then return true end                 -- 凱蒂的郵哨
+		if TryAnnounce(config.spells.bots, Bots) then return end              -- 修理機器人
+		if TryAnnounce(config.spells.katy_stampwhistle) then return end       -- 凱蒂的郵哨
 	elseif event == "SPELL_CREATE" then
-		if TryAnnounce(config.spells.ritual_of_summoning) then return true end     -- 召喚儀式
-		if TryAnnounce(config.spells.moll_e) then return true end                  -- MOLL-E 郵箱
-		if TryAnnounce(config.spells.create_soulwell) then return true end         -- 靈魂之井
-		if TryAnnounce(config.spells.toys, Toys) then return true end              -- 玩具
-		if TryAnnounce(config.spells.portals, Portals) then return true end        -- 傳送門
+		if TryAnnounce(config.spells.ritual_of_summoning) then return end     -- 召喚儀式
+		if TryAnnounce(config.spells.moll_e) then return end                  -- MOLL-E 郵箱
+		if TryAnnounce(config.spells.create_soulwell) then return end         -- 靈魂之井
+		if TryAnnounce(config.spells.toys, Toys) then return end              -- 玩具
+		if TryAnnounce(config.spells.portals, Portals) then return end        -- 傳送門
 	end
-
-	return false
 end
 
 function AS:Combat(...)
@@ -244,7 +255,6 @@ function AS:Combat(...)
 	end
 
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
-	
 
 	if destName then destName = destName:gsub("%-[^|]+", "") else return end
 	if sourceName then sourceName = sourceName:gsub("%-[^|]+", "") else return end
@@ -287,24 +297,68 @@ function AS:Combat(...)
 	return false
 end
 
+function AS:Taunt(...)
+	local config = self.db.taunt_spells
+	if not config.enabled then return end
+
+	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, missType = ...
+	if not spellId or not sourceGUID then return end
+	local sourceType = strsplit("-", sourceGUID)
+
+	-- 找到宠物的主人
+	-- 参考自 https://www.wowinterface.com/forums/showthread.php?t=43082
+	local tempTooltip = CreateFrame( "GameTooltip", "FindPetOwnerToolTip", nil, "GameTooltipTemplate" )
+	tempTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
+	local tempPetDetails = _G["FindPetOwnerToolTipTextLeft2"]
+
+	local function getPetOwner(pet_name)
+		tempTooltip:ClearLines()
+		tempTooltip:SetUnit(pet_name)
+		local details = tempPetDetails:GetText()
+		if not details then return nil end
+		local split_word = "'"
+		if GetLocale() == "zhCN" or GetLocale() == "zhTW" then split_word = "的" end
+		return select(1, string.split(split_word, details))
+	end
+
+	-- if sourceType == "Player" then
+	-- 	print("施法者为玩家：", sourceName, GetSpellLink(spellId))
+	-- elseif sourceType == "Pet" and sourceType == "Creature" then
+	-- 	print("施法者为宠物：", sourceName, getPetOwner(sourceName), GetSpellLink(spellId))
+	-- else 
+	-- 	print("施法者未知：", sourceType, sourceName)
+	-- end
+
+	-- if event == "SPELL_MISSED" then
+		
+	-- elseif event == "SPELL_AURA_APPLIED" then
+	
+	-- end
+
+
+
+	-- if TauntSpells[spellID]
+
+
+end
+
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
-	-- 为了防止多次传入验证，如果法术事件可能匹配多种类型，
-	-- 那么就根据返回值来判断是否终止来减少资源消耗
-	-- 所以要新建函数种类的话也需要函数给予一个确切的消息：该法术是否属于这个门类
-	-- 打断由于其特殊性（一个函数handle就够了），不需要进行这个判断。
-
 	if subEvent == "SPELL_CAST_SUCCESS" then
 		if self:Combat(CombatLogGetCurrentEventInfo()) then return end
-		if self:Utility(CombatLogGetCurrentEventInfo()) then return end
+		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_SUMMON" then
 		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_CREATE" then
 		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_INTERRUPT" then
 		self:Interrupt(CombatLogGetCurrentEventInfo())
-    end
+	elseif subEvent == "SPELL_AURA_APPLIED" then
+		self:Taunt(CombatLogGetCurrentEventInfo())
+	elseif subEvent == "SPELL_MISSED" then
+		self:Taunt(CombatLogGetCurrentEventInfo())
+	end
 end
 
 function AS:Initialize()

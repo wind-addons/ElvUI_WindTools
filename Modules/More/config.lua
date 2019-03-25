@@ -134,6 +134,10 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
+		["taunt_spells"] = {
+			["enabled"] = true,
+			
+		}
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -197,6 +201,7 @@ WT.ToolConfigs["More Tools"] = {
 			order = 5,
 			name = L["Interrupt"],
 			type = "group",
+			guiInline = false,
 			args = {
 				enable = {
 					order = 1,

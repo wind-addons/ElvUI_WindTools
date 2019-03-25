@@ -98,16 +98,28 @@ local Portals = {
 	[120146] = true,	-- 遠古達拉然
 }
 
+local Resurrection = {
+	[20484] = true,		-- 復生
+	[61999] = true,		-- 盟友復生
+	[20707] = true,		-- 靈魂石
+	[50769] = true,		-- 復活
+	[2006]  = true,		-- 復活術
+	[7328]  = true,		-- 救贖
+	[2008]  = true,		-- 先祖之魂
+	[115178] = true,	-- 回命訣
+	[265116] = true,	-- 不穩定的時間轉移器（工程學）
+}
+
 local CombatResurrection = {
-	[61999] = true,	-- 盟友復生
-	[20484] = true,	-- 復生
-	[20707] = true,	-- 靈魂石
+	[61999] = true,	    -- 盟友復生
+	[20484] = true,	    -- 復生
+	[20707] = true,	    -- 靈魂石
+	[265116] = true,	-- 不穩定的時間轉移器（工程學）
 }
 local ThreatTransfer = {
 	[34477] = true,	-- 誤導
 	[57934] = true,	-- 偷天換日
 }
-
 
 function AS:SendMessage(text, channel, raid_warning)
 	-- 忽视不通告讯息
@@ -200,18 +212,20 @@ function AS:Utility(...)
 
 	-- 绑定事件
 	if event == "SPELL_CAST_SUCCESS" then
-		if TryAnnounce(config.spells.conjure_refreshment) then return end     -- 召喚餐點桌
-		if TryAnnounce(config.spells.feasts, Feasts) then return end          -- 大餐大鍋
+		if TryAnnounce(config.spells.conjure_refreshment) then return true end     -- 召喚餐點桌
+		if TryAnnounce(config.spells.feasts, Feasts) then return true end          -- 大餐大鍋
 	elseif event == "SPELL_SUMMON" then
-		if TryAnnounce(config.spells.bots, Bots) then return end              -- 修理機器人
-		if TryAnnounce(config.spells.cmoll_e) then return end                 -- 凱蒂的郵哨
+		if TryAnnounce(config.spells.bots, Bots) then return true end              -- 修理機器人
+		if TryAnnounce(config.spells.cmoll_e) then return true end                 -- 凱蒂的郵哨
 	elseif event == "SPELL_CREATE" then
-		if TryAnnounce(config.spells.ritual_of_summoning) then return end     -- 召喚儀式
-		if TryAnnounce(config.spells.moll_e) then return end                  -- MOLL-E 郵箱
-		if TryAnnounce(config.spells.create_soulwell) then return end         -- 靈魂之井
-		if TryAnnounce(config.spells.toys, Toys) then return end              -- 玩具
-		if TryAnnounce(config.spells.portals, Portals) then return end        -- 傳送門
+		if TryAnnounce(config.spells.ritual_of_summoning) then return true end     -- 召喚儀式
+		if TryAnnounce(config.spells.moll_e) then return true end                  -- MOLL-E 郵箱
+		if TryAnnounce(config.spells.create_soulwell) then return true end         -- 靈魂之井
+		if TryAnnounce(config.spells.toys, Toys) then return true end              -- 玩具
+		if TryAnnounce(config.spells.portals, Portals) then return true end        -- 傳送門
 	end
+
+	return false
 end
 
 function AS:Combat(...)
@@ -276,9 +290,14 @@ end
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
+	-- 为了防止多次传入验证，如果法术事件可能匹配多种类型，
+	-- 那么就根据返回值来判断是否终止来减少资源消耗
+	-- 所以要新建函数种类的话也需要函数给予一个确切的消息：该法术是否属于这个门类
+	-- 打断由于其特殊性（一个函数handle就够了），不需要进行这个判断。
+
 	if subEvent == "SPELL_CAST_SUCCESS" then
 		if self:Combat(CombatLogGetCurrentEventInfo()) then return end
-		self:Utility(CombatLogGetCurrentEventInfo())
+		if self:Utility(CombatLogGetCurrentEventInfo()) then return end
 	elseif subEvent == "SPELL_SUMMON" then
 		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_CREATE" then

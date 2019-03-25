@@ -10,6 +10,54 @@ local pairs = pairs
 
 local PlayerName = UnitName("player")
 
+-- 一个对 CJK 支持更好的分割字符串函数
+-- 参考自 https://blog.csdn.net/sftxlin/article/details/48275197
+local function BetterSplit(str, split_char)
+
+    if str == "" or str == nil then 
+        return {};
+    end
+	local split_len = string.len(split_char)
+    local sub_str_tab = {};
+    local i = 0;
+    local j = 0;
+    while true do
+        j = string.find(str, split_char,i+split_len);
+        if string.len(str) == i then 
+            break;
+        end
+ 
+ 
+        if j == nil then
+            table.insert(sub_str_tab,string.sub(str,i));
+            break;
+        end;
+ 
+ 
+        table.insert(sub_str_tab,string.sub(str,i,j-1));
+        i = j+split_len;
+    end
+    return sub_str_tab;
+end
+
+-- 找到宠物的主人
+-- 参考自 https://www.wowinterface.com/forums/showthread.php?t=43082
+local tempTooltip = CreateFrame( "GameTooltip", "FindPetOwnerToolTip", nil, "GameTooltipTemplate" )
+tempTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
+local tempPetDetails = _G["FindPetOwnerToolTipTextLeft2"]
+
+local function GetPetInfo(pet_name)
+	tempTooltip:ClearLines()
+	tempTooltip:SetUnit(pet_name)
+	local details = tempPetDetails:GetText()
+	if not details then return nil end
+	local split_word = "'"
+	if GetLocale() == "zhCN" or GetLocale() == "zhTW" then split_word = "的" end
+	local pet_owner = BetterSplit(details, split_word)[1]
+	local pet_role = BetterSplit(details, split_word)[2]
+	return pet_owner, pet_role
+end
+
 local Feasts = {
 	[126492] = true,  -- 燒烤盛宴
 	[126494] = true,  -- 豪华燒烤盛宴
@@ -134,11 +182,18 @@ local ThreatTransfer = {
 	[57934] = true,	-- 偷天換日
 }
 
-function AS:SendMessage(text, channel, raid_warning)
+function AS:SendMessage(text, channel, raid_warning, whisper_target)
 	-- 忽视不通告讯息
 	if channel == "NONE" then return end
 	-- 聊天框输出
 	if channel == "SELF" then ChatFrame1:AddMessage(text) return end
+	-- 密语
+	if channel == "WHISPER" then
+		if whisper_target then 
+			SendChatMessage(text, channel, nil, whisper_target)
+		end
+		return
+	end
 	-- 表情频道前置冒号以优化显示
 	if channel == "EMOTE" then text = ": "..text end
 	-- 如果允许团队警告
@@ -303,7 +358,7 @@ function AS:Taunt(...)
 	if not spellId or not sourceGUID or not destGUID or not Taunt[spellId] then return false end
 
 	local sourceType = strsplit("-", sourceGUID)
-	local petOwner
+	local petOwner, petRole
 	
 	-- 格式化自定义字符串
 	local function FormatMessageWithPet(custom_message)
@@ -314,6 +369,7 @@ function AS:Taunt(...)
 		custom_message = gsub(custom_message, "%%target%%", destName)
 		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
 		custom_message = gsub(custom_message, "%%pet%%", sourceName)
+		custom_message = gsub(custom_message, "%%pet_role%%", petRole)
 		return custom_message
 	end
 
@@ -324,22 +380,6 @@ function AS:Taunt(...)
 		custom_message = gsub(custom_message, "%%target%%", destName)
 		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
 		return custom_message
-	end
-
-	-- 找到宠物的主人
-	-- 参考自 https://www.wowinterface.com/forums/showthread.php?t=43082
-	local tempTooltip = CreateFrame( "GameTooltip", "FindPetOwnerToolTip", nil, "GameTooltipTemplate" )
-	tempTooltip:SetOwner( WorldFrame, "ANCHOR_NONE" )
-	local tempPetDetails = _G["FindPetOwnerToolTipTextLeft2"]
-
-	local function GetPetOwner(pet_name)
-		tempTooltip:ClearLines()
-		tempTooltip:SetUnit(pet_name)
-		local details = tempPetDetails:GetText()
-		if not details then return nil end
-		local split_word = "'"
-		if GetLocale() == "zhCN" or GetLocale() == "zhTW" then split_word = "的" end
-		return select(1, string.split(split_word, details))
 	end
 	
 	if event == "SPELL_AURA_APPLIED" then
@@ -353,7 +393,7 @@ function AS:Taunt(...)
 				self:SendMessage(FormatMessageWithoutPet(config.others.player.success_text), self:GetChannel(config.others.player.success_channel))
 			end
 		elseif sourceType == "Pet" or sourceType == "Creature" then
-			petOwner = GetPetOwner(sourceName)
+			petOwner, petRole = GetPetInfo(sourceName)
 			if petOwner == PlayerName then
 				if config.player.pet.enabled then
 					self:SendMessage(FormatMessageWithPet(config.player.pet.success_text), self:GetChannel(config.player.pet.success_channel))
@@ -373,7 +413,7 @@ function AS:Taunt(...)
 				self:SendMessage(FormatMessageWithoutPet(config.others.player.failed_text), self:GetChannel(config.others.player.failed_channel))
 			end
 		elseif sourceType == "Pet" or sourceType == "Creature" then
-			petOwner = GetPetOwner(sourceName)
+			petOwner, petRole = GetPetInfo(sourceName)
 			if petOwner == PlayerName then
 				if config.player.pet.enabled then
 					self:SendMessage(FormatMessageWithPet(config.player.pet.failed_text), self:GetChannel(config.player.pet.failed_channel))
@@ -387,10 +427,34 @@ function AS:Taunt(...)
 	return true
 end
 
+function AS:SayThanks(...)
+	local config = self.db.thanks
+	if not config.enabled then return end
+	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
+	if not destGUID or not sourceGUID then return end
+
+	-- 格式化自定义字符串
+	local function FormatMessage(custom_message)
+		destName = destName:gsub("%-[^|]+", "")
+		sourceName = sourceName:gsub("%-[^|]+", "")
+		custom_message = gsub(custom_message, "%%player%%", destName)
+		custom_message = gsub(custom_message, "%%target%%", sourceName)
+		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
+		return custom_message
+	end
+	
+	if Resurrection[spellId] then
+		if config.resurrection.enabled and sourceGUID == UnitGUID("player") and destGUID ~= UnitGUID("player") then
+			self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, destName)
+		end
+	end
+end
+
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local subEvent = select(2, CombatLogGetCurrentEventInfo())
 
 	if subEvent == "SPELL_CAST_SUCCESS" then
+		self:SayThanks(CombatLogGetCurrentEventInfo())
 		if self:Combat(CombatLogGetCurrentEventInfo()) then return end
 		self:Utility(CombatLogGetCurrentEventInfo())
 	elseif subEvent == "SPELL_SUMMON" then

@@ -156,8 +156,8 @@ P["WindTools"]["More Tools"] = {
 				},
 				["pet"] = {
 					["enabled"] = true,
-					["success_text"] = L["My %pet% taunted %target% successfully!"],
-					["failed_text"] = L["My %pet% failed on taunting %target%!"],
+					["success_text"] = L["My %pet_role% %pet% taunted %target% successfully!"],
+					["failed_text"] = L["My %pet_role% %pet% failed on taunting %target%!"],
 					["success_channel"] = {
 						["solo"] = "EMOTE",
 						["party"] = "PARTY",
@@ -192,8 +192,8 @@ P["WindTools"]["More Tools"] = {
 				},
 				["pet"] = {
 					["enabled"] = false,
-					["success_text"] = L["%player%'s %pet% taunted %target% successfully!"],
-					["failed_text"] = L["%player%'s %pet% failed on taunting %target%!"],
+					["success_text"] = L["%player%\'s %pet_role% %pet% taunted %target% successfully!"],
+					["failed_text"] = L["%player%\'s %pet_role% %pet% failed on taunting %target%!"],
 					["success_channel"] = {
 						["solo"] = "NONE",
 						["party"] = "NONE",
@@ -209,6 +209,18 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
+		["thanks"] = {
+			["resurrection"] = {
+				["enabled"] = true,
+				["text"] = L["%target%, thank you for using %spell% to revive me. :)"],
+				["channel"] = {
+					["solo"] = "WHISPER",
+					["party"] = "WHISPER",
+					["instance"] = "WHISPER",
+					["raid"] = "WHISPER",
+				},
+			}
+		}
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -1362,7 +1374,6 @@ WT.ToolConfigs["More Tools"] = {
 		["taunt_spells"] = {
 			order = 8,
 			name = L["Taunt spells"],
-			type = "group",
 			args = {
 				enable = {
 					order = 1,
@@ -1609,7 +1620,7 @@ WT.ToolConfigs["More Tools"] = {
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Success"],
-									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%pet_role%", L["Pet role"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 								},
 								success_text_example = {
 									order = 5,
@@ -1619,6 +1630,7 @@ WT.ToolConfigs["More Tools"] = {
 										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
 										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
 										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%pet_role%%", L["Totem"])
 										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
 										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
@@ -1629,7 +1641,7 @@ WT.ToolConfigs["More Tools"] = {
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Failed"],
-									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+									desc = FormatDesc("%player%",  L["Your name"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%pet_role%", L["Pet role"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 								},
 								failed_text_example = {
 									order = 7,
@@ -1639,6 +1651,7 @@ WT.ToolConfigs["More Tools"] = {
 										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
 										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
 										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%pet_role%%", L["Totem"])
 										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
 										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
@@ -1975,7 +1988,7 @@ WT.ToolConfigs["More Tools"] = {
 						},
 						pet = {
 							order = 2,
-							name = L["Other players' pet"],
+							name = L["Other players\' pet"],
 							get = function(info)
 								return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]]
 							end,
@@ -2009,7 +2022,7 @@ WT.ToolConfigs["More Tools"] = {
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Success"],
-									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%pet_role%", L["Pet role"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 								},
 								success_text_example = {
 									order = 5,
@@ -2019,6 +2032,7 @@ WT.ToolConfigs["More Tools"] = {
 										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["success_text"]
 										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
 										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%pet_role%%", L["Totem"])
 										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
 										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
@@ -2029,7 +2043,7 @@ WT.ToolConfigs["More Tools"] = {
 									type = "input",
 									width = 'full',
 									name = L["Text"].." - "..L["Failed"],
-									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+									desc = FormatDesc("%player%",  L["Name of the player"]).."\n"..FormatDesc("%pet%", L["Pet name"]).."\n"..FormatDesc("%pet_role%", L["Pet role"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
 								},
 								failed_text_example = {
 									order = 7,
@@ -2039,6 +2053,7 @@ WT.ToolConfigs["More Tools"] = {
 										local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]]["failed_text"]
 										custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
 										custom_message = gsub(custom_message, "%%pet%%", L["Niuzao"])
+										custom_message = gsub(custom_message, "%%pet_role%%", L["Totem"])
 										custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
 										custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(20484))
 										return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
@@ -2171,6 +2186,130 @@ WT.ToolConfigs["More Tools"] = {
 					},
 				},
 			},
+		},
+		["thanks"] = {
+			order = 9,
+			name = L["Say thanks"],
+			args = {
+				enable = {
+					order = 1,
+					name = L["Enable"],
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] = value end,
+				},
+				resurrection = {
+					order = 2,
+					name = L["Resurrection"],
+					disabled = function(info)
+						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
+					end,
+					get = function(info)
+						return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]] = value
+					end,
+					args = {
+						enabled = {
+							order = 1,
+							disabled = false,
+							name = L["Enable"],
+						},
+						default_text = {
+							order = 2,
+							type = "execute",
+							func = function(info)
+								E.db.WindTools["More Tools"]["Announce System"][info[4]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]]["text"]
+							end,
+							name = L["Use default text"],
+						},
+						text = {
+							order = 4,
+							type = "input",
+							width = 'full',
+							name = L["Text"],
+							desc = FormatDesc("%player%", L["Your name"]).."\n"..FormatDesc("%target%", L["Target name"]).."\n"..FormatDesc("%spell%", L["The spell link"]),
+						},
+						example = {
+							order = 5,
+							type = "description",
+							hidden = function(info) return not E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]]["enabled"] end,
+							name = function(info)
+								local custom_message = E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]]["text"]
+								custom_message = gsub(custom_message, "%%player%%", UnitName("player"))
+								custom_message = gsub(custom_message, "%%target%%", L["Sylvanas"])
+								custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(61999))
+								return "\n"..WT:ColorStr(L["Example"])..": "..custom_message.."\n"
+							end
+						},
+						channel = {
+							order = 8,
+							name = L["Channel"],
+							get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] end,
+							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[6]][info[#info]] = value end,
+							args = {
+								["solo"] = {
+									order = 1,
+									name = L["Solo"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["WHISPER"] = L["Whisper"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["party"] = {
+									order = 2,
+									name = L["In party"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["WHISPER"] = L["Whisper"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["instance"] = {
+									order = 3,
+									name = L["In instance"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["WHISPER"] = L["Whisper"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["INSTANCE_CHAT"] = L["Instance"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+								["raid"] = {
+									order = 4,
+									name = L["In raid"],
+									type = "select",
+									values = {
+										["NONE"] = L["None"],
+										["WHISPER"] = L["Whisper"],
+										["SELF"] = L["Self(Chat Frame)"],
+										["EMOTE"] = L["Emote"],
+										["PARTY"] = L["Party"],
+										["RAID"] = L["Raid"],
+										["YELL"] = L["Yell"],
+										["SAY"] = L["Say"],
+									},
+								},
+							},
+						},
+					},
+				},
+			},	
 		},
 	},
 	["CVarsTool"] = {

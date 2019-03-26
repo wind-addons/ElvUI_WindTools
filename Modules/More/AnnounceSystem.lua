@@ -246,9 +246,10 @@ function AS:Interrupt(...)
 
 	-- 他人打断
 	if config.others.enabled then
-		if IsInGroup() and (UnitInRaid(sourceName) or UnitInParty(sourceName)) then
-			self:SendMessage(FormatMessage(config.others.text), self:GetChannel(config.others.channel))
-		end
+		local sourceType = strsplit("-", sourceGUID)
+		if sourceType == "Pet" then sourceName = select(1, GetPetInfo(sourceName)) end
+		if not UnitInRaid(sourceName) or not UnitInParty(sourceName) then return end
+		self:SendMessage(FormatMessage(config.others.text), self:GetChannel(config.others.channel))
 	end
 end
 

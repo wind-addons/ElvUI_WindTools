@@ -5,6 +5,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local ElvUF = ElvUI.oUF
+local RC = LibStub("LibRangeCheck-2.0")
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 --Cache global variables
 --Lua functions
@@ -455,5 +456,20 @@ ElvUF.Tags.Methods["power:percent-short"] = function(unit)
 	local pType = UnitPowerType(unit)
 	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
 	local String = GetFormattedText(min, max, "PERCENT", true)
+	return String
+end
+
+-- 距离
+ElvUF.Tags.Methods["range"] = function(unit)
+	if not unit then return end
+	local min, max = RC:GetRange(unit)
+	local String = format("%s - %s", min, max)
+	return String
+end
+
+ElvUF.Tags.Methods["range:expect"] = function(unit)
+	if not unit then return end
+	local min, max = RC:GetRange(unit)
+	local String = format("%s", floor((min+max)/2))
 	return String
 end

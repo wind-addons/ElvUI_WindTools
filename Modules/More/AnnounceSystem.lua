@@ -479,8 +479,7 @@ function AS:LFG_COMPLETION_REWARD(event, ...)
 end
 
 function AS:CHALLENGE_MODE_COMPLETED(event, ...)
-	AS:SayThanks_Goodbye()
-	--C_Timer.After(2, )
+	print("--挑戰模式完成事件--")
 end
 
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)

@@ -26,7 +26,7 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 			["others"] = {
-				["enabled"] = true,
+				["enabled"] = false,
 				["text"] = L["%player% interrupted %target%\'s %target_spell%!"],
 				["channel"] = {
 					["party"] = "EMOTE",
@@ -138,7 +138,7 @@ P["WindTools"]["More Tools"] = {
 			["enabled"] = true,
 			["player"] = {
 				["player"] = {
-					["enabled"] = true,
+					["enabled"] = false,
 					["success_text"] = L["I taunted %target% successfully!"],
 					["provoke_all_text"] = L["I taunted all enemies in 10 yards!"],
 					["failed_text"] = L["I failed on taunting %target%!"],
@@ -156,7 +156,7 @@ P["WindTools"]["More Tools"] = {
 					},
 				},
 				["pet"] = {
-					["enabled"] = true,
+					["enabled"] = false,
 					["success_text"] = L["My %pet_role% %pet% taunted %target% successfully!"],
 					["failed_text"] = L["My %pet_role% %pet% failed on taunting %target%!"],
 					["success_channel"] = {

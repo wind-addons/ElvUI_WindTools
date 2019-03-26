@@ -7,7 +7,7 @@
 ## Notes: Collection of useful features for ElvUI.
 ## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
 ## Notes-zhCN: 适用于 ElvUI 的各种小功能集合。
-## RequiredDeps: ElvUI, ElvUI_Config
+## RequiredDeps: ElvUI
 ## DefaultState: enabled
 
 ## X-Website: http://bbs.ngacn.cc/read.php?tid=12142815

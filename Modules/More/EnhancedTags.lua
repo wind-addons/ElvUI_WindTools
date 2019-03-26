@@ -287,6 +287,10 @@ ElvUF.Tags.Methods["classcolor:deathknight"] = function()
 	return Hex(_COLORS.class["DEATHKNIGHT"])
 end
 
+ElvUF.Tags.Methods["classcolor:demonhunter"] = function()
+	return Hex(_COLORS.class["DEMONHUNTER"])
+end
+
 ElvUF.Tags.Methods["classcolor:druid"] = function()
 	return Hex(_COLORS.class["DRUID"])
 end
@@ -298,6 +302,15 @@ end
 ElvUF.Tags.Methods["classcolor:rogue"] = function()
 	return Hex(_COLORS.class["ROGUE"])
 end
+
+ElvUF.Tags.Methods["classcolor:dk"] = function()
+	return Hex(_COLORS.class["DEATHKNIGHT"])
+end
+
+ElvUF.Tags.Methods["classcolor:dh"] = function()
+	return Hex(_COLORS.class["DEMONHUNTER"])
+end
+
 
 -- 取消百分号
 -- 血量 100

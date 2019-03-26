@@ -192,22 +192,22 @@ local function GetFormattedText(min, max, style, noDecimal)
 	end
 end
 
--- Credits goes to Simpy 
-local function abbrev(text)
-	local endname = match(text, ".+%s(.+)$")
-	if endname then
-		local newname = ""
-		for k, v in gmatch(text, "%S-%s") do
-			newname = newname .. sub(k,1,1) .. ". "
+local function abbrev(name)
+	local letters, lastWord = '', strmatch(name, '.+%s(.+)$')
+	if lastWord then
+		for word in gmatch(name, '.-%s') do
+			local firstLetter = utf8sub(gsub(word, '^[%s%p]*', ''), 1, 1)
+			if firstLetter ~= utf8lower(firstLetter) then
+				letters = format('%s%s. ', letters, firstLetter)
+			end
 		end
-		text = newname .. endname
+		name = format('%s%s', letters, lastWord)
 	end
-	return text
+	return name
 end
 
---[[
-	Add custom tags below this block
---]]
+-- Add custom tags below
+
 ElvUF.Tags.Events["name:abbrev"] = "UNIT_NAME_UPDATE"
 ElvUF.Tags.Methods["name:abbrev"] = function(unit)
 	local name = UnitName(unit)

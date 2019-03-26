@@ -3,7 +3,7 @@ local L = AceLocale:NewLocale("ElvUI", "enUS")
 if not L then return end
 -- enUS
 -- 设置主界面
-L["WindTools"] = "|cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r"
+L["WindTools"] = "|cff0287d0Wi|r|cff1297e0n|r|cff22a7f0dT|r|cff19b5feo|r|cff29c5ffo|r|cff39d5ffl|r|cff39d5ffs|r"
 L["%s version: %s"] = true
 L["%s is a collection of useful tools."] = true
 L["Release / Update Link"] = true

@@ -462,7 +462,7 @@ function AS:SayThanks(...)
 	if Resurrection[spellId] then
 		-- 排除预先绑定灵魂石的情况
 		if not InCombatLockdown() and spellId == 20707 then return end
-		if config.resurrection.enabled and sourceGUID == UnitGUID("player") and destGUID ~= UnitGUID("player") then
+		if config.resurrection.enabled and sourceGUID ~= UnitGUID("player") and destGUID == UnitGUID("player") then
 			self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, destName)
 		end
 	end

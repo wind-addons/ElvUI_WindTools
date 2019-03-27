@@ -13,7 +13,6 @@ local PlayerName = UnitName("player")
 -- 一个对 CJK 支持更好的分割字符串函数
 -- 参考自 https://blog.csdn.net/sftxlin/article/details/48275197
 local function BetterSplit(str, split_char)
-
     if str == "" or str == nil then 
         return {};
     end
@@ -177,6 +176,7 @@ local CombatResurrection = {
 	[20707] = true,	    -- 靈魂石
 	[265116] = true,	-- 不穩定的時間轉移器（工程學）
 }
+
 local ThreatTransfer = {
 	[34477] = true,	-- 誤導
 	[57934] = true,	-- 偷天換日
@@ -206,7 +206,7 @@ function AS:SendMessage(text, channel, raid_warning, whisper_target)
 	SendChatMessage(text, channel)
 end
 
-function AS:GetChannel(channel_db, raid_warning)
+function AS:GetChannel(channel_db)
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
 		return channel_db.instance
 	elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
@@ -217,6 +217,21 @@ function AS:GetChannel(channel_db, raid_warning)
 		return channel_db.solo
 	end
 	return "NONE"
+end
+
+function AS:SendAddonMessage(message)
+	if IsInGroup() and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and not IsInRaid() then
+		C_ChatInfo.SendAddonMessage(self.Prefix, message, "PARTY")
+	elseif IsInGroup() and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and IsInRaid() then
+		C_ChatInfo.SendAddonMessage(self.Prefix, message, "RAID")
+	end
+end
+
+function AS:CanIAnnounce()
+	self.AllUsers = {}
+	self.ActiveUser = nil
+	self.ActiveUserOfficer = nil
+	if IsInGroup() then self:SendAddonMessage("HELLO") else self.ActiveUser = PlayerName end
 end
 
 function AS:Interrupt(...)
@@ -261,6 +276,8 @@ function AS:Utility(...)
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
 	sourceName = sourceName:gsub("%-[^|]+", "")
 
+	if self.ActiveUser ~= PlayerName then return end
+
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
 		custom_message = gsub(custom_message, "%%player%%", sourceName)
@@ -302,6 +319,8 @@ function AS:Combat(...)
 	local difficultyId = select(3, GetInstanceInfo())
 	if not destName or not sourceName then return end
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
+
+	if self.ActiveUser ~= PlayerName then return end
 
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
@@ -480,7 +499,47 @@ function AS:LFG_COMPLETION_REWARD(event, ...)
 end
 
 function AS:CHALLENGE_MODE_COMPLETED(event, ...)
-	print("--挑戰模式完成事件--")
+	C_Timer.NewTimer(2, self.SayThanks_Goodbye())
+end
+
+function AS:GROUP_ROSTER_UPDATE(event, ...)
+	self:CanIAnnounce()
+end
+
+function AS:ZONE_CHANGED_NEW_AREA(event, ...)
+	self:CanIAnnounce()
+end
+
+function AS:CHAT_MSG_ADDON(event, ...)
+	local prefix, message, channel, sender = select(1, ...)
+	if prefix ~= self.Prefix then return end
+	-- 默认用户进入队伍时自动打个招呼
+	if message == "HELLO" then
+		-- 如果别人打招呼了将告诉这个人用户的权限来比较
+		local office = UnitIsGroupAssistant("player") and "1" or "0"
+		self:SendAddonMessage("FB_"..office)
+	elseif message:match("^FB_") then
+		local officer = BetterSplit(message, "_")[2] == "1"
+		self.AllUsers[sender] = officer
+
+		for user_name, is_officer in pairs(self.AllUsers) do
+			if self.ActiveUser == nil then
+				self.ActiveUser = user_name
+				self.ActiveUserOfficer = is_officer
+			end
+			-- 从权限上管控
+			if is_officer and not self.ActiveUserOfficer then
+				self.ActiveUser = user_name
+				self.ActiveUserOfficer = is_officer
+			elseif is_officer == self.ActiveUserOfficer then
+				if user_name < self.ActiveUser then
+					self.ActiveUser = user_name
+				end
+			end
+		end
+
+		print("ActiveUser is: ", self.ActiveUser)
+	end
 end
 
 function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
@@ -503,8 +562,6 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	end
 end
 
-
-
 function AS:Initialize()
 	self.db = E.db.WindTools["More Tools"]["Announce System"]
 	if not self.db.enabled then return end
@@ -512,8 +569,18 @@ function AS:Initialize()
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("LFG_COMPLETION_REWARD")
 	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("CHAT_MSG_ADDON")
+
+	self.Prefix = "WIND_AS"
+	self.AllUsers = {}
+	local regStatus = C_ChatInfo.RegisterAddonMessagePrefix(self.Prefix)
+	if not regStatus then print("[WindTools Announce System] Prefix error") end
 
 	self.MonkProvokeAllTimeCache = {}
+
+	self.CanIAnnounce()
 end
 
 local function InitializeCallback()

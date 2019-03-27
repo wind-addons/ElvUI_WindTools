@@ -202,6 +202,7 @@ EFL.ClientColor = {
 }
 function EFL:ClassColorCode(class)
 	local color = class and (CUSTOM_CLASS_COLORS) or { r = 1, g = 1, b = 1 }
+	if not color.r or not color.g or not color.b then color = { r = 1, g = 1, b = 1 } end
 	return format('|cFF%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
 end
 function EFL:UpdateFriends(button)

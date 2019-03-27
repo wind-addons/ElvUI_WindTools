@@ -517,15 +517,14 @@ function AS:CHAT_MSG_ADDON(event, ...)
 	if prefix ~= self.Prefix then return end
 	-- 默认用户进入队伍时自动打个招呼
 	if message == "HELLO" then
-		-- 如果别人打招呼了将告诉这个人用户的权限来比较
 		local authority = 0
+		if not IsInGroup() then return end
 		if UnitIsGroupLeader("player") then authority = 2 end
 		if UnitIsGroupAssistant("player") then authority = 1 end
 		self:SendAddonMessage("FB_"..authority)
 	elseif message:match("^FB_") then
-		local authority = tonumber(select(2, strsplit("_", "FB_2")))
+		local authority = tonumber(select(2, strsplit("_", message)))
 		self.AllUsers[sender] = authority
-
 		for user_name, user_authority in pairs(self.AllUsers) do
 			if self.ActiveUser == nil then
 				self.ActiveUser = user_name

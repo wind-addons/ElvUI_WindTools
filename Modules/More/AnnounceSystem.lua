@@ -538,7 +538,7 @@ function AS:CHAT_MSG_ADDON(event, ...)
 				self.ActiveUserAuthority = user_authority
 			end
 		end
-		print("[WindTools DEBUG] ActiveUser is: ", self.ActiveUser)
+		--print("[WindTools DEBUG] ActiveUser is: ", self.ActiveUser)
 	end
 end
 

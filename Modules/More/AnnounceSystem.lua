@@ -8,7 +8,8 @@ local gsub = string.gsub
 local format = string.format
 local pairs = pairs
 
-local PlayerName = UnitName("player")
+local PlayerName, PlayerRelam =  UnitFullName("player")
+local PlayerNameWithServer = format("%s-%s", PlayerName, PlayerRelam)
 
 -- 一个对 CJK 支持更好的分割字符串函数
 -- 参考自 https://blog.csdn.net/sftxlin/article/details/48275197
@@ -228,10 +229,11 @@ function AS:SendAddonMessage(message)
 end
 
 function AS:CanIAnnounce()
+	if not self then return end
 	self.AllUsers = {}
 	self.ActiveUser = nil
 	self.ActiveUserOfficer = nil
-	if IsInGroup() then self:SendAddonMessage("HELLO") else self.ActiveUser = PlayerName end
+	if IsInGroup() then self:SendAddonMessage("HELLO") else self.ActiveUser = PlayerNameWithServer end
 end
 
 function AS:Interrupt(...)
@@ -276,7 +278,7 @@ function AS:Utility(...)
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
 	sourceName = sourceName:gsub("%-[^|]+", "")
 
-	if self.ActiveUser ~= PlayerName then return end
+	if self.ActiveUser ~= PlayerNameWithServer then return end
 
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
@@ -320,7 +322,7 @@ function AS:Combat(...)
 	if not destName or not sourceName then return end
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
 
-	if self.ActiveUser ~= PlayerName then return end
+	if self.ActiveUser ~= PlayerNameWithServer then return end
 
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
@@ -538,7 +540,7 @@ function AS:CHAT_MSG_ADDON(event, ...)
 			end
 		end
 
-		print("ActiveUser is: ", self.ActiveUser)
+		print("[WindTools DEBUG] ActiveUser is: ", self.ActiveUser)
 	end
 end
 

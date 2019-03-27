@@ -232,7 +232,7 @@ function AS:CanIAnnounce()
 	if not self then return end
 	self.AllUsers = {}
 	self.ActiveUser = nil
-	self.ActiveUserOfficer = nil
+	self.ActiveUserAuthority = nil
 	if IsInGroup() then self:SendAddonMessage("HELLO") else self.ActiveUser = PlayerNameWithServer end
 end
 
@@ -518,28 +518,26 @@ function AS:CHAT_MSG_ADDON(event, ...)
 	-- 默认用户进入队伍时自动打个招呼
 	if message == "HELLO" then
 		-- 如果别人打招呼了将告诉这个人用户的权限来比较
-		local office = UnitIsGroupAssistant("player") and "1" or "0"
-		self:SendAddonMessage("FB_"..office)
+		local authority = 0
+		if UnitIsGroupLeader("player") then authority = 2 end
+		if UnitIsGroupAssistant("player") then authority = 1 end
+		self:SendAddonMessage("FB_"..authority)
 	elseif message:match("^FB_") then
-		local officer = BetterSplit(message, "_")[2] == "1"
-		self.AllUsers[sender] = officer
-
-		for user_name, is_officer in pairs(self.AllUsers) do
+		local authority = tonumber(select(2, strsplit("_", "FB_2")))
+		self.AllUsers[sender] = authority
+		
+		for user_name, user_authority in pairs(self.AllUsers) do
 			if self.ActiveUser == nil then
 				self.ActiveUser = user_name
-				self.ActiveUserOfficer = is_officer
-			end
-			-- 从权限上管控
-			if is_officer and not self.ActiveUserOfficer then
+				self.ActiveUserAuthority = user_authority
+			elseif user_authority > self.ActiveUserAuthority then
 				self.ActiveUser = user_name
-				self.ActiveUserOfficer = is_officer
-			elseif is_officer == self.ActiveUserOfficer then
-				if user_name < self.ActiveUser then
-					self.ActiveUser = user_name
-				end
+				self.ActiveUserAuthority = user_authority
+			elseif user_authority == self.ActiveUserAuthority and user_name < self.ActiveUser then
+				self.ActiveUser = user_name
+				self.ActiveUserAuthority = user_authority
 			end
 		end
-
 		print("[WindTools DEBUG] ActiveUser is: ", self.ActiveUser)
 	end
 end

@@ -485,7 +485,7 @@ function AS:SayThanks(...)
 		-- 排除预先绑定灵魂石的情况
 		if not InCombatLockdown() and spellId == 20707 then return end
 		if config.resurrection.enabled and sourceGUID ~= UnitGUID("player") and destGUID == UnitGUID("player") then
-			self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, destName)
+			self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, sourceName)
 		end
 	end
 end
@@ -525,7 +525,7 @@ function AS:CHAT_MSG_ADDON(event, ...)
 	elseif message:match("^FB_") then
 		local authority = tonumber(select(2, strsplit("_", "FB_2")))
 		self.AllUsers[sender] = authority
-		
+
 		for user_name, user_authority in pairs(self.AllUsers) do
 			if self.ActiveUser == nil then
 				self.ActiveUser = user_name

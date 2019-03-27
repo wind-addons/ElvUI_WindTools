@@ -8,7 +8,7 @@ local gsub = string.gsub
 local format = string.format
 local pairs = pairs
 
-local PlayerName, PlayerRelam =  UnitFullName("player")
+local PlayerName, PlayerRelam = UnitName("player"), GetRealmName("player")
 local PlayerNameWithServer = format("%s-%s", PlayerName, PlayerRelam)
 
 -- 一个对 CJK 支持更好的分割字符串函数
@@ -497,11 +497,11 @@ function AS:SayThanks_Goodbye()
 end
 
 function AS:LFG_COMPLETION_REWARD(event, ...)
-	self.SayThanks_Goodbye()
+	C_Timer.After(1, function() self:SayThanks_Goodbye() end)
 end
 
 function AS:CHALLENGE_MODE_COMPLETED(event, ...)
-	C_Timer.NewTimer(2, self.SayThanks_Goodbye())
+	C_Timer.After(1, function() self:SayThanks_Goodbye() end)
 end
 
 function AS:GROUP_ROSTER_UPDATE(event, ...)

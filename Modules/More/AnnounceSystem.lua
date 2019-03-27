@@ -4,9 +4,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local AS = E:NewModule('Wind_AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
-local gsub = string.gsub
-local format = string.format
-local pairs = pairs
+local _G = _G
+local UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink = UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink
+local strsplit, gsub, format, pairs= strsplit, string.gsub, string.format, pairs
 
 local PlayerName, PlayerRelam = UnitName("player"), GetRealmName("player")
 local PlayerNameWithServer = format("%s-%s", PlayerName, PlayerRelam)

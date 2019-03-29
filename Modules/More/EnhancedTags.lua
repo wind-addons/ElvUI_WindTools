@@ -5,6 +5,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local ElvUF = ElvUI.oUF
+local RC = LibStub("LibRangeCheck-2.0")
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 --Cache global variables
 --Lua functions
@@ -31,64 +32,71 @@ local UnitName = UnitName
 --GLOBALS: _TAGS, Hex, _COLORS
 
 function E:ShortValue(v)
-	shortValueDec = format("%%.%df", E.db.general.decimalLength or 1)
+	local shortValueDec = format("%%.%df", E.db.general.decimalLength or 1)
+	local shortValue = abs(v)
 	if E.db.general.numberPrefixStyle == "METRIC" then
-		if abs(v) >= 1e9 then
+		if shortValue >= 1e12 then
+			return format(shortValueDec.."T", v / 1e12)
+		elseif shortValue >= 1e9 then
 			return format(shortValueDec.."G", v / 1e9)
-		elseif abs(v) >= 1e6 then
+		elseif shortValue >= 1e6 then
 			return format(shortValueDec.."M", v / 1e6)
-		elseif abs(v) >= 1e3 then
+		elseif shortValue >= 1e3 then
 			return format(shortValueDec.."k", v / 1e3)
 		else
-			return format("%s", v)
+			return format("%.0f", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "CHINESE" then
 		if E.db.WindTools["More Tools"]["Enhanced Tags"]["enabled"] then
-			if abs(v) >= 1e8 then
+			if shortValue >= 1e8 then
 				return format(shortValueDec..L["Yi"], v / 1e8)
-			elseif abs(v) >= 1e4 then
+			elseif shortValue >= 1e4 then
 				return format(shortValueDec..L["Wan"], v / 1e4)
 			else
-				return format("%s", v)
+				return format("%.0f", v)
 			end
 		else
-			if abs(v) >= 1e8 then
+			if shortValue >= 1e8 then
 				return format(shortValueDec.."Y", v / 1e8)
-			elseif abs(v) >= 1e4 then
+			elseif shortValue >= 1e4 then
 				return format(shortValueDec.."W", v / 1e4)
 			else
-				return format("%s", v)
+				return format("%.0f", v)
 			end
 		end
 	elseif E.db.general.numberPrefixStyle == "KOREAN" then
-		if abs(v) >= 1e8 then
+		if shortValue >= 1e8 then
 			return format(shortValueDec.."억", v / 1e8)
-		elseif abs(v) >= 1e4 then
+		elseif shortValue >= 1e4 then
 			return format(shortValueDec.."만", v / 1e4)
-		elseif abs(v) >= 1e3 then
+		elseif shortValue >= 1e3 then
 			return format(shortValueDec.."천", v / 1e3)
 		else
-			return format("%s", v)
+			return format("%.0f", v)
 		end
 	elseif E.db.general.numberPrefixStyle == "GERMAN" then
-		if abs(v) >= 1e9 then
+		if shortValue >= 1e12 then
+			return format(shortValueDec.."Bio", v / 1e12)
+		elseif shortValue >= 1e9 then
 			return format(shortValueDec.."Mrd", v / 1e9)
-		elseif abs(v) >= 1e6 then
+		elseif shortValue >= 1e6 then
 			return format(shortValueDec.."Mio", v / 1e6)
-		elseif abs(v) >= 1e3 then
+		elseif shortValue >= 1e3 then
 			return format(shortValueDec.."Tsd", v / 1e3)
 		else
-			return format("%s", v)
+			return format("%.0f", v)
 		end
 	else
-		if abs(v) >= 1e9 then
+		if shortValue >= 1e12 then
+			return format(shortValueDec.."T", v / 1e12)
+		elseif shortValue >= 1e9 then
 			return format(shortValueDec.."B", v / 1e9)
-		elseif abs(v) >= 1e6 then
+		elseif shortValue >= 1e6 then
 			return format(shortValueDec.."M", v / 1e6)
-		elseif abs(v) >= 1e3 then
+		elseif shortValue >= 1e3 then
 			return format(shortValueDec.."K", v / 1e3)
 		else
-			return format("%s", v)
+			return format("%.0f", v)
 		end
 	end
 end
@@ -185,22 +193,22 @@ local function GetFormattedText(min, max, style, noDecimal)
 	end
 end
 
--- Credits goes to Simpy 
-local function abbrev(text)
-	local endname = match(text, ".+%s(.+)$")
-	if endname then
-		local newname = ""
-		for k, v in gmatch(text, "%S-%s") do
-			newname = newname .. sub(k,1,1) .. ". "
+local function abbrev(name)
+	local letters, lastWord = '', strmatch(name, '.+%s(.+)$')
+	if lastWord then
+		for word in gmatch(name, '.-%s') do
+			local firstLetter = utf8sub(gsub(word, '^[%s%p]*', ''), 1, 1)
+			if firstLetter ~= utf8lower(firstLetter) then
+				letters = format('%s%s. ', letters, firstLetter)
+			end
 		end
-		text = newname .. endname
+		name = format('%s%s', letters, lastWord)
 	end
-	return text
+	return name
 end
 
---[[
-	Add custom tags below this block
---]]
+-- Add custom tags below
+
 ElvUF.Tags.Events["name:abbrev"] = "UNIT_NAME_UPDATE"
 ElvUF.Tags.Methods["name:abbrev"] = function(unit)
 	local name = UnitName(unit)
@@ -280,6 +288,10 @@ ElvUF.Tags.Methods["classcolor:deathknight"] = function()
 	return Hex(_COLORS.class["DEATHKNIGHT"])
 end
 
+ElvUF.Tags.Methods["classcolor:demonhunter"] = function()
+	return Hex(_COLORS.class["DEMONHUNTER"])
+end
+
 ElvUF.Tags.Methods["classcolor:druid"] = function()
 	return Hex(_COLORS.class["DRUID"])
 end
@@ -291,6 +303,15 @@ end
 ElvUF.Tags.Methods["classcolor:rogue"] = function()
 	return Hex(_COLORS.class["ROGUE"])
 end
+
+ElvUF.Tags.Methods["classcolor:dk"] = function()
+	return Hex(_COLORS.class["DEATHKNIGHT"])
+end
+
+ElvUF.Tags.Methods["classcolor:dh"] = function()
+	return Hex(_COLORS.class["DEMONHUNTER"])
+end
+
 
 -- 取消百分号
 -- 血量 100
@@ -435,5 +456,20 @@ ElvUF.Tags.Methods["power:percent-short"] = function(unit)
 	local pType = UnitPowerType(unit)
 	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
 	local String = GetFormattedText(min, max, "PERCENT", true)
+	return String
+end
+
+-- 距离
+ElvUF.Tags.Methods["range"] = function(unit)
+	if not unit then return end
+	local min, max = RC:GetRange(unit)
+	local String = format("%s - %s", min, max)
+	return String
+end
+
+ElvUF.Tags.Methods["range:expect"] = function(unit)
+	if not unit then return end
+	local min, max = RC:GetRange(unit)
+	local String = format("%s", floor((min+max)/2))
 	return String
 end

@@ -59,15 +59,15 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 
--- E.PopupDialogs["WIND_UPDATE_RL"] = {
--- 	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
--- 	button1 = ACCEPT,
--- 	button2 = CANCEL,
--- 	OnAccept = ReloadUI,
--- 	timeout = 0,
--- 	whileDead = 1,
--- 	hideOnEscape = false,
--- }
+E.PopupDialogs["WIND_UPDATE_RL"] = {
+	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ReloadUI,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = false,
+}
 
 function WT:InsertOptions()
 	-- 感谢名单
@@ -239,16 +239,24 @@ function WT:InsertOptions()
 					end
 				end
 
-				-- 转换旧的数据, 经过一两个小版本迭代后可以考虑删除
-				-- if E.db.WindTools[feature_name] then
-				-- 	E.db.WindTools[module_name][feature_name] = E.db.WindTools[feature_name]
-				-- 	E.db.WindTools[feature_name] = nil
-				-- 	rl_popup = true
-				-- end
+				-- 通告系统的设定项太多了还是分开选择好点
+				if feature_name == "Announce System" then
+					for arg_name, arg in pairs(E.Options.args.WindTools.args[module_name].args[feature_name].args) do
+						if arg.order > 4 then arg.guiInline = false end
+					end
+				end
 			end
 		end
 	end
+
 	-- if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
+
+	-- 版本更新需要重置设置的时候使用
+	if not E.db.WindTools.InstalledVersion or E.db.WindTools.InstalledVersion ~= WT.Version then
+		E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
+		E.db.WindTools.InstalledVersion = WT.Version
+		E:StaticPopup_Show("WIND_UPDATE_RL")
+	end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

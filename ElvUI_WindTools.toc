@@ -1,10 +1,10 @@
 ## Interface: 80100
-## Author: houshuu
+## Author: houshuu, Someblu
 ## Version: @project-version@
-## Title: |cfffe7b2cElvUI|r |cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7T|r|cff81d4fao|r|cffb3e5fco|r|cffe1f5fel|r|cffe1f5fes|r
-## Title-zhTW: |cfffe7b2cElvUI|r |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r
-## Title-zhCN: |cfffe7b2cElvUI|r |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa工|r|cffb3e5fc具|r|cffe1f5fe箱|r
-## Notes: Collection of useful tools
+## Title: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0dT|r|cff19b5feo|r|cff29c5ffo|r|cff39d5ffl|r|cff39d5ffs|r
+## Title-zhTW: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0d工|r|cff19b5fe具|r|cff29c5ff箱|r
+## Title-zhCN: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0d工|r|cff19b5fe具|r|cff29c5ff箱|r
+## Notes: Collection of useful features for ElvUI.
 ## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
 ## Notes-zhCN: 适用于 ElvUI 的各种小功能集合。
 ## RequiredDeps: ElvUI

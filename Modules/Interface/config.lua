@@ -159,6 +159,9 @@ P["WindTools"]["Interface"] = {
 			["QuestIconShadow"] = true,
 			["Tooltip"] = true,
 			["Databars"] = true,
+		},
+		["AddonSkins"] = {
+			["bigwigs"] = true,
 		}
 	},
 	["Enhanced World Map"] = {

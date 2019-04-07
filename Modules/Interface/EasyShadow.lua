@@ -1,8 +1,8 @@
 -- 简单阴影
 -- 考虑到效能，不会添加通用函数来加阴影
 -- 作者：houshuu
-
--- AddonSkins 部分来源于 BenikUI
+-- AddonSkins 美化修改自 BenikUI
+-- 任务图标美化修改自 NDui
 local E, L, V, P, G = unpack(ElvUI)
 local AS            = unpack(AddOnSkins)
 local WT         = E:GetModule("WindTools")
@@ -69,7 +69,11 @@ local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	frame.shadow = shadow
 end
 
--- 来自 NDui by siweia
+local function CreateTabShadow(tab)
+	if not tab then return end
+	if tab.Backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
+end
+
 local function shadowQuestIcon(_, block)
 	local itemButton = block.itemButton
 	if itemButton and not itemButton.styled then
@@ -80,6 +84,42 @@ local function shadowQuestIcon(_, block)
 	if rightButton and not rightButton.styled then
 		CreateMyShadow(rightButton, 3)
 		rightButton.styled = true
+	end
+end
+
+local function WeakAurasShadows()
+	local function Skin_WeakAuras(frame, ftype)
+		if frame.Backdrop then CreateMyShadow(frame.Backdrop, 2) end
+	end
+	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
+	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
+
+	WeakAuras.regionTypes.icon.create = function(parent, data)
+		local region = Create_Icon(parent, data)
+		Skin_WeakAuras(region, 'icon')
+		return region
+	end
+
+	WeakAuras.regionTypes.aurabar.create = function(parent)
+		local region = Create_AuraBar(parent)
+		Skin_WeakAuras(region, 'aurabar')
+		return region
+	end
+
+	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
+		Modify_Icon(parent, region, data)
+		Skin_WeakAuras(region, 'icon')
+	end
+
+	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
+		Modify_AuraBar(parent, region, data)
+		Skin_WeakAuras(region, 'aurabar')
+	end
+
+	for weakAura, _ in pairs(WeakAuras.regions) do
+		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
+			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
+		end
 	end
 end
 
@@ -179,8 +219,18 @@ function EasyShadow:Initialize()
 end
 
 function EasyShadow:AddOnSkins()
+	-- Tab
+	if self.db.AddonSkins.general then
+		hooksecurefunc(AS, "SkinTab", CreateTabShadow)
+	end
+	
+	-- Weakaura
+	if self.db.AddonSkins.weakaura and AS:CheckAddOn('WeakAuras') then
+		AS:RegisterSkin('WeakAuras', WeakAurasShadows, 'ADDON_LOADED')
+	end
+
 	-- Bigwigs
-	if AS:CheckAddOn('BigWigs') then
+	if self.db.AddonSkins.bigwigs and AS:CheckAddOn('BigWigs') then
 		AS:RegisterSkin('BigWigs', EasyShadow.BigWigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', EasyShadow.BigWigs)
 	end
@@ -195,17 +245,15 @@ function EasyShadow:BigWigs(event, addon)
 					frame:ClearAllPoints()
 					frame:SetPoint('TOP', '$parent', 'BOTTOM', 0, -(AS.PixelPerfect and 2 or 4))
 					frame:SetHeight(16)
-					if EasyShadow.db.AddonSkins.bigwigs then CreateMyShadow(frame, 3) end
+					CreateMyShadow(frame, 3)
 				end
 			end)
 		end
 	end
 
 	if event == 'ADDON_LOADED' and addon == 'BigWigs_Plugins' then
-		if EasyShadow.db.AddonSkins.bigwigs then
-			CreateMyShadow(BigWigsInfoBox, 3)
-			CreateMyShadow(BigWigsAltPower, 3)
-		end
+		CreateMyShadow(BigWigsInfoBox, 3)
+		CreateMyShadow(BigWigsAltPower, 3)
 
 		local buttonsize = 19
 		local FreeBackgrounds = {}
@@ -213,9 +261,7 @@ function EasyShadow:BigWigs(event, addon)
 		local CreateBG = function()
 			local BG = CreateFrame('Frame')
 			BG:SetTemplate('Transparent')
-			if EasyShadow.db.AddonSkins.bigwigs then
-				CreateMyShadow(BG, 2)
-			end
+			CreateMyShadow(BG, 2)
 
 			return BG
 		end

@@ -162,6 +162,8 @@ P["WindTools"]["Interface"] = {
 		},
 		["AddonSkins"] = {
 			["bigwigs"] = true,
+			["general"] = true,
+			["weakaura"] = true,
 		}
 	},
 	["Enhanced World Map"] = {

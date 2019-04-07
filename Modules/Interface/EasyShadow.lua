@@ -7,6 +7,7 @@ local E, L, V, P, G = unpack(ElvUI)
 local AS            = unpack(AddOnSkins)
 local WT         = E:GetModule("WindTools")
 local A          = E:GetModule('Auras')
+local S          = E:GetModule('Skins')
 local UF         = E:GetModule('UnitFrames')
 local TT         = E:GetModule('Tooltip')
 local DATABAR    = E:GetModule('DataBars')
@@ -71,7 +72,15 @@ end
 
 local function CreateTabShadow(tab)
 	if not tab then return end
-	if tab.Backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
+	if tab.backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
+end
+
+local function CreateElvUITabShadow(tab)
+	if not tab then return end
+	if tab.backdrop then
+		tab.backdrop:SetTemplate("Transparent")
+		CreateMyShadow(tab.Backdrop, 2, 1, 0.5)
+	end
 end
 
 local function shadowQuestIcon(_, block)
@@ -142,6 +151,11 @@ end
 
 function EasyShadow:ShadowElvUIFrames()
 	if not self.db then return end
+
+	hooksecurefunc(S, "HandleTab", function(_, tab)
+		if not tab then return end
+		if tab.backdrop then CreateMyShadow(tab.backdrop, 5) end
+	end)
 
 	if self.db.ElvUIFrames.Aura then
 		hooksecurefunc(A, "CreateIcon", function(self, button)

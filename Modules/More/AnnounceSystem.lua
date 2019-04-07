@@ -221,9 +221,10 @@ function AS:GetChannel(channel_db)
 end
 
 function AS:SendAddonMessage(message)
-	if IsInGroup() and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and not IsInRaid() then
+	if not IsInGroup() then return end
+	if not IsInRaid() then
 		C_ChatInfo.SendAddonMessage(self.Prefix, message, "PARTY")
-	elseif IsInGroup() and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and IsInRaid() then
+	else
 		C_ChatInfo.SendAddonMessage(self.Prefix, message, "RAID")
 	end
 end
@@ -272,7 +273,7 @@ end
 
 function AS:Utility(...)
 	local config = self.db.utility_spells
-	if not config.enabled then return end
+	if not config or not config.enabled return end
 	local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellId = ...
 	if InCombatLockdown() or not event or not spellId or not sourceName then return end
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end
@@ -316,7 +317,7 @@ end
 
 function AS:Combat(...)
 	local config = self.db.combat_spells
-	if not config.enabled then return end
+	if not config or not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
 	local difficultyId = select(3, GetInstanceInfo())
 	if not destName or not sourceName then return end

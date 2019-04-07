@@ -147,6 +147,7 @@ P["WindTools"]["Interface"] = {
 			["ElvUI_Bar5Button"] = false,
 			["ElvUI_Bar6Button"] = false,
 			["ElvUI_StanceBarButton"] = false,
+			["ElvUI_TotemBarTotem"] = false,
 		},
 		["ElvUIFrames"] = {
 			["Aura"] = true,
@@ -157,6 +158,7 @@ P["WindTools"]["Interface"] = {
 			["UnitFrames"] = false,
 			["QuestIconShadow"] = true,
 			["Tooltip"] = true,
+			["Databars"] = true,
 		}
 	},
 	["Enhanced World Map"] = {

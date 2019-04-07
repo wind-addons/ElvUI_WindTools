@@ -6,6 +6,7 @@ local WT         = E:GetModule("WindTools")
 local A          = E:GetModule('Auras')
 local UF         = E:GetModule('UnitFrames')
 local TT         = E:GetModule('Tooltip')
+local DATABAR    = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow')
 local ElvUF      = ElvUF
 local LSM        = LibStub("LibSharedMedia-3.0")
@@ -31,6 +32,7 @@ EasyShadow.ElvUIActionbars = {
 	["ElvUI_Bar5Button"] = L["Action Bar"].." 5",
 	["ElvUI_Bar6Button"] = L["Action Bar"].." 6",
 	["ElvUI_StanceBarButton"] = L["StanceBar"],
+	["ElvUI_TotemBarTotem"] = L["TotemBar"],
 }
 
 EasyShadow.ElvUIFrames = {
@@ -42,6 +44,7 @@ EasyShadow.ElvUIFrames = {
 	["UnitFrameAura"] = L["Unit Frame Aura"],
 	["QuestIconShadow"] = L["Quest Icon"],
 	["Tooltip"] = L["Game Tooltip"],
+	["Databars"] = L["Databars"],
 }
 
 local function CreateMyShadow(frame, size, backalpha, borderalpha)
@@ -96,7 +99,6 @@ end
 
 function EasyShadow:ShadowElvUIFrames()
 	if not self.db then return end
-	CreateMyShadow(_G["ElvUI_AzeriteBar"], 3)
 
 	if self.db.ElvUIFrames.Aura then
 		hooksecurefunc(A, "CreateIcon", function(self, button)
@@ -153,6 +155,13 @@ function EasyShadow:ShadowElvUIFrames()
 			if E.private.tooltip.enable ~= true then return end
 			CreateMyShadow(_G["GameTooltipStatusBar"], 4, 0.8, 0)
 		end)
+	end
+
+	if self.db.ElvUIFrames.Databars then
+		if DATABAR.db.azerite.enable then CreateMyShadow(_G["ElvUI_AzeriteBar"], 2) end
+		if DATABAR.db.experience.enable then CreateMyShadow(_G["ElvUI_ExperienceBar"], 2) end
+		if DATABAR.db.reputation.enable then CreateMyShadow(_G["ElvUI_ReputationBar"], 2) end
+		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
 	end
 end
 

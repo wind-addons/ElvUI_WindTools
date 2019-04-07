@@ -24,12 +24,13 @@ EasyShadow.BlzFrames = {
 }
 
 EasyShadow.ElvUIActionbars = {
-	["ElvUI_Bar1Button"] = L["ActionBar"].." 1",
-	["ElvUI_Bar2Button"] = L["ActionBar"].." 2",
-	["ElvUI_Bar3Button"] = L["ActionBar"].." 3",
-	["ElvUI_Bar4Button"] = L["ActionBar"].." 4",
-	["ElvUI_Bar5Button"] = L["ActionBar"].." 5",
-	["ElvUI_Bar6Button"] = L["Actionbar"].." 6",
+	["ElvUI_Bar1Button"] = L["Action Bar"].." 1",
+	["ElvUI_Bar2Button"] = L["Action Bar"].." 2",
+	["ElvUI_Bar3Button"] = L["Action Bar"].." 3",
+	["ElvUI_Bar4Button"] = L["Action Bar"].." 4",
+	["ElvUI_Bar5Button"] = L["Action Bar"].." 5",
+	["ElvUI_Bar6Button"] = L["Action Bar"].." 6",
+	["ElvUI_StanceBarButton"] = L["StanceBar"],
 }
 
 EasyShadow.ElvUIFrames = {
@@ -44,7 +45,7 @@ EasyShadow.ElvUIFrames = {
 }
 
 local function CreateMyShadow(frame, size, backalpha, borderalpha)
-	if frame.shadow then return end
+	if not frame or frame.shadow then return end
 	local back = backalpha or 0.5
 	local border = backalpha or 0.6
 
@@ -79,7 +80,7 @@ end
 function EasyShadow:ShadowBlzFrames()
 	if not self.db then return end
 	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 5) end
+		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 3) end
 	end
 	
 end
@@ -95,6 +96,8 @@ end
 
 function EasyShadow:ShadowElvUIFrames()
 	if not self.db then return end
+	CreateMyShadow(_G["ElvUI_AzeriteBar"], 3)
+
 	if self.db.ElvUIFrames.Aura then
 		hooksecurefunc(A, "CreateIcon", function(self, button)
 			CreateMyShadow(button, 4)
@@ -117,20 +120,20 @@ function EasyShadow:ShadowElvUIFrames()
 
 	if self.db.ElvUIFrames.Castbar then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar, 4)
+			CreateMyShadow(frame.Castbar, 3)
 		end)
 	end
 
 	if self.db.ElvUIFrames.CastbarIcon then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 4)
+			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 3)
 		end)	
 	end
 
 	if self.db.ElvUIFrames.UnitFrameAura then
-		hooksecurefunc(UF, "AuraIconUpdate", function(_, _, _, button)
+		hooksecurefunc(UF, "UpdateAuraSettings", function(_,  _, button)
 			CreateMyShadow(button, 2, 0.5, 1)
-		end)	
+		end)
 	end
 
 	if self.db.ElvUIFrames.Classbar then

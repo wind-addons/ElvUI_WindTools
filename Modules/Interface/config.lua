@@ -146,6 +146,7 @@ P["WindTools"]["Interface"] = {
 			["ElvUI_Bar4Button"] = false,
 			["ElvUI_Bar5Button"] = false,
 			["ElvUI_Bar6Button"] = false,
+			["ElvUI_StanceBarButton"] = false,
 		},
 		["ElvUIFrames"] = {
 			["Aura"] = true,
@@ -627,11 +628,11 @@ WT.ToolConfigs["Interface"] = {
 				}
 				optOrder = optOrder + 1
 			end
-
-			for i = 1, 6 do
-				Options.ElvUIActionbars.args["ElvUI_Bar"..i.."Button"] = {
-					order = i,
-					name = L["Action Bar"]..i,
+			optOrder = 1
+			for k, v in pairs(EasyShadow.ElvUIActionbars) do
+				Options.ElvUIActionbars.args[k]={
+					order = optOrder,
+					name = v,
 				}
 			end
 

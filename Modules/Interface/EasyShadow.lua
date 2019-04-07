@@ -4,17 +4,18 @@
 -- AddonSkins 美化修改自 BenikUI
 -- 任务图标美化修改自 NDui
 local E, L, V, P, G = unpack(ElvUI)
-local AS            = unpack(AddOnSkins)
-local WT         = E:GetModule("WindTools")
-local A          = E:GetModule('Auras')
-local S          = E:GetModule('Skins')
-local UF         = E:GetModule('UnitFrames')
-local TT         = E:GetModule('Tooltip')
-local DATABAR    = E:GetModule('DataBars')
+local AS = unpack(AddOnSkins) 
+local WT = E:GetModule("WindTools")
+local A = E:GetModule('Auras')
+local S = E:GetModule('Skins')
+local UF = E:GetModule('UnitFrames')
+local TT = E:GetModule('Tooltip')
+local DATABAR = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow')
-local ElvUF      = ElvUF
-local LSM        = LibStub("LibSharedMedia-3.0")
-local _G         = _G
+local LSM = LibStub("LibSharedMedia-3.0")
+local _G = _G
+
+local hooksecurefunc = hooksecurefunc
 
 -- 初始化颜色
 local borderr, borderg, borderb = 0, 0, 0
@@ -42,7 +43,7 @@ EasyShadow.elvui_frame_list = {
 
 EasyShadow.addonskins_list = {
 	["weakaura"] = L["Weakaura 2"],
-	["bigWigs"] = L["Bigwigs"],
+	["bigwigs"] = L["Bigwigs"],
 	["general"] = L["General"],
 }
 
@@ -169,8 +170,14 @@ function EasyShadow:ShadowElvUIFrames()
 			end
 		end
 
+		-- 换装备
 		CreateMyShadow(EquipmentFlyoutFrameButtons, 2)
 
+		-- Ace 3
+		hooksecurefunc(S, "Ace3_RegisterAsContainer", function(_, widget)
+			local frame = widget.content:GetParent()
+			if frame then CreateMyShadow(frame, 4) end
+		end)
 	end
 
 	-- 光环条
@@ -220,14 +227,14 @@ function EasyShadow:ShadowElvUIFrames()
 	end
 
 	-- 鼠标提示
-	if self.db.elvui.Tootooltipsltip then
+	if self.db.elvui.tooltips then
 		hooksecurefunc(TT, "SetStyle", function(_, tt)
 			CreateMyShadow(tt, 4)
 		end)
 		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
 			if tt:IsForbidden() then return end
 			if E.private.tooltip.enable ~= true then return end
-			CreateMyShadow(_G["GameTooltipStatusBar"], 4, 0.8, 0)
+			CreateMyShadow(_G.GameTooltipStatusBar, 4, 0.8, 0)
 		end)
 	end
 

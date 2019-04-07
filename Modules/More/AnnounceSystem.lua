@@ -273,7 +273,7 @@ end
 
 function AS:Utility(...)
 	local config = self.db.utility_spells
-	if not config or not config.enabled return end
+	if not config or not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, spellId = ...
 	if InCombatLockdown() or not event or not spellId or not sourceName then return end
 	if sourceName ~= PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then return end

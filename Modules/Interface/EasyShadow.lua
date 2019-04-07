@@ -28,27 +28,22 @@ EasyShadow.BlzFrames = {
 	["VideoOptionsFrame"] = L["Video Options"],
 }
 
-EasyShadow.ElvUIActionbars = {
-	["ElvUI_Bar1Button"] = L["Action Bar"].." 1",
-	["ElvUI_Bar2Button"] = L["Action Bar"].." 2",
-	["ElvUI_Bar3Button"] = L["Action Bar"].." 3",
-	["ElvUI_Bar4Button"] = L["Action Bar"].." 4",
-	["ElvUI_Bar5Button"] = L["Action Bar"].." 5",
-	["ElvUI_Bar6Button"] = L["Action Bar"].." 6",
-	["ElvUI_StanceBarButton"] = L["StanceBar"],
-	["ElvUI_TotemBarTotem"] = L["TotemBar"],
+EasyShadow.elvui_frame_list = {
+	["actionbars"] = L["Actionbars"],
+	["auras"] = L["Auras"],
+	["castbar"] = L["Cast Bar"],
+	["classbar"] = L["Class Bar"],
+	["databars"] = L["Databars"],
+	["general"] = L["General"],
+	["quest_item"] = L["Quest Icon"],
+	["unitframes"] = L["Unit Frames"],
+	["tooltips"] = L["Game Tooltip"],
 }
 
-EasyShadow.ElvUIFrames = {
-	["Aura"] = L["Auras"],
-	["Castbar"] = L["Cast Bar"],
-	["CastbarIcon"] = L["Cast Bar Icon"],
-	["UnitFrames"] = L["Unit Frames"],
-	["Classbar"] = L["Class Bar"],
-	["UnitFrameAura"] = L["Unit Frame Aura"],
-	["QuestIconShadow"] = L["Quest Icon"],
-	["Tooltip"] = L["Game Tooltip"],
-	["Databars"] = L["Databars"],
+EasyShadow.addonskins_list = {
+	["weakaura"] = L["Weakaura 2"],
+	["bigWigs"] = L["Bigwigs"],
+	["general"] = L["General"],
 }
 
 local function CreateMyShadow(frame, size, backalpha, borderalpha)
@@ -135,75 +130,81 @@ end
 function EasyShadow:ShadowBlzFrames()
 	if not self.db then return end
 	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 3) end
-	end
-	
-end
-
-function EasyShadow:ShadowElvUIActionbars()
-	if not self.db then return end
-	for k, v in pairs(self.ElvUIActionbars) do
-		if self.db.ElvUIActionbars[k] then 
-			for i = 1, 12 do CreateMyShadow(_G[k..i], 3) end
-		end
+		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 4) end
 	end
 end
 
 function EasyShadow:ShadowElvUIFrames()
 	if not self.db then return end
 
-	hooksecurefunc(S, "HandleTab", function(_, tab)
-		if not tab then return end
-		if tab.backdrop then CreateMyShadow(tab.backdrop, 5) end
-	end)
-
-	if self.db.ElvUIFrames.Aura then
-		hooksecurefunc(A, "CreateIcon", function(self, button)
-			CreateMyShadow(button, 4)
+	if self.db.elvui.general then
+		-- ElvUI 美化标签页
+		hooksecurefunc(S, "HandleTab", function(_, tab)
+			if not tab then return end
+			if tab.backdrop then CreateMyShadow(tab.backdrop, 3) end
 		end)
-		hooksecurefunc(A, "UpdateAura", function(self, button, index)
-			CreateMyShadow(button, 4)
+
+		-- ElvUI 美化按钮
+		hooksecurefunc(S, "HandleButton", function(_, button)
+			if not button then return end
+			CreateMyShadow(button, 3)
+		end)
+
+		-- ElvUI 框体渲染
+		hooksecurefunc(S, "HandlePortraitFrame", function(_, frame)
+			if not frame then return end
+			if frame.backdrop then CreateMyShadow(frame.backdrop, 3) end
 		end)
 	end
 
-	if self.db.ElvUIFrames.QuestIconShadow then
+	-- 光环条
+	if self.db.elvui.auras then
+		hooksecurefunc(A, "CreateIcon", function(self, button)
+			if button then CreateMyShadow(button, 4) end
+		end)
+		hooksecurefunc(A, "UpdateAura", function(self, button, index)
+			if button then CreateMyShadow(button, 4) end
+		end)
+	end
+
+	-- 任务物品
+	if self.db.elvui.quest_item then
 		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
 		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
 	end
 
-	if self.db.ElvUIFrames.UnitFrames then
+	-- 单位框体
+	if self.db.elvui.unitframes then
 		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
 			CreateMyShadow(frame, 4, 0.5, 0.8)
 		end)
-	end
 
-	if self.db.ElvUIFrames.Castbar then
-		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar, 3)
-		end)
-	end
-
-	if self.db.ElvUIFrames.CastbarIcon then
-		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar.ButtonIcon.bg, 3)
-		end)	
-	end
-
-	if self.db.ElvUIFrames.UnitFrameAura then
 		hooksecurefunc(UF, "UpdateAuraSettings", function(_,  _, button)
 			CreateMyShadow(button, 2, 0.5, 1)
 		end)
 	end
 
-	if self.db.ElvUIFrames.Classbar then
+	-- 职业条
+	if self.db.elvui.classbar then
 		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
 			local bars = frame[frame.ClassBar]
 			if not bars then return end
 			CreateMyShadow(bars, 4, 0.5, 0.8)
 		end)
 	end
-	
-	if self.db.ElvUIFrames.Tooltip then
+
+	-- 施法条
+	if self.db.elvui.castbar then
+		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
+			CreateMyShadow(frame.Castbar, 3)
+			if not frame.db.castbar.iconAttached then
+				CreateMyShadow(frame.Castbar.ButtonIcon.bg, 3)
+			end
+		end)
+	end
+
+	-- 鼠标提示
+	if self.db.elvui.Tootooltipsltip then
 		hooksecurefunc(TT, "SetStyle", function(_, tt)
 			CreateMyShadow(tt, 4)
 		end)
@@ -214,37 +215,56 @@ function EasyShadow:ShadowElvUIFrames()
 		end)
 	end
 
-	if self.db.ElvUIFrames.Databars then
+	-- 数据条
+	if self.db.elvui.databars then
 		if DATABAR.db.azerite.enable then CreateMyShadow(_G["ElvUI_AzeriteBar"], 2) end
 		if DATABAR.db.experience.enable then CreateMyShadow(_G["ElvUI_ExperienceBar"], 2) end
 		if DATABAR.db.reputation.enable then CreateMyShadow(_G["ElvUI_ReputationBar"], 2) end
 		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
+	end
+
+	if self.db.elvui.actionbars then
+		-- 常规动作条
+		local actionbarlist = {
+			"ElvUI_Bar1Button",
+			"ElvUI_Bar2Button",
+			"ElvUI_Bar3Button",
+			"ElvUI_Bar4Button",
+			"ElvUI_Bar5Button",
+			"ElvUI_Bar6Button",
+			"ElvUI_StanceBarButton",
+			"ElvUI_TotemBarTotem",
+		}
+		for item in pairs(actionbarlist) do
+			for i = 1, 12 do CreateMyShadow(_G[item..i], 3) end
+		end
+		-- 非常规动作条
+		CreateMyShadow(_G.ZoneAbilityFrame.SpellButton, 3)
 	end
 end
 
 function EasyShadow:Initialize()
 	self.db = E.db.WindTools["Interface"]["EasyShadow"]
 	if not self.db["enabled"] then return end
-	
+
 	self:ShadowBlzFrames()
-	self:ShadowElvUIActionbars()
 	self:ShadowElvUIFrames()
 	self:AddOnSkins()
 end
 
 function EasyShadow:AddOnSkins()
-	-- Tab
-	if self.db.AddonSkins.general then
+	-- 用 AddOnSkins 美化的窗体标签页
+	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", CreateTabShadow)
 	end
 	
 	-- Weakaura
-	if self.db.AddonSkins.weakaura and AS:CheckAddOn('WeakAuras') then
+	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
 		AS:RegisterSkin('WeakAuras', WeakAurasShadows, 'ADDON_LOADED')
 	end
 
 	-- Bigwigs
-	if self.db.AddonSkins.bigwigs and AS:CheckAddOn('BigWigs') then
+	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
 		AS:RegisterSkin('BigWigs', EasyShadow.BigWigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', EasyShadow.BigWigs)
 	end

@@ -139,31 +139,21 @@ P["WindTools"]["Interface"] = {
 			["InterfaceOptionsFrame"] = true,
 			["VideoOptionsFrame"] = true,
 		},
-		["ElvUIActionbars"] = {
-			["ElvUI_Bar1Button"] = false,
-			["ElvUI_Bar2Button"] = false,
-			["ElvUI_Bar3Button"] = false,
-			["ElvUI_Bar4Button"] = false,
-			["ElvUI_Bar5Button"] = false,
-			["ElvUI_Bar6Button"] = false,
-			["ElvUI_StanceBarButton"] = false,
-			["ElvUI_TotemBarTotem"] = false,
+		["elvui"] = {
+			["actionbars"] = false,
+			["auras"] = false,
+			["castbar"] = false,
+			["classbar"] = false,
+			["general"] = false,
+			["unitframe"] = false,
+			["quest_item"] = false,
+			["tooltips"] = false,
+			["databars"] = false,
 		},
-		["ElvUIFrames"] = {
-			["Aura"] = true,
-			["Castbar"] = false,
-			["CastbarIcon"] = false,
-			["Classbar"] = false,
-			["UnitFrameAura"] = false,
-			["UnitFrames"] = false,
-			["QuestIconShadow"] = true,
-			["Tooltip"] = true,
-			["Databars"] = true,
-		},
-		["AddonSkins"] = {
-			["bigwigs"] = true,
-			["general"] = true,
-			["weakaura"] = true,
+		["addonskins"] = {
+			["bigwigs"] = false,
+			["general"] = false,
+			["weakaura"] = false,
 		}
 	},
 	["Enhanced World Map"] = {
@@ -610,18 +600,19 @@ WT.ToolConfigs["Interface"] = {
 			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].BlzFrames[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
-		["ElvUIActionbars"] = {
+		["elvui"] = {
 			order = 6,
-			name = L["Action Bar"],
-			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].ElvUIActionbars[info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].ElvUIActionbars[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			name = "ElvUI"..L["Frame Setting"],
+			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] end,
+			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
-		["ElvUIFrames"] = {
+		["addonskins"] = {
 			order = 7,
-			name = "ElvUI"..L["Frame Setting"],
-			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].ElvUIFrames[info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].ElvUIFrames[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			name = "AddOnSkins",
+			hidden = function() return not IsAddOnLoaded("AddOnSkins") end,
+			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].addonskins[info[#info]] end,
+			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].addonskins[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
 		func = function()
@@ -636,16 +627,17 @@ WT.ToolConfigs["Interface"] = {
 				optOrder = optOrder + 1
 			end
 			optOrder = 1
-			for k, v in pairs(EasyShadow.ElvUIActionbars) do
-				Options.ElvUIActionbars.args[k]={
+			for k, v in pairs(EasyShadow.elvui_frame_list) do
+				Options.elvui.args[k]={
 					order = optOrder,
 					name = v,
 				}
+				optOrder = optOrder + 1
 			end
 
 			optOrder = 1
-			for k, v in pairs(EasyShadow.ElvUIFrames) do
-				Options.ElvUIFrames.args[k]={
+			for k, v in pairs(EasyShadow.addonskins_list) do
+				Options.addonskins.args[k]={
 					order = optOrder,
 					name = v,
 				}

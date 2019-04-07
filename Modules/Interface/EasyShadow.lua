@@ -142,11 +142,11 @@ function EasyShadow:ShadowElvUIFrames()
 			if tab.backdrop then CreateMyShadow(tab.backdrop, 2) end
 		end)
 
-		-- ElvUI 美化按钮
-		hooksecurefunc(S, "HandleButton", function(_, button)
-			if not button then return end
-			CreateMyShadow(button, 2)
-		end)
+		-- -- ElvUI 美化按钮
+		-- hooksecurefunc(S, "HandleButton", function(_, button)
+		-- 	if not button then return end
+		-- 	CreateMyShadow(button, 2)
+		-- end)
 
 		-- ElvUI 框体渲染
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, frame)

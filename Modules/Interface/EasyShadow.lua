@@ -65,18 +65,15 @@ local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	frame.shadow = shadow
 end
 
-local function CreateTabShadow(tab)
-	if not tab then return end
-	if tab.backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
-end
+local function mirrorTimersShadows()
+	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.mirrorTimers ~= true then return end
 
-local function CreateElvUITabShadow(tab)
-	if not tab then return end
-	if tab.backdrop then
-		tab.backdrop:SetTemplate("Transparent")
-		CreateMyShadow(tab.Backdrop, 2, 1, 0.5)
+	for i = 1, MIRRORTIMER_NUMTIMERS do
+		local statusBar = _G['MirrorTimer'..i..'StatusBar']
+		statusBar.backdrop:CreateSoftShadow()
 	end
 end
+
 
 local function shadowQuestIcon(_, block)
 	local itemButton = block.itemButton
@@ -141,20 +138,39 @@ function EasyShadow:ShadowElvUIFrames()
 		-- ElvUI 美化标签页
 		hooksecurefunc(S, "HandleTab", function(_, tab)
 			if not tab then return end
-			if tab.backdrop then CreateMyShadow(tab.backdrop, 3) end
+			if tab.backdrop then CreateMyShadow(tab.backdrop, 2) end
 		end)
 
 		-- ElvUI 美化按钮
 		hooksecurefunc(S, "HandleButton", function(_, button)
 			if not button then return end
-			CreateMyShadow(button, 3)
+			CreateMyShadow(button, 2)
 		end)
 
 		-- ElvUI 框体渲染
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, frame)
 			if not frame then return end
-			if frame.backdrop then CreateMyShadow(frame.backdrop, 3) end
+			if frame.backdrop then CreateMyShadow(frame.backdrop, 2) end
 		end)
+
+		-- ElvUI 美化图标
+		-- hooksecurefunc(S, "HandleIcon", function(_, icon)
+		-- 	if not icon then return end
+		-- 	CreateMyShadow(icon,2)
+		-- end)
+
+		-- 团队控制
+		if E.private.general.raidUtility then
+			if _G["RaidUtility_ShowButton"] then
+				CreateMyShadow(_G["RaidUtility_ShowButton"], 4)
+			end
+			if _G["RaidUtilityPanel"] then
+				CreateMyShadow(_G["RaidUtilityPanel"], 4)
+			end
+		end
+
+		CreateMyShadow(EquipmentFlyoutFrameButtons, 2)
+
 	end
 
 	-- 光环条
@@ -223,20 +239,24 @@ function EasyShadow:ShadowElvUIFrames()
 		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
 	end
 
-	if self.db.elvui.actionbars then
+	if self.db.elvui.actionbars or true then
 		-- 常规动作条
-		local actionbarlist = {
-			"ElvUI_Bar1Button",
-			"ElvUI_Bar2Button",
-			"ElvUI_Bar3Button",
-			"ElvUI_Bar4Button",
-			"ElvUI_Bar5Button",
-			"ElvUI_Bar6Button",
-			"ElvUI_StanceBarButton",
-			"ElvUI_TotemBarTotem",
+		local actionbar_list = {
+			"Bar1Button",
+			"Bar2Button",
+			"Bar3Button",
+			"Bar4Button",
+			"Bar5Button",
+			"Bar6Button",
+			"StanceBarButton",
+			"BarPetButton",
+			"TotemBarTotem",
 		}
-		for item in pairs(actionbarlist) do
-			for i = 1, 12 do CreateMyShadow(_G[item..i], 3) end
+		for _, item in pairs(actionbar_list) do
+			for i = 1, 12 do
+				local button = _G["ElvUI_"..item..i]
+				if button and button.backdrop then CreateMyShadow(button.backdrop, 3) end
+			end
 		end
 		-- 非常规动作条
 		CreateMyShadow(_G.ZoneAbilityFrame.SpellButton, 3)
@@ -255,7 +275,10 @@ end
 function EasyShadow:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
 	if self.db.addonskins.general then
-		hooksecurefunc(AS, "SkinTab", CreateTabShadow)
+		hooksecurefunc(AS, "SkinTab", function()
+			if not tab then return end
+			if tab.backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
+		end)
 	end
 	
 	-- Weakaura

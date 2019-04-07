@@ -12,6 +12,7 @@ local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow')
+local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
 local _G = _G
 
@@ -46,6 +47,11 @@ EasyShadow.addonskins_list = {
 	["bigwigs"] = L["Bigwigs"],
 	["general"] = L["General"],
 }
+
+EasyShadow.windtools_list = {
+	["minimap_button"] = L["Minimap Buttons"],
+}
+
 
 local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	if not frame or frame.shadow then return end
@@ -249,19 +255,19 @@ function EasyShadow:ShadowElvUIFrames()
 	if self.db.elvui.actionbars or true then
 		-- 常规动作条
 		local actionbar_list = {
-			"Bar1Button",
-			"Bar2Button",
-			"Bar3Button",
-			"Bar4Button",
-			"Bar5Button",
-			"Bar6Button",
-			"StanceBarButton",
-			"BarPetButton",
-			"TotemBarTotem",
+			"ElvUI_Bar1Button",
+			"ElvUI_Bar2Button",
+			"ElvUI_Bar3Button",
+			"ElvUI_Bar4Button",
+			"ElvUI_Bar5Button",
+			"ElvUI_Bar6Button",
+			"ElvUI_StanceBarButton",
+			"PetActionButton",
+			"ElvUI_TotemBarTotem",
 		}
 		for _, item in pairs(actionbar_list) do
 			for i = 1, 12 do
-				local button = _G["ElvUI_"..item..i]
+				local button = _G[item..i]
 				if button and button.backdrop then CreateMyShadow(button.backdrop, 3) end
 			end
 		end

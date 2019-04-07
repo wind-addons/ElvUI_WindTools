@@ -5,9 +5,9 @@
 -- 主要修改条目：
 -- 汉化
 
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
 
 local sub, len, find = string.sub, string.len, string.find
 
@@ -394,7 +394,8 @@ function MB:CreateFrames()
 end
 
 function MB:Initialize()
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].enabled then return end
+	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
+	if not self.db.enabled then return end
 
 	self:CreateFrames()
 end

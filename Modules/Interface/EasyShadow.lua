@@ -16,10 +16,6 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
--- 初始化颜色
-local borderr, borderg, borderb = 0, 0, 0
-local backdropr, backdropg, backdropb = 0, 0, 0
-
 -- 不需要检测插件载入即可上阴影的框体
 EasyShadow.BlzFrames = {
 	["MMHolder"] = L["MiniMap"],
@@ -220,6 +216,42 @@ local function shadowBigWigs(self, event, addon)
 	end
 end
 
+local function shadowWeakAuras()
+	local function Skin_WeakAuras(frame, ftype)
+		if frame.Backdrop then frame.Backdrop:CreateShadow() end
+	end
+	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
+	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
+
+	WeakAuras.regionTypes.icon.create = function(parent, data)
+		local region = Create_Icon(parent, data)
+		Skin_WeakAuras(region, 'icon')
+		return region
+	end
+
+	WeakAuras.regionTypes.aurabar.create = function(parent)
+		local region = Create_AuraBar(parent)
+		Skin_WeakAuras(region, 'aurabar')
+		return region
+	end
+
+	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
+		Modify_Icon(parent, region, data)
+		Skin_WeakAuras(region, 'icon')
+	end
+
+	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
+		Modify_AuraBar(parent, region, data)
+		Skin_WeakAuras(region, 'aurabar')
+	end
+
+	for weakAura, _ in pairs(WeakAuras.regions) do
+		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
+			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
+		end
+	end
+end
+
 local function shadowObjectiveTracker()
 	-- 修改自 BenikUI，顺带简单美化，以后有空剥离这部分自定义美化到任务列表增强
 
@@ -300,40 +332,12 @@ local function shadowObjectiveTracker()
 	hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup",FindGroupButtonShadows)
 end
 
-local function shadowWeakAuras()
-	local function Skin_WeakAuras(frame, ftype)
-		if frame.Backdrop then frame.Backdrop:CreateShadow() end
-	end
-	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
-	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
-
-	WeakAuras.regionTypes.icon.create = function(parent, data)
-		local region = Create_Icon(parent, data)
-		Skin_WeakAuras(region, 'icon')
-		return region
+local function shadowAlerts()
+	local function createShadowOnAlert(alert)
+		if alert then alert:CreateShadow() end
 	end
 
-	WeakAuras.regionTypes.aurabar.create = function(parent)
-		local region = Create_AuraBar(parent)
-		Skin_WeakAuras(region, 'aurabar')
-		return region
-	end
-
-	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
-		Modify_Icon(parent, region, data)
-		Skin_WeakAuras(region, 'icon')
-	end
-
-	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
-		Modify_AuraBar(parent, region, data)
-		Skin_WeakAuras(region, 'aurabar')
-	end
-
-	for weakAura, _ in pairs(WeakAuras.regions) do
-		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
-			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
-		end
-	end
+	hooksecurefunc(AlertContainerMixin, "AddAlertFrame", createShadowOnAlert)
 end
 
 function EasyShadow:ShadowBlzFrames()
@@ -351,11 +355,15 @@ function EasyShadow:ShadowElvUIFrames()
 		-- 为 ElvUI 美化皮肤模块添加阴影功能
 		hooksecurefunc(S, "HandleTab", function(_, tab) if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end end)
 		hooksecurefunc(S, "HandleButton", function(_, button) if button then button:CreateShadow(2) end end)
+		hooksecurefunc(S, "HandleEditBox", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 
 		-- 任务追踪
 		shadowObjectiveTracker()
 
+		-- 提醒
+		shadowAlerts()
+		
 		-- 人物面板
 		for i=1, 4 do
 			local tab = _G["CharacterFrameTab"..i]
@@ -399,7 +407,7 @@ function EasyShadow:ShadowElvUIFrames()
 	-- 施法条
 	if self.db.elvui.castbar then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			frame.Castbar:CreateShadow(2)
+			frame.Castbar:CreateShadow()
 			if not frame.db.castbar.iconAttached then
 				frame.Castbar.ButtonIcon.bg:CreateShadow()
 			end
@@ -433,8 +441,8 @@ function EasyShadow:ShadowElvUIFrames()
 			"ElvUI_Bar5Button",
 			"ElvUI_Bar6Button",
 			"ElvUI_StanceBarButton",
-			"PetActionButton",
 			"ElvUI_TotemBarTotem",
+			"PetActionButton",
 		}
 		for _, item in pairs(actionbar_list) do
 			for i = 1, 12 do
@@ -446,6 +454,7 @@ function EasyShadow:ShadowElvUIFrames()
 		-- 非常规动作条
 		if _G.ZoneAbilityFrame and _G.ZoneAbilityFrame.SpellButton then
 			_G.ZoneAbilityFrame.SpellButton:CreateShadow()
+			_G.ExtraActionButton1:CreateShadow()
 		end
 	end
 end
@@ -481,7 +490,9 @@ function EasyShadow:AddOnSkins()
 	end
 end
 
+
 local function InitializeCallback()
 	EasyShadow:Initialize()
 end
+
 E:RegisterModule(EasyShadow:GetName(), InitializeCallback)

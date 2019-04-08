@@ -1,10 +1,8 @@
 -- 简单阴影
--- 考虑到效能，不会添加通用函数来加阴影
 -- 作者：houshuu
 -- AddonSkins 美化修改自 BenikUI
 -- 任务图标美化修改自 NDui
 local E, L, V, P, G = unpack(ElvUI)
-local AS = unpack(AddOnSkins) 
 local WT = E:GetModule("WindTools")
 local A = E:GetModule('Auras')
 local S = E:GetModule('Skins')
@@ -14,8 +12,8 @@ local DATABAR = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow')
 local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
-local _G = _G
 
+local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 -- 初始化颜色
@@ -51,7 +49,6 @@ EasyShadow.addonskins_list = {
 EasyShadow.windtools_list = {
 	["minimap_button"] = L["Minimap Buttons"],
 }
-
 
 local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	if not frame or frame.shadow then return end
@@ -252,7 +249,7 @@ function EasyShadow:ShadowElvUIFrames()
 		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
 	end
 
-	if self.db.elvui.actionbars or true then
+	if self.db.elvui.actionbars then
 		-- 常规动作条
 		local actionbar_list = {
 			"ElvUI_Bar1Button",
@@ -282,11 +279,16 @@ function EasyShadow:Initialize()
 
 	self:ShadowBlzFrames()
 	self:ShadowElvUIFrames()
-	self:AddOnSkins()
+
+	if IsAddOnLoaded("AddOnSkins") then
+		
+		self:AddOnSkins()
+	end
 end
 
 function EasyShadow:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
+	local AS = unpack(AddOnSkins)
 	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", function()
 			if not tab then return end
@@ -307,6 +309,7 @@ function EasyShadow:AddOnSkins()
 end
 
 function EasyShadow:BigWigs(event, addon)
+	local AS = unpack(AddOnSkins)
 	if event == 'PLAYER_ENTERING_WORLD' then
 		if BigWigsLoader then
 			BigWigsLoader.RegisterMessage('AddOnSkins', "BigWigs_FrameCreated", function(event, frame, name)

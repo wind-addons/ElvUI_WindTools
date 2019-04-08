@@ -221,7 +221,32 @@ local function shadowBigWigs(self, event, addon)
 end
 
 local function shadowObjectiveTracker()
-	-- BenikUI
+	-- 修改自 BenikUI，顺带简单美化，以后有空剥离这部分自定义美化到任务列表增强
+
+	local function SkinOjectiveTrackerHeaders()
+		local frame = _G.ObjectiveTrackerFrame.MODULES
+		if frame then
+			for i = 1, #frame do
+				local modules = frame[i]
+				if modules then
+					modules.Header.Background:SetAtlas(nil)
+					local text = modules.Header.Text
+					text:FontTemplate(nil, E.db.general.fontSize + 2, "OUTLINE")
+					text:SetParent(modules.Header)
+				end
+			end
+		end
+	end
+
+	local function SkinObjectiveTrackerText(self, block)
+		local text = block.HeaderText
+		text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
+		for objectiveKey, line in pairs(block.lines) do
+			line.Text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
+		end
+	end
+
+	-- 收起按钮
 	ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:CreateShadow(5)
 	ObjectiveTrackerFrame.HeaderMenu.MinimizeButton.shadow:SetOutside()
 
@@ -230,18 +255,18 @@ local function shadowObjectiveTracker()
 		local bar = progressBar and progressBar.Bar
 		if not bar then return end
 		local icon = bar.Icon
+		local label = bar.Label
 
 		if not progressBar.hasShadow then
-			bar.backdrop:CreateShadow(3)
-
-			if icon then
-				if not bar.dummy then -- need a frame to apply the shadow
-					bar.dummy = CreateFrame('Frame', nil, bar)
-					bar.dummy:SetOutside(icon)
-					bar.dummy:CreateShadow(3)
-					bar.dummy:SetShown(icon:IsShown())
-				end
-				icon:Size(18) -- I like this better
+			bar.backdrop:CreateShadow()
+			progressBar.backdrop:CreateShadow()
+			-- 稍微移动下图标位置，防止阴影重叠，更加美观！
+			if icon then icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0) end
+			-- 顺便修正一下字体位置，反正不知道为什么 ElvUI 要往上移动一个像素
+			if label then
+				label:ClearAllPoints()
+				label:Point("CENTER", bar, 0, 0)
+				label:FontTemplate(E.media.normFont, 14, "OUTLINE")
 			end
 			progressBar.hasShadow = true
 		end
@@ -259,7 +284,9 @@ local function shadowObjectiveTracker()
 	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
 	hooksecurefunc(SCENARIO_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
 	hooksecurefunc(QUEST_TRACKER_MODULE,"SetBlockHeader", ItemButtonShadows)
+	hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", SkinObjectiveTrackerText)
 	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
+	hooksecurefunc("ObjectiveTracker_Update", SkinOjectiveTrackerHeaders)
 
 	local function FindGroupButtonShadows(block)
 		if block.hasGroupFinderButton and block.groupFinderButton then
@@ -326,7 +353,6 @@ function EasyShadow:ShadowElvUIFrames()
 		hooksecurefunc(S, "HandleButton", function(_, button) if button then button:CreateShadow(2) end end)
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 
-
 		-- 任务追踪
 		shadowObjectiveTracker()
 
@@ -359,7 +385,7 @@ function EasyShadow:ShadowElvUIFrames()
 	-- 单位框体
 	if self.db.elvui.unitframes then
 		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame) if frame then frame:CreateShadow() end end)
-		-- hooksecurefunc(UF, "UpdateNameSettings", function(_, _, button) if button then button:CreateShadow() end end)
+		hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button) if button then button:CreateShadow() end end)
 	end
 
 	-- 职业条
@@ -373,7 +399,7 @@ function EasyShadow:ShadowElvUIFrames()
 	-- 施法条
 	if self.db.elvui.castbar then
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			frame.Castbar:CreateShadow()
+			frame.Castbar:CreateShadow(2)
 			if not frame.db.castbar.iconAttached then
 				frame.Castbar.ButtonIcon.bg:CreateShadow()
 			end

@@ -253,8 +253,8 @@ local function shadowWeakAuras()
 end
 
 local function shadowObjectiveTracker()
-	-- 修改自 BenikUI，顺带简单美化，以后有空剥离这部分自定义美化到任务列表增强
-
+	-- 修改自 BenikUI
+	-- 顺带重写了一些任务追踪的简单美化，以后有空剥离这部分自定义美化到任务列表增强
 	local function SkinOjectiveTrackerHeaders()
 		local frame = _G.ObjectiveTrackerFrame.MODULES
 		if frame then
@@ -272,9 +272,11 @@ local function shadowObjectiveTracker()
 
 	local function SkinObjectiveTrackerText(self, block)
 		local text = block.HeaderText
-		text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
-		for objectiveKey, line in pairs(block.lines) do
-			line.Text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
+		if text then 
+			text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
+			for objectiveKey, line in pairs(block.lines) do
+				line.Text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
+			end
 		end
 	end
 
@@ -319,6 +321,9 @@ local function shadowObjectiveTracker()
 	hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", SkinObjectiveTrackerText)
 	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
 	hooksecurefunc("ObjectiveTracker_Update", SkinOjectiveTrackerHeaders)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"SetStringText", function(_, fontString)
+		fontString:FontTemplate(nil, nil, "OUTLINE")
+	end)
 
 	local function FindGroupButtonShadows(block)
 		if block.hasGroupFinderButton and block.groupFinderButton then
@@ -334,10 +339,48 @@ end
 
 local function shadowAlerts()
 	local function createShadowOnAlert(alert)
-		if alert then alert:CreateShadow() end
+		if not alert then return end
+		if alert.backdrop then alert.backdrop:CreateShadow() end
 	end
 
-	hooksecurefunc(AlertContainerMixin, "AddAlertFrame", createShadowOnAlert)
+	--[[ HOOKS ]]--
+	-- Achievements
+	hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", createShadowOnAlert)
+
+	-- Encounters
+	hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", createShadowOnAlert)
+
+	-- Garrisons
+	hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", createShadowOnAlert)
+
+	-- Honor
+	hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", createShadowOnAlert)
+
+	-- Loot
+	hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.LootAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.StorePurchaseAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- Professions
+	hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", createShadowOnAlert)
+
+	-- Pets/Mounts
+	hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", createShadowOnAlert)
+	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", createShadowOnAlert)
 end
 
 function EasyShadow:ShadowBlzFrames()
@@ -351,7 +394,6 @@ function EasyShadow:ShadowElvUIFrames()
 	if not self.db then return end
 
 	if self.db.elvui.general then
-
 		-- 为 ElvUI 美化皮肤模块添加阴影功能
 		hooksecurefunc(S, "HandleTab", function(_, tab) if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end end)
 		hooksecurefunc(S, "HandleButton", function(_, button) if button then button:CreateShadow(2) end end)

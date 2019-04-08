@@ -69,16 +69,6 @@ local function CreateMyShadow(frame, size, backalpha, borderalpha)
 	frame.shadow = shadow
 end
 
-local function mirrorTimersShadows()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.mirrorTimers ~= true then return end
-
-	for i = 1, MIRRORTIMER_NUMTIMERS do
-		local statusBar = _G['MirrorTimer'..i..'StatusBar']
-		statusBar.backdrop:CreateSoftShadow()
-	end
-end
-
-
 local function shadowQuestIcon(_, block)
 	local itemButton = block.itemButton
 	if itemButton and not itemButton.styled then
@@ -92,223 +82,7 @@ local function shadowQuestIcon(_, block)
 	end
 end
 
-local function WeakAurasShadows()
-	local function Skin_WeakAuras(frame, ftype)
-		if frame.Backdrop then CreateMyShadow(frame.Backdrop, 2) end
-	end
-	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
-	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
-
-	WeakAuras.regionTypes.icon.create = function(parent, data)
-		local region = Create_Icon(parent, data)
-		Skin_WeakAuras(region, 'icon')
-		return region
-	end
-
-	WeakAuras.regionTypes.aurabar.create = function(parent)
-		local region = Create_AuraBar(parent)
-		Skin_WeakAuras(region, 'aurabar')
-		return region
-	end
-
-	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
-		Modify_Icon(parent, region, data)
-		Skin_WeakAuras(region, 'icon')
-	end
-
-	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
-		Modify_AuraBar(parent, region, data)
-		Skin_WeakAuras(region, 'aurabar')
-	end
-
-	for weakAura, _ in pairs(WeakAuras.regions) do
-		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
-			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
-		end
-	end
-end
-
-function EasyShadow:ShadowBlzFrames()
-	if not self.db then return end
-	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 4) end
-	end
-end
-
-function EasyShadow:ShadowElvUIFrames()
-	if not self.db then return end
-
-	if self.db.elvui.general then
-		-- ElvUI 美化标签页
-		hooksecurefunc(S, "HandleTab", function(_, tab)
-			if not tab then return end
-			if tab.backdrop then CreateMyShadow(tab.backdrop, 2) end
-		end)
-
-		-- -- ElvUI 美化按钮
-		-- hooksecurefunc(S, "HandleButton", function(_, button)
-		-- 	if not button then return end
-		-- 	CreateMyShadow(button, 2)
-		-- end)
-
-		-- ElvUI 框体渲染
-		hooksecurefunc(S, "HandlePortraitFrame", function(_, frame)
-			if not frame then return end
-			if frame.backdrop then CreateMyShadow(frame.backdrop, 2) end
-		end)
-
-		-- ElvUI 美化图标
-		-- hooksecurefunc(S, "HandleIcon", function(_, icon)
-		-- 	if not icon then return end
-		-- 	CreateMyShadow(icon,2)
-		-- end)
-
-		-- 团队控制
-		if E.private.general.raidUtility then
-			if _G["RaidUtility_ShowButton"] then
-				CreateMyShadow(_G["RaidUtility_ShowButton"], 4)
-			end
-			if _G["RaidUtilityPanel"] then
-				CreateMyShadow(_G["RaidUtilityPanel"], 4)
-			end
-		end
-
-		-- 换装备
-		CreateMyShadow(EquipmentFlyoutFrameButtons, 2)
-
-		-- Ace 3
-		hooksecurefunc(S, "Ace3_RegisterAsContainer", function(_, widget)
-			local frame = widget.content:GetParent()
-			if frame then CreateMyShadow(frame, 4) end
-		end)
-	end
-
-	-- 光环条
-	if self.db.elvui.auras then
-		hooksecurefunc(A, "CreateIcon", function(self, button)
-			if button then CreateMyShadow(button, 4) end
-		end)
-		hooksecurefunc(A, "UpdateAura", function(self, button, index)
-			if button then CreateMyShadow(button, 4) end
-		end)
-	end
-
-	-- 任务物品
-	if self.db.elvui.quest_item then
-		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
-		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
-	end
-
-	-- 单位框体
-	if self.db.elvui.unitframes then
-		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
-			CreateMyShadow(frame, 4, 0.5, 0.8)
-		end)
-
-		hooksecurefunc(UF, "UpdateAuraSettings", function(_,  _, button)
-			CreateMyShadow(button, 2, 0.5, 1)
-		end)
-	end
-
-	-- 职业条
-	if self.db.elvui.classbar then
-		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
-			local bars = frame[frame.ClassBar]
-			if not bars then return end
-			CreateMyShadow(bars, 4, 0.5, 0.8)
-		end)
-	end
-
-	-- 施法条
-	if self.db.elvui.castbar then
-		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
-			CreateMyShadow(frame.Castbar, 3)
-			if not frame.db.castbar.iconAttached then
-				CreateMyShadow(frame.Castbar.ButtonIcon.bg, 3)
-			end
-		end)
-	end
-
-	-- 鼠标提示
-	if self.db.elvui.tooltips then
-		hooksecurefunc(TT, "SetStyle", function(_, tt)
-			CreateMyShadow(tt, 4)
-		end)
-		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
-			if tt:IsForbidden() then return end
-			if E.private.tooltip.enable ~= true then return end
-			CreateMyShadow(_G.GameTooltipStatusBar, 4, 0.8, 0)
-		end)
-	end
-
-	-- 数据条
-	if self.db.elvui.databars then
-		if DATABAR.db.azerite.enable then CreateMyShadow(_G["ElvUI_AzeriteBar"], 2) end
-		if DATABAR.db.experience.enable then CreateMyShadow(_G["ElvUI_ExperienceBar"], 2) end
-		if DATABAR.db.reputation.enable then CreateMyShadow(_G["ElvUI_ReputationBar"], 2) end
-		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
-	end
-
-	if self.db.elvui.actionbars then
-		-- 常规动作条
-		local actionbar_list = {
-			"ElvUI_Bar1Button",
-			"ElvUI_Bar2Button",
-			"ElvUI_Bar3Button",
-			"ElvUI_Bar4Button",
-			"ElvUI_Bar5Button",
-			"ElvUI_Bar6Button",
-			"ElvUI_StanceBarButton",
-			"PetActionButton",
-			"ElvUI_TotemBarTotem",
-		}
-		for _, item in pairs(actionbar_list) do
-			for i = 1, 12 do
-				local button = _G[item..i]
-				if button and button.backdrop then CreateMyShadow(button.backdrop, 3) end
-			end
-		end
-		-- 非常规动作条
-		CreateMyShadow(_G.ZoneAbilityFrame.SpellButton, 3)
-	end
-end
-
-function EasyShadow:Initialize()
-	self.db = E.db.WindTools["Interface"]["EasyShadow"]
-	if not self.db["enabled"] then return end
-
-	self:ShadowBlzFrames()
-	self:ShadowElvUIFrames()
-
-	if IsAddOnLoaded("AddOnSkins") then
-		
-		self:AddOnSkins()
-	end
-end
-
-function EasyShadow:AddOnSkins()
-	-- 用 AddOnSkins 美化的窗体标签页
-	local AS = unpack(AddOnSkins)
-	if self.db.addonskins.general then
-		hooksecurefunc(AS, "SkinTab", function()
-			if not tab then return end
-			if tab.backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
-		end)
-	end
-	
-	-- Weakaura
-	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
-		AS:RegisterSkin('WeakAuras', WeakAurasShadows, 'ADDON_LOADED')
-	end
-
-	-- Bigwigs
-	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
-		AS:RegisterSkin('BigWigs', EasyShadow.BigWigs, 'ADDON_LOADED')
-		AS:RegisterSkinForPreload('BigWigs_Plugins', EasyShadow.BigWigs)
-	end
-end
-
-function EasyShadow:BigWigs(event, addon)
+local function shadowBigWigs(self, event, addon)
 	local AS = unpack(AddOnSkins)
 	if event == 'PLAYER_ENTERING_WORLD' then
 		if BigWigsLoader then
@@ -476,6 +250,225 @@ function EasyShadow:BigWigs(event, addon)
 		})
 
 		AS:UnregisterSkinEvent('BigWigs', event)
+	end
+end
+
+local function shadowWeakAuras()
+	local function Skin_WeakAuras(frame, ftype)
+		if frame.Backdrop then CreateMyShadow(frame.Backdrop, 2) end
+	end
+	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
+	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
+
+	WeakAuras.regionTypes.icon.create = function(parent, data)
+		local region = Create_Icon(parent, data)
+		Skin_WeakAuras(region, 'icon')
+		return region
+	end
+
+	WeakAuras.regionTypes.aurabar.create = function(parent)
+		local region = Create_AuraBar(parent)
+		Skin_WeakAuras(region, 'aurabar')
+		return region
+	end
+
+	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
+		Modify_Icon(parent, region, data)
+		Skin_WeakAuras(region, 'icon')
+	end
+
+	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
+		Modify_AuraBar(parent, region, data)
+		Skin_WeakAuras(region, 'aurabar')
+	end
+
+	for weakAura, _ in pairs(WeakAuras.regions) do
+		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
+			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
+		end
+	end
+end
+
+function EasyShadow:ShadowBlzFrames()
+	if not self.db then return end
+	for k, v in pairs(self.BlzFrames) do
+		if self.db.BlzFrames[k] then CreateMyShadow(_G[k], 4) end
+	end
+end
+
+function EasyShadow:ShadowElvUIFrames()
+	if not self.db then return end
+
+	if self.db.elvui.general then
+		-- ElvUI 美化标签页
+		hooksecurefunc(S, "HandleTab", function(_, tab)
+			if not tab then return end
+			if tab.backdrop then CreateMyShadow(tab.backdrop, 2) end
+		end)
+
+		-- 人物面板
+		for i=1, 4 do
+			local tab = _G["CharacterFrameTab"..i]
+			if tab and tab.backdrop then CreateMyShadow(tab.backdrop, 2) end
+		end
+
+		-- ElvUI 美化按钮
+		hooksecurefunc(S, "HandleButton", function(_, button)
+			if not button then return end
+			CreateMyShadow(button, 2)
+		end)
+
+		-- ElvUI 框体渲染
+		hooksecurefunc(S, "HandlePortraitFrame", function(_, frame)
+			if not frame then return end
+			if not frame.backdrop then 
+				CreateMyShadow(frame, 2)
+			else
+				CreateMyShadow(frame.backdrop, 2)
+			end
+		end)
+
+		-- 团队控制
+		if E.private.general.raidUtility then
+			if _G["RaidUtility_ShowButton"] then
+				CreateMyShadow(_G["RaidUtility_ShowButton"], 3)
+			end
+			if _G["RaidUtilityPanel"] then
+				CreateMyShadow(_G["RaidUtilityPanel"], 3)
+			end
+		end
+
+		-- 镜像时间条 呼吸条
+		for i = 1, MIRRORTIMER_NUMTIMERS do
+			local statusBar = _G['MirrorTimer'..i..'StatusBar']
+			if statusBar.backdrop then CreateMyShadow(statusBar.backdrop, 3) end
+		end
+
+		-- 换装备
+		CreateMyShadow(EquipmentFlyoutFrameButtons, 3)
+	end
+
+	-- 光环条
+	if self.db.elvui.auras then
+		hooksecurefunc(A, "CreateIcon", function(self, button)
+			if button then CreateMyShadow(button, 4) end
+		end)
+		hooksecurefunc(A, "UpdateAura", function(self, button, index)
+			if button then CreateMyShadow(button, 4) end
+		end)
+	end
+
+	-- 任务物品
+	if self.db.elvui.quest_item then
+		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", shadowQuestIcon)
+		hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", shadowQuestIcon)
+	end
+
+	-- 单位框体
+	if self.db.elvui.unitframes then
+		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
+			CreateMyShadow(frame, 4, 0.5, 0.8)
+		end)
+
+		hooksecurefunc(UF, "UpdateAuraSettings", function(_,  _, button)
+			CreateMyShadow(button, 2, 0.5, 1)
+		end)
+	end
+
+	-- 职业条
+	if self.db.elvui.classbar then
+		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
+			local bars = frame[frame.ClassBar]
+			if not bars then return end
+			CreateMyShadow(bars, 4, 0.5, 0.8)
+		end)
+	end
+
+	-- 施法条
+	if self.db.elvui.castbar then
+		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
+			CreateMyShadow(frame.Castbar, 3)
+			if not frame.db.castbar.iconAttached then
+				CreateMyShadow(frame.Castbar.ButtonIcon.bg, 3)
+			end
+		end)
+	end
+
+	-- 鼠标提示
+	if self.db.elvui.tooltips then
+		hooksecurefunc(TT, "SetStyle", function(_, tt)
+			CreateMyShadow(tt, 4)
+		end)
+		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
+			if tt:IsForbidden() then return end
+			if E.private.tooltip.enable ~= true then return end
+			CreateMyShadow(_G.GameTooltipStatusBar, 4, 0.8, 0)
+		end)
+	end
+
+	-- 数据条
+	if self.db.elvui.databars then
+		if DATABAR.db.azerite.enable then CreateMyShadow(_G["ElvUI_AzeriteBar"], 2) end
+		if DATABAR.db.experience.enable then CreateMyShadow(_G["ElvUI_ExperienceBar"], 2) end
+		if DATABAR.db.reputation.enable then CreateMyShadow(_G["ElvUI_ReputationBar"], 2) end
+		if DATABAR.db.honor.enable then CreateMyShadow(_G["ElvUI_HonorBar"], 2) end
+	end
+
+	if self.db.elvui.actionbars then
+		-- 常规动作条
+		local actionbar_list = {
+			"ElvUI_Bar1Button",
+			"ElvUI_Bar2Button",
+			"ElvUI_Bar3Button",
+			"ElvUI_Bar4Button",
+			"ElvUI_Bar5Button",
+			"ElvUI_Bar6Button",
+			"ElvUI_StanceBarButton",
+			"PetActionButton",
+			"ElvUI_TotemBarTotem",
+		}
+		for _, item in pairs(actionbar_list) do
+			for i = 1, 12 do
+				local button = _G[item..i]
+				if button and button.backdrop then CreateMyShadow(button.backdrop, 3) end
+			end
+		end
+		-- 非常规动作条
+		CreateMyShadow(_G.ZoneAbilityFrame.SpellButton, 3)
+	end
+end
+
+function EasyShadow:Initialize()
+	self.db = E.db.WindTools["Interface"]["EasyShadow"]
+	if not self.db["enabled"] then return end
+
+	self:ShadowBlzFrames()
+	self:ShadowElvUIFrames()
+
+	if IsAddOnLoaded("AddOnSkins") then
+		self:AddOnSkins()
+	end
+end
+
+function EasyShadow:AddOnSkins()
+	-- 用 AddOnSkins 美化的窗体标签页
+	local AS = unpack(AddOnSkins)
+	if self.db.addonskins.general then
+		hooksecurefunc(AS, "SkinTab", function()
+			if not tab then return end
+			if tab.backdrop then CreateMyShadow(tab.Backdrop, 2, 1, 0.5) end
+		end)
+	end
+	
+	-- Weakaura
+	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
+		AS:RegisterSkin('WeakAuras', shadowWeakAuras, 'ADDON_LOADED')
+	end
+
+	-- Bigwigs
+	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
+		AS:RegisterSkin('BigWigs', shadowBigWigs, 'ADDON_LOADED')
+		AS:RegisterSkinForPreload('BigWigs_Plugins', shadowBigWigs)
 	end
 end
 

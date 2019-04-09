@@ -38,7 +38,7 @@ P["WindTools"]["More Tools"] = {
 		["utility_spells"] = {
 			["enabled"] = true,
 			["channel"] = {
-				["solo"] = "SELF",
+				["solo"] = "NONE",
 				["party"] = "PARTY",
 				["instance"] = "INSTANCE_CHAT",
 				["raid"] = "RAID",
@@ -138,7 +138,7 @@ P["WindTools"]["More Tools"] = {
 			["enabled"] = true,
 			["player"] = {
 				["player"] = {
-					["enabled"] = false,
+					["enabled"] = true,
 					["success_text"] = L["I taunted %target% successfully!"],
 					["provoke_all_text"] = L["I taunted all enemies in 10 yards!"],
 					["failed_text"] = L["I failed on taunting %target%!"],
@@ -2240,18 +2240,9 @@ WT.ToolConfigs["More Tools"] = {
 			order = 9,
 			name = L["Say thanks"],
 			args = {
-				enable = {
-					order = 1,
-					name = L["Enable"],
-					get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] end,
-					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"] = value end,
-				},
 				goodbye = {
-					order = 2,
+					order = 1,
 					name = L["Goodbye"],
-					disabled = function(info)
-						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
-					end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]]
 					end,
@@ -2327,11 +2318,8 @@ WT.ToolConfigs["More Tools"] = {
 					},
 				},
 				resurrection = {
-					order = 3,
+					order = 2,
 					name = L["Resurrection"],
-					disabled = function(info)
-						return not E.db.WindTools["More Tools"]["Announce System"][info[4]]["enabled"]
-					end,
 					get = function(info)
 						return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]]
 					end,
@@ -2437,8 +2425,7 @@ WT.ToolConfigs["More Tools"] = {
 							},
 						},
 					},
-				},
-				
+				},			
 			},	
 		},
 	},

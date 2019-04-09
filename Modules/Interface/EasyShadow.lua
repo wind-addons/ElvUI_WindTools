@@ -255,36 +255,6 @@ end
 
 local function shadow_objective_tracker()
 	-- 修改自 BenikUI
-	-- 顺带重写了一些任务追踪的简单美化，以后有空剥离这部分自定义美化到任务列表增强
-	local function SkinObjectiveTrackerHeaders()
-		local frame = _G.ObjectiveTrackerFrame.MODULES
-		if frame then
-			for i = 1, #frame do
-				local modules = frame[i]
-				if modules then
-					modules.Header.Background:SetAtlas(nil)
-					local text = modules.Header.Text
-					text:FontTemplate(nil, E.db.general.fontSize + 2, "OUTLINE")
-					text:SetParent(modules.Header)
-				end
-			end
-		end
-	end
-
-	-- 文字
-	local function SkinObjectiveTrackerText(self, block)
-		local text = block.HeaderText
-		if text then 
-			text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
-			for objectiveKey, line in pairs(block.lines) do
-				line.Text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
-			end
-		end
-	end
-
-	local function SkinWorldQuestText(self, font_string)
-		if font_string then font_string:FontTemplate(nil, nil, "OUTLINE") end
-	end
 
 	-- 收起按钮
 	ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:CreateShadow(5)
@@ -319,16 +289,6 @@ local function shadow_objective_tracker()
 		end
 	end
 
-	hooksecurefunc(BONUS_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(SCENARIO_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(QUEST_TRACKER_MODULE,"SetBlockHeader", ItemButtonShadows)
-	hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", SkinObjectiveTrackerText)
-	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
-	hooksecurefunc("ObjectiveTracker_Update", SkinObjectiveTrackerHeaders)
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", SkinWorldQuestText)
-
 	local function FindGroupButtonShadows(block)
 		if block.hasGroupFinderButton and block.groupFinderButton then
 			if block.groupFinderButton and not block.groupFinderButton.hasShadow then
@@ -338,7 +298,14 @@ local function shadow_objective_tracker()
 			end
 		end
 	end
-	hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup",FindGroupButtonShadows)
+
+	hooksecurefunc(BONUS_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(SCENARIO_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(QUEST_TRACKER_MODULE,"SetBlockHeader", ItemButtonShadows)
+	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
+	hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup", FindGroupButtonShadows)
 end
 
 local function shadow_alerts()

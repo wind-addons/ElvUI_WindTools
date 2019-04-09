@@ -25,8 +25,6 @@ P["WindTools"] = {}
 ---------------------------------------------------
 -- 常用函数
 ---------------------------------------------------
--- 摘自 ElvUI 源代码
--- 转换 RGB 数值为 16 进制
 -- 此处 r, g, b 各值均为 0~1 之间
 local function RGBToHex(r, g, b)
 	r = r <= 1 and r >= 0 and r or 0
@@ -34,22 +32,13 @@ local function RGBToHex(r, g, b)
 	b = b <= 1 and b >= 0 and b or 0
 	return format("%02x%02x%02x", r*255, g*255, b*255)
 end
--- 改自 ElvUI_CustomTweaks
+
 -- 为字符串添加自定义颜色
 function WT:ColorStr(str, r, g, b)
-	local hex
-	local coloredString
-	
-	if r and g and b then
-		hex = RGBToHex(r, g, b)
-	else
-		-- 默认设置为浅蓝色
-		hex = RGBToHex(52/255, 152/255, 219/255)
-	end
-	
-	coloredString = "|cff"..hex..str.."|r"
-	return coloredString
+	local hex = r and g and b and RGBToHex(r, g, b) or RGBToHex(52/255, 152/255, 219/255)
+	return "|cff"..hex..str.."|r"
 end
+
 -- 功能列表
 local ToolsOrder = {
 	["Interface"]  = 1,

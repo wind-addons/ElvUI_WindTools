@@ -5,21 +5,18 @@ local WT = E:GetModule("WindTools")
 local _G = _G
 
 P["WindTools"]["Quest"] = {
-	["Quest List Enhanced"] = {
-		["enabled"] = true,
-		["titlecolor"] = true,
-		["titlelevel"] = true,
-		["detaillevel"] = true,
-		["titlefont"] = E.db.general.font,
-		["titlefontsize"] = 14,
-		["titlefontflag"] = "OUTLINE",
-		["infofont"] = E.db.general.font,
-		["infofontsize"] = 12,
-		["infofontflag"] = "OUTLINE",
-		["ignorehightlevel"] = true,
-		["width"] = 240,
-		["frametitle"] = true,
-		["leftside"] = false,
+	["Objective Tracker"] = {
+		enabled = true,
+		header = {
+			font = E.db.general.font,
+			size = E.db.general.fontSize,
+			style = "OUTLINE",
+		},
+		info = {
+			font = E.db.general.font,
+			size = E.db.general.fontSize,
+			style = "OUTLINE",
+		},
 	},
 	["Quest Announcment"] = {
 		["enabled"] = true,
@@ -39,119 +36,77 @@ P["WindTools"]["Quest"] = {
 }
 
 WT.ToolConfigs["Quest"] = {
-	["Quest List Enhanced"] = {
-		tDesc   = L["Add the level information in front of the quest name."],
-		oAuthor = "wandercga",
+	["Objective Tracker"] = {
+		tDesc   = L["The new-look interface for objective tracker."],
+		oAuthor = "houshuu",
 		cAuthor = "houshuu",
 		["general"] = {
 			order = 5,
 			name = L['General'],
-			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
 			args = {
-				["titlefont"] = {
-					type = 'select', dialogControl = 'LSM30_Font',
+				header = {
 					order = 1,
-					name = L['Name Font'],
-					values = LSM:HashTable('font'),
+					name = L["Header"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] end,
+					set = function(info, value) E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] = value end,
+					args = {
+						font = {
+							type = 'select', dialogControl = 'LSM30_Font',
+							order = 1,
+							name = L['Font'],
+							values = LSM:HashTable('font'),
+						},
+						size = {
+							order = 2,
+							name = L['Size'],
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						style = {
+							order = 3,
+							name = L["Style"],
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+					},	
 				},
-				["titlefontsize"] = {
+				info = {
 					order = 2,
-					name = L['Name Font Size'],
-					type = 'range',
-					min = 6, max = 22, step = 1,
-				},
-				["titlefontflag"] = {
-					name = L["Name Font Flag"],
-					order = 3,
-					type = 'select',
-					values = {
-						['NONE'] = L['None'],
-						['OUTLINE'] = L['OUTLINE'],
-						['MONOCHROME'] = L['MONOCHROME'],
-						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
-						['THICKOUTLINE'] = L['THICKOUTLINE'],
+					name = L["Info text"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] end,
+					set = function(info, value) E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] = value end,
+					args = {
+						font = {
+							type = 'select', dialogControl = 'LSM30_Font',
+							order = 1,
+							name = L['Font'],
+							values = LSM:HashTable('font'),
+						},
+						size = {
+							order = 2,
+							name = L['Size'],
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						style = {
+							order = 3,
+							name = L["Style"],
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
 					},
-				},
-				["infofont"] = {
-					type = 'select', dialogControl = 'LSM30_Font',
-					order = 4,
-					name = L['Info Font'],
-					values = LSM:HashTable('font'),
-				},
-				["infofontsize"] = {
-					order = 5,
-					name = L["Info Font Size"],
-					type = 'range',
-					min = 6, max = 22, step = 1,
-				},
-				["infofontflag"] = {
-					name = L["Info Font Outline"],
-					order = 6,
-					type = 'select',
-					values = {
-						['NONE'] = L['None'],
-						['OUTLINE'] = L['OUTLINE'],
-						['MONOCHROME'] = L['MONOCHROME'],
-						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
-						['THICKOUTLINE'] = L['THICKOUTLINE'],
-					},
-				},
-				["titlecolor"] = {
-					order = 7,
-					name = L["Title Class Color"],
-				},
-			},
-		},
-		["level"] = {
-			order = 6,
-			name = L['Quest Level'],
-			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
-			args = {
-				["titlelevel"] = {
-					order = 1,
-					name = L["Tracker Level"],
-					desc = L["Display level info in quest title (Tracker)"],
-				},
-				["detaillevel"] = {
-					order = 2,
-					name = L["Quest details level"],
-					desc = L["Display level info in quest title (Quest details)"],
-				},
-				["ignorehighlevel"] = {
-					order = 3,
-					name = L["Ignore high level"],
-				},
-			},
-		},
-		["leftsidemode"] = {
-			order = 7,
-			name = L["Left Side Minimize Button"],
-			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
-			args = {
-				["leftside"] = {
-					order = 1,
-					name  = L["Enable"],
-				},
-			}
-		},
-		["other"] = {
-			order = 8,
-			name = L['Other Setting'],
-			get = function(info) return E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["Quest"]["Quest List Enhanced"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL")end,
-			args = {
-				["width"] = {
-					order = 1,
-					type = 'range',
-					name = L["Tracker width"],
-					min = 200, max = 300, step = 1,
-				},
-				["frametitle"] = {
-					order = 2,
-					name = L["Frame Title"],
 				},
 			},
 		},

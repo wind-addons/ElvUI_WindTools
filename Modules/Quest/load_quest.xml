@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='config.lua'/>
 	<Script file='ObjectiveProgress.lua'/>
+	<Script file='ObjectiveTracker.lua'/>
 	<Script file='QuestAnnouncment.lua'/>
-	<Script file='QuestListEnhanced.lua'/>
 	<Script file='CloseQuestVoice.lua'/>
 </Ui>

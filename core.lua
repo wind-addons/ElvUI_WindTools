@@ -58,6 +58,16 @@ E.PopupDialogs["WIND_UPDATE_RL"] = {
 	hideOnEscape = false,
 }
 
+E.PopupDialogs["WIND_RL"] = {
+	text = L["WindTools will reload your user interface to apply the change."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ReloadUI,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = true,
+}
+
 function WT:InsertOptions()
 	-- 感谢名单
 	local WindToolsCreditList = {

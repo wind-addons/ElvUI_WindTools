@@ -12,6 +12,11 @@ P["WindTools"]["Quest"] = {
 			size = E.db.general.fontSize,
 			style = "OUTLINE",
 		},
+		title = {
+			font = E.db.general.font,
+			size = E.db.general.fontSize,
+			style = "OUTLINE",
+		},
 		info = {
 			font = E.db.general.font,
 			size = E.db.general.fontSize,
@@ -40,7 +45,7 @@ WT.ToolConfigs["Quest"] = {
 		tDesc   = L["The new-look interface for objective tracker."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["general"] = {
+		general = {
 			order = 5,
 			name = L['General'],
 			args = {
@@ -48,7 +53,10 @@ WT.ToolConfigs["Quest"] = {
 					order = 1,
 					name = L["Header"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] end,
-					set = function(info, value) E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] = value end,
+					set = function(info, value)
+						E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] = value;
+						E:StaticPopup_Show("WIND_RL")
+					end,
 					args = {
 						font = {
 							type = 'select', dialogControl = 'LSM30_Font',
@@ -76,11 +84,49 @@ WT.ToolConfigs["Quest"] = {
 						},
 					},	
 				},
-				info = {
+				title = {
 					order = 2,
+					name = L["Title"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["title"][info[#info]] end,
+					set = function(info, value)
+						E.db.WindTools.Quest["Objective Tracker"]["title"][info[#info]] = value
+						E:StaticPopup_Show("WIND_RL")
+					end,
+					args = {
+						font = {
+							type = 'select', dialogControl = 'LSM30_Font',
+							order = 1,
+							name = L['Font'],
+							values = LSM:HashTable('font'),
+						},
+						size = {
+							order = 2,
+							name = L['Size'],
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						style = {
+							order = 3,
+							name = L["Style"],
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+					},
+				},
+				info = {
+					order = 3,
 					name = L["Info text"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] end,
-					set = function(info, value) E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] = value end,
+					set = function(info, value)
+						E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] = value
+						E:StaticPopup_Show("WIND_RL")
+					end,
 					args = {
 						font = {
 							type = 'select', dialogControl = 'LSM30_Font',

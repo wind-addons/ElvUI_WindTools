@@ -285,7 +285,7 @@ local function shadow_objective_tracker()
 	local function ItemButtonShadows(self, block)
 		local item = block.itemButton
 		if item and not item.shadow then
-			item:CreateShadow(3)
+			item:CreateShadow()
 		end
 	end
 
@@ -310,7 +310,14 @@ end
 
 local function shadow_alerts()
 	local function create_alert_shadow(alert)
-		if alert and alert.backdrop then alert.backdrop:CreateShadow() end
+		if not alert then return end
+		if alert.backdrop then alert.backdrop:CreateShadow() end
+		if alert.Label and alert.Icon then
+			alert.Label:ClearAllPoints()
+			alert.Label:SetPoint("TOPLEFT", alert.Icon, "TOPRIGHT", 5, 2)
+		end
+		if alert.Icon then alert.Icon.b:CreateShadow() end
+		if alert.SpecIcon then alert.SpecIcon.b:CreateShadow() end
 	end
 
 	-- 成就
@@ -377,6 +384,7 @@ function EasyShadow:ShadowElvUIFrames()
 		shadow_alerts()
 		
 		-- 人物面板
+		_G.CharacterFrame:CreateShadow()
 		for i=1, 4 do
 			local tab = _G["CharacterFrameTab"..i]
 			if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end

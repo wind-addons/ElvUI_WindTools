@@ -365,12 +365,23 @@ function EasyShadow:ShadowGeneralFrames()
 		["CharacterFrame"] = false,
 		["EquipmentFlyoutFrameButtons"] = false,
 		["ElvUI_ContainerFrame"] = false,
+		["AddonList"] = false,
+		["BonusRollFrame"] = false,
+		["ChatMenu"] = false,
+		["SplashFrame"] = false,
+		["DropDownList1"] = false,
 	}
 
 	for frame, createOnBackdrop in pairs(blizzard_frames_backdrop) do
 		if not createOnBackdrop then
-			if _G[frame] then _G[frame]:CreateShadow(5) end
+			if _G[frame] then _G[frame]:CreateShadow(3) end
 		end
+	end
+
+	-- 输入法框
+	if _G.IMECandidatesFrame then
+		_G.IMECandidatesFrame:CreateShadow()
+		S:HandlePortraitFrame(_G.IMECandidatesFrame)
 	end
 
 	-- 人物面板 Tab
@@ -391,7 +402,6 @@ function EasyShadow:ShadowGeneralFrames()
 
 	-- 任务追踪
 	shadow_objective_tracker()
-
 end
 
 function EasyShadow:ShadowElvUIFrames()

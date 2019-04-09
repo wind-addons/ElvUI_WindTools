@@ -342,48 +342,48 @@ local function shadow_objective_tracker()
 end
 
 local function shadow_alerts()
-	local function createShadowOnAlert(alert)
+	local function create_alert_shadow(alert)
 		if alert and alert.backdrop then alert.backdrop:CreateShadow() end
 	end
 
-	--[[ HOOKS ]]--
-	-- Achievements
-	hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 成就
+	hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", create_alert_shadow)
 
-	-- Encounters
-	hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 遭遇
+	hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", create_alert_shadow)
 
-	-- Garrisons
-	hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 要塞
+	hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", create_alert_shadow)
 
-	-- Honor
-	hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 荣誉
+	hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", create_alert_shadow)
 
-	-- Loot
-	hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.LootAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.StorePurchaseAlertSystem, "setUpFunction", createShadowOnAlert)
-	-- Professions
-	hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 拾取
+	hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.LootAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.StorePurchaseAlertSystem, "setUpFunction", create_alert_shadow)
+	
+	-- 专业技能
+	hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", create_alert_shadow)
 
-	-- Pets/Mounts
-	hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", createShadowOnAlert)
-	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", createShadowOnAlert)
+	-- 宠物 / 坐骑
+	hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
 function EasyShadow:ShadowBlzFrames()

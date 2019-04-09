@@ -437,7 +437,22 @@ function EasyShadow:ShadowElvUIFrames()
 
 	-- 单位框体
 	if self.db.elvui.unitframes then
+		-- 低频度更新单位框体外围阴影
 		hooksecurefunc(UF, "UpdateNameSettings", function(_, frame) if frame then frame:CreateShadow() end end)
+		-- 在 oUF 更新仇恨值阴影时判断是否隐藏美化阴影
+		hooksecurefunc(UF, "Configure_Threat", function(_, frame)
+			local threat = frame.ThreatIndicator
+			if not threat then return end
+			threat.PostUpdate = function(self, unit, status, r, g, b)
+				UF.UpdateThreat(self, unit, status, r, g, b)
+				local parent = self:GetParent()
+				if (parent.unit ~= unit) or not unit then return end
+				local db = parent.db
+				if not db then return end
+				if db.threatStyle == 'GLOW' and parent.shadow then parent.shadow:SetShown(not threat.glow:IsShown()) end
+			end
+		end)
+		-- 为单位框体光环提供边缘美化
 		hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button) if button then button:CreateShadow() end end)
 	end
 
@@ -498,7 +513,9 @@ function EasyShadow:ShadowElvUIFrames()
 
 		-- 非常规动作条
 		if _G.ZoneAbilityFrame and _G.ZoneAbilityFrame.SpellButton then
+			-- 区域技能
 			_G.ZoneAbilityFrame.SpellButton:CreateShadow()
+			-- 特殊技能栏 1 好像也没遇到需要用到 2 的，先放着吧
 			_G.ExtraActionButton1:CreateShadow()
 		end
 	end

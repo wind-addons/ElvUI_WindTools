@@ -1,5 +1,5 @@
 local E, L, V, P, G = unpack(ElvUI)
---local LSM = LibStub("LibSharedMedia-3.0")
+local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
 local _G = _G
@@ -131,24 +131,37 @@ P["WindTools"]["Interface"] = {
 		},
 		['FlipDragon'] = false,
 	},
-	["EasyShadow"] = {
-		["enabled"] = true,
-		["elvui"] = {
-			["actionbars"] = false,
-			["auras"] = false,
-			["castbar"] = false,
-			["classbar"] = false,
-			["general"] = false,
-			["unitframe"] = false,
-			["quest_item"] = false,
-			["tooltips"] = false,
-			["databars"] = false,
+	["Skins"] = {
+		enabled = true,
+		elvui = {
+			actionbars = true,
+			auras = true,
+			castbar = true,
+			classbar = true,
+			general = true,
+			unitframe = true,
+			quest_item = true,
+			tooltips = true,
+			databars = true,
 		},
-		["addonskins"] = {
-			["bigwigs"] = false,
-			["general"] = false,
-			["weakaura"] = false,
-		}
+		addonskins = {
+			bigwigs = true,
+			general = true,
+			weakaura = true,
+		},
+		ime = {
+			no_backdrop = true,
+			label = {
+				font = E.db.general.font,
+				size = E.db.general.fontSize + 3,
+				style = "OUTLINE",
+			},
+			candidate = {
+				font = E.db.general.font,
+				size = E.db.general.fontSize + 3,
+				style = "OUTLINE",
+			},
+		},
 	},
 	["Enhanced World Map"] = {
 		["enabled"] = false,
@@ -583,30 +596,106 @@ WT.ToolConfigs["Interface"] = {
 			end
 		end,
 	},
-	["EasyShadow"] = {
-		tDesc   = L["Add shadow to frames."],
+	["Skins"] = {
+		tDesc   = L["Provide a new style for ElvUI."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
 		["elvui"] = {
 			order = 5,
 			name = "ElvUI"..L["Frame Setting"],
-			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			get = function(info) return E.db.WindTools.Interface.Skins.elvui[info[#info]] end,
+			set = function(info, value) E.db.WindTools.Interface.Skins.elvui[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
 		["addonskins"] = {
 			order = 6,
 			name = "AddOnSkins",
 			hidden = function() return not IsAddOnLoaded("AddOnSkins") end,
-			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].addonskins[info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].addonskins[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			get = function(info) return E.db.WindTools.Interface.Skins.addonskins[info[#info]] end,
+			set = function(info, value) E.db.WindTools.Interface.Skins.addonskins[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
+		["ime"] = {
+			order = 7,
+			name = L["IME"],
+			args = {
+				no_backdrop = {
+					get = function(info) return E.db.WindTools.Interface.Skins.ime.no_backdrop end,
+					set = function(info, value) E.db.WindTools.Interface.Skins.ime.no_backdrop = value end,
+					order = 1,
+					name = L["No backdrop"],
+				},
+				label = {
+					order = 2,
+					name = L["Label"],
+					get = function(info) return E.db.WindTools.Interface.Skins.ime.label[info[#info]] end,
+					set = function(info, value) E.db.WindTools.Interface.Skins.ime.label[info[#info]] = value end,
+					args = {
+						font = {
+							type = 'select', dialogControl = 'LSM30_Font',
+							order = 1,
+							name = L['Font'],
+							values = LSM:HashTable('font'),
+						},
+						size = {
+							order = 2,
+							name = L['Size'],
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						style = {
+							order = 3,
+							name = L["Style"],
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+					},
+				},
+				candidate = {
+					order = 3,
+					name = L["Candidate"],
+					get = function(info) return E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] end,
+					set = function(info, value) E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] = value end,
+					args = {
+						font = {
+							type = 'select', dialogControl = 'LSM30_Font',
+							order = 1,
+							name = L['Font'],
+							values = LSM:HashTable('font'),
+						},
+						size = {
+							order = 2,
+							name = L['Size'],
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						style = {
+							order = 3,
+							name = L["Style"],
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+					},
+				},
+			}
+		},
 		func = function()
-			local EasyShadow = E:GetModule('Wind_EasyShadow')
-			local Options = WT.ToolConfigs["Interface"]["EasyShadow"]
+			local WS = E:GetModule('Wind_Skins')
+			local Options = WT.ToolConfigs.Interface.Skins
 			local optOrder = 1
-			for k, v in pairs(EasyShadow.elvui_frame_list) do
+			for k, v in pairs(WS.elvui_frame_list) do
 				Options.elvui.args[k]={
 					order = optOrder,
 					name = v,
@@ -615,7 +704,7 @@ WT.ToolConfigs["Interface"] = {
 			end
 
 			optOrder = 1
-			for k, v in pairs(EasyShadow.addonskins_list) do
+			for k, v in pairs(WS.addonskins_list) do
 				Options.addonskins.args[k]={
 					order = optOrder,
 					name = v,

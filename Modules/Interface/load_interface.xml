@@ -2,7 +2,7 @@
 	<Script file='config.lua'/>
 	<Script file='AutoButton.lua'/>
 	<Script file='MinimapButtons.lua'/>
-	<Script file='EasyShadow.lua'/>
+	<Script file='Skins.lua'/>
 	<Script file='iShadow.lua'/>
 	<Script file='EnhancedWorldMap.lua'/>
 	<Script file='EnhancedTooltip.lua'/>

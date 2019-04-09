@@ -13,10 +13,10 @@ local S = E:GetModule('Skins')
 local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
-local EasyShadow = E:NewModule('Wind_EasyShadow', 'AceEvent-3.0')
+local WS = E:NewModule('Wind_Skins', 'AceEvent-3.0')
 local LSM = LibStub("LibSharedMedia-3.0")
 
-EasyShadow.elvui_frame_list = {
+WS.elvui_frame_list = {
 	["actionbars"] = L["Actionbars"],
 	["auras"] = L["Auras"],
 	["castbar"] = L["Cast Bar"],
@@ -28,17 +28,17 @@ EasyShadow.elvui_frame_list = {
 	["tooltips"] = L["Game Tooltip"],
 }
 
-EasyShadow.addonskins_list = {
+WS.addonskins_list = {
 	["general"] = L["General"],
 	["weakaura"] = L["Weakaura"],
 	["bigwigs"] = L["Bigwigs"],
 }
 
-EasyShadow.windtools_list = {
+WS.windtools_list = {
 	["minimap_button"] = L["Minimap Buttons"],
 }
 
-EasyShadow.blizzard_frames_backdrop = {
+WS.blizzard_frames_backdrop = {
 	["MMHolder"] = false,
 	["HelpFrame"] = false,
 	["HelpFrameHeader"] = false,
@@ -58,7 +58,7 @@ EasyShadow.blizzard_frames_backdrop = {
 	["SpellBookFrame"] = false,
 }
 
-EasyShadow.lazy_load_list = {
+WS.lazy_load_list = {
 	["Blizzard_GarrisonUI"] = {"GarrisonLandingPage", "BFAMissionFrame"},
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 }
@@ -376,7 +376,7 @@ local function shadow_alerts()
 	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
-function EasyShadow:ADDON_LOADED(_, addon)
+function WS:ADDON_LOADED(_, addon)
 	if not self.db.elvui.general then return end
 	if self.lazy_load_list[addon] then
 		for _, frame in pairs(self.lazy_load_list[addon]) do
@@ -394,7 +394,7 @@ function EasyShadow:ADDON_LOADED(_, addon)
 	end
 end
 
-function EasyShadow:ShadowGeneralFrames()
+function WS:ShadowGeneralFrames()
 	if not self.db.elvui.general then return end
 
 	for frame, createOnBackdrop in pairs(self.blizzard_frames_backdrop) do
@@ -433,17 +433,7 @@ function EasyShadow:ShadowGeneralFrames()
 	end
 
 	-- 输入法框
-	if _G.IMECandidatesFrame then
-		local frame = _G.IMECandidatesFrame
-		frame:CreateShadow()
-		S:HandlePortraitFrame(frame)
-		for i=1,10 do
-			if frame["c"..i] then
-				frame["c"..i].label:FontTemplate(nil, 16, "OUTLINE")
-				frame["c"..i].candidate:FontTemplate(nil, 16, "OUTLINE")
-			end
-		end
-	end
+	if _G.IMECandidatesFrame then _G.IMECandidatesFrame:CreateShadow() end
 
 	-- 团队控制
 	if _G.RaidUtility_ShowButton then _G.RaidUtility_ShowButton:CreateShadow() end
@@ -459,7 +449,7 @@ function EasyShadow:ShadowGeneralFrames()
 	shadow_objective_tracker()
 end
 
-function EasyShadow:ShadowElvUIFrames()
+function WS:ShadowElvUIFrames()
 	if not self.db then return end
 
 	if self.db.elvui.general then
@@ -562,9 +552,22 @@ function EasyShadow:ShadowElvUIFrames()
 	end
 end
 
+function WS:CustomSkins()
+	-- 输入法候选框
+	if _G.IMECandidatesFrame then
+		local frame = _G.IMECandidatesFrame
+		local db = self.db.ime
+		if db.no_backdrop then S:HandlePortraitFrame(frame) end
+		for i=1,10 do
+			if frame["c"..i] then
+				frame["c"..i].label:FontTemplate(LSM:Fetch('font', db.label.font), db.label.size, db.label.style)
+				frame["c"..i].candidate:FontTemplate(LSM:Fetch('font', db.candidate.font), db.candidate.size, db.candidate.style)
+			end
+		end
+	end
+end
 
-
-function EasyShadow:AddOnSkins()
+function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
 	local AS = unpack(AddOnSkins)
 	if self.db.addonskins.general then
@@ -583,11 +586,12 @@ function EasyShadow:AddOnSkins()
 	end
 end
 
-function EasyShadow:Initialize()
-	self.db = E.db.WindTools["Interface"]["EasyShadow"]
-	if not self.db["enabled"] then return end
+function WS:Initialize()
+	self.db = E.db.WindTools.Interface.Skins
+	if not self.db.enabled then return end
 	self:ShadowElvUIFrames()
 	self:ShadowGeneralFrames()
+	self:CustomSkins()
 	if IsAddOnLoaded("AddOnSkins") then
 		self:AddOnSkins()
 	end
@@ -595,7 +599,7 @@ function EasyShadow:Initialize()
 end
 
 local function InitializeCallback()
-	EasyShadow:Initialize()
+	WS:Initialize()
 end
 
-E:RegisterModule(EasyShadow:GetName(), InitializeCallback)
+E:RegisterModule(WS:GetName(), InitializeCallback)

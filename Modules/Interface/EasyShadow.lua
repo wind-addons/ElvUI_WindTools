@@ -13,7 +13,7 @@ local S = E:GetModule('Skins')
 local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
-local EasyShadow = E:NewModule('Wind_EasyShadow')
+local EasyShadow = E:NewModule('Wind_EasyShadow', 'AceEvent-3.0')
 local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
 
@@ -37,6 +37,11 @@ EasyShadow.addonskins_list = {
 
 EasyShadow.windtools_list = {
 	["minimap_button"] = L["Minimap Buttons"],
+}
+
+EasyShadow.lazy_load_list = {
+	["Blizzard_GarrisonUI"] = "GarrisonLandingPage",
+	["Blizzard_BindingUI"] = "KeyBindingFrame",
 }
 
 local function shadow_bigwigs(self, event, addon)
@@ -352,6 +357,15 @@ local function shadow_alerts()
 	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
+
+
+function EasyShadow:ADDON_LOADED(_, addon)
+	if self.lazy_load_list[addon] then
+		local frame = self.lazy_load_list[addon]
+		if _G[frame] then _G[frame]:CreateShadow(4) end
+	end
+end
+
 function EasyShadow:ShadowGeneralFrames()
 	if not self.db.elvui.general then return end
 	
@@ -507,15 +521,7 @@ function EasyShadow:ShadowElvUIFrames()
 	end
 end
 
-function EasyShadow:Initialize()
-	self.db = E.db.WindTools["Interface"]["EasyShadow"]
-	if not self.db["enabled"] then return end
-	self:ShadowElvUIFrames()
-	self:ShadowGeneralFrames()
-	if IsAddOnLoaded("AddOnSkins") then
-		self:AddOnSkins()
-	end
-end
+
 
 function EasyShadow:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
@@ -534,6 +540,17 @@ function EasyShadow:AddOnSkins()
 		AS:RegisterSkin('BigWigs', shadow_bigwigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
 	end
+end
+
+function EasyShadow:Initialize()
+	self.db = E.db.WindTools["Interface"]["EasyShadow"]
+	if not self.db["enabled"] then return end
+	self:ShadowElvUIFrames()
+	self:ShadowGeneralFrames()
+	if IsAddOnLoaded("AddOnSkins") then
+		self:AddOnSkins()
+	end
+	self:RegisterEvent('ADDON_LOADED')
 end
 
 local function InitializeCallback()

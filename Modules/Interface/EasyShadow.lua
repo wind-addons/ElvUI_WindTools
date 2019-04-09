@@ -1,4 +1,4 @@
--- 简单阴影
+-- 皮肤增强
 -- 作者：houshuu
 -- AddonSkins, 任务追踪, 部分 ElvUI 组件美化修改自 BenikUI
 
@@ -38,9 +38,29 @@ EasyShadow.windtools_list = {
 	["minimap_button"] = L["Minimap Buttons"],
 }
 
+EasyShadow.blizzard_frames_backdrop = {
+	["MMHolder"] = false,
+	["HelpFrame"] = false,
+	["HelpFrameHeader"] = false,
+	["GameMenuFrame"] = false,
+	["InterfaceOptionsFrame"] = false,
+	["VideoOptionsFrame"] = false,
+	["CharacterFrame"] = false,
+	["EquipmentFlyoutFrameButtons"] = false,
+	["ElvUI_ContainerFrame"] = false,
+	["AddonList"] = false,
+	["BonusRollFrame"] = false,
+	["ChatMenu"] = false,
+	["SplashFrame"] = false,
+	["DropDownList1"] = false,
+	["FriendsFrame"] = false,
+	["PVEFrame"] = false,
+	["SpellBookFrame"] = false,
+}
+
 EasyShadow.lazy_load_list = {
-	["Blizzard_GarrisonUI"] = "GarrisonLandingPage",
-	["Blizzard_BindingUI"] = "KeyBindingFrame",
+	["Blizzard_GarrisonUI"] = {"GarrisonLandingPage", "BFAMissionFrame"},
+	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 }
 
 local function shadow_bigwigs(self, event, addon)
@@ -359,47 +379,70 @@ end
 function EasyShadow:ADDON_LOADED(_, addon)
 	if not self.db.elvui.general then return end
 	if self.lazy_load_list[addon] then
-		local frame = self.lazy_load_list[addon]
-		if _G[frame] then _G[frame]:CreateShadow(4) end
+		for _, frame in pairs(self.lazy_load_list[addon]) do
+			if _G[frame] then _G[frame]:CreateShadow(4) end
+		end
+	end
+
+	-- 公会页面标签页
+	if addon == "Blizzard_Communities" and _G.CommunitiesFrame then
+		local frame = _G.CommunitiesFrame
+		frame.ChatTab:CreateShadow()
+		frame.RosterTab:CreateShadow()
+		frame.GuildBenefitsTab:CreateShadow()
+		frame.GuildInfoTab:CreateShadow()
 	end
 end
 
 function EasyShadow:ShadowGeneralFrames()
 	if not self.db.elvui.general then return end
-	
-	local blizzard_frames_backdrop = {
-		["MMHolder"] = false,
-		["HelpFrame"] = false,
-		["HelpFrameHeader"] = false,
-		["GameMenuFrame"] = false,
-		["InterfaceOptionsFrame"] = false,
-		["VideoOptionsFrame"] = false,
-		["CharacterFrame"] = false,
-		["EquipmentFlyoutFrameButtons"] = false,
-		["ElvUI_ContainerFrame"] = false,
-		["AddonList"] = false,
-		["BonusRollFrame"] = false,
-		["ChatMenu"] = false,
-		["SplashFrame"] = false,
-		["DropDownList1"] = false,
-	}
 
-	for frame, createOnBackdrop in pairs(blizzard_frames_backdrop) do
+	for frame, createOnBackdrop in pairs(self.blizzard_frames_backdrop) do
 		if not createOnBackdrop then
 			if _G[frame] then _G[frame]:CreateShadow(3) end
 		end
 	end
 
-	-- 输入法框
-	if _G.IMECandidatesFrame then
-		_G.IMECandidatesFrame:CreateShadow()
-		S:HandlePortraitFrame(_G.IMECandidatesFrame)
-	end
-
-	-- 人物面板 Tab
-	for i=1, 4 do
+	-- 人物面板标签页
+	for i=1,4 do
 		local tab = _G["CharacterFrameTab"..i]
 		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	end
+
+	-- 好友面板标签页
+	for i=1,3 do
+		local tab = _G["FriendsFrameTab"..i]
+		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	end
+
+	-- 地城团队标签页
+	for i=1,3 do
+		local tab = _G["PVEFrameTab"..i]
+		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	end
+
+	-- 法术书标签页
+	for i=1,3 do
+		local tab = _G["SpellBookFrameTabButton"..i]
+		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	end
+
+	for i=1,8 do
+		local tab = _G["SpellBookSkillLineTab"..i]
+		if tab then tab:CreateShadow(2) end
+	end
+
+	-- 输入法框
+	if _G.IMECandidatesFrame then
+		local frame = _G.IMECandidatesFrame
+		frame:CreateShadow()
+		S:HandlePortraitFrame(frame)
+		for i=1,10 do
+			if frame["c"..i] then
+				frame["c"..i].label:FontTemplate(nil, 16, "OUTLINE")
+				frame["c"..i].candidate:FontTemplate(nil, 16, "OUTLINE")
+			end
+		end
 	end
 
 	-- 团队控制

@@ -14,6 +14,7 @@ L["Scale"] = "缩放"
 L["Reset"] = "重置"
 L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."] = "ElvUI Wind工具箱 已经升级，同时插件配置的数据结构也发生了巨大的改变。 为了使这些改变生效，你可能不得不重载你的用户界面。"
 L["|cffff0000If you click Accept, it will reset your Windtools."] = "|cffff0000如果你点击确定，这将会重置你的 Wind 工具箱配置。"
+L["|cffff0000If you click Accept, it will reset this module."] = "|cffff0000如果你点击确定，这将会重置这个模块。"
 L["WindTools will reload your user interface to apply the change."] = "为了应用更改，Wind工具箱将会重载你的界面。"
 -- 功能界面
 L["Enable"] = "开启"
@@ -394,4 +395,3 @@ L["The new-look interface for objective tracker."] = "为进度追踪提供全�
 L["Header"] = "顶部"
 L["Title"] = "标题"
 L["Info text"] = "信息"
-L["Large item button"] = "更大的物品按钮"

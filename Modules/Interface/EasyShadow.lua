@@ -17,14 +17,6 @@ local EasyShadow = E:NewModule('Wind_EasyShadow')
 local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
 
--- 不需要检测插件载入即可上阴影的框体
-EasyShadow.BlzFrames = {
-	["MMHolder"] = L["MiniMap"],
-	["GameMenuFrame"] = L["Game Menu"],
-	["InterfaceOptionsFrame"] = L["Interface Options"],
-	["VideoOptionsFrame"] = L["Video Options"],
-}
-
 EasyShadow.elvui_frame_list = {
 	["actionbars"] = L["Actionbars"],
 	["auras"] = L["Auras"],
@@ -38,9 +30,9 @@ EasyShadow.elvui_frame_list = {
 }
 
 EasyShadow.addonskins_list = {
+	["general"] = L["General"],
 	["weakaura"] = L["Weakaura 2"],
 	["bigwigs"] = L["Bigwigs"],
-	["general"] = L["General"],
 }
 
 EasyShadow.windtools_list = {
@@ -360,11 +352,46 @@ local function shadow_alerts()
 	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
-function EasyShadow:ShadowBlzFrames()
-	if not self.db then return end
-	for k, v in pairs(self.BlzFrames) do
-		if self.db.BlzFrames[k] then _G[k]:CreateShadow() end
+function EasyShadow:ShadowGeneralFrames()
+	if not self.db.elvui.general then return end
+	
+	local blizzard_frames_backdrop = {
+		["MMHolder"] = false,
+		["HelpFrame"] = false,
+		["HelpFrameHeader"] = false,
+		["GameMenuFrame"] = false,
+		["InterfaceOptionsFrame"] = false,
+		["VideoOptionsFrame"] = false,
+		["CharacterFrame"] = false,
+		["EquipmentFlyoutFrameButtons"] = false,
+		["ElvUI_ContainerFrame"] = false,
+	}
+
+	for frame, createOnBackdrop in pairs(blizzard_frames_backdrop) do
+		if not createOnBackdrop then
+			if _G[frame] then _G[frame]:CreateShadow(5) end
+		end
 	end
+
+	-- 人物面板 Tab
+	for i=1, 4 do
+		local tab = _G["CharacterFrameTab"..i]
+		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	end
+
+	-- 团队控制
+	if _G.RaidUtility_ShowButton then _G.RaidUtility_ShowButton:CreateShadow() end
+	if _G.RaidUtilityPanel then _G.RaidUtilityPanel:CreateShadow() end
+
+	-- 镜像时间条 呼吸条
+	for i = 1, MIRRORTIMER_NUMTIMERS do
+		local statusBar = _G['MirrorTimer'..i..'StatusBar']
+		if statusBar.backdrop then statusBar.backdrop:CreateShadow() end
+	end
+
+	-- 任务追踪
+	shadow_objective_tracker()
+
 end
 
 function EasyShadow:ShadowElvUIFrames()
@@ -373,35 +400,9 @@ function EasyShadow:ShadowElvUIFrames()
 	if self.db.elvui.general then
 		-- 为 ElvUI 美化皮肤模块添加阴影功能
 		hooksecurefunc(S, "HandleTab", function(_, tab) if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end end)
-		hooksecurefunc(S, "HandleButton", function(_, button) if button then button:CreateShadow(2) end end)
-		hooksecurefunc(S, "HandleEditBox", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
-
-		-- 任务追踪
-		shadow_objective_tracker()
-
 		-- 提醒
 		shadow_alerts()
-		
-		-- 人物面板
-		_G.CharacterFrame:CreateShadow()
-		for i=1, 4 do
-			local tab = _G["CharacterFrameTab"..i]
-			if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
-		end
-
-		-- 团队控制
-		if _G.RaidUtility_ShowButton then _G.RaidUtility_ShowButton:CreateShadow() end
-		if _G.RaidUtilityPanel then _G.RaidUtilityPanel:CreateShadow() end
-
-		-- 镜像时间条 呼吸条
-		for i = 1, MIRRORTIMER_NUMTIMERS do
-			local statusBar = _G['MirrorTimer'..i..'StatusBar']
-			if statusBar.backdrop then statusBar.backdrop:CreateShadow() end
-		end
-
-		-- 换装备
-		EquipmentFlyoutFrameButtons:CreateShadow()
 	end
 
 	-- 光环条
@@ -499,10 +500,8 @@ end
 function EasyShadow:Initialize()
 	self.db = E.db.WindTools["Interface"]["EasyShadow"]
 	if not self.db["enabled"] then return end
-
-	self:ShadowBlzFrames()
 	self:ShadowElvUIFrames()
-
+	self:ShadowGeneralFrames()
 	if IsAddOnLoaded("AddOnSkins") then
 		self:AddOnSkins()
 	end
@@ -526,7 +525,6 @@ function EasyShadow:AddOnSkins()
 		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
 	end
 end
-
 
 local function InitializeCallback()
 	EasyShadow:Initialize()

@@ -133,12 +133,6 @@ P["WindTools"]["Interface"] = {
 	},
 	["EasyShadow"] = {
 		["enabled"] = true,
-		["BlzFrames"] = {
-			["MMHolder"] = true,
-			["GameMenuFrame"] = true,
-			["InterfaceOptionsFrame"] = true,
-			["VideoOptionsFrame"] = true,
-		},
 		["elvui"] = {
 			["actionbars"] = false,
 			["auras"] = false,
@@ -593,22 +587,15 @@ WT.ToolConfigs["Interface"] = {
 		tDesc   = L["Add shadow to frames."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["BlzFrames"] = {
-			order = 5,
-			name = L["Game Menu"],
-			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].BlzFrames[info[#info]] end,
-			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].BlzFrames[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
-			args = {}
-		},
 		["elvui"] = {
-			order = 6,
+			order = 5,
 			name = "ElvUI"..L["Frame Setting"],
 			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] end,
 			set = function(info, value) E.db.WindTools["Interface"]["EasyShadow"].elvui[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {}
 		},
 		["addonskins"] = {
-			order = 7,
+			order = 6,
 			name = "AddOnSkins",
 			hidden = function() return not IsAddOnLoaded("AddOnSkins") end,
 			get = function(info) return E.db.WindTools["Interface"]["EasyShadow"].addonskins[info[#info]] end,
@@ -619,14 +606,6 @@ WT.ToolConfigs["Interface"] = {
 			local EasyShadow = E:GetModule('Wind_EasyShadow')
 			local Options = WT.ToolConfigs["Interface"]["EasyShadow"]
 			local optOrder = 1
-			for k, v in pairs(EasyShadow.BlzFrames) do
-				Options.BlzFrames.args[k]={
-					order = optOrder,
-					name = v,
-				}
-				optOrder = optOrder + 1
-			end
-			optOrder = 1
 			for k, v in pairs(EasyShadow.elvui_frame_list) do
 				Options.elvui.args[k]={
 					order = optOrder,

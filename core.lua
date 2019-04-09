@@ -33,13 +33,6 @@ local function RGBToHex(r, g, b)
 	return format("%02x%02x%02x", r*255, g*255, b*255)
 end
 
--- 重置
-local function ResetWindTools()
-	E.db.WindTools = P["WindTools"]
-	E.db.WindTools.InstalledVersion = WT.Version
-	ReloadUI()
-end
-
 -- 为字符串添加自定义颜色
 function WT:ColorStr(str, r, g, b)
 	local hex = r and g and b and RGBToHex(r, g, b) or RGBToHex(52/255, 152/255, 219/255)
@@ -69,10 +62,31 @@ E.PopupDialogs["WIND_RESET"] = {
 	text = L["|cffff0000If you click Accept, it will reset your Windtools.|r"],
 	button1 = ACCEPT,
 	button2 = CANCEL,
-	OnAccept = ResetWindTools,
+	OnAccept = function()
+		E.db.WindTools = P["WindTools"]
+		E.db.WindTools.InstalledVersion = WT.Version
+		ReloadUI()
+	end,
 	timeout = 0,
 	whileDead = 1,
-	hideOnEscape = true,
+	hideOnEscape = false,
+}
+
+E.PopupDialogs["WIND_MODULE_RESET"] = {
+	text = L["|cffff0000If you click Accept, it will reset this module."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = function(self)
+		if self.data and self.data.cata and self.data.wind_mod then
+			E.db.WindTools[self.data.cata][self.data.wind_mod] = P.WindTools[self.data.cata][self.data.wind_mod]
+			ReloadUI()
+		else
+			print(L["Reset is failed."])
+		end
+	end,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = false,
 }
 
 E.PopupDialogs["WIND_RL"] = {
@@ -184,7 +198,7 @@ function WT:InsertOptions()
 		for arg_name, arg in pairs(feature) do
 			if arg.args then
 				arg.type = arg.type or "group"
-				arg.guiInline = true
+				if arg.type == "group" then arg.guiInline = true end
 				check_attributes(arg.args)
 			else
 				arg.type = arg.type or "toggle"
@@ -234,10 +248,17 @@ function WT:InsertOptions()
 						enablebtn = {
 							order = 4,
 							type  = "toggle",
-							width = "full",
+							width = "normal",
 							name  = WT:ColorStr(L["Enable"]),
 							get   = function(info) return E.db.WindTools[module_name][feature_name]["enabled"] end,
 							set   = function(info, value) E.db.WindTools[module_name][feature_name]["enabled"]     = value; E:StaticPopup_Show("PRIVATE_RL") end,
+						},
+						resetbtn = {
+							order = 4,
+							type  = "execute",
+							width = "normal",
+							name  = L["Reset"],
+							func  = function() E:StaticPopup_Show("WIND_MODULE_RESET", nil, nil, {cata=module_name, wind_mod=feature_name}) end,
 						}
 					}
 				}

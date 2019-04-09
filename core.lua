@@ -33,6 +33,13 @@ local function RGBToHex(r, g, b)
 	return format("%02x%02x%02x", r*255, g*255, b*255)
 end
 
+-- 重置
+local function ResetWindTools()
+	E.db.WindTools = P["WindTools"]
+	E.db.WindTools.InstalledVersion = WT.Version
+	ReloadUI()
+end
+
 -- 为字符串添加自定义颜色
 function WT:ColorStr(str, r, g, b)
 	local hex = r and g and b and RGBToHex(r, g, b) or RGBToHex(52/255, 152/255, 219/255)
@@ -56,6 +63,16 @@ E.PopupDialogs["WIND_UPDATE_RL"] = {
 	timeout = 0,
 	whileDead = 1,
 	hideOnEscape = false,
+}
+
+E.PopupDialogs["WIND_RESET"] = {
+	text = L["|cffff0000If you click Accept, it will reset your Windtools."],
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ResetWindTools,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = true,
 }
 
 E.PopupDialogs["WIND_RL"] = {
@@ -138,6 +155,12 @@ function WT:InsertOptions()
 				order = 9,
 				type  = "description",
 				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96Weakaura|r @ TW-暗影之月)\nSomeBlu @ Github"
+			},
+			reset_button = {
+				order = 10,
+				type  = "execute",
+				name  = L["Reset"],
+				func = function() E:StaticPopup_Show("WIND_RESET") end,
 			},
 			credit = {
 				order = -1,
@@ -251,11 +274,11 @@ function WT:InsertOptions()
 	-- if rl_popup then E:StaticPopup_Show("WIND_UPDATE_RL") end
 
 	-- 版本更新需要重置设置的时候使用
-	if not E.db.WindTools.InstalledVersion or E.db.WindTools.InstalledVersion ~= WT.Version then
-		E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
-		E.db.WindTools.InstalledVersion = WT.Version
-		E:StaticPopup_Show("WIND_UPDATE_RL")
-	end
+	-- if not E.db.WindTools.InstalledVersion then
+	-- 	E.db.WindTools["More Tools"]["Announce System"] = P["WindTools"]["More Tools"]["Announce System"]
+	-- 	E.db.WindTools.InstalledVersion = WT.Version
+	-- 	E:StaticPopup_Show("WIND_UPDATE_RL")
+	-- end
 end
 ---------------------------------------------------
 -- ElvUI 设定部分初始化

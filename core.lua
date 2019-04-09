@@ -66,7 +66,7 @@ E.PopupDialogs["WIND_UPDATE_RL"] = {
 }
 
 E.PopupDialogs["WIND_RESET"] = {
-	text = L["|cffff0000If you click Accept, it will reset your Windtools."],
+	text = L["|cffff0000If you click Accept, it will reset your Windtools.|r"],
 	button1 = ACCEPT,
 	button2 = CANCEL,
 	OnAccept = ResetWindTools,

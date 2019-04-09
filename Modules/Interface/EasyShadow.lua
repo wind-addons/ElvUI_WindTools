@@ -2,6 +2,10 @@
 -- 作者：houshuu
 -- AddonSkins, 任务追踪, 部分 ElvUI 组件美化修改自 BenikUI
 
+local _G = _G
+local unpack = unpack
+local hooksecurefunc = hooksecurefunc
+
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local A = E:GetModule('Auras')
@@ -12,9 +16,6 @@ local DATABAR = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow')
 local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
-
-local _G = _G
-local hooksecurefunc = hooksecurefunc
 
 -- 不需要检测插件载入即可上阴影的框体
 EasyShadow.BlzFrames = {
@@ -46,7 +47,7 @@ EasyShadow.windtools_list = {
 	["minimap_button"] = L["Minimap Buttons"],
 }
 
-local function shadowBigWigs(self, event, addon)
+local function shadow_bigwigs(self, event, addon)
 	local AS = unpack(AddOnSkins)
 	if event == 'PLAYER_ENTERING_WORLD' then
 		if BigWigsLoader then
@@ -216,7 +217,7 @@ local function shadowBigWigs(self, event, addon)
 	end
 end
 
-local function shadowWeakAuras()
+local function shadow_weakauras()
 	local function Skin_WeakAuras(frame, ftype)
 		if frame.Backdrop then frame.Backdrop:CreateShadow() end
 	end
@@ -252,10 +253,10 @@ local function shadowWeakAuras()
 	end
 end
 
-local function shadowObjectiveTracker()
+local function shadow_objective_tracker()
 	-- 修改自 BenikUI
 	-- 顺带重写了一些任务追踪的简单美化，以后有空剥离这部分自定义美化到任务列表增强
-	local function SkinOjectiveTrackerHeaders()
+	local function SkinObjectiveTrackerHeaders()
 		local frame = _G.ObjectiveTrackerFrame.MODULES
 		if frame then
 			for i = 1, #frame do
@@ -270,6 +271,7 @@ local function shadowObjectiveTracker()
 		end
 	end
 
+	-- 文字
 	local function SkinObjectiveTrackerText(self, block)
 		local text = block.HeaderText
 		if text then 
@@ -278,6 +280,10 @@ local function shadowObjectiveTracker()
 				line.Text:FontTemplate(nil, E.db.general.fontSize, "OUTLINE")
 			end
 		end
+	end
+
+	local function SkinWorldQuestText(self, font_string)
+		if font_string then font_string:FontTemplate(nil, nil, "OUTLINE") end
 	end
 
 	-- 收起按钮
@@ -320,10 +326,8 @@ local function shadowObjectiveTracker()
 	hooksecurefunc(QUEST_TRACKER_MODULE,"SetBlockHeader", ItemButtonShadows)
 	hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", SkinObjectiveTrackerText)
 	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
-	hooksecurefunc("ObjectiveTracker_Update", SkinOjectiveTrackerHeaders)
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"SetStringText", function(_, fontString)
-		fontString:FontTemplate(nil, nil, "OUTLINE")
-	end)
+	hooksecurefunc("ObjectiveTracker_Update", SkinObjectiveTrackerHeaders)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", SkinWorldQuestText)
 
 	local function FindGroupButtonShadows(block)
 		if block.hasGroupFinderButton and block.groupFinderButton then
@@ -337,10 +341,9 @@ local function shadowObjectiveTracker()
 	hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup",FindGroupButtonShadows)
 end
 
-local function shadowAlerts()
+local function shadow_alerts()
 	local function createShadowOnAlert(alert)
-		if not alert then return end
-		if alert.backdrop then alert.backdrop:CreateShadow() end
+		if alert and alert.backdrop then alert.backdrop:CreateShadow() end
 	end
 
 	--[[ HOOKS ]]--
@@ -401,10 +404,10 @@ function EasyShadow:ShadowElvUIFrames()
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 
 		-- 任务追踪
-		shadowObjectiveTracker()
+		shadow_objective_tracker()
 
 		-- 提醒
-		shadowAlerts()
+		shadow_alerts()
 		
 		-- 人物面板
 		for i=1, 4 do
@@ -522,13 +525,13 @@ function EasyShadow:AddOnSkins()
 	
 	-- Weakaura
 	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
-		AS:RegisterSkin('WeakAuras', shadowWeakAuras, 'ADDON_LOADED')
+		AS:RegisterSkin('WeakAuras', shadow_weakauras, 'ADDON_LOADED')
 	end
 
 	-- Bigwigs
 	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
-		AS:RegisterSkin('BigWigs', shadowBigWigs, 'ADDON_LOADED')
-		AS:RegisterSkinForPreload('BigWigs_Plugins', shadowBigWigs)
+		AS:RegisterSkin('BigWigs', shadow_bigwigs, 'ADDON_LOADED')
+		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
 	end
 end
 

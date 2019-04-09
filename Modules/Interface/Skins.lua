@@ -562,6 +562,7 @@ function WS:CustomSkins()
 			if frame["c"..i] then
 				frame["c"..i].label:FontTemplate(LSM:Fetch('font', db.label.font), db.label.size, db.label.style)
 				frame["c"..i].candidate:FontTemplate(LSM:Fetch('font', db.candidate.font), db.candidate.size, db.candidate.style)
+				frame["c"..i].candidate:SetWidth(db.width)
 			end
 		end
 	end

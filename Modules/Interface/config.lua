@@ -151,6 +151,7 @@ P["WindTools"]["Interface"] = {
 		},
 		ime = {
 			no_backdrop = true,
+			width = 200,
 			label = {
 				font = E.db.general.font,
 				size = E.db.general.fontSize + 3,
@@ -618,15 +619,22 @@ WT.ToolConfigs["Interface"] = {
 		["ime"] = {
 			order = 7,
 			name = L["IME"],
+			get = function(info) return E.db.WindTools.Interface.Skins.ime[info[#info]] end,
+			set = function(info, value) E.db.WindTools.Interface.Skins.ime[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {
 				no_backdrop = {
-					get = function(info) return E.db.WindTools.Interface.Skins.ime.no_backdrop end,
-					set = function(info, value) E.db.WindTools.Interface.Skins.ime.no_backdrop = value end,
 					order = 1,
 					name = L["No backdrop"],
 				},
-				label = {
+				width = {
 					order = 2,
+					type = "range",
+					name = L["Width"],
+					desc = L["You can set width to display long text."],
+					min = 100, max = 600, step = 1,
+				},
+				label = {
+					order = 3,
 					name = L["Label"],
 					get = function(info) return E.db.WindTools.Interface.Skins.ime.label[info[#info]] end,
 					set = function(info, value) E.db.WindTools.Interface.Skins.ime.label[info[#info]] = value end,
@@ -658,7 +666,7 @@ WT.ToolConfigs["Interface"] = {
 					},
 				},
 				candidate = {
-					order = 3,
+					order = 4,
 					name = L["Candidate"],
 					get = function(info) return E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] end,
 					set = function(info, value) E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] = value end,

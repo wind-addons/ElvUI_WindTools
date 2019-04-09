@@ -14,7 +14,6 @@ local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
 local EasyShadow = E:NewModule('Wind_EasyShadow', 'AceEvent-3.0')
-local MMB = E:GetModule('Wind_MinimapButtons')
 local LSM = LibStub("LibSharedMedia-3.0")
 
 EasyShadow.elvui_frame_list = {
@@ -31,7 +30,7 @@ EasyShadow.elvui_frame_list = {
 
 EasyShadow.addonskins_list = {
 	["general"] = L["General"],
-	["weakaura"] = L["Weakaura 2"],
+	["weakaura"] = L["Weakaura"],
 	["bigwigs"] = L["Bigwigs"],
 }
 
@@ -357,9 +356,8 @@ local function shadow_alerts()
 	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
-
-
 function EasyShadow:ADDON_LOADED(_, addon)
+	if not self.db.elvui.general then return end
 	if self.lazy_load_list[addon] then
 		local frame = self.lazy_load_list[addon]
 		if _G[frame] then _G[frame]:CreateShadow(4) end

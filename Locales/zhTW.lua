@@ -390,6 +390,8 @@ L["%target%, thank you for using %spell% to revive me. :)"] = "%target%，感謝
 L["Thanks all!"] = "感謝各位！"
 -- 进度追踪
 L["Objective Tracker"] = "進度追蹤"
+L["The new-look interface for objective tracker."] = "為進度追蹤提供全新的介面。"
 L["Header"] = "頂部"
 L["Title"] = "標題"
 L["Info text"] = "信息"
+L["Large item button"] = "更大的物品按鈕"

@@ -4,6 +4,10 @@ local WT = E:GetModule("WindTools")
 
 local _G = _G
 
+local function refresh_objective_tracker()
+	ObjectiveTracker_Update()
+end
+
 P["WindTools"]["Quest"] = {
 	["Objective Tracker"] = {
 		enabled = true,
@@ -54,8 +58,8 @@ WT.ToolConfigs["Quest"] = {
 					name = L["Header"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] end,
 					set = function(info, value)
-						E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] = value;
-						E:StaticPopup_Show("WIND_RL")
+						E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] = value
+						refresh_objective_tracker()
 					end,
 					args = {
 						font = {
@@ -90,7 +94,7 @@ WT.ToolConfigs["Quest"] = {
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["title"][info[#info]] end,
 					set = function(info, value)
 						E.db.WindTools.Quest["Objective Tracker"]["title"][info[#info]] = value
-						E:StaticPopup_Show("WIND_RL")
+						refresh_objective_tracker()
 					end,
 					args = {
 						font = {
@@ -125,7 +129,7 @@ WT.ToolConfigs["Quest"] = {
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] end,
 					set = function(info, value)
 						E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] = value
-						E:StaticPopup_Show("WIND_RL")
+						refresh_objective_tracker()
 					end,
 					args = {
 						font = {

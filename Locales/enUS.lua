@@ -403,6 +403,8 @@ L["%target%, thank you for using %spell% to revive me. :)"] = true
 L["Thanks all!"] = true
 -- 进度追踪
 L["Objective Tracker"] = true
+L["The new-look interface for objective tracker."] = true
 L["Header"] = true
 L["Title"] = true
 L["Info text"] = true
+L["Large item button"] = true

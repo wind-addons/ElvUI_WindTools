@@ -522,6 +522,7 @@ function WS:ShadowElvUIFrames()
 		if DATABAR.db.honor.enable then _G.ElvUI_HonorBar:CreateShadow() end
 	end
 
+	-- 动作条
 	if self.db.elvui.actionbars then
 		-- 常规动作条
 		local actionbar_list = {
@@ -549,6 +550,13 @@ function WS:ShadowElvUIFrames()
 			-- 特殊技能栏 1 好像也没遇到需要用到 2 的，先放着吧
 			_G.ExtraActionButton1:CreateShadow()
 		end
+	end
+
+	-- 额外能量条
+	if self.db.elvui.altpowerbar then
+		hooksecurefunc(UF, "Configure_AltPower", function(_, frame)
+			if frame and frame.AlternativePower then frame.AlternativePower:CreateShadow() end
+		end)
 	end
 end
 

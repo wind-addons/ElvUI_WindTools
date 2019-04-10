@@ -63,7 +63,7 @@ local function RScanQuests()
 	local QuestList = {}
 	local qIndex = 1
 	local qLink
-	local splitdot = QN_Locale["Colon"]           -- zh_CN 为全角" ：" ,en_US 为半角的 ":" ,zh_TW 请自行试验
+	local splitdot = QN_Locale["Colon"]
 	while GetQuestLogTitle(qIndex) do
 		local qTitle, qLevel, qGroup, qisHeader, qisCollapsed, qisComplete, frequency, qID = GetQuestLogTitle(qIndex)
 		local qTag, qTagName = GetQuestTagInfo(qID)
@@ -81,11 +81,11 @@ local function RScanQuests()
 				QuestID  =qID,          -- Integer
 				Link     =qLink
 			}
-			if qisComplete == 1 and ( IsQuestWatched(qIndex) ) then
-				RemoveQuestWatch(qIndex)
-			--	WatchFrame_Update()
-				ObjectiveTracker_Update()
-			end
+			-- if qisComplete == 1 and ( IsQuestWatched(qIndex) ) then
+			-- 	RemoveQuestWatch(qIndex)
+			-- --	WatchFrame_Update()
+			-- 	ObjectiveTracker_Update()
+			-- end
 			for i=1,GetNumQuestLeaderBoards(qIndex) do
 				local leaderboardTxt, itemType, isDone = GetQuestLogLeaderBoard (i,qIndex);
 			--	local j, k, itemName, numItems, numNeeded = string.find(leaderboardTxt, "(.*)"..splitdot.."%s*([%d]+)%s*/%s*([%d]+)");

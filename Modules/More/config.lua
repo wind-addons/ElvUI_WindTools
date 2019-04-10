@@ -20,7 +20,7 @@ P["WindTools"]["More Tools"] = {
 				["text"] = L["I interrupted %target%\'s %target_spell%!"],
 				["channel"] = {
 					["solo"] = "SELF",
-					["party"] = "PARTY"
+					["party"] = "PARTY",
 					["instance"] = "INSTANCE_CHAT",
 					["raid"] = "RAID",
 				},

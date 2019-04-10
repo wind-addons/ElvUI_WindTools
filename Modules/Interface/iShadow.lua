@@ -8,7 +8,7 @@
 
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local iShadow = E:NewModule('Wind_iShadow');
+local iShadow = E:NewModule('Wind_iShadow')
 
 function iShadow:SetShadowLevel(n)
 	self.f:SetAlpha(n/100)

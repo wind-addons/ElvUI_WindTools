@@ -2,7 +2,7 @@
 -- 去除迷雾部分作者：Leatrix
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
-local EWM = E:NewModule('Wind_EnhancedWorldMap', 'AceHook-3.0');
+local EWM = E:NewModule('Wind_EnhancedWorldMap', 'AceHook-3.0')
 local _G = _G
 
 function EWM:SetMapScale()

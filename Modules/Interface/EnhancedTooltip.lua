@@ -119,6 +119,7 @@ local function getLevelColorString(level, short)
 end
 
 function ETT:ItemIcons()
+	if not self.db.item_icon then return end
 	-- 来自 Ndui
 	local newString = "0:0:64:64:5:59:5:59"
 
@@ -359,9 +360,8 @@ end
 function ETT:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
 	if not self.db.enabled then return end
-	-- 鼠标提示副本进度
+	self:ItemIcons()
 	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
-	if self.db.item_icon then self:ItemIcons() end
 end
 
 local function InitializeCallback()

@@ -6,9 +6,15 @@ local EWM = E:NewModule('Wind_EnhancedWorldMap', 'AceHook-3.0');
 local _G = _G
 
 function EWM:SetMapScale()
+	local function fix_cursor(cursor)
+		-- 修复指针错误 方案来源 NDui
+		local x, y = MapCanvasScrollControllerMixin.GetCursorPosition(cursor)
+		local scale = WorldMapFrame:GetScale()
+		return x/scale, y/scale;
+	end
+
 	_G["WorldMapFrame"]:SetScale(E.db.WindTools["Interface"]["Enhanced World Map"]["scale"])
-	-- 修复指针错误 方案来源 NDui
-	RunScript("WorldMapFrame.ScrollContainer.GetCursorPosition=function(f) local x,y=MapCanvasScrollControllerMixin.GetCursorPosition(f);local s=WorldMapFrame:GetScale();return x/s,y/s;end")
+	WorldMapFrame.ScrollContainer.GetCursorPosition = fix_cursor
 end
 
 -- Map data
@@ -251,95 +257,98 @@ local LeaMapsData = {
 -- Create table to store revealed overlays
 local overlayTextures = {}
 -- Function to refresh overlays (Blizzard_SharedMapDataProviders\MapExplorationDataProvider)
-local function RefMap(self)
-	overlayTextures = {}
-	local mapID = WorldMapFrame.mapID; if not mapID then return end
-	local artID = C_Map.GetMapArtID(mapID); if not artID or not LeaMapsData[artID] then return end
-	local LeaMapsZone = LeaMapsData[artID]
 
-	-- Store already explored tiles in a table so they can be ignored
-	local TileExists = {}
-	local exploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures(mapID)
-	if exploredMapTextures then
-		for i, exploredTextureInfo in ipairs(exploredMapTextures) do
-			local key = exploredTextureInfo.textureWidth .. ":" .. exploredTextureInfo.textureHeight .. ":" .. exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
-			TileExists[key] = true
+function EWM:RevealMap()
+	if not self.db or not self.db.reveal then return end
+
+	local function ref_map(self)
+		overlayTextures = {}
+		local mapID = WorldMapFrame.mapID; if not mapID then return end
+		local artID = C_Map.GetMapArtID(mapID); if not artID or not LeaMapsData[artID] then return end
+		local LeaMapsZone = LeaMapsData[artID]
+	
+		-- Store already explored tiles in a table so they can be ignored
+		local TileExists = {}
+		local exploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures(mapID)
+		if exploredMapTextures then
+			for i, exploredTextureInfo in ipairs(exploredMapTextures) do
+				local key = exploredTextureInfo.textureWidth .. ":" .. exploredTextureInfo.textureHeight .. ":" .. exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
+				TileExists[key] = true
+			end
 		end
-	end
-
-	-- Get the sizes
-	self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
-	local layers = C_Map.GetMapArtLayers(mapID)
-	local layerInfo = layers and layers[self.layerIndex]
-	if not layerInfo then return end
-	local TILE_SIZE_WIDTH = layerInfo.tileWidth
-	local TILE_SIZE_HEIGHT = layerInfo.tileHeight
-
-	-- Show textures if they are in database and have not been explored
-	for key, files in pairs(LeaMapsZone) do
-		if not TileExists[key] then
-			local width, height, offsetX, offsetY = strsplit(":", key)
-			local fileDataIDs = { strsplit(",", files) }
-			local numTexturesWide = ceil(width/TILE_SIZE_WIDTH)
-			local numTexturesTall = ceil(height/TILE_SIZE_HEIGHT)
-			local texturePixelWidth, textureFileWidth, texturePixelHeight, textureFileHeight
-			for j = 1, numTexturesTall do
-				if ( j < numTexturesTall ) then
-					texturePixelHeight = TILE_SIZE_HEIGHT
-					textureFileHeight = TILE_SIZE_HEIGHT
-				else
-					texturePixelHeight = mod(height, TILE_SIZE_HEIGHT)
-					if ( texturePixelHeight == 0 ) then
+	
+		-- Get the sizes
+		self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
+		local layers = C_Map.GetMapArtLayers(mapID)
+		local layerInfo = layers and layers[self.layerIndex]
+		if not layerInfo then return end
+		local TILE_SIZE_WIDTH = layerInfo.tileWidth
+		local TILE_SIZE_HEIGHT = layerInfo.tileHeight
+	
+		-- Show textures if they are in database and have not been explored
+		for key, files in pairs(LeaMapsZone) do
+			if not TileExists[key] then
+				local width, height, offsetX, offsetY = strsplit(":", key)
+				local fileDataIDs = { strsplit(",", files) }
+				local numTexturesWide = ceil(width/TILE_SIZE_WIDTH)
+				local numTexturesTall = ceil(height/TILE_SIZE_HEIGHT)
+				local texturePixelWidth, textureFileWidth, texturePixelHeight, textureFileHeight
+				for j = 1, numTexturesTall do
+					if ( j < numTexturesTall ) then
 						texturePixelHeight = TILE_SIZE_HEIGHT
-					end
-					textureFileHeight = 16
-					while(textureFileHeight < texturePixelHeight) do
-						textureFileHeight = textureFileHeight * 2
-					end
-				end
-				for k = 1, numTexturesWide do
-					local texture = self.overlayTexturePool:Acquire()
-					if ( k < numTexturesWide ) then
-						texturePixelWidth = TILE_SIZE_WIDTH
-						textureFileWidth = TILE_SIZE_WIDTH
+						textureFileHeight = TILE_SIZE_HEIGHT
 					else
-						texturePixelWidth = mod(width, TILE_SIZE_WIDTH)
-						if ( texturePixelWidth == 0 ) then
-							texturePixelWidth = TILE_SIZE_WIDTH
+						texturePixelHeight = mod(height, TILE_SIZE_HEIGHT)
+						if ( texturePixelHeight == 0 ) then
+							texturePixelHeight = TILE_SIZE_HEIGHT
 						end
-						textureFileWidth = 16
-						while(textureFileWidth < texturePixelWidth) do
-							textureFileWidth = textureFileWidth * 2
+						textureFileHeight = 16
+						while(textureFileHeight < texturePixelHeight) do
+							textureFileHeight = textureFileHeight * 2
 						end
 					end
-					texture:SetSize(texturePixelWidth, texturePixelHeight)
-					texture:SetTexCoord(0, texturePixelWidth/textureFileWidth, 0, texturePixelHeight/textureFileHeight)
-					texture:SetPoint("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k-1)), -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
-					texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
-					texture:SetDrawLayer("ARTWORK", -1)
-					texture:Show()
-					tinsert(overlayTextures, texture)
+					for k = 1, numTexturesWide do
+						local texture = self.overlayTexturePool:Acquire()
+						if ( k < numTexturesWide ) then
+							texturePixelWidth = TILE_SIZE_WIDTH
+							textureFileWidth = TILE_SIZE_WIDTH
+						else
+							texturePixelWidth = mod(width, TILE_SIZE_WIDTH)
+							if ( texturePixelWidth == 0 ) then
+								texturePixelWidth = TILE_SIZE_WIDTH
+							end
+							textureFileWidth = 16
+							while(textureFileWidth < texturePixelWidth) do
+								textureFileWidth = textureFileWidth * 2
+							end
+						end
+						texture:SetSize(texturePixelWidth, texturePixelHeight)
+						texture:SetTexCoord(0, texturePixelWidth/textureFileWidth, 0, texturePixelHeight/textureFileHeight)
+						texture:SetPoint("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k-1)), -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
+						texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
+						texture:SetDrawLayer("ARTWORK", -1)
+						texture:Show()
+						tinsert(overlayTextures, texture)
+					end
 				end
 			end
 		end
+	end
+
+	for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
+		hooksecurefunc(pin, "RefreshOverlays", ref_map)
 	end
 end
 
 function EWM:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced World Map"]
-
-	if not self.db["enabled"] then return end
-
+	if not self.db.enabled then return end
 	self:SetMapScale()
-
-	if self.db["reveal"] then
-		for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-			hooksecurefunc(pin, "RefreshOverlays", RefMap)
-		end
-	end
+	self:RevealMap()
 end
 
 local function InitializeCallback()
 	EWM:Initialize()
 end
+
 E:RegisterModule(EWM:GetName(), InitializeCallback)

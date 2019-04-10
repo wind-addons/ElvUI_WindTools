@@ -20,7 +20,7 @@ P["WindTools"]["More Tools"] = {
 				["text"] = L["I interrupted %target%\'s %target_spell%!"],
 				["channel"] = {
 					["solo"] = "SELF",
-					["party"] = "PARTY",
+					["party"] = "PARTY"
 					["instance"] = "INSTANCE_CHAT",
 					["raid"] = "RAID",
 				},
@@ -291,7 +291,7 @@ WT.ToolConfigs["More Tools"] = {
 		tDesc   = L["A simply announce system."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["interrupt"] = {
+		interrupt = {
 			order = 5,
 			name = L["Interrupt"],
 			type = "group",
@@ -463,7 +463,7 @@ WT.ToolConfigs["More Tools"] = {
 							get = function(info) return E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] end,
 							set = function(info, value) E.db.WindTools["More Tools"]["Announce System"]["interrupt"]["others"]["channel"][info[#info]] = value end,
 							args = {
-								["party"] = {
+								party = {
 									order = 1,
 									name = L["In party"],
 									type = "select",
@@ -476,7 +476,7 @@ WT.ToolConfigs["More Tools"] = {
 										["SAY"] = L["Say"],
 									},
 								},
-								["instance"] = {
+								instance = {
 									order = 2,
 									name = L["In instance"],
 									type = "select",

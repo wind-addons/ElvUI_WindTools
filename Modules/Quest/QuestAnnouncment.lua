@@ -130,13 +130,13 @@ local function isSuppliesQuest(title)
 	if E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] then
 		if ClientLocale == 'zhCN' then
 			if find(title, "补给需求：") then return true end
-			if find(title, "产品订单：") then return true end
+			if find(title, "订单：") then return true end
 		elseif ClientLocale == 'zhTW' then
 			if find(title, "需要的補給品：") then return true end
-			if find(title, "工作訂單：") then return true end
+			if find(title, "訂單：") then return true end
 		elseif ClientLocale == 'enUS' then
 			if find(title, "Supplies Needed:") then return true end
-			if find(title, "Work Order:") then return true end
+			if find(title, "Order:") then return true end
 		end
 	end
 

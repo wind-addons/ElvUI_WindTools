@@ -125,7 +125,7 @@ function ETT:ItemIcons()
 	local function setTooltipIcon(self, icon)
 		local title = icon and _G[self:GetName().."TextLeft1"]
 		if title then
-			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, 16, title:GetText())
+			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, 12, title:GetText())
 		end
 	
 		for i = 2, self:NumLines() do
@@ -361,7 +361,7 @@ function ETT:Initialize()
 	if not self.db.enabled then return end
 	-- 鼠标提示副本进度
 	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
-	ETT:ItemIcons()
+	if self.db.item_icon then self:ItemIcons() end
 end
 
 local function InitializeCallback()

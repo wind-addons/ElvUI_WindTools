@@ -143,79 +143,80 @@ local function isSuppliesQuest(title)
 	return false
 end
 
-function QuestAnnouncment:Initialize()
-	if not E.db.WindTools["Quest"]["Quest Announcment"]["enabled"] then return end
-	local QN = CreateFrame("Frame")
-	QN:RegisterEvent("QUEST_LOG_UPDATE")
-	QN:SetScript("OnEvent", function(self, event)
-		local QN_Progress = QN_Locale["Progress"]
-		local QN_ItemMsg,QN_ItemColorMsg = " "," "
+function QuestAnnouncment:QUEST_LOG_UPDATE()
+	local QN_Progress = QN_Locale["Progress"]
+	local QN_ItemMsg,QN_ItemColorMsg = " "," "
 
-		if QHisFirst then
-			lastList = RScanQuests()
-			QHisFirst = false
+	if QHisFirst then
+		lastList = RScanQuests()
+		QHisFirst = false
+	end
+
+	local currList = RScanQuests()
+
+	for i,v in pairs(currList) do
+		local TagStr = " ";
+		if currList[i].Tag and (currList[i].Group < 2) then TagStr = RGBStr.Y .. "["..currList[i].Tag.."]|r" end
+		if currList[i].Tag and (currList[i].Group > 1) then TagStr = RGBStr.Y .. "["..currList[i].Tag..currList[i].Group.."]|r" end
+		if currList[i].Daily == 1 and currList[i].Tag then
+			TagStr = RGBStr.D .. "[" .. DAILY .. currList[i].Tag .. "]|r" ;
+		elseif currList[i].Daily == 1 then
+			TagStr = RGBStr.D .. "[" .. DAILY .. "]|r";
+		elseif currList[i].Tag then
+			TagStr = "["..currList[i].Tag .. "]";
 		end
 
-		local currList = RScanQuests()
-
-		for i,v in pairs(currList) do
-			local TagStr = " ";
-			if currList[i].Tag and (currList[i].Group < 2) then TagStr = RGBStr.Y .. "["..currList[i].Tag.."]|r" end
-			if currList[i].Tag and (currList[i].Group > 1) then TagStr = RGBStr.Y .. "["..currList[i].Tag..currList[i].Group.."]|r" end
-			if currList[i].Daily == 1 and currList[i].Tag then
-				TagStr = RGBStr.D .. "[" .. DAILY .. currList[i].Tag .. "]|r" ;
-			elseif currList[i].Daily == 1 then
-				TagStr = RGBStr.D .. "[" .. DAILY .. "]|r";
-			elseif currList[i].Tag then
-				TagStr = "["..currList[i].Tag .. "]";
-			end
-
-			if lastList[i] then  -- 已有任务，上次和本次Scan都有这一个任务
-				if not lastList[i].Complete then
-					if (#currList[i] > 0) and (#lastList[i] > 0) then
-						for j=1,#currList[i] do
-							if currList[i][j] and lastList[i][j] and currList[i][j].DoneNum and lastList[i][j].DoneNum then
-								if currList[i][j].DoneNum > lastList[i][j].DoneNum then
-									--QN_ItemMsg = QN_Locale["Quest"]..currList[i].Link..QN_Progress ..": ".. currList[i][j].NeedItem ..":".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
-									QN_ItemMsg = QN_Progress ..":" .. currList[i][j].NeedItem ..": ".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
-									QN_ItemColorMsg = RGBStr.G..QN_Locale["Quest"].."|r".. RGBStr.P .. "["..currList[i].Level.."]|r "..currList[i].Link..RGBStr.G..QN_Progress..":|r"..RGBStr.K..currList[i][j].NeedItem..":|r"..RGBStr.Y..currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum .."|r"
-									if not E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] then
-										PrtChatMsg(QN_ItemMsg)
-									end
+		if lastList[i] then  -- 已有任务，上次和本次Scan都有这一个任务
+			if not lastList[i].Complete then
+				if (#currList[i] > 0) and (#lastList[i] > 0) then
+					for j=1,#currList[i] do
+						if currList[i][j] and lastList[i][j] and currList[i][j].DoneNum and lastList[i][j].DoneNum then
+							if currList[i][j].DoneNum > lastList[i][j].DoneNum then
+								--QN_ItemMsg = QN_Locale["Quest"]..currList[i].Link..QN_Progress ..": ".. currList[i][j].NeedItem ..":".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
+								QN_ItemMsg = QN_Progress ..":" .. currList[i][j].NeedItem ..": ".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
+								QN_ItemColorMsg = RGBStr.G..QN_Locale["Quest"].."|r".. RGBStr.P .. "["..currList[i].Level.."]|r "..currList[i].Link..RGBStr.G..QN_Progress..":|r"..RGBStr.K..currList[i][j].NeedItem..":|r"..RGBStr.Y..currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum .."|r"
+								if not E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] then
+									PrtChatMsg(QN_ItemMsg)
 								end
 							end
 						end
 					end
 				end
-				if (#currList[i] > 0) and (#lastList[i] > 0) and (currList[i].Complete == 1) then
-					if not lastList[i].Complete then
-						if (currList[i].Group > 1) and currList[i].Tag then
-							QN_ItemMsg = QN_Locale["Quest"].."["..currList[i].Level.."]".."["..currList[i].Tag..currList[i].Group.."]"..currList[i].Link.." "..QN_Locale["Complete"]
-						else
-							QN_ItemMsg = QN_Locale["Quest"].."["..currList[i].Level.."]"..currList[i].Link.." "..QN_Locale["Complete"]
-						end
-						QN_ItemColorMsg = RGBStr.G .. QN_Locale["Quest"] .. "|r" .. RGBStr.P .. "[" .. currList[i].Level .. "]|r " .. currList[i].Link .. TagStr .. RGBStr.K .. QN_Locale["Complete"] .. "|r"
-						PrtChatMsg(QN_ItemMsg)
-						UIErrorsFrame:AddMessage(QN_ItemColorMsg);
-					end
-				end
 			end
-
-			if not lastList[i] and not isSuppliesQuest(currList[i].Title) then  -- last List have not the Quest, New Quest Accepted
-				if (currList[i].Group > 1) and currList[i].Tag then
-					QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]".."["..currList[i].Tag..currList[i].Group.."]"..currList[i].Link
-				elseif currList[i].Daily == 1 then
-					QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]".."[" .. DAILY .. "]"..currList[i].Link
-				else
-					QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]"..currList[i].Link
+			if (#currList[i] > 0) and (#lastList[i] > 0) and (currList[i].Complete == 1) then
+				if not lastList[i].Complete then
+					if (currList[i].Group > 1) and currList[i].Tag then
+						QN_ItemMsg = QN_Locale["Quest"].."["..currList[i].Level.."]".."["..currList[i].Tag..currList[i].Group.."]"..currList[i].Link.." "..QN_Locale["Complete"]
+					else
+						QN_ItemMsg = QN_Locale["Quest"].."["..currList[i].Level.."]"..currList[i].Link.." "..QN_Locale["Complete"]
+					end
+					QN_ItemColorMsg = RGBStr.G .. QN_Locale["Quest"] .. "|r" .. RGBStr.P .. "[" .. currList[i].Level .. "]|r " .. currList[i].Link .. TagStr .. RGBStr.K .. QN_Locale["Complete"] .. "|r"
+					PrtChatMsg(QN_ItemMsg)
+					UIErrorsFrame:AddMessage(QN_ItemColorMsg);
 				end
-				QN_ItemColorMsg = RGBStr.K .. QN_Locale["Accept"]..":|r" .. RGBStr.P .."["..currList[i].Level.."]|r "..TagStr..currList[i].Link
-				PrtChatMsg(QN_ItemMsg)
 			end
 		end
 
-		lastList = currList
-	end)
+		if not lastList[i] and not isSuppliesQuest(currList[i].Title) then  -- last List have not the Quest, New Quest Accepted
+			if (currList[i].Group > 1) and currList[i].Tag then
+				QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]".."["..currList[i].Tag..currList[i].Group.."]"..currList[i].Link
+			elseif currList[i].Daily == 1 then
+				QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]".."[" .. DAILY .. "]"..currList[i].Link
+			else
+				QN_ItemMsg = QN_Locale["Accept"]..":["..currList[i].Level.."]"..currList[i].Link
+			end
+			QN_ItemColorMsg = RGBStr.K .. QN_Locale["Accept"]..":|r" .. RGBStr.P .."["..currList[i].Level.."]|r "..TagStr..currList[i].Link
+			PrtChatMsg(QN_ItemMsg)
+		end
+	end
+
+	lastList = currList
+end
+
+function QuestAnnouncment:Initialize()
+	self.db = E.db.WindTools["Quest"]["Quest Announcment"]
+	if not self.db.enabled then return end
+	QuestAnnouncment:RegisterEvent("QUEST_LOG_UPDATE")
 end
 
 local function InitializeCallback()

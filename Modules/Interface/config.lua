@@ -185,11 +185,7 @@ P["WindTools"]["Interface"] = {
 		['buttonsPerRow'] = 5,
 	},
 	["Enhanced Tooltip"] = {
-		["Offset"] = {
-			["mouseOffsetX"] = 0,
-			["mouseOffsetY"] = 0,
-			["overrideCombat"] = false,
-		},
+		["item_icon"] = true,
 		["Progression"] = {
 			["enabled"] = true,
 			["Dungeon"] = {
@@ -845,8 +841,14 @@ WT.ToolConfigs["Interface"] = {
 		tDesc   = L["Useful tooltip tweaks."],
 		oAuthor = "Nick Bockmeulen, houshuu",
 		cAuthor = "SomeBlu",
-		["progression"] = {
+		["item_icon"] = {
 			order = 5,
+			name = L["Item icon"],
+			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"] end,
+			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+		},
+		["progression"] = {
+			order = 6,
 			name = L["Progression"],
 			desc  = L["Add progression info to tooltip."],
 			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"][info[#info]] end,

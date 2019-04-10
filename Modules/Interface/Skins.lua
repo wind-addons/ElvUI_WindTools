@@ -26,6 +26,8 @@ WS.elvui_frame_list = {
 	["quest_item"] = L["Quest Icon"],
 	["unitframes"] = L["Unit Frames"],
 	["tooltips"] = L["Game Tooltip"],
+	["altpowerbar"] = L["Altpower Bar"],
+	["top_and_bottom_panel"] = L["Top and Bottom panel"],
 }
 
 WS.addonskins_list = {
@@ -399,8 +401,15 @@ function WS:ShadowGeneralFrames()
 
 	for frame, createOnBackdrop in pairs(self.blizzard_frames_backdrop) do
 		if not createOnBackdrop then
-			if _G[frame] then _G[frame]:CreateShadow(3) end
+			if _G[frame] then _G[frame]:CreateShadow() end
 		end
+	end
+
+
+	-- 暴雪通知
+	for i=1,4 do
+		local alert = _G["StaticPopup"..i]
+		if alert then alert:CreateShadow() end
 	end
 
 	-- 人物面板标签页
@@ -427,6 +436,7 @@ function WS:ShadowGeneralFrames()
 		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
 	end
 
+	-- 法术书侧栏
 	for i=1,8 do
 		local tab = _G["SpellBookSkillLineTab"..i]
 		if tab then tab:CreateShadow(2) end
@@ -558,6 +568,13 @@ function WS:ShadowElvUIFrames()
 			if frame and frame.AlternativePower then frame.AlternativePower:CreateShadow() end
 		end)
 	end
+
+	-- 上下条
+	if self.db.elvui.top_and_bottom_panel then
+		if _G.ElvUI_TopPanel then _G.ElvUI_TopPanel:CreateShadow() end
+		if _G.ElvUI_BottomPanel then _G.ElvUI_BottomPanel:CreateShadow() end
+	end
+
 end
 
 function WS:CustomSkins()

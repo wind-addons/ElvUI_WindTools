@@ -143,6 +143,8 @@ P["WindTools"]["Interface"] = {
 			quest_item = true,
 			tooltips = true,
 			databars = true,
+			top_and_bottom_panel = true,
+			altpowerbar = true,
 		},
 		addonskins = {
 			bigwigs = true,

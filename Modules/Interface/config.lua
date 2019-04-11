@@ -189,7 +189,8 @@ P["WindTools"]["Interface"] = {
 	["Enhanced Tooltip"] = {
 		["item_icon"] = {
 			["enabled"] = true,
-			["size"] = E.db.general.fontSize,
+			["width"] = E.db.general.fontSize,
+			["height"] = E.db.general.fontSize,
 		},
 		["Progression"] = {
 			["enabled"] = true,

@@ -181,7 +181,13 @@ function ETT:ItemIcons()
 	
 	local function ReskinRewardIcon(self)
 		if self and self.Icon then
-			self.Icon:SetTexCoord(WT:GetTexCoord(ETT.db.item_icon.width, ETT.db.item_icon.height, true))
+			local width, height = ETT.db.item_icon.width, ETT.db.item_icon.height
+			local yOffset = 0 and height > width or (-width/2)
+			self.Icon:SetTexCoord(WT:GetTexCoord(width, height, true))
+			self.Icon:SetWidth(width)
+			self.Icon:SetHeight(height)
+			self.Tooltip:ClearAllPoints()
+			self.Tooltip:SetPoint("TOPLEFT", self.Icon, "TOPRIGHT", 0, height)
 			self.IconBorder:Hide()
 		end
 	end

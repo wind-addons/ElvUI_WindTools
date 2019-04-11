@@ -119,14 +119,14 @@ local function getLevelColorString(level, short)
 end
 
 function ETT:ItemIcons()
-	if not self.db.item_icon then return end
+	if not self.db.item_icon.enabled then return end
 	-- 来自 Ndui
 	local newString = "0:0:64:64:5:59:5:59"
 
 	local function setTooltipIcon(self, icon)
 		local title = icon and _G[self:GetName().."TextLeft1"]
 		if title then
-			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, 12, title:GetText())
+			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, ETT.db.item_icon.size, title:GetText())
 		end
 	
 		for i = 2, self:NumLines() do

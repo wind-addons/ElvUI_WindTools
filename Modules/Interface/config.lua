@@ -187,7 +187,10 @@ P["WindTools"]["Interface"] = {
 		['buttonsPerRow'] = 5,
 	},
 	["Enhanced Tooltip"] = {
-		["item_icon"] = true,
+		["item_icon"] = {
+			["enabled"] = true,
+			["size"] = E.db.general.fontSize,
+		},
 		["Progression"] = {
 			["enabled"] = true,
 			["Dungeon"] = {
@@ -846,8 +849,20 @@ WT.ToolConfigs["Interface"] = {
 		["item_icon"] = {
 			order = 5,
 			name = L["Item icon"],
-			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"] end,
-			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["item_icon"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				["enabled"] = {
+					order = 1,
+					name = L["Enable"],
+				},
+				["size"] = {
+					order = 2,
+					type = "range",
+					min = 8, max = 40, step =1,
+					name = L["Size"],
+				},
+			},
 		},
 		["progression"] = {
 			order = 6,

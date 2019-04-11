@@ -857,11 +857,17 @@ WT.ToolConfigs["Interface"] = {
 					order = 1,
 					name = L["Enable"],
 				},
-				["size"] = {
+				["width"] = {
 					order = 2,
 					type = "range",
 					min = 8, max = 40, step =1,
-					name = L["Size"],
+					name = L["Width"],
+				},
+				["height"] = {
+					order = 3,
+					type = "range",
+					min = 8, max = 40, step =1,
+					name = L["Height"],
 				},
 			},
 		},

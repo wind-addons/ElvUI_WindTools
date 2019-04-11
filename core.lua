@@ -39,6 +39,21 @@ function WT:ColorStr(str, r, g, b)
 	return "|cff"..hex..str.."|r"
 end
 
+-- 保持宽高比函数
+function WT:GetTexCoord(width, height, keepAspectRatio)
+	local left, right, top, bottom = unpack(E.TexCoords)
+	if width > height and keepAspectRatio then
+		local aspectRatio = height / width
+		top = (0.5 - top) * aspectRatio
+		bottom = (bottom - 0.5) * aspectRatio
+	elseif height > width and keepAspectRatio then
+		local aspectRatio = width / height
+		left = (0.5 - left) * aspectRatio
+		right = (right - 0.5) * aspectRatio
+	end
+	return left, right, top, bottom
+end
+
 -- 功能列表
 local ToolsOrder = {
 	["Interface"]  = 1,

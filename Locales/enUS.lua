@@ -204,6 +204,7 @@ L["Default is 0.3, DO NOT change it unless Fast Loot is not worked."] = true
 -- 鼠标提示增强
 L["Enhanced Tooltip"] = true
 L["Useful tooltip tweaks."] = true
+L["Item icon"] = true
 L["Progression"] = true
 L["Add progression info to tooltip."] = true
 L["Mythic"] = true 

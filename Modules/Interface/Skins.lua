@@ -28,6 +28,7 @@ WS.elvui_frame_list = {
 	["tooltips"] = L["Game Tooltip"],
 	["altpowerbar"] = L["Altpower Bar"],
 	["top_and_bottom_panel"] = L["Top and Bottom panel"],
+	["chat_panel"] = L["Chat panel"],
 }
 
 WS.addonskins_list = {
@@ -58,6 +59,7 @@ WS.blizzard_frames_backdrop = {
 	["FriendsFrame"] = false,
 	["PVEFrame"] = false,
 	["SpellBookFrame"] = false,
+	["BNToastFrame"] = false,
 }
 
 WS.lazy_load_list = {
@@ -405,7 +407,6 @@ function WS:ShadowGeneralFrames()
 		end
 	end
 
-
 	-- 暴雪通知
 	for i=1,4 do
 		local alert = _G["StaticPopup"..i]
@@ -575,6 +576,11 @@ function WS:ShadowElvUIFrames()
 		if _G.ElvUI_BottomPanel then _G.ElvUI_BottomPanel:CreateShadow() end
 	end
 
+	-- 聊天面板
+	if self.db.elvui.chat_panel then
+		if _G.LeftChatPanel then _G.LeftChatPanel:CreateShadow() end
+		if _G.RightChatPanel then _G.RightChatPanel:CreateShadow() end
+	end
 end
 
 function WS:CustomSkins()

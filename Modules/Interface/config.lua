@@ -671,6 +671,7 @@ WT.ToolConfigs["Interface"] = {
 				candidate = {
 					order = 4,
 					name = L["Candidate"],
+					desc = L["CJK IME candidates"],
 					get = function(info) return E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] end,
 					set = function(info, value) E.db.WindTools.Interface.Skins.ime.candidate[info[#info]] = value end,
 					args = {

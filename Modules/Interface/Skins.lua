@@ -17,13 +17,12 @@ local WS = E:NewModule('Wind_Skins', 'AceEvent-3.0')
 local LSM = LibStub("LibSharedMedia-3.0")
 
 WS.elvui_frame_list = {
-	["actionbars"] = L["Actionbars"],
+	["actionbars"] = L["Action Bars"],
 	["auras"] = L["Auras"],
 	["castbar"] = L["Cast Bar"],
 	["classbar"] = L["Class Bar"],
 	["databars"] = L["Databars"],
 	["general"] = L["General"],
-	["quest_item"] = L["Quest Icon"],
 	["unitframes"] = L["Unit Frames"],
 	["tooltips"] = L["Game Tooltip"],
 	["altpowerbar"] = L["Altpower Bar"],
@@ -35,10 +34,6 @@ WS.addonskins_list = {
 	["general"] = L["General"],
 	["weakaura"] = L["Weakaura"],
 	["bigwigs"] = L["Bigwigs"],
-}
-
-WS.windtools_list = {
-	["minimap_button"] = L["Minimap Buttons"],
 }
 
 WS.blizzard_frames_backdrop = {

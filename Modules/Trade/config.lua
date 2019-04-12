@@ -19,12 +19,12 @@ P["WindTools"]["Trade"] = {
 		--["monochrome"] = false,
 	},
 	["Azerite Tooltip"] = {
-		["enabled"] = true,
-		["RemoveBlizzard"]= true,
-		["Compact"] = false,
-		["OnlySpec"] = false,
-		["Bags"] = false,
-		["PaperDoll"] = true,
+		enabled = true,
+		removeblizzard = true,
+		onlyspec = false,
+		compact = false,
+		bags = true,
+		paperdoll = true,    
 	},
 }
 
@@ -64,26 +64,26 @@ WT.ToolConfigs["Trade"] = {
 			get = function(info) return E.db.WindTools["Trade"]["Azerite Tooltip"][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Trade"]["Azerite Tooltip"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			args = {
-				["RemoveBlizzard"] = {
+				removeblizzard = {
 					order = 1,
 					name = L["Replace Blizzard Azerite Text"],
 				},
-				["OnlySpec"] = {
+				onlyspec = {
 					order = 2,
 					name = L["Current Spec Only"],
 					desc = L["Show traits for your current specialization only"],
 				},
-				["Compact"] = {
+				compact = {
 					order = 3,
 					name = L["Compact Mode"],
 					desc = L["Only icons"],
 				},
-				["Bags"] = {
+				bags = {
 					order = 4,
 					name = L["Bag icon"],
 					desc = L["Show selected traits in bags (works only with Blizzard Bags and Bagnon)"],
 				},
-				["PaperDoll"] = {
+				paperdoll = {
 					order = 5,
 					name = L["Character panel icon"],
 					desc = L["Show selected traits in Character Frame"],

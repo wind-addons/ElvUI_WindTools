@@ -58,7 +58,7 @@ WS.blizzard_frames_backdrop = {
 }
 
 WS.lazy_load_list = {
-	["Blizzard_GarrisonUI"] = {"GarrisonLandingPage", "BFAMissionFrame"},
+	["Blizzard_GarrisonUI"] = {"GarrisonLandingPage", "BFAMissionFrame", "OrderHallMissionFrame"},
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 }
 

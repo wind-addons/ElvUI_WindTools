@@ -69,6 +69,7 @@ WS.blizzard_frames_backdrop = {
 WS.lazy_load_list = {
 	["Blizzard_GarrisonUI"] = {"GarrisonLandingPage", "BFAMissionFrame", "OrderHallMissionFrame"},
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
+	["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
 }
 
 local function shadow_bigwigs(self, event, addon)

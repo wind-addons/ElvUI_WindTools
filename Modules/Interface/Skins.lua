@@ -55,6 +55,12 @@ WS.blizzard_frames_backdrop = {
 	["PVEFrame"] = false,
 	["SpellBookFrame"] = false,
 	["BNToastFrame"] = false,
+	["MailFrame"] = false,
+	["ReadyCheckFrame"] = false,
+	["IMECandidatesFrame"] = false,
+	["RaidUtility_ShowButton"] = false,
+	["RaidUtility_CloseButton"] = false,
+	["RaidUtilityPanel"] = false,
 }
 
 WS.lazy_load_list = {
@@ -437,13 +443,6 @@ function WS:ShadowGeneralFrames()
 		local tab = _G["SpellBookSkillLineTab"..i]
 		if tab then tab:CreateShadow(2) end
 	end
-
-	-- 输入法框
-	if _G.IMECandidatesFrame then _G.IMECandidatesFrame:CreateShadow() end
-
-	-- 团队控制
-	if _G.RaidUtility_ShowButton then _G.RaidUtility_ShowButton:CreateShadow() end
-	if _G.RaidUtilityPanel then _G.RaidUtilityPanel:CreateShadow() end
 
 	-- 镜像时间条 呼吸条
 	for i = 1, MIRRORTIMER_NUMTIMERS do

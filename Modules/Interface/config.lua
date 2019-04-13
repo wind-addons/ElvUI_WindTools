@@ -190,8 +190,6 @@ P["WindTools"]["Interface"] = {
 	["Enhanced Tooltip"] = {
 		["item_icon"] = {
 			["enabled"] = true,
-			["width"] = E.db.general.fontSize,
-			["height"] = E.db.general.fontSize,
 		},
 		["Progression"] = {
 			["enabled"] = true,
@@ -858,18 +856,6 @@ WT.ToolConfigs["Interface"] = {
 				["enabled"] = {
 					order = 1,
 					name = L["Enable"],
-				},
-				["width"] = {
-					order = 2,
-					type = "range",
-					min = 8, max = 40, step =1,
-					name = L["Width"],
-				},
-				["height"] = {
-					order = 3,
-					type = "range",
-					min = 8, max = 40, step =1,
-					name = L["Height"],
 				},
 			},
 		},

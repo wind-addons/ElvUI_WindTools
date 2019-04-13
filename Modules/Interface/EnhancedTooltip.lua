@@ -120,7 +120,6 @@ end
 
 function ETT:ItemIcons()
 	if not self.db.item_icon.enabled then return end
-	local icon_size = self.db.item_icon.width > self.db.item_icon.height and self.db.item_icon.width or self.db.item_icon.height
 
 	-- 来自 Ndui
 	local newString = "0:0:64:64:5:59:5:59"
@@ -128,7 +127,7 @@ function ETT:ItemIcons()
 	local function setTooltipIcon(self, icon)
 		local title = icon and _G[self:GetName().."TextLeft1"]
 		if title then
-			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, icon_size, title:GetText())
+			title:SetFormattedText("|T%s:20:20:"..newString..":%d|t %s", icon, 20, title:GetText())
 		end
 	
 		for i = 2, self:NumLines() do
@@ -181,13 +180,7 @@ function ETT:ItemIcons()
 	
 	local function ReskinRewardIcon(self)
 		if self and self.Icon then
-			local width, height = ETT.db.item_icon.width, ETT.db.item_icon.height
-			local yOffset = 0 and height > width or (-width/2)
-			self.Icon:SetTexCoord(WT:GetTexCoord(width, height, true))
-			self.Icon:SetWidth(width)
-			self.Icon:SetHeight(height)
-			self.Tooltip:ClearAllPoints()
-			self.Tooltip:SetPoint("TOPLEFT", self.Icon, "TOPRIGHT", 0, height)
+			self.Icon:SetTexCoord(unpack(E.TexCoords))
 			self.IconBorder:Hide()
 		end
 	end

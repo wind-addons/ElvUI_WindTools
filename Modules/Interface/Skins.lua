@@ -63,6 +63,7 @@ WS.blizzard_frames_backdrop = {
 	["RaidUtility_CloseButton"] = false,
 	["RaidUtilityRoleIcons"] = false,
 	["RaidUtilityPanel"] = false,
+	["WorldMapFrame"] = false,
 }
 
 WS.lazy_load_list = {

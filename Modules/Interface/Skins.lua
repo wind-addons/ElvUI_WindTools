@@ -46,6 +46,7 @@ WS.blizzard_frames_backdrop = {
 	["CharacterFrame"] = false,
 	["EquipmentFlyoutFrameButtons"] = false,
 	["ElvUI_ContainerFrame"] = false,
+	["ElvUI_BankContainerFrame"] = false,
 	["AddonList"] = false,
 	["BonusRollFrame"] = false,
 	["ChatMenu"] = false,
@@ -60,6 +61,7 @@ WS.blizzard_frames_backdrop = {
 	["IMECandidatesFrame"] = false,
 	["RaidUtility_ShowButton"] = false,
 	["RaidUtility_CloseButton"] = false,
+	["RaidUtilityRoleIcons"] = false,
 	["RaidUtilityPanel"] = false,
 }
 

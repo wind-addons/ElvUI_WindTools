@@ -64,6 +64,7 @@ WS.blizzard_frames_backdrop = {
 	["RaidUtilityRoleIcons"] = false,
 	["RaidUtilityPanel"] = false,
 	["WorldMapFrame"] = false,
+	["LeaveVehicleButton"] = false,
 }
 
 WS.lazy_load_list = {
@@ -72,7 +73,8 @@ WS.lazy_load_list = {
 		"GarrisonMissonFrame",
 		"GarrisonShipyardFrame",
 		"OrderHallMissionFrame",
-		"BFAMissionFrame"
+		"BFAMissionFrame",
+		"OrderHallCommandBar",
 	},
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 	["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
@@ -407,6 +409,13 @@ function WS:ADDON_LOADED(_, addon)
 		frame.RosterTab:CreateShadow()
 		frame.GuildBenefitsTab:CreateShadow()
 		frame.GuildInfoTab:CreateShadow()
+	end
+
+	-- 職業大廳條
+	if addon == "Blizzard_GarrisonUI" then
+		_G.OrderHallCommandBar.AreaName:FontTemplate(nil, nil, "OUTLINE")
+		_G.OrderHallCommandBar.AreaName:ClearAllPoints()
+		_G.OrderHallCommandBar.AreaName:SetPoint("CENTER", 0, 0)
 	end
 end
 

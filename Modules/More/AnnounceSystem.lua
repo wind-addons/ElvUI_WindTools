@@ -221,10 +221,12 @@ end
 
 function AS:SendAddonMessage(message)
 	if not IsInGroup() then return end
-	if not IsInRaid() then
-		C_ChatInfo.SendAddonMessage(self.Prefix, message, "PARTY")
-	else
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
+		C_ChatInfo.SendAddonMessage(self.Prefix, message, "INSTANCE")
+	elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
 		C_ChatInfo.SendAddonMessage(self.Prefix, message, "RAID")
+	elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+		C_ChatInfo.SendAddonMessage(self.Prefix, message, "PARTY")
 	end
 end
 

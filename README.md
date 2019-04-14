@@ -1,6 +1,6 @@
 <div align="center">
     <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
-    <img src="https://img.shields.io/badge/ElvUI-11.09-blue.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/ElvUI-11.10-blue.svg?longCache=true&style=flat"/>
     <img src="https://img.shields.io/badge/Version-1.4.4-green.svg?longCache=true&style=flat"/>
 
 Enhanced. Configurable. Better performance.<br>

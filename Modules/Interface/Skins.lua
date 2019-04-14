@@ -293,6 +293,7 @@ local function shadow_objective_tracker()
 		local label = bar.Label
 
 		if not progressBar.hasShadow then
+			if not bar.backdrop or not progressBar.backdrop then return end
 			bar.backdrop:CreateShadow()
 			progressBar.backdrop:CreateShadow()
 			-- 稍微移动下图标位置，防止阴影重叠，更加美观！

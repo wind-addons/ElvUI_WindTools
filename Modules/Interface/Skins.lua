@@ -570,9 +570,10 @@ function WS:ShadowElvUIFrames()
 
 	-- 额外能量条
 	if self.db.elvui.altpowerbar then
-		hooksecurefunc(UF, "Configure_AltPower", function(_, frame)
-			if frame and frame.AlternativePower then frame.AlternativePower:CreateShadow() end
-		end)
+		if not _G.ElvUI_AltPowerBar then return end
+		_G.ElvUI_AltPowerBar.backdrop:CreateShadow()
+		_G.ElvUI_AltPowerBar.text:ClearAllPoints()
+		_G.ElvUI_AltPowerBar.text:SetPoint("CENTER", 0, -2)
 	end
 
 	-- 上下条

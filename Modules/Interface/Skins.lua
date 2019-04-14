@@ -612,6 +612,12 @@ function WS:CustomSkins()
 			end
 		end
 	end
+
+	-- 错误提示
+	if _G.UIErrorsFrame and self.db.ui_errors.enabled then
+		local db = self.db.ui_errors
+		_G.UIErrorsFrame:FontTemplate(LSM:Fetch('font', db.font), db.size, "OUTLINE")
+	end
 end
 
 function WS:AddOnSkins()

@@ -166,6 +166,12 @@ P["WindTools"]["Interface"] = {
 				style = "OUTLINE",
 			},
 		},
+		ui_errors = {
+			enabled = true,
+			font = E.db.general.font,
+			size = E.db.general.fontSize + 2,
+			style = "OUTLINE",
+		}
 	},
 	["Enhanced World Map"] = {
 		["enabled"] = false,
@@ -697,6 +703,42 @@ WT.ToolConfigs["Interface"] = {
 								['THICKOUTLINE'] = L['THICKOUTLINE'],
 							},
 						},
+					},
+				},
+			}
+		},
+		["ui_errors"] = {
+			order = 8,
+			name = L["Error Frame"],
+			get = function(info) return E.db.WindTools.Interface.Skins.ui_errors[info[#info]] end,
+			set = function(info, value) E.db.WindTools.Interface.Skins.ui_errors[info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				enabled = {
+					order = 1,
+					name = L["Enable"],
+				},
+				font = {
+					type = 'select', dialogControl = 'LSM30_Font',
+					order = 2,
+					name = L['Font'],
+					values = LSM:HashTable('font'),
+				},
+				size = {
+					order = 3,
+					name = L['Size'],
+					type = 'range',
+					min = 6, max = 22, step = 1,
+				},
+				style = {
+					order = 4,
+					name = L["Style"],
+					type = 'select',
+					values = {
+						['NONE'] = L['None'],
+						['OUTLINE'] = L['OUTLINE'],
+						['MONOCHROME'] = L['MONOCHROME'],
+						['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+						['THICKOUTLINE'] = L['THICKOUTLINE'],
 					},
 				},
 			}

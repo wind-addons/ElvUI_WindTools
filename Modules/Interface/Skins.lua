@@ -412,7 +412,7 @@ function WS:ADDON_LOADED(_, addon)
 	end
 
 	-- 職業大廳條
-	if addon == "Blizzard_GarrisonUI" then
+	if addon == "Blizzard_GarrisonUI" and _G.OrderHallCommandBar then
 		_G.OrderHallCommandBar.AreaName:FontTemplate(nil, nil, "OUTLINE")
 		_G.OrderHallCommandBar.AreaName:ClearAllPoints()
 		_G.OrderHallCommandBar.AreaName:SetPoint("CENTER", 0, 0)

@@ -385,6 +385,9 @@ L["The new-look interface for objective tracker."] = "为进度追踪提供全�
 L["Header"] = "顶部"
 L["Title"] = "标题"
 L["Info text"] = "信息"
+L["Use class color"] = "使用职业色"
+L["Custom title color"] = "自定标题颜色"
+L["Custom highlight color"] = "自定高亮颜色"
 -- 美化皮肤
 L["Provide a new style for ElvUI."] = "为 ElvUI 带来全新的风格。"
 L["Game Tooltip"] = "浮动提示"
@@ -402,6 +405,7 @@ L["Weakaura"] = true
 L["Bigwigs"] = true
 L["IME"]= "输入法"
 L["No backdrop"] = "去除背景"
+L["Label"] = "序号"
 L["Candidate"] = "预测词"
 L["You can set width to display long text."] = "你可以设定宽度来显示更长的文字。"
 L["CJK IME candidates"] = "中日韩输入法预测词"

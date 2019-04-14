@@ -385,6 +385,9 @@ L["The new-look interface for objective tracker."] = true
 L["Header"] = true
 L["Title"] = true
 L["Info text"] = true
+L["Use class color"] = true
+L["Custom title color"] = true
+L["Custom highlight color"] = true
 -- 美化皮肤
 L["Provide a new style for ElvUI."] = true
 L["Game Tooltip"] = true
@@ -402,6 +405,7 @@ L["Weakaura"] = true
 L["Bigwigs"] = true
 L["IME"]= true
 L["No backdrop"] = true
+L["Label"] = true
 L["Candidate"] = true
 L["You can set width to display long text."] = true
 L["CJK IME candidates"] = true

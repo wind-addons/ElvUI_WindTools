@@ -20,6 +20,12 @@ P["WindTools"]["Quest"] = {
 			font = E.db.general.font,
 			size = E.db.general.fontSize,
 			style = "OUTLINE",
+			color = {
+				enabled = true,
+				class_color = true,
+				custom_color = { r = 0.75, g = 0.61, b = 0 },
+				custom_color_highlight = { r = NORMAL_FONT_COLOR.r, g = NORMAL_FONT_COLOR.g, b = NORMAL_FONT_COLOR.b },
+			},
 		},
 		info = {
 			font = E.db.general.font,
@@ -119,6 +125,61 @@ WT.ToolConfigs["Quest"] = {
 								['MONOCHROME'] = L['MONOCHROME'],
 								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
 								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+						color = {
+							order = 4,
+							name = L["Color"],
+							get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["title"]["color"][info[#info]] end,
+							set = function(info, value)
+								E.db.WindTools.Quest["Objective Tracker"]["title"]["color"][info[#info]] = value
+								refresh_objective_tracker()
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									name = L["Enable"],
+								},
+								class_color = {
+									order = 2,
+									name = L["Use class color"],
+									set = function(info, value)
+										E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["class_color"] = value
+										E:StaticPopup_Show("WIND_RL")
+									end,
+								},
+								custom_color = {
+									order = 3,
+									type = "color",
+									name = L["Custom title color"],
+									hasAlpha = false,
+									hidden = function() return E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["class_color"] end,
+									get = function(info)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["custom_color"]
+										return t.r, t.g, t.b
+									end,
+									set = function(info, r, g, b)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["custom_color"]
+										t.r, t.g, t.b = r, g, b
+										E:StaticPopup_Show("WIND_RL")
+									end,
+								},
+								custom_color_highlight = {
+									order = 4,
+									type = "color",
+									name = L["Custom highlight color"],
+									hasAlpha = false,
+									hidden = function() return E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["class_color"] end,
+									get = function(info)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["custom_color_highlight"]
+										return t.r, t.g, t.b
+									end,
+									set = function(info, r, g, b)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["title"]["color"]["custom_color_highlight"]
+										t.r, t.g, t.b = r, g, b
+										E:StaticPopup_Show("WIND_RL")
+									end,
+								},
 							},
 						},
 					},

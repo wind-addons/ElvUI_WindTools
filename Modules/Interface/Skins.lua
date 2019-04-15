@@ -67,6 +67,7 @@ WS.blizzard_frames_backdrop = {
 	["RaidUtilityPanel"] = false,
 	["WorldMapFrame"] = false,
 	["LeaveVehicleButton"] = false,
+	["GhostFrameContentsFrame"] = false,
 }
 
 WS.lazy_load_list = {
@@ -624,7 +625,7 @@ end
 function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
 	AS = unpack(AddOnSkins)
-	
+
 	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", function() if tab and tab.backdrop then tab.backdrop:CreateShadow() end end)
 	end

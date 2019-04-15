@@ -15,7 +15,6 @@ local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
 local WS = E:NewModule('Wind_Skins', 'AceEvent-3.0')
 local LSM = LibStub("LibSharedMedia-3.0")
-
 local AS
 
 WS.elvui_frame_list = {
@@ -430,6 +429,15 @@ function WS:ShadowGeneralFrames()
 		end
 	end
 
+
+	-- 商人界面
+	if _G.MerchantFrame then
+		_G.MerchantFrame.backdrop:CreateShadow()
+		_G.MerchantFrameTab1.backdrop:CreateShadow(2)
+		_G.MerchantFrameTab2.backdrop:CreateShadow(2)
+	end
+
+
 	-- 暴雪通知
 	for i=1,4 do
 		local alert = _G["StaticPopup"..i]
@@ -483,6 +491,7 @@ function WS:ShadowElvUIFrames()
 		-- 为 ElvUI 美化皮肤模块添加阴影功能
 		hooksecurefunc(S, "HandleTab", function(_, tab) if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end end)
 		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
+		if _G.ElvUIVendorGraysFrame then _G.ElvUIVendorGraysFrame:CreateShadow() end
 		-- 提醒
 		shadow_alerts()
 	end

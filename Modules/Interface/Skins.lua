@@ -584,7 +584,7 @@ function WS:ShadowElvUIFrames()
 		if not _G.ElvUI_AltPowerBar then return end
 		_G.ElvUI_AltPowerBar.backdrop:CreateShadow()
 		_G.ElvUI_AltPowerBar.text:ClearAllPoints()
-		_G.ElvUI_AltPowerBar.text:SetPoint("CENTER", 0, -2)
+		_G.ElvUI_AltPowerBar.text:SetPoint("CENTER", 0, -1)
 	end
 
 	-- 上下条

@@ -16,6 +16,8 @@ local DATABAR = E:GetModule('DataBars')
 local WS = E:NewModule('Wind_Skins', 'AceEvent-3.0')
 local LSM = LibStub("LibSharedMedia-3.0")
 
+local AS
+
 WS.elvui_frame_list = {
 	["actionbars"] = L["Action Bars"],
 	["auras"] = L["Auras"],
@@ -81,7 +83,6 @@ WS.lazy_load_list = {
 }
 
 local function shadow_bigwigs(self, event, addon)
-	local AS = unpack(AddOnSkins)
 	if event == 'PLAYER_ENTERING_WORLD' then
 		if BigWigsLoader then
 			BigWigsLoader.RegisterMessage('AddOnSkins', "BigWigs_FrameCreated", function(event, frame, name)
@@ -622,7 +623,8 @@ end
 
 function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
-	local AS = unpack(AddOnSkins)
+	AS = unpack(AddOnSkins)
+	
 	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", function() if tab and tab.backdrop then tab.backdrop:CreateShadow() end end)
 	end

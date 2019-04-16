@@ -247,7 +247,7 @@ function AT:BuildTooltip(self)
                         addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
                     end
                 end
-                
+                azeriteTooltipText = nil
             end
         else
             for j=1, 5 do

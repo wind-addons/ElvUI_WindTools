@@ -7,7 +7,6 @@
 -- 增加设定项
 
 local E, L, V, P, G = unpack(ElvUI)
-local B = E:GetModule('Bags')
 local WT = E:GetModule("WindTools")
 local AT = E:NewModule("Wind_AzeriteTooltip", "AceEvent-3.0", "AceHook-3.0")
 
@@ -497,19 +496,6 @@ function AT:Initialize()
             AT:SetContainerAzerite(self) 
         end)
     end
-
-    hooksecurefunc(B, "UpdateSlot", function(self, bagID, slotID)
-        --if not AT.db.Bags then return end
-        if (self.Bags[bagID] and self.Bags[bagID].numSlots ~= GetContainerNumSlots(bagID)) or not self.Bags[bagID] or not self.Bags[bagID][slotID] then
-            return;
-        end
-        local slot = self.Bags[bagID][slotID];
-        local link = GetContainerItemLink(bagID, slotID)
-        if link then
-            local azeriteEmpoweredItemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotID)
-            AT:CreateAzeriteIcons(button, azeriteEmpoweredItemLocation)
-        end
-    end)
 
     self:SecureHookScript(GameTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')
     self:SecureHookScript(ItemRefTooltip, 'OnTooltipSetItem', 'OnTooltipSetItem')

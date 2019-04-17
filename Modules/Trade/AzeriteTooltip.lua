@@ -122,10 +122,6 @@ function AT:ClearBlizzardText(tooltip)
                     textLeft[i-1]:SetText("")
                     line:SetText("")
                     textLeft[i+1]:SetText(addText)
-                elseif (text:find(AzeritePowers) and not text:find(">")) then
-                    textLeft[i-1]:SetText("")
-                    line:SetText("")
-                    textLeft[i+1]:SetText(addText)
                 -- 8.1 FIX --
                 elseif text:find(AZERITE_EMPOWERED_ITEM_FULLY_UPGRADED) then
                     textLeft[i-1]:SetText("")

@@ -476,9 +476,9 @@ function AS:SayThanks(...)
 	-- 格式化自定义字符串
 	local function FormatMessage(custom_message)
 		destName = destName:gsub("%-[^|]+", "")
-		sourceName = sourceName:gsub("%-[^|]+", "")
+		sourceNameWithoutServer = sourceName:gsub("%-[^|]+", "")
 		custom_message = gsub(custom_message, "%%player%%", destName)
-		custom_message = gsub(custom_message, "%%target%%", sourceName)
+		custom_message = gsub(custom_message, "%%target%%", sourceNameWithoutServer)
 		custom_message = gsub(custom_message, "%%spell%%", GetSpellLink(spellId))
 		return custom_message
 	end

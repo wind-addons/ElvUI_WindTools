@@ -1,5 +1,4 @@
-local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
-local L = AceLocale:NewLocale("ElvUI", "zhTW")
+local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhTW", true, true)
 if not L then return end
 -- zhTW
 -- 设置主界面

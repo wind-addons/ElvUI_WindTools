@@ -1,5 +1,4 @@
-local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
-local L = AceLocale:NewLocale("ElvUI", "enUS")
+local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
 if not L then return end
 -- enUS
 -- 设置主界面

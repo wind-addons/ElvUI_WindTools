@@ -6,7 +6,8 @@
 -- 模块化
 -- 增加颜色设定
 
-local E, L, V, P, G = unpack(ElvUI);
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local AK = E:NewModule('Wind_AlreadyKnown');
 local _G = _G
 

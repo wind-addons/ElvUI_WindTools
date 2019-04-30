@@ -5,7 +5,8 @@
 -- 主要修改条目：
 -- 模块化
 
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local Panel = StaticPopupDialogs["DELETE_GOOD_ITEM"]
 
 local function AddText(boxEditor)

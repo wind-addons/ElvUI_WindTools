@@ -1,5 +1,6 @@
 -- 作者：houshuu
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local CQV = E:NewModule('Wind_CloseQuestVoice', 'AceHook-3.0');
 

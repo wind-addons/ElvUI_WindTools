@@ -2,10 +2,13 @@
 ---------------------------------------------------
 -- 插件创建声明
 ---------------------------------------------------
-local E, L, V, P, G = unpack(ElvUI);
+local E, _, V, P, G = unpack(ElvUI);
 local WT = E:NewModule('WindTools', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addonName, addonTable = ...
+
+addonTable[1] = ElvUI[1].Libs.ACL:GetLocale('ElvUI', E.global.general.locale or 'enUS')
+local L = addonTable[1]
 ---------------------------------------------------
 -- 缓存及提高代码可读性
 ---------------------------------------------------

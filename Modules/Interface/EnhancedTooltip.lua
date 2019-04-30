@@ -7,7 +7,8 @@
 -- 添加副本自定义功能
 -- 汉化
 
-local E, L, V, P, G = unpack(ElvUI);
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local TT  = E:GetModule('Tooltip')
 local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')

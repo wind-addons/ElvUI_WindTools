@@ -6,7 +6,8 @@
 -- 模块化
 -- 增加设定项
 
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local AT = E:NewModule("Wind_AzeriteTooltip", "AceEvent-3.0", "AceHook-3.0")
 

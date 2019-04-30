@@ -7,7 +7,8 @@
 -- 删减设定项
 -- 个人不用 说 通报，而是发送到聊天框
 
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local QuestAnnouncment = E:NewModule('Wind_QuestAnnouncment', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 

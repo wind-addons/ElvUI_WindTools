@@ -6,7 +6,8 @@
 -- 模块化
 -- 添加自定义功能开关
 
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local TabChatMod = E:NewModule('Wind_TabChatMod', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 

@@ -2,7 +2,8 @@
 -- 原作者：Azilroka(https://www.tukui.org/addons.php?id=79)
 -- 导入：houshuu
 -------------------
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local DO = E:NewModule('Wind_DragonOverlay', 'AceEvent-3.0')
 

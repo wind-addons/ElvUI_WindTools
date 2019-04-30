@@ -2,7 +2,8 @@
 -- 作者：houshuu
 -------------------
 
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local CVarsTool = E:NewModule('Wind_CVarsTool');
 

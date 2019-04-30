@@ -2,7 +2,8 @@
 -- 作者：houshuu
 
 --Add access to ElvUI engine and unitframe framework
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local ElvUF = ElvUI.oUF
 local RC = LibStub("LibRangeCheck-2.0")

@@ -1,6 +1,7 @@
 -- 修改：SomeBlu
 
-local E, L, V, P, G = unpack(ElvUI) -- Import Functions/Constants, Config, Locales
+local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 local WT = E:GetModule("WindTools")
 local AB = E:NewModule('Wind_AutoButton', 'AceEvent-3.0')
 

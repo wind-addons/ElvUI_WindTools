@@ -410,6 +410,10 @@ function WS:ADDON_LOADED(_, addon)
 		frame.RosterTab:CreateShadow()
 		frame.GuildBenefitsTab:CreateShadow()
 		frame.GuildInfoTab:CreateShadow()
+		frame.GuildMemberDetailFrame:CreateShadow()
+		frame.GuildMemberDetailFrame:ClearAllPoints()
+		frame.GuildMemberDetailFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 5, -76)
+		if _G.CommunitiesGuildLogFrame then _G.CommunitiesGuildLogFrame:CreateShadow() end
 	end
 
 	-- 職業大廳條

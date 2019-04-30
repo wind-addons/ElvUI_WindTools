@@ -1,5 +1,5 @@
 -- 原作：Skip Azerite Animations
--- 原作者：Permok(https://wago.io/HkUtqi7QQ)
+-- 原作者：Permok (https://wago.io/HkUtqi7QQ)
 -- 修改：SomeBlu
 -------------------
 -- 主要修改条目：

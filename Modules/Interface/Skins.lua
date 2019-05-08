@@ -38,37 +38,37 @@ WS.addonskins_list = {
 	["bigwigs"] = L["Bigwigs"],
 }
 
-WS.blizzard_frames_backdrop = {
-	["MMHolder"] = false,
-	["HelpFrame"] = false,
-	["HelpFrameHeader"] = false,
-	["GameMenuFrame"] = false,
-	["InterfaceOptionsFrame"] = false,
-	["VideoOptionsFrame"] = false,
-	["CharacterFrame"] = false,
-	["EquipmentFlyoutFrameButtons"] = false,
-	["ElvUI_ContainerFrame"] = false,
-	["ElvUI_BankContainerFrame"] = false,
-	["AddonList"] = false,
-	["BonusRollFrame"] = false,
-	["ChatMenu"] = false,
-	["SplashFrame"] = false,
-	["DropDownList1"] = false,
-	["FriendsFrame"] = false,
-	["PVEFrame"] = false,
-	["SpellBookFrame"] = false,
-	["BNToastFrame"] = false,
-	["MailFrame"] = false,
-	["ReadyCheckFrame"] = false,
-	["IMECandidatesFrame"] = false,
-	["RaidUtility_ShowButton"] = false,
-	["RaidUtility_CloseButton"] = false,
-	["RaidUtilityRoleIcons"] = false,
-	["RaidUtilityPanel"] = false,
-	["WorldMapFrame"] = false,
-	["LeaveVehicleButton"] = false,
-	["GhostFrameContentsFrame"] = false,
-	
+WS.blizzard_frames = {
+	["MMHolder"] = true,
+	["HelpFrame"] = true,
+	["HelpFrameHeader"] = true,
+	["GameMenuFrame"] = true,
+	["InterfaceOptionsFrame"] = true,
+	["VideoOptionsFrame"] = true,
+	["CharacterFrame"] = true,
+	["EquipmentFlyoutFrameButtons"] = true,
+	["ElvUI_ContainerFrame"] = true,
+	["ElvUI_BankContainerFrame"] = true,
+	["AddonList"] = true,
+	["BonusRollFrame"] = true,
+	["ChatMenu"] = true,
+	["SplashFrame"] = true,
+	["DropDownList1"] = true,
+	["FriendsFrame"] = true,
+	["PVEFrame"] = true,
+	["SpellBookFrame"] = true,
+	["BNToastFrame"] = true,
+	["MailFrame"] = true,
+	["ReadyCheckFrame"] = true,
+	["IMECandidatesFrame"] = true,
+	["RaidUtility_ShowButton"] = true,
+	["RaidUtility_CloseButton"] = true,
+	["RaidUtilityRoleIcons"] = true,
+	["RaidUtilityPanel"] = true,
+	["WorldMapFrame"] = true,
+	["LeaveVehicleButton"] = true,
+	["GhostFrameContentsFrame"] = true,
+	["ReputationDetailFrame"] = true,
 }
 
 WS.lazy_load_list = {
@@ -400,6 +400,7 @@ end
 
 function WS:ADDON_LOADED(_, addon)
 	if not self.db.elvui.general then return end
+
 	if self.lazy_load_list[addon] then
 		for _, frame in pairs(self.lazy_load_list[addon]) do
 			if _G[frame] then _G[frame]:CreateShadow(4) end
@@ -430,12 +431,13 @@ end
 function WS:ShadowGeneralFrames()
 	if not self.db.elvui.general then return end
 
-	for frame, createOnBackdrop in pairs(self.blizzard_frames_backdrop) do
-		if not createOnBackdrop then
+	for frame, noBackdrop in pairs(self.blizzard_frames) do
+		if noBackdrop then
 			if _G[frame] then _G[frame]:CreateShadow() end
+		else
+			if _G[frame] and _G[frame].backdrop then _G[frame].backdrop:CreateShadow() end
 		end
 	end
-
 
 	-- 商人界面
 	if _G.MerchantFrame then

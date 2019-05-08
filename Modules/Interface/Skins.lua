@@ -68,6 +68,7 @@ WS.blizzard_frames_backdrop = {
 	["WorldMapFrame"] = false,
 	["LeaveVehicleButton"] = false,
 	["GhostFrameContentsFrame"] = false,
+	
 }
 
 WS.lazy_load_list = {
@@ -81,6 +82,7 @@ WS.lazy_load_list = {
 	},
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 	["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
+	["Blizzard_Calendar"] = {"CalendarFrame", "CalendarViewHolidayFrame"},
 }
 
 local function shadow_bigwigs(self, event, addon)

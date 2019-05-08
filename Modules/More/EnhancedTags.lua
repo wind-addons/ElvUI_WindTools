@@ -5,9 +5,9 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
+local WTT = E:NewModule('Wind_Tags')
 local ElvUF = ElvUI.oUF
 local RC = LibStub("LibRangeCheck-2.0")
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 --Cache global variables
 --Lua functions
 local _G = _G
@@ -31,12 +31,6 @@ local UnitClass = UnitClass
 local UnitName = UnitName
 
 --GLOBALS: _TAGS, Hex, _COLORS
-
-if E.db.WindTools["More Tools"]["Enhanced Tags"]["enabled"] then
-	if E.ShortPrefixStyles then
-		E.ShortPrefixStyles["CHINESE"] = {{1e8,L["Y"]}, {1e4,L["W"]}}
-	end
-end
 
 local textFormatStyles = {
 	["CURRENT"] = "%s",
@@ -410,3 +404,18 @@ ElvUF.Tags.Methods["range:expect"] = function(unit)
 	local String = format("%s", floor((min+max)/2))
 	return String
 end
+
+function WTT:Initialize()
+	if E.db.WindTools["More Tools"]["Enhanced Tags"]["enabled"] then
+		if E.ShortPrefixStyles then
+			E.ShortPrefixStyles["CHINESE"] = {{1e8,L["Yi"]}, {1e4,L["Wan"]}}
+			E:BuildPrefixValues()
+		end
+	end
+end
+
+local function InitializeCallback()
+	WTT:Initialize()
+end
+
+E:RegisterModule(WTT:GetName(), InitializeCallback)

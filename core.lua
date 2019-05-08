@@ -6,7 +6,7 @@ local E, _, V, P, G = unpack(ElvUI);
 local WT = E:NewModule('WindTools', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addonName, addonTable = ...
-
+-- 新的多语种设定
 addonTable[1] = ElvUI[1].Libs.ACL:GetLocale('ElvUI', E.global.general.locale or 'enUS')
 local L = addonTable[1]
 ---------------------------------------------------
@@ -56,6 +56,10 @@ function WT:GetTexCoord(width, height, keepAspectRatio)
 	end
 	return left, right, top, bottom
 end
+
+-- TODO: 刷新全部设定
+-- 或许可以添加到 staggerTable
+-- https://git.tukui.org/elvui/elvui/blob/development/ElvUI/Core/Core.lua#L1267
 
 -- 功能列表
 local ToolsOrder = {

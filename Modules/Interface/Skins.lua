@@ -11,6 +11,7 @@ local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local A = E:GetModule('Auras')
 local S = E:GetModule('Skins')
+local AB = E:GetModule('ActionBars')
 local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
@@ -69,6 +70,7 @@ WS.blizzard_frames = {
 	["LeaveVehicleButton"] = true,
 	["GhostFrameContentsFrame"] = true,
 	["ReputationDetailFrame"] = true,
+	["CinematicFrameCloseDialog"] = true,
 }
 
 WS.lazy_load_list = {
@@ -595,6 +597,11 @@ function WS:ShadowElvUIFrames()
 			-- 特殊技能栏 1 好像也没遇到需要用到 2 的，先放着吧
 			_G.ExtraActionButton1:CreateShadow()
 		end
+
+		hooksecurefunc(AB, "StyleButton", function(_, button)
+			button.backdrop:CreateShadow()
+		end)
+
 	end
 
 	-- 额外能量条

@@ -71,6 +71,7 @@ WS.blizzard_frames = {
 	["GhostFrameContentsFrame"] = true,
 	["ReputationDetailFrame"] = true,
 	["CinematicFrameCloseDialog"] = true,
+	["TaxiFrame"] = true,
 }
 
 WS.lazy_load_list = {

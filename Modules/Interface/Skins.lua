@@ -531,6 +531,12 @@ function WS:ShadowElvUIFrames()
 				if db.threatStyle == 'GLOW' and parent.shadow then parent.shadow:SetShown(not threat.glow:IsShown()) end
 			end
 		end)
+		-- 为分离的能量条提供阴影
+		hooksecurefunc(UF, "Configure_Power", function(_, frame)
+			if frame.USE_POWERBAR and frame.POWERBAR_DETACHED then 
+				frame.Power:CreateShadow()
+			end
+		end)
 		-- 为单位框体光环提供边缘美化
 		hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button) if button then button:CreateShadow() end end)
 	end

@@ -607,7 +607,7 @@ function WS:ShadowElvUIFrames()
 		end
 
 		hooksecurefunc(AB, "StyleButton", function(_, button)
-			button.backdrop:CreateShadow()
+			if button.backdrop then button.backdrop:CreateShadow() end
 		end)
 
 	end

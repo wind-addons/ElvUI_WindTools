@@ -17,7 +17,7 @@ This addon is developed for ElvUI users. Includes many useful features such as A
 [Curse](https://www.curseforge.com/wow/addons/elvui_windtools)
 
 # Support 支持
-ElvUI 11.11 + 8.1.5.29981 (Live)
+ElvUI 11.11 + 8.1.5.30706 (Live)
 
 ## More info 更多信息
 CHINESE 中文 → [NGA](http://bbs.ngacn.cc/read.php?tid=12142815)

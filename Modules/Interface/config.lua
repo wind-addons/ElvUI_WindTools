@@ -132,6 +132,15 @@ P["WindTools"]["Interface"] = {
 		},
 		['FlipDragon'] = false,
 	},
+	["Raid Markers"] ={
+		['enabled'] = true,
+		['visibility'] = 'DEFAULT',
+		['backdrop'] = false,
+		['buttonSize'] = 22,
+		['spacing'] = 2,
+		['orientation'] = 'HORIZONTAL',
+		['modifier'] = 'shift-',
+	},
 	["Skins"] = {
 		enabled = true,
 		elvui = {
@@ -604,6 +613,73 @@ WT.ToolConfigs["Interface"] = {
 				Order = Order + 2
 			end
 		end,
+	},
+	["Raid Markers"] ={
+		tDesc   = L["Display a quick action bar for raid targets and world markers."],
+		oAuthor = "Feraldin, nickbock",
+		cAuthor = "mcc",
+		["general"] = {
+			order = 5,
+			get = function(info) return E.db.WindTools["Interface"]["Raid Markers"][ info[#info] ] end,	
+			set = function(info, value) E.db.WindTools["Interface"]["Raid Markers"][ info[#info] ] = value; E:GetModule("Wind_RaidMarkerBar"):ToggleSettings() end,
+			type = "group",
+			name = L['Raid Marker Bar'],
+			args = {
+				visibility = {		
+					type = 'select',
+					order = 1,
+					name = L["Visibility"],
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,
+					values = {
+						DEFAULT = L['Use Default'],
+						INPARTY = AGGRO_WARNING_IN_PARTY,
+						ALWAYS  = L['Always Display'],
+					},
+				},
+				backdrop = {
+					type = 'toggle',
+					order = 2,
+					name = L["Backdrop"],
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,			
+				},
+				buttonSize = {
+					order = 3,
+					type = 'range',
+					name = L['Button Size'],
+					min = 16, max = 40, step = 1,
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,
+				},
+				spacing = {
+					order = 4,
+					type = 'range',
+					name = L["Button Spacing"],
+					min = 0, max = 10, step = 1,
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,
+				},
+				orientation = {
+					order = 5,
+					type = 'select',
+					name = L['Orientation'],
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,
+					values = {
+						['HORIZONTAL'] = L['Horizontal'],
+						['VERTICAL'] = L['Vertical'],
+					},
+				},
+				modifier = {
+					order = 6,
+					type = 'select',
+					name = L['Modifier Key'],
+					desc = L['Set the modifier key for placing world markers.'],
+					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"]["enabled"] end,
+					values = {
+						['shift-'] = L['Shift Key'],
+						['ctrl-'] = L['Ctrl Key'],
+						['alt-'] = L['Alt Key'],
+					}
+				}
+			}
+		},
 	},
 	["Skins"] = {
 		tDesc   = L["Provide a new style for ElvUI."],

@@ -8,4 +8,5 @@
 	<Script file='EnhancedTooltip.lua'/>
 	<Script file='DragonOverlay.lua'/>
 	<Script file='SkipAzeriteAnimations.lua'/>
+	<Script file='raidmarkers.lua'/>
 </Ui>

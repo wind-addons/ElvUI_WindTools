@@ -118,7 +118,7 @@ function RM:UpdateBar()
 		end
 	end
 	
-	if self.db.enable then self.frame:Show() else self.frame:Hide() end
+	if self.db.enabled then self.frame:Show() else self.frame:Hide() end
 end
 
 function RM:ToggleSettings()
@@ -126,7 +126,7 @@ function RM:ToggleSettings()
 		self:UpdateBar()
 		self:UpdateWorldMarkersAndTooltips()
 	
-		if self.db.enable then
+		if self.db.enabled then
 			RegisterStateDriver(self.frame, "visibility", self.db.visibility == 'DEFAULT' and '[noexists, nogroup] hide; show' or self.db.visibility == 'ALWAYS' and '[noexists, nogroup] show; show' or '[group] show; hide')
 		else
 			UnregisterStateDriver(self.frame, "visibility")
@@ -163,7 +163,7 @@ end
 
 function RM:Initialize()
 	self.db = E.db.WindTools["Interface"]["Raid Markers"]
-	if not self.db['enabled'] then return end
+	if not self.db.enabled then return end
 	
 	self.frame = CreateFrame("Frame", "RaidMarkerBar", E.UIParent, "SecureHandlerStateTemplate")
 	self.frame:SetResizable(false)

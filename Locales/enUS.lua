@@ -279,6 +279,26 @@ L['Frame Level'] = true
 L['Icon Size'] = true
 L['Width'] = true
 L['Height'] = true
+-- Raid Marker Bar
+L['Raid Marker Bar'] = true
+L['Display a quick action bar for raid targets and world markers.'] = true
+L['Modifier Key'] = true
+L['Set the modifier key for placing world markers.'] = true
+L['Shift Key'] = true
+L['Ctrl Key'] = true
+L['Alt Key'] = true
+L["Raid Markers"] = true
+L["Click to clear the mark."] = true
+L["Click to mark the target."] = true
+L["%sClick to remove all worldmarkers."] = true
+L["%sClick to place a worldmarker."] = true
+L["Visibility"] = true
+L['Use Default'] = true
+L['Always Display'] = true
+L["Button Spacing"] = true
+L['Orientation'] = true
+L['Horizontal'] = true
+L['Vertical'] = true
 -- 信息文字
 L['Distance'] = true
 L['Target Range'] = true

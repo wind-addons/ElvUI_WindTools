@@ -482,7 +482,12 @@ end
 
 function AT:Initialize()
     if not E.db.WindTools["Trade"]["Azerite Tooltip"]["enabled"] then return end
-    self.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+
+	self.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+	tinsert(WT.UpdateAll, function()
+		AT.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+    end)
+    
     self:SecureHook('PaperDollItemSlotButton_Update')
     self:SecureHook('EquipmentFlyout_DisplayButton')
     self:SecureHook('ContainerFrame_Update')

@@ -24,6 +24,7 @@ WT.Version = GetAddOnMetadata(addonName, "Version")
 WT.Title = L["WindTools"]
 -- 初始化设定
 WT.ToolConfigs = {}
+WT.UpdateAll = {}
 P["WindTools"] = {}
 ---------------------------------------------------
 -- 常用函数
@@ -70,15 +71,15 @@ local ToolsOrder = {
 	["More Tools"] = 5,
 }
 
-E.PopupDialogs["WIND_UPDATE_RL"] = {
-	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
-	button1 = ACCEPT,
-	button2 = CANCEL,
-	OnAccept = ReloadUI,
-	timeout = 0,
-	whileDead = 1,
-	hideOnEscape = false,
-}
+-- E.PopupDialogs["WIND_UPDATE_RL"] = {
+-- 	text = L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."],
+-- 	button1 = ACCEPT,
+-- 	button2 = CANCEL,
+-- 	OnAccept = ReloadUI,
+-- 	timeout = 0,
+-- 	whileDead = 1,
+-- 	hideOnEscape = false,
+-- }
 
 E.PopupDialogs["WIND_RESET"] = {
 	text = L["|cffff0000If you click Accept, it will reset your Windtools.|r"],
@@ -343,6 +344,11 @@ end
 ---------------------------------------------------
 function WT:Initialize()
 	EP:RegisterPlugin(addonName, WT.InsertOptions)
+	hooksecurefunc(E, "UpdateAll", function()
+		for _,update in ipairs(WT.UpdateAll) do
+			update()
+		end
+	end)
 end
 
 ---------------------------------------------------

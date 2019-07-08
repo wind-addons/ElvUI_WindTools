@@ -17,8 +17,12 @@ local WT = E:GetModule("WindTools")
 local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
 
 function EnterCombatAlert:Initialize()
+	if not E.db.WindTools["More Tools"]["Enter Combat Alert"].enabled then return end
+
 	self.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		EnterCombatAlert.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+	end)
 
 	local enterCombat = L["Enter Combat"]
 	local leaveCombat = L["Leave Combat"]
@@ -90,7 +94,7 @@ function EnterCombatAlert:Initialize()
 	end)
 
 	-- Create ElvUI mover
-	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return E.db.WindTools["Interface"]["Enter Combat Alert"].enabled; end)
+	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return EnterCombatAlert.db.enabled; end)
 end
 
 local function InitializeCallback()

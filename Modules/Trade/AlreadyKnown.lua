@@ -139,8 +139,13 @@ local function _hookMerchant() -- Most of this found from FrameXML/MerchantFrame
 end
 
 function AK:Initialize()
+	if not E.db.WindTools["Trade"]["Already Known"].enabled then return end
+
 	self.db = E.db.WindTools["Trade"]["Already Known"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		AK.db = E.db.WindTools["Trade"]["Already Known"]
+	end)
+	
 	r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 	-- 商店頁面
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)

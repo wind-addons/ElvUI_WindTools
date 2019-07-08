@@ -57,8 +57,12 @@ function DO:SetOverlay()
 end
 
 function DO:Initialize()
+	if not E.db.WindTools["Interface"]["Dragon Overlay"]["enabled"] then return end
+
 	self.db = E.db.WindTools["Interface"]["Dragon Overlay"]
-	if not self.db["enabled"] then return end
+	tinsert(WT.UpdateAll, function()
+		DO.db = E.db.WindTools["Interface"]["Dragon Overlay"]
+	end)
 
 	local frame = CreateFrame("Frame", 'DragonOverlayFrame', UIParent)
 	frame.Texture = frame:CreateTexture(nil, 'ARTWORK')

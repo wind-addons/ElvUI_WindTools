@@ -677,8 +677,13 @@ function WS:AddOnSkins()
 end
 
 function WS:Initialize()
+	if not E.db.WindTools.Interface.Skins.enabled then return end
+
 	self.db = E.db.WindTools.Interface.Skins
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		WS.db = E.db.WindTools.Interface.Skins
+	end)
+
 	self:ShadowElvUIFrames()
 	self:ShadowGeneralFrames()
 	self:CustomSkins()

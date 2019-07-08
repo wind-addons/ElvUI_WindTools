@@ -360,8 +360,13 @@ function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 end
 
 function ETT:Initialize()
+	if not E.db.WindTools["Interface"]["Enhanced Tooltip"].enabled then return end
+
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		ETT.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
+	end)
+
 	self:ItemIcons()
 	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
 end

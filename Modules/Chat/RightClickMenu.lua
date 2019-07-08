@@ -209,10 +209,15 @@ UnitPopupButtons["NAME_COPY"] = {
 function EnhancedRCMenu:Initialize()
 	if not E.db.WindTools["Chat"]["Right-click Menu"]["enabled"] then return end
 
+	self.db = E.db.WindTools["Chat"]["Right-click Menu"]
+	tinsert(WT.UpdateAll, function()
+		EnhancedRCMenu.db = E.db.WindTools["Chat"]["Right-click Menu"]
+	end)
+
 	-- 好友功能 载入
 	tinsert(UnitPopupMenus["FRIEND"], #UnitPopupMenus["FRIEND"] - 1, "WINDTOOLS")
 	for _, v in pairs(EnhancedRCMenu.friend_features) do
-		if E.db.WindTools["Chat"]["Right-click Menu"]["friend"][v] then
+		if self.db["friend"][v] then
 			tinsert(UnitPopupMenus["FRIEND"], #UnitPopupMenus["FRIEND"] - 1, v)
 		end
 	end
@@ -220,7 +225,7 @@ function EnhancedRCMenu:Initialize()
 	-- -- 聊天名单功能 载入
 	-- tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, "WINDTOOLS")
 	-- for _, v in pairs(EnhancedRCMenu.cr_features) do
-	-- 	if E.db.WindTools["Chat"]["Right-click Menu"]["chat_roster"][v] then
+	-- 	if self.db["chat_roster"][v] then
 	-- 		tinsert(UnitPopupMenus["CHAT_ROSTER"], #UnitPopupMenus["CHAT_ROSTER"] - 1, v)
 	-- 	end
 	-- end
@@ -229,14 +234,14 @@ function EnhancedRCMenu:Initialize()
 	-- tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, "WINDTOOLS")
 	-- tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, "WINDTOOLS")
 	-- for _, v in pairs(EnhancedRCMenu.guild_features) do
-	-- 	if E.db.WindTools["Chat"]["Right-click Menu"]["guild"][v] then
+	-- 	if self.db["guild"][v] then
 	-- 		tinsert(UnitPopupMenus["GUILD"], #UnitPopupMenus["GUILD"] - 1, v)
 	-- 		tinsert(UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"], #UnitPopupMenus["COMMUNITIES_GUILD_MEMBER"] - 1, v)
 	-- 	end
 	-- end
 
 	-- 修复回报功能错误
-	-- if E.db.WindTools["Chat"]["Right-click Menu"]["friend"]["Fix_Report"] then
+	-- if self.db["friend"]["Fix_Report"] then
 	-- 	local old_C_ChatInfo_CanReportPlayer = C_ChatInfo.CanReportPlayer
 	-- 	C_ChatInfo.CanReportPlayer = function(...)
 	-- 		return true

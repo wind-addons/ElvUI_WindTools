@@ -109,26 +109,26 @@ end
 
 local function PrtChatMsg(msg)
 	if (not IsInGroup(LE_PARTY_CATEGORY_HOME) or IsInRaid(LE_PARTY_CATEGORY_HOME)) and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-		if E.db.WindTools["Quest"]["Quest Announcment"]["Instance"] then
+		if self.db["Instance"] then
 			SendChatMessage(msg, "instance_chat", nil)
 		end
 	elseif UnitInRaid("player") then
-		if E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] then
+		if self.db["Raid"] then
 			SendChatMessage(msg, "raid", nil)
 		end
 	elseif UnitInParty("Party1") then
-		if E.db.WindTools["Quest"]["Quest Announcment"]["Party"] then
+		if self.db["Party"] then
 			SendChatMessage(msg, "party", nil)
 		end
 	else
-		if E.db.WindTools["Quest"]["Quest Announcment"]["Solo"] then
+		if self.db["Solo"] then
 			ChatFrame1:AddMessage(msg)
 		end
 	end
 end
 
 local function isSuppliesQuest(title)
-	if E.db.WindTools["Quest"]["Quest Announcment"]["ignore_supplies"] then
+	if QuestAnnouncment.db["ignore_supplies"] then
 		if ClientLocale == 'zhCN' then
 			if find(title, "补给需求：") then return true end
 			if find(title, "订单：") then return true end
@@ -176,7 +176,7 @@ function QuestAnnouncment:QUEST_LOG_UPDATE()
 								--QN_ItemMsg = QN_Locale["Quest"]..currList[i].Link..QN_Progress ..": ".. currList[i][j].NeedItem ..":".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
 								QN_ItemMsg = QN_Progress ..":" .. currList[i][j].NeedItem ..": ".. currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum
 								QN_ItemColorMsg = RGBStr.G..QN_Locale["Quest"].."|r".. RGBStr.P .. "["..currList[i].Level.."]|r "..currList[i].Link..RGBStr.G..QN_Progress..":|r"..RGBStr.K..currList[i][j].NeedItem..":|r"..RGBStr.Y..currList[i][j].DoneNum .. "/"..currList[i][j].NeedNum .."|r"
-								if not E.db.WindTools["Quest"]["Quest Announcment"]["NoDetail"] then
+								if not self.db["NoDetail"] then
 									PrtChatMsg(QN_ItemMsg)
 								end
 							end
@@ -215,8 +215,13 @@ function QuestAnnouncment:QUEST_LOG_UPDATE()
 end
 
 function QuestAnnouncment:Initialize()
+	if not E.db.WindTools["Quest"]["Quest Announcment"].enabled then return end
+
 	self.db = E.db.WindTools["Quest"]["Quest Announcment"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		QuestAnnouncment.db = E.db.WindTools["Quest"]["Quest Announcment"]
+	end)
+	
 	QuestAnnouncment:RegisterEvent("QUEST_LOG_UPDATE")
 end
 

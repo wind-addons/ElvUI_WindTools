@@ -74,8 +74,13 @@ function OT:ChangeColors()
 end
 
 function OT:Initialize()
-    self.db = E.db.WindTools.Quest["Objective Tracker"]
-    if not self.db.enabled then return end
+    if not E.db.WindTools.Quest["Objective Tracker"].enabled then return end
+
+	self.db = E.db.WindTools.Quest["Objective Tracker"]
+	tinsert(WT.UpdateAll, function()
+		OT.db = E.db.WindTools.Quest["Objective Tracker"]
+    end)
+    
     self:ChangeFonts()
     self:ChangeColors()
 end

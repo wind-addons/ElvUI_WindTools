@@ -162,9 +162,13 @@ end
 -- end
 
 function RM:Initialize()
-	self.db = E.db.WindTools["Interface"]["Raid Markers"]
-	if not self.db.enabled then return end
+	if not E.db.WindTools["Interface"]["Raid Markers"].enabled then return end
 	
+	self.db = E.db.WindTools["Interface"]["Raid Markers"]
+	tinsert(WT.UpdateAll, function()
+		RM.db = E.db.WindTools["Interface"]["Raid Markers"]
+	end)
+
 	self.frame = CreateFrame("Frame", "RaidMarkerBar", E.UIParent, "SecureHandlerStateTemplate")
 	self.frame:SetResizable(false)
 	self.frame:SetClampedToScreen(true)

@@ -1,6 +1,6 @@
 -- 原作：ElvUI_S&L 的一个增强组件
 -- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
--- 修改：houshuu
+-- 修改：houshuu, SomeBlu
 -------------------
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = unpack(select(2, ...))
@@ -14,21 +14,17 @@ local SetClampedToScreen = SetClampedToScreen
 local RegisterForDrag = RegisterForDrag
 local StartMoving = StartMoving
 local StopMovingOrSizing = StopMovingOrSizing
-local InCombatLockdown = InCombatLockdown
 
 EBF.Frames = {
 	"AddonList",
 	"AudioOptionsFrame",
 	"BankFrame",
-	"BonusRollFrame",
-	"BonusRollLootWonFrame",
-	"BonusRollMoneyWonFrame",
 	"CharacterFrame",
-	"ChannelFrame",
 	"ChatConfigFrame",
 	"DressUpFrame",
 	"FriendsFrame",
 	"FriendsFriendsFrame",
+	"GameMenuFrame",
 	"GossipFrame",
 	"GuildInviteFrame",
 	"GuildRegistrarFrame",
@@ -45,6 +41,7 @@ EBF.Frames = {
 	"PVEFrame",
 	"PetStableFrame",
 	"PetitionFrame",
+	"PVPReadyDialog",
 	"QuestFrame",
 	"QuestLogPopupDetailFrame",
 	"RaidBrowserFrame",
@@ -57,7 +54,7 @@ EBF.Frames = {
 	"SpellBookFrame",
 	"SplashFrame",
 	"StackSplitFrame",
-	-- "StaticPopup1",
+	"StaticPopup1",
 	"StaticPopup2",
 	"StaticPopup3",
 	"StaticPopup4",
@@ -68,22 +65,35 @@ EBF.Frames = {
 	"TutorialFrame",
 	"VideoOptionsFrame",
 	"WorldMapFrame",
-	"GameMenuFrame",
-	"PVPReadyDialog",
 }
+
+EBF.TempOnly = {
+	["BonusRollFrame"] = true,
+	["BonusRollLootWonFrame"] = true,
+	["BonusRollMoneyWonFrame"] = true,
+}
+
 EBF.AddonsList = {
 	["Blizzard_AchievementUI"] = { "AchievementFrame" },
+	["Blizzard_AlliedRacesUI"] = { "AlliedRacesFrame" },
 	["Blizzard_ArchaeologyUI"] = { "ArchaeologyFrame" },
 	["Blizzard_AuctionUI"] = { "AuctionFrame" },
+	["Blizzard_AzeriteEssenceUI"] = { "AzeriteEssenceUI" },
+	["Blizzard_AzeriteRespecUI"] = { "AzeriteRespecFrame" },
+	["Blizzard_AzeriteUI"] = { "AzeriteEmpoweredItemUI" },
 	["Blizzard_BarberShopUI"] = { "BarberShopFrame" },
 	["Blizzard_BindingUI"] = { "KeyBindingFrame" },
 	["Blizzard_BlackMarketUI"] = { "BlackMarketFrame" },
-	["Blizzard_Calendar"] = { "CalendarCreateEventFrame", "CalendarFrame", "CalendarViewEventFrame", "CalendarViewHolidayFrame" },
+	["Blizzard_Calendar"] = { "CalendarCreateEventFrame", "CalendarFrame" },
 	["Blizzard_ChallengesUI"] = { "ChallengesKeystoneFrame" }, -- 'ChallengesLeaderboardFrame'
-	["Blizzard_Collections"] = { "CollectionsJournal" },
-	["Blizzard_Communities"] = { "CommunitiesFrame", "CommunitiesGuildLogFrame","CommunitiesGuildRecruitmentFrame","CommunitiesSettingsDialog"},
+	["Blizzard_Collections"] = { "CollectionsJournal", "WardrobeFrame" },
+	["Blizzard_Communities"] = { "CommunitiesFrame" },
 	["Blizzard_EncounterJournal"] = { "EncounterJournal" },
-	["Blizzard_GarrisonUI"] = { "GarrisonLandingPage", "GarrisonMissionFrame", "GarrisonCapacitiveDisplayFrame", "GarrisonBuildingFrame", "GarrisonRecruiterFrame", "GarrisonRecruitSelectFrame", "GarrisonShipyardFrame" },
+	["Blizzard_GarrisonUI"] = {
+		"GarrisonLandingPage", "GarrisonMissionFrame", "GarrisonCapacitiveDisplayFrame",
+		"GarrisonBuildingFrame", "GarrisonRecruiterFrame", "GarrisonRecruitSelectFrame",
+		"GarrisonShipyardFrame", "OrderHallMissionFrame", "BFAMissionFrame",
+	},
 	["Blizzard_GMChatUI"] = { "GMChatStatusFrame" },
 	["Blizzard_GMSurveyUI"] = { "GMSurveyFrame" },
 	["Blizzard_GuildBankUI"] = { "GuildBankFrame" },
@@ -97,52 +107,40 @@ EBF.AddonsList = {
 	["Blizzard_MacroUI"] = { "MacroFrame" },
 	["Blizzard_OrderHallUI"] = { "OrderHallTalentFrame" },
 	["Blizzard_QuestChoice"] = { "QuestChoiceFrame" },
+	["Blizzard_ScrappingMachineUI"] = { "ScrappingMachineFrame" },
 	["Blizzard_TalentUI"] = { "PlayerTalentFrame" },
-	-- ["Blizzard_TalkingHeadUI"] = { "TalkingHeadFrame" },
 	["Blizzard_TradeSkillUI"] = { "TradeSkillFrame" },
 	["Blizzard_TrainerUI"] = { "ClassTrainerFrame" },
 	["Blizzard_VoidStorageUI"] = { "VoidStorageFrame" },
-	["Blizzard_ScrappingMachineUI"] = { "ScrappingMachineFrame" },
-	["Blizzard_GuildUI"] = { "GuildFrame" },
-	["Blizzard_AzeriteUI"] = { "AzeriteEmpoweredItemUI" },
-}
-EBF.CombatLockFrames = {
-	["SpellBookFrame"] = true,
-}
-EBF.NeedFixFrames = {
-	["HelpFrame"] = true,
-	["VideoOptionsFrame"] = true,
-	["InterfaceOptionsFrame"] = true,
 }
 
-local function LoadPosition(self)
-	if self.IsMoving == true then return end
+EBF.ExlusiveFrames = {
+	["QuestFrame"] = { "GossipFrame", },
+	["GossipFrame"] = { "QuestFrame", },
+	["GameMenuFrame"] = { "VideoOptionsFrame", "InterfaceOptionsFrame", "HelpFrame",},
+	["VideoOptionsFrame"] = { "GameMenuFrame",},
+	["InterfaceOptionsFrame"] = { "GameMenuFrame",},
+	["HelpFrame"] = { "GameMenuFrame",},
+}
 
-	local Name = self:GetName()
-	if EBF.CombatLockFrames[Name] and InCombatLockdown() then
-		self:RegisterEvent('PLAYER_REGEN_ENABLED')
-		return
-	end
+EBF.NoSpecialFrames = {
+	["StaticPopup1"] = true,
+	["StaticPopup2"] = true,
+	["StaticPopup3"] = true,
+	["StaticPopup4"] = true,
+}
 
-	if not self:GetPoint() then
-		self:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116)
-	end
+EBF.FramesAreaAlter = {
+	["GarrisonMissionFrame"] = "left",
+	["OrderHallMissionFrame"] = "left",
+	["BFAMissionFrame"] = "left",
+}
 
-	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
-		self:ClearAllPoints()
-		self:SetPoint(unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name]))
-	end
-	
-	if Name == "QuestFrame" then
-		_G["GossipFrame"]:Hide()
-	elseif Name == "GossipFrame" then
-		_G["QuestFrame"]:Hide()
-	end
-
-	if EBF.NeedFixFrames[Name] then
-		_G["GameMenuFrame"]:Hide()
-	end
-end
+EBF.SpecialDefaults = {
+	["GarrisonMissionFrame"] = { "CENTER", _G.UIParent, "CENTER", 0, 0 },
+	["OrderHallMissionFrame"] = { "CENTER", _G.UIParent, "CENTER", 0, 0 },
+	["BFAMissionFrame"] = { "CENTER", _G.UIParent, "CENTER", 0, 0 },
+}
 
 local function OnDragStart(self)
 	self.IsMoving = true
@@ -151,12 +149,12 @@ end
 
 local function OnDragStop(self)
 	self:StopMovingOrSizing()
-	self.IsMoving = false
 	local Name = self:GetName()
-	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember then
+	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and not EBF.TempOnly[Name]  then
 		local a, b, c, d, e = self:GetPoint()
 		if self:GetParent() then 
 			b = self:GetParent():GetName() or UIParent
+			if not _G[b] then b = UIParent end
 		else
 			b = UIParent
 		end
@@ -166,15 +164,46 @@ local function OnDragStop(self)
 		else
 			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] = {a, b, c, d, e}
 		end
+		self:SetUserPlaced(true)
 	else
 		self:SetUserPlaced(false)
 	end
+	self.IsMoving = false
+end
+
+local function LoadPosition(self)
+	if self.IsMoving == true then return end
+	local Name = self:GetName()
+
+	if not self:GetPoint() then
+		if EBF.SpecialDefaults[Name] then
+			local a,b,c,d,e = unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name])
+			self:SetPoint(a,b,c,d,e, true)
+		else
+			self:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116, true)
+		end
+		OnDragStop(self)
+	end
+
+	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
+		self:ClearAllPoints()
+		local a,b,c,d,e = unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name])
+		self:SetPoint(a,b,c,d,e, true)
+	end
+	
+	if EBF.ExlusiveFrames[Name] then
+		for _, name in pairs(EBF.ExlusiveFrames[Name]) do _G[name]:Hide() end
+	end
+end
+
+function EBF:RewritePoint(anchor, parent, point, x, y, called)
+	if not called then LoadPosition(self) end
 end
 
 function EBF:MakeMovable(Name)
 	local frame = _G[Name]
 	if not frame then
-		print("Frame to move doesn't exist: "..(frameName or "Unknown"))
+		print("Frame to move doesn't exist: "..(frameName or "Unknown"), "error")
 		return
 	end
 
@@ -187,57 +216,27 @@ function EBF:MakeMovable(Name)
 	frame:HookScript("OnShow", LoadPosition)
 	frame:HookScript("OnDragStart", OnDragStart)
 	frame:HookScript("OnDragStop", OnDragStop)
+	frame:HookScript("OnHide", OnDragStop)
+	hooksecurefunc(frame, "SetPoint", self.RewritePoint)
 
-	if EBF.CombatLockFrames[Name] then
-		frame:HookScript("OnHide", function(self)
-			self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-		end)
-		frame:HookScript("OnEvent", function(self, event)
-			if event == "PLAYER_REGEN_ENABLED" then
-				if self:IsVisible() then
-					LoadPosition(self)
-				end
-				self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-			end
-		end)
+	frame.ignoreFramePositionManager = true
+	if self.FramesAreaAlter[Name] then
+		if UIPanelWindows[Name] and UIPanelWindows[Name].area then UIPanelWindows[Name].area = self.FramesAreaAlter[Name] end
 	end
-
-	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember then
-		frame.ignoreFramePositionManager = true
-		if UIPanelWindows[Name] then
-			for Key in pairs(UIPanelWindows[Name]) do
-				if Key == 'area' or Key == "pushable" then
-					UIPanelWindows[Name][Key] = nil
-				end
-			end
-		end
-		if not UISpecialFrames[Name] then tinsert(UISpecialFrames, Name) end
-	end
-
-	C_Timer.After(0, function()
-		if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
-			if not frame:GetPoint() then
-				frame:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116)
-			end
-
-			frame:ClearAllPoints()
-			frame:SetPoint(unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name]))
-		end
-	end)
 end
 
 function EBF:Addons(event, addon)
-	addon = EBF.AddonsList[addon]
+	addon = self.AddonsList[addon]
 	if not addon then return end
 	if type(addon) == "table" then
 		for i = 1, #addon do
-			EBF:MakeMovable(addon[i])
+			self:MakeMovable(addon[i])
 		end
 	else
-		EBF:MakeMovable(addon)
+		self:MakeMovable(addon)
 	end
-	EBF.addonCount = EBF.addonCount + 1
-	if EBF.addonCount == #EBF.AddonsList then EBF:UnregisterEvent(event) end
+	self.addonCount = self.addonCount + 1
+	if self.addonCount == #self.AddonsList then self:UnregisterEvent(event) end
 end
 
 function EBF:VehicleScale()
@@ -253,35 +252,47 @@ function EBF:ErrorFrameSize()
 	_G["UIErrorsFrame"]:SetSize(self.db.errorframe.width, self.db.errorframe.height) --512 x 60
 end
 
+local ToDelete = {
+	["CalendarViewEventFrame"] = true,
+	["CalendarViewHolidayFrame"] = true,
+}
+
 function EBF:Initialize()
 	if not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["enabled"] then return end
 	
 	self.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
-	EBF.addonCount = 0
+	self.addonCount = 0
+
+	for Name, _ in pairs(ToDelete) do
+		if self.db.points[Name] then self.db.points[Name] = nil end
+	end
+	
+	PVPReadyDialog:Hide()
+
 	if self.db.moveframe then
-		for i = 1, #EBF.Frames do
-			EBF:MakeMovable(EBF.Frames[i])
+		for Name, _ in pairs(self.TempOnly) do
+			if self.db.points[Name] then self.db.points[Name] = nil end
+		end
+
+		for i = 1, #self.Frames do
+			self:MakeMovable(self.Frames[i])
 		end
 		if self.db.moveelvbag then
-			EBF:MakeMovable("ElvUI_ContainerFrame")
+			self:MakeMovable("ElvUI_ContainerFrame")
 		end
 		self:RegisterEvent("ADDON_LOADED", "Addons")
 		
 		-- Check Forced Loaded AddOns
-		for AddOn, Table in pairs(EBF.AddonsList) do
+		for AddOn, Table in pairs(self.AddonsList) do
 			if IsAddOnLoaded(AddOn) then
 				for _, frame in pairs(Table) do
-					EBF:MakeMovable(frame)
+					self:MakeMovable(frame)
 				end
 			end
 		end
 	end
-	hooksecurefunc(VehicleSeatIndicator,"SetPoint", EBF.VehicleScale)
-	EBF:ErrorFrameSize()
-	function EBF:ForUpdateAll()
-		EBF:VehicleScale()
-		EBF:ErrorFrameSize()
-	end
+	hooksecurefunc(VehicleSeatIndicator,"SetPoint", self.VehicleScale)
+	self:ErrorFrameSize()
 end
 
 local function InitializeCallback()

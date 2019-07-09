@@ -341,7 +341,7 @@ end
 ---------------------------------------------------
 function WT:Initialize()
 	EP:RegisterPlugin(addonName, WT.InsertOptions)
-	hooksecurefunc(E, "UpdateAll", function()
+	hooksecurefunc(E, "UpdateEnd", function()
 		for _,update in ipairs(WT.UpdateAll) do
 			update()
 		end

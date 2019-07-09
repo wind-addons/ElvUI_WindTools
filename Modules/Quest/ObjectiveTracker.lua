@@ -79,6 +79,7 @@ function OT:Initialize()
 	self.db = E.db.WindTools.Quest["Objective Tracker"]
 	tinsert(WT.UpdateAll, function()
 		OT.db = E.db.WindTools.Quest["Objective Tracker"]
+        OT:ChangeColors()
     end)
     
     self:ChangeFonts()

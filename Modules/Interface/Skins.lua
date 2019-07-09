@@ -682,6 +682,12 @@ function WS:Initialize()
 	self.db = E.db.WindTools.Interface.Skins
 	tinsert(WT.UpdateAll, function()
 		WS.db = E.db.WindTools.Interface.Skins
+		WS:ShadowElvUIFrames()
+		WS:ShadowGeneralFrames()
+		WS:CustomSkins()
+		if IsAddOnLoaded("AddOnSkins") then
+			WS:AddOnSkins()
+		end
 	end)
 
 	self:ShadowElvUIFrames()

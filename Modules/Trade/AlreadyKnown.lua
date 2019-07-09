@@ -142,11 +142,12 @@ function AK:Initialize()
 	if not E.db.WindTools["Trade"]["Already Known"].enabled then return end
 
 	self.db = E.db.WindTools["Trade"]["Already Known"]
+	r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 	tinsert(WT.UpdateAll, function()
 		AK.db = E.db.WindTools["Trade"]["Already Known"]
+		r, g, b = AK.db.color.r, AK.db.color.g, AK.db.color.b
 	end)
 	
-	r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 	-- 商店頁面
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 	-- AH載入

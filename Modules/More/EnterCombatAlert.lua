@@ -24,15 +24,6 @@ function EnterCombatAlert:Initialize()
 		EnterCombatAlert.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
 	end)
 
-	local enterCombat = L["Enter Combat"]
-	local leaveCombat = L["Leave Combat"]
-	
-	-- Load custom text
-	if self.db.custom_text.enabled then
-		enterCombat = self.db.custom_text_enter
-		leaveCombat = self.db.custom_text_leave
-	end
-
 	-- Cache color setting
 	local color_enter = self.db.style.font_color_enter
 	local color_leave = self.db.style.font_color_leave
@@ -82,6 +73,15 @@ function EnterCombatAlert:Initialize()
 	alertFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	alertFrame:SetScript("OnEvent", function(self, event, ...)
+		local enterCombat = L["Enter Combat"]
+		local leaveCombat = L["Leave Combat"]
+		
+		-- Load custom text
+		if EnterCombatAlert.db.custom_text.enabled then
+			enterCombat = EnterCombatAlert.db.custom_text_enter
+			leaveCombat = EnterCombatAlert.db.custom_text_leave
+		end
+
 		self:Hide()
 		if (event == "PLAYER_REGEN_DISABLED") then
 			self.text:SetText(enterCombat)

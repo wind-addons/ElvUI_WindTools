@@ -582,6 +582,7 @@ function AB:Initialize()
 	self.db = E.db.WindTools["Interface"]["Auto Buttons"]
 	tinsert(WT.UpdateAll, function()
 		AB.db = E.db.WindTools["Interface"]["Auto Buttons"]
+		AB:UpdateAutoButton()
 	end)
 	
 	-- Create anchor

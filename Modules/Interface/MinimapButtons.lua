@@ -400,6 +400,7 @@ function MB:Initialize()
 	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
 	tinsert(WT.UpdateAll, function()
 		MB.db = E.db.WindTools["Interface"]["Minimap Buttons"]
+		MB:CreateFrames()
 	end)
 
 	self:CreateFrames()

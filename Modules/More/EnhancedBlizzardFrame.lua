@@ -263,6 +263,7 @@ function EBF:Initialize()
 	self.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
 	tinsert(WT.UpdateAll, function()
 		EBF.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
+		EBF:ErrorFrameSize()
 	end)
 
 	self.addonCount = 0

@@ -167,6 +167,8 @@ function RM:Initialize()
 	self.db = E.db.WindTools["Interface"]["Raid Markers"]
 	tinsert(WT.UpdateAll, function()
 		RM.db = E.db.WindTools["Interface"]["Raid Markers"]
+		RM:CreateButtons()
+		RM:ToggleSettings()
 	end)
 
 	self.frame = CreateFrame("Frame", "RaidMarkerBar", E.UIParent, "SecureHandlerStateTemplate")

@@ -347,6 +347,8 @@ function EWM:Initialize()
 	self.db = E.db.WindTools["Interface"]["Enhanced World Map"]
 	tinsert(WT.UpdateAll, function()
 		EWM.db = E.db.WindTools["Interface"]["Enhanced World Map"]
+		EWM:SetMapScale()
+		EWM:RevealMap()
 	end)
 
 	self:SetMapScale()

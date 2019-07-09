@@ -1,5 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
@@ -1013,7 +1012,7 @@ WT.ToolConfigs["Interface"] = {
 				},
 				["Raid"] = {
 					order = 3,
-					name = L["Raid"],
+					name = L["Raids"],
 					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] end,
 					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 					disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,

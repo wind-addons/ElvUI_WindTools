@@ -5,8 +5,7 @@
 -- 主要修改条目：
 -- 汉化
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
 

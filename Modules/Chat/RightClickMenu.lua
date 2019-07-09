@@ -7,8 +7,7 @@
 -- 模块化
 -- 增加自定义功能设定项
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local EnhancedRCMenu = E:NewModule('Wind_EnhancedRCMenu')
 local locale = GetLocale()

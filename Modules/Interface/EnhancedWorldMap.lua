@@ -1,7 +1,6 @@
 -- 作者：houshuu
 -- 去除迷雾部分作者：Leatrix
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local EWM = E:NewModule('Wind_EnhancedWorldMap', 'AceHook-3.0')
 local _G = _G

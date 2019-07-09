@@ -2,8 +2,7 @@
 -- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
 -- 修改：houshuu, SomeBlu
 -------------------
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local EBF = E:NewModule("Wind_EnhancedBlizzardFrame", 'AceHook-3.0', 'AceEvent-3.0')
 local _G = _G

@@ -1,4 +1,4 @@
-local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS")
+local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
 
 -- enUS
 -- 设置主界面
@@ -32,10 +32,6 @@ L["More Tools"] = true
 L["Credit List"] = true
 -- 任务通告
 L["No Detail"] = true
-L["Instance"] = true
-L["Raid"] = true
-L["Party"] = true
-L["Solo"] = true
 L["Ignore supplies quest"] = true
 -- 已学配方染色
 L["Already Known"] = true
@@ -97,7 +93,6 @@ L["Fix REPORT"] = true
 -- 增强好友菜单
 L["Enhanced Friend List"] = true
 L["Customize friend frame."] = true
-L["Features"] = true
 L["Name color & Level"] = true
 L["Enhanced Texuture"] = true
 L["Name Font"] = true
@@ -368,7 +363,7 @@ L["Say"] = true
 L["Solo"] = true
 L["Party"] = true
 L["Instance"] = true
-L["Raid"] = true
+L["Raids"] = true
 L["In party"] = true
 L["In instance"] = true
 L["In raid"] = true
@@ -422,7 +417,7 @@ L["Top and Bottom panel"] = true
 L["Chat panel"] = true
 L["Weakaura"] = true
 L["Bigwigs"] = true
-L["IME"]= true
+L["IME"] = true
 L["No backdrop"] = true
 L["Label"] = true
 L["Candidate"] = true

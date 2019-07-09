@@ -10,8 +10,7 @@
 -- 改进动画效果
 -- 支持 ElvUI 移动
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');

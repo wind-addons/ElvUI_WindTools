@@ -7,8 +7,7 @@
 -- 添加副本自定义功能
 -- 汉化
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local TT  = E:GetModule('Tooltip')
 local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')
@@ -288,7 +287,7 @@ function ETT:SetProgressionInfo(guid, tt)
 		-- add progression tooltip line
 		if self.db["Progression"]["Raid"]["enabled"] then -- raid progress
 			tt:AddLine(" ")
-			tt:AddLine(L["Raid"])
+			tt:AddLine(L["Raids"])
 			for _,tier in ipairs(self.RP.tiers) do -- Raid
 				if self.db["Progression"]["Raid"][tier] then
 					for _,level in ipairs(self.RP.levels) do

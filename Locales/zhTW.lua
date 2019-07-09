@@ -1,4 +1,4 @@
-local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhTW")
+local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhTW", true, true)
 
 -- zhTW
 -- 设置主界面
@@ -32,10 +32,6 @@ L["More Tools"] = "更多功能"
 L["Credit List"] = "鳴謝名單"
 -- 任务通告
 L["No Detail"] = "非詳細通報"
-L["Instance"] = "副本"
-L["Raid"] = "團隊副本"
-L["Party"] = "隊伍"
-L["Solo"] = "個人"
 L["Ignore supplies quest"] = "略過補給品任務"
 -- 已学配方染色
 L["Already Known"] = "已學配方上色"
@@ -97,7 +93,6 @@ L["Fix REPORT"] = "修復回報功能"
 -- 增强好友菜单
 L["Enhanced Friend List"] = "增強好友列表"
 L["Customize friend frame."] = "自定美化你的好友列表"
-L["Features"] = "功能"
 L["Name color & Level"] = "姓名染色 & 等級"
 L["Enhanced Texuture"] = "材質增強"
 L["Name Font"] = "名字字型"
@@ -205,7 +200,7 @@ L["Enhanced Tooltip"] = "浮動提示增強"
 L["Useful tooltip tweaks."] = "一些實用的浮動提示增強功能。"
 L["Item icon"] = "物品圖標"
 L["Progression"] = "進度提示"
-L["Add progression info to tooltip."] = "添加團隊副本進度到滑鼠提示。"
+L["Add progression info to tooltip."] = "添加副本進度到滑鼠提示。"
 L["Mythic"] = "傳奇"
 L["Heroic"] = "英雄"
 L["Normal"] = "普通"
@@ -368,7 +363,7 @@ L["Say"] = "說"
 L["Solo"] = "獨自一人"
 L["Party"] = "隊伍"
 L["Instance"] = "副本"
-L["Raid"] = "團隊副本"
+L["Raids"] = "團隊副本"
 L["In party"] = "在隊伍中"
 L["In instance"] = "在副本中"
 L["In raid"] = "在團隊副本中"
@@ -422,7 +417,7 @@ L["Top and Bottom panel"] = "頂部底部面板"
 L["Chat panel"] = "聊天面板"
 L["Weakaura"] = true
 L["Bigwigs"] = true
-L["IME"]= "輸入法"
+L["IME"] = "輸入法"
 L["No backdrop"] = "去除背景"
 L["Label"] = "序號"
 L["Candidate"] = "預測詞"

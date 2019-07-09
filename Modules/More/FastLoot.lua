@@ -6,8 +6,7 @@
 -- 模块化
 -- 增加速度设定项
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local FastLoot = E:NewModule('Wind_FastLoot');
 

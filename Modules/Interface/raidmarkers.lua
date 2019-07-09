@@ -1,6 +1,5 @@
-local E, _, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
+local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 
-local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local RM = E:NewModule('Wind_RaidMarkerBar', 'AceEvent-3.0')
 

@@ -6,8 +6,7 @@
 -- 模块化
 -- 精简代码，移动设定项绑定 ElvUI 配置
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local iShadow = E:NewModule('Wind_iShadow')
 

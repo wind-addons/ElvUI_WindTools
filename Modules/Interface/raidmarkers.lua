@@ -1,3 +1,7 @@
+-- 原作：ElvUI_S&L 的一个增强组件
+-- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
+-- 修改：mcc1, SomeBlu
+
 local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 
 local WT = E:GetModule("WindTools")

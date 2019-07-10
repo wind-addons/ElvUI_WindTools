@@ -138,7 +138,7 @@ P["WindTools"]["Interface"] = {
 		['buttonSize'] = 22,
 		['spacing'] = 2,
 		['orientation'] = 'HORIZONTAL',
-		['modifier'] = 'shift-',
+		['modifier'] = 'shift',
 	},
 	["Skins"] = {
 		enabled = true,
@@ -672,9 +672,9 @@ WT.ToolConfigs["Interface"] = {
 					desc = L['Set the modifier key for placing world markers.'],
 					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"].enabled end,
 					values = {
-						['shift-'] = L['Shift Key'],
-						['ctrl-'] = L['Ctrl Key'],
-						['alt-'] = L['Alt Key'],
+						['shift'] = L['Shift Key'],
+						['ctrl'] = L['Ctrl Key'],
+						['alt'] = L['Alt Key'],
 					}
 				}
 			}

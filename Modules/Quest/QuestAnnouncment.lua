@@ -108,19 +108,19 @@ end
 
 local function PrtChatMsg(msg)
 	if (not IsInGroup(LE_PARTY_CATEGORY_HOME) or IsInRaid(LE_PARTY_CATEGORY_HOME)) and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-		if self.db["Instance"] then
+		if QuestAnnouncment.db["Instance"] then
 			SendChatMessage(msg, "instance_chat", nil)
 		end
 	elseif UnitInRaid("player") then
-		if self.db["Raid"] then
+		if QuestAnnouncment.db["Raid"] then
 			SendChatMessage(msg, "raid", nil)
 		end
 	elseif UnitInParty("Party1") then
-		if self.db["Party"] then
+		if QuestAnnouncment.db["Party"] then
 			SendChatMessage(msg, "party", nil)
 		end
 	else
-		if self.db["Solo"] then
+		if QuestAnnouncment.db["Solo"] then
 			ChatFrame1:AddMessage(msg)
 		end
 	end

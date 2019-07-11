@@ -149,7 +149,7 @@ end
 local function OnDragStop(self)
 	self:StopMovingOrSizing()
 	local Name = self:GetName()
-	if self.db.remember and not EBF.TempOnly[Name]  then
+	if EBF.db.remember and not EBF.TempOnly[Name]  then
 		local a, b, c, d, e = self:GetPoint()
 		if self:GetParent() then 
 			b = self:GetParent():GetName() or UIParent
@@ -158,10 +158,10 @@ local function OnDragStop(self)
 			b = UIParent
 		end
 		if Name == "QuestFrame" or Name == "GossipFrame" then
-			self.db.points["GossipFrame"] = {a, b, c, d, e}
-			self.db.points["QuestFrame"] = {a, b, c, d, e}
+			EBF.db.points["GossipFrame"] = {a, b, c, d, e}
+			EBF.db.points["QuestFrame"] = {a, b, c, d, e}
 		else
-			self.db.points[Name] = {a, b, c, d, e}
+			EBF.db.points[Name] = {a, b, c, d, e}
 		end
 		self:SetUserPlaced(true)
 	else
@@ -184,9 +184,9 @@ local function LoadPosition(self)
 		OnDragStop(self)
 	end
 
-	if self.db.remember and self.db.points[Name] then
+	if EBF.db.remember and EBF.db.points[Name] then
 		self:ClearAllPoints()
-		local a,b,c,d,e = unpack(self.db.points[Name])
+		local a,b,c,d,e = unpack(EBF.db.points[Name])
 		self:SetPoint(a,b,c,d,e, true)
 	end
 	

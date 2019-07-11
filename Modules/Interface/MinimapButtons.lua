@@ -89,7 +89,7 @@ local function print_r ( t )
 end
 
 local function OnEnter(self)
-	if not self.db.mouseover or self.db.skinStyle == 'NOANCHOR' then return end
+	if not MB.db.mouseover or MB.db.skinStyle == 'NOANCHOR' then return end
 	UIFrameFadeIn(MinimapButtonBar, 0.2, MinimapButtonBar:GetAlpha(), 1)
 	if self:GetName() ~= 'MinimapButtonBar' then
 		self:SetBackdropBorderColor(.7, .7, 0)
@@ -97,7 +97,7 @@ local function OnEnter(self)
 end
 
 local function OnLeave(self)
-	if not self.db.mouseover or self.db.skinStyle == 'NOANCHOR' then return end
+	if not MB.db.mouseover or MB.db.skinStyle == 'NOANCHOR' then return end
 	UIFrameFadeOut(MinimapButtonBar, 0.2, MinimapButtonBar:GetAlpha(), 0)
 	if self:GetName() ~= 'MinimapButtonBar' then
 		self:SetBackdropBorderColor(0, 0, 0)

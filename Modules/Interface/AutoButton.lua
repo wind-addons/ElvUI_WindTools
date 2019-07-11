@@ -452,7 +452,7 @@ function AB:ScanItemCount(elapsed)
 		return
 	end
 	lastUpdate = 0
-	for i = 1, self.db.questNum do
+	for i = 1, AB.db.questNum do
 		local f = _G["AutoQuestButton"..i]
 		if f and f.itemName then
 			local count = GetItemCount(f.itemID, nil, 1)

@@ -7,6 +7,7 @@
 -- 增加颜色设定
 
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local WT = E:GetModule("WindTools")
 local AK = E:NewModule('Wind_AlreadyKnown');
 local _G = _G
 

@@ -240,7 +240,7 @@ end
 
 function EBF:VehicleScale()
 	local frame = _G["VehicleSeatIndicator"]
-	local frameScale = self.db["vehicleSeatScale"]
+	local frameScale = EBF.db["vehicleSeatScale"]
 	frame:SetScale(frameScale)
 	if frame.mover then
 		frame.mover:SetSize(frameScale * frame:GetWidth(), frameScale * frame:GetHeight())

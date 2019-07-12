@@ -201,7 +201,7 @@ function MB:SkinButton(frame)
 end
 
 function MB:DelayedUpdateLayout()
-	if self.db.skinStyle ~= 'NOANCHOR' then
+	if MB.db.skinStyle ~= 'NOANCHOR' then
 		MB:ScheduleTimer("UpdateLayout", .05)
 	end
 end

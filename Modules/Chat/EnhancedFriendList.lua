@@ -25,8 +25,9 @@ local function FriendColorInit()
 				local _, realName, _, _, toonName, toonID, client, _, _, _, _, _, _, _, _, _, _, _, isFavorite, mobile = BNGetFriendInfo(button.id);
 				if client == BNET_CLIENT_WOW then
 					local _, _, _, realmName, _, _, _, class, _, zoneName, level, _, _, _, _, _ = BNGetGameAccountInfo(toonID);
-					if button.name then
-						button.name:SetText(realName.." ("..EFL:ClassColor(class):GenerateHexColorMarkup()..toonName.."|r, ".."|cfff0c40f"..level.."|r)")
+					local classc = EFL:ClassColor(class)
+					if button.name and classc then
+						button.name:SetText(realName.." ("..classc:GenerateHexColorMarkup()..toonName.."|r, ".."|cfff0c40f"..level.."|r)")
 					end
 					if CanCooperateWithGameAccount(toonID) ~= true then
 						if button.info then
@@ -37,10 +38,11 @@ local function FriendColorInit()
 				end
 			elseif button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 				local name, level, class, _, connected, _, _, _ = GetFriendInfo(i);
-				if connected then
+				local classc = EFL:ClassColor(class)
+				if connected and classc then
 					if button.name and name then
 						button.name:SetText(name..", L"..level);
-						button.name:SetTextColor(EFL:ClassColor(class):GetRGB());
+						button.name:SetTextColor(classc:GetRGB());
 					end
 				end
 			end
@@ -177,10 +179,11 @@ function EFL:UpdateFriends(button)
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
+		local classc = EFL:ClassColor(class)
 		broadcastText = nil
-		if connected then
+		if connected and classc then
 			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
-			nameText = format('%s%s - (%s - %s %s)', EFL:ClassColor(class):GenerateHexColorMarkup(), name, class, LEVEL, level)
+			nameText = format('%s%s - (%s - %s %s)', classc:GenerateHexColorMarkup(), name, class, LEVEL, level)
 			nameColor = FRIENDS_WOW_NAME_COLOR
 			Cooperate = true
 		else
@@ -205,11 +208,11 @@ function EFL:UpdateFriends(button)
 
 		if characterName then
 			_, _, _, realmName, realmID, faction, race, class, _, zoneName, level, gameText = BNGetGameAccountInfo(toonID)
-			if client == BNET_CLIENT_WOW then
+			local classc = EFL:ClassColor(class)
+			if client == BNET_CLIENT_WOW and classc then
 				if (level == nil or tonumber(level) == nil) then level = 0 end
-				local classcolor = EFL:ClassColor(class):GenerateHexColorMarkup()
 				local diff = level ~= 0 and format('|cFF%02x%02x%02x', GetQuestDifficultyColor(level).r * 255, GetQuestDifficultyColor(level).g * 255, GetQuestDifficultyColor(level).b * 255) or '|cFFFFFFFF'
-				nameText = format('%s |cFFFFFFFF(|r%s%s|r - %s %s%s|r|cFFFFFFFF)|r', nameText, classcolor, characterName, LEVEL, diff, level)
+				nameText = format('%s |cFFFFFFFF(|r%s%s|r - %s %s%s|r|cFFFFFFFF)|r', nameText, classc:GenerateHexColorMarkup(), characterName, LEVEL, diff, level)
 				Cooperate = CanCooperateWithGameAccount(toonID)
 			else
 				nameText = format('|cFF%s%s|r', EFL.ClientColor[client] or 'FFFFFF', nameText)

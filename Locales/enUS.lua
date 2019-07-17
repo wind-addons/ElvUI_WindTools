@@ -208,6 +208,7 @@ L["LFR"] = true
 L["Uldir"] = true
 L["BattleOfDazaralor"] = true
 L["CrucibleOfStorms"] = true
+L["EternalPalace"] = true
 L["Dungeon"] = true
 L["MythicDungeon"] = true
 L["AtalDazar"] = true

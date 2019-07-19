@@ -14,7 +14,7 @@ local ETT = E:NewModule('Wind_EnhancedTootip')
 
 ETT.RP = {
 	-- sort key
-	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms" },
+	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms", "EternalPalace" },
 	["levels"] = { "Mythic", "Heroic", "Normal", "LFR" },
 	-- stat id
 	["Raid"] = {
@@ -74,6 +74,20 @@ ETT.RP = {
 			},
 			["LFR"] = {
 				13404, 13408,
+			},
+		},
+		["EternalPalace"] = {
+			["Mythic"] = {
+				13590, 13594, 13598, 13603, 13607, 13611, 13615, 13619,
+			},
+			["Heroic"] = {
+				13589, 13593, 13597, 13602, 13606, 13610, 13614, 13618,
+			},
+			["Normal"] = {
+				13588, 13592, 13596, 13601, 13605, 13609, 13613, 13617,
+			},
+			["LFR"] = {
+				13587, 13591, 13595, 13600, 13604, 13608, 13612, 13616,
 			},
 		},
 	},

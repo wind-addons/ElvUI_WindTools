@@ -216,8 +216,9 @@ P["WindTools"]["Interface"] = {
 			["Raid"] = {
 				["enabled"] = true,
 				["Uldir"] = false,
-				["BattleOfDazaralor"] = true,
+				["BattleOfDazaralor"] = false,
 				["CrucibleOfStorms"] = false,
+				["EternalPalace"] = true,
 			}
 		},
 	},
@@ -1033,6 +1034,10 @@ WT.ToolConfigs["Interface"] = {
 						["CrucibleOfStorms"] = {
 							order = 4,
 							name = L["CrucibleOfStorms"],
+						},
+						["EternalPalace"] = {
+							order = 5,
+							name = L["EternalPalace"],
 						},
 					}
 				}

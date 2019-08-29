@@ -7,15 +7,14 @@
 -- 添加副本自定义功能
 -- 汉化
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local TT  = E:GetModule('Tooltip')
 local WT  = E:GetModule("WindTools")
 local ETT = E:NewModule('Wind_EnhancedTootip')
 
 ETT.RP = {
 	-- sort key
-	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms" },
+	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms", "EternalPalace" },
 	["levels"] = { "Mythic", "Heroic", "Normal", "LFR" },
 	-- stat id
 	["Raid"] = {
@@ -75,6 +74,20 @@ ETT.RP = {
 			},
 			["LFR"] = {
 				13404, 13408,
+			},
+		},
+		["EternalPalace"] = {
+			["Mythic"] = {
+				13590, 13594, 13598, 13603, 13607, 13611, 13615, 13619,
+			},
+			["Heroic"] = {
+				13589, 13593, 13597, 13602, 13606, 13610, 13614, 13618,
+			},
+			["Normal"] = {
+				13588, 13592, 13596, 13601, 13605, 13609, 13613, 13617,
+			},
+			["LFR"] = {
+				13587, 13591, 13595, 13600, 13604, 13608, 13612, 13616,
 			},
 		},
 	},
@@ -288,7 +301,7 @@ function ETT:SetProgressionInfo(guid, tt)
 		-- add progression tooltip line
 		if self.db["Progression"]["Raid"]["enabled"] then -- raid progress
 			tt:AddLine(" ")
-			tt:AddLine(L["Raid"])
+			tt:AddLine(L["Raids"])
 			for _,tier in ipairs(self.RP.tiers) do -- Raid
 				if self.db["Progression"]["Raid"][tier] then
 					for _,level in ipairs(self.RP.levels) do
@@ -360,8 +373,13 @@ function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 end
 
 function ETT:Initialize()
+	if not E.db.WindTools["Interface"]["Enhanced Tooltip"].enabled then return end
+
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		ETT.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
+	end)
+
 	self:ItemIcons()
 	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
 end

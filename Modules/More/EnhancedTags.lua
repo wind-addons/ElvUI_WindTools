@@ -2,8 +2,7 @@
 -- 作者：houshuu
 
 --Add access to ElvUI engine and unitframe framework
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local WTT = E:NewModule('Wind_Tags')
 local ElvUF = ElvUI.oUF

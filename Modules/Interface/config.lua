@@ -1,5 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
@@ -139,7 +138,7 @@ P["WindTools"]["Interface"] = {
 		['buttonSize'] = 22,
 		['spacing'] = 2,
 		['orientation'] = 'HORIZONTAL',
-		['modifier'] = 'shift-',
+		['modifier'] = 'shift',
 	},
 	["Skins"] = {
 		enabled = true,
@@ -217,8 +216,9 @@ P["WindTools"]["Interface"] = {
 			["Raid"] = {
 				["enabled"] = true,
 				["Uldir"] = false,
-				["BattleOfDazaralor"] = true,
+				["BattleOfDazaralor"] = false,
 				["CrucibleOfStorms"] = false,
+				["EternalPalace"] = true,
 			}
 		},
 	},
@@ -617,7 +617,7 @@ WT.ToolConfigs["Interface"] = {
 	["Raid Markers"] ={
 		tDesc   = L["Display a quick action bar for raid targets and world markers."],
 		oAuthor = "Feraldin, nickbock",
-		cAuthor = "mcc",
+		cAuthor = "mcc, SomeBlu",
 		["general"] = {
 			order = 5,
 			get = function(info) return E.db.WindTools["Interface"]["Raid Markers"][ info[#info] ] end,	
@@ -673,9 +673,9 @@ WT.ToolConfigs["Interface"] = {
 					desc = L['Set the modifier key for placing world markers.'],
 					disabled = function() return not E.db.WindTools["Interface"]["Raid Markers"].enabled end,
 					values = {
-						['shift-'] = L['Shift Key'],
-						['ctrl-'] = L['Ctrl Key'],
-						['alt-'] = L['Alt Key'],
+						['shift'] = L['Shift Key'],
+						['ctrl'] = L['Ctrl Key'],
+						['alt'] = L['Alt Key'],
 					}
 				}
 			}
@@ -1013,7 +1013,7 @@ WT.ToolConfigs["Interface"] = {
 				},
 				["Raid"] = {
 					order = 3,
-					name = L["Raid"],
+					name = L["Raids"],
 					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] end,
 					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 					disabled = function() return not E.db.WindTools["Interface"]["Enhanced Tooltip"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["enabled"] or not E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"]["Raid"]["enabled"] end,
@@ -1034,6 +1034,10 @@ WT.ToolConfigs["Interface"] = {
 						["CrucibleOfStorms"] = {
 							order = 4,
 							name = L["CrucibleOfStorms"],
+						},
+						["EternalPalace"] = {
+							order = 5,
+							name = L["EternalPalace"],
 						},
 					}
 				}

@@ -1,7 +1,6 @@
 -- 原创模块
 -- 参考：https://wow.gamepedia.com/COMBAT_LOG_EVENT
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local AS = E:NewModule('Wind_AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 
@@ -567,8 +566,12 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 end
 
 function AS:Initialize()
+	if not E.db.WindTools["More Tools"]["Announce System"].enabled then return end
+
 	self.db = E.db.WindTools["More Tools"]["Announce System"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		AS.db = E.db.WindTools["More Tools"]["Announce System"]
+	end)
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("LFG_COMPLETION_REWARD")

@@ -2,8 +2,7 @@
 -- 原作者：Azilroka(https://www.tukui.org/addons.php?id=79)
 -- 导入：houshuu
 -------------------
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local DO = E:NewModule('Wind_DragonOverlay', 'AceEvent-3.0')
 
@@ -57,8 +56,12 @@ function DO:SetOverlay()
 end
 
 function DO:Initialize()
+	if not E.db.WindTools["Interface"]["Dragon Overlay"]["enabled"] then return end
+
 	self.db = E.db.WindTools["Interface"]["Dragon Overlay"]
-	if not self.db["enabled"] then return end
+	tinsert(WT.UpdateAll, function()
+		DO.db = E.db.WindTools["Interface"]["Dragon Overlay"]
+	end)
 
 	local frame = CreateFrame("Frame", 'DragonOverlayFrame', UIParent)
 	frame.Texture = frame:CreateTexture(nil, 'ARTWORK')

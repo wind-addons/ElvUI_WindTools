@@ -6,8 +6,8 @@
 -- 模块化
 -- 增加颜色设定
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local WT = E:GetModule("WindTools")
 local AK = E:NewModule('Wind_AlreadyKnown');
 local _G = _G
 
@@ -139,9 +139,15 @@ local function _hookMerchant() -- Most of this found from FrameXML/MerchantFrame
 end
 
 function AK:Initialize()
+	if not E.db.WindTools["Trade"]["Already Known"].enabled then return end
+
 	self.db = E.db.WindTools["Trade"]["Already Known"]
-	if not self.db.enabled then return end
 	r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+	tinsert(WT.UpdateAll, function()
+		AK.db = E.db.WindTools["Trade"]["Already Known"]
+		r, g, b = AK.db.color.r, AK.db.color.g, AK.db.color.b
+	end)
+	
 	-- 商店頁面
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", _hookMerchant)
 	-- AH載入

@@ -1,5 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 
@@ -241,7 +240,7 @@ WT.ToolConfigs["Quest"] = {
 		},
 		["Raid"] = {
 			order = 7,
-			name = L["Raid"],
+			name = L["Raids"],
 			get = function(info) return E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] end,
 			set = function(info, value) E.db.WindTools["Quest"]["Quest Announcment"]["Raid"] = value; E:StaticPopup_Show("PRIVATE_RL")end
 		},

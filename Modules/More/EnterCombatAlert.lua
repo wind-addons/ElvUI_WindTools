@@ -10,24 +10,18 @@
 -- 改进动画效果
 -- 支持 ElvUI 移动
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
 
 function EnterCombatAlert:Initialize()
-	self.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
-	if not self.db.enabled then return end
+	if not E.db.WindTools["More Tools"]["Enter Combat Alert"].enabled then return end
 
-	local enterCombat = L["Enter Combat"]
-	local leaveCombat = L["Leave Combat"]
-	
-	-- Load custom text
-	if self.db.custom_text.enabled then
-		enterCombat = self.db.custom_text_enter
-		leaveCombat = self.db.custom_text_leave
-	end
+	self.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+	tinsert(WT.UpdateAll, function()
+		EnterCombatAlert.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+	end)
 
 	-- Cache color setting
 	local color_enter = self.db.style.font_color_enter
@@ -78,6 +72,15 @@ function EnterCombatAlert:Initialize()
 	alertFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	alertFrame:SetScript("OnEvent", function(self, event, ...)
+		local enterCombat = L["Enter Combat"]
+		local leaveCombat = L["Leave Combat"]
+		
+		-- Load custom text
+		if EnterCombatAlert.db.custom_text.enabled then
+			enterCombat = EnterCombatAlert.db.custom_text_enter
+			leaveCombat = EnterCombatAlert.db.custom_text_leave
+		end
+
 		self:Hide()
 		if (event == "PLAYER_REGEN_DISABLED") then
 			self.text:SetText(enterCombat)
@@ -90,7 +93,7 @@ function EnterCombatAlert:Initialize()
 	end)
 
 	-- Create ElvUI mover
-	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return E.db.WindTools["Interface"]["Enter Combat Alert"].enabled; end)
+	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return EnterCombatAlert.db.enabled; end)
 end
 
 local function InitializeCallback()

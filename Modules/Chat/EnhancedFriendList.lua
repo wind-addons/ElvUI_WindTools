@@ -1,88 +1,55 @@
 -- 原作：EnhancedFriendList
 -- 原作者：Awbee (http://www.wowinterface.com/downloads/info8679-EnhancedFriendList.html)
--- 修改：houshuu
+-- 修改：houshuu, SomeBlu
 -------------------
 -- 主要修改条目：
--- 模块化
+-- 模块化, 精简代码
 -- 染色逻辑
 -- 添加新的 rgb 函数
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local EFL = E:NewModule('Wind_EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
 
 -- Friend Color
-local function Hex(r, g, b)
-    if(type(r) == 'table') then
-        if(r.r) then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
-    end
-    if(not r or not g or not b) then
-        r, g, b = 1, 1, 1
-    end
-    return format('|cff%02x%02x%02x', r*255, g*255, b*255)
-end
 local function FriendColorInit()
-	local friendOffset = HybridScrollFrame_GetOffset(FriendsFrameFriendsScrollFrame);
-	if not friendOffset then
-		return;
-	end
-	if friendOffset < 0 then
-		friendOffset = 0;
-	end
-
-	local numBNetTotal, numBNetOnline = BNGetNumFriends();
-	if numBNetOnline > 0 then
-		for i=1, numBNetOnline, 1 do
-			local _, realName, _, _, toonName, toonID, client, _, _, _, _, _, _, _, _, _ = BNGetFriendInfo(i);
-			if client == BNET_CLIENT_WOW then
-				local _, _, _, realmName, _, _, _, class, _, zoneName, level, _, _, _, _, _ = BNGetGameAccountInfo(toonID);
-				for k,v in pairs(LOCALIZED_CLASS_NAMES_MALE) do if class == v then class = k end end
-				if GetLocale() ~= "enUS" then
-					for k,v in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do if class == v then class = k end end
+	local numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends();
+	local numWoWOnline = C_FriendList.GetNumOnlineFriends();
+	if numBNetOnline > 0 or numWoWOnline > 0 then
+		local bnetConnected = BNConnected();
+		for i = 1, FRIENDS_TO_DISPLAY do
+			local button = _G["FriendsFrameFriendsScrollFrameButton"..i]
+			if not button then return end
+			if button.buttonType == FRIENDS_BUTTON_TYPE_BNET and bnetConnected then
+				local _, realName, _, _, toonName, toonID, client, _, _, _, _, _, _, _, _, _, _, _, isFavorite, mobile = BNGetFriendInfo(button.id);
+				if client == BNET_CLIENT_WOW then
+					local _, _, _, realmName, _, _, _, class, _, zoneName, level, _, _, _, _, _ = BNGetGameAccountInfo(toonID);
+					local classc = EFL:ClassColor(class)
+					if button.name and classc then
+						button.name:SetText(realName.." ("..classc:GenerateHexColorMarkup()..toonName.."|r, ".."|cfff0c40f"..level.."|r)")
+					end
+					if CanCooperateWithGameAccount(toonID) ~= true then
+						if button.info then
+							button.info:SetText(zoneName.." ("..realmName..")");
+						end
+					end
+					if isFavorite then button.Favorite:SetPoint("TOPLEFT", button.name, "TOPLEFT", button.name:GetStringWidth(), 0); end
 				end
-				local classc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
-				if not classc then
-					return;
-				end
-				local nameString = _G["FriendsFrameFriendsScrollFrameButton"..(i-friendOffset).."Name"];
-				if nameString then
-					nameString:SetText(realName.." ("..Hex(classc.r, classc.g, classc.b)..toonName.."|r, "..Hex(.945, .769, .059)..level.."|r)")
-				end
-				if CanCooperateWithGameAccount(toonID) ~= true then
-					local nameString = _G["FriendsFrameFriendsScrollFrameButton"..(i-friendOffset).."Info"];
-					if nameString then
-						nameString:SetText(zoneName.." ("..realmName..")");
+			elseif button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
+				local name, level, class, _, connected, _, _, _ = GetFriendInfo(i);
+				local classc = EFL:ClassColor(class)
+				if connected and classc then
+					if button.name and name then
+						button.name:SetText(name..", L"..level);
+						button.name:SetTextColor(classc:GetRGB());
 					end
 				end
 			end
 		end
 	end
-
-	local numberOfFriends, onlineFriends = GetNumFriends();
-	if onlineFriends > 0 then
-		for i=1, onlineFriends, 1 do
-			j = i + numBNetOnline;
-			local name, level, class, area, connected, status, note, RAF = GetFriendInfo(i);
-			for k,v in pairs(LOCALIZED_CLASS_NAMES_MALE) do if class == v then class = k end end
-			if GetLocale() ~= "enUS" then
-				for k,v in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do if class == v then class = k end end
-			end
-			local classc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
-			if not classc then
-				return;
-			end
-			if connected then
-				local nameString = _G["FriendsFrameFriendsScrollFrameButton"..(j-friendOffset).."Name"];
-				if nameString and name then
-					nameString:SetText(name..", L"..level);
-					nameString:SetTextColor(classc.r, classc.g, classc.b);
-				end
-			end
-		end
-	end
 end
+
 -- Enhanced
 local MediaPath = 'Interface\\Addons\\ElvUI_WindTools\\Texture\\FriendList\\'
 EFL.GameIcons = {
@@ -201,20 +168,22 @@ EFL.ClientColor = {
 	App = '82C5FF',
 	BSAp = '82C5FF',
 }
-function EFL:ClassColorCode(class)
-	local color = class and (CUSTOM_CLASS_COLORS) or { r = 1, g = 1, b = 1 }
-	if not color.r or not color.g or not color.b then color = { r = 1, g = 1, b = 1 } end
-	return format('|cFF%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
+function EFL:ClassColor(class)
+	for k,v in pairs(LOCALIZED_CLASS_NAMES_MALE) do if class == v then class = k; break; end end
+	if GetLocale() ~= "enUS" then
+		for k,v in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do if class == v then class = k; break; end end
+	end
+	return (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class];
 end
 function EFL:UpdateFriends(button)
-	self.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
 		local name, level, class, area, connected, status = GetFriendInfo(button.id)
+		local classc = EFL:ClassColor(class)
 		broadcastText = nil
-		if connected then
+		if connected and classc then
 			button.status:SetTexture(EFL.StatusIcons[self.db.StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
-			nameText = format('%s%s - (%s - %s %s)', EFL:ClassColorCode(class), name, class, LEVEL, level)
+			nameText = format('%s%s - (%s - %s %s)', classc:GenerateHexColorMarkup(), name, class, LEVEL, level)
 			nameColor = FRIENDS_WOW_NAME_COLOR
 			Cooperate = true
 		else
@@ -239,11 +208,11 @@ function EFL:UpdateFriends(button)
 
 		if characterName then
 			_, _, _, realmName, realmID, faction, race, class, _, zoneName, level, gameText = BNGetGameAccountInfo(toonID)
-			if client == BNET_CLIENT_WOW then
+			local classc = EFL:ClassColor(class)
+			if client == BNET_CLIENT_WOW and classc then
 				if (level == nil or tonumber(level) == nil) then level = 0 end
-				local classcolor = EFL:ClassColorCode(class)
 				local diff = level ~= 0 and format('|cFF%02x%02x%02x', GetQuestDifficultyColor(level).r * 255, GetQuestDifficultyColor(level).g * 255, GetQuestDifficultyColor(level).b * 255) or '|cFFFFFFFF'
-				nameText = format('%s |cFFFFFFFF(|r%s%s|r - %s %s%s|r|cFFFFFFFF)|r', nameText, classcolor, characterName, LEVEL, diff, level)
+				nameText = format('%s |cFFFFFFFF(|r%s%s|r - %s %s%s|r|cFFFFFFFF)|r', nameText, classc:GenerateHexColorMarkup(), characterName, LEVEL, diff, level)
 				Cooperate = CanCooperateWithGameAccount(toonID)
 			else
 				nameText = format('|cFF%s%s|r', EFL.ClientColor[client] or 'FFFFFF', nameText)
@@ -283,11 +252,12 @@ function EFL:UpdateFriends(button)
 
 	if nameText then
 		button.name:SetText(nameText)
-		button.name:SetTextColor(nameColor.r, nameColor.g, nameColor.b)
+		button.name:SetTextColor(nameColor:GetRGB())
 		button.info:SetText(infoText)
 		button.info:SetTextColor(unpack(Cooperate and {1, .96, .45} or {.49, .52, .54}))
 		button.name:SetFont(LSM:Fetch('font', self.db.NameFont), self.db.NameFontSize, self.db.NameFontFlag)
 		button.info:SetFont(LSM:Fetch('font', self.db.InfoFont), self.db.InfoFontSize, self.db.InfoFontFlag)
+		if button.Favorite:IsShown() then button.Favorite:SetPoint("TOPLEFT", button.name, "TOPLEFT", button.name:GetStringWidth(), 0); end
 	end
 end
 
@@ -301,7 +271,12 @@ function EFL:Initialize()
 		hooksecurefunc("HybridScrollFrame_Update", FriendColorInit)
 	end
 
-	if E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]["enabled"] then
+	self.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
+	tinsert(WT.UpdateAll, function()
+		EFL.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
+	end)
+	
+	if self.db["enabled"] then
 		-- 检查是否要进行增强
 		EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 	end

@@ -6,8 +6,7 @@
 -- 模块化
 -- 增加设定项
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local AT = E:NewModule("Wind_AzeriteTooltip", "AceEvent-3.0", "AceHook-3.0")
 
@@ -123,6 +122,10 @@ function AT:ClearBlizzardText(tooltip)
                     textLeft[i-1]:SetText("")
                     line:SetText("")
                     textLeft[i+1]:SetText(addText)
+				elseif (text:find(AzeritePowers) and not text:find(">")) then
+                    textLeft[i-1]:SetText("")
+                    line:SetText("")
+					textLeft[i+1]:SetText(addText)
                 -- 8.1 FIX --
                 elseif text:find(AZERITE_EMPOWERED_ITEM_FULLY_UPGRADED) then
                     textLeft[i-1]:SetText("")
@@ -244,7 +247,6 @@ function AT:BuildTooltip(self)
                         addText = addText.."\n|cFF7a7a7a"..L["Level"].." "..tierLevel..azeriteTooltipText.."|r"
                     end
                 end
-                azeriteTooltipText = nil
             end
         else
             for j=1, 5 do
@@ -482,7 +484,12 @@ end
 
 function AT:Initialize()
     if not E.db.WindTools["Trade"]["Azerite Tooltip"]["enabled"] then return end
-    self.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+
+	self.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+	tinsert(WT.UpdateAll, function()
+		AT.db = E.db.WindTools["Trade"]["Azerite Tooltip"]
+    end)
+    
     self:SecureHook('PaperDollItemSlotButton_Update')
     self:SecureHook('EquipmentFlyout_DisplayButton')
     self:SecureHook('ContainerFrame_Update')

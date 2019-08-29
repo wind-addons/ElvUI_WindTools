@@ -5,8 +5,7 @@
 -- 主要修改条目：
 -- 汉化
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
 
@@ -90,7 +89,7 @@ local function print_r ( t )
 end
 
 local function OnEnter(self)
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].mouseover or E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'NOANCHOR' then return end
+	if not MB.db.mouseover or MB.db.skinStyle == 'NOANCHOR' then return end
 	UIFrameFadeIn(MinimapButtonBar, 0.2, MinimapButtonBar:GetAlpha(), 1)
 	if self:GetName() ~= 'MinimapButtonBar' then
 		self:SetBackdropBorderColor(.7, .7, 0)
@@ -98,7 +97,7 @@ local function OnEnter(self)
 end
 
 local function OnLeave(self)
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].mouseover or E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'NOANCHOR' then return end
+	if not MB.db.mouseover or MB.db.skinStyle == 'NOANCHOR' then return end
 	UIFrameFadeOut(MinimapButtonBar, 0.2, MinimapButtonBar:GetAlpha(), 0)
 	if self:GetName() ~= 'MinimapButtonBar' then
 		self:SetBackdropBorderColor(0, 0, 0)
@@ -106,7 +105,7 @@ local function OnLeave(self)
 end
 
 function MB:SkinButton(frame)
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].mbcalendar then
+	if not self.db.mbcalendar then
 		table.insert(ignoreButtons, "GameTimeFrame")
 	end
 
@@ -141,7 +140,7 @@ function MB:SkinButton(frame)
 	
 	if name == "DBMMinimapButton" then frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87") end
 	if name == "SmartBuff_MiniMapButton" then frame:SetNormalTexture(select(3, GetSpellInfo(12051))) end
-	if name == "GarrisonLandingPageMinimapButton" and E.db.WindTools["Interface"]["Minimap Buttons"].mbgarrison then frame:SetScale(1) end
+	if name == "GarrisonLandingPageMinimapButton" and self.db.mbgarrison then frame:SetScale(1) end
 	
 	if not frame.isSkinned then
 		frame:HookScript('OnEnter', OnEnter)
@@ -202,20 +201,20 @@ function MB:SkinButton(frame)
 end
 
 function MB:DelayedUpdateLayout()
-	if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle ~= 'NOANCHOR' then
+	if MB.db.skinStyle ~= 'NOANCHOR' then
 		MB:ScheduleTimer("UpdateLayout", .05)
 	end
 end
 
 function MB:UpdateSkinStyle()
 	local doreload = 0
-	if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'NOANCHOR' then 
-		if E.db.WindTools["Interface"]["Minimap Buttons"].mbgarrison then
-			E.db.WindTools["Interface"]["Minimap Buttons"].mbgarrison = false
+	if self.db.skinStyle == 'NOANCHOR' then 
+		if self.db.mbgarrison then
+			self.db.mbgarrison = false
 			doreload = 1
 		end
-		if E.db.WindTools["Interface"]["Minimap Buttons"].mbcalendar then 
-			E.db.WindTools["Interface"]["Minimap Buttons"].mbcalendar = false
+		if self.db.mbcalendar then 
+			self.db.mbcalendar = false
 			doreload = 1
 		end
 		if doreload == 1 then
@@ -229,7 +228,7 @@ function MB:UpdateSkinStyle()
 end
 
 function MB:UpdateLayout()
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].enabled then return end
+	if not self.db.enabled then return end
 	if InCombatLockdown() then
 		MB:RegisterEvent("PLAYER_REGEN_ENABLED", "UpdateLayout")	
 		return
@@ -237,25 +236,25 @@ function MB:UpdateLayout()
 		MB:UnregisterEvent("PLAYER_REGEN_ENABLED")
  	end
 	
-	local AnchorX, AnchorY, MaxX = 0, 1, E.db.WindTools["Interface"]["Minimap Buttons"].buttonsPerRow
-	local ButtonsPerRow = E.db.WindTools["Interface"]["Minimap Buttons"].buttonsPerRow
+	local AnchorX, AnchorY, MaxX = 0, 1, self.db.buttonsPerRow
+	local ButtonsPerRow = self.db.buttonsPerRow
 	local NumColumns = ceil(#moveButtons / ButtonsPerRow)
 	local Spacing, Mult = 2, 1
-	local Size = E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize
+	local Size = self.db.buttonSize
 	local ActualButtons, Maxed = 0
-	local direction = E.db.WindTools["Interface"]["Minimap Buttons"].layoutDirection == 'NORMAL'
+	local direction = self.db.layoutDirection == 'NORMAL'
 	local offset = direction and -2 or 2
 
 	if NumColumns == 1 and ButtonsPerRow > #moveButtons then
 		ButtonsPerRow = #moveButtons
 	end
 
-	if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'HORIZONTAL' then
+	if self.db.skinStyle == 'HORIZONTAL' then
 		minimapButtonBar:SetPoint(direction and 'LEFT' or 'RIGHT', minimapButtonBarAnchor, direction and 'LEFT' or 'RIGHT', -2, 0)
 	else
 		minimapButtonBar:SetPoint(direction and 'TOP' or 'BOTTOM', minimapButtonBarAnchor, direction and 'TOP' or 'BOTTOM', -2, 0)
 	end
-	minimapButtonBar:SetSize(E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize + 4, E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize + 4)
+	minimapButtonBar:SetSize(self.db.buttonSize + 4, self.db.buttonSize + 4)
 	
 	local lastFrame, anchor1, anchor2, offsetX, offsetY
 	
@@ -270,7 +269,7 @@ function MB:UpdateLayout()
 			Maxed = true
 		end
 
-		if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'NOANCHOR' then
+		if self.db.skinStyle == 'NOANCHOR' then
 			frame:SetParent(frame.original.Parent)
 			if frame.original.DragStart then
 				frame:SetScript("OnDragStart", frame.original.DragStart)
@@ -300,9 +299,9 @@ function MB:UpdateLayout()
 			frame:ClearAllPoints()
 			frame:SetFrameStrata("LOW")
 			frame:SetFrameLevel(20)
-			frame:Size(E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize)
+			frame:Size(self.db.buttonSize)
 
-			if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == 'HORIZONTAL' then
+			if self.db.skinStyle == 'HORIZONTAL' then
 				anchor1 = direction and 'TOPLEFT' or 'TOPRIGHT'
 				anchor2 = direction and 'TOPRIGHT' or 'TOPLEFT'
 				offsetX = direction and (Spacing + ((Size + Spacing) * (AnchorX - 1))) or -(Spacing + ((Size + Spacing) * (AnchorX - 1)))
@@ -319,14 +318,14 @@ function MB:UpdateLayout()
 		lastFrame = frame
 	end
 	
-	if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle ~= 'NOANCHOR' and #moveButtons > 0 then
-		if E.db.WindTools["Interface"]["Minimap Buttons"].skinStyle == "HORIZONTAL" then
-			--minimapButtonBar:SetWidth((E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
+	if self.db.skinStyle ~= 'NOANCHOR' and #moveButtons > 0 then
+		if self.db.skinStyle == "HORIZONTAL" then
+			--minimapButtonBar:SetWidth((self.db.buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
 			local BarWidth = (Spacing + ((Size * (ActualButtons * Mult)) + ((Spacing * (ActualButtons - 1)) * Mult) + (Spacing * Mult)))
 			local BarHeight = (Spacing + ((Size * (AnchorY * Mult)) + ((Spacing * (AnchorY - 1)) * Mult) + (Spacing * Mult)))
 			minimapButtonBar:SetSize(BarWidth, BarHeight)
 		else
-			--minimapButtonBar:SetHeight((E.db.WindTools["Interface"]["Minimap Buttons"].buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
+			--minimapButtonBar:SetHeight((self.db.buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
 			local BarWidth = (Spacing + ((Size * (AnchorY * Mult)) + ((Spacing * (AnchorY - 1)) * Mult) + (Spacing * Mult)))
 			local BarHeight = (Spacing + ((Size * (ActualButtons * Mult)) + ((Spacing * (ActualButtons - 1)) * Mult) + (Spacing * Mult)))
 			minimapButtonBar:SetSize(BarWidth, BarHeight)
@@ -339,7 +338,7 @@ function MB:UpdateLayout()
 		minimapButtonBar:Hide()
 	end
 	
-	if E.db.WindTools["Interface"]["Minimap Buttons"].backdrop then
+	if self.db.backdrop then
 		minimapButtonBar.backdrop:Show()
 	else
 		minimapButtonBar.backdrop:Hide()
@@ -347,7 +346,7 @@ function MB:UpdateLayout()
 end
 
 function MB:ChangeMouseOverSetting()
-	if E.db.WindTools["Interface"]["Minimap Buttons"].mouseover then
+	if self.db.mouseover then
 		minimapButtonBar:SetAlpha(0)
 	else
 		minimapButtonBar:SetAlpha(1)
@@ -360,7 +359,7 @@ function MB:SkinMinimapButtons()
 	for i = 1, Minimap:GetNumChildren() do
 		self:SkinButton(select(i, Minimap:GetChildren()))
 	end
-	if E.db.WindTools["Interface"]["Minimap Buttons"].mbgarrison then
+	if self.db.mbgarrison then
 		self:SkinButton(GarrisonLandingPageMinimapButton)
 	end
 	MB:UpdateLayout()
@@ -395,8 +394,13 @@ function MB:CreateFrames()
 end
 
 function MB:Initialize()
+	if not E.db.WindTools["Interface"]["Minimap Buttons"].enabled then return end
+
 	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		MB.db = E.db.WindTools["Interface"]["Minimap Buttons"]
+		MB:CreateFrames()
+	end)
 
 	self:CreateFrames()
 end

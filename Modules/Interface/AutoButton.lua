@@ -1,7 +1,6 @@
 -- 修改：SomeBlu
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local AB = E:NewModule('Wind_AutoButton', 'AceEvent-3.0')
 
@@ -233,8 +232,8 @@ end
 local function CreateButton(name, size)
 	if _G[name] then
 		_G[name]:Size(size)
-		_G[name].c:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].countFontSize, 'OUTLINE')
-		_G[name].k:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].bindFontSize, 'OUTLINE')
+		_G[name].c:FontTemplate(nil, AB.db.countFontSize, 'OUTLINE')
+		_G[name].k:FontTemplate(nil, AB.db.bindFontSize, 'OUTLINE')
 		return _G[name]
 	end
 	
@@ -257,14 +256,14 @@ local function CreateButton(name, size)
 
 	-- Count text for our button
 	AutoButton.c = AutoButton:CreateFontString(nil, "OVERLAY")
-	AutoButton.c:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].countFontSize, 'OUTLINE')
+	AutoButton.c:FontTemplate(nil, AB.db.countFontSize, 'OUTLINE')
 	AutoButton.c:SetTextColor(1, 1, 1, 1)
 	AutoButton.c:Point("BOTTOMRIGHT", AutoButton, "BOTTOMRIGHT", 0.5, 0)
 	AutoButton.c:SetJustifyH("CENTER")	
 
 	-- Binding text for our button
 	AutoButton.k = AutoButton:CreateFontString(nil, "OVERLAY")
-	AutoButton.k:FontTemplate(nil, E.db.WindTools["Interface"]["Auto Buttons"].bindFontSize, 'OUTLINE')
+	AutoButton.k:FontTemplate(nil, AB.db.bindFontSize, 'OUTLINE')
 	AutoButton.k:SetTextColor(0.6, 0.6, 0.6)
 	AutoButton.k:Point("TOPRIGHT", AutoButton, "TOPRIGHT", 1, -3)
 	AutoButton.k:SetJustifyH("RIGHT")		
@@ -283,8 +282,6 @@ local function CreateButton(name, size)
 end
 
 function AB:ScanItem(event)
-	local db = E.db.WindTools["Interface"]["Auto Buttons"]
-
 	HideAllButton(event)
 	GetWorldQuestItemList('init');
 
@@ -294,32 +291,32 @@ function AB:ScanItem(event)
 	if minimapZoneText == L["Alliance Mine"] or minimapZoneText == L["Horde Mine"] then
 		for i = 1, #garrisonsmv do
 			local count = GetItemCount(garrisonsmv[i])
-			if count and (count > 0) and (not db.blankList[garrisonsmv[i]]) then
+			if count and (count > 0) and (not self.db.blankList[garrisonsmv[i]]) then
 				tinsert(questItemIDList, garrisonsmv[i])
 			end
 		end
 	elseif minimapZoneText == L["Salvage Yard"] then
 		for i = 1, #garrisonsc do
 			local count = GetItemCount(garrisonsc[i])
-			if count and (count > 0) and (not db.blankList[garrisonsc[i]]) then
+			if count and (count > 0) and (not self.db.blankList[garrisonsc[i]]) then
 				tinsert(questItemIDList, garrisonsc[i])
 			end
 		end
 	else
 		for k, v in pairs(QuestItemList) do
 			if (not QuestItemList[k].isComplete) or (QuestItemList[k].isComplete and QuestItemList[k].showItemWhenComplete) then
-				if not db.blankList[k] then
+				if not self.db.blankList[k] then
 					tinsert(questItemIDList, k)
 				end
 			end
 		end
-		for k, v in pairs(E.db.WindTools["Interface"]["Auto Buttons"].whiteList) do
+		for k, v in pairs(self.db.whiteList) do
 			local count = GetItemCount(k)
-			if count and (count > 0) and v and (not db.blankList[k]) then
+			if count and (count > 0) and v and (not self.db.blankList[k]) then
 				tinsert(questItemIDList, k)
 			end
 		end
-		if GetItemCount(123866) and (GetItemCount(123866) >= 5) and (not db.blankList[123866]) and (GetCurrentMapAreaID("player") == 945) then
+		if GetItemCount(123866) and (GetItemCount(123866) >= 5) and (not self.db.blankList[123866]) and (GetCurrentMapAreaID("player") == 945) then
 			tinsert(questItemIDList, 123866)
 		end			
 	end
@@ -334,9 +331,9 @@ function AB:ScanItem(event)
 		end
 	end)
 	
-	if db.questNum > 0 then
+	if self.db.questNum > 0 then
 		local ApItemNum = 0
-		if db.AptifactItem and (event == "BAG_UPDATE_DELAYED") then
+		if self.db.AptifactItem and (event == "BAG_UPDATE_DELAYED") then
 			local itemLink, itemID = GetAptifactItem()
 			if itemLink then
 				ApItemNum = 1
@@ -358,7 +355,7 @@ function AB:ScanItem(event)
 		end
 		if _G["AutoQuestButton1"].ap then ApItemNum = 1 end
 			
-		if not db.AptifactItem then
+		if not self.db.AptifactItem then
 			_G["AutoQuestButton1"].ap = false
 			ApItemNum = 0
 		end
@@ -366,7 +363,7 @@ function AB:ScanItem(event)
 			local itemID = questItemIDList[i]
 			local itemName = GetItemInfo(itemID)
 
-			if i > db.questNum then break; end
+			if i > self.db.questNum then break; end
 			
 			local AutoButton = _G["AutoQuestButton"..(i+ApItemNum)]
 			local count = GetItemCount(itemID, nil, 1)
@@ -411,16 +408,16 @@ function AB:ScanItem(event)
 	
 	-- Scan inventory for Equipment matches
 	local num = 0
-	if db.slotNum > 0 then
+	if self.db.slotNum > 0 then
 		for w = 1, 18 do
 			local slotID = GetInventoryItemID("player", w)
-			if slotID and IsSlotItem(slotID) and not db.blankList[slotID] then
+			if slotID and IsSlotItem(slotID) and not self.db.blankList[slotID] then
 				local iSpell = GetItemSpell(slotID)
 				local itemName, _, rarity = GetItemInfo(slotID)
 				
 				local itemIcon = GetInventoryItemTexture("player", w)
 				num = num + 1
-				if num > db.slotNum then break; end
+				if num > self.db.slotNum then break; end
 				
 				local AutoButton = _G["AutoSlotButton".. num]
 				if not AutoButton then break; end
@@ -455,7 +452,7 @@ function AB:ScanItemCount(elapsed)
 		return
 	end
 	lastUpdate = 0
-	for i = 1, E.db.WindTools["Interface"]["Auto Buttons"].questNum do
+	for i = 1, AB.db.questNum do
 		local f = _G["AutoQuestButton"..i]
 		if f and f.itemName then
 			local count = GetItemCount(f.itemID, nil, 1)
@@ -470,10 +467,9 @@ function AB:ScanItemCount(elapsed)
 end
 
 function AB:UpdateBind()
-	local db = E.db.WindTools["Interface"]["Auto Buttons"]
-	if not db then return; end
+	if not self.db then return; end
 	
-	for i = 1, db.questNum do
+	for i = 1, self.db.questNum do
 		local bindButton = 'CLICK AutoQuestButton'..i..':LeftButton'
 		local button = _G['AutoQuestButton'..i]
 		local bindText = GetBindingKey(bindButton)
@@ -487,7 +483,7 @@ function AB:UpdateBind()
 		
 		if button then button.k:SetText(bindText) end
 	end
-	for i = 1, db.slotNum do
+	for i = 1, self.db.slotNum do
 		local bindButton = 'CLICK AutoSlotButton'..i..':LeftButton'
 		local button = _G['AutoSlotButton'..i]
 		local bindText = GetBindingKey(bindButton)
@@ -504,7 +500,7 @@ function AB:UpdateBind()
 end
 
 function AB:ToggleAutoButton()
-	if E.db.WindTools["Interface"]["Auto Buttons"].enabled then
+	if self.db.enabled then
 		self:RegisterEvent("BAG_UPDATE_DELAYED", "ScanItem")
 		self:RegisterEvent("UNIT_INVENTORY_CHANGED", "ScanItem")
 		self:RegisterEvent("ZONE_CHANGED", "ScanItem")
@@ -534,18 +530,17 @@ function AB:ToggleAutoButton()
 end
 
 function AB:UpdateAutoButton()
-	local db = E.db.WindTools["Interface"]["Auto Buttons"]
 	local i = 0
 	
 	local lastButton, lastColumnButton, buttonsPerRow;
-	for i = 1, db.questNum do
-		local f = CreateButton("AutoQuestButton"..i, db.questSize)
-		buttonsPerRow = db.questPerRow
+	for i = 1, self.db.questNum do
+		local f = CreateButton("AutoQuestButton"..i, self.db.questSize)
+		buttonsPerRow = self.db.questPerRow
 		lastButton = _G["AutoQuestButton"..i-1];
 		lastColumnButton = _G["AutoQuestButton"..i-buttonsPerRow];
 		
-		if db.questNum < db.questPerRow then
-			buttonsPerRow = db.questNum;
+		if self.db.questNum < self.db.questPerRow then
+			buttonsPerRow = self.db.questNum;
 		end		
 		f:ClearAllPoints()
 		
@@ -558,14 +553,14 @@ function AB:UpdateAutoButton()
 		end
 	end
 	
-	for i = 1, db.slotNum do
-		local f = CreateButton("AutoSlotButton"..i, db.slotSize)
-		buttonsPerRow = db.slotPerRow
+	for i = 1, self.db.slotNum do
+		local f = CreateButton("AutoSlotButton"..i, self.db.slotSize)
+		buttonsPerRow = self.db.slotPerRow
 		lastButton = _G["AutoSlotButton"..i-1];
 		lastColumnButton = _G["AutoSlotButton"..i-buttonsPerRow];
 		
-		if db.slotNum < db.slotPerRow then
-			buttonsPerRow = db.questNum;
+		if self.db.slotNum < self.db.slotPerRow then
+			buttonsPerRow = self.db.questNum;
 		end		
 		f:ClearAllPoints()
 		
@@ -583,21 +578,25 @@ end
 function AB:Initialize()
 	if not E.db.WindTools["Interface"]["Auto Buttons"].enabled then return end
 	
-	local db = E.db.WindTools["Interface"]["Auto Buttons"]
+	self.db = E.db.WindTools["Interface"]["Auto Buttons"]
+	tinsert(WT.UpdateAll, function()
+		AB.db = E.db.WindTools["Interface"]["Auto Buttons"]
+		AB:UpdateAutoButton()
+	end)
 	
 	-- Create anchor
 	local AutoButtonAnchor = CreateFrame("Frame", "AutoButtonAnchor", UIParent)
 	AutoButtonAnchor:SetClampedToScreen(true)
 	AutoButtonAnchor:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 4)
-	AutoButtonAnchor:Size(db.questNum > 0 and db.questSize * db.questNum or 260, db.questNum > 0 and db.questSize or 40)
-	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Interface"]["Auto Buttons"].enabled; end)
+	AutoButtonAnchor:Size(self.db.questNum > 0 and self.db.questSize * self.db.questNum or 260, self.db.questNum > 0 and self.db.questSize or 40)
+	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, "ALL,EUI", function() return AB.db.enabled; end)
 	
 	-- Create anchor2
 	local AutoButtonAnchor2 = CreateFrame("Frame", "AutoButtonAnchor2", UIParent)
 	AutoButtonAnchor2:SetClampedToScreen(true)
 	AutoButtonAnchor2:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 48)
-	AutoButtonAnchor2:Size(db.slotNum > 0 and db.slotSize * db.slotNum or 260, db.slotNum > 0 and db.slotSize or 40)
-	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, "ALL,EUI", function() return E.db.WindTools["Interface"]["Auto Buttons"].enabled; end)
+	AutoButtonAnchor2:Size(self.db.slotNum > 0 and self.db.slotSize * self.db.slotNum or 260, self.db.slotNum > 0 and self.db.slotSize or 40)
+	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, "ALL,EUI", function() return AB.db.enabled; end)
 	
 	self:UpdateAutoButton()
 end

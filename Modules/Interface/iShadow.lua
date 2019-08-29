@@ -6,8 +6,7 @@
 -- 模块化
 -- 精简代码，移动设定项绑定 ElvUI 配置
 
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local iShadow = E:NewModule('Wind_iShadow')
 
@@ -18,6 +17,12 @@ end
 function iShadow:Initialize()
 	if not E.db.WindTools["Interface"]["iShadow"]["enabled"] then return end
 
+	self.db = E.db.WindTools["Interface"]["iShadow"]
+	tinsert(WT.UpdateAll, function()
+		iShadow.db = E.db.WindTools["Interface"]["iShadow"]
+		iShadow:SetShadowLevel((iShadow.db.level or 50))
+	end)
+
 	self.f = CreateFrame("Frame", "ShadowBackground")
 	self.f:SetPoint("TOPLEFT")
 	self.f:SetPoint("BOTTOMRIGHT")
@@ -27,7 +32,7 @@ function iShadow:Initialize()
 	self.f.tex:SetTexture([[Interface\Addons\ElvUI_WindTools\Texture\shadow.tga]])
 	self.f.tex:SetAllPoints(f)
 
-	self:SetShadowLevel((E.db.WindTools["Interface"]["iShadow"]["level"] or 50))
+	self:SetShadowLevel((self.db.level or 50))
 end
 
 local function InitializeCallback()

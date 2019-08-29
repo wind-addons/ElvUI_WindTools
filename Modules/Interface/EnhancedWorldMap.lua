@@ -1,7 +1,6 @@
 -- 作者：houshuu
 -- 去除迷雾部分作者：Leatrix
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local EWM = E:NewModule('Wind_EnhancedWorldMap', 'AceHook-3.0')
 local _G = _G
@@ -14,7 +13,7 @@ function EWM:SetMapScale()
 		return x/scale, y/scale;
 	end
 
-	_G["WorldMapFrame"]:SetScale(E.db.WindTools["Interface"]["Enhanced World Map"]["scale"])
+	_G["WorldMapFrame"]:SetScale(self.db.scale)
 	WorldMapFrame.ScrollContainer.GetCursorPosition = fix_cursor
 end
 
@@ -342,8 +341,15 @@ function EWM:RevealMap()
 end
 
 function EWM:Initialize()
+	if not E.db.WindTools["Interface"]["Enhanced World Map"].enabled then return end
+
 	self.db = E.db.WindTools["Interface"]["Enhanced World Map"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		EWM.db = E.db.WindTools["Interface"]["Enhanced World Map"]
+		EWM:SetMapScale()
+		EWM:RevealMap()
+	end)
+
 	self:SetMapScale()
 	self:RevealMap()
 end

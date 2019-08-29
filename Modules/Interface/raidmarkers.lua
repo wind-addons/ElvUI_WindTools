@@ -1,85 +1,73 @@
 -- 原作：ElvUI_S&L 的一个增强组件
 -- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
--- 修改：mcc1
+-- 修改：mcc1, SomeBlu
 
-local E, _, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
+local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 
-local L = unpack(select(2, ...))
 local WT = E:GetModule("WindTools")
 local RM = E:NewModule('Wind_RaidMarkerBar', 'AceEvent-3.0')
 
-local layouts = { 
-	[1] = {RT = 1, WM = 5},	-- yellow/star 
-	[2] = {RT = 2, WM = 6},	-- orange/circle 
-	[3] = {RT = 3, WM = 3},	-- purple/diamond 
-	[4] = {RT = 4, WM = 2},	-- green/triangle 
-	[5] = {RT = 5, WM = 7},	-- white/moon 
-	[6] = {RT = 6, WM = 1},	-- blue/square 
-	[7] = {RT = 7, WM = 4},	-- red/cross 
-	[8] = {RT = 8, WM = 8},	-- white/skull 
-	[9] = {RT = 0, WM = 0},	-- clear target/worldmarker 
-}
-
+local lastClear = 0
 
 function RM:CreateButtons()
-	for k, layout in ipairs(layouts) do
-		local button = CreateFrame("Button", ("RaidMarkerBarButton%d"):format(k), self.frame, "SecureActionButtonTemplate")
+	local modifier = self.db.modifier
+	local modifierString = modifier:gsub("^%l", string.upper)
+	local modifierLocale = L[modifierString .. " Key"]
+	for i = 1,9 do
+		local button = CreateFrame("Button", ("RaidMarkerBarButton%d"):format(i), self.frame, "SecureActionButtonTemplate")
 		button:SetHeight(self.db.buttonSize)
 		button:SetWidth(self.db.buttonSize)
 		button:SetTemplate('Transparent')
-		
+
 		local image = button:CreateTexture(nil, "ARTWORK")
 		image:SetAllPoints()
-		image:SetTexture(k == 9 and "Interface\\BUTTONS\\UI-GroupLoot-Pass-Up" or ("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d"):format(k))
-	
-		local target, worldmarker = layout.RT, layout.WM
-		-- target icons
-		if target then
-			button:SetAttribute("type1", "macro")
-			button:SetAttribute("macrotext1", ("/tm %d"):format(k))
-		end
-	
-		button:RegisterForClicks("AnyDown")
-		self.frame.buttons[k] = button
-	end
-end
 
-function RM:UpdateWorldMarkersAndTooltips()
-	for i = 1, 9 do
-		local target, worldmarker = layouts[i].RT, layouts[i].WM
-		local button = self.frame.buttons[i]
+		if i < 9 then
+			image:SetTexture(("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d"):format(i))
 
-		if target and not worldmarker then
-			-- tooltip
-			button:SetScript("OnEnter", function(self)
-				self:SetBackdropBorderColor(.7, .7, 0)
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(L["Raid Markers"])
-				GameTooltip:AddLine(k == 9 and L["Click to clear the mark."] or L["Click to mark the target."], 1, 1, 1)
-				GameTooltip:Show()
-			end)
+			button:SetAttribute("type*", "macro")
+			button:SetAttribute("macrotext1", ("/tm %d"):format(i))
+			button:SetAttribute("macrotext2", ("/tm 9"))
+
+			button:SetAttribute(("%s-type*"):format(modifier), "macro")
+			button:SetAttribute(("%s-macrotext1"):format(modifier), ("/wm %d"):format(i))
+			button:SetAttribute(("%s-macrotext2"):format(modifier), ("/cwm %d"):format(i))
 		else
-			-- add worldmarkers to the macro texts
-			local modifier = self.db.modifier or "shift-"
-			button:SetAttribute(("%stype1"):format(modifier), "macro")
-			button.modifier = modifier
-			button:SetAttribute(("%smacrotext1"):format(modifier), worldmarker == 0 and "/cwm all" or ("/cwm %d\n/wm %d"):format(worldmarker, worldmarker))	
-			
-			button:SetScript("OnEnter", function(self)
-				self:SetBackdropBorderColor(.7, .7, 0)
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(L["Raid Markers"])
-				GameTooltip:AddLine(i == 9 and ("%s\n%s"):format(L["Click to clear the mark."], (L["%sClick to remove all worldmarkers."]):format(button.modifier:upper()))
-					or ("%s\n%s"):format(L["Click to mark the target."], (L["%sClick to place a worldmarker."]):format(button.modifier:upper())), 1, 1, 1)
-				GameTooltip:Show()
-			end)			
+			image:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
+
+			button:SetAttribute("type", "click")
+			button:SetScript("OnClick", function(self)
+				if _G[("Is%sKeyDown"):format(modifierString)]() then
+					ClearRaidMarker()
+				else
+					local now = GetTime()
+					if now - lastClear > 1 then -- limiting
+						lastClear = now
+						for i = 1,9 do
+							SetRaidTarget("player", i) 
+						end
+					end
+				end
+			end)
 		end
-		
+
+		button:RegisterForClicks("AnyDown")
+		button:SetScript("OnEnter", function(self)
+			self:SetBackdropBorderColor(.7, .7, 0)
+			GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+			GameTooltip:SetText(L["Raid Markers"])
+			GameTooltip:AddLine(i == 9 and ("%s\n%s"):format(L["Click to clear all marks."], (L["%s + Click to remove all worldmarkers."]):format(modifierLocale))
+				or ("%s\n%s\n%s\n%s"):format(L["Left Click to mark the target with this mark."], L["Right Click to clear the mark on the target."], (L["%s + Left Click to place this worldmarker."]):format(modifierLocale), (L["%s + Right Click to clear this worldmarker."]):format(modifierLocale)), 1, 1, 1)
+			GameTooltip:Show()
+		end)
+
 		-- tooltip
 		button:SetScript("OnLeave", function(self)
 			self:SetBackdropBorderColor(0, 0, 0)
 			GameTooltip:Hide() 
-		end)	
+		end)
+
+		self.frame.buttons[i] = button
 	end
 end
 
@@ -128,7 +116,6 @@ end
 function RM:ToggleSettings()
 	if not InCombatLockdown() then
 		self:UpdateBar()
-		self:UpdateWorldMarkersAndTooltips()
 	
 		if self.db.enabled then
 			RegisterStateDriver(self.frame, "visibility", self.db.visibility == 'DEFAULT' and '[noexists, nogroup] hide; show' or self.db.visibility == 'ALWAYS' and '[noexists, nogroup] show; show' or '[group] show; hide')
@@ -166,9 +153,16 @@ end
 -- end
 
 function RM:Initialize()
+	if not E.db.WindTools["Interface"]["Raid Markers"].enabled then return end
+
 	self.db = E.db.WindTools["Interface"]["Raid Markers"]
-	if not self.db.enabled then return end
-	
+	tinsert(WT.UpdateAll, function()
+		RM.db = E.db.WindTools["Interface"]["Raid Markers"]
+		RM:CreateButtons()
+		RM:ToggleSettings()
+	end)
+	self.db.modifier = self.db.modifier:gsub("-", "") -- db conversion
+
 	self.frame = CreateFrame("Frame", "RaidMarkerBar", E.UIParent, "SecureHandlerStateTemplate")
 	self.frame:SetResizable(false)
 	self.frame:SetClampedToScreen(true)

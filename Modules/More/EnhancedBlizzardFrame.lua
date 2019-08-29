@@ -2,8 +2,7 @@
 -- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
 -- 修改：houshuu, SomeBlu
 -------------------
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local L = unpack(select(2, ...))
+local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local EBF = E:NewModule("Wind_EnhancedBlizzardFrame", 'AceHook-3.0', 'AceEvent-3.0')
 local _G = _G
@@ -150,7 +149,7 @@ end
 local function OnDragStop(self)
 	self:StopMovingOrSizing()
 	local Name = self:GetName()
-	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and not EBF.TempOnly[Name]  then
+	if EBF.db.remember and not EBF.TempOnly[Name]  then
 		local a, b, c, d, e = self:GetPoint()
 		if self:GetParent() then 
 			b = self:GetParent():GetName() or UIParent
@@ -159,10 +158,10 @@ local function OnDragStop(self)
 			b = UIParent
 		end
 		if Name == "QuestFrame" or Name == "GossipFrame" then
-			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points["GossipFrame"] = {a, b, c, d, e}
-			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points["QuestFrame"] = {a, b, c, d, e}
+			EBF.db.points["GossipFrame"] = {a, b, c, d, e}
+			EBF.db.points["QuestFrame"] = {a, b, c, d, e}
 		else
-			E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] = {a, b, c, d, e}
+			EBF.db.points[Name] = {a, b, c, d, e}
 		end
 		self:SetUserPlaced(true)
 	else
@@ -177,7 +176,7 @@ local function LoadPosition(self)
 
 	if not self:GetPoint() then
 		if EBF.SpecialDefaults[Name] then
-			local a,b,c,d,e = unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name])
+			local a,b,c,d,e = unpack(self.db.points[Name])
 			self:SetPoint(a,b,c,d,e, true)
 		else
 			self:SetPoint('TOPLEFT', 'UIParent', 'TOPLEFT', 16, -116, true)
@@ -185,9 +184,9 @@ local function LoadPosition(self)
 		OnDragStop(self)
 	end
 
-	if E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].remember and E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name] then
+	if EBF.db.remember and EBF.db.points[Name] then
 		self:ClearAllPoints()
-		local a,b,c,d,e = unpack(E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].points[Name])
+		local a,b,c,d,e = unpack(EBF.db.points[Name])
 		self:SetPoint(a,b,c,d,e, true)
 	end
 	
@@ -241,7 +240,7 @@ end
 
 function EBF:VehicleScale()
 	local frame = _G["VehicleSeatIndicator"]
-	local frameScale = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["vehicleSeatScale"]
+	local frameScale = EBF.db["vehicleSeatScale"]
 	frame:SetScale(frameScale)
 	if frame.mover then
 		frame.mover:SetSize(frameScale * frame:GetWidth(), frameScale * frame:GetHeight())
@@ -261,6 +260,11 @@ function EBF:Initialize()
 	if not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["enabled"] then return end
 	
 	self.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
+	tinsert(WT.UpdateAll, function()
+		EBF.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
+		EBF:ErrorFrameSize()
+	end)
+
 	self.addonCount = 0
 
 	for Name, _ in pairs(ToDelete) do

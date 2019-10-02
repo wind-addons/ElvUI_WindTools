@@ -202,7 +202,7 @@ end
 function EBF:MakeMovable(Name)
 	local frame = _G[Name]
 	if not frame then
-		print("Frame to move doesn't exist: "..(frameName or "Unknown"), "error")
+		print("Frame to move doesn't exist: "..(Name or "Unknown"), "error")
 		return
 	end
 
@@ -256,6 +256,17 @@ local ToDelete = {
 	["CalendarViewHolidayFrame"] = true,
 }
 
+function EBF:CheckESLBlizzMove()
+	if E.private and E.private.sle and E.private.sle.module then
+		if E.private.sle.module.blizzmove.enable then
+			message("WindTools" .. L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."])
+			return true
+		end
+	end
+	
+	return false;
+end
+
 function EBF:Initialize()
 	if not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["enabled"] then return end
 	
@@ -273,7 +284,7 @@ function EBF:Initialize()
 	
 	PVPReadyDialog:Hide()
 
-	if self.db.moveframe then
+	if self.db.moveframe and not self:CheckESLBlizzMove() then
 		for Name, _ in pairs(self.TempOnly) do
 			if self.db.points[Name] then self.db.points[Name] = nil end
 		end

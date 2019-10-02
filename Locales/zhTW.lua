@@ -154,6 +154,7 @@ L["Move ElvUI Bag"] = "移動 ElvUI 背包"
 L["Remember Position"] = "記憶移動位置"
 L["Error Frame"] = "錯誤框架"
 L["Vehicle Seat Scale"] = "載具座位縮放"
+L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."] = "移動暴雪框架與Shadow&Light存在沖突，請取消重復選項."
 -- Tag 增强
 L["Wan"] = "萬"
 L["Yi"]  = "億"

@@ -154,6 +154,7 @@ L["Move ElvUI Bag"] = true
 L["Remember Position"] = true
 L["Error Frame"] = true
 L["Vehicle Seat Scale"] = true
+L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."] = true
 -- Tag 增强
 L["Wan"] = true
 L["Yi"]  = true

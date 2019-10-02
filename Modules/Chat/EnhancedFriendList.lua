@@ -12,6 +12,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local EFL = E:NewModule('Wind_EnhancedFriendsList', 'AceEvent-3.0', 'AceHook-3.0', 'AceTimer-3.0')
 
+
 -- Friend Color
 local function FriendColorInit()
 	local numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends();
@@ -175,6 +176,7 @@ function EFL:ClassColor(class)
 	end
 	return (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class];
 end
+
 function EFL:UpdateFriends(button)
 	local nameText, nameColor, infoText, broadcastText, _, Cooperate
 	if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
@@ -207,13 +209,23 @@ function EFL:UpdateFriends(button)
 		end
 
 		if characterName then
-			_, _, _, realmName, realmID, faction, race, class, _, zoneName, level, gameText = BNGetGameAccountInfo(toonID)
+			local accountInfo = C_BattleNet.GetFriendAccountInfo(button.id);
+			local gameAccountInfo = C_BattleNet.GetGameAccountInfoByID(toonID);
+			realmName = gameAccountInfo.realmName or "";
+			realmID = gameAccountInfo.realmID or 0;
+			faction = gameAccountInfo.factionName or "";
+			race = gameAccountInfo.raceName or "";
+			class = gameAccountInfo.className or "";
+			zoneName = gameAccountInfo.areaName or "";
+			level = gameAccountInfo.characterLevel or "";
+			gameText = gameAccountInfo.richPresence or "";
+
 			local classc = EFL:ClassColor(class)
 			if client == BNET_CLIENT_WOW and classc then
 				if (level == nil or tonumber(level) == nil) then level = 0 end
 				local diff = level ~= 0 and format('|cFF%02x%02x%02x', GetQuestDifficultyColor(level).r * 255, GetQuestDifficultyColor(level).g * 255, GetQuestDifficultyColor(level).b * 255) or '|cFFFFFFFF'
 				nameText = format('%s |cFFFFFFFF(|r%s%s|r - %s %s%s|r|cFFFFFFFF)|r', nameText, classc:GenerateHexColorMarkup(), characterName, LEVEL, diff, level)
-				Cooperate = CanCooperateWithGameAccount(toonID)
+				Cooperate = CanCooperateWithGameAccount(accountInfo) and realmName ~= "" --拿不到服务器名字的为怀旧服
 			else
 				nameText = format('|cFF%s%s|r', EFL.ClientColor[client] or 'FFFFFF', nameText)
 			end
@@ -229,9 +241,15 @@ function EFL:UpdateFriends(button)
 						infoText = zoneName
 					else
 						infoText = format('%s - %s', zoneName, realmName)
+						if realmName == "" and realmID ~= 0 then --拿不到服务器名字的为怀旧服
+							infoText = gameText
+						end
 					end
 				end
-				button.gameIcon:SetTexture(EFL.GameIcons[faction][self.db.GameIcon[faction]])
+				
+				if faction ~= "" then
+					button.gameIcon:SetTexture(EFL.GameIcons[faction][self.db.GameIcon[faction]])
+				end
 			else
 				infoText = gameText
 				button.gameIcon:SetTexture(EFL.GameIcons[client][self.db.GameIcon[client]])

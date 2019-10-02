@@ -389,7 +389,6 @@ local function shadow_alerts()
 	hooksecurefunc(_G.LootAlertSystem, "setUpFunction", create_alert_shadow)
 	hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", create_alert_shadow)
 	hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", create_alert_shadow)
-	hooksecurefunc(_G.StorePurchaseAlertSystem, "setUpFunction", create_alert_shadow)
 	
 	-- 专业技能
 	hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", create_alert_shadow)
@@ -399,6 +398,10 @@ local function shadow_alerts()
 	hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", create_alert_shadow)
 	hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", create_alert_shadow)
 	hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
+	
+	-- 其它
+	hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction", create_alert_shadow)
+	hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
 function WS:ADDON_LOADED(_, addon)

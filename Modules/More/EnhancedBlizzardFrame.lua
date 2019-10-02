@@ -257,7 +257,7 @@ local ToDelete = {
 }
 
 function EBF:CheckESLBlizzMove()
-	if E.private ~= nil and E.private.sle ~= nil then
+	if E.private and E.private.sle and E.private.sle.module then
 		if E.private.sle.module.blizzmove.enable then
 			message("WindTools" .. L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."])
 			return true

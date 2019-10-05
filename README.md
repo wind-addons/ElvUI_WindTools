@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
-    <img src="https://img.shields.io/badge/ElvUI-11.21-blue.svg?longCache=true&style=flat"/>
-    <img src="https://img.shields.io/badge/Version-1.5.0-green.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/ElvUI-11.23-blue.svg?longCache=true&style=flat"/>
+    <img src="https://img.shields.io/badge/Version-1.5.1-green.svg?longCache=true&style=flat"/>
 
 Enhanced. Configurable. Better performance.<br>
 增强，可设置，更佳的性能。
@@ -17,7 +17,7 @@ This addon is developed for ElvUI users. Includes many useful features such as A
 [Curse](https://www.curseforge.com/wow/addons/elvui_windtools)
 
 # Support 支持
-ElvUI 11.21 + 8.2.0.31478  (Live)
+ElvUI 11.23 + 8.2.5.32028  (Live)
 
 ## More info 更多信息
 CHINESE 中文 → [NGA](http://bbs.ngacn.cc/read.php?tid=12142815)

@@ -9,6 +9,17 @@ local RM = E:NewModule('Wind_RaidMarkerBar', 'AceEvent-3.0')
 
 local lastClear = 0
 
+local DictOfTargetToWorld = {
+	[1] = 5,
+	[2] = 6,
+	[3] = 3,
+	[4] = 2,
+	[5] = 7,
+	[6] = 1,
+	[7] = 4,
+	[8] = 8,
+}
+
 function RM:CreateButtons()
 	local modifier = self.db.modifier
 	local modifierString = modifier:gsub("^%l", string.upper)
@@ -30,8 +41,8 @@ function RM:CreateButtons()
 			button:SetAttribute("macrotext2", ("/tm 9"))
 
 			button:SetAttribute(("%s-type*"):format(modifier), "macro")
-			button:SetAttribute(("%s-macrotext1"):format(modifier), ("/wm %d"):format(i))
-			button:SetAttribute(("%s-macrotext2"):format(modifier), ("/cwm %d"):format(i))
+			button:SetAttribute(("%s-macrotext1"):format(modifier), ("/wm %d"):format(DictOfTargetToWorld[i]))
+			button:SetAttribute(("%s-macrotext2"):format(modifier), ("/cwm %d"):format(DictOfTargetToWorld[i]))
 		else
 			image:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 

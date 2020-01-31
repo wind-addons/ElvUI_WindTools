@@ -167,44 +167,44 @@ function WT:InsertOptions()
 				type = "header",
 				name = format(L["%s version: %s"], WT.Title, WT.Version),
 			},		
-			description1 = {
-				order = 3,
-				type  = "description",
-				name  = format(L["%s is a collection of useful tools."], WT.Title),
-			},
-			spacer1 = {
-				order = 4,
-				type  = "description",
-				name  = "\n",
-			},
-			header2 = {
-				order = 5,
-				type  = "header",
-				name  = L["Release / Update Link"],
-			},
-			ngapage = {
-				order = 6,
-				type  = "input",
-				width = "full",
-				name  = L["You can use the following link to get more information (in Chinese)"],
-				get   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
-				set   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
-			},
-			spacer2 = {
-				order = 7,
-				type  = "description",
-				name  = "\n",
-			},
-			header3 = {
-				order = 8,
-				type  = "header",
-				name  = WT:ColorStr(L["Author"]),
-			},
-			author = {
-				order = 9,
-				type  = "description",
-				name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96Tabimonk|r @ TW-暗影之月)\nSomeBlu @ Github"
-			},
+			-- description1 = {
+			-- 	order = 3,
+			-- 	type  = "description",
+			-- 	name  = format(L["%s is a collection of useful tools."], WT.Title),
+			-- },
+			-- spacer1 = {
+			-- 	order = 4,
+			-- 	type  = "description",
+			-- 	name  = "\n",
+			-- },
+			-- header2 = {
+			-- 	order = 5,
+			-- 	type  = "header",
+			-- 	name  = L["Release / Update Link"],
+			-- },
+			-- ngapage = {
+			-- 	order = 6,
+			-- 	type  = "input",
+			-- 	width = "full",
+			-- 	name  = L["You can use the following link to get more information (in Chinese)"],
+			-- 	get   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
+			-- 	set   = function(info) return "http://bbs.ngacn.cc/read.php?tid=12142815" end,
+			-- },
+			-- spacer2 = {
+			-- 	order = 7,
+			-- 	type  = "description",
+			-- 	name  = "\n",
+			-- },
+			-- header3 = {
+			-- 	order = 8,
+			-- 	type  = "header",
+			-- 	name  = WT:ColorStr(L["Author"]),
+			-- },
+			-- author = {
+			-- 	order = 9,
+			-- 	type  = "description",
+			-- 	name  = "|cffC79C6Ehoushuu @ NGA|r (|cff00FF96Tabimonk|r @ TW-暗影之月)\nSomeBlu @ Github"
+			-- },
 			reset_button = {
 				order = 10,
 				type  = "execute",

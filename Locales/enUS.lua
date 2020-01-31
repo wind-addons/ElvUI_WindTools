@@ -11,6 +11,7 @@ L["Author"] = true
 L["General"] = true
 L["Scale"] = true
 L["Reset"] = true
+L["Infomation"] = true
 L["ElvUI WindTools has been updated and the data structure of the stored config has also been greatly changed. In order to make these changes take effect, you may have to reload your User Interface."] = true
 L["|cffff0000If you click Accept, it will reset your Windtools."] = true
 L["|cffff0000If you click Accept, it will reset this module."] = true

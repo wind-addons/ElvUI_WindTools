@@ -405,12 +405,7 @@ ElvUF.Tags.Methods["range:expect"] = function(unit)
 end
 
 function WTT:Initialize()
-	if E.db.WindTools["More Tools"]["Enhanced Tags"]["enabled"] then
-		if E.ShortPrefixStyles then
-			E.ShortPrefixStyles["CHINESE"] = {{1e8,L["Yi"]}, {1e4,L["Wan"]}}
-			E:BuildPrefixValues()
-		end
-	end
+	return
 end
 
 local function InitializeCallback()

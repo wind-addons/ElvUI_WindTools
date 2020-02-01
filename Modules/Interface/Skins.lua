@@ -564,7 +564,10 @@ function WS:ShadowElvUIFrames()
 
 	-- 鼠标提示
 	if self.db.elvui.tooltips then
-		hooksecurefunc(TT, "SetStyle", function(_, tt) if tt then tt:CreateShadow(4) end end)
+		hooksecurefunc(TT, "SetStyle", function(_, tt)
+			if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() then return end
+			tt:CreateShadow(4)
+		end)
 		hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
 			if tt:IsForbidden() or E.private.tooltip.enable ~= true then return end
 			if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end

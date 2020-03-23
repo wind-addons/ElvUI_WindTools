@@ -86,6 +86,7 @@ WS.lazy_load_list = {
 	["Blizzard_BindingUI"] = {"KeyBindingFrame"},
 	["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
 	["Blizzard_Calendar"] = {"CalendarFrame", "CalendarViewHolidayFrame"},
+	["Blizzard_AuctionHouseUI"] = { "AuctionHouseFrame" },
 }
 
 local function shadow_bigwigs(self, event, addon)

@@ -190,6 +190,7 @@ function EFL:UpdateFriends(button)
             zoneName = gameAccountInfo.areaName or "";
             level = gameAccountInfo.characterLevel or "";
             gameText = gameAccountInfo.richPresence or "";
+            lastOnline = accountInfo.lastOnlineTime or 0;
 
             local classc = EFL:ClassColor(class)
             if client == BNET_CLIENT_WOW and classc then
@@ -231,7 +232,13 @@ function EFL:UpdateFriends(button)
         else
             button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack].Offline)
             nameColor = FRIENDS_GRAY_COLOR
-            infoText = lastOnline == 0 and FRIENDS_LIST_OFFLINE or format(BNET_LAST_ONLINE_TIME, FriendsFrame_GetLastOnline(lastOnline))
+            if lastOnline == 0 then
+                infoText = FRIENDS_LIST_OFFLINE
+            elseif lastOnline == nil then
+                infoText = FRIENDS_LIST_ONLINE
+            else
+                infoText = format(BNET_LAST_ONLINE_TIME, FriendsFrame_GetLastOnline(lastOnline))
+            end
         end
     end
 

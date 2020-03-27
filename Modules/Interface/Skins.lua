@@ -453,7 +453,6 @@ function WS:ShadowGeneralFrames()
 		_G.MerchantFrameTab2.backdrop:CreateShadow(2)
 	end
 
-
 	-- 暴雪通知
 	for i=1,4 do
 		local alert = _G["StaticPopup"..i]

@@ -263,7 +263,7 @@ function WT:InsertOptions()
 						header1 = {
 							order = 0,
 							type  = "header",
-							name  = L["Information"],
+							name  = L["Module Information"],
 						},
 						oriauthor = {
 							order = 1,

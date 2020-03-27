@@ -49,7 +49,7 @@ EBF.Frames = {
 	"ReadyCheckFrame",
 	"ReportCheatingDialog",
 	"RolePollPopup",
-	"ScrollOfResurrectionSelectionFrame",
+	--"ScrollOfResurrectionSelectionFrame",
 	"SpellBookFrame",
 	"SplashFrame",
 	"StackSplitFrame",

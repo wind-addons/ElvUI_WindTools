@@ -2757,7 +2757,6 @@ WT.ToolConfigs["More Tools"] = {
 			},
 		},
 		func = function()
-			E.Options.args.WindTools.args["More Tools"].args["Enhanced Tags"].args["enablebtn"].name = L["Chinese W/Y"]
 		end,
 	},
 }

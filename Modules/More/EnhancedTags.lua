@@ -138,274 +138,275 @@ local function abbrev(name)
 end
 
 -- Add custom tags below
-
-ElvUF.Tags.Events["name:abbrev"] = "UNIT_NAME_UPDATE"
-ElvUF.Tags.Methods["name:abbrev"] = function(unit)
-	local name = UnitName(unit)
-	name = abbrev(name)
-
-	if name and name:find(" ") then
+local function addTags()
+	ElvUF.Tags.Events["name:abbrev"] = "UNIT_NAME_UPDATE"
+	ElvUF.Tags.Methods["name:abbrev"] = function(unit)
+		local name = UnitName(unit)
 		name = abbrev(name)
+
+		if name and name:find(" ") then
+			name = abbrev(name)
+		end
+
+		--The value 20 controls how many characters are allowed in the name before it gets truncated. Change it to fit your needs.
+		return name ~= nil and E:ShortenString(name, 20) or ""
 	end
 
-	--The value 20 controls how many characters are allowed in the name before it gets truncated. Change it to fit your needs.
-	return name ~= nil and E:ShortenString(name, 20) or ""
-end
+	ElvUF.Tags.Events["num:targeting"] = "UNIT_TARGET PLAYER_TARGET_CHANGED GROUP_ROSTER_UPDATE"
+	ElvUF.Tags.Methods["num:targeting"] = function(unit)
+		if not IsInGroup() then return "" end
+		local targetedByNum = 0
 
-ElvUF.Tags.Events["num:targeting"] = "UNIT_TARGET PLAYER_TARGET_CHANGED GROUP_ROSTER_UPDATE"
-ElvUF.Tags.Methods["num:targeting"] = function(unit)
-	if not IsInGroup() then return "" end
-	local targetedByNum = 0
+		--Count the amount of other people targeting the unit
+		for i = 1, GetNumGroupMembers() do
+			local groupUnit = (IsInRaid() and "raid"..i or "party"..i);
+			if (UnitIsUnit(groupUnit.."target", unit) and not UnitIsUnit(groupUnit, "player")) then
+				targetedByNum = targetedByNum + 1
+			end
+		end
 
-	--Count the amount of other people targeting the unit
-	for i = 1, GetNumGroupMembers() do
-		local groupUnit = (IsInRaid() and "raid"..i or "party"..i);
-		if (UnitIsUnit(groupUnit.."target", unit) and not UnitIsUnit(groupUnit, "player")) then
+		--Add 1 if we"re targeting the unit too
+		if UnitIsUnit("playertarget", unit) then
 			targetedByNum = targetedByNum + 1
 		end
+
+		return (targetedByNum > 0 and targetedByNum or "")
 	end
 
-	--Add 1 if we"re targeting the unit too
-	if UnitIsUnit("playertarget", unit) then
-		targetedByNum = targetedByNum + 1
+	ElvUF.Tags.Methods["classcolor:player"] = function()
+		local _, unitClass = UnitClass("player")
+		local String
+
+		if unitClass then
+			String = Hex(_COLORS.class[unitClass])
+		else
+			String = "|cFFC2C2C2"
+		end
+		
+		return String
 	end
 
-	return (targetedByNum > 0 and targetedByNum or "")
-end
-
-ElvUF.Tags.Methods["classcolor:player"] = function()
-	local _, unitClass = UnitClass("player")
-	local String
-
-	if unitClass then
-		String = Hex(_COLORS.class[unitClass])
-	else
-		String = "|cFFC2C2C2"
-	end
-	
-	return String
-end
-
-ElvUF.Tags.Methods["classcolor:hunter"] = function()
-	return Hex(_COLORS.class["HUNTER"])
-end
-
-ElvUF.Tags.Methods["classcolor:warrior"] = function()
-	return Hex(_COLORS.class["WARRIOR"])
-end
-
-ElvUF.Tags.Methods["classcolor:paladin"] = function()
-	return Hex(_COLORS.class["PALADIN"])
-end
-
-ElvUF.Tags.Methods["classcolor:mage"] = function()
-	return Hex(_COLORS.class["MAGE"])
-end
-
-ElvUF.Tags.Methods["classcolor:priest"] = function()
-	return Hex(_COLORS.class["PRIEST"])
-end
-
-ElvUF.Tags.Methods["classcolor:warlock"] = function()
-	return Hex(_COLORS.class["WARLOCK"])
-end
-
-ElvUF.Tags.Methods["classcolor:shaman"] = function()
-	return Hex(_COLORS.class["SHAMAN"])
-end
-
-ElvUF.Tags.Methods["classcolor:deathknight"] = function()
-	return Hex(_COLORS.class["DEATHKNIGHT"])
-end
-
-ElvUF.Tags.Methods["classcolor:demonhunter"] = function()
-	return Hex(_COLORS.class["DEMONHUNTER"])
-end
-
-ElvUF.Tags.Methods["classcolor:druid"] = function()
-	return Hex(_COLORS.class["DRUID"])
-end
-
-ElvUF.Tags.Methods["classcolor:monk"] = function()
-	return Hex(_COLORS.class["MONK"])
-end
-
-ElvUF.Tags.Methods["classcolor:rogue"] = function()
-	return Hex(_COLORS.class["ROGUE"])
-end
-
-ElvUF.Tags.Methods["classcolor:dk"] = function()
-	return Hex(_COLORS.class["DEATHKNIGHT"])
-end
-
-ElvUF.Tags.Methods["classcolor:dh"] = function()
-	return Hex(_COLORS.class["DEMONHUNTER"])
-end
-
-
--- 取消百分号
--- 血量 100
-ElvUF.Tags.Events["health:percent-nosymbol"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
-ElvUF.Tags.Methods["health:percent-nosymbol"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = L["Dead"]
-	elseif UnitIsGhost(unit) then
-		String = L["Ghost"]
-	elseif not UnitIsConnected(unit) then
-		String = L["Offline"]
-	else
-		String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
-	end
-	
-	return String
-end
--- 血量 100 无状态提示
-ElvUF.Tags.Events["health:percent-nosymbol-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
-ElvUF.Tags.Methods["health:percent-nosymbol-nostatus"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = "0"
-	elseif UnitIsGhost(unit) then
-		String = "0"
-	elseif not UnitIsConnected(unit) then
-		String = "-"
-	else
-		String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
-	end
-	
-	return String
-end
-
--- 取消小数点
--- 血量 100%
-ElvUF.Tags.Events["health:percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
-ElvUF.Tags.Methods["health:percent-short"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = L["Dead"]
-	elseif UnitIsGhost(unit) then
-		String = L["Ghost"]
-	elseif not UnitIsConnected(unit) then
-		String = L["Offline"]
-	else
-		String = GetFormattedText(min, max, "PERCENT", true)
-	end
-	
-	return String
-end
-
--- 血量 100% 无状态提示
-ElvUF.Tags.Events["health:percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
-ElvUF.Tags.Methods["health:percent-short-nostatus"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = "0%"
-	elseif UnitIsGhost(unit) then
-		String = "0%"
-	elseif not UnitIsConnected(unit) then
-		String = "-"
-	else
-		String = GetFormattedText(min, max, "PERCENT", true)
-	end
-	
-	return String
-end
-
--- 血量 120 - 100%
-ElvUF.Tags.Events["health:current-percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
-ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = L["Dead"]
-	elseif UnitIsGhost(unit) then
-		String = L["Ghost"]
-	elseif not UnitIsConnected(unit) then
-		String = L["Offline"]
-	else
-		String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+	ElvUF.Tags.Methods["classcolor:hunter"] = function()
+		return Hex(_COLORS.class["HUNTER"])
 	end
 
-	return String
-end
-
--- 血量 120 - 100% 无状态提示
-ElvUF.Tags.Events["health:current-percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
-ElvUF.Tags.Methods["health:current-percent-short-nostatus"] = function(unit)
-	local min, max = UnitHealth(unit), UnitHealthMax(unit)
-	local deficit = max - min
-	local String
-
-	if UnitIsDead(unit) then
-		String = "0 - 0%"
-	elseif UnitIsGhost(unit) then
-		String = "0 - 0%"
-	elseif not UnitIsConnected(unit) then
-		String = "-"
-	else
-		String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+	ElvUF.Tags.Methods["classcolor:warrior"] = function()
+		return Hex(_COLORS.class["WARRIOR"])
 	end
 
-	return String
-end
+	ElvUF.Tags.Methods["classcolor:paladin"] = function()
+		return Hex(_COLORS.class["PALADIN"])
+	end
 
--- 能量 120 - 100%
-ElvUF.Tags.Events["power:current-percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
-	local pType = UnitPowerType(unit)
-	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
-	local String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
-	return String
-end
--- 能量 100
-ElvUF.Tags.Events["power:percent-nosymbol"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-ElvUF.Tags.Methods["power:percent-nosymbol"] = function(unit)
-	local pType = UnitPowerType(unit)
-	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
-	local String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
-	return String
-end
--- 能量 100%
-ElvUF.Tags.Events["power:percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-ElvUF.Tags.Methods["power:percent-short"] = function(unit)
-	local pType = UnitPowerType(unit)
-	local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
-	local String = GetFormattedText(min, max, "PERCENT", true)
-	return String
-end
+	ElvUF.Tags.Methods["classcolor:mage"] = function()
+		return Hex(_COLORS.class["MAGE"])
+	end
 
--- 距离
-ElvUF.Tags.Methods["range"] = function(unit)
-	if not unit then return end
-	local min, max = RC:GetRange(unit)
-	local String = format("%s - %s", min, max)
-	return String
-end
+	ElvUF.Tags.Methods["classcolor:priest"] = function()
+		return Hex(_COLORS.class["PRIEST"])
+	end
 
-ElvUF.Tags.Methods["range:expect"] = function(unit)
-	if not unit then return end
-	local min, max = RC:GetRange(unit)
-	local String = format("%s", floor((min+max)/2))
-	return String
+	ElvUF.Tags.Methods["classcolor:warlock"] = function()
+		return Hex(_COLORS.class["WARLOCK"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:shaman"] = function()
+		return Hex(_COLORS.class["SHAMAN"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:deathknight"] = function()
+		return Hex(_COLORS.class["DEATHKNIGHT"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:demonhunter"] = function()
+		return Hex(_COLORS.class["DEMONHUNTER"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:druid"] = function()
+		return Hex(_COLORS.class["DRUID"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:monk"] = function()
+		return Hex(_COLORS.class["MONK"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:rogue"] = function()
+		return Hex(_COLORS.class["ROGUE"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:dk"] = function()
+		return Hex(_COLORS.class["DEATHKNIGHT"])
+	end
+
+	ElvUF.Tags.Methods["classcolor:dh"] = function()
+		return Hex(_COLORS.class["DEMONHUNTER"])
+	end
+
+
+	-- 取消百分号
+	-- 血量 100
+	ElvUF.Tags.Events["health:percent-nosymbol"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+	ElvUF.Tags.Methods["health:percent-nosymbol"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = L["Dead"]
+		elseif UnitIsGhost(unit) then
+			String = L["Ghost"]
+		elseif not UnitIsConnected(unit) then
+			String = L["Offline"]
+		else
+			String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+		end
+		
+		return String
+	end
+	-- 血量 100 无状态提示
+	ElvUF.Tags.Events["health:percent-nosymbol-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+	ElvUF.Tags.Methods["health:percent-nosymbol-nostatus"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = "0"
+		elseif UnitIsGhost(unit) then
+			String = "0"
+		elseif not UnitIsConnected(unit) then
+			String = "-"
+		else
+			String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+		end
+		
+		return String
+	end
+
+	-- 取消小数点
+	-- 血量 100%
+	ElvUF.Tags.Events["health:percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+	ElvUF.Tags.Methods["health:percent-short"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = L["Dead"]
+		elseif UnitIsGhost(unit) then
+			String = L["Ghost"]
+		elseif not UnitIsConnected(unit) then
+			String = L["Offline"]
+		else
+			String = GetFormattedText(min, max, "PERCENT", true)
+		end
+		
+		return String
+	end
+
+	-- 血量 100% 无状态提示
+	ElvUF.Tags.Events["health:percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION"
+	ElvUF.Tags.Methods["health:percent-short-nostatus"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = "0%"
+		elseif UnitIsGhost(unit) then
+			String = "0%"
+		elseif not UnitIsConnected(unit) then
+			String = "-"
+		else
+			String = GetFormattedText(min, max, "PERCENT", true)
+		end
+		
+		return String
+	end
+
+	-- 血量 120 - 100%
+	ElvUF.Tags.Events["health:current-percent-short"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
+	ElvUF.Tags.Methods["health:current-percent-short"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = L["Dead"]
+		elseif UnitIsGhost(unit) then
+			String = L["Ghost"]
+		elseif not UnitIsConnected(unit) then
+			String = L["Offline"]
+		else
+			String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+		end
+
+		return String
+	end
+
+	-- 血量 120 - 100% 无状态提示
+	ElvUF.Tags.Events["health:current-percent-short-nostatus"] = "UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH"
+	ElvUF.Tags.Methods["health:current-percent-short-nostatus"] = function(unit)
+		local min, max = UnitHealth(unit), UnitHealthMax(unit)
+		local deficit = max - min
+		local String
+
+		if UnitIsDead(unit) then
+			String = "0 - 0%"
+		elseif UnitIsGhost(unit) then
+			String = "0 - 0%"
+		elseif not UnitIsConnected(unit) then
+			String = "-"
+		else
+			String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+		end
+
+		return String
+	end
+
+	-- 能量 120 - 100%
+	ElvUF.Tags.Events["power:current-percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:current-percent-short"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local String = GetFormattedText(min, max, "CURRENT_PERCENT", true)
+		return String
+	end
+	-- 能量 100
+	ElvUF.Tags.Events["power:percent-nosymbol"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:percent-nosymbol"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local String = GetFormattedText(min, max, "PERCENT_NO_SYMBOL", true)
+		return String
+	end
+	-- 能量 100%
+	ElvUF.Tags.Events["power:percent-short"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:percent-short"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local String = GetFormattedText(min, max, "PERCENT", true)
+		return String
+	end
+
+	-- 距离
+	ElvUF.Tags.Methods["range"] = function(unit)
+		if not unit then return end
+		local min, max = RC:GetRange(unit)
+		local String = format("%s - %s", min, max)
+		return String
+	end
+
+	ElvUF.Tags.Methods["range:expect"] = function(unit)
+		if not unit then return end
+		local min, max = RC:GetRange(unit)
+		local String = format("%s", floor((min+max)/2))
+		return String
+	end
 end
 
 function WTT:Initialize()
-	return
+	if E.db.WindTools["More Tools"]["Enhanced Tags"].enabled then addTags() end
 end
 
 local function InitializeCallback()

@@ -317,7 +317,7 @@ local function shadow_objective_tracker()
 			-- 顺便修正一下字体位置，反正不知道为什么 ElvUI 要往上移动一个像素
 			if label then
 				label:ClearAllPoints()
-				label:Point("CENTER", bar, 0, 0)
+				label:Point("CENTER", bar, 0, -1)
 				label:FontTemplate(E.media.normFont, 14, "OUTLINE")
 			end
 			progressBar.hasShadow = true

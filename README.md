@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/beta/Title.png?raw=true"/><br>
+    <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/master/Title.png?raw=true"/><br>
     <img src="https://img.shields.io/badge/ElvUI-11.372-blue.svg?longCache=true&style=flat"/>
     <img src="https://img.shields.io/badge/Version-1.5.4-green.svg?longCache=true&style=flat"/>
 

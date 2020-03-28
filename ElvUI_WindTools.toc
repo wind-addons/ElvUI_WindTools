@@ -1,13 +1,13 @@
 ## Interface: 80300
 ## Author: houshuu, Someblu
 ## Version: @project-version@
-## Title: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0dT|r|cff19b5feo|r|cff29c5ffo|r|cff39d5ffl|r|cff39d5ffs|r
-## Title-zhTW: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0d工|r|cff19b5fe具|r|cff29c5ff箱|r
-## Title-zhCN: |cfffe7b2cElvUI|r |cff0287d0Wi|r|cff1297e0n|r|cff22a7f0d工|r|cff19b5fe具|r|cff29c5ff箱|r
+## Title: |cff1784d1ElvUI|r |cffffffffWind|r|cff00aaffTools|r
+## Title-zhTW: |cff1784d1ElvUI|r |cffffffffWind|r|cff00aaff工具箱|r
+## Title-zhCN: |cff1784d1ElvUI|r |cffffffffWind|r|cff00aaff工具箱|r
 ## Notes: Collection of useful features for ElvUI.
 ## Notes-zhTW: 為 ElvUI 提供的各種小功能整合包。
 ## Notes-zhCN: 适用于 ElvUI 的各种小功能集合。
-## RequiredDeps: ElvUI
+## RequiredDeps: ElvUI, ElvUI_OptionsUI
 ## DefaultState: enabled
 
 ## X-Website: http://bbs.ngacn.cc/read.php?tid=12142815

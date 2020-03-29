@@ -864,7 +864,7 @@ WT.ToolConfigs["Interface"] = {
 		},
 	},
 	["iShadow"] = {
-		tDesc   = L["Movie effect for WoW."],
+		tDesc   = L["Adding a shadowed border to the UI window."],
 		oAuthor = "iShadow",
 		cAuthor = "houshuu",
 		["setlevel"] = {

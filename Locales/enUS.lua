@@ -188,7 +188,7 @@ L["Close Quest Voice"] = true
 L["Disable TalkingHeadFrame."] = true
 -- 屏幕景深
 L["iShadow"] = true
-L["Movie effect for WoW."] = true
+L["Adding a shadowed border to the UI window."] = true
 L["Shadow Level"] = true
 L["Default is 50."] = true
 -- 光速拾取

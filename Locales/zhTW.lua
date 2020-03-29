@@ -188,7 +188,7 @@ L["Close Quest Voice"] = "關閉視訊"
 L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
 -- 屏幕景深
 L["iShadow"] = "屏幕景深"
-L["Movie effect for WoW."] = "讓魔獸世界看起來有電影般的效果。"
+L["Adding a shadowed border to the UI window."] = "為 UI 介面添加一個背景陰影邊框。"
 L["Shadow Level"] = "陰影等級"
 L["Default is 50."] = "預設值為50。"
 -- 光速拾取

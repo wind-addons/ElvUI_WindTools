@@ -865,7 +865,7 @@ WT.ToolConfigs["Interface"] = {
 	},
 	["iShadow"] = {
 		tDesc   = L["Adding a shadowed border to the UI window."],
-		oAuthor = "iShadow",
+		oAuthor = "selias2k",
 		cAuthor = "houshuu",
 		["setlevel"] = {
 			order = 5,

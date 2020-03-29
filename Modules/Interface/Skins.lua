@@ -673,7 +673,7 @@ end
 
 function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
-	local AS = unpack(AddOnSkins)
+	AS = unpack(AddOnSkins)
 
 	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", function() if tab and tab.backdrop then tab.backdrop:CreateShadow() end end)

@@ -259,37 +259,40 @@ local function shadow_bigwigs(self, event, addon)
 end
 
 local function shadow_weakauras()
-	local function Skin_WeakAuras(frame, ftype)
-		if frame.Backdrop then frame.Backdrop:CreateShadow() end
+	local function Skin_WeakAuras(frame)
+		if not frame.shadow then frame:CreateShadow(2) end
 	end
-	local Create_Icon, Modify_Icon = WeakAuras.regionTypes.icon.create, WeakAuras.regionTypes.icon.modify
-	local Create_AuraBar, Modify_AuraBar = WeakAuras.regionTypes.aurabar.create, WeakAuras.regionTypes.aurabar.modify
 
-	WeakAuras.regionTypes.icon.create = function(parent, data)
+	local regionTypes = WeakAuras.regionTypes
+	local Create_Icon, Modify_Icon = regionTypes.icon.create, regionTypes.icon.modify
+	local Create_AuraBar, Modify_AuraBar = regionTypes.aurabar.create, regionTypes.aurabar.modify
+
+	regionTypes.icon.create = function(parent, data)
 		local region = Create_Icon(parent, data)
-		Skin_WeakAuras(region, 'icon')
+		Skin_WeakAuras(region)
 		return region
 	end
 
-	WeakAuras.regionTypes.aurabar.create = function(parent)
+	regionTypes.aurabar.create = function(parent)
 		local region = Create_AuraBar(parent)
-		Skin_WeakAuras(region, 'aurabar')
+		Skin_WeakAuras(region)
 		return region
 	end
 
-	WeakAuras.regionTypes.icon.modify = function(parent, region, data)
+	regionTypes.icon.modify = function(parent, region, data)
 		Modify_Icon(parent, region, data)
-		Skin_WeakAuras(region, 'icon')
+		Skin_WeakAuras(region)
 	end
 
-	WeakAuras.regionTypes.aurabar.modify = function(parent, region, data)
+	regionTypes.aurabar.modify = function(parent, region, data)
 		Modify_AuraBar(parent, region, data)
-		Skin_WeakAuras(region, 'aurabar')
+		Skin_WeakAuras(region)
 	end
 
-	for weakAura, _ in pairs(WeakAuras.regions) do
-		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
-			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
+	for weakAura in pairs(WeakAuras.regions) do
+		local regions = WeakAuras.regions[weakAura]
+		if regions.regionType == 'icon' or regions.regionType == 'aurabar' then
+			Skin_WeakAuras(regions.region)
 		end
 	end
 end
@@ -509,6 +512,13 @@ function WS:ShadowElvUIFrames()
 		if _G.ElvUIVendorGraysFrame then _G.ElvUIVendorGraysFrame:CreateShadow() end
 		-- 提醒
 		shadow_alerts()
+		-- ElvUI 设定
+		hooksecurefunc(E, "ToggleOptionsUI", function()
+			local frame = E:Config_GetWindow()
+			if not frame.shadow then
+				frame:CreateShadow()
+			end
+		end)
 	end
 
 	-- 光环条
@@ -663,7 +673,7 @@ end
 
 function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
-	AS = unpack(AddOnSkins)
+	local AS = unpack(AddOnSkins)
 
 	if self.db.addonskins.general then
 		hooksecurefunc(AS, "SkinTab", function() if tab and tab.backdrop then tab.backdrop:CreateShadow() end end)
@@ -671,12 +681,12 @@ function WS:AddOnSkins()
 	
 	-- Weakaura
 	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
-		AS:RegisterSkin('WeakAuras', shadow_weakauras, 'ADDON_LOADED')
+		AS:RegisterSkin('|cff00aaffWind|rWeakAuras2', shadow_weakauras, 'ADDON_LOADED')
 	end
 
 	-- Bigwigs
 	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
-		AS:RegisterSkin('BigWigs', shadow_bigwigs, 'ADDON_LOADED')
+		AS:RegisterSkin('|cff00aaffWind|rBigWigs', shadow_bigwigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
 	end
 end

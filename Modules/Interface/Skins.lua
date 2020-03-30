@@ -30,11 +30,13 @@ WS.elvui_frame_list = {
 	["altpowerbar"] = L["Altpower Bar"],
 	["top_and_bottom_panel"] = L["Top and Bottom panel"],
 	["chat_panel"] = L["Chat panel"],
+	["editbox"] = L["Edit box"],
+	["lang_icon"] = L["Language indicator"],
 }
 
 WS.addonskins_list = {
 	["general"] = L["General"],
-	["weakaura"] = L["Weakaura"],
+	["weakaura"] = L["Weakauras2"],
 	["bigwigs"] = L["Bigwigs"],
 }
 
@@ -652,6 +654,24 @@ function WS:ShadowElvUIFrames()
 	if self.db.elvui.chat_panel then
 		if _G.LeftChatPanel then _G.LeftChatPanel:CreateShadow() end
 		if _G.RightChatPanel then _G.RightChatPanel:CreateShadow() end
+	end
+
+	for i = 1, NUM_CHAT_WINDOWS do
+		-- 输入框
+		local editBox = _G['ChatFrame'..i..'EditBox']
+		-- 输入法语言标识
+		local langIcon = _G['ChatFrame'..i..'EditBoxLanguage']
+		if editBox and self.db.elvui.editbox then
+			editBox:CreateShadow(5)
+		end
+
+		if editBox and langIcon and self.db.elvui.lang_icon then
+			S:HandlePortraitFrame(langIcon)
+			langIcon:SetSize(20, 22)
+			langIcon:ClearAllPoints()
+			langIcon:SetPoint("TOPLEFT", editBox, "TOPRIGHT", 7, 0)
+			langIcon:CreateShadow(5)
+		end
 	end
 end
 

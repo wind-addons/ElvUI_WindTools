@@ -155,6 +155,8 @@ P["WindTools"]["Interface"] = {
 			quest_item = true,
 			tooltips = true,
 			top_and_bottom_panel = true,
+			editbox = true,
+			lang_icon = true,
 		},
 		addonskins = {
 			bigwigs = true,

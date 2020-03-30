@@ -625,6 +625,13 @@ function WS:ShadowElvUIFrames()
 			if button.backdrop then button.backdrop:CreateShadow() end
 		end)
 
+		-- 微型系统条
+		for i=1, #MICRO_BUTTONS do
+			if _G[MICRO_BUTTONS[i]].backdrop then
+				_G[MICRO_BUTTONS[i]].backdrop:CreateShadow()
+			end
+		end
+
 	end
 
 	-- 额外能量条

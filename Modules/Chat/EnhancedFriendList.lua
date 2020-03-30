@@ -226,7 +226,9 @@ function EFL:UpdateFriends(button)
                 end
             else
                 infoText = gameText
-                button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
+                if not client == "VIPR" and not client == "ODIN" and not client == "W3" then
+                    button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
+                end
             end
             nameColor = FRIENDS_BNET_NAME_COLOR
         else

@@ -32,6 +32,7 @@ WS.elvui_frame_list = {
 	["chat_panel"] = L["Chat panel"],
 	["editbox"] = L["Edit box"],
 	["lang_icon"] = L["Language indicator"],
+	["losscontrol"] = L["Loss of control"],
 }
 
 WS.addonskins_list = {
@@ -695,6 +696,35 @@ function WS:CustomSkins()
 		local db = self.db.ui_errors
 		_G.UIErrorsFrame:FontTemplate(LSM:Fetch('font', db.font), db.size, "OUTLINE")
 		_G.ActionStatusText:FontTemplate(LSM:Fetch('font', db.font), db.size, "OUTLINE")
+	end
+
+	-- 失去控制
+	if self.db.elvui.losscontrol then
+		local function changeLocPos(s)
+			s.Icon:ClearAllPoints()
+			s.Icon:Point("LEFT", s, "LEFT", 0, 0)
+			
+			-- 没有框架可以上阴影，自己做个同大小且重叠的
+			local bg = CreateFrame("Frame", nil, s)
+			bg:Size(s.Icon:GetWidth(), s.Icon:GetHeight())
+			bg:Point("TOPLEFT", s.Icon, "TOPLEFT", 0, 0)
+			bg:CreateShadow(5)
+			s.bg = bg
+			
+			s.AbilityName:ClearAllPoints()
+			s.AbilityName:Point("TOPLEFT", s.Icon, "TOPRIGHT", 10, 0)
+			
+			-- 时间归位
+			s.TimeLeft:ClearAllPoints()
+			s.TimeLeft.NumberText:ClearAllPoints()
+			s.TimeLeft.NumberText:Point("BOTTOMLEFT", s.Icon, "BOTTOMRIGHT", 10, 0)
+			
+			s.TimeLeft.SecondsText:ClearAllPoints()
+			s.TimeLeft.SecondsText:Point("TOPLEFT", s.TimeLeft.NumberText, "TOPRIGHT", 3, 0)
+			
+			s:Size(s.Icon:GetWidth() + 10 + s.AbilityName:GetWidth(), s.Icon:GetHeight() )
+		end
+		hooksecurefunc("LossOfControlFrame_SetUpDisplay", changeLocPos)
 	end
 end
 

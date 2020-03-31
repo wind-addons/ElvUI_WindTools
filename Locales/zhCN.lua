@@ -429,3 +429,4 @@ L["You can set width to display long text."] = "你可以设定宽度来显示�
 L["CJK IME candidates"] = "中日韩输入法预测词"
 L["Edit box"] = "输入框"
 L["Language indicator"] = "输入法指示器"
+L["Loss of control"] = "失去控制"

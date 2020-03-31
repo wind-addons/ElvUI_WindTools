@@ -157,6 +157,7 @@ P["WindTools"]["Interface"] = {
 			top_and_bottom_panel = true,
 			editbox = true,
 			lang_icon = true,
+			losscontrol = true,
 		},
 		addonskins = {
 			bigwigs = true,

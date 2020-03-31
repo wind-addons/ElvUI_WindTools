@@ -429,3 +429,4 @@ L["You can set width to display long text."] = true
 L["CJK IME candidates"] = true
 L["Edit box"] = true
 L["Language indicator"] = true
+L["Loss of control"] = true

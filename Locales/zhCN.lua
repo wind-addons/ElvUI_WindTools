@@ -432,3 +432,6 @@ L["CJK IME candidates"] = "中日韩输入法预测词"
 L["Edit box"] = "输入框"
 L["Language indicator"] = "输入法指示器"
 L["Loss of control"] = "失去控制"
+-- 声望追踪
+L["Track Reputation"] = true
+L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'] = true

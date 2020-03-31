@@ -48,6 +48,9 @@ P["WindTools"]["Quest"] = {
 	["Objective Progress"] = {
 		["enabled"] = true,
 	},
+	["Track Reputation"] = {
+		["enabled"] = false,
+	},
 }
 
 WT.ToolConfigs["Quest"] = {
@@ -272,6 +275,11 @@ WT.ToolConfigs["Quest"] = {
 	["Objective Progress"] = {
 		tDesc   = L["Add quest/mythic+ dungeon progress to tooltip."],
 		oAuthor = "Simca",
+		cAuthor = "houshuu",
+	},
+	["Track Reputation"] = {
+		tDesc   = L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'],
+		oAuthor = "ElvUI_Enhanced, Marcel Menzel",
 		cAuthor = "houshuu",
 	},
 }

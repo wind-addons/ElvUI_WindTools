@@ -210,6 +210,7 @@ L["Uldir"] = true
 L["BattleOfDazaralor"] = true
 L["CrucibleOfStorms"] = true
 L["EternalPalace"] = true
+L["Nyalotha"] = true
 L["Dungeon"] = true
 L["MythicDungeon"] = true
 L["AtalDazar"] = true
@@ -222,6 +223,7 @@ L["TheMOTHERLODE!!"] = true
 L["TheUnderrot"] = true
 L["TolDagor"] = true
 L["WaycrestManor"] = true
+L["Mechagon"] = true
 L["Mythic+"] = true
 L["Mythic+(LEG&BFA)"] = true
 -- 跳过艾泽里特特质选择界面的渲染动画

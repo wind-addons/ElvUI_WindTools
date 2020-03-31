@@ -221,7 +221,8 @@ P["WindTools"]["Interface"] = {
 				["Uldir"] = false,
 				["BattleOfDazaralor"] = false,
 				["CrucibleOfStorms"] = false,
-				["EternalPalace"] = true,
+				["EternalPalace"] = false,
+				["Nyalotha"] = true,
 			}
 		},
 	},
@@ -1041,6 +1042,10 @@ WT.ToolConfigs["Interface"] = {
 						["EternalPalace"] = {
 							order = 5,
 							name = L["EternalPalace"],
+						},
+						["Nyalotha"] = {
+							order = 6,
+							name = L["Nyalotha"],
 						},
 					}
 				}

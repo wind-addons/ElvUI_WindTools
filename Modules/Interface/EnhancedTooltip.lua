@@ -14,7 +14,7 @@ local ETT = E:NewModule('Wind_EnhancedTootip')
 
 ETT.RP = {
 	-- sort key
-	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms", "EternalPalace" },
+	["tiers"] = { "Uldir", "BattleOfDazaralor", "CrucibleOfStorms", "EternalPalace", "Nyalotha" },
 	["levels"] = { "Mythic", "Heroic", "Normal", "LFR" },
 	-- stat id
 	["Raid"] = {
@@ -90,6 +90,20 @@ ETT.RP = {
 				13587, 13591, 13595, 13600, 13604, 13608, 13612, 13616,
 			},
 		},
+		["Nyalotha"] = {
+			["Mythic"] = {
+				14082, 14094, 14098, 14105, 14110, 14115, 14120, 14211, 14126, 14130, 14134, 14138,
+			},
+			["Heroic"] = {
+				14080, 14093, 14097, 14104, 14109, 14114, 14119, 14210, 14125, 14129, 14133, 14137,
+			},
+			["Normal"] = {
+				14079, 14091, 14096, 14102, 14108, 14112, 14118, 14208, 14124, 14128, 14132, 14136,
+			},
+			["LFR"] = {
+				14078, 14089, 14095, 14101, 14107, 14111, 14117, 14207, 14123, 14127, 14131, 14135,
+			},
+		},
 	},
 	["Dungeon"] = {
 		["MythicDungeon"] = {
@@ -103,6 +117,7 @@ ETT.RP = {
 			["TheUnderrot"] = 12745,
 			["TolDagor"] = 12782,
 			["WaycrestManor"] = 12785,
+			["Mechagon"] = 13620,
 		},
 		["Mythic+"] = {
 			["Mythic+(LEG&BFA)"] = 7399,

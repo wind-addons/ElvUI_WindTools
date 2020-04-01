@@ -58,6 +58,10 @@ WS.blizzard_frames = {
 	["SplashFrame"] = true,
 	["DropDownList1"] = true,
 	["FriendsFrame"] = true,
+	["FriendsTooltip"] = true,
+	["RaidInfoFrame"] = true,
+	["RecruitAFriendRewardsFrame"] = true,
+	["RecruitAFriendRecruitmentFrame"] = true,
 	["PVEFrame"] = true,
 	["SpellBookFrame"] = true,
 	["BNToastFrame"] = true,
@@ -521,6 +525,17 @@ function WS:ShadowElvUIFrames()
 			if not frame.shadow then
 				frame:CreateShadow()
 			end
+		end)
+	end
+
+	-- AddOnSkins
+	if AddOnSkins then
+		local AS = unpack(AddOnSkins)
+		hooksecurefunc(AS, "SkinFrame", function(_, f)
+			f:CreateShadow()
+		end)
+		hooksecurefunc(AS, "SkinTab", function(_, f)
+			S:HandleTab(f)
 		end)
 	end
 

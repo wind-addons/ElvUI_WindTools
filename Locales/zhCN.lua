@@ -399,6 +399,12 @@ L["I taunted all enemies in 10 yards!"] = "我群嘲了10码内的所有敌人�
 L["%player% taunted all enemies in 10 yards!"] = "%player% 群嘲了10码内的所有敌人！"
 L["%target%, thank you for using %spell% to revive me. :)"] = "%target%，感谢你使用 %spell% 复活我。:)"
 L["Thanks all!"] = "感谢各位！"
+L["Reset Instance"] = "重置副本"
+L["Use prefix"] = "使用前缀"
+L["%s has been reset"] = "已重置 %s"
+L["Cannot reset %s (There are players still inside the instance.)"] = "重置 %s 失败（副本内还有玩家）"
+L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = "重置 %s 失败（有玩家在尝试进入副本）"
+L["Cannot reset %s (There are players offline in your party.)"] = "重置 %s 失败（有离线玩家）"
 -- 进度追踪
 L["Objective Tracker"] = "进度追踪"
 L["The new-look interface for objective tracker."] = "为进度追踪提供全新的界面。"

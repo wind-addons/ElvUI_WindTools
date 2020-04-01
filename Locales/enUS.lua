@@ -399,6 +399,12 @@ L["I taunted all enemies in 10 yards!"] = true
 L["%player% taunted all enemies in 10 yards!"] = true
 L["%target%, thank you for using %spell% to revive me. :)"] = true
 L["Thanks all!"] = true
+L["Reset Instance"] = true
+L["Use prefix"] = true
+L["%s has been reset"] = true
+L["Cannot reset %s (There are players still inside the instance.)"] = true
+L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = true
+L["Cannot reset %s (There are players offline in your party.)"] = true
 -- 进度追踪
 L["Objective Tracker"] = true
 L["The new-look interface for objective tracker."] = true

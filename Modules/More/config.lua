@@ -232,6 +232,15 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
+		["reset_instance"] = {
+			["enabled"] = true,
+			["prefix"] = true,
+			["channel"] = {
+				["party"] = "PARTY",
+				["instance"] = "INSTANCE_CHAT",
+				["raid"] = "RAID",
+			},
+		}
 	},
 	["CVarsTool"] = {
 		["enabled"] = true,
@@ -2428,6 +2437,73 @@ WT.ToolConfigs["More Tools"] = {
 				},			
 			},	
 		},
+		["reset_instance"] = {
+			order = 10,
+			name = L["Reset Instance"],
+			get = function(info)
+				return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WindTools["More Tools"]["Announce System"][info[4]][info[#info]] = value
+			end,
+			args = {
+				enabled = {
+					order = 1,
+					name = L["Enable"],
+				},
+				prefix = {
+					order = 2,
+					name = L["Use prefix"],
+				},
+				channel = {
+					order = 3,
+					name = L["Channel"],
+					get = function(info) return E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]] end,
+					set = function(info, value) E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]][info[#info]] = value end,
+					args = {
+						["party"] = {
+							order = 1,
+							name = L["In party"],
+							type = "select",
+							values = {
+								["NONE"] = L["None"],
+								["EMOTE"] = L["Emote"],
+								["PARTY"] = L["Party"],
+								["YELL"] = L["Yell"],
+								["SAY"] = L["Say"],
+							},
+						},
+						["instance"] = {
+							order = 2,
+							name = L["In instance"],
+							type = "select",
+							values = {
+								["NONE"] = L["None"],
+								["EMOTE"] = L["Emote"],
+								["PARTY"] = L["Party"],
+								["INSTANCE_CHAT"] = L["Instance"],
+								["YELL"] = L["Yell"],
+								["SAY"] = L["Say"],
+							},
+						},
+						["raid"] = {
+							order = 3,
+							name = L["In raid"],
+							type = "select",
+							values = {
+								["NONE"] = L["None"],
+								["EMOTE"] = L["Emote"],
+								["PARTY"] = L["Party"],
+								["RAID"] = L["Raids"],
+								["YELL"] = L["Yell"],
+								["SAY"] = L["Say"],
+							},
+						},
+					},
+				},
+			}
+			
+		}
 	},
 	["CVarsTool"] = {
 		tDesc   = L["Setting CVars easily."],

@@ -6,7 +6,7 @@ local AS = E:NewModule('Wind_AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'Ac
 
 local _G = _G
 local UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink = UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink
-local strsplit, gsub, format, pairs= strsplit, string.gsub, string.format, pairs
+local strsplit, gsub, format, match, pairs = strsplit, string.gsub, string.format, string.match, pairs
 
 local PlayerName, PlayerRelam = UnitName("player"), GetRealmName("player")
 local PlayerNameWithServer = format("%s-%s", PlayerName, PlayerRelam)
@@ -566,6 +566,31 @@ function AS:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	end
 end
 
+function AS:CHAT_MSG_SYSTEM(event, msg)
+	--修改自 InstanceResetAnnouncer
+	--Novaspark-Firemaw EU (classic) / Venomisto-Frostmourne OCE (retail).
+	--https://www.curseforge.com/members/venomisto/projectsd
+	local config = self.db.reset_instance
+	if not config.enabled then return end
+
+	local msgList = {
+		INSTANCE_RESET_SUCCESS = L["%s has been reset"],
+		INSTANCE_RESET_FAILED = L["Cannot reset %s (There are players still inside the instance.)"],
+		INSTANCE_RESET_FAILED_ZONING = L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"],
+		INSTANCE_RESET_FAILED_OFFLINE = L["Cannot reset %s (There are players offline in your party.)"],
+	}
+
+	for sysMsg, windMsg in pairs(msgList) do
+		sysMsg = _G[sysMsg]
+		if (match(msg, gsub(sysMsg, "%%s", ".+"))) then
+			local instance = match(msg, gsub(sysMsg, "%%s", "(.+)"));
+			local prefix = config.prefix and "<WindTools> " or ""
+			self:SendMessage(format(prefix..windMsg, instance), self:GetChannel(config.channel))
+			return
+		end
+	end
+end
+
 function AS:Initialize()
 	if not E.db.WindTools["More Tools"]["Announce System"].enabled then return end
 
@@ -580,6 +605,7 @@ function AS:Initialize()
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("CHAT_MSG_ADDON")
+	self:RegisterEvent("CHAT_MSG_SYSTEM")
 
 	self.Prefix = "WIND_AS"
 	self.AllUsers = {}

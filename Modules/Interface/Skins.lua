@@ -472,7 +472,7 @@ function WS:ShadowGeneralFrames()
 	end
 
 	-- 好友面板标签页
-	for i=1,3 do
+	for i=1,4 do
 		local tab = _G["FriendsFrameTab"..i]
 		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
 	end

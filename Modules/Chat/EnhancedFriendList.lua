@@ -99,6 +99,27 @@ EFL.GameIcons = {
         Gloss = MediaPath .. 'GameIcons\\Launcher\\Destiny2',
         Launcher = MediaPath .. 'GameIcons\\Launcher\\Destiny2',
     },
+    VIPR = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD),
+        BlizzardChat = BNet_GetClientTexture(BNET_CLIENT_COD),
+        Flat = BNet_GetClientTexture(BNET_CLIENT_COD),
+        Gloss = BNet_GetClientTexture(BNET_CLIENT_COD),
+        Launcher = BNet_GetClientTexture(BNET_CLIENT_COD),
+    },
+    ODIN = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
+        BlizzardChat = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
+        Flat = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
+        Gloss = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
+        Launcher = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
+    },
+    W3 = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WC3),
+        BlizzardChat = BNet_GetClientTexture(BNET_CLIENT_WC3),
+        Flat = BNet_GetClientTexture(BNET_CLIENT_WC3),
+        Gloss = BNet_GetClientTexture(BNET_CLIENT_WC3),
+        Launcher = BNet_GetClientTexture(BNET_CLIENT_WC3),
+    },
 }
 EFL.StatusIcons = {
     Default = {
@@ -226,9 +247,7 @@ function EFL:UpdateFriends(button)
                 end
             else
                 infoText = gameText
-                if not client == "VIPR" and not client == "ODIN" and not client == "W3" then
-                    button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
-                end
+                button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
             end
             nameColor = FRIENDS_BNET_NAME_COLOR
         else

@@ -720,11 +720,13 @@ function WS:CustomSkins()
 			s.Icon:Point("LEFT", s, "LEFT", 0, 0)
 			
 			-- 没有框架可以上阴影，自己做个同大小且重叠的
-			local bg = CreateFrame("Frame", nil, s)
-			bg:Size(s.Icon:GetWidth(), s.Icon:GetHeight())
-			bg:Point("TOPLEFT", s.Icon, "TOPLEFT", 0, 0)
-			bg:CreateShadow(5)
-			s.bg = bg
+			if not s.WindBG then
+				local bg = CreateFrame("Frame", nil, s)
+				bg:Size(s.Icon:GetWidth(), s.Icon:GetHeight())
+				bg:Point("TOPLEFT", s.Icon, "TOPLEFT", 0, 0)
+				bg:CreateShadow(5)
+				s.WindBG = bg
+			end
 			
 			s.AbilityName:ClearAllPoints()
 			s.AbilityName:Point("TOPLEFT", s.Icon, "TOPRIGHT", 10, 0)

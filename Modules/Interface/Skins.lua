@@ -79,6 +79,7 @@ WS.blizzard_frames = {
 	["CinematicFrameCloseDialog"] = true,
 	["TaxiFrame"] = true,
 	["DressUpFrame"] = true,
+	["MainMenuBarVehicleLeaveButton"] = true,
 }
 
 WS.lazy_load_list = {
@@ -94,6 +95,7 @@ WS.lazy_load_list = {
 	["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
 	["Blizzard_Calendar"] = {"CalendarFrame", "CalendarViewHolidayFrame"},
 	["Blizzard_AuctionHouseUI"] = { "AuctionHouseFrame" },
+	["Blizzard_WarboardUI"] = { "WarboardQuestChoiceFrame" },
 }
 
 local function shadow_bigwigs(self, event, addon)

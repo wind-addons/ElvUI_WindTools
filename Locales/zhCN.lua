@@ -237,9 +237,15 @@ L["Include Officer Channel"] = "包括干部频道"
 -- 任务通告
 L["Quest Announcment"] = "任务通告"
 L["Let you know quest is completed."] = "当任务完成之时会通告。"
--- 自动摧毁
-L["Auto Delete"] = "自动填入DELETE"
-L["Enter DELETE automatically."] = "在摧毁物品时自动填入DELETE。"
+-- 删除增强
+L["Enhanced Delete"] = "删除增强"
+L["Provide a more convenient way to delete items."] = "提供一个更方便的删除物品方式。"
+L["Use Delete key"] = "使用 Del 按键"
+L["You may also press the |cffffd200Delete|r key as confirmation."] = "你也可以通过按下 Delete 来删除。"
+L["Use delete button"] = "使用删除按钮"
+L["Click the button to confirm the deletion of good items."] = "当系统要你填入 DELETE 时，只需按一下按钮即可。"
+L["Click to confirm"] = "点击确认"
+L["Confirmed"] = "已确认"
 -- 目标进度
 L["Objective Progress"] = "目标进度"
 L["Add quest/mythic+ dungeon progress to tooltip."] = "添加任务或是传奇钥石地下城怪物进度到鼠标提示。"

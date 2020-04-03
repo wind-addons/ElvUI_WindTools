@@ -5,12 +5,14 @@ local WT = E:GetModule("WindTools")
 local _G = _G
 
 P["WindTools"]["Trade"] = {
-	["Auto Delete"] = {
-		["enabled"] = true,
+	["Enhanced Delete"] = {
+		enabled = true,
+		use_delete_key = true,
+		click_button_delete = true,
 	},
 	["Already Known"] = {
-		["enabled"] = true,
-		["color"] = {
+		enabled = true,
+		color = {
 			r = 0,
 			g = 1,
 			b = 0,
@@ -29,10 +31,30 @@ P["WindTools"]["Trade"] = {
 }
 
 WT.ToolConfigs["Trade"] = {
-	["Auto Delete"] = {
-		tDesc   = L["Enter DELETE automatically."],
-		oAuthor = "bulleet",
+	["Enhanced Delete"] = {
+		tDesc   = L["Provide a more convenient way to delete items."],
+		oAuthor = "houshuu",
 		cAuthor = "houshuu",
+		["general"] = {
+			name = L['General'],
+			order = 6,
+			get = function(info) return E.db.WindTools["Trade"]["Enhanced Delete"][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Trade"]["Enhanced Delete"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			args = {
+				use_delete_key = {
+					order = 1,
+					width = "full",
+					name = L["Use Delete key"],
+					desc = L["You may also press the |cffffd200Delete|r key as confirmation."],
+				},
+				click_button_delete = {
+					order = 2,
+					width = "full",
+					name = L["Use delete button"],
+					desc = L["Click the button to confirm the deletion of good items."],
+				},
+			}
+		}
 	},
 	["Already Known"] = {
 		tDesc   = L["Change item color if learned before."],

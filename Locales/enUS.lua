@@ -237,9 +237,15 @@ L["Include Officer Channel"] = true
 -- 任务通告
 L["Quest Announcment"] = true
 L["Let you know quest is completed."] = true
--- 自动摧毁
-L["Auto Delete"] = true
-L["Enter DELETE automatically."] = true
+-- 删除增强
+L["Enhanced Delete"] = true
+L["Provide a more convenient way to delete items."] = true
+L["Use Delete key"] = true
+L["You may also press the |cffffd200Delete|r key as confirmation."] = true
+L["Use delete button"] = true
+L["Click the button to confirm the deletion of good items."] = true
+L["Click to confirm"] = true
+L["Confirmed"] = true
 -- 目标进度
 L["Objective Progress"] = true
 L["Add quest/mythic+ dungeon progress to tooltip."] = true

@@ -769,7 +769,7 @@ function WS:AddOnSkins()
 
 	-- Bigwigs
 	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
-		AS:RegisterSkin('|cff00aaffWind|rBigWigs', shadow_bigwigs, 'ADDON_LOADED')
+		AS:RegisterSkin('BigWigs', shadow_bigwigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
 	end
 end

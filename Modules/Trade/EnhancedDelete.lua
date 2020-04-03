@@ -49,7 +49,7 @@ function ED:DELETE_ITEM_CONFIRM(event)
 		local dialog = _G["StaticPopup" .. i]
 		local type = dialog.which
 		if self.hookDeleteDialogs[type] then
-			if self.db.use_delete_key then
+			if self.db.use_delete_key and type ~= "DELETE_ITEM" then
 				-- 添加说明
 				local msg = dialog.text:GetText()
 				local msgTable = {strsplit("\n\n", msg)}

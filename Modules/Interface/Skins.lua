@@ -63,6 +63,8 @@ WS.blizzard_frames = {
 	["RecruitAFriendRewardsFrame"] = true,
 	["RecruitAFriendRecruitmentFrame"] = true,
 	["PVEFrame"] = true,
+	["LFGDungeonReadyDialog"] = true,
+	["LFGDungeonReadyStatus"] = true,
 	["SpellBookFrame"] = true,
 	["BNToastFrame"] = true,
 	["MailFrame"] = true,
@@ -426,6 +428,12 @@ function WS:ADDON_LOADED(_, addon)
 		end
 	end
 
+	if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
+		if _G.TalkingHeadFrame then
+			TalkingHeadFrame:CreateShadow(5)
+		end
+	end
+
 	-- 公会页面标签页
 	if addon == "Blizzard_Communities" and _G.CommunitiesFrame then
 		local frame = _G.CommunitiesFrame
@@ -651,7 +659,6 @@ function WS:ShadowElvUIFrames()
 				_G[MICRO_BUTTONS[i]].backdrop:CreateShadow()
 			end
 		end
-
 	end
 
 	-- 额外能量条

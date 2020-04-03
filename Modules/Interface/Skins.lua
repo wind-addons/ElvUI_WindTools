@@ -430,7 +430,7 @@ function WS:ADDON_LOADED(_, addon)
 
 	if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
 		if _G.TalkingHeadFrame then
-			TalkingHeadFrame:CreateShadow(5)
+			TalkingHeadFrame:CreateShadow(6)
 		end
 	end
 

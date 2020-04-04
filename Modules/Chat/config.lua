@@ -5,9 +5,12 @@ local _G = _G
 
 P["WindTools"]["Chat"] = {
 	["Tab Chat Mod"] = {
-		["enabled"] = true,
-		["whispercycle"] = false,
-		["useofficer"] = false,
+		enabled = true,
+		whisper_cycle = false,
+		use_yell = false,
+		use_battleground = false,
+		use_raid_warning = false,
+		use_officer = false,
 	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,
@@ -64,29 +67,33 @@ P["WindTools"]["Chat"] = {
 WT.ToolConfigs["Chat"] = {
 	["Tab Chat Mod"] = {
 		tDesc   = L["Use tab to switch channel."],
-		oAuthor = "EUI",
+		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		["addwhisper"] = {
+		["general"] = {
 			name = L["Whisper Cycle"],
 			order = 5,
+			get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] end,
+			set = function(info, value) E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] = value end,
 			args = {
-				["seteffect"] = {
-					name = L["Enable"],
+				whisper_cycle = {
+					name = L["Whisper Cycle"],
 					order = 1,
-					get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"]["whispercycle"] end,
-					set = function(info, value) E.db.WindTools["Chat"]["Tab Chat Mod"]["whispercycle"] = value;end
 				},
-			}
-		},
-		["addofficer"] = {
-			name = L["Include Officer Channel"],
-			order = 6,
-			args = {
-				["seteffect"] = {
-					name = L["Enable"],
-					order = 1,
-					get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"] end,
-					set = function(info, value) E.db.WindTools["Chat"]["Tab Chat Mod"]["useofficer"] = value;end
+				use_yell = {
+					name = CHAT_MSG_YELL,
+					order = 2,
+				},
+				use_battleground = {
+					name = CHAT_MSG_BATTLEGROUND,
+					order = 3,
+				},
+				use_raid_warning = {
+					name = CHAT_MSG_RAID_WARNING,
+					order = 4,
+				},
+				use_officer = {
+					name = CHAT_MSG_OFFICER,
+					order = 5,
 				},
 			}
 		},

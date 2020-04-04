@@ -1,10 +1,4 @@
--- 原作：(无名代码片段)
--- 原作者：heng9999（http://nga.178.com/read.php?tid=5522598&page=1#pid95992230Anchor）
--- 修改：houshuu
--------------------
--- 主要修改条目：
--- 模块化
--- 添加自定义功能开关
+-- 原创模块
 
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")

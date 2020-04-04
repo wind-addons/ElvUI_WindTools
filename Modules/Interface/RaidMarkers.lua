@@ -80,9 +80,6 @@ function RM:CreateButtons()
 		end)
 
 		self.frame.buttons[i] = button
-		if WS.db.elvui.general and not self.db.backdrop then
-			button:CreateShadow()
-		end
 	end
 end
 
@@ -126,6 +123,15 @@ function RM:UpdateBar()
 	end
 	
 	if self.db.enabled then self.frame:Show() else self.frame:Hide() end
+end
+
+function RM:ShadowButtons()
+	for i = 1, 9, 1 do
+		local button = self.frame.buttons[i]
+		if WS.db.elvui.general and not self.db.backdrop then
+			button:CreateShadow()
+		end
+	end
 end
 
 function RM:ToggleSettings()
@@ -175,6 +181,7 @@ function RM:Initialize()
 	tinsert(WT.UpdateAll, function()
 		RM.db = E.db.WindTools["Interface"]["Raid Markers"]
 		RM:CreateButtons()
+		RM:ShadowButtons()
 		RM:ToggleSettings()
 	end)
 	self.db.modifier = self.db.modifier:gsub("-", "") -- db conversion
@@ -194,6 +201,7 @@ function RM:Initialize()
 	
 	--self:RegisterEvent("GROUP_ROSTER_UPDATE", "ToggleSettings")
 	self:CreateButtons()
+	self:ShadowButtons()
 	self:ToggleSettings()
 end
 

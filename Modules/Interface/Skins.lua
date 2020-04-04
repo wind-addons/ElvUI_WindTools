@@ -5,6 +5,7 @@
 local _G = _G
 local unpack = unpack
 local hooksecurefunc = hooksecurefunc
+local _
 
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")

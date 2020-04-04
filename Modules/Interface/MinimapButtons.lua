@@ -8,6 +8,7 @@
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
+local WS = E:GetModule('Wind_Skins')
 
 local sub, len, find = string.sub, string.len, string.find
 
@@ -18,7 +19,6 @@ local ignoreButtons = {
 	"ElvConfigToggle",
 	"ElvUIConfigToggle",
 	"ElvUI_ConsolidatedBuffs",
-	--"GameTimeFrame",
 	"HelpOpenTicketButton",
 	"MMHolder",
 	"DroodFocusMinimapButton",
@@ -37,6 +37,13 @@ local genericIgnores = {
 	"MinimMap",
 	"Spy_MapNoteList_mini",
 	"ZGVMarker",
+	'poiMinimap',
+	'GuildMap3Mini',
+	'LibRockConfig-1.0_MinimapButton',
+	'NauticusMiniIcon',
+	'WestPointer',
+	'Cork',
+	'DugisArrowMinimapPoint',
 }
 
 -- ignore all frames where then name contains this text
@@ -44,6 +51,7 @@ local partialIgnores = {
 	"Node",
 	"Note",
 	"Pin",
+	"POI",
 }
 
 -- whitelist all frames starting with
@@ -104,6 +112,11 @@ local function OnLeave(self)
 	end
 end
 
+function MB:ResetGarrisonSize()
+	if InCombatLockdown() then return end
+	GarrisonLandingPageMinimapButton:Size(self.db.buttonSize);
+end
+
 function MB:SkinButton(frame)
 	if not self.db.mbcalendar then
 		table.insert(ignoreButtons, "GameTimeFrame")
@@ -135,12 +148,22 @@ function MB:SkinButton(frame)
 	if name ~= "GarrisonLandingPageMinimapButton" then 
 		frame:SetPushedTexture(nil)
 		frame:SetDisabledTexture(nil)
+		frame:SetHighlightTexture(nil)
 	end
-	frame:SetHighlightTexture(nil)
 	
 	if name == "DBMMinimapButton" then frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87") end
 	if name == "SmartBuff_MiniMapButton" then frame:SetNormalTexture(select(3, GetSpellInfo(12051))) end
-	if name == "GarrisonLandingPageMinimapButton" and self.db.mbgarrison then frame:SetScale(1) end
+	if name == "GarrisonLandingPageMinimapButton" and self.db.mbgarrison then 
+		frame:SetScale(1)
+		if not frame.isRegister then
+			MB:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ResetGarrisonSize");
+			MB:RegisterEvent("ZONE_CHANGED", "ResetGarrisonSize");
+			MB:RegisterEvent("ZONE_CHANGED_INDOORS", "ResetGarrisonSize");
+			MB:RegisterEvent("GARRISON_SHOW_LANDING_PAGE", "ResetGarrisonSize"); 
+		end
+		frame.isRegister = true
+	end
+	if name == "GRM_MinimapButton" then frame.GRM_MinimapButtonBorder:Hide() end
 	
 	if not frame.isSkinned then
 		frame:HookScript('OnEnter', OnEnter)
@@ -196,6 +219,8 @@ function MB:SkinButton(frame)
 		frame:SetTemplate("Tranparent")
 
 		tinsert(moveButtons, name)
+		
+		if WS.db.elvui.general and not self.db.backdrop then frame:CreateShadow() end
 		frame.isSkinned = true
 	end
 end
@@ -320,12 +345,10 @@ function MB:UpdateLayout()
 	
 	if self.db.skinStyle ~= 'NOANCHOR' and #moveButtons > 0 then
 		if self.db.skinStyle == "HORIZONTAL" then
-			--minimapButtonBar:SetWidth((self.db.buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
 			local BarWidth = (Spacing + ((Size * (ActualButtons * Mult)) + ((Spacing * (ActualButtons - 1)) * Mult) + (Spacing * Mult)))
 			local BarHeight = (Spacing + ((Size * (AnchorY * Mult)) + ((Spacing * (AnchorY - 1)) * Mult) + (Spacing * Mult)))
 			minimapButtonBar:SetSize(BarWidth, BarHeight)
 		else
-			--minimapButtonBar:SetHeight((self.db.buttonSize * #moveButtons) + (2 * #moveButtons + 1) + 1)
 			local BarWidth = (Spacing + ((Size * (AnchorY * Mult)) + ((Spacing * (AnchorY - 1)) * Mult) + (Spacing * Mult)))
 			local BarHeight = (Spacing + ((Size * (ActualButtons * Mult)) + ((Spacing * (ActualButtons - 1)) * Mult) + (Spacing * Mult)))
 			minimapButtonBar:SetSize(BarWidth, BarHeight)
@@ -340,6 +363,7 @@ function MB:UpdateLayout()
 	
 	if self.db.backdrop then
 		minimapButtonBar.backdrop:Show()
+		if WS.db.elvui.general then minimapButtonBar.backdrop:CreateShadow() end
 	else
 		minimapButtonBar.backdrop:Hide()
 	end
@@ -391,14 +415,16 @@ function MB:CreateFrames()
 
 	self:ChangeMouseOverSetting()
 	self:SkinMinimapButtons()
+
+	self.bar = minimapButtonBar
 end
 
 function MB:Initialize()
-	if not E.db.WindTools["Interface"]["Minimap Buttons"].enabled then return end
-
 	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
+	if not self.db.enabled then return end
+	
 	tinsert(WT.UpdateAll, function()
-		MB.db = E.db.WindTools["Interface"]["Minimap Buttons"]
+		MB.db = self.db
 		MB:CreateFrames()
 	end)
 

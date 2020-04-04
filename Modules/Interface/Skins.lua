@@ -315,7 +315,7 @@ local function shadow_objective_tracker()
 	ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:CreateShadow(5)
 	ObjectiveTrackerFrame.HeaderMenu.MinimizeButton.shadow:SetOutside()
 
-	local function ProgressBarsShadows(self, _, line)
+	local function ProgressBarsShadows(_, _, line)
 		local progressBar = line and line.ProgressBar
 		local bar = progressBar and progressBar.Bar
 		if not bar then return end
@@ -323,16 +323,23 @@ local function shadow_objective_tracker()
 		local label = bar.Label
 
 		if not progressBar.hasShadow then
-			if not bar.backdrop or not progressBar.backdrop then return end
-			bar.backdrop:CreateShadow()
-			progressBar.backdrop:CreateShadow()
+			if not bar.backdrop then 
+				bar:CreateShadow()
+			else
+				bar.backdrop:CreateShadow()
+			end
+
+			if progressBar.backdrop then
+				progressBar.backdrop:CreateShadow()
+			end
+
 			-- 稍微移动下图标位置，防止阴影重叠，更加美观！
 			if icon then icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0) end
 			-- 顺便修正一下字体位置，反正不知道为什么 ElvUI 要往上移动一个像素
 			if label then
 				label:ClearAllPoints()
-				label:Point("CENTER", bar, 0, -1)
-				label:FontTemplate(E.media.normFont, 14, "OUTLINE")
+				label:Point("CENTER", bar, 0, 0)
+				label:FontTemplate(E.media.normFont, 13, "OUTLINE")
 			end
 			progressBar.hasShadow = true
 		end
@@ -355,10 +362,10 @@ local function shadow_objective_tracker()
 		end
 	end
 
-	hooksecurefunc(BONUS_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
-	hooksecurefunc(SCENARIO_TRACKER_MODULE,"AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+	hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
 	hooksecurefunc(QUEST_TRACKER_MODULE,"SetBlockHeader", ItemButtonShadows)
 	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE,"AddObjective", ItemButtonShadows)
 	hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup", FindGroupButtonShadows)

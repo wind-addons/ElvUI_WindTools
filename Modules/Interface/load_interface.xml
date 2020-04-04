@@ -6,7 +6,7 @@
 	<Script file='EnhancedTooltip.lua'/>
 	<Script file='DragonOverlay.lua'/>
 	<Script file='SkipAzeriteAnimations.lua'/>
-	<Script file='RaidMarkers.lua'/>
 	<Script file='Skins.lua'/>
+	<Script file='RaidMarkers.lua'/>
 	<Script file='MinimapButtons.lua'/>
 </Ui>

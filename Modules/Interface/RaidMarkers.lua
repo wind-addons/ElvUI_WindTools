@@ -5,6 +5,7 @@
 local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 
 local WT = E:GetModule("WindTools")
+local WS = E:GetModule('Wind_Skins')
 local RM = E:NewModule('Wind_RaidMarkerBar', 'AceEvent-3.0')
 
 local lastClear = 0
@@ -79,6 +80,9 @@ function RM:CreateButtons()
 		end)
 
 		self.frame.buttons[i] = button
+		if WS.db.elvui.general and not self.db.backdrop then
+			button:CreateShadow()
+		end
 	end
 end
 
@@ -136,6 +140,7 @@ function RM:ToggleSettings()
 		end
 		if self.db.backdrop then
 			self.frame.backdrop:Show()
+			if WS.db.elvui.general then self.frame.backdrop:CreateShadow() end
 		else
 			self.frame.backdrop:Hide()
 		end
@@ -182,7 +187,7 @@ function RM:Initialize()
 	self.frame:ClearAllPoints()
 	self.frame:Point("BOTTOMRIGHT", RightChatPanel, "TOPRIGHT", -1, 3)
 	self.frame.buttons = {}
-	
+
 	self.frame.backdrop:SetAllPoints()
 
 	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'])

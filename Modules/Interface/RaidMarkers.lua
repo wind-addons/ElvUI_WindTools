@@ -129,15 +129,6 @@ function RM:UpdateBar()
 	end
 end
 
-function RM:ShadowButtons()
-	for i = 1, 9, 1 do
-		local button = self.frame.buttons[i]
-		if WS.db.elvui.general and not self.db.backdrop then
-			button:CreateShadow()
-		end
-	end
-end
-
 function RM:ToggleSettings()
 	if not InCombatLockdown() then
 		self:UpdateBar()
@@ -148,6 +139,7 @@ function RM:ToggleSettings()
 			UnregisterStateDriver(self.frame, "visibility")
 			self.frame:Hide()
 		end
+
 		if self.db.backdrop then
 			self.frame.backdrop:Show()
 		else
@@ -157,8 +149,18 @@ function RM:ToggleSettings()
 		if WS.db.elvui.general then
 			if self.db.backdrop then
 				self.frame.backdrop:CreateShadow()
+				if self.frame.backdrop.shadow then self.frame.backdrop.shadow:Show() end
+				for i = 1, 9, 1 do
+					local button = self.frame.buttons[i]
+					if button.shadow then button.shadow:Hide() end
+				end
 			else
-				self:ShadowButtons()
+				if self.frame.backdrop.shadow then self.frame.backdrop.shadow:Hide() end
+				for i = 1, 9, 1 do
+					local button = self.frame.buttons[i]
+					button:CreateShadow()
+					if button.shadow then button.shadow:Show() end
+				end
 			end
 		end
 	end

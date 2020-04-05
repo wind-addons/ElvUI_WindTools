@@ -35,6 +35,7 @@ WS.elvui_frame_list = {
 	["editbox"] = L["Edit box"],
 	["lang_icon"] = L["Language indicator"],
 	["losscontrol"] = L["Loss of control"],
+	["character_frame"] = CHARACTER_INFO,
 }
 
 WS.addonskins_list = {
@@ -439,10 +440,19 @@ function WS:ADDON_LOADED(_, addon)
 
 	-- 离开界面
 	AFK.AFKMode.bottom:CreateShadow(10)
+
 	AFK.AFKMode.bottom.logo:Size(512, 128)
+	AFK.AFKMode.bottom.logo:SetTexture("Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
+
+	-- 离开界面字体位置美观性调整
 	AFK.AFKMode.bottom.logo:ClearAllPoints()
 	AFK.AFKMode.bottom.logo:Point("CENTER", AFK.AFKMode.bottom, "CENTER", 0, 25)
-	AFK.AFKMode.bottom.logo:SetTexture("Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
+
+	AFK.AFKMode.bottom.guild:ClearAllPoints()
+	AFK.AFKMode.bottom.guild:Point("TOPLEFT", AFK.AFKMode.bottom.name, "BOTTOMLEFT", 0, -11)
+
+	AFK.AFKMode.bottom.time:ClearAllPoints()
+	AFK.AFKMode.bottom.time:Point("TOPLEFT", AFK.AFKMode.bottom.guild, "BOTTOMLEFT", 0, -11)
 
 	-- 特写框架
 	if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
@@ -572,6 +582,14 @@ function WS:ShadowElvUIFrames()
 		hooksecurefunc(A, "UpdateAura", function(_, button) if button then button:CreateShadow() end end)
 	end
 
+	if self.db.elvui.character_frame then
+		local CharacterModelFrame = _G.CharacterModelFrame
+		CharacterModelFrame:SetTemplate("Transparent")
+		CharacterModelFrame:DisableDrawLayer("BACKGROUND")
+		CharacterModelFrame:DisableDrawLayer("BORDER")
+		CharacterModelFrame:DisableDrawLayer("OVERLAY")
+		if CharacterModelFrame.backdrop then CharacterModelFrame.backdrop:Kill() end
+	end
 	-- 单位框体
 	if self.db.elvui.unitframes then
 		-- 低频度更新单位框体外围阴影

@@ -158,6 +158,7 @@ P["WindTools"]["Interface"] = {
 			editbox = true,
 			lang_icon = true,
 			losscontrol = true,
+			character_frame = true,
 		},
 		addonskins = {
 			bigwigs = true,

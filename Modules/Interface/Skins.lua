@@ -15,6 +15,7 @@ local AB = E:GetModule('ActionBars')
 local UF = E:GetModule('UnitFrames')
 local TT = E:GetModule('Tooltip')
 local DATABAR = E:GetModule('DataBars')
+local AFK = E:GetModule('AFK')
 local WS = E:NewModule('Wind_Skins', 'AceEvent-3.0')
 local LSM = LibStub("LibSharedMedia-3.0")
 local AS
@@ -436,6 +437,14 @@ function WS:ADDON_LOADED(_, addon)
 		end
 	end
 
+	-- 离开界面
+	AFK.AFKMode.bottom:CreateShadow(10)
+	AFK.AFKMode.bottom.logo:Size(512, 128)
+	AFK.AFKMode.bottom.logo:ClearAllPoints()
+	AFK.AFKMode.bottom.logo:Point("CENTER", AFK.AFKMode.bottom, "CENTER", 0, 25)
+	AFK.AFKMode.bottom.logo:SetTexture("Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
+
+	-- 特写框架
 	if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
 		if _G.TalkingHeadFrame then
 			TalkingHeadFrame:CreateShadow(6)

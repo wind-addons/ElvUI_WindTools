@@ -122,7 +122,11 @@ function RM:UpdateBar()
 		end
 	end
 	
-	if self.db.enabled then self.frame:Show() else self.frame:Hide() end
+	if self.db.enabled then
+		self.frame:Show()
+	else
+		self.frame:Hide()
+	end
 end
 
 function RM:ShadowButtons()
@@ -146,42 +150,26 @@ function RM:ToggleSettings()
 		end
 		if self.db.backdrop then
 			self.frame.backdrop:Show()
-			if WS.db.elvui.general then self.frame.backdrop:CreateShadow() end
 		else
 			self.frame.backdrop:Hide()
+		end
+
+		if WS.db.elvui.general then
+			if self.db.backdrop then
+				self.frame.backdrop:CreateShadow()
+			else
+				self:ShadowButtons()
+			end
 		end
 	end
 end
 
--- function RM:Initialize()
--- 	self.db = E.private.general.raidmarkerbar
-	
--- 	self.frame = CreateFrame("Frame", "RaidMarkerBar", E.UIParent, "SecureHandlerStateTemplate")
--- 	self.frame:SetResizable(false)
--- 	self.frame:SetClampedToScreen(true)
--- 	self.frame:SetFrameStrata('LOW')
--- 	self.frame:CreateBackdrop('Transparent')
--- 	self.frame:ClearAllPoints()
--- 	self.frame:Point("BOTTOMRIGHT", RightChatPanel, "TOPRIGHT", -1, 3)
--- 	self.frame.buttons = {}
-	
--- 	self.frame.backdrop:SetAllPoints()
-
--- 	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'])
-	
--- 	--self:RegisterEvent("GROUP_ROSTER_UPDATE", "ToggleSettings")
--- 	self:CreateButtons()
--- 	self:ToggleSettings()
--- end
-
 function RM:Initialize()
-	if not E.db.WindTools["Interface"]["Raid Markers"].enabled then return end
-
 	self.db = E.db.WindTools["Interface"]["Raid Markers"]
+	if not self.db.enabled then return end
 	tinsert(WT.UpdateAll, function()
 		RM.db = E.db.WindTools["Interface"]["Raid Markers"]
 		RM:CreateButtons()
-		RM:ShadowButtons()
 		RM:ToggleSettings()
 	end)
 	self.db.modifier = self.db.modifier:gsub("-", "") -- db conversion
@@ -194,14 +182,10 @@ function RM:Initialize()
 	self.frame:ClearAllPoints()
 	self.frame:Point("BOTTOMRIGHT", RightChatPanel, "TOPRIGHT", -1, 3)
 	self.frame.buttons = {}
-
 	self.frame.backdrop:SetAllPoints()
-
 	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'])
-	
-	--self:RegisterEvent("GROUP_ROSTER_UPDATE", "ToggleSettings")
+
 	self:CreateButtons()
-	self:ShadowButtons()
 	self:ToggleSettings()
 end
 

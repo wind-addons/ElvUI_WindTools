@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='config.lua'/>
-	<Script file='ChatMod.lua'/>
+	<Script file='TabChatMod.lua'/>
 	<Script file='EnhancedFriendList.lua'/>
 	<Script file='RightClickMenu.lua'/>
 </Ui>

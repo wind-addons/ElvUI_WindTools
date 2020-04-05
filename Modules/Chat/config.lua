@@ -70,7 +70,7 @@ WT.ToolConfigs["Chat"] = {
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
 		["general"] = {
-			name = L["Whisper Cycle"],
+			name = L["General"],
 			order = 5,
 			get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] end,
 			set = function(info, value) E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] = value end,

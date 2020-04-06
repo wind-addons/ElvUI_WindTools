@@ -434,4 +434,5 @@ end
 local function InitializeCallback()
 	MB:Initialize()
 end
+
 E:RegisterModule(MB:GetName(), InitializeCallback)

@@ -5,4 +5,5 @@
 	<Script file='QuestAnnouncment.lua'/>
 	<Script file='CloseQuestVoice.lua'/>
 	<Script file='TrackReputation.lua'/>
+	<Script file='ParagonReputation.lua'/>
 </Ui>

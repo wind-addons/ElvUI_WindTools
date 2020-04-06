@@ -60,7 +60,11 @@ P["WindTools"]["Quest"] = {
 		["enabled"] = true,
 	},
 	["Track Reputation"] = {
-		["enabled"] = false,
+		enabled = false,
+	},
+	["Paragon Reputation"] = {
+		enabled = true,
+		color = { r = 0, g = .5, b = .9 },
 	},
 }
 

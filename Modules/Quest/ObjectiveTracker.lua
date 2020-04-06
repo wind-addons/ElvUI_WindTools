@@ -333,8 +333,8 @@ end
 function OT:GOSSIP_CONFIRM()
 	local npcID = GetNPCID()
 	if(npcID and darkmoonNPC[npcID]) then
-		SelectGossipOption(index, "", true)
-		StaticPopup_Hide("GOSSIP_CONFIRM")
+		local dialog = StaticPopup_FindVisible("GOSSIP_CONFIRM") 
+		StaticPopup_OnClick(dialog, 1)
 	end
 end
 
@@ -485,7 +485,7 @@ end
 function OT:RefreshSwitchButton()
     local sbdb = self.db.auto_turn_in.switch_button
 
-    if sbdb.enabled and not ObjectiveTrackerFrame.collapsed then
+    if sbdb.enabled and not ObjectiveTrackerFrame.collapsed and not InCombatLockdown() then
         self.SwitchButton:Show()
     else
         self.SwitchButton:Hide()

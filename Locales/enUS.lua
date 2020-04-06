@@ -440,6 +440,7 @@ L["Top and Bottom panel"] = true
 L["Chat panel"] = true
 L["Weakauras2"] = true
 L["Bigwigs"] = true
+L["Immersion"] = true
 L["IME"] = true
 L["No backdrop"] = true
 L["Label"] = true

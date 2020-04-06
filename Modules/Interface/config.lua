@@ -164,6 +164,7 @@ P["WindTools"]["Interface"] = {
 			bigwigs = true,
 			general = true,
 			weakaura = true,
+			immersion = true,
 		},
 		ime = {
 			no_backdrop = true,

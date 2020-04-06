@@ -440,6 +440,7 @@ L["Top and Bottom panel"] = "顶部底部面板"
 L["Chat panel"] = "聊天面板"
 L["Weakauras2"] = true
 L["Bigwigs"] = true
+L["Immersion"] = true
 L["IME"] = "输入法"
 L["No backdrop"] = "去除背景"
 L["Label"] = "序号"

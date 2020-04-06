@@ -42,6 +42,7 @@ WS.addonskins_list = {
 	["general"] = L["General"],
 	["weakaura"] = L["Weakauras2"],
 	["bigwigs"] = L["Bigwigs"],
+	["immersion"] = L["Immersion"]
 }
 
 WS.blizzard_frames = {
@@ -102,6 +103,147 @@ WS.lazy_load_list = {
 	["Blizzard_AuctionHouseUI"] = { "AuctionHouseFrame" },
 	["Blizzard_WarboardUI"] = { "WarboardQuestChoiceFrame" },
 }
+
+local function shadow_immersion(self, event, addon)
+	ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
+	ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
+
+
+	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 8, -8)
+	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -8, 8)
+	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
+
+	ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
+	if ImmersionFrame.TalkBox.MainFrame.CloseButton.Texture then 
+	ImmersionFrame.TalkBox.MainFrame.CloseButton.Texture:Kill()
+	end
+
+	S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
+
+	ImmersionFrame.TalkBox.Hilite:SetTemplate()
+	ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
+	ImmersionFrame.TalkBox.Hilite:SetBackdropColor(0, 0, 0, 0)
+
+	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
+	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
+	ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
+
+
+	ImmersionFrame.TalkBox.Elements:StripTextures()
+	ImmersionFrame.TalkBox.Elements:CreateBackdrop('Transparent')
+	ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.Elements, 'TOPLEFT', 16, -16)
+	ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.Elements, 'BOTTOMRIGHT', -16, 16)
+	ImmersionFrame.TalkBox.Elements.backdrop:CreateShadow()
+
+	ImmersionFrame.TalkBox.MainFrame.Overlay:Kill()
+
+	S:HandleStatusBar(ImmersionFrame.TalkBox.ReputationBar)
+	ImmersionFrame.TalkBox.ReputationBar:ClearAllPoints()
+	ImmersionFrame.TalkBox.ReputationBar:SetPoint('TOPLEFT', ImmersionFrame.TalkBox, 'BOTTOMLEFT', -20, 10)
+	ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon:Hide();
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon.Show = function() end;
+
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.NameTag:Hide();
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.NameTag.Show = function() end;
+
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen:Hide();
+	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
+
+	local function SkinReward(Button)
+	if Button.Icon then
+		Button:CreateBackdrop()
+		
+		if Button.NameFrame then
+			Button.NameFrame:Hide()
+		end
+		
+		if Button.Border then
+			Button.Border:Hide()
+		end
+		
+		if Button.Mask then
+			Button.Mask:Hide()
+		end
+		
+		Button.backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0, 0)
+		Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT', 0, 0)
+		Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
+		
+		S:HandleIcon(Button.Icon)
+		Button.Icon.backdrop = CreateFrame('Frame', nil, Button)
+		Button.Icon.backdrop:SetTemplate()
+		Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
+		Button.Icon.backdrop:SetOutside(Button.Icon)
+		
+		Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
+		Button.AutoCastShine:SetParent(Button.Icon.backdrop)
+		Button.AutoCastShine:SetAllPoints()
+		
+		for _, sparks in pairs(Button.AutoCastShine.sparkles) do
+			sparks:SetSize(sparks:GetWidth() * 2, sparks:GetHeight() * 2)
+		end
+		
+		Button:SetScript("OnUpdate", function(self)
+				if ImmersionFrame.TalkBox.Elements.chooseItems and ImmersionFrame.TalkBox.Elements.itemChoice == self:GetID() then
+				AutoCastShine_AutoCastStart(self.AutoCastShine, 0, .44, .87 )
+				self.Backdrop:SetBackdropBorderColor(0, 0.44, .87, 1)
+				else
+				self.Backdrop:SetBackdropBorderColor(unpack(AS.BorderColor))
+				AutoCastShine_AutoCastStop(self.AutoCastShine)
+				end
+		end)
+	end
+	
+	if Button.CircleBackground then
+		Button.CircleBackground:SetTexture()
+		Button.CircleBackgroundGlow:SetTexture()
+		hooksecurefunc(Button.ValueText, "SetText", function(self, text) Button.Count:SetText('+'..text) self:Hide() end)
+	end
+	end
+
+	SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ArtifactXPFrame)
+	SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.HonorFrame)
+	SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame)
+	SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.TitleFrame)
+	SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.SkillPointFrame)
+
+	ImmersionFrame:HookScript('OnEvent', function(self)
+		for _, Button in ipairs(self.TitleButtons.Buttons) do
+			if Button and not Button.backdrop then
+				Button:StripTextures()
+				Button:CreateBackdrop('Transparent')
+				Button.Overlay:Kill()
+				Button.backdrop:CreateShadow()
+				Button.backdrop:SetInside(Button, 4, 4)
+				Button.Hilite:SetTemplate()
+				Button.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
+				Button.Hilite:SetBackdropColor(0, 0, 0, 0)
+				Button.Hilite:SetAllPoints(Button.backdrop)
+				Button:SetHighlightTexture('')
+			end
+		end
+		for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
+			if Button and not Button.backdrop then
+				SkinReward(Button)
+			end
+		end
+		for _, Button in ipairs(self.TalkBox.Elements.Progress.Buttons) do
+			if Button and not Button.backdrop then
+				Button:StripTextures()
+				Button:CreateBackdrop('Transparent')
+				S:HandleIcon(Button.Icon)
+				Button.NameFrame:Hide()
+				Button.Border:Hide()
+				Button.Mask:Hide()
+
+				Button.backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0, 0)
+				Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT', 0, 0)
+				Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
+			end
+		end
+	end)
+end
 
 local function shadow_bigwigs(self, event, addon)
 	if event == 'PLAYER_ENTERING_WORLD' then
@@ -519,18 +661,7 @@ function WS:ShadowGeneralFrames()
 		local alert = _G["StaticPopup"..i]
 		if alert then alert:CreateShadow() end
 	end
-
-	local tabs = {
-		"LeftDisabled",
-		"MiddleDisabled",
-		"RightDisabled",
-		"Left",
-		"Middle",
-		"Right"
-	}
 	
-
-
 	-- 人物面板标签页
 	for i=1,4 do
 		CreateTabShadow(_G["CharacterFrameTab"..i])
@@ -840,13 +971,18 @@ function WS:AddOnSkins()
 
 	-- Weakaura
 	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
-		AS:RegisterSkin('|cff00aaffWind|rWeakAuras2', shadow_weakauras, 'ADDON_LOADED')
+		AS:RegisterSkin('WeakAuras2', shadow_weakauras, 'ADDON_LOADED')
 	end
 
 	-- Bigwigs
 	if self.db.addonskins.bigwigs and AS:CheckAddOn('BigWigs') then
 		AS:RegisterSkin('BigWigs', shadow_bigwigs, 'ADDON_LOADED')
 		AS:RegisterSkinForPreload('BigWigs_Plugins', shadow_bigwigs)
+	end
+
+	-- Immersion
+	if self.db.addonskins.immersion and AS:CheckAddOn('Immersion') then
+		AS:RegisterSkin('Immersion', shadow_immersion, 'ADDON_LOADED')
 	end
 end
 

@@ -13,8 +13,10 @@ ED.hookDeleteDialogs = {
 	["DELETE_GOOD_QUEST_ITEM"] = true,
 }
 
-function ED:ShowFillInButton(editBoxFrame)
-	if not editBoxFrame then return end
+function ED:ShowFillInButton(dialog)
+	local editBoxFrame = dialog.editBox
+	local yesButton = dialog.button1
+	if not editBoxFrame or not yesButton then return end
 
 	-- 初始化一个按钮
 	if not self.fillInButton then
@@ -25,13 +27,14 @@ function ED:ShowFillInButton(editBoxFrame)
 	end
 	
 	-- 覆盖住
+	editBoxFrame:Hide()
 	self.fillInButton:SetPoint("TOPLEFT", editBoxFrame, "TOPLEFT", -2, -4)
 	self.fillInButton:SetPoint("BOTTOMRIGHT", editBoxFrame, "BOTTOMRIGHT", 2, 4)
 
 	-- 点击后填入 Delete
 	self.fillInButton:SetText("|cffe74c3c"..L["Click to confirm"].."|r")
 	self.fillInButton:SetScript("OnClick", function(self)
-		editBoxFrame:SetText(DELETE_ITEM_CONFIRM_STRING)
+		yesButton:Enable()
 		self:SetText("|cff2ecc71"..L["Confirmed"].."|r")
 	end)
 	self.fillInButton:Show()
@@ -49,18 +52,20 @@ function ED:DELETE_ITEM_CONFIRM(event)
 		local dialog = _G["StaticPopup" .. i]
 		local type = dialog.which
 		if self.hookDeleteDialogs[type] then
-			if self.db.use_delete_key and type ~= "DELETE_ITEM" then
-				-- 添加说明
-				local msg = dialog.text:GetText()
-				local msgTable = {strsplit("\n\n", msg)}
-				msg = ""
-				for k, v in pairs(msgTable) do
-					if (v ~= "") and (not strmatch(v, DELETE_ITEM_CONFIRM_STRING)) then
-						msg = msg..v.."\n\n"
+			if self.db.use_delete_key then
+				if type ~= "DELETE_ITEM" then
+					-- 添加说明
+					local msg = dialog.text:GetText()
+					local msgTable = {strsplit("\n\n", msg)}
+					msg = ""
+					for k, v in pairs(msgTable) do
+						if (v ~= "") and (not strmatch(v, DELETE_ITEM_CONFIRM_STRING)) then
+							msg = msg..v.."\n\n"
+						end
 					end
+					msg = msg..L["You may also press the |cffffd200Delete|r key as confirmation."]
+					dialog.text:SetText(msg)
 				end
-				msg = msg..L["You may also press the |cffffd200Delete|r key as confirmation."]
-				dialog.text:SetText(msg)
 
 				-- 按键删除
 				dialog:SetScript("OnKeyDown", function(self, key) if key == "DELETE" then DeleteCursorItem() end end)
@@ -68,7 +73,7 @@ function ED:DELETE_ITEM_CONFIRM(event)
 			end
 			-- 点击填入
 			if self.db.click_button_delete and StaticPopupDialogs[type].hasEditBox == 1 then
-				self:ShowFillInButton(dialog.editBox)
+				self:ShowFillInButton(dialog)
 				dialog:HookScript("OnHide", function(self) ED:HideFillInButton() end)
 				dialog.editBox:ClearFocus()
 			end
@@ -77,8 +82,11 @@ function ED:DELETE_ITEM_CONFIRM(event)
 end
 
 function ED:Initialize()
+	if not E.db.WindTools["Trade"]["Enhanced Delete"] then return end
 	self.db = E.db.WindTools["Trade"]["Enhanced Delete"]
-	if not self.db.enabled then return end
+	tinsert(WT.UpdateAll, function()
+		ED.db = E.db.WindTools["Trade"]["Enhanced Delete"]
+	end)
 
 	self:RegisterEvent("DELETE_ITEM_CONFIRM")
 end

@@ -167,7 +167,7 @@ function RM:ToggleSettings()
 end
 
 function RM:Initialize()
-	if not E.db.WindTools["Interface"]["Raid Markers"] then return end
+	if not E.db.WindTools["Interface"]["Raid Markers"].enabled then return end
 	self.db = E.db.WindTools["Interface"]["Raid Markers"]
 	tinsert(WT.UpdateAll, function()
 		RM.db = E.db.WindTools["Interface"]["Raid Markers"]

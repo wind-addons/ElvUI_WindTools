@@ -419,7 +419,7 @@ function MB:CreateFrames()
 end
 
 function MB:Initialize()
-	if not E.db.WindTools["Interface"]["Minimap Buttons"] then return end
+	if not E.db.WindTools["Interface"]["Minimap Buttons"].enabled then return end
 	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
 	
 	tinsert(WT.UpdateAll, function()

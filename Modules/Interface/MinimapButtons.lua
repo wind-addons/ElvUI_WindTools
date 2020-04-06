@@ -8,7 +8,6 @@
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local MB = E:NewModule('Wind_MinimapButtons', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
-local WS = E:GetModule('Wind_Skins')
 
 local sub, len, find = string.sub, string.len, string.find
 
@@ -220,7 +219,7 @@ function MB:SkinButton(frame)
 
 		tinsert(moveButtons, name)
 		
-		if WS.db.elvui.general and not self.db.backdrop then frame:CreateShadow() end
+		if E.db.WindTools.Interface.Skins.elvui.general and not self.db.backdrop then frame:CreateShadow() end
 		frame.isSkinned = true
 	end
 end
@@ -363,7 +362,7 @@ function MB:UpdateLayout()
 	
 	if self.db.backdrop then
 		minimapButtonBar.backdrop:Show()
-		if WS.db.elvui.general then minimapButtonBar.backdrop:CreateShadow() end
+		if E.db.WindTools.Interface.Skins then minimapButtonBar.backdrop:CreateShadow() end
 	else
 		minimapButtonBar.backdrop:Hide()
 	end
@@ -424,7 +423,7 @@ function MB:Initialize()
 	self.db = E.db.WindTools["Interface"]["Minimap Buttons"]
 	
 	tinsert(WT.UpdateAll, function()
-		MB.db = self.db
+		MB.db = E.db.WindTools["Interface"]["Minimap Buttons"]
 		MB:CreateFrames()
 	end)
 

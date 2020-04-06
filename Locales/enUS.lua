@@ -226,8 +226,8 @@ L["WaycrestManor"] = true
 L["Mechagon"] = true
 L["Mythic+"] = true
 L["Mythic+(LEG&BFA)"] = true
-L["Health Info"] = true,
-L["Health Bar"] = true,
+L["Health Info"] = true
+L["Health Bar"] = true
 -- 跳过艾泽里特特质选择界面的渲染动画
 L["Skip Azerite Animations"] = true
 L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = true

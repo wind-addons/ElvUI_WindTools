@@ -210,6 +210,10 @@ P["WindTools"]["Interface"] = {
 		["item_icon"] = {
 			["enabled"] = true,
 		},
+		["health_info_offset"] = {
+			bar = 0,
+			text = 0,
+		},
 		["Progression"] = {
 			["enabled"] = true,
 			["Dungeon"] = {
@@ -983,8 +987,30 @@ WT.ToolConfigs["Interface"] = {
 				},
 			},
 		},
-		["progression"] = {
+		["health_info_offset"] = {
 			order = 6,
+			name = L["Health Info"],
+			args = {
+				["bar"] = {
+					order = 1,
+					name = L["Health Bar"].." "..L['Y Offset'],
+					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["health_info_offset"]["bar"] end,
+					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["health_info_offset"]["bar"] = value end,
+					type = 'range',
+					min = -350, max = 350, step = 1,
+				},
+				["text"] = {
+					order = 2,
+					name = L["Text"].." "..L['Y Offset'],
+					get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["health_info_offset"]["text"] end,
+					set = function(info, value) E.db.WindTools["Interface"]["Enhanced Tooltip"]["health_info_offset"]["text"] = value end,
+					type = 'range',
+					min = -350, max = 350, step = 1,
+				},
+			},
+		},
+		["progression"] = {
+			order = 7,
 			name = L["Progression"],
 			desc  = L["Add progression info to tooltip."],
 			get = function(info) return E.db.WindTools["Interface"]["Enhanced Tooltip"]["Progression"][info[#info]] end,

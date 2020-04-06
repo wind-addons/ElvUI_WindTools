@@ -387,16 +387,42 @@ function ETT.AddInspectInfo(self, tt, unit, numTries, r, g, b)
 	ETT:SetProgressionInfo(guid, tt)
 end
 
+function ETT:MoveHealthInfo()
+	if E.private.tooltip.enable ~= true then return end
+
+	hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(self, tt, parent)
+		if tt.StatusBar then
+			if E.db.tooltip.healthBar.statusPosition == "BOTTOM" then
+				if not tt.StatusBar.anchoredToTop then
+					tt.StatusBar:ClearAllPoints()
+					tt.StatusBar:Point("TOPLEFT", tt, "BOTTOMLEFT", E.Border-1, -(E.Spacing * 3) + ETT.db.health_info_offset.bar)
+					tt.StatusBar:Point("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border+1, -(E.Spacing * 3) + ETT.db.health_info_offset.bar)
+					tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, ETT.db.health_info_offset.text)
+				end
+			else
+				if tt.StatusBar.anchoredToTop then
+					tt.StatusBar:ClearAllPoints()
+					tt.StatusBar:Point("BOTTOMLEFT", tt, "TOPLEFT", E.Border-1, (E.Spacing * 3) + ETT.db.health_info_offset.bar)
+					tt.StatusBar:Point("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border+1, (E.Spacing * 3) + ETT.db.health_info_offset.bar)
+					tt.StatusBar.text:Point("CENTER", tt.StatusBar, 0, ETT.db.health_info_offset.text)
+				end
+			end
+		end
+	end)
+end
+
 function ETT:Initialize()
 	if not E.db.WindTools["Interface"]["Enhanced Tooltip"].enabled then return end
 
 	self.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
 	tinsert(WT.UpdateAll, function()
 		ETT.db = E.db.WindTools["Interface"]["Enhanced Tooltip"]
+		ETT:MoveHealthInfo()
 	end)
 
 	self:ItemIcons()
 	hooksecurefunc(TT, 'AddInspectInfo', ETT.AddInspectInfo)
+	ETT:MoveHealthInfo()
 end
 
 local function InitializeCallback()

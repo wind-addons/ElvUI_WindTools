@@ -226,6 +226,8 @@ L["WaycrestManor"] = "威奎斯特莊園"
 L["Mechagon"] = "機械岡"
 L["Mythic+"] = "M+"
 L["Mythic+(LEG&BFA)"] = "M+ 軍團&決戰"
+L["Health Info"] = "生命值訊息"
+L["Health Bar"] = "生命條"
 -- 跳过艾泽里特特质选择界面的渲染动画
 L["Skip Azerite Animations"] = "跳過艾澤里特動畫"
 L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = "跳過艾澤萊晶岩之力選擇界面中的新護甲揭示特效和下一圈特效。"

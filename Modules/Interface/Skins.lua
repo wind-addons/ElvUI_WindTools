@@ -664,6 +664,9 @@ function WS:ShadowElvUIFrames()
 			if tt:IsForbidden() or E.private.tooltip.enable ~= true then return end
 			if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
 		end)
+		hooksecurefunc("QueueStatusFrame_Update", function(self)
+			self:CreateShadow()
+		end)
 	end
 
 	-- 数据条

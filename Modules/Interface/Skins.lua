@@ -108,15 +108,11 @@ local function shadow_immersion(self, event, addon)
 	ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
 	ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
-
 	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 8, -8)
 	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -8, 8)
 	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
 
 	ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
-	if ImmersionFrame.TalkBox.MainFrame.CloseButton.Texture then 
-	ImmersionFrame.TalkBox.MainFrame.CloseButton.Texture:Kill()
-	end
 
 	S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
 
@@ -127,7 +123,6 @@ local function shadow_immersion(self, event, addon)
 	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
 	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
 	ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
-
 
 	ImmersionFrame.TalkBox.Elements:StripTextures()
 	ImmersionFrame.TalkBox.Elements:CreateBackdrop('Transparent')
@@ -151,9 +146,9 @@ local function shadow_immersion(self, event, addon)
 	ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
 
 	local function SkinReward(Button)
-	if Button.Icon then
-		Button:CreateBackdrop()
-		
+		if Button.Icon then
+			Button:CreateBackdrop()
+			
 		if Button.NameFrame then
 			Button.NameFrame:Hide()
 		end
@@ -171,10 +166,6 @@ local function shadow_immersion(self, event, addon)
 		Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
 		
 		S:HandleIcon(Button.Icon)
-		Button.Icon.backdrop = CreateFrame('Frame', nil, Button)
-		Button.Icon.backdrop:SetTemplate()
-		Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
-		Button.Icon.backdrop:SetOutside(Button.Icon)
 		
 		Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
 		Button.AutoCastShine:SetParent(Button.Icon.backdrop)
@@ -186,11 +177,11 @@ local function shadow_immersion(self, event, addon)
 		
 		Button:SetScript("OnUpdate", function(self)
 				if ImmersionFrame.TalkBox.Elements.chooseItems and ImmersionFrame.TalkBox.Elements.itemChoice == self:GetID() then
-				AutoCastShine_AutoCastStart(self.AutoCastShine, 0, .44, .87 )
-				self.Backdrop:SetBackdropBorderColor(0, 0.44, .87, 1)
+					AutoCastShine_AutoCastStart(self.AutoCastShine, 0, .44, .87 )
+					self.backdrop:SetBackdropBorderColor(0, 0.44, .87, 1)
 				else
-				self.Backdrop:SetBackdropBorderColor(unpack(AS.BorderColor))
-				AutoCastShine_AutoCastStop(self.AutoCastShine)
+					self.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+					AutoCastShine_AutoCastStop(self.AutoCastShine)
 				end
 		end)
 	end
@@ -982,7 +973,7 @@ function WS:AddOnSkins()
 
 	-- Immersion
 	if self.db.addonskins.immersion and AS:CheckAddOn('Immersion') then
-		AS:RegisterSkin('Immersion', shadow_immersion, 'ADDON_LOADED')
+		AS:RegisterSkin('Immersion', shadow_immersion, 'PLAYER_ENTERING_WORLD')
 	end
 end
 

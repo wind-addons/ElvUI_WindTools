@@ -32,6 +32,17 @@ P["WindTools"]["Quest"] = {
 			size = E.db.general.fontSize,
 			style = "OUTLINE",
 		},
+		auto_turn_in = {
+			auto = false,
+			switch_button = {
+				enabled = true,
+				font = E.db.general.font,
+				size = E.db.general.fontSize,
+				style = "OUTLINE",
+				x_offset = 0,
+				y_offset = 0,
+			}
+		}
 	},
 	["Quest Announcment"] = {
 		["enabled"] = true,
@@ -62,8 +73,76 @@ WT.ToolConfigs["Quest"] = {
 			order = 5,
 			name = L['General'],
 			args = {
-				header = {
+				auto_turn_in = {
 					order = 1,
+					name = L["Auto Turn In"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] end,
+					set = function(info, value)
+						E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] = value
+						WT.UpdateSwitchButton()
+					end,
+					args = {
+						auto = {
+							order = 1,
+							name = L["Auto"],
+						},
+						switch_button = {
+							order = 2,
+							name = L["Switch button"],
+							get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] end,
+							set = function(info, value)
+								E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] = value
+								WT.UpdateSwitchButton()
+							end,
+							args = {
+								enabled = {
+									order = 1,
+									name = L["Enable"],
+								},
+								font = {
+									type = 'select', dialogControl = 'LSM30_Font',
+									order = 2,
+									name = L['Font'],
+									values = LSM:HashTable('font'),
+								},
+								size = {
+									order = 3,
+									name = L['Size'],
+									type = 'range',
+									min = 6, max = 22, step = 1,
+								},
+								style = {
+									order = 4,
+									name = L["Style"],
+									type = 'select',
+									values = {
+										['NONE'] = L['None'],
+										['OUTLINE'] = L['OUTLINE'],
+										['MONOCHROME'] = L['MONOCHROME'],
+										['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+										['THICKOUTLINE'] = L['THICKOUTLINE'],
+									},
+								},
+								x_offset = {
+									order = 5,
+									type = 'range',
+									name = L['X Offset'],
+									min = -350, max = 350, step = 1,
+								},
+								y_offset = {
+									order = 6,
+									type = 'range',
+									name = L['Y Offset'],
+									min = -350, max = 350, step = 1,
+								},
+							},
+						}
+						
+
+					},
+				},
+				header = {
+					order = 2,
 					name = L["Header"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["header"][info[#info]] end,
 					set = function(info, value)
@@ -98,7 +177,7 @@ WT.ToolConfigs["Quest"] = {
 					},	
 				},
 				title = {
-					order = 2,
+					order = 3,
 					name = L["Title"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["title"][info[#info]] end,
 					set = function(info, value)
@@ -188,7 +267,7 @@ WT.ToolConfigs["Quest"] = {
 					},
 				},
 				info = {
-					order = 3,
+					order = 4,
 					name = L["Info text"],
 					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["info"][info[#info]] end,
 					set = function(info, value)

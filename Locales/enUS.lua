@@ -420,6 +420,9 @@ L["Info text"] = true
 L["Use class color"] = true
 L["Custom title color"] = true
 L["Custom highlight color"] = true
+L["Auto Turn In"] = true
+L["Switch button"] = true
+L["Auto"] = true
 -- 美化皮肤
 L["Provide a new style for ElvUI."] = true
 L["Game Tooltip"] = true

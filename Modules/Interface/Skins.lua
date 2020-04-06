@@ -429,6 +429,20 @@ local function shadow_alerts()
 	hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
+local function CreateTabShadow(tab)
+	if not tab then return end
+	if tab and tab.backdrop and not tab.hasWindSkin then
+		tab:StripTextures()
+		tab:CreateBackdrop('Transparent')
+		tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
+		tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
+		tab.backdrop:CreateShadow(2)
+		tab.hasWindSkin = true
+	else
+		tab:CreateShadow(2)
+	end
+end
+
 function WS:ADDON_LOADED(_, addon)
 	if not self.db.elvui.general then return end
 
@@ -501,39 +515,50 @@ function WS:ShadowGeneralFrames()
 	end
 
 	-- 暴雪通知
-	for i=1,4 do
+	for i=1, 4 do
 		local alert = _G["StaticPopup"..i]
 		if alert then alert:CreateShadow() end
 	end
 
+	local tabs = {
+		"LeftDisabled",
+		"MiddleDisabled",
+		"RightDisabled",
+		"Left",
+		"Middle",
+		"Right"
+	}
+	
+
+
 	-- 人物面板标签页
 	for i=1,4 do
-		local tab = _G["CharacterFrameTab"..i]
-		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+		CreateTabShadow(_G["CharacterFrameTab"..i])
 	end
 
 	-- 好友面板标签页
-	for i=1,4 do
-		local tab = _G["FriendsFrameTab"..i]
-		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	for i=1, 4 do
+		CreateTabShadow(_G["FriendsFrameTab"..i])
 	end
 
 	-- 地城团队标签页
-	for i=1,3 do
-		local tab = _G["PVEFrameTab"..i]
-		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	for i=1, 3 do
+		CreateTabShadow(_G["PVEFrameTab"..i])
 	end
 
+	-- 天赋标签页
+	for i=1, 3 do
+		CreateTabShadow(_G["PlayerTalentFrameTab"..i])
+	end
+		
 	-- 法术书标签页
-	for i=1,3 do
-		local tab = _G["SpellBookFrameTabButton"..i]
-		if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end
+	for i=1, 5 do
+		CreateTabShadow(_G["SpellBookFrameTabButton"..i])
 	end
 
 	-- 法术书侧栏
-	for i=1,8 do
-		local tab = _G["SpellBookSkillLineTab"..i]
-		if tab then tab:CreateShadow(2) end
+	for i=1, MAX_SKILLLINE_TABS do
+		CreateTabShadow(_G["SpellBookSkillLineTab"..i])
 	end
 
 	-- 镜像时间条 呼吸条
@@ -551,8 +576,10 @@ function WS:ShadowElvUIFrames()
 
 	if self.db.elvui.general then
 		-- 为 ElvUI 美化皮肤模块添加阴影功能
-		hooksecurefunc(S, "HandleTab", function(_, tab) if tab and tab.backdrop then tab.backdrop:CreateShadow(2) end end)
-		hooksecurefunc(S, "HandlePortraitFrame", function(_, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
+		hooksecurefunc(S, "HandleTab", function(self, tab)
+			CreateTabShadow(tab)
+		end)
+		hooksecurefunc(S, "HandlePortraitFrame", function(self, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 		if _G.ElvUIVendorGraysFrame then _G.ElvUIVendorGraysFrame:CreateShadow() end
 		-- 提醒
 		shadow_alerts()
@@ -562,17 +589,6 @@ function WS:ShadowElvUIFrames()
 			if not frame.shadow then
 				frame:CreateShadow()
 			end
-		end)
-	end
-
-	-- AddOnSkins
-	if AddOnSkins then
-		local AS = unpack(AddOnSkins)
-		hooksecurefunc(AS, "SkinFrame", function(_, f)
-			f:CreateShadow()
-		end)
-		hooksecurefunc(AS, "SkinTab", function(_, f)
-			S:HandleTab(f)
 		end)
 	end
 
@@ -590,6 +606,7 @@ function WS:ShadowElvUIFrames()
 		CharacterModelFrame:DisableDrawLayer("OVERLAY")
 		if CharacterModelFrame.backdrop then CharacterModelFrame.backdrop:Kill() end
 	end
+
 	-- 单位框体
 	if self.db.elvui.unitframes then
 		-- 低频度更新单位框体外围阴影
@@ -607,12 +624,14 @@ function WS:ShadowElvUIFrames()
 				if db.threatStyle == 'GLOW' and parent.shadow then parent.shadow:SetShown(not threat.glow:IsShown()) end
 			end
 		end)
+
 		-- 为分离的能量条提供阴影
 		hooksecurefunc(UF, "Configure_Power", function(_, frame)
 			if frame.USE_POWERBAR and frame.POWERBAR_DETACHED then 
 				frame.Power:CreateShadow()
 			end
 		end)
+
 		-- 为单位框体光环提供边缘美化
 		hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button) if button then button:CreateShadow() end end)
 	end
@@ -792,11 +811,30 @@ end
 function WS:AddOnSkins()
 	-- 用 AddOnSkins 美化的窗体标签页
 	AS = unpack(AddOnSkins)
-
-	if self.db.addonskins.general then
-		hooksecurefunc(AS, "SkinTab", function() if tab and tab.backdrop then tab.backdrop:CreateShadow() end end)
-	end
 	
+	-- AddOnSkins
+	if self.db.addonskins.general then
+		hooksecurefunc(AS, "SkinFrame", function(self, f)
+			f:CreateShadow()
+			f:StripTextures()
+			f:CreateBackdrop('Transparent')
+		end)
+
+		hooksecurefunc(AS, "SkinTab", function(self, f)
+			if f.Backdrop then f.Backdrop:Kill() end
+			S:HandleTab(f)
+		end)
+	
+		AS.SkinScrollBar = function(self, frame)
+			S.HandleScrollBar(self, frame)
+			frame:CreateShadow()
+		end
+
+		AS.SkinButton = function(self, button, strip)
+			S.HandleButton(self, button, strip)
+		end
+	end
+
 	-- Weakaura
 	if self.db.addonskins.weakaura and AS:CheckAddOn('WeakAuras') then
 		AS:RegisterSkin('|cff00aaffWind|rWeakAuras2', shadow_weakauras, 'ADDON_LOADED')

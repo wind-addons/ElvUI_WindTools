@@ -6,6 +6,7 @@
 -- 性能优化
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
+local S = E:GetModule('Skins')
 local PR = E:NewModule('Wind_ParagonReputation', 'AceHook-3.0', 'AceEvent-3.0');
 
 local _G = _G
@@ -16,9 +17,12 @@ local GetQuestLogIndexByID = GetQuestLogIndexByID
 local GetItemInfo = GetItemInfo
 local GetQuestLogCompletionText = GetQuestLogCompletionText
 local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
+local GameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
 local GameTooltip_AddQuestRewardsToTooltip = GameTooltip_AddQuestRewardsToTooltip
 local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = C_Reputation.GetFactionParagonInfo
+local C_Timer_After = C_Timer.After
+local UIFrameFadeIn = UIFrameFadeIn
 
 local ACTIVE_TOAST = false
 local WAITING_TOAST = {}
@@ -80,13 +84,13 @@ function PR:SetupParagonTooltip()
 	end
 end
 
-function PR:Tooltip(tt, event)
-	if not tt.questID then return end
+function PR:Tooltip(bar, event)
+	if not bar.questID then return end
 	if event == "OnEnter" then
-		local _, link = GetItemInfo(PARAGON_QUEST_ID[tt.questID][2])
+		local _, link = GetItemInfo(PARAGON_QUEST_ID[bar.questID][2])
 		if link ~= nil then
-			GameTooltip:SetOwner(tt,"ANCHOR_NONE")
-			GameTooltip:SetPoint("TOPLEFT",tt,"BOTTOMRIGHT")
+			GameTooltip:SetOwner(bar,"ANCHOR_NONE")
+			GameTooltip:SetPoint("LEFT", bar, "RIGHT", 10, 0)
 			GameTooltip:SetHyperlink(link)
 			GameTooltip:Show()
 		end
@@ -109,27 +113,25 @@ function PR:HookReputationBars()
 	end
 end
 
-function PR:ShowToast(name,text)
+function PR:ShowToast(name, text)
 	ACTIVE_TOAST = true
-	if self.DB.sound then PlaySound(44295,"master",true) end
+	if self.db.toast.sound then PlaySound(44295, "master", true) end
 	PR.toast:EnableMouse(false)
 	PR.toast.title:SetText(name)
 	PR.toast.title:SetAlpha(0)
 	PR.toast.description:SetText(text)
 	PR.toast.description:SetAlpha(0)
-	PR.toast.reset:Hide()
-	PR.toast.lock:Hide()
 	UIFrameFadeIn(PR.toast,.5,0,1)
-	C_Timer.After(.5,function()
+	C_Timer_After(.5,function()
 		UIFrameFadeIn(PR.toast.title,.5,0,1)
 	end)
-	C_Timer.After(.75,function()
+	C_Timer_After(.75,function()
 		UIFrameFadeIn(PR.toast.description,.5,0,1)
 	end)
-	C_Timer.After(PR.DB.fade,function()
+	C_Timer_After(PR.db.toast.fade_time,function()
 		UIFrameFadeOut(PR.toast,1,1,0)
 	end)
-	C_Timer.After(PR.DB.fade+1.25,function()
+	C_Timer_After(PR.db.toast.fade_time+1.25,function()
 		PR.toast:Hide()
 		ACTIVE_TOAST = false
 		if #WAITING_TOAST > 0 then
@@ -144,10 +146,42 @@ function PR:WaitToast()
 	PR:ShowToast(name,text)
 end
 
+function PR:CreateToast()
+	local toast = CreateFrame("FRAME", "ParagonReputation_Toast", UIParent)
+	toast:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 250)
+	toast:SetSize(302, 70)
+	toast:SetClampedToScreen(true)
+	toast:Hide()
+
+	-- [Toast] Create Background Texture
+	toast:CreateBackdrop('Transparent')
+	if E.db.WindTools.Interface.Skins.elvui.general and toast.backdrop then
+		toast.backdrop:CreateShadow()
+	end
+
+	-- [Toast] Create Title Text
+	toast.title = toast:CreateFontString(nil,"ARTWORK","GameFontNormalLarge")
+	toast.title:SetPoint("TOPLEFT",toast,"TOPLEFT",23,-10)
+	toast.title:SetWidth(260)
+	toast.title:SetHeight(16)
+	toast.title:SetJustifyV("TOP")
+	toast.title:SetJustifyH("LEFT")
+
+	-- [Toast] Create Description Text
+	toast.description = toast:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
+	toast.description:SetPoint("TOPLEFT",toast.title,"TOPLEFT",1,-23)
+	toast.description:SetWidth(258)
+	toast.description:SetHeight(32)			
+	toast.description:SetJustifyV("TOP")
+	toast.description:SetJustifyH("LEFT")
+
+	PR.toast = toast
+end
+
 function PR:QUEST_ACCEPTED(event,...)
 	local questIndex,questID = ...
-	--TODO PR.db.toast
-	if false and PARAGON_QUEST_ID[questID] then
+
+	if PR.db.toast.enabled and PARAGON_QUEST_ID[questID] then
 		local name = GetFactionInfoByID(PARAGON_QUEST_ID[questID][1])
 		local text = GetQuestLogCompletionText(questIndex)
 		if ACTIVE_TOAST then
@@ -216,38 +250,28 @@ function PR:ChangeReputationBars()
 					factionBar:SetStatusBarColor(r,g,b)
 					factionRow.rolloverText = HIGHLIGHT_FONT_COLOR_CODE.." "..format(REPUTATION_PROGRESS_FORMAT,BreakUpLargeNumbers(value),BreakUpLargeNumbers(threshold))..FONT_COLOR_CODE_CLOSE
 					
-					if hasRewardPending then
-						value = value-threshold
-						factionStanding:SetText("+"..BreakUpLargeNumbers(value))
-						factionRow.standingText = "+"..BreakUpLargeNumbers(value)
-					else
-						value = threshold-value
+					if PR.db.text == "PARAGON" then
+						factionStanding:SetText(L["Paragon"])
+						factionRow.standingText = L["Paragon"]
+					elseif PR.db.text == "CURRENT"  then
 						factionStanding:SetText(BreakUpLargeNumbers(value))
 						factionRow.standingText = BreakUpLargeNumbers(value)
+					elseif PR.db.text == "VALUE" then
+						factionStanding:SetText(" "..BreakUpLargeNumbers(value).." / "..BreakUpLargeNumbers(threshold))
+						factionRow.standingText = (" "..BreakUpLargeNumbers(value).." / "..BreakUpLargeNumbers(threshold))
+						factionRow.rolloverText = nil					
+					elseif PR.db.text == "DEFICIT" then
+						if hasRewardPending then
+							value = value-threshold
+							factionStanding:SetText("+"..BreakUpLargeNumbers(value))
+							factionRow.standingText = "+"..BreakUpLargeNumbers(value)
+						else
+							value = threshold-value
+							factionStanding:SetText(BreakUpLargeNumbers(value))
+							factionRow.standingText = BreakUpLargeNumbers(value)
+						end
+						factionRow.rolloverText = nil
 					end
-					factionRow.rolloverText = nil
-					-- if PR.DB.text == "PARAGON" then
-					-- 	factionStanding:SetText(L["PARAGON"])
-					-- 	factionRow.standingText = L["PARAGON"]
-					-- elseif PR.DB.text == "CURRENT"  then
-					-- 	factionStanding:SetText(BreakUpLargeNumbers(value))
-					-- 	factionRow.standingText = BreakUpLargeNumbers(value)
-					-- elseif PR.DB.text == "VALUE" then
-					-- 	factionStanding:SetText(" "..BreakUpLargeNumbers(value).." / "..BreakUpLargeNumbers(threshold))
-					-- 	factionRow.standingText = (" "..BreakUpLargeNumbers(value).." / "..BreakUpLargeNumbers(threshold))
-					-- 	factionRow.rolloverText = nil					
-					-- elseif PR.DB.text == "DEFICIT" then
-					-- 	if hasRewardPending then
-					-- 		value = value-threshold
-					-- 		factionStanding:SetText("+"..BreakUpLargeNumbers(value))
-					-- 		factionRow.standingText = "+"..BreakUpLargeNumbers(value)
-					-- 	else
-					-- 		value = threshold-value
-					-- 		factionStanding:SetText(BreakUpLargeNumbers(value))
-					-- 		factionRow.standingText = BreakUpLargeNumbers(value)
-					-- 	end
-					-- 	factionRow.rolloverText = nil
-					-- end
 					if factionIndex == GetSelectedFaction() and ReputationDetailFrame:IsShown() then
 						local count = floor(currentValue/threshold)
 						if hasRewardPending then count = count-1 end
@@ -280,6 +304,8 @@ function PR:Initialize()
 	hooksecurefunc("ReputationParagonFrame_SetupParagonTooltip", PR.SetupParagonTooltip)
 	hooksecurefunc("ReputationFrame_Update", PR.ChangeReputationBars)
 	PR:HookReputationBars()
+	PR:CreateToast()
+	E:CreateMover(PR.toast, "Wind_ParagonReputationToastFrameMover", L["Paragon Reputation Toast"], nil, nil, nil, "ALL", function() return PR.db.enabled; end)
 end
 
 local function InitializeCallback()

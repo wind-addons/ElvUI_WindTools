@@ -451,5 +451,16 @@ L["Edit box"] = "输入框"
 L["Language indicator"] = "输入法指示器"
 L["Loss of control"] = "失去控制"
 -- 声望追踪
-L["Track Reputation"] = true
-L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'] = true
+L['Track Reputation'] = "声望追踪"
+L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'] = "当你获得某个阵营的声望时, 将自动追踪此阵营的声望至经验栏位." 
+-- 巅峰声望
+L["Paragon Reputation"] = "巅峰声望"
+L['Better visualization of Paragon Factions on the Reputation Frame.'] = "在声望界面中更显著的提示你的巅峰声望情况。"
+L["Toast"] = "提示信息面板"
+L["Paragon Reputation Toast"] = "巅峰声望箱子提示"
+L["Fade time"] = "存在时间"
+L["Format"] = "格式"
+L["Sound"] = "音效"
+L["Reputation panel"] = "声望界面"
+L["Paragon"] = "崇拜"
+L["Exalted"] = "巅峰"

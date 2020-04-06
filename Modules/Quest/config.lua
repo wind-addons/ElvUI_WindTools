@@ -65,6 +65,12 @@ P["WindTools"]["Quest"] = {
 	["Paragon Reputation"] = {
 		enabled = true,
 		color = { r = 0, g = .5, b = .9 },
+		text = "DEFICIT",
+		toast = {
+			enabled = true,
+			sound = true,
+			fade_time = 5,
+		}
 	},
 }
 
@@ -364,5 +370,67 @@ WT.ToolConfigs["Quest"] = {
 		tDesc   = L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'],
 		oAuthor = "ElvUI_Enhanced, Marcel Menzel",
 		cAuthor = "houshuu",
+	},
+	["Paragon Reputation"] = {
+		tDesc   = L['Better visualization of Paragon Factions on the Reputation Frame.'],
+		oAuthor = "|cffabd473Fail|r |cffff4000US-Ragnaros|r",
+		cAuthor = "houshuu",
+		reputation_panel = {
+			order = 5,
+			name = L["Reputation panel"],
+			get = function(info) return E.db.WindTools["Quest"]["Paragon Reputation"][ info[#info] ] end,
+			set = function(info, value) E.db.WindTools["Quest"]["Paragon Reputation"][ info[#info] ] = value; ReputationFrame_Update() end,
+			args = {
+				color = {
+					order = 1, 
+					name = L["Color"],
+					type = "color",
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.WindTools["Quest"]["Paragon Reputation"].color
+						return t.r, t.g, t.b, 1, 0, .5, .9, 1
+					end,
+					set = function(info, r, g, b)
+						local t = E.db.WindTools["Quest"]["Paragon Reputation"].color
+						t.r, t.g, t.b = r, g, b
+						ReputationFrame_Update()
+					end,
+				},
+				text = {
+					order = 2, 
+					name = L["Format"],
+					type = 'select',
+					values = {
+						['PARAGON'] = L["Paragon"]..' (100/10000)',
+						['EXALTED'] = L["Exalted"]..' (100/10000)',
+						['CURRENT'] = '100 (100/10000)',
+						['VALUE'] = '100/10000',
+						['DEFICIT'] = '9900',
+					},
+				},
+			},
+		},
+		toast = {
+			order = 6,
+			name = L["Toast"],
+			get = function(info) return E.db.WindTools["Quest"]["Paragon Reputation"]["toast"][ info[#info] ] end,
+			set = function(info, value) E.db.WindTools["Quest"]["Paragon Reputation"]["toast"][ info[#info] ] = value end,
+			args = {
+				enabled = {
+					order = 1, 
+					name = L["Enable"],
+				},
+				sound = {
+					order = 1, 
+					name = L["Sound"],
+				},
+				fade_time = {
+					order = 3,
+					type = "range",
+					name = L["Fade time"],
+					min = 1, max = 15.0, step = 0.01,
+				},
+			},
+		},
 	},
 }

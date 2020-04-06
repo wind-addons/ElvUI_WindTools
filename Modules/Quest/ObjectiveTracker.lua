@@ -588,8 +588,8 @@ function OT:Initialize()
         OT:RefreshSwitchButton()
     end
 
-    hooksecurefunc("ObjectiveTracker_Collapse", function() OT:RefreshSwitchButton() end)
-    hooksecurefunc("ObjectiveTracker_Expand", function() OT:RefreshSwitchButton() end)
+    hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Show", function() OT:RefreshSwitchButton() end)
+    hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Hide", function() OT:RefreshSwitchButton() end)
 end
 
 local function InitializeCallback()

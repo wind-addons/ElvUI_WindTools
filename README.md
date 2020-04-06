@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://github.com/fang2hou/ElvUI_WindTools/blob/master/Title.png?raw=true"/><br>
     <img src="https://img.shields.io/badge/ElvUI-11.372-blue.svg?longCache=true&style=for-the-badge"/>
-    <img src="https://img.shields.io/badge/Version-1.5.10-green.svg?longCache=true&style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/Version-1.5.11-green.svg?longCache=true&style=for-the-badge"/>
 
 Enhanced. Configurable. Better performance.<br>
 增强，可设置，更佳的性能。

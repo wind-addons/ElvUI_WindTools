@@ -426,7 +426,7 @@ L["Auto Turn In"] = "自動交接任務"
 L["Switch button"] = "切換按鈕"
 L["Auto"] = "自動"
 -- 美化皮膚
-L["Provide a new style for ElvUI."] = "为 ElvUI 带来全新的风格。"
+L["Provide a new style for ElvUI."] = "為 ElvUI 帶來煥然一新的風格。"
 L["Game Tooltip"] = "浮動提示"
 L["Auras"] = "光環"
 L["Action Bars"] = "快捷列"

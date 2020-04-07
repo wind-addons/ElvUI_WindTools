@@ -932,6 +932,12 @@ function WS:CustomSkins()
 		end
 		hooksecurefunc("LossOfControlFrame_SetUpDisplay", changeLocPos)
 	end
+
+	-- 一些微小位置移动
+	hooksecurefunc("ReputationFrame_Update", function(self)
+		_G.ReputationDetailFrame:ClearAllPoints()
+		_G.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 5, 0)
+	end)
 end
 
 function WS:AddOnSkins()

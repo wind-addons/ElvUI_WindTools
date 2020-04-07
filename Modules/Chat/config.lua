@@ -61,6 +61,9 @@ P["WindTools"]["Chat"] = {
 		-- 	["NAME_COPY"] = true,
 		-- 	["FRIEND_ADD"] = true,
 		-- }
+	},
+	["Unblock Filter"] = {
+		["enabled"] = true,
 	}
 }
 
@@ -345,4 +348,9 @@ WT.ToolConfigs["Chat"] = {
 			-- }
 		end,
 	},
+	["Unblock Filter"] = {
+		tDesc   = L["Unblock profanity filter setting for China server."],
+		oAuthor = "EKE",
+		cAuthor = "houshuu",
+	}
 }

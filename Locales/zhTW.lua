@@ -470,3 +470,6 @@ L["Sound"] = "音效"
 L["Reputation panel"] = "聲望介面"
 L["Paragon"] = "崇拜"
 L["Exalted"] = "巔峰"
+-- 解锁过滤器
+L["Unblock Filter"] = "解鎖過濾器"
+L["Unblock profanity filter setting for China server."] = "解鎖中國大陸服務器的語言過濾器設置。"

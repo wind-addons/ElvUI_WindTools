@@ -3,4 +3,5 @@
 	<Script file='TabChatMod.lua'/>
 	<Script file='EnhancedFriendList.lua'/>
 	<Script file='RightClickMenu.lua'/>
+	<Script file='UnblockFilter.lua'/>
 </Ui>

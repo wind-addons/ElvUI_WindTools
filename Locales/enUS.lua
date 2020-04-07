@@ -470,3 +470,6 @@ L["Sound"] = true
 L["Reputation panel"] = true
 L["Paragon"] = true
 L["Exalted"] = true
+-- 解锁过滤器
+L["Unblock Filter"] = true
+L["Unblock profanity filter setting for China server."] = true

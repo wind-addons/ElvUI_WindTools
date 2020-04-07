@@ -176,12 +176,16 @@ function EFL:UpdateFriends(button)
         local classc = EFL:ClassColor(class)
         broadcastText = nil
         if connected and classc then
-            button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
+            if self.db.enhanced.enabled then
+                button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack][(status == CHAT_FLAG_DND and 'DND' or status == CHAT_FLAG_AFK and 'AFK' or 'Online')])
+            end
             nameText = format('%s%s - (%s - %s %s)', classc:GenerateHexColorMarkup(), name, class, LEVEL, level)
             nameColor = FRIENDS_WOW_NAME_COLOR
             Cooperate = true
         else
-            button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack].Offline)
+            if self.db.enhanced.enabled then
+                button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack].Offline)
+            end
             nameText = name
             nameColor = FRIENDS_GRAY_COLOR
         end
@@ -227,7 +231,9 @@ function EFL:UpdateFriends(button)
         end
 
         if isOnline then
-            button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
+            if self.db.enhanced.enabled then
+                button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack][(isDND and 'DND' or isAFK and 'AFK' or 'Online')])
+            end
             if client == BNET_CLIENT_WOW then
                 if not zoneName or zoneName == '' then
                     infoText = UNKNOWN
@@ -243,15 +249,21 @@ function EFL:UpdateFriends(button)
                 end
 
                 if faction ~= "" then
-                    button.gameIcon:SetTexture(EFL.GameIcons[faction][self.db["enhanced"].GameIcon[faction]])
+                    if self.db.enhanced.enabled then
+                        button.gameIcon:SetTexture(EFL.GameIcons[faction][self.db["enhanced"].GameIcon[faction]])
+                    end
                 end
             else
                 infoText = gameText
-                button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
+                if self.db.enhanced.enabled then
+                    button.gameIcon:SetTexture(EFL.GameIcons[client][self.db["enhanced"].GameIcon[client]])
+                end
             end
             nameColor = FRIENDS_BNET_NAME_COLOR
         else
-            button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack].Offline)
+            if self.db.enhanced.enabled then
+                button.status:SetTexture(EFL.StatusIcons[self.db["enhanced"].StatusIconPack].Offline)
+            end
             nameColor = FRIENDS_GRAY_COLOR
             if lastOnline == 0 then
                 infoText = FRIENDS_LIST_OFFLINE
@@ -287,20 +299,14 @@ function EFL:UpdateFriends(button)
 end
 
 function EFL:Initialize()
-    -- 总开关
-    if not E.db.WindTools["Chat"]["Enhanced Friend List"]["enabled"] then
-        return
-    end
+    if not E.db.WindTools["Chat"]["Enhanced Friend List"]["enabled"] then return end
 
     self.db = E.db.WindTools["Chat"]["Enhanced Friend List"]
     tinsert(WT.UpdateAll, function()
         EFL.db = E.db.WindTools["Chat"]["Enhanced Friend List"]["enhanced"]
     end)
 
-    if self.db["enhanced"]["enabled"] then
-        -- 检查是否要进行增强
-        EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
-    end
+    EFL:SecureHook("FriendsFrame_UpdateFriendButton", 'UpdateFriends')
 end
 
 local function InitializeCallback()

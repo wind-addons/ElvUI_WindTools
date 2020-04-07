@@ -36,13 +36,16 @@ P["WindTools"]["Quest"] = {
 			auto = false,
 			switch_button = {
 				enabled = true,
+				fade_with_objective_tracker = true,
 				font = E.db.general.font,
 				size = E.db.general.fontSize,
 				style = "OUTLINE",
-				x_offset = 0,
-				y_offset = 0,
-			}
-		}
+				enabled_text = L["Auto Turn In"],
+				disabled_text = L["Auto Turn In"],
+				enabled_color = {r = .298, g = .82, b = .216},
+				disabled_color = {r = .467, g = .467, b = .467},
+			},
+		},
 	},
 	["Quest Announcment"] = {
 		["enabled"] = true,
@@ -79,36 +82,51 @@ WT.ToolConfigs["Quest"] = {
 		tDesc   = L["The new-look interface for objective tracker."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
-		general = {
+		auto_turn_in = {
 			order = 5,
-			name = L['General'],
+			name = L["Auto Turn In"],
+			get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] end,
+			set = function(info, value)
+				E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] = value
+				WT.UpdateSwitchButton()
+			end,
 			args = {
-				auto_turn_in = {
+				auto = {
 					order = 1,
-					name = L["Auto Turn In"],
-					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] end,
+					name = L["Auto"],
+				},
+				use_switch_button = {
+					order = 1,
+					name = L["Switch button"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["enabled"] end,
 					set = function(info, value)
-						E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"][info[#info]] = value
+						E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["enabled"] = value
+						WT.UpdateSwitchButton()
+					end,
+				},
+				switch_button = {
+					order = 2,
+					name = L["Switch button"],
+					get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] end,
+					set = function(info, value)
+						E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] = value
 						WT.UpdateSwitchButton()
 					end,
 					args = {
-						auto = {
+						fade_with_objective_tracker = {
 							order = 1,
-							name = L["Auto"],
+							name = L["Fade with Objective Tracker"],
+							width = "full",
 						},
-						switch_button = {
+						font_setting = {
 							order = 2,
-							name = L["Switch button"],
+							name = L["Custom font"],
 							get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] end,
 							set = function(info, value)
 								E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] = value
 								WT.UpdateSwitchButton()
 							end,
 							args = {
-								enabled = {
-									order = 1,
-									name = L["Enable"],
-								},
 								font = {
 									type = 'select', dialogControl = 'LSM30_Font',
 									order = 2,
@@ -133,24 +151,69 @@ WT.ToolConfigs["Quest"] = {
 										['THICKOUTLINE'] = L['THICKOUTLINE'],
 									},
 								},
-								x_offset = {
-									order = 5,
-									type = 'range',
-									name = L['X Offset'],
-									min = -350, max = 350, step = 1,
+							},
+						},
+						text_setting = {
+							order = 3,
+							name = L["Custom text"],
+							get = function(info) return E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] end,
+							set = function(info, value)
+								E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"][info[#info]] = value
+								WT.UpdateSwitchButton()
+							end,
+							args = {
+								enabled_text = {
+									order = 1,
+									type = "input",
+									width = 1.2,
+									name = L["Text when enabled"],
 								},
-								y_offset = {
-									order = 6,
-									type = 'range',
-									name = L['Y Offset'],
-									min = -350, max = 350, step = 1,
+								enabled_color = {
+									order = 2,
+									type = "color",
+									name = L["Enabled"],
+									hasAlpha = false,
+									get = function(info)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["enabled_color"]
+										return t.r, t.g, t.b, nil, .298, .82, .216, nil
+									end,
+									set = function(info, r, g, b)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["enabled_color"]
+										t.r, t.g, t.b = r, g, b
+										WT.UpdateSwitchButton()
+									end,
+								},
+								disabled_text = {
+									order = 3,
+									type = "input",
+									width = 1.2,
+									name = L["Text when disabled"],
+								},
+								disabled_color = {
+									order = 4,
+									type = "color",
+									name = L["Disabled"],
+									hasAlpha = false,
+									get = function(info)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["disabled_color"]
+										return t.r, t.g, t.b, nil, .467, .467, .467, nil
+									end,
+									set = function(info, r, g, b)
+										local t = E.db.WindTools.Quest["Objective Tracker"]["auto_turn_in"]["switch_button"]["disabled_color"]
+										t.r, t.g, t.b = r, g, b
+										WT.UpdateSwitchButton()
+									end,
 								},
 							},
-						}
-						
-
+						},
 					},
 				},
+			},
+		},
+		general = {
+			order = 6,
+			name = L['General'],
+			args = {
 				header = {
 					order = 2,
 					name = L["Header"],

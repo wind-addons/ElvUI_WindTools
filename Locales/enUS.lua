@@ -425,6 +425,11 @@ L["Custom highlight color"] = true
 L["Auto Turn In"] = true
 L["Switch button"] = true
 L["Auto"] = true
+L["Fade with Objective Tracker"] = true
+L["Custom font"] = true
+L["Custom text"] = true
+L["Text when enabled"] = true
+L["Text when disabled"] = true
 -- 美化皮肤
 L["Provide a new style for ElvUI."] = true
 L["Game Tooltip"] = true

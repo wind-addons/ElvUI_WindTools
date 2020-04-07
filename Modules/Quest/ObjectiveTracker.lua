@@ -438,7 +438,8 @@ function OT:CreateSwitchButton()
     if self.SwitchButton then return end
 
     local holder = _G.ObjectiveFrameHolder
-    local button = CreateFrame("Frame", nil, holder)
+	local button = CreateFrame("Frame", nil, UIParent)
+	
     button:SetHeight(20)
     button:SetWidth(60)
     button.text = button:CreateFontString(nil, "OVERLAY")
@@ -449,7 +450,9 @@ function OT:CreateSwitchButton()
             OT:RefreshAutoTurnIn()
             OT:RefreshSwitchButton()
         end
-    end)
+	end)
+
+	button:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 250)
     self.SwitchButton = button
 end
 
@@ -484,22 +487,26 @@ end
 
 function OT:RefreshSwitchButton()
     local sbdb = self.db.auto_turn_in.switch_button
+	
+	-- 按钮显隐操作
+	local fade = _G.ObjectiveTrackerFrame.collapsed and sbdb.fade_with_objective_tracker
 
-    if sbdb.enabled and not ObjectiveTrackerFrame.collapsed and not InCombatLockdown() then
-        self.SwitchButton:Show()
-    else
-        self.SwitchButton:Hide()
-        return
-    end
+	if not InCombatLockdown() then
+		if sbdb.enabled and not fade then
+			self.SwitchButton:Show()
+		else
+			self.SwitchButton:Hide()
+			return
+		end
+	end
 
-    self.SwitchButton:SetPoint("CENTER", sbdb.x_offset, sbdb.y_offset)
     self.SwitchButton.text:FontTemplate(LSM:Fetch('font', sbdb.font), sbdb.size, sbdb.style)
     self.SwitchButton.text:SetPoint("CENTER", 0, 0)
 
     if self.db.auto_turn_in.auto then
-        self.SwitchButton.text:SetText("|cff4cd137"..L["Auto Turn In"].."|r")
+        self.SwitchButton.text:SetText(WT:ColorStrWithPack(sbdb.enabled_text, sbdb.enabled_color))
     else
-        self.SwitchButton.text:SetText("|cff777777"..L["Auto Turn In"].."|r")
+        self.SwitchButton.text:SetText(WT:ColorStrWithPack(sbdb.disabled_text, sbdb.disabled_color))
     end
 end
 
@@ -589,7 +596,9 @@ function OT:Initialize()
     end
 
     hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Show", function() OT:RefreshSwitchButton() end)
-    hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Hide", function() OT:RefreshSwitchButton() end)
+	hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Hide", function() OT:RefreshSwitchButton() end)
+	
+	E:CreateMover(self.SwitchButton, "Wind_TurnInSwitchButton", L["Auto Turn In Button"], nil, nil, nil, "ALL", function() return OT.db.auto_turn_in.switch_button.enabled; end)
 end
 
 local function InitializeCallback()

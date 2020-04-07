@@ -40,6 +40,13 @@ function WT:ColorStr(str, r, g, b)
 	return "|cff"..hex..str.."|r"
 end
 
+-- 为字符串添加自定义颜色(适合数据库形式的上色)
+function WT:ColorStrWithPack(str, colorPack)
+	local r, g, b = colorPack.r, colorPack.g, colorPack.b
+	if not r or not g or not b then return str end
+	return WT:ColorStr(str, r, g, b)
+end
+
 -- 保持宽高比函数
 function WT:GetTexCoord(width, height, keepAspectRatio)
 	local left, right, top, bottom = unpack(E.TexCoords)

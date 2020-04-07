@@ -589,14 +589,14 @@ function AB:Initialize()
 	AutoButtonAnchor:SetClampedToScreen(true)
 	AutoButtonAnchor:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 4)
 	AutoButtonAnchor:Size(self.db.questNum > 0 and self.db.questSize * self.db.questNum or 260, self.db.questNum > 0 and self.db.questSize or 40)
-	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, "ALL,EUI", function() return AB.db.enabled; end)
+	E:CreateMover(AutoButtonAnchor, "AutoButtonAnchorMover", L["Auto QuestItem Button"], nil, nil, nil, 'WINDTOOLS,ALL', function() return AB.db.enabled; end)
 	
 	-- Create anchor2
 	local AutoButtonAnchor2 = CreateFrame("Frame", "AutoButtonAnchor2", UIParent)
 	AutoButtonAnchor2:SetClampedToScreen(true)
 	AutoButtonAnchor2:Point("BOTTOMLEFT", RightChatPanel or LeftChatPanel, "TOPLEFT", 0, 48)
 	AutoButtonAnchor2:Size(self.db.slotNum > 0 and self.db.slotSize * self.db.slotNum or 260, self.db.slotNum > 0 and self.db.slotSize or 40)
-	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, "ALL,EUI", function() return AB.db.enabled; end)
+	E:CreateMover(AutoButtonAnchor2, "AutoButtonAnchor2Mover", L["Auto InventoryItem Button"], nil, nil, nil, 'WINDTOOLS,ALL', function() return AB.db.enabled; end)
 	
 	self:UpdateAutoButton()
 end

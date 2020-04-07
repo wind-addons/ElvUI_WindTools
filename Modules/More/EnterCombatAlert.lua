@@ -93,7 +93,7 @@ function EnterCombatAlert:Initialize()
 	end)
 
 	-- Create ElvUI mover
-	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, "ALL", function() return EnterCombatAlert.db.enabled; end)
+	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, 'WINDTOOLS,ALL', function() return EnterCombatAlert.db.enabled; end)
 end
 
 local function InitializeCallback()

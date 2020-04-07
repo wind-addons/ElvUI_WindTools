@@ -125,6 +125,8 @@ E.PopupDialogs["WIND_RL"] = {
 	whileDead = 1,
 	hideOnEscape = true,
 }
+tinsert(E.ConfigModeLayouts, 'WINDTOOLS')
+E.ConfigModeLocalizedStrings['WINDTOOLS'] = L["WindTools"]
 
 function WT:InsertOptions()
 	-- 感谢名单

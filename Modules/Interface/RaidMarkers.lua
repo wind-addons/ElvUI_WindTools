@@ -185,7 +185,7 @@ function RM:Initialize()
 	self.frame:Point("BOTTOMRIGHT", RightChatPanel, "TOPRIGHT", -1, 3)
 	self.frame.buttons = {}
 	self.frame.backdrop:SetAllPoints()
-	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'])
+	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'], nil, nil, nil, 'WINDTOOLS,ALL')
 
 	self:CreateButtons()
 	self:ToggleSettings()

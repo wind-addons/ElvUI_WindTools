@@ -598,7 +598,7 @@ function OT:Initialize()
     hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Show", function() OT:RefreshSwitchButton() end)
 	hooksecurefunc(_G.ObjectiveTrackerFrame.BlocksFrame, "Hide", function() OT:RefreshSwitchButton() end)
 	
-	E:CreateMover(self.SwitchButton, "Wind_TurnInSwitchButton", L["Auto Turn In Button"], nil, nil, nil, "ALL", function() return OT.db.auto_turn_in.switch_button.enabled; end)
+	E:CreateMover(self.SwitchButton, "Wind_TurnInSwitchButton", L["Auto Turn In Button"], nil, nil, nil, 'WINDTOOLS,ALL', function() return OT.db.auto_turn_in.switch_button.enabled; end)
 end
 
 local function InitializeCallback()

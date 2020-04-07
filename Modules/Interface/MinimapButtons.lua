@@ -400,7 +400,7 @@ function MB:CreateFrames()
 	minimapButtonBarAnchor:Size(200, 32)
 	minimapButtonBarAnchor:SetFrameStrata("BACKGROUND")
 	
-	E:CreateMover(minimapButtonBarAnchor, "MinimapButtonAnchor", L["Minimap Button Bar"])
+	E:CreateMover(minimapButtonBarAnchor, "MinimapButtonAnchor", L["Minimap Button Bar"], nil, nil, nil, 'WINDTOOLS,ALL')
 
 	minimapButtonBar = CreateFrame("Frame", "MinimapButtonBar", E.UIParent)
 	minimapButtonBar:SetFrameStrata('LOW')

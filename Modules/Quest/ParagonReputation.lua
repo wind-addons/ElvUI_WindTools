@@ -305,7 +305,7 @@ function PR:Initialize()
 	hooksecurefunc("ReputationFrame_Update", PR.ChangeReputationBars)
 	PR:HookReputationBars()
 	PR:CreateToast()
-	E:CreateMover(PR.toast, "Wind_ParagonReputationToastFrameMover", L["Paragon Reputation Toast"], nil, nil, nil, "ALL", function() return PR.db.enabled; end)
+	E:CreateMover(PR.toast, "Wind_ParagonReputationToastFrameMover", L["Paragon Reputation Toast"], nil, nil, nil, 'WINDTOOLS,ALL', function() return PR.db.enabled; end)
 end
 
 local function InitializeCallback()

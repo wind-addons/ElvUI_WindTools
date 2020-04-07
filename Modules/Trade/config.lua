@@ -26,7 +26,8 @@ P["WindTools"]["Trade"] = {
 		onlyspec = false,
 		compact = false,
 		bags = true,
-		paperdoll = true,    
+		paperdoll = true, 
+		icon_anchor = "BOTTOMLEFT",
 	},
 }
 
@@ -110,6 +111,18 @@ WT.ToolConfigs["Trade"] = {
 					name = L["Character panel icon"],
 					desc = L["Show selected traits in Character Frame"],
 				},
+				icon_anchor = {
+					order = 6,
+					name = L["Icon Anchor"],
+					desc = L["Show selected traits in Character Frame"],
+					type = "select",
+					style = "dropdown",
+					values = {
+						["TOPLEFT"] = "TOP", -- 0
+						["BOTTOMLEFT"] = "BOTTOM", -- 1
+	
+					},
+				}
 			}
 		}
 	},

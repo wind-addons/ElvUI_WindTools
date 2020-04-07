@@ -315,7 +315,7 @@ L["MicroMenu"] = true
 -- 艾泽里特特质提示
 L["Azerite Tooltip"] = true
 L["Show azerite traits in the tooltip when you mouseover an azerite item."] = true
-L["Level"] = true
+L["Icon Anchor"] = true
 L["Replace Blizzard Azerite Text"] = true
 L["Current Spec Only"] = true
 L["Show traits for your current specialization only"] = true

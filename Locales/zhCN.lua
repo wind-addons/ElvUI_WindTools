@@ -315,7 +315,7 @@ L["MicroMenu"] = "游戏菜单"
 -- 艾泽里特特质提示
 L["Azerite Tooltip"] = "艾泽里特特质提示"
 L["Show azerite traits in the tooltip when you mouseover an azerite item."] = "在你的鼠标提示信息中显示艾泽里特特质。"
-L["Level"] = "等级"
+L["Icon Anchor"] = "角标锚点"
 L["Replace Blizzard Azerite Text"] = "替代自带特质文字"
 L["Current Spec Only"] = "当前专精"
 L["Show traits for your current specialization only"] = "仅显示当前专精"

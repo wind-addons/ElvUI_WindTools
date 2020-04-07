@@ -731,6 +731,19 @@ function WS:ShadowElvUIFrames()
 			TalentMicroButtonAlert:CreateShadow()
 		end
 
+		-- 世界地图任务界面背景
+		local QuestScrollFrame = _G.QuestScrollFrame
+		if QuestScrollFrame.Background then QuestScrollFrame.Background:Kill() end
+		if QuestScrollFrame.DetailFrame and QuestScrollFrame.DetailFrame.backdrop then
+			QuestScrollFrame.DetailFrame.backdrop:SetTemplate("Transparent")
+		end
+
+		local QuestMapFrame = _G.QuestMapFrame
+		if QuestMapFrame.DetailsFrame then
+			if QuestMapFrame.DetailsFrame.backdrop then QuestMapFrame.DetailsFrame.backdrop:SetTemplate("Transparent") end
+			if QuestMapFrame.DetailsFrame.RewardsFrame then QuestMapFrame.DetailsFrame.RewardsFrame:SetTemplate("Transparent") end
+		end
+
 		-- 弹出通知
 		for i = 1, 3 do
 			local f = _G.ElvUI_StaticPopup1
@@ -866,11 +879,12 @@ function WS:ShadowElvUIFrames()
 
 	-- 额外能量条
 	if self.db.elvui.altpowerbar then
-		if not _G.ElvUI_AltPowerBar then return end
-		_G.ElvUI_AltPowerBar.backdrop:SetTemplate('Transparent')
-		_G.ElvUI_AltPowerBar.backdrop:CreateShadow()
-		_G.ElvUI_AltPowerBar.text:ClearAllPoints()
-		_G.ElvUI_AltPowerBar.text:SetPoint("CENTER", 0, -1)
+		local bar = _G.ElvUI_AltPowerBar
+		if not bar then return end
+		bar.backdrop:SetTemplate('Transparent')
+		bar.backdrop:CreateShadow()
+		bar.text:ClearAllPoints()
+		bar.text:SetPoint("CENTER", 0, -1)
 	end
 
 	-- 上下条
@@ -909,7 +923,7 @@ function WS:CustomSkins()
 	if _G.IMECandidatesFrame then
 		local frame = _G.IMECandidatesFrame
 		local db = self.db.ime
-		if db.no_backdrop then S:HandlePortraitFrame(frame) end
+		if db and db.no_backdrop then S:HandlePortraitFrame(frame) end
 		for i=1,10 do
 			if frame["c"..i] then
 				frame["c"..i].label:FontTemplate(LSM:Fetch('font', db.label.font), db.label.size, db.label.style)

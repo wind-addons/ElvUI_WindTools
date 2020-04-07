@@ -472,7 +472,7 @@ end
 
 function AS:SayThanks(...)
 	local config = self.db.thanks
-	if not config.enabled then return end
+	if not config or not config.enabled then return end
 	local _, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId = ...
 	if not destGUID or not sourceGUID then return end
 
@@ -497,7 +497,7 @@ end
 
 function AS:SayThanks_Goodbye()
 	local config = self.db.thanks
-	if not config.enabled or not config.goodbye.enabled then return end
+	if not config or not config.enabled or not config.goodbye.enabled then return end
 	self:SendMessage(config.goodbye.text, self:GetChannel(config.goodbye.channel))
 end
 

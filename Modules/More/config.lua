@@ -2662,20 +2662,20 @@ WT.ToolConfigs["More Tools"] = {
 			order = 6,
 			name = L["Custom Text"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"][info[#info]] = value; E:GetModule("Wind_EnterCombatAlert"):RefreshAlert(); end,
 			args = {
 				["enabled"] = {
 					order = 1,
 					name = L["Enable"],
 				},
-				["custom_enter_combat"] = {
+				["custom_enter_text"] = {
 					order = 2,
 					type = "input",
 					name = L["Custom Text (Enter)"],
 					width = 'full',
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,
 				},
-				["custom_leave_combat"] = {
+				["custom_leave_text"] = {
 					order = 3,
 					type = "input",
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enter Combat Alert"]["custom_text"] end,

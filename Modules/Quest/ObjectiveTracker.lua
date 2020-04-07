@@ -518,8 +518,10 @@ function OT:ChangeFonts()
                 local modules = frame[i]
                 if modules then
                     modules.Header.Background:SetAtlas(nil)
-                    local text = modules.Header.Text
-                    text:FontTemplate(LSM:Fetch('font', OT.db.header.font), OT.db.header.size, OT.db.header.style)
+					local text = modules.Header.Text
+					if OT.db.title then
+						text:FontTemplate(LSM:Fetch('font', OT.db.header.font), OT.db.header.size, OT.db.header.style)
+					end
                     text:SetParent(modules.Header)
                 end
             end
@@ -528,10 +530,14 @@ function OT:ChangeFonts()
 
     local function setText(self, block)
         local text = block.HeaderText
-        if text then
-            text:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
-            for objectiveKey, line in pairs(block.lines) do
-                line.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+		if text then
+			if OT.db.title then
+				text:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
+			end
+			for objectiveKey, line in pairs(block.lines) do
+				if OT.db.info then
+					line.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+				end
             end
         end
     end
@@ -539,10 +545,14 @@ function OT:ChangeFonts()
     local function hookWQText(self)
         for _, block in pairs(WORLD_QUEST_TRACKER_MODULE.usedBlocks) do
             for objectiveKey, line in pairs(block.lines) do
-                if objectiveKey == 0 then
-                    line.Text:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
-                elseif objectiveKey then
-                    line.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+				if objectiveKey == 0 then
+					if OT.db.title then
+						line.Text:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
+					end
+				elseif objectiveKey then
+					if OT.db.info then
+						line.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+					end
                 end
             end
         end

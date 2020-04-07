@@ -310,10 +310,12 @@ function AB:ScanItem(event)
 				end
 			end
 		end
-		for k, v in pairs(self.db.whiteList) do
-			local count = GetItemCount(k)
-			if count and (count > 0) and v and (not self.db.blankList[k]) then
-				tinsert(questItemIDList, k)
+		if self.db.whiteList then
+			for k, v in pairs(self.db.whiteList) do
+				local count = GetItemCount(k)
+				if count and (count > 0) and v and (not self.db.blankList[k]) then
+					tinsert(questItemIDList, k)
+				end
 			end
 		end
 		if GetItemCount(123866) and (GetItemCount(123866) >= 5) and (not self.db.blankList[123866]) and (GetCurrentMapAreaID("player") == 945) then
@@ -331,9 +333,9 @@ function AB:ScanItem(event)
 		end
 	end)
 	
-	if self.db.questNum > 0 then
+	if AB.db and AB.db.questNum and AB.db.questNum > 0 then
 		local ApItemNum = 0
-		if self.db.AptifactItem and (event == "BAG_UPDATE_DELAYED") then
+		if AB.db.AptifactItem and (event == "BAG_UPDATE_DELAYED") then
 			local itemLink, itemID = GetAptifactItem()
 			if itemLink then
 				ApItemNum = 1
@@ -355,7 +357,7 @@ function AB:ScanItem(event)
 		end
 		if _G["AutoQuestButton1"].ap then ApItemNum = 1 end
 			
-		if not self.db.AptifactItem then
+		if not AB.db.AptifactItem then
 			_G["AutoQuestButton1"].ap = false
 			ApItemNum = 0
 		end
@@ -363,7 +365,7 @@ function AB:ScanItem(event)
 			local itemID = questItemIDList[i]
 			local itemName = GetItemInfo(itemID)
 
-			if i > self.db.questNum then break; end
+			if i > AB.db.questNum then break; end
 			
 			local AutoButton = _G["AutoQuestButton"..(i+ApItemNum)]
 			local count = GetItemCount(itemID, nil, 1)
@@ -408,16 +410,16 @@ function AB:ScanItem(event)
 	
 	-- Scan inventory for Equipment matches
 	local num = 0
-	if self.db.slotNum > 0 then
+	if AB.db and AB.db.slotNum and AB.db.slotNum > 0 then
 		for w = 1, 18 do
 			local slotID = GetInventoryItemID("player", w)
-			if slotID and IsSlotItem(slotID) and not self.db.blankList[slotID] then
+			if slotID and IsSlotItem(slotID) and not AB.db.blankList[slotID] then
 				local iSpell = GetItemSpell(slotID)
 				local itemName, _, rarity = GetItemInfo(slotID)
 				
 				local itemIcon = GetInventoryItemTexture("player", w)
 				num = num + 1
-				if num > self.db.slotNum then break; end
+				if num > AB.db.slotNum then break; end
 				
 				local AutoButton = _G["AutoSlotButton".. num]
 				if not AutoButton then break; end
@@ -447,6 +449,7 @@ end
 
 local lastUpdate = 0
 function AB:ScanItemCount(elapsed)
+	if not AB.db or not AB.db.questNum then return end
 	lastUpdate = lastUpdate + elapsed
 	if lastUpdate < 0.5 then
 		return
@@ -467,7 +470,7 @@ function AB:ScanItemCount(elapsed)
 end
 
 function AB:UpdateBind()
-	if not self.db then return; end
+	if not self.db or not self.db.questNum or not self.db.slotNum then return end
 	
 	for i = 1, self.db.questNum do
 		local bindButton = 'CLICK AutoQuestButton'..i..':LeftButton'

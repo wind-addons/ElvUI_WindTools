@@ -723,8 +723,11 @@ function WS:ShadowElvUIFrames()
 		-- 美化遗漏天赋提示
 		if E.global.general.showMissingTalentAlert then
 			local TalentMicroButtonAlert = _G.TalentMicroButtonAlert
-			TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth()+50)
-			TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth()+50)
+			if not TalentMicroButtonAlert.shadow then
+				-- 防止重复扩大
+				TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth()+50)
+				TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth()+50)
+			end
 			TalentMicroButtonAlert:CreateShadow()
 		end
 

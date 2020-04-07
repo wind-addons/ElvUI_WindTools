@@ -116,7 +116,7 @@ end
 function ECA:PLAYER_REGEN_DISABLED()
 	local color = self.db.style.font_color_enter
 	self:AnimateAlert(function()
-		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text_enter or L["Enter Combat"])
+		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text.custom_enter_text or L["Enter Combat"])
 		self.alert.text:SetTextColor(color.r,color.g,color.b,color.a)
 	end)
 end
@@ -124,7 +124,7 @@ end
 function ECA:PLAYER_REGEN_ENABLED()
 	local color = self.db.style.font_color_leave
 	self:AnimateAlert(function()
-		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text_leave or L["Leave Combat"])
+		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text.custom_leave_text or L["Leave Combat"])
 		self.alert.text:SetTextColor(color.r,color.g,color.b,color.a)
 	end)
 end

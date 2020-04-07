@@ -703,13 +703,20 @@ function WS:ShadowElvUIFrames()
 		end)
 		hooksecurefunc(S, "HandlePortraitFrame", function(self, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
 		if _G.ElvUIVendorGraysFrame then _G.ElvUIVendorGraysFrame:CreateShadow() end
+		
 		-- 提醒
 		shadow_alerts()
+
 		-- ElvUI 设定
 		hooksecurefunc(E, "ToggleOptionsUI", function()
 			local frame = E:Config_GetWindow()
-			if not frame.shadow then
-				frame:CreateShadow()
+			frame:CreateShadow()
+		end)
+			
+		-- 跳过剧情
+		hooksecurefunc('MovieFrame_PlayMovie', function(f)
+			if f.CloseDialog then
+				f.CloseDialog:CreateShadow()
 			end
 		end)
 
@@ -719,6 +726,12 @@ function WS:ShadowElvUIFrames()
 			TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth()+50)
 			TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth()+50)
 			TalentMicroButtonAlert:CreateShadow()
+		end
+
+		-- 弹出通知
+		for i = 1, 3 do
+			local f = _G.ElvUI_StaticPopup1
+			if f then f:CreateShadow() end
 		end
 	end
 

@@ -712,6 +712,14 @@ function WS:ShadowElvUIFrames()
 				frame:CreateShadow()
 			end
 		end)
+
+		-- 美化遗漏天赋提示
+		if E.global.general.showMissingTalentAlert then
+			local TalentMicroButtonAlert = _G.TalentMicroButtonAlert
+			TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth()+50)
+			TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth()+50)
+			TalentMicroButtonAlert:CreateShadow()
+		end
 	end
 
 	-- 光环条
@@ -933,7 +941,7 @@ function WS:CustomSkins()
 		hooksecurefunc("LossOfControlFrame_SetUpDisplay", changeLocPos)
 	end
 
-	-- 一些微小位置移动
+	-- 声望详细窗口对齐
 	hooksecurefunc("ReputationFrame_Update", function(self)
 		_G.ReputationDetailFrame:ClearAllPoints()
 		_G.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 5, 0)

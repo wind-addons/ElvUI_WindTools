@@ -423,6 +423,7 @@ L["Use class color"] = true
 L["Custom title color"] = true
 L["Custom highlight color"] = true
 L["Auto Turn In"] = true
+L["Auto Turn In Button"] = true
 L["Switch button"] = true
 L["Auto"] = true
 L["Fade with Objective Tracker"] = true

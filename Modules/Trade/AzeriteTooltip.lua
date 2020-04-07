@@ -12,6 +12,7 @@ local AT = E:NewModule("Wind_AzeriteTooltip", "AceEvent-3.0", "AceHook-3.0")
 
 local strsplit = strsplit
 local tinsert = tinsert
+local format = format
 local GetSpellInfo = GetSpellInfo
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
@@ -48,6 +49,20 @@ local rings = {
 }
 
 local addText = ""
+
+-- |Tpath:height[:width[:offsetX:offsetY:[textureWidth:textureHeight:leftTexel:rightTexel:topTexel:bottomTexel[:rVertexColor:gVertexColor:bVertexColor]]]]|t
+-- 算法：
+-- 先决定要切多少边
+-- 然后再根据比例去切割材质，keep aspect ratio！
+local iconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
+
+local function getIconString(icon, known)
+    if known then
+        return format(iconString..":255:255:255|t", icon)
+    else
+        return format(iconString..":150:150:150|t", icon)
+    end
+end
 
 function AT:GetSpellID(powerID)
     local powerInfo = C_AzeriteEmpoweredItem_GetPowerInfo(powerID)
@@ -201,7 +216,7 @@ function AT:BuildTooltip(self)
 
       if C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID(link) then
 
-          addText = ""
+        addText = ""
         
         local currentLevel = AT:GetAzeriteLevel()
 
@@ -230,24 +245,19 @@ function AT:BuildTooltip(self)
 
                     if tierLevel <= currentLevel then
                         if AT:ScanSelectedTraits(self, azeritePowerName) then
-                            local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:255:255:255|t'
-                            azeriteTooltipText = azeriteTooltipText.."  >"..azeriteIcon.."<"
+                            azeriteTooltipText = azeriteTooltipText.."  >"..getIconString(icon, true).."<"
 
                             tinsert(activePowers, {name = azeritePowerName})
                             activeAzeriteTrait = true
                         elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
-                            local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:255:255:255|t'
-                            azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+                            azeriteTooltipText = azeriteTooltipText.."  "..getIconString(icon, true)
                         elseif not AT.db.onlyspec or IsControlKeyDown() then
-                            local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
-                            azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+                            azeriteTooltipText = azeriteTooltipText.."  "..getIconString(icon, true)
                         end
-                    elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then						
-                        local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
-                        azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+                    elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
+                        azeriteTooltipText = azeriteTooltipText.."  "..getIconString(icon, false)
                     elseif not AT.db.onlyspec or IsControlKeyDown() then
-                        local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
-                        azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
+                        azeriteTooltipText = azeriteTooltipText.."  "..getIconString(icon, false)
                     end
                 end
 
@@ -294,26 +304,22 @@ function AT:BuildTooltip(self)
                     local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
                     local azeriteSpellID = AT:GetSpellID(azeritePowerID)
                     local azeritePowerName, _, icon = GetSpellInfo(azeriteSpellID)
-                    local azeriteIcon = '|T'..icon..':20:20:0:0:64:64:4:60:4:60|t'
-                    local azeriteTooltipText = "  "..azeriteIcon.."  "..azeritePowerName
-  
                     if tierLevel <= currentLevel then
                         if AT:ScanSelectedTraits(self, azeritePowerName) then
                             tinsert(activePowers, {name = azeritePowerName})
                             activeAzeriteTrait = true	
-
-                            addText = addText.."\n|cFF00FF00"..azeriteTooltipText.."|r"			
+                            addText = addText.."\n|cFF00FF00"..getIconString(icon, true).."  "..azeritePowerName.."|r"			
                         elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
-                            addText = addText.."\n|cFFFFFFFF"..azeriteTooltipText.."|r"
+                            addText = addText.."\n|cFFFFFFFF"..getIconString(icon, true).."  "..azeritePowerName.."|r"
                         elseif not AT.db.onlyspec or IsControlKeyDown()  then
-                            addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
+                            addText = addText.."\n|cFF7a7a7a"..getIconString(icon, false).."  "..azeritePowerName.."|r"
                         end
                     elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
-                        addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
+                        addText = addText.."\n|cFF7a7a7a"..getIconString(icon, true).."  "..azeritePowerName.."|r"
                     elseif not AT.db.onlyspec or IsControlKeyDown() then
-                        addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
+                        addText = addText.."\n|cFF7a7a7a"..getIconString(icon, false).."  "..azeritePowerName.."|r"
                     end	
-                end	
+                end
             end
         end
 

@@ -17,6 +17,7 @@ local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetContainerItemLink = GetContainerItemLink
+local IsControlKeyDown = IsControlKeyDown
 local C_AzeriteItem_FindActiveAzeriteItem = C_AzeriteItem.FindActiveAzeriteItem
 local C_AzeriteItem_GetPowerLevel = C_AzeriteItem.GetPowerLevel
 local C_AzeriteEmpoweredItem_GetPowerInfo = C_AzeriteEmpoweredItem.GetPowerInfo
@@ -24,7 +25,9 @@ local C_AzeriteEmpoweredItem_GetAllTierInfo = C_AzeriteEmpoweredItem.GetAllTierI
 local C_AzeriteEmpoweredItem_IsPowerSelected = C_AzeriteEmpoweredItem.IsPowerSelected
 local C_AzeriteEmpoweredItem_GetAllTierInfoByItemID = C_AzeriteEmpoweredItem.GetAllTierInfoByItemID
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItem = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem
+local C_AzeriteEmpoweredItem_IsPowerAvailableForSpec = C_AzeriteEmpoweredItem.IsPowerAvailableForSpec
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
+
 
 local locationIDs = {
     ["Head"] = 1, 
@@ -232,14 +235,14 @@ function AT:BuildTooltip(self)
 
                             tinsert(activePowers, {name = azeritePowerName})
                             activeAzeriteTrait = true
-                        elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
+                        elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
                             local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:255:255:255|t'
                             azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
                         elseif not AT.db.onlyspec or IsControlKeyDown() then
                             local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
                             azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
                         end
-                    elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then						
+                    elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then						
                         local azeriteIcon = '|T'..icon..':24:24:0:0:64:64:4:60:4:60:150:150:150|t'
                         azeriteTooltipText = azeriteTooltipText.."  "..azeriteIcon
                     elseif not AT.db.onlyspec or IsControlKeyDown() then
@@ -290,7 +293,6 @@ function AT:BuildTooltip(self)
                 for i, v in pairs(allTierInfo[j]["azeritePowerIDs"]) do
                     local azeritePowerID = allTierInfo[j]["azeritePowerIDs"][i]
                     local azeriteSpellID = AT:GetSpellID(azeritePowerID)
-                        
                     local azeritePowerName, _, icon = GetSpellInfo(azeriteSpellID)
                     local azeriteIcon = '|T'..icon..':20:20:0:0:64:64:4:60:4:60|t'
                     local azeriteTooltipText = "  "..azeriteIcon.."  "..azeritePowerName
@@ -301,12 +303,12 @@ function AT:BuildTooltip(self)
                             activeAzeriteTrait = true	
 
                             addText = addText.."\n|cFF00FF00"..azeriteTooltipText.."|r"			
-                        elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
+                        elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
                             addText = addText.."\n|cFFFFFFFF"..azeriteTooltipText.."|r"
                         elseif not AT.db.onlyspec or IsControlKeyDown()  then
                             addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
                         end
-                    elseif C_AzeriteEmpoweredItem.IsPowerAvailableForSpec(azeritePowerID, specID) then
+                    elseif C_AzeriteEmpoweredItem_IsPowerAvailableForSpec(azeritePowerID, specID) then
                         addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"
                     elseif not AT.db.onlyspec or IsControlKeyDown() then
                         addText = addText.."\n|cFF7a7a7a"..azeriteTooltipText.."|r"

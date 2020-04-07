@@ -280,13 +280,13 @@ P["WindTools"]["More Tools"] = {
 				a = 1.0,
 			},
 			["stay_duration"] = 1.5,
-			["animation_duration"] = 0.5,
+			["animation_duration"] = 1,
 			["scale"] = 0.8,
 		},
 		["custom_text"] = {
 			["enabled"] = false,
-			["custom_enter_text"] = "",
-			["custom_leave_text"] = "",
+			["custom_enter_text"] = L["Enter Combat"],
+			["custom_leave_text"] = L["Leave Combat"],
 		},
 	},
 	["Fast Loot"] = {
@@ -2571,13 +2571,13 @@ WT.ToolConfigs["More Tools"] = {
 	},
 	["Enter Combat Alert"] = {
 		tDesc   = L["Alert you after enter or leave combat."],
-		oAuthor = "loudsoul",
+		oAuthor = "houshuu",
 		cAuthor = "houshuu",
 		["style"] = {
 			order = 5,
 			name = L["Style"],
 			get = function(info) return E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"][info[#info]] end,
-			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+			set = function(info, value) E.db.WindTools["More Tools"]["Enter Combat Alert"]["style"][info[#info]] = value; E:GetModule("Wind_EnterCombatAlert"):RefreshAlert() end,
 			args = {
 				["font_name"] = {
 					order = 1,

@@ -1,103 +1,157 @@
--- 原作：TinyUntitled 的 Player lua中的一段
--- loudsoul (http://bbs.ngacn.cc/read.php?tid=10240957)
--- 修改：houshuu
--------------------
--- 主要修改条目：
--- 模块化
--- 增加自定义文字设定项
--- 增加文字风格设置
--- 增加背景设置
--- 改进动画效果
--- 支持 ElvUI 移动
+-- 原创模块
 
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
-local EnterCombatAlert = E:NewModule('Wind_EnterCombatAlert');
+local ECA = E:NewModule('Wind_EnterCombatAlert', 'AceEvent-3.0', 'AceTimer-3.0');
 
-function EnterCombatAlert:Initialize()
+function ECA:CreateAlert()
+	if self.alert then return end
+	local alert = CreateFrame("Frame", "Wind_EnterCombatAlertFrame", UIParent)
+	alert:SetClampedToScreen(true)
+	alert:SetSize(300, 65)
+	alert:Point("TOP", 0, -280)
+	alert:SetScale(self.db.style.scale)
+	alert:Hide()
+
+	alert.Bg = alert:CreateTexture(nil, "BACKGROUND")
+	alert.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
+	alert.Bg:Point("TOP")
+	alert.Bg:SetSize(400, 60)
+	alert.Bg:SetTexCoord(0, 400/512, 341/512, 407/512)
+	alert.Bg:SetVertexColor(1, 1, 1, 0.4)
+
+	alert.text = alert:CreateFontString(nil)
+	alert.text:Point("CENTER", 0, -1)
+
+	self.alert = alert
+end
+
+function ECA:RefreshAlert()
+	wipe(self.animationQueue)
+	
+	self.alert.text:FontTemplate(LSM:Fetch('font', self.db.style.font_name), self.db.style.font_size, self.db.style.font_flag)
+	
+	if self.db.style.use_backdrop then
+		self.alert.Bg:Show()
+	else
+		self.alert.Bg:Hide()
+	end
+end
+
+function ECA:FadeIn(second, func)
+	local fadeInfo = {};
+
+	fadeInfo.mode = "IN"
+	fadeInfo.timeToFade = second
+	fadeInfo.startAlpha = 0
+	fadeInfo.endAlpha = 1
+	fadeInfo.finishedFunc = function()
+		if func then func() end
+	end
+	UIFrameFade(self.alert, fadeInfo)
+end
+
+function ECA:FadeOut(second, func)
+	local fadeInfo = {};
+
+	fadeInfo.mode = "OUT"
+	fadeInfo.timeToFade = second
+	fadeInfo.startAlpha = 1
+	fadeInfo.endAlpha = 0
+	fadeInfo.finishedFunc = function()
+		if func then func() end
+	end
+	UIFrameFade(self.alert, fadeInfo)
+end
+
+local function executeNextAnimation()
+	if ECA.animationQueue and ECA.animationQueue[1] then
+		local func = ECA.animationQueue[1]
+		func()
+		tremove(ECA.animationQueue, 1)
+	end
+end
+
+function ECA:AnimateAlert(changeTextFunc)
+	local stay_duration = self.db.style.stay_duration
+	local animation_duration = self.db.style.animation_duration
+	
+	-- 如果已经在动画，则清除全部剩余动作
+	if self.inAnimation then
+		if self.animationTimer then
+			-- 如果正在待机中，直接更改文字可能视觉效果较好
+			changeTextFunc()
+			return
+		else
+			wipe(self.animationQueue)
+			-- 防止瞬间改变带来突兀感
+			tinsert(self.animationQueue, function()
+				changeTextFunc()
+				ECA:FadeIn(animation_duration, executeNextAnimation)
+			end)
+		end
+	else
+		self.inAnimation = true
+		changeTextFunc()
+		self:FadeIn(animation_duration, executeNextAnimation)
+	end
+
+	tinsert(self.animationQueue, function()
+		ECA.animationTimer = C_Timer.NewTimer(stay_duration, executeNextAnimation)
+	end)
+
+	tinsert(self.animationQueue, function()
+		ECA.animationTimer = nil
+		ECA:FadeOut(animation_duration, executeNextAnimation)
+	end)
+
+	tinsert(self.animationQueue, function()
+		ECA.inAnimation = false
+	end)
+
+	self.inAnimation = true
+end
+
+function ECA:PLAYER_REGEN_DISABLED()
+	local color = self.db.style.font_color_enter
+	self:AnimateAlert(function()
+		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text_enter or L["Enter Combat"])
+		self.alert.text:SetTextColor(color.r,color.g,color.b,color.a)
+	end)
+end
+
+function ECA:PLAYER_REGEN_ENABLED()
+	local color = self.db.style.font_color_leave
+	self:AnimateAlert(function()
+		self.alert.text:SetText(self.db.custom_text.enabled and self.db.custom_text_leave or L["Leave Combat"])
+		self.alert.text:SetTextColor(color.r,color.g,color.b,color.a)
+	end)
+end
+
+function ECA:Initialize()
 	if not E.db.WindTools["More Tools"]["Enter Combat Alert"].enabled then return end
 
 	self.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
 	tinsert(WT.UpdateAll, function()
-		EnterCombatAlert.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+		ECA.db = E.db.WindTools["More Tools"]["Enter Combat Alert"]
+		ECA:CreateAlert()
 	end)
 
-	-- Cache color setting
-	local color_enter = self.db.style.font_color_enter
-	local color_leave = self.db.style.font_color_leave
+	ECA.inAnimation = false
+	self.animationQueue = {}
 
-	-- Create frame
-	local alertFrame = CreateFrame("Frame", "alertFrame", UIParent)
-	alertFrame:SetClampedToScreen(true)
-	alertFrame:SetSize(300, 65)
-	alertFrame:SetPoint("TOP", 0, -280)
-	alertFrame:SetScale(self.db.style.scale)
-	alertFrame:Hide()
+	self:CreateAlert()
+	self:RefreshAlert()
 
-	-- Use backdrop
-	if self.db.style.use_backdrop then
-		alertFrame.Bg = alertFrame:CreateTexture(nil, "BACKGROUND")
-		alertFrame.Bg:SetTexture("Interface\\LevelUp\\MinorTalents")
-		alertFrame.Bg:SetPoint("TOP")
-		alertFrame.Bg:SetSize(400, 60)
-		alertFrame.Bg:SetTexCoord(0, 400/512, 341/512, 407/512)
-		alertFrame.Bg:SetVertexColor(1, 1, 1, 0.4)
-	end
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 
-	-- Set text
-	alertFrame.text = alertFrame:CreateFontString(nil)
-	alertFrame.text:SetFont(LSM:Fetch('font', self.db.style.font_name), self.db.style.font_size, self.db.style.font_flag)
-	alertFrame.text:SetPoint("CENTER", 0, -1)
-	
-	-- Animation
-	local stay_duration = self.db.style.stay_duration
-	local animation_duration = self.db.style.animation_duration
-	local total_time = stay_duration + animation_duration*2
-
-	alertFrame:SetScript("OnShow", function(self)
-		self.timer = 0
-	end)
-	alertFrame:SetScript("OnUpdate", function(self, elapsed)
-		self.timer = self.timer + elapsed
-		if (self.timer > total_time) then self:Hide() end
-		if (self.timer <= animation_duration) then
-			self:SetAlpha(self.timer * 2)
-		elseif (self.timer > (animation_duration+stay_duration)) then
-			self:SetAlpha(2-(self.timer-stay_duration)/animation_duration)
-		end
-	end)
-
-	-- Change text
-	alertFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-	alertFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-	alertFrame:SetScript("OnEvent", function(self, event, ...)
-		local enterCombat = L["Enter Combat"]
-		local leaveCombat = L["Leave Combat"]
-		
-		-- Load custom text
-		if EnterCombatAlert.db.custom_text.enabled then
-			enterCombat = EnterCombatAlert.db.custom_text_enter
-			leaveCombat = EnterCombatAlert.db.custom_text_leave
-		end
-
-		self:Hide()
-		if (event == "PLAYER_REGEN_DISABLED") then
-			self.text:SetText(enterCombat)
-			self.text:SetTextColor(color_enter.r,color_enter.g,color_enter.b,color_enter.a)
-		elseif (event == "PLAYER_REGEN_ENABLED") then
-			self.text:SetText(leaveCombat)
-			self.text:SetTextColor(color_leave.r,color_leave.g,color_leave.b,color_leave.a)
-		end
-		self:Show()
-	end)
-
-	-- Create ElvUI mover
-	E:CreateMover(alertFrame, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, 'WINDTOOLS,ALL', function() return EnterCombatAlert.db.enabled; end)
+	E:CreateMover(self.alert, "alertFrameMover", L["Enter Combat Alert"], nil, nil, nil, 'WINDTOOLS,ALL', function() return EnterCombatAlert.db.enabled; end)
 end
 
 local function InitializeCallback()
-	EnterCombatAlert:Initialize()
+	ECA:Initialize()
 end
 
-E:RegisterModule(EnterCombatAlert:GetName(), InitializeCallback)
+E:RegisterModule(ECA:GetName(), InitializeCallback)

@@ -255,7 +255,8 @@ function TCM:Initialize()
 
 	-- 缓存 { 密语对象 = {时间, 方式} }
 	if not self.db.whisper_targets then self.db.whisper_targets = {} end
-
+	self:RefreshWhisperTargets()
+	
 	self.PlayerName, self.ServerName = UnitFullName("player")
 
 	hooksecurefunc("ChatEdit_CustomTabPressed", TCM.TabPressed)

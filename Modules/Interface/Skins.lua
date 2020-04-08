@@ -31,7 +31,8 @@ WS.elvui_frame_list = {
 	["tooltips"] = L["Game Tooltip"],
 	["altpowerbar"] = L["Altpower Bar"],
 	["top_and_bottom_panel"] = L["Top and Bottom panel"],
-	["chat_panel"] = L["Chat panel"],
+	["left_chat_panel"] = L["Left chat panel"],
+	["right_chat_panel"] = L["Right chat panel"],
 	["editbox"] = L["Edit box"],
 	["lang_icon"] = L["Language indicator"],
 	["losscontrol"] = L["Loss of control"],
@@ -898,8 +899,10 @@ function WS:ShadowElvUIFrames()
 	end
 
 	-- 聊天面板
-	if self.db.elvui.chat_panel then
+	if self.db.elvui.left_chat_panel then
 		if _G.LeftChatPanel then _G.LeftChatPanel:CreateShadow() end
+	end
+	if self.db.elvui.right_chat_panel then
 		if _G.RightChatPanel then _G.RightChatPanel:CreateShadow() end
 	end
 

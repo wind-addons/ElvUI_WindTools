@@ -162,7 +162,7 @@ function TCM:GetNext(chatType, currentTarget)
 					-- 如果表内为空，则什么都不改变
 					newChatType = chatType
 					newTarget = currentTarget
-					UIErrorsFrame:AddMessage(L["There is no more whisper targets."], 1, 0, 0, 53, 5);
+					UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0, 53, 5);
 				end
 			end
 		else

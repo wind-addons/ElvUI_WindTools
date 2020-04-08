@@ -236,6 +236,7 @@ L["Tab Chat Mod"] = "Tab 切換頻道"
 L["Use tab to switch channel."] = "可以使用 Tab 來快速切換頻道。"
 L["Whisper Cycle"] = "密語獨立循環"
 L["Include Officer Channel"] = "包括幹部頻道"
+L["There is no more whisper targets."]  = "找不到更多密語對象"
 -- 任务通告
 L["Quest Announcment"] = "任務通告"
 L["Let you know quest is completed."] = "當任務完成之時會通告。"

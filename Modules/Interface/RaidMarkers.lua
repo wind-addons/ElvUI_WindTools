@@ -25,11 +25,15 @@ function RM:CreateButtons()
 	local modifier = self.db.modifier
 	local modifierString = modifier:gsub("^%l", string.upper)
 	local modifierLocale = L[modifierString .. " Key"]
+
 	for i = 1,9 do
 		local button = CreateFrame("Button", ("RaidMarkerBarButton%d"):format(i), self.frame, "SecureActionButtonTemplate")
 		button:SetHeight(self.db.buttonSize)
 		button:SetWidth(self.db.buttonSize)
 		button:SetTemplate('Transparent')
+		if E.db.WindTools.Interface.Skins.enabled and E.db.WindTools.Interface.Skins.elvui.general then
+			if button then button:CreateShadow() end
+		end
 
 		local image = button:CreateTexture(nil, "ARTWORK")
 		image:SetAllPoints()
@@ -132,24 +136,6 @@ end
 function RM:ToggleSettings()
 	if not InCombatLockdown() then
 		self:UpdateBar()
-
-		if E.db.WindTools.Interface.Skins.elvui.general then
-			if self.db.backdrop then
-				self.frame.backdrop:CreateShadow()
-				if self.frame.backdrop.shadow then self.frame.backdrop.shadow:Show() end
-				for i = 1, 9, 1 do
-					local button = self.frame.buttons[i]
-					if button.shadow then button.shadow:Hide() end
-				end
-			else
-				if self.frame.backdrop.shadow then self.frame.backdrop.shadow:Hide() end
-				for i = 1, 9, 1 do
-					local button = self.frame.buttons[i]
-					button:CreateShadow()
-					if button.shadow then button.shadow:Show() end
-				end
-			end
-		end
 	
 		if self.db.enabled then
 			RegisterStateDriver(self.frame, "visibility", self.db.visibility == 'DEFAULT' and '[noexists, nogroup] hide; show' or self.db.visibility == 'ALWAYS' and '[noexists, nogroup] show; show' or '[group] show; hide')
@@ -160,8 +146,16 @@ function RM:ToggleSettings()
 
 		if self.db.backdrop then
 			self.frame.backdrop:Show()
+			for i = 9, 1, -1 do
+				local button = self.frame.buttons[i]
+				if button and button.shadow then button.shadow:Hide() end
+			end
 		else
 			self.frame.backdrop:Hide()
+			for i = 9, 1, -1 do
+				local button = self.frame.buttons[i]
+				if button and button.shadow then button.shadow:Show() end
+			end
 		end
 	end
 end
@@ -185,10 +179,15 @@ function RM:Initialize()
 	self.frame:Point("BOTTOMRIGHT", RightChatPanel, "TOPRIGHT", -1, 3)
 	self.frame.buttons = {}
 	self.frame.backdrop:SetAllPoints()
+	if E.db.WindTools.Interface.Skins.enabled and E.db.WindTools.Interface.Skins.elvui.general then
+		self.frame.backdrop:CreateShadow()
+	end
+	
 	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'], nil, nil, nil, 'WINDTOOLS,ALL')
-
 	self:CreateButtons()
-	self:ToggleSettings()
+	C_Timer.After(.5, function()
+		RM:ToggleSettings()
+	end)
 end
 
 local function InitializeCallback()

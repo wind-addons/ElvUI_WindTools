@@ -61,7 +61,7 @@ function TCM:CheckAvailability(type)
 end
 
 function TCM:RefreshWhisperTargets()
-	if not self.WhisperTargets then return 0 end
+	if not self.db.whisper_targets then return 0 end
 
 	local newTargets = {}
 	local currentTime = time()
@@ -69,7 +69,7 @@ function TCM:RefreshWhisperTargets()
 
 	local numberOfTargets = 0
 
-	for target, data in pairs(self.WhisperTargets) do
+	for target, data in pairs(self.db.whisper_targets) do
 		local targetTime, targetType = unpack(data)
 		if (currentTime - targetTime) < expirationTime then
 			newTargets[target] = { targetTime, targetType }
@@ -77,21 +77,21 @@ function TCM:RefreshWhisperTargets()
 		end
 	end
 	
-	wipe(self.WhisperTargets)
-	self.WhisperTargets = newTargets
+	wipe(self.db.whisper_targets)
+	self.db.whisper_targets = newTargets
 
 	return numberOfTargets
 end
 
 function TCM:UpdateWhisperTargets(target, chatTime, type)
-	if not self.WhisperTargets then return end
+	if not self.db.whisper_targets then return end
 	local currentTime = chatTime or time()
 
 	-- 本服玩家去除服务器名
 	local name, server = strsplit("-", target)
 	if (server) and (server == self.ServerName) then target = name end
 
-	self.WhisperTargets[target] = { currentTime, type }
+	self.db.whisper_targets[target] = { currentTime, type }
 end
 
 function TCM:GetNextWhisper(currentTarget)
@@ -103,15 +103,15 @@ function TCM:GetNextWhisper(currentTarget)
 
 	if self:RefreshWhisperTargets() ~= 0 then
 		-- 设定一定要早于当前密语历史目标
-		if currentTarget and self.WhisperTargets[currentTarget] then
-			limit = self.WhisperTargets[currentTarget][1]
+		if currentTarget and self.db.whisper_targets[currentTarget] then
+			limit = self.db.whisper_targets[currentTarget][1]
 		end
 
 		-- 当前不是密语状况下就算一个历史数据也要切换过去
 		if not currentTarget then needSwitch = true end
 
 		-- 遍历历史寻找到 早一个历史目标 或者 初始化频道变换的目标
-		for target, data in pairs(self.WhisperTargets) do
+		for target, data in pairs(self.db.whisper_targets) do
 			local targetTime, targetType = unpack(data)
 			if (targetTime > oldTime and targetTime < limit) or needSwitch then
 				tellTarget = target
@@ -135,7 +135,7 @@ function TCM:GetLastWhisper()
 
 	if self:RefreshWhisperTargets() ~= 0 then
 		-- 遍历历史寻找到 最后一个历史目标
-		for target, data in pairs(self.WhisperTargets) do
+		for target, data in pairs(self.db.whisper_targets) do
 			local targetTime, targetType = unpack(data)
 			if (targetTime > oldTime) then
 				tellTarget = target
@@ -250,10 +250,12 @@ function TCM:Initialize()
 
 	tinsert(WT.UpdateAll, function()
 		TCM.db = E.db.WindTools["Chat"]["Tab Chat Mod"]
+		TCM:RefreshWhisperTargets()
 	end)
 
 	-- 缓存 { 密语对象 = {时间, 方式} }
-	self.WhisperTargets = {}
+	if not self.db.whisper_targets then self.db.whisper_targets = {} end
+
 	self.PlayerName, self.ServerName = UnitFullName("player")
 
 	hooksecurefunc("ChatEdit_CustomTabPressed", TCM.TabPressed)

@@ -11,6 +11,7 @@ P["WindTools"]["Chat"] = {
 		use_battleground = false,
 		use_raid_warning = false,
 		use_officer = false,
+		whisper_targets = {},
 	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,

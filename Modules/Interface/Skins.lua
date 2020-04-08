@@ -115,8 +115,10 @@ local function shadow_immersion(self, event, addon)
 
 	ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
 
-	S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
-
+	C_Timer.After(.5, function()
+		S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
+	end)
+	
 	ImmersionFrame.TalkBox.Hilite:SetTemplate()
 	ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
 	ImmersionFrame.TalkBox.Hilite:SetBackdropColor(0, 0, 0, 0)

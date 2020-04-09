@@ -237,6 +237,8 @@ L["Use tab to switch channel."] = "可以使用 Tab 来快速切换频道。"
 L["Whisper Cycle"] = "密语独立循环"
 L["Include Officer Channel"] = "包括干部频道"
 L["There is no more whisper targets"]  = "找不到更多密语对象"
+L['Whisper history expiration time (min)'] = "密语目标自动清理（分）"
+L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'] = "此模块会自动记录密语以方便切换目标。\n您可以设置到期时间，让模块自动生成您想要的候选目标群组。"
 -- 任务通告
 L["Quest Announcment"] = "任务通告"
 L["Let you know quest is completed."] = "当任务完成之时会通告。"

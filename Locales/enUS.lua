@@ -237,6 +237,8 @@ L["Use tab to switch channel."] = true
 L["Whisper Cycle"] = true
 L["Include Officer Channel"] = true
 L["There is no more whisper targets"]  = true
+L['Whisper history expiration time (min)'] = true
+L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'] = true
 -- 任务通告
 L["Quest Announcment"] = true
 L["Let you know quest is completed."] = true

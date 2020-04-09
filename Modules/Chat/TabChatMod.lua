@@ -5,6 +5,7 @@ local WT = E:GetModule("WindTools")
 local TCM = E:NewModule('Wind_TabChatMod', 'AceHook-3.0', 'AceEvent-3.0');
 
 local pairs = pairs
+local unpack = unpack
 local tostring = tostring
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
@@ -32,6 +33,10 @@ local IndexOfChannelListWithWhisper={}
 
 for k, v in pairs(ChannelList) do IndexOfChannelList[v] = k end
 for k, v in pairs(ChannelListWithWhisper) do IndexOfChannelListWithWhisper[v] = k end
+
+-- 用于锁定对象
+local nextChatType
+local nextTellTarget
 
 function TCM:CheckAvailability(type)
 	if type == "YELL" then
@@ -65,7 +70,7 @@ function TCM:RefreshWhisperTargets()
 
 	local newTargets = {}
 	local currentTime = time()
-	local expirationTime = 10*60 -- 10 分钟过期
+	local expirationTime = self.db.whisper_history_time and 60*self.db.whisper_history_time or 600
 
 	local numberOfTargets = 0
 
@@ -206,16 +211,19 @@ end
 function TCM:TabPressed()
 	if strsub(tostring(self:GetText()), 1, 1) == "/" then return end
 
-	local chatType = self:GetAttribute("chatType")
-	local tellTarget = self:GetAttribute("tellTarget")
+	nextChatType, nextTellTarget = nil, nil
+	nextChatType, nextTellTarget = TCM:GetNext(self:GetAttribute("chatType"), self:GetAttribute("tellTarget"))
+end
 
-	local newChatType, newTellTarget = TCM:GetNext(chatType, tellTarget)
+function TCM:SetNewChat()
+	self:SetAttribute("chatType", nextChatType)
 
-	self:SetAttribute("chatType", newChatType)
-
-	if newTellTarget then
-		self:SetAttribute("tellTarget", newTellTarget)
+	if nextTellTarget then
+		self:SetAttribute("tellTarget", nextTellTarget)
 	end
+
+	ACTIVE_CHAT_EDIT_BOX = self
+	LAST_ACTIVE_CHAT_EDIT_BOX = self
 
 	ChatEdit_UpdateHeader(self)
 end
@@ -256,10 +264,11 @@ function TCM:Initialize()
 	-- 缓存 { 密语对象 = {时间, 方式} }
 	if not self.db.whisper_targets then self.db.whisper_targets = {} end
 	self:RefreshWhisperTargets()
-	
+
 	self.PlayerName, self.ServerName = UnitFullName("player")
 
 	hooksecurefunc("ChatEdit_CustomTabPressed", TCM.TabPressed)
+	hooksecurefunc("ChatEdit_SecureTabPressed", TCM.SetNewChat)
 
 	self:RegisterEvent("CHAT_MSG_WHISPER")
 	self:RegisterEvent("CHAT_MSG_WHISPER_INFORM")

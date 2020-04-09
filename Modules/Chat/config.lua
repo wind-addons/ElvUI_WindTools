@@ -12,6 +12,7 @@ P["WindTools"]["Chat"] = {
 		use_raid_warning = false,
 		use_officer = false,
 		whisper_targets = {},
+		whisper_history_time = 10,
 	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,
@@ -98,6 +99,14 @@ WT.ToolConfigs["Chat"] = {
 				use_officer = {
 					name = CHAT_MSG_OFFICER,
 					order = 5,
+				},
+				whisper_history_time = {
+					name = L['Whisper history expiration time (min)'],
+					order = 6,
+					type = 'range',
+					width = 1.3,
+					desc = L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'],
+					min = 1, max = 2400, step = 1,
 				},
 			}
 		},

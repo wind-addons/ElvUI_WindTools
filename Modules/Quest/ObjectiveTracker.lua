@@ -517,12 +517,10 @@ function OT:ChangeFonts()
             for i = 1, #frame do
                 local modules = frame[i]
                 if modules then
-                    modules.Header.Background:SetAtlas(nil)
 					local text = modules.Header.Text
 					if OT.db.title then
 						text:FontTemplate(LSM:Fetch('font', OT.db.header.font), OT.db.header.size, OT.db.header.style)
 					end
-                    text:SetParent(modules.Header)
                 end
             end
         end
@@ -585,6 +583,7 @@ end
 
 function OT:Initialize()
     if not E.db.WindTools.Quest["Objective Tracker"].enabled then return end
+	if not IsAddOnLoaded("Blizzard_ObjectiveTracker") then return end
 
 	self.db = E.db.WindTools.Quest["Objective Tracker"]
 	tinsert(WT.UpdateAll, function()

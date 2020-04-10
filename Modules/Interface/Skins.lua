@@ -1036,7 +1036,6 @@ function WS:AddOnSkins()
 			f:CreateShadow()
 			f:StripTextures()
 			f:CreateBackdrop('Transparent')
-			f.backdrop:SetFrameLevel(max(0, f:GetParent():GetFrameLevel()-1))
 			f.backdrop:SetFrameStrata(f:GetParent():GetFrameStrata())
 		end)
 

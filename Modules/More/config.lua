@@ -211,20 +211,22 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
-		["thanks"] = {
-			["goodbye"] = {
-				["enabled"] = true,
-				["text"] = L["Thanks all!"],
-				["channel"] = {
+		thanks = {
+			goodbye = {
+				enabled = true,
+				text = L["Thanks all!"],
+				delay = 0,
+				channel = {
 					["party"] = "PARTY",
 					["instance"] = "INSTANCE_CHAT",
 					["raid"] = "RAID",
 				},
 			},
-			["resurrection"] = {
-				["enabled"] = true,
-				["text"] = L["%target%, thank you for using %spell% to revive me. :)"],
-				["channel"] = {
+			resurrection = {
+				enabled = true,
+				text = L["%target%, thank you for using %spell% to revive me. :)"],
+				delay = 0,
+				channel = {
 					["solo"] = "WHISPER",
 					["party"] = "WHISPER",
 					["instance"] = "WHISPER",
@@ -232,10 +234,10 @@ P["WindTools"]["More Tools"] = {
 				},
 			},
 		},
-		["reset_instance"] = {
-			["enabled"] = true,
-			["prefix"] = true,
-			["channel"] = {
+		reset_instance = {
+			enabled = true,
+			prefix = true,
+			channel = {
 				["party"] = "PARTY",
 				["instance"] = "INSTANCE_CHAT",
 				["raid"] = "RAID",
@@ -2268,7 +2270,7 @@ WT.ToolConfigs["More Tools"] = {
 							order = 2,
 							type = "execute",
 							func = function(info)
-								E.db.WindTools["More Tools"]["Announce System"][info[4]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]]["text"]
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]]["text"]
 							end,
 							name = L["Use default text"],
 						},
@@ -2324,6 +2326,12 @@ WT.ToolConfigs["More Tools"] = {
 								},
 							},
 						},
+						delay = {
+							order = 4,
+							name = L["Delay (sec)"],
+							type = 'range',
+							min = 0, max = 20, step = 1,
+						},
 					},
 				},
 				resurrection = {
@@ -2345,7 +2353,7 @@ WT.ToolConfigs["More Tools"] = {
 							order = 2,
 							type = "execute",
 							func = function(info)
-								E.db.WindTools["More Tools"]["Announce System"][info[4]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]]["text"]
+								E.db.WindTools["More Tools"]["Announce System"][info[4]][info[5]]["text"] = P["WindTools"]["More Tools"]["Announce System"][info[4]][info[5]]["text"]
 							end,
 							name = L["Use default text"],
 						},
@@ -2432,6 +2440,12 @@ WT.ToolConfigs["More Tools"] = {
 									},
 								},
 							},
+						},
+						delay = {
+							order = 6,
+							name = L["Delay (sec)"],
+							type = 'range',
+							min = 0, max = 20, step = 1,
 						},
 					},
 				},			

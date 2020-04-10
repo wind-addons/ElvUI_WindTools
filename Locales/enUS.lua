@@ -416,6 +416,7 @@ L["%s has been reset"] = true
 L["Cannot reset %s (There are players still inside the instance.)"] = true
 L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = true
 L["Cannot reset %s (There are players offline in your party.)"] = true
+L["Delay (sec)"] = true
 -- 进度追踪
 L["Objective Tracker"] = true
 L["The new-look interface for objective tracker."] = true

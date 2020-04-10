@@ -7,6 +7,15 @@ local AS = E:NewModule('Wind_AnnounceSystem', 'AceHook-3.0', 'AceEvent-3.0', 'Ac
 local _G = _G
 local UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink = UnitName, GetRealmName, UnitGUID, UnitInParty, UnitInRaid, IsInInstance, GetSpellLink
 local strsplit, gsub, format, match, pairs = strsplit, string.gsub, string.format, string.match, pairs
+local SendChatMessage = SendChatMessage
+local UnitIsGroupLeader = UnitIsGroupLeader
+local UnitIsGroupAssistant = UnitIsGroupAssistant
+local IsEveryoneAssistant = IsEveryoneAssistant
+local IsInRaid = IsInRaid
+local IsInGroup = IsInGroup
+local GetInstanceInfo = GetInstanceInfo
+local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+local C_Timer_After = C_Timer.After
 
 local PlayerName, PlayerRelam = UnitName("player"), GetRealmName("player")
 local PlayerNameWithServer = format("%s-%s", PlayerName, PlayerRelam)
@@ -490,7 +499,13 @@ function AS:SayThanks(...)
 		-- 排除预先绑定灵魂石的情况
 		if not InCombatLockdown() and spellId == 20707 then return end
 		if config.resurrection.enabled and sourceGUID ~= UnitGUID("player") and destGUID == UnitGUID("player") then
-			self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, sourceName)
+			if config.resurrection.delay then
+				C_Timer_After(config.resurrection.delay, function()
+					AS:SendMessage(FormatMessage(config.resurrection.text), AS:GetChannel(config.resurrection.channel), nil, sourceName)
+				end)
+			else
+				self:SendMessage(FormatMessage(config.resurrection.text), self:GetChannel(config.resurrection.channel), nil, sourceName)
+			end
 		end
 	end
 end
@@ -498,15 +513,22 @@ end
 function AS:SayThanks_Goodbye()
 	local config = self.db.thanks
 	if not config or not config.enabled or not config.goodbye.enabled then return end
-	self:SendMessage(config.goodbye.text, self:GetChannel(config.goodbye.channel))
+
+	if config.goodbye.delay then
+		C_Timer_After(config.goodbye.delay, function()
+			AS:SendMessage(config.goodbye.text, AS:GetChannel(config.goodbye.channel))
+		end)
+	else
+		self:SendMessage(config.goodbye.text, self:GetChannel(config.goodbye.channel))
+	end
 end
 
 function AS:LFG_COMPLETION_REWARD(event, ...)
-	C_Timer.After(1, function() self:SayThanks_Goodbye() end)
+	C_Timer_After(1, function() self:SayThanks_Goodbye() end)
 end
 
 function AS:CHALLENGE_MODE_COMPLETED(event, ...)
-	C_Timer.After(1, function() self:SayThanks_Goodbye() end)
+	C_Timer_After(1, function() self:SayThanks_Goodbye() end)
 end
 
 function AS:GROUP_ROSTER_UPDATE(event, ...)

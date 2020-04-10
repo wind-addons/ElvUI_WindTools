@@ -73,6 +73,7 @@ WS.blizzard_frames = {
 	["SpellBookFrame"] = true,
 	["BNToastFrame"] = true,
 	["MailFrame"] = true,
+	["OpenMailFrame"] = true,
 	["ReadyCheckFrame"] = true,
 	["IMECandidatesFrame"] = true,
 	["RaidUtility_ShowButton"] = true,
@@ -611,17 +612,35 @@ function WS:ADDON_LOADED(_, addon)
 		end
 	end
 
-	-- 公会页面标签页
-	if addon == "Blizzard_Communities" and _G.CommunitiesFrame then
-		local frame = _G.CommunitiesFrame
-		frame.ChatTab:CreateShadow()
-		frame.RosterTab:CreateShadow()
-		frame.GuildBenefitsTab:CreateShadow()
-		frame.GuildInfoTab:CreateShadow()
-		frame.GuildMemberDetailFrame:CreateShadow()
-		frame.GuildMemberDetailFrame:ClearAllPoints()
-		frame.GuildMemberDetailFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 5, -76)
-		if _G.CommunitiesGuildLogFrame then _G.CommunitiesGuildLogFrame:CreateShadow() end
+	-- 公会
+	if addon == "Blizzard_Communities" then
+		if _G.CommunitiesFrame then
+			local frame = _G.CommunitiesFrame
+			frame.ChatTab:CreateShadow()
+			frame.RosterTab:CreateShadow()
+			frame.GuildBenefitsTab:CreateShadow()
+			frame.GuildInfoTab:CreateShadow()
+			frame.GuildMemberDetailFrame:CreateShadow()
+			frame.GuildMemberDetailFrame:ClearAllPoints()
+			frame.GuildMemberDetailFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 5, -76)
+			if _G.CommunitiesGuildLogFrame then _G.CommunitiesGuildLogFrame:CreateShadow() end
+		end
+
+		-- 搜寻社群
+		if _G.ClubFinderCommunityAndGuildFinderFrame then
+			local frame = _G.ClubFinderCommunityAndGuildFinderFrame
+			if frame.ClubFinderPendingTab then frame.ClubFinderPendingTab:CreateShadow() end
+			if frame.ClubFinderSearchTab then frame.ClubFinderSearchTab:CreateShadow() end
+			if frame.RequestToJoinFrame then frame.RequestToJoinFrame:CreateShadow() end
+		end
+
+		-- 搜寻公会
+		if _G.ClubFinderGuildFinderFrame then
+			local frame = _G.ClubFinderGuildFinderFrame
+			if frame.ClubFinderPendingTab then frame.ClubFinderPendingTab:CreateShadow() end
+			if frame.ClubFinderSearchTab then frame.ClubFinderSearchTab:CreateShadow() end
+			if frame.RequestToJoinFrame then frame.RequestToJoinFrame:CreateShadow() end
+		end
 	end
 
 	-- 職業大廳條
@@ -690,6 +709,11 @@ function WS:ShadowGeneralFrames()
 		CreateTabShadow(_G["SpellBookSkillLineTab"..i])
 	end
 
+	-- 邮件界面标签页
+	for i=1, 2 do
+		CreateTabShadow(_G["MailFrameTab"..i])
+	end
+	
 	-- 镜像时间条 呼吸条
 	for i = 1, MIRRORTIMER_NUMTIMERS do
 		local statusBar = _G['MirrorTimer'..i..'StatusBar']

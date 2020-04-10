@@ -186,6 +186,7 @@ function RM:Initialize()
 	E:CreateMover(self.frame, "RaidMarkerBarAnchor", L['Raid Marker Bar'], nil, nil, nil, 'WINDTOOLS,ALL')
 	self:CreateButtons()
 	C_Timer.After(.5, function()
+		self.frame:Show()
 		RM:ToggleSettings()
 	end)
 end

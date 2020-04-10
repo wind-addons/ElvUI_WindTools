@@ -251,6 +251,8 @@ L["Use delete button"] = "使用删除按钮"
 L["Click the button to confirm the deletion of good items."] = "当系统要你填入 DELETE 时，只需按一下按钮即可。"
 L["Click to confirm"] = "点击确认"
 L["Confirmed"] = "已确认"
+L["Skip confirm"] = "跳过确认"
+L["Just delete a good item as a junk."] = "让删除优秀物品就像删除垃圾一样方便。"
 -- 目标进度
 L["Objective Progress"] = "目标进度"
 L["Add quest/mythic+ dungeon progress to tooltip."] = "添加任务或是传奇钥石地下城怪物进度到鼠标提示。"

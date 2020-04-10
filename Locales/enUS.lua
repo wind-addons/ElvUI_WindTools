@@ -251,6 +251,8 @@ L["Use delete button"] = true
 L["Click the button to confirm the deletion of good items."] = true
 L["Click to confirm"] = true
 L["Confirmed"] = true
+L["Skip confirm"] = true
+L["Just delete a good item as a junk."] = true
 -- 目标进度
 L["Objective Progress"] = true
 L["Add quest/mythic+ dungeon progress to tooltip."] = true

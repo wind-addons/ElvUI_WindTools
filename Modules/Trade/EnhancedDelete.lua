@@ -76,6 +76,9 @@ function ED:DELETE_ITEM_CONFIRM(event)
 				self:ShowFillInButton(dialog)
 				dialog:HookScript("OnHide", function(self) ED:HideFillInButton() end)
 				dialog.editBox:ClearFocus()
+			elseif self.db.skip_confirm_delete and StaticPopupDialogs[type].hasEditBox == 1 then
+				dialog.editBox:ClearFocus()
+				dialog.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
 			end
 		end
 	end

@@ -9,6 +9,7 @@ P["WindTools"]["Trade"] = {
 		enabled = true,
 		use_delete_key = true,
 		click_button_delete = true,
+		skip_confirm_delete = false,
 	},
 	["Already Known"] = {
 		enabled = true,
@@ -50,9 +51,29 @@ WT.ToolConfigs["Trade"] = {
 				},
 				click_button_delete = {
 					order = 2,
-					width = "full",
+					width = 1.5,
+					set = function(info, value)
+						E.db.WindTools["Trade"]["Enhanced Delete"][info[#info]] = value
+						if value then
+							E.db.WindTools["Trade"]["Enhanced Delete"].skip_confirm_delete = false
+						end
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
 					name = L["Use delete button"],
 					desc = L["Click the button to confirm the deletion of good items."],
+				},
+				skip_confirm_delete = {
+					order = 3,
+					width = 1.5,
+					set = function(info, value)
+						E.db.WindTools["Trade"]["Enhanced Delete"][info[#info]] = value
+						if value then
+							E.db.WindTools["Trade"]["Enhanced Delete"].click_button_delete = false
+						end
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+					name = L["Skip confirm"],
+					desc = L["Just delete a good item as a junk."],
 				},
 			}
 		}

@@ -116,9 +116,7 @@ local function shadow_immersion(self, event, addon)
 
 	ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
 
-	C_Timer.After(.5, function()
-		S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
-	end)
+	S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
 	
 	ImmersionFrame.TalkBox.Hilite:SetTemplate()
 	ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
@@ -640,6 +638,23 @@ function WS:ADDON_LOADED(_, addon)
 			if frame.ClubFinderPendingTab then frame.ClubFinderPendingTab:CreateShadow() end
 			if frame.ClubFinderSearchTab then frame.ClubFinderSearchTab:CreateShadow() end
 			if frame.RequestToJoinFrame then frame.RequestToJoinFrame:CreateShadow() end
+		end
+	end
+
+	-- 冒险指南标签页
+	if addon == "Blizzard_EncounterJournal" then
+		local frames = {
+			"EncounterJournalEncounterFrameInfoOverviewTab",
+			"EncounterJournalEncounterFrameInfoLootTab",
+			"EncounterJournalEncounterFrameInfoBossTab",
+			"EncounterJournalEncounterFrameInfoModelTab",
+		}
+
+		for _, frame in pairs(frames) do
+			if _G[frame] and _G[frame].backdrop then
+				_G[frame].backdrop:SetTemplate('Transparent')
+				_G[frame].backdrop:CreateShadow(2)
+			end
 		end
 	end
 

@@ -1036,7 +1036,10 @@ function WS:AddOnSkins()
 			f:CreateShadow()
 			f:StripTextures()
 			f:CreateBackdrop('Transparent')
-			f.backdrop:SetFrameStrata(f:GetParent():GetFrameStrata())
+			local p = f:GetParent()
+			if p and p:GetFrameStrata() then
+				f.backdrop:SetFrameStrata(p:GetFrameStrata())
+			end
 		end)
 
 		hooksecurefunc(AS, "SkinTab", function(self, f)

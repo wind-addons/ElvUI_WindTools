@@ -136,13 +136,6 @@ end
 function RM:ToggleSettings()
 	if not InCombatLockdown() then
 		self:UpdateBar()
-	
-		if self.db.enabled then
-			RegisterStateDriver(self.frame, "visibility", self.db.visibility == 'DEFAULT' and '[noexists, nogroup] hide; show' or self.db.visibility == 'ALWAYS' and '[noexists, nogroup] show; show' or '[group] show; hide')
-		else
-			UnregisterStateDriver(self.frame, "visibility")
-			self.frame:Hide()
-		end
 
 		if self.db.backdrop then
 			self.frame.backdrop:Show()
@@ -156,6 +149,13 @@ function RM:ToggleSettings()
 				local button = self.frame.buttons[i]
 				if button and button.shadow then button.shadow:Show() end
 			end
+		end
+		
+		if self.db.enabled then
+			RegisterStateDriver(self.frame, "visibility", self.db.visibility == 'DEFAULT' and '[noexists, nogroup] hide; show' or self.db.visibility == 'ALWAYS' and '[noexists, nogroup] show; show' or '[group] show; hide')
+		else
+			UnregisterStateDriver(self.frame, "visibility")
+			self.frame:Hide()
 		end
 	end
 end

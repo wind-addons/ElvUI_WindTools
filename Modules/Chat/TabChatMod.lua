@@ -156,6 +156,10 @@ end
 function TCM:GetNext(chatType, currentTarget)
 	local newChatType, newTarget, nextIndex
 
+	if chatType == "CHANNEL" then
+		chatType = "SAY"
+	end
+
 	if self.db.whisper_cycle then
 		if chatType == "WHISPER" or chatType == "BN_WHISPER" then
 			-- 密语+战网聊天限定进行寻找
@@ -176,7 +180,7 @@ function TCM:GetNext(chatType, currentTarget)
 			while(not TCM:CheckAvailability(ChannelList[nextIndex])) do
 				nextIndex = nextIndex % NumberOfChannelList + 1
 			end
-			return ChannelListWithWhisper[nextIndex], nil
+			newChatType = ChannelListWithWhisper[nextIndex]
 		end
 	else
 		if chatType == "WHISPER" or chatType == "BN_WHISPER" then

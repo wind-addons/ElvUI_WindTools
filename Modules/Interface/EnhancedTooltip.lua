@@ -253,6 +253,7 @@ function ETT:ItemIcons()
 end
 
 function ETT:UpdateProgression(guid, faction)
+	if not self.db then return end
 	local statFunc = guid == playerGUID and GetStatistic or GetComparisonStatistic
 
 	progressCache[guid] = progressCache[guid] or {}

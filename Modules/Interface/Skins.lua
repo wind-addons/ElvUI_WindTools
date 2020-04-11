@@ -1033,21 +1033,56 @@ function WS:AddOnSkins()
 	
 	-- AddOnSkins
 	if self.db.addonskins.general then
-		hooksecurefunc(AS, "SkinFrame", function(self, f)
-			f:CreateShadow()
-			f:StripTextures()
-			f:CreateBackdrop('Transparent')
-			local p = f:GetParent()
-			if p and p:GetFrameStrata() then
-				f.backdrop:SetFrameStrata(p:GetFrameStrata())
+		local function WindAS_SkinCloseButton(self, Button, Reposition)
+			if Button.windSkin then return end
+			if Reposition then
+				S:HandleCloseButton(Button, "TOPRIGHT", 2, 2)
+			else
+				S:HandleCloseButton(Button)
 			end
-		end)
+
+			Button.windSkin = true
+		end
+
+		local function WindAS_SkinFrame(self, frame, template, override, kill)
+			local name = frame and frame.GetName and frame:GetName()
+			local insetFrame = name and _G[name..'Inset'] or frame.Inset
+			local closeButton = name and _G[name..'CloseButton'] or frame.CloseButton
+			if not override then
+				frame:StripTextures()
+			end
+			frame:SetTemplate('Transparent')
+			frame:CreateShadow()
+			if insetFrame then
+				AS:SkinFrame(insetFrame)
+			end
+			if closeButton then
+				WindAS_SkinCloseButton(closeButton)
+			end
+		end
+
+		AS.SkinFrame = WindAS_SkinFrame
+		AS.SkinCloseButton = WindAS_SkinCloseButton
 
 		hooksecurefunc(AS, "SkinTab", function(self, f)
 			if f.Backdrop then f.Backdrop:Kill() end
 			S:HandleTab(f)
 		end)
-	
+
+		AS.SkinTooltip = function(self, frame)
+			for _, Region in pairs(AS.Blizzard.Tooltip) do
+				if tooltip[Region] then
+					tooltip[Region]:SetTexture()
+				end
+			end
+		
+			WindAS_SkinFrame(self, tooltip)
+		
+			if scale then
+				tooltip:SetScale(AS.UIScale)
+			end
+		end
+
 		AS.SkinScrollBar = function(self, frame)
 			S.HandleScrollBar(self, frame)
 			frame:CreateShadow()

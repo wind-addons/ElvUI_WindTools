@@ -1069,15 +1069,13 @@ function WS:AddOnSkins()
 			S:HandleTab(f)
 		end)
 
-		AS.SkinTooltip = function(self, frame)
+		AS.SkinTooltip = function(self, frame, scale)
 			for _, Region in pairs(AS.Blizzard.Tooltip) do
 				if tooltip[Region] then
 					tooltip[Region]:SetTexture()
 				end
 			end
-		
 			WindAS_SkinFrame(self, tooltip)
-		
 			if scale then
 				tooltip:SetScale(AS.UIScale)
 			end

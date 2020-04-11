@@ -16,8 +16,6 @@ L["|cffff0000If you click Accept, it will reset your Windtools."] = true
 L["|cffff0000If you click Accept, it will reset this module."] = true
 L["WindTools will reload your user interface to apply the change."] = true
 -- 功能界面
-L["Enable"] = true
-L["Disable"] = true
 L["Module Information"] = true
 L["Author: %s, Edited by %s"] = true
 L["Setting"] = true

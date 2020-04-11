@@ -16,8 +16,6 @@ L["|cffff0000If you click Accept, it will reset your Windtools.|r"] = "|cffff000
 L["|cffff0000If you click Accept, it will reset this module."] = "|cffff0000如果你點擊確定，這將會重置這個模組。|r"
 L["WindTools will reload your user interface to apply the change."] = "為了應用當前更改，Wind工具箱將會重載你的介面。"
 -- 功能界面
-L["Enable"] = "開啟"
-L["Disable"] = "關閉"
 L["Module Information"] = "模組訊息"
 L["Author: %s, Edited by %s"] = "原作者：%s， 修改者：%s"
 L["Setting"] = "設定"

@@ -355,8 +355,8 @@ function OT:QUEST_ACCEPTED()
 end
 
 function OT:QUEST_ITEM_UPDATE()
-    if(choiceQueue and QuickQuest[choiceQueue]) then
-		QuickQuest[choiceQueue]()
+    if(choiceQueue and OT[choiceQueue]) then
+		OT[choiceQueue]()
 	end
 end
 

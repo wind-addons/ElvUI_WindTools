@@ -7,6 +7,7 @@ P["WindTools"]["Chat"] = {
 	["Chat Frame"] = {
 		enabled = true,
 		item_link = {
+			enabled = true,
 			add_level = true,
 			add_icon = true,
 		},
@@ -77,47 +78,73 @@ P["WindTools"]["Chat"] = {
 }
 
 WT.ToolConfigs["Chat"] = {
-	-- ["Tab Chat Mod"] = {
-	-- 	tDesc   = L["Use tab to switch channel."],
-	-- 	oAuthor = "houshuu",
-	-- 	cAuthor = "houshuu",
-	-- 	["general"] = {
-	-- 		name = L["General"],
-	-- 		order = 5,
-	-- 		get = function(info) return E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] end,
-	-- 		set = function(info, value) E.db.WindTools["Chat"]["Tab Chat Mod"][ info[#info] ] = value end,
-	-- 		args = {
-	-- 			whisper_cycle = {
-	-- 				name = L["Whisper Cycle"],
-	-- 				order = 1,
-	-- 			},
-	-- 			use_yell = {
-	-- 				name = CHAT_MSG_YELL,
-	-- 				order = 2,
-	-- 			},
-	-- 			use_battleground = {
-	-- 				name = CHAT_MSG_BATTLEGROUND,
-	-- 				order = 3,
-	-- 			},
-	-- 			use_raid_warning = {
-	-- 				name = CHAT_MSG_RAID_WARNING,
-	-- 				order = 4,
-	-- 			},
-	-- 			use_officer = {
-	-- 				name = CHAT_MSG_OFFICER,
-	-- 				order = 5,
-	-- 			},
-	-- 			whisper_history_time = {
-	-- 				name = L['Whisper history expiration time (min)'],
-	-- 				order = 6,
-	-- 				type = 'range',
-	-- 				width = 1.3,
-	-- 				desc = L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'],
-	-- 				min = 1, max = 2400, step = 1,
-	-- 			},
-	-- 		}
-	-- 	},
-	-- },
+	["Chat Frame"] = {
+		tDesc   = L["Provide more features for chat frame."],
+		oAuthor = "houshuu",
+		cAuthor = "houshuu",
+		smart_tab = {
+			name = L["Use Tab to change channel"],
+			order = 5,
+			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
+			args = {
+				enabled = {
+					order = 1,
+					name = L["Enable"],
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				whisper_cycle = {
+					name = L["Whisper Cycle"],
+					order = 2,
+				},
+				use_yell = {
+					name = CHAT_MSG_YELL,
+					order = 3,
+				},
+				use_battleground = {
+					name = CHAT_MSG_BATTLEGROUND,
+					order = 4,
+				},
+				use_raid_warning = {
+					name = CHAT_MSG_RAID_WARNING,
+					order = 5,
+				},
+				use_officer = {
+					name = CHAT_MSG_OFFICER,
+					order = 6,
+				},
+				whisper_history_time = {
+					name = L['Whisper history expiration time (min)'],
+					order = 7,
+					type = 'range',
+					width = 1.3,
+					desc = L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'],
+					min = 1, max = 2400, step = 1,
+				},
+			}
+		},
+		item_link = {
+			name = L["Add information on link"],
+			order = 5,
+			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
+			args = {
+				enabled = {
+					name = L["Enable"],
+					order = 1,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				add_icon = {
+					name = L["Add Icon"],
+					order = 2,
+				},
+				add_level = {
+					name = L["Add Level"],
+					order = 3,
+				},
+			},
+		},	
+	},
 	["Enhanced Friend List"] = {
 		tDesc   = L["Customize friend frame."],
 		oAuthor = "ProjectAzilroka",

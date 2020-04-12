@@ -21,6 +21,10 @@ P["WindTools"]["Chat"] = {
 			whisper_targets = {},
 			whisper_history_time = 10,
 		},
+		emote = {
+			enabled = true,
+			size = 16,
+		}
 	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,
@@ -143,7 +147,7 @@ WT.ToolConfigs["Chat"] = {
 					order = 3,
 				},
 			},
-		},	
+		},
 	},
 	["Enhanced Friend List"] = {
 		tDesc   = L["Customize friend frame."],

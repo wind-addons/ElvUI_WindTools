@@ -111,17 +111,22 @@ local function shadow_immersion(self, event, addon)
 	ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
 	ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
-	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 8, -8)
-	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -8, 8)
+	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 11, -11)
+	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 11)
 	ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
 
 	ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
 
-	S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
+	if not ImmersionFrame.TalkBox.MainFrame.CloseButton.windSkin then
+		S:HandleCloseButton(ImmersionFrame.TalkBox.MainFrame.CloseButton)
+		ImmersionFrame.TalkBox.MainFrame.CloseButton.windSkin = true
+	end
 	
 	ImmersionFrame.TalkBox.Hilite:SetTemplate()
 	ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
 	ImmersionFrame.TalkBox.Hilite:SetBackdropColor(0, 0, 0, 0)
+	ImmersionFrame.TalkBox.Hilite:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 11, -11)
+	ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 11)
 
 	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
 	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
@@ -169,6 +174,9 @@ local function shadow_immersion(self, event, addon)
 		Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
 		
 		S:HandleIcon(Button.Icon)
+		Button.Icon:CreateBackdrop()
+		Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
+		Button.Icon.backdrop:SetOutside(Button.Icon)
 		
 		Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
 		Button.AutoCastShine:SetParent(Button.Icon.backdrop)
@@ -1104,7 +1112,7 @@ function WS:AddOnSkins()
 
 	-- Immersion
 	if self.db.addonskins.immersion and AS:CheckAddOn('Immersion') then
-		AS:RegisterSkin('Immersion', shadow_immersion, 'PLAYER_ENTERING_WORLD')
+		AS:RegisterSkin('Immersion', shadow_immersion, 'ADDON_LOADED')
 	end
 end
 

@@ -109,9 +109,9 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame,
-                                                             'TOPLEFT', 11, -11)
+                                                             'TOPLEFT', 11, -12)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame,
-                                                             'BOTTOMRIGHT', -11, 11)
+                                                             'BOTTOMRIGHT', -11,9)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
 
     ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
@@ -124,11 +124,12 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Hilite:SetTemplate()
     ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
     ImmersionFrame.TalkBox.Hilite:SetBackdropColor(0, 0, 0, 0)
-    ImmersionFrame.TalkBox.Hilite:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 11, -11)
-    ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 11)
+    ImmersionFrame.TalkBox.Hilite:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 11, -12)
+    ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 9)
 
     ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
-    ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
+	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
+	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetAlpha(.8)
     ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
 
     ImmersionFrame.TalkBox.Elements:StripTextures()

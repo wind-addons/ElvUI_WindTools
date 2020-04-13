@@ -67,7 +67,7 @@ local slotAbbr = {
     [FINGER0SLOT] = L["Finger_Abbr"],
     [TRINKET0SLOT] = L["Trinket_Abbr"],
     -- 副手物品
-    [INVTYPE_HOLDABLE] = L["Held In Off-hand_Abbr"],
+    [INVTYPE_HOLDABLE] = L["Held In Off-hand_Abbr"]
 }
 
 local function AddItemInfo(Hyperlink)
@@ -81,7 +81,7 @@ local function AddItemInfo(Hyperlink)
         ItemLevelTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         ItemLevelTooltip:ClearLines()
         ItemLevelTooltip:SetHyperlink(link)
-    
+
         if CF.db.link.add_level then
             for i = 2, 5 do
                 local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
@@ -108,7 +108,7 @@ local function AddItemInfo(Hyperlink)
                         if rightText and rightText:IsShown() then
                             -- 护甲分类
                             local text = rightText:GetText() or ""
-                            slot = text..slot
+                            slot = text .. slot
                         end
                     end
                     if slot then break end
@@ -116,9 +116,9 @@ local function AddItemInfo(Hyperlink)
                         -- 如果右边有字，且不是常规物品，那么必定为武器！
                         if ClientLang == "zhTW" or ClientLang == "zhCN" or ClientLang == "krKR" then
                             -- 为汉字圈的用户去除空格！（虽然还没有完整的韩语支持...）
-                            slot = leftText:GetText()..rightText:GetText()
+                            slot = leftText:GetText() .. rightText:GetText()
                         else
-                            slot = leftText:GetText().." "..rightText:GetText()
+                            slot = leftText:GetText() .. " " .. rightText:GetText()
                         end
                     end
                     if slot then break end
@@ -129,7 +129,7 @@ local function AddItemInfo(Hyperlink)
         if (level and extraname) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1:" .. extraname .. "]|h")
         elseif (level and slot) then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot.. "/" .. level .. ":%1]|h")
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. "/" .. level .. ":%1]|h")
         elseif (level) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
         elseif (slot) then
@@ -150,11 +150,10 @@ local function AddSpellInfo(Hyperlink)
     -- 法术图标也要！
     local id = match(Hyperlink, "Hspell:(%d-):")
     if (not id) then return end
-    
+
     if CF.db.link.add_icon then
         local texture = GetSpellTexture(tonumber(id))
         local icon = format(IconString .. ":255:255:255|t", texture)
-        print(icon)
         Hyperlink = icon .. " " .. Hyperlink
     end
 
@@ -440,8 +439,6 @@ end
 -------------------------------------
 -- 表情
 
-
-
 local emotes = {
     {key = "angel", zhTW = "天使", zhCN = "天使"}, {key = "angry", zhTW = "生氣", zhCN = "生气"},
     {key = "biglaugh", zhTW = "大笑", zhCN = "大笑"}, {key = "clap", zhTW = "鼓掌", zhCN = "鼓掌"},
@@ -500,21 +497,69 @@ local function ReplaceEmote(value)
 end
 
 function CF:CreateInterface()
-    local frame, button
+    local button
     local width, height, column, space = 20, 20, 10, 6
     local index = 0
-    frame = CreateFrame("Frame", "CustomEmoteFrame", UIParent, "UIPanelDialogTemplate")
+    -- 创建 ElvUI 风格框体
+    local frame = CreateFrame("Frame", "Wind_CustomEmoteFrame", UIParent, "UIPanelDialogTemplate")
+    _G.Wind_CustomEmoteFrameTitleBG:Hide()
+    _G.Wind_CustomEmoteFrameDialogBG:Hide()
     frame:StripTextures()
     frame:CreateBackdrop('Transparent')
     frame:CreateShadow()
-    frame.title = frame:CreateFontString(nil, "ARTWORK", "ChatFontNormal")
-    frame.title:SetPoint("TOP", frame, "TOP", 0, -9)
-    frame.title:FontTemplate()
-    S:HandleCloseButton(_G.CustomEmoteFrameClose)
+    S:HandleCloseButton(_G.Wind_CustomEmoteFrameClose)
+
+    -- 定位
     frame:SetWidth(column * (width + space) + 24)
     frame:SetClampedToScreen(true)
     frame:SetFrameStrata("DIALOG")
-    frame:SetPoint("TOPRIGHT", GeneralDockManager, "TOPRIGHT", 0, 220) -- 這裡調整位置
+    frame:SetPoint("LEFT", ChatFrame1, "RIGHT", 60, 0)
+
+    -- 拖动
+    frame:SetMovable(true)
+    frame:EnableMouse(true)
+    frame:RegisterForDrag("LeftButton")
+
+    frame:SetScript("OnMouseDown", function(self, button)
+        if button == "LeftButton" and not self.isMoving then
+            self:StartMoving();
+            self.isMoving = true;
+        end
+    end)
+    frame:SetScript("OnMouseUp", function(self, button)
+        if button == "LeftButton" and self.isMoving then
+            self:StopMovingOrSizing();
+            self.isMoving = false;
+        elseif button == "RightButton" and not self.isMoving then
+            -- 右键复原
+            self:ClearAllPoints()
+            self:SetPoint("LEFT", ChatFrame1, "RIGHT", 60, 0)
+        end
+    end)
+    frame:SetScript("OnHide", function(self)
+        if (self.isMoving) then
+            self:StopMovingOrSizing();
+            self.isMoving = false;
+        end
+    end)
+
+    -- 标题
+    frame.title = frame:CreateFontString(nil, "ARTWORK", "ChatFontNormal")
+    frame.title:SetPoint("TOP", frame, "TOP", 0, -9)
+    frame.title:FontTemplate(E.media.normFont, 16, newStyle)
+
+    -- 帮助提示
+    local tipsButton = CreateFrame("Frame", nil, frame)
+    tipsButton:SetSize(25, 25)
+    tipsButton:SetPoint("TOPLEFT", frame, "TOPLEFT", 3, -4)
+    tipsButton.text = tipsButton:CreateFontString(nil, "ARTWORK")
+    tipsButton.text:SetPoint("CENTER", 0, 0)
+    tipsButton.text:FontTemplate(E.media.normFont, 14, newStyle)
+    tipsButton.text:SetText("?")
+    tipsButton:SetScript("OnEnter", function() frame.title:SetText(L["Move (L\124\124R) Reset"]) end)
+    tipsButton:SetScript("OnLeave", function() frame.title:SetText("") end)
+
+    -- 建立表情
     for _, v in ipairs(emotes) do
         button = CreateFrame("Button", nil, frame)
         button.emote = "{" .. (v[ClientLang] or v.key) .. "}"

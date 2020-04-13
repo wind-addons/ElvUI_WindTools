@@ -482,6 +482,28 @@ function OT:ChangeFonts()
         end
     end
 
+    local function SetBonusText()
+        local module = _G.BONUS_OBJECTIVE_TRACKER_MODULE
+        if (not module) or (not module.usedBlocks) then return end
+        for _, block in pairs(module.usedBlocks) do
+            if not block.hasWindSkin then
+                local contents = block.ScrollContents
+                if not contents then return end
+                local lines = {contents:GetChildren()}
+                for index, line in pairs(lines) do
+                    if line and line.Text and OT.db and OT.db.info and OT.db.title then
+                        if index == 1 then
+                            line.Text:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
+                        else
+                            line.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+                        end
+                    end
+                end
+                block.hasWindSkin = true
+            end
+        end
+    end
+
     local function setText(self, block)
         local text = block.HeaderText
         if text then
@@ -494,6 +516,7 @@ function OT:ChangeFonts()
                 end
             end
         end
+        SetBonusText()
     end
 
     local function hookWQText(self)

@@ -105,6 +105,15 @@ WS.lazy_load_list = {
     ["Blizzard_MacroUI"] = {"MacroPopupFrame"}
 }
 
+function WS:SkinFont(font, size, style)
+	local oldSize = select(2, font:GetFont())
+	local newSize = size or oldSize
+	local newStyle = style or "OUTLINE"
+	font:FontTemplate(E.media.normFont, newSize, newStyle)
+	font:SetShadowColor(0, 0, 0, 0)
+	font.SetShadowColor = E.noop
+end
+
 local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
     ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
@@ -156,7 +165,8 @@ local function shadow_immersion(self, event, addon)
     S:HandleStatusBar(ImmersionFrame.TalkBox.ReputationBar)
     ImmersionFrame.TalkBox.ReputationBar:ClearAllPoints()
     ImmersionFrame.TalkBox.ReputationBar:SetPoint('TOPLEFT', ImmersionFrame.TalkBox, 'BOTTOMLEFT', -20, 10)
-    ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
+	ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
+
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon:Hide();
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon.Show = function() end;
 
@@ -166,9 +176,23 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen:Hide();
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
 
-	ImmersionFrame.TalkBox.Elements.Progress.ReqText:FontTemplate(E.media.normFont, 16, "OUTLINE")
-	ImmersionFrame.TalkBox.Elements.Progress.ReqText:SetShadowColor(0, 0, 0, 0)
-	ImmersionFrame.TalkBox.Elements.Progress.ReqText.SetShadowColor = E.noop
+	-- 需求物品
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Progress.ReqText)
+	-- 任务奖励
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.Header, 16)
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemReceiveText, 14)
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ReceiveText, 14)
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ValueText, 14)
+	-- 任务目标
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesHeader, 16)
+	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesText, 14)
+
+	if ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame then
+		local buttons = {ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame:GetChildren()}
+		for _, v in pairs(buttons) do
+			WS:SkinFont(v.Text, 14)
+		end
+	 end
 
     local function SkinReward(Button)
         if Button.Icon then
@@ -192,7 +216,6 @@ local function shadow_immersion(self, event, addon)
 			Button.Name:FontTemplate(E.media.normFont, 14, "OUTLINE")
 			Button.Name:SetShadowColor(0, 0, 0, 0)
 			Button.Name.SetShadowColor = E.noop
-
 
             Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
             Button.AutoCastShine:SetParent(Button.Icon.backdrop)
@@ -243,7 +266,7 @@ local function shadow_immersion(self, event, addon)
                 Button.Hilite:SetBackdropColor(0, 0, 0, 0)
                 Button.Hilite:SetAllPoints(Button.backdrop)
 				Button:SetHighlightTexture('')
-				Button.Label:FontTemplate(E.media.normFont, 18, "OUTLINE")
+				WS:SkinFont(Button.Label)
             end
         end
         for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
@@ -629,13 +652,9 @@ function WS:ADDON_LOADED(_, addon)
     if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
         local f = _G.TalkingHeadFrame
         if f then
-            f:CreateShadow(6)
-            f.NameFrame.Name:FontTemplate(E.media.normFont, 20, "OUTLINE")
-            f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
-            f.NameFrame.Name.SetShadowColor = E.noop
-			f.TextFrame.Text:FontTemplate(E.media.normFont, 16, "OUTLINE")
-            f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
-            f.TextFrame.Text.SetShadowColor = E.noop
+			f:CreateShadow(6)
+			WS:SkinFont(f.NameFrame.Name)
+			WS:SkinFont(f.TextFrame.Text)
         end
     end
 

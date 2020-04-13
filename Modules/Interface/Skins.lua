@@ -133,6 +133,17 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetAlpha(.8)
     ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
 
+	ImmersionFrame.TalkBox.NameFrame.Name:FontTemplate(E.media.normFont, 20, "OUTLINE")
+	ImmersionFrame.TalkBox.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
+	ImmersionFrame.TalkBox.NameFrame.Name.SetShadowColor = E.noop
+
+	ImmersionFrame.TalkBox.TextFrame.Text:FontTemplate(E.media.normFont, 16, "OUTLINE")
+	ImmersionFrame.TalkBox.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
+	ImmersionFrame.TalkBox.TextFrame.Text.SetShadowColor = E.noop
+	if ImmersionFrame.TalkBox.TextFrame.SpeechProgress then
+		ImmersionFrame.TalkBox.TextFrame.SpeechProgress:FontTemplate()
+	end
+
     ImmersionFrame.TalkBox.Elements:StripTextures()
     ImmersionFrame.TalkBox.Elements:CreateBackdrop('Transparent')
     ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.Elements, 'TOPLEFT', 16, -16)
@@ -155,6 +166,10 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen:Hide();
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
 
+	ImmersionFrame.TalkBox.Elements.Progress.ReqText:FontTemplate(E.media.normFont, 16, "OUTLINE")
+	ImmersionFrame.TalkBox.Elements.Progress.ReqText:SetShadowColor(0, 0, 0, 0)
+	ImmersionFrame.TalkBox.Elements.Progress.ReqText.SetShadowColor = E.noop
+
     local function SkinReward(Button)
         if Button.Icon then
             Button:CreateBackdrop('Transparent')
@@ -172,7 +187,12 @@ local function shadow_immersion(self, event, addon)
             S:HandleIcon(Button.Icon)
             Button.Icon:CreateBackdrop()
             Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
-            Button.Icon.backdrop:SetOutside(Button.Icon)
+			Button.Icon.backdrop:SetOutside(Button.Icon)
+			
+			Button.Name:FontTemplate(E.media.normFont, 14, "OUTLINE")
+			Button.Name:SetShadowColor(0, 0, 0, 0)
+			Button.Name.SetShadowColor = E.noop
+
 
             Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
             Button.AutoCastShine:SetParent(Button.Icon.backdrop)
@@ -222,7 +242,8 @@ local function shadow_immersion(self, event, addon)
                 Button.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
                 Button.Hilite:SetBackdropColor(0, 0, 0, 0)
                 Button.Hilite:SetAllPoints(Button.backdrop)
-                Button:SetHighlightTexture('')
+				Button:SetHighlightTexture('')
+				Button.Label:FontTemplate(E.media.normFont, 18, "OUTLINE")
             end
         end
         for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
@@ -609,10 +630,10 @@ function WS:ADDON_LOADED(_, addon)
         local f = _G.TalkingHeadFrame
         if f then
             f:CreateShadow(6)
-            f.NameFrame.Name:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.4, "OUTLINE")
+            f.NameFrame.Name:FontTemplate(E.media.normFont, 20, "OUTLINE")
             f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
             f.NameFrame.Name.SetShadowColor = E.noop
-            f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.15, "OUTLINE")
+			f.TextFrame.Text:FontTemplate(E.media.normFont, 16, "OUTLINE")
             f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
             f.TextFrame.Text.SetShadowColor = E.noop
         end

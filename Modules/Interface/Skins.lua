@@ -92,8 +92,8 @@ WS.blizzard_frames = {
 
 WS.lazy_load_list = {
     ["Blizzard_GarrisonUI"] = {
-        "GarrisonLandingPage", "GarrisonMissonFrame", "GarrisonShipyardFrame",
-        "OrderHallMissionFrame", "BFAMissionFrame", "OrderHallCommandBar"
+        "GarrisonLandingPage", "GarrisonMissonFrame", "GarrisonShipyardFrame", "OrderHallMissionFrame",
+        "BFAMissionFrame", "OrderHallCommandBar"
     },
     ["Blizzard_BindingUI"] = {"KeyBindingFrame"},
     ["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
@@ -108,15 +108,10 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
     ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
-    ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT',
-                                                             ImmersionFrame.TalkBox
-                                                                 .BackgroundFrame,
+    ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame,
                                                              'TOPLEFT', 11, -11)
-    ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT',
-                                                             ImmersionFrame.TalkBox
-                                                                 .BackgroundFrame,
-                                                             'BOTTOMRIGHT', -11,
-                                                             11)
+    ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame,
+                                                             'BOTTOMRIGHT', -11, 11)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
 
     ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
@@ -129,50 +124,34 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Hilite:SetTemplate()
     ImmersionFrame.TalkBox.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
     ImmersionFrame.TalkBox.Hilite:SetBackdropColor(0, 0, 0, 0)
-    ImmersionFrame.TalkBox.Hilite:SetPoint('TOPLEFT', ImmersionFrame.TalkBox
-                                               .BackgroundFrame, 'TOPLEFT', 11,
-                                           -11)
-    ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT',
-                                           ImmersionFrame.TalkBox
-                                               .BackgroundFrame, 'BOTTOMRIGHT',
-                                           -11, 11)
+    ImmersionFrame.TalkBox.Hilite:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame, 'TOPLEFT', 11, -11)
+    ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 11)
 
     ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
-    ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT",
-                                                                2, -2)
+    ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
     ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
 
     ImmersionFrame.TalkBox.Elements:StripTextures()
     ImmersionFrame.TalkBox.Elements:CreateBackdrop('Transparent')
-    ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('TOPLEFT',
-                                                      ImmersionFrame.TalkBox
-                                                          .Elements, 'TOPLEFT',
-                                                      16, -16)
-    ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('BOTTOMRIGHT',
-                                                      ImmersionFrame.TalkBox
-                                                          .Elements,
-                                                      'BOTTOMRIGHT', -16, 16)
+    ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.Elements, 'TOPLEFT', 16, -16)
+    ImmersionFrame.TalkBox.Elements.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.Elements, 'BOTTOMRIGHT',
+                                                      -16, 16)
     ImmersionFrame.TalkBox.Elements.backdrop:CreateShadow()
 
     ImmersionFrame.TalkBox.MainFrame.Overlay:Kill()
 
     S:HandleStatusBar(ImmersionFrame.TalkBox.ReputationBar)
     ImmersionFrame.TalkBox.ReputationBar:ClearAllPoints()
-    ImmersionFrame.TalkBox.ReputationBar:SetPoint('TOPLEFT',
-                                                  ImmersionFrame.TalkBox,
-                                                  'BOTTOMLEFT', -20, 10)
+    ImmersionFrame.TalkBox.ReputationBar:SetPoint('TOPLEFT', ImmersionFrame.TalkBox, 'BOTTOMLEFT', -20, 10)
     ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon:Hide();
-    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon.Show =
-        function() end;
+    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon.Show = function() end;
 
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.NameTag:Hide();
-    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.NameTag
-        .Show = function() end;
+    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.NameTag.Show = function() end;
 
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen:Hide();
-    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen
-        .Show = function() end;
+    ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
 
     local function SkinReward(Button)
         if Button.Icon then
@@ -185,8 +164,7 @@ local function shadow_immersion(self, event, addon)
             if Button.Mask then Button.Mask:Hide() end
 
             Button.backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0, 0)
-            Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT',
-                                     0, 0)
+            Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT', 0, 0)
             Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
 
             S:HandleIcon(Button.Icon)
@@ -194,8 +172,7 @@ local function shadow_immersion(self, event, addon)
             Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
             Button.Icon.backdrop:SetOutside(Button.Icon)
 
-            Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button,
-                                               'AutoCastShineTemplate')
+            Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
             Button.AutoCastShine:SetParent(Button.Icon.backdrop)
             Button.AutoCastShine:SetAllPoints()
 
@@ -204,13 +181,12 @@ local function shadow_immersion(self, event, addon)
             end
 
             Button:SetScript("OnUpdate", function(self)
-                if ImmersionFrame.TalkBox.Elements.chooseItems and
-                    ImmersionFrame.TalkBox.Elements.itemChoice == self:GetID() then
+                if ImmersionFrame.TalkBox.Elements.chooseItems and ImmersionFrame.TalkBox.Elements.itemChoice ==
+                    self:GetID() then
                     AutoCastShine_AutoCastStart(self.AutoCastShine, 0, .44, .87)
                     self.backdrop:SetBackdropBorderColor(0, 0.44, .87, 1)
                 else
-                    self.backdrop:SetBackdropBorderColor(
-                        unpack(E.media.bordercolor))
+                    self.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
                     AutoCastShine_AutoCastStop(self.AutoCastShine)
                 end
             end)
@@ -226,13 +202,11 @@ local function shadow_immersion(self, event, addon)
         end
     end
 
-    SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame
-                   .ArtifactXPFrame)
+    SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ArtifactXPFrame)
     SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.HonorFrame)
     SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame)
     SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.TitleFrame)
-    SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame
-                   .SkillPointFrame)
+    SkinReward(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.SkillPointFrame)
 
     ImmersionFrame:HookScript('OnEvent', function(self)
         for _, Button in ipairs(self.TitleButtons.Buttons) do
@@ -249,8 +223,7 @@ local function shadow_immersion(self, event, addon)
                 Button:SetHighlightTexture('')
             end
         end
-        for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame
-                                    .Buttons) do
+        for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
             if Button and not Button.backdrop then SkinReward(Button) end
         end
         for _, Button in ipairs(self.TalkBox.Elements.Progress.Buttons) do
@@ -262,10 +235,8 @@ local function shadow_immersion(self, event, addon)
                 Button.Border:Hide()
                 Button.Mask:Hide()
 
-                Button.backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0,
-                                         0)
-                Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon,
-                                         'BOTTOMRIGHT', 0, 0)
+                Button.backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0, 0)
+                Button.backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT', 0, 0)
                 Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
             end
         end
@@ -275,13 +246,11 @@ end
 local function shadow_bigwigs(self, event, addon)
     if event == 'PLAYER_ENTERING_WORLD' then
         if BigWigsLoader then
-            BigWigsLoader.RegisterMessage('AddOnSkins', "BigWigs_FrameCreated",
-                                          function(event, frame, name)
+            BigWigsLoader.RegisterMessage('AddOnSkins', "BigWigs_FrameCreated", function(event, frame, name)
                 if name == "QueueTimer" then
                     AS:SkinStatusBar(frame)
                     frame:ClearAllPoints()
-                    frame:SetPoint('TOP', '$parent', 'BOTTOM', 0,
-                                   -(AS.PixelPerfect and 2 or 4))
+                    frame:SetPoint('TOP', '$parent', 'BOTTOM', 0, -(AS.PixelPerfect and 2 or 4))
                     frame:SetHeight(16)
                     frame:CreateShadow()
                 end
@@ -373,8 +342,7 @@ local function shadow_bigwigs(self, event, addon)
             bar.candyBarBackground:SetTexture(AS.NormTex)
 
             bar.candyBarIconFrame:ClearAllPoints()
-            bar.candyBarIconFrame:SetPoint('BOTTOMRIGHT', bar, 'BOTTOMLEFT', -7,
-                                           0)
+            bar.candyBarIconFrame:SetPoint('BOTTOMRIGHT', bar, 'BOTTOMLEFT', -7, 0)
             bar.candyBarIconFrame:SetSize(buttonsize, buttonsize)
             AS:SkinTexture(bar.candyBarIconFrame)
 
@@ -407,22 +375,17 @@ local function shadow_bigwigs(self, event, addon)
             bar.candyBarBackground:SetTexture(unpack(AS.BackdropColor))
 
             bar.candyBarIconFrame:ClearAllPoints()
-            bar.candyBarIconFrame:SetPoint('BOTTOMRIGHT', bar, 'BOTTOMLEFT', -7,
-                                           0)
+            bar.candyBarIconFrame:SetPoint('BOTTOMRIGHT', bar, 'BOTTOMLEFT', -7, 0)
             bar.candyBarIconFrame:SetSize(buttonsize, buttonsize)
             AS:SkinTexture(bar.candyBarIconFrame)
 
             bar.candyBarLabel:ClearAllPoints()
-            bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 2,
-                                       AS:AdjustForTheme(10))
-            bar.candyBarLabel:SetPoint("RIGHT", bar, "RIGHT", -2,
-                                       AS:AdjustForTheme(10))
+            bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 2, AS:AdjustForTheme(10))
+            bar.candyBarLabel:SetPoint("RIGHT", bar, "RIGHT", -2, AS:AdjustForTheme(10))
 
             bar.candyBarDuration:ClearAllPoints()
-            bar.candyBarDuration:SetPoint("LEFT", bar, "LEFT", 2,
-                                          AS:AdjustForTheme(10))
-            bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -2,
-                                          AS:AdjustForTheme(10))
+            bar.candyBarDuration:SetPoint("LEFT", bar, "LEFT", 2, AS:AdjustForTheme(10))
+            bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -2, AS:AdjustForTheme(10))
 
             AS:SkinTexture(bar.candyBarIconFrame)
         end
@@ -432,24 +395,16 @@ local function shadow_bigwigs(self, event, addon)
             apiVersion = 1,
             version = 1,
             GetSpacing = function() return 3 end,
-            ApplyStyle = function(bar)
-                ApplyStyle(bar, FreeBackgrounds, buttonsize)
-            end,
-            BarStopped = function(bar)
-                FreeStyle(bar, FreeBackgrounds)
-            end,
+            ApplyStyle = function(bar) ApplyStyle(bar, FreeBackgrounds, buttonsize) end,
+            BarStopped = function(bar) FreeStyle(bar, FreeBackgrounds) end,
             GetStyleName = function() return 'AddOnSkins' end
         })
         BigWigsBars:RegisterBarStyle('AddOnSkins Half-Bar', {
             apiVersion = 1,
             version = 1,
             GetSpacing = function() return 13 end,
-            ApplyStyle = function(bar)
-                ApplyStyleHalfBar(bar, FreeBackgrounds, buttonsize)
-            end,
-            BarStopped = function(bar)
-                FreeStyle(bar, FreeBackgrounds)
-            end,
+            ApplyStyle = function(bar) ApplyStyleHalfBar(bar, FreeBackgrounds, buttonsize) end,
+            BarStopped = function(bar) FreeStyle(bar, FreeBackgrounds) end,
             GetStyleName = function() return 'AddOnSkins Half-Bar' end
         })
 
@@ -458,15 +413,11 @@ local function shadow_bigwigs(self, event, addon)
 end
 
 local function shadow_weakauras()
-    local function Skin_WeakAuras(frame)
-        if not frame.shadow then frame:CreateShadow(2) end
-    end
+    local function Skin_WeakAuras(frame) if not frame.shadow then frame:CreateShadow(2) end end
 
     local regionTypes = WeakAuras.regionTypes
-    local Create_Icon, Modify_Icon = regionTypes.icon.create,
-                                     regionTypes.icon.modify
-    local Create_AuraBar, Modify_AuraBar = regionTypes.aurabar.create,
-                                           regionTypes.aurabar.modify
+    local Create_Icon, Modify_Icon = regionTypes.icon.create, regionTypes.icon.modify
+    local Create_AuraBar, Modify_AuraBar = regionTypes.aurabar.create, regionTypes.aurabar.modify
 
     regionTypes.icon.create = function(parent, data)
         local region = Create_Icon(parent, data)
@@ -492,9 +443,7 @@ local function shadow_weakauras()
 
     for weakAura in pairs(WeakAuras.regions) do
         local regions = WeakAuras.regions[weakAura]
-        if regions.regionType == 'icon' or regions.regionType == 'aurabar' then
-            Skin_WeakAuras(regions.region)
-        end
+        if regions.regionType == 'icon' or regions.regionType == 'aurabar' then Skin_WeakAuras(regions.region) end
     end
 end
 
@@ -519,14 +468,10 @@ local function shadow_objective_tracker()
                 bar.backdrop:CreateShadow()
             end
 
-            if progressBar.backdrop then
-                progressBar.backdrop:CreateShadow()
-            end
+            if progressBar.backdrop then progressBar.backdrop:CreateShadow() end
 
             -- 稍微移动下图标位置，防止阴影重叠，更加美观！
-            if icon then
-                icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0)
-            end
+            if icon then icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0) end
             -- 顺便修正一下字体位置，反正不知道为什么 ElvUI 要往上移动一个像素
             if label then
                 label:ClearAllPoints()
@@ -552,18 +497,13 @@ local function shadow_objective_tracker()
         end
     end
 
-    hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar",
-                   ProgressBarsShadows)
-    hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar",
-                   ProgressBarsShadows)
-    hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar",
-                   ProgressBarsShadows)
-    hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar",
-                   ProgressBarsShadows)
+    hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+    hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+    hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
+    hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", ProgressBarsShadows)
     hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", ItemButtonShadows)
     hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", ItemButtonShadows)
-    hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup",
-                   FindGroupButtonShadows)
+    hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup", FindGroupButtonShadows)
 end
 
 local function shadow_alerts()
@@ -579,53 +519,37 @@ local function shadow_alerts()
     end
 
     -- 成就
-    hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", create_alert_shadow)
     hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 遭遇
-    hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", create_alert_shadow)
     hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", create_alert_shadow)
     hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", create_alert_shadow)
-    hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 要塞
-    hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 荣誉
-    hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 拾取
-    hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", create_alert_shadow)
     hooksecurefunc(_G.LootAlertSystem, "setUpFunction", create_alert_shadow)
-    hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", create_alert_shadow)
     hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 专业技能
-    hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 宠物 / 坐骑
     hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", create_alert_shadow)
@@ -633,10 +557,8 @@ local function shadow_alerts()
     hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", create_alert_shadow)
 
     -- 其它
-    hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction",
-                   create_alert_shadow)
-    hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction",
-                   create_alert_shadow)
+    hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction", create_alert_shadow)
+    hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", create_alert_shadow)
 end
 
 local function CreateTabShadow(tab)
@@ -657,33 +579,27 @@ function WS:ADDON_LOADED(_, addon)
     if not self.db.elvui.general then return end
 
     if self.lazy_load_list[addon] then
-        for _, frame in pairs(self.lazy_load_list[addon]) do
-            if _G[frame] then _G[frame]:CreateShadow(4) end
-        end
+        for _, frame in pairs(self.lazy_load_list[addon]) do if _G[frame] then _G[frame]:CreateShadow(4) end end
     end
 
     -- 离开界面
     AFK.AFKMode.bottom:CreateShadow(10)
 
     AFK.AFKMode.bottom.logo:Size(512, 128)
-    AFK.AFKMode.bottom.logo:SetTexture(
-        "Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
+    AFK.AFKMode.bottom.logo:SetTexture("Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
 
     -- 离开界面字体位置美观性调整
     AFK.AFKMode.bottom.logo:ClearAllPoints()
     AFK.AFKMode.bottom.logo:Point("CENTER", AFK.AFKMode.bottom, "CENTER", 0, 25)
 
     AFK.AFKMode.bottom.guild:ClearAllPoints()
-    AFK.AFKMode.bottom.guild:Point("TOPLEFT", AFK.AFKMode.bottom.name,
-                                   "BOTTOMLEFT", 0, -11)
+    AFK.AFKMode.bottom.guild:Point("TOPLEFT", AFK.AFKMode.bottom.name, "BOTTOMLEFT", 0, -11)
 
     AFK.AFKMode.bottom.time:ClearAllPoints()
-    AFK.AFKMode.bottom.time:Point("TOPLEFT", AFK.AFKMode.bottom.guild,
-                                  "BOTTOMLEFT", 0, -11)
+    AFK.AFKMode.bottom.time:Point("TOPLEFT", AFK.AFKMode.bottom.guild, "BOTTOMLEFT", 0, -11)
 
     -- 特写框架
-    if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and
-        addon == "Blizzard_TalkingHeadUI" then
+    if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
         if _G.TalkingHeadFrame then TalkingHeadFrame:CreateShadow(6) end
     end
 
@@ -697,49 +613,32 @@ function WS:ADDON_LOADED(_, addon)
             frame.GuildInfoTab:CreateShadow()
             frame.GuildMemberDetailFrame:CreateShadow()
             frame.GuildMemberDetailFrame:ClearAllPoints()
-            frame.GuildMemberDetailFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT",
-                                                  5, -76)
-            if _G.CommunitiesGuildLogFrame then
-                _G.CommunitiesGuildLogFrame:CreateShadow()
-            end
+            frame.GuildMemberDetailFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 5, -76)
+            if _G.CommunitiesGuildLogFrame then _G.CommunitiesGuildLogFrame:CreateShadow() end
         end
 
         -- 搜寻社群
         if _G.ClubFinderCommunityAndGuildFinderFrame then
             local frame = _G.ClubFinderCommunityAndGuildFinderFrame
-            if frame.ClubFinderPendingTab then
-                frame.ClubFinderPendingTab:CreateShadow()
-            end
-            if frame.ClubFinderSearchTab then
-                frame.ClubFinderSearchTab:CreateShadow()
-            end
-            if frame.RequestToJoinFrame then
-                frame.RequestToJoinFrame:CreateShadow()
-            end
+            if frame.ClubFinderPendingTab then frame.ClubFinderPendingTab:CreateShadow() end
+            if frame.ClubFinderSearchTab then frame.ClubFinderSearchTab:CreateShadow() end
+            if frame.RequestToJoinFrame then frame.RequestToJoinFrame:CreateShadow() end
         end
 
         -- 搜寻公会
         if _G.ClubFinderGuildFinderFrame then
             local frame = _G.ClubFinderGuildFinderFrame
-            if frame.ClubFinderPendingTab then
-                frame.ClubFinderPendingTab:CreateShadow()
-            end
-            if frame.ClubFinderSearchTab then
-                frame.ClubFinderSearchTab:CreateShadow()
-            end
-            if frame.RequestToJoinFrame then
-                frame.RequestToJoinFrame:CreateShadow()
-            end
+            if frame.ClubFinderPendingTab then frame.ClubFinderPendingTab:CreateShadow() end
+            if frame.ClubFinderSearchTab then frame.ClubFinderSearchTab:CreateShadow() end
+            if frame.RequestToJoinFrame then frame.RequestToJoinFrame:CreateShadow() end
         end
     end
 
     -- 冒险指南标签页
     if addon == "Blizzard_EncounterJournal" then
         local frames = {
-            "EncounterJournalEncounterFrameInfoOverviewTab",
-            "EncounterJournalEncounterFrameInfoLootTab",
-            "EncounterJournalEncounterFrameInfoBossTab",
-            "EncounterJournalEncounterFrameInfoModelTab"
+            "EncounterJournalEncounterFrameInfoOverviewTab", "EncounterJournalEncounterFrameInfoLootTab",
+            "EncounterJournalEncounterFrameInfoBossTab", "EncounterJournalEncounterFrameInfoModelTab"
         }
 
         for _, frame in pairs(frames) do
@@ -764,16 +663,12 @@ function WS:ShadowGeneralFrames()
     for frame, noBackdrop in pairs(self.blizzard_frames) do
         if noBackdrop then
             if frame.Border then
-                if _G[frame] and _G[frame].Border then
-                    _G[frame].backdrop:CreateShadow(4)
-                end
+                if _G[frame] and _G[frame].Border then _G[frame].backdrop:CreateShadow(4) end
             else
                 if _G[frame] then _G[frame]:CreateShadow() end
             end
         else
-            if _G[frame] and _G[frame].backdrop then
-                _G[frame].backdrop:CreateShadow(4)
-            end
+            if _G[frame] and _G[frame].backdrop then _G[frame].backdrop:CreateShadow(4) end
         end
     end
 
@@ -806,9 +701,7 @@ function WS:ShadowGeneralFrames()
     for i = 1, 5 do CreateTabShadow(_G["SpellBookFrameTabButton" .. i]) end
 
     -- 法术书侧栏
-    for i = 1, MAX_SKILLLINE_TABS do
-        CreateTabShadow(_G["SpellBookSkillLineTab" .. i])
-    end
+    for i = 1, MAX_SKILLLINE_TABS do CreateTabShadow(_G["SpellBookSkillLineTab" .. i]) end
 
     -- 邮件界面标签页
     for i = 1, 2 do CreateTabShadow(_G["MailFrameTab" .. i]) end
@@ -828,14 +721,10 @@ function WS:ShadowElvUIFrames()
 
     if self.db.elvui.general then
         -- 为 ElvUI 美化皮肤模块添加阴影功能
-        hooksecurefunc(S, "HandleTab",
-                       function(self, tab) CreateTabShadow(tab) end)
-        hooksecurefunc(S, "HandlePortraitFrame", function(self, f)
-            if f and f.backdrop then f.backdrop:CreateShadow() end
-        end)
-        if _G.ElvUIVendorGraysFrame then
-            _G.ElvUIVendorGraysFrame:CreateShadow()
-        end
+        hooksecurefunc(S, "HandleTab", function(self, tab) CreateTabShadow(tab) end)
+        hooksecurefunc(S, "HandlePortraitFrame",
+                       function(self, f) if f and f.backdrop then f.backdrop:CreateShadow() end end)
+        if _G.ElvUIVendorGraysFrame then _G.ElvUIVendorGraysFrame:CreateShadow() end
 
         -- 提醒
         shadow_alerts()
@@ -847,30 +736,23 @@ function WS:ShadowElvUIFrames()
         end)
 
         -- 跳过剧情
-        hooksecurefunc('MovieFrame_PlayMovie', function(f)
-            if f.CloseDialog then f.CloseDialog:CreateShadow() end
-        end)
+        hooksecurefunc('MovieFrame_PlayMovie', function(f) if f.CloseDialog then f.CloseDialog:CreateShadow() end end)
 
         -- 美化遗漏天赋提示
         if E.global.general.showMissingTalentAlert then
             local TalentMicroButtonAlert = _G.TalentMicroButtonAlert
             if not TalentMicroButtonAlert.shadow then
                 -- 防止重复扩大
-                TalentMicroButtonAlert:SetWidth(
-                    TalentMicroButtonAlert:GetWidth() + 50)
-                TalentMicroButtonAlert.Text:SetWidth(
-                    TalentMicroButtonAlert.Text:GetWidth() + 50)
+                TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth() + 50)
+                TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth() + 50)
             end
             TalentMicroButtonAlert:CreateShadow()
         end
 
         -- 世界地图任务界面背景
         local QuestScrollFrame = _G.QuestScrollFrame
-        if QuestScrollFrame.Background then
-            QuestScrollFrame.Background:Kill()
-        end
-        if QuestScrollFrame.DetailFrame and
-            QuestScrollFrame.DetailFrame.backdrop then
+        if QuestScrollFrame.Background then QuestScrollFrame.Background:Kill() end
+        if QuestScrollFrame.DetailFrame and QuestScrollFrame.DetailFrame.backdrop then
             QuestScrollFrame.DetailFrame.backdrop:SetTemplate("Transparent")
         end
 
@@ -880,8 +762,7 @@ function WS:ShadowElvUIFrames()
                 QuestMapFrame.DetailsFrame.backdrop:SetTemplate("Transparent")
             end
             if QuestMapFrame.DetailsFrame.RewardsFrame then
-                QuestMapFrame.DetailsFrame.RewardsFrame:SetTemplate(
-                    "Transparent")
+                QuestMapFrame.DetailsFrame.RewardsFrame:SetTemplate("Transparent")
             end
         end
 
@@ -893,17 +774,13 @@ function WS:ShadowElvUIFrames()
     end
 
     if self.db.elvui.scenario_background then
-        hooksecurefunc("ScenarioStage_CustomizeBlock",
-                       function(stageBlock, scenarioType, widgetSetID,
-                                textureKitID)
+        hooksecurefunc("ScenarioStage_CustomizeBlock", function(stageBlock, scenarioType, widgetSetID, textureKitID)
             if widgetSetID then return end
             stageBlock.NormalBG:StripTextures()
             if not stageBlock.backdrop then
                 stageBlock:CreateBackdrop('Transparent')
-                stageBlock.backdrop:SetPoint("TOPLEFT", stageBlock.NormalBG,
-                                             "TOPLEFT", 4, -4)
-                stageBlock.backdrop:SetPoint("BOTTOMRIGHT", stageBlock.NormalBG,
-                                             "BOTTOMRIGHT", -4, 4)
+                stageBlock.backdrop:SetPoint("TOPLEFT", stageBlock.NormalBG, "TOPLEFT", 4, -4)
+                stageBlock.backdrop:SetPoint("BOTTOMRIGHT", stageBlock.NormalBG, "BOTTOMRIGHT", -4, 4)
                 stageBlock.backdrop:CreateShadow()
             end
         end)
@@ -911,12 +788,8 @@ function WS:ShadowElvUIFrames()
 
     -- 光环条
     if self.db.elvui.auras then
-        hooksecurefunc(A, "CreateIcon", function(_, button)
-            if button then button:CreateShadow() end
-        end)
-        hooksecurefunc(A, "UpdateAura", function(_, button)
-            if button then button:CreateShadow() end
-        end)
+        hooksecurefunc(A, "CreateIcon", function(_, button) if button then button:CreateShadow() end end)
+        hooksecurefunc(A, "UpdateAura", function(_, button) if button then button:CreateShadow() end end)
     end
 
     if self.db.elvui.character_frame then
@@ -925,17 +798,13 @@ function WS:ShadowElvUIFrames()
         CharacterModelFrame:DisableDrawLayer("BACKGROUND")
         CharacterModelFrame:DisableDrawLayer("BORDER")
         CharacterModelFrame:DisableDrawLayer("OVERLAY")
-        if CharacterModelFrame.backdrop then
-            CharacterModelFrame.backdrop:Kill()
-        end
+        if CharacterModelFrame.backdrop then CharacterModelFrame.backdrop:Kill() end
     end
 
     -- 单位框体
     if self.db.elvui.unitframes then
         -- 低频度更新单位框体外围阴影
-        hooksecurefunc(UF, "UpdateNameSettings", function(_, frame)
-            if frame then frame:CreateShadow() end
-        end)
+        hooksecurefunc(UF, "UpdateNameSettings", function(_, frame) if frame then frame:CreateShadow() end end)
         -- 在 oUF 更新仇恨值阴影时判断是否隐藏美化阴影
         hooksecurefunc(UF, "Configure_Threat", function(_, frame)
             local threat = frame.ThreatIndicator
@@ -954,15 +823,11 @@ function WS:ShadowElvUIFrames()
 
         -- 为分离的能量条提供阴影
         hooksecurefunc(UF, "Configure_Power", function(_, frame)
-            if frame.USE_POWERBAR and frame.POWERBAR_DETACHED then
-                frame.Power:CreateShadow()
-            end
+            if frame.USE_POWERBAR and frame.POWERBAR_DETACHED then frame.Power:CreateShadow() end
         end)
 
         -- 为单位框体光环提供边缘美化
-        hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button)
-            if button then button:CreateShadow() end
-        end)
+        hooksecurefunc(UF, "UpdateAuraSettings", function(_, _, button) if button then button:CreateShadow() end end)
     end
 
     -- 职业条
@@ -977,42 +842,28 @@ function WS:ShadowElvUIFrames()
     if self.db.elvui.castbar then
         hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
             frame.Castbar:CreateShadow()
-            if not frame.db.castbar.iconAttached then
-                frame.Castbar.ButtonIcon.bg:CreateShadow()
-            end
+            if not frame.db.castbar.iconAttached then frame.Castbar.ButtonIcon.bg:CreateShadow() end
         end)
     end
 
     -- 鼠标提示
     if self.db.elvui.tooltips then
         hooksecurefunc(TT, "SetStyle", function(_, tt)
-            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or
-                tt:IsForbidden() then return end
+            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() then return end
             tt:CreateShadow(4)
         end)
         hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
-            if tt:IsForbidden() or E.private.tooltip.enable ~= true then
-                return
-            end
-            if _G.GameTooltipStatusBar then
-                _G.GameTooltipStatusBar:CreateShadow(4)
-            end
+            if tt:IsForbidden() or E.private.tooltip.enable ~= true then return end
+            if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
         end)
-        hooksecurefunc("QueueStatusFrame_Update",
-                       function(self) self:CreateShadow() end)
+        hooksecurefunc("QueueStatusFrame_Update", function(self) self:CreateShadow() end)
     end
 
     -- 数据条
     if self.db.elvui.databars then
-        if DATABAR.db.azerite.enable then
-            _G.ElvUI_AzeriteBar:CreateShadow()
-        end
-        if DATABAR.db.experience.enable then
-            _G.ElvUI_ExperienceBar:CreateShadow()
-        end
-        if DATABAR.db.reputation.enable then
-            _G.ElvUI_ReputationBar:CreateShadow()
-        end
+        if DATABAR.db.azerite.enable then _G.ElvUI_AzeriteBar:CreateShadow() end
+        if DATABAR.db.experience.enable then _G.ElvUI_ExperienceBar:CreateShadow() end
+        if DATABAR.db.reputation.enable then _G.ElvUI_ReputationBar:CreateShadow() end
         if DATABAR.db.honor.enable then _G.ElvUI_HonorBar:CreateShadow() end
     end
 
@@ -1020,16 +871,13 @@ function WS:ShadowElvUIFrames()
     if self.db.elvui.actionbars then
         -- 常规动作条
         local actionbar_list = {
-            "ElvUI_Bar1Button", "ElvUI_Bar2Button", "ElvUI_Bar3Button",
-            "ElvUI_Bar4Button", "ElvUI_Bar5Button", "ElvUI_Bar6Button",
-            "ElvUI_StanceBarButton", "ElvUI_TotemBarTotem", "PetActionButton"
+            "ElvUI_Bar1Button", "ElvUI_Bar2Button", "ElvUI_Bar3Button", "ElvUI_Bar4Button", "ElvUI_Bar5Button",
+            "ElvUI_Bar6Button", "ElvUI_StanceBarButton", "ElvUI_TotemBarTotem", "PetActionButton"
         }
         for _, item in pairs(actionbar_list) do
             for i = 1, 12 do
                 local button = _G[item .. i]
-                if button and button.backdrop then
-                    button.backdrop:CreateShadow()
-                end
+                if button and button.backdrop then button.backdrop:CreateShadow() end
             end
         end
 
@@ -1041,15 +889,12 @@ function WS:ShadowElvUIFrames()
             _G.ExtraActionButton1:CreateShadow()
         end
 
-        hooksecurefunc(AB, "StyleButton", function(_, button)
-            if button.backdrop then button.backdrop:CreateShadow() end
-        end)
+        hooksecurefunc(AB, "StyleButton",
+                       function(_, button) if button.backdrop then button.backdrop:CreateShadow() end end)
 
         -- 微型系统条
         for i = 1, #MICRO_BUTTONS do
-            if _G[MICRO_BUTTONS[i]].backdrop then
-                _G[MICRO_BUTTONS[i]].backdrop:CreateShadow()
-            end
+            if _G[MICRO_BUTTONS[i]].backdrop then _G[MICRO_BUTTONS[i]].backdrop:CreateShadow() end
         end
     end
 
@@ -1070,12 +915,8 @@ function WS:ShadowElvUIFrames()
     end
 
     -- 聊天面板
-    if self.db.elvui.left_chat_panel then
-        if _G.LeftChatPanel then _G.LeftChatPanel:CreateShadow() end
-    end
-    if self.db.elvui.right_chat_panel then
-        if _G.RightChatPanel then _G.RightChatPanel:CreateShadow() end
-    end
+    if self.db.elvui.left_chat_panel then if _G.LeftChatPanel then _G.LeftChatPanel:CreateShadow() end end
+    if self.db.elvui.right_chat_panel then if _G.RightChatPanel then _G.RightChatPanel:CreateShadow() end end
 
     for i = 1, NUM_CHAT_WINDOWS do
         -- 输入框
@@ -1102,12 +943,9 @@ function WS:CustomSkins()
         if db and db.no_backdrop then S:HandlePortraitFrame(frame) end
         for i = 1, 10 do
             if frame["c" .. i] then
-                frame["c" .. i].label:FontTemplate(
-                    LSM:Fetch('font', db.label.font), db.label.size,
-                    db.label.style)
-                frame["c" .. i].candidate:FontTemplate(
-                    LSM:Fetch('font', db.candidate.font), db.candidate.size,
-                    db.candidate.style)
+                frame["c" .. i].label:FontTemplate(LSM:Fetch('font', db.label.font), db.label.size, db.label.style)
+                frame["c" .. i].candidate:FontTemplate(LSM:Fetch('font', db.candidate.font), db.candidate.size,
+                                                       db.candidate.style)
                 frame["c" .. i].candidate:SetWidth(db.width)
             end
         end
@@ -1116,10 +954,8 @@ function WS:CustomSkins()
     -- 错误提示
     if _G.UIErrorsFrame and self.db.ui_errors.enabled then
         local db = self.db.ui_errors
-        _G.UIErrorsFrame:FontTemplate(LSM:Fetch('font', db.font), db.size,
-                                      "OUTLINE")
-        _G.ActionStatusText:FontTemplate(LSM:Fetch('font', db.font), db.size,
-                                         "OUTLINE")
+        _G.UIErrorsFrame:FontTemplate(LSM:Fetch('font', db.font), db.size, "OUTLINE")
+        _G.ActionStatusText:FontTemplate(LSM:Fetch('font', db.font), db.size, "OUTLINE")
     end
 
     -- 失去控制
@@ -1143,15 +979,12 @@ function WS:CustomSkins()
             -- 时间归位
             s.TimeLeft:ClearAllPoints()
             s.TimeLeft.NumberText:ClearAllPoints()
-            s.TimeLeft.NumberText:Point("BOTTOMLEFT", s.Icon, "BOTTOMRIGHT", 10,
-                                        0)
+            s.TimeLeft.NumberText:Point("BOTTOMLEFT", s.Icon, "BOTTOMRIGHT", 10, 0)
 
             s.TimeLeft.SecondsText:ClearAllPoints()
-            s.TimeLeft.SecondsText:Point("TOPLEFT", s.TimeLeft.NumberText,
-                                         "TOPRIGHT", 3, 0)
+            s.TimeLeft.SecondsText:Point("TOPLEFT", s.TimeLeft.NumberText, "TOPRIGHT", 3, 0)
 
-            s:Size(s.Icon:GetWidth() + 10 + s.AbilityName:GetWidth(),
-                   s.Icon:GetHeight())
+            s:Size(s.Icon:GetWidth() + 10 + s.AbilityName:GetWidth(), s.Icon:GetHeight())
         end
         hooksecurefunc("LossOfControlFrame_SetUpDisplay", changeLocPos)
     end
@@ -1159,8 +992,7 @@ function WS:CustomSkins()
     -- 声望详细窗口对齐
     hooksecurefunc("ReputationFrame_Update", function(self)
         _G.ReputationDetailFrame:ClearAllPoints()
-        _G.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame,
-                                       "TOPRIGHT", 5, 0)
+        _G.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 5, 0)
     end)
 end
 
@@ -1184,8 +1016,7 @@ function WS:AddOnSkins()
         local function WindAS_SkinFrame(self, frame, template, override, kill)
             local name = frame and frame.GetName and frame:GetName()
             local insetFrame = name and _G[name .. 'Inset'] or frame.Inset
-            local closeButton = name and _G[name .. 'CloseButton'] or
-                                    frame.CloseButton
+            local closeButton = name and _G[name .. 'CloseButton'] or frame.CloseButton
             if not override then frame:StripTextures() end
             frame:SetTemplate('Transparent')
             frame:CreateShadow()
@@ -1203,9 +1034,7 @@ function WS:AddOnSkins()
 
         AS.SkinTooltip = function(self, frame, scale)
             for _, Region in pairs(AS.Blizzard.Tooltip) do
-                if tooltip[Region] then
-                    tooltip[Region]:SetTexture()
-                end
+                if tooltip[Region] then tooltip[Region]:SetTexture() end
             end
             WindAS_SkinFrame(self, tooltip)
             if scale then tooltip:SetScale(AS.UIScale) end
@@ -1216,9 +1045,7 @@ function WS:AddOnSkins()
             frame:CreateShadow()
         end
 
-        AS.SkinButton = function(self, button, strip)
-            S.HandleButton(self, button, strip)
-        end
+        AS.SkinButton = function(self, button, strip) S.HandleButton(self, button, strip) end
     end
 
     -- Weakaura

@@ -10,6 +10,7 @@ P["WindTools"]["Chat"] = {
 			enabled = true,
 			add_level = true,
 			add_icon = true,
+			add_slot = true,
 		},
 		smart_tab = {
 			enabled = true,
@@ -87,7 +88,7 @@ WT.ToolConfigs["Chat"] = {
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",
 		smart_tab = {
-			name = L["Use Tab to change channel"],
+			name = L["Use Tab to switch channel"],
 			order = 5,
 			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
@@ -145,6 +146,10 @@ WT.ToolConfigs["Chat"] = {
 				add_level = {
 					name = L["Add Level"],
 					order = 3,
+				},
+				add_slot = {
+					name = L["Add Slot"],
+					order = 4,
 				},
 			},
 		},

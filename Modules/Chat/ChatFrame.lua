@@ -35,6 +35,8 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitInBattleground = UnitInBattleground
 local UnitFullName = UnitFullName
 
+local ClientLang = GetLocale()
+
 -------------------------------------
 -- 物品等级，图标
 local ItemLevelTooltip = CreateFrame("GameTooltip", "ChatLinkLevelTooltip", UIParent, "GameTooltipTemplate")
@@ -45,34 +47,93 @@ local ItemNamePattern = gsub(CHALLENGE_MODE_KEYSTONE_NAME, "%%s", "(.+)")
 
 local IconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
 
+local slotAbbr = {
+    -- 这里是可缩写的常规物品
+    -- 武器就不缩写了，判定现在是提示中靠左和靠右都有显示的话就算
+    -- 人物面板左列
+    [HEADSLOT] = L["Head_Abbr"],
+    [NECKSLOT] = L["Neck_Abbr"],
+    [SHOULDERSLOT] = L["Shoulders_Abbr"],
+    [BACKSLOT] = L["Back_Abbr"],
+    [CHESTSLOT] = L["Chest_Abbr"],
+    [SHIRTSLOT] = L["Shirt_Abbr"],
+    [TABARDSLOT] = L["Tabard_Abbr"],
+    [WRISTSLOT] = L["Wrist_Abbr"],
+    -- 人物面板右列
+    [HANDSSLOT] = L["Hands_Abbr"],
+    [WAISTSLOT] = L["Waist_Abbr"],
+    [LEGSSLOT] = L["Legs_Abbr"],
+    [FEETSLOT] = L["Feet_Abbr"],
+    [FINGER0SLOT] = L["Finger_Abbr"],
+    [TRINKET0SLOT] = L["Trinket_Abbr"],
+    -- 副手物品
+    [INVTYPE_HOLDABLE] = L["Held In Off-hand_Abbr"],
+}
+
 local function AddItemInfo(Hyperlink)
     local id = match(Hyperlink, "Hitem:(%d-):")
     if (not id) then return end
 
     -- 获取物品实际等级
-    if CF.db.link.add_level then
-        local text, level, extraname
+    if CF.db.link.add_level or CF.db.link.add_slot then
+        local text, level, extraname, slot
         local link = match(Hyperlink, "|H(.-)|h")
         ItemLevelTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         ItemLevelTooltip:ClearLines()
         ItemLevelTooltip:SetHyperlink(link)
-        for i = 2, 4 do
-            local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
-            if not leftText then break end
-            text = leftText:GetText() or ""
-            level = match(text, ItemLevelPattern)
-            if (level) then break end
-            level = match(text, ItemPowerPattern)
-            if (level) then
-                extraname = match(_G[ItemLevelTooltip:GetName() .. "TextLeft1"]:GetText(), ItemNamePattern)
-                break
+    
+        if CF.db.link.add_level then
+            for i = 2, 5 do
+                local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
+                if leftText then
+                    text = leftText:GetText() or ""
+                    level = match(text, ItemLevelPattern)
+                    if (level) then break end
+                    level = match(text, ItemPowerPattern)
+                    if (level) then
+                        extraname = match(_G[ItemLevelTooltip:GetName() .. "TextLeft1"]:GetText(), ItemNamePattern)
+                        break
+                    end
+                end
+            end
+        end
+
+        if ((not CF.db.link.add_level) or (not extraname)) and CF.db.link.add_slot then
+            for i = 4, 6 do
+                local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
+                local rightText = _G[ItemLevelTooltip:GetName() .. "TextRight" .. i]
+                if leftText then
+                    if slotAbbr[leftText:GetText()] then
+                        slot = slotAbbr[leftText:GetText()]
+                        if rightText and rightText:IsShown() then
+                            -- 护甲分类
+                            local text = rightText:GetText() or ""
+                            slot = text..slot
+                        end
+                    end
+                    if slot then break end
+                    if rightText and rightText:IsShown() then
+                        -- 如果右边有字，且不是常规物品，那么必定为武器！
+                        if ClientLang == "zhTW" or ClientLang == "zhCN" or ClientLang == "krKR" then
+                            -- 为汉字圈的用户去除空格！（虽然还没有完整的韩语支持...）
+                            slot = leftText:GetText()..rightText:GetText()
+                        else
+                            slot = leftText:GetText().." "..rightText:GetText()
+                        end
+                    end
+                    if slot then break end
+                end
             end
         end
 
         if (level and extraname) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1:" .. extraname .. "]|h")
+        elseif (level and slot) then
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot.. "/" .. level .. ":%1]|h")
         elseif (level) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
+        elseif (slot) then
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. ":%1]|h")
         end
     end
 
@@ -102,7 +163,7 @@ end
 
 function CF:InitializeLink()
     if not self.db.link.enabled then return end
-    
+
     local function filter(self, event, msg, ...)
         msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
         msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
@@ -379,7 +440,7 @@ end
 -------------------------------------
 -- 表情
 
-local ClientLang = GetLocale()
+
 
 local emotes = {
     {key = "angel", zhTW = "天使", zhCN = "天使"}, {key = "angry", zhTW = "生氣", zhCN = "生气"},

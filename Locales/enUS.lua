@@ -229,14 +229,6 @@ L["Health Bar"] = true
 -- 跳过艾泽里特特质选择界面的渲染动画
 L["Skip Azerite Animations"] = true
 L["Skips the reveal animation of a new azerite armor piece and the animation after you select a trait."] = true
--- 频道切换
-L["Tab Chat Mod"] = true
-L["Use tab to switch channel."] = true
-L["Whisper Cycle"] = true
-L["Include Officer Channel"] = true
-L["There is no more whisper targets"]  = true
-L['Whisper history expiration time (min)'] = true
-L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'] = true
 -- 任务通告
 L["Quest Announcment"] = true
 L["Let you know quest is completed."] = true
@@ -479,3 +471,30 @@ L["Exalted"] = true
 -- 解锁过滤器
 L["Unblock Filter"] = true
 L["Unblock profanity filter setting for China server."] = true
+-- 聊天框增强
+L["Chat Frame"] = true
+L["Provide more features for chat frame."] = true
+L["Use Tab to switch channel"] = true
+L["Whisper Cycle"] = true
+L['Whisper history expiration time (min)'] = true
+L["There is no more whisper targets"]  = true
+L['This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets.'] = true
+L["Add information on link"] = true
+L["Add Icon"] = true
+L["Add Level"] = true
+L["Add Slot"] = true
+L["Head_Abbr"] = " Head"
+L["Neck_Abbr"] = "Neck"
+L["Shoulders_Abbr"] = " Shoulders"
+L["Back_Abbr"] = " Back"
+L["Chest_Abbr"] = " Chest"
+L["Shirt_Abbr"] = "Shirt"
+L["Tabard_Abbr"] = "Tabard"
+L["Wrist_Abbr"] = " Wrist"
+L["Hands_Abbr"] = " Hands"
+L["Waist_Abbr"] = " Waist"
+L["Legs_Abbr"] = " Legs"
+L["Feet_Abbr"] = " Feet"
+L["Finger_Abbr"] = "Finger"
+L["Trinket_Abbr"] = "Trinket"
+L["Held In Off-hand_Abbr"] = "Off-hand"

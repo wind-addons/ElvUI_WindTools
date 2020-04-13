@@ -576,7 +576,7 @@ end
 -------------------------------------
 -- 初始化
 function CF:Initialize()
-    if not E.db.WindTools["Chat"]["Chat Frame"] then return end
+    if not E.db.WindTools["Chat"]["Chat Frame"].enabled then return end
     self.db = E.db.WindTools["Chat"]["Chat Frame"]
 
     tinsert(WT.UpdateAll, function() CF.db = E.db.WindTools["Chat"]["Chat Frame"] end)

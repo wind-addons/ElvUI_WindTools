@@ -6,7 +6,7 @@ local _G = _G
 P["WindTools"]["Chat"] = {
 	["Chat Frame"] = {
 		enabled = true,
-		item_link = {
+		link = {
 			enabled = true,
 			add_level = true,
 			add_icon = true,
@@ -127,9 +127,9 @@ WT.ToolConfigs["Chat"] = {
 				},
 			}
 		},
-		item_link = {
+		link = {
 			name = L["Add information on link"],
-			order = 5,
+			order = 6,
 			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
 			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
 			args = {

@@ -17,6 +17,7 @@ local unpack = unpack
 local tostring = tostring
 local hooksecurefunc = hooksecurefunc
 local ceil = ceil
+local tonumber = tonumber
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
@@ -44,13 +45,14 @@ local ItemNamePattern = gsub(CHALLENGE_MODE_KEYSTONE_NAME, "%%s", "(.+)")
 
 local IconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
 
-local function AddLinkInfo(Hyperlink)
-    local link = match(Hyperlink, "|H(.-)|h")
-    local texture = GetItemIcon(link)
-    if (not texture) then return end
+local function AddItemInfo(Hyperlink)
+    local id = match(Hyperlink, "Hitem:(%d-):")
+    if (not id) then return end
+
     -- 获取物品实际等级
-    if CF.db.item_link.add_level then
+    if CF.db.link.add_level then
         local text, level, extraname
+        local link = match(Hyperlink, "|H(.-)|h")
         ItemLevelTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         ItemLevelTooltip:ClearLines()
         ItemLevelTooltip:SetHyperlink(link)
@@ -74,7 +76,8 @@ local function AddLinkInfo(Hyperlink)
         end
     end
 
-    if CF.db.item_link.add_icon then
+    if CF.db.link.add_icon then
+        local texture = GetItemIcon(tonumber(id))
         local icon = format(IconString .. ":255:255:255|t", texture)
         Hyperlink = icon .. " " .. Hyperlink
     end
@@ -82,11 +85,27 @@ local function AddLinkInfo(Hyperlink)
     return Hyperlink
 end
 
-function CF:InitializeItemLink()
-    if not self.db.item_link.enabled then return end
+local function AddSpellInfo(Hyperlink)
+    -- 法术图标也要！
+    local id = match(Hyperlink, "Hspell:(%d-):")
+    if (not id) then return end
+    
+    if CF.db.link.add_icon then
+        local texture = GetSpellTexture(tonumber(id))
+        local icon = format(IconString .. ":255:255:255|t", texture)
+        print(icon)
+        Hyperlink = icon .. " " .. Hyperlink
+    end
 
+    return Hyperlink
+end
+
+function CF:InitializeLink()
+    if not self.db.link.enabled then return end
+    
     local function filter(self, event, msg, ...)
-        if true then msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddLinkInfo) end
+        msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
+        msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
         return false, msg, ...
     end
 
@@ -501,7 +520,7 @@ function CF:Initialize()
 
     tinsert(WT.UpdateAll, function() CF.db = E.db.WindTools["Chat"]["Chat Frame"] end)
 
-    self:InitializeItemLink()
+    self:InitializeLink()
     self:InitializeSmartTab()
     self:InitializeEmote()
 end

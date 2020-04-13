@@ -904,16 +904,40 @@ function WS:ShadowElvUIFrames()
     end
 
     -- 鼠标提示
-    if self.db.elvui.tooltips then
+	if self.db.elvui.tooltips then
+		local styleTT = {
+			_G.ItemRefTooltip,
+			_G.FriendsTooltip,
+			_G.WarCampaignTooltip,
+			_G.EmbeddedItemTooltip,
+			_G.ReputationParagonTooltip,
+			-- already have locals
+			StoryTooltip,
+			GameTooltip,
+		}
+	
+		for _, tt in pairs(styleTT) do
+			if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then return end
+			tt:CreateShadow(4)
+			tt.hasWindSkin = true
+		end
+
         hooksecurefunc(TT, "SetStyle", function(_, tt)
-            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() then return end
-            tt:CreateShadow(4)
+            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then return end
+			tt:CreateShadow(4)
+			tt.hasWindSkin = true
         end)
         hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
-            if tt:IsForbidden() or E.private.tooltip.enable ~= true then return end
-            if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
+            if tt:IsForbidden() or E.private.tooltip.enable ~= true or tt.hasWindSkin then return end
+			if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
+			tt.hasWindSkin = true
         end)
-        hooksecurefunc("QueueStatusFrame_Update", function(self) self:CreateShadow() end)
+		hooksecurefunc("QueueStatusFrame_Update", function(self)
+			if not self.hasWindSkin then
+				self:CreateShadow()
+				self.hasWindSkin = true
+			end 
+		end)
     end
 
     -- 数据条

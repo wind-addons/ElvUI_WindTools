@@ -46,7 +46,7 @@ local IconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
 
 local function AddLinkInfo(Hyperlink)
     local link = match(Hyperlink, "|H(.-)|h")
-    local texture = GetItemIcon(Hyperlink)
+    local texture = GetItemIcon(link)
     if (not texture) then return end
     -- 获取物品实际等级
     if CF.db.item_link.add_level then

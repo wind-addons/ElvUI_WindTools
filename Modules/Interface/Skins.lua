@@ -605,7 +605,16 @@ function WS:ADDON_LOADED(_, addon)
 
     -- 特写框架
     if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
-        if _G.TalkingHeadFrame then TalkingHeadFrame:CreateShadow(6) end
+		local f = _G.TalkingHeadFrame
+		if f then
+			f:CreateShadow(6)
+			f.NameFrame.Name:FontTemplate(E.media.normFont, E.db.general.fontSize*1.4, "OUTLINE")
+			f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
+			f.NameFrame.Name.SetShadowColor = E.noop
+			f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize*1.1, "OUTLINE")
+			f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
+			f.TextFrame.Text.SetShadowColor = E.noop
+		end
     end
 
     -- 公会

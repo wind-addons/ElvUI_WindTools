@@ -612,7 +612,7 @@ function WS:ADDON_LOADED(_, addon)
             f.NameFrame.Name:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.4, "OUTLINE")
             f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
             f.NameFrame.Name.SetShadowColor = E.noop
-            f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.1, "OUTLINE")
+            f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.15, "OUTLINE")
             f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
             f.TextFrame.Text.SetShadowColor = E.noop
         end

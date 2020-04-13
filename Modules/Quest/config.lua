@@ -56,7 +56,7 @@ P["WindTools"]["Quest"] = {
 		["Solo"] = true,
 		["ignore_supplies"] = true,
 	},
-	["Close Quest Voice"] = {
+	["Disable Talking Head"] = {
 		["enabled"] = false,
 	},
 	["Objective Progress"] = {
@@ -421,7 +421,7 @@ WT.ToolConfigs["Quest"] = {
 		},
 		
 	},
-	["Close Quest Voice"] = {
+	["Disable Talking Head"] = {
 		tDesc   = L["Disable TalkingHeadFrame."],
 		oAuthor = "houshuu",
 		cAuthor = "houshuu",

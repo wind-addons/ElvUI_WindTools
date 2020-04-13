@@ -1,4 +1,5 @@
-local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhTW", true, true)
+local E = unpack(ElvUI)
+local L = E.Libs.ACL:NewLocale("ElvUI", "zhTW", true, true)
 
 -- zhTW
 -- 设置主界面
@@ -181,9 +182,9 @@ L['Mouse Over'] = "鼠標滑過顯示"
 L["Minimap Buttons"] = "小地圖按鍵"
 L['Buttons per row'] = "每行按鍵數"
 L['The max number of buttons when a new row starts.'] = "每一行的最大按鍵數量。"
--- 关闭视频通话
-L["Close Quest Voice"] = "關閉視訊"
-L["Disable TalkingHeadFrame."] = "關閉任務視訊功能。"
+-- 关闭特写
+L["Disable Talking Head"] = "關閉特寫"
+L["Disable TalkingHeadFrame."] = "關閉特寫框架。"
 -- 屏幕景深
 L["iShadow"] = "屏幕景深"
 L["Adding a shadowed border to the UI window."] = "為 UI 介面添加一個背景陰影邊框。"
@@ -409,8 +410,8 @@ L["Cannot reset %s (There are players still inside the instance.)"] = "重置 %s
 L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = "重置 %s 失敗（有玩家在試圖進入副本）"
 L["Cannot reset %s (There are players offline in your party.)"] = "重置 %s 失敗（有離線玩家）"
 L["Delay (sec)"] = "延遲 (秒)"
--- 进度追踪
-L["Objective Tracker"] = "進度追蹤"
+-- 任务列表
+L["Objective Tracker"] = "任务列表"
 L["The new-look interface for objective tracker."] = "為進度追蹤提供全新的介面。"
 L["Header"] = "頂部"
 L["Title"] = "標題"
@@ -498,3 +499,7 @@ L["Feet_Abbr"] = "腳"
 L["Finger_Abbr"] = "戒指"
 L["Trinket_Abbr"] = "飾品"
 L["Held In Off-hand_Abbr"] = "副手"
+-- ElvUI 修复
+L["Profiles"] = "設定檔"
+L["Ticket Tracker"] = "工單追蹤"
+L["Changelog"] = "更新記錄"

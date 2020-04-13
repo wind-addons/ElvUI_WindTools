@@ -1,4 +1,5 @@
-local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
+local E = unpack(ElvUI)
+local L = E.Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
 
 -- enUS
 -- 设置主界面
@@ -181,8 +182,8 @@ L['Mouse Over'] = true
 L["Minimap Buttons"] = true
 L['Buttons per row'] = true
 L['The max number of buttons when a new row starts.'] = true
--- 关闭视频通话
-L["Close Quest Voice"] = true
+-- 关闭特写
+L["Disable Talking Head"] = true
 L["Disable TalkingHeadFrame."] = true
 -- 屏幕景深
 L["iShadow"] = true
@@ -409,7 +410,7 @@ L["Cannot reset %s (There are players still inside the instance.)"] = true
 L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = true
 L["Cannot reset %s (There are players offline in your party.)"] = true
 L["Delay (sec)"] = true
--- 进度追踪
+-- 任务列表
 L["Objective Tracker"] = true
 L["The new-look interface for objective tracker."] = true
 L["Header"] = true

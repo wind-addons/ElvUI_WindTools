@@ -105,6 +105,7 @@ WS.lazy_load_list = {
 	["Blizzard_AuctionHouseUI"] = { "AuctionHouseFrame" },
 	["Blizzard_WarboardUI"] = { "WarboardQuestChoiceFrame" },
 	["Blizzard_BarbershopUI"] = { "BarberShopFrame" },
+	["Blizzard_MacroUI"] = { "MacroPopupFrame" },
 }
 
 local function shadow_immersion(self, event, addon)

@@ -461,6 +461,7 @@ L["CJK IME candidates"] = true
 L["Edit box"] = true
 L["Language indicator"] = true
 L["Loss of control"] = true
+L["Scenario stage background"] = true
 -- 声望追踪
 L["Track Reputation"] = true
 L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'] = true

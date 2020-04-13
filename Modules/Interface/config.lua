@@ -160,6 +160,7 @@ P["WindTools"]["Interface"] = {
 			lang_icon = true,
 			losscontrol = true,
 			character_frame = true,
+			scenario_background = true,
 		},
 		addonskins = {
 			bigwigs = true,

@@ -37,6 +37,7 @@ WS.elvui_frame_list = {
 	["lang_icon"] = L["Language indicator"],
 	["losscontrol"] = L["Loss of control"],
 	["character_frame"] = CHARACTER_INFO,
+	["scenario_background"] = L["Scenario stage background"],
 }
 
 WS.addonskins_list = {
@@ -805,6 +806,19 @@ function WS:ShadowElvUIFrames()
 			local f = _G.ElvUI_StaticPopup1
 			if f then f:CreateShadow() end
 		end
+	end
+
+	if self.db.elvui.scenario_background then
+		hooksecurefunc("ScenarioStage_CustomizeBlock", function(stageBlock, scenarioType, widgetSetID, textureKitID)
+			if widgetSetID then return end
+			stageBlock.NormalBG:StripTextures()
+			if not stageBlock.backdrop then
+				stageBlock:CreateBackdrop('Transparent')
+				stageBlock.backdrop:SetPoint("TOPLEFT", stageBlock.NormalBG, "TOPLEFT", 4, -4)
+				stageBlock.backdrop:SetPoint("BOTTOMRIGHT", stageBlock.NormalBG, "BOTTOMRIGHT", -4, 4)
+				stageBlock.backdrop:CreateShadow()
+			end
+		end)
 	end
 
 	-- 光环条

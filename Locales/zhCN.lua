@@ -461,6 +461,7 @@ L["CJK IME candidates"] = "中日韩输入法预测词"
 L["Edit box"] = "输入框"
 L["Language indicator"] = "输入法指示器"
 L["Loss of control"] = "失去控制"
+L["Scenario stage background"] = "场景阶段背景"
 -- 声望追踪
 L['Track Reputation'] = "声望追踪"
 L['Automatically change your watched faction on the reputation bar to the faction you got reputation points for.'] = "当你获得某个阵营的声望时, 将自动追踪此阵营的声望至经验栏位." 

@@ -558,7 +558,7 @@ function OT:ChangeFonts()
 
 	local function hookScenarioText(self)
 		local s = _G.ScenarioObjectiveBlock
-		if s then
+		if s and s.lines then
 			for k, v in pairs(s.lines) do
 				if v.Text and OT.db and OT.db.info then
 					v.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
@@ -566,7 +566,6 @@ function OT:ChangeFonts()
 			end
 		end
 	end
-
 
     hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", setText)
 	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "Update", hookWQText)

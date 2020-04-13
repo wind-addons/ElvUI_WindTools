@@ -87,7 +87,8 @@ WS.blizzard_frames = {
     ["CinematicFrameCloseDialog"] = true,
     ["TaxiFrame"] = true,
     ["DressUpFrame"] = true,
-    ["MainMenuBarVehicleLeaveButton"] = true
+    ["MainMenuBarVehicleLeaveButton"] = true,
+    ["ItemTextFrame"] = true
 }
 
 WS.lazy_load_list = {
@@ -111,7 +112,7 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('TOPLEFT', ImmersionFrame.TalkBox.BackgroundFrame,
                                                              'TOPLEFT', 11, -12)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame,
-                                                             'BOTTOMRIGHT', -11,9)
+                                                             'BOTTOMRIGHT', -11, 9)
     ImmersionFrame.TalkBox.BackgroundFrame.backdrop:CreateShadow()
 
     ImmersionFrame.TalkBox.PortraitFrame:StripTextures()
@@ -128,8 +129,8 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Hilite:SetPoint('BOTTOMRIGHT', ImmersionFrame.TalkBox.BackgroundFrame, 'BOTTOMRIGHT', -11, 9)
 
     ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetDrawLayer("OVERLAY", 7)
-	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
-	ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetAlpha(.8)
+    ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetPoint("BOTTOMRIGHT", 2, -2)
+    ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetAlpha(.8)
     ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
 
     ImmersionFrame.TalkBox.Elements:StripTextures()
@@ -514,12 +515,12 @@ local function shadow_alerts()
         if alert.Label and alert.Icon then
             alert.Label:ClearAllPoints()
             alert.Label:SetPoint("TOPLEFT", alert.Icon, "TOPRIGHT", 5, 2)
-		end
-		if alert.Icon and alert.Icon.Texture and alert.Icon.Texture.b then
-			alert.Icon.Texture.b:Point("TOPLEFT", alert.Icon.Texture, "TOPLEFT", -1, 1)
-			alert.Icon.Texture.b:Point("BOTTOMRIGHT", alert.Icon.Texture, "BOTTOMRIGHT", 1, -1)
-			alert.Icon.Texture.b:CreateShadow(7)
-		end
+        end
+        if alert.Icon and alert.Icon.Texture and alert.Icon.Texture.b then
+            alert.Icon.Texture.b:Point("TOPLEFT", alert.Icon.Texture, "TOPLEFT", -1, 1)
+            alert.Icon.Texture.b:Point("BOTTOMRIGHT", alert.Icon.Texture, "BOTTOMRIGHT", 1, -1)
+            alert.Icon.Texture.b:CreateShadow(7)
+        end
         if alert.SpecIcon then alert.SpecIcon.b:CreateShadow() end
     end
 
@@ -605,16 +606,16 @@ function WS:ADDON_LOADED(_, addon)
 
     -- 特写框架
     if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
-		local f = _G.TalkingHeadFrame
-		if f then
-			f:CreateShadow(6)
-			f.NameFrame.Name:FontTemplate(E.media.normFont, E.db.general.fontSize*1.4, "OUTLINE")
-			f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
-			f.NameFrame.Name.SetShadowColor = E.noop
-			f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize*1.1, "OUTLINE")
-			f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
-			f.TextFrame.Text.SetShadowColor = E.noop
-		end
+        local f = _G.TalkingHeadFrame
+        if f then
+            f:CreateShadow(6)
+            f.NameFrame.Name:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.4, "OUTLINE")
+            f.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
+            f.NameFrame.Name.SetShadowColor = E.noop
+            f.TextFrame.Text:FontTemplate(E.media.normFont, E.db.general.fontSize * 1.1, "OUTLINE")
+            f.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
+            f.TextFrame.Text.SetShadowColor = E.noop
+        end
     end
 
     -- 公会

@@ -455,9 +455,9 @@ function OT:RefreshSwitchButton()
     self.SwitchButton.text:FontTemplate(LSM:Fetch('font', sbdb.font), sbdb.size, sbdb.style)
     self.SwitchButton.text:SetPoint("CENTER", 0, 0)
 
-    sbdb.button_width = self.SwitchButton.text:GetStringWidth() + 2
-    sbdb.button_height = self.SwitchButton.text:GetStringHeight() + 2
-    self.SwitchButton:SetSize(sbdb.button_width, sbdb.button_height)
+    local button_width = self.SwitchButton.text:GetStringWidth() + 2
+    local button_height = self.SwitchButton.text:GetStringHeight() + 2
+    self.SwitchButton:SetSize(button_width, button_height)
 
     if self.db.auto_turn_in.auto then
         self.SwitchButton.text:SetText(WT:ColorStrWithPack(sbdb.enabled_text, sbdb.enabled_color))

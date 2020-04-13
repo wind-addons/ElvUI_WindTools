@@ -157,7 +157,7 @@ local function shadow_immersion(self, event, addon)
 
     local function SkinReward(Button)
         if Button.Icon then
-            Button:CreateBackdrop()
+            Button:CreateBackdrop('Transparent')
 
             if Button.NameFrame then Button.NameFrame:Hide() end
 

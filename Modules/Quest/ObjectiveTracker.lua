@@ -554,11 +554,34 @@ function OT:ChangeFonts()
                 end
             end
         end
-    end
+	end
+
+	local function hookScenarioText(self)
+		local s = _G.ScenarioObjectiveBlock
+		if s then
+			for k, v in pairs(s.lines) do
+				if v.Text and OT.db and OT.db.info then
+					v.Text:FontTemplate(LSM:Fetch('font', OT.db.info.font), OT.db.info.size, OT.db.info.style)
+				end
+			end
+		end
+	end
+
 
     hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", setText)
-    hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "Update", hookWQText)
-    hooksecurefunc("ObjectiveTracker_Update", setHeader)
+	hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "Update", hookWQText)
+	hooksecurefunc(SCENARIO_CONTENT_TRACKER_MODULE, "Update", hookScenarioText)
+	hooksecurefunc("ObjectiveTracker_Update", setHeader)
+
+	hooksecurefunc("ScenarioBlocksFrame_SetupStageBlock", function(scenarioCompleted)
+		ScenarioStageBlock.CompleteLabel:FontTemplate(LSM:Fetch('font', OT.db.title.font), nil, OT.db.title.style)
+	end)
+
+	hooksecurefunc("ScenarioStage_CustomizeBlock", function(stageBlock, scenarioType, widgetSetID, textureKitID)
+		if stageBlock.Stage and OT.db and OT.db.title then
+			stageBlock.Stage:FontTemplate(LSM:Fetch('font', OT.db.title.font), OT.db.title.size, OT.db.title.style)
+		end
+	end)
 end
 
 function OT:ChangeColors()

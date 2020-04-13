@@ -115,6 +115,7 @@ function WS:SkinFont(font, size, style)
 end
 
 local function shadow_immersion(self, event, addon)
+	if ImmersionFrame.hasWindSkin then return end
     ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
     ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
@@ -286,7 +287,8 @@ local function shadow_immersion(self, event, addon)
                 Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
             end
         end
-    end)
+	end)
+	ImmersionFrame.hasWindSkin = true
 end
 
 local function shadow_bigwigs(self, event, addon)

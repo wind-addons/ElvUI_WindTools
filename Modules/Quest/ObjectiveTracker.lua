@@ -5,6 +5,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local WT = E:GetModule("WindTools")
 local OT = E:NewModule('Wind_ObjectiveTacker', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local _G = _G
+local _
 
 -- QuickQuest, by p3lim
 -- Import from NDui

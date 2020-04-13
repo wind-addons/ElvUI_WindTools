@@ -513,8 +513,12 @@ local function shadow_alerts()
         if alert.Label and alert.Icon then
             alert.Label:ClearAllPoints()
             alert.Label:SetPoint("TOPLEFT", alert.Icon, "TOPRIGHT", 5, 2)
-        end
-        if alert.Icon and alert.Icon.b then alert.Icon.b:CreateShadow() end
+		end
+		if alert.Icon and alert.Icon.Texture and alert.Icon.Texture.b then
+			alert.Icon.Texture.b:Point("TOPLEFT", alert.Icon.Texture, "TOPLEFT", -1, 1)
+			alert.Icon.Texture.b:Point("BOTTOMRIGHT", alert.Icon.Texture, "BOTTOMRIGHT", 1, -1)
+			alert.Icon.Texture.b:CreateShadow(7)
+		end
         if alert.SpecIcon then alert.SpecIcon.b:CreateShadow() end
     end
 

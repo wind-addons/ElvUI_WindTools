@@ -40,7 +40,7 @@ local ClientLang = GetLocale()
 
 -------------------------------------
 -- 物品等级，图标
-local ItemLevelTooltip = CreateFrame("GameTooltip", "Wind_ChatLinkTooltip", UIParent, "GameTooltipTemplate")
+local ItemLevelTooltip = E.ScanTooltip
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
 local ItemPowerPattern = gsub(CHALLENGE_MODE_ITEM_POWER_LEVEL, "%%d", "(%%d+)")
 local ItemNamePattern = gsub(CHALLENGE_MODE_KEYSTONE_NAME, "%%s", "(.+)")
@@ -85,7 +85,7 @@ local function AddItemInfo(Hyperlink)
     if CF.db.link.add_level or CF.db.link.add_slot then
         local text, level, extraname, slot
         local link = match(Hyperlink, "|H(.-)|h")
-        ItemLevelTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        ItemLevelTooltip:SetOwner(_G.UIParent, 'ANCHOR_NONE')
         ItemLevelTooltip:ClearLines()
         ItemLevelTooltip:SetHyperlink(link)
 

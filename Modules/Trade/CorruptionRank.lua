@@ -181,7 +181,7 @@ function CR:Corruption_PlayerSummary()
     CR:Corruption_AddSummary()
 end
 
-local tip = CreateFrame("GameTooltip", "Wind_CorruptionGetLinkTooltip", UIParent, "GameTooltipTemplate")
+local tip = E.ScanTooltip
 local cloakResString = "(%d+) " .. ITEM_MOD_CORRUPTION_RESISTANCE
 
 local essenceTextureIDs = {
@@ -196,7 +196,7 @@ local essenceTextureIDs = {
 
 function CR:Corruption_SearchEssence()
     local resistance = 0
-    tip:SetOwner(UIParent, "ANCHOR_NONE")
+    tip:SetOwner(_G.UIParent, 'ANCHOR_NONE')
     tip:SetInventoryItem(InspectFrame.unit, 2)
     for i = 1, 10 do
         local tex = _G[tip:GetName() .. "Texture" .. i]
@@ -211,7 +211,7 @@ end
 
 function CR:Corruption_SearchCloak()
     local resistance = 0
-    tip:SetOwner(UIParent, "ANCHOR_NONE")
+    tip:SetOwner(_G.UIParent, 'ANCHOR_NONE')
     tip:SetInventoryItem(InspectFrame.unit, 15)
     for i = 1, tip:NumLines() do
         local line = _G[tip:GetName() .. "TextLeft" .. i]

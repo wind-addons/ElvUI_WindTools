@@ -649,11 +649,7 @@ end
 function CF:DunToSlash()
     hooksecurefunc("ChatEdit_OnTextChanged", function(self, userInput)
         local text = self:GetText()
-        if userInput and CF.db.correction.dun_to_slash then
-            if text == "、" then
-                self:SetText("/")
-            end
-        end
+        if userInput and CF.db.correction.dun_to_slash then if text == "、" then self:SetText("/") end end
     end)
 end
 

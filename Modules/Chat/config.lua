@@ -26,7 +26,7 @@ P["WindTools"]["Chat"] = {
 		},
 		emote = {
 			enabled = true,
-			size = 16,
+			use_panel = true,
 		},
 		correction = {
 			enabled = true,

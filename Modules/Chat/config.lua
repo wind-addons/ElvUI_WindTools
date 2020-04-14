@@ -27,7 +27,11 @@ P["WindTools"]["Chat"] = {
 		emote = {
 			enabled = true,
 			size = 16,
-		}
+		},
+		correction = {
+			enabled = true,
+			dun_to_slash = true,
+		},
 	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,
@@ -160,6 +164,43 @@ WT.ToolConfigs["Chat"] = {
 				add_corruption_rank = {
 					name = L["Add Corruption Rank"],
 					order = 5,
+				},
+			},
+		},
+		emote = {
+			name = L["Emote"],
+			order = 7,
+			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
+			args = {
+				enabled = {
+					name = L["Enable"],
+					desc = L["Parse emote expresstion from other players."],
+					order = 1,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				use_panel = {
+					name = L["Use Emote Panel"],
+					desc = L["Press { to active the emote select window."],
+					order = 2,
+				},
+			},
+		},
+		correction = {
+			name = L["Input Correction"],
+			order = 8,
+			get = function(info) return E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] end,
+			set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value end,
+			args = {
+				enabled = {
+					name = L["Enable"],
+					order = 1,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				dun_to_slash = {
+					name = "「、」=>「/」",
+					desc = L["Designed for Asian player, it will help you to enter command without switching IME."],
+					order = 2,
 				},
 			},
 		},

@@ -1,7 +1,7 @@
 -- 原创模块
 -- 部分功能改自TinyChat
 -- https://nga.178.com/read.php?tid=10240957
--- 部分修改来源于爱不易
+-- 部分修改方式来源于爱不易
 local E, L, V, P, G = unpack(ElvUI) -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
 local CF = E:NewModule('Wind_ChatFrame', 'AceHook-3.0', 'AceEvent-3.0')
@@ -78,6 +78,8 @@ local function AddItemInfo(Hyperlink)
     local id = match(Hyperlink, "Hitem:(%d-):")
     if (not id) then return end
     id = tonumber(id)
+    -- debug 用
+    -- print(Hyperlink:gsub("\124", "\124\124"))
 
     -- 获取物品实际等级
     if CF.db.link.add_level or CF.db.link.add_slot then
@@ -144,7 +146,7 @@ local function AddItemInfo(Hyperlink)
         end
     end
 
-    -- 腐化信息+
+    -- 腐化信息
     if CF.db.link.add_corruption_rank then
         local corruptionInfo = E:GetModule("Wind_CorruptionRank"):Corruption_Search(Hyperlink)
 
@@ -604,6 +606,7 @@ function CF:CreateInterface()
     frame:Hide()
     -- 让输入框支持当输入 { 时自动弹出聊天表情选择框
     hooksecurefunc("ChatEdit_OnTextChanged", function(self, userInput)
+        if not CF.db.emote.use_panel then return end
         local text = self:GetText()
         if (userInput and (strsub(text, -1) == "{" or strsub(text, -1) == "｛")) then frame:Show() end
     end)
@@ -642,6 +645,24 @@ function CF:InitializeEmote()
 end
 
 -------------------------------------
+-- 自动纠错
+function CF:DunToSlash()
+    hooksecurefunc("ChatEdit_OnTextChanged", function(self, userInput)
+        local text = self:GetText()
+        if userInput and CF.db.correction.dun_to_slash then
+            if text == "、" then
+                self:SetText("/")
+            end
+        end
+    end)
+end
+
+function CF:InitializeInputCorrection()
+    if not self.db.correction.enabled then return end
+    self:DunToSlash()
+end
+
+-------------------------------------
 -- 初始化
 function CF:Initialize()
     if not E.db.WindTools["Chat"]["Chat Frame"]["enabled"] then return end
@@ -652,6 +673,7 @@ function CF:Initialize()
     self:InitializeLink()
     self:InitializeSmartTab()
     self:InitializeEmote()
+    self:InitializeInputCorrection()
 end
 
 local function InitializeCallback() CF:Initialize() end

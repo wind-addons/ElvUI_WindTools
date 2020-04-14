@@ -923,11 +923,13 @@ function WS:ShadowElvUIFrames()
 		end
 
         hooksecurefunc(TT, "SetStyle", function(_, tt)
+            if (tt.StatusBar) then tt.StatusBar:CreateShadow(4) end
             if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then return end
-			tt:CreateShadow(4)
+            tt:CreateShadow(4)
 			tt.hasWindSkin = true
         end)
         hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
+            if (tt.StatusBar) then tt.StatusBar:CreateShadow(4) end
             if tt:IsForbidden() or E.private.tooltip.enable ~= true or tt.hasWindSkin then return end
 			if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
 			tt.hasWindSkin = true

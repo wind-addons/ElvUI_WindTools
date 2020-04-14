@@ -498,6 +498,9 @@ L["Feet_Abbr"] = "腳"
 L["Finger_Abbr"] = "戒"
 L["Trinket_Abbr"] = "飾"
 L["Held In Off-hand_Abbr"] = "副手"
+-- 腐化等级
+L["Corruption Rank"] = "腐化等級"
+L["Show corruption rank in the tooltip when you mouseover an corruption item."] = "在浮動提示中顯示腐化物品的腐化等級。"
 -- ElvUI 修复
 L["Profiles"] = "設定檔"
 L["Ticket Tracker"] = "工單追蹤"

@@ -3,4 +3,5 @@
 	<Script file='AlreadyKnown.lua'/>
 	<Script file='EnhancedDelete.lua'/>
 	<Script file='AzeriteTooltip.lua'/>
+	<Script file='CorruptionRank.lua'/>
 </Ui>

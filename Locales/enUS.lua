@@ -498,3 +498,6 @@ L["Feet_Abbr"] = "Feet"
 L["Finger_Abbr"] = "Finger"
 L["Trinket_Abbr"] = "Trinket"
 L["Held In Off-hand_Abbr"] = "Off-hand"
+-- 腐化等级
+L["Corruption Rank"] = true
+L["Show corruption rank in the tooltip when you mouseover an corruption item."] = true

@@ -39,7 +39,7 @@ local ClientLang = GetLocale()
 
 -------------------------------------
 -- 物品等级，图标
-local ItemLevelTooltip = CreateFrame("GameTooltip", "ChatLinkLevelTooltip", UIParent, "GameTooltipTemplate")
+local ItemLevelTooltip = CreateFrame("GameTooltip", "Wind_ChatLinkLevelTooltip", UIParent, "GameTooltipTemplate")
 
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
 local ItemPowerPattern = gsub(CHALLENGE_MODE_ITEM_POWER_LEVEL, "%%d", "(%%d+)")
@@ -628,7 +628,7 @@ end
 -------------------------------------
 -- 初始化
 function CF:Initialize()
-    if not E.db.WindTools["Chat"]["Chat Frame"].enabled then return end
+    if not E.db.WindTools["Chat"]["Chat Frame"]["enabled"] then return end
     self.db = E.db.WindTools["Chat"]["Chat Frame"]
 
     tinsert(WT.UpdateAll, function() CF.db = E.db.WindTools["Chat"]["Chat Frame"] end)

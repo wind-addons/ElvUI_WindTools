@@ -85,7 +85,7 @@ function ED:DELETE_ITEM_CONFIRM(event)
 end
 
 function ED:Initialize()
-	if not E.db.WindTools["Trade"]["Enhanced Delete"] then return end
+	if not E.db.WindTools["Trade"]["Enhanced Delete"]["enabled"] then return end
 	self.db = E.db.WindTools["Trade"]["Enhanced Delete"]
 	tinsert(WT.UpdateAll, function()
 		ED.db = E.db.WindTools["Trade"]["Enhanced Delete"]

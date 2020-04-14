@@ -30,6 +30,9 @@ P["WindTools"]["Trade"] = {
 		paperdoll = true, 
 		icon_anchor = "BOTTOMLEFT",
 	},
+	["Corruption Rank"] = {
+		enabled = true,
+	},
 }
 
 WT.ToolConfigs["Trade"] = {
@@ -146,5 +149,10 @@ WT.ToolConfigs["Trade"] = {
 				}
 			}
 		}
+	},
+	["Corruption Rank"] = {
+		tDesc   = L["Show corruption rank in the tooltip when you mouseover an corruption item."],
+		oAuthor = "NDui",
+		cAuthor = "houshuu",
 	},
 }

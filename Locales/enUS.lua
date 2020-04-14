@@ -485,6 +485,7 @@ L["Add Icon"] = true
 L["Add Level"] = true
 L["Add Armor Category"] = true
 L["Add Weapon Category"] = true
+L["Add Corruption Rank"] = true
 L["Head_Abbr"] = "Head"
 L["Neck_Abbr"] = "Neck"
 L["Shoulders_Abbr"] = "Shoulders"

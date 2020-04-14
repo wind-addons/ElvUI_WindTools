@@ -23,6 +23,7 @@ local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 local GetItemInfo = GetItemInfo
+local GetSpellInfo = GetSpellInfo
 local GetLocale = GetLocale
 local CreateFrame = CreateFrame
 local IsInGroup = IsInGroup
@@ -39,8 +40,7 @@ local ClientLang = GetLocale()
 
 -------------------------------------
 -- 物品等级，图标
-local ItemLevelTooltip = CreateFrame("GameTooltip", "Wind_ChatLinkLevelTooltip", UIParent, "GameTooltipTemplate")
-
+local ItemLevelTooltip = CreateFrame("GameTooltip", "Wind_ChatLinkTooltip", UIParent, "GameTooltipTemplate")
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
 local ItemPowerPattern = gsub(CHALLENGE_MODE_ITEM_POWER_LEVEL, "%%d", "(%%d+)")
 local ItemNamePattern = gsub(CHALLENGE_MODE_KEYSTONE_NAME, "%%s", "(.+)")
@@ -136,11 +136,27 @@ local function AddItemInfo(Hyperlink)
         if (level and extraname) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1:" .. extraname .. "]|h")
         elseif (level and slot) then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. "/" .. level .. ":%1]|h")
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. "-" .. slot .. ":%1]|h")
         elseif (level) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
         elseif (slot) then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. ":%1]|h")
+        end
+    end
+
+    -- 腐化信息+
+    if CF.db.link.add_corruption_rank then
+        local corruptionInfo = E:GetModule("Wind_CorruptionRank"):Corruption_Search(Hyperlink)
+
+        if corruptionInfo then
+            local spellName = GetSpellInfo(corruptionInfo.spellID)
+            local levelText = corruptionInfo.level
+            levelText = levelText:gsub("%s?%(.-%)", "")
+            if levelText ~= "" then
+                -- 阿拉伯数字貌似好看点？
+                spellName = spellName .. string.len(levelText)
+            end
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[%1/" .. spellName .. "]|h")
         end
     end
 

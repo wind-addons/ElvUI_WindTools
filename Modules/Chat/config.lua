@@ -12,6 +12,7 @@ P["WindTools"]["Chat"] = {
 			add_icon = true,
 			add_armor_category = true,
 			add_weapon_category = true,
+			add_corruption_rank = true,
 		},
 		smart_tab = {
 			enabled = true,
@@ -154,6 +155,10 @@ WT.ToolConfigs["Chat"] = {
 				},
 				add_weapon_category = {
 					name = L["Add Weapon Category"],
+					order = 5,
+				},
+				add_corruption_rank = {
+					name = L["Add Corruption Rank"],
 					order = 5,
 				},
 			},

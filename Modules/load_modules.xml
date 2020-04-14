@@ -2,7 +2,7 @@
 	<Include file="Datatext\load_datatext.xml"/>
 	<Include file="Chat\load_chat.xml"/>
 	<Include file="Quest\load_quest.xml"/>
-	<Include file="Trade\load_trade.xml"/>
 	<Include file="More\load_more.xml"/>
+	<Include file="Trade\load_trade.xml"/>
 	<Include file="Interface\load_interface.xml"/>
 </Ui>

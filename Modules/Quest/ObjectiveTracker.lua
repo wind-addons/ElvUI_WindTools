@@ -585,7 +585,7 @@ end
 
 function OT:PLAYER_ENTERING_WORLD()
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    C_Timer.After(1.5, function() OT:RefreshSwitchButton() end)
+    C_Timer.After(.5, function() OT:RefreshSwitchButton() end)
 end
 
 function OT:Initialize()

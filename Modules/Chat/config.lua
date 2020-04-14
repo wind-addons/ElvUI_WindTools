@@ -10,7 +10,8 @@ P["WindTools"]["Chat"] = {
 			enabled = true,
 			add_level = true,
 			add_icon = true,
-			add_slot = true,
+			add_armor_category = true,
+			add_weapon_category = true,
 		},
 		smart_tab = {
 			enabled = true,
@@ -147,9 +148,13 @@ WT.ToolConfigs["Chat"] = {
 					name = L["Add Level"],
 					order = 3,
 				},
-				add_slot = {
-					name = L["Add Slot"],
+				add_armor_category = {
+					name = L["Add Armor Category"],
 					order = 4,
+				},
+				add_weapon_category = {
+					name = L["Add Weapon Category"],
+					order = 5,
 				},
 			},
 		},

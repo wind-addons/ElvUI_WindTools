@@ -253,6 +253,9 @@ function PR:ChangeReputationBars()
 					if PR.db.text == "PARAGON" then
 						factionStanding:SetText(L["Paragon"])
 						factionRow.standingText = L["Paragon"]
+					elseif PR.db.text == "EXALTED" then
+						factionStanding:SetText(L["Exalted"])
+						factionRow.standingText = L["Exalted"]
 					elseif PR.db.text == "CURRENT"  then
 						factionStanding:SetText(BreakUpLargeNumbers(value))
 						factionRow.standingText = BreakUpLargeNumbers(value)

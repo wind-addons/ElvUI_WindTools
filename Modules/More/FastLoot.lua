@@ -8,28 +8,39 @@
 
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
-local FastLoot = E:NewModule('Wind_FastLoot');
+local FL = E:NewModule('Wind_FastLoot', 'AceEvent-3.0');
 
-function FastLoot:Initialize()
-	if not E.db.WindTools["More Tools"]["Fast Loot"]["enabled"] then return end
-	local faster = CreateFrame("Frame")
-	faster:RegisterEvent("LOOT_READY")
-	faster:SetScript("OnEvent",function()
-		local tDelay = 0
-		if GetTime() - tDelay >= 0.3 then
-			tDelay = GetTime()
-			if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
-				for i = GetNumLootItems(), 1, -1 do
-					LootSlot(i)
-				end
-				tDelay = GetTime()
+local GetTime = GetTime
+local LootSlot = LootSlot
+local GetCVarBool = GetCVarBool
+local IsModifiedClick = IsModifiedClick
+
+function FL:LOOT_READY()
+	local tDelay = 0
+	if GetTime() - tDelay >= self.db.speed then
+		tDelay = GetTime()
+		if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
+			for i = GetNumLootItems(), 1, -1 do
+				LootSlot(i)
 			end
+			tDelay = GetTime()
 		end
+	end
+end
+
+function FL:Initialize()
+	if not E.db.WindTools["More Tools"]["Fast Loot"]["enabled"] then return end
+	self.db = E.db.WindTools["More Tools"]["Fast Loot"]
+
+	tinsert(WT.UpdateAll, function()
+		FL.db = E.db.WindTools["More Tools"]["Fast Loot"]
 	end)
+
+	self:RegisterEvent("LOOT_READY")
 end
 
 local function InitializeCallback()
-	FastLoot:Initialize()
+	FL:Initialize()
 end
 
-E:RegisterModule(FastLoot:GetName(), InitializeCallback)
+E:RegisterModule(FL:GetName(), InitializeCallback)

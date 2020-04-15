@@ -5,6 +5,7 @@ local _G = _G
 local unpack = unpack
 local hooksecurefunc = hooksecurefunc
 local _
+local find = string.find
 
 local E, L, V, P, G = unpack(ElvUI); -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
@@ -93,8 +94,12 @@ WS.blizzard_frames = {
 
 WS.lazy_load_list = {
     ["Blizzard_GarrisonUI"] = {
-        "GarrisonLandingPage", "GarrisonMissionFrame", "GarrisonShipyardFrame", "OrderHallMissionFrame",
-        "BFAMissionFrame", "OrderHallCommandBar",
+        "GarrisonLandingPage",
+        "GarrisonMissionFrame",
+        "GarrisonShipyardFrame",
+        "OrderHallMissionFrame",
+        "BFAMissionFrame",
+        "OrderHallCommandBar"
     },
     ["Blizzard_BindingUI"] = {"KeyBindingFrame"},
     ["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},
@@ -106,16 +111,23 @@ WS.lazy_load_list = {
 }
 
 function WS:SkinFont(font, size, style)
-	local oldSize = select(2, font:GetFont())
-	local newSize = size or oldSize
-	local newStyle = style or "OUTLINE"
-	font:FontTemplate(E.media.normFont, newSize, newStyle)
-	font:SetShadowColor(0, 0, 0, 0)
-	font.SetShadowColor = E.noop
+    local oldSize = select(2, font:GetFont())
+    local newSize = size or oldSize
+    local newStyle = style or "OUTLINE"
+    font:FontTemplate(E.media.normFont, newSize, newStyle)
+    font:SetShadowColor(0, 0, 0, 0)
+    font.SetShadowColor = E.noop
 end
 
 local function shadow_immersion(self, event, addon)
-	if ImmersionFrame.hasWindSkin then return end
+
+    if ImmersionFrame.TalkBox.TextFrame.SpeechProgress and
+        not ImmersionFrame.TalkBox.TextFrame.SpeechProgress.hasWindSkin then
+        ImmersionFrame.TalkBox.TextFrame.SpeechProgress:FontTemplate()
+        ImmersionFrame.TalkBox.TextFrame.SpeechProgress.hasWindSkin = true
+    end
+
+    if ImmersionFrame.hasWindSkin then return end
     ImmersionFrame.TalkBox.BackgroundFrame:StripTextures()
     ImmersionFrame.TalkBox.BackgroundFrame:CreateBackdrop('Transparent')
 
@@ -143,16 +155,13 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.MainFrame.Model.ModelShadow:SetAlpha(.8)
     ImmersionFrame.TalkBox.MainFrame.Model.PortraitBG:Hide()
 
-	ImmersionFrame.TalkBox.NameFrame.Name:FontTemplate(E.media.normFont, 20, "OUTLINE")
-	ImmersionFrame.TalkBox.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
-	ImmersionFrame.TalkBox.NameFrame.Name.SetShadowColor = E.noop
+    ImmersionFrame.TalkBox.NameFrame.Name:FontTemplate(E.media.normFont, 20, "OUTLINE")
+    ImmersionFrame.TalkBox.NameFrame.Name:SetShadowColor(0, 0, 0, 0)
+    ImmersionFrame.TalkBox.NameFrame.Name.SetShadowColor = E.noop
 
-	ImmersionFrame.TalkBox.TextFrame.Text:FontTemplate(E.media.normFont, 16, "OUTLINE")
-	ImmersionFrame.TalkBox.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
-	ImmersionFrame.TalkBox.TextFrame.Text.SetShadowColor = E.noop
-	if ImmersionFrame.TalkBox.TextFrame.SpeechProgress then
-		ImmersionFrame.TalkBox.TextFrame.SpeechProgress:FontTemplate()
-	end
+    ImmersionFrame.TalkBox.TextFrame.Text:FontTemplate(E.media.normFont, 16, "OUTLINE")
+    ImmersionFrame.TalkBox.TextFrame.Text:SetShadowColor(0, 0, 0, 0)
+    ImmersionFrame.TalkBox.TextFrame.Text.SetShadowColor = E.noop
 
     ImmersionFrame.TalkBox.Elements:StripTextures()
     ImmersionFrame.TalkBox.Elements:CreateBackdrop('Transparent')
@@ -166,7 +175,7 @@ local function shadow_immersion(self, event, addon)
     S:HandleStatusBar(ImmersionFrame.TalkBox.ReputationBar)
     ImmersionFrame.TalkBox.ReputationBar:ClearAllPoints()
     ImmersionFrame.TalkBox.ReputationBar:SetPoint('TOPLEFT', ImmersionFrame.TalkBox, 'BOTTOMLEFT', -20, 10)
-	ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
+    ImmersionFrame.TalkBox.ReputationBar.icon:SetAlpha(0)
 
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon:Hide();
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.Icon.Show = function() end;
@@ -177,23 +186,21 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen:Hide();
     ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemHighlight.TextSheen.Show = function() end;
 
-	-- 需求物品
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Progress.ReqText)
-	-- 任务奖励
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.Header, 16)
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemReceiveText, 14)
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ReceiveText, 14)
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ValueText, 14)
-	-- 任务目标
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesHeader, 16)
-	WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesText, 14)
+    -- 需求物品
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Progress.ReqText)
+    -- 任务奖励
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.Header, 16)
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.ItemReceiveText, 14)
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ReceiveText, 14)
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.XPFrame.ValueText, 14)
+    -- 任务目标
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesHeader, 16)
+    WS:SkinFont(ImmersionFrame.TalkBox.Elements.Content.ObjectivesText, 14)
 
-	if ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame then
-		local buttons = {ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame:GetChildren()}
-		for _, v in pairs(buttons) do
-			WS:SkinFont(v.Text, 14)
-		end
-	 end
+    if ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame then
+        local buttons = {ImmersionFrame.TalkBox.Elements.Content.RewardsFrame.MoneyFrame:GetChildren()}
+        for _, v in pairs(buttons) do WS:SkinFont(v.Text, 14) end
+    end
 
     local function SkinReward(Button)
         if Button.Icon then
@@ -212,11 +219,11 @@ local function shadow_immersion(self, event, addon)
             S:HandleIcon(Button.Icon)
             Button.Icon:CreateBackdrop()
             Button.Icon.backdrop:SetBackdropColor(0, 0, 0, 0)
-			Button.Icon.backdrop:SetOutside(Button.Icon)
-			
-			Button.Name:FontTemplate(E.media.normFont, 14, "OUTLINE")
-			Button.Name:SetShadowColor(0, 0, 0, 0)
-			Button.Name.SetShadowColor = E.noop
+            Button.Icon.backdrop:SetOutside(Button.Icon)
+
+            Button.Name:FontTemplate(E.media.normFont, 14, "OUTLINE")
+            Button.Name:SetShadowColor(0, 0, 0, 0)
+            Button.Name.SetShadowColor = E.noop
 
             Button.AutoCastShine = CreateFrame('Frame', '$parentShine', Button, 'AutoCastShineTemplate')
             Button.AutoCastShine:SetParent(Button.Icon.backdrop)
@@ -257,7 +264,13 @@ local function shadow_immersion(self, event, addon)
     ImmersionFrame:HookScript('OnEvent', function(self)
         for _, Button in ipairs(self.TitleButtons.Buttons) do
             if Button and not Button.backdrop then
-                Button:StripTextures()
+                for _, region in pairs({Button:GetRegions()}) do
+                    if region:GetObjectType() == "Texture" then
+                        if not (region:GetName() and find(region:GetName(), "Icon")) then
+                            region:StripTextures()
+                        end
+                    end
+                end
                 Button:CreateBackdrop('Transparent')
                 Button.Overlay:Kill()
                 Button.backdrop:CreateShadow()
@@ -266,8 +279,8 @@ local function shadow_immersion(self, event, addon)
                 Button.Hilite:SetBackdropBorderColor(0, 0.44, .87, 1)
                 Button.Hilite:SetBackdropColor(0, 0, 0, 0)
                 Button.Hilite:SetAllPoints(Button.backdrop)
-				Button:SetHighlightTexture('')
-				WS:SkinFont(Button.Label)
+                Button:SetHighlightTexture('')
+                WS:SkinFont(Button.Label)
             end
         end
         for _, Button in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
@@ -287,8 +300,8 @@ local function shadow_immersion(self, event, addon)
                 Button.backdrop:SetPoint('RIGHT', Button, 'RIGHT', -5, 0)
             end
         end
-	end)
-	ImmersionFrame.hasWindSkin = true
+    end)
+    ImmersionFrame.hasWindSkin = true
 end
 
 local function shadow_bigwigs(self, event, addon)
@@ -654,9 +667,9 @@ function WS:ADDON_LOADED(_, addon)
     if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
         local f = _G.TalkingHeadFrame
         if f then
-			f:CreateShadow(6)
-			WS:SkinFont(f.NameFrame.Name)
-			WS:SkinFont(f.TextFrame.Text)
+            f:CreateShadow(6)
+            WS:SkinFont(f.NameFrame.Name)
+            WS:SkinFont(f.TextFrame.Text)
         end
     end
 
@@ -694,8 +707,10 @@ function WS:ADDON_LOADED(_, addon)
     -- 冒险指南标签页
     if addon == "Blizzard_EncounterJournal" then
         local frames = {
-            "EncounterJournalEncounterFrameInfoOverviewTab", "EncounterJournalEncounterFrameInfoLootTab",
-            "EncounterJournalEncounterFrameInfoBossTab", "EncounterJournalEncounterFrameInfoModelTab"
+            "EncounterJournalEncounterFrameInfoOverviewTab",
+            "EncounterJournalEncounterFrameInfoLootTab",
+            "EncounterJournalEncounterFrameInfoBossTab",
+            "EncounterJournalEncounterFrameInfoModelTab"
         }
 
         for _, frame in pairs(frames) do
@@ -904,42 +919,46 @@ function WS:ShadowElvUIFrames()
     end
 
     -- 鼠标提示
-	if self.db.elvui.tooltips then
-		local styleTT = {
-			_G.ItemRefTooltip,
-			_G.FriendsTooltip,
-			_G.WarCampaignTooltip,
-			_G.EmbeddedItemTooltip,
-			_G.ReputationParagonTooltip,
-			-- already have locals
-			StoryTooltip,
-			GameTooltip,
-		}
-	
-		for _, tt in pairs(styleTT) do
-			if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then return end
-			tt:CreateShadow(4)
-			tt.hasWindSkin = true
-		end
+    if self.db.elvui.tooltips then
+        local styleTT = {
+            _G.ItemRefTooltip,
+            _G.FriendsTooltip,
+            _G.WarCampaignTooltip,
+            _G.EmbeddedItemTooltip,
+            _G.ReputationParagonTooltip,
+            -- already have locals
+            StoryTooltip,
+            GameTooltip
+        }
+
+        for _, tt in pairs(styleTT) do
+            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then
+                return
+            end
+            tt:CreateShadow(4)
+            tt.hasWindSkin = true
+        end
 
         hooksecurefunc(TT, "SetStyle", function(_, tt)
             if (tt.StatusBar) then tt.StatusBar:CreateShadow(4) end
-            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then return end
+            if not tt or (tt == E.ScanTooltip or tt.IsEmbedded) or tt:IsForbidden() or tt.hasWindSkin then
+                return
+            end
             tt:CreateShadow(4)
-			tt.hasWindSkin = true
+            tt.hasWindSkin = true
         end)
         hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
             if (tt.StatusBar) then tt.StatusBar:CreateShadow(4) end
             if tt:IsForbidden() or E.private.tooltip.enable ~= true or tt.hasWindSkin then return end
-			if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
-			tt.hasWindSkin = true
+            if _G.GameTooltipStatusBar then _G.GameTooltipStatusBar:CreateShadow(4) end
+            tt.hasWindSkin = true
         end)
-		hooksecurefunc("QueueStatusFrame_Update", function(self)
-			if not self.hasWindSkin then
-				self:CreateShadow()
-				self.hasWindSkin = true
-			end 
-		end)
+        hooksecurefunc("QueueStatusFrame_Update", function(self)
+            if not self.hasWindSkin then
+                self:CreateShadow()
+                self.hasWindSkin = true
+            end
+        end)
     end
 
     -- 数据条
@@ -954,8 +973,15 @@ function WS:ShadowElvUIFrames()
     if self.db.elvui.actionbars then
         -- 常规动作条
         local actionbar_list = {
-            "ElvUI_Bar1Button", "ElvUI_Bar2Button", "ElvUI_Bar3Button", "ElvUI_Bar4Button", "ElvUI_Bar5Button",
-            "ElvUI_Bar6Button", "ElvUI_StanceBarButton", "ElvUI_TotemBarTotem", "PetActionButton"
+            "ElvUI_Bar1Button",
+            "ElvUI_Bar2Button",
+            "ElvUI_Bar3Button",
+            "ElvUI_Bar4Button",
+            "ElvUI_Bar5Button",
+            "ElvUI_Bar6Button",
+            "ElvUI_StanceBarButton",
+            "ElvUI_TotemBarTotem",
+            "PetActionButton"
         }
         for _, item in pairs(actionbar_list) do
             for i = 1, 12 do

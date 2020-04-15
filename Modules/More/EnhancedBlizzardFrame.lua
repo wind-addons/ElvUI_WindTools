@@ -3,7 +3,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
 local EBF = E:NewModule('Wind_EnhancedBlizzardFrame', 'AceEvent-3.0')
-local BlizzMoveInformDB = {}
+local HelpInfoRecord = {}
 
 local _G = _G
 local tinsert = tinsert
@@ -147,7 +147,7 @@ local noSaveFrames = {
     "InterfaceOptionsFrame",
     "HelpFrame",
     "GameMenuFrame",
-    "GossipFrame",
+    "GossipFrame"
 }
 
 local function OnSetPoint(self)
@@ -280,13 +280,14 @@ function EBF:SetMoveHandle(moveFrame, handleFrame)
 end
 
 function EBF:InformUser(action)
-    if not BlizzMoveInformDB[action] then
-        BlizzMoveInformDB[action] = true
+    if not self.db.help_info then return end
+    if not HelpInfoRecord[action] then
+        HelpInfoRecord[action] = true
 
         if action == "move" then
-            print("Has just moved a frame. SHIFT+Click to reset the position.")
+            print(L["WindTools"] .. ": " .. L["You just moved a frame. SHIFT+Click to reset the position."])
         else
-            print("Has just resized a frame. CTRL+Click to reset the scale.")
+            print(L["WindTools"] .. ": " .. L["You just resized a frame. CTRL+Click to reset the scale."])
         end
     end
 end
@@ -372,23 +373,25 @@ function EBF:MoveNormalFrames()
 end
 
 function EBF:CheckESLBlizzMove()
+    if IsAddOnLoaded("BlizzMove") then
+        message("WindTools" .. " " .. L["Move Blizzard frame is conflict with BlizzMove. \nPlease disable one of them."])
+        return true
+    end
+
     if E.private and E.private.sle and E.private.sle.module then
         if E.private.sle.module.blizzmove.enable then
-            message("WindTools" ..
-                        L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."])
+            message("WindTools" .. " " ..
+                        L["Move Blizzard frame is conflict with Shadow&Light.\nPlease cancel the duplicate option."])
             return true
         end
     end
     return false;
 end
 
-function EBF:ErrorFrameSize()
-    _G["UIErrorsFrame"]:SetSize(self.db.errorframe.width, self.db.errorframe.height)
-end
+function EBF:ErrorFrameSize() _G["UIErrorsFrame"]:SetSize(self.db.errorframe.width, self.db.errorframe.height) end
 
 function EBF:Initialize()
     if not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["enabled"] then return end
-    if IsAddOnLoaded("BlizzMove") then return end
 
     self.db = E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]
     tinsert(WT.UpdateAll, function()

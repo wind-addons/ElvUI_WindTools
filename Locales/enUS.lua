@@ -153,7 +153,12 @@ L["Move ElvUI Bag"] = true
 L["Remember Position"] = true
 L["Error Frame"] = true
 L["Vehicle Seat Scale"] = true
-L["Move Blizzard frame is conflict with Shadow&Light, Please cancel the duplicate option."] = true
+L["Help information"] = true
+L["When you moved or resized a frame, it will display a message contains introduction of the module."] = true
+L["Move Blizzard frame is conflict with Shadow&Light.\nPlease cancel the duplicate option."] = true
+L["Move Blizzard frame is conflict with BlizzMove. \nPlease disable one of them."] = true
+L["You just moved a frame. SHIFT+Click to reset the position."] = true
+L["You just resized a frame. CTRL+Click to reset the scale."] = true
 -- Tag 增强
 L["Wan"] = true
 L["Yi"]  = true

@@ -257,6 +257,7 @@ P["WindTools"]["More Tools"] = {
 			["height"] = 60,
 			["width"] = 512,
 		},
+		["help_info"] = true,
 		["vehicleSeatScale"] = 1,
 	},
 	["Enhanced Tags"] = {
@@ -2736,8 +2737,14 @@ WT.ToolConfigs["More Tools"] = {
 					name = L["Move ElvUI Bag"],
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["moveframe"] end,
 				},
-				["remember"] = {
+				["help_info"] = {
 					order = 3,
+					name = L["Help information"],
+					desc = L["When you moved or resized a frame, it will display a message contains introduction of the module."],
+					disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["moveframe"] end,
+				},
+				["remember"] = {
+					order = 4,
 					name = L["Remember Position"],
 					disabled = function(info) return not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"].enabled or not E.db.WindTools["More Tools"]["Enhanced Blizzard Frame"]["moveframe"] end,
 				},

@@ -35,6 +35,8 @@ local IsEveryoneAssistant = IsEveryoneAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitInBattleground = UnitInBattleground
 local UnitFullName = UnitFullName
+local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
+local C_Timer_NewTicker = C_Timer.NewTicker
 
 local ClientLang = GetLocale()
 
@@ -613,9 +615,14 @@ function CF:CreateInterface()
 end
 
 function CF:HandleEmoteWithBubble()
-    hooksecurefunc(M, "SkinBubble", function(self, frame)
-        print(frame.text:GetText())
-        if frame.text then frame.text:SetText(self.text:gsub("%{.-%}", ReplaceEmote)) end
+    C_Timer_NewTicker(.1, function()
+        for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
+            if frame.text then
+                local oldMessage = frame.text:GetText()
+                local afterMessage = oldMessage:gsub("%{.-%}", ReplaceEmote)
+                if oldMessage ~= afterMessage then frame.text:SetText(afterMessage) end
+            end
+        end
     end)
 end
 
@@ -641,7 +648,7 @@ function CF:InitializeEmote()
     ChatFrame_AddMessageEventFilter("CHAT_MSG_EMOTE", filter)
 
     self:CreateInterface()
-    -- self:HandleEmoteWithBubble()
+    self:HandleEmoteWithBubble()
 end
 
 -------------------------------------

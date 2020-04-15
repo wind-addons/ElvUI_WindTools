@@ -26,6 +26,7 @@ P["WindTools"]["Chat"] = {
 		},
 		emote = {
 			enabled = true,
+			size = 16,
 			use_panel = true,
 		},
 		correction = {
@@ -179,10 +180,16 @@ WT.ToolConfigs["Chat"] = {
 					order = 1,
 					set = function(info, value) E.db.WindTools["Chat"]["Chat Frame"][info[4]][info[#info]] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 				},
+				size = {
+					name = L['Emote Icon Size'],
+					order = 2,
+					type = 'range',
+					min = 5, max = 35, step = 1,
+				},
 				use_panel = {
 					name = L["Use Emote Panel"],
 					desc = L["Press { to active the emote select window."],
-					order = 2,
+					order = 3,
 				},
 			},
 		},

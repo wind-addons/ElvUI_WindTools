@@ -500,6 +500,7 @@ L["Finger_Abbr"] = "Finger"
 L["Trinket_Abbr"] = "Trinket"
 L["Held In Off-hand_Abbr"] = "Off-hand"
 L["Use Emote Panel"] = true
+L['Emote Icon Size'] = true
 L["Move (L\124\124R) Reset"] = true
 L["Parse emote expresstion from other players."] = true
 L["Press { to active the emote select window."] = true

@@ -93,8 +93,8 @@ WS.blizzard_frames = {
 
 WS.lazy_load_list = {
     ["Blizzard_GarrisonUI"] = {
-        "GarrisonLandingPage", "GarrisonMissonFrame", "GarrisonShipyardFrame", "OrderHallMissionFrame",
-        "BFAMissionFrame", "OrderHallCommandBar"
+        "GarrisonLandingPage", "GarrisonMissionFrame", "GarrisonShipyardFrame", "OrderHallMissionFrame",
+        "BFAMissionFrame", "OrderHallCommandBar",
     },
     ["Blizzard_BindingUI"] = {"KeyBindingFrame"},
     ["Blizzard_ChallengesUI"] = {"ChallengesKeystoneFrame"},

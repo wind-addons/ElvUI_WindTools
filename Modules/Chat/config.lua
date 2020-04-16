@@ -60,12 +60,12 @@ P["WindTools"]["Chat"] = {
 		normal_channels = {
 			["SAY"] = {enabled = true, cmd = "s", color = {1, 1, 1, 1}, abbr = L["Say_Abbr"]},
 			["YELL"] = {enabled = true, cmd = "y", color = {1, .25, .25, 1}, abbr = L["Yell_Abbr"]},
-			["EMOTE"] = {enabled = true, cmd = "e", color = {1, .5, .25, 1}, abbr = L["Emote_Abbr"]},
+			["EMOTE"] = {enabled = false, cmd = "e", color = {1, .5, .25, 1}, abbr = L["Emote_Abbr"]},
 			["GUILD"] = {enabled = true, cmd = "g", color = {.25, 1, .25, 1}, abbr = L["Guild_Abbr"]},
 			["PARTY"] = {enabled = true, cmd = "p", color = {.67, .67, 1, 1}, abbr = L["Party_Abbr"]},
 			["INSTANCE"] = {enabled = true, cmd = "i", color = {1, .5, 0, 1}, abbr = L["Instance_Abbr"]},
 			["RAID"] = {enabled = true, cmd = "raid", color = {1, .5, 0, 1}, abbr = L["Raid_Abbr"]},
-			["RAID_WARNING"] = {enabled = true, cmd = "rw", color = {1, .28, 0, 1}, abbr = L["RaidWarning_Abbr"]},
+			["RAID_WARNING"] = {enabled = false, cmd = "rw", color = {1, .28, 0, 1}, abbr = L["RaidWarning_Abbr"]},
 		},
 		world_channel = {
 			enabled = true,

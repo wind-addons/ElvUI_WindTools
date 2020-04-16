@@ -8,13 +8,19 @@ local _G = _G
 local ipairs = ipairs
 local format = format
 local CreateFrame = CreateFrame
+local GetChannelName = GetChannelName
+local JoinChannelByName = JoinChannelByName
+local LeaveChannelByName = LeaveChannelByName
+local InCombatLockdown = InCombatLockdown
+local ChatFrame_AddChannel = ChatFrame_AddChannel
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
+local C_Timer_After = C_Timer.After
 
 local normal_channels_index = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "EMOTE"}
 
 function CB:DebugPrint(text) print(L["WindTools"] .. "[聊天条]: " .. text) end
 
-function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip)
+function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, tips, abbr)
     local ElvUIValueColor = E.db.general.valuecolor
 
     if not self.bar[name] then
@@ -27,16 +33,17 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip)
 
         -- 鼠标提示
         button:SetScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
+            self:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
             GameTooltip:SetOwner(self, "ANCHOR_TOP")
-			GameTooltip:SetText(tooltip or _G[name] or "")
-			GameTooltip:Show()
+            GameTooltip:SetText(tooltip or _G[name] or "")
+            if tips then for _, tip in ipairs(tips) do GameTooltip:AddLine(tip) end end
+            GameTooltip:Show()
         end)
-        
+
         button:SetScript("OnLeave", function(self)
-			self:SetBackdropBorderColor(0, 0, 0)
-			GameTooltip:Hide() 
-		end)
+            self:SetBackdropBorderColor(0, 0, 0)
+            GameTooltip:Hide()
+        end)
 
         -- 块状风格条
         if self.db.style.block_type.enabled then
@@ -69,20 +76,28 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip)
     self.bar[name]:Point(anchor_point, CB.bar, anchor_point, x, y)
 
     self.bar[name]:Show()
+
+    return self.bar[name]
 end
 
 function CB:DisableButton(name) if self.bar[name] then self.bar[name]:Hide() end end
 
 function CB:UpdateBar()
+    if self.AlreadyWaitForUpdate then return end
+
     if not self.bar then
         self:DebugPrint("找不到母条！")
         return
+    end
+
+    if InCombatLockdown() then
+        self.AlreadyWaitForUpdate = true
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
     end
     -- 记录按钮个数来方便更新条的大小
     local numberOfButtons = 0
     local width, height
 
-    -- 建立普通频道条
     local anchor = self.db.style.orientation == "HORIZONTAL" and "LEFT" or "TOP"
     local pos_x = 0
     local pos_y = 0
@@ -96,16 +111,18 @@ function CB:UpdateBar()
         end
     end
 
+    -- 建立普通频道条
     for _, name in ipairs(normal_channels_index) do
         local db = self.db.normal_channels[name]
         if db.enabled then
-            local chatFunc = function()
+            local chatFunc = function(self, mouseButton)
+                if mouseButton ~= "LeftButton" then return end
                 local currentText = DefaultChatFrame.editBox:GetText()
                 local command = format("/%s ", db.cmd)
                 ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
             end
 
-            self:UpdateButton(name, chatFunc, anchor, pos_x, pos_y, db.color, self.db.style.block_type.tex)
+            self:UpdateButton(name, chatFunc, anchor, pos_x, pos_y, db.color, self.db.style.block_type.tex, nil, nil, db.abbr)
             numberOfButtons = numberOfButtons + 1
 
             -- 调整锚点到下一个按钮的位置上
@@ -117,6 +134,64 @@ function CB:UpdateBar()
         else
             self:DisableButton(name)
         end
+    end
+
+    -- 建立世界频道条
+    if self.db.world_channel.enabled then
+        local worldChannelName = self.db.world_channel.channel_name
+        if not worldChannelName or worldChannelName == "" then
+            self:DebugPrint(L["World channel no found, please setup again."])
+            return
+        end
+
+        local chatFunc = function(self, mouseButton)
+            local channelId = GetChannelName(worldChannelName)
+            if mouseButton == "LeftButton" then
+                local autoJoined = false
+                -- 自动加入
+                if channelId == 0 and CB.db.world_channel.auto_join then
+                    JoinChannelByName(worldChannelName)
+                    ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
+                    channelId = GetChannelName(worldChannelName)
+                    autoJoined = true
+                end
+                if channelId == 0 then return end
+                local currentText = DefaultChatFrame.editBox:GetText()
+                local command = format("/%s ", channelId)
+                if autoJoined then
+                    -- 刚切过去要稍微过一会才能让聊天框反映为频道
+                    C_Timer_After(.5, function()
+                        ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+                    end)
+                else
+                    ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+                end
+            elseif mouseButton == "RightButton" then
+                if channelId == 0 then
+                    JoinChannelByName(worldChannelName)
+                    ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
+                else
+                    LeaveChannelByName(worldChannelName)
+                end
+            end
+        end
+
+        self:UpdateButton("WORLD", chatFunc, anchor, pos_x, pos_y, self.db.world_channel.color,
+                          self.db.style.block_type.tex, worldChannelName, {
+            L["Left Click: Change to" .. " " .. worldChannelName],
+            L["Right Click: Join/Leave"] .. " " .. worldChannelName
+        }, self.db.world_channel.abbr)
+
+        numberOfButtons = numberOfButtons + 1
+
+        -- 调整锚点到下一个按钮的位置上
+        if anchor == "LEFT" then
+            pos_x = pos_x + self.db.style.width + self.db.style.padding
+        else
+            pos_y = pos_y - self.db.style.height - self.db.style.padding
+        end
+    else
+        self:DisableButton(name)
     end
 
     -- 计算条大小
@@ -158,9 +233,9 @@ function CB:CreateBar()
     self.bar.backdrop:CreateShadow()
 end
 
-function CB:PLAYER_ENTERING_WORLD()
-    CB:CreateBar()
-    CB:UpdateBar()
+function CB:PLAYER_REGEN_ENABLED()
+    self:UpdateBar()
+    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function CB:Initialize()
@@ -169,7 +244,10 @@ function CB:Initialize()
 
     tinsert(WT.UpdateAll, function() CB.db = E.db.WindTools["Chat"]["Chat Bar"] end)
 
-    self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    CB:CreateBar()
+    CB:UpdateBar()
+
+    E:CreateMover(CB.bar, "Wind_ChatBarMover", L["Chat Bar"], nil, nil, nil, 'WINDTOOLS,ALL', function() return CB.db.enabled; end)
 end
 
 local function InitializeCallback() CB:Initialize() end

@@ -107,7 +107,8 @@ WS.lazy_load_list = {
     ["Blizzard_AuctionHouseUI"] = {"AuctionHouseFrame"},
     ["Blizzard_WarboardUI"] = {"WarboardQuestChoiceFrame"},
     ["Blizzard_BarbershopUI"] = {"BarberShopFrame"},
-    ["Blizzard_MacroUI"] = {"MacroPopupFrame"}
+    ["Blizzard_MacroUI"] = {"MacroPopupFrame"},
+    ["Blizzard_TalentUI"] = {"PlayerTalentFrameTalentsPvpTalentFrameTalentList"}
 }
 
 function WS:SkinFont(font, size, style)

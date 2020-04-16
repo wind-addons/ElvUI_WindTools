@@ -34,6 +34,59 @@ P["WindTools"]["Chat"] = {
 			dun_to_slash = true,
 		},
 	},
+	["Chat Bar"] = {
+		enabled = true,
+		style = {
+			bar_backdrop = false,
+			orientation = "HORIZONTAL",
+			padding = 5,
+			width = 40,
+			height = 8,
+			block_type = {
+				tex = "Melli",
+				enabled = true,
+				shadow = true,
+			},
+			text_type = {
+				visible = true,
+				color = false,
+				x_offset = 0,
+				y_offset = 3,
+				font_name = E.media.normFont,
+				font_size = 12,
+				font_style = "OUTLINE",
+			},
+		},
+		normal_channels = {
+			["SAY"] = {enabled = true, cmd = "s", color = {1, 1, 1, 1}, abbr = L["Say_Abbr"]},
+			["YELL"] = {enabled = true, cmd = "y", color = {1, .25, .25, 1}, abbr = L["Yell_Abbr"]},
+			["EMOTE"] = {enabled = true, cmd = "e", color = {1, .5, .25, 1}, abbr = L["Emote_Abbr"]},
+			["GUILD"] = {enabled = true, cmd = "g", color = {.25, 1, .25, 1}, abbr = L["Guild_Abbr"]},
+			["PARTY"] = {enabled = true, cmd = "p", color = {.67, .67, 1, 1}, abbr = L["Party_Abbr"]},
+			["INSTANCE"] = {enabled = true, cmd = "i", color = {1, .5, 0, 1}, abbr = L["Instance_Abbr"]},
+			["RAID"] = {enabled = true, cmd = "raid", color = {1, .5, 0, 1}, abbr = L["Raid_Abbr"]},
+			["RAID_WARNING"] = {enabled = true, cmd = "rw", color = {1, .28, 0, 1}, abbr = L["RaidWarning_Abbr"]},
+		},
+		world_channel = {
+			enabled = true,
+			auto_join = true,
+			channel_name = "",
+			color = {.2, .6, .86, 1},
+			abbr = L["World_Abbr"],
+		},
+		emote_button = {
+			enabled = true,
+			use_icon = true,
+			color = {1, 1, 1, 1},
+			abbr = L["Emote_Abbr"],
+		},
+		roll_button = {
+			enabled = true,
+			use_icon = true,
+			color = {1, 1, 1, 1},
+			abbr = L["Roll_Abbr"],
+		},
+	},
 	["Enhanced Friend List"] = {
 		["enabled"] = true,
 		["color_name"] = true,
@@ -211,6 +264,260 @@ WT.ToolConfigs["Chat"] = {
 				},
 			},
 		},
+	},
+	["Chat Bar"] = {
+		tDesc   = L["Add a chat bar for switching channel."],
+		oAuthor = "houshuu",
+		cAuthor = "houshuu",
+		style = {
+			name = L["Style"],
+			order = 5,
+			args = {
+				bar_backdrop = {
+					order = 1,
+					name = L["Bar Backdrop"],
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.bar_backdrop end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.bar_backdrop = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+				},
+				block_type = {
+					order = 2,
+					name = L["Block Type"],
+					disabled = function() return true end,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				text_type = {
+					order = 3,
+					name = L["Text Type"],
+					disabled = function() return true end,
+					hidden = function() return true end,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled = value; E:StaticPopup_Show("PRIVATE_RL") end,
+				},
+				orientation = {
+					order = 4,
+					type = 'select',
+					name = L['Orientation'],
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.orientation end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.orientation = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					values = {
+						['HORIZONTAL'] = L['Horizontal'],
+						['VERTICAL'] = L['Vertical'],
+					},
+				},
+				padding = {
+					order = 5,
+					type = 'range',
+					name = L['Padding'],
+					min = 0, max = 20, step = 1,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.padding end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.padding = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+				},
+				width = {
+					order = 6,
+					type = 'range',
+					name = L['Width'],
+					min = 2, max = 100, step = 1,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.width end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.width = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+				},
+				height = {
+					order = 7,
+					type = 'range',
+					name = L['Height'],
+					min = 2, max = 100, step = 1,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.height end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.height = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+				},
+				block_type_setting = {
+					order = 10,
+					name = L["Block Type Setting"],
+					hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
+					args = {
+						block_type_shadow = {
+							order = 1,
+							name = L["Add Shadow"],
+							get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.shadow end,
+							set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.shadow = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+						},
+						block_type_tex = {
+							order = 2,
+							name = L["Texture"],
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
+							get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.tex end,
+							set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.tex = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+							type = "select",
+							dialogControl = "LSM30_Statusbar",
+							values = _G.AceGUIWidgetLSMlists.statusbar,
+						},
+					},
+				},
+			},
+		},
+		normal_channels = {
+			name = _G.CHANNEL,
+			order = 7,
+			args = {
+				world_channel = {
+					order = 100,
+					name = _G.WORLD,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					args = {
+						enabled = {
+							order = 1,
+							name = L["Enable"],
+						},
+						auto_join = {
+							order = 2,
+							name = L["Auto Join"],
+						},
+						channel_name = {
+							order = 3,
+							type = "input",
+							name = L["Channel Name"],
+						},
+						color = {
+							order = 4,
+							type = "color",
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+								local default = P.WindTools["Chat"]["Chat Bar"].roll_button.color
+								return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2], default[3], default[4]
+							end,
+							set = function(info, r, g, b, a)
+								E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = {r, g, b, a}
+								E:GetModule('Wind_ChatBar'):UpdateBar()
+							end,
+						},
+						abbr = {
+							order = 5,
+							type = "input",
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Abbreviation"],
+						},
+					},
+				},
+				emote_button = {
+					order = 101,
+					name = "Wind"..L["Emote"],
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					args = {
+						enabled = {
+							order = 1,
+							name = L["Enable"],
+						},
+						use_icon = {
+							order = 2,
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Use Icon rather than text"],
+						},
+						color = {
+							order = 3,
+							type = "color",
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+								local default = P.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+								return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2], default[3], default[4]
+							end,
+							set = function(info, r, g, b, a)
+								E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = {r, g, b, a}
+								E:GetModule('Wind_ChatBar'):UpdateBar()
+							end,
+						},
+						abbr = {
+							order = 4,
+							type = "input",
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Abbreviation"],
+						},
+					},
+				},
+				roll_button = {
+					order = 102,
+					name = _G.ROLL,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					args = {
+						enabled = {
+							order = 1,
+							name = L["Enable"],
+						},
+						use_icon = {
+							order = 2,
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Use Icon rather than text"],
+						},
+						color = {
+							order = 3,
+							type = "color",
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+								local default = P.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+								return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2], default[3], default[4]
+							end,
+							set = function(info, r, g, b, a)
+								E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = {r, g, b, a}
+								E:GetModule('Wind_ChatBar'):UpdateBar()
+							end,
+						},
+						abbr = {
+							order = 4,
+							type = "input",
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Abbreviation"],
+						},
+					},
+				},
+			},
+		},				
+		func = function()
+			local option = WT.ToolConfigs["Chat"]["Chat Bar"].normal_channels.args
+			local db = P["WindTools"]["Chat"]["Chat Bar"].normal_channels
+			local normal_channels_index = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "EMOTE"}
+			for index, name in ipairs(normal_channels_index) do
+				option[name] = {
+					order = index,
+					name = _G[name],
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[4]][info[5]][info[6]] end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"][info[4]][info[5]][info[6]] = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					args = {
+						enabled = {
+							order = 1,
+							name = L["Enable"],
+						},
+						color = {
+							order = 2,
+							type = "color",
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[4]][info[5]][info[6]]
+								local default = db[name].color
+								return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2], default[3], default[4]
+							end,
+							set = function(info, r, g, b, a)
+								E.db.WindTools["Chat"]["Chat Bar"][info[4]][info[5]][info[6]] = {r, g, b, a}
+								E:GetModule('Wind_ChatBar'):UpdateBar()
+							end,
+						},
+						abbr = {
+							order = 3,
+							type = "input",
+							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							name = L["Abbreviation"],
+						},
+					},
+				}
+			end
+		end,
 	},
 	["Enhanced Friend List"] = {
 		tDesc   = L["Customize friend frame."],

@@ -44,8 +44,6 @@ local ClientLang = GetLocale()
 -- 物品等级，图标
 local ItemLevelTooltip = E.ScanTooltip
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
-local ItemPowerPattern = gsub(CHALLENGE_MODE_ITEM_POWER_LEVEL, "%%d", "(%%d+)")
-local ItemNamePattern = gsub(CHALLENGE_MODE_KEYSTONE_NAME, "%%s", "(.+)")
 
 local IconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
 
@@ -98,11 +96,6 @@ local function AddItemInfo(Hyperlink)
                     text = leftText:GetText() or ""
                     level = match(text, ItemLevelPattern)
                     if (level) then break end
-                    level = match(text, ItemPowerPattern)
-                    if (level) then
-                        extraname = match(_G[ItemLevelTooltip:GetName() .. "TextLeft1"]:GetText(), ItemNamePattern)
-                        break
-                    end
                 end
             end
         end
@@ -216,10 +209,27 @@ end
 
 -- 频道循环列表
 local ChannelList = {
-    "SAY", "YELL", "PARTY", "INSTANCE_CHAT", "RAID", "RAID_WARNING", "BATTLEGROUND", "GUILD", "OFFICER"
+    "SAY",
+    "YELL",
+    "PARTY",
+    "INSTANCE_CHAT",
+    "RAID",
+    "RAID_WARNING",
+    "BATTLEGROUND",
+    "GUILD",
+    "OFFICER"
 }
 local ChannelListWithWhisper = {
-    "SAY", "YELL", "PARTY", "INSTANCE_CHAT", "RAID", "RAID_WARNING", "BATTLEGROUND", "GUILD", "OFFICER", "WHISPER",
+    "SAY",
+    "YELL",
+    "PARTY",
+    "INSTANCE_CHAT",
+    "RAID",
+    "RAID_WARNING",
+    "BATTLEGROUND",
+    "GUILD",
+    "OFFICER",
+    "WHISPER",
     "BN_WHISPER"
 }
 
@@ -467,32 +477,58 @@ end
 -- 表情
 
 local emotes = {
-    {key = "angel", zhTW = "天使", zhCN = "天使"}, {key = "angry", zhTW = "生氣", zhCN = "生气"},
-    {key = "biglaugh", zhTW = "大笑", zhCN = "大笑"}, {key = "clap", zhTW = "鼓掌", zhCN = "鼓掌"},
-    {key = "cool", zhTW = "酷", zhCN = "酷"}, {key = "cry", zhTW = "哭", zhCN = "哭"},
-    {key = "cutie", zhTW = "可愛", zhCN = "可爱"}, {key = "despise", zhTW = "鄙視", zhCN = "鄙视"},
-    {key = "dreamsmile", zhTW = "美夢", zhCN = "美梦"}, {key = "embarrass", zhTW = "尷尬", zhCN = "尴尬"},
-    {key = "evil", zhTW = "邪惡", zhCN = "邪恶"}, {key = "excited", zhTW = "興奮", zhCN = "兴奋"},
-    {key = "faint", zhTW = "暈", zhCN = "晕"}, {key = "fight", zhTW = "打架", zhCN = "打架"},
-    {key = "flu", zhTW = "流感", zhCN = "流感"}, {key = "freeze", zhTW = "呆", zhCN = "呆"},
-    {key = "frown", zhTW = "皺眉", zhCN = "皱眉"}, {key = "greet", zhTW = "致敬", zhCN = "致敬"},
-    {key = "grimace", zhTW = "鬼臉", zhCN = "鬼脸"}, {key = "growl", zhTW = "齜牙", zhCN = "龇牙"},
-    {key = "happy", zhTW = "開心", zhCN = "开心"}, {key = "heart", zhTW = "心", zhCN = "心"},
-    {key = "horror", zhTW = "恐懼", zhCN = "恐惧"}, {key = "ill", zhTW = "生病", zhCN = "生病"},
-    {key = "innocent", zhTW = "無辜", zhCN = "无辜"}, {key = "kongfu", zhTW = "功夫", zhCN = "功夫"},
-    {key = "love", zhTW = "花痴", zhCN = "花痴"}, {key = "mail", zhTW = "郵件", zhCN = "邮件"},
-    {key = "makeup", zhTW = "化妝", zhCN = "化妆"}, {key = "mario", zhTW = "馬里奧", zhCN = "马里奥"},
-    {key = "meditate", zhTW = "沉思", zhCN = "沉思"}, {key = "miserable", zhTW = "可憐", zhCN = "可怜"},
-    {key = "okay", zhTW = "好", zhCN = "好"}, {key = "pretty", zhTW = "漂亮", zhCN = "漂亮"},
-    {key = "puke", zhTW = "吐", zhCN = "吐"}, {key = "shake", zhTW = "握手", zhCN = "握手"},
-    {key = "shout", zhTW = "喊", zhCN = "喊"}, {key = "shuuuu", zhTW = "閉嘴", zhCN = "闭嘴"},
-    {key = "shy", zhTW = "害羞", zhCN = "害羞"}, {key = "sleep", zhTW = "睡覺", zhCN = "睡觉"},
-    {key = "smile", zhTW = "微笑", zhCN = "微笑"}, {key = "suprise", zhTW = "吃驚", zhCN = "吃惊"},
-    {key = "surrender", zhTW = "失敗", zhCN = "失败"}, {key = "sweat", zhTW = "流汗", zhCN = "流汗"},
-    {key = "tear", zhTW = "流淚", zhCN = "流泪"}, {key = "tears", zhTW = "悲劇", zhCN = "悲剧"},
-    {key = "think", zhTW = "想", zhCN = "想"}, {key = "titter", zhTW = "偷笑", zhCN = "偷笑"},
-    {key = "ugly", zhTW = "猥瑣", zhCN = "猥琐"}, {key = "victory", zhTW = "勝利", zhCN = "胜利"},
-    {key = "volunteer", zhTW = "雷鋒", zhCN = "雷锋"}, {key = "wronged", zhTW = "委屈", zhCN = "委屈"},
+    {key = "angel", zhTW = "天使", zhCN = "天使"},
+    {key = "angry", zhTW = "生氣", zhCN = "生气"},
+    {key = "biglaugh", zhTW = "大笑", zhCN = "大笑"},
+    {key = "clap", zhTW = "鼓掌", zhCN = "鼓掌"},
+    {key = "cool", zhTW = "酷", zhCN = "酷"},
+    {key = "cry", zhTW = "哭", zhCN = "哭"},
+    {key = "cutie", zhTW = "可愛", zhCN = "可爱"},
+    {key = "despise", zhTW = "鄙視", zhCN = "鄙视"},
+    {key = "dreamsmile", zhTW = "美夢", zhCN = "美梦"},
+    {key = "embarrass", zhTW = "尷尬", zhCN = "尴尬"},
+    {key = "evil", zhTW = "邪惡", zhCN = "邪恶"},
+    {key = "excited", zhTW = "興奮", zhCN = "兴奋"},
+    {key = "faint", zhTW = "暈", zhCN = "晕"},
+    {key = "fight", zhTW = "打架", zhCN = "打架"},
+    {key = "flu", zhTW = "流感", zhCN = "流感"},
+    {key = "freeze", zhTW = "呆", zhCN = "呆"},
+    {key = "frown", zhTW = "皺眉", zhCN = "皱眉"},
+    {key = "greet", zhTW = "致敬", zhCN = "致敬"},
+    {key = "grimace", zhTW = "鬼臉", zhCN = "鬼脸"},
+    {key = "growl", zhTW = "齜牙", zhCN = "龇牙"},
+    {key = "happy", zhTW = "開心", zhCN = "开心"},
+    {key = "heart", zhTW = "心", zhCN = "心"},
+    {key = "horror", zhTW = "恐懼", zhCN = "恐惧"},
+    {key = "ill", zhTW = "生病", zhCN = "生病"},
+    {key = "innocent", zhTW = "無辜", zhCN = "无辜"},
+    {key = "kongfu", zhTW = "功夫", zhCN = "功夫"},
+    {key = "love", zhTW = "花痴", zhCN = "花痴"},
+    {key = "mail", zhTW = "郵件", zhCN = "邮件"},
+    {key = "makeup", zhTW = "化妝", zhCN = "化妆"},
+    {key = "mario", zhTW = "馬里奧", zhCN = "马里奥"},
+    {key = "meditate", zhTW = "沉思", zhCN = "沉思"},
+    {key = "miserable", zhTW = "可憐", zhCN = "可怜"},
+    {key = "okay", zhTW = "好", zhCN = "好"},
+    {key = "pretty", zhTW = "漂亮", zhCN = "漂亮"},
+    {key = "puke", zhTW = "吐", zhCN = "吐"},
+    {key = "shake", zhTW = "握手", zhCN = "握手"},
+    {key = "shout", zhTW = "喊", zhCN = "喊"},
+    {key = "shuuuu", zhTW = "閉嘴", zhCN = "闭嘴"},
+    {key = "shy", zhTW = "害羞", zhCN = "害羞"},
+    {key = "sleep", zhTW = "睡覺", zhCN = "睡觉"},
+    {key = "smile", zhTW = "微笑", zhCN = "微笑"},
+    {key = "suprise", zhTW = "吃驚", zhCN = "吃惊"},
+    {key = "surrender", zhTW = "失敗", zhCN = "失败"},
+    {key = "sweat", zhTW = "流汗", zhCN = "流汗"},
+    {key = "tear", zhTW = "流淚", zhCN = "流泪"},
+    {key = "tears", zhTW = "悲劇", zhCN = "悲剧"},
+    {key = "think", zhTW = "想", zhCN = "想"},
+    {key = "titter", zhTW = "偷笑", zhCN = "偷笑"},
+    {key = "ugly", zhTW = "猥瑣", zhCN = "猥琐"},
+    {key = "victory", zhTW = "勝利", zhCN = "胜利"},
+    {key = "volunteer", zhTW = "雷鋒", zhCN = "雷锋"},
+    {key = "wronged", zhTW = "委屈", zhCN = "委屈"},
     -- 指定了texture一般用於BLIZ自帶的素材
     {key = "wrong", zhTW = "錯", zhCN = "错", texture = "Interface\\RaidFrame\\ReadyCheck-NotReady"},
     {key = "right", zhTW = "對", zhCN = "对", texture = "Interface\\RaidFrame\\ReadyCheck-Ready"},

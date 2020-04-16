@@ -596,7 +596,7 @@ function CF:CreateInterface()
         elseif button == "RightButton" and not self.isMoving then
             -- 右键复原
             self:ClearAllPoints()
-            self:SetPoint("LEFT", ChatFrame1, "RIGHT", 60, 0)
+            self:SetPoint("TOPLEFT", Wind_CustomEmoteFrameMover, "TOPLEFT", 0, 0)
         end
     end)
     frame:SetScript("OnHide", function(self)
@@ -646,8 +646,12 @@ function CF:CreateInterface()
     hooksecurefunc("ChatEdit_OnTextChanged", function(self, userInput)
         if not CF.db.emote.use_panel then return end
         local text = self:GetText()
-        if (userInput and (strsub(text, -1) == "{" or strsub(text, -1) == "｛")) then frame:Show() end
+        if (userInput and (strsub(text, -1) == "{")) then frame:Show() end
     end)
+
+    self.EmoteSelector = frame
+    E:CreateMover(CF.EmoteSelector, "Wind_CustomEmoteFrameMover", L["Emote Selector"], nil, nil, nil, 'WINDTOOLS,ALL',
+                  function() return CF.db.enabled; end)
 end
 
 function CF:HandleEmoteWithBubble()

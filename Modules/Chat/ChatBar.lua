@@ -15,10 +15,26 @@ local InCombatLockdown = InCombatLockdown
 local ChatFrame_AddChannel = ChatFrame_AddChannel
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
 local C_Timer_After = C_Timer.After
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local UnitIsGroupLeader = UnitIsGroupLeader
+local UnitIsGroupAssistant = UnitIsGroupAssistant
+local IsEveryoneAssistant = IsEveryoneAssistant
 
 local normal_channels_index = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "EMOTE"}
 
-function CB:DebugPrint(text) print(L["WindTools"] .. "[聊天条]: " .. text) end
+local check_funcs = {
+    ["PARTY"] = function() return IsInGroup(LE_PARTY_CATEGORY_HOME) end,
+    ["INSTANCE"] = function() return IsInGroup(LE_PARTY_CATEGORY_INSTANCE) end,
+    ["RAID"] = function() return IsInRaid() end,
+    ["RAID_WARNING"] = function()
+        return IsInRaid() and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or IsEveryoneAssistant())
+    end,
+    ["GUILD"] = function() return IsInGuild() end,
+    ["OFFICER"] = function() return IsInGuild() and CanEditOfficerNote() end
+}
+
+function CB:DebugPrint(text) print(L["WindTools"] .. " " .. L["Chat Bar"] .. ": " .. text) end
 
 function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, tips, abbr)
     local ElvUIValueColor = E.db.general.valuecolor
@@ -83,17 +99,14 @@ end
 function CB:DisableButton(name) if self.bar[name] then self.bar[name]:Hide() end end
 
 function CB:UpdateBar()
-    if self.AlreadyWaitForUpdate then return end
-
-    if not self.bar then
-        self:DebugPrint("找不到母条！")
-        return
-    end
+    if (not self.bar) or self.AlreadyWaitForUpdate then return end
 
     if InCombatLockdown() then
         self.AlreadyWaitForUpdate = true
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
     end
+
     -- 记录按钮个数来方便更新条的大小
     local numberOfButtons = 0
     local width, height
@@ -122,7 +135,8 @@ function CB:UpdateBar()
                 ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
             end
 
-            self:UpdateButton(name, chatFunc, anchor, pos_x, pos_y, db.color, self.db.style.block_type.tex, nil, nil, db.abbr)
+            self:UpdateButton(name, chatFunc, anchor, pos_x, pos_y, db.color, self.db.style.block_type.tex, nil, nil,
+                              db.abbr)
             numberOfButtons = numberOfButtons + 1
 
             -- 调整锚点到下一个按钮的位置上
@@ -178,7 +192,7 @@ function CB:UpdateBar()
 
         self:UpdateButton("WORLD", chatFunc, anchor, pos_x, pos_y, self.db.world_channel.color,
                           self.db.style.block_type.tex, worldChannelName, {
-            L["Left Click: Change to" .. " " .. worldChannelName],
+            L["Left Click: Change to"] .. " " .. worldChannelName,
             L["Right Click: Join/Leave"] .. " " .. worldChannelName
         }, self.db.world_channel.abbr)
 
@@ -191,7 +205,38 @@ function CB:UpdateBar()
             pos_y = pos_y - self.db.style.height - self.db.style.padding
         end
     else
-        self:DisableButton(name)
+        self:DisableButton("WORLD")
+    end
+
+    -- 建立表情按键
+    if self.db.emote_button.enabled then
+        local chatFunc = function(self, mouseButton)
+            if mouseButton == "LeftButton" then
+                if E.db.WindTools["Chat"]["Chat Frame"]["enabled"] and
+                    E.db.WindTools["Chat"]["Chat Frame"].emote.use_panel and _G.Wind_CustomEmoteFrame then
+                    if _G.Wind_CustomEmoteFrame:IsShown() then
+                        _G.Wind_CustomEmoteFrame:Hide()
+                    else
+                        _G.Wind_CustomEmoteFrame:Show()
+                    end
+                end
+            end
+        end
+
+        self:UpdateButton("WindEmote", chatFunc, anchor, pos_x, pos_y, self.db.emote_button.color,
+                          self.db.style.block_type.tex, L["Wind Emote"], {L["Left Click: Toggle"]},
+                          self.db.emote_button.abbr)
+
+        numberOfButtons = numberOfButtons + 1
+
+        -- 调整锚点到下一个按钮的位置上
+        if anchor == "LEFT" then
+            pos_x = pos_x + self.db.style.width + self.db.style.padding
+        else
+            pos_y = pos_y - self.db.style.height - self.db.style.padding
+        end
+    else
+        self:DisableButton("WindEmote")
     end
 
     -- 计算条大小
@@ -247,7 +292,8 @@ function CB:Initialize()
     CB:CreateBar()
     CB:UpdateBar()
 
-    E:CreateMover(CB.bar, "Wind_ChatBarMover", L["Chat Bar"], nil, nil, nil, 'WINDTOOLS,ALL', function() return CB.db.enabled; end)
+    E:CreateMover(CB.bar, "Wind_ChatBarMover", L["Chat Bar"], nil, nil, nil, 'WINDTOOLS,ALL',
+                  function() return CB.db.enabled; end)
 end
 
 local function InitializeCallback() CB:Initialize() end

@@ -530,7 +530,10 @@ local function shadow_objective_tracker()
                 bar.backdrop:CreateShadow()
             end
 
-            if progressBar.backdrop then progressBar.backdrop:CreateShadow() end
+            if progressBar.backdrop then
+                progressBar.backdrop:SetTemplate('Transparent')
+                progressBar.backdrop:CreateShadow()
+            end
 
             -- 稍微移动下图标位置，防止阴影重叠，更加美观！
             if icon then icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0) end
@@ -579,7 +582,7 @@ local function shadow_alerts()
         if alert.Icon and alert.Icon.Texture and alert.Icon.Texture.b then
             alert.Icon.Texture.b:Point("TOPLEFT", alert.Icon.Texture, "TOPLEFT", -1, 1)
             alert.Icon.Texture.b:Point("BOTTOMRIGHT", alert.Icon.Texture, "BOTTOMRIGHT", 1, -1)
-            alert.Icon.Texture.b:CreateShadow(7)
+            alert.Icon.Texture.b:CreateShadow(5)
         end
         if alert.SpecIcon then alert.SpecIcon.b:CreateShadow() end
     end
@@ -782,7 +785,10 @@ function WS:ShadowGeneralFrames()
     -- 镜像时间条 呼吸条
     for i = 1, MIRRORTIMER_NUMTIMERS do
         local statusBar = _G['MirrorTimer' .. i .. 'StatusBar']
-        if statusBar.backdrop then statusBar.backdrop:CreateShadow() end
+        if statusBar.backdrop then
+            statusBar.backdrop:SetTemplate('Tranparent')
+            statusBar.backdrop:CreateShadow()
+        end
     end
 
     -- 任务追踪

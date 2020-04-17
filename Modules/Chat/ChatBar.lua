@@ -72,7 +72,7 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
                 local fontName, _, fontFlags = self.text:GetFont()
                 self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
             end
-            GameTooltip:SetOwner(self, "ANCHOR_TOP")
+            GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
             GameTooltip:SetText(tooltip or _G[name] or "")
             if tips then for _, tip in ipairs(tips) do GameTooltip:AddLine(tip) end end
             GameTooltip:Show()
@@ -229,11 +229,11 @@ function CB:UpdateBar()
     end
 
     -- 建立表情按键
-    if self.db.emote_button.enabled then
+    if self.db.emote_button.enabled and E.db.WindTools["Chat"]["Chat Frame"]["enabled"] and
+        E.db.WindTools["Chat"]["Chat Frame"].emote.use_panel then
         local chatFunc = function(self, mouseButton)
             if mouseButton == "LeftButton" then
-                if E.db.WindTools["Chat"]["Chat Frame"]["enabled"] and
-                    E.db.WindTools["Chat"]["Chat Frame"].emote.use_panel and _G.Wind_CustomEmoteFrame then
+                if _G.Wind_CustomEmoteFrame then
                     if _G.Wind_CustomEmoteFrame:IsShown() then
                         _G.Wind_CustomEmoteFrame:Hide()
                     else
@@ -243,9 +243,11 @@ function CB:UpdateBar()
             end
         end
 
+        local abbr = (self.db.emote_button.use_icon and
+                         "|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario.blp:" ..
+                         self.db.style.text_type.font_size .. "|t") or self.db.emote_button.abbr
         self:UpdateButton("WindEmote", chatFunc, anchor, pos_x, pos_y, self.db.emote_button.color,
-                          self.db.style.block_type.tex, "Wind " .. L["Emote"], {L["Left Click: Toggle"]},
-                          self.db.emote_button.abbr)
+                          self.db.style.block_type.tex, "Wind " .. L["Emote"], {L["Left Click: Toggle"]}, abbr)
 
         numberOfButtons = numberOfButtons + 1
 
@@ -257,6 +259,27 @@ function CB:UpdateBar()
         end
     else
         self:DisableButton("WindEmote")
+    end
+
+    -- 建立Roll点键
+    if self.db.emote_button.enabled then
+        local chatFunc = function(self, mouseButton) if mouseButton == "LeftButton" then RandomRoll(1, 100) end end
+        local abbr = (self.db.emote_button.use_icon and "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:" ..
+                         self.db.style.text_type.font_size .. "|t") or self.db.emote_button.abbr
+
+        self:UpdateButton("ROLL", chatFunc, anchor, pos_x, pos_y, self.db.roll_button.color,
+                          self.db.style.block_type.tex, nil, nil, abbr)
+
+        numberOfButtons = numberOfButtons + 1
+
+        -- 调整锚点到下一个按钮的位置上
+        if anchor == "LEFT" then
+            pos_x = pos_x + self.db.style.width + self.db.style.padding
+        else
+            pos_y = pos_y - self.db.style.height - self.db.style.padding
+        end
+    else
+        self:DisableButton("ROLL")
     end
 
     -- 计算条大小

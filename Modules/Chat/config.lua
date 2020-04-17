@@ -461,7 +461,7 @@ WT.ToolConfigs["Chat"] = {
 						use_icon = {
 							order = 2,
 							name = L["Use Icon"],
-							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							hidden = function() return not E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
 							desc = L["Use a icon rather than text"],
 						},
 						color = {
@@ -500,7 +500,7 @@ WT.ToolConfigs["Chat"] = {
 						use_icon = {
 							order = 2,
 							name = L["Use Icon"],
-							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+							hidden = function() return not E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
 							desc = L["Use a icon rather than text"],
 						},
 						color = {

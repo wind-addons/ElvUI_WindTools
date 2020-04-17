@@ -89,7 +89,8 @@ WS.blizzard_frames = {
     ["TaxiFrame"] = true,
     ["DressUpFrame"] = true,
     ["MainMenuBarVehicleLeaveButton"] = true,
-    ["ItemTextFrame"] = true
+    ["ItemTextFrame"] = true,
+    ["ChatConfigFrame"] = true
 }
 
 WS.lazy_load_list = {

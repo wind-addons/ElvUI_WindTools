@@ -511,6 +511,7 @@ L["Parse emote expresstion from other players."] = true
 L["Press { to active the emote select window."] = true
 L["Input Correction"] = true
 L["Designed for Asian player, it will help you to enter command without switching IME."] = true
+L["Emote Selector"] = true
 -- 腐化等级
 L["Corruption Rank"] = true
 L["Show corruption rank in the tooltip when you mouseover an corruption item."] = true

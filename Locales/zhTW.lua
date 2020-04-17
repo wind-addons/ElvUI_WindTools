@@ -511,6 +511,7 @@ L["Parse emote expresstion from other players."] = "解析其他玩家發送的�
 L["Press { to active the emote select window."] = "按下 { （英文左大括號）來激活窗口"
 L["Input Correction"] = "輸入修正"
 L["Designed for Asian player, it will help you to enter command without switching IME."] = "為亞洲玩家設計, 能幫助你在不切換輸入法的時候鍵入命令."
+L["Emote Selector"] = "表情選擇工具"
 -- 腐化等级
 L["Corruption Rank"] = "腐化等級"
 L["Show corruption rank in the tooltip when you mouseover an corruption item."] = "在浮動提示中顯示腐化物品的腐化等級."

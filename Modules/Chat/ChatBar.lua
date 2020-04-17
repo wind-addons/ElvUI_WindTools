@@ -127,6 +127,8 @@ function CB:UpdateBar()
         return
     end
 
+    
+
     -- 记录按钮个数来方便更新条的大小
     local numberOfButtons = 0
     local width, height
@@ -324,6 +326,7 @@ end
 function CB:PLAYER_REGEN_ENABLED()
     self:UpdateBar()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    self.AlreadyWaitForUpdate = false
 end
 
 function CB:Initialize()
@@ -332,6 +335,8 @@ function CB:Initialize()
 
     tinsert(WT.UpdateAll, function() CB.db = E.db.WindTools["Chat"]["Chat Bar"] end)
 
+    self.AlreadyWaitForUpdate = false
+    
     CB:CreateBar()
     CB:UpdateBar()
 

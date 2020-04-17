@@ -58,7 +58,8 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
             -- 文字型
             button.text = button:CreateFontString(nil, "OVERLAY")
             button.text:Point("CENTER", button, "CENTER", 0, 0)
-            button.text:FontTemplate(LSM:Fetch('font', self.db.style.text_type.font_name), self.db.style.text_type.font_size, self.db.style.text_type.font_style)
+            button.text:FontTemplate(LSM:Fetch('font', self.db.style.text_type.font_name),
+                                     self.db.style.text_type.font_size, self.db.style.text_type.font_style)
             button.defaultFontSize = self.db.style.text_type.font_size
         end
 
@@ -69,7 +70,7 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
                 self.backdrop.shadow:Show()
             elseif CB.db.style.text_type.enabled then
                 local fontName, _, fontFlags = self.text:GetFont()
-                self.text:FontTemplate(fontName, self.defaultFontSize+4, fontFlags)
+                self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
             end
             GameTooltip:SetOwner(self, "ANCHOR_TOP")
             GameTooltip:SetText(tooltip or _G[name] or "")
@@ -81,9 +82,7 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
             GameTooltip:Hide()
             if CB.db.style.block_type.enabled then
                 self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
-                if not CB.db.style.block_type.shadow then
-                    self.backdrop.shadow:Hide()
-                end
+                if not CB.db.style.block_type.shadow then self.backdrop.shadow:Hide() end
             elseif CB.db.style.text_type.enabled then
                 local fontName, _, fontFlags = self.text:GetFont()
                 self.text:FontTemplate(fontName, self.defaultFontSize, fontFlags)
@@ -104,7 +103,7 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
         end
     elseif self.db.style.text_type.enabled then
         local buttonText = self.db.style.text_type.color and WT:ColorStr(abbr, color[1], color[2], color[3]) or abbr
-        self.bar[name].text:SetText(buttonText)    
+        self.bar[name].text:SetText(buttonText)
     end
 
     -- 尺寸和位置更新
@@ -137,7 +136,7 @@ function CB:UpdateBar()
     local pos_y = 0
 
     if self.db.style.bar_backdrop then
-        -- 有背景边距的情况下，初始化第一个按钮的定位
+        -- 有背景边距的情况下, 初始化第一个按钮的定位
         if anchor == "LEFT" then
             pos_x = pos_x + self.db.style.padding
         else
@@ -245,7 +244,7 @@ function CB:UpdateBar()
         end
 
         self:UpdateButton("WindEmote", chatFunc, anchor, pos_x, pos_y, self.db.emote_button.color,
-                          self.db.style.block_type.tex, "Wind "..L["Emote"], {L["Left Click: Toggle"]},
+                          self.db.style.block_type.tex, "Wind " .. L["Emote"], {L["Left Click: Toggle"]},
                           self.db.emote_button.abbr)
 
         numberOfButtons = numberOfButtons + 1
@@ -269,7 +268,7 @@ function CB:UpdateBar()
             width = self.db.style.padding * 2 + self.db.style.width
             height = self.db.style.padding * (numberOfButtons + 1) + self.db.style.height * numberOfButtons
         end
-    else -- 如果没有背景，背景边距自然也不用算在框架大小内
+    else -- 如果没有背景, 背景边距自然也不用算在框架大小内
         if self.db.style.orientation == "HORIZONTAL" then
             width = self.db.style.padding * (numberOfButtons - 1) + self.db.style.width * numberOfButtons
             height = self.db.style.height

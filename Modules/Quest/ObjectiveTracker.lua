@@ -36,9 +36,9 @@ local ignoreQuestNPC = {
     [105387] = true, -- 安杜斯
     [93538] = true, -- 达瑞妮斯
     [154534] = true, -- 大杂院阿畅
-    [150987] = true, -- 肖恩·维克斯，斯坦索姆
-    [150563] = true, -- 斯卡基特，麦卡贡订单日常
-    [143555] = true -- 山德·希尔伯曼，祖达萨PVP军需官
+    [150987] = true, -- 肖恩·维克斯, 斯坦索姆
+    [150563] = true, -- 斯卡基特, 麦卡贡订单日常
+    [143555] = true -- 山德·希尔伯曼, 祖达萨PVP军需官
 }
 
 local ignoreGossipNPC = {
@@ -70,7 +70,7 @@ local ignoreGossipNPC = {
     [84684] = true, -- Lieutenant Thorn (Alliance)
     [117871] = true, -- War Councilor Victoria (Class Challenges @ Broken Shore)
     [155101] = true, -- 元素精华融合器
-    [155261] = true, -- 肖恩·维克斯，斯坦索姆
+    [155261] = true, -- 肖恩·维克斯, 斯坦索姆
     [150122] = true, -- 荣耀堡法师
     [150131] = true -- 萨尔玛法师
 }
@@ -155,7 +155,7 @@ local ignoreProgressNPC = {
     [124312] = true,
     [141584] = true,
     [326027] = true, -- 运输站回收生成器DX-82
-    [150563] = true -- 斯卡基特，麦卡贡订单日常
+    [150563] = true -- 斯卡基特, 麦卡贡订单日常
 }
 
 local cashRewards = {

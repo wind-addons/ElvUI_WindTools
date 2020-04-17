@@ -514,3 +514,33 @@ L["Designed for Asian player, it will help you to enter command without switchin
 -- 腐化等级
 L["Corruption Rank"] = true
 L["Show corruption rank in the tooltip when you mouseover an corruption item."] = true
+-- 聊天条
+L["Chat Bar"] = true
+L["Add a chat bar for switching channel."] = true
+L["World channel no found, please setup again."] = true
+L["Left Click: Change to"] = true
+L["Right Click: Join/Leave"] = true
+L["Left Click: Toggle"] = true
+L["Say_Abbr"] = "S"
+L["Yell_Abbr"] = "Y"
+L["Emote_Abbr"] = "E"
+L["Party_Abbr"] = "P"
+L["Instance_Abbr"] = "I"
+L["Raid_Abbr"] = "R"
+L["RaidWarning_Abbr"] = "RW"
+L["Guild_Abbr"] = "G"
+L["Officer_Abbr"] = "O"
+L["World_Abbr"] = "WD"
+L["Roll_Abbr"] = "R"
+L["Bar Backdrop"] = true
+L["Smart Hide"] = true
+L["Block Type"] = true
+L["Text Type"] = true
+L['Padding'] = true
+L["Block Type Setting"] = true
+L["Add Button Shadow"] = true
+L["Button Texture"] = true
+L["Auto Join"] = true
+L["Channel Name"] = true
+L["Abbreviation"] = true
+L["Use a icon rather than text"] = true

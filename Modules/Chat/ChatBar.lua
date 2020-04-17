@@ -21,7 +21,7 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local IsEveryoneAssistant = IsEveryoneAssistant
 
-local normal_channels_index = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "EMOTE"}
+local normal_channels_index = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE"}
 
 local check_funcs = {
     ["PARTY"] = function() return IsInGroup(LE_PARTY_CATEGORY_HOME) end,
@@ -224,7 +224,7 @@ function CB:UpdateBar()
         end
 
         self:UpdateButton("WindEmote", chatFunc, anchor, pos_x, pos_y, self.db.emote_button.color,
-                          self.db.style.block_type.tex, L["Wind Emote"], {L["Left Click: Toggle"]},
+                          self.db.style.block_type.tex, "Wind "..L["Emote"], {L["Left Click: Toggle"]},
                           self.db.emote_button.abbr)
 
         numberOfButtons = numberOfButtons + 1

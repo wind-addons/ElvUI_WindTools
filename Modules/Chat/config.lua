@@ -63,11 +63,11 @@ P["WindTools"]["Chat"] = {
 			["YELL"] = {enabled = true, cmd = "y", color = {1, .25, .25, 1}, abbr = L["Yell_Abbr"]},
 			["EMOTE"] = {enabled = false, cmd = "e", color = {1, .5, .25, 1}, abbr = L["Emote_Abbr"]},
 			["PARTY"] = {enabled = true, cmd = "p", color = {.67, .67, 1, 1}, abbr = L["Party_Abbr"]},
-			["INSTANCE"] = {enabled = true, cmd = "i", color = {1, .5, 0, 1}, abbr = L["Instance_Abbr"]},
+			["INSTANCE"] = {enabled = true, cmd = "i", color = {1, .73, .2, 1}, abbr = L["Instance_Abbr"]},
 			["RAID"] = {enabled = true, cmd = "raid", color = {1, .5, 0, 1}, abbr = L["Raid_Abbr"]},
 			["RAID_WARNING"] = {enabled = false, cmd = "rw", color = {1, .28, 0, 1}, abbr = L["RaidWarning_Abbr"]},
 			["GUILD"] = {enabled = true, cmd = "g", color = {.25, 1, .25, 1}, abbr = L["Guild_Abbr"]},
-			["OFFICER"] = {enabled = false, cmd = "o", color = {.25, 1, .25, 1}, abbr = L["Officer_Abbr"]},
+			["OFFICER"] = {enabled = false, cmd = "o", color = {.25, .75, .25, 1}, abbr = L["Officer_Abbr"]},
 		},
 		world_channel = {
 			enabled = true,
@@ -79,13 +79,13 @@ P["WindTools"]["Chat"] = {
 		emote_button = {
 			enabled = true,
 			use_icon = true,
-			color = {1, 1, 1, 1},
+			color = {1, .33, .52, 1},
 			abbr = L["Emote_Abbr"],
 		},
 		roll_button = {
 			enabled = true,
 			use_icon = true,
-			color = {1, 1, 1, 1},
+			color = {.56, .56, .56, 1},
 			abbr = L["Roll_Abbr"],
 		},
 	},
@@ -283,7 +283,7 @@ WT.ToolConfigs["Chat"] = {
 				},
 				smart_hide = {
 					order = 2,
-					name = L["Bar Backdrop"],
+					name = L["Smart Hide"],
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide end,
 					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
 				},
@@ -344,13 +344,13 @@ WT.ToolConfigs["Chat"] = {
 					args = {
 						block_type_shadow = {
 							order = 1,
-							name = L["Add Shadow"],
+							name = L["Add Button Shadow"],
 							get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.shadow end,
 							set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.shadow = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
 						},
 						block_type_tex = {
 							order = 2,
-							name = L["Texture"],
+							name = L["Button Texture"],
 							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
 							get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.tex end,
 							set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.tex = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
@@ -421,7 +421,7 @@ WT.ToolConfigs["Chat"] = {
 						use_icon = {
 							order = 2,
 							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
-							name = L["Use Icon rather than text"],
+							name = L["Use a icon rather than text"],
 						},
 						color = {
 							order = 3,
@@ -459,7 +459,7 @@ WT.ToolConfigs["Chat"] = {
 						use_icon = {
 							order = 2,
 							hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
-							name = L["Use Icon rather than text"],
+							name = L["Use a icon rather than text"],
 						},
 						color = {
 							order = 3,

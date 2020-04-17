@@ -24,7 +24,6 @@ local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 local GetItemInfo = GetItemInfo
 local GetSpellInfo = GetSpellInfo
-local GetLocale = GetLocale
 local CreateFrame = CreateFrame
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
@@ -37,8 +36,6 @@ local UnitInBattleground = UnitInBattleground
 local UnitFullName = UnitFullName
 local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
 local C_Timer_NewTicker = C_Timer.NewTicker
-
-local ClientLang = GetLocale()
 
 -------------------------------------
 -- 物品等级，图标
@@ -109,7 +106,7 @@ local function AddItemInfo(Hyperlink)
                 if SearchArmorType[equipLoc] then
                     -- 如果有护甲分类的
                     local armorType = select(7, GetItemInfo(id))
-                    if ClientLang == "zhTW" or ClientLang == "zhCN" then
+                    if G.general.locale == "zhTW" or G.general.locale == "zhCN" then
                         slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
                     else
                         slot = armorType .. " " .. (abbrList[equipLoc] or _G[equipLoc])
@@ -625,7 +622,7 @@ function CF:CreateInterface()
     -- 建立表情
     for _, v in ipairs(emotes) do
         button = CreateFrame("Button", nil, frame)
-        button.emote = "{" .. (v[ClientLang] or v.key) .. "}"
+        button.emote = "{" .. (v[G.general.locale] or v.key) .. "}"
         button:SetSize(width, height)
         if (v.texture) then
             button:SetNormalTexture(v.texture)

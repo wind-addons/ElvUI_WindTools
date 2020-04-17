@@ -44,17 +44,15 @@ P["WindTools"]["Chat"] = {
 			width = 40,
 			height = 8,
 			block_type = {
-				tex = "Melli",
 				enabled = true,
+				tex = V.general.normTex,
 				shadow = true,
 			},
 			text_type = {
-				visible = true,
-				color = false,
-				x_offset = 0,
-				y_offset = 3,
-				font_name = E.media.normFont,
-				font_size = 12,
+				enabled = false,
+				color = true,
+				font_name = E.db.general.font,
+				font_size = 14,
 				font_style = "OUTLINE",
 			},
 		},
@@ -290,17 +288,22 @@ WT.ToolConfigs["Chat"] = {
 				block_type = {
 					order = 3,
 					name = L["Block Type"],
-					disabled = function() return true end,
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
-					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled = value; E:StaticPopup_Show("PRIVATE_RL") end,
+					set = function(info, value)
+						E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled = value
+						E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled = not value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
 				},
 				text_type = {
 					order = 4,
 					name = L["Text Type"],
-					disabled = function() return true end,
-					hidden = function() return true end,
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
-					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled = value; E:StaticPopup_Show("PRIVATE_RL") end,
+					set = function(info, value)
+						E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled = value
+						E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled = not value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
 				},
 				orientation = {
 					order = 7,
@@ -338,7 +341,7 @@ WT.ToolConfigs["Chat"] = {
 					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.height = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
 				},
 				block_type_setting = {
-					order = 10,
+					order = 13,
 					name = L["Block Type Setting"],
 					hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
 					args = {
@@ -357,6 +360,43 @@ WT.ToolConfigs["Chat"] = {
 							type = "select",
 							dialogControl = "LSM30_Statusbar",
 							values = _G.AceGUIWidgetLSMlists.statusbar,
+						},
+					},
+				},
+				text_type_setting = {
+					order = 14,
+					name = L["Text Type Setting"],
+					hidden = function() return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.text_type[info[#info]] end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.text_type[info[#info]] = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					args = {
+						font_name = {
+							name = L['Font'],
+							order = 1,
+							type = 'select', dialogControl = 'LSM30_Font',
+							values = LSM:HashTable('font'),
+						},
+						font_size = {
+							name = L['Size'],
+							order = 2,
+							type = 'range',
+							min = 6, max = 22, step = 1,
+						},
+						font_style = {
+							name = L['Style'],
+							order = 3,
+							type = 'select',
+							values = {
+								['NONE'] = L['None'],
+								['OUTLINE'] = L['OUTLINE'],
+								['MONOCHROME'] = L['MONOCHROME'],
+								['MONOCHROMEOUTLINE'] = L['MONOCROMEOUTLINE'],
+								['THICKOUTLINE'] = L['THICKOUTLINE'],
+							},
+						},
+						color = {
+							order = 1,
+							name = L["Use Color"],
 						},
 					},
 				},

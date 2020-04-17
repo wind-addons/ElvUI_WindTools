@@ -1,6 +1,7 @@
 -- 原创模块
 local E, L, V, P, G = unpack(ElvUI)
 local WT = E:GetModule("WindTools")
+local LSM = LibStub("LibSharedMedia-3.0")
 local CB = E:NewModule('Wind_ChatBar', 'AceHook-3.0', 'AceEvent-3.0')
 
 local _
@@ -47,9 +48,29 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
         button:RegisterForClicks("AnyDown")
         button:SetScript("OnMouseUp", func)
 
+        if self.db.style.block_type.enabled then
+            -- 块状型
+            button.colorBlock = button:CreateTexture(nil, "ARTWORK")
+            button.colorBlock:SetAllPoints()
+            button:CreateBackdrop('Transparent')
+            button.backdrop:CreateShadow()
+        elseif self.db.style.text_type.enabled then
+            -- 文字型
+            button.text = button:CreateFontString(nil, "OVERLAY")
+            button.text:Point("CENTER", button, "CENTER", 0, 0)
+            button.text:FontTemplate(LSM:Fetch('font', self.db.style.text_type.font_name), self.db.style.text_type.font_size, self.db.style.text_type.font_style)
+            button.defaultFontSize = self.db.style.text_type.font_size
+        end
+
         -- 鼠标提示
         button:SetScript("OnEnter", function(self)
-            self:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
+            if CB.db.style.block_type.enabled then
+                self.backdrop.shadow:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
+                self.backdrop.shadow:Show()
+            elseif CB.db.style.text_type.enabled then
+                local fontName, _, fontFlags = self.text:GetFont()
+                self.text:FontTemplate(fontName, self.defaultFontSize+4, fontFlags)
+            end
             GameTooltip:SetOwner(self, "ANCHOR_TOP")
             GameTooltip:SetText(tooltip or _G[name] or "")
             if tips then for _, tip in ipairs(tips) do GameTooltip:AddLine(tip) end end
@@ -57,33 +78,33 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
         end)
 
         button:SetScript("OnLeave", function(self)
-            self:SetBackdropBorderColor(0, 0, 0)
             GameTooltip:Hide()
+            if CB.db.style.block_type.enabled then
+                self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
+                if not CB.db.style.block_type.shadow then
+                    self.backdrop.shadow:Hide()
+                end
+            elseif CB.db.style.text_type.enabled then
+                local fontName, _, fontFlags = self.text:GetFont()
+                self.text:FontTemplate(fontName, self.defaultFontSize, fontFlags)
+            end
         end)
-
-        -- 块状风格条
-        if self.db.style.block_type.enabled then
-            button.colorBlock = button:CreateTexture(nil, "ARTWORK")
-            button.colorBlock:SetAllPoints()
-            button:CreateBackdrop('Transparent')
-            button.backdrop:CreateShadow()
-        end
-
-        -- 文字风格条
-        -- 预留（建立文字格式）
 
         self.bar[name] = button
     end
 
     -- 块状风格条 设置更新
     if self.db.style.block_type.enabled then
-        self.bar[name].colorBlock:SetTexture(tex and E.Libs.LSM:Fetch('statusbar', tex) or E.media.normTex)
+        self.bar[name].colorBlock:SetTexture(tex and LSM:Fetch('statusbar', tex) or E.media.normTex)
         self.bar[name].colorBlock:SetVertexColor(unpack(color or {1, 1, 1, 1}));
         if self.db.style.block_type.shadow then
             self.bar[name].backdrop.shadow:Show()
         else
             self.bar[name].backdrop.shadow:Hide()
         end
+    elseif self.db.style.text_type.enabled then
+        local buttonText = self.db.style.text_type.color and WT:ColorStr(abbr, color[1], color[2], color[3]) or abbr
+        self.bar[name].text:SetText(buttonText)    
     end
 
     -- 尺寸和位置更新

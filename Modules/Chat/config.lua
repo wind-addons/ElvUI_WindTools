@@ -283,7 +283,7 @@ WT.ToolConfigs["Chat"] = {
 					order = 2,
 					name = L["Smart Hide"],
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide end,
-					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide = value; E:StaticPopup_Show("PRIVATE_RL") end,
 				},
 				block_type = {
 					order = 3,

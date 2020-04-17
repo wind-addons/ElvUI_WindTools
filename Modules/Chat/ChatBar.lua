@@ -127,8 +127,6 @@ function CB:UpdateBar()
         return
     end
 
-    
-
     -- 记录按钮个数来方便更新条的大小
     local numberOfButtons = 0
     local width, height
@@ -149,7 +147,14 @@ function CB:UpdateBar()
     -- 建立普通频道条
     for _, name in ipairs(normal_channels_index) do
         local db = self.db.normal_channels[name]
-        if db.enabled then
+        local show = db.enabled and true or false
+
+        -- 检查是否要自动隐藏掉
+        if show and self.db.style.smart_hide then
+            if check_funcs[name] then show = check_funcs[name]() and true or false end
+        end
+
+        if show then
             local chatFunc = function(self, mouseButton)
                 if mouseButton ~= "LeftButton" then return end
                 local currentText = DefaultChatFrame.editBox:GetText()
@@ -336,12 +341,17 @@ function CB:Initialize()
     tinsert(WT.UpdateAll, function() CB.db = E.db.WindTools["Chat"]["Chat Bar"] end)
 
     self.AlreadyWaitForUpdate = false
-    
+
     CB:CreateBar()
     CB:UpdateBar()
 
     E:CreateMover(CB.bar, "Wind_ChatBarMover", L["Chat Bar"], nil, nil, nil, 'WINDTOOLS,ALL',
                   function() return CB.db.enabled; end)
+
+    if self.db.style.smart_hide then
+        self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
+        self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
+    end
 end
 
 local function InitializeCallback() CB:Initialize() end

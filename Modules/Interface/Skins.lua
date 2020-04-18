@@ -6,7 +6,6 @@ local unpack = unpack
 local hooksecurefunc = hooksecurefunc
 local _
 local find = string.find
-local floor = math.floor
 
 local E, L, V, P, G = unpack(ElvUI); -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local WT = E:GetModule("WindTools")
@@ -526,8 +525,6 @@ local function shadow_objective_tracker()
         local label = bar.Label
 
         if not progressBar.hasShadow then
-            -- 用于修正阴影错位
-            bar:SetHeight(floor(bar:GetHeight() / 2) * 2 + 1)
             if not bar.backdrop then
                 bar:CreateShadow()
             else

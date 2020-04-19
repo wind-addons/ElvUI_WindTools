@@ -366,7 +366,7 @@ WT.ToolConfigs["Chat"] = {
 							set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.block_type.tex = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
 							type = "select",
 							dialogControl = "LSM30_Statusbar",
-							values = _G.AceGUIWidgetLSMlists.statusbar,
+							values = AceGUIWidgetLSMlists.statusbar,
 						},
 					},
 				},

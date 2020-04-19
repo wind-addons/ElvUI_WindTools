@@ -3,5 +3,9 @@
     <!--@no-lib-strip@-->
     <Script file="LibRangeCheck-2.0\LibRangeCheck-2.0.lua"/>
     <Include file="LibObjectiveProgress-1.0\embed.xml"/>
+    <Include file="Ace3\AceGUI-3.0\AceGUI-3.0.xml"/>
+    <Include file="Ace3\AceConfig-3.0\AceConfig-3.0.xml"/>
+    <Include file="Ace3\AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
+    <Include file="AceGUI-3.0-SharedMediaWidgets\widget.xml"/>
     <!--@end-no-lib-strip@-->
 </Ui>

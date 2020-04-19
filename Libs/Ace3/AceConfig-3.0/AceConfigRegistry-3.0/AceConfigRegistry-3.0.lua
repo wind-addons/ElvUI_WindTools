@@ -96,6 +96,8 @@ local basekeys={
 	-- below here were created by ElvUI --
 	customWidth=optnumber,
 	textWidth=optmethodbool,
+	sliderElvUI=optmethodbool,
+	buttonElvUI=optmethodbool,
 	sortByValue=optmethodbool,
 	dragdrop=optmethodbool,
 		dragOnEnter=optmethodfalse,
@@ -149,7 +151,6 @@ local typedkeys={
 		dialogControl=optstring,
 		dropdownControl=optstring,
 		multiline=optboolnumber,
-		luaHighlighting=optbool, -- ElvUI
 	},
 	toggle={
 		tristate=optbool,

@@ -1192,7 +1192,8 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					local image, width, height = GetOptionsMemberValue("image",v, options, path, appName)
 
 					local iconControl = type(image) == "string" or type(image) == "number"
-					control = CreateControl(v.dialogControl or v.control, iconControl and "Icon" or "Button-ElvUI")
+					local buttonElvUI = GetOptionsMemberValue("buttonElvUI",v, options, path, appName)
+					control = CreateControl(v.dialogControl or v.control, iconControl and "Icon" or buttonElvUI and "Button-ElvUI" or "Button")
 					if iconControl then
 						if not width then
 							width = GetOptionsMemberValue("imageWidth",v, options, path, appName)
@@ -1219,16 +1220,11 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					control:SetCallback("OnClick",ActivateControl)
 
 				elseif v.type == "input" then
-					control = CreateControl(v.dialogControl or v.control, v.multiline and "MultiLineEditBox-ElvUI" or "EditBox")
+					control = CreateControl(v.dialogControl or v.control, v.multiline and "MultiLineEditBox" or "EditBox")
 
 					if v.multiline and control.SetNumLines then
 						control:SetNumLines(tonumber(v.multiline) or 4)
 					end
-					-- ElvUI block
-					if control.SetSyntaxHighlightingEnabled then
-						control:SetSyntaxHighlightingEnabled(v.luaHighlighting or false)
-					end
-					-- End ElvUI block
 					control:SetLabel(name)
 					control:SetCallback("OnEnterPressed",ActivateControl)
 					local text = GetOptionsMemberValue("get",v, options, path, appName)
@@ -1266,7 +1262,8 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 						end
 					end
 				elseif v.type == "range" then
-					control = CreateControl(v.dialogControl or v.control, "Slider-ElvUI")
+					local sliderElvUI = GetOptionsMemberValue("sliderElvUI",v, options, path, appName)
+					control = CreateControl(v.dialogControl or v.control, sliderElvUI and "Slider-ElvUI" or "Slider")
 					control:SetLabel(name)
 					control:SetSliderValues(v.softMin or v.min or 0, v.softMax or v.max or 100, v.bigStep or v.step or 0)
 					control:SetIsPercent(v.isPercent)

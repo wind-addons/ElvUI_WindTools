@@ -37,12 +37,24 @@ local check_funcs = {
 
 function CB:DebugPrint(text) print(L["WindTools"] .. " " .. L["Chat Bar"] .. ": " .. text) end
 
+function CB:Button_OnEnter()
+    if self.db.style.mouseover then
+        E:UIFrameFadeIn(self.bar, .5, self.bar:GetAlpha(), 1)
+    end
+end
+
+function CB:Button_OnLeave()
+    if self.db.style.mouseover then
+        E:UIFrameFadeOut(self.bar, .5, self.bar:GetAlpha(), 0)
+    end
+end
+
 function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, tips, abbr)
     local ElvUIValueColor = E.db.general.valuecolor
 
     if not self.bar[name] then
         -- 按键本体
-        local button = CreateFrame("Button", nil, UIParent, "SecureActionButtonTemplate")
+        local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
         button:StripTextures()
         button:SetBackdropBorderColor(0, 0, 0)
         button:RegisterForClicks("AnyDown")
@@ -89,6 +101,9 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
             end
         end)
 
+        self:HookScript(button, 'OnEnter', 'Button_OnEnter')
+        self:HookScript(button, 'OnLeave', 'Button_OnLeave')
+
         self.bar[name] = button
     end
 
@@ -112,7 +127,6 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
     self.bar[name]:Point(anchor_point, CB.bar, anchor_point, x, y)
 
     self.bar[name]:Show()
-
     return self.bar[name]
 end
 
@@ -308,6 +322,16 @@ function CB:UpdateBar()
         end
     end
 
+    if self.db.style.mouseover then
+        self.bar:SetAlpha(0)
+        if not self.db.style.bar_backdrop then
+            -- 为鼠标显隐模式稍微增加一点可点击区域
+            height = height + 8
+        end
+    else
+        self.bar:SetAlpha(1)
+    end
+
     self.bar:Size(width, height)
 
     if self.db.style.bar_backdrop then
@@ -326,6 +350,8 @@ function CB:CreateBar()
     self.bar:ClearAllPoints()
     self.bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
     self.bar.backdrop:CreateShadow()
+    self:HookScript(self.bar, 'OnEnter', 'Button_OnEnter')
+    self:HookScript(self.bar, 'OnLeave', 'Button_OnLeave')
 end
 
 function CB:PLAYER_REGEN_ENABLED()

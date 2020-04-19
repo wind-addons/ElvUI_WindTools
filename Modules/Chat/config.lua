@@ -39,6 +39,7 @@ P["WindTools"]["Chat"] = {
 		style = {
 			smart_hide = false,
 			bar_backdrop = false,
+			mouseover = false,
 			orientation = "HORIZONTAL",
 			padding = 5,
 			width = 40,
@@ -285,8 +286,14 @@ WT.ToolConfigs["Chat"] = {
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide end,
 					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.smart_hide = value; E:StaticPopup_Show("PRIVATE_RL") end,
 				},
-				block_type = {
+				mouseover = {
 					order = 3,
+					name = L["Mouse Over"],
+					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.mouseover end,
+					set = function(info, value) E.db.WindTools["Chat"]["Chat Bar"].style.mouseover = value; E:GetModule('Wind_ChatBar'):UpdateBar() end,
+				},
+				block_type = {
+					order = 4,
 					name = L["Block Type"],
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled end,
 					set = function(info, value)
@@ -296,7 +303,7 @@ WT.ToolConfigs["Chat"] = {
 					end,
 				},
 				text_type = {
-					order = 4,
+					order = 5,
 					name = L["Text Type"],
 					get = function(info) return E.db.WindTools["Chat"]["Chat Bar"].style.text_type.enabled end,
 					set = function(info, value)

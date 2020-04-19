@@ -6,4 +6,5 @@
 	<Script file='EnterCombatAlert.lua'/>
 	<Script file='CVarsTool.lua'/>
 	<Script file='EnhancedBlizzardFrame.lua'/>
+	<Script file='FixArtifactTransmog.lua'/>
 </Ui>

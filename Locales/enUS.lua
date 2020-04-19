@@ -548,3 +548,6 @@ L["Channel Name"] = true
 L["Abbreviation"] = true
 L["Use Icon"] = true
 L["Use a icon rather than text"] = true
+-- 修正神器幻化
+L["Fix Artifact Transmog"] = true
+L["Fix saving Legion artifact in your transmog outfits."] = true

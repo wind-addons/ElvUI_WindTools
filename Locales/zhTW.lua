@@ -548,6 +548,9 @@ L["Channel Name"] = "頻道名"
 L["Abbreviation"] = "縮寫"
 L["Use Icon"] = "使用圖示"
 L["Use a icon rather than text"] = "使用一個圖標來代替文字"
+-- 修正神器幻化
+L["Fix Artifact Transmog"] = "修正神器塑形"
+L["Fix saving Legion artifact in your transmog outfits."] = "修正塑形套裝中的神兵外形保存功能."
 -- ElvUI 修复
 L["Profiles"] = "設定檔"
 L["Ticket Tracker"] = "工單追蹤"

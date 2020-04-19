@@ -296,6 +296,9 @@ P["WindTools"]["More Tools"] = {
 		["enabled"] = true,
 		["speed"] = 0.3,
 	},
+	["Fix Artifact Transmog"] = {
+		enabled = true,
+	}
 }
 
 WT.ToolConfigs["More Tools"] = {
@@ -2855,5 +2858,10 @@ WT.ToolConfigs["More Tools"] = {
 		},
 		func = function()
 		end,
+	},
+	["Fix Artifact Transmog"] = {
+		tDesc   = L["Fix saving Legion artifact in your transmog outfits."],
+		oAuthor = "zaCade",
+		cAuthor = "houshuu",
 	},
 }

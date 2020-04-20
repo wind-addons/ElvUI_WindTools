@@ -336,8 +336,14 @@ function CB:UpdateBar()
 
     if self.db.style.bar_backdrop then
         self.bar.backdrop:Show()
+        if E.db.WindTools.Interface.Skins.elvui.general then
+            self.bar.shadow:Show()
+        else
+            self.bar.shadow:Hide()
+        end
     else
         self.bar.backdrop:Hide()
+        self.bar.shadow:Hide()
     end
 end
 
@@ -349,7 +355,7 @@ function CB:CreateBar()
     self.bar:CreateBackdrop('Transparent')
     self.bar:ClearAllPoints()
     self.bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
-    self.bar.backdrop:CreateShadow()
+    self.bar:CreateShadow()
     self:HookScript(self.bar, 'OnEnter', 'Button_OnEnter')
     self:HookScript(self.bar, 'OnLeave', 'Button_OnLeave')
 end

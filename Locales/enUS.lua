@@ -59,6 +59,7 @@ L["Delete ItemID"] = true
 L["Must is itemID!"] = true
 L["Whitelist"] = true
 L["Blacklist"] = true
+L["Disable Slot Button"] = true
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = true
 L["Enter Combat Alert"] = true

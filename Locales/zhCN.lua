@@ -59,6 +59,7 @@ L["Delete ItemID"] = "删除物品ID"
 L["Must is itemID!"] = "必需是物品的ID编号"
 L["Whitelist"] = "白名单"
 L["Blacklist"] = "黑名单"
+L["Disable Slot Button"] = "禁用装备按钮"
 -- 进入战斗提示功能
 L["Alert you after enter or leave combat."] = "在进出战斗时提示信息"
 L["Enter Combat Alert"] = "进出战斗提示"

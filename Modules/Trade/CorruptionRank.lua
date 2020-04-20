@@ -231,9 +231,9 @@ function CR:Corruption_InspectSummary()
     GameTooltip:AddLine(CORRUPTION_DESCRIPTION, 1, .8, 0, 1)
 
     CR:Corruption_Summary(InspectFrame.unit)
-    local total = TT:Corruption_Total()
-    local essence = TT:Corruption_SearchEssence()
-    local cloak = TT:Corruption_SearchCloak()
+    local total = CR:Corruption_Total()
+    local essence = CR:Corruption_SearchEssence()
+    local cloak = CR:Corruption_SearchCloak()
     local resistance = essence + cloak
 
     GameTooltip:AddLine(" ")
@@ -270,7 +270,7 @@ function CR:INSPECT_READY(...)
     if not InspectFrame then return end
     CR:Corruption_CreateEye()
 
-    local guid = ...
+    local guid = select(2, ...)
     local eye = InspectFrame.__eye
     if InspectFrame.unit and UnitGUID(InspectFrame.unit) == guid then
         eye.guid = guid

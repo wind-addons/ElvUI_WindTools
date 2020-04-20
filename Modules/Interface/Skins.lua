@@ -672,7 +672,7 @@ function WS:ADDON_LOADED(_, addon)
     if E.private.skins.blizzard.enable and E.private.skins.blizzard.talkinghead and addon == "Blizzard_TalkingHeadUI" then
         local f = _G.TalkingHeadFrame
         if f then
-            f:CreateShadow(6)
+            if E.db.general.talkingHeadFrameBackdrop then f:CreateShadow(6) end
             WS:SkinFont(f.NameFrame.Name)
             WS:SkinFont(f.TextFrame.Text)
         end

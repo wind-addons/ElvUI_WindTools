@@ -981,20 +981,26 @@ function WS:ShadowElvUIFrames()
     if self.db.elvui.actionbars then
         -- 常规动作条
         local actionbar_list = {
-            "ElvUI_Bar1Button",
-            "ElvUI_Bar2Button",
-            "ElvUI_Bar3Button",
-            "ElvUI_Bar4Button",
-            "ElvUI_Bar5Button",
-            "ElvUI_Bar6Button",
-            "ElvUI_StanceBarButton",
-            "ElvUI_TotemBarTotem",
-            "PetActionButton"
+            "ElvUI_Bar1",
+            "ElvUI_Bar2",
+            "ElvUI_Bar3",
+            "ElvUI_Bar4",
+            "ElvUI_Bar5",
+            "ElvUI_Bar6",
+            "ElvUI_StanceBar",
+            "PetAction"
         }
-        for _, item in pairs(actionbar_list) do
-            for i = 1, 12 do
-                local button = _G[item .. i]
-                if button and button.backdrop then button.backdrop:CreateShadow() end
+        for _, bar in pairs(actionbar_list) do
+            if _G[bar] then
+                if _G[bar].backdrop and _G[bar].backdrop:IsShown() then
+                    -- 条风格
+                    _G[bar].backdrop:CreateShadow()
+                end
+                -- 按钮风格
+                for i = 1, 12 do
+                    local button = _G[bar .. "Button" .. i]
+                    if button and button.backdrop then button.backdrop:CreateShadow() end
+                end
             end
         end
 

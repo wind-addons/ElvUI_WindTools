@@ -1019,6 +1019,15 @@ function WS:ShadowElvUIFrames()
         for i = 1, #MICRO_BUTTONS do
             if _G[MICRO_BUTTONS[i]].backdrop then _G[MICRO_BUTTONS[i]].backdrop:CreateShadow() end
         end
+
+        -- 左聊天面板
+        if E.db.datatexts.panelBackdrop then
+            -- ElvUI中开启左右面板背景的情况下
+            if E.db.datatexts.leftChatPanel and _G.LeftChatDataPanel then _G.LeftChatDataPanel:CreateShadow() end
+            if E.db.datatexts.leftChatPanel and _G.LeftChatToggleButton then _G.LeftChatToggleButton:CreateShadow() end
+            if E.db.datatexts.rightChatPanel and _G.RightChatDataPanel then _G.RightChatDataPanel:CreateShadow()  end
+            if E.db.datatexts.rightChatPanel and _G.RightChatToggleButton then _G.RightChatToggleButton:CreateShadow() end
+        end
     end
 
     -- 额外能量条

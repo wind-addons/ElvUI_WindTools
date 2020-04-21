@@ -740,12 +740,12 @@ function WS:ShadowGeneralFrames()
     for frame, noBackdrop in pairs(self.blizzard_frames) do
         if noBackdrop then
             if frame.Border then
-                if _G[frame] and _G[frame].Border then _G[frame].backdrop:CreateShadow(4) end
+                if _G[frame] and _G[frame].Border then _G[frame].backdrop:CreateShadow(3) end
             else
                 if _G[frame] then _G[frame]:CreateShadow() end
             end
         else
-            if _G[frame] and _G[frame].backdrop then _G[frame].backdrop:CreateShadow(4) end
+            if _G[frame] and _G[frame].backdrop then _G[frame].backdrop:CreateShadow(3) end
         end
     end
 

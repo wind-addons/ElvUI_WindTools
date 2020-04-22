@@ -139,6 +139,8 @@ tinsert(E.ConfigModeLayouts, 'WINDTOOLS')
 E.ConfigModeLocalizedStrings['WINDTOOLS'] = L["WindTools"]
 
 function WT:InsertOptions()
+	-- 标题添加
+	E.Options.name = E.Options.name .. " + " .. L["WindTools"] .. " " .. WT.Version
 	-- 感谢名单
 	local WindToolsCreditList = {
 		"Awbee", 

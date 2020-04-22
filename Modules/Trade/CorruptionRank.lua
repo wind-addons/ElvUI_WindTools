@@ -247,7 +247,14 @@ end
 function CR:Corruption_CreateEye()
     if not InspectFrame.__eye then
         local eye = CreateFrame("Button", nil, InspectFrame)
-        eye:SetPoint("BOTTOM", InspectHandsSlot, "TOP", 0, 10)
+        local offsetX = 0
+        if IsAddOnLoaded("ElvUI_SLE") then
+            if E.db.sle.armory.inspect.enable then
+                offsetX = -40
+            end
+        end
+
+        eye:SetPoint("BOTTOM", InspectHandsSlot, "TOP", offsetX, 10)
         eye:SetSize(50, 50)
         eye:SetScript("OnEnter", CR.Corruption_InspectSummary)
         eye:SetScript("OnLeave", function() GameTooltip:Hide() end)

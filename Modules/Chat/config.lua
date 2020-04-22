@@ -87,29 +87,6 @@ P["WindTools"]["Chat"] = {
             fontFlag = "OUTLINE",
             areaColor = { r = 1, g = 1, b = 1 },
         },
-        ["color_name"] = true,
-        ["enhanced"] = {
-            ["enabled"] = true,
-            ["NameFont"] = E.db.general.font,
-            ["NameFontSize"] = 13,
-            ["NameFontFlag"] = "OUTLINE",
-           
-            ["StatusIconPack"] = "D3",
-            ["GameIcon"] = {
-                ["App"] = "Launcher",
-                ["Alliance"] = "Launcher",
-                ["Horde"] = "Launcher",
-                ["Neutral"] = "Launcher",
-                ["D3"] = "Launcher",
-                ["WTCG"] = "Launcher",
-                ["S1"] = "Launcher",
-                ["S2"] = "Launcher",
-                ["BSAp"] = "Launcher",
-                ["Hero"] = "Launcher",
-                ["Pro"] = "Launcher",
-                ["DST2"] = "Launcher"
-            }
-        }
     },
     ["Right-click Menu"] = {
         ["enabled"] = false,
@@ -603,67 +580,36 @@ WT.ToolConfigs["Chat"] = {
     },
     ["Enhanced Friend List"] = {
         tDesc = L["Customize friend frame."],
-        oAuthor = "ProjectAzilroka",
+        oAuthor = "houshuu",
         cAuthor = "houshuu",
-        ["colorName"] = {
-            name = L['Features'],
+        nameStyle = {
             order = 5,
-            args = {
-                ["color_name"] = {
-                    name = L['Name color & Level'],
-                    order = 1,
-                    get = function(info)
-                        return E.db.WindTools["Chat"]["Enhanced Friend List"].color_name
-                    end,
-                    set = function(info, value)
-                        E.db.WindTools["Chat"]["Enhanced Friend List"].color_name = value;
-                        E:StaticPopup_Show("PRIVATE_RL")
-                    end
-                },
-                ["enhanced_enable"] = {
-                    name = L['Enhanced Texuture'],
-                    order = 2,
-                    get = function(info)
-                        return E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced["enabled"]
-                    end,
-                    set = function(info, value)
-                        E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced["enabled"] = value;
-                        E:StaticPopup_Show("PRIVATE_RL")
-                    end
-                }
-            }
-        },
-        ["general"] = {
-            name = L['General'],
-            order = 6,
-            get = function(info) return E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced[info[#info]] end,
+            name = L["Friend Name"],
+            get = function(info) return E.db.WindTools[info[2]][info[3]][info[4]][info[5]] end,
             set = function(info, value)
-                E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced[info[#info]] = value
+                E.db.WindTools[info[2]][info[3]][info[4]][info[5]] = value
                 FriendsFrame_Update()
             end,
             args = {
-                ["NameFont"] = {
-                    name = L['Name Font'],
+                font = {
+                    name = L["Font"],
                     order = 1,
                     type = 'select',
                     dialogControl = 'LSM30_Font',
-                    desc = L['The font that the RealID / Character Name / Level uses.'],
                     values = LSM:HashTable('font')
                 },
-                ["NameFontSize"] = {
-                    name = L['Name Font Size'],
+                fontSize = {
+                    name = L["Font Size"],
                     order = 2,
                     type = 'range',
-                    desc = L['The font size that the RealID / Character Name / Level uses.'],
                     min = 6,
                     max = 22,
                     step = 1
                 },
-                ["NameFontFlag"] = {
-                    name = L['Name Font Flag'],
+                fontFlag = {
+                    name = L["Style"],
                     order = 3,
                     type = 'select',
-                    desc = L['The font flag that the RealID / Character Name / Level uses.'],
                     values = {
                         ['NONE'] = L['None'],
                         ['OUTLINE'] = L['OUTLINE'],
@@ -672,27 +618,47 @@ WT.ToolConfigs["Chat"] = {
                         ['THICKOUTLINE'] = L['THICKOUTLINE']
                     }
                 },
-                ["InfoFont"] = {
+                hideMaxLevel = {
+                    order = 4,
+                    name = L["Hide Max Level"],
+                },
+                useGameColor = {
+                    order = 5,
+                    name = L["Use Game Color"],
+                },
+                useClassColor = {
+                    order = 6,
+                    name = L["Use Class Color"],
+                },
+            }
+        },
+        infoStyle = {
+            order = 6,
+            name = L["Friend Information"],
+            get = function(info) return E.db.WindTools[info[2]][info[3]][info[4]][info[5]] end,
+            set = function(info, value)
+                E.db.WindTools[info[2]][info[3]][info[4]][info[5]] = value
+                FriendsFrame_Update()
+            end,
+            args = {
+                font = {
+                    name = L["Font"],
+                    order = 1,
                     type = 'select',
                     dialogControl = 'LSM30_Font',
-                    name = L['Info Font'],
-                    order = 4,
-                    desc = L['The font that the Zone / Server uses.'],
                     values = LSM:HashTable('font')
                 },
-                ["InfoFontSize"] = {
-                    name = L['Info Font Size'],
-                    order = 5,
-                    desc = L['The font size that the Zone / Server uses.'],
+                fontSize = {
+                    name = L["Font Size"],
+                    order = 2,
                     type = 'range',
                     min = 6,
                     max = 22,
                     step = 1
                 },
-                ["InfoFontFlag"] = {
-                    name = L['Info Font Outline'],
-                    order = 6,
-                    desc = L['The font flag that the Zone / Server uses.'],
+                fontFlag = {
+                    name = L["Style"],
+                    order = 3,
                     type = 'select',
                     values = {
                         ['NONE'] = L['None'],
@@ -702,112 +668,53 @@ WT.ToolConfigs["Chat"] = {
                         ['THICKOUTLINE'] = L['THICKOUTLINE']
                     }
                 },
-                ["StatusIconPack"] = {
-                    name = L['Status Icon Pack'],
-                    order = 7,
-                    desc = L['Different Status Icons.'],
-                    type = 'select',
-                    values = {['Default'] = L['Default'], ['Square'] = L['Square'], ['D3'] = L['Diablo 3']}
-                }
-            }
+                areaColor = {
+                    order = 4,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WindTools[info[2]][info[3]][info[4]][info[5]]
+                        local default = P.WindTools[info[2]][info[3]][info[4]][info[5]] 
+                        return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WindTools[info[2]][info[3]][info[4]][info[5]] = {r = r, g = g, b = b}
+                        FriendsFrame_Update()
+                    end
+                },
+            },
         },
-        ["GameIcons"] = {
-            name = L['Game Icons'],
+        textures = {
             order = 7,
-            get = function(info)
-                return E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced.GameIcon[info[#info]]
-            end,
+            name = L["Enhanced Texuture"],
+            get = function(info) return E.db.WindTools[info[2]][info[3]][info[4]][info[5]] end,
             set = function(info, value)
-                E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced.GameIcon[info[#info]] = value
+                E.db.WindTools[info[2]][info[3]][info[4]][info[5]] = value
                 FriendsFrame_Update()
             end,
-            args = {}
+            args = {
+                game = {
+                    name = L["Game Icons"],
+                    order = 1,
+                    type = 'select',
+                    values = {
+                        ['Default'] = L['Default'],
+                        ['Modern'] = L['Modern'],
+                    }
+                },
+                status = {
+                    name = L["Status Icon Pack"],
+                    order = 2,
+                    type = 'select',
+                    values = {
+                        ['Default'] = L['Default'],
+                        ['D3'] = L['Diablo 3'],
+                        ['Square'] = L['Square'],
+                    }
+                },
+            }
         },
-        ["GameIconsPreview"] = {name = L['Game Icon Preview'], order = 8, args = {}},
-        ["StatusIcons"] = {name = L['Status Icon Preview'], order = 9, args = {}},
-        func = function()
-            local EFL = E:GetModule("Wind_EnhancedFriendsList")
-            local GameIconsOptions = {
-                Alliance = FACTION_ALLIANCE,
-                Horde = FACTION_HORDE,
-                Neutral = FACTION_STANDING_LABEL4,
-                D3 = L['Diablo 3'],
-                WTCG = L['Hearthstone'],
-                S1 = L['Starcraft'],
-                S2 = L['Starcraft 2'],
-                App = L['App'],
-                BSAp = L['Mobile'],
-                Hero = L['Hero of the Storm'],
-                Pro = L['Overwatch'],
-                DST2 = L['Destiny 2']
-            }
-            local GameIconOrder = {
-                Alliance = 1,
-                Horde = 2,
-                Neutral = 3,
-                D3 = 4,
-                WTCG = 5,
-                S1 = 6,
-                S2 = 7,
-                App = 8,
-                BSAp = 9,
-                Hero = 10,
-                Pro = 11,
-                DST2 = 12
-            }
-            local StatusIconsOptions = {
-                Online = FRIENDS_LIST_ONLINE,
-                Offline = FRIENDS_LIST_OFFLINE,
-                DND = DEFAULT_DND_MESSAGE,
-                AFK = DEFAULT_AFK_MESSAGE
-            }
-            local StatusIconsOrder = {Online = 1, Offline = 2, DND = 3, AFK = 4}
-
-            for Key, Value in pairs(GameIconsOptions) do
-                WT.ToolConfigs["Chat"]["Enhanced Friend List"].GameIcons.args[Key] =
-                    {
-                        name = L[Value] .. " " .. L['Icon'],
-                        order = GameIconOrder[Key],
-                        type = 'select',
-                        values = {
-                            ['Default'] = L['Default'],
-                            ['BlizzardChat'] = L['Blizzard Chat'],
-                            ['Flat'] = L['Flat Style'],
-                            ['Gloss'] = L['Glossy'],
-                            ['Launcher'] = L['Launcher']
-                        }
-                    }
-                WT.ToolConfigs["Chat"]["Enhanced Friend List"].GameIconsPreview.args[Key] =
-                    {
-                        order = GameIconOrder[Key],
-                        type = 'execute',
-                        name = L[Value],
-                        func = function() return end,
-                        image = function(info)
-                            return EFL.GameIcons[info[#info]][E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced
-                                       .GameIcon[Key]], 32, 32
-                        end
-                    }
-            end
-
-            -- 排除缺少的 SC1 图标
-            WT.ToolConfigs["Chat"]["Enhanced Friend List"].GameIcons.args["S1"].values["Flat"] = nil
-            WT.ToolConfigs["Chat"]["Enhanced Friend List"].GameIcons.args["S1"].values["Gloss"] = nil
-
-            for Key, Value in pairs(StatusIconsOptions) do
-                WT.ToolConfigs["Chat"]["Enhanced Friend List"].StatusIcons.args[Key] =
-                    {
-                        order = StatusIconsOrder[Key],
-                        type = 'execute',
-                        name = L[Value],
-                        func = function() return end,
-                        image = function(info)
-                            return EFL.StatusIcons[E.db.WindTools["Chat"]["Enhanced Friend List"].enhanced
-                                       .StatusIconPack][info[#info]], 16, 16
-                        end
-                    }
-            end
-        end
     },
     ["Right-click Menu"] = {
         tDesc = L["Enhanced right-click menu"],

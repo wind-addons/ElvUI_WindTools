@@ -133,7 +133,7 @@ end
 function CB:DisableButton(name) if self.bar[name] then self.bar[name]:Hide() end end
 
 function CB:UpdateBar()
-    if (not self.bar) or self.AlreadyWaitForUpdate then return end
+    if (not self.bar) or (not self.db.normal_channels) or self.AlreadyWaitForUpdate then return end
 
     if InCombatLockdown() then
         self.AlreadyWaitForUpdate = true

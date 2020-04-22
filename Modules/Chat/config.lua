@@ -68,16 +68,32 @@ P["WindTools"]["Chat"] = {
         roll_button = {enabled = true, use_icon = true, color = {.56, .56, .56, 1}, abbr = L["Roll_Abbr"]}
     },
     ["Enhanced Friend List"] = {
-        ["enabled"] = true,
+        enabled = true,
+        textures = {
+            game = "Modern",
+            status = "Square",
+        },
+        nameStyle = {
+            font = E.db.general.font,
+            fontSize = 13,
+            fontFlag = "OUTLINE",
+            hideMaxLevel = true,
+            useGameColor = true,
+            useClassColor = true,
+        },
+        infoStyle = {
+            font = E.db.general.font,
+            fontSize = 12,
+            fontFlag = "OUTLINE",
+            areaColor = { r = 1, g = 1, b = 1 },
+        },
         ["color_name"] = true,
         ["enhanced"] = {
             ["enabled"] = true,
             ["NameFont"] = E.db.general.font,
             ["NameFontSize"] = 13,
             ["NameFontFlag"] = "OUTLINE",
-            ["InfoFont"] = E.db.general.font,
-            ["InfoFontSize"] = 12,
-            ["InfoFontFlag"] = "OUTLINE",
+           
             ["StatusIconPack"] = "D3",
             ["GameIcon"] = {
                 ["App"] = "Launcher",

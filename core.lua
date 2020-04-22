@@ -2,8 +2,9 @@
 ---------------------------------------------------
 -- 插件创建声明
 ---------------------------------------------------
-local E, L, V, P, G = unpack(ElvUI);
-local WT = E:NewModule('WindTools', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+local E, L, V, P, G = unpack(ElvUI)
+local LSM = E.Libs.LSM
+local WT = E:NewModule('WindTools', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addonName, addonTable = ...
 ---------------------------------------------------
@@ -60,6 +61,15 @@ function WT:GetTexCoord(width, height, keepAspectRatio)
 		right = 0.5 + (right - 0.5) * aspectRatio
 	end
 	return left, right, top, bottom
+end
+
+function WT.ClearTextShadow(text)
+	text:SetShadowColor(0, 0, 0, 0)
+    text.SetShadowColor = E.noop
+end
+
+function WT.SetFont(text, styleDB)
+	text:FontTemplate(LSM:Fetch('font', styleDB.font), styleDB.fontSize, styleDB.fontFlag)	
 end
 
 -- TODO: 刷新全部设定

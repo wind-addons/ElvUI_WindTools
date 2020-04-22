@@ -511,6 +511,7 @@ L["RaidWarning_Abbr"] = "RW"
 L["Guild_Abbr"] = "G"
 L["Officer_Abbr"] = "O"
 L["World_Abbr"] = "WD"
+L["Community_Abbr"] = "C"
 L["Roll_Abbr"] = "R"
 L["Bar Backdrop"] = true
 L["Smart Hide"] = true
@@ -527,6 +528,9 @@ L["Channel Name"] = true
 L["Abbreviation"] = true
 L["Use Icon"] = true
 L["Use a icon rather than text"] = true
+L["Please use Blizzard Communities UI add the channel to your main chat frame first."] = true
+L["Club channel no found, please setup again."] = true
+L["Club channel %s no found, please use the full name of the channel."] = true
 -- 修正神器幻化
 L["Fix Artifact Transmog"] = true
 L["Fix saving Legion artifact in your transmog outfits."] = true

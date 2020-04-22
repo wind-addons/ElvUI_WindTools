@@ -7,15 +7,20 @@ local CB = E:NewModule('Wind_ChatBar', 'AceHook-3.0', 'AceEvent-3.0')
 local _
 local _G = _G
 local ipairs = ipairs
+local pairs = pairs
+local strmatch = strmatch
 local format = format
+local tostring = tostring
 local CreateFrame = CreateFrame
 local GetChannelName = GetChannelName
+local GetChannelList = GetChannelList
 local JoinChannelByName = JoinChannelByName
 local LeaveChannelByName = LeaveChannelByName
 local InCombatLockdown = InCombatLockdown
 local ChatFrame_AddChannel = ChatFrame_AddChannel
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
 local C_Timer_After = C_Timer.After
+local C_Club_GetClubInfo = C_Club.GetClubInfo
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local UnitIsGroupLeader = UnitIsGroupLeader
@@ -35,19 +40,22 @@ local check_funcs = {
     ["OFFICER"] = function() return IsInGuild() and CanEditOfficerNote() end
 }
 
+local function GetCommuniryChannelByName(text)
+    local channelList = {GetChannelList()}
+    for k, v in pairs(channelList) do
+        local clubId = strmatch(tostring(v), "Community:(.-):")
+        if clubId then
+            local info = C_Club_GetClubInfo(clubId)
+            if info.name == text then return GetChannelName(tostring(v)) end
+        end
+    end
+end
+
 function CB:DebugPrint(text) print(L["WindTools"] .. " " .. L["Chat Bar"] .. ": " .. text) end
 
-function CB:Button_OnEnter()
-    if self.db.style.mouseover then
-        E:UIFrameFadeIn(self.bar, .5, self.bar:GetAlpha(), 1)
-    end
-end
+function CB:Button_OnEnter() if self.db.style.mouseover then E:UIFrameFadeIn(self.bar, .5, self.bar:GetAlpha(), 1) end end
 
-function CB:Button_OnLeave()
-    if self.db.style.mouseover then
-        E:UIFrameFadeOut(self.bar, .5, self.bar:GetAlpha(), 0)
-    end
-end
+function CB:Button_OnLeave() if self.db.style.mouseover then E:UIFrameFadeOut(self.bar, .5, self.bar:GetAlpha(), 0) end end
 
 function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, tips, abbr)
     local ElvUIValueColor = E.db.general.valuecolor
@@ -196,57 +204,94 @@ function CB:UpdateBar()
         local worldChannelName = self.db.world_channel.channel_name
         if not worldChannelName or worldChannelName == "" then
             self:DebugPrint(L["World channel no found, please setup again."])
+            self:DisableButton("WORLD")
             return
-        end
-
-        local chatFunc = function(self, mouseButton)
-            local channelId = GetChannelName(worldChannelName)
-            if mouseButton == "LeftButton" then
-                local autoJoined = false
-                -- 自动加入
-                if channelId == 0 and CB.db.world_channel.auto_join then
-                    JoinChannelByName(worldChannelName)
-                    ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
-                    channelId = GetChannelName(worldChannelName)
-                    autoJoined = true
-                end
-                if channelId == 0 then return end
-                local currentText = DefaultChatFrame.editBox:GetText()
-                local command = format("/%s ", channelId)
-                if autoJoined then
-                    -- 刚切过去要稍微过一会才能让聊天框反映为频道
-                    C_Timer_After(.5, function()
+        else
+            local chatFunc = function(self, mouseButton)
+                local channelId = GetChannelName(worldChannelName)
+                if mouseButton == "LeftButton" then
+                    local autoJoined = false
+                    -- 自动加入
+                    if channelId == 0 and CB.db.world_channel.auto_join then
+                        JoinChannelByName(worldChannelName)
+                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
+                        channelId = GetChannelName(worldChannelName)
+                        autoJoined = true
+                    end
+                    if channelId == 0 then return end
+                    local currentText = DefaultChatFrame.editBox:GetText()
+                    local command = format("/%s ", channelId)
+                    if autoJoined then
+                        -- 刚切过去要稍微过一会才能让聊天框反映为频道
+                        C_Timer_After(.5, function()
+                            ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+                        end)
+                    else
                         ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
-                    end)
-                else
-                    ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
-                end
-            elseif mouseButton == "RightButton" then
-                if channelId == 0 then
-                    JoinChannelByName(worldChannelName)
-                    ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
-                else
-                    LeaveChannelByName(worldChannelName)
+                    end
+                elseif mouseButton == "RightButton" then
+                    if channelId == 0 then
+                        JoinChannelByName(worldChannelName)
+                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
+                    else
+                        LeaveChannelByName(worldChannelName)
+                    end
                 end
             end
-        end
 
-        self:UpdateButton("WORLD", chatFunc, anchor, pos_x, pos_y, self.db.world_channel.color,
-                          self.db.style.block_type.tex, worldChannelName, {
-            L["Left Click: Change to"] .. " " .. worldChannelName,
-            L["Right Click: Join/Leave"] .. " " .. worldChannelName
-        }, self.db.world_channel.abbr)
+            self:UpdateButton("WORLD", chatFunc, anchor, pos_x, pos_y, self.db.world_channel.color,
+                              self.db.style.block_type.tex, worldChannelName, {
+                L["Left Click: Change to"] .. " " .. worldChannelName,
+                L["Right Click: Join/Leave"] .. " " .. worldChannelName
+            }, self.db.world_channel.abbr)
 
-        numberOfButtons = numberOfButtons + 1
+            numberOfButtons = numberOfButtons + 1
 
-        -- 调整锚点到下一个按钮的位置上
-        if anchor == "LEFT" then
-            pos_x = pos_x + self.db.style.width + self.db.style.padding
-        else
-            pos_y = pos_y - self.db.style.height - self.db.style.padding
+            -- 调整锚点到下一个按钮的位置上
+            if anchor == "LEFT" then
+                pos_x = pos_x + self.db.style.width + self.db.style.padding
+            else
+                pos_y = pos_y - self.db.style.height - self.db.style.padding
+            end
         end
     else
         self:DisableButton("WORLD")
+    end
+
+    -- 建立社群频道条
+    if self.db.community_channel.enabled then
+        local communityName = self.db.community_channel.channel_name
+        if not communityName or communityName == "" then
+            self:DebugPrint(L["Club channel no found, please setup again."])
+            self:DisableButton("CLUB")
+        else
+            local chatFunc = function(self, mouseButton)
+                if mouseButton ~= "LeftButton" then return end
+                local clubChannelId = GetCommuniryChannelByName(communityName)
+                if not clubChannelId then
+                    CB:DebugPrint(format(L["Club channel %s no found, please use the full name of the channel."],
+                                         communityName))
+                else
+                    local currentText = DefaultChatFrame.editBox:GetText()
+                    local command = format("/%s ", clubChannelId)
+                    ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
+                end
+            end
+
+            self:UpdateButton("CLUB", chatFunc, anchor, pos_x, pos_y, self.db.community_channel.color,
+                              self.db.style.block_type.tex, communityName, nil, self.db.community_channel.abbr)
+
+            numberOfButtons = numberOfButtons + 1
+
+            -- 调整锚点到下一个按钮的位置上
+            if anchor == "LEFT" then
+                pos_x = pos_x + self.db.style.width + self.db.style.padding
+            else
+                pos_y = pos_y - self.db.style.height - self.db.style.padding
+            end
+        end
+    else
+        self:DisableButton("CLUB")
     end
 
     -- 建立表情按键
@@ -264,9 +309,9 @@ function CB:UpdateBar()
             end
         end
 
-        local abbr = (self.db.emote_button.use_icon and
-                         "|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario.blp:" ..
-                         self.db.style.text_type.font_size .. "|t") or self.db.emote_button.abbr
+        local abbr =
+            (self.db.emote_button.use_icon and "|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario:" ..
+                self.db.style.text_type.font_size .. "|t") or self.db.emote_button.abbr
         self:UpdateButton("WindEmote", chatFunc, anchor, pos_x, pos_y, self.db.emote_button.color,
                           self.db.style.block_type.tex, "Wind " .. L["Emote"], {L["Left Click: Toggle"]}, abbr)
 

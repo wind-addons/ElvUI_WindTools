@@ -37,7 +37,7 @@ P["WindTools"]["Chat"] = {
             padding = 5,
             width = 40,
             height = 8,
-            block_type = {enabled = true, tex = V.general.normTex, shadow = true},
+            block_type = {enabled = true, tex = "Melli", shadow = true},
             text_type = {
                 enabled = false,
                 color = true,
@@ -58,35 +58,28 @@ P["WindTools"]["Chat"] = {
             ["OFFICER"] = {enabled = false, cmd = "o", color = {.25, .75, .25, 1}, abbr = L["Officer_Abbr"]}
         },
         world_channel = {
-            enabled = true,
+            enabled = false,
             auto_join = true,
             channel_name = "",
             color = {.2, .6, .86, 1},
             abbr = L["World_Abbr"]
         },
+        community_channel = {enabled = false, channel_name = "", color = {.72, .27, .86, 1}, abbr = L["Community_Abbr"]},
         emote_button = {enabled = true, use_icon = true, color = {1, .33, .52, 1}, abbr = L["Emote_Abbr"]},
         roll_button = {enabled = true, use_icon = true, color = {.56, .56, .56, 1}, abbr = L["Roll_Abbr"]}
     },
     ["Enhanced Friend List"] = {
         enabled = true,
-        textures = {
-            game = "Modern",
-            status = "Square",
-        },
+        textures = {game = "Modern", status = "Square"},
         nameStyle = {
             font = E.db.general.font,
             fontSize = 13,
             fontFlag = "OUTLINE",
             hideMaxLevel = true,
             useGameColor = true,
-            useClassColor = true,
+            useClassColor = true
         },
-        infoStyle = {
-            font = E.db.general.font,
-            fontSize = 12,
-            fontFlag = "OUTLINE",
-            areaColor = { r = 1, g = 1, b = 1 },
-        },
+        infoStyle = {font = E.db.general.font, fontSize = 12, fontFlag = "OUTLINE", areaColor = {r = 1, g = 1, b = 1}}
     },
     ["Right-click Menu"] = {
         ["enabled"] = false,
@@ -423,7 +416,7 @@ WT.ToolConfigs["Chat"] = {
                             hasAlpha = true,
                             get = function(info)
                                 local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
-                                local default = P.WindTools["Chat"]["Chat Bar"].roll_button.color
+                                local default = P.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
                                 return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2],
                                        default[3], default[4]
                             end,
@@ -442,8 +435,51 @@ WT.ToolConfigs["Chat"] = {
                         }
                     }
                 },
-                emote_button = {
+                community_channel = {
                     order = 101,
+                    name = _G.COMMUNITIES,
+                    get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
+                    set = function(info, value)
+                        E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = value;
+                        E:GetModule('Wind_ChatBar'):UpdateBar()
+                    end,
+                    args = {
+                        enabled = {order = 1, name = L["Enable"]},
+                        channel_name = {order = 3, type = "input", name = L["Channel Name"]},
+                        color = {
+                            order = 4,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = true,
+                            get = function(info)
+                                local colordb = E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+                                local default = P.WindTools["Chat"]["Chat Bar"][info[5]][info[6]]
+                                return colordb[1], colordb[2], colordb[3], colordb[4], default[1], default[2],
+                                       default[3], default[4]
+                            end,
+                            set = function(info, r, g, b, a)
+                                E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] = {r, g, b, a}
+                                E:GetModule('Wind_ChatBar'):UpdateBar()
+                            end
+                        },
+                        abbr = {
+                            order = 5,
+                            type = "input",
+                            hidden = function()
+                                return E.db.WindTools["Chat"]["Chat Bar"].style.block_type.enabled
+                            end,
+                            name = L["Abbreviation"]
+                        },
+                        community_channel_desc = {
+                            order = 6,
+                            type = "description",
+                            width = "full",
+                            name = L["Please use Blizzard Communities UI add the channel to your main chat frame first."],
+                        },
+                    }
+                },
+                emote_button = {
+                    order = 102,
                     name = "Wind" .. L["Emote"],
                     get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
                     set = function(info, value)
@@ -487,7 +523,7 @@ WT.ToolConfigs["Chat"] = {
                     }
                 },
                 roll_button = {
-                    order = 102,
+                    order = 103,
                     name = _G.ROLL,
                     get = function(info) return E.db.WindTools["Chat"]["Chat Bar"][info[5]][info[6]] end,
                     set = function(info, value)
@@ -598,14 +634,7 @@ WT.ToolConfigs["Chat"] = {
                     dialogControl = 'LSM30_Font',
                     values = LSM:HashTable('font')
                 },
-                fontSize = {
-                    name = L["Font Size"],
-                    order = 2,
-                    type = 'range',
-                    min = 6,
-                    max = 22,
-                    step = 1
-                },
+                fontSize = {name = L["Font Size"], order = 2, type = 'range', min = 6, max = 22, step = 1},
                 fontFlag = {
                     name = L["Style"],
                     order = 3,
@@ -618,18 +647,9 @@ WT.ToolConfigs["Chat"] = {
                         ['THICKOUTLINE'] = L['THICKOUTLINE']
                     }
                 },
-                hideMaxLevel = {
-                    order = 4,
-                    name = L["Hide Max Level"],
-                },
-                useGameColor = {
-                    order = 5,
-                    name = L["Use Game Color"],
-                },
-                useClassColor = {
-                    order = 6,
-                    name = L["Use Class Color"],
-                },
+                hideMaxLevel = {order = 4, name = L["Hide Max Level"]},
+                useGameColor = {order = 5, name = L["Use Game Color"]},
+                useClassColor = {order = 6, name = L["Use Class Color"]}
             }
         },
         infoStyle = {
@@ -648,14 +668,7 @@ WT.ToolConfigs["Chat"] = {
                     dialogControl = 'LSM30_Font',
                     values = LSM:HashTable('font')
                 },
-                fontSize = {
-                    name = L["Font Size"],
-                    order = 2,
-                    type = 'range',
-                    min = 6,
-                    max = 22,
-                    step = 1
-                },
+                fontSize = {name = L["Font Size"], order = 2, type = 'range', min = 6, max = 22, step = 1},
                 fontFlag = {
                     name = L["Style"],
                     order = 3,
@@ -675,15 +688,15 @@ WT.ToolConfigs["Chat"] = {
                     hasAlpha = false,
                     get = function(info)
                         local colordb = E.db.WindTools[info[2]][info[3]][info[4]][info[5]]
-                        local default = P.WindTools[info[2]][info[3]][info[4]][info[5]] 
+                        local default = P.WindTools[info[2]][info[3]][info[4]][info[5]]
                         return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b
                     end,
                     set = function(info, r, g, b, a)
                         E.db.WindTools[info[2]][info[3]][info[4]][info[5]] = {r = r, g = g, b = b}
                         FriendsFrame_Update()
                     end
-                },
-            },
+                }
+            }
         },
         textures = {
             order = 7,
@@ -698,23 +711,16 @@ WT.ToolConfigs["Chat"] = {
                     name = L["Game Icons"],
                     order = 1,
                     type = 'select',
-                    values = {
-                        ['Default'] = L['Default'],
-                        ['Modern'] = L['Modern'],
-                    }
+                    values = {['Default'] = L['Default'], ['Modern'] = L['Modern']}
                 },
                 status = {
                     name = L["Status Icon Pack"],
                     order = 2,
                     type = 'select',
-                    values = {
-                        ['Default'] = L['Default'],
-                        ['D3'] = L['Diablo 3'],
-                        ['Square'] = L['Square'],
-                    }
-                },
+                    values = {['Default'] = L['Default'], ['D3'] = L['Diablo 3'], ['Square'] = L['Square']}
+                }
             }
-        },
+        }
     },
     ["Right-click Menu"] = {
         tDesc = L["Enhanced right-click menu"],

@@ -39,70 +39,34 @@ local MAX_PLAYER_LEVEL_TABLE = MAX_PLAYER_LEVEL_TABLE
 local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Texture\\FriendList\\"
 
 local GameIcons = {
-    ["Alliance"] = {
+    ["Alliance"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. 'GameIcons\\Alliance'},
+    ["Horde"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. 'GameIcons\\Horde'},
+    ["Neutral"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. 'GameIcons\\WoW'},
+    [BNET_CLIENT_WOW] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. 'GameIcons\\WoW'},
+    [BNET_CLIENT_WOW .. "C"] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. 'GameIcons\\Alliance',
+        Modern = MediaPath .. 'GameIcons\\WoW'
     },
-    ["Horde"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. 'GameIcons\\Horde',
-    },
-    ["Neutral"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. 'GameIcons\\WoW',
-    },
-    [BNET_CLIENT_WOW] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. 'GameIcons\\WoW',
-    },
-    [BNET_CLIENT_WOW.."C"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. 'GameIcons\\WoW',
-    },
-    [BNET_CLIENT_D3] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_D3),
-        Modern = MediaPath .. 'GameIcons\\D3',
-    },
-    [BNET_CLIENT_WTCG] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WTCG),
-        Modern = MediaPath .. 'GameIcons\\HS',
-    },
-    [BNET_CLIENT_SC] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_SC),
-        Modern = MediaPath .. 'GameIcons\\SC',
-    },
-    [BNET_CLIENT_SC2] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_SC2),
-        Modern = MediaPath .. 'GameIcons\\SC2',
-    },
-    [BNET_CLIENT_APP] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_APP),
-        Modern = MediaPath .. 'GameIcons\\App',
-    },
-    ["BSAp"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_APP),
-        Modern = MediaPath .. 'GameIcons\\MApp',
-    },
+    [BNET_CLIENT_D3] = {Default = BNet_GetClientTexture(BNET_CLIENT_D3), Modern = MediaPath .. 'GameIcons\\D3'},
+    [BNET_CLIENT_WTCG] = {Default = BNet_GetClientTexture(BNET_CLIENT_WTCG), Modern = MediaPath .. 'GameIcons\\HS'},
+    [BNET_CLIENT_SC] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC), Modern = MediaPath .. 'GameIcons\\SC'},
+    [BNET_CLIENT_SC2] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC2), Modern = MediaPath .. 'GameIcons\\SC2'},
+    [BNET_CLIENT_APP] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. 'GameIcons\\App'},
+    ["BSAp"] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. 'GameIcons\\MApp'},
     [BNET_CLIENT_HEROES] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_HEROES),
-        Modern = MediaPath .. 'GameIcons\\HotS',
+        Modern = MediaPath .. 'GameIcons\\HotS'
     },
     [BNET_CLIENT_OVERWATCH] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_OVERWATCH),
-        Modern = MediaPath .. 'GameIcons\\OW',
+        Modern = MediaPath .. 'GameIcons\\OW'
     },
-    [BNET_CLIENT_COD] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_COD),
-        Modern = MediaPath .. 'GameIcons\\COD',
-    },
+    [BNET_CLIENT_COD] = {Default = BNet_GetClientTexture(BNET_CLIENT_COD), Modern = MediaPath .. 'GameIcons\\COD'},
     [BNET_CLIENT_COD_MW] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
-        Modern = MediaPath .. 'GameIcons\\COD_MW',
+        Modern = MediaPath .. 'GameIcons\\COD_MW'
     },
-    [BNET_CLIENT_WC3] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WC3),
-        Modern = MediaPath .. 'GameIcons\\WC3',
-    },
+    [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. 'GameIcons\\WC3'}
 }
 
 local StatusIcons = {
@@ -194,10 +158,10 @@ function EFL:UpdateFriendButton(button)
         -- 战网好友
         local friendAccountInfo = C_BattleNet_GetFriendAccountInfo(button.id)
         realID = friendAccountInfo.accountName
-        
+
         local gameAccountInfo = friendAccountInfo.gameAccountInfo
         game = gameAccountInfo.clientProgram
-        
+
         if gameAccountInfo.isOnline then
             if friendAccountInfo.isAFK or gameAccountInfo.isGameAFK then
                 status = "AFK"
@@ -209,7 +173,7 @@ function EFL:UpdateFriendButton(button)
         else
             status = "Offline"
         end
-        
+
         -- 如果是魔兽正式服/怀旧服，进一步获取角色信息
         if game == BNET_CLIENT_WOW then
             name = gameAccountInfo.characterName or ""
@@ -228,9 +192,7 @@ function EFL:UpdateFriendButton(button)
     end
 
     -- 状态图标
-    if status then
-        button.status:SetTexture(StatusIcons[self.db.textures.status][status])
-    end
+    if status then button.status:SetTexture(StatusIcons[self.db.textures.status][status]) end
 
     if game and game ~= "" then
         local buttonTitle, buttonText
@@ -241,10 +203,8 @@ function EFL:UpdateFriendButton(button)
         local nameString =
             class and self.db.nameStyle.useClassColor and WT:ColorStrWithPack(name, GetClassColor(class)) or name
 
-        if level then
-            if self.db.nameStyle.hideMaxLevel and MaxLevel[game] and level ~= MaxLevel[game] then
-                nameString = nameString .. WT:ColorStrWithPack(": " .. level, GetQuestDifficultyColor(level))
-            end
+        if level and MaxLevel[game] and (level ~= MaxLevel[game] or not self.db.nameStyle.hideMaxLevel) then
+            nameString = nameString .. WT:ColorStrWithPack(": " .. level, GetQuestDifficultyColor(level))
         end
 
         if nameString and realIDString then

@@ -655,13 +655,6 @@ function WS:ADDON_LOADED(_, addon)
     -- 离开界面
     AFK.AFKMode.bottom:CreateShadow(10)
 
-    AFK.AFKMode.bottom.logo:Size(512, 128)
-    AFK.AFKMode.bottom.logo:SetTexture("Interface\\Addons\\ElvUI_WindTools\\Texture\\WindTools.blp")
-
-    -- 离开界面字体位置美观性调整
-    AFK.AFKMode.bottom.logo:ClearAllPoints()
-    AFK.AFKMode.bottom.logo:Point("CENTER", AFK.AFKMode.bottom, "CENTER", 0, 25)
-
     AFK.AFKMode.bottom.guild:ClearAllPoints()
     AFK.AFKMode.bottom.guild:Point("TOPLEFT", AFK.AFKMode.bottom.name, "BOTTOMLEFT", 0, -11)
 
@@ -896,7 +889,7 @@ function WS:ShadowElvUIFrames()
                 local db = parent.db
                 if not db then return end
                 if db.threatStyle == 'GLOW' and parent.shadow then
-                    parent.shadow:SetShown(not threat.glow:IsShown())
+                    parent.shadow:SetShown(not threat.MainGlow:IsShown())
                 end
             end
         end)

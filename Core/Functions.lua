@@ -1,2 +1,1 @@
-local _, NameSpace = ...
-local W, F, DB, E, L, V, P, G = unpack(NameSpace)
+local W, F, E, L, V, P, G = unpack(select(2, ...))

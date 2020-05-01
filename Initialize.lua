@@ -9,14 +9,18 @@ local hooksecurefunc = hooksecurefunc
 -- 注册 Wind 工具箱为 Ace3 插件
 local W = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", 'AceTimer-3.0', 'AceHook-3.0');
 
+-- 初始化用于保存设置的数据库
+V.WT = {}
+P.WT = {}
+G.WT = {}
+
 NameSpace[1] = W
 NameSpace[2] = {} -- 函数
-NameSpace[3] = {} -- 数据库
-NameSpace[4] = E
-NameSpace[5] = E.Libs.ACL:GetLocale('ElvUI', E.global.general.locale)
-NameSpace[6] = V
-NameSpace[7] = P
-NameSpace[8] = G
+NameSpace[3] = E
+NameSpace[4] = E.Libs.ACL:GetLocale('ElvUI', E.global.general.locale)
+NameSpace[5] = V.WT
+NameSpace[6] = P.WT
+NameSpace[7] = G.WT
 
 _G[AddOnName] = NameSpace
 

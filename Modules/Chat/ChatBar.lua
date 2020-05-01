@@ -328,10 +328,10 @@ function CB:UpdateBar()
     end
 
     -- 建立Roll点键
-    if self.db.emote_button.enabled then
+    if self.db.roll_button.enabled then
         local chatFunc = function(self, mouseButton) if mouseButton == "LeftButton" then RandomRoll(1, 100) end end
-        local abbr = (self.db.emote_button.use_icon and "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:" ..
-                         self.db.style.text_type.font_size .. "|t") or self.db.emote_button.abbr
+        local abbr = (self.db.roll_button.use_icon and "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:" ..
+                         self.db.style.text_type.font_size .. "|t") or self.db.roll_button.abbr
 
         self:UpdateButton("ROLL", chatFunc, anchor, pos_x, pos_y, self.db.roll_button.color,
                           self.db.style.block_type.tex, nil, nil, abbr)

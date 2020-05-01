@@ -7,9 +7,9 @@ local tonumber = tonumber
 local hooksecurefunc = hooksecurefunc
 
 -- 注册 Wind 工具箱为 Ace3 插件
-local WT = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", 'AceTimer-3.0', 'AceHook-3.0');
+local W = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", 'AceTimer-3.0', 'AceHook-3.0');
 
-NameSpace[1] = WT
+NameSpace[1] = W
 NameSpace[2] = {} -- 函数
 NameSpace[3] = {} -- 数据库
 NameSpace[4] = E
@@ -23,7 +23,7 @@ _G[AddOnName] = NameSpace
 ---------------------------------------------------
 -- ElvUI 模块注册回调
 ---------------------------------------------------
-function WT:PluginCallback()
+function W:PluginCallback()
     -- 标题添加
     E.Options.name = E.Options.name .. " + WindUI 0.1"
 end
@@ -31,16 +31,16 @@ end
 ---------------------------------------------------
 -- 配置更改后的模块更新
 ---------------------------------------------------
-function WT:UpdateAll()
+function W:UpdateAll()
 
 end
 
 ---------------------------------------------------
 -- 注册 ElvUI 模块
 ---------------------------------------------------
-function WT:Initialize()
-    EP:RegisterPlugin(AddOnName, WT.PluginCallback)
-    hooksecurefunc(E, "UpdateAll", WT.UpdateAll)
+function W:Initialize()
+    EP:RegisterPlugin(AddOnName, W.PluginCallback)
+    hooksecurefunc(E, "UpdateAll", W.UpdateAll)
 end
 
-EP:HookInitialize(WT, WT.Initialize)
+EP:HookInitialize(W, W.Initialize)

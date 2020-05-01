@@ -8,4 +8,8 @@ V.skins = {
 		enable = true,
 		misc = true,
 	},
+	elvui = {
+		enable = true,
+		chatCopyFrame = true,
+	}
 }

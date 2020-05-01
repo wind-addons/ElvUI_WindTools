@@ -11,9 +11,14 @@ S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 
 function S:CreateShadow(frame, size, r, g, b)
-    if frame.shadow then return end
-    -- 材质类型将阴影附着于父框架
+	if frame.shadow then return end
+	
     if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
+
+	r = r or 0
+	g = g or 0
+	b = b or 0
+
 
     local shadow = CreateFrame('Frame', nil, frame)
     shadow:SetFrameLevel(1)
@@ -21,7 +26,9 @@ function S:CreateShadow(frame, size, r, g, b)
     shadow:SetOutside(frame, size or 4, size or 4)
     shadow:SetBackdrop({edgeFile = LSM:Fetch('border', 'ElvUI GlowBorder'), edgeSize = E:Scale(size or 5)})
     shadow:SetBackdropColor(r, g, b, 0)
-    shadow:SetBackdropBorderColor(r, g, b, size and 0.9 or 0.4)
+	shadow:SetBackdropBorderColor(r, g, b, 0.5)
+
+	frame.shadow = shadow
 end
 
 function S:HandleFrame(frame)

@@ -1,10 +1,9 @@
-local _, NameSpace = ...
-local W, F, DB, E, L, V, P, G = unpack(NameSpace)
+local W, F, E, L = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 local S = W:NewModule('Skins','AceTimer-3.0','AceHook-3.0','AceEvent-3.0')
 
 local _G = _G
-local xpcall = xpcall
+local tinsert, xpcall, next = tinsert, xpcall, next
 local CreateFrame = CreateFrame
 
 S.allowBypass = {}
@@ -30,10 +29,10 @@ end
 
 function S:AddCallback(name, func, position)
 	local load = (name == 'function' and name) or (not func and S[name])
-	S:RegisterSkin('ElvUI', load or func, nil, nil, position)
+	S:RegisterSkin('ElvUI_WindUI', load or func, nil, nil, position)
 end
 
-function S:AddCallbackForAddon(addonName, name, func, forceLoad, bypass, position) -- arg2: name is 'given name'; see example above.
+function S:AddCallbackForAddon(addonName, name, func, forceLoad, bypass, position)
 	local load = (name == 'function' and name) or (not func and (S[name] or S[addonName]))
 	S:RegisterSkin(addonName, load or func, forceLoad, bypass, position)
 end
@@ -50,7 +49,7 @@ function S:RegisterSkin(addonName, func, forceLoad, bypass, position)
 	if forceLoad then
 		xpcall(func, errorhandler)
 		self.addonsToLoad[addonName] = nil
-	elseif addonName == 'ElvUI' then
+	elseif addonName == 'ElvUI_WindUI' then
 		if position then
 			tinsert(self.nonAddonsToLoad, position, func)
 		else
@@ -90,7 +89,7 @@ function S:ADDON_LOADED(_, addonName)
 	end
 end
 
-function S:OnInitialize()
+function S:Initialize()
 	for index, func in next, self.nonAddonsToLoad do
 		xpcall(func, errorhandler)
 		self.nonAddonsToLoad[index] = nil
@@ -102,9 +101,7 @@ function S:OnInitialize()
 			S:CallLoadedAddon(addonName, object)
 		end
 	end
-	C_Timer.After(2, function()
-		print("Skins Loaded")
-	end)
 end
 
 S:RegisterEvent('ADDON_LOADED')
+W:RegisterModule(S:GetName())

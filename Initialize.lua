@@ -43,6 +43,10 @@ end
 -- 注册 ElvUI 模块
 ---------------------------------------------------
 function W:Initialize()
+    -- 确保初始化顺序为 ElvUI -> WindTools -> 各模块
+    self.initialized = true
+    self:InitializeModules()
+
     EP:RegisterPlugin(AddOnName, W.PluginCallback)
     hooksecurefunc(E, "UpdateAll", W.UpdateAll)
 end

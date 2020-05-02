@@ -1,7 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule('Skins')
+local AB = E:GetModule('ActionBars')
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_ActionBars()
     if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then return end
@@ -42,6 +44,9 @@ function S:ElvUI_ActionBars()
 
         S:CreateShadow(_G.ExtraActionButton1)
     end
+
+    hooksecurefunc(AB, "StyleButton",
+                       function(_, button) if button.backdrop then S:CreateShadow(button.backdrop) end end)
 end
 
 S:AddCallback('ElvUI_ActionBars')

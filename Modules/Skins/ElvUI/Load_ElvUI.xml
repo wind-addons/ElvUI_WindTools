@@ -1,9 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='ActionBars.lua'/>
+	<Script file='AltPowerBar.lua'/>
 	<Script file='Auras.lua'/>
 	<Script file='CopyChatFrame.lua'/>
 	<Script file='Databars.lua'/>
 	<Script file='Minimap.lua'/>
 	<Script file='Option.lua'/>
+	<Script file='Panels.lua'/>
 	<Script file='StaticPopup.lua'/>
 </Ui>

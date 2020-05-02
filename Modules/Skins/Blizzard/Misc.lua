@@ -16,9 +16,6 @@ function S:BlizzardMiscFrames()
         "VideoOptionsFrame",
         "AudioOptionsFrame",
         "AutoCompleteBox",
-        "ReadyCheckFrame",
-        "QueueStatusFrame",
-        "LFDReadyCheckPopup"
     }
 
     for _, frame in pairs(miscFrames) do S:CreateShadow(_G[frame]) end

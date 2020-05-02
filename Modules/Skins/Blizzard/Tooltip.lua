@@ -26,7 +26,7 @@ function S:TooltipFrames()
 
     hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
         if (tt.StatusBar) then S:CreateShadow(tt.StatusBar) end
-        if _G.GameTooltipStatusBar then S:CreateShadow(_G.GameTooltipStatusBar) end
+        if _G.GameTooltipStatusBar then S:CreateShadow(_G.GameTooltipStatusBar, 6) end
     end)
 
     hooksecurefunc("QueueStatusFrame_Update", function(self) S:CreateShadow(self) end)

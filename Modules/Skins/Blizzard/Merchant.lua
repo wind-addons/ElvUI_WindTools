@@ -9,9 +9,7 @@ function S:MerchantFrame()
 
     S:CreateTabShadow(_G.MerchantFrame)
 
-    for i= 1, 2 do
-		S:CreateTabShadow(_G["MerchantFrameTab"..i])
-	end
+    for i = 1, 2 do S:CreateTabShadow(_G["MerchantFrameTab" .. i]) end
 end
 
 S:AddCallback('MerchantFrame')

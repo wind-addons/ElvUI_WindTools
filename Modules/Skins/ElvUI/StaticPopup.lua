@@ -7,7 +7,7 @@ function S:ElvUI_StaticPopup()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.staticPopup) then return end
 
     for i = 1, 3 do
-        local f = _G["ElvUI_StaticPopup"..i]
+        local f = _G["ElvUI_StaticPopup" .. i]
         if f then S:CreateShadow(f) end
     end
 end

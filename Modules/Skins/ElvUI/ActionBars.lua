@@ -24,16 +24,12 @@ function S:ElvUI_ActionBars()
             if E.private.WT.skins.elvui.actionBar then
                 for i = 1, 12 do
                     local button = _G[bar .. "Button" .. i]
-                    if button and button.backdrop then
-                        S:CreateShadow(button.backdrop)
-                    end
+                    if button and button.backdrop then S:CreateShadow(button.backdrop) end
                 end
             end
 
             if E.private.WT.skins.elvui.actionBarBackdrop then
-                if _G[bar].backdrop and _G[bar].backdrop:IsShown() then
-                    S:CreateShadow(_G[bar].backdrop)
-                end
+                if _G[bar].backdrop and _G[bar].backdrop:IsShown() then S:CreateShadow(_G[bar].backdrop) end
             end
         end
     end

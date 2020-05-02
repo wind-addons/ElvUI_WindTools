@@ -16,11 +16,5 @@ function S:BlizzardTalent()
     S:CreateShadow(TalentMicroButtonAlert)
 end
 
-function S:Blizzard_TalentUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.talent) then return end
-    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.talent) then return end
-
-end
-
 --S:AddCallbackForAddon('Blizzard_TalentUI')
 S:AddCallback('BlizzardTalent')

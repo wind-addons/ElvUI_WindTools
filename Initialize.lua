@@ -15,7 +15,7 @@ P.WT = {}
 G.WT = {}
 
 NameSpace[1] = W
-NameSpace[2] = {} -- 函数
+NameSpace[2] = {} -- 函数 F
 NameSpace[3] = E
 NameSpace[4] = E.Libs.ACL:GetLocale('ElvUI', E.global.general.locale)
 NameSpace[5] = V.WT
@@ -35,9 +35,7 @@ end
 ---------------------------------------------------
 -- 配置更改后的模块更新
 ---------------------------------------------------
-function W:UpdateAll()
-
-end
+function W:UpdateAll() end
 
 ---------------------------------------------------
 -- 注册 ElvUI 模块

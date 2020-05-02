@@ -14,9 +14,16 @@ V.skins = {
 		communities = true,
 		merchant = true,
 		misc = true,
+		quest = true,
+		tooltip = true,
+		worldMap = true,
 	},
 	elvui = {
 		enable = true,
+		actionBar = true,
+		actionBarBackdrop = false,
 		chatCopyFrame = true,
+		option = true,
+		staticPopup = true,
 	}
 }

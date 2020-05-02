@@ -9,6 +9,7 @@ function S:Blizzard_Communities()
 
     if _G.CommunitiesFrame then
         local f = _G.CommunitiesFrame
+        S:CreateShadow(f)
         S:CreateTabShadow(f.ChatTab)
         S:CreateTabShadow(f.RosterTab)
         S:CreateTabShadow(f.GuildBenefitsTab)

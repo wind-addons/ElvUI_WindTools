@@ -2,5 +2,9 @@
 	<Script file='Communities.lua'/>
 	<Script file='Merchant.lua'/>
 	<Script file='Misc.lua'/>
+	<Script file='IslandsQueueUI.lua'/>
+	<Script file='Quest.lua'/>
+	<Script file='Talent.lua'/>
+	<Script file='Tooltip.lua'/>
 	<Script file='WorldMap.lua'/>
 </Ui>

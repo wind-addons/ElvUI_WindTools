@@ -25,14 +25,14 @@ function S:CreateShadow(frame, size, r, g, b)
     shadow:SetOutside(frame, size or 4, size or 4)
     shadow:SetBackdrop({edgeFile = LSM:Fetch('border', 'ElvUI GlowBorder'), edgeSize = E:Scale(size or 5)})
     shadow:SetBackdropColor(r, g, b, 0)
-    shadow:SetBackdropBorderColor(r, g, b, 0.5)
+    shadow:SetBackdropBorderColor(r, g, b, 0.618)
 
     frame.shadow = shadow
 end
 
 function S:CreateTabShadow(tab, noBackdrop)
 	if not tab then return end
-	if noBackdrop then S:CreateShadow(tab) else S:CreateShadow(tab.backdrop)
+	if noBackdrop then S:CreateShadow(tab) else S:CreateShadow(tab.backdrop) end
 end
 
 function S:HandleFrame(frame) end

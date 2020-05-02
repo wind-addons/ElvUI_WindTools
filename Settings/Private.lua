@@ -14,6 +14,7 @@ V.skins = {
 		communities = true,
 		merchant = true,
 		misc = true,
+		ime = true,
 		quest = true,
 		tooltip = true,
 		worldMap = true,

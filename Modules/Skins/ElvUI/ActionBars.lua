@@ -21,21 +21,21 @@ function S:ElvUI_ActionBars()
 
     for _, bar in pairs(actionBarList) do
         if _G[bar] then
-            if E.private.WT.skins.elvui.actionBar then
+            if E.private.WT.skins.elvui.actionbar then
                 for i = 1, 12 do
                     local button = _G[bar .. "Button" .. i]
                     if button and button.backdrop then S:CreateShadow(button.backdrop) end
                 end
             end
 
-            if E.private.WT.skins.elvui.actionBarBackdrop then
+            if E.private.WT.skins.elvui.actionbarBackdrop then
                 if _G[bar].backdrop and _G[bar].backdrop:IsShown() then S:CreateShadow(_G[bar].backdrop) end
             end
         end
     end
 
     -- 特殊技能
-    if E.private.WT.skins.elvui.actionBar then
+    if E.private.WT.skins.elvui.actionbar then
         if _G.ZoneAbilityFrame and _G.ZoneAbilityFrame.SpellButton then
             S:CreateShadow(_G.ZoneAbilityFrame.SpellButton)
         end

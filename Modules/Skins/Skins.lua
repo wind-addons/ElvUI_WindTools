@@ -3,7 +3,7 @@ local LSM = E.Libs.LSM
 local S = W:NewModule('Skins', 'AceTimer-3.0', 'AceHook-3.0', 'AceEvent-3.0')
 
 local _G = _G
-local tinsert, xpcall, next = tinsert, xpcall, next
+local tinsert, xpcall, next, assert = tinsert, xpcall, next, assert
 local CreateFrame = CreateFrame
 
 S.allowBypass = {}

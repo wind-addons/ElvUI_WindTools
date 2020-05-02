@@ -2,6 +2,8 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule('Skins')
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
+local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:BlizzardMiscFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.misc) then return end
@@ -34,9 +36,7 @@ function S:BlizzardMiscFrames()
 
     -- 下拉菜单
     for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
-        if _G["DropDownList" .. i] then
-            S:CreateShadow(_G["DropDownList" .. i])
-        end
+        if _G["DropDownList" .. i] then S:CreateShadow(_G["DropDownList" .. i]) end
     end
 
 end

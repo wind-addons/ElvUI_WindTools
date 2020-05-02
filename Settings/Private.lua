@@ -18,6 +18,7 @@ V.skins = {
 		ime = true,
 		quest = true,
 		worldMap = true,
+		tooltip = true,
 		staticPopup = true,
 	},
 	elvui = {

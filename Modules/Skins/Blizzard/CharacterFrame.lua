@@ -17,7 +17,6 @@ function S:CharacterFrame()
     CharacterModelFrame:DisableDrawLayer("BORDER")
     CharacterModelFrame:DisableDrawLayer("OVERLAY")
     if CharacterModelFrame.backdrop then CharacterModelFrame.backdrop:Kill() end
-
 end
 
 S:AddCallback('CharacterFrame')

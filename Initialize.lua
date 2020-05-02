@@ -5,6 +5,7 @@ local EP = E.Libs.EP
 local _G = _G
 local tonumber = tonumber
 local hooksecurefunc = hooksecurefunc
+local collectgarbage = collectgarbage
 
 -- 注册 Wind 工具箱为 Ace3 插件
 local W = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", 'AceTimer-3.0', 'AceHook-3.0');
@@ -47,6 +48,8 @@ function W:Initialize()
 
     EP:RegisterPlugin(AddOnName, W.PluginCallback)
     hooksecurefunc(E, "UpdateAll", W.UpdateAll)
+
+    collectgarbage("collect")
 end
 
 EP:HookInitialize(W, W.Initialize)

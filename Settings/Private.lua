@@ -30,6 +30,7 @@ V.skins = {
 		actionbarBackdrop = false,
 		auras = true,
 		chatCopyFrame = true,
+		databars = true,
 		minimap = true,
 		option = true,
 		tooltip = true,

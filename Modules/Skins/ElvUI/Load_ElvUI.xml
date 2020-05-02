@@ -2,6 +2,7 @@
 	<Script file='ActionBars.lua'/>
 	<Script file='Auras.lua'/>
 	<Script file='CopyChatFrame.lua'/>
+	<Script file='Databars.lua'/>
 	<Script file='Minimap.lua'/>
 	<Script file='Option.lua'/>
 	<Script file='StaticPopup.lua'/>

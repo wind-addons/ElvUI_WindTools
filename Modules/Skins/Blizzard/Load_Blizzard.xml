@@ -1,10 +1,12 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Achievement.lua'/>
 	<Script file='AddonManager.lua'/>
+	<Script file='AuctionHouse.lua'/>
 	<Script file='Character.lua'/>
 	<Script file='Communities.lua'/>
 	<Script file='Debug.lua'/>
 	<Script file='Friends.lua'/>
+	<Script file='Garrison.lua'/>
 	<Script file='InputMethodEditor.lua'/>
 	<Script file='IslandsQueue.lua'/>
 	<Script file='KeyBinding.lua'/>

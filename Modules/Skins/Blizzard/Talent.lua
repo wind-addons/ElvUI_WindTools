@@ -21,10 +21,10 @@ function S:Blizzard_TalentUI()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.talent) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.talent) then return end
 
-    for i = 1, 3 do S:CreateTabShadow(_G["PlayerTalentFrameTab" .. i]) end
-    S:CreateShadow(_G.PlayerTalentFrameTalentsPvpTalentFrameTalentList)
     S:CreateShadow(_G.PlayerTalentFrame)
+    S:CreateShadow(_G.PlayerTalentFrameTalentsPvpTalentFrameTalentList)
+    for i = 1, 3 do S:CreateTabShadowAfterElvUISkins(_G["PlayerTalentFrameTab" .. i]) end
 end
 
-S:AddCallbackForAddon('Blizzard_TalentUI')
 S:AddCallback('BlizzardTalent')
+S:AddCallbackForAddon('Blizzard_TalentUI')

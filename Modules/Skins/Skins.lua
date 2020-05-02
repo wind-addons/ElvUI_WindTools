@@ -31,7 +31,7 @@ function S:CreateShadow(frame, size, r, g, b)
 end
 
 function S:CreateTabShadow(tab, noBackdrop)
-	if not tab or tab.windStyle then return end
+    if not tab or tab.windStyle then return end
     if noBackdrop then
         S:CreateShadow(tab)
     else
@@ -40,6 +40,17 @@ function S:CreateTabShadow(tab, noBackdrop)
         S:CreateShadow(tab.backdrop)
     end
     tab.windStyle = true
+end
+
+function S:CreateTabShadowAfterElvUISkins(tab)
+    if not tab or tab.windStyle then return end
+    if tab.backdrop then
+        tab.backdrop:SetTemplate("Transparent")
+        S:CreateShadow(tab.backdrop)
+        tab.windStyle = true
+    else
+        E:Delay(.1, function() S:CreateTabShadowAfterElvUISkins(tab) end)
+    end
 end
 
 function S:HandleFrame(frame) end

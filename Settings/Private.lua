@@ -11,6 +11,7 @@ V.skins = {
 	},
 	blizzard = {
 		enable = true,
+		addonManager = true,
 		communities = true,
 		character = true,
 		debug = true,

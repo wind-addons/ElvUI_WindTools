@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='AddonManager.lua'/>
 	<Script file='Communities.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='Character.lua'/>

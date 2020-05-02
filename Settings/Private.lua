@@ -14,6 +14,7 @@ V.skins = {
 		communities = true,
 		character = true,
 		debug = true,
+		friends = true,
 		merchant = true,
 		misc = true,
 		ime = true,

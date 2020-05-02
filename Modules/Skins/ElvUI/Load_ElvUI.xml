@@ -3,9 +3,10 @@
 	<Script file='AltPowerBar.lua'/>
 	<Script file='Auras.lua'/>
 	<Script file='CopyChatFrame.lua'/>
-	<Script file='Databars.lua'/>
-	<Script file='Minimap.lua'/>
+	<Script file='DataBars.lua'/>
+	<Script file='MiniMap.lua'/>
 	<Script file='Option.lua'/>
 	<Script file='Panels.lua'/>
 	<Script file='StaticPopup.lua'/>
+	<Script file='StatusReport.lua'/>
 </Ui>

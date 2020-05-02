@@ -3,7 +3,7 @@ local LSM = E.Libs.LSM
 local S = W:NewModule('Skins', 'AceTimer-3.0', 'AceHook-3.0', 'AceEvent-3.0')
 
 local _G = _G
-local tinsert, xpcall, next, assert = tinsert, xpcall, next, assert
+local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
 local CreateFrame = CreateFrame
 
 S.allowBypass = {}
@@ -30,34 +30,36 @@ function S:CreateShadow(frame, size, r, g, b)
     frame.shadow = shadow
 end
 
-function S:CreateShadowAfterElvUISkins(frame, size, r, g, b)
-    if frame then
-        S:CreateShadow(frame, size, r, g, b)
-    else
-        E:Delay(.1, function() S:CreateShadowAfterElvUISkins(frame, size, r, g, b) end)
-    end
-end
-
 function S:CreateTabShadow(tab, noBackdrop)
     if not tab or tab.windStyle then return end
     if noBackdrop then
         S:CreateShadow(tab)
     else
-        assert(tab.backdrop, "[WT美化]无标签页背景")
-        tab.backdrop:SetTemplate("Transparent")
-        S:CreateShadow(tab.backdrop)
+        if tab.backdrop then
+            tab.backdrop:SetTemplate("Transparent")
+            S:CreateShadow(tab.backdrop)
+        else
+            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", tab:GetName()))
+        end
     end
     tab.windStyle = true
 end
 
-function S:CreateTabShadowAfterElvUISkins(tab)
+function S:CreateTabShadowAfterElvUISkins(tab, tried)
     if not tab or tab.windStyle then return end
+
+    tried = tried or 20
+
     if tab.backdrop then
         tab.backdrop:SetTemplate("Transparent")
         S:CreateShadow(tab.backdrop)
         tab.windStyle = true
     else
-        E:Delay(.1, function() S:CreateTabShadowAfterElvUISkins(tab) end)
+        if tried >= 0 then
+            E:Delay(0.1, function() S:CreateTabShadowAfterElvUISkins(tab, tried - 1) end)
+        else
+            F.DebugMessage(S, format("[2]无法找到 %s 的ElvUI美化背景！", tab:GetName()))
+        end
     end
 end
 

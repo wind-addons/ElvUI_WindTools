@@ -1,5 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Communities.lua'/>
+	<Script file='StaticPopup.lua'/>
+	<Script file='CharacterFrame.lua'/>
 	<Script file='Merchant.lua'/>
 	<Script file='Misc.lua'/>
 	<Script file='InputMethodEditor.lua'/>

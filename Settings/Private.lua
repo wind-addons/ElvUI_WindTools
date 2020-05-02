@@ -12,19 +12,23 @@ V.skins = {
 	blizzard = {
 		enable = true,
 		communities = true,
+		character = true,
 		merchant = true,
 		misc = true,
 		ime = true,
 		quest = true,
-		tooltip = true,
 		worldMap = true,
+		staticPopup = true,
 	},
 	elvui = {
 		enable = true,
-		actionBar = true,
-		actionBarBackdrop = false,
+		actionbar = true,
+		actionbarBackdrop = false,
+		auras = true,
 		chatCopyFrame = true,
+		minimap = true,
 		option = true,
+		tooltip = true,
 		staticPopup = true,
-	}
+	},
 }

@@ -31,8 +31,15 @@ function S:CreateShadow(frame, size, r, g, b)
 end
 
 function S:CreateTabShadow(tab, noBackdrop)
-	if not tab then return end
-	if noBackdrop then S:CreateShadow(tab) else S:CreateShadow(tab.backdrop) end
+	if not tab or tab.windStyle then return end
+    if noBackdrop then
+        S:CreateShadow(tab)
+    else
+        assert(tab.backdrop, "[WT美化]无标签页背景")
+        tab.backdrop:SetTemplate("Transparent")
+        S:CreateShadow(tab.backdrop)
+    end
+    tab.windStyle = true
 end
 
 function S:HandleFrame(frame) end

@@ -4,8 +4,8 @@ local S = W:GetModule('Skins')
 local _G = _G
 
 function S:ElvUI_ActionBars()
-    if not E.private.WT.skins.elvui.enable then return end
-    if not (E.private.WT.skins.elvui.actionBar or E.private.WT.skins.elvui.actionBarBackdrop) then return end
+    if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then return end
+    if not (E.private.WT.skins.elvui.actionbar or E.private.WT.skins.elvui.actionbarBackdrop) then return end
 
     -- 常规动作条
     local actionBarList = {

@@ -31,6 +31,14 @@ function S:BlizzardMiscFrames()
     local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
 
     for _, menu in pairs(chatMenus) do _G[menu]:HookScript("OnShow", function(f) if f then S:CreateShadow(f) end end) end
+
+    -- 下拉菜单
+    for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
+        if _G["DropDownList" .. i] then
+            S:CreateShadow(_G["DropDownList" .. i])
+        end
+    end
+
 end
 
 S:AddCallback('BlizzardMiscFrames')

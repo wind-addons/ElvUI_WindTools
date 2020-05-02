@@ -1,0 +1,26 @@
+<Bindings>
+	<Binding name="CLICK AutoSlotButton1:LeftButton" header="AutoSlotButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton2:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton3:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton4:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton5:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton6:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton7:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton8:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton9:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton10:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton11:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoSlotButton12:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton1:LeftButton" header="AutoQuestButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton2:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton3:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton4:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton5:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton6:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton7:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton8:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton9:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton10:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton11:LeftButton" category="|cffC495DDWindTools|r"/>
+	<Binding name="CLICK AutoQuestButton12:LeftButton" category="|cffC495DDWindTools|r"/>
+</Bindings>

@@ -8,6 +8,7 @@
 	<Script file='DebugTools.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
+	<Script file='Help.lua'/>
 	<Script file='InputMethodEditor.lua'/>
 	<Script file='IslandsQueue.lua'/>
 	<Script file='KeyBinding.lua'/>
@@ -21,6 +22,8 @@
 	<Script file='Misc.lua'/>
 	<Script file='OrderHall.lua'/>
 	<Script file='Quest.lua'/>
+	<Script file='RaidInfo.lua'/>
+	<Script file='RaidUtility.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='Talent.lua'/>

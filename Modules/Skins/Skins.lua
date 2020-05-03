@@ -63,7 +63,13 @@ function S:CreateTabShadowAfterElvUISkins(tab, tried)
     end
 end
 
-function S:HandleFrame(frame) end
+function S:SetTransparentBackdrop(frame)
+    if frame.backdrop then
+        backdrop:SetTemplate("Transparent")
+    else
+        frame:CreateBackdrop("Transparent")
+    end
+end
 
 function S:AddCallback(name, func, position)
     local load = (name == 'function' and name) or (not func and S[name])

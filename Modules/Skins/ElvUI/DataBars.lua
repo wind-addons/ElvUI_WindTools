@@ -6,7 +6,7 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_DataBars()
-    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.databars) then return end
+    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.dataBars) then return end
 
     local bars = {_G.ElvUI_AzeriteBar, _G.ElvUI_ExperienceBar, _G.ElvUI_ReputationBar, _G.ElvUI_HonorBar}
     for _, bar in pairs(bars) do if bar then S:CreateShadow(bar) end end

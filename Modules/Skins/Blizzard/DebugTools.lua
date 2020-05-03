@@ -13,6 +13,8 @@ function S:DebugFrames()
 
     S:CreateShadow(_G.TableAttributeDisplay)
     S:CreateShadow(_G.FrameStackTooltip)
+
+    hooksecurefunc(_G.TableInspectorMixin, "OnLoad", function(s) if s then S:CreateShadow(s) end end)
 end
 
 S:AddCallback('DebugFrames')

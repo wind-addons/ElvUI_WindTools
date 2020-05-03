@@ -43,6 +43,9 @@ V.skins = {
 		actionBarsBackdrop = false,
 		altPowerBar = true,
 		auras = true,
+		castBars = true,
+		chatPanels = true,
+		classBars = true,
 		chatCopyFrame = true,
 		databars = true,
 		miniMap = true,
@@ -50,5 +53,6 @@ V.skins = {
 		panels = true,
 		staticPopup = true,
 		statusReport = true,
+		unitFrames = true,
 	},
 }

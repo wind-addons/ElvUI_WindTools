@@ -42,8 +42,8 @@ V.skins = {
 	},
 	elvui = {
 		enable = true,
-		actionBars = true,
-		actionBarsBackdrop = false,
+		actionBarsButton = true,
+		actionBarsBackdrop = true,
 		altPowerBar = true,
 		auras = true,
 		castBars = true,

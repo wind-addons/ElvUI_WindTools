@@ -10,10 +10,10 @@ function S:Blizzard_Communities()
     if _G.CommunitiesFrame then
         local f = _G.CommunitiesFrame
         S:CreateShadow(f)
-        S:CreateTabShadow(f.ChatTab)
-        S:CreateTabShadow(f.RosterTab)
-        S:CreateTabShadow(f.GuildBenefitsTab)
-        S:CreateTabShadow(f.GuildInfoTab)
+        S:CreateShadow(f.ChatTab)
+        S:CreateShadow(f.RosterTab)
+        S:CreateShadow(f.GuildBenefitsTab)
+        S:CreateShadow(f.GuildInfoTab)
         S:CreateShadow(f.GuildMemberDetailFrame)
         S:CreateShadow(f.ClubFinderInvitationFrame)
         if _G.CommunitiesGuildLogFrame then S:CreateShadow(_G.CommunitiesGuildLogFrame) end
@@ -22,16 +22,16 @@ function S:Blizzard_Communities()
     -- 搜寻社群
     if _G.ClubFinderCommunityAndGuildFinderFrame then
         local f = _G.ClubFinderCommunityAndGuildFinderFrame
-        if f.ClubFinderPendingTab then S:CreateTabShadow(f.ClubFinderPendingTab) end
-        if f.ClubFinderSearchTab then S:CreateTabShadow(f.ClubFinderSearchTab) end
+        if f.ClubFinderPendingTab then S:CreateShadow(f.ClubFinderPendingTab) end
+        if f.ClubFinderSearchTab then S:CreateShadow(f.ClubFinderSearchTab) end
         if f.RequestToJoinFrame then S:CreateShadow(f.RequestToJoinFrame) end
     end
 
     -- 搜寻公会
     if _G.ClubFinderGuildFinderFrame then
         local f = _G.ClubFinderGuildFinderFrame
-        if f.ClubFinderPendingTab then S:CreateTabShadow(f.ClubFinderPendingTab) end
-        if f.ClubFinderSearchTab then S:CreateTabShadow(f.ClubFinderSearchTab) end
+        if f.ClubFinderPendingTab then S:CreateShadow(f.ClubFinderPendingTab) end
+        if f.ClubFinderSearchTab then S:CreateShadow(f.ClubFinderSearchTab) end
         if f.RequestToJoinFrame then S:CreateShadow(f.RequestToJoinFrame) end
     end
 end

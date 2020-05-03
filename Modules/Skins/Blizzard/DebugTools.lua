@@ -6,8 +6,8 @@ local UIParentLoadAddOn = UIParentLoadAddOn
 local _G = _G
 
 function S:DebugFrames()
-    if not E.private.skins.blizzard.enable then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.debug) then return end
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.debug) then return end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.debugTools) then return end
 
     if not _G.FrameStackTooltip or not _G.TableAttributeDisplay then UIParentLoadAddOn('Blizzard_DebugTools') end
 

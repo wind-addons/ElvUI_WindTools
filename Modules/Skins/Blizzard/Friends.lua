@@ -10,8 +10,10 @@ function S:FriendsFrame()
 
     local frames = {
         _G.FriendsFrame,
+        _G.QuickJoinFrame,
         _G.AddFriendFrame,
         _G.BNToastFrame,
+        _G.RecruitAFriendFrame.SplashFrame,
         _G.RecruitAFriendRewardsFrame,
         _G.RecruitAFriendRecruitmentFrame,
         _G.FriendsFrameBattlenetFrame.BroadcastFrame

@@ -39,7 +39,7 @@ function S:CreateTabShadow(tab, noBackdrop)
             tab.backdrop:SetTemplate("Transparent")
             S:CreateShadow(tab.backdrop)
         else
-            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", tab:GetName()))
+            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", tab:GetName() or "无名框体"))
         end
     end
     tab.windStyle = true

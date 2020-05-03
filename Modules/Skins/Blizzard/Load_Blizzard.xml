@@ -3,16 +3,22 @@
 	<Script file='AddonManager.lua'/>
 	<Script file='AdventureMap.lua'/>
 	<Script file='AuctionHouse.lua'/>
+	<Script file='Barbershop.lua'/>
+	<Script file='Calendar.lua'/>
+	<Script file='Challenges.lua'/>
 	<Script file='Character.lua'/>
 	<Script file='Communities.lua'/>
 	<Script file='DebugTools.lua'/>
+	<Script file='DressingRoom.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
+	<Script file='Gossip.lua'/>
 	<Script file='Help.lua'/>
 	<Script file='InputMethodEditor.lua'/>
 	<Script file='IslandsQueue.lua'/>
 	<Script file='KeyBinding.lua'/>
 	<Script file='LookingForGroup.lua'/>
+	<Script file='Loot.lua'/>
 	<Script file='LossOfControl.lua'/>
 	<Script file='Macro.lua'/>
 	<Script file='Mail.lua'/>
@@ -27,6 +33,8 @@
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='Talent.lua'/>
+	<Script file='Taxi.lua'/>
 	<Script file='Tooltip.lua'/>
+	<Script file='Warboard.lua'/>
 	<Script file='WorldMap.lua'/>
 </Ui>

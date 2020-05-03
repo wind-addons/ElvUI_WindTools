@@ -6,7 +6,7 @@ local pairs = pairs
 
 function S:LookingForGroupFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.lfg) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.lfg) then return end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.lookingForGroup) then return end
 
     local frames = {
         _G.PVEFrame,

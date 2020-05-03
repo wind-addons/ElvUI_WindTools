@@ -9,7 +9,6 @@ function S:HelpFrame()
 
     S:CreateShadow(_G.HelpFrame)
     S:CreateShadow(_G.HelpFrame.Header)
-    _G.HelpFrame.Header.backdrop:SetTemplate("Transparent")
 end
 
 S:AddCallback('HelpFrame')

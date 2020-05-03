@@ -5,6 +5,10 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
+function S:Blizzard_DeathRecap()
+    S:CreateShadow(_G.DeathRecapFrame)
+end
+
 function S:BlizzardMiscFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.misc) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.misc) then return end
@@ -39,6 +43,16 @@ function S:BlizzardMiscFrames()
     -- 错误提示
     F.SetFontOutline(_G.UIErrorsFrame)
     F.SetFontOutline(_G.ActionStatusText)
+
+    -- 灵魂医者传送按钮
+    S:CreateShadow(_G.GhostFrameContentsFrame)
+    
+    -- 跳过剧情
+    S:CreateShadow(_G.CinematicFrameCloseDialog)
+
+    -- 聊天设定
+    S:CreateShadow(_G.ChatConfigFrame)
 end
 
 S:AddCallback('BlizzardMiscFrames')
+S:AddCallbackForAddon('Blizzard_DeathRecap')

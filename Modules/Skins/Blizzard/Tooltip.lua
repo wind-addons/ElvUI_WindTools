@@ -22,7 +22,9 @@ function S:TooltipFrames()
         if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then S:CreateShadow(tt) end
     end
 
-    hooksecurefunc(TT, "SetStyle", function(_, tt) S:CreateShadow(tt) end)
+    hooksecurefunc(TT, "SetStyle", function(_, tt)
+        if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then S:CreateShadow(tt) end
+    end)
 
     hooksecurefunc(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
         if (tt.StatusBar) then S:CreateShadow(tt.StatusBar) end

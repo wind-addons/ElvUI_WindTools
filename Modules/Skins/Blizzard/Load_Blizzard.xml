@@ -12,12 +12,14 @@
 	<Script file='IslandsQueue.lua'/>
 	<Script file='KeyBinding.lua'/>
 	<Script file='LookingForGroup.lua'/>
+	<Script file='LossOfControl.lua'/>
 	<Script file='Macro.lua'/>
 	<Script file='Mail.lua'/>
 	<Script file='Merchant.lua'/>
 	<Script file='MicroButtons.lua'/>
 	<Script file='MirrorTimers.lua'/>
 	<Script file='Misc.lua'/>
+	<Script file='OrderHall.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>

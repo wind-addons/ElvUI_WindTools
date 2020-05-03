@@ -15,7 +15,7 @@ function S:BlizzardMiscFrames()
         "InterfaceOptionsFrame",
         "VideoOptionsFrame",
         "AudioOptionsFrame",
-        "AutoCompleteBox",
+        "AutoCompleteBox"
     }
 
     for _, frame in pairs(miscFrames) do S:CreateShadow(_G[frame]) end
@@ -36,6 +36,9 @@ function S:BlizzardMiscFrames()
         if _G["DropDownList" .. i] then S:CreateShadow(_G["DropDownList" .. i]) end
     end
 
+    -- 错误提示
+    F.SetFontOutline(_G.UIErrorsFrame)
+    F.SetFontOutline(_G.ActionStatusText)
 end
 
 S:AddCallback('BlizzardMiscFrames')

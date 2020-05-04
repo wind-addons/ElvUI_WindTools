@@ -39,7 +39,7 @@ function W:Initialize()
     self:InitializeModules()
 
     EP:RegisterPlugin(AddOnName, W.PluginCallback)
-    hooksecurefunc(E, "UpdateAll", W.UpdateAll)
+    hooksecurefunc(E, "UpdateAll", W.UpdateModules)
 
     collectgarbage("collect")
 end

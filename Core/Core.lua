@@ -28,14 +28,19 @@ function W:InitializeModules()
 end
 
 ---------------------------------------------------
+-- 配置更改后的模块更新
+---------------------------------------------------
+function W:UpdateModules()
+    for _, moduleName in pairs(W.RegisteredModules) do
+        local module = self:GetModule(moduleName)
+        if module.ProfileUpdate then pcall(module.ProfileUpdate, module) end
+    end
+end
+
+---------------------------------------------------
 -- ElvUI 模块注册回调
 ---------------------------------------------------
 function W:PluginCallback()
     -- 标题添加
     E.Options.name = E.Options.name .. " + WindUI 0.1"
 end
-
----------------------------------------------------
--- 配置更改后的模块更新
----------------------------------------------------
-function W:UpdateAll() end

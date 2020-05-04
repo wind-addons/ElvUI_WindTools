@@ -3,6 +3,7 @@ local S = W:GetModule('Skins')
 local B = E:GetModule('DataBars')
 
 local _G = _G
+local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_DataBars()

@@ -1,3 +1,4 @@
+-- 去除地图迷雾部分功能感谢：Leatrix
 local W, F, E, L = unpack(select(2, ...))
 local WM = W:NewModule('WorldMap', 'AceHook-3.0')
 
@@ -13,7 +14,7 @@ local WorldMapFrame = _G.WorldMapFrame
 local MapCanvasScrollControllerMixin = MapCanvasScrollControllerMixin
 
 -- 迷雾数据
-local Fogs = {
+local RevealDatabase = {
     [2] = {
         ["162:157:399:440"] = "440583",
         ["192:184:457:406"] = "271426",
@@ -1900,90 +1901,89 @@ local Fogs = {
     }
 }
 
+-- 用于储存显现的覆盖层
 local overlayTextures = {}
 
-function WM:Reveal()
-    if not E.private.WT.maps.worldMap.reveal then return end
+function WM:HandleMap()
+    overlayTextures = {}
+    local mapID = WorldMapFrame.mapID;
+    if not mapID then return end
+    local artID = C_Map_GetMapArtID(mapID);
+    if not artID or not RevealDatabase[artID] then return end
+    local zone = RevealDatabase[artID]
 
-    local function ref_map(self)
-        overlayTextures = {}
-        local mapID = WorldMapFrame.mapID;
-        if not mapID then return end
-        local artID = C_Map_GetMapArtID(mapID);
-        if not artID or not Fogs[artID] then return end
-        local zone = Fogs[artID]
-
-        -- Store already explored tiles in a table so they can be ignored
-        local TileExists = {}
-        local exploredMapTextures = C_MapExplorationInfo_GetExploredMapTextures(mapID)
-        if exploredMapTextures then
-            for i, exploredTextureInfo in ipairs(exploredMapTextures) do
-                local key = exploredTextureInfo.textureWidth .. ":" .. exploredTextureInfo.textureHeight .. ":" ..
-                                exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
-                TileExists[key] = true
-            end
+    -- 储存已经探索的地图以在后续操作中忽略
+    local TileExists = {}
+    local exploredMapTextures = C_MapExplorationInfo_GetExploredMapTextures(mapID)
+    if exploredMapTextures then
+        for i, exploredTextureInfo in ipairs(exploredMapTextures) do
+            local key = exploredTextureInfo.textureWidth .. ":" .. exploredTextureInfo.textureHeight .. ":" ..
+                            exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
+            TileExists[key] = true
         end
+    end
 
-        -- Get the sizes
-        self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
-        local layers = C_Map_GetMapArtLayers(mapID)
-        local layerInfo = layers and layers[self.layerIndex]
-        if not layerInfo then return end
-        local TILE_SIZE_WIDTH = layerInfo.tileWidth
-        local TILE_SIZE_HEIGHT = layerInfo.tileHeight
+    -- 取得大小
+    self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
+    local layers = C_Map_GetMapArtLayers(mapID)
+    local layerInfo = layers and layers[self.layerIndex]
+    if not layerInfo then return end
+    local TILE_SIZE_WIDTH = layerInfo.tileWidth
+    local TILE_SIZE_HEIGHT = layerInfo.tileHeight
 
-        -- Show textures if they are in database and have not been explored
-        for key, files in pairs(zone) do
-            if not TileExists[key] then
-                local width, height, offsetX, offsetY = strsplit(":", key)
-                local fileDataIDs = {strsplit(",", files)}
-                local numTexturesWide = ceil(width / TILE_SIZE_WIDTH)
-                local numTexturesTall = ceil(height / TILE_SIZE_HEIGHT)
-                local texturePixelWidth, textureFileWidth, texturePixelHeight, textureFileHeight
-                for j = 1, numTexturesTall do
-                    if (j < numTexturesTall) then
-                        texturePixelHeight = TILE_SIZE_HEIGHT
-                        textureFileHeight = TILE_SIZE_HEIGHT
+    -- 如果未被探索，且在数据库中存在材质地址，则进行显示
+    for key, files in pairs(zone) do
+        if not TileExists[key] then
+            local width, height, offsetX, offsetY = strsplit(":", key)
+            local fileDataIDs = {strsplit(",", files)}
+            local numTexturesWide = ceil(width / TILE_SIZE_WIDTH)
+            local numTexturesTall = ceil(height / TILE_SIZE_HEIGHT)
+            local texturePixelWidth, textureFileWidth, texturePixelHeight, textureFileHeight
+            for j = 1, numTexturesTall do
+                if (j < numTexturesTall) then
+                    texturePixelHeight = TILE_SIZE_HEIGHT
+                    textureFileHeight = TILE_SIZE_HEIGHT
+                else
+                    texturePixelHeight = mod(height, TILE_SIZE_HEIGHT)
+                    if (texturePixelHeight == 0) then texturePixelHeight = TILE_SIZE_HEIGHT end
+                    textureFileHeight = 16
+                    while (textureFileHeight < texturePixelHeight) do
+                        textureFileHeight = textureFileHeight * 2
+                    end
+                end
+                for k = 1, numTexturesWide do
+                    local texture = self.overlayTexturePool:Acquire()
+                    if (k < numTexturesWide) then
+                        texturePixelWidth = TILE_SIZE_WIDTH
+                        textureFileWidth = TILE_SIZE_WIDTH
                     else
-                        texturePixelHeight = mod(height, TILE_SIZE_HEIGHT)
-                        if (texturePixelHeight == 0) then texturePixelHeight = TILE_SIZE_HEIGHT end
-                        textureFileHeight = 16
-                        while (textureFileHeight < texturePixelHeight) do
-                            textureFileHeight = textureFileHeight * 2
+                        texturePixelWidth = mod(width, TILE_SIZE_WIDTH)
+                        if (texturePixelWidth == 0) then texturePixelWidth = TILE_SIZE_WIDTH end
+                        textureFileWidth = 16
+                        while (textureFileWidth < texturePixelWidth) do
+                            textureFileWidth = textureFileWidth * 2
                         end
                     end
-                    for k = 1, numTexturesWide do
-                        local texture = self.overlayTexturePool:Acquire()
-                        if (k < numTexturesWide) then
-                            texturePixelWidth = TILE_SIZE_WIDTH
-                            textureFileWidth = TILE_SIZE_WIDTH
-                        else
-                            texturePixelWidth = mod(width, TILE_SIZE_WIDTH)
-                            if (texturePixelWidth == 0) then
-                                texturePixelWidth = TILE_SIZE_WIDTH
-                            end
-                            textureFileWidth = 16
-                            while (textureFileWidth < texturePixelWidth) do
-                                textureFileWidth = textureFileWidth * 2
-                            end
-                        end
-                        texture:Size(texturePixelWidth, texturePixelHeight)
-                        texture:SetTexCoord(0, texturePixelWidth / textureFileWidth, 0,
-                                            texturePixelHeight / textureFileHeight)
-                        texture:Point("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k - 1)),
-                                      -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
-                        texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
-                        texture:SetDrawLayer("ARTWORK", -1)
-                        texture:Show()
-                        tinsert(overlayTextures, texture)
-                    end
+                    texture:Size(texturePixelWidth, texturePixelHeight)
+                    texture:SetTexCoord(0, texturePixelWidth / textureFileWidth, 0,
+                                        texturePixelHeight / textureFileHeight)
+                    texture:Point("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k - 1)),
+                                  -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
+                    texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
+                    texture:SetDrawLayer("ARTWORK", -1)
+                    texture:Show()
+                    tinsert(overlayTextures, texture)
                 end
             end
         end
     end
+end
+
+function WM:Reveal()
+    if not E.private.WT.maps.worldMap.reveal then return end
 
     for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-        hooksecurefunc(pin, "RefreshOverlays", ref_map)
+        hooksecurefunc(pin, "RefreshOverlays", WM.HandleMap)
     end
 end
 

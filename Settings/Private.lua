@@ -8,7 +8,7 @@ V.skins = {
 	},
 	vignetting = {
 		enable = true,
-		level = 50,
+		level = 30,
 	},
 	ace3 = {
 		enable = true,

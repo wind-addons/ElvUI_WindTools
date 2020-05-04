@@ -12,13 +12,13 @@ end
 function S:Vignetting()
     if not E.private.WT.skins.vignetting.enable then return end
 
-    local frame = CreateFrame("Frame", "ShadowBackground")
+    local frame = CreateFrame("Frame", "ShadowBackground", E.UIParent)
     frame:Point("TOPLEFT")
     frame:Point("BOTTOMRIGHT")
     frame:SetFrameLevel(0)
     frame:SetFrameStrata("BACKGROUND")
     frame.tex = frame:CreateTexture()
-    frame.tex:SetTexture(F.GetTexture("Vignetting.tga","Textures"))
+    frame.tex:SetTexture(F.GetTexture("Vignetting.tga", "Textures"))
     frame.tex:SetAllPoints(frame)
 
     W.VignettingFrame = frame

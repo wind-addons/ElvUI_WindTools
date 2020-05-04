@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local LSM = E.Libs.LSM
-local S = W:NewModule('Skins', 'AceTimer-3.0', 'AceHook-3.0', 'AceEvent-3.0')
+local S = W:GetModule('Skins')
 
 local _G = _G
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format

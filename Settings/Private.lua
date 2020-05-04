@@ -1,5 +1,11 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+V.maps = {
+    worldMap = {
+        reveal = true,
+    }
+}
+
 V.skins = {
 	color = {
 		r = 0,

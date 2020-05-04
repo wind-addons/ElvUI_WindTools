@@ -6,6 +6,10 @@ V.skins = {
 		g = 0,
 		b = 0,
 	},
+	vignetting = {
+		enable = true,
+		level = 50,
+	},
 	ace3 = {
 		enable = true,
 	},

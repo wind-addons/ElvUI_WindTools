@@ -14,3 +14,11 @@ function F.DebugMessage(module, text)
     local message = format("[WindUI - %s] %s", moduleName, text)
     print(message)
 end
+
+function F.GetTexture(name, folder)
+    local mediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\"
+    if folder then mediaPath = mediaPath .. folder .. "\\" end
+    mediaPath = mediaPath .. name
+    print(mediaPath)
+    return mediaPath
+end

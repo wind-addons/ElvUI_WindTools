@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Skins.lua'/>
-	<Include file='Addons\Load_Addons.xml'/>
-	<Include file='ElvUI\Load_ElvUI.xml'/>
+	<Script file='Vignetting.lua'/>
 	<Include file='Blizzard\Load_Blizzard.xml'/>
+	<Include file='ElvUI\Load_ElvUI.xml'/>
+	<Include file='Addons\Load_Addons.xml'/>
 </Ui>

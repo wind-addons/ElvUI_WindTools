@@ -1,6 +1,6 @@
 ## Interface: 80300
-## Author: Elv, Simpy
-## Version: 11.372
+## Author: houshuu
+## Version: 1.0
 ## Title: |cff1784d1ElvUI|r WindUI
 ## RequiredDeps: ElvUI
 ## OptionalDeps: Blizzard_PetJournal, SharedMedia, Gatherer, Masque

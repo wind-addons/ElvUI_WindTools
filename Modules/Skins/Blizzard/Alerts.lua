@@ -155,6 +155,32 @@ local function SkinInvasionAlert(frame)
     frame.windStyle = true
 end
 
+
+local function SkinWorldQuestCompleteAlert(frame)
+    if not frame or frame.windStyle then return end
+
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child.template and child.template == "Default" then
+            for _, region in pairs({child:GetRegions()}) do
+                if region.b then
+                    frame.Icon = region
+                    region:ClearAllPoints()
+                    region:Point("LEFT", frame.backdrop, "LEFT", 12, 0)
+                    break
+                end
+            end
+        end
+    end
+    
+
+    F.SetFontOutline(frame.ToastText)
+    F.SetFontOutline(frame.QuestName, nil, "+2")
+    
+    frame.windStyle = true
+end
+
 function S:AlertFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
@@ -168,7 +194,7 @@ function S:AlertFrames()
     hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", SkinGuildChallengeAlert)
     hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", SkinInvasionAlert)
     hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", SkinWorldQuestCompleteAlert)
 
     -- 要塞
     hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", SkinAlert)

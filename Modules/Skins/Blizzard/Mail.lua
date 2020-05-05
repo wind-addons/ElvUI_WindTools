@@ -10,7 +10,7 @@ function S:MailFrame()
     S:CreateShadow(_G.MailFrame)
     S:CreateShadow(_G.OpenMailFrame)
 
-    for i = 1, 2 do S:CreateTabShadow(_G["MailFrameTab" .. i]) end
+    for i = 1, 2 do S:CreateBackdropShadow(_G["MailFrameTab" .. i]) end
 end
 
 S:AddCallback('MailFrame')

@@ -20,7 +20,7 @@ function S:FriendsFrame()
     }
 
     for _, frame in pairs(frames) do S:CreateShadow(frame) end
-    for i = 1, 4 do S:CreateTabShadow(_G["FriendsFrameTab" .. i]) end
+    for i = 1, 4 do S:CreateBackdropShadow(_G["FriendsFrameTab" .. i]) end
 end
 
 S:AddCallback('FriendsFrame')

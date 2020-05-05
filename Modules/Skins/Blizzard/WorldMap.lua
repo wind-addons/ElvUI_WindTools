@@ -7,7 +7,7 @@ function S:WorldMapFrame()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.worldMap) then return end
 
-    S:CreateTabShadow(_G.WorldMapFrame)
+    S:CreateBackdropShadow(_G.WorldMapFrame)
 
     local QuestScrollFrame = _G.QuestScrollFrame
     if QuestScrollFrame.Background then QuestScrollFrame.Background:Kill() end

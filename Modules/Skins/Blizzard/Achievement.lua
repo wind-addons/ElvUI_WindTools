@@ -18,7 +18,7 @@ function S:Blizzard_AchievementUI()
 
     SkinAchievementFrame()
 
-    for i = 1, 3 do S:CreateTabShadowAfterElvUISkins(_G["AchievementFrameTab" .. i]) end
+    for i = 1, 3 do S:CreateBackdropShadowAfterElvUISkins(_G["AchievementFrameTab" .. i]) end
 end
 
 S:AddCallbackForAddon('Blizzard_AchievementUI')

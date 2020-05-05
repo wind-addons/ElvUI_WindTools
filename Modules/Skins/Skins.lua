@@ -11,7 +11,7 @@ S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 
 function S:CreateShadow(frame, size, r, g, b)
-    if frame.shadow then return end
+    if not frame or frame.windStyle or frame.shadow then return end
 
     if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
 
@@ -28,37 +28,38 @@ function S:CreateShadow(frame, size, r, g, b)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 
     frame.shadow = shadow
+    frame.windStyle = true
 end
 
-function S:CreateTabShadow(tab, noBackdrop)
-    if not tab or tab.windStyle then return end
+function S:CreateBackdropShadow(frame)
+    if not frame or frame.windStyle then return end
     if noBackdrop then
-        S:CreateShadow(tab)
+        S:CreateShadow(frame)
     else
-        if tab.backdrop then
-            tab.backdrop:SetTemplate("Transparent")
-            S:CreateShadow(tab.backdrop)
+        if frame.backdrop then
+            frame.backdrop:SetTemplate("Transparent")
+            S:CreateShadow(frame.backdrop)
+            frame.windStyle = true
         else
-            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", tab:GetName() or "无名框体"))
+            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", frame:GetName() or "无名框体"))
         end
     end
-    tab.windStyle = true
 end
 
-function S:CreateTabShadowAfterElvUISkins(tab, tried)
-    if not tab or tab.windStyle then return end
+function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
+    if not frame or frame.windStyle then return end
 
     tried = tried or 20
 
-    if tab.backdrop then
-        tab.backdrop:SetTemplate("Transparent")
-        S:CreateShadow(tab.backdrop)
-        tab.windStyle = true
+    if frame.backdrop then
+        frame.backdrop:SetTemplate("Transparent")
+        S:CreateShadow(frame.backdrop)
+        frame.windStyle = true
     else
         if tried >= 0 then
-            E:Delay(0.1, function() S:CreateTabShadowAfterElvUISkins(tab, tried - 1) end)
+            E:Delay(0.1, function() S:CreateBackdropShadowAfterElvUISkins(frame, tried - 1) end)
         else
-            F.DebugMessage(S, format("[2]无法找到 %s 的ElvUI美化背景！", tab:GetName()))
+            F.DebugMessage(S, format("[2]无法找到 %s 的ElvUI美化背景！", frame:GetName()))
         end
     end
 end

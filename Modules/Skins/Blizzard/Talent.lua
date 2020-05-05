@@ -23,7 +23,7 @@ function S:Blizzard_TalentUI()
 
     S:CreateShadow(_G.PlayerTalentFrame)
     S:CreateShadow(_G.PlayerTalentFrameTalentsPvpTalentFrameTalentList)
-    for i = 1, 3 do S:CreateTabShadowAfterElvUISkins(_G["PlayerTalentFrameTab" .. i]) end
+    for i = 1, 3 do S:CreateBackdropShadowAfterElvUISkins(_G["PlayerTalentFrameTab" .. i]) end
 end
 
 S:AddCallback('BlizzardTalent')

@@ -19,7 +19,7 @@ function S:LookingForGroupFrames()
 
     for _, frame in pairs(frames) do S:CreateShadow(frame) end
 
-    for i = 1, 3 do S:CreateTabShadow(_G["PVEFrameTab" .. i]) end
+    for i = 1, 3 do S:CreateBackdropShadow(_G["PVEFrameTab" .. i]) end
 end
 
 S:AddCallback('LookingForGroupFrames')

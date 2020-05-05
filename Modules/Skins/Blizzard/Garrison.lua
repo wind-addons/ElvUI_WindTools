@@ -54,7 +54,7 @@ function S:Blizzard_GarrisonUI()
     }
 
     for _, frame in pairs(frames) do if frame then S:CreateShadow(frame) end end
-    for _, tab in pairs(tabs) do if tab then S:CreateTabShadowAfterElvUISkins(tab) end end
+    for _, tab in pairs(tabs) do if tab then S:CreateBackdropShadowAfterElvUISkins(tab) end end
 end
 
 S:AddCallbackForAddon('Blizzard_GarrisonUI')

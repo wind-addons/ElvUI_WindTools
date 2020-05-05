@@ -2,6 +2,7 @@
 	<Script file='Achievement.lua'/>
 	<Script file='AddonManager.lua'/>
 	<Script file='AdventureMap.lua'/>
+	<Script file='Alerts.lua'/>
 	<Script file='AuctionHouse.lua'/>
 	<Script file='Barbershop.lua'/>
 	<Script file='Calendar.lua'/>
@@ -26,6 +27,7 @@
 	<Script file='MicroButtons.lua'/>
 	<Script file='MirrorTimers.lua'/>
 	<Script file='Misc.lua'/>
+	<Script file='ObjectiveTracker.lua'/>
 	<Script file='OrderHall.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>

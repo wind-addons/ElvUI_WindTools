@@ -11,7 +11,7 @@ function S:Blizzard_AuctionHouseUI()
 
     S:CreateShadow(_G.AuctionHouseFrame)
 
-    for _, tab in pairs(tabs) do if tab then S:CreateTabShadowAfterElvUISkins(tab) end end
+    for _, tab in pairs(tabs) do if tab then S:CreateBackdropShadowAfterElvUISkins(tab) end end
 end
 
 S:AddCallbackForAddon('Blizzard_AuctionHouseUI')

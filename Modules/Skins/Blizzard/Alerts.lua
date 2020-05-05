@@ -127,7 +127,7 @@ local function SkinInvasionAlert(frame)
             end
         end
     end
-    
+
     frame.BonusStar:ClearAllPoints()
     frame.BonusStar:Point("RIGHT", frame.backdrop, "RIGHT", -10, 0)
 
@@ -151,10 +151,9 @@ local function SkinInvasionAlert(frame)
         frame.ZoneName:ClearAllPoints()
         frame.ZoneName:Point("TOP", frame.Title, "BOTTOM", 0, -5)
     end
-    
+
     frame.windStyle = true
 end
-
 
 local function SkinWorldQuestCompleteAlert(frame)
     if not frame or frame.windStyle then return end
@@ -173,11 +172,10 @@ local function SkinWorldQuestCompleteAlert(frame)
             end
         end
     end
-    
 
     F.SetFontOutline(frame.ToastText)
     F.SetFontOutline(frame.QuestName, nil, "+2")
-    
+
     frame.windStyle = true
 end
 

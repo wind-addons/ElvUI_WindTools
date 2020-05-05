@@ -24,6 +24,43 @@ local function SkinAlert(alert)
     alert.windStyle = true
 end
 
+
+local function SkinAchievementAlert(frame)
+    if not frame or frame.windStyle then return end
+    local _, nameTextSize = frame.Name:GetFont()
+
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.Unlocked)
+    F.SetFontOutline(frame.Name, nil, nameTextSize + 2)
+    F.SetFontOutline(frame.GuildName)
+
+    if frame.Icon.Texture.b then
+        frame.Icon.Texture.b:Point("TOPLEFT", frame.Icon.Texture, "TOPLEFT", -1, 1)
+        frame.Icon.Texture.b:Point("BOTTOMRIGHT", frame.Icon.Texture, "BOTTOMRIGHT", 1, -1)
+    end
+
+    frame.Name:ClearAllPoints()
+    frame.Name:Point("TOP", frame.Unlocked, "BOTTOM", 0, -5)
+
+    frame.GuildBanner:ClearAllPoints()
+    frame.GuildBanner:Point("TOPRIGHT", frame, "TOPRIGHT", -13, -12)
+
+    frame.GuildBorder:ClearAllPoints()
+    frame.GuildBorder:Point("TOPRIGHT", frame, "TOPRIGHT", -13, -12)
+
+    frame.windStyle = true
+end
+
+local function SkinGuildChallengeAlert(frame)
+    if not frame or frame.windStyle then return end
+
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+    F.SetFrameFontOutline(frame)
+
+    frame.windStyle = true
+end
+
 local function SkinCriteriaAlert(frame)
     if not frame or frame.windStyle then return end
 
@@ -60,17 +97,32 @@ local function SkinMoneyWonAlert(frame)
     frame.windStyle = true
 end
 
+local function SkinNewRecipeLearnedAlert(frame)
+    if not frame or frame.windStyle then return end
+
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+    F.SetFontOutline(frame.Name)
+    F.SetFontOutline(frame.Title)
+
+    if frame.Icon.b then
+        frame.Icon.b:Point("TOPLEFT", frame.Icon, "TOPLEFT", -1, 1)
+        frame.Icon.b:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 1, -1)
+    end
+
+    frame.windStyle = true
+end
+
 function S:AlertFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
 
     -- 成就
-    hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", SkinAchievementAlert)
     hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", SkinCriteriaAlert)
-
+    
     -- 遭遇
     hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", SkinGuildChallengeAlert)
     hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", SkinAlert)
@@ -95,7 +147,7 @@ function S:AlertFrames()
 
     -- 专业技能
     hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", SkinNewRecipeLearnedAlert)
 
     -- 宠物 / 坐骑
     hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", SkinAlert)

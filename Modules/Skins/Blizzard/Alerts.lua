@@ -24,15 +24,13 @@ local function SkinAlert(alert)
     alert.windStyle = true
 end
 
-
 local function SkinAchievementAlert(frame)
     if not frame or frame.windStyle then return end
-    local _, nameTextSize = frame.Name:GetFont()
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Unlocked)
-    F.SetFontOutline(frame.Name, nil, nameTextSize + 2)
+    F.SetFontOutline(frame.Name, nil, "+2")
     F.SetFontOutline(frame.GuildName)
 
     if frame.Icon.Texture.b then
@@ -112,6 +110,51 @@ local function SkinNewRecipeLearnedAlert(frame)
     frame.windStyle = true
 end
 
+local function SkinInvasionAlert(frame)
+    if not frame or frame.windStyle then return end
+
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child.template and child.template == "Default" then
+            for _, region in pairs({child:GetRegions()}) do
+                if region.b then
+                    frame.Icon = region
+                    region:ClearAllPoints()
+                    region:Point("LEFT", frame.backdrop, "LEFT", 18, 0)
+                    break
+                end
+            end
+        end
+    end
+    
+    frame.BonusStar:ClearAllPoints()
+    frame.BonusStar:Point("RIGHT", frame.backdrop, "RIGHT", -10, 0)
+
+    -- 完成标题
+    for _, region in pairs({frame:GetRegions()}) do
+        if region:IsObjectType("FontString") then
+            if region ~= frame.ZoneName then
+                frame.Title = region
+                break
+            end
+        end
+    end
+
+    if frame.Title then
+        F.SetFontOutline(frame.Title)
+        frame.Title:ClearAllPoints()
+        frame.Title:Point("TOP", frame.backdrop, "TOP", 23, -31)
+
+        -- 地区
+        F.SetFontOutline(frame.ZoneName, nil, "+2")
+        frame.ZoneName:ClearAllPoints()
+        frame.ZoneName:Point("TOP", frame.Title, "BOTTOM", 0, -5)
+    end
+    
+    frame.windStyle = true
+end
+
 function S:AlertFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
@@ -119,11 +162,11 @@ function S:AlertFrames()
     -- 成就
     hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", SkinAchievementAlert)
     hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", SkinCriteriaAlert)
-    
+
     -- 遭遇
     hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", SkinGuildChallengeAlert)
-    hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", SkinInvasionAlert)
     hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", SkinAlert)
 

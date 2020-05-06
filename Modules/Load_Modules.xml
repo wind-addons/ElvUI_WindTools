@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="Combat\Load_Combat.xml"/>
 	<Include file="Maps\Load_Maps.xml"/>
 	<Include file="Skins\Load_Skins.xml"/>
 </Ui>

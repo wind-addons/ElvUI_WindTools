@@ -48,7 +48,8 @@ function C:CreateAnimationFrame()
     self.animationFrame.swordLeftToRight = frame
 
     -- 剑 ↖
-    frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
+    frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"),
+                                   true)
     anime = A.CreateAnimationGroup(frame, "anime")
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -96,9 +97,7 @@ function C:UpdateAnimationFrame()
 end
 
 function C:StartAnimation(enterCombat)
-    if not self.animationFrame then
-        F.DebugMessage(C, "找不到动画框架")
-    end
+    if not self.animationFrame then F.DebugMessage(C, "找不到动画框架") end
 
     if enterCombat then
         self.animationFrame.swordLeftToRight:Show()

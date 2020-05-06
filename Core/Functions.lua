@@ -4,9 +4,9 @@ local format, pairs, tonumber, type = format, pairs, tonumber, type
 ---------------------------------------------------
 -- 函数：更换字体描边为 OUTLINE
 -- 必要参数
--- - text(object) FontString 型 Object
+-- - text(object)        FontString 型 Object
 -- 可选参数
--- - font(string) 字型路径，nil 时为当前字型
+-- - font(string)        字型路径，nil 时为当前字型
 -- - size(number/string) 字体尺寸或是尺寸变化量字符串，nil 时为当前尺寸
 ---------------------------------------------------
 function F.SetFontOutline(text, font, size)
@@ -22,9 +22,9 @@ end
 ---------------------------------------------------
 -- 函数：更换框体内部字体描边为 OUTLINE
 -- 必要参数
--- - frame(object) Frame 型 Object
+-- - frame(object)       Frame 型 Object
 -- 可选参数
--- - font(string) 字型路径，nil 时为当前字型
+-- - font(string)        字型路径，nil 时为当前字型
 -- - size(number/string) 字体尺寸或是尺寸变化量字符串，nil 时为当前尺寸
 ---------------------------------------------------
 function F.SetFrameFontOutline(frame, font, size)
@@ -36,8 +36,8 @@ end
 ---------------------------------------------------
 -- 函数：输出 Debug 信息
 -- 必要参数
--- - module(table, string) Ace3 模块或字符串
--- - text(string) 错误讯息
+-- - module(table/string) Ace3 模块或自定义字符串
+-- - text(string)          错误讯息
 ---------------------------------------------------
 function F.DebugMessage(module, text)
     if type(module) ~= "string" then module = module:GetName() end
@@ -48,7 +48,7 @@ end
 ---------------------------------------------------
 -- 函数：获取媒体资源路径
 -- 必要参数
--- - name(string) 资源名
+-- - name(string)   资源名
 -- 可选参数
 -- - folder(string) 分类目录
 ---------------------------------------------------

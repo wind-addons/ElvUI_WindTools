@@ -165,9 +165,7 @@ function C:StartAnimation(enterCombat)
     end
 end
 
-function C:CreateTextFrame()
-    if self.textFrame then return end
-end
+function C:CreateTextFrame() if self.textFrame then return end end
 
 function C:ShowAlert() end
 
@@ -179,26 +177,34 @@ function C:PLAYER_REGEN_DISABLED() self:StartAnimation(true) end
 
 function C:PLAYER_REGEN_ENABLED() self:StartAnimation(false) end
 
-function C:ConstructFrames()
-    local frame = CreateFrame("Frame", "WindToolsCombatAlertFrame", E.UIParent)
-    frame:Point("TOP", 0, -200)
-    self.alert = frame
+function C:UpdateMover()
+    if not self.alert then return end
+    local width = self.animationFrame:GetWidth()
+    local height = self.animationFrame:GetHeight()
+    self.alert:Size(width, height)
+end
 
-    self:CreateAnimationFrame()
+function C:UpdateFrames()
+    if not self.alert then self:ConstructFrames() end
     self:UpdateAnimationFrame()
+    self:UpdateMover()
+end
+
+function C:ConstructFrames()
+    self.alert = CreateFrame("Frame", nil, E.UIParent)
+    self.alert:Point("TOP", 0, -200)
+    self:CreateAnimationFrame()
     self:CreateTextFrame()
+
+    self:UpdateAnimationFrame()
+    self:UpdateMover()
+
+    E:CreateMover(self.alert, "WTCombatAlertFrameMover", L["Combat Alert"], nil, nil, nil, 'ALL,WINDTOOLS',
+                  function() return E.db.WT.combat.combatAlert.enable end)
 
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
-
-    local width = self.animationFrame:GetWidth()
-    local height = self.animationFrame:GetHeight()
-
-    self.alert:Size(width, height)
-
-    E:CreateMover(self.alert, "combatAlertFrameMover", L["Combat Alert"], nil, nil, nil, 'ALL,WINDTOOLS',
-                  function() return C.db.enabled; end)
 end
 
 function C:Initialize()
@@ -210,7 +216,9 @@ end
 
 function C:ProfileUpdate()
     if E.db.WT.combat.combatAlert.enable then
-        self:ConstructFrames()
+        self:UpdateFrames()
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        self:RegisterEvent("PLAYER_REGEN_DISABLED")
     else
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
         self:UnregisterEvent("PLAYER_REGEN_DISABLED")

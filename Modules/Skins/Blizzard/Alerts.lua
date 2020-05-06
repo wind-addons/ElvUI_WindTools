@@ -84,13 +84,16 @@ local function SkinMoneyWonAlert(frame)
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Label)
-    F.SetFontOutline(frame.Amount)
+    F.SetFontOutline(frame.Amount, nil, "+1")
 
     frame.Label:ClearAllPoints()
-    frame.Label:Point("TOPLEFT", frame.Icon, "TOPRIGHT", 12, -2)
+    frame.Label:Point("TOP", frame.backdrop, "TOP", 24, -5)
+    frame.Label:SetJustifyH("MIDDLE")
+    frame.Label:SetJustifyV("TOP")
 
     frame.Amount:ClearAllPoints()
-    frame.Amount:Point("BOTTOMLEFT", frame.Icon, "BOTTOMRIGHT", 12, 2)
+    local xOffset = (180 - frame.Amount:GetStringWidth()) / 2
+    frame.Amount:Point("BOTTOMLEFT", frame.Icon, "BOTTOMRIGHT", xOffset, 2)
 
     frame.windStyle = true
 end
@@ -100,7 +103,7 @@ local function SkinNewRecipeLearnedAlert(frame)
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Name)
-    F.SetFontOutline(frame.Title)
+    F.SetFontOutline(frame.Title, nil, "+2")
 
     if frame.Icon.b then
         frame.Icon.b:Point("TOPLEFT", frame.Icon, "TOPLEFT", -1, 1)
@@ -145,11 +148,13 @@ local function SkinInvasionAlert(frame)
         F.SetFontOutline(frame.Title)
         frame.Title:ClearAllPoints()
         frame.Title:Point("TOP", frame.backdrop, "TOP", 23, -31)
+        frame.Title:SetJustifyH("MIDDLE")
 
         -- 地区
         F.SetFontOutline(frame.ZoneName, nil, "+2")
         frame.ZoneName:ClearAllPoints()
         frame.ZoneName:Point("TOP", frame.Title, "BOTTOM", 0, -5)
+        frame.ZoneName:SetJustifyH("MIDDLE")
     end
 
     frame.windStyle = true
@@ -179,6 +184,83 @@ local function SkinWorldQuestCompleteAlert(frame)
     frame.windStyle = true
 end
 
+local function SkinLootUpgradeAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.TitleText)
+    frame.TitleText:ClearAllPoints()
+    frame.TitleText:Point("TOP", frame.backdrop, 30, -12)
+    frame.TitleText:SetJustifyH("MIDDLE")
+    frame.TitleText:SetJustifyV("TOP")
+
+    local texts = {
+        frame.BaseQualityItemName,
+        frame.UpgradeQualityItemName,
+        frame.WhiteText,
+        frame.WhiteText2,
+    }
+
+    for _, text in pairs(texts) do
+        F.SetFontOutline(text, nil, "+2")
+        text:ClearAllPoints()
+        text:Point("BOTTOM", frame.backdrop, 30, 12)
+        text:SetJustifyH("MIDDLE")
+        text:SetJustifyV("BOTTOM")
+    end
+
+    frame.windStyle = true
+end
+
+local function SkinLootAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.Label)
+    F.SetFontOutline(frame.RollValue)
+    F.SetFontOutline(frame.ItemName)
+
+    frame.windStyle = true
+end
+
+local function SkinLegendaryItemAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    frame.Icon:ClearAllPoints()
+    frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
+
+
+    F.SetFontOutline(frame.ItemName, nil, "+1")
+    frame.ItemName:ClearAllPoints()
+    frame.ItemName:Point("BOTTOM", frame.backdrop, "BOTTOM", 32, 16)
+    frame.ItemName:SetJustifyH("MIDDLE")
+    frame.ItemName:SetJustifyV("BOTTOM")
+
+    for _, region in pairs({frame:GetRegions()}) do
+        if region:IsObjectType("FontString") and region ~= frame.ItemName then
+            F.SetFontOutline(region)
+            region:ClearAllPoints()
+            region:Point("TOP", frame.backdrop, "TOP", 32, -16)
+            region:SetJustifyH("MIDDLE")
+            region:SetJustifyV("TOP")
+            break
+        end
+    end
+
+    frame.windStyle = true
+end
+
+local function SkinDigsiteCompleteAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.Title)
+    F.SetFontOutline(frame.DigsiteType, nil, "+2")
+
+    frame.windStyle = true
+end
+
 function S:AlertFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
@@ -203,17 +285,15 @@ function S:AlertFrames()
     hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", SkinAlert)
 
-    -- 荣誉
-    hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", SkinAlert)
-
     -- 拾取
-    hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.LootAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", SkinLegendaryItemAlert)
+    hooksecurefunc(_G.LootAlertSystem, "setUpFunction", SkinLootAlert)
+    hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", SkinLootUpgradeAlert)
     hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", SkinMoneyWonAlert)
+    hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", SkinMoneyWonAlert)
 
     -- 专业技能
-    hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", SkinDigsiteCompleteAlert)
     hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", SkinNewRecipeLearnedAlert)
 
     -- 宠物 / 坐骑

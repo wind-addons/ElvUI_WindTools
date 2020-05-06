@@ -8,9 +8,11 @@
 	<Script file='Calendar.lua'/>
 	<Script file='Challenges.lua'/>
 	<Script file='Character.lua'/>
+	<Script file='Collections.lua'/>
 	<Script file='Communities.lua'/>
 	<Script file='DebugTools.lua'/>
 	<Script file='DressingRoom.lua'/>
+	<Script file='EncounterJournal.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
 	<Script file='Gossip.lua'/>

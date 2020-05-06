@@ -8,18 +8,7 @@ local function SkinAlert(alert)
 
     S:CreateBackdropShadowAfterElvUISkins(alert)
 
-    if alert.Label and alert.Icon then
-        alert.Label:ClearAllPoints()
-        alert.Label:SetPoint("TOPLEFT", alert.Icon, "TOPRIGHT", 5, 2)
-    end
-
-    if alert.Icon and alert.Icon.Texture and alert.Icon.Texture.b then
-        alert.Icon.Texture.b:Point("TOPLEFT", alert.Icon.Texture, "TOPLEFT", -1, 1)
-        alert.Icon.Texture.b:Point("BOTTOMRIGHT", alert.Icon.Texture, "BOTTOMRIGHT", 1, -1)
-        alert.Icon.Texture.b:CreateShadow(5)
-    end
-
-    if alert.SpecIcon then alert.SpecIcon.b:CreateShadow() end
+    F.SetFrameFontOutline(alert)
 
     alert.windStyle = true
 end
@@ -194,12 +183,7 @@ local function SkinLootUpgradeAlert(frame)
     frame.TitleText:SetJustifyH("MIDDLE")
     frame.TitleText:SetJustifyV("TOP")
 
-    local texts = {
-        frame.BaseQualityItemName,
-        frame.UpgradeQualityItemName,
-        frame.WhiteText,
-        frame.WhiteText2,
-    }
+    local texts = {frame.BaseQualityItemName, frame.UpgradeQualityItemName, frame.WhiteText, frame.WhiteText2}
 
     for _, text in pairs(texts) do
         F.SetFontOutline(text, nil, "+2")
@@ -229,7 +213,6 @@ local function SkinLegendaryItemAlert(frame)
 
     frame.Icon:ClearAllPoints()
     frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
-
 
     F.SetFontOutline(frame.ItemName, nil, "+1")
     frame.ItemName:ClearAllPoints()
@@ -261,6 +244,72 @@ local function SkinDigsiteCompleteAlert(frame)
     frame.windStyle = true
 end
 
+local function SkinRafRewardDeliveredAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.Title, nil, "+1")
+    frame.Title:ClearAllPoints()
+    frame.Title:Point("BOTTOM", frame.backdrop, "BOTTOM", 24, 16)
+    frame.Title:SetJustifyH("MIDDLE")
+    frame.Title:SetJustifyV("BOTTOM")
+
+    F.SetFontOutline(frame.Description)
+    frame.Description:ClearAllPoints()
+    frame.Description:Point("TOP", frame.backdrop, "TOP", 24, -16)
+    frame.Description:SetJustifyH("MIDDLE")
+    frame.Description:SetJustifyV("TOP")
+
+    frame.windStyle = true
+end
+
+local function SkinNewItemAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    F.SetFontOutline(frame.Label)
+    frame.Label:ClearAllPoints()
+    frame.Label:Point("TOP", frame.backdrop, "TOP", 32, -13)
+    frame.Label:SetJustifyH("MIDDLE")
+    frame.Label:SetJustifyV("TOP")
+
+    F.SetFontOutline(frame.Name, nil, "+1")
+    frame.Name:ClearAllPoints()
+    frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 32, 15)
+    frame.Name:SetJustifyH("MIDDLE")
+    frame.Name:SetJustifyV("BOTTOM")
+
+    if frame.Icon.b then
+        frame.Icon.b:ClearAllPoints()
+        frame.Icon.b:Point("TOPLEFT", frame.Icon, "TOPLEFT", -1, 1)
+        frame.Icon.b:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 1, -1)
+    end
+
+    frame.windStyle = true
+end
+
+local function SkinGarrisonBuildingAlert(frame)
+    if not frame or frame.windStyle then return end
+    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    frame.Icon:ClearAllPoints()
+    frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 12, 0)
+
+    F.SetFontOutline(frame.Title, nil, "+1")
+    frame.Title:ClearAllPoints()
+    frame.Title:Point("TOP", frame.backdrop, "TOP", 26, -13)
+    frame.Title:SetJustifyH("MIDDLE")
+    frame.Title:SetJustifyV("TOP")
+
+    F.SetFontOutline(frame.Name, nil, "+1")
+    frame.Name:ClearAllPoints()
+    frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 26, 15)
+    frame.Name:SetJustifyH("MIDDLE")
+    frame.Name:SetJustifyV("BOTTOM")
+
+    frame.windStyle = true
+end
+
 function S:AlertFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
@@ -280,7 +329,7 @@ function S:AlertFrames()
     hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", SkinGarrisonBuildingAlert)
     hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", SkinAlert)
     hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", SkinAlert)
@@ -297,13 +346,13 @@ function S:AlertFrames()
     hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", SkinNewRecipeLearnedAlert)
 
     -- 宠物 / 坐骑
-    hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", SkinNewItemAlert)
+    hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", SkinNewItemAlert)
+    hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", SkinNewItemAlert)
 
     -- 其它
     hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", SkinAlert)
+    hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", SkinRafRewardDeliveredAlert)
 end
 
 S:AddCallback('AlertFrames')

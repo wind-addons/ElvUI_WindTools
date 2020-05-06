@@ -2,11 +2,13 @@ local W, F, E, L = unpack(select(2, ...))
 local C = W:NewModule('CombatAlert', 'AceEvent-3.0')
 local A = F.Animation
 
-local unpack = unpack
+local unpack, tinsert, tremove = unpack, tinsert, tremove
 local CreateFrame = CreateFrame
 
-function C:UpdateConfigs() end
+local isPlaying = false
+local alertQueue = {}
 
+-- 动画
 function C:CreateAnimationFrame()
     if self.animationFrame then return end
 
@@ -22,7 +24,8 @@ function C:CreateAnimationFrame()
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.SetAnimationWhileShowing(frame, anime)
+    A.PlayAnimationOnShow(frame, anime)
+    A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
     anime.moveToCenter:SetDuration(0.3)
     anime.moveToCenter:SetStartDelay(0) -- 进场
     anime.fadeIn:SetDuration(0.3)
@@ -37,7 +40,8 @@ function C:CreateAnimationFrame()
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.SetAnimationWhileShowing(frame, anime)
+    A.PlayAnimationOnShow(frame, anime)
+    A.CloseAnimationOnHide(frame, anime)
     anime.moveToCenter:SetDuration(0.5)
     anime.moveToCenter:SetStartDelay(0) -- 进场
     anime.fadeIn:SetDuration(0.5)
@@ -54,7 +58,8 @@ function C:CreateAnimationFrame()
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.SetAnimationWhileShowing(frame, anime)
+    A.PlayAnimationOnShow(frame, anime)
+    A.CloseAnimationOnHide(frame, anime)
     anime.moveToCenter:SetDuration(0.5)
     anime.moveToCenter:SetStartDelay(0) -- 进场
     anime.fadeIn:SetDuration(0.5)
@@ -100,6 +105,7 @@ function C:StartAnimation(enterCombat)
     if not self.animationFrame then F.DebugMessage(C, "找不到动画框架") end
 
     if enterCombat then
+        isPlaying = true
         self.animationFrame.swordLeftToRight:Show()
         self.animationFrame.swordRightToLeft:Show()
         -- 盾牌动画会由左到右的剑自动触发
@@ -107,17 +113,43 @@ function C:StartAnimation(enterCombat)
     end
 end
 
+-- 文字
 function C:CreateTextFrame() if self.textFrame then return end end
 
-function C:ShowAlert() end
+-- 通知控制
+function C:ShowAlert(...)
+    self:StartAnimation(...)
+end
 
-function C:QueueAlert() end
+function C:QueueAlert(...)
+    tinsert(alertQueue, ...)
+end
 
-function C:CheckNextAlert() end
+function C.LoadNextAlert()
+    if alertQueue and alertQueue[1] then
+        local enterCombat = alertQueue[1]
+        C:StartAnimation(enterCombat)
+        tremove(alertQueue, 1)
+    else
+        isPlaying = false
+    end
+end
 
-function C:PLAYER_REGEN_DISABLED() self:StartAnimation(true) end
+function C:PLAYER_REGEN_DISABLED()
+    if isPlaying then
+        QueueAlert(true)
+    else
+        ShowAlert(true)
+    end
+end
 
-function C:PLAYER_REGEN_ENABLED() self:StartAnimation(false) end
+function C:PLAYER_REGEN_ENABLED() 
+    if isPlaying then
+        QueueAlert(false)
+    else
+        ShowAlert(false)
+    end
+end
 
 function C:UpdateMover()
     if not self.alert then return end

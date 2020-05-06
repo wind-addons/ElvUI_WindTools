@@ -131,7 +131,7 @@ end
 -- - frame(object)          动画框体
 -- - animationGroup(object) 动画组
 ---------------------------------------------------
-function A.SetAnimationWhileShowing(frame, animationGroup)
+function A.PlayAnimationOnShow(frame, animationGroup)
     if not animationGroup or type(animationGroup) == "string" then animationGroup = self[animationGroup] end
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[3]找不到动画组")
@@ -139,7 +139,27 @@ function A.SetAnimationWhileShowing(frame, animationGroup)
     end
 
     frame:SetScript("OnShow", function() animationGroup:Play() end)
-    animationGroup:SetScript("OnFinished", function() frame:Hide() end)
+end
+
+---------------------------------------------------
+-- 函数：设定动画结束时的操作
+-- 必要参数
+-- - frame(object)          动画框体
+-- - animationGroup(object) 动画组
+-- 可选参数
+-- - endFunc(function)      结束时的回调
+---------------------------------------------------
+function A.CloseAnimationOnHide(frame, animationGroup, callback)
+    if not animationGroup or type(animationGroup) == "string" then animationGroup = self[animationGroup] end
+    if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
+        F.DebugMessage("动画", "[3]找不到动画组")
+        return
+    end
+
+    animationGroup:SetScript("OnFinished", function()
+        frame:Hide()
+        if callback then callback() end
+    end)
 end
 
 ---------------------------------------------------

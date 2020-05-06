@@ -36,12 +36,12 @@ end
 ---------------------------------------------------
 -- 函数：输出 Debug 信息
 -- 必要参数
--- - module(table) Ace3 模块
+-- - module(table, string) Ace3 模块或字符串
 -- - text(string) 错误讯息
 ---------------------------------------------------
 function F.DebugMessage(module, text)
-    local moduleName = module:GetName()
-    local message = format("[WindUI - %s] %s", moduleName, text)
+    if type(module) ~= "string" then module = module:GetName() end
+    local message = format("[WindUI - %s] %s", module, text)
     print(message)
 end
 

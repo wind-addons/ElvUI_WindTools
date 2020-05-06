@@ -10,3 +10,5 @@ So, I try to build a more powerful plugin for ElvUI, also named ElvUI_WindTools.
 所以我尝试开发一个更加强大的 ElvUI 插件，也叫 ElvUI_WindTools 这个名字。
 
 # 加油，奥利给~
+目前还没有设定界面，不建议下载使用。  
+这个仓库在正式版之后将不再更新，全部工作会直接转移到 ElvUI_WindTools 之中继续。

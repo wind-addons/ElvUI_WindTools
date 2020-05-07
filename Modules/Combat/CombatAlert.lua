@@ -117,12 +117,12 @@ end
 function C:CreateTextFrame() if self.textFrame then return end end
 
 -- 通知控制
-function C:ShowAlert(...)
-    self:StartAnimation(...)
+function C:ShowAlert(enterCombat)
+    self:StartAnimation(enterCombat)
 end
 
-function C:QueueAlert(...)
-    tinsert(alertQueue, ...)
+function C:QueueAlert(enterCombat)
+    tinsert(alertQueue, enterCombat)
 end
 
 function C.LoadNextAlert()
@@ -137,17 +137,17 @@ end
 
 function C:PLAYER_REGEN_DISABLED()
     if isPlaying then
-        QueueAlert(true)
+        self:QueueAlert(true)
     else
-        ShowAlert(true)
+        self:ShowAlert(true)
     end
 end
 
 function C:PLAYER_REGEN_ENABLED() 
     if isPlaying then
-        QueueAlert(false)
+        self:QueueAlert(false)
     else
-        ShowAlert(false)
+        self:ShowAlert(false)
     end
 end
 

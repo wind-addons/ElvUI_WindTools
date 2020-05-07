@@ -43,6 +43,7 @@ end
 
 -- 为字符串添加自定义颜色(适合数据库形式的上色)
 function WT:ColorStrWithPack(str, colorPack)
+	if not colorPack then return str end
 	local r, g, b = colorPack.r, colorPack.g, colorPack.b
 	if not r or not g or not b then return str end
 	return WT:ColorStr(str, r, g, b)

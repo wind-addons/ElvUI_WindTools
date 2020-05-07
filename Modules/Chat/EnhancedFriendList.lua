@@ -178,7 +178,7 @@ function EFL:UpdateFriendButton(button)
         if game == BNET_CLIENT_WOW then
             name = gameAccountInfo.characterName or ""
             level = gameAccountInfo.characterLevel or 0
-            faction = gameAccountInfo.factionName or ""
+            faction = gameAccountInfo.factionName or nil
             class = gameAccountInfo.className or ""
             area = gameAccountInfo.areaName or ""
 

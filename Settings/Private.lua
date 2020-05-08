@@ -1,23 +1,23 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 V.maps = {
-    worldMap = {
-        reveal = true,
-    }
+	worldMap = {
+		reveal = true
+	}
 }
 
 V.skins = {
 	color = {
 		r = 0,
 		g = 0,
-		b = 0,
+		b = 0
 	},
 	vignetting = {
 		enable = true,
-		level = 30,
+		level = 30
 	},
 	ace3 = {
-		enable = true,
+		enable = true
 	},
 	blizzard = {
 		enable = true,
@@ -61,7 +61,7 @@ V.skins = {
 		taxi = true,
 		tooltip = true,
 		warboard = true,
-		worldMap = true,
+		worldMap = true
 	},
 	elvui = {
 		enable = true,
@@ -81,6 +81,6 @@ V.skins = {
 		panels = true,
 		staticPopup = true,
 		statusReport = true,
-		unitFrames = true,
-	},
+		unitFrames = true
+	}
 }

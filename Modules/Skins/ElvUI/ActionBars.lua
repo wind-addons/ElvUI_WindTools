@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
-local AB = E:GetModule('ActionBars')
+local S = W:GetModule("Skins")
+local AB = E:GetModule("ActionBars")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -9,14 +9,20 @@ local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
 local function SkinBar(bar, type)
-    if not (bar and bar.backdrop) then return end
+    if not (bar and bar.backdrop) then
+        return
+    end
 
     if E.private.WT.skins.elvui.actionBarsBackdrop then
         if bar.db.backdrop then
-            if not bar.backdrop.shadow then S:CreateShadow(bar.backdrop) end
+            if not bar.backdrop.shadow then
+                S:CreateShadow(bar.backdrop)
+            end
             bar.backdrop.shadow:Show()
         else
-            if bar.backdrop.shadow then bar.backdrop.shadow:Hide() end
+            if bar.backdrop.shadow then
+                bar.backdrop.shadow:Hide()
+            end
         end
     end
 
@@ -41,8 +47,12 @@ local function SkinBar(bar, type)
 end
 
 function S:ElvUI_ActionBars()
-    if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then return end
-    if not (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop) then return end
+    if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
+        return
+    end
+    if not (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop) then
+        return
+    end
 
     -- 常规动作条
     for id = 1, 10 do
@@ -50,23 +60,43 @@ function S:ElvUI_ActionBars()
         SkinBar(bar, "PLAYER")
     end
 
-    hooksecurefunc(AB, "PositionAndSizeBar", function(self, barName)
-        local bar = self.handledBars[barName]
-        SkinBar(bar, "PLAYER")
-    end)
+    hooksecurefunc(
+        AB,
+        "PositionAndSizeBar",
+        function(self, barName)
+            local bar = self.handledBars[barName]
+            SkinBar(bar, "PLAYER")
+        end
+    )
 
     -- 宠物动作条
     SkinBar(_G.ElvUI_BarPet, "PET")
-    hooksecurefunc(AB, "PositionAndSizeBarPet", function() SkinBar(_G.ElvUI_BarPet, "PET") end)
+    hooksecurefunc(
+        AB,
+        "PositionAndSizeBarPet",
+        function()
+            SkinBar(_G.ElvUI_BarPet, "PET")
+        end
+    )
 
     -- 姿态条
     SkinBar(_G.ElvUI_StanceBar, "STANCE")
-    hooksecurefunc(AB, "PositionAndSizeBarShapeShift", function() SkinBar(_G.ElvUI_StanceBar, "STANCE") end)
+    hooksecurefunc(
+        AB,
+        "PositionAndSizeBarShapeShift",
+        function()
+            SkinBar(_G.ElvUI_StanceBar, "STANCE")
+        end
+    )
 
-    if not E.private.WT.skins.elvui.actionBarsButton then return end
+    if not E.private.WT.skins.elvui.actionBarsButton then
+        return
+    end
 
     -- 特殊技能
-    if _G.ZoneAbilityFrame and _G.ZoneAbilityFrame.SpellButton then S:CreateShadow(_G.ZoneAbilityFrame.SpellButton) end
+    if _G.ZoneAbilityFrame and _G.ZoneAbilityFrame.SpellButton then
+        S:CreateShadow(_G.ZoneAbilityFrame.SpellButton)
+    end
 
     -- 离开载具
     S:CreateShadow(_G.MainMenuBarVehicleLeaveButton)
@@ -74,9 +104,10 @@ function S:ElvUI_ActionBars()
     -- 额外动作条
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]
-        if button then S:CreateShadow(button) end
+        if button then
+            S:CreateShadow(button)
+        end
     end
-
 end
 
-S:AddCallback('ElvUI_ActionBars')
+S:AddCallback("ElvUI_ActionBars")

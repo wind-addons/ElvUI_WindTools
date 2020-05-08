@@ -26,7 +26,7 @@ function A.CreateAnimationFrame(name, parent, strata, level, hidden, texture, is
         frame:SetFrameLevel(level)
     end
     if hidden then
-        frame:SetAlpha(0);
+        frame:SetAlpha(0)
         frame:Hide()
     end
 
@@ -151,7 +151,8 @@ function A.PlayAnimationOnShow(frame, animationGroup)
     end
 
     frame:SetScript(
-        "OnShow", function()
+        "OnShow",
+        function()
             animationGroup:Play()
         end
     )
@@ -175,7 +176,8 @@ function A.CloseAnimationOnHide(frame, animationGroup, callback)
     end
 
     animationGroup:SetScript(
-        "OnFinished", function()
+        "OnFinished",
+        function()
             frame:Hide()
             if callback then
                 callback()

@@ -1,13 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
+local S = W:GetModule("Skins")
 
 local _
 local _G = _G
 local pairs = pairs
 
 function S:Blizzard_GarrisonUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.AdventureMap) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.adventureMap) then return end
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.AdventureMap) then
+        return
+    end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.adventureMap) then
+        return
+    end
 
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
     local childFrame = AdventureMapQuestChoiceDialog.Details.Child
@@ -22,4 +26,4 @@ function S:Blizzard_GarrisonUI()
     F.SetFontOutline(AdventureMapQuestChoiceDialog.RewardsHeader)
 end
 
-S:AddCallbackForAddon('Blizzard_GarrisonUI')
+S:AddCallbackForAddon("Blizzard_GarrisonUI")

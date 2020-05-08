@@ -1,6 +1,6 @@
 -- 去除地图迷雾部分功能感谢：Leatrix
 local W, F, E, L = unpack(select(2, ...))
-local WM = W:NewModule('WorldMap', 'AceHook-3.0')
+local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
 local _G = _G
 local tinsert, strsplit, ceil, ipairs, mod = tinsert, strsplit, ceil, ipairs, mod
@@ -1906,10 +1906,14 @@ local overlayTextures = {}
 
 function WM:HandleMap()
     overlayTextures = {}
-    local mapID = WorldMapFrame.mapID;
-    if not mapID then return end
-    local artID = C_Map_GetMapArtID(mapID);
-    if not artID or not RevealDatabase[artID] then return end
+    local mapID = WorldMapFrame.mapID
+    if not mapID then
+        return
+    end
+    local artID = C_Map_GetMapArtID(mapID)
+    if not artID or not RevealDatabase[artID] then
+        return
+    end
     local zone = RevealDatabase[artID]
 
     -- 储存已经探索的地图以在后续操作中忽略
@@ -1917,8 +1921,11 @@ function WM:HandleMap()
     local exploredMapTextures = C_MapExplorationInfo_GetExploredMapTextures(mapID)
     if exploredMapTextures then
         for i, exploredTextureInfo in ipairs(exploredMapTextures) do
-            local key = exploredTextureInfo.textureWidth .. ":" .. exploredTextureInfo.textureHeight .. ":" ..
-                            exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
+            local key =
+                exploredTextureInfo.textureWidth ..
+                ":" ..
+                    exploredTextureInfo.textureHeight ..
+                        ":" .. exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
             TileExists[key] = true
         end
     end
@@ -1927,7 +1934,9 @@ function WM:HandleMap()
     self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
     local layers = C_Map_GetMapArtLayers(mapID)
     local layerInfo = layers and layers[self.layerIndex]
-    if not layerInfo then return end
+    if not layerInfo then
+        return
+    end
     local TILE_SIZE_WIDTH = layerInfo.tileWidth
     local TILE_SIZE_HEIGHT = layerInfo.tileHeight
 
@@ -1945,7 +1954,9 @@ function WM:HandleMap()
                     textureFileHeight = TILE_SIZE_HEIGHT
                 else
                     texturePixelHeight = mod(height, TILE_SIZE_HEIGHT)
-                    if (texturePixelHeight == 0) then texturePixelHeight = TILE_SIZE_HEIGHT end
+                    if (texturePixelHeight == 0) then
+                        texturePixelHeight = TILE_SIZE_HEIGHT
+                    end
                     textureFileHeight = 16
                     while (textureFileHeight < texturePixelHeight) do
                         textureFileHeight = textureFileHeight * 2
@@ -1958,17 +1969,26 @@ function WM:HandleMap()
                         textureFileWidth = TILE_SIZE_WIDTH
                     else
                         texturePixelWidth = mod(width, TILE_SIZE_WIDTH)
-                        if (texturePixelWidth == 0) then texturePixelWidth = TILE_SIZE_WIDTH end
+                        if (texturePixelWidth == 0) then
+                            texturePixelWidth = TILE_SIZE_WIDTH
+                        end
                         textureFileWidth = 16
                         while (textureFileWidth < texturePixelWidth) do
                             textureFileWidth = textureFileWidth * 2
                         end
                     end
                     texture:Size(texturePixelWidth, texturePixelHeight)
-                    texture:SetTexCoord(0, texturePixelWidth / textureFileWidth, 0,
-                                        texturePixelHeight / textureFileHeight)
-                    texture:Point("TOPLEFT", offsetX + (TILE_SIZE_WIDTH * (k - 1)),
-                                  -(offsetY + (TILE_SIZE_HEIGHT * (j - 1))))
+                    texture:SetTexCoord(
+                        0,
+                        texturePixelWidth / textureFileWidth,
+                        0,
+                        texturePixelHeight / textureFileHeight
+                    )
+                    texture:Point(
+                        "TOPLEFT",
+                        offsetX + (TILE_SIZE_WIDTH * (k - 1)),
+                        -(offsetY + (TILE_SIZE_HEIGHT * (j - 1)))
+                    )
                     texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
                     texture:SetDrawLayer("ARTWORK", -1)
                     texture:Show()
@@ -1980,7 +2000,9 @@ function WM:HandleMap()
 end
 
 function WM:Reveal()
-    if not E.private.WT.maps.worldMap.reveal then return end
+    if not E.private.WT.maps.worldMap.reveal then
+        return
+    end
 
     for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
         hooksecurefunc(pin, "RefreshOverlays", WM.HandleMap)

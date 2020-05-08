@@ -1,13 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
+local S = W:GetModule("Skins")
 
 local _
 local _G = _G
 local pairs = pairs
 
 function S:GarrisonTooltips()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.garrison) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.garrison) then return end
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.garrison) then
+        return
+    end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.garrison) then
+        return
+    end
 
     local tooltips = {
         _G.GarrisonFollowerTooltip,
@@ -18,15 +22,23 @@ function S:GarrisonTooltips()
         _G.GarrisonFollowerAbilityTooltip,
         _G.FloatingGarrisonFollowerAbilityTooltip,
         _G.GarrisonFollowerMissionAbilityWithoutCountersTooltip,
-        _G.GarrisonFollowerAbilityWithoutCountersTooltip,
+        _G.GarrisonFollowerAbilityWithoutCountersTooltip
     }
 
-    for _, tooltip in pairs(tooltips) do if tooltip then S:CreateShadow(tooltip) end end
+    for _, tooltip in pairs(tooltips) do
+        if tooltip then
+            S:CreateShadow(tooltip)
+        end
+    end
 end
 
 function S:Blizzard_GarrisonUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.garrison) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.garrison) then return end
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.garrison) then
+        return
+    end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.garrison) then
+        return
+    end
 
     local frames = {
         _G.GarrisonMissionFrame,
@@ -53,9 +65,17 @@ function S:Blizzard_GarrisonUI()
         _G.BFAMissionFrameTab3
     }
 
-    for _, frame in pairs(frames) do if frame then S:CreateShadow(frame) end end
-    for _, tab in pairs(tabs) do if tab then S:CreateBackdropShadowAfterElvUISkins(tab) end end
+    for _, frame in pairs(frames) do
+        if frame then
+            S:CreateShadow(frame)
+        end
+    end
+    for _, tab in pairs(tabs) do
+        if tab then
+            S:CreateBackdropShadowAfterElvUISkins(tab)
+        end
+    end
 end
 
-S:AddCallbackForAddon('Blizzard_GarrisonUI')
-S:AddCallback('GarrisonTooltips')
+S:AddCallbackForAddon("Blizzard_GarrisonUI")
+S:AddCallback("GarrisonTooltips")

@@ -12,7 +12,9 @@ local format, pairs, tonumber, type = format, pairs, tonumber, type
 function F.SetFontOutline(text, font, size)
     local fontName, fontHeight = text:GetFont()
 
-    if size and type(size) == "string" then size = fontHeight + tonumber(size) end
+    if size and type(size) == "string" then
+        size = fontHeight + tonumber(size)
+    end
 
     text:FontTemplate(font or fontName, size or fontHeight, "OUTLINE")
     text:SetShadowColor(0, 0, 0, 0)
@@ -29,7 +31,9 @@ end
 ---------------------------------------------------
 function F.SetFrameFontOutline(frame, font, size)
     for _, region in pairs({frame:GetRegions()}) do
-        if region:IsObjectType("FontString") then F.SetFontOutline(region, font, size) end
+        if region:IsObjectType("FontString") then
+            F.SetFontOutline(region, font, size)
+        end
     end
 end
 
@@ -40,7 +44,9 @@ end
 -- - text(string)          错误讯息
 ---------------------------------------------------
 function F.DebugMessage(module, text)
-    if type(module) ~= "string" then module = module:GetName() end
+    if type(module) ~= "string" then
+        module = module:GetName()
+    end
     local message = format("[WindUI - %s] %s", module, text)
     print(message)
 end
@@ -54,7 +60,9 @@ end
 ---------------------------------------------------
 function F.GetTexture(name, folder)
     local mediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\"
-    if folder then mediaPath = mediaPath .. folder .. "\\" end
+    if folder then
+        mediaPath = mediaPath .. folder .. "\\"
+    end
     mediaPath = mediaPath .. name
     return mediaPath
 end

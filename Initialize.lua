@@ -8,9 +8,7 @@ local hooksecurefunc = hooksecurefunc
 local collectgarbage = collectgarbage
 
 -- 注册 Wind 工具箱为 Ace3 插件
-local W = LibStub("AceAddon-3.0"):NewAddon(
-              AddOnName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0"
-          );
+local W = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
 -- 初始化用于保存设置的数据库
 V.WT = {}

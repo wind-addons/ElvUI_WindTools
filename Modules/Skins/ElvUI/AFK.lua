@@ -1,12 +1,14 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
-local AFK = E:GetModule('AFK')
+local S = W:GetModule("Skins")
+local AFK = E:GetModule("AFK")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_AFK()
-    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.afk) then return end
+    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.afk) then
+        return
+    end
 
     S:CreateShadow(AFK.AFKMode.bottom, 10)
 
@@ -17,4 +19,4 @@ function S:ElvUI_AFK()
     AFK.AFKMode.bottom.time:Point("TOPLEFT", AFK.AFKMode.bottom.guild, "BOTTOMLEFT", 0, -11)
 end
 
-S:AddCallback('ElvUI_AFK')
+S:AddCallback("ElvUI_AFK")

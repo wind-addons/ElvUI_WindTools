@@ -1,10 +1,12 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
+local S = W:GetModule("Skins")
 
 local _G = _G
 
 local function SkinAlert(alert)
-    if not alert or alert.windStyle then return end
+    if not alert or alert.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(alert)
 
@@ -14,7 +16,9 @@ local function SkinAlert(alert)
 end
 
 local function SkinAchievementAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
@@ -40,7 +44,9 @@ local function SkinAchievementAlert(frame)
 end
 
 local function SkinGuildChallengeAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFrameFontOutline(frame)
@@ -49,7 +55,9 @@ local function SkinGuildChallengeAlert(frame)
 end
 
 local function SkinCriteriaAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
@@ -69,7 +77,9 @@ local function SkinCriteriaAlert(frame)
 end
 
 local function SkinMoneyWonAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Label)
@@ -88,7 +98,9 @@ local function SkinMoneyWonAlert(frame)
 end
 
 local function SkinNewRecipeLearnedAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Name)
@@ -103,7 +115,9 @@ local function SkinNewRecipeLearnedAlert(frame)
 end
 
 local function SkinInvasionAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
@@ -150,7 +164,9 @@ local function SkinInvasionAlert(frame)
 end
 
 local function SkinWorldQuestCompleteAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
 
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
@@ -174,7 +190,9 @@ local function SkinWorldQuestCompleteAlert(frame)
 end
 
 local function SkinLootUpgradeAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.TitleText)
@@ -197,7 +215,9 @@ local function SkinLootUpgradeAlert(frame)
 end
 
 local function SkinLootAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Label)
@@ -208,7 +228,9 @@ local function SkinLootAlert(frame)
 end
 
 local function SkinLegendaryItemAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     frame.Icon:ClearAllPoints()
@@ -235,7 +257,9 @@ local function SkinLegendaryItemAlert(frame)
 end
 
 local function SkinDigsiteCompleteAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Title)
@@ -245,7 +269,9 @@ local function SkinDigsiteCompleteAlert(frame)
 end
 
 local function SkinRafRewardDeliveredAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Title, nil, "+1")
@@ -264,7 +290,9 @@ local function SkinRafRewardDeliveredAlert(frame)
 end
 
 local function SkinNewItemAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Label)
@@ -289,7 +317,9 @@ local function SkinNewItemAlert(frame)
 end
 
 local function SkinGarrisonBuildingAlert(frame)
-    if not frame or frame.windStyle then return end
+    if not frame or frame.windStyle then
+        return
+    end
     S:CreateBackdropShadowAfterElvUISkins(frame)
 
     frame.Icon:ClearAllPoints()
@@ -311,8 +341,12 @@ local function SkinGarrisonBuildingAlert(frame)
 end
 
 function S:AlertFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then return end
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then
+        return
+    end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then
+        return
+    end
 
     -- 成就
     hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", SkinAchievementAlert)
@@ -355,4 +389,4 @@ function S:AlertFrames()
     hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", SkinRafRewardDeliveredAlert)
 end
 
-S:AddCallback('AlertFrames')
+S:AddCallback("AlertFrames")

@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local C = W:NewModule('CombatAlert', 'AceEvent-3.0')
+local C = W:NewModule("CombatAlert", "AceEvent-3.0")
 local A = F.Animation
 
 local unpack, tinsert, tremove = unpack, tinsert, tremove
@@ -10,7 +10,9 @@ local alertQueue = {}
 
 -- 动画
 function C:CreateAnimationFrame()
-    if self.animationFrame then return end
+    if self.animationFrame then
+        return
+    end
 
     local frame, tex, anime
     -- 动画核心区域透明框体（方便通过 ElvUI 移动）
@@ -48,12 +50,17 @@ function C:CreateAnimationFrame()
     anime.fadeIn:SetStartDelay(0) -- 进场
     anime.fadeOut:SetDuration(0.3)
     anime.fadeOut:SetStartDelay(0.5 + 0.6) -- 退场
-    anime.fadeIn:SetScript("OnFinished", function() self.animationFrame.shield:Show() end)
+    anime.fadeIn:SetScript(
+        "OnFinished",
+        function()
+            self.animationFrame.shield:Show()
+        end
+    )
     self.animationFrame.swordLeftToRight = frame
 
     -- 剑 ↖
-    frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"),
-                                   true)
+    frame =
+        A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
     anime = A.CreateAnimationGroup(frame, "anime")
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -70,7 +77,9 @@ function C:CreateAnimationFrame()
 end
 
 function C:UpdateAnimationFrame()
-    if not self.animationFrame then return end
+    if not self.animationFrame then
+        return
+    end
     local animationFrameSize = {240 * self.db.animationSize, 220 * self.db.animationSize}
     local textureSize = 200 * self.db.animationSize
     local swordOffset = 150 * self.db.animationSize
@@ -102,19 +111,25 @@ function C:UpdateAnimationFrame()
 end
 
 function C:StartAnimation(enterCombat)
-    if not self.animationFrame then F.DebugMessage(C, "找不到动画框架") end
+    if not self.animationFrame then
+        F.DebugMessage(C, "找不到动画框架")
+    end
 
     if enterCombat then
+        -- 盾牌动画会由左到右的剑自动触发
         isPlaying = true
         self.animationFrame.swordLeftToRight:Show()
         self.animationFrame.swordRightToLeft:Show()
-        -- 盾牌动画会由左到右的剑自动触发
     else
     end
 end
 
 -- 文字
-function C:CreateTextFrame() if self.textFrame then return end end
+function C:CreateTextFrame()
+    if self.textFrame then
+        return
+    end
+end
 
 -- 通知控制
 function C:ShowAlert(enterCombat)
@@ -143,7 +158,7 @@ function C:PLAYER_REGEN_DISABLED()
     end
 end
 
-function C:PLAYER_REGEN_ENABLED() 
+function C:PLAYER_REGEN_ENABLED()
     if isPlaying then
         self:QueueAlert(false)
     else
@@ -152,14 +167,18 @@ function C:PLAYER_REGEN_ENABLED()
 end
 
 function C:UpdateMover()
-    if not self.alert then return end
+    if not self.alert then
+        return
+    end
     local width = self.animationFrame:GetWidth()
     local height = self.animationFrame:GetHeight()
     self.alert:Size(width, height)
 end
 
 function C:UpdateFrames()
-    if not self.alert then self:ConstructFrames() end
+    if not self.alert then
+        self:ConstructFrames()
+    end
     self:UpdateAnimationFrame()
     self:UpdateMover()
 end
@@ -173,8 +192,18 @@ function C:ConstructFrames()
     self:UpdateAnimationFrame()
     self:UpdateMover()
 
-    E:CreateMover(self.alert, "WTCombatAlertFrameMover", L["Combat Alert"], nil, nil, nil, 'ALL,WINDTOOLS',
-                  function() return E.db.WT.combat.combatAlert.enable end)
+    E:CreateMover(
+        self.alert,
+        "WTCombatAlertFrameMover",
+        L["Combat Alert"],
+        nil,
+        nil,
+        nil,
+        "ALL,WINDTOOLS",
+        function()
+            return E.db.WT.combat.combatAlert.enable
+        end
+    )
 
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -182,7 +211,9 @@ function C:ConstructFrames()
 end
 
 function C:Initialize()
-    if not E.db.WT.combat.combatAlert.enable then return end
+    if not E.db.WT.combat.combatAlert.enable then
+        return
+    end
     self.db = E.db.WT.combat.combatAlert
 
     self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")

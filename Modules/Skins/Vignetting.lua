@@ -1,16 +1,20 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule('Skins')
+local S = W:GetModule("Skins")
 
 local _G = _G
 
 function S:UpdateVignetting()
     local frame = W.VignettingFrame
     local level = E.private.WT.skins.vignetting.level / 100
-    if frame and level then frame:SetAlpha(level) end
+    if frame and level then
+        frame:SetAlpha(level)
+    end
 end
 
 function S:Vignetting()
-    if not E.private.WT.skins.vignetting.enable then return end
+    if not E.private.WT.skins.vignetting.enable then
+        return
+    end
 
     local frame = CreateFrame("Frame", "ShadowBackground", E.UIParent)
     frame:Point("TOPLEFT")
@@ -26,4 +30,4 @@ function S:Vignetting()
     S:UpdateVignetting()
 end
 
-S:AddCallback('Vignetting')
+S:AddCallback("Vignetting")

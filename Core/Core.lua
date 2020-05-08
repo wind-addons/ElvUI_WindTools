@@ -23,7 +23,9 @@ end
 function W:InitializeModules()
     for _, moduleName in pairs(W.RegisteredModules) do
         local module = self:GetModule(moduleName)
-        if module.Initialize then pcall(module.Initialize, module) end
+        if module.Initialize then
+            pcall(module.Initialize, module)
+        end
     end
 end
 
@@ -33,7 +35,9 @@ end
 function W:UpdateModules()
     for _, moduleName in pairs(W.RegisteredModules) do
         local module = self:GetModule(moduleName)
-        if module.ProfileUpdate then pcall(module.ProfileUpdate, module) end
+        if module.ProfileUpdate then
+            pcall(module.ProfileUpdate, module)
+        end
     end
 end
 

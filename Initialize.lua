@@ -25,14 +25,10 @@ NameSpace[7] = G.WT
 
 _G[AddOnName] = NameSpace
 
----------------------------------------------------
 -- 预处理 WindTools 模块
----------------------------------------------------
 W.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0")
 
----------------------------------------------------
 -- 注册 ElvUI 模块
----------------------------------------------------
 function W:Initialize()
     -- 确保初始化顺序为 ElvUI -> WindTools -> 各模块
     self.initialized = true

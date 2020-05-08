@@ -3,21 +3,19 @@ F.Animation = {}
 local A = F.Animation
 
 local pairs, type = pairs, type
-
----------------------------------------------------
--- 函数：创建动画框体
--- 可选参数
--- - name(string)     框体名
--- - parent(object)   父框体
--- - strata(string)   框体的显示层级
--- - level(string)    框体层级内的显示等级
--- - hidden(bool)     是否初始化为隐藏
--- - texture(string)  材质的文件路径
--- - isMirror(string) 是否翻转材质
--- 返回值
--- - (object)         生成的框体
----------------------------------------------------
+--[[
+    创建动画窗体
+    @param {string} [name] 动画窗体名
+    @param {object} [parent=ElvUIParent] 父窗体
+    @param {strata} [string] 窗体层级
+    @param {level} [number] 窗体等级
+    @param {hidden} [boolean] 窗体创建后隐藏
+    @param {texture} [string] 材质路径
+    @param {isMirror} [boolean] 使材质沿 y 轴翻折
+    @returns object 创建的窗体
+]]
 function A.CreateAnimationFrame(name, parent, strata, level, hidden, texture, isMirror)
+    parent = parent or E.UIParent
     local frame = CreateFrame("Frame", name, parent)
     if strata then
         frame:SetFrameStrata(strata)
@@ -46,18 +44,15 @@ function A.CreateAnimationFrame(name, parent, strata, level, hidden, texture, is
     return frame
 end
 
----------------------------------------------------
--- 函数：创建动画组
--- 必要参数
--- - frame(object) 父框体
--- 可选参数
--- - name(string)  动画组名
--- 返回值
--- - (object)      生成的动画组
----------------------------------------------------
+--[[
+    创建动画组
+    @param {object} parent 父窗体
+    @param {string} [name] 动画组名
+    @returns object 生成的动画组
+]]
 function A.CreateAnimationGroup(frame, name)
     if not frame then
-        F.DebugMessage("动画", "[1]父框体缺失")
+        F.DebugMessage("动画", "[1]父窗体缺失")
         return
     end
     name = name or "anime"
@@ -66,12 +61,11 @@ function A.CreateAnimationGroup(frame, name)
     return animationGroup
 end
 
----------------------------------------------------
--- 函数：添加移动动画
--- 必要参数
--- - animationGroup(object) 从属动画组
--- - name(string)           动画索引名
----------------------------------------------------
+--[[
+    添加移动动画
+    @param {object} animationGroup 从属动画组
+    @param {string} name 动画索引名
+]]
 function A.AddTranslation(animationGroup, name)
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         return
@@ -86,12 +80,11 @@ function A.AddTranslation(animationGroup, name)
     animationGroup[name] = animation
 end
 
----------------------------------------------------
--- 函数：添加渐入动画
--- 必要参数
--- - animationGroup(object) 从属动画组
--- - name(string)           动画索引名
----------------------------------------------------
+--[[
+    添加渐入动画
+    @param {object} animationGroup 从属动画组
+    @param {string} name 动画索引名
+]]
 function A.AddFadeIn(animationGroup, name)
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[1]找不到动画组")
@@ -110,12 +103,11 @@ function A.AddFadeIn(animationGroup, name)
     animationGroup[name] = animation
 end
 
----------------------------------------------------
--- 函数：添加渐隐动画
--- 必要参数
--- - animationGroup(object) 从属动画组
--- - name(string)           动画索引名
----------------------------------------------------
+--[[
+    添加渐隐动画
+    @param {object} animationGroup 从属动画组
+    @param {string} name 动画索引名
+]]
 function A.AddFadeOut(animationGroup, name)
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[2]找不到动画组")
@@ -135,12 +127,11 @@ function A.AddFadeOut(animationGroup, name)
     animationGroup[name] = animation
 end
 
----------------------------------------------------
--- 函数：设定动画随显示属性而播放
--- 必要参数
--- - frame(object)          动画框体
--- - animationGroup(object) 动画组
----------------------------------------------------
+--[[
+    设定动画随显示属性而播放
+    @param {object} frame 动画窗体
+    @param {object} animationGroup 动画组
+]]
 function A.PlayAnimationOnShow(frame, animationGroup)
     if not animationGroup or type(animationGroup) == "string" then
         animationGroup = self[animationGroup]
@@ -158,14 +149,12 @@ function A.PlayAnimationOnShow(frame, animationGroup)
     )
 end
 
----------------------------------------------------
--- 函数：设定动画结束时的操作
--- 必要参数
--- - frame(object)          动画框体
--- - animationGroup(object) 动画组
--- 可选参数
--- - endFunc(function)      结束时的回调
----------------------------------------------------
+--[[
+    设定动画随显示属性而播放
+    @param {object} frame 动画窗体
+    @param {object} animationGroup 动画组
+    @param {function} [callback] 结束时的回调
+]]
 function A.CloseAnimationOnHide(frame, animationGroup, callback)
     if not animationGroup or type(animationGroup) == "string" then
         animationGroup = self[animationGroup]
@@ -186,12 +175,11 @@ function A.CloseAnimationOnHide(frame, animationGroup, callback)
     )
 end
 
----------------------------------------------------
--- 函数：调整动画组速度
--- 必要参数
--- - animationGroup(object) 动画组
--- - speed(number)          速度（相较于原速度的倍数）
----------------------------------------------------
+--[[
+    调整动画组速度
+    @param {object} animationGroup 动画组
+    @param {number} speed 相较于原速度的倍数
+]]
 function A.SpeedAnimationGroup(animationGroup, speed)
     if not speed or type(speed) ~= "number" then
         F.DebugMessage("动画", "[1]找不到速度")

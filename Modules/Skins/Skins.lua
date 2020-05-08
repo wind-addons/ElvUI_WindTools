@@ -6,10 +6,17 @@ local _G = _G
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
 local CreateFrame = CreateFrame
 
-S.allowBypass = {}
-S.addonsToLoad = {}
-S.nonAddonsToLoad = {}
+S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
+S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
 
+--[[
+    创建阴影
+    @param {object} frame 待美化的窗体
+    @param {number} size 阴影尺寸
+    @param {number} [r=阴影全局R值] R 通道数值（0~1）
+    @param {number} [g=阴影全局G值] G 通道数值（0~1）
+    @param {number} [b=阴影全局B值] B 通道数值（0~1）
+]]
 function S:CreateShadow(frame, size, r, g, b)
     if not frame or frame.windStyle or frame.shadow then
         return
@@ -35,6 +42,10 @@ function S:CreateShadow(frame, size, r, g, b)
     frame.windStyle = true
 end
 
+--[[
+    创建阴影于 ElvUI 美化背景
+    @param {object} frame 窗体
+]]
 function S:CreateBackdropShadow(frame)
     if not frame or frame.windStyle then
         return
@@ -52,6 +63,12 @@ function S:CreateBackdropShadow(frame)
     end
 end
 
+--[[
+    创建阴影于 ElvUI 美化背景（延迟等待 ElvUI 美化加载完毕）
+    2 秒内未能美化会报错~
+    @param {object} frame 窗体
+    @param {string} [tried=20] 尝试次数
+]]
 function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
     if not frame or frame.windStyle then
         return
@@ -77,6 +94,10 @@ function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
     end
 end
 
+--[[
+    设定窗体美化背景为透明风格
+    @param {object} frame 窗体
+]]
 function S:SetTransparentBackdrop(frame)
     if frame.backdrop then
         backdrop:SetTemplate("Transparent")
@@ -85,49 +106,43 @@ function S:SetTransparentBackdrop(frame)
     end
 end
 
-function S:AddCallback(name, func, position)
-    local load = (name == "function" and name) or (not func and S[name])
-    S:RegisterSkin("ElvUI_WindUI", load or func, nil, nil, position)
+--[[
+    注册回调
+    @param {string} name 函数名
+    @param {function} [func=S.name] 回调函数
+]]
+function S:AddCallback(name, func)
+    tinsert(self.nonAddonsToLoad, func or S[name])
 end
 
-function S:AddCallbackForAddon(addonName, name, func, forceLoad, bypass, position)
-    local load = (name == "function" and name) or (not func and (S[name] or S[addonName]))
-    S:RegisterSkin(addonName, load or func, forceLoad, bypass, position)
+--[[
+    注册插件回调
+    @param {string} addonName 插件名
+    @param {function} [func=S.addonName] 插件回调函数
+]]
+function S:AddCallbackForAddon(addonName, func)
+    local addon = self.addonsToLoad[addonName]
+    if not addon then
+        self.addonsToLoad[addonName] = {}
+        addon = self.addonsToLoad[addonName]
+    end
+
+    tinsert(addon, func or S[addonName])
 end
 
+--[[
+    游戏系统输出错误
+    @param {string} err 错误
+]]
 local function errorhandler(err)
     return _G.geterrorhandler()(err)
 end
 
-function S:RegisterSkin(addonName, func, forceLoad, bypass, position)
-    if bypass then
-        self.allowBypass[addonName] = true
-    end
-
-    if forceLoad then
-        xpcall(func, errorhandler)
-        self.addonsToLoad[addonName] = nil
-    elseif addonName == "ElvUI_WindUI" then
-        if position then
-            tinsert(self.nonAddonsToLoad, position, func)
-        else
-            tinsert(self.nonAddonsToLoad, func)
-        end
-    else
-        local addon = self.addonsToLoad[addonName]
-        if not addon then
-            self.addonsToLoad[addonName] = {}
-            addon = self.addonsToLoad[addonName]
-        end
-
-        if position then
-            tinsert(addon, position, func)
-        else
-            tinsert(addon, func)
-        end
-    end
-end
-
+--[[
+    回调注册的插件函数
+    @param {string} addonName 插件名
+    @param {object} object 回调的函数
+]]
 function S:CallLoadedAddon(addonName, object)
     for _, func in next, object do
         xpcall(func, errorhandler)
@@ -136,8 +151,12 @@ function S:CallLoadedAddon(addonName, object)
     self.addonsToLoad[addonName] = nil
 end
 
+--[[
+    根据插件载入事件唤起回调
+    @param {string} addonName 插件名
+]]
 function S:ADDON_LOADED(_, addonName)
-    if not self.allowBypass[addonName] and not E.initialized then
+    if not E.initialized then
         return
     end
 
@@ -147,6 +166,7 @@ function S:ADDON_LOADED(_, addonName)
     end
 end
 
+-- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     for index, func in next, self.nonAddonsToLoad do
         xpcall(func, errorhandler)

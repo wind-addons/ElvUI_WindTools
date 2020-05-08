@@ -8,7 +8,9 @@ local hooksecurefunc = hooksecurefunc
 local collectgarbage = collectgarbage
 
 -- 注册 Wind 工具箱为 Ace3 插件
-local W = LibStub("AceAddon-3.0"):NewAddon(AddOnName, "AceConsole-3.0", "AceEvent-3.0", 'AceTimer-3.0', 'AceHook-3.0');
+local W = LibStub("AceAddon-3.0"):NewAddon(
+              AddOnName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0"
+          );
 
 -- 初始化用于保存设置的数据库
 V.WT = {}
@@ -18,7 +20,7 @@ G.WT = {}
 NameSpace[1] = W
 NameSpace[2] = {} -- 函数 F
 NameSpace[3] = E
-NameSpace[4] = E.Libs.ACL:GetLocale('ElvUI', E.global.general.locale)
+NameSpace[4] = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 NameSpace[5] = V.WT
 NameSpace[6] = P.WT
 NameSpace[7] = G.WT
@@ -28,7 +30,7 @@ _G[AddOnName] = NameSpace
 ---------------------------------------------------
 -- 预处理 WindTools 模块
 ---------------------------------------------------
-W.Skins = W:NewModule('Skins', 'AceHook-3.0', 'AceEvent-3.0')
+W.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0")
 
 ---------------------------------------------------
 -- 注册 ElvUI 模块

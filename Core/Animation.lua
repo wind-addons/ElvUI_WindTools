@@ -2,7 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 F.Animation = {}
 local A = F.Animation
 
-local pairs, type, unpack = pairs, type, unpack
+local pairs, type, unpack, getn = pairs, type, unpack, getn
 --[[
     创建动画窗体
     @param {string} [name] 动画窗体名
@@ -114,7 +114,7 @@ function A.AddFadeOut(animationGroup, name)
         return
     end
     if not name then
-        F.DebugMessage("动画", "动画名缺失")
+        F.DebugMessage("动画", "[3]动画名缺失")
         return
     end
 
@@ -135,11 +135,21 @@ end
 ]]
 function A.AddScale(animationGroup, name, fromScale, toScale)
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
-        F.DebugMessage("动画", "[2]找不到动画组")
+        F.DebugMessage("动画", "[3]找不到动画组")
         return
     end
     if not name then
-        F.DebugMessage("动画", "动画名缺失")
+        F.DebugMessage("动画", "[4]动画名缺失")
+        return
+    end
+
+    if not fromScale or type(fromScale) ~= "table" or getn(fromScale) < 2 then
+        F.DebugMessage("动画", "[1]缩放动画初始x,y错误")
+        return
+    end
+
+    if not toScale or type(toScale) ~= "table" or getn(toScale) < 2 then
+        F.DebugMessage("动画", "[1]缩放动画目标x,y错误")
         return
     end
 

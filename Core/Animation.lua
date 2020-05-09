@@ -3,6 +3,7 @@ F.Animation = {}
 local A = F.Animation
 
 local pairs, type, unpack, getn = pairs, type, unpack, getn
+
 --[[
     创建动画窗体
     @param {string} [name] 动画窗体名
@@ -16,13 +17,17 @@ local pairs, type, unpack, getn = pairs, type, unpack, getn
 ]]
 function A.CreateAnimationFrame(name, parent, strata, level, hidden, texture, isMirror)
     parent = parent or E.UIParent
+
     local frame = CreateFrame("Frame", name, parent)
+
     if strata then
         frame:SetFrameStrata(strata)
     end
+
     if level then
         frame:SetFrameLevel(level)
     end
+
     if hidden then
         frame:SetAlpha(0)
         frame:Hide()
@@ -55,9 +60,12 @@ function A.CreateAnimationGroup(frame, name)
         F.DebugMessage("动画", "[1]父窗体缺失")
         return
     end
+
     name = name or "anime"
+
     local animationGroup = frame:CreateAnimationGroup()
     frame[name] = animationGroup
+
     return animationGroup
 end
 
@@ -90,6 +98,7 @@ function A.AddFadeIn(animationGroup, name)
         F.DebugMessage("动画", "[1]找不到动画组")
         return
     end
+
     if not name then
         F.DebugMessage("动画", "[2]动画名缺失")
         return
@@ -113,6 +122,7 @@ function A.AddFadeOut(animationGroup, name)
         F.DebugMessage("动画", "[2]找不到动画组")
         return
     end
+
     if not name then
         F.DebugMessage("动画", "[3]动画名缺失")
         return
@@ -138,6 +148,7 @@ function A.AddScale(animationGroup, name, fromScale, toScale)
         F.DebugMessage("动画", "[3]找不到动画组")
         return
     end
+
     if not name then
         F.DebugMessage("动画", "[4]动画名缺失")
         return
@@ -169,6 +180,7 @@ function A.PlayAnimationOnShow(frame, animationGroup)
     if not animationGroup or type(animationGroup) == "string" then
         animationGroup = self[animationGroup]
     end
+
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[3]找不到动画组")
         return
@@ -190,8 +202,9 @@ end
 ]]
 function A.CloseAnimationOnHide(frame, animationGroup, callback)
     if not animationGroup or type(animationGroup) == "string" then
-        animationGroup = self[animationGroup]
+        animationGroup = frame[animationGroup]
     end
+
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[3]找不到动画组")
         return
@@ -218,16 +231,19 @@ function A.SpeedAnimationGroup(animationGroup, speed)
         F.DebugMessage("动画", "[1]找不到速度")
         return
     end
+
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
         F.DebugMessage("动画", "[4]找不到动画组")
         return
     end
-    local durationTimer = 1 / speed
 
     if not animationGroup.GetAnimations then
         F.DebugMessage("动画", "[1]无法找到动画组的子成员")
         return
     end
+
+    local durationTimer = 1 / speed
+
     for _, animation in pairs({animationGroup:GetAnimations()}) do
         if not animation.originalDuration then
             animation.originalDuration = animation:GetDuration()

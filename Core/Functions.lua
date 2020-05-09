@@ -1,5 +1,42 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+local LSM = E.Libs.LSM
 local format, pairs, tonumber, type = format, pairs, tonumber, type
+
+--[[
+    从数据库设定字体样式
+    @param {object} text FontString 型对象
+    @param {table} db 字体样式数据库
+]]
+function F.SetFontWithDB(text, db)
+    if not text or not text.GetFont then
+        F.DebugMessage("函数", "[1]找不到处理字体风格的字体")
+        return
+    end
+    if not db or type(db) ~= "table" then
+        F.DebugMessage("函数", "[1]找不到字体风格数据库")
+        return
+    end
+
+    text:FontTemplate(LSM:Fetch('font', db.name), db.size, db.style)
+end
+
+--[[
+    从数据库设定字体颜色
+    @param {object} text FontString 型对象
+    @param {table} db 字体颜色数据库
+]]
+function F.SetFontColorWithDB(text, db)
+    if not text or not text.GetFont then
+        F.DebugMessage("函数", "[2]找不到处理字体风格的字体")
+        return
+    end
+    if not db or type(db) ~= "table" then
+        F.DebugMessage("函数", "[1]找不到字体颜色数据库")
+        return
+    end
+
+    text:SetTextColor(db.r,db.g,db.b,db.a)
+end
 
 --[[
     更换字体描边为轮廓
@@ -9,7 +46,7 @@ local format, pairs, tonumber, type = format, pairs, tonumber, type
 ]]
 function F.SetFontOutline(text, font, size)
     if not text or not text.GetFont then
-        F.DebugMessage("函数", "找不到处理字体风格的字体")
+        F.DebugMessage("函数", "[3]找不到处理字体风格的字体")
         return
     end
     local fontName, fontHeight = text:GetFont()

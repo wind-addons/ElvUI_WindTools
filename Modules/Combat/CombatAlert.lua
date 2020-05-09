@@ -20,7 +20,7 @@ function C:CreateAnimationFrame()
     self.animationFrame = frame
 
     -- 盾
-    frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 3, true, F.GetTexture("Shield.tga", "Textures"))
+    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 3, true, F.GetTexture("Shield.tga", "Textures"))
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -46,7 +46,7 @@ function C:CreateAnimationFrame()
     self.animationFrame.shield = frame
 
     -- 剑 ↗
-    frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"))
+    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"))
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -80,7 +80,7 @@ function C:CreateAnimationFrame()
 
     -- 剑 ↖
     frame =
-        A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
+        A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -147,18 +147,80 @@ function C:CreateTextFrame()
         return
     end
 
-    local frame = CreateFrame("Frame", nil, self.alert)
-	frame:Point("TOP", self.animationFrame or self.alert, 0, -20)
-    frame.text = frame:CreateFontString(nil)
+    local frame = A.CreateAnimationFrame(nil, self.alert, "HIGH", 4, true)
+    frame.text = frame:CreateFontString()
     frame.text:Point("CENTER", 0, 0)
-    
+    frame.text:SetJustifyV("MIDDLE")
+    frame.text:SetJustifyH("CENTER")
+
+    local anime = A.CreateAnimationGroup(frame, "enter")
+    A.AddTranslation(anime, "moveUp")
+    A.AddTranslation(anime, "moveDown")
+    A.AddFadeIn(anime, "fadeIn")
+    A.AddFadeOut(anime, "fadeOut")
+    anime.moveUp:SetDuration(0.4)
+    anime.moveUp:SetStartDelay(0)
+    anime.moveDown:SetDuration(0.1)
+    anime.moveDown:SetStartDelay(0.4)
+    anime.fadeIn:SetDuration(0.5)
+    anime.fadeIn:SetStartDelay(0)
+    anime.fadeOut:SetDuration(0.3)
+    anime.fadeOut:SetStartDelay(0.9)
+    anime = A.CreateAnimationGroup(frame, "leave")
+    A.AddFadeIn(anime, "fadeIn")
+    A.AddFadeOut(anime, "fadeOut")
+    A.AddTranslation(anime, "moveUp")
+    anime.fadeIn:SetDuration(0.3)
+    anime.fadeIn:SetStartDelay(0)
+    anime.fadeOut:SetDuration(0.6)
+    anime.fadeOut:SetStartDelay(0.6)
+    anime.moveUp:SetDuration(0.6)
+    anime.moveUp:SetStartDelay(0.6)
+
     self.textFrame = frame
+end
+
+function C:UpdateTextFrame()
+    if not self.textFrame then
+        return
+    end
+
+    local moveUpOffset = 160 * self.db.animationSize
+    local moveDownOffset = -40 * self.db.animationSize
+
+    local f = self.textFrame
+
+    F.SetFontWithDB(f.text, self.db.font)
+    f.text:SetText(self.db.enterText)
+    f:Size(f.text:GetStringWidth(), f.text:GetStringHeight())
+
+    -- 动画尺寸更新
+    f.enter.moveUp:SetOffset(0, moveUpOffset)
+    f.enter.moveDown:SetOffset(0, moveDownOffset)
+    f.leave.moveUp:SetOffset(0, -moveDownOffset)
+
+    -- 动画时间更新
+    A.SpeedAnimationGroup(f.enter, self.db.speed)
+    A.SpeedAnimationGroup(f.leave, self.db.speed)
+
+    -- 上方动画窗体如果不存在，确认下个提示的工作就交给文字窗体了
+    if not self.db.animation then
+        A.CloseAnimationOnHide(f, "enter", C.LoadNextAlert)
+        A.CloseAnimationOnHide(f, "leave", C.LoadNextAlert)
+    else
+        A.CloseAnimationOnHide(f, "enter")
+        A.CloseAnimationOnHide(f, "leave")
+    end
 end
 
 -- 通知控制
 function C:ShowAlert(enterCombat)
     if not self.animationFrame then
         F.DebugMessage(C, "找不到动画框架")
+    end
+
+    if not self.textFrame then
+        F.DebugMessage(C, "找不到文字框架")
     end
 
     if isPlaying then
@@ -168,38 +230,69 @@ function C:ShowAlert(enterCombat)
 
     isPlaying = true
 
-    local f = self.animationFrame
+    local a = self.animationFrame
+    local t = self.textFrame
     local swordOffsetEnter = 150 * self.db.animationSize
     local swordOffsetLeave = 20 * self.db.animationSize
     local shieldOffsetEnter = 50 * self.db.animationSize
     local shieldOffsetLeave = -15 * self.db.animationSize
+    local textOffsetEnter = -120 * self.db.animationSize
+    local textOffsetLeave = -20 * self.db.animationSize
 
-    f.shield.enter:Stop()
-    f.swordLeftToRight.enter:Stop()
-    f.swordRightToLeft.enter:Stop()
-    f.shield.leave:Stop()
-    f.swordLeftToRight.leave:Stop()
-    f.swordRightToLeft.leave:Stop()
+    if self.db.animation then
+        a.shield.enter:Stop()
+        a.swordLeftToRight.enter:Stop()
+        a.swordRightToLeft.enter:Stop()
+        a.shield.leave:Stop()
+        a.swordLeftToRight.leave:Stop()
+        a.swordRightToLeft.leave:Stop()
+    end
+    if self.db.text then
+        t.enter:Stop()
+        t.leave:Stop()
+    end
 
     if enterCombat then
-        -- 盾牌动画会由左到右的剑自动触发
-        f.shield:Point("CENTER", 0, shieldOffsetEnter)
-        f.swordLeftToRight:Point("CENTER", -swordOffsetEnter, -swordOffsetEnter)
-        f.swordRightToLeft:Point("CENTER", swordOffsetEnter, -swordOffsetEnter)
-        f.swordLeftToRight:Show()
-        f.swordRightToLeft:Show()
-        f.swordLeftToRight.enter:Restart()
-        f.swordRightToLeft.enter:Restart()
+        if self.db.animation then
+            -- 盾牌动画会由左到右的剑自动触发
+            a.shield:Point("CENTER", 0, shieldOffsetEnter)
+            a.swordLeftToRight:Point("CENTER", -swordOffsetEnter, -swordOffsetEnter)
+            a.swordRightToLeft:Point("CENTER", swordOffsetEnter, -swordOffsetEnter)
+            a.swordLeftToRight:Show()
+            a.swordRightToLeft:Show()
+            a.swordLeftToRight.enter:Restart()
+            a.swordRightToLeft.enter:Restart()
+        end
+
+        if self.db.text then
+            t.text:SetText(self.db.enterText)
+            F.SetFontColorWithDB(t.text, self.db.enterColor)
+            t:Size(t.text:GetStringWidth(), t.text:GetStringHeight())
+            t:Point("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetEnter)
+            t:Show()
+            t.enter:Restart()
+        end
     else
-        f.shield:Point("CENTER", 0, shieldOffsetLeave)
-        f.swordLeftToRight:Point("CENTER", -swordOffsetLeave, -swordOffsetLeave)
-        f.swordRightToLeft:Point("CENTER", swordOffsetLeave, -swordOffsetLeave)
-        f.shield:Show()
-        f.swordLeftToRight:Show()
-        f.swordRightToLeft:Show()
-        f.shield.leave:Restart()
-        f.swordLeftToRight.leave:Restart()
-        f.swordRightToLeft.leave:Restart()
+        if self.db.animation then
+            a.shield:Point("CENTER", 0, shieldOffsetLeave)
+            a.swordLeftToRight:Point("CENTER", -swordOffsetLeave, -swordOffsetLeave)
+            a.swordRightToLeft:Point("CENTER", swordOffsetLeave, -swordOffsetLeave)
+            a.shield:Show()
+            a.swordLeftToRight:Show()
+            a.swordRightToLeft:Show()
+            a.shield.leave:Restart()
+            a.swordLeftToRight.leave:Restart()
+            a.swordRightToLeft.leave:Restart()
+        end
+
+        if self.db.text then
+            t.text:SetText(self.db.leaveText)
+            F.SetFontColorWithDB(t.text, self.db.leaveColor)
+            t:Size(t.text:GetStringWidth(), t.text:GetStringHeight())
+            t:Point("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetLeave)
+            t:Show()
+            t.leave:Restart()
+        end
     end
 end
 
@@ -231,8 +324,14 @@ function C:UpdateMover()
     if not self.alert then
         return
     end
-    local width = self.animationFrame:GetWidth()
-    local height = self.animationFrame:GetHeight()
+
+    local width = self.animationFrame and self.animationFrame:GetWidth() or 0
+    local height = self.animationFrame and self.animationFrame:GetHeight() or 0
+
+    if self.textFrame then
+        height = height + self.textFrame:GetHeight()
+    end
+
     self.alert:Size(width, height)
 end
 
@@ -241,6 +340,7 @@ function C:UpdateFrames()
         self:ConstructFrames()
     else
         self:UpdateAnimationFrame()
+        self:UpdateTextFrame()
         self:UpdateMover()
     end
 end
@@ -252,6 +352,7 @@ function C:ConstructFrames()
     self:CreateTextFrame()
 
     self:UpdateAnimationFrame()
+    self:UpdateTextFrame()
     self:UpdateMover()
 
     E:CreateMover(

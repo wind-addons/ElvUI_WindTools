@@ -9,9 +9,9 @@ P.combat = {
         animationSize = 1,
         enterText = L["Enter Combat"],
         leaveText = L["Leave Combat"],
-        enterColor = {r = 0.91, g = 0.3, b = 0.24, a = 1.0},
-        leaveColor = {r = 0.18, g = 0.8, b = 0.44, a = 1.0},
-        font = {name = E.db.general.font, size = E.db.general.fontSize + 3, style = "OUTLINE"}
+        enterColor = {r = 0.929, g = 0.11, b = 0.141, a = 1.0},
+        leaveColor = {r = 1, g = 0.914, b = 0.184, a = 1.0},
+        font = {name = E.db.general.font, size = 25, style = "OUTLINE"}
     }
 }
 

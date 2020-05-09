@@ -15,7 +15,6 @@ function C:CreateAnimationFrame()
     end
 
     local frame, anime
-    -- 动画核心区域透明框体（方便通过 ElvUI 移动）
     frame = CreateFrame("Frame", nil, self.alert)
     frame:Point("TOP", 0, 0)
     self.animationFrame = frame
@@ -27,22 +26,22 @@ function C:CreateAnimationFrame()
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
     A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
-    anime.moveToCenter:SetDuration(0.3)
+    anime.moveToCenter:SetDuration(0.2)
     anime.moveToCenter:SetStartDelay(0)
-    anime.fadeIn:SetDuration(0.3)
+    anime.fadeIn:SetDuration(0.2)
     anime.fadeIn:SetStartDelay(0)
-    anime.fadeOut:SetDuration(0.32)
-    anime.fadeOut:SetStartDelay(0.3 + 0.3)
+    anime.fadeOut:SetDuration(0.3)
+    anime.fadeOut:SetStartDelay(0.5)
     anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
     A.AddScale(anime, "scale", {1, 1}, {0.1, 0.1})
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
     anime.fadeIn:SetDuration(0.3)
     anime.fadeIn:SetStartDelay(0)
-    anime.scale:SetDuration(0.35)
-    anime.scale:SetStartDelay(0.5)
-    anime.fadeOut:SetDuration(0.4)
-    anime.fadeOut:SetStartDelay(0.5)
+    anime.scale:SetDuration(0.6)
+    anime.scale:SetStartDelay(0.6)
+    anime.fadeOut:SetDuration(0.6)
+    anime.fadeOut:SetStartDelay(0.6)
     A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
     self.animationFrame.shield = frame
 
@@ -53,12 +52,12 @@ function C:CreateAnimationFrame()
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
     A.CloseAnimationOnHide(frame, anime)
-    anime.moveToCenter:SetDuration(0.5)
+    anime.moveToCenter:SetDuration(0.4)
     anime.moveToCenter:SetStartDelay(0)
-    anime.fadeIn:SetDuration(0.5)
+    anime.fadeIn:SetDuration(0.4)
     anime.fadeIn:SetStartDelay(0)
     anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5 + 0.6)
+    anime.fadeOut:SetStartDelay(0.9)
     anime.fadeIn:SetScript(
         "OnFinished",
         function()
@@ -72,10 +71,10 @@ function C:CreateAnimationFrame()
     A.AddFadeOut(anime, "fadeOut")
     anime.fadeIn:SetDuration(0.3)
     anime.fadeIn:SetStartDelay(0)
-    anime.moveToCorner:SetDuration(0.35)
-    anime.moveToCorner:SetStartDelay(0.5)
-    anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5)
+    anime.moveToCorner:SetDuration(0.6)
+    anime.moveToCorner:SetStartDelay(0.6)
+    anime.fadeOut:SetDuration(0.6)
+    anime.fadeOut:SetStartDelay(0.6)
     A.CloseAnimationOnHide(frame, anime)
     self.animationFrame.swordLeftToRight = frame
 
@@ -87,22 +86,22 @@ function C:CreateAnimationFrame()
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
     A.CloseAnimationOnHide(frame, anime)
-    anime.moveToCenter:SetDuration(0.5)
+    anime.moveToCenter:SetDuration(0.4)
     anime.moveToCenter:SetStartDelay(0)
-    anime.fadeIn:SetDuration(0.5)
+    anime.fadeIn:SetDuration(0.4)
     anime.fadeIn:SetStartDelay(0)
     anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5 + 0.6)
+    anime.fadeOut:SetStartDelay(0.9)
     anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
     A.AddTranslation(anime, "moveToCorner")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
     anime.fadeIn:SetDuration(0.3)
     anime.fadeIn:SetStartDelay(0)
-    anime.moveToCorner:SetDuration(0.35)
-    anime.moveToCorner:SetStartDelay(0.5)
-    anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5)
+    anime.moveToCorner:SetDuration(0.6)
+    anime.moveToCorner:SetStartDelay(0.6)
+    anime.fadeOut:SetDuration(0.6)
+    anime.fadeOut:SetStartDelay(0.6)
     A.CloseAnimationOnHide(frame, anime)
     self.animationFrame.swordRightToLeft = frame
 end
@@ -134,12 +133,12 @@ function C:UpdateAnimationFrame()
     f.swordRightToLeft.leave.moveToCorner:SetOffset(-swordAnimationRange, swordAnimationRange)
 
     -- 动画时间更新
-    A.SpeedAnimationGroup(f.shield.enter, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordLeftToRight.enter, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordRightToLeft.enter, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.shield.leave, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordLeftToRight.leave, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordRightToLeft.leave, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.shield.enter, self.db.speed)
+    A.SpeedAnimationGroup(f.swordLeftToRight.enter, self.db.speed)
+    A.SpeedAnimationGroup(f.swordRightToLeft.enter, self.db.speed)
+    A.SpeedAnimationGroup(f.shield.leave, self.db.speed)
+    A.SpeedAnimationGroup(f.swordLeftToRight.leave, self.db.speed)
+    A.SpeedAnimationGroup(f.swordRightToLeft.leave, self.db.speed)
 end
 
 -- 文字
@@ -147,6 +146,13 @@ function C:CreateTextFrame()
     if self.textFrame then
         return
     end
+
+    local frame = CreateFrame("Frame", nil, self.alert)
+	frame:Point("TOP", self.animationFrame or self.alert, 0, -20)
+    frame.text = frame:CreateFontString(nil)
+    frame.text:Point("CENTER", 0, 0)
+    
+    self.textFrame = frame
 end
 
 -- 通知控制

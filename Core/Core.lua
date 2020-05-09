@@ -41,9 +41,3 @@ function W:UpdateModules()
         end
     end
 end
-
--- ElvUI 模块注册回调
-function W:PluginCallback()
-    -- 标题添加
-    E.Options.name = E.Options.name .. " + WindUI 0.1"
-end

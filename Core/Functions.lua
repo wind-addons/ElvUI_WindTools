@@ -112,3 +112,15 @@ function F.GetTexture(name, folder)
     mediaPath = mediaPath .. name
     return mediaPath
 end
+
+--[[
+    获取图标字符串
+    @param {string} icon 图标路径
+    @param {number} size 图标大小
+    @returns {string} 图标字符串
+]]
+function F.GetIconString(icon, size)
+    size = size or 14
+    local template = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
+    return format(template, icon, size, size)
+end

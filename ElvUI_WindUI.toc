@@ -1,11 +1,11 @@
 ## Interface: 80300
 ## Author: houshuu
-## Version: 1.0
-## Title: |cff1784d1ElvUI|r WindUI
+## Version: 2.0
+## Title: |cff1784d1ElvUI|r WindTools
 ## RequiredDeps: ElvUI
 ## OptionalDeps: Blizzard_PetJournal, SharedMedia, Gatherer, Masque
 ## X-Tukui-ProjectID: placeholder
-## X-Tukui-ProjectFolders: ElvUI_WindUI
+## X-Tukui-ProjectFolders: ElvUI_WindTools
 
 ## Libraries\Load_Libraries.xml
 Initialize.lua
@@ -15,4 +15,4 @@ Settings\Load_Settings.xml
 Core\Load_Core.xml
 ##Layout\Load_Layout.xml
 Modules\Load_Modules.xml
-##Options\Load_Options.xml
+Options\Load_Options.xml

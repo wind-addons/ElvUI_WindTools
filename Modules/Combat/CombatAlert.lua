@@ -2,7 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local C = W:NewModule("CombatAlert", "AceEvent-3.0")
 local A = F.Animation
 
-local unpack, tinsert, tremove = unpack, tinsert, tremove
+local unpack, tinsert, tremove, max = unpack, tinsert, tremove, max
 local CreateFrame = CreateFrame
 
 local isPlaying = false
@@ -325,14 +325,22 @@ function C:UpdateMover()
         return
     end
 
-    local width = self.animationFrame and self.animationFrame:GetWidth() or 0
-    local height = self.animationFrame and self.animationFrame:GetHeight() or 0
+    local width = 0
+    local height = 0
 
-    if self.textFrame then
+    if self.db.animation and self.animationFrame then
+        width = width + self.animationFrame:GetWidth() or 0
+        height = height + self.animationFrame:GetHeight() or 0
+    end
+
+    if self.db.text and self.textFrame then
+        width = max(width, self.animationFrame:GetWidth())
         height = height + self.textFrame:GetHeight()
     end
 
-    self.alert:Size(width, height)
+    if width ~= 0 and height ~= 0 then
+        self.alert:Size(width, height)
+    end
 end
 
 function C:UpdateFrames()

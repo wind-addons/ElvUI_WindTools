@@ -14,7 +14,7 @@ function C:CreateAnimationFrame()
         return
     end
 
-    local frame, tex, anime
+    local frame, anime
     -- 动画核心区域透明框体（方便通过 ElvUI 移动）
     frame = CreateFrame("Frame", nil, self.alert)
     frame:Point("TOP", 0, 0)
@@ -22,57 +22,88 @@ function C:CreateAnimationFrame()
 
     -- 盾
     frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 3, true, F.GetTexture("Shield.tga", "Textures"))
-    anime = A.CreateAnimationGroup(frame, "anime")
+    anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.PlayAnimationOnShow(frame, anime)
     A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
     anime.moveToCenter:SetDuration(0.3)
-    anime.moveToCenter:SetStartDelay(0) -- 进场
+    anime.moveToCenter:SetStartDelay(0)
     anime.fadeIn:SetDuration(0.3)
-    anime.fadeIn:SetStartDelay(0) -- 进场
-    anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.3 + 0.3) -- 退场
+    anime.fadeIn:SetStartDelay(0)
+    anime.fadeOut:SetDuration(0.32)
+    anime.fadeOut:SetStartDelay(0.3 + 0.3)
+    anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
+    A.AddScale(anime, "scale", {1, 1}, {0.1, 0.1})
+    A.AddFadeIn(anime, "fadeIn")
+    A.AddFadeOut(anime, "fadeOut")
+    anime.fadeIn:SetDuration(0.3)
+    anime.fadeIn:SetStartDelay(0)
+    anime.scale:SetDuration(0.35)
+    anime.scale:SetStartDelay(0.5)
+    anime.fadeOut:SetDuration(0.4)
+    anime.fadeOut:SetStartDelay(0.5)
+    A.CloseAnimationOnHide(frame, anime, C.LoadNextAlert)
     self.animationFrame.shield = frame
 
     -- 剑 ↗
     frame = A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"))
-    anime = A.CreateAnimationGroup(frame, "anime")
+    anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.PlayAnimationOnShow(frame, anime)
     A.CloseAnimationOnHide(frame, anime)
     anime.moveToCenter:SetDuration(0.5)
-    anime.moveToCenter:SetStartDelay(0) -- 进场
+    anime.moveToCenter:SetStartDelay(0)
     anime.fadeIn:SetDuration(0.5)
-    anime.fadeIn:SetStartDelay(0) -- 进场
+    anime.fadeIn:SetStartDelay(0)
     anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5 + 0.6) -- 退场
+    anime.fadeOut:SetStartDelay(0.5 + 0.6)
     anime.fadeIn:SetScript(
         "OnFinished",
         function()
             self.animationFrame.shield:Show()
+            self.animationFrame.shield.enter:Play()
         end
     )
+    anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
+    A.AddTranslation(anime, "moveToCorner")
+    A.AddFadeIn(anime, "fadeIn")
+    A.AddFadeOut(anime, "fadeOut")
+    anime.fadeIn:SetDuration(0.3)
+    anime.fadeIn:SetStartDelay(0)
+    anime.moveToCorner:SetDuration(0.35)
+    anime.moveToCorner:SetStartDelay(0.5)
+    anime.fadeOut:SetDuration(0.3)
+    anime.fadeOut:SetStartDelay(0.5)
+    A.CloseAnimationOnHide(frame, anime)
     self.animationFrame.swordLeftToRight = frame
 
     -- 剑 ↖
     frame =
         A.CreateAnimationFrame(name, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
-    anime = A.CreateAnimationGroup(frame, "anime")
+    anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
     A.AddFadeOut(anime, "fadeOut")
-    A.PlayAnimationOnShow(frame, anime)
     A.CloseAnimationOnHide(frame, anime)
     anime.moveToCenter:SetDuration(0.5)
-    anime.moveToCenter:SetStartDelay(0) -- 进场
+    anime.moveToCenter:SetStartDelay(0)
     anime.fadeIn:SetDuration(0.5)
-    anime.fadeIn:SetStartDelay(0) -- 进场
+    anime.fadeIn:SetStartDelay(0)
     anime.fadeOut:SetDuration(0.3)
-    anime.fadeOut:SetStartDelay(0.5 + 0.6) -- 退场
+    anime.fadeOut:SetStartDelay(0.5 + 0.6)
+    anime = A.CreateAnimationGroup(frame, "leave") -- 离开战斗
+    A.AddTranslation(anime, "moveToCorner")
+    A.AddFadeIn(anime, "fadeIn")
+    A.AddFadeOut(anime, "fadeOut")
+    anime.fadeIn:SetDuration(0.3)
+    anime.fadeIn:SetStartDelay(0)
+    anime.moveToCorner:SetDuration(0.35)
+    anime.moveToCorner:SetStartDelay(0.5)
+    anime.fadeOut:SetDuration(0.3)
+    anime.fadeOut:SetStartDelay(0.5)
+    A.CloseAnimationOnHide(frame, anime)
     self.animationFrame.swordRightToLeft = frame
 end
 
@@ -80,11 +111,10 @@ function C:UpdateAnimationFrame()
     if not self.animationFrame then
         return
     end
+
     local animationFrameSize = {240 * self.db.animationSize, 220 * self.db.animationSize}
     local textureSize = 200 * self.db.animationSize
-    local swordOffset = 150 * self.db.animationSize
     local swordAnimationRange = 130 * self.db.animationSize
-    local shieldOffset = 50 * self.db.animationSize
     local shieldAnimationRange = 65 * self.db.animationSize
 
     local f = self.animationFrame
@@ -93,35 +123,23 @@ function C:UpdateAnimationFrame()
     f:Size(unpack(animationFrameSize))
 
     f.shield:Size(0.8 * textureSize, 0.8 * textureSize)
-    f.shield:Point("CENTER", 0, shieldOffset)
-    f.shield.anime.moveToCenter:SetOffset(0, -shieldAnimationRange)
+    f.shield.enter.moveToCenter:SetOffset(0, -shieldAnimationRange)
 
     f.swordLeftToRight:Size(textureSize, textureSize)
-    f.swordLeftToRight:Point("CENTER", -swordOffset, -swordOffset)
-    f.swordLeftToRight.anime.moveToCenter:SetOffset(swordAnimationRange, swordAnimationRange)
+    f.swordLeftToRight.enter.moveToCenter:SetOffset(swordAnimationRange, swordAnimationRange)
+    f.swordLeftToRight.leave.moveToCorner:SetOffset(swordAnimationRange, swordAnimationRange)
 
     f.swordRightToLeft:Size(textureSize, textureSize)
-    f.swordRightToLeft:Point("CENTER", swordOffset, -swordOffset)
-    f.swordRightToLeft.anime.moveToCenter:SetOffset(-swordAnimationRange, swordAnimationRange)
+    f.swordRightToLeft.enter.moveToCenter:SetOffset(-swordAnimationRange, swordAnimationRange)
+    f.swordRightToLeft.leave.moveToCorner:SetOffset(-swordAnimationRange, swordAnimationRange)
 
     -- 动画时间更新
-    A.SpeedAnimationGroup(f.shield.anime, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordLeftToRight.anime, self.db.animateSpeed)
-    A.SpeedAnimationGroup(f.swordRightToLeft.anime, self.db.animateSpeed)
-end
-
-function C:StartAnimation(enterCombat)
-    if not self.animationFrame then
-        F.DebugMessage(C, "找不到动画框架")
-    end
-
-    if enterCombat then
-        -- 盾牌动画会由左到右的剑自动触发
-        isPlaying = true
-        self.animationFrame.swordLeftToRight:Show()
-        self.animationFrame.swordRightToLeft:Show()
-    else
-    end
+    A.SpeedAnimationGroup(f.shield.enter, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.swordLeftToRight.enter, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.swordRightToLeft.enter, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.shield.leave, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.swordLeftToRight.leave, self.db.animateSpeed)
+    A.SpeedAnimationGroup(f.swordRightToLeft.leave, self.db.animateSpeed)
 end
 
 -- 文字
@@ -133,7 +151,50 @@ end
 
 -- 通知控制
 function C:ShowAlert(enterCombat)
-    self:StartAnimation(enterCombat)
+    if not self.animationFrame then
+        F.DebugMessage(C, "找不到动画框架")
+    end
+
+    if isPlaying then
+        self:QueueAlert(enterCombat)
+        return
+    end
+
+    isPlaying = true
+
+    local f = self.animationFrame
+    local swordOffsetEnter = 150 * self.db.animationSize
+    local swordOffsetLeave = 20 * self.db.animationSize
+    local shieldOffsetEnter = 50 * self.db.animationSize
+    local shieldOffsetLeave = -15 * self.db.animationSize
+
+    f.shield.enter:Stop()
+    f.swordLeftToRight.enter:Stop()
+    f.swordRightToLeft.enter:Stop()
+    f.shield.leave:Stop()
+    f.swordLeftToRight.leave:Stop()
+    f.swordRightToLeft.leave:Stop()
+
+    if enterCombat then
+        -- 盾牌动画会由左到右的剑自动触发
+        f.shield:Point("CENTER", 0, shieldOffsetEnter)
+        f.swordLeftToRight:Point("CENTER", -swordOffsetEnter, -swordOffsetEnter)
+        f.swordRightToLeft:Point("CENTER", swordOffsetEnter, -swordOffsetEnter)
+        f.swordLeftToRight:Show()
+        f.swordRightToLeft:Show()
+        f.swordLeftToRight.enter:Restart()
+        f.swordRightToLeft.enter:Restart()
+    else
+        f.shield:Point("CENTER", 0, shieldOffsetLeave)
+        f.swordLeftToRight:Point("CENTER", -swordOffsetLeave, -swordOffsetLeave)
+        f.swordRightToLeft:Point("CENTER", swordOffsetLeave, -swordOffsetLeave)
+        f.shield:Show()
+        f.swordLeftToRight:Show()
+        f.swordRightToLeft:Show()
+        f.shield.leave:Restart()
+        f.swordLeftToRight.leave:Restart()
+        f.swordRightToLeft.leave:Restart()
+    end
 end
 
 function C:QueueAlert(enterCombat)
@@ -141,31 +202,25 @@ function C:QueueAlert(enterCombat)
 end
 
 function C.LoadNextAlert()
+    isPlaying = false
+
     if alertQueue and alertQueue[1] then
         local enterCombat = alertQueue[1]
         C:StartAnimation(enterCombat)
         tremove(alertQueue, 1)
-    else
-        isPlaying = false
     end
 end
 
+-- 事件绑定
 function C:PLAYER_REGEN_DISABLED()
-    if isPlaying then
-        self:QueueAlert(true)
-    else
-        self:ShowAlert(true)
-    end
+    self:ShowAlert(true)
 end
 
 function C:PLAYER_REGEN_ENABLED()
-    if isPlaying then
-        self:QueueAlert(false)
-    else
-        self:ShowAlert(false)
-    end
+    self:ShowAlert(false)
 end
 
+-- 更新配置
 function C:UpdateMover()
     if not self.alert then
         return
@@ -178,9 +233,10 @@ end
 function C:UpdateFrames()
     if not self.alert then
         self:ConstructFrames()
+    else
+        self:UpdateAnimationFrame()
+        self:UpdateMover()
     end
-    self:UpdateAnimationFrame()
-    self:UpdateMover()
 end
 
 function C:ConstructFrames()
@@ -210,15 +266,6 @@ function C:ConstructFrames()
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
 end
 
-function C:Initialize()
-    if not E.db.WT.combat.combatAlert.enable then
-        return
-    end
-    self.db = E.db.WT.combat.combatAlert
-
-    self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")
-end
-
 function C:ProfileUpdate()
     if E.db.WT.combat.combatAlert.enable then
         self:UpdateFrames()
@@ -228,6 +275,15 @@ function C:ProfileUpdate()
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
         self:UnregisterEvent("PLAYER_REGEN_DISABLED")
     end
+end
+
+function C:Initialize()
+    if not E.db.WT.combat.combatAlert.enable then
+        return
+    end
+    self.db = E.db.WT.combat.combatAlert
+
+    self:RegisterEvent("PLAYER_ENTERING_WORLD", "ConstructFrames")
 end
 
 W:RegisterModule(C:GetName())

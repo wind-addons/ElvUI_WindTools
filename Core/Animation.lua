@@ -2,7 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 F.Animation = {}
 local A = F.Animation
 
-local pairs, type = pairs, type
+local pairs, type, unpack = pairs, type, unpack
 --[[
     创建动画窗体
     @param {string} [name] 动画窗体名
@@ -122,7 +122,30 @@ function A.AddFadeOut(animationGroup, name)
     animation:SetFromAlpha(1)
     animation:SetToAlpha(0)
     animation:SetSmoothing("OUT")
-    animation.aType = "Alpha"
+    animation:SetParent(animationGroup)
+    animationGroup[name] = animation
+end
+
+--[[
+    添加缩放动画
+    @param {object} animationGroup 从属动画组
+    @param {string} name 动画索引名
+    @param {number[2]} fromScale 原尺寸 x, y
+    @param {number[2]} toScale 动画后尺寸 x, y
+]]
+function A.AddScale(animationGroup, name, fromScale, toScale)
+    if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
+        F.DebugMessage("动画", "[2]找不到动画组")
+        return
+    end
+    if not name then
+        F.DebugMessage("动画", "动画名缺失")
+        return
+    end
+
+    local animation = animationGroup:CreateAnimation("Scale")
+    animation:SetFromScale(unpack(fromScale))
+    animation:SetToScale(unpack(toScale))
     animation:SetParent(animationGroup)
     animationGroup[name] = animation
 end

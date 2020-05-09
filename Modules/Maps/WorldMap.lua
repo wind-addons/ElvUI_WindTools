@@ -1,4 +1,5 @@
--- 去除地图迷雾部分功能感谢：Leatrix
+-- 去除地图迷雾部分功能来源 Leatrix
+-- 修复指针错误来源 NDui
 local W, F, E, L = unpack(select(2, ...))
 local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
@@ -11,7 +12,7 @@ local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 
 local WorldMapFrame = _G.WorldMapFrame
-local MapCanvasScrollControllerMixin = MapCanvasScrollControllerMixin
+local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 -- 迷雾数据
 local RevealDatabase = {
@@ -2010,10 +2011,10 @@ function WM:Reveal()
 end
 
 function WM:UpdateScale()
+    WorldMapFrame:SetClampedToScreen(true)
     WorldMapFrame:SetScale(E.db.WT.maps.worldMap.scale)
     WorldMapFrame.ScrollContainer.GetCursorPosition = function(cursor)
-        -- 修复指针错误 方案来源 NDui
-        local x, y = MapCanvasScrollControllerMixin.GetCursorPosition(cursor)
+        local x, y = MapCanvasScrollControllerMixin_GetCursorPosition(cursor)
         local scale = WorldMapFrame:GetScale()
         return x / scale, y / scale
     end
@@ -2024,6 +2025,8 @@ function WM:Initialize()
     self:Reveal()
 end
 
-WM.ProfileUpdate = WM.Initialize
+function WM:ProfileUpdate()
+    self:UpdateScale()
+end
 
 W:RegisterModule(WM:GetName())

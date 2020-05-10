@@ -17,7 +17,7 @@ function F.SetFontWithDB(text, db)
         return
     end
 
-    text:FontTemplate(LSM:Fetch('font', db.name), db.size, db.style)
+    text:FontTemplate(LSM:Fetch("font", db.name), db.size, db.style)
 end
 
 --[[
@@ -35,7 +35,7 @@ function F.SetFontColorWithDB(text, db)
         return
     end
 
-    text:SetTextColor(db.r,db.g,db.b,db.a)
+    text:SetTextColor(db.r, db.g, db.b, db.a)
 end
 
 --[[
@@ -97,30 +97,4 @@ function F.DebugMessage(module, text)
     end
     local message = format("[WT - %s] %s", module, text)
     print(message)
-end
-
---[[
-    获取媒体资源路径
-    @param {string} name 资源名
-    @param {string} folder 分类目录
-]]
-function F.GetTexture(name, folder)
-    local mediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\"
-    if folder then
-        mediaPath = mediaPath .. folder .. "\\"
-    end
-    mediaPath = mediaPath .. name
-    return mediaPath
-end
-
---[[
-    获取图标字符串
-    @param {string} icon 图标路径
-    @param {number} size 图标大小
-    @returns {string} 图标字符串
-]]
-function F.GetIconString(icon, size)
-    size = size or 14
-    local template = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
-    return format(template, icon, size, size)
 end

@@ -22,7 +22,7 @@ function S:Vignetting()
     frame:SetFrameLevel(0)
     frame:SetFrameStrata("BACKGROUND")
     frame.tex = frame:CreateTexture()
-    frame.tex:SetTexture(F.GetTexture("Vignetting.tga", "Textures"))
+    frame.tex:SetTexture(W.Media.Textures.vignetting)
     frame.tex:SetAllPoints(frame)
 
     W.VignettingFrame = frame

@@ -20,7 +20,7 @@ function C:CreateAnimationFrame()
     self.animationFrame = frame
 
     -- 盾
-    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 3, true, F.GetTexture("Shield.tga", "Textures"))
+    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 3, true, W.Media.Textures.shield)
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -46,7 +46,7 @@ function C:CreateAnimationFrame()
     self.animationFrame.shield = frame
 
     -- 剑 ↗
-    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"))
+    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword)
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -80,7 +80,7 @@ function C:CreateAnimationFrame()
 
     -- 剑 ↖
     frame =
-        A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, F.GetTexture("Sword.tga", "Textures"), true)
+        A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword, true)
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")

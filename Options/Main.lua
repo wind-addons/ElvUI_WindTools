@@ -6,7 +6,7 @@ W.options = {
         order = 101,
         name = L["Combat"],
         desc = L["Make the combat more interesting."],
-        icon = F.GetTexture("combat.tga", "Icons"),
+        icon = W.Media.Icons.combat,
         args = {}
     }
 }
@@ -14,7 +14,7 @@ W.options = {
 -- ElvUI_OptionsUI 回调
 function W:OptionsCallback()
     -- 标题
-    local icon = F.GetIconString(F.GetTexture("hammer.tga", "Icons"), 14)
+    local icon = F.GetIconString(W.Media.Icons.tools, 14)
     E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " " .. W.Version
 
     -- 设置主界面
@@ -28,7 +28,7 @@ function W:OptionsCallback()
                 type = "description",
                 name = "",
                 image = function()
-                    return F.GetTexture("WindTools.blp", "Textures"), 512, 128
+                    return W.Media.Textures.logo, 512, 128
                 end
             }
         }

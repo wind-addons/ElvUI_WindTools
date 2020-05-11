@@ -3,7 +3,7 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
-function S:ElvUI_Option()
+function S:ElvUI_OptionsUI()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option) then
         return
     end
@@ -12,10 +12,12 @@ function S:ElvUI_Option()
         E,
         "ToggleOptionsUI",
         function()
-            local frame = E:Config_GetWindow()
-            frame:CreateShadow()
+            if not InCombatLockdown() then
+                local frame = E:Config_GetWindow()
+                frame:CreateShadow()
+            end
         end
     )
 end
 
-S:AddCallback("ElvUI_Option")
+S:AddCallback("ElvUI_OptionsUI")

@@ -305,7 +305,7 @@ function C.LoadNextAlert()
 
     if alertQueue and alertQueue[1] then
         local enterCombat = alertQueue[1]
-        C:StartAnimation(enterCombat)
+        C:ShowAlert(enterCombat)
         tremove(alertQueue, 1)
     end
 end
@@ -386,6 +386,7 @@ function C:ProfileUpdate()
         self:UpdateFrames()
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:RegisterEvent("PLAYER_REGEN_DISABLED")
+        self:PLAYER_REGEN_DISABLED()
     else
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
         self:UnregisterEvent("PLAYER_REGEN_DISABLED")

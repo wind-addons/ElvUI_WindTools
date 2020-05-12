@@ -8,6 +8,13 @@ W.options = {
         desc = L["Make the combat more interesting."],
         icon = W.Media.Icons.combat,
         args = {}
+    },
+    skins = {
+        order = 102,
+        name = L["Skins"],
+        desc = L["Apply new shadow style for ElvUI."],
+        icon = W.Media.Icons.skins,
+        args = {}
     }
 }
 

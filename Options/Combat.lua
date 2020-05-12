@@ -8,7 +8,6 @@ options.combatAlert = {
     type = "group",
     name = L["Combat Alert"],
     desc = L["Show a alert when you enter or leave combat."],
-    hidden = false,
     get = function(info)
         return E.db.WT.combat.combatAlert[info[#info]]
     end,

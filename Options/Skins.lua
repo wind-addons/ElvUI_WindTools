@@ -74,7 +74,7 @@ options.blizzard = {
         },
         achievements = {
             type = "toggle",
-            name = L["ACHIEVEMENTS"],
+            name = _G.ACHIEVEMENTS,
             desc = L["TOGGLESKIN_DESC"]
         },
         addonManager = {

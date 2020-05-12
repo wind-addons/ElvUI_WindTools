@@ -23,7 +23,7 @@ function S:Blizzard_AchievementUI()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.achievement) then
         return
     end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.achievement) then
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.achievements) then
         return
     end
 

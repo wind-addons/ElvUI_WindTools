@@ -16,12 +16,12 @@ V.skins = {
 		enable = true,
 		level = 30
 	},
-	ace3 = {
-		enable = true
+	addons = {
+		ace3 = true
 	},
 	blizzard = {
 		enable = true,
-		achievement = true,
+		achievements = true,
 		addonManager = true,
 		adventureMap = true,
 		alerts = true,

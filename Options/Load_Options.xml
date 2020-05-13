@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="Main.lua"/>
 	<Script file="Combat.lua"/>
+	<Script file="Maps.lua"/>
 	<Script file="Skins.lua"/>
 </Ui>

@@ -10,7 +10,7 @@ options.general = {
     name = L["General"],
     args = {
         shadowColor = {
-            order = 3,
+            order = 1,
             type = "color",
             name = L["Shadow Color"],
             hasAlpha = false,
@@ -29,6 +29,7 @@ options.general = {
             order = 2,
             type = "group",
             name = L["Vignetting"],
+            inline = true,
             get = function(info)
                 return E.private.WT.skins.vignetting[info[#info]]
             end,
@@ -69,6 +70,7 @@ options.blizzard = {
     end,
     args = {
         enable = {
+            order = 0,
             type = "toggle",
             name = L["Enable"]
         },
@@ -84,7 +86,7 @@ options.blizzard = {
         },
         adventureMap = {
             type = "toggle",
-            name = L["ADVENTURE_MAP_TITLE"],
+            name = _G.ADVENTURE_MAP_TITLE,
             desc = L["TOGGLESKIN_DESC"]
         },
         alerts = {
@@ -94,12 +96,12 @@ options.blizzard = {
         },
         auctionHouse = {
             type = "toggle",
-            name = L["AUCTIONS"],
+            name = _G.AUCTIONS,
             desc = L["TOGGLESKIN_DESC"]
         },
         barberShop = {
             type = "toggle",
-            name = L["BARBERSHOP"],
+            name = _G.BARBERSHOP,
             desc = L["TOGGLESKIN_DESC"]
         },
         calendar = {
@@ -109,22 +111,22 @@ options.blizzard = {
         },
         challenges = {
             type = "toggle",
-            name = L["Challenges"],
+            name = _G.CHALLENGES,
             desc = L["TOGGLESKIN_DESC"]
         },
         character = {
             type = "toggle",
-            name = L["Character Frame"],
+            name = _G.CHARACTER,
             desc = L["TOGGLESKIN_DESC"]
         },
         collections = {
             type = "toggle",
-            name = L["COLLECTIONS"],
+            name = _G.COLLECTIONS,
             desc = L["TOGGLESKIN_DESC"]
         },
         communities = {
             type = "toggle",
-            name = L["COMMUNITIES"],
+            name = _G.COMMUNITIES,
             desc = L["TOGGLESKIN_DESC"]
         },
         debugTools = {
@@ -134,22 +136,22 @@ options.blizzard = {
         },
         dressingRoom = {
             type = "toggle",
-            name = L["DRESSUP_FRAME"],
+            name = _G.DRESSUP_FRAME,
             desc = L["TOGGLESKIN_DESC"]
         },
         encounterJournal = {
             type = "toggle",
-            name = L["ENCOUNTER_JOURNAL"],
+            name = _G.ENCOUNTER_JOURNAL,
             desc = L["TOGGLESKIN_DESC"]
         },
         friends = {
             type = "toggle",
-            name = L["FRIENDS"],
+            name = _G.FRIENDS,
             desc = L["TOGGLESKIN_DESC"]
         },
         garrison = {
             type = "toggle",
-            name = L["GARRISON_LOCATION_TOOLTIP"],
+            name = _G.GARRISON_LOCATION_TOOLTIP,
             desc = L["TOGGLESKIN_DESC"]
         },
         gossip = {
@@ -169,7 +171,7 @@ options.blizzard = {
         },
         lookingForGroup = {
             type = "toggle",
-            name = L["LFG_TITLE"],
+            name = _G.LFG_TITLE,
             desc = L["TOGGLESKIN_DESC"]
         },
         loot = {
@@ -179,12 +181,12 @@ options.blizzard = {
         },
         lossOfControl = {
             type = "toggle",
-            name = L["LOSS_OF_CONTROL"],
+            name = _G.LOSS_OF_CONTROL,
             desc = L["TOGGLESKIN_DESC"]
         },
         macro = {
             type = "toggle",
-            name = L["MACROS"],
+            name = _G.MACROS,
             desc = L["TOGGLESKIN_DESC"]
         },
         mail = {
@@ -194,7 +196,7 @@ options.blizzard = {
         },
         merchant = {
             type = "toggle",
-            name = L["Merchant Frame"],
+            name = _G.MERCHANT,
             desc = L["TOGGLESKIN_DESC"]
         },
         microButtons = {
@@ -214,7 +216,7 @@ options.blizzard = {
         },
         objectiveTracker = {
             type = "toggle",
-            name = L["OBJECTIVES_TRACKER_LABEL"],
+            name = _G.OBJECTIVES_TRACKER_LABEL,
             desc = L["TOGGLESKIN_DESC"]
         },
         orderHall = {
@@ -229,22 +231,22 @@ options.blizzard = {
         },
         raidInfo = {
             type = "toggle",
-            name = L["Raid Info"],
+            name = _G.RAID_INFO,
             desc = L["TOGGLESKIN_DESC"]
         },
         raidUtility = {
             type = "toggle",
-            name = L["Enable"],
+            name = L["Raid Utility"],
             desc = L["TOGGLESKIN_DESC"]
         },
         scenario = {
             type = "toggle",
-            name = L["Scenario"],
+            name = _G.SCENARIOS,
             desc = L["TOGGLESKIN_DESC"]
         },
         spellBook = {
             type = "toggle",
-            name = L["SPELLBOOK"],
+            name = _G.SPELLBOOK,
             desc = L["TOGGLESKIN_DESC"]
         },
         staticPopup = {
@@ -254,12 +256,12 @@ options.blizzard = {
         },
         talent = {
             type = "toggle",
-            name = L["TALENTS"],
+            name = _G.TALENTS,
             desc = L["TOGGLESKIN_DESC"]
         },
         taxi = {
             type = "toggle",
-            name = L["FLIGHT_MAP"],
+            name = _G.FLIGHT_MAP,
             desc = L["TOGGLESKIN_DESC"]
         },
         tooltip = {
@@ -274,7 +276,7 @@ options.blizzard = {
         },
         worldMap = {
             type = "toggle",
-            name = L["WORLD_MAP"],
+            name = _G.WORLD_MAP,
             desc = L["TOGGLESKIN_DESC"]
         }
     }

@@ -76,208 +76,167 @@ options.blizzard = {
         },
         achievements = {
             type = "toggle",
-            name = _G.ACHIEVEMENTS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.ACHIEVEMENTS
         },
         addonManager = {
             type = "toggle",
-            name = L["AddOn Manager"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["AddOn Manager"]
         },
         adventureMap = {
             type = "toggle",
-            name = _G.ADVENTURE_MAP_TITLE,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.ADVENTURE_MAP_TITLE
         },
         alerts = {
             type = "toggle",
-            name = L["Alert Frames"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Alert Frames"]
         },
         auctionHouse = {
             type = "toggle",
-            name = _G.AUCTIONS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.AUCTIONS
         },
         barberShop = {
             type = "toggle",
-            name = _G.BARBERSHOP,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.BARBERSHOP
         },
         calendar = {
             type = "toggle",
-            name = L["Calendar Frame"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Calendar Frame"]
         },
         challenges = {
             type = "toggle",
-            name = _G.CHALLENGES,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.CHALLENGES
         },
         character = {
             type = "toggle",
-            name = _G.CHARACTER,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.CHARACTER
         },
         collections = {
             type = "toggle",
-            name = _G.COLLECTIONS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.COLLECTIONS
         },
         communities = {
             type = "toggle",
-            name = _G.COMMUNITIES,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.COMMUNITIES
         },
         debugTools = {
             type = "toggle",
-            name = L["Debug Tools"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Debug Tools"]
         },
         dressingRoom = {
             type = "toggle",
-            name = _G.DRESSUP_FRAME,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.DRESSUP_FRAME
         },
         encounterJournal = {
             type = "toggle",
-            name = _G.ENCOUNTER_JOURNAL,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.ENCOUNTER_JOURNAL
         },
         friends = {
             type = "toggle",
-            name = _G.FRIENDS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.FRIENDS
         },
         garrison = {
             type = "toggle",
-            name = _G.GARRISON_LOCATION_TOOLTIP,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.GARRISON_LOCATION_TOOLTIP
         },
         gossip = {
             type = "toggle",
-            name = L["Gossip Frame"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Gossip Frame"]
         },
         help = {
             type = "toggle",
-            name = L["Help Frame"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Help Frame"]
         },
         ime = {
             type = "toggle",
-            name = L["IME"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["IME"]
         },
         lookingForGroup = {
             type = "toggle",
-            name = _G.LFG_TITLE,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.LFG_TITLE
         },
         loot = {
             type = "toggle",
-            name = L["Loot Frames"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Loot Frames"]
         },
         lossOfControl = {
             type = "toggle",
-            name = _G.LOSS_OF_CONTROL,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.LOSS_OF_CONTROL
         },
         macro = {
             type = "toggle",
-            name = _G.MACROS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.MACROS
         },
         mail = {
             type = "toggle",
-            name = L["Mail Frame"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Mail Frame"]
         },
         merchant = {
             type = "toggle",
-            name = _G.MERCHANT,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.MERCHANT
         },
         microButtons = {
             type = "toggle",
-            name = L["Micro Bar"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Micro Bar"]
         },
         mirrorTimers = {
             type = "toggle",
-            name = L["Mirror Timers"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Mirror Timers"]
         },
         misc = {
             type = "toggle",
-            name = L["Misc Frames"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Misc Frames"]
         },
         objectiveTracker = {
             type = "toggle",
-            name = _G.OBJECTIVES_TRACKER_LABEL,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.OBJECTIVES_TRACKER_LABEL
         },
         orderHall = {
             type = "toggle",
-            name = L["Orderhall"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Orderhall"]
         },
         quest = {
             type = "toggle",
-            name = L["Quest Frames"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Quest Frames"]
         },
         raidInfo = {
             type = "toggle",
-            name = _G.RAID_INFO,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.RAID_INFO
         },
         raidUtility = {
             type = "toggle",
-            name = L["Raid Utility"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Raid Utility"]
         },
         scenario = {
             type = "toggle",
-            name = _G.SCENARIOS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.SCENARIOS
         },
         spellBook = {
             type = "toggle",
-            name = _G.SPELLBOOK,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.SPELLBOOK
         },
         staticPopup = {
             type = "toggle",
-            name = L["Static Popup"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Static Popup"]
         },
         talent = {
             type = "toggle",
-            name = _G.TALENTS,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.TALENTS
         },
         taxi = {
             type = "toggle",
-            name = _G.FLIGHT_MAP,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.FLIGHT_MAP
         },
         tooltip = {
             type = "toggle",
-            name = L["Tooltip"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Tooltip"]
         },
         warboard = {
             type = "toggle",
-            name = L["Warboard"],
-            desc = L["TOGGLESKIN_DESC"]
+            name = L["Warboard"]
         },
         worldMap = {
             type = "toggle",
-            name = _G.WORLD_MAP,
-            desc = L["TOGGLESKIN_DESC"]
+            name = _G.WORLD_MAP
         }
     }
 }

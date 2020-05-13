@@ -14,7 +14,7 @@ options.worldMap = {
             order = 1,
             type = "toggle",
             name = L["Reveal Fog"],
-            desc = L["Remove Fog of War on your world map."],
+            desc = L["Remove Fog of War from your world map."],
             get = function(info)
                 return E.private.WT.maps.worldMap[info[#info]]
             end,

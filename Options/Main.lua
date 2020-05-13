@@ -5,7 +5,7 @@ W.options = {
     combat = {
         order = 101,
         name = L["Combat"],
-        desc = L["Make the combat more interesting."],
+        desc = L["Make combat more interesting."],
         icon = W.Media.Icons.combat,
         args = {}
     },

@@ -40,7 +40,7 @@ options.combatAlert = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Display a animation when you enter or leave a combat."]
+                    desc = L["Display an animation when you enter or leave combat."]
                 },
                 animationSize = {
                     order = 2,
@@ -63,7 +63,7 @@ options.combatAlert = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Display a text when you enter or leave a combat."]
+                    desc = L["Display a text when you enter or leave combat."]
                 },
                 enterText = {
                     order = 2,

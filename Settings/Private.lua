@@ -17,7 +17,8 @@ V.skins = {
 		level = 30
 	},
 	addons = {
-		ace3 = true
+		ace3 = true,
+		bigwigs = true,
 	},
 	blizzard = {
 		enable = true,

@@ -240,3 +240,114 @@ options.blizzard = {
         }
     }
 }
+
+options.elvui = {
+    order = 2,
+    type = "group",
+    name = L["ElvUI"],
+    get = function(info)
+        return E.private.WT.skins.elvui[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.skins.elvui[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        enable = {
+            order = 0,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        actionBarsBackdrop = {
+            type = "toggle",
+            name = L["Actionbars Backdrop"]
+        },
+        actionBarsButton = {
+            type = "toggle",
+            name = L["Actionbars Button"]
+        },
+        afk = {
+            type = "toggle",
+            name = L["AFK Mode"]
+        },
+        altPowerBar = {
+            type = "toggle",
+            name = L["Alt Power"]
+        },
+        auras = {
+            type = "toggle",
+            name = L["Auras"]
+        },
+        bags = {
+            type = "toggle",
+            name = L["Bags"]
+        },
+        castBars = {
+            type = "toggle",
+            name = L["Cast Bar"]
+        },
+        chatPanels = {
+            type = "toggle",
+            name = L["Chat Panels"]
+        },
+        classBars = {
+            type = "toggle",
+            name = L["Class Bars"]
+        },
+        chatCopyFrame = {
+            type = "toggle",
+            name = L["Chat Copy Frame"]
+        },
+        dataBars = {
+            type = "toggle",
+            name = L["Data Bars"]
+        },
+        miniMap = {
+            type = "toggle",
+            name = L["Minimap"]
+        },
+        option = {
+            type = "toggle",
+            name = L["Options"]
+        },
+        panels = {
+            type = "toggle",
+            name = L["Panels"]
+        },
+        staticPopup = {
+            type = "toggle",
+            name = L["Static Popup"]
+        },
+        statusReport = {
+            type = "toggle",
+            name = L["Status Report"]
+        },
+        unitFrames = {
+            type = "toggle",
+            name = L["UnitFrames"]
+        }
+    }
+}
+
+options.addons = {
+    order = 3,
+    type = "group",
+    name = L["Addons"],
+    get = function(info)
+        return E.private.WT.skins.addons[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.skins.addons[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        ace3 = {
+            type = "toggle",
+            name = L["Ace3"]
+        },
+        bigwigs = {
+            type = "toggle",
+            name = L["BigWigs"]
+        }
+    }
+}

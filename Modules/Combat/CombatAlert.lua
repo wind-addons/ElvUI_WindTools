@@ -79,8 +79,7 @@ function C:CreateAnimationFrame()
     self.animationFrame.swordLeftToRight = frame
 
     -- 剑 ↖
-    frame =
-        A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword, true)
+    frame = A.CreateAnimationFrame(nil, self.animationFrame, "HIGH", 2, true, W.Media.Textures.sword, true)
     anime = A.CreateAnimationGroup(frame, "enter") -- 进入战斗
     A.AddTranslation(anime, "moveToCenter")
     A.AddFadeIn(anime, "fadeIn")
@@ -192,7 +191,7 @@ function C:UpdateTextFrame()
     local moveDownOffset = -40 * self.db.animationSize
 
     local f = self.textFrame
-    
+
     f:Hide()
     F.SetFontWithDB(f.text, self.db.font)
     f.text:SetText(self.db.enterText)
@@ -218,7 +217,7 @@ function C:UpdateTextFrame()
 end
 
 -- 通知控制
-function C:ShowAlert(enterCombat)
+function C:ShowAlert(alertType)
     if not self.animationFrame then
         F.DebugMessage(C, "找不到动画框架")
     end
@@ -228,7 +227,7 @@ function C:ShowAlert(enterCombat)
     end
 
     if isPlaying then
-        self:QueueAlert(enterCombat)
+        self:QueueAlert(alertType)
         return
     end
 
@@ -256,7 +255,7 @@ function C:ShowAlert(enterCombat)
         t.leave:Stop()
     end
 
-    if enterCombat then
+    if alertType == "ENTER" then
         if self.db.animation then
             -- 盾牌动画会由左到右的剑自动触发
             a.shield:Point("CENTER", 0, shieldOffsetEnter)
@@ -300,27 +299,26 @@ function C:ShowAlert(enterCombat)
     end
 end
 
-function C:QueueAlert(enterCombat)
-    tinsert(alertQueue, enterCombat)
+function C:QueueAlert(alertType)
+    tinsert(alertQueue, alertType)
 end
 
 function C.LoadNextAlert()
     isPlaying = false
 
     if alertQueue and alertQueue[1] then
-        local enterCombat = alertQueue[1]
-        C:ShowAlert(enterCombat)
+        C:ShowAlert(alertQueue[1])
         tremove(alertQueue, 1)
     end
 end
 
 -- 事件绑定
 function C:PLAYER_REGEN_DISABLED()
-    self:ShowAlert(true)
+    self:ShowAlert("ENTER")
 end
 
 function C:PLAYER_REGEN_ENABLED()
-    self:ShowAlert(false)
+    self:ShowAlert("LEAVE")
 end
 
 -- 更新配置
@@ -391,11 +389,15 @@ function C:ProfileUpdate()
         self:UpdateFrames()
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:RegisterEvent("PLAYER_REGEN_DISABLED")
-        self:PLAYER_REGEN_DISABLED()
     else
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
         self:UnregisterEvent("PLAYER_REGEN_DISABLED")
     end
+end
+
+function C:Preview()
+    self:ShowAlert("ENTER")
+    self:QueueAlert("LEAVE")
 end
 
 function C:Initialize()

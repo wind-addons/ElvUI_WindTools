@@ -30,8 +30,17 @@ options.combatAlert = {
             max = 4,
             step = 0.01
         },
-        animationConfig = {
+        preview = {
             order = 3,
+            type = "execute",
+            name = L["Preview"],
+            desc = L["Preview the alert visual effect."],
+            func = function()
+                C:Preview()
+            end
+        },
+        animationConfig = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Animation"],
@@ -54,7 +63,7 @@ options.combatAlert = {
             }
         },
         textConfig = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Text"],

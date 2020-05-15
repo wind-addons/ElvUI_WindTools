@@ -16,13 +16,28 @@ options.combatAlert = {
         C:ProfileUpdate()
     end,
     args = {
-        enable = {
+        desc = {
             order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L[
+                        "This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."
+                    ]
+                }
+            }
+        },
+        enable = {
+            order = 2,
             type = "toggle",
             name = L["Enable"]
         },
         speed = {
-            order = 2,
+            order = 3,
             type = "range",
             name = L["Speed"],
             desc = L["The speed of the alert."],
@@ -31,7 +46,7 @@ options.combatAlert = {
             step = 0.01
         },
         preview = {
-            order = 3,
+            order = 4,
             type = "execute",
             name = L["Preview"],
             desc = L["Preview the alert visual effect."],
@@ -40,7 +55,7 @@ options.combatAlert = {
             end
         },
         animationConfig = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Animation"],
@@ -63,7 +78,7 @@ options.combatAlert = {
             }
         },
         textConfig = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Text"],

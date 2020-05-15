@@ -5,8 +5,32 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
-options.general = {
+options.desc = {
     order = 1,
+    type = "group",
+    inline = true,
+    name = L["Description"],
+    args = {
+        feature_1 = {
+            order = 1,
+            type = "description",
+            name = L["WindTools provides a new shadow style for original ElvUI."]
+        },
+        feature_2 = {
+            order = 2,
+            type = "description",
+            name = L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."]
+        },
+        feature_3 = {
+            order = 3,
+            type = "description",
+            name = L["WindSkins is all in control, enjoy your own ElvUI interface!"]
+        }
+    }
+}
+
+options.general = {
+    order = 2,
     type = "group",
     name = L["General"],
     args = {
@@ -59,7 +83,7 @@ options.general = {
 }
 
 options.blizzard = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Blizzard"],
     get = function(info)
@@ -243,7 +267,7 @@ options.blizzard = {
 }
 
 options.elvui = {
-    order = 2,
+    order = 4,
     type = "group",
     name = L["ElvUI"],
     get = function(info)
@@ -331,7 +355,7 @@ options.elvui = {
 }
 
 options.addons = {
-    order = 3,
+    order = 5,
     type = "group",
     name = L["Addons"],
     get = function(info)

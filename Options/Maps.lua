@@ -10,8 +10,21 @@ options.worldMap = {
     type = "group",
     name = L["World Map"],
     args = {
-        reveal = {
+        desc = {
             order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["This module will help you to reveal and resize maps."]
+                }
+            }
+        },
+        reveal = {
+            order = 2,
             type = "toggle",
             name = L["Reveal Fog"],
             desc = L["Remove Fog of War from your world map."],
@@ -24,7 +37,7 @@ options.worldMap = {
             end
         },
         scale = {
-            order = 2,
+            order = 3,
             type = "range",
             name = L["Scale"],
             desc = L["Resize world map."],

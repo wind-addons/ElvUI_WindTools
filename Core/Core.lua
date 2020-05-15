@@ -33,9 +33,9 @@ function W:InitializeModules()
 end
 
 -- 配置更改后的模块更新
-function W:UpdateModules()
+function W.UpdateModules()
     for _, moduleName in pairs(W.RegisteredModules) do
-        local module = self:GetModule(moduleName)
+        local module = W:GetModule(moduleName)
         if module.ProfileUpdate then
             pcall(module.ProfileUpdate, module)
         end

@@ -8,6 +8,7 @@ local CreateFrame = CreateFrame
 
 S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
 S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
+S.updateProfile = {} -- 配置更新后的更新表
 
 --[[
     创建阴影
@@ -131,6 +132,15 @@ function S:AddCallbackForAddon(addonName, func)
 end
 
 --[[
+    注册更新回调
+    @param {string} name 函数名
+    @param {function} [func=S.name] 回调函数
+]]
+function S:AddCallbackForUpdate(name, func)
+    tinsert(self.updateProfile, func or S[name])
+end
+
+--[[
     游戏系统输出错误
     @param {string} err 错误
 ]]
@@ -178,6 +188,13 @@ function S:Initialize()
         if isLoaded and isFinished then
             S:CallLoadedAddon(addonName, object)
         end
+    end
+end
+
+function S:ProfileUpdate()
+    for index, func in next, self.updateProfile do
+        xpcall(func, errorhandler, self)
+        self.updateProfile[index] = nil
     end
 end
 

@@ -121,13 +121,16 @@ function C:UpdateAnimationFrame()
     -- 动画尺寸
     f:Size(unpack(animationFrameSize))
 
+    f.shield:Hide()
     f.shield:Size(0.8 * textureSize, 0.8 * textureSize)
     f.shield.enter.moveToCenter:SetOffset(0, -shieldAnimationRange)
 
+    f.swordLeftToRight:Hide()
     f.swordLeftToRight:Size(textureSize, textureSize)
     f.swordLeftToRight.enter.moveToCenter:SetOffset(swordAnimationRange, swordAnimationRange)
     f.swordLeftToRight.leave.moveToCorner:SetOffset(swordAnimationRange, swordAnimationRange)
 
+    f.swordRightToLeft:Hide()
     f.swordRightToLeft:Size(textureSize, textureSize)
     f.swordRightToLeft.enter.moveToCenter:SetOffset(-swordAnimationRange, swordAnimationRange)
     f.swordRightToLeft.leave.moveToCorner:SetOffset(-swordAnimationRange, swordAnimationRange)
@@ -189,7 +192,8 @@ function C:UpdateTextFrame()
     local moveDownOffset = -40 * self.db.animationSize
 
     local f = self.textFrame
-
+    
+    f:Hide()
     F.SetFontWithDB(f.text, self.db.font)
     f.text:SetText(self.db.enterText)
     f:Size(f.text:GetStringWidth(), f.text:GetStringHeight())
@@ -383,6 +387,7 @@ end
 
 function C:ProfileUpdate()
     if E.db.WT.combat.combatAlert.enable then
+        self.db = E.db.WT.combat.combatAlert
         self:UpdateFrames()
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:RegisterEvent("PLAYER_REGEN_DISABLED")

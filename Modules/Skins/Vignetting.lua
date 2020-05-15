@@ -46,3 +46,4 @@ function S:UpdateVignettingConfig()
 end
 
 S:AddCallback("Vignetting")
+S:AddCallbackForUpdate("UpdateVignettingConfig")

@@ -19,7 +19,7 @@ P.item = {
     delete = {
         enable = true,
         useKeyboardDel = true,
-        fillIn = "AUTO",
+        fillIn = "CLICK",
     }
 }
 

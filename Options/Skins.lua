@@ -14,17 +14,20 @@ options.desc = {
         feature_1 = {
             order = 1,
             type = "description",
-            name = L["WindTools provides a new shadow style for original ElvUI."]
+            name = L["WindTools provides a new shadow style for original ElvUI."],
+            fontSize = "medium"
         },
         feature_2 = {
             order = 2,
             type = "description",
-            name = L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."]
+            name = L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."],
+            fontSize = "medium"
         },
         feature_3 = {
             order = 3,
             type = "description",
-            name = L["WindSkins is all in control, enjoy your own ElvUI interface!"]
+            name = L["WindSkins is all in control, enjoy your own ElvUI interface!"],
+            fontSize = "medium"
         }
     }
 }

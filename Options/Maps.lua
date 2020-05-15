@@ -19,7 +19,8 @@ options.worldMap = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["This module will help you to reveal and resize maps."]
+                    name = L["This module will help you to reveal and resize maps."],
+                    fontSize = "medium"
                 }
             }
         },

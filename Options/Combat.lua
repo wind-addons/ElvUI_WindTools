@@ -28,7 +28,8 @@ options.combatAlert = {
                     name = L[
                         "This module will display a alert frame when entering and leaving combat.\n" ..
                             "You can customize animations and text effects."
-                    ]
+                    ],
+                    fontSize = "medium"
                 }
             }
         },

@@ -27,7 +27,8 @@ options.delete = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["This module provides several easy-to-use methods of deleting items."]
+                    name = L["This module provides several easy-to-use methods of deleting items."],
+                    fontSize = "medium"
                 }
             }
         },

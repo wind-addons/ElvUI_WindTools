@@ -12,10 +12,6 @@ V.skins = {
 		g = 0,
 		b = 0
 	},
-	vignetting = {
-		enable = true,
-		level = 30
-	},
 	addons = {
 		ace3 = true,
 		bigwigs = true,

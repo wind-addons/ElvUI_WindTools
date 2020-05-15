@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.skins.args
 local LSM = E.Libs.LSM
+local S = W:GetModule("Skins")
 
 local _G = _G
 
@@ -31,11 +32,11 @@ options.general = {
             name = L["Vignetting"],
             inline = true,
             get = function(info)
-                return E.private.WT.skins.vignetting[info[#info]]
+                return E.db.WT.skins.vignetting[info[#info]]
             end,
             set = function(info, value)
-                E.private.WT.skins.vignetting[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
+                E.db.WT.skins.vignetting[info[#info]] = value
+                S:UpdateVignettingConfig()
             end,
             args = {
                 enable = {
@@ -48,9 +49,9 @@ options.general = {
                     type = "range",
                     name = L["Level"],
                     desc = L["Change the alpha of vignetting."],
-                    min = 0.1,
-                    max = 3,
-                    step = 0.01
+                    min = 1,
+                    max = 100,
+                    step = 1
                 }
             }
         }

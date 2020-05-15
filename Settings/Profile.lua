@@ -28,3 +28,10 @@ P.maps = {
         scale = 1.236
     }
 }
+
+P.skins = {
+    vignetting = {
+		enable = true,
+		level = 30
+	},
+}

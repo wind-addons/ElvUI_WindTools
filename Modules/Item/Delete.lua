@@ -80,7 +80,7 @@ function DI:DELETE_ITEM_CONFIRM()
             -- Delete 填入
             if StaticPopupDialogs[type].hasEditBox == 1 then
                 dialog.editBox:ClearFocus()
-                if self.db.fillIn == "CLICK" and  then
+                if self.db.fillIn == "CLICK"  then
                     self:ShowFillInButton(dialog)
 				    dialog:HookScript("OnHide", DI.HideFillInButton)
                 elseif self.db.fillIn == "AUTO" then

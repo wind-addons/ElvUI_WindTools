@@ -14,8 +14,7 @@ function S:ElvUI_OptionsUI()
         "ToggleOptionsUI",
         function()
             if not InCombatLockdown() then
-                local frame = E:Config_GetWindow()
-                frame:CreateShadow()
+                S:CreateShadow(E:Config_GetWindow())
             end
         end
     )

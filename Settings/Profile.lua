@@ -15,6 +15,14 @@ P.combat = {
     }
 }
 
+P.item = {
+    delete = {
+        enable = true,
+        useKeyboardDel = true,
+        fillIn = "AUTO",
+    }
+}
+
 P.maps = {
     worldMap = {
         scale = 1.236

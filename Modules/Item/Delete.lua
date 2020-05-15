@@ -1,0 +1,111 @@
+local W, F, E, L = unpack(select(2, ...))
+local DI = W:NewModule("DeleteItem", "AceEvent-3.0", "AceHook-3.0")
+local ES = E:GetModule("Skins")
+local S = W:GetModule("Skins")
+local strsplit,strmatch = strsplit,strmatch
+local pairs = pairs
+local CreateFrame = CreateFrame
+local STATICPOPUP_NUMDIALOGS = STATICPOPUP_NUMDIALOGS
+
+local dialogs = {
+	["DELETE_ITEM"] = true,
+	["DELETE_GOOD_ITEM"] = true,
+	["DELETE_QUEST_ITEM"] = true,
+	["DELETE_GOOD_QUEST_ITEM"] = true,
+}
+
+function DI:ShowFillInButton(dialog)
+	local editBoxFrame = dialog.editBox
+	local yesButton = dialog.button1
+	if not editBoxFrame or not yesButton then return end
+
+	-- 初始化一个按钮
+	if not self.fillInButton then
+		local button = CreateFrame("Button", "MyButton", E.UIParent, "UIPanelButtonTemplate")
+		button:SetFrameStrata("TOOLTIP")
+		ES:HandleButton(button) -- ElvUI 按钮美化
+		self.fillInButton = button
+	end
+	
+	-- 覆盖住
+	editBoxFrame:Hide()
+	self.fillInButton:SetPoint("TOPLEFT", editBoxFrame, "TOPLEFT", -2, -4)
+	self.fillInButton:SetPoint("BOTTOMRIGHT", editBoxFrame, "BOTTOMRIGHT", 2, 4)
+
+	-- 点击后填入 Delete
+	self.fillInButton:SetText("|cffe74c3c"..L["Click to confirm"].."|r")
+	self.fillInButton:SetScript("OnClick", function(self)
+		yesButton:Enable()
+		self:SetText("|cff2ecc71"..L["Confirmed"].."|r")
+	end)
+	self.fillInButton:Show()
+end
+
+function DI.HideFillInButton()
+	if DI.fillInButton then
+		DI.fillInButton:Hide()
+		DI.fillInButton:SetScript("OnClick", nil)
+	end
+end
+
+function DI:DELETE_ITEM_CONFIRM()
+	for i = 1, STATICPOPUP_NUMDIALOGS do
+		local dialog = _G["StaticPopup" .. i]
+		local type = dialog.which
+        
+        if dialogs[type] then
+			if self.db.useKeyboardDel then
+				if type ~= "DELETE_ITEM" then
+					-- 添加说明
+					local msg = dialog.text:GetText()
+					local msgTable = {strsplit("\n\n", msg)}
+                    
+                    msg = ""
+                    
+					for k, v in pairs(msgTable) do
+						if (v ~= "") and (not strmatch(v, DELETE_ITEM_CONFIRM_STRING)) then
+							msg = msg..v.."\n\n"
+						end
+					end
+                    
+                    msg = msg..L["You may also press the |cffffd200Delete|r key as confirmation."]
+					dialog.text:SetText(msg)
+				end
+
+				-- 按键删除
+				dialog:SetScript("OnKeyDown", function(self, key) if key == "DELETE" then DeleteCursorItem() end end)
+				dialog:HookScript("OnHide", function(self) self:SetScript("OnKeyDown", nil) end)
+            end
+            
+            -- Delete 填入
+            if StaticPopupDialogs[type].hasEditBox == 1 then
+                dialog.editBox:ClearFocus()
+                if self.db.fillIn == "CLICK" and  then
+                    self:ShowFillInButton(dialog)
+				    dialog:HookScript("OnHide", DI.HideFillInButton)
+                elseif self.db.fillIn == "AUTO" then
+                    dialog.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
+                end
+            end
+		end
+	end
+end
+
+function DI:Initialize()
+    if not E.db.WT.item.delete.enable then
+        return
+    end
+    self.db = E.db.WT.item.delete
+
+    self:RegisterEvent("DELETE_ITEM_CONFIRM")
+end
+
+function DI:ProfileUpdate()
+    if not E.db.WT.item.delete.enable then
+        self:UnregisterEvent("DELETE_ITEM_CONFIRM")
+    else
+        self:Initialize()
+    end
+end
+
+W:RegisterModule(DI:GetName())

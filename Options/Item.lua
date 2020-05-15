@@ -2,17 +2,20 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.item.args
 local LSM = E.Libs.LSM
 
+local DI = W:GetModule("DeleteItem")
+
 local _G = _G
 
 options.delete = {
     order = 1,
     type = "group",
-    name = L["Delete"],
+    name = L["Delete Item"],
     get = function(info)
         return E.db.WT.item.delete[info[#info]]
     end,
     set = function(info, value)
         E.db.WT.item.delete[info[#info]] = value
+        DI:ProfileUpdate()
     end,
     args = {
         desc = {

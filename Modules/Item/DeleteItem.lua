@@ -1,7 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local DI = W:NewModule("Delete", "AceEvent-3.0", "AceHook-3.0")
+local DI = W:NewModule("DeleteItem", "AceEvent-3.0", "AceHook-3.0")
 local ES = E:GetModule("Skins")
-local S = W:GetModule("Skins")
 local strsplit, strmatch = strsplit, strmatch
 local pairs = pairs
 local CreateFrame = CreateFrame

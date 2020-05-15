@@ -18,7 +18,7 @@ P.combat = {
 P.item = {
     delete = {
         enable = true,
-        useKeyboardDel = true,
+        delKey = true,
         fillIn = "CLICK",
     }
 }

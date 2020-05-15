@@ -104,7 +104,7 @@ function DI:DELETE_ITEM_CONFIRM()
 			return
 		end
 
-		if self.db.useKeyboardDel then
+		if self.db.delKey then
 			self:AddKeySupport(dialog)
 		end
 
@@ -116,8 +116,6 @@ function DI:DELETE_ITEM_CONFIRM()
 			elseif self.db.fillIn == "AUTO" then
 				dialog.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
 			end
-
-			dialog.editBox:ClearFocus()
 		end
 	end
 end

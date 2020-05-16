@@ -1,6 +1,4 @@
--- 原作：Square Minimap Buttons
--- 原作者：Azilroka, Sinaris, Feraldin
--- 修改：houshuu
+-- 基于：Square Minimap Buttons (Azilroka, Sinaris, Feraldin)
 
 local W, F, E, L = unpack(select(2, ...))
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0")
@@ -16,46 +14,44 @@ local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
 local C_Timer_After = C_Timer.After
 
--- 忽略的小地图框架
-local ignoreButtons = {
-	"AsphyxiaUIMinimapHelpButton",
-	"AsphyxiaUIMinimapVersionButton",
-	"ElvConfigToggle",
-	"ElvUIConfigToggle",
-	"ElvUI_ConsolidatedBuffs",
-	"HelpOpenTicketButton",
-	"MMHolder",
-	"DroodFocusMinimapButton",
-	"QueueStatusMinimapButton",
-	"TimeManagerClockButton",
-	"MinimapZoneTextButton"
-}
-
--- 忽略的框架名起始字符串
-local genericIgnores = {
-	"Archy",
-	"GatherMatePin",
-	"GatherNote",
-	"GuildInstance",
-	"HandyNotesPin",
-	"MinimMap",
-	"Spy_MapNoteList_mini",
-	"ZGVMarker",
-	"poiMinimap",
-	"GuildMap3Mini",
-	"LibRockConfig-1.0_MinimapButton",
-	"NauticusMiniIcon",
-	"WestPointer",
-	"Cork",
-	"DugisArrowMinimapPoint"
-}
-
--- 忽略含有字符串的框架
-local partialIgnores = {
-	"Node",
-	"Note",
-	"Pin",
-	"POI"
+-- 忽略列表
+local IgnoreList = {
+	full = {
+		"AsphyxiaUIMinimapHelpButton",
+		"AsphyxiaUIMinimapVersionButton",
+		"ElvConfigToggle",
+		"ElvUIConfigToggle",
+		"ElvUI_ConsolidatedBuffs",
+		"HelpOpenTicketButton",
+		"MMHolder",
+		"DroodFocusMinimapButton",
+		"QueueStatusMinimapButton",
+		"TimeManagerClockButton",
+		"MinimapZoneTextButton"
+	},
+	startWith = {
+		"Archy",
+		"GatherMatePin",
+		"GatherNote",
+		"GuildInstance",
+		"HandyNotesPin",
+		"MinimMap",
+		"Spy_MapNoteList_mini",
+		"ZGVMarker",
+		"poiMinimap",
+		"GuildMap3Mini",
+		"LibRockConfig-1.0_MinimapButton",
+		"NauticusMiniIcon",
+		"WestPointer",
+		"Cork",
+		"DugisArrowMinimapPoint"
+	},
+	partial = {
+		"Node",
+		"Note",
+		"Pin",
+		"POI"
+	}
 }
 
 -- 框架名白名单
@@ -64,7 +60,6 @@ local whiteList = {
 }
 
 local moveButtons = {}
-local minimapButtonBarAnchor, minimapButtonBar
 
 local function print_r(t)
 	local print_r_cache = {}
@@ -104,12 +99,12 @@ function MB:ResetGarrisonSize()
 	if InCombatLockdown() then
 		return
 	end
-	GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
+	_G.GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
 end
 
 function MB:SkinButton(frame)
-	if not self.db.mbcalendar then
-		tinsert(ignoreButtons, "GameTimeFrame")
+	if not self.db.calendar then
+		tinsert(IgnoreList.full, "GameTimeFrame")
 	end
 
 	if frame == nil or frame:GetName() == nil or (frame:GetObjectType() ~= "Button") or not frame:IsVisible() then
@@ -127,20 +122,19 @@ function MB:SkinButton(frame)
 	end
 
 	if not validIcon then
-		for i = 1, #ignoreButtons do
-			if name == ignoreButtons[i] then
+		for _, ignoreName in pairs(IgnoreList.full) do
+			if name == ignoreName then
+				return
+			end
+		end
+		for _, ignoreName in pairs(IgnoreList.startWith) do
+			if strsub(name, 1, strlen(ignoreName)) == ignoreName then
 				return
 			end
 		end
 
-		for i = 1, #genericIgnores do
-			if strsub(name, 1, strlen(genericIgnores[i])) == genericIgnores[i] then
-				return
-			end
-		end
-
-		for i = 1, #partialIgnores do
-			if strfind(name, partialIgnores[i]) ~= nil then
+		for _, ignoreName in pairs(IgnoreList.partial) do
+			if strfind(name, ignoreName) ~= nil then
 				return
 			end
 		end
@@ -160,7 +154,7 @@ function MB:SkinButton(frame)
 		frame:SetNormalTexture(select(3, GetSpellInfo(12051)))
 	end
 
-	if name == "GarrisonLandingPageMinimapButton" and self.db.mbgarrison then
+	if name == "GarrisonLandingPageMinimapButton" and self.db.garrison then
 		frame:SetScale(1)
 		if not frame.isRegister then
 			MB:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ResetGarrisonSize")
@@ -176,8 +170,6 @@ function MB:SkinButton(frame)
 	end
 
 	if not frame.isSkinned then
-		-- frame:HookScript("OnEnter", OnEnter)
-		-- frame:HookScript("OnLeave", OnLeave)
 		frame:HookScript("OnClick", self.DelayedUpdateLayout)
 		for _, region in pairs({frame:GetRegions()}) do
 			frame.original = {}
@@ -257,12 +249,12 @@ end
 function MB:UpdateSkinStyle()
 	local doreload = 0
 	if self.db.skinStyle == "NOANCHOR" then
-		if self.db.mbgarrison then
-			self.db.mbgarrison = false
+		if self.db.garrison then
+			self.db.garrison = false
 			doreload = 1
 		end
-		if self.db.mbcalendar then
-			self.db.mbcalendar = false
+		if self.db.calendar then
+			self.db.calendar = false
 			doreload = 1
 		end
 		if doreload == 1 then
@@ -296,8 +288,8 @@ function MB:UpdateLayout()
 	-- 更新按钮
 	local buttonX, buttonY, anchor, offsetX, offsetY
 
-	for i = 1, #moveButtons do
-		local frame = _G[moveButtons[i]]
+	for i, moveButton in pairs(moveButtons) do
+		local frame = _G[moveButton]
 
 		if self.db.skinStyle == "NOANCHOR" then
 			frame:SetParent(frame.original.Parent)
@@ -335,7 +327,7 @@ function MB:UpdateLayout()
 				buttonX = numOfRows
 			end
 
-			frame:SetParent(minimapButtonBar)
+			frame:SetParent(self.bar)
 			frame:SetMovable(false)
 			frame:SetScript("OnDragStart", nil)
 			frame:SetScript("OnDragStop", nil)
@@ -389,8 +381,6 @@ function MB:UpdateLayout()
 			width, height = height, width
 		end
 
-		print(width, height)
-
 		self.bar:Size(width, height)
 		self.barAnchor:Size(width, height)
 		self.bar:Show()
@@ -417,16 +407,60 @@ function MB:UpdateLayout()
 	else
 		self.bar.backdrop:Hide()
 	end
+
+	-- 鼠标显隐功能
+	if self.db.mouseover then
+		self.bar:SetScript(
+			"OnEnter",
+			function(self)
+				UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
+			end
+		)
+		self.bar:SetScript(
+			"OnLeave",
+			function(self)
+				UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
+			end
+		)
+		self.bar:SetAlpha(0)
+
+		for _, moveButton in pairs(moveButtons) do
+			local frame = _G[moveButton]
+			frame:HookScript(
+				"OnEnter",
+				function(self)
+					UIFrameFadeIn(MB.bar, 0.2, MB.bar:GetAlpha(), 1)
+					self:SetBackdropBorderColor(.7, .7, 0)
+				end
+			)
+			frame:HookScript(
+				"OnLeave",
+				function(self)
+					UIFrameFadeOut(MB.bar, 0.2, MB.bar:GetAlpha(), 0)
+					self:SetBackdropBorderColor(0, 0, 0)
+				end
+			)
+		end
+	else
+		self.bar:SetScript("OnEnter", nil)
+		self.bar:SetScript("OnLeave", nil)
+		self.bar:SetAlpha(1)
+		for _, moveButton in pairs(moveButtons) do
+			local frame = _G[moveButton]
+			frame:HookScript("OnEnter", nil)
+			frame:HookScript("OnLeave", nil)
+		end
+	end
 end
 
 function MB:SkinMinimapButtons()
 	self:RegisterEvent("ADDON_LOADED", "StartSkinning")
 
-	for i = 1, Minimap:GetNumChildren() do
-		self:SkinButton(select(i, Minimap:GetChildren()))
+	for i = 1, _G.Minimap:GetNumChildren() do
+		self:SkinButton(select(i, _G.Minimap:GetChildren()))
 	end
 
-	if self.db.mbgarrison then
+	if self.db.garrison then
 		self:SkinButton(_G.GarrisonLandingPageMinimapButton)
 	end
 
@@ -442,28 +476,6 @@ function MB:StartSkinning()
 			MB:SkinMinimapButtons()
 		end
 	)
-end
-
-function MB:UpdateMouseoverConfig()
-	if self.db.mouseover then
-		self.bar:SetScript(
-			"OnEnter",
-			function(self)
-				UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
-			end
-		)
-		self.bar:SetScript(
-			"OnLeave",
-			function(self)
-				UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
-			end
-		)
-		self.bar:SetAlpha(0)
-	else
-		self.bar:SetScript("OnEnter", nil)
-		self.bar:SetScript("OnLeave", nil)
-		self.bar:SetAlpha(1)
-	end
 end
 
 function MB:CreateFrames()

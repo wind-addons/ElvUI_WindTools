@@ -13,8 +13,8 @@ V.maps = {
 		spacing = 2,
 		layoutDirection = "NORMAL",
 		skinStyle = "HORIZONTAL",
-		mbcalendar = false,
-		mbgarrison = true
+		calendar = false,
+		garrison = true
 	}
 }
 

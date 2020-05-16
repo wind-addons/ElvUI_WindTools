@@ -9,7 +9,7 @@ local S = W:GetModule("Skins")
 local _G = _G
 local ceil, floor, min = ceil, floor, min
 local strlen, strsub, strfind = strlen, strsub, strfind
-local tinsert = tinsert
+local tinsert, type, pairs = tinsert, type, pairs
 
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
@@ -155,7 +155,7 @@ function MB:SkinButton(frame)
 	if name == "DBMMinimapButton" then
 		frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
 	end
-	
+
 	if name == "SmartBuff_MiniMapButton" then
 		frame:SetNormalTexture(select(3, GetSpellInfo(12051)))
 	end
@@ -178,9 +178,8 @@ function MB:SkinButton(frame)
 	if not frame.isSkinned then
 		-- frame:HookScript("OnEnter", OnEnter)
 		-- frame:HookScript("OnLeave", OnLeave)
-		frame:HookScript("OnClick", MB.DelayedUpdateLayout)
-		for i = 1, frame:GetNumRegions() do
-			local region = select(i, frame:GetRegions())
+		frame:HookScript("OnClick", self.DelayedUpdateLayout)
+		for _, region in pairs({frame:GetRegions()}) do
 			frame.original = {}
 			frame.original.Width, frame.original.Height = frame:GetSize()
 			frame.original.Point,
@@ -202,8 +201,8 @@ function MB:SkinButton(frame)
 				local texture = region:GetTexture()
 
 				if
-					(texture and (type(texture) ~= "number") and
-						(texture:find("Border") or texture:find("Background") or texture:find("AlphaMask")))
+					texture and type(texture) ~= "number" and
+						(texture:find("Border") or texture:find("Background") or texture:find("AlphaMask"))
 				 then
 					region:SetTexture(nil)
 				else
@@ -234,17 +233,18 @@ function MB:SkinButton(frame)
 				end
 			end
 		end
+
 		frame:SetTemplate("Tranparent")
 
 		tinsert(moveButtons, name)
-		S:CreateShadow(MB.bar.backdrop)
+		S:CreateShadow(frame)
 
 		frame.isSkinned = true
 	end
 end
 
 function MB:DelayedUpdateLayout()
-	if MB.db.skinStyle ~= "NOANCHOR" then
+	if self.db.skinStyle ~= "NOANCHOR" then
 		C_Timer_After(
 			.1,
 			function()
@@ -327,10 +327,9 @@ function MB:UpdateLayout()
 			frame:SetScale(frame.original.Scale)
 			frame:SetMovable(true)
 		else
-			print(1)
 			-- 找到默认布局下的 X 行 Y 列 （从 1 开始）
-			buttonX = i % numOfRows
-			buttonY = floor(i / numOfRows) + 1
+			buttonX = i % buttonsPerRow
+			buttonY = floor(i / buttonsPerRow) + 1
 
 			if buttonX == 0 then
 				buttonX = numOfRows
@@ -369,7 +368,13 @@ function MB:UpdateLayout()
 			end
 
 			frame:ClearAllPoints()
-			frame:Point(anchor, MB.bar, anchor, offsetX, offsetY)
+			frame:Point(anchor, self.bar, anchor, offsetX, offsetY)
+		end
+
+		if E.private.WT.skins.windtools and not self.db.backdrop then
+			frame.shadow:Show()
+		else
+			frame.shadow:Hide()
 		end
 	end
 
@@ -383,6 +388,8 @@ function MB:UpdateLayout()
 		if not self.db.skinStyle == "HORIZONTAL" then
 			width, height = height, width
 		end
+
+		print(width, height)
 
 		self.bar:Size(width, height)
 		self.barAnchor:Size(width, height)
@@ -399,13 +406,13 @@ function MB:UpdateLayout()
 		anchor = direction and "TOP" or "BOTTOM"
 	end
 
-	self.bar:Point(anchor, MB.barAnchor, anchor, 0, 0)
+	self.bar:Point(anchor, self.barAnchor, anchor, 0, 0)
 
 	if self.db.backdrop then
 		self.bar.backdrop:Show()
 
 		if E.private.WT.skins.windtools then
-			S:CreateShadow(MB.bar.backdrop)
+			S:CreateShadow(self.bar.backdrop)
 		end
 	else
 		self.bar.backdrop:Hide()
@@ -466,31 +473,30 @@ function MB:CreateFrames()
 
 	local frame = CreateFrame("Frame", nil, E.UIParent)
 	frame:Point("TOPRIGHT", RightMiniPanel, "BOTTOMRIGHT", 0, -2)
-	frame:Size(200, 32)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 
+	frame = CreateFrame("Frame", nil, E.UIParent)
+	frame:SetFrameStrata("LOW")
+	frame:CreateBackdrop("Transparent")
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
+	self.bar = frame
+
+	self:SkinMinimapButtons()
+
 	E:CreateMover(
-		frame,
+		self.barAnchor,
 		"WTMinimapButtonBarAnchor",
 		L["Minimap Button Bar"],
 		nil,
 		nil,
 		nil,
-		"WINDTOOLS,ALL",
+		"ALL,WINDTOOLS",
 		function()
 			return E.private.WT.maps.minimapButtons.enable
 		end
 	)
-
-	frame = CreateFrame("Frame", "MinimapButtonBar", E.UIParent)
-	frame:SetFrameStrata("LOW")
-	frame:CreateBackdrop("Transparent")
-	frame:ClearAllPoints()
-	frame:SetPoint("CENTER", MB.barAnchor, "CENTER", 0, 0)
-	self.bar = frame
-
-	self:SkinMinimapButtons()
 end
 
 function MB:Initialize()

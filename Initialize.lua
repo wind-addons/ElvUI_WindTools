@@ -26,6 +26,7 @@ addon[6] = P.WT
 addon[7] = G.WT
 
 _G[addonName] = addon
+W.Version = GetAddOnMetadata(addonName, "Version")
 
 -- 预处理 WindTools 模块
 W.Modules = {}

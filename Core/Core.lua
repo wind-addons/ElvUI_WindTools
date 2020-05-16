@@ -5,7 +5,6 @@ local pcall, pairs, tinsert = pcall, pairs, tinsert
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 
 -- 一些常量
-W.Version = GetAddOnMetadata(addonName, "Version")
 W.Title = L["WindTools"]
 
 W.RegisteredModules = {}

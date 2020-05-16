@@ -3,11 +3,23 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 V.maps = {
 	worldMap = {
 		reveal = true
+	},
+	minimapButtons = {
+		enable = true,
+		mouseover = true,
+		buttonsPerRow = 6,
+		buttonSize = 32,
+		backdrop = true,
+		spacing = 2,
+		layoutDirection = "NORMAL",
+		skinStyle = "HORIZONTAL",
+		mbcalendar = false,
+		mbgarrison = true
 	}
 }
 
 V.misc = {
-    saveArtifact = true,
+	saveArtifact = true
 }
 
 V.skins = {
@@ -16,9 +28,10 @@ V.skins = {
 		g = 0,
 		b = 0
 	},
+	windtools = true,
 	addons = {
 		ace3 = true,
-		bigwigs = true,
+		bigwigs = true
 	},
 	blizzard = {
 		enable = true,

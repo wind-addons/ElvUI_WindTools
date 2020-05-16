@@ -19,7 +19,7 @@ P.item = {
     delete = {
         enable = true,
         delKey = true,
-        fillIn = "CLICK",
+        fillIn = "CLICK"
     }
 }
 
@@ -31,7 +31,7 @@ P.maps = {
 
 P.skins = {
     vignetting = {
-		enable = true,
-		level = 30
-	},
+        enable = true,
+        level = 30
+    }
 }

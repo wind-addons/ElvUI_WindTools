@@ -19,7 +19,7 @@ options.transmog = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["This module focous on enhancement of transmog."],
+                    name = L["This module focus on enhancement of transmog."],
                     fontSize = "medium"
                 }
             }

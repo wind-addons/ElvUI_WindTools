@@ -282,6 +282,7 @@ function MB:UpdateLayout()
 	local buttonsPerRow = self.db.buttonsPerRow
 	local numOfRows = ceil(#moveButtons / buttonsPerRow)
 	local spacing = self.db.spacing
+	local backdropSpacing = self.db.backdropSpacing
 	local buttonSize = self.db.buttonSize
 	local direction = self.db.layoutDirection == "NORMAL"
 
@@ -338,8 +339,8 @@ function MB:UpdateLayout()
 			frame:Size(buttonSize)
 
 			anchor = "TOPLEFT"
-			offsetX = spacing + (buttonX - 1) * (buttonSize + spacing)
-			offsetY = spacing + (buttonY - 1) * (buttonSize + spacing)
+			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
+			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
 			if self.db.skinStyle == "HORIZONTAL" then
 				if direction then
@@ -374,8 +375,8 @@ function MB:UpdateLayout()
 	buttonsPerRow = min(buttonsPerRow, #moveButtons)
 
 	if self.db.skinStyle ~= "NOANCHOR" and #moveButtons > 0 then
-		local width = buttonSize * buttonsPerRow + spacing * (buttonsPerRow + 1)
-		local height = buttonSize * numOfRows + spacing * (numOfRows + 1)
+		local width = buttonSize * buttonsPerRow + spacing * (buttonsPerRow - 1) + backdropSpacing * 2
+		local height = buttonSize * numOfRows + spacing * (numOfRows - 1) + backdropSpacing * 2
 
 		if not self.db.skinStyle == "HORIZONTAL" then
 			width, height = height, width

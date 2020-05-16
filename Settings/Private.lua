@@ -10,6 +10,7 @@ V.maps = {
 		buttonsPerRow = 6,
 		buttonSize = 32,
 		backdrop = true,
+		backdropSpacing = 5,
 		spacing = 2,
 		layoutDirection = "NORMAL",
 		skinStyle = "HORIZONTAL",

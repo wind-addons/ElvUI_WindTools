@@ -3,5 +3,6 @@
 	<Script file="Combat.lua"/>
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>
+	<Script file="Misc.lua"/>
 	<Script file="Skins.lua"/>
 </Ui>

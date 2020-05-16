@@ -6,6 +6,10 @@ V.maps = {
 	}
 }
 
+V.misc = {
+    saveArtifact = true,
+}
+
 V.skins = {
 	color = {
 		r = 0,

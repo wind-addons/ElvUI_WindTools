@@ -2,5 +2,6 @@
 	<Include file="Combat\Load_Combat.xml"/>
 	<Include file="Item\Load_Item.xml"/>
 	<Include file="Maps\Load_Maps.xml"/>
+	<Include file="Misc\Load_Misc.xml"/>
 	<Include file="Skins\Load_Skins.xml"/>
 </Ui>

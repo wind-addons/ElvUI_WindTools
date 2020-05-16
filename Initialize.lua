@@ -34,6 +34,7 @@ W.Title = L["WindTools"]
 -- 预处理 WindTools 模块
 W.Modules = {}
 W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0")
+W.Modules.Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0")
 
 -- 注册 ElvUI 模块
 function W:Initialize()

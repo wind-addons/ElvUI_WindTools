@@ -23,8 +23,15 @@ W.options = {
         icon = W.Media.Icons.map,
         args = {}
     },
-    skins = {
+    misc = {
         order = 104,
+        name = L["Misc"],
+        desc = L["Miscellaneous modules."],
+        icon = W.Media.Icons.misc,
+        args = {}
+    },
+    skins = {
+        order = 105,
         name = L["Skins"],
         desc = L["Apply new shadow style for ElvUI."],
         icon = W.Media.Icons.skins,

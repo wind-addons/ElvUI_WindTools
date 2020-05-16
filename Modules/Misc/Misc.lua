@@ -73,7 +73,7 @@ function M:ADDON_LOADED(_, addonName)
 
     local object = self.addonsToLoad[addonName]
     if object then
-        M:CallLoadedAddon(addonName, object)
+        self:CallLoadedAddon(addonName, object)
     end
 end
 

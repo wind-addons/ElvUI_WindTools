@@ -113,7 +113,7 @@ end
     @param {function} [func=S.name] 回调函数
 ]]
 function S:AddCallback(name, func)
-    tinsert(self.nonAddonsToLoad, func or S[name])
+    tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
 --[[
@@ -128,7 +128,7 @@ function S:AddCallbackForAddon(addonName, func)
         addon = self.addonsToLoad[addonName]
     end
 
-    tinsert(addon, func or S[addonName])
+    tinsert(addon, func or self[addonName])
 end
 
 --[[
@@ -137,7 +137,7 @@ end
     @param {function} [func=S.name] 回调函数
 ]]
 function S:AddCallbackForUpdate(name, func)
-    tinsert(self.updateProfile, func or S[name])
+    tinsert(self.updateProfile, func or self[name])
 end
 
 --[[
@@ -172,7 +172,7 @@ function S:ADDON_LOADED(_, addonName)
 
     local object = self.addonsToLoad[addonName]
     if object then
-        S:CallLoadedAddon(addonName, object)
+        self:CallLoadedAddon(addonName, object)
     end
 end
 
@@ -186,7 +186,7 @@ function S:Initialize()
     for addonName, object in pairs(self.addonsToLoad) do
         local isLoaded, isFinished = IsAddOnLoaded(addonName)
         if isLoaded and isFinished then
-            S:CallLoadedAddon(addonName, object)
+            self:CallLoadedAddon(addonName, object)
         end
     end
 end

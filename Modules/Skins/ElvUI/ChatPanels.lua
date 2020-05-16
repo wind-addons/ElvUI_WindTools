@@ -6,19 +6,19 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 local function ToggleShadows()
-    local panelBackdrop = E.db.chat.panelBackdrop
-    if panelBackdrop == "SHOWBOTH" then
-        _G.LeftChatPanel.shadow:Show()
-        _G.RightChatPanel.shadow:Show()
-    elseif panelBackdrop == "HIDEBOTH" then
-        _G.LeftChatPanel.shadow:Hide()
-        _G.RightChatPanel.shadow:Hide()
-    elseif panelBackdrop == "LEFT" then
-        _G.LeftChatPanel.shadow:Show()
-        _G.RightChatPanel.shadow:Hide()
+    local leftDB = E.db.chat.datatexts.panels.LeftChatDataPanel
+    local rightDB = E.db.chat.datatexts.panels.RightChatDataPanel
+
+    if leftDB.enable and leftDB.backdrop then
+        _G.LeftChatDataPanel.shadow:Show()
     else
-        _G.LeftChatPanel.shadow:Hide()
-        _G.RightChatPanel.shadow:Show()
+        _G.LeftChatDataPanel.shadow:Hide()
+    end
+
+    if rightDB.enable and rightDB.backdrop then
+        _G.RightChatDataPanel.shadow:Show()
+    else
+        _G.RightChatDataPanel.shadow:Hide()
     end
 end
 
@@ -27,8 +27,8 @@ function S:ElvUI_ChatPanels()
         return
     end
 
-    S:CreateShadow(_G.LeftChatPanel)
-    S:CreateShadow(_G.RightChatPanel)
+    S:CreateShadow(_G.LeftChatDataPanel)
+    S:CreateShadow(_G.RightChatDataPanel)
     ToggleShadows()
 
     hooksecurefunc(LO, "ToggleChatPanels", ToggleShadows)

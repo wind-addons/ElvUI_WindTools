@@ -27,10 +27,6 @@ addon[7] = G.WT
 
 _G[addonName] = addon
 
--- 一些常量
-W.Version = GetAddOnMetadata(addonName, "Version")
-W.Title = L["WindTools"]
-
 -- 预处理 WindTools 模块
 W.Modules = {}
 W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0")

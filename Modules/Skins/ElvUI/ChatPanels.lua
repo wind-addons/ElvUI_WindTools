@@ -6,8 +6,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 local function ToggleShadows()
-    local leftDB = E.db.chat.datatexts.panels.LeftChatDataPanel
-    local rightDB = E.db.chat.datatexts.panels.RightChatDataPanel
+    local leftDB = E.db.datatexts.panels.LeftChatDataPanel
+    local rightDB = E.db.datatexts.panels.RightChatDataPanel
 
     if leftDB.enable and leftDB.backdrop then
         _G.LeftChatDataPanel.shadow:Show()
@@ -23,7 +23,7 @@ local function ToggleShadows()
 end
 
 function S:ElvUI_ChatPanels()
-    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.chatPanels) then
+    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.chatDataPanels) then
         return
     end
 

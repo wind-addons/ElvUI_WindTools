@@ -314,9 +314,9 @@ options.elvui = {
             type = "toggle",
             name = L["Cast Bar"]
         },
-        chatPanels = {
+        chatDataPanels = {
             type = "toggle",
-            name = L["Chat Panels"]
+            name = L["Chat Data Panels"]
         },
         classBars = {
             type = "toggle",

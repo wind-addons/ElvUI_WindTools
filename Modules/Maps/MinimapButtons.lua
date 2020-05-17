@@ -484,7 +484,7 @@ function MB:CreateFrames()
 	E:CreateMover(
 		self.barAnchor,
 		"WTMinimapButtonBarAnchor",
-		L["Minimap Button Bar"],
+		L["Minimap Buttons Bar"],
 		nil,
 		nil,
 		nil,

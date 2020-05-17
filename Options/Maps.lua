@@ -28,8 +28,8 @@ options.minimapButtons = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enabled"],
-            desc = L["Toggle the bar."],
+            name = L["Enable"],
+            desc = L["Toggle minimap buttons bar."],
             get = function(info)
                 return E.private.WT.maps.minimapButtons[info[#info]]
             end,
@@ -42,7 +42,7 @@ options.minimapButtons = {
             order = 3,
             type = "toggle",
             name = L["Mouse Over"],
-            desc = L["Only show the bar when you mouse over it."],
+            desc = L["Only show minimap buttons bar when you mouse over it."],
             get = function(info)
                 return E.private.WT.maps.minimapButtons[info[#info]]
             end,
@@ -55,7 +55,7 @@ options.minimapButtons = {
             order = 4,
             type = "group",
             inline = true,
-            name = L["Bar"],
+            name = L["Minimap Buttons Bar"],
             get = function(info)
                 return E.private.WT.maps.minimapButtons[info[#info]]
             end,

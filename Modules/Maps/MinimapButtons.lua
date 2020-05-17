@@ -154,6 +154,13 @@ function MB:SkinButton(frame)
 			end
 
 			frame.original = original
+
+			if name == "GameTimeFrame" and region:IsObjectType("FontString") then
+				region:SetDrawLayer("ARTWORK")
+				region:SetParent(frame)
+				frame.windToday = region
+			end
+
 			if region:IsObjectType("Texture") then
 				local t = region:GetTexture()
 
@@ -167,13 +174,16 @@ function MB:SkinButton(frame)
 					region:SetDrawLayer("ARTWORK")
 					if (name == "GameTimeFrame") then
 						if t == [[Interface\Calendar\UI-Calendar-Button]] then
-							region:Hide()
+							region:SetAlpha(0)
 						end
 
-						local tex = frame:CreateTexture()
-						tex:SetTexture(W.Media.Icons.calendar)
-						tex:Point("TOPLEFT", frame, "TOPLEFT", 0, 0)
-						tex:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+						if not frame.windTex then
+							local tex = frame:CreateTexture()
+							tex:SetTexture(W.Media.Icons.calendar)
+							tex:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
+							tex:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
+							frame.windTex = tex
+						end
 
 						if (region:GetName() == "GameTimeCalendarInvitesTexture") then
 							region:SetTexCoord(0.03125, 0.6484375, 0.03125, 0.8671875)
@@ -356,6 +366,11 @@ function MB:UpdateLayout()
 		else
 			frame.shadow:Hide()
 		end
+
+		if moveButton == "GameTimeFrame" then
+			frame.windToday:ClearAllPoints()
+			frame.windToday:Point("TOP", frame, "TOP", 0, -0.45 * buttonSize)
+		end
 	end
 
 	-- 更新条
@@ -407,7 +422,7 @@ function MB:SkinMinimapButtons()
 	self:UpdateLayout()
 end
 
-function MB:UpdatemouseOverConfig()
+function MB:UpdateMouseOverConfig()
 	-- 鼠标显隐功能
 	if self.db.mouseOver then
 		self.bar:SetScript(

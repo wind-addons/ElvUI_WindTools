@@ -94,7 +94,16 @@ options.minimapButtons = {
                         NOANCHOR = L["Drag"],
                         HORIZONTAL = L["Horizontal"],
                         VERTICAL = L["Vertical"]
-                    }
+                    },
+                    set = function(info, value)
+                        E.private.WT.maps.minimapButtons[info[#info]] = value
+                        -- 如果开启日历美化的话，需要重载来取消掉美化
+                        if value == "NOANCHOR" and E.private.WT.maps.minimapButtons.calendar then
+                            E:StaticPopup_Show("PRIVATE_RL")
+                        else
+                            MB:UpdateLayout()
+                        end
+                    end,
                 }
             }
         },

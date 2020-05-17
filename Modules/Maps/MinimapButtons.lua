@@ -3,14 +3,13 @@
 local W, F, E, L = unpack(select(2, ...))
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")
+local MM = E:GetModule("Minimap")
 
 local _G = _G
-local ceil, floor, min = ceil, floor, min
-local strlen, strsub, strfind = strlen, strsub, strfind
-local tinsert, type, pairs = tinsert, type, pairs
+local tinsert, type, pairs, hooksecurefunc = tinsert, type, pairs, hooksecurefunc
+local ceil, floor, min, strlen, strsub, strfind = ceil, floor, min, strlen, strsub, strfind
 
-local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
+local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
 local C_Timer_After = C_Timer.After
 
@@ -481,10 +480,14 @@ function MB:Initialize()
 
 	self:CreateFrames()
 	self:UpdatemouseOverConfig()
-end
 
-function MB:ProfileUpdate()
-	-- self:UpdateScale()
+	hooksecurefunc(
+		MM,
+		"UpdateSettings",
+		function()
+			MB:UpdateLayout()
+		end
+	)
 end
 
 W:RegisterModule(MB:GetName())

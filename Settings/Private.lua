@@ -6,7 +6,7 @@ V.maps = {
 	},
 	minimapButtons = {
 		enable = true,
-		mouseover = true,
+		mouseover = false,
 		buttonsPerRow = 6,
 		buttonSize = 32,
 		backdrop = true,
@@ -14,7 +14,7 @@ V.maps = {
 		spacing = 2,
 		layoutDirection = "NORMAL",
 		skinStyle = "HORIZONTAL",
-		calendar = false,
+		calendar = true,
 		garrison = true
 	}
 }

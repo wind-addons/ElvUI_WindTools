@@ -61,44 +61,11 @@ local whiteList = {
 
 local moveButtons = {}
 
-local function print_r(t)
-	local print_r_cache = {}
-	local function sub_print_r(t, indent)
-		if (print_r_cache[tostring(t)]) then
-			print(indent .. "*" .. tostring(t))
-		else
-			print_r_cache[tostring(t)] = true
-			if (type(t) == "table") then
-				for pos, val in pairs(t) do
-					if (type(val) == "table") then
-						print(indent .. "[" .. pos .. "] => " .. tostring(t) .. " {")
-						sub_print_r(val, indent .. string.rep(" ", string.len(pos) + 8))
-						print(indent .. string.rep(" ", string.len(pos) + 6) .. "}")
-					elseif (type(val) == "string") then
-						print(indent .. "[" .. pos .. '] => "' .. val .. '"')
-					else
-						print(indent .. "[" .. pos .. "] => " .. tostring(val))
-					end
-				end
-			else
-				print(indent .. tostring(t))
-			end
-		end
-	end
-	if (type(t) == "table") then
-		print(tostring(t) .. " {")
-		sub_print_r(t, "  ")
-		print("}")
-	else
-		sub_print_r(t, "  ")
-	end
-	print()
-end
-
 function MB:ResetGarrisonSize()
 	if InCombatLockdown() then
 		return
 	end
+
 	_G.GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
 end
 
@@ -172,30 +139,26 @@ function MB:SkinButton(frame)
 	if not frame.isSkinned then
 		frame:HookScript("OnClick", self.DelayedUpdateLayout)
 		for _, region in pairs({frame:GetRegions()}) do
-			frame.original = {}
-			frame.original.Width, frame.original.Height = frame:GetSize()
-			frame.original.Point,
-				frame.original.relativeTo,
-				frame.original.relativePoint,
-				frame.original.xOfs,
-				frame.original.yOfs = frame:GetPoint()
-			frame.original.Parent = frame:GetParent()
-			frame.original.FrameStrata = frame:GetFrameStrata()
-			frame.original.FrameLevel = frame:GetFrameLevel()
-			frame.original.Scale = frame:GetScale()
+			local original = {}
+			original.Width, original.Height = frame:GetSize()
+			original.Point, original.relativeTo, original.relativePoint, original.xOfs, original.yOfs = frame:GetPoint()
+			original.Parent = frame:GetParent()
+			original.FrameStrata = frame:GetFrameStrata()
+			original.FrameLevel = frame:GetFrameLevel()
+			original.Scale = frame:GetScale()
 			if frame:HasScript("OnDragStart") then
-				frame.original.DragStart = frame:GetScript("OnDragStart")
+				original.DragStart = frame:GetScript("OnDragStart")
 			end
 			if frame:HasScript("OnDragStop") then
-				frame.original.DragEnd = frame:GetScript("OnDragStop")
+				original.DragEnd = frame:GetScript("OnDragStop")
 			end
-			if (region:GetObjectType() == "Texture") then
-				local texture = region:GetTexture()
 
-				if
-					texture and type(texture) ~= "number" and
-						(texture:find("Border") or texture:find("Background") or texture:find("AlphaMask"))
-				 then
+			frame.original = original
+
+			if region:IsObjectType("Texture") then
+				local t = region:GetTexture()
+
+				if t and type(t) ~= "number" and (t:find("Border") or t:find("Background") or t:find("AlphaMask")) then
 					region:SetTexture(nil)
 				else
 					region:ClearAllPoints()
@@ -219,17 +182,16 @@ function MB:SkinButton(frame)
 					end
 
 					if (name == "PS_MinimapButton") then
-						region.SetPoint = function()
-						end
+						region.SetPoint = E.noop
 					end
 				end
 			end
 		end
 
 		frame:SetTemplate("Tranparent")
+		S:CreateShadow(frame)
 
 		tinsert(moveButtons, name)
-		S:CreateShadow(frame)
 
 		frame.isSkinned = true
 	end
@@ -293,31 +255,26 @@ function MB:UpdateLayout()
 		local frame = _G[moveButton]
 
 		if self.db.skinStyle == "NOANCHOR" then
-			frame:SetParent(frame.original.Parent)
-			if frame.original.DragStart then
-				frame:SetScript("OnDragStart", frame.original.DragStart)
+			local original = frame.original
+			frame:SetParent(original.Parent)
+			if original.DragStart then
+				frame:SetScript("OnDragStart", original.DragStart)
 			end
-			if frame.original.DragEnd then
-				frame:SetScript("OnDragStop", frame.original.DragEnd)
+			if original.DragEnd then
+				frame:SetScript("OnDragStop", original.DragEnd)
 			end
 
 			frame:ClearAllPoints()
-			frame:Size(frame.original.Width, frame.original.Height)
+			frame:Size(original.Width, original.Height)
 
-			if frame.original.Point ~= nil then
-				frame:SetPoint(
-					frame.original.Point,
-					frame.original.relativeTo,
-					frame.original.relativePoint,
-					frame.original.xOfs,
-					frame.original.yOfs
-				)
+			if original.Point ~= nil then
+				frame:SetPoint(original.Point, original.relativeTo, original.relativePoint, original.xOfs, original.yOfs)
 			else
-				frame:Point("CENTER", Minimap, "CENTER", -80, -34)
+				frame:Point("CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
-			frame:SetFrameStrata(frame.original.FrameStrata)
-			frame:SetFrameLevel(frame.original.FrameLevel)
-			frame:SetScale(frame.original.Scale)
+			frame:SetFrameStrata(original.FrameStrata)
+			frame:SetFrameLevel(original.FrameLevel)
+			frame:SetScale(original.Scale)
 			frame:SetMovable(true)
 		else
 			-- 找到默认布局下的 X 行 Y 列 （从 1 开始）
@@ -384,8 +341,8 @@ function MB:UpdateLayout()
 
 		self.bar:Size(width, height)
 		self.barAnchor:Size(width, height)
-		self.bar:Show()
 		RegisterStateDriver(self.bar, "visibility", "[petbattle]hide;show")
+		self.bar:Show()
 	else
 		UnregisterStateDriver(self.bar, "visibility")
 		self.bar:Hide()
@@ -401,14 +358,26 @@ function MB:UpdateLayout()
 
 	if self.db.backdrop then
 		self.bar.backdrop:Show()
-
-		if E.private.WT.skins.windtools then
-			S:CreateShadow(self.bar.backdrop)
-		end
 	else
 		self.bar.backdrop:Hide()
 	end
+end
 
+function MB:SkinMinimapButtons()
+	self:RegisterEvent("ADDON_LOADED", "StartSkinning")
+
+	for i = 1, _G.Minimap:GetNumChildren() do
+		self:SkinButton(select(i, _G.Minimap:GetChildren()))
+	end
+
+	if self.db.garrison then
+		self:SkinButton(_G.GarrisonLandingPageMinimapButton)
+	end
+
+	self:UpdateLayout()
+end
+
+function MB:UpdateMouseoverConfig()
 	-- 鼠标显隐功能
 	if self.db.mouseover then
 		self.bar:SetScript(
@@ -423,7 +392,6 @@ function MB:UpdateLayout()
 				UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
 			end
 		)
-		self.bar:SetAlpha(0)
 
 		for _, moveButton in pairs(moveButtons) do
 			local frame = _G[moveButton]
@@ -442,30 +410,20 @@ function MB:UpdateLayout()
 				end
 			)
 		end
+
+		self.bar:SetAlpha(0)
 	else
 		self.bar:SetScript("OnEnter", nil)
 		self.bar:SetScript("OnLeave", nil)
-		self.bar:SetAlpha(1)
+
 		for _, moveButton in pairs(moveButtons) do
 			local frame = _G[moveButton]
 			frame:HookScript("OnEnter", nil)
 			frame:HookScript("OnLeave", nil)
 		end
+
+		self.bar:SetAlpha(1)
 	end
-end
-
-function MB:SkinMinimapButtons()
-	self:RegisterEvent("ADDON_LOADED", "StartSkinning")
-
-	for i = 1, _G.Minimap:GetNumChildren() do
-		self:SkinButton(select(i, _G.Minimap:GetChildren()))
-	end
-
-	if self.db.garrison then
-		self:SkinButton(_G.GarrisonLandingPageMinimapButton)
-	end
-
-	self:UpdateLayout()
 end
 
 function MB:StartSkinning()
@@ -497,6 +455,10 @@ function MB:CreateFrames()
 	self.bar = frame
 
 	self:SkinMinimapButtons()
+
+	if E.private.WT.skins.windtools then
+		S:CreateShadow(self.bar.backdrop)
+	end
 
 	E:CreateMover(
 		self.barAnchor,

@@ -206,7 +206,9 @@ function MB:SkinButton(frame)
 		end
 
 		frame:SetTemplate("Tranparent")
-		S:CreateShadow(frame)
+		if E.private.WT.skins.windtools then
+			S:CreateShadow(frame)
+		end
 
 		frame:HookScript(
 			"OnEnter",
@@ -236,7 +238,7 @@ function MB:SkinButton(frame)
 end
 
 function MB.DelayedUpdateLayout()
-	if MB.db.style ~= "NOANCHOR" then
+	if MB.db.orientation ~= "NOANCHOR" then
 		C_Timer_After(
 			.1,
 			function()
@@ -271,7 +273,7 @@ function MB:UpdateLayout()
 	for i, moveButton in pairs(moveButtons) do
 		local frame = _G[moveButton]
 
-		if self.db.style == "NOANCHOR" then
+		if self.db.orientation == "NOANCHOR" then
 			local original = frame.original
 			frame:SetParent(original.Parent)
 			if original.DragStart then
@@ -316,7 +318,7 @@ function MB:UpdateLayout()
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
-			if self.db.style == "HORIZONTAL" then
+			if self.db.orientation == "HORIZONTAL" then
 				if direction then
 					anchor = "TOPLEFT"
 					offsetY = -offsetY
@@ -353,11 +355,11 @@ function MB:UpdateLayout()
 	-- 更新条
 	buttonsPerRow = min(buttonsPerRow, #moveButtons)
 
-	if self.db.style ~= "NOANCHOR" and #moveButtons > 0 then
+	if self.db.orientation ~= "NOANCHOR" and #moveButtons > 0 then
 		local width = buttonSize * buttonsPerRow + spacing * (buttonsPerRow - 1) + backdropSpacing * 2
 		local height = buttonSize * numOfRows + spacing * (numOfRows - 1) + backdropSpacing * 2
 
-		if self.db.style == "VERTICAL" then
+		if self.db.orientation == "VERTICAL" then
 			width, height = height, width
 		end
 
@@ -370,7 +372,7 @@ function MB:UpdateLayout()
 		self.bar:Hide()
 	end
 
-	if self.db.style == "HORIZONTAL" then
+	if self.db.orientation == "HORIZONTAL" then
 		anchor = direction and "LEFT" or "RIGHT"
 	else
 		anchor = direction and "TOP" or "BOTTOM"

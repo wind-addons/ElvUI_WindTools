@@ -85,10 +85,10 @@ options.minimapButtons = {
                     name = L["Inverse Direction"],
                     desc = L["Reverse the direction of adding buttons."],
                 },
-                style = {
+                orientation = {
                     order = 4,
                     type = "select",
-                    name = L["Style"],
+                    name = L["Orientation"],
                     desc = L["Arrangement direction of the bar."],
                     values = {
                         NOANCHOR = L["Drag"],

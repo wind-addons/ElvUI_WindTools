@@ -13,7 +13,7 @@ V.maps = {
 		backdropSpacing = 3,
 		spacing = 2,
 		inverseDirection = false,
-		style = "HORIZONTAL",
+		orientation = "HORIZONTAL",
 		calendar = false,
 		garrison = false
 	}

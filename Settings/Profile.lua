@@ -12,6 +12,16 @@ P.combat = {
         enterColor = {r = 0.929, g = 0.11, b = 0.141, a = 1.0},
         leaveColor = {r = 1, g = 0.914, b = 0.184, a = 1.0},
         font = {name = E.db.general.font, size = 25, style = "OUTLINE"}
+    },
+    raidMarkers = {
+        enable = true,
+        visibility = "DEFAULT",
+        backdrop = true,
+        backdropSpacing = 3,
+        buttonSize = 22,
+        spacing = 2,
+        orientation = "HORIZONTAL",
+        modifier = "shift"
     }
 }
 

@@ -197,8 +197,8 @@ function MB:SkinButton(frame)
 	end
 end
 
-function MB:DelayedUpdateLayout()
-	if self.db.skinStyle ~= "NOANCHOR" then
+function MB.DelayedUpdateLayout()
+	if MB.db.skinStyle ~= "NOANCHOR" then
 		C_Timer_After(
 			.1,
 			function()
@@ -282,7 +282,8 @@ function MB:UpdateLayout()
 			buttonY = floor(i / buttonsPerRow) + 1
 
 			if buttonX == 0 then
-				buttonX = numOfRows
+				buttonX = buttonsPerRow
+				buttonY = buttonY - 1
 			end
 
 			frame:SetParent(self.bar)

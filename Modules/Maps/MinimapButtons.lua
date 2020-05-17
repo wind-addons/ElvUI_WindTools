@@ -154,7 +154,6 @@ function MB:SkinButton(frame)
 			end
 
 			frame.original = original
-
 			if region:IsObjectType("Texture") then
 				local t = region:GetTexture()
 
@@ -167,6 +166,15 @@ function MB:SkinButton(frame)
 					region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 					region:SetDrawLayer("ARTWORK")
 					if (name == "GameTimeFrame") then
+						if t == [[Interface\Calendar\UI-Calendar-Button]] then
+							region:Hide()
+						end
+
+						local tex = frame:CreateTexture()
+						tex:SetTexture(W.Media.Icons.calendar)
+						tex:Point("TOPLEFT", frame, "TOPLEFT", 0, 0)
+						tex:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+
 						if (region:GetName() == "GameTimeCalendarInvitesTexture") then
 							region:SetTexCoord(0.03125, 0.6484375, 0.03125, 0.8671875)
 							region:SetDrawLayer("ARTWORK", 1)
@@ -191,6 +199,27 @@ function MB:SkinButton(frame)
 		frame:SetTemplate("Tranparent")
 		S:CreateShadow(frame)
 
+		frame:HookScript(
+			"OnEnter",
+			function()
+				if not self.db.mouseOver then
+					return
+				end
+				UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
+				frame:SetBackdropBorderColor(.7, .7, 0)
+			end
+		)
+		frame:HookScript(
+			"OnLeave",
+			function()
+				if not self.db.mouseOver then
+					return
+				end
+				UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
+				frame:SetBackdropBorderColor(0, 0, 0)
+			end
+		)
+
 		tinsert(moveButtons, name)
 
 		frame.isSkinned = true
@@ -198,7 +227,7 @@ function MB:SkinButton(frame)
 end
 
 function MB.DelayedUpdateLayout()
-	if MB.db.skinStyle ~= "NOANCHOR" then
+	if MB.db.style ~= "NOANCHOR" then
 		C_Timer_After(
 			.1,
 			function()
@@ -208,9 +237,9 @@ function MB.DelayedUpdateLayout()
 	end
 end
 
-function MB:UpdateSkinStyle()
+function MB:Updatestyle()
 	local doreload = 0
-	if self.db.skinStyle == "NOANCHOR" then
+	if self.db.style == "NOANCHOR" then
 		if self.db.garrison then
 			self.db.garrison = false
 			doreload = 1
@@ -246,7 +275,7 @@ function MB:UpdateLayout()
 	local spacing = self.db.spacing
 	local backdropSpacing = self.db.backdropSpacing
 	local buttonSize = self.db.buttonSize
-	local direction = self.db.layoutDirection == "NORMAL"
+	local direction = not self.db.inverseDirection
 
 	-- 更新按钮
 	local buttonX, buttonY, anchor, offsetX, offsetY
@@ -254,7 +283,7 @@ function MB:UpdateLayout()
 	for i, moveButton in pairs(moveButtons) do
 		local frame = _G[moveButton]
 
-		if self.db.skinStyle == "NOANCHOR" then
+		if self.db.style == "NOANCHOR" then
 			local original = frame.original
 			frame:SetParent(original.Parent)
 			if original.DragStart then
@@ -300,7 +329,7 @@ function MB:UpdateLayout()
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
-			if self.db.skinStyle == "HORIZONTAL" then
+			if self.db.style == "HORIZONTAL" then
 				if direction then
 					anchor = "TOPLEFT"
 					offsetY = -offsetY
@@ -332,11 +361,11 @@ function MB:UpdateLayout()
 	-- 更新条
 	buttonsPerRow = min(buttonsPerRow, #moveButtons)
 
-	if self.db.skinStyle ~= "NOANCHOR" and #moveButtons > 0 then
+	if self.db.style ~= "NOANCHOR" and #moveButtons > 0 then
 		local width = buttonSize * buttonsPerRow + spacing * (buttonsPerRow - 1) + backdropSpacing * 2
 		local height = buttonSize * numOfRows + spacing * (numOfRows - 1) + backdropSpacing * 2
 
-		if not self.db.skinStyle == "HORIZONTAL" then
+		if self.db.style == "VERTICAL" then
 			width, height = height, width
 		end
 
@@ -349,7 +378,7 @@ function MB:UpdateLayout()
 		self.bar:Hide()
 	end
 
-	if self.db.skinStyle == "HORIZONTAL" then
+	if self.db.style == "HORIZONTAL" then
 		anchor = direction and "LEFT" or "RIGHT"
 	else
 		anchor = direction and "TOP" or "BOTTOM"
@@ -378,15 +407,16 @@ function MB:SkinMinimapButtons()
 	self:UpdateLayout()
 end
 
-function MB:UpdateMouseoverConfig()
+function MB:UpdatemouseOverConfig()
 	-- 鼠标显隐功能
-	if self.db.mouseover then
+	if self.db.mouseOver then
 		self.bar:SetScript(
 			"OnEnter",
 			function(self)
 				UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
 			end
 		)
+
 		self.bar:SetScript(
 			"OnLeave",
 			function(self)
@@ -394,35 +424,10 @@ function MB:UpdateMouseoverConfig()
 			end
 		)
 
-		for _, moveButton in pairs(moveButtons) do
-			local frame = _G[moveButton]
-			frame:HookScript(
-				"OnEnter",
-				function(self)
-					UIFrameFadeIn(MB.bar, 0.2, MB.bar:GetAlpha(), 1)
-					self:SetBackdropBorderColor(.7, .7, 0)
-				end
-			)
-			frame:HookScript(
-				"OnLeave",
-				function(self)
-					UIFrameFadeOut(MB.bar, 0.2, MB.bar:GetAlpha(), 0)
-					self:SetBackdropBorderColor(0, 0, 0)
-				end
-			)
-		end
-
 		self.bar:SetAlpha(0)
 	else
 		self.bar:SetScript("OnEnter", nil)
 		self.bar:SetScript("OnLeave", nil)
-
-		for _, moveButton in pairs(moveButtons) do
-			local frame = _G[moveButton]
-			frame:HookScript("OnEnter", nil)
-			frame:HookScript("OnLeave", nil)
-		end
-
 		self.bar:SetAlpha(1)
 	end
 end
@@ -482,7 +487,7 @@ function MB:Initialize()
 	self.db = E.private.WT.maps.minimapButtons
 
 	self:CreateFrames()
-	self:UpdateMouseoverConfig()
+	self:UpdatemouseOverConfig()
 end
 
 function MB:ProfileUpdate()

@@ -247,27 +247,6 @@ function MB.DelayedUpdateLayout()
 	end
 end
 
-function MB:Updatestyle()
-	local doreload = 0
-	if self.db.style == "NOANCHOR" then
-		if self.db.garrison then
-			self.db.garrison = false
-			doreload = 1
-		end
-		if self.db.calendar then
-			self.db.calendar = false
-			doreload = 1
-		end
-		if doreload == 1 then
-			E:StaticPopup_Show("PRIVATE_RL")
-		else
-			self:UpdateLayout()
-		end
-	else
-		self:UpdateLayout()
-	end
-end
-
 function MB:UpdateLayout()
 	if not self.db.enable then
 		return
@@ -335,7 +314,6 @@ function MB:UpdateLayout()
 			frame:SetFrameLevel(20)
 			frame:Size(buttonSize)
 
-			anchor = "TOPLEFT"
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
@@ -369,7 +347,7 @@ function MB:UpdateLayout()
 
 		if moveButton == "GameTimeFrame" then
 			frame.windToday:ClearAllPoints()
-			frame.windToday:Point("TOP", frame, "TOP", 0, -0.45 * buttonSize)
+			frame.windToday:Point("TOP", frame, "TOP", 1, -0.45 * buttonSize)
 		end
 	end
 
@@ -411,8 +389,8 @@ end
 function MB:SkinMinimapButtons()
 	self:RegisterEvent("ADDON_LOADED", "StartSkinning")
 
-	for i = 1, _G.Minimap:GetNumChildren() do
-		self:SkinButton(select(i, _G.Minimap:GetChildren()))
+	for _, child in pairs({_G.Minimap:GetChildren()}) do
+		self:SkinButton(child)
 	end
 
 	if self.db.garrison then

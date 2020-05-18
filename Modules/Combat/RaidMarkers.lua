@@ -103,22 +103,27 @@ function RM:UpdateButtons()
 end
 
 function RM:ToggleSettings()
-	if not InCombatLockdown() then
-		self:UpdateButtons()
-		self:UpdateBar()
+	if InCombatLockdown() then
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", "ToggleSettings")
+		return
+	else
+		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+	end
 
-		if self.db.enable then
-			RegisterStateDriver(
-				self.bar,
-				"visibility",
-				self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
-					self.db.visibility == "ALWAYS" and "[noexists, nogroup] show; show" or
-					"[group] show; hide"
-			)
-		else
-			UnregisterStateDriver(self.bar, "visibility")
-			self.bar:Hide()
-		end
+	self:UpdateButtons()
+	self:UpdateBar()
+
+	if self.db.enable then
+		RegisterStateDriver(
+			self.bar,
+			"visibility",
+			self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
+				self.db.visibility == "ALWAYS" and "[noexists, nogroup] show; show" or
+				"[group] show; hide"
+		)
+	else
+		UnregisterStateDriver(self.bar, "visibility")
+		self.bar:Hide()
 	end
 end
 

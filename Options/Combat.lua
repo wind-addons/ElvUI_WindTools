@@ -302,7 +302,7 @@ options.raidMarkers = {
             end,
             set = function(info, value)
                 E.db.WT.combat.raidMarkers[info[#info]] = value
-                RM:UpdateBar()
+                RM:ToggleSettings()
             end,
             args = {
                 buttonSize = {

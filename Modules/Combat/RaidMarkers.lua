@@ -210,7 +210,8 @@ function RM:CreateButtons()
 		end
 
 		local tex = button:CreateTexture(nil, "ARTWORK")
-		tex:SetAllPoints()
+		tex:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
+		tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
 
 		if i < 9 then
 			tex:SetTexture(("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d"):format(i))

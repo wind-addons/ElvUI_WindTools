@@ -63,7 +63,7 @@ function RM:UpdateBar()
 		end
 	end
 
-	if self.db.enabled then
+	if self.db.enable then
 		self.bar:Show()
 	else
 		self.bar:Hide()
@@ -92,7 +92,7 @@ function RM:ToggleSettings()
 			end
 		end
 
-		if self.db.enabled then
+		if self.db.enable then
 			RegisterStateDriver(
 				self.bar,
 				"visibility",
@@ -129,7 +129,7 @@ function RM:CreateBar()
 	frame:Size(500, 40)
 	self.bar = frame
 
-	self:SkinMinimapButtons()
+	self:CreateButtons()
 
 	if E.private.WT.skins.windtools then
 		S:CreateShadow(self.bar.backdrop)
@@ -253,6 +253,7 @@ function RM:Initialize()
 	if not E.db.WT.combat.raidMarkers.enable then
 		return
 	end
+
 	self.db = E.db.WT.combat.raidMarkers
 end
 

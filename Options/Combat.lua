@@ -4,6 +4,8 @@ local C = W:GetModule("CombatAlert")
 local RM = W:GetModule("RaidMarkers")
 local LSM = E.Libs.LSM
 
+local _G = _G
+
 options.combatAlert = {
     order = 1,
     type = "group",
@@ -227,7 +229,7 @@ options.raidMarkers = {
                     name = L["Visibility"],
                     values = {
                         DEFAULT = L["Default"],
-                        INPARTY = AGGRO_WARNING_IN_PARTY,
+                        INPARTY = _G.AGGRO_WARNING_IN_PARTY,
                         ALWAYS = L["Always Display"]
                     }
                 },

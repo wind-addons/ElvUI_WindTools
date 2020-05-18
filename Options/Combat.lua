@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.combat.args
 local C = W:GetModule("CombatAlert")
+local RM = W:GetModule("RaidMarkers")
 local LSM = E.Libs.LSM
 
 options.combatAlert = {
@@ -169,6 +170,160 @@ options.combatAlert = {
                             step = 1
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+options.raidMarkers = {
+    order = 1,
+    type = "group",
+    name = L["Raid Markers"],
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add an extra bar to let you set raid markers efficiently."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            desc = L["Toggle raid markers bar."],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:ProfileUpdate()
+            end
+        },
+        visibilityConfig = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Visibility"],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:ToggleSettings()
+            end,
+            args = {
+                visibility = {
+                    type = "select",
+                    order = 1,
+                    name = L["Visibility"],
+                    values = {
+                        DEFAULT = L["Default"],
+                        INPARTY = AGGRO_WARNING_IN_PARTY,
+                        ALWAYS = L["Always Display"]
+                    }
+                },
+                mouseOver = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Mouse Over"],
+                    desc = L["Only show raid markers bar when you mouse over it."]
+                },
+                modifier = {
+                    order = 3,
+                    type = "select",
+                    name = L["Modifier Key"],
+                    desc = L["Set the modifier key for placing world markers."],
+                    values = {
+                        shift = L["Shift Key"],
+                        ctrl = L["Ctrl Key"],
+                        alt = L["Alt Key"]
+                    },
+                    set = function(info, value)
+                        E.db.WT.combat.raidMarkers[info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                }
+            }
+        },
+        barConfig = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Raid Markers Bar"],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:ToggleSettings()
+            end,
+            args = {
+                backdrop = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Bar Backdrop"],
+                    desc = L["Show a backdrop of the bar."]
+                },
+                backdropSpacing = {
+                    order = 2,
+                    type = "range",
+                    name = L["Backdrop Spacing"],
+                    desc = L["The spacing between the backdrop and the buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+                orientation = {
+                    order = 3,
+                    type = "select",
+                    name = L["Orientation"],
+                    desc = L["Arrangement direction of the bar."],
+                    values = {
+                        HORIZONTAL = L["Horizontal"],
+                        VERTICAL = L["Vertical"]
+                    }
+                }
+            }
+        },
+        buttonsConfig = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Buttons"],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:UpdateBar()
+            end,
+            args = {
+                buttonSize = {
+                    order = 1,
+                    type = "range",
+                    name = L["Button Size"],
+                    desc = L["The size of the buttons."],
+                    min = 15,
+                    max = 60,
+                    step = 1
+                },
+                spacing = {
+                    order = 3,
+                    type = "range",
+                    name = L["Button Spacing"],
+                    desc = L["The spacing between buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
                 }
             }
         }

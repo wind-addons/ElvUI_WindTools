@@ -15,11 +15,12 @@ P.combat = {
     },
     raidMarkers = {
         enable = true,
+        mouseOver = false,
         visibility = "DEFAULT",
         backdrop = true,
         backdropSpacing = 3,
-        buttonSize = 22,
-        spacing = 2,
+        buttonSize = 30,
+        spacing = 4,
         orientation = "HORIZONTAL",
         modifier = "shift"
     }

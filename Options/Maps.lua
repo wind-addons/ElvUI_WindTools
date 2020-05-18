@@ -68,7 +68,7 @@ options.minimapButtons = {
                     order = 1,
                     type = "toggle",
                     name = L["Bar Backdrop"],
-                    desc = L["Show a backdrop of the bar."],
+                    desc = L["Show a backdrop of the bar."]
                 },
                 backdropSpacing = {
                     order = 2,
@@ -83,7 +83,7 @@ options.minimapButtons = {
                     order = 3,
                     type = "toggle",
                     name = L["Inverse Direction"],
-                    desc = L["Reverse the direction of adding buttons."],
+                    desc = L["Reverse the direction of adding buttons."]
                 },
                 orientation = {
                     order = 4,
@@ -103,7 +103,7 @@ options.minimapButtons = {
                         else
                             MB:UpdateLayout()
                         end
-                    end,
+                    end
                 }
             }
         },
@@ -133,7 +133,7 @@ options.minimapButtons = {
                     order = 2,
                     type = "range",
                     name = L["Button Size"],
-                    desc = L["The size of the action buttons."],
+                    desc = L["The size of the buttons."],
                     get = function(info)
                         return E.private.WT.maps.minimapButtons[info[#info]]
                     end,
@@ -153,7 +153,7 @@ options.minimapButtons = {
                     min = 1,
                     max = 30,
                     step = 1
-                },
+                }
             }
         },
         blizzardButtonsConfig = {
@@ -173,13 +173,13 @@ options.minimapButtons = {
                     order = 1,
                     type = "toggle",
                     name = L["Calendar"],
-                    desc = L["Add calendar button to the bar."],
+                    desc = L["Add calendar button to the bar."]
                 },
                 garrison = {
                     order = 2,
                     type = "toggle",
                     name = L["Garrison"],
-                    desc = L["Add garrison button to the bar."],
+                    desc = L["Add garrison button to the bar."]
                 }
             }
         }

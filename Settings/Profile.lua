@@ -15,7 +15,7 @@ P.combat = {
     },
     raidMarkers = {
         enable = true,
-        visibility = "DEFAULT",
+        visibility = "ALWAYS",
         backdrop = true,
         backdropSpacing = 3,
         buttonSize = 22,

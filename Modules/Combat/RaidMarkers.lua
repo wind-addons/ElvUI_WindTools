@@ -7,10 +7,11 @@ local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W:GetModule("Skins")
 
 local _G = _G
-local GameTooltip = _G.GameTooltip
 local strupper = strupper
 local GetTime, SetRaidTarget, ClearRaidMarker = GetTime, SetRaidTarget, ClearRaidMarker
-local InCombatLockdown = InCombatLockdown
+local GameTooltip, InCombatLockdown = _G.GameTooltip, InCombatLockdown
+local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
+local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 
 local lastClear = 0
 
@@ -110,20 +111,45 @@ function RM:ToggleSettings()
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	end
 
+	if not self.db.enable then
+		UnregisterStateDriver(self.bar, "visibility")
+		self.bar:Hide()
+		return
+	end
+
 	self:UpdateButtons()
 	self:UpdateBar()
 
-	if self.db.enable then
-		RegisterStateDriver(
-			self.bar,
-			"visibility",
-			self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
-				self.db.visibility == "ALWAYS" and "[noexists, nogroup] show; show" or
-				"[group] show; hide"
+	-- 注册团队状况显隐
+	RegisterStateDriver(
+		self.bar,
+		"visibility",
+		self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
+			self.db.visibility == "ALWAYS" and "[noexists, nogroup] show; show" or
+			"[group] show; hide"
+	)
+
+	-- 鼠标显隐
+	if self.db.mouseOver then
+		self.bar:SetScript(
+			"OnEnter",
+			function(self)
+				UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
+			end
 		)
+
+		self.bar:SetScript(
+			"OnLeave",
+			function(self)
+				UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
+			end
+		)
+
+		self.bar:SetAlpha(0)
 	else
-		UnregisterStateDriver(self.bar, "visibility")
-		self.bar:Hide()
+		self.bar:SetScript("OnEnter", nil)
+		self.bar:SetScript("OnLeave", nil)
+		self.bar:SetAlpha(1)
 	end
 end
 
@@ -252,6 +278,29 @@ function RM:CreateButtons()
 			function(self)
 				self:SetBackdropBorderColor(0, 0, 0)
 				GameTooltip:Hide()
+			end
+		)
+
+		-- 鼠标显隐
+		button:HookScript(
+			"OnEnter",
+			function()
+				if not self.db.mouseOver then
+					return
+				end
+				UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
+				button:SetBackdropBorderColor(.7, .7, 0)
+			end
+		)
+
+		button:HookScript(
+			"OnLeave",
+			function()
+				if not self.db.mouseOver then
+					return
+				end
+				UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
+				button:SetBackdropBorderColor(0, 0, 0)
 			end
 		)
 

@@ -8,7 +8,7 @@ local MM = E:GetModule("Minimap")
 local _G = _G
 local tinsert, type, pairs, hooksecurefunc = tinsert, type, pairs, hooksecurefunc
 local ceil, floor, min, strlen, strsub, strfind = ceil, floor, min, strlen, strsub, strfind
-
+local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
 local C_Timer_After = C_Timer.After

@@ -1,6 +1,6 @@
 -- 原作：ElvUI_S&L 的一个增强组件
 -- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
--- 修改：mcc1, SomeBlu
+-- 修改：houshuu, mcc1, SomeBlu
 
 local W, F, E, L = unpack(select(2, ...))
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
@@ -25,49 +25,42 @@ local TargetToWorld = {
 }
 
 function RM:UpdateBar()
-	local height, width
-
-	-- adjust height/width for orientation
-	if self.db.orientation == "VERTICAL" then
-		width = self.db.buttonSize + 3
-		height = (self.db.buttonSize * 9) + (self.db.spacing * 9)
-	else
-		width = (self.db.buttonSize * 9) + (self.db.spacing * 9)
-		height = self.db.buttonSize + 3
+	if not self.db.enable then
+		self.bar:Hide()
+		return
 	end
-
-	self.bar:SetWidth(width)
-	self.bar:SetHeight(height)
 
 	for i = 9, 1, -1 do
 		local button = self.bar.buttons[i]
 		local prev = self.bar.buttons[i + 1]
 		button:ClearAllPoints()
+		button:Size(self.db.buttonSize)
 
-		button:SetWidth(self.db.buttonSize)
-		button:SetHeight(self.db.buttonSize)
-
-		-- align the buttons with orientation
 		if self.db.orientation == "VERTICAL" then
 			if i == 9 then
-				button:SetPoint("TOP", 0, -3)
+				button:Point("TOP", 0, -self.db.backdropSpacing)
 			else
-				button:SetPoint("TOP", prev, "BOTTOM", 0, -self.db.spacing)
+				button:Point("TOP", prev, "BOTTOM", 0, -self.db.spacing)
 			end
 		else
 			if i == 9 then
-				button:SetPoint("LEFT", 3, 0)
+				button:SetPoint("LEFT", self.db.backdropSpacing, 0)
 			else
 				button:SetPoint("LEFT", prev, "RIGHT", self.db.spacing, 0)
 			end
 		end
 	end
 
-	if self.db.enable then
-		self.bar:Show()
-	else
-		self.bar:Hide()
+	local height = self.db.buttonSize + self.db.backdropSpacing * 2
+	local width = self.db.backdropSpacing * 2 + self.db.buttonSize * 9 + self.db.spacing * 8
+
+	if self.db.orientation == "VERTICAL" then
+		width, height = height, width
 	end
+
+	self.bar:Show()
+	self.bar:Size(width, height)
+	self.barAnchor:Size(width, height)
 end
 
 function RM:ToggleSettings()
@@ -115,7 +108,6 @@ function RM:CreateBar()
 	local frame = CreateFrame("Frame", nil, E.UIParent)
 	frame:Point("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
 	frame:SetFrameStrata("BACKGROUND")
-	frame:Size(500, 40)
 	self.barAnchor = frame
 
 	frame = CreateFrame("Frame", nil, E.UIParent)
@@ -126,10 +118,10 @@ function RM:CreateBar()
 	frame:ClearAllPoints()
 	frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
 	frame.buttons = {}
-	frame:Size(500, 40)
 	self.bar = frame
 
 	self:CreateButtons()
+	self:ToggleSettings()
 
 	if E.private.WT.skins.windtools then
 		S:CreateShadow(self.bar.backdrop)
@@ -241,11 +233,11 @@ end
 function RM:ProfileUpdate()
 	self.db = E.db.WT.combat.raidMarkers
 
-	if self.db.enable then
+	if self.db.enable and not self.bar then
 		self:CreateBar()
-	else
+		return
 	end
-	self:CreateButtons()
+
 	self:ToggleSettings()
 end
 
@@ -255,6 +247,8 @@ function RM:Initialize()
 	end
 
 	self.db = E.db.WT.combat.raidMarkers
+
+	self:CreateBar()
 end
 
 W:RegisterModule(RM:GetName())

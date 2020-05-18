@@ -10,6 +10,7 @@ local _G = _G
 local GameTooltip = _G.GameTooltip
 local strupper = strupper
 local GetTime, SetRaidTarget, ClearRaidMarker = GetTime, SetRaidTarget, ClearRaidMarker
+local InCombatLockdown = InCombatLockdown
 
 local lastClear = 0
 
@@ -61,29 +62,50 @@ function RM:UpdateBar()
 	self.bar:Show()
 	self.bar:Size(width, height)
 	self.barAnchor:Size(width, height)
+
+	if self.db.backdrop then
+		self.bar.backdrop:Show()
+	else
+		self.bar.backdrop:Hide()
+	end
+end
+
+function RM:UpdateButtons()
+	if not self.bar or not self.bar.buttons then
+		return
+	end
+
+	self.modifierString = self.db.modifier:gsub("^%l", strupper)
+
+	for i = 9, 1, -1 do
+		local button = self.bar.buttons[i]
+
+		-- WindSkins 阴影处理
+		if button and button.shadow then
+			if self.db.backdrop then
+				button.shadow:Hide()
+			else
+				button.shadow:Show()
+			end
+		end
+
+		-- 宏按键绑定
+		if i < 9 then
+			local button = self.bar.buttons[i]
+			button:SetAttribute("shift-type*", nil)
+			button:SetAttribute("alt-type*", nil)
+			button:SetAttribute("ctrl-type*", nil)
+			button:SetAttribute(("%s-type*"):format(self.db.modifier), "macro")
+			button:SetAttribute(("%s-macrotext1"):format(self.db.modifier), ("/wm %d"):format(TargetToWorld[i]))
+			button:SetAttribute(("%s-macrotext2"):format(self.db.modifier), ("/cwm %d"):format(TargetToWorld[i]))
+		end
+	end
 end
 
 function RM:ToggleSettings()
 	if not InCombatLockdown() then
+		self:UpdateButtons()
 		self:UpdateBar()
-
-		if self.db.backdrop then
-			self.bar.backdrop:Show()
-			for i = 9, 1, -1 do
-				local button = self.bar.buttons[i]
-				if button and button.shadow then
-					button.shadow:Hide()
-				end
-			end
-		else
-			self.bar.backdrop:Hide()
-			for i = 9, 1, -1 do
-				local button = self.bar.buttons[i]
-				if button and button.shadow then
-					button.shadow:Show()
-				end
-			end
-		end
 
 		if self.db.enable then
 			RegisterStateDriver(
@@ -142,13 +164,15 @@ function RM:CreateBar()
 end
 
 function RM:CreateButtons()
-	local modifier = self.db.modifier
-	local modifierString = modifier:gsub("^%l", strupper)
+	self.modifierString = self.db.modifier:gsub("^%l", strupper)
 
 	for i = 1, 9 do
-		local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
+		local button = self.bar.buttons[i]
+		if not button then
+			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
+			button:SetTemplate("Transparent")
+		end
 		button:Size(self.db.buttonSize)
-		button:SetTemplate("Transparent")
 
 		if E.private.WT.skins.windtools then
 			S:CreateShadow(button)
@@ -164,9 +188,9 @@ function RM:CreateButtons()
 			button:SetAttribute("macrotext1", ("/tm %d"):format(i))
 			button:SetAttribute("macrotext2", ("/tm 9"))
 
-			button:SetAttribute(("%s-type*"):format(modifier), "macro")
-			button:SetAttribute(("%s-macrotext1"):format(modifier), ("/wm %d"):format(TargetToWorld[i]))
-			button:SetAttribute(("%s-macrotext2"):format(modifier), ("/cwm %d"):format(TargetToWorld[i]))
+			button:SetAttribute(("%s-type*"):format(self.db.modifier), "macro")
+			button:SetAttribute(("%s-macrotext1"):format(self.db.modifier), ("/wm %d"):format(TargetToWorld[i]))
+			button:SetAttribute(("%s-macrotext2"):format(self.db.modifier), ("/cwm %d"):format(TargetToWorld[i]))
 		else
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
@@ -174,7 +198,7 @@ function RM:CreateButtons()
 			button:SetScript(
 				"OnClick",
 				function(self)
-					if _G[("Is%sKeyDown"):format(modifierString)]() then
+					if _G[("Is%sKeyDown"):format(self.modifierString)]() then
 						ClearRaidMarker()
 					else
 						local now = GetTime()
@@ -197,18 +221,18 @@ function RM:CreateButtons()
 			function(self)
 				self:SetBackdropBorderColor(.7, .7, 0)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(L["Raid Markers"])
+				GameTooltip:SetText(L["WindTools"] .. " " .. L["Raid Markers"])
 				GameTooltip:AddLine(
 					i == 9 and
 						("%s\n%s"):format(
 							L["Click to clear all marks."],
-							(L["%s + Click to remove all worldmarkers."]):format(modifierString)
+							(L["%s + Click to remove all worldmarkers."]):format(RM.modifierString)
 						) or
 						("%s\n%s\n%s\n%s"):format(
 							L["Left Click to mark the target with this mark."],
 							L["Right Click to clear the mark on the target."],
-							(L["%s + Left Click to place this worldmarker."]):format(modifierString),
-							(L["%s + Right Click to clear this worldmarker."]):format(modifierString)
+							(L["%s + Left Click to place this worldmarker."]):format(RM.modifierString),
+							(L["%s + Right Click to clear this worldmarker."]):format(RM.modifierString)
 						),
 					1,
 					1,

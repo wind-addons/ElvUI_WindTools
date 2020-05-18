@@ -248,11 +248,7 @@ options.raidMarkers = {
                         shift = L["Shift Key"],
                         ctrl = L["Ctrl Key"],
                         alt = L["Alt Key"]
-                    },
-                    set = function(info, value)
-                        E.db.WT.combat.raidMarkers[info[#info]] = value
-                        E:StaticPopup_Show("PRIVATE_RL")
-                    end
+                    }
                 }
             }
         },

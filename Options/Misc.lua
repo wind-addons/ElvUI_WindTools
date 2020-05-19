@@ -5,6 +5,8 @@ local M = W:GetModule("Misc")
 
 local _G = _G
 
+local C_CVar_SetCVar, C_CVar_GetCVarBool = C_CVar.SetCVar, C_CVar.GetCVarBool
+
 options.transmog = {
     order = 1,
     type = "group",
@@ -36,6 +38,96 @@ options.transmog = {
                 E.private.WT.misc[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end
+        }
+    }
+}
+
+options.cvars = {
+    order = 2,
+    type = "group",
+    name = L["CVars Editor"],
+    get = function(info)
+        return C_CVar_GetCVarBool(info[#info])
+    end,
+    set = function(info, value)
+        C_CVar_SetCVar(info[#info], value and "1" or "0")
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["A simple editor for CVars."],
+                    fontSize = "medium"
+                }
+            }
         },
+        visualEffect = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Visual Effect"],
+            args = {
+                ffxGlow = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Glow Effect"]
+                },
+                ffxDeath = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Death Effect"]
+                },
+                ffxNether = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Nether Effect"]
+                }
+            }
+        },
+        tooltips = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Tooltips"],
+            args = {
+                alwaysCompareItems = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Auto Compare"]
+                },
+                showQuestTrackingTooltips = {
+                    order = 2,
+                    type = "toggle",
+                    width = "double",
+                    name = L["Show Quest Info"]
+                }
+            }
+        },
+        mouse = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Mouse"],
+            args = {
+                rawMouseEnable = {
+                    order = 1,
+                    type = "toggle",
+                    width = "double",
+                    name = L["Raw Mouse"]
+                },
+                rawMouseAccelerationEnable = {
+                    order = 2,
+                    type = "toggle",
+                    width = "double",
+                    name = L["Raw Mouse Acceleration"]
+                }
+            }
+        }
     }
 }

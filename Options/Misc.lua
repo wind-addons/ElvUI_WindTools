@@ -99,13 +99,14 @@ options.cvars = {
                 alwaysCompareItems = {
                     order = 1,
                     type = "toggle",
-                    name = L["Auto Compare"]
+                    name = L["Auto Compare"],
                 },
                 showQuestTrackingTooltips = {
                     order = 2,
                     type = "toggle",
                     width = "double",
-                    name = L["Show Quest Info"]
+                    name = L["Show Quest Info"],
+                    desc = L["Add progress information (Ex. Mob 10/25)."]
                 }
             }
         },
@@ -119,13 +120,15 @@ options.cvars = {
                     order = 1,
                     type = "toggle",
                     width = "double",
-                    name = L["Raw Mouse"]
+                    name = L["Raw Mouse"],
+                    desc = L["It will fix the problem if your cursor has abnormal movement."]
                 },
                 rawMouseAccelerationEnable = {
                     order = 2,
                     type = "toggle",
                     width = "double",
-                    name = L["Raw Mouse Acceleration"]
+                    name = L["Raw Mouse Acceleration"],
+                    desc = L["Changes the rate at which your mouse pointer moves based on the speed you're moving the mouse."]
                 }
             }
         }

@@ -254,9 +254,9 @@ options.blizzard = {
             type = "toggle",
             name = _G.FLIGHT_MAP
         },
-        tooltip = {
+        tooltips = {
             type = "toggle",
-            name = L["Tooltip"]
+            name = L["Tooltips"]
         },
         warboard = {
             type = "toggle",

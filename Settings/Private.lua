@@ -74,7 +74,7 @@ V.skins = {
 		staticPopup = true,
 		talent = true,
 		taxi = true,
-		tooltip = true,
+		tooltips = true,
 		warboard = true,
 		worldMap = true
 	},

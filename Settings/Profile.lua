@@ -31,6 +31,10 @@ P.item = {
         enable = true,
         delKey = true,
         fillIn = "CLICK"
+    },
+    alreadyKnown = {
+        enable = true,
+        
     }
 }
 

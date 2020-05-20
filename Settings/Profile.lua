@@ -34,7 +34,12 @@ P.item = {
     },
     alreadyKnown = {
         enable = true,
-        
+        mode = "COLOR",
+        color = {
+            r = 0,
+            g = 1,
+            b = 0
+        }
     }
 }
 

@@ -19,13 +19,9 @@ local SetItemButtonNameFrameVertexColor = SetItemButtonNameFrameVertexColor
 local SetItemButtonNormalTextureVertexColor = SetItemButtonNormalTextureVertexColor
 local HybridScrollFrame_GetButtons = HybridScrollFrame_GetButtons
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
-local PetKnownString = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
 
-local db = {
-	r = 0,
-	g = 1,
-	b = 0
-}
+local PetKnownString = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
+local numberOfHookedFunctions = 0
 
 local knownTable = {}
 
@@ -62,14 +58,13 @@ local containerItems = {
 	}
 }
 
-
 local function IsAlreadyKnown(itemLink)
 	if knownTable[itemLink] then
 		return true
 	end
 
 	local itemId = tonumber(itemLink:match("item:(%d+)"))
-	
+
 	if not itemId then
 		return
 	end
@@ -111,11 +106,13 @@ local function IsAlreadyKnown(itemLink)
 
 	-- 找到 已经学会 字符串（物品，玩具）
 	if Search:Tooltip(itemLink, _G.ITEM_SPELL_KNOWN) then
+		knownTable[itemLink] = true
 		return true
 	end
 
 	-- 找到 已收集 字符串（小宠物）
 	if Search:Tooltip(itemLink, PetKnownString) then
+		knownTable[itemLink] = true
 		return true
 	end
 
@@ -130,13 +127,14 @@ function AK:Merchant()
 		local itemLink = GetMerchantItemLink(index)
 
 		if itemLink and IsAlreadyKnown(itemLink) then
-			SetItemButtonNameFrameVertexColor(merchantButton, db.r, db.g, db.b)
-			SetItemButtonSlotVertexColor(merchantButton, db.r, db.g, db.b)
-			SetItemButtonTextureVertexColor(itemButton, 0.9 * db.r, 0.9 * db.g, 0.9 * db.b)
-			SetItemButtonNormalTextureVertexColor(itemButton, 0.9 * db.r, 0.9 * db.g, 0.9 * db.b)
-
-			if db.monochrome then
+			if self.db.mode == "MONOCHROME" then
 				_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(true)
+			else
+				local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+				SetItemButtonNameFrameVertexColor(merchantButton, r, g, b)
+				SetItemButtonSlotVertexColor(merchantButton, r, g, b)
+				SetItemButtonTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
+				SetItemButtonNormalTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
 			end
 		else
 			_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(false)
@@ -161,17 +159,20 @@ function AK:GuildBank()
 		local itemLink = GetGuildBankItemLink(tab, i)
 
 		if itemLink and IsAlreadyKnown(itemLink) then
-			SetItemButtonTextureVertexColor(button, 0.9 * db.r, 0.9 * db.g, 0.9 * db.b)
-			SetItemButtonNormalTextureVertexColor(button, 0.9 * db.r, 0.9 * db.g, 0.9 * db.b)
-			SetItemButtonDesaturated(button, db.monochrome)
+			if self.db.mode == "MONOCHROME" then
+				SetItemButtonDesaturated(button, true)
+			else
+				local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+				SetItemButtonTextureVertexColor(button, 0.9 * r, 0.9 * g, 0.9 * b)
+				SetItemButtonNormalTextureVertexColor(button, 0.9 * r, 0.9 * g, 0.9 * b)
+			end
 		end
 	end
 end
 
 function AK:AutionHouse()
-	local frame = _G.RefreshScrollFrame
+	local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
 	local numResults = frame.getNumEntries()
-
 	local buttons = HybridScrollFrame_GetButtons(frame.ScrollFrame)
 	local buttonCount = buttons and #buttons or 0
 	local offset = frame:GetScrollOffset()
@@ -190,15 +191,18 @@ function AK:AutionHouse()
 
 				if itemLink and IsAlreadyKnown(itemLink) then
 					button.SelectedHighlight:Show()
-					button.SelectedHighlight:SetVertexColor(db.r, db.g, db.b)
 					button.SelectedHighlight:SetAlpha(.2)
-
-					button.cells[2].Icon:SetVertexColor(db.r, db.g, db.b)
-					button.cells[2].IconBorder:SetVertexColor(db.r, db.g, db.b)
-					button.cells[2].Icon:SetDesaturated(db.monochrome)
+					if self.db.mode == "MONOCHROME" then
+						button.SelectedHighlight:SetVertexColor(1, 1, 1)
+						button.cells[2].Icon:SetDesaturated(true)
+					else
+						local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+						button.SelectedHighlight:SetVertexColor(r, g, b)
+						button.cells[2].Icon:SetVertexColor(r, g, b)
+						button.cells[2].IconBorder:SetVertexColor(r, g, b)
+					end
 				else
 					button.SelectedHighlight:SetVertexColor(1, 1, 1)
-
 					button.cells[2].Icon:SetVertexColor(1, 1, 1)
 					button.cells[2].IconBorder:SetVertexColor(1, 1, 1)
 					button.cells[2].Icon:SetDesaturated(false)
@@ -208,12 +212,10 @@ function AK:AutionHouse()
 	end
 end
 
-local numberOfHookedFunctions = 0
-
 function AK:ADDON_LOADED(event, addOnName)
 	if addOnName == "Blizzard_AuctionHouseUI" then
 		local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
-		self:SecureHook(frame, "RefreshScrollFrame", "AutionHouseUI")
+		self:SecureHook(frame, "RefreshScrollFrame", "AutionHouse")
 		numberOfHookedFunctions = numberOfHookedFunctions + 1
 	elseif addOnName == "Blizzard_GuildBankUI" then
 		self:SecureHook("GuildBankFrame_Update", "GuildBank")
@@ -235,9 +237,7 @@ function AK:Initialize()
 	end
 
 	self.db = E.db.WT.item.alreadyKnown
-
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo", "Merchant")
-
 	self:RegisterEvent("ADDON_LOADED")
 end
 

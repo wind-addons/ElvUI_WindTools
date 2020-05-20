@@ -98,3 +98,23 @@ function F.DebugMessage(module, text)
     local message = format("[WT - %s] %s", module, text)
     print(message)
 end
+
+--[[
+    延迟去除全部模块函数钩子
+    @param {table/string} module Ace3 模块或自定义字符串
+]]
+function F.DelayUnhookAll(module)
+    if type(module) == "string" then
+        module = W:GetModule(module)
+    end
+
+    if module then
+        if module.UnhookAll then
+            E:Delay(1, module.UnhookAll, module)
+        else
+            F.DebugMessage(module, "无 AceHook 库函数！")
+        end
+    else
+        F.DebugMessage(nil, "找不到模块！")
+    end
+end

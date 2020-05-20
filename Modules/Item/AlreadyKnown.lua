@@ -7,7 +7,6 @@ local Search = E.Libs.ItemSearch
 
 local _G = _G
 local mod, min, ceil, tonumber, strsplit, strmatch, format = mod, min, ceil, tonumber, strsplit, strmatch, format
-
 local IsAddOnLoaded = IsAddOnLoaded
 local GetItemInfo = GetItemInfo
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
@@ -120,6 +119,10 @@ local function IsAlreadyKnown(itemLink)
 end
 
 function AK:Merchant()
+	if not self.db.enable then
+		return
+	end
+
 	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
 		local index = (((MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE) + i)
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
@@ -143,6 +146,10 @@ function AK:Merchant()
 end
 
 function AK:GuildBank()
+	if not self.db.enable then
+		return
+	end
+
 	local tab = GetCurrentGuildBankTab()
 
 	for i = 1, _G.MAX_GUILDBANK_SLOTS_PER_TAB do
@@ -171,6 +178,10 @@ function AK:GuildBank()
 end
 
 function AK:AutionHouse()
+	if not self.db.enable then
+		return
+	end
+
 	local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
 	local numResults = frame.getNumEntries()
 	local buttons = HybridScrollFrame_GetButtons(frame.ScrollFrame)
@@ -237,33 +248,20 @@ function AK:Initialize()
 	end
 
 	self.db = E.db.WT.item.alreadyKnown
+	self.initialized = true
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo", "Merchant")
 	self:RegisterEvent("ADDON_LOADED")
 end
 
 function AK:ToggleSetting()
-	if not E.db.WT.item.alreadyKnown.enable then
-		self:UnhookAll()
-	else
-		self.db = E.db.WT.item.alreadyKnown
-		numberOfHookedFunctions = 0
+	if IsAddOnLoaded("AlreadyKnown") then
+		return
+	end
 
-		self:SecureHook("MerchantFrame_UpdateMerchantInfo", "Merchant")
+	self.db = E.db.WT.item.alreadyKnown
 
-		if IsAddOnLoaded("Blizzard_AuctionHouseUI") then
-			local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
-			self:SecureHook(frame, "RefreshScrollFrame", "AutionHouse")
-			numberOfHookedFunctions = numberOfHookedFunctions + 1
-		end
-		
-		if IsAddOnLoaded("Blizzard_GuildBankUI") then
-			self:SecureHook("GuildBankFrame_Update", "GuildBank")
-			numberOfHookedFunctions = numberOfHookedFunctions + 1
-		end
-
-		if numberOfHookedFunctions ~= 2 then
-			self:RegisterEvent("ADDON_LOADED")
-		end
+	if self.db.enable and not self.initialized then
+		self:Initialize()
 	end
 end
 

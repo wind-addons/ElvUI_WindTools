@@ -3,6 +3,7 @@
 
 local W, F, E, L = unpack(select(2, ...))
 local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
+local Search = E.Libs.ItemSearch
 
 local _G = _G
 local mod, min, ceil, tonumber, strsplit, strmatch, format = mod, min, ceil, tonumber, strsplit, strmatch, format
@@ -16,12 +17,9 @@ local SetItemButtonSlotVertexColor = SetItemButtonSlotVertexColor
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 local SetItemButtonNameFrameVertexColor = SetItemButtonNameFrameVertexColor
 local SetItemButtonNormalTextureVertexColor = SetItemButtonNormalTextureVertexColor
-
-local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
-
-local MERCHANT_ITEMS_PER_PAGE = MERCHANT_ITEMS_PER_PAGE
-
 local HybridScrollFrame_GetButtons = HybridScrollFrame_GetButtons
+local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
+local PetKnownString = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
 
 local db = {
 	r = 0,
@@ -32,52 +30,38 @@ local db = {
 local knownTable = {}
 
 local questItems = {
-	-- Quest items and matching quests
-	-- Equipment Blueprint: Tuskarr Fishing Net
-	[128491] = 39359, -- Alliance
-	[128251] = 39359, -- Horde
-	-- Equipment Blueprint: Unsinkable
-	[128250] = 39358, -- Alliance
-	[128489] = 39358 -- Horde
-}
-
-local specialItems = {
-	-- Items needing special treatment
-	-- Krokul Flute -> Flight Master's Whistle
-	[152964] = {141605, 11, 269} -- 269 for Flute applied Whistle, 257 (or anything else than 269) for pre-apply Whistle
+	[128491] = 39359,
+	[128251] = 39359,
+	[128250] = 39358,
+	[128489] = 39358
 }
 
 local containerItems = {
-	-- These items are containers containing items we might know already, but don't get any marking about us knowing the contents already
 	[21740] = {
-		-- Small Rocket Recipes
-		21724, -- Schematic: Small Blue Rocket
-		21725, -- Schematic: Small Green Rocket
-		21726 -- Schematic: Small Red Rocket
+		21724,
+		21725,
+		21726
 	},
 	[21741] = {
-		-- Cluster Rocket Recipes
-		21730, -- Schematic: Blue Rocket Cluster
-		21731, -- Schematic: Green Rocket Cluster
-		21732 -- Schematic: Red Rocket Cluster
+		21730,
+		21731,
+		21732
 	},
 	[21742] = {
-		-- Large Rocket Recipes
-		21727, -- Schematic: Large Blue Rocket
-		21728, -- Schematic: Large Green Rocket
-		21729 -- Schematic: Large Red Rocket
+		21727,
+		21728,
+		21729
 	},
 	[21743] = {
-		-- Large Cluster Rocket Recipes
-		21733, -- Schematic: Large Blue Rocket Cluster
-		21734, -- Schematic: Large Green Rocket Cluster
-		21735 -- Schematic: Large Red Rocket Cluster
+		21733,
+		21734,
+		21735
 	},
 	[128319] = {
-		-- Void-Shrouded Satchel
-		128318 -- Touch of the Void
+		128318
 	}
 }
+
 
 local function IsAlreadyKnown(itemLink)
 	if knownTable[itemLink] then
@@ -85,22 +69,14 @@ local function IsAlreadyKnown(itemLink)
 	end
 
 	local itemId = tonumber(itemLink:match("item:(%d+)"))
+	
+	if not itemId then
+		return
+	end
 
-	if itemId and questItems[itemId] then
+	if questItems[itemId] then
 		return false
-	elseif itemId and specialItems[itemId] then
-		local specialData = specialItems[itemId]
-		local _, specialLink = GetItemInfo(specialData[1])
-		if specialLink then
-			local specialTbl = {strsplit(":", specialLink)}
-			local specialInfo = tonumber(specialTbl[specialData[2]])
-			if specialInfo == specialData[3] then
-				knownTable[itemLink] = true
-				return true
-			end
-		end
-		return false
-	elseif itemId and containerItems[itemId] then
+	elseif containerItems[itemId] then
 		local knownCount, totalCount = 0, 0
 		for ci = 1, #containerItems[itemId] do
 			totalCount = totalCount + 1
@@ -110,6 +86,18 @@ local function IsAlreadyKnown(itemLink)
 			end
 		end
 		return (knownCount == totalCount)
+	elseif itemId == 152964 then
+		local _, specialLink = GetItemInfo(141605)
+		if specialLink then
+			local specialTbl = {strsplit(":", specialLink)}
+			local specialInfo = tonumber(specialTbl[11])
+			if specialInfo == 269 then
+				knownTable[itemLink] = true
+				return true
+			end
+		else
+			return false
+		end
 	end
 
 	if itemLink:match("|H(.-):") == "battlepet" then
@@ -121,30 +109,22 @@ local function IsAlreadyKnown(itemLink)
 		return false
 	end
 
-	E.ScanTooltip:ClearLines()
-	E.ScanTooltip:SetHyperlink(itemLink)
-
-	local lines = E.ScanTooltip:NumLines()
-	for i = 2, lines do
-		local text = _G["AKScanningTooltipTextLeft" .. i]:GetText()
-		if text == _G.ITEM_SPELL_KNOWN or strmatch(text, S_PET_KNOWN) then
-			if lines - i <= 3 then
-				knownTable[itemLink] = true
-			end
-		elseif
-			text == _G.TOY and _G["AKScanningTooltipTextLeft" .. i + 2] and
-				_G["AKScanningTooltipTextLeft" .. i + 2]:GetText() == _G.ITEM_SPELL_KNOWN
-		 then
-			knownTable[itemLink] = true
-		end
+	-- 找到 已经学会 字符串（物品，玩具）
+	if Search:Tooltip(itemLink, _G.ITEM_SPELL_KNOWN) then
+		return true
 	end
 
-	return knownTable[itemLink] and true or false
+	-- 找到 已收集 字符串（小宠物）
+	if Search:Tooltip(itemLink, PetKnownString) then
+		return true
+	end
+
+	return false
 end
 
 function AK:Merchant()
-	for i = 1, MERCHANT_ITEMS_PER_PAGE do
-		local index = (((_G.MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i)
+	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
+		local index = (((MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE) + i)
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
 		local merchantButton = _G["MerchantItem" .. i]
 		local itemLink = GetMerchantItemLink(index)

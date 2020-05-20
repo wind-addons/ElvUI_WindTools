@@ -65,7 +65,7 @@ local function IsAlreadyKnown(itemLink)
 	local itemId = tonumber(itemLink:match("item:(%d+)"))
 
 	if not itemId then
-		return
+		return false
 	end
 
 	if questItems[itemId] then

@@ -241,12 +241,32 @@ function AK:Initialize()
 	self:RegisterEvent("ADDON_LOADED")
 end
 
-function AK:ProfileUpdate()
-	if not E.db.WT.item.delete.enable then
-		self:UnregisterEvent("DELETE_ITEM_CONFIRM")
+function AK:ToggleSetting()
+	if not E.db.WT.item.alreadyKnown.enable then
+		self:UnhookAll()
 	else
-		self:Initialize()
+		self.db = E.db.WT.item.alreadyKnown
+		numberOfHookedFunctions = 0
+
+		self:SecureHook("MerchantFrame_UpdateMerchantInfo", "Merchant")
+
+		if IsAddOnLoaded("Blizzard_AuctionHouseUI") then
+			local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
+			self:SecureHook(frame, "RefreshScrollFrame", "AutionHouse")
+			numberOfHookedFunctions = numberOfHookedFunctions + 1
+		end
+		
+		if IsAddOnLoaded("Blizzard_GuildBankUI") then
+			self:SecureHook("GuildBankFrame_Update", "GuildBank")
+			numberOfHookedFunctions = numberOfHookedFunctions + 1
+		end
+
+		if numberOfHookedFunctions ~= 2 then
+			self:RegisterEvent("ADDON_LOADED")
+		end
 	end
 end
+
+AK.ProfileUpdate = AK.ToggleSetting
 
 W:RegisterModule(AK:GetName())

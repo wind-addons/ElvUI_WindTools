@@ -55,3 +55,63 @@ options.delete = {
         }
     }
 }
+
+options.alreadyKnown = {
+    order = 2,
+    type = "group",
+    name = L["Already Known"],
+    get = function(info)
+        return E.db.WT.item.alreadyKnown[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.alreadyKnown[info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Puts a overlay on already known learnable items on vendors and AH."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        mode = {
+            order = 3,
+            name = L["Mode"],
+            type = "select",
+            values = {
+                COLOR = L["Custom Color"],
+                MONOCHROME = L["Monochrome"]
+            }
+        },
+        color = {
+            order = 4,
+            type = "color",
+            name = L["Color"],
+            hidden = function()
+                return not (E.db.WT.item.alreadyKnown.mode == "COLOR")
+            end,
+            hasAlpha = false,
+            get = function(info)
+                local db = E.db.WT.item.alreadyKnown.color
+                local default = P.item.alreadyKnown.color
+                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+            end,
+            set = function(info, r, g, b)
+                local db = E.db.WT.item.alreadyKnown.color
+                db.r, db.g, db.b = r, g, b
+            end
+        }
+    }
+}

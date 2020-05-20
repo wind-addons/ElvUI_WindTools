@@ -3,6 +3,7 @@ local options = W.options.item.args
 local LSM = E.Libs.LSM
 
 local DI = W:GetModule("DeleteItem")
+local AK = W:GetModule("AlreadyKnown")
 
 local _G = _G
 
@@ -84,7 +85,11 @@ options.alreadyKnown = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.item.alreadyKnown[info[#info]] = value
+                AK:ToggleSetting()
+            end,
         },
         mode = {
             order = 3,

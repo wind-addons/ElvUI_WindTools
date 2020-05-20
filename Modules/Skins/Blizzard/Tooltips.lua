@@ -6,7 +6,7 @@ local _G = _G
 
 function S:TooltipFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then return end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.tooltip) then return end
+    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.tooltips) then return end
 
     local styleTT = {
         _G.GameTooltip,

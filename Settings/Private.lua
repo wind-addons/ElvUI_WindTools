@@ -99,3 +99,7 @@ V.skins = {
 		unitFrames = true
 	}
 }
+
+V.tooltip = {
+	icon = true,
+}

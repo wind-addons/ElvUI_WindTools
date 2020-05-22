@@ -36,6 +36,13 @@ W.options = {
         desc = L["Apply new shadow style for ElvUI."],
         icon = W.Media.Icons.skins,
         args = {}
+    },
+    tooltips = {
+        order = 106,
+        name = L["Tooltips"],
+        desc = L["Add some additional information to your tooltips."],
+        icon = W.Media.Icons.skins,
+        args = {}
     }
 }
 

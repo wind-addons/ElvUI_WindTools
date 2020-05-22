@@ -4,5 +4,5 @@
 	<Include file="Maps\Load_Maps.xml"/>
 	<Include file="Misc\Load_Misc.xml"/>
 	<Include file="Skins\Load_Skins.xml"/>
-	<Include file="Tooltip\Load_Tooltip.xml"/>
+	<Include file="Tooltips\Load_Tooltips.xml"/>
 </Ui>

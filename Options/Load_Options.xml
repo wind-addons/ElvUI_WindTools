@@ -5,4 +5,5 @@
 	<Script file="Maps.lua"/>
 	<Script file="Misc.lua"/>
 	<Script file="Skins.lua"/>
+	<Script file="Tooltips.lua"/>
 </Ui>

@@ -1,6 +1,6 @@
 -- 来自 Ndui
 local W, F, E, L = unpack(select(2, ...))
-local T = W:GetModule("Tooltip")
+local T = W:GetModule("Tooltips")
 
 local _G = _G
 local strfind, gsub = strfind, gsub
@@ -113,7 +113,7 @@ local function ReskinRewardIcon(self)
 end
 
 function T:Icons()
-    if not E.private.WT.tooltip.icon then
+    if not E.private.WT.tooltips.icon then
         return
     end
 

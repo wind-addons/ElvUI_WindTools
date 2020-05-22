@@ -100,6 +100,6 @@ V.skins = {
 	}
 }
 
-V.tooltip = {
+V.tooltips = {
 	icon = true,
 }

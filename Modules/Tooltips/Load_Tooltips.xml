@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='Tooltip.lua'/>
+	<Script file='Tooltips.lua'/>
 	<Script file='Icons.lua'/>
 	<!-- <Script file='Progression.lua'/> -->
 </Ui>

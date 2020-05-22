@@ -41,7 +41,7 @@ W.options = {
         order = 106,
         name = L["Tooltips"],
         desc = L["Add some additional information to your tooltips."],
-        icon = W.Media.Icons.skins,
+        icon = W.Media.Icons.tooltips,
         args = {}
     }
 }

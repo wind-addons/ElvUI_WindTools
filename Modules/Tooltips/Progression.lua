@@ -18,7 +18,6 @@ local compareGUID
 local playerGUID = UnitGUID("player")
 local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
-local IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 
 -- 8.0 决战艾泽拉斯
 local tiers = {
@@ -33,74 +32,85 @@ local levels = {"Mythic", "Heroic", "Normal", "Looking For Raid"}
 
 local Locales = {
     ["Looking For Raid"] = {
-        short = "LFR",
+        short = L["[ABBR] Looking For Raid"],
         full = L["Looking For Raid"]
     },
     ["Normal"] = {
-        short = "N",
+        short = L["[ABBR] Normal"],
         full = L["Normal"]
     },
     ["Heroic"] = {
-        short = "H",
+        short = L["[ABBR] Heroic"],
         full = L["Heroic"]
     },
     ["Mythic"] = {
-        short = "M",
+        short = L["[ABBR] Mythic"],
         full = L["Mythic"]
     },
     -- 团本名
     ["Uldir"] = {
-        short = L["Uldir"],
+        short = L["[ABBR] Uldir"],
         full = L["Uldir"]
     },
     ["Battle of Dazaralor"] = {
-        short = L["BoD"],
+        short = L["[ABBR] Battle of Dazaralor"],
         full = L["Battle of Dazaralor"]
     },
     ["Crucible of Storms"] = {
-        short = L["CoS"],
-        full = L["Battle of Dazaralor"]
+        short = L["[ABBR] Crucible of Storms"],
+        full = L["Crucible of Storms"]
     },
     ["Azshara's Eternal Palace"] = {
-        short = L["AEP"],
+        short = L["[ABBR] Azshara's Eternal Palace"],
         full = L["Azshara's Eternal Palace"]
     },
     ["Ny'alotha, The Waking City"] = {
-        short = L["Nyalotha"],
+        short = L["[ABBR] Ny'alotha, The Waking City"],
         full = L["Ny'alotha, The Waking City"]
     },
     -- 地下城名
     ["Atal'Dazar"] = {
+        short = L["[ABBR] Atal'Dazar"],
         full = L["Atal'Dazar"]
     },
     ["FreeHold"] = {
+        short = L["[ABBR] FreeHold"],
         full = L["FreeHold"]
     },
     ["Kings' Rest"] = {
+        short = L["[ABBR] Kings' Rest"],
         full = L["Kings' Rest"]
     },
     ["Shrine of the Storm"] = {
+        short = L["[ABBR] Shrine of the Storm"],
         full = L["Shrine of the Storm"]
     },
     ["Siege of Boralus"] = {
+        short = L["[ABBR] Siege of Boralus"],
         full = L["Siege of Boralus"]
     },
     ["Temple of Sethrealiss"] = {
+        short = L["[ABBR] Temple of Sethrealiss"],
         full = L["Temple of Sethrealiss"]
     },
     ["The MOTHERLODE!!"] = {
+        short = L["[ABBR] The MOTHERLODE!!"],
         full = L["The MOTHERLODE!!"]
     },
     ["The Underrot"] = {
+        short = L["[ABBR] The Underrot"],
         full = L["The Underrot"]
     },
     ["Tol Dagor"] = {
+        short = L["[ABBR] Tol Dagor"],
         full = L["Tol Dagor"]
     },
     ["Waycrest Manor"] = {
+        short = L["[ABBR] Waycrest Manor"],
         full = L["Waycrest Manor"]
     },
     ["Operation: Mechagon"] = {
+        short = L["[ABBR] Operation: Mechagon"],
         full = L["Operation: Mechagon"]
     }
 }

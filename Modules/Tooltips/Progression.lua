@@ -13,6 +13,8 @@ local GetStatistic, GetComparisonStatistic = GetStatistic, GetComparisonStatisti
 local IsAddOnLoaded, HideUIPanel = IsAddOnLoaded, HideUIPanel
 local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
 
+local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
+
 local loadedComparison
 local compareGUID
 local playerGUID = UnitGUID("player")
@@ -429,7 +431,6 @@ local function UpdateProgression(guid, faction)
         for _, tier in ipairs(tiers) do
             -- 单个团本
             if db.raid[tier] then
-                print(tier)
                 progressCache[guid].info.raid[tier] = {}
                 local bosses
 
@@ -457,8 +458,6 @@ local function UpdateProgression(guid, faction)
                         end
                     end
                 end
-
-                foreach(progressCache[guid].info.raid[tier], print)
             end
         end
     end
@@ -494,10 +493,10 @@ local function SetProgressionInfo(guid, tt)
                 for _, tier in ipairs(tiers) do
                     if db.raid[tier] then
                         for _, level in ipairs(levels) do
-                            if strfind(leftTipText, Locales[tier].full) and strfind(leftTipText, Locales[level].full) then
+                            if strfind(leftTipText, Locales[tier].short) and strfind(leftTipText, Locales[level].full) then
                                 local rightTip = _G["GameTooltipTextRight" .. i]
                                 leftTip:SetText(
-                                    format("%s %s:", Locales[tier].full, GetLevelColoredString(level, false))
+                                    format("%s %s:", Locales[tier].short, GetLevelColoredString(level, false))
                                 )
                                 rightTip:SetText(progressCache[guid].info.raid[tier][level])
                                 updated = true
@@ -518,13 +517,10 @@ local function SetProgressionInfo(guid, tt)
             if db.dungeon.enable then -- 地下城进度
                 for name, achievementID in pairs(dungeonAchievements) do
                     if db.dungeon[name] then
-                        if strfind(leftTipText, Locales[name].full) then
-                            -- update found tooltip text line
+                        if strfind(leftTipText, Locales[name].short) then
                             local rightTip = _G["GameTooltipTextRight" .. i]
-                            leftTip:SetText(Locales[name].full .. ":")
-                            rightTip:SetText(
-                                GetLevelColoredString("Mythic", true) .. progressCache[guid].info.dungeon[name]
-                            )
+                            leftTip:SetText(Locales[name].short .. ":")
+                            rightTip:SetText(progressCache[guid].info.dungeon[name])
                             updated = true
                             found = true
                             break
@@ -566,7 +562,7 @@ local function SetProgressionInfo(guid, tt)
         tt:AddLine(L["Dungeon"] .. "[" .. progressCache[guid].info.dungeon.times .. "]")
         for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
-                local left = format("%s:", Locales[name].full)
+                local left = format("%s:", Locales[name].short)
                 local right = progressCache[guid].info.dungeon[name]
 
                 tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)

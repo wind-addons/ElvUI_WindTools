@@ -378,7 +378,6 @@ local dungeonAchievements = {
     ["Tol Dagor"] = 12782,
     ["Waycrest Manor"] = 12785,
     ["Operation: Mechagon"] = 13620,
-    ["Mythic+ Times"] = 7399
 }
 
 local function GetLevelColoredString(level, short)
@@ -427,6 +426,7 @@ local function UpdateProgression(guid, faction)
                 progressCache[guid].info.raid[tier] = {}
                 local bosses
 
+                -- 达萨亚洛之战分开联盟和部落
                 if tier == "Battle of Dazaralor" then
                     bosses = raidAchievements[tier][faction]
                 else
@@ -457,7 +457,8 @@ local function UpdateProgression(guid, faction)
     -- 传奇地下城
     if db.dungeon.enable then
         progressCache[guid].info.dungeon = {}
-        for name, achievementID in ipairs(dungeonAchievements) do
+        progressCache[guid].info.dungeon.times = GetBossKillTimes(guid, 7399)
+        for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
                 progressCache[guid].info.dungeon[name] = GetBossKillTimes(guid, achievementID)
             end
@@ -506,7 +507,7 @@ local function SetProgressionInfo(guid, tt)
             found = false
 
             if db.dungeon.enable then -- 地下城进度
-                for name, achievementID in ipairs(dungeonAchievements) do
+                for name, achievementID in pairs(dungeonAchievements) do
                     if db.dungeon[name] then
                         if strfind(leftTipText, Locales[name].full) then
                             -- update found tooltip text line
@@ -552,8 +553,8 @@ local function SetProgressionInfo(guid, tt)
     end
     if db.dungeon.enable then -- 地下城进度
         tt:AddLine(" ")
-        tt:AddLine(L["Dungeon"])
-        for name, achievementID in ipairs(dungeonAchievements) do
+        tt:AddLine(L["Dungeon"].."["..progressCache[guid].info.dungeon.times.."]")
+        for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
                 local left = format("%s:", Locales[name].full)
                 local right = progressCache[guid].info.dungeon[name]

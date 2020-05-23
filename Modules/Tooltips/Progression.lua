@@ -559,7 +559,7 @@ local function SetProgressionInfo(guid, tt)
 
     if db.dungeon.enable then -- 地下城进度
         tt:AddLine(" ")
-        tt:AddLine(L["Dungeon"] .. "[" .. progressCache[guid].info.dungeon.times .. "]")
+        tt:AddLine(L["Dungeons"] .. "[" .. progressCache[guid].info.dungeon.times .. "]")
         for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
                 local left = format("%s:", Locales[name].short)

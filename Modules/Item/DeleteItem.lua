@@ -123,6 +123,7 @@ function DI:Initialize()
 	if not E.db.WT.item.delete.enable then
 		return
 	end
+	
 	self.db = E.db.WT.item.delete
 
 	self:RegisterEvent("DELETE_ITEM_CONFIRM")

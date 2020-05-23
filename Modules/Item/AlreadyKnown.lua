@@ -2,8 +2,8 @@
 -- 原作者：ahak (https://wow.curseforge.com/projects/alreadyknown)
 
 local W, F, E, L = unpack(select(2, ...))
-local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 local Search = E.Libs.ItemSearch
+local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local mod, min, ceil, tonumber, strsplit, strmatch, format = mod, min, ceil, tonumber, strsplit, strmatch, format

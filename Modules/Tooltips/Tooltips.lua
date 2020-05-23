@@ -33,10 +33,13 @@ local function errorhandler(err)
 end
 
 function T:Initialize()
+    self.db = E.private.WT.tooltips
+    
     for index, func in next, self.load do
         xpcall(func, errorhandler)
         self.load[index] = nil
     end
+
 end
 
 function T:ProfileUpdate()

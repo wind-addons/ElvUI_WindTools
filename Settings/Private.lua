@@ -102,4 +102,29 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	progression = {
+		raid = {
+			enable = true,
+			["Uldir"] = true,
+			["Battle of Dazaralor"] = true,
+			["Crucible of Storms"] = true,
+			["Azshara's Eternal Palace"] = true,
+			["Ny'alotha, The Waking City"] = true
+		},
+		dungeon = {
+			enable = true,
+			["Atal'Dazar"] = true,
+			["FreeHold"] = true,
+			["Kings' Rest"] = true,
+			["Shrine of the Storm"] = true,
+			["Siege of Boralus"] = true,
+			["Temple of Sethrealiss"] = true,
+			["The MOTHERLODE!!"] = true,
+			["The Underrot"] = true,
+			["Tol Dagor"] = true,
+			["Waycrest Manor"] = true,
+			["Operation: Mechagon"] = true,
+			["Mythic+ Times"] = true
+		}
+	}
 }

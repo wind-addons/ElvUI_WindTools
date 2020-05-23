@@ -2,7 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
-local select, pairs, ipairs, tonumber = select, pairs, ipairs, tonumber
+local select, ipairs, tonumber = select, ipairs, tonumber
 local strfind, format = strfind, format
 local GetTime, CanInspect = GetTime, CanInspect
 
@@ -28,6 +28,7 @@ local tiers = {
     "Azshara's Eternal Palace",
     "Ny'alotha, The Waking City"
 }
+
 local levels = {"Mythic", "Heroic", "Normal", "Looking For Raid"}
 
 local Locales = {
@@ -53,6 +54,10 @@ local Locales = {
         full = L["Uldir"]
     },
     ["Battle of Dazaralor"] = {
+        short = L["BoD"],
+        full = L["Battle of Dazaralor"]
+    },
+    ["Crucible of Storms"] = {
         short = L["BoD"],
         full = L["Battle of Dazaralor"]
     },
@@ -422,7 +427,7 @@ local function UpdateProgression(guid, faction)
                 progressCache[guid].info.raid[tier] = {}
                 local bosses
 
-                if tier == "Battle Of Dazaralor" then
+                if tier == "Battle of Dazaralor" then
                     bosses = raidAchievements[tier][faction]
                 else
                     bosses = raidAchievements[tier]
@@ -452,7 +457,7 @@ local function UpdateProgression(guid, faction)
     -- 传奇地下城
     if db.dungeon.enable then
         progressCache[guid].info.dungeon = {}
-        for name, achievementID in pairs(dungeonAchievements) do
+        for name, achievementID in ipairs(dungeonAchievements) do
             if db.dungeon[name] then
                 progressCache[guid].info.dungeon[name] = GetBossKillTimes(guid, achievementID)
             end
@@ -501,12 +506,12 @@ local function SetProgressionInfo(guid, tt)
             found = false
 
             if db.dungeon.enable then -- 地下城进度
-                for name, achievementID in pairs(dungeonAchievements) do
+                for name, achievementID in ipairs(dungeonAchievements) do
                     if db.dungeon[name] then
                         if strfind(leftTipText, Locales[name].full) then
                             -- update found tooltip text line
                             local rightTip = _G["GameTooltipTextRight" .. i]
-                            leftTip:SetText(L[name].full .. ":")
+                            leftTip:SetText(Locales[name].full .. ":")
                             rightTip:SetText(
                                 GetLevelColoredString("Mythic", true) .. progressCache[guid].info.dungeon[name]
                             )
@@ -534,8 +539,8 @@ local function SetProgressionInfo(guid, tt)
         for _, tier in ipairs(tiers) do
             if db.raid[tier] then
                 for _, level in ipairs(levels) do
-                    if (progressCache[guid].info["Raid"][tier][level]) then
-                        local left = format("%s %s:", L[tier].short, GetLevelColoredString(level, false))
+                    if (progressCache[guid].info.raid[tier][level]) then
+                        local left = format("%s %s:", Locales[tier].short, GetLevelColoredString(level, false))
                         local right =
                             GetLevelColoredString(level, true) .. " " .. progressCache[guid].info.raid[tier][level]
 
@@ -548,9 +553,9 @@ local function SetProgressionInfo(guid, tt)
     if db.dungeon.enable then -- 地下城进度
         tt:AddLine(" ")
         tt:AddLine(L["Dungeon"])
-        for name, achievementID in pairs(dungeonAchievements) do
+        for name, achievementID in ipairs(dungeonAchievements) do
             if db.dungeon[name] then
-                local left = format("%s:", L[name].full)
+                local left = format("%s:", Locales[name].full)
                 local right = progressCache[guid].info.dungeon[name]
 
                 tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)

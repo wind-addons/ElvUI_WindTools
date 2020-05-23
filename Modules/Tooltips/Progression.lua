@@ -2,7 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
-local select, ipairs, tonumber = select, ipairs, tonumber
+local select, pairs, ipairs, tonumber = select, pairs, ipairs, tonumber
 local strfind, format = strfind, format
 local GetTime, CanInspect = GetTime, CanInspect
 
@@ -22,11 +22,11 @@ local IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem
 
 -- 8.0 决战艾泽拉斯
 local tiers = {
-    "Uldir",
-    "Battle of Dazaralor",
-    "Crucible of Storms",
+    "Ny'alotha, The Waking City",
     "Azshara's Eternal Palace",
-    "Ny'alotha, The Waking City"
+    "Crucible of Storms",
+    "Battle of Dazaralor",
+    "Uldir"
 }
 
 local levels = {"Mythic", "Heroic", "Normal", "Looking For Raid"}
@@ -58,7 +58,7 @@ local Locales = {
         full = L["Battle of Dazaralor"]
     },
     ["Crucible of Storms"] = {
-        short = L["BoD"],
+        short = L["CoS"],
         full = L["Battle of Dazaralor"]
     },
     ["Azshara's Eternal Palace"] = {
@@ -102,10 +102,6 @@ local Locales = {
     },
     ["Operation: Mechagon"] = {
         full = L["Operation: Mechagon"]
-    },
-    -- 其他
-    ["Mythic+ Times"] = {
-        full = L["Mythic+ Times"]
     }
 }
 
@@ -377,7 +373,7 @@ local dungeonAchievements = {
     ["The Underrot"] = 12745,
     ["Tol Dagor"] = 12782,
     ["Waycrest Manor"] = 12785,
-    ["Operation: Mechagon"] = 13620,
+    ["Operation: Mechagon"] = 13620
 }
 
 local function GetLevelColoredString(level, short)
@@ -423,6 +419,7 @@ local function UpdateProgression(guid, faction)
         for _, tier in ipairs(tiers) do
             -- 单个团本
             if db.raid[tier] then
+                print(tier)
                 progressCache[guid].info.raid[tier] = {}
                 local bosses
 
@@ -443,13 +440,15 @@ local function UpdateProgression(guid, faction)
                         end
                     end
 
-                    if (alreadyKilled > 0) then
-                        progressCache[guid].info.raid[tier][level] = format("%d/%d", highest, #bosses[level])
+                    if alreadyKilled > 0 then
+                        progressCache[guid].info.raid[tier][level] = format("%d/%d", alreadyKilled, #bosses[level])
                         if alreadyKilled == #bosses[level] then
                             break -- 全通本难度后毋须扫描更低难度进度
                         end
                     end
                 end
+
+                foreach(progressCache[guid].info.raid[tier], print)
             end
         end
     end
@@ -551,9 +550,10 @@ local function SetProgressionInfo(guid, tt)
             end
         end
     end
+
     if db.dungeon.enable then -- 地下城进度
         tt:AddLine(" ")
-        tt:AddLine(L["Dungeon"].."["..progressCache[guid].info.dungeon.times.."]")
+        tt:AddLine(L["Dungeon"] .. "[" .. progressCache[guid].info.dungeon.times .. "]")
         for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
                 local left = format("%s:", Locales[name].full)

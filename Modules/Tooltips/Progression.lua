@@ -538,9 +538,11 @@ local function SetProgressionInfo(guid, tt)
         return
     end
 
+    local icon = F.GetIconString(W.Media.Textures.smallLogo, 12)
+
     if db.raid.enable then -- 团本进度
         tt:AddLine(" ")
-        tt:AddLine(L["Raids"])
+        tt:AddDoubleLine(L["Raids"], icon, nil, nil, nil, 1, 1, 1)
 
         for _, tier in ipairs(tiers) do
             if db.raid[tier] then
@@ -559,7 +561,8 @@ local function SetProgressionInfo(guid, tt)
 
     if db.dungeon.enable then -- 地下城进度
         tt:AddLine(" ")
-        tt:AddLine(L["Dungeons"] .. "[" .. progressCache[guid].info.dungeon.times .. "]")
+        local titleLeft = L["Dungeons"] .. "[" .. progressCache[guid].info.dungeon.times .. "]"
+        tt:AddDoubleLine(titleLeft, icon, nil, nil, nil, 1, 1, 1)
         for name, achievementID in pairs(dungeonAchievements) do
             if db.dungeon[name] then
                 local left = format("%s:", Locales[name].short)

@@ -251,9 +251,10 @@ function RM:CreateButtons()
 		button:SetScript(
 			"OnEnter",
 			function(self)
+				local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 				self:SetBackdropBorderColor(.7, .7, 0)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(L["WindTools"] .. " " .. L["Raid Markers"])
+				GameTooltip:SetText(L["Raid Markers"] .. " " .. icon)
 				GameTooltip:AddLine(
 					i == 9 and
 						("%s\n%s"):format(

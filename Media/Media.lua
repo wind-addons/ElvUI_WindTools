@@ -29,7 +29,8 @@ end
 AddMedia("vignetting", "Vignetting.tga", "Textures")
 AddMedia("sword", "Sword.tga", "Textures")
 AddMedia("shield", "Shield.tga", "Textures")
-AddMedia("logo", "WindTools.tga", "Textures")
+AddMedia("logo", "WindTools.blp", "Textures")
+AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")

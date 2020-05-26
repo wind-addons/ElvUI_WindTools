@@ -443,7 +443,7 @@ function CB:UpdateBar()
         end
     end
 
-    if self.db.mouseover then
+    if self.db.mouseOver then
         self.bar:SetAlpha(0)
         if not self.db.backdrop then
             -- 为鼠标显隐模式稍微增加一点可点击区域
@@ -490,7 +490,7 @@ function CB:PLAYER_REGEN_ENABLED()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
-function CB:Initializee()
+function CB:Initialize()
     if not E.db.WT.social.chatBar.enable then
         return
     end

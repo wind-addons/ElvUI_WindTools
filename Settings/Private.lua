@@ -103,6 +103,7 @@ V.skins = {
 V.tooltips = {
 	icon = true,
 	progression = {
+		enable = true,
 		raid = {
 			enable = true,
 			["Uldir"] = true,
@@ -123,8 +124,7 @@ V.tooltips = {
 			["The Underrot"] = true,
 			["Tol Dagor"] = true,
 			["Waycrest Manor"] = true,
-			["Operation: Mechagon"] = true,
-			["Mythic+ Times"] = true
+			["Operation: Mechagon"] = true
 		}
 	}
 }

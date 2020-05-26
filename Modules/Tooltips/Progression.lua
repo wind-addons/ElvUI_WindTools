@@ -575,7 +575,7 @@ local function SetProgressionInfo(guid, tt)
 end
 
 local function AddProgression(self, tt, unit, numTries, r, g, b)
-    if not E.private.WT.tooltips.progression then
+    if not E.private.WT.tooltips.progression.enable then
         return
     end
 
@@ -641,10 +641,6 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
 end
 
 function T:Progression()
-    if not E.private.WT.tooltips.progression then
-        return
-    end
-
     hooksecurefunc(ET, "AddInspectInfo", AddProgression)
 end
 

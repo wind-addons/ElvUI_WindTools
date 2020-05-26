@@ -1,14 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
 local LSM = LibStub("LibSharedMedia-3.0")
+local S = W:GetModule("Skins")
 
 local _, _G = _, _G
 local pairs, ipairs, tostring, strmatch, format = pairs, ipairs, tostring, strmatch, format
 local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
-local GetChannelName, GetChannelList, ChatFrame_AddChannel = GetChannelName, GetChannelList, ChatFrame_AddChannel
+local GetChannelName, GetChannelList = GetChannelName, GetChannelList
+local ChatFrame_OpenChat, ChatFrame_AddChannel = ChatFrame_OpenChat, ChatFrame_AddChannel
 local JoinChannelByName, LeaveChannelByName = JoinChannelByName, LeaveChannelByName
 local UnitIsGroupLeader, UnitIsGroupAssistant = UnitIsGroupLeader, UnitIsGroupAssistant
 local IsInGroup, IsInRaid, IsInGuild, IsEveryoneAssistant = IsInGroup, IsInRaid, IsInGuild, IsEveryoneAssistant
+local RandomRoll = RandomRoll
 
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
 local C_Timer_After = C_Timer.After
@@ -19,7 +22,7 @@ local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 local normalChannelsIndex = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE"}
 
-local check_funcs = {
+local checkFunctions = {
     ["PARTY"] = function()
         return IsInGroup(LE_PARTY_CATEGORY_HOME)
     end,
@@ -54,18 +57,18 @@ local function GetCommuniryChannelByName(text)
 end
 
 function CB:OnEnterBar()
-    if self.db.style.mouseOver then
+    if self.db.mouseOver then
         E:UIFrameFadeIn(self.bar, .2, self.bar:GetAlpha(), 1)
     end
 end
 
 function CB:OnLeaveBar()
-    if self.db.style.mouseOver then
+    if self.db.mouseOver then
         E:UIFrameFadeOut(self.bar, .2, self.bar:GetAlpha(), 0)
     end
 end
 
-function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, tips, abbr)
+function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tips, abbr)
     local ElvUIValueColor = E.db.general.valuecolor
 
     if not self.bar[name] then
@@ -76,40 +79,37 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
         button:RegisterForClicks("AnyDown")
         button:SetScript("OnMouseUp", func)
 
-        if self.db.style == "BLOCK" then -- 块状型
-            button.colorBlock = button:CreateTexture(nil, "ARTWORK")
-            button.colorBlock:SetAllPoints()
-            button:CreateBackdrop("Transparent")
-            button.backdrop:CreateShadow()
-        else -- 文字型
-            button.text = button:CreateFontString(nil, "OVERLAY")
-            button.text:Point("CENTER", button, "CENTER", 0, 0)
-            button.text:FontTemplate(
-                LSM:Fetch("font", self.db.style.text_type.font_name),
-                self.db.style.text_type.font_size,
-                self.db.style.text_type.font_style
-            )
-            button.defaultFontSize = self.db.style.text_type.font_size
-        end
+        button.colorBlock = button:CreateTexture(nil, "ARTWORK")
+        button.colorBlock:SetAllPoints()
+        button:CreateBackdrop("Transparent")
+        S:CreateShadow(button.backdrop)
+
+        button.text = button:CreateFontString(nil, "OVERLAY")
+        button.text:Point("CENTER", button, "CENTER", 0, 0)
+        F.SetFontWithDB(button.text, self.db.font)
+        button.defaultFontSize = self.db.font.size
 
         -- 鼠标提示
         button:SetScript(
             "OnEnter",
             function(self)
-                if CB.db.style.block_type.enabled then
+                if CB.db.style == "BLOCK" then
                     self.backdrop.shadow:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
                     self.backdrop.shadow:Show()
-                elseif CB.db.style.text_type.enabled then
+                else
                     local fontName, _, fontFlags = self.text:GetFont()
                     self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
                 end
+
                 GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
                 GameTooltip:SetText(tooltip or _G[name] or "")
+
                 if tips then
                     for _, tip in ipairs(tips) do
                         GameTooltip:AddLine(tip)
                     end
                 end
+
                 GameTooltip:Show()
             end
         )
@@ -118,42 +118,50 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                if CB.db.style.block_type.enabled then
+                if CB.db.style == "BLOCK" then
                     self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
-                    if not CB.db.style.block_type.shadow then
+
+                    if not CB.db.blockShadow then
                         self.backdrop.shadow:Hide()
                     end
-                elseif CB.db.style.text_type.enabled then
+                else
                     local fontName, _, fontFlags = self.text:GetFont()
                     self.text:FontTemplate(fontName, self.defaultFontSize, fontFlags)
                 end
             end
         )
 
-        self:HookScript(button, "OnEnter", "Button_OnEnter")
-        self:HookScript(button, "OnLeave", "Button_OnLeave")
+        self:HookScript(button, "OnEnter", "OnEnterBar")
+        self:HookScript(button, "OnLeave", "OnLeaveBar")
 
         self.bar[name] = button
     end
 
     -- 块状风格条 设置更新
-    if self.db.style.block_type.enabled then
+    if self.db.style == "BLOCK" then
         self.bar[name].colorBlock:SetTexture(tex and LSM:Fetch("statusbar", tex) or E.media.normTex)
         self.bar[name].colorBlock:SetVertexColor(unpack(color or {1, 1, 1, 1}))
-        if self.db.style.block_type.shadow then
+        self.bar[name].colorBlock:Show()
+        if self.db.blockShadow then
             self.bar[name].backdrop.shadow:Show()
         else
             self.bar[name].backdrop.shadow:Hide()
         end
-    elseif self.db.style.text_type.enabled then
-        local buttonText = self.db.style.text_type.color and WT:ColorStr(abbr, color[1], color[2], color[3]) or abbr
+        
+        self.bar[name].text:Hide()
+    else
+        local buttonText = self.db.color and F.CreateColorString(abbr, color) or abbr
         self.bar[name].text:SetText(buttonText)
+        self.bar[name].text:Show()
+
+        self.bar[name].colorBlock:Hide()
+        self.bar[name].backdrop.shadow:Hide()
     end
 
     -- 尺寸和位置更新
-    self.bar[name]:Size(CB.db.style.width, CB.db.style.height)
+    self.bar[name]:Size(CB.db.buttonWidth, CB.db.style.buttonHeight)
     self.bar[name]:ClearAllPoints()
-    self.bar[name]:Point(anchor_point, CB.bar, anchor_point, x, y)
+    self.bar[name]:Point(anchorPoint, CB.bar, anchorPoint, x, y)
 
     self.bar[name]:Show()
     return self.bar[name]
@@ -166,42 +174,38 @@ function CB:DisableButton(name)
 end
 
 function CB:UpdateBar()
-    if (not self.bar) or (not self.db.normal_channels) or self.AlreadyWaitForUpdate then
+    if not self.bar then
         return
     end
 
     if InCombatLockdown() then
-        self.AlreadyWaitForUpdate = true
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
 
-    -- 记录按钮个数来方便更新条的大小
-    local numberOfButtons = 0
+    local numberOfButtons = 0 -- 记录按钮个数来方便更新条的大小
     local width, height
 
-    local anchor = self.db.style.orientation == "HORIZONTAL" and "LEFT" or "TOP"
-    local pos_x = 0
-    local pos_y = 0
+    local anchor = self.db.orientation == "HORIZONTAL" and "LEFT" or "TOP"
+    local offsetX = 0
+    local offsetY = 0
 
-    if self.db.style.bar_backdrop then
-        -- 有背景边距的情况下, 初始化第一个按钮的定位
+    if self.db.backdrop then
         if anchor == "LEFT" then
-            pos_x = pos_x + self.db.style.padding
+            offsetX = offsetX + self.db.backdropSpacing
         else
-            pos_y = pos_y - self.db.style.padding
+            offsetY = offsetY - self.db.backdropSpacing
         end
     end
 
     -- 建立普通频道条
     for _, name in ipairs(normalChannelsIndex) do
-        local db = self.db.normal_channels[name]
-        local show = db.enabled and true or false
+        local db = self.db.channels[name]
+        local show = db.enable
 
-        -- 检查是否要自动隐藏掉
-        if show and self.db.style.smart_hide then
-            if check_funcs[name] then
-                show = check_funcs[name]() and true or false
+        if show and self.db.autoHide then -- 自动隐藏功能
+            if checkFunctions[name] then
+                show = checkFunctions[name]() and true or false
             end
         end
 
@@ -215,25 +219,14 @@ function CB:UpdateBar()
                 ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
             end
 
-            self:UpdateButton(
-                name,
-                chatFunc,
-                anchor,
-                pos_x,
-                pos_y,
-                db.color,
-                self.db.style.block_type.tex,
-                nil,
-                nil,
-                db.abbr
-            )
+            self:UpdateButton(name, chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, nil, nil, db.abbr)
             numberOfButtons = numberOfButtons + 1
 
             -- 调整锚点到下一个按钮的位置上
             if anchor == "LEFT" then
-                pos_x = pos_x + self.db.style.width + self.db.style.padding
+                offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
             else
-                pos_y = pos_y - self.db.style.height - self.db.style.padding
+                offsetY = offsetY - (self.db.buttonHeight + self.db.spacing)
             end
         else
             self:DisableButton(name)
@@ -241,22 +234,24 @@ function CB:UpdateBar()
     end
 
     -- 建立世界频道条
-    if self.db.world_channel.enabled then
-        local worldChannelName = self.db.world_channel.channel_name
-        if not worldChannelName or worldChannelName == "" then
+    if self.db.channels.world.enable then
+        local db = self.db.channels.world
+        local name = db.name
+
+        if not name or name == "" then
             self:DebugPrint(L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
             return
         else
             local chatFunc = function(self, mouseButton)
-                local channelId = GetChannelName(worldChannelName)
+                local channelId = GetChannelName(name)
                 if mouseButton == "LeftButton" then
                     local autoJoined = false
                     -- 自动加入
-                    if channelId == 0 and CB.db.world_channel.auto_join then
-                        JoinChannelByName(worldChannelName)
-                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
-                        channelId = GetChannelName(worldChannelName)
+                    if channelId == 0 and db.autoJoin then
+                        JoinChannelByName(name)
+                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, name)
+                        channelId = GetChannelName(name)
                         autoJoined = true
                     end
                     if channelId == 0 then
@@ -277,10 +272,10 @@ function CB:UpdateBar()
                     end
                 elseif mouseButton == "RightButton" then
                     if channelId == 0 then
-                        JoinChannelByName(worldChannelName)
-                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, worldChannelName)
+                        JoinChannelByName(name)
+                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, name)
                     else
-                        LeaveChannelByName(worldChannelName)
+                        LeaveChannelByName(name)
                     end
                 end
             end
@@ -289,25 +284,25 @@ function CB:UpdateBar()
                 "WORLD",
                 chatFunc,
                 anchor,
-                pos_x,
-                pos_y,
-                self.db.world_channel.color,
-                self.db.style.block_type.tex,
+                offsetX,
+                offsetY,
+                db.color,
+                self.db.tex,
                 worldChannelName,
                 {
                     L["Left Click: Change to"] .. " " .. worldChannelName,
                     L["Right Click: Join/Leave"] .. " " .. worldChannelName
                 },
-                self.db.world_channel.abbr
+                db.abbr
             )
 
             numberOfButtons = numberOfButtons + 1
 
             -- 调整锚点到下一个按钮的位置上
             if anchor == "LEFT" then
-                pos_x = pos_x + self.db.style.width + self.db.style.padding
+                offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
             else
-                pos_y = pos_y - self.db.style.height - self.db.style.padding
+                offsetY = offsetY - (self.db.buttonHeight + self.db.spacing)
             end
         end
     else
@@ -315,9 +310,10 @@ function CB:UpdateBar()
     end
 
     -- 建立社群频道条
-    if self.db.community_channel.enabled then
-        local communityName = self.db.community_channel.channel_name
-        if not communityName or communityName == "" then
+    if self.db.channels.community.enable then
+        local db = self.db.channels.community
+        local name = db.name
+        if not name or name == "" then
             self:DebugPrint(L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
@@ -325,11 +321,9 @@ function CB:UpdateBar()
                 if mouseButton ~= "LeftButton" then
                     return
                 end
-                local clubChannelId = GetCommuniryChannelByName(communityName)
+                local clubChannelId = GetCommuniryChannelByName(name)
                 if not clubChannelId then
-                    CB:DebugPrint(
-                        format(L["Club channel %s no found, please use the full name of the channel."], communityName)
-                    )
+                    print(format(L["Club channel %s no found, please use the full name of the channel."], name))
                 else
                     local currentText = DefaultChatFrame.editBox:GetText()
                     local command = format("/%s ", clubChannelId)
@@ -337,26 +331,15 @@ function CB:UpdateBar()
                 end
             end
 
-            self:UpdateButton(
-                "CLUB",
-                chatFunc,
-                anchor,
-                pos_x,
-                pos_y,
-                self.db.community_channel.color,
-                self.db.style.block_type.tex,
-                communityName,
-                nil,
-                self.db.community_channel.abbr
-            )
+            self:UpdateButton("CLUB", chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, name, nil, db.abbr)
 
             numberOfButtons = numberOfButtons + 1
 
             -- 调整锚点到下一个按钮的位置上
             if anchor == "LEFT" then
-                pos_x = pos_x + self.db.style.width + self.db.style.padding
+                offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
             else
-                pos_y = pos_y - self.db.style.height - self.db.style.padding
+                offsetY = offsetY - (self.db.buttonHeight + self.db.spacing)
             end
         end
     else
@@ -364,34 +347,32 @@ function CB:UpdateBar()
     end
 
     -- 建立表情按键
-    if
-        self.db.emote_button.enabled and E.db.WindTools["Chat"]["Chat Frame"]["enabled"] and
-            E.db.WindTools["Chat"]["Chat Frame"].emote.use_panel
-     then
+    if self.db.channels.emote.enable and E.private.WT.social.emote.enable and E.private.WT.social.emote.panel then
+        local db = self.db.channels.emote
+
         local chatFunc = function(self, mouseButton)
             if mouseButton == "LeftButton" then
-                if _G.Wind_CustomEmoteFrame then
-                    if _G.Wind_CustomEmoteFrame:IsShown() then
-                        _G.Wind_CustomEmoteFrame:Hide()
+                if _G.WTCustomEmoteFrame then
+                    if _G.WTCustomEmoteFrame:IsShown() then
+                        _G.WTCustomEmoteFrame:Hide()
                     else
-                        _G.Wind_CustomEmoteFrame:Show()
+                        _G.WTCustomEmoteFrame:Show()
                     end
                 end
             end
         end
 
         local abbr =
-            (self.db.emote_button.use_icon and
-            "|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario:" .. self.db.style.text_type.font_size .. "|t") or
-            self.db.emote_button.abbr
+            db.icon and ("|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario:" .. self.db.font.size .. "|t") or
+            db.abbr
         self:UpdateButton(
             "WindEmote",
             chatFunc,
             anchor,
-            pos_x,
-            pos_y,
-            self.db.emote_button.color,
-            self.db.style.block_type.tex,
+            offsetX,
+            offsetY,
+            db.color,
+            self.db.tex,
             "Wind " .. L["Emote"],
             {L["Left Click: Toggle"]},
             abbr
@@ -401,75 +382,68 @@ function CB:UpdateBar()
 
         -- 调整锚点到下一个按钮的位置上
         if anchor == "LEFT" then
-            pos_x = pos_x + self.db.style.width + self.db.style.padding
+            offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
         else
-            pos_y = pos_y - self.db.style.height - self.db.style.padding
+            offsetY = offsetY - (self.db.buttonHeight + self.db.spacing)
         end
     else
         self:DisableButton("WindEmote")
     end
 
     -- 建立Roll点键
-    if self.db.roll_button.enabled then
+    if self.db.channels.roll.enable then
+        local db = self.db.channels.roll
+
         local chatFunc = function(self, mouseButton)
             if mouseButton == "LeftButton" then
                 RandomRoll(1, 100)
             end
         end
-        local abbr =
-            (self.db.roll_button.use_icon and
-            "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:" .. self.db.style.text_type.font_size .. "|t") or
-            self.db.roll_button.abbr
 
-        self:UpdateButton(
-            "ROLL",
-            chatFunc,
-            anchor,
-            pos_x,
-            pos_y,
-            self.db.roll_button.color,
-            self.db.style.block_type.tex,
-            nil,
-            nil,
-            abbr
-        )
+        local abbr = (db.icon and "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:" .. self.db.font.size .. "|t") or db.abbr
+
+        self:UpdateButton("ROLL", chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, nil, nil, abbr)
 
         numberOfButtons = numberOfButtons + 1
 
         -- 调整锚点到下一个按钮的位置上
         if anchor == "LEFT" then
-            pos_x = pos_x + self.db.style.width + self.db.style.padding
+            offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
         else
-            pos_y = pos_y - self.db.style.height - self.db.style.padding
+            offsetY = offsetY - (self.db.buttonHeight + self.db.spacing)
         end
     else
         self:DisableButton("ROLL")
     end
 
     -- 计算条大小
-    if self.db.style.bar_backdrop then
-        if self.db.style.orientation == "HORIZONTAL" then
-            width = self.db.style.padding * (numberOfButtons + 1) + self.db.style.width * numberOfButtons
-            height = self.db.style.padding * 2 + self.db.style.height
+    if self.db.backdrop then
+        if self.db.orientation == "HORIZONTAL" then
+            width =
+                self.db.backdropSpacing * 2 + self.db.buttonWidth * numberOfButtons +
+                self.db.spacing * (numberOfButtons - 1)
+            height = self.db.backdropSpacing * 2 + self.db.buttonHeight
         else
-            width = self.db.style.padding * 2 + self.db.style.width
-            height = self.db.style.padding * (numberOfButtons + 1) + self.db.style.height * numberOfButtons
+            width = self.db.backdropSpacing * 2 + self.db.buttonWidth
+            height =
+                self.db.backdropSpacing * 2 + self.db.buttonHeight * numberOfButtons +
+                self.db.spacing * (numberOfButtons - 1)
         end
-    else -- 如果没有背景, 背景边距自然也不用算在框架大小内
-        if self.db.style.orientation == "HORIZONTAL" then
-            width = self.db.style.padding * (numberOfButtons - 1) + self.db.style.width * numberOfButtons
-            height = self.db.style.height
+    else
+        if self.db.orientation == "HORIZONTAL" then
+            width = self.db.buttonWidth * numberOfButtons + self.db.spacing * (numberOfButtons - 1)
+            height = self.db.buttonHeight
         else
-            width = self.db.style.width
-            height = self.db.style.padding * (numberOfButtons - 1) + self.db.style.height * numberOfButtons
+            width = self.db.buttonWidth
+            height = self.db.buttonHeight * numberOfButtons + self.db.spacing * (numberOfButtons - 1)
         end
     end
 
-    if self.db.style.mouseover then
+    if self.db.mouseover then
         self.bar:SetAlpha(0)
-        if not self.db.style.bar_backdrop then
+        if not self.db.backdrop then
             -- 为鼠标显隐模式稍微增加一点可点击区域
-            height = height + 8
+            height = height + 6
         end
     else
         self.bar:SetAlpha(1)
@@ -477,13 +451,9 @@ function CB:UpdateBar()
 
     self.bar:Size(width, height)
 
-    if self.db.style.bar_backdrop then
+    if self.db.backdrop then
         self.bar.backdrop:Show()
-        if E.db.WindTools.Interface.Skins.elvui.general then
-            self.bar.shadow:Show()
-        else
-            self.bar.shadow:Hide()
-        end
+        self.bar.shadow:Show()
     else
         self.bar.backdrop:Hide()
         self.bar.shadow:Hide()
@@ -491,14 +461,18 @@ function CB:UpdateBar()
 end
 
 function CB:CreateBar()
-    self.bar = CreateFrame("Frame", "WTChatBar", E.UIParent, "SecureHandlerStateTemplate")
-    self.bar:SetResizable(false)
-    self.bar:SetClampedToScreen(true)
-    self.bar:SetFrameStrata("LOW")
-    self.bar:CreateBackdrop("Transparent")
-    self.bar:ClearAllPoints()
-    self.bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
-    self.bar:CreateShadow()
+    local bar = CreateFrame("Frame", "WTChatBar", E.UIParent, "SecureHandlerStateTemplate")
+
+    bar:SetResizable(false)
+    bar:SetClampedToScreen(true)
+    bar:SetFrameStrata("LOW")
+    bar:CreateBackdrop("Transparent")
+    bar:ClearAllPoints()
+    bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
+    S:CreateShadow(bar)
+
+    self.bar = bar
+
     self:HookScript(self.bar, "OnEnter", "OnEnterBar")
     self:HookScript(self.bar, "OnLeave", "OnLeaveBar")
 end
@@ -506,16 +480,13 @@ end
 function CB:PLAYER_REGEN_ENABLED()
     self:UpdateBar()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-    self.AlreadyWaitForUpdate = false
 end
 
 function CB:Initialize()
-    if not E.db.WT.social.chatBar.enabled then
+    if not E.db.WT.social.chatBar.enable then
         return
     end
     self.db = E.db.WT.social.chatBar
-
-    self.AlreadyWaitForUpdate = false
 
     CB:CreateBar()
     CB:UpdateBar()
@@ -529,11 +500,11 @@ function CB:Initialize()
         nil,
         "WINDTOOLS,ALL",
         function()
-            return CB.db.enabled
+            return CB.db.enable
         end
     )
 
-    if self.db.style.smart_hide then
+    if self.db.autoHide then
         self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
         self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
     end
@@ -547,7 +518,7 @@ function CB:ProfileUpdate()
 
     self.db = E.db.WT.social.chatBar
 
-    if self.db.style.smart_hide then
+    if self.db.autoHide then
         self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
         self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
     else

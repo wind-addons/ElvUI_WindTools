@@ -60,7 +60,7 @@ P.social = {
     chatBar = {
         enable = true,
         style = "BLOCK",
-        shadow = true,
+        blockShadow = true,
         autoHide = false,
         mouseOver = false,
         backdrop = true,
@@ -71,6 +71,7 @@ P.social = {
         orientation = "HORIZONTAL",
         tex = "Melli",
         font = {name = E.db.general.font, size = 25, style = "OUTLINE"},
+        color = true,
         channels = {
             ["SAY"] = {
                 enable = true,
@@ -132,6 +133,12 @@ P.social = {
                 name = "",
                 color = {r = 0.2, g = 0.6, b = 0.86, a = 1},
                 abbr = L["[ABBR] World"]
+            },
+            community = {
+                enable = false,
+                name = "",
+                color = {r = 0.72, g = 0.27, b = 0.86, a = 1},
+                abbr = L["[ABBR] Community"]
             },
             emote = {
                 enable = true,

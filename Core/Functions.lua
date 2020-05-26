@@ -60,6 +60,34 @@ function F.SetFontOutline(text, font, size)
     text.SetShadowColor = E.noop
 end
 
+
+local function RGBToHex(r, g, b)
+	r = r <= 1 and r >= 0 and r or 0
+	g = g <= 1 and g >= 0 and g or 0
+	b = b <= 1 and b >= 0 and b or 0
+	return format("%02x%02x%02x", r*255, g*255, b*255)
+end
+
+--[[
+    从数据库创建彩色字符串
+    @param {string} text 文字
+    @param {table} db 字体颜色数据库
+]]
+function F.CreateColorString(text, db)
+    if not text or not type(text) == "string" then
+        F.DebugMessage("函数", "[4]找不到处理字体风格的字体")
+        return
+    end
+    if not db or type(db) ~= "table" then
+        F.DebugMessage("函数", "[2]找不到字体颜色数据库")
+        return
+    end
+
+    local hex = db.r and db.g and db.b and RGBToHex(db.r, db.g, db.b) or "ffffff"
+    
+    return "|cff"..hex..str.."|r"
+end
+
 --[[
     更换窗体内部字体描边为轮廓
     @param {object} frame 窗体

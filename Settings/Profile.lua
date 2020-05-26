@@ -55,3 +55,9 @@ P.skins = {
         level = 30
     }
 }
+
+P.social = {
+    chatBar = {
+        enable = true,
+    }
+}

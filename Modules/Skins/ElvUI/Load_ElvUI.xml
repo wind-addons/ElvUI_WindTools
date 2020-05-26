@@ -5,6 +5,7 @@
 	<Script file='Auras.lua'/>
 	<Script file='Bags.lua'/>
 	<Script file='CastBars.lua'/>
+	<Script file='ChatDataPanels.lua'/>
 	<Script file='ChatPanels.lua'/>
 	<Script file='ClassBars.lua'/>
 	<Script file='CopyChatFrame.lua'/>

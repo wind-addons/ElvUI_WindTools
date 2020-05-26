@@ -88,6 +88,7 @@ V.skins = {
 		bags = true,
 		castBars = true,
 		chatDataPanels = true,
+		chatPanels = true,
 		classBars = true,
 		chatCopyFrame = true,
 		dataBars = true,

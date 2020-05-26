@@ -53,15 +53,15 @@ local function GetCommuniryChannelByName(text)
     end
 end
 
-function CB:Button_OnEnter()
-    if self.db.style.mouseover then
-        E:UIFrameFadeIn(self.bar, .5, self.bar:GetAlpha(), 1)
+function CB:OnEnterBar()
+    if self.db.style.mouseOver then
+        E:UIFrameFadeIn(self.bar, .2, self.bar:GetAlpha(), 1)
     end
 end
 
-function CB:Button_OnLeave()
-    if self.db.style.mouseover then
-        E:UIFrameFadeOut(self.bar, .5, self.bar:GetAlpha(), 0)
+function CB:OnLeaveBar()
+    if self.db.style.mouseOver then
+        E:UIFrameFadeOut(self.bar, .2, self.bar:GetAlpha(), 0)
     end
 end
 
@@ -76,14 +76,12 @@ function CB:UpdateButton(name, func, anchor_point, x, y, color, tex, tooltip, ti
         button:RegisterForClicks("AnyDown")
         button:SetScript("OnMouseUp", func)
 
-        if self.db.style.block_type.enabled then
-            -- 块状型
+        if self.db.style == "BLOCK" then -- 块状型
             button.colorBlock = button:CreateTexture(nil, "ARTWORK")
             button.colorBlock:SetAllPoints()
             button:CreateBackdrop("Transparent")
             button.backdrop:CreateShadow()
-        elseif self.db.style.text_type.enabled then
-            -- 文字型
+        else -- 文字型
             button.text = button:CreateFontString(nil, "OVERLAY")
             button.text:Point("CENTER", button, "CENTER", 0, 0)
             button.text:FontTemplate(
@@ -501,8 +499,8 @@ function CB:CreateBar()
     self.bar:ClearAllPoints()
     self.bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
     self.bar:CreateShadow()
-    self:HookScript(self.bar, "OnEnter", "Button_OnEnter")
-    self:HookScript(self.bar, "OnLeave", "Button_OnLeave")
+    self:HookScript(self.bar, "OnEnter", "OnEnterBar")
+    self:HookScript(self.bar, "OnLeave", "OnLeaveBar")
 end
 
 function CB:PLAYER_REGEN_ENABLED()

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
-local LSM = LibStub("LibSharedMedia-3.0")
+local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
 
 local _, _G = _, _G
@@ -140,14 +140,18 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     -- 块状风格条 设置更新
     if self.db.style == "BLOCK" then
         self.bar[name].colorBlock:SetTexture(tex and LSM:Fetch("statusbar", tex) or E.media.normTex)
-        self.bar[name].colorBlock:SetVertexColor(unpack(color or {1, 1, 1, 1}))
+        
+        if color then
+            self.bar[name].colorBlock:SetVertexColor(color.r, color.g, color.b, color.a)
+        end
+
         self.bar[name].colorBlock:Show()
         if self.db.blockShadow then
             self.bar[name].backdrop.shadow:Show()
         else
             self.bar[name].backdrop.shadow:Hide()
         end
-        
+
         self.bar[name].text:Hide()
     else
         local buttonText = self.db.color and F.CreateColorString(abbr, color) or abbr
@@ -159,7 +163,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     end
 
     -- 尺寸和位置更新
-    self.bar[name]:Size(CB.db.buttonWidth, CB.db.style.buttonHeight)
+    self.bar[name]:Size(CB.db.buttonWidth, CB.db.buttonHeight)
     self.bar[name]:ClearAllPoints()
     self.bar[name]:Point(anchorPoint, CB.bar, anchorPoint, x, y)
 
@@ -347,7 +351,7 @@ function CB:UpdateBar()
     end
 
     -- 建立表情按键
-    if self.db.channels.emote.enable and E.private.WT.social.emote.enable and E.private.WT.social.emote.panel then
+    if self.db.channels.emote.enable then --and E.private.WT.social.emote.enable and E.private.WT.social.emote.panel then
         local db = self.db.channels.emote
 
         local chatFunc = function(self, mouseButton)
@@ -461,6 +465,10 @@ function CB:UpdateBar()
 end
 
 function CB:CreateBar()
+    if self.bar then
+        return
+    end
+
     local bar = CreateFrame("Frame", "WTChatBar", E.UIParent, "SecureHandlerStateTemplate")
 
     bar:SetResizable(false)
@@ -482,10 +490,11 @@ function CB:PLAYER_REGEN_ENABLED()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
-function CB:Initialize()
+function CB:Initializee()
     if not E.db.WT.social.chatBar.enable then
         return
     end
+
     self.db = E.db.WT.social.chatBar
 
     CB:CreateBar()

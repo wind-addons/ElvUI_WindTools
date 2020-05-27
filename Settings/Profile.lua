@@ -70,7 +70,7 @@ P.social = {
         spacing = 5,
         orientation = "HORIZONTAL",
         tex = "Melli",
-        font = {name = E.db.general.font, size = 25, style = "OUTLINE"},
+        font = {name = E.db.general.font, size = 12, style = "OUTLINE"},
         color = true,
         channels = {
             ["SAY"] = {

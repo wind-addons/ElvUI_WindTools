@@ -85,7 +85,7 @@ function F.CreateColorString(text, db)
 
     local hex = db.r and db.g and db.b and RGBToHex(db.r, db.g, db.b) or "ffffff"
     
-    return "|cff"..hex..str.."|r"
+    return "|cff"..hex..text.."|r"
 end
 
 --[[

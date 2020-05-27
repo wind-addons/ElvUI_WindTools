@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
-local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
+local LSM = E.Libs.LSM
 
 local _, _G = _, _G
 local pairs, ipairs, tostring, strmatch, format = pairs, ipairs, tostring, strmatch, format
@@ -58,13 +58,13 @@ end
 
 function CB:OnEnterBar()
     if self.db.mouseOver then
-        E:UIFrameFadeIn(self.bar, .2, self.bar:GetAlpha(), 1)
+        E:UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
     end
 end
 
 function CB:OnLeaveBar()
     if self.db.mouseOver then
-        E:UIFrameFadeOut(self.bar, .2, self.bar:GetAlpha(), 0)
+        E:UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
     end
 end
 
@@ -146,6 +146,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         end
 
         self.bar[name].colorBlock:Show()
+        self.bar[name].backdrop:Show()
         if self.db.blockShadow then
             self.bar[name].backdrop.shadow:Show()
         else
@@ -156,13 +157,16 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     else
         local buttonText = self.db.color and F.CreateColorString(abbr, color) or abbr
         self.bar[name].text:SetText(buttonText)
+        self.bar[name].defaultFontSize = self.db.font.size
+        F.SetFontWithDB(self.bar[name].text, self.db.font)
         self.bar[name].text:Show()
 
         self.bar[name].colorBlock:Hide()
-        self.bar[name].backdrop.shadow:Hide()
+        self.bar[name].backdrop:Hide()
     end
 
     -- 尺寸和位置更新
+    
     self.bar[name]:Size(CB.db.buttonWidth, CB.db.buttonHeight)
     self.bar[name]:ClearAllPoints()
     self.bar[name]:Point(anchorPoint, CB.bar, anchorPoint, x, y)
@@ -507,7 +511,7 @@ function CB:Initialize()
         nil,
         nil,
         nil,
-        "WINDTOOLS,ALL",
+        "ALL,WINDTOOLS",
         function()
             return CB.db.enable
         end

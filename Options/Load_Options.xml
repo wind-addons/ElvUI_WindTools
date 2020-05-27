@@ -1,9 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="Main.lua"/>
+	<Script file="Core.lua"/>
 	<Script file="Combat.lua"/>
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>
 	<Script file="Misc.lua"/>
 	<Script file="Skins.lua"/>
+	<Script file="Social.lua"/>
 	<Script file="Tooltips.lua"/>
 </Ui>

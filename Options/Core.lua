@@ -43,6 +43,13 @@ W.options = {
         desc = L["Add some additional information to your tooltips."],
         icon = W.Media.Icons.tooltips,
         args = {}
+    },
+    social = {
+        order = 107,
+        name = L["Social"],
+        desc = L["Make some enhancements on chat and friend frames."],
+        icon = W.Media.Icons.chat,
+        args = {}
     }
 }
 

@@ -225,18 +225,8 @@ options.chatBar = {
                             type = "toggle",
                             name = L["Enable"]
                         },
-                        autoJoin = {
-                            order = 2,
-                            type = "toggle",
-                            name = L["Auto Join"]
-                        },
-                        name = {
-                            order = 3,
-                            type = "input",
-                            name = L["Channel Name"]
-                        },
                         color = {
-                            order = 4,
+                            order = 2,
                             type = "color",
                             name = L["Color"],
                             hasAlpha = true,
@@ -256,13 +246,23 @@ options.chatBar = {
                             end
                         },
                         abbr = {
-                            order = 5,
+                            order = 3,
                             type = "input",
                             hidden = function()
                                 return not (E.db.WT.social.chatBar.style == "TEXT")
                             end,
                             name = L["Abbreviation"]
-                        }
+                        },
+                        name = {
+                            order = 4,
+                            type = "input",
+                            name = L["Channel Name"]
+                        },
+                        autoJoin = {
+                            order = 5,
+                            type = "toggle",
+                            name = L["Auto Join"]
+                        },
                     }
                 },
                 community = {
@@ -282,13 +282,8 @@ options.chatBar = {
                             type = "toggle",
                             name = L["Enable"]
                         },
-                        name = {
-                            order = 2,
-                            type = "input",
-                            name = L["Channel Name"]
-                        },
                         color = {
-                            order = 3,
+                            order = 2,
                             type = "color",
                             name = L["Color"],
                             hasAlpha = true,
@@ -308,12 +303,17 @@ options.chatBar = {
                             end
                         },
                         abbr = {
-                            order = 4,
+                            order = 3,
                             type = "input",
                             hidden = function()
                                 return not (E.db.WT.social.chatBar.style == "TEXT")
                             end,
                             name = L["Abbreviation"]
+                        },
+                        name = {
+                            order = 4,
+                            type = "input",
+                            name = L["Channel Name"]
                         },
                         communityDesc = {
                             order = 5,
@@ -340,14 +340,8 @@ options.chatBar = {
                             type = "toggle",
                             name = L["Enable"]
                         },
-                        icon = {
-                            order = 2,
-                            type = "toggle",
-                            name = L["Use Icon"],
-                            desc = L["Use a icon rather than text"]
-                        },
                         color = {
-                            order = 3,
+                            order = 2,
                             type = "color",
                             name = L["Color"],
                             hasAlpha = true,
@@ -364,6 +358,15 @@ options.chatBar = {
                                     a = a
                                 }
                                 CB:UpdateBar()
+                            end
+                        },
+                        icon = {
+                            order = 3,
+                            type = "toggle",
+                            name = L["Use Icon"],
+                            desc = L["Use a icon rather than text"],
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
                             end
                         },
                         abbr = {
@@ -393,14 +396,8 @@ options.chatBar = {
                             type = "toggle",
                             name = L["Enable"]
                         },
-                        icon = {
-                            order = 2,
-                            type = "toggle",
-                            name = L["Use Icon"],
-                            desc = L["Use a icon rather than text"]
-                        },
                         color = {
-                            order = 3,
+                            order = 2,
                             type = "color",
                             name = L["Color"],
                             hasAlpha = true,
@@ -417,6 +414,15 @@ options.chatBar = {
                                     a = a
                                 }
                                 CB:UpdateBar()
+                            end
+                        },
+                        icon = {
+                            order = 3,
+                            type = "toggle",
+                            name = L["Use Icon"],
+                            desc = L["Use a icon rather than text"],
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
                             end
                         },
                         abbr = {

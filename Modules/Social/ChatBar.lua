@@ -247,7 +247,7 @@ function CB:UpdateBar()
         local name = db.name
 
         if not name or name == "" then
-            self:DebugPrint(L["World channel no found, please setup again."])
+            print(L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
             return
         else
@@ -322,7 +322,7 @@ function CB:UpdateBar()
         local db = self.db.channels.community
         local name = db.name
         if not name or name == "" then
-            self:DebugPrint(L["Club channel no found, please setup again."])
+            print(L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
             local chatFunc = function(self, mouseButton)

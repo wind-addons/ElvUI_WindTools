@@ -91,7 +91,7 @@ options.chatBar = {
             order = 3,
             type = "group",
             inline = true,
-            name = L["Buttons"],
+            name = L["Button"],
             args = {
                 buttonWidth = {
                     order = 1,
@@ -201,6 +201,288 @@ options.chatBar = {
                     }
                 }
             }
+        },
+        channels = {
+            name = _G.CHANNEL,
+            order = 5,
+            type = "group",
+            inline = true,
+            args = {
+                world = {
+                    order = 100,
+                    type = "group",
+                    name = _G.WORLD,
+                    get = function(info)
+                        return E.db.WT.social.chatBar.channels.world[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.chatBar.channels.world[info[#info]] = value
+                        CB:UpdateBar()
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"]
+                        },
+                        autoJoin = {
+                            order = 2,
+                            type = "toggle",
+                            name = L["Auto Join"]
+                        },
+                        name = {
+                            order = 3,
+                            type = "input",
+                            name = L["Channel Name"]
+                        },
+                        color = {
+                            order = 4,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = true,
+                            get = function(info)
+                                local colordb = E.db.WT.social.chatBar.channels.world.color
+                                local default = P.social.chatBar.channels.world.color
+                                return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                E.db.WT.social.chatBar.channels.world.color = {
+                                    r = r,
+                                    g = g,
+                                    b = b,
+                                    a = a
+                                }
+                                CB:UpdateBar()
+                            end
+                        },
+                        abbr = {
+                            order = 5,
+                            type = "input",
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
+                            end,
+                            name = L["Abbreviation"]
+                        }
+                    }
+                },
+                community = {
+                    order = 101,
+                    type = "group",
+                    name = _G.COMMUNITIES,
+                    get = function(info)
+                        return E.db.WT.social.chatBar.channels.community[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.chatBar.channels.community[info[#info]] = value
+                        CB:UpdateBar()
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"]
+                        },
+                        name = {
+                            order = 2,
+                            type = "input",
+                            name = L["Channel Name"]
+                        },
+                        color = {
+                            order = 3,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = true,
+                            get = function(info)
+                                local colordb = E.db.WT.social.chatBar.channels.community.color
+                                local default = P.social.chatBar.channels.community.color
+                                return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                E.db.WT.social.chatBar.channels.community.color = {
+                                    r = r,
+                                    g = g,
+                                    b = b,
+                                    a = a
+                                }
+                                CB:UpdateBar()
+                            end
+                        },
+                        abbr = {
+                            order = 4,
+                            type = "input",
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
+                            end,
+                            name = L["Abbreviation"]
+                        },
+                        communityDesc = {
+                            order = 5,
+                            type = "description",
+                            width = "full",
+                            name = L["Please use Blizzard Communities UI add the channel to your main chat frame first."]
+                        }
+                    }
+                },
+                emote = {
+                    order = 102,
+                    type = "group",
+                    name = "Wind" .. L["Emote"],
+                    get = function(info)
+                        return E.db.WT.social.chatBar.channels.emote[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.chatBar.channels.emote[info[#info]] = value
+                        CB:UpdateBar()
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"]
+                        },
+                        icon = {
+                            order = 2,
+                            type = "toggle",
+                            name = L["Use Icon"],
+                            desc = L["Use a icon rather than text"]
+                        },
+                        color = {
+                            order = 3,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = true,
+                            get = function(info)
+                                local colordb = E.db.WT.social.chatBar.channels.emote.color
+                                local default = P.social.chatBar.channels.emote.color
+                                return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                E.db.WT.social.chatBar.channels.emote.color = {
+                                    r = r,
+                                    g = g,
+                                    b = b,
+                                    a = a
+                                }
+                                CB:UpdateBar()
+                            end
+                        },
+                        abbr = {
+                            order = 4,
+                            type = "input",
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
+                            end,
+                            name = L["Abbreviation"]
+                        }
+                    }
+                },
+                roll = {
+                    order = 103,
+                    type = "group",
+                    name = _G.ROLL,
+                    get = function(info)
+                        return E.db.WT.social.chatBar.channels.roll[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.chatBar.channels.roll[info[#info]] = value
+                        CB:UpdateBar()
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"]
+                        },
+                        icon = {
+                            order = 2,
+                            type = "toggle",
+                            name = L["Use Icon"],
+                            desc = L["Use a icon rather than text"]
+                        },
+                        color = {
+                            order = 3,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = true,
+                            get = function(info)
+                                local colordb = E.db.WT.social.chatBar.channels.roll.color
+                                local default = P.social.chatBar.channels.roll.color
+                                return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                E.db.WT.social.chatBar.channels.roll.color = {
+                                    r = r,
+                                    g = g,
+                                    b = b,
+                                    a = a
+                                }
+                                CB:UpdateBar()
+                            end
+                        },
+                        abbr = {
+                            order = 4,
+                            type = "input",
+                            hidden = function()
+                                return not (E.db.WT.social.chatBar.style == "TEXT")
+                            end,
+                            name = L["Abbreviation"]
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+do -- 普通频道
+    local channels = {"SAY", "YELL", "EMOTE", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER"}
+    for index, name in ipairs(channels) do
+        options.chatBar.args.channels.args[name] = {
+            order = index,
+            type = "group",
+            name = _G[name],
+            get = function(info)
+                return E.db.WT.social.chatBar.channels[name][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.social.chatBar.channels[name][info[#info]] = value
+                CB:UpdateBar()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = true,
+                    get = function(info)
+                        local colordb = E.db.WT.social.chatBar.channels[name].color
+                        local default = P.social.chatBar.channels[name].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.social.chatBar.channels[name].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                            a = a
+                        }
+                        CB:UpdateBar()
+                    end
+                },
+                abbr = {
+                    order = 3,
+                    type = "input",
+                    hidden = function()
+                        return not (E.db.WT.social.chatBar.style == "TEXT")
+                    end,
+                    name = L["Abbreviation"]
+                }
+            }
+        }
+    end
+end

@@ -3,6 +3,7 @@ local options = W.options.social.args
 local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
+local FL = W:GetModule("FriendList")
 
 options.chatBar = {
     order = 1,
@@ -262,7 +263,7 @@ options.chatBar = {
                             order = 5,
                             type = "toggle",
                             name = L["Auto Join"]
-                        },
+                        }
                     }
                 },
                 community = {
@@ -492,3 +493,210 @@ do -- 普通频道
         }
     end
 end
+
+options.friendList = {
+    order = 2,
+    type = "group",
+    name = L["Friend List"],
+    get = function(info)
+        return E.db.WT.social.friendList[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.friendList[info[#info]] = value
+        FriendsFrame_Update()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature1 = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add additional information to the friend frame."],
+                    fontSize = "medium"
+                },
+                feature2 = {
+                    order = 2,
+                    type = "description",
+                    name = L["Modify the texture of status and make name colorful."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.social.friendList[info[#info]] = value
+                FL:ProfileUpdate()
+            end
+        },
+        textures = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Enhanced Texuture"],
+            get = function(info)
+                return E.db.WT.social.friendList.textures[info[#info]] 
+            end,
+            set = function(info, value)
+                E.db.WT.social.friendList.textures[info[#info]] = value
+                FriendsFrame_Update()
+            end,
+            args = {
+                game = {
+                    name = L["Game Icons"],
+                    order = 1,
+                    type = "select",
+                    values = {
+                        ["Default"] = L["Default"],
+                        ["Modern"] = L["Modern"]
+                    }
+                },
+                status = {
+                    name = L["Status Icon Pack"],
+                    order = 2,
+                    type = "select",
+                    values = {
+                        ["Default"] = L["Default"],
+                        ["D3"] = L["Diablo 3"],
+                        ["Square"] = L["Square"]
+                    }
+                }
+            }
+        },
+        name = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Name"],
+            args = {
+                hideMaxLevel = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Hide Max Level"]
+                },
+                useGameColor = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Use Game Color"],
+                    desc = L["Change the color of the name to the in-playing game style."]
+                },
+                useClassColor = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Use Class Color"]
+                },
+                font = {
+                    order = 4,
+                    type = "group",
+                    name = L["Font Setting"],
+                    get = function(info)
+                        return E.db.WT.social.friendList.nameFont[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.friendList.nameFont[info[#info]] = value
+                        FriendsFrame_Update()
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        }
+                    }
+                }
+            }
+        },
+        info = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Infomation"],
+            args = {
+                areaColor = {
+                    order = 4,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function()
+                        local colordb = E.db.WT.social.friendList.areaColor
+                        local default = P.social.friendList.areaColor
+                        return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b
+                    end,
+                    set = function(_, r, g, b)
+                        E.db.WT.social.friendList.areaColor = {r = r, g = g, b = b}
+                        FriendsFrame_Update()
+                    end
+                },
+                font = {
+                    order = 2,
+                    type = "group",
+                    name = L["Font Setting"],
+                    get = function(info)
+                        return E.db.WT.social.friendList.infoFont[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.friendList.infoFont[info[#info]] = value
+                        FriendsFrame_Update()
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

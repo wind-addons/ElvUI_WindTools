@@ -11,7 +11,11 @@ P.combat = {
         leaveText = L["Leave Combat"],
         enterColor = {r = 0.929, g = 0.11, b = 0.141, a = 1},
         leaveColor = {r = 1, g = 0.914, b = 0.184, a = 1},
-        font = {name = E.db.general.font, size = 25, style = "OUTLINE"}
+        font = {
+            name = E.db.general.font,
+            size = 25,
+            style = "OUTLINE"
+        }
     },
     raidMarkers = {
         enable = true,
@@ -70,7 +74,11 @@ P.social = {
         spacing = 5,
         orientation = "HORIZONTAL",
         tex = "Melli",
-        font = {name = E.db.general.font, size = 12, style = "OUTLINE"},
+        font = {
+            name = E.db.general.font,
+            size = 12,
+            style = "OUTLINE"
+        },
         color = true,
         channels = {
             ["SAY"] = {
@@ -152,6 +160,31 @@ P.social = {
                 color = {r = 0.56, g = 0.56, b = 0.56, a = 1},
                 abbr = L["[ABBR] Roll"]
             }
+        }
+    },
+    friendList = {
+        enable = true,
+        hideMaxLevel = true,
+        useGameColor = true,
+        useClassColor = true,
+        textures = {
+            game = "Modern",
+            status = "Square"
+        },
+        areaColor = {
+            r = 1,
+            g = 1,
+            b = 1
+        },
+        nameFont = {
+            name = E.db.general.font,
+            size = 13,
+            style = "OUTLINE"
+        },
+        infoFont = {
+            name = E.db.general.font,
+            size = 12,
+            style = "OUTLINE"
         }
     }
 }

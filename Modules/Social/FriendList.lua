@@ -263,6 +263,8 @@ function FL:ProfileUpdate()
     if E.db.WT.social.friendList.enable and not self.initialized then
         self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
     end
+    
+    FriendsFrame_Update()
 end
 
 local function InitializeCallback()

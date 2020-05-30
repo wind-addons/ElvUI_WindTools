@@ -175,7 +175,9 @@ function FL:UpdateFriendButton(button)
 
             if gameAccountInfo.wowProjectID == 2 then
                 game = BNET_CLIENT_WOW .. "C" -- 标注怀旧服好友
-                server = BNET_FRIEND_TOOLTIP_WOW_CLASSIC -- 暂时用经典版来代替服务器
+                local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
+                server = serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC
+                server = server .. "*"
             else
                 server = gameAccountInfo.realmDisplayName or ""
             end
@@ -191,10 +193,8 @@ function FL:UpdateFriendButton(button)
         local buttonTitle, buttonText
 
         -- 名字
-        local realIDString =
-            realID and self.db.useGameColor and F.CreateColorString(realID, BNColor[game]) or realID
-        local nameString =
-            class and self.db.useClassColor and F.CreateColorString(name, GetClassColor(class)) or name
+        local realIDString = realID and self.db.useGameColor and F.CreateColorString(realID, BNColor[game]) or realID
+        local nameString = class and self.db.useClassColor and F.CreateColorString(name, GetClassColor(class)) or name
 
         if level and MaxLevel[game] and (level ~= MaxLevel[game] or not self.db.hideMaxLevel) then
             nameString = nameString .. F.CreateColorString(": " .. level, GetQuestDifficultyColor(level))

@@ -47,7 +47,7 @@ P.item = {
     },
     fastLoot = {
         enable = true,
-        speed = 0.3
+        limit = 0.3
     }
 }
 

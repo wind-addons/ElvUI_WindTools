@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='ChatBar.lua'/>
+	<Script file='Filter.lua'/>
 	<Script file='FriendList.lua'/>
 </Ui>

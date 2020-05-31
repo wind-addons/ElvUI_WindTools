@@ -267,8 +267,4 @@ function FL:ProfileUpdate()
     FriendsFrame_Update()
 end
 
-local function InitializeCallback()
-    FL:Initialize()
-end
-
 W:RegisterModule(FL:GetName())

@@ -44,6 +44,10 @@ P.item = {
             g = 1,
             b = 0
         }
+    },
+    fastLoot = {
+        enable = true,
+        speed = 0.3
     }
 }
 
@@ -186,5 +190,9 @@ P.social = {
             size = 12,
             style = "OUTLINE"
         }
+    },
+    filter = {
+        enable = true,
+        unblockProfanityFilter = true
     }
 }

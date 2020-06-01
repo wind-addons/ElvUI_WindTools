@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 
 local DI = W:GetModule("DeleteItem")
 local AK = W:GetModule("AlreadyKnown")
+local FL = W:GetModule("FastLoot")
 
 local _G = _G
 
@@ -118,5 +119,48 @@ options.alreadyKnown = {
                 db.r, db.g, db.b = r, g, b
             end
         }
+    }
+}
+
+options.fastLoot = {
+    order = 3,
+    type = "group",
+    name = L["Fast Loot"],
+    get = function(info)
+        return E.db.WT.item.fastLoot[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.fastLoot[info[#info]] = value
+        FL:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["This module will accelerate the speed of loot."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        limit = {
+            order = 2,
+            type = "range",
+            name = L["Limit"],
+            desc = L["The time delay between every loot operations. (Default is 0.3)"],
+            min = 0.05,
+            max = 0.5,
+            step = 0.01
+        },
     }
 }

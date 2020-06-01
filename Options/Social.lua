@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
 local FL = W:GetModule("FriendList")
+local FL = W:GetModule("Filter")
 
 options.chatBar = {
     order = 1,
@@ -698,5 +699,51 @@ options.friendList = {
                 }
             }
         }
+    }
+}
+
+options.filter = {
+    order = 3,
+    type = "group",
+    name = L["Filter"],
+    get = function(info)
+        return E.db.WT.social.filter[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.filter[info[#info]] = value
+        FT:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Unblock the profanity filter."],
+                    fontSize = "medium"
+                },
+                commingSoon = {
+                    order = 2,
+                    type = "description",
+                    name = L["More features are comming soon."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        unblockProfanityFilter = {
+            order = 2,
+            type = "toggle",
+            name = L["Profanity Filter"],
+            desc = L["Unblock the setting of profanity filter. [CN Server]"]
+        },
     }
 }

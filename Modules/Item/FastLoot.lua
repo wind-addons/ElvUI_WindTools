@@ -28,7 +28,7 @@ function FL:Initialize()
 	self:RegisterEvent("LOOT_READY")
 end
 
-function FT:ProfileUpdate()
+function FL:ProfileUpdate()
     self.db = E.db.WT.item.fastLoot
 
     if self.db.enable then

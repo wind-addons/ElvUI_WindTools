@@ -129,3 +129,9 @@ V.tooltips = {
 		}
 	}
 }
+
+V.social = {
+	smartTab = {
+		whisperTargets = {}
+	}
+}

@@ -2,4 +2,5 @@
 	<Script file='ChatBar.lua'/>
 	<Script file='Filter.lua'/>
 	<Script file='FriendList.lua'/>
+	<Script file='SmartTab.lua'/>
 </Ui>

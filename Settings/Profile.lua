@@ -194,5 +194,14 @@ P.social = {
     filter = {
         enable = true,
         unblockProfanityFilter = true
+    },
+    smartTab = {
+        enable = true,
+        whisperCycle = true,
+        yell = false,
+        battleground = false,
+        raidWarning = false,
+        officer = true,
+        historyLimit = 10
     }
 }

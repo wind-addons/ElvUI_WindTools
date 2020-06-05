@@ -13,7 +13,5 @@ Locales\Load_Locales.xml
 Media\Load_Media.xml
 Settings\Load_Settings.xml
 Core\Load_Core.xml
-##Layout\Load_Layout.xml
 Modules\Load_Modules.xml
-Datatexts\Load_Datatexts.xml
 Options\Load_Options.xml

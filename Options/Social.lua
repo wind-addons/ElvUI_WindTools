@@ -4,7 +4,8 @@ local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
 local FL = W:GetModule("FriendList")
-local FL = W:GetModule("Filter")
+local FT = W:GetModule("Filter")
+local ST = W:GetModule("SmartTab")
 
 options.chatBar = {
     order = 1,
@@ -542,7 +543,7 @@ options.friendList = {
             inline = true,
             name = L["Enhanced Texuture"],
             get = function(info)
-                return E.db.WT.social.friendList.textures[info[#info]] 
+                return E.db.WT.social.friendList.textures[info[#info]]
             end,
             set = function(info, value)
                 E.db.WT.social.friendList.textures[info[#info]] = value
@@ -744,6 +745,76 @@ options.filter = {
             type = "toggle",
             name = L["Profanity Filter"],
             desc = L["Unblock the setting of profanity filter. [CN Server]"]
+        }
+    }
+}
+
+options.smartTab = {
+    order = 4,
+    type = "group",
+    name = L["Smart Tab"],
+    get = function(info)
+        return E.db.WT.social.smartTab[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.smartTab[info[#info]] = value
+        ST:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["This module will change the channel when Tab has been pressed."],
+                    fontSize = "medium"
+                }
+            }
         },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        whisperCycle = {
+            order = 2,
+            type = "toggle",
+            name = L["Whisper Cycle"]
+        },
+        yell = {
+            order = 3,
+            type = "toggle",
+            name = CHAT_MSG_YELL
+        },
+        battleground = {
+            order = 4,
+            type = "toggle",
+            name = CHAT_MSG_BATTLEGROUND
+        },
+        raidWarning = {
+            order = 5,
+            type = "toggle",
+            name = CHAT_MSG_RAID_WARNING
+        },
+        officer = {
+            order = 6,
+            type = "toggle",
+            name = CHAT_MSG_OFFICER
+        },
+        historyLimit = {
+            order = 7,
+            type = "range",
+            name = L["Expiration time (min)"],
+            desc = L[
+                "This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."
+            ],
+            min = 1,
+            max = 2400,
+            step = 1
+        }
     }
 }

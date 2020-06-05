@@ -197,11 +197,11 @@ P.social = {
     },
     smartTab = {
         enable = true,
-        whisperCycle = true,
+        whisperCycle = false,
         yell = false,
         battleground = false,
         raidWarning = false,
-        officer = true,
+        officer = false,
         historyLimit = 10
     }
 }

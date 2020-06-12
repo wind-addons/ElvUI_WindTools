@@ -23,7 +23,7 @@ addon[3] = E
 addon[4] = L
 addon[5] = V.WT
 addon[6] = P.WT
-addon[7] = G.WT
+addon[7] = G
 
 _G[addonName] = addon
 W.Version = GetAddOnMetadata(addonName, "Version")

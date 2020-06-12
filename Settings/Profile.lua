@@ -166,6 +166,13 @@ P.social = {
             }
         }
     },
+    chatLink = {
+        enable = true,
+        level = true,
+        icon = true,
+        armorCategory = true,
+        weaponCategory = true
+    },
     friendList = {
         enable = true,
         hideMaxLevel = true,

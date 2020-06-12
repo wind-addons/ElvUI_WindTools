@@ -3,6 +3,7 @@ local options = W.options.social.args
 local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
+local CL = W:GetModule("ChatLink")
 local FL = W:GetModule("FriendList")
 local FT = W:GetModule("Filter")
 local ST = W:GetModule("SmartTab")
@@ -496,8 +497,64 @@ do -- 普通频道
     end
 end
 
+options.chatLink = {
+    order = 4,
+    type = "group",
+    name = L["Chat Link"],
+    get = function(info)
+        return E.db.WT.social.chatLink[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.chatLink[info[#info]] = value
+        CL:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L[
+                        "Add extra information on the link, so that you can get basic information but do not need to click."
+                    ],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        level = {
+            order = 2,
+            type = "toggle",
+            name = L["Level"]
+        },
+        icon = {
+            order = 3,
+            type = "toggle",
+            name = L["Icon"]
+        },
+        armorCategory = {
+            order = 4,
+            type = "toggle",
+            name = L["Armor Category"]
+        },
+        weaponCategory = {
+            order = 5,
+            type = "toggle",
+            name = L["Weapon Category"]
+        }
+    }
+}
+
 options.friendList = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Friend List"],
     get = function(info)
@@ -704,7 +761,7 @@ options.friendList = {
 }
 
 options.filter = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Filter"],
     get = function(info)
@@ -750,7 +807,7 @@ options.filter = {
 }
 
 options.smartTab = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

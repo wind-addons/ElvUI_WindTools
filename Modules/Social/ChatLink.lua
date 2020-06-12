@@ -23,19 +23,19 @@ local SearchArmorType = {
 }
 
 local abbrList = {
-    INVTYPE_HEAD = L["Head_Abbr"],
-    INVTYPE_NECK = L["Neck_Abbr"],
-    INVTYPE_SHOULDER = L["Shoulders_Abbr"],
-    INVTYPE_CLOAK = L["Back_Abbr"],
-    INVTYPE_CHEST = L["Chest_Abbr"],
-    INVTYPE_WRIST = L["Wrist_Abbr"],
-    INVTYPE_HAND = L["Hands_Abbr"],
-    INVTYPE_WAIST = L["Waist_Abbr"],
-    INVTYPE_LEGS = L["Legs_Abbr"],
-    INVTYPE_FEET = L["Feet_Abbr"],
-    INVTYPE_HOLDABLE = L["Held In Off-hand_Abbr"],
-    INVTYPE_FINGER = L["Finger_Abbr"],
-    INVTYPE_TRINKET = L["Trinket_Abbr"]
+    INVTYPE_HEAD = L["[ABBR] Head"],
+    INVTYPE_NECK = L["[ABBR] Neck"],
+    INVTYPE_SHOULDER = L["[ABBR] Shoulders"],
+    INVTYPE_CLOAK = L["[ABBR] Back"],
+    INVTYPE_CHEST = L["[ABBR] Chest"],
+    INVTYPE_WRIST = L["[ABBR] Wrist"],
+    INVTYPE_HAND = L["[ABBR] Hands"],
+    INVTYPE_WAIST = L["[ABBR] Waist"],
+    INVTYPE_LEGS = L["[ABBR] Legs"],
+    INVTYPE_FEET = L["[ABBR] Feet"],
+    INVTYPE_HOLDABLE = L["[ABBR] Held In Off-hand"],
+    INVTYPE_FINGER = L["[ABBR] Finger"],
+    INVTYPE_TRINKET = L["[ABBR] Trinket"]
 }
 
 local function AddItemInfo(Hyperlink)

@@ -498,7 +498,7 @@ do -- 普通频道
 end
 
 options.chatLink = {
-    order = 4,
+    order = 2,
     type = "group",
     name = L["Chat Link"],
     get = function(info)

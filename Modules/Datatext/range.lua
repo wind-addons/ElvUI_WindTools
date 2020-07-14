@@ -61,4 +61,4 @@ E.valueColorUpdateFuncs[ValueColorUpdate] = true
 	click - function to fire when clicking the datatext
 	onEnterFunc - function to fire OnEnter
 ]]
-DT:RegisterDatatext(L['Target Range'], {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate)
+DT:RegisterDatatext(L['Target Range'], nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate)

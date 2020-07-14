@@ -44,4 +44,4 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(L["MicroMenu"], {"PLAYER_ENTERING_WORLD"}, OnEvent, nil, OnClick)
+DT:RegisterDatatext(L["MicroMenu"], nil, {"PLAYER_ENTERING_WORLD"}, OnEvent, nil, OnClick)

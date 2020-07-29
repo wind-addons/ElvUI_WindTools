@@ -393,15 +393,23 @@ local function addTags()
 	ElvUF.Tags.Methods["range"] = function(unit)
 		if not unit then return end
 		local min, max = RC:GetRange(unit)
-		local String = format("%s - %s", min, max)
-		return String
+		if min and max then
+			return format("%s - %s", min, max)
+		elseif min then
+			return format("%s+", min)
+		end
+		return ""
 	end
 
 	ElvUF.Tags.Methods["range:expect"] = function(unit)
 		if not unit then return end
 		local min, max = RC:GetRange(unit)
-		local String = format("%s", floor((min+max)/2))
-		return String
+		if min and max then
+			return format("%s", floor((min + max) / 2))
+		elseif min then
+			return format("%s+", min)
+		end
+		return ""
 	end
 end
 

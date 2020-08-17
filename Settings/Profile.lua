@@ -210,5 +210,10 @@ P.social = {
         raidWarning = false,
         officer = false,
         historyLimit = 10
+    },
+    emote = {
+        enable = true,
+        panel = true,
+        size = 16
     }
 }

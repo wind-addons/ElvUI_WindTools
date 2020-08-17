@@ -20,7 +20,8 @@ V.maps = {
 }
 
 V.misc = {
-	saveArtifact = true
+	saveArtifact = true,
+	pauseToSlash = true
 }
 
 V.skins = {

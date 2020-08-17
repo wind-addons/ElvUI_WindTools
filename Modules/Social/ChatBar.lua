@@ -366,6 +366,8 @@ function CB:UpdateBar()
                     else
                         _G.WTCustomEmoteFrame:Show()
                     end
+                else
+                    print(L["Please enable \"Emote\" module in Social category."])
                 end
             end
         end

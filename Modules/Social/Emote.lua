@@ -1,5 +1,6 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
 local CE = W:NewModule("Emote", "AceEvent-3.0")
+local S = E:GetModule("Skins")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -109,13 +110,13 @@ function CE:CreateInterface()
     local width, height, column, space = 20, 20, 10, 6
     local index = 0
     -- 创建 ElvUI 风格框体
-    local frame = CreateFrame("Frame", "Wind_CustomEmoteFrame", UIParent, "UIPanelDialogTemplate")
-    _G.Wind_CustomEmoteFrameTitleBG:Hide()
-    _G.Wind_CustomEmoteFrameDialogBG:Hide()
+    local frame = CreateFrame("Frame", "WTCustomEmoteFrame", UIParent, "UIPanelDialogTemplate")
+    _G.WTCustomEmoteFrameTitleBG:Hide()
+    _G.WTCustomEmoteFrameDialogBG:Hide()
     frame:StripTextures()
     frame:CreateBackdrop("Transparent")
     frame:CreateShadow()
-    S:HandleCloseButton(_G.Wind_CustomEmoteFrameClose)
+    S:HandleCloseButton(_G.WTCustomEmoteFrameClose)
 
     -- 定位
     frame:SetWidth(column * (width + space) + 24)
@@ -146,7 +147,7 @@ function CE:CreateInterface()
             elseif button == "RightButton" and not self.isMoving then
                 -- 右键复原
                 self:ClearAllPoints()
-                self:SetPoint("TOPLEFT", Wind_CustomEmoteFrameMover, "TOPLEFT", 0, 0)
+                self:SetPoint("TOPLEFT", WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
             end
         end
     )
@@ -226,7 +227,7 @@ function CE:CreateInterface()
     self.EmoteSelector = frame
     E:CreateMover(
         CE.EmoteSelector,
-        "Wind_CustomEmoteFrameMover",
+        "WTCustomEmoteFrameMover",
         L["Emote Selector"],
         nil,
         nil,
@@ -258,7 +259,7 @@ end
 function CE:Initialize()
     self.db = E.db.WT.social.emote
 
-    if self.UIInitialized or (not self.db.enable) then
+    if self.Initialized or (not self.db.enable) then
         return
     end
 
@@ -278,15 +279,11 @@ function CE:Initialize()
     self:CreateInterface()
     self:HandleEmoteWithBubble()
 
-    self.UIInitialized = true
+    self.Initialized = true
 end
 
 function CE:ProfileUpdate()
-    self.db = E.db.WT.social.emote
-
-    if not self.UIInitialized then
-        self:Initialize()
-    end
+    self:Initialize()
 end
 
 W:RegisterModule(CE:GetName())

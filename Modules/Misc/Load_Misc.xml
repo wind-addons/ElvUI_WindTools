@@ -1,4 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Core -->
 	<Script file='Misc.lua'/>
+	<!-- Submodule -->
+	<Script file='DisableTalkingHead.lua'/>
+	<Script file='PauseToSlash.lua'/>
 	<Script file='Transmog.lua'/>
 </Ui>

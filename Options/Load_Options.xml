@@ -1,5 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="Core.lua"/>
+	<!-- Core -->
+	<Script file='Core.lua'/>
+	<!-- Submodule -->
 	<Script file="Combat.lua"/>
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>

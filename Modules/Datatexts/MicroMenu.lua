@@ -9,37 +9,75 @@ local menuFrame = CreateFrame("Frame", "WTMicroMenuDatatextMenu", E.UIParent, "U
 
 local microMenu = {
 	{text = MAINMENU_BUTTON, isTitle = true, notCheckable = true},
-	{text = CHARACTER_BUTTON, func = function()
+	{
+		text = CHARACTER_BUTTON,
+		func = function()
 			ToggleCharacter("PaperDollFrame")
-		end, notCheckable = true},
-	{text = SPELLBOOK_ABILITIES_BUTTON, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = SPELLBOOK_ABILITIES_BUTTON,
+		func = function()
 			ToggleFrame(SpellBookFrame)
-		end, notCheckable = true},
-	{text = TALENTS_BUTTON, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = TALENTS_BUTTON,
+		func = function()
 			if (not PlayerTalentFrame) then
 				TalentFrame_LoadUI()
 			end
 			ShowUIPanel(PlayerTalentFrame)
-		end, notCheckable = true},
-	{text = ACHIEVEMENT_BUTTON, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = ACHIEVEMENT_BUTTON,
+		func = function()
 			ToggleAchievementFrame()
-		end, notCheckable = true},
-	{text = MOUNTS, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = MOUNTS,
+		func = function()
 			ToggleCollectionsJournal(1)
-		end, notCheckable = true},
-	{text = PETS, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = PETS,
+		func = function()
 			ToggleCollectionsJournal(2)
-		end, notCheckable = true},
-	{text = TOY_BOX, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = TOY_BOX,
+		func = function()
 			ToggleCollectionsJournal(3)
-		end, notCheckable = true},
-	{text = HEIRLOOMS, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = HEIRLOOMS,
+		func = function()
 			ToggleCollectionsJournal(4)
-		end, notCheckable = true},
-	{text = SOCIAL_BUTTON, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = SOCIAL_BUTTON,
+		func = function()
 			ToggleFriendsFrame(1)
-		end, notCheckable = true},
-	{text = ACHIEVEMENTS_GUILD_TAB, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = ACHIEVEMENTS_GUILD_TAB,
+		func = function()
 			if IsInGuild() then
 				if (not CommunitiesFrame) then
 					LoadAddOn("Blizzard_Communities")
@@ -51,7 +89,9 @@ local microMenu = {
 				end
 				LookingForGuildFrame_Toggle()
 			end
-		end, notCheckable = true},
+		end,
+		notCheckable = true
+	},
 	{
 		text = COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVE .. " / " .. COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVP,
 		func = function()
@@ -59,21 +99,41 @@ local microMenu = {
 		end,
 		notCheckable = true
 	},
-	{text = RAID, func = function()
+	{
+		text = RAID,
+		func = function()
 			ToggleFriendsFrame(3)
-		end, notCheckable = true},
-	{text = ENCOUNTER_JOURNAL, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = ENCOUNTER_JOURNAL,
+		func = function()
 			ToggleEncounterJournal()
-		end, notCheckable = true},
-	{text = HELP_BUTTON, func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = HELP_BUTTON,
+		func = function()
 			ToggleHelpFrame()
-		end, notCheckable = true},
-	{text = "|cfffe7b2cElvUI|r", func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = "|cfffe7b2cElvUI|r",
+		func = function()
 			E:ToggleOptionsUI()
-		end, notCheckable = true},
-	{text = L["WindTools"], func = function()
+		end,
+		notCheckable = true
+	},
+	{
+		text = L["WindTools"],
+		func = function()
 			E:ToggleOptionsUI("WindUI")
-		end, notCheckable = true}
+		end,
+		notCheckable = true
+	}
 }
 
 local function OnEvent(self, event, unit)

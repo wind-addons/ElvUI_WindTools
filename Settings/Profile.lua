@@ -217,3 +217,16 @@ P.social = {
         size = 16
     }
 }
+
+P.quest = {
+    paragonReputation = {
+        enable = true,
+        color = {r = 0, g = .5, b = .9},
+        text = "DEFICIT",
+        toast = {
+            enabled = true,
+            sound = true,
+            fade_time = 5
+        }
+    }
+}

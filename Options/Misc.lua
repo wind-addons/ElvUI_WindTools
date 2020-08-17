@@ -155,7 +155,7 @@ options.pauseToSlash = {
                 }
             }
         },
-        saveArtifact = {
+        pauseToSlash = {
             order = 2,
             type = "toggle",
             name = L["Enable"],
@@ -166,6 +166,40 @@ options.pauseToSlash = {
             set = function(info, value)
                 E.private.WT.misc[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
+            end
+        }
+    }
+}
+
+options.disableTalkingHead = {
+    order = 4,
+    type = "group",
+    name = L["Disable Talking Head"],
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Enable this module will disable Blizzard Talking Head."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        disableTalkingHead = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            desc = L["Stop talking."],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
             end
         }
     }

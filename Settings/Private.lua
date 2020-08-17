@@ -21,7 +21,8 @@ V.maps = {
 
 V.misc = {
 	saveArtifact = true,
-	pauseToSlash = true
+	pauseToSlash = true,
+	disableTalkingHead = true,
 }
 
 V.skins = {

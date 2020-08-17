@@ -36,6 +36,12 @@ options.general = {
             type = "toggle",
             name = L["Add Icon"],
             desc = L["Show an icon for items and spells."]
+        },
+        objectiveProgress = {
+            order = 2,
+            type = "toggle",
+            name = L["Objective Progress"],
+            desc = L["Add more details of objective progress information into tooltips."]
         }
     }
 }

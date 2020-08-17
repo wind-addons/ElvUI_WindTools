@@ -105,6 +105,7 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	objectiveProgress = true,
 	progression = {
 		enable = true,
 		raid = {

@@ -4,4 +4,5 @@
 	<Script file='Filter.lua'/>
 	<Script file='FriendList.lua'/>
 	<Script file='SmartTab.lua'/>
+	<Script file='Emote.lua'/>
 </Ui>

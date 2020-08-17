@@ -179,7 +179,7 @@ function PR:CreateToast()
 
 	-- [Toast] Create Background Texture
 	toast:CreateBackdrop("Transparent")
-	if E.db.WindTools.Interface.Skins.elvui.general and toast.backdrop then
+	if E.private.WT.skins.elvui.enable and toast.backdrop then
 		toast.backdrop:CreateShadow()
 	end
 

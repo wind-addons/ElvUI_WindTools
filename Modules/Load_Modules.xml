@@ -4,6 +4,7 @@
 	<Include file="Item\Load_Item.xml"/>
 	<Include file="Maps\Load_Maps.xml"/>
 	<Include file="Misc\Load_Misc.xml"/>
+	<Include file="Quest\Load_Quest.xml"/>
 	<Include file="Skins\Load_Skins.xml"/>
 	<Include file="Social\Load_Social.xml"/>
 	<Include file="Tooltips\Load_Tooltips.xml"/>

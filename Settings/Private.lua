@@ -77,6 +77,7 @@ V.skins = {
 		talent = true,
 		taxi = true,
 		tooltips = true,
+		tutorial = true,
 		warboard = true,
 		worldMap = true
 	},

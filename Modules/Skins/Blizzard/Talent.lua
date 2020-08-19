@@ -8,7 +8,7 @@ function S:BlizzardTalent()
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.talent) then return end
 
     local TalentMicroButtonAlert = _G.TalentMicroButtonAlert
-    if not TalentMicroButtonAlert.shadow then
+    if TalentMicroButtonAlert and (not TalentMicroButtonAlert.shadow) then
         -- 防止重复扩大
         TalentMicroButtonAlert:SetWidth(TalentMicroButtonAlert:GetWidth() + 50)
         TalentMicroButtonAlert.Text:SetWidth(TalentMicroButtonAlert.Text:GetWidth() + 50)

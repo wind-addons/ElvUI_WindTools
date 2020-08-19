@@ -16,7 +16,6 @@ local FRIENDS_TEXTURE_AFK, FRIENDS_TEXTURE_DND = FRIENDS_TEXTURE_AFK, FRIENDS_TE
 local FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE = FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
-local MAX_PLAYER_LEVEL_TABLE = MAX_PLAYER_LEVEL_TABLE
 
 local MediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\FriendList\\"
 
@@ -73,8 +72,8 @@ local StatusIcons = {
 }
 
 local MaxLevel = {
-    [BNET_CLIENT_WOW .. "C"] = MAX_PLAYER_LEVEL_TABLE[0],
-    [BNET_CLIENT_WOW] = MAX_PLAYER_LEVEL_TABLE[#MAX_PLAYER_LEVEL_TABLE]
+    [BNET_CLIENT_WOW .. "C"] = 60,
+    [BNET_CLIENT_WOW] = 50
 }
 
 local BNColor = {
@@ -263,7 +262,7 @@ function FL:ProfileUpdate()
     if E.db.WT.social.friendList.enable and not self.initialized then
         self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
     end
-    
+
     FriendsFrame_Update()
 end
 

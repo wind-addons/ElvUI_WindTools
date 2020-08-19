@@ -39,6 +39,7 @@
 	<Script file='Talent.lua'/>
 	<Script file='Taxi.lua'/>
 	<Script file='Tooltips.lua'/>
+	<Script file='Tutorial.lua'/>
 	<Script file='Warboard.lua'/>
 	<Script file='WorldMap.lua'/>
 </Ui>

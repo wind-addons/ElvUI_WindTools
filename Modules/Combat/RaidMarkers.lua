@@ -163,7 +163,7 @@ function RM:CreateBar()
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 
-	frame = CreateFrame("Frame", nil, E.UIParent)
+	frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
 	frame:SetResizable(false)
 	frame:SetClampedToScreen(true)
 	frame:SetFrameStrata("LOW")

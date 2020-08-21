@@ -20,9 +20,9 @@ function S:WorldMapFrame()
         if QuestMapFrame.DetailsFrame.backdrop then
             QuestMapFrame.DetailsFrame.backdrop:SetTemplate("Transparent")
         end
-        if not QuestMapFrame.DetailsFrame.RewardsFrame.backdrop then
+        if QuestMapFrame.DetailsFrame.RewardsFrame.backdrop then
             QuestMapFrame.DetailsFrame.RewardsFrame.backdrop:SetTemplate("Transparent")
-        else
+        elseif QuestMapFrame.DetailsFrame.RewardsFrame then
             QuestMapFrame.DetailsFrame.RewardsFrame:CreateBackdrop("Transparent")
         end
     end

@@ -205,7 +205,7 @@ function MB:SkinButton(frame)
 			end
 		end
 
-		frame:SetTemplate("Tranparent")
+		frame:CreateBackdrop("Tranparent")
 		if E.private.WT.skins.windtools then
 			S:CreateShadow(frame)
 		end

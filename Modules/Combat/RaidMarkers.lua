@@ -189,7 +189,7 @@ function RM:CreateBar()
 		nil,
 		"ALL,WINDTOOLS",
 		function()
-			return E.db.WT.maps.raidMarkers.enable
+			return E.db.WT.combat.raidMarkers.enable
 		end
 	)
 end
@@ -200,7 +200,7 @@ function RM:CreateButtons()
 	for i = 1, 9 do
 		local button = self.bar.buttons[i]
 		if not button then
-			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
+			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
 			button:SetTemplate("Transparent")
 		end
 		button:Size(self.db.buttonSize)

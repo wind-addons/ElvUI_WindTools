@@ -18,7 +18,7 @@ function S:InputMethodEditor()
             S:CreateShadow(editBox)
             if langIcon then
                 langIcon:StripTextures()
-                langIcon:SetTemplate("Transparent")
+                langIcon:CreateBackdrop("Transparent")
                 langIcon:SetSize(20, 22)
                 langIcon:ClearAllPoints()
                 langIcon:SetPoint("TOPLEFT", editBox, "TOPRIGHT", 7, 0)

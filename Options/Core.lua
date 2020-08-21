@@ -5,7 +5,7 @@ W.options = {
     item = {
         order = 101,
         name = L["Item"],
-        desc = L["Make adventure life easier."],
+        desc = L["Add a lot of QoL features to WoW."],
         icon = W.Media.Icons.item,
         args = {}
     },
@@ -23,22 +23,29 @@ W.options = {
         icon = W.Media.Icons.map,
         args = {}
     },
-    social = {
+    quest = {
         order = 104,
+        name = L["Quest"],
+        desc = L["Make adventure life easier."],
+        icon = W.Media.Icons.map,
+        args = {}
+    },
+    social = {
+        order = 105,
         name = L["Social"],
         desc = L["Make some enhancements on chat and friend frames."],
         icon = W.Media.Icons.chat,
         args = {}
     },
     tooltips = {
-        order = 105,
+        order = 106,
         name = L["Tooltips"],
         desc = L["Add some additional information to your tooltips."],
         icon = W.Media.Icons.tooltips,
         args = {}
     },
     skins = {
-        order = 106,
+        order = 107,
         name = L["Skins"],
         desc = L["Apply new shadow style for ElvUI."],
         icon = W.Media.Icons.skins,

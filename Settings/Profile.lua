@@ -224,7 +224,7 @@ P.quest = {
         color = {r = 0, g = .5, b = .9},
         text = "DEFICIT",
         toast = {
-            enabled = true,
+            enable = true,
             sound = true,
             fade_time = 5
         }

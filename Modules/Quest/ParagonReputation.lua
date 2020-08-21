@@ -357,7 +357,7 @@ function PR:Initialize()
 		nil,
 		"WINDTOOLS,ALL",
 		function()
-			return PR.db.enable
+			return PR.db.toast.enable
 		end
 	)
 

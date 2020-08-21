@@ -6,6 +6,7 @@
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>
 	<Script file="Misc.lua"/>
+	<Script file="Quest.lua"/>
 	<Script file="Skins.lua"/>
 	<Script file="Social.lua"/>
 	<Script file="Tooltips.lua"/>

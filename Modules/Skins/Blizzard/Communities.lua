@@ -4,7 +4,7 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:Blizzard_Communities()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.Communities) then
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.communities) then
         return
     end
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.communities) then

@@ -5,8 +5,8 @@ local _G = _G
 
 local function SkinAchievementFrame(tried)
     tried = tried or 0
-    if _G.AchievementFramePixelBorderCENTER then
-        S:CreateShadow(_G.AchievementFramePixelBorderCENTER)
+    if _G.AchievementFrame.backdrop then
+        S:CreateShadow(_G.AchievementFrame.backdrop)
     else
         if tried < 20 then
             E:Delay(

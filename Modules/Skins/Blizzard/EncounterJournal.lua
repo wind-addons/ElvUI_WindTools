@@ -19,7 +19,7 @@ function S:Blizzard_EncounterJournal()
     S:CreateShadow(EncounterJournal)
 
     -- Boss 按钮
-    if E.private.skins.parchmentRemover.enable then
+    if E.private.skins.parchmentRemoverEnable then
         hooksecurefunc(
             "EncounterJournal_DisplayInstance",
             function()

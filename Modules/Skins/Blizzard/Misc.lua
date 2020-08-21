@@ -72,7 +72,7 @@ function S:BlizzardMiscFrames()
 
     -- 错误提示
     F.SetFontOutline(_G.UIErrorsFrame)
-    F.SetFontOutline(_G.ActionStatusText)
+    F.SetFontOutline(_G.ActionStatus.Text)
 
     -- 灵魂医者传送按钮
     S:CreateShadow(_G.GhostFrameContentsFrame)

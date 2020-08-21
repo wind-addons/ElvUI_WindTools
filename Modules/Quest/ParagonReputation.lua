@@ -1,6 +1,7 @@
 -- 原作：Fail@US-Ragnaros
 local W, F, E, L = unpack(select(2, ...))
 local PR = W:NewModule("ParagonReputation", "AceHook-3.0", "AceEvent-3.0")
+local S = W:GetModule("Skins")
 
 local _G = _G
 local unpack = unpack
@@ -171,7 +172,7 @@ function PR:WaitToast()
 end
 
 function PR:CreateToast()
-	local toast = CreateFrame("FRAME", "ParagonReputation_Toast", UIParent)
+	local toast = CreateFrame("FRAME", "ParagonReputation_Toast", UIParent, "BackdropTemplate")
 	toast:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 250)
 	toast:SetSize(302, 70)
 	toast:SetClampedToScreen(true)
@@ -179,8 +180,8 @@ function PR:CreateToast()
 
 	-- [Toast] Create Background Texture
 	toast:CreateBackdrop("Transparent")
-	if E.private.WT.skins.elvui.enable and toast.backdrop then
-		toast.backdrop:CreateShadow()
+	if E.private.WT.skins.windtools and toast.backdrop then
+		S:CreateShadow(toast.backdrop)
 	end
 
 	-- [Toast] Create Title Text

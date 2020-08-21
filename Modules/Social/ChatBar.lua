@@ -73,7 +73,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 
     if not self.bar[name] then
         -- 按键本体
-        local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
+        local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
         button:StripTextures()
         button:SetBackdropBorderColor(0, 0, 0)
         button:RegisterForClicks("AnyDown")

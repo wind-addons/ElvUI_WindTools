@@ -21,7 +21,6 @@ function S:CharacterFrame()
 
     -- 去除人物模型背景
     local CharacterModelFrame = _G.CharacterModelFrame
-    CharacterModelFrame:SetTemplate("Transparent")
     CharacterModelFrame:DisableDrawLayer("BACKGROUND")
     CharacterModelFrame:DisableDrawLayer("BORDER")
     CharacterModelFrame:DisableDrawLayer("OVERLAY")

@@ -19,6 +19,9 @@ function S:CharacterFrame()
         S:CreateBackdropShadow(_G["CharacterFrameTab" .. i])
     end
 
+    -- 代币窗口
+    S:CreateShadow(_G.TokenFramePopup)
+
     -- 去除人物模型背景
     local CharacterModelFrame = _G.CharacterModelFrame
     CharacterModelFrame:DisableDrawLayer("BACKGROUND")

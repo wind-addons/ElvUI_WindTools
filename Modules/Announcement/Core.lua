@@ -4,6 +4,9 @@ local A = W:NewModule("Announcement", "AceEvent-3.0")
 local _G = _G
 local pairs = pairs
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
+local SendChatMessage, C_ChatInfo_SendAddonMessage= SendChatMessage, C_ChatInfo.SendAddonMessage
+local IsInGroup, IsInRaid = IsInGroup, IsInRaid
+local UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant = UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant
 
 A.EventFunctions = {}
 
@@ -22,6 +25,13 @@ function A:AddCallbackForEvent(eventName, submoduleFunctionName)
     tinsert(event, submoduleFunctionName)
 end
 
+--[[
+    发送消息
+    @param {string} text 欲发送的字符串
+    @param {string} channel 频道
+    @param {boolean} raid_warning 允许使用团队警告
+    @param {string} whisper_target 密语目标
+]]
 function A:SendMessage(text, channel, raid_warning, whisper_target)
     -- 忽视不通告讯息
     if channel == "NONE" then
@@ -53,15 +63,20 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
     SendChatMessage(text, channel)
 end
 
-function A:GetChannel(channel_db)
+--[[
+    获取最适合的频道
+    @param {object} channelDB 频道配置
+    @return {string} 频道
+]]
+function A:GetChannel(channelDB)
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
-        return channel_db.instance
+        return channelDB.instance
     elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
-        return channel_db.raid
+        return channelDB.raid
     elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-        return channel_db.party
-    elseif channel_db.solo then
-        return channel_db.solo
+        return channelDB.party
+    elseif channelDB.solo then
+        return channelDB.solo
     end
     return "NONE"
 end
@@ -71,14 +86,19 @@ function A:SendAddonMessage(message)
         return
     end
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
-        C_ChatInfo.SendAddonMessage(self.Prefix, message, "INSTANCE")
+        C_ChatInfo_SendAddonMessage(self.Prefix, message, "INSTANCE")
     elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
-        C_ChatInfo.SendAddonMessage(self.Prefix, message, "RAID")
+        C_ChatInfo_SendAddonMessage(self.Prefix, message, "RAID")
     elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-        C_ChatInfo.SendAddonMessage(self.Prefix, message, "PARTY")
+        C_ChatInfo_SendAddonMessage(self.Prefix, message, "PARTY")
     end
 end
 
+--[[
+    事件转发
+    @param {string} event 事件名
+    @param {object} data 数据
+]]
 function A:TransferEventInfo(event, data)
     local submodules = self.EventFunctions[event]
     if not submodules then

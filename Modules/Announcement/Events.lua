@@ -33,8 +33,7 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     elseif event == "SPELL_CREATE" then
         -- self:Utility(CombatLogGetCurrentEventInfo())
     elseif event == "SPELL_INTERRUPT" then
-        local spellId = combatInfo[12]
-        local extraSpellId = combatInfo[15]
+        local spellId, extraSpellId = combatInfo[12], combatInfo[15]
         self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     elseif event == "SPELL_AURA_APPLIED" then
         -- self:Taunt(CombatLogGetCurrentEventInfo())

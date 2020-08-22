@@ -33,6 +33,83 @@ P.announcement = {
             instance = "INSTANCE_CHAT",
             raid = "RAID"
         }
+    },
+    taunt = {
+        enable = true,
+        player = {
+            player = {
+                enable = true,
+                provokeAllText = L["I taunted all enemies in 10 yards!"],
+                successText = L["I taunted %target% successfully!"],
+                failedText = L["I failed on taunting %target%!"],
+                successChannel = {
+                    solo = "EMOTE",
+                    party = "PARTY",
+                    instance = "INSTANCE_CHAT",
+                    raid = "RAID"
+                },
+                failedChannel = {
+                    solo = "EMOTE",
+                    party = "PARTY",
+                    instance = "INSTANCE_CHAT",
+                    raid = "RAID"
+                }
+            },
+            pet = {
+                enable = false,
+                successText = L["My %pet_role% %pet% taunted %target% successfully!"],
+                failedText = L["My %pet_role% %pet% failed on taunting %target%!"],
+                successChannel = {
+                    solo = "EMOTE",
+                    party = "PARTY",
+                    instance = "INSTANCE_CHAT",
+                    raid = "RAID"
+                },
+                failedChannel = {
+                    solo = "EMOTE",
+                    party = "PARTY",
+                    instance = "INSTANCE_CHAT",
+                    raid = "RAID"
+                }
+            }
+        },
+        others = {
+            player = {
+                enable = false,
+                provokeAllText = L["%player% taunted all enemies in 10 yards!"],
+                successText = L["%player% taunted %target% successfully!"],
+                failedText = L["%player% failed on taunting %target%!"],
+                successChannel = {
+                    solo = "NONE",
+                    party = "NONE",
+                    instance = "NONE",
+                    raid = "NONE"
+                },
+                failedChannel = {
+                    solo = "NONE",
+                    party = "SELF",
+                    instance = "SELF",
+                    raid = "SELF"
+                }
+            },
+            pet = {
+                enable = false,
+                successText = L["%player%'s %pet_role% %pet% taunted %target% successfully!"],
+                failedText = L["%player%'s %pet_role% %pet% failed on taunting %target%!"],
+                successChannel = {
+                    solo = "NONE",
+                    party = "NONE",
+                    instance = "NONE",
+                    raid = "NONE"
+                },
+                failedChannel = {
+                    solo = "NONE",
+                    party = "SELF",
+                    instance = "SELF",
+                    raid = "SELF"
+                }
+            }
+        }
     }
 }
 

@@ -80,6 +80,28 @@ function A:SendAddonMessage(message)
     end
 end
 
+function A:GetPetOwner(petName)
+    E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
+    E.ScanTooltip:ClearLines()
+    E.ScanTooltip:SetUnit(petName)
+    local details = E.ScanTooltip.TextLeft2:GetText()
+
+    if not details then
+        return
+    end
+
+    local delimiter
+    if strsub(E:GetLocale(), 0, 2) == "zh" then
+        delimiter = "的"
+    else
+        delimiter = "'s"
+    end
+
+    local owner, role = strsplit(delimiter, details)
+
+    return owner, role
+end
+
 function A:Initialize()
     self.db = E.db.WT.announcement
 

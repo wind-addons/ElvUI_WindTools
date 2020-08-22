@@ -1,5 +1,5 @@
-## Interface: 80300
-## Author: houshuu
+## Interface: 90001
+## Author: fang2hou
 ## Version: 2.0
 ## Title: |cff1784d1ElvUI|r WindTools
 ## RequiredDeps: ElvUI

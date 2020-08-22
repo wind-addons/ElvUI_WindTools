@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="Announcement\Load_Announcement.xml"/>
 	<Include file="Combat\Load_Combat.xml"/>
 	<Include file="Datatexts\Load_Datatexts.xml"/>
 	<Include file="Item\Load_Item.xml"/>

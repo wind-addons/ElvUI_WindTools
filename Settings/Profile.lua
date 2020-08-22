@@ -1,5 +1,18 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+P.announcement = {
+    enable = true,
+    resetInstance = {
+        enable = true,
+        prefix = true,
+        channel = {
+            ["party"] = "PARTY",
+            ["instance"] = "INSTANCE_CHAT",
+            ["raid"] = "RAID",
+        },
+    }
+}
+
 P.combat = {
     combatAlert = {
         enable = true,

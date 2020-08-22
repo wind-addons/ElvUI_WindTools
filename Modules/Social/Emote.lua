@@ -195,7 +195,7 @@ function CE:CreateInterface()
         if (v.texture) then
             button:SetNormalTexture(v.texture)
         else
-            button:SetNormalTexture("Interface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\" .. v.key)
+            button:SetNormalTexture("Interface\\Addons\\ElvUI_WindUI\\Media\\Emotes\\" .. v.key)
         end
         button:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
         button:SetPoint(

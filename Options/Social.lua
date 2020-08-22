@@ -121,8 +121,8 @@ options.chatBar = {
                     type = "select",
                     name = L["Style"],
                     values = {
-                        ["BLOCK"] = L["Block"],
-                        ["TEXT"] = L["Text"]
+                        BLOCK = L["Block"],
+                        TEXT = L["Text"]
                     }
                 }
             }
@@ -661,8 +661,8 @@ options.friendList = {
                     order = 1,
                     type = "select",
                     values = {
-                        ["Default"] = L["Default"],
-                        ["Modern"] = L["Modern"]
+                        Default = L["Default"],
+                        Modern = L["Modern"]
                     }
                 },
                 status = {
@@ -670,9 +670,9 @@ options.friendList = {
                     order = 2,
                     type = "select",
                     values = {
-                        ["Default"] = L["Default"],
-                        ["D3"] = L["Diablo 3"],
-                        ["Square"] = L["Square"]
+                        Default = L["Default"],
+                        D3 = L["Diablo 3"],
+                        Square = L["Square"]
                     }
                 }
             }

@@ -5,8 +5,7 @@ A.EventList = {
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
     "LFG_COMPLETION_REWARD",
-    "CHALLENGE_MODE_COMPLETED",
-    "SCENARIO_COMPLETED"
+    "CHALLENGE_MODE_COMPLETED"
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -30,9 +29,9 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     local spellId = combatInfo[12]
 
     if event == "SPELL_CAST_SUCCESS" then
-        self:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
         -- if self:Combat(CombatLogGetCurrentEventInfo()) then return end
         -- self:Utility(CombatLogGetCurrentEventInfo())
+        self:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_SUMMON" then
         -- self:Utility(CombatLogGetCurrentEventInfo())
     elseif event == "SPELL_CREATE" then

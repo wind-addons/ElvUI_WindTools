@@ -41,7 +41,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
         local sourceType = strsplit("-", sourceGUID)
 
         if sourceType == "Pet" then
-            sourceName = self:GetPetOwner(sourceName)
+            sourceName = self:GetPetInfo(sourceName)
         end
 
         if not UnitInRaid(sourceName) or not UnitInParty(sourceName) then

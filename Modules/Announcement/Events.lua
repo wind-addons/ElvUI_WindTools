@@ -18,6 +18,7 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     -- 参数列表
     -- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
     local combatInfo = {CombatLogGetCurrentEventInfo()}
+    local timestamp = combatInfo[1]
     local event = combatInfo[2]
     local sourceGUID = combatInfo[4]
     local sourceName = combatInfo[5]
@@ -36,8 +37,10 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
         local spellId, extraSpellId = combatInfo[12], combatInfo[15]
         self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     elseif event == "SPELL_AURA_APPLIED" then
-        -- self:Taunt(CombatLogGetCurrentEventInfo())
+        local spellId = combatInfo[12]
+        self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_MISSED" then
-    -- self:Taunt(CombatLogGetCurrentEventInfo())
+        local spellId = combatInfo[12]
+        self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     end
 end

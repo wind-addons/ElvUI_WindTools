@@ -56,7 +56,7 @@ P.announcement = {
                 }
             },
             pet = {
-                enable = false,
+                enable = true,
                 successText = L["My %pet_role% %pet% taunted %target% successfully!"],
                 failedText = L["My %pet_role% %pet% failed on taunting %target%!"],
                 successChannel = {

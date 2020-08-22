@@ -6,10 +6,8 @@ local pairs = pairs
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
 local SendChatMessage, C_ChatInfo_SendAddonMessage = SendChatMessage, C_ChatInfo.SendAddonMessage
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
-local UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant =
-    UnitIsGroupLeader,
-    UnitIsGroupAssistant,
-    IsEveryoneAssistant
+local UnitIsGroupLeader, UnitIsGroupAssistant = UnitIsGroupLeader, UnitIsGroupAssistant
+local IsEveryoneAssistant = IsEveryoneAssistant
 
 --[[
     发送消息
@@ -80,7 +78,7 @@ function A:SendAddonMessage(message)
     end
 end
 
-function A:GetPetOwner(petName)
+function A:GetPetInfo(petName)
     E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
     E.ScanTooltip:ClearLines()
     E.ScanTooltip:SetUnit(petName)
@@ -90,14 +88,14 @@ function A:GetPetOwner(petName)
         return
     end
 
-    local delimiter
+    local delimiter = "'s"
     if strsub(E:GetLocale(), 0, 2) == "zh" then
         delimiter = "的"
-    else
-        delimiter = "'s"
     end
 
-    local owner, role = strsplit(delimiter, details)
+    local raw = {strsplit(delimiter, details)}
+
+    local owner, role = raw[1], raw[#raw]
 
     return owner, role
 end

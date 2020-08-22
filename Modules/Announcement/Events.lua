@@ -24,9 +24,10 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     local sourceName = combatInfo[5]
     local destGUID = combatInfo[8]
     local destName = combatInfo[9]
+    local spellId = combatInfo[12]
 
     if event == "SPELL_CAST_SUCCESS" then
-        -- self:SayThanks(CombatLogGetCurrentEventInfo())
+        self:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
         -- if self:Combat(CombatLogGetCurrentEventInfo()) then return end
         -- self:Utility(CombatLogGetCurrentEventInfo())
     elseif event == "SPELL_SUMMON" then
@@ -34,13 +35,11 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     elseif event == "SPELL_CREATE" then
         -- self:Utility(CombatLogGetCurrentEventInfo())
     elseif event == "SPELL_INTERRUPT" then
-        local spellId, extraSpellId = combatInfo[12], combatInfo[15]
+        local extraSpellId = combatInfo[15]
         self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     elseif event == "SPELL_AURA_APPLIED" then
-        local spellId = combatInfo[12]
         self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_MISSED" then
-        local spellId = combatInfo[12]
         self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     end
 end

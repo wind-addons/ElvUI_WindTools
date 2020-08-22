@@ -119,13 +119,13 @@ options.goodbye = {
             step = 1
         },
         text = {
-            order = 3,
+            order = 4,
             type = "input",
             name = L["Text"],
             width = 2.5
         },
         useDefaultText = {
-            order = 4,
+            order = 5,
             type = "execute",
             func = function(info)
                 E.db.WT.announcement.goodbye.text = P.announcement.goodbye.text
@@ -133,7 +133,7 @@ options.goodbye = {
             name = L["Default Text"]
         },
         channel = {
-            order = 4,
+            order = 6,
             name = L["Channel"],
             type = "group",
             inline = true,

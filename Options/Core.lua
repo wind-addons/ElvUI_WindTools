@@ -30,18 +30,18 @@ W.options = {
         icon = W.Media.Icons.map,
         args = {}
     },
-    announcement = {
-        order = 105,
-        name = L["Announcement"],
-        desc = L["Send something to game automatically."],
-        icon = W.Media.Icons.map,
-        args = {}
-    },
     social = {
-        order = 106,
+        order = 105,
         name = L["Social"],
         desc = L["Make some enhancements on chat and friend frames."],
         icon = W.Media.Icons.chat,
+        args = {}
+    },
+    announcement = {
+        order = 106,
+        name = L["Announcement"],
+        desc = L["Send something to game automatically."],
+        icon = W.Media.Icons.map,
         args = {}
     },
     tooltips = {

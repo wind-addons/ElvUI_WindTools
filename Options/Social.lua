@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
 local CL = W:GetModule("ChatLink")
+local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
 local FT = W:GetModule("Filter")
 local ST = W:GetModule("SmartTab")
@@ -553,8 +554,56 @@ options.chatLink = {
     }
 }
 
-options.friendList = {
+options.emote = {
     order = 3,
+    type = "group",
+    name = L["Emote"],
+    get = function(info)
+        return E.db.WT.social.emote[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.emote[info[#info]] = value
+        WE:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Parse emote expresstion from other players."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        size = {
+            name = L["Emote Icon Size"],
+            order = 2,
+            type = "range",
+            min = 5,
+            max = 35,
+            step = 1
+        },
+        panel = {
+            order = 3,
+            type = "toggle",
+            name = L["Use Emote Panel"],
+            desc = L["Press { to active the emote select window."]
+        }
+    }
+}
+
+options.friendList = {
+    order = 4,
     type = "group",
     name = L["Friend List"],
     get = function(info)
@@ -761,7 +810,7 @@ options.friendList = {
 }
 
 options.filter = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Filter"],
     get = function(info)
@@ -807,7 +856,7 @@ options.filter = {
 }
 
 options.smartTab = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

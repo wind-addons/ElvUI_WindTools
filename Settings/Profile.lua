@@ -348,8 +348,8 @@ P.social = {
     },
     emote = {
         enable = true,
-        panel = true,
-        size = 16
+        size = 16,
+        panel = true
     }
 }
 

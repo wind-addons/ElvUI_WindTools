@@ -232,7 +232,7 @@ function CE:CreateInterface()
         nil,
         nil,
         nil,
-        "WINDTOOLS,ALL",
+        "ALL,WINDTOOLS",
         function()
             return CE.db.enable
         end
@@ -243,6 +243,7 @@ function CE:HandleEmoteWithBubble()
     C_Timer_NewTicker(
         .1,
         function()
+            if not CE.db.enable then return end
             for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
                 if frame.text then
                     local oldMessage = frame.text:GetText()
@@ -284,6 +285,13 @@ end
 
 function CE:ProfileUpdate()
     self:Initialize()
+
+    if self.Initialized and not self.db.enable then
+        self.EmoteSelector:Hide()
+    end
+
+    -- 由于有表情按键, 需要更新一下
+    W:GetModule("ChatBar"):UpdateBar()
 end
 
 W:RegisterModule(CE:GetName())

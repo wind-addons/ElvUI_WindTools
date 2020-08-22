@@ -355,7 +355,7 @@ function CB:UpdateBar()
     end
 
     -- 建立表情按键
-    if self.db.channels.emote.enable then --and E.private.WT.social.emote.enable and E.private.WT.social.emote.panel then
+    if self.db.channels.emote.enable and E.db.WT.social.emote.enable then
         local db = self.db.channels.emote
 
         local chatFunc = function(self, mouseButton)

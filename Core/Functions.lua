@@ -1,7 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 local format, pairs, tonumber, type = format, pairs, tonumber, type
-local strlen, strsub, strfind, tinsert = strlen, strsub, strfind, tinsert
 
 --[[
     从数据库设定字体样式
@@ -61,11 +60,12 @@ function F.SetFontOutline(text, font, size)
     text.SetShadowColor = E.noop
 end
 
+
 local function RGBToHex(r, g, b)
-    r = r <= 1 and r >= 0 and r or 0
-    g = g <= 1 and g >= 0 and g or 0
-    b = b <= 1 and b >= 0 and b or 0
-    return format("%02x%02x%02x", r * 255, g * 255, b * 255)
+	r = r <= 1 and r >= 0 and r or 0
+	g = g <= 1 and g >= 0 and g or 0
+	b = b <= 1 and b >= 0 and b or 0
+	return format("%02x%02x%02x", r*255, g*255, b*255)
 end
 
 --[[
@@ -84,8 +84,8 @@ function F.CreateColorString(text, db)
     end
 
     local hex = db.r and db.g and db.b and RGBToHex(db.r, db.g, db.b) or "ffffff"
-
-    return "|cff" .. hex .. text .. "|r"
+    
+    return "|cff"..hex..text.."|r"
 end
 
 --[[
@@ -145,36 +145,4 @@ function F.DelayUnhookAll(module)
     else
         F.DebugMessage(nil, "找不到模块！")
     end
-end
-
---[[
-    分割 CJK 字符串
-    @param {string} str 待分割字符串
-    @param {string} split_char 分割符
-参考自 https://blog.csdn.net/sftxlin/article/details/48275197
-]]
-function F.SplitString(str, split_char)
-    if str == "" or str == nil then
-        F.DebugMessage(nil, "分割字符串为空")
-        return {}
-    end
-    local split_len = strlen(split_char)
-    local sub_str_tab = {}
-    local i = 0
-    local j = 0
-    while true do
-        j = strfind(str, split_char, i + split_len)
-        if strlen(str) == i then
-            break
-        end
-
-        if j == nil then
-            tinsert(sub_str_tab, strsub(str, i))
-            break
-        end
-
-        tinsert(sub_str_tab, strsub(str, i, j - 1))
-        i = j + split_len
-    end
-    return sub_str_tab
 end

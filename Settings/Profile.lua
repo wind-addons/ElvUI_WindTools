@@ -2,6 +2,16 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 P.announcement = {
     enable = true,
+    goodbye = {
+        enable = true,
+        text = L["Thanks all!"],
+        delay = 3,
+        channel = {
+            party = "PARTY",
+            instance = "INSTANCE_CHAT",
+            raid = "RAID"
+        }
+    },
     interrupt = {
         enable = true,
         onlyInstance = true,

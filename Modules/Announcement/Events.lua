@@ -3,7 +3,10 @@ local A = W:GetModule("Announcement")
 
 A.EventList = {
     "CHAT_MSG_SYSTEM",
-    "COMBAT_LOG_EVENT_UNFILTERED"
+    "COMBAT_LOG_EVENT_UNFILTERED",
+    "LFG_COMPLETION_REWARD",
+    "CHALLENGE_MODE_COMPLETED",
+    "SCENARIO_COMPLETED"
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -43,3 +46,13 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
         self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     end
 end
+
+function A:LFG_COMPLETION_REWARD()
+    self:Goodbye()
+end
+
+function A:CHALLENGE_MODE_COMPLETED()
+    self:Goodbye()
+end
+
+-- TODO: SCENARIO_COMPLETED 场景完成事件

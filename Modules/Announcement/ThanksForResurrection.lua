@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local C_Timer_After = C_Timer.After
 
 local ResurrectionSpellList = {
 	[20484] = true, -- 復生

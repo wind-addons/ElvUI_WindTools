@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Core.lua'/>
 	<Script file='Events.lua'/>
+	<Script file='Goodbye.lua'/>
 	<Script file='Interrupt.lua'/>
 	<Script file='ResetInstance.lua'/>
 	<Script file='Taunt.lua'/>

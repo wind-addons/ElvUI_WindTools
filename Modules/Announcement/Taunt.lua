@@ -1,7 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
+local strsplit, gsub = strsplit, gsub
+local GetSpellLink = GetSpellLink
 
-A.MonkProvokeAllTimeCache = {}
+local MonkProvokeAllCache = {}
 
 local TauntSpellList = {
     [355] = true, -- 嘲諷（戰士）
@@ -59,11 +61,8 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 if config.player.player.enable then
                     if spellId == 118635 then
                         -- 武僧群嘲防刷屏
-                        if
-                            not self.MonkProvokeAllTimeCache[sourceGUID] or
-                                timestamp - self.MonkProvokeAllTimeCache[sourceGUID] > 1
-                         then
-                            self.MonkProvokeAllTimeCache[sourceGUID] = timestamp
+                        if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then
+                            MonkProvokeAllCache[sourceGUID] = timestamp
                             self:SendMessage(
                                 FormatMessageWithoutPet(config.player.player.provokeAllText),
                                 self:GetChannel(config.player.player.successChannel)
@@ -79,11 +78,8 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
             elseif config.others.player.enable then
                 if spellId == 118635 then
                     -- 武僧群嘲防刷屏
-                    if
-                        not self.MonkProvokeAllTimeCache[sourceGUID] or
-                            timestamp - self.MonkProvokeAllTimeCache[sourceGUID] > 1
-                     then
-                        self.MonkProvokeAllTimeCache[sourceGUID] = timestamp
+                    if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then
+                        MonkProvokeAllCache[sourceGUID] = timestamp
                         self:SendMessage(
                             FormatMessageWithoutPet(config.others.player.provoke_all_text),
                             self:GetChannel(config.others.player.success_channel)

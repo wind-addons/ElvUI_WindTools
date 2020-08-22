@@ -5,6 +5,14 @@ local A = W:GetModule("Announcement")
 local _G = _G
 local format = format
 
+local function ImportantColorString(string)
+    return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
+end
+
+local function FormatDesc(code, helpText)
+    return ImportantColorString(code) .. " = " .. helpText
+end
+
 options.desc = {
     order = 1,
     type = "group",
@@ -31,7 +39,6 @@ options.desc = {
         }
     }
 }
-
 
 options.enable = {
     order = 2,
@@ -75,6 +82,242 @@ options.interrupt = {
             order = 2,
             type = "toggle",
             name = L["Enable"]
+        },
+        onlyInstance = {
+            order = 3,
+            type = "toggle",
+            name = L["Only Instance"],
+            desc = L["Disable announcement in open world."]
+        },
+        player = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Player(Only you)"],
+            get = function(info)
+                return E.db.WT.announcement.interrupt[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.interrupt[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Your name"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["Your spell link"]),
+                        FormatDesc("%target_spell%", L["Interrupted spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.interrupt[info[#info - 1]].text =
+                            P.announcement.interrupt[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.interrupt[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", UnitName("player"))
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.interrupt[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.interrupt[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        solo = {
+                            order = 1,
+                            name = L["Solo"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        },
+                        party = {
+                            order = 2,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                PARTY = _G.PARTY,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        },
+                        instance = {
+                            order = 3,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                PARTY = _G.PARTY,
+                                INSTANCE_CHAT = _G.INSTANCE_CHAT,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        },
+                        raid = {
+                            order = 4,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                PARTY = _G.PARTY,
+                                RAID = _G.RAID,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        others = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Other Players"],
+            get = function(info)
+                return E.db.WT.announcement.interrupt[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.interrupt[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Name of the player"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["The spell link"]),
+                        FormatDesc("%target_spell%", L["Interrupted spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.interrupt[info[#info - 1]].text =
+                            P.announcement.interrupt[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.interrupt[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", UnitName("player"))
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.interrupt[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.interrupt[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        party = {
+                            order = 1,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                PARTY = _G.PARTY,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        },
+                        instance = {
+                            order = 2,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                PARTY = _G.PARTY,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                INSTANCE_CHAT = _G.INSTANCE_CHAT,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        },
+                        raid = {
+                            order = 3,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = _G.NONE,
+                                SELF = L["Self(Chat Frame)"],
+                                EMOTE = _G.EMOTE,
+                                PARTY = _G.PARTY,
+                                RAID = _G.RAID,
+                                YELL = _G.YELL,
+                                SAY = _G.SAY
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -187,20 +430,6 @@ options.goodbye = {
     }
 }
 
-local ImportantColor = {
-    r = 52 / 255,
-    g = 152 / 255,
-    b = 219 / 255
-}
-
-local function ImportantColorString(string)
-    return F.CreateColorString(string, ImportantColor)
-end
-
-local function FormatDesc(code, helpText)
-    return ImportantColorString(code) .. " = " .. helpText
-end
-
 options.thanksForResurrection = {
     order = 6,
     type = "group",
@@ -250,6 +479,12 @@ options.thanksForResurrection = {
                     order = 1,
                     type = "input",
                     name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s",
+                        FormatDesc("%player%", L["Your name"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%spell%", L["The spell link"])
+                    ),
                     width = 2.5
                 },
                 useDefaultText = {
@@ -269,7 +504,7 @@ options.thanksForResurrection = {
                         message = gsub(message, "%%player%%", UnitName("player"))
                         message = gsub(message, "%%target%%", L["Sylvanas"])
                         message = gsub(message, "%%spell%%", GetSpellLink(61999))
-                        return "\n" .. ImportantColorString(L["Example"], db) .. ": " .. message .. "\n"
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
             }
@@ -284,10 +519,12 @@ options.thanksForResurrection = {
                     order = 1,
                     type = "input",
                     name = L["Text"],
-                    desc = FormatDesc("%player%", L["Your name"]) ..
-                        "\n" ..
-                            FormatDesc("%target%", L["Target name"]) ..
-                                "\n" .. FormatDesc("%spell%", L["The spell link"]),
+                    desc = format(
+                        "%s\n%s\n%s",
+                        FormatDesc("%player%", L["Your name"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%spell%", L["The spell link"])
+                    ),
                     width = 2.5
                 },
                 useDefaultText = {

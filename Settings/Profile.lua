@@ -2,14 +2,37 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 P.announcement = {
     enable = true,
+    interrupt = {
+        enable = true,
+        onlyInstance = true,
+        player = {
+            enable = true,
+            text = L["I interrupted %target%'s %target_spell%!"],
+            channel = {
+                solo = "SELF",
+                party = "PARTY",
+                instance = "INSTANCE_CHAT",
+                raid = "RAID"
+            }
+        },
+        others = {
+            enable = false,
+            text = L["%player% interrupted %target%'s %target_spell%!"],
+            channel = {
+                party = "EMOTE",
+                instance = "NONE",
+                raid = "NONE"
+            }
+        }
+    },
     resetInstance = {
         enable = true,
         prefix = true,
         channel = {
-            ["party"] = "PARTY",
-            ["instance"] = "INSTANCE_CHAT",
-            ["raid"] = "RAID",
-        },
+            party = "PARTY",
+            instance = "INSTANCE_CHAT",
+            raid = "RAID"
+        }
     }
 }
 

@@ -17,8 +17,8 @@ local msgList = {
     INSTANCE_RESET_FAILED_OFFLINE = L["Cannot reset %s (There are players offline in your party.)"]
 }
 
-function A:ResetInstance(event, data)
-    if not self.db.resetInstance.enable or event ~= "CHAT_MSG_SYSTEM" then
+function A:ResetInstance(data)
+    if not self.db.resetInstance.enable then
         return
     end
 
@@ -35,5 +35,3 @@ function A:ResetInstance(event, data)
         end
     end
 end
-
-A:AddCallbackForEvent("CHAT_MSG_SYSTEM", "ResetInstance")

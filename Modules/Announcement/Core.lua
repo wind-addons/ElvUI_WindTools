@@ -8,23 +8,6 @@ local SendChatMessage, C_ChatInfo_SendAddonMessage= SendChatMessage, C_ChatInfo.
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 local UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant = UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant
 
-A.EventFunctions = {}
-
---[[
-    注册事件回调
-    @param {string} eventName 事件名
-    @param {function} submoduleFunctionName 事件回调函数
-]]
-function A:AddCallbackForEvent(eventName, submoduleFunctionName)
-    local event = self.EventFunctions[eventName]
-    if not event then
-        self.EventFunctions[eventName] = {}
-        event = self.EventFunctions[eventName]
-    end
-
-    tinsert(event, submoduleFunctionName)
-end
-
 --[[
     发送消息
     @param {string} text 欲发送的字符串
@@ -94,24 +77,6 @@ function A:SendAddonMessage(message)
     end
 end
 
---[[
-    事件转发
-    @param {string} event 事件名
-    @param {object} data 数据
-]]
-function A:TransferEventInfo(event, data)
-    local submodules = self.EventFunctions[event]
-    if not submodules then
-        return
-    end
-
-    for _, submodule in pairs(submodules) do
-        if self[submodule] then
-            self[submodule](self, event, data)
-        end
-    end
-end
-
 function A:Initialize()
     self.db = E.db.WT.announcement
 
@@ -119,7 +84,7 @@ function A:Initialize()
         return
     end
 
-    for event, _ in pairs(self.EventFunctions) do
+    for _, event in pairs(self.EventList) do
         A:RegisterEvent(event)
     end
 
@@ -134,7 +99,7 @@ function A:ProfileUpdate()
     end
 
     -- 禁用模块后反注册事件
-    for event, _ in pairs(mod.EventFunctions) do
+    for _, event in pairs(self.EventList) do
         A:UnregisterEvent(event)
     end
 

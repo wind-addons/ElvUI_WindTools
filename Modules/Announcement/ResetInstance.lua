@@ -15,8 +15,6 @@ local msgList = {
 }
 
 function A:ResetInstance(event, data)
-    print(data[1])
-
     if not self.db.resetInstance.enable or event ~= "CHAT_MSG_SYSTEM" then
         return
     end

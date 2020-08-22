@@ -5,5 +5,4 @@ local A = W:GetModule("Announcement")
 
 function A:CHAT_MSG_SYSTEM(event, text)
     self:TransferEventInfo(event, {text})
-    print(text)
 end

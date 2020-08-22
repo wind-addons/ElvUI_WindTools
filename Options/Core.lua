@@ -30,29 +30,36 @@ W.options = {
         icon = W.Media.Icons.map,
         args = {}
     },
-    social = {
+    announcement = {
         order = 105,
+        name = L["Announcement"],
+        desc = L["Send something to game automatically."],
+        icon = W.Media.Icons.map,
+        args = {}
+    },
+    social = {
+        order = 106,
         name = L["Social"],
         desc = L["Make some enhancements on chat and friend frames."],
         icon = W.Media.Icons.chat,
         args = {}
     },
     tooltips = {
-        order = 106,
+        order = 107,
         name = L["Tooltips"],
         desc = L["Add some additional information to your tooltips."],
         icon = W.Media.Icons.tooltips,
         args = {}
     },
     skins = {
-        order = 107,
+        order = 108,
         name = L["Skins"],
         desc = L["Apply new shadow style for ElvUI."],
         icon = W.Media.Icons.skins,
         args = {}
     },
     misc = {
-        order = 107,
+        order = 109,
         name = L["Misc"],
         desc = L["Miscellaneous modules."],
         icon = W.Media.Icons.misc,

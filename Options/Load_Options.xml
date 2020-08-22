@@ -2,6 +2,7 @@
 	<!-- Core -->
 	<Script file='Core.lua'/>
 	<!-- Submodule -->
+	<Script file="Announcement.lua"/>
 	<Script file="Combat.lua"/>
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>

@@ -78,7 +78,7 @@ function PR:SetupParagonTooltip()
 		local factionName = GetFactionInfoByID(self.factionID)
 		local questIndex = GetQuestLogIndexByID(rewardQuestID)
 		local description = GetQuestLogCompletionText(questIndex) or ""
-		EmbeddedItemTooltip:SetText(L["PARAGON"])
+		EmbeddedItemTooltip:SetText(L["Paragon"])
 		EmbeddedItemTooltip:AddLine(description, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, 1)
 		GameTooltip_AddQuestRewardsToTooltip(EmbeddedItemTooltip, rewardQuestID)
 		EmbeddedItemTooltip:Show()

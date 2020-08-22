@@ -126,7 +126,7 @@ local dungeons = {
     "The Underrot",
     "Tol Dagor",
     "Waycrest Manor",
-    "Operation: Mechagon",
+    "Operation: Mechagon"
 }
 
 for index, raid in ipairs(raids) do

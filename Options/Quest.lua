@@ -32,7 +32,7 @@ options.paragonReputation = {
             name = L["Enable"]
         },
         reputation_panel = {
-			order = 3,
+            order = 3,
             name = L["Reputation panel"],
             type = "group",
             inline = true,
@@ -40,65 +40,67 @@ options.paragonReputation = {
                 E.db.WT.quest.paragonReputation[info[#info]] = value
                 ReputationFrame_Update()
             end,
-			args = {
-				color = {
-					order = 1, 
-					name = L["Color"],
-					type = "color",
-					hasAlpha = false,
-					get = function(info)
-						local t = E.db.WT.quest.paragonReputation.color
-						return t.r, t.g, t.b, 1, 0, .5, .9, 1
-					end,
-					set = function(info, r, g, b)
-						local t = E.db.WT.quest.paragonReputation.color
-						t.r, t.g, t.b = r, g, b
-						ReputationFrame_Update()
-					end,
-				},
-				text = {
-					order = 2, 
-					name = L["Format"],
-					type = 'select',
-					values = {
-						['PARAGON'] = L["Paragon"]..' (100/10000)',
-						['EXALTED'] = L["Exalted"]..' (100/10000)',
-						['CURRENT'] = '100 (100/10000)',
-						['VALUE'] = '100/10000',
-						['DEFICIT'] = '9900',
-					},
-				},
-			},
+            args = {
+                color = {
+                    order = 1,
+                    name = L["Color"],
+                    type = "color",
+                    hasAlpha = false,
+                    get = function(info)
+                        local t = E.db.WT.quest.paragonReputation.color
+                        return t.r, t.g, t.b, 1, 0, .5, .9, 1
+                    end,
+                    set = function(info, r, g, b)
+                        local t = E.db.WT.quest.paragonReputation.color
+                        t.r, t.g, t.b = r, g, b
+                        ReputationFrame_Update()
+                    end
+                },
+                text = {
+                    order = 2,
+                    name = L["Format"],
+                    type = "select",
+                    values = {
+                        ["PARAGON"] = L["Paragon"] .. " (100/10000)",
+                        ["EXALTED"] = L["Exalted"] .. " (100/10000)",
+                        ["CURRENT"] = "100 (100/10000)",
+                        ["VALUE"] = "100/10000",
+                        ["DEFICIT"] = "9900"
+                    }
+                }
+            }
         },
         toast = {
-			order = 4,
+            order = 4,
             name = L["Toast"],
             type = "group",
             inline = true,
             get = function(info)
-                return E.db.WT.quest.paragonReputation[info[#info-1]][info[#info]]
+                return E.db.WT.quest.paragonReputation[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.quest.paragonReputation[info[#info-1]][info[#info]] = value
+                E.db.WT.quest.paragonReputation[info[#info - 1]][info[#info]] = value
             end,
-			args = {
-				enable = {
+            args = {
+                enable = {
                     order = 1,
-                    type = "toggle", 
-					name = L["Enable"],
-				},
-				sound = {
-                    order = 2, 
                     type = "toggle",
-					name = L["Sound"],
-				},
-				fade_time = {
-					order = 3,
-					type = "range",
-					name = L["Fade time"],
-					min = 1, max = 15.0, step = 0.01,
-				},
-			},
-		},
+                    name = L["Enable"]
+                },
+                sound = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Sound"]
+                },
+                fade_time = {
+                    order = 3,
+                    type = "range",
+                    name = L["Fade time"],
+                    min = 1,
+                    max = 15.0,
+                    step = 0.01
+                }
+            }
+        }
     }
 }

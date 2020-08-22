@@ -91,7 +91,7 @@ options.cvars = {
                     type = "toggle",
                     name = L["Raw Mouse Acceleration"],
                     desc = L[
-                        "Changes the rate at which your mouse pointer moves based on the speed you're moving the mouse."
+                        "Changes the rate at which your mouse pointer moves based on the speed you are moving the mouse."
                     ]
                 }
             }

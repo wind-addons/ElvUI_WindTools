@@ -14,4 +14,4 @@ function S:Blizzard_BarbershopUI()
     S:CreateShadow(_G.TutorialFrame)
 end
 
-S:AddCallback('TutorialFrame')
+S:AddCallback("TutorialFrame")

@@ -19,7 +19,7 @@ local TauntSpellList = {
 
 function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     local config = self.db.taunt
-    if not config.enable then
+    if not config or not config.enable then
         return
     end
 

@@ -18,7 +18,8 @@ local msgList = {
 }
 
 function A:ResetInstance(data)
-    if not self.db.resetInstance.enable then
+    local config = self.db.resetInstance
+    if not config or not config.enable then
         return
     end
 
@@ -26,10 +27,10 @@ function A:ResetInstance(data)
         systemMessage = _G[systemMessage]
         if (match(data.text, gsub(systemMessage, "%%s", ".+"))) then
             local instance = match(data.text, gsub(systemMessage, "%%s", "(.+)"))
-            local prefix = self.db.resetInstance.prefix and "<WindTools> " or ""
+            local prefix = config.prefix and "<WindTools> " or ""
             self:SendMessage(
                 format(prefix .. friendlyMessage, instance),
-                self:GetChannel(self.db.resetInstance.channel)
+                self:GetChannel(config.channel)
             )
             return
         end

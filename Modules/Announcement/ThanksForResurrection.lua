@@ -18,7 +18,7 @@ local ResurrectionSpellList = {
 function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
 	local config = self.db.thanksForResurrection
 
-	if not config.enable then
+	if not config or not config.enable then
 		return
 	end
 

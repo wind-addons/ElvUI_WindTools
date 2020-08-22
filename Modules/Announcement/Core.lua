@@ -4,9 +4,12 @@ local A = W:NewModule("Announcement", "AceEvent-3.0")
 local _G = _G
 local pairs = pairs
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
-local SendChatMessage, C_ChatInfo_SendAddonMessage= SendChatMessage, C_ChatInfo.SendAddonMessage
+local SendChatMessage, C_ChatInfo_SendAddonMessage = SendChatMessage, C_ChatInfo.SendAddonMessage
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
-local UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant = UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant
+local UnitIsGroupLeader, UnitIsGroupAssistant, IsEveryoneAssistant =
+    UnitIsGroupLeader,
+    UnitIsGroupAssistant,
+    IsEveryoneAssistant
 
 --[[
     发送消息

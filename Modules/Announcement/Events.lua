@@ -14,7 +14,6 @@ function A:CHAT_MSG_SYSTEM(event, text)
     self:ResetInstance(data) -- 重置副本
 end
 
-
 function A:COMBAT_LOG_EVENT_UNFILTERED()
     -- 参数列表
     -- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
@@ -26,20 +25,20 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     local destName = combatInfo[9]
 
     if event == "SPELL_CAST_SUCCESS" then
-		-- self:SayThanks(CombatLogGetCurrentEventInfo())
-		-- if self:Combat(CombatLogGetCurrentEventInfo()) then return end
-		-- self:Utility(CombatLogGetCurrentEventInfo())
-	elseif event == "SPELL_SUMMON" then
-		-- self:Utility(CombatLogGetCurrentEventInfo())
-	elseif event == "SPELL_CREATE" then
-		-- self:Utility(CombatLogGetCurrentEventInfo())
+        -- self:SayThanks(CombatLogGetCurrentEventInfo())
+        -- if self:Combat(CombatLogGetCurrentEventInfo()) then return end
+        -- self:Utility(CombatLogGetCurrentEventInfo())
+    elseif event == "SPELL_SUMMON" then
+        -- self:Utility(CombatLogGetCurrentEventInfo())
+    elseif event == "SPELL_CREATE" then
+        -- self:Utility(CombatLogGetCurrentEventInfo())
     elseif event == "SPELL_INTERRUPT" then
         local spellId = combatInfo[12]
         local extraSpellId = combatInfo[15]
-		self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
-	elseif event == "SPELL_AURA_APPLIED" then
-		-- self:Taunt(CombatLogGetCurrentEventInfo())
-	elseif event == "SPELL_MISSED" then
-		-- self:Taunt(CombatLogGetCurrentEventInfo())
-	end
+        self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
+    elseif event == "SPELL_AURA_APPLIED" then
+        -- self:Taunt(CombatLogGetCurrentEventInfo())
+    elseif event == "SPELL_MISSED" then
+    -- self:Taunt(CombatLogGetCurrentEventInfo())
+    end
 end

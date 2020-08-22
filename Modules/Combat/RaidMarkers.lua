@@ -230,7 +230,7 @@ function RM:CreateButtons()
 			button:SetScript(
 				"OnClick",
 				function(self)
-					if _G[("Is%sKeyDown"):format(self.modifierString)]() then
+					if _G[("Is%sKeyDown"):format(RM.modifierString)]() then
 						ClearRaidMarker()
 					else
 						local now = GetTime()
@@ -317,6 +317,8 @@ function RM:ProfileUpdate()
 		self:CreateBar()
 		return
 	end
+
+	self.modifierString = self.db.modifier:gsub("^%l", strupper)
 
 	self:ToggleSettings()
 end

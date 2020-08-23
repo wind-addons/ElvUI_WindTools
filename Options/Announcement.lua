@@ -3,7 +3,7 @@ local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
 
 local _G = _G
-local format = format
+local pairs, tonumber, format, strupper = pairs, tonumber, format, strupper
 
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
@@ -1224,6 +1224,203 @@ options.combatResurrection = {
         }
     }
 }
+
+options.utility = {
+    order = 6,
+    type = "group",
+    name = L["Utility"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Send the use of portals, ritual of summoning, feasts, etc."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        channel = {
+            order = 3,
+            name = L["Channel"],
+            type = "group",
+            inline = true,
+            get = function(info)
+                return E.db.WT.announcement.utility[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.utility[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                solo = {
+                    order = 1,
+                    name = L["Solo"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = _G.EMOTE,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                party = {
+                    order = 2,
+                    name = L["In Party"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                instance = {
+                    order = 3,
+                    name = L["In Instance"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        INSTANCE_CHAT = _G.INSTANCE_CHAT,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                raid = {
+                    order = 4,
+                    name = L["In Raid"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        RAID = _G.RAID,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                }
+            }
+        }
+    }
+}
+
+do
+    local categoryLocales = {
+        feasts = L["Feasts"],
+        bots = L["Bots"],
+        toys = L["Toys"],
+        portals = L["Portals"]
+    }
+
+    local specialExampleSpell = {
+        feasts = 286050,
+        bots = 67826,
+        toys = 61031,
+        portals = 10059
+    }
+
+    local spellOptions = options.utility.args
+    local spellOrder = 10
+    local categoryOrder = 50
+    for categoryOrId, config in pairs(P.announcement.utility.spells) do
+        local groupName, groupOrder, exampleSpellId
+        local id = tonumber(categoryOrId)
+        if id then
+            groupName = GetSpellInfo(id)
+            exampleSpellId = id
+            groupOrder = spellOrder
+            spellOrder = spellOrder + 1
+        else
+            groupName = categoryLocales[categoryOrId]
+            exampleSpellId = specialExampleSpell[categoryOrId]
+            groupOrder = categoryOrder
+            categoryOrder = categoryOrder + 1
+        end
+
+        exampleSpellId = exampleSpellId or 20484
+
+        spellOptions[categoryOrId] = {
+            order = groupOrder,
+            name = groupName,
+            type = "group",
+            get = function(info)
+                return E.db.WT.announcement.utility.spells[categoryOrId][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.utility.spells[categoryOrId][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                includePlayer = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Include Player"],
+                    desc = L["Uncheck this box, it will not send message if you cast the spell."]
+                },
+                raidWarning = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Raid Warning"],
+                    desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."]
+                },
+                text = {
+                    order = 4,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s",
+                        FormatDesc("%player%", L["Name of the player"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%spell%", L["The spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 5,
+                    type = "execute",
+                    func = function()
+                        E.db.WT.announcement.utility.spells[categoryOrId].text =
+                            P.announcement.utility.spells[categoryOrId].text
+                    end,
+                    name = L["Default Text"]
+                },
+                example = {
+                    order = 6,
+                    type = "description",
+                    name = function()
+                        local message = E.db.WT.announcement.utility.spells[categoryOrId].text
+                        message = gsub(message, "%%player%%", UnitName("player"))
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%spell%%", GetSpellLink(exampleSpellId))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
+                    end
+                }
+            }
+        }
+    end
+end
 
 options.goodbye = {
     order = 7,

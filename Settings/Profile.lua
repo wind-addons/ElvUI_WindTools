@@ -142,35 +142,35 @@ P.announcement = {
             raid = "RAID"
         },
         spells = {
-            [698] = {
+            ["698"] = {
                 -- 召喚儀式
                 enable = true,
                 includePlayer = true,
                 raidWarning = true,
                 text = L["%player% is casting %spell%, please assist!"]
             },
-            [29893] = {
+            ["29893"] = {
                 -- 靈魂之井
                 enable = true,
                 includePlayer = true,
                 raidWarning = true,
                 text = L["%player% is handing out cookies, go and get one!"]
             },
-            [54710] = {
+            ["54710"] = {
                 -- MOLL-E 郵箱
                 enable = true,
                 includePlayer = true,
                 raidWarning = true,
                 text = L["%player% puts %spell%"]
             },
-            [261602] = {
+            ["261602"] = {
                 -- 凱蒂的郵哨
                 enable = true,
                 includePlayer = true,
                 raidWarning = true,
                 text = L["%player% used %spell%"]
             },
-            [190336] = {
+            ["190336"] = {
                 -- 召喚餐點桌
                 enable = true,
                 includePlayer = true,

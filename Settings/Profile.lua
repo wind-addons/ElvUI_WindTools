@@ -222,7 +222,7 @@ P.combat = {
         enterText = L["Enter Combat"],
         leaveText = L["Leave Combat"],
         enterColor = {r = 0.929, g = 0.11, b = 0.141, a = 1},
-        leaveColor = {r = 1, g = 0.914, b = 0.184, a = 1},
+        leaveColor = {r = 0.227, g = 1, b = 0.6, a = 1},
         font = {
             name = E.db.general.font,
             size = 25,

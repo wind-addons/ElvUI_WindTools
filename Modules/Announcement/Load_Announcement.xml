@@ -8,4 +8,5 @@
 	<Script file='ResetInstance.lua'/>
 	<Script file='Taunt.lua'/>
 	<Script file='ThanksForResurrection.lua'/>
+	<Script file='Utility.lua'/>
 </Ui>

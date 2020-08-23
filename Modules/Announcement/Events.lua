@@ -16,9 +16,9 @@ function A:CHAT_MSG_SYSTEM(event, text)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()
+    local combatInfo = {CombatLogGetCurrentEventInfo()}
     -- 参数列表
     -- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
-    local combatInfo = {CombatLogGetCurrentEventInfo()}
     local timestamp = combatInfo[1]
     local event = combatInfo[2]
     local sourceGUID = combatInfo[4]
@@ -29,12 +29,12 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
 
     if event == "SPELL_CAST_SUCCESS" then
         -- if self:Combat(CombatLogGetCurrentEventInfo()) then return end
-        -- self:Utility(CombatLogGetCurrentEventInfo())
+        self:Utility(event, sourceName, spellId)
         self:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_SUMMON" then
-        -- self:Utility(CombatLogGetCurrentEventInfo())
+        self:Utility(event, sourceName, spellId)
     elseif event == "SPELL_CREATE" then
-        -- self:Utility(CombatLogGetCurrentEventInfo())
+        self:Utility(event, sourceName, spellId)
     elseif event == "SPELL_INTERRUPT" then
         local extraSpellId = combatInfo[15]
         self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)

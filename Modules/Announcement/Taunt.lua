@@ -65,13 +65,13 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                             MonkProvokeAllCache[sourceGUID] = timestamp
                             self:SendMessage(
                                 FormatMessageWithoutPet(config.player.player.provokeAllText),
-                                self:GetChannel(config.player.player.successChannel)
+                                self:GetChannel(config.player.player.channel)
                             )
                         end
                     else
                         self:SendMessage(
                             FormatMessageWithoutPet(config.player.player.successText),
-                            self:GetChannel(config.player.player.successChannel)
+                            self:GetChannel(config.player.player.channel)
                         )
                     end
                 end
@@ -81,14 +81,14 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                     if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then
                         MonkProvokeAllCache[sourceGUID] = timestamp
                         self:SendMessage(
-                            FormatMessageWithoutPet(config.others.player.provoke_all_text),
-                            self:GetChannel(config.others.player.success_channel)
+                            FormatMessageWithoutPet(config.others.player.provokeAllText),
+                            self:GetChannel(config.others.player.channel)
                         )
                     end
                 else
                     self:SendMessage(
-                        FormatMessageWithoutPet(config.others.player.success_text),
-                        self:GetChannel(config.others.player.success_channel)
+                        FormatMessageWithoutPet(config.others.player.successText),
+                        self:GetChannel(config.others.player.channel)
                     )
                 end
             end
@@ -98,13 +98,13 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 if config.player.pet.enable then
                     self:SendMessage(
                         FormatMessageWithPet(config.player.pet.successText),
-                        self:GetChannel(config.player.pet.successChannel)
+                        self:GetChannel(config.player.pet.channel)
                     )
                 end
             elseif config.others.pet.enable then
                 self:SendMessage(
                     FormatMessageWithPet(config.others.pet.successText),
-                    self:GetChannel(config.others.pet.successChannel)
+                    self:GetChannel(config.others.pet.channel)
                 )
             end
         end
@@ -115,13 +115,13 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 if config.player.player.enable then
                     self:SendMessage(
                         FormatMessageWithoutPet(config.player.player.failedText),
-                        self:GetChannel(config.player.player.failedChannel)
+                        self:GetChannel(config.player.player.channel)
                     )
                 end
             elseif config.others.player.enable then
                 self:SendMessage(
                     FormatMessageWithoutPet(config.others.player.failedText),
-                    self:GetChannel(config.others.player.failedChannel)
+                    self:GetChannel(config.others.player.channel)
                 )
             end
         elseif sourceType == "Pet" or sourceType == "Creature" then
@@ -130,13 +130,13 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 if config.player.pet.enable then
                     self:SendMessage(
                         FormatMessageWithPet(config.player.pet.failedText),
-                        self:GetChannel(config.player.pet.failedChannel)
+                        self:GetChannel(config.player.pet.channel)
                     )
                 end
             elseif config.others.pet.enable then
                 self:SendMessage(
                     FormatMessageWithPet(config.others.pet.failedText),
-                    self:GetChannel(config.others.pet.failedChannel)
+                    self:GetChannel(config.others.pet.channel)
                 )
             end
         end

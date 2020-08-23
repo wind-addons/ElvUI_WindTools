@@ -1124,7 +1124,7 @@ options.combatResurrection = {
         raidWarning = {
             order = 4,
             type = "toggle",
-            name = L["Raid Warning"],
+            name = _G.RAID_WARNING,
             desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."]
         },
         text = {
@@ -1382,7 +1382,7 @@ do
                 raidWarning = {
                     order = 3,
                     type = "toggle",
-                    name = L["Raid Warning"],
+                    name = _G.RAID_WARNING,
                     desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."]
                 },
                 text = {

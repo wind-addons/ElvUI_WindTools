@@ -3,12 +3,13 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local GetCVarBool = GetCVarBool
 local pcall, pairs, tinsert = pcall, pairs, tinsert
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
-local UnitName, GetRealmName = UnitName, GetRealmName
+local UnitGUID, UnitName, GetRealmName = UnitGUID, UnitName, GetRealmName
 
 -- 一些常量
 W.Title = L["WindTools"]
 
 W.PlayerName = UnitName("player")
+W.PlayerGUID = UnitGUID("player")
 W.PlayerRelam = GetRealmName("player")
 W.PlayerNameWithRelam = format("%s-%s", W.PlayerName, W.PlayerRelam)
 

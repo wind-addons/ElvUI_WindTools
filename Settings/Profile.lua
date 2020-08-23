@@ -2,6 +2,18 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 P.announcement = {
     enable = true,
+    combatResurrection = {
+        enable = true,
+        onlySourceIsPlayer = false,
+        raidWarning = false,
+        text = L["%player% casted %spell% -> %target%"],
+        channel = {
+            solo = "EMOTE",
+            party = "PARTY",
+            instance = "INSTANCE_CHAT",
+            raid = "RAID"
+        }
+    },
     goodbye = {
         enable = true,
         text = L["Thanks all!"],
@@ -105,6 +117,20 @@ P.announcement = {
             party = "WHISPER",
             instance = "WHISPER",
             raid = "WHISPER"
+        }
+    },
+    threatTransfer = {
+        enable = true,
+        onlyNotTank = true,
+        forceSourceIsPlayer = true,
+        forceDestIsPlayer = false,
+        raidWarning = false,
+        text = L["%player% casted %spell% -> %target%"],
+        channel = {
+            solo = "EMOTE",
+            party = "PARTY",
+            instance = "INSTANCE_CHAT",
+            raid = "RAID"
         }
     },
     utility = {

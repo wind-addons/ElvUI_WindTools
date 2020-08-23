@@ -4,6 +4,7 @@ local tostring = tostring
 local UnitInRaid, UnitInParty = UnitInRaid, UnitInParty
 
 local BotList = {
+    [157066] = true, -- 沃特
     [22700] = true, -- 修理機器人74A型
     [44389] = true, -- 修理機器人110G型
     [54711] = true, -- 廢料機器人

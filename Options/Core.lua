@@ -27,7 +27,7 @@ W.options = {
         order = 104,
         name = L["Quest"],
         desc = L["Make adventure life easier."],
-        icon = W.Media.Icons.map,
+        icon = W.Media.Icons.quest,
         args = {}
     },
     social = {
@@ -41,7 +41,7 @@ W.options = {
         order = 106,
         name = L["Announcement"],
         desc = L["Send something to game automatically."],
-        icon = W.Media.Icons.map,
+        icon = W.Media.Icons.announcement,
         args = {}
     },
     tooltips = {

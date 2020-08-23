@@ -342,7 +342,7 @@ options.taunt = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Send messages after taunt successed or failed."],
+                    name = L["Send messages after taunt succeeded or failed."],
                     fontSize = "medium"
                 }
             }
@@ -1078,6 +1078,146 @@ options.taunt = {
                                 SAY = _G.SAY
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+options.combatResurrection = {
+    order = 5,
+    type = "group",
+    name = L["Combat Resurrection"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Send messages about combat resurrection use."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        onlySourceIsPlayer = {
+            order = 3,
+            type = "toggle",
+            name = L["Only You"],
+            desc = L["Only send messages after you cast combat resurrection."]
+        },
+        raidWarning = {
+            order = 4,
+            type = "toggle",
+            name = L["Raid Warning"],
+            desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."]
+        },
+        text = {
+            order = 5,
+            type = "input",
+            name = L["Text"],
+            desc = format(
+                "%s\n%s\n%s",
+                FormatDesc("%player%", L["Name of the player"]),
+                FormatDesc("%target%", L["Target name"]),
+                FormatDesc("%spell%", L["The spell link"])
+            ),
+            width = 2.5
+        },
+        useDefaultText = {
+            order = 6,
+            type = "execute",
+            func = function(info)
+                E.db.WT.announcement.combatResurrection.text = P.announcement.combatResurrection.text
+            end,
+            name = L["Default Text"]
+        },
+        example = {
+            order = 7,
+            type = "description",
+            name = function()
+                local message = E.db.WT.announcement.combatResurrection.text
+                message = gsub(message, "%%player%%", UnitName("player"))
+                message = gsub(message, "%%target%%", L["Sylvanas"])
+                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+            end
+        },
+        channel = {
+            order = 8,
+            name = L["Channel"],
+            type = "group",
+            inline = true,
+            get = function(info)
+                return E.db.WT.announcement.combatResurrection[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.combatResurrection[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                solo = {
+                    order = 1,
+                    name = L["Solo"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = _G.EMOTE,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                party = {
+                    order = 2,
+                    name = L["In Party"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                instance = {
+                    order = 3,
+                    name = L["In Instance"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        INSTANCE_CHAT = _G.INSTANCE_CHAT,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                raid = {
+                    order = 4,
+                    name = L["In Raid"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        RAID = _G.RAID,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
                     }
                 }
             }

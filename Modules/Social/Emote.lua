@@ -260,7 +260,7 @@ end
 function CE:Initialize()
     self.db = E.db.WT.social.emote
 
-    if self.Initialized or (not self.db.enable) then
+    if self.initialized or (not self.db.enable) then
         return
     end
 
@@ -280,13 +280,13 @@ function CE:Initialize()
     self:CreateInterface()
     self:HandleEmoteWithBubble()
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function CE:ProfileUpdate()
     self:Initialize()
 
-    if self.Initialized and not self.db.enable then
+    if self.initialized and not self.db.enable then
         self.EmoteSelector:Hide()
     end
 

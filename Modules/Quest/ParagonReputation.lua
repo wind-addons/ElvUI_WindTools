@@ -338,7 +338,7 @@ end
 
 function PR:Initialize()
 	self.db = E.db.WT.quest.paragonReputation
-	if not self.db.enable or self.Initialized then
+	if not self.db.enable or self.initialized then
         return
 	end
 	
@@ -362,7 +362,7 @@ function PR:Initialize()
 		end
 	)
 
-	self.Initialized = true
+	self.initialized = true
 end
 
 function PR:ProfileUpdate()

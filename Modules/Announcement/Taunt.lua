@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 local strsplit, gsub = strsplit, gsub
-local GetSpellLink = GetSpellLink
+local GetSpellLink, IsInGroup = GetSpellLink, IsInGroup
 
 local MonkProvokeAllCache = {}
 
@@ -75,7 +75,7 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                         )
                     end
                 end
-            elseif config.others.player.enable then
+            elseif config.others.player.enable and IsInGroup() then
                 if spellId == 118635 then
                     -- 武僧群嘲防刷屏
                     if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then

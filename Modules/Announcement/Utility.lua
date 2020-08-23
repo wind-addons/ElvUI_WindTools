@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
+local tostring = tostring
 local UnitInRaid, UnitInParty = UnitInRaid, UnitInParty
 
 local BotList = {
@@ -107,7 +108,7 @@ local function TryAnnounce(spellId, sourceName, id, list, type)
     end
 
     local channelConfig = A.db.utility.channel
-    local spellConfig = (type and A.db.utility.spells[type]) or (id and A.db.utility.spells[id])
+    local spellConfig = (type and A.db.utility.spells[type]) or (id and A.db.utility.spells[tostring(id)])
 
     if not spellConfig or not channelConfig then
         return
@@ -158,6 +159,9 @@ function A:Utility(event, sourceName, spellId)
         if TryAnnounce(spellId, sourceName, 261602) then
             return
         end -- 凱蒂的郵哨
+        if TryAnnounce(spellId, sourceName, 195782) then
+            return
+        end -- 召喚月羽雕像
     elseif event == "SPELL_CREATE" then
         if TryAnnounce(spellId, sourceName, 698) then
             return

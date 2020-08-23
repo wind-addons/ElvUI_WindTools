@@ -170,6 +170,13 @@ P.announcement = {
                 raidWarning = true,
                 text = L["%player% used %spell%"]
             },
+            ["195782"] = {
+                -- 召喚月羽雕像
+                enable = true,
+                includePlayer = true,
+                raidWarning = true,
+                text = L["%player% used %spell%"]
+            },
             ["190336"] = {
                 -- 召喚餐點桌
                 enable = true,

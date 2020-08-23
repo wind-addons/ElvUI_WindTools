@@ -17,7 +17,7 @@ local msgList = {
     INSTANCE_RESET_FAILED_OFFLINE = L["Cannot reset %s (There are players offline in your party.)"]
 }
 
-function A:ResetInstance(data)
+function A:ResetInstance(text)
     local config = self.db.resetInstance
     if not config or not config.enable then
         return
@@ -25,8 +25,8 @@ function A:ResetInstance(data)
 
     for systemMessage, friendlyMessage in pairs(msgList) do
         systemMessage = _G[systemMessage]
-        if (match(data.text, gsub(systemMessage, "%%s", ".+"))) then
-            local instance = match(data.text, gsub(systemMessage, "%%s", "(.+)"))
+        if (match(text, gsub(systemMessage, "%%s", ".+"))) then
+            local instance = match(text, gsub(systemMessage, "%%s", "(.+)"))
             local prefix = config.prefix and "<WindTools> " or ""
             self:SendMessage(
                 format(prefix .. friendlyMessage, instance),

@@ -26,6 +26,9 @@
 - Jasmine_20863 @ www.iconfont.cn
     - Media/Icons/Item.tga
 
+- canisminor-weibo @ www.iconfont.cn
+    - Media/Icons/NGA.tga
+
 - cg尐愳 @ www.iconfont.cn
     - Media/Icons/Map.tga
 

@@ -23,7 +23,7 @@ do
 end
 
 local function AddMedia(name, file, type)
-	W.Media[type][name] = MediaPath..type.."\\"..file
+	W.Media[type][name] = MediaPath .. type .. "\\" .. file
 end
 
 AddMedia("vignetting", "Vignetting.tga", "Textures")
@@ -36,7 +36,7 @@ AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")
 AddMedia("combat", "Combat.tga", "Icons")
-AddMedia("help", "Help.tga", "Icons")
+AddMedia("information", "Information.tga", "Icons")
 AddMedia("item", "Item.tga", "Icons")
 AddMedia("map", "Map.tga", "Icons")
 AddMedia("misc", "Misc.tga", "Icons")
@@ -44,3 +44,8 @@ AddMedia("quest", "Quest.tga", "Icons")
 AddMedia("skins", "Skins.tga", "Icons")
 AddMedia("tools", "Hammer.tga", "Icons")
 AddMedia("tooltips", "Tooltips.tga", "Icons")
+
+AddMedia("discord", "Discord.tga", "Icons")
+AddMedia("qq", "QQ.tga", "Icons")
+AddMedia("github", "Github.tga", "Icons")
+AddMedia("nga", "NGA.tga", "Icons")

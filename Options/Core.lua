@@ -64,6 +64,13 @@ W.options = {
         desc = L["Miscellaneous modules."],
         icon = W.Media.Icons.misc,
         args = {}
+    },
+    information = {
+        order = 200,
+        name = L["Information"],
+        desc = L["Credits & help."],
+        icon = W.Media.Icons.information,
+        args = {}
     }
 }
 

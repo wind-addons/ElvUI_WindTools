@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 local format, pairs, tonumber, type = format, pairs, tonumber, type
+local GetClassColor = GetClassColor
 
 --[[
     从数据库设定字体样式
@@ -76,8 +77,29 @@ function F.CreateColorString(text, db)
     end
 
     local hex = db.r and db.g and db.b and E:RGBToHex(db.r, db.g, db.b) or "|cffffffff"
-    
-    return hex..text.."|r"
+
+    return hex .. text .. "|r"
+end
+
+--[[
+    创建职业色字符串
+    @param {string} text 文字
+    @param {string} englishClass 职业名
+]]
+function F.CreateClassColorString(text, englishClass)
+    if not text or not type(text) == "string" then
+        F.DebugMessage("函数", "[5]找不到处理字体风格的字体")
+        return
+    end
+    if not englishClass or type(englishClass) ~= "string" then
+        F.DebugMessage("函数", "[3]职业错误")
+        return
+    end
+
+    local r, g, b = GetClassColor(englishClass)
+    local hex = r and g and b and E:RGBToHex(r, g, b) or "|cffffffff"
+
+    return hex .. text .. "|r"
 end
 
 --[[

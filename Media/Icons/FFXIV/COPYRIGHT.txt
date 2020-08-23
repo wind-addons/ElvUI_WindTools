@@ -1,0 +1,14 @@
+jaJP:
+このフォルダにおいてのファイルは「ファイナルファンタジーXIV 著作物利用条件」を基づき，利用しています．
+著作物の利用は日本国内に限定されているので，無断コピーし，海外での利用については法律上問題が生じます．
+
+enUS:
+DO NOT COPY ICONS TO YOUR ADDONS IF YOU ARE NOT LIVE IN JAPAN.
+PUBLISH THE ADDON CONTAINS THESE ICONS ICONS ILLEGAL OUTSIDE JAPAN.
+PLEASE CHECK ファイナルファンタジーXIV 著作物利用条件.
+
+zhCN:
+本文件夹内的图标受到"ファイナルファンタジーXIV 著作物利用条件"保护, 仅可在日本国内使用.
+请不要随意拷贝这里的图标! 如果发布于日本国之外的地区, 这将是违法行为.
+
+fang2hou @ Japan

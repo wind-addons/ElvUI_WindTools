@@ -4,6 +4,8 @@ local M = W:GetModule("Misc")
 local _G = _G
 local mixin = _G.WardrobeOutfitDropDownMixin
 
+local pairs = pairs
+
 local TRANSMOG_SLOTS = TRANSMOG_SLOTS
 local NO_TRANSMOG_SOURCE_ID = NO_TRANSMOG_SOURCE_ID
 local LE_TRANSMOG_TYPE_APPEARANCE = LE_TRANSMOG_TYPE_APPEARANCE
@@ -19,11 +21,11 @@ local function CheckOutfitForSave(self, name)
     local mainHandEnchant, offHandEnchant
     local pendingSources = {}
 
-    for i = 1, #TRANSMOG_SLOTS do
-        local sourceID = self:GetSlotSourceID(TRANSMOG_SLOTS[i].slot, TRANSMOG_SLOTS[i].transmogType)
+    for key, transmogSlot in pairs(TRANSMOG_SLOTS) do
+        local sourceID = self:GetSlotSourceID(transmogSlot.location)
         if (sourceID ~= NO_TRANSMOG_SOURCE_ID) then
-            if (TRANSMOG_SLOTS[i].transmogType == LE_TRANSMOG_TYPE_APPEARANCE) then
-                local slotID = GetInventorySlotInfo(TRANSMOG_SLOTS[i].slot)
+            if (transmogSlot.location:IsAppearance()) then
+                local slotID = transmogSlot.location:GetSlotID()
                 local isValidSource = C_TransmogCollection_PlayerKnowsSource(sourceID)
                 if (not isValidSource) then
                     local isInfoReady, canCollect = C_TransmogCollection_PlayerCanCollectSource(sourceID)
@@ -39,8 +41,8 @@ local function CheckOutfitForSave(self, name)
                 if (isValidSource) then
                     sources[slotID] = sourceID
                 end
-            elseif (TRANSMOG_SLOTS[i].transmogType == LE_TRANSMOG_TYPE_ILLUSION) then
-                if (TRANSMOG_SLOTS[i].slot == "MAINHANDSLOT") then
+            elseif (transmogSlot.location:IsIllusion()) then
+                if (transmogSlot.location:IsMainHand()) then
                     mainHandEnchant = sourceID
                 else
                     offHandEnchant = sourceID
@@ -71,23 +73,28 @@ local function IsOutfitDressed(self)
     if (not appearanceSources) then
         return true
     end
-
-    for i = 1, #TRANSMOG_SLOTS do
-        if (TRANSMOG_SLOTS[i].transmogType == LE_TRANSMOG_TYPE_APPEARANCE) then
-            local sourceID = self:GetSlotSourceID(TRANSMOG_SLOTS[i].slot, LE_TRANSMOG_TYPE_APPEARANCE)
-            local slotID = GetInventorySlotInfo(TRANSMOG_SLOTS[i].slot)
+    for key, transmogSlot in pairs(TRANSMOG_SLOTS) do
+        if transmogSlot.location:IsAppearance() then
+            local sourceID = self:GetSlotSourceID(transmogSlot.location)
+            local slotID = transmogSlot.location:GetSlotID()
             if (sourceID ~= NO_TRANSMOG_SOURCE_ID and sourceID ~= appearanceSources[slotID]) then
-                if (appearanceSources[slotID] ~= NO_TRANSMOG_SOURCE_ID) then
-                    return false
-                end
+                return false
             end
         end
     end
-    local mainHandSourceID = self:GetSlotSourceID("MAINHANDSLOT", LE_TRANSMOG_TYPE_ILLUSION)
+    local mainHandIllusionTransmogLocation =
+        TransmogUtil.GetTransmogLocation("MAINHANDSLOT", Enum.TransmogType.Illusion, Enum.TransmogModification.None)
+    local mainHandSourceID = self:GetSlotSourceID(mainHandIllusionTransmogLocation)
     if (mainHandSourceID ~= mainHandEnchant) then
         return false
     end
-    local offHandSourceID = self:GetSlotSourceID("SECONDARYHANDSLOT", LE_TRANSMOG_TYPE_ILLUSION)
+    local offHandIllusionTransmogLocation =
+        TransmogUtil.GetTransmogLocation(
+        "SECONDARYHANDSLOT",
+        Enum.TransmogType.Illusion,
+        Enum.TransmogModification.None
+    )
+    local offHandSourceID = self:GetSlotSourceID(offHandIllusionTransmogLocation)
     if (offHandSourceID ~= offHandEnchant) then
         return false
     end

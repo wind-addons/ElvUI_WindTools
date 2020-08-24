@@ -130,7 +130,7 @@ local microMenu = {
 	{
 		text = L["WindTools"],
 		func = function()
-			E:ToggleOptionsUI("WindUI")
+			E:ToggleOptionsUI("WindTools")
 		end,
 		notCheckable = true
 	}

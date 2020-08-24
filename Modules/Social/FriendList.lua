@@ -17,7 +17,7 @@ local FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE = FRIENDS_TEXTURE_OFFLINE,
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
-local MediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\FriendList\\"
+local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
 local GameIcons = {
     ["Alliance"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Alliance"},

@@ -6,7 +6,7 @@ W.Media = {
 	Textures = {}
 }
 
-local MediaPath = "Interface\\Addons\\ElvUI_WindUI\\Media\\"
+local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\"
 
 --[[
     获取图标字符串

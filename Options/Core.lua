@@ -81,7 +81,7 @@ function W:OptionsCallback()
     E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " " .. W.Version
 
     -- 设置主界面
-    E.Options.args.WindUI = {
+    E.Options.args.WindTools = {
         type = "group",
         childGroups = "tree",
         name = W.Title .. " " .. W.Version,
@@ -99,7 +99,7 @@ function W:OptionsCallback()
 
     -- 模块设定
     for catagory, information in pairs(W.options) do
-        E.Options.args.WindUI.args[catagory] = {
+        E.Options.args.WindTools.args[catagory] = {
             order = information.order,
             type = "group",
             childGroups = "tab",

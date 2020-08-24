@@ -8,8 +8,6 @@ local pairs = pairs
 
 local TRANSMOG_SLOTS = TRANSMOG_SLOTS
 local NO_TRANSMOG_SOURCE_ID = NO_TRANSMOG_SOURCE_ID
-local LE_TRANSMOG_TYPE_APPEARANCE = LE_TRANSMOG_TYPE_APPEARANCE
-local LE_TRANSMOG_TYPE_ILLUSION = LE_TRANSMOG_TYPE_ILLUSION
 
 local GetInventorySlotInfo = GetInventorySlotInfo
 local C_TransmogCollection_PlayerCanCollectSource = C_TransmogCollection.PlayerCanCollectSource

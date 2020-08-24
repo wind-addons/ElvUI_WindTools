@@ -22,16 +22,26 @@ options.help = {
             fontSize = "medium",
             name = format(
                 "%s\n\n%s\n\n%s\n\n%s\n\n\n",
-                L["Thank you for using ElvUI_WindTools."],
-                L[
-                    "WindTools is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
-                ],
-                L[
-                    "In Shadowlands (9.0) pre-patch, ElvUI_WindTools has been rewritten, such that possibly there are bugs somewhere."
-                ],
-                L[
-                    "You can use QQ Group, Discord, Github, or the thread in NGA.cn to send me your suggestions or bugs you met."
-                ]
+                format(L["Thank you for using %s!"], L["WindTools"]),
+                format(
+                    L[
+                        "%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
+                    ],
+                    L["WindTools"]
+                ),
+                format(
+                    L[
+                        "In Shadowlands (9.0) pre-patch, %s has been rewritten, such that possibly there are bugs somewhere."
+                    ],
+                    L["WindTools"]
+                ),
+                format(
+                    L["You can use %s, %s, %s, or the thread in %s to me your suggestions or bugs you met."],
+                    L["QQ Group"],
+                    L["Discord"],
+                    L["Github"],
+                    L["NGA.cn"]
+                )
             )
         },
         contributors = {
@@ -160,9 +170,9 @@ options.credits = {
     type = "group",
     name = L["Credits"],
     args = {
-        medias = {
+        mediaFiles = {
             order = 2,
-            name = L["Medias"],
+            name = L["Media Files"],
             type = "group",
             inline = true,
             args = {}
@@ -171,7 +181,7 @@ options.credits = {
 }
 
 do
-    local mediasCreditList = {
+    local mediaFilesCreditList = {
         ["Ferous Media (Ferous)"] = {
             "Media/Texture/Vignetting.tga"
         },
@@ -227,8 +237,8 @@ do
 
     local configOrder = 1
 
-    for author, sourceTable in pairs(mediasCreditList) do
-        options.credits.args.medias.args[tostring(configOrder)] = {
+    for author, sourceTable in pairs(mediaFilesCreditList) do
+        options.credits.args.mediaFiles.args[tostring(configOrder)] = {
             order = configOrder,
             type = "description",
             name = AddColor(author)
@@ -236,7 +246,7 @@ do
         configOrder = configOrder + 1
 
         for _, source in pairs(sourceTable) do
-            options.credits.args.medias.args[tostring(configOrder)] = {
+            options.credits.args.mediaFiles.args[tostring(configOrder)] = {
                 order = configOrder,
                 type = "description",
                 name = "  - " .. source

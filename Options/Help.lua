@@ -36,7 +36,7 @@ options.help = {
                     L["WindTools"]
                 ),
                 format(
-                    L["You can use %s, %s, %s, or the thread in %s to me your suggestions or bugs you met."],
+                    L["You can use %s, %s, %s, or the thread in %s to send your suggestions or bugs you met."],
                     L["QQ Group"],
                     L["Discord"],
                     L["Github"],

@@ -2,7 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.information.args
 local ACH = E.Libs.ACH
 
-local type, format, pairs, tostring = type, format, pairs, tostring
+local unpack, type, format, pairs, tostring = unpack, type, format, pairs, tostring
 
 local function AddColor(string)
     if type(string) ~= "string" then
@@ -170,8 +170,22 @@ options.credits = {
     type = "group",
     name = L["Credits"],
     args = {
-        mediaFiles = {
+        specialThanks = {
+            order = 1,
+            name = L["Special Thanks"],
+            type = "group",
+            inline = true,
+            args = {}
+        },
+        codes = {
             order = 2,
+            name = L["Codes"],
+            type = "group",
+            inline = true,
+            args = {}
+        },
+        mediaFiles = {
+            order = 3,
             name = L["Media Files"],
             type = "group",
             inline = true,
@@ -180,7 +194,107 @@ options.credits = {
     }
 }
 
-do
+do -- 特别感谢
+    local nameList = {
+        "|cffd12727Blazeflack|r",
+        "|cffff7d0aMerathilis|r",
+        "|cffff7d0aBenik|r",
+        "|cfffff0cdsiweia|r",
+        "|cfffff0cdloudsoul|r",
+        E:TextGradient("Simpy", 1.00, 1.00, 0.60, 0.53, 1.00, 0.40),
+        "|cff0070deAzilroka|r",
+        "Haste",
+        "Tukz",
+        "Elv"
+    }
+
+    local nameString = strjoin(", ", unpack(nameList))
+
+    options.credits.args.specialThanks.args["1"] = {
+        order = 1,
+        type = "description",
+        name = format(L["Special thanks to %s."], nameString)
+    }
+
+    options.credits.args.specialThanks.args["2"] = {
+        order = 2,
+        type = "description",
+        name = L["I have learned a lot from their codes."]
+    }
+end
+
+do -- 插件代码
+    local codesCreditList = {
+        [L["Announcement"]] = {
+            "Venomisto (InstanceResetAnnouncer)",
+            "Wetxius, Shestak (ShestakUI)"
+        },
+        [L["Raid Markers"]] = {
+            "Repooc (Shadow & Light)"
+        },
+        [L["Datatexts"]] = {
+            "crackpotx (ElvUI Micro Menu Datatext)"
+        },
+        [L["Already Known"]] = {
+            "ahak (Already Known?)"
+        },
+        [L["Fast Loot"]] = {
+            "Leatrix (Leatrix Plus)"
+        },
+        [L["World Map"]] = {
+            "Leatrix (Leatrix Maps)",
+            "siweia (NDui)"
+        },
+        [L["Minimap Buttons"]] = {
+            "Azilroka, Sinaris, Feraldin (Square Minimap Buttons)"
+        },
+        [L["Misc"]] = {
+            "Warbaby (爱不易)",
+            "zaCade (FixTransmogOutfits)"
+        },
+        [L["Paragon Reputation"]] = {
+            "Fail (Paragon Reputation)"
+        },
+        [L["Skins"]] = {
+            "selias2k (iShadow)"
+        },
+        [L["Filter"]] = {
+            "EKE (Fuckyou)"
+        },
+        [L["Friend List"]] = {
+            "Azilroka (ProjectAzilroka)"
+        },
+        [L["Emote"]] = {
+            "loudsoul (TinyChat)"
+        },
+        [L["Tooltips"]] = {
+            "Tevoll (ElvUI Enhanced Again)",
+            "MMOSimca (Simple Objective Progress)"
+        }
+    }
+
+    local configOrder = 1
+
+    for moduleName, credits in pairs(codesCreditList) do
+        options.credits.args.codes.args[tostring(configOrder)] = {
+            order = configOrder,
+            type = "description",
+            name = AddColor(moduleName) .. " " .. L["Module"]
+        }
+        configOrder = configOrder + 1
+
+        for _, credit in pairs(credits) do
+            options.credits.args.codes.args[tostring(configOrder)] = {
+                order = configOrder,
+                type = "description",
+                name = "  - " .. credit
+            }
+            configOrder = configOrder + 1
+        end
+    end
+end
+
+do -- 媒体文件
     local mediaFilesCreditList = {
         ["Ferous Media (Ferous)"] = {
             "Media/Texture/Vignetting.tga"

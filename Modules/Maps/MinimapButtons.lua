@@ -1,5 +1,3 @@
--- 基于：Square Minimap Buttons (Azilroka, Sinaris, Feraldin)
-
 local W, F, E, L = unpack(select(2, ...))
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")

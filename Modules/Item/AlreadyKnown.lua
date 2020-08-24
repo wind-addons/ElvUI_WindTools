@@ -1,6 +1,3 @@
--- 原作：Already Known?
--- 原作者：ahak (https://wow.curseforge.com/projects/alreadyknown)
-
 local W, F, E, L = unpack(select(2, ...))
 local Search = E.Libs.ItemSearch
 local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")

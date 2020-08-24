@@ -1,7 +1,3 @@
--- 修改自 InstanceResetAnnouncer
--- Novaspark-Firemaw EU (classic) / Venomisto-Frostmourne OCE (retail).
--- https://www.curseforge.com/members/venomisto/projectsd
-
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 

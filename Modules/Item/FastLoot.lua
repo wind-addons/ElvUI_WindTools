@@ -1,4 +1,3 @@
--- 原作者：Leatrix (https://wow.curseforge.com/projects/leatrix-plus)
 local W, F, E, L = unpack(select(2, ...))
 local FL = W:NewModule("FastLoot", "AceEvent-3.0")
 

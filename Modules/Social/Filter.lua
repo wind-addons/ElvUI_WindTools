@@ -4,8 +4,6 @@ local FT = W:NewModule("Filter", "AceEvent-3.0")
 local GetCVar, ConsoleExec = GetCVar, ConsoleExec
 
 function FT:LOADING_SCREEN_DISABLED()
-    -- 导入自 Fxxkyou
-    -- https://nga.178.com/read.php?tid=21171325
     if GetCVar("profanityFilter") == "1" then
         ConsoleExec("portal TW")
         ConsoleExec("profanityFilter 0")

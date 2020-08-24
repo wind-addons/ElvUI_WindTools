@@ -1,7 +1,3 @@
--- 原作：ElvUI_S&L 的一个增强组件
--- 原作者：ElvUI_S&L (https://www.tukui.org/addons.php?id=38)
--- 修改：houshuu, mcc1, SomeBlu
-
 local W, F, E, L = unpack(select(2, ...))
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W:GetModule("Skins")

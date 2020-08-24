@@ -4,7 +4,7 @@
 	<!-- Submodule -->
 	<Script file="Announcement.lua"/>
 	<Script file="Combat.lua"/>
-	<Script file="Help.lua"/>
+	<Script file="Information.lua"/>
 	<Script file="Item.lua"/>
 	<Script file="Maps.lua"/>
 	<Script file="Misc.lua"/>

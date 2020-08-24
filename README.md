@@ -1,14 +1,15 @@
-# What's this? 这是什么？
-This is a renewed version of ElvUI_WindTools, it will be released before Shadowlands.  
-这是一个 ElvUI_WindTools 的重构版本，将在魔兽世界暗影国度发售前进行发布。
+<div align="center">
+<img src="https://github.com/fang2hou/ElvUI_WindTools/blob/master/Title.png?raw=true"/><br>
+<img src="https://img.shields.io/badge/ElvUI-11.49-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.0.0-green.svg?longCache=true&style=for-the-badge"/>
 
-# Why renew 为什么重构
-I have learned a lot from developing ElvUI_WindTools in these years, but ElvUI_WindTools do not have a good module control system and efficient workflow.  
-我从开发 ElvUI_WindTools 中学到了很多，但 ElvUI_WindTools 并没有一个很好的模块控制系统及高效的工作流。
+ElvUI 的可定制增强<br>
+Customizable Enhancement for ElvUI
+</div>
 
-So, I try to build a more powerful plugin for ElvUI, also named ElvUI_WindTools.  
-所以我尝试开发一个更加强大的 ElvUI 插件，也叫 ElvUI_WindTools 这个名字。
+<br>
+这个仓库用来存放暗影国度版本的插件.  
+This repo is for the version of Shadowlands (9.0).
 
-# 加油，奥利给~
-目前还没有设定界面，不建议下载使用。  
-这个仓库在正式版之后将不再更新，全部工作会直接转移到 ElvUI_WindTools 之中继续。
+访问过去版本 [ElvUI_WindTools (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)  
+Check legacy version here: [ElvUI_WindTools (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

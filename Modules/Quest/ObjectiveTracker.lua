@@ -17,6 +17,23 @@ local SystemCache = {
     }
 }
 
+local classColor = _G.RAID_CLASS_COLORS[E.myclass]
+
+function OT:UpdateHeaderFont()
+    local frame = _G.ObjectiveTrackerFrame.MODULES
+    local config = self.db.header
+
+    if not config or not frame then
+        return
+    end
+
+    for _, module in pairs(frame) do
+        if module.Header then
+			F.SetFontWithDB(module.Header.Text, config)
+		end
+	end
+end
+
 function OT:UpdateColorOfTitle()
     if not IsAddOnLoaded("Blizzard_ObjectiveTracker") then
         return
@@ -28,8 +45,6 @@ function OT:UpdateColorOfTitle()
     end
 
     if config.enable and not self.titleColorChanged then
-        local classColor = _G.RAID_CLASS_COLORS[E.myclass]
-
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
             r = config.useClassColor and classColor.r or config.customColorNormal.r,
             g = config.useClassColor and classColor.g or config.customColorNormal.g,
@@ -65,6 +80,8 @@ function OT:Initialize()
     if not self.db.enable or self.initialized then
         return
     end
+
+    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
 
     self.initialized = true
 

@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+local _G = _G
 
 P.announcement = {
     enable = true,
@@ -431,6 +432,30 @@ P.social = {
 }
 
 P.quest = {
+    objectiveTracker = {
+        enable = true,
+        header = {
+            name = E.db.general.font,
+            size = E.db.general.fontSize,
+            style = "OUTLINE"
+        },
+        title = {
+            name = E.db.general.font,
+            size = E.db.general.fontSize,
+            style = "OUTLINE"
+        },
+        titleColor = {
+            enable = true,
+            useClassColor = true,
+            customColorNormal = {r = 0.75, g = 0.61, b = 0},
+            customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
+        },
+        info = {
+            name = E.db.general.font,
+            size = E.db.general.fontSize,
+            style = "OUTLINE"
+        }
+    },
     paragonReputation = {
         enable = true,
         color = {r = 0, g = .5, b = .9},

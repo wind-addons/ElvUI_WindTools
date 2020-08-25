@@ -6,6 +6,7 @@
 	<Script file='CombatResurrection.lua'/>
 	<Script file='Goodbye.lua'/>
 	<Script file='Interrupt.lua'/>
+	<Script file='Quest.lua'/>
 	<Script file='ResetInstance.lua'/>
 	<Script file='Taunt.lua'/>
 	<Script file='ThanksForResurrection.lua'/>

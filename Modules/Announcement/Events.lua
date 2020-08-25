@@ -5,7 +5,8 @@ A.EventList = {
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
     "LFG_COMPLETION_REWARD",
-    "CHALLENGE_MODE_COMPLETED"
+    "CHALLENGE_MODE_COMPLETED",
+    "QUEST_LOG_UPDATE",
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -55,3 +56,7 @@ function A:CHALLENGE_MODE_COMPLETED()
 end
 
 -- TODO: SCENARIO_COMPLETED 场景完成事件
+
+function A:QUEST_LOG_UPDATE()
+    self:Quest()
+end

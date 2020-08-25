@@ -68,13 +68,11 @@ function OT:UpdateQuestFont(block)
     end
 
     if block.HeaderText then
-        print(1)
         F.SetFontWithDB(block.HeaderText, config.title)
     end
 
     if block.lines then
         for objectiveKey, line in pairs(block.lines) do
-            print(line.Text:GetText())
             F.SetFontWithDB(line.Text, config.info)
         end
     end

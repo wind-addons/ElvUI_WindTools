@@ -48,6 +48,38 @@ P.announcement = {
             }
         }
     },
+    quest = {
+        enable = true,
+        replaceBlizzardProgress = true,
+        noDetails = true,
+        hideMaxLevel = true,
+        channel = {
+            solo = "SELF",
+            party = "PARTY",
+            instance = "INSTANCE_CHAT",
+            raid = "RAID"
+        },
+        tag = {
+            enable = true,
+            color = {r = 0.490, g = 0.373, b = 1.000}
+        },
+        group = {
+            enable = true,
+            color = {r = 1.000, g = 0.220, b = 0.220}
+        },
+        level = {
+            enable = true,
+            color = {r = 0.773, g = 0.424, b = 0.941}
+        },
+        daily = {
+            enable = true,
+            color = {r = 1.000, g = 0.980, b = 0.396}
+        },
+        weekly = {
+            enable = true,
+            color = {r = 0.196, g = 1.000, b = 0.494}
+        }
+    },
     resetInstance = {
         enable = true,
         prefix = true,

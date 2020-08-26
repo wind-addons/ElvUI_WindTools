@@ -8,23 +8,10 @@ local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local GetQuestLink = GetQuestLink
-local UnitLevel = UnitLevel
 
-local lastList = lastList
+local maxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 
-local cache = {
-	last = {},
-	current = {}
-}
-
-local color = {
-	daily = {r = 1.000, g = 0.980, b = 0.396},
-	weekly = {r = 0.196, g = 1.000, b = 0.494},
-	group = {r = 1.000, g = 0.220, b = 0.220},
-	tag = {r = 0.490, g = 0.373, b = 1.000},
-	level = {r = 0.773, g = 0.424, b = 0.941},
-	accept = {r = 1.000, g = 0.980, b = 0.396}
-}
+local lastList
 
 local function GetQuests()
 	local quests = {}
@@ -43,6 +30,7 @@ local function GetQuests()
 				isComplete = questInfo.isComplete,
 				frequency = questInfo.frequency,
 				tag = tagInfo and tagInfo.tagName,
+				worldQuestType = tagInfo and tagInfo.worldQuestType,
 				link = GetQuestLink(questInfo.questID)
 			}
 
@@ -63,6 +51,11 @@ local function GetQuests()
 end
 
 function A:Quest()
+	local config = self.db.quest
+	if not config or not config.enable then
+		return
+	end
+
 	local currentList = GetQuests()
 
 	if not lastList then
@@ -71,32 +64,38 @@ function A:Quest()
 	end
 
 	for questID, questCache in pairs(currentList) do
-		local extraInfo = ""
 		local mainInfo = ""
+		local extraInfo = ""
+		local needAnnounce = false
 
-		if questCache.frequency == 1 then -- 每日
-			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.DAILY .. "]", color.daily)
-		elseif questCache.frequency == 2 then -- 每周
-			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.WEEKLY .. "]", color.weekly)
+		if questCache.frequency == 1 and config.daily.enable then -- 每日
+			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.DAILY .. "]", config.daily.color)
+		elseif questCache.frequency == 2 and config.weekly.enable then -- 每周
+			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.WEEKLY .. "]", config.weekly.color)
 		end
 
-		if questCache.suggestedGroup > 1 then -- 多人
-			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", color.group)
+		if questCache.suggestedGroup > 1 and config.suggestedGroup.enable then -- 多人
+			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
 		end
 
-		if questCache.level ~= UnitLevel("player") then -- 等级不同时, 添加等级信息
-			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.level .. "]", color.level)
+		if questCache.level and config.level.enable then -- 等级
+			if not config.hideMaxLevel or questCache.level ~= maxLevelForPlayerExpansion then
+				extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
+			end
 		end
 
-		if questCache.tag then -- 任务分类
-			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.tag .. "]", color.level)
+		if questCache.tag and config.tag then -- 任务分类
+			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.tag .. "]", config.tag.color)
 		end
 
 		local questCacheOld = lastList[questID]
 
 		if questCacheOld then
 			if not questCacheOld.isComplete then -- 之前未完成
-				if #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
+				if questCache.isComplete then
+					mainInfo = questCache.link .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
+					needAnnounce = true
+				elseif #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
 					for queryIndex = 1, #questCache do
 						if
 							questCache[queryIndex] and questCacheOld[queryIndex] and questCache[queryIndex].numItems and
@@ -109,43 +108,38 @@ function A:Quest()
 								b = 0.5
 							}
 
-							local progressInfo = questCache[queryIndex].numItems .. "/" .. questCache[queryIndex].numNeeded
+							local subGoalIsCompleted = questCache[queryIndex].numItems == questCache[queryIndex].numNeeded
 
-							if questCache.isComplete or questCache[queryIndex].numItems == questCache[queryIndex].numNeeded then
-								progressInfo =
-									progressInfo .. "|TInterface/RaidFrame/ReadyCheck-Ready:15:15:-1:2:64:64:6:60:8:60|t" .. L["Completed!"]
+							if config.includeDetails or subGoalIsCompleted then
+								local progressInfo = questCache[queryIndex].numItems .. "/" .. questCache[queryIndex].numNeeded
+								if subGoalIsCompleted then
+									local redayCheckIcon = "|TInterface/RaidFrame/ReadyCheck-Ready:15:15:-1:2:64:64:6:60:8:60|t"
+									progressInfo = progressInfo .. redayCheckIcon
+								end
+								mainInfo = questCache.link .. " " .. questCache[queryIndex].item .. " "
+								mainInfo = mainInfo .. F.CreateColorString(progressInfo, progressColor)
+								needAnnounce = true
 							end
-
-							mainInfo = mainInfo .. questCache.link .. " " .. F.CreateColorString(progressInfo, progressColor)
 						end
 					end
 				end
 			end
-		elseif true then
-			mainInfo = mainInfo .. questCache.link .. F.CreateColorString(L["Accepted"], color.accept)
+		else
+			mainInfo = questCache.link .. " " .. F.CreateColorString(L["Accepted"], {r = 1.000, g = 0.980, b = 0.396})
+			needAnnounce = true
 		end
 
-		if mainInfo ~= "" then
-			UIErrorsFrame:AddMessage(extraInfo .. mainInfo)
-			print(extraInfo .. " / main:" .. mainInfo)
+		if needAnnounce then
+			local message = extraInfo .. mainInfo
+			UIErrorsFrame:AddMessage(message)
+			message = gsub(message, "%|T(.*)%|t", "")
+			message = gsub(message, "%|cff%x%x%x%x%x%x", "")
+			message = gsub(message, "%|r", "")
+			message = gsub(message, "%|Hquest(.*)%|h", "")
+			message = gsub(message, "%|h", "")
+			self:SendMessage(message, self:GetChannel(config.channel))
 		end
 	end
 
 	lastList = currentList
-end
-
-local disabledBlizzard = false
-
-local function DisableBlizzardQuestStatus()
-	if disabledBlizzard then
-		return
-	end
-
-	local originalFunction = _G.QuestMapFrame_CheckQuestCriteria
-
-	QuestMapFrame_CheckQuestCriteria = function(...)
-		originalFunction(...)
-		print(1)
-		return false
-	end
 end

@@ -49,12 +49,10 @@ P.announcement = {
         }
     },
     quest = {
-        enable = true,
-        replaceBlizzardProgress = true,
-        noDetails = true,
+        enable = true,  
+        includeDetails = true,
         hideMaxLevel = true,
         channel = {
-            solo = "SELF",
             party = "PARTY",
             instance = "INSTANCE_CHAT",
             raid = "RAID"
@@ -63,7 +61,7 @@ P.announcement = {
             enable = true,
             color = {r = 0.490, g = 0.373, b = 1.000}
         },
-        group = {
+        suggestedGroup = {
             enable = true,
             color = {r = 1.000, g = 0.220, b = 0.220}
         },

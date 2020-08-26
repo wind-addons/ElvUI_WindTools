@@ -66,26 +66,35 @@ function A:Quest()
 	for questID, questCache in pairs(currentList) do
 		local mainInfo = ""
 		local extraInfo = ""
+		local mainInfoColored = ""
+		local extraInfoColored = ""
 		local needAnnounce = false
+		local isDetailInfo = false
 
 		if questCache.frequency == 1 and config.daily.enable then -- 每日
-			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.DAILY .. "]", config.daily.color)
+			extraInfo = extraInfo .. "[" .. _G.DAILY .. "]"
+			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. _G.DAILY .. "]", config.daily.color)
 		elseif questCache.frequency == 2 and config.weekly.enable then -- 每周
-			extraInfo = extraInfo .. F.CreateColorString("[" .. _G.WEEKLY .. "]", config.weekly.color)
+			extraInfo = extraInfo .. "[" .. _G.WEEKLY .. "]"
+			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. _G.WEEKLY .. "]", config.weekly.color)
 		end
 
 		if questCache.suggestedGroup > 1 and config.suggestedGroup.enable then -- 多人
-			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
+			extraInfo = extraInfo .. "[" .. questCache.suggestedGroup .. "]"
+			extraInfoColored =
+				extraInfoColored .. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
 		end
 
 		if questCache.level and config.level.enable then -- 等级
 			if not config.hideMaxLevel or questCache.level ~= maxLevelForPlayerExpansion then
-				extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
+				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
+				extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
 			end
 		end
 
 		if questCache.tag and config.tag then -- 任务分类
-			extraInfo = extraInfo .. F.CreateColorString("[" .. questCache.tag .. "]", config.tag.color)
+			extraInfo = extraInfo .. "[" .. questCache.tag .. "]"
+			extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.tag .. "]", config.tag.color)
 		end
 
 		local questCacheOld = lastList[questID]
@@ -93,7 +102,8 @@ function A:Quest()
 		if questCacheOld then
 			if not questCacheOld.isComplete then -- 之前未完成
 				if questCache.isComplete then
-					mainInfo = questCache.link .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
+					mainInfo = questCache.title .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
+					mainInfoColored = questCache.link .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
 					needAnnounce = true
 				elseif #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
 					for queryIndex = 1, #questCache do
@@ -112,32 +122,43 @@ function A:Quest()
 
 							if config.includeDetails or subGoalIsCompleted then
 								local progressInfo = questCache[queryIndex].numItems .. "/" .. questCache[queryIndex].numNeeded
+								local progressInfoColored = progressInfo
 								if subGoalIsCompleted then
 									local redayCheckIcon = "|TInterface/RaidFrame/ReadyCheck-Ready:15:15:-1:2:64:64:6:60:8:60|t"
-									progressInfo = progressInfo .. redayCheckIcon
+									progressInfoColored = progressInfoColored .. redayCheckIcon
+								else
+									isDetailInfo = true
 								end
-								mainInfo = questCache.link .. " " .. questCache[queryIndex].item .. " "
-								mainInfo = mainInfo .. F.CreateColorString(progressInfo, progressColor)
+
+								mainInfo = "[" .. questCache.title .. "]" .. " " .. questCache[queryIndex].item .. " "
+								mainInfoColored = questCache.link .. " " .. questCache[queryIndex].item .. " "
+
+								mainInfo = mainInfo .. progressInfo
+								mainInfoColored = mainInfoColored .. F.CreateColorString(progressInfoColored, progressColor)
 								needAnnounce = true
 							end
 						end
 					end
 				end
 			end
-		else
-			mainInfo = questCache.link .. " " .. F.CreateColorString(L["Accepted"], {r = 1.000, g = 0.980, b = 0.396})
-			needAnnounce = true
+		else -- 新的任务
+			if not questCache.worldQuestType then -- 屏蔽世界任务的接收, 路过不报告
+				mainInfo = "[" .. questCache.title .. "]" .. " " .. L["Accepted"]
+				mainInfoColored = questCache.link .. " " .. F.CreateColorString(L["Accepted"], {r = 1.000, g = 0.980, b = 0.396})
+				needAnnounce = true
+			end
 		end
 
 		if needAnnounce then
 			local message = extraInfo .. mainInfo
-			UIErrorsFrame:AddMessage(message)
-			message = gsub(message, "%|T(.*)%|t", "")
-			message = gsub(message, "%|cff%x%x%x%x%x%x", "")
-			message = gsub(message, "%|r", "")
-			message = gsub(message, "%|Hquest(.*)%|h", "")
-			message = gsub(message, "%|h", "")
+			-- TODO: 疑似PTR无法发出带有链接的信息
+			-- print(gsub(message, "\124", "\124\124"))
 			self:SendMessage(message, self:GetChannel(config.channel))
+
+			if not isDetailInfo then -- 具体进度系统会提示
+				local messageColored = extraInfoColored .. mainInfoColored
+				UIErrorsFrame:AddMessage(messageColored)
+			end
 		end
 	end
 

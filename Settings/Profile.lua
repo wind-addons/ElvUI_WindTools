@@ -51,7 +51,6 @@ P.announcement = {
     quest = {
         enable = true,  
         includeDetails = true,
-        hideMaxLevel = true,
         channel = {
             party = "PARTY",
             instance = "INSTANCE_CHAT",
@@ -67,7 +66,8 @@ P.announcement = {
         },
         level = {
             enable = true,
-            color = {r = 0.773, g = 0.424, b = 0.941}
+            color = {r = 0.773, g = 0.424, b = 0.941},
+            hideOnMax = true,
         },
         daily = {
             enable = true,

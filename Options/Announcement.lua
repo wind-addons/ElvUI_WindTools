@@ -53,8 +53,298 @@ options.enable = {
     name = L["Enable"]
 }
 
-options.interrupt = {
+options.quest = {
     order = 3,
+    type = "group",
+    name = L["Quest"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Let your teammates know the progress of quests."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        includeDetails = {
+            order = 3,
+            type = "toggle",
+            name = L["Include Details"],
+            desc = L["Announce every time the progress has been changed."]
+        },
+        channel = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Channel"],
+            get = function(info)
+                return E.db.WT.announcement[info[#info - 2]][info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 2]][info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                party = {
+                    order = 1,
+                    name = L["In Party"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                instance = {
+                    order = 2,
+                    name = L["In Instance"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        PARTY = _G.PARTY,
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = _G.EMOTE,
+                        INSTANCE_CHAT = _G.INSTANCE_CHAT,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                },
+                raid = {
+                    order = 3,
+                    name = L["In Raid"],
+                    type = "select",
+                    values = {
+                        NONE = _G.NONE,
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = _G.EMOTE,
+                        PARTY = _G.PARTY,
+                        RAID = _G.RAID,
+                        YELL = _G.YELL,
+                        SAY = _G.SAY
+                    }
+                }
+            }
+        },
+        tag = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Tag"],
+            get = function(info)
+                return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["The category of the quest."],
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
+                        local default = P.announcement.quest[info[#info - 1]].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.announcement.quest[info[#info - 1]].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                        }
+                    end
+                },
+            }
+        },
+        suggestedGroup = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Suggested Group"],
+            get = function(info)
+                return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["If the quest is suggested with multi-players, add the number of players to the message."],
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
+                        local default = P.announcement.quest[info[#info - 1]].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.announcement.quest[info[#info - 1]].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                        }
+                    end
+                },
+            }
+        },
+        level = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = L["Level"],
+            get = function(info)
+                return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["The level of the quest."],
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
+                        local default = P.announcement.quest[info[#info - 1]].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.announcement.quest[info[#info - 1]].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                        }
+                    end
+                },
+                hideOnMax = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Hide Max Level"],
+                    desc = L["Hide the level part if the quest level is the max level of this expansion."]
+                },
+            }
+        },
+        daily = {
+            order = 8,
+            type = "group",
+            inline = true,
+            name = _G.DAILY,
+            get = function(info)
+                return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add the prefix if the quest is a daily quest."],
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
+                        local default = P.announcement.quest[info[#info - 1]].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.announcement.quest[info[#info - 1]].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                        }
+                    end
+                },
+            }
+        },
+        weekly = {
+            order = 9,
+            type = "group",
+            inline = true,
+            name = _G.WEEKLY,
+            get = function(info)
+                return E.db.WT.announcement.quest[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.quest[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add the prefix if the quest is a weekly quest."],
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local colordb = E.db.WT.announcement.quest[info[#info - 1]].color
+                        local default = P.announcement.quest[info[#info - 1]].color
+                        return colordb.r, colordb.g, colordb.b, colordb.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        E.db.WT.announcement.quest[info[#info - 1]].color = {
+                            r = r,
+                            g = g,
+                            b = b,
+                        }
+                    end
+                },
+            }
+        },
+    }
+}
+
+options.interrupt = {
+    order = 4,
     type = "group",
     name = L["Interrupt"],
     get = function(info)
@@ -323,7 +613,7 @@ options.interrupt = {
 }
 
 options.taunt = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Taunt"],
     get = function(info)
@@ -1086,7 +1376,7 @@ options.taunt = {
 }
 
 options.combatResurrection = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Combat Resurrection"],
     get = function(info)
@@ -1226,7 +1516,7 @@ options.combatResurrection = {
 }
 
 options.utility = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Utility"],
     get = function(info)
@@ -1423,7 +1713,7 @@ do
 end
 
 options.goodbye = {
-    order = 7,
+    order = 8,
     type = "group",
     name = L["Goodbye"],
     get = function(info)
@@ -1531,7 +1821,7 @@ options.goodbye = {
 }
 
 options.thanksForResurrection = {
-    order = 8,
+    order = 9,
     type = "group",
     name = L["Thanks For Resurrection"],
     get = function(info)

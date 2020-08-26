@@ -86,7 +86,7 @@ function A:Quest()
 		end
 
 		if questCache.level and config.level.enable then -- 等级
-			if not config.hideMaxLevel or questCache.level ~= maxLevelForPlayerExpansion then
+			if not config.level.hideOnMax or questCache.level ~= maxLevelForPlayerExpansion then
 				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
 				extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
 			end

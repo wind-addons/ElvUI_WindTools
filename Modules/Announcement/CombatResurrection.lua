@@ -23,7 +23,7 @@ end
 
 function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
     local config = self.db.combatResurrection
-    if not config or not config.enable then
+    if not config or not config.enable or not sourceName or not destName then
         return
     end
 

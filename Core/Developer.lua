@@ -3,36 +3,50 @@ local strrep, type = strrep, type
 
 F.Developer = {}
 
-local format, tostring, type, print, pairs, strrep = format, tostring, type, print, pairs, strrep
+local type, pairs, print, tostring = type, pairs, print, tostring
+local format, strrep, strlen = format, strrep, strlen
 
-local key = ""
-function F.Developer.Print(object, level)
-    if not level then
-        key = ""
-        level = 0
-    end
-    
-    local indent = strrep(" ", level * 2)
-
+--[[
+    高级打印函数
+    -- 参考自 https://www.cnblogs.com/leezj/p/4230271.html
+    @param {Any} object 随意变量或常量
+]]
+function F.Developer.Print(object)
     if type(object) == "table" then
-        if key ~= "" then
-            print(indent .. key .. " " .. "=" .. " " .. "{")
-        else
-            print(indent .. "{")
-        end
-
-        key = ""
-        for k, v in pairs(object) do
-            if type(v) == "table" then
-                key = k
-                F.Developer.Print(v, level + 1)
+        local cache = {}
+        local function printLoop(subject, indent)
+            if (cache[tostring(subject)]) then
+                print(indent .. "*" .. tostring(subject))
             else
-                local content = format("%s%s = %s", indent .. "  ", tostring(k), tostring(v))
-                print(content)
+                cache[tostring(subject)] = true
+                if (type(subject) == "table") then
+                    for pos, val in pairs(subject) do
+                        if (type(val) == "table") then
+                            print(indent .. "[" .. pos .. "] => " .. tostring(subject) .. " {")
+                            printLoop(val, indent .. strrep(" ", strlen(pos) + 8))
+                            print(indent .. strrep(" ", strlen(pos) + 6) .. "}")
+                        elseif (type(val) == "string") then
+                            print(indent .. "[" .. pos .. '] => "' .. val .. '"')
+                        else
+                            print(indent .. "[" .. pos .. "] => " .. tostring(val))
+                        end
+                    end
+                else
+                    print(indent .. tostring(t))
+                end
             end
         end
-        print(indent .. "}")
+        if (type(object) == "table") then
+            print(tostring(object) .. " {")
+            printLoop(object, "  ")
+            print("}")
+        else
+            printLoop(object, "  ")
+        end
+        print()
+    elseif type(object) == "string" then
+        print('(string) "' .. object .. '"')
     else
-        print(indent .. tostring(object))
+        print("(" .. type(object) .. ") " .. tostring(object))
     end
 end

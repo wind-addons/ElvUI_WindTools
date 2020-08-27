@@ -2,5 +2,6 @@
 	<Script file='Functions.lua'/>
 	<Script file='Animation.lua'/>
 	<Script file='Core.lua'/>
+	<Script file='Developer.lua'/>
 	<Script file='Options.lua'/>
 </Ui>

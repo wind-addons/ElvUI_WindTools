@@ -96,8 +96,11 @@ function A:GetPetInfo(petName)
     local raw = {F.SplitCJKString(delimiter, details)}
 
     local owner, role = raw[1], raw[#raw]
+    if owner and role then
+        return owner, role
+    end
 
-    return owner, role
+    return nil, nil
 end
 
 function A:Initialize()

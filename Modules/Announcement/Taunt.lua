@@ -94,20 +94,18 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
             end
         elseif sourceType == "Pet" or sourceType == "Creature" then
             petOwner, petRole = self:GetPetInfo(sourceName)
-            if petOwner then
-                if petOwner == W.PlayerName then
-                    if config.player.pet.enable then
-                        self:SendMessage(
-                            FormatMessageWithPet(config.player.pet.successText),
-                            self:GetChannel(config.player.pet.channel)
-                        )
-                    end
-                elseif config.others.pet.enable then
+            if petOwner and petOwner == W.PlayerName then
+                if config.player.pet.enable then
                     self:SendMessage(
-                        FormatMessageWithPet(config.others.pet.successText),
-                        self:GetChannel(config.others.pet.channel)
+                        FormatMessageWithPet(config.player.pet.successText),
+                        self:GetChannel(config.player.pet.channel)
                     )
                 end
+            elseif petOwner and config.others.pet.enable then
+                self:SendMessage(
+                    FormatMessageWithPet(config.others.pet.successText),
+                    self:GetChannel(config.others.pet.channel)
+                )
             end
         end
     elseif event == "SPELL_MISSED" then
@@ -128,20 +126,18 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
             end
         elseif sourceType == "Pet" or sourceType == "Creature" then
             petOwner, petRole = self:GetPetInfo(sourceName)
-            if petOwner then
-                if petOwner == W.PlayerName then
-                    if config.player.pet.enable then
-                        self:SendMessage(
-                            FormatMessageWithPet(config.player.pet.failedText),
-                            self:GetChannel(config.player.pet.channel)
-                        )
-                    end
-                elseif config.others.pet.enable then
+            if petOwner and petOwner == W.PlayerName then
+                if config.player.pet.enable then
                     self:SendMessage(
-                        FormatMessageWithPet(config.others.pet.failedText),
-                        self:GetChannel(config.others.pet.channel)
+                        FormatMessageWithPet(config.player.pet.failedText),
+                        self:GetChannel(config.player.pet.channel)
                     )
                 end
+            elseif petOwner and config.others.pet.enable then
+                self:SendMessage(
+                    FormatMessageWithPet(config.others.pet.failedText),
+                    self:GetChannel(config.others.pet.channel)
+                )
             end
         end
     end

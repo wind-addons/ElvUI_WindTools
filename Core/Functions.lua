@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
-local format, pairs, tonumber, type = format, pairs, tonumber, type
+local format, pairs, tonumber, type, unpack = format, pairs, tonumber, type, unpack
+local strlen, strfind, strsub, tinsert = strlen, strfind, strsub, tinsert
 local GetClassColor = GetClassColor
 
 --[[
@@ -159,4 +160,39 @@ function F.DelayUnhookAll(module)
     else
         F.DebugMessage(nil, "找不到模块！")
     end
+end
+
+--[[
+    分割 CJK 字符串
+    @param {string} delimiter 分割符
+    @param {string} subject 待分割字符串
+    @return {table/string} 分割结果
+]]
+function F.SplitCJKString(delimiter, subject)
+    if not subject or subject == "" then
+        return {}
+    end
+
+    local length = strlen(delimiter)
+    local results = {}
+
+    local i = 0
+    local j = 0
+
+    while true do
+        j = strfind(subject, delimiter, i + length)
+        if strlen(subject) == i then
+            break
+        end
+
+        if j == nil then
+            tinsert(results, strsub(subject, i))
+            break
+        end
+
+        tinsert(results, strsub(subject, i, j - 1))
+        i = j + length
+    end
+
+    return unpack(results)
 end

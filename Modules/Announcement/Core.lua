@@ -93,7 +93,7 @@ function A:GetPetInfo(petName)
         delimiter = "的"
     end
 
-    local raw = {strsplit(delimiter, details)}
+    local raw = {F.SplitCJKString(delimiter, details)}
 
     local owner, role = raw[1], raw[#raw]
 

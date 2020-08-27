@@ -644,7 +644,7 @@ options.taunt = {
         },
         playerPlayer = {
             order = 3,
-            name = L["You"],
+            name = L["Player"],
             type = "group",
             get = function(info)
                 return E.db.WT.announcement.taunt.player.player[info[#info]]

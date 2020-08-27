@@ -30,7 +30,7 @@ function OT:UpdateBonusFont()
 
     for _, block in pairs(frame.usedBlocks) do
         if not block.WTStyle then
-            if not not block.ScrollContents or not block.ScrollContents.GetChildren then 
+            if not (not block.ScrollContents) or not block.ScrollContents.GetChildren then
                 return
             end
 
@@ -55,9 +55,9 @@ function OT:UpdateHeaderFont()
 
     for _, module in pairs(frame) do
         if module.Header then
-			F.SetFontWithDB(module.Header.Text, config)
-		end
-	end
+            F.SetFontWithDB(module.Header.Text, config)
+        end
+    end
 end
 
 function OT:UpdateQuestFont(block)
@@ -104,6 +104,7 @@ function OT:UpdateTitleColor()
         }
 
         self.titleColorChanged = true
+        ObjectiveTracker_Update()
     elseif not config.enable and self.titleColorChanged then
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
             r = SystemCache["Header"].r,
@@ -118,6 +119,7 @@ function OT:UpdateTitleColor()
         }
 
         self.titleColorChanged = false
+        ObjectiveTracker_Update()
     end
 end
 
@@ -129,7 +131,6 @@ function OT:Initialize()
 
     self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
     self:SecureHook(QUEST_TRACKER_MODULE, "SetBlockHeader", "UpdateQuestFont")
-
 
     self.initialized = true
 

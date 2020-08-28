@@ -498,5 +498,9 @@ P.quest = {
     },
     turnIn = {
         enable = true,
+        selectReward = true,
+        darkmoon = true,
+        followerAssignees = true,
+        rogueClassHallInsignia = true,
     }
 }

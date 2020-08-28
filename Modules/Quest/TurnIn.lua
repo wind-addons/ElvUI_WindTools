@@ -184,7 +184,7 @@ end
 local function IsTrackingHidden()
     for index = 1, GetNumTrackingTypes() do
         local name, _, active = GetTrackingInfo(index)
-        if (name == (_G.MINIMAP_TRACKING_TRIVIAL_QUESTS or _G.MINIMAP_TRACKING_HIDDEN_QUESTS)) then
+        if name == (_G.MINIMAP_TRACKING_TRIVIAL_QUESTS or _G.MINIMAP_TRACKING_HIDDEN_QUESTS) then
             return active
         end
     end
@@ -204,8 +204,8 @@ local function GetActiveGossipQuestInfo(index)
 end
 
 local function AttemptAutoComplete(event)
-    if (GetNumAutoQuestPopUps() > 0) then
-        if (UnitIsDeadOrGhost("player")) then
+    if GetNumAutoQuestPopUps() > 0 then
+        if UnitIsDeadOrGhost("player") then
             TI:RegisterEvent("PLAYER_REGEN_ENABLED")
             return
         end
@@ -213,7 +213,7 @@ local function AttemptAutoComplete(event)
         local questID, popUpType = GetAutoQuestPopUp(1)
         local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
         if not tagInfo.worldQuestType then
-            if (popUpType == "OFFER") then
+            if popUpType == "OFFER" then
                 ShowQuestOffer(C_QuestLog_GetLogIndexForQuestID(questID))
             else
                 ShowQuestComplete(C_QuestLog_GetLogIndexForQuestID(questID))
@@ -223,7 +223,7 @@ local function AttemptAutoComplete(event)
         C_Timer_After(1, AttemptAutoComplete)
     end
 
-    if (event == "PLAYER_REGEN_ENABLED") then
+    if event == "PLAYER_REGEN_ENABLED" then
         TI:UnregisterEvent("PLAYER_REGEN_ENABLED")
     end
 end
@@ -233,8 +233,8 @@ local function GetQuestLogQuests(onlyComplete)
 
     for index = 1, C_QuestLog_GetNumQuestLogEntries() do
         local questInfo = C_QuestLog_GetInfo(questIndex)
-        if (not questInfo.isHeader) then
-            if (onlyComplete and questInfo.isComplete or not onlyComplete) then
+        if not questInfo.isHeader then
+            if onlyComplete and questInfo.isComplete or not onlyComplete then
                 quests[questInfo.title] = questInfo.questID
             end
         end
@@ -245,12 +245,12 @@ end
 
 function TI:QUEST_GREETING()
     local npcID = GetNPCID()
-    if (ignoreQuestNPC[npcID]) then
+    if ignoreQuestNPC[npcID] then
         return
     end
 
     local active = C_GossipInfo_GetNumActiveQuests()
-    if (active > 0) then
+    if active > 0 then
         local logQuests = GetQuestLogQuests(true)
         for index = 1, active do
             local info = C_GossipInfo_GetActiveQuests(index)
@@ -268,10 +268,10 @@ function TI:QUEST_GREETING()
     end
 
     local available = C_GossipInfo_GetNumAvailableQuests()
-    if (available > 0) then
+    if available > 0 then
         for index = 1, available do
             local info = C_GossipInfo_GetAvailableQuests(index)
-            if ((not info.isTrivial and not info.isIgnored) or IsTrackingHidden()) then
+            if not info.isTrivial and not info.isIgnored or IsTrackingHidden() then
                 C_GossipInfo_SelectActiveQuest(index)
             end
         end
@@ -280,16 +280,16 @@ end
 
 function TI:GOSSIP_SHOW()
     local npcID = GetNPCID()
-    if (ignoreQuestNPC[npcID]) then
+    if ignoreQuestNPC[npcID] then
         return
     end
 
     local active = C_GossipInfo_GetNumActiveQuests()
-    if (active > 0) then
+    if active > 0 then
         local logQuests = GetQuestLogQuests(true)
         for index = 1, active do
             local info = GetActiveGossipQuestInfo(index)
-            if (info.isComplete) then
+            if info.isComplete then
                 local questID = logQuests[info.title]
                 if not questID then
                     C_GossipInfo_SelectActiveQuest(index)
@@ -303,36 +303,39 @@ function TI:GOSSIP_SHOW()
     end
 
     local available = C_GossipInfo_GetNumAvailableQuests()
-    if (available > 0) then
+    if available > 0 then
         for index = 1, available do
             local info = GetAvailableGossipQuestInfo(index)
-            if ((not info.isTrivial and not info.isIgnored) or IsTrackingHidden()) then
+            if not info.isTrivial and not info.isIgnored or IsTrackingHidden() then
                 C_GossipInfo_SelectAvailableQuest(index)
-            elseif (info.isTrivial and npcID == 64337) then
+            elseif info.isTrivial and npcID == 64337 then
                 C_GossipInfo_SelectAvailableQuest(index)
             end
         end
     end
 
-    if (rogueClassHallInsignia[npcID]) then
+    if rogueClassHallInsignia[npcID] then
+        if not self.db or not self.db.rogueClassHallInsignia then
+            return
+        end
         return C_GossipInfo_SelectOption(1)
     end
 
-    if (available == 0 and active == 0) then
+    if available == 0 and active == 0 then
         if C_GossipInfo_GetNumOptions() == 1 then
-            if (npcID == 57850) then
+            if npcID == 57850 then
                 return C_GossipInfo_SelectOption(1)
             end
 
             local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
-            if (instance ~= "raid" and not ignoreGossipNPC[npcID] and not (instance == "scenario" and mapID == 1626)) then
+            if instance ~= "raid" and not ignoreGossipNPC[npcID] and not (instance == "scenario" and mapID == 1626) then
                 local info = C_GossipInfo_GetOptions()
-                if (info.type == "gossip") then
+                if info.type == "gossip" then
                     C_GossipInfo_SelectOption(1)
                     return
                 end
             end
-        elseif followerAssignees[npcID] and C_GossipInfo_GetNumOptions() > 1 then
+        elseif followerAssignees[npcID] and C_GossipInfo_GetNumOptions() > 1 and self.db and self.db.followerAssignees then
             return C_GossipInfo_SelectOption(1)
         end
     end
@@ -340,14 +343,14 @@ end
 
 function TI:GOSSIP_CONFIRM()
     local npcID = GetNPCID()
-    if (npcID and darkmoonNPC[npcID]) then
+    if npcID and darkmoonNPC[npcID] and self.db and self.db.darkmoon then
         local dialog = StaticPopup_FindVisible("GOSSIP_CONFIRM")
         StaticPopup_OnClick(dialog, 1)
     end
 end
 
 function TI:QUEST_DETAIL()
-    if (not QuestGetAutoAccept()) then
+    if not QuestGetAutoAccept() then
         AcceptQuest()
     end
 end
@@ -357,19 +360,19 @@ function TI:QUEST_ACCEPT_CONFIRM()
 end
 
 function TI:QUEST_ACCEPTED()
-    if (QuestFrame:IsShown() and QuestGetAutoAccept()) then
+    if QuestFrame:IsShown() and QuestGetAutoAccept() then
         CloseQuest()
     end
 end
 
 function TI:QUEST_ITEM_UPDATE()
-    if (choiceQueue and self[choiceQueue]) then
+    if choiceQueue and self[choiceQueue] then
         self[choiceQueue]()
     end
 end
 
 function TI:QUEST_PROGRESS()
-    if (IsQuestCompletable()) then
+    if IsQuestCompletable() then
         local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
         if tagInfo.tagID == 153 or tagInfo.worldQuestType then
             return
@@ -381,13 +384,13 @@ function TI:QUEST_PROGRESS()
         end
 
         local requiredItems = GetNumQuestItems()
-        if (requiredItems > 0) then
+        if requiredItems > 0 then
             for index = 1, requiredItems do
                 local link = GetQuestItemLink("required", index)
-                if (link) then
+                if link then
                     local id = tonumber(strmatch(link, "item:(%d+)"))
                     for _, itemID in next, itemBlacklist do
-                        if (itemID == id) then
+                        if itemID == id then
                             return
                         end
                     end
@@ -410,9 +413,9 @@ function TI:QUEST_COMPLETE()
     end
 
     local choices = GetNumQuestChoices()
-    if (choices <= 1) then
+    if choices <= 1 then
         GetQuestReward(1)
-    elseif (choices > 1) then
+    elseif choices > 1 and self.db and self.db.selectReward then
         local bestSellPrice, bestIndex = 0
 
         for index = 1, choices do
@@ -421,7 +424,7 @@ function TI:QUEST_COMPLETE()
                 local itemSellPrice = select(11, GetItemInfo(link))
                 itemSellPrice = cashRewards[tonumber(strmatch(link, "item:(%d+):"))] or itemSellPrice
 
-                if (itemSellPrice > bestSellPrice) then
+                if itemSellPrice > bestSellPrice then
                     bestSellPrice, bestIndex = itemSellPrice, index
                 end
             else

@@ -1,8 +1,142 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.quest.args
+local TI = W:GetModule("TurnIn")
+
+local pairs, print, tostring, tonumber = pairs, print, tostring, tonumber
+local UnitName, UnitExists, UnitPlayerControlled = UnitName, UnitExists, UnitPlayerControlled
+
+local customListSelected
+
+options.turnIn = {
+    order = 1,
+    type = "group",
+    name = L["Turn In"],
+    get = function(info)
+        return E.db.WT.quest.turnIn[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.quest.turnIn[info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Make quest acceptance and completion automatically."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        selectReward = {
+            order = 3,
+            type = "toggle",
+            name = L["Select Reward"],
+            desc = L[
+                "If there are multiple items in the reward list, it will select the reward with the highest sell price."
+            ],
+            width = 2
+        },
+        darkmoon = {
+            order = 4,
+            type = "toggle",
+            name = L["Dark Moon"],
+            desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
+            width = 2
+        },
+        followerAssignees = {
+            order = 5,
+            type = "toggle",
+            name = L["Follower Assignees"],
+            desc = L["Open the window of follower recruit automatically."],
+            width = 2
+        },
+        rogueClassHallInsignia = {
+            order = 6,
+            type = "toggle",
+            name = L["Rogue Class Hall Insignia"],
+            desc = L["Open the passageway to rogue class hall automatically."],
+            width = 2
+        },
+        custom = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = L["Ignored NPCs"],
+            args = {
+                description = {
+                    order = 1,
+                    type = "description",
+                    name = L["If you add the NPC into the list, all automation will do not work for it."],
+                    width = "full"
+                },
+                list = {
+                    order = 2,
+                    type = "select",
+                    name = L["Ignore List"],
+                    get = function()
+                        return customListSelected
+                    end,
+                    set = function(_, value)
+                        customListSelected = value
+                    end,
+                    values = function()
+                        local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+                        local result = {}
+                        for key, value in pairs(list) do
+                            result[tostring(key)] = value
+                        end
+                        return result
+                    end
+                },
+                addButton = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Add Target"],
+                    desc = L["Make sure you select the NPC as your target."],
+                    func = function()
+                        if not UnitExists("target") then
+                            print(L["Target is not exists."])
+                            return
+                        end
+                        if UnitPlayerControlled("target") then
+                            print(L["Target is not an NPC."])
+                            return
+                        end
+                        local npcID = TI:GetNPCID("target")
+                        if npcID then
+                            E.db.WT.quest.turnIn.customIgnoreNPCs[npcID] = UnitName("target")
+                        end
+                    end
+                },
+                deleteButton = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Delete"],
+                    desc = L["Delete the selected NPC."],
+                    func = function()
+                        if customListSelected then
+                            local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+                            list[tonumber(customListSelected)] = nil
+                        end
+                    end
+                }
+            }
+        }
+    }
+}
 
 options.paragonReputation = {
-    order = 1,
+    order = 2,
     type = "group",
     name = L["Paragon Reputation"],
     get = function(info)

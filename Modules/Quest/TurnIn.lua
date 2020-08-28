@@ -175,10 +175,6 @@ local cashRewards = {
     [138133] = 27 -- Elixir of Endless Wonder, 27 copper
 }
 
-local function GetNPCID()
-    return tonumber(strmatch(UnitGUID("npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
-end
-
 local function IsTrackingHidden()
     for index = 1, GetNumTrackingTypes() do
         local name, _, active = GetTrackingInfo(index)
@@ -194,13 +190,13 @@ local function IsWorldQuestType(questID)
 end
 
 local function IsIgnored()
-    local npcID = GetNPCID()
+    local npcID = TI:GetNPCID()
 
     if ignoreQuestNPC[npcID] then
         return true
     end
 
-    if TI.db and TI.db.customIgnoreNPC and TI.db.customIgnoreNPC[npcID] then
+    if TI.db and TI.db.customIgnoreNPCs and TI.db.customIgnoreNPCs[npcID] then
         return true
     end
 
@@ -255,6 +251,10 @@ local function GetQuestLogQuests(onlyComplete)
     return quests
 end
 
+function TI:GetNPCID(unit)
+    return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
+end
+
 function TI:QUEST_GREETING()
     if IsIgnored() then
         return
@@ -293,6 +293,8 @@ function TI:GOSSIP_SHOW()
     if IsIgnored() then
         return
     end
+
+    print(self:GetNPCID())
 
     local active = C_GossipInfo_GetNumActiveQuests()
     if active > 0 then
@@ -352,7 +354,7 @@ function TI:GOSSIP_SHOW()
 end
 
 function TI:GOSSIP_CONFIRM()
-    local npcID = GetNPCID()
+    local npcID = self:GetNPCID()
     if npcID and darkmoonNPC[npcID] and self.db and self.db.darkmoon then
         local dialog = StaticPopup_FindVisible("GOSSIP_CONFIRM")
         StaticPopup_OnClick(dialog, 1)
@@ -392,8 +394,7 @@ function TI:QUEST_PROGRESS()
             return
         end
 
-        local npcID = GetNPCID()
-        if ignoreProgressNPC[npcID] then
+        if IsIgnored() then
             return
         end
 
@@ -425,7 +426,7 @@ function TI:QUEST_COMPLETE()
     end
 
     -- Blingtron 6000 only!
-    local npcID = GetNPCID()
+    local npcID = self:GetNPCID()
     if npcID == 43929 or npcID == 77789 then
         return
     end

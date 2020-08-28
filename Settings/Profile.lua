@@ -502,7 +502,7 @@ P.quest = {
         darkmoon = true,
         followerAssignees = true,
         rogueClassHallInsignia = true,
-        customIgnoreNPC = {
+        customIgnoreNPCs = {
             [144383] = "乌龟人"
         },
     }

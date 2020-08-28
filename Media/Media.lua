@@ -32,6 +32,10 @@ AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("logo", "WindTools.blp", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 
+AddMedia("ffxivTank", "FFXIV\\Tank", "Textures")
+AddMedia("ffxivDPS", "FFXIV\\DPS", "Textures")
+AddMedia("ffxivHealer", "FFXIV\\Healer", "Textures")
+
 AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")

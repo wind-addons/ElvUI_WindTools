@@ -22,7 +22,7 @@ V.maps = {
 V.misc = {
 	saveArtifact = true,
 	pauseToSlash = true,
-	disableTalkingHead = true,
+	disableTalkingHead = true
 }
 
 V.skins = {
@@ -79,7 +79,8 @@ V.skins = {
 		tooltips = true,
 		tutorial = true,
 		warboard = true,
-		worldMap = true
+		worldMap = true,
+		roleIconStyle = "FFXIV"
 	},
 	elvui = {
 		enable = true,

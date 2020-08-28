@@ -495,5 +495,8 @@ P.quest = {
             sound = true,
             fade_time = 5
         }
+    },
+    turnIn = {
+        enable = true,
     }
 }

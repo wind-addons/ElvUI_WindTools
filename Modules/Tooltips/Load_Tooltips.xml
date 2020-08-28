@@ -2,6 +2,7 @@
 	<!-- Core -->
 	<Script file='Core.lua'/>
 	<!-- Submodule -->
+	<Script file='HealthBar.lua'/>
 	<Script file='Icons.lua'/>
 	<Script file='Progression.lua'/>
 </Ui>

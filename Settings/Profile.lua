@@ -505,3 +505,7 @@ P.quest = {
         customIgnoreNPCs = {}
     }
 }
+
+P.tooltips = {
+    yOffsetOfHealthBar = 0
+}

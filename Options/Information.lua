@@ -227,7 +227,8 @@ do -- 插件代码
     local codesCreditList = {
         [L["Announcement"]] = {
             "Venomisto (InstanceResetAnnouncer)",
-            "Wetxius, Shestak (ShestakUI)"
+            "Wetxius, Shestak (ShestakUI)",
+            "cadcamzy (EUI)"
         },
         [L["Raid Markers"]] = {
             "Repooc (Shadow & Light)"
@@ -270,6 +271,10 @@ do -- 插件代码
         [L["Tooltips"]] = {
             "Tevoll (ElvUI Enhanced Again)",
             "MMOSimca (Simple Objective Progress)"
+        },
+        [L["Turn In"]] = {
+            "p3lim (QuickQuest)",
+            "siweia (NDui)"
         }
     }
 

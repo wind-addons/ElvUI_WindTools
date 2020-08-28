@@ -1,8 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local TI = W:NewModule("TurnIn", "AceHook-3.0", "AceEvent-3.0")
 
--- QuickQuest, by p3lim
--- Import from NDui
 local _G = _G
 local strmatch, tonumber, next, select, tonumber, wipe = strmatch, tonumber, next, select, tonumber, wipe
 local GetNumTrackingTypes, GetTrackingInfo = GetNumTrackingTypes, GetTrackingInfo

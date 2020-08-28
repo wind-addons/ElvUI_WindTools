@@ -195,6 +195,20 @@ local function IsWorldQuestType(questID)
     return tagInfo.worldQuestType and true or false
 end
 
+local function IsIgnored()
+    local npcID = GetNPCID()
+
+    if ignoreQuestNPC[npcID] then
+        return true
+    end
+
+    if TI.db and TI.db.customIgnoreNPC and TI.db.customIgnoreNPC[npcID] then
+        return true
+    end
+
+    return false
+end
+
 local function GetAvailableGossipQuestInfo(index)
     return select(((index * 7) - 7) + 1, C_GossipInfo_GetAvailableQuests())
 end
@@ -244,8 +258,7 @@ local function GetQuestLogQuests(onlyComplete)
 end
 
 function TI:QUEST_GREETING()
-    local npcID = GetNPCID()
-    if ignoreQuestNPC[npcID] then
+    if IsIgnored() then
         return
     end
 
@@ -279,8 +292,7 @@ function TI:QUEST_GREETING()
 end
 
 function TI:GOSSIP_SHOW()
-    local npcID = GetNPCID()
-    if ignoreQuestNPC[npcID] then
+    if IsIgnored() then
         return
     end
 
@@ -350,6 +362,10 @@ function TI:GOSSIP_CONFIRM()
 end
 
 function TI:QUEST_DETAIL()
+    if IsIgnored() then
+        return
+    end
+
     if not QuestGetAutoAccept() then
         AcceptQuest()
     end
@@ -406,6 +422,10 @@ function TI:QUEST_PROGRESS()
 end
 
 function TI:QUEST_COMPLETE()
+    if IsIgnored() then
+        return
+    end
+
     -- Blingtron 6000 only!
     local npcID = GetNPCID()
     if npcID == 43929 or npcID == 77789 then

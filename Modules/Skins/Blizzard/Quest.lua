@@ -11,6 +11,7 @@ function S:BlizzardQuestFrames()
         return
     end
 
+    S:CreateShadow(_G.QuestFrame)
     S:CreateShadow(_G.QuestModelScene)
 
     F.SetFontOutline(QuestNPCModelNameText)

@@ -31,14 +31,29 @@ options.general = {
         E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
-        icon = {
+        yOffsetOfHealthBar = {
             order = 1,
+            type = "range",
+            name = L["Health Bar Y-Offset"],
+            desc = L["Change the postion of the health bar."],
+            get = function(info)
+                return E.db.WT.tooltips[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.tooltips[info[#info]] = value
+            end,
+            min = -50,
+            max = 50,
+            step = 1
+        },
+        icon = {
+            order = 2,
             type = "toggle",
             name = L["Add Icon"],
             desc = L["Show an icon for items and spells."]
         },
         objectiveProgress = {
-            order = 2,
+            order = 3,
             type = "toggle",
             name = L["Objective Progress"],
             desc = L["Add more details of objective progress information into tooltips."]

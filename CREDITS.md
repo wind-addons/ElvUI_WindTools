@@ -1,3 +1,55 @@
+# Codes
+- Announcement
+    - Venomisto (InstanceResetAnnouncer)
+    - Wetxius, Shestak (ShestakUI)
+    - cadcamzy (EUI)
+
+- Raid Markers
+    - Repooc (Shadow & Light)
+
+- Datatexts
+    - crackpotx (ElvUI Micro Menu Datatext)
+
+- Already Known
+    - ahak (Already Known?)
+
+- Fast Loot
+    - Leatrix (Leatrix Plus)
+
+- World Map
+    - Leatrix (Leatrix Maps)
+    - siweia (NDui)
+
+- Minimap Buttons
+    - Azilroka, Sinaris, Feraldin (Square Minimap Buttons)
+
+- Misc
+    - Warbaby (爱不易)
+    - zaCade (FixTransmogOutfits)
+
+- Paragon Reputation
+    - Fail (Paragon Reputation)
+
+- Skins
+    - selias2k (iShadow)
+
+- Filter
+    - EKE (Fuckyou)
+
+- Friend List
+    - Azilroka (ProjectAzilroka)
+
+- Emote
+    - loudsoul (TinyChat)
+
+- Tooltips
+    - Tevoll (ElvUI Enhanced Again)
+    - MMOSimca (Simple Objective Progress)
+
+- Turn In
+    - p3lim (QuickQuest)
+    - siweia (NDui)
+
 # Medias
 - Ferous Media (Ferous)
     - Media/Texture/Vignetting.tga

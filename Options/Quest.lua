@@ -35,7 +35,8 @@ options.turnIn = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
         selectReward = {
             order = 3,
@@ -114,7 +115,8 @@ options.turnIn = {
                         end
                         local npcID = TI:GetNPCID("target")
                         if npcID then
-                            E.db.WT.quest.turnIn.customIgnoreNPCs[npcID] = UnitName("target")
+                            local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+                            list[npcID] = UnitName("target")
                         end
                     end
                 },

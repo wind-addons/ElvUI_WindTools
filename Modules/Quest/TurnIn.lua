@@ -294,7 +294,7 @@ function TI:GOSSIP_SHOW()
         return
     end
 
-    print(self:GetNPCID())
+    local npcID = self:GetNPCID()
 
     local active = C_GossipInfo_GetNumActiveQuests()
     if active > 0 then

@@ -49,7 +49,7 @@ P.announcement = {
         }
     },
     quest = {
-        enable = true,  
+        enable = true,
         includeDetails = true,
         channel = {
             party = "PARTY",
@@ -67,7 +67,7 @@ P.announcement = {
         level = {
             enable = true,
             color = {r = 0.773, g = 0.424, b = 0.941},
-            hideOnMax = true,
+            hideOnMax = true
         },
         daily = {
             enable = true,
@@ -502,8 +502,6 @@ P.quest = {
         darkmoon = true,
         followerAssignees = true,
         rogueClassHallInsignia = true,
-        customIgnoreNPCs = {
-            [144383] = "乌龟人"
-        },
+        customIgnoreNPCs = {}
     }
 }

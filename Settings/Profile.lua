@@ -301,7 +301,7 @@ P.maps = {
     rectangleMinimap = {
 		enable = true,
 		widthPercentage = 1,
-		heightPercentage = 0.854
+		heightPercentage = 0.75
 	}
 }
 

@@ -3,11 +3,65 @@ local options = W.options.maps.args
 local LSM = E.Libs.LSM
 local WM = W:GetModule("WorldMap")
 local MB = W:GetModule("MinimapButtons")
+local RM = W:GetModule("RectangleMinimap")
 
 local _G = _G
 
-options.minimapButtons = {
+options.rectangleMinimap = {
     order = 1,
+    type = "group",
+    name = L["Rectangle Minimap"],
+    get = function(info)
+        return E.db.WT.maps.rectangleMinimap[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.maps.rectangleMinimap[info[#info]] = value
+        RM:ChangeShape()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Change the shape of ElvUI minimap."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        widthPercentage = {
+            order = 3,
+            type = "range",
+            name = L["Width Percentage"],
+            desc = L["Percentage of ElvUI minimap size."],
+            min = 0.01,
+            max = 1,
+            step = 0.01
+        },
+        heightPercentage = {
+            order = 4,
+            type = "range",
+            name = L["Height Percentage"],
+            desc = L["Percentage of ElvUI minimap size."],
+            min = 0.01,
+            max = 1,
+            step = 0.01
+        }
+    }
+}
+
+options.minimapButtons = {
+    order = 2,
     type = "group",
     name = L["Minimap Buttons"],
     args = {
@@ -187,7 +241,7 @@ options.minimapButtons = {
 }
 
 options.worldMap = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["World Map"],
     args = {

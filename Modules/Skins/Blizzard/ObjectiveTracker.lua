@@ -79,9 +79,6 @@ function S:ObjectiveTrackerFrame()
     local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
     local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 
-    S:CreateShadow(minimizeButton)
-    minimizeButton.shadow:SetOutside()
-
     hooksecurefunc("ObjectiveTracker_Update", SkinOjectiveTrackerHeaders)
     hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup", SkinFindGroupButton)
     hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)

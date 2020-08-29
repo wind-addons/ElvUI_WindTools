@@ -45,28 +45,28 @@ options.turnIn = {
             desc = L[
                 "If there are multiple items in the reward list, it will select the reward with the highest sell price."
             ],
-            width = 2
+            width = 1.667
         },
         darkmoon = {
             order = 4,
             type = "toggle",
             name = L["Dark Moon"],
             desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
-            width = 2
+            width = 1.667
         },
         followerAssignees = {
             order = 5,
             type = "toggle",
             name = L["Follower Assignees"],
             desc = L["Open the window of follower recruit automatically."],
-            width = 2
+            width = 1.667
         },
         rogueClassHallInsignia = {
             order = 6,
             type = "toggle",
             name = L["Rogue Class Hall Insignia"],
-            desc = L["Open the passageway to rogue class hall automatically."],
-            width = 2
+            desc = L["Open the passageway to Rogue Class Hall automatically."],
+            width = 1.667
         },
         custom = {
             order = 7,

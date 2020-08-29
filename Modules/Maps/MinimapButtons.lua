@@ -441,7 +441,7 @@ function MB:CreateFrames()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent)
-	frame:Point("TOPRIGHT", RightMiniPanel, "BOTTOMRIGHT", 0, -2)
+	frame:Point("TOPRIGHT", MMHolder, "BOTTOMRIGHT", 0, -5)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 

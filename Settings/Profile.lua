@@ -299,10 +299,10 @@ P.maps = {
         scale = 1.236
     },
     rectangleMinimap = {
-		enable = false,
-		widthPercentage = 1,
-		heightPercentage = 0.75
-	}
+        enable = false,
+        widthPercentage = 1,
+        heightPercentage = 0.75
+    }
 }
 
 P.skins = {
@@ -500,6 +500,17 @@ P.quest = {
             sound = true,
             fade_time = 5
         }
+    },
+    switchButtons = {
+        enable = true,
+        font = {
+            name = E.db.general.font,
+            size = 10,
+            style = "OUTLINE"
+        },
+        backdrop = false,
+        announcement = true,
+        turnIn = true
     },
     turnIn = {
         enable = true,

@@ -346,7 +346,7 @@ function MB:UpdateLayout()
 
 		if moveButton == "GameTimeFrame" then
 			frame.windToday:ClearAllPoints()
-			frame.windToday:Point("TOP", frame, "TOP", 0, -0.45 * buttonSize)
+			frame.windToday:Point("TOP", frame, "TOP", 0.5, -0.45 * buttonSize)
 		end
 	end
 

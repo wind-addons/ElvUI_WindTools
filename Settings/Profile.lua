@@ -299,7 +299,7 @@ P.maps = {
         scale = 1.236
     },
     rectangleMinimap = {
-		enable = true,
+		enable = false,
 		widthPercentage = 1,
 		heightPercentage = 0.75
 	}

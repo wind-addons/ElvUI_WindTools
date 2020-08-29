@@ -297,7 +297,12 @@ P.item = {
 P.maps = {
     worldMap = {
         scale = 1.236
-    }
+    },
+    rectangleMinimap = {
+		enable = true,
+		widthPercentage = 1,
+		heightPercentage = 0.854
+	}
 }
 
 P.skins = {

@@ -472,22 +472,30 @@ function MB:CreateFrames()
 	)
 end
 
+function MB:SetUpdateHook()
+	if not self.Initialized then
+		self:SecureHook(MM, "SetGetMinimapShape", "UpdateLayout")
+		self:SecureHook(MM, "UpdateSettings", "UpdateLayout")
+		self:SecureHook(E, "UpdateAll", "UpdateLayout")
+		self.Initialized = true
+	end
+end
+
+function MB:PLAYER_ENTERING_WORLD()
+	self:SetUpdateHook()
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end
+
 function MB:Initialize()
-	if not E.private.WT.maps.minimapButtons.enable then
+	self.db = E.private.WT.maps.minimapButtons
+	if not self.db.enable then
 		return
 	end
-	self.db = E.private.WT.maps.minimapButtons
 
 	self:CreateFrames()
-	self:UpdatemouseOverConfig()
+	self:UpdateMouseOverConfig()
 
-	hooksecurefunc(
-		MM,
-		"UpdateSettings",
-		function()
-			MB:UpdateLayout()
-		end
-	)
+	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 W:RegisterModule(MB:GetName())

@@ -36,12 +36,13 @@ function RM:SetUpdateHook()
         self:SecureHook(MM, "UpdateSettings", "ChangeShape")
         self:SecureHook(MM, "Initialize", "ChangeShape")
         self:SecureHook(E, "UpdateAll", "ChangeShape")
+        self.Initialized = true
     end
     self:ChangeShape()
 end
 
 function RM:PLAYER_ENTERING_WORLD()
-self:SetUpdateHook()
+    self:SetUpdateHook()
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end
 
@@ -55,9 +56,10 @@ function RM:Initialize()
 end
 
 function RM:ProfileUpdate()
-    print(1)
     self.db = E.db.WT.maps.rectangleMinimap
-    if not self.db then return end
+    if not self.db then
+        return
+    end
     if self.db.enable then
         self:SetUpdateHook()
     end

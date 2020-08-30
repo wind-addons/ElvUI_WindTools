@@ -12,6 +12,7 @@ function S:GossipFrame()
     end
 
     S:CreateShadow(_G.ItemTextFrame)
+    S:CreateShadow(_G.GossipFrame)
 end
 
 S:AddCallback("GossipFrame")

@@ -43,6 +43,7 @@ V.skins = {
 		adventureMap = true,
 		alerts = true,
 		auctionHouse = true,
+		azeriteEssence = true,
 		barberShop = true,
 		calendar = true,
 		challenges = true,

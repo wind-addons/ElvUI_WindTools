@@ -886,41 +886,64 @@ options.smartTab = {
             type = "toggle",
             name = L["Enable"]
         },
-        whisperCycle = {
+        channelSetting = {
             order = 2,
-            type = "toggle",
-            name = L["Whisper Cycle"]
+            type = "group",
+            inline = true,
+            name = L["Channel"],
+            get = function(info)
+                return E.db.WT.social.smartTab[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.social.smartTab[info[#info]] = value
+                ST:ProfileUpdate()
+            end,
+            args = {
+                yell = {
+                    order = 1,
+                    type = "toggle",
+                    name = _G.CHAT_MSG_YELL
+                },
+                battleground = {
+                    order = 2,
+                    type = "toggle",
+                    name = _G.CHAT_MSG_BATTLEGROUND
+                },
+                raidWarning = {
+                    order = 3,
+                    type = "toggle",
+                    name = _G.CHAT_MSG_RAID_WARNING
+                },
+                officer = {
+                    order = 4,
+                    type = "toggle",
+                    name = _G.CHAT_MSG_OFFICER
+                }
+            }
         },
-        yell = {
+        whisperSetting = {
             order = 3,
-            type = "toggle",
-            name = CHAT_MSG_YELL
-        },
-        battleground = {
-            order = 4,
-            type = "toggle",
-            name = CHAT_MSG_BATTLEGROUND
-        },
-        raidWarning = {
-            order = 5,
-            type = "toggle",
-            name = CHAT_MSG_RAID_WARNING
-        },
-        officer = {
-            order = 6,
-            type = "toggle",
-            name = CHAT_MSG_OFFICER
-        },
-        historyLimit = {
-            order = 7,
-            type = "range",
-            name = L["Expiration time (min)"],
-            desc = L[
-                "This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."
-            ],
-            min = 1,
-            max = 2400,
-            step = 1
+            type = "group",
+            inline = true,
+            name = _G.WHISPER,
+            args = {
+                whisperCycle = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Whisper Cycle"]
+                },
+                historyLimit = {
+                    order = 2,
+                    type = "range",
+                    name = L["Expiration time (min)"],
+                    desc = L[
+                        "This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."
+                    ],
+                    min = 1,
+                    max = 2400,
+                    step = 1
+                }
+            }
         }
     }
 }

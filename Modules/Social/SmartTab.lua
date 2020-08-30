@@ -7,6 +7,7 @@ local UnitIsGroupLeader, IsEveryoneAssistant = UnitIsGroupLeader, IsEveryoneAssi
 local UnitInBattleground, CanEditOfficerNote = UnitInBattleground, CanEditOfficerNote
 local IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant = IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant
 local LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE
+local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
 
 -- 频道循环列表
 local ChannelList = {
@@ -73,7 +74,7 @@ function ST:CheckAvailability(type)
     elseif type == "GUILD" then
         return IsInGuild()
     elseif type == "OFFICER" then
-        return self.db.officer and IsInGuild() and CanEditOfficerNote()
+        return self.db.officer and IsInGuild() and C_GuildInfo_IsGuildOfficer()
     end
 
     return true

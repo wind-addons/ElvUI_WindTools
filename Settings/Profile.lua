@@ -417,6 +417,7 @@ P.social = {
     },
     chatLine = {
         enable = true,
+        roleIconSize = 16,
         abbreviation = true,
         removeBrackets = true,
     },

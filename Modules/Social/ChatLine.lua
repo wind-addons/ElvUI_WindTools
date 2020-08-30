@@ -21,11 +21,19 @@ local WIND_DEFAULT_STRINGS = {
     PET_BATTLE_COMBAT_LOG = _G.PET_BATTLE_COMBAT_LOG
 }
 
-local rolePaths = {
-    TANK = E:TextureString(W.Media.Icons.ffxivTank, ":16:16"),
-    HEALER = E:TextureString(W.Media.Icons.ffxivHealer, ":16:16"),
-    DAMAGER = E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
-}
+local rolePaths
+
+function CL:UpdateRoleIcons()
+    if not self.db then return end
+
+    local sizeString = format(":%d:%d", self.db.roleIconSize, self.db.roleIconSize)
+
+    rolePaths = {
+        TANK = E:TextureString(W.Media.Icons.ffxivTank, sizeString),
+        HEALER = E:TextureString(W.Media.Icons.ffxivHealer, sizeString),
+        DAMAGER = E:TextureString(W.Media.Icons.ffxivDPS, sizeString)
+    }
+end
 
 function CL:ShortChannel()
     local noBracketsString
@@ -86,6 +94,8 @@ function CL:Initialize()
     if not self.db or not self.db.enable or not E.private.chat.enable then
         return
     end
+
+    self:UpdateRoleIcons()
 
     if self.db.abbreviation then
         cache.HandleShortChannels = CH.HandleShortChannels

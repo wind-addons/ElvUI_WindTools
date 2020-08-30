@@ -153,7 +153,9 @@ function A:Quest()
 			local message = extraInfo .. mainInfo
 			-- TODO: 疑似PTR无法发出带有链接的信息
 			-- print(gsub(message, "\124", "\124\124"))
-			self:SendMessage(message, self:GetChannel(config.channel))
+			if not E.db.WT.quest.switchButtons.enable or not config.paused then
+				self:SendMessage(message, self:GetChannel(config.channel))
+			end
 
 			if not isDetailInfo then -- 具体进度系统会提示
 				local messageColored = extraInfoColored .. mainInfoColored

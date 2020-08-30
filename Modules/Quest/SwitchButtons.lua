@@ -43,11 +43,11 @@ function SB:UpdateLayout()
     if self.db.announcement then
         if not self.bar.announcement then
             self.bar.announcement = self:CreateButton(L["[ABBR] Announcement"])
-            self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable)
+            self.bar.announcement:SetChecked(not E.db.WT.announcement.quest.paused)
             self.bar.announcement:SetScript(
                 "OnClick",
                 function()
-                    E.db.WT.announcement.quest.enable = self.bar.announcement:GetChecked()
+                    E.db.WT.announcement.quest.paused = not self.bar.announcement:GetChecked()
                 end
             )
         end
@@ -127,7 +127,7 @@ function SB:CreateBar()
         nil,
         "ALL,WINDTOOLS",
         function()
-            return E.private.WT.maps.quest.switchButtons.enable
+            return E.db.WT.quest.switchButtons.enable
         end
     )
 end
@@ -142,6 +142,25 @@ function SB:Initialize()
 end
 
 function SB:ProfileUpdate()
+    self.db = E.db.WT.quest.switchButtons
+    if not self.db.enable then
+        if self.bar then
+            self.bar:Hide()
+        end
+    else
+        if not self.bar then
+            self:CreateBar()
+        else
+            self:UpdateLayout()
+        end
+
+        if self.db.announcement then
+            self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable)
+        end
+        if self.db.turnIn then
+            self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
+        end
+    end
 end
 
 W:RegisterModule(SB:GetName())

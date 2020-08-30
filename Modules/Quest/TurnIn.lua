@@ -508,6 +508,7 @@ function TI:ProfileUpdate()
         self:UnregisterEvent("PLAYER_LOGIN")
         self:UnregisterEvent("QUEST_AUTOCOMPLETE")
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+        self.initialized = false
     end
 end
 

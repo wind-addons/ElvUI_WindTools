@@ -50,6 +50,7 @@ P.announcement = {
     },
     quest = {
         enable = true,
+        paused = true,
         includeDetails = true,
         channel = {
             party = "PARTY",

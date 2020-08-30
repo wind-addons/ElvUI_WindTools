@@ -1,6 +1,8 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.quest.args
+local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
+local SB = W:GetModule("SwitchButtons")
 
 local pairs, print, tostring, tonumber = pairs, print, tostring, tonumber
 local UnitName, UnitExists, UnitPlayerControlled = UnitName, UnitExists, UnitPlayerControlled
@@ -137,8 +139,116 @@ options.turnIn = {
     }
 }
 
-options.paragonReputation = {
+options.switchButtons = {
     order = 2,
+    type = "group",
+    name = L["Switch Buttons"],
+    get = function(info)
+        return E.db.WT.quest.switchButtons[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.quest.switchButtons[info[#info]] = value
+        SB:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add a bar contains buttons to enable/disable modules quickly."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        backdrop = {
+            order = 3,
+            type = "toggle",
+            name = L["Bar Backdrop"]
+        },
+        font = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Font Setting"],
+            get = function(info)
+                return E.db.WT.quest.switchButtons.font[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.quest.switchButtons.font[info[#info]] = value
+                SB:UpdateLayout()
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        modules = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Modules"],
+            get = function(info)
+                return E.db.WT.quest.switchButtons[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.quest.switchButtons[info[#info]] = value
+                SB:UpdateLayout()
+            end,
+            args = {
+                announcement = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Announcement"] .. " (" .. L["Quest"] .. ")",
+                    width = 1.667
+                },
+                turnIn = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Turn In"],
+                    width = 1.667
+                }
+            }
+        }
+    }
+}
+
+options.paragonReputation = {
+    order = 3,
     type = "group",
     name = L["Paragon Reputation"],
     get = function(info)

@@ -215,7 +215,9 @@ function MB:SkinButton(frame)
 					return
 				end
 				UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
-				frame:SetBackdropBorderColor(.7, .7, 0)
+				if frame.SetBackdropBorderColor then
+					frame:SetBackdropBorderColor(.7, .7, 0)
+				end
 			end
 		)
 		frame:HookScript(
@@ -225,7 +227,9 @@ function MB:SkinButton(frame)
 					return
 				end
 				UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
-				frame:SetBackdropBorderColor(0, 0, 0)
+				if frame.SetBackdropBorderColor then
+					frame:SetBackdropBorderColor(0, 0, 0)
+				end
 			end
 		)
 
@@ -440,12 +444,12 @@ function MB:CreateFrames()
 		return
 	end
 
-	local frame = CreateFrame("Frame", nil, E.UIParent)
+	local frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
 	frame:Point("TOPRIGHT", MMHolder, "BOTTOMRIGHT", 0, -5)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 
-	frame = CreateFrame("Frame", nil, E.UIParent)
+	frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
 	frame:SetFrameStrata("LOW")
 	frame:CreateBackdrop("Transparent")
 	frame:ClearAllPoints()

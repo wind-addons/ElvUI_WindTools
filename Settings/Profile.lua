@@ -415,6 +415,11 @@ P.social = {
             }
         }
     },
+    chatLine = {
+        enable = true,
+        abbreviation = true,
+        removeBrackets = true,
+    },
     chatLink = {
         enable = true,
         level = true,

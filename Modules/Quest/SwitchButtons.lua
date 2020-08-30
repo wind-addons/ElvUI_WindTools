@@ -5,6 +5,34 @@ local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local CreateFrame = CreateFrame
 
+function SB:CreateButton(text)
+    if not self.db or not self.bar then
+        return
+    end
+
+    local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
+    ES:HandleCheckBox(button)
+    
+    button.text = button:CreateFontString()
+    button.text:Point("LEFT", button, "RIGHT", 0, 0)
+    F.SetFontWithDB(button.text, self.db.font)
+    button.text:SetText(text)
+    button.text:SetJustifyV("MIDDLE")
+
+    return button
+end
+
+function SB:UpdateButton(button)
+    if not self.db or not button then
+        return
+    end
+
+    F.SetFontWithDB(button.text, self.db.font)
+    button:Size(2 * self.db.font.size)
+    button.buttonSize = button.text:GetStringWidth() + 2 * self.db.font.size
+    button:Show()
+end
+
 function SB:UpdateLayout()
     if not self.db and not self.bar then
         return
@@ -14,22 +42,11 @@ function SB:UpdateLayout()
 
     if self.db.announcement then
         if not self.bar.announcement then
-            local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-            local buttonText = button:CreateFontString()
-
-            ES:HandleCheckBox(button)
-            button:Size(2 * self.db.font.size)
-            buttonText:FontTemplate()
-            buttonText:Point("LEFT", button, "RIGHT", 0, 0)
-            buttonText:SetJustifyV("MIDDLE")
-            buttonText:SetJustifyH("LEFT")
-            buttonText:SetText(L["[ABBR] Announcement"])
-
-            button.text = buttonText
-            button.buttonSize = buttonText:GetStringWidth() + 2 * self.db.font.size
-            self.bar.announcement = button
+            self.bar.announcement = self:CreateButton(L["[ABBR] Announcement"])
         end
-        self.bar.announcement:Show()
+
+        self:UpdateButton(self.bar.announcement)
+
         self.bar.announcement:Point("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.announcement.buttonSize
     else
@@ -40,22 +57,11 @@ function SB:UpdateLayout()
 
     if self.db.turnIn then
         if not self.bar.turnIn then
-            local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-            local buttonText = button:CreateFontString()
-            ES:HandleCheckBox(button)
-            button:Size(2 * self.db.font.size)
-
-            buttonText:FontTemplate()
-            buttonText:Point("LEFT", button, "RIGHT", 0, 0)
-            buttonText:SetJustifyV("MIDDLE")
-            buttonText:SetJustifyH("LEFT")
-            buttonText:SetText(L["[ABBR] Turn In"])
-
-            button.text = buttonText
-            button.buttonSize = buttonText:GetStringWidth() + 2 * self.db.font.size
-            self.bar.turnIn = button
+            self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"])
         end
-        self.bar.turnIn:Show()
+
+        self:UpdateButton(self.bar.turnIn)
+
         self.bar.turnIn:Point("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.turnIn.buttonSize
     else
@@ -70,8 +76,8 @@ function SB:UpdateLayout()
         self.bar.backdrop:Hide()
     end
 
-    self.bar:Size(xOffset+1, 20)
-    self.barAnchor:Size(xOffset+1, 20)
+    self.bar:Size(xOffset + 1, 20)
+    self.barAnchor:Size(xOffset + 1, 20)
 end
 
 function SB:CreateBar()
@@ -80,7 +86,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", nil, E.UIParent)
-    frame:Point("LEFT", ObjectiveFrameMover, "LEFT", 0, -2)
+    frame:Point("RIGHT", ObjectiveFrameMover, "RIGHT", 0, -2)
     frame:SetFrameStrata("BACKGROUND")
     self.barAnchor = frame
 

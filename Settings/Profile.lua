@@ -506,8 +506,9 @@ P.quest = {
         enable = true,
         font = {
             name = E.db.general.font,
-            size = 10,
-            style = "OUTLINE"
+            size = 12,
+            style = "OUTLINE",
+            color = {r = 1, g = 0.82, b = 0}
         },
         backdrop = false,
         announcement = true,

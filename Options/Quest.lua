@@ -214,6 +214,22 @@ options.switchButtons = {
                     min = 5,
                     max = 60,
                     step = 1
+                },
+                color = {
+                    order = 4,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.db.WT.quest.switchButtons.font.color
+                        local default = P.quest.switchButtons.font.color
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.db.WT.quest.switchButtons.font.color
+                        db.r, db.g, db.b = r, g, b
+                        SB:UpdateLayout()
+                    end
                 }
             }
         },

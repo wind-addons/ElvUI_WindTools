@@ -13,10 +13,11 @@ function SB:CreateButton(text)
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
     ES:HandleCheckBox(button)
 
+    button.originalText = text
     button.text = button:CreateFontString()
-    button.text:Point("LEFT", button, "RIGHT", 0, 0)
+    button.text:Point("LEFT", button, "RIGHT", 0, -1)
     F.SetFontWithDB(button.text, self.db.font)
-    button.text:SetText(text)
+    button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
     button.text:SetJustifyV("MIDDLE")
 
     return button
@@ -28,8 +29,22 @@ function SB:UpdateButton(button)
     end
 
     F.SetFontWithDB(button.text, self.db.font)
-    button:Size(2 * self.db.font.size)
-    button.buttonSize = button.text:GetStringWidth() + 2 * self.db.font.size
+
+    button.buttonSize = 0
+
+    if self.db.font.size < 7 then
+        button:Size(16)
+        button.buttonSize = button.buttonSize + 16
+    elseif self.db.font.size <= 12 then
+        button:Size(self.db.font.size + 9)
+        button.buttonSize = self.db.font.size + 9
+    else
+        button:Size(self.db.font.size + 12)
+        button.buttonSize = self.db.font.size + 12
+    end
+
+    button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
+    button.buttonSize = button.buttonSize + button.text:GetStringWidth()
     button:Show()
 end
 
@@ -91,8 +106,15 @@ function SB:UpdateLayout()
         self.bar.backdrop:Hide()
     end
 
-    self.bar:Size(xOffset + 1, 20)
-    self.barAnchor:Size(xOffset + 1, 20)
+    if xOffset ~= 0 then
+        self.bar:Show()
+        self.barAnchor:Show()
+        self.bar:Size(xOffset + 1, 20)
+        self.barAnchor:Size(xOffset + 1, 20)
+    else
+        self.bar:Hide()
+        self.barAnchor:Hide()
+    end
 end
 
 function SB:CreateBar()
@@ -151,12 +173,14 @@ function SB:ProfileUpdate()
         if not self.bar then
             self:CreateBar()
         else
+            self.bar:Show()
             self:UpdateLayout()
         end
 
         if self.db.announcement then
             self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable)
         end
+
         if self.db.turnIn then
             self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
         end

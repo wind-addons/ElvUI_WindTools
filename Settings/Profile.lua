@@ -418,7 +418,8 @@ P.social = {
     chatLine = {
         enable = true,
         roleIconSize = 16,
-        abbreviation = true,
+        abbreviation = "SHORT",
+        removeChannel = true,
         removeBrackets = true,
     },
     chatLink = {

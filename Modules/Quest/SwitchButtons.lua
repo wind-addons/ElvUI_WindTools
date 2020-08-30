@@ -12,7 +12,7 @@ function SB:CreateButton(text)
 
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
     ES:HandleCheckBox(button)
-    
+
     button.text = button:CreateFontString()
     button.text:Point("LEFT", button, "RIGHT", 0, 0)
     F.SetFontWithDB(button.text, self.db.font)
@@ -43,6 +43,13 @@ function SB:UpdateLayout()
     if self.db.announcement then
         if not self.bar.announcement then
             self.bar.announcement = self:CreateButton(L["[ABBR] Announcement"])
+            self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable)
+            self.bar.announcement:SetScript(
+                "OnClick",
+                function()
+                    E.db.WT.announcement.quest.enable = self.bar.announcement:GetChecked()
+                end
+            )
         end
 
         self:UpdateButton(self.bar.announcement)
@@ -58,6 +65,14 @@ function SB:UpdateLayout()
     if self.db.turnIn then
         if not self.bar.turnIn then
             self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"])
+            self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
+            self.bar.turnIn:SetScript(
+                "OnClick",
+                function()
+                    E.db.WT.quest.turnIn.enable = self.bar.turnIn:GetChecked()
+                    W:GetModule("TurnIn"):ProfileUpdate()
+                end
+            )
         end
 
         self:UpdateButton(self.bar.turnIn)

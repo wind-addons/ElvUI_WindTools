@@ -41,6 +41,7 @@ function S:Blizzard_GarrisonUI()
     end
 
     local frames = {
+        _G.GarrisonCapacitiveDisplayFrame,
         _G.GarrisonMissionFrame,
         _G.GarrisonLandingPage,
         _G.GarrisonShipyardFrame,

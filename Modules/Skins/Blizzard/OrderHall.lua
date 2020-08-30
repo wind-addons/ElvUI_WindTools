@@ -11,6 +11,11 @@ function S:Blizzard_OrderHallUI()
         return
     end
 
+    local talentPanel = _G.OrderHallTalentFrame
+    if talentPanel then
+        S:CreateShadow(talentPanel)
+    end
+
     local bar = _G.OrderHallCommandBar
     if bar then
         F.SetFontOutline(bar.AreaName)

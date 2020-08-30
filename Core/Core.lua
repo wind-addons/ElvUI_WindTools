@@ -4,6 +4,7 @@ local GetCVarBool = GetCVarBool
 local pcall, pairs, tinsert = pcall, pairs, tinsert
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 local UnitGUID, UnitName, GetRealmName = UnitGUID, UnitName, GetRealmName
+local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 
 -- 一些常量
 W.Title = L["WindTools"]
@@ -12,6 +13,7 @@ W.PlayerName = UnitName("player")
 W.PlayerGUID = UnitGUID("player")
 W.PlayerRelam = GetRealmName("player")
 W.PlayerNameWithRelam = format("%s-%s", W.PlayerName, W.PlayerRelam)
+W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 
 -- 模块部分
 W.RegisteredModules = {}

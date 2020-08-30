@@ -9,8 +9,6 @@ local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local GetQuestLink = GetQuestLink
 
-local maxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-
 local lastList
 
 local function GetQuests()
@@ -86,7 +84,7 @@ function A:Quest()
 		end
 
 		if questCache.level and config.level.enable then -- 等级
-			if not config.level.hideOnMax or questCache.level ~= maxLevelForPlayerExpansion then
+			if not config.level.hideOnMax or questCache.level ~= W.MaxLevelForPlayerExpansion then
 				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
 				extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
 			end

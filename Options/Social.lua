@@ -748,21 +748,6 @@ options.friendList = {
             inline = true,
             name = L["Information"],
             args = {
-                areaColor = {
-                    order = 1,
-                    type = "color",
-                    name = L["Color"],
-                    hasAlpha = false,
-                    get = function()
-                        local colordb = E.db.WT.social.friendList.areaColor
-                        local default = P.social.friendList.areaColor
-                        return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b
-                    end,
-                    set = function(_, r, g, b)
-                        E.db.WT.social.friendList.areaColor = {r = r, g = g, b = b}
-                        FriendsFrame_Update()
-                    end
-                },
                 font = {
                     order = 2,
                     type = "group",
@@ -801,7 +786,22 @@ options.friendList = {
                             min = 5,
                             max = 60,
                             step = 1
-                        }
+                        },
+                        areaColor = {
+                            order = 4,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            get = function()
+                                local colordb = E.db.WT.social.friendList.areaColor
+                                local default = P.social.friendList.areaColor
+                                return colordb.r, colordb.g, colordb.b, nil, default.r, default.g, default.b
+                            end,
+                            set = function(_, r, g, b)
+                                E.db.WT.social.friendList.areaColor = {r = r, g = g, b = b}
+                                FriendsFrame_Update()
+                            end
+                        },
                     }
                 }
             }

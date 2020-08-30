@@ -73,7 +73,7 @@ local StatusIcons = {
 
 local MaxLevel = {
     [BNET_CLIENT_WOW .. "C"] = 60,
-    [BNET_CLIENT_WOW] = 50
+    [BNET_CLIENT_WOW] = W.MaxLevelForPlayerExpansion
 }
 
 local BNColor = {

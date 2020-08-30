@@ -374,7 +374,7 @@ P.social = {
                 enable = false,
                 cmd = "rw",
                 color = {r = 1, g = 0.28, b = 0, a = 1},
-                abbr = L["[ABBR] RaidWarning"]
+                abbr = L["[ABBR] Raid Warning"]
             },
             ["GUILD"] = {
                 enable = true,

@@ -48,7 +48,7 @@ local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
-local cache = {}
+CT.cache = {}
 local lfgRoles = {}
 local initRecord = {}
 
@@ -104,10 +104,16 @@ local historyTypes = {
 
 local roleIcons
 
-local elvuiRoleIconsPath = {
+CT.cache.elvuiRoleIconsPath = {
     Tank = E.Media.Textures.Tank,
     Healer = E.Media.Textures.Healer,
     DPS = E.Media.Textures.DPS
+}
+
+CT.cache.blizzardRoleIcons = {
+    Tank = _G.INLINE_TANK_ICON,
+    Healer = _G.INLINE_HEALER_ICON,
+    DPS = _G.INLINE_DAMAGER_ICON
 }
 
 function CT:UpdateRoleIcons()
@@ -124,30 +130,27 @@ function CT:UpdateRoleIcons()
             DAMAGER = E:TextureString(W.Media.Icons.ffxivDPS, sizeString)
         }
 
-        if not cache.BlizzardInlineIcons then
-            cache.BlizzardInlineIcons = {}
-            cache.BlizzardInlineIcons = {
-                TANK = _G.INLINE_TANK_ICON,
-                HEALER = _G.INLINE_HEALER_ICON,
-                DAMAGER = _G.INLINE_DAMAGER_ICON
-            }
-        end
-
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif self.db.roleIconStyle == "DEFAULT" then
         roleIcons = {
-            TANK = E:TextureString(elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
-            HEALER = E:TextureString(elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
-            DAMAGER = E:TextureString(elvuiRoleIconsPath.DPS, sizeString)
+            TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
+            HEALER = E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
+            DAMAGER = E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, sizeString)
         }
-
-        if cache.BlizzardInlineIcons then
-            _G.INLINE_TANK_ICON = cache.BlizzardInlineIcons.TANK
-            _G.INLINE_HEALER_ICON = cache.BlizzardInlineIcons.HEALER
-            _G.INLINE_DAMAGER_ICON = cache.BlizzardInlineIcons.DAMAGER
-        end
+        _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
+        _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
+        _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
+    elseif self.db.roleIconStyle == "BLIZZARD" then
+        roleIcons = {
+            TANK = gsub(CT.cache.blizzardRoleIcons.Tank, ":16:16", sizeString),
+            HEALER = gsub(CT.cache.blizzardRoleIcons.Healer, ":16:16", sizeString),
+            DAMAGER = gsub(CT.cache.blizzardRoleIcons.DPS, ":16:16", sizeString)
+        }
+        _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
+        _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
+        _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
     end
 end
 
@@ -994,14 +997,14 @@ function CT:ToggleReplacement()
     -- HandleShortChannels
     if self.db.abbreviation ~= "DEFAULT" or self.db.removeBrackets then
         if not initRecord.HandleShortChannels then
-            cache.HandleShortChannels = CH.HandleShortChannels -- 备份
+            CT.cache.HandleShortChannels = CH.HandleShortChannels -- 备份
             CH.HandleShortChannels = CT.HandleShortChannels -- 替换
             initRecord.HandleShortChannels = true
         end
     else
         if initRecord.HandleShortChannels then
-            if cache.HandleShortChannels then
-                CH.HandleShortChannels = cache.HandleShortChannels -- 还原
+            if CT.cache.HandleShortChannels then
+                CH.HandleShortChannels = CT.cache.HandleShortChannels -- 还原
             end
             initRecord.HandleShortChannels = false
         end
@@ -1037,18 +1040,18 @@ function CT:ToggleReplacement()
     -- CheckLFGRoles
     if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 then
         if not initRecord.ChatFrame_MessageEventHandler then
-            cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
+            CT.cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
             CH.ChatFrame_MessageEventHandler = CT.ChatFrame_MessageEventHandler
-            cache.CheckLFGRoles = CH.CheckLFGRoles
+            CT.cache.CheckLFGRoles = CH.CheckLFGRoles
             CH.CheckLFGRoles = CT.CheckLFGRoles
 
             initRecord.ChatFrame_MessageEventHandler = true
         end
     else
         if initRecord.ChatFrame_MessageEventHandler then
-            if cache.ChatFrame_MessageEventHandler then
-                CH.ChatFrame_MessageEventHandler = cache.ChatFrame_MessageEventHandler
-                CH.CheckLFGRoles = cache.CheckLFGRoles
+            if CT.cache.ChatFrame_MessageEventHandler then
+                CH.ChatFrame_MessageEventHandler = CT.cache.ChatFrame_MessageEventHandler
+                CH.CheckLFGRoles = CT.cache.CheckLFGRoles
             end
 
             initRecord.ChatFrame_MessageEventHandler = false

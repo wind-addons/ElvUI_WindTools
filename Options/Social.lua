@@ -555,6 +555,27 @@ options.chatLink = {
     }
 }
 
+local SampleStrings = {}
+do
+    local icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
+    SampleStrings.ffxiv = icons
+
+    icons = ""
+    icons = icons .. CT.cache.blizzardRoleIcons.Tank .. " "
+    icons = icons .. CT.cache.blizzardRoleIcons.Healer .. " "
+    icons = icons .. CT.cache.blizzardRoleIcons.DPS
+    SampleStrings.blizzard = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, ":16:16:0:0:64:64:2:56:2:56") .. " "
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, ":16:16:0:0:64:64:2:56:2:56") .. " "
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, ":16:16")
+    SampleStrings.elvui = icons
+end
+
 options.chatText = {
     order = 2,
     type = "group",
@@ -615,8 +636,9 @@ options.chatText = {
                     name = L["Style"],
                     desc = L["Change the icons indicate the role."],
                     values = {
-                        FFXIV = L["Fianl Fantasy XIV"],
-                        DEFAULT = L["Default"]
+                        FFXIV = SampleStrings.ffxiv,
+                        BLIZZARD = SampleStrings.blizzard,
+                        DEFAULT = SampleStrings.elvui
                     }
                 },
                 roleIconSize = {

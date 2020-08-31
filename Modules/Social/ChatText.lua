@@ -117,12 +117,31 @@ function CT:UpdateRoleIcons()
             HEALER = E:TextureString(W.Media.Icons.ffxivHealer, sizeString),
             DAMAGER = E:TextureString(W.Media.Icons.ffxivDPS, sizeString)
         }
+
+        if not cache.BlizzardInlineIcons then
+            cache.BlizzardInlineIcons = {}
+            cache.BlizzardInlineIcons = {
+                TANK = _G.INLINE_TANK_ICON,
+                HEALER = _G.INLINE_HEALER_ICON,
+                DAMAGER = _G.INLINE_DAMAGER_ICON
+            }
+        end
+
+        _G.INLINE_TANK_ICON = roleIcons.TANK
+        _G.INLINE_HEALER_ICON = roleIcons.HEALER
+        _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif self.db.roleIconStyle == "DEFAULT" then
         roleIcons = {
             TANK = E:TextureString(E.Media.Textures.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
             HEALER = E:TextureString(E.Media.Textures.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
             DAMAGER = E:TextureString(E.Media.Textures.DPS, sizeString)
         }
+
+        if cache.BlizzardInlineIcons then
+            _G.INLINE_TANK_ICON = cache.BlizzardInlineIcons.TANK
+            _G.INLINE_HEALER_ICON = cache.BlizzardInlineIcons.HEALER
+            _G.INLINE_DAMAGER_ICON = cache.BlizzardInlineIcons.DAMAGER
+        end
     end
 end
 

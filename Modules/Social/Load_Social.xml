@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='ChatBar.lua'/>
-	<Script file='ChatLine.lua'/>
+	<Script file='ChatText.lua'/>
 	<Script file='ChatLink.lua'/>
 	<Script file='Emote.lua'/>
 	<Script file='Filter.lua'/>

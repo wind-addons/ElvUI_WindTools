@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 
 local CB = W:GetModule("ChatBar")
 local CL = W:GetModule("ChatLink")
+local CT = W:GetModule("ChatText")
 local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
 local FT = W:GetModule("Filter")
@@ -554,8 +555,85 @@ options.chatLink = {
     }
 }
 
+options.chatText = {
+    order = 2,
+    type = "group",
+    name = L["Chat Text"],
+    get = function(info)
+        return E.db.WT.social.chatText[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.chatText[info[#info]] = value
+        CT:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Modify the chat text style."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        removeBrackets = {
+            order = 2,
+            type = "toggle",
+            name = L["Remove Brackets"]
+        },
+        abbreviation = {
+            order = 3,
+            type = "select",
+            name = L["Abbreviation"],
+            desc = L["Modify the style of abbreviation of channels."],
+            values = {
+                NONE = L["None"],
+                SHORT = L["Short"],
+                DEFAULT = L["Default"]
+            }
+        },
+        roleIcon = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Role Icon"],
+            args = {
+                roleIconStyle = {
+                    order = 1,
+                    type = "select",
+                    name = L["Style"],
+                    desc = L["Change the icons indicate the role."],
+                    values = {
+                        FFXIV = L["Fianl Fantasy XIV"],
+                        DEFAULT = L["Default"]
+                    }
+                },
+                roleIconSize = {
+                    order = 2,
+                    type = "range",
+                    name = L["Size"],
+                    min = 5,
+                    max = 25,
+                    step = 1
+                }
+            }
+        }
+    }
+}
+
 options.emote = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Emote"],
     get = function(info)
@@ -603,7 +681,7 @@ options.emote = {
 }
 
 options.friendList = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Friend List"],
     get = function(info)
@@ -801,7 +879,7 @@ options.friendList = {
                                 E.db.WT.social.friendList.areaColor = {r = r, g = g, b = b}
                                 FriendsFrame_Update()
                             end
-                        },
+                        }
                     }
                 }
             }
@@ -810,7 +888,7 @@ options.friendList = {
 }
 
 options.filter = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Filter"],
     get = function(info)
@@ -856,7 +934,7 @@ options.filter = {
 }
 
 options.smartTab = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

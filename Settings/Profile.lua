@@ -415,19 +415,19 @@ P.social = {
             }
         }
     },
-    chatLine = {
-        enable = true,
-        abbreviation = "SHORT",
-        removeBrackets = true,
-        roleIconSize = 16,
-        roleIconStyle = "FFXIV",
-    },
     chatLink = {
         enable = true,
         level = true,
         icon = true,
         armorCategory = true,
         weaponCategory = true
+    },
+    chatText = {
+        enable = true,
+        abbreviation = "SHORT",
+        removeBrackets = true,
+        roleIconSize = 16,
+        roleIconStyle = "FFXIV",
     },
     friendList = {
         enable = true,

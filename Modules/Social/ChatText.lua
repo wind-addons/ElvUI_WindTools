@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local CL = W:NewModule("ChatLine")
+local CT = W:NewModule("ChatText")
 local CH = E:GetModule("Chat")
 
 local ipairs, pairs, wipe, time = ipairs, pairs, wipe, time
@@ -92,7 +92,7 @@ local historyTypes = {
 
 local roleIcons
 
-function CL:UpdateRoleIcons()
+function CT:UpdateRoleIcons()
     if not self.db then
         return
     end
@@ -114,23 +114,23 @@ function CL:UpdateRoleIcons()
     end
 end
 
-function CL:ShortChannel()
+function CT:ShortChannel()
     local noBracketsString
     local abbr
 
-    if CL.db then
-        if CL.db.removeBrackets then
+    if CT.db then
+        if CT.db.removeBrackets then
             noBracketsString = "|Hchannel:%s|h%s|h"
         end
 
-        if CL.db.abbreviation == "SHORT" then
+        if CT.db.abbreviation == "SHORT" then
             abbr = abbrStrings[strupper(self)]
-        elseif CL.db.abbreviation == "NONE" then
+        elseif CT.db.abbreviation == "NONE" then
             return ""
         end
     end
     
-    if not abbr and CL.db.abbreviation == "SHORT" then
+    if not abbr and CT.db.abbreviation == "SHORT" then
         local name = select(2, GetChannelName(gsub(self, "channel:", "")))
         if name then
             abbr = F.SubCJKString(name, 1, 1)
@@ -142,8 +142,8 @@ function CL:ShortChannel()
     return format(noBracketsString or "|Hchannel:%s|h[%s]|h", self, abbr)
 end
 
-function CL:HandleShortChannels(msg)
-    msg = gsub(msg, "|Hchannel:(.-)|h%[(.-)%]|h", CL.ShortChannel)
+function CT:HandleShortChannels(msg)
+    msg = gsub(msg, "|Hchannel:(.-)|h%[(.-)%]|h", CT.ShortChannel)
     msg = gsub(msg, "CHANNEL:", "")
     msg = gsub(msg, "^(.-|h) " .. L["whispers"], "%1")
     msg = gsub(msg, "^(.-|h) " .. L["says"], "%1")
@@ -152,12 +152,12 @@ function CL:HandleShortChannels(msg)
     msg = gsub(msg, "<" .. _G.DND .. ">", "[|cffE7E716" .. L["DND"] .. "|r] ")
 
     local raidWarningString = ""
-    if CL.db and CL.db.removeBrackets then
-        if CL.db.abbreviation == "SHORT" then
+    if CT.db and CT.db.removeBrackets then
+        if CT.db.abbreviation == "SHORT" then
             raidWarningString = abbrStrings["RAID_WARNING"]
         end
     else
-        if CL.db.abbreviation == "SHORT" then
+        if CT.db.abbreviation == "SHORT" then
             raidWarningString = "[" .. abbrStrings["RAID_WARNING"] .. "]"
         end
     end
@@ -165,11 +165,11 @@ function CL:HandleShortChannels(msg)
     return msg
 end
 
-function CL:Test()
+function CT:Test()
     F.Developer.Print(lfgRoles)
 end
 
-function CL:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHistory, historyTime)
+function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHistory, historyTime)
     local historyTimestamp  --we need to extend the arguments on AddMessage so we can properly handle times without overriding
     if isHistory == "ElvUI_ChatHistory" then
         historyTimestamp = historyTime
@@ -196,7 +196,7 @@ function CL:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHis
     self.OldAddMessage(self, msg, infoR, infoG, infoB, infoID, accessID, typeID)
 end
 
-function CL:CheckLFGRoles()
+function CT:CheckLFGRoles()
     if not CH.db.lfgIcons or not IsInGroup() then
         return
     end
@@ -222,7 +222,7 @@ function CL:CheckLFGRoles()
 end
 
 E.NameReplacements = {}
-function CL:ChatFrame_MessageEventHandler(
+function CT:ChatFrame_MessageEventHandler(
     frame,
     event,
     arg1,
@@ -248,7 +248,7 @@ function CL:ChatFrame_MessageEventHandler(
     historyBTag)
     -- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
     -- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
-    local noBrackets = CL.db.removeBrackets
+    local noBrackets = CT.db.removeBrackets
     
     if strsub(event, 1, 8) == "CHAT_MSG" then
         if arg16 then
@@ -951,7 +951,7 @@ function CL:ChatFrame_MessageEventHandler(
     end
 end
 
-function CL:ToggleReplacement()
+function CT:ToggleReplacement()
     if not self.db then
         return
     end
@@ -960,7 +960,7 @@ function CL:ToggleReplacement()
     if self.db.abbreviation ~= "DEFAULT" or self.db.removeBrackets then
         if not initRecord.HandleShortChannels then
             cache.HandleShortChannels = CH.HandleShortChannels -- 备份
-            CH.HandleShortChannels = CL.HandleShortChannels -- 替换
+            CH.HandleShortChannels = CT.HandleShortChannels -- 替换
             initRecord.HandleShortChannels = true
         end
     else
@@ -979,7 +979,7 @@ function CL:ToggleReplacement()
                 local frame = _G[frameName]
                 local id = frame:GetID()
                 if id ~= 2 and frame.OldAddMessage then
-                    frame.AddMessage = CL.AddMessage
+                    frame.AddMessage = CT.AddMessage
                 end
             end
 
@@ -1003,9 +1003,9 @@ function CL:ToggleReplacement()
     if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 then
         if not initRecord.ChatFrame_MessageEventHandler then
             cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
-            CH.ChatFrame_MessageEventHandler = CL.ChatFrame_MessageEventHandler
+            CH.ChatFrame_MessageEventHandler = CT.ChatFrame_MessageEventHandler
             cache.CheckLFGRoles = CH.CheckLFGRoles
-            CH.CheckLFGRoles = CL.CheckLFGRoles
+            CH.CheckLFGRoles = CT.CheckLFGRoles
 
             initRecord.ChatFrame_MessageEventHandler = true
         end
@@ -1021,8 +1021,8 @@ function CL:ToggleReplacement()
     end
 end
 
-function CL:Initialize()
-    self.db = E.db.WT.social.chatLine
+function CT:Initialize()
+    self.db = E.db.WT.social.chatText
     if not self.db or not self.db.enable or not E.private.chat.enable then
         return
     end
@@ -1032,12 +1032,12 @@ function CL:Initialize()
     self:CheckLFGRoles()
 end
 
-function CL:ProfileUpdate()
-    self.db = E.db.WT.social.chatLine
+function CT:ProfileUpdate()
+    self.db = E.db.WT.social.chatText
 
     self:UpdateRoleIcons()
     self:ToggleReplacement()
     self:CheckLFGRoles()
 end
 
-W:RegisterModule(CL:GetName())
+W:RegisterModule(CT:GetName())

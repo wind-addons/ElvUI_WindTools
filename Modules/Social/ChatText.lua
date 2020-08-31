@@ -104,6 +104,12 @@ local historyTypes = {
 
 local roleIcons
 
+local elvuiRoleIconsPath = {
+    Tank = E.Media.Textures.Tank,
+    Healer = E.Media.Textures.Healer,
+    DPS = E.Media.Textures.DPS
+}
+
 function CT:UpdateRoleIcons()
     if not self.db then
         return
@@ -132,9 +138,9 @@ function CT:UpdateRoleIcons()
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif self.db.roleIconStyle == "DEFAULT" then
         roleIcons = {
-            TANK = E:TextureString(E.Media.Textures.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
-            HEALER = E:TextureString(E.Media.Textures.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
-            DAMAGER = E:TextureString(E.Media.Textures.DPS, sizeString)
+            TANK = E:TextureString(elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
+            HEALER = E:TextureString(elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
+            DAMAGER = E:TextureString(elvuiRoleIconsPath.DPS, sizeString)
         }
 
         if cache.BlizzardInlineIcons then
@@ -196,10 +202,6 @@ function CT:HandleShortChannels(msg)
     end
     msg = gsub(msg, "^%[" .. _G.RAID_WARNING .. "%]", raidWarningString)
     return msg
-end
-
-function CT:Test()
-    F.Developer.Print(lfgRoles)
 end
 
 function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHistory, historyTime)

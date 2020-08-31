@@ -139,6 +139,7 @@ function CT:UpdateRoleIcons()
             HEALER = E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
             DAMAGER = E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, sizeString)
         }
+
         _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
         _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
         _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
@@ -148,6 +149,7 @@ function CT:UpdateRoleIcons()
             HEALER = gsub(CT.cache.blizzardRoleIcons.Healer, ":16:16", sizeString),
             DAMAGER = gsub(CT.cache.blizzardRoleIcons.DPS, ":16:16", sizeString)
         }
+
         _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
         _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
         _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS

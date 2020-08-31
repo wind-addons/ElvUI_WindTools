@@ -1,5 +1,5 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
-local CE = W:NewModule("Emote", "AceEvent-3.0")
+local CE = W:NewModule("Emote")
 local S = E:GetModule("Skins")
 
 local _G = _G

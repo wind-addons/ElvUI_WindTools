@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local CL = W:NewModule("ChatLine", "AceHook-3.0")
+local CL = W:NewModule("ChatLine")
 local CH = E:GetModule("Chat")
 
 local ipairs, pairs, wipe, time = ipairs, pairs, wipe, time

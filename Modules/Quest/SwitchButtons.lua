@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
-local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
+local SB = W:NewModule("SwitchButtons")
 
 local CreateFrame = CreateFrame
 

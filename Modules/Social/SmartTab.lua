@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
-local ST = W:NewModule("SmartTab", "AceEvent-3.0")
+local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
-local time, unpack, pairs, wipe, hooksecurefunc = time, unpack, pairs, wipe, hooksecurefunc
+local time, unpack, pairs, wipe = time, unpack, pairs, wipe
 local strsplit, strsub, tostring = strsplit, strsub, tostring
 local UnitIsGroupLeader, IsEveryoneAssistant = UnitIsGroupLeader, IsEveryoneAssistant
 local UnitInBattleground, CanEditOfficerNote = UnitInBattleground, CanEditOfficerNote
@@ -235,33 +235,33 @@ function ST:GetNext(chatType, currentTarget)
     return newChatType, newTarget
 end
 
-function ST:TabPressed()
+function ST:TabPressed(frame)
     if not ST.db.enable then
         return
     end
-    if strsub(tostring(self:GetText()), 1, 1) == "/" then
+    if strsub(tostring(frame:GetText()), 1, 1) == "/" then
         return
     end
 
     nextChatType, nextTellTarget = nil, nil
-    nextChatType, nextTellTarget = ST:GetNext(self:GetAttribute("chatType"), self:GetAttribute("tellTarget"))
+    nextChatType, nextTellTarget = ST:GetNext(frame:GetAttribute("chatType"), frame:GetAttribute("tellTarget"))
 end
 
-function ST:SetNewChat()
+function ST:SetNewChat(frame)
     if not ST.db.enable then
         return
     end
 
-    self:SetAttribute("chatType", nextChatType)
+    frame:SetAttribute("chatType", nextChatType)
 
     if nextTellTarget then
-        self:SetAttribute("tellTarget", nextTellTarget)
+        frame:SetAttribute("tellTarget", nextTellTarget)
     end
 
-    ACTIVE_CHAT_EDIT_BOX = self
-    LAST_ACTIVE_CHAT_EDIT_BOX = self
+    ACTIVE_CHAT_EDIT_BOX = frame
+    LAST_ACTIVE_CHAT_EDIT_BOX = frame
 
-    ChatEdit_UpdateHeader(self)
+    ChatEdit_UpdateHeader(frame)
 end
 
 -- 接收密语
@@ -298,8 +298,8 @@ function ST:Initialize()
 
     -- 缓存 { 密语对象 = {时间, 方式} }
 
-    hooksecurefunc("ChatEdit_CustomTabPressed", ST.TabPressed)
-    hooksecurefunc("ChatEdit_SecureTabPressed", ST.SetNewChat)
+    self:SecureHook("ChatEdit_CustomTabPressed", "TabPressed")
+    self:SecureHook("ChatEdit_SecureTabPressed", "SetNewChat")
 
     if not self.db.enable then
         return

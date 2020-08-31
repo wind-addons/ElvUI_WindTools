@@ -1,11 +1,8 @@
--- 去除地图迷雾部分功能来源 Leatrix
--- 修复指针错误来源 NDui
 local W, F, E, L = unpack(select(2, ...))
 local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
 local _G = _G
 local tinsert, strsplit, ceil, ipairs, mod = tinsert, strsplit, ceil, ipairs, mod
-local hooksecurefunc = hooksecurefunc
 
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
@@ -1905,7 +1902,7 @@ local RevealDatabase = {
 -- 用于储存显现的覆盖层
 local overlayTextures = {}
 
-function WM:HandleMap()
+function WM:HandleMap(map)
     overlayTextures = {}
     local mapID = WorldMapFrame.mapID
     if not mapID then
@@ -1932,9 +1929,9 @@ function WM:HandleMap()
     end
 
     -- 取得大小
-    self.layerIndex = self:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
+    map.layerIndex = map:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
     local layers = C_Map_GetMapArtLayers(mapID)
-    local layerInfo = layers and layers[self.layerIndex]
+    local layerInfo = layers and layers[map.layerIndex]
     if not layerInfo then
         return
     end
@@ -1964,7 +1961,7 @@ function WM:HandleMap()
                     end
                 end
                 for k = 1, numTexturesWide do
-                    local texture = self.overlayTexturePool:Acquire()
+                    local texture = map.overlayTexturePool:Acquire()
                     if (k < numTexturesWide) then
                         texturePixelWidth = TILE_SIZE_WIDTH
                         textureFileWidth = TILE_SIZE_WIDTH
@@ -2006,7 +2003,7 @@ function WM:Reveal()
     end
 
     for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-        hooksecurefunc(pin, "RefreshOverlays", WM.HandleMap)
+        self:SecureHook(pin, "RefreshOverlays", "HandleMap")
     end
 end
 

@@ -56,25 +56,25 @@ local PARAGON_QUEST_ID = {
 	[55976] = {2400, 169939} --Waveblade Ankoan
 }
 
-function PR:ColorWatchbar()
+function PR:ColorWatchbar(bar)
 	if not PR.db.enable then
-        return
+		return
 	end
 
 	local factionID = select(6, GetWatchedFactionInfo())
 	if factionID and C_Reputation_IsFactionParagon(factionID) then
-		self:SetBarColor(PR.db.color.r, PR.db.color.g, PR.db.color.b)
+		bar:SetBarColor(PR.db.color.r, PR.db.color.g, PR.db.color.b)
 	end
 end
 
-function PR:SetupParagonTooltip()
+function PR:SetupParagonTooltip(tt)
 	if not PR.db.enable then
-        return
+		return
 	end
 
-	local _, _, rewardQuestID, hasRewardPending = C_Reputation_GetFactionParagonInfo(self.factionID)
+	local _, _, rewardQuestID, hasRewardPending = C_Reputation_GetFactionParagonInfo(tt.factionID)
 	if hasRewardPending then
-		local factionName = GetFactionInfoByID(self.factionID)
+		local factionName = GetFactionInfoByID(tt.factionID)
 		local questIndex = GetQuestLogIndexByID(rewardQuestID)
 		local description = GetQuestLogCompletionText(questIndex) or ""
 		EmbeddedItemTooltip:SetText(L["Paragon"])
@@ -238,7 +238,7 @@ end
 
 function PR:ChangeReputationBars()
 	if not PR.db.enable then
-        return
+		return
 	end
 
 	local ReputationFrame = _G.ReputationFrame
@@ -338,14 +338,14 @@ end
 function PR:Initialize()
 	self.db = E.db.WT.quest.paragonReputation
 	if not self.db.enable or self.initialized then
-        return
+		return
 	end
-	
+
 	self:RegisterEvent("QUEST_ACCEPTED")
 
-	hooksecurefunc(ReputationBarMixin, "Update", PR.ColorWatchbar)
-	hooksecurefunc("ReputationParagonFrame_SetupParagonTooltip", PR.SetupParagonTooltip)
-	hooksecurefunc("ReputationFrame_Update", PR.ChangeReputationBars)
+	self:SecureHook(ReputationBarMixin, "Update", "ColorWatchbar")
+	self:SecureHook("ReputationParagonFrame_SetupParagonTooltip", "SetupParagonTooltip")
+	self:SecureHook("ReputationFrame_Update", "ChangeReputationBars")
 	PR:HookReputationBars()
 	PR:CreateToast()
 	E:CreateMover(
@@ -366,7 +366,7 @@ end
 
 function PR:ProfileUpdate()
 	self:Initialize()
-	
+
 	if not self.db.enable then
 		self:UnregisterEvent("QUEST_ACCEPTED")
 	end

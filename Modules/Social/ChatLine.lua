@@ -3,13 +3,10 @@ local CL = W:NewModule("ChatLine", "AceHook-3.0")
 local CH = E:GetModule("Chat")
 
 local BetterDate = BetterDate
-local time = time
-local ipairs = ipairs
+local time, format, ipairs, gsub = time, format, ipairs, gsub
 
 local cache = {}
 local initRecord = {}
-
-local abbrStrings
 
 local abbrStrings = {
     GUILD = L["[ABBR] Guild"],
@@ -45,7 +42,6 @@ function CL:ShortChannel()
     local abbr
 
     if CL.db then
-
         if CL.db.removeBrackets then
             noBracketsString = "|Hchannel:%s|h%s|h"
         end

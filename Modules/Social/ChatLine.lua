@@ -4,7 +4,7 @@ local CH = E:GetModule("Chat")
 
 local ipairs, pairs, wipe, time = ipairs, pairs, wipe, time
 local strfind, strlen, strupper, strlower = strfind, strlen, strupper, strlower
-local tostring,strsub, gsub, format = tostring, strsub, gsub, format
+local tostring, strsub, gsub, format = tostring, strsub, gsub, format
 
 local BetterDate = BetterDate
 local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
@@ -36,7 +36,7 @@ local GMError = GMError
 local GMChatFrame_IsGM = GMChatFrame_IsGM
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
-local IsInRaid =IsInRaid
+local IsInRaid = IsInRaid
 local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
@@ -67,25 +67,26 @@ local abbrStrings = {
     PET_BATTLE_COMBAT_LOG = _G.PET_BATTLE_COMBAT_LOG
 }
 
-local historyTypes = { -- the events set on the chats are still in FindURL_Events, this is used to ignore some types only
-	CHAT_MSG_WHISPER			= 'WHISPER',
-	CHAT_MSG_WHISPER_INFORM		= 'WHISPER',
-	CHAT_MSG_BN_WHISPER			= 'WHISPER',
-	CHAT_MSG_BN_WHISPER_INFORM	= 'WHISPER',
-	CHAT_MSG_GUILD				= 'GUILD',
-	CHAT_MSG_GUILD_ACHIEVEMENT	= 'GUILD',
-	CHAT_MSG_OFFICER		= 'OFFICER',
-	CHAT_MSG_PARTY			= 'PARTY',
-	CHAT_MSG_PARTY_LEADER	= 'PARTY',
-	CHAT_MSG_RAID			= 'RAID',
-	CHAT_MSG_RAID_LEADER	= 'RAID',
-	CHAT_MSG_RAID_WARNING	= 'RAID',
-	CHAT_MSG_INSTANCE_CHAT			= 'INSTANCE',
-	CHAT_MSG_INSTANCE_CHAT_LEADER	= 'INSTANCE',
-	CHAT_MSG_CHANNEL		= 'CHANNEL',
-	CHAT_MSG_SAY			= 'SAY',
-	CHAT_MSG_YELL			= 'YELL',
-	CHAT_MSG_EMOTE			= 'EMOTE' -- this never worked, check it sometime.
+local historyTypes = {
+    -- the events set on the chats are still in FindURL_Events, this is used to ignore some types only
+    CHAT_MSG_WHISPER = "WHISPER",
+    CHAT_MSG_WHISPER_INFORM = "WHISPER",
+    CHAT_MSG_BN_WHISPER = "WHISPER",
+    CHAT_MSG_BN_WHISPER_INFORM = "WHISPER",
+    CHAT_MSG_GUILD = "GUILD",
+    CHAT_MSG_GUILD_ACHIEVEMENT = "GUILD",
+    CHAT_MSG_OFFICER = "OFFICER",
+    CHAT_MSG_PARTY = "PARTY",
+    CHAT_MSG_PARTY_LEADER = "PARTY",
+    CHAT_MSG_RAID = "RAID",
+    CHAT_MSG_RAID_LEADER = "RAID",
+    CHAT_MSG_RAID_WARNING = "RAID",
+    CHAT_MSG_INSTANCE_CHAT = "INSTANCE",
+    CHAT_MSG_INSTANCE_CHAT_LEADER = "INSTANCE",
+    CHAT_MSG_CHANNEL = "CHANNEL",
+    CHAT_MSG_SAY = "SAY",
+    CHAT_MSG_YELL = "YELL",
+    CHAT_MSG_EMOTE = "EMOTE" -- this never worked, check it sometime.
 }
 
 local roleIcons
@@ -105,8 +106,8 @@ function CL:UpdateRoleIcons()
         }
     elseif self.db.roleIconStyle == "DEFAULT" then
         roleIcons = {
-            TANK = E:TextureString(E.Media.Textures.Tank, sizeString..':0:0:64:64:2:56:2:56'),
-            HEALER = E:TextureString(E.Media.Textures.Healer, sizeString..':0:0:64:64:2:56:2:56'),
+            TANK = E:TextureString(E.Media.Textures.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
+            HEALER = E:TextureString(E.Media.Textures.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
             DAMAGER = E:TextureString(E.Media.Textures.DPS, sizeString)
         }
     end
@@ -237,6 +238,8 @@ function CL:ChatFrame_MessageEventHandler(
     historyBTag)
     -- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
     -- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
+    local noBrackets = CL.db.removeBrackets
+    
     if strsub(event, 1, 8) == "CHAT_MSG" then
         if arg16 then
             return true
@@ -470,7 +473,7 @@ function CL:ChatFrame_MessageEventHandler(
                 end
             end
             frame:AddMessage(
-                format(arg1, GetPlayerLink(arg2, ("[%s]"):format(coloredName))),
+                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(coloredName))),
                 info.r,
                 info.g,
                 info.b,
@@ -481,7 +484,7 @@ function CL:ChatFrame_MessageEventHandler(
                 historyTime
             )
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
-            local message = format(arg1, GetPlayerLink(arg2, ("[%s]"):format(coloredName)))
+            local message = format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(coloredName)))
             if C_SocialIsSocialEnabled() then
                 local achieveID = GetAchievementInfoFromHyperlink(arg1)
                 if achieveID then
@@ -658,18 +661,18 @@ function CL:ChatFrame_MessageEventHandler(
                         client
                     ) or ""
                     local characterNameText = BNet_GetClientEmbeddedTexture(client, 14) .. characterName
-                    local linkDisplayText = ("[%s] (%s)"):format(arg2, characterNameText)
+                    local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
                     local playerLink =
                         GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                     message = format(globalstring, playerLink)
                 else
-                    local linkDisplayText = ("[%s]"):format(arg2)
+                    local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
                     local playerLink =
                         GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                     message = format(globalstring, playerLink)
                 end
             else
-                local linkDisplayText = ("[%s]"):format(arg2)
+                local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
                 local playerLink =
                     GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                 message = format(globalstring, playerLink)
@@ -678,7 +681,7 @@ function CL:ChatFrame_MessageEventHandler(
         elseif chatType == "BN_INLINE_TOAST_BROADCAST" then
             if arg1 ~= "" then
                 arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
-                local linkDisplayText = ("[%s]"):format(arg2)
+                local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
                 local playerLink =
                     GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                 frame:AddMessage(
@@ -747,7 +750,7 @@ function CL:ChatFrame_MessageEventHandler(
             local usingEmote = (chatType == "EMOTE") or (chatType == "TEXT_EMOTE")
 
             if usingDifferentLanguage or not usingEmote then
-                playerLinkDisplayText = ("[%s]"):format(coloredName)
+                playerLinkDisplayText = (noBrackets and "%s" or "[%s]"):format(coloredName)
             end
 
             local isCommunityType = chatType == "COMMUNITIES_CHANNEL"
@@ -987,7 +990,7 @@ function CL:ToggleReplacement()
 
     -- ChatFrame_MessageEventHandler
     -- CheckLFGRoles
-    if self.db.removeBrackets then
+    if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 then
         if not initRecord.ChatFrame_MessageEventHandler then
             cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
             CH.ChatFrame_MessageEventHandler = CL.ChatFrame_MessageEventHandler
@@ -1002,7 +1005,7 @@ function CL:ToggleReplacement()
                 CH.ChatFrame_MessageEventHandler = cache.ChatFrame_MessageEventHandler
                 CH.CheckLFGRoles = cache.CheckLFGRoles
             end
-            
+
             initRecord.ChatFrame_MessageEventHandler = false
         end
     end

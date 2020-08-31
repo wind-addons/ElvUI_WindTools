@@ -55,6 +55,18 @@ local initRecord = {}
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
 
+local elvuiAbbrStrings = {
+    GUILD = L["G"],
+    PARTY = L["P"],
+    RAID = L["R"],
+    OFFICER = L["O"],
+    PARTY_LEADER = L["PL"],
+    RAID_LEADER = L["RL"],
+    INSTANCE_CHAT = L["I"],
+    INSTANCE_CHAT_LEADER = L["IL"],
+    PET_BATTLE_COMBAT_LOG = _G.PET_BATTLE_COMBAT_LOG
+}
+
 local abbrStrings = {
     GUILD = L["[ABBR] Guild"],
     PARTY = L["[ABBR] Party"],
@@ -127,9 +139,11 @@ function CT:ShortChannel()
             abbr = abbrStrings[strupper(self)]
         elseif CT.db.abbreviation == "NONE" then
             return ""
+        else
+            abbr = elvuiAbbrStrings[strupper(self)]
         end
     end
-    
+
     if not abbr and CT.db.abbreviation == "SHORT" then
         local name = select(2, GetChannelName(gsub(self, "channel:", "")))
         if name then
@@ -249,7 +263,7 @@ function CT:ChatFrame_MessageEventHandler(
     -- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
     -- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
     local noBrackets = CT.db.removeBrackets
-    
+
     if strsub(event, 1, 8) == "CHAT_MSG" then
         if arg16 then
             return true

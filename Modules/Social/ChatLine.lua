@@ -26,6 +26,7 @@ local FCFManager_ShouldSuppressMessageFlash = FCFManager_ShouldSuppressMessageFl
 local FlashClientIcon = FlashClientIcon
 local GetAchievementInfo = GetAchievementInfo
 local GetAchievementInfoFromHyperlink = GetAchievementInfoFromHyperlink
+local GetChannelName = GetChannelName
 local GetCVar, GetCVarBool = GetCVar, GetCVarBool
 local GetBNPlayerCommunityLink = GetBNPlayerCommunityLink
 local GetBNPlayerLink = GetBNPlayerLink
@@ -128,8 +129,17 @@ function CL:ShortChannel()
             return ""
         end
     end
+    
+    if not abbr and CL.db.abbreviation == "SHORT" then
+        local name = select(2, GetChannelName(gsub(self, "channel:", "")))
+        if name then
+            abbr = F.SubCJKString(name, 1, 1)
+        end
+    end
 
-    return format(noBracketsString or "|Hchannel:%s|h[%s]|h", self, abbr or gsub(self, "channel:", ""))
+    abbr = abbr or gsub(self, "channel:", "")
+
+    return format(noBracketsString or "|Hchannel:%s|h[%s]|h", self, abbr)
 end
 
 function CL:HandleShortChannels(msg)

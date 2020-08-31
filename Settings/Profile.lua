@@ -418,7 +418,6 @@ P.social = {
     chatLine = {
         enable = true,
         abbreviation = "SHORT",
-        removeChannel = true,
         removeBrackets = true,
         roleIconSize = 16,
         roleIconStyle = "FFXIV",

@@ -5,5 +5,6 @@
 	<Script file='Emote.lua'/>
 	<Script file='Filter.lua'/>
 	<Script file='FriendList.lua'/>
+	<Script file='RightClickMenu.lua'/>
 	<Script file='SmartTab.lua'/>
 </Ui>

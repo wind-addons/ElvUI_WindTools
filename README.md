@@ -7,6 +7,13 @@ ElvUI 的可定制增强<br>
 Customizable Enhancement for ElvUI
 </div>
 
+[2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
+[2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
+
+
+[Discord](https://discord.com/invite/JMz5Zsk)
+
+
 <br>
 
 这个仓库用来存放暗影国度版本的插件.  

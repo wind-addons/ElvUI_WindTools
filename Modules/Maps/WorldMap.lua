@@ -11,6 +11,12 @@ local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExpl
 local WorldMapFrame = _G.WorldMapFrame
 local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
+-- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
+-- UiMapArtID = {
+--     TextureWidth:TextureHeight:offsetX:offsetY = WorldMapOverlayTileFileDataID
+--     ...
+-- }
+
 -- 迷雾数据
 local RevealDatabase = {
     [2] = {

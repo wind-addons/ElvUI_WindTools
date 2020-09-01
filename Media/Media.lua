@@ -36,6 +36,10 @@ AddMedia("ffxivTank", "FFXIV\\Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV\\DPS.tga", "Icons")
 AddMedia("ffxivHealer", "FFXIV\\Healer.tga", "Icons")
 
+AddMedia("windTank", "Wind\\Tank.tga", "Icons")
+AddMedia("windDPS", "Wind\\DPS.tga", "Icons")
+AddMedia("windHealer", "Wind\\Healer.tga", "Icons")
+
 AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")

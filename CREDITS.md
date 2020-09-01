@@ -59,6 +59,9 @@
     - Media/Texture/Shield.tga
     - Media/Texture/Sword.tga
     - Media/Icons/Announcement.tga
+    - Media/Icons/Wind/Tank.tga
+    - Media/Icons/Wind/Healer.tga
+    - Media/Icons/Wind/DPS.tga
 
 - Icon made by Pixel perfect from www.flaticon.com
     - Media/Icons/Calendar.tga

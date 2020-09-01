@@ -562,6 +562,12 @@ do
     icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
     SampleStrings.ffxiv = icons
+    
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.windTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.windHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.windDPS, ":16:16")
+    SampleStrings.wind = icons
 
     icons = ""
     icons = icons .. CT.cache.blizzardRoleIcons.Tank .. " "
@@ -636,6 +642,7 @@ options.chatText = {
                     name = L["Style"],
                     desc = L["Change the icons indicate the role."],
                     values = {
+                        WIND = SampleStrings.wind,
                         FFXIV = SampleStrings.ffxiv,
                         BLIZZARD = SampleStrings.blizzard,
                         DEFAULT = SampleStrings.elvui

@@ -133,6 +133,16 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
+    elseif self.db.roleIconStyle == "WIND" then
+            roleIcons = {
+                TANK = E:TextureString(W.Media.Icons.windTank, sizeString),
+                HEALER = E:TextureString(W.Media.Icons.windHealer, sizeString),
+                DAMAGER = E:TextureString(W.Media.Icons.windDPS, sizeString)
+            }
+    
+            _G.INLINE_TANK_ICON = roleIcons.TANK
+            _G.INLINE_HEALER_ICON = roleIcons.HEALER
+            _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif self.db.roleIconStyle == "DEFAULT" then
         roleIcons = {
             TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),

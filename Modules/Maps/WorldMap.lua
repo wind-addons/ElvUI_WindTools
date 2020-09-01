@@ -2142,7 +2142,6 @@ function WM:HandleMap(map)
         return
     end
     local zone = RevealDatabase[artID]
-    print(artID)
 
     -- 储存已经探索的地图以在后续操作中忽略
     local TileExists = {}

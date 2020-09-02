@@ -6,6 +6,8 @@ local _G = _G
 local mod, min, ceil, tonumber, strsplit, strmatch, format = mod, min, ceil, tonumber, strsplit, strmatch, format
 local IsAddOnLoaded = IsAddOnLoaded
 local GetItemInfo = GetItemInfo
+local GetGuildBankItemInfo = GetGuildBankItemInfo
+local GetGuildBankItemLink = GetGuildBankItemLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local GetMerchantItemLink = GetMerchantItemLink
 local SetItemButtonDesaturated = SetItemButtonDesaturated
@@ -121,7 +123,7 @@ function AK:Merchant()
 	end
 
 	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
-		local index = (((MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE) + i)
+		local index = (((_G.MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE) + i)
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
 		local merchantButton = _G["MerchantItem" .. i]
 		local itemLink = GetMerchantItemLink(index)
@@ -150,14 +152,14 @@ function AK:GuildBank()
 	local tab = GetCurrentGuildBankTab()
 
 	for i = 1, _G.MAX_GUILDBANK_SLOTS_PER_TAB do
-		index = mod(i, _G.NUM_SLOTS_PER_GUILDBANK_GROUP)
+		local index = mod(i, _G.NUM_SLOTS_PER_GUILDBANK_GROUP)
 
 		if (index == 0) then
 			index = _G.NUM_SLOTS_PER_GUILDBANK_GROUP
 		end
 
-		column = ceil((i - .5) / _G.NUM_SLOTS_PER_GUILDBANK_GROUP)
-		button = _G["GuildBankColumn" .. column .. "Button" .. index]
+		local column = ceil((i - .5) / _G.NUM_SLOTS_PER_GUILDBANK_GROUP)
+		local button = _G["GuildBankColumn" .. column .. "Button" .. index]
 
 		local _ = GetGuildBankItemInfo(tab, i)
 		local itemLink = GetGuildBankItemLink(tab, i)

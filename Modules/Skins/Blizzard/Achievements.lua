@@ -20,17 +20,14 @@ local function SkinAchievementFrame(tried)
 end
 
 function S:Blizzard_AchievementUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.achievement) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.achievements) then
+    if not self:CheckDB("achievement", "achievements") then
         return
     end
 
     SkinAchievementFrame()
 
     for i = 1, 3 do
-        S:CreateBackdropShadowAfterElvUISkins(_G["AchievementFrameTab" .. i])
+        self:CreateBackdropShadowAfterElvUISkins(_G["AchievementFrameTab" .. i])
     end
 end
 

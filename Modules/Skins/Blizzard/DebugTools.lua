@@ -5,10 +5,7 @@ local _G = _G
 local UIParentLoadAddOn = UIParentLoadAddOn
 
 function S:DebugFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.debug) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.debugTools) then
+    if not self:CheckDB("debug", "debugTools") then
         return
     end
 
@@ -16,10 +13,10 @@ function S:DebugFrames()
         UIParentLoadAddOn("Blizzard_DebugTools")
     end
 
-    S:CreateShadow(_G.TableAttributeDisplay)
-    S:CreateShadow(_G.FrameStackTooltip)
+    self:CreateShadow(_G.TableAttributeDisplay)
+    self:CreateShadow(_G.FrameStackTooltip)
 
-    S:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateShadow")
+    self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateShadow")
 end
 
 S:AddCallback("DebugFrames")

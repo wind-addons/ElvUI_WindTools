@@ -5,20 +5,16 @@ local _G = _G
 local pairs = pairs
 
 function S:Blizzard_AuctionHouseUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.auctionhouse) then
+    if not self:CheckDB("auctionhouse", "auctionHouse") then
         return
     end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.auctionHouse) then
-        return
-    end
+
+    self:CreateShadow(_G.AuctionHouseFrame)
 
     local tabs = {_G.AuctionHouseFrameBuyTab, _G.AuctionHouseFrameSellTab, _G.AuctionHouseFrameAuctionsTab}
-
-    S:CreateShadow(_G.AuctionHouseFrame)
-
     for _, tab in pairs(tabs) do
         if tab then
-            S:CreateBackdropShadowAfterElvUISkins(tab)
+            self:CreateBackdropShadowAfterElvUISkins(tab)
         end
     end
 end

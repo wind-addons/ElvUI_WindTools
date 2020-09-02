@@ -4,23 +4,20 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:CharacterFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.character) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.character) then
+    if not self:CheckDB("character") then
         return
     end
 
     -- 角色面板
-    S:CreateShadow(_G.CharacterFrame)
-    S:CreateShadow(_G.GearManagerDialogPopup)
-    S:CreateShadow(_G.EquipmentFlyoutFrameButtons)
+    self:CreateShadow(_G.CharacterFrame)
+    self:CreateShadow(_G.GearManagerDialogPopup)
+    self:CreateShadow(_G.EquipmentFlyoutFrameButtons)
     for i = 1, 4 do
-        S:CreateBackdropShadow(_G["CharacterFrameTab" .. i])
+        self:CreateBackdropShadow(_G["CharacterFrameTab" .. i])
     end
 
     -- 代币窗口
-    S:CreateShadow(_G.TokenFramePopup)
+    self:CreateShadow(_G.TokenFramePopup)
 
     -- 去除人物模型背景
     local CharacterModelFrame = _G.CharacterModelFrame
@@ -32,7 +29,7 @@ function S:CharacterFrame()
     end
 
     -- 声望
-    S:CreateShadow(_G.ReputationDetailFrame)
+    self:CreateShadow(_G.ReputationDetailFrame)
 end
 
 S:AddCallback("CharacterFrame")

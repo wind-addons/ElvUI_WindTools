@@ -7,10 +7,10 @@ local select = select
 
 function S:EncounterJournal_DisplayInstance()
     local bossIndex = 1
-    local _, _, bossID = _G.EJ_GetEncounterInfoByIndex(bossIndex)
-    local bossButton
+    local bossID = select(3, _G.EJ_GetEncounterInfoByIndex(bossIndex))
+
     while bossID do
-        bossButton = _G["EncounterJournalBossButton" .. bossIndex]
+        local bossButton = _G["EncounterJournalBossButton" .. bossIndex]
         if bossButton and not bossButton.windStyle then
             self:CreateShadow(bossButton)
             F.SetFontOutline(bossButton.text)
@@ -25,17 +25,11 @@ function S:EncounterJournal_DisplayInstance()
 end
 
 function S:Blizzard_EncounterJournal()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.encounterjournal) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.encounterJournal) then
+    if not self:CheckDB("encounterjournal", "encounterJournal") then
         return
     end
 
-    local EncounterJournal = _G.EncounterJournal
-    local EncounterInfo = EncounterJournal.encounter.info
-
-    S:CreateShadow(EncounterJournal)
+    self:CreateShadow(_G.EncounterJournal)
 
     -- Boss 按钮
     if E.private.skins.parchmentRemoverEnable then
@@ -44,14 +38,14 @@ function S:Blizzard_EncounterJournal()
 
     -- 下方标签页
     local tabs = {
-        EncounterInfo.overviewTab,
-        EncounterInfo.lootTab,
-        EncounterInfo.bossTab,
-        EncounterInfo.modelTab
+        _G.EncounterJournal.encounter.info.overviewTab,
+        _G.EncounterJournal.encounter.info.lootTab,
+        _G.EncounterJournal.encounter.info.bossTab,
+        _G.EncounterJournal.encounter.info.modelTab
     }
 
     for _, tab in pairs(tabs) do
-        S:CreateBackdropShadowAfterElvUISkins(tab)
+        self:CreateBackdropShadowAfterElvUISkins(tab)
     end
 end
 

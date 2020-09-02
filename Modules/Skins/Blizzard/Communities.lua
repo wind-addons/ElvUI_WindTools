@@ -4,24 +4,21 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:Blizzard_Communities()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.communities) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.communities) then
+    if not self:CheckDB("communities") then
         return
     end
 
     if _G.CommunitiesFrame then
         local f = _G.CommunitiesFrame
-        S:CreateShadow(f)
-        S:CreateShadow(f.ChatTab)
-        S:CreateShadow(f.RosterTab)
-        S:CreateShadow(f.GuildBenefitsTab)
-        S:CreateShadow(f.GuildInfoTab)
-        S:CreateShadow(f.GuildMemberDetailFrame)
-        S:CreateShadow(f.ClubFinderInvitationFrame)
+        self:CreateShadow(f)
+        self:CreateShadow(f.ChatTab)
+        self:CreateShadow(f.RosterTab)
+        self:CreateShadow(f.GuildBenefitsTab)
+        self:CreateShadow(f.GuildInfoTab)
+        self:CreateShadow(f.GuildMemberDetailFrame)
+        self:CreateShadow(f.ClubFinderInvitationFrame)
         if _G.CommunitiesGuildLogFrame then
-            S:CreateShadow(_G.CommunitiesGuildLogFrame)
+            self:CreateShadow(_G.CommunitiesGuildLogFrame)
         end
     end
 
@@ -29,13 +26,13 @@ function S:Blizzard_Communities()
     if _G.ClubFinderCommunityAndGuildFinderFrame then
         local f = _G.ClubFinderCommunityAndGuildFinderFrame
         if f.ClubFinderPendingTab then
-            S:CreateShadow(f.ClubFinderPendingTab)
+            self:CreateShadow(f.ClubFinderPendingTab)
         end
         if f.ClubFinderSearchTab then
-            S:CreateShadow(f.ClubFinderSearchTab)
+            self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            S:CreateShadow(f.RequestToJoinFrame)
+            self:CreateShadow(f.RequestToJoinFrame)
         end
     end
 
@@ -43,13 +40,13 @@ function S:Blizzard_Communities()
     if _G.ClubFinderGuildFinderFrame then
         local f = _G.ClubFinderGuildFinderFrame
         if f.ClubFinderPendingTab then
-            S:CreateShadow(f.ClubFinderPendingTab)
+            self:CreateShadow(f.ClubFinderPendingTab)
         end
         if f.ClubFinderSearchTab then
-            S:CreateShadow(f.ClubFinderSearchTab)
+            self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            S:CreateShadow(f.RequestToJoinFrame)
+            self:CreateShadow(f.RequestToJoinFrame)
         end
     end
 end

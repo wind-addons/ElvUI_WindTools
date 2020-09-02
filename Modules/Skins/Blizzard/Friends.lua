@@ -5,10 +5,7 @@ local _G = _G
 local pairs = pairs
 
 function S:FriendsFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.friends) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.friends) then
+    if not self:CheckDB("friends") then
         return
     end
 
@@ -24,10 +21,11 @@ function S:FriendsFrame()
     }
 
     for _, frame in pairs(frames) do
-        S:CreateShadow(frame)
+        self:CreateShadow(frame)
     end
+
     for i = 1, 4 do
-        S:CreateBackdropShadow(_G["FriendsFrameTab" .. i])
+        self:CreateBackdropShadow(_G["FriendsFrameTab" .. i])
     end
 end
 

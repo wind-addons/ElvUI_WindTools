@@ -275,7 +275,7 @@ function S:SkinRafRewardDeliveredAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    
+
     self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Title, nil, "+1")
@@ -347,52 +347,49 @@ function S:SkinGarrisonBuildingAlert(frame)
 end
 
 function S:AlertFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.alertframes) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.alerts) then
+    if not self:CheckDB("alertframes", "alerts") then
         return
     end
 
     -- 成就
-    S:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
-    S:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
+    self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
+    self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
 
     -- 遭遇
-    S:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", "SkinGuildChallengeAlert")
-    S:SecureHook(_G.InvasionAlertSystem, "setUpFunction", "SkinInvasionAlert")
-    S:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", "SkinWorldQuestCompleteAlert")
+    self:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", "SkinGuildChallengeAlert")
+    self:SecureHook(_G.InvasionAlertSystem, "setUpFunction", "SkinInvasionAlert")
+    self:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", "SkinWorldQuestCompleteAlert")
 
     -- 要塞
-    S:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", "SkinGarrisonBuildingAlert")
-    S:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", "SkinGarrisonBuildingAlert")
+    self:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", "SkinAlert")
 
     -- 拾取
-    S:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", "SkinLegendaryItemAlert")
-    S:SecureHook(_G.LootAlertSystem, "setUpFunction", "SkinLootAlert")
-    S:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", "SkinLootUpgradeAlert")
-    S:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
-    S:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
+    self:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", "SkinLegendaryItemAlert")
+    self:SecureHook(_G.LootAlertSystem, "setUpFunction", "SkinLootAlert")
+    self:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", "SkinLootUpgradeAlert")
+    self:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
+    self:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
 
     -- 专业技能
-    S:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
-    S:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
+    self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
+    self:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
 
     -- 宠物 / 坐骑
-    S:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")
-    S:SecureHook(_G.NewMountAlertSystem, "setUpFunction", "SkinNewItemAlert")
-    S:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
+    self:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")
+    self:SecureHook(_G.NewMountAlertSystem, "setUpFunction", "SkinNewItemAlert")
+    self:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
 
     -- 其它
-    S:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
-    S:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
+    self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
 end
 
 S:AddCallback("AlertFrames")

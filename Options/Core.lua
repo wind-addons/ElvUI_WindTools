@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+local pairs = pairs
 
 -- 设定类别
 W.options = {

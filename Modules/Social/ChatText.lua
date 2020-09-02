@@ -3,7 +3,7 @@ local CT = W:NewModule("ChatText")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM
 
-local tonumber, type = tonumber, type
+local tonumber, type, next = tonumber, type, next
 local ipairs, pairs, wipe, time, select = ipairs, pairs, wipe, time, select
 local strfind, strlen, strupper, strlower = strfind, strlen, strupper, strlower
 local tostring, strsub, gsub, format = tostring, strsub, gsub, format

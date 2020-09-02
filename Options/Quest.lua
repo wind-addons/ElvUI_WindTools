@@ -6,6 +6,7 @@ local SB = W:GetModule("SwitchButtons")
 
 local pairs, print, tostring, tonumber = pairs, print, tostring, tonumber
 local UnitName, UnitExists, UnitPlayerControlled = UnitName, UnitExists, UnitPlayerControlled
+local ReputationFrame_Update = ReputationFrame_Update
 
 local customListSelected
 

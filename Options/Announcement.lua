@@ -3,6 +3,9 @@ local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
 
 local _G = _G
+local gsub =gsub
+local UnitName = UnitName
+local GetSpellLink = GetSpellLink
 local pairs, tonumber, format, strupper = pairs, tonumber, format, strupper
 
 local function ImportantColorString(string)
@@ -1934,7 +1937,7 @@ options.thanksForResurrection = {
                         message = gsub(message, "%%player%%", UnitName("player"))
                         message = gsub(message, "%%target%%", L["Sylvanas"])
                         message = gsub(message, "%%spell%%", GetSpellLink(61999))
-                        return "\n" .. ImportantColorString(L["Example"], db) .. ": " .. message .. "\n"
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
             }

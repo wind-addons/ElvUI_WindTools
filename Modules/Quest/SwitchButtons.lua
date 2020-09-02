@@ -3,7 +3,6 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 local SB = W:NewModule("SwitchButtons")
 
-local ObjectiveFrameMover = _G.ObjectiveFrameMover
 local CreateFrame = CreateFrame
 
 function SB:CreateButton(text)
@@ -124,7 +123,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", nil, E.UIParent)
-    frame:Point("RIGHT", ObjectiveFrameMover, "RIGHT", 0, -2)
+    frame:Point("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
     frame:SetFrameStrata("BACKGROUND")
     self.barAnchor = frame
 

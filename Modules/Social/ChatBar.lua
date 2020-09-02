@@ -4,6 +4,7 @@ local S = W:GetModule("Skins")
 local LSM = E.Libs.LSM
 
 local _, _G = _, _G
+local print = print
 local pairs, ipairs, tostring, strmatch, format = pairs, ipairs, tostring, strmatch, format
 local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
 local GetChannelName, GetChannelList = GetChannelName, GetChannelList
@@ -16,6 +17,7 @@ local RandomRoll = RandomRoll
 local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
 local C_Timer_After = C_Timer.After
 local C_Club_GetClubInfo = C_Club.GetClubInfo
+local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
@@ -39,7 +41,7 @@ local checkFunctions = {
         return IsInGuild()
     end,
     ["OFFICER"] = function()
-        return IsInGuild() and CanEditOfficerNote()
+        return IsInGuild() and C_GuildInfo_IsGuildOfficer()
     end
 }
 
@@ -101,23 +103,23 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
                     self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
                 end
 
-                GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
-                GameTooltip:SetText(tooltip or _G[name] or "")
+                _G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
+                _G.GameTooltip:SetText(tooltip or _G[name] or "")
 
                 if tips then
                     for _, tip in ipairs(tips) do
-                        GameTooltip:AddLine(tip)
+                        _G.GameTooltip:AddLine(tip)
                     end
                 end
 
-                GameTooltip:Show()
+                _G.GameTooltip:Show()
             end
         )
 
         button:SetScript(
             "OnLeave",
             function(self)
-                GameTooltip:Hide()
+                _G.GameTooltip:Hide()
                 if CB.db.style == "BLOCK" then
                     self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
 
@@ -258,7 +260,7 @@ function CB:UpdateBar()
                     -- 自动加入
                     if channelId == 0 and db.autoJoin then
                         JoinChannelByName(name)
-                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, name)
+                        ChatFrame_AddChannel(DefaultChatFrame, name)
                         channelId = GetChannelName(name)
                         autoJoined = true
                     end
@@ -281,7 +283,7 @@ function CB:UpdateBar()
                 elseif mouseButton == "RightButton" then
                     if channelId == 0 then
                         JoinChannelByName(name)
-                        ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, name)
+                        ChatFrame_AddChannel(DefaultChatFrame, name)
                     else
                         LeaveChannelByName(name)
                     end
@@ -296,10 +298,10 @@ function CB:UpdateBar()
                 offsetY,
                 db.color,
                 self.db.tex,
-                worldChannelName,
+                db.name,
                 {
-                    L["Left Click: Change to"] .. " " .. worldChannelName,
-                    L["Right Click: Join/Leave"] .. " " .. worldChannelName
+                    L["Left Click: Change to"] .. " " .. db.name,
+                    L["Right Click: Join/Leave"] .. " " .. db.name
                 },
                 db.abbr
             )
@@ -482,7 +484,7 @@ function CB:CreateBar()
     bar:SetFrameStrata("LOW")
     bar:CreateBackdrop("Transparent")
     bar:ClearAllPoints()
-    bar:Point("BOTTOMLEFT", LeftChatPanel, "TOPLEFT", 6, 3)
+    bar:Point("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)
     S:CreateShadow(bar)
 
     self.bar = bar

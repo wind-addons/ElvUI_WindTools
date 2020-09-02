@@ -367,6 +367,7 @@ L["Show a backdrop of the bar."] = true
 L["Show an icon for items and spells."] = true
 L["Shrine of the Storm"] = true
 L["Siege of Boralus"] = true
+L["Sites"] = true
 L["Size"] = true
 L["Skins"] = true
 L["Smart Tab"] = true

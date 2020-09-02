@@ -177,15 +177,22 @@ options.credits = {
             inline = true,
             args = {}
         },
-        codes = {
+        sites = {
             order = 2,
+            name = L["Sites"],
+            type = "group",
+            inline = true,
+            args = {}
+        },
+        codes = {
+            order = 3,
             name = L["Codes"],
             type = "group",
             inline = true,
             args = {}
         },
         mediaFiles = {
-            order = 3,
+            order = 4,
             name = L["Media Files"],
             type = "group",
             inline = true,
@@ -221,6 +228,23 @@ do -- 特别感谢
         type = "description",
         name = L["I have learned a lot from their codes."]
     }
+end
+
+do -- 网站
+    local siteList = {
+        "https://www.wowhead.com/",
+        "https://www.townlong-yak.com/",
+        "https://wow.tools/",
+        "https://wow.gamepedia.com/"
+    }
+
+    for i, site in pairs(siteList) do
+        options.credits.args.sites.args[tostring(i)] = {
+            order = i,
+            type = "description",
+            name = site,
+        }
+    end
 end
 
 do -- 插件代码
@@ -305,13 +329,16 @@ do -- 媒体文件
             "Media/Texture/Vignetting.tga"
         },
         ["Icon made by Freepik from www.flaticon.com"] = {
+            "Media/Icons/Announcement.tga",
             "Media/Texture/Combat.tga",
             "Media/Texture/Shield.tga",
-            "Media/Texture/Sword.tga",
-            "Media/Icons/Announcement.tga"
+            "Media/Texture/Sword.tga"
         },
         ["Icon made by Pixel perfect from www.flaticon.com"] = {
             "Media/Icons/Calendar.tga"
+        },
+        ["Marijan Petrovski @ PSDchat.com"] = {
+            "Media/Icons/Hexagon"
         },
         ["ファイナルファンタジーXIV ファンキット"] = {
             "Media/Icons/FFXIV"

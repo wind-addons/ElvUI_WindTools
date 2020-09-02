@@ -1,3 +1,21 @@
+# Special Thanks
+- Blazeflack
+- Merathilis
+- Benik
+- siweia
+- loudsoul
+- Simpy
+- Azilroka
+- Haste
+- Tukz
+- Elv
+
+# Sites
+- [https://www.wowhead.com/](https://www.wowhead.com/)
+- [https://www.townlong-yak.com/](https://www.townlong-yak.com/)
+- [https://wow.tools/](https://wow.tools/)
+- [https://wow.gamepedia.com](https://wow.gamepedia.com)
+
 # Codes
 - Announcement
     - Venomisto (InstanceResetAnnouncer)
@@ -55,16 +73,16 @@
     - Media/Texture/Vignetting.tga
 
 - Icon made by Freepik from www.flaticon.com
+    - Media/Icons/Announcement.tga
     - Media/Texture/Combat.tga
     - Media/Texture/Shield.tga
     - Media/Texture/Sword.tga
-    - Media/Icons/Announcement.tga
-    - Media/Icons/Wind/Tank.tga
-    - Media/Icons/Wind/Healer.tga
-    - Media/Icons/Wind/DPS.tga
 
 - Icon made by Pixel perfect from www.flaticon.com
     - Media/Icons/Calendar.tga
+
+- Marijan Petrovski @ PSDchat.com
+    - Media/Icons/Hexagon
 
 - ファイナルファンタジーXIV ファンキット
     - Media/Icons/FFXIV

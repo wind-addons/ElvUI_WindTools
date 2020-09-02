@@ -3,14 +3,21 @@ local PR = W:NewModule("ParagonReputation", "AceHook-3.0", "AceEvent-3.0")
 local S = W:GetModule("Skins")
 
 local _G = _G
+local mod = mod
+local floor = floor
 local unpack = unpack
+local format = format
 local tremove = tremove
+local BreakUpLargeNumbers = BreakUpLargeNumbers
+local CreateFrame = CreateFrame
 local GetWatchedFactionInfo = GetWatchedFactionInfo
 local GetFactionInfo = GetFactionInfo
 local GetFactionInfoByID = GetFactionInfoByID
+local GetNumFactions = GetNumFactions
 local GetQuestLogIndexByID = GetQuestLogIndexByID
 local GetItemInfo = GetItemInfo
 local GetQuestLogCompletionText = GetQuestLogCompletionText
+local GetSelectedFaction = GetSelectedFaction
 local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
 local GameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
 local GameTooltip_AddQuestRewardsToTooltip = GameTooltip_AddQuestRewardsToTooltip
@@ -18,7 +25,14 @@ local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = C_Reputation.GetFactionParagonInfo
 local C_Timer_After = C_Timer.After
 local UIFrameFadeIn = UIFrameFadeIn
+local UIFrameFadeOut = UIFrameFadeOut
 local PlaySound = PlaySound
+
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
+local FONT_COLOR_CODE_CLOSE = FONT_COLOR_CODE_CLOSE
+local HIGHLIGHT_FONT_COLOR_CODE = HIGHLIGHT_FONT_COLOR_CODE
+local NUM_FACTIONS_DISPLAYED = NUM_FACTIONS_DISPLAYED
+local REPUTATION_PROGRESS_FORMAT = REPUTATION_PROGRESS_FORMAT
 
 local ACTIVE_TOAST = false
 local WAITING_TOAST = {}
@@ -77,12 +91,12 @@ function PR:SetupParagonTooltip(tt)
 		local factionName = GetFactionInfoByID(tt.factionID)
 		local questIndex = GetQuestLogIndexByID(rewardQuestID)
 		local description = GetQuestLogCompletionText(questIndex) or ""
-		EmbeddedItemTooltip:SetText(L["Paragon"])
-		EmbeddedItemTooltip:AddLine(description, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, 1)
-		GameTooltip_AddQuestRewardsToTooltip(EmbeddedItemTooltip, rewardQuestID)
-		EmbeddedItemTooltip:Show()
+		_G.EmbeddedItemTooltip:SetText(L["Paragon"])
+		_G.EmbeddedItemTooltip:AddLine(description, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, 1)
+		GameTooltip_AddQuestRewardsToTooltip(_G.EmbeddedItemTooltip, rewardQuestID)
+		_G.EmbeddedItemTooltip:Show()
 	else
-		EmbeddedItemTooltip:Hide()
+		_G.EmbeddedItemTooltip:Hide()
 	end
 end
 
@@ -93,14 +107,14 @@ function PR:Tooltip(bar, event)
 	if event == "OnEnter" then
 		local _, link = GetItemInfo(PARAGON_QUEST_ID[bar.questID][2])
 		if link ~= nil then
-			GameTooltip:SetOwner(bar, "ANCHOR_NONE")
-			GameTooltip:SetPoint("LEFT", bar, "RIGHT", 10, 0)
-			GameTooltip:SetHyperlink(link)
-			GameTooltip:Show()
+			_G.GameTooltip:SetOwner(bar, "ANCHOR_NONE")
+			_G.GameTooltip:SetPoint("LEFT", bar, "RIGHT", 10, 0)
+			_G.GameTooltip:SetHyperlink(link)
+			_G.GameTooltip:Show()
 		end
 	elseif event == "OnLeave" then
-		GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
-		GameTooltip:Hide()
+		GameTooltip_SetDefaultAnchor(_G.GameTooltip, E.UIParent)
+		_G.GameTooltip:Hide()
 	end
 end
 
@@ -171,8 +185,8 @@ function PR:WaitToast()
 end
 
 function PR:CreateToast()
-	local toast = CreateFrame("FRAME", "ParagonReputation_Toast", UIParent, "BackdropTemplate")
-	toast:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 250)
+	local toast = CreateFrame("FRAME", "ParagonReputation_Toast", E.UIParent, "BackdropTemplate")
+	toast:SetPoint("BOTTOM", E.UIParent, "BOTTOM", 0, 250)
 	toast:SetSize(302, 70)
 	toast:SetClampedToScreen(true)
 	toast:Hide()
@@ -243,7 +257,7 @@ function PR:ChangeReputationBars()
 
 	local ReputationFrame = _G.ReputationFrame
 	ReputationFrame.paragonFramesPool:ReleaseAll()
-	local factionOffset = FauxScrollFrame_GetOffset(ReputationListScrollFrame)
+	local factionOffset = FauxScrollFrame_GetOffset(_G.ReputationListScrollFrame)
 	for n = 1, NUM_FACTIONS_DISPLAYED, 1 do
 		local factionIndex = factionOffset + n
 		local factionRow = _G["ReputationBar" .. n]
@@ -313,13 +327,13 @@ function PR:ChangeReputationBars()
 						end
 						factionRow.rolloverText = nil
 					end
-					if factionIndex == GetSelectedFaction() and ReputationDetailFrame:IsShown() then
+					if factionIndex == GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
 						local count = floor(currentValue / threshold)
 						if hasRewardPending then
 							count = count - 1
 						end
 						if count > 0 then
-							ReputationDetailFactionName:SetText(name .. " |cffffffffx" .. count .. "|r")
+							_G.ReputationDetailFactionName:SetText(name .. " |cffffffffx" .. count .. "|r")
 						end
 					end
 				end
@@ -343,7 +357,7 @@ function PR:Initialize()
 
 	self:RegisterEvent("QUEST_ACCEPTED")
 
-	self:SecureHook(ReputationBarMixin, "Update", "ColorWatchbar")
+	self:SecureHook(_G.ReputationBarMixin, "Update", "ColorWatchbar")
 	self:SecureHook("ReputationParagonFrame_SetupParagonTooltip", "SetupParagonTooltip")
 	self:SecureHook("ReputationFrame_Update", "ChangeReputationBars")
 	PR:HookReputationBars()

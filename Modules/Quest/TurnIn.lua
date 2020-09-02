@@ -3,11 +3,24 @@ local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
 local strmatch, tonumber, next, select, tonumber, wipe = strmatch, tonumber, next, select, tonumber, wipe
+local GetInstanceInfo = GetInstanceInfo
 local GetNumTrackingTypes, GetTrackingInfo = GetNumTrackingTypes, GetTrackingInfo
 local GetNumAutoQuestPopUps, GetAutoQuestPopUp = GetNumAutoQuestPopUps, GetAutoQuestPopUp
 local UnitGUID, UnitIsDeadOrGhost = UnitGUID, UnitIsDeadOrGhost
 local AcceptQuest, CloseQuest, QuestGetAutoAccept = AcceptQuest, CloseQuest, QuestGetAutoAccept
 local ShowQuestOffer, ShowQuestComplete = ShowQuestOffer, ShowQuestComplete
+local StaticPopup_FindVisible = StaticPopup_FindVisible
+local StaticPopup_OnClick = StaticPopup_OnClick
+local IsQuestCompletable = IsQuestCompletable
+local GetQuestID = GetQuestID
+local GetNumQuestItems = GetNumQuestItems
+local GetQuestItemLink = GetQuestItemLink
+local CompleteQuest = CompleteQuest
+local GetQuestReward = GetQuestReward
+local GetItemInfo = GetItemInfo
+local GetQuestItemInfo = GetQuestItemInfo
+local QuestInfoItem_OnClick = QuestInfoItem_OnClick
+
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
@@ -21,8 +34,9 @@ local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_GetNumOptions = C_GossipInfo.GetNumOptions
 local C_GossipInfo_GetOptions = C_GossipInfo.GetOptions
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
-
 local C_Timer_After = C_Timer.After
+
+local quests, choiceQueue = {}
 
 local ignoreQuestNPC = {
     [88570] = true, -- Fate-Twister Tiklal
@@ -220,7 +234,7 @@ local function AttemptAutoComplete(event)
 
         local questID, popUpType = GetAutoQuestPopUp(1)
         local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
-        if not tagInfo.worldQuestType then
+        if not tagInfo or not tagInfo.worldQuestType then
             if popUpType == "OFFER" then
                 ShowQuestOffer(C_QuestLog_GetLogIndexForQuestID(questID))
             else
@@ -240,7 +254,7 @@ local function GetQuestLogQuests(onlyComplete)
     wipe(quests)
 
     for index = 1, C_QuestLog_GetNumQuestLogEntries() do
-        local questInfo = C_QuestLog_GetInfo(questIndex)
+        local questInfo = C_QuestLog_GetInfo(index)
         if not questInfo.isHeader then
             if onlyComplete and questInfo.isComplete or not onlyComplete then
                 quests[questInfo.title] = questInfo.questID
@@ -376,7 +390,7 @@ function TI:QUEST_ACCEPT_CONFIRM()
 end
 
 function TI:QUEST_ACCEPTED()
-    if QuestFrame:IsShown() and QuestGetAutoAccept() then
+    if _G.QuestFrame:IsShown() and QuestGetAutoAccept() then
         CloseQuest()
     end
 end
@@ -452,7 +466,7 @@ function TI:QUEST_COMPLETE()
             end
         end
 
-        local button = bestIndex and QuestInfoRewardsFrame.RewardButtons[bestIndex]
+        local button = bestIndex and _G.QuestInfoRewardsFrame.RewardButtons[bestIndex]
         if button then
             QuestInfoItem_OnClick(button)
         end

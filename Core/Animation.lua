@@ -3,6 +3,7 @@ F.Animation = {}
 local A = F.Animation
 
 local pairs, type, unpack, getn = pairs, type, unpack, getn
+local CreateFrame = CreateFrame
 
 --[[
     创建动画窗体
@@ -178,7 +179,7 @@ end
 ]]
 function A.PlayAnimationOnShow(frame, animationGroup)
     if not animationGroup or type(animationGroup) == "string" then
-        animationGroup = self[animationGroup]
+        animationGroup = frame[animationGroup]
     end
 
     if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then

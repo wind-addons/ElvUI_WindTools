@@ -1,10 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W:GetModule("Skins")
-local CreateFrame = CreateFrame
 
 local _G = _G
 local strupper = strupper
+local CreateFrame = CreateFrame
 local GetTime, SetRaidTarget, ClearRaidMarker = GetTime, SetRaidTarget, ClearRaidMarker
 local GameTooltip, InCombatLockdown = _G.GameTooltip, InCombatLockdown
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver

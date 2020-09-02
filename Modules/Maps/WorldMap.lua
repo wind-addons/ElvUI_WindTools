@@ -17,8 +17,9 @@ local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControll
 --     TextureWidth:TextureHeight:offsetX:offsetY = WorldMapOverlayTileFileDataID
 --     ...
 -- }
-
+    
 -- 迷雾数据
+-- 生成工具: https://github.com/fang2hou/WindToolsScripts/tree/master/MapOverlay
 local RevealDatabase = {
     [2] = {
         ["162:157:399:440"] = "440583",

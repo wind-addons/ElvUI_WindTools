@@ -139,11 +139,11 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-    elseif self.db.roleIconStyle == "WIND" then
+    elseif self.db.roleIconStyle == "HEXAGON" then
         roleIcons = {
-            TANK = E:TextureString(W.Media.Icons.windTank, sizeString),
-            HEALER = E:TextureString(W.Media.Icons.windHealer, sizeString),
-            DAMAGER = E:TextureString(W.Media.Icons.windDPS, sizeString)
+            TANK = E:TextureString(W.Media.Icons.hexagonTank, sizeString),
+            HEALER = E:TextureString(W.Media.Icons.hexagonHealer, sizeString),
+            DAMAGER = E:TextureString(W.Media.Icons.hexagonDPS, sizeString)
         }
 
         _G.INLINE_TANK_ICON = roleIcons.TANK

@@ -566,10 +566,10 @@ do
     SampleStrings.ffxiv = icons
     
     icons = ""
-    icons = icons .. E:TextureString(W.Media.Icons.windTank, ":16:16") .. " "
-    icons = icons .. E:TextureString(W.Media.Icons.windHealer, ":16:16") .. " "
-    icons = icons .. E:TextureString(W.Media.Icons.windDPS, ":16:16")
-    SampleStrings.wind = icons
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonDPS, ":16:16")
+    SampleStrings.hexagon = icons
 
     icons = ""
     icons = icons .. CT.cache.blizzardRoleIcons.Tank .. " "
@@ -644,7 +644,7 @@ options.chatText = {
                     name = L["Style"],
                     desc = L["Change the icons indicate the role."],
                     values = {
-                        WIND = SampleStrings.wind,
+                        HEXAGON = SampleStrings.hexagon,
                         FFXIV = SampleStrings.ffxiv,
                         BLIZZARD = SampleStrings.blizzard,
                         DEFAULT = SampleStrings.elvui

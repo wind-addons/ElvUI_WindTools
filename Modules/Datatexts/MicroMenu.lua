@@ -4,6 +4,21 @@ local DT = E:GetModule("DataTexts")
 local _G = _G
 local format = format
 local EasyMenu = EasyMenu
+local CreateFrame = CreateFrame
+local ToggleFrame = ToggleFrame
+local ToggleCharacter = ToggleCharacter
+local TalentFrame_LoadUI = TalentFrame_LoadUI
+local ShowUIPanel = ShowUIPanel
+local ToggleAchievementFrame = ToggleAchievementFrame
+local ToggleCollectionsJournal = ToggleCollectionsJournal
+local ToggleFriendsFrame = ToggleFriendsFrame
+local IsInGuild = IsInGuild
+local LoadAddOn = LoadAddOn
+local LookingForGuildFrame_LoadUI = LookingForGuildFrame_LoadUI
+local LookingForGuildFrame_Toggle = LookingForGuildFrame_Toggle
+local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
+local ToggleEncounterJourn = ToggleEncounterJournalal
+local ToggleHelpFrame = ToggleHelpFrame
 
 local menuFrame = CreateFrame("Frame", "WTMicroMenuDatatextMenu", E.UIParent, "UIDropDownMenuTemplate")
 

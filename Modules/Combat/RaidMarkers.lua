@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W:GetModule("Skins")
+local CreateFrame = CreateFrame
 
 local _G = _G
 local strupper = strupper

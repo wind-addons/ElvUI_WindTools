@@ -3,6 +3,7 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 local SB = W:NewModule("SwitchButtons")
 
+local _G = _G
 local CreateFrame = CreateFrame
 
 function SB:CreateButton(text)

@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 
+local _G = _G
 local format, pairs, strmatch, strsplit = format, pairs, strmatch, strsplit
 local BNConnected, BNet_GetClientTexture = BNConnected, BNet_GetClientTexture
 local FriendsFrame_Update = FriendsFrame_Update

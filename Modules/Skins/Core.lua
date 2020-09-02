@@ -21,12 +21,18 @@ S.updateProfile = {} -- 配置更新后的更新表
 ]]
 function S:CheckDB(elvuiKey, windtoolsKey, notBlizzard)
     if not notBlizzard then
-        windtoolsKey = windtoolsKey or elvuiKey
-        if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
-            return false
-        end
-        if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
-            return false
+        if elvuiKey then
+            windtoolsKey = windtoolsKey or elvuiKey
+            if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
+                return false
+            end
+            if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+                return false
+            end
+        else
+            if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+                return false
+            end
         end
     end
 

@@ -3,7 +3,6 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local GetCVarBool = GetCVarBool
 local pcall, pairs, tinsert = pcall, pairs, tinsert
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
-local UnitGUID, UnitName, GetRealmName = UnitGUID, UnitName, GetRealmName
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 
 -- 一些常量

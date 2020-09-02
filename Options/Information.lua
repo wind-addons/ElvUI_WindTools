@@ -105,7 +105,7 @@ options.help = {
                 build = {
                     order = 3,
                     type = "description",
-                    name = L["WoW Build"] .. ": " .. AddColor(format("%s (%s)", GetBuildInfo()))
+                    name = L["WoW Build"] .. ": " .. AddColor(format("%s (%s)", E.wowpatch, E.wowbuild))
                 }
             }
         },

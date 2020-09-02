@@ -595,7 +595,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
     local guid = UnitGUID(unit)
 
     if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
-        if guid == playerGUID then
+        if guid == E.myguid then
             UpdateProgression(guid, E.myfaction)
         else
             ClearAchievementComparisonUnit()

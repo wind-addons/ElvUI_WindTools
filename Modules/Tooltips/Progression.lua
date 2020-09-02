@@ -19,8 +19,6 @@ local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison
 local compareGUID
-local playerGUID = UnitGUID("player")
-local playerFaction = UnitFactionGroup("player")
 local progressCache = {}
 
 -- 8.0 决战艾泽拉斯
@@ -411,7 +409,7 @@ end
 local function GetBossKillTimes(guid, achievementID)
     local times
 
-    if guid == playerGUID then
+    if guid == E.myguid then
         times = tonumber(GetStatistic(achievementID), 10)
     else
         times = tonumber(GetComparisonStatistic(achievementID), 10)
@@ -598,7 +596,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
 
     if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
         if guid == playerGUID then
-            UpdateProgression(guid, playerFaction)
+            UpdateProgression(guid, E.myfaction)
         else
             ClearAchievementComparisonUnit()
             if not loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then

@@ -30,7 +30,7 @@ function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
     if CombatResurrectionList[spellId] then
         local needAnnounce = true
 
-        if config.onlySourceIsPlayer and sourceGUID ~= W.PlayerGUID then
+        if config.onlySourceIsPlayer and sourceGUID ~= E.myguid then
             needAnnounce = false
         end
 

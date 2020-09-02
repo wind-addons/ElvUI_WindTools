@@ -36,9 +36,9 @@ function A:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
             end
         end
 
-        if config.forceSourceIsPlayer and sourceGUID == W.PlayerGUID then
+        if config.forceSourceIsPlayer and sourceGUID == E.myguid then
             needAnnounce = true
-        elseif config.forceDestIsPlayer and destGUID == W.PlayerGUID then
+        elseif config.forceDestIsPlayer and destGUID == E.myguid then
             needAnnounce = true
         end
 

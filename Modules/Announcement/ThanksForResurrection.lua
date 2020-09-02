@@ -40,7 +40,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 	end
 
 	if ResurrectionSpellList[spellId] then
-		if spellId == 20707 and sourceGUID ~= W.PlayerGUID and destGUID == W.PlayerGUID then
+		if spellId == 20707 and sourceGUID ~= E.myguid and destGUID == E.myguid then
 			if not UnitIsDeadOrGhost("player") then
 				-- 被额外绑定灵魂石
 				A:SendMessage(FormatMessage(config.soulstoneText), A:GetChannel(config.channel), nil, sourceName)
@@ -48,7 +48,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 			end
 		end
 
-		if sourceGUID ~= W.PlayerGUID and destGUID == W.PlayerGUID then
+		if sourceGUID ~= E.myguid and destGUID == E.myguid then
 			C_Timer_After(
 				config.delay,
 				function()

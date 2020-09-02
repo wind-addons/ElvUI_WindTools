@@ -119,7 +119,7 @@ local function TryAnnounce(spellId, sourceName, id, list, type)
     end
 
     if (id and spellId == id) or (type and list[spellId]) then
-        if spellConfig.enable and (sourceName ~= W.PlayerName or spellConfig.includePlayer) then
+        if spellConfig.enable and (sourceName ~= E.myname or spellConfig.includePlayer) then
             A:SendMessage(
                 FormatMessage(spellConfig.text, sourceName, spellId),
                 A:GetChannel(channelConfig),
@@ -143,7 +143,7 @@ function A:Utility(event, sourceName, spellId)
         return
     end
 
-    if sourceName ~= W.PlayerName and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then
+    if sourceName ~= E.myname and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then
         return
     end
 

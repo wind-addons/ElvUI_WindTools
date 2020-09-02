@@ -117,7 +117,7 @@ function ST:UpdateWhisperTargets(target, chatTime, type)
 
     -- 本服玩家去除服务器名
     local name, server = strsplit("-", target)
-    if (server) and (server == W.PlayerRelam) then
+    if (server) and (server == E.myrealm) then
         target = name
     end
 
@@ -271,7 +271,7 @@ end
 -- 接收密语
 function ST:CHAT_MSG_WHISPER(_, _, author)
     -- 自己别给自己发
-    if author == W.PlayerName .. "-" .. W.PlayerRelam then
+    if author == E.myname .. "-" .. E.myrealm then
         return
     end
     self:UpdateWhisperTargets(author, nil, "WHISPER")
@@ -280,7 +280,7 @@ end
 -- 发送密语
 function ST:CHAT_MSG_WHISPER_INFORM(_, _, author)
     -- 自己别给自己发
-    if author == W.PlayerName .. "-" .. W.PlayerRelam then
+    if author == E.myname .. "-" .. E.myrealm then
         return
     end
     self:UpdateWhisperTargets(author, nil, "WHISPER")

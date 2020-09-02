@@ -8,11 +8,6 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 
 -- 一些常量
 W.Title = L["WindTools"]
-
-W.PlayerName = UnitName("player")
-W.PlayerGUID = UnitGUID("player")
-W.PlayerRelam = GetRealmName("player")
-W.PlayerNameWithRelam = format("%s-%s", W.PlayerName, W.PlayerRelam)
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 
 -- 模块部分

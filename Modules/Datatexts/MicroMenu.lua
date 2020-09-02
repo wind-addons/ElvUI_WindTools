@@ -20,6 +20,9 @@ local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 local ToggleEncounterJourn = ToggleEncounterJournalal
 local ToggleHelpFrame = ToggleHelpFrame
 
+local GameMenuFrame = _G.GameMenuFrame
+local MAINMENU_BUTTON = MAINMENU_BUTTON
+
 local menuFrame = CreateFrame("Frame", "WTMicroMenuDatatextMenu", E.UIParent, "UIDropDownMenuTemplate")
 
 local microMenu = {

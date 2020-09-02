@@ -1,7 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local DT = E:GetModule("DataTexts")
 local RC = LibStub("LibRangeCheck-2.0")
+
 local strjoin = strjoin
+local UnitName = UnitName
 
 local displayString = ""
 local lastPanel

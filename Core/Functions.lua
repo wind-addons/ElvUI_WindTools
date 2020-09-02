@@ -1,7 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
-local format, pairs, tonumber, type, unpack = format, pairs, tonumber, type, unpack
-local strlen, strfind, strsub, tinsert = strlen, strfind, strsub, tinsert
+local format, pairs, tonumber, type, unpack, print = format, pairs, tonumber, type, unpack, print
+local strlen, strfind, strsub, strbyte, tinsert = strlen, strfind, strsub, strbyte, tinsert
 local GetClassColor = GetClassColor
 
 --[[
@@ -205,7 +205,7 @@ end
     @return {number} 数量
 ]]
 function F.SubStringGetByteCount(str, index)
-    local curByte = string.byte(str, index)
+    local curByte = strbyte(str, index)
     local byteCount = 1
     if curByte == nil then
         byteCount = 0

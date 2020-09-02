@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
 local _G = _G
+local pairs, tonumber = pairs, tonumber
 local tinsert, strsplit, ceil, ipairs, mod = tinsert, strsplit, ceil, ipairs, mod
 
 local C_Map_GetMapArtID = C_Map.GetMapArtID

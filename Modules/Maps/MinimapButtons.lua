@@ -4,10 +4,11 @@ local S = W:GetModule("Skins")
 local MM = E:GetModule("Minimap")
 
 local _G = _G
-local tinsert, type, pairs, hooksecurefunc = tinsert, type, pairs, hooksecurefunc
+local tinsert, type, pairs, select = tinsert, type, pairs, select
 local ceil, floor, min, strlen, strsub, strfind = ceil, floor, min, strlen, strsub, strfind
 local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
+local GetSpellInfo = GetSpellInfo
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
 local C_Timer_After = C_Timer.After
 
@@ -445,7 +446,7 @@ function MB:CreateFrames()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
-	frame:Point("TOPRIGHT", MMHolder, "BOTTOMRIGHT", 0, -5)
+	frame:Point("TOPRIGHT", _G.MMHolder, "BOTTOMRIGHT", 0, -5)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 

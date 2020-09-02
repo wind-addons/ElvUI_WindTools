@@ -3,8 +3,12 @@ local CL = W:NewModule("ChatLink", "AceEvent-3.0")
 
 local _G = _G
 local match, format, gsub = string.match, format, gsub
-local pairs, unpack, tostring, hooksecurefunc = pairs, unpack, tostring, hooksecurefunc
+local pairs, unpack, tostring = pairs, unpack, tostring
 local select, ceil, tonumber = select, ceil, tonumber
+local GetItemInfo = GetItemInfo
+local GetItemIcon = GetItemIcon
+local GetSpellTexture = GetSpellTexture
+local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 
 local ItemLevelTooltip = E.ScanTooltip
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")

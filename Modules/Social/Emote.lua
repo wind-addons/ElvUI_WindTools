@@ -1,12 +1,16 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
-local CE = W:NewModule("Emote")
+local CE = W:NewModule("Emote", "AceHook-3.0")
 local S = E:GetModule("Skins")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
+local pairs, ipairs, floor, ceil, strsub = pairs, ipairs, floor, ceil, strsub
+local ChatEdit_ActivateChat = ChatEdit_ActivateChat
+local ChatEdit_ChooseBoxForSend = ChatEdit_ChooseBoxForSend
+local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+local CreateFrame = CreateFrame
+
 local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
 local C_Timer_NewTicker = C_Timer.NewTicker
-local CreateFrame = CreateFrame
 
 local emotes = {
     {key = "angel", zhTW = "天使", zhCN = "天使"},
@@ -91,7 +95,8 @@ local function ReplaceEmote(value)
     for _, v in ipairs(emotes) do
         if (emote == v.key or emote == v.zhCN or emote == v.zhTW) then
             return "|T" ..
-                (v.texture or "Interface\\AddOns\\ElvUI_WindTools\\Media\\Emotes\\" .. v.key) .. ":" .. CE.db.size .. "|t"
+                (v.texture or "Interface\\AddOns\\ElvUI_WindTools\\Media\\Emotes\\" .. v.key) ..
+                    ":" .. CE.db.size .. "|t"
         end
     end
     return value
@@ -110,7 +115,7 @@ function CE:CreateInterface()
     local width, height, column, space = 20, 20, 10, 6
     local index = 0
     -- 创建 ElvUI 风格框体
-    local frame = CreateFrame("Frame", "WTCustomEmoteFrame", UIParent, "UIPanelDialogTemplate")
+    local frame = CreateFrame("Frame", "WTCustomEmoteFrame", E.UIParent, "UIPanelDialogTemplate")
     _G.WTCustomEmoteFrameTitleBG:Hide()
     _G.WTCustomEmoteFrameDialogBG:Hide()
     frame:StripTextures()
@@ -122,7 +127,7 @@ function CE:CreateInterface()
     frame:SetWidth(column * (width + space) + 24)
     frame:SetClampedToScreen(true)
     frame:SetFrameStrata("DIALOG")
-    frame:SetPoint("LEFT", ChatFrame1, "RIGHT", 60, 0)
+    frame:SetPoint("LEFT", _G.LeftChatPanel, "RIGHT", 60, 0)
 
     -- 拖动
     frame:SetMovable(true)
@@ -147,7 +152,7 @@ function CE:CreateInterface()
             elseif button == "RightButton" and not self.isMoving then
                 -- 右键复原
                 self:ClearAllPoints()
-                self:SetPoint("TOPLEFT", WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
+                self:SetPoint("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
             end
         end
     )
@@ -164,7 +169,7 @@ function CE:CreateInterface()
     -- 标题
     frame.title = frame:CreateFontString(nil, "ARTWORK", "ChatFontNormal")
     frame.title:SetPoint("TOP", frame, "TOP", 0, -9)
-    frame.title:FontTemplate(E.media.normFont, 16, newStyle)
+    frame.title:FontTemplate(E.media.normFont, 16, "OUTLINE")
 
     -- 帮助提示
     local tipsButton = CreateFrame("Frame", nil, frame)
@@ -172,7 +177,7 @@ function CE:CreateInterface()
     tipsButton:SetPoint("TOPLEFT", frame, "TOPLEFT", 3, -4)
     tipsButton.text = tipsButton:CreateFontString(nil, "ARTWORK")
     tipsButton.text:SetPoint("CENTER", 0, 0)
-    tipsButton.text:FontTemplate(E.media.normFont, 14, newStyle)
+    tipsButton.text:FontTemplate(E.media.normFont, 14, "OUTLINE")
     tipsButton.text:SetText("?")
     tipsButton:SetScript(
         "OnEnter",
@@ -210,23 +215,14 @@ function CE:CreateInterface()
     end
     frame:SetHeight(ceil(index / column) * (height + space) + 46)
     frame:Hide()
+
     -- 让输入框支持当输入 { 时自动弹出聊天表情选择框
-    hooksecurefunc(
-        "ChatEdit_OnTextChanged",
-        function(self, userInput)
-            if not (CE.db.panel and CE.db.enable) then
-                return
-            end
-            local text = self:GetText()
-            if (userInput and (strsub(text, -1) == "{")) then
-                frame:Show()
-            end
-        end
-    )
+    self:SecureHook("ChatEdit_OnTextChanged")
 
     self.EmoteSelector = frame
+
     E:CreateMover(
-        CE.EmoteSelector,
+        self.EmoteSelector,
         "WTCustomEmoteFrameMover",
         L["Emote Selector"],
         nil,
@@ -234,16 +230,28 @@ function CE:CreateInterface()
         nil,
         "ALL,WINDTOOLS",
         function()
-            return CE.db.enable
+            return self.db.enable
         end
     )
+end
+
+function CE:ChatEdit_OnTextChanged(chatEdit, userInput)
+    if not (self.db and self.db.panel and self.db.enable) then
+        return
+    end
+    local text = chatEdit:GetText()
+    if (userInput and (strsub(text, -1) == "{")) then
+        self.EmoteSelector:Show()
+    end
 end
 
 function CE:HandleEmoteWithBubble()
     C_Timer_NewTicker(
         .1,
         function()
-            if not CE.db.enable then return end
+            if not CE.db.enable then
+                return
+            end
             for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
                 if frame.text then
                     local oldMessage = frame.text:GetText()

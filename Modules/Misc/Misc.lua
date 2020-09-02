@@ -2,7 +2,9 @@ local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
 local _G = _G
+local pairs = pairs
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
+local IsAddOnLoaded = IsAddOnLoaded
 
 M.addonsToLoad = {} -- 等待插件载入后执行的函数表
 M.nonAddonsToLoad = {} -- 毋须等待插件的函数表

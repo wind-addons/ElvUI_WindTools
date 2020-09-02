@@ -1,7 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
+local _G = _G
 local hooksecurefunc = hooksecurefunc
+local TalkingHeadFrame_CloseImmediately = TalkingHeadFrame_CloseImmediately
 
 function M:DisableTalkingHead()
     if _G.TalkingHeadFrame then

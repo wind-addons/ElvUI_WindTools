@@ -14,6 +14,11 @@ local C_TransmogCollection_PlayerCanCollectSource = C_TransmogCollection.PlayerC
 local C_TransmogCollection_PlayerKnowsSource = C_TransmogCollection.PlayerKnowsSource
 local C_TransmogCollection_GetOutfitSources = C_TransmogCollection.GetOutfitSources
 
+local WardrobeOutfitFrame = _G.WardrobeOutfitFrame
+local TransmogUtil_GetTransmogLocation = TransmogUtil.GetTransmogLocation
+local Enum_TransmogType_Illusion = Enum.TransmogType.Illusion
+local Enum_TransmogModification_None = Enum.TransmogModification.None
+
 local function CheckOutfitForSave(self, name)
     local sources = {}
     local mainHandEnchant, offHandEnchant
@@ -81,16 +86,16 @@ local function IsOutfitDressed(self)
         end
     end
     local mainHandIllusionTransmogLocation =
-        TransmogUtil.GetTransmogLocation("MAINHANDSLOT", Enum.TransmogType.Illusion, Enum.TransmogModification.None)
+        TransmogUtil_GetTransmogLocation("MAINHANDSLOT", Enum_TransmogType_Illusion, Enum_TransmogModification_None)
     local mainHandSourceID = self:GetSlotSourceID(mainHandIllusionTransmogLocation)
     if (mainHandSourceID ~= mainHandEnchant) then
         return false
     end
     local offHandIllusionTransmogLocation =
-        TransmogUtil.GetTransmogLocation(
+        TransmogUtil_GetTransmogLocation(
         "SECONDARYHANDSLOT",
-        Enum.TransmogType.Illusion,
-        Enum.TransmogModification.None
+        Enum_TransmogType_Illusion,
+        Enum_TransmogModification_None
     )
     local offHandSourceID = self:GetSlotSourceID(offHandIllusionTransmogLocation)
     if (offHandSourceID ~= offHandEnchant) then

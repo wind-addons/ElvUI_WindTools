@@ -1,7 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
-local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+
+local GetSpellLink = GetSpellLink
 local C_Timer_After = C_Timer.After
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 
 local ResurrectionSpellList = {
 	[20484] = true, -- 復生
@@ -29,7 +31,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 	-- 格式化自定义字符串
 	local function FormatMessage(message)
 		destName = destName:gsub("%-[^|]+", "")
-		sourceNameWithoutServer = sourceName:gsub("%-[^|]+", "")
+		local sourceNameWithoutServer = gsub(sourceName, "%-[^|]+", "")
 		message = gsub(message, "%%player%%", destName)
 		message = gsub(message, "%%target%%", sourceNameWithoutServer)
 		message = gsub(message, "%%spell%%", GetSpellLink(spellId))
@@ -37,7 +39,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 	end
 
 	if ResurrectionSpellList[spellId] then
-		if spellId == 20707 and sourceGUID ~= UnitGUID("player") and destGUID == UnitGUID("player") then
+		if spellId == 20707 and sourceGUID ~= W.PlayerGUID and destGUID == W.PlayerGUID then
 			if not UnitIsDeadOrGhost("player") then
 				-- 被额外绑定灵魂石
 				A:SendMessage(FormatMessage(config.soulstoneText), A:GetChannel(config.channel), nil, sourceName)
@@ -45,7 +47,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 			end
 		end
 
-		if sourceGUID ~= UnitGUID("player") and destGUID == UnitGUID("player") then
+		if sourceGUID ~= W.PlayerGUID and destGUID == W.PlayerGUID then
 			C_Timer_After(
 				config.delay,
 				function()

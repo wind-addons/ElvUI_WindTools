@@ -2,12 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local _G = _G
-local strfind = strfind
+local strfind, pairs = strfind, pairs
 
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local GetQuestLink = GetQuestLink
+local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
+local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
 
 local lastList
 
@@ -157,7 +159,7 @@ function A:Quest()
 
 			if not isDetailInfo then -- 具体进度系统会提示
 				local messageColored = extraInfoColored .. mainInfoColored
-				UIErrorsFrame:AddMessage(messageColored)
+				_G.UIErrorsFrame:AddMessage(messageColored)
 			end
 		end
 	end

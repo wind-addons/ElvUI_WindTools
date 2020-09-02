@@ -2,7 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local gsub = gsub
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local GetSpellLink, UnitGroupRolesAssigned = GetSpellLink, UnitGroupRolesAssigned
 
 local CombatResurrectionList = {
     [61999] = true, -- 盟友復生

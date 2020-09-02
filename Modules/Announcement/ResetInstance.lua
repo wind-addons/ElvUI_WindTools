@@ -1,8 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
+local _G = _G
 local pairs = pairs
-local gsub, format, match = string.gsub, string.format, string.match
+local gsub, format, strmatch = gsub, format, strmatch
 
 local msgList = {
     INSTANCE_RESET_SUCCESS = L["%s has been reset"],
@@ -21,13 +22,10 @@ function A:ResetInstance(text)
 
     for systemMessage, friendlyMessage in pairs(msgList) do
         systemMessage = _G[systemMessage]
-        if (match(text, gsub(systemMessage, "%%s", ".+"))) then
-            local instance = match(text, gsub(systemMessage, "%%s", "(.+)"))
+        if (strmatch(text, gsub(systemMessage, "%%s", ".+"))) then
+            local instance = strmatch(text, gsub(systemMessage, "%%s", "(.+)"))
             local prefix = config.prefix and "<WindTools> " or ""
-            self:SendMessage(
-                format(prefix .. friendlyMessage, instance),
-                self:GetChannel(config.channel)
-            )
+            self:SendMessage(format(prefix .. friendlyMessage, instance), self:GetChannel(config.channel))
             return
         end
     end

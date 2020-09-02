@@ -3,11 +3,14 @@ local A = W:NewModule("Announcement", "AceEvent-3.0")
 
 local _G = _G
 local pairs = pairs
-local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
+local tinsert, xpcall, next, assert, format, strsub = tinsert, xpcall, next, assert, format, strsub
 local SendChatMessage, C_ChatInfo_SendAddonMessage = SendChatMessage, C_ChatInfo.SendAddonMessage
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 local UnitIsGroupLeader, UnitIsGroupAssistant = UnitIsGroupLeader, UnitIsGroupAssistant
 local IsEveryoneAssistant = IsEveryoneAssistant
+
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 --[[
     发送消息
@@ -23,7 +26,7 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
     end
     -- 聊天框输出
     if channel == "SELF" then
-        ChatFrame1:AddMessage(text)
+        _G.ChatFrame1:AddMessage(text)
         return
     end
     -- 密语

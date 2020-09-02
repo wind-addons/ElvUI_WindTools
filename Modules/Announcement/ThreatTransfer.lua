@@ -3,6 +3,7 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local GetSpellLink = GetSpellLink
 
 local ThreatTransferList = {
     [34477] = true, -- 誤導

@@ -1,7 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
-local tostring = tostring
+
+local gsub, tostring = gsub, tostring
 local UnitInRaid, UnitInParty = UnitInRaid, UnitInParty
+local GetSpellLink = GetSpellLink
+local InCombatLockdown = InCombatLockdown
 
 local BotList = {
     [157066] = true, -- 沃特

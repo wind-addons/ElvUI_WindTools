@@ -16,23 +16,20 @@ S.updateProfile = {} -- 配置更新后的更新表
     查询是否符合开启条件
     @param {string} elvuiKey      ElvUI 数据库 Key
     @param {string} windtoolsKey  WindTools 数据库 Key
-    @param {bool} notBlizzard=nil 皮肤类型
     @return {bool} 启用状态
 ]]
-function S:CheckDB(elvuiKey, windtoolsKey, notBlizzard)
-    if not notBlizzard then
-        if elvuiKey then
-            windtoolsKey = windtoolsKey or elvuiKey
-            if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
-                return false
-            end
-            if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
-                return false
-            end
-        else
-            if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
-                return false
-            end
+function S:CheckDB(elvuiKey, windtoolsKey)
+    if elvuiKey then
+        windtoolsKey = windtoolsKey or elvuiKey
+        if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
+            return false
+        end
+        if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+            return false
+        end
+    else
+        if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+            return false
         end
     end
 

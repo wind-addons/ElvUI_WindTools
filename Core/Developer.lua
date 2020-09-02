@@ -32,7 +32,7 @@ function F.Developer.Print(object)
                         end
                     end
                 else
-                    print(indent .. tostring(t))
+                    print(indent .. tostring(subject))
                 end
             end
         end

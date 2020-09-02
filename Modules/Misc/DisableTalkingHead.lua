@@ -3,10 +3,11 @@ local M = W:GetModule("Misc")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
-local TalkingHeadFrame_CloseImmediately = TalkingHeadFrame_CloseImmediately
+local TalkingHeadFrame_CloseImmediately
 
 function M:DisableTalkingHead()
     if _G.TalkingHeadFrame then
+        TalkingHeadFrame_CloseImmediately = _G.TalkingHeadFrame_CloseImmediately
         hooksecurefunc(
             "TalkingHeadFrame_PlayCurrent",
             function()
@@ -19,6 +20,7 @@ function M:DisableTalkingHead()
         hooksecurefunc(
             "TalkingHead_LoadUI",
             function()
+                TalkingHeadFrame_CloseImmediately = _G.TalkingHeadFrame_CloseImmediately
                 hooksecurefunc(
                     "TalkingHeadFrame_PlayCurrent",
                     function()

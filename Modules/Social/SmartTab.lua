@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
+local _G =_G
 local time, unpack, pairs, wipe = time, unpack, pairs, wipe
 local strsplit, strsub, tostring = strsplit, strsub, tostring
 local UnitIsGroupLeader, IsEveryoneAssistant = UnitIsGroupLeader, IsEveryoneAssistant
@@ -8,6 +9,9 @@ local UnitInBattleground, CanEditOfficerNote = UnitInBattleground, CanEditOffice
 local IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant = IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant
 local LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
+
+local ACTIVE_CHAT_EDIT_BOX =ACTIVE_CHAT_EDIT_BOX
+local LAST_ACTIVE_CHAT_EDIT_BOX = LAST_ACTIVE_CHAT_EDIT_BOX
 
 -- 频道循环列表
 local ChannelList = {
@@ -113,7 +117,7 @@ function ST:UpdateWhisperTargets(target, chatTime, type)
 
     -- 本服玩家去除服务器名
     local name, server = strsplit("-", target)
-    if (server) and (server == self.ServerName) then
+    if (server) and (server == W.PlayerRelam) then
         target = name
     end
 
@@ -194,7 +198,7 @@ function ST:GetNext(chatType, currentTarget)
                     -- 如果表内为空，则什么都不改变
                     newChatType = chatType
                     newTarget = currentTarget
-                    UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0, 53, 5)
+                    _G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0, 53, 5)
                 end
             end
         else
@@ -223,7 +227,7 @@ function ST:GetNext(chatType, currentTarget)
             newChatType = ChannelListWithWhisper[nextIndex]
             if newChatType == "WHISPER" or newChatType == "BN_WHISPER" then
                 -- 查找下一个密语目标
-                newChatType, newTarget = self:GetNextWhisper(tellTarget)
+                newChatType, newTarget = self:GetNextWhisper(currentTarget)
                 if newChatType == "NONE" then
                     -- 如果当前用户已经是密语循环的最后或者没有密语历史目标，跳到说
                     newChatType = ChannelListWithWhisper[1]
@@ -261,13 +265,13 @@ function ST:SetNewChat(frame)
     ACTIVE_CHAT_EDIT_BOX = frame
     LAST_ACTIVE_CHAT_EDIT_BOX = frame
 
-    ChatEdit_UpdateHeader(frame)
+    _G.ChatEdit_UpdateHeader(frame)
 end
 
 -- 接收密语
 function ST:CHAT_MSG_WHISPER(_, _, author)
     -- 自己别给自己发
-    if author == self.PlayerName .. "-" .. self.ServerName then
+    if author == W.PlayerName .. "-" .. W.PlayerRelam then
         return
     end
     self:UpdateWhisperTargets(author, nil, "WHISPER")
@@ -276,7 +280,7 @@ end
 -- 发送密语
 function ST:CHAT_MSG_WHISPER_INFORM(_, _, author)
     -- 自己别给自己发
-    if author == self.PlayerName .. "-" .. self.ServerName then
+    if author == W.PlayerName .. "-" .. W.PlayerRelam then
         return
     end
     self:UpdateWhisperTargets(author, nil, "WHISPER")
@@ -306,7 +310,6 @@ function ST:Initialize()
     end
 
     self:RefreshWhisperTargets()
-    self.PlayerName, self.ServerName = UnitFullName("player")
 
     self:RegisterEvent("CHAT_MSG_WHISPER")
     self:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
@@ -326,7 +329,6 @@ function ST:ProfileUpdate()
     end
 
     self:RefreshWhisperTargets()
-    self.PlayerName, self.ServerName = UnitFullName("player")
 
     self:RegisterEvent("CHAT_MSG_WHISPER")
     self:RegisterEvent("CHAT_MSG_WHISPER_INFORM")

@@ -27,12 +27,7 @@ function S:RaidUtility()
         S:CreateShadow(frame)
     end
 
-    S:SecureHookScript(
-        _G.RaidUtility_ShowButton,
-        "OnClick",
-        
-    "RaidUtility_ShowButton_OnClick"
-    )
+    S:SecureHookScript(_G.RaidUtility_ShowButton, "OnClick", "RaidUtility_ShowButton_OnClick")
 end
 
 S:AddCallback("RaidUtility")

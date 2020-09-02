@@ -14,6 +14,7 @@ local StaticPopup_OnClick = StaticPopup_OnClick
 local IsQuestCompletable = IsQuestCompletable
 local GetQuestID = GetQuestID
 local GetNumQuestItems = GetNumQuestItems
+local GetNumQuestChoices = GetNumQuestChoices
 local GetQuestItemLink = GetQuestItemLink
 local CompleteQuest = CompleteQuest
 local GetQuestReward = GetQuestReward

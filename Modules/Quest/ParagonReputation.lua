@@ -5,6 +5,7 @@ local S = W:GetModule("Skins")
 local _G = _G
 local mod = mod
 local floor = floor
+local select = select
 local unpack = unpack
 local format = format
 local tremove = tremove

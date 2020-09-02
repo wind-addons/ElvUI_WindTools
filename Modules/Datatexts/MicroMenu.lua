@@ -17,7 +17,7 @@ local LoadAddOn = LoadAddOn
 local LookingForGuildFrame_LoadUI = LookingForGuildFrame_LoadUI
 local LookingForGuildFrame_Toggle = LookingForGuildFrame_Toggle
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
-local ToggleEncounterJourn = ToggleEncounterJournalal
+local ToggleEncounterJournal = ToggleEncounterJournalal
 local ToggleHelpFrame = ToggleHelpFrame
 
 local GameMenuFrame = _G.GameMenuFrame
@@ -37,17 +37,17 @@ local microMenu = {
 	{
 		text = SPELLBOOK_ABILITIES_BUTTON,
 		func = function()
-			ToggleFrame(SpellBookFrame)
+			ToggleFrame(_G.SpellBookFrame)
 		end,
 		notCheckable = true
 	},
 	{
 		text = TALENTS_BUTTON,
 		func = function()
-			if (not PlayerTalentFrame) then
+			if (not _G.PlayerTalentFrame) then
 				TalentFrame_LoadUI()
 			end
-			ShowUIPanel(PlayerTalentFrame)
+			ShowUIPanel(_G.PlayerTalentFrame)
 		end,
 		notCheckable = true
 	},
@@ -97,12 +97,12 @@ local microMenu = {
 		text = ACHIEVEMENTS_GUILD_TAB,
 		func = function()
 			if IsInGuild() then
-				if (not CommunitiesFrame) then
+				if (not _G.CommunitiesFrame) then
 					LoadAddOn("Blizzard_Communities")
 				end
-				ToggleFrame(CommunitiesFrame)
+				ToggleFrame(_G.CommunitiesFrame)
 			else
-				if (not LookingForGuildFrame) then
+				if (not _G.LookingForGuildFrame) then
 					LookingForGuildFrame_LoadUI()
 				end
 				LookingForGuildFrame_Toggle()

@@ -6,7 +6,7 @@ local pairs = pairs
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()
-    S:CreateShadow(_G.DeathRecapFrame)
+    self:CreateShadow(_G.DeathRecapFrame)
 end
 
 function S:SkinSkipButton(frame)
@@ -16,10 +16,7 @@ function S:SkinSkipButton(frame)
 end
 
 function S:BlizzardMiscFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.misc) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.misc) then
+    if not self:CheckDB("misc") then
         return
     end
 
@@ -33,24 +30,24 @@ function S:BlizzardMiscFrames()
     }
 
     for _, frame in pairs(miscFrames) do
-        S:CreateShadow(_G[frame])
+        self:CreateShadow(_G[frame])
     end
 
     -- 跳过剧情
-    S:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
-    S:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
+    self:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
+    self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
 
     -- 聊天菜单
     local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
 
     for _, menu in pairs(chatMenus) do
-        S:SecureHookScript(_G[menu], "OnShow", "CreateShadow")
+        self:SecureHookScript(_G[menu], "OnShow", "CreateShadow")
     end
 
     -- 下拉菜单
     for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
         if _G["DropDownList" .. i] then
-            S:CreateShadow(_G["DropDownList" .. i])
+            self:CreateShadow(_G["DropDownList" .. i])
         end
     end
 
@@ -59,13 +56,13 @@ function S:BlizzardMiscFrames()
     F.SetFontOutline(_G.ActionStatus.Text)
 
     -- 灵魂医者传送按钮
-    S:CreateShadow(_G.GhostFrameContentsFrame)
+    self:CreateShadow(_G.GhostFrameContentsFrame)
 
     -- 跳过剧情
-    S:CreateShadow(_G.CinematicFrameCloseDialog)
+    self:CreateShadow(_G.CinematicFrameCloseDialog)
 
     -- 聊天设定
-    S:CreateShadow(_G.ChatConfigFrame)
+    self:CreateShadow(_G.ChatConfigFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

@@ -4,18 +4,15 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:MailFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.mail) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.mail) then
+    if not self:CheckDB("mail") then
         return
     end
 
-    S:CreateShadow(_G.MailFrame)
-    S:CreateShadow(_G.OpenMailFrame)
+    self:CreateShadow(_G.MailFrame)
+    self:CreateShadow(_G.OpenMailFrame)
 
     for i = 1, 2 do
-        S:CreateBackdropShadow(_G["MailFrameTab" .. i])
+        self:CreateBackdropShadow(_G["MailFrameTab" .. i])
     end
 end
 

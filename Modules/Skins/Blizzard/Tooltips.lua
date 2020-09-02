@@ -21,10 +21,7 @@ function S:TTGameTooltip_SetDefaultAnchor(_, tt)
 end
 
 function S:TooltipFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.tooltips) then
+    if not self:CheckDB("tooltip", "tooltips") then
         return
     end
 
@@ -40,13 +37,13 @@ function S:TooltipFrames()
 
     for _, tt in pairs(styleTT) do
         if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then
-            S:CreateShadow(tt)
+            self:CreateShadow(tt)
         end
     end
 
-    S:SecureHook(TT, "SetStyle", "TTSetStyle")
-    S:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TTGameTooltip_SetDefaultAnchor")
-    S:SecureHook("QueueStatusFrame_Update", "CreateShadow")
+    self:SecureHook(TT, "SetStyle", "TTSetStyle")
+    self:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TTGameTooltip_SetDefaultAnchor")
+    self:SecureHook("QueueStatusFrame_Update", "CreateShadow")
 end
 
 S:AddCallback("TooltipFrames")

@@ -4,14 +4,11 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:WorldMapFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.worldMap) then
+    if not self:CheckDB("worldmap", "worldMap") then
         return
     end
 
-    S:CreateBackdropShadow(_G.WorldMapFrame)
+    self:CreateBackdropShadow(_G.WorldMapFrame)
 
     local QuestScrollFrame = _G.QuestScrollFrame
     if QuestScrollFrame.Background then

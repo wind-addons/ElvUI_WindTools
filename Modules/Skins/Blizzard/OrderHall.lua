@@ -4,17 +4,11 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:Blizzard_OrderHallUI()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.orderhall) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.orderHall) then
+    if not self:CheckDB("orderhall", "orderHall") then
         return
     end
 
-    local talentPanel = _G.OrderHallTalentFrame
-    if talentPanel then
-        S:CreateShadow(talentPanel)
-    end
+    self:CreateShadow(_G.OrderHallTalentFrame)
 
     local bar = _G.OrderHallCommandBar
     if bar then

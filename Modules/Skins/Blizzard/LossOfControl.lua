@@ -3,7 +3,7 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
-function S:LossOfControlFrame_SetUpDisplay(s)
+function S:Blizzard_LossOfControlFrame_SetUpDisplay(s)
     s.Icon:ClearAllPoints()
     s.Icon:Point("LEFT", s, "LEFT", 0, 0)
 
@@ -27,14 +27,11 @@ function S:LossOfControlFrame_SetUpDisplay(s)
 end
 
 function S:LossOfControlFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.losscontrol) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.lossOfControl) then
+    if not self:CheckDB("losscontrol", "lossOfControl") then
         return
     end
 
-    S:SecureHook("LossOfControlFrame_SetUpDisplay")
+    S:SecureHook("LossOfControlFrame_SetUpDisplay", "Blizzard_LossOfControlFrame_SetUpDisplay")
 end
 
 S:AddCallback("LossOfControlFrame")

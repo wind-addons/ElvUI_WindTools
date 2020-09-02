@@ -5,7 +5,7 @@ local _G = _G
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 
 function S:InputMethodEditor()
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.ime) then
+    if not self:CheckDB(nil, "ime") then
         return
     end
 
@@ -16,14 +16,14 @@ function S:InputMethodEditor()
         local langIcon = _G["ChatFrame" .. i .. "EditBoxLanguage"]
 
         if editBox then
-            S:CreateShadow(editBox)
+            self:CreateShadow(editBox)
             if langIcon then
                 langIcon:StripTextures()
                 langIcon:CreateBackdrop("Transparent")
                 langIcon:SetSize(20, 22)
                 langIcon:ClearAllPoints()
                 langIcon:SetPoint("TOPLEFT", editBox, "TOPRIGHT", 7, 0)
-                S:CreateShadow(langIcon)
+                self:CreateShadow(langIcon)
             end
         end
     end
@@ -36,7 +36,7 @@ function S:InputMethodEditor()
 
     IMECandidatesFrame:StripTextures()
     IMECandidatesFrame:SetTemplate("Transparent")
-    S:CreateShadow(IMECandidatesFrame)
+    self:CreateShadow(IMECandidatesFrame)
 
     for i = 1, 10 do
         local cf = IMECandidatesFrame["c" .. i]

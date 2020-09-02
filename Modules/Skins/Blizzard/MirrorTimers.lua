@@ -5,10 +5,7 @@ local _G = _G
 local MIRRORTIMER_NUMTIMERS = MIRRORTIMER_NUMTIMERS
 
 function S:MirrorTimers()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.mirrorTimers) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.mirrorTimers) then
+    if not self:CheckDB("mirrorTimers") then
         return
     end
 
@@ -16,7 +13,7 @@ function S:MirrorTimers()
         local statusBar = _G["MirrorTimer" .. i .. "StatusBar"]
         if statusBar.backdrop then
             statusBar.backdrop:SetTemplate("Tranparent")
-            S:CreateShadow(statusBar.backdrop)
+            self:CreateShadow(statusBar.backdrop)
         end
     end
 end

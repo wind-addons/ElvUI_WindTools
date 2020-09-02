@@ -1,17 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
-local MICRO_BUTTONS = MICRO_BUTTONS
 
 local _G = _G
+local MICRO_BUTTONS = MICRO_BUTTONS
 
 function S:MicroButtons()
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.microButtons) then
+    if not self:CheckDB(nil, "microButtons") then
         return
     end
 
     for i = 1, #MICRO_BUTTONS do
         if _G[MICRO_BUTTONS[i]].backdrop then
-            S:CreateShadow(_G[MICRO_BUTTONS[i]].backdrop)
+            self:CreateShadow(_G[MICRO_BUTTONS[i]].backdrop)
         end
     end
 end

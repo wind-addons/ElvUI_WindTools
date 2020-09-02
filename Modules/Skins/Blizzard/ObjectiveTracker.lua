@@ -70,27 +70,24 @@ function S:SkinTimerBars(_, _, line)
 end
 
 function S:ObjectiveTrackerFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.objectiveTracker) then
+    if not self:CheckDB("objectiveTracker") then
         return
     end
 
     local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
     local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 
-    S:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
-    S:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
-    S:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    S:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    S:SecureHook(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    S:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    S:SecureHook(_G.QUEST_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    S:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    S:SecureHook(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    S:SecureHook(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", "SkinItemButton")
-    S:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "SkinItemButton")
+    self:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
+    self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
+    self:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    self:SecureHook(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    self:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    self:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    self:SecureHook(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    self:SecureHook(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", "SkinItemButton")
+    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "SkinItemButton")
 end
 
 S:AddCallback("ObjectiveTrackerFrame")

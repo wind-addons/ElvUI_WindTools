@@ -5,19 +5,18 @@ local _G = _G
 local MAX_SKILLLINE_TABS = MAX_SKILLLINE_TABS
 
 function S:SpellBookFrame()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.spellbook) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.spellBook) then
+    if not self:CheckDB("spellbook", "spellBook") then
         return
     end
 
-    S:CreateShadow(_G.SpellBookFrame)
+    self:CreateShadow(_G.SpellBookFrame)
+
     for i = 1, 5 do
-        S:CreateBackdropShadow(_G["SpellBookFrameTabButton" .. i])
+        self:CreateBackdropShadow(_G["SpellBookFrameTabButton" .. i])
     end
+
     for i = 1, MAX_SKILLLINE_TABS do
-        S:CreateShadow(_G["SpellBookSkillLineTab" .. i])
+        self:CreateShadow(_G["SpellBookSkillLineTab" .. i])
     end
 end
 

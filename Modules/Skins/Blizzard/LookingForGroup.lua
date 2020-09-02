@@ -5,10 +5,7 @@ local _G = _G
 local pairs = pairs
 
 function S:LookingForGroupFrames()
-    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.lfg) then
-        return
-    end
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.lookingForGroup) then
+    if not self:CheckDB("lfg", "lookingForGroup") then
         return
     end
 
@@ -22,11 +19,11 @@ function S:LookingForGroupFrames()
     }
 
     for _, frame in pairs(frames) do
-        S:CreateShadow(frame)
+        self:CreateShadow(frame)
     end
 
     for i = 1, 3 do
-        S:CreateBackdropShadow(_G["PVEFrameTab" .. i])
+        self:CreateBackdropShadow(_G["PVEFrameTab" .. i])
     end
 end
 

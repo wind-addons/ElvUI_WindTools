@@ -18,11 +18,11 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
 end
 
 function S:ScenarioStage()
-    if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.scenario) then
+    if not self:CheckDB(nil, "scenario") then
         return
     end
 
-    S:SecureHook("ScenarioStage_CustomizeBlock")
+    self:SecureHook("ScenarioStage_CustomizeBlock")
 end
 
 S:AddCallback("ScenarioStage")

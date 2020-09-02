@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local T = W:GetModule("Tooltips")
 
 local _G = _G
+local tinsert, next, xpcall = tinsert, next, xpcall
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
@@ -34,12 +35,11 @@ end
 
 function T:Initialize()
     self.db = E.private.WT.tooltips
-    
+
     for index, func in next, self.load do
         xpcall(func, errorhandler)
         self.load[index] = nil
     end
-
 end
 
 function T:ProfileUpdate()

@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
+local _G = _G
 local select, pairs, ipairs, tonumber = select, pairs, ipairs, tonumber
 local strfind, format = strfind, format
 local GetTime, CanInspect = GetTime, CanInspect
@@ -12,7 +13,8 @@ local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local GetStatistic, GetComparisonStatistic = GetStatistic, GetComparisonStatistic
 local IsAddOnLoaded, HideUIPanel = IsAddOnLoaded, HideUIPanel
 local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
-
+local InCombatLockdown =InCombatLockdown 
+local AchievementFrame_DisplayComparison =AchievementFrame_DisplayComparison
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison
@@ -574,7 +576,7 @@ local function SetProgressionInfo(guid, tt)
     end
 end
 
-local function AddProgression(self, tt, unit, numTries, r, g, b)
+function T:AddProgression(_, tt, unit, numTries, r, g, b)
     if not E.private.WT.tooltips.progression.enable then
         return
     end
@@ -601,7 +603,7 @@ local function AddProgression(self, tt, unit, numTries, r, g, b)
             ClearAchievementComparisonUnit()
             if not loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then
                 AchievementFrame_DisplayComparison(unit)
-                HideUIPanel(AchievementFrame)
+                HideUIPanel(_G.AchievementFrame)
                 ClearAchievementComparisonUnit()
                 loadedComparison = true
             end
@@ -631,7 +633,7 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
         local faction = race and C_CreatureInfo_GetFactionInfo(race).groupTag
         if faction then
             UpdateProgression(GUID, faction)
-            GameTooltip:SetUnit(unit)
+            _G.GameTooltip:SetUnit(unit)
         end
     end
 
@@ -641,7 +643,7 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
 end
 
 function T:Progression()
-    hooksecurefunc(ET, "AddInspectInfo", AddProgression)
+    T:SecureHook(ET, "AddInspectInfo", "AddProgression")
 end
 
 T:AddCallback("Progression")

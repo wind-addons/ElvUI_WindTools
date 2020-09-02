@@ -4,10 +4,9 @@ local MM = E:GetModule("Minimap")
 
 local _G = _G
 local InCombatLockdown = InCombatLockdown
-local Minimap = _G.Minimap
 
 function RM:ChangeShape()
-    if not self.db or not self.db.enable then
+    if not self.db then
         return
     end
 
@@ -15,19 +14,22 @@ function RM:ChangeShape()
         return
     end
 
+    local Minimap = _G.Minimap
     local MMHolder = _G.MMHolder
+    local MinimapPanel = _G.MinimapPanel
 
-    local oldWidth, oldHeight = Minimap:GetSize()
-    local oldHolderWidth, oldHolderHeight = MMHolder:GetSize()
+    local widthPct = self.db.enable and self.db.widthPercentage or 1
+    local heightPct = self.db.enable and self.db.heightPercentage or 1
+    local newWidth = widthPct * E.MinimapSize
+    local newHeight = heightPct * E.MinimapSize
 
-    local newWidth = self.db.widthPercentage * E.db.general.minimap.size
-    local newHeight = self.db.heightPercentage * E.db.general.minimap.size
-
-    local newHolderWidth = oldHolderWidth - oldWidth + newWidth
-    local newHolderHeight = oldHolderHeight - oldHeight + newHeight
+    local borderWidth, borderHeight = E.PixelMode and 2 or 6, E.PixelMode and 2 or 8
+    local panelSize, joinPanel = (MinimapPanel:IsShown() and MinimapPanel:GetHeight()) or (E.PixelMode and 1 or -1), 1
+    local holderHeight = newHeight + (panelSize - joinPanel)
 
     Minimap:Size(newWidth, newHeight)
-    MMHolder:Size(newHolderWidth, newHolderHeight)
+    MMHolder:Size(newWidth + borderWidth, holderHeight + borderHeight)
+    _G.MinimapMover:Size(newWidth + borderWidth, holderHeight + borderHeight)
 end
 
 function RM:SetUpdateHook()
@@ -57,11 +59,15 @@ end
 
 function RM:ProfileUpdate()
     self.db = E.db.WT.maps.rectangleMinimap
+
     if not self.db then
         return
     end
+
     if self.db.enable then
         self:SetUpdateHook()
+    else
+        self:ChangeShape()
     end
 end
 

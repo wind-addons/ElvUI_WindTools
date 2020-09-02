@@ -218,14 +218,6 @@ local function IsIgnored()
     return false
 end
 
-local function GetAvailableGossipQuestInfo(index)
-    return select(((index * 7) - 7) + 1, C_GossipInfo_GetAvailableQuests())
-end
-
-local function GetActiveGossipQuestInfo(index)
-    return select(((index * 6) - 6) + 1, C_GossipInfo_GetActiveQuests())
-end
-
 local function AttemptAutoComplete(event)
     if GetNumAutoQuestPopUps() > 0 then
         if UnitIsDeadOrGhost("player") then
@@ -315,7 +307,7 @@ function TI:GOSSIP_SHOW()
     if active > 0 then
         local logQuests = GetQuestLogQuests(true)
         for index = 1, active do
-            local info = GetActiveGossipQuestInfo(index)
+            local info = C_GossipInfo_GetActiveQuests()[index]
             if info.isComplete then
                 local questID = logQuests[info.title]
                 if not questID then
@@ -332,7 +324,7 @@ function TI:GOSSIP_SHOW()
     local available = C_GossipInfo_GetNumAvailableQuests()
     if available > 0 then
         for index = 1, available do
-            local info = GetAvailableGossipQuestInfo(index)
+            local info = C_GossipInfo_GetAvailableQuests()[index]
             if not info.isTrivial and not info.isIgnored or IsTrackingHidden() then
                 C_GossipInfo_SelectAvailableQuest(index)
             elseif info.isTrivial and npcID == 64337 then

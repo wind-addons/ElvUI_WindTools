@@ -3,9 +3,8 @@ local S = W:GetModule("Skins")
 local LO = E:GetModule("Layout")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 
-local function ToggleShadows()
+function S:ElvUI_ChatPanels_ToggleShadows()
     local leftDB = E.db.datatexts.panels.LeftChatDataPanel
     local rightDB = E.db.datatexts.panels.RightChatDataPanel
 
@@ -33,8 +32,8 @@ function S:ElvUI_ChatPanels()
     _G.LeftChatDataPanel.shadow:Point("TOPLEFT", _G.LeftChatToggleButton,"TOPLEFT", -4, 4)
     _G.RightChatDataPanel.shadow:Point("BOTTOMRIGHT", _G.RightChatToggleButton,"BOTTOMRIGHT", 4, -4)
 
-    ToggleShadows()
-    hooksecurefunc(LO, "ToggleChatPanels", ToggleShadows)
+    S:ElvUI_ChatPanels_ToggleShadows()
+    S:SecureHook(LO, "ToggleChatPanels", "ElvUI_ChatPanels_ToggleShadows")
 end
 
 S:AddCallback("ElvUI_ChatPanels")

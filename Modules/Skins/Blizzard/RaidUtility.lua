@@ -6,6 +6,13 @@ local _G = _G
 local pairs = pairs
 local InCombatLockdown = InCombatLockdown
 
+function S:RaidUtility_ShowButton_OnClick()
+    if not InCombatLockdown() then
+        _G.RaidUtility_CloseButton:ClearAllPoints()
+        _G.RaidUtility_CloseButton:Point("TOP", _G.RaidUtilityPanel, "BOTTOM", 0, -4)
+    end
+end
+
 function S:RaidUtility()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.nonraid) then
         return
@@ -21,14 +28,10 @@ function S:RaidUtility()
     end
 
     S:SecureHookScript(
-        RaidUtility_ShowButton,
+        _G.RaidUtility_ShowButton,
         "OnClick",
-        function()
-            if not InCombatLockdown() then
-                _G.RaidUtility_CloseButton:ClearAllPoints()
-                _G.RaidUtility_CloseButton:Point("TOP", _G.RaidUtilityPanel, "BOTTOM", 0, -4)
-            end
-        end
+        
+    "RaidUtility_ShowButton_OnClick"
     )
 end
 

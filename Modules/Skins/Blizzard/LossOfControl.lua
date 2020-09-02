@@ -2,16 +2,15 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 
-local function SkinLossOfControl(s)
+function S:LossOfControlFrame_SetUpDisplay(s)
     s.Icon:ClearAllPoints()
     s.Icon:Point("LEFT", s, "LEFT", 0, 0)
 
     if not s.Icon.backdrop then
         s.Icon:CreateBackdrop()
     end
-    S:CreateShadow(s.Icon.backdrop)
+    self:CreateShadow(s.Icon.backdrop)
 
     s.AbilityName:ClearAllPoints()
     s.AbilityName:Point("TOPLEFT", s.Icon, "TOPRIGHT", 10, 0)
@@ -35,7 +34,7 @@ function S:LossOfControlFrame()
         return
     end
 
-    hooksecurefunc("LossOfControlFrame_SetUpDisplay", SkinLossOfControl)
+    S:SecureHook("LossOfControlFrame_SetUpDisplay")
 end
 
 S:AddCallback("LossOfControlFrame")

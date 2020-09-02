@@ -4,6 +4,12 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
+function S:ElvUI_Auras_SkinIcon(_, button)
+    if button then
+        self:CreateShadow(button)
+    end
+end
+
 function S:ElvUI_Auras()
     if not E.private.auras.enable then
         return
@@ -12,24 +18,8 @@ function S:ElvUI_Auras()
         return
     end
 
-    hooksecurefunc(
-        A,
-        "CreateIcon",
-        function(_, button)
-            if button then
-                S:CreateShadow(button)
-            end
-        end
-    )
-    hooksecurefunc(
-        A,
-        "UpdateAura",
-        function(_, button)
-            if button then
-                S:CreateShadow(button)
-            end
-        end
-    )
+    S:SecureHook(A, "CreateIcon", "ElvUI_Auras_SkinIcon")
+    S:SecureHook(A, "UpdateAura", "ElvUI_Auras_SkinIcon")
 end
 
 S:AddCallback("ElvUI_Auras")

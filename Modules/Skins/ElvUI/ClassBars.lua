@@ -3,7 +3,13 @@ local S = W:GetModule("Skins")
 local UF = E:GetModule("UnitFrames")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
+
+function S:ElvUI_UnitFrames_SkinClassBar(_, frame)
+    local bar = frame[frame.ClassBar]
+    if bar then
+        self:CreateShadow(bar)
+    end
+end
 
 function S:ElvUI_ClassBars()
     if not E.private.unitframe.enable then
@@ -13,16 +19,7 @@ function S:ElvUI_ClassBars()
         return
     end
 
-    hooksecurefunc(
-        UF,
-        "Configure_ClassBar",
-        function(_, frame)
-            local bar = frame[frame.ClassBar]
-            if bar then
-                S:CreateShadow(bar)
-            end
-        end
-    )
+    S:SecureHook(UF, "Configure_ClassBar", "ElvUI_UnitFrames_SkinClassBar")
 end
 
 S:AddCallback("ElvUI_ClassBars")

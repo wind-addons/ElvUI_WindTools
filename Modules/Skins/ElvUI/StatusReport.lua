@@ -4,9 +4,9 @@ local S = W:GetModule("Skins")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-local function SkinStatusReport()
-    S:CreateShadow(_G.ElvUIStatusReport)
-    S:CreateShadow(_G.ElvUIStatusPlugins)
+function S:ElvUI_SkinStatusReport()
+    self:CreateShadow(_G.ElvUIStatusReport)
+    self:CreateShadow(_G.ElvUIStatusPlugins)
 end
 
 function S:ElvUI_StatusReport()
@@ -15,10 +15,10 @@ function S:ElvUI_StatusReport()
     end
 
     if E.StatusFrame then
-        SkinStatusReport()
+        S:ElvUI_SkinStatusReport()
     end
 
-    hooksecurefunc(E, "CreateStatusFrame", SkinStatusReport)
+    S:SecureHook(E, "CreateStatusFrame", "ElvUI_SkinStatusReport")
 end
 
 S:AddCallback("ElvUI_StatusReport")

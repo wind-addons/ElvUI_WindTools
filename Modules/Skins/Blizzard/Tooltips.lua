@@ -3,6 +3,22 @@ local TT = E:GetModule("Tooltip")
 local S = W:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
+
+function S:TTSetStyle(_, tt)
+    if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then
+        self:CreateShadow(tt)
+    end
+end
+
+function S:TTGameTooltip_SetDefaultAnchor(_, tt)
+    if (tt.StatusBar) then
+        self:CreateShadow(tt.StatusBar)
+    end
+    if _G.GameTooltipStatusBar then
+        self:CreateShadow(_G.GameTooltipStatusBar, 6)
+    end
+end
 
 function S:TooltipFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then
@@ -28,35 +44,9 @@ function S:TooltipFrames()
         end
     end
 
-    hooksecurefunc(
-        TT,
-        "SetStyle",
-        function(_, tt)
-            if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then
-                S:CreateShadow(tt)
-            end
-        end
-    )
-
-    hooksecurefunc(
-        TT,
-        "GameTooltip_SetDefaultAnchor",
-        function(_, tt)
-            if (tt.StatusBar) then
-                S:CreateShadow(tt.StatusBar)
-            end
-            if _G.GameTooltipStatusBar then
-                S:CreateShadow(_G.GameTooltipStatusBar, 6)
-            end
-        end
-    )
-
-    hooksecurefunc(
-        "QueueStatusFrame_Update",
-        function(self)
-            S:CreateShadow(self)
-        end
-    )
+    S:SecureHook(TT, "SetStyle", "TTSetStyle")
+    S:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TTGameTooltip_SetDefaultAnchor")
+    S:SecureHook("QueueStatusFrame_Update", "CreateShadow")
 end
 
 S:AddCallback("TooltipFrames")

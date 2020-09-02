@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local MAX_SKILLLINE_TABS = MAX_SKILLLINE_TABS
 
 function S:SpellBookFrame()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.spellbook) then

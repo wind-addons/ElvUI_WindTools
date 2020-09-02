@@ -3,7 +3,6 @@ local S = W:GetModule("Skins")
 local AFK = E:GetModule("AFK")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_AFK()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.afk) then

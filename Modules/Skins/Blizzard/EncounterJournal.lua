@@ -3,7 +3,26 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local pairs = pairs
-local hooksecurefunc = hooksecurefunc
+local select = select
+
+function S:EncounterJournal_DisplayInstance()
+    local bossIndex = 1
+    local _, _, bossID = _G.EJ_GetEncounterInfoByIndex(bossIndex)
+    local bossButton
+    while bossID do
+        bossButton = _G["EncounterJournalBossButton" .. bossIndex]
+        if bossButton and not bossButton.windStyle then
+            self:CreateShadow(bossButton)
+            F.SetFontOutline(bossButton.text)
+            bossButton.text:ClearAllPoints()
+            bossButton.text:Point("LEFT", bossButton, "LEFT", 105, 0)
+            bossButton.text:Point("RIGHT", bossButton, "RIGHT", 0, 0)
+            bossButton.windStyle = true
+        end
+        bossIndex = bossIndex + 1
+        bossID = select(3, _G.EJ_GetEncounterInfoByIndex(bossIndex))
+    end
+end
 
 function S:Blizzard_EncounterJournal()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.encounterjournal) then
@@ -20,27 +39,7 @@ function S:Blizzard_EncounterJournal()
 
     -- Boss 按钮
     if E.private.skins.parchmentRemoverEnable then
-        hooksecurefunc(
-            "EncounterJournal_DisplayInstance",
-            function()
-                local bossIndex = 1
-                local _, _, bossID = _G.EJ_GetEncounterInfoByIndex(bossIndex)
-                local bossButton
-                while bossID do
-                    bossButton = _G["EncounterJournalBossButton" .. bossIndex]
-                    if bossButton and not bossButton.windStyle then
-                        S:CreateShadow(bossButton)
-                        F.SetFontOutline(bossButton.text)
-                        bossButton.text:ClearAllPoints()
-                        bossButton.text:Point("LEFT", bossButton, "LEFT", 105, 0)
-                        bossButton.text:Point("RIGHT", bossButton, "RIGHT", 0, 0)
-                        bossButton.windStyle = true
-                    end
-                    bossIndex = bossIndex + 1
-                    _, _, bossID = _G.EJ_GetEncounterInfoByIndex(bossIndex)
-                end
-            end
-        )
+        S:SecureHook("EncounterJournal_DisplayInstance")
     end
 
     -- 下方标签页

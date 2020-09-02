@@ -2,8 +2,9 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
-local function SkinOjectiveTrackerHeaders()
+function S:SkinOjectiveTrackerHeaders()
     local frame = _G.ObjectiveTrackerFrame.MODULES
     if frame then
         for i = 1, #frame do
@@ -14,24 +15,24 @@ local function SkinOjectiveTrackerHeaders()
     end
 end
 
-local function SkinItemButton(_, block)
+function S:SkinItemButton(_, block)
     local item = block.itemButton
     if item and not item.windStyle then
-        S:CreateShadow(item)
+        self:CreateShadow(item)
         item.windStyle = true
     end
 end
 
-local function SkinFindGroupButton(block)
+function S:SkinFindGroupButton(block)
     if block.hasGroupFinderButton and block.groupFinderButton then
         if block.groupFinderButton and not block.groupFinderButton.windStyle then
-            S:CreateShadow(block.groupFinderButton)
+            self:CreateShadow(block.groupFinderButton)
             block.groupFinderButton.windStyle = true
         end
     end
 end
 
-local function SkinProgressBars(_, _, line)
+function S:SkinProgressBars(_, _, line)
     local progressBar = line and line.ProgressBar
     local bar = progressBar and progressBar.Bar
     if not bar or progressBar.windStyle then
@@ -41,11 +42,11 @@ local function SkinProgressBars(_, _, line)
     local label = bar.Label
 
     -- 条阴影
-    S:CreateBackdropShadowAfterElvUISkins(bar)
+    self:CreateBackdropShadowAfterElvUISkins(bar)
 
     -- 稍微移动下图标位置，防止阴影重叠，更加美观！
     if icon then
-        S:CreateBackdropShadowAfterElvUISkins(progressBar)
+        self:CreateBackdropShadowAfterElvUISkins(progressBar)
         icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0)
     end
 
@@ -59,13 +60,13 @@ local function SkinProgressBars(_, _, line)
     progressBar.windStyle = true
 end
 
-local function SkinTimerBars(_, _, line)
+function S:SkinTimerBars(_, _, line)
     local timerBar = line and line.TimerBar
     local bar = timerBar and timerBar.Bar
     if bar.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(bar)
+    self:CreateBackdropShadowAfterElvUISkins(bar)
 end
 
 function S:ObjectiveTrackerFrame()
@@ -79,17 +80,17 @@ function S:ObjectiveTrackerFrame()
     local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
     local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 
-    hooksecurefunc("ObjectiveTracker_Update", SkinOjectiveTrackerHeaders)
-    hooksecurefunc("QuestObjectiveSetupBlockButton_FindGroup", SkinFindGroupButton)
-    hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-    hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-    hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-    hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-    hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
-    hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
-    hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
-    hooksecurefunc(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", SkinItemButton)
-    hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinItemButton)
+    S:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
+    S:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
+    S:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    S:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    S:SecureHook(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    S:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
+    S:SecureHook(_G.QUEST_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    S:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    S:SecureHook(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    S:SecureHook(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", "SkinItemButton")
+    S:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "SkinItemButton")
 end
 
 S:AddCallback("ObjectiveTrackerFrame")

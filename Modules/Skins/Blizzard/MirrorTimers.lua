@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local MIRRORTIMER_NUMTIMERS = MIRRORTIMER_NUMTIMERS
 
 function S:MirrorTimers()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.mirrorTimers) then

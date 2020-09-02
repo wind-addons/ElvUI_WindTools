@@ -3,7 +3,13 @@ local S = W:GetModule("Skins")
 local UF = E:GetModule("UnitFrames")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
+
+function S:ElvUI_UnitFrames_SkinCast(_, frame)
+    self:CreateShadow(frame.Castbar)
+    if not frame.db.castbar.iconAttached then
+        self:CreateShadow(frame.Castbar.ButtonIcon.bg)
+    end
+end
 
 function S:ElvUI_CastBars()
     if not E.private.unitframe.enable then
@@ -13,16 +19,7 @@ function S:ElvUI_CastBars()
         return
     end
 
-    hooksecurefunc(
-        UF,
-        "Configure_Castbar",
-        function(_, frame)
-            S:CreateShadow(frame.Castbar)
-            if not frame.db.castbar.iconAttached then
-                S:CreateShadow(frame.Castbar.ButtonIcon.bg)
-            end
-        end
-    )
+    S:SecureHook(UF, "Configure_Castbar", "ElvUI_UnitFrames_SkinCast")
 end
 
 S:AddCallback("ElvUI_CastBars")

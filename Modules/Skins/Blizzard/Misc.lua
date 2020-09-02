@@ -2,11 +2,17 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
+local pairs = pairs
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()
     S:CreateShadow(_G.DeathRecapFrame)
+end
+
+function S:SkinSkipButton(frame)
+    if frame and frame.CloseDialog then
+        self:CreateShadow(frame.CloseDialog)
+    end
 end
 
 function S:BlizzardMiscFrames()
@@ -31,36 +37,14 @@ function S:BlizzardMiscFrames()
     end
 
     -- 跳过剧情
-    hooksecurefunc(
-        "CinematicFrame_OnDisplaySizeChanged",
-        function(f)
-            if f and f.CloseDialog then
-                S:CreateShadow(f.CloseDialog)
-            end
-        end
-    )
-
-    hooksecurefunc(
-        "MovieFrame_PlayMovie",
-        function(f)
-            if f and f.CloseDialog then
-                S:CreateShadow(f.CloseDialog)
-            end
-        end
-    )
+    S:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
+    S:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
 
     -- 聊天菜单
     local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
 
     for _, menu in pairs(chatMenus) do
-        _G[menu]:HookScript(
-            "OnShow",
-            function(f)
-                if f then
-                    S:CreateShadow(f)
-                end
-            end
-        )
+        S:SecureHookScript(_G[menu], "OnShow", "CreateShadow")
     end
 
     -- 下拉菜单

@@ -4,7 +4,12 @@ local B = E:GetModule("DataBars")
 
 local _G = _G
 local pairs = pairs
-local hooksecurefunc = hooksecurefunc
+
+function S:ElvUI_SkinDataBar(_, name)
+    if _G[name] then
+        self:CreateShadow(_G[name])
+    end
+end
 
 function S:ElvUI_DataBars()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.dataBars) then
@@ -19,15 +24,7 @@ function S:ElvUI_DataBars()
     end
 
     -- 后续进行配置更新时进行添加
-    hooksecurefunc(
-        B,
-        "CreateBar",
-        function(_, name)
-            if _G[name] then
-                S:CreateShadow(_G[name])
-            end
-        end
-    )
+    S:SecureHook(B, "CreateBar", "ElvUI_SkinDataBar")
 end
 
 S:AddCallback("ElvUI_DataBars")

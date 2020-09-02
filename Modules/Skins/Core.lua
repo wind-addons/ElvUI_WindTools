@@ -3,8 +3,10 @@ local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
 local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
 local CreateFrame = CreateFrame
+local IsAddOnLoaded = IsAddOnLoaded
 
 S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
 S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
@@ -51,16 +53,12 @@ function S:CreateBackdropShadow(frame)
     if not frame or frame.windStyle then
         return
     end
-    if noBackdrop then
-        S:CreateShadow(frame)
+    if frame.backdrop then
+        frame.backdrop:SetTemplate("Transparent")
+        S:CreateShadow(frame.backdrop)
+        frame.windStyle = true
     else
-        if frame.backdrop then
-            frame.backdrop:SetTemplate("Transparent")
-            S:CreateShadow(frame.backdrop)
-            frame.windStyle = true
-        else
-            F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", frame:GetName() or "无名框体"))
-        end
+        F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", frame:GetName() or "无名框体"))
     end
 end
 
@@ -101,7 +99,7 @@ end
 ]]
 function S:SetTransparentBackdrop(frame)
     if frame.backdrop then
-        backdrop:SetTemplate("Transparent")
+        frame.backdrop:SetTemplate("Transparent")
     else
         frame:CreateBackdrop("Transparent")
     end

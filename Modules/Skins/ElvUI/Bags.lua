@@ -3,7 +3,6 @@ local S = W:GetModule("Skins")
 local B = E:GetModule("Bags")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_Bags()
     if not E.private.bags.enable then

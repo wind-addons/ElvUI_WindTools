@@ -1,9 +1,8 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
-local UIParentLoadAddOn = UIParentLoadAddOn
-
 local _G = _G
+local UIParentLoadAddOn = UIParentLoadAddOn
 
 function S:DebugFrames()
     if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.debug) then
@@ -20,15 +19,7 @@ function S:DebugFrames()
     S:CreateShadow(_G.TableAttributeDisplay)
     S:CreateShadow(_G.FrameStackTooltip)
 
-    hooksecurefunc(
-        _G.TableInspectorMixin,
-        "OnLoad",
-        function(s)
-            if s then
-                S:CreateShadow(s)
-            end
-        end
-    )
+    S:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateShadow")
 end
 
 S:AddCallback("DebugFrames")

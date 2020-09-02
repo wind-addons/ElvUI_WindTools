@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local CreateFrame = CreateFrame
 
 function S:UpdateVignetting()
     local frame = W.VignettingFrame

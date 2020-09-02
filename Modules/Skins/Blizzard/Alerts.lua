@@ -2,25 +2,27 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
+local hooksecurefunc = hooksecurefunc
 
-local function SkinAlert(alert)
+function S:SkinAlert(alert)
     if not alert or alert.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(alert)
+    self:CreateBackdropShadowAfterElvUISkins(alert)
 
     F.SetFrameFontOutline(alert)
 
     alert.windStyle = true
 end
 
-local function SkinAchievementAlert(frame)
+function S:SkinAchievementAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Unlocked)
     F.SetFontOutline(frame.Name, nil, "+2")
@@ -43,23 +45,23 @@ local function SkinAchievementAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinGuildChallengeAlert(frame)
+function S:SkinGuildChallengeAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFrameFontOutline(frame)
 
     frame.windStyle = true
 end
 
-local function SkinCriteriaAlert(frame)
+function S:SkinCriteriaAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Unlocked)
     F.SetFontOutline(frame.Name)
@@ -76,12 +78,12 @@ local function SkinCriteriaAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinMoneyWonAlert(frame)
+function S:SkinMoneyWonAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Label)
     F.SetFontOutline(frame.Amount, nil, "+1")
 
@@ -97,12 +99,12 @@ local function SkinMoneyWonAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinNewRecipeLearnedAlert(frame)
+function S:SkinNewRecipeLearnedAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
     F.SetFontOutline(frame.Name)
     F.SetFontOutline(frame.Title, nil, "+2")
 
@@ -114,12 +116,12 @@ local function SkinNewRecipeLearnedAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinInvasionAlert(frame)
+function S:SkinInvasionAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     for _, child in pairs({frame:GetChildren()}) do
         if child.template and child.template == "Default" then
@@ -163,12 +165,12 @@ local function SkinInvasionAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinWorldQuestCompleteAlert(frame)
+function S:SkinWorldQuestCompleteAlert(frame)
     if not frame or frame.windStyle then
         return
     end
 
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     for _, child in pairs({frame:GetChildren()}) do
         if child.template and child.template == "Default" then
@@ -189,11 +191,12 @@ local function SkinWorldQuestCompleteAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinLootUpgradeAlert(frame)
+function S:SkinLootUpgradeAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.TitleText)
     frame.TitleText:ClearAllPoints()
@@ -214,11 +217,11 @@ local function SkinLootUpgradeAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinLootAlert(frame)
+function S:SkinLootAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Label)
     F.SetFontOutline(frame.RollValue)
@@ -227,11 +230,11 @@ local function SkinLootAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinLegendaryItemAlert(frame)
+function S:SkinLegendaryItemAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     frame.Icon:ClearAllPoints()
     frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
@@ -256,11 +259,11 @@ local function SkinLegendaryItemAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinDigsiteCompleteAlert(frame)
+function S:SkinDigsiteCompleteAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Title)
     F.SetFontOutline(frame.DigsiteType, nil, "+2")
@@ -268,11 +271,12 @@ local function SkinDigsiteCompleteAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinRafRewardDeliveredAlert(frame)
+function S:SkinRafRewardDeliveredAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+    
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Title, nil, "+1")
     frame.Title:ClearAllPoints()
@@ -289,11 +293,12 @@ local function SkinRafRewardDeliveredAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinNewItemAlert(frame)
+function S:SkinNewItemAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     F.SetFontOutline(frame.Label)
     frame.Label:ClearAllPoints()
@@ -316,11 +321,12 @@ local function SkinNewItemAlert(frame)
     frame.windStyle = true
 end
 
-local function SkinGarrisonBuildingAlert(frame)
+function S:SkinGarrisonBuildingAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    S:CreateBackdropShadowAfterElvUISkins(frame)
+
+    self:CreateBackdropShadowAfterElvUISkins(frame)
 
     frame.Icon:ClearAllPoints()
     frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 12, 0)
@@ -349,44 +355,44 @@ function S:AlertFrames()
     end
 
     -- 成就
-    hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", SkinAchievementAlert)
-    hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction", SkinCriteriaAlert)
+    S:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
+    S:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
 
     -- 遭遇
-    hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction", SkinGuildChallengeAlert)
-    hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction", SkinInvasionAlert)
-    hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction", SkinWorldQuestCompleteAlert)
+    S:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", "SkinGuildChallengeAlert")
+    S:SecureHook(_G.InvasionAlertSystem, "setUpFunction", "SkinInvasionAlert")
+    S:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", "SkinWorldQuestCompleteAlert")
 
     -- 要塞
-    hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction", SkinGarrisonBuildingAlert)
-    hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", SkinAlert)
+    S:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", "SkinGarrisonBuildingAlert")
+    S:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", "SkinAlert")
 
     -- 拾取
-    hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction", SkinLegendaryItemAlert)
-    hooksecurefunc(_G.LootAlertSystem, "setUpFunction", SkinLootAlert)
-    hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction", SkinLootUpgradeAlert)
-    hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction", SkinMoneyWonAlert)
-    hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction", SkinMoneyWonAlert)
+    S:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", "SkinLegendaryItemAlert")
+    S:SecureHook(_G.LootAlertSystem, "setUpFunction", "SkinLootAlert")
+    S:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", "SkinLootUpgradeAlert")
+    S:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
+    S:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
 
     -- 专业技能
-    hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction", SkinDigsiteCompleteAlert)
-    hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction", SkinNewRecipeLearnedAlert)
+    S:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
+    S:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
 
     -- 宠物 / 坐骑
-    hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction", SkinNewItemAlert)
-    hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction", SkinNewItemAlert)
-    hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction", SkinNewItemAlert)
+    S:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")
+    S:SecureHook(_G.NewMountAlertSystem, "setUpFunction", "SkinNewItemAlert")
+    S:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
 
     -- 其它
-    hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction", SkinAlert)
-    hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction", SkinRafRewardDeliveredAlert)
+    S:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
+    S:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
 end
 
 S:AddCallback("AlertFrames")

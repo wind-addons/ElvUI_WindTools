@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 
 function S:InputMethodEditor()
     if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard.ime) then

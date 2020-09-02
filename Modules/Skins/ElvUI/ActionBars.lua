@@ -3,7 +3,6 @@ local S = W:GetModule("Skins")
 local AB = E:GetModule("ActionBars")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
@@ -46,6 +45,19 @@ local function SkinBar(bar, type)
     end
 end
 
+function S:ElvUI_ActionBar_PositionAndSizeBar(actionBarModule, barName)
+    local bar = actionBarModule.handledBars[barName]
+    SkinBar(bar, "PLAYER")
+end
+
+function S:ElvUI_ActionBar_PositionAndSizeBarPet()
+    SkinBar(_G.ElvUI_BarPet, "PET")
+end
+
+function S:ElvUI_ActionBar_PositionAndSizeBarShapeShift()
+    SkinBar(_G.ElvUI_StanceBar, "STANCE")
+end
+
 function S:ElvUI_ActionBars()
     if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
         return
@@ -60,34 +72,15 @@ function S:ElvUI_ActionBars()
         SkinBar(bar, "PLAYER")
     end
 
-    hooksecurefunc(
-        AB,
-        "PositionAndSizeBar",
-        function(self, barName)
-            local bar = self.handledBars[barName]
-            SkinBar(bar, "PLAYER")
-        end
-    )
+    S:SecureHook(AB, "PositionAndSizeBar", "ElvUI_ActionBar_PositionAndSizeBar")
 
     -- 宠物动作条
     SkinBar(_G.ElvUI_BarPet, "PET")
-    hooksecurefunc(
-        AB,
-        "PositionAndSizeBarPet",
-        function()
-            SkinBar(_G.ElvUI_BarPet, "PET")
-        end
-    )
+    S:SecureHook(AB, "PositionAndSizeBarPet", "ElvUI_ActionBar_PositionAndSizeBarPet")
 
     -- 姿态条
     SkinBar(_G.ElvUI_StanceBar, "STANCE")
-    hooksecurefunc(
-        AB,
-        "PositionAndSizeBarShapeShift",
-        function()
-            SkinBar(_G.ElvUI_StanceBar, "STANCE")
-        end
-    )
+    S:SecureHook(AB, "PositionAndSizeBarShapeShift", "ElvUI_ActionBar_PositionAndSizeBarShapeShift")
 
     if not E.private.WT.skins.elvui.actionBarsButton then
         return

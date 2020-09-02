@@ -26,14 +26,14 @@ function S:ElvUI_ChatPanels()
         return
     end
 
-    S:CreateShadow(_G.LeftChatDataPanel)
-    S:CreateShadow(_G.RightChatDataPanel)
+    self:CreateShadow(_G.LeftChatDataPanel)
+    self:CreateShadow(_G.RightChatDataPanel)
 
-    _G.LeftChatDataPanel.shadow:Point("TOPLEFT", _G.LeftChatToggleButton,"TOPLEFT", -4, 4)
-    _G.RightChatDataPanel.shadow:Point("BOTTOMRIGHT", _G.RightChatToggleButton,"BOTTOMRIGHT", 4, -4)
+    _G.LeftChatDataPanel.shadow:Point("TOPLEFT", _G.LeftChatToggleButton, "TOPLEFT", -4, 4)
+    _G.RightChatDataPanel.shadow:Point("BOTTOMRIGHT", _G.RightChatToggleButton, "BOTTOMRIGHT", 4, -4)
 
-    S:ElvUI_ChatPanels_ToggleShadows()
-    S:SecureHook(LO, "ToggleChatPanels", "ElvUI_ChatPanels_ToggleShadows")
+    self:ElvUI_ChatPanels_ToggleShadows()
+    self:SecureHook(LO, "ToggleChatPanels", "ElvUI_ChatPanels_ToggleShadows")
 end
 
 S:AddCallback("ElvUI_ChatPanels")

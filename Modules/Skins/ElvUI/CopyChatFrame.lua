@@ -8,7 +8,7 @@ function S:ElvUICopyChatFrame()
         return
     end
 
-    S:CreateShadow(_G.CopyChatFrame)
+    self:CreateShadow(_G.CopyChatFrame)
     F.SetFontOutline(_G.CopyChatFrameEditBox)
 end
 

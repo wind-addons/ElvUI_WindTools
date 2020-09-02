@@ -9,10 +9,7 @@ function S:ElvUI_StaticPopup()
     end
 
     for i = 1, 3 do
-        local f = _G["ElvUI_StaticPopup" .. i]
-        if f then
-            S:CreateShadow(f)
-        end
+        self:CreateShadow(_G["ElvUI_StaticPopup" .. i])
     end
 end
 

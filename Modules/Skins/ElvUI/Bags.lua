@@ -12,11 +12,11 @@ function S:ElvUI_Bags()
         return
     end
 
-    S:CreateShadow(B.BagFrame)
-    S:CreateShadow(B.BankFrame)
+    self:CreateShadow(B.BagFrame)
+    self:CreateShadow(B.BankFrame)
 
     if _G.ElvUIVendorGraysFrame then
-        S:CreateShadow(_G.ElvUIVendorGraysFrame)
+        self:CreateShadow(_G.ElvUIVendorGraysFrame)
     end
 end
 

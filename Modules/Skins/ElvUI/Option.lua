@@ -15,7 +15,7 @@ function S:ElvUI_OptionsUI()
         return
     end
 
-    S:SecureHook(E, "ToggleOptionsUI", "ElvUI_SkinOptionsUI")
+    self:SecureHook(E, "ToggleOptionsUI", "ElvUI_SkinOptionsUI")
 end
 
 S:AddCallback("ElvUI_OptionsUI")

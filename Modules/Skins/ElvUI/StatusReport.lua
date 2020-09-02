@@ -15,10 +15,10 @@ function S:ElvUI_StatusReport()
     end
 
     if E.StatusFrame then
-        S:ElvUI_SkinStatusReport()
+        self:ElvUI_SkinStatusReport()
     end
 
-    S:SecureHook(E, "CreateStatusFrame", "ElvUI_SkinStatusReport")
+    self:SecureHook(E, "CreateStatusFrame", "ElvUI_SkinStatusReport")
 end
 
 S:AddCallback("ElvUI_StatusReport")

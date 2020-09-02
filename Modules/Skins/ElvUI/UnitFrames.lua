@@ -5,9 +5,7 @@ local UF = E:GetModule("UnitFrames")
 local _G = _G
 
 function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
-    if f then
-        self:CreateShadow(f)
-    end
+    self:CreateShadow(f)
 end
 
 function S:ElvUI_UnitFrames_Configure_Threat(_, f)
@@ -34,9 +32,7 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
 end
 
 function S:ElvUI_UnitFrames_UpdateAuraSettings(_, _, a)
-    if a then
-        self:CreateShadow(a)
-    end
+    self:CreateShadow(a)
 end
 
 function S:ElvUI_UnitFrames()
@@ -48,16 +44,16 @@ function S:ElvUI_UnitFrames()
     end
 
     -- 低频度更新单位框体外围阴影
-    S:SecureHook(UF, "UpdateNameSettings", "ElvUI_UnitFrames_UpdateNameSettings")
+    self:SecureHook(UF, "UpdateNameSettings", "ElvUI_UnitFrames_UpdateNameSettings")
 
     -- 在 oUF 更新仇恨值阴影时判断是否隐藏美化阴影
-    S:SecureHook(UF, "Configure_Threat", "ElvUI_UnitFrames_Configure_Threat")
+    self:SecureHook(UF, "Configure_Threat", "ElvUI_UnitFrames_Configure_Threat")
 
     -- 为分离的能量条提供阴影
-    S:SecureHook(UF, "Configure_Power", "ElvUI_UnitFrames_Configure_Power")
+    self:SecureHook(UF, "Configure_Power", "ElvUI_UnitFrames_Configure_Power")
 
     -- 为单位框体光环提供边缘美化
-    S:SecureHook(UF, "UpdateAuraSettings", "ElvUI_UnitFrames_UpdateAuraSettings")
+    self:SecureHook(UF, "UpdateAuraSettings", "ElvUI_UnitFrames_UpdateAuraSettings")
 end
 
 S:AddCallback("ElvUI_UnitFrames")

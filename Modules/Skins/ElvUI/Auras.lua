@@ -5,9 +5,7 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:ElvUI_Auras_SkinIcon(_, button)
-    if button then
-        self:CreateShadow(button)
-    end
+    self:CreateShadow(button)
 end
 
 function S:ElvUI_Auras()
@@ -18,8 +16,8 @@ function S:ElvUI_Auras()
         return
     end
 
-    S:SecureHook(A, "CreateIcon", "ElvUI_Auras_SkinIcon")
-    S:SecureHook(A, "UpdateAura", "ElvUI_Auras_SkinIcon")
+    self:SecureHook(A, "CreateIcon", "ElvUI_Auras_SkinIcon")
+    self:SecureHook(A, "UpdateAura", "ElvUI_Auras_SkinIcon")
 end
 
 S:AddCallback("ElvUI_Auras")

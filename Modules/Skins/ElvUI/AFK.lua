@@ -9,7 +9,7 @@ function S:ElvUI_AFK()
         return
     end
 
-    S:CreateShadow(AFK.AFKMode.bottom, 10)
+    self:CreateShadow(AFK.AFKMode.bottom, 10)
 
     AFK.AFKMode.bottom.guild:ClearAllPoints()
     AFK.AFKMode.bottom.guild:Point("TOPLEFT", AFK.AFKMode.bottom.name, "BOTTOMLEFT", 0, -11)

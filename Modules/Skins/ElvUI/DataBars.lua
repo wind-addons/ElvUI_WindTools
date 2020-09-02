@@ -19,12 +19,12 @@ function S:ElvUI_DataBars()
     local bars = {_G.ElvUI_AzeriteBar, _G.ElvUI_ExperienceBar, _G.ElvUI_ReputationBar, _G.ElvUI_HonorBar}
     for _, bar in pairs(bars) do
         if bar then
-            S:CreateShadow(bar)
+            self:CreateShadow(bar)
         end
     end
 
     -- 后续进行配置更新时进行添加
-    S:SecureHook(B, "CreateBar", "ElvUI_SkinDataBar")
+    self:SecureHook(B, "CreateBar", "ElvUI_SkinDataBar")
 end
 
 S:AddCallback("ElvUI_DataBars")

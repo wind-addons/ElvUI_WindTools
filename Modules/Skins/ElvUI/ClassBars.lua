@@ -19,7 +19,7 @@ function S:ElvUI_ClassBars()
         return
     end
 
-    S:SecureHook(UF, "Configure_ClassBar", "ElvUI_UnitFrames_SkinClassBar")
+    self:SecureHook(UF, "Configure_ClassBar", "ElvUI_UnitFrames_SkinClassBar")
 end
 
 S:AddCallback("ElvUI_ClassBars")

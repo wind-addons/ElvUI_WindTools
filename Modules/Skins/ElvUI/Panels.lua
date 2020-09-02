@@ -9,12 +9,8 @@ function S:ElvUI_Panels()
         return
     end
 
-    if _G.ElvUI_TopPanel then
-        S:CreateShadow(_G.ElvUI_TopPanel)
-    end
-    if _G.ElvUI_BottomPanel then
-        S:CreateShadow(_G.ElvUI_BottomPanel)
-    end
+    self:CreateShadow(_G.ElvUI_TopPanel)
+    self:CreateShadow(_G.ElvUI_BottomPanel)
 end
 
 S:AddCallback("ElvUI_Panels")

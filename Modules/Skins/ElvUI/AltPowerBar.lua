@@ -10,14 +10,16 @@ function S:ElvUI_AltPowerBar()
     end
 
     local bar = _G.ElvUI_AltPowerBar
+    
     if not bar then
         return
     end
 
     bar.backdrop:SetTemplate("Transparent")
-    S:CreateShadow(bar.backdrop)
-    bar.text:ClearAllPoints()
+    self:CreateShadow(bar.backdrop)
+
     F.SetFontOutline(bar.text)
+    bar.text:ClearAllPoints()
     bar.text:SetPoint("CENTER", 0, -1)
 end
 

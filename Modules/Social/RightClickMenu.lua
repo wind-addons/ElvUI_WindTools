@@ -1,24 +1,15 @@
 local W, F, E, L = unpack(select(2, ...))
 local RCM = W:NewModule("RightClickMenu", "AceHook-3.0")
 
-local fasfasfasf = {
-    SELF = true,
-    PARTY = true,
-    PLAYER = true,
-    RAID_PLAYER = true,
-    RAID = true,
-    FRIEND = true,
-    BN_FRIEND = true,
-    GUILD = true,
-    GUILD_OFFLINE = true,
-    CHAT_ROSTER = true,
-    TARGET = true,
-    ARENAENEMY = true,
-    FOCUS = true,
-    WORLD_STATE_SCORE = true,
-    COMMUNITIES_WOW_MEMBER = true,
-    COMMUNITIES_GUILD_MEMBER = true
-}
+local _G = _G
+local wipe = wipe
+local pairs = pairs
+local GuildInvite = print -- TODO:Testing
+local UnitPlayerControlled = UnitPlayerControlled
+local CanGuildInvite = CanGuildInvite
+
+local C_Club_GetGuildClubId = C_Club.GetGuildClubId
+local C_FriendList_SendWho = C_FriendList.SendWho
 
 local function URLEncode(str)
     str =
@@ -59,21 +50,52 @@ local PredefinedType = {
             RAF_RECRUIT = true
         },
         func = function(frame)
-            local playerName = frame.chatTarget or frame.name
-            print(playerName)
+            if frame.chatTarget then
+                GuildInvite(frame.chatTarget)
+            elseif frame.name then
+                local playerName = frame.name
+                if frame.server and frame.server ~= E.myrealm then
+                    playerName = playerName .. "-" .. frame.server
+                end
+                GuildInvite(playerName)
+            else
+                F.DebugMessage(RCM, L["Cannot get the name."])
+            end
         end,
         isHidden = function(frame)
-            if frame.which == "TARGET" then
-                local playerName = frame.name
+            -- 无邀请权限时不显示
+            if not CanGuildInvite() then
+                return true
+            end
+
+            -- 公会频道不需要这个功能
+            if frame.communityClubID then
+                if tonumber(frame.communityClubID) == tonumber(C_Club_GetGuildClubId()) then
+                    return true
+                end
+            end
+
+            -- 目标为 NPC 时不显示
+            if frame.unit and frame.unit == "target" then
                 if not UnitPlayerControlled("target") then
                     return true
                 end
-            elseif frame.which == "FOCUS" then
-                local playerName = frame.name
+            end
+
+            -- 焦点为 NPC 时不显示
+            if frame.unit and frame.unit == "focus" then
                 if not UnitPlayerControlled("focus") then
                     return true
                 end
             end
+
+            -- 忽略自己
+            if frame.name == E.myname then
+                if not frame.server or frame.server == E.myrealm then
+                    return true
+                end
+            end
+
             return false
         end
     },
@@ -105,21 +127,82 @@ local PredefinedType = {
                 local link = GetArmoryBaseURL() .. URLEncode(server) .. "/" .. URLEncode(name)
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
-                print(L["Cannot get the armory link."])
+                F.DebugMessage(RCM, L["Cannot get the armory link."])
             end
         end,
         isHidden = function(frame)
-            if frame.which == "TARGET" then
-                local playerName = frame.name
+            -- 目标为 NPC 时不显示
+            if frame.unit and frame.unit == "target" then
                 if not UnitPlayerControlled("target") then
                     return true
                 end
-            elseif frame.which == "FOCUS" then
-                local playerName = frame.name
+            end
+
+            -- 焦点为 NPC 时不显示
+            if frame.unit and frame.unit == "focus" then
                 if not UnitPlayerControlled("focus") then
                     return true
                 end
             end
+
+            return false
+        end
+    },
+    WHO = {
+        name = _G.WHO,
+        supportTypes = {
+            PARTY = true,
+            PLAYER = true,
+            RAID_PLAYER = true,
+            RAID = true,
+            FRIEND = true,
+            BN_FRIEND = true,
+            GUILD = true,
+            GUILD_OFFLINE = true,
+            CHAT_ROSTER = true,
+            TARGET = true,
+            ARENAENEMY = true,
+            FOCUS = true,
+            WORLD_STATE_SCORE = true,
+            COMMUNITIES_WOW_MEMBER = true,
+            COMMUNITIES_GUILD_MEMBER = true,
+            RAF_RECRUIT = true
+        },
+        func = function(frame)
+            if frame.chatTarget then
+                C_FriendList_SendWho(frame.chatTarget)
+            elseif frame.name then
+                local playerName = frame.name
+                if frame.server and frame.server ~= E.myrealm then
+                    playerName = playerName .. "-" .. frame.server
+                end
+                C_FriendList_SendWho(playerName)
+            else
+                F.DebugMessage(RCM, L["Cannot get the name."])
+            end
+        end,
+        isHidden = function(frame)
+            -- 目标为 NPC 时不显示
+            if frame.unit and frame.unit == "target" then
+                if not UnitPlayerControlled("target") then
+                    return true
+                end
+            end
+
+            -- 焦点为 NPC 时不显示
+            if frame.unit and frame.unit == "focus" then
+                if not UnitPlayerControlled("focus") then
+                    return true
+                end
+            end
+
+            -- 忽略自己
+            if frame.name == E.myname then
+                if not frame.server or frame.server == E.myrealm then
+                    return true
+                end
+            end
+
             return false
         end
     }
@@ -237,7 +320,7 @@ function RCM:UpdateButton(index, config, closeAfterFunction)
     button:SetScript(
         "OnClick",
         function()
-            config.func(_G.DropDownList1.dropdown)
+            config.func(self.cache)
             if closeAfterFunction then
                 CloseDropDownMenus()
             end
@@ -258,22 +341,23 @@ function RCM:UpdateMenu()
         self:UpdateButton(2, PredefinedType.ARMORY, true)
     end
 
-    -- btn:SetAttribute("type1", "macro");
-    -- btn:SetAttribute("macrotext1", "/cast Frost Bolt");
+    if self.db.who then
+        self:UpdateButton(3, PredefinedType.WHO, true)
+    end
 
     for i, button in pairs(self.menu.buttons) do
-        if i >= 3 then
+        if i >= 4 then
             button.supportTypes = nil
         end
     end
 end
 
 -- 自动隐藏不符合条件的按钮
-function RCM:DisplayButtons(which)
+function RCM:DisplayButtons()
     local buttonOrder = 1
     for i, button in pairs(self.menu.buttons) do
-        if button.supportTypes and button.supportTypes[which] then
-            if not button.isHidden(_G.DropDownList1.dropdown) then
+        if button.supportTypes and button.supportTypes[self.cache.which] then
+            if not button.isHidden(self.cache) then
                 button:Show()
                 button:ClearAllPoints()
                 button:Point("TOPLEFT", self.menu, "TOPLEFT", 16, -16 * buttonOrder)
@@ -296,8 +380,18 @@ function RCM:ShowMenu(frame)
     -- 预组队伍右键
     -- dropdown.Button == _G.LFGListFrameDropDownButton
 
+    wipe(self.cache)
+    self.cache = {
+        which = dropdown.which,
+        name = dropdown.name,
+        unit = dropdown.unit,
+        server = dropdown.server,
+        chatTarget = dropdown.chatTarget,
+        communityClubID = dropdown.communityClubID
+    }
+
     if dropdown.which then
-        if self:DisplayButtons(dropdown.which) then
+        if self:DisplayButtons() then
             self.menu:SetParent(frame)
             self.menu:SetFrameStrata(frame:GetFrameStrata())
             self.menu:SetFrameLevel(frame:GetFrameLevel() + 2)
@@ -327,6 +421,7 @@ function RCM:Initialize()
         return
     end
 
+    self.cache = {}
     self:CreateMenu()
     self:UpdateMenu()
     self:SecureHookScript(_G.DropDownList1, "OnShow", "ShowMenu")

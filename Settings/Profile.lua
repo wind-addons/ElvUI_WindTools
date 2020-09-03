@@ -427,7 +427,7 @@ P.social = {
         abbreviation = "SHORT",
         removeBrackets = true,
         roleIconSize = 16,
-        roleIconStyle = "FFXIV",
+        roleIconStyle = "FFXIV"
     },
     emote = {
         enable = true,
@@ -465,8 +465,9 @@ P.social = {
     },
     rightClickMenu = {
         enable = true,
-        guildInvite = true,
         armory = true,
+        guildInvite = true,
+        who = true
     },
     smartTab = {
         enable = true,
@@ -476,7 +477,7 @@ P.social = {
         raidWarning = false,
         officer = false,
         historyLimit = 10
-    },
+    }
 }
 
 P.quest = {

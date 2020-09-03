@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local RCM = W:NewModule("RightClickMenu", "AceHook-3.0")
+local CM = W:NewModule("ContextMenu", "AceHook-3.0")
 
 local _G = _G
 local wipe = wipe
@@ -10,6 +10,8 @@ local CanGuildInvite = CanGuildInvite
 
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_SendWho = C_FriendList.SendWho
+
+local UIDROPDOWNMENU_MAXBUTTONS = UIDROPDOWNMENU_MAXBUTTONS
 
 local function URLEncode(str)
     str =
@@ -59,7 +61,7 @@ local PredefinedType = {
                 end
                 GuildInvite(playerName)
             else
-                F.DebugMessage(RCM, L["Cannot get the name."])
+                F.DebugMessage(CM, L["Cannot get the name."])
             end
         end,
         isHidden = function(frame)
@@ -127,7 +129,7 @@ local PredefinedType = {
                 local link = GetArmoryBaseURL() .. URLEncode(server) .. "/" .. URLEncode(name)
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
-                F.DebugMessage(RCM, L["Cannot get the armory link."])
+                F.DebugMessage(CM, L["Cannot get the armory link."])
             end
         end,
         isHidden = function(frame)
@@ -178,7 +180,7 @@ local PredefinedType = {
                 end
                 C_FriendList_SendWho(playerName)
             else
-                F.DebugMessage(RCM, L["Cannot get the name."])
+                F.DebugMessage(CM, L["Cannot get the name."])
             end
         end,
         isHidden = function(frame)
@@ -208,7 +210,7 @@ local PredefinedType = {
     }
 }
 
-local function RightClickMenu_OnShow(menu)
+local function ContextMenu_OnShow(menu)
     local parent = menu:GetParent() or menu
     local width = parent:GetWidth()
     local height = 16
@@ -223,15 +225,15 @@ local function RightClickMenu_OnShow(menu)
     return height
 end
 
-local function RightClickMenuButton_OnEnter(button)
+local function ContextMenuButton_OnEnter(button)
     _G[button:GetName() .. "Highlight"]:Show()
 end
 
-local function RightClickMenuButton_OnLeave(button)
+local function ContextMenuButton_OnLeave(button)
     _G[button:GetName() .. "Highlight"]:Hide()
 end
 
-function RCM:SkinDropDownList(frame)
+function CM:SkinDropDownList(frame)
     local Backdrop = _G[frame:GetName() .. "Backdrop"]
     local menuBackdrop = _G[frame:GetName() .. "MenuBackdrop"]
 
@@ -244,7 +246,7 @@ function RCM:SkinDropDownList(frame)
     end
 end
 
-function RCM:SkinButton(button)
+function CM:SkinButton(button)
     local r, g, b = unpack(E.media.rgbvaluecolor)
 
     local highlight = _G[button:GetName() .. "Highlight"]
@@ -253,8 +255,8 @@ function RCM:SkinButton(button)
     highlight:SetDrawLayer("BACKGROUND")
     highlight:SetVertexColor(r, g, b)
 
-    button:SetScript("OnEnter", RightClickMenuButton_OnEnter)
-    button:SetScript("OnLeave", RightClickMenuButton_OnLeave)
+    button:SetScript("OnEnter", ContextMenuButton_OnEnter)
+    button:SetScript("OnLeave", ContextMenuButton_OnLeave)
 
     _G[button:GetName() .. "Check"]:SetAlpha(0)
     _G[button:GetName() .. "UnCheck"]:SetAlpha(0)
@@ -264,16 +266,16 @@ function RCM:SkinButton(button)
     _G[button:GetName() .. "InvisibleButton"]:SetAlpha(0)
 end
 
-function RCM:CreateMenu()
+function CM:CreateMenu()
     if self.menu then
         return
     end
 
-    local frame = CreateFrame("Button", "WTRightClickDropDownList", E.UIParent, "UIDropDownListTemplate")
+    local frame = CreateFrame("Button", "WTContextMenu", E.UIParent, "UIDropDownListTemplate")
     self:SkinDropDownList(frame)
     frame:Hide()
 
-    frame:SetScript("OnShow", RightClickMenu_OnShow)
+    frame:SetScript("OnShow", ContextMenu_OnShow)
     frame:SetScript("OnHide", nil)
     frame:SetScript("OnClick", nil)
     frame:SetScript("OnUpdate", nil)
@@ -281,9 +283,9 @@ function RCM:CreateMenu()
     frame.buttons = {}
 
     for i = 1, UIDROPDOWNMENU_MAXBUTTONS do
-        local button = _G["WTRightClickDropDownListButton" .. i]
+        local button = _G["WTContextMenuButton" .. i]
         if not button then
-            button = CreateFrame("Button", "WTRightClickDropDownListButton" .. i, frame, "UIDropDownMenuButtonTemplate")
+            button = CreateFrame("Button", "WTContextMenuButton" .. i, frame, "UIDropDownMenuButtonTemplate")
         end
 
         local text = _G[button:GetName() .. "NormalText"]
@@ -305,7 +307,7 @@ function RCM:CreateMenu()
     self.menu = frame
 end
 
-function RCM:UpdateButton(index, config, closeAfterFunction)
+function CM:UpdateButton(index, config, closeAfterFunction)
     local button = self.menu.buttons[index]
     if not button then
         return
@@ -328,32 +330,37 @@ function RCM:UpdateButton(index, config, closeAfterFunction)
     )
 end
 
-function RCM:UpdateMenu()
+function CM:UpdateMenu()
     if not self.db then
         return
     end
 
+    local buttonIndex = 1
+
     if self.db.guildInvite then
-        self:UpdateButton(1, PredefinedType.GUILD_INVITE, true)
+        self:UpdateButton(buttonIndex, PredefinedType.GUILD_INVITE, true)
+        buttonIndex = buttonIndex + 1
     end
 
     if self.db.armory then
-        self:UpdateButton(2, PredefinedType.ARMORY, true)
+        self:UpdateButton(buttonIndex, PredefinedType.ARMORY, true)
+        buttonIndex = buttonIndex + 1
     end
 
     if self.db.who then
-        self:UpdateButton(3, PredefinedType.WHO, true)
+        self:UpdateButton(buttonIndex, PredefinedType.WHO, true)
+        buttonIndex = buttonIndex + 1
     end
 
     for i, button in pairs(self.menu.buttons) do
-        if i >= 4 then
+        if i >= buttonIndex then
             button.supportTypes = nil
         end
     end
 end
 
 -- 自动隐藏不符合条件的按钮
-function RCM:DisplayButtons()
+function CM:DisplayButtons()
     local buttonOrder = 1
     for i, button in pairs(self.menu.buttons) do
         if button.supportTypes and button.supportTypes[self.cache.which] then
@@ -371,7 +378,7 @@ function RCM:DisplayButtons()
     return (buttonOrder ~= 1)
 end
 
-function RCM:ShowMenu(frame)
+function CM:ShowMenu(frame)
     local dropdown = frame.dropdown
     if not dropdown or not self.db.enable then
         return
@@ -397,7 +404,7 @@ function RCM:ShowMenu(frame)
             self.menu:SetFrameLevel(frame:GetFrameLevel() + 2)
 
             local dropDownListHeight = frame:GetHeight()
-            local menuHeight = RightClickMenu_OnShow(self.menu)
+            local menuHeight = ContextMenu_OnShow(self.menu)
 
             frame:SetHeight(dropDownListHeight + menuHeight)
 
@@ -409,14 +416,14 @@ function RCM:ShowMenu(frame)
     end
 end
 
-function RCM:CloseMenu()
+function CM:CloseMenu()
     if self.db.enable and self.menu then
         self.menu:Hide()
     end
 end
 
-function RCM:Initialize()
-    self.db = E.db.WT.social.rightClickMenu
+function CM:Initialize()
+    self.db = E.db.WT.social.contextMenu
     if not self.db.enable or self.initialized then
         return
     end
@@ -430,8 +437,8 @@ function RCM:Initialize()
     self.initialized = true
 end
 
-function RCM:ProfileUpdate()
-    self.db = E.db.WT.social.rightClickMenu
+function CM:ProfileUpdate()
+    self.db = E.db.WT.social.contextMenu
     if self.db.enable then
         if not self.initialized then
             self:Initialize()
@@ -441,4 +448,4 @@ function RCM:ProfileUpdate()
     end
 end
 
-W:RegisterModule(RCM:GetName())
+W:RegisterModule(CM:GetName())

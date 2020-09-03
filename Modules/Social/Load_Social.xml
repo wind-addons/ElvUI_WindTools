@@ -2,9 +2,9 @@
 	<Script file='ChatBar.lua'/>
 	<Script file='ChatText.lua'/>
 	<Script file='ChatLink.lua'/>
+	<Script file='ContextMenu.lua'/>
 	<Script file='Emote.lua'/>
 	<Script file='Filter.lua'/>
 	<Script file='FriendList.lua'/>
-	<Script file='RightClickMenu.lua'/>
 	<Script file='SmartTab.lua'/>
 </Ui>

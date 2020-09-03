@@ -10,6 +10,7 @@ local CT = W:GetModule("ChatText")
 local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
 local FT = W:GetModule("Filter")
+local CM = W:GetModule("ContextMenu")
 local ST = W:GetModule("SmartTab")
 
 options.chatBar = {
@@ -564,7 +565,7 @@ do
     icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
     SampleStrings.ffxiv = icons
-    
+
     icons = ""
     icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.hexagonHealer, ":16:16") .. " "
@@ -585,7 +586,7 @@ do
 end
 
 options.chatText = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Chat Text"],
     get = function(info)
@@ -663,8 +664,62 @@ options.chatText = {
     }
 }
 
-options.emote = {
+options.contextMenu = {
     order = 4,
+    type = "group",
+    name = L["Context Menu"],
+    get = function(info)
+        return E.db.WT.social.contextMenu[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.social.contextMenu[info[#info]] = value
+        CM:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add features to pop-up menu without taint."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        armory = {
+            order = 2,
+            type = "toggle",
+            name = L["Armory"]
+        },
+        addFriend = {
+            order = 3,
+            type = "toggle",
+            name = _G.ADD_FRIEND
+        },
+        guildInvite = {
+            order = 4,
+            type = "toggle",
+            name = L["Guild Invite"]
+        },
+        who = {
+            order = 5,
+            type = "toggle",
+            name = _G.WHO
+        }
+    }
+}
+
+options.emote = {
+    order = 5,
     type = "group",
     name = L["Emote"],
     get = function(info)
@@ -712,7 +767,7 @@ options.emote = {
 }
 
 options.friendList = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Friend List"],
     get = function(info)
@@ -919,7 +974,7 @@ options.friendList = {
 }
 
 options.filter = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Filter"],
     get = function(info)
@@ -965,7 +1020,7 @@ options.filter = {
 }
 
 options.smartTab = {
-    order = 7,
+    order = 8,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

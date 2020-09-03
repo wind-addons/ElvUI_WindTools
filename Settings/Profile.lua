@@ -463,9 +463,10 @@ P.social = {
         enable = true,
         unblockProfanityFilter = true
     },
-    rightClickMenu = {
+    contextMenu = {
         enable = true,
         armory = true,
+        addFriend = true,
         guildInvite = true,
         who = true
     },

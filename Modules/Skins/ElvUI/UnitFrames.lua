@@ -26,8 +26,21 @@ function S:ElvUI_UnitFrames_Configure_Threat(_, f)
 end
 
 function S:ElvUI_UnitFrames_Configure_Power(_, f)
-    if f.USE_POWERBAR and f.POWERBAR_DETACHED then
-        self:CreateShadow(f.Power)
+    if f.USE_POWERBAR then
+        if f.POWERBAR_DETACHED then
+            if not f.Power.shadow then
+                self:CreateShadow(f.Power)
+            else
+                f.Power.shadow:SetFrameLevel(1)
+                f.Power.shadow:SetFrameStrata(f.Power:GetFrameStrata())
+                f.Power.shadow:SetOutside(f.Power, 4, 4)
+                f.Power.shadow:Show()
+            end
+        else
+            if f.Power.shadow then
+                f.Power.shadow:Hide()
+            end
+        end
     end
 end
 

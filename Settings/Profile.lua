@@ -429,6 +429,11 @@ P.social = {
         roleIconSize = 16,
         roleIconStyle = "FFXIV",
     },
+    emote = {
+        enable = true,
+        size = 16,
+        panel = true
+    },
     friendList = {
         enable = true,
         hideMaxLevel = true,
@@ -458,6 +463,11 @@ P.social = {
         enable = true,
         unblockProfanityFilter = true
     },
+    rightClickMenu = {
+        enable = true,
+        guildInvite = true,
+        armory = true,
+    },
     smartTab = {
         enable = true,
         whisperCycle = false,
@@ -467,11 +477,6 @@ P.social = {
         officer = false,
         historyLimit = 10
     },
-    emote = {
-        enable = true,
-        size = 16,
-        panel = true
-    }
 }
 
 P.quest = {

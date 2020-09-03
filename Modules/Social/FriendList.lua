@@ -109,7 +109,7 @@ local function GetClassColor(className)
     end
 
     -- 德语及法语有分性别的职业名
-    if E.locale == "deDE" or E.locale == "frFR" then
+    if E:GetLocale() == "deDE" or E:GetLocale() == "frFR" then
         for class, localizedName in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do
             if className == localizedName then
                 return C_ClassColor_GetClassColor(class)

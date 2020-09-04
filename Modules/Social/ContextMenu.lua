@@ -2,38 +2,23 @@ local W, F, E, L = unpack(select(2, ...))
 local CM = W:NewModule("ContextMenu", "AceHook-3.0")
 
 local _G = _G
-local wipe = wipe
+local format = format
+local gsub = gsub
 local pairs = pairs
+local strbyte = strbyte
+local tonumber = tonumber
+local unpack = unpack
+local wipe = wipe
+local CanGuildInvite = CanGuildInvite
+local CloseDropDownMenus = CloseDropDownMenus
+local CreateFrame = CreateFrame
 local GuildInvite = print -- TODO:Testing
 local UnitPlayerControlled = UnitPlayerControlled
-local CanGuildInvite = CanGuildInvite
 
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_SendWho = C_FriendList.SendWho
 
 local UIDROPDOWNMENU_MAXBUTTONS = UIDROPDOWNMENU_MAXBUTTONS
-
-local function URLEncode(str)
-    str =
-        gsub(
-        str,
-        "([^%w%.%- ])",
-        function(c)
-            return format("%%%02X", strbyte(c))
-        end
-    )
-    return gsub(str, " ", "+")
-end
-
-local function GetArmoryBaseURL()
-    local host = "https://worldofwarcraft.com/en-us/character/us/"
-
-    if E:GetLocale() == "zhTW" then
-        host = "https://worldofwarcraft.com/zh-tw/character/tw/"
-    end
-
-    return host
-end
 
 local PredefinedType = {
     GUILD_INVITE = {
@@ -125,8 +110,9 @@ local PredefinedType = {
         func = function(frame)
             local name = frame.name
             local server = frame.server or E.myrealm
+
             if name and server then
-                local link = GetArmoryBaseURL() .. URLEncode(server) .. "/" .. URLEncode(name)
+                local link = CM:GetArmoryBaseURL() .. CM:URLEncode(server) .. "/" .. CM:URLEncode(name)
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
                 F.DebugMessage(CM, L["Cannot get the armory link."])
@@ -207,8 +193,106 @@ local PredefinedType = {
 
             return false
         end
+    },
+    ADDFRIEND = {
+        name = _G.ADD_FRIEND,
+        supportTypes = {
+            PARTY = true,
+            PLAYER = true,
+            RAID_PLAYER = true,
+            RAID = true,
+            FRIEND = true,
+            BN_FRIEND = true,
+            GUILD = true,
+            GUILD_OFFLINE = true,
+            CHAT_ROSTER = true,
+            TARGET = true,
+            ARENAENEMY = true,
+            FOCUS = true,
+            WORLD_STATE_SCORE = true,
+            COMMUNITIES_WOW_MEMBER = true,
+            COMMUNITIES_GUILD_MEMBER = true,
+            RAF_RECRUIT = true
+        },
+        func = function(frame)
+            if frame.chatTarget then
+                C_FriendList_SendWho(frame.chatTarget)
+            elseif frame.name then
+                local playerName = frame.name
+                if frame.server and frame.server ~= E.myrealm then
+                    playerName = playerName .. "-" .. frame.server
+                end
+                C_FriendList_SendWho(playerName)
+            else
+                F.DebugMessage(CM, L["Cannot get the name."])
+            end
+        end,
+        isHidden = function(frame)
+            -- 目标为 NPC 时不显示
+            if frame.unit and frame.unit == "target" then
+                if not UnitPlayerControlled("target") then
+                    return true
+                end
+            end
+
+            -- 焦点为 NPC 时不显示
+            if frame.unit and frame.unit == "focus" then
+                if not UnitPlayerControlled("focus") then
+                    return true
+                end
+            end
+
+            -- 忽略自己
+            if frame.name == E.myname then
+                if not frame.server or frame.server == E.myrealm then
+                    return true
+                end
+            end
+
+            return false
+        end
     }
 }
+
+function CM:URLEncode(str)
+    str =
+        gsub(
+        str,
+        "([^%w%.%- ])",
+        function(c)
+            return format("%%%02X", strbyte(c))
+        end
+    )
+    return gsub(str, " ", "+")
+end
+
+function CM:GetArmoryBaseURL()
+    local host = "https://worldofwarcraft.com/"
+
+    local language = strlower(W.Locale)
+    local languageURL = format("%s-%s/", strsub(language, 1, 2), strsub(language, 3, 4))
+    host = host .. languageURL .. "character/"
+
+    local serverLocation = "us"
+
+    if W.Locale ~= "enUS" then
+        if W.Locale == "zhTW" or W.Locale == "zhTW" then
+            serverLocation = "tw"
+        elseif W.Locale == "koKR" then
+            serverLocation = "kr"
+        else
+            serverLocation = "eu"
+        end
+    end
+
+    if self.db and self.db.armoryOverride[E.myrealm] then
+        serverLocation = self.db.armoryOverride[E.myrealm]
+    end
+
+    host = host .. serverLocation .. "/"
+
+    return host
+end
 
 local function ContextMenu_OnShow(menu)
     local parent = menu:GetParent() or menu
@@ -336,6 +420,11 @@ function CM:UpdateMenu()
     end
 
     local buttonIndex = 1
+
+    if self.db.addFriend then
+        self:UpdateButton(buttonIndex, PredefinedType.WHO, true)
+        buttonIndex = buttonIndex + 1
+    end
 
     if self.db.guildInvite then
         self:UpdateButton(buttonIndex, PredefinedType.GUILD_INVITE, true)

@@ -620,13 +620,18 @@ options.chatText = {
             name = L["Enable"],
             width = "full"
         },
-        removeBrackets = {
+        removeRealm = {
             order = 2,
+            type = "toggle",
+            name = L["Remove Realm"]
+        },
+        removeBrackets = {
+            order = 3,
             type = "toggle",
             name = L["Remove Brackets"]
         },
         abbreviation = {
-            order = 3,
+            order = 4,
             type = "select",
             name = L["Abbreviation"],
             desc = L["Modify the style of abbreviation of channels."],
@@ -637,7 +642,7 @@ options.chatText = {
             }
         },
         roleIcon = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Role Icon"],

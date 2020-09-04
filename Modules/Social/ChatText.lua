@@ -286,7 +286,7 @@ function CT:CheckLFGRoles()
 end
 
 function CT:HandleName(nameString)
-    if not nameString or type(nameString) ~= "string" then
+    if not nameString or nameString == "" then
         return nameString
     end
     

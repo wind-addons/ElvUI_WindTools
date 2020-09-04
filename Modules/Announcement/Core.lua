@@ -92,7 +92,7 @@ function A:GetPetInfo(petName)
     end
 
     local delimiter = "'s"
-    if strsub(E:GetLocale(), 0, 2) == "zh" then
+    if strsub(W.Locale, 0, 2) == "zh" then
         delimiter = "的"
     end
 

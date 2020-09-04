@@ -3,6 +3,7 @@ local options = W.options.social.args
 local LSM = E.Libs.LSM
 
 local FriendsFrame_Update = FriendsFrame_Update
+local customListSelected
 
 local CB = W:GetModule("ChatBar")
 local CL = W:GetModule("ChatLink")
@@ -693,27 +694,125 @@ options.contextMenu = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
-        armory = {
+        normalConfig = {
             order = 2,
-            type = "toggle",
-            name = L["Armory"]
+            type = "group",
+            inline = true,
+            name = L["General"],
+            args = {
+                addFriend = {
+                    order = 1,
+                    type = "toggle",
+                    name = _G.ADD_FRIEND
+                },
+                guildInvite = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Guild Invite"]
+                },
+                who = {
+                    order = 3,
+                    type = "toggle",
+                    name = _G.WHO
+                }
+            }
         },
-        addFriend = {
+        armoryConfig = {
             order = 3,
-            type = "toggle",
-            name = _G.ADD_FRIEND
-        },
-        guildInvite = {
-            order = 4,
-            type = "toggle",
-            name = L["Guild Invite"]
-        },
-        who = {
-            order = 5,
-            type = "toggle",
-            name = _G.WHO
+            type = "group",
+            inline = true,
+            name = L["Armory"],
+            args = {
+                armory = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    get = function(info)
+                        return E.db.WT.social.contextMenu.armory
+                    end,
+                    set = function(info, value)
+                        E.db.WT.social.contextMenu.armory = value
+                        CM:ProfileUpdate()
+                    end
+                },
+                setArea = {
+                    order = 2,
+                    type = "select",
+                    name = L["Set Area"],
+                    desc = L[
+                        "If the game language is different from the primary language in this server, you need to specify which area you play on."
+                    ],
+                    get = function()
+                        local list = E.db.WT.social.contextMenu.armoryOverride
+                        if list[E.myrealm] then
+                            return list[E.myrealm]
+                        else
+                            return "NONE"
+                        end
+                    end,
+                    set = function(_, value)
+                        local list = E.db.WT.social.contextMenu.armoryOverride
+                        if value == "NONE" then
+                            list[E.myrealm] = nil
+                        else
+                            list[E.myrealm] = value
+                        end
+                    end,
+                    values = {
+                        NONE = L["Auto-detect"],
+                        tw = L["Taiwan"],
+                        kr = L["Korea"],
+                        us = L["Americas & Oceania"],
+                        eu = L["Europe"]
+                    }
+                },
+                list = {
+                    order = 3,
+                    type = "select",
+                    name = L["Server List"],
+                    get = function()
+                        return customListSelected
+                    end,
+                    set = function(_, value)
+                        customListSelected = value
+                    end,
+                    values = function()
+                        local list = E.db.WT.social.contextMenu.armoryOverride
+
+                        local displayName = {
+                            tw = L["Taiwan"],
+                            kr = L["Korea"],
+                            us = L["Americas & Oceania"],
+                            eu = L["Europe"]
+                        }
+
+                        local result = {}
+                        for key, value in pairs(list) do
+                            result[key] = key .. " > " .. displayName[value]
+                        end
+
+                        return result
+                    end,
+                    width = 2
+                },
+                deleteButton = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Delete"],
+                    desc = L["Delete the selected NPC."],
+                    func = function()
+                        if customListSelected then
+                            local list = E.db.WT.social.contextMenu.armoryOverride
+                            if list[customListSelected] then
+                                list[customListSelected] = nil
+                            end
+                        end
+                    end
+                }
+            }
         }
     }
 }

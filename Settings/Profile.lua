@@ -303,6 +303,23 @@ P.maps = {
         enable = false,
         widthPercentage = 1,
         heightPercentage = 0.75
+    },
+    whoClicked = {
+        enable = true,
+        xOffset = 0,
+        yOffset = 0,
+        fadeInTime = 0.5,
+        stayTime = 3,
+        fadeOutTime = 0.5,
+        addRealm = false,
+        onlyOnCombat = true,
+        classColor = true,
+        customColor = {r = 1, g = 1, b = 1},
+        font = {
+            name = E.db.general.font,
+            size = 14,
+            style = "OUTLINE"
+        }
     }
 }
 

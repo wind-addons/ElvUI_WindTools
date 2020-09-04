@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='MinimapButtons.lua'/>
 	<Script file='RectangleMinimap.lua'/>
+	<Script file='WhoClicked.lua'/>
 	<Script file='WorldMap.lua'/>
 </Ui>

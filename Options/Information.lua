@@ -335,7 +335,8 @@ do -- 媒体文件
             "Media/Icons/Announcement.tga",
             "Media/Texture/Combat.tga",
             "Media/Texture/Shield.tga",
-            "Media/Texture/Sword.tga"
+            "Media/Texture/Sword.tga",
+            "Media/Icons/Tooltips.tga"
         },
         ["Icon made by Pixel perfect from www.flaticon.com"] = {
             "Media/Icons/Calendar.tga"
@@ -348,9 +349,6 @@ do -- 媒体文件
         },
         ["小华子COME @ www.iconfont.cn"] = {
             "Media/Icons/Misc.tga"
-        },
-        ["阿猫阿箫 @ www.iconfont.cn"] = {
-            "Media/Icons/Tooltips.tga"
         },
         ["KERRY_ZJX @ www.iconfont.cn"] = {
             "Media/Icons/Combat.tga"

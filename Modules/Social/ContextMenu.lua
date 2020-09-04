@@ -443,6 +443,8 @@ function CM:UpdateMenu()
 
     for i, button in pairs(self.menu.buttons) do
         if i >= buttonIndex then
+            button:SetScript("OnClick", nil)
+            button.Text:Hide()
             button.supportTypes = nil
         end
     end
@@ -450,21 +452,21 @@ end
 
 function CM:DisplayButtons()
     -- 自动隐藏不符合条件的按钮
-    local buttonOrder = 1
+    local buttonOrder = 0
     for i, button in pairs(self.menu.buttons) do
         if button.supportTypes and button.supportTypes[self.cache.which] then
             if not button.isHidden(self.cache) then
+                buttonOrder = buttonOrder + 1
                 button:Show()
                 button:ClearAllPoints()
                 button:Point("TOPLEFT", self.menu, "TOPLEFT", 16, -16 * buttonOrder)
-                buttonOrder = buttonOrder + 1
             end
         else
             button:Hide()
         end
     end
 
-    return (buttonOrder ~= 1)
+    return buttonOrder > 0
 end
 
 function CM:ShowMenu(frame)

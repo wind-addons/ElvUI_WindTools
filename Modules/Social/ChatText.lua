@@ -212,6 +212,14 @@ function CT:HandleShortChannels(msg)
     msg = gsub(msg, "<" .. _G.DND .. ">", "[|cffE7E716" .. L["DND"] .. "|r] ")
 
     local raidWarningString = ""
+    if CT.db and CT.db.abbreviation and W.ChineseLocale then
+        -- 中文特別缩写
+        msg = gsub(msg, F.SubCJKString(_G.CHAT_WHISPER_GET, 3), L["[ABBR] Whisper"].."：")
+        msg = gsub(msg, F.SubCJKString(_G.CHAT_WHISPER_INFORM_GET, 1, 3), L["[ABBR] Whisper"])
+        msg = gsub(msg, F.SubCJKString(_G.CHAT_SAY_GET, 3), L["[ABBR] Say"].."：")
+        msg = gsub(msg, F.SubCJKString(_G.CHAT_YELL_GET, 3), L["[ABBR] Yell"].."：")
+    end
+
     if CT.db and CT.db.removeBrackets then
         if CT.db.abbreviation == "SHORT" then
             raidWarningString = abbrStrings["RAID_WARNING"]

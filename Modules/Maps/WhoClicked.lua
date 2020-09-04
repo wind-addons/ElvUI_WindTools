@@ -2,7 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local WC = W:NewModule("WhoClicked", "AceEvent-3.0")
 
 local _G = _G
+
+local max = max
+local select = select
+
+local UnitClass = UnitClass
+local UnitName = UnitName
 local InCombatLockdown = InCombatLockdown
+
 local C_Timer_After = C_Timer.After
 
 local hideTimes = 0

@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 local GetCVarBool = GetCVarBool
 local GetLocale = GetLocale
+local strsub = strsub
 local pcall, pairs, tinsert = pcall, pairs, tinsert
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
@@ -9,6 +10,7 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 -- 一些常量
 W.Title = L["WindTools"]
 W.Locale = GetLocale()
+W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 
 -- 模块部分

@@ -84,7 +84,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         button.colorBlock = button:CreateTexture(nil, "ARTWORK")
         button.colorBlock:SetAllPoints()
         button:CreateBackdrop("Transparent")
-        S:CreateShadow(button.backdrop)
+        S:CreateShadow(button.backdrop, 3)
 
         button.text = button:CreateFontString(nil, "OVERLAY")
         button.text:Point("CENTER", button, "CENTER", 0, 0)
@@ -168,7 +168,6 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     end
 
     -- 尺寸和位置更新
-    
     self.bar[name]:Size(CB.db.buttonWidth, CB.db.buttonHeight)
     self.bar[name]:ClearAllPoints()
     self.bar[name]:Point(anchorPoint, CB.bar, anchorPoint, x, y)
@@ -482,6 +481,7 @@ function CB:CreateBar()
     bar:SetResizable(false)
     bar:SetClampedToScreen(true)
     bar:SetFrameStrata("LOW")
+    bar:SetFrameLevel(5) -- 高于 ElvUI 经验条
     bar:CreateBackdrop("Transparent")
     bar:ClearAllPoints()
     bar:Point("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)

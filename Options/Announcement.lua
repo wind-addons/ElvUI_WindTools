@@ -1,11 +1,17 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
+local SB = W:GetModule("SwitchButtons")
 
 local _G = _G
-local gsub =gsub
+
+local format = format
+local gsub = gsub
+local pairs = pairs
+local strupper = strupper
+local tonumber = tonumber
+
 local GetSpellLink = GetSpellLink
-local pairs, tonumber, format, strupper = pairs, tonumber, format, strupper
 
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
@@ -83,7 +89,11 @@ options.quest = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                SB:ProfileUpdate()
+            end
         },
         includeDetails = {
             order = 3,
@@ -162,7 +172,7 @@ options.quest = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["The category of the quest."],
+                    desc = L["The category of the quest."]
                 },
                 color = {
                     order = 2,
@@ -178,10 +188,10 @@ options.quest = {
                         E.db.WT.announcement.quest[info[#info - 1]].color = {
                             r = r,
                             g = g,
-                            b = b,
+                            b = b
                         }
                     end
-                },
+                }
             }
         },
         suggestedGroup = {
@@ -200,7 +210,7 @@ options.quest = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["If the quest is suggested with multi-players, add the number of players to the message."],
+                    desc = L["If the quest is suggested with multi-players, add the number of players to the message."]
                 },
                 color = {
                     order = 2,
@@ -216,10 +226,10 @@ options.quest = {
                         E.db.WT.announcement.quest[info[#info - 1]].color = {
                             r = r,
                             g = g,
-                            b = b,
+                            b = b
                         }
                     end
-                },
+                }
             }
         },
         level = {
@@ -238,7 +248,7 @@ options.quest = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["The level of the quest."],
+                    desc = L["The level of the quest."]
                 },
                 color = {
                     order = 2,
@@ -254,7 +264,7 @@ options.quest = {
                         E.db.WT.announcement.quest[info[#info - 1]].color = {
                             r = r,
                             g = g,
-                            b = b,
+                            b = b
                         }
                     end
                 },
@@ -263,7 +273,7 @@ options.quest = {
                     type = "toggle",
                     name = L["Hide Max Level"],
                     desc = L["Hide the level part if the quest level is the max level of this expansion."]
-                },
+                }
             }
         },
         daily = {
@@ -282,7 +292,7 @@ options.quest = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Add the prefix if the quest is a daily quest."],
+                    desc = L["Add the prefix if the quest is a daily quest."]
                 },
                 color = {
                     order = 2,
@@ -298,10 +308,10 @@ options.quest = {
                         E.db.WT.announcement.quest[info[#info - 1]].color = {
                             r = r,
                             g = g,
-                            b = b,
+                            b = b
                         }
                     end
-                },
+                }
             }
         },
         weekly = {
@@ -320,7 +330,7 @@ options.quest = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Add the prefix if the quest is a weekly quest."],
+                    desc = L["Add the prefix if the quest is a weekly quest."]
                 },
                 color = {
                     order = 2,
@@ -336,12 +346,12 @@ options.quest = {
                         E.db.WT.announcement.quest[info[#info - 1]].color = {
                             r = r,
                             g = g,
-                            b = b,
+                            b = b
                         }
                     end
-                },
+                }
             }
-        },
+        }
     }
 }
 

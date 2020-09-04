@@ -4,8 +4,14 @@ local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
 local SB = W:GetModule("SwitchButtons")
 
-local pairs, print, tostring, tonumber = pairs, print, tostring, tonumber
-local UnitName, UnitExists, UnitPlayerControlled = UnitName, UnitExists, UnitPlayerControlled
+local pairs = pairs
+local print = print
+local tonumber = tonumber
+local tostring = tostring
+
+local UnitExists = UnitExists
+local UnitName = UnitName
+local UnitPlayerControlled = UnitPlayerControlled
 local ReputationFrame_Update = ReputationFrame_Update
 
 local customListSelected
@@ -39,6 +45,10 @@ options.turnIn = {
             order = 2,
             type = "toggle",
             name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.quest.turnIn[info[#info]] = value
+                SB:ProfileUpdate()
+            end,
             width = "full"
         },
         selectReward = {

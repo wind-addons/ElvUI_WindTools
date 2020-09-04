@@ -277,6 +277,21 @@ function CT:CheckLFGRoles()
     end
 end
 
+function CT:HandleName(nameString)
+    if not self.db or not self.db.enable or not self.db.removeRealm then
+        return nameString
+    end
+
+    if strsub(nameString, strlen(nameString) - 1) == "|r" then -- 颜色
+        nameString = F.SplitCJKString("-", nameString)
+        nameString = nameString .. "|r"
+    else
+        nameString = F.SplitCJKString("-", nameString)
+    end
+
+    return nameString
+end
+
 E.NameReplacements = {}
 function CT:ChatFrame_MessageEventHandler(
     frame,
@@ -539,7 +554,7 @@ function CT:ChatFrame_MessageEventHandler(
                 end
             end
             frame:AddMessage(
-                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(coloredName))),
+                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName)))),
                 info.r,
                 info.g,
                 info.b,
@@ -550,7 +565,8 @@ function CT:ChatFrame_MessageEventHandler(
                 historyTime
             )
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
-            local message = format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(coloredName)))
+            local message =
+                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName))))
             if C_Social_IsSocialEnabled() then
                 local achieveID = GetAchievementInfoFromHyperlink(arg1)
                 if achieveID then
@@ -727,7 +743,8 @@ function CT:ChatFrame_MessageEventHandler(
                         client
                     ) or ""
                     local characterNameText = BNet_GetClientEmbeddedTexture(client, 14) .. characterName
-                    local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
+                    local linkDisplayText =
+                        (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, CT:HandleName(characterNameText))
                     local playerLink =
                         GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                     message = format(globalstring, playerLink)
@@ -816,7 +833,7 @@ function CT:ChatFrame_MessageEventHandler(
             local usingEmote = (chatType == "EMOTE") or (chatType == "TEXT_EMOTE")
 
             if usingDifferentLanguage or not usingEmote then
-                playerLinkDisplayText = (noBrackets and "%s" or "[%s]"):format(coloredName)
+                playerLinkDisplayText = (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName))
             end
 
             local isCommunityType = chatType == "COMMUNITIES_CHANNEL"
@@ -1056,7 +1073,7 @@ function CT:ToggleReplacement()
 
     -- ChatFrame_MessageEventHandler
     -- CheckLFGRoles
-    if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 then
+    if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 or self.db.removeRealm then
         if not initRecord.ChatFrame_MessageEventHandler then
             CT.cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
             CH.ChatFrame_MessageEventHandler = CT.ChatFrame_MessageEventHandler

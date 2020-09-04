@@ -469,9 +469,7 @@ P.social = {
         addFriend = true,
         guildInvite = true,
         who = true,
-        armoryOverride = {
-            Anasterian = "tw"
-        }
+        armoryOverride = {}
     },
     smartTab = {
         enable = true,

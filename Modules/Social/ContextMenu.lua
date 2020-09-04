@@ -16,6 +16,7 @@ local GuildInvite = print -- TODO:Testing
 local UnitPlayerControlled = UnitPlayerControlled
 
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
+local C_FriendList_AddFriend = C_FriendList.AddFriend
 local C_FriendList_SendWho = C_FriendList.SendWho
 
 local UIDROPDOWNMENU_MAXBUTTONS = UIDROPDOWNMENU_MAXBUTTONS
@@ -207,7 +208,6 @@ local PredefinedType = {
             GUILD_OFFLINE = true,
             CHAT_ROSTER = true,
             TARGET = true,
-            ARENAENEMY = true,
             FOCUS = true,
             WORLD_STATE_SCORE = true,
             COMMUNITIES_WOW_MEMBER = true,
@@ -216,13 +216,13 @@ local PredefinedType = {
         },
         func = function(frame)
             if frame.chatTarget then
-                C_FriendList_SendWho(frame.chatTarget)
+                C_FriendList_AddFriend(frame.chatTarget)
             elseif frame.name then
                 local playerName = frame.name
                 if frame.server and frame.server ~= E.myrealm then
                     playerName = playerName .. "-" .. frame.server
                 end
-                C_FriendList_SendWho(playerName)
+                C_FriendList_AddFriend(playerName)
             else
                 F.DebugMessage(CM, L["Cannot get the name."])
             end
@@ -253,6 +253,29 @@ local PredefinedType = {
         end
     }
 }
+
+local function ContextMenu_OnShow(menu)
+    local parent = menu:GetParent() or menu
+    local width = parent:GetWidth()
+    local height = 16
+    for i = 1, #menu.buttons do
+        local button = menu.buttons[i]
+        if button:IsShown() then
+            button:SetWidth(width - 32)
+            height = height + 16
+        end
+    end
+    menu:SetHeight(height)
+    return height
+end
+
+local function ContextMenuButton_OnEnter(button)
+    _G[button:GetName() .. "Highlight"]:Show()
+end
+
+local function ContextMenuButton_OnLeave(button)
+    _G[button:GetName() .. "Highlight"]:Hide()
+end
 
 function CM:URLEncode(str)
     str =
@@ -292,29 +315,6 @@ function CM:GetArmoryBaseURL()
     host = host .. serverLocation .. "/"
 
     return host
-end
-
-local function ContextMenu_OnShow(menu)
-    local parent = menu:GetParent() or menu
-    local width = parent:GetWidth()
-    local height = 16
-    for i = 1, #menu.buttons do
-        local button = menu.buttons[i]
-        if button:IsShown() then
-            button:SetWidth(width - 32)
-            height = height + 16
-        end
-    end
-    menu:SetHeight(height)
-    return height
-end
-
-local function ContextMenuButton_OnEnter(button)
-    _G[button:GetName() .. "Highlight"]:Show()
-end
-
-local function ContextMenuButton_OnLeave(button)
-    _G[button:GetName() .. "Highlight"]:Hide()
 end
 
 function CM:SkinDropDownList(frame)
@@ -422,7 +422,7 @@ function CM:UpdateMenu()
     local buttonIndex = 1
 
     if self.db.addFriend then
-        self:UpdateButton(buttonIndex, PredefinedType.WHO, true)
+        self:UpdateButton(buttonIndex, PredefinedType.ADDFRIEND, true)
         buttonIndex = buttonIndex + 1
     end
 
@@ -448,8 +448,8 @@ function CM:UpdateMenu()
     end
 end
 
--- 自动隐藏不符合条件的按钮
 function CM:DisplayButtons()
+    -- 自动隐藏不符合条件的按钮
     local buttonOrder = 1
     for i, button in pairs(self.menu.buttons) do
         if button.supportTypes and button.supportTypes[self.cache.which] then

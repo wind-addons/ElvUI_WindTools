@@ -2,7 +2,9 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.social.args
 local LSM = E.Libs.LSM
 
+local pairs = pairs
 local FriendsFrame_Update = FriendsFrame_Update
+
 local customListSelected
 
 local CB = W:GetModule("ChatBar")

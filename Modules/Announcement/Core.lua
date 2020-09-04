@@ -91,11 +91,7 @@ function A:GetPetInfo(petName)
         return
     end
 
-    local delimiter = "'s"
-    if strsub(W.Locale, 0, 2) == "zh" then
-        delimiter = "的"
-    end
-
+    local delimiter = W.ChineseLocale and "的" or "'s"
     local raw = {F.SplitCJKString(delimiter, details)}
 
     local owner, role = raw[1], raw[#raw]

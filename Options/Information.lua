@@ -299,6 +299,9 @@ do -- 插件代码
         [L["Turn In"]] = {
             "p3lim (QuickQuest)",
             "siweia (NDui)"
+        },
+        [L["Context Menu"]] = {
+            "Ludicrous Speed, LLC. (Raider.IO)"
         }
     }
 

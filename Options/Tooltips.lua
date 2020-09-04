@@ -46,14 +46,29 @@ options.general = {
             max = 50,
             step = 1
         },
-        icon = {
+        yOffsetOfHealthText = {
             order = 2,
+            type = "range",
+            name = L["Health Text Y-Offset"],
+            desc = L["Change the postion of the health text."],
+            get = function(info)
+                return E.db.WT.tooltips[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.tooltips[info[#info]] = value
+            end,
+            min = -50,
+            max = 50,
+            step = 1
+        },
+        icon = {
+            order = 3,
             type = "toggle",
             name = L["Add Icon"],
             desc = L["Show an icon for items and spells."]
         },
         objectiveProgress = {
-            order = 3,
+            order = 4,
             type = "toggle",
             name = L["Objective Progress"],
             desc = L["Add more details of objective progress information into tooltips."]

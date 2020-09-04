@@ -541,5 +541,6 @@ P.quest = {
 }
 
 P.tooltips = {
-    yOffsetOfHealthBar = 0
+    yOffsetOfHealthBar = 0,
+    yOffsetOfHealthText = 0
 }

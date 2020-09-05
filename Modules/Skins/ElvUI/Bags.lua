@@ -13,7 +13,9 @@ function S:ElvUI_Bags()
     end
 
     self:CreateShadow(B.BagFrame)
+    self:CreateShadow(B.BagFrame.ContainerHolder)
     self:CreateShadow(B.BankFrame)
+    self:CreateShadow(B.BankFrame.ContainerHolder)
 
     if _G.ElvUIVendorGraysFrame then
         self:CreateShadow(_G.ElvUIVendorGraysFrame)

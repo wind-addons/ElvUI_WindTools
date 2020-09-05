@@ -4,19 +4,24 @@ local S = W:GetModule("Skins")
 local _G = _G
 local UIParentLoadAddOn = UIParentLoadAddOn
 
-function S:DebugFrames()
+function S:Blizzard_DebugTools()
     if not self:CheckDB("debug", "debugTools") then
         return
     end
 
-    if not _G.FrameStackTooltip or not _G.TableAttributeDisplay then
-        UIParentLoadAddOn("Blizzard_DebugTools")
+    if E.private.skins.blizzard.tooltip then
+        self:CreateShadow(_G.FrameStackTooltip)
+        self:CreateShadow(_G.EventTraceTooltip)
     end
 
     self:CreateShadow(_G.TableAttributeDisplay)
-    self:CreateShadow(_G.FrameStackTooltip)
+    self:CreateShadow(_G.EventTraceFrame)
 
     self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateShadow")
 end
 
-S:AddCallback("DebugFrames")
+if _G.IsAddOnLoaded('Blizzard_DebugTools') then
+	S:AddCallback('Blizzard_DebugTools')
+else
+	S:AddCallbackForAddon('Blizzard_DebugTools')
+end

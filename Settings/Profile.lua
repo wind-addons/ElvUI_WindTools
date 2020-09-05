@@ -296,9 +296,6 @@ P.item = {
 }
 
 P.maps = {
-    worldMap = {
-        scale = 1.236
-    },
     rectangleMinimap = {
         enable = false,
         heightPercentage = 0.8

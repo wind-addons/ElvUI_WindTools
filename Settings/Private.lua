@@ -2,7 +2,12 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 V.maps = {
 	worldMap = {
-		reveal = true
+		enable = true,
+		reveal = true,
+		scale = {
+			enable = true,
+			size = 1.236
+		}
 	},
 	minimapButtons = {
 		enable = true,

@@ -220,7 +220,7 @@ end
 
 function OT:Initialize()
     self.db = E.db.WT.quest.objectiveTracker
-    if not self.db.enable or self.initialized then
+    if not self.db.enable or self.Initialized then
         return
     end
 
@@ -243,13 +243,19 @@ function OT:Initialize()
         self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
     end
 
-    self.initialized = true
+    self.Initialized = true
 end
 
 function OT:ProfileUpdate()
-    self:Initialize()
-    self:ChangeQuestTitleColor()
-    self:UpdateGlobals()
+    self.db = E.db.WT.quest.objectiveTracker
+    if self.db.enable then
+        if not self.Initialized then
+            self:Initialize()
+        else
+            self:ChangeQuestTitleColor()
+            self:UpdateGlobals()
+        end
+    end
 end
 
 W:RegisterModule(OT:GetName())

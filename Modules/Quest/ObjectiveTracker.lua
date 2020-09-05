@@ -4,6 +4,7 @@ local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
 local _G = _G
 local pairs, ipairs = pairs, ipairs
 local IsAddOnLoaded = IsAddOnLoaded
+local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local SystemCache = {
     ["Header"] = {
@@ -53,14 +54,16 @@ function OT:UpdateHeaderFont()
         return
     end
 
-    for _, module in pairs(frame) do
-        if module.Header then
-            F.SetFontWithDB(module.Header.Text, config)
+    for i = 1, #frame do
+        local modules = frame[i]
+        if modules then
+            local text = modules.Header.Text
+            F.SetFontWithDB(text, config)
         end
     end
 end
 
-function OT:UpdateQuestFont(block)
+function OT:UpdateQuestFont(_, block)
     local config = self.db
 
     if not config or not block then
@@ -71,13 +74,11 @@ function OT:UpdateQuestFont(block)
         F.SetFontWithDB(block.HeaderText, config.title)
     end
 
-    if block.lines then
-        for objectiveKey, line in pairs(block.lines) do
-            F.SetFontWithDB(line.Text, config.info)
-        end
+    if block.currentLine  then
+        F.SetFontWithDB(block.currentLine.Text, config.info)
     end
 
-    self:UpdateBonusFont()
+    -- self:UpdateBonusFont()
 end
 
 function OT:UpdateTitleColor()
@@ -92,15 +93,15 @@ function OT:UpdateTitleColor()
 
     if config.enable and not self.titleColorChanged then
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
-            r = config.useClassColor and classColor.r or config.customColorNormal.r,
-            g = config.useClassColor and classColor.g or config.customColorNormal.g,
-            b = config.useClassColor and classColor.b or config.customColorNormal.b
+            r = config.classColor and classColor.r or config.customColorNormal.r,
+            g = config.classColor and classColor.g or config.customColorNormal.g,
+            b = config.classColor and classColor.b or config.customColorNormal.b
         }
 
         _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"] = {
-            r = config.useClassColor and classColor.r or config.customColorHighlight.r,
-            g = config.useClassColor and classColor.g or config.customColorHighlight.g,
-            b = config.useClassColor and classColor.b or config.customColorHighlight.b
+            r = config.classColor and classColor.r or config.customColorHighlight.r,
+            g = config.classColor and classColor.g or config.customColorHighlight.g,
+            b = config.classColor and classColor.b or config.customColorHighlight.b
         }
 
         self.titleColorChanged = true
@@ -129,12 +130,15 @@ function OT:Initialize()
         return
     end
 
-    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
-    self:SecureHook(QUEST_TRACKER_MODULE, "SetBlockHeader", "UpdateQuestFont")
-
-    self.initialized = true
-
     self:UpdateTitleColor()
+
+    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
+    self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
+    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
+    self:SecureHook(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
+
+    
+    self.initialized = true
 end
 
 function OT:ProfileUpdate()

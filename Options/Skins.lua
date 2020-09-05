@@ -122,6 +122,10 @@ options.blizzard = {
             type = "toggle",
             name = _G.AUCTIONS
         },
+        azeriteEssence = {
+            type = "toggle",
+            name = L["Azerite Essence"]
+        },
         barberShop = {
             type = "toggle",
             name = _G.BARBERSHOP
@@ -254,9 +258,17 @@ options.blizzard = {
             type = "toggle",
             name = _G.FLIGHT_MAP
         },
+        timeManager = {
+            type = "toggle",
+            name = _G.STOPWATCH_TITLE
+        },
         tooltips = {
             type = "toggle",
             name = L["Tooltips"]
+        },
+        tutorial = {
+            type = "toggle",
+            name = L["Tutorials"]
         },
         warboard = {
             type = "toggle",

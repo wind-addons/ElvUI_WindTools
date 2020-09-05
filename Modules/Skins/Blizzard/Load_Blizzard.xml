@@ -39,6 +39,7 @@
 	<Script file='StaticPopup.lua'/>
 	<Script file='Talent.lua'/>
 	<Script file='Taxi.lua'/>
+	<Script file='TimeManager.lua'/>
 	<Script file='Tooltips.lua'/>
 	<Script file='Tutorial.lua'/>
 	<Script file='Warboard.lua'/>

@@ -512,7 +512,7 @@ P.quest = {
         titleColor = {
             enable = true,
             classColor = true,
-            customColorNormal = {r = 0.75, g = 0.61, b = 0},
+            customColorNormal = {r = 0.000, g = 0.659, b =1.000},
             customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
         },
         info = {
@@ -520,13 +520,7 @@ P.quest = {
             size = E.db.general.fontSize,
             style = "OUTLINE",
         },
-        infoColor = {
-            enable = true,
-            classColor = false,
-            customColorNormal = {r = 1, g = 0.61, b = 0},
-            customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
-        },
-        noDash = true,
+        noDash = false,
     },
     paragonReputation = {
         enable = true,

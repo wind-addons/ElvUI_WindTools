@@ -63,19 +63,29 @@ function OT:UpdateHeaderFont()
     end
 end
 
-function OT:UpdateQuestFont(_, block)
-    local config = self.db
-
-    if not config or not block then
+function OT:UpdateQuestFont(module, block)
+    if not self.db or not block then
         return
     end
 
-    if block.HeaderText then
-        F.SetFontWithDB(block.HeaderText, config.title)
+    if block.HeaderText and not block.HeaderText.windStyle then
+        F.SetFontWithDB(block.HeaderText, self.db.title)
+        block.HeaderText.windStyle = true
     end
 
-    if block.currentLine  then
-        F.SetFontWithDB(block.currentLine.Text, config.info)
+    if block.currentLine and not block.currentLine.windStyle then
+        F.SetFontWithDB(block.currentLine.Text, self.db.info)
+        if block.currentLine.Dash then
+            if self.db.noDash then
+            block.currentLine.Dash:Hide()
+            block.currentLine.Text:ClearAllPoints()
+            block.currentLine.Text:Point("TOPLEFT", block.currentLine.Dash, "TOPLEFT", 0, 0)
+            else
+                F.SetFontWithDB(block.currentLine.Dash, self.db.info)
+            end
+        end
+
+        block.currentLine.windStyle = true
     end
 
     -- self:UpdateBonusFont()
@@ -132,12 +142,22 @@ function OT:Initialize()
 
     self:UpdateTitleColor()
 
-    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
-    self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
-    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
-    self:SecureHook(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", "UpdateQuestFont")
+    local trackerModules = {
+        _G.SCENARIO_CONTENT_TRACKER_MODULE,
+        _G.UI_WIDGET_TRACKER_MODULE,
+        _G.BONUS_OBJECTIVE_TRACKER_MODULE,
+        _G.WORLD_QUEST_TRACKER_MODULE,
+        _G.CAMPAIGN_QUEST_TRACKER_MODULE,
+        _G.QUEST_TRACKER_MODULE,
+        _G.ACHIEVEMENT_TRACKER_MODULE
+    }
 
-    
+    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
+
+    for _, module in pairs(trackerModules) do
+        self:SecureHook(module, "AddObjective", "UpdateQuestFont")
+    end
+
     self.initialized = true
 end
 

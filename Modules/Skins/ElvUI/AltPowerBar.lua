@@ -18,9 +18,8 @@ function S:ElvUI_AltPowerBar()
     bar.backdrop:SetTemplate("Transparent")
     self:CreateShadow(bar.backdrop)
 
-    F.SetFontOutline(bar.text)
     bar.text:ClearAllPoints()
-    bar.text:SetPoint("CENTER", 0, -1)
+    bar.text:Point("CENTER", 0, -1)
 end
 
 S:AddCallback("ElvUI_AltPowerBar")

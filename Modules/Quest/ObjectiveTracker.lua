@@ -2,7 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
-local pairs, ipairs = pairs, ipairs
+local abs = abs
+local format = format
+local ipairs = ipairs
+local min = min
+local pairs = pairs
+local strmatch = strmatch
+local tonumber = tonumber
+
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
@@ -120,7 +127,6 @@ function OT:ChangeDashStyle(currentLine)
         currentLine.Dash:Hide()
         currentLine.Text:ClearAllPoints()
         currentLine.Text:Point("TOPLEFT", currentLine.Dash, "TOPLEFT", 0, 0)
-        
     else
         F.SetFontWithDB(currentLine.Dash, self.db.info)
     end

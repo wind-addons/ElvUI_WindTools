@@ -301,13 +301,12 @@ P.maps = {
     },
     rectangleMinimap = {
         enable = false,
-        widthPercentage = 1,
-        heightPercentage = 0.75
+        heightPercentage = 0.8
     },
     whoClicked = {
         enable = true,
         xOffset = 0,
-        yOffset = 0,
+        yOffset = 2,
         fadeInTime = 0.5,
         stayTime = 3,
         fadeOutTime = 0.5,

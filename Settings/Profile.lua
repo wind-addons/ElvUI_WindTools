@@ -521,6 +521,9 @@ P.quest = {
             customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
         },
         noDash = true,
+        percentage = true,
+        colorfulPercentage = true,
+        colorfulProgress = false,
     },
     paragonReputation = {
         enable = true,

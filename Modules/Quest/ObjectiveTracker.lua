@@ -46,7 +46,7 @@ function OT:UpdateBonusFont()
     end
 end
 
-function OT:UpdateHeaderFont()
+function OT:ChangeQuestHeaderStyle()
     local frame = _G.ObjectiveTrackerFrame.MODULES
     local config = self.db.header
 
@@ -63,7 +63,7 @@ function OT:UpdateHeaderFont()
     end
 end
 
-function OT:UpdateQuestFont(module, block)
+function OT:ChangeQuestFontStyle(_, block)
     if not self.db or not block then
         return
     end
@@ -75,23 +75,25 @@ function OT:UpdateQuestFont(module, block)
 
     if block.currentLine and not block.currentLine.windStyle then
         F.SetFontWithDB(block.currentLine.Text, self.db.info)
-        if block.currentLine.Dash then
-            if self.db.noDash then
-            block.currentLine.Dash:Hide()
-            block.currentLine.Text:ClearAllPoints()
-            block.currentLine.Text:Point("TOPLEFT", block.currentLine.Dash, "TOPLEFT", 0, 0)
-            else
-                F.SetFontWithDB(block.currentLine.Dash, self.db.info)
-            end
-        end
-
-        block.currentLine.windStyle = true
+        self:ChangeDashStyle(block.currentLine)
     end
-
-    -- self:UpdateBonusFont()
 end
 
-function OT:UpdateTitleColor()
+function OT:ChangeDashStyle(currentLine)
+    if not self.db or not currentLine or not currentLine.Dash then
+        return
+    end
+
+    if self.db.noDash then
+        currentLine.Dash:Hide()
+        currentLine.Text:ClearAllPoints()
+        currentLine.Text:Point("TOPLEFT", currentLine.Dash, "TOPLEFT", 0, 0)
+    else
+        F.SetFontWithDB(currentLine.Dash, self.db.info)
+    end
+end
+
+function OT:ChangeQuestTitleColor()
     if not IsAddOnLoaded("Blizzard_ObjectiveTracker") then
         return
     end
@@ -140,7 +142,7 @@ function OT:Initialize()
         return
     end
 
-    self:UpdateTitleColor()
+    self:ChangeQuestTitleColor()
 
     local trackerModules = {
         _G.SCENARIO_CONTENT_TRACKER_MODULE,
@@ -152,10 +154,10 @@ function OT:Initialize()
         _G.ACHIEVEMENT_TRACKER_MODULE
     }
 
-    self:SecureHook("ObjectiveTracker_Update", "UpdateHeaderFont")
+    self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
 
     for _, module in pairs(trackerModules) do
-        self:SecureHook(module, "AddObjective", "UpdateQuestFont")
+        self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
     end
 
     self.initialized = true
@@ -163,7 +165,7 @@ end
 
 function OT:ProfileUpdate()
     self:Initialize()
-    self:UpdateTitleColor()
+    self:ChangeQuestTitleColor()
 end
 
 W:RegisterModule(OT:GetName())

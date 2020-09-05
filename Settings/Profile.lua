@@ -509,18 +509,18 @@ P.quest = {
             size = E.db.general.fontSize,
             style = "OUTLINE"
         },
+        info = {
+            name = E.db.general.font,
+            size = E.db.general.fontSize,
+            style = "OUTLINE",
+        },
         titleColor = {
             enable = true,
             classColor = true,
             customColorNormal = {r = 0.000, g = 0.659, b =1.000},
             customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
         },
-        info = {
-            name = E.db.general.font,
-            size = E.db.general.fontSize,
-            style = "OUTLINE",
-        },
-        noDash = false,
+        noDash = true,
     },
     paragonReputation = {
         enable = true,

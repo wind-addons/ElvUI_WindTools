@@ -13,7 +13,7 @@ local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local ItemLevelTooltip = E.ScanTooltip
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
 
-local IconString = "|T%s:18:21:0:0:64:64:5:59:10:54"
+local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
 
 local SearchArmorType = {
     INVTYPE_HEAD = true,

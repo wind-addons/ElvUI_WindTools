@@ -27,7 +27,9 @@ V.maps = {
 V.misc = {
 	saveArtifact = true,
 	pauseToSlash = true,
-	disableTalkingHead = true
+	disableTalkingHead = true,
+	moveBlizzardFrames = true,
+	moveElvUIBags = true
 }
 
 V.skins = {

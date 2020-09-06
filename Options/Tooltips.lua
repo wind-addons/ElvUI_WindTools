@@ -31,47 +31,57 @@ options.general = {
         E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
-        yOffsetOfHealthBar = {
+        additionalInformation = {
             order = 1,
-            type = "range",
-            name = L["Health Bar Y-Offset"],
-            desc = L["Change the postion of the health bar."],
-            get = function(info)
-                return E.db.WT.tooltips[info[#info]]
-            end,
-            set = function(info, value)
-                E.db.WT.tooltips[info[#info]] = value
-            end,
-            min = -50,
-            max = 50,
-            step = 1
+            type = "group",
+            inline = true,
+            name = L["Additional Information"],
+            args = {
+                icon = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Add Icon"],
+                    desc = L["Show an icon for items and spells."]
+                },
+                objectiveProgress = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Objective Progress"],
+                    desc = L["Add more details of objective progress information into tooltips."]
+                }
+            }
         },
-        yOffsetOfHealthText = {
+        healthBar = {
             order = 2,
-            type = "range",
-            name = L["Health Text Y-Offset"],
-            desc = L["Change the postion of the health text."],
+            type = "group",
+            inline = true,
+            name = L["Health Bar"],
             get = function(info)
                 return E.db.WT.tooltips[info[#info]]
             end,
             set = function(info, value)
                 E.db.WT.tooltips[info[#info]] = value
             end,
-            min = -50,
-            max = 50,
-            step = 1
-        },
-        icon = {
-            order = 3,
-            type = "toggle",
-            name = L["Add Icon"],
-            desc = L["Show an icon for items and spells."]
-        },
-        objectiveProgress = {
-            order = 4,
-            type = "toggle",
-            name = L["Objective Progress"],
-            desc = L["Add more details of objective progress information into tooltips."]
+            args = {
+                yOffsetOfHealthBar = {
+                    order = 1,
+                    type = "range",
+                    name = L["Health Bar Y-Offset"],
+                    desc = L["Change the postion of the health bar."],
+                    min = -50,
+                    max = 50,
+                    step = 1
+                },
+                yOffsetOfHealthText = {
+                    order = 2,
+                    type = "range",
+                    name = L["Health Text Y-Offset"],
+                    desc = L["Change the postion of the health text."],
+                    min = -50,
+                    max = 50,
+                    step = 1
+                }
+            }
         }
     }
 }

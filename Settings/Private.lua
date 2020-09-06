@@ -119,15 +119,11 @@ V.tooltips = {
 		enable = true,
 		raids = {
 			enable = true,
-			["Uldir"] = true,
-			["Battle of Dazaralor"] = true,
-			["Crucible of Storms"] = true,
-			["Azshara's Eternal Palace"] = true,
+			["Castle Nathria"] = true,
 			["Ny'alotha, The Waking City"] = true
 		},
 		mythicDungeons = {
 			enable = true,
-			challengeModeTimes = true,
 			["The Necrotic Wake"] = true,
 			["Plaguefall"] = true,
 			["Mists of Tirna Scithe"] = true,

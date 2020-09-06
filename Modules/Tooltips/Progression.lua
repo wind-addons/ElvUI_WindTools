@@ -22,24 +22,21 @@ local compareGUID
 local cache = {}
 
 local tiers = {
-    "Ny'alotha, The Waking City",
-    "Azshara's Eternal Palace",
-    "Crucible of Storms",
-    "Battle of Dazaralor",
-    "Uldir"
+    "Castle Nathria",
+    "Ny'alotha, The Waking City"
 }
 
 local levels = {
     "Mythic",
     "Heroic",
     "Normal",
-    "Looking For Raid"
+    "Raid Finder"
 }
 
 local locales = {
-    ["Looking For Raid"] = {
-        short = L["[ABBR] Looking For Raid"],
-        full = L["Looking For Raid"]
+    ["Raid Finder"] = {
+        short = L["[ABBR] Raid Finder"],
+        full = L["Raid Finder"]
     },
     ["Normal"] = {
         short = L["[ABBR] Normal"],
@@ -53,73 +50,14 @@ local locales = {
         short = L["[ABBR] Mythic"],
         full = L["Mythic"]
     },
-    -- 团本名
-    ["Uldir"] = {
-        short = L["[ABBR] Uldir"],
-        full = L["Uldir"]
-    },
-    ["Battle of Dazaralor"] = {
-        short = L["[ABBR] Battle of Dazaralor"],
-        full = L["Battle of Dazaralor"]
-    },
-    ["Crucible of Storms"] = {
-        short = L["[ABBR] Crucible of Storms"],
-        full = L["Crucible of Storms"]
-    },
-    ["Azshara's Eternal Palace"] = {
-        short = L["[ABBR] Azshara's Eternal Palace"],
-        full = L["Azshara's Eternal Palace"]
+    ["Castle Nathria"] = {
+        short = L["[ABBR] Castle Nathria"],
+        full = L["Castle Nathria"]
     },
     ["Ny'alotha, The Waking City"] = {
         short = L["[ABBR] Ny'alotha, The Waking City"],
         full = L["Ny'alotha, The Waking City"]
     },
-    -- 8.0 地下城
-    ["Atal'Dazar"] = {
-        short = L["[ABBR] Atal'Dazar"],
-        full = L["Atal'Dazar"]
-    },
-    ["FreeHold"] = {
-        short = L["[ABBR] FreeHold"],
-        full = L["FreeHold"]
-    },
-    ["Kings' Rest"] = {
-        short = L["[ABBR] Kings' Rest"],
-        full = L["Kings' Rest"]
-    },
-    ["Shrine of the Storm"] = {
-        short = L["[ABBR] Shrine of the Storm"],
-        full = L["Shrine of the Storm"]
-    },
-    ["Siege of Boralus"] = {
-        short = L["[ABBR] Siege of Boralus"],
-        full = L["Siege of Boralus"]
-    },
-    ["Temple of Sethrealiss"] = {
-        short = L["[ABBR] Temple of Sethrealiss"],
-        full = L["Temple of Sethrealiss"]
-    },
-    ["The MOTHERLODE!!"] = {
-        short = L["[ABBR] The MOTHERLODE!!"],
-        full = L["The MOTHERLODE!!"]
-    },
-    ["The Underrot"] = {
-        short = L["[ABBR] The Underrot"],
-        full = L["The Underrot"]
-    },
-    ["Tol Dagor"] = {
-        short = L["[ABBR] Tol Dagor"],
-        full = L["Tol Dagor"]
-    },
-    ["Waycrest Manor"] = {
-        short = L["[ABBR] Waycrest Manor"],
-        full = L["Waycrest Manor"]
-    },
-    ["Operation: Mechagon"] = {
-        short = L["[ABBR] Operation: Mechagon"],
-        full = L["Operation: Mechagon"]
-    },
-    -- 9.0 地下城
     ["The Necrotic Wake"] = {
         short = L["[ABBR] The Necrotic Wake"],
         full = L["The Necrotic Wake"]
@@ -155,203 +93,6 @@ local locales = {
 }
 
 local raidAchievements = {
-    ["Uldir"] = {
-        ["Mythic"] = {
-            12789,
-            12793,
-            12797,
-            12801,
-            12805,
-            12811,
-            12816,
-            12820
-        },
-        ["Heroic"] = {
-            12788,
-            12792,
-            12796,
-            12800,
-            12804,
-            12810,
-            12815,
-            12819
-        },
-        ["Normal"] = {
-            12787,
-            12791,
-            12795,
-            12799,
-            12803,
-            12809,
-            12814,
-            12818
-        },
-        ["Looking For Raid"] = {
-            12786,
-            12790,
-            12794,
-            12798,
-            12802,
-            12808,
-            12813,
-            12817
-        }
-    },
-    ["Battle of Dazaralor"] = {
-        separated = true,
-        ["Alliance"] = {
-            ["Mythic"] = {
-                13331,
-                13353,
-                13348,
-                13362,
-                13366,
-                13370,
-                13374,
-                13378,
-                13382
-            },
-            ["Heroic"] = {
-                13330,
-                13351,
-                13347,
-                13361,
-                13365,
-                13369,
-                13373,
-                13377,
-                13381
-            },
-            ["Normal"] = {
-                13329,
-                13350,
-                13346,
-                13359,
-                13364,
-                13368,
-                13372,
-                13376,
-                13380
-            },
-            ["Looking For Raid"] = {
-                13328,
-                13349,
-                13344,
-                13358,
-                13363,
-                13367,
-                13371,
-                13375,
-                13379
-            }
-        },
-        ["Horde"] = {
-            ["Mythic"] = {
-                13331,
-                13336,
-                13357,
-                13374,
-                13378,
-                13382,
-                13362,
-                13366,
-                13370
-            },
-            ["Heroic"] = {
-                13330,
-                13334,
-                13356,
-                13373,
-                13377,
-                13381,
-                13361,
-                13365,
-                13369
-            },
-            ["Normal"] = {
-                13329,
-                13333,
-                13355,
-                13372,
-                13376,
-                13380,
-                13359,
-                13364,
-                13368
-            },
-            ["Looking For Raid"] = {
-                13328,
-                13332,
-                13354,
-                13371,
-                13375,
-                13379,
-                13358,
-                13363,
-                13367
-            }
-        }
-    },
-    ["Crucible of Storms"] = {
-        ["Mythic"] = {
-            13407,
-            13413
-        },
-        ["Heroic"] = {
-            13406,
-            13412
-        },
-        ["Normal"] = {
-            13405,
-            13411
-        },
-        ["Looking For Raid"] = {
-            13404,
-            13408
-        }
-    },
-    ["Azshara's Eternal Palace"] = {
-        ["Mythic"] = {
-            13590,
-            13594,
-            13598,
-            13603,
-            13607,
-            13611,
-            13615,
-            13619
-        },
-        ["Heroic"] = {
-            13589,
-            13593,
-            13597,
-            13602,
-            13606,
-            13610,
-            13614,
-            13618
-        },
-        ["Normal"] = {
-            13588,
-            13592,
-            13596,
-            13601,
-            13605,
-            13609,
-            13613,
-            13617
-        },
-        ["Looking For Raid"] = {
-            13587,
-            13591,
-            13595,
-            13600,
-            13604,
-            13608,
-            13612,
-            13616
-        }
-    },
     ["Ny'alotha, The Waking City"] = {
         ["Mythic"] = {
             14082,
@@ -395,7 +136,7 @@ local raidAchievements = {
             14132,
             14136
         },
-        ["Looking For Raid"] = {
+        ["Raid Finder"] = {
             14078,
             14089,
             14095,
@@ -408,6 +149,56 @@ local raidAchievements = {
             14127,
             14131,
             14135
+        }
+    },
+    ["Castle Nathria"] = {
+        ["Mythic"] = {
+            14421,
+            14425,
+            14427,
+            14433,
+            14437,
+            14441,
+            14445,
+            14447,
+            14453,
+            14457
+        },
+        ["Heroic"] = {
+            14420,
+            14424,
+            14428,
+            14432,
+            14436,
+            14440,
+            14444,
+            14445,
+            14452,
+            14456
+        },
+        ["Normal"] = {
+            14419,
+            14423,
+            14427,
+            14431,
+            14435,
+            14439,
+            14443,
+            14447,
+            14451,
+            14455
+        },
+        ["Raid Finder"] = {
+            14422,
+            14426,
+            14430,
+            14434,
+            14438,
+            14442,
+            14446,
+            14450,
+            14454,
+            14458
         }
     }
 }
@@ -495,9 +286,7 @@ local function UpdateProgression(guid, faction)
         cache[guid].info.mythicDungeons = {}
 
         -- 挑战模式次数
-        if db.mythicDungeons.challengeModeTimes then
-            cache[guid].info.mythicDungeons.times = GetBossKillTimes(guid, 7399)
-        end
+        cache[guid].info.mythicDungeons.times = GetBossKillTimes(guid, 7399)
 
         -- 传奇副本尾王击杀次数
         for name, achievementID in pairs(dungeonAchievements) do
@@ -583,8 +372,7 @@ local function SetProgressionInfo(guid, tt)
                 for _, level in ipairs(levels) do
                     if (cache[guid].info.raids[tier][level]) then
                         local left = format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
-                        local right =
-                            GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
+                        local right = GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
 
                         tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
                     end

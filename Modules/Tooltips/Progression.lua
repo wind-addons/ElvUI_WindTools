@@ -233,15 +233,8 @@ local function GetLevelColoredString(level, short)
 end
 
 local function GetBossKillTimes(guid, achievementID)
-    local times
-
-    if guid == E.myguid then
-        times = tonumber(GetStatistic(achievementID), 10)
-    else
-        times = tonumber(GetComparisonStatistic(achievementID), 10)
-    end
-
-    return times or 0
+    local func = guid == E.myguid and GetStatistic or GetComparisonStatistic
+    return tonumber(func(achievementID), 10) or 0
 end
 
 local function UpdateProgression(guid, faction)

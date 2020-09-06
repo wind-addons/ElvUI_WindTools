@@ -48,8 +48,6 @@ local function AddItemInfo(Hyperlink)
         return
     end
     id = tonumber(id)
-    -- debug 用
-    -- print(Hyperlink:gsub("\124", "\124\124"))
 
     -- 获取物品实际等级
     if CL.db.level or CL.db.slot then
@@ -138,7 +136,7 @@ local function AddItemInfo(Hyperlink)
 end
 
 local function AddSpellInfo(Hyperlink)
-    -- 法术图标也要！
+    -- 法术图标
     local id = match(Hyperlink, "Hspell:(%d-):")
     if (not id) then
         return
@@ -153,12 +151,47 @@ local function AddSpellInfo(Hyperlink)
     return Hyperlink
 end
 
+local function AddPvPTalentInfo(Hyperlink)
+    -- PVP 天赋
+    local id = match(Hyperlink, "Hpvptal:(%d-)|")
+    if (not id) then
+        return
+    end
+
+    if CL.db.icon then
+        local texture = select(3, GetPvpTalentInfoByID(tonumber(id)))
+        local icon = format(IconString .. ":255:255:255|t", texture)
+        Hyperlink = icon .. " " .. Hyperlink
+    end
+
+    return Hyperlink
+end
+
+local function AddTalentInfo(Hyperlink)
+    -- 天赋
+    local id = match(Hyperlink, "Htalent:(%d-)|")
+    if (not id) then
+        return
+    end
+
+    if CL.db.icon then
+        local texture = select(3, GetTalentInfoByID(tonumber(id)))
+        local icon = format(IconString .. ":255:255:255|t", texture)
+        Hyperlink = icon .. " " .. Hyperlink
+    end
+
+    return Hyperlink
+end
+
 function CL:Initialize()
     self.db = E.db.WT.social.chatLink
 
     local function filter(self, event, msg, ...)
+        -- print(msg:gsub("\124", "\124\124"))
         msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
         msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
+        msg = msg:gsub("(|Htalent:%d+|h.-|h)", AddTalentInfo)
+        msg = msg:gsub("(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
         return false, msg, ...
     end
 

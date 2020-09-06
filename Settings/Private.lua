@@ -117,7 +117,7 @@ V.tooltips = {
 	objectiveProgress = true,
 	progression = {
 		enable = true,
-		raid = {
+		raids = {
 			enable = true,
 			["Uldir"] = true,
 			["Battle of Dazaralor"] = true,
@@ -125,19 +125,17 @@ V.tooltips = {
 			["Azshara's Eternal Palace"] = true,
 			["Ny'alotha, The Waking City"] = true
 		},
-		dungeon = {
+		mythicDungeons = {
 			enable = true,
-			["Atal'Dazar"] = true,
-			["FreeHold"] = true,
-			["Kings' Rest"] = true,
-			["Shrine of the Storm"] = true,
-			["Siege of Boralus"] = true,
-			["Temple of Sethrealiss"] = true,
-			["The MOTHERLODE!!"] = true,
-			["The Underrot"] = true,
-			["Tol Dagor"] = true,
-			["Waycrest Manor"] = true,
-			["Operation: Mechagon"] = true
+			challengeModeTimes = true,
+			["The Necrotic Wake"] = true,
+			["Plaguefall"] = true,
+			["Mists of Tirna Scithe"] = true,
+			["Halls of Atonement"] = true,
+			["Theater of Pain"] = true,
+			["De Other Side"] = true,
+			["Spires of Ascension"] = true,
+			["Sanguine Depths"] = true
 		}
 	}
 }

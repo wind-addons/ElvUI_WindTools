@@ -13,15 +13,14 @@ local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local GetStatistic, GetComparisonStatistic = GetStatistic, GetComparisonStatistic
 local IsAddOnLoaded, HideUIPanel = IsAddOnLoaded, HideUIPanel
 local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
-local InCombatLockdown =InCombatLockdown 
-local AchievementFrame_DisplayComparison =AchievementFrame_DisplayComparison
+local InCombatLockdown = InCombatLockdown
+local AchievementFrame_DisplayComparison = AchievementFrame_DisplayComparison
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison
 local compareGUID
-local progressCache = {}
+local cache = {}
 
--- 8.0 决战艾泽拉斯
 local tiers = {
     "Ny'alotha, The Waking City",
     "Azshara's Eternal Palace",
@@ -30,9 +29,14 @@ local tiers = {
     "Uldir"
 }
 
-local levels = {"Mythic", "Heroic", "Normal", "Looking For Raid"}
+local levels = {
+    "Mythic",
+    "Heroic",
+    "Normal",
+    "Looking For Raid"
+}
 
-local Locales = {
+local locales = {
     ["Looking For Raid"] = {
         short = L["[ABBR] Looking For Raid"],
         full = L["Looking For Raid"]
@@ -70,7 +74,7 @@ local Locales = {
         short = L["[ABBR] Ny'alotha, The Waking City"],
         full = L["Ny'alotha, The Waking City"]
     },
-    -- 地下城名
+    -- 8.0 地下城
     ["Atal'Dazar"] = {
         short = L["[ABBR] Atal'Dazar"],
         full = L["Atal'Dazar"]
@@ -114,6 +118,39 @@ local Locales = {
     ["Operation: Mechagon"] = {
         short = L["[ABBR] Operation: Mechagon"],
         full = L["Operation: Mechagon"]
+    },
+    -- 9.0 地下城
+    ["The Necrotic Wake"] = {
+        short = L["[ABBR] The Necrotic Wake"],
+        full = L["The Necrotic Wake"]
+    },
+    ["Plaguefall"] = {
+        short = L["[ABBR] Plaguefall"],
+        full = L["Plaguefall"]
+    },
+    ["Mists of Tirna Scithe"] = {
+        short = L["[ABBR] Mists of Tirna Scithe"],
+        full = L["Mists of Tirna Scithe"]
+    },
+    ["Halls of Atonement"] = {
+        short = L["[ABBR] Halls of Atonement"],
+        full = L["Halls of Atonement"]
+    },
+    ["Theater of Pain"] = {
+        short = L["[ABBR] Theater of Pain"],
+        full = L["Theater of Pain"]
+    },
+    ["De Other Side"] = {
+        short = L["[ABBR] De Other Side"],
+        full = L["De Other Side"]
+    },
+    ["Spires of Ascension"] = {
+        short = L["[ABBR] Spires of Ascension"],
+        full = L["Spires of Ascension"]
+    },
+    ["Sanguine Depths"] = {
+        short = L["[ABBR] Sanguine Depths"],
+        full = L["Sanguine Depths"]
     }
 }
 
@@ -161,6 +198,7 @@ local raidAchievements = {
         }
     },
     ["Battle of Dazaralor"] = {
+        separated = true,
         ["Alliance"] = {
             ["Mythic"] = {
                 13331,
@@ -375,17 +413,14 @@ local raidAchievements = {
 }
 
 local dungeonAchievements = {
-    ["Atal'Dazar"] = 12749,
-    ["FreeHold"] = 12752,
-    ["Kings' Rest"] = 12763,
-    ["Shrine of the Storm"] = 12768,
-    ["Siege of Boralus"] = 12773,
-    ["Temple of Sethrealiss"] = 12776,
-    ["The MOTHERLODE!!"] = 12779,
-    ["The Underrot"] = 12745,
-    ["Tol Dagor"] = 12782,
-    ["Waycrest Manor"] = 12785,
-    ["Operation: Mechagon"] = 13620
+    ["The Necrotic Wake"] = 14404,
+    ["Plaguefall"] = 14398,
+    ["Mists of Tirna Scithe"] = 14395,
+    ["Halls of Atonement"] = 14392,
+    ["Theater of Pain"] = 14407,
+    ["De Other Side"] = 14389,
+    ["Spires of Ascension"] = 14401,
+    ["Sanguine Depths"] = 14202
 }
 
 local function GetLevelColoredString(level, short)
@@ -400,9 +435,9 @@ local function GetLevelColoredString(level, short)
     end
 
     if short then
-        return "|cff" .. color .. Locales[level].short .. "|r"
+        return "|cff" .. color .. locales[level].short .. "|r"
     else
-        return "|cff" .. color .. Locales[level].full .. "|r"
+        return "|cff" .. color .. locales[level].full .. "|r"
     end
 end
 
@@ -421,38 +456,31 @@ end
 local function UpdateProgression(guid, faction)
     local db = E.private.WT.tooltips.progression
 
-    progressCache[guid] = progressCache[guid] or {}
-    progressCache[guid].info = progressCache[guid].info or {}
-    progressCache[guid].timer = GetTime()
+    cache[guid] = cache[guid] or {}
+    cache[guid].info = cache[guid].info or {}
+    cache[guid].timer = GetTime()
 
-    -- 团本成就查询
-    if db.raid.enable then
-        progressCache[guid].info.raid = {}
+    -- 团本
+    if db.raids.enable then
+        cache[guid].info.raids = {}
         for _, tier in ipairs(tiers) do
-            -- 单个团本
-            if db.raid[tier] then
-                progressCache[guid].info.raid[tier] = {}
-                local bosses
-
-                -- 达萨亚洛之战分开联盟和部落
-                if tier == "Battle of Dazaralor" then
-                    bosses = raidAchievements[tier][faction]
-                else
-                    bosses = raidAchievements[tier]
+            if db.raids[tier] then
+                cache[guid].info.raids[tier] = {}
+                local bosses = raidAchievements[tier]
+                if bosses.separated then
+                    bosses = bosses[faction]
                 end
 
                 for _, level in ipairs(levels) do
                     local alreadyKilled = 0
-
-                    -- 统计 Boss 击杀个数
-                    for _, achievementID in ipairs(bosses[level]) do
+                    for _, achievementID in pairs(bosses[level]) do
                         if GetBossKillTimes(guid, achievementID) > 0 then
                             alreadyKilled = alreadyKilled + 1
                         end
                     end
 
                     if alreadyKilled > 0 then
-                        progressCache[guid].info.raid[tier][level] = format("%d/%d", alreadyKilled, #bosses[level])
+                        cache[guid].info.raids[tier][level] = format("%d/%d", alreadyKilled, #bosses[level])
                         if alreadyKilled == #bosses[level] then
                             break -- 全通本难度后毋须扫描更低难度进度
                         end
@@ -463,19 +491,25 @@ local function UpdateProgression(guid, faction)
     end
 
     -- 传奇地下城
-    if db.dungeon.enable then
-        progressCache[guid].info.dungeon = {}
-        progressCache[guid].info.dungeon.times = GetBossKillTimes(guid, 7399)
+    if db.mythicDungeons.enable then
+        cache[guid].info.mythicDungeons = {}
+
+        -- 挑战模式次数
+        if db.mythicDungeons.challengeModeTimes then
+            cache[guid].info.mythicDungeons.times = GetBossKillTimes(guid, 7399)
+        end
+
+        -- 传奇副本尾王击杀次数
         for name, achievementID in pairs(dungeonAchievements) do
-            if db.dungeon[name] then
-                progressCache[guid].info.dungeon[name] = GetBossKillTimes(guid, achievementID)
+            if db.mythicDungeons[name] then
+                cache[guid].info.mythicDungeons[name] = GetBossKillTimes(guid, achievementID)
             end
         end
     end
 end
 
 local function SetProgressionInfo(guid, tt)
-    if not progressCache[guid] then
+    if not cache[guid] then
         return
     end
 
@@ -489,16 +523,16 @@ local function SetProgressionInfo(guid, tt)
         local found = false
 
         if leftTipText then
-            if db.raid.enable then -- 团本进度
+            if db.raids.enable then -- 团本进度
                 for _, tier in ipairs(tiers) do
-                    if db.raid[tier] then
+                    if db.raids[tier] then
                         for _, level in ipairs(levels) do
-                            if strfind(leftTipText, Locales[tier].short) and strfind(leftTipText, Locales[level].full) then
+                            if strfind(leftTipText, locales[tier].short) and strfind(leftTipText, locales[level].full) then
                                 local rightTip = _G["GameTooltipTextRight" .. i]
                                 leftTip:SetText(
-                                    format("%s %s:", Locales[tier].short, GetLevelColoredString(level, false))
+                                    format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
                                 )
-                                rightTip:SetText(progressCache[guid].info.raid[tier][level])
+                                rightTip:SetText(cache[guid].info.raids[tier][level])
                                 updated = true
                                 found = true
                                 break
@@ -514,13 +548,13 @@ local function SetProgressionInfo(guid, tt)
 
             found = false
 
-            if db.dungeon.enable then -- 地下城进度
+            if db.mythicDungeons.enable then -- 地下城进度
                 for name, achievementID in pairs(dungeonAchievements) do
-                    if db.dungeon[name] then
-                        if strfind(leftTipText, Locales[name].short) then
+                    if db.mythicDungeons[name] then
+                        if strfind(leftTipText, locales[name].short) then
                             local rightTip = _G["GameTooltipTextRight" .. i]
-                            leftTip:SetText(Locales[name].short .. ":")
-                            rightTip:SetText(progressCache[guid].info.dungeon[name])
+                            leftTip:SetText(locales[name].short .. ":")
+                            rightTip:SetText(cache[guid].info.mythicDungeons[name])
                             updated = true
                             found = true
                             break
@@ -540,17 +574,17 @@ local function SetProgressionInfo(guid, tt)
 
     local icon = F.GetIconString(W.Media.Textures.smallLogo, 12)
 
-    if db.raid.enable then -- 团本进度
+    if db.raids.enable then -- 团本进度
         tt:AddLine(" ")
         tt:AddDoubleLine(L["Raids"], icon, nil, nil, nil, 1, 1, 1)
 
         for _, tier in ipairs(tiers) do
-            if db.raid[tier] then
+            if db.raids[tier] then
                 for _, level in ipairs(levels) do
-                    if (progressCache[guid].info.raid[tier][level]) then
-                        local left = format("%s %s:", Locales[tier].short, GetLevelColoredString(level, false))
+                    if (cache[guid].info.raids[tier][level]) then
+                        local left = format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
                         local right =
-                            GetLevelColoredString(level, true) .. " " .. progressCache[guid].info.raid[tier][level]
+                            GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
 
                         tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
                     end
@@ -559,14 +593,14 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.dungeon.enable then -- 地下城进度
+    if db.mythicDungeons.enable then -- 地下城进度
         tt:AddLine(" ")
-        local titleLeft = L["Dungeons"] .. "[" .. progressCache[guid].info.dungeon.times .. "]"
+        local titleLeft = L["Mythic Dungeons"] .. " [" .. cache[guid].info.mythicDungeons.times .. "]"
         tt:AddDoubleLine(titleLeft, icon, nil, nil, nil, 1, 1, 1)
         for name, achievementID in pairs(dungeonAchievements) do
-            if db.dungeon[name] then
-                local left = format("%s:", Locales[name].short)
-                local right = progressCache[guid].info.dungeon[name]
+            if db.mythicDungeons[name] then
+                local left = format("%s:", locales[name].short)
+                local right = cache[guid].info.mythicDungeons[name]
 
                 tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
             end
@@ -594,7 +628,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
 
     local guid = UnitGUID(unit)
 
-    if not progressCache[guid] or (GetTime() - progressCache[guid].timer) > 600 then
+    if not cache[guid] or (GetTime() - cache[guid].timer) > 600 then
         if guid == E.myguid then
             UpdateProgression(guid, E.myfaction)
         else

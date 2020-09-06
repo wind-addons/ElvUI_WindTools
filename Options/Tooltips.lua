@@ -94,16 +94,16 @@ options.progression = {
             name = L["Enable"],
             desc = L["Add progression information to tooltips."]
         },
-        raid = {
+        raids = {
             order = 2,
             type = "group",
             name = L["Raids"],
             inline = true,
             get = function(info)
-                return E.private.WT.tooltips.progression.raid[info[#info]]
+                return E.private.WT.tooltips.progression.raids[info[#info]]
             end,
             set = function(info, value)
-                E.private.WT.tooltips.progression.raid[info[#info]] = value
+                E.private.WT.tooltips.progression.raids[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
@@ -114,16 +114,16 @@ options.progression = {
                 }
             }
         },
-        dungeon = {
+        mythicDungeons = {
             order = 2,
             type = "group",
-            name = L["Dungeons"],
+            name = L["Mythic Dungeons"],
             inline = true,
             get = function(info)
-                return E.private.WT.tooltips.progression.dungeon[info[#info]]
+                return E.private.WT.tooltips.progression.mythicDungeons[info[#info]]
             end,
             set = function(info, value)
-                E.private.WT.tooltips.progression.dungeon[info[#info]] = value
+                E.private.WT.tooltips.progression.mythicDungeons[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
@@ -137,40 +137,36 @@ options.progression = {
     }
 }
 
-local raids = {
-    "Ny'alotha, The Waking City",
-    "Azshara's Eternal Palace",
-    "Crucible of Storms",
-    "Battle of Dazaralor",
-    "Uldir"
-}
-
-local dungeons = {
-    "Atal'Dazar",
-    "FreeHold",
-    "Kings' Rest",
-    "Shrine of the Storm",
-    "Siege of Boralus",
-    "Temple of Sethrealiss",
-    "The MOTHERLODE!!",
-    "The Underrot",
-    "Tol Dagor",
-    "Waycrest Manor",
-    "Operation: Mechagon"
-}
-
-for index, raid in ipairs(raids) do
-    options.progression.args.raid.args[raid] = {
-        order = index + 1,
-        type = "toggle",
-        name = L[raid]
+do
+    local raids = {
+        "Ny'alotha, The Waking City",
+        "Castle Nathria"
     }
-end
 
-for index, dungeon in ipairs(dungeons) do
-    options.progression.args.dungeon.args[dungeon] = {
-        order = index + 2,
-        type = "toggle",
-        name = L[dungeon]
+    local dungeons = {
+        "The Necrotic Wake",
+        "Plaguefall",
+        "Mists of Tirna Scithe",
+        "Halls of Atonement",
+        "Theater of Pain",
+        "De Other Side",
+        "Spires of Ascension",
+        "Sanguine Depths"
     }
+
+    for index, name in ipairs(raids) do
+        options.progression.args.raids.args[name] = {
+            order = index + 1,
+            type = "toggle",
+            name = L[name]
+        }
+    end
+
+    for index, name in ipairs(dungeons) do
+        options.progression.args.mythicDungeons.args[name] = {
+            order = index + 2,
+            type = "toggle",
+            name = L[name]
+        }
+    end
 end

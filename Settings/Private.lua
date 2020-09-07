@@ -56,6 +56,7 @@ V.skins = {
 		blackMarket = true,
 		calendar = true,
 		challenges = true,
+		channels = true,
 		character = true,
 		collections = true,
 		communities = true,

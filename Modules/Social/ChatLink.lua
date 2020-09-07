@@ -5,9 +5,9 @@ local _G = _G
 local ceil = ceil
 local format = format
 local gsub = gsub
-local match = match
 local pairs = pairs
 local select = select
+local strmatch = strmatch
 local tonumber = tonumber
 local tostring = tostring
 local unpack = unpack
@@ -52,7 +52,7 @@ local abbrList = {
 }
 
 local function AddItemInfo(Hyperlink)
-    local id = match(Hyperlink, "Hitem:(%d-):")
+    local id = strmatch(Hyperlink, "Hitem:(%d-):")
     if (not id) then
         return
     end
@@ -61,7 +61,7 @@ local function AddItemInfo(Hyperlink)
     -- 获取物品实际等级
     if CL.db.level or CL.db.slot then
         local text, level, extraname, slot
-        local link = match(Hyperlink, "|H(.-)|h")
+        local link = strmatch(Hyperlink, "|H(.-)|h")
         ItemLevelTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
         ItemLevelTooltip:ClearLines()
         ItemLevelTooltip:SetHyperlink(link)
@@ -71,7 +71,7 @@ local function AddItemInfo(Hyperlink)
                 local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
                 if leftText then
                     text = leftText:GetText() or ""
-                    level = match(text, ItemLevelPattern)
+                    level = strmatch(text, ItemLevelPattern)
                     if (level) then
                         break
                     end
@@ -146,7 +146,7 @@ end
 
 local function AddSpellInfo(Hyperlink)
     -- 法术图标
-    local id = match(Hyperlink, "Hspell:(%d-):")
+    local id = strmatch(Hyperlink, "Hspell:(%d-):")
     if (not id) then
         return
     end
@@ -162,7 +162,7 @@ end
 
 local function AddPvPTalentInfo(Hyperlink)
     -- PVP 天赋
-    local id = match(Hyperlink, "Hpvptal:(%d-)|")
+    local id = strmatch(Hyperlink, "Hpvptal:(%d-)|")
     if (not id) then
         return
     end
@@ -178,7 +178,7 @@ end
 
 local function AddTalentInfo(Hyperlink)
     -- 天赋
-    local id = match(Hyperlink, "Htalent:(%d-)|")
+    local id = strmatch(Hyperlink, "Htalent:(%d-)|")
     if (not id) then
         return
     end

@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
 local MF = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
-local _G = _G
 
 local BlizzardFrames = {
     "AddonList",
@@ -63,7 +62,7 @@ local BlizzardFrames = {
     }
 }
 
-local BlizzardFramesLoadOnDemand = {
+local BlizzardFramesOnDemand = {
     ["Blizzard_AchievementUI"] = {
         ["AchievementFrame"] = {
             "AchievementFrameHeader",
@@ -78,14 +77,10 @@ local BlizzardFramesLoadOnDemand = {
         "ArchaeologyFrame"
     },
     ["Blizzard_ArtifactUI"] = {
-        "ArtifactFrame",
-        "ArtifactRelicForgeFrame"
+        "ArtifactFrame"
     },
     ["Blizzard_AuctionHouseUI"] = {
         "AuctionHouseFrame"
-    },
-    ["Blizzard_AuctionUI"] = {
-        "AuctionFrame"
     },
     ["Blizzard_AzeriteEssenceUI"] = {
         "AzeriteEssenceUI"
@@ -104,23 +99,30 @@ local BlizzardFramesLoadOnDemand = {
     },
     ["Blizzard_Calendar"] = {
         ["CalendarFrame"] = {
-            "CalendarViewHolidayFrame",
             "CalendarCreateEventFrame",
             "CalendarCreateEventInviteListScrollFrame",
             "CalendarViewEventFrame",
             "CalendarViewEventFrame.HeaderFrame",
-            "CalendarViewEventInviteListScrollFrame"
+            "CalendarViewEventInviteListScrollFrame",
+            "CalendarViewHolidayFrame"
         }
     },
     ["Blizzard_ChallengesUI"] = {
         "ChallengesKeystoneFrame"
+    },
+    ["Blizzard_Channels"] = {
+        "ChannelFrame"
     },
     ["Blizzard_Collections"] = {
         "CollectionsJournal",
         "WardrobeFrame"
     },
     ["Blizzard_Communities"] = {
-        "CommunitiesFrame",
+        "ClubFinderGuildFinderFrame.RequestToJoinFrame",
+        ["CommunitiesFrame"] = {
+            "ClubFinderCommunityAndGuildFinderFrame.CommunityCards.ListScrollFrame"
+        },
+        "CommunitiesFrame.RecruitmentDialog",
         "CommunitiesGuildLogFrame",
         "CommunitiesGuildNewsFiltersFrame",
         "CommunitiesGuildTextEditFrame"
@@ -138,19 +140,19 @@ local BlizzardFramesLoadOnDemand = {
         "FlightMapFrame"
     },
     ["Blizzard_GarrisonUI"] = {
-        "GarrisonLandingPage",
-        "GarrisonMissionFrame",
-        "GarrisonCapacitiveDisplayFrame",
         "GarrisonBuildingFrame",
+        "GarrisonCapacitiveDisplayFrame",
+        ["GarrisonLandingPage"] = {
+            "GarrisonLandingPageReportListListScrollFrame",
+            "GarrisonLandingPageFollowerListListScrollFrame"
+        },
+        "GarrisonMissionFrame",
+        "GarrisonMonumentFrame",
         "GarrisonRecruiterFrame",
         "GarrisonRecruitSelectFrame",
         "GarrisonShipyardFrame",
         "OrderHallMissionFrame",
-        "BFAMissionFrame",
-        "GarrisonMonumentFrame"
-    },
-    ["Blizzard_GlyphUI"] = {
-        "GlyphFrame"
+        "BFAMissionFrame"
     },
     ["Blizzard_GMChatUI"] = {
         "GMChatStatusFrame"
@@ -209,17 +211,19 @@ local BlizzardFramesLoadOnDemand = {
     ["Blizzard_ReforgingUI"] = {
         "ReforgingFrame"
     },
-    ["Blizzard_QuestChoice"] = {
-        "QuestChoiceFrame"
-    },
     ["Blizzard_ScrappingMachineUI"] = {
         "ScrappingMachineFrame"
     },
     ["Blizzard_TalentUI"] = {
         "PlayerTalentFrame"
     },
+    ["Blizzard_TalkingHeadUI"] = {
+        "TalkingHeadFrame"
+    },
     ["Blizzard_TradeSkillUI"] = {
-        "TradeSkillFrame"
+        ["TradeSkillFrame"] = {
+            "TradeSkillFrame.RecipeList"
+        }
     },
     ["Blizzard_TrainerUI"] = {
         "ClassTrainerFrame"
@@ -235,42 +239,81 @@ local BlizzardFramesLoadOnDemand = {
     }
 }
 
-local function OnMouseDown(frame, button)
-    if button == "LeftButton" then
-        if frame.MoveFrame:IsMovable() then
-            frame.MoveFrame:StartMoving()
+function MF:HandleFrame(frameName, mainFrameName)
+    local frame = _G
+    local mainFrame
+
+    local path = {strsplit(".", frameName)}
+    for i = 1, #path do
+        frame = frame[path[i]]
+    end
+
+    if mainFrameName then
+        mainFrame = _G
+        path = {strsplit(".", mainFrameName)}
+        for i = 1, #path do
+            mainFrame = mainFrame[path[i]]
+        end
+    end
+
+    if frame then
+        if InCombatLockdown() and frame:IsProtected() then
+            return
+        end
+
+        frame:SetMovable(true)
+        frame:SetClampedToScreen(true)
+
+        mainFrame = mainFrame or frame
+        frame.MoveFrame = mainFrame
+
+        frame:EnableMouse(true)
+
+        frame:HookScript(
+            "OnMouseDown",
+            function(self, button)
+                if button == "LeftButton" then
+                    if self.MoveFrame:IsMovable() then
+                        self.MoveFrame:StartMoving()
+                    end
+                end
+            end
+        )
+
+        frame:HookScript(
+            "OnMouseUp",
+            function(self, button)
+                if button == "LeftButton" then
+                    self.MoveFrame:StopMovingOrSizing()
+                end
+            end
+        )
+
+    else
+        F.DebugMessage(self, format("Cannot find the frame: %s", frame))
+    end
+end
+
+function MF:HandleFramesWithTable(table)
+    for key, value in pairs(table) do
+        if type(key) == "number" and type(value) == "string" then
+            self:HandleFrame(value)
+        elseif type(key) == "string" and type(value) == "table" then
+            self:HandleFrame(key)
+            for _, subFrameName in pairs(value) do
+                self:HandleFrame(subFrameName, key)
+            end
         end
     end
 end
 
-local function OnMouseUp(frame, button)
-    if button == "LeftButton" then
-        frame.MoveFrame:StopMovingOrSizing()
-    end
-end
-
-function MF:HandleFrame(frame, mainFrame)
-    if not frame then
-        F.DebugMessage(self, format("Cannot find the frame: %s", value))
+function MF:HandleAddon(_, addon)
+    local frameTable = BlizzardFramesOnDemand[addon]
+    if not frameTable then
         return
     end
 
-    if InCombatLockdown() and frame:IsProtected() then
-        return
-    end
-
-    frame:SetMovable(true)
-    frame:SetClampedToScreen(true)
-
-    mainFrame = mainFrame or frame
-    frame.MoveFrame = mainFrame
-
-    frame:EnableMouse(true)
-    frame:HookScript("OnMouseDown", OnMouseDown)
-    frame:HookScript("OnMouseUp", OnMouseUp)
-end
-
-function MF:Test()
+    self:HandleFramesWithTable(frameTable)
 end
 
 function MF:Initialize()
@@ -280,16 +323,18 @@ function MF:Initialize()
     end
 
     if self.db.moveBlizzardFrames then
-        for key, value in pairs(BlizzardFrames) do
-            if type(key) == "number" and type(value) == "string" then
-                self:HandleFrame(_G[value], mainFrame)
-            elseif type(key) == "string" and type(value) == "table" then
-                self:HandleFrame(_G[key])
-                for _, subFrameName in pairs(value) do
-                    self:HandleFrame(_G[subFrameName], _G[key])
-                end
+        -- 全局变量中已经存在的窗体
+        self:HandleFramesWithTable(BlizzardFrames)
+
+        -- 检查当前已经载入的插件
+        for addon in pairs(BlizzardFramesOnDemand) do
+            if IsAddOnLoaded(addon) then
+                self.HandleAddon(nil, addon)
             end
         end
+
+        -- 为后续载入插件注册事件
+        self:RegisterEvent("ADDON_LOADED", "HandleAddon")
     end
 end
 

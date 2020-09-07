@@ -105,7 +105,18 @@ function OT:ChangeQuestFontStyle(_, block)
 
     if block.HeaderText and not block.HeaderText.windStyle then
         F.SetFontWithDB(block.HeaderText, self.db.title)
+        block.HeaderText:SetHeight(block.HeaderText:GetHeight() + 2)
         block.HeaderText.windStyle = true
+    end
+
+    if block.ScrollContents then
+        local childs = {block.ScrollContents:GetChildren()}
+
+        if #childs == 1 and childs[1].Text then
+            F.SetFontWithDB(childs[1].Text, self.db.title)
+            childs[1].Text:SetHeight(childs[1].Text:GetHeight() + 4)
+            childs[1].windStyle = true
+        end
     end
 
     if block.currentLine and not block.currentLine.windStyle then
@@ -217,7 +228,7 @@ function OT:Initialize()
     end
 
     self:ChangeQuestTitleColor()
-    
+
     if self.db.noDash then
         _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
     end

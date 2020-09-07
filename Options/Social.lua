@@ -536,27 +536,36 @@ options.chatLink = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
-        level = {
+        general = {
             order = 2,
-            type = "toggle",
-            name = L["Level"]
-        },
-        icon = {
-            order = 3,
-            type = "toggle",
-            name = L["Icon"]
-        },
-        armorCategory = {
-            order = 4,
-            type = "toggle",
-            name = L["Armor Category"]
-        },
-        weaponCategory = {
-            order = 5,
-            type = "toggle",
-            name = L["Weapon Category"]
+            type = "group",
+            inline = true,
+            name = L["Additional Information"],
+            args = {
+                level = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Level"]
+                },
+                icon = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Icon"]
+                },
+                armorCategory = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Armor Category"]
+                },
+                weaponCategory = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Weapon Category"]
+                }
+            }
         }
     }
 }
@@ -853,7 +862,8 @@ options.emote = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
         size = {
             name = L["Emote Icon Size"],
@@ -1114,7 +1124,8 @@ options.filter = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
         unblockProfanityFilter = {
             order = 2,

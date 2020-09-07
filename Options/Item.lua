@@ -37,7 +37,8 @@ options.delete = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
         delKey = {
             order = 3,
@@ -91,6 +92,7 @@ options.alreadyKnown = {
                 E.db.WT.item.alreadyKnown[info[#info]] = value
                 AK:ToggleSetting()
             end,
+            width = "full"
         },
         mode = {
             order = 3,
@@ -151,7 +153,8 @@ options.fastLoot = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
         limit = {
             order = 2,
@@ -161,6 +164,6 @@ options.fastLoot = {
             min = 0.05,
             max = 0.5,
             step = 0.01
-        },
+        }
     }
 }

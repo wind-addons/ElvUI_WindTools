@@ -24,6 +24,7 @@ local BlizzardFrames = {
     "MerchantFrame",
     "PetitionFrame",
     "PetStableFrame",
+    "PlayerReportFrame",
     "PVPReadyDialog",
     "QuestFrame",
     "QuestLogPopupDetailFrame",

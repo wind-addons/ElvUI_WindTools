@@ -44,10 +44,6 @@ local BlizzardFrames = {
     "SpellBookFrame",
     "SplashFrame",
     "StackSplitFrame",
-    "StaticPopup1",
-    "StaticPopup2",
-    "StaticPopup3",
-    "StaticPopup4",
     "TabardFrame",
     "TaxiFrame",
     "TradeFrame",
@@ -56,7 +52,9 @@ local BlizzardFrames = {
     ["CharacterFrame"] = {
         "PaperDollFrame",
         "ReputationFrame",
-        "TokenFrame"
+        "TokenFrame",
+        "TokenFramePopup",
+        "TokenFrameContainer",
     },
     ["MailFrame"] = {
         "SendMailFrame",

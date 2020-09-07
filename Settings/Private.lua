@@ -33,6 +33,7 @@ V.misc = {
 }
 
 V.skins = {
+	removeParchment = true,
 	color = {
 		r = 0,
 		g = 0,

@@ -211,6 +211,11 @@ function S:Initialize()
             self:CallLoadedAddon(addonName, object)
         end
     end
+
+    -- 去除羊皮纸
+    if E.private.WT.skins.removeParchment then
+        E.private.skins.parchmentRemoverEnable = true
+    end
 end
 
 function S:ProfileUpdate()

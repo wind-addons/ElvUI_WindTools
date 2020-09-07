@@ -10,12 +10,26 @@ function S:ElvUI_SkinOptionsUI()
     end
 end
 
+function S:ElvUI_SkinInstall()
+    if not InCombatLockdown() then
+        self:CreateShadow(_G.ElvUIInstallFrame)
+    end
+end
+
 function S:ElvUI_OptionsUI()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option) then
         return
     end
 
+    -- 设定
     self:SecureHook(E, "ToggleOptionsUI", "ElvUI_SkinOptionsUI")
+
+    -- 安装
+    if _G.ElvUIInstallFrame then
+        self:CreateShadow(_G.ElvUIInstallFrame)
+    else
+        self:SecureHook(E, "Install", "ElvUI_SkinInstall")
+    end
 end
 
 S:AddCallback("ElvUI_OptionsUI")

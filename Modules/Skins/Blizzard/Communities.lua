@@ -49,6 +49,9 @@ function S:Blizzard_Communities()
             self:CreateShadow(f.RequestToJoinFrame)
         end
     end
+
+    -- 公会招募
+    self:CreateShadow(_G.CommunitiesFrame.RecruitmentDialog)
 end
 
 S:AddCallbackForAddon("Blizzard_Communities")

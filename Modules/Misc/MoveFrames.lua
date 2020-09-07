@@ -23,7 +23,6 @@ local BlizzardFrames = {
     "LFGDungeonReadyStatus",
     "LootFrame",
     "MerchantFrame",
-    "OpenMailFrame",
     "PetitionFrame",
     "PetStableFrame",
     "PVPReadyDialog",
@@ -53,8 +52,7 @@ local BlizzardFrames = {
     ["MailFrame"] = {
         "SendMailFrame",
         ["OpenMailFrame"] = {
-            "OpenMailSender",
-            "OpenMailFrameInset"
+            "OpenMailSender"
         }
     },
     ["PVEFrame"] = {
@@ -68,8 +66,11 @@ local BlizzardFrames = {
 
 local BlizzardFramesLoadOnDemand = {
     ["Blizzard_AchievementUI"] = {
-        "AchievementFrame",
-        "AchievementFrameHeader"
+        ["AchievementFrame"] = {
+            "AchievementFrameHeader",
+            "AchievementFrameAchievementsContainer",
+            "AchievementFrameCategoriesContainer"
+        }
     },
     ["Blizzard_AlliedRacesUI"] = {
         "AlliedRacesFrame"
@@ -96,9 +97,6 @@ local BlizzardFramesLoadOnDemand = {
     ["Blizzard_AzeriteUI"] = {
         "AzeriteEmpoweredItemUI"
     },
-    ["Blizzard_BarberShopUI"] = {
-        "BarberShopFrame"
-    },
     ["Blizzard_BindingUI"] = {
         "KeyBindingFrame"
     },
@@ -106,8 +104,11 @@ local BlizzardFramesLoadOnDemand = {
         "BlackMarketFrame"
     },
     ["Blizzard_Calendar"] = {
-        "CalendarCreateEventFrame",
-        "CalendarFrame"
+        ["CalendarFrame"] = {
+            ["CalendarCreateEventFrame"] = {
+                "CalendarCreateEventInviteListScrollFrame"
+            }
+        }
     },
     ["Blizzard_ChallengesUI"] = {
         "ChallengesKeystoneFrame"
@@ -262,7 +263,12 @@ function MF:HandleFrames(frameTable, mainFrame)
 end
 
 function MF:HandleFrame(frame, mainFrame)
-    if not frame or (InCombatLockdown() and frame:IsProtected()) then
+    if not frame then
+        F.DebugMessage(self, format("Cannot find the frame: %s", value))
+        return
+    end
+
+    if InCombatLockdown() and frame:IsProtected() then
         return
     end
 
@@ -270,23 +276,24 @@ function MF:HandleFrame(frame, mainFrame)
     frame:SetClampedToScreen(true)
 
     mainFrame = mainFrame or frame
-    mainFrame.MoveFrame = frame
+    frame.MoveFrame = mainFrame
 
-    mainFrame:EnableMouse(true)
-    mainFrame:HookScript("OnMouseDown", OnMouseDown)
-    mainFrame:HookScript("OnMouseUp", OnMouseUp)
+    frame:EnableMouse(true)
+    frame:HookScript("OnMouseDown", OnMouseDown)
+    frame:HookScript("OnMouseUp", OnMouseUp)
 end
 
 function MF:Test()
-    if self.db.moveBlizzardFrames then
-        self:HandleFrames(BlizzardFrames)
-    end
 end
 
 function MF:Initialize()
     self.db = E.private.WT.misc
     if not self.db then
         return
+    end
+
+    if self.db.moveBlizzardFrames then
+        self:HandleFrames(BlizzardFrames)
     end
 end
 

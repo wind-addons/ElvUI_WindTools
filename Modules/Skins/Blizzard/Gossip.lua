@@ -8,8 +8,8 @@ function S:GossipFrame()
         return
     end
 
-    self:CreateShadow(_G.ItemTextFrame)
     self:CreateShadow(_G.GossipFrame)
+    self:CreateShadow(_G.ItemTextFrame)
 end
 
 S:AddCallback("GossipFrame")

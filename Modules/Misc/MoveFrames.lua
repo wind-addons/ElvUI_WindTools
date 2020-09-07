@@ -112,7 +112,8 @@ local BlizzardFramesOnDemand = {
         "ChallengesKeystoneFrame"
     },
     ["Blizzard_Channels"] = {
-        "ChannelFrame"
+        "ChannelFrame",
+        "CreateChannelPopup"
     },
     ["Blizzard_Collections"] = {
         "CollectionsJournal",
@@ -258,7 +259,7 @@ function MF:HandleFrame(frameName, mainFrameName)
     end
 
     if frame then
-        if InCombatLockdown() and frame:IsProtected() then
+        if InCombatLockdown() and frame:IsProtected() or frame.MoveFrame then
             return
         end
 
@@ -327,15 +328,15 @@ function MF:Initialize()
         -- 全局变量中已经存在的窗体
         self:HandleFramesWithTable(BlizzardFrames)
 
+        -- 为后续载入插件注册事件
+        self:RegisterEvent("ADDON_LOADED", "HandleAddon")
+
         -- 检查当前已经载入的插件
         for addon in pairs(BlizzardFramesOnDemand) do
             if IsAddOnLoaded(addon) then
-                self.HandleAddon(nil, addon)
+                self:HandleAddon(nil, addon)
             end
         end
-
-        -- 为后续载入插件注册事件
-        self:RegisterEvent("ADDON_LOADED", "HandleAddon")
     end
 end
 

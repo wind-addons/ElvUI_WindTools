@@ -4,6 +4,7 @@ local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
 local _G = _G
 local abs = abs
 local format = format
+local floor = floor
 local ipairs = ipairs
 local min = min
 local pairs = pairs
@@ -122,9 +123,12 @@ function OT:ChangeQuestFontStyle(_, block)
     if block.currentLine and not block.currentLine.windStyle then
         F.SetFontWithDB(block.currentLine.Text, self.db.info)
         self:ChangeDashStyle(block.currentLine)
-        local increasedHeight = self:ColorfulProgression(block.currentLine.Text)
-        if increasedHeight and increasedHeight > 1 then
-            block.height = block.height + increasedHeight
+
+        local widthBefore = block.currentLine.Text:GetStringWidth()
+        self:ColorfulProgression(block.currentLine.Text)
+        local widthAfter = block.currentLine.Text:GetStringWidth()
+        if floor(widthAfter / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) > floor(widthBefore / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) then
+            block.height = block.height + self.db.info.size + 2
         end
     end
 end

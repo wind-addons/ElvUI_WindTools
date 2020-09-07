@@ -98,7 +98,7 @@ function S:ElvUI_ActionBars()
     -- 特殊技能
     self:SecureHook(_G.ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", "SkinZoneAbilities")
 
-    for i = 1, ExtraActionBarFrame:GetNumChildren() do
+    for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]
         if button then
             self:CreateShadow(button)

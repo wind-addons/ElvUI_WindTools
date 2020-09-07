@@ -2,35 +2,21 @@ local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
-local TalkingHeadFrame_CloseImmediately
+
+function M:TalkingHeadFrame_PlayCurrent()
+    if E.private.WT.misc.disableTalkingHead then
+        _G.TalkingHeadFrame_CloseImmediately()
+    end
+end
+function M:TalkingHead_LoadUI()
+    self:SecureHook("TalkingHeadFrame_PlayCurrent")
+end
 
 function M:DisableTalkingHead()
     if _G.TalkingHeadFrame then
-        TalkingHeadFrame_CloseImmediately = _G.TalkingHeadFrame_CloseImmediately
-        hooksecurefunc(
-            "TalkingHeadFrame_PlayCurrent",
-            function()
-                if E.private.WT.misc.disableTalkingHead then
-                    TalkingHeadFrame_CloseImmediately()
-                end
-            end
-        )
+        M:SecureHook("TalkingHeadFrame_PlayCurrent")
     else
-        hooksecurefunc(
-            "TalkingHead_LoadUI",
-            function()
-                TalkingHeadFrame_CloseImmediately = _G.TalkingHeadFrame_CloseImmediately
-                hooksecurefunc(
-                    "TalkingHeadFrame_PlayCurrent",
-                    function()
-                        if E.private.WT.misc.disableTalkingHead then
-                            TalkingHeadFrame_CloseImmediately()
-                        end
-                    end
-                )
-            end
-        )
+        M:SecureHook("TalkingHead_LoadUI")
     end
 end
 

@@ -1,6 +1,15 @@
 local W, F, E, L = unpack(select(2, ...))
 local MF = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 
+local _G = _G
+local format = format
+local pairs = pairs
+local strsplit = strsplit
+local type = type
+
+local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
+
 local BlizzardFrames = {
     "AddonList",
     "AudioOptionsFrame",

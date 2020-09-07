@@ -116,6 +116,9 @@ options.progression = {
                 E.private.WT.tooltips.progression.raids[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
+            disabled = function()
+                return not E.private.WT.tooltips.progression.enable
+            end,
             args = {
                 enable = {
                     order = 1,
@@ -135,6 +138,9 @@ options.progression = {
             set = function(info, value)
                 E.private.WT.tooltips.progression.mythicDungeons[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            disabled = function()
+                return not E.private.WT.tooltips.progression.enable
             end,
             args = {
                 enable = {
@@ -168,7 +174,10 @@ do
         options.progression.args.raids.args[name] = {
             order = index + 1,
             type = "toggle",
-            name = L[name]
+            name = L[name],
+            disabled = function()
+                return not (E.private.WT.tooltips.progression.enable and E.private.WT.tooltips.progression.raids.enable)
+            end
         }
     end
 
@@ -176,7 +185,11 @@ do
         options.progression.args.mythicDungeons.args[name] = {
             order = index + 2,
             type = "toggle",
-            name = L[name]
+            name = L[name],
+            disabled = function()
+                return not (E.private.WT.tooltips.progression.enable and
+                    E.private.WT.tooltips.progression.mythicDungeons.enable)
+            end
         }
     end
 end

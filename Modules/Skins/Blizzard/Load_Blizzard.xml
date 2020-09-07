@@ -36,6 +36,8 @@
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>
 	<Script file='RaidUtility.lua'/>
+	<Script file='Scenario.lua'/>
+	<Script file='ScrappingMachine.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='Talent.lua'/>

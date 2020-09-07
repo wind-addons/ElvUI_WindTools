@@ -81,6 +81,7 @@ V.skins = {
 		raidInfo = true,
 		raidUtility = true,
 		scenario = true,
+		scrappingMachine = true,
 		spellBook = true,
 		staticPopup = true,
 		talent = true,

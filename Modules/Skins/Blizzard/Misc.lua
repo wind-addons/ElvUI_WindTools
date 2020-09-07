@@ -64,6 +64,9 @@ function S:BlizzardMiscFrames()
     -- 举报玩家
     self:CreateShadow(_G.PlayerReportFrame)
     self:CreateShadow(_G.ReportCheatingDialog)
+    
+    -- 分离物品
+    self:CreateShadow(_G.StackSplitFrame)
 
     -- 聊天设定
     self:CreateShadow(_G.ChatConfigFrame)

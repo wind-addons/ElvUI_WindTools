@@ -6,6 +6,7 @@
 	<Script file='AuctionHouse.lua'/>
 	<Script file='AzeriteEssence.lua'/>
 	<Script file='Barbershop.lua'/>
+	<Script file='BlackMarket.lua'/>
 	<Script file='Calendar.lua'/>
 	<Script file='Challenges.lua'/>
 	<Script file='Character.lua'/>

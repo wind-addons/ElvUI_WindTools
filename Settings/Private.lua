@@ -52,6 +52,7 @@ V.skins = {
 		auctionHouse = true,
 		azeriteEssence = true,
 		barberShop = true,
+		blackMarket = true,
 		calendar = true,
 		challenges = true,
 		character = true,

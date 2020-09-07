@@ -59,6 +59,14 @@ function S:ElvUI_ActionBar_PositionAndSizeBarShapeShift()
     self:ElvUI_ActionBar_SkinBar(_G.ElvUI_StanceBar, "STANCE")
 end
 
+function S:SkinZoneAbilities(button)
+    for spellButton in button.SpellButtonContainer:EnumerateActive() do
+        if spellButton and spellButton.IsSkinned then
+            self:CreateShadow(spellButton)
+        end
+    end
+end
+
 function S:ElvUI_ActionBars()
     if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
         return
@@ -88,11 +96,12 @@ function S:ElvUI_ActionBars()
     end
 
     -- 特殊技能
-    local container = _G.ZoneAbilityFrame.SpellButtonContainer
+    self:SecureHook(_G.ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", "SkinZoneAbilities")
 
-    if container then
-        for _, child in pairs({container:GetChildren()}) do
-            self:CreateShadow(child, 6)
+    for i = 1, ExtraActionBarFrame:GetNumChildren() do
+        local button = _G["ExtraActionButton" .. i]
+        if button then
+            self:CreateShadow(button)
         end
     end
 

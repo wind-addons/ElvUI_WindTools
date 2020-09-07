@@ -51,9 +51,8 @@ local BlizzardFrames = {
     },
     ["MailFrame"] = {
         "SendMailFrame",
-        ["OpenMailFrame"] = {
-            "OpenMailSender"
-        }
+        "OpenMailFrame",
+        "OpenMailSender"
     },
     ["PVEFrame"] = {
         "LFGListApplicationViewerScrollFrame",
@@ -105,9 +104,12 @@ local BlizzardFramesLoadOnDemand = {
     },
     ["Blizzard_Calendar"] = {
         ["CalendarFrame"] = {
-            ["CalendarCreateEventFrame"] = {
-                "CalendarCreateEventInviteListScrollFrame"
-            }
+            "CalendarViewHolidayFrame",
+            "CalendarCreateEventFrame",
+            "CalendarCreateEventInviteListScrollFrame",
+            "CalendarViewEventFrame",
+            "CalendarViewEventFrame.HeaderFrame",
+            "CalendarViewEventInviteListScrollFrame"
         }
     },
     ["Blizzard_ChallengesUI"] = {
@@ -247,21 +249,6 @@ local function OnMouseUp(frame, button)
     end
 end
 
-function MF:HandleFrames(frameTable, mainFrame)
-    for key, value in pairs(frameTable) do
-        if type(key) == "number" and type(value) == "string" then
-            if _G[value] then
-                self:HandleFrame(_G[value], mainFrame)
-            else
-                F.DebugMessage(self, format("Cannot find the frame: %s", value))
-            end
-        elseif type(key) == "string" and type(value) == "table" then
-            self:HandleFrames(value, mainFrame or _G[key])
-            self:HandleFrame(_G[key], mainFrame)
-        end
-    end
-end
-
 function MF:HandleFrame(frame, mainFrame)
     if not frame then
         F.DebugMessage(self, format("Cannot find the frame: %s", value))
@@ -293,7 +280,16 @@ function MF:Initialize()
     end
 
     if self.db.moveBlizzardFrames then
-        self:HandleFrames(BlizzardFrames)
+        for key, value in pairs(BlizzardFrames) do
+            if type(key) == "number" and type(value) == "string" then
+                self:HandleFrame(_G[value], mainFrame)
+            elseif type(key) == "string" and type(value) == "table" then
+                self:HandleFrame(_G[key])
+                for _, subFrameName in pairs(value) do
+                    self:HandleFrame(_G[subFrameName], _G[key])
+                end
+            end
+        end
     end
 end
 

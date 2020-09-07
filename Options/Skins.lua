@@ -53,8 +53,20 @@ options.general = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end
         },
-        vignetting = {
+        removeParchment = {
             order = 2,
+            type = "toggle",
+            name = L["Parchment Remover"],
+            get = function()
+                return E.db.WT.skins.removeParchment
+            end,
+            set = function(_, value)
+                E.db.WT.skins.removeParchment = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        vignetting = {
+            order = 3,
             type = "group",
             name = L["Vignetting"],
             inline = true,
@@ -76,6 +88,9 @@ options.general = {
                     type = "range",
                     name = L["Level"],
                     desc = L["Change the alpha of vignetting."],
+                    disabled = function()
+                        return not E.db.WT.skins.vignetting.enable
+                    end,
                     min = 1,
                     max = 100,
                     step = 1
@@ -100,7 +115,7 @@ options.blizzard = {
         enable = {
             order = 0,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
         },
         achievements = {
             type = "toggle",
@@ -130,13 +145,21 @@ options.blizzard = {
             type = "toggle",
             name = _G.BARBERSHOP
         },
+        blackMarket = {
+            type = "toggle",
+            name = _G.BLACK_MARKET_AUCTION_HOUSE
+        },
         calendar = {
             type = "toggle",
-            name = L["Calendar Frame"]
+            name = L["Calendar"]
         },
         challenges = {
             type = "toggle",
             name = _G.CHALLENGES
+        },
+        channels = {
+            type = "toggle",
+            name = _G.CHANNELS
         },
         character = {
             type = "toggle",
@@ -165,6 +188,10 @@ options.blizzard = {
         friends = {
             type = "toggle",
             name = _G.FRIENDS
+        },
+        flightMap = {
+            type = "toggle",
+            name = _G.FLIGHT_MAP
         },
         garrison = {
             type = "toggle",
@@ -242,6 +269,10 @@ options.blizzard = {
             type = "toggle",
             name = _G.SCENARIOS
         },
+        scrappingMachine = {
+            type = "toggle",
+            name = _G.SCRAPPING_MACHINE_TITLE
+        },
         spellBook = {
             type = "toggle",
             name = _G.SPELLBOOK
@@ -280,6 +311,14 @@ options.blizzard = {
         }
     }
 }
+
+for key, value in pairs(options.blizzard.args) do
+    if key ~= "enable" then
+        value.disabled = function()
+            return not E.private.WT.skins.blizzard.enable
+        end
+    end
+end
 
 options.elvui = {
     order = 4,
@@ -368,6 +407,14 @@ options.elvui = {
         }
     }
 }
+
+for key, value in pairs(options.elvui.args) do
+    if key ~= "enable" then
+        value.disabled = function()
+            return not E.private.WT.skins.elvui.enable
+        end
+    end
+end
 
 options.addons = {
     order = 5,

@@ -497,34 +497,6 @@ P.social = {
 }
 
 P.quest = {
-    objectiveTracker = {
-        enable = true,
-        header = {
-            name = E.db.general.font,
-            size = E.db.general.fontSize,
-            style = "OUTLINE"
-        },
-        title = {
-            name = E.db.general.font,
-            size = E.db.general.fontSize,
-            style = "OUTLINE"
-        },
-        info = {
-            name = E.db.general.font,
-            size = E.db.general.fontSize,
-            style = "OUTLINE",
-        },
-        titleColor = {
-            enable = true,
-            classColor = true,
-            customColorNormal = {r = 0.000, g = 0.659, b =1.000},
-            customColorHighlight = {r = _G.NORMAL_FONT_COLOR.r, g = _G.NORMAL_FONT_COLOR.g, b = _G.NORMAL_FONT_COLOR.b}
-        },
-        noDash = true,
-        percentage = true,
-        colorfulPercentage = true,
-        colorfulProgress = false,
-    },
     paragonReputation = {
         enable = true,
         color = {r = 0, g = .5, b = .9},

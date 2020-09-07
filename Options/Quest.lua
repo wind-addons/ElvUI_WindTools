@@ -3,6 +3,7 @@ local options = W.options.quest.args
 local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
 local SB = W:GetModule("SwitchButtons")
+local OT = W:GetModule("ObjectiveTracker")
 
 local pairs = pairs
 local print = print
@@ -12,12 +13,269 @@ local tostring = tostring
 local UnitExists = UnitExists
 local UnitName = UnitName
 local UnitPlayerControlled = UnitPlayerControlled
+local ObjectiveTracker_Update = ObjectiveTracker_Update
 local ReputationFrame_Update = ReputationFrame_Update
 
 local customListSelected
 
-options.turnIn = {
+options.objectiveTracker = {
     order = 1,
+    type = "group",
+    name = L["Objective Tracker"],
+    get = function(info)
+        return E.private.WT.quest.objectiveTracker[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.quest.objectiveTracker[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature_1 = {
+                    order = 1,
+                    type = "description",
+                    name = L["1. Customize the font of Objective Tracker."],
+                    fontSize = "medium"
+                },
+                feature_2 = {
+                    order = 2,
+                    type = "description",
+                    name = L["2. Add colorful progress text to the quest."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        noDash = {
+            order = 2,
+            type = "toggle",
+            name = L["No Dash"]
+        },
+        progress = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Progress"],
+            args = {
+                percentage = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Percentage"],
+                    desc = L["Add percentage text after quest text."]
+                },
+                colorfulPercentage = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Colorful Percentage"],
+                    desc = L["Make the additional percentage text be colored."]
+                },
+                colorfulProgress = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Colorful Progress"]
+                }
+            }
+        },
+        titleColor = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Title Color"],
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker.titleColor[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker.titleColor[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Change the color of quest titles."]
+                },
+                classColor = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Use Class Color"]
+                },
+                customColorNormal = {
+                    order = 3,
+                    type = "color",
+                    name = L["Normal Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
+                        local default = V.quest.objectiveTracker.titleColor.customColorNormal
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
+                        db.r, db.g, db.b = r, g, b
+
+                    end
+                },
+                customColorHighlight = {
+                    order = 3,
+                    type = "color",
+                    name = L["Highlight Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
+                        local default = V.quest.objectiveTracker.titleColor.customColorHighlight
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
+                        db.r, db.g, db.b = r, g, b
+                        OT:ChangeQuestTitleColor()
+                        ObjectiveTracker_Update()
+                    end
+                }
+            }
+        },
+        header = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Header"],
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        title = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Title"],
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        info = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = L["Information"],
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        }
+    }
+}
+
+options.turnIn = {
+    order = 2,
     type = "group",
     name = L["Turn In"],
     get = function(info)
@@ -151,7 +409,7 @@ options.turnIn = {
 }
 
 options.switchButtons = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Switch Buttons"],
     get = function(info)
@@ -275,7 +533,7 @@ options.switchButtons = {
 }
 
 options.paragonReputation = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Paragon Reputation"],
     get = function(info)

@@ -210,22 +210,17 @@ function OT:ChangeQuestTitleColor()
     end
 end
 
-function OT:UpdateGlobals()
-    if not self.db.noDash then
-        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - _G.OBJECTIVE_TRACKER_DASH_WIDTH - 12
-    else
-        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
-    end
-end
-
 function OT:Initialize()
-    self.db = E.db.WT.quest.objectiveTracker
-    if not self.db.enable or self.Initialized then
+    self.db = E.private.WT.quest.objectiveTracker
+    if not self.db.enable then
         return
     end
 
     self:ChangeQuestTitleColor()
-    self:UpdateGlobals()
+    
+    if self.db.noDash then
+        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
+    end
 
     local trackerModules = {
         _G.SCENARIO_CONTENT_TRACKER_MODULE,
@@ -241,20 +236,6 @@ function OT:Initialize()
 
     for _, module in pairs(trackerModules) do
         self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
-    end
-
-    self.Initialized = true
-end
-
-function OT:ProfileUpdate()
-    self.db = E.db.WT.quest.objectiveTracker
-    if self.db.enable then
-        if not self.Initialized then
-            self:Initialize()
-        else
-            self:ChangeQuestTitleColor()
-            self:UpdateGlobals()
-        end
     end
 end
 

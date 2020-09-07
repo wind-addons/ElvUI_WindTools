@@ -14,6 +14,7 @@
 	<Script file='DebugTools.lua'/>
 	<Script file='DressingRoom.lua'/>
 	<Script file='EncounterJournal.lua'/>
+	<Script file='FlightMap.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
 	<Script file='Gossip.lua'/>

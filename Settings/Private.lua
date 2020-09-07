@@ -60,6 +60,7 @@ V.skins = {
 		debugTools = true,
 		dressingRoom = true,
 		encounterJournal = true,
+		flightMap = true,
 		friends = true,
 		garrison = true,
 		gossip = true,

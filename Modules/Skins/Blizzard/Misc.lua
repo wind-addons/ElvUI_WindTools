@@ -61,6 +61,10 @@ function S:BlizzardMiscFrames()
     -- 跳过剧情
     self:CreateShadow(_G.CinematicFrameCloseDialog)
 
+    -- 举报玩家
+    self:CreateShadow(_G.PlayerReportFrame)
+    self:CreateShadow(_G.ReportCheatingDialog)
+
     -- 聊天设定
     self:CreateShadow(_G.ChatConfigFrame)
 end

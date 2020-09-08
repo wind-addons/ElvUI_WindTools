@@ -3,7 +3,6 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local pairs = pairs
-local hooksecurefunc = hooksecurefunc
 
 function S:SkinAlert(alert)
     if not alert or alert.windStyle then
@@ -13,6 +12,10 @@ function S:SkinAlert(alert)
     self:CreateBackdropShadowAfterElvUISkins(alert)
 
     F.SetFrameFontOutline(alert)
+
+    if alert.EncounterIcon then
+        alert.EncounterIcon:Hide()
+    end
 
     alert.windStyle = true
 end

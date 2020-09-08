@@ -3,38 +3,58 @@ local CT = W:NewModule("ChatText")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM
 
-local tonumber, type, next = tonumber, type, next
-local ipairs, pairs, wipe, time, select = ipairs, pairs, wipe, time, select
-local strfind, strlen, strupper, strlower = strfind, strlen, strupper, strlower
-local tostring, strsub, gsub, format = tostring, strsub, gsub, format
-
 local _G = _G
-local BetterDate = BetterDate
+
+local format = format
+local gsub = gsub
+local ipairs = ipairs
+local next = next
+local pairs= pairs
+local select = select
+local strfind = strfind
+local strlen = strlen
+local strlower = strlower
+local strmatch = strmatch
+local strsub = strsub
+local strupper = strupper
+local time = time
+local tonumber = tonumber
+local tostring= tostring
+local type = type
+local wipe = wipe
+
+local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
 local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
-local BNGetNumFriendInvites = BNGetNumFriendInvites
-local Chat_GetChatCategory = Chat_GetChatCategory
+local BetterDate = BetterDate
+local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
+local C_Club_GetClubInfo = C_Club.GetClubInfo
+local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
+local C_Social_GetLastItem = C_Social.GetLastItem
+local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
 local ChatEdit_SetLastTellTarget = ChatEdit_SetLastTellTarget
 local ChatFrame_CanChatGroupPerformExpressionExpansion = ChatFrame_CanChatGroupPerformExpressionExpansion
 local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
 local ChatFrame_ResolvePrefixedChannelName = ChatFrame_ResolvePrefixedChannelName
 local ChatHistory_GetAccessID = ChatHistory_GetAccessID
-local FCF_StartAlertFlash = FCF_StartAlertFlash
+local Chat_GetChatCategory = Chat_GetChatCategory
 local FCFManager_ShouldSuppressMessage = FCFManager_ShouldSuppressMessage
 local FCFManager_ShouldSuppressMessageFlash = FCFManager_ShouldSuppressMessageFlash
+local FCF_StartAlertFlash = FCF_StartAlertFlash
 local FlashClientIcon = FlashClientIcon
+local GMChatFrame_IsGM = GMChatFrame_IsGM
+local GMError = GMError
 local GetAchievementInfo = GetAchievementInfo
 local GetAchievementInfoFromHyperlink = GetAchievementInfoFromHyperlink
-local GetChannelName = GetChannelName
-local GetCVar, GetCVarBool = GetCVar, GetCVarBool
 local GetBNPlayerCommunityLink = GetBNPlayerCommunityLink
 local GetBNPlayerLink = GetBNPlayerLink
+local GetCVar = GetCVar
+local GetCVarBool = GetCVarBool
+local GetChannelName = GetChannelName
 local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
 local GetNumGroupMembers = GetNumGroupMembers
 local GetPlayerCommunityLink = GetPlayerCommunityLink
 local GetPlayerLink = GetPlayerLink
-local GMError = GMError
-local GMChatFrame_IsGM = GMChatFrame_IsGM
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
@@ -48,11 +68,6 @@ local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
-
-local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
-local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
-local C_Social_GetLastItem = C_Social.GetLastItem
 
 CT.cache = {}
 local lfgRoles = {}
@@ -182,7 +197,7 @@ function CT:ShortChannel()
         end
 
         if CT.db.abbreviation == "SHORT" then
-            abbr = abbrStrings[strupper(self)]
+            abbr = abbrStrings[strupper(self)] .. " "
         elseif CT.db.abbreviation == "NONE" then
             return ""
         else
@@ -192,8 +207,22 @@ function CT:ShortChannel()
 
     if not abbr and CT.db.abbreviation == "SHORT" then
         local name = select(2, GetChannelName(gsub(self, "channel:", "")))
+
         if name then
-            abbr = F.SubCJKString(name, 1, 1)
+            local communityID = strmatch(name, "Community:(%d+):")
+            if communityID then
+                local communityInfo = C_Club_GetClubInfo(communityID)
+
+                if communityInfo.clubType == 0 then
+                    abbr = strupper(F.SubCJKString(communityInfo.name, 1, 2))
+                    abbr = E:TextGradient(abbr, 0.000, 0.592, 0.902, 0.000, 0.659, 1.000)
+                elseif communityInfo.clubType == 1 then
+                    abbr = communityInfo.shortName or strupper(F.SubCJKString(communityInfo.name, 1, 2))
+                    abbr = F.CreateColorString(abbr, {r = 0.902, g = 0.494, b = 0.133})
+                end
+            else
+                abbr = F.SubCJKString(name, 1, 1)
+            end
         end
     end
 
@@ -289,7 +318,7 @@ function CT:HandleName(nameString)
     if not nameString or nameString == "" then
         return nameString
     end
-    
+
     if not self.db or not self.db.enable or not self.db.removeRealm then
         return nameString
     end

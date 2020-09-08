@@ -58,11 +58,14 @@ options.objectiveTracker = {
             set = function(info, value)
                 E.private.WT.quest.objectiveTracker[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
-            end,
+            end
         },
         noDash = {
             order = 2,
             type = "toggle",
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             name = L["No Dash"]
         },
         progress = {
@@ -70,6 +73,9 @@ options.objectiveTracker = {
             type = "group",
             inline = true,
             name = L["Progress"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             args = {
                 colorfulProgress = {
                     order = 1,
@@ -95,6 +101,9 @@ options.objectiveTracker = {
             type = "group",
             inline = true,
             name = L["Title Color"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             get = function(info)
                 return E.private.WT.quest.objectiveTracker.titleColor[info[#info]]
             end,
@@ -130,7 +139,7 @@ options.objectiveTracker = {
                     end
                 },
                 customColorHighlight = {
-                    order = 3,
+                    order = 4,
                     type = "color",
                     name = L["Highlight Color"],
                     hasAlpha = false,
@@ -151,6 +160,9 @@ options.objectiveTracker = {
             type = "group",
             inline = true,
             name = L["Header"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             get = function(info)
                 return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
@@ -193,6 +205,9 @@ options.objectiveTracker = {
             type = "group",
             inline = true,
             name = L["Title"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             get = function(info)
                 return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
@@ -235,6 +250,9 @@ options.objectiveTracker = {
             type = "group",
             inline = true,
             name = L["Information"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
             get = function(info)
                 return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
@@ -317,6 +335,9 @@ options.turnIn = {
             desc = L[
                 "If there are multiple items in the reward list, it will select the reward with the highest sell price."
             ],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
             width = 1.667
         },
         darkmoon = {
@@ -324,6 +345,9 @@ options.turnIn = {
             type = "toggle",
             name = L["Dark Moon"],
             desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
             width = 1.667
         },
         followerAssignees = {
@@ -331,6 +355,9 @@ options.turnIn = {
             type = "toggle",
             name = L["Follower Assignees"],
             desc = L["Open the window of follower recruit automatically."],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
             width = 1.667
         },
         rogueClassHallInsignia = {
@@ -338,6 +365,9 @@ options.turnIn = {
             type = "toggle",
             name = L["Rogue Class Hall Insignia"],
             desc = L["Open the passageway to Rogue Class Hall automatically."],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
             width = 1.667
         },
         custom = {
@@ -345,6 +375,9 @@ options.turnIn = {
             type = "group",
             inline = true,
             name = L["Ignored NPCs"],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
             args = {
                 description = {
                     order = 1,
@@ -445,11 +478,17 @@ options.switchButtons = {
             order = 3,
             type = "toggle",
             name = L["Hide With Objective Tracker"],
-            width = 1.5,
+            disabled = function()
+                return not E.db.WT.quest.switchButtons.enable
+            end,
+            width = 1.5
         },
         backdrop = {
             order = 4,
             type = "toggle",
+            disabled = function()
+                return not E.db.WT.quest.switchButtons.enable
+            end,
             name = L["Bar Backdrop"]
         },
         font = {
@@ -457,6 +496,9 @@ options.switchButtons = {
             type = "group",
             inline = true,
             name = L["Font Setting"],
+            disabled = function()
+                return not E.db.WT.quest.switchButtons.enable
+            end,
             get = function(info)
                 return E.db.WT.quest.switchButtons.font[info[#info]]
             end,
@@ -515,6 +557,9 @@ options.switchButtons = {
             type = "group",
             inline = true,
             name = L["Modules"],
+            disabled = function()
+                return not E.db.WT.quest.switchButtons.enable
+            end,
             get = function(info)
                 return E.db.WT.quest.switchButtons[info[#info]]
             end,
@@ -575,6 +620,9 @@ options.paragonReputation = {
             name = L["Reputation panel"],
             type = "group",
             inline = true,
+            disabled = function()
+                return not E.db.WT.quest.paragonReputation.enable
+            end,
             set = function(info, value)
                 E.db.WT.quest.paragonReputation[info[#info]] = value
                 ReputationFrame_Update()
@@ -614,6 +662,9 @@ options.paragonReputation = {
             name = L["Toast"],
             type = "group",
             inline = true,
+            disabled = function()
+                return not E.db.WT.quest.paragonReputation.enable
+            end,
             get = function(info)
                 return E.db.WT.quest.paragonReputation[info[#info - 1]][info[#info]]
             end,

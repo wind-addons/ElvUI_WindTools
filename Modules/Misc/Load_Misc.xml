@@ -4,6 +4,7 @@
 	<!-- Submodule -->
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='PauseToSlash.lua'/>
+	<Script file='Tags.lua'/>
 	<Script file='Transmog.lua'/>
 	<!-- Others -->
 	<Script file='MoveFrames.lua'/>

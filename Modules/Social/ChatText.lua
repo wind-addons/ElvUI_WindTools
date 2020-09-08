@@ -21,6 +21,7 @@ local time = time
 local tonumber = tonumber
 local tostring = tostring
 local type = type
+local utf8sub = string.utf8sub
 local wipe = wipe
 
 local BNGetNumFriendInvites = BNGetNumFriendInvites
@@ -214,14 +215,14 @@ function CT:ShortChannel()
                 local communityInfo = C_Club_GetClubInfo(communityID)
 
                 if communityInfo.clubType == 0 then
-                    abbr = strupper(F.SubCJKString(communityInfo.name, 1, 2))
+                    abbr = strupper(utf8sub(communityInfo.name, 1, 2))
                     abbr = E:TextGradient(abbr, 0.000, 0.592, 0.902, 0.000, 0.659, 1.000)
                 elseif communityInfo.clubType == 1 then
-                    abbr = communityInfo.shortName or strupper(F.SubCJKString(communityInfo.name, 1, 2))
+                    abbr = communityInfo.shortName or strupper(utf8sub(communityInfo.name, 1, 2))
                     abbr = F.CreateColorString(abbr, {r = 0.902, g = 0.494, b = 0.133})
                 end
             else
-                abbr = F.SubCJKString(name, 1, 1)
+                abbr = utf8sub(name, 1, 1)
             end
         end
     end
@@ -243,10 +244,10 @@ function CT:HandleShortChannels(msg)
     local raidWarningString = ""
     if CT.db and CT.db.abbreviation and W.ChineseLocale then
         -- 中文特別缩写
-        msg = gsub(msg, F.SubCJKString(_G.CHAT_WHISPER_GET, 3), L["[ABBR] Whisper"] .. "：")
-        msg = gsub(msg, F.SubCJKString(_G.CHAT_WHISPER_INFORM_GET, 1, 3), L["[ABBR] Whisper"])
-        msg = gsub(msg, F.SubCJKString(_G.CHAT_SAY_GET, 3), L["[ABBR] Say"] .. "：")
-        msg = gsub(msg, F.SubCJKString(_G.CHAT_YELL_GET, 3), L["[ABBR] Yell"] .. "：")
+        msg = gsub(msg, utf8sub(_G.CHAT_WHISPER_GET, 3), L["[ABBR] Whisper"] .. "：")
+        msg = gsub(msg, utf8sub(_G.CHAT_WHISPER_INFORM_GET, 1, 3), L["[ABBR] Whisper"])
+        msg = gsub(msg, utf8sub(_G.CHAT_SAY_GET, 3), L["[ABBR] Say"] .. "：")
+        msg = gsub(msg, utf8sub(_G.CHAT_YELL_GET, 3), L["[ABBR] Yell"] .. "：")
     end
 
     if CT.db and CT.db.removeBrackets then

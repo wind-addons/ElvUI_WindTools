@@ -4,6 +4,11 @@ local LSM = E.Libs.LSM
 local M = W:GetModule("Misc")
 
 local _G = _G
+local format = format
+local strlower = strlower
+local GetClassInfo = GetClassInfo
+local GetNumClasses = GetNumClasses
+
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
 
@@ -250,3 +255,117 @@ options.disableTalkingHead = {
         }
     }
 }
+
+options.tags = {
+    order = 6,
+    type = "group",
+    name = L["Transmog"],
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add more oUF tags. You can use them on UnitFrames configuration."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        tags = {
+            order = 1,
+            type = "toggle",
+            name = L["Tags"],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        }
+    }
+}
+
+do
+    local examples = {}
+
+    examples.health = {
+        name = L["Health"],
+        noSign = {
+            tag = "[health:percent-nosign]",
+            text = L["The percentage of current health without percent sign"]
+        },
+        noStatusNoSign = {
+            tag = "[health:percent-nostatus-nosign]",
+            text = L["The percentage of health without percent sign and status"]
+        }
+    }
+
+    examples.power = {
+        name = L["Power"],
+        noSign = {
+            tag = "[power:percent-nosign]",
+            text = L["The percentage of current power without percent sign"]
+        }
+    }
+
+    examples.range = {
+        name = L["Range"],
+        normal = {
+            tag = "[range]",
+            text = L["Range"]
+        },
+        expectation = {
+            tag = "[range:expectation]",
+            text = L["Range Expectation"]
+        }
+    }
+
+    examples.color = {
+        name = L["Color"],
+        player = {
+            tag = "[classcolor:player]",
+            text = L["The color of the player's class"]
+        },
+    }
+
+    for i=1,  GetNumClasses() do
+        local localizedName, upperText = GetClassInfo(i)
+        examples.color[upperText] = {
+            tag = format("[classcolor:%s]", strlower(upperText)),
+            text = format(L["The color of %s"], localizedName)
+        }
+    end
+    
+
+    local index = 11
+    for cat, catTable in pairs(examples) do
+        options.tags.args[cat] = {
+            order = index,
+            type = "group",
+            name = catTable.name,
+            args = {}
+        }
+        index = index + 1
+
+        local subIndex = 1
+        for key, data in pairs(catTable) do
+            if key ~= "name" then
+                options.tags.args[cat].args[key] = {
+                    order = subIndex,
+                    type = "input",
+                    width = "full",
+                    name = data.text,
+                    get = function()
+                        return data.tag
+                    end
+                }
+                subIndex = subIndex + 1
+            end
+        end
+    end
+end

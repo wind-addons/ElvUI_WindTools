@@ -67,22 +67,22 @@ options.objectiveTracker = {
             inline = true,
             name = L["Progress"],
             args = {
-                percentage = {
+                colorfulProgress = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Colorful Progress"]
+                },
+                percentage = {
+                    order = 2,
                     type = "toggle",
                     name = L["Percentage"],
                     desc = L["Add percentage text after quest text."]
                 },
                 colorfulPercentage = {
-                    order = 2,
+                    order = 3,
                     type = "toggle",
                     name = L["Colorful Percentage"],
                     desc = L["Make the additional percentage text be colored."]
-                },
-                colorfulProgress = {
-                    order = 3,
-                    type = "toggle",
-                    name = L["Colorful Progress"]
                 }
             }
         },
@@ -123,7 +123,6 @@ options.objectiveTracker = {
                     set = function(info, r, g, b)
                         local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
                         db.r, db.g, db.b = r, g, b
-
                     end
                 },
                 customColorHighlight = {

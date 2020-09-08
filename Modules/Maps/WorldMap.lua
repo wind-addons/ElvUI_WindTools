@@ -2,16 +2,20 @@ local W, F, E, L = unpack(select(2, ...))
 local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
 local _G = _G
-local collectgarbage = collectgarbage
-local pairs, tonumber = pairs, tonumber
-local tinsert, strsplit, ceil, ipairs, mod = tinsert, strsplit, ceil, ipairs, mod
+local ceil = ceil
+local ipairs = ipairs
+local mod = mod
+local pairs = pairs
+local strsplit = strsplit
+local tinsert = tinsert
+local tonumber = tonumber
 
+local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
-local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
+local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 local WorldMapFrame = _G.WorldMapFrame
-local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 -- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
 -- UiMapArtID = {
@@ -2241,7 +2245,7 @@ local RevealDatabase = {
 -- 用于储存显现的覆盖层
 local overlayTextures = {}
 
-function WM:HandleMap(map)
+function WM:HandleMap(map, fullUpdate)
     overlayTextures = {}
     local mapID = WorldMapFrame.mapID
     if not mapID then
@@ -2257,12 +2261,8 @@ function WM:HandleMap(map)
     local TileExists = {}
     local exploredMapTextures = C_MapExplorationInfo_GetExploredMapTextures(mapID)
     if exploredMapTextures then
-        for i, exploredTextureInfo in ipairs(exploredMapTextures) do
-            local key =
-                exploredTextureInfo.textureWidth ..
-                ":" ..
-                    exploredTextureInfo.textureHeight ..
-                        ":" .. exploredTextureInfo.offsetX .. ":" .. exploredTextureInfo.offsetY
+        for i, tex in ipairs(exploredMapTextures) do
+            local key = tex.textureWidth .. ":" .. tex.textureHeight .. ":" .. tex.offsetX .. ":" .. tex.offsetY
             TileExists[key] = true
         end
     end
@@ -2329,6 +2329,9 @@ function WM:HandleMap(map)
                     texture:SetTexture(tonumber(fileDataIDs[((j - 1) * numTexturesWide) + k]), nil, nil, "TRILINEAR")
                     texture:SetDrawLayer("ARTWORK", -1)
                     texture:Show()
+                    if fullUpdate then
+                        map.textureLoadGroup:AddTexture(texture)
+                    end
                     tinsert(overlayTextures, texture)
                 end
             end

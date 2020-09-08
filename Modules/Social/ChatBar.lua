@@ -258,7 +258,7 @@ function CB:UpdateBar()
                     local autoJoined = false
                     -- 自动加入
                     if channelId == 0 and db.autoJoin then
-                        JoinChannelByName(name)
+                        JoinPermanentChannel(name)
                         ChatFrame_AddChannel(DefaultChatFrame, name)
                         channelId = GetChannelName(name)
                         autoJoined = true

@@ -12,6 +12,7 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
     end
 
     stageBlock.NormalBG:StripTextures()
+    stageBlock.FinalBG:StripTextures()
     stageBlock.backdrop:ClearAllPoints()
     stageBlock.backdrop:Point("TOPLEFT", stageBlock.NormalBG, "TOPLEFT", 4, -4)
     stageBlock.backdrop:Point("BOTTOMRIGHT", stageBlock.NormalBG, "BOTTOMRIGHT", -20, 6)

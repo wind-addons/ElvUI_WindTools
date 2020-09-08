@@ -3,24 +3,35 @@ local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
 local S = W:GetModule("Skins")
 local LSM = E.Libs.LSM
 
-local _, _G = _, _G
+local _G = _G
+local format = format
+local ipairs = ipairs
+local pairs = pairs
 local print = print
-local pairs, ipairs, tostring, strmatch, format = pairs, ipairs, tostring, strmatch, format
-local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
-local GetChannelName, GetChannelList = GetChannelName, GetChannelList
-local ChatFrame_OpenChat, ChatFrame_AddChannel = ChatFrame_OpenChat, ChatFrame_AddChannel
-local JoinChannelByName, LeaveChannelByName = JoinChannelByName, LeaveChannelByName
-local UnitIsGroupLeader, UnitIsGroupAssistant = UnitIsGroupLeader, UnitIsGroupAssistant
-local IsInGroup, IsInRaid, IsInGuild, IsEveryoneAssistant = IsInGroup, IsInRaid, IsInGuild, IsEveryoneAssistant
-local RandomRoll = RandomRoll
+local strmatch = strmatch
+local tostring = tostring
 
-local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
-local C_Timer_After = C_Timer.After
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
-
+local C_Timer_After = C_Timer.After
+local ChatFrame_AddChannel = ChatFrame_AddChannel
+local ChatFrame_OpenChat = ChatFrame_OpenChat
+local CreateFrame = CreateFrame
+local DefaultChatFrame = _G.DEFAULT_CHAT_FRAME
+local GetChannelList = GetChannelList
+local GetChannelName = GetChannelName
+local InCombatLockdown = InCombatLockdown
+local IsEveryoneAssistant = IsEveryoneAssistant
+local IsInGroup = IsInGroup
+local IsInGuild = IsInGuild
+local IsInRaid = IsInRaid
+local JoinPermanentChannel = JoinPermanentChannel
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local LeaveChannelByName = LeaveChannelByName
+local RandomRoll = RandomRoll
+local UnitIsGroupAssistant = UnitIsGroupAssistant
+local UnitIsGroupLeader = UnitIsGroupLeader
 
 local normalChannelsIndex = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE"}
 
@@ -281,7 +292,7 @@ function CB:UpdateBar()
                     end
                 elseif mouseButton == "RightButton" then
                     if channelId == 0 then
-                        JoinChannelByName(name)
+                        JoinPermanentChannel(name)
                         ChatFrame_AddChannel(DefaultChatFrame, name)
                     else
                         LeaveChannelByName(name)

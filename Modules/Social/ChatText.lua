@@ -9,7 +9,7 @@ local format = format
 local gsub = gsub
 local ipairs = ipairs
 local next = next
-local pairs= pairs
+local pairs = pairs
 local select = select
 local strfind = strfind
 local strlen = strlen
@@ -19,7 +19,7 @@ local strsub = strsub
 local strupper = strupper
 local time = time
 local tonumber = tonumber
-local tostring= tostring
+local tostring = tostring
 local type = type
 local wipe = wipe
 
@@ -197,7 +197,7 @@ function CT:ShortChannel()
         end
 
         if CT.db.abbreviation == "SHORT" then
-            abbr = abbrStrings[strupper(self)] .. " "
+            abbr = abbrStrings[strupper(self)]
         elseif CT.db.abbreviation == "NONE" then
             return ""
         else

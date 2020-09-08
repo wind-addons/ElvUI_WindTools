@@ -2,6 +2,16 @@ local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 local RC = E.Libs.RC
 
+local floor = floor
+local format = format
+local select = select
+local strlen = strlen
+local strlower = strlower
+local strsub = strsub
+local GetClassColor = GetClassColor
+local GetClassInfo = GetClassInfo
+local GetNumClasses = GetNumClasses
+
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
@@ -34,57 +44,17 @@ function M:Tags()
 		return GetClassColorString(E.myclass)
 	end
 
-	E.oUF.Tags.Methods["classcolor:hunter"] = function()
-		return GetClassColorString("HUNTER")
-	end
-
-	E.oUF.Tags.Methods["classcolor:warrior"] = function()
-		return GetClassColorString("WARRIOR")
-	end
-
-	E.oUF.Tags.Methods["classcolor:paladin"] = function()
-		return GetClassColorString("PALADIN")
-	end
-
-	E.oUF.Tags.Methods["classcolor:mage"] = function()
-		return GetClassColorString("MAGE")
-	end
-
-	E.oUF.Tags.Methods["classcolor:priest"] = function()
-		return GetClassColorString("PRIEST")
-	end
-
-	E.oUF.Tags.Methods["classcolor:warlock"] = function()
-		return GetClassColorString("WARLOCK")
-	end
-
-	E.oUF.Tags.Methods["classcolor:shaman"] = function()
-		return GetClassColorString("SHAMAN")
-	end
-
-	E.oUF.Tags.Methods["classcolor:deathknight"] = function()
-		return GetClassColorString("DEATHKNIGHT")
-	end
-
-	E.oUF.Tags.Methods["classcolor:demonhunter"] = function()
-		return GetClassColorString("DEMONHUNTER")
-	end
-
-	E.oUF.Tags.Methods["classcolor:druid"] = function()
-		return GetClassColorString("DRUID")
-	end
-
-	E.oUF.Tags.Methods["classcolor:monk"] = function()
-		return GetClassColorString("MONK")
-	end
-
-	E.oUF.Tags.Methods["classcolor:rogue"] = function()
-		return GetClassColorString("ROGUE")
+	for i = 1, GetNumClasses() do
+		local upperText = select(2, GetClassInfo(i))
+		local tag = "classcolor:" .. strlower(upperText)
+		E.oUF.Tags.Methods[tag] = function()
+			return GetClassColorString(upperText)
+		end
 	end
 
 	-- 血量百分比 去除百分号
-	E.oUF.Tags.Events["health:percent-nosymbol"] = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED"
-	E.oUF.Tags.Methods["health:percent-nosymbol"] = function(unit)
+	E.oUF.Tags.Events["health:percent-nosign"] = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED"
+	E.oUF.Tags.Methods["health:percent-nosign"] = function(unit)
 		local originalString = E.oUF.Tags.Methods["health:percent"](unit)
 		local length = strlen(originalString)
 		if strsub(originalString, length, length) == "%" then
@@ -95,8 +65,8 @@ function M:Tags()
 	end
 
 	-- 无状态血量百分比 去除百分号
-	E.oUF.Tags.Events["health:percent-nostatus-nosymbol"] = "UNIT_HEALTH UNIT_MAXHEALTH"
-	E.oUF.Tags.Methods["health:percent-nostatus-nosymbol"] = function(unit)
+	E.oUF.Tags.Events["health:percent-nostatus-nosign"] = "UNIT_HEALTH UNIT_MAXHEALTH"
+	E.oUF.Tags.Methods["health:percent-nostatus-nosign"] = function(unit)
 		local originalString = E.oUF.Tags.Methods["health:percent-nostatus"](unit)
 		local length = strlen(originalString)
 		if strsub(originalString, length, length) == "%" then
@@ -107,8 +77,8 @@ function M:Tags()
 	end
 
 	-- 能量百分比 去除百分号
-	E.oUF.Tags.Events["power:percent-nosymbol"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-	E.oUF.Tags.Methods["power:percent-nosymbol"] = function(unit)
+	E.oUF.Tags.Events["power:percent-nosign"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	E.oUF.Tags.Methods["power:percent-nosign"] = function(unit)
 		local originalString = E.oUF.Tags.Methods["power:percent"](unit)
 		if originalString then
 			local length = strlen(originalString)

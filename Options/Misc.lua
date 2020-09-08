@@ -4,8 +4,8 @@ local LSM = E.Libs.LSM
 local M = W:GetModule("Misc")
 
 local _G = _G
-
-local C_CVar_SetCVar, C_CVar_GetCVarBool = C_CVar.SetCVar, C_CVar.GetCVarBool
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
+local C_CVar_SetCVar = C_CVar.SetCVar
 
 options.cvars = {
     order = 1,
@@ -99,8 +99,54 @@ options.cvars = {
     }
 }
 
-options.transmog = {
+options.moveFrames = {
     order = 2,
+    type = "group",
+    name = L["Move Frames"],
+    get = function(info)
+        return E.private.WT.misc[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.misc[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["This module provides the feature that repositions the frames with drag and drop."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        moveBlizzardFrames = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        moveElvUIBags = {
+            order = 2,
+            type = "toggle",
+            name = L["Move ElvUI Bags"]
+        },
+        rememberPositions = {
+            order = 3,
+            type = "toggle",
+            hidden = true,
+            name = L["Remember Positions"]
+        }
+    }
+}
+
+options.transmog = {
+    order = 3,
     type = "group",
     name = L["Transmog"],
     args = {
@@ -135,7 +181,7 @@ options.transmog = {
 }
 
 options.pauseToSlash = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Pause to slash"],
     args = {
@@ -172,7 +218,7 @@ options.pauseToSlash = {
 }
 
 options.disableTalkingHead = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Disable Talking Head"],
     args = {

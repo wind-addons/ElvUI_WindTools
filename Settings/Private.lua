@@ -29,7 +29,8 @@ V.misc = {
 	pauseToSlash = true,
 	disableTalkingHead = true,
 	moveBlizzardFrames = true,
-	moveElvUIBags = true
+	moveElvUIBags = true,
+	rememberPositions = true,
 }
 
 V.quest = {

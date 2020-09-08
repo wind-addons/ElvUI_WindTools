@@ -26,13 +26,20 @@ function S:TooltipFrames()
     end
 
     local styleTT = {
-        _G.GameTooltip,
-        _G.ItemRefTooltip,
-        _G.FriendsTooltip,
-        _G.WarCampaignTooltip,
-        _G.EmbeddedItemTooltip,
-        _G.ReputationParagonTooltip,
-        _G.QuestScrollFrame.StoryTooltip
+		_G.ItemRefTooltip,
+		_G.ItemRefShoppingTooltip1,
+		_G.ItemRefShoppingTooltip2,
+		_G.FriendsTooltip,
+		_G.WarCampaignTooltip,
+		_G.EmbeddedItemTooltip,
+		_G.ReputationParagonTooltip,
+		_G.GameTooltip,
+		_G.ShoppingTooltip1,
+		_G.ShoppingTooltip2,
+		_G.QuestScrollFrame.StoryTooltip,
+		_G.QuestScrollFrame.CampaignTooltip,
+		_G.ElvUIConfigTooltip,
+		_G.ElvUISpellBookTooltip
     }
 
     for _, tt in pairs(styleTT) do

@@ -57,6 +57,9 @@ function S:SkinProgressBars(_, _, line)
         F.SetFontOutline(label)
     end
 
+    --   目标字样
+    F.SetFontOutline(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+
     progressBar.windStyle = true
 end
 

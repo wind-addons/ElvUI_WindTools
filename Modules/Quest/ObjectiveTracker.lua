@@ -14,8 +14,6 @@ local tonumber = tonumber
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
-local oldTextWidth
-
 local SystemCache = {
     ["Header"] = {
         r = _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
@@ -81,31 +79,34 @@ function OT:ChangeQuestFontStyle(_, block)
         return
     end
 
-    if block.HeaderText and not block.HeaderText.windStyle then
+    if block.HeaderText then
         F.SetFontWithDB(block.HeaderText, self.db.title)
-        block.HeaderText:SetHeight(block.HeaderText:GetHeight() + 2)
-        block.HeaderText.windStyle = true
-    end
-
-    if block.ScrollContents then
-        local childs = {block.ScrollContents:GetChildren()}
-
-        if #childs == 1 and childs[1].Text then
-            F.SetFontWithDB(childs[1].Text, self.db.title)
-            childs[1].Text:SetHeight(childs[1].Text:GetHeight() + 4)
-            childs[1].windStyle = true
+        local height = block.HeaderText:GetStringHeight() + 2
+        if height ~= block.HeaderText:GetHeight() then
+            block.HeaderText:SetHeight(height)
         end
     end
 
     if block.currentLine then
-        F.SetFontWithDB(block.currentLine.Text, self.db.info)
-        self:ChangeDashStyle(block.currentLine, "Dash")
+        if block.currentLine.objectiveKey == 0 then
+            F.SetFontWithDB(block.currentLine.Text, self.db.title)
+            local height = block.currentLine.Text:GetStringHeight() + 4
+            if height ~= block.currentLine.Text:GetHeight() then
+                block.currentLine.Text:SetHeight(height)
+            end
+        else
+            F.SetFontWithDB(block.currentLine.Text, self.db.info)
+            self:ChangeDashStyle(block.currentLine, "Dash")
 
-        local widthBefore = block.currentLine.Text:GetStringWidth()
-        self:ColorfulProgression(block.currentLine.Text)
-        local widthAfter = block.currentLine.Text:GetStringWidth()
-        if floor(widthAfter / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) > floor(widthBefore / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) then
-            block.height = block.height + self.db.info.size + 2
+            local widthBefore = block.currentLine.Text:GetStringWidth()
+            self:ColorfulProgression(block.currentLine.Text)
+            local widthAfter = block.currentLine.Text:GetStringWidth()
+            if
+                floor(widthAfter / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) >
+                    floor(widthBefore / _G.OBJECTIVE_TRACKER_TEXT_WIDTH)
+             then
+                block.height = block.height + self.db.info.size + 2
+            end
         end
     end
 end
@@ -146,6 +147,9 @@ function OT:ChangeDashStyle(currentLine, target)
         if target == "Dash" then
             F.SetFontWithDB(currentLine[target], self.db.info)
         end
+        currentLine[target]:Show()
+        currentLine.Text:ClearAllPoints()
+        currentLine.Text:Point("TOPLEFT", currentLine[target], "TOPRIGHT", 0, 0)
     end
 end
 
@@ -193,7 +197,7 @@ function OT:ChangeQuestTitleColor()
         return
     end
 
-    if config.enable and not self.titleColorChanged then
+    if config.enable then
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
             r = config.classColor and classColor.r or config.customColorNormal.r,
             g = config.classColor and classColor.g or config.customColorNormal.g,
@@ -226,18 +230,22 @@ function OT:ChangeQuestTitleColor()
     end
 end
 
+function OT:UpdateTextWidth()
+    if self.db.noDash then
+        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
+    else
+        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - _G.OBJECTIVE_TRACKER_DASH_WIDTH - 12
+    end
+end
+
 function OT:Initialize()
-    self.db = E.private.WT.quest.objectiveTracker
+    self.db = E.db.WT.quest.objectiveTracker
     if not self.db.enable then
         return
     end
 
     self:ChangeQuestTitleColor()
-
-    if self.db.noDash then
-        oldTextWidth = _G.OBJECTIVE_TRACKER_TEXT_WIDTH
-        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
-    end
+    self:UpdateTextWidth()
 
     local trackerModules = {
         -- _G.SCENARIO_CONTENT_TRACKER_MODULE,
@@ -249,12 +257,12 @@ function OT:Initialize()
         _G.ACHIEVEMENT_TRACKER_MODULE
     }
 
-    self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
-    self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
-
     for _, module in pairs(trackerModules) do
         self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
     end
+
+    self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
+    self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
 end
 
 W:RegisterModule(OT:GetName())

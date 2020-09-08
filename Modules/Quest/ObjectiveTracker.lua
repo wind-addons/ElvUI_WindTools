@@ -15,12 +15,12 @@ local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local SystemCache = {
-    ["Header"] = {
+    TitleNormalColor = {
         r = _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
         g = _G.OBJECTIVE_TRACKER_COLOR["Header"].g,
         b = _G.OBJECTIVE_TRACKER_COLOR["Header"].b
     },
-    ["HeaderHighlight"] = {
+    TitleHighlightColor = {
         r = _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].r,
         g = _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].g,
         b = _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].b
@@ -42,13 +42,12 @@ local color = {
     }
 }
 
-local function GetColor(progress)
+local function GetProgressColor(progress)
     local r = (color.complete.r - color.start.r) * progress + color.start.r
     local g = (color.complete.g - color.start.g) * progress + color.start.g
     local b = (color.complete.r - color.start.b) * progress + color.start.b
 
     -- 色彩亮度补偿
-
     local addition = 0.35
     r = min(r + abs(0.5 - progress) * addition, r)
     g = min(g + abs(0.5 - progress) * addition, g)
@@ -59,18 +58,45 @@ end
 
 function OT:ChangeQuestHeaderStyle()
     local frame = _G.ObjectiveTrackerFrame.MODULES
-    local config = self.db.header
-
-    if not config or not frame then
+    if not self.db or not frame then
         return
     end
 
     for i = 1, #frame do
         local modules = frame[i]
-        if modules then
-            local text = modules.Header.Text
-            F.SetFontWithDB(text, config)
+        if modules and modules.Header and modules.Header.Text then
+            F.SetFontWithDB(modules.Header.Text, self.db.header)
         end
+    end
+end
+
+function OT:HandleTitleText(text)
+    F.SetFontWithDB(text, self.db.title)
+    local height = text:GetStringHeight() + 2
+    if height ~= text:GetHeight() then
+        text:SetHeight(height)
+    end
+end
+
+function OT:HandleInfoText(text)
+    self:ColorfulProgression(text)
+    F.SetFontWithDB(text, self.db.info)
+    text:SetHeight(text:GetStringHeight())
+
+    local line = text:GetParent()
+    local dash = line.Dash or line.Icon
+
+    if self.db.noDash and dash then
+        dash:Hide()
+        text:ClearAllPoints()
+        text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
+    else
+        if dash.SetText then
+            F.SetFontWithDB(dash, self.db.info)
+        end
+        dash:Show()
+        text:ClearAllPoints()
+        text:Point("TOPLEFT", dash, "TOPRIGHT", 0, 0)
     end
 end
 
@@ -80,33 +106,14 @@ function OT:ChangeQuestFontStyle(_, block)
     end
 
     if block.HeaderText then
-        F.SetFontWithDB(block.HeaderText, self.db.title)
-        local height = block.HeaderText:GetStringHeight() + 2
-        if height ~= block.HeaderText:GetHeight() then
-            block.HeaderText:SetHeight(height)
-        end
+        self:HandleTitleText(block.HeaderText)
     end
 
     if block.currentLine then
-        if block.currentLine.objectiveKey == 0 then
-            F.SetFontWithDB(block.currentLine.Text, self.db.title)
-            local height = block.currentLine.Text:GetStringHeight() + 4
-            if height ~= block.currentLine.Text:GetHeight() then
-                block.currentLine.Text:SetHeight(height)
-            end
+        if block.currentLine.objectiveKey == 0 then -- 世界任务标题
+            self:HandleTitleText(block.currentLine.Text)
         else
-            F.SetFontWithDB(block.currentLine.Text, self.db.info)
-            self:ChangeDashStyle(block.currentLine, "Dash")
-
-            local widthBefore = block.currentLine.Text:GetStringWidth()
-            self:ColorfulProgression(block.currentLine.Text)
-            local widthAfter = block.currentLine.Text:GetStringWidth()
-            if
-                floor(widthAfter / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) >
-                    floor(widthBefore / _G.OBJECTIVE_TRACKER_TEXT_WIDTH)
-             then
-                block.height = block.height + self.db.info.size + 2
-            end
+            self:HandleInfoText(block.currentLine.Text)
         end
     end
 end
@@ -116,40 +123,9 @@ function OT:ScenarioObjectiveBlock_UpdateCriteria()
         local childs = {_G.ScenarioObjectiveBlock:GetChildren()}
         for _, child in pairs(childs) do
             if child.Text then
-                F.SetFontWithDB(child.Text, self.db.info)
-                self:ChangeDashStyle(child, "Icon")
-
-                local widthBefore = child.Text:GetStringWidth()
-                self:ColorfulProgression(child.Text)
-                local widthAfter = child.Text:GetStringWidth()
-                if
-                    floor(widthAfter / _G.OBJECTIVE_TRACKER_TEXT_WIDTH) >
-                        floor(widthBefore / _G.OBJECTIVE_TRACKER_TEXT_WIDTH)
-                 then
-                    _G.ScenarioObjectiveBlock.height = _G.ScenarioObjectiveBlock.height + self.db.info.size + 2
-                end
-                child.windStyle = true
+                self:HandleInfoText(block.currentLine.Text)
             end
         end
-    end
-end
-
-function OT:ChangeDashStyle(currentLine, target)
-    if not self.db or not currentLine or not currentLine[target] then
-        return
-    end
-
-    if self.db.noDash then
-        currentLine[target]:Hide()
-        currentLine.Text:ClearAllPoints()
-        currentLine.Text:Point("TOPLEFT", currentLine[target], "TOPLEFT", 0, 0)
-    else
-        if target == "Dash" then
-            F.SetFontWithDB(currentLine[target], self.db.info)
-        end
-        currentLine[target]:Show()
-        currentLine.Text:ClearAllPoints()
-        currentLine.Text:Point("TOPLEFT", currentLine[target], "TOPRIGHT", 0, 0)
     end
 end
 
@@ -172,14 +148,14 @@ function OT:ColorfulProgression(text)
     local progress = tonumber(current) / tonumber(required)
 
     if self.db.colorfulProgress then
-        info = F.CreateColorString(current .. "/" .. required, GetColor(progress))
+        info = F.CreateColorString(current .. "/" .. required, GetProgressColor(progress))
         info = info .. " " .. details
     end
 
     if self.db.percentage then
         local percentage = format("[%.f%%]", progress * 100)
         if self.db.colorfulPercentage then
-            percentage = F.CreateColorString(percentage, GetColor(progress))
+            percentage = F.CreateColorString(percentage, GetProgressColor(progress))
         end
         info = info .. " " .. percentage
     end
@@ -197,7 +173,7 @@ function OT:ChangeQuestTitleColor()
         return
     end
 
-    if config.enable then
+    if config.enable and self.db.enable then
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
             r = config.classColor and classColor.r or config.customColorNormal.r,
             g = config.classColor and classColor.g or config.customColorNormal.g,
@@ -211,23 +187,23 @@ function OT:ChangeQuestTitleColor()
         }
 
         self.titleColorChanged = true
-        ObjectiveTracker_Update()
-    elseif not config.enable and self.titleColorChanged then
+    elseif (not config.enable or not self.db.enable) and self.titleColorChanged then
         _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
-            r = SystemCache["Header"].r,
-            g = SystemCache["Header"].g,
-            b = SystemCache["Header"].b
+            r = SystemCache["TitleNormalColor"].r,
+            g = SystemCache["TitleNormalColor"].g,
+            b = SystemCache["TitleNormalColor"].b
         }
 
         _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"] = {
-            r = SystemCache["HeaderHighlight"].r,
-            g = SystemCache["HeaderHighlight"].g,
-            b = SystemCache["HeaderHighlight"].b
+            r = SystemCache["TitleHighlightColor"].r,
+            g = SystemCache["TitleHighlightColor"].g,
+            b = SystemCache["TitleHighlightColor"].b
         }
 
         self.titleColorChanged = false
-        ObjectiveTracker_Update()
     end
+
+    ObjectiveTracker_Update()
 end
 
 function OT:UpdateTextWidth()
@@ -239,30 +215,34 @@ function OT:UpdateTextWidth()
 end
 
 function OT:Initialize()
-    self.db = E.db.WT.quest.objectiveTracker
+    self.db = E.private.WT.quest.objectiveTracker
     if not self.db.enable then
         return
     end
 
-    self:ChangeQuestTitleColor()
     self:UpdateTextWidth()
 
-    local trackerModules = {
-        -- _G.SCENARIO_CONTENT_TRACKER_MODULE,
-        _G.UI_WIDGET_TRACKER_MODULE,
-        _G.BONUS_OBJECTIVE_TRACKER_MODULE,
-        _G.WORLD_QUEST_TRACKER_MODULE,
-        _G.CAMPAIGN_QUEST_TRACKER_MODULE,
-        _G.QUEST_TRACKER_MODULE,
-        _G.ACHIEVEMENT_TRACKER_MODULE
-    }
+    if not self.Initialized then
+        local trackerModules = {
+            _G.UI_WIDGET_TRACKER_MODULE,
+            _G.BONUS_OBJECTIVE_TRACKER_MODULE,
+            _G.WORLD_QUEST_TRACKER_MODULE,
+            _G.CAMPAIGN_QUEST_TRACKER_MODULE,
+            _G.QUEST_TRACKER_MODULE,
+            _G.ACHIEVEMENT_TRACKER_MODULE
+        }
 
-    for _, module in pairs(trackerModules) do
-        self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
+        for _, module in pairs(trackerModules) do
+            self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
+        end
+
+        self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
+        self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
+
+        self.Initialized = true
     end
 
-    self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
-    self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
+    self:ChangeQuestTitleColor()
 end
 
 W:RegisterModule(OT:GetName())

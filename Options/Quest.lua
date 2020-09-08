@@ -23,10 +23,10 @@ options.objectiveTracker = {
     type = "group",
     name = L["Objective Tracker"],
     get = function(info)
-        return E.db.WT.quest.objectiveTracker[info[#info]]
+        return E.private.WT.quest.objectiveTracker[info[#info]]
     end,
     set = function(info, value)
-        E.db.WT.quest.objectiveTracker[info[#info]] = value
+        E.private.WT.quest.objectiveTracker[info[#info]] = value
         ObjectiveTracker_Update()
     end,
     args = {
@@ -54,7 +54,11 @@ options.objectiveTracker = {
             order = 1,
             type = "toggle",
             name = L["Enable"],
-            width = "full"
+            width = "full",
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
         },
         noDash = {
             order = 2,
@@ -92,10 +96,10 @@ options.objectiveTracker = {
             inline = true,
             name = L["Title Color"],
             get = function(info)
-                return E.db.WT.quest.objectiveTracker.titleColor[info[#info]]
+                return E.private.WT.quest.objectiveTracker.titleColor[info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.quest.objectiveTracker.titleColor[info[#info]] = value
+                E.private.WT.quest.objectiveTracker.titleColor[info[#info]] = value
                 OT:ChangeQuestTitleColor()
             end,
             args = {
@@ -116,12 +120,12 @@ options.objectiveTracker = {
                     name = L["Normal Color"],
                     hasAlpha = false,
                     get = function(info)
-                        local db = E.db.WT.quest.objectiveTracker.titleColor.customColorNormal
-                        local default = P.quest.objectiveTracker.titleColor.customColorNormal
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
+                        local default = V.quest.objectiveTracker.titleColor.customColorNormal
                         return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
                     end,
                     set = function(info, r, g, b)
-                        local db = E.db.WT.quest.objectiveTracker.titleColor.customColorNormal
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
                         db.r, db.g, db.b = r, g, b
                     end
                 },
@@ -131,12 +135,12 @@ options.objectiveTracker = {
                     name = L["Highlight Color"],
                     hasAlpha = false,
                     get = function(info)
-                        local db = E.db.WT.quest.objectiveTracker.titleColor.customColorHighlight
-                        local default = P.quest.objectiveTracker.titleColor.customColorHighlight
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
+                        local default = V.quest.objectiveTracker.titleColor.customColorHighlight
                         return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
                     end,
                     set = function(info, r, g, b)
-                        local db = E.db.WT.quest.objectiveTracker.titleColor.customColorHighlight
+                        local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
                         db.r, db.g, db.b = r, g, b
                     end
                 }
@@ -148,12 +152,11 @@ options.objectiveTracker = {
             inline = true,
             name = L["Header"],
             get = function(info)
-                return E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
-                OT:ChangeQuestHeaderStyle()
-                ObjectiveTracker_Update()
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
                 name = {
@@ -191,11 +194,11 @@ options.objectiveTracker = {
             inline = true,
             name = L["Title"],
             get = function(info)
-                return E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
-                ObjectiveTracker_Update()
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
                 name = {
@@ -233,11 +236,11 @@ options.objectiveTracker = {
             inline = true,
             name = L["Information"],
             get = function(info)
-                return E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
-                ObjectiveTracker_Update()
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
                 name = {

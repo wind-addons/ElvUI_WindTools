@@ -1,6 +1,7 @@
 local E, _, V, P, G = unpack(ElvUI)
 local addonName, addon = ...
 local EP = E.Libs.EP
+local AceAddon = E.Libs.AceAddon
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
@@ -10,7 +11,7 @@ local collectgarbage = collectgarbage
 local GetAddOnMetadata = GetAddOnMetadata
 
 -- 注册 Wind 工具箱为 Ace3 插件
-local W = LibStub("AceAddon-3.0"):NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
+local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
 -- 初始化用于保存设置的数据库
 V.WT = {}
@@ -27,6 +28,9 @@ addon[7] = G
 
 _G["WindTools"] = addon
 W.Version = GetAddOnMetadata(addonName, "Version")
+
+-- 注册库
+E:AddLib("RC", "LibRangeCheck-2.0")
 
 -- 预处理 WindTools 模块
 W.Modules = {}

@@ -278,7 +278,7 @@ options.tags = {
         tags = {
             order = 1,
             type = "toggle",
-            name = L["Tags"],
+            name = L["Enable"],
             get = function(info)
                 return E.private.WT.misc[info[#info]]
             end,

@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
-local SB = W:NewModule("SwitchButtons")
+local SB = W:NewModule("SwitchButtons", "AceHook-3.0")
 
 local _G = _G
 local CreateFrame = CreateFrame
@@ -116,6 +116,8 @@ function SB:UpdateLayout()
         self.bar:Hide()
         self.barAnchor:Hide()
     end
+
+    self:AutoHideWithObjectiveFrame()
 end
 
 function SB:CreateBar()
@@ -155,12 +157,27 @@ function SB:CreateBar()
     )
 end
 
+function SB:AutoHideWithObjectiveFrame()
+    if not self.db.enable or not self.bar then
+        return
+    end
+
+
+    if self.db.hideWithObjectiveTracker and _G.ObjectiveTrackerFrame.collapsed then
+        self.bar:Hide()
+    else
+        self.bar:Show()
+    end
+end
+
 function SB:Initialize()
     self.db = E.db.WT.quest.switchButtons
     if not self.db.enable then
         return
     end
 
+    self:SecureHook("ObjectiveTracker_Collapse", "AutoHideWithObjectiveFrame")
+    self:SecureHook("ObjectiveTracker_Expand", "AutoHideWithObjectiveFrame")
     self:CreateBar()
 end
 

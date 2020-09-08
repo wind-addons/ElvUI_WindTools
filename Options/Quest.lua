@@ -438,15 +438,22 @@ options.switchButtons = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
+        },
+        hideWithObjectiveTracker = {
+            order = 3,
+            type = "toggle",
+            name = L["Hide With Objective Tracker"],
+            width = 1.5,
         },
         backdrop = {
-            order = 3,
+            order = 4,
             type = "toggle",
             name = L["Bar Backdrop"]
         },
         font = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Font Setting"],
@@ -504,7 +511,7 @@ options.switchButtons = {
             }
         },
         modules = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Modules"],

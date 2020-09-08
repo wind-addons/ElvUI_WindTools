@@ -123,7 +123,7 @@ function OT:ScenarioObjectiveBlock_UpdateCriteria()
         local childs = {_G.ScenarioObjectiveBlock:GetChildren()}
         for _, child in pairs(childs) do
             if child.Text then
-                self:HandleInfoText(block.currentLine.Text)
+                self:HandleInfoText(child.Text)
             end
         end
     end

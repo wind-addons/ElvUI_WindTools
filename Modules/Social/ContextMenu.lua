@@ -14,7 +14,7 @@ local wipe = wipe
 local CanGuildInvite = CanGuildInvite
 local CloseDropDownMenus = CloseDropDownMenus
 local CreateFrame = CreateFrame
-local GuildInvite = print -- TODO:Testing
+local GuildInvite = GuildInvite
 local UnitPlayerControlled = UnitPlayerControlled
 
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId

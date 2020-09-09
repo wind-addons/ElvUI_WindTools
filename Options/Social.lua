@@ -566,6 +566,9 @@ options.chatLink = {
             type = "group",
             inline = true,
             name = L["Additional Information"],
+            disabled = function()
+                return not E.db.WT.social.chatLink.enable
+            end,
             args = {
                 level = {
                     order = 1,

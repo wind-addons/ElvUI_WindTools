@@ -192,39 +192,40 @@ local function AddTalentInfo(Hyperlink)
     return Hyperlink
 end
 
-function CL:Initialize()
-    self.db = E.db.WT.social.chatLink
-
-    local function filter(self, event, msg, ...)
-        -- print(msg:gsub("\124", "\124\124"))
+function CL:Filter(event, msg, ...)
+    if CL.db.enable then
         msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
         msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
         msg = msg:gsub("(|Htalent:%d+|h.-|h)", AddTalentInfo)
         msg = msg:gsub("(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
-        return false, msg, ...
     end
+    return false, msg, ...
+end
 
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", filter)
+function CL:Initialize()
+    self.db = E.db.WT.social.chatLink
 
-    self.initialized = true
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", self.Filter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", self.Filter)
+
+    self.Initialized = true
 end
 
 function CL:ProfileUpdate()
     self.db = E.db.WT.social.chatLink
 
-    if self.db.enable and not self.initialized then
+    if self.db.enable and not self.Initialized then
         self:Initialize()
     end
 end

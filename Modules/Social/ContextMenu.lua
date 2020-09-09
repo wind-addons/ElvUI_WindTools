@@ -11,6 +11,7 @@ local strsub = strsub
 local tonumber = tonumber
 local unpack = unpack
 local wipe = wipe
+
 local CanGuildInvite = CanGuildInvite
 local CloseDropDownMenus = CloseDropDownMenus
 local CreateFrame = CreateFrame
@@ -32,7 +33,6 @@ local PredefinedType = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
-            BN_FRIEND = true,
             CHAT_ROSTER = true,
             TARGET = true,
             FOCUS = true,
@@ -98,7 +98,6 @@ local PredefinedType = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
-            BN_FRIEND = true,
             GUILD = true,
             GUILD_OFFLINE = true,
             CHAT_ROSTER = true,
@@ -115,7 +114,7 @@ local PredefinedType = {
             local server = frame.server or E.myrealm
 
             if name and server then
-                local link = CM:GetArmoryBaseURL() .. CM:URLEncode(server) .. "/" .. CM:URLEncode(name)
+                local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
                 F.DebugMessage(CM, L["Cannot get the armory link."])
@@ -147,7 +146,6 @@ local PredefinedType = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
-            BN_FRIEND = true,
             GUILD = true,
             GUILD_OFFLINE = true,
             CHAT_ROSTER = true,
@@ -205,7 +203,6 @@ local PredefinedType = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
-            BN_FRIEND = true,
             GUILD = true,
             GUILD_OFFLINE = true,
             CHAT_ROSTER = true,
@@ -277,18 +274,6 @@ end
 
 local function ContextMenuButton_OnLeave(button)
     _G[button:GetName() .. "Highlight"]:Hide()
-end
-
-function CM:URLEncode(str)
-    str =
-        gsub(
-        str,
-        "([^%w%.%- ])",
-        function(c)
-            return format("%%%02X", strbyte(c))
-        end
-    )
-    return gsub(str, " ", "+")
 end
 
 function CM:GetArmoryBaseURL()
@@ -455,13 +440,15 @@ end
 function CM:DisplayButtons()
     -- 自动隐藏不符合条件的按钮
     local buttonOrder = 0
-    for i, button in pairs(self.menu.buttons) do
+    for _, button in pairs(self.menu.buttons) do
         if button.supportTypes and button.supportTypes[self.cache.which] then
             if not button.isHidden(self.cache) then
                 buttonOrder = buttonOrder + 1
                 button:Show()
                 button:ClearAllPoints()
                 button:Point("TOPLEFT", self.menu, "TOPLEFT", 16, -16 * buttonOrder)
+            else
+                button:Hide()
             end
         else
             button:Hide()
@@ -490,16 +477,14 @@ function CM:ShowMenu(frame)
         communityClubID = dropdown.communityClubID
     }
 
-    if dropdown.which then
+    if self.cache.which then
         if self:DisplayButtons() then
             self.menu:SetParent(frame)
             self.menu:SetFrameStrata(frame:GetFrameStrata())
             self.menu:SetFrameLevel(frame:GetFrameLevel() + 2)
 
-            local dropDownListHeight = frame:GetHeight()
             local menuHeight = ContextMenu_OnShow(self.menu)
-
-            frame:SetHeight(dropDownListHeight + menuHeight)
+            frame:SetHeight(frame:GetHeight() + menuHeight)
 
             self.menu:ClearAllPoints()
             self.menu:Point("BOTTOMLEFT", 0, 16)
@@ -510,14 +495,14 @@ function CM:ShowMenu(frame)
 end
 
 function CM:CloseMenu()
-    if self.db.enable and self.menu then
+    if self.menu then
         self.menu:Hide()
     end
 end
 
 function CM:Initialize()
     self.db = E.db.WT.social.contextMenu
-    if not self.db.enable or self.initialized then
+    if not self.db.enable or self.Initialized then
         return
     end
 
@@ -527,13 +512,16 @@ function CM:Initialize()
     self:SecureHookScript(_G.DropDownList1, "OnShow", "ShowMenu")
     self:SecureHookScript(_G.DropDownList1, "OnHide", "CloseMenu")
 
-    self.initialized = true
+    self.tempButton = CreateFrame("Button", "WTContextMenuTempButton", E.UIParent, "SecureActionButtonTemplate")
+    self.tempButton:SetAttribute("type1", "macro")
+
+    self.Initialized = true
 end
 
 function CM:ProfileUpdate()
     self.db = E.db.WT.social.contextMenu
-    if self.db.enable then
-        if not self.initialized then
+    if self.db and self.db.enable then
+        if not self.Initialized then
             self:Initialize()
         else
             self:UpdateMenu()

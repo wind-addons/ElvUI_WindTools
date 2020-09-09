@@ -3,14 +3,18 @@ local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
 local S = E:GetModule("Skins")
 
 local _G = _G
-local pairs, ipairs, floor, ceil, strsub = pairs, ipairs, floor, ceil, strsub
+local ceil = ceil
+local floor = floor
+local ipairs = ipairs
+local pairs = pairs
+local strsub = strsub
+
 local ChatEdit_ActivateChat = ChatEdit_ActivateChat
 local ChatEdit_ChooseBoxForSend = ChatEdit_ChooseBoxForSend
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local CreateFrame = CreateFrame
 
 local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
-local C_Timer_NewTicker = C_Timer.NewTicker
 
 local emotes = {
     {key = "angel", zhTW = "天使", zhCN = "天使"},

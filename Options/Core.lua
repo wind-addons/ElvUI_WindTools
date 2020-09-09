@@ -52,15 +52,22 @@ W.options = {
         icon = W.Media.Icons.tooltips,
         args = {}
     },
-    skins = {
+    unitFrames = {
         order = 108,
+        name = L["UnitFrames"],
+        desc = L["Add more features to ElvUI UnitFrames."],
+        icon = W.Media.Icons.unitFrames,
+        args = {}
+    },
+    skins = {
+        order = 109,
         name = L["Skins"],
         desc = L["Apply new shadow style for ElvUI."],
         icon = W.Media.Icons.skins,
         args = {}
     },
     misc = {
-        order = 109,
+        order = 110,
         name = L["Misc"],
         desc = L["Miscellaneous modules."],
         icon = W.Media.Icons.misc,

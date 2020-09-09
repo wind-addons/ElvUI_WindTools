@@ -53,6 +53,7 @@ AddMedia("quest", "Quest.tga", "Icons")
 AddMedia("skins", "Skins.tga", "Icons")
 AddMedia("tools", "Hammer.tga", "Icons")
 AddMedia("tooltips", "Tooltips.tga", "Icons")
+AddMedia("unitFrames", "UnitFrames.tga", "Icons")
 
 AddMedia("discord", "Discord.tga", "Icons")
 AddMedia("qq", "QQ.tga", "Icons")

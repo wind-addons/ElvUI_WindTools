@@ -143,9 +143,10 @@ function CT:UpdateRoleIcons()
         return
     end
 
-    local sizeString = format(":%d:%d", self.db.roleIconSize, self.db.roleIconSize)
+    local pack = self.db.enable and self.db.roleIconStyle or "DEFAULT"
+    local sizeString = self.db.enable and format(":%d:%d", self.db.roleIconSize, self.db.roleIconSize) or ":16:16"
 
-    if self.db.roleIconStyle == "FFXIV" then
+    if pack == "FFXIV" then
         roleIcons = {
             TANK = E:TextureString(W.Media.Icons.ffxivTank, sizeString),
             HEALER = E:TextureString(W.Media.Icons.ffxivHealer, sizeString),
@@ -155,7 +156,7 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-    elseif self.db.roleIconStyle == "HEXAGON" then
+    elseif pack == "HEXAGON" then
         roleIcons = {
             TANK = E:TextureString(W.Media.Icons.hexagonTank, sizeString),
             HEALER = E:TextureString(W.Media.Icons.hexagonHealer, sizeString),
@@ -165,7 +166,7 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
-    elseif self.db.roleIconStyle == "DEFAULT" then
+    elseif pack == "DEFAULT" then
         roleIcons = {
             TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),
             HEALER = E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, sizeString .. ":0:0:64:64:2:56:2:56"),
@@ -175,7 +176,7 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
         _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
         _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
-    elseif self.db.roleIconStyle == "BLIZZARD" then
+    elseif pack == "BLIZZARD" then
         roleIcons = {
             TANK = gsub(CT.cache.blizzardRoleIcons.Tank, ":16:16", sizeString),
             HEALER = gsub(CT.cache.blizzardRoleIcons.Healer, ":16:16", sizeString),
@@ -242,7 +243,7 @@ function CT:HandleShortChannels(msg)
     msg = gsub(msg, "<" .. _G.DND .. ">", "[|cffE7E716" .. L["DND"] .. "|r] ")
 
     local raidWarningString = ""
-    if CT.db and CT.db.abbreviation and W.ChineseLocale then
+    if CT.db and CT.db.abbreviation == "SHORT" and W.ChineseLocale then
         -- 中文特別缩写
         msg = gsub(msg, utf8sub(_G.CHAT_WHISPER_GET, 3), L["[ABBR] Whisper"] .. "：")
         msg = gsub(msg, utf8sub(_G.CHAT_WHISPER_INFORM_GET, 1, 3), L["[ABBR] Whisper"])
@@ -1072,7 +1073,7 @@ function CT:ToggleReplacement()
     end
 
     -- HandleShortChannels
-    if self.db.abbreviation ~= "DEFAULT" or self.db.removeBrackets then
+    if self.db.enable and (self.db.abbreviation ~= "DEFAULT" or self.db.removeBrackets) then
         if not initRecord.HandleShortChannels then
             CT.cache.HandleShortChannels = CH.HandleShortChannels -- 备份
             CH.HandleShortChannels = CT.HandleShortChannels -- 替换
@@ -1088,7 +1089,7 @@ function CT:ToggleReplacement()
     end
 
     -- ChatFrame_AddMessage
-    if self.db.removeBrackets then
+    if self.db.enable and self.db.removeBrackets then
         if not initRecord.ChatFrame_AddMessage then
             for _, frameName in ipairs(_G.CHAT_FRAMES) do
                 local frame = _G[frameName]
@@ -1115,7 +1116,11 @@ function CT:ToggleReplacement()
 
     -- ChatFrame_MessageEventHandler
     -- CheckLFGRoles
-    if self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 or self.db.removeRealm then
+    if
+        self.db.enable and
+            (self.db.removeBrackets or self.db.roleIconStyle ~= "DEFAULT" or self.db.roleIconSize ~= 15 or
+                self.db.removeRealm)
+     then
         if not initRecord.ChatFrame_MessageEventHandler then
             CT.cache.ChatFrame_MessageEventHandler = CH.ChatFrame_MessageEventHandler
             CH.ChatFrame_MessageEventHandler = CT.ChatFrame_MessageEventHandler
@@ -1149,6 +1154,9 @@ end
 
 function CT:ProfileUpdate()
     self.db = E.db.WT.social.chatText
+    if not self.db then
+        return
+    end
 
     self:UpdateRoleIcons()
     self:ToggleReplacement()

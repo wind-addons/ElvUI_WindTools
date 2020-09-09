@@ -657,18 +657,27 @@ options.chatText = {
         removeRealm = {
             order = 2,
             type = "toggle",
-            name = L["Remove Realm"]
+            name = L["Remove Realm"],
+            disabled = function()
+                return not E.db.WT.social.chatText.enable
+            end,
         },
         removeBrackets = {
             order = 3,
             type = "toggle",
-            name = L["Remove Brackets"]
+            name = L["Remove Brackets"],
+            disabled = function()
+                return not E.db.WT.social.chatText.enable
+            end,
         },
         abbreviation = {
             order = 4,
             type = "select",
             name = L["Abbreviation"],
             desc = L["Modify the style of abbreviation of channels."],
+            disabled = function()
+                return not E.db.WT.social.chatText.enable
+            end,
             values = {
                 NONE = L["None"],
                 SHORT = L["Short"],
@@ -680,6 +689,9 @@ options.chatText = {
             type = "group",
             inline = true,
             name = L["Role Icon"],
+            disabled = function()
+                return not E.db.WT.social.chatText.enable
+            end,
             args = {
                 roleIconStyle = {
                     order = 1,

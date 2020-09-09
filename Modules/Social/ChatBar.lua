@@ -387,7 +387,7 @@ function CB:UpdateBar()
         end
 
         local abbr =
-            db.icon and ("|TInterface\\AddOns\\ElvUI_WindTools\\Texture\\Emotes\\mario:" .. self.db.font.size .. "|t") or
+            db.icon and ("|TInterface\\AddOns\\ElvUI_WindTools\\Media\\Emotes\\mario:" .. self.db.font.size .. "|t") or
             db.abbr
         self:UpdateButton(
             "WindEmote",

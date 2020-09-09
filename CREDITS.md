@@ -71,6 +71,12 @@
 - Context Menu
     - Ludicrous Speed, LLC. (Raider.IO)
 
+- Quick Focus
+    - siweia (NDui)
+
+- Move Frames
+    - zaCade, Numynum (BlizzMove)
+
 # Medias
 - Ferous Media (Ferous)
     - Media/Texture/Vignetting.tga

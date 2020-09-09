@@ -242,7 +242,7 @@ do -- 网站
         options.credits.args.sites.args[tostring(i)] = {
             order = i,
             type = "description",
-            name = site,
+            name = site
         }
     end
 end
@@ -302,6 +302,12 @@ do -- 插件代码
         },
         [L["Context Menu"]] = {
             "Ludicrous Speed, LLC. (Raider.IO)"
+        },
+        [L["Quick Focus"]] = {
+            "siweia (NDui)"
+        },
+        [L["Move Frames"]] = {
+            "zaCade, Numynum (BlizzMove)"
         }
     }
 

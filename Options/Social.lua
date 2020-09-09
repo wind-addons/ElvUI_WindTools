@@ -42,31 +42,38 @@ options.chatBar = {
                 }
             }
         },
-        general = {
+        enable = {
             order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.social.chatBar[info[#info]] = value
+                CB:ProfileUpdate()
+            end
+        },
+        general = {
+            order = 2,
             type = "group",
             inline = true,
             name = L["General"],
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
+            end,
             args = {
-                enable = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Enable"]
-                },
                 autoHide = {
-                    order = 2,
+                    order = 1,
                     type = "toggle",
                     name = L["Auto Hide"],
                     desc = L["Hide channels not exist."]
                 },
                 mouseOver = {
-                    order = 3,
+                    order = 2,
                     type = "toggle",
                     name = L["Mouse Over"],
                     desc = L["Only show chat bar when you mouse over it."]
                 },
                 orientation = {
-                    order = 4,
+                    order = 3,
                     type = "select",
                     name = L["Orientation"],
                     values = {
@@ -77,10 +84,13 @@ options.chatBar = {
             }
         },
         backdrop = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Backdrop"],
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
+            end,
             args = {
                 backdrop = {
                     order = 1,
@@ -100,10 +110,13 @@ options.chatBar = {
             }
         },
         button = {
-            order = 3,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Button"],
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
+            end,
             args = {
                 buttonWidth = {
                     order = 1,
@@ -135,11 +148,14 @@ options.chatBar = {
             }
         },
         blockStyle = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             hidden = function()
                 return not (E.db.WT.social.chatBar.style == "BLOCK")
+            end,
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
             end,
             name = L["Style"],
             args = {
@@ -158,9 +174,12 @@ options.chatBar = {
             }
         },
         textStyle = {
-            order = 4,
+            order = 6,
             type = "group",
             inline = true,
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
+            end,
             hidden = function()
                 return not (E.db.WT.social.chatBar.style == "TEXT")
             end,
@@ -215,10 +234,13 @@ options.chatBar = {
             }
         },
         channels = {
-            name = _G.CHANNEL,
-            order = 5,
+            order = 7,
             type = "group",
             inline = true,
+            name = _G.CHANNEL,
+            disabled = function()
+                return not E.db.WT.social.chatBar.enable
+            end,
             args = {
                 world = {
                     order = 100,

@@ -36,22 +36,22 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local normalChannelsIndex = {"SAY", "YELL", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER", "EMOTE"}
 
 local checkFunctions = {
-    ["PARTY"] = function()
+    PARTY = function()
         return IsInGroup(LE_PARTY_CATEGORY_HOME)
     end,
-    ["INSTANCE"] = function()
+    INSTANCE = function()
         return IsInGroup(LE_PARTY_CATEGORY_INSTANCE)
     end,
-    ["RAID"] = function()
+    RAID = function()
         return IsInRaid()
     end,
-    ["RAID_WARNING"] = function()
+    RAID_WARNING = function()
         return IsInRaid() and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or IsEveryoneAssistant())
     end,
-    ["GUILD"] = function()
+    GUILD = function()
         return IsInGuild()
     end,
-    ["OFFICER"] = function()
+    OFFICER = function()
         return IsInGuild() and C_GuildInfo_IsGuildOfficer()
     end
 }
@@ -153,7 +153,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     -- 块状风格条 设置更新
     if self.db.style == "BLOCK" then
         self.bar[name].colorBlock:SetTexture(tex and LSM:Fetch("statusbar", tex) or E.media.normTex)
-        
+
         if color then
             self.bar[name].colorBlock:SetVertexColor(color.r, color.g, color.b, color.a)
         end
@@ -379,7 +379,7 @@ function CB:UpdateBar()
                         _G.WTCustomEmoteFrame:Show()
                     end
                 else
-                    print(L["Please enable \"Emote\" module in Social category."])
+                    print(L['Please enable "Emote" module in Social category.'])
                 end
             end
         end
@@ -510,11 +510,10 @@ function CB:PLAYER_REGEN_ENABLED()
 end
 
 function CB:Initialize()
-    if not E.db.WT.social.chatBar.enable then
+    self.db = E.db.WT.social.chatBar
+    if not self.db.enable then
         return
     end
-
-    self.db = E.db.WT.social.chatBar
 
     CB:CreateBar()
     CB:UpdateBar()
@@ -539,12 +538,20 @@ function CB:Initialize()
 end
 
 function CB:ProfileUpdate()
-    if not self.bar then
-        self:Initialize()
+    self.db = E.db.WT.social.chatBar
+
+    if not self.db.enable then
+        if self.bar then
+            self.bar:Hide()
+        end
         return
     end
 
-    self.db = E.db.WT.social.chatBar
+    if self.db.enable and not self.bar then
+        self:Initialize()
+    end
+
+    self.bar:Show()
 
     if self.db.autoHide then
         self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")

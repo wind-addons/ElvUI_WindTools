@@ -12,4 +12,5 @@
 	<Script file="Skins.lua"/>
 	<Script file="Social.lua"/>
 	<Script file="Tooltips.lua"/>
+	<Script file="UnitFrames.lua"/>
 </Ui>

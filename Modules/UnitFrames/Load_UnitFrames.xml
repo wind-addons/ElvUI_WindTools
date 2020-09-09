@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Core -->
+	<Script file='Core.lua'/>
+	<!-- Submodule -->
+	<Script file='QuickFocus.lua'/>
+</Ui>

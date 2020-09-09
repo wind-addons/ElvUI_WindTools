@@ -7,7 +7,6 @@ local _G = _G
 local format = format
 local ipairs = ipairs
 local pairs = pairs
-local print = print
 local strmatch = strmatch
 local tostring = tostring
 
@@ -259,7 +258,7 @@ function CB:UpdateBar()
         local name = db.name
 
         if not name or name == "" then
-            print(L["World channel no found, please setup again."])
+            F.DebugMessage(self, L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
             return
         else
@@ -334,7 +333,7 @@ function CB:UpdateBar()
         local db = self.db.channels.community
         local name = db.name
         if not name or name == "" then
-            print(L["Club channel no found, please setup again."])
+            F.DebugMessage(self, L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
             local chatFunc = function(self, mouseButton)
@@ -343,7 +342,10 @@ function CB:UpdateBar()
                 end
                 local clubChannelId = GetCommuniryChannelByName(name)
                 if not clubChannelId then
-                    print(format(L["Club channel %s no found, please use the full name of the channel."], name))
+                    F.DebugMessage(
+                        self,
+                        format(L["Club channel %s no found, please use the full name of the channel."], name)
+                    )
                 else
                     local currentText = DefaultChatFrame.editBox:GetText()
                     local command = format("/%s ", clubChannelId)
@@ -379,7 +381,7 @@ function CB:UpdateBar()
                         _G.WTCustomEmoteFrame:Show()
                     end
                 else
-                    print(L['Please enable "Emote" module in Social category.'])
+                    F.DebugMessage(self, L["Please enable Emote module in WindTools Social category."])
                 end
             end
         end

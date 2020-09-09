@@ -26,6 +26,8 @@ local BNET_FRIEND_TOOLTIP_WOW_CLASSIC = BNET_FRIEND_TOOLTIP_WOW_CLASSIC
 
 local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
+local cache = {}
+
 local GameIcons = {
     ["Alliance"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Alliance"},
     ["Horde"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Horde"},
@@ -120,6 +122,10 @@ end
 
 function FL:UpdateFriendButton(button)
     if not self.db.enable then
+        if cache.name and cache.info then
+            F.SetFontWithDB(button.name, cache.name)
+            F.SetFontWithDB(button.info, cache.info)
+        end
         return
     end
 
@@ -242,6 +248,24 @@ function FL:UpdateFriendButton(button)
     end
 
     -- 字体风格
+    if not cache.name then
+        local name, size, style = button.name:GetFont()
+        cache.name = {
+            name = name,
+            size = size,
+            style = style
+        }
+    end
+
+    if not cache.info then
+        local name, size, style = button.info:GetFont()
+        cache.info = {
+            name = name,
+            size = size,
+            style = style
+        }
+    end
+
     F.SetFontOutline(button.name)
     F.SetFontWithDB(button.name, self.db.nameFont)
 
@@ -268,7 +292,7 @@ end
 function FL:ProfileUpdate()
     self.db = E.db.WT.social.friendList
 
-    if E.db.WT.social.friendList.enable and not self.initialized then
+    if self.db and self.db.enable and not self.initialized then
         self:SecureHook("FriendsFrame_UpdateFriendButton", "UpdateFriendButton")
     end
 

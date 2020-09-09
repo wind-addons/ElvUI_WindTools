@@ -992,6 +992,9 @@ options.friendList = {
                 E.db.WT.social.friendList.textures[info[#info]] = value
                 FriendsFrame_Update()
             end,
+            disabled = function()
+                return not E.db.WT.social.friendList.enable
+            end,
             args = {
                 game = {
                     name = L["Game Icons"],
@@ -1019,6 +1022,9 @@ options.friendList = {
             type = "group",
             inline = true,
             name = L["Name"],
+            disabled = function()
+                return not E.db.WT.social.friendList.enable
+            end,
             args = {
                 hideMaxLevel = {
                     order = 1,
@@ -1084,6 +1090,9 @@ options.friendList = {
             type = "group",
             inline = true,
             name = L["Information"],
+            disabled = function()
+                return not E.db.WT.social.friendList.enable
+            end,
             args = {
                 font = {
                     order = 2,
@@ -1188,7 +1197,10 @@ options.filter = {
             order = 2,
             type = "toggle",
             name = L["Profanity Filter"],
-            desc = L["Unblock the setting of profanity filter. [CN Server]"]
+            desc = L["Unblock the setting of profanity filter. [CN Server]"],
+            disabled = function()
+                return not E.db.WT.social.filter.enable
+            end
         }
     }
 }
@@ -1236,6 +1248,9 @@ options.smartTab = {
                 E.db.WT.social.smartTab[info[#info]] = value
                 ST:ProfileUpdate()
             end,
+            disabled = function()
+                return not E.db.WT.social.smartTab.enable
+            end,
             args = {
                 yell = {
                     order = 1,
@@ -1264,6 +1279,9 @@ options.smartTab = {
             type = "group",
             inline = true,
             name = _G.WHISPER,
+            disabled = function()
+                return not E.db.WT.social.smartTab.enable
+            end,
             args = {
                 whisperCycle = {
                     order = 1,

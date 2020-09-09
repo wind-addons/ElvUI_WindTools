@@ -1,10 +1,11 @@
 local W, F, E, L = unpack(select(2, ...))
 local FT = W:NewModule("Filter", "AceEvent-3.0")
 
-local GetCVar, ConsoleExec = GetCVar, ConsoleExec
+local ConsoleExec = ConsoleExec
+local GetCVar = GetCVar
 
 function FT:LOADING_SCREEN_DISABLED()
-    if GetCVar("profanityFilter") == "1" then
+    if GetCVar("portal") == "CN" and GetCVar("profanityFilter") == "1" then
         ConsoleExec("portal TW")
         ConsoleExec("profanityFilter 0")
     end

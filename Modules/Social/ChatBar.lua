@@ -343,7 +343,7 @@ function CB:UpdateBar()
                 local clubChannelId = GetCommuniryChannelByName(name)
                 if not clubChannelId then
                     F.DebugMessage(
-                        self,
+                        CB,
                         format(L["Club channel %s no found, please use the full name of the channel."], name)
                     )
                 else
@@ -381,7 +381,7 @@ function CB:UpdateBar()
                         _G.WTCustomEmoteFrame:Show()
                     end
                 else
-                    F.DebugMessage(self, L["Please enable Emote module in WindTools Social category."])
+                    F.DebugMessage(CB, L["Please enable Emote module in WindTools Social category."])
                 end
             end
         end

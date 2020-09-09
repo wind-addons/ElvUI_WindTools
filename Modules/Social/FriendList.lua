@@ -2,13 +2,19 @@ local W, F, E, L = unpack(select(2, ...))
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 
 local _G = _G
-local format, pairs, strmatch, strsplit = format, pairs, strmatch, strsplit
-local BNConnected, BNet_GetClientTexture = BNConnected, BNet_GetClientTexture
+local format = format
+local pairs = pairs
+local strmatch = strmatch
+local strsplit = strsplit
+
+local BNConnected = BNConnected
+local BNet_GetClientTexture = BNet_GetClientTexture
 local FriendsFrame_Update = FriendsFrame_Update
+local GetQuestDifficultyColor = GetQuestDifficultyColor
+
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_ClassColor_GetClassColor = C_ClassColor.GetClassColor
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
-local GetQuestDifficultyColor = GetQuestDifficultyColor
 
 local BNET_CLIENT_APP, BNET_CLIENT_CLNT, BNET_CLIENT_COD = BNET_CLIENT_APP, BNET_CLIENT_CLNT, BNET_CLIENT_COD
 local BNET_CLIENT_COD_MW, BNET_CLIENT_D3, BNET_CLIENT_HEROES = BNET_CLIENT_COD_MW, BNET_CLIENT_D3, BNET_CLIENT_HEROES

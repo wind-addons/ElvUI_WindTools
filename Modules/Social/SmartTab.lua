@@ -1,17 +1,29 @@
 local W, F, E, L = unpack(select(2, ...))
 local ST = W:NewModule("SmartTab", "AceHook-3.0", "AceEvent-3.0")
 
-local _G =_G
-local time, unpack, pairs, wipe = time, unpack, pairs, wipe
-local strsplit, strsub, tostring = strsplit, strsub, tostring
-local UnitIsGroupLeader, IsEveryoneAssistant = UnitIsGroupLeader, IsEveryoneAssistant
-local UnitInBattleground, CanEditOfficerNote = UnitInBattleground, CanEditOfficerNote
-local IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant = IsInGroup, IsInRaid, IsInGuild, UnitIsGroupAssistant
-local LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE
+local _G = _G
+local pairs = pairs
+local strsplit = strsplit
+local strsub = strsub
+local time = time
+local tostring = tostring
+local unpack = unpack
+local wipe = wipe
+
+local IsEveryoneAssistant = IsEveryoneAssistant
+local IsInGroup = IsInGroup
+local IsInGuild = IsInGuild
+local IsInRaid = IsInRaid
+local UnitInBattleground = UnitInBattleground
+local UnitIsGroupAssistant = UnitIsGroupAssistant
+local UnitIsGroupLeader = UnitIsGroupLeader
+
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
 
-local ACTIVE_CHAT_EDIT_BOX =ACTIVE_CHAT_EDIT_BOX
+local ACTIVE_CHAT_EDIT_BOX = ACTIVE_CHAT_EDIT_BOX
 local LAST_ACTIVE_CHAT_EDIT_BOX = LAST_ACTIVE_CHAT_EDIT_BOX
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 -- 频道循环列表
 local ChannelList = {

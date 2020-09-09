@@ -2,7 +2,9 @@ local W, F, E, L = unpack(select(2, ...))
 local T = W:GetModule("Tooltips")
 
 local _G = _G
-local tinsert, next, xpcall = tinsert, next, xpcall
+local next  = next
+local tinsert = tinsert
+local xpcall = xpcall
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
@@ -19,7 +21,7 @@ end
 --[[
     注册更新回调
     @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
+    @param {function} [func=T.name] 回调函数
 ]]
 function T:AddCallbackForUpdate(name, func)
     tinsert(self.updateProfile, func or self[name])

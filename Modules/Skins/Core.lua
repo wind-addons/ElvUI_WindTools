@@ -3,8 +3,12 @@ local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
 
 local _G = _G
+local format = format
+local next = next
 local pairs = pairs
-local tinsert, xpcall, next, assert, format = tinsert, xpcall, next, assert, format
+local tinsert = tinsert
+local xpcall = xpcall
+
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 

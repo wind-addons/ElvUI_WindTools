@@ -182,3 +182,11 @@ V.social = {
 		whisperTargets = {}
 	}
 }
+
+V.unitFrames = {
+    quickFocus = {
+        enable = true,
+        modifier = "shift",
+        button = "BUTTON1";
+    }
+}

@@ -9,4 +9,5 @@
 	<Include file="Skins\Load_Skins.xml"/>
 	<Include file="Social\Load_Social.xml"/>
 	<Include file="Tooltips\Load_Tooltips.xml"/>
+	<Include file="UnitFrames\Load_UnitFrames.xml"/>
 </Ui>

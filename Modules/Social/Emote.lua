@@ -1,5 +1,5 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
-local CE = W:NewModule("Emote", "AceHook-3.0")
+local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
 local S = E:GetModule("Skins")
 
 local _G = _G
@@ -104,7 +104,7 @@ end
 
 local function EmoteFilter(self, event, msg, ...)
     if CE.db.enable then
-        msg = msg:gsub("%{.-%}", ReplaceEmote)
+        msg = gsub(msg, "%{.-%}", ReplaceEmote)
     end
 
     return false, msg, ...
@@ -245,30 +245,33 @@ function CE:ChatEdit_OnTextChanged(chatEdit, userInput)
     end
 end
 
-function CE:HandleEmoteWithBubble()
-    C_Timer_NewTicker(
-        .1,
-        function()
-            if not CE.db.enable then
-                return
-            end
-            for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
-                if frame.text then
-                    local oldMessage = frame.text:GetText()
-                    local afterMessage = oldMessage:gsub("%{.-%}", ReplaceEmote)
-                    if oldMessage ~= afterMessage then
-                        frame.text:SetText(afterMessage)
-                    end
-                end
+function CE:ParseChatBubbles()
+    for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
+        if frame.backdrop and frame.backdrop.String then
+            local oldMessage = frame.backdrop.String:GetText()
+            local afterMessage = gsub(oldMessage, "%{.-%}", ReplaceEmote)
+            if oldMessage ~= afterMessage then
+                frame.backdrop.String:SetText(afterMessage)
             end
         end
-    )
+    end
+end
+
+function CE:HandleEmoteWithBubble()
+    if self.db and self.db.enable and self.db.chatBubbles then
+        self.bubbleTimer = self:ScheduleRepeatingTimer("ParseChatBubbles", 0.1)
+    else
+        if self.bubbleTimer then
+            self:CancelTimer(self.bubbleTimer)
+            self.bubbleTimer = nil
+        end
+    end
 end
 
 function CE:Initialize()
     self.db = E.db.WT.social.emote
 
-    if self.initialized or (not self.db.enable) then
+    if self.initialized or not self.db.enable then
         return
     end
 
@@ -287,7 +290,6 @@ function CE:Initialize()
 
     self:CreateInterface()
     self:HandleEmoteWithBubble()
-
     self.initialized = true
 end
 
@@ -300,6 +302,8 @@ function CE:ProfileUpdate()
 
     -- 由于有表情按键, 需要更新一下
     W:GetModule("ChatBar"):UpdateBar()
+
+    self:HandleEmoteWithBubble()
 end
 
 W:RegisterModule(CE:GetName())

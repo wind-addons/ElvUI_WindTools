@@ -660,7 +660,7 @@ options.chatText = {
             name = L["Remove Realm"],
             disabled = function()
                 return not E.db.WT.social.chatText.enable
-            end,
+            end
         },
         removeBrackets = {
             order = 3,
@@ -668,7 +668,7 @@ options.chatText = {
             name = L["Remove Brackets"],
             disabled = function()
                 return not E.db.WT.social.chatText.enable
-            end,
+            end
         },
         abbreviation = {
             order = 4,
@@ -755,6 +755,9 @@ options.contextMenu = {
             type = "group",
             inline = true,
             name = L["General"],
+            disabled = function()
+                return not E.db.WT.social.contextMenu.enable
+            end,
             args = {
                 addFriend = {
                     order = 1,
@@ -778,6 +781,9 @@ options.contextMenu = {
             type = "group",
             inline = true,
             name = L["Armory"],
+            disabled = function()
+                return not E.db.WT.social.contextMenu.enable
+            end,
             args = {
                 armory = {
                     order = 1,
@@ -906,6 +912,9 @@ options.emote = {
             name = L["Emote Icon Size"],
             order = 2,
             type = "range",
+            disabled = function()
+                return not E.db.WT.social.emote.enable
+            end,
             min = 5,
             max = 35,
             step = 1
@@ -914,7 +923,18 @@ options.emote = {
             order = 3,
             type = "toggle",
             name = L["Use Emote Panel"],
-            desc = L["Press { to active the emote select window."]
+            desc = L["Press { to active the emote select window."],
+            disabled = function()
+                return not E.db.WT.social.emote.enable
+            end
+        },
+        chatBubbles = {
+            order = 4,
+            type = "toggle",
+            name = _G.CHAT_BUBBLES_TEXT,
+            disabled = function()
+                return not E.db.WT.social.emote.enable
+            end
         }
     }
 }

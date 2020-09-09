@@ -446,7 +446,8 @@ P.social = {
     emote = {
         enable = true,
         size = 16,
-        panel = true
+        panel = true,
+        chatBubbles = true
     },
     friendList = {
         enable = true,

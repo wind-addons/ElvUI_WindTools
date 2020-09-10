@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local MF = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
+local B = E:GetModule("Bags")
 
 local _G = _G
 local format = format
@@ -54,7 +55,7 @@ local BlizzardFrames = {
         "ReputationFrame",
         "TokenFrame",
         "TokenFramePopup",
-        "TokenFrameContainer",
+        "TokenFrameContainer"
     },
     ["MailFrame"] = {
         "SendMailFrame",
@@ -297,7 +298,6 @@ function MF:HandleFrame(frameName, mainFrameName)
                 end
             end
         )
-
     else
         F.DebugMessage(self, format("Cannot find the frame: %s", frame))
     end
@@ -325,6 +325,40 @@ function MF:HandleAddon(_, addon)
     self:HandleFramesWithTable(frameTable)
 end
 
+function MF:PLAYER_REGEN_ENABLED()
+    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    self:HandleElvUIBag()
+end
+
+function MF:HandleElvUIBag()
+    local f = B.BagFrame
+
+    if InCombatLockdown() then
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+
+    if self.db.moveElvUIBags then
+        f:SetScript(
+            "OnDragStart",
+            function(frame)
+                frame:StartMoving()
+            end
+        )
+        f:SetScript(
+            "OnEnter",
+            function(frame)
+                local GameTooltip = _G.GameTooltip
+                GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+                GameTooltip:ClearLines()
+                GameTooltip:AddDoubleLine(L["Drag"]..":", L["Temporary Move"], 1, 1, 1)
+                GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
+                GameTooltip:Show()
+            end
+        )
+    end
+end
+
 function MF:Initialize()
     self.db = E.private.WT.misc
     if not self.db then
@@ -345,6 +379,8 @@ function MF:Initialize()
             end
         end
     end
+
+    self:HandleElvUIBag()
 end
 
 W:RegisterModule(MF:GetName())

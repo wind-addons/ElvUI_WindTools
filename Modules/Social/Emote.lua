@@ -5,6 +5,7 @@ local S = E:GetModule("Skins")
 local _G = _G
 local ceil = ceil
 local floor = floor
+local gsub = gsub
 local ipairs = ipairs
 local pairs = pairs
 local strsub = strsub
@@ -80,7 +81,7 @@ local emotes = {
 local function EmoteButton_OnClick(self, button)
     local editBox = ChatEdit_ChooseBoxForSend()
     ChatEdit_ActivateChat(editBox)
-    editBox:SetText(editBox:GetText():gsub("{$", "") .. self.emote)
+    editBox:SetText(gsub(editBox:GetText(), "{$", "") .. self.emote)
     if (button == "LeftButton") then
         self:GetParent():Hide()
     end
@@ -95,7 +96,7 @@ local function EmoteButton_OnLeave(self)
 end
 
 local function ReplaceEmote(value)
-    local emote = value:gsub("[%{%}]", "")
+    local emote = gsub(value, "[%{%}]", "")
     for _, v in ipairs(emotes) do
         if (emote == v.key or emote == v.zhCN or emote == v.zhTW) then
             return "|T" ..

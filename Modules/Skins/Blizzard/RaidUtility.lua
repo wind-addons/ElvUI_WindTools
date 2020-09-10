@@ -12,7 +12,12 @@ function S:RaidUtility_ShowButton_OnClick()
     end
 
     _G.RaidUtility_CloseButton:ClearAllPoints()
-    _G.RaidUtility_CloseButton:Point("TOP", _G.RaidUtilityPanel, "BOTTOM", 0, -4)
+    local anchor = _G.RaidUtilityPanel:GetPoint()
+    if anchor == "TOP" then
+        _G.RaidUtility_CloseButton:Point("TOP", _G.RaidUtilityPanel, "BOTTOM", 0, -4)
+    else
+        _G.RaidUtility_CloseButton:Point("BOTTOM", _G.RaidUtilityPanel, "TOP", 0, 4)
+    end
 end
 
 function S:RaidUtility()

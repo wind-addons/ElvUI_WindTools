@@ -49,7 +49,10 @@ function RM:UpdateBar()
 		button:ClearAllPoints()
 		button:Size(self.db.buttonSize)
 
-		if not ((i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown)) then
+		if (i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown) then
+			button:Hide()
+		else
+			button:Show()
 			if self.db.orientation == "VERTICAL" then
 				if i == 1 then
 					button:Point("TOP", 0, -self.db.backdropSpacing)
@@ -63,7 +66,6 @@ function RM:UpdateBar()
 					button:SetPoint("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
 				end
 			end
-
 			previousButton = button
 			numButtons = numButtons + 1
 		end

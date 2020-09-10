@@ -222,6 +222,9 @@ options.raidMarkers = {
                 E.db.WT.combat.raidMarkers[info[#info]] = value
                 RM:ToggleSettings()
             end,
+            disabled = function()
+                return not E.db.WT.combat.raidMarkers.enable
+            end,
             args = {
                 visibility = {
                     type = "select",
@@ -264,6 +267,9 @@ options.raidMarkers = {
                 E.db.WT.combat.raidMarkers[info[#info]] = value
                 RM:ToggleSettings()
             end,
+            disabled = function()
+                return not E.db.WT.combat.raidMarkers.enable
+            end,
             args = {
                 backdrop = {
                     order = 1,
@@ -292,8 +298,45 @@ options.raidMarkers = {
                 }
             }
         },
-        buttonsConfig = {
+        specialButtons = {
             order = 5,
+            type = "group",
+            inline = true,
+            name = L["Raid Buttons"],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:UpdateBar()
+            end,
+            disabled = function()
+                return not E.db.WT.combat.raidMarkers.enable
+            end,
+            args = {
+                readyCheck = {
+                    order = 2,
+                    type = "toggle",
+                    name = _G.READY_CHECK,
+                },
+                countDown = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Count Down"],
+                },
+                countDownTime = {
+                    order = 3,
+                    type = "range",
+                    name = L["Count Down Time"],
+                    desc = L["Count down time in seconds."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+            }
+        },
+        buttonsConfig = {
+            order = 6,
             type = "group",
             inline = true,
             name = L["Buttons"],
@@ -303,6 +346,9 @@ options.raidMarkers = {
             set = function(info, value)
                 E.db.WT.combat.raidMarkers[info[#info]] = value
                 RM:ToggleSettings()
+            end,
+            disabled = function()
+                return not E.db.WT.combat.raidMarkers.enable
             end,
             args = {
                 buttonSize = {
@@ -325,5 +371,6 @@ options.raidMarkers = {
                 }
             }
         }
+        
     }
 }

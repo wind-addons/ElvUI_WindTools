@@ -3,12 +3,22 @@ local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W:GetModule("Skins")
 
 local _G = _G
+local GameTooltip = _G.GameTooltip
+
+local format = format
+local gsub = gsub
 local strupper = strupper
+
+local ClearRaidMarker = ClearRaidMarker
 local CreateFrame = CreateFrame
-local GetTime, SetRaidTarget, ClearRaidMarker = GetTime, SetRaidTarget, ClearRaidMarker
-local GameTooltip, InCombatLockdown = _G.GameTooltip, InCombatLockdown
-local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
-local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
+local DoReadyCheck = DoReadyCheck
+local GetTime = GetTime
+local InCombatLockdown = InCombatLockdown
+local RegisterStateDriver = RegisterStateDriver
+local SetRaidTarget = SetRaidTarget
+local UIFrameFadeIn = UIFrameFadeOut
+local UIFrameFadeOut = UIFrameFadeOut
+local UnregisterStateDriver = UnregisterStateDriver
 
 local C_PartyInfo_DoCountdown = C_PartyInfo.DoCountdown
 
@@ -33,7 +43,7 @@ function RM:UpdateBar()
 
 	local previousButton
 	local numButtons = 0
-	
+
 	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 		button:ClearAllPoints()

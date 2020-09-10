@@ -2,14 +2,16 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local _G = _G
-local strfind, pairs = strfind, pairs
+local pairs = pairs
+local strfind  = strfind
 
-local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
-local C_QuestLog_GetInfo = C_QuestLog.GetInfo
-local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
-local GetQuestLink = GetQuestLink
 local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
+local GetQuestLink = GetQuestLink
 local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
+
+local C_QuestLog_GetInfo = C_QuestLog.GetInfo
+local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
+local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 
 local lastList
 
@@ -18,7 +20,12 @@ local function GetQuests()
 
 	for questIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local questInfo = C_QuestLog_GetInfo(questIndex)
-		if not questInfo.isHeader then -- 去除任务分类(比如, "高嶺-高嶺部族"任务, "高嶺"要排除掉)
+		local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
+		-- isHeader: 任务分类(比如, "高嶺-高嶺部族" 任务, "高嶺"要排除掉)
+		-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
+		-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
+
+		if not skip then 
 			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
 
 			-- 基础任务信息, 用于后续生成句子使用

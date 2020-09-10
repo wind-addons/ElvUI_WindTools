@@ -10,6 +10,8 @@ local GameTooltip, InCombatLockdown = _G.GameTooltip, InCombatLockdown
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
 local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 
+local C_PartyInfo_DoCountdown = C_PartyInfo.DoCountdown
+
 local lastClear = 0
 
 local TargetToWorld = {
@@ -29,29 +31,38 @@ function RM:UpdateBar()
 		return
 	end
 
-	for i = 9, 1, -1 do
+	local previousButton
+	local numButtons = 0
+	
+	for i = 1, 11 do
 		local button = self.bar.buttons[i]
-		local prev = self.bar.buttons[i + 1]
 		button:ClearAllPoints()
 		button:Size(self.db.buttonSize)
 
+		if i == 10 then
+		else
+		end
+
 		if self.db.orientation == "VERTICAL" then
-			if i == 9 then
+			if i == 1 then
 				button:Point("TOP", 0, -self.db.backdropSpacing)
 			else
-				button:Point("TOP", prev, "BOTTOM", 0, -self.db.spacing)
+				button:Point("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
 			end
 		else
-			if i == 9 then
+			if i == 1 then
 				button:SetPoint("LEFT", self.db.backdropSpacing, 0)
 			else
-				button:SetPoint("LEFT", prev, "RIGHT", self.db.spacing, 0)
+				button:SetPoint("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
 			end
 		end
+
+		previousButton = button
+		numButtons = numButtons + 1
 	end
 
 	local height = self.db.buttonSize + self.db.backdropSpacing * 2
-	local width = self.db.backdropSpacing * 2 + self.db.buttonSize * 9 + self.db.spacing * 8
+	local width = self.db.backdropSpacing * 2 + self.db.buttonSize * numButtons + self.db.spacing * (numButtons - 1)
 
 	if self.db.orientation == "VERTICAL" then
 		width, height = height, width
@@ -73,9 +84,9 @@ function RM:UpdateButtons()
 		return
 	end
 
-	self.modifierString = self.db.modifier:gsub("^%l", strupper)
+	self.modifierString = gsub(self.db.modifier, "^%l", strupper)
 
-	for i = 9, 1, -1 do
+	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 
 		-- WindSkins 阴影处理
@@ -88,14 +99,14 @@ function RM:UpdateButtons()
 		end
 
 		-- 宏按键绑定
-		if i < 9 then
+		if button.isMarkButton then
 			local button = self.bar.buttons[i]
 			button:SetAttribute("shift-type*", nil)
 			button:SetAttribute("alt-type*", nil)
 			button:SetAttribute("ctrl-type*", nil)
-			button:SetAttribute(("%s-type*"):format(self.db.modifier), "macro")
-			button:SetAttribute(("%s-macrotext1"):format(self.db.modifier), ("/wm %d"):format(TargetToWorld[i]))
-			button:SetAttribute(("%s-macrotext2"):format(self.db.modifier), ("/cwm %d"):format(TargetToWorld[i]))
+			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
+			button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
+			button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
 		end
 	end
 end
@@ -194,7 +205,7 @@ end
 function RM:CreateButtons()
 	self.modifierString = self.db.modifier:gsub("^%l", strupper)
 
-	for i = 1, 9 do
+	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 		if not button then
 			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
@@ -210,24 +221,26 @@ function RM:CreateButtons()
 		tex:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
 		tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
 
-		if i < 9 then
-			tex:SetTexture(("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d"):format(i))
+		if i < 9 then -- 标记
+			tex:SetTexture(format("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d", i))
 
 			button:SetAttribute("type*", "macro")
-			button:SetAttribute("macrotext1", ("/tm %d"):format(i))
+			button:SetAttribute("macrotext1", format("/tm %d", i))
 			button:SetAttribute("macrotext2", ("/tm 9"))
 
-			button:SetAttribute(("%s-type*"):format(self.db.modifier), "macro")
-			button:SetAttribute(("%s-macrotext1"):format(self.db.modifier), ("/wm %d"):format(TargetToWorld[i]))
-			button:SetAttribute(("%s-macrotext2"):format(self.db.modifier), ("/cwm %d"):format(TargetToWorld[i]))
-		else
+			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
+			button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
+			button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
+
+			button.isMarkButton = true
+		elseif i == 9 then -- 清除按钮
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
 			button:SetAttribute("type", "click")
 			button:SetScript(
 				"OnClick",
 				function(self)
-					if _G[("Is%sKeyDown"):format(RM.modifierString)]() then
+					if _G[format("Is%sKeyDown", RM.modifierString)]() then
 						ClearRaidMarker()
 					else
 						local now = GetTime()
@@ -240,11 +253,59 @@ function RM:CreateButtons()
 					end
 				end
 			)
+		elseif i == 10 then -- 准备确认
+			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
+
+			button:SetAttribute("type", "click")
+			button:SetScript(
+				"OnClick",
+				function()
+					DoReadyCheck()
+				end
+			)
+		elseif i == 11 then -- 开怪倒数
+			tex:SetTexture("Interface\\Icons\\Spell_unused2")
+			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
+			button:SetAttribute("type", "click")
+			button:SetScript(
+				"OnClick",
+				function(_, button)
+					if button == "LeftButton" then
+						C_PartyInfo_DoCountdown(7)
+					elseif button == "RightButton" then
+						C_PartyInfo_DoCountdown(0)
+					end
+				end
+			)
 		end
 
 		button:RegisterForClicks("AnyDown")
 
 		-- 鼠标提示
+		local tooltipText = ""
+
+		if i < 9 then
+			tooltipText =
+				format(
+				"%s\n%s\n%s\n%s",
+				L["Left Click to mark the target with this mark."],
+				L["Right Click to clear the mark on the target."],
+				format(L["%s + Left Click to place this worldmarker."], RM.modifierString),
+				format(L["%s + Right Click to clear this worldmarker."], RM.modifierString)
+			)
+		elseif i == 9 then
+			tooltipText =
+				format(
+				"%s\n%s",
+				L["Click to clear all marks."],
+				format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
+			)
+		elseif i == 10 then
+			tooltipText = L["Click to ready check."]
+		elseif i == 11 then
+			tooltipText = format("%s\n%s", L["Click to start count down."], L["Right click to stop count down."])
+		end
+
 		button:SetScript(
 			"OnEnter",
 			function(self)
@@ -252,22 +313,7 @@ function RM:CreateButtons()
 				self:SetBackdropBorderColor(.7, .7, 0)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
 				GameTooltip:SetText(L["Raid Markers"] .. " " .. icon)
-				GameTooltip:AddLine(
-					i == 9 and
-						("%s\n%s"):format(
-							L["Click to clear all marks."],
-							(L["%s + Click to remove all worldmarkers."]):format(RM.modifierString)
-						) or
-						("%s\n%s\n%s\n%s"):format(
-							L["Left Click to mark the target with this mark."],
-							L["Right Click to clear the mark on the target."],
-							(L["%s + Left Click to place this worldmarker."]):format(RM.modifierString),
-							(L["%s + Right Click to clear this worldmarker."]):format(RM.modifierString)
-						),
-					1,
-					1,
-					1
-				)
+				GameTooltip:AddLine(tooltipText, 1, 1, 1)
 				GameTooltip:Show()
 			end
 		)

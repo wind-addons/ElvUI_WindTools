@@ -281,7 +281,7 @@ function RM:CreateButtons()
 				"OnClick",
 				function(_, button)
 					if button == "LeftButton" then
-						C_PartyInfo_DoCountdown(RM.db.countDownTime-1)
+						C_PartyInfo_DoCountdown(RM.db.countDownTime - 1)
 					elseif button == "RightButton" then
 						C_PartyInfo_DoCountdown(-1)
 					end
@@ -316,13 +316,15 @@ function RM:CreateButtons()
 			tooltipText = format("%s\n%s", L["Click to start count down."], L["Right click to stop count down."])
 		end
 
+		local tooltipTitle = i <= 9 and L["Raid Markers"] or L["Raid Utility"]
+
 		button:SetScript(
 			"OnEnter",
 			function(self)
 				local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 				self:SetBackdropBorderColor(.7, .7, 0)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(L["Raid Markers"] .. " " .. icon)
+				GameTooltip:SetText(tooltipTitle .. " " .. icon)
 				GameTooltip:AddLine(tooltipText, 1, 1, 1)
 				GameTooltip:Show()
 			end

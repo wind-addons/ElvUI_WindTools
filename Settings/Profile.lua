@@ -270,7 +270,10 @@ P.combat = {
         buttonSize = 30,
         spacing = 4,
         orientation = "HORIZONTAL",
-        modifier = "shift"
+        modifier = "shift",
+        readyCheck = true,
+        countDown = true,
+        countDownTime = 5,
     }
 }
 

@@ -49,26 +49,24 @@ function RM:UpdateBar()
 		button:ClearAllPoints()
 		button:Size(self.db.buttonSize)
 
-		if i == 10 then
-		else
-		end
-
-		if self.db.orientation == "VERTICAL" then
-			if i == 1 then
-				button:Point("TOP", 0, -self.db.backdropSpacing)
+		if not ((i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown)) then
+			if self.db.orientation == "VERTICAL" then
+				if i == 1 then
+					button:Point("TOP", 0, -self.db.backdropSpacing)
+				else
+					button:Point("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
+				end
 			else
-				button:Point("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
+				if i == 1 then
+					button:SetPoint("LEFT", self.db.backdropSpacing, 0)
+				else
+					button:SetPoint("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
+				end
 			end
-		else
-			if i == 1 then
-				button:SetPoint("LEFT", self.db.backdropSpacing, 0)
-			else
-				button:SetPoint("LEFT", previousButton, "RIGHT", self.db.spacing, 0)
-			end
-		end
 
-		previousButton = button
-		numButtons = numButtons + 1
+			previousButton = button
+			numButtons = numButtons + 1
+		end
 	end
 
 	local height = self.db.buttonSize + self.db.backdropSpacing * 2
@@ -281,9 +279,9 @@ function RM:CreateButtons()
 				"OnClick",
 				function(_, button)
 					if button == "LeftButton" then
-						C_PartyInfo_DoCountdown(7)
+						C_PartyInfo_DoCountdown(RM.db.countDownTime-1)
 					elseif button == "RightButton" then
-						C_PartyInfo_DoCountdown(0)
+						C_PartyInfo_DoCountdown(-1)
 					end
 				end
 			)

@@ -298,7 +298,7 @@ options.raidMarkers = {
                 }
             }
         },
-        specialButtons = {
+        raidButtons = {
             order = 5,
             type = "group",
             inline = true,
@@ -315,7 +315,7 @@ options.raidMarkers = {
             end,
             args = {
                 readyCheck = {
-                    order = 2,
+                    order = 1,
                     type = "toggle",
                     name = _G.READY_CHECK,
                 },

@@ -133,7 +133,7 @@ options.moveFrames = {
         moveBlizzardFrames = {
             order = 1,
             type = "toggle",
-            name = L["Enable"],
+            name = L["Enable"]
         },
         moveElvUIBags = {
             order = 2,
@@ -149,7 +149,10 @@ options.moveFrames = {
                 rememberPositions = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    set = function(info, value)
+                        E.private.WT.misc[info[#info]] = value
+                    end
                 },
                 clearHistory = {
                     order = 2,

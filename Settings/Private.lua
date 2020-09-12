@@ -67,6 +67,7 @@ V.quest = {
 }
 
 V.skins = {
+	enable = true,
 	windtools = true,
 	removeParchment = true,
 	color = {

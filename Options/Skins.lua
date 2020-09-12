@@ -36,9 +36,37 @@ options.general = {
     order = 2,
     type = "group",
     name = L["General"],
+    get = function(info)
+        return E.private.WT.skins[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.skins[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
     args = {
-        shadowColor = {
+        enable = {
             order = 1,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        windtools = {
+            order = 2,
+            type = "toggle",
+            name = L["WindTools Modules"],
+            disabled = function()
+                return not E.private.WT.skins.enable
+            end
+        },
+        removeParchment = {
+            order = 3,
+            type = "toggle",
+            name = L["Parchment Remover"],
+            disabled = function()
+                return not E.private.WT.skins.enable
+            end
+        },
+        shadowColor = {
+            order = 4,
             type = "color",
             name = L["Shadow Color"],
             hasAlpha = false,
@@ -51,22 +79,13 @@ options.general = {
                 local db = E.private.WT.skins.color
                 db.r, db.g, db.b = r, g, b
                 E:StaticPopup_Show("PRIVATE_RL")
-            end
-        },
-        removeParchment = {
-            order = 2,
-            type = "toggle",
-            name = L["Parchment Remover"],
-            get = function()
-                return E.db.WT.skins.removeParchment
             end,
-            set = function(_, value)
-                E.db.WT.skins.removeParchment = value
-                E:StaticPopup_Show("PRIVATE_RL")
+            disabled = function()
+                return not E.private.WT.skins.enable
             end
         },
         vignetting = {
-            order = 3,
+            order = 5,
             type = "group",
             name = L["Vignetting"],
             inline = true,
@@ -76,6 +95,9 @@ options.general = {
             set = function(info, value)
                 E.db.WT.skins.vignetting[info[#info]] = value
                 S:UpdateVignettingConfig()
+            end,
+            disabled = function()
+                return not E.private.WT.skins.enable
             end,
             args = {
                 enable = {
@@ -111,11 +133,14 @@ options.blizzard = {
         E.private.WT.skins.blizzard[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
+    disabled = function()
+        return not E.private.WT.skins.enable
+    end,
     args = {
         enable = {
             order = 0,
             type = "toggle",
-            name = L["Enable"],
+            name = L["Enable"]
         },
         achievements = {
             type = "toggle",
@@ -335,6 +360,9 @@ options.elvui = {
         E.private.WT.skins.elvui[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
+    disabled = function()
+        return not E.private.WT.skins.enable
+    end,
     args = {
         enable = {
             order = 0,
@@ -430,6 +458,9 @@ options.addons = {
     set = function(info, value)
         E.private.WT.skins.addons[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    disabled = function()
+        return not E.private.WT.skins.enable
     end,
     args = {
         ace3 = {

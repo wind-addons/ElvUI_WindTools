@@ -424,6 +424,28 @@ function MF:HandleElvUIBag()
             )
             f.WTMoveFramesHandled = true
         end
+
+        f = B:GetContainerFrame(true)
+        if not f.WTMoveFramesHandled then
+            f:SetScript(
+                "OnDragStart",
+                function(frame)
+                    frame:StartMoving()
+                end
+            )
+            f:SetScript(
+                "OnEnter",
+                function(frame)
+                    local GameTooltip = _G.GameTooltip
+                    GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+                    GameTooltip:ClearLines()
+                    GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
+                    GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
+                    GameTooltip:Show()
+                end
+            )
+            f.WTMoveFramesHandled = true
+        end
     end
 end
 

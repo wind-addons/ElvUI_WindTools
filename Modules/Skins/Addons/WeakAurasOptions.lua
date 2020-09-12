@@ -175,12 +175,51 @@ function S:WeakAuras_ShowOptions()
     frame.windStyle = true
 end
 
+function S:WeakAuras_TextEditor()
+    ES:HandleButton(_G.WASettingsButton)
+
+    local frame = _G.WASnippetsButton:GetParent()
+    if not frame then
+        return
+    end
+
+    for _, child in pairs {frame:GetChildren()} do
+        if child.Text then
+            ES:HandleButton(child)
+        end
+    end
+
+    frame = _G.WeakAurasSnippets
+    if not frame then
+        return
+    end
+
+    frame.TopEdge:Kill()
+    frame.LeftEdge:Kill()
+    frame.RightEdge:Kill()
+    frame.BottomEdge:Kill()
+    frame.TopLeftCorner:Kill()
+    frame.TopRightCorner:Kill()
+    frame.BottomLeftCorner:Kill()
+    frame.BottomRightCorner:Kill()
+    frame.Center:Kill()
+    frame:CreateBackdrop("Transparent")
+    S:CreateShadow(frame)
+
+    for _, child in pairs {frame:GetChildren()} do
+        if child.Text then
+            ES:HandleButton(child)
+        end
+    end
+end
+
 function S:WeakAurasOptions()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
         return
     end
 
     self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
+    self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
 end
 
 S:AddCallbackForAddon("WeakAurasOptions")

@@ -32,7 +32,7 @@ V.misc = {
 	moveElvUIBags = true,
 	rememberPositions = true,
 	framePositions = {},
-	tags = true,
+	tags = true
 }
 
 V.quest = {
@@ -49,12 +49,12 @@ V.quest = {
 		},
 		title = {
 			name = E.db.general.font,
-			size = E.db.general.fontSize+1,
+			size = E.db.general.fontSize + 1,
 			style = "OUTLINE"
 		},
 		info = {
 			name = E.db.general.font,
-			size = E.db.general.fontSize-1,
+			size = E.db.general.fontSize - 1,
 			style = "OUTLINE"
 		},
 		titleColor = {
@@ -76,8 +76,8 @@ V.skins = {
 		b = 0
 	},
 	addons = {
-		ace3 = true,
-		bigwigs = true
+		bigwigs = true,
+		weakAurasOptions = true
 	},
 	blizzard = {
 		enable = true,
@@ -187,9 +187,9 @@ V.social = {
 }
 
 V.unitFrames = {
-    quickFocus = {
-        enable = true,
-        modifier = "shift",
-        button = "BUTTON1";
-    }
+	quickFocus = {
+		enable = true,
+		modifier = "shift",
+		button = "BUTTON1"
+	}
 }

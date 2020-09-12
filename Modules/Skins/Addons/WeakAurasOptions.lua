@@ -39,8 +39,8 @@ local function TryHandleButtonAfter(name, times)
 end
 
 function S:WeakAurasMultiLineEditBox(Constructor)
-    if not self:CheckDB(nil, "weakAurasOptions") then
-        return Constructor
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return
     end
 
     local function SkinedConstructor()
@@ -176,11 +176,7 @@ function S:WeakAuras_ShowOptions()
 end
 
 function S:WeakAurasOptions()
-    if not self:CheckDB(nil, "weakAurasOptions") then
-        return
-    end
-
-    if not IsAddOnLoaded("WeakAuras") then
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
         return
     end
 

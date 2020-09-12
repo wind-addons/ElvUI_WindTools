@@ -467,12 +467,13 @@ options.addons = {
         return not E.private.WT.skins.enable
     end,
     args = {
-        ace3 = {
+        weakAurasOptions = {
             type = "toggle",
-            name = L["Ace3"]
+            name = L["WeakAuras Options"]
         },
         bigwigs = {
             type = "toggle",
+            hidden = true,
             name = L["BigWigs"]
         }
     }

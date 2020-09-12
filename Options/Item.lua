@@ -7,6 +7,7 @@ local AK = W:GetModule("AlreadyKnown")
 local FL = W:GetModule("FastLoot")
 
 local _G = _G
+local format = format
 
 options.delete = {
     order = 1,

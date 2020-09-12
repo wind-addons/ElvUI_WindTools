@@ -3,9 +3,14 @@ local ES = E:GetModule("Skins")
 local S = W:GetModule("Skins")
 
 local _G = _G
-local C_Timer_After = C_Timer.After
+local gsub = gsub
+local pairs = pairs
+local strfind = strfind
+local unpack = unpack
 
-local AceGUI
+local IsAddOnLoaded = IsAddOnLoaded
+
+local C_Timer_After = C_Timer.After
 
 local function TryHandleButtonAfter(name, times)
     times = times or 0
@@ -175,7 +180,11 @@ function S:WeakAurasOptions()
         return
     end
 
-    self:SecureHook(WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
+    if not IsAddOnLoaded("WeakAuras") then
+        return
+    end
+
+    self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
 end
 
 S:AddCallbackForAddon("WeakAurasOptions")

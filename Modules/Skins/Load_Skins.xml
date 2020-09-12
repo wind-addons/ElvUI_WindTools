@@ -5,5 +5,5 @@
 	<Script file='Vignetting.lua'/>
 	<Include file='Blizzard\Load_Blizzard.xml'/>
 	<Include file='ElvUI\Load_ElvUI.xml'/>
-	<!-- <Include file='Addons\Load_Addons.xml'/> -->
+	<Include file='Addons\Load_Addons.xml'/>
 </Ui>

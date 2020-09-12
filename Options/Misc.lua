@@ -134,18 +134,32 @@ options.moveFrames = {
             order = 1,
             type = "toggle",
             name = L["Enable"],
-            width = "full"
         },
         moveElvUIBags = {
             order = 2,
             type = "toggle",
             name = L["Move ElvUI Bags"]
         },
-        rememberPositions = {
+        remember = {
             order = 3,
-            type = "toggle",
-            hidden = true,
-            name = L["Remember Positions"]
+            type = "group",
+            inline = true,
+            name = L["Remember Positions"],
+            args = {
+                rememberPositions = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                clearHistory = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Clear History"],
+                    func = function()
+                        E.private.WT.misc.framePositions = {}
+                    end
+                }
+            }
         }
     }
 }
@@ -330,17 +344,16 @@ do
         player = {
             tag = "[classcolor:player]",
             text = L["The color of the player's class"]
-        },
+        }
     }
 
-    for i=1,  GetNumClasses() do
+    for i = 1, GetNumClasses() do
         local localizedName, upperText = GetClassInfo(i)
         examples.color[upperText] = {
             tag = format("[classcolor:%s]", strlower(upperText)),
             text = format(L["The color of %s"], localizedName)
         }
     end
-    
 
     local index = 11
     for cat, catTable in pairs(examples) do

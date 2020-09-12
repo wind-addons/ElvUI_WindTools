@@ -252,7 +252,7 @@ local BlizzardFramesOnDemand = {
 }
 
 function MF:Remember(frame)
-    if not frame.windFrameName then
+    if not frame.windFrameName or not self.db.rememberPositions then
         return
     end
 
@@ -273,7 +273,11 @@ function MF:Remember(frame)
 end
 
 function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
-    if not frame.windFrameName or not self.db.framePositions[frame.windFrameName] then
+    if not frame.windFrameName or not self.db.rememberPositions then
+        return
+    end
+
+    if not self.db.framePositions[frame.windFrameName] then
         return
     end
 
@@ -393,38 +397,34 @@ function MF:PLAYER_REGEN_ENABLED()
 end
 
 function MF:HandleElvUIBag()
-    if f.WTMoveFramesHandled then
-        return
-    end
-
-    local f = B.BagFrame
-
     if InCombatLockdown() then
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
 
     if self.db.moveElvUIBags then
-        f:SetScript(
-            "OnDragStart",
-            function(frame)
-                frame:StartMoving()
-            end
-        )
-        f:SetScript(
-            "OnEnter",
-            function(frame)
-                local GameTooltip = _G.GameTooltip
-                GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
-                GameTooltip:ClearLines()
-                GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
-                GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
-                GameTooltip:Show()
-            end
-        )
+        local f = B:GetContainerFrame()
+        if not f.WTMoveFramesHandled then
+            f:SetScript(
+                "OnDragStart",
+                function(frame)
+                    frame:StartMoving()
+                end
+            )
+            f:SetScript(
+                "OnEnter",
+                function(frame)
+                    local GameTooltip = _G.GameTooltip
+                    GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+                    GameTooltip:ClearLines()
+                    GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
+                    GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
+                    GameTooltip:Show()
+                end
+            )
+            f.WTMoveFramesHandled = true
+        end
     end
-
-    f.WTMoveFramesHandled = true
 end
 
 function MF:Initialize()

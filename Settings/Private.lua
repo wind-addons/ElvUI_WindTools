@@ -31,6 +31,7 @@ V.misc = {
 	moveBlizzardFrames = true,
 	moveElvUIBags = true,
 	rememberPositions = true,
+	framePositions = {},
 	tags = true,
 }
 

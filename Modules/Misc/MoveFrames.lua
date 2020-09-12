@@ -11,6 +11,8 @@ local type = type
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 
+local waitFrameList = {}
+
 local BlizzardFrames = {
     "AddonList",
     "AudioOptionsFrame",
@@ -249,57 +251,111 @@ local BlizzardFramesOnDemand = {
     }
 }
 
+function MF:Remember(frame)
+    if not frame.windFrameName then
+        return
+    end
+
+    local numPoints = frame:GetNumPoints()
+    if numPoints then
+        self.db.framePositions[frame.windFrameName] = {}
+        for index = 1, numPoints do
+            local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
+            self.db.framePositions[frame.windFrameName][index] = {
+                anchorPoint = anchorPoint,
+                relativeFrame = relativeFrame,
+                relativePoint = relativePoint,
+                offX = offX,
+                offY = offY
+            }
+        end
+    end
+end
+
+function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
+    if not frame.windFrameName or not self.db.framePositions[frame.windFrameName] then
+        return
+    end
+
+    if not frame.isChangingPoint then
+        frame.isChangingPoint = true
+        local points = self.db.framePositions[frame.windFrameName]
+        frame:ClearAllPoints()
+        for _, point in pairs(points) do
+            frame:Point(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
+        end
+        frame.isChangingPoint = nil
+    end
+end
+
 function MF:HandleFrame(frameName, mainFrameName)
     local frame = _G
     local mainFrame
 
-    local path = {strsplit(".", frameName)}
-    for i = 1, #path do
-        frame = frame[path[i]]
-    end
-
-    if mainFrameName then
-        mainFrame = _G
-        path = {strsplit(".", mainFrameName)}
+    do -- 分析带分隔符的子框架
+        local path = {strsplit(".", frameName)}
         for i = 1, #path do
-            mainFrame = mainFrame[path[i]]
+            frame = frame[path[i]]
+        end
+
+        if mainFrameName then
+            mainFrame = _G
+            path = {strsplit(".", mainFrameName)}
+            for i = 1, #path do
+                mainFrame = mainFrame[path[i]]
+            end
         end
     end
 
-    if frame then
-        if InCombatLockdown() and frame:IsProtected() or frame.MoveFrame then
-            return
+    if not frame or frame.MoveFrame then
+        return
+    end
+
+    -- 战斗中框架受保护的话注册到离开战斗后再处理
+    if InCombatLockdown() and frame:IsProtected() then
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        waitFrameList[#waitFrameList + 1] = {
+            frameName = frameName,
+            mainFrameName = mainFrameName
+        }
+        return
+    end
+
+    frame:SetMovable(true)
+    frame:SetClampedToScreen(true)
+    frame:EnableMouse(true)
+    frame.MoveFrame = mainFrame or frame
+
+    -- 鼠标按下
+    frame:HookScript(
+        "OnMouseDown",
+        function(self, button)
+            if button == "LeftButton" and self.MoveFrame:IsMovable() then
+                self.MoveFrame:StartMoving()
+            end
         end
+    )
 
-        frame:SetMovable(true)
-        frame:SetClampedToScreen(true)
-
-        mainFrame = mainFrame or frame
-        frame.MoveFrame = mainFrame
-
-        frame:EnableMouse(true)
-
-        frame:HookScript(
-            "OnMouseDown",
-            function(self, button)
-                if button == "LeftButton" then
-                    if self.MoveFrame:IsMovable() then
-                        self.MoveFrame:StartMoving()
-                    end
-                end
+    -- 鼠标抬起
+    frame:HookScript(
+        "OnMouseUp",
+        function(self, button)
+            if button == "LeftButton" then
+                self.MoveFrame:StopMovingOrSizing()
+                MF:Remember(self.MoveFrame)
             end
-        )
+        end
+    )
 
-        frame:HookScript(
-            "OnMouseUp",
-            function(self, button)
-                if button == "LeftButton" then
-                    self.MoveFrame:StopMovingOrSizing()
-                end
-            end
-        )
-    else
-        F.DebugMessage(self, format("Cannot find the frame: %s", frame))
+    -- 储存一个名字用于调取存储的位置
+    frame.windFrameName = frameName
+    if not frame.MoveFrame.windFrameName then
+        frame.MoveFrame.windFrameName = mainFrameName
+    end
+
+    -- 注册调整位置的钩子
+    if not self:IsHooked(frame.MoveFrame, "SetPoint") then
+        self:SecureHook(frame.MoveFrame, "SetPoint", "Reposition")
     end
 end
 
@@ -328,9 +384,19 @@ end
 function MF:PLAYER_REGEN_ENABLED()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
     self:HandleElvUIBag()
+
+    for _, data in pairs(waitFrameList) do
+        self:HandleFrame(data.frameName, data.mainFrameName)
+    end
+
+    waitFrameList = {}
 end
 
 function MF:HandleElvUIBag()
+    if f.WTMoveFramesHandled then
+        return
+    end
+
     local f = B.BagFrame
 
     if InCombatLockdown() then
@@ -351,12 +417,14 @@ function MF:HandleElvUIBag()
                 local GameTooltip = _G.GameTooltip
                 GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
                 GameTooltip:ClearLines()
-                GameTooltip:AddDoubleLine(L["Drag"]..":", L["Temporary Move"], 1, 1, 1)
+                GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
                 GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
                 GameTooltip:Show()
             end
         )
     end
+
+    f.WTMoveFramesHandled = true
 end
 
 function MF:Initialize()

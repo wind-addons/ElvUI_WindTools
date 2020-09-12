@@ -205,7 +205,7 @@ function MB:SkinButton(frame)
 		end
 
 		frame:CreateBackdrop("Tranparent")
-		if E.private.WT.skins.windtools then
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools then
 			S:CreateShadow(frame)
 		end
 
@@ -343,10 +343,12 @@ function MB:UpdateLayout()
 			frame:Point(anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
-		if E.private.WT.skins.windtools and not self.db.backdrop then
-			frame.shadow:Show()
-		else
-			frame.shadow:Hide()
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+			if not self.db.backdrop then
+				frame.shadow:Show()
+			else
+				frame.shadow:Hide()
+			end
 		end
 
 		if moveButton == "GameTimeFrame" then
@@ -459,7 +461,7 @@ function MB:CreateFrames()
 
 	self:SkinMinimapButtons()
 
-	if E.private.WT.skins.windtools then
+	if E.private.WT.skins.enable and E.private.WT.skins.windtools then
 		S:CreateShadow(self.bar.backdrop)
 	end
 

@@ -194,7 +194,7 @@ function PR:CreateToast()
 
 	-- [Toast] Create Background Texture
 	toast:CreateBackdrop("Transparent")
-	if E.private.WT.skins.windtools and toast.backdrop then
+	if E.private.WT.skins.enable and E.private.WT.skins.windtools and toast.backdrop then
 		S:CreateShadow(toast.backdrop)
 	end
 

@@ -139,7 +139,7 @@ function SB:CreateBar()
 
     self:UpdateLayout()
 
-    if E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
         S:CreateShadow(self.bar.backdrop)
     end
 

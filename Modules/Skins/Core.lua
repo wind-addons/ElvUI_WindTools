@@ -192,7 +192,7 @@ end
     @param {string} addonName 插件名
 ]]
 function S:ADDON_LOADED(_, addonName)
-    if not E.initialized then
+    if not E.initialized or not E.private.WT.skins.enable then
         return
     end
 
@@ -204,6 +204,10 @@ end
 
 -- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
+    if not E.private.WT.skins.enable then
+        return
+    end
+
     for index, func in next, self.nonAddonsToLoad do
         xpcall(func, errorhandler, self)
         self.nonAddonsToLoad[index] = nil
@@ -219,13 +223,6 @@ function S:Initialize()
     -- 去除羊皮纸
     if E.private.WT.skins.removeParchment then
         E.private.skins.parchmentRemoverEnable = true
-    end
-end
-
-function S:ProfileUpdate()
-    for index, func in next, self.updateProfile do
-        xpcall(func, errorhandler, self)
-        self.updateProfile[index] = nil
     end
 end
 

@@ -433,6 +433,16 @@ function MF:Initialize()
         return
     end
 
+    if IsAddOnLoaded("BlizzMove") then
+        MF.StopRunning = "BlizzMove"
+        return
+    end
+
+    if IsAddOnLoaded("MoveAnything") then
+        MF.StopRunning = "MoveAnything"
+        return
+    end
+
     if self.db.moveBlizzardFrames then
         -- 全局变量中已经存在的窗体
         self:HandleFramesWithTable(BlizzardFrames)

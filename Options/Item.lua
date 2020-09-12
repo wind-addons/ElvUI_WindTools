@@ -79,7 +79,13 @@ options.alreadyKnown = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Puts a overlay on already known learnable items on vendors and AH."],
+                    name = function()
+                        if AK.StopRunning then
+                            return format("|cffff0000"..L["Because of %s, this module will not be loaded."].."|r", AK.StopRunning)
+                        else
+                            return L["Puts a overlay on already known learnable items on vendors and AH."]
+                        end
+                    end,
                     fontSize = "medium"
                 }
             }

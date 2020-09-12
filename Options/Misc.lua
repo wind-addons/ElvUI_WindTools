@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.misc.args
 local LSM = E.Libs.LSM
 local M = W:GetModule("Misc")
+local MF = W:GetModule("MoveFrames")
 
 local _G = _G
 local format = format
@@ -125,7 +126,13 @@ options.moveFrames = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["This module provides the feature that repositions the frames with drag and drop."],
+                    name = function()
+                        if MF.StopRunning then
+                            return format("|cffff0000"..L["Because of %s, this module will not be loaded."].."|r", MF.StopRunning)
+                        else
+                            return L["This module provides the feature that repositions the frames with drag and drop."]
+                        end
+                    end,
                     fontSize = "medium"
                 }
             }

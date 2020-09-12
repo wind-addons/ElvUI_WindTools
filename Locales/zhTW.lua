@@ -88,6 +88,7 @@ L["Backdrop"] = "背景"
 L["Backdrop Spacing"] = "背景間距"
 L["Bags"] = "背包"
 L["Bar Backdrop"] = "條背景"
+L["Because of %s, this module will not be loaded."] = "由于 %s 的存在, 這個模組將不會被載入."
 L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = "除了副本技能, 更是提供了多種友好發言功能."
 L["Better visualization of Paragon Factions on the Reputation Frame."] = "在聲望介面中更顯著的提示你的巔峰聲望情況."
 L["BigWigs"] = true

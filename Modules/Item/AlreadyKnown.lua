@@ -3,19 +3,27 @@ local Search = E.Libs.ItemSearch
 local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
-local mod, min, ceil, tonumber, strsplit, strmatch, format = mod, min, ceil, tonumber, strsplit, strmatch, format
-local IsAddOnLoaded = IsAddOnLoaded
-local GetItemInfo = GetItemInfo
+local ceil = ceil
+local format = format
+local min = min
+local mod = mod
+local strmatch = strmatch
+local strsplit = strsplit
+local tonumber = tonumber
+
+local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetGuildBankItemLink = GetGuildBankItemLink
-local GetCurrentGuildBankTab = GetCurrentGuildBankTab
+local GetItemInfo = GetItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
+local HybridScrollFrame_GetButtons = HybridScrollFrame_GetButtons
+local IsAddOnLoaded = IsAddOnLoaded
 local SetItemButtonDesaturated = SetItemButtonDesaturated
-local SetItemButtonSlotVertexColor = SetItemButtonSlotVertexColor
-local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 local SetItemButtonNameFrameVertexColor = SetItemButtonNameFrameVertexColor
 local SetItemButtonNormalTextureVertexColor = SetItemButtonNormalTextureVertexColor
-local HybridScrollFrame_GetButtons = HybridScrollFrame_GetButtons
+local SetItemButtonSlotVertexColor = SetItemButtonSlotVertexColor
+local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
+
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
 
 local PetKnownString = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
@@ -239,6 +247,7 @@ end
 
 function AK:Initialize()
 	if IsAddOnLoaded("AlreadyKnown") then
+		self.StopRunning = "AlreadyKnonwn"
 		return
 	end
 
@@ -254,6 +263,7 @@ end
 
 function AK:ToggleSetting()
 	if IsAddOnLoaded("AlreadyKnown") then
+		self.StopRunning = "AlreadyKnonwn"
 		return
 	end
 

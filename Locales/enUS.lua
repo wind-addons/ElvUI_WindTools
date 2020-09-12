@@ -88,6 +88,7 @@ L["Backdrop"] = true
 L["Backdrop Spacing"] = true
 L["Bags"] = true
 L["Bar Backdrop"] = true
+L["Because of %s, this module will not be loaded."] = true
 L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = true
 L["Better visualization of Paragon Factions on the Reputation Frame."] = true
 L["BigWigs"] = true

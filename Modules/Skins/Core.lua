@@ -15,6 +15,7 @@ local IsAddOnLoaded = IsAddOnLoaded
 S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
 S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
 S.updateProfile = {} -- 配置更新后的更新表
+S.aceWidgets = {}
 
 --[[
     查询是否符合开启条件
@@ -154,6 +155,15 @@ function S:AddCallback(name, func)
 end
 
 --[[
+    注册 AceGUI 回调
+    @param {string} name 函数名
+    @param {function} [func=S.name] 回调函数
+]]
+function S:AddCallbackForAceGUIWidget(name, func)
+    self.aceWidgets[name] = func or self[name]
+end
+
+--[[
     注册插件回调
     @param {string} addonName 插件名
     @param {function} [func=S.addonName] 插件回调函数
@@ -213,6 +223,33 @@ function S:ADDON_LOADED(_, addonName)
     end
 end
 
+function S:UpdateWidget(AceGUI, name, oldFunc)
+    if self.aceWidgets[name] then
+        AceGUI.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
+        self.aceWidgets[name] = nil
+    end
+end
+
+function S:LibStub_NewLibrary(_, major)
+    if major == "AceGUI-3.0" then
+        local AceGUI = _G.LibStub("AceGUI-3.0")
+        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+
+        if self:IsHooked(_G.LibStub, "NewLibrary") then
+            self:Unhook(_G.LibStub, "NewLibrary")
+        end
+    end
+end
+
+function S:Hook_Ace3()
+    local AceGUI = _G.LibStub("AceGUI-3.0")
+    if AceGUI then
+        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+    else
+        self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
+    end
+end
+
 -- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     if not E.private.WT.skins.enable then
@@ -230,6 +267,8 @@ function S:Initialize()
             self:CallLoadedAddon(addonName, object)
         end
     end
+
+    self:Hook_Ace3()
 
     -- 去除羊皮纸
     if E.private.WT.skins.removeParchment then

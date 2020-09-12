@@ -226,6 +226,10 @@ options.blizzard = {
             type = "toggle",
             name = L["Gossip Frame"]
         },
+        guildBank = {
+            type = "toggle",
+            name = L["Guild Bank"]
+        },
         help = {
             type = "toggle",
             name = L["Help Frame"]

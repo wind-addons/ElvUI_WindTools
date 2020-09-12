@@ -102,6 +102,7 @@ V.skins = {
 		friends = true,
 		garrison = true,
 		gossip = true,
+		guildBank = true,
 		help = true,
 		ime = true,
 		lookingForGroup = true,

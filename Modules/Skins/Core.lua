@@ -121,6 +121,17 @@ function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
     end
 end
 
+function S:ReskinTab(tab)
+    if not tab then
+        return
+    end
+
+    if tab.GetName then
+        F.SetFontOutline(_G[tab:GetName() .. "Text"])
+    end
+    S:CreateBackdropShadowAfterElvUISkins(tab)
+end
+
 --[[
     设定窗体美化背景为透明风格
     @param {object} frame 窗体

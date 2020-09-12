@@ -20,6 +20,7 @@
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
 	<Script file='Gossip.lua'/>
+	<Script file='GuildBank.lua'/>
 	<Script file='Help.lua'/>
 	<Script file='InputMethodEditor.lua'/>
 	<Script file='IslandsQueue.lua'/>

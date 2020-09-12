@@ -25,7 +25,7 @@ function S:FriendsFrame()
     end
 
     for i = 1, 4 do
-        self:CreateBackdropShadow(_G["FriendsFrameTab" .. i])
+        self:ReskinTab(_G["FriendsFrameTab" .. i])
     end
 end
 

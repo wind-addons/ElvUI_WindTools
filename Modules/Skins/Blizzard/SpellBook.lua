@@ -12,7 +12,7 @@ function S:SpellBookFrame()
     self:CreateShadow(_G.SpellBookFrame)
 
     for i = 1, 5 do
-        self:CreateBackdropShadow(_G["SpellBookFrameTabButton" .. i])
+        self:ReskinTab(_G["SpellBookFrameTabButton" .. i])
     end
 
     for i = 1, MAX_SKILLLINE_TABS do

@@ -23,7 +23,7 @@ function S:LookingForGroupFrames()
     end
 
     for i = 1, 3 do
-        self:CreateBackdropShadow(_G["PVEFrameTab" .. i])
+        self:ReskinTab(_G["PVEFrameTab" .. i])
     end
 end
 

@@ -30,7 +30,7 @@ function S:Blizzard_TalentUI()
     self:CreateShadow(_G.PlayerTalentFrame)
     self:CreateShadow(_G.PlayerTalentFrameTalentsPvpTalentFrameTalentList)
     for i = 1, 3 do
-        self:CreateBackdropShadowAfterElvUISkins(_G["PlayerTalentFrameTab" .. i])
+        self:ReskinTab(_G["PlayerTalentFrameTab" .. i])
     end
 end
 

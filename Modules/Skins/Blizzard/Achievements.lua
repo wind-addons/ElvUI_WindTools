@@ -27,7 +27,7 @@ function S:Blizzard_AchievementUI()
     SkinAchievementFrame()
 
     for i = 1, 3 do
-        self:CreateBackdropShadowAfterElvUISkins(_G["AchievementFrameTab" .. i])
+        self:ReskinTab(_G["AchievementFrameTab" .. i])
     end
 end
 

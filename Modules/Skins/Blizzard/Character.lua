@@ -13,7 +13,7 @@ function S:CharacterFrame()
     self:CreateShadow(_G.GearManagerDialogPopup)
     self:CreateShadow(_G.EquipmentFlyoutFrameButtons)
     for i = 1, 4 do
-        self:CreateBackdropShadow(_G["CharacterFrameTab" .. i])
+        self:ReskinTab(_G["CharacterFrameTab" .. i])
     end
 
     -- 代币窗口

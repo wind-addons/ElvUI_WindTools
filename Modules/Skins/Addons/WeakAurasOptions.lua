@@ -38,6 +38,35 @@ local function TryHandleButtonAfter(name, times)
     end
 end
 
+local function TryHandleTextureAfter(name, times)
+    times = times or 0
+    if times > 10 then
+        return
+    end
+
+    local handled = false
+
+    if _G[name] then
+        for _, child in pairs {_G[name]:GetChildren()} do
+            if child.model or child.texture or child.mask or child.region or child.defaultIcon then
+                local firstRegion = child:GetRegions()
+                firstRegion:SetTexture("")
+                handled = true
+            end
+        end
+    end
+
+    if not handled then
+        times = times + 1
+        C_Timer_After(
+            .05,
+            function()
+                TryHandleTextureAfter(name, times)
+            end
+        )
+    end
+end
+
 function S:WeakAurasMultiLineEditBox(Constructor)
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
         return
@@ -61,6 +90,46 @@ function S:WeakAurasMultiLineEditBox(Constructor)
         local expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
         TryHandleButtonAfter(expandButtonName)
 
+        return widget
+    end
+
+    return SkinedConstructor
+end
+
+function S:WeakAurasDisplayButton(Constructor)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return
+    end
+
+    local function SkinedConstructor()
+        local widget = Constructor()
+        ES:HandleButton(widget.frame)
+        widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
+        widget.frame.background:SetAlpha(0)
+        widget.icon:SetTexCoord(unpack(E.TexCoords))
+        TryHandleTextureAfter(widget.frame:GetName())
+        ES:HandleEditBox(widget.renamebox)
+        return widget
+    end
+
+    return SkinedConstructor
+end
+
+function S:WeakAurasNewButton(Constructor)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return
+    end
+
+    local function SkinedConstructor()
+        local widget = Constructor()
+        ES:HandleButton(widget.frame)
+        widget.frame.background:SetAlpha(0)
+        widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
+        widget.icon:SetTexCoord(unpack(E.TexCoords))
+        widget.icon:Size(35)
+        widget.icon:ClearAllPoints()
+        widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
+        TryHandleTextureAfter(widget.frame:GetName())
         return widget
     end
 
@@ -113,7 +182,7 @@ function S:WeakAuras_ShowOptions()
             end
         end
 
-        if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then
+        if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then -- 右上按钮
             for _, region in pairs {child:GetRegions()} do
                 region:StripTextures()
             end
@@ -172,6 +241,15 @@ function S:WeakAuras_ShowOptions()
         end
     end
 
+    local tooltipAnchor = _G.WeakAurasTooltipImportButton:GetParent()
+    if tooltipAnchor then
+        for _, child in pairs {tooltipAnchor:GetChildren()} do
+            if child.Text then
+                ES:HandleButton(child)
+            end
+        end
+    end
+
     frame.windStyle = true
 end
 
@@ -224,3 +302,5 @@ end
 
 S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
+S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
+S:AddCallbackForAceGUIWidget("WeakAurasNewButton")

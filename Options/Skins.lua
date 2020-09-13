@@ -467,6 +467,10 @@ options.addons = {
         return not E.private.WT.skins.enable
     end,
     args = {
+        weakAuras = {
+            type = "toggle",
+            name = L["WeakAuras"]
+        },
         weakAurasOptions = {
             type = "toggle",
             name = L["WeakAuras Options"]

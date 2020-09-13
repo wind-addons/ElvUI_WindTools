@@ -77,6 +77,7 @@ V.skins = {
 	},
 	addons = {
 		bigwigs = true,
+		weakAuras = true,
 		weakAurasOptions = true
 	},
 	blizzard = {

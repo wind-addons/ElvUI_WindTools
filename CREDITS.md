@@ -97,6 +97,9 @@
 - ファイナルファンタジーXIV ファンキット
     - Media/Icons/FFXIV
 
+- Coolkids (SunUI)
+    - Media/Icons/SunUIRoles.tga
+
 - 小华子COME @ www.iconfont.cn
     - Media/Icons/Misc.tga
 
@@ -111,9 +114,6 @@
 
 - cg尐愳 @ www.iconfont.cn
     - Media/Icons/Map.tga
-
-- 张伟峰 @ www.iconfont.cn
-    - Media/Icons/Help.tga
 
 - Marina·麥 @ www.iconfont.cn
     - Media/Icons/Help.tga

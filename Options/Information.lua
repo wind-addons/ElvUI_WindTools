@@ -353,6 +353,9 @@ do -- 媒体文件
         ["ファイナルファンタジーXIV ファンキット"] = {
             "Media/Icons/FFXIV"
         },
+        ["SunUI (Coolkids)"] = {
+            "Media/Icons/SunUIRoles.tga"
+        },
         ["小华子COME @ www.iconfont.cn"] = {
             "Media/Icons/Misc.tga"
         },
@@ -367,9 +370,6 @@ do -- 媒体文件
         },
         ["cg尐愳 @ www.iconfont.cn"] = {
             "Media/Icons/Map.tga"
-        },
-        ["张伟峰 @ www.iconfont.cn"] = {
-            "Media/Icons/Help.tga"
         },
         ["Marina·麥 @ www.iconfont.cn"] = {
             "Media/Icons/Help.tga"

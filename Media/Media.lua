@@ -33,6 +33,8 @@ AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("logo", "WindTools.blp", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 
+AddMedia("sunUIRoles", "SunUIRoles.tga", "Icons")
+
 AddMedia("ffxivTank", "FFXIV\\Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV\\DPS.tga", "Icons")
 AddMedia("ffxivHealer", "FFXIV\\Healer.tga", "Icons")

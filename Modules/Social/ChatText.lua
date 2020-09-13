@@ -166,6 +166,16 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = roleIcons.TANK
         _G.INLINE_HEALER_ICON = roleIcons.HEALER
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
+    elseif pack == "SUNUI" then
+        roleIcons = {
+            TANK = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:0:21:21:42"),
+            HEALER = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:22:41:1:20"),
+            DAMAGER = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:21:42:21:42")
+        }
+
+        _G.INLINE_TANK_ICON = roleIcons.TANK
+        _G.INLINE_HEALER_ICON = roleIcons.HEALER
+        _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif pack == "DEFAULT" then
         roleIcons = {
             TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),

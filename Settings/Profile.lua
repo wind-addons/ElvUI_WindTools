@@ -443,7 +443,7 @@ P.social = {
         abbreviation = "SHORT",
         removeBrackets = true,
         roleIconSize = 16,
-        roleIconStyle = "FFXIV",
+        roleIconStyle = "SUNUI",
         removeRealm = true
     },
     emote = {

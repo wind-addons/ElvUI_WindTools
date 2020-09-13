@@ -620,6 +620,12 @@ do
     icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, ":16:16:0:0:64:64:2:56:2:56") .. " "
     icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, ":16:16")
     SampleStrings.elvui = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:0:21:21:42") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:22:41:1:20") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:21:42:21:42")
+    SampleStrings.sunui = icons
 end
 
 options.chatText = {
@@ -701,6 +707,7 @@ options.chatText = {
                     values = {
                         HEXAGON = SampleStrings.hexagon,
                         FFXIV = SampleStrings.ffxiv,
+                        SUNUI = SampleStrings.sunui,
                         BLIZZARD = SampleStrings.blizzard,
                         DEFAULT = SampleStrings.elvui
                     }

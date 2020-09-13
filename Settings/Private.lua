@@ -117,6 +117,7 @@ V.skins = {
 		misc = true,
 		objectiveTracker = true,
 		orderHall = true,
+		playerChoice = true,
 		quest = true,
 		raidInfo = true,
 		raidUtility = true,
@@ -131,8 +132,7 @@ V.skins = {
 		trainer = true,
 		tutorial = true,
 		warboard = true,
-		worldMap = true,
-		roleIconStyle = "FFXIV"
+		worldMap = true
 	},
 	elvui = {
 		enable = true,

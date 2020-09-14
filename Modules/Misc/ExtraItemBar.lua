@@ -11,29 +11,45 @@ local tonumber = tonumber
 local InCombatLockdown = InCombatLockdown
 local GetQuestLogSpecialItemInfo = GetQuestLogSpecialItemInfo
 local CreateFrame = CreateFrame
+local GetInventoryItemID = GetInventoryItemID
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local GameTooltip = _G.GameTooltip
+local IsUsableItem = IsUsableItem
+local GetItemIcon = GetItemIcon
+local GetItemCount = GetItemCount
+local GetItemInfo = GetItemInfo
 
 local questItemList = {}
+local equipmentList = {}
 
-local function GetWorldQuestItemList()
-    local link, item, charges, showItemWhenComplete = GetQuestLogSpecialItemInfo(questLogIndex)
-end
-
-function EB:UpdateQuestItemList()
+local function UpdateQuestItemList()
     wipe(questItemList)
     for questLogIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
         local link = GetQuestLogSpecialItemInfo(questLogIndex)
         if link then
             local itemID = tonumber(strmatch(link, "|Hitem:(%d+):"))
-            tinsert(questItemList, itemID)
+            local data = {
+                questLogIndex = questLogIndex,
+                itemID = itemID
+            }
+            tinsert(questItemList, data)
+        end
+    end
+end
+
+local function UpdateEquipmentList()
+    wipe(equipmentList)
+    for slotID = 1, 18 do
+        local itemID = GetInventoryItemID("player", slotID)
+        if itemID and IsUsableItem(itemID) then
+            tinsert(equipmentList, slotID)
         end
     end
 end
 
 function EB:Test()
-    self:UpdateQuestItemList()
-    F.Developer.Print(questItemList)
+    UpdateQuestItemList()
+    UpdateEquipmentList()
     self:CreateBar(1)
     self:UpdateBar(1)
 end
@@ -84,19 +100,72 @@ function EB:UpdateButton(name, barDB)
     return button
 end
 
-function EB:SetUpButton(button, itemID)
-    if itemID then
-        local name = GetItemInfo(itemID)
-        local count = GetItemCount(itemID, nil, true)
-        local icon = GetItemIcon(itemID)
-        button.tex:SetTexture(icon)
-        button.itemName = name
-        button.itemID = itemID
+function EB:SetUpButton(button, questItemData, slotID)
+    button.itemName = nil
+    button.itemID = nil
+    button.spellName = nil
+    button.slotID = nil
+    button.countText = nil
+
+    if questItemData then
+        button.itemID = questItemData.itemID
+        button.itemName = GetItemInfo(questItemData.itemID)
+        button.spellName = IsUsableItem(questItemData.itemID)
+        button.countText = GetItemCount(questItemData.itemID, nil, true)
+        button.tex:SetTexture(GetItemIcon(questItemData.itemID))
+        button.questLogIndex = questItemData.questLogIndex
+    elseif slotID then
+        local itemID = GetInventoryItemID("player", slotID)
+        local name, _, rarity = GetItemInfo(itemID)
+
+        button.slotID = slotID
+        button.itemName = GetItemInfo(itemID)
         button.spellName = IsUsableItem(itemID)
-        button.slotID = nil
+        button.tex:SetTexture(GetItemIcon(itemID))
+
+        if rarity and rarity > 1 then
+            local r, g, b = GetItemQualityColor(rarity)
+            button:SetBackdropBorderColor(r, g, b)
+        end
     end
 
     button:Show()
+
+    -- 更新对叠数
+    if button.countText and button.countText > 1 then
+        button.count:SetText(countText)
+    else
+        button.count:SetText()
+    end
+
+    -- 更新 OnUpdate 函数
+    local OnUpdateFunction
+
+    if button.itemID then
+        OnUpdateFunction = function(self)
+            local start, duration, enable
+            if self.questLogIndex > 0 then
+                start, duration, enable = GetQuestLogSpecialItemCooldown(self.questLogIndex)
+            else
+                start, duration, enable = GetItemCooldown(self.itemID)
+            end
+            CooldownFrame_Set(self.cooldown, start, duration, enable)
+            if (duration and duration > 0 and enable and enable == 0) then
+                self.tex:SetVertexColor(0.4, 0.4, 0.4)
+            elseif IsItemInRange(itemID, "target") == 0 then
+                self.tex:SetVertexColor(1, 0, 0)
+            else
+                self.tex:SetVertexColor(1, 1, 1)
+            end
+        end
+    elseif button.slotID then
+        OnUpdateFunction = function(self)
+            local start, duration, enable = GetInventoryItemCooldown("player", self.slotID)
+            CooldownFrame_Set(self.cooldown, start, duration, enable)
+        end
+    end
+
+    button:SetScript("OnUpdate", OnUpdateFunction)
 
     -- 浮动提示
     button:SetScript(
@@ -217,8 +286,17 @@ function EB:UpdateBar(id)
     local buttonID = 1
 
     -- 更新任务物品
-    for _, itemID in pairs(questItemList) do
-        self:SetUpButton(self.bars[id].buttons[buttonID], itemID)
+    for _, data in pairs(questItemList) do
+        self:SetUpButton(self.bars[id].buttons[buttonID], data)
+        buttonID = buttonID + 1
+        if buttonID > 12 then
+            return
+        end
+    end
+
+    -- 更新装备物品
+    for _, slotID in pairs(equipmentList) do
+        self:SetUpButton(self.bars[id].buttons[buttonID], nil, slotID)
         buttonID = buttonID + 1
         if buttonID > 12 then
             return

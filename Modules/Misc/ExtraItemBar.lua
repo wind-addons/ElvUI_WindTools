@@ -54,48 +54,41 @@ function EB:Test()
     self:UpdateBar(1)
 end
 
-function EB:UpdateButton(name, barDB)
-    local button = _G[name]
-    if not button then
-        button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
-        button:Size(barDB.size)
-        button:SetTemplate("Default")
-        button:StyleButton()
-        button:SetClampedToScreen(true)
-        button:SetAttribute("type", "item")
-        button:EnableMouse(false)
-        button:RegisterForClicks("AnyUp")
-
-        local tex = button:CreateTexture(nil, "OVERLAY", nil)
-        tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
-        tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
-        tex:SetTexCoord(unpack(E.TexCoords))
-
-        local count = button:CreateFontString(nil, "OVERLAY")
-        count:SetTextColor(1, 1, 1, 1)
-        count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0.5, 0)
-        count:SetJustifyH("CENTER")
-
-        local bind = button:CreateFontString(nil, "OVERLAY")
-        bind:SetTextColor(0.6, 0.6, 0.6)
-        bind:Point("BOTTOM", button, "BOTTOM", 0, -5)
-        bind:SetJustifyH("CENTER")
-
-        local cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate")
-        cooldown:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
-        cooldown:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
-        cooldown:SetSwipeColor(0, 0, 0, 0)
-        cooldown:SetDrawBling(false)
-
-        button.tex = tex
-        button.count = count
-        button.bind = bind
-        button.cooldown = cooldown
-    end
-
-    F.SetFontWithDB(button.count, barDB.countFont)
-    F.SetFontWithDB(button.bind, barDB.bindFont)
+function EB:CreateButton(name, barDB)
+    local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(barDB.size)
+    button:SetTemplate("Default")
+    button:SetClampedToScreen(true)
+    button:SetAttribute("type", "item")
+    button:EnableMouse(false)
+    button:RegisterForClicks("AnyUp")
+
+    local tex = button:CreateTexture(nil, "OVERLAY", nil)
+    tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
+    tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
+    tex:SetTexCoord(unpack(E.TexCoords))
+
+    local count = button:CreateFontString(nil, "OVERLAY")
+    count:SetTextColor(1, 1, 1, 1)
+    count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0.5, 0)
+    count:SetJustifyH("CENTER")
+    F.SetFontWithDB(count, barDB.countFont)
+
+    local bind = button:CreateFontString(nil, "OVERLAY")
+    bind:SetTextColor(0.6, 0.6, 0.6)
+    bind:Point("BOTTOM", button, "BOTTOM", 0, -5)
+    bind:SetJustifyH("CENTER")
+    F.SetFontWithDB(bind, barDB.bindFont)
+
+    local cooldown = CreateFrame("Cooldown", name .. "Cooldown", button, "CooldownFrameTemplate")
+    E:RegisterCooldown(cooldown)
+
+    button.tex = tex
+    button.count = count
+    button.bind = bind
+    button.cooldown = cooldown
+
+    button:StyleButton()
 
     return button
 end
@@ -114,6 +107,8 @@ function EB:SetUpButton(button, questItemData, slotID)
         button.countText = GetItemCount(questItemData.itemID, nil, true)
         button.tex:SetTexture(GetItemIcon(questItemData.itemID))
         button.questLogIndex = questItemData.questLogIndex
+
+        button:SetBackdropBorderColor(1, 1, 1)
     elseif slotID then
         local itemID = GetInventoryItemID("player", slotID)
         local name, _, rarity = GetItemInfo(itemID)
@@ -152,7 +147,7 @@ function EB:SetUpButton(button, questItemData, slotID)
             CooldownFrame_Set(self.cooldown, start, duration, enable)
             if (duration and duration > 0 and enable and enable == 0) then
                 self.tex:SetVertexColor(0.4, 0.4, 0.4)
-            elseif IsItemInRange(itemID, "target") == 0 then
+            elseif IsItemInRange(self.itemID, "target") == false then
                 self.tex:SetVertexColor(1, 0, 0)
             else
                 self.tex:SetVertexColor(1, 1, 1)
@@ -264,7 +259,7 @@ function EB:CreateBar(id)
     -- 建立按钮
     bar.buttons = {}
     for i = 1, 12 do
-        bar.buttons[i] = self:UpdateButton(bar:GetName() .. "Button" .. i, barDB)
+        bar.buttons[i] = self:CreateButton(bar:GetName() .. "Button" .. i, barDB)
 
         if i == 1 then
             bar.buttons[i]:Point("LEFT", bar, "LEFT", 5, 0)

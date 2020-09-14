@@ -533,6 +533,7 @@ L["Vignetting"] = "螢幕暗角"
 L["Visibility"] = "可見性"
 L["Visual Effect"] = "視覺效果"
 L["Warboard"] = "英雄召喚告示板"
+L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 設定"
 L["Weapon Category"] = "武器分類"
 L["Whisper Cycle"] = "密語獨立循環"

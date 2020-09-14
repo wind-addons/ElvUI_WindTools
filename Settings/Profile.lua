@@ -1,6 +1,8 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local _G = _G
 
+local GetLocale = GetLocale
+
 P.announcement = {
     enable = true,
     combatResurrection = {
@@ -483,7 +485,7 @@ P.social = {
     },
     contextMenu = {
         enable = true,
-        armory = true,
+        armory = GetLocale() ~= "zhCN",
         addFriend = true,
         guildInvite = true,
         who = true,

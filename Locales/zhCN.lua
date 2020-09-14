@@ -533,6 +533,7 @@ L["Vignetting"] = "画面暗角"
 L["Visibility"] = "可见性"
 L["Visual Effect"] = "视觉效果"
 L["Warboard"] = "布告牌"
+L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 设定"
 L["Weapon Category"] = "武器分类"
 L["Whisper Cycle"] = "密语独立循环"

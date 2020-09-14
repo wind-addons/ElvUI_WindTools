@@ -533,6 +533,7 @@ L["Vignetting"] = true
 L["Visibility"] = true
 L["Visual Effect"] = true
 L["Warboard"] = "Hero's Call Board"
+L["WeakAuras"] = true
 L["WeakAuras Options"] = true
 L["Weapon Category"] = true
 L["Whisper Cycle"] = true

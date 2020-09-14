@@ -275,7 +275,7 @@ P.combat = {
         modifier = "shift",
         readyCheck = true,
         countDown = true,
-        countDownTime = 5,
+        countDownTime = 5
     }
 }
 
@@ -320,6 +320,29 @@ P.maps = {
             name = E.db.general.font,
             size = 14,
             style = "OUTLINE"
+        }
+    }
+}
+
+P.misc = {
+    extraItemsBar = {
+        enable = true,
+        bar1 = {
+            enable = true,
+            size = 30,
+            countFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+            bindFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+        },
+        bar2 = {
+            enable = true
         }
     }
 }

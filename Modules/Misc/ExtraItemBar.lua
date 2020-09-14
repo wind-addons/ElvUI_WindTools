@@ -285,45 +285,28 @@ function EB:UpdateBar(id)
 
     local buttonID = 1
 
-    local include = {
-        quest = false,
-        equip = false
-    }
-
-    for _, module in pairs {strsplit("[, ]", barDB.include)} do
-        if module == "QUEST" then
-            include.quest = true
-        elseif module == "EQUIP" then
-            include.equip = true
-        end
-    end
-
-    -- 更新任务物品
-    if include.quest then
-        for _, data in pairs(questItemList) do
-            self:SetUpButton(bar.buttons[buttonID], data)
-            buttonID = buttonID + 1
-            if buttonID > 12 then
-                return
+    for _, module in ipairs {strsplit("[, ]", barDB.include)} do
+        if module == "QUEST" then -- 更新任务物品
+            for _, data in pairs(questItemList) do
+                self:SetUpButton(bar.buttons[buttonID], data)
+                buttonID = buttonID + 1
+                if buttonID > 12 then
+                    return
+                end
+            end
+        elseif module == "EQUIP" then -- 更新装备物品
+            for _, slotID in pairs(equipmentList) do
+                self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+                buttonID = buttonID + 1
+                if buttonID > 12 then
+                    return
+                end
             end
         end
     end
 
-    -- 更新装备物品
-    if include.equip then
-        for _, slotID in pairs(equipmentList) do
-            self:SetUpButton(bar.buttons[buttonID], nil, slotID)
-            buttonID = buttonID + 1
-            if buttonID > 12 then
-                return
-            end
-        end
-    end
-
+    -- 隐藏其余按钮
     if buttonID == 1 then
-        for hideButtonID = buttonID, 12 do
-            bar.buttons[hideButtonID]:Hide()
-        end
         bar:Hide()
         return
     elseif buttonID <= 12 then

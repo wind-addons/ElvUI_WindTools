@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local EB = W:NewModule("ExtraItemsBar", "AceEvent-3.0", "AceHook-3.0")
-local ES = E:GetModule("Skins")
+local S = W:GetModule("Skins")
 
 local _G = _G
 local unpack = unpack
@@ -89,6 +89,10 @@ function EB:CreateButton(name, barDB)
     button.cooldown = cooldown
 
     button:StyleButton()
+
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+        S:CreateShadow(button)
+    end
 
     return button
 end
@@ -231,12 +235,12 @@ function EB:CreateBar(id)
     -- 建立条移动锚点
     local anchor = CreateFrame("Frame", "WTExtraItemsBar" .. id .. "Anchor", E.UIParent)
     anchor:SetClampedToScreen(true)
-    anchor:Point("BOTTOMLEFT", _G.RightChatPanel or _G.LeftChatPanel, "TOPLEFT", 0, (id - 1) * 40)
+    anchor:Point("BOTTOMLEFT", _G.RightChatPanel or _G.LeftChatPanel, "TOPLEFT", 0, (id - 1) * 45)
     anchor:Size(200, 40)
     E:CreateMover(
         anchor,
-        "WTExtraItemsBarMover",
-        L["Extra Items Bar" .. " " .. id],
+        "WTExtraItemsBar" .. id .. "Mover",
+        L["Extra Items Bar"] .. " " .. id,
         nil,
         nil,
         nil,
@@ -260,7 +264,7 @@ function EB:CreateBar(id)
     bar.buttons = {}
     for i = 1, 12 do
         bar.buttons[i] = self:CreateButton(bar:GetName() .. "Button" .. i, barDB)
-
+        bar.buttons[i]:SetParent(bar)
         if i == 1 then
             bar.buttons[i]:Point("LEFT", bar, "LEFT", 5, 0)
         else
@@ -276,31 +280,96 @@ function EB:UpdateBar(id)
         return
     end
 
+    local bar = self.bars[id]
     local barDB = self.db["bar" .. id]
 
     local buttonID = 1
 
+    local include = {
+        quest = false,
+        equip = false
+    }
+
+    for _, module in pairs {strsplit("[, ]", barDB.include)} do
+        if module == "QUEST" then
+            include.quest = true
+        elseif module == "EQUIP" then
+            include.equip = true
+        end
+    end
+
     -- 更新任务物品
-    for _, data in pairs(questItemList) do
-        self:SetUpButton(self.bars[id].buttons[buttonID], data)
-        buttonID = buttonID + 1
-        if buttonID > 12 then
-            return
+    if include.quest then
+        for _, data in pairs(questItemList) do
+            self:SetUpButton(bar.buttons[buttonID], data)
+            buttonID = buttonID + 1
+            if buttonID > 12 then
+                return
+            end
         end
     end
 
     -- 更新装备物品
-    for _, slotID in pairs(equipmentList) do
-        self:SetUpButton(self.bars[id].buttons[buttonID], nil, slotID)
-        buttonID = buttonID + 1
-        if buttonID > 12 then
-            return
+    if include.equip then
+        for _, slotID in pairs(equipmentList) do
+            self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+            buttonID = buttonID + 1
+            if buttonID > 12 then
+                return
+            end
         end
     end
 
-    if buttonID <= 12 then
+    if buttonID == 1 then
         for hideButtonID = buttonID, 12 do
-            self.bars[id].buttons[hideButtonID]:Hide()
+            bar.buttons[hideButtonID]:Hide()
+        end
+        bar:Hide()
+        return
+    elseif buttonID <= 12 then
+        for hideButtonID = buttonID, 12 do
+            bar.buttons[hideButtonID]:Hide()
+        end
+    end
+
+    bar:Show()
+
+    -- 切换阴影
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+        if barDB.backdrop then
+            bar.backdrop:Show()
+            for i = 1, 12 do
+                if bar.buttons[i].shadow then
+                    bar.buttons[i].shadow:Hide()
+                end
+            end
+        else
+            bar.backdrop:Hide()
+            for i = 1, 12 do
+                if bar.buttons[i].shadow then
+                    bar.buttons[i].shadow:Show()
+                end
+            end
+        end
+    end
+end
+
+function EB:UpdateAll()
+    UpdateQuestItemList()
+    UpdateEquipmentList()
+
+    for i = 1, 3 do
+        self:UpdateBar(i)
+    end
+end
+
+function EB:CreateAll()
+    self.bars = {}
+
+    for i = 1, 3 do
+        self:CreateBar(i)
+        if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+            S:CreateShadow(self.bars[i].backdrop)
         end
     end
 end
@@ -311,8 +380,7 @@ function EB:Initialize()
         return
     end
 
-    self.bars = {}
-    --self:CreateBar(1)
+    self:CreateAll()
 end
 
 W:RegisterModule(EB:GetName())

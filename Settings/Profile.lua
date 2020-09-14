@@ -330,6 +330,7 @@ P.misc = {
         bar1 = {
             enable = true,
             size = 30,
+            backdrop = true,
             countFont = {
                 name = E.db.general.font,
                 size = 12,
@@ -340,10 +341,40 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
+            include = "QUEST,EQUIP"
         },
         bar2 = {
-            enable = true
-        }
+            enable = true,
+            size = 30,
+            backdrop = true,
+            countFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+            bindFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+            include = "QUEST"
+        },
+        bar3 = {
+            enable = true,
+            size = 30,
+            backdrop = false,
+            countFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+            bindFont = {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
+            include = "EQUIP"
+        },
     }
 }
 

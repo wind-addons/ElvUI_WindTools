@@ -498,7 +498,7 @@ function EB:UpdateBar(id)
                 end
             end
         end
-        
+
         if buttonID > 12 then
             return
         end
@@ -533,27 +533,27 @@ function EB:UpdateBar(id)
 
         if i == 1 then
             if anchor == "TOPLEFT" then
-                button:Point("TOPRIGHT", bar, "TOPRIGHT", -barDB.backdropSpacing, -barDB.backdropSpacing)
+                button:Point(anchor, bar, anchor, barDB.backdropSpacing, -barDB.backdropSpacing)
             elseif anchor == "TOPRIGHT" then
-                button:Point("TOPLEFT", bar, "TOPLEFT", barDB.backdropSpacing, -barDB.backdropSpacing)
+                button:Point(anchor, bar, anchor, -barDB.backdropSpacing, -barDB.backdropSpacing)
             elseif anchor == "BOTTOMLEFT" then
-                button:Point("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -barDB.backdropSpacing, barDB.backdropSpacing)
+                button:Point(anchor, bar, anchor, barDB.backdropSpacing, barDB.backdropSpacing)
             elseif anchor == "BOTTOMRIGHT" then
-                button:Point("BOTTOMLEFT", bar, "BOTTOMLEFT", barDB.backdropSpacing, barDB.backdropSpacing)
+                button:Point(anchor, bar, anchor, -barDB.backdropSpacing, barDB.backdropSpacing)
             end
         elseif i <= barDB.buttonsPerRow then
             local nearest = bar.buttons[i - 1]
             if anchor == "TOPLEFT" or anchor == "BOTTOMLEFT" then
-                button:Point("RIGHT", nearest, "LEFT", barDB.spacing, 0)
+                button:Point("LEFT", nearest, "RIGHT", barDB.spacing, 0)
             else
-                button:Point("LEFT", nearest, "RIGHT", -barDB.spacing, 0)
+                button:Point("RIGHT", nearest, "LEFT", -barDB.spacing, 0)
             end
         else
             local nearest = bar.buttons[i - barDB.buttonsPerRow]
             if anchor == "TOPLEFT" or anchor == "TOPRIGHT" then
-                button:Point("TOP", nearest, "BOTTOM", 0, -barDB.spacing)
+                button:Point("BOTTOM", nearest, "TOP", 0, -barDB.spacing)
             else
-                button:Point("BOTTOM", nearest, "TOP", 0, barDB.spacing)
+                button:Point("TOP", nearest, "BOTTOM", 0, barDB.spacing)
             end
         end
     end

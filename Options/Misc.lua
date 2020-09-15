@@ -204,6 +204,12 @@ do -- 添加按钮设定组
                     min = 1,
                     max = 12,
                     step = 1
+                },
+                include = {
+                    order = 11,
+                    type = "input",
+                    name = L["Included Button Types"],
+                    width = "full"
                 }
             }
         }

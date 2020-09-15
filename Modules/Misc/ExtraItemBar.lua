@@ -175,6 +175,12 @@ local function UpdateEquipmentList()
     end
 end
 
+local UpdateAfterCombat = {
+    [1] = false,
+    [2] = false,
+    [3] = false
+}
+
 function EB:CreateButton(name, barDB)
     local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(barDB.buttonWidth, barDB.buttonHeight)
@@ -287,10 +293,6 @@ function EB:SetUpButton(button, questItemData, slotID)
     button:SetScript(
         "OnEnter",
         function(self)
-            if InCombatLockdown() then
-                return
-            end
-
             GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
             GameTooltip:ClearLines()
 
@@ -322,25 +324,6 @@ function EB:SetUpButton(button, questItemData, slotID)
             button:SetAttribute("type", "item")
             button:SetAttribute("item", button.itemName)
         end
-    else
-        button:RegisterEvent("PLAYER_REGEN_ENABLED")
-        button:SetScript(
-            "OnEvent",
-            function(self, event)
-                if event == "PLAYER_REGEN_ENABLED" then
-                    self:EnableMouse(true)
-                    if self.slotID then
-                        self:SetAttribute("type", "macro")
-                        self:SetAttribute("macrotext", "/use " .. self.slotID)
-                    elseif self.itemName then
-                        self:SetAttribute("type", "item")
-                        self:SetAttribute("item", self.itemName)
-                    end
-                    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-                    button:Show()
-                end
-            end
-        )
     end
 end
 
@@ -411,6 +394,29 @@ function EB:UpdateButtonSize(button, barDB)
     button.tex:SetTexCoord(left, right, top, bottom)
 end
 
+function EB:PLAYER_REGEN_ENABLED()
+    for i = 1, 3 do
+        if UpdateAfterCombat[i] then
+            self:UpdateBar(i)
+            UpdateAfterCombat[i] = false
+        end
+    end
+end
+
+function EB:UpdateBarTextOnCombat(i)
+    for k = 1, 12 do
+        local button = self.bars[i].buttons[k]
+        if button.itemID and button:IsShown() then
+            button.countText = GetItemCount(button.itemID, nil, true)
+            if button.countText and button.countText > 1 then
+                button.count:SetText(countText)
+            else
+                button.count:SetText()
+            end
+        end
+    end
+end
+
 function EB:UpdateBar(id)
     if not self.db or not self.db["bar" .. id] then
         return
@@ -418,6 +424,13 @@ function EB:UpdateBar(id)
 
     local bar = self.bars[id]
     local barDB = self.db["bar" .. id]
+
+    if InCombatLockdown() then
+        self:UpdateBarTextOnCombat(id)
+        UpdateAfterCombat[id] = true
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
 
     if not self.db.enable or not barDB.enable then
         bar:Hide()
@@ -551,9 +564,9 @@ function EB:UpdateBar(id)
         else
             local nearest = bar.buttons[i - barDB.buttonsPerRow]
             if anchor == "TOPLEFT" or anchor == "TOPRIGHT" then
-                button:Point("BOTTOM", nearest, "TOP", 0, -barDB.spacing)
+                button:Point("TOP", nearest, "BOTTOM", 0, -barDB.spacing)
             else
-                button:Point("TOP", nearest, "BOTTOM", 0, barDB.spacing)
+                button:Point("BOTTOM", nearest, "TOP", 0, barDB.spacing)
             end
         end
     end
@@ -626,9 +639,10 @@ function EB:Initialize()
     self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
     self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
     self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
-    -- self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
 
     self.Initialized = true
+
+    -- self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
 end
 
 function EB:ProfileUpdate()

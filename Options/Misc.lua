@@ -654,16 +654,33 @@ do
     examples.color = {
         name = L["Color"],
         player = {
+            order = 0,
             tag = "[classcolor:player]",
             text = L["The color of the player's class"]
         }
     }
 
+    local className = {
+        WARRIOR = L["Warrior"],
+        PALADIN = L["Paladin"],
+        HUNTER = L["Hunter"],
+        ROGUE = L["Rogue"],
+        PRIEST = L["Priest"],
+        DEATHKNIGHT = L["Deathknight"],
+        SHAMAN = L["Shaman"],
+        MAGE = L["Mage"],
+        WARLOCK = L["Warlock"],
+        MONK = L["Monk"],
+        DRUID = L["Druid"],
+        DEMONHUNTER = L["Demonhunter"]
+    }
+
     for i = 1, GetNumClasses() do
-        local localizedName, upperText = GetClassInfo(i)
+        local upperText = select(2, GetClassInfo(i))
         examples.color[upperText] = {
+            order = i,
             tag = format("[classcolor:%s]", strlower(upperText)),
-            text = format(L["The color of %s"], localizedName)
+            text = format(L["The color of %s"], className[upperText])
         }
     end
 
@@ -681,7 +698,7 @@ do
         for key, data in pairs(catTable) do
             if key ~= "name" then
                 options.tags.args[cat].args[key] = {
-                    order = subIndex,
+                    order = data.order or subIndex,
                     type = "input",
                     width = "full",
                     name = data.text,

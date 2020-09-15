@@ -95,7 +95,7 @@ options.combatAlert = {
                 enterText = {
                     order = 2,
                     type = "input",
-                    name = L["Text (Enter)"]
+                    name = L["Enter Text"]
                 },
                 enterColor = {
                     order = 3,
@@ -114,7 +114,7 @@ options.combatAlert = {
                 leaveText = {
                     order = 4,
                     type = "input",
-                    name = L["Text (Leave)"]
+                    name = L["Leave Text"]
                 },
                 leaveColor = {
                     order = 5,
@@ -315,12 +315,12 @@ options.raidMarkers = {
                 readyCheck = {
                     order = 1,
                     type = "toggle",
-                    name = L["Ready Check"],
+                    name = L["Ready Check"]
                 },
                 countDown = {
                     order = 2,
                     type = "toggle",
-                    name = L["Count Down"],
+                    name = L["Count Down"]
                 },
                 countDownTime = {
                     order = 3,
@@ -330,7 +330,7 @@ options.raidMarkers = {
                     min = 1,
                     max = 30,
                     step = 1
-                },
+                }
             }
         },
         buttonsConfig = {
@@ -369,6 +369,5 @@ options.raidMarkers = {
                 }
             }
         }
-        
     }
 }

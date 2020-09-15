@@ -5,9 +5,10 @@ local AceAddon = E.Libs.AceAddon
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
-local tonumber = tonumber
-local hooksecurefunc = hooksecurefunc
 local collectgarbage = collectgarbage
+local hooksecurefunc = hooksecurefunc
+local tonumber = tonumber
+
 local GetAddOnMetadata = GetAddOnMetadata
 
 -- 注册 Wind 工具箱为 Ace3 插件

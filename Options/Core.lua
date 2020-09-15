@@ -85,14 +85,14 @@ W.options = {
 -- ElvUI_OptionsUI 回调
 function W:OptionsCallback()
     -- 标题
-    local icon = F.GetIconString(W.Media.Icons.tools, 14)
+    local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
     E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " " .. W.Version
 
     -- 设置主界面
     E.Options.args.WindTools = {
         type = "group",
         childGroups = "tree",
-        name = W.Title .. " " .. W.Version,
+        name = W.Title,
         args = {
             logo = {
                 order = 1,

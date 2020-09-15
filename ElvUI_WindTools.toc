@@ -1,9 +1,11 @@
 ## Interface: 90001
 ## Author: fang2hou
 ## Version: 2.0
-## Title: |cff1784d1ElvUI|r WindTools
+## Title: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0T|r|cff60b1e8o|r|cff98c0d5o|r|cffc1ccc6l|r|cffc1ccc6s|r
+## Title-zhCN: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0工|r|cff98c0d5具|r|cffc1ccc6箱|r
+## Title-zhTW: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0工|r|cff98c0d5具|r|cffc1ccc6箱|r
 ## RequiredDeps: ElvUI
-## OptionalDeps: Blizzard_PetJournal, SharedMedia, Gatherer, Masque
+## OptionalDeps: Blizzard_PetJournal, SharedMedia
 ## X-Tukui-ProjectID: placeholder
 ## X-Tukui-ProjectFolders: ElvUI_WindTools
 

@@ -326,7 +326,7 @@ P.maps = {
 
 P.misc = {
     extraItemsBar = {
-        enable = false,
+        enable = true,
         customList = {},
         blackList = {},
         bar1 = {
@@ -334,11 +334,11 @@ P.misc = {
             mouseOver = false,
             backdrop = true,
             backdropSpacing = 3,
-            buttonWidth = 40,
+            buttonWidth = 35,
             buttonHeight = 30,
-            buttonsPerRow = 6,
+            buttonsPerRow = 12,
             anchor = "TOPLEFT",
-            spacing = 5,
+            spacing = 3,
             countFont = {
                 name = E.db.general.font,
                 size = 12,
@@ -349,17 +349,17 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "BANNER,EQUIP"
+            include = "QUEST,BANNER,EQUIP"
         },
         bar2 = {
             enable = true,
             mouseOver = false,
             backdrop = true,
             backdropSpacing = 3,
-            buttonWidth = 30,
+            buttonWidth = 35,
             buttonHeight = 30,
-            buttonsPerRow = 6,
-            spacing = 5,
+            buttonsPerRow = 12,
+            spacing = 3,
             backdrop = true,
             anchor = "TOPLEFT",
             countFont = {
@@ -372,17 +372,17 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "UTILITY,FLASK"
+            include = "POTION,FLASK,UTILITY"
         },
         bar3 = {
-            enable = true,
+            enable = false,
             mouseOver = false,
             backdrop = true,
             backdropSpacing = 3,
-            buttonWidth = 30,
+            buttonWidth = 35,
             buttonHeight = 30,
-            buttonsPerRow = 6,
-            spacing = 5,
+            buttonsPerRow = 12,
+            spacing = 3,
             backdrop = false,
             anchor = "TOPLEFT",
             countFont = {
@@ -395,7 +395,7 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "EQUIP"
+            include = "CUSTOM"
         }
     }
 }

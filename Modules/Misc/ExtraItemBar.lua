@@ -175,13 +175,6 @@ local function UpdateEquipmentList()
     end
 end
 
-function EB:Test()
-    UpdateQuestItemList()
-    UpdateEquipmentList()
-    self:CreateBar(1)
-    self:UpdateBar(1)
-end
-
 function EB:CreateButton(name, barDB)
     local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(barDB.buttonWidth, barDB.buttonHeight)
@@ -235,7 +228,6 @@ function EB:SetUpButton(button, questItemData, slotID)
     if questItemData then
         button.itemID = questItemData.itemID
         button.itemName = GetItemInfo(questItemData.itemID)
-        button.spellName = IsUsableItem(questItemData.itemID)
         button.countText = GetItemCount(questItemData.itemID, nil, true)
         button.tex:SetTexture(GetItemIcon(questItemData.itemID))
         button.questLogIndex = questItemData.questLogIndex
@@ -247,7 +239,6 @@ function EB:SetUpButton(button, questItemData, slotID)
 
         button.slotID = slotID
         button.itemName = GetItemInfo(itemID)
-        button.spellName = IsUsableItem(itemID)
         button.tex:SetTexture(GetItemIcon(itemID))
 
         if rarity and rarity > 1 then
@@ -428,6 +419,11 @@ function EB:UpdateBar(id)
     local bar = self.bars[id]
     local barDB = self.db["bar" .. id]
 
+    if not self.db.enable or not barDB.enable then
+        bar:Hide()
+        return
+    end
+
     local buttonID = 1
 
     for _, module in ipairs {strsplit("[, ]", barDB.include)} do
@@ -561,13 +557,20 @@ function EB:UpdateBar(id)
     end
 end
 
-function EB:UpdateAll()
-    UpdateQuestItemList()
-    UpdateEquipmentList()
-
+function EB:UpdateBars()
     for i = 1, 3 do
         self:UpdateBar(i)
     end
+end
+
+function EB:UpdateQuestItem()
+    UpdateQuestItemList()
+    self:UpdateBars()
+end
+
+function EB:UpdateEquipment()
+    UpdateEquipmentList()
+    self:UpdateBars()
 end
 
 function EB:CreateAll()
@@ -583,11 +586,47 @@ end
 
 function EB:Initialize()
     self.db = E.db.WT.misc.extraItemsBar
-    if not self.db or not self.db.enable then
+    if not self.db or not self.db.enable or self.Initialized then
         return
     end
 
     self:CreateAll()
+    UpdateQuestItemList()
+    UpdateEquipmentList()
+    self:UpdateBars()
+
+    self:RegisterEvent("UNIT_INVENTORY_CHANGED", "UpdateEquipment")
+    self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateBars")
+    self:RegisterEvent("ZONE_CHANGED", "UpdateBars")
+    self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateBars")
+    self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "UpdateQuestItem")
+    self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
+    self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
+    self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
+    self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
+
+    self.Initialized = true
+end
+
+function EB:ProfileUpdate()
+    self:Initialize()
+
+    if self.db.enable then
+        UpdateQuestItemList()
+        UpdateEquipmentList()
+    elseif self.Initialized then
+        self:UnregisterEvent("UNIT_INVENTORY_CHANGED")
+        self:UnregisterEvent("BAG_UPDATE_DELAYED")
+        self:UnregisterEvent("ZONE_CHANGED")
+        self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+        self:UnregisterEvent("QUEST_WATCH_LIST_CHANGED")
+        self:UnregisterEvent("QUEST_LOG_UPDATE")
+        self:UnregisterEvent("QUEST_ACCEPTED")
+        self:UnregisterEvent("QUEST_TURNED_IN")
+        self:UnregisterEvent("UPDATE_BINDINGS")
+    end
+
+    self:UpdateBars()
 end
 
 W:RegisterModule(EB:GetName())

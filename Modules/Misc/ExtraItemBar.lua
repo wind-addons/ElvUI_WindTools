@@ -3,21 +3,33 @@ local EB = W:NewModule("ExtraItemsBar", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")
 
 local _G = _G
-local unpack = unpack
+local ceil = ceil
+local ipairs = ipairs
+local pairs = pairs
 local strmatch = strmatch
+local strsplit = strsplit
 local tinsert = tinsert
-local wipe = wipe
 local tonumber = tonumber
-local InCombatLockdown = InCombatLockdown
-local GetQuestLogSpecialItemInfo = GetQuestLogSpecialItemInfo
+local unpack = unpack
+local wipe = wipe
+
+local CooldownFrame_Set = CooldownFrame_Set
 local CreateFrame = CreateFrame
-local GetInventoryItemID = GetInventoryItemID
-local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local GameTooltip = _G.GameTooltip
-local IsUsableItem = IsUsableItem
-local GetItemIcon = GetItemIcon
+local GetInventoryItemCooldown = GetInventoryItemCooldown
+local GetInventoryItemID = GetInventoryItemID
+local GetItemCooldown =GetItemCooldown
 local GetItemCount = GetItemCount
+local GetItemIcon = GetItemIcon
 local GetItemInfo = GetItemInfo
+local GetItemQualityColor = GetItemQualityColor
+local GetQuestLogSpecialItemCooldown = GetQuestLogSpecialItemCooldown
+local GetQuestLogSpecialItemInfo = GetQuestLogSpecialItemInfo
+local InCombatLockdown = InCombatLockdown
+local IsItemInRange = IsItemInRange
+local IsUsableItem = IsUsableItem
+
+local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 
 -- https://shadowlands.wowhead.com/potions/name:Potion/min-req-level:40#0+2+3+18
 -- Wowhead 抓取后正则替换: ^"([0-9]{6})".* 到 [$1] = true
@@ -255,7 +267,7 @@ function EB:SetUpButton(button, questItemData, slotID)
 
     -- 更新堆叠数
     if button.countText and button.countText > 1 then
-        button.count:SetText(countText)
+        button.count:SetText(button.countText)
     else
         button.count:SetText()
     end
@@ -409,7 +421,7 @@ function EB:UpdateBarTextOnCombat(i)
         if button.itemID and button:IsShown() then
             button.countText = GetItemCount(button.itemID, nil, true)
             if button.countText and button.countText > 1 then
-                button.count:SetText(countText)
+                button.count:SetText(button.countText)
             else
                 button.count:SetText()
             end

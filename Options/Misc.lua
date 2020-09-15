@@ -7,12 +7,16 @@ local EB = W:GetModule("ExtraItemsBar")
 
 local _G = _G
 local format = format
+local pairs = pairs
+local print = print
 local select = select
 local strlower = strlower
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
+
 local GetClassInfo = GetClassInfo
+local GetItemInfo = GetItemInfo
 local GetNumClasses = GetNumClasses
 
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool

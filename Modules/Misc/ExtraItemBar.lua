@@ -128,8 +128,6 @@ function EB:SetUpButton(button, questItemData, slotID)
         end
     end
 
-    button:Show()
-
     -- 更新对叠数
     if button.countText and button.countText > 1 then
         button.count:SetText(countText)
@@ -197,6 +195,7 @@ function EB:SetUpButton(button, questItemData, slotID)
     -- 更新按钮功能
     if not InCombatLockdown() then
         button:EnableMouse(true)
+        button:Show()
         if button.slotID then
             button:SetAttribute("type", "macro")
             button:SetAttribute("macrotext", "/use " .. button.slotID)
@@ -219,6 +218,7 @@ function EB:SetUpButton(button, questItemData, slotID)
                         self:SetAttribute("item", self.itemName)
                     end
                     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                    button:Show()
                 end
             end
         )

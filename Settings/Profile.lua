@@ -326,7 +326,7 @@ P.maps = {
 
 P.misc = {
     extraItemsBar = {
-        enable = false,
+        enable = true,
         bar1 = {
             enable = true,
             size = 30,
@@ -357,7 +357,7 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "QUEST"
+            include = "QUEST,EQUIP,QUEST,EQUIP"
         },
         bar3 = {
             enable = true,
@@ -374,7 +374,7 @@ P.misc = {
                 style = "OUTLINE"
             },
             include = "EQUIP"
-        },
+        }
     }
 }
 

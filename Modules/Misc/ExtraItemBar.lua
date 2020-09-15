@@ -184,7 +184,7 @@ end
 
 function EB:CreateButton(name, barDB)
     local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
-    button:Size(barDB.size)
+    button:Size(barDB.buttonWidth, barDB.buttonHeight)
     button:SetTemplate("Default")
     button:SetClampedToScreen(true)
     button:SetAttribute("type", "item")
@@ -240,7 +240,7 @@ function EB:SetUpButton(button, questItemData, slotID)
         button.tex:SetTexture(GetItemIcon(questItemData.itemID))
         button.questLogIndex = questItemData.questLogIndex
 
-        button:SetBackdropBorderColor(1, 1, 1)
+        button:SetBackdropBorderColor(0, 0, 0)
     elseif slotID then
         local itemID = GetInventoryItemID("player", slotID)
         local name, _, rarity = GetItemInfo(itemID)
@@ -403,6 +403,23 @@ function EB:CreateBar(id)
     self.bars[id] = bar
 end
 
+function EB:UpdateButtonSize(button, barDB)
+    button:Size(barDB.buttonWidth, barDB.buttonHeight)
+    local left, right, top, bottom = unpack(E.TexCoords)
+
+    if barDB.buttonWidth > barDB.buttonHeight then
+        local offset = (bottom - top) * (1 - barDB.buttonHeight / barDB.buttonWidth) / 2
+        top = top + offset
+        bottom = bottom - offset
+    elseif barDB.buttonWidth < barDB.buttonHeight then
+        local offset = (right - left) * (1 - barDB.buttonWidth / barDB.buttonHeight) / 2
+        left = left + offset
+        right = right - offset
+    end
+
+    button.tex:SetTexCoord(left, right, top, bottom)
+end
+
 function EB:UpdateBar(id)
     if not self.db or not self.db["bar" .. id] then
         return
@@ -417,6 +434,7 @@ function EB:UpdateBar(id)
         if module == "QUEST" then -- 更新任务物品
             for _, data in pairs(questItemList) do
                 self:SetUpButton(bar.buttons[buttonID], data)
+                self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                 buttonID = buttonID + 1
             end
         elseif module == "POTION" then -- 更新药水
@@ -424,6 +442,7 @@ function EB:UpdateBar(id)
                 local count = GetItemCount(potionID)
                 if count and count > 0 and not self.db.blackList[potionID] then
                     self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                     buttonID = buttonID + 1
                 end
             end
@@ -432,6 +451,7 @@ function EB:UpdateBar(id)
                 local count = GetItemCount(flaskID)
                 if count and count > 0 and not self.db.blackList[flaskID] then
                     self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                     buttonID = buttonID + 1
                 end
             end
@@ -440,6 +460,7 @@ function EB:UpdateBar(id)
                 local count = GetItemCount(bannerID)
                 if count and count > 0 and not self.db.blackList[bannerID] then
                     self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
+                    bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
                     buttonID = buttonID + 1
                 end
             end
@@ -448,12 +469,14 @@ function EB:UpdateBar(id)
                 local count = GetItemCount(utilityID)
                 if count and count > 0 and not self.db.blackList[utilityID] then
                     self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
+                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                     buttonID = buttonID + 1
                 end
             end
         elseif module == "EQUIP" then -- 更新装备物品
             for _, slotID in pairs(equipmentList) do
                 self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+                self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                 buttonID = buttonID + 1
             end
         end

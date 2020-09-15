@@ -5,7 +5,7 @@ local _G = _G
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 
 function S:InputMethodEditor()
-    if not self:CheckDB(nil, "ime") then
+    if not self:CheckDB(nil, "inputMethodEditor") then
         return
     end
 

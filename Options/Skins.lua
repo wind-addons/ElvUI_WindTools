@@ -144,7 +144,7 @@ options.blizzard = {
         },
         achievements = {
             type = "toggle",
-            name = _G.ACHIEVEMENTS
+            name = L["Achievements"]
         },
         addonManager = {
             type = "toggle",
@@ -152,7 +152,7 @@ options.blizzard = {
         },
         adventureMap = {
             type = "toggle",
-            name = _G.ADVENTURE_MAP_TITLE
+            name = L["Adventure Map"]
         },
         alerts = {
             type = "toggle",
@@ -160,7 +160,7 @@ options.blizzard = {
         },
         auctionHouse = {
             type = "toggle",
-            name = _G.AUCTIONS
+            name = L["Auction House"]
         },
         azeriteEssence = {
             type = "toggle",
@@ -168,11 +168,11 @@ options.blizzard = {
         },
         barberShop = {
             type = "toggle",
-            name = _G.BARBERSHOP
+            name = L["Barber Shop"]
         },
         blackMarket = {
             type = "toggle",
-            name = _G.BLACK_MARKET_AUCTION_HOUSE
+            name = L["Black Market"]
         },
         calendar = {
             type = "toggle",
@@ -180,23 +180,23 @@ options.blizzard = {
         },
         challenges = {
             type = "toggle",
-            name = _G.CHALLENGES
+            name = L["Challenges"]
         },
         channels = {
             type = "toggle",
-            name = _G.CHANNELS
+            name = L["Channels"]
         },
         character = {
             type = "toggle",
-            name = _G.CHARACTER
+            name = L["Character"]
         },
         collections = {
             type = "toggle",
-            name = _G.COLLECTIONS
+            name = L["Collections"]
         },
         communities = {
             type = "toggle",
-            name = _G.COMMUNITIES
+            name = L["Communities"]
         },
         debugTools = {
             type = "toggle",
@@ -204,23 +204,23 @@ options.blizzard = {
         },
         dressingRoom = {
             type = "toggle",
-            name = _G.DRESSUP_FRAME
+            name = L["Dressing Room"]
         },
         encounterJournal = {
             type = "toggle",
-            name = _G.ENCOUNTER_JOURNAL
+            name = L["Encounter Journal"]
         },
         friends = {
             type = "toggle",
-            name = _G.FRIENDS
+            name = L["Friends"]
         },
         flightMap = {
             type = "toggle",
-            name = _G.FLIGHT_MAP
+            name = L["Flight Map"]
         },
         garrison = {
             type = "toggle",
-            name = _G.GARRISON_LOCATION_TOOLTIP
+            name = L["Garrison"]
         },
         gossip = {
             type = "toggle",
@@ -234,13 +234,13 @@ options.blizzard = {
             type = "toggle",
             name = L["Help Frame"]
         },
-        ime = {
+        inputMethodEditor = {
             type = "toggle",
-            name = L["IME"]
+            name = L["Input Method Editor"]
         },
         lookingForGroup = {
             type = "toggle",
-            name = _G.LFG_TITLE
+            name = L["Looking For Group"]
         },
         loot = {
             type = "toggle",
@@ -248,11 +248,11 @@ options.blizzard = {
         },
         lossOfControl = {
             type = "toggle",
-            name = _G.LOSS_OF_CONTROL
+            name = L["Loss Of Control"]
         },
         macro = {
             type = "toggle",
-            name = _G.MACROS
+            name = L["Macros"]
         },
         mail = {
             type = "toggle",
@@ -260,7 +260,7 @@ options.blizzard = {
         },
         merchant = {
             type = "toggle",
-            name = _G.MERCHANT
+            name = L["Merchant"]
         },
         microButtons = {
             type = "toggle",
@@ -276,7 +276,7 @@ options.blizzard = {
         },
         objectiveTracker = {
             type = "toggle",
-            name = _G.OBJECTIVES_TRACKER_LABEL
+            name = L["Objective Tracker"]
         },
         orderHall = {
             type = "toggle",
@@ -288,7 +288,7 @@ options.blizzard = {
         },
         raidInfo = {
             type = "toggle",
-            name = _G.RAID_INFO
+            name = L["Raid Info"]
         },
         raidUtility = {
             type = "toggle",
@@ -296,15 +296,15 @@ options.blizzard = {
         },
         scenario = {
             type = "toggle",
-            name = _G.SCENARIOS
+            name = L["Scenario"]
         },
         scrappingMachine = {
             type = "toggle",
-            name = _G.SCRAPPING_MACHINE_TITLE
+            name = L["Scrapping Machine"]
         },
         spellBook = {
             type = "toggle",
-            name = _G.SPELLBOOK
+            name = L["Spell Book"]
         },
         staticPopup = {
             type = "toggle",
@@ -312,15 +312,19 @@ options.blizzard = {
         },
         talent = {
             type = "toggle",
-            name = _G.TALENTS
+            name = L["Talents"]
+        },
+        talkingHead = {
+            type = "toggle",
+            name = L["Talking Head"]
         },
         taxi = {
             type = "toggle",
-            name = _G.FLIGHT_MAP
+            name = L["Taxi"]
         },
         timeManager = {
             type = "toggle",
-            name = _G.STOPWATCH_TITLE
+            name = L["Stopwatch"]
         },
         tooltips = {
             type = "toggle",
@@ -340,7 +344,7 @@ options.blizzard = {
         },
         worldMap = {
             type = "toggle",
-            name = _G.WORLD_MAP
+            name = L["World Map"]
         }
     }
 }

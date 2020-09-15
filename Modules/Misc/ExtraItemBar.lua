@@ -18,7 +18,7 @@ local CreateFrame = CreateFrame
 local GameTooltip = _G.GameTooltip
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemID = GetInventoryItemID
-local GetItemCooldown =GetItemCooldown
+local GetItemCooldown = GetItemCooldown
 local GetItemCount = GetItemCount
 local GetItemIcon = GetItemIcon
 local GetItemInfo = GetItemInfo
@@ -305,6 +305,10 @@ function EB:SetUpButton(button, questItemData, slotID)
     button:SetScript(
         "OnEnter",
         function(self)
+            local bar = self:GetParent()
+            if EB.db["bar" .. bar.id].mouseOver then
+                E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+            end
             GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
             GameTooltip:ClearLines()
 
@@ -321,6 +325,10 @@ function EB:SetUpButton(button, questItemData, slotID)
     button:SetScript(
         "OnLeave",
         function(self)
+            local bar = self:GetParent()
+            if EB.db["bar" .. bar.id].mouseOver then
+                E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), 0)
+            end
             GameTooltip:Hide()
         end
     )
@@ -335,6 +343,46 @@ function EB:SetUpButton(button, questItemData, slotID)
         elseif button.itemName then
             button:SetAttribute("type", "item")
             button:SetAttribute("item", button.itemName)
+        end
+    end
+end
+
+function EB:UpdateButtonSize(button, barDB)
+    button:Size(barDB.buttonWidth, barDB.buttonHeight)
+    local left, right, top, bottom = unpack(E.TexCoords)
+
+    if barDB.buttonWidth > barDB.buttonHeight then
+        local offset = (bottom - top) * (1 - barDB.buttonHeight / barDB.buttonWidth) / 2
+        top = top + offset
+        bottom = bottom - offset
+    elseif barDB.buttonWidth < barDB.buttonHeight then
+        local offset = (right - left) * (1 - barDB.buttonWidth / barDB.buttonHeight) / 2
+        left = left + offset
+        right = right - offset
+    end
+
+    button.tex:SetTexCoord(left, right, top, bottom)
+end
+
+function EB:PLAYER_REGEN_ENABLED()
+    for i = 1, 3 do
+        if UpdateAfterCombat[i] then
+            self:UpdateBar(i)
+            UpdateAfterCombat[i] = false
+        end
+    end
+end
+
+function EB:UpdateBarTextOnCombat(i)
+    for k = 1, 12 do
+        local button = self.bars[i].buttons[k]
+        if button.itemID and button:IsShown() then
+            button.countText = GetItemCount(button.itemID, nil, true)
+            if button.countText and button.countText > 1 then
+                button.count:SetText(button.countText)
+            else
+                button.count:SetText()
+            end
         end
     end
 end
@@ -386,47 +434,25 @@ function EB:CreateBar(id)
         end
     end
 
-    self.bars[id] = bar
-end
-
-function EB:UpdateButtonSize(button, barDB)
-    button:Size(barDB.buttonWidth, barDB.buttonHeight)
-    local left, right, top, bottom = unpack(E.TexCoords)
-
-    if barDB.buttonWidth > barDB.buttonHeight then
-        local offset = (bottom - top) * (1 - barDB.buttonHeight / barDB.buttonWidth) / 2
-        top = top + offset
-        bottom = bottom - offset
-    elseif barDB.buttonWidth < barDB.buttonHeight then
-        local offset = (right - left) * (1 - barDB.buttonWidth / barDB.buttonHeight) / 2
-        left = left + offset
-        right = right - offset
-    end
-
-    button.tex:SetTexCoord(left, right, top, bottom)
-end
-
-function EB:PLAYER_REGEN_ENABLED()
-    for i = 1, 3 do
-        if UpdateAfterCombat[i] then
-            self:UpdateBar(i)
-            UpdateAfterCombat[i] = false
-        end
-    end
-end
-
-function EB:UpdateBarTextOnCombat(i)
-    for k = 1, 12 do
-        local button = self.bars[i].buttons[k]
-        if button.itemID and button:IsShown() then
-            button.countText = GetItemCount(button.itemID, nil, true)
-            if button.countText and button.countText > 1 then
-                button.count:SetText(button.countText)
-            else
-                button.count:SetText()
+    bar:SetScript(
+        "OnEnter",
+        function(self)
+            if barDB.mouseOver then
+                E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
             end
         end
-    end
+    )
+
+    bar:SetScript(
+        "OnLeave",
+        function(self)
+            if barDB.mouseOver then
+                E:UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
+            end
+        end
+    )
+
+    self.bars[id] = bar
 end
 
 function EB:UpdateBar(id)
@@ -602,6 +628,12 @@ function EB:UpdateBar(id)
                 end
             end
         end
+    end
+
+    if barDB.mouseOver then
+        bar:SetAlpha(0)
+    else
+        bar:SetAlpha(1)
     end
 end
 

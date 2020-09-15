@@ -25,13 +25,6 @@ local C_CVar_SetCVar = C_CVar.SetCVar
 local customListSelected1
 local customListSelected2
 
-local points = {
-    TOPLEFT = L["TOPLEFT"],
-    TOPRIGHT = L["TOPRIGHT"],
-    BOTTOMLEFT = L["BOTTOMLEFT"],
-    BOTTOMRIGHT = L["BOTTOMRIGHT"]
-}
-
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
 end
@@ -217,27 +210,38 @@ do -- 添加按钮设定组
                     type = "toggle",
                     name = L["Enable"]
                 },
-                anchor = {
+                mouseOver = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Mouse Over"],
+                    desc = L["Only show the bar when you mouse over it."]
+                },
+                anchor = {
+                    order = 3,
                     type = "select",
                     name = L["Anchor Point"],
                     desc = L["The first button anchors itself to this point on the bar."],
-                    values = points
+                    values = {
+                        TOPLEFT = L["TOPLEFT"],
+                        TOPRIGHT = L["TOPRIGHT"],
+                        BOTTOMLEFT = L["BOTTOMLEFT"],
+                        BOTTOMRIGHT = L["BOTTOMRIGHT"]
+                    }
                 },
                 betterOption1 = {
-                    order = 3,
+                    order = 4,
                     type = "description",
                     name = " ",
                     width = "full"
                 },
                 backdrop = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Bar Backdrop"],
                     desc = L["Show a backdrop of the bar."]
                 },
                 backdropSpacing = {
-                    order = 5,
+                    order = 6,
                     type = "range",
                     name = L["Backdrop Spacing"],
                     desc = L["The spacing between the backdrop and the buttons."],
@@ -246,7 +250,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 spacing = {
-                    order = 6,
+                    order = 7,
                     type = "range",
                     name = L["Button Spacing"],
                     desc = L["The spacing between buttons."],
@@ -255,13 +259,13 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 betterOption2 = {
-                    order = 7,
+                    order = 8,
                     type = "description",
                     name = " ",
                     width = "full"
                 },
                 buttonWidth = {
-                    order = 8,
+                    order = 9,
                     type = "range",
                     name = L["Button Width"],
                     desc = L["The width of the buttons."],
@@ -270,7 +274,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 buttonHeight = {
-                    order = 9,
+                    order = 10,
                     type = "range",
                     name = L["Button Height"],
                     desc = L["The height of the buttons."],
@@ -279,7 +283,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 buttonsPerRow = {
-                    order = 10,
+                    order = 11,
                     type = "range",
                     name = L["Buttons Per Row"],
                     min = 1,
@@ -287,7 +291,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 include = {
-                    order = 11,
+                    order = 12,
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(

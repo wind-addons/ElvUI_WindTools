@@ -350,6 +350,7 @@ L["Only send messages after you cast combat resurrection."] = "只有在你戰�
 L["Only show chat bar when you mouse over it."] = "只在滑鼠經過時顯示聊天條."
 L["Only show minimap buttons bar when you mouse over it."] = "只在滑鼠經過時顯示小地圖按鍵條."
 L["Only show raid markers bar when you mouse over it."] = "只在滑鼠經過時顯示團隊標記條."
+L["Only show the bar when you mouse over it."] = "只在滑鼠經過時顯示條."
 L["Open the passageway to Rogue Class Hall automatically."] = "自動開啟通往盜賊職業大廳的通路."
 L["Open the window of follower recruit automatically."] = "自動打開追隨者招募窗口."
 L["Options"] = "設定"

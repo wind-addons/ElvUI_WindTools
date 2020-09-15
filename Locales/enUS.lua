@@ -350,6 +350,7 @@ L["Only send messages after you cast combat resurrection."] = true
 L["Only show chat bar when you mouse over it."] = true
 L["Only show minimap buttons bar when you mouse over it."] = true
 L["Only show raid markers bar when you mouse over it."] = true
+L["Only show the bar when you mouse over it."] = true
 L["Open the passageway to Rogue Class Hall automatically."] = true
 L["Open the window of follower recruit automatically."] = true
 L["Options"] = true

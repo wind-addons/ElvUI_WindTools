@@ -256,7 +256,7 @@ function EB:SetUpButton(button, questItemData, slotID)
         end
     end
 
-    -- 更新对叠数
+    -- 更新堆叠数
     if button.countText and button.countText > 1 then
         button.count:SetText(countText)
     else
@@ -489,9 +489,53 @@ function EB:UpdateBar(id)
     if buttonID == 1 then
         bar:Hide()
         return
-    elseif buttonID <= 12 then
+    end
+
+    if buttonID <= 12 then
         for hideButtonID = buttonID, 12 do
             bar.buttons[hideButtonID]:Hide()
+        end
+    end
+
+    -- 计算新的条大小
+    local numRows = ceil((buttonID - 1) / barDB.buttonsPerRow)
+    local numCols = buttonID > barDB.buttonsPerRow and barDB.buttonsPerRow or (buttonID - 1)
+    local newBarWidth = 2 * barDB.backdropSpacing + numCols * barDB.buttonWidth + (numCols - 1) * barDB.spacing
+    local newBarHeight = 2 * barDB.backdropSpacing + numRows * barDB.buttonHeight + (numRows - 1) * barDB.spacing
+    bar:Size(newBarWidth, newBarHeight)
+    bar:GetParent():Size(newBarWidth, newBarHeight)
+
+    -- 重新定位图标
+    for i = 1, buttonID - 1 do
+        local anchor = barDB.anchor
+        local button = bar.buttons[i]
+
+        button:ClearAllPoints()
+
+        if i == 1 then
+            if anchor == "TOPLEFT" then
+                button:Point("TOPRIGHT", bar, "TOPRIGHT", -barDB.backdropSpacing, -barDB.backdropSpacing)
+            elseif anchor == "TOPRIGHT" then
+                button:Point("TOPLEFT", bar, "TOPLEFT", barDB.backdropSpacing, -barDB.backdropSpacing)
+            elseif anchor == "BOTTOMLEFT" then
+                button:Point("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -barDB.backdropSpacing, barDB.backdropSpacing)
+            elseif anchor == "BOTTOMRIGHT" then
+                button:Point("BOTTOMLEFT", bar, "BOTTOMLEFT", barDB.backdropSpacing, barDB.backdropSpacing)
+            end
+        elseif i <= barDB.buttonsPerRow then
+            local nearest = bar.buttons[i - 1]
+            if anchor == "TOPLEFT" or anchor == "BOTTOMLEFT" then
+                button:Point("RIGHT", nearest, "LEFT", barDB.spacing, 0)
+            else
+                button:Point("LEFT", nearest, "RIGHT", -barDB.spacing, 0)
+            end
+        else
+            local nearest = bar.buttons[i - barDB.buttonsPerRow]
+            if anchor == "TOPLEFT" or anchor == "TOPRIGHT" then
+                button:Point("TOP", nearest, "BOTTOM", 0, -barDB.spacing)
+            else
+                button:Point("BOTTOM", nearest, "TOP", 0, barDB.spacing)
+            end
         end
     end
 

@@ -326,7 +326,7 @@ P.maps = {
 
 P.misc = {
     extraItemsBar = {
-        enable = true,
+        enable = false,
         customList = {},
         blackList = {},
         bar1 = {

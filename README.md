@@ -7,7 +7,7 @@ ElvUI 的可定制增强<br>
 Customizable enhancements for ElvUI
 </div>
 
-# 功能 Features
+# :sweat_drops: 功能 Features
 ## 物品
 1. **删除物品**: 支持点击确认删除, 快捷键删除, 自动填入 Delete.  
 2. **已学配方上色**: 为已学习配方添加自定义颜色以进行区别.  
@@ -76,26 +76,20 @@ Customizable enhancements for ElvUI
 
 更多功能加入中...
 
-# 下载 Download
+# :white_check_mark: 下载 Download
 [2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
 [2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
 
-
 [Discord](https://discord.com/invite/JMz5Zsk)
 
-<br>
-
-# 鸣谢 Credits
+# :heart: 鸣谢 Credits
 [完整鸣谢名单](CREDITS.md)  
 [All credits](CREDITS.md)
-
-<br>
 
 -----
 <br>
 
 >这个仓库用来存放暗影国度版本的插件.  
 >访问过去版本 [ElvUI_WindTools (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)  
-
 >This repo is for the version of Shadowlands (9.0).  
 >Check legacy version here: [ElvUI_WindTools (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

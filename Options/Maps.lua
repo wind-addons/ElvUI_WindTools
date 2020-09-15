@@ -5,8 +5,6 @@ local MB = W:GetModule("MinimapButtons")
 local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
 
-local _G = _G
-
 options.whoClicked = {
     order = 1,
     type = "group",

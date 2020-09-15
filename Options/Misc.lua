@@ -5,7 +5,6 @@ local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
 local EB = W:GetModule("ExtraItemsBar")
 
-local _G = _G
 local format = format
 local pairs = pairs
 local print = print

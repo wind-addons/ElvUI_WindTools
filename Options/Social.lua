@@ -237,7 +237,7 @@ options.chatBar = {
             order = 7,
             type = "group",
             inline = true,
-            name = _G.CHANNEL,
+            name = L["Channels"],
             disabled = function()
                 return not E.db.WT.social.chatBar.enable
             end,
@@ -245,7 +245,7 @@ options.chatBar = {
                 world = {
                     order = 100,
                     type = "group",
-                    name = _G.WORLD,
+                    name = L["World"],
                     get = function(info)
                         return E.db.WT.social.chatBar.channels.world[info[#info]]
                     end,
@@ -302,7 +302,7 @@ options.chatBar = {
                 community = {
                     order = 101,
                     type = "group",
-                    name = _G.COMMUNITIES,
+                    name = L["Community"],
                     get = function(info)
                         return E.db.WT.social.chatBar.channels.community[info[#info]]
                     end,
@@ -416,7 +416,7 @@ options.chatBar = {
                 roll = {
                     order = 103,
                     type = "group",
-                    name = _G.ROLL,
+                    name = L["Roll"],
                     get = function(info)
                         return E.db.WT.social.chatBar.channels.roll[info[#info]]
                     end,
@@ -476,11 +476,22 @@ options.chatBar = {
 
 do -- 普通频道
     local channels = {"SAY", "YELL", "EMOTE", "PARTY", "INSTANCE", "RAID", "RAID_WARNING", "GUILD", "OFFICER"}
+    local locales = {
+        SAY = L["Say"],
+        YELL = L["Yell"],
+        EMOTE = L["Emote"],
+        PARTY = L["Party"],
+        INSTANCE = L["Instance"],
+        RAID = L["Raid"],
+        RAID_WARNING = L["Raid Warning"],
+        GUILD = L["Guild"],
+        OFFICER = L["Officer"]
+    }
     for index, name in ipairs(channels) do
         options.chatBar.args.channels.args[name] = {
             order = index,
             type = "group",
-            name = _G[name],
+            name = locales[name],
             get = function(info)
                 return E.db.WT.social.chatBar.channels[name][info[#info]]
             end,
@@ -769,7 +780,7 @@ options.contextMenu = {
                 addFriend = {
                     order = 1,
                     type = "toggle",
-                    name = _G.ADD_FRIEND
+                    name = L["Add Friends"]
                 },
                 guildInvite = {
                     order = 2,
@@ -779,7 +790,7 @@ options.contextMenu = {
                 who = {
                     order = 3,
                     type = "toggle",
-                    name = _G.WHO
+                    name = L["Who"]
                 }
             }
         },
@@ -938,7 +949,7 @@ options.emote = {
         chatBubbles = {
             order = 4,
             type = "toggle",
-            name = _G.CHAT_BUBBLES_TEXT,
+            name = L["Chat Bubbles"],
             disabled = function()
                 return not E.db.WT.social.emote.enable
             end
@@ -1262,22 +1273,22 @@ options.smartTab = {
                 yell = {
                     order = 1,
                     type = "toggle",
-                    name = _G.CHAT_MSG_YELL
+                    name = L["Yell"]
                 },
                 battleground = {
                     order = 2,
                     type = "toggle",
-                    name = _G.CHAT_MSG_BATTLEGROUND
+                    name = L["Battleground"]
                 },
                 raidWarning = {
                     order = 3,
                     type = "toggle",
-                    name = _G.CHAT_MSG_RAID_WARNING
+                    name = L["Raid Warning"]
                 },
                 officer = {
                     order = 4,
                     type = "toggle",
-                    name = _G.CHAT_MSG_OFFICER
+                    name = L["Officer"]
                 }
             }
         },
@@ -1285,7 +1296,7 @@ options.smartTab = {
             order = 3,
             type = "group",
             inline = true,
-            name = _G.WHISPER,
+            name = L["Whisper"],
             disabled = function()
                 return not E.db.WT.social.smartTab.enable
             end,

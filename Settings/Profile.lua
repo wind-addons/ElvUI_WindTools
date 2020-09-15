@@ -327,6 +327,8 @@ P.maps = {
 P.misc = {
     extraItemsBar = {
         enable = true,
+        customList = {},
+        blackList = {},
         bar1 = {
             enable = true,
             size = 30,
@@ -341,7 +343,7 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "QUEST,EQUIP"
+            include = "BANNER,EQUIP"
         },
         bar2 = {
             enable = true,
@@ -357,7 +359,7 @@ P.misc = {
                 size = 12,
                 style = "OUTLINE"
             },
-            include = "QUEST,EQUIP,QUEST,EQUIP"
+            include = "UTILITY,FLASK"
         },
         bar3 = {
             enable = true,

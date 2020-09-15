@@ -19,13 +19,12 @@ local GetItemIcon = GetItemIcon
 local GetItemCount = GetItemCount
 local GetItemInfo = GetItemInfo
 
-local questItemList = {}
-local equipmentList = {}
-
--- 仅抓取 40 等级以上的药水
 -- https://shadowlands.wowhead.com/potions/name:Potion/min-req-level:40#0+2+3+18
--- Wowhead 抓取后正则替换 => ^"([0-9]{6})","([^"]*)",.* 到 [$1] = true, -- $2
-local battlePotions = {
+-- Wowhead 抓取后正则替换: ^"([0-9]{6})".* 到 [$1] = true
+
+-- 药水 需求人物等级 40 级
+local potions = {
+    [5512] = true, -- 治療石
     [176443] = true, -- 消逝狂亂藥水
     [118915] = true, -- 打鬥者的無底德拉諾力量藥水
     [118911] = true, -- 打鬥者的德拉諾智力藥水
@@ -103,9 +102,52 @@ local battlePotions = {
     [171370] = true, -- 幽魂迅捷藥水
     [183823] = true, -- 暢行無阻藥水
     [180317] = true, -- 靈性治療藥水
-    [180318] = true, -- 靈性法力藥水
+    [180318] = true -- 靈性法力藥水
 }
 
+-- 药剂 需求人物等级 40 级
+local flasks = {
+    [168652] = true, -- 強效無盡深淵精煉藥劑
+    [168654] = true, -- 強效暗流精煉藥劑
+    [168651] = true, -- 強效洪流精煉藥劑
+    [168655] = true, -- 強效神秘精煉藥劑
+    [152639] = true, -- 無盡深淵精煉藥劑
+    [168653] = true, -- 強效遼闊地平線精煉藥劑
+    [152638] = true, -- 洪流精煉藥劑
+    [152641] = true, -- 暗流精煉藥劑
+    [127848] = true, -- 七魔精煉藥劑
+    [127849] = true, -- 無盡軍士精煉藥劑
+    [127850] = true, -- 萬道傷痕精煉藥劑
+    [127847] = true, -- 低語契約精煉藥劑
+    [152640] = true, -- 遼闊地平線精煉藥劑
+    [127858] = true, -- 靈魂精煉藥劑
+    [162518] = true, -- 神秘精煉藥劑
+    [171276] = true, -- 鬼靈威力精煉藥劑
+    [171278] = true -- 鬼靈耐力精煉藥
+}
+
+-- 战旗
+local banners = {
+    [63359] = true, -- 合作旌旗
+    [64400] = true, -- 合作旌旗
+    [64398] = true, -- 團結軍旗
+    [64401] = true, -- 團結軍旗
+    [64399] = true, -- 協調戰旗
+    [64402] = true, -- 協調戰旗
+    [18606] = true, -- 聯盟戰旗
+    [18607] = true -- 部落戰旗
+}
+
+-- 实用工具
+local utilities = {
+    [153023] = true, -- 光鑄增強符文
+    [109076] = true, -- 哥布林滑翔工具組
+    [49040] = true, -- 吉福斯
+    [132514] = true -- 自動鐵錘
+}
+
+-- 更新任务物品列表
+local questItemList = {}
 local function UpdateQuestItemList()
     wipe(questItemList)
     for questLogIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
@@ -121,6 +163,8 @@ local function UpdateQuestItemList()
     end
 end
 
+-- 更新装备物品列表
+local equipmentList = {}
 local function UpdateEquipmentList()
     wipe(equipmentList)
     for slotID = 1, 18 do
@@ -225,7 +269,7 @@ function EB:SetUpButton(button, questItemData, slotID)
     if button.itemID then
         OnUpdateFunction = function(self)
             local start, duration, enable
-            if self.questLogIndex > 0 then
+            if self.questLogIndex and self.questLogIndex > 0 then
                 start, duration, enable = GetQuestLogSpecialItemCooldown(self.questLogIndex)
             else
                 start, duration, enable = GetItemCooldown(self.itemID)
@@ -374,18 +418,47 @@ function EB:UpdateBar(id)
             for _, data in pairs(questItemList) do
                 self:SetUpButton(bar.buttons[buttonID], data)
                 buttonID = buttonID + 1
-                if buttonID > 12 then
-                    return
+            end
+        elseif module == "POTION" then -- 更新药水
+            for potionID in pairs(potions) do
+                local count = GetItemCount(potionID)
+                if count and count > 0 and not self.db.blackList[potionID] then
+                    self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+                    buttonID = buttonID + 1
+                end
+            end
+        elseif module == "FLASK" then -- 更新药剂
+            for flaskID in pairs(flasks) do
+                local count = GetItemCount(flaskID)
+                if count and count > 0 and not self.db.blackList[flaskID] then
+                    self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                    buttonID = buttonID + 1
+                end
+            end
+        elseif module == "BANNER" then -- 更新战旗
+            for bannerID in pairs(banners) do
+                local count = GetItemCount(bannerID)
+                if count and count > 0 and not self.db.blackList[bannerID] then
+                    self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
+                    buttonID = buttonID + 1
+                end
+            end
+        elseif module == "UTILITY" then -- 更新实用工具
+            for utilityID in pairs(utilities) do
+                local count = GetItemCount(utilityID)
+                if count and count > 0 and not self.db.blackList[utilityID] then
+                    self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
+                    buttonID = buttonID + 1
                 end
             end
         elseif module == "EQUIP" then -- 更新装备物品
             for _, slotID in pairs(equipmentList) do
                 self:SetUpButton(bar.buttons[buttonID], nil, slotID)
                 buttonID = buttonID + 1
-                if buttonID > 12 then
-                    return
-                end
             end
+        end
+        if buttonID > 12 then
+            return
         end
     end
 

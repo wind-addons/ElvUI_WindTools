@@ -50,6 +50,7 @@
 
 - Skins
     - selias2k (iShadow)
+    - siweia (NDui)
 
 - Filter
     - EKE (Fuckyou)
@@ -76,6 +77,9 @@
 
 - Move Frames
     - zaCade, Numynum (BlizzMove)
+
+- Extra Items Bar
+    - cadcamzy (EUI)
 
 # Medias
 - Ferous Media (Ferous)

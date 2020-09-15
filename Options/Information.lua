@@ -281,7 +281,8 @@ do -- 插件代码
             "Fail (Paragon Reputation)"
         },
         [L["Skins"]] = {
-            "selias2k (iShadow)"
+            "selias2k (iShadow)",
+            "siweia (NDui)"
         },
         [L["Filter"]] = {
             "EKE (Fuckyou)"
@@ -308,7 +309,10 @@ do -- 插件代码
         },
         [L["Move Frames"]] = {
             "zaCade, Numynum (BlizzMove)"
-        }
+        },
+        [L["Extra Items Bar"]] = {
+            "cadcamzy (EUI)"
+        },
     }
 
     local configOrder = 1

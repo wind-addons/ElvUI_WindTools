@@ -7,7 +7,11 @@ local EB = W:GetModule("ExtraItemsBar")
 
 local _G = _G
 local format = format
+local select = select
 local strlower = strlower
+local tinsert = tinsert
+local tonumber = tonumber
+local tremove = tremove
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 
@@ -23,6 +27,14 @@ local points = {
     BOTTOMLEFT = L["BOTTOMLEFT"],
     BOTTOMRIGHT = L["BOTTOMRIGHT"]
 }
+
+local function ImportantColorString(string)
+    return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
+end
+
+local function FormatDesc(code, helpText)
+    return ImportantColorString(code) .. " = " .. helpText
+end
 
 options.extraItemsBar = {
     order = 1,
@@ -60,6 +72,9 @@ options.extraItemsBar = {
             type = "group",
             inline = true,
             name = L["Custom Items"],
+            disabled = function()
+                return not E.db.WT.misc.extraItemsBar.enable
+            end,
             args = {
                 list = {
                     order = 1,
@@ -112,6 +127,65 @@ options.extraItemsBar = {
                     end
                 }
             }
+        },
+        blackList = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = L["Blacklist"],
+            disabled = function()
+                return not E.db.WT.misc.extraItemsBar.enable
+            end,
+            args = {
+                list = {
+                    order = 1,
+                    type = "select",
+                    name = L["List"],
+                    get = function()
+                        return customListSelected2
+                    end,
+                    set = function(_, value)
+                        customListSelected2 = value
+                    end,
+                    values = function()
+                        local result = {}
+                        for key, value in pairs(E.db.WT.misc.extraItemsBar.blackList) do
+                            result[key] = value
+                        end
+                        return result
+                    end
+                },
+                addToList = {
+                    order = 2,
+                    type = "input",
+                    name = L["New Item ID"],
+                    get = function()
+                        return ""
+                    end,
+                    set = function(_, value)
+                        local itemID = tonumber(value)
+                        local itemName = select(1, GetItemInfo(itemID))
+                        if itemName then
+                            E.db.WT.misc.extraItemsBar.blackList[itemID] = itemName
+                            EB:UpdateBars()
+                        else
+                            print(L["The item ID is invalid."])
+                        end
+                    end
+                },
+                deleteButton = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Delete"],
+                    desc = L["Delete the selected item."],
+                    func = function()
+                        if customListSelected2 then
+                            E.db.WT.misc.extraItemsBar.blackList[customListSelected2] = nil
+                            EB:UpdateBars()
+                        end
+                    end
+                }
+            }
         }
     }
 }
@@ -124,11 +198,14 @@ do -- 添加按钮设定组
             inline = true,
             name = L["Bar"] .. " " .. i,
             get = function(info)
-                return E.db.WT.misc.extraItemsBar[info[#info - 1]][info[#info]]
+                return E.db.WT.misc.extraItemsBar["bar" .. i][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.misc.extraItemsBar[info[#info - 1]][info[#info]] = value
+                E.db.WT.misc.extraItemsBar["bar" .. i][info[#info]] = value
                 EB:UpdateBar(i)
+            end,
+            disabled = function()
+                return not E.db.WT.misc.extraItemsBar.enable
             end,
             args = {
                 enable = {
@@ -208,7 +285,19 @@ do -- 添加按钮设定组
                 include = {
                     order = 11,
                     type = "input",
-                    name = L["Included Button Types"],
+                    name = L["Button Groups"],
+                    desc = format(
+                        "%s %s\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                        L["Set the type and order of button groups."],
+                        L["You can separate the groups with a comma."],
+                        FormatDesc("QUEST", L["Quest Items"]),
+                        FormatDesc("EQUIP", L["Equipments"]),
+                        FormatDesc("POTION", L["Potions"]),
+                        FormatDesc("FLASK", L["Flasks"]),
+                        FormatDesc("BANNER", L["Banners"]),
+                        FormatDesc("UTILITY", L["Utilities"]),
+                        FormatDesc("CUSTOM", L["Custom Items"])
+                    ),
                     width = "full"
                 }
             }

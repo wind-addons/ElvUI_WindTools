@@ -24,126 +24,126 @@ local GetItemInfo = GetItemInfo
 
 -- 药水 需求人物等级 40 级
 local potions = {
-    [5512] = true, -- 治療石
-    [176443] = true, -- 消逝狂亂藥水
-    [118915] = true, -- 打鬥者的無底德拉諾力量藥水
-    [118911] = true, -- 打鬥者的德拉諾智力藥水
-    [118913] = true, -- 打鬥者的無底德拉諾敏捷藥水
-    [118914] = true, -- 打鬥者的無底德拉諾智力藥水
-    [116925] = true, -- 舊式的自由行動藥水
-    [118910] = true, -- 打鬥者的德拉諾敏捷藥水
-    [118912] = true, -- 打鬥者的德拉諾力量藥水
-    [114124] = true, -- 幽靈藥水
-    [115531] = true, -- 迴旋艾斯蘭藥水
-    [127845] = true, -- 不屈藥水
-    [142117] = true, -- 持久之力藥水
-    [127844] = true, -- 遠古戰役藥水
-    [127834] = true, -- 上古治療藥水
-    [127835] = true, -- 上古法力藥水
-    [127843] = true, -- 致命恩典藥水
-    [127846] = true, -- 脈流藥水
-    [127836] = true, -- 上古活力藥水
-    [136569] = true, -- 陳年的生命藥水
-    [144396] = true, -- 悍勇治療藥水
-    [144397] = true, -- 悍勇護甲藥水
-    [144398] = true, -- 悍勇怒氣藥水
-    [152615] = true, -- 暗星治療藥水
-    [142326] = true, -- 打鬥者持久之力藥水
-    [142325] = true, -- 打鬥者上古治療藥水
-    [152619] = true, -- 暗星法力藥水
-    [169451] = true, -- 深淵治療藥水
-    [169299] = true, -- 無盡狂怒藥水
-    [152497] = true, -- 輕足藥水
-    [168498] = true, -- 精良智力戰鬥藥水
-    [152495] = true, -- 濱海法力藥水
-    [168500] = true, -- 精良力量戰鬥藥水
-    [168489] = true, -- 精良敏捷戰鬥藥水
-    [152494] = true, -- 濱海治療藥水
-    [168506] = true, -- 凝神決心藥水
-    [152561] = true, -- 回復藥水
-    [168529] = true, -- 地緣強化藥水
-    [163222] = true, -- 智力戰鬥藥水
-    [163223] = true, -- 敏捷戰鬥藥水
-    [152550] = true, -- 海霧藥水
-    [152503] = true, -- 隱身藥水
-    [152557] = true, -- 鋼膚藥水
-    [163224] = true, -- 力量戰鬥藥水
-    [152560] = true, -- 澎湃鮮血藥水
-    [169300] = true, -- 野性癒合藥水
-    [168501] = true, -- 精良鋼膚藥水
-    [168499] = true, -- 精良耐力戰鬥藥水
-    [163225] = true, -- 耐力戰鬥藥水
-    [152559] = true, -- 死亡湧升藥水
-    [163082] = true, -- 濱海回春藥水
-    [168502] = true, -- 重組藥水
-    [167917] = true, -- 鬥陣濱海治療藥水
-    [167920] = true, -- 鬥陣智力戰鬥藥水
-    [167918] = true, -- 鬥陣力量戰鬥藥水
-    [167919] = true, -- 鬥陣敏捷戰鬥藥水
-    [184090] = true, -- 導靈者之速藥水
-    [180771] = true, -- 不尋常力量藥水
-    [171267] = true, -- 鬼靈治療藥水
-    [171270] = true, -- 鬼靈敏捷藥水
-    [171351] = true, -- 死亡凝視藥水
-    [171273] = true, -- 鬼靈智力藥水
-    [171352] = true, -- 強力驅邪藥水
-    [171350] = true, -- 神性覺醒藥水
-    [171349] = true, -- 魅影之火藥水
-    [171266] = true, -- 魂隱藥水
-    [171272] = true, -- 鬼靈清晰藥水
-    [171268] = true, -- 鬼靈法力藥水
-    [176811] = true, -- 靈魄獻祭藥水
-    [171271] = true, -- 堅實暗影藥水
-    [171274] = true, -- 鬼靈耐力藥水
-    [171269] = true, -- 鬼靈活力藥水
-    [171275] = true, -- 鬼靈力量藥水
-    [171264] = true, -- 靈視藥水
-    [171263] = true, -- 靈魂純淨藥水
-    [171370] = true, -- 幽魂迅捷藥水
-    [183823] = true, -- 暢行無阻藥水
-    [180317] = true, -- 靈性治療藥水
-    [180318] = true -- 靈性法力藥水
+    5512, -- 治療石
+    176443, -- 消逝狂亂藥水
+    118915, -- 打鬥者的無底德拉諾力量藥水
+    118911, -- 打鬥者的德拉諾智力藥水
+    118913, -- 打鬥者的無底德拉諾敏捷藥水
+    118914, -- 打鬥者的無底德拉諾智力藥水
+    116925, -- 舊式的自由行動藥水
+    118910, -- 打鬥者的德拉諾敏捷藥水
+    118912, -- 打鬥者的德拉諾力量藥水
+    114124, -- 幽靈藥水
+    115531, -- 迴旋艾斯蘭藥水
+    127845, -- 不屈藥水
+    142117, -- 持久之力藥水
+    127844, -- 遠古戰役藥水
+    127834, -- 上古治療藥水
+    127835, -- 上古法力藥水
+    127843, -- 致命恩典藥水
+    127846, -- 脈流藥水
+    127836, -- 上古活力藥水
+    136569, -- 陳年的生命藥水
+    144396, -- 悍勇治療藥水
+    144397, -- 悍勇護甲藥水
+    144398, -- 悍勇怒氣藥水
+    152615, -- 暗星治療藥水
+    142326, -- 打鬥者持久之力藥水
+    142325, -- 打鬥者上古治療藥水
+    152619, -- 暗星法力藥水
+    169451, -- 深淵治療藥水
+    169299, -- 無盡狂怒藥水
+    152497, -- 輕足藥水
+    168498, -- 精良智力戰鬥藥水
+    152495, -- 濱海法力藥水
+    168500, -- 精良力量戰鬥藥水
+    168489, -- 精良敏捷戰鬥藥水
+    152494, -- 濱海治療藥水
+    168506, -- 凝神決心藥水
+    152561, -- 回復藥水
+    168529, -- 地緣強化藥水
+    163222, -- 智力戰鬥藥水
+    163223, -- 敏捷戰鬥藥水
+    152550, -- 海霧藥水
+    152503, -- 隱身藥水
+    152557, -- 鋼膚藥水
+    163224, -- 力量戰鬥藥水
+    152560, -- 澎湃鮮血藥水
+    169300, -- 野性癒合藥水
+    168501, -- 精良鋼膚藥水
+    168499, -- 精良耐力戰鬥藥水
+    163225, -- 耐力戰鬥藥水
+    152559, -- 死亡湧升藥水
+    163082, -- 濱海回春藥水
+    168502, -- 重組藥水
+    167917, -- 鬥陣濱海治療藥水
+    167920, -- 鬥陣智力戰鬥藥水
+    167918, -- 鬥陣力量戰鬥藥水
+    167919, -- 鬥陣敏捷戰鬥藥水
+    184090, -- 導靈者之速藥水
+    180771, -- 不尋常力量藥水
+    171267, -- 鬼靈治療藥水
+    171270, -- 鬼靈敏捷藥水
+    171351, -- 死亡凝視藥水
+    171273, -- 鬼靈智力藥水
+    171352, -- 強力驅邪藥水
+    171350, -- 神性覺醒藥水
+    171349, -- 魅影之火藥水
+    171266, -- 魂隱藥水
+    171272, -- 鬼靈清晰藥水
+    171268, -- 鬼靈法力藥水
+    176811, -- 靈魄獻祭藥水
+    171271, -- 堅實暗影藥水
+    171274, -- 鬼靈耐力藥水
+    171269, -- 鬼靈活力藥水
+    171275, -- 鬼靈力量藥水
+    171264, -- 靈視藥水
+    171263, -- 靈魂純淨藥水
+    171370, -- 幽魂迅捷藥水
+    183823, -- 暢行無阻藥水
+    180317, -- 靈性治療藥水
+    180318 -- 靈性法力藥水
 }
 
 -- 药剂 需求人物等级 40 级
 local flasks = {
-    [168652] = true, -- 強效無盡深淵精煉藥劑
-    [168654] = true, -- 強效暗流精煉藥劑
-    [168651] = true, -- 強效洪流精煉藥劑
-    [168655] = true, -- 強效神秘精煉藥劑
-    [152639] = true, -- 無盡深淵精煉藥劑
-    [168653] = true, -- 強效遼闊地平線精煉藥劑
-    [152638] = true, -- 洪流精煉藥劑
-    [152641] = true, -- 暗流精煉藥劑
-    [127848] = true, -- 七魔精煉藥劑
-    [127849] = true, -- 無盡軍士精煉藥劑
-    [127850] = true, -- 萬道傷痕精煉藥劑
-    [127847] = true, -- 低語契約精煉藥劑
-    [152640] = true, -- 遼闊地平線精煉藥劑
-    [127858] = true, -- 靈魂精煉藥劑
-    [162518] = true, -- 神秘精煉藥劑
-    [171276] = true, -- 鬼靈威力精煉藥劑
-    [171278] = true -- 鬼靈耐力精煉藥
+    168652, -- 強效無盡深淵精煉藥劑
+    168654, -- 強效暗流精煉藥劑
+    168651, -- 強效洪流精煉藥劑
+    168655, -- 強效神秘精煉藥劑
+    152639, -- 無盡深淵精煉藥劑
+    168653, -- 強效遼闊地平線精煉藥劑
+    152638, -- 洪流精煉藥劑
+    152641, -- 暗流精煉藥劑
+    127848, -- 七魔精煉藥劑
+    127849, -- 無盡軍士精煉藥劑
+    127850, -- 萬道傷痕精煉藥劑
+    127847, -- 低語契約精煉藥劑
+    152640, -- 遼闊地平線精煉藥劑
+    127858, -- 靈魂精煉藥劑
+    162518, -- 神秘精煉藥劑
+    171276, -- 鬼靈威力精煉藥劑
+    171278 -- 鬼靈耐力精煉藥
 }
 
 -- 战旗
 local banners = {
-    [63359] = true, -- 合作旌旗
-    [64400] = true, -- 合作旌旗
-    [64398] = true, -- 團結軍旗
-    [64401] = true, -- 團結軍旗
-    [64399] = true, -- 協調戰旗
-    [64402] = true, -- 協調戰旗
-    [18606] = true, -- 聯盟戰旗
-    [18607] = true -- 部落戰旗
+    63359, -- 合作旌旗
+    64400, -- 合作旌旗
+    64398, -- 團結軍旗
+    64401, -- 團結軍旗
+    64399, -- 協調戰旗
+    64402, -- 協調戰旗
+    18606, -- 聯盟戰旗
+    18607 -- 部落戰旗
 }
 
 -- 实用工具
 local utilities = {
-    [153023] = true, -- 光鑄增強符文
-    [109076] = true, -- 哥布林滑翔工具組
-    [49040] = true, -- 吉福斯
-    [132514] = true -- 自動鐵錘
+    153023, -- 光鑄增強符文
+    109076, -- 哥布林滑翔工具組
+    49040, -- 吉福斯
+    132514 -- 自動鐵錘
 }
 
 -- 更新任务物品列表
@@ -429,53 +429,76 @@ function EB:UpdateBar(id)
     for _, module in ipairs {strsplit("[, ]", barDB.include)} do
         if module == "QUEST" then -- 更新任务物品
             for _, data in pairs(questItemList) do
-                self:SetUpButton(bar.buttons[buttonID], data)
-                self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                buttonID = buttonID + 1
-            end
-        elseif module == "POTION" then -- 更新药水
-            for potionID in pairs(potions) do
-                local count = GetItemCount(potionID)
-                if count and count > 0 and not self.db.blackList[potionID] then
-                    self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+                if not self.db.blackList[data.itemID] then
+                    self:SetUpButton(bar.buttons[buttonID], data)
                     self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                     buttonID = buttonID + 1
+                end
+            end
+        elseif module == "POTION" then -- 更新药水
+            for _, potionID in pairs(potions) do
+                local count = GetItemCount(potionID)
+                if count and count > 0 and not self.db.blackList[potionID] then
+                    if not self.db.blackList[potionID] then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
                 end
             end
         elseif module == "FLASK" then -- 更新药剂
-            for flaskID in pairs(flasks) do
+            for _, flaskID in pairs(flasks) do
                 local count = GetItemCount(flaskID)
                 if count and count > 0 and not self.db.blackList[flaskID] then
-                    self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
-                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                    buttonID = buttonID + 1
+                    if not self.db.blackList[flaskID] then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
                 end
             end
         elseif module == "BANNER" then -- 更新战旗
-            for bannerID in pairs(banners) do
+            for _, bannerID in pairs(banners) do
                 local count = GetItemCount(bannerID)
                 if count and count > 0 and not self.db.blackList[bannerID] then
-                    self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
-                    bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
-                    buttonID = buttonID + 1
+                    if not self.db.blackList[bannerID] then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
+                        bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
+                        buttonID = buttonID + 1
+                    end
                 end
             end
         elseif module == "UTILITY" then -- 更新实用工具
-            for utilityID in pairs(utilities) do
+            for _, utilityID in pairs(utilities) do
                 local count = GetItemCount(utilityID)
                 if count and count > 0 and not self.db.blackList[utilityID] then
-                    self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
-                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                    buttonID = buttonID + 1
+                    if not self.db.blackList[utilityID] then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
                 end
             end
         elseif module == "EQUIP" then -- 更新装备物品
             for _, slotID in pairs(equipmentList) do
-                self:SetUpButton(bar.buttons[buttonID], nil, slotID)
-                self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                buttonID = buttonID + 1
+                local itemID = GetInventoryItemID("player", slotID)
+                if itemID and not self.db.blackList[itemID] then
+                    self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                    buttonID = buttonID + 1
+                end
+            end
+        elseif module == "CUSTOM" then -- 更新自定义列表
+            for _, itemID in pairs(self.db.customList) do
+                local count = GetItemCount(itemID)
+                if count and count > 0 and not self.db.blackList[itemID] then
+                    self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
+                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                    buttonID = buttonID + 1
+                end
             end
         end
+        
         if buttonID > 12 then
             return
         end
@@ -603,7 +626,7 @@ function EB:Initialize()
     self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
     self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
     self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
-    self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
+    -- self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
 
     self.Initialized = true
 end

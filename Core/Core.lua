@@ -16,6 +16,16 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 -- 模块部分
 W.RegisteredModules = {}
 
+-- 快捷键注册
+_G.BINDING_CATEGORY_ELVUI_WINDTOOLS = L["WindTools"]
+for i = 1, 3 do
+    _G["BINDING_HEADER_WTEXTRAITEMSBAR" .. i] =
+        F.CreateColorString(L["Extra Items Bar"] .. " " .. i, E.db.general.valuecolor)
+    for j = 1, 12 do
+        _G["BINDING_NAME_WTEXTRAITEMSBAR" .. i .. "BUTTON" .. j] = L["Button"] .. " " .. j
+    end
+end
+
 --[[
     注册 WindTools 模块
     @param {string} name 模块名

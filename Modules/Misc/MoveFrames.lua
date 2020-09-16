@@ -234,7 +234,8 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_TradeSkillUI"] = {
         ["TradeSkillFrame"] = {
-            "TradeSkillFrame.RecipeList"
+            "TradeSkillFrame.RecipeList",
+            "TradeSkillFrame.OptionalReagentList"
         }
     },
     ["Blizzard_TrainerUI"] = {

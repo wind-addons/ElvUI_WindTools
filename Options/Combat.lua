@@ -315,7 +315,13 @@ options.raidMarkers = {
                 readyCheck = {
                     order = 1,
                     type = "toggle",
-                    name = L["Ready Check"]
+                    name = L["Ready Check"] .. " / " .. L["Advanced Combat Logging"],
+                    desc = format(
+                        "%s\n%s",
+                        L["Left Click to ready check."],
+                        L["Right click to toggle advanced combat logging."]
+                    ),
+                    width = 2
                 },
                 countDown = {
                     order = 2,

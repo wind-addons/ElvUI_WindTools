@@ -11,7 +11,6 @@ local strupper = strupper
 
 local ClearRaidMarker = ClearRaidMarker
 local CreateFrame = CreateFrame
-local DoReadyCheck = DoReadyCheck
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
@@ -263,16 +262,11 @@ function RM:CreateButtons()
 					end
 				end
 			)
-		elseif i == 10 then -- 准备确认
+		elseif i == 10 then -- 准备确认 & 战斗记录
 			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
-
-			button:SetAttribute("type", "click")
-			button:SetScript(
-				"OnClick",
-				function()
-					DoReadyCheck()
-				end
-			)
+			button:SetAttribute("type*", "macro")
+			button:SetAttribute("macrotext1", "/readycheck")
+			button:SetAttribute("macrotext2", "/combatlog")
 		elseif i == 11 then -- 开怪倒数
 			tex:SetTexture("Interface\\Icons\\Spell_unused2")
 			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
@@ -311,9 +305,9 @@ function RM:CreateButtons()
 				format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
 			)
 		elseif i == 10 then
-			tooltipText = L["Click to ready check."]
+			tooltipText = format("%s\n%s", L["Left Click to ready check."], L["Right click to toggle advanced combat logging."])
 		elseif i == 11 then
-			tooltipText = format("%s\n%s", L["Click to start count down."], L["Right click to stop count down."])
+			tooltipText = format("%s\n%s", L["Left Click to start count down."], L["Right click to stop count down."])
 		end
 
 		local tooltipTitle = i <= 9 and L["Raid Markers"] or L["Raid Utility"]

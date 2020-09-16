@@ -4,7 +4,7 @@ local S = W:GetModule("Skins")
 local _G = _G
 
 function S:Blizzard_TradeSkillUI()
-    if not self:CheckDB("tradeskill") then
+    if not self:CheckDB("tradeskill", "tradeSkill") then
         return
     end
 

@@ -15,7 +15,7 @@ function S:ProfilingWindow_UpdateButtons(frame)
     for _, button in pairs {frame.titleFrame:GetChildren()} do
         local isCollapse = false
         for _, region in pairs {button:GetRegions()} do
-            if region.GetTexture then
+            if region.GetTexture and region:GetTexture() then
                 if strfind(region:GetTexture(), "Collapse") then
                     isCollapse = true
                 end
@@ -57,11 +57,11 @@ function S:ProfilingWindow_UpdateButtons(frame)
             )
 
             button:SetHitRectInsets(6, 6, 7, 7)
-            button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -19, 3)
+            button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
         else
             ES:HandleCloseButton(button)
             button:ClearAllPoints()
-            button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 3, 5)
+            button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 5)
         end
     end
 end
@@ -145,6 +145,11 @@ function S:WeakAuras()
     if profilingWindow then
         self:CreateShadow(profilingWindow)
         self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
+
+        -- local reportWindow = _G.WeakAurasSaved.ProfilingWindow
+        -- if reportWindow then
+            
+        -- end
     end
 end
 

@@ -3,6 +3,7 @@ local ES = E:GetModule("Skins")
 local S = W:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
 
 function S:Immersion_ReskinTitleButton(frame)
     for _, button in pairs {frame.TitleButtons:GetChildren()} do

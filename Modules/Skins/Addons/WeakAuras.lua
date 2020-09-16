@@ -4,9 +4,69 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local pairs = pairs
+local strfind = strfind
 local unpack = unpack
 
--- Most part is copied from NDui
+function S:ProfilingWindow_UpdateButtons(frame)
+    for _, button in pairs {frame.statsFrame:GetChildren()} do
+        ES:HandleButton(button)
+    end
+
+    for _, button in pairs {frame.titleFrame:GetChildren()} do
+        local isCollapse = false
+        for _, region in pairs {button:GetRegions()} do
+            if region.GetTexture then
+                if strfind(region:GetTexture(), "Collapse") then
+                    isCollapse = true
+                end
+            end
+        end
+
+        if isCollapse then
+            button:StripTextures()
+
+            button.Texture = button:CreateTexture(nil, "OVERLAY")
+            button.Texture:Point("CENTER")
+            button.Texture:SetTexture(E.Media.Textures.ArrowUp)
+            button.Texture:Size(14, 14)
+
+            button:HookScript(
+                "OnEnter",
+                function(self)
+                    if self.Texture then
+                        self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+                    end
+                end
+            )
+
+            button:HookScript(
+                "OnLeave",
+                function(self)
+                    if self.Texture then
+                        self.Texture:SetVertexColor(1, 1, 1)
+                    end
+                end
+            )
+
+            button:HookScript(
+                "OnClick",
+                function(self)
+                    self:SetNormalTexture("")
+                    self:SetPushedTexture("")
+                end
+            )
+
+            button:SetHitRectInsets(6, 6, 7, 7)
+            button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -19, 3)
+        else
+            ES:HandleCloseButton(button)
+            button:ClearAllPoints()
+            button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 3, 5)
+        end
+    end
+end
+
+-- 来源于 NDui
 local function Skin_WeakAuras(f, fType)
     if fType == "icon" then
         if not f.windStyle then
@@ -78,6 +138,13 @@ function S:WeakAuras()
         if regions.regionType == "icon" or regions.regionType == "aurabar" then
             Skin_WeakAuras(regions.region, regions.regionType)
         end
+    end
+
+    -- 效能分析
+    local profilingWindow = _G.WeakAuras.frames["RealTime Profiling Window"]
+    if profilingWindow then
+        self:CreateShadow(profilingWindow)
+        self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
     end
 end
 

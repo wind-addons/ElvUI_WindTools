@@ -132,6 +132,7 @@ V.skins = {
 		taxi = true,
 		timeManager = true,
 		tooltips = true,
+		tradeskill = true,
 		trainer = true,
 		tutorial = true,
 		warboard = true,

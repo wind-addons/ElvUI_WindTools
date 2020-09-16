@@ -76,7 +76,8 @@ V.skins = {
 		b = 0
 	},
 	addons = {
-		bigwigs = true,
+		ace3 = true,
+		bigWigs = true,
 		weakAuras = true,
 		weakAurasOptions = true
 	},

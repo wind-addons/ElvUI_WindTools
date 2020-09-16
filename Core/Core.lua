@@ -1,11 +1,15 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+local format = format
+local pairs = pairs
+local pcall = pcall
+local strsub = strsub
+local tinsert = tinsert
+
 local GetCVarBool = GetCVarBool
 local GetLocale = GetLocale
-local strsub = strsub
-local pcall, pairs, tinsert = pcall, pairs, tinsert
-local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
+local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 
 -- 一些常量
 W.Title = L["WindTools"]
@@ -22,7 +26,7 @@ for i = 1, 3 do
     _G["BINDING_HEADER_WTEXTRAITEMSBAR" .. i] =
         F.CreateColorString(L["Extra Items Bar"] .. " " .. i, E.db.general.valuecolor)
     for j = 1, 12 do
-        _G["BINDING_NAME_WTEXTRAITEMSBAR" .. i .. "BUTTON" .. j] = L["Button"] .. " " .. j
+        _G[format("BINDING_NAME_CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)] = L["Button"] .. " " .. j
     end
 end
 

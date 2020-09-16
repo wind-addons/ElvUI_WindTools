@@ -4,6 +4,7 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local ceil = ceil
+local format = format
 local ipairs = ipairs
 local pairs = pairs
 local strmatch = strmatch
@@ -664,6 +665,27 @@ function EB:CreateAll()
     end
 end
 
+function EB:UpdateBinding()
+    if not self.db then
+        return
+    end
+
+    for i = 1, 3 do
+        for j = 1, 12 do
+            local button = self.bars[i].buttons[j]
+            if button then
+                local bindingName = format("CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)
+                local bindingText = GetBindingKey(bindingName) or ""
+                bindingText = gsub(bindingText, "ALT--", "A")
+                bindingText = gsub(bindingText, "CTRL--", "C")
+                bindingText = gsub(bindingText, "SHIFT--", "S")
+
+                button.bind:SetText(bindingText)
+            end
+        end
+    end
+end
+
 function EB:Initialize()
     self.db = E.db.WT.misc.extraItemsBar
     if not self.db or not self.db.enable or self.Initialized then
@@ -674,6 +696,7 @@ function EB:Initialize()
     UpdateQuestItemList()
     UpdateEquipmentList()
     self:UpdateBars()
+    self:UpdateBinding()
 
     self:RegisterEvent("UNIT_INVENTORY_CHANGED", "UpdateEquipment")
     self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateBars")
@@ -683,10 +706,10 @@ function EB:Initialize()
     self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
     self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
     self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
+    self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
     self.Initialized = true
 
-    -- self:RegisterEvent("UPDATE_BINDINGS", "UpdateBind")
 end
 
 function EB:ProfileUpdate()

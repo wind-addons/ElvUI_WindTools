@@ -155,7 +155,7 @@ function S:AddCallback(name, func)
 end
 
 --[[
-    注册 AceGUI 回调
+    注册 AceGUI Widget 回调
     @param {string} name 函数名
     @param {function} [func=S.name] 回调函数
 ]]

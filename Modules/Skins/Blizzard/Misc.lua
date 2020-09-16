@@ -70,6 +70,9 @@ function S:BlizzardMiscFrames()
 
     -- 聊天设定
     self:CreateShadow(_G.ChatConfigFrame)
+
+    -- 颜色选择器
+    self:CreateShadow(_G.ColorPickerFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

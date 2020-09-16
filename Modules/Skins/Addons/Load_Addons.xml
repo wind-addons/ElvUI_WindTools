@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<!-- <Script file='BigWigs.lua'/>
-	<Script file='Immersion.lua'/> -->
+	<Script file='Ace3.lua'/>
+	<Script file='BigWigs.lua'/>
+	<!-- <Script file='Immersion.lua'/> -->
 	<Script file='WeakAuras.lua'/>
 	<Script file='WeakAurasOptions.lua'/>
 </Ui>

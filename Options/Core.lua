@@ -1,5 +1,8 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+
+local gsub = gsub
 local pairs = pairs
+local strrep = strrep
 
 -- 设定类别
 W.options = {
@@ -74,13 +77,33 @@ W.options = {
         args = {}
     },
     information = {
-        order = 200,
+        order = 111,
         name = L["Information"],
         desc = L["Credits & help."],
         icon = W.Media.Icons.information,
         args = {}
     }
 }
+
+local tempString = strrep("Z", 11)
+local tempString =
+    E:TextGradient(
+    tempString,
+    0.910, 0.314, 0.357,
+    0.976, 0.835, 0.431,
+    0.953, 0.925, 0.761,
+    0.078, 0.694, 0.671
+)
+
+local color = {}
+print(tempString)
+gsub(
+    tempString,
+    "cff(......)Z",
+    function(self)
+        color[#color + 1] = self
+    end
+)
 
 -- ElvUI_OptionsUI 回调
 function W:OptionsCallback()
@@ -106,15 +129,15 @@ function W:OptionsCallback()
     }
 
     -- 模块设定
-    for catagory, information in pairs(W.options) do
+    for catagory, info in pairs(W.options) do
         E.Options.args.WindTools.args[catagory] = {
-            order = information.order,
+            order = info.order,
             type = "group",
             childGroups = "tab",
-            name = information.name,
-            desc = information.desc,
-            icon = information.icon,
-            args = information.args
+            name = "|cff" .. color[info.order - 100] .. info.name,
+            desc = info.desc,
+            icon = info.icon,
+            args = info.args
         }
     end
 end

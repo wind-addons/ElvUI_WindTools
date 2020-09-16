@@ -69,7 +69,7 @@ end
 
 function S:WeakAurasMultiLineEditBox(Constructor)
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
-        return
+        return Constructor
     end
 
     local function SkinedConstructor()
@@ -98,7 +98,7 @@ end
 
 function S:WeakAurasDisplayButton(Constructor)
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
-        return
+        return Constructor
     end
 
     local function SkinedConstructor()

@@ -345,6 +345,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             bindFont = {
                 name = E.db.general.font,
@@ -352,6 +357,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             include = "QUEST,BANNER,EQUIP"
         },
@@ -371,6 +381,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             bindFont = {
                 name = E.db.general.font,
@@ -378,6 +393,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             include = "POTION,FLASK,UTILITY"
         },
@@ -397,6 +417,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             bindFont = {
                 name = E.db.general.font,
@@ -404,6 +429,11 @@ P.misc = {
                 style = "OUTLINE",
                 xOffset = 0,
                 yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
             },
             include = "CUSTOM"
         }

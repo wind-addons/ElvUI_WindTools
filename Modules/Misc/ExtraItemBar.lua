@@ -613,6 +613,9 @@ function EB:UpdateBar(id)
         F.SetFontWithDB(button.count, barDB.countFont)
         F.SetFontWithDB(button.bind, barDB.bindFont)
 
+        F.SetFontColorWithDB(button.count, barDB.countFont.color)
+        F.SetFontColorWithDB(button.bind, barDB.bindFont.color)
+
         button.count:ClearAllPoints()
         button.count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)
 

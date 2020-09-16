@@ -36,7 +36,7 @@ E:AddLib("RC", "LibRangeCheck-2.0")
 -- 预处理 WindTools 模块
 W.Modules = {}
 W.Modules.Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0")
-W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0")
+W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0")
 W.Modules.Tooltip = W:NewModule("Tooltips", "AceHook-3.0", "AceEvent-3.0")
 
 -- 注册 ElvUI 模块

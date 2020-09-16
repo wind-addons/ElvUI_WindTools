@@ -66,7 +66,6 @@ options.extraItemsBar = {
         custom = {
             order = 6,
             type = "group",
-            inline = true,
             name = L["Custom Items"],
             disabled = function()
                 return not E.db.WT.misc.extraItemsBar.enable
@@ -127,7 +126,6 @@ options.extraItemsBar = {
         blackList = {
             order = 7,
             type = "group",
-            inline = true,
             name = L["Blacklist"],
             disabled = function()
                 return not E.db.WT.misc.extraItemsBar.enable
@@ -191,7 +189,6 @@ do -- 添加按钮设定组
         options.extraItemsBar.args["bar" .. i] = {
             order = i + 2,
             type = "group",
-            inline = true,
             name = L["Bar"] .. " " .. i,
             get = function(info)
                 return E.db.WT.misc.extraItemsBar["bar" .. i][info[#info]]
@@ -289,8 +286,136 @@ do -- 添加按钮设定组
                     max = 12,
                     step = 1
                 },
-                include = {
+                countFont = {
                     order = 12,
+                    type = "group",
+                    inline = true,
+                    name = L["Stack Counter"],
+                    get = function(info)
+                        return E.db.WT.misc.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.misc.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]] = value
+                        EB:UpdateBar(i)
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        highLevel = {
+                            order = 6,
+                            type = "toggle",
+                            name = L["High Frame Level"],
+                            desc = L["Show the text above the cooldown layer."]
+                        }
+                    }
+                },
+                bindFont = {
+                    order = 13,
+                    type = "group",
+                    inline = true,
+                    name = L["Key Binding"],
+                    get = function(info)
+                        return E.db.WT.misc.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.misc.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]] = value
+                        EB:UpdateBar(i)
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        highLevel = {
+                            order = 6,
+                            type = "toggle",
+                            name = L["High Frame Level"],
+                            desc = L["Show the text above the cooldown layer."]
+                        }
+                    }
+                },
+                include = {
+                    order = 14,
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(

@@ -342,12 +342,18 @@ P.misc = {
             countFont = {
                 name = E.db.general.font,
                 size = 12,
-                style = "OUTLINE"
+                style = "OUTLINE",
+                xOffset = 0,
+                yOffset = 0,
+                highLevel = false
             },
             bindFont = {
                 name = E.db.general.font,
                 size = 12,
-                style = "OUTLINE"
+                style = "OUTLINE",
+                xOffset = 0,
+                yOffset = 0,
+                highLevel = true
             },
             include = "QUEST,BANNER,EQUIP"
         },
@@ -360,7 +366,7 @@ P.misc = {
             buttonHeight = 30,
             buttonsPerRow = 12,
             anchor = "TOPLEFT",
-            spacing = 3, 
+            spacing = 3,
             countFont = {
                 name = E.db.general.font,
                 size = 12,

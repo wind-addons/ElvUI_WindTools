@@ -210,13 +210,13 @@ function EB:CreateButton(name, barDB)
 
     local count = button:CreateFontString(nil, "OVERLAY")
     count:SetTextColor(1, 1, 1, 1)
-    count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0.5, 0)
+    count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT")
     count:SetJustifyH("CENTER")
     F.SetFontWithDB(count, barDB.countFont)
 
     local bind = button:CreateFontString(nil, "OVERLAY")
     bind:SetTextColor(0.6, 0.6, 0.6)
-    bind:Point("BOTTOM", button, "BOTTOM", 0, -5)
+    bind:Point("TOPRIGHT", button, "TOPRIGHT")
     bind:SetJustifyH("CENTER")
     F.SetFontWithDB(bind, barDB.bindFont)
 
@@ -576,8 +576,8 @@ function EB:UpdateBar(id)
     bar:Size(newBarWidth, newBarHeight)
     bar:GetParent():Size(newBarWidth, newBarHeight)
 
-    -- 重新定位图标
     for i = 1, buttonID - 1 do
+        -- 重新定位图标
         local anchor = barDB.anchor
         local button = bar.buttons[i]
 
@@ -608,6 +608,16 @@ function EB:UpdateBar(id)
                 button:Point("BOTTOM", nearest, "TOP", 0, barDB.spacing)
             end
         end
+
+        -- 调整文字风格
+        F.SetFontWithDB(button.count, barDB.countFont)
+        F.SetFontWithDB(button.bind, barDB.bindFont)
+
+        button.count:ClearAllPoints()
+        button.count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)
+
+        button.bind:ClearAllPoints()
+        button.bind:Point("TOPRIGHT", button, "TOPRIGHT", barDB.bindFont.xOffset, barDB.bindFont.yOffset)
     end
 
     bar:Show()
@@ -709,7 +719,6 @@ function EB:Initialize()
     self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
     self.Initialized = true
-
 end
 
 function EB:ProfileUpdate()

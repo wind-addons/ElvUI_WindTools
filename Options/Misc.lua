@@ -341,12 +341,6 @@ do -- 添加按钮设定组
                             min = -50,
                             max = 50,
                             step = 1
-                        },
-                        highLevel = {
-                            order = 6,
-                            type = "toggle",
-                            name = L["High Frame Level"],
-                            desc = L["Show the text above the cooldown layer."]
                         }
                     }
                 },
@@ -405,12 +399,6 @@ do -- 添加按钮设定组
                             min = -50,
                             max = 50,
                             step = 1
-                        },
-                        highLevel = {
-                            order = 6,
-                            type = "toggle",
-                            name = L["High Frame Level"],
-                            desc = L["Show the text above the cooldown layer."]
                         }
                     }
                 },

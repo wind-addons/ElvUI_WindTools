@@ -290,7 +290,7 @@ do -- 添加按钮设定组
                     order = 12,
                     type = "group",
                     inline = true,
-                    name = L["Stack Counter"],
+                    name = L["Counter"],
                     get = function(info)
                         return E.db.WT.misc.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
                     end,

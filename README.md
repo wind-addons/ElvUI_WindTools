@@ -10,15 +10,13 @@ Customizable enhancements for ElvUI
 
 # :white_check_mark: 下载 Download
 
-
-
 [2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
 [2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
 
 如果你有任何问题, 可以随时通过 Discord 来回报.  
 If you have any problem, just feel free to send messages via Discord.
 
-<img src="https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/>
+<a href="https://discord.com/invite/JMz5Zsk"><img src="https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/></a>
 
 # :sweat_drops: 功能 Features
 ## 物品

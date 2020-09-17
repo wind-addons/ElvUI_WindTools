@@ -20,6 +20,9 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 -- 模块部分
 W.RegisteredModules = {}
 
+-- 更新记录
+W.Changelog = {}
+
 -- 快捷键注册
 _G.BINDING_CATEGORY_ELVUI_WINDTOOLS = L["WindTools"]
 for i = 1, 3 do

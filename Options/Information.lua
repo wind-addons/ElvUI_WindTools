@@ -312,7 +312,7 @@ do -- 插件代码
         },
         [L["Extra Items Bar"]] = {
             "cadcamzy (EUI)"
-        },
+        }
     }
 
     local configOrder = 1
@@ -410,5 +410,100 @@ do -- 媒体文件
             }
             configOrder = configOrder + 1
         end
+    end
+end
+
+options.changelog = {
+    order = 3,
+    type = "group",
+    childGroups = "select",
+    name = L["Changelog"],
+    args = {}
+}
+
+for version, data in pairs(W.Changelog) do
+    local versionString = format("%d.%02d", version / 100, mod(version, 100))
+
+    options.changelog.args[tostring(version)] = {
+        order = 1000 - version,
+        name = versionString,
+        type = "group",
+        args = {}
+    }
+
+    local page = options.changelog.args[tostring(version)].args
+
+    page.date = {
+        order = 1,
+        type = "description",
+        name = "|cffbbbbbb" .. data.RELEASE_DATE .. " " .. L["Released"] .. "|r",
+        fontSize = "small"
+    }
+
+    page.version = {
+        order = 2,
+        type = "description",
+        name = L["Version"] .. " - " .. AddColor(versionString),
+        fontSize = "large"
+    }
+
+    if data.IMPORTANT and #data.IMPORTANT > 0 then
+        page.importantHeader = {
+            order = 3,
+            type = "header",
+            name = AddColor(L["Important"])
+        }
+        page.important = {
+            order = 4,
+            type = "description",
+            name = function()
+                local text = ""
+                for index, line in ipairs(data.IMPORTANT) do
+                    text = text .. format("%02d", index) .. ". " .. line .. "\n"
+                end
+                return text
+            end,
+            fontSize = "medium"
+        }
+    end
+
+    if data.NEW and #data.NEW > 0 then
+        page.newHeader = {
+            order = 5,
+            type = "header",
+            name = AddColor(L["New"])
+        }
+        page.new = {
+            order = 6,
+            type = "description",
+            name = function()
+                local text = ""
+                for index, line in ipairs(data.NEW) do
+                    text = text .. format("%02d", index) .. ". " .. line .. "\n"
+                end
+                return text
+            end,
+            fontSize = "medium"
+        }
+    end
+
+    if data.IMPROVEMENT and #data.IMPROVEMENT > 0 then
+        page.improvementHeader = {
+            order = 7,
+            type = "header",
+            name = AddColor(L["Improvement"])
+        }
+        page.improvement = {
+            order = 8,
+            type = "description",
+            name = function()
+                local text = ""
+                for index, line in ipairs(data.IMPROVEMENT) do
+                    text = text .. format("%02d", index) .. ". " .. line .. "\n"
+                end
+                return text
+            end,
+            fontSize = "medium"
+        }
     end
 end

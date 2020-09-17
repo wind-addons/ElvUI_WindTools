@@ -188,55 +188,56 @@ function S:WeakAuras_ShowOptions()
             end
             local button = child:GetChildren()
 
-            local isCollapse = false
-            for _, region in pairs {button:GetRegions()} do
-                if region.GetTexture then
-                    if strfind(region:GetTexture(), "Collapse") then
-                        isCollapse = true
-                    end
+            if not button.windStyle and button.GetNormalTexture then
+                local normalTexturePath = button:GetNormalTexture():GetTexture()
+                if normalTexturePath == "Interface\\BUTTONS\\UI-Panel-CollapseButton-Up" then
+                    button:StripTextures()
+
+                    button.Texture = button:CreateTexture(nil, "OVERLAY")
+                    button.Texture:Point("CENTER")
+                    button.Texture:SetTexture(E.Media.Textures.ArrowUp)
+                    button.Texture:Size(14, 14)
+
+                    button:HookScript(
+                        "OnEnter",
+                        function(self)
+                            if self.Texture then
+                                self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+                            end
+                        end
+                    )
+
+                    button:HookScript(
+                        "OnLeave",
+                        function(self)
+                            if self.Texture then
+                                self.Texture:SetVertexColor(1, 1, 1)
+                            end
+                        end
+                    )
+
+                    button:HookScript(
+                        "OnClick",
+                        function(self)
+                            self:SetNormalTexture("")
+                            self:SetPushedTexture("")
+                            if self:GetParent():GetParent().minimized then
+                                button.Texture:SetRotation(ES.ArrowRotation["down"])
+                            else
+                                button.Texture:SetRotation(ES.ArrowRotation["up"])
+                            end
+                        end
+                    )
+
+                    button:SetHitRectInsets(6, 6, 7, 7)
+                    button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -25, -5)
+                else
+                    ES:HandleCloseButton(button)
+                    button:ClearAllPoints()
+                    button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -3, -3)
                 end
-            end
 
-            if isCollapse then
-                button:StripTextures()
-
-                button.Texture = button:CreateTexture(nil, "OVERLAY")
-                button.Texture:Point("CENTER")
-                button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-                button.Texture:Size(14, 14)
-
-                button:HookScript(
-                    "OnEnter",
-                    function(self)
-                        if self.Texture then
-                            self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
-                        end
-                    end
-                )
-
-                button:HookScript(
-                    "OnLeave",
-                    function(self)
-                        if self.Texture then
-                            self.Texture:SetVertexColor(1, 1, 1)
-                        end
-                    end
-                )
-
-                button:HookScript(
-                    "OnClick",
-                    function(self)
-                        self:SetNormalTexture("")
-                        self:SetPushedTexture("")
-                    end
-                )
-
-                button:SetHitRectInsets(6, 6, 7, 7)
-                button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -25, -5)
-            else
-                ES:HandleCloseButton(button)
-                button:ClearAllPoints()
-                button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -3, -3)
+                button.windStyle = true
             end
         end
     end

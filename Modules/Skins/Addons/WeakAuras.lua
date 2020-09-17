@@ -7,12 +7,38 @@ local pairs = pairs
 local strfind = strfind
 local unpack = unpack
 
+function S:WeakAuras_PrintProfile()
+    local frame = _G.WADebugEditBox.Background
+
+    if frame and not frame.windStyle then
+        local textArea = _G.WADebugEditBoxScrollFrame:GetRegions()
+        ES:HandleScrollBar(_G.WADebugEditBoxScrollFrameScrollBar)
+
+        frame:StripTextures()
+        frame:CreateBackdrop("Transparent")
+        S:CreateShadow(frame)
+
+        for _, child in pairs {frame:GetChildren()} do
+            if child:GetNumRegions() == 3 then
+                child:StripTextures()
+                local subChild = child:GetChildren()
+                ES:HandleCloseButton(subChild)
+                subChild:ClearAllPoints()
+                subChild:Point("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
+            end
+        end
+
+        frame.windStyle = true
+    end
+end
+
 function S:ProfilingWindow_UpdateButtons(frame)
-    -- 下方四个按钮
+    -- 下方 4 个按钮
     for _, button in pairs {frame.statsFrame:GetChildren()} do
         ES:HandleButton(button)
     end
 
+    -- 顶部 2 个按钮
     for _, button in pairs {frame.titleFrame:GetChildren()} do
         if not button.windStyle and button.GetNormalTexture then
             local normalTexturePath = button:GetNormalTexture():GetTexture()
@@ -69,8 +95,8 @@ function S:ProfilingWindow_UpdateButtons(frame)
     end
 end
 
--- 来源于 NDui
 local function Skin_WeakAuras(f, fType)
+    -- 来源于 NDui
     if fType == "icon" then
         if not f.windStyle then
             f.icon:SetTexCoord(unpack(E.TexCoords))
@@ -148,11 +174,7 @@ function S:WeakAuras()
     if profilingWindow then
         self:CreateShadow(profilingWindow)
         self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
-
-    -- local reportWindow = _G.WeakAurasSaved.ProfilingWindow
-    -- if reportWindow then
-
-    -- end
+        self:SecureHook(_G.WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
     end
 end
 

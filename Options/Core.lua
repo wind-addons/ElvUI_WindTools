@@ -90,7 +90,7 @@ local tempString =
     E:TextGradient(tempString, 0.910, 0.314, 0.357, 0.976, 0.835, 0.431, 0.953, 0.925, 0.761, 0.078, 0.694, 0.671)
 
 local color = {}
-print(tempString)
+
 gsub(
     tempString,
     "cff(......)Z",
@@ -103,7 +103,7 @@ gsub(
 function W:OptionsCallback()
     -- 标题
     local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-    E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " " .. W.Version
+    E.Options.name = E.Options.name .. " + " .. icon .. "  " .. W.Title .. " " .. W.Version
 
     -- 设置主界面
     E.Options.args.WindTools = {

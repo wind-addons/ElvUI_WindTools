@@ -461,7 +461,7 @@ for version, data in pairs(W.Changelog) do
                 for index, line in ipairs(data.IMPORTANT) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
-                return text
+                return text .. "\n"
             end,
             fontSize = "medium"
         }
@@ -481,7 +481,7 @@ for version, data in pairs(W.Changelog) do
                 for index, line in ipairs(data.NEW) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
-                return text
+                return text .. "\n"
             end,
             fontSize = "medium"
         }
@@ -501,7 +501,7 @@ for version, data in pairs(W.Changelog) do
                 for index, line in ipairs(data.IMPROVEMENT) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
-                return text
+                return text .. "\n"
             end,
             fontSize = "medium"
         }

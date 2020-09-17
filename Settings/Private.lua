@@ -78,6 +78,7 @@ V.skins = {
 	addons = {
 		ace3 = true,
 		bigWigs = true,
+		hekili = true,
 		immersion = true,
 		weakAuras = true,
 		weakAurasOptions = true

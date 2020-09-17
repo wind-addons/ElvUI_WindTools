@@ -481,6 +481,14 @@ options.addons = {
             type = "toggle",
             name = L["BigWigs"]
         },
+        hekili = {
+            type = "toggle",
+            name = L["Hekili"]
+        },
+        immersion = {
+            type = "toggle",
+            name = L["Immersion"]
+        },
         weakAuras = {
             type = "toggle",
             name = L["WeakAuras"]

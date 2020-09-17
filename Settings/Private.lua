@@ -197,5 +197,9 @@ V.unitFrames = {
 		enable = true,
 		modifier = "shift",
 		button = "BUTTON1"
+	},
+	roleIcons = {
+		enable = true,
+		pack = "SUNUI"
 	}
 }

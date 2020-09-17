@@ -1,3 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='QuickFocus.lua'/>
+	<Script file='RoleIcons.lua'/>
 </Ui>

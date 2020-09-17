@@ -13,10 +13,13 @@ function SB:CreateButton(text)
 
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
     ES:HandleCheckBox(button)
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+        S:CreateShadow(button.backdrop)
+    end
 
     button.originalText = text
     button.text = button:CreateFontString()
-    button.text:Point("LEFT", button, "RIGHT", 0, -1)
+    button.text:Point("LEFT", button, "RIGHT", 0, 0)
     F.SetFontWithDB(button.text, self.db.font)
     button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
     button.text:SetJustifyV("MIDDLE")
@@ -45,6 +48,8 @@ function SB:UpdateButton(button)
     end
 
     button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
+    local checkedTexture = button:GetCheckedTexture()
+    checkedTexture:SetVertexColor(self.db.font.color.r, self.db.font.color.g, self.db.font.color.b)
     button.buttonSize = button.buttonSize + button.text:GetStringWidth()
     button:Show()
 end
@@ -103,8 +108,20 @@ function SB:UpdateLayout()
 
     if self.db.backdrop then
         self.bar.backdrop:Show()
+        if self.bar.announcement.backdrop.shadow then
+            self.bar.announcement.backdrop.shadow:Hide()
+        end
+        if self.bar.turnIn.backdrop.shadow then
+            self.bar.turnIn.backdrop.shadow:Hide()
+        end
     else
         self.bar.backdrop:Hide()
+        if self.bar.announcement.backdrop.shadow then
+            self.bar.announcement.backdrop.shadow:Show()
+        end
+        if self.bar.turnIn.backdrop.shadow then
+            self.bar.turnIn.backdrop.shadow:Show()
+        end
     end
 
     if xOffset ~= 0 then
@@ -161,7 +178,6 @@ function SB:AutoHideWithObjectiveFrame()
     if not self.db.enable or not self.bar then
         return
     end
-
 
     if self.db.hideWithObjectiveTracker and _G.ObjectiveTrackerFrame.collapsed then
         self.bar:Hide()

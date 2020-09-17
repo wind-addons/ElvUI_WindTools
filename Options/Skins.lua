@@ -477,7 +477,7 @@ options.addons = {
             type = "toggle",
             name = L["Ace3"]
         },
-        bigwigs = {
+        bigWigs = {
             type = "toggle",
             name = L["BigWigs"]
         },

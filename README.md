@@ -1,11 +1,24 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-11.52-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.0-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.00%20Beta-green.svg?longCache=true&style=for-the-badge"/>
 
 ElvUI 的可定制增强<br>
 Customizable enhancements for ElvUI
 </div>
+
+
+# :white_check_mark: 下载 Download
+
+
+
+[2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
+[2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
+
+如果你有任何问题, 可以随时通过 Discord 来回报.  
+If you have any problem, just feel free to send messages via Discord.
+
+<img src="https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/>
 
 # :sweat_drops: 功能 Features
 ## 物品
@@ -75,12 +88,6 @@ Customizable enhancements for ElvUI
 7. **标签**: 各职业颜色, 目标推测距离, 无符号血量, 无符号能量, 等等.
 
 更多功能加入中...
-
-# :white_check_mark: 下载 Download
-[2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
-[2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
-
-[Discord](https://discord.com/invite/JMz5Zsk)
 
 # :heart: 鸣谢 Credits
 [完整鸣谢名单](CREDITS.md)  

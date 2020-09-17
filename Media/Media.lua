@@ -33,8 +33,6 @@ AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("logo", "WindTools.blp", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 
-AddMedia("sunUIRoles", "SunUIRoles.tga", "Icons")
-
 AddMedia("ffxivTank", "FFXIV\\Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV\\DPS.tga", "Icons")
 AddMedia("ffxivHealer", "FFXIV\\Healer.tga", "Icons")
@@ -42,6 +40,10 @@ AddMedia("ffxivHealer", "FFXIV\\Healer.tga", "Icons")
 AddMedia("hexagonTank", "Hexagon\\Tank.tga", "Icons")
 AddMedia("hexagonDPS", "Hexagon\\DPS.tga", "Icons")
 AddMedia("hexagonHealer", "Hexagon\\Healer.tga", "Icons")
+
+AddMedia("sunUITank", "SunUI\\Tank.tga", "Icons")
+AddMedia("sunUIDPS", "SunUI\\DPS.tga", "Icons")
+AddMedia("sunUIHealer", "SunUI\\Healer.tga", "Icons")
 
 AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")

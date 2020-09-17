@@ -168,9 +168,9 @@ function CT:UpdateRoleIcons()
         _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     elseif pack == "SUNUI" then
         roleIcons = {
-            TANK = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:0:21:21:42"),
-            HEALER = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:22:41:1:20"),
-            DAMAGER = E:TextureString(W.Media.Icons.sunUIRoles, sizeString .. ":0:0:64:64:21:42:21:42")
+            TANK = E:TextureString(W.Media.Icons.sunUITank, sizeString),
+            HEALER = E:TextureString(W.Media.Icons.sunUIHealer, sizeString),
+            DAMAGER = E:TextureString(W.Media.Icons.sunUIDPS, sizeString)
         }
 
         _G.INLINE_TANK_ICON = roleIcons.TANK

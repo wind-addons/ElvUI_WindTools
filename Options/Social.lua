@@ -633,9 +633,9 @@ do
     SampleStrings.elvui = icons
 
     icons = ""
-    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:0:21:21:42") .. " "
-    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:22:41:1:20") .. " "
-    icons = icons .. E:TextureString(W.Media.Icons.sunUIRoles, ":16:16:0:0:64:64:21:42:21:42")
+    icons = icons .. E:TextureString(W.Media.Icons.sunUITank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIDPS, ":16:16")
     SampleStrings.sunui = icons
 end
 

@@ -8,60 +8,63 @@ local strfind = strfind
 local unpack = unpack
 
 function S:ProfilingWindow_UpdateButtons(frame)
+    -- 下方四个按钮
     for _, button in pairs {frame.statsFrame:GetChildren()} do
         ES:HandleButton(button)
     end
 
     for _, button in pairs {frame.titleFrame:GetChildren()} do
-        local isCollapse = false
-        for _, region in pairs {button:GetRegions()} do
-            if region.GetTexture and region:GetTexture() then
-                if strfind(region:GetTexture(), "Collapse") then
-                    isCollapse = true
-                end
+        if not button.windStyle and button.GetNormalTexture then
+            local normalTexturePath = button:GetNormalTexture():GetTexture()
+            if normalTexturePath == "Interface\\BUTTONS\\UI-Panel-CollapseButton-Up" then
+                button:StripTextures()
+
+                button.Texture = button:CreateTexture(nil, "OVERLAY")
+                button.Texture:Point("CENTER")
+                button.Texture:SetTexture(E.Media.Textures.ArrowUp)
+                button.Texture:Size(14, 14)
+
+                button:HookScript(
+                    "OnEnter",
+                    function(self)
+                        if self.Texture then
+                            self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+                        end
+                    end
+                )
+
+                button:HookScript(
+                    "OnLeave",
+                    function(self)
+                        if self.Texture then
+                            self.Texture:SetVertexColor(1, 1, 1)
+                        end
+                    end
+                )
+
+                button:HookScript(
+                    "OnClick",
+                    function(self)
+                        self:SetNormalTexture("")
+                        self:SetPushedTexture("")
+                        self.Texture:Show("")
+                        if self:GetParent():GetParent().minimized then
+                            button.Texture:SetRotation(ES.ArrowRotation["down"])
+                        else
+                            button.Texture:SetRotation(ES.ArrowRotation["up"])
+                        end
+                    end
+                )
+
+                button:SetHitRectInsets(6, 6, 7, 7)
+                button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
+            else
+                ES:HandleCloseButton(button)
+                button:ClearAllPoints()
+                button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 5)
             end
-        end
 
-        if isCollapse then
-            button:StripTextures()
-
-            button.Texture = button:CreateTexture(nil, "OVERLAY")
-            button.Texture:Point("CENTER")
-            button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-            button.Texture:Size(14, 14)
-
-            button:HookScript(
-                "OnEnter",
-                function(self)
-                    if self.Texture then
-                        self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
-                    end
-                end
-            )
-
-            button:HookScript(
-                "OnLeave",
-                function(self)
-                    if self.Texture then
-                        self.Texture:SetVertexColor(1, 1, 1)
-                    end
-                end
-            )
-
-            button:HookScript(
-                "OnClick",
-                function(self)
-                    self:SetNormalTexture("")
-                    self:SetPushedTexture("")
-                end
-            )
-
-            button:SetHitRectInsets(6, 6, 7, 7)
-            button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
-        else
-            ES:HandleCloseButton(button)
-            button:ClearAllPoints()
-            button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 5)
+            button.windStyle = true
         end
     end
 end
@@ -146,10 +149,10 @@ function S:WeakAuras()
         self:CreateShadow(profilingWindow)
         self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
 
-        -- local reportWindow = _G.WeakAurasSaved.ProfilingWindow
-        -- if reportWindow then
-            
-        -- end
+    -- local reportWindow = _G.WeakAurasSaved.ProfilingWindow
+    -- if reportWindow then
+
+    -- end
     end
 end
 

@@ -358,7 +358,7 @@ do -- 媒体文件
             "Media/Icons/FFXIV"
         },
         ["SunUI (Coolkids)"] = {
-            "Media/Icons/SunUIRoles.tga"
+            "Media/Icons/SunUI"
         },
         ["小华子COME @ www.iconfont.cn"] = {
             "Media/Icons/Misc.tga"

@@ -102,7 +102,7 @@
     - Media/Icons/FFXIV
 
 - Coolkids (SunUI)
-    - Media/Icons/SunUIRoles.tga
+    - Media/Icons/SunUI
 
 - 小华子COME @ www.iconfont.cn
     - Media/Icons/Misc.tga

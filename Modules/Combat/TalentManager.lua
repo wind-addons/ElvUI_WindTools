@@ -3,14 +3,26 @@ local TM = W:NewModule("TalentManager", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local _G = _G
+local format = format
 local gsub = gsub
+local pairs = pairs
 local tinsert = tinsert
+local tremove = tremove
 local unpack = unpack
-local LearnTalents = LearnTalents
+
+local CreateFrame = CreateFrame
+local EasyMenu = EasyMenu
+local GetSpecialization = GetSpecialization
+local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
 local GetTalentTierInfo = GetTalentTierInfo
+local IsAddOnLoaded = IsAddOnLoaded
+local LearnTalents = LearnTalents
 
-local MAX_TALENT_TIERS = MAX_TALENT_TIERS
+local ACCEPT = _G.ACCEPT
+local CANCEL = _G.CANCEL
+local MAX_TALENT_TIERS = _G.MAX_TALENT_TIERS
 
 function TM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_TalentUI" then
@@ -268,13 +280,19 @@ function TM:BuildFrame()
         frame:Hide()
     end
 
-    self:SecureHook("PlayerTalentFrame_ShowTalentTab", function()
-        frame:Show()
-    end)
+    self:SecureHook(
+        "PlayerTalentFrame_ShowTalentTab",
+        function()
+            frame:Show()
+        end
+    )
 
-    self:SecureHook("PlayerTalentFrame_HideTalentTab", function()
-        frame:Hide()
-    end)
+    self:SecureHook(
+        "PlayerTalentFrame_HideTalentTab",
+        function()
+            frame:Hide()
+        end
+    )
 
     self.frame = frame
     self:UpdateSetButtons()
@@ -369,6 +387,7 @@ function TM:Initialize()
 
     self:Enviroment()
     self:UpdatePlayerInfo()
+    self:BuildFrame()
 end
 
 W:RegisterModule(TM:GetName())

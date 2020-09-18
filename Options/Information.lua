@@ -2,7 +2,12 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.information.args
 local ACH = E.Libs.ACH
 
-local unpack, type, format, pairs, tostring = unpack, type, format, pairs, tostring
+local format = format
+local ipairs = ipairs
+local pairs = pairs
+local tostring = tostring
+local type = type
+local unpack = unpack
 
 local function AddColor(string)
     if type(string) ~= "string" then

@@ -20,6 +20,7 @@ W.Changelog[200] = {
         "新增 Hekili 插件皮肤",
         "新增 Immersion 插件皮肤",
         "新增 WeakAuras_Option 插件皮肤",
+        "新增 BugSack 插件皮肤",
     },
     IMPROVEMENT = {
         "更新 9.0 地图迷雾去除",

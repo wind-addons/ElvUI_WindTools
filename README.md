@@ -76,10 +76,11 @@ If you have any problem, just feel free to send messages via Discord.
 3. **ElvUI 框体美化**: 为 ElvUI 模块添加美化.
 4. **WindTools 框体美化**: 为 WindTools 模块添加美化.
 5. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+9. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
 6. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
 7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
 8. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
-9. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
+9. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
 
 ## 其他
 1. **额外物品条**: 支持添加3个条来放置任务物品, 药水, 药剂, 战旗, 等等. 按钮大小, 背景, 顺序和按钮组都可自定义.

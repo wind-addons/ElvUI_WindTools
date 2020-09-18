@@ -146,6 +146,11 @@ function TM:UpdatePlayerInfo()
     self.specID = specID
     self.specName = specName
     self.specIcon = specIcon
+
+    if self.frame then
+        self.frame.specIcon:SetTexture(self.specIcon)
+        self.frame.specName:SetText(self.specName)
+    end
 end
 
 function TM:UpdateSetButtons()
@@ -234,6 +239,22 @@ function TM:BuildFrame()
     if E.private.WT.skins.enable and E.private.WT.skins.windtools then
         S:CreateShadow(frame.backdrop)
     end
+
+    -- 专精图标
+    local tex = frame:CreateTexture(nil, "ARTWORK")
+    tex:CreateBackdrop()
+    tex:SetTexture(self.specIcon)
+    tex:SetTexCoord(unpack(E.TexCoords))
+    tex:Size(30, 30)
+    tex:Point("TOPLEFT", frame, "TOPLEFT", 10, -10)
+    frame.specIcon = tex
+
+    -- 专精文字
+    local text = frame:CreateFontString(nil, "ARTWORK")
+    text:FontTemplate()
+    text:SetText(self.specName)
+    text:Point("LEFT", tex, "RIGHT", 10, 0)
+    frame.specName = text
 
     -- 新增按钮
     local newButton = CreateFrame("Button", "WTTalentManagerNewButton", frame, "UIPanelButtonTemplate")

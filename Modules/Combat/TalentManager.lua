@@ -12,47 +12,6 @@ local GetTalentTierInfo = GetTalentTierInfo
 
 local MAX_TALENT_TIERS = MAX_TALENT_TIERS
 
--- 新增设定的窗口
-E.PopupDialogs.WINDTOOLS_TALENT_MANAGER_NEW_SET = {
-    text = L["Talent Manager"],
-    button1 = ACCEPT,
-    button2 = CANCEL,
-    hasEditBox = 1,
-    OnShow = function(self, setNumber)
-        self.editBox:SetAutoFocus(false)
-        self.editBox.width = self.editBox:GetWidth()
-        self.editBox:Width(280)
-        self.editBox:AddHistoryLine("text")
-        self.editBox:SetText(L["New Set"] .. " #" .. setNumber)
-        self.editBox:HighlightText()
-        self.editBox:SetJustifyH("CENTER")
-    end,
-    OnHide = function(self)
-        self.editBox:Width(self.editBox.width or 50)
-        self.editBox.width = nil
-    end,
-    EditBoxOnEnterPressed = function(self)
-        local setName = self:GetText()
-        if setName then
-            TM:SaveSet(setName)
-        end
-    end,
-    EditBoxOnEscapePressed = function(self)
-        self:GetParent():Hide()
-    end,
-    OnAccept = function(self)
-        local setName = self.editBox:GetText()
-        if setName then
-            TM:SaveSet(setName)
-        end
-    end,
-    hideOnEscape = 1
-}
-
-function TM:SaveSet(setName)
-    print(setName)
-end
-
 function TM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_TalentUI" then
         self:UnregisterEvent("ADDON_LOADED")
@@ -60,40 +19,66 @@ function TM:ADDON_LOADED(_, addon)
     end
 end
 
-function TM:BuildFrame()
-    if not IsAddOnLoaded("Blizzard_TalentUI") then
-        self:RegisterEvent("ADDON_LOADED")
+function TM:SaveSet(setName)
+    local talentString = self:GetTalentString()
+    
+    if not self.db.sets[self.specID] then
+        self.db.sets[self.specID] = {}
+    end
+
+    local isSameName = false
+    for key, data in pairs(self.db.sets[specID]) do
+        if data.setName == setName then
+            isSameName = true
+        end
+    end
+
+    if isSameName then
+        F.DebugMessage(TM, format(L["Already have a set named %s."], setName))
+    elseif #self.db.sets[self.specID] == 15 then
+        F.DebugMessage(TM, L["Too many sets here, please delete one of them and try again."])
+    else
+        tinsert(
+            self.db.sets[self.specID],
+            {
+                setName = setName,
+                talentString = talentString
+            }
+        )
+        self:UpdateSetButtons()
+    end
+end
+
+function TM:RenameSet(specID, setName, newName)
+    if not self.db.sets[specID] then
         return
     end
 
-    -- 在天赋页右边加上
-    local frame = CreateFrame("Frame", "WTTalentManager", E.UIParent)
-    frame:Point("TOPLEFT", _G.PlayerTalentFrame, "TOPRIGHT", 3, -1)
-    frame:Point("BOTTOMRIGHT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 153, 1)
-    frame:CreateBackdrop("Transparent")
+    for key, data in pairs(self.db.sets[specID]) do
+        if data.setName == setName then
+            data.setName = newName
+            return
+        end
+    end
+end
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
-        S:CreateShadow(frame.backdrop)
+function TM:DeleteSet(specID, setName)
+    if not self.db.sets[specID] then
+        return
     end
 
-    -- 新增按钮
-    local newButton = CreateFrame("Button", "WTTalentManagerNewButton", frame, "UIPanelButtonTemplate")
-    newButton:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 5, 5)
-    newButton:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -5, 5)
-    newButton:SetHeight(20)
-    newButton:SetText(L["New Set"])
-    newButton:SetScript(
-        "OnClick",
-        function()
-            E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, 10)
+    for key, data in pairs(self.db.sets[specID]) do
+        if data.setName == setName then
+            tremove(self.db.sets, key)
         end
-    )
-    ES:HandleButton(newButton)
-
-    self.frame = frame
+    end
 end
 
 function TM:SetTalent(talentString)
+    if not talentString or talentString == "" then
+        return
+    end
+
     local talentTable = {}
     gsub(
         talentString,
@@ -130,11 +115,229 @@ function TM:GetTalentString()
     return talentString
 end
 
+function TM:UpdatePlayerInfo()
+    local specID = GetSpecializationInfo(GetSpecialization())
+    self.specID = specID
+end
+
+function TM:UpdateSetButtons()
+    if not self.frame then
+        return
+    end
+
+    if not self.specID or not self.db.sets[self.specID] then
+        return
+    end
+
+    local db = self.db.sets[self.specID]
+    local numSets = #db
+    
+    -- 更新按钮
+    for i = 1, numSets do
+        local button = self.frame.setButtons[i]
+        button:SetText(db[i].setName)
+        button.setName = db[i].setName
+        button.specID = self.specID
+        button.talentString = db[i].talentString
+        button:Show()
+    end
+
+    -- 隐藏不需要显示的按钮
+    if numSets == 15 then
+        return
+    end
+
+    for i = numSets + 1, 15 do
+        local button = self.frame.setButtons[i]
+        button.setName = nil
+        button.specID = nil
+        button.talentString = nil
+        button:Hide()
+    end
+end
+
+function TM:ShowContextText(button)
+    local menu = {
+        {
+            text = button.setName,
+            isTitle = true,
+            notCheckable = true
+        },
+        {
+            text = L["Save"],
+            func = function()
+                TM:SaveSet(button.setName)
+            end,
+            notCheckable = true
+        },
+        {
+            text = L["Rename"],
+            func = function()
+                E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_RENAME_SET", nil, nil, button)
+            end,
+            notCheckable = true
+        },
+        {
+            text = L["Delete"],
+            func = function()
+                TM:DeleteSet(button.specID, button.setName)
+            end,
+            notCheckable = true
+        }
+    }
+
+    EasyMenu(menu, self.contextMenuFrame, "cursor", 0, -50, "MENU")
+end
+
+function TM:BuildFrame()
+    if not IsAddOnLoaded("Blizzard_TalentUI") then
+        self:RegisterEvent("ADDON_LOADED")
+        return
+    end
+
+    -- 在天赋页右边加上
+    local frame = CreateFrame("Frame", "WTTalentManager", E.UIParent)
+    frame:Point("TOPLEFT", _G.PlayerTalentFrame, "TOPRIGHT", 3, -1)
+    frame:Point("BOTTOMRIGHT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 153, 1)
+    frame:CreateBackdrop("Transparent")
+
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+        S:CreateShadow(frame.backdrop)
+    end
+
+    -- 新增按钮
+    local newButton = CreateFrame("Button", "WTTalentManagerNewButton", frame, "UIPanelButtonTemplate")
+    newButton:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 5, 5)
+    newButton:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -5, 5)
+    newButton:SetHeight(20)
+    newButton:SetText(L["New Set"])
+    newButton:SetScript(
+        "OnClick",
+        function()
+            E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, 10)
+        end
+    )
+    ES:HandleButton(newButton)
+
+    -- 天赋设定按钮
+    frame.setButtons = {}
+    for i = 1, 15 do
+        local button = CreateFrame("Button", "WTTalentManagerSetButton" .. i, frame, "UIPanelButtonTemplate")
+        button:Size(140, 20)
+
+        if i == 1 then
+            button:Point("TOP", frame, "TOP", 0, -50)
+        else
+            button:Point("TOP", frame.setButtons[i - 1], "BOTTOM", 0, -5)
+        end
+
+        button:SetText("")
+        button:SetScript(
+            "OnClick",
+            function(self, mouseButton)
+                if mouseButton == "LeftButton" then
+                    TM:SetTalent(self.talentString)
+                elseif mouseButton == "RightButton" then
+                    TM:ShowContextText(self)
+                end
+            end
+        )
+        ES:HandleButton(button)
+        button:Hide()
+        frame.setButtons[i] = button
+    end
+
+    self.frame = frame
+    self:UpdateSetButtons()
+end
+
+function TM:Enviroment()
+    -- 新增设定的窗口
+    E.PopupDialogs.WINDTOOLS_TALENT_MANAGER_NEW_SET = {
+        text = L["Talent Manager"] .. " - " .. L["New Set"],
+        button1 = ACCEPT,
+        button2 = CANCEL,
+        hasEditBox = 1,
+        OnShow = function(self, setNumber)
+            self.editBox:SetAutoFocus(false)
+            self.editBox.width = self.editBox:GetWidth()
+            self.editBox:Width(280)
+            self.editBox:AddHistoryLine("text")
+            self.editBox:SetText(L["New Set"] .. " #" .. setNumber)
+            self.editBox:HighlightText()
+            self.editBox:SetJustifyH("CENTER")
+        end,
+        OnHide = function(self)
+            self.editBox:Width(self.editBox.width or 50)
+            self.editBox.width = nil
+        end,
+        EditBoxOnEnterPressed = function(self)
+            local setName = self:GetText()
+            if setName then
+                TM:SaveSet(setName)
+            end
+        end,
+        EditBoxOnEscapePressed = function(self)
+            self:GetParent():Hide()
+        end,
+        OnAccept = function(self)
+            local setName = self.editBox:GetText()
+            if setName then
+                TM:SaveSet(setName)
+            end
+        end,
+        hideOnEscape = 1
+    }
+
+    -- 重命名的窗口
+    E.PopupDialogs.WINDTOOLS_TALENT_MANAGER_RENAME_SET = {
+        text = L["Talent Manager"] .. " - " .. L["Rename Set"],
+        button1 = ACCEPT,
+        button2 = CANCEL,
+        hasEditBox = 1,
+        OnShow = function(self, data)
+            self.editBox:SetAutoFocus(false)
+            self.editBox.width = self.editBox:GetWidth()
+            self.editBox:Width(280)
+            self.editBox:AddHistoryLine("text")
+            self.editBox:SetText(data.setName)
+            self.editBox:HighlightText()
+            self.editBox:SetJustifyH("CENTER")
+        end,
+        OnHide = function(self)
+            self.editBox:Width(self.editBox.width or 50)
+            self.editBox.width = nil
+        end,
+        EditBoxOnEnterPressed = function(self)
+            local newName = self:GetText()
+            if newName then
+                TM:RenameSet(data.specID, data.setName, newName)
+            end
+        end,
+        EditBoxOnEscapePressed = function(self)
+            self:GetParent():Hide()
+        end,
+        OnAccept = function(self)
+            local newName = self.editBox:GetText()
+            if newName then
+                TM:RenameSet(data.specID, data.setName, newName)
+            end
+        end,
+        hideOnEscape = 1
+    }
+
+    -- 按钮右键菜单
+    self.contextMenuFrame = CreateFrame("Frame", "WTTalentManagerContextMenu", E.UIParent, "UIDropDownMenuTemplate")
+end
+
 function TM:Initialize()
     self.db = E.private.WT.combat.talentManager
     if not self.db.enable then
         return
     end
+
+    self:Enviroment()
+    self:UpdatePlayerInfo()
 end
 
 W:RegisterModule(TM:GetName())

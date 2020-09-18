@@ -21,13 +21,13 @@ end
 
 function TM:SaveSet(setName)
     local talentString = self:GetTalentString()
-    
+
     if not self.db.sets[self.specID] then
         self.db.sets[self.specID] = {}
     end
 
     local isSameName = false
-    for key, data in pairs(self.db.sets[specID]) do
+    for key, data in pairs(self.db.sets[self.specID]) do
         if data.setName == setName then
             isSameName = true
         end
@@ -131,7 +131,7 @@ function TM:UpdateSetButtons()
 
     local db = self.db.sets[self.specID]
     local numSets = #db
-    
+
     -- 更新按钮
     for i = 1, numSets do
         local button = self.frame.setButtons[i]
@@ -200,6 +200,8 @@ function TM:BuildFrame()
     frame:Point("TOPLEFT", _G.PlayerTalentFrame, "TOPRIGHT", 3, -1)
     frame:Point("BOTTOMRIGHT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 153, 1)
     frame:CreateBackdrop("Transparent")
+
+    frame:EnableMouse(true)
 
     if E.private.WT.skins.enable and E.private.WT.skins.windtools then
         S:CreateShadow(frame.backdrop)

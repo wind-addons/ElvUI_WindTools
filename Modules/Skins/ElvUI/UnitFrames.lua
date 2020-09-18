@@ -27,18 +27,16 @@ end
 
 function S:ElvUI_UnitFrames_Configure_Power(_, f)
     if f.USE_POWERBAR then
+        local shadow = f.Power.backdrop.shadow
         if f.POWERBAR_DETACHED then
-            if not f.Power.shadow then
-                self:CreateShadow(f.Power)
+            if not shadow then
+                self:CreateShadow(f.Power.backdrop)
             else
-                f.Power.shadow:SetFrameLevel(1)
-                f.Power.shadow:SetFrameStrata(f.Power:GetFrameStrata())
-                f.Power.shadow:SetOutside(f.Power, 4, 4)
-                f.Power.shadow:Show()
+                shadow:Show()
             end
         else
-            if f.Power.shadow then
-                f.Power.shadow:Hide()
+            if shadow then
+                shadow:Hide()
             end
         end
     end

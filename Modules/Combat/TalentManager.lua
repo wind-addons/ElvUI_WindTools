@@ -258,15 +258,15 @@ function TM:BuildFrame()
 
     -- 新增按钮
     local newButton = CreateFrame("Button", "WTTalentManagerNewButton", frame, "UIPanelButtonTemplate")
-    newButton:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 5, 5)
-    newButton:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -5, 5)
+    newButton:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 5, 10)
+    newButton:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -5, 10)
     newButton:SetHeight(20)
     newButton:SetText(L["New Set"])
     newButton:SetScript(
         "OnClick",
         function()
             local db = self.db.sets[self.specID]
-            local nextIndex = db and #db+1 or 1
+            local nextIndex = db and #db + 1 or 1
             E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, nextIndex)
         end
     )
@@ -308,7 +308,11 @@ function TM:BuildFrame()
     self:SecureHook(
         "PlayerTalentFrame_ShowTalentTab",
         function()
-            frame:Show()
+            if not self.db.forceHide then
+                frame:Show()
+            else
+                frame:Hide()
+            end
         end
     )
 
@@ -326,6 +330,32 @@ function TM:BuildFrame()
             frame:Hide()
         end
     )
+
+    -- 移动模块兼容
+    if E.private.WT.misc.moveBlizzardFrames then
+        local MF = W:GetModule("MoveFrames")
+        MF:HandleFrame(frame:GetName(), "PlayerTalentFrame")
+    end
+
+    -- 开关按钮
+    local toggleButton =
+        CreateFrame("Button", "WTTalentManagerToggleButton", _G.PlayerTalentFrameTalents, "UIPanelButtonTemplate")
+    toggleButton:Point("BOTTOMRIGHT", _G.PlayerTalentFrameTalents, "BOTTOMRIGHT", -5, -15)
+    toggleButton:Size(200, 25)
+    toggleButton:SetText(L["Toggle Talent Manager"])
+    toggleButton:SetScript(
+        "OnClick",
+        function()
+            if frame:IsShown() then
+                TM.db.forceHide = true
+                frame:Hide()
+            else
+                TM.db.forceHide = nil
+                frame:Show()
+            end
+        end
+    )
+    ES:HandleButton(toggleButton)
 
     self.frame = frame
     self:UpdateSetButtons()

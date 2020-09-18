@@ -142,8 +142,10 @@ function TM:GetTalentString()
 end
 
 function TM:UpdatePlayerInfo()
-    local specID = GetSpecializationInfo(GetSpecialization())
+    local specID, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
     self.specID = specID
+    self.specName = specName
+    self.specIcon = specIcon
 end
 
 function TM:UpdateSetButtons()
@@ -387,6 +389,13 @@ function TM:Enviroment()
     self.contextMenuFrame = CreateFrame("Frame", "WTTalentManagerContextMenu", E.UIParent, "UIDropDownMenuTemplate")
 end
 
+function TM:PLAYER_SPECIALIZATION_CHANGED(_, unit)
+    if unit == "player" then
+        self:UpdatePlayerInfo()
+        self:UpdateSetButtons()
+    end
+end
+
 function TM:Initialize()
     self.db = E.private.WT.combat.talentManager
     if not self.db.enable then
@@ -396,6 +405,8 @@ function TM:Initialize()
     self:Enviroment()
     self:UpdatePlayerInfo()
     self:BuildFrame()
+
+    self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 end
 
 W:RegisterModule(TM:GetName())

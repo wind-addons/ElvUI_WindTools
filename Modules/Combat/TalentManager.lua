@@ -341,8 +341,9 @@ function TM:BuildFrame()
     local toggleButton =
         CreateFrame("Button", "WTTalentManagerToggleButton", _G.PlayerTalentFrameTalents, "UIPanelButtonTemplate")
     toggleButton:Point("BOTTOMRIGHT", _G.PlayerTalentFrameTalents, "BOTTOMRIGHT", -5, -15)
-    toggleButton:Size(200, 25)
     toggleButton:SetText(L["Toggle Talent Manager"])
+    toggleButton:SetWidth(toggleButton.Text:GetStringWidth()+20)
+    toggleButton:SetHeight(25)
     toggleButton:SetScript(
         "OnClick",
         function()

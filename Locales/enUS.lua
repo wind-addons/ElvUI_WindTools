@@ -602,6 +602,7 @@ L["This module works with Chinese and Korean, it will correct the text to slash 
 L["Title"] = true
 L["Title Color"] = true
 L["Toast"] = true
+L["Toggle Talent Manager"] = true
 L["Toggle minimap buttons bar."] = true
 L["Toggle raid markers bar."] = true
 L["Too many sets here, please delete one of them and try again."] = true

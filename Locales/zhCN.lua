@@ -602,6 +602,7 @@ L["This module works with Chinese and Korean, it will correct the text to slash 
 L["Title"] = "标题"
 L["Title Color"] = "标题颜色"
 L["Toast"] = "提示信息面板"
+L["Toggle Talent Manager"] = "开关天赋管家"
 L["Toggle minimap buttons bar."] = "开关小地图按钮条."
 L["Toggle raid markers bar."] = "开关团队标记条."
 L["Too many sets here, please delete one of them and try again."] = "已有过多设定, 请删除其中之一后进行重试."

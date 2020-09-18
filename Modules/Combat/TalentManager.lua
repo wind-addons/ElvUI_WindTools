@@ -294,6 +294,14 @@ function TM:BuildFrame()
         end
     )
 
+    self:SecureHook(
+        _G.PlayerTalentFrame,
+        "Hide",
+        function()
+            frame:Hide()
+        end
+    )
+
     self.frame = frame
     self:UpdateSetButtons()
 end

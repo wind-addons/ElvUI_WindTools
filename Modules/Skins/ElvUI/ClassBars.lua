@@ -7,7 +7,8 @@ local _G = _G
 function S:ElvUI_UnitFrames_SkinClassBar(_, frame)
     local bar = frame[frame.ClassBar]
     if bar then
-        self:CreateShadow(bar)
+        bar.backdrop:SetTemplate("Transparent")
+        self:CreateShadow(bar.backdrop)
     end
 end
 

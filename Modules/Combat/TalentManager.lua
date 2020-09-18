@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local TM = W:NewModule("TalentManager", "AceEvent-3.0")
+local TM = W:NewModule("TalentManager", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
@@ -49,6 +49,17 @@ function TM:SaveSet(setName)
     end
 end
 
+function TM:UpdateSet(setName)
+    local talentString = self:GetTalentString()
+    for key, data in pairs(self.db.sets[self.specID]) do
+        if data.setName == setName then
+            data.talentString = talentString
+            self:UpdateSetButtons()
+            return
+        end
+    end
+end
+
 function TM:RenameSet(specID, setName, newName)
     if not self.db.sets[specID] then
         return
@@ -57,6 +68,7 @@ function TM:RenameSet(specID, setName, newName)
     for key, data in pairs(self.db.sets[specID]) do
         if data.setName == setName then
             data.setName = newName
+            self:UpdateSetButtons()
             return
         end
     end
@@ -69,7 +81,9 @@ function TM:DeleteSet(specID, setName)
 
     for key, data in pairs(self.db.sets[specID]) do
         if data.setName == setName then
-            tremove(self.db.sets, key)
+            tremove(self.db.sets[specID], key)
+            self:UpdateSetButtons()
+            return
         end
     end
 end
@@ -164,9 +178,9 @@ function TM:ShowContextText(button)
             notCheckable = true
         },
         {
-            text = L["Save"],
+            text = L["Overwrite"],
             func = function()
-                TM:SaveSet(button.setName)
+                TM:UpdateSet(button.setName, true)
             end,
             notCheckable = true
         },
@@ -234,6 +248,7 @@ function TM:BuildFrame()
         end
 
         button:SetText("")
+        button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         button:SetScript(
             "OnClick",
             function(self, mouseButton)
@@ -248,6 +263,18 @@ function TM:BuildFrame()
         button:Hide()
         frame.setButtons[i] = button
     end
+
+    if not _G.PlayerTalentFrameTalents:IsShown() then
+        frame:Hide()
+    end
+
+    self:SecureHook("PlayerTalentFrame_ShowTalentTab", function()
+        frame:Show()
+    end)
+
+    self:SecureHook("PlayerTalentFrame_HideTalentTab", function()
+        frame:Hide()
+    end)
 
     self.frame = frame
     self:UpdateSetButtons()
@@ -278,6 +305,7 @@ function TM:Enviroment()
             if setName then
                 TM:SaveSet(setName)
             end
+            self:GetParent():Hide()
         end,
         EditBoxOnEscapePressed = function(self)
             self:GetParent():Hide()
@@ -310,16 +338,17 @@ function TM:Enviroment()
             self.editBox:Width(self.editBox.width or 50)
             self.editBox.width = nil
         end,
-        EditBoxOnEnterPressed = function(self)
+        EditBoxOnEnterPressed = function(self, data)
             local newName = self:GetText()
             if newName then
                 TM:RenameSet(data.specID, data.setName, newName)
             end
+            self:GetParent():Hide()
         end,
         EditBoxOnEscapePressed = function(self)
             self:GetParent():Hide()
         end,
-        OnAccept = function(self)
+        OnAccept = function(self, data)
             local newName = self.editBox:GetText()
             if newName then
                 TM:RenameSet(data.specID, data.setName, newName)

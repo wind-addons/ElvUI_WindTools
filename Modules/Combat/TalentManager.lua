@@ -252,6 +252,9 @@ function TM:BuildFrame()
     -- 专精文字
     local text = frame:CreateFontString(nil, "ARTWORK")
     text:FontTemplate()
+    text:SetWidth(90)
+    text:SetJustifyH("LEFT")
+    F.SetFontOutline(text)
     text:SetText(self.specName)
     text:Point("LEFT", tex, "RIGHT", 10, 0)
     frame.specName = text

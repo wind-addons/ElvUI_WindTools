@@ -112,6 +112,7 @@ L["Blizzard Buttons"] = "暴雪按钮"
 L["Block"] = "方块"
 L["Block Shadow"] = "方块阴影"
 L["Bots"] = "机器人"
+L["BugSack"] = true
 L["Button"] = "按钮"
 L["Button Groups"] = "按钮组"
 L["Button Height"] = "按钮高度"

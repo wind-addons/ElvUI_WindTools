@@ -112,6 +112,7 @@ L["Blizzard Buttons"] = true
 L["Block"] = true
 L["Block Shadow"] = true
 L["Bots"] = true
+L["BugSack"] = true
 L["Button"] = true
 L["Button Groups"] = true
 L["Button Height"] = true

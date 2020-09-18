@@ -1,5 +1,11 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+V.combat = {
+    talentManager = {
+        enable = true,
+	}
+}
+	
 V.maps = {
 	worldMap = {
 		enable = true,

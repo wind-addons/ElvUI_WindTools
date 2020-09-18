@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='CombatAlert.lua'/>
 	<Script file='RaidMarkers.lua'/>
+	<Script file='TalentManager.lua'/>
 </Ui>

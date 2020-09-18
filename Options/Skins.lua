@@ -481,6 +481,10 @@ options.addons = {
             type = "toggle",
             name = L["BigWigs"]
         },
+        bugSack = {
+            type = "toggle",
+            name = L["BugSack"]
+        },
         hekili = {
             type = "toggle",
             name = L["Hekili"]

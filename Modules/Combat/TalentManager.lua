@@ -214,7 +214,7 @@ function TM:ShowContextText(button)
         }
     }
 
-    EasyMenu(menu, self.contextMenuFrame, "cursor", 0, -50, "MENU")
+    EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
 end
 
 function TM:BuildFrame()
@@ -244,7 +244,9 @@ function TM:BuildFrame()
     newButton:SetScript(
         "OnClick",
         function()
-            E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, 10)
+            local db = self.db.sets[self.specID]
+            local nextIndex = db and #db+1 or 1
+            E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, nextIndex)
         end
     )
     ES:HandleButton(newButton)

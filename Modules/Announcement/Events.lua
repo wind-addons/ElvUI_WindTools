@@ -4,10 +4,12 @@ local A = W:GetModule("Announcement")
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 
 A.EventList = {
+    "CHALLENGE_MODE_COMPLETED",
+    "CHAT_MSG_ADDON",
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
+    "GROUP_ROSTER_UPDATE",
     "LFG_COMPLETION_REWARD",
-    "CHALLENGE_MODE_COMPLETED",
     "QUEST_LOG_UPDATE"
 }
 
@@ -61,4 +63,11 @@ end
 
 function A:QUEST_LOG_UPDATE()
     self:Quest()
+end
+
+function A:CHAT_MSG_ADDON()
+end
+
+function A:GROUP_ROSTER_UPDATE()
+    self:UpdatePartyInfo()
 end

@@ -51,7 +51,7 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
 end
 
 --[[
-    获取最适合的频道
+    获取最适合的频道配置
     @param {object} channelDB 频道配置
     @return {string} 频道
 ]]
@@ -66,19 +66,6 @@ function A:GetChannel(channelDB)
         return channelDB.solo
     end
     return "NONE"
-end
-
-function A:SendAddonMessage(message)
-    if not IsInGroup() then
-        return
-    end
-    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
-        C_ChatInfo_SendAddonMessage(self.Prefix, message, "INSTANCE")
-    elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
-        C_ChatInfo_SendAddonMessage(self.Prefix, message, "RAID")
-    elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-        C_ChatInfo_SendAddonMessage(self.Prefix, message, "PARTY")
-    end
 end
 
 function A:GetPetInfo(petName)
@@ -105,7 +92,7 @@ end
 function A:Initialize()
     self.db = E.db.WT.announcement
 
-    if not self.db.enable or self.initialized then
+    if not self.db.enable or self.Initialized then
         return
     end
 
@@ -113,13 +100,15 @@ function A:Initialize()
         A:RegisterEvent(event)
     end
 
-    self.initialized = true
+    self:InitializeAuthority()
+
+    self.Initialized = true
 end
 
 function A:ProfileUpdate()
     self:Initialize()
 
-    if self.db.enable or not self.initialized then
+    if self.db.enable or not self.Initialized then
         return
     end
 
@@ -128,7 +117,7 @@ function A:ProfileUpdate()
         A:UnregisterEvent(event)
     end
 
-    self.initialized = false
+    self.Initialized = false
 end
 
 W:RegisterModule(A:GetName())

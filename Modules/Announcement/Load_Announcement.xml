@@ -1,6 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
 	<Script file='Core.lua'/>
+	<!-- Authority Module -->
+	<Script file='Authority.lua'/>
 	<!-- Submodule -->
 	<Script file='Events.lua'/>
 	<Script file='CombatResurrection.lua'/>

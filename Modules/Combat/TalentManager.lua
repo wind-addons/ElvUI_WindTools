@@ -154,16 +154,12 @@ function TM:UpdatePlayerInfo()
 end
 
 function TM:UpdateSetButtons()
-    if not self.frame then
-        return
-    end
-
-    if not self.specID or not self.db.sets[self.specID] then
+    if not self.frame or not self.specID then
         return
     end
 
     local db = self.db.sets[self.specID]
-    local numSets = #db
+    local numSets = db and #db or 0
 
     -- 更新按钮
     for i = 1, numSets do

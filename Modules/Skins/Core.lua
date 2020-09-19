@@ -9,6 +9,8 @@ local pairs = pairs
 local tinsert = tinsert
 local xpcall = xpcall
 
+local AceGUI
+
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 
@@ -223,37 +225,35 @@ function S:ADDON_LOADED(_, addonName)
     end
 end
 
-function S:UpdateWidgetEarly(AceGUI)
+function S:UpdateWidgetEarly()
     for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
-        if self.aceWidgets[name] then
-            AceGUI.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
-            self.aceWidgets[name] = nil
-        end
+        S:UpdateWidget(AceGUI, name, oldFunc)
     end
 end
 
-function S:UpdateWidget(AceGUI, name, oldFunc)
+function S:UpdateWidget(lib, name, oldFunc)
     if self.aceWidgets[name] then
-        AceGUI.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
+        lib.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
         self.aceWidgets[name] = nil
     end
 end
 
 function S:LibStub_NewLibrary(_, major)
     if major == "AceGUI-3.0" then
-        local AceGUI = _G.LibStub("AceGUI-3.0")
-        S:UpdateWidgetEarly(AceGUI)
-        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
         if self:IsHooked(_G.LibStub, "NewLibrary") then
             self:Unhook(_G.LibStub, "NewLibrary")
         end
+
+        AceGUI = _G.LibStub("AceGUI-3.0")
+        S:UpdateWidgetEarly()
+        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
     end
 end
 
 function S:Hook_Ace3()
     local AceGUI = _G.LibStub("AceGUI-3.0")
     if AceGUI then
-        S:UpdateWidgetEarly(AceGUI)
+        S:UpdateWidgetEarly()
         self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
     else
         self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")

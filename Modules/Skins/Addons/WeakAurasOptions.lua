@@ -89,7 +89,7 @@ function S:WeakAurasMultiLineEditBox(Constructor)
 
         local expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
         TryHandleButtonAfter(expandButtonName)
-
+        print( widget.label:GetText())
         return widget
     end
 
@@ -298,7 +298,7 @@ function S:WeakAurasOptions()
     end
 
     self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
-    self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
+    -- self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
 end
 
 S:AddCallbackForAddon("WeakAurasOptions")

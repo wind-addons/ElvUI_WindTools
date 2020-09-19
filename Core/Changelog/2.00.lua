@@ -2,10 +2,11 @@ local W = unpack(select(2, ...))
 
 W.Changelog[200] = {
     RELEASE_DATE = "2020/9/24",
-    IMPORTANT=  {
-        "完全重写了全部模块和核心功能",
+    IMPORTANT = {
+        "完全重写了全部模块和核心功能"
     },
     NEW = {
+        "新增天赋管家功能",
         "新增右键菜单功能",
         "新增进出战斗动画功能",
         "新增小地图点击者功能",
@@ -20,7 +21,7 @@ W.Changelog[200] = {
         "新增 Hekili 插件皮肤",
         "新增 Immersion 插件皮肤",
         "新增 WeakAuras_Option 插件皮肤",
-        "新增 BugSack 插件皮肤",
+        "新增 BugSack 插件皮肤"
     },
     IMPROVEMENT = {
         "更新 9.0 地图迷雾去除",

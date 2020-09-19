@@ -385,6 +385,7 @@ L["No Dash"] = true
 L["None"] = true
 L["Normal"] = true
 L["Normal Color"] = true
+L["Not set"] = true
 L["Ny'alotha, The Waking City"] = true
 L["O"] = true
 L["OMG, wealthy %player% puts %spell%!"] = true

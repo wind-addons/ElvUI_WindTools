@@ -13,6 +13,7 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
+local GameTooltip = _G.GameTooltip
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
@@ -218,6 +219,36 @@ function TM:ShowContextText(button)
     EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
 end
 
+function TM:GetTalentTooltipLine(tier, column)
+    local lineTemplate = "|T%s:12:14:0:0:32:32:2:30:4:28|t %s"
+    if column == 0 then
+        return format(lineTemplate, 134400, L["Not set"])
+    else
+        local _, name, icon = GetTalentInfo(tier, column, 1)
+        return format(lineTemplate, icon, name)
+    end
+end
+
+function TM:SetButtonTooltip(button)
+    local talentTable = {}
+    gsub(
+        button.talentString,
+        "[0-9]",
+        function(char)
+            tinsert(talentTable, tonumber(char))
+        end
+    )
+    GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT", 8, 20)
+    GameTooltip:SetText(button.setName)
+
+    for tier = 1, MAX_TALENT_TIERS do
+        local text = self:GetTalentTooltipLine(tier, talentTable[tier], 1)
+        GameTooltip:AddLine(text, 1, 1, 1)
+    end
+
+    GameTooltip:Show()
+end
+
 function TM:BuildFrame()
     if not IsAddOnLoaded("Blizzard_TalentUI") then
         self:RegisterEvent("ADDON_LOADED")
@@ -285,6 +316,10 @@ function TM:BuildFrame()
 
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+        ES:HandleButton(button)
+        S:CreateShadow(button.backdrop, nil, 1, 1, 1)
+        button.backdrop.shadow:Hide()
+
         button:SetScript(
             "OnClick",
             function(self, mouseButton)
@@ -295,7 +330,23 @@ function TM:BuildFrame()
                 end
             end
         )
-        ES:HandleButton(button)
+
+        button:SetScript(
+            "OnEnter",
+            function(self)
+                TM:SetButtonTooltip(self)
+                self.backdrop.shadow:Show()
+            end
+        )
+
+        button:SetScript(
+            "OnLeave",
+            function(self)
+                GameTooltip:Hide()
+                self.backdrop.shadow:Hide()
+            end
+        )
+
         button:Hide()
         frame.setButtons[i] = button
     end
@@ -341,7 +392,7 @@ function TM:BuildFrame()
         CreateFrame("Button", "WTTalentManagerToggleButton", _G.PlayerTalentFrameTalents, "UIPanelButtonTemplate")
     toggleButton:Point("BOTTOMRIGHT", _G.PlayerTalentFrameTalents, "BOTTOMRIGHT", -5, -15)
     toggleButton:SetText(L["Toggle Talent Manager"])
-    toggleButton:SetWidth(toggleButton.Text:GetStringWidth()+20)
+    toggleButton:SetWidth(toggleButton.Text:GetStringWidth() + 20)
     toggleButton:SetHeight(25)
     toggleButton:SetScript(
         "OnClick",

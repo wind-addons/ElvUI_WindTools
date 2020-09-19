@@ -256,7 +256,7 @@ function TM:BuildFrame()
     end
 
     -- 在天赋页右边加上
-    local frame = CreateFrame("Frame", "WTTalentManager", E.UIParent)
+    local frame = CreateFrame("Frame", "WTTalentManager", _G.PlayerTalentFrame)
     frame:Point("TOPLEFT", _G.PlayerTalentFrame, "TOPRIGHT", 3, -1)
     frame:Point("BOTTOMRIGHT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 153, 1)
     frame:CreateBackdrop("Transparent")

@@ -2,4 +2,5 @@
 	<Script file='AlreadyKnown.lua'/>
 	<Script file='DeleteItem.lua'/>
 	<Script file='FastLoot.lua'/>
+	<Script file='Trade.lua'/>
 </Ui>

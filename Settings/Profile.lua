@@ -297,6 +297,11 @@ P.item = {
     fastLoot = {
         enable = true,
         limit = 0.3
+    },
+    trade = {
+        enable = true,
+        thanksButton  = true,
+        thanksText = L["Thank you!"]
     }
 }
 

@@ -5,6 +5,7 @@ local LSM = E.Libs.LSM
 local DI = W:GetModule("DeleteItem")
 local AK = W:GetModule("AlreadyKnown")
 local FL = W:GetModule("FastLoot")
+local TD = W:GetModule("Trade")
 
 local format = format
 
@@ -171,5 +172,50 @@ options.fastLoot = {
             max = 0.5,
             step = 0.01
         }
+    }
+}
+
+options.trade = {
+    order = 4,
+    type = "group",
+    name = L["Trade"],
+    get = function(info)
+        return E.db.WT.item.trade[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.trade[info[#info]] = value
+        TD:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add some features on Trade Frame."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        thanksButton = {
+            order = 2,
+            type = "toggle",
+            name = L["Thanks Button"],
+        },
+        thanksText = {
+            order = 3,
+            type = "input",
+            name = L["Thanks Text"]
+        },
     }
 }

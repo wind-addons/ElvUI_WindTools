@@ -26,6 +26,10 @@ function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
     if not config or not config.enable or not sourceName or not destName then
         return
     end
+    
+    if not self:CheckAuthority("COMBAT_RESURRECTION") then
+        return
+    end
 
     if CombatResurrectionList[spellId] then
         local needAnnounce = true

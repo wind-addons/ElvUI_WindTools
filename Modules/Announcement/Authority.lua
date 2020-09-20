@@ -135,6 +135,7 @@ do
             function()
                 A:SendInterruptConfig()
                 A:SendUtilityConfig()
+                A:SendCombatResurrectionConfig()
                 waitSend = false
             end
         )
@@ -161,4 +162,15 @@ function A:SendUtilityConfig()
 
     local channel = self:GetChannel(self.db.utility.channel)
     self:SendMyLevel("UTILITY", channelLevel[channel])
+end
+
+-- 战斗复活
+-- COMBAT_RESURRECTION
+function A:SendCombatResurrectionConfig()
+    if not self.db.combatResurrection.enable then
+        return
+    end
+
+    local channel = self:GetChannel(self.db.combatResurrection.channel)
+    self:SendMyLevel("COMBAT_RESURRECTION", channelLevel[channel])
 end

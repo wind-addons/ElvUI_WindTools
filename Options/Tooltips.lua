@@ -82,6 +82,41 @@ options.general = {
                     step = 1
                 }
             }
+        },
+        groupInfo = {
+            order = 3,
+            type = "group",
+            inline = true,
+            get = function(info)
+                return E.db.WT.tooltips.groupInfo[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.tooltips.groupInfo[info[#info]] = value
+            end,
+            name = L["Group Info"],
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add LFG group info to tooltip."]
+                },
+                title = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Add Title"],
+                    desc = L["Display an additional title."]
+                },
+                mode = {
+                    order = 3,
+                    name = L["Mode"],
+                    type = "select",
+                    values = {
+                        NORMAL = L["Normal"],
+                        COMPACT = L["Compact"]
+                    }
+                }
+            }
         }
     }
 }

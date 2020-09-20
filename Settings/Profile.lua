@@ -653,5 +653,10 @@ P.quest = {
 
 P.tooltips = {
     yOffsetOfHealthBar = 0,
-    yOffsetOfHealthText = 0
+    yOffsetOfHealthText = 0,
+    groupInfo = {
+        enable = true,
+        title = true,
+        mode = "NORMAL"
+    }
 }

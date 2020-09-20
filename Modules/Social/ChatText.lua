@@ -796,8 +796,7 @@ function CT:ChatFrame_MessageEventHandler(
                         client
                     ) or ""
                     local characterNameText = BNet_GetClientEmbeddedTexture(client, 14) .. characterName
-                    local linkDisplayText =
-                        (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, CT:HandleName(characterNameText))
+                    local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
                     local playerLink =
                         GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
                     message = format(globalstring, playerLink)

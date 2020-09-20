@@ -101,6 +101,7 @@ function A:Initialize()
     end
 
     self:InitializeAuthority()
+    self:ResetAuthority()
 
     self.Initialized = true
 end
@@ -117,6 +118,7 @@ function A:ProfileUpdate()
         A:UnregisterEvent(event)
     end
 
+    self:ResetAuthority()
     self.Initialized = false
 end
 

@@ -147,6 +147,10 @@ function A:Utility(event, sourceName, spellId)
         return
     end
 
+    if not self:CheckAuthority("UTILITY") then
+        return
+    end
+
     sourceName = sourceName:gsub("%-[^|]+", "")
 
     if event == "SPELL_CAST_SUCCESS" then

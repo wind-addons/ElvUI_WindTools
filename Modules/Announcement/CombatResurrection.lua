@@ -8,7 +8,8 @@ local CombatResurrectionList = {
     [61999] = true, -- 盟友復生
     [20484] = true, -- 復生
     [20707] = true, -- 靈魂石
-    [265116] = true -- 不穩定的時間轉移器（工程學）
+    [265116] = true, -- 不穩定的時間轉移器（工程學）
+    [345130] = true -- Disposable Spectrophasic Reanimator（工程學）
 }
 
 -- 格式化自定义字符串
@@ -26,7 +27,7 @@ function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
     if not config or not config.enable or not sourceName or not destName then
         return
     end
-    
+
     if not self:CheckAuthority("COMBAT_RESURRECTION") then
         return
     end

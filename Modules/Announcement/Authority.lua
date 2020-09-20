@@ -171,6 +171,10 @@ function A:SendCombatResurrectionConfig()
         return
     end
 
+    if self.db.combatResurrection.onlySourceIsPlayer then
+        return
+    end
+
     local channel = self:GetChannel(self.db.combatResurrection.channel)
 
     if channel == "RAID" and self.db.combatResurrection.raidWarning then

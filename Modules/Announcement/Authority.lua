@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
+local C_Timer_After = C_Timer.After
 local C_ChatInfo_RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 
@@ -67,8 +68,6 @@ function A:SendMyLevel(key, value)
 end
 
 function A:ReceiveLevel(message)
-    -- print(message)
-
     if message == "RESET_AUTHORITY" then
         self:UpdatePartyInfo()
         return
@@ -130,12 +129,14 @@ do
         cache = {}
 
         waitSend = true
-        C_Timer.After(
+        C_Timer_After(
             0.5,
             function()
                 A:SendInterruptConfig()
                 A:SendUtilityConfig()
                 A:SendCombatResurrectionConfig()
+                A:SendTauntConfig()
+                A:SendThreatTransferConfig()
                 waitSend = false
             end
         )
@@ -182,4 +183,44 @@ function A:SendCombatResurrectionConfig()
     end
 
     self:SendMyLevel("COMBAT_RESURRECTION", channelLevel[channel])
+end
+
+-- 嘲讽
+-- TAUNT_OTHERS
+-- TAUNT_OTHERS_PET
+function A:SendTauntConfig()
+    if not self.db.taunt.enable then
+        return
+    end
+
+    if self.db.taunt.others.player.enable then
+        local channel = self:GetChannel(self.db.taunt.others.player.channel)
+        self:SendMyLevel("TAUNT_OTHERS", channelLevel[channel])
+    end
+
+    if self.db.taunt.others.pet.enable then
+        local channel = self:GetChannel(self.db.taunt.others.pet.channel)
+        self:SendMyLevel("TAUNT_OTHERS_PET", channelLevel[channel])
+    end
+end
+
+-- 仇恨转移
+-- THREAT_TRANSFER
+function A:SendThreatTransferConfig()
+    if not self.db.threatTransfer.enable then
+        return
+    end
+
+    local channel = self:GetChannel(self.db.threatTransfer.channel)
+
+    if channel == "RAID" and self.db.threatTransfer.raidWarning then
+        channel = "RAID_WARNING"
+    end
+
+    local value = channelLevel[channel]
+    if not self.db.threatTransfer.onlyNotTank then
+        value = value + 100
+    end
+
+    self:SendMyLevel("THREAT_TRANSFER", value)
 end

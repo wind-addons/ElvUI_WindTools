@@ -26,6 +26,10 @@ function A:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
         return
     end
 
+    if not self:CheckAuthority("THREAT_TRANSFER") then
+        return
+    end
+
     if ThreatTransferList[spellId] then
         local needAnnounce = false
 

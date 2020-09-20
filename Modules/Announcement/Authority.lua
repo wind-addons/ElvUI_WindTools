@@ -172,5 +172,10 @@ function A:SendCombatResurrectionConfig()
     end
 
     local channel = self:GetChannel(self.db.combatResurrection.channel)
+
+    if channel == "RAID" and self.db.combatResurrection.raidWarning then
+        channel = "RAID_WARNING"
+    end
+
     self:SendMyLevel("COMBAT_RESURRECTION", channelLevel[channel])
 end

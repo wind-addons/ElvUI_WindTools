@@ -381,7 +381,11 @@ options.interrupt = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
         },
         onlyInstance = {
             order = 3,
@@ -526,6 +530,10 @@ options.interrupt = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
+                    set = function(info, value)
+                        E.db.WT.announcement.interrupt[info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end,
                     width = "full"
                 },
                 text = {
@@ -572,6 +580,7 @@ options.interrupt = {
                     end,
                     set = function(info, value)
                         E.db.WT.announcement.interrupt[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
                     end,
                     args = {
                         party = {
@@ -1413,7 +1422,11 @@ options.combatResurrection = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
         },
         onlySourceIsPlayer = {
             order = 3,
@@ -1425,7 +1438,11 @@ options.combatResurrection = {
             order = 4,
             type = "toggle",
             name = L["Raid Warning"],
-            desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."]
+            desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
         },
         text = {
             order = 5,
@@ -1468,6 +1485,7 @@ options.combatResurrection = {
             end,
             set = function(info, value)
                 E.db.WT.announcement.combatResurrection[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
             end,
             args = {
                 solo = {
@@ -1553,7 +1571,11 @@ options.utility = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
         },
         channel = {
             order = 3,
@@ -1565,6 +1587,7 @@ options.utility = {
             end,
             set = function(info, value)
                 E.db.WT.announcement.utility[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
             end,
             args = {
                 solo = {

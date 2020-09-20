@@ -65,7 +65,11 @@ function A:QUEST_LOG_UPDATE()
     self:Quest()
 end
 
-function A:CHAT_MSG_ADDON()
+-- 权限认证部分
+function A:CHAT_MSG_ADDON(_, prefix, text)
+    if prefix == self.prefix then
+        self:ReceiveLevel(text)
+    end
 end
 
 function A:GROUP_ROSTER_UPDATE()

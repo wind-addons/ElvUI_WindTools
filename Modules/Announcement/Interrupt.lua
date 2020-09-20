@@ -21,6 +21,10 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
         return
     end
 
+    if not self:CheckAuthority("INTERRUPT_OTHERS") then
+        return
+    end
+
     -- 格式化自定义字符串
     local function FormatMessage(message)
 		sourceName = sourceName:gsub("%-[^|]+", "")

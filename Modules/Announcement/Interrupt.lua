@@ -27,7 +27,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
 
     -- 格式化自定义字符串
     local function FormatMessage(message)
-		sourceName = sourceName:gsub("%-[^|]+", "")
+        sourceName = sourceName:gsub("%-[^|]+", "")
         message = gsub(message, "%%player%%", sourceName)
         message = gsub(message, "%%target%%", destName)
         message = gsub(message, "%%player_spell%%", GetSpellLink(spellId))
@@ -48,7 +48,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
             sourceName = self:GetPetInfo(sourceName)
         end
 
-        if not UnitInRaid(sourceName) or not UnitInParty(sourceName) then
+        if not UnitInRaid(sourceName) and not UnitInParty(sourceName) then
             return
         end
 

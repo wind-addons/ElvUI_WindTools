@@ -328,6 +328,10 @@ options.blizzard = {
             type = "toggle",
             name = L["Tooltips"]
         },
+        trade = {
+            type = "toggle",
+            name = L["Trade"]
+        },
         tradeSkill = {
             type = "toggle",
             name = L["Trade Skill"]

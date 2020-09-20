@@ -8,9 +8,7 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local prefix = "WT_AS"
 
 -- 基础信息
-local guidSplitted = {strsplit("-", E.myguid)}
-local myServerID, myPlayerUID = tonumber(guidSplitted[2], 10), tonumber(guidSplitted[3], 16)
-guidSplitted = nil
+local myServerID, myPlayerUID
 
 -- 频道分级, 优先高级别的玩家
 local channelLevel = {
@@ -40,18 +38,46 @@ end
 function A:InitilizeAuthority()
     local successfulRequest = C_ChatInfo_RegisterAddonMessagePrefix(prefix)
     assert(successfulRequest, L["The addon message prefix registration is failed."])
+
+    local guidSplitted = {strsplit("-", E.myguid)}
+    myServerID = tonumber(guidSplitted[2], 10)
+    myPlayerUID = tonumber(guidSplitted[3], 16)
 end
 
 function A:CheckAuthority(type)
     return IsInGroup() and authority[type] or true
 end
 
-function A:SendAddonMessage(message)
-    if not IsInGroup() then
+function A:SendMyLevel(key, value)
+    if not IsInGroup() or not key or not value then
         return
     end
 
+    myLevels[key] = value
+    local message = format("%s=%s;%d;%d", key, level, myServerID, myPlayerUID)
     C_ChatInfo_SendAddonMessage(prefix, message, GetBestChannel())
+end
+
+function A:ReceiveLevel(message)
+    local key, value, serverID, playerUID = strmatch(message, "^(.-)=([0-9]-);([0-9]-);([0-9]+)")
+    serverID = tonumber(serverID)
+    playerUID = tonumber(playerUID)
+
+    if noAuthority[key] or not myLevels[key] then
+        return
+    end
+
+    if level > myLevels[key] then -- 等级比较
+        noAuthority[key] = true
+    elseif level == myLevels[key] then
+        if serverID > myServerID then -- 服务器 ID 比较
+            noAuthority[key] = true
+        elseif serverID == myServerID then
+            if playerUID > myPlayerUID then -- 玩家 ID 比较
+                noAuthority[key] = true
+            end
+        end
+    end
 end
 
 function A:UpdatePartyInfo()
@@ -59,7 +85,12 @@ function A:UpdatePartyInfo()
         return
     end
 
-    self:SendInterruptConfig()
+    noAuthority = {}
+    myLevels = {}
+
+    C_Timer.After(0.2, function()
+        A:SendInterruptConfig()
+    end)
 end
 
 -- 打断:
@@ -74,36 +105,9 @@ function A:SendInterruptConfig()
 
     -- 自己打断
     local channel = self:GetChannel(config.player.channel)
-    local level = channelLevel[channel]
-    if level then
-        myLevels["INTERRUPT_PLAYER"] = level
-        self:SendAddonMessage(format("INTERRUPT_PLAYER=%s;%d;%d", level, myServerID, myPlayerUID))
-    end
+    self:SendMyLevel("INTERRUPT_PLAYER", channelLevel[channel])
 
     -- 他人打断
     channel = self:GetChannel(config.others.channel)
-    level = channelLevel[channel]
-    if level then
-        myLevels["INTERRUPT_OTHERS"] = level
-        self:SendAddonMessage(format("INTERRUPT_OTHERS=%s;%d;%d", level, myServerID, myPlayerUID))
-    end
-end
-
-function A:ReceiveInterruptConfig(key, level, serverID, playerUID)
-    if noAuthority[configKey] then
-        return
-    end
-
-    local configKey = "INTERRUPT_" .. key
-    if level > myLevels[configKey] then -- 等级比较
-        noAuthority[configKey] = true
-    elseif level == myLevels[configKey] then
-        if serverID > myServerID then -- 服务器 ID 比较
-            noAuthority[configKey] = true
-        elseif serverID == myServerID then
-            if playerUID > myPlayerUID then -- 玩家 ID 比较
-                noAuthority[configKey] = true
-            end
-        end
-    end
+    self:SendMyLevel("INTERRUPT_OTHERS", channelLevel[channel])
 end

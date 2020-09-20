@@ -187,59 +187,59 @@ P.announcement = {
                 -- 靈魂之井
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% is handing out cookies, go and get one!"]
             },
             ["54710"] = {
                 -- MOLL-E 郵箱
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% puts %spell%"]
             },
             ["261602"] = {
                 -- 凱蒂的郵哨
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% used %spell%"]
             },
             ["195782"] = {
                 -- 召喚月羽雕像
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% used %spell%"]
             },
             ["190336"] = {
                 -- 召喚餐點桌
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% casted %spell%, today's special is Anchovy Pie!"]
             },
             feasts = {
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["OMG, wealthy %player% puts %spell%!"]
             },
             bots = {
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% puts %spell%"]
             },
             toys = {
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% puts %spell%"]
             },
             portals = {
                 enable = true,
                 includePlayer = true,
-                raidWarning = true,
+                raidWarning = false,
                 text = L["%player% opened %spell%!"]
             }
         }

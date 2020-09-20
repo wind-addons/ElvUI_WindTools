@@ -57,6 +57,10 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
     if event == "SPELL_AURA_APPLIED" then
         -- 嘲讽成功
         if sourceType == "Player" then
+            if not self:CheckAuthority("TAUNT_OTHERS") then
+                return
+            end
+
             if sourceName == E.myname then
                 if config.player.player.enable then
                     if spellId == 118635 then
@@ -93,6 +97,10 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 end
             end
         elseif sourceType == "Pet" or sourceType == "Creature" then
+            if not self:CheckAuthority("TAUNT_OTHERS_PET") then
+                return
+            end
+
             petOwner, petRole = self:GetPetInfo(sourceName)
             if petOwner and petOwner == E.myname then
                 if config.player.pet.enable then
@@ -111,6 +119,10 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
     elseif event == "SPELL_MISSED" then
         -- 嘲讽失败
         if sourceType == "Player" then
+            if not self:CheckAuthority("TAUNT_OTHERS") then
+                return
+            end
+
             if sourceName == E.myname then
                 if config.player.player.enable then
                     self:SendMessage(
@@ -125,6 +137,10 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                 )
             end
         elseif sourceType == "Pet" or sourceType == "Creature" then
+            if not self:CheckAuthority("TAUNT_OTHERS_PET") then
+                return
+            end
+
             petOwner, petRole = self:GetPetInfo(sourceName)
             if petOwner and petOwner == E.myname then
                 if config.player.pet.enable then

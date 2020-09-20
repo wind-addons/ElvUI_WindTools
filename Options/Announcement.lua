@@ -659,7 +659,11 @@ options.taunt = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
         },
         playerPlayer = {
             order = 3,
@@ -1052,7 +1056,11 @@ options.taunt = {
                 enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    set = function(info, value)
+                        E.db.WT.announcement.taunt.others.player[info[#info]] = value
+                        A:ResetAuthority()
+                    end
                 },
                 success = {
                     order = 2,
@@ -1183,6 +1191,7 @@ options.taunt = {
                     end,
                     set = function(info, value)
                         E.db.WT.announcement.taunt.others.player.channel[info[#info]] = value
+                        A:ResetAuthority()
                     end,
                     args = {
                         party = {
@@ -1244,7 +1253,11 @@ options.taunt = {
                 enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    set = function(info, value)
+                        E.db.WT.announcement.taunt.others.pet[info[#info]] = value
+                        A:ResetAuthority()
+                    end
                 },
                 success = {
                     order = 2,
@@ -1344,6 +1357,7 @@ options.taunt = {
                     end,
                     set = function(info, value)
                         E.db.WT.announcement.taunt.others.pet.channel[info[#info]] = value
+                        A:ResetAuthority()
                     end,
                     args = {
                         party = {
@@ -1745,8 +1759,164 @@ do
     end
 end
 
-options.goodbye = {
+options.threatTransfer = {
     order = 8,
+    type = "group",
+    name = L["Threat Transfer"],
+    get = function(info)
+        return E.db.WT.announcement.threatTransfer[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement.threatTransfer[info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Alert teammates that the threat transfer spell being used."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
+        },
+        raidWarning = {
+            order = 3,
+            type = "toggle",
+            name = L["Raid Warning"],
+            desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
+        },
+        situation = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Situations"],
+            args = {
+                onlyNotTank = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Only Not Tank"],
+                    desc = L["Only announce when the target is not a tank."],
+                    set = function(info, value)
+                        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end
+                },
+                forceSourceIsPlayer = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Source"],
+                    desc = L["Force to announce if the spell which is cast by you."]
+                },
+                forceDestIsPlayer = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Target"],
+                    desc = L["Force to announce if the target is you."]
+                }
+            }
+        },
+        text = {
+            order = 5,
+            type = "input",
+            name = L["Text"],
+            width = 2.5
+        },
+        useDefaultText = {
+            order = 6,
+            type = "execute",
+            func = function(info)
+                E.db.WT.announcement.threatTransfer.text = P.announcement.threatTransfer.text
+            end,
+            name = L["Default Text"]
+        },
+        channel = {
+            order = 7,
+            name = L["Channel"],
+            type = "group",
+            inline = true,
+            get = function(info)
+                return E.db.WT.announcement.threatTransfer[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.threatTransfer[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end,
+            args = {
+                solo = {
+                    order = 1,
+                    name = L["Solo"],
+                    type = "select",
+                    values = {
+                        NONE = L["None"],
+                        SELF = L["Self(Chat Frame)"],
+                        EMOTE = L["Emote"],
+                        YELL = L["Yell"],
+                        SAY = L["Say"]
+                    }
+                },
+                party = {
+                    order = 2,
+                    name = L["In Party"],
+                    type = "select",
+                    values = {
+                        NONE = L["None"],
+                        EMOTE = L["Emote"],
+                        PARTY = L["Party"],
+                        YELL = L["Yell"],
+                        SAY = L["Say"]
+                    }
+                },
+                instance = {
+                    order = 3,
+                    name = L["In Instance"],
+                    type = "select",
+                    values = {
+                        NONE = L["None"],
+                        EMOTE = L["Emote"],
+                        PARTY = L["Party"],
+                        INSTANCE_CHAT = L["Instance"],
+                        YELL = L["Yell"],
+                        SAY = L["Say"]
+                    }
+                },
+                raid = {
+                    order = 4,
+                    name = L["In Raid"],
+                    type = "select",
+                    values = {
+                        NONE = L["None"],
+                        EMOTE = L["Emote"],
+                        PARTY = L["Party"],
+                        RAID = L["Raid"],
+                        YELL = L["Yell"],
+                        SAY = L["Say"]
+                    }
+                }
+            }
+        }
+    }
+}
+
+options.goodbye = {
+    order = 9,
     type = "group",
     name = L["Goodbye"],
     get = function(info)
@@ -1854,7 +2024,7 @@ options.goodbye = {
 }
 
 options.thanksForResurrection = {
-    order = 9,
+    order = 10,
     type = "group",
     name = L["Thanks For Resurrection"],
     get = function(info)
@@ -2047,7 +2217,7 @@ options.thanksForResurrection = {
 }
 
 options.resetInstance = {
-    order = 10,
+    order = 11,
     type = "group",
     name = L["Reset Instance"],
     get = function(info)

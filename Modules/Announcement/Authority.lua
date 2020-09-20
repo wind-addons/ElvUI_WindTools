@@ -1,9 +1,21 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
-local C_Timer_After = C_Timer.After
+local assert = assert
+local format = format
+local strmatch = strmatch
+local strsplit = strsplit
+local tonumber = tonumber
+
+local IsInGroup = IsInGroup
+local IsInRaid = IsInRaid
+
 local C_ChatInfo_RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
+local C_Timer_After = C_Timer.After
+
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 -- 前缀
 A.prefix = "WT_AS"

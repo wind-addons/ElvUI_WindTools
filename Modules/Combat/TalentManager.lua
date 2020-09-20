@@ -4,10 +4,12 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+
 local format = format
 local gsub = gsub
 local pairs = pairs
 local tinsert = tinsert
+local tonumber = tonumber
 local tremove = tremove
 local unpack = unpack
 
@@ -122,7 +124,7 @@ function TM:SetTalent(talentString)
     local talentIDs = {}
     for tier = 1, MAX_TALENT_TIERS do
         local isAvilable, column = GetTalentTierInfo(tier, 1)
-        if isAvilable and talentTable[tier] ~= 0 and talentTable[i] ~= column then
+        if isAvilable and talentTable[tier] ~= 0 and talentTable[tier] ~= column then
             local talentID = GetTalentInfo(tier, talentTable[tier], 1)
             tinsert(talentIDs, talentID)
         end

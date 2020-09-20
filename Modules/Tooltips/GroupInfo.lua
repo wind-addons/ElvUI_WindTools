@@ -3,8 +3,16 @@ local ET = E:GetModule("Tooltip")
 local UF = E:GetModule("UnitFrames")
 local T = W:GetModule("Tooltips")
 
+local _G = _G
+local format = format
+local pairs = pairs
+local sort = sort
+local wipe = wipe
+
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+
+local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 local displayOrder = {
     [1] = "TANK",
@@ -48,14 +56,14 @@ function T:AddGroupInfo(tooltip, resultID)
     }
 
     local display = {
-		TANK = false, 
-		HEALER = false,
-		DAMAGER = false,
-	}
+        TANK = false,
+        HEALER = false,
+        DAMAGER = false
+    }
 
     -- 缓存成员信息
     for i = 1, result.numMembers do
-        local role, class =  C_LFGList_GetSearchResultMemberInfo(resultID, i)
+        local role, class = C_LFGList_GetSearchResultMemberInfo(resultID, i)
 
         if not display[role] then
             display[role] = true
@@ -71,7 +79,6 @@ function T:AddGroupInfo(tooltip, resultID)
     sort(
         cache,
         function(a, b)
-            print(a)
             return displayOrder[a] > displayOrder[b]
         end
     )
@@ -79,7 +86,7 @@ function T:AddGroupInfo(tooltip, resultID)
     -- 隔断标题
     if config.title then
         tooltip:AddLine(" ")
-        tooltip:AddLine(L["WindTools"] .. " "..L["Party Info"])
+        tooltip:AddLine(L["WindTools"] .. " " .. L["Party Info"])
     end
 
     -- 紧凑模式

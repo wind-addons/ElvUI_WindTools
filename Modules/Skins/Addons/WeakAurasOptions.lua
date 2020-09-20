@@ -89,7 +89,6 @@ function S:WeakAurasMultiLineEditBox(Constructor)
 
         local expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
         TryHandleButtonAfter(expandButtonName)
-        print( widget.label:GetText())
         return widget
     end
 

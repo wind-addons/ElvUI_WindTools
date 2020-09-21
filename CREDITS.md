@@ -16,6 +16,12 @@
 - [https://wow.tools/](https://wow.tools/)
 - [https://wow.gamepedia.com](https://wow.gamepedia.com)
 
+# Localization
+- français (frFR)
+    - PodVibe @ CurseForge
+- Deutsche (deDE)
+    - imna1975 @ CurseForge
+
 # Codes
 - Announcement
     - Venomisto (InstanceResetAnnouncer)

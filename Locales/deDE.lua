@@ -336,6 +336,7 @@ L["Let your teammates know the progress of quests."] = true
 L["Level"] = true
 L["Limit"] = true
 L["List"] = true
+L["Localization"] = "Lokalisierung"
 L["Looking For Group"] = true
 L["Loot Frames"] = "Beutefenster"
 L["Loss Of Control"] = true

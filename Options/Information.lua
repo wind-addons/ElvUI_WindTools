@@ -189,15 +189,22 @@ options.credits = {
             inline = true,
             args = {}
         },
-        codes = {
+        localization = {
             order = 3,
+            name = L["Localization"],
+            type = "group",
+            inline = true,
+            args = {}
+        },
+        codes = {
+            order = 4,
             name = L["Codes"],
             type = "group",
             inline = true,
             args = {}
         },
         mediaFiles = {
-            order = 4,
+            order = 5,
             name = L["Media Files"],
             type = "group",
             inline = true,
@@ -249,6 +256,36 @@ do -- 网站
             type = "description",
             name = site
         }
+    end
+end
+
+do -- 本地化
+    local localizationList = {
+        ["français (frFR)"] = {
+            "PodVibe @ CurseForge",
+        },
+        ["Deutsche (deDE)"] = {
+            "imna1975 @ CurseForge"
+        }
+    }
+
+    local configOrder = 1
+    for langName, credits in pairs(localizationList) do
+        options.credits.args.localization.args[tostring(configOrder)] = {
+            order = configOrder,
+            type = "description",
+            name = AddColor(langName)
+        }
+        configOrder = configOrder + 1
+
+        for _, credit in pairs(credits) do
+            options.credits.args.localization.args[tostring(configOrder)] = {
+                order = configOrder,
+                type = "description",
+                name = "  - " .. credit
+            }
+            configOrder = configOrder + 1
+        end
     end
 end
 

@@ -336,6 +336,7 @@ L["Let your teammates know the progress of quests."] = "让你的队友知晓任
 L["Level"] = "等级"
 L["Limit"] = "限制"
 L["List"] = "列表"
+L["Localization"] = "本地化"
 L["Looking For Group"] = "寻求组队"
 L["Loot Frames"] = "拾取框体"
 L["Loss Of Control"] = "失控警报"

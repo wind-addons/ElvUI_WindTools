@@ -3,21 +3,22 @@
 <img src="https://img.shields.io/badge/ElvUI-11.52-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Version-2.00%20Beta-green.svg?longCache=true&style=for-the-badge"/>
 
-ElvUI 的可定制增强<br>
-Customizable enhancements for ElvUI
+[简体中文](README_zhCN.md) | [繁體中文](README_zhTW.md) 
 </div>
 
 
-# :white_check_mark: 下载 Download
-测试版(Test Version): <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>  
-[Curse](https://www.curseforge.com/wow/addons/elvui_windtools)  [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html)  [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
+# :white_check_mark: Download
+|  Stable Version   | Test Version  |
+|  :----:  | :----:  |
+| <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E7%A8%B3%E5%AE%9A%E7%89%88"/>   | <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>   |
 
-如果你有任何问题, 可以随时通过 Discord 来回报.  
+Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
+
 If you have any problem, just feel free to send messages via Discord.
 
 <a href="https://discord.com/invite/JMz5Zsk"><img src="https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/></a>
 
-# :sweat_drops: 功能 Features
+# :sweat_drops: Features
 ## 物品
 1. **删除物品**: 支持点击确认删除, 快捷键删除, 自动填入 Delete.  
 2. **已学配方上色**: 为已学习配方添加自定义颜色以进行区别.  
@@ -94,16 +95,13 @@ If you have any problem, just feel free to send messages via Discord.
 6. **关闭特写**: 强制关闭特写框架.
 7. **标签**: 各职业颜色, 目标推测距离, 无符号血量, 无符号能量, 等等.
 
-更多功能加入中...
+More features are coming soon.
 
-# :heart: 鸣谢 Credits
-[完整鸣谢名单](CREDITS.md)  
+# :heart: Credits
 [All credits](CREDITS.md)
 
 -----
 <br>
 
->这个仓库用来存放暗影国度版本的插件.  
->访问过去版本 [ElvUI_WindTools (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)  
 >This repo is for the version of Shadowlands (9.0).  
 >Check legacy version here: [ElvUI_WindTools (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

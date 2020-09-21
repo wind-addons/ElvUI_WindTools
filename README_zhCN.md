@@ -12,7 +12,7 @@
 |  :----:  | :----:  |
 | <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E7%A8%B3%E5%AE%9A%E7%89%88"/>   | <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>   |
 
-下载网站: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
+下载网站: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 如果你有任何问题, 可以随时通过 Discord 来回报.  
 

@@ -30,7 +30,7 @@ If you have any problem, feel free to send messages via Discord.
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Talent Manager**: Save and change talents set with one-click.
 
-## Maps
+## Map
 1. **Who Clicked?**: Display the name of players who clicked the minimap.  
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
 3. **Minimap Buttons**: Collect all the minimap buttons to a bar.  
@@ -52,48 +52,48 @@ If you have any problem, feel free to send messages via Discord.
 7. **Filter**: Unblock `profanityFilter` CVars in Mainland China server.
 8. **Smart Tab**: Use Tab to cycle the chat channel; Save the whisper target cross character.
 
-## 通告
-1. **任务**: 让队友知道你的任务进度, 同时自己也能看到彩色的任务追踪.
-2. **打断**: 打断通告, 能够识别打断的宠物主人, 更可自定义文字格式.
-3. **嘲讽**: 嘲讽通告, 支持群嘲, 能够识别嘲讽的宠物主人, 可自定义文字格式.
-4. **战斗复活**: 战复通告, 可设定是否在团队警告中使用, 还是仅自己施放的战复.
-5. **实用技能**: 为机器人, 大餐, 传送门, 玩具等添加使用通告.
-6. **仇恨转移**: 提示仇恨转移技能的使用, 可以设定目标非坦克, 或按技能使用者和目标来通报等.
-7. **告别**: 副本结束的时候和队友说再见, 做个有礼貌的人!
-8. **感谢复活**: 感谢他人的复活, 可设定延迟等.
-9. **副本重置**: 副本重置后进行喊话.
+## Announcement
+1. **Quest**: Detailed quest progress.
+2. **Interrupt**: Send a message after the spell interrupt; Supports pet spells.
+3. **Taunt**: Send a message after the taunt spell cast; Supports pets and monk ox statue.
+4. **Combat Resurrection**: Alert teammates the usage of combat resurrection spells.
+5. **Utility**: Alert the usage of bots, feast, toys, and more.
+6. **Threat Transfer**: If someone tries to transfer the threat to the other player, send a message.
+7. **Goodbye**: Say goodbye to teammates after the dungeon is completed.
+8. **Thanks For Resurrection**: Say thanks for the player who resurrected you
+9. **Reset Instance**: Alert teammates after instance resetting.
 
-## 鼠标提示
-1. **图标**: 添加物品图标到鼠标提示中.
-2. **任务进度**: 添加部分任务的小怪百分比信息.
-3. **队伍信息**: 添加寻求组队的队伍信息到鼠标提示中.
-4. **生命条**: 调整生命条和生命文字偏移.
-5. **团队进度**: 添加各个团队副本和地下城的通关次数.
+## Tooltip
+1. **Icons**: Add the icon of items and spells.
+2. **Objective Progress**: Add the additional progress information of mobs.
+3. **Group Info**: Add LFG group information into tooltips.
+4. **Health Bar**: Set the offset of the health bar and health text in tooltips.
+5. **Progression**: Add the raid and dungeon progression information in the inspect tooltip.
 
-## 单位框体
-1. **快速焦点**: 通过自定义鼠标按键和组合键来快速设定焦点.
-2. **职责图标**: 自定义单位框体上的职责图标组.
+## Unit Frames
+1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
+2. **Role Icon**: Change the icon pack of role icons.
 
-## 美化外观
-1. **屏幕暗角**: 让游戏更加有电影的感觉!
-2. **暴雪框体美化**: 在 ElvUI 美化皮肤之上, 进行框体和文字的美化.
-3. **ElvUI 框体美化**: 为 ElvUI 模块添加美化.
-4. **WindTools 框体美化**: 为 WindTools 模块添加美化.
-5. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
-9. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
-6. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
-7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
-8. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
-9. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
+## Skins
+1. **Vignetting**: Add the shadowed border inner game interface.
+2. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
+3. **ElvUI Frame Skins**: Reskin ElvUI modules.
+4. **WindTools Skins**: Reskin WindTools modules.
+5. **WeakAuras Skins**: Apply skins for WeakAuras, WeakAuras option.
+9. **Ace3 Skins**: Apply skins for Ace3-GUI widgets.
+6. **Immersion Skins**: Apply skins for Immersion.
+7. **Bigwigs Skins**: Apply skins for Bigwigs.
+8. **Hekili Skins**: Apply skins for Hekili.
+9. **BugSack Skins**: Apply skins for BugSack.
 
-## 其他
-1. **额外物品条**: 支持添加3个条来放置任务物品, 药水, 药剂, 战旗, 等等. 按钮大小, 背景, 顺序和按钮组都可自定义.
-2. **CVars 编辑器**: 一些常用功能 CVars 的开关.
-3. **移动框架**: 移动各种暴雪的框架, 快速移动 ElvUI 背包, 支持记住/清除移动位置.
-4. **幻化**: 支持神器加入幻化套装.
-5. **顿号转斜杠**: 中文输入法依旧可以进行命令输入, 输入命令快人一步.
-6. **关闭特写**: 强制关闭特写框架.
-7. **标签**: 各职业颜色, 目标推测距离, 无符号血量, 无符号能量, 等等.
+## Misc
+1. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
+2. **CVars Editor**: Simple editor for changing CVars.
+3. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
+4. **Transmog**: Add support of saving artifacts in wardrobe outfits.
+5. **Pause to Slash**: Convert CJK pause to slash.
+6. **Disable Talking Head**: Disable the talking head.
+7. **Tags**: Additional tags like range, health text without the sign, class color.
 
 More features are coming soon.
 

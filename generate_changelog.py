@@ -67,14 +67,14 @@ parts = [
 ]
 
 with open("CHANGELOG.md", "w", encoding="utf8") as f:
-    for L in locales:
-        f.write("# {}: {:.2f}\n".format(L["VERSION"], latest_version))
-        f.write(L["REALEASE_DATE_STRING"].format(changelog["RELEASE_DATE"])+"\n")
+    for locale in locales:
+        f.write("# {}: {:.2f}\n".format(locale["VERSION"], latest_version))
+        f.write(locale["REALEASE_DATE_STRING"].format(changelog["RELEASE_DATE"])+"\n")
 
         for part in parts:
             if changelog[part["name"]] and len(changelog[part["name"]]) > 0:
-                f.write("## {} {}\n".format(part["emoji"], L[part["name"]]))
-                for line in changelog[part["name"]][L["language"]]:
+                f.write("## {} {}\n".format(part["emoji"], locale[part["name"]]))
+                for line in changelog[part["name"]][locale["language"]]:
                     f.write("- {}\n".format(line))
                 
         

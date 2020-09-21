@@ -14,5 +14,7 @@ ignore:
   - .gitignore
   - .github/*
   - README.md
+  - README_zhCN.md
+  - README_zhTW.md
   - Title.png
   - generate_changelog.py

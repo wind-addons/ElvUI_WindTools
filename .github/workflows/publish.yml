@@ -1,10 +1,9 @@
-name: 构建测试版
+name: publish
 
 on:
   push:
     tags:
-      - "**-alpha**"
-      - "**-beta**"
+      - "*"
 
 jobs:
   build:

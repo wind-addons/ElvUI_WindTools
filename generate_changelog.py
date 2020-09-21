@@ -1,0 +1,81 @@
+
+import os
+import re
+from slpp import slpp as lua
+
+# 找到最新的更新文档
+latest_version = 0
+for _, _, files in os.walk("Core/Changelog", topdown=False):
+    for file in files:
+        version = re.sub(r"(\.lua)|(^.*\.xml)", "", file)
+        if version:
+            version = float(version)
+            if version > latest_version:
+                latest_version = version
+
+# 提取更新记录的 lua 字符串
+changelog_path = "Core/Changelog/{:.2f}.lua".format(latest_version)
+with open(changelog_path, "r", encoding="utf8") as f:
+    changelog_lua_string = f.read().replace("\n", "")
+
+start_index = changelog_lua_string.find("{")
+changelog_lua_string = changelog_lua_string[start_index:]
+
+# 解析 lua table 到 Python dict
+changelog = lua.decode(changelog_lua_string)
+
+locales = [
+    {
+        "language": "enUS",
+        "VERSION": "Version",
+        "IMPORTANT": "Important",
+        "NEW": "New",
+        "IMPROVEMENT": "Improvement",
+        "REALEASE_DATE_STRING": "{} Released"
+    },
+    {
+        "language": "zhCN",
+        "VERSION": "版本",
+        "IMPORTANT": "重要",
+        "NEW": "新增",
+        "IMPROVEMENT": "改善",
+        "REALEASE_DATE_STRING": "{} 发布"
+    },
+    {
+        "language": "zhTW",
+        "VERSION": "版本",
+        "IMPORTANT": "重要",
+        "NEW": "新增",
+        "IMPROVEMENT": "改善",
+        "REALEASE_DATE_STRING": "{} 發布"
+    }
+]
+
+parts = [
+    {
+        "emoji" : "❗",
+        "name" : "IMPORTANT",
+    },
+    {
+        "emoji" : "✳️",
+        "name" : "NEW",
+    },
+    {
+        "emoji" : "💪",
+        "name" : "IMPROVEMENT",
+    }
+]
+
+with open("CHANGELOG.md", "w", encoding="utf8") as f:
+    for L in locales:
+        f.write("# {}: {:.2f}\n".format(L["VERSION"], latest_version))
+        f.write(L["REALEASE_DATE_STRING"].format(changelog["RELEASE_DATE"])+"\n")
+
+        for part in parts:
+            if changelog[part["name"]] and len(changelog[part["name"]]) > 0:
+                f.write("## {} {}\n".format(part["emoji"], L[part["name"]]))
+                for line in changelog[part["name"]][L["language"]]:
+                    f.write("- {}\n".format(line))
+                
+        
+        f.write("------\n")

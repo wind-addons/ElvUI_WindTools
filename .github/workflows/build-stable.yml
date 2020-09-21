@@ -1,0 +1,51 @@
+name: 构建稳定版
+
+on:
+  push:
+    branches-ignore:
+      - development
+      - legacy
+    tags:
+      - "*"
+      - "!**-alpha**"
+      - "!**-beta**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取分支
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: 初始化 Python 环境
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: 安装 Python 相关依赖
+        run: pip install git+https://github.com/SirAnthony/slpp
+      
+      - name: 生成更新文档
+        run: python generate_changelog.py
+
+      - name: 创建包
+        uses: BigWigsMods/packager@master
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.UPDATE_TOKEN }}
+
+      - name: 上传到 Github Actions
+        uses: actions/upload-artifact@v2
+        with:
+          name: ElvUI_WindTools
+          path: .release/*.zip
+
+      - name: 发送失败信息到 Discord
+        uses: nebularg/actions-discord-webhook@v1
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          status: ${{ job.status }}
+        if: failure()

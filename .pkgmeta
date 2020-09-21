@@ -15,4 +15,4 @@ ignore:
   - .github/*
   - README.md
   - Title.png
-  - generate_changelog.lua
+  - generate_changelog.py

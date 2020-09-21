@@ -9,9 +9,8 @@ Customizable enhancements for ElvUI
 
 
 # :white_check_mark: 下载 Download
-
-[2.0 开发版](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (只能运行于 Beta 或 PTR)  
-[2.0 Development Version](https://github.com/fang2hou/ElvUI_WindTools/archive/development.zip) (Only work on BETA or PTR)
+测试版(Test Version): <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>  
+[Curse](https://www.curseforge.com/wow/addons/elvui_windtools)  [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html)  [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 如果你有任何问题, 可以随时通过 Discord 来回报.  
 If you have any problem, just feel free to send messages via Discord.

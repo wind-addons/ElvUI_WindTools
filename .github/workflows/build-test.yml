@@ -2,9 +2,6 @@ name: 构建测试版
 
 on:
   push:
-    branches-ignore:
-      - stable
-      - legacy
     tags:
       - "**-alpha**"
       - "**-beta**"

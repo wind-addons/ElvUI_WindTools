@@ -2,9 +2,6 @@ name: 构建稳定版
 
 on:
   push:
-    branches-ignore:
-      - development
-      - legacy
     tags:
       - "*"
       - "!**-alpha**"

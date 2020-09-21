@@ -1,2 +1,6 @@
 # macOS 缓存文件
 .DS_Store
+
+# 自动打包的库文件
+Libraries/LibObjectiveProgress-1.0
+Libraries/LibRangeCheck-2.0

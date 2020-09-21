@@ -78,4 +78,4 @@ with open("CHANGELOG.md", "w", encoding="utf8") as f:
                     f.write("- {}\n".format(line))
                 
         
-        f.write("------\n")
+        f.write("\n------\n")

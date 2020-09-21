@@ -1,22 +1,16 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-11.52-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.00%20Beta-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.00-green.svg?longCache=true&style=for-the-badge"/>
 
-[简体中文](README_zhCN.md) | [繁體中文](README_zhTW.md) 
+[简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) 
 </div>
 
 
-# :white_check_mark: Download
-|  Stable Version   | Test Version  |
-|  :----:  | :----:  |
-| <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E7%A8%B3%E5%AE%9A%E7%89%88"/>   | <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>   |
+# :white_check_mark: Status
+![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish) [![](https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.com/invite/JMz5Zsk)
 
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
-
-If you have any problem, feel free to send messages via Discord.
-
-<a href="https://discord.com/invite/JMz5Zsk"><img src="https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/></a>
 
 # :sweat_drops: Features
 ## Item

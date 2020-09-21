@@ -6,17 +6,10 @@
 </div>
 
 
-# :white_check_mark: 下载
+# :white_check_mark: 状态
+![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish) [![](https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.com/invite/JMz5Zsk)
 
-|  稳定版   | 测试版  |
-|  :----:  | :----:  |
-| <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E7%A8%B3%E5%AE%9A%E7%89%88"/>   | <img src="https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/%E6%9E%84%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%89%88"/>   |
-
-下载网站: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
-
-如果你有任何问题, 可以随时通过 Discord 来回报.  
-
-<a href="https://discord.com/invite/JMz5Zsk"><img src="https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&style=for-the-badge&logo=discord"/></a>
+下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :sweat_drops: 功能
 ## 物品

@@ -11,7 +11,7 @@ function S:ElvUI_MiniMap()
         return
     end
 
-    self:CreateShadow(_G.MMHolder, 6)
+    self:CreateShadow(_G.MMHolder)
 end
 
 S:AddCallback("ElvUI_MiniMap")

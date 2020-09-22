@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
-local SB = W:NewModule("SwitchButtons", "AceHook-3.0")
+local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local CreateFrame = CreateFrame
@@ -186,6 +186,11 @@ function SB:AutoHideWithObjectiveFrame()
     end
 end
 
+function SB:PLAYER_ENTERING_WORLD()
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+    self:UpdateLayout()
+end
+
 function SB:Initialize()
     self.db = E.db.WT.quest.switchButtons
     if not self.db.enable then
@@ -195,6 +200,8 @@ function SB:Initialize()
     self:SecureHook("ObjectiveTracker_Collapse", "AutoHideWithObjectiveFrame")
     self:SecureHook("ObjectiveTracker_Expand", "AutoHideWithObjectiveFrame")
     self:CreateBar()
+
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 function SB:ProfileUpdate()

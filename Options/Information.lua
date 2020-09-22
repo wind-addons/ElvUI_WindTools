@@ -592,7 +592,7 @@ options.reset = {
     name = L["Reset"],
     args = {
         announcement = {
-            order = 1,
+            order = 2,
             type = "group",
             inline = true,
             name = AddColor(L["Announcement"]),
@@ -733,6 +733,195 @@ options.reset = {
                     end
                 }
             }
-        }
+        },
+        combat = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Combat"]),
+            args = {
+                combatAlert = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Combat Alert"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Combat Alert"],
+                            nil,
+                            function()
+                                E.db.WT.combat.combatAlert = P.combat.combatAlert
+                            end
+                        )
+                    end
+                },
+                raidMarkers = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Raid Markers"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Raid Markers"],
+                            nil,
+                            function()
+                                E.db.WT.combat.raidMarkers = P.combat.raidMarkers
+                            end
+                        )
+                    end
+                },
+                talentManager = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Talent Manager"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Talent Manager"],
+                            nil,
+                            function()
+                                E.private.WT.combat.talentManager = V.combat.talentManager
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        item = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Item"]),
+            args = {
+                alreadyKnown = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Already Known"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Already Known"],
+                            nil,
+                            function()
+                                E.db.WT.item.alreadyKnown = P.item.alreadyKnown
+                            end
+                        )
+                    end
+                },
+                delete = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Delete Item"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Delete Item"],
+                            nil,
+                            function()
+                                E.db.WT.item.delete = P.item.delete
+                            end
+                        )
+                    end
+                },
+                fastLoot = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Fast Loot"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Fast Loot"],
+                            nil,
+                            function()
+                                E.db.WT.item.fastLoot = P.item.fastLoot
+                            end
+                        )
+                    end
+                },
+                trade = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Trade"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Trade"],
+                            nil,
+                            function()
+                                E.db.WT.item.trade = P.item.trade
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        maps = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Maps"]),
+            args = {
+                minimapButtons = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Minimap Buttons"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Minimap Buttons"],
+                            nil,
+                            function()
+                                E.private.WT.maps.minimapButtons = V.maps.minimapButtons
+                            end
+                        )
+                    end
+                },
+                rectangleMinimap = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Rectangle Minimap"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Rectangle Minimap"],
+                            nil,
+                            function()
+                                E.db.WT.maps.rectangleMinimap = P.maps.rectangleMinimap
+                            end
+                        )
+                    end
+                },
+                whoClicked = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Who Clicked Minimap"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Who Clicked Minimap"],
+                            nil,
+                            function()
+                                E.db.WT.maps.whoClicked = P.maps.whoClicked
+                            end
+                        )
+                    end
+                },
+                worldMap = {
+                    order = 4,
+                    type = "execute",
+                    name = L["World Map"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["World Map"],
+                            nil,
+                            function()
+                                E.private.WT.maps.worldMap = V.maps.worldMap
+                            end
+                        )
+                    end
+                }
+            }
+        },
     }
 }

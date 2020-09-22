@@ -592,7 +592,7 @@ options.reset = {
     name = L["Reset"],
     args = {
         announcement = {
-            order = 2,
+            order = 1,
             type = "group",
             inline = true,
             name = AddColor(L["Announcement"]),
@@ -735,7 +735,7 @@ options.reset = {
             }
         },
         combat = {
-            order = 3,
+            order = 2,
             type = "group",
             inline = true,
             name = AddColor(L["Combat"]),
@@ -788,7 +788,7 @@ options.reset = {
             }
         },
         item = {
-            order = 4,
+            order = 3,
             type = "group",
             inline = true,
             name = AddColor(L["Item"]),
@@ -856,7 +856,7 @@ options.reset = {
             }
         },
         maps = {
-            order = 5,
+            order = 4,
             type = "group",
             inline = true,
             name = AddColor(L["Maps"]),
@@ -924,7 +924,7 @@ options.reset = {
             }
         },
         quest = {
-            order = 6,
+            order = 5,
             type = "group",
             inline = true,
             name = AddColor(L["Quest"]),
@@ -992,7 +992,7 @@ options.reset = {
             }
         },
         social = {
-            order = 7,
+            order = 6,
             type = "group",
             inline = true,
             name = AddColor(L["Social"]),
@@ -1120,7 +1120,7 @@ options.reset = {
             }
         },
         tooltips = {
-            order = 8,
+            order = 7,
             type = "group",
             inline = true,
             name = AddColor(L["Tooltips"]),
@@ -1176,7 +1176,7 @@ options.reset = {
             }
         },
         unitFrames = {
-            order = 9,
+            order = 8,
             type = "group",
             inline = true,
             name = AddColor(L["UnitFrames"]),
@@ -1214,7 +1214,7 @@ options.reset = {
             }
         },
         skins = {
-            order = 10,
+            order = 9,
             type = "group",
             inline = true,
             name = AddColor(L["Skins"]),
@@ -1285,7 +1285,7 @@ options.reset = {
             }
         },
         misc = {
-            order = 11,
+            order = 10,
             type = "group",
             inline = true,
             name = AddColor(L["Misc"]),
@@ -1384,6 +1384,14 @@ options.reset = {
                     end
                 }
             }
-        }
+        },
+        resetAllModules = {
+            order = 12,
+            type = "execute",
+            name = L["Reset All Modules"],
+            func = function()
+                E:StaticPopup_Show("WINDTOOLS_RESET_ALL_MODULES")
+            end
+        },
     }
 }

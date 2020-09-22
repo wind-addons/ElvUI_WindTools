@@ -923,5 +923,467 @@ options.reset = {
                 }
             }
         },
+        quest = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Quest"]),
+            args = {
+                objectiveTracker = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Objective Tracker"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Objective Tracker"],
+                            nil,
+                            function()
+                                E.private.WT.quest.objectiveTracker = V.quest.objectiveTracker
+                            end
+                        )
+                    end
+                },
+                paragonReputation = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Paragon Reputation"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Paragon Reputation"],
+                            nil,
+                            function()
+                                E.db.WT.quest.paragonReputation = P.quest.paragonReputation
+                            end
+                        )
+                    end
+                },
+                switchButtons = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Switch Buttons"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Switch Buttons"],
+                            nil,
+                            function()
+                                E.db.WT.quest.switchButtons = P.quest.switchButtons
+                            end
+                        )
+                    end
+                },
+                turnIn = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Turn In"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Turn In"],
+                            nil,
+                            function()
+                                E.db.WT.quest.turnIn = P.quest.turnIn
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        social = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Social"]),
+            args = {
+                chatBar = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Chat Bar"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Chat Bar"],
+                            nil,
+                            function()
+                                E.db.WT.social.chatBar = P.social.chatBar
+                            end
+                        )
+                    end
+                },
+                chatLink = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Chat Link"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Chat Link"],
+                            nil,
+                            function()
+                                E.db.WT.social.chatLink = P.social.chatLink
+                            end
+                        )
+                    end
+                },
+                chatText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Chat Text"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Chat Text"],
+                            nil,
+                            function()
+                                E.db.WT.social.chatText = P.social.chatText
+                            end
+                        )
+                    end
+                },
+                contextMenu = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Context Menu"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Context Menu"],
+                            nil,
+                            function()
+                                E.db.WT.social.contextMenu = P.social.contextMenu
+                            end
+                        )
+                    end
+                },
+                emote = {
+                    order = 5,
+                    type = "execute",
+                    name = L["Emote"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Emote"],
+                            nil,
+                            function()
+                                E.db.WT.social.emote = P.social.emote
+                            end
+                        )
+                    end
+                },
+                filter = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Filter"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Filter"],
+                            nil,
+                            function()
+                                E.db.WT.social.filter = P.social.filter
+                            end
+                        )
+                    end
+                },
+                friendList = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Friend List"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Friend List"],
+                            nil,
+                            function()
+                                E.db.WT.social.friendList = P.social.friendList
+                            end
+                        )
+                    end
+                },
+                smartTab = {
+                    order = 8,
+                    type = "execute",
+                    name = L["Smart Tab"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Smart Tab"],
+                            nil,
+                            function()
+                                E.db.WT.social.smartTab = P.social.smartTab
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        tooltips = {
+            order = 8,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Tooltips"]),
+            args = {
+                general = {
+                    order = 1,
+                    type = "execute",
+                    name = L["General"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["General"],
+                            nil,
+                            function()
+                                E.private.WT.tooltips.icon = V.tooltips.icon
+                                E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
+                                E.db.WT.tooltips.yOffsetOfHealthBar = P.tooltips.yOffsetOfHealthBar
+                                E.db.WT.tooltips.yOffsetOfHealthText = P.tooltips.yOffsetOfHealthText
+                            end
+                        )
+                    end
+                },
+                progression = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Progression"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Progression"],
+                            nil,
+                            function()
+                                E.private.WT.tooltips.progression = V.tooltips.progression
+                            end
+                        )
+                    end
+                },
+                groupInfo = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Group Info"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Group Info"],
+                            nil,
+                            function()
+                                E.db.WT.tooltips.groupInfo = P.tooltips.groupInfo
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        unitFrames = {
+            order = 9,
+            type = "group",
+            inline = true,
+            name = AddColor(L["UnitFrames"]),
+            args = {
+                quickFocus = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Quick Focus"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Quick Focus"],
+                            nil,
+                            function()
+                                E.private.WT.unitFrames.quickFocus = V.unitFrames.quickFocus
+                            end
+                        )
+                    end
+                },
+                roleIcon = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Role Icon"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Role Icon"],
+                            nil,
+                            function()
+                                E.private.WT.unitFrames.roleIcon = V.unitFrames.roleIcon
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        skins = {
+            order = 10,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Skins"]),
+            args = {
+                general = {
+                    order = 2,
+                    type = "execute",
+                    name = L["General"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["General"],
+                            nil,
+                            function()
+                                E.private.WT.skins.enable = V.skins.enable
+                                E.private.WT.skins.windtools = V.skins.windtools
+                                E.private.WT.skins.removeParchment = V.skins.removeParchment
+                                E.private.WT.skins.color = V.skins.color
+                            end
+                        )
+                    end
+                },
+                addons = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Addons"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Addons"],
+                            nil,
+                            function()
+                                E.private.WT.skins.addons = V.skins.addons
+                            end
+                        )
+                    end
+                },
+                blizzard = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Blizzard"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Blizzard"],
+                            nil,
+                            function()
+                                E.private.WT.skins.blizzard = V.skins.blizzard
+                            end
+                        )
+                    end
+                },
+                elvui = {
+                    order = 3,
+                    type = "execute",
+                    name = L["ElvUI"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["ElvUI"],
+                            nil,
+                            function()
+                                E.private.WT.skins.elvui = V.skins.elvui
+                            end
+                        )
+                    end
+                }
+            }
+        },
+        misc = {
+            order = 11,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Misc"]),
+            args = {
+                extraItemsBar = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Extra Items Bar"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Extra Items Bar"],
+                            nil,
+                            function()
+                                E.db.WT.misc.extraItemsBar = P.misc.extraItemsBar
+                            end
+                        )
+                    end
+                },
+                disableTalkingHead = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Disable Talking Head"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Disable Talking Head"],
+                            nil,
+                            function()
+                                E.private.WT.misc.disableTalkingHead = V.misc.disableTalkingHead
+                            end
+                        )
+                    end
+                },
+                transmog = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Transmog"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Transmog"],
+                            nil,
+                            function()
+                                E.private.WT.misc.saveArtifact = V.misc.saveArtifact
+                            end
+                        )
+                    end
+                },
+                pauseToSlash = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Pause to slash"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Pause to slash"],
+                            nil,
+                            function()
+                                E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
+                            end
+                        )
+                    end
+                },
+                tags = {
+                    order = 5,
+                    type = "execute",
+                    name = L["Tags"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Tags"],
+                            nil,
+                            function()
+                                E.private.WT.misc.tags = V.misc.tags
+                            end
+                        )
+                    end
+                },
+                moveFrames = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Move Frames"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Move Frames"],
+                            nil,
+                            function()
+                                E.private.WT.misc.moveBlizzardFrames = V.misc.moveBlizzardFrames
+                                E.private.WT.misc.moveElvUIBags = V.misc.moveElvUIBags
+                                E.private.WT.misc.rememberPositions = V.misc.rememberPositions
+                                E.private.WT.misc.framePositions = V.misc.framePositions
+                            end
+                        )
+                    end
+                }
+            }
+        }
     }
 }

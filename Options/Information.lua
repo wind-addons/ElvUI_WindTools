@@ -2,12 +2,15 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.information.args
 local ACH = E.Libs.ACH
 
+local _G = _G
 local format = format
 local ipairs = ipairs
 local pairs = pairs
 local tostring = tostring
 local type = type
 local unpack = unpack
+
+local ReloadUI = ReloadUI
 
 local function AddColor(string)
     if type(string) ~= "string" then
@@ -262,7 +265,7 @@ end
 do -- 本地化
     local localizationList = {
         ["français (frFR)"] = {
-            "PodVibe @ CurseForge",
+            "PodVibe @ CurseForge"
         },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge"
@@ -554,3 +557,182 @@ for version, data in pairs(W.Changelog) do
         }
     end
 end
+
+-- 重置
+
+E.PopupDialogs.WINDTOOLS_RESET_MODULE = {
+    text = L["Are you sure you want to reset %s module?"],
+    button1 = _G.ACCEPT,
+    button2 = _G.CANCEL,
+    OnAccept = function(_, func)
+        func()
+        ReloadUI()
+    end,
+    whileDead = 1,
+    hideOnEscape = true
+}
+
+E.PopupDialogs.WINDTOOLS_RESET_ALL_MODULES = {
+    text = format(L["Reset all %s modules."], L["WindTools"]),
+    button1 = _G.ACCEPT,
+    button2 = _G.CANCEL,
+    OnAccept = function()
+        E.db.WT = P
+        E.private.WT = V
+        ReloadUI()
+    end,
+    whileDead = 1,
+    hideOnEscape = true
+}
+
+options.reset = {
+    order = 4,
+    type = "group",
+    childGroups = "select",
+    name = L["Reset"],
+    args = {
+        announcement = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = AddColor(L["Announcement"]),
+            args = {
+                combatResurrection = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Combat Resurrection"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Combat Resurrection"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.combatResurrection = P.announcement.combatResurrection
+                            end
+                        )
+                    end
+                },
+                goodbye = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Goodbye"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Goodbye"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.goodbye = P.announcement.goodbye
+                            end
+                        )
+                    end
+                },
+                interrupt = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Interrupt"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Interrupt"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.interrupt = P.announcement.interrupt
+                            end
+                        )
+                    end
+                },
+                quest = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Quest"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Quest"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.quest = P.announcement.quest
+                            end
+                        )
+                    end
+                },
+                resetInstance = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Reset Instance"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Reset Instance"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.resetInstance = P.announcement.resetInstance
+                            end
+                        )
+                    end
+                },
+                taunt = {
+                    order = 5,
+                    type = "execute",
+                    name = L["Taunt"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Taunt"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.taunt = P.announcement.taunt
+                            end
+                        )
+                    end
+                },
+                thanksForResurrection = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Thanks For Resurrection"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Thanks For Resurrection"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.thanksForResurrection = P.announcement.thanksForResurrection
+                            end
+                        )
+                    end
+                },
+                threatTransfer = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Threat Transfer"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Threat Transfer"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.threatTransfer = P.announcement.threatTransfer
+                            end
+                        )
+                    end
+                },
+                utility = {
+                    order = 8,
+                    type = "execute",
+                    name = L["Utility"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Utility"],
+                            nil,
+                            function()
+                                E.db.WT.announcement.utility = P.announcement.utility
+                            end
+                        )
+                    end
+                }
+            }
+        }
+    }
+}

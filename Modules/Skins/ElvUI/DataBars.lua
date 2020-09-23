@@ -7,7 +7,7 @@ local pairs = pairs
 
 function S:ElvUI_SkinDataBar(_, name)
     if _G[name] then
-        self:CreateShadow(_G[name])
+        self:CreateShadow(_G[name].backdrop)
     end
 end
 

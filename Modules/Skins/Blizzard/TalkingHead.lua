@@ -8,6 +8,10 @@ function S:Blizzard_TalkingHeadUI()
         return
     end
 
+    if not E.db.general.talkingHeadFrameBackdrop then
+        return
+    end
+
     self:CreateShadow(_G.TalkingHeadFrame)
 end
 

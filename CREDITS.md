@@ -139,3 +139,16 @@
 
 - ProjectAzilroka (Azilroka)
     - Media/FriendList
+
+- Tepid Monkey
+    - Media/Fonts/AccidentalPresidency.ttf
+
+- Julieta Ulanovsky
+    - Media/Fonts/Montserrat-ExtraBold.ttf
+
+- Keith Bates
+    - Media/Fonts/Roadway.ttf
+
+- OnePlus
+    - Media/Sounds/OnePlusLight.ogg
+    - Media/Sounds/OnePlusSurprise.ogg

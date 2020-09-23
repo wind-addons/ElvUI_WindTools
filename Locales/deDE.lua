@@ -640,6 +640,7 @@ L["Toggle raid markers bar."] = true
 L["Too many sets here, please delete one of them and try again."] = true
 L["Tooltips"] = true
 L["Totem"] = true
+L["Totem Bar"] = true
 L["Toys"] = true
 L["Trade"] = true
 L["Trade Skill"] = true

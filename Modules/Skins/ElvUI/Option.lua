@@ -16,6 +16,11 @@ function S:ElvUI_SkinInstall()
     end
 end
 
+function S:ElvUI_SkinMoverPopup()
+    self:CreateShadow(_G.ElvUIMoverPopupWindow)
+    self:CreateShadow(_G.ElvUIMoverPopupWindow.header)
+end
+
 function S:ElvUI_OptionsUI()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option) then
         return
@@ -30,6 +35,9 @@ function S:ElvUI_OptionsUI()
     else
         self:SecureHook(E, "Install", "ElvUI_SkinInstall")
     end
+
+    -- 调整位置
+    self:SecureHook(E, "ToggleMoveMode", "ElvUI_SkinMoverPopup")
 end
 
 S:AddCallback("ElvUI_OptionsUI")

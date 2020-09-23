@@ -576,7 +576,18 @@ function EB:UpdateBar(id)
     local newBarWidth = 2 * barDB.backdropSpacing + numCols * barDB.buttonWidth + (numCols - 1) * barDB.spacing
     local newBarHeight = 2 * barDB.backdropSpacing + numRows * barDB.buttonHeight + (numRows - 1) * barDB.spacing
     bar:Size(newBarWidth, newBarHeight)
-    bar:GetParent():Size(newBarWidth, newBarHeight)
+
+    -- 移动框
+    local numMoverRows = ceil(12 / barDB.buttonsPerRow)
+    local numMoverCols = barDB.buttonsPerRow
+    local newMoverWidth =
+        2 * barDB.backdropSpacing + numMoverCols * barDB.buttonWidth + (numMoverCols - 1) * barDB.spacing
+    local newMoverHeight =
+        2 * barDB.backdropSpacing + numMoverRows * barDB.buttonHeight + (numMoverRows - 1) * barDB.spacing
+    bar:GetParent():Size(newMoverWidth, newMoverHeight)
+
+    bar:ClearAllPoints()
+    bar:Point(barDB.anchor)
 
     for i = 1, buttonID - 1 do
         -- 重新定位图标

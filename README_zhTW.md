@@ -12,6 +12,9 @@
 下載點: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 發布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :sweat_drops: 功能
+## 素材
+3 個字型, 2 個材質以及 2 個提示音.
+
 ## 物品
 1. **刪除物品**: 支持點擊確認刪除, 按鍵刪除, 自動填入 Delete.
 2. **已學配方上色**: 為已學習配方添加自定義顏色以進行區別.

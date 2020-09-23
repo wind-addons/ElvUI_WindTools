@@ -13,6 +13,9 @@
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :sweat_drops: Features
+## Media Files
+3 fonts, 2 textures and 2 ringtones.
+
 ## Item
 1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.  
 2. **Already Known**: Add a colored overlay to the recipes you have already learned.  

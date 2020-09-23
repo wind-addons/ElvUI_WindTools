@@ -68,3 +68,25 @@ AddMedia("discord", "Discord.tga", "Icons")
 AddMedia("qq", "QQ.tga", "Icons")
 AddMedia("github", "Github.tga", "Icons")
 AddMedia("nga", "NGA.tga", "Icons")
+
+do
+	local Region = 128
+
+	if GetLocale() == "zhCN" then
+		Region = 4
+	end
+
+	if GetLocale() == "zhTW" then
+		Region = 8
+	end
+
+	LSM:Register("font", "Accidental Presidency", MediaPath .. "Fonts\\AccidentalPresidency.ttf", Region)
+	LSM:Register("font", "Montserrat", MediaPath .. "Fonts\\Montserrat-ExtraBold.ttf", Region)
+	LSM:Register("font", "Roadway", MediaPath .. "Fonts\\Roadway.ttf", Region)
+
+	LSM:Register("statusbar", "WindTools Glow", MediaPath .. "Textures\\StatusbarGlow.tga")
+	LSM:Register("statusbar", "WindTools Flat", MediaPath .. "Textures\\StatusbarFlat.blp")
+
+	LSM:Register("sound", "OnePlus Light", MediaPath .. "Sounds\\OnePlusLight.ogg")
+	LSM:Register("sound", "OnePlus Surprise", MediaPath .. "Sounds\\OnePlusSurprise.ogg")
+end

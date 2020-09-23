@@ -167,6 +167,7 @@ V.skins = {
 		panels = true,
 		staticPopup = true,
 		statusReport = true,
+		totemBar = true,
 		unitFrames = true
 	}
 }

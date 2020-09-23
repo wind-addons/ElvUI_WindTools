@@ -447,6 +447,10 @@ options.elvui = {
             type = "toggle",
             name = L["Status Report"]
         },
+        totemBar = {
+            type = "toggle",
+            name = L["Totem Bar"]
+        },
         unitFrames = {
             type = "toggle",
             name = L["UnitFrames"]

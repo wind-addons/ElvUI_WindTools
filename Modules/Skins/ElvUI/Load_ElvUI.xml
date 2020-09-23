@@ -16,5 +16,6 @@
 	<Script file='RoleIcons.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='StatusReport.lua'/>
+	<Script file='TotemBar.lua'/>
 	<Script file='UnitFrames.lua'/>
 </Ui>

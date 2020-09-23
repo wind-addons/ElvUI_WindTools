@@ -7,6 +7,5 @@
 	<Script file='Tags.lua'/>
 	<Script file='Transmog.lua'/>
 	<!-- Others -->
-	<Script file='ExtraItemBar.lua'/>
 	<Script file='MoveFrames.lua'/>
 </Ui>

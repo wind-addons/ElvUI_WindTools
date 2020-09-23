@@ -302,34 +302,7 @@ P.item = {
         enable = true,
         thanksButton  = true,
         thanksText = L["Thank you!"]
-    }
-}
-
-P.maps = {
-    rectangleMinimap = {
-        enable = false,
-        heightPercentage = 0.8
     },
-    whoClicked = {
-        enable = true,
-        xOffset = 0,
-        yOffset = 2,
-        fadeInTime = 0.5,
-        stayTime = 3,
-        fadeOutTime = 0.5,
-        addRealm = false,
-        onlyOnCombat = true,
-        classColor = true,
-        customColor = {r = 1, g = 1, b = 1},
-        font = {
-            name = E.db.general.font,
-            size = 14,
-            style = "OUTLINE"
-        }
-    }
-}
-
-P.misc = {
     extraItemsBar = {
         enable = true,
         customList = {},
@@ -441,6 +414,30 @@ P.misc = {
                 }
             },
             include = "CUSTOM"
+        }
+    }
+}
+
+P.maps = {
+    rectangleMinimap = {
+        enable = false,
+        heightPercentage = 0.8
+    },
+    whoClicked = {
+        enable = true,
+        xOffset = 0,
+        yOffset = 2,
+        fadeInTime = 0.5,
+        stayTime = 3,
+        fadeOutTime = 0.5,
+        addRealm = false,
+        onlyOnCombat = true,
+        classColor = true,
+        customColor = {r = 1, g = 1, b = 1},
+        font = {
+            name = E.db.general.font,
+            size = 14,
+            style = "OUTLINE"
         }
     }
 }

@@ -702,7 +702,7 @@ function EB:UpdateBinding()
 end
 
 function EB:Initialize()
-    self.db = E.db.WT.misc.extraItemsBar
+    self.db = E.db.WT.item.extraItemsBar
     if not self.db or not self.db.enable or self.Initialized then
         return
     end

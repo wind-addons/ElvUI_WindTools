@@ -6,11 +6,456 @@ local DI = W:GetModule("DeleteItem")
 local AK = W:GetModule("AlreadyKnown")
 local FL = W:GetModule("FastLoot")
 local TD = W:GetModule("Trade")
+local EB = W:GetModule("ExtraItemsBar")
 
 local format = format
+local pairs = pairs
+local print = print
+local select = select
+local strlower = strlower
+local tinsert = tinsert
+local tonumber = tonumber
+local tremove = tremove
+local GetItemInfo = GetItemInfo
+
+local customListSelected1
+local customListSelected2
+
+local function ImportantColorString(string)
+    return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
+end
+
+local function FormatDesc(code, helpText)
+    return ImportantColorString(code) .. " = " .. helpText
+end
+
+options.extraItemsBar = {
+    order = 1,
+    type = "group",
+    name = L["Extra Items Bar"],
+    get = function(info)
+        return E.db.WT.item.extraItemsBar[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.extraItemsBar[info[#info]] = value
+        EB:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add a bar to contain quest items and usable equipment."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        custom = {
+            order = 6,
+            type = "group",
+            name = L["Custom Items"],
+            disabled = function()
+                return not E.db.WT.item.extraItemsBar.enable
+            end,
+            args = {
+                list = {
+                    order = 1,
+                    type = "select",
+                    name = L["List"],
+                    get = function()
+                        return customListSelected1
+                    end,
+                    set = function(_, value)
+                        customListSelected1 = value
+                    end,
+                    values = function()
+                        local list = E.db.WT.item.extraItemsBar.customList
+                        local result = {}
+                        for key, value in pairs(list) do
+                            result[key] = select(1, GetItemInfo(value))
+                        end
+                        return result
+                    end
+                },
+                addToList = {
+                    order = 2,
+                    type = "input",
+                    name = L["New Item ID"],
+                    get = function()
+                        return ""
+                    end,
+                    set = function(_, value)
+                        local itemID = tonumber(value)
+                        local itemName = select(1, GetItemInfo(itemID))
+                        if itemName then
+                            tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
+                            EB:UpdateBars()
+                        else
+                            print(L["The item ID is invalid."])
+                        end
+                    end
+                },
+                deleteButton = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Delete"],
+                    desc = L["Delete the selected item."],
+                    func = function()
+                        if customListSelected1 then
+                            local list = E.db.WT.item.extraItemsBar.customList
+                            tremove(list, customListSelected1)
+                            EB:UpdateBars()
+                        end
+                    end
+                }
+            }
+        },
+        blackList = {
+            order = 7,
+            type = "group",
+            name = L["Blacklist"],
+            disabled = function()
+                return not E.db.WT.item.extraItemsBar.enable
+            end,
+            args = {
+                list = {
+                    order = 1,
+                    type = "select",
+                    name = L["List"],
+                    get = function()
+                        return customListSelected2
+                    end,
+                    set = function(_, value)
+                        customListSelected2 = value
+                    end,
+                    values = function()
+                        local result = {}
+                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
+                            result[key] = value
+                        end
+                        return result
+                    end
+                },
+                addToList = {
+                    order = 2,
+                    type = "input",
+                    name = L["New Item ID"],
+                    get = function()
+                        return ""
+                    end,
+                    set = function(_, value)
+                        local itemID = tonumber(value)
+                        local itemName = select(1, GetItemInfo(itemID))
+                        if itemName then
+                            E.db.WT.item.extraItemsBar.blackList[itemID] = itemName
+                            EB:UpdateBars()
+                        else
+                            print(L["The item ID is invalid."])
+                        end
+                    end
+                },
+                deleteButton = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Delete"],
+                    desc = L["Delete the selected item."],
+                    func = function()
+                        if customListSelected2 then
+                            E.db.WT.item.extraItemsBar.blackList[customListSelected2] = nil
+                            EB:UpdateBars()
+                        end
+                    end
+                }
+            }
+        }
+    }
+}
+
+do -- 添加按钮设定组
+    for i = 1, 3 do
+        options.extraItemsBar.args["bar" .. i] = {
+            order = i + 2,
+            type = "group",
+            name = L["Bar"] .. " " .. i,
+            get = function(info)
+                return E.db.WT.item.extraItemsBar["bar" .. i][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.extraItemsBar["bar" .. i][info[#info]] = value
+                EB:UpdateBar(i)
+            end,
+            disabled = function()
+                return not E.db.WT.item.extraItemsBar.enable
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                mouseOver = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Mouse Over"],
+                    desc = L["Only show the bar when you mouse over it."]
+                },
+                anchor = {
+                    order = 3,
+                    type = "select",
+                    name = L["Anchor Point"],
+                    desc = L["The first button anchors itself to this point on the bar."],
+                    values = {
+                        TOPLEFT = L["TOPLEFT"],
+                        TOPRIGHT = L["TOPRIGHT"],
+                        BOTTOMLEFT = L["BOTTOMLEFT"],
+                        BOTTOMRIGHT = L["BOTTOMRIGHT"]
+                    }
+                },
+                betterOption1 = {
+                    order = 4,
+                    type = "description",
+                    name = " ",
+                    width = "full"
+                },
+                backdrop = {
+                    order = 5,
+                    type = "toggle",
+                    name = L["Bar Backdrop"],
+                    desc = L["Show a backdrop of the bar."]
+                },
+                backdropSpacing = {
+                    order = 6,
+                    type = "range",
+                    name = L["Backdrop Spacing"],
+                    desc = L["The spacing between the backdrop and the buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+                spacing = {
+                    order = 7,
+                    type = "range",
+                    name = L["Button Spacing"],
+                    desc = L["The spacing between buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+                betterOption2 = {
+                    order = 8,
+                    type = "description",
+                    name = " ",
+                    width = "full"
+                },
+                buttonWidth = {
+                    order = 9,
+                    type = "range",
+                    name = L["Button Width"],
+                    desc = L["The width of the buttons."],
+                    min = 2,
+                    max = 80,
+                    step = 1
+                },
+                buttonHeight = {
+                    order = 10,
+                    type = "range",
+                    name = L["Button Height"],
+                    desc = L["The height of the buttons."],
+                    min = 2,
+                    max = 60,
+                    step = 1
+                },
+                buttonsPerRow = {
+                    order = 11,
+                    type = "range",
+                    name = L["Buttons Per Row"],
+                    min = 1,
+                    max = 12,
+                    step = 1
+                },
+                countFont = {
+                    order = 12,
+                    type = "group",
+                    inline = true,
+                    name = L["Counter"],
+                    get = function(info)
+                        return E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]] = value
+                        EB:UpdateBar(i)
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        color = {
+                            order = 6,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            get = function(info)
+                                local db = E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                local default = P.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b = r, g, b
+                                EB:UpdateBar(i)
+                            end
+                        }
+                    }
+                },
+                bindFont = {
+                    order = 13,
+                    type = "group",
+                    inline = true,
+                    name = L["Key Binding"],
+                    get = function(info)
+                        return E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]] = value
+                        EB:UpdateBar(i)
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        color = {
+                            order = 6,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            get = function(info)
+                                local db = E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                local default = P.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b = r, g, b
+                                EB:UpdateBar(i)
+                            end
+                        }
+                    }
+                },
+                include = {
+                    order = 14,
+                    type = "input",
+                    name = L["Button Groups"],
+                    desc = format(
+                        "%s %s\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                        L["Set the type and order of button groups."],
+                        L["You can separate the groups with a comma."],
+                        FormatDesc("QUEST", L["Quest Items"]),
+                        FormatDesc("EQUIP", L["Equipments"]),
+                        FormatDesc("POTION", L["Potions"]),
+                        FormatDesc("FLASK", L["Flasks"]),
+                        FormatDesc("BANNER", L["Banners"]),
+                        FormatDesc("UTILITY", L["Utilities"]),
+                        FormatDesc("CUSTOM", L["Custom Items"])
+                    ),
+                    width = "full"
+                }
+            }
+        }
+    end
+end
 
 options.delete = {
-    order = 1,
+    order = 2,
     type = "group",
     name = L["Delete Item"],
     get = function(info)
@@ -61,7 +506,7 @@ options.delete = {
 }
 
 options.alreadyKnown = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Already Known"],
     get = function(info)
@@ -82,7 +527,10 @@ options.alreadyKnown = {
                     type = "description",
                     name = function()
                         if AK.StopRunning then
-                            return format("|cffff0000"..L["Because of %s, this module will not be loaded."].."|r", AK.StopRunning)
+                            return format(
+                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                AK.StopRunning
+                            )
                         else
                             return L["Puts a overlay on already known learnable items on vendors and AH."]
                         end
@@ -132,7 +580,7 @@ options.alreadyKnown = {
 }
 
 options.fastLoot = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Fast Loot"],
     get = function(info)
@@ -176,7 +624,7 @@ options.fastLoot = {
 }
 
 options.trade = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Trade"],
     get = function(info)
@@ -210,12 +658,12 @@ options.trade = {
         thanksButton = {
             order = 2,
             type = "toggle",
-            name = L["Thanks Button"],
+            name = L["Thanks Button"]
         },
         thanksText = {
             order = 3,
             type = "input",
             name = L["Thanks Text"]
-        },
+        }
     }
 }

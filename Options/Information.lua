@@ -865,7 +865,22 @@ options.reset = {
                             end
                         )
                     end
-                }
+                },
+                extraItemsBar = {
+                    order = 5,
+                    type = "execute",
+                    name = L["Extra Items Bar"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Extra Items Bar"],
+                            nil,
+                            function()
+                                E.db.WT.item.extraItemsBar = P.item.extraItemsBar
+                            end
+                        )
+                    end
+                },
             }
         },
         maps = {
@@ -1303,23 +1318,8 @@ options.reset = {
             inline = true,
             name = AddColor(L["Misc"]),
             args = {
-                extraItemsBar = {
-                    order = 1,
-                    type = "execute",
-                    name = L["Extra Items Bar"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Extra Items Bar"],
-                            nil,
-                            function()
-                                E.db.WT.misc.extraItemsBar = P.misc.extraItemsBar
-                            end
-                        )
-                    end
-                },
                 disableTalkingHead = {
-                    order = 2,
+                    order = 1,
                     type = "execute",
                     name = L["Disable Talking Head"],
                     func = function()
@@ -1334,7 +1334,7 @@ options.reset = {
                     end
                 },
                 transmog = {
-                    order = 3,
+                    order = 2,
                     type = "execute",
                     name = L["Transmog"],
                     func = function()
@@ -1349,7 +1349,7 @@ options.reset = {
                     end
                 },
                 pauseToSlash = {
-                    order = 4,
+                    order = 3,
                     type = "execute",
                     name = L["Pause to slash"],
                     func = function()
@@ -1364,7 +1364,7 @@ options.reset = {
                     end
                 },
                 tags = {
-                    order = 5,
+                    order = 4,
                     type = "execute",
                     name = L["Tags"],
                     func = function()
@@ -1379,7 +1379,7 @@ options.reset = {
                     end
                 },
                 moveFrames = {
-                    order = 6,
+                    order = 5,
                     type = "execute",
                     name = L["Move Frames"],
                     func = function()

@@ -21,6 +21,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 2. **Already Known**: Add a colored overlay to the recipes you have already learned.  
 3. **Fast Loot**: Make the auto-loot more efficiently.
 4. **Trade**: Say thanks to the trade target with one-click.
+5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
 
 ## Combat
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more! 
@@ -84,13 +85,12 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 9. **BugSack Skins**: Apply skins for BugSack.
 
 ## Misc
-1. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
-2. **CVars Editor**: Simple editor for changing CVars.
-3. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
-4. **Transmog**: Add support of saving artifacts in wardrobe outfits.
-5. **Pause to Slash**: Convert CJK pause to slash.
-6. **Disable Talking Head**: Disable the talking head.
-7. **Tags**: Additional tags like range, health text without the sign, class color.
+1. **CVars Editor**: Simple editor for changing CVars.
+2. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
+3. **Transmog**: Add support of saving artifacts in wardrobe outfits.
+4. **Pause to Slash**: Convert CJK pause to slash.
+5. **Disable Talking Head**: Disable the talking head.
+6. **Tags**: Additional tags like range, health text without the sign, class color.
 
 More features are coming soon.
 

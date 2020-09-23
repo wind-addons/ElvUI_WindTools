@@ -300,7 +300,7 @@ P.item = {
     },
     trade = {
         enable = true,
-        thanksButton  = true,
+        thanksButton = true,
         thanksText = L["Thank you!"]
     },
     extraItemsBar = {

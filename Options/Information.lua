@@ -880,7 +880,7 @@ options.reset = {
                             end
                         )
                     end
-                },
+                }
             }
         },
         maps = {

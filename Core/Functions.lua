@@ -196,3 +196,7 @@ function F.SplitCJKString(delimiter, subject)
 
     return unpack(results)
 end
+
+function F.Round(number, decimals)
+    return format(format("%%.%df", decimals), number)
+end

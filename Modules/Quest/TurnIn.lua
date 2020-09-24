@@ -271,7 +271,7 @@ function TI:QUEST_GREETING()
     if active > 0 then
         local logQuests = GetQuestLogQuests(true)
         for index = 1, active do
-            local info = C_GossipInfo_GetActiveQuests(index)
+            local info = C_GossipInfo_GetActiveQuests()[index]
             if info.isComplete then
                 local questID = logQuests[info.title]
                 if not questID then

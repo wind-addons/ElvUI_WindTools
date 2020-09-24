@@ -116,8 +116,6 @@ function T:AddGroupInfo(tooltip, resultID)
 
     wipe(cache)
 
-    tooltip.windGroupInfo = true
-
     tooltip:ClearAllPoints()
     tooltip:SetPoint("TOPLEFT", _G.LFGListFrame, "TOPRIGHT", 10, 0)
     tooltip:Show()

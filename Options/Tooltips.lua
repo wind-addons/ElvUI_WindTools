@@ -42,17 +42,33 @@ options.general = {
                     type = "toggle",
                     name = L["Add Icon"],
                     desc = L["Show an icon for items and spells."]
-                },
+                }
+            }
+        },
+        objectiveProgressInformation = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Objective Progress"],
+            args = {
                 objectiveProgress = {
-                    order = 4,
+                    order = 1,
                     type = "toggle",
-                    name = L["Objective Progress"],
+                    name = L["Enable"],
                     desc = L["Add more details of objective progress information into tooltips."]
+                },
+                objectiveProgressAccuracy = {
+                    order = 2,
+                    name = L["Accuracy"],
+                    type = "range",
+                    min = 0,
+                    max = 5,
+                    step = 1
                 }
             }
         },
         healthBar = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Health Bar"],
@@ -84,7 +100,7 @@ options.general = {
             }
         },
         groupInfo = {
-            order = 3,
+            order = 4,
             type = "group",
             inline = true,
             get = function(info)

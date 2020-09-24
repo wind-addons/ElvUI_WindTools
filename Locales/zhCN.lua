@@ -30,6 +30,7 @@ L["AFK Mode"] = "离开模式"
 L["Abbreviation"] = "缩写"
 L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."] = "自动接受暗月马戏团法师的传送."
 L["Accepted"] = "已接受"
+L["Accuracy"] = "准确度"
 L["Ace3"] = true
 L["Achievements"] = "成就"
 L["Actionbars Backdrop"] = "动作条背景"

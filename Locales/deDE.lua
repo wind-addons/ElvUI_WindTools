@@ -30,6 +30,7 @@ L["AFK Mode"] = "AFK Modus"
 L["Abbreviation"] = true
 L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."] = true
 L["Accepted"] = true
+L["Accuracy"] = true
 L["Ace3"] = true
 L["Achievements"] = true
 L["Actionbars Backdrop"] = true

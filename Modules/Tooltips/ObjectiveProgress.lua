@@ -4,6 +4,7 @@ local LOP = LibStub("LibObjectiveProgress-1.0")
 
 local _G = _G
 local floor = floor
+local format = format
 local next = next
 local select = select
 local tonumber = tonumber

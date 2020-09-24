@@ -1,11 +1,11 @@
 package-as: ElvUI_WindTools
 
 externals:
+  Libraries/LibRangeCheck-2.0: https://repos.wowace.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
   # Libraries/LibObjectiveProgress-1.0:
   #   url: https://repos.curseforge.com/wow/libobjectiveprogress-1-0
   #   type: hg
   # 9.0 修复版
-  Libraries/LibRangeCheck-2.0: https://repos.wowace.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
 
 manual-changelog:
   filename: CHANGELOG.md

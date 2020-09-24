@@ -2,12 +2,22 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:NewModule("Announcement", "AceEvent-3.0")
 
 local _G = _G
+
+local assert = assert
+local format = format
+local next = next
 local pairs = pairs
-local tinsert, xpcall, next, assert, format, strsub = tinsert, xpcall, next, assert, format, strsub
-local SendChatMessage, C_ChatInfo_SendAddonMessage = SendChatMessage, C_ChatInfo.SendAddonMessage
-local IsInGroup, IsInRaid = IsInGroup, IsInRaid
-local UnitIsGroupLeader, UnitIsGroupAssistant = UnitIsGroupLeader, UnitIsGroupAssistant
+local strsub = strsub
+local tinsert = tinsert
+local xpcall = xpcall
+
+local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local IsEveryoneAssistant = IsEveryoneAssistant
+local IsInGroup = IsInGroup
+local IsInRaid = IsInRaid
+local SendChatMessage = SendChatMessage
+local UnitIsGroupAssistant = UnitIsGroupAssistant
+local UnitIsGroupLeader = UnitIsGroupLeader
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME

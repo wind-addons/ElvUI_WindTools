@@ -12,6 +12,11 @@ local unpack = unpack
 
 local ReloadUI = ReloadUI
 
+local discordURL = "https://discord.gg/JMz5Zsk"
+if E.global.general.locale == "zhCN" or E.global.general.locale == "zhTW" then
+    discordURL = "https://discord.gg/nA44TeZ"
+end
+
 local function AddColor(string)
     if type(string) ~= "string" then
         string = tostring(string)
@@ -139,7 +144,7 @@ options.help = {
                     name = L["Discord"],
                     image = W.Media.Icons.discord,
                     func = function()
-                        E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://discord.gg/JMz5Zsk")
+                        E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, discordURL)
                     end,
                     width = 0.7
                 },

@@ -15,7 +15,9 @@ function S:LookingForGroupFrames()
         _G.LFGDungeonReadyStatus,
         _G.ReadyCheckFrame,
         _G.QueueStatusFrame,
-        _G.LFDReadyCheckPopup
+        _G.LFDReadyCheckPopup,
+        _G.LFGListInviteDialog,
+        _G.LFGListApplicationDialog
     }
 
     for _, frame in pairs(frames) do

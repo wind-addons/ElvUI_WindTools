@@ -15,6 +15,7 @@ W.Changelog[200] = {
     },
     NEW = {
         ["zhCN"] = {
+            "新增快速钥石功能",
             "新增天赋管家功能",
             "新增右键菜单功能",
             "新增进出战斗动画功能",
@@ -35,6 +36,7 @@ W.Changelog[200] = {
             "新增 BugSack 插件皮肤"
         },
         ["zhTW"] = {
+            "新增快速鑰石功能",
             "新增天賦管家功能",
             "新增右鍵菜單功能",
             "新增進出戰鬥動畫功能",
@@ -55,6 +57,7 @@ W.Changelog[200] = {
             "新增 BugSack 插件皮膚"
         },
         ["enUS"] = {
+            "Add Quick Keystone module",
             "Add Talent Manager module",
             "Add Context Menu module",
             "Add Combat Alert module",

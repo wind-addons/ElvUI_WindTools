@@ -2,25 +2,27 @@ local W, F, E, L = unpack(select(2, ...))
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
+
 local format = format
-local EasyMenu = EasyMenu
+
 local CreateFrame = CreateFrame
-local ToggleFrame = ToggleFrame
-local ToggleCharacter = ToggleCharacter
-local TalentFrame_LoadUI = TalentFrame_LoadUI
-local ShowUIPanel = ShowUIPanel
-local ToggleAchievementFrame = ToggleAchievementFrame
-local ToggleCollectionsJournal = ToggleCollectionsJournal
-local ToggleFriendsFrame = ToggleFriendsFrame
+local EasyMenu = EasyMenu
+local GameMenuFrame = _G.GameMenuFrame
 local IsInGuild = IsInGuild
 local LoadAddOn = LoadAddOn
 local LookingForGuildFrame_LoadUI = LookingForGuildFrame_LoadUI
 local LookingForGuildFrame_Toggle = LookingForGuildFrame_Toggle
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
+local ShowUIPanel = ShowUIPanel
+local TalentFrame_LoadUI = TalentFrame_LoadUI
+local ToggleAchievementFrame = ToggleAchievementFrame
+local ToggleCharacter = ToggleCharacter
+local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleEncounterJournal = ToggleEncounterJournal
+local ToggleFrame = ToggleFrame
+local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleHelpFrame = ToggleHelpFrame
 
-local GameMenuFrame = _G.GameMenuFrame
 local MAINMENU_BUTTON = MAINMENU_BUTTON
 
 local menuFrame = CreateFrame("Frame", "WTMicroMenuDatatextMenu", E.UIParent, "UIDropDownMenuTemplate")

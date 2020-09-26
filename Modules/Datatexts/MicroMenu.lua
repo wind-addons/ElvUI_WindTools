@@ -17,7 +17,7 @@ local LoadAddOn = LoadAddOn
 local LookingForGuildFrame_LoadUI = LookingForGuildFrame_LoadUI
 local LookingForGuildFrame_Toggle = LookingForGuildFrame_Toggle
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
-local ToggleEncounterJournal = ToggleEncounterJournalal
+local ToggleEncounterJournal = ToggleEncounterJournal
 local ToggleHelpFrame = ToggleHelpFrame
 
 local GameMenuFrame = _G.GameMenuFrame

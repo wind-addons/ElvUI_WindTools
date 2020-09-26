@@ -3,6 +3,7 @@ local LSM = E.Libs.LSM
 local C = W:GetModule("CombatAlert")
 local RM = W:GetModule("RaidMarkers")
 local TM = W:GetModule("TalentManager")
+local QK = W:GetModule("QuickKeystone")
 
 local options = W.options.combat.args
 
@@ -402,9 +403,7 @@ options.talentManager = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L[
-                        "Save and learn talents by one-click."
-                    ],
+                    name = L["Save and learn talents by one-click."],
                     fontSize = "medium"
                 }
             }
@@ -422,6 +421,41 @@ options.talentManager = {
                 E.private.WT.combat.talentManager.sets = {}
                 TM:UpdateSetButtons()
             end
+        }
+    }
+}
+
+options.quickKeystone = {
+    order = 4,
+    name = L["Quick Keystone"],
+    type = "group",
+    get = function(info)
+        return E.db.WT.combat.quickKeystone[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.combat.quickKeystone[info[#info]] = value
+        QK:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Put the keystone from bag automatically."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
         }
     }
 }

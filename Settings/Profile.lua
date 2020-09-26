@@ -276,6 +276,9 @@ P.combat = {
         readyCheck = true,
         countDown = true,
         countDownTime = 5
+    },
+    quickKeystone = {
+        enable = true
     }
 }
 

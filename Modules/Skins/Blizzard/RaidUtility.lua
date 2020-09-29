@@ -21,7 +21,7 @@ function S:RaidUtility_ShowButton_OnClick()
 end
 
 function S:RaidUtility()
-    if not self:CheckDB("nonraid", "raidUtility") then
+    if not self:CheckDB("nonraid", "raidUtility") or not E.private.general.raidUtility then
         return
     end
 

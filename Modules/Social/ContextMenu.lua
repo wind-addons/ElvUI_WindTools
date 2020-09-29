@@ -338,12 +338,12 @@ local PredefinedType = {
                 end
             end
 
-            -- -- 忽略自己
-            -- if frame.name == E.myname then
-            --     if not frame.server or frame.server == E.myrealm then
-            --         return true
-            --     end
-            -- end
+            -- 忽略自己
+            if frame.name == E.myname then
+                if not frame.server or frame.server == E.myrealm then
+                    return true
+                end
+            end
 
             return false
         end

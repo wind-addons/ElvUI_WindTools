@@ -250,6 +250,103 @@ local PredefinedType = {
 
             return false
         end
+    },
+    REPORT_STATS = {
+        name = L["Report Stats"],
+        supportTypes = {
+            PARTY = true,
+            PLAYER = true,
+            RAID_PLAYER = true,
+            FRIEND = true,
+            BN_FRIEND = true,
+            GUILD = true,
+            CHAT_ROSTER = true,
+            TARGET = true,
+            FOCUS = true,
+            COMMUNITIES_WOW_MEMBER = true,
+            COMMUNITIES_GUILD_MEMBER = true,
+            RAF_RECRUIT = true
+        },
+        func = function(frame)
+            local name
+
+            if frame.chatTarget then
+                name = frame.chatTarget
+            elseif frame.name then
+                if frame.server and frame.server ~= E.myrealm then
+                    name = frame.name .. "-" .. frame.server
+                end
+            end
+
+            if not name then
+                F.DebugMessage(CM, L["Cannot get the name."])
+            end
+
+            local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
+
+            SendChatMessage(
+                format(
+                    "(%s) %s: %.1f %s: %s",
+                    select(2, GetSpecializationInfo(GetSpecialization())) .. select(1, UnitClass("player")),
+                    ITEM_LEVEL_ABBR,
+                    select(2, GetAverageItemLevel()),
+                    HP,
+                    AbbreviateNumbers(UnitHealthMax("player"))
+                ),
+                "WHISPER",
+                nil,
+                name
+            )
+            -- 致命
+            SendChatMessage(
+                format(" - %s: %.2f%%", CRITICAL, max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))),
+                "WHISPER",
+                nil,
+                name
+            )
+            -- 加速
+            SendChatMessage(format(" - %s: %.2f%%", STAT_HASTE, GetHaste()), "WHISPER", nil, name)
+            -- 精通
+            SendChatMessage(format(" - %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()), "WHISPER", nil, name)
+
+            -- 臨機應變
+            SendChatMessage(
+                format(
+                    " - %s: %.2f%%",
+                    STAT_VERSATILITY,
+                    GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)
+                ),
+                "WHISPER",
+                nil,
+                name
+            )
+            -- 汲取
+            --SendChatMessage(format(" - %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal()), "WHISPER", nil, name)
+        end,
+        isHidden = function(frame)
+            -- 目标为 NPC 时不显示
+            if frame.unit and frame.unit == "target" then
+                if not UnitPlayerControlled("target") then
+                    return true
+                end
+            end
+
+            -- 焦点为 NPC 时不显示
+            if frame.unit and frame.unit == "focus" then
+                if not UnitPlayerControlled("focus") then
+                    return true
+                end
+            end
+
+            -- -- 忽略自己
+            -- if frame.name == E.myname then
+            --     if not frame.server or frame.server == E.myrealm then
+            --         return true
+            --     end
+            -- end
+
+            return false
+        end
     }
 }
 
@@ -420,6 +517,11 @@ function CM:UpdateMenu()
 
     if self.db.armory then
         self:UpdateButton(buttonIndex, PredefinedType.ARMORY, true)
+        buttonIndex = buttonIndex + 1
+    end
+
+    if self.db.reportStats then
+        self:UpdateButton(buttonIndex, PredefinedType.REPORT_STATS, true)
         buttonIndex = buttonIndex + 1
     end
 

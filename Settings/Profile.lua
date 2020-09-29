@@ -606,11 +606,12 @@ P.social = {
     },
     contextMenu = {
         enable = true,
-        armory = GetLocale() ~= "zhCN",
+        armory = E.global.general.locale ~= "zhCN",
+        armoryOverride = {},
         addFriend = true,
         guildInvite = true,
         who = true,
-        armoryOverride = {}
+        reportStats = true,
     },
     smartTab = {
         enable = true,

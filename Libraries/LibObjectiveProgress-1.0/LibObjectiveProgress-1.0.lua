@@ -1,6 +1,7 @@
 --[[
 LibObjectiveProgress: Core API
 Developed by: Simca@Malfurion (MMOSimca)
+Modified by: houshuu @ NGA
 ]]--
 
 -- Set major/minor version

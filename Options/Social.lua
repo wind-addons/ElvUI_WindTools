@@ -787,8 +787,13 @@ options.contextMenu = {
                     type = "toggle",
                     name = L["Guild Invite"]
                 },
-                who = {
+                reportStats = {
                     order = 3,
+                    type = "toggle",
+                    name = L["Report Stats"]
+                },
+                who = {
+                    order = 4,
                     type = "toggle",
                     name = L["Who"]
                 }

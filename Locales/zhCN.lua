@@ -496,6 +496,7 @@ L["Remove Fog of War from your world map."] = "从你的世界地图移除战争
 L["Remove Realm"] = "去除服务器"
 L["Rename"] = "重命名"
 L["Rename Set"] = "重命名设定"
+L["Report Stats"] = "报告属性"
 L["Reputation panel"] = "声望界面"
 L["Reset"] = "重置"
 L["Reset All Modules"] = "重置全部模块"

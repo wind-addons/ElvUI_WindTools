@@ -496,6 +496,7 @@ L["Remove Fog of War from your world map."] = true
 L["Remove Realm"] = true
 L["Rename"] = true
 L["Rename Set"] = true
+L["Report Stats"] = true
 L["Reputation panel"] = true
 L["Reset"] = true
 L["Reset All Modules"] = true

@@ -288,10 +288,6 @@ options.blizzard = {
             type = "toggle",
             name = L["Raid Info"]
         },
-        raidUtility = {
-            type = "toggle",
-            name = L["Raid Utility"]
-        },
         scenario = {
             type = "toggle",
             name = L["Scenario"]
@@ -438,6 +434,10 @@ options.elvui = {
         panels = {
             type = "toggle",
             name = L["Panels"]
+        },
+        raidUtility = {
+            type = "toggle",
+            name = L["Raid Utility"]
         },
         staticPopup = {
             type = "toggle",

@@ -21,7 +21,11 @@ function S:RaidUtility_ShowButton_OnClick()
 end
 
 function S:RaidUtility()
-    if not self:CheckDB("nonraid", "raidUtility") or not E.private.general.raidUtility then
+    if not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.raidUtility then
+        return
+    end
+
+    if not E.private.general.raidUtility then
         return
     end
 

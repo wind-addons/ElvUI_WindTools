@@ -43,7 +43,8 @@ V.misc = {
 	mute = {
 		enable = true,
 		mount = {
-			[45693] = true
+			[63796] = true,
+			[229385] = true
 		}
 	}
 }

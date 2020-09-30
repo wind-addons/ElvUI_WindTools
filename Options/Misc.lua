@@ -12,6 +12,7 @@ local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 local GetSpellInfo = GetSpellInfo
 
+local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
 
@@ -40,8 +41,58 @@ options.cvars = {
                 }
             }
         },
+        combat = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Combat"],
+            args = {
+                floatingCombatTextCombatDamage = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Floating Damage Text"],
+                    width = 1.5
+                },
+                floatingCombatTextCombatHealing = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Floating Healing Text"],
+                    width = 1.5
+                },
+                WorldTextScale = {
+                    order = 3,
+                    type = "range",
+                    name = L["Floating Text Scale"],
+                    get = function(info)
+                        return tonumber(C_CVar_GetCVar(info[#info]))
+                    end,
+                    set = function(info, value)
+                        return C_CVar_SetCVar(info[#info], value)
+                    end,
+                    min = 0.1,
+                    max = 5,
+                    step = 0.1,
+                    width = 1.5
+                },
+                SpellQueueWindow = {
+                    order = 4,
+                    type = "range",
+                    name = L["Spell Queue Window"],
+                    get = function(info)
+                        return tonumber(C_CVar_GetCVar(info[#info]))
+                    end,
+                    set = function(info, value)
+                        return C_CVar_SetCVar(info[#info], value)
+                    end,
+                    min = 0,
+                    max = 400,
+                    step = 1,
+                    width = 1.5
+                }
+            }
+        },
         visualEffect = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Visual Effect"],
@@ -64,7 +115,7 @@ options.cvars = {
             }
         },
         tooltips = {
-            order = 3,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Tooltips"],
@@ -83,7 +134,7 @@ options.cvars = {
             }
         },
         mouse = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Mouse"],

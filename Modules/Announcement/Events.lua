@@ -21,16 +21,10 @@ function A:CHAT_MSG_SYSTEM(event, text)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()
-    local combatInfo = {CombatLogGetCurrentEventInfo()}
     -- 参数列表
     -- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
-    local timestamp = combatInfo[1]
-    local event = combatInfo[2]
-    local sourceGUID = combatInfo[4]
-    local sourceName = combatInfo[5]
-    local destGUID = combatInfo[8]
-    local destName = combatInfo[9]
-    local spellId = combatInfo[12]
+    local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId =
+        CombatLogGetCurrentEventInfo()
 
     if event == "SPELL_CAST_SUCCESS" then
         self:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)

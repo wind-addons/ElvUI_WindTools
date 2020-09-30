@@ -228,7 +228,7 @@ options.mute = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Disable some annoying sound effect."],
+                    name = L["Disable some annoying sound effects."],
                     fontSize = "medium"
                 }
             }

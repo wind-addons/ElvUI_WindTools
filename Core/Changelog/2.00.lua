@@ -15,6 +15,7 @@ W.Changelog[200] = {
     },
     NEW = {
         ["zhCN"] = {
+            "新增静音功能",
             "新增快速钥石功能",
             "新增天赋管家功能",
             "新增右键菜单功能",
@@ -36,6 +37,7 @@ W.Changelog[200] = {
             "新增 BugSack 插件皮肤"
         },
         ["zhTW"] = {
+            "新增靜音功能",
             "新增快速鑰石功能",
             "新增天賦管家功能",
             "新增右鍵菜單功能",
@@ -57,6 +59,7 @@ W.Changelog[200] = {
             "新增 BugSack 插件皮膚"
         },
         ["enUS"] = {
+            "Add Mute module",
             "Add Quick Keystone module",
             "Add Talent Manager module",
             "Add Context Menu module",

@@ -89,9 +89,10 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 1. **CVars Editor**: Simple editor for changing CVars.
 2. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
 3. **Transmog**: Add support of saving artifacts in wardrobe outfits.
-4. **Pause to Slash**: Convert CJK pause to slash.
-5. **Disable Talking Head**: Disable the talking head.
-6. **Tags**: Additional tags like range, health text without the sign, class color.
+4. **Mute**: Disable some annoying sound effects.
+5. **Pause to Slash**: Convert CJK pause to slash.
+6. **Disable Talking Head**: Disable the talking head.
+7. **Tags**: Additional tags like range, health text without the sign, class color.
 
 More features are coming soon.
 

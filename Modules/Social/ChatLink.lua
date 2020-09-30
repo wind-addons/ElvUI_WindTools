@@ -119,22 +119,6 @@ local function AddItemInfo(Hyperlink)
         end
     end
 
-    -- 腐化信息
-    -- if CL.db.link.add_corruption_rank then
-    --     local corruptionInfo = E:GetModule("Wind_CorruptionRank"):Corruption_Search(Hyperlink)
-
-    --     if corruptionInfo then
-    --         local spellName = GetSpellInfo(corruptionInfo.spellID)
-    --         local levelText = corruptionInfo.level
-    --         levelText = levelText:gsub("%s?%(.-%)", "")
-    --         if levelText ~= "" then
-    --             -- 阿拉伯数字貌似好看点？
-    --             spellName = spellName .. string.len(levelText)
-    --         end
-    --         Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[%1/" .. spellName .. "]|h")
-    --     end
-    -- end
-
     if CL.db.icon then
         local texture = GetItemIcon(id)
         local icon = format(IconString .. ":255:255:255|t", texture)
@@ -147,6 +131,22 @@ end
 local function AddSpellInfo(Hyperlink)
     -- 法术图标
     local id = strmatch(Hyperlink, "Hspell:(%d-):")
+    if (not id) then
+        return
+    end
+
+    if CL.db.icon then
+        local texture = GetSpellTexture(tonumber(id))
+        local icon = format(IconString .. ":255:255:255|t", texture)
+        Hyperlink = icon .. " " .. Hyperlink
+    end
+
+    return Hyperlink
+end
+
+local function AddEnchantInfo(Hyperlink)
+    -- 附魔图标
+    local id = strmatch(Hyperlink, "Henchant:(%d-)\124")
     if (not id) then
         return
     end
@@ -196,6 +196,7 @@ function CL:Filter(event, msg, ...)
     if CL.db.enable then
         msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
         msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
+        msg = msg:gsub("(|Henchant:%d+|h.-|h)", AddEnchantInfo)
         msg = msg:gsub("(|Htalent:%d+|h.-|h)", AddTalentInfo)
         msg = msg:gsub("(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
     end

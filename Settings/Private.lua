@@ -39,7 +39,13 @@ V.misc = {
 	moveElvUIBags = true,
 	rememberPositions = true,
 	framePositions = {},
-	tags = true
+	tags = true,
+	mute = {
+		enable = true,
+		mount = {
+			[45693] = true
+		}
+	}
 }
 
 V.quest = {

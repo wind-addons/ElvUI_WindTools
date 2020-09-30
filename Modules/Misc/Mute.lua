@@ -3,6 +3,7 @@ local M = W:GetModule("Misc")
 
 local pairs = pairs
 local MuteSoundFile = MuteSoundFile
+local UnmuteSoundFile = UnmuteSoundFile
 
 local MountSE = {
     [63796] = {
@@ -52,6 +53,10 @@ function M:Mute()
         if E.private.WT.misc.mute.mount[mountID] then
             for _, soundID in pairs(soundIDs) do
                 MuteSoundFile(soundID)
+            end
+        else
+            for _, soundID in pairs(soundIDs) do
+                UnmuteSoundFile(soundID)
             end
         end
     end

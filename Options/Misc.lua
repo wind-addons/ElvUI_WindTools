@@ -5,9 +5,12 @@ local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
 
 local format = format
+local tonumber = tonumber
+local tostring = tostring
 
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local GetSpellInfo = GetSpellInfo
 
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
@@ -211,8 +214,54 @@ options.transmog = {
     }
 }
 
+options.mute = {
+    order = 3,
+    type = "group",
+    name = L["Mute"],
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Disable some annoying sound effect."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        mount = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Mount"],
+            get = function(info)
+                return E.private.WT.misc.mute[info[#info - 1]][tonumber(info[#info])]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.mute[info[#info - 1]][tonumber(info[#info])] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {}
+        }
+    }
+}
+
+do
+    for id in pairs(V.misc.mute.mount) do
+        options.mute.args.mount.args[tostring(id)] = {
+            order = id,
+            type = "toggle",
+            name = GetSpellInfo(id)
+        }
+    end
+end
+
 options.pauseToSlash = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["Pause to slash"],
     args = {
@@ -249,7 +298,7 @@ options.pauseToSlash = {
 }
 
 options.disableTalkingHead = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Disable Talking Head"],
     args = {
@@ -283,7 +332,7 @@ options.disableTalkingHead = {
 }
 
 options.tags = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Tags"],
     args = {

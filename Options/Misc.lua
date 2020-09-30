@@ -233,8 +233,20 @@ options.mute = {
                 }
             }
         },
-        mount = {
+        enable = {
             order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            get = function(info)
+                return E.private.WT.misc.mute.enable
+            end,
+            set = function(info, value)
+                E.private.WT.misc.mute.enable = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        mount = {
+            order = 3,
             type = "group",
             inline = true,
             name = L["Mount"],

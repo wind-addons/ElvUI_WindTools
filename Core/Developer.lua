@@ -1,10 +1,14 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
-local strrep, type = strrep, type
+
+local format = format
+local pairs = pairs
+local print = print
+local strlen = strlen
+local strrep = strrep
+local tostring = tostring
+local type = type
 
 F.Developer = {}
-
-local type, pairs, print, tostring = type, pairs, print, tostring
-local format, strrep, strlen = format, strrep, strlen
 
 --[[
     高级打印函数

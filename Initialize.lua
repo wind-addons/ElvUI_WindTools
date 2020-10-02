@@ -46,7 +46,7 @@ function W:Initialize()
     self:InitializeModules()
 
     EP:RegisterPlugin(addonName, W.OptionsCallback)
-    W:SecureHook(E, "UpdateAll", "UpdateModules")
+    self:SecureHook(E, "UpdateAll", "UpdateModules")
 
     collectgarbage("collect")
 end

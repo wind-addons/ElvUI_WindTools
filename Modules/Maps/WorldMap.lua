@@ -3,6 +3,7 @@ local WM = W:NewModule("WorldMap", "AceHook-3.0")
 
 local _G = _G
 local ceil = ceil
+local collectgarbage = collectgarbage
 local ipairs = ipairs
 local mod = mod
 local pairs = pairs
@@ -13,9 +14,30 @@ local tonumber = tonumber
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
+local C_Timer_After = C_Timer.After
 local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 local WorldMapFrame = _G.WorldMapFrame
+
+-- 提供一个方式进行垃圾回收
+do
+    local isWaiting = false
+    function WM:collectGarbageAfter(time)
+        if isWaiting then
+            return
+        end
+
+        isWaiting = true
+
+        C_Timer_After(
+            time,
+            function()
+                collectgarbage("collect")
+                isWaiting = false
+            end
+        )
+    end
+end
 
 -- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
 -- UiMapArtID = {
@@ -2537,6 +2559,10 @@ function WM:HandleMap(map, fullUpdate)
                 end
             end
         end
+    end
+
+    if self.db.clearCache then
+        self:collectGarbageAfter(30)
     end
 end
 

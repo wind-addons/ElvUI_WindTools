@@ -145,7 +145,7 @@ options.roleIcon = {
 options.castBar = {
     order = 3,
     type = "group",
-    name = L["Castbar"],
+    name = L["Cast Bar"],
     get = function(info)
         return E.db.WT.unitFrames.castBar[info[#info]]
     end,
@@ -251,7 +251,7 @@ do
                     args = {
                         anchor = {
                             order = 1,
-                            name = L["Anchor"],
+                            name = L["Anchor Point"],
                             type = "select",
                             values = anchorTable
                         },
@@ -319,7 +319,7 @@ do
                     order = 3,
                     type = "group",
                     inline = true,
-                    name = L["Spell Name"],
+                    name = L["Time"],
                     get = function(info)
                         return E.db.WT.unitFrames.castBar[optionData.key].time[info[#info]]
                     end,
@@ -330,7 +330,7 @@ do
                     args = {
                         anchor = {
                             order = 1,
-                            name = L["Anchor"],
+                            name = L["Anchor Point"],
                             type = "select",
                             values = anchorTable
                         },

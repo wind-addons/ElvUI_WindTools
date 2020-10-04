@@ -37,7 +37,7 @@ function CB:StyleAfterConfigure(_, unitFrame)
         F.SetFontWithDB(castBar.Text, db.text.font)
 
         castBar.Time:ClearAllPoints()
-        castBar.Time:Point(db.time.anchor, castBar, db.time.anchor, db.time.offsetX, db.time.offsetX)
+        castBar.Time:Point(db.time.anchor, castBar, db.time.anchor, db.time.offsetX, db.time.offsetY)
         F.SetFontWithDB(castBar.Time, db.time.font)
     else
         UF:Configure_FontString(castBar.Text)

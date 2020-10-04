@@ -51,13 +51,11 @@ options.cvars = {
                     order = 1,
                     type = "toggle",
                     name = L["Floating Damage Text"],
-                    width = 1.5
                 },
                 floatingCombatTextCombatHealing = {
                     order = 2,
                     type = "toggle",
                     name = L["Floating Healing Text"],
-                    width = 1.5
                 },
                 WorldTextScale = {
                     order = 3,
@@ -72,7 +70,6 @@ options.cvars = {
                     min = 0.1,
                     max = 5,
                     step = 0.1,
-                    width = 1.5
                 },
                 SpellQueueWindow = {
                     order = 4,
@@ -87,7 +84,6 @@ options.cvars = {
                     min = 0,
                     max = 400,
                     step = 1,
-                    width = 1.5
                 }
             }
         },

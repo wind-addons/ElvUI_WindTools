@@ -1409,7 +1409,8 @@ options.reset = {
             name = L["Reset All Modules"],
             func = function()
                 E:StaticPopup_Show("WINDTOOLS_RESET_ALL_MODULES")
-            end
+            end,
+            width = "full"
         }
     }
 }

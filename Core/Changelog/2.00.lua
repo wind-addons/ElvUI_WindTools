@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[200] = {
-    RELEASE_DATE = "2020/10/06",
+    RELEASE_DATE = "2020/10/13",
     IMPORTANT = {
         ["zhCN"] = {
             "完全重写了全部模块和核心功能"

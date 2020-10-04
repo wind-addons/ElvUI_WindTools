@@ -669,11 +669,11 @@ P.tooltips = {
 
 P.unitFrames = {
     castBar = {
-        enable = true,
+        enable = false,
         player = {
-            enable = true,
+            enable = false,
             text = {
-                anchor = "CENTER",
+                anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
@@ -683,7 +683,6 @@ P.unitFrames = {
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,
@@ -695,7 +694,7 @@ P.unitFrames = {
             }
         },
         target = {
-            enable = true,
+            enable = false,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -707,7 +706,6 @@ P.unitFrames = {
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,
@@ -719,7 +717,7 @@ P.unitFrames = {
             }
         },
         pet = {
-            enable = true,
+            enable = false,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -731,7 +729,6 @@ P.unitFrames = {
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,
@@ -743,7 +740,7 @@ P.unitFrames = {
             }
         },
         focus = {
-            enable = true,
+            enable = false,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -766,7 +763,7 @@ P.unitFrames = {
             }
         },
         boss = {
-            enable = true,
+            enable = false,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -789,7 +786,7 @@ P.unitFrames = {
             }
         },
         arena = {
-            enable = true,
+            enable = false,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,

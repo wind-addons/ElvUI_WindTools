@@ -4,6 +4,9 @@ local CB = W:NewModule("CastBar", "AceHook-3.0", "AceEvent-3.0")
 local UF = E:GetModule("UnitFrames")
 local LSM = LibStub("LibSharedMedia-3.0")
 
+local _G = _G
+local pairs = pairs
+
 local configKey = {
     ElvUF_Player = "player",
     ElvUF_Target = "target",

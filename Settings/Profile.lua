@@ -671,9 +671,9 @@ P.unitFrames = {
     castBar = {
         enable = true,
         player = {
-            enbale = true,
+            enable = true,
             text = {
-                anchor = "LEFT",
+                anchor = "CENTER",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
@@ -695,7 +695,7 @@ P.unitFrames = {
             }
         },
         target = {
-            enbale = true,
+            enable = true,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -719,7 +719,7 @@ P.unitFrames = {
             }
         },
         pet = {
-            enbale = true,
+            enable = true,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -743,7 +743,7 @@ P.unitFrames = {
             }
         },
         focus = {
-            enbale = true,
+            enable = true,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -766,7 +766,7 @@ P.unitFrames = {
             }
         },
         boss = {
-            enbale = true,
+            enable = true,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,
@@ -789,7 +789,7 @@ P.unitFrames = {
             }
         },
         arena = {
-            enbale = true,
+            enable = true,
             text = {
                 anchor = "LEFT",
                 offsetX = 0,

@@ -1,6 +1,9 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.unitFrames.args
+local LSM = E.Libs.LSM
+
 local CT = W:GetModule("ChatText")
+local CB = W:GetModule("CastBar")
 
 options.quickFocus = {
     order = 1,
@@ -93,7 +96,7 @@ do
 end
 
 options.roleIcon = {
-    order = 1,
+    order = 2,
     type = "group",
     name = L["Role Icon"],
     get = function(info)
@@ -138,3 +141,260 @@ options.roleIcon = {
         }
     }
 }
+
+options.castBar = {
+    order = 3,
+    type = "group",
+    name = L["Castbar"],
+    get = function(info)
+        return E.db.WT.unitFrames.castBar[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.unitFrames.castBar[info[#info]] = value
+        CB:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add more custom options to ElvUI cast bars."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        }
+    }
+}
+
+do
+    local anchorTable = {
+        TOP = L["TOP"],
+        BOTTOM = L["BOTTOM"],
+        LEFT = L["LEFT"],
+        RIGHT = L["RIGHT"],
+        TOPRIGHT = L["TOPRIGHT"],
+        TOPLEFT = L["TOPLEFT"],
+        BOTTOMRIGHT = L["BOTTOMRIGHT"],
+        BOTTOMLEFT = L["BOTTOMLEFT"],
+        CENTER = L["CENTER"]
+    }
+
+    local optionTable = {
+        {
+            name = L["Player"],
+            key = "player"
+        },
+        {
+            name = L["Target"],
+            key = "target"
+        },
+        {
+            name = L["Pet"],
+            key = "pet"
+        },
+        {
+            name = L["Focus"],
+            key = "focus"
+        },
+        {
+            name = L["Boss"],
+            key = "boss"
+        },
+        {
+            name = L["Arena"],
+            key = "arena"
+        }
+    }
+
+    for optionOrder, optionData in ipairs(optionTable) do
+        options.castBar.args[optionData.key] = {
+            order = optionOrder + 2,
+            type = "group",
+            name = optionData.name,
+            get = function(info)
+                return E.db.WT.unitFrames.castBar[optionData.key][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.unitFrames.castBar[optionData.key][info[#info]] = value
+                CB:Refresh(optionData.key)
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "group",
+                    inline = true,
+                    name = L["Spell Name"],
+                    get = function(info)
+                        return E.db.WT.unitFrames.castBar[optionData.key].text[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.unitFrames.castBar[optionData.key].text[info[#info]] = value
+                        CB:Refresh(optionData.key)
+                    end,
+                    args = {
+                        anchor = {
+                            order = 1,
+                            name = L["Anchor"],
+                            type = "select",
+                            values = anchorTable
+                        },
+                        offsetX = {
+                            order = 2,
+                            type = "range",
+                            name = L["X-Offset"],
+                            min = -200,
+                            max = 200,
+                            step = 1
+                        },
+                        offsetY = {
+                            order = 3,
+                            type = "range",
+                            name = L["Y-Offset"],
+                            min = -200,
+                            max = 200,
+                            step = 1
+                        },
+                        font = {
+                            order = 4,
+                            type = "group",
+                            inline = true,
+                            name = L["Style"],
+                            get = function(info)
+                                return E.db.WT.unitFrames.castBar[optionData.key].text.font[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.unitFrames.castBar[optionData.key].text.font[info[#info]] = value
+                                CB:Refresh(optionData.key)
+                            end,
+                            args = {
+                                name = {
+                                    order = 1,
+                                    type = "select",
+                                    dialogControl = "LSM30_Font",
+                                    name = L["Font"],
+                                    values = LSM:HashTable("font")
+                                },
+                                style = {
+                                    order = 2,
+                                    type = "select",
+                                    name = L["Outline"],
+                                    values = {
+                                        NONE = L["None"],
+                                        OUTLINE = L["OUTLINE"],
+                                        MONOCHROME = L["MONOCHROME"],
+                                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                        THICKOUTLINE = L["THICKOUTLINE"]
+                                    }
+                                },
+                                size = {
+                                    order = 3,
+                                    name = L["Size"],
+                                    type = "range",
+                                    min = 5,
+                                    max = 60,
+                                    step = 1
+                                }
+                            }
+                        }
+                    }
+                },
+                time = {
+                    order = 3,
+                    type = "group",
+                    inline = true,
+                    name = L["Spell Name"],
+                    get = function(info)
+                        return E.db.WT.unitFrames.castBar[optionData.key].time[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.unitFrames.castBar[optionData.key].time[info[#info]] = value
+                        CB:Refresh(optionData.key)
+                    end,
+                    args = {
+                        anchor = {
+                            order = 1,
+                            name = L["Anchor"],
+                            type = "select",
+                            values = anchorTable
+                        },
+                        offsetX = {
+                            order = 2,
+                            type = "range",
+                            name = L["X-Offset"],
+                            min = -200,
+                            max = 200,
+                            step = 1
+                        },
+                        offsetY = {
+                            order = 3,
+                            type = "range",
+                            name = L["Y-Offset"],
+                            min = -200,
+                            max = 200,
+                            step = 1
+                        },
+                        font = {
+                            order = 4,
+                            type = "group",
+                            inline = true,
+                            name = L["Style"],
+                            get = function(info)
+                                return E.db.WT.unitFrames.castBar[optionData.key].time.font[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.unitFrames.castBar[optionData.key].time.font[info[#info]] = value
+                                CB:Refresh(optionData.key)
+                            end,
+                            args = {
+                                name = {
+                                    order = 1,
+                                    type = "select",
+                                    dialogControl = "LSM30_Font",
+                                    name = L["Font"],
+                                    values = LSM:HashTable("font")
+                                },
+                                style = {
+                                    order = 2,
+                                    type = "select",
+                                    name = L["Outline"],
+                                    values = {
+                                        NONE = L["None"],
+                                        OUTLINE = L["OUTLINE"],
+                                        MONOCHROME = L["MONOCHROME"],
+                                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                        THICKOUTLINE = L["THICKOUTLINE"]
+                                    }
+                                },
+                                size = {
+                                    order = 3,
+                                    name = L["Size"],
+                                    type = "range",
+                                    min = 5,
+                                    max = 60,
+                                    step = 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    end
+end

@@ -39,6 +39,9 @@ function CB:StyleAfterConfigure(_, unitFrame)
         castBar.Time:ClearAllPoints()
         castBar.Time:Point(db.time.anchor, castBar, db.time.anchor, db.time.offsetX, db.time.offsetX)
         F.SetFontWithDB(castBar.Time, db.time.font)
+    else
+        UF:Configure_FontString(castBar.Text)
+        UF:Configure_FontString(castBar.Time)
     end
 end
 
@@ -46,6 +49,14 @@ function CB:ResetStyleWithElvUI(frameName)
     local frame = _G[frameName]
     if frame then
         UF:Configure_Castbar(frame)
+    end
+end
+
+function CB:Refresh(key)
+    for frame, theKey in pairs(configKey) do
+        if not key or key == theKey then
+            self:ResetStyleWithElvUI(frame)
+        end
     end
 end
 
@@ -65,16 +76,11 @@ function CB:ProfileUpdate()
         if not self.IsHooked(UF, "Configure_Castbar") then
             self:SecureHook(UF, "Configure_Castbar", "StyleAfterConfigure")
         end
-
-        for frame in pairs(configKey) do
-            self:ResetStyleWithElvUI(frame)
-        end
+        self:Refresh()
     else
         if self.IsHooked(UF, "Configure_Castbar") then
             self:Unhook(UF, "Configure_Castbar")
-            for frame in pairs(configKey) do
-                self:ResetStyleWithElvUI(frame)
-            end
+            self:Refresh()
         end
     end
 end

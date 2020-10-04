@@ -72,6 +72,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 ## Unit Frames
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
 2. **Role Icon**: Change the icon pack of role icons.
+3. **Cast Bar**: Add more custom options to ElvUI cast bars.
 
 ## Skins
 1. **Vignetting**: Add the shadowed border inner game interface.

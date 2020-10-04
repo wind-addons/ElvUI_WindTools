@@ -673,15 +673,13 @@ P.unitFrames = {
         player = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
@@ -699,15 +697,13 @@ P.unitFrames = {
         target = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
@@ -725,15 +721,13 @@ P.unitFrames = {
         pet = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
@@ -751,19 +745,16 @@ P.unitFrames = {
         focus = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,
@@ -777,19 +768,16 @@ P.unitFrames = {
         boss = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,
@@ -803,19 +791,16 @@ P.unitFrames = {
         arena = {
             enbale = true,
             text = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "LEFT",
                 offsetX = 0,
                 offsetY = 0,
                 font = {
                     name = E.db.general.font,
                     size = 12,
-                    style = "OUTLINE",
-                    color = {r = 1, g = 0.82, b = 0}
+                    style = "OUTLINE"
                 }
             },
             time = {
-                color = {r = 1, g = 1, b = 1, a = 1},
                 anchor = "RIGHT",
                 offsetX = 0,
                 offsetY = 0,

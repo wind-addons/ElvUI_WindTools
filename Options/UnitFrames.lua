@@ -248,6 +248,9 @@ do
                         E.db.WT.unitFrames.castBar[optionData.key].text[info[#info]] = value
                         CB:Refresh(optionData.key)
                     end,
+                    disabled = function()
+                        return not E.db.WT.unitFrames.castBar[optionData.key].enable
+                    end,
                     args = {
                         anchor = {
                             order = 1,
@@ -326,6 +329,9 @@ do
                     set = function(info, value)
                         E.db.WT.unitFrames.castBar[optionData.key].time[info[#info]] = value
                         CB:Refresh(optionData.key)
+                    end,
+                    disabled = function()
+                        return not E.db.WT.unitFrames.castBar[optionData.key].enable
                     end,
                     args = {
                         anchor = {

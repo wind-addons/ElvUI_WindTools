@@ -611,7 +611,7 @@ P.social = {
         addFriend = true,
         guildInvite = true,
         who = true,
-        reportStats = true,
+        reportStats = true
     },
     smartTab = {
         enable = true,
@@ -664,5 +664,167 @@ P.tooltips = {
         enable = true,
         title = true,
         mode = "NORMAL"
+    }
+}
+
+P.unitFrames = {
+    castBar = {
+        enable = true,
+        player = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        },
+        target = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        },
+        pet = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        },
+        focus = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        },
+        boss = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        },
+        arena = {
+            enbale = true,
+            text = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "LEFT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = E.db.general.font,
+                    size = 12,
+                    style = "OUTLINE",
+                    color = {r = 1, g = 0.82, b = 0}
+                }
+            },
+            time = {
+                color = {r = 1, g = 1, b = 1, a = 1},
+                anchor = "RIGHT",
+                offsetX = 0,
+                offsetY = 0,
+                font = {
+                    name = "Montserrat",
+                    size = 12,
+                    style = "OUTLINE"
+                }
+            }
+        }
     }
 }

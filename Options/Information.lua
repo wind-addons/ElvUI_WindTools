@@ -134,7 +134,7 @@ options.help = {
                     name = L["NGA.cn"],
                     image = W.Media.Icons.nga,
                     func = function()
-                        E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=12142815")
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=12142815")
                     end,
                     width = 0.7
                 },
@@ -144,7 +144,7 @@ options.help = {
                     name = L["Discord"],
                     image = W.Media.Icons.discord,
                     func = function()
-                        E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, discordURL)
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, discordURL)
                     end,
                     width = 0.7
                 },
@@ -154,7 +154,7 @@ options.help = {
                     name = L["QQ Group"],
                     image = W.Media.Icons.qq,
                     func = function()
-                        E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "306069019")
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "306069019")
                     end,
                     width = 0.7
                 },
@@ -165,7 +165,7 @@ options.help = {
                     image = W.Media.Icons.github,
                     func = function()
                         E:StaticPopup_Show(
-                            "ELVUI_EDITBOX",
+                            "WINDTOOLS_EDITBOX",
                             nil,
                             nil,
                             "https://github.com/fang2hou/ElvUI_WindTools/issues"

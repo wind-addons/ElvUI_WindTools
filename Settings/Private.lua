@@ -14,7 +14,7 @@ V.maps = {
 		clearCache = true,
 		scale = {
 			enable = true,
-			size = 1.236
+			size = 1.24
 		}
 	},
 	minimapButtons = {

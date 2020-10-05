@@ -17,8 +17,6 @@ local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_Timer_After = C_Timer.After
 local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
-local WorldMapFrame = _G.WorldMapFrame
-
 -- 提供一个方式进行垃圾回收
 do
     local isWaiting = false
@@ -2470,7 +2468,7 @@ local overlayTextures = {}
 
 function WM:HandleMap(map, fullUpdate)
     overlayTextures = {}
-    local mapID = WorldMapFrame.mapID
+    local mapID = _G.WorldMapFrame.mapID
     if not mapID then
         return
     end
@@ -2571,14 +2569,14 @@ function WM:Reveal()
         return
     end
 
-    for pin in WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
+    for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
         self:SecureHook(pin, "RefreshOverlays", "HandleMap")
     end
 end
 
-local function Wind_GetCursorPosition(cursor)
+function WM:GetCursorPosition(_, cursor)
     local x, y = MapCanvasScrollControllerMixin_GetCursorPosition(cursor)
-    return x / WM.db.scale.size, y / WM.db.scale.size
+    return x / self.db.scale.size, y / self.db.scale.size
 end
 
 function WM:Scale()
@@ -2586,9 +2584,9 @@ function WM:Scale()
         return
     end
 
-    WorldMapFrame:SetClampedToScreen(true)
-    WorldMapFrame:SetScale(self.db.scale.size)
-    WorldMapFrame.ScrollContainer.GetCursorPosition = Wind_GetCursorPosition
+    _G.WorldMapFrame:SetClampedToScreen(true)
+    _G.WorldMapFrame:SetScale(self.db.scale.size)
+    self:RawHook(_G.WorldMapFrame.ScrollContainer, "GetCursorPosition", "GetCursorPosition", true)
 end
 
 function WM:Initialize()

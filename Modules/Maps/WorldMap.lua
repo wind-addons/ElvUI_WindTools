@@ -2574,11 +2574,6 @@ function WM:Reveal()
     end
 end
 
-function WM:GetCursorPosition(_, cursor)
-    local x, y = MapCanvasScrollControllerMixin_GetCursorPosition(cursor)
-    return x / self.db.scale.size, y / self.db.scale.size
-end
-
 function WM:Scale()
     if not self.db.scale.enable then
         return
@@ -2586,7 +2581,12 @@ function WM:Scale()
 
     _G.WorldMapFrame:SetClampedToScreen(true)
     _G.WorldMapFrame:SetScale(self.db.scale.size)
-    self:RawHook(_G.WorldMapFrame.ScrollContainer, "GetCursorPosition", "GetCursorPosition", true)
+
+    _G.WorldMapFrame.ScrollContainer.GetCursorPosition = function(cursor)
+        local x, y = MapCanvasScrollControllerMixin_GetCursorPosition(cursor)
+        local scale = _G.WorldMapFrame:GetScale()
+        return x / scale, y / scale
+    end
 end
 
 function WM:Initialize()

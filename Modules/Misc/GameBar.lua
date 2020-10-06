@@ -86,7 +86,7 @@ function GB:ConstructButton(config)
         return
     end
 
-    local button = CreateFrame("Button", nil, bar, "SecureActionButtonTemplate, BackdropTemplate")
+    local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(self.db.buttonSize)
 
     local normalTex = button:CreateTexture(nil, "ARTWORK")
@@ -114,7 +114,7 @@ function GB:ConstructButton(config)
     self:HookScript(button, "OnEnter", "ButtonOnEnter")
     self:HookScript(button, "OnLeave", "ButtonOnLeave")
 
-    self:UpdateButtonTexture(button)
+    self:UpdateButton(button)
 
     tinsert(self.bar.buttons, button)
 end

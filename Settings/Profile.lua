@@ -810,3 +810,34 @@ P.unitFrames = {
         }
     }
 }
+
+P.misc = {
+    gameBar = {
+        enable = true,
+        mouseOver = false,
+        visibility = "DEFAULT",
+        backdrop = true,
+        backdropSpacing = 3,
+        buttonSize = 32,
+        spacing = 4,
+        orientation = "HORIZONTAL",
+        fadeTime = 0.618,
+        normalColor = "NONE",
+        hoverColor = "CLASS",
+        customNormalColor = {r = 1, g = 1, b = 1},
+        customHoverColor = {r = 0.000, g = 0.659, b = 1.000},
+        time = {
+            enable = true,
+            localTime = true,
+            twentyFour = true,
+            flash = true,
+            font = {
+                name = "Montserrat",
+                size = 12,
+                style = "OUTLINE"
+            }
+        },
+        left = "CHARACTER,SPELLS",
+        right = "PVE, ENCOUNTERJOURNAL"
+    }
+}

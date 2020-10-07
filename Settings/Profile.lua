@@ -820,7 +820,6 @@ P.misc = {
         backdropSpacing = 3,
         buttonSize = 32,
         spacing = 4,
-        orientation = "HORIZONTAL",
         fadeTime = 0.618,
         normalColor = "NONE",
         hoverColor = "CLASS",
@@ -837,7 +836,21 @@ P.misc = {
                 style = "OUTLINE"
             }
         },
-        left = "CHARACTER,SPELLS",
-        right = "PVE, ENCOUNTERJOURNAL"
+        left = {
+            [1] = "CHARACTER",
+            [2] = "SPELLS",
+            [3] = "CHARACTER",
+            [4] = "SPELLS",
+            [5] = "CHARACTER",
+            [6] = "SPELLS",
+        },
+        right = {
+            [1] = "PVE",
+            [2] = "ENCOUNTERJOURNAL",
+            [3] = "PVE",
+            [4] = "ENCOUNTERJOURNAL",
+            [5] = "PVE",
+            [6] = "ENCOUNTERJOURNAL",
+        },
     }
 }

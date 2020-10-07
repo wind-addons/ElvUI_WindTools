@@ -818,9 +818,9 @@ P.misc = {
         visibility = "DEFAULT",
         backdrop = true,
         backdropSpacing = 3,
-        buttonSize = 32,
+        buttonSize = 24,
         spacing = 4,
-        fadeTime = 0.618,
+        fadeTime = 0.309,
         normalColor = "NONE",
         hoverColor = "CLASS",
         customNormalColor = {r = 1, g = 1, b = 1},
@@ -832,7 +832,7 @@ P.misc = {
             flash = true,
             font = {
                 name = "Montserrat",
-                size = 25,
+                size = 20,
                 style = "OUTLINE"
             }
         },

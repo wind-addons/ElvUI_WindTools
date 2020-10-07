@@ -2,6 +2,11 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local GB = W:NewModule("GameBar", "AceTimer-3.0", "AceHook-3.0")
 
+local date = date
+local tonumber = tonumber
+local format = format
+local CreateFrame = CreateFrame
+
 local ButtonTypes = {
     CHARACTER = {
         name = L["Character"],
@@ -63,7 +68,7 @@ function GB:ConstructBar()
 
     local bar = CreateFrame("Frame", "WTGameBar", E.UIParent)
     bar:Size(800, 60)
-    bar:Point("CENTER")
+    bar:Point("TOP", 0, -20)
 
     local middlePanel = CreateFrame("Frame", "WTGameBarMiddlePanel", bar)
     middlePanel:Size(81, 50)
@@ -95,6 +100,26 @@ end
 -------------------------
 -- 时间
 function GB:ConstructTimeArea()
+    local normalTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    normalTime:Point("CENTER")
+    F.SetFontWithDB(normalTime, self.db.time.font)
+    self.bar.middlePanel.normalTime = normalTime
+
+    local flashTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    flashTime:Point("CENTER")
+    F.SetFontWithDB(flashTime, self.db.time.font)
+    self.bar.middlePanel.flashTime = flashTime
+
+    self:UpdateTimeFormat()
+    self:ScheduleTimer("SetUpTimeAreaTimer", 60 - tonumber(date("%S")))
+end
+
+function GB:SetUpTimeAreaTimer()
+    self:UpdateTime()
+    self.timeAreaUpdateTimer = self:ScheduleRepeatingTimer("UpdateTime", 60)
+end
+
+function GB:UpdateTimeFormat()
     local normalColor = {r = 1, g = 1, b = 1}
     local hoverColor = {r = 1, g = 1, b = 1}
 
@@ -127,24 +152,8 @@ function GB:ConstructTimeArea()
         F.CreateColorString("%s", normalColor) ..
         F.CreateColorString(":", hoverColor) .. F.CreateColorString("%s", normalColor)
 
-    local normalTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-    normalTime:Point("CENTER")
-    F.SetFontWithDB(normalTime, self.db.time.font)
-    normalTime.format = normalTimeFormat
-    self.bar.middlePanel.normalTime = normalTime
-
-    local flashTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-    flashTime:Point("CENTER")
-    F.SetFontWithDB(flashTime, self.db.time.font)
-    flashTime.format = flashTimeFormat
-    self.bar.middlePanel.flashTime = flashTime
-
-    self:ScheduleTimer("SetUpTimeAreaTimer", 60 - tonumber(date("%S")))
-end
-
-function GB:SetUpTimeAreaTimer()
-    self:UpdateTime()
-    self.timeAreaUpdateTimer = self:ScheduleRepeatingTimer("UpdateTime", 60)
+    self.bar.middlePanel.normalTime.format = normalTimeFormat
+    self.bar.middlePanel.flashTime.format = flashTimeFormat
 end
 
 function GB:UpdateTime()
@@ -167,10 +176,10 @@ function GB:UpdateTimeArea()
 
     panel.flashTime:SetText("55:55")
 
-    self.bar.middlePanel:SetWidth(panel.flashTime:GetStringWidth()*1.309)
-    self.bar.middlePanel:SetHeight(panel.flashTime:GetStringHeight()*1.927)
+    self.bar.middlePanel:SetWidth(panel.flashTime:GetStringWidth() * 1.309)
+    self.bar.middlePanel:SetHeight(panel.flashTime:GetStringHeight() * 1.927)
 
-    if self.db.time.flash then 
+    if self.db.time.flash then
         E:Flash(panel.flashTime, 1, true)
         panel.normalTime:Show()
         panel.flashTime:Show()

@@ -71,11 +71,17 @@ AddMedia("nga", "NGA.tga", "Icons")
 
 AddMedia("barAchievement", "GameBar\\Achievement.tga", "Icons")
 AddMedia("barCharacter", "GameBar\\Character.tga", "Icons")
+AddMedia("barCollections", "GameBar\\Collections.tga", "Icons")
+AddMedia("barEncounterJournal", "GameBar\\EncounterJournal.tga", "Icons")
 AddMedia("barFriends", "GameBar\\Friends.tga", "Icons")
+AddMedia("barHome", "GameBar\\Home.tga", "Icons")
+AddMedia("barOptions", "GameBar\\Options.tga", "Icons")
+AddMedia("barPetJournal", "GameBar\\PetJournal.tga", "Icons")
 AddMedia("barGuild", "GameBar\\Guild.tga", "Icons")
-AddMedia("barJournal", "GameBar\\Journal.tga", "Icons")
 AddMedia("barPVE", "GameBar\\PVE.tga", "Icons")
-AddMedia("barSpells", "GameBar\\Spells.tga", "Icons")
+AddMedia("barScreenShot", "GameBar\\ScreenShot.tga", "Icons")
+AddMedia("barSpellBook", "GameBar\\SpellBook.tga", "Icons")
+AddMedia("barTalents", "GameBar\\Talents.tga", "Icons")
 
 do
 	local Region = 128

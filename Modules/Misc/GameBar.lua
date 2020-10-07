@@ -2,59 +2,107 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local GB = W:NewModule("GameBar", "AceTimer-3.0", "AceHook-3.0")
 
+local _G = _G
 local date = date
 local tonumber = tonumber
 local format = format
 local CreateFrame = CreateFrame
 
 local ButtonTypes = {
+    NONE = {
+        name = "NONE"
+    },
+    ACHIEVEMENT = {
+        name = L["Achievement"],
+        icon = W.Media.Icons.barAchievement,
+        func = _G.ToggleAchievementFrame
+    },
     CHARACTER = {
         name = L["Character"],
         icon = W.Media.Icons.barCharacter,
         func = function()
-            print("character")
+            ToggleCharacter("PaperDollFrame")
         end
     },
-    SPELLS = {
-        name = L["Spells"],
-        icon = W.Media.Icons.barSpells,
+    COLLECTIONS = {
+        name = L["Collections"],
+        icon = W.Media.Icons.barCollections,
+        func = _G.ToggleCollectionsJournal
+    },
+    ENCOUNTERJOURNAL = {
+        name = L["Encounter Journal"],
+        icon = W.Media.Icons.barEncounterJournal,
         func = function()
-            print("Spells")
+            if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+                _G.EncounterJournal_LoadUI()
+            end
+
+            ToggleFrame(_G.EncounterJournal)
         end
     },
     FRIENDS = {
         name = L["Friends"],
         icon = W.Media.Icons.barFriends,
         func = function()
-            print("character")
+            ToggleFriendsFrame(1)
+        end
+    },
+    HOME = {
+        name = L["Home"],
+        icon = W.Media.Icons.barHome,
+        func = function()
+            ToggleFriendsFrame(1)
+        end
+    },
+    PETJOURNAL = {
+        name = L["Pet Journal"],
+        icon = W.Media.Icons.barPetJournal,
+        func = function()
+            ToggleCollectionsJournal(2)
         end
     },
     GUILD = {
         name = L["Guild"],
         icon = W.Media.Icons.barGuild,
-        func = function()
-            print("Guild")
-        end
-    },
-    ENCOUNTERJOURNAL = {
-        name = L["Encounter Journal"],
-        icon = W.Media.Icons.barJournal,
-        func = function()
-            print("Encounter Journal")
-        end
-    },
-    PETJOURNAL = {
-        name = L["Pet Journal"],
-        icon = W.Media.Icons.barJournal,
-        func = function()
-            print("Pet Journal")
-        end
+        func = _G.ToggleGuildFrame
     },
     PVE = {
         name = L["PVE"],
         icon = W.Media.Icons.barPVE,
         func = function()
-            print("PVE")
+            ToggleLFDParentFrame()
+        end
+    },
+    SCREENSHOT = {
+        name = L["ScreenShot"],
+        icon = W.Media.Icons.barScreenShot,
+        func = _G.Screenshot
+    },
+    SPELLBOOK = {
+        name = L["Spell Book"],
+        icon = W.Media.Icons.barSpellBook,
+        func = function()
+            if not _G.SpellBookFrame:IsShown() then
+                ShowUIPanel(_G.SpellBookFrame)
+            else
+                HideUIPanel(_G.SpellBookFrame)
+            end
+        end
+    },
+    TALENTS = {
+        name = L["Talents"],
+        icon = W.Media.Icons.barTalents,
+        func = function()
+            if not _G.PlayerTalentFrame then
+                _G.TalentFrame_LoadUI()
+            end
+
+            local PlayerTalentFrame = _G.PlayerTalentFrame
+            if not PlayerTalentFrame:IsShown() then
+                ShowUIPanel(PlayerTalentFrame)
+            else
+                HideUIPanel(PlayerTalentFrame)
+            end
         end
     }
 }

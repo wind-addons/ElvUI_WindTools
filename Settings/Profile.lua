@@ -817,10 +817,10 @@ P.misc = {
         mouseOver = false,
         visibility = "DEFAULT",
         backdrop = true,
-        backdropSpacing = 3,
+        backdropSpacing = 5,
         buttonSize = 24,
         spacing = 4,
-        fadeTime = 0.309,
+        fadeTime = 0.618,
         normalColor = "NONE",
         hoverColor = "CLASS",
         customNormalColor = {r = 1, g = 1, b = 1},
@@ -832,25 +832,25 @@ P.misc = {
             flash = true,
             font = {
                 name = "Montserrat",
-                size = 20,
+                size = 25,
                 style = "OUTLINE"
             }
         },
         left = {
             [1] = "CHARACTER",
-            [2] = "SPELLS",
-            [3] = "CHARACTER",
-            [4] = "SPELLS",
-            [5] = "CHARACTER",
-            [6] = "SPELLS",
+            [2] = "SPELLBOOK",
+            [3] = "TALENTS",
+            [4] = "FRIENDS",
+            [5] = "GUILD",
+            [6] = "SCREENSHOT"
         },
         right = {
-            [1] = "PVE",
-            [2] = "ENCOUNTERJOURNAL",
+            [1] = "HOME",
+            [2] = "ACHIEVEMENT",
             [3] = "PVE",
             [4] = "ENCOUNTERJOURNAL",
-            [5] = "PVE",
-            [6] = "ENCOUNTERJOURNAL",
-        },
+            [5] = "PETJOURNAL",
+            [6] = "COLLECTIONS"
+        }
     }
 }

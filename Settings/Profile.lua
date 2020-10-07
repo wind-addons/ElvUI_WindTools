@@ -832,7 +832,7 @@ P.misc = {
             flash = true,
             font = {
                 name = "Montserrat",
-                size = 12,
+                size = 25,
                 style = "OUTLINE"
             }
         },

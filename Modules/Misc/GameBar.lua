@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
-local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
+local GB = W:NewModule("GameBar", "AceTimer-3.0", "AceHook-3.0")
 
 local ButtonTypes = {
     CHARACTER = {
@@ -66,7 +66,7 @@ function GB:ConstructBar()
     bar:Point("CENTER")
 
     local middlePanel = CreateFrame("Frame", "WTGameBarMiddlePanel", bar)
-    middlePanel:Size(100, 60)
+    middlePanel:Size(81, 50)
     middlePanel:Point("CENTER")
     middlePanel:CreateBackdrop("Transparent")
     bar.middlePanel = middlePanel
@@ -90,6 +90,97 @@ function GB:ConstructBar()
     end
 
     self.bar = bar
+end
+
+-------------------------
+-- 时间
+function GB:ConstructTimeArea()
+    local normalColor = {r = 1, g = 1, b = 1}
+    local hoverColor = {r = 1, g = 1, b = 1}
+
+    if self.db.normalColor == "CUSTOM" then
+        normalColor = self.db.customNormalColor
+    elseif self.db.normalColor == "CLASS" then
+        normalColor = E:ClassColor(E.myclass, true)
+    elseif self.db.normalColor == "VALUE" then
+        normalColor = {
+            r = E.media.rgbvaluecolor[1],
+            g = E.media.rgbvaluecolor[2],
+            b = E.media.rgbvaluecolor[3]
+        }
+    end
+
+    if self.db.hoverColor == "CUSTOM" then
+        hoverColor = self.db.customHoverColor
+    elseif self.db.hoverColor == "CLASS" then
+        hoverColor = E:ClassColor(E.myclass, true)
+    elseif self.db.hoverColor == "VALUE" then
+        hoverColor = {
+            r = E.media.rgbvaluecolor[1],
+            g = E.media.rgbvaluecolor[2],
+            b = E.media.rgbvaluecolor[3]
+        }
+    end
+
+    local normalTimeFormat = F.CreateColorString("%s %s", normalColor)
+    local flashTimeFormat =
+        F.CreateColorString("%s", normalColor) ..
+        F.CreateColorString(":", hoverColor) .. F.CreateColorString("%s", normalColor)
+
+    local normalTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    normalTime:Point("CENTER")
+    F.SetFontWithDB(normalTime, self.db.time.font)
+    normalTime.format = normalTimeFormat
+    self.bar.middlePanel.normalTime = normalTime
+
+    local flashTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    flashTime:Point("CENTER")
+    F.SetFontWithDB(flashTime, self.db.time.font)
+    flashTime.format = flashTimeFormat
+    self.bar.middlePanel.flashTime = flashTime
+
+    self:ScheduleTimer("SetUpTimeAreaTimer", 60 - tonumber(date("%S")))
+end
+
+function GB:SetUpTimeAreaTimer()
+    self:UpdateTime()
+    self.timeAreaUpdateTimer = self:ScheduleRepeatingTimer("UpdateTime", 60)
+end
+
+function GB:UpdateTime()
+    local panel = self.bar.middlePanel
+    local hour, min = date("%H"), date("%M")
+
+    if self.db.time.twentyFour then
+        hour = date("%I")
+    end
+
+    panel.normalTime:SetText(format(panel.normalTime.format, hour, min))
+    panel.flashTime:SetText(format(panel.flashTime.format, hour, min))
+end
+
+function GB:UpdateTimeArea()
+    local panel = self.bar.middlePanel
+
+    F.SetFontWithDB(panel.normalTime, self.db.time.font)
+    F.SetFontWithDB(panel.flashTime, self.db.time.font)
+
+    panel.flashTime:SetText("55:55")
+
+    self.bar.middlePanel:SetWidth(panel.flashTime:GetStringWidth()*1.309)
+    self.bar.middlePanel:SetHeight(panel.flashTime:GetStringHeight()*1.927)
+
+    if self.db.time.flash then 
+        E:Flash(panel.flashTime, 1, true)
+        panel.normalTime:Show()
+        panel.flashTime:Show()
+    else
+        E:StopFlash(panel.flashTime)
+        panel.normalTime:Hide()
+        panel.flashTime:Show()
+    end
+
+    self:UpdateTime()
 end
 
 -------------------------
@@ -257,7 +348,9 @@ end
 
 function GB:Test()
     self:ConstructBar()
+    self:ConstructTimeArea()
     self:ConstructButtons()
+    self:UpdateTimeArea()
     self:UpdateButtons()
     self:UpdateLayout()
 end

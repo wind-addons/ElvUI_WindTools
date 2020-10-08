@@ -7,6 +7,7 @@ local date = date
 local tonumber = tonumber
 local format = format
 local CreateFrame = CreateFrame
+local ToggleCharacter = ToggleCharacter
 
 local ButtonTypes = {
     NONE = {
@@ -69,9 +70,7 @@ local ButtonTypes = {
     PVE = {
         name = L["PVE"],
         icon = W.Media.Icons.barPVE,
-        func = function()
-            ToggleLFDParentFrame()
-        end
+        func = _G.ToggleLFDParentFrame
     },
     SCREENSHOT = {
         name = L["ScreenShot"],

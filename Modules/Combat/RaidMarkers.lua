@@ -235,7 +235,7 @@ function RM:CreateButtons()
 
 			button:SetAttribute("type*", "macro")
 			button:SetAttribute("macrotext1", format("/tm %d", i))
-			button:SetAttribute("macrotext2", ("/tm 9"))
+			button:SetAttribute("macrotext2", "/tm 9")
 
 			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
 			button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))

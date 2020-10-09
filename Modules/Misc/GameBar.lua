@@ -16,37 +16,47 @@ local ButtonTypes = {
     ACHIEVEMENT = {
         name = L["Achievement"],
         icon = W.Media.Icons.barAchievement,
-        func = _G.ToggleAchievementFrame
+        click = {
+            LeftButton = _G.ToggleAchievementFrame
+        }
     },
     CHARACTER = {
         name = L["Character"],
         icon = W.Media.Icons.barCharacter,
-        func = function()
-            ToggleCharacter("PaperDollFrame")
-        end
+        click = {
+            LeftButton = function()
+                ToggleCharacter("PaperDollFrame")
+            end
+        }
     },
     COLLECTIONS = {
         name = L["Collections"],
         icon = W.Media.Icons.barCollections,
-        func = _G.ToggleCollectionsJournal
+        click = {
+            LeftButton = _G.ToggleCollectionsJournal
+        }
     },
     ENCOUNTERJOURNAL = {
         name = L["Encounter Journal"],
         icon = W.Media.Icons.barEncounterJournal,
-        func = function()
-            if not IsAddOnLoaded("Blizzard_EncounterJournal") then
-                _G.EncounterJournal_LoadUI()
-            end
+        click = {
+            LeftButton = function()
+                if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+                    _G.EncounterJournal_LoadUI()
+                end
 
-            ToggleFrame(_G.EncounterJournal)
-        end
+                ToggleFrame(_G.EncounterJournal)
+            end
+        }
     },
     FRIENDS = {
         name = L["Friends"],
         icon = W.Media.Icons.barFriends,
-        func = function()
-            ToggleFriendsFrame(1)
-        end
+        click = {
+            LeftButton = function()
+                ToggleFriendsFrame(1)
+            end
+        }
     },
     HOME = {
         name = L["Home"],
@@ -59,51 +69,63 @@ local ButtonTypes = {
     PETJOURNAL = {
         name = L["Pet Journal"],
         icon = W.Media.Icons.barPetJournal,
-        func = function()
-            ToggleCollectionsJournal(2)
-        end
+        click = {
+            LeftButton = function()
+                ToggleCollectionsJournal(2)
+            end
+        }
     },
     GUILD = {
         name = L["Guild"],
         icon = W.Media.Icons.barGuild,
-        func = _G.ToggleGuildFrame
+        click = {
+            LeftButton = _G.ToggleGuildFrame
+        }
     },
     PVE = {
         name = L["PVE"],
         icon = W.Media.Icons.barPVE,
-        func = _G.ToggleLFDParentFrame
+        click = {
+            LeftButton = _G.ToggleLFDParentFrame
+        }
     },
     SCREENSHOT = {
         name = L["ScreenShot"],
         icon = W.Media.Icons.barScreenShot,
-        func = _G.Screenshot
+        click = {
+            LeftButton = _G.Screenshot
+        }
     },
     SPELLBOOK = {
         name = L["Spell Book"],
         icon = W.Media.Icons.barSpellBook,
-        func = function()
-            if not _G.SpellBookFrame:IsShown() then
-                ShowUIPanel(_G.SpellBookFrame)
-            else
-                HideUIPanel(_G.SpellBookFrame)
+        click = {
+            LeftButton = function()
+                if not _G.SpellBookFrame:IsShown() then
+                    ShowUIPanel(_G.SpellBookFrame)
+                else
+                    HideUIPanel(_G.SpellBookFrame)
+                end
             end
-        end
+        }
     },
     TALENTS = {
         name = L["Talents"],
         icon = W.Media.Icons.barTalents,
-        func = function()
-            if not _G.PlayerTalentFrame then
-                _G.TalentFrame_LoadUI()
-            end
+        click = {
+            LeftButton = function()
+                if not _G.PlayerTalentFrame then
+                    _G.TalentFrame_LoadUI()
+                end
 
-            local PlayerTalentFrame = _G.PlayerTalentFrame
-            if not PlayerTalentFrame:IsShown() then
-                ShowUIPanel(PlayerTalentFrame)
-            else
-                HideUIPanel(PlayerTalentFrame)
+                local PlayerTalentFrame = _G.PlayerTalentFrame
+                if not PlayerTalentFrame:IsShown() then
+                    ShowUIPanel(PlayerTalentFrame)
+                else
+                    HideUIPanel(PlayerTalentFrame)
+                end
             end
-        end
+        }
     }
 }
 
@@ -284,17 +306,17 @@ function GB:UpdateButton(button, config)
     button:Size(self.db.buttonSize)
     button.name = config.name
 
-    if config.func then
-        function button:Click(button)
-            print(button)
-            config.func()
+    if config.click then
+        function button:Click(mouseButton)
+            local func = mouseButton and config.click[mouseButton] or config.click.LeftButton
+            func()
         end
         button:SetAttribute("type*", "click")
         button:SetAttribute("clickbutton", button)
     elseif config.item then
         button:SetAttribute("type*", "item")
-		button:SetAttribute("item1", config.item.item1)
-		button:SetAttribute("item2", config.item.item2)
+        button:SetAttribute("item1", config.item.item1)
+        button:SetAttribute("item2", config.item.item2)
     end
 
     -- 普通状态

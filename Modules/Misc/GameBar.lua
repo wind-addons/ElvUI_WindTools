@@ -51,9 +51,10 @@ local ButtonTypes = {
     HOME = {
         name = L["Home"],
         icon = W.Media.Icons.barHome,
-        func = function()
-            ToggleFriendsFrame(1)
-        end
+        item = {
+            item1 = GetItemInfo(6948),
+            item2 = GetItemInfo(141605)
+        }
     },
     PETJOURNAL = {
         name = L["Pet Journal"],
@@ -113,7 +114,7 @@ function GB:ConstructBar()
         return
     end
 
-    local bar = CreateFrame("Frame", "WTGameBar", E.UIParent)
+    local bar = CreateFrame("Frame", "WTGameBar", E.UIParent, "SecureHandlerStateTemplate")
     bar:Size(800, 60)
     bar:Point("TOP", 0, -20)
 
@@ -256,6 +257,7 @@ function GB:ConstructButton()
 
     local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(self.db.buttonSize)
+    button:RegisterForClicks("AnyUp")
 
     local normalTex = button:CreateTexture(nil, "ARTWORK")
     normalTex:Point("CENTER")
@@ -275,14 +277,25 @@ function GB:ConstructButton()
 end
 
 function GB:UpdateButton(button, config)
+    if InCombatLockdown() then
+        return
+    end
+
     button:Size(self.db.buttonSize)
     button.name = config.name
-    button:SetScript(
-        "OnClick",
-        function()
+
+    if config.func then
+        function button:Click(button)
+            print(button)
             config.func()
         end
-    )
+        button:SetAttribute("type*", "click")
+        button:SetAttribute("clickbutton", button)
+    elseif config.item then
+        button:SetAttribute("type*", "item")
+		button:SetAttribute("item1", config.item.item1)
+		button:SetAttribute("item2", config.item.item2)
+    end
 
     -- 普通状态
     local r, g, b = 1, 1, 1

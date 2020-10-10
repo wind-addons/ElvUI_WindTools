@@ -352,7 +352,7 @@ end
 function GB:UpdateTime()
     local panel = self.bar.middlePanel
 
-    local hour = self.db.time.twentyFour and date("%H") or date("%I")
+    local hour = self.db and self.db.time and self.db.time.twentyFour and date("%H") or date("%I")
     local min = date("%M")
 
     panel.hour:SetText(format(panel.hour.format, hour))
@@ -626,7 +626,9 @@ function GB:ProfileUpdate()
         if self.Initialized then
             self.bar:Show()
             self:UpdateHomeButton()
+            self:UpdateTimeFormat()
             self:UpdateTimeArea()
+            self:UpdateTime()
             self:UpdateButtons()
             self:UpdateLayout()
         else

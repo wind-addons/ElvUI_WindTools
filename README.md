@@ -94,6 +94,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 5. **Pause to Slash**: Convert CJK pause to slash.
 6. **Disable Talking Head**: Disable the talking head.
 7. **Tags**: Additional tags like range, health text without the sign, class color.
+8. **Game Bar**: A system bar in modern style; Support customization.
 
 More features are coming soon.
 

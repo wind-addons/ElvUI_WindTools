@@ -584,8 +584,24 @@ options.gameBar = {
                     max = 30,
                     step = 1
                 },
-                spacing = {
+                timeAreaWidth = {
                     order = 3,
+                    type = "range",
+                    name = L["Time Area Width"],
+                    min = 1,
+                    max = 200,
+                    step = 1,
+                },
+                timeAreaHeight = {
+                    order = 4,
+                    type = "range",
+                    name = L["Time Area Height"],
+                    min = 1,
+                    max = 100,
+                    step = 1,
+                },
+                spacing = {
+                    order = 5,
                     type = "range",
                     name = L["Button Spacing"],
                     desc = L["The spacing between buttons."],
@@ -594,7 +610,7 @@ options.gameBar = {
                     step = 1
                 },
                 buttonSize = {
-                    order = 4,
+                    order = 6,
                     type = "range",
                     name = L["Button Size"],
                     desc = L["The size of the buttons."],

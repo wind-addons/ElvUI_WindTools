@@ -34,7 +34,7 @@ local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
 local ButtonTypes = {
     NONE = {
-        name = L["NONE"]
+        name = L["None"]
     },
     ACHIEVEMENT = {
         name = L["Achievement"],
@@ -526,17 +526,17 @@ function GB:UpdateLayout()
     local numLeftButtons, numRightButtons = 0, 0
 
     -- 左面板
-    local isFirst = true
     local lastButton = nil
     for i = 1, 6 do
         local button = self.buttons[i]
-        if button.name ~= L["NONE"] then
+        if button.name ~= L["None"] then
             button:Show()
             button:ClearAllPoints()
-            if isFirst then
+            if not lastButton then
+                button:ClearAllPoints()
                 button:Point("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
-                isFirst = false
             else
+                button:ClearAllPoints()
                 button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
             end
             lastButton = button
@@ -557,17 +557,17 @@ function GB:UpdateLayout()
     end
 
     -- 右面板
-    isFirst = true
     lastButton = nil
     for i = 1, 6 do
         local button = self.buttons[i + 6]
-        if button.name ~= "NONE" then
+        if button.name ~= L["None"] then
             button:Show()
             button:ClearAllPoints()
-            if isFirst then
+            if not lastButton then
+                button:ClearAllPoints()
                 button:Point("LEFT", self.bar.rightPanel, "LEFT", self.db.backdropSpacing, 0)
-                isFirst = false
             else
+                button:ClearAllPoints()
                 button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
             end
             lastButton = button

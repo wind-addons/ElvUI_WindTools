@@ -88,6 +88,9 @@
     - cadcamzy (EUI)
 
 # Medias
+- Iconfont (Alibaba)
+    - Media/Icons/GameBar
+
 - Ferous Media (Ferous)
     - Media/Texture/Vignetting.tga
 

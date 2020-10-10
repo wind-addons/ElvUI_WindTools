@@ -13,7 +13,7 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
-local GameTooltip = _G.GameTooltip
+local GameTooltip = GameTooltip
 local GetItemInfo = GetItemInfo
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown

@@ -525,6 +525,7 @@ function GB:Initialize()
     self:ConstructBar()
     self:ConstructTimeArea()
     self:ConstructButtons()
+    self:UpdateHomeButton()
     self:UpdateTimeArea()
     self:UpdateButtons()
     self:UpdateLayout()
@@ -541,6 +542,7 @@ function GB:ProfileUpdate()
     if self.db.enable then
         if self.Initialized then
             self.bar:Show()
+            self:UpdateHomeButton()
             self:UpdateTimeArea()
             self:UpdateButtons()
             self:UpdateLayout()
@@ -557,6 +559,11 @@ function GB:ProfileUpdate()
             self.bar:Hide()
         end
     end
+end
+
+function GB:UpdateHomeButton()
+    ButtonTypes.HOME.item.item1 = GetItemInfo(self.db.home.left)
+    ButtonTypes.HOME.item.item2 = GetItemInfo(self.db.home.right)
 end
 
 function GB:GetAvailableButtons()

@@ -838,6 +838,10 @@ P.misc = {
                 style = "OUTLINE"
             }
         },
+        home = {
+            left = "6948",
+            right = "141605"
+        },
         left = {
             [1] = "CHARACTER",
             [2] = "SPELLBOOK",

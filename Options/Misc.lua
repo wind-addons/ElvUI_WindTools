@@ -590,7 +590,7 @@ options.gameBar = {
                     name = L["Time Area Width"],
                     min = 1,
                     max = 200,
-                    step = 1,
+                    step = 1
                 },
                 timeAreaHeight = {
                     order = 4,
@@ -598,7 +598,7 @@ options.gameBar = {
                     name = L["Time Area Height"],
                     min = 1,
                     max = 100,
-                    step = 1,
+                    step = 1
                 },
                 spacing = {
                     order = 5,
@@ -767,7 +767,7 @@ options.gameBar = {
                     end,
                     min = 1,
                     max = 60,
-                    step = 1,
+                    step = 1
                 },
                 font = {
                     order = 6,
@@ -814,8 +814,25 @@ options.gameBar = {
                 }
             }
         },
-        leftButtons = {
+        home = {
             order = 13,
+            type = "group",
+            name = L["Home"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
+            get = function(info)
+                return E.db.WT.misc.gameBar.home[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar.home[info[#info]] = value
+                GB:UpdateHomeButton()
+                GB:UpdateButtons()
+            end,
+            args = {}
+        },
+        leftButtons = {
+            order = 14,
             type = "group",
             name = L["Left Buttons"],
             disabled = function()
@@ -831,7 +848,7 @@ options.gameBar = {
             args = {}
         },
         rightButtons = {
-            order = 14,
+            order = 16,
             type = "group",
             name = L["Right Buttons"],
             disabled = function()
@@ -851,6 +868,24 @@ options.gameBar = {
 
 do
     local availableButtons = GB:GetAvailableButtons()
+    local heartstones = {
+        ["6948"] = GetItemInfo(6948), -- 爐石
+        ["110560"] = GetItemInfo(110560), -- 要塞爐石
+        ["140192"] = GetItemInfo(140192), -- 達拉然爐石
+        ["141605"] = GetItemInfo(141605), -- 飛行管理員的哨子
+        ["162973"] = GetItemInfo(162973), -- 冬天爺爺的爐石
+        ["163045"] = GetItemInfo(163045), -- 無頭騎士的爐石
+        ["165669"] = GetItemInfo(165669), -- 新年長者的爐石
+        ["165670"] = GetItemInfo(165670), -- 傳播者充滿愛的爐石
+        ["165802"] = GetItemInfo(165802), -- 貴族園丁的爐石
+        ["166746"] = GetItemInfo(166746), -- 吞火者的爐石
+        ["166747"] = GetItemInfo(166747), -- 啤酒節狂歡者的爐石
+        ["168907"] = GetItemInfo(168907), -- 全像數位化爐石
+        ["172179"] = GetItemInfo(172179), -- 永恆旅人的爐石
+        ["180290"] = GetItemInfo(180290), -- 暗夜妖精的爐石
+        ["182773"] = GetItemInfo(182773), -- 死靈領主爐石
+        ["184353"] = GetItemInfo(184353) -- 琪瑞安族爐石
+    }
 
     for i = 1, 6 do
         options.gameBar.args.leftButtons.args[tostring(i)] = {
@@ -867,4 +902,18 @@ do
             values = availableButtons
         }
     end
+
+    options.gameBar.args.home.args.left = {
+        order = 1,
+        type = "select",
+        name = L["Left Button"],
+        values = heartstones
+    }
+
+    options.gameBar.args.home.args.right = {
+        order = 2,
+        type = "select",
+        name = L["Right Button"],
+        values = heartstones
+    }
 end

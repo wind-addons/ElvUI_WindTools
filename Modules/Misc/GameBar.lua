@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
-local GB = W:NewModule("GameBar", "AceHook-3.0")
+local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local date = date
@@ -137,14 +137,15 @@ function GB:ConstructBar()
         return
     end
 
-    local bar = CreateFrame("Frame", "WTGameBar", E.UIParent, "SecureHandlerStateTemplate")
+    local bar = CreateFrame("Frame", "WTGameBar", E.UIParent)
     bar:Size(800, 60)
     bar:Point("TOP", 0, -20)
 
-    local middlePanel = CreateFrame("Frame", "WTGameBarMiddlePanel", bar)
+    local middlePanel = CreateFrame("Button", "WTGameBarMiddlePanel", bar, "SecureActionButtonTemplate")
     middlePanel:Size(81, 50)
     middlePanel:Point("CENTER")
     middlePanel:CreateBackdrop("Transparent")
+    middlePanel:RegisterForClicks("AnyUp")
     bar.middlePanel = middlePanel
 
     local leftPanel = CreateFrame("Frame", "WTGameBarLeftPanel", bar)
@@ -169,23 +170,67 @@ function GB:ConstructBar()
 end
 
 function GB:ConstructTimeArea()
-    local normalTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-    normalTime:Point("CENTER")
-    F.SetFontWithDB(normalTime, self.db.time.font)
-    self.bar.middlePanel.normalTime = normalTime
+    local colon = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    colon:Point("CENTER")
+    F.SetFontWithDB(colon, self.db.time.font)
+    self.bar.middlePanel.colon = colon
 
-    local flashTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
-    flashTime:Point("CENTER")
-    F.SetFontWithDB(flashTime, self.db.time.font)
-    self.bar.middlePanel.flashTime = flashTime
+    local hour = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    hour:Point("RIGHT", colon, "LEFT", 1, 0)
+    F.SetFontWithDB(hour, self.db.time.font)
+    self.bar.middlePanel.hour = hour
+
+    local hourHover = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    hourHover:Point("RIGHT", colon, "LEFT", 1, 0)
+    F.SetFontWithDB(hourHover, self.db.time.font)
+    hourHover:SetAlpha(0)
+    self.bar.middlePanel.hourHover = hourHover
+
+    local minutes = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    minutes:Point("LEFT", colon, "RIGHT", 0, 0)
+    F.SetFontWithDB(minutes, self.db.time.font)
+    self.bar.middlePanel.minutes = minutes
+
+    local minutesHover = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    minutesHover:Point("LEFT", colon, "RIGHT", 0, 0)
+    F.SetFontWithDB(minutesHover, self.db.time.font)
+    minutesHover:SetAlpha(0)
+    self.bar.middlePanel.minutesHover = minutesHover
+
+    self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
     self:UpdateTimeFormat()
     self:UpdateTime()
     self.timeAreaUpdateTimer =
         C_Timer_NewTicker(
-            self.db.time.interval,
+        self.db.time.interval,
         function()
             GB:UpdateTime()
+        end
+    )
+
+    self:HookScript(
+        self.bar.middlePanel,
+        "OnEnter",
+        function(panel)
+            E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
+            E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
+        end
+    )
+
+    self:HookScript(
+        self.bar.middlePanel,
+        "OnLeave",
+        function(panel)
+            E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
+            E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
+        end
+    )
+
+    self.bar.middlePanel:SetScript(
+        "OnClick",
+        function()
+            ToggleFrame(_G.TimeManagerFrame)
         end
     )
 end
@@ -194,7 +239,7 @@ function GB:UpdateTimeTicker()
     self.timeAreaUpdateTimer:Cancel()
     self.timeAreaUpdateTimer =
         C_Timer_NewTicker(
-            self.db.time.interval,
+        self.db.time.interval,
         function()
             GB:UpdateTime()
         end
@@ -229,40 +274,42 @@ function GB:UpdateTimeFormat()
         }
     end
 
-    local normalTimeFormat = F.CreateColorString("%s %s", normalColor)
-    local flashTimeFormat = F.CreateColorString(":", hoverColor)
-
-    self.bar.middlePanel.normalTime.format = normalTimeFormat
-    self.bar.middlePanel.flashTime.format = flashTimeFormat
+    self.bar.middlePanel.hour.format = F.CreateColorString("%s", normalColor)
+    self.bar.middlePanel.hourHover.format = F.CreateColorString("%s", hoverColor)
+    self.bar.middlePanel.minutes.format = F.CreateColorString("%s", normalColor)
+    self.bar.middlePanel.minutesHover.format = F.CreateColorString("%s", hoverColor)
+    self.bar.middlePanel.colon:SetText(F.CreateColorString(":", hoverColor))
 end
 
 function GB:UpdateTime()
     local panel = self.bar.middlePanel
-    local hour, min = date("%H"), date("%M")
 
-    if self.db.time.twentyFour then
-        hour = date("%I")
-    end
+    local hour = self.db.time.twentyFour and date("%H") or date("%I")
+    local min = date("%M")
 
-    panel.normalTime:SetText(format(panel.normalTime.format, hour, min))
-    panel.flashTime:SetText(format(panel.flashTime.format, hour, min))
+    panel.hour:SetText(format(panel.hour.format, hour))
+    panel.hourHover:SetText(format(panel.hourHover.format, hour))
+    panel.minutes:SetText(format(panel.minutes.format, min))
+    panel.minutesHover:SetText(format(panel.minutesHover.format, min))
+
+    panel.colon:ClearAllPoints()
+    local offset = (panel.hour:GetStringWidth() - panel.minutes:GetStringWidth()) / 2
+    panel.colon:Point("CENTER", offset, -1)
 end
 
 function GB:UpdateTimeArea()
     local panel = self.bar.middlePanel
 
-    F.SetFontWithDB(panel.normalTime, self.db.time.font)
-    F.SetFontWithDB(panel.flashTime, self.db.time.font)
-
-    panel.flashTime:SetText("55:55")
-
-    self.bar.middlePanel:SetWidth(panel.flashTime:GetStringWidth() * 1.309)
-    self.bar.middlePanel:SetHeight(panel.flashTime:GetStringHeight() * 1.927)
+    F.SetFontWithDB(panel.hour, self.db.time.font)
+    F.SetFontWithDB(panel.hourHover, self.db.time.font)
+    F.SetFontWithDB(panel.minutes, self.db.time.font)
+    F.SetFontWithDB(panel.minutesHover, self.db.time.font)
+    F.SetFontWithDB(panel.colon, self.db.time.font)
 
     if self.db.time.flash then
-        E:Flash(panel.flashTime, 1, true)
+        E:Flash(panel.colon, 1, true)
     else
-        E:StopFlash(panel.flashTime)
+        E:StopFlash(panel.colon)
     end
 
     self:UpdateTime()
@@ -281,7 +328,7 @@ function GB:ConstructButton()
         return
     end
 
-    local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
+    local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
     button:Size(self.db.buttonSize)
     button:RegisterForClicks("AnyUp")
 
@@ -454,6 +501,9 @@ function GB:UpdateLayout()
         local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
         self.bar.rightPanel:Size(panelWidth, panelHeight)
     end
+
+    -- 时间区域
+    self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
 end
 
 function GB:PLAYER_REGEN_ENABLED()
@@ -495,7 +545,12 @@ function GB:ProfileUpdate()
             self:UpdateButtons()
             self:UpdateLayout()
         else
-            self.Initialize()
+            if InCombatLockdown() then
+                self:RegisterEvent("PLAYER_REGEN_ENABLED")
+                return
+            else
+                self.Initialize()
+            end
         end
     else
         if self.Initialized then

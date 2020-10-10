@@ -132,8 +132,6 @@ local ButtonTypes = {
     }
 }
 
--------------------------
--- 条
 function GB:ConstructBar()
     if self.bar then
         return
@@ -170,8 +168,6 @@ function GB:ConstructBar()
     self.bar = bar
 end
 
--------------------------
--- 时间
 function GB:ConstructTimeArea()
     local normalTime = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
     normalTime:Point("CENTER")
@@ -272,8 +268,6 @@ function GB:UpdateTimeArea()
     self:UpdateTime()
 end
 
--------------------------
--- 按钮
 function GB:ButtonOnEnter(button)
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
 end
@@ -386,8 +380,6 @@ function GB:UpdateButtons()
     end
 end
 
--------------------------
--- 排列
 function GB:UpdateLayout()
     if self.db.backdrop then
         self.bar.leftPanel.backdrop:Show()
@@ -464,9 +456,19 @@ function GB:UpdateLayout()
     end
 end
 
+function GB:PLAYER_REGEN_ENABLED()
+    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    self:Initialize()
+end
+
 function GB:Initialize()
     self.db = E.db.WT.misc.gameBar
     if not self.db or not self.db.enable then
+        return
+    end
+
+    if InCombatLockdown() then
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
 

@@ -834,7 +834,7 @@ options.gameBar = {
         leftButtons = {
             order = 14,
             type = "group",
-            name = L["Left Buttons"],
+            name = L["Left Panel"],
             disabled = function()
                 return not E.db.WT.misc.gameBar.enable
             end,
@@ -850,7 +850,7 @@ options.gameBar = {
         rightButtons = {
             order = 16,
             type = "group",
-            name = L["Right Buttons"],
+            name = L["Right Panel"],
             disabled = function()
                 return not E.db.WT.misc.gameBar.enable
             end,

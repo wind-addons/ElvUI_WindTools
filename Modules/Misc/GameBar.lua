@@ -185,19 +185,20 @@ function GB:ConstructTimeArea()
 
     self:UpdateTimeFormat()
     self:UpdateTime()
-    C_Timer_After(
-        62 - tonumber(date("%S")),
+    self.timeAreaUpdateTimer =
+        C_Timer_NewTicker(
+            self.db.time.interval,
         function()
-            GB:SetUpTimeAreaTimer()
+            GB:UpdateTime()
         end
     )
 end
 
-function GB:SetUpTimeAreaTimer()
-    self:UpdateTime()
+function GB:UpdateTimeTicker()
+    self.timeAreaUpdateTimer:Cancel()
     self.timeAreaUpdateTimer =
         C_Timer_NewTicker(
-        60,
+            self.db.time.interval,
         function()
             GB:UpdateTime()
         end
@@ -240,8 +241,6 @@ function GB:UpdateTimeFormat()
 end
 
 function GB:UpdateTime()
-    print(date("%H:%M:%S"))
-
     local panel = self.bar.middlePanel
     local hour, min = date("%H"), date("%M")
 

@@ -617,7 +617,8 @@ options.gameBar = {
             set = function(info, value)
                 E.db.WT.misc.gameBar[info[#info]] = value
                 GB:UpdateButtons()
-                GB:UpdateTimeArea()
+                GB:UpdateTimeFormat()
+                GB:UpdateTime()
             end,
             args = {
                 fadeTime = {
@@ -739,8 +740,21 @@ options.gameBar = {
                     type = "toggle",
                     name = L["Flash"]
                 },
-                font = {
+                interval = {
                     order = 5,
+                    type = "range",
+                    name = L["Interval"],
+                    desc = L["The interval of updating."],
+                    set = function(info, value)
+                        E.db.WT.misc.gameBar.time[info[#info]] = value
+                        GB:UpdateTimeTicker()
+                    end,
+                    min = 1,
+                    max = 60,
+                    step = 1,
+                },
+                font = {
+                    order = 6,
                     type = "group",
                     name = L["Font Setting"],
                     inline = true,

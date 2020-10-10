@@ -826,7 +826,6 @@ P.misc = {
         customNormalColor = {r = 1, g = 1, b = 1},
         customHoverColor = {r = 0, g = 0.659, b = 1},
         time = {
-            enable = true,
             localTime = true,
             twentyFour = true,
             flash = true,

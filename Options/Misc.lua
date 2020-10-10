@@ -736,11 +736,6 @@ options.gameBar = {
                 GB:UpdateLayout()
             end,
             args = {
-                enable = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Enable"]
-                },
                 localTime = {
                     order = 2,
                     type = "toggle",

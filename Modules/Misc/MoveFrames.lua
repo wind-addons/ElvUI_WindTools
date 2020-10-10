@@ -232,6 +232,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_TalkingHeadUI"] = {
         "TalkingHeadFrame"
     },
+    ["Blizzard_TimeManager"] = {
+        "TimeManagerFrame"
+    },
     ["Blizzard_TradeSkillUI"] = {
         ["TradeSkillFrame"] = {
             "TradeSkillFrame.RecipeList",

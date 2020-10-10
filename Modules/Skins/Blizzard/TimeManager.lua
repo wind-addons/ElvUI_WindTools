@@ -7,13 +7,9 @@ function S:Blizzard_TimeManager()
     if not self:CheckDB("timemanager", "timeManager") then
         return
     end
-
-    local frame = _G.StopwatchFrame
-    if not frame then
-        return
-    end
-
-    self:CreateShadow(frame.backdrop)
+    
+    self:CreateShadow(_G.TimeManagerFrame.backdrop)
+    self:CreateShadow(_G.StopwatchFrame.backdrop)
     _G.StopwatchTicker:ClearAllPoints()
     _G.StopwatchTicker:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -49, 1)
 end

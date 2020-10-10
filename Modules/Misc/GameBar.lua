@@ -4,10 +4,25 @@ local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local date = date
-local tonumber = tonumber
 local format = format
+local pairs = pairs
+local tinsert = tinsert
+local tonumber = tonumber
+local unpack = unpack
+
 local CreateFrame = CreateFrame
+local EncounterJournal_LoadUI = EncounterJournal_LoadUI
+local GetItemInfo = GetItemInfo
+local HideUIPanel = HideUIPanel
+local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
+local ShowUIPanel = ShowUIPanel
+local SpellBookFrame = SpellBookFrame
+local TalentFrame_LoadUI = TalentFrame_LoadUI
 local ToggleCharacter = ToggleCharacter
+local ToggleCollectionsJournal = ToggleCollectionsJournal
+local ToggleFrame = ToggleFrame
+local ToggleFriendsFrame = ToggleFriendsFrame
 
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
@@ -20,7 +35,7 @@ local ButtonTypes = {
         name = L["Achievement"],
         icon = W.Media.Icons.barAchievement,
         click = {
-            LeftButton = _G.ToggleAchievementFrame
+            LeftButton = ToggleAchievementFrame
         }
     },
     CHARACTER = {
@@ -36,7 +51,7 @@ local ButtonTypes = {
         name = L["Collections"],
         icon = W.Media.Icons.barCollections,
         click = {
-            LeftButton = _G.ToggleCollectionsJournal
+            LeftButton = ToggleCollectionsJournal
         }
     },
     ENCOUNTERJOURNAL = {
@@ -45,7 +60,7 @@ local ButtonTypes = {
         click = {
             LeftButton = function()
                 if not IsAddOnLoaded("Blizzard_EncounterJournal") then
-                    _G.EncounterJournal_LoadUI()
+                    EncounterJournal_LoadUI()
                 end
 
                 ToggleFrame(_G.EncounterJournal)
@@ -82,21 +97,21 @@ local ButtonTypes = {
         name = L["Guild"],
         icon = W.Media.Icons.barGuild,
         click = {
-            LeftButton = _G.ToggleGuildFrame
+            LeftButton = ToggleGuildFrame
         }
     },
     PVE = {
         name = L["PVE"],
         icon = W.Media.Icons.barPVE,
         click = {
-            LeftButton = _G.ToggleLFDParentFrame
+            LeftButton = ToggleLFDParentFrame
         }
     },
     SCREENSHOT = {
         name = L["ScreenShot"],
         icon = W.Media.Icons.barScreenShot,
         click = {
-            LeftButton = _G.Screenshot
+            LeftButton = Screenshot
         }
     },
     SPELLBOOK = {
@@ -104,10 +119,10 @@ local ButtonTypes = {
         icon = W.Media.Icons.barSpellBook,
         click = {
             LeftButton = function()
-                if not _G.SpellBookFrame:IsShown() then
-                    ShowUIPanel(_G.SpellBookFrame)
+                if not SpellBookFrame:IsShown() then
+                    ShowUIPanel(SpellBookFrame)
                 else
-                    HideUIPanel(_G.SpellBookFrame)
+                    HideUIPanel(SpellBookFrame)
                 end
             end
         }
@@ -117,8 +132,8 @@ local ButtonTypes = {
         icon = W.Media.Icons.barTalents,
         click = {
             LeftButton = function()
-                if not _G.PlayerTalentFrame then
-                    _G.TalentFrame_LoadUI()
+                if not PlayerTalentFrame then
+                    TalentFrame_LoadUI()
                 end
 
                 local PlayerTalentFrame = _G.PlayerTalentFrame

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
-local GB = W:NewModule("GameBar", "AceTimer-3.0", "AceHook-3.0")
+local GB = W:NewModule("GameBar", "AceHook-3.0")
 
 local _G = _G
 local date = date
@@ -8,6 +8,9 @@ local tonumber = tonumber
 local format = format
 local CreateFrame = CreateFrame
 local ToggleCharacter = ToggleCharacter
+
+local C_Timer_After = C_Timer.After
+local C_Timer_NewTicker = C_Timer.NewTicker
 
 local ButtonTypes = {
     NONE = {
@@ -181,12 +184,24 @@ function GB:ConstructTimeArea()
     self.bar.middlePanel.flashTime = flashTime
 
     self:UpdateTimeFormat()
-    self:ScheduleTimer("SetUpTimeAreaTimer", 60 - tonumber(date("%S")))
+    self:UpdateTime()
+    C_Timer_After(
+        62 - tonumber(date("%S")),
+        function()
+            GB:SetUpTimeAreaTimer()
+        end
+    )
 end
 
 function GB:SetUpTimeAreaTimer()
     self:UpdateTime()
-    self.timeAreaUpdateTimer = self:ScheduleRepeatingTimer("UpdateTime", 60)
+    self.timeAreaUpdateTimer =
+        C_Timer_NewTicker(
+        60,
+        function()
+            GB:UpdateTime()
+        end
+    )
 end
 
 function GB:UpdateTimeFormat()
@@ -218,15 +233,15 @@ function GB:UpdateTimeFormat()
     end
 
     local normalTimeFormat = F.CreateColorString("%s %s", normalColor)
-    local flashTimeFormat =
-        F.CreateColorString("%s", normalColor) ..
-        F.CreateColorString(":", hoverColor) .. F.CreateColorString("%s", normalColor)
+    local flashTimeFormat = F.CreateColorString(":", hoverColor)
 
     self.bar.middlePanel.normalTime.format = normalTimeFormat
     self.bar.middlePanel.flashTime.format = flashTimeFormat
 end
 
 function GB:UpdateTime()
+    print(date("%H:%M:%S"))
+
     local panel = self.bar.middlePanel
     local hour, min = date("%H"), date("%M")
 
@@ -251,12 +266,8 @@ function GB:UpdateTimeArea()
 
     if self.db.time.flash then
         E:Flash(panel.flashTime, 1, true)
-        panel.normalTime:Show()
-        panel.flashTime:Show()
     else
         E:StopFlash(panel.flashTime)
-        panel.normalTime:Hide()
-        panel.flashTime:Show()
     end
 
     self:UpdateTime()
@@ -397,6 +408,7 @@ function GB:UpdateLayout()
     for i = 1, 6 do
         local button = self.buttons[i]
         if button.name ~= L["NONE"] then
+            button:Show()
             button:ClearAllPoints()
             if isFirst then
                 button:Point("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
@@ -406,13 +418,20 @@ function GB:UpdateLayout()
             end
             lastButton = button
             numLeftButtons = numLeftButtons + 1
+        else
+            button:Hide()
         end
     end
 
-    local panelWidth =
-        self.db.backdropSpacing * 2 + (numLeftButtons - 1) * self.db.spacing + numLeftButtons * self.db.buttonSize
-    local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
-    self.bar.leftPanel:Size(panelWidth, panelHeight)
+    if numLeftButtons == 0 then
+        self.bar.leftPanel:Hide()
+    else
+        self.bar.leftPanel:Show()
+        local panelWidth =
+            self.db.backdropSpacing * 2 + (numLeftButtons - 1) * self.db.spacing + numLeftButtons * self.db.buttonSize
+        local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
+        self.bar.leftPanel:Size(panelWidth, panelHeight)
+    end
 
     -- 右面板
     isFirst = true
@@ -420,6 +439,7 @@ function GB:UpdateLayout()
     for i = 1, 6 do
         local button = self.buttons[i + 6]
         if button.name ~= "NONE" then
+            button:Show()
             button:ClearAllPoints()
             if isFirst then
                 button:Point("LEFT", self.bar.rightPanel, "LEFT", self.db.backdropSpacing, 0)
@@ -429,27 +449,57 @@ function GB:UpdateLayout()
             end
             lastButton = button
             numRightButtons = numRightButtons + 1
+        else
+            button:Hide()
         end
     end
 
-    panelWidth =
-        self.db.backdropSpacing * 2 + (numRightButtons - 1) * self.db.spacing + numRightButtons * self.db.buttonSize
-    self.bar.rightPanel:Size(panelWidth, panelHeight)
-end
-
-function GB:Test()
-    self:ConstructBar()
-    self:ConstructTimeArea()
-    self:ConstructButtons()
-    self:UpdateTimeArea()
-    self:UpdateButtons()
-    self:UpdateLayout()
+    if numRightButtons == 0 then
+        self.bar.rightPanel:Hide()
+    else
+        self.bar.rightPanel:Show()
+        local panelWidth =
+            self.db.backdropSpacing * 2 + (numRightButtons - 1) * self.db.spacing + numRightButtons * self.db.buttonSize
+        local panelHeight = self.db.backdropSpacing * 2 + self.db.buttonSize
+        self.bar.rightPanel:Size(panelWidth, panelHeight)
+    end
 end
 
 function GB:Initialize()
     self.db = E.db.WT.misc.gameBar
     if not self.db or not self.db.enable then
         return
+    end
+
+    self:ConstructBar()
+    self:ConstructTimeArea()
+    self:ConstructButtons()
+    self:UpdateTimeArea()
+    self:UpdateButtons()
+    self:UpdateLayout()
+
+    self.Initialized = true
+end
+
+function GB:ProfileUpdate()
+    self.db = E.db.WT.misc.gameBar
+    if not self.db then
+        return
+    end
+
+    if self.db.enable then
+        if self.Initialized then
+            self.bar:Show()
+            self:UpdateTimeArea()
+            self:UpdateButtons()
+            self:UpdateLayout()
+        else
+            self.Initialize()
+        end
+    else
+        if self.Initialized then
+            self.bar:Hide()
+        end
     end
 end
 
@@ -462,6 +512,5 @@ function GB:GetAvailableButtons()
 
     return buttons
 end
-
 
 W:RegisterModule(GB:GetName())

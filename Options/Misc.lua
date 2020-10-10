@@ -3,6 +3,7 @@ local options = W.options.misc.args
 local LSM = E.Libs.LSM
 local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
+local GB = W:GetModule("GameBar")
 
 local format = format
 local tonumber = tonumber
@@ -50,12 +51,12 @@ options.cvars = {
                 floatingCombatTextCombatDamage = {
                     order = 1,
                     type = "toggle",
-                    name = L["Floating Damage Text"],
+                    name = L["Floating Damage Text"]
                 },
                 floatingCombatTextCombatHealing = {
                     order = 2,
                     type = "toggle",
-                    name = L["Floating Healing Text"],
+                    name = L["Floating Healing Text"]
                 },
                 WorldTextScale = {
                     order = 3,
@@ -69,7 +70,7 @@ options.cvars = {
                     end,
                     min = 0.1,
                     max = 5,
-                    step = 0.1,
+                    step = 0.1
                 },
                 SpellQueueWindow = {
                     order = 4,
@@ -83,7 +84,7 @@ options.cvars = {
                     end,
                     min = 0,
                     max = 400,
-                    step = 1,
+                    step = 1
                 }
             }
         },
@@ -517,5 +518,297 @@ do
                 subIndex = subIndex + 1
             end
         end
+    end
+end
+
+options.gameBar = {
+    order = 8,
+    type = "group",
+    name = L["Game Bar"],
+    get = function(info)
+        return E.db.WT.misc.gameBar[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc.gameBar[info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add a game bar for improving QoL."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            desc = L["Toggle the game bar"]
+        },
+        general = {
+            order = 10,
+            type = "group",
+            name = L["General"],
+            get = function(info)
+                return E.db.WT.misc.gameBar[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar[info[#info]] = value
+            end,
+            args = {
+                backdrop = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Bar Backdrop"],
+                    desc = L["Show a backdrop of the bar."]
+                },
+                backdropSpacing = {
+                    order = 2,
+                    type = "range",
+                    name = L["Backdrop Spacing"],
+                    desc = L["The spacing between the backdrop and the buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+                spacing = {
+                    order = 3,
+                    type = "range",
+                    name = L["Button Spacing"],
+                    desc = L["The spacing between buttons."],
+                    min = 1,
+                    max = 30,
+                    step = 1
+                },
+                buttonSize = {
+                    order = 4,
+                    type = "range",
+                    name = L["Button Size"],
+                    desc = L["The size of the buttons."],
+                    min = 2,
+                    max = 80,
+                    step = 1
+                }
+            }
+        },
+        display = {
+            order = 11,
+            type = "group",
+            name = L["Display"],
+            get = function(info)
+                return E.db.WT.misc.gameBar[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar[info[#info]] = value
+            end,
+            args = {
+                fadeTime = {
+                    order = 1,
+                    type = "range",
+                    name = L["Fade Time"],
+                    desc = L["The animation speed."],
+                    min = 0,
+                    max = 3,
+                    step = 0.01
+                },
+                normal = {
+                    order = 2,
+                    type = "group",
+                    name = L["Normal"],
+                    inline = true,
+                    args = {
+                        normalColor = {
+                            order = 1,
+                            type = "select",
+                            name = L["Mode"],
+                            values = {
+                                NONE = L["None"],
+                                CLASS = L["Class Color"],
+                                VALUE = L["Value Color"],
+                                CUSTOM = L["Custom"]
+                            }
+                        },
+                        customNormalColor = {
+                            order = 2,
+                            type = "color",
+                            name = L["Custom Color"],
+                            hidden = function()
+                                return E.db.WT.misc.gameBar.normalColor ~= "CUSTOM"
+                            end,
+                            get = function(info)
+                                local db = E.db.WT.misc.gameBar[info[#info]]
+                                local default = P.misc.gameBar[info[#info]]
+                                return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                local db = E.db.WT.misc.gameBar[info[#info]]
+                                db.r, db.g, db.b, db.a = r, g, b, a
+                            end
+                        }
+                    }
+                },
+                hover = {
+                    order = 3,
+                    type = "group",
+                    name = L["Hover"],
+                    inline = true,
+                    args = {
+                        hoverColor = {
+                            order = 1,
+                            type = "select",
+                            name = L["Mode"],
+                            values = {
+                                NONE = L["None"],
+                                CLASS = L["Class Color"],
+                                VALUE = L["Value Color"],
+                                CUSTOM = L["Custom"]
+                            }
+                        },
+                        customHoverColor = {
+                            order = 2,
+                            type = "color",
+                            name = L["Custom Color"],
+                            hidden = function()
+                                return E.db.WT.misc.gameBar.hoverColor ~= "CUSTOM"
+                            end,
+                            get = function(info)
+                                local db = E.db.WT.misc.gameBar[info[#info]]
+                                local default = P.misc.gameBar[info[#info]]
+                                return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                local db = E.db.WT.misc.gameBar[info[#info]]
+                                db.r, db.g, db.b, db.a = r, g, b, a
+                            end
+                        }
+                    }
+                }
+            }
+        },
+        time = {
+            order = 12,
+            type = "group",
+            name = L["Time"],
+            get = function(info)
+                return E.db.WT.misc.gameBar.time[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar.time[info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                localTime = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Local Time"]
+                },
+                twentyFour = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["24 Hours"]
+                },
+                flash = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Flash"]
+                },
+                font = {
+                    order = 5,
+                    type = "group",
+                    name = L["Font Setting"],
+                    inline = true,
+                    get = function(info)
+                        return E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        }
+                    }
+                }
+            }
+        },
+        leftButtons = {
+            order = 13,
+            type = "group",
+            name = L["Left Buttons"],
+            get = function(info)
+                return E.db.WT.misc.gameBar.left[tonumber(info[#info])]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar.left[tonumber(info[#info])] = value
+            end,
+            args = {}
+        },
+        rightButtons = {
+            order = 14,
+            type = "group",
+            name = L["Right Buttons"],
+            get = function(info)
+                return E.db.WT.misc.gameBar.right[tonumber(info[#info])]
+            end,
+            set = function(info, value)
+                E.db.WT.misc.gameBar.right[tonumber(info[#info])] = value
+            end,
+            args = {}
+        }
+    }
+}
+
+do
+    local availableButtons = GB:GetAvailableButtons()
+
+    for i = 1, 6 do
+        options.gameBar.args.leftButtons.args[tostring(i)] = {
+            order = i,
+            type = "select",
+            name = format(L["Button #%d"], i),
+            values = availableButtons
+        }
+
+        options.gameBar.args.rightButtons.args[tostring(i)] = {
+            order = i,
+            type = "select",
+            name = format(L["Button #%d"], i),
+            values = availableButtons
+        }
     end
 end

@@ -103,8 +103,8 @@ local ButtonTypes = {
         },
         tooltips = {
             L["Home"],
-            L["Left Button:"] .. " " .. GetItemInfo(6948),
-            L["Right Button:"] .. " " .. GetItemInfo(141605)
+            L["Left Button"] .. ": " .. GetItemInfo(6948),
+            L["Right Button"] .. ": " .. GetItemInfo(141605)
         }
     },
     PETJOURNAL = {
@@ -150,8 +150,8 @@ local ButtonTypes = {
         },
         tooltips = {
             L["Screenshot"],
-            L["Left Button:"] .. " " .. L["Screenshot immediately"],
-            L["Right Button:"] .. " " .. L["Screenshot after 2 secs"]
+            L["Left Button"] .. ": " .. L["Screenshot immediately"],
+            L["Right Button"] .. ": " .. L["Screenshot after 2 secs"]
         }
     },
     SPELLBOOK = {
@@ -279,8 +279,8 @@ function GB:ConstructTimeArea()
 
             GameTooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, 0)
             GameTooltip:SetText(L["Time"])
-            GameTooltip:AddLine(L["Left Button:"] .. " " .. L["Calendar"], 1, 1, 1)
-            GameTooltip:AddLine(L["Right Button:"] .. " " .. L["Time Manager"], 1, 1, 1)
+            GameTooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
+            GameTooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
             GameTooltip:Show()
         end
     )
@@ -650,8 +650,8 @@ function GB:UpdateHomeButton()
 
     ButtonTypes.HOME.tooltips = {
         L["Home"],
-        L["Left Button:"] .. " " .. GetItemInfo(self.db.home.left),
-        L["Right Button:"] .. " " .. GetItemInfo(self.db.home.right)
+        L["Left Button"] .. ": " .. GetItemInfo(self.db.home.left),
+        L["Right Button"] .. ": " .. GetItemInfo(self.db.home.right)
     }
 end
 

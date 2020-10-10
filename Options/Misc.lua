@@ -551,7 +551,7 @@ options.gameBar = {
             order = 2,
             type = "toggle",
             name = L["Enable"],
-            desc = L["Toggle the game bar"]
+            desc = L["Toggle the game bar."]
         },
         general = {
             order = 10,

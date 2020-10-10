@@ -5,6 +5,7 @@ local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local _G = _G
 local date = date
 local format = format
+local ipairs = ipairs
 local pairs = pairs
 local tinsert = tinsert
 local tonumber = tonumber
@@ -17,6 +18,7 @@ local GetItemInfo = GetItemInfo
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local TalentFrame_LoadUI = TalentFrame_LoadUI
@@ -175,7 +177,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barTalents,
         click = {
             LeftButton = function()
-                if not PlayerTalentFrame then
+                if not _G.PlayerTalentFrame then
                     TalentFrame_LoadUI()
                 end
 

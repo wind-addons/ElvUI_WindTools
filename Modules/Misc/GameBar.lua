@@ -11,7 +11,7 @@ local ToggleCharacter = ToggleCharacter
 
 local ButtonTypes = {
     NONE = {
-        name = "NONE"
+        name = L["NONE"]
     },
     ACHIEVEMENT = {
         name = L["Achievement"],
@@ -396,7 +396,7 @@ function GB:UpdateLayout()
     local lastButton = nil
     for i = 1, 6 do
         local button = self.buttons[i]
-        if button.name ~= "NONE" then
+        if button.name ~= L["NONE"] then
             button:ClearAllPoints()
             if isFirst then
                 button:Point("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
@@ -452,5 +452,16 @@ function GB:Initialize()
         return
     end
 end
+
+function GB:GetAvailableButtons()
+    local buttons = {}
+
+    for buttonKey, buttonData in pairs(ButtonTypes) do
+        buttons[buttonKey] = buttonData.name
+    end
+
+    return buttons
+end
+
 
 W:RegisterModule(GB:GetName())

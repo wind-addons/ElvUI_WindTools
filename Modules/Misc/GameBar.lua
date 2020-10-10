@@ -12,6 +12,7 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
+local GameTooltip = _G.GameTooltip
 local GetItemInfo = GetItemInfo
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
@@ -27,6 +28,8 @@ local ToggleFriendsFrame = ToggleFriendsFrame
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
 
+local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
+
 local ButtonTypes = {
     NONE = {
         name = L["NONE"]
@@ -36,6 +39,9 @@ local ButtonTypes = {
         icon = W.Media.Icons.barAchievement,
         click = {
             LeftButton = ToggleAchievementFrame
+        },
+        tooltips = {
+            L["Achievement"]
         }
     },
     CHARACTER = {
@@ -45,6 +51,9 @@ local ButtonTypes = {
             LeftButton = function()
                 ToggleCharacter("PaperDollFrame")
             end
+        },
+        tooltips = {
+            L["Character"]
         }
     },
     COLLECTIONS = {
@@ -52,6 +61,9 @@ local ButtonTypes = {
         icon = W.Media.Icons.barCollections,
         click = {
             LeftButton = ToggleCollectionsJournal
+        },
+        tooltips = {
+            L["Collections"]
         }
     },
     ENCOUNTERJOURNAL = {
@@ -65,6 +77,9 @@ local ButtonTypes = {
 
                 ToggleFrame(_G.EncounterJournal)
             end
+        },
+        tooltips = {
+            L["Encounter Journal"]
         }
     },
     FRIENDS = {
@@ -74,6 +89,9 @@ local ButtonTypes = {
             LeftButton = function()
                 ToggleFriendsFrame(1)
             end
+        },
+        tooltips = {
+            L["Friends"]
         }
     },
     HOME = {
@@ -82,6 +100,11 @@ local ButtonTypes = {
         item = {
             item1 = GetItemInfo(6948),
             item2 = GetItemInfo(141605)
+        },
+        tooltips = {
+            L["Home"],
+            L["Left Button:"] .. " " .. GetItemInfo(6948),
+            L["Right Button:"] .. " " .. GetItemInfo(141605)
         }
     },
     PETJOURNAL = {
@@ -91,6 +114,9 @@ local ButtonTypes = {
             LeftButton = function()
                 ToggleCollectionsJournal(2)
             end
+        },
+        tooltips = {
+            L["Pet Journal"]
         }
     },
     GUILD = {
@@ -98,6 +124,9 @@ local ButtonTypes = {
         icon = W.Media.Icons.barGuild,
         click = {
             LeftButton = ToggleGuildFrame
+        },
+        tooltips = {
+            L["Guild"]
         }
     },
     PVE = {
@@ -105,13 +134,24 @@ local ButtonTypes = {
         icon = W.Media.Icons.barPVE,
         click = {
             LeftButton = ToggleLFDParentFrame
+        },
+        tooltips = {
+            L["PVE"]
         }
     },
     SCREENSHOT = {
-        name = L["ScreenShot"],
+        name = L["Screenshot"],
         icon = W.Media.Icons.barScreenShot,
         click = {
-            LeftButton = Screenshot
+            LeftButton = Screenshot,
+            RightButton = function()
+                C_Timer_After(2, Screenshot)
+            end
+        },
+        tooltips = {
+            L["Screenshot"],
+            L["Left Button:"] .. " " .. L["Screenshot immediately"],
+            L["Right Button:"] .. " " .. L["Screenshot after 2 secs"]
         }
     },
     SPELLBOOK = {
@@ -125,6 +165,9 @@ local ButtonTypes = {
                     HideUIPanel(SpellBookFrame)
                 end
             end
+        },
+        tooltips = {
+            L["Spell Book"]
         }
     },
     TALENTS = {
@@ -143,6 +186,9 @@ local ButtonTypes = {
                     HideUIPanel(PlayerTalentFrame)
                 end
             end
+        },
+        tooltips = {
+            L["Talents"]
         }
     }
 }
@@ -230,6 +276,12 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
             E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
+
+            GameTooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, 0)
+            GameTooltip:SetText(L["Time"])
+            GameTooltip:AddLine(L["Left Button:"] .. " " .. L["Calendar"], 1, 1, 1)
+            GameTooltip:AddLine(L["Right Button:"] .. " " .. L["Time Manager"], 1, 1, 1)
+            GameTooltip:Show()
         end
     )
 
@@ -239,6 +291,7 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
+            GameTooltip:Hide()
         end
     )
 
@@ -332,10 +385,24 @@ end
 
 function GB:ButtonOnEnter(button)
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
+    if button.tooltips then
+        GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, 0)
+
+        for index, line in ipairs(button.tooltips) do
+            if index == 1 then
+                GameTooltip:SetText(line)
+            else
+                GameTooltip:AddLine(line, 1, 1, 1)
+            end
+        end
+
+        GameTooltip:Show()
+    end
 end
 
 function GB:ButtonOnLeave(button)
     E:UIFrameFadeOut(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 0)
+    GameTooltip:Hide()
 end
 
 function GB:ConstructButton()
@@ -371,6 +438,7 @@ function GB:UpdateButton(button, config)
 
     button:Size(self.db.buttonSize)
     button.name = config.name
+    button.tooltips = config.tooltips
 
     if config.click then
         function button:Click(mouseButton)
@@ -579,6 +647,12 @@ end
 function GB:UpdateHomeButton()
     ButtonTypes.HOME.item.item1 = GetItemInfo(self.db.home.left)
     ButtonTypes.HOME.item.item2 = GetItemInfo(self.db.home.right)
+
+    ButtonTypes.HOME.tooltips = {
+        L["Home"],
+        L["Left Button:"] .. " " .. GetItemInfo(self.db.home.left),
+        L["Right Button:"] .. " " .. GetItemInfo(self.db.home.right)
+    }
 end
 
 function GB:GetAvailableButtons()

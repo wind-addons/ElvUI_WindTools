@@ -1,7 +1,7 @@
 package-as: ElvUI_WindTools
 
 externals:
-  Libraries/LibRangeCheck-2.0: https://repos.wowace.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
+  Libraries/LibRangeCheck-2.0: https://repos.curseforge.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
 
 manual-changelog:
   filename: CHANGELOG.md

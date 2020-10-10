@@ -28,7 +28,7 @@ options.desc = {
         feature_1 = {
             order = 1,
             type = "description",
-            name = L["Announcement module is a tool for help you send messages."],
+            name = L["Announcement module is a tool to help you send messages."],
             fontSize = "medium"
         },
         feature_2 = {

@@ -530,6 +530,7 @@ options.gameBar = {
     end,
     set = function(info, value)
         E.db.WT.misc.gameBar[info[#info]] = value
+        GB:ProfileUpdate()
     end,
     args = {
         desc = {
@@ -556,11 +557,16 @@ options.gameBar = {
             order = 10,
             type = "group",
             name = L["General"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
             get = function(info)
                 return E.db.WT.misc.gameBar[info[#info]]
             end,
             set = function(info, value)
                 E.db.WT.misc.gameBar[info[#info]] = value
+                GB:UpdateButtons()
+                GB:UpdateLayout()
             end,
             args = {
                 backdrop = {
@@ -602,11 +608,16 @@ options.gameBar = {
             order = 11,
             type = "group",
             name = L["Display"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
             get = function(info)
                 return E.db.WT.misc.gameBar[info[#info]]
             end,
             set = function(info, value)
                 E.db.WT.misc.gameBar[info[#info]] = value
+                GB:UpdateButtons()
+                GB:UpdateTimeArea()
             end,
             args = {
                 fadeTime = {
@@ -696,11 +707,16 @@ options.gameBar = {
             order = 12,
             type = "group",
             name = L["Time"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
             get = function(info)
                 return E.db.WT.misc.gameBar.time[info[#info]]
             end,
             set = function(info, value)
                 E.db.WT.misc.gameBar.time[info[#info]] = value
+                GB:UpdateTimeArea()
+                GB:UpdateLayout()
             end,
             args = {
                 enable = {
@@ -733,6 +749,8 @@ options.gameBar = {
                     end,
                     set = function(info, value)
                         E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]] = value
+                        GB:UpdateTimeFormat()
+                        GB:UpdateTimeArea()
                     end,
                     args = {
                         name = {
@@ -770,11 +788,15 @@ options.gameBar = {
             order = 13,
             type = "group",
             name = L["Left Buttons"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
             get = function(info)
                 return E.db.WT.misc.gameBar.left[tonumber(info[#info])]
             end,
             set = function(info, value)
                 E.db.WT.misc.gameBar.left[tonumber(info[#info])] = value
+                GB:UpdateButtons()
             end,
             args = {}
         },
@@ -782,11 +804,15 @@ options.gameBar = {
             order = 14,
             type = "group",
             name = L["Right Buttons"],
+            disabled = function()
+                return not E.db.WT.misc.gameBar.enable
+            end,
             get = function(info)
                 return E.db.WT.misc.gameBar.right[tonumber(info[#info])]
             end,
             set = function(info, value)
                 E.db.WT.misc.gameBar.right[tonumber(info[#info])] = value
+                GB:UpdateButtons()
             end,
             args = {}
         }

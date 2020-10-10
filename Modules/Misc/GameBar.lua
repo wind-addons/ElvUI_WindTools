@@ -606,8 +606,8 @@ function GB:UpdateLayout()
 
     -- 更新移动区域尺寸
     local areaWidth = 20 + self.bar.middlePanel:GetWidth()
-    areaWidth = areaWidth + 2 * max(self.bar.rightPanel:GetWidth(), self.bar.leftPanel:GetWidth())
-    local areaHeight = max(self.bar.leftPanel:GetHeight(), self.bar.leftPanel:GetWidth())
+    areaWidth = areaWidth + 2 * max(self.bar.leftPanel:GetWidth(), self.bar.rightPanel:GetWidth())
+    local areaHeight = max(self.bar.leftPanel:GetHeight(), self.bar.rightPanel:GetHeight())
     areaHeight = max(areaHeight, self.bar.middlePanel:GetHeight())
 
     self.bar:Size(areaWidth, areaHeight)

@@ -6,6 +6,7 @@ local _G = _G
 local date = date
 local format = format
 local ipairs = ipairs
+local max = max
 local pairs = pairs
 local tinsert = tinsert
 local tonumber = tonumber
@@ -230,6 +231,19 @@ function GB:ConstructBar()
     end
 
     self.bar = bar
+
+    E:CreateMover(
+        self.bar,
+        "WTGameBarAnchor",
+        L["Game Bar"],
+        nil,
+        nil,
+        nil,
+        "ALL,WINDTOOLS",
+        function()
+            return GB.db and GB.db.enable
+        end
+    )
 end
 
 function GB:ConstructTimeArea()
@@ -589,6 +603,14 @@ function GB:UpdateLayout()
 
     -- 时间区域
     self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
+
+    -- 更新移动区域尺寸
+    local areaWidth = 20 + self.bar.middlePanel:GetWidth()
+    areaWidth = areaWidth + 2 * max(self.bar.rightPanel:GetWidth(), self.bar.leftPanel:GetWidth())
+    local areaHeight = max(self.bar.leftPanel:GetHeight(), self.bar.leftPanel:GetWidth())
+    areaHeight = max(areaHeight, self.bar.middlePanel:GetHeight())
+
+    self.bar:Size(areaWidth, areaHeight)
 end
 
 function GB:PLAYER_REGEN_ENABLED()

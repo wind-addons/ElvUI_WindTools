@@ -1400,6 +1400,36 @@ options.reset = {
                             end
                         )
                     end
+                },
+                mute = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Mute"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Mute"],
+                            nil,
+                            function()
+                                E.private.WT.misc.mute = V.misc.mute
+                            end
+                        )
+                    end
+                },
+                gameBar = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Game Bar"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Game Bar"],
+                            nil,
+                            function()
+                                E.db.WT.misc.gameBar = P.misc.gameBar
+                            end
+                        )
+                    end
                 }
             }
         },

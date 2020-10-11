@@ -6,7 +6,6 @@ local DT = E:GetModule("DataTexts")
 local _G = _G
 local collectgarbage = collectgarbage
 local date = date
-local format = format
 local ipairs = ipairs
 local max = max
 local pairs = pairs
@@ -588,8 +587,9 @@ function GB:UpdateButton(button, config)
             C_Timer_NewTicker(
             1,
             function()
-                button.additionalText:SetText(
-                    format(button.additionalTextFormat, config.additionalText and config.additionalText() or "")
+                button.additionalText:SetFormattedText(
+                    button.additionalTextFormat,
+                    config.additionalText and config.additionalText() or ""
                 )
             end
         )

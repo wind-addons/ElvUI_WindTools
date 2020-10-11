@@ -18,7 +18,6 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
-local GetItemInfo = GetItemInfo
 local GetNumGuildMembers = GetNumGuildMembers
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
@@ -35,10 +34,11 @@ local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
 
+local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
+local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
-local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
-local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 
 local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
@@ -109,7 +109,7 @@ local ButtonTypes = {
         name = L["Home"],
         icon = W.Media.Icons.barHome,
         item = {},
-        tooltips = {}
+        tooltips = L["Home"]
     },
     PETJOURNAL = {
         name = L["Pet Journal"],
@@ -502,8 +502,8 @@ function GB:UpdateButton(button, config)
         button:SetAttribute("clickbutton", button)
     elseif config.item then
         button:SetAttribute("type*", "item")
-        button:SetAttribute("item1", config.item.item1)
-        button:SetAttribute("item2", config.item.item2)
+        button:SetAttribute("item1", config.item.item1 or "")
+        button:SetAttribute("item2", config.item.item2 or "")
     end
 
     -- 普通状态
@@ -677,7 +677,20 @@ end
 
 function GB:PLAYER_REGEN_ENABLED()
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-    self:Initialize()
+    self:ProfileUpdate()
+end
+
+function GB:PLAYER_ENTERING_WORLD()
+    C_Timer_After(
+        1,
+        function()
+            if InCombatLockdown() then
+                self:RegisterEvent("PLAYER_REGEN_ENABLED")
+            else
+                self:ProfileUpdate()
+            end
+        end
+    )
 end
 
 function GB:Initialize()
@@ -694,10 +707,10 @@ function GB:Initialize()
     self:ConstructBar()
     self:ConstructTimeArea()
     self:ConstructButtons()
-    self:UpdateHomeButton()
     self:UpdateTimeArea()
     self:UpdateButtons()
     self:UpdateLayout()
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
     self.Initialized = true
 end
@@ -732,22 +745,27 @@ function GB:ProfileUpdate()
     end
 end
 
+GB.testItem = ""
 function GB:UpdateHomeButton()
-    ButtonTypes.HOME.item.item1 = GetItemInfo(self.db.home.left)
-    ButtonTypes.HOME.item.item2 = GetItemInfo(self.db.home.right)
+    GB.testItem = C_Item_GetItemNameByID(self.db.home.left)
+
+    ButtonTypes.HOME.item = {
+        item1 = C_Item_GetItemNameByID(self.db.home.left),
+        item2 = C_Item_GetItemNameByID(self.db.home.right)
+    }
 
     ButtonTypes.HOME.tooltips = {
         L["Home"],
-        L["Left Button"] .. ": " .. GetItemInfo(self.db.home.left),
-        L["Right Button"] .. ": " .. GetItemInfo(self.db.home.right)
+        L["Left Button"] .. ": " .. C_Item_GetItemNameByID(self.db.home.left),
+        L["Right Button"] .. ": " .. C_Item_GetItemNameByID(self.db.home.right)
     }
 end
 
 function GB:GetAvailableButtons()
     local buttons = {}
 
-    for buttonKey, buttonData in pairs(ButtonTypes) do
-        buttons[buttonKey] = buttonData.name
+    for key, data in pairs(ButtonTypes) do
+        buttons[key] = data.name
     end
 
     return buttons

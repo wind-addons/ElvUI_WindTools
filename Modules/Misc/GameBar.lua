@@ -78,16 +78,6 @@ local ButtonTypes = {
             L["Character"]
         }
     },
-    COLLECTIONS = {
-        name = L["Collections"],
-        icon = W.Media.Icons.barCollections,
-        click = {
-            LeftButton = ToggleCollectionsJournal
-        },
-        tooltips = {
-            L["Collections"]
-        }
-    },
     ENCOUNTER_JOURNAL = {
         name = L["Encounter Journal"],
         icon = W.Media.Icons.barEncounterJournal,
@@ -225,6 +215,18 @@ local ButtonTypes = {
         },
         tooltips = {
             L["Talents"]
+        }
+    },
+    TOY_BOX = {
+        name = L["Toy Box"],
+        icon = W.Media.Icons.barToyBox,
+        click = {
+            LeftButton = function()
+                ToggleCollectionsJournal(3)
+            end
+        },
+        tooltips = {
+            L["Toy Box"]
         }
     }
 }

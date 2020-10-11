@@ -106,8 +106,8 @@ local ButtonTypes = {
         },
         tooltips = {
             L["Home"],
-            L["Left Button"] .. ": " .. GetItemInfo(6948),
-            L["Right Button"] .. ": " .. GetItemInfo(141605)
+            L["Left Button"] .. ": " .. GetItemInfo(6948) or "",
+            L["Right Button"] .. ": " .. GetItemInfo(141605) or ""
         }
     },
     PETJOURNAL = {

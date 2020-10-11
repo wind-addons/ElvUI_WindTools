@@ -46,14 +46,14 @@ local ButtonTypes = {
     NONE = {
         name = L["None"]
     },
-    ACHIEVEMENT = {
-        name = L["Achievement"],
-        icon = W.Media.Icons.barAchievement,
+    ACHIEVEMENTS = {
+        name = L["Achievements"],
+        icon = W.Media.Icons.barAchievements,
         click = {
             LeftButton = ToggleAchievementFrame
         },
         tooltips = {
-            L["Achievement"]
+            L["Achievements"]
         }
     },
     CHARACTER = {

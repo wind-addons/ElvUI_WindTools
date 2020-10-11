@@ -43,9 +43,6 @@ local C_Timer_NewTicker = C_Timer.NewTicker
 local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
 local ButtonTypes = {
-    NONE = {
-        name = L["None"]
-    },
     ACHIEVEMENTS = {
         name = L["Achievements"],
         icon = W.Media.Icons.barAchievements,
@@ -105,22 +102,14 @@ local ButtonTypes = {
         additionalText = C_FriendList_GetNumOnlineFriends,
         tooltips = "Friends"
     },
-    HOME = {
-        name = L["Home"],
-        icon = W.Media.Icons.barHome,
-        item = {},
-        tooltips = L["Home"]
-    },
-    PETJOURNAL = {
-        name = L["Pet Journal"],
-        icon = W.Media.Icons.barPetJournal,
+    GROUP_FINDER = {
+        name = L["Group Finder"],
+        icon = W.Media.Icons.barGroupFinder,
         click = {
-            LeftButton = function()
-                ToggleCollectionsJournal(2)
-            end
+            LeftButton = ToggleLFDParentFrame
         },
         tooltips = {
-            L["Pet Journal"]
+            L["Group Finder"]
         }
     },
     GUILD = {
@@ -134,14 +123,25 @@ local ButtonTypes = {
         end,
         tooltips = "Guild"
     },
-    GROUP_FINDER = {
-        name = L["Group Finder"],
-        icon = W.Media.Icons.barGroupFinder,
+    HOME = {
+        name = L["Home"],
+        icon = W.Media.Icons.barHome,
+        item = {},
+        tooltips = L["Home"]
+    },
+    NONE = {
+        name = L["None"]
+    },
+    PETJOURNAL = {
+        name = L["Pet Journal"],
+        icon = W.Media.Icons.barPetJournal,
         click = {
-            LeftButton = ToggleLFDParentFrame
+            LeftButton = function()
+                ToggleCollectionsJournal(2)
+            end
         },
         tooltips = {
-            L["Group Finder"]
+            L["Pet Journal"]
         }
     },
     SCREENSHOT = {

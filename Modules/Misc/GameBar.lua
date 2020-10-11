@@ -4,21 +4,28 @@ local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
+local collectgarbage = collectgarbage
 local date = date
 local format = format
 local ipairs = ipairs
 local max = max
 local pairs = pairs
+local select = select
 local tinsert = tinsert
 local tonumber = tonumber
+local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
 local GetItemInfo = GetItemInfo
+local GetNumGuildMembers = GetNumGuildMembers
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local IsInGuild = IsInGuild
+local IsModifierKeyDown = IsModifierKeyDown
+local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
@@ -27,8 +34,6 @@ local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
-local IsInGuild = IsInGuild
-local GetNumGuildMembers = GetNumGuildMembers
 
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker

@@ -863,9 +863,9 @@ P.misc = {
         right = {
             [1] = "HOME",
             [2] = "ACHIEVEMENTS",
-            [3] = "TOY_BOX",
+            [3] = "MISSION_REPORTS",
             [4] = "ENCOUNTER_JOURNAL",
-            [5] = "MISSION_REPORTS",
+            [5] = "TOY_BOX",
             [6] = "PET_JOURNAL",
             [7] = "BAGS"
         }

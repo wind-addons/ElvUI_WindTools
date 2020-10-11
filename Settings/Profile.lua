@@ -841,6 +841,7 @@ P.misc = {
             right = "141605"
         },
         additionalText = {
+            enable = true,
             anchor = "BOTTOMRIGHT",
             x = 3,
             y = -3,

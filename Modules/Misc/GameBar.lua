@@ -546,7 +546,7 @@ function GB:UpdateButton(button, config)
 
     button.additionalTextFormat = F.CreateColorString("%s", {r = r, g = g, b = b})
 
-    if config.additionalText then
+    if config.additionalText and self.db.additionalText.enable then
         button.additionalTextTimer =
             C_Timer_NewTicker(
             1,

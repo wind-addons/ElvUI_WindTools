@@ -649,7 +649,7 @@ options.gameBar = {
                 normal = {
                     order = 2,
                     type = "group",
-                    name = L["Normal"],
+                    name = L["Color"] .. " - " .. L["Normal"],
                     inline = true,
                     args = {
                         normalColor = {
@@ -685,7 +685,7 @@ options.gameBar = {
                 hover = {
                     order = 3,
                     type = "group",
-                    name = L["Hover"],
+                    name = L["Color"] .. " - " .. L["Hover"],
                     inline = true,
                     args = {
                         hoverColor = {
@@ -715,6 +715,58 @@ options.gameBar = {
                                 local db = E.db.WT.misc.gameBar[info[#info]]
                                 db.r, db.g, db.b, db.a = r, g, b, a
                             end
+                        }
+                    }
+                },
+                additionalText = {
+                    order = 4,
+                    type = "group",
+                    name = L["Additional Text"],
+                    inline = true,
+                    get = function(info)
+                        return E.db.WT.misc.gameBar.additionalText[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.misc.gameBar.additionalText[info[#info]] = value
+                        GB:UpdateButtons()
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"]
+                        },
+                        anchor = {
+                            order = 2,
+                            type = "select",
+                            name = L["Anchor Point"],
+                            values = {
+                                TOP = L["TOP"],
+                                BOTTOM = L["BOTTOM"],
+                                LEFT = L["LEFT"],
+                                RIGHT = L["RIGHT"],
+                                CENTER = L["CENTER"],
+                                TOPLEFT = L["TOPLEFT"],
+                                TOPRIGHT = L["TOPRIGHT"],
+                                BOTTOMLEFT = L["BOTTOMLEFT"],
+                                BOTTOMRIGHT = L["BOTTOMRIGHT"]
+                            }
+                        },
+                        x = {
+                            order = 3,
+                            type = "range",
+                            name = L["X-Offset"],
+                            min = -100,
+                            max = 100,
+                            step = 1
+                        },
+                        y = {
+                            order = 4,
+                            type = "range",
+                            name = L["Y-Offset"],
+                            min = -100,
+                            max = 100,
+                            step = 1
                         }
                     }
                 }

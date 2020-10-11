@@ -90,7 +90,7 @@ local ButtonTypes = {
         }
     },
     FRIENDS = {
-        name = L["Friends"],
+        name = L["Friend List"],
         icon = W.Media.Icons.barFriends,
         click = {
             LeftButton = function()

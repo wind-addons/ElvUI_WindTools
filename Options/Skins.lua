@@ -210,7 +210,7 @@ options.blizzard = {
         },
         friends = {
             type = "toggle",
-            name = L["Friends"]
+            name = L["Friend List"]
         },
         flightMap = {
             type = "toggle",

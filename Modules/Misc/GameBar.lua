@@ -134,14 +134,14 @@ local ButtonTypes = {
         end,
         tooltips = "Guild"
     },
-    PVE = {
-        name = L["PVE"],
-        icon = W.Media.Icons.barPVE,
+    GROUP_FINDER = {
+        name = L["Group Finder"],
+        icon = W.Media.Icons.barGroupFinder,
         click = {
             LeftButton = ToggleLFDParentFrame
         },
         tooltips = {
-            L["PVE"]
+            L["Group Finder"]
         }
     },
     SCREENSHOT = {

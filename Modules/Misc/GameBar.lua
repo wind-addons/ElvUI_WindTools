@@ -418,10 +418,10 @@ function GB:UpdateTime()
     local hour = self.db and self.db.time and self.db.time.twentyFour and date("%H") or date("%I")
     local min = date("%M")
 
-    panel.hour:SetText(format(panel.hour.format, hour))
-    panel.hourHover:SetText(format(panel.hourHover.format, hour))
-    panel.minutes:SetText(format(panel.minutes.format, min))
-    panel.minutesHover:SetText(format(panel.minutesHover.format, min))
+    panel.hour:SetFormattedText(panel.hour.format, hour)
+    panel.hourHover:SetFormattedText(panel.hourHover.format, hour)
+    panel.minutes:SetFormattedText(panel.minutes.format, min)
+    panel.minutesHover:SetFormattedText(panel.minutesHover.format, min)
 
     panel.colon:ClearAllPoints()
     local offset = (panel.hour:GetStringWidth() - panel.minutes:GetStringWidth()) / 2

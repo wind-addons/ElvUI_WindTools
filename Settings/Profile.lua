@@ -857,15 +857,17 @@ P.misc = {
             [3] = "TALENTS",
             [4] = "FRIENDS",
             [5] = "GUILD",
-            [6] = "SCREENSHOT"
+            [6] = "GROUP_FINDER",
+            [7] = "SCREENSHOT"
         },
         right = {
             [1] = "HOME",
             [2] = "ACHIEVEMENTS",
-            [3] = "GROUP_FINDER",
-            [4] = "ENCOUNTERJOURNAL",
-            [5] = "PETJOURNAL",
-            [6] = "COLLECTIONS"
+            [3] = "COLLECTIONS",
+            [4] = "ENCOUNTER_JOURNAL",
+            [5] = "MISSION_REPORTS",
+            [6] = "PET_JOURNAL",
+            [7] = "BAGS"
         }
     }
 }

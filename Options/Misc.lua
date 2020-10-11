@@ -935,7 +935,7 @@ do
         ["184353"] = GetItemInfo(184353) -- 琪瑞安族爐石
     }
 
-    for i = 1, 6 do
+    for i = 1, 7 do
         options.gameBar.args.leftButtons.args[tostring(i)] = {
             order = i,
             type = "select",

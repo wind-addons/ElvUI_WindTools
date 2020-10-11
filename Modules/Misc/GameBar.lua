@@ -29,6 +29,7 @@ local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local TalentFrame_LoadUI = TalentFrame_LoadUI
+local ToggleAllBags = ToggleAllBags
 local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
@@ -36,10 +37,15 @@ local ToggleFriendsFrame = ToggleFriendsFrame
 
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
 
+local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0
+local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0
+
+local NUM_PANEL_BUTTONS = 7
 local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
 local ButtonTypes = {
@@ -52,6 +58,14 @@ local ButtonTypes = {
         tooltips = {
             L["Achievements"]
         }
+    },
+    BAGS = {
+        name = L["Bags"],
+        icon = W.Media.Icons.barBags,
+        click = {
+            LeftButton = ToggleAllBags
+        },
+        tooltips = "Bags"
     },
     CHARACTER = {
         name = L["Character"],
@@ -75,7 +89,7 @@ local ButtonTypes = {
             L["Collections"]
         }
     },
-    ENCOUNTERJOURNAL = {
+    ENCOUNTER_JOURNAL = {
         name = L["Encounter Journal"],
         icon = W.Media.Icons.barEncounterJournal,
         click = {
@@ -129,10 +143,28 @@ local ButtonTypes = {
         item = {},
         tooltips = L["Home"]
     },
+    MISSION_REPORTS = {
+        name = L["Mission Reports"],
+        icon = W.Media.Icons.barMissionReports,
+        click = {
+            LeftButton = function(button)
+                DT.RegisteredDataTexts["Missions"].onClick(button)
+            end
+        },
+        additionalText = function()
+            local numMissions =
+                #C_Garrison_GetCompleteMissions(FollowerType_9_0) + #C_Garrison_GetCompleteMissions(FollowerType_8_0)
+            if numMissions == 0 then
+                numMissions = ""
+            end
+            return numMissions
+        end,
+        tooltips = "Missions"
+    },
     NONE = {
         name = L["None"]
     },
-    PETJOURNAL = {
+    PET_JOURNAL = {
         name = L["Pet Journal"],
         icon = W.Media.Icons.barPetJournal,
         click = {
@@ -496,7 +528,7 @@ function GB:UpdateButton(button, config)
     if config.click then
         function button:Click(mouseButton)
             local func = mouseButton and config.click[mouseButton] or config.click.LeftButton
-            func()
+            func(GB.bar.middlePanel)
         end
         button:SetAttribute("type*", "click")
         button:SetAttribute("clickbutton", button)
@@ -576,15 +608,15 @@ function GB:ConstructButtons()
     end
 
     self.buttons = {}
-    for i = 1, 12 do
+    for i = 1, NUM_PANEL_BUTTONS * 2 do
         self:ConstructButton()
     end
 end
 
 function GB:UpdateButtons()
-    for i = 1, 6 do
+    for i = 1, NUM_PANEL_BUTTONS do
         self:UpdateButton(self.buttons[i], ButtonTypes[self.db.left[i]])
-        self:UpdateButton(self.buttons[i + 6], ButtonTypes[self.db.right[i]])
+        self:UpdateButton(self.buttons[i + NUM_PANEL_BUTTONS], ButtonTypes[self.db.right[i]])
     end
 end
 
@@ -603,16 +635,14 @@ function GB:UpdateLayout()
 
     -- 左面板
     local lastButton = nil
-    for i = 1, 6 do
+    for i = 1, NUM_PANEL_BUTTONS do
         local button = self.buttons[i]
         if button.name ~= L["None"] then
             button:Show()
             button:ClearAllPoints()
             if not lastButton then
-                button:ClearAllPoints()
                 button:Point("LEFT", self.bar.leftPanel, "LEFT", self.db.backdropSpacing, 0)
             else
-                button:ClearAllPoints()
                 button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
             end
             lastButton = button
@@ -634,16 +664,14 @@ function GB:UpdateLayout()
 
     -- 右面板
     lastButton = nil
-    for i = 1, 6 do
-        local button = self.buttons[i + 6]
+    for i = 1, NUM_PANEL_BUTTONS do
+        local button = self.buttons[i + NUM_PANEL_BUTTONS]
         if button.name ~= L["None"] then
             button:Show()
             button:ClearAllPoints()
             if not lastButton then
-                button:ClearAllPoints()
                 button:Point("LEFT", self.bar.rightPanel, "LEFT", self.db.backdropSpacing, 0)
             else
-                button:ClearAllPoints()
                 button:Point("LEFT", lastButton, "RIGHT", self.db.spacing, 0)
             end
             lastButton = button

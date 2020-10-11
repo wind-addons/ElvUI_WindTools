@@ -307,6 +307,12 @@ function GB:ConstructTimeArea()
     minutesHover:SetAlpha(0)
     self.bar.middlePanel.minutesHover = minutesHover
 
+    local text = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
+    text:Point("TOP", self.bar, "BOTTOM", 0, -5)
+    F.SetFontWithDB(text, self.db.additionalText.font)
+    text:SetAlpha(0)
+    self.bar.middlePanel.text = text
+
     self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
     self:UpdateTimeFormat()
@@ -319,15 +325,22 @@ function GB:ConstructTimeArea()
         end
     )
 
+    DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
     self:HookScript(
         self.bar.middlePanel,
         "OnEnter",
         function(panel)
+            DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
+            DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
             E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
+            E:UIFrameFadeIn(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 1)
 
-            DT.tooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, -10)
+            DT.tooltip:SetOwner(panel.text, "ANCHOR_BOTTOM", 0, -5)
+
             if IsModifierKeyDown() then
+                DT.RegisteredDataTexts["System"].eventFunc()
                 DT.RegisteredDataTexts["System"].onEnter()
             else
                 DT.tooltip:ClearLines()
@@ -338,6 +351,16 @@ function GB:ConstructTimeArea()
                 DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
                 DT.tooltip:Show()
             end
+
+            self.tooltipTimer =
+                C_Timer_NewTicker(
+                1,
+                function()
+                    DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
+                    DT.RegisteredDataTexts["System"].eventFunc()
+                    DT.RegisteredDataTexts["System"].onEnter()
+                end
+            )
         end
     )
 
@@ -347,8 +370,11 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
+            E:UIFrameFadeOut(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 0)
+
             DT.RegisteredDataTexts["System"].onLeave()
             DT.tooltip:Hide()
+            self.tooltipTimer:Cancel()
         end
     )
 
@@ -358,6 +384,8 @@ function GB:ConstructTimeArea()
             if IsModifierKeyDown() then
                 collectgarbage("collect")
                 ResetCPUUsage()
+                DT.RegisteredDataTexts["System"].eventFunc()
+                DT.RegisteredDataTexts["System"].onEnter()
             else
                 ToggleFrame(_G.TimeManagerFrame)
             end
@@ -435,6 +463,7 @@ function GB:UpdateTimeArea()
     F.SetFontWithDB(panel.minutes, self.db.time.font)
     F.SetFontWithDB(panel.minutesHover, self.db.time.font)
     F.SetFontWithDB(panel.colon, self.db.time.font)
+    F.SetFontWithDB(panel.text, self.db.additionalText.font)
 
     if self.db.time.flash then
         E:Flash(panel.colon, 1, true)

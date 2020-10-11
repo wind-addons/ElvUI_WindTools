@@ -808,10 +808,7 @@ function GB:ProfileUpdate()
     end
 end
 
-GB.testItem = ""
 function GB:UpdateHomeButton()
-    GB.testItem = C_Item_GetItemNameByID(self.db.home.left)
-
     ButtonTypes.HOME.item = {
         item1 = C_Item_GetItemNameByID(self.db.home.left),
         item2 = C_Item_GetItemNameByID(self.db.home.right)

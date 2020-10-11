@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
+local DT = E:GetModule("DataTexts")
 
 local _G = _G
 local date = date
@@ -14,7 +15,6 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
-local GameTooltip = GameTooltip
 local GetItemInfo = GetItemInfo
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
@@ -33,6 +33,7 @@ local GetNumGuildMembers = GetNumGuildMembers
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 
 local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
@@ -97,9 +98,7 @@ local ButtonTypes = {
             end
         },
         additionalText = C_FriendList_GetNumOnlineFriends,
-        tooltips = function()
-            print(1)
-        end
+        tooltips = "Friends"
     },
     HOME = {
         name = L["Home"],
@@ -128,9 +127,7 @@ local ButtonTypes = {
         additionalText = function()
             return IsInGuild() and select(2, GetNumGuildMembers()) or ""
         end,
-        tooltips = {
-            L["Guild"]
-        }
+        tooltips = "Guild"
     },
     PVE = {
         name = L["PVE"],
@@ -293,11 +290,11 @@ function GB:ConstructTimeArea()
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
             E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
 
-            GameTooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, 0)
-            GameTooltip:SetText(L["Time"])
-            GameTooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
-            GameTooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
-            GameTooltip:Show()
+            DT.tooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, 0)
+            DT.tooltip:SetText(L["Time"])
+            DT.tooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
+            DT.tooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
+            DT.tooltip:Show()
         end
     )
 
@@ -307,7 +304,7 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
-            GameTooltip:Hide()
+            DT.tooltip:Hide()
         end
     )
 
@@ -403,26 +400,36 @@ function GB:ButtonOnEnter(button)
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
     if button.tooltips then
         if type(button.tooltips) == "table" then
-            GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, 0)
+            DT.tooltip:ClearLines()
+            DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
 
             for index, line in ipairs(button.tooltips) do
                 if index == 1 then
-                    GameTooltip:SetText(line)
+                    DT.tooltip:SetText(line)
                 else
-                    GameTooltip:AddLine(line, 1, 1, 1)
+                    DT.tooltip:AddLine(line, 1, 1, 1)
                 end
             end
-
-        elseif type(button.tooltips) == "function" then
-            button.tooltips()
+            DT.tooltip:Show()
+        elseif type(button.tooltips) == "string" then
+            DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
+            local DTModule = DT.RegisteredDataTexts[button.tooltips]
+            if DTModule and DTModule.onEnter then
+                DTModule.onEnter()
+            end
+            -- 如果 ElvUI 数据文字鼠标提示没有进行显示的话, 显示一个简单的说明
+            if not DT.tooltip:IsShown() then
+                DT.tooltip:ClearLines()
+                DT.tooltip:SetText(button.name)
+                DT.tooltip:Show()
+            end
         end
-        GameTooltip:Show()
     end
 end
 
 function GB:ButtonOnLeave(button)
     E:UIFrameFadeOut(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 0)
-    GameTooltip:Hide()
+    DT.tooltip:Hide()
 end
 
 function GB:ConstructButton()
@@ -531,7 +538,9 @@ function GB:UpdateButton(button, config)
             C_Timer_NewTicker(
             1,
             function()
-                button.additionalText:SetText(format(button.additionalTextFormat, config.additionalText and config.additionalText() or ""))
+                button.additionalText:SetText(
+                    format(button.additionalTextFormat, config.additionalText and config.additionalText() or "")
+                )
             end
         )
         button.additionalText:ClearAllPoints()

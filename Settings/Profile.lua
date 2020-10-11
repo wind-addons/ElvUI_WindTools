@@ -840,6 +840,16 @@ P.misc = {
             left = "6948",
             right = "141605"
         },
+        additionalText = {
+            anchor = "BOTTOMRIGHT",
+            x = 5,
+            y = -5,
+            font = {
+                name = "Montserrat",
+                size = 12,
+                style = "OUTLINE"
+            }
+        },
         left = {
             [1] = "CHARACTER",
             [2] = "SPELLBOOK",

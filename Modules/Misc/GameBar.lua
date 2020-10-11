@@ -27,9 +27,12 @@ local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
+local IsInGuild = IsInGuild
+local GetNumGuildMembers = GetNumGuildMembers
 
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 
 local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 
@@ -93,22 +96,16 @@ local ButtonTypes = {
                 ToggleFriendsFrame(1)
             end
         },
-        tooltips = {
-            L["Friends"]
-        }
+        additionalText = C_FriendList_GetNumOnlineFriends,
+        tooltips = function()
+            print(1)
+        end
     },
     HOME = {
         name = L["Home"],
         icon = W.Media.Icons.barHome,
-        item = {
-            item1 = GetItemInfo(6948),
-            item2 = GetItemInfo(141605)
-        },
-        tooltips = {
-            L["Home"],
-            L["Left Button"] .. ": " .. GetItemInfo(6948) or "",
-            L["Right Button"] .. ": " .. GetItemInfo(141605) or ""
-        }
+        item = {},
+        tooltips = {}
     },
     PETJOURNAL = {
         name = L["Pet Journal"],
@@ -128,6 +125,9 @@ local ButtonTypes = {
         click = {
             LeftButton = ToggleGuildFrame
         },
+        additionalText = function()
+            return IsInGuild() and select(2, GetNumGuildMembers()) or ""
+        end,
         tooltips = {
             L["Guild"]
         }
@@ -402,16 +402,20 @@ end
 function GB:ButtonOnEnter(button)
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
     if button.tooltips then
-        GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, 0)
+        if type(button.tooltips) == "table" then
+            GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, 0)
 
-        for index, line in ipairs(button.tooltips) do
-            if index == 1 then
-                GameTooltip:SetText(line)
-            else
-                GameTooltip:AddLine(line, 1, 1, 1)
+            for index, line in ipairs(button.tooltips) do
+                if index == 1 then
+                    GameTooltip:SetText(line)
+                else
+                    GameTooltip:AddLine(line, 1, 1, 1)
+                end
             end
-        end
 
+        elseif type(button.tooltips) == "function" then
+            button.tooltips()
+        end
         GameTooltip:Show()
     end
 end
@@ -441,6 +445,13 @@ function GB:ConstructButton()
     hoverTex:SetAlpha(0)
     button.hoverTex = hoverTex
 
+    local additionalText = button:CreateFontString(nil, "OVERLAY")
+    additionalText:Point(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
+    F.SetFontWithDB(additionalText, self.db.additionalText.font)
+    additionalText:SetJustifyH("CENTER")
+    additionalText:SetJustifyV("CENTER")
+    button.additionalText = additionalText
+
     self:HookScript(button, "OnEnter", "ButtonOnEnter")
     self:HookScript(button, "OnLeave", "ButtonOnLeave")
 
@@ -456,6 +467,7 @@ function GB:UpdateButton(button, config)
     button.name = config.name
     button.tooltips = config.tooltips
 
+    -- 按下动作
     if config.click then
         function button:Click(mouseButton)
             local func = mouseButton and config.click[mouseButton] or config.click.LeftButton
@@ -506,6 +518,29 @@ function GB:UpdateButton(button, config)
     button.hoverTex:SetTexture(config.icon)
     button.hoverTex:Size(self.db.buttonSize)
     button.hoverTex:SetVertexColor(r, g, b)
+
+    -- 设定额外文字
+    if button.additionalTextTimer and not button.additionalTextTimer:IsCancelled() then
+        button.additionalTextTimer:Cancel()
+    end
+
+    button.additionalTextFormat = F.CreateColorString("%s", {r = r, g = g, b = b})
+
+    if config.additionalText then
+        button.additionalTextTimer =
+            C_Timer_NewTicker(
+            1,
+            function()
+                button.additionalText:SetText(format(button.additionalTextFormat, config.additionalText and config.additionalText() or ""))
+            end
+        )
+        button.additionalText:ClearAllPoints()
+        button.additionalText:Point(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
+        F.SetFontWithDB(button.additionalText, self.db.additionalText.font)
+        button.additionalText:Show()
+    else
+        button.additionalText:Hide()
+    end
 end
 
 function GB:ConstructButtons()

@@ -326,11 +326,11 @@ function GB:ConstructTimeArea()
     )
 
     DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
+
     self:HookScript(
         self.bar.middlePanel,
         "OnEnter",
         function(panel)
-            DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
             DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
@@ -342,6 +342,15 @@ function GB:ConstructTimeArea()
             if IsModifierKeyDown() then
                 DT.RegisteredDataTexts["System"].eventFunc()
                 DT.RegisteredDataTexts["System"].onEnter()
+                self.tooltipTimer =
+                    C_Timer_NewTicker(
+                    1,
+                    function()
+                        DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+                        DT.RegisteredDataTexts["System"].eventFunc()
+                        DT.RegisteredDataTexts["System"].onEnter()
+                    end
+                )
             else
                 DT.tooltip:ClearLines()
                 DT.tooltip:SetText(L["Time"])
@@ -350,17 +359,14 @@ function GB:ConstructTimeArea()
                 DT.tooltip:AddLine("\n")
                 DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
                 DT.tooltip:Show()
+                self.tooltipTimer =
+                    C_Timer_NewTicker(
+                    1,
+                    function()
+                        DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+                    end
+                )
             end
-
-            self.tooltipTimer =
-                C_Timer_NewTicker(
-                1,
-                function()
-                    DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
-                    DT.RegisteredDataTexts["System"].eventFunc()
-                    DT.RegisteredDataTexts["System"].onEnter()
-                end
-            )
         end
     )
 

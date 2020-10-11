@@ -290,11 +290,18 @@ function GB:ConstructTimeArea()
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
             E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
 
-            DT.tooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, 0)
-            DT.tooltip:SetText(L["Time"])
-            DT.tooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
-            DT.tooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
-            DT.tooltip:Show()
+            DT.tooltip:SetOwner(panel, "ANCHOR_BOTTOM", 0, -10)
+            if IsModifierKeyDown() then
+                DT.RegisteredDataTexts["System"].onEnter()
+            else
+                DT.tooltip:ClearLines()
+                DT.tooltip:SetText(L["Time"])
+                DT.tooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
+                DT.tooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
+                DT.tooltip:AddLine("\n")
+                DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
+                DT.tooltip:Show()
+            end
         end
     )
 
@@ -304,6 +311,7 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
+            DT.RegisteredDataTexts["System"].onLeave()
             DT.tooltip:Hide()
         end
     )
@@ -311,7 +319,12 @@ function GB:ConstructTimeArea()
     self.bar.middlePanel:SetScript(
         "OnClick",
         function()
-            ToggleFrame(_G.TimeManagerFrame)
+            if IsModifierKeyDown() then
+                collectgarbage("collect")
+                ResetCPUUsage()
+            else
+                ToggleFrame(_G.TimeManagerFrame)
+            end
         end
     )
 end
@@ -399,10 +412,9 @@ end
 function GB:ButtonOnEnter(button)
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
     if button.tooltips then
+        DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
         if type(button.tooltips) == "table" then
             DT.tooltip:ClearLines()
-            DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
-
             for index, line in ipairs(button.tooltips) do
                 if index == 1 then
                     DT.tooltip:SetText(line)
@@ -412,11 +424,12 @@ function GB:ButtonOnEnter(button)
             end
             DT.tooltip:Show()
         elseif type(button.tooltips) == "string" then
-            DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
             local DTModule = DT.RegisteredDataTexts[button.tooltips]
+
             if DTModule and DTModule.onEnter then
                 DTModule.onEnter()
             end
+
             -- 如果 ElvUI 数据文字鼠标提示没有进行显示的话, 显示一个简单的说明
             if not DT.tooltip:IsShown() then
                 DT.tooltip:ClearLines()

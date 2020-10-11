@@ -842,8 +842,8 @@ P.misc = {
         },
         additionalText = {
             anchor = "BOTTOMRIGHT",
-            x = 5,
-            y = -5,
+            x = 3,
+            y = -3,
             font = {
                 name = "Montserrat",
                 size = 12,

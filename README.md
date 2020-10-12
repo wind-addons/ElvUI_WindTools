@@ -85,6 +85,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 7. **Bigwigs Skins**: Apply skins for Bigwigs.
 8. **Hekili Skins**: Apply skins for Hekili.
 9. **BugSack Skins**: Apply skins for BugSack.
+10. **TinyInspect Skins**: Apply skins for TinyInspect.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

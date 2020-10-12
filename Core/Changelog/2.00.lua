@@ -36,7 +36,8 @@ W.Changelog[200] = {
             "新增 Hekili 插件皮肤",
             "新增 Immersion 插件皮肤",
             "新增 WeakAuras_Option 插件皮肤",
-            "新增 BugSack 插件皮肤"
+            "新增 BugSack 插件皮肤",
+            "新增 TinyInspect 插件皮肤"
         },
         ["zhTW"] = {
             "新增遊戲條功能",
@@ -60,7 +61,8 @@ W.Changelog[200] = {
             "新增 Hekili 插件皮膚",
             "新增 Immersion 插件皮膚",
             "新增 WeakAuras_Option 插件皮膚",
-            "新增 BugSack 插件皮膚"
+            "新增 BugSack 插件皮膚",
+            "新增 TinyInspect 插件皮膚"
         },
         ["enUS"] = {
             "Add Game Bar module",
@@ -83,7 +85,8 @@ W.Changelog[200] = {
             "New skins for Hekili",
             "New skins for Immersion",
             "New skins for WeakAuras_Option",
-            "New skins for BugSack"
+            "New skins for BugSack",
+            "New skins for TinyInspect"
         }
     },
     IMPROVEMENT = {

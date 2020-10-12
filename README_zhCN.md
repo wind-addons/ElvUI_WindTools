@@ -84,6 +84,7 @@
 7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
 8. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
 9. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
+10. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

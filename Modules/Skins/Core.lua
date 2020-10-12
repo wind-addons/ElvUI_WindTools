@@ -51,8 +51,8 @@ end
     @param {number} [g=阴影全局G值] G 通道数值（0~1）
     @param {number} [b=阴影全局B值] B 通道数值（0~1）
 ]]
-function S:CreateShadow(frame, size, r, g, b)
-    if not E.private.WT.skins.shadow then
+function S:CreateShadow(frame, size, r, g, b, force)
+    if not E.private.WT.skins.shadow and not force then
         return
     end
 

@@ -319,7 +319,7 @@ function TM:BuildFrame()
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         ES:HandleButton(button)
-        S:CreateShadow(button.backdrop, nil, 1, 1, 1)
+        S:CreateShadow(button.backdrop, nil, 1, 1, 1, true)
         if button.backdrop.shadow then
             button.backdrop.shadow:Hide()
         end

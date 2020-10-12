@@ -94,7 +94,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         button.colorBlock = button:CreateTexture(nil, "ARTWORK")
         button.colorBlock:SetAllPoints()
         button:CreateBackdrop("Transparent")
-        S:CreateShadow(button.backdrop, 3)
+        S:CreateShadow(button.backdrop, 3, nil, nil, nil, true)
 
         button.text = button:CreateFontString(nil, "OVERLAY")
         button.text:Point("CENTER", button, "CENTER", 0, 0)
@@ -106,8 +106,14 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
             "OnEnter",
             function(self)
                 if CB.db.style == "BLOCK" then
-                    self.backdrop.shadow:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
-                    self.backdrop.shadow:Show()
+                    if self.backdrop.shadow then
+                        self.backdrop.shadow:SetBackdropBorderColor(
+                            ElvUIValueColor.r,
+                            ElvUIValueColor.g,
+                            ElvUIValueColor.b
+                        )
+                        self.backdrop.shadow:Show()
+                    end
                 else
                     local fontName, _, fontFlags = self.text:GetFont()
                     self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
@@ -134,7 +140,9 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
                     self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
 
                     if not CB.db.blockShadow then
-                        self.backdrop.shadow:Hide()
+                        if self.backdrop.shadow then
+                            self.backdrop.shadow:Hide()
+                        end
                     end
                 else
                     local fontName, _, fontFlags = self.text:GetFont()
@@ -159,10 +167,12 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 
         self.bar[name].colorBlock:Show()
         self.bar[name].backdrop:Show()
-        if self.db.blockShadow then
-            self.bar[name].backdrop.shadow:Show()
-        else
-            self.bar[name].backdrop.shadow:Hide()
+        if self.bar[name].backdrop.shadow then
+            if self.db.blockShadow then
+                self.bar[name].backdrop.shadow:Show()
+            else
+                self.bar[name].backdrop.shadow:Hide()
+            end
         end
 
         self.bar[name].text:Hide()
@@ -475,12 +485,14 @@ function CB:UpdateBar()
 
     self.bar:Size(width, height)
 
-    if self.db.backdrop then
-        self.bar.backdrop:Show()
-        self.bar.shadow:Show()
-    else
-        self.bar.backdrop:Hide()
-        self.bar.shadow:Hide()
+    if E.private.WT.skins.shadow then
+        if self.db.backdrop then
+            self.bar.backdrop:Show()
+            self.bar.shadow:Show()
+        else
+            self.bar.backdrop:Hide()
+            self.bar.shadow:Hide()
+        end
     end
 end
 

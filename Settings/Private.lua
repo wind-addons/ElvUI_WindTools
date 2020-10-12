@@ -126,6 +126,7 @@ V.skins = {
 		guildBank = true,
 		help = true,
 		inputMethodEditor = true,
+		inspect = true,
 		lookingForGroup = true,
 		loot = true,
 		lossOfControl = true,

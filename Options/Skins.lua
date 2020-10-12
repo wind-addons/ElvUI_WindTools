@@ -236,6 +236,10 @@ options.blizzard = {
             type = "toggle",
             name = L["Input Method Editor"]
         },
+        inspect = {
+            type = "toggle",
+            name = L["Inspect"]
+        },
         lookingForGroup = {
             type = "toggle",
             name = L["Looking For Group"]

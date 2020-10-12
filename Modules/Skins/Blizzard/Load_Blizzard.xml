@@ -23,6 +23,7 @@
 	<Script file='GuildBank.lua'/>
 	<Script file='Help.lua'/>
 	<Script file='InputMethodEditor.lua'/>
+	<Script file='Inspect.lua'/>
 	<Script file='IslandsQueue.lua'/>
 	<Script file='KeyBinding.lua'/>
 	<Script file='LookingForGroup.lua'/>

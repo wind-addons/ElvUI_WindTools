@@ -57,11 +57,16 @@ local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0
 
 local NUM_PANEL_BUTTONS = 7
 local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
+local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
+local RightButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
+local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
 
-local function AddDoubleLineForItem(itemID)
+local function AddDoubleLineForItem(itemID, prefix)
     if type(itemID) == "string" then
         itemID = tonumber(itemID)
     end
+
+    prefix = prefix and prefix .. " " or ""
 
     local name = C_Item_GetItemNameByID(itemID)
     local texture = GetItemIcon(itemID)
@@ -77,7 +82,7 @@ local function AddDoubleLineForItem(itemID)
     end
 
     DT.tooltip:AddDoubleLine(
-        icon .. " " .. name,
+        prefix .. icon .. " " .. name,
         canUse and L["Ready"] or cooldownTimeString,
         1,
         1,
@@ -184,8 +189,8 @@ local ButtonTypes = {
             DT.tooltip:ClearLines()
             DT.tooltip:SetText(L["Home"])
             DT.tooltip:AddLine("\n")
-            AddDoubleLineForItem(GB.db.home.left)
-            AddDoubleLineForItem(GB.db.home.right)
+            AddDoubleLineForItem(GB.db.home.left, LeftButtonIcon)
+            AddDoubleLineForItem(GB.db.home.right, RightButtonIcon)
             DT.tooltip:Show()
 
             button.tooltipsUpdateTimer =
@@ -195,8 +200,8 @@ local ButtonTypes = {
                     DT.tooltip:ClearLines()
                     DT.tooltip:SetText(L["Home"])
                     DT.tooltip:AddLine("\n")
-                    AddDoubleLineForItem(GB.db.home.left)
-                    AddDoubleLineForItem(GB.db.home.right)
+                    AddDoubleLineForItem(GB.db.home.left, LeftButtonIcon)
+                    AddDoubleLineForItem(GB.db.home.right, RightButtonIcon)
                     DT.tooltip:Show()
                 end
             )
@@ -251,8 +256,9 @@ local ButtonTypes = {
         },
         tooltips = {
             L["Screenshot"],
-            L["Left Button"] .. ": " .. L["Screenshot immediately"],
-            L["Right Button"] .. ": " .. L["Screenshot after 2 secs"]
+            "\n",
+            LeftButtonIcon .. " " .. L["Screenshot immediately"],
+            RightButtonIcon .. " " .. L["Screenshot after 2 secs"]
         }
     },
     SPELLBOOK = {
@@ -431,8 +437,9 @@ function GB:ConstructTimeArea()
             else
                 DT.tooltip:ClearLines()
                 DT.tooltip:SetText(L["Time"])
-                DT.tooltip:AddLine(L["Left Button"] .. ": " .. L["Calendar"], 1, 1, 1)
-                DT.tooltip:AddLine(L["Right Button"] .. ": " .. L["Time Manager"], 1, 1, 1)
+                DT.tooltip:AddLine("\n", 1, 1, 1)
+                DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Calendar"], 1, 1, 1)
+                DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Time Manager"], 1, 1, 1)
                 DT.tooltip:AddLine("\n")
                 DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
                 DT.tooltip:Show()

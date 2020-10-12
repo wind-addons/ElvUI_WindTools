@@ -96,12 +96,14 @@ W.Changelog[200] = {
             "更新 9.0 暗影国度的药水, 药剂等物品的自动物品列表",
             "为团队标记条添加团队确认, 倒数, 高级战斗记录开关等功能",
             "完善暴雪, ElvUI, WindTools 框体及模块的边缘美化",
+            "在装备鱼竿时停用快速拾取",
             "修复 BigWigs 插件皮肤",
             "修复 WeakAuras 插件皮肤",
             "修复与 ElvUI_MerathilisUI 同时使用时可能发生的错误",
             "修复聊天链接图标中不显示天赋图标的问题",
             "修复移动框体可能造成的错误",
-            "修复聊天条功能加入世界频道时可能造成的频道丢失问题"
+            "修复聊天条功能加入世界频道时可能造成的频道丢失问题",
+            "修复背包空间不足时快速拾取可能导致的问题"
         },
         ["zhTW"] = {
             "更新 9.0 地圖迷霧去除",
@@ -109,12 +111,14 @@ W.Changelog[200] = {
             "更新 9.0 暗影之地的藥水, 藥劑等物品的自動物品列表",
             "為團隊標記條添加團隊確認, 倒數, 高級戰鬥記錄開關等功能",
             "完善暴雪, ElvUI, WindTools 框架及模組的邊緣美化",
+            "在裝備魚竿時停用快速拾取",
             "修正 BigWigs 插件皮膚",
             "修正 WeakAuras 插件皮膚",
             "修正與 ElvUI_MerathilisUI 同時使用時可能發生的錯誤",
             "修正聊天鏈接圖標中不顯示天賦圖標的問題",
             "修正移動框體可能造成的錯誤",
-            "修正聊天條功能加入世界頻道時可能造成的頻道丟失問題"
+            "修正聊天條功能加入世界頻道時可能造成的頻道丟失問題",
+            "修正背包空間不足時快速拾取可能導致的問題"
         },
         ["enUS"] = {
             "Update world map removal database to 9.0.",
@@ -122,12 +126,14 @@ W.Changelog[200] = {
             "Update automatic item list of potions, potions, and other items to 9.0",
             "Add ready check, countdown, toggle advanced combat logging to raid mark bar.",
             "Renew some skins of Blizzard, ElvUI, WindTools frames or modules",
+            "Stop fast loot if equip any fishing pole",
             "Fix the skin for BigWigs",
             "Fix the skin for WeakAuras",
             "Fix the errors that may occur when enabling ElvUI_MerathilisUI simultaneously",
             "Fix the problem that the icon not displayed before talent links",
             "Fix the several bugs of Move Frames module",
-            "Fix the auto-join of world channel"
+            "Fix the auto-join of world channel",
+            "Fix the problem that fast loot when bags are full"
         }
     }
 }

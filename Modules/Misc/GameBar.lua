@@ -61,6 +61,27 @@ local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1
 local RightButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
 local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
 
+local Heartstones = {
+    6948, -- 爐石
+    110560, -- 要塞爐石
+    140192, -- 達拉然爐石
+    141605, -- 飛行管理員的哨子
+    162973, -- 冬天爺爺的爐石
+    163045, -- 無頭騎士的爐石
+    165669, -- 新年長者的爐石
+    165670, -- 傳播者充滿愛的爐石
+    165802, -- 貴族園丁的爐石
+    166746, -- 吞火者的爐石
+    166747, -- 啤酒節狂歡者的爐石
+    168907, -- 全像數位化爐石
+    172179, -- 永恆旅人的爐石
+    180290, -- 暗夜妖精的爐石
+    182773, -- 死靈領主爐石
+    184353 -- 琪瑞安族爐石
+}
+
+local HeartstonesTable
+
 local function AddDoubleLineForItem(itemID, prefix)
     if type(itemID) == "string" then
         itemID = tonumber(itemID)
@@ -68,7 +89,7 @@ local function AddDoubleLineForItem(itemID, prefix)
 
     prefix = prefix and prefix .. " " or ""
 
-    local name = C_Item_GetItemNameByID(itemID)
+    local name = HeartstonesTable[tostring(itemID)]
     local texture = GetItemIcon(itemID)
     local icon = format(IconString .. ":255:255:255|t", texture)
     local startTime, duration = GetItemCooldown(itemID)
@@ -853,6 +874,7 @@ function GB:PLAYER_ENTERING_WORLD()
     C_Timer_After(
         1,
         function()
+            self:UpdateHearthStoneTable()
             if InCombatLockdown() then
                 self:RegisterEvent("PLAYER_REGEN_ENABLED")
             else
@@ -873,6 +895,7 @@ function GB:Initialize()
         return
     end
 
+    self:UpdateHearthStoneTable()
     self:ConstructBar()
     self:ConstructTimeArea()
     self:ConstructButtons()
@@ -919,6 +942,22 @@ function GB:UpdateHomeButton()
         item1 = C_Item_GetItemNameByID(self.db.home.left),
         item2 = C_Item_GetItemNameByID(self.db.home.right)
     }
+end
+
+function GB:UpdateHearthStoneTable()
+    HeartstonesTable = {}
+
+    for _, id in pairs(Heartstones) do
+        HeartstonesTable[tostring(id)] = C_Item_GetItemNameByID(id)
+    end
+end
+
+function GB:GetHearthStoneTable()
+    if not HeartstonesTable then
+        self:UpdateHearthStoneTable()
+    end
+
+    return HeartstonesTable
 end
 
 function GB:GetAvailableButtons()

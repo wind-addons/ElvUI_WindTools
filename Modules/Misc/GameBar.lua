@@ -102,7 +102,10 @@ local ButtonTypes = {
                 ToggleFriendsFrame(1)
             end
         },
-        additionalText = C_FriendList_GetNumOnlineFriends,
+        additionalText = function()
+            local number = C_FriendList_GetNumOnlineFriends()
+            return number > 0 and number or ""
+        end,
         tooltips = "Friends"
     },
     GROUP_FINDER = {
@@ -620,6 +623,11 @@ function GB:UpdateButton(button, config)
     button.additionalTextFormat = F.CreateColorString("%s", {r = r, g = g, b = b})
 
     if config.additionalText and self.db.additionalText.enable then
+        button.additionalText:SetFormattedText(
+            button.additionalTextFormat,
+            config.additionalText and config.additionalText() or ""
+        )
+
         button.additionalTextTimer =
             C_Timer_NewTicker(
             self.db.additionalText.slowMode and 10 or 1,

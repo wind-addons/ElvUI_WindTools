@@ -800,7 +800,7 @@ function GB:ProfileUpdate()
                 self:RegisterEvent("PLAYER_REGEN_ENABLED")
                 return
             else
-                self.Initialize()
+                self:Initialize()
             end
         end
     else

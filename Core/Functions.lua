@@ -1,7 +1,18 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
-local format, pairs, tonumber, type, unpack, print = format, pairs, tonumber, type, unpack, print
-local strlen, strfind, strsub, strbyte, tinsert = strlen, strfind, strsub, strbyte, tinsert
+
+local format = format
+local pairs = pairs
+local print = print
+local strbyte = strbyte
+local strfind = strfind
+local strlen = strlen
+local strsub = strsub
+local tinsert = tinsert
+local tonumber = tonumber
+local type = type
+local unpack = unpack
+
 local GetClassColor = GetClassColor
 
 --[[

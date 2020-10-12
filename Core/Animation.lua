@@ -2,7 +2,11 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 F.Animation = {}
 local A = F.Animation
 
-local pairs, type, unpack, getn = pairs, type, unpack, getn
+local getn = getn
+local pairs = pairs
+local type = type
+local unpack = unpack
+
 local CreateFrame = CreateFrame
 
 --[[

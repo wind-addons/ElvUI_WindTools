@@ -29,10 +29,14 @@ local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local TalentFrame_LoadUI = TalentFrame_LoadUI
 local ToggleAllBags = ToggleAllBags
+local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
+local ToggleGuildFinder = ToggleGuildFinder
+local ToggleGuildFrame = ToggleGuildFrame
+local ToggleTimeManager = ToggleTimeManager
 
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
@@ -122,7 +126,13 @@ local ButtonTypes = {
         name = L["Guild"],
         icon = W.Media.Icons.barGuild,
         click = {
-            LeftButton = ToggleGuildFrame
+            LeftButton = function()
+                if IsInGuild() then
+                    ToggleGuildFrame()
+                else
+                    ToggleGuildFinder()
+                end
+            end
         },
         additionalText = function()
             return IsInGuild() and select(2, GetNumGuildMembers()) or ""
@@ -391,14 +401,16 @@ function GB:ConstructTimeArea()
 
     self.bar.middlePanel:SetScript(
         "OnClick",
-        function()
+        function(_, mouseButton)
             if IsModifierKeyDown() then
                 collectgarbage("collect")
                 ResetCPUUsage()
                 DT.RegisteredDataTexts["System"].eventFunc()
                 DT.RegisteredDataTexts["System"].onEnter()
-            else
-                ToggleFrame(_G.TimeManagerFrame)
+            elseif mouseButton == "LeftButton" then
+                ToggleCalendar()
+            elseif mouseButton == "RightButton" then
+                ToggleTimeManager()
             end
         end
     )

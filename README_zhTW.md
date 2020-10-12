@@ -79,12 +79,12 @@
 3. **ElvUI 框架美化**: 為 ElvUI 模組添加美化.
 4. **WindTools 框架美化**: 為 WindTools 模組添加美化.
 5. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
-9. **Ace3 美化**: 為 Ace3-GUI 的部分庫組件添加美化.
-6. **Immersion 美化**: 為 Immersion 對話窗口, 按鍵提供全方位的美化.
-7. **Bigwigs 美化**: 為 Bigwigs 的條和設定界面添加美化.
-8. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化.
-9. **BugSack 美化**: 為 BugSack 的錯誤提示窗口添加美化.
-10. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
+6. **Ace3 美化**: 為 Ace3-GUI 的部分庫組件添加美化.
+7. **Immersion 美化**: 為 Immersion 對話窗口, 按鍵提供全方位的美化.
+8. **Bigwigs 美化**: 為 Bigwigs 的條和設定界面添加美化.
+9. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化.
+10. **BugSack 美化**: 為 BugSack 的錯誤提示窗口添加美化.
+11. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
 
 ## 其他
 1. **CVars 編輯器**: 一些常用功能 CVars 的開關.

@@ -80,12 +80,12 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui_windtools) |
 3. **ElvUI Frame Skins**: Reskin ElvUI modules.
 4. **WindTools Skins**: Reskin WindTools modules.
 5. **WeakAuras Skins**: Apply skins for WeakAuras, WeakAuras option.
-9. **Ace3 Skins**: Apply skins for Ace3-GUI widgets.
-6. **Immersion Skins**: Apply skins for Immersion.
-7. **Bigwigs Skins**: Apply skins for Bigwigs.
-8. **Hekili Skins**: Apply skins for Hekili.
-9. **BugSack Skins**: Apply skins for BugSack.
-10. **TinyInspect Skins**: Apply skins for TinyInspect.
+6. **Ace3 Skins**: Apply skins for Ace3-GUI widgets.
+7. **Immersion Skins**: Apply skins for Immersion.
+8. **Bigwigs Skins**: Apply skins for Bigwigs.
+9. **Hekili Skins**: Apply skins for Hekili.
+10. **BugSack Skins**: Apply skins for BugSack.
+11. **TinyInspect Skins**: Apply skins for TinyInspect.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

@@ -8,6 +8,7 @@ local collectgarbage = collectgarbage
 local date = date
 local ipairs = ipairs
 local max = max
+local mod = mod
 local pairs = pairs
 local select = select
 local tinsert = tinsert
@@ -17,6 +18,7 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
+local GetGameTime = GetGameTime
 local GetNumGuildMembers = GetNumGuildMembers
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
@@ -465,8 +467,17 @@ end
 function GB:UpdateTime()
     local panel = self.bar.middlePanel
 
-    local hour = self.db and self.db.time and self.db.time.twentyFour and date("%H") or date("%I")
-    local min = date("%M")
+    local hour, min
+
+    if self.db and self.db.time then
+        if self.db.time.localTime then
+            hour = self.db.time.twentyFour and date("%H") or date("%I")
+            min = date("%M")
+        else
+            hour, min = GetGameTime()
+            hour = self.db.time.twentyFour and hour or mod(hour, 12)
+        end
+    end
 
     panel.hour:SetFormattedText(panel.hour.format, hour)
     panel.hourHover:SetFormattedText(panel.hourHover.format, hour)

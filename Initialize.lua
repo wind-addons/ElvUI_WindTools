@@ -11,6 +11,8 @@ local tonumber = tonumber
 
 local GetAddOnMetadata = GetAddOnMetadata
 
+local C_Timer_After = C_Timer.After
+
 -- 注册 Wind 工具箱为 Ace3 插件
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
@@ -47,8 +49,13 @@ function W:Initialize()
 
     EP:RegisterPlugin(addonName, W.OptionsCallback)
     self:SecureHook(E, "UpdateAll", "UpdateModules")
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
+end
 
-    collectgarbage("collect")
+function W:PLAYER_ENTERING_WORLD()
+    C_Timer_After(2, function()
+        collectgarbage("collect")
+    end)
 end
 
 EP:HookInitialize(W, W.Initialize)

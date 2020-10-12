@@ -7,20 +7,15 @@ local GetContainerNumSlots = GetContainerNumSlots
 local GetContainerItemID = GetContainerItemID
 local UseContainerItem = UseContainerItem
 
-local NUM_BAG_SLOTS = NUM_BAG_SLOTS
+local C_Item_IsItemKeystoneByID = C_Item.IsItemKeystoneByID
 
-local keystones = {
-    [138019] = true,
-    [158923] = true,
-    [180653] = true,
-    [151086] = true
-}
+local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 function QK:PutKeystone()
     for bagIndex = 0, NUM_BAG_SLOTS do
         for slotIndex = 1, GetContainerNumSlots(bagIndex) do
             local itemID = GetContainerItemID(bagIndex, slotIndex)
-            if itemID and keystones[itemID] then
+            if itemID and C_Item_IsItemKeystoneByID(itemID) then
                 UseContainerItem(bagIndex, slotIndex)
                 return
             end
@@ -33,7 +28,7 @@ function QK:UpdateHook(event, addon)
         if addon == "Blizzard_ChallengesUI" then
             self:UnregisterEvent("ADDON_LOADED")
         else
-            return 
+            return
         end
     end
 
@@ -54,7 +49,7 @@ function QK:UpdateHook(event, addon)
 end
 
 function QK:ProfileUpdate()
-	self.db = E.db.WT.combat.quickKeystone
+    self.db = E.db.WT.combat.quickKeystone
 
     if IsAddOnLoaded("Blizzard_ChallengesUI") then
         self:UpdateHook()

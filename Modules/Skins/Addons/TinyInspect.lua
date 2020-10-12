@@ -41,6 +41,16 @@ function S:TinyInspect_SkinPanel(unit, parent, ilevel, maxLevel)
     frame.closeButton:ClearAllPoints()
     frame.closeButton:SetPoint("BOTTOMLEFT", 3, 3)
 
+    if frame.specicon then
+        frame.specicon:SetMask(nil)
+        frame.specicon:Size(35)
+        frame.specicon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+    end
+
+    if frame.spectext then
+        F.SetFontOutline(frame.spectext, E.db.general.font)
+    end
+
     local inspectFrameHolder = CreateFrame("Frame", nil, parent)
     inspectFrameHolder:Point("TOPLEFT", frame, "TOPLEFT", 0, -1)
     inspectFrameHolder:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 1)

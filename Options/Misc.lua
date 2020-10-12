@@ -942,13 +942,17 @@ do
         order = 1,
         type = "select",
         name = L["Left Button"],
-        values = GB:GetHearthStoneTable()
+        values = function()
+            return GB:GetHearthStoneTable()
+        end
     }
 
     options.gameBar.args.home.args.right = {
         order = 2,
         type = "select",
         name = L["Right Button"],
-        values = GB:GetHearthStoneTable()
+        values = function()
+            return GB:GetHearthStoneTable()
+        end
     }
 end

@@ -232,7 +232,7 @@ function EB:CreateButton(name, barDB)
 
     button:StyleButton()
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
         S:CreateShadow(button)
     end
 
@@ -639,7 +639,7 @@ function EB:UpdateBar(id)
     bar:Show()
 
     -- 切换阴影
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
         if barDB.backdrop then
             bar.backdrop:Show()
             for i = 1, 12 do
@@ -685,7 +685,7 @@ function EB:CreateAll()
 
     for i = 1, 3 do
         self:CreateBar(i)
-        if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
             S:CreateShadow(self.bars[i].backdrop)
         end
     end

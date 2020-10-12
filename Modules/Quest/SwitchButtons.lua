@@ -13,7 +13,7 @@ function SB:CreateButton(text)
 
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
     ES:HandleCheckBox(button)
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
         S:CreateShadow(button.backdrop)
     end
 
@@ -156,7 +156,7 @@ function SB:CreateBar()
 
     self:UpdateLayout()
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
         S:CreateShadow(self.bar.backdrop)
     end
 

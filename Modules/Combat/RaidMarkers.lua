@@ -193,7 +193,7 @@ function RM:CreateBar()
 	self:CreateButtons()
 	self:ToggleSettings()
 
-	if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 		S:CreateShadow(self.bar.backdrop)
 	end
 
@@ -222,7 +222,7 @@ function RM:CreateButtons()
 		end
 		button:Size(self.db.buttonSize)
 
-		if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			S:CreateShadow(button)
 		end
 

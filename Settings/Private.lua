@@ -85,6 +85,7 @@ V.skins = {
 	enable = true,
 	windtools = true,
 	removeParchment = true,
+	shadow = true,
 	color = {
 		r = 0,
 		g = 0,

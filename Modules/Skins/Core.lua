@@ -52,6 +52,10 @@ end
     @param {number} [b=阴影全局B值] B 通道数值（0~1）
 ]]
 function S:CreateShadow(frame, size, r, g, b)
+    if not E.private.WT.skins.shadow then
+        return
+    end
+
     if not frame or frame.windStyle or frame.shadow then
         return
     end
@@ -81,12 +85,17 @@ end
     @param {object} frame 窗体
 ]]
 function S:CreateBackdropShadow(frame)
+    if not E.private.WT.skins.shadow then
+        return
+    end
+
     if not frame or frame.windStyle then
         return
     end
+
     if frame.backdrop then
         frame.backdrop:SetTemplate("Transparent")
-        S:CreateShadow(frame.backdrop)
+        self:CreateShadow(frame.backdrop)
         frame.windStyle = true
     else
         F.DebugMessage(S, format("[1]无法找到 %s 的ElvUI美化背景！", frame:GetName() or "无名框体"))
@@ -108,14 +117,16 @@ function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
 
     if frame.backdrop then
         frame.backdrop:SetTemplate("Transparent")
-        S:CreateShadow(frame.backdrop)
+        if E.private.WT.skins.shadow then
+            self:CreateShadow(frame.backdrop)
+        end
         frame.windStyle = true
     else
         if tried >= 0 then
             E:Delay(
                 0.1,
                 function()
-                    S:CreateBackdropShadowAfterElvUISkins(frame, tried - 1)
+                    self:CreateBackdropShadowAfterElvUISkins(frame, tried - 1)
                 end
             )
         else
@@ -132,7 +143,8 @@ function S:ReskinTab(tab)
     if tab.GetName then
         F.SetFontOutline(_G[tab:GetName() .. "Text"])
     end
-    S:CreateBackdropShadowAfterElvUISkins(tab)
+
+    self:CreateBackdropShadowAfterElvUISkins(tab)
 end
 
 --[[

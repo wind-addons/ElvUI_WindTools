@@ -205,7 +205,7 @@ function MB:SkinButton(frame)
 		end
 
 		frame:CreateBackdrop("Tranparent")
-		if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			S:CreateShadow(frame)
 		end
 
@@ -343,7 +343,7 @@ function MB:UpdateLayout()
 			frame:Point(anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
-		if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			if not self.db.backdrop then
 				frame.shadow:Show()
 			else
@@ -461,7 +461,7 @@ function MB:CreateFrames()
 
 	self:SkinMinimapButtons()
 
-	if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 		S:CreateShadow(self.bar.backdrop)
 	end
 

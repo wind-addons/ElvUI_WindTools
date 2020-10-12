@@ -265,7 +265,7 @@ function TM:BuildFrame()
 
     frame:EnableMouse(true)
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateShadow(frame.backdrop)
     end
 
@@ -320,7 +320,9 @@ function TM:BuildFrame()
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         ES:HandleButton(button)
         S:CreateShadow(button.backdrop, nil, 1, 1, 1)
-        button.backdrop.shadow:Hide()
+        if button.backdrop.shadow then
+            button.backdrop.shadow:Hide()
+        end
 
         button:SetScript(
             "OnClick",
@@ -337,7 +339,9 @@ function TM:BuildFrame()
             "OnEnter",
             function(self)
                 TM:SetButtonTooltip(self)
-                self.backdrop.shadow:Show()
+                if self.backdrop.shadow then
+                    self.backdrop.shadow:Show()
+                end
             end
         )
 
@@ -345,7 +349,9 @@ function TM:BuildFrame()
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                self.backdrop.shadow:Hide()
+                if self.backdrop.shadow then
+                    self.backdrop.shadow:Hide()
+                end
             end
         )
 

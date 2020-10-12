@@ -362,7 +362,7 @@ function GB:ConstructBar()
     rightPanel:CreateBackdrop("Transparent")
     bar.rightPanel = rightPanel
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateShadow(leftPanel.backdrop)
         S:CreateShadow(middlePanel.backdrop)
         S:CreateShadow(rightPanel.backdrop)

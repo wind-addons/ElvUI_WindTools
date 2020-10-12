@@ -47,40 +47,61 @@ options.general = {
             type = "toggle",
             name = L["Enable"]
         },
-        windtools = {
+        general = {
             order = 2,
-            type = "toggle",
-            name = L["WindTools Modules"],
+            type = "group",
+            name = L["General"],
+            inline = true,
             disabled = function()
                 return not E.private.WT.skins.enable
-            end
+            end,
+            args = {
+                windtools = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["WindTools Modules"]
+                },
+                removeParchment = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Parchment Remover"]
+                }
+            }
         },
-        removeParchment = {
+        shadow = {
             order = 3,
-            type = "toggle",
-            name = L["Parchment Remover"],
+            type = "group",
+            name = L["Shadow"],
+            inline = true,
             disabled = function()
                 return not E.private.WT.skins.enable
-            end
-        },
-        shadowColor = {
-            order = 4,
-            type = "color",
-            name = L["Shadow Color"],
-            hasAlpha = false,
-            get = function(info)
-                local db = E.private.WT.skins.color
-                local default = V.skins.color
-                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
             end,
-            set = function(info, r, g, b)
-                local db = E.private.WT.skins.color
-                db.r, db.g, db.b = r, g, b
-                E:StaticPopup_Show("PRIVATE_RL")
-            end,
-            disabled = function()
-                return not E.private.WT.skins.enable
-            end
+            args = {
+                shadow = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                color = {
+                    order = 2,
+                    type = "color",
+                    name = L["Shadow Color"],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.private.WT.skins.color
+                        local default = V.skins.color
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.color
+                        db.r, db.g, db.b = r, g, b
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    disabled = function()
+                        return not E.private.WT.skins.enable
+                    end
+                }
+            }
         },
         vignetting = {
             order = 5,

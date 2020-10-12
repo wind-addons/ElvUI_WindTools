@@ -622,7 +622,7 @@ function GB:UpdateButton(button, config)
     if config.additionalText and self.db.additionalText.enable then
         button.additionalTextTimer =
             C_Timer_NewTicker(
-            1,
+            self.db.additionalText.slowMode and 10 or 1,
             function()
                 button.additionalText:SetFormattedText(
                     button.additionalTextFormat,

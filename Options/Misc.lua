@@ -767,7 +767,13 @@ options.gameBar = {
                             min = -100,
                             max = 100,
                             step = 1
-                        }
+                        },
+                        slowMode = {
+                            order = 5,
+                            type = "toggle",
+                            name = L["Slow Mode"],
+                            desc = L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."]
+                        },
                     }
                 }
             }

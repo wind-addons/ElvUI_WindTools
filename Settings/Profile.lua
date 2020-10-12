@@ -842,6 +842,7 @@ P.misc = {
         },
         additionalText = {
             enable = true,
+            slowMode = true,
             anchor = "BOTTOMRIGHT",
             x = 3,
             y = -3,

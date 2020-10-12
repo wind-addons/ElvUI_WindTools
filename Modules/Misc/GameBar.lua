@@ -6,6 +6,8 @@ local DT = E:GetModule("DataTexts")
 local _G = _G
 local collectgarbage = collectgarbage
 local date = date
+local floor = floor
+local format = format
 local ipairs = ipairs
 local max = max
 local mod = mod
@@ -19,7 +21,10 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
 local GetGameTime = GetGameTime
+local GetItemCooldown = GetItemCooldown
+local GetItemIcon = GetItemIcon
 local GetNumGuildMembers = GetNumGuildMembers
+local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
@@ -51,7 +56,40 @@ local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0
 local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0
 
 local NUM_PANEL_BUTTONS = 7
-local WTIcon = F.GetIconString(W.Media.Textures.smallLogo, 14)
+local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
+
+local function AddDoubleLineForItem(itemID)
+    if type(itemID) == "string" then
+        itemID = tonumber(itemID)
+    end
+
+    local name = C_Item_GetItemNameByID(itemID)
+    local texture = GetItemIcon(itemID)
+    local icon = format(IconString .. ":255:255:255|t", texture)
+    local startTime, duration = GetItemCooldown(itemID)
+    local cooldownTime = startTime + duration - GetTime()
+    local cooldownTimeString
+
+    local canUse = cooldownTime <= 0
+
+    if cooldownTime > 60 then
+        local min = floor(cooldownTime / 60)
+        cooldownTimeString = min .. " " .. L["[ABBR] Minute"]
+    else
+        cooldownTimeString = floor(cooldownTime) .. " " .. L["[ABBR] Second"]
+    end
+
+    DT.tooltip:AddDoubleLine(
+        icon .. " " .. name,
+        canUse and L["Ready"] or cooldownTimeString,
+        1,
+        1,
+        1,
+        canUse and 0 or 1,
+        canUse and 1 or 0,
+        0
+    )
+end
 
 local ButtonTypes = {
     ACHIEVEMENTS = {
@@ -145,7 +183,32 @@ local ButtonTypes = {
         name = L["Home"],
         icon = W.Media.Icons.barHome,
         item = {},
-        tooltips = L["Home"]
+        tooltips = function(button)
+            DT.tooltip:ClearLines()
+            DT.tooltip:SetText(L["Home"])
+            DT.tooltip:AddLine("\n")
+            AddDoubleLineForItem(GB.db.home.left)
+            AddDoubleLineForItem(GB.db.home.right)
+            DT.tooltip:Show()
+
+            button.tooltipsUpdateTimer =
+                C_Timer_NewTicker(
+                1,
+                function()
+                    DT.tooltip:ClearLines()
+                    DT.tooltip:SetText(L["Home"])
+                    DT.tooltip:AddLine("\n")
+                    AddDoubleLineForItem(GB.db.home.left)
+                    AddDoubleLineForItem(GB.db.home.right)
+                    DT.tooltip:Show()
+                end
+            )
+        end,
+        tooltipsLeave = function(button)
+            if button.tooltipsUpdateTimer and button.tooltipsUpdateTimer.Cancel then
+                button.tooltipsUpdateTimer:Cancel()
+            end
+        end
     },
     MISSION_REPORTS = {
         name = L["Mission Reports"],
@@ -535,6 +598,8 @@ function GB:ButtonOnEnter(button)
                 DT.tooltip:SetText(button.name)
                 DT.tooltip:Show()
             end
+        elseif type(button.tooltips) == "function" then
+            button.tooltips(button)
         end
     end
 end
@@ -542,6 +607,9 @@ end
 function GB:ButtonOnLeave(button)
     E:UIFrameFadeOut(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 0)
     DT.tooltip:Hide()
+    if button.tooltipsLeave then
+        button.tooltipsLeave(button)
+    end
 end
 
 function GB:ConstructButton()
@@ -585,6 +653,7 @@ function GB:UpdateButton(button, config)
     button:Size(self.db.buttonSize)
     button.name = config.name
     button.tooltips = config.tooltips
+    button.tooltipsLeave = config.tooltipsLeave
 
     -- 按下动作
     if config.click then
@@ -845,12 +914,6 @@ function GB:UpdateHomeButton()
     ButtonTypes.HOME.item = {
         item1 = C_Item_GetItemNameByID(self.db.home.left),
         item2 = C_Item_GetItemNameByID(self.db.home.right)
-    }
-
-    ButtonTypes.HOME.tooltips = {
-        L["Home"],
-        L["Left Button"] .. ": " .. C_Item_GetItemNameByID(self.db.home.left),
-        L["Right Button"] .. ": " .. C_Item_GetItemNameByID(self.db.home.right)
     }
 end
 

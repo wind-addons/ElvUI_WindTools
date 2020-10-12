@@ -68,15 +68,12 @@ local function AddDoubleLineForItem(itemID)
     local icon = format(IconString .. ":255:255:255|t", texture)
     local startTime, duration = GetItemCooldown(itemID)
     local cooldownTime = startTime + duration - GetTime()
-    local cooldownTimeString
-
     local canUse = cooldownTime <= 0
-
-    if cooldownTime > 60 then
+    local cooldownTimeString
+    if not canUse then
         local min = floor(cooldownTime / 60)
-        cooldownTimeString = min .. " " .. L["[ABBR] Minute"]
-    else
-        cooldownTimeString = floor(cooldownTime) .. " " .. L["[ABBR] Second"]
+        local sec = floor(mod(cooldownTime, 60))
+        cooldownTimeString = format("%2d:%2d", min, sec)
     end
 
     DT.tooltip:AddDoubleLine(

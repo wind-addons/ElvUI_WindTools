@@ -10,8 +10,6 @@ local EasyMenu = EasyMenu
 local GameMenuFrame = _G.GameMenuFrame
 local IsInGuild = IsInGuild
 local LoadAddOn = LoadAddOn
-local LookingForGuildFrame_LoadUI = LookingForGuildFrame_LoadUI
-local LookingForGuildFrame_Toggle = LookingForGuildFrame_Toggle
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 local ShowUIPanel = ShowUIPanel
 local TalentFrame_LoadUI = TalentFrame_LoadUI
@@ -21,6 +19,8 @@ local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleEncounterJournal = ToggleEncounterJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
+local ToggleGuildFinder = ToggleGuildFinder
+local ToggleGuildFrame = ToggleGuildFrame
 local ToggleHelpFrame = ToggleHelpFrame
 
 local MAINMENU_BUTTON = MAINMENU_BUTTON
@@ -99,15 +99,9 @@ local microMenu = {
 		text = ACHIEVEMENTS_GUILD_TAB,
 		func = function()
 			if IsInGuild() then
-				if (not _G.CommunitiesFrame) then
-					LoadAddOn("Blizzard_Communities")
-				end
-				ToggleFrame(_G.CommunitiesFrame)
+				ToggleGuildFrame()
 			else
-				if (not _G.LookingForGuildFrame) then
-					LookingForGuildFrame_LoadUI()
-				end
-				LookingForGuildFrame_Toggle()
+				ToggleGuildFinder()
 			end
 		end,
 		notCheckable = true

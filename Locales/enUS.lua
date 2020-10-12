@@ -110,6 +110,7 @@ L["BOTTOMRIGHT"] = true
 L["Backdrop"] = true
 L["Backdrop Spacing"] = true
 L["Bags"] = true
+L["Bags are full"] = true
 L["Banners"] = true
 L["Bar"] = true
 L["Bar Backdrop"] = true

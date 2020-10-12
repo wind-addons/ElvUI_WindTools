@@ -1,11 +1,25 @@
 local W, F, E, L = unpack(select(2, ...))
 local FL = W:NewModule("FastLoot", "AceEvent-3.0")
 
-local GetTime = GetTime
-local LootSlot = LootSlot
+local _G = _G
+local tonumber = tonumber
+
 local GetCVarBool = GetCVarBool
+local GetContainerNumFreeSlots = GetContainerNumFreeSlots
 local GetNumLootItems = GetNumLootItems
+local GetTime = GetTime
 local IsModifiedClick = IsModifiedClick
+local LootSlot = LootSlot
+
+local NUM_BAG_SLOTS = NUM_BAG_SLOTS
+
+function FL:GetFreeSlots()
+	local numFreeSlots = 0
+	for bag = 0, NUM_BAG_SLOTS do
+		numFreeSlots = numFreeSlots + tonumber((GetContainerNumFreeSlots(bag))) or 0
+	end
+	return numFreeSlots
+end
 
 function FL:LOOT_READY()
 	local tDelay = 0
@@ -13,7 +27,11 @@ function FL:LOOT_READY()
 		tDelay = GetTime()
 		if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
 			for i = GetNumLootItems(), 1, -1 do
-				LootSlot(i)
+				if self:GetFreeSlots() > 0 then
+					LootSlot(i)
+				else
+					_G.UIErrorsFrame:AddMessage(E.InfoColor .. L["Bags are full"])
+				end
 			end
 			tDelay = GetTime()
 		end
@@ -21,20 +39,22 @@ function FL:LOOT_READY()
 end
 
 function FL:Initialize()
-	if not E.db.WT.item.fastLoot.enable then return end
+	if not E.db.WT.item.fastLoot.enable then
+		return
+	end
 	self.db = E.db.WT.item.fastLoot
 
 	self:RegisterEvent("LOOT_READY")
 end
 
 function FL:ProfileUpdate()
-    self.db = E.db.WT.item.fastLoot
+	self.db = E.db.WT.item.fastLoot
 
-    if self.db.enable then
-        self:RegisterEvent("LOOT_READY")
-    else
-        self:UnregisterEvent("LOOT_READY")
-    end
+	if self.db.enable then
+		self:RegisterEvent("LOOT_READY")
+	else
+		self:UnregisterEvent("LOOT_READY")
+	end
 end
 
 W:RegisterModule(FL:GetName())

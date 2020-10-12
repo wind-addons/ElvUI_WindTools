@@ -3,7 +3,8 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
-local LibStub = _G.LibStub
+local pairs = pairs
+local CreateFrame = CreateFrame
 
 local DeleteRegions = {
     "Center",
@@ -40,13 +41,13 @@ function S:TinyInspect_SkinPanel(unit, parent, ilevel, maxLevel)
     frame.closeButton:ClearAllPoints()
     frame.closeButton:SetPoint("BOTTOMLEFT", 3, 3)
 
-    inspectFrameHolder = CreateFrame("Frame", nil, parent)
+    local inspectFrameHolder = CreateFrame("Frame", nil, parent)
     inspectFrameHolder:Point("TOPLEFT", frame, "TOPLEFT", 0, -1)
     inspectFrameHolder:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 1)
     inspectFrameHolder:CreateBackdrop("Transparent")
     inspectFrameHolder.backdrop:SetFrameLevel(frame:GetFrameLevel())
     inspectFrameHolder.backdrop:SetFrameStrata(frame:GetFrameStrata())
-    S:CreateShadow(inspectFrameHolder, 5)
+    self:CreateShadow(inspectFrameHolder, 5)
 
     self:SecureHookScript(
         frame.closeButton,

@@ -3,8 +3,6 @@ local ES = E:GetModule("Skins")
 local S = W:GetModule("Skins")
 
 local _G = _G
-local LibStub = _G.LibStub
-
 local pairs = pairs
 
 function S:BugSack_Open()

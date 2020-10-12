@@ -565,6 +565,8 @@ function GB:UpdateTime()
         else
             hour, min = GetGameTime()
             hour = self.db.time.twentyFour and hour or mod(hour, 12)
+            hour = format("%02d", hour)
+            min = format("%02d", min)
         end
     end
 

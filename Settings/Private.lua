@@ -96,6 +96,7 @@ V.skins = {
 		bugSack = true,
 		hekili = true,
 		immersion = true,
+		tinyInspect = true,
 		weakAuras = true,
 		weakAurasOptions = true
 	},

@@ -501,6 +501,10 @@ options.addons = {
             type = "toggle",
             name = L["Immersion"]
         },
+        tinyInspect = {
+            type = "toggle",
+            name = L["TinyInspect"]
+        },
         weakAuras = {
             type = "toggle",
             name = L["WeakAuras"]

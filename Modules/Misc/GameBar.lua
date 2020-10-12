@@ -15,6 +15,7 @@ local pairs = pairs
 local select = select
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 local type = type
 local unpack = unpack
 

@@ -663,7 +663,8 @@ options.trade = {
         thanksText = {
             order = 3,
             type = "input",
-            name = L["Thanks Text"]
+            name = L["Thanks Text"],
+            width = "full"
         }
     }
 }

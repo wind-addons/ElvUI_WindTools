@@ -73,7 +73,7 @@ local function AddDoubleLineForItem(itemID)
     if not canUse then
         local min = floor(cooldownTime / 60)
         local sec = floor(mod(cooldownTime, 60))
-        cooldownTimeString = format("%2d:%2d", min, sec)
+        cooldownTimeString = format("%02d:%02d", min, sec)
     end
 
     DT.tooltip:AddDoubleLine(

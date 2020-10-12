@@ -2,6 +2,26 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local C_Timer_After = C_Timer.After
+
+local function DeleteBackdrop(count)
+    count = count or 0
+
+    if count > 20 then
+        return
+    end
+
+    if _G.InspectModelFrame.backdrop then
+        _G.InspectModelFrame.backdrop:Kill()
+    else
+        C_Timer_After(
+            0.05,
+            function()
+                DeleteBackdrop(count + 1)
+            end
+        )
+    end
+end
 
 function S:Blizzard_InspectUI()
     if not self:CheckDB("inspect") then
@@ -20,10 +40,9 @@ function S:Blizzard_InspectUI()
         InspectModelFrame:DisableDrawLayer("BACKGROUND")
         InspectModelFrame:DisableDrawLayer("BORDER")
         InspectModelFrame:DisableDrawLayer("OVERLAY")
-        if InspectModelFrame.backdrop then
-            InspectModelFrame.backdrop:Kill()
-        end
     end
+
+    DeleteBackdrop()
 end
 
 S:AddCallbackForAddon("Blizzard_InspectUI")

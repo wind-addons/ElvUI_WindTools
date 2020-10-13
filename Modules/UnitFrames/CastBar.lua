@@ -34,17 +34,23 @@ function CB:StyleAfterConfigure(_, unitFrame)
     local db = configKey[name] and self.db[configKey[name]]
     local castBar = unitFrame.Castbar
 
-    if castBar and db and db.enable and db.text and db.time then
-        castBar.Text:ClearAllPoints()
-        castBar.Text:Point(db.text.anchor, castBar, db.text.anchor, db.text.offsetX, db.text.offsetY)
-        F.SetFontWithDB(castBar.Text, db.text.font)
+    if castBar then
+        if db and db.enable and db.text and db.time then
+            if db.text.anchor and db.text.offsetX and db.text.offsetY and db.text.font then
+                castBar.Text:ClearAllPoints()
+                castBar.Text:Point(db.text.anchor, castBar, db.text.anchor, db.text.offsetX, db.text.offsetY)
+                F.SetFontWithDB(castBar.Text, db.text.font)
+            end
 
-        castBar.Time:ClearAllPoints()
-        castBar.Time:Point(db.time.anchor, castBar, db.time.anchor, db.time.offsetX, db.time.offsetY)
-        F.SetFontWithDB(castBar.Time, db.time.font)
-    else
-        UF:Configure_FontString(castBar.Text)
-        UF:Configure_FontString(castBar.Time)
+            if db.time.anchor and db.time.offsetX and db.time.offsetY and db.time.font then
+                castBar.Time:ClearAllPoints()
+                castBar.Time:Point(db.time.anchor, castBar, db.time.anchor, db.time.offsetX, db.time.offsetY)
+                F.SetFontWithDB(castBar.Time, db.time.font)
+            end
+        else
+            UF:Configure_FontString(castBar.Text)
+            UF:Configure_FontString(castBar.Time)
+        end
     end
 end
 
@@ -65,6 +71,7 @@ end
 
 function CB:Initialize()
     self.db = E.db.WT.unitFrames.castBar
+
     if not E.private.unitframe.enable or not self.db or not self.db.enable then
         return
     end
@@ -76,12 +83,12 @@ function CB:ProfileUpdate()
     self.db = E.db.WT.unitFrames.castBar
 
     if self.db.enable then
-        if not self.IsHooked(UF, "Configure_Castbar") then
+        if not self:IsHooked(UF, "Configure_Castbar") then
             self:SecureHook(UF, "Configure_Castbar", "StyleAfterConfigure")
         end
         self:Refresh()
     else
-        if self.IsHooked(UF, "Configure_Castbar") then
+        if self:IsHooked(UF, "Configure_Castbar") then
             self:Unhook(UF, "Configure_Castbar")
             self:Refresh()
         end

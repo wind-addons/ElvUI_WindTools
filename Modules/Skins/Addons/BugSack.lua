@@ -85,3 +85,4 @@ function S:BugSack()
 end
 
 S:AddCallbackForAddon("BugSack")
+S:DisableAddOnSkin("BugSack")

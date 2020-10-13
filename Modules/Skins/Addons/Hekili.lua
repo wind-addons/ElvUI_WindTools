@@ -20,3 +20,4 @@ function S:Hekili()
 end
 
 S:AddCallbackForAddon("Hekili")
+S:DisableAddOnSkin("Hekili")

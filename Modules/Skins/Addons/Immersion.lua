@@ -125,3 +125,4 @@ function S:Immersion()
 end
 
 S:AddCallbackForAddon("Immersion")
+S:DisableAddOnSkin("Immersion")

@@ -181,3 +181,4 @@ function S:TinyInspect()
 end
 
 S:AddCallbackForAddon("TinyInspect")
+S:DisableAddOnSkin("TinyInspect")

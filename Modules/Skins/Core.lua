@@ -272,6 +272,15 @@ function S:Hook_Ace3()
     end
 end
 
+function S:DisableAddOnSkin(key)
+    if _G.AddOnSkins then
+        local AS = _G.AddOnSkins[1]
+        if AS and AS.db[key] then
+            AS:SetOption(key, false)
+        end
+    end
+end
+
 -- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     if not E.private.WT.skins.enable then

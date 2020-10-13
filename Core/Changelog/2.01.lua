@@ -16,12 +16,15 @@ W.Changelog[201] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "修正更新说明中的一些错误.",
+            "添加聊天条的间隔设定.",
         },
         ["zhTW"] = {
-            "修正更新说明中的一些错误.",
+            "修正更新說明的一些錯誤.",
+            "添加聊天條的間隔設定.",
         },
         ["enUS"] = {
-            "Ammend the changelog"
+            "Ammend the changelog.",
+            "Add spacing option of chat bar.",
         }
     }
 }

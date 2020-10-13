@@ -122,7 +122,7 @@ W.Changelog[200] = {
         },
         ["enUS"] = {
             "Update world map removal database to 9.0.",
-            "Update feast and  utility kill IDs to 9.0",
+            "Update feast and  utility spell IDs to 9.0",
             "Update automatic item list of potions, potions, and other items to 9.0",
             "Add ready check, countdown, toggle advanced combat logging to raid mark bar.",
             "Renew some skins of Blizzard, ElvUI, WindTools frames or modules",

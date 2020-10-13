@@ -136,8 +136,16 @@ options.chatBar = {
                     max = 60,
                     step = 1
                 },
-                style = {
+                spacing = {
                     order = 3,
+                    type = "range",
+                    name = L["Spacing"],
+                    min = 0,
+                    max = 80,
+                    step = 1
+                },
+                style = {
+                    order = 4,
                     type = "select",
                     name = L["Style"],
                     values = {

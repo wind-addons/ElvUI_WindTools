@@ -570,10 +570,15 @@ options.chatLink = {
             order = 1,
             type = "toggle",
             name = L["Enable"],
-            width = "full"
+        },
+        compatibile = {
+            order = 2,
+            type = "toggle",
+            name = L["Compatibile"],
+            desc = format(L["Compatibile with %s."], L["TinyInspect"])
         },
         general = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Additional Information"],

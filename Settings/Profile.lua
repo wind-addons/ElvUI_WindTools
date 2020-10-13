@@ -559,7 +559,8 @@ P.social = {
         level = true,
         icon = true,
         armorCategory = true,
-        weaponCategory = true
+        weaponCategory = true,
+        compatibile = true
     },
     chatText = {
         enable = true,

@@ -203,8 +203,19 @@ function CL:Filter(event, msg, ...)
     return false, msg, ...
 end
 
+function CL:PLAYER_ENTERING_WORLD()
+    if _G.TinyInspectDB and self.db.compatibile then
+        _G.TinyInspectDB.EnableItemLevel = false
+        _G.TinyInspectDB.ShowItemBorder = false
+        _G.TinyInspectDB.ShowItemSlotString = false
+        _G.TinyInspectDB.EnableItemLevelChat = false
+    end
+end
+
 function CL:Initialize()
     self.db = E.db.WT.social.chatLink
+
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
     ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", self.Filter)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", self.Filter)
@@ -229,6 +240,8 @@ function CL:ProfileUpdate()
     if self.db.enable and not self.Initialized then
         self:Initialize()
     end
+
+    self:PLAYER_ENTERING_WORLD()
 end
 
 W:RegisterModule(CL:GetName())

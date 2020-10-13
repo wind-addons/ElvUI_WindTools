@@ -1,12 +1,12 @@
-name: publish
+name: publish_stable
 
 on:
   push:
     branches:
       - stable
     tags-ignore:
-      - "!**-alpha-**"
-      - "!**-beta-**"
+      - "**-alpha-**"
+      - "**-beta-**"
 
 jobs:
   build:

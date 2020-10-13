@@ -7,26 +7,11 @@ local C_Timer_NewTicker = C_Timer.NewTicker
 function S:BigWigs_CreateBar(barLib, ...)
     local bar = self.hooks[barLib]["CreateBar"](barLib, ...)
 
-    S:CreateShadow(bar, 5)
-
-    if bar:Get("bigwigs:AddOnSkins:ibg") then
-        print(1)
+    if E.private.WT.skins.shadow then
+        self:CreateShadow(bar, 5)
+        bar.candyBarIconFrame:CreateBackdrop()
+        self:CreateShadow(bar.candyBarIconFrame.backdrop)
     end
-
-    if bar.candyBarIconFrameBackdrop then
-        S:CreateShadow(bar.candyBarIconFrameBackdrop)
-    end
-
-    C_Timer_NewTicker(
-        0.1,
-        function()
-            local addOnSkinsBG = bar.Get and bar:Get("bigwigs:AddOnSkins:ibg")
-            if addOnSkinsBG and not addOnSkinsBG.shadow then
-                S:CreateShadow(addOnSkinsBG)
-            end
-        end,
-        3
-    )
 
     return bar
 end

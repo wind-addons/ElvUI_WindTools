@@ -626,7 +626,7 @@ options.reset = {
                             ["databars"] = {
                                 ["threat"] = {
                                     ["fontOutline"] = "OUTLINE",
-                                    ["width"] = 417,
+                                    ["width"] = 417
                                 },
                                 ["experience"] = {
                                     ["fontSize"] = 8,
@@ -634,25 +634,25 @@ options.reset = {
                                     ["fontOutline"] = "OUTLINE",
                                     ["height"] = 5,
                                     ["hideInCombat"] = false,
-                                    ["width"] = 222,
+                                    ["width"] = 222
                                 },
                                 ["honor"] = {
-                                    ["enable"] = false,
+                                    ["enable"] = false
                                 },
                                 ["reputation"] = {
                                     ["enable"] = true,
-                                    ["height"] = 5,
+                                    ["height"] = 5
                                 },
                                 ["azerite"] = {
-                                    ["enable"] = false,
+                                    ["enable"] = false
                                 },
                                 ["customTexture"] = true,
-                                ["statusbar"] = "WindTools Glow",
+                                ["statusbar"] = "WindTools Glow"
                             },
                             ["general"] = {
                                 ["totems"] = {
                                     ["size"] = 35,
-                                    ["growthDirection"] = "HORIZONTAL",
+                                    ["growthDirection"] = "HORIZONTAL"
                                 },
                                 ["fontSize"] = 13,
                                 ["autoTrackReputation"] = true,
@@ -661,17 +661,17 @@ options.reset = {
                                 ["minimap"] = {
                                     ["icons"] = {
                                         ["mail"] = {
-                                            ["yOffset"] = -20,
+                                            ["yOffset"] = -20
                                         },
                                         ["lfgEye"] = {
                                             ["position"] = "BOTTOMLEFT",
-                                            ["yOffset"] = -2,
+                                            ["yOffset"] = -2
                                         },
                                         ["classHall"] = {
-                                            ["position"] = "TOPRIGHT",
-                                        },
+                                            ["position"] = "TOPRIGHT"
+                                        }
                                     },
-                                    ["size"] = 220,
+                                    ["size"] = 220
                                 },
                                 ["decimalLength"] = 0,
                                 ["talkingHeadFrameBackdrop"] = true,
@@ -680,36 +680,36 @@ options.reset = {
                                     ["a"] = 0.75,
                                     ["r"] = 0.04705882352941176,
                                     ["g"] = 0.04705882352941176,
-                                    ["b"] = 0.04705882352941176,
+                                    ["b"] = 0.04705882352941176
                                 },
                                 ["valuecolor"] = {
                                     ["a"] = 1,
                                     ["b"] = 1,
                                     ["g"] = 0.6784313725490196,
-                                    ["r"] = 0.05882352941176471,
+                                    ["r"] = 0.05882352941176471
                                 },
                                 ["loginmessage"] = false,
                                 ["itemLevel"] = {
                                     ["displayInspectInfo"] = false,
-                                    ["itemLevelFontSize"] = 14,
+                                    ["itemLevelFontSize"] = 14
                                 },
                                 ["backdropcolor"] = {
                                     ["a"] = 1,
                                     ["r"] = 0.1176470588235294,
                                     ["g"] = 0.1176470588235294,
-                                    ["b"] = 0.1176470588235294,
+                                    ["b"] = 0.1176470588235294
                                 },
                                 ["objectiveFrameAutoHideInKeystone"] = true,
                                 ["bordercolor"] = {
-                                    ["a"] = 1,
+                                    ["a"] = 1
                                 },
                                 ["altPowerBar"] = {
                                     ["statusBarColorGradient"] = true,
-                                    ["smoothbars"] = true,
+                                    ["smoothbars"] = true
                                 },
                                 ["stickyFrames"] = false,
                                 ["bonusObjectivePosition"] = "RIGHT",
-                                ["resurrectSound"] = true,
+                                ["resurrectSound"] = true
                             },
                             ["movers"] = {
                                 ["WTRaidMarkersBarAnchor"] = "TOP,ElvUIParent,TOP,0,-85",
@@ -762,7 +762,7 @@ options.reset = {
                                 ["RightChatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-18,23",
                                 ["AlertFrameMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,180",
                                 ["DebuffsMover"] = "TOP,ElvUIParent,TOP,144,-397",
-                                ["MinimapMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-25,-25",
+                                ["MinimapMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-25,-25"
                             },
                             ["v11NamePlateReset"] = true,
                             ["chat"] = {
@@ -777,7 +777,7 @@ options.reset = {
                                 ["keywords"] = "%MYNAME%",
                                 ["font"] = "聊天",
                                 ["channelAlerts"] = {
-                                    ["WHISPER"] = "OnePlus Light",
+                                    ["WHISPER"] = "OnePlus Light"
                                 },
                                 ["tabSelector"] = "NONE",
                                 ["hideChatToggles"] = true,
@@ -786,37 +786,37 @@ options.reset = {
                                 ["customTimeColor"] = {
                                     ["r"] = 1,
                                     ["g"] = 0.7647058823529411,
-                                    ["b"] = 0.3803921568627451,
-                                },
+                                    ["b"] = 0.3803921568627451
+                                }
                             },
                             ["auras"] = {
                                 ["debuffs"] = {
                                     ["countFontSize"] = 18,
                                     ["size"] = 42,
-                                    ["durationFontSize"] = 18,
+                                    ["durationFontSize"] = 18
                                 },
                                 ["fontOutline"] = "OUTLINE",
                                 ["buffs"] = {
                                     ["countFontSize"] = 19,
                                     ["size"] = 36,
-                                    ["durationFontSize"] = 14,
+                                    ["durationFontSize"] = 14
                                 },
                                 ["countYOffset"] = 24,
                                 ["timeYOffset"] = 6,
-                                ["font"] = "Roadway",
+                                ["font"] = "Roadway"
                             },
                             ["datatexts"] = {
                                 ["panels"] = {
                                     ["MinimapPanel"] = {
-                                        ["enable"] = false,
+                                        ["enable"] = false
                                     },
                                     ["RightChatDataPanel"] = {
-                                        ["enable"] = false,
+                                        ["enable"] = false
                                     },
                                     ["LeftChatDataPanel"] = {
-                                        ["enable"] = false,
-                                    },
-                                },
+                                        ["enable"] = false
+                                    }
+                                }
                             },
                             ["unitframe"] = {
                                 ["fontSize"] = 12,
@@ -831,13 +831,13 @@ options.reset = {
                                             ["spacing"] = 3,
                                             ["priority"] = "Blacklist,Personal,RaidDebuffs,CCDebuffs,Friendly:Dispellable",
                                             ["attachTo"] = "BUFFS",
-                                            ["perrow"] = 4,
+                                            ["perrow"] = 4
                                         },
                                         ["raidRoleIcons"] = {
                                             ["enable"] = true,
                                             ["yOffset"] = 0,
                                             ["xOffset"] = 0,
-                                            ["position"] = "TOPLEFT",
+                                            ["position"] = "TOPLEFT"
                                         },
                                         ["resurrectIcon"] = {
                                             ["attachTo"] = "CENTER",
@@ -845,14 +845,14 @@ options.reset = {
                                             ["enable"] = true,
                                             ["xOffset"] = 0,
                                             ["attachToObject"] = "Frame",
-                                            ["size"] = 30,
+                                            ["size"] = 30
                                         },
                                         ["phaseIndicator"] = {
                                             ["anchorPoint"] = "CENTER",
                                             ["scale"] = 0.8,
                                             ["xOffset"] = 0,
                                             ["enable"] = true,
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["CombatIcon"] = {
                                             ["anchorPoint"] = "CENTER",
@@ -863,25 +863,25 @@ options.reset = {
                                                 ["a"] = 1,
                                                 ["r"] = 1,
                                                 ["g"] = 0.2,
-                                                ["b"] = 0.2,
+                                                ["b"] = 0.2
                                             },
                                             ["enable"] = true,
                                             ["defaultColor"] = true,
-                                            ["texture"] = "DEFAULT",
+                                            ["texture"] = "DEFAULT"
                                         },
                                         ["aurabar"] = {
                                             ["attachTo"] = "DEBUFFS",
                                             ["spacing"] = 0,
                                             ["detachedWidth"] = 270,
                                             ["priority"] = "Blacklist,blockNoDuration,Personal,Boss,RaidDebuffs,PlayerBuffs",
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
-                                            },
+                                                ["lengthBeforeFade"] = 0.1
+                                            }
                                         },
                                         ["castbar"] = {
                                             ["iconAttachedTo"] = "Castbar",
@@ -895,8 +895,8 @@ options.reset = {
                                             ["textColor"] = {
                                                 ["b"] = 1,
                                                 ["g"] = 1,
-                                                ["r"] = 1,
-                                            },
+                                                ["r"] = 1
+                                            }
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -908,7 +908,7 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -919,7 +919,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -929,25 +929,25 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["power"] = {
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["width"] = 100,
                                         ["infoPanel"] = {
-                                            ["height"] = 20,
+                                            ["height"] = 20
                                         },
                                         ["pvpIcon"] = {
                                             ["anchorPoint"] = "CENTER",
                                             ["scale"] = 1,
                                             ["xOffset"] = 0,
                                             ["enable"] = false,
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["orientation"] = "RIGHT",
                                         ["height"] = 30,
@@ -957,7 +957,7 @@ options.reset = {
                                             ["perrow"] = 5,
                                             ["priority"] = "Blacklist,Personal,nonPersonal",
                                             ["maxDuration"] = 0,
-                                            ["yOffset"] = -80,
+                                            ["yOffset"] = -80
                                         },
                                         ["middleClickFocus"] = true,
                                         ["raidicon"] = {
@@ -966,24 +966,24 @@ options.reset = {
                                             ["enable"] = true,
                                             ["xOffset"] = 0,
                                             ["attachToObject"] = "Frame",
-                                            ["yOffset"] = 8,
-                                        },
+                                            ["yOffset"] = 8
+                                        }
                                     },
                                     ["party"] = {
                                         ["debuffs"] = {
                                             ["xOffset"] = 3,
                                             ["sizeOverride"] = 34,
                                             ["countFont"] = "Montserrat",
-                                            ["perrow"] = 5,
+                                            ["perrow"] = 5
                                         },
                                         ["rdebuffs"] = {
                                             ["xOffset"] = 28,
                                             ["font"] = "Montserrat",
                                             ["fontOutline"] = "OUTLINE",
-                                            ["yOffset"] = 6,
+                                            ["yOffset"] = 6
                                         },
                                         ["raidRoleIcons"] = {
-                                            ["xOffset"] = 3,
+                                            ["xOffset"] = 3
                                         },
                                         ["growthDirection"] = "DOWN_RIGHT",
                                         ["disableFocusGlow"] = true,
@@ -991,10 +991,10 @@ options.reset = {
                                         ["roleIcon"] = {
                                             ["xOffset"] = 5,
                                             ["position"] = "LEFT",
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["castbar"] = {
-                                            ["width"] = 154,
+                                            ["width"] = 154
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1006,7 +1006,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 13,
+                                                ["size"] = 13
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1016,7 +1016,7 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
+                                                ["size"] = 12
                                             },
                                             ["Wind Health Percent"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1027,56 +1027,56 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 22,
-                                            },
+                                                ["size"] = 22
+                                            }
                                         },
                                         ["summonIcon"] = {
                                             ["attachTo"] = "RIGHT",
-                                            ["xOffset"] = -20,
+                                            ["xOffset"] = -20
                                         },
                                         ["width"] = 154,
                                         ["power"] = {
                                             ["height"] = 4,
                                             ["hideonnpc"] = true,
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["buffs"] = {
                                             ["sizeOverride"] = 34,
                                             ["enable"] = true,
                                             ["xOffset"] = -3,
                                             ["countFont"] = "Montserrat",
-                                            ["perrow"] = 3,
+                                            ["perrow"] = 3
                                         },
                                         ["height"] = 35,
                                         ["verticalSpacing"] = 5,
                                         ["health"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["cutaway"] = {
                                             ["health"] = {
-                                                ["enabled"] = true,
-                                            },
-                                        },
+                                                ["enabled"] = true
+                                            }
+                                        }
                                     },
                                     ["player"] = {
                                         ["debuffs"] = {
-                                            ["enable"] = false,
+                                            ["enable"] = false
                                         },
                                         ["disableTargetGlow"] = false,
                                         ["raidRoleIcons"] = {
                                             ["xOffset"] = 3,
-                                            ["position"] = "TOPRIGHT",
+                                            ["position"] = "TOPRIGHT"
                                         },
                                         ["disableFocusGlow"] = false,
                                         ["classbar"] = {
                                             ["detachFromFrame"] = true,
-                                            ["height"] = 13,
+                                            ["height"] = 13
                                         },
                                         ["aurabar"] = {
-                                            ["enable"] = false,
+                                            ["enable"] = false
                                         },
                                         ["RestIcon"] = {
                                             ["anchorPoint"] = "BOTTOMLEFT",
@@ -1084,16 +1084,16 @@ options.reset = {
                                             ["size"] = 21,
                                             ["color"] = {
                                                 ["g"] = 0.5568627450980392,
-                                                ["r"] = 0.203921568627451,
+                                                ["r"] = 0.203921568627451
                                             },
                                             ["xOffset"] = 13,
                                             ["defaultColor"] = false,
-                                            ["texture"] = "RESTING1",
+                                            ["texture"] = "RESTING1"
                                         },
                                         ["power"] = {
                                             ["detachFromFrame"] = true,
                                             ["text_format"] = "",
-                                            ["height"] = 15,
+                                            ["height"] = 15
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1105,7 +1105,7 @@ options.reset = {
                                                 ["justifyH"] = "CENTER",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 22,
+                                                ["size"] = 22
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1116,7 +1116,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1126,25 +1126,25 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["raidicon"] = {
-                                            ["size"] = 19,
+                                            ["size"] = 19
                                         },
                                         ["disableMouseoverGlow"] = true,
                                         ["width"] = 220,
                                         ["infoPanel"] = {
                                             ["height"] = 14,
-                                            ["transparent"] = true,
+                                            ["transparent"] = true
                                         },
                                         ["health"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["fader"] = {
                                             ["enable"] = true,
                                             ["vehicle"] = false,
-                                            ["minAlpha"] = 0,
+                                            ["minAlpha"] = 0
                                         },
                                         ["castbar"] = {
                                             ["xOffsetTime"] = 0,
@@ -1152,7 +1152,7 @@ options.reset = {
                                             ["textColor"] = {
                                                 ["b"] = 1,
                                                 ["g"] = 1,
-                                                ["r"] = 1,
+                                                ["r"] = 1
                                             },
                                             ["width"] = 257,
                                             ["iconXOffset"] = -4,
@@ -1162,32 +1162,31 @@ options.reset = {
                                             ["iconSize"] = 24,
                                             ["format"] = "REMAININGMAX",
                                             ["iconAttached"] = false,
-                                            ["latency"] = false,
+                                            ["latency"] = false
                                         },
                                         ["height"] = 30,
                                         ["portrait"] = {
                                             ["overlay"] = true,
                                             ["camDistanceScale"] = 2.88,
-                                            ["overlayAlpha"] = 0.2,
+                                            ["overlayAlpha"] = 0.2
                                         },
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
+                                                ["lengthBeforeFade"] = 0.1
                                             },
                                             ["power"] = {
                                                 ["lengthBeforeFade"] = 0.1,
-                                                ["fadeOutTime"] = 0.3,
-                                            },
+                                                ["fadeOutTime"] = 0.3
+                                            }
                                         },
                                         ["pvp"] = {
-                                            ["position"] = "RIGHT",
-                                        },
+                                            ["position"] = "RIGHT"
+                                        }
                                     },
                                     ["raid40"] = {
-                                        ["rdebuffs"] = {
-                                        },
+                                        ["rdebuffs"] = {}
                                     },
                                     ["focus"] = {
                                         ["debuffs"] = {
@@ -1198,14 +1197,14 @@ options.reset = {
                                             ["attachTo"] = "BUFFS",
                                             ["priority"] = "Blacklist,Personal,RaidDebuffs,CCDebuffs,Friendly:Dispellable",
                                             ["anchorPoint"] = "TOPLEFT",
-                                            ["yOffset"] = 80,
+                                            ["yOffset"] = 80
                                         },
                                         ["disableTargetGlow"] = true,
                                         ["raidRoleIcons"] = {
                                             ["enable"] = true,
                                             ["position"] = "TOPLEFT",
                                             ["xOffset"] = 0,
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["resurrectIcon"] = {
                                             ["attachTo"] = "CENTER",
@@ -1213,32 +1212,32 @@ options.reset = {
                                             ["enable"] = true,
                                             ["xOffset"] = 0,
                                             ["attachToObject"] = "Frame",
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["phaseIndicator"] = {
                                             ["anchorPoint"] = "CENTER",
                                             ["enable"] = true,
                                             ["scale"] = 0.8,
                                             ["xOffset"] = 0,
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["aurabar"] = {
                                             ["maxBars"] = 6,
-                                            ["detachedWidth"] = 270,
+                                            ["detachedWidth"] = 270
                                         },
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
-                                            },
+                                                ["lengthBeforeFade"] = 0.1
+                                            }
                                         },
                                         ["pvpIcon"] = {
                                             ["anchorPoint"] = "CENTER",
                                             ["enable"] = false,
                                             ["scale"] = 1,
                                             ["xOffset"] = 0,
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1250,7 +1249,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -1,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1261,7 +1260,7 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1271,18 +1270,18 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 4,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["width"] = 138,
                                         ["infoPanel"] = {
-                                            ["height"] = 20,
+                                            ["height"] = 20
                                         },
                                         ["power"] = {
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["height"] = 30,
                                         ["orientation"] = "RIGHT",
@@ -1293,7 +1292,7 @@ options.reset = {
                                             ["enable"] = true,
                                             ["priority"] = "Blacklist,Personal,nonPersonal",
                                             ["maxDuration"] = 0,
-                                            ["yOffset"] = -80,
+                                            ["yOffset"] = -80
                                         },
                                         ["castbar"] = {
                                             ["iconAttachedTo"] = "Castbar",
@@ -1307,18 +1306,18 @@ options.reset = {
                                             ["textColor"] = {
                                                 ["b"] = 1,
                                                 ["g"] = 1,
-                                                ["r"] = 1,
-                                            },
+                                                ["r"] = 1
+                                            }
                                         },
-                                        ["middleClickFocus"] = true,
+                                        ["middleClickFocus"] = true
                                     },
                                     ["target"] = {
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
-                                            },
+                                                ["lengthBeforeFade"] = 0.1
+                                            }
                                         },
                                         ["debuffs"] = {
                                             ["countFontSize"] = 15,
@@ -1326,7 +1325,7 @@ options.reset = {
                                             ["spacing"] = 3,
                                             ["perrow"] = 6,
                                             ["anchorPoint"] = "TOPLEFT",
-                                            ["yOffset"] = 80,
+                                            ["yOffset"] = 80
                                         },
                                         ["castbar"] = {
                                             ["iconAttached"] = false,
@@ -1341,8 +1340,8 @@ options.reset = {
                                             ["textColor"] = {
                                                 ["r"] = 1,
                                                 ["g"] = 1,
-                                                ["b"] = 1,
-                                            },
+                                                ["b"] = 1
+                                            }
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1354,7 +1353,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1365,7 +1364,7 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1375,44 +1374,44 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["raidRoleIcons"] = {
-                                            ["xOffset"] = 3,
+                                            ["xOffset"] = 3
                                         },
                                         ["width"] = 220,
                                         ["health"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["height"] = 30,
                                         ["buffs"] = {
                                             ["anchorPoint"] = "TOPLEFT",
                                             ["spacing"] = 2,
-                                            ["yOffset"] = -80,
+                                            ["yOffset"] = -80
                                         },
                                         ["power"] = {
                                             ["text_format"] = "",
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["aurabar"] = {
-                                            ["enable"] = false,
-                                        },
+                                            ["enable"] = false
+                                        }
                                     },
                                     ["raid"] = {
                                         ["roleIcon"] = {
                                             ["xOffset"] = 2,
                                             ["position"] = "TOPLEFT",
-                                            ["yOffset"] = -2,
+                                            ["yOffset"] = -2
                                         },
                                         ["portrait"] = {
-                                            ["fullOverlay"] = true,
+                                            ["fullOverlay"] = true
                                         },
                                         ["power"] = {
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["customTexts"] = {
                                             ["Wind Name"] = {
@@ -1423,32 +1422,32 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 10,
-                                            },
+                                                ["size"] = 10
+                                            }
                                         },
                                         ["rdebuffs"] = {
                                             ["font"] = "Montserrat",
                                             ["fontOutline"] = "OUTLINE",
                                             ["xOffset"] = 23,
                                             ["size"] = 25,
-                                            ["yOffset"] = 14,
+                                            ["yOffset"] = 14
                                         },
                                         ["width"] = 72,
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["height"] = 40,
                                         ["summonIcon"] = {
-                                            ["attachTo"] = "TOPRIGHT",
-                                        },
+                                            ["attachTo"] = "TOPRIGHT"
+                                        }
                                     },
                                     ["boss"] = {
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.2,
-                                            },
+                                                ["lengthBeforeFade"] = 0.2
+                                            }
                                         },
                                         ["debuffs"] = {
                                             ["sizeOverride"] = 30,
@@ -1456,11 +1455,11 @@ options.reset = {
                                             ["xOffset"] = -5,
                                             ["perrow"] = 4,
                                             ["countFont"] = "Montserrat",
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["castbar"] = {
                                             ["height"] = 24,
-                                            ["width"] = 220,
+                                            ["width"] = 220
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1472,7 +1471,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 14,
+                                                ["size"] = 14
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1483,7 +1482,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1493,12 +1492,12 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["width"] = 220,
                                         ["health"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["spacing"] = 50,
                                         ["height"] = 30,
@@ -1509,40 +1508,40 @@ options.reset = {
                                             ["xOffset"] = 5,
                                             ["attachTo"] = "HEALTH",
                                             ["countFont"] = "Montserrat",
-                                            ["yOffset"] = 0,
+                                            ["yOffset"] = 0
                                         },
                                         ["power"] = {
                                             ["text_format"] = "",
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
-                                        },
+                                            ["text_format"] = ""
+                                        }
                                     },
                                     ["targettarget"] = {
                                         ["cutaway"] = {
                                             ["health"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
+                                                ["lengthBeforeFade"] = 0.1
                                             },
                                             ["power"] = {
                                                 ["enabled"] = true,
                                                 ["fadeOutTime"] = 0.3,
-                                                ["lengthBeforeFade"] = 0.1,
-                                            },
+                                                ["lengthBeforeFade"] = 0.1
+                                            }
                                         },
                                         ["debuffs"] = {
                                             ["anchorPoint"] = "TOPRIGHT",
                                             ["perrow"] = 4,
                                             ["attachTo"] = "FRAME",
-                                            ["yOffset"] = 20,
+                                            ["yOffset"] = 20
                                         },
                                         ["name"] = {
-                                            ["text_format"] = "",
+                                            ["text_format"] = ""
                                         },
                                         ["power"] = {
-                                            ["height"] = 4,
+                                            ["height"] = 4
                                         },
                                         ["customTexts"] = {
                                             ["Wind Power"] = {
@@ -1554,7 +1553,7 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Health"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1565,7 +1564,7 @@ options.reset = {
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 16,
+                                                ["size"] = 16
                                             },
                                             ["Wind Name"] = {
                                                 ["attachTextTo"] = "Health",
@@ -1575,12 +1574,12 @@ options.reset = {
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
-                                                ["size"] = 12,
-                                            },
+                                                ["size"] = 12
+                                            }
                                         },
                                         ["height"] = 30,
-                                        ["width"] = 100,
-                                    },
+                                        ["width"] = 100
+                                    }
                                 },
                                 ["statusbar"] = "WindTools Glow",
                                 ["colors"] = {
@@ -1588,27 +1587,27 @@ options.reset = {
                                         ["MANA"] = {
                                             ["b"] = 0.6313725490196078,
                                             ["g"] = 0.4509803921568628,
-                                            ["r"] = 0.3098039215686275,
+                                            ["r"] = 0.3098039215686275
                                         },
                                         ["RUNIC_POWER"] = {
-                                            ["g"] = 0.8196078431372549,
+                                            ["g"] = 0.8196078431372549
                                         },
                                         ["MAELSTROM"] = {
                                             ["b"] = 0.9803921568627451,
                                             ["g"] = 0.2588235294117647,
-                                            ["r"] = 0.2156862745098039,
+                                            ["r"] = 0.2156862745098039
                                         },
                                         ["ENERGY"] = {
                                             ["b"] = 0.3490196078431372,
                                             ["g"] = 0.6313725490196078,
-                                            ["r"] = 0.6509803921568628,
-                                        },
+                                            ["r"] = 0.6509803921568628
+                                        }
                                     },
                                     ["castColor"] = {
                                         ["a"] = 1,
                                         ["r"] = 0.2588235294117647,
                                         ["g"] = 0.7098039215686275,
-                                        ["b"] = 1,
+                                        ["b"] = 1
                                     },
                                     ["transparentHealth"] = true,
                                     ["colorhealthbyvalue"] = false,
@@ -1616,37 +1615,37 @@ options.reset = {
                                     ["health_backdrop"] = {
                                         ["r"] = 0.5137254901960784,
                                         ["g"] = 0.5137254901960784,
-                                        ["b"] = 0.5137254901960784,
+                                        ["b"] = 0.5137254901960784
                                     },
                                     ["health"] = {
                                         ["r"] = 0.1333333333333333,
                                         ["g"] = 0.1333333333333333,
-                                        ["b"] = 0.1333333333333333,
+                                        ["b"] = 0.1333333333333333
                                     },
                                     ["borderColor"] = {
-                                        ["a"] = 1,
+                                        ["a"] = 1
                                     },
                                     ["castNoInterrupt"] = {
                                         ["a"] = 1,
                                         ["b"] = 0.4941176470588236,
                                         ["g"] = 0.3882352941176471,
-                                        ["r"] = 1,
+                                        ["r"] = 1
                                     },
                                     ["powerclass"] = true,
                                     ["healthMultiplier"] = 0.75,
                                     ["frameGlow"] = {
                                         ["targetGlow"] = {
-                                            ["enable"] = false,
+                                            ["enable"] = false
                                         },
                                         ["mouseoverGlow"] = {
                                             ["color"] = {
                                                 ["a"] = 0.1000000238418579,
                                                 ["r"] = 0.4470588235294117,
                                                 ["g"] = 0.4470588235294117,
-                                                ["b"] = 0.4470588235294117,
-                                            },
-                                        },
-                                    },
+                                                ["b"] = 0.4470588235294117
+                                            }
+                                        }
+                                    }
                                 },
                                 ["fontOutline"] = "OUTLINE",
                                 ["smoothbars"] = true,
@@ -1654,39 +1653,38 @@ options.reset = {
                                     ["fonts"] = {
                                         ["enable"] = true,
                                         ["font"] = "Oswald",
-                                        ["fontSize"] = 17,
-                                    },
+                                        ["fontSize"] = 17
+                                    }
                                 },
                                 ["filters"] = {
-                                    ["aurawatch"] = {
-                                    },
-                                },
+                                    ["aurawatch"] = {}
+                                }
                             },
                             ["WT"] = {
                                 ["maps"] = {
                                     ["rectangleMinimap"] = {
-                                        ["enable"] = true,
-                                    },
+                                        ["enable"] = true
+                                    }
                                 },
                                 ["social"] = {
                                     ["chatBar"] = {
                                         ["channels"] = {
                                             ["world"] = {
                                                 ["name"] = "組隊頻道",
-                                                ["enable"] = true,
-                                            },
-                                        },
-                                    },
+                                                ["enable"] = true
+                                            }
+                                        }
+                                    }
                                 },
                                 ["item"] = {
                                     ["extraItemsBar"] = {
                                         ["bar1"] = {
-                                            ["buttonsPerRow"] = 6,
+                                            ["buttonsPerRow"] = 6
                                         },
                                         ["bar2"] = {
-                                            ["buttonsPerRow"] = 6,
-                                        },
-                                    },
+                                            ["buttonsPerRow"] = 6
+                                        }
+                                    }
                                 },
                                 ["unitFrames"] = {
                                     ["castBar"] = {
@@ -1696,42 +1694,42 @@ options.reset = {
                                             ["text"] = {
                                                 ["offsetX"] = 6,
                                                 ["font"] = {
-                                                    ["size"] = 13,
-                                                },
+                                                    ["size"] = 13
+                                                }
                                             },
                                             ["time"] = {
                                                 ["offsetX"] = -5,
                                                 ["font"] = {
-                                                    ["size"] = 13,
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
+                                                    ["size"] = 13
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             ["actionbar"] = {
                                 ["bar3"] = {
                                     ["buttonspacing"] = 4,
                                     ["buttonsPerRow"] = 4,
-                                    ["buttons"] = 8,
+                                    ["buttons"] = 8
                                 },
                                 ["hideCooldownBling"] = true,
                                 ["bar1"] = {
-                                    ["buttonspacing"] = 4,
+                                    ["buttonspacing"] = 4
                                 },
                                 ["bar2"] = {
                                     ["buttonspacing"] = 4,
-                                    ["enabled"] = true,
+                                    ["enabled"] = true
                                 },
                                 ["rightClickSelfCast"] = true,
                                 ["microbar"] = {
-                                    ["buttonSpacing"] = 4,
+                                    ["buttonSpacing"] = 4
                                 },
                                 ["bar5"] = {
-                                    ["enabled"] = false,
+                                    ["enabled"] = false
                                 },
                                 ["zoneActionButton"] = {
-                                    ["clean"] = true,
+                                    ["clean"] = true
                                 },
                                 ["transparent"] = true,
                                 ["font"] = "Montserrat",
@@ -1740,39 +1738,39 @@ options.reset = {
                                 ["hotkeyTextYOffset"] = -2,
                                 ["stanceBar"] = {
                                     ["buttonspacing"] = 4,
-                                    ["buttonsize"] = 24,
+                                    ["buttonsize"] = 24
                                 },
                                 ["barPet"] = {
                                     ["buttonspacing"] = 4,
                                     ["inheritGlobalFade"] = true,
                                     ["backdrop"] = false,
-                                    ["buttonsize"] = 37,
+                                    ["buttonsize"] = 37
                                 },
                                 ["bar4"] = {
                                     ["backdrop"] = false,
-                                    ["inheritGlobalFade"] = true,
-                                },
+                                    ["inheritGlobalFade"] = true
+                                }
                             },
                             ["nameplates"] = {
                                 ["cutaway"] = {
                                     ["health"] = {
                                         ["enabled"] = true,
                                         ["fadeOutTime"] = 0.3,
-                                        ["lengthBeforeFade"] = 0.2,
-                                    },
+                                        ["lengthBeforeFade"] = 0.2
+                                    }
                                 },
                                 ["smoothbars"] = true,
                                 ["statusbar"] = "WindTools Glow",
                                 ["units"] = {
                                     ["TARGET"] = {
-                                        ["glowStyle"] = "style7",
+                                        ["glowStyle"] = "style7"
                                     },
                                     ["PLAYER"] = {
                                         ["buffs"] = {
-                                            ["countFont"] = "Montserrat Bold",
-                                        },
-                                    },
-                                },
+                                            ["countFont"] = "Montserrat Bold"
+                                        }
+                                    }
+                                }
                             },
                             ["bags"] = {
                                 ["junkDesaturate"] = true,
@@ -1780,7 +1778,7 @@ options.reset = {
                                 ["currencyFormat"] = "ICON",
                                 ["countFontOutline"] = "OUTLINE",
                                 ["vendorGrays"] = {
-                                    ["enable"] = true,
+                                    ["enable"] = true
                                 },
                                 ["itemLevelFontOutline"] = "OUTLINE",
                                 ["transparent"] = true,
@@ -1788,20 +1786,20 @@ options.reset = {
                                 ["useBlizzardCleanup"] = true,
                                 ["showBindType"] = true,
                                 ["clearSearchOnClose"] = true,
-                                ["countFont"] = "Montserrat",
+                                ["countFont"] = "Montserrat"
                             },
                             ["cooldown"] = {
                                 ["fonts"] = {
                                     ["enable"] = true,
                                     ["font"] = "Accidental Presidency",
-                                    ["fontSize"] = 27,
-                                },
+                                    ["fontSize"] = 27
+                                }
                             },
                             ["tooltip"] = {
                                 ["fontSize"] = 13,
                                 ["healthBar"] = {
                                     ["statusPosition"] = "TOP",
-                                    ["fontSize"] = 13,
+                                    ["fontSize"] = 13
                                 },
                                 ["colorAlpha"] = 0.75,
                                 ["headerFontSize"] = 15,
@@ -1810,8 +1808,8 @@ options.reset = {
                                 ["fontOutline"] = "OUTLINE",
                                 ["cursorAnchorType"] = "ANCHOR_CURSOR_RIGHT",
                                 ["itemCount"] = "BOTH",
-                                ["smallTextFontSize"] = 13,
-                            },
+                                ["smallTextFontSize"] = 13
+                            }
                         }
 
                         local E, _, _, P = unpack(_G.ElvUI)
@@ -1821,7 +1819,7 @@ options.reset = {
                     end
                 },
                 characterProfile = {
-                    order = 1,
+                    order = 2,
                     type = "execute",
                     name = L["Character Profile"],
                     func = function()
@@ -1842,7 +1840,7 @@ options.reset = {
                         E.private["WT"]["misc"]["mute"]["mount"][229385] = true
                         E.private["skins"]["parchmentRemoverEnable"] = true
                         E.private["theme"] = "default"
-                        E:StaticPopup_Show('PRIVATE_RL')
+                        E:StaticPopup_Show("PRIVATE_RL")
                     end
                 }
             }

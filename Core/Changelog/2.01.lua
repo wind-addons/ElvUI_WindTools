@@ -1,6 +1,6 @@
 local W = unpack(select(2, ...))
 
-W.Changelog[200] = {
+W.Changelog[201] = {
     RELEASE_DATE = "TBC",
     NEW = {
         ["zhCN"] = {

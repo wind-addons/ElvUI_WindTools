@@ -34,7 +34,7 @@ function CB:StyleAfterConfigure(_, unitFrame)
     local db = configKey[name] and self.db[configKey[name]]
     local castBar = unitFrame.Castbar
 
-    if castBar and db and db.enable then
+    if castBar and db and db.enable and db.text and db.time then
         castBar.Text:ClearAllPoints()
         castBar.Text:Point(db.text.anchor, castBar, db.text.anchor, db.text.offsetX, db.text.offsetY)
         F.SetFontWithDB(castBar.Text, db.text.font)

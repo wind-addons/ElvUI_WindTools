@@ -237,7 +237,7 @@ function S:ADDON_LOADED(_, addonName)
     end
 end
 
-function S:UpdateWidgetEarly()
+function S:UpdateWidgetEarly(AceGUI)
     for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
         S:UpdateWidget(AceGUI, name, oldFunc)
     end
@@ -257,7 +257,7 @@ function S:LibStub_NewLibrary(_, major)
         end
 
         AceGUI = _G.LibStub("AceGUI-3.0")
-        S:UpdateWidgetEarly()
+        S:UpdateWidgetEarly(AceGUI)
         self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
     end
 end
@@ -265,7 +265,7 @@ end
 function S:Hook_Ace3()
     local AceGUI = _G.LibStub("AceGUI-3.0")
     if AceGUI then
-        S:UpdateWidgetEarly()
+        S:UpdateWidgetEarly(AceGUI)
         self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
     else
         self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")

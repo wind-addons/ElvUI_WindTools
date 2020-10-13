@@ -580,6 +580,7 @@ L["Send the use of portals, ritual of summoning, feasts, etc."] = "通報傳送�
 L["Server List"] = "伺服器列表"
 L["Set Area"] = "設定區域"
 L["Set the modifier key for placing world markers."] = "設定標示團隊光柱的組合鍵"
+L["Set the profile to WindTools style."] = "設置設定為 WindTools 樣式."
 L["Set the type and order of button groups."] = "設定按鍵組的類型及排列順序."
 L["Shadow"] = "陰影"
 L["Shadow Color"] = "陰影色"

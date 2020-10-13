@@ -580,6 +580,7 @@ L["Send the use of portals, ritual of summoning, feasts, etc."] = true
 L["Server List"] = true
 L["Set Area"] = true
 L["Set the modifier key for placing world markers."] = true
+L["Set the profile to WindTools style."] = true
 L["Set the type and order of button groups."] = true
 L["Shadow"] = true
 L["Shadow Color"] = true

@@ -2,8 +2,6 @@ name: publish_development
 
 on:
   push:
-    branches:
-      - development
     tags:
       - "**-alpha-**"
       - "**-beta-**"

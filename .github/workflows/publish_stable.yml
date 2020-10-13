@@ -2,8 +2,6 @@ name: publish_stable
 
 on:
   push:
-    branches:
-      - stable
     tags-ignore:
       - "**-alpha-**"
       - "**-beta-**"

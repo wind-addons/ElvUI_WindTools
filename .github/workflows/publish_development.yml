@@ -3,7 +3,8 @@ name: publish
 on:
   push:
     tags:
-      - "*"
+      - "**-alpha-**"
+      - "**-beta-**"
 
 jobs:
   build:
@@ -33,7 +34,6 @@ jobs:
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
 
       - name: 上传到 Github Actions
         uses: actions/upload-artifact@v2

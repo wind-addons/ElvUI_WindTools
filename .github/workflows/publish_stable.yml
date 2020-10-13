@@ -2,8 +2,9 @@ name: publish
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - stable
+    tags-ignore:
       - "!**-alpha-**"
       - "!**-beta-**"
 

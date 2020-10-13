@@ -30,7 +30,7 @@ local function TryHandleButtonAfter(name, times)
     if not handled then
         times = times + 1
         C_Timer_After(
-            .05,
+            .01,
             function()
                 TryHandleButtonAfter(name, times)
             end

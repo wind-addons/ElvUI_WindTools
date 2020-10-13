@@ -580,7 +580,6 @@ for version, data in pairs(W.Changelog) do
 end
 
 -- 重置
-
 E.PopupDialogs.WINDTOOLS_RESET_MODULE = {
     text = L["Are you sure you want to reset %s module?"],
     button1 = _G.ACCEPT,
@@ -612,11 +611,1247 @@ options.reset = {
     childGroups = "select",
     name = L["Reset"],
     args = {
+        windProfile = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Wind Profiles"],
+            args = {
+                layout = {
+                    order = 1,
+                    type = "execute",
+                    name = L["ElvUI Profile"],
+                    func = function()
+                        local WindUI = {
+                            ["databars"] = {
+                                ["threat"] = {
+                                    ["fontOutline"] = "OUTLINE",
+                                    ["width"] = 417,
+                                },
+                                ["experience"] = {
+                                    ["fontSize"] = 8,
+                                    ["hideAtMaxLevel"] = false,
+                                    ["fontOutline"] = "OUTLINE",
+                                    ["height"] = 5,
+                                    ["hideInCombat"] = false,
+                                    ["width"] = 222,
+                                },
+                                ["honor"] = {
+                                    ["enable"] = false,
+                                },
+                                ["reputation"] = {
+                                    ["enable"] = true,
+                                    ["height"] = 5,
+                                },
+                                ["azerite"] = {
+                                    ["enable"] = false,
+                                },
+                                ["customTexture"] = true,
+                                ["statusbar"] = "WindTools Glow",
+                            },
+                            ["general"] = {
+                                ["totems"] = {
+                                    ["size"] = 35,
+                                    ["growthDirection"] = "HORIZONTAL",
+                                },
+                                ["fontSize"] = 13,
+                                ["autoTrackReputation"] = true,
+                                ["autoAcceptInvite"] = true,
+                                ["autoRepair"] = "PLAYER",
+                                ["minimap"] = {
+                                    ["icons"] = {
+                                        ["mail"] = {
+                                            ["yOffset"] = -20,
+                                        },
+                                        ["lfgEye"] = {
+                                            ["position"] = "BOTTOMLEFT",
+                                            ["yOffset"] = -2,
+                                        },
+                                        ["classHall"] = {
+                                            ["position"] = "TOPRIGHT",
+                                        },
+                                    },
+                                    ["size"] = 220,
+                                },
+                                ["decimalLength"] = 0,
+                                ["talkingHeadFrameBackdrop"] = true,
+                                ["bottomPanel"] = false,
+                                ["backdropfadecolor"] = {
+                                    ["a"] = 0.75,
+                                    ["r"] = 0.04705882352941176,
+                                    ["g"] = 0.04705882352941176,
+                                    ["b"] = 0.04705882352941176,
+                                },
+                                ["valuecolor"] = {
+                                    ["a"] = 1,
+                                    ["b"] = 1,
+                                    ["g"] = 0.6784313725490196,
+                                    ["r"] = 0.05882352941176471,
+                                },
+                                ["loginmessage"] = false,
+                                ["itemLevel"] = {
+                                    ["displayInspectInfo"] = false,
+                                    ["itemLevelFontSize"] = 14,
+                                },
+                                ["backdropcolor"] = {
+                                    ["a"] = 1,
+                                    ["r"] = 0.1176470588235294,
+                                    ["g"] = 0.1176470588235294,
+                                    ["b"] = 0.1176470588235294,
+                                },
+                                ["objectiveFrameAutoHideInKeystone"] = true,
+                                ["bordercolor"] = {
+                                    ["a"] = 1,
+                                },
+                                ["altPowerBar"] = {
+                                    ["statusBarColorGradient"] = true,
+                                    ["smoothbars"] = true,
+                                },
+                                ["stickyFrames"] = false,
+                                ["bonusObjectivePosition"] = "RIGHT",
+                                ["resurrectSound"] = true,
+                            },
+                            ["movers"] = {
+                                ["WTRaidMarkersBarAnchor"] = "TOP,ElvUIParent,TOP,0,-85",
+                                ["ThreatBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,9",
+                                ["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,14,131",
+                                ["ElvUF_RaidMover"] = "RIGHT,ElvUIParent,CENTER,-200,100",
+                                ["LeftChatMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,44,35",
+                                ["GMMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,44,224",
+                                ["BuffsMover"] = "TOPRIGHT,MinimapMover,TOPLEFT,-10,0",
+                                ["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,321,33",
+                                ["LootFrameMover"] = "BOTTOM,ElvUIParent,BOTTOM,221,97",
+                                ["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-321,33",
+                                ["SocialMenuMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,16,127",
+                                ["WTMinimapButtonBarAnchor"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,0,-25",
+                                ["ElvUF_FocusMover"] = "TOP,ElvUIParent,TOP,341,-502",
+                                ["ClassBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,317",
+                                ["DurabilityFrameMover"] = "TOPLEFT,ElvUF_PlayerMover,BOTTOMLEFT,0,-200",
+                                ["VehicleSeatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-419,52",
+                                ["ExperienceBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-25,-205",
+                                ["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,300,300",
+                                ["ElvUF_TargetTargetMover"] = "TOPLEFT,ElvUF_TargetMover,TOPRIGHT,5,0",
+                                ["Wind_ChatBarMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,45,25",
+                                ["WTExtraItemsBar2Mover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-199,207",
+                                ["ElvUF_PetMover"] = "TOPRIGHT,ElvUF_PlayerMover,TOPLEFT,-5,0",
+                                ["MirrorTimer1Mover"] = "TOP,ElvUIParent,TOP,0,-116",
+                                ["ElvUF_PartyMover"] = "RIGHT,ElvUIParent,CENTER,-300,100",
+                                ["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,-72,62",
+                                ["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,-72,26",
+                                ["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,300",
+                                ["PlayerPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,300",
+                                ["TalkingHeadFrameMover"] = "TOP,ElvUIParent,TOP,0,-180",
+                                ["WTExtraItemsBar1Mover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-199,248",
+                                ["AzeriteBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-686,-128",
+                                ["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,216,26",
+                                ["ReputationBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-25,-212",
+                                ["VehicleLeaveButton"] = "BOTTOM,ElvUIParent,BOTTOM,0,420",
+                                ["AltPowerBarMover"] = "TOP,ElvUIParent,TOP,6,-164",
+                                ["VOICECHAT"] = "TOPLEFT,ElvUIParent,TOPLEFT,336,-26",
+                                ["ObjectiveFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,121,-25",
+                                ["BNETMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,44,224",
+                                ["ShiftAB"] = "BOTTOMLEFT,ElvAB_1,TOPLEFT,0,5",
+                                ["ElvUF_TargetCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,14,382",
+                                ["HonorBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-625,-212",
+                                ["ArenaHeaderMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-215,366",
+                                ["Wind_ParagonReputationToastFrameMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,203",
+                                ["WTExtraItemsBar3Mover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-230,207",
+                                ["BossHeaderMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-240,360",
+                                ["TotemBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-334,255",
+                                ["ElvAB_4"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-25,337",
+                                ["RightChatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-18,23",
+                                ["AlertFrameMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,180",
+                                ["DebuffsMover"] = "TOP,ElvUIParent,TOP,144,-397",
+                                ["MinimapMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-25,-25",
+                            },
+                            ["v11NamePlateReset"] = true,
+                            ["chat"] = {
+                                ["fontSize"] = 13,
+                                ["tabFontOutline"] = "OUTLINE",
+                                ["keywordSound"] = "OnePlus Surprise",
+                                ["tabFontSize"] = 13,
+                                ["fontOutline"] = "OUTLINE",
+                                ["panelBackdrop"] = "HIDEBOTH",
+                                ["socialQueueMessages"] = true,
+                                ["maxLines"] = 2000,
+                                ["keywords"] = "%MYNAME%",
+                                ["font"] = "聊天",
+                                ["channelAlerts"] = {
+                                    ["WHISPER"] = "OnePlus Light",
+                                },
+                                ["tabSelector"] = "NONE",
+                                ["hideChatToggles"] = true,
+                                ["timeStampFormat"] = "%H:%M ",
+                                ["hideVoiceButtons"] = true,
+                                ["customTimeColor"] = {
+                                    ["r"] = 1,
+                                    ["g"] = 0.7647058823529411,
+                                    ["b"] = 0.3803921568627451,
+                                },
+                            },
+                            ["auras"] = {
+                                ["debuffs"] = {
+                                    ["countFontSize"] = 18,
+                                    ["size"] = 42,
+                                    ["durationFontSize"] = 18,
+                                },
+                                ["fontOutline"] = "OUTLINE",
+                                ["buffs"] = {
+                                    ["countFontSize"] = 19,
+                                    ["size"] = 36,
+                                    ["durationFontSize"] = 14,
+                                },
+                                ["countYOffset"] = 24,
+                                ["timeYOffset"] = 6,
+                                ["font"] = "Roadway",
+                            },
+                            ["datatexts"] = {
+                                ["panels"] = {
+                                    ["MinimapPanel"] = {
+                                        ["enable"] = false,
+                                    },
+                                    ["RightChatDataPanel"] = {
+                                        ["enable"] = false,
+                                    },
+                                    ["LeftChatDataPanel"] = {
+                                        ["enable"] = false,
+                                    },
+                                },
+                            },
+                            ["unitframe"] = {
+                                ["fontSize"] = 12,
+                                ["units"] = {
+                                    ["pet"] = {
+                                        ["debuffs"] = {
+                                            ["countFontSize"] = 15,
+                                            ["countFont"] = "Montserrat Bold",
+                                            ["enable"] = true,
+                                            ["yOffset"] = 80,
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["spacing"] = 3,
+                                            ["priority"] = "Blacklist,Personal,RaidDebuffs,CCDebuffs,Friendly:Dispellable",
+                                            ["attachTo"] = "BUFFS",
+                                            ["perrow"] = 4,
+                                        },
+                                        ["raidRoleIcons"] = {
+                                            ["enable"] = true,
+                                            ["yOffset"] = 0,
+                                            ["xOffset"] = 0,
+                                            ["position"] = "TOPLEFT",
+                                        },
+                                        ["resurrectIcon"] = {
+                                            ["attachTo"] = "CENTER",
+                                            ["yOffset"] = 0,
+                                            ["enable"] = true,
+                                            ["xOffset"] = 0,
+                                            ["attachToObject"] = "Frame",
+                                            ["size"] = 30,
+                                        },
+                                        ["phaseIndicator"] = {
+                                            ["anchorPoint"] = "CENTER",
+                                            ["scale"] = 0.8,
+                                            ["xOffset"] = 0,
+                                            ["enable"] = true,
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["CombatIcon"] = {
+                                            ["anchorPoint"] = "CENTER",
+                                            ["yOffset"] = 0,
+                                            ["size"] = 20,
+                                            ["xOffset"] = 0,
+                                            ["color"] = {
+                                                ["a"] = 1,
+                                                ["r"] = 1,
+                                                ["g"] = 0.2,
+                                                ["b"] = 0.2,
+                                            },
+                                            ["enable"] = true,
+                                            ["defaultColor"] = true,
+                                            ["texture"] = "DEFAULT",
+                                        },
+                                        ["aurabar"] = {
+                                            ["attachTo"] = "DEBUFFS",
+                                            ["spacing"] = 0,
+                                            ["detachedWidth"] = 270,
+                                            ["priority"] = "Blacklist,blockNoDuration,Personal,Boss,RaidDebuffs,PlayerBuffs",
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                        },
+                                        ["castbar"] = {
+                                            ["iconAttachedTo"] = "Castbar",
+                                            ["width"] = 100,
+                                            ["iconAttached"] = false,
+                                            ["displayTarget"] = true,
+                                            ["timeToHold"] = 0.4,
+                                            ["iconSize"] = 27,
+                                            ["height"] = 20,
+                                            ["icon"] = false,
+                                            ["textColor"] = {
+                                                ["b"] = 1,
+                                                ["g"] = 1,
+                                                ["r"] = 1,
+                                            },
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 2,
+                                                ["text_format"] = "[mouseover][power:current-percent]",
+                                                ["yOffset"] = -14,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 3,
+                                                ["text_format"] = "[curhp] || [health:percent-nostatus]",
+                                                ["yOffset"] = -27,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 27,
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["power"] = {
+                                            ["height"] = 4,
+                                        },
+                                        ["width"] = 100,
+                                        ["infoPanel"] = {
+                                            ["height"] = 20,
+                                        },
+                                        ["pvpIcon"] = {
+                                            ["anchorPoint"] = "CENTER",
+                                            ["scale"] = 1,
+                                            ["xOffset"] = 0,
+                                            ["enable"] = false,
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["orientation"] = "RIGHT",
+                                        ["height"] = 30,
+                                        ["buffs"] = {
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["spacing"] = 2,
+                                            ["perrow"] = 5,
+                                            ["priority"] = "Blacklist,Personal,nonPersonal",
+                                            ["maxDuration"] = 0,
+                                            ["yOffset"] = -80,
+                                        },
+                                        ["middleClickFocus"] = true,
+                                        ["raidicon"] = {
+                                            ["attachTo"] = "TOP",
+                                            ["size"] = 18,
+                                            ["enable"] = true,
+                                            ["xOffset"] = 0,
+                                            ["attachToObject"] = "Frame",
+                                            ["yOffset"] = 8,
+                                        },
+                                    },
+                                    ["party"] = {
+                                        ["debuffs"] = {
+                                            ["xOffset"] = 3,
+                                            ["sizeOverride"] = 34,
+                                            ["countFont"] = "Montserrat",
+                                            ["perrow"] = 5,
+                                        },
+                                        ["rdebuffs"] = {
+                                            ["xOffset"] = 28,
+                                            ["font"] = "Montserrat",
+                                            ["fontOutline"] = "OUTLINE",
+                                            ["yOffset"] = 6,
+                                        },
+                                        ["raidRoleIcons"] = {
+                                            ["xOffset"] = 3,
+                                        },
+                                        ["growthDirection"] = "DOWN_RIGHT",
+                                        ["disableFocusGlow"] = true,
+                                        ["groupBy"] = "ROLE2",
+                                        ["roleIcon"] = {
+                                            ["xOffset"] = 5,
+                                            ["position"] = "LEFT",
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["castbar"] = {
+                                            ["width"] = 154,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[mouseover][power:percent-nosign]",
+                                                ["yOffset"] = -16,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 13,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 22,
+                                                ["text_format"] = "[namecolor][name] [smartlevel]",
+                                                ["yOffset"] = 1,
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                            ["Wind Health Percent"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[health:percent-nostatus-nosign]",
+                                                ["yOffset"] = 0,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 22,
+                                            },
+                                        },
+                                        ["summonIcon"] = {
+                                            ["attachTo"] = "RIGHT",
+                                            ["xOffset"] = -20,
+                                        },
+                                        ["width"] = 154,
+                                        ["power"] = {
+                                            ["height"] = 4,
+                                            ["hideonnpc"] = true,
+                                            ["text_format"] = "",
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["buffs"] = {
+                                            ["sizeOverride"] = 34,
+                                            ["enable"] = true,
+                                            ["xOffset"] = -3,
+                                            ["countFont"] = "Montserrat",
+                                            ["perrow"] = 3,
+                                        },
+                                        ["height"] = 35,
+                                        ["verticalSpacing"] = 5,
+                                        ["health"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                            },
+                                        },
+                                    },
+                                    ["player"] = {
+                                        ["debuffs"] = {
+                                            ["enable"] = false,
+                                        },
+                                        ["disableTargetGlow"] = false,
+                                        ["raidRoleIcons"] = {
+                                            ["xOffset"] = 3,
+                                            ["position"] = "TOPRIGHT",
+                                        },
+                                        ["disableFocusGlow"] = false,
+                                        ["classbar"] = {
+                                            ["detachFromFrame"] = true,
+                                            ["height"] = 13,
+                                        },
+                                        ["aurabar"] = {
+                                            ["enable"] = false,
+                                        },
+                                        ["RestIcon"] = {
+                                            ["anchorPoint"] = "BOTTOMLEFT",
+                                            ["yOffset"] = 13,
+                                            ["size"] = 21,
+                                            ["color"] = {
+                                                ["g"] = 0.5568627450980392,
+                                                ["r"] = 0.203921568627451,
+                                            },
+                                            ["xOffset"] = 13,
+                                            ["defaultColor"] = false,
+                                            ["texture"] = "RESTING1",
+                                        },
+                                        ["power"] = {
+                                            ["detachFromFrame"] = true,
+                                            ["text_format"] = "",
+                                            ["height"] = 15,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Power",
+                                                ["xOffset"] = 0,
+                                                ["text_format"] = "[power:current]",
+                                                ["yOffset"] = 7,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "CENTER",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 22,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 4,
+                                                ["text_format"] = "[curhp] || [health:percent-nostatus]",
+                                                ["yOffset"] = -27,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 25,
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["raidicon"] = {
+                                            ["size"] = 19,
+                                        },
+                                        ["disableMouseoverGlow"] = true,
+                                        ["width"] = 220,
+                                        ["infoPanel"] = {
+                                            ["height"] = 14,
+                                            ["transparent"] = true,
+                                        },
+                                        ["health"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["fader"] = {
+                                            ["enable"] = true,
+                                            ["vehicle"] = false,
+                                            ["minAlpha"] = 0,
+                                        },
+                                        ["castbar"] = {
+                                            ["xOffsetTime"] = 0,
+                                            ["iconAttachedTo"] = "Castbar",
+                                            ["textColor"] = {
+                                                ["b"] = 1,
+                                                ["g"] = 1,
+                                                ["r"] = 1,
+                                            },
+                                            ["width"] = 257,
+                                            ["iconXOffset"] = -4,
+                                            ["height"] = 24,
+                                            ["displayTarget"] = true,
+                                            ["xOffsetText"] = 0,
+                                            ["iconSize"] = 24,
+                                            ["format"] = "REMAININGMAX",
+                                            ["iconAttached"] = false,
+                                            ["latency"] = false,
+                                        },
+                                        ["height"] = 30,
+                                        ["portrait"] = {
+                                            ["overlay"] = true,
+                                            ["camDistanceScale"] = 2.88,
+                                            ["overlayAlpha"] = 0.2,
+                                        },
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                            ["power"] = {
+                                                ["lengthBeforeFade"] = 0.1,
+                                                ["fadeOutTime"] = 0.3,
+                                            },
+                                        },
+                                        ["pvp"] = {
+                                            ["position"] = "RIGHT",
+                                        },
+                                    },
+                                    ["raid40"] = {
+                                        ["rdebuffs"] = {
+                                        },
+                                    },
+                                    ["focus"] = {
+                                        ["debuffs"] = {
+                                            ["countFontSize"] = 15,
+                                            ["countFont"] = "Montserrat Bold",
+                                            ["perrow"] = 4,
+                                            ["spacing"] = 3,
+                                            ["attachTo"] = "BUFFS",
+                                            ["priority"] = "Blacklist,Personal,RaidDebuffs,CCDebuffs,Friendly:Dispellable",
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["yOffset"] = 80,
+                                        },
+                                        ["disableTargetGlow"] = true,
+                                        ["raidRoleIcons"] = {
+                                            ["enable"] = true,
+                                            ["position"] = "TOPLEFT",
+                                            ["xOffset"] = 0,
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["resurrectIcon"] = {
+                                            ["attachTo"] = "CENTER",
+                                            ["size"] = 30,
+                                            ["enable"] = true,
+                                            ["xOffset"] = 0,
+                                            ["attachToObject"] = "Frame",
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["phaseIndicator"] = {
+                                            ["anchorPoint"] = "CENTER",
+                                            ["enable"] = true,
+                                            ["scale"] = 0.8,
+                                            ["xOffset"] = 0,
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["aurabar"] = {
+                                            ["maxBars"] = 6,
+                                            ["detachedWidth"] = 270,
+                                        },
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                        },
+                                        ["pvpIcon"] = {
+                                            ["anchorPoint"] = "CENTER",
+                                            ["enable"] = false,
+                                            ["scale"] = 1,
+                                            ["xOffset"] = 0,
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["enable"] = true,
+                                                ["text_format"] = "[mouseover][power:current-percent]",
+                                                ["yOffset"] = -14,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["xOffset"] = -1,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["enable"] = true,
+                                                ["text_format"] = "[health:percent-nostatus] || [curhp]",
+                                                ["yOffset"] = -27,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["xOffset"] = -2,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["enable"] = true,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 27,
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["xOffset"] = 4,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["width"] = 138,
+                                        ["infoPanel"] = {
+                                            ["height"] = 20,
+                                        },
+                                        ["power"] = {
+                                            ["height"] = 4,
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["height"] = 30,
+                                        ["orientation"] = "RIGHT",
+                                        ["buffs"] = {
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["perrow"] = 5,
+                                            ["spacing"] = 2,
+                                            ["enable"] = true,
+                                            ["priority"] = "Blacklist,Personal,nonPersonal",
+                                            ["maxDuration"] = 0,
+                                            ["yOffset"] = -80,
+                                        },
+                                        ["castbar"] = {
+                                            ["iconAttachedTo"] = "Castbar",
+                                            ["width"] = 138,
+                                            ["iconAttached"] = false,
+                                            ["displayTarget"] = true,
+                                            ["timeToHold"] = 0.4,
+                                            ["iconSize"] = 27,
+                                            ["height"] = 20,
+                                            ["icon"] = false,
+                                            ["textColor"] = {
+                                                ["b"] = 1,
+                                                ["g"] = 1,
+                                                ["r"] = 1,
+                                            },
+                                        },
+                                        ["middleClickFocus"] = true,
+                                    },
+                                    ["target"] = {
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                        },
+                                        ["debuffs"] = {
+                                            ["countFontSize"] = 15,
+                                            ["countFont"] = "Montserrat Bold",
+                                            ["spacing"] = 3,
+                                            ["perrow"] = 6,
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["yOffset"] = 80,
+                                        },
+                                        ["castbar"] = {
+                                            ["iconAttached"] = false,
+                                            ["width"] = 310,
+                                            ["iconXOffset"] = -4,
+                                            ["iconAttachedTo"] = "Castbar",
+                                            ["displayTarget"] = true,
+                                            ["height"] = 24,
+                                            ["iconSize"] = 24,
+                                            ["format"] = "REMAININGMAX",
+                                            ["timeToHold"] = 0.4,
+                                            ["textColor"] = {
+                                                ["r"] = 1,
+                                                ["g"] = 1,
+                                                ["b"] = 1,
+                                            },
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[mouseover][power:percent-nosign]",
+                                                ["yOffset"] = -14,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[health:percent-nostatus] || [curhp]",
+                                                ["yOffset"] = -27,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 3,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 25,
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["raidRoleIcons"] = {
+                                            ["xOffset"] = 3,
+                                        },
+                                        ["width"] = 220,
+                                        ["health"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["height"] = 30,
+                                        ["buffs"] = {
+                                            ["anchorPoint"] = "TOPLEFT",
+                                            ["spacing"] = 2,
+                                            ["yOffset"] = -80,
+                                        },
+                                        ["power"] = {
+                                            ["text_format"] = "",
+                                            ["height"] = 4,
+                                        },
+                                        ["aurabar"] = {
+                                            ["enable"] = false,
+                                        },
+                                    },
+                                    ["raid"] = {
+                                        ["roleIcon"] = {
+                                            ["xOffset"] = 2,
+                                            ["position"] = "TOPLEFT",
+                                            ["yOffset"] = -2,
+                                        },
+                                        ["portrait"] = {
+                                            ["fullOverlay"] = true,
+                                        },
+                                        ["power"] = {
+                                            ["height"] = 4,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 1,
+                                                ["text_format"] = "[namecolor][name:short]",
+                                                ["yOffset"] = -11,
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 10,
+                                            },
+                                        },
+                                        ["rdebuffs"] = {
+                                            ["font"] = "Montserrat",
+                                            ["fontOutline"] = "OUTLINE",
+                                            ["xOffset"] = 23,
+                                            ["size"] = 25,
+                                            ["yOffset"] = 14,
+                                        },
+                                        ["width"] = 72,
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["height"] = 40,
+                                        ["summonIcon"] = {
+                                            ["attachTo"] = "TOPRIGHT",
+                                        },
+                                    },
+                                    ["boss"] = {
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.2,
+                                            },
+                                        },
+                                        ["debuffs"] = {
+                                            ["sizeOverride"] = 30,
+                                            ["spacing"] = 3,
+                                            ["xOffset"] = -5,
+                                            ["perrow"] = 4,
+                                            ["countFont"] = "Montserrat",
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["castbar"] = {
+                                            ["height"] = 24,
+                                            ["width"] = 220,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 0,
+                                                ["text_format"] = "[mouseover][power:current-percent]",
+                                                ["yOffset"] = -14,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 14,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 0,
+                                                ["text_format"] = "[health:percent-nostatus] || [health:current]",
+                                                ["yOffset"] = 0,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -1,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 25,
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["width"] = 220,
+                                        ["health"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["spacing"] = 50,
+                                        ["height"] = 30,
+                                        ["buffs"] = {
+                                            ["anchorPoint"] = "RIGHT",
+                                            ["sizeOverride"] = 30,
+                                            ["spacing"] = 3,
+                                            ["xOffset"] = 5,
+                                            ["attachTo"] = "HEALTH",
+                                            ["countFont"] = "Montserrat",
+                                            ["yOffset"] = 0,
+                                        },
+                                        ["power"] = {
+                                            ["text_format"] = "",
+                                            ["height"] = 4,
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                    },
+                                    ["targettarget"] = {
+                                        ["cutaway"] = {
+                                            ["health"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                            ["power"] = {
+                                                ["enabled"] = true,
+                                                ["fadeOutTime"] = 0.3,
+                                                ["lengthBeforeFade"] = 0.1,
+                                            },
+                                        },
+                                        ["debuffs"] = {
+                                            ["anchorPoint"] = "TOPRIGHT",
+                                            ["perrow"] = 4,
+                                            ["attachTo"] = "FRAME",
+                                            ["yOffset"] = 20,
+                                        },
+                                        ["name"] = {
+                                            ["text_format"] = "",
+                                        },
+                                        ["power"] = {
+                                            ["height"] = 4,
+                                        },
+                                        ["customTexts"] = {
+                                            ["Wind Power"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[mouseover][power:percent-nosign]",
+                                                ["yOffset"] = -14,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Health"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = -2,
+                                                ["text_format"] = "[health:percent-nostatus] || [curhp]",
+                                                ["yOffset"] = -27,
+                                                ["font"] = "Accidental Presidency",
+                                                ["justifyH"] = "LEFT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 16,
+                                            },
+                                            ["Wind Name"] = {
+                                                ["attachTextTo"] = "Health",
+                                                ["xOffset"] = 3,
+                                                ["text_format"] = "[name]",
+                                                ["yOffset"] = 25,
+                                                ["justifyH"] = "RIGHT",
+                                                ["fontOutline"] = "OUTLINE",
+                                                ["enable"] = true,
+                                                ["size"] = 12,
+                                            },
+                                        },
+                                        ["height"] = 30,
+                                        ["width"] = 100,
+                                    },
+                                },
+                                ["statusbar"] = "WindTools Glow",
+                                ["colors"] = {
+                                    ["power"] = {
+                                        ["MANA"] = {
+                                            ["b"] = 0.6313725490196078,
+                                            ["g"] = 0.4509803921568628,
+                                            ["r"] = 0.3098039215686275,
+                                        },
+                                        ["RUNIC_POWER"] = {
+                                            ["g"] = 0.8196078431372549,
+                                        },
+                                        ["MAELSTROM"] = {
+                                            ["b"] = 0.9803921568627451,
+                                            ["g"] = 0.2588235294117647,
+                                            ["r"] = 0.2156862745098039,
+                                        },
+                                        ["ENERGY"] = {
+                                            ["b"] = 0.3490196078431372,
+                                            ["g"] = 0.6313725490196078,
+                                            ["r"] = 0.6509803921568628,
+                                        },
+                                    },
+                                    ["castColor"] = {
+                                        ["a"] = 1,
+                                        ["r"] = 0.2588235294117647,
+                                        ["g"] = 0.7098039215686275,
+                                        ["b"] = 1,
+                                    },
+                                    ["transparentHealth"] = true,
+                                    ["colorhealthbyvalue"] = false,
+                                    ["customhealthbackdrop"] = true,
+                                    ["health_backdrop"] = {
+                                        ["r"] = 0.5137254901960784,
+                                        ["g"] = 0.5137254901960784,
+                                        ["b"] = 0.5137254901960784,
+                                    },
+                                    ["health"] = {
+                                        ["r"] = 0.1333333333333333,
+                                        ["g"] = 0.1333333333333333,
+                                        ["b"] = 0.1333333333333333,
+                                    },
+                                    ["borderColor"] = {
+                                        ["a"] = 1,
+                                    },
+                                    ["castNoInterrupt"] = {
+                                        ["a"] = 1,
+                                        ["b"] = 0.4941176470588236,
+                                        ["g"] = 0.3882352941176471,
+                                        ["r"] = 1,
+                                    },
+                                    ["powerclass"] = true,
+                                    ["healthMultiplier"] = 0.75,
+                                    ["frameGlow"] = {
+                                        ["targetGlow"] = {
+                                            ["enable"] = false,
+                                        },
+                                        ["mouseoverGlow"] = {
+                                            ["color"] = {
+                                                ["a"] = 0.1000000238418579,
+                                                ["r"] = 0.4470588235294117,
+                                                ["g"] = 0.4470588235294117,
+                                                ["b"] = 0.4470588235294117,
+                                            },
+                                        },
+                                    },
+                                },
+                                ["fontOutline"] = "OUTLINE",
+                                ["smoothbars"] = true,
+                                ["cooldown"] = {
+                                    ["fonts"] = {
+                                        ["enable"] = true,
+                                        ["font"] = "Oswald",
+                                        ["fontSize"] = 17,
+                                    },
+                                },
+                                ["filters"] = {
+                                    ["aurawatch"] = {
+                                    },
+                                },
+                            },
+                            ["WT"] = {
+                                ["maps"] = {
+                                    ["rectangleMinimap"] = {
+                                        ["enable"] = true,
+                                    },
+                                },
+                                ["social"] = {
+                                    ["chatBar"] = {
+                                        ["channels"] = {
+                                            ["world"] = {
+                                                ["name"] = "組隊頻道",
+                                                ["enable"] = true,
+                                            },
+                                        },
+                                    },
+                                },
+                                ["item"] = {
+                                    ["extraItemsBar"] = {
+                                        ["bar1"] = {
+                                            ["buttonsPerRow"] = 6,
+                                        },
+                                        ["bar2"] = {
+                                            ["buttonsPerRow"] = 6,
+                                        },
+                                    },
+                                },
+                                ["unitFrames"] = {
+                                    ["castBar"] = {
+                                        ["enable"] = true,
+                                        ["player"] = {
+                                            ["enable"] = true,
+                                            ["text"] = {
+                                                ["offsetX"] = 6,
+                                                ["font"] = {
+                                                    ["size"] = 13,
+                                                },
+                                            },
+                                            ["time"] = {
+                                                ["offsetX"] = -5,
+                                                ["font"] = {
+                                                    ["size"] = 13,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                            ["actionbar"] = {
+                                ["bar3"] = {
+                                    ["buttonspacing"] = 4,
+                                    ["buttonsPerRow"] = 4,
+                                    ["buttons"] = 8,
+                                },
+                                ["hideCooldownBling"] = true,
+                                ["bar1"] = {
+                                    ["buttonspacing"] = 4,
+                                },
+                                ["bar2"] = {
+                                    ["buttonspacing"] = 4,
+                                    ["enabled"] = true,
+                                },
+                                ["rightClickSelfCast"] = true,
+                                ["microbar"] = {
+                                    ["buttonSpacing"] = 4,
+                                },
+                                ["bar5"] = {
+                                    ["enabled"] = false,
+                                },
+                                ["zoneActionButton"] = {
+                                    ["clean"] = true,
+                                },
+                                ["transparent"] = true,
+                                ["font"] = "Montserrat",
+                                ["globalFadeAlpha"] = 0.7000000000000001,
+                                ["fontOutline"] = "OUTLINE",
+                                ["hotkeyTextYOffset"] = -2,
+                                ["stanceBar"] = {
+                                    ["buttonspacing"] = 4,
+                                    ["buttonsize"] = 24,
+                                },
+                                ["barPet"] = {
+                                    ["buttonspacing"] = 4,
+                                    ["inheritGlobalFade"] = true,
+                                    ["backdrop"] = false,
+                                    ["buttonsize"] = 37,
+                                },
+                                ["bar4"] = {
+                                    ["backdrop"] = false,
+                                    ["inheritGlobalFade"] = true,
+                                },
+                            },
+                            ["nameplates"] = {
+                                ["cutaway"] = {
+                                    ["health"] = {
+                                        ["enabled"] = true,
+                                        ["fadeOutTime"] = 0.3,
+                                        ["lengthBeforeFade"] = 0.2,
+                                    },
+                                },
+                                ["smoothbars"] = true,
+                                ["statusbar"] = "WindTools Glow",
+                                ["units"] = {
+                                    ["TARGET"] = {
+                                        ["glowStyle"] = "style7",
+                                    },
+                                    ["PLAYER"] = {
+                                        ["buffs"] = {
+                                            ["countFont"] = "Montserrat Bold",
+                                        },
+                                    },
+                                },
+                            },
+                            ["bags"] = {
+                                ["junkDesaturate"] = true,
+                                ["itemLevelFont"] = "Montserrat",
+                                ["currencyFormat"] = "ICON",
+                                ["countFontOutline"] = "OUTLINE",
+                                ["vendorGrays"] = {
+                                    ["enable"] = true,
+                                },
+                                ["itemLevelFontOutline"] = "OUTLINE",
+                                ["transparent"] = true,
+                                ["moneyFormat"] = "SHORTINT",
+                                ["useBlizzardCleanup"] = true,
+                                ["showBindType"] = true,
+                                ["clearSearchOnClose"] = true,
+                                ["countFont"] = "Montserrat",
+                            },
+                            ["cooldown"] = {
+                                ["fonts"] = {
+                                    ["enable"] = true,
+                                    ["font"] = "Accidental Presidency",
+                                    ["fontSize"] = 27,
+                                },
+                            },
+                            ["tooltip"] = {
+                                ["fontSize"] = 13,
+                                ["healthBar"] = {
+                                    ["statusPosition"] = "TOP",
+                                    ["fontSize"] = 13,
+                                },
+                                ["colorAlpha"] = 0.75,
+                                ["headerFontSize"] = 15,
+                                ["textFontSize"] = 13,
+                                ["font"] = "思源黑體 粗體",
+                                ["fontOutline"] = "OUTLINE",
+                                ["cursorAnchorType"] = "ANCHOR_CURSOR_RIGHT",
+                                ["itemCount"] = "BOTH",
+                                ["smallTextFontSize"] = 13,
+                            },
+                        }
+
+                        local E, _, _, P = unpack(_G.ElvUI)
+                        E:CopyTable(E.db, P)
+                        E:CopyTable(E.db, WindUI)
+                        E:StaggeredUpdateAll()
+                    end
+                },
+                characterProfile = {
+                    order = 1,
+                    type = "execute",
+                    name = L["Character Profile"],
+                    func = function()
+                        E.private["general"]["normTex"] = "WindTools Glow"
+                        E.private["general"]["glossTex"] = "WindTools Flat"
+                        E.private["general"]["chatBubbleFontOutline"] = "OUTLINE"
+                        E.private["general"]["minimap"]["hideCalendar"] = false
+                        E.private["WT"]["maps"]["minimapButtons"]["buttonSize"] = 25
+                        E.private["WT"]["maps"]["minimapButtons"]["backdropSpacing"] = 1
+                        E.private["WT"]["maps"]["minimapButtons"]["calendar"] = true
+                        E.private["WT"]["maps"]["minimapButtons"]["orientation"] = "VERTICAL"
+                        E.private["WT"]["maps"]["minimapButtons"]["spacing"] = 5
+                        E.private["WT"]["maps"]["minimapButtons"]["backdrop"] = false
+                        E.private["WT"]["maps"]["minimapButtons"]["mouseOver"] = true
+                        E.private["WT"]["maps"]["worldMap"]["scale"]["size"] = 1.55
+                        E.private["WT"]["misc"]["mute"]["enable"] = true
+                        E.private["WT"]["misc"]["mute"]["mount"][63796] = true
+                        E.private["WT"]["misc"]["mute"]["mount"][229385] = true
+                        E.private["skins"]["parchmentRemoverEnable"] = true
+                        E.private["theme"] = "default"
+                        E:StaticPopup_Show('PRIVATE_RL')
+                    end
+                }
+            }
+        },
         announcement = {
             order = 1,
             type = "group",
             inline = true,
-            name = AddColor(L["Announcement"]),
+            name = L["Announcement"],
             args = {
                 combatResurrection = {
                     order = 1,

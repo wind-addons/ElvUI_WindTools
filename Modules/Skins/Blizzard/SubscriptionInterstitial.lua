@@ -5,20 +5,11 @@ local ES = E:GetModule("Skins")
 local _G = _G
 
 function S:Blizzard_SubscriptionInterstitialUI()
-    if not self:CheckDB("playerChoice", "subscriptionInterstitial") then
+    if not self:CheckDB("subscriptionInterstitial") then
         return
     end
 
-    local frame = _G.SubscriptionInterstitialFrame
-
-    frame:StripTextures()
-    frame:CreateBackdrop('Transparent')
-    frame.ShadowOverlay:Kill()
-
-    ES:HandleCloseButton(frame.CloseButton)
-    ES:HandleButton(frame.ClosePanelButton)
-
-    self:CreateShadow(frame)
+    self:CreateShadow(_G.SubscriptionInterstitialFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_SubscriptionInterstitialUI")

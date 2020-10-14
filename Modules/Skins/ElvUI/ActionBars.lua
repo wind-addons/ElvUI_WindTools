@@ -67,6 +67,18 @@ function S:SkinZoneAbilities(button)
     end
 end
 
+function S:ElvUI_ActionBar_LoadKeyBinder()
+    local frame = _G.ElvUIBindPopupWindow
+    if not frame then
+        return
+    end
+
+    self:CreateShadow(frame)
+
+    frame.header:SetFrameLevel(frame.header:GetFrameLevel() + 2)
+    self:CreateShadow(frame.header)
+end
+
 function S:ElvUI_ActionBars()
     if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
         return
@@ -114,6 +126,13 @@ function S:ElvUI_ActionBars()
         if button then
             self:CreateShadow(button)
         end
+    end
+
+    -- 按键绑定
+    if _G.ElvUIBindPopupWindow then
+        self:ElvUI_ActionBar_LoadKeyBinder()
+    else
+        self:SecureHook(AB, "LoadKeyBinder", "ElvUI_ActionBar_LoadKeyBinder")
     end
 end
 

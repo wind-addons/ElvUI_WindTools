@@ -226,6 +226,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_ScrappingMachineUI"] = {
         "ScrappingMachineFrame"
     },
+    ["Blizzard_SubscriptionInterstitialUI"] = {
+        "SubscriptionInterstitialFrame"
+    },
     ["Blizzard_TalentUI"] = {
         "PlayerTalentFrame"
     },

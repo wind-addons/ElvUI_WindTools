@@ -146,6 +146,7 @@ V.skins = {
 		scrappingMachine = true,
 		spellBook = true,
 		staticPopup = true,
+		subscriptionInterstitial = true,
 		talent = true,
 		talkingHead = true,
 		taxi = true,

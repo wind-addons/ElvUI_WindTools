@@ -620,6 +620,7 @@ L["Stay"] = true
 L["Stop talking."] = true
 L["Stopwatch"] = true
 L["Style"] = "Style"
+L["Subscription Interstitial"] = true
 L["Success"] = true
 L["Suggested Group"] = true
 L["Switch Buttons"] = true

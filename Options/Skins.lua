@@ -329,6 +329,10 @@ options.blizzard = {
             type = "toggle",
             name = L["Static Popup"]
         },
+        subscriptionInterstitial = {
+            type = "toggle",
+            name = L["Subscription Interstitial"]
+        },
         talent = {
             type = "toggle",
             name = L["Talents"]

@@ -5,11 +5,11 @@ W.Changelog[201] = {
     NEW = {
         ["zhCN"] = {
             "添加 Wind 风格的配置文件和导入按钮(信息-重置).",
-            "添加包月弹出广告的窗体美化."
+            "添加月卡弹出广告的窗体美化."
         },
         ["zhTW"] = {
             "添加了 Wind 風格的配置文件和導入按鍵(信息-重置).",
-            "添加訂閱彈出式廣告的框架美化."
+            "添加包月彈出式廣告的框架美化."
         },
         ["enUS"] = {
             "Add Wind style profiles and buttons for importing. (Information - Reset)",

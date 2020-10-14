@@ -297,18 +297,25 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 end
 
 function MF:HandleFrame(frameName, mainFrameName)
-    local frame = _G
+    local frame
     local mainFrame
 
-    do -- 分析带分隔符的子框架
+    if frameName.GetName then
+        frame = frameName
+    else -- 分析带分隔符的子框架
+        frame = _G
         local path = {strsplit(".", frameName)}
         for i = 1, #path do
             frame = frame[path[i]]
         end
+    end
 
-        if mainFrameName then
+    if mainFrameName then
+        if mainFrameName.GetName then
+            mainFrame = mainFrameName
+        else
             mainFrame = _G
-            path = {strsplit(".", mainFrameName)}
+            local path = {strsplit(".", mainFrameName)}
             for i = 1, #path do
                 mainFrame = mainFrame[path[i]]
             end

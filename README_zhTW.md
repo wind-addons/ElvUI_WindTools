@@ -1,6 +1,6 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-11.52-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.00-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/版本-2.00-green.svg?longCache=true&style=for-the-badge"/>
 <br>
 </div>

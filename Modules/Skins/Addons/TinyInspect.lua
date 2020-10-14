@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
+local MF = W:GetModule("MoveFrames")
 
 local _G = _G
 local pairs = pairs
@@ -75,6 +76,11 @@ do
                 inspectFrameHolder:Hide()
             end
         )
+
+        if MF and MF.db and MF.db.moveBlizzardFrames then
+            MF:HandleFrame(inspectFrameHolder, parent.MoveFrame or parent)
+            frame.MoveFrame = inspectFrameHolder.MoveFrame
+        end
 
         inspectFrameHolder:Show()
         parent.inspectFrameHolder = inspectFrameHolder
@@ -152,6 +158,11 @@ do
                 statsFrameHolder:Hide()
             end
         )
+
+        if MF and MF.db and MF.db.moveBlizzardFrames then
+            local parent = frame:GetParent()
+            MF:HandleFrame(statsFrameHolder, parent.MoveFrame or parent)
+        end
 
         statsFrameHolder:Show()
         frame.statsFrameHolder = statsFrameHolder

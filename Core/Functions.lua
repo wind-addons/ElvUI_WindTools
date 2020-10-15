@@ -87,6 +87,7 @@ function F.CreateColorString(text, db)
         F.DebugMessage("函数", "[4]找不到处理字体风格的字体")
         return
     end
+
     if not db or type(db) ~= "table" then
         F.DebugMessage("函数", "[2]找不到字体颜色数据库")
         return
@@ -142,6 +143,10 @@ end
     @param {string} text 错误讯息
 ]]
 function F.DebugMessage(module, text)
+    if not (E.private and E.private.WT and E.private.WT.core.debugMessage) then
+        return
+    end
+
     if not text then
         return
     end

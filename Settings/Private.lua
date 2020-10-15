@@ -226,3 +226,7 @@ V.unitFrames = {
 		roleIconStyle = "SUNUI"
 	}
 }
+
+V.core = {
+	debugMessage = false
+}

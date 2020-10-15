@@ -637,8 +637,18 @@ options.gameBar = {
                 GB:UpdateTime()
             end,
             args = {
-                fadeTime = {
+                mouseOver = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Mouse Over"],
+                    desc = L["Show the bar only mouse hovered the area."],
+                    set = function(info, value)
+                        E.db.WT.misc.gameBar[info[#info]] = value
+                        GB:UpdateBar()
+                    end
+                },
+                fadeTime = {
+                    order = 2,
                     type = "range",
                     name = L["Fade Time"],
                     desc = L["The animation speed."],
@@ -647,7 +657,7 @@ options.gameBar = {
                     step = 0.01
                 },
                 normal = {
-                    order = 2,
+                    order = 3,
                     type = "group",
                     name = L["Color"] .. " - " .. L["Normal"],
                     inline = true,
@@ -683,7 +693,7 @@ options.gameBar = {
                     }
                 },
                 hover = {
-                    order = 3,
+                    order = 4,
                     type = "group",
                     name = L["Color"] .. " - " .. L["Hover"],
                     inline = true,
@@ -719,7 +729,7 @@ options.gameBar = {
                     }
                 },
                 additionalText = {
-                    order = 4,
+                    order = 5,
                     type = "group",
                     name = L["Additional Text"],
                     inline = true,

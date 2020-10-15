@@ -816,6 +816,7 @@ P.unitFrames = {
 P.misc = {
     gameBar = {
         enable = true,
+        mouseOver = false,
         backdrop = true,
         backdropSpacing = 5,
         timeAreaWidth = 110,

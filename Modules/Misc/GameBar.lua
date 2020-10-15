@@ -343,6 +343,24 @@ function GB:ConstructBar()
     bar:Size(800, 60)
     bar:Point("TOP", 0, -20)
 
+    bar:SetScript(
+        "OnEnter",
+        function(bar)
+            if self.db and self.db.mouseOver then
+                E:UIFrameFadeIn(bar, self.db.fadeTime, bar:GetAlpha(), 1)
+            end
+        end
+    )
+
+    bar:SetScript(
+        "OnLeave",
+        function(bar)
+            if self.db and self.db.mouseOver then
+                E:UIFrameFadeOut(bar, self.db.fadeTime, bar:GetAlpha(), 0)
+            end
+        end
+    )
+
     local middlePanel = CreateFrame("Button", "WTGameBarMiddlePanel", bar, "SecureActionButtonTemplate")
     middlePanel:Size(81, 50)
     middlePanel:Point("CENTER")
@@ -382,6 +400,14 @@ function GB:ConstructBar()
             return GB.db and GB.db.enable
         end
     )
+end
+
+function GB:UpdateBar()
+    if self.db and self.db.mouseOver then
+        self.bar:SetAlpha(0)
+    else
+        self.bar:SetAlpha(1)
+    end
 end
 
 function GB:ConstructTimeArea()
@@ -446,6 +472,10 @@ function GB:ConstructTimeArea()
         self.bar.middlePanel,
         "OnEnter",
         function(panel)
+            if self.db and self.db.mouseOver then
+                E:UIFrameFadeIn(self.bar, self.db.fadeTime, self.bar:GetAlpha(), 1)
+            end
+
             DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
@@ -493,6 +523,9 @@ function GB:ConstructTimeArea()
         self.bar.middlePanel,
         "OnLeave",
         function(panel)
+            if self.db and self.db.mouseOver then
+                E:UIFrameFadeOut(self.bar, self.db.fadeTime, self.bar:GetAlpha(), 0)
+            end
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
             if not self.db.time.alwaysSystemInfo then
@@ -635,6 +668,9 @@ function GB:UpdateTimeArea()
 end
 
 function GB:ButtonOnEnter(button)
+    if self.db and self.db.mouseOver then
+        E:UIFrameFadeIn(self.bar, self.db.fadeTime, self.bar:GetAlpha(), 1)
+    end
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
     if button.tooltips then
         DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
@@ -668,6 +704,9 @@ function GB:ButtonOnEnter(button)
 end
 
 function GB:ButtonOnLeave(button)
+    if self.db and self.db.mouseOver then
+        E:UIFrameFadeOut(self.bar, self.db.fadeTime, self.bar:GetAlpha(), 0)
+    end
     E:UIFrameFadeOut(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 0)
     DT.tooltip:Hide()
     if button.tooltipsLeave then
@@ -940,6 +979,7 @@ function GB:Initialize()
     self:UpdateTimeArea()
     self:UpdateButtons()
     self:UpdateLayout()
+    self:UpdateBar()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
     self.Initialized = true
@@ -960,6 +1000,7 @@ function GB:ProfileUpdate()
             self:UpdateTime()
             self:UpdateButtons()
             self:UpdateLayout()
+            self:UpdateBar()
         else
             if InCombatLockdown() then
                 self:RegisterEvent("PLAYER_REGEN_ENABLED")

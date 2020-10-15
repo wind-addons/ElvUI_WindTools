@@ -8,7 +8,7 @@
 # :white_check_mark: 状态
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/nA44TeZ)
 
-下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Tukui](https://www.tukui.org/addons.php?id=183) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases) 
+下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :sweat_drops: 功能
 ## 素材

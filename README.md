@@ -9,7 +9,7 @@
 # :white_check_mark: Status
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/JMz5Zsk)
 
-Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Tukui](https://www.tukui.org/addons.php?id=183) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
+Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :sweat_drops: Features
 ## Media Files

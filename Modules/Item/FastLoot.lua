@@ -17,22 +17,22 @@ local LootSlot = LootSlot
 
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
-do
-	local localizedType
-	function FL:IsFishing()
-		if not localizedType or strlen(localizedType) < 2 then
-			localizedType = select(7, GetItemInfo(6256))
-			self:IsFishing()
-			return
-		end
+local LOCALIZED_TYPE_POLES
 
+function FL:IsFishing()
+	if not (LOCALIZED_TYPE_POLES and strlen(LOCALIZED_TYPE_POLES) > 2) then
+		LOCALIZED_TYPE_POLES = select(7, GetItemInfo(6256))
+	end
+
+	if LOCALIZED_TYPE_POLES and strlen(LOCALIZED_TYPE_POLES) > 2 then
 		local mainHandWeaponID = GetInventoryItemID("player", 16)
-		local weaponType = select(7, GetItemInfo(mainHandWeaponID))
-		if weaponType and localizedType == weaponType then
+		local weaponType = mainHandWeaponID and select(7, GetItemInfo(mainHandWeaponID))
+		if weaponType and LOCALIZED_TYPE_POLES == weaponType then
 			return true
 		end
-		return false
 	end
+
+	return false
 end
 
 function FL:GetFreeSlots()

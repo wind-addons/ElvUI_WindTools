@@ -228,5 +228,5 @@ V.unitFrames = {
 }
 
 V.core = {
-	debugMessage = false
+	debugMode = false
 }

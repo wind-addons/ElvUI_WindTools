@@ -215,6 +215,7 @@ L["Datatexts"] = true
 L["De Other Side"] = true
 L["Death Effect"] = "Effet de mort"
 L["Deathknight"] = true
+L["Debug Mode"] = true
 L["Debug Tools"] = "Outils de débogage"
 L["Default"] = "Défaut"
 L["Default Text"] = true
@@ -332,6 +333,7 @@ L["If the quest is suggested with multi-players, add the number of players to th
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = true
 L["If you add the NPC into the list, all automation will do not work for it."] = true
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = true
+L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = true
 L["Ignore List"] = true
 L["Ignored NPCs"] = true
 L["Immersion"] = true

@@ -174,7 +174,20 @@ options.help = {
                     width = 0.7
                 }
             }
-        }
+        },
+        debugMode = {
+            order = 999,
+            type = "toggle",
+            name = L["Debug Mode"],
+            desc = L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."],
+            get = function(info)
+                return E.private.WT.core.debugMode
+            end,
+            set = function(info, value)
+                E.private.WT.core.debugMode = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+        },
     }
 }
 

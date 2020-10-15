@@ -215,6 +215,7 @@ L["Datatexts"] = "資訊文字"
 L["De Other Side"] = "彼界境地"
 L["Death Effect"] = "死亡畫面"
 L["Deathknight"] = "死亡騎士"
+L["Debug Mode"] = true
 L["Debug Tools"] = "除錯工具"
 L["Default"] = "預設"
 L["Default Text"] = "預設文本"
@@ -332,6 +333,7 @@ L["If the quest is suggested with multi-players, add the number of players to th
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = "如果獎勵列表中存在多個物品, 將會自動選擇最高售價的物品."
 L["If you add the NPC into the list, all automation will do not work for it."] = "如果你添加某個 NPC 進入列表, 所有的自動化操作將不再作用於它."
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = "如果你有發言權限, 這將會優先使用團隊警告頻道(/rw), 而不是團隊頻道(/r)."
+L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = "如果你安裝了其他 ElvUI 插件, 不推薦启用除錯模式."
 L["Ignore List"] = "忽略列表"
 L["Ignored NPCs"] = "忽略 NPC"
 L["Immersion"] = true

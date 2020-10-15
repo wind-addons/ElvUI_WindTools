@@ -2,9 +2,16 @@ local W, F, E, L = unpack(select(2, ...))
 local T = W:GetModule("Tooltips")
 
 local _G = _G
-local strfind, gsub, unpack, pairs = strfind, gsub, unpack, pairs
-local GetItemIcon, GetSpellTexture = GetItemIcon, GetSpellTexture
-local IsAddOnLoaded, IsAzeriteEmpoweredItemByID = IsAddOnLoaded, IsAzeriteEmpoweredItemByID
+local gsub = gsub
+local pairs = pairs
+local strfind = strfind
+local unpack = unpack
+
+local GetItemIcon = GetItemIcon
+local GetSpellTexture = GetSpellTexture
+local IsAddOnLoaded = IsAddOnLoaded
+
+local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 
 local newString = "0:0:64:64:5:59:5:59"
 
@@ -59,7 +66,7 @@ local HookItem =
     function(self)
         local _, link = self:GetItem()
         if link then
-            if IsAddOnLoaded("AzeriteTooltip") and IsAzeriteEmpoweredItemByID(link) then
+            if IsAddOnLoaded("AzeriteTooltip") and C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID(link) then
                 self.NoWindItemIcon = true
             end
 

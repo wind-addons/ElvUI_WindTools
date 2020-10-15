@@ -415,7 +415,7 @@ function GB:ConstructTimeArea()
     local text = self.bar.middlePanel:CreateFontString(nil, "OVERLAY")
     text:Point("TOP", self.bar, "BOTTOM", 0, -5)
     F.SetFontWithDB(text, self.db.additionalText.font)
-    text:SetAlpha(0)
+    text:SetAlpha(self.db.time.alwaysSystemInfo and 1 or 0)
     self.bar.middlePanel.text = text
 
     self.bar.middlePanel:Size(self.db.timeAreaWidth, self.db.timeAreaHeight)
@@ -432,6 +432,16 @@ function GB:ConstructTimeArea()
 
     DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
 
+    if self.db.time.alwaysSystemInfo then
+        self.alwaysSystemInfoTimer =
+            C_Timer_NewTicker(
+            1,
+            function()
+                DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
+            end
+        )
+    end
+
     self:HookScript(
         self.bar.middlePanel,
         "OnEnter",
@@ -440,7 +450,10 @@ function GB:ConstructTimeArea()
 
             E:UIFrameFadeIn(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 1)
             E:UIFrameFadeIn(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 1)
-            E:UIFrameFadeIn(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 1)
+
+            if not self.db.time.alwaysSystemInfo then
+                E:UIFrameFadeIn(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 1)
+            end
 
             DT.tooltip:SetOwner(panel.text, "ANCHOR_BOTTOM", 0, -5)
 
@@ -482,7 +495,9 @@ function GB:ConstructTimeArea()
         function(panel)
             E:UIFrameFadeOut(panel.hourHover, self.db.fadeTime, panel.hourHover:GetAlpha(), 0)
             E:UIFrameFadeOut(panel.minutesHover, self.db.fadeTime, panel.minutesHover:GetAlpha(), 0)
-            E:UIFrameFadeOut(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 0)
+            if not self.db.time.alwaysSystemInfo then
+                E:UIFrameFadeOut(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 0)
+            end
 
             DT.RegisteredDataTexts["System"].onLeave()
             DT.tooltip:Hide()
@@ -595,6 +610,25 @@ function GB:UpdateTimeArea()
         E:Flash(panel.colon, 1, true)
     else
         E:StopFlash(panel.colon)
+    end
+
+    if self.db.time.alwaysSystemInfo then
+        DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+        panel.text:SetAlpha(1)
+        if not self.alwaysSystemInfoTimer or self.alwaysSystemInfoTimer:IsCancelled() then
+            self.alwaysSystemInfoTimer =
+                C_Timer_NewTicker(
+                1,
+                function()
+                    DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
+                end
+            )
+        end
+    else
+        panel.text:SetAlpha(0)
+        if self.alwaysSystemInfoTimer and not self.alwaysSystemInfoTimer:IsCancelled() then
+            self.alwaysSystemInfoTimer:Cancel()
+        end
     end
 
     self:UpdateTime()

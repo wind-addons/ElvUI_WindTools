@@ -831,6 +831,7 @@ P.misc = {
             twentyFour = true,
             flash = true,
             interval = 10,
+            alwaysSystemInfo = false,
             font = {
                 name = "Montserrat",
                 size = 25,

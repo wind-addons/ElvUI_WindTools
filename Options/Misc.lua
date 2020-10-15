@@ -772,8 +772,10 @@ options.gameBar = {
                             order = 5,
                             type = "toggle",
                             name = L["Slow Mode"],
-                            desc = L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."]
-                        },
+                            desc = L[
+                                "Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."
+                            ]
+                        }
                     }
                 }
             }
@@ -809,8 +811,14 @@ options.gameBar = {
                     type = "toggle",
                     name = L["Flash"]
                 },
-                interval = {
+                alwaysSystemInfo = {
                     order = 5,
+                    type = "toggle",
+                    name = L["Always Show Info"],
+                    desc = L["The system information will be always shown rather than showing only being hovered."]
+                },
+                interval = {
+                    order = 6,
                     type = "range",
                     name = L["Interval"],
                     desc = L["The interval of updating."],

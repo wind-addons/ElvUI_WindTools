@@ -103,6 +103,7 @@ local function Skin_WeakAuras(f, fType)
             f.icon.SetTexCoord = E.noop
             f:CreateBackdrop()
             S:CreateShadow(f.backdrop)
+            f.backdrop:StripTextures()
             f.backdrop:SetFrameLevel(0)
             f.backdrop.icon = f.icon
             f.backdrop:HookScript(
@@ -120,8 +121,9 @@ local function Skin_WeakAuras(f, fType)
     elseif fType == "aurabar" then
         if not f.windStyle then
             f:CreateBackdrop()
-            S:CreateShadow(f.backdrop)
+            f.backdrop:StripTextures()
             f.backdrop:SetFrameLevel(0)
+            S:CreateShadow(f.backdrop)
             f.icon:SetTexCoord(unpack(E.TexCoords))
             f.icon.SetTexCoord = E.noop
             f.iconFrame:SetAllPoints(f.icon)

@@ -397,7 +397,7 @@ end
 function TI:QUEST_PROGRESS()
     if IsQuestCompletable() then
         local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
-        if tagInfo.tagID == 153 or tagInfo.worldQuestType then
+        if tagInfo and tagInfo.tagID == 153 or tagInfo and tagInfo.worldQuestType then
             return
         end
 

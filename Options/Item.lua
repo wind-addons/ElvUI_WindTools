@@ -257,8 +257,16 @@ do -- 添加按钮设定组
                     name = " ",
                     width = "full"
                 },
-                buttonWidth = {
+                numButtons = {
                     order = 9,
+                    type = "range",
+                    name = L["Buttons"],
+                    min = 1,
+                    max = 12,
+                    step = 1
+                },
+                buttonWidth = {
+                    order = 10,
                     type = "range",
                     name = L["Button Width"],
                     desc = L["The width of the buttons."],
@@ -267,7 +275,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 buttonHeight = {
-                    order = 10,
+                    order = 11,
                     type = "range",
                     name = L["Button Height"],
                     desc = L["The height of the buttons."],
@@ -276,7 +284,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 buttonsPerRow = {
-                    order = 11,
+                    order = 12,
                     type = "range",
                     name = L["Buttons Per Row"],
                     min = 1,
@@ -284,7 +292,7 @@ do -- 添加按钮设定组
                     step = 1
                 },
                 countFont = {
-                    order = 12,
+                    order = 13,
                     type = "group",
                     inline = true,
                     name = L["Counter"],
@@ -358,7 +366,7 @@ do -- 添加按钮设定组
                     }
                 },
                 bindFont = {
-                    order = 13,
+                    order = 14,
                     type = "group",
                     inline = true,
                     name = L["Key Binding"],

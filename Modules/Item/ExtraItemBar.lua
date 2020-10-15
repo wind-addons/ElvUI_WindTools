@@ -232,7 +232,7 @@ function EB:CreateButton(name, barDB)
 
     button:StyleButton()
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateShadow(button)
     end
 
@@ -481,80 +481,78 @@ function EB:UpdateBar(id)
     local buttonID = 1
 
     for _, module in ipairs {strsplit("[, ]", barDB.include)} do
-        if module == "QUEST" then -- 更新任务物品
-            for _, data in pairs(questItemList) do
-                if not self.db.blackList[data.itemID] then
-                    self:SetUpButton(bar.buttons[buttonID], data)
-                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                    buttonID = buttonID + 1
+        if buttonID <= barDB.numButtons then
+            if module == "QUEST" then -- 更新任务物品
+                for _, data in pairs(questItemList) do
+                    if not self.db.blackList[data.itemID] then
+                        self:SetUpButton(bar.buttons[buttonID], data)
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
                 end
-            end
-        elseif module == "POTION" then -- 更新药水
-            for _, potionID in pairs(potions) do
-                local count = GetItemCount(potionID)
-                if count and count > 0 and not self.db.blackList[potionID] then
-                    if not self.db.blackList[potionID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+            elseif module == "POTION" then -- 更新药水
+                for _, potionID in pairs(potions) do
+                    local count = GetItemCount(potionID)
+                    if count and count > 0 and not self.db.blackList[potionID] then
+                        if not self.db.blackList[potionID] then
+                            self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
+                            self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                            buttonID = buttonID + 1
+                        end
+                    end
+                end
+            elseif module == "FLASK" then -- 更新药剂
+                for _, flaskID in pairs(flasks) do
+                    local count = GetItemCount(flaskID)
+                    if count and count > 0 and not self.db.blackList[flaskID] then
+                        if not self.db.blackList[flaskID] then
+                            self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                            self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                            buttonID = buttonID + 1
+                        end
+                    end
+                end
+            elseif module == "BANNER" then -- 更新战旗
+                for _, bannerID in pairs(banners) do
+                    local count = GetItemCount(bannerID)
+                    if count and count > 0 and not self.db.blackList[bannerID] then
+                        if not self.db.blackList[bannerID] then
+                            self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
+                            bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
+                            buttonID = buttonID + 1
+                        end
+                    end
+                end
+            elseif module == "UTILITY" then -- 更新实用工具
+                for _, utilityID in pairs(utilities) do
+                    local count = GetItemCount(utilityID)
+                    if count and count > 0 and not self.db.blackList[utilityID] then
+                        if not self.db.blackList[utilityID] then
+                            self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
+                            self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                            buttonID = buttonID + 1
+                        end
+                    end
+                end
+            elseif module == "EQUIP" then -- 更新装备物品
+                for _, slotID in pairs(equipmentList) do
+                    local itemID = GetInventoryItemID("player", slotID)
+                    if itemID and not self.db.blackList[itemID] then
+                        self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
+                end
+            elseif module == "CUSTOM" then -- 更新自定义列表
+                for _, itemID in pairs(self.db.customList) do
+                    local count = GetItemCount(itemID)
+                    if count and count > 0 and not self.db.blackList[itemID] then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end
                 end
             end
-        elseif module == "FLASK" then -- 更新药剂
-            for _, flaskID in pairs(flasks) do
-                local count = GetItemCount(flaskID)
-                if count and count > 0 and not self.db.blackList[flaskID] then
-                    if not self.db.blackList[flaskID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            end
-        elseif module == "BANNER" then -- 更新战旗
-            for _, bannerID in pairs(banners) do
-                local count = GetItemCount(bannerID)
-                if count and count > 0 and not self.db.blackList[bannerID] then
-                    if not self.db.blackList[bannerID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
-                        bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
-                        buttonID = buttonID + 1
-                    end
-                end
-            end
-        elseif module == "UTILITY" then -- 更新实用工具
-            for _, utilityID in pairs(utilities) do
-                local count = GetItemCount(utilityID)
-                if count and count > 0 and not self.db.blackList[utilityID] then
-                    if not self.db.blackList[utilityID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            end
-        elseif module == "EQUIP" then -- 更新装备物品
-            for _, slotID in pairs(equipmentList) do
-                local itemID = GetInventoryItemID("player", slotID)
-                if itemID and not self.db.blackList[itemID] then
-                    self:SetUpButton(bar.buttons[buttonID], nil, slotID)
-                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                    buttonID = buttonID + 1
-                end
-            end
-        elseif module == "CUSTOM" then -- 更新自定义列表
-            for _, itemID in pairs(self.db.customList) do
-                local count = GetItemCount(itemID)
-                if count and count > 0 and not self.db.blackList[itemID] then
-                    self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
-                    self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                    buttonID = buttonID + 1
-                end
-            end
-        end
-
-        if buttonID > 12 then
-            return
         end
     end
 
@@ -578,7 +576,7 @@ function EB:UpdateBar(id)
     bar:Size(newBarWidth, newBarHeight)
 
     -- 移动框
-    local numMoverRows = ceil(12 / barDB.buttonsPerRow)
+    local numMoverRows = ceil(barDB.numButtons / barDB.buttonsPerRow)
     local numMoverCols = barDB.buttonsPerRow
     local newMoverWidth =
         2 * barDB.backdropSpacing + numMoverCols * barDB.buttonWidth + (numMoverCols - 1) * barDB.spacing
@@ -639,7 +637,7 @@ function EB:UpdateBar(id)
     bar:Show()
 
     -- 切换阴影
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         if barDB.backdrop then
             bar.backdrop:Show()
             for i = 1, 12 do
@@ -685,7 +683,7 @@ function EB:CreateAll()
 
     for i = 1, 3 do
         self:CreateBar(i)
-        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow  then
+        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
             S:CreateShadow(self.bars[i].backdrop)
         end
     end

@@ -52,7 +52,8 @@ W.Changelog[201] = {
             "[游戏条] 修复了切换配置时可能导致的报错.",
             "[游戏条] 好友计数将会统计战网好友了.",
             "[切换按钮] 修复了有时通报按钮选中状态错误的问题.",
-            "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0."
+            "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0.",
+            "[交接] 修复一处可能的报错."
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -63,7 +64,8 @@ W.Changelog[201] = {
             "[遊戲條] 修復了切換設定時可能導致的報錯.",
             "[遊戲條] 好友計數支持戰網好友.",
             "[切換按鈕] 修復了有時通報按鍵選中狀態錯誤的問題.",
-            "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0."
+            "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0.",
+            "[交接] 修復一處可能的報錯."
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -74,7 +76,8 @@ W.Changelog[201] = {
             "[Game Bar] Fix the errors may occur after profile changed.",
             "[Game Bar] The number of friend button will count BN friends.",
             "[Switch Button] Fix the status display of Announce Button.",
-            "[Tooltips] Update API of Azerite equips to 9.0."
+            "[Tooltips] Update API of Azerite equips to 9.0.",
+            "[Turn In] Fix the bug that the quest tag is nil."
         }
     }
 }

@@ -226,14 +226,23 @@ function CT:ShortChannel()
                 local communityInfo = C_Club_GetClubInfo(communityID)
 
                 if communityInfo.clubType == 0 then
-                    abbr = strupper(utf8sub(communityInfo.name, 1, 2))
+                    if communityInfo.name and CT.db and CT.db.customAbbreviation then
+                        abbr = CT.db.customAbbreviation[communityInfo.name]
+                    end
+                    abbr = abbr or strupper(utf8sub(communityInfo.name, 1, 2))
                     abbr = E:TextGradient(abbr, 0.000, 0.592, 0.902, 0.000, 0.659, 1.000)
                 elseif communityInfo.clubType == 1 then
-                    abbr = communityInfo.shortName or strupper(utf8sub(communityInfo.name, 1, 2))
+                    if CT.db and CT.db.customAbbreviation then
+                        abbr = CT.db.customAbbreviation[communityInfo.name]
+                    end
+                    abbr = abbr or communityInfo.shortName or strupper(utf8sub(communityInfo.name, 1, 2))
                     abbr = F.CreateColorString(abbr, {r = 0.902, g = 0.494, b = 0.133})
                 end
             else
-                abbr = utf8sub(name, 1, 1)
+                if CT.db and CT.db.customAbbreviation then
+                    abbr = CT.db.customAbbreviation[name]
+                end
+                abbr = abbr or utf8sub(name, 1, 1)
             end
         end
     end

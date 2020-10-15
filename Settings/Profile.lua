@@ -568,7 +568,8 @@ P.social = {
         removeBrackets = true,
         roleIconSize = 16,
         roleIconStyle = "SUNUI",
-        removeRealm = true
+        removeRealm = true,
+        customAbbreviation = {}
     },
     emote = {
         enable = true,

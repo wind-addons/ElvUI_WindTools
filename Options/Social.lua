@@ -577,7 +577,7 @@ options.chatLink = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"],
+            name = L["Enable"]
         },
         compatibile = {
             order = 2,
@@ -652,102 +652,195 @@ do
     SampleStrings.sunui = icons
 end
 
-options.chatText = {
-    order = 3,
-    type = "group",
-    name = L["Chat Text"],
-    get = function(info)
-        return E.db.WT.social.chatText[info[#info]]
-    end,
-    set = function(info, value)
-        E.db.WT.social.chatText[info[#info]] = value
-        CT:ProfileUpdate()
-    end,
-    args = {
-        desc = {
-            order = 0,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L["Modify the chat text style."],
-                    fontSize = "medium"
-                }
-            }
-        },
-        enable = {
-            order = 1,
-            type = "toggle",
-            name = L["Enable"],
-            width = "full"
-        },
-        removeRealm = {
-            order = 2,
-            type = "toggle",
-            name = L["Remove Realm"],
-            disabled = function()
-                return not E.db.WT.social.chatText.enable
-            end
-        },
-        removeBrackets = {
-            order = 3,
-            type = "toggle",
-            name = L["Remove Brackets"],
-            disabled = function()
-                return not E.db.WT.social.chatText.enable
-            end
-        },
-        abbreviation = {
-            order = 4,
-            type = "select",
-            name = L["Abbreviation"],
-            desc = L["Modify the style of abbreviation of channels."],
-            disabled = function()
-                return not E.db.WT.social.chatText.enable
-            end,
-            values = {
-                NONE = L["None"],
-                SHORT = L["Short"],
-                DEFAULT = L["Default"]
-            }
-        },
-        roleIcon = {
-            order = 5,
-            type = "group",
-            inline = true,
-            name = L["Role Icon"],
-            disabled = function()
-                return not E.db.WT.social.chatText.enable
-            end,
-            args = {
-                roleIconStyle = {
-                    order = 1,
-                    type = "select",
-                    name = L["Style"],
-                    desc = L["Change the icons indicate the role."],
-                    values = {
-                        HEXAGON = SampleStrings.hexagon,
-                        FFXIV = SampleStrings.ffxiv,
-                        SUNUI = SampleStrings.sunui,
-                        BLIZZARD = SampleStrings.blizzard,
-                        DEFAULT = SampleStrings.elvui
+do
+    local newRuleName, newRuleAbbr, selectedRule
+
+    options.chatText = {
+        order = 3,
+        type = "group",
+        name = L["Chat Text"],
+        get = function(info)
+            return E.db.WT.social.chatText[info[#info]]
+        end,
+        set = function(info, value)
+            E.db.WT.social.chatText[info[#info]] = value
+            CT:ProfileUpdate()
+        end,
+        args = {
+            desc = {
+                order = 0,
+                type = "group",
+                inline = true,
+                name = L["Description"],
+                args = {
+                    feature = {
+                        order = 1,
+                        type = "description",
+                        name = L["Modify the chat text style."],
+                        fontSize = "medium"
                     }
-                },
-                roleIconSize = {
-                    order = 2,
-                    type = "range",
-                    name = L["Size"],
-                    min = 5,
-                    max = 25,
-                    step = 1
+                }
+            },
+            enable = {
+                order = 1,
+                type = "toggle",
+                name = L["Enable"],
+                width = "full"
+            },
+            removeRealm = {
+                order = 2,
+                type = "toggle",
+                name = L["Remove Realm"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end
+            },
+            removeBrackets = {
+                order = 3,
+                type = "toggle",
+                name = L["Remove Brackets"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end
+            },
+            abbreviation = {
+                order = 4,
+                type = "select",
+                name = L["Abbreviation"],
+                desc = L["Modify the style of abbreviation of channels."],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end,
+                values = {
+                    NONE = L["None"],
+                    SHORT = L["Short"],
+                    DEFAULT = L["Default"]
+                }
+            },
+            roleIcon = {
+                order = 5,
+                type = "group",
+                inline = true,
+                name = L["Role Icon"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end,
+                args = {
+                    roleIconStyle = {
+                        order = 1,
+                        type = "select",
+                        name = L["Style"],
+                        desc = L["Change the icons indicate the role."],
+                        values = {
+                            HEXAGON = SampleStrings.hexagon,
+                            FFXIV = SampleStrings.ffxiv,
+                            SUNUI = SampleStrings.sunui,
+                            BLIZZARD = SampleStrings.blizzard,
+                            DEFAULT = SampleStrings.elvui
+                        }
+                    },
+                    roleIconSize = {
+                        order = 2,
+                        type = "range",
+                        name = L["Size"],
+                        min = 5,
+                        max = 25,
+                        step = 1
+                    }
+                }
+            },
+            customAbbreviation = {
+                order = 6,
+                type = "group",
+                inline = true,
+                name = L["Abbreviation Customization"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end,
+                args = {
+                    newRule = {
+                        order = 1,
+                        type = "group",
+                        inline = true,
+                        name = L["New Rule"],
+                        args = {
+                            channelName = {
+                                order = 1,
+                                type = "input",
+                                name = L["Channel Name"],
+                                get = function()
+                                    return newRuleName
+                                end,
+                                set = function(_, value)
+                                    newRuleName = value
+                                end
+                            },
+                            abbrName = {
+                                order = 2,
+                                type = "input",
+                                name = L["Abbreviation"],
+                                get = function()
+                                    return newRuleAbbr
+                                end,
+                                set = function(_, value)
+                                    newRuleAbbr = value
+                                end
+                            },
+                            addButton = {
+                                order = 3,
+                                type = "execute",
+                                name = L["Add / Update"],
+                                desc = L["Add or update the rule with custom abbreviation."],
+                                func = function()
+                                    if newRuleName and newRuleAbbr then
+                                        E.db.WT.social.chatText.customAbbreviation[newRuleName] = newRuleAbbr
+                                        newRuleAbbr = nil
+                                        newRuleName = nil
+                                    else
+                                        print(L["Please set the channel and abbreviation first."])
+                                    end
+                                end
+                            }
+                        }
+                    },
+                    deleteRule = {
+                        order = 2,
+                        type = "group",
+                        inline = true,
+                        name = L["Delete Rule"],
+                        args = {
+                            list = {
+                                order = 1,
+                                type = "select",
+                                name = L["List"],
+                                get = function()
+                                    return selectedRule
+                                end,
+                                set = function(_, value)
+                                    selectedRule = value
+                                end,
+                                values = function()
+                                    return E.db.WT.social.chatText.customAbbreviation
+                                end,
+                                width = 2
+                            },
+                            deleteButton = {
+                                order = 3,
+                                type = "execute",
+                                name = L["Remove"],
+                                func = function()
+                                    if selectedRule then
+                                        E.db.WT.social.chatText.customAbbreviation[selectedRule] = nil
+                                    end
+                                end
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-}
+end
 
 options.contextMenu = {
     order = 4,

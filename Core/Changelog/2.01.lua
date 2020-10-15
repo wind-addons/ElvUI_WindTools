@@ -37,7 +37,8 @@ W.Changelog[201] = {
             "[游戏条] 添加了一直显示系统信息文字的功能和选项.",
             "[游戏条] 添加了附加文字的字体选项.",
             "[切换按钮] 修复了有时通报按钮选中状态错误的问题.",
-            "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0."
+            "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0.",
+            "[聊天文字] 添加了自定义缩写频道文字的功能."
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -48,7 +49,8 @@ W.Changelog[201] = {
             "[遊戲條] 添加了一直顯示系統信息文字的功能和選項.",
             "[遊戲條] 添加了附加文字的字體選項.",
             "[切換按鈕] 修復了有時通報按鍵選中狀態錯誤的問題.",
-            "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0."
+            "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0.",
+            "[聊天文字] 添加了自訂頻道縮寫的功能."
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -59,7 +61,8 @@ W.Changelog[201] = {
             "[Game Bar] Add the feature and options for always showing system information.",
             "[Game Bar] Add the options for additional text font style.",
             "[Switch Button] Fix the status display of Announce Button.",
-            "[Tooltips] Update API of Azerite equips to 9.0."
+            "[Tooltips] Update API of Azerite equips to 9.0.",
+            "[Chat Text] Add the feature of channel abbreviation customization."
         }
     }
 }

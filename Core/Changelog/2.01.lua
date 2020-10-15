@@ -30,9 +30,10 @@ W.Changelog[201] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "修正更新说明中的一些错误.",
-            "添加聊天条的间隔设定.",
+            "调整了部分框架的层级以更好的显示内容.",
             "添加 TinyInspect 窗体的移动功能.",
             "[施法条] 修复了切换配置时可能导致的报错.",
+            "[聊天条] 添加了聊天按键的间隔选项.",
             "[游戏条] 修复了切换配置时可能导致的报错.",
             "[游戏条] 添加了一直显示系统信息文字的功能和选项.",
             "[游戏条] 添加了附加文字的字体选项.",
@@ -44,9 +45,10 @@ W.Changelog[201] = {
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
-            "添加聊天條的間隔設定.",
+            "調整了部分框架的層級以更好的顯示內容.",
             "添加 TinyInspect 框架的移動功能.",
             "[施法條] 修復了切換設定時可能導致的報錯.",
+            "[聊天條] 添加了聊天按鍵的間隔設定.",
             "[遊戲條] 修復了切換設定時可能導致的報錯.",
             "[遊戲條] 添加了一直顯示系統信息文字的功能和設定.",
             "[遊戲條] 添加了附加文字的字體選項.",
@@ -58,9 +60,10 @@ W.Changelog[201] = {
         },
         ["enUS"] = {
             "Ammend the changelog.",
-            "Add spacing option of chat bar.",
-            "Now TinyInspect frames can be draged and moved.",
+            "Change the strata of several frames for better display.",
+            "Now TinyInspect frames can be dragged and moved.",
             "[Cast Bar] Fix the errors may occur after profile changed.",
+            "[Chat Bar] Add spacing option.",
             "[Game Bar] Fix the errors may occur after profile changed.",
             "[Game Bar] Add the feature and options for always showing system information.",
             "[Game Bar] Add the options for additional text font style.",

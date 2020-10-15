@@ -5,7 +5,6 @@
 <br>
 </div>
 
-
 # :white_check_mark: 状态
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/nA44TeZ)
 
@@ -103,6 +102,5 @@
 
 -----
 <br>
-
 >这个仓库用来存放暗影国度版本的插件.  
 >访问过去版本 [ElvUI_WindTools (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)  

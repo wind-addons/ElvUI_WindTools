@@ -4,13 +4,13 @@ W.Changelog[201] = {
     RELEASE_DATE = "TBC",
     IMPORTANT = {
         ["zhCN"] = {
-            "除非你手动开启除错模式, 除错信息将不再显示.",
+            "除非你手动开启除错模式, 除错信息将不再显示."
         },
         ["zhTW"] = {
-            "除非你手動開啟除錯模式, 除錯信息將不再顯示.",
+            "除非你手動開啟除錯模式, 除錯信息將不再顯示."
         },
         ["enUS"] = {
-            "The debug message will no longer show unless you enable the debug mode manully.",
+            "The debug message will no longer show unless you enable the debug mode manully."
         }
     },
     NEW = {
@@ -56,7 +56,7 @@ W.Changelog[201] = {
             "[Game Bar] Fix the errors may occur after profile changed.",
             "[Game Bar] Add the feature and options for always showing system information.",
             "[Switch Button] Fix the status display of Announce Button.",
-            "[Tooltips] Update API of Azerite equips to 9.0.",
+            "[Tooltips] Update API of Azerite equips to 9.0."
         }
     }
 }

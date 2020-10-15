@@ -6,7 +6,6 @@
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) 
 </div>
 
-
 # :white_check_mark: Status
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/JMz5Zsk)
 
@@ -104,6 +103,5 @@ More features are coming soon.
 
 -----
 <br>
-
 >This repo is for the version of Shadowlands (9.0).  
 >Check legacy version here: [ElvUI_WindTools (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

@@ -485,12 +485,14 @@ function CB:UpdateBar()
 
     self.bar:Size(width, height)
 
-    if E.private.WT.skins.shadow then
-        if self.db.backdrop then
-            self.bar.backdrop:Show()
+    if self.db.backdrop then
+        self.bar.backdrop:Show()
+        if E.private.WT.skins.shadow and self.bar.shadow then
             self.bar.shadow:Show()
-        else
-            self.bar.backdrop:Hide()
+        end
+    else
+        self.bar.backdrop:Hide()
+        if E.private.WT.skins.shadow and self.bar.shadow then
             self.bar.shadow:Hide()
         end
     end

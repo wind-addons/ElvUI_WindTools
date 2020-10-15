@@ -13,7 +13,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
         return
     end
 
-    if config.onlyInstance and IsInInstance() then
+    if config.onlyInstance and not IsInInstance() then
         return
     end
 

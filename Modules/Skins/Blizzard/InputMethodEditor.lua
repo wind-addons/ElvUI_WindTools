@@ -35,7 +35,7 @@ function S:InputMethodEditor()
     end
 
     IMECandidatesFrame:StripTextures()
-    IMECandidatesFrame:SetTemplate("Transparent")
+    IMECandidatesFrame:SetTemplate()
     self:CreateShadow(IMECandidatesFrame)
 
     for i = 1, 10 do

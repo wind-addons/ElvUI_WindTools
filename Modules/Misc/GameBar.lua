@@ -19,6 +19,7 @@ local tostring = tostring
 local type = type
 local unpack = unpack
 
+local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame
 local EncounterJournal_LoadUI = EncounterJournal_LoadUI
 local GetGameTime = GetGameTime
@@ -46,6 +47,9 @@ local ToggleGuildFinder = ToggleGuildFinder
 local ToggleGuildFrame = ToggleGuildFrame
 local ToggleTimeManager = ToggleTimeManager
 
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
@@ -171,7 +175,26 @@ local ButtonTypes = {
             end
         },
         additionalText = function()
-            local number = C_FriendList_GetNumOnlineFriends()
+            local number = C_FriendList_GetNumOnlineFriends() or 0
+            local numBNOnlineFriend = select(2, BNGetNumFriends())
+
+            for i = 1, numBNOnlineFriend do
+                local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+                if accountInfo and accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.isOnline then
+                    local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+                    if numGameAccounts and numGameAccounts > 0 then
+                        for j = 1, numGameAccounts do
+                            local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+                            if gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" then
+                                number = number + 1
+                            end
+                        end
+                    elseif accountInfo.gameAccountInfo.clientProgram == "WoW" then
+                        number = number + 1
+                    end
+                end
+            end
+
             return number > 0 and number or ""
         end,
         tooltips = "Friends"

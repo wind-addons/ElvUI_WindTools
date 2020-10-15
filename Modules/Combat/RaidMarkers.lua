@@ -177,7 +177,7 @@ function RM:CreateBar()
 
 	local frame = CreateFrame("Frame", nil, E.UIParent)
 	frame:Point("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
-	frame:SetFrameStrata("BACKGROUND")
+	frame:SetFrameStrata("DIALOG")
 	self.barAnchor = frame
 
 	frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")

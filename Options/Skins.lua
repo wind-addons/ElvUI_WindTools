@@ -3,6 +3,8 @@ local options = W.options.skins.args
 local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
 
+local pairs = pairs
+
 options.desc = {
     order = 1,
     type = "group",

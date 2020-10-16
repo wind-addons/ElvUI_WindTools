@@ -2,18 +2,20 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local _G = _G
-local gsub, strsub, strsplit = gsub, strsub, strsplit
-local UnitGUID, GetSpellLink = UnitGUID, GetSpellLink
-local IsInInstance, UnitInRaid, UnitInParty = IsInInstance, UnitInRaid, UnitInParty
+local gsub = gsub
+local strsplit = strsplit
+local strsub = strsub
+
+local GetSpellLink = GetSpellLink
+local IsInInstance = IsInInstance
+local UnitGUID = UnitGUID
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
 
 function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     local config = self.db.interrupt
 
-    if not config.enable then
-        return
-    end
-
-    if config.onlyInstance and not IsInInstance() then
+    if not config.enable or config.onlyInstance and not IsInInstance() then
         return
     end
 

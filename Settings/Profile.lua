@@ -817,6 +817,8 @@ P.unitFrames = {
 }
 
 P.misc = {
+    noKanjiMath = true,
+    disableTalkingHead = false,
     gameBar = {
         enable = true,
         mouseOver = false,

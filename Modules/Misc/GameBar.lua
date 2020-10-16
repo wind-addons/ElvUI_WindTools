@@ -880,7 +880,7 @@ function GB:UpdateButton(button, config)
                     config.additionalText and config.additionalText() or ""
                 )
                 GargageCollectionCounter = GargageCollectionCounter + 1
-                if GargageCollectionCounter > 200 then
+                if GargageCollectionCounter > 30 then
                     collectgarbage("collect")
                     GargageCollectionCounter = 0
                 end

@@ -13,27 +13,10 @@ local GetItemInfo = GetItemInfo
 local GetNumLootItems = GetNumLootItems
 local GetTime = GetTime
 local IsModifiedClick = IsModifiedClick
+local IsFishingLoot = IsFishingLoot
 local LootSlot = LootSlot
 
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
-
-local LOCALIZED_TYPE_POLES
-
-function FL:IsFishing()
-	if not (LOCALIZED_TYPE_POLES and strlen(LOCALIZED_TYPE_POLES) > 2) then
-		LOCALIZED_TYPE_POLES = select(7, GetItemInfo(6256))
-	end
-
-	if LOCALIZED_TYPE_POLES and strlen(LOCALIZED_TYPE_POLES) > 2 then
-		local mainHandWeaponID = GetInventoryItemID("player", 16)
-		local weaponType = mainHandWeaponID and select(7, GetItemInfo(mainHandWeaponID))
-		if weaponType and LOCALIZED_TYPE_POLES == weaponType then
-			return true
-		end
-	end
-
-	return false
-end
 
 function FL:GetFreeSlots()
 	local numFreeSlots = 0
@@ -47,7 +30,7 @@ function FL:LOOT_READY()
 	local tDelay = 0
 	if GetTime() - tDelay >= self.db.limit then
 		tDelay = GetTime()
-		if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") and not self:IsFishing() then
+		if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") and not IsFishingLoot() then
 			for i = GetNumLootItems(), 1, -1 do
 				if self:GetFreeSlots() > 0 then
 					LootSlot(i)

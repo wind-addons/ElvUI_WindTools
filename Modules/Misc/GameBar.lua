@@ -150,6 +150,18 @@ local ButtonTypes = {
             L["Character"]
         }
     },
+    COLLECTIONS = {
+        name = L["Collections"],
+        icon = W.Media.Icons.barCollections,
+        click = {
+            LeftButton = function()
+                ToggleCollectionsJournal(1)
+            end
+        },
+        tooltips = {
+            L["Collections"]
+        }
+    },
     ENCOUNTER_JOURNAL = {
         name = L["Encounter Journal"],
         icon = W.Media.Icons.barEncounterJournal,

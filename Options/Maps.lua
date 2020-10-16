@@ -299,7 +299,7 @@ options.minimapButtons = {
                     type = "range",
                     name = L["Backdrop Spacing"],
                     desc = L["The spacing between the backdrop and the buttons."],
-                    min = 1,
+                    min = 0,
                     max = 30,
                     step = 1
                 },
@@ -374,7 +374,7 @@ options.minimapButtons = {
                     type = "range",
                     name = L["Button Spacing"],
                     desc = L["The spacing between buttons."],
-                    min = 1,
+                    min = 0,
                     max = 30,
                     step = 1
                 }

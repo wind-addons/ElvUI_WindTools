@@ -30,10 +30,6 @@ function RM:ChangeShape()
     local newHeight = E.MinimapSize * heightPct
     local diff = E.MinimapSize - newHeight
 
-    local borderWidth, borderHeight = E.PixelMode and 2 or 6, E.PixelMode and 2 or 8
-    local panelSize, joinPanel = (MinimapPanel:IsShown() and MinimapPanel:GetHeight()) or (E.PixelMode and 1 or -1), 1
-    local holderHeight = newHeight + (panelSize - joinPanel)
-
     Minimap:SetMaskTexture(texturePath)
     Minimap:Size(E.MinimapSize, E.MinimapSize)
     Minimap:SetHitRectInsets(0, 0, (diff / 2) * E.mult, (diff / 2) * E.mult)
@@ -48,8 +44,31 @@ function RM:ChangeShape()
         Minimap.location:Point("TOP", MMHolder, "TOP", 0, -5)
     end
 
-    MMHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
-    _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
+    self:MMHolder_Size()
+end
+
+do
+    local isRunning
+    function RM:MMHolder_Size()
+        if isRunning then
+            return
+        end
+
+        isRunning = true
+
+        local fileID = self.db.enable and floor(self.db.heightPercentage * 128) or 128
+        local newHeight = E.MinimapSize * fileID / 128
+
+        local borderWidth, borderHeight = E.PixelMode and 2 or 6, E.PixelMode and 2 or 8
+        local panelSize, joinPanel =
+            (MinimapPanel:IsShown() and MinimapPanel:GetHeight()) or (E.PixelMode and 1 or -1),
+            1
+        local holderHeight = newHeight + (panelSize - joinPanel)
+
+        MMHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
+        _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
+        isRunning = false
+    end
 end
 
 function RM:SetUpdateHook()
@@ -58,6 +77,7 @@ function RM:SetUpdateHook()
         self:SecureHook(MM, "UpdateSettings", "ChangeShape")
         self:SecureHook(MM, "Initialize", "ChangeShape")
         self:SecureHook(E, "UpdateAll", "ChangeShape")
+        self:SecureHook(_G.MMHolder, "Size", "MMHolder_Size")
         self.Initialized = true
     end
     self:ChangeShape()

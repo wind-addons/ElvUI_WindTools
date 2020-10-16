@@ -17,8 +17,66 @@ local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
 
-options.cvars = {
+options.general = {
     order = 1,
+    type = "group",
+    name = L["General"],
+    args = {
+        pauseToSlash = {
+            order = 1,
+            type = "toggle",
+            name = L["Pause to slash"],
+            desc = L["Just for Chinese and Korean players"],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        saveArtifact = {
+            order = 2,
+            type = "toggle",
+            name = L["Save Artifact"],
+            desc = L["Allow you to save outfits even if the artifact in it."],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        disableTalkingHead = {
+            order = 3,
+            type = "toggle",
+            name = L["Disable Talking Head"],
+            desc = L["Disable Blizzard Talking Head."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
+        },
+        noKanjiMath = {
+            order = 4,
+            type = "toggle",
+            name = L["Math Without Kanji"],
+            desc = L["Use alphabet rather than kanji (Only for Chinese players)"],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
+        }
+    }
+}
+
+options.cvars = {
+    order = 2,
     type = "group",
     name = L["CVars Editor"],
     get = function(info)
@@ -156,7 +214,7 @@ options.cvars = {
 }
 
 options.moveFrames = {
-    order = 2,
+    order = 4,
     type = "group",
     name = L["Move Frames"],
     get = function(info)
@@ -227,43 +285,8 @@ options.moveFrames = {
     }
 }
 
-options.transmog = {
-    order = 3,
-    type = "group",
-    name = L["Transmog"],
-    args = {
-        desc = {
-            order = 1,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L["This module focus on enhancement of transmog."],
-                    fontSize = "medium"
-                }
-            }
-        },
-        saveArtifact = {
-            order = 2,
-            type = "toggle",
-            name = L["Save Artifact"],
-            desc = L["Allow you to save outfits even if the artifact in it."],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
-        }
-    }
-}
-
 options.mute = {
-    order = 3,
+    order = 5,
     type = "group",
     name = L["Mute"],
     args = {
@@ -320,79 +343,8 @@ do
     end
 end
 
-options.pauseToSlash = {
-    order = 5,
-    type = "group",
-    name = L["Pause to slash"],
-    args = {
-        desc = {
-            order = 1,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L[
-                        "This module works with Chinese and Korean, it will correct the text to slash when you input Pause."
-                    ],
-                    fontSize = "medium"
-                }
-            }
-        },
-        pauseToSlash = {
-            order = 2,
-            type = "toggle",
-            name = L["Enable"],
-            desc = L["Pause to slash (Just for Chinese and Korean players)"],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
-        }
-    }
-}
-
-options.disableTalkingHead = {
-    order = 6,
-    type = "group",
-    name = L["Disable Talking Head"],
-    args = {
-        desc = {
-            order = 1,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L["Enable this module will disable Blizzard Talking Head."],
-                    fontSize = "medium"
-                }
-            }
-        },
-        disableTalkingHead = {
-            order = 2,
-            type = "toggle",
-            name = L["Enable"],
-            desc = L["Stop talking."],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-            end
-        }
-    }
-}
-
 options.tags = {
-    order = 7,
+    order = 6,
     type = "group",
     name = L["Tags"],
     args = {
@@ -522,7 +474,7 @@ do
 end
 
 options.gameBar = {
-    order = 8,
+    order = 7,
     type = "group",
     name = L["Game Bar"],
     get = function(info)

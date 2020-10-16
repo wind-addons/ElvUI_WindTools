@@ -3,6 +3,8 @@ local options = W.options.social.args
 local LSM = E.Libs.LSM
 
 local pairs = pairs
+local print = print
+
 local FriendsFrame_Update = FriendsFrame_Update
 
 local customListSelected

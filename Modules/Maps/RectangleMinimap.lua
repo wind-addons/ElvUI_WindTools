@@ -3,8 +3,10 @@ local RM = W:NewModule("RectangleMinimap", "AceEvent-3.0", "AceHook-3.0")
 local MM = E:GetModule("Minimap")
 
 local _G = _G
-local sqrt = sqrt
+local floor = floor
 local format = format
+local pairs = pairs
+local sqrt = sqrt
 
 local InCombatLockdown = InCombatLockdown
 

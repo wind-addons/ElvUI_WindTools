@@ -62,6 +62,7 @@ W.Changelog[201] = {
             "[美化皮肤] 添加一鍵開啟, 一鍵關閉按鈕.",
             "[通告] 副本内打断通报修复.",
             "[小地图图标] 小地图图标的间隔和背景间隔允许为 0.",
+            "[矩形小地图] 矩形小地图修复地图偏移.",
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -82,6 +83,7 @@ W.Changelog[201] = {
             "[美化皮膚] 添加一鍵開啟, 一鍵關閉按鈕.",
             "[通告] 副本内打斷通報修復.",
             "[小地圖圖標] 小地圖圖標的間隔和背景間隔允許為 0.",
+            "[矩形小地圖] 矩形小地圖修復地圖偏移.",
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -102,6 +104,7 @@ W.Changelog[201] = {
             "[Skins] Add options for disable/enable all.",
             "[Announcement] Fix the problem that interrupt is disabled in instance.",
             "[Minimap Buttons] The spacing and backdrop spacing can be 0.",
+            "[Rectangle Minimap] Fix the offset of minimap.",
         }
     }
 }

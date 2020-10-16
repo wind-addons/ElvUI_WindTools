@@ -40,6 +40,9 @@
 - Fast Loot
     - Leatrix (Leatrix Plus)
 
+- Rectangle Minimap
+    - Repooc (Shadow & Light)
+
 - World Map
     - Leatrix (Leatrix Maps)
     - siweia (NDui)

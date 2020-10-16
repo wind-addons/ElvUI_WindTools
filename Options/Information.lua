@@ -186,8 +186,8 @@ options.help = {
             set = function(info, value)
                 E.private.WT.core.debugMode = value
                 E:StaticPopup_Show("PRIVATE_RL")
-            end,
-        },
+            end
+        }
     }
 }
 
@@ -328,6 +328,9 @@ do -- 插件代码
         },
         [L["Fast Loot"]] = {
             "Leatrix (Leatrix Plus)"
+        },
+        [L["Rectangle Minimap"]] = {
+            "Repooc (Shadow & Light)"
         },
         [L["World Map"]] = {
             "Leatrix (Leatrix Maps)",
@@ -634,7 +637,7 @@ options.reset = {
                     order = 1,
                     type = "execute",
                     name = L["ElvUI Profile"],
-                    desc = "|cffff0000"..L["Set the profile to WindTools style."],
+                    desc = "|cffff0000" .. L["Set the profile to WindTools style."],
                     func = function()
                         local WindUI = {
                             ["databars"] = {
@@ -1836,7 +1839,7 @@ options.reset = {
                     order = 2,
                     type = "execute",
                     name = L["Character Profile"],
-                    desc = "|cffff0000"..L["Set the profile to WindTools style."],
+                    desc = "|cffff0000" .. L["Set the profile to WindTools style."],
                     func = function()
                         E.private["general"]["normTex"] = "WindTools Glow"
                         E.private["general"]["glossTex"] = "WindTools Flat"

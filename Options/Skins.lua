@@ -161,219 +161,303 @@ options.blizzard = {
             type = "toggle",
             name = L["Enable"]
         },
+        enableAll = {
+            order = 1,
+            type = "execute",
+            name = L["Enable All"],
+            func = function()
+                for key in pairs(V.skins.blizzard) do
+                    E.private.WT.skins.blizzard[key] = true
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        disableAll = {
+            order = 2,
+            type = "execute",
+            name = L["Disable All"],
+            func = function()
+                for key in pairs(V.skins.blizzard) do
+                    if key ~= "enable" then
+                        E.private.WT.skins.blizzard[key] = false
+                    end
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        betterOption = {
+            order = 3,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
         achievements = {
+            order = 10,
             type = "toggle",
             name = L["Achievements"]
         },
         addonManager = {
+            order = 10,
             type = "toggle",
             name = L["AddOn Manager"]
         },
         adventureMap = {
+            order = 10,
             type = "toggle",
             name = L["Adventure Map"]
         },
         alerts = {
+            order = 10,
             type = "toggle",
             name = L["Alert Frames"]
         },
         auctionHouse = {
+            order = 10,
             type = "toggle",
             name = L["Auction House"]
         },
         azeriteEssence = {
+            order = 10,
             type = "toggle",
             name = L["Azerite Essence"]
         },
         barberShop = {
+            order = 10,
             type = "toggle",
             name = L["Barber Shop"]
         },
         blackMarket = {
+            order = 10,
             type = "toggle",
             name = L["Black Market"]
         },
         calendar = {
+            order = 10,
             type = "toggle",
             name = L["Calendar"]
         },
         challenges = {
+            order = 10,
             type = "toggle",
             name = L["Challenges"]
         },
         channels = {
+            order = 10,
             type = "toggle",
             name = L["Channels"]
         },
         character = {
+            order = 10,
             type = "toggle",
             name = L["Character"]
         },
         collections = {
+            order = 10,
             type = "toggle",
             name = L["Collections"]
         },
         communities = {
+            order = 10,
             type = "toggle",
             name = L["Communities"]
         },
         debugTools = {
+            order = 10,
             type = "toggle",
             name = L["Debug Tools"]
         },
         dressingRoom = {
+            order = 10,
             type = "toggle",
             name = L["Dressing Room"]
         },
         encounterJournal = {
+            order = 10,
             type = "toggle",
             name = L["Encounter Journal"]
         },
         friends = {
+            order = 10,
             type = "toggle",
             name = L["Friend List"]
         },
         flightMap = {
+            order = 10,
             type = "toggle",
             name = L["Flight Map"]
         },
         garrison = {
+            order = 10,
             type = "toggle",
             name = L["Garrison"]
         },
         gossip = {
+            order = 10,
             type = "toggle",
             name = L["Gossip Frame"]
         },
         guildBank = {
+            order = 10,
             type = "toggle",
             name = L["Guild Bank"]
         },
         help = {
+            order = 10,
             type = "toggle",
             name = L["Help Frame"]
         },
         inputMethodEditor = {
+            order = 10,
             type = "toggle",
             name = L["Input Method Editor"]
         },
         inspect = {
+            order = 10,
             type = "toggle",
             name = L["Inspect"]
         },
         lookingForGroup = {
+            order = 10,
             type = "toggle",
             name = L["Looking For Group"]
         },
         loot = {
+            order = 10,
             type = "toggle",
             name = L["Loot Frames"]
         },
         lossOfControl = {
+            order = 10,
             type = "toggle",
             name = L["Loss Of Control"]
         },
         macro = {
+            order = 10,
             type = "toggle",
             name = L["Macros"]
         },
         mail = {
+            order = 10,
             type = "toggle",
             name = L["Mail Frame"]
         },
         merchant = {
+            order = 10,
             type = "toggle",
             name = L["Merchant"]
         },
         microButtons = {
+            order = 10,
             type = "toggle",
             name = L["Micro Bar"]
         },
         mirrorTimers = {
+            order = 10,
             type = "toggle",
             name = L["Mirror Timers"]
         },
         misc = {
+            order = 10,
             type = "toggle",
             name = L["Misc Frames"]
         },
         objectiveTracker = {
+            order = 10,
             type = "toggle",
             name = L["Objective Tracker"]
         },
         orderHall = {
+            order = 10,
             type = "toggle",
             name = L["Orderhall"]
         },
         quest = {
+            order = 10,
             type = "toggle",
             name = L["Quest Frames"]
         },
         raidInfo = {
+            order = 10,
             type = "toggle",
             name = L["Raid Info"]
         },
         scenario = {
+            order = 10,
             type = "toggle",
             name = L["Scenario"]
         },
         scrappingMachine = {
+            order = 10,
             type = "toggle",
             name = L["Scrapping Machine"]
         },
         spellBook = {
+            order = 10,
             type = "toggle",
             name = L["Spell Book"]
         },
         staticPopup = {
+            order = 10,
             type = "toggle",
             name = L["Static Popup"]
         },
         subscriptionInterstitial = {
+            order = 10,
             type = "toggle",
             name = L["Subscription Interstitial"]
         },
         talent = {
+            order = 10,
             type = "toggle",
             name = L["Talents"]
         },
         talkingHead = {
+            order = 10,
             type = "toggle",
             name = L["Talking Head"]
         },
         taxi = {
+            order = 10,
             type = "toggle",
             name = L["Taxi"]
         },
         timeManager = {
+            order = 10,
             type = "toggle",
             name = L["Stopwatch"]
         },
         tooltips = {
+            order = 10,
             type = "toggle",
             name = L["Tooltips"]
         },
         trade = {
+            order = 10,
             type = "toggle",
             name = L["Trade"]
         },
         tradeSkill = {
+            order = 10,
             type = "toggle",
             name = L["Trade Skill"]
         },
         trainer = {
+            order = 10,
             type = "toggle",
             name = L["Trainer"]
         },
         tutorial = {
+            order = 10,
             type = "toggle",
             name = L["Tutorials"]
         },
         warboard = {
+            order = 10,
             type = "toggle",
             name = L["Warboard"]
         },
         worldMap = {
+            order = 10,
             type = "toggle",
             name = L["World Map"]
         }
@@ -408,79 +492,128 @@ options.elvui = {
             type = "toggle",
             name = L["Enable"]
         },
+        enableAll = {
+            order = 1,
+            type = "execute",
+            name = L["Enable All"],
+            func = function()
+                for key in pairs(V.skins.elvui) do
+                    E.private.WT.skins.elvui[key] = true
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        disableAll = {
+            order = 2,
+            type = "execute",
+            name = L["Disable All"],
+            func = function()
+                for key in pairs(V.skins.elvui) do
+                    if key ~= "enable" then
+                        E.private.WT.skins.elvui[key] = false
+                    end
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        betterOption = {
+            order = 3,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
         actionBarsBackdrop = {
+            order = 10,
             type = "toggle",
             name = L["Actionbars Backdrop"]
         },
         actionBarsButton = {
+            order = 10,
             type = "toggle",
             name = L["Actionbars Button"]
         },
         afk = {
+            order = 10,
             type = "toggle",
             name = L["AFK Mode"]
         },
         altPowerBar = {
+            order = 10,
             type = "toggle",
             name = L["Alt Power"]
         },
         auras = {
+            order = 10,
             type = "toggle",
             name = L["Auras"]
         },
         bags = {
+            order = 10,
             type = "toggle",
             name = L["Bags"]
         },
         castBars = {
+            order = 10,
             type = "toggle",
             name = L["Cast Bar"]
         },
         chatDataPanels = {
+            order = 10,
             type = "toggle",
             name = L["Chat Data Panels"]
         },
         classBars = {
+            order = 10,
             type = "toggle",
             name = L["Class Bars"]
         },
         chatCopyFrame = {
+            order = 10,
             type = "toggle",
             name = L["Chat Copy Frame"]
         },
         dataBars = {
+            order = 10,
             type = "toggle",
             name = L["Data Bars"]
         },
         miniMap = {
+            order = 10,
             type = "toggle",
             name = L["Minimap"]
         },
         option = {
+            order = 10,
             type = "toggle",
             name = L["Options"]
         },
         panels = {
+            order = 10,
             type = "toggle",
             name = L["Panels"]
         },
         raidUtility = {
+            order = 10,
             type = "toggle",
             name = L["Raid Utility"]
         },
         staticPopup = {
+            order = 10,
             type = "toggle",
             name = L["Static Popup"]
         },
         statusReport = {
+            order = 10,
             type = "toggle",
             name = L["Status Report"]
         },
         totemBar = {
+            order = 10,
             type = "toggle",
             name = L["Totem Bar"]
         },
         unitFrames = {
+            order = 10,
             type = "toggle",
             name = L["UnitFrames"]
         }
@@ -510,35 +643,71 @@ options.addons = {
         return not E.private.WT.skins.enable
     end,
     args = {
+        enableAll = {
+            order = 0,
+            type = "execute",
+            name = L["Enable All"],
+            func = function()
+                for key in pairs(V.skins.addons) do
+                    E.private.WT.skins.addons[key] = true
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        disableAll = {
+            order = 1,
+            type = "execute",
+            name = L["Disable All"],
+            func = function()
+                for key in pairs(V.skins.addons) do
+                    E.private.WT.skins.addons[key] = false
+                end
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        betterOption = {
+            order = 2,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
         ace3 = {
+            order = 10,
             type = "toggle",
             name = L["Ace3"]
         },
         bigWigs = {
+            order = 10,
             type = "toggle",
             name = L["BigWigs"]
         },
         bugSack = {
+            order = 10,
             type = "toggle",
             name = L["BugSack"]
         },
         hekili = {
+            order = 10,
             type = "toggle",
             name = L["Hekili"]
         },
         immersion = {
+            order = 10,
             type = "toggle",
             name = L["Immersion"]
         },
         tinyInspect = {
+            order = 10,
             type = "toggle",
             name = L["TinyInspect"]
         },
         weakAuras = {
+            order = 10,
             type = "toggle",
             name = L["WeakAuras"]
         },
         weakAurasOptions = {
+            order = 10,
             type = "toggle",
             name = L["WeakAuras Options"]
         }

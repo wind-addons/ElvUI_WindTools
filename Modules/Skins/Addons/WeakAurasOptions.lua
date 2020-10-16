@@ -116,7 +116,7 @@ end
 
 function S:WeakAurasNewButton(Constructor)
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
-        return
+        return Constructor
     end
 
     local function SkinedConstructor()

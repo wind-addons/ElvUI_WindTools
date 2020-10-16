@@ -536,7 +536,7 @@ function CB:Initialize()
 
     E:CreateMover(
         CB.bar,
-        "Wind_ChatBarMover",
+        "WTChatBarMover",
         L["Chat Bar"],
         nil,
         nil,

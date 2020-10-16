@@ -365,7 +365,7 @@ function PR:Initialize()
 	PR:CreateToast()
 	E:CreateMover(
 		PR.toast,
-		"Wind_ParagonReputationToastFrameMover",
+		"WTParagonReputationToastFrameMover",
 		L["Paragon Reputation Toast"],
 		nil,
 		nil,

@@ -196,6 +196,9 @@ function S:TinyInspect()
 
     if _G.ShowInspectItemListFrame then
         self:SecureHook("ShowInspectItemListFrame", "TinyInspect_SkinListPanel")
+    end
+
+    if _G.ShowInspectItemStatsFrame then
         self:SecureHook("ShowInspectItemStatsFrame", "TinyInspect_SkinStatsPanel")
     end
 end

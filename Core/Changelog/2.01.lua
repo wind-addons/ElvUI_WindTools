@@ -21,7 +21,8 @@ W.Changelog[201] = {
             "[游戏条] 添加了一直显示系统信息文字的功能和选项.",
             "[游戏条] 添加了附加文字的字体选项.",
             "[游戏条] 添加了鼠标滑过显示的功能和选项.",
-            "[聊天文字] 添加了自定义缩写频道文字的功能."
+            "[聊天文字] 添加了自定义缩写频道文字的功能.",
+            "[其他] 添加了使用英文字母替换汉字单位的功能."
         },
         ["zhTW"] = {
             "添加了 Wind 風格的配置文件和導入按鍵(信息-重置).",
@@ -30,7 +31,8 @@ W.Changelog[201] = {
             "[遊戲條] 添加了一直顯示系統信息文字的功能和設定.",
             "[遊戲條] 添加了附加文字的字體選項.",
             "[遊戲條] 添加了滑鼠經過時顯示的功能和設定.",
-            "[聊天文字] 添加了自訂頻道縮寫的功能."
+            "[聊天文字] 添加了自訂頻道縮寫的功能.",
+            "[其他] 添加了使用英文字母替換漢字單位的功能."
         },
         ["enUS"] = {
             "Add Wind style profiles and buttons for importing. (Information - Reset)",
@@ -39,7 +41,8 @@ W.Changelog[201] = {
             "[Game Bar] Add the feature and options for always showing system information.",
             "[Game Bar] Add the options for additional text font style.",
             "[Game Bar] Add the feature and options of mouseover.",
-            "[Chat Text] Add the feature of channel abbreviation customization."
+            "[Chat Text] Add the feature of channel abbreviation customization.",
+            "[Misc] Add the feature of using english alphabet rather than kanji in math."
         }
     },
     IMPROVEMENT = {

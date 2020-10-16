@@ -59,7 +59,7 @@ do
         local MinimapPanel = _G.MinimapPanel
         local MMHolder = _G.MMHolder
 
-        local fileID = self.db.enable and floor(self.db.heightPercentage * 128) or 128
+        local fileID = self.db.enable and self.db.heightPercentage and floor(self.db.heightPercentage * 128) or 128
         local newHeight = E.MinimapSize * fileID / 128
 
         local borderWidth, borderHeight = E.PixelMode and 2 or 6, E.PixelMode and 2 or 8

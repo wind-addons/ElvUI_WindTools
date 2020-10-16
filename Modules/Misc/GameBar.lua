@@ -649,20 +649,24 @@ end
 
 function GB:UpdateTime()
     local panel = self.bar.middlePanel
-    if not panel or not self.db and not self.db.time then
+    if not panel or not self.db then
         return
     end
 
     local hour, min
 
-    if self.db.time.localTime then
-        hour = self.db.time.twentyFour and date("%H") or date("%I")
-        min = date("%M")
+    if self.db.time then
+        if self.db.time.localTime then
+            hour = self.db.time.twentyFour and date("%H") or date("%I")
+            min = date("%M")
+        else
+            hour, min = GetGameTime()
+            hour = self.db.time.twentyFour and hour or mod(hour, 12)
+            hour = format("%02d", hour)
+            min = format("%02d", min)
+        end
     else
-        hour, min = GetGameTime()
-        hour = self.db.time.twentyFour and hour or mod(hour, 12)
-        hour = format("%02d", hour)
-        min = format("%02d", min)
+        return
     end
 
     panel.hour:SetFormattedText(panel.hour.format, hour)

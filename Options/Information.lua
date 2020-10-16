@@ -88,14 +88,19 @@ options.help = {
                     name = "MouJiaoZi"
                 },
                 ["5"] = {
-                    order = 4,
+                    order = 5,
                     type = "description",
                     name = "404Polaris"
                 },
                 ["6"] = {
-                    order = 4,
+                    order = 6,
                     type = "description",
                     name = "LiangYuxuan"
+                },
+                ["7"] = {
+                    order = 7,
+                    type = "description",
+                    name = "keludechu"
                 }
             }
         },

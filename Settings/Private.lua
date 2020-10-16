@@ -123,6 +123,7 @@ V.skins = {
 		friends = true,
 		garrison = true,
 		gossip = true,
+		guild = true,
 		guildBank = true,
 		help = true,
 		inputMethodEditor = true,

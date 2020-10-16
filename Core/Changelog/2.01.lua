@@ -74,7 +74,8 @@ W.Changelog[201] = {
             "[通告] 副本内打断通报修复.",
             "[小地图图标] 小地图图标的间隔和背景间隔允许为 0.",
             "[矩形小地图] 矩形小地图修复地图偏移.",
-            "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配."
+            "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配.",
+            "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时."
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -97,7 +98,8 @@ W.Changelog[201] = {
             "[通告] 副本内打斷通報修復.",
             "[小地圖圖標] 小地圖圖標的間隔和背景間隔允許為 0.",
             "[矩形小地圖] 矩形小地圖修復地圖偏移.",
-            "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配."
+            "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配.",
+            "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時."
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -120,7 +122,8 @@ W.Changelog[201] = {
             "[Announcement] Fix the problem that interrupt is disabled in instance.",
             "[Minimap Buttons] The spacing and backdrop spacing can be 0.",
             "[Rectangle Minimap] Fix the offset of minimap.",
-            "[Rectangle Minimap] The shadow skin will apply after the size of minimap holder changed."
+            "[Rectangle Minimap] The shadow skin will apply after the size of minimap holder changed.",
+            "[Raid Marker] Countdown will use Bigwigs / DBM pull timer if it is usable."
         }
     }
 }

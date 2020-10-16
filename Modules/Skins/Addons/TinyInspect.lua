@@ -53,6 +53,13 @@ do
             F.SetFontOutline(frame.spectext, E.db.general.font)
         end
 
+        for i = 1, 20 do
+            if frame["item" .. i] then
+                F.SetFontOutline(frame["item" .. i].itemString, E.db.general.font)
+                F.SetFontOutline(frame["item" .. i].levelString, "Montserrat")
+            end
+        end
+
         local inspectFrameHolder = CreateFrame("Frame", nil, parent)
         inspectFrameHolder:Point("TOPLEFT", frame, "TOPLEFT", 0, -1)
         inspectFrameHolder:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 1)
@@ -84,6 +91,7 @@ do
 
         inspectFrameHolder:Show()
         parent.inspectFrameHolder = inspectFrameHolder
+        frame:SetParent(inspectFrameHolder)
     end
 end
 
@@ -166,6 +174,7 @@ do
 
         statsFrameHolder:Show()
         frame.statsFrameHolder = statsFrameHolder
+        statsFrame:SetParent(statsFrameHolder)
 
         self:SecureHook(
             statsFrame,

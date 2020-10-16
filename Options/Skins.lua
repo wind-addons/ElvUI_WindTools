@@ -698,6 +698,12 @@ options.addons = {
             type = "toggle",
             name = L["Immersion"]
         },
+        rematch = {
+            order = 10,
+            type = "toggle",
+            name = L["Rematch"],
+            hidden = true,
+        },
         tinyInspect = {
             order = 10,
             type = "toggle",

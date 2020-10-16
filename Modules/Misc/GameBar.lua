@@ -27,6 +27,7 @@ local GetItemCooldown = GetItemCooldown
 local GetItemIcon = GetItemIcon
 local GetNumGuildMembers = GetNumGuildMembers
 local GetTime = GetTime
+local GuildFrame_LoadUI = GuildFrame_LoadUI
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
@@ -231,6 +232,13 @@ local ButtonTypes = {
                 else
                     ToggleGuildFinder()
                 end
+            end,
+            RightButton = function()
+                if not _G.GuildFrame then
+                    GuildFrame_LoadUI()
+                end
+                
+                ToggleFrame(_G.GuildFrame)
             end
         },
         additionalText = function()

@@ -35,6 +35,7 @@ V.maps = {
 V.misc = {
 	saveArtifact = true,
 	pauseToSlash = true,
+	noKanjiMath = false,
 	moveBlizzardFrames = true,
 	moveElvUIBags = true,
 	rememberPositions = true,

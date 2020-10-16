@@ -48,23 +48,24 @@ options.general = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end
         },
-        disableTalkingHead = {
-            order = 3,
-            type = "toggle",
-            name = L["Disable Talking Head"],
-            desc = L["Disable Blizzard Talking Head."],
-            get = function(info)
-                return E.db.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.db.WT.misc[info[#info]] = value
-            end
-        },
         noKanjiMath = {
-            order = 4,
+            order = 3,
             type = "toggle",
             name = L["Math Without Kanji"],
             desc = L["Use alphabet rather than kanji (Only for Chinese players)"],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        disableTalkingHead = {
+            order = 4,
+            type = "toggle",
+            name = L["Disable Talking Head"],
+            desc = L["Disable Blizzard Talking Head."],
             get = function(info)
                 return E.db.WT.misc[info[#info]]
             end,

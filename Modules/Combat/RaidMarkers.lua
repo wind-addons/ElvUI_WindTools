@@ -13,6 +13,7 @@ local ClearRaidMarker = ClearRaidMarker
 local CreateFrame = CreateFrame
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
 local RegisterStateDriver = RegisterStateDriver
 local SetRaidTarget = SetRaidTarget
 local UIFrameFadeIn = UIFrameFadeOut
@@ -270,17 +271,27 @@ function RM:CreateButtons()
 		elseif i == 11 then -- 开怪倒数
 			tex:SetTexture("Interface\\Icons\\Spell_unused2")
 			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
-			button:SetAttribute("type", "click")
-			button:SetScript(
-				"OnClick",
-				function(_, button)
-					if button == "LeftButton" then
-						C_PartyInfo_DoCountdown(RM.db.countDownTime - 1)
-					elseif button == "RightButton" then
-						C_PartyInfo_DoCountdown(-1)
+			if IsAddOnLoaded("BigWigs") then
+				button:SetAttribute("type*", "macro")
+				button:SetAttribute("macrotext1", "/pull " .. RM.db.countDownTime)
+				button:SetAttribute("macrotext2", "/pull 0")
+			elseif IsAddOnLoaded("DBM-Core") then
+				button:SetAttribute("type*", "macro")
+				button:SetAttribute("macrotext1", "/dbm pull " .. RM.db.countDownTime)
+				button:SetAttribute("macrotext2", "/dbm pull 0")
+			else
+				button:SetAttribute("type*", "click")
+				button:SetScript(
+					"OnClick",
+					function(_, button)
+						if button == "LeftButton" then
+							C_PartyInfo_DoCountdown(RM.db.countDownTime)
+						elseif button == "RightButton" then
+							C_PartyInfo_DoCountdown(-1)
+						end
 					end
-				end
-			)
+				)
+			end
 		end
 
 		button:RegisterForClicks("AnyDown")

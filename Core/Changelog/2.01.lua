@@ -18,11 +18,14 @@ W.Changelog[201] = {
             "[重置] 添加 Wind 风格的配置文件和导入按钮.",
             "[美化皮肤] 添加了月卡弹出广告的窗体美化.",
             "[美化皮肤] 添加了经典版公会界面的美化.",
+            "[美化皮肤] 添加了宠物战斗的美化.",
             "[聊天条] 添加了聊天按键的间隔选项.",
             "[游戏条] 添加了一直显示系统信息文字的功能和选项.",
             "[游戏条] 添加了附加文字的字体选项.",
+            "[游戏条] 添加了可见性的字体选项.",
             "[游戏条] 添加了鼠标滑过显示的功能和选项.",
             "[游戏条] 添加了藏品按钮.",
+            "[游戏条] 添加了商城按钮.",
             "[聊天文字] 添加了自定义缩写频道文字的功能.",
             "[其他] 添加了使用英文字母替换汉字单位的功能."
         },
@@ -30,11 +33,14 @@ W.Changelog[201] = {
             "[重置] 添加了 Wind 風格的配置文件和導入按鍵.",
             "[美化皮膚] 添加了包月彈出式廣告的框架美化.",
             "[美化皮膚] 添加了經典版公會介面美化.",
+            "[美化皮膚] 添加了小寵物戰鬥.",
             "[聊天條] 添加了聊天按鍵的間隔設定.",
             "[遊戲條] 添加了一直顯示系統信息文字的功能和設定.",
             "[遊戲條] 添加了附加文字的字體選項.",
+            "[遊戲條] 添加了可見性的字體選項.",
             "[遊戲條] 添加了滑鼠經過時顯示的功能和設定.",
             "[遊戲條] 添加了收藏按鍵.",
+            "[遊戲條] 添加了商城按鍵.",
             "[聊天文字] 添加了自訂頻道縮寫的功能.",
             "[其他] 添加了使用英文字母替換漢字單位的功能."
         },
@@ -42,11 +48,14 @@ W.Changelog[201] = {
             "[Reset] Add Wind style profiles and buttons for importing. (Information - Reset)",
             "[Skins] Add new skin for Subscription Interstitial Frame.",
             "[Skins] Add new skin for classic guild UI.",
+            "[Skins] Add new skin for pet combat.",
             "[Chat Bar] Add spacing option.",
             "[Game Bar] Add the feature and options for always showing system information.",
             "[Game Bar] Add the options for additional text font style.",
+            "[Game Bar] Add the options for visibility.",
             "[Game Bar] Add the feature and options of mouseover.",
             "[Game Bar] Add Collections button.",
+            "[Game Bar] Add Shop button.",
             "[Chat Text] Add the feature of channel abbreviation customization.",
             "[Misc] Add the feature of using english alphabet rather than kanji in math."
         }
@@ -62,6 +71,7 @@ W.Changelog[201] = {
             "[游戏条] 好友计数将会统计战网好友了.",
             "[游戏条] 右键公会将会打开经典版界面.",
             "[切换按钮] 修复了有时通报按钮选中状态错误的问题.",
+            "[切换按钮] 在宠物战斗中自动隐藏.",
             "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0.",
             "[交接] 修复一处可能的报错.",
             "[快速拾取] 修复一处循环逻辑错误.",
@@ -73,9 +83,11 @@ W.Changelog[201] = {
             "[美化皮肤] 修复一处可能触发的 TinyInspect 美化错误.",
             "[通告] 副本内打断通报修复.",
             "[小地图图标] 小地图图标的间隔和背景间隔允许为 0.",
+            "[世界地图] 自动识别兼容 Mapster.",
             "[矩形小地图] 矩形小地图修复地图偏移.",
             "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配.",
-            "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时."
+            "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时.",
+            "[任务进度] 支持俄语客户端."
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -86,6 +98,7 @@ W.Changelog[201] = {
             "[遊戲條] 修復了切換設定時可能導致的報錯.",
             "[遊戲條] 好友計數支持戰網好友.",
             "[切換按鈕] 修復了有時通報按鍵選中狀態錯誤的問題.",
+            "[切換按鈕] 在宠物战斗中自动隐藏.",
             "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0.",
             "[交接] 修復一處可能的報錯.",
             "[快速拾取] 修復一處邏輯循環錯誤.",
@@ -97,9 +110,11 @@ W.Changelog[201] = {
             "[美化皮膚] 修復可能發生的 TinyInspect 的美化錯誤.",
             "[通告] 副本内打斷通報修復.",
             "[小地圖圖標] 小地圖圖標的間隔和背景間隔允許為 0.",
+            "[世界地圖] 自動識別兼容 Mapster.",
             "[矩形小地圖] 矩形小地圖修復地圖偏移.",
             "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配.",
-            "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時."
+            "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時.",
+            "[任務進度] 支援俄文客戶端."
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -110,6 +125,7 @@ W.Changelog[201] = {
             "[Game Bar] Fix the errors may occur after profile changed.",
             "[Game Bar] The number of friend button will count BN friends.",
             "[Switch Button] Fix the status display of Announce Button.",
+            "[Switch Button] Auto hide in pet battle.",
             "[Tooltips] Update API of Azerite equips to 9.0.",
             "[Turn In] Fix the bug that the quest tag is nil.",
             "[Fast Loot] Fix the a loop bug.",
@@ -121,9 +137,11 @@ W.Changelog[201] = {
             "[Skins] Fix a bug in TinyInspect reskin.",
             "[Announcement] Fix the problem that interrupt is disabled in instance.",
             "[Minimap Buttons] The spacing and backdrop spacing can be 0.",
+            "[World Map] Compatible with Mapster.",
             "[Rectangle Minimap] Fix the offset of minimap.",
             "[Rectangle Minimap] The shadow skin will apply after the size of minimap holder changed.",
-            "[Raid Marker] Countdown will use Bigwigs / DBM pull timer if it is usable."
+            "[Raid Marker] Countdown will use Bigwigs / DBM pull timer if it is usable.",
+            "[Objective Frame] Add support of Russian client."
         }
     }
 }

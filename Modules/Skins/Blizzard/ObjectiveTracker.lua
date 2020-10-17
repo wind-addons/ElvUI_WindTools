@@ -21,6 +21,10 @@ function S:SkinItemButton(_, block)
         self:CreateShadow(item.backdrop)
         item.windStyle = true
     end
+
+    if item.backdrop and item.backdrop.Center then
+        item.backdrop.Center:StripTextures()
+    end
 end
 
 function S:SkinFindGroupButton(block)

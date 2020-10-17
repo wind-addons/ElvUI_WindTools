@@ -754,9 +754,6 @@ function GB:ButtonOnEnter(button)
             local DTModule = DT.RegisteredDataTexts[button.tooltips]
 
             if DTModule and DTModule.onEnter then
-                if DTModule.onEvent then
-                    DTModule.onEvent()
-                end
                 DTModule.onEnter()
             end
 

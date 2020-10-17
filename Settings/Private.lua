@@ -141,6 +141,7 @@ V.skins = {
 		misc = true,
 		objectiveTracker = true,
 		orderHall = true,
+		petBattle = true,
 		playerChoice = true,
 		quest = true,
 		raidInfo = true,

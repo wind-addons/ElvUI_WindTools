@@ -373,6 +373,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Orderhall"]
         },
+        petBattle = {
+            order = 10,
+            type = "toggle",
+            name = L["Pet Battle"]
+        },
         quest = {
             order = 10,
             type = "toggle",

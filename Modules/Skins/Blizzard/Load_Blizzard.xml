@@ -38,6 +38,7 @@
 	<Script file='Misc.lua'/>
 	<Script file='ObjectiveTracker.lua'/>
 	<Script file='OrderHall.lua'/>
+	<Script file='PetBattle.lua'/>
 	<Script file='PlayerChoice.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>

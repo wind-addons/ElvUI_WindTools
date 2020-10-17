@@ -4,13 +4,16 @@ W.Changelog[201] = {
     RELEASE_DATE = "TBC",
     IMPORTANT = {
         ["zhCN"] = {
-            "除非你手动开启除错模式, 除错信息将不再显示."
+            "除非你手动开启除错模式, 除错信息将不再显示.",
+            "非英语客户端将会在导入字体时加入 (en) 来方便分别, 同时防止其他插件读取造成方块字."
         },
         ["zhTW"] = {
-            "除非你手動開啟除錯模式, 除錯信息將不再顯示."
+            "除非你手動開啟除錯模式, 除錯信息將不再顯示.",
+            "非英文客戶端將會在導入字體時加入 (en) 來方便分別, 同時防止其他插件讀取造成方塊字."
         },
         ["enUS"] = {
-            "The debug message will no longer show unless you enable the debug mode manully."
+            "The debug message will no longer show unless you enable the debug mode manully.",
+            "For non English client users, the english font will be imported with the suffix (en) for avoiding display error in other addons."
         }
     },
     NEW = {

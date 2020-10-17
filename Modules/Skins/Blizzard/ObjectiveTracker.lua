@@ -22,7 +22,7 @@ function S:SkinItemButton(_, block)
         item.windStyle = true
     end
 
-    if item.backdrop and item.backdrop.Center then
+    if item and item.backdrop and item.backdrop.Center then
         item.backdrop.Center:StripTextures()
     end
 end

@@ -4,7 +4,10 @@ local S = W:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
 
 local _G = _G
-local LibStub = _G.LibStub
+local pairs = pairs
+local unpack = unpack
+
+local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 
 function S:Rematch()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then

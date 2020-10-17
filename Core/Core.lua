@@ -3,6 +3,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local format = format
 local pairs = pairs
 local pcall = pcall
+local print = print
 local strsub = strsub
 local tinsert = tinsert
 

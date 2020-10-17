@@ -6,6 +6,8 @@ local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
 local WM = W:GetModule("WorldMap")
 
+local format = format
+
 options.whoClicked = {
     order = 1,
     type = "group",

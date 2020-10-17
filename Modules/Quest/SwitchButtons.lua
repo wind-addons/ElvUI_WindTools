@@ -4,7 +4,9 @@ local ES = E:GetModule("Skins")
 local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
+
 local CreateFrame = CreateFrame
+local RegisterStateDriver = RegisterStateDriver
 
 function SB:CreateButton(text)
     if not self.db or not self.bar then

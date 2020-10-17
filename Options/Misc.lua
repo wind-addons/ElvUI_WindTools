@@ -782,6 +782,16 @@ options.gameBar = {
                             }
                         }
                     }
+                },
+                visibility = {
+                    order = 6,
+                    type = "input",
+                    name = L["Visibility"],
+                    set = function(info, value)
+                        E.db.WT.misc.gameBar[info[#info]] = value
+                        GB:UpdateBar()
+                    end,
+                    width = "full"
                 }
             }
         },

@@ -832,6 +832,7 @@ P.misc = {
         hoverColor = "CLASS",
         customNormalColor = {r = 1, g = 1, b = 1},
         customHoverColor = {r = 0, g = 0.659, b = 1},
+        visibility = "[petbattle] hide; show",
         time = {
             localTime = true,
             twentyFour = true,

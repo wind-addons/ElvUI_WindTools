@@ -454,6 +454,8 @@ function GB:UpdateBar()
     else
         self.bar:SetAlpha(1)
     end
+
+    RegisterStateDriver(self.bar, "visibility", self.db.visibility)
 end
 
 function GB:ConstructTimeArea()
@@ -1070,6 +1072,7 @@ function GB:ProfileUpdate()
     else
         if self.Initialized then
             self.bar:Hide()
+            self.bar:UnregisterStateDriver(self.bar, "visibility")
         end
     end
 end

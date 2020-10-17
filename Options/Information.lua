@@ -34,7 +34,7 @@ options.help = {
             type = "description",
             fontSize = "medium",
             name = format(
-                "%s\n\n%s\n\n%s\n\n%s\n\n\n",
+                "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s\n\n",
                 format(L["Thank you for using %s!"], L["WindTools"]),
                 format(
                     L[
@@ -54,6 +54,13 @@ options.help = {
                     L["Discord"],
                     L["Github"],
                     L["NGA.cn"]
+                ),
+                format(L["The localization of %s is community-driven."], L["WindTools"]),
+                format(
+                    L[
+                        "If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."
+                    ],
+                    L["WindTools"]
                 )
             )
         },
@@ -948,7 +955,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[mouseover][power:percent-nosign]",
                                                 ["yOffset"] = -14,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -959,7 +967,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[health:percent-nostatus] || [curhp]",
                                                 ["yOffset"] = -27,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -1069,7 +1078,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[mouseover][power:current-percent]",
                                                 ["yOffset"] = -14,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 2,
@@ -1080,7 +1090,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[curhp] || [health:percent-nostatus]",
                                                 ["yOffset"] = -27,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 3,
@@ -1138,7 +1149,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[power:current]",
                                                 ["yOffset"] = 7,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "CENTER",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 0,
@@ -1149,7 +1161,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[curhp] || [health:percent-nostatus]",
                                                 ["yOffset"] = -27,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 4,
@@ -1309,7 +1322,8 @@ options.reset = {
                                                 ["xOffset"] = -1,
                                                 ["text_format"] = "[mouseover][power:current-percent]",
                                                 ["yOffset"] = -14,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
@@ -1320,7 +1334,8 @@ options.reset = {
                                                 ["xOffset"] = -2,
                                                 ["text_format"] = "[health:percent-nostatus] || [curhp]",
                                                 ["yOffset"] = -27,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["enable"] = true,
@@ -1421,7 +1436,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[mouseover][power:percent-nosign]",
                                                 ["yOffset"] = -14,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -1432,7 +1448,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[health:percent-nostatus] || [curhp]",
                                                 ["yOffset"] = -27,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "LEFT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -1534,7 +1551,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[mouseover][power:current-percent]",
                                                 ["yOffset"] = -14,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 0,
@@ -1545,7 +1563,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[health:percent-nostatus] || [health:current]",
                                                 ["yOffset"] = 0,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = 0,
@@ -1584,7 +1603,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[health:percent-nostatus-nosign]",
                                                 ["yOffset"] = 0,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -1605,7 +1625,8 @@ options.reset = {
                                                 ["enable"] = true,
                                                 ["text_format"] = "[mouseover][power:percent-nosign]",
                                                 ["yOffset"] = -16,
-                                                ["font"] = "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""),
+                                                ["font"] = "Accidental Presidency" ..
+                                                    (W.CompatibleFont and " (en)" or ""),
                                                 ["justifyH"] = "RIGHT",
                                                 ["fontOutline"] = "OUTLINE",
                                                 ["xOffset"] = -2,
@@ -1848,7 +1869,7 @@ options.reset = {
                                 ["timeYOffset"] = 6,
                                 ["fontOutline"] = "OUTLINE",
                                 ["countYOffset"] = 24,
-                                ["font"] = "Roadway".. (W.CompatibleFont and " (en)" or ""),
+                                ["font"] = "Roadway" .. (W.CompatibleFont and " (en)" or ""),
                                 ["buffs"] = {
                                     ["countFontSize"] = 19,
                                     ["durationFontSize"] = 14,

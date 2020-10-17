@@ -340,6 +340,7 @@ L["If the game language is different from the primary language in this server, y
 L["If the quest is suggested with multi-players, add the number of players to the message."] = true
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = true
 L["If you add the NPC into the list, all automation will do not work for it."] = true
+L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."] = true
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = true
 L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = true
 L["Ignore List"] = true
@@ -683,6 +684,7 @@ L["The height of the buttons."] = true
 L["The interval of updating."] = true
 L["The item ID is invalid."] = true
 L["The level of the quest."] = true
+L["The localization of %s is community-driven."] = true
 L["The name of the player"] = true
 L["The percentage of current health without percent sign"] = true
 L["The percentage of current power without percent sign"] = true

@@ -90,7 +90,8 @@ W.Changelog[201] = {
             "[矩形小地图] 矩形小地图修复地图偏移.",
             "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配.",
             "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时.",
-            "[任务进度] 支持俄语客户端."
+            "[任务进度] 支持俄语客户端.",
+            "[标签] 修复距离标签可能发生的错误."
         },
         ["zhTW"] = {
             "修正更新說明的一些錯誤.",
@@ -117,7 +118,8 @@ W.Changelog[201] = {
             "[矩形小地圖] 矩形小地圖修復地圖偏移.",
             "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配.",
             "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時.",
-            "[任務進度] 支援俄文客戶端."
+            "[任務進度] 支援俄文客戶端.",
+            "[標籤] 修復距離標籤可能帶來的問題."
         },
         ["enUS"] = {
             "Ammend the changelog.",
@@ -144,7 +146,8 @@ W.Changelog[201] = {
             "[Rectangle Minimap] Fix the offset of minimap.",
             "[Rectangle Minimap] The shadow skin will apply after the size of minimap holder changed.",
             "[Raid Marker] Countdown will use Bigwigs / DBM pull timer if it is usable.",
-            "[Objective Frame] Add support of Russian client."
+            "[Objective Frame] Add support of Russian client.",
+            '[Tags] Fix the bugs of "[range]".'
         }
     }
 }

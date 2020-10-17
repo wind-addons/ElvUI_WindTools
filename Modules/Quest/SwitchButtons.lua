@@ -153,6 +153,9 @@ function SB:CreateBar()
     frame:CreateBackdrop("Transparent")
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
+
+    RegisterStateDriver(frame, "visibility", "[petbattle] hide; show")
+
     self.bar = frame
 
     self:UpdateLayout()
@@ -220,7 +223,9 @@ function SB:ProfileUpdate()
         end
 
         if self.db.announcement then
-            self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable and not E.db.WT.announcement.quest.paused)
+            self.bar.announcement:SetChecked(
+                E.db.WT.announcement.quest.enable and not E.db.WT.announcement.quest.paused
+            )
         end
 
         if self.db.turnIn then

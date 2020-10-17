@@ -11,11 +11,13 @@ local strsplit = strsplit
 local tinsert = tinsert
 local tonumber = tonumber
 
+local IsAddOnLoaded = IsAddOnLoaded
+local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
+
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_Timer_After = C_Timer.After
-local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 -- 提供一个方式进行垃圾回收
 do
@@ -2600,7 +2602,13 @@ function WM:Scale()
 end
 
 function WM:Initialize()
+    if IsAddOnLoaded("Mapster") then
+        self.StopRunning = "Mapster"
+        return
+    end
+
     self.db = E.private.WT.maps.worldMap
+
     if not self.db or not self.db.enable then
         return
     end

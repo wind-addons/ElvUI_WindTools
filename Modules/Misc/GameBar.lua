@@ -127,7 +127,9 @@ local ButtonTypes = {
         name = L["Achievements"],
         icon = W.Media.Icons.barAchievements,
         click = {
-            LeftButton = ToggleAchievementFrame
+            LeftButton = function()
+                ToggleAchievementFrame(false)
+            end
         },
         tooltips = {
             L["Achievements"]

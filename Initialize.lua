@@ -27,7 +27,7 @@ addon[3] = E
 addon[4] = L
 addon[5] = V.WT
 addon[6] = P.WT
-addon[7] = G
+addon[7] = G.WT
 
 _G["WindTools"] = addon
 W.Version = GetAddOnMetadata(addonName, "Version")
@@ -53,6 +53,10 @@ function W:Initialize()
 end
 
 function W:PLAYER_ENTERING_WORLD()
+    C_Timer_After(10, function()
+        W:CheckInstalledVersion()
+    end)
+
     C_Timer_After(2, function()
         collectgarbage("collect")
     end)

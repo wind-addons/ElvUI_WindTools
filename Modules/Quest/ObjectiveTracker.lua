@@ -139,13 +139,12 @@ function OT:ColorfulProgression(text)
         return
     end
 
-    local current, required, details
-    if W.Locale == "ruRU" then
+    local current, required, details = strmatch(info, "^(%d-)/(%d-) (.+)")
+
+    if not (current and required and details) then
         details, current, required = strmatch(info, "(.+): (%d-)/(%d-)$")
-    else
-        current, required, details = strmatch(info, "^(%d-)/(%d-) (.+)")
     end
-    
+
     if not (current and required and details) then
         return
     end

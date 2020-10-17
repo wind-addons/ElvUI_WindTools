@@ -128,6 +128,7 @@ L["Black Market"] = true
 L["Blacklist"] = true
 L["Blizzard"] = true
 L["Blizzard Buttons"] = true
+L["Blizzard Shop"] = true
 L["Block"] = true
 L["Block Shadow"] = true
 L["Boss"] = true

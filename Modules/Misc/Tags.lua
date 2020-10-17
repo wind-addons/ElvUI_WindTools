@@ -27,7 +27,13 @@ function M:Tags()
 		if not unit then
 			return
 		end
-		return format("%s - %s", RC:GetRange(unit))
+
+		local min, max = RC:GetRange(unit)
+		if min and max then
+			return format("%s - %s", RC:GetRange(unit))
+		end
+
+		return ""
 	end
 
 	-- 距离预测中值 (5)
@@ -35,8 +41,13 @@ function M:Tags()
 		if not unit then
 			return
 		end
+
 		local min, max = RC:GetRange(unit)
-		return format("%s", floor((min + max) / 2))
+		if min and max then
+			return format("%s", floor((min + max) / 2))
+		end
+
+		return ""
 	end
 
 	-- 职业颜色

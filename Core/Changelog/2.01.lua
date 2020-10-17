@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[201] = {
-    RELEASE_DATE = "TBC",
+    RELEASE_DATE = "2020/10/18",
     IMPORTANT = {
         ["zhCN"] = {
             "除非你手动开启除错模式, 除错信息将不再显示.",
@@ -71,8 +71,11 @@ W.Changelog[201] = {
             "[施法条] 修复了切换配置时可能导致的报错.",
             "[额外物品条] 添加了按钮数量选项.",
             "[游戏条] 修复了切换配置时可能导致的报错.",
+            "[游戏条] 修复了好友鼠标提示更新不及时的问题.",
+            "[游戏条] 修复了公会鼠标提示更新不及时的问题.",
             "[游戏条] 好友计数将会统计战网好友了.",
             "[游戏条] 右键公会将会打开经典版界面.",
+            "[游戏条] 成就按钮默认开启第一页.",
             "[切换按钮] 修复了有时通报按钮选中状态错误的问题.",
             "[切换按钮] 在宠物战斗中自动隐藏.",
             "[鼠标提示] 艾泽里特装备相关 API 函数更新到 9.0.",
@@ -100,7 +103,11 @@ W.Changelog[201] = {
             "[施法條] 修復了切換設定時可能導致的報錯.",
             "[额外物品条] 添加了按鍵數量的設定.",
             "[遊戲條] 修復了切換設定時可能導致的報錯.",
+            "[遊戲條] 修復了好友浮動提示更新不及時的問題.",
+            "[遊戲條] 修復了公會浮動提示更新不及時的問題.",
             "[遊戲條] 好友計數支持戰網好友.",
+            "[遊戲條] 右鍵公會將會打開經典版介面.",
+            "[遊戲條] 成就按鍵現在將會開啟第一頁.",
             "[切換按鈕] 修復了有時通報按鍵選中狀態錯誤的問題.",
             "[切換按鈕] 在寵物戰鬥中自動隱藏.",
             "[浮動提示] 艾澤裡特裝備相關 API 函數更新至 9.0.",
@@ -128,7 +135,11 @@ W.Changelog[201] = {
             "[Cast Bar] Fix the errors may occur after profile changed.",
             "[Extra Item Bar] Add the number of buttons option.",
             "[Game Bar] Fix the errors may occur after profile changed.",
+            "[Game Bar] Fix the bugs that cause the friend tooltip not update.",
+            "[Game Bar] Fix the bugs that cause the guild tooltip not update.",
             "[Game Bar] The number of friend button will count BN friends.",
+            "[Game Bar] Right click the Guild button will open classic Guild UI.",
+            "[Game Bar] Achievement Button will open the first page rather than stats.",
             "[Switch Button] Fix the status display of Announce Button.",
             "[Switch Button] Auto hide in pet battle.",
             "[Tooltips] Update API of Azerite equips to 9.0.",

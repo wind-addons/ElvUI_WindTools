@@ -5,15 +5,18 @@ W.Changelog[201] = {
     IMPORTANT = {
         ["zhCN"] = {
             "除非你手动开启除错模式, 除错信息将不再显示.",
-            "非英语客户端将会在导入字体时加入 (en) 来方便分别, 同时防止其他插件读取造成方块字."
+            "非英语客户端将会在导入字体时加入 (en) 来方便分别, 同时防止其他插件读取造成方块字.",
+            "冒险手册的移动暂时停用, 正在寻找除错的解决方案."
         },
         ["zhTW"] = {
             "除非你手動開啟除錯模式, 除錯信息將不再顯示.",
-            "非英文客戶端將會在導入字體時加入 (en) 來方便分別, 同時防止其他插件讀取造成方塊字."
+            "非英文客戶端將會在導入字體時加入 (en) 來方便分別, 同時防止其他插件讀取造成方塊字.",
+            "冒險手冊的移動暫時停用, 正在尋找出錯的解決方案."
         },
         ["enUS"] = {
             "The debug message will no longer show unless you enable the debug mode manully.",
-            "For non English client users, the english font will be imported with the suffix (en) for avoiding display error in other addons."
+            "For non English client users, the english font will be imported with the suffix (en) for avoiding display error in other addons.",
+            "Move Frames module will not affect Encounter Journal for now, I am trying to find another solution without error."
         }
     },
     NEW = {
@@ -65,6 +68,7 @@ W.Changelog[201] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[临时补丁] 修正 ElvUI 导致的任务物品遮罩问题.",
             "修正更新说明中的一些错误.",
             "调整了部分框架的层级以更好的显示内容.",
             "[聊天条] 修复了文字风格中可能错误显示背景的错误.",
@@ -94,9 +98,10 @@ W.Changelog[201] = {
             "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配.",
             "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时.",
             "[任务进度] 支持俄语客户端.",
-            "[标签] 修复距离标签可能发生的错误."
+            '[标签] 修复 "[range]" 标签可能发生的错误.'
         },
         ["zhTW"] = {
+            "[臨時補丁] 修正 ElvUI 所導致的任務物品遮罩問題.",
             "修正更新說明的一些錯誤.",
             "調整了部分框架的層級以更好的顯示內容.",
             "[聊天條] 修復了文字風格中可能錯誤顯示背景的問題.",
@@ -126,9 +131,10 @@ W.Changelog[201] = {
             "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配.",
             "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時.",
             "[任務進度] 支援俄文客戶端.",
-            "[標籤] 修復距離標籤可能帶來的問題."
+            '[標籤] 修復 "[range]" 距離標籤可能帶來的問題.'
         },
         ["enUS"] = {
+            "[Temp Patch] Fix the backdrop of quest item. Actually this is a bug caused by ElvUI",
             "Ammend the changelog.",
             "Change the strata of several frames for better display.",
             "[Chat Bar] Fix the backdrop incorrect showing.",

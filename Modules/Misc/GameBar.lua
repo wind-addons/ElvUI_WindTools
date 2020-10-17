@@ -122,6 +122,29 @@ local function AddDoubleLineForItem(itemID, prefix)
     )
 end
 
+-- 假的数据面板! 为了 event 函数不报错
+
+local VirtualDTEvent = {
+    Friends = nil,
+    Guild = "GUILD_ROSTER_UPDATE"
+}
+
+local VirtualDT = {
+    Friends = {
+        text = {
+            SetFormattedText = E.noop
+        }
+    },
+    Guild = {
+        text = {
+            SetFormattedText = E.noop
+        },
+        GetScript = function()
+            return E.noop
+        end
+    }
+}
+
 local ButtonTypes = {
     ACHIEVEMENTS = {
         name = L["Achievements"],
@@ -752,6 +775,10 @@ function GB:ButtonOnEnter(button)
             DT.tooltip:Show()
         elseif type(button.tooltips) == "string" then
             local DTModule = DT.RegisteredDataTexts[button.tooltips]
+
+            if VirtualDT[button.tooltips] and DTModule.eventFunc then
+                DTModule.eventFunc(VirtualDT[button.tooltips], VirtualDTEvent[button.tooltips])
+            end
 
             if DTModule and DTModule.onEnter then
                 DTModule.onEnter()

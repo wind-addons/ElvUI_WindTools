@@ -322,7 +322,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. ((W.CompatibleFont and " (en)" or "")),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -334,7 +334,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. ((W.CompatibleFont and " (en)" or "")),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -359,7 +359,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -371,7 +371,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -396,7 +396,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -408,7 +408,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -692,7 +692,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -715,7 +715,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -738,7 +738,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -761,7 +761,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -784,7 +784,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -807,7 +807,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat",
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -840,7 +840,7 @@ P.misc = {
             interval = 10,
             alwaysSystemInfo = false,
             font = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 25,
                 style = "OUTLINE"
             }
@@ -856,7 +856,7 @@ P.misc = {
             x = 3,
             y = -3,
             font = {
-                name = "Montserrat",
+                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
                 size = 12,
                 style = "OUTLINE"
             }

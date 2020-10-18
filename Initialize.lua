@@ -53,13 +53,20 @@ function W:Initialize()
 end
 
 function W:PLAYER_ENTERING_WORLD()
-    C_Timer_After(10, function()
-        W:CheckInstalledVersion()
-    end)
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+    C_Timer_After(
+        10,
+        function()
+            W:CheckInstalledVersion()
+        end
+    )
 
-    C_Timer_After(2, function()
-        collectgarbage("collect")
-    end)
+    C_Timer_After(
+        2,
+        function()
+            collectgarbage("collect")
+        end
+    )
 end
 
 EP:HookInitialize(W, W.Initialize)

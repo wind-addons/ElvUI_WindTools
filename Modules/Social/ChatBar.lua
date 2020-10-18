@@ -270,7 +270,6 @@ function CB:UpdateBar()
         if not name or name == "" then
             F.DebugMessage(self, L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
-            return
         else
             local chatFunc = function(self, mouseButton)
                 local channelId = GetChannelName(name)

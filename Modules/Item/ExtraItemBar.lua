@@ -637,16 +637,18 @@ function EB:UpdateBar(id)
     bar:Show()
 
     -- 切换阴影
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        if barDB.backdrop then
-            bar.backdrop:Show()
+    if barDB.backdrop then
+        bar.backdrop:Show()
+        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
             for i = 1, 12 do
                 if bar.buttons[i].shadow then
                     bar.buttons[i].shadow:Hide()
                 end
             end
-        else
-            bar.backdrop:Hide()
+        end
+    else
+        bar.backdrop:Hide()
+        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
             for i = 1, 12 do
                 if bar.buttons[i].shadow then
                     bar.buttons[i].shadow:Show()

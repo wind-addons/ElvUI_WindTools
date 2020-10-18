@@ -787,7 +787,7 @@ options.reset = {
                             },
                             ["WT"] = {
                                 ["misc"] = {
-                                    ["noKanjiMath"] = true,
+                                    ["noKanjiMath"] = false,
                                     ["gameBar"] = {
                                         ["home"] = {
                                             ["left"] = "172179"

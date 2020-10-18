@@ -49,6 +49,7 @@ local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleGuildFinder = ToggleGuildFinder
 local ToggleGuildFrame = ToggleGuildFrame
 local ToggleTimeManager = ToggleTimeManager
+local UnregisterStateDriver = UnregisterStateDriver
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
@@ -1112,8 +1113,8 @@ function GB:ProfileUpdate()
         end
     else
         if self.Initialized then
+            UnregisterStateDriver(self.bar, "visibility")
             self.bar:Hide()
-            self.bar:UnregisterStateDriver(self.bar, "visibility")
         end
     end
 end

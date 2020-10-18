@@ -88,7 +88,7 @@ local function AddItemInfo(Hyperlink)
                 if SearchArmorType[equipLoc] then
                     -- 如果有护甲分类的
                     local armorType = select(7, GetItemInfo(id))
-                    if E:GetLocale() == "zhTW" or E:GetLocale() == "zhCN" then
+                    if E.global.general.locale == "zhTW" or E.global.general.locale == "zhCN" then
                         slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
                     else
                         slot = armorType .. " " .. (abbrList[equipLoc] or _G[equipLoc])

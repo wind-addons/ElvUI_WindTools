@@ -15,9 +15,11 @@ function S:PetBattle()
 
     self:CreateShadow(actionBar)
 
-    actionBar.shadow:ClearAllPoints()
-    actionBar.shadow:Point("TOPLEFT", bf.xpBar, "TOPLEFT", -5, 5)
-    actionBar.shadow:Point("BOTTOMRIGHT", actionBar, "BOTTOMRIGHT", 5, -5)
+    if actionBar.shadow then
+        actionBar.shadow:ClearAllPoints()
+        actionBar.shadow:Point("TOPLEFT", bf.xpBar, "TOPLEFT", -5, 5)
+        actionBar.shadow:Point("BOTTOMRIGHT", actionBar, "BOTTOMRIGHT", 5, -5)
+    end
 
     self:CreateShadow(_G.PetBattleFrame.ActiveAlly.HealthBarBackdrop)
     self:CreateShadow(_G.PetBattleFrame.ActiveAlly.IconBackdrop)

@@ -101,6 +101,11 @@ local function AddDoubleLineForItem(itemID, prefix)
     prefix = prefix and prefix .. " " or ""
 
     local name = HeartstonesTable[tostring(itemID)]
+
+    if not name then
+        return
+    end
+
     local texture = GetItemIcon(itemID)
     local icon = format(IconString .. ":255:255:255|t", texture)
     local startTime, duration = GetItemCooldown(itemID)

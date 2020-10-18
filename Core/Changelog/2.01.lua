@@ -98,7 +98,8 @@ W.Changelog[201] = {
             "[矩形小地图] 阴影皮肤将会在小地图尺寸改变时自动适配.",
             "[团队标记] 团队标记中的倒计时将会优先使用更精准的 Bigwigs 或 DBM 倒计时.",
             "[任务进度] 支持俄语客户端.",
-            '[标签] 修复 "[range]" 标签可能发生的错误.'
+            '[标签] 修复 "[range]" 标签可能发生的错误.',
+            "[聊天链接] 修复了发送链接时候语言识别错误的问题."
         },
         ["zhTW"] = {
             "[臨時補丁] 修正 ElvUI 所導致的任務物品遮罩問題.",
@@ -131,7 +132,8 @@ W.Changelog[201] = {
             "[矩形小地圖] 陰影皮膚將會在小地圖容器尺寸改變時自動適配.",
             "[團隊標記] 團隊標記中的倒計時將會優先使用更精準的 Bigwigs 或 DBM 倒計時.",
             "[任務進度] 支援俄文客戶端.",
-            '[標籤] 修復 "[range]" 距離標籤可能帶來的問題.'
+            '[標籤] 修復 "[range]" 距離標籤可能帶來的問題.',
+            "[聊天鏈接] 修復發送護甲時語言識別錯誤的問題."
         },
         ["enUS"] = {
             "[Temp Patch] Fix the backdrop of quest item. Actually this is a bug caused by ElvUI",
@@ -164,7 +166,8 @@ W.Changelog[201] = {
             "[Rectangle Minimap] The shadow skin will apply after the size of minimap holder changed.",
             "[Raid Marker] Countdown will use Bigwigs / DBM pull timer if it is usable.",
             "[Objective Frame] Add support of Russian client.",
-            '[Tags] Fix the bugs of "[range]".'
+            '[Tags] Fix the bugs of "[range]".',
+            "[Chat Link] Fix the bug that the locale detection do not work."
         }
     }
 }

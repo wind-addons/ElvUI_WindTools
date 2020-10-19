@@ -62,6 +62,10 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
         Modern = MediaPath .. "GameIcons\\COD_MW"
     },
+    [BNET_CLIENT_COD_MW2] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW2),
+        Modern = MediaPath .. "GameIcons\\COD_MW2"
+    },
     [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. "GameIcons\\WC3"}
 }
 

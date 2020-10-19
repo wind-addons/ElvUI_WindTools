@@ -13,6 +13,7 @@ function S:LootFrame()
     
     self:CreateShadow(_G.BonusRollFrame)
     self:CreateShadow(_G.BonusRollLootWonFrame.backdrop)
+    self:CreateShadow(_G.BonusRollMoneyWonFrame.backdrop)
 end
 
 S:AddCallback("LootFrame")

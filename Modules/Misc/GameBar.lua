@@ -425,6 +425,7 @@ local ButtonTypes = {
 
 function GB:ShowAdvancedTimeTooltip(panel)
     DT.RegisteredDataTexts["Time"].onEnter()
+    DT.RegisteredDataTexts["Time"].onLeave()
     -- DT.tooltip:ClearLines()
     -- DT.tooltip:SetText(L["Time"])
     -- DT.tooltip:AddLine("\n", 1, 1, 1)

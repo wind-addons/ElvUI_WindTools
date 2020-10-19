@@ -70,8 +70,6 @@ local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1
 local RightButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:410|t"
 local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t"
 
-local GargageCollectionCounter = 0
-
 local Heartstones = {
     6948, -- 爐石
     110560, -- 要塞爐石
@@ -938,11 +936,6 @@ function GB:UpdateButton(button, config)
                     button.additionalTextFormat,
                     config.additionalText and config.additionalText() or ""
                 )
-                GargageCollectionCounter = GargageCollectionCounter + 1
-                if GargageCollectionCounter > 30 then
-                    collectgarbage("collect")
-                    GargageCollectionCounter = 0
-                end
             end
         )
         button.additionalText:ClearAllPoints()

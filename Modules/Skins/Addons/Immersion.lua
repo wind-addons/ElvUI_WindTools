@@ -11,7 +11,7 @@ function S:Immersion_ReskinTitleButton(frame)
             ES:HandleButton(button)
             button.backdrop:SetTemplate("Transparent")
             button.backdrop:ClearAllPoints()
-            button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 10, -3)
+            button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
             self:CreateShadow(button.backdrop)
 

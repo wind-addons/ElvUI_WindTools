@@ -423,15 +423,16 @@ local ButtonTypes = {
     }
 }
 
-function GB:ShowAdvancedTimeTooltip(button)
-    DT.tooltip:ClearLines()
-    DT.tooltip:SetText(L["Time"])
-    DT.tooltip:AddLine("\n", 1, 1, 1)
-    DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Calendar"], 1, 1, 1)
-    DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Time Manager"], 1, 1, 1)
-    DT.tooltip:AddLine("\n")
-    DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
-    DT.tooltip:Show()
+function GB:ShowAdvancedTimeTooltip(panel)
+    DT.RegisteredDataTexts["Time"].onEnter()
+    -- DT.tooltip:ClearLines()
+    -- DT.tooltip:SetText(L["Time"])
+    -- DT.tooltip:AddLine("\n", 1, 1, 1)
+    -- DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Calendar"], 1, 1, 1)
+    -- DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Time Manager"], 1, 1, 1)
+    -- DT.tooltip:AddLine("\n")
+    -- DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
+    -- DT.tooltip:Show()
 end
 
 function GB:ConstructBar()

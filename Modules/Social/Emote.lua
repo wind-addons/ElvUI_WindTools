@@ -200,7 +200,7 @@ function CE:CreateInterface()
     -- 建立表情
     for _, v in ipairs(emotes) do
         button = CreateFrame("Button", nil, frame)
-        button.emote = "{" .. (v[G.general.locale] or v.key) .. "}"
+        button.emote = "{" .. (v[E.global.general.locale] or v.key) .. "}"
         button:SetSize(width, height)
         if (v.texture) then
             button:SetNormalTexture(v.texture)

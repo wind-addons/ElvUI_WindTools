@@ -123,8 +123,8 @@ function S:ElvUI_ActionBars()
     -- 额外动作条
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]
-        if button then
-            self:CreateShadow(button)
+        if button and button.backdrop then
+            self:CreateShadow(button.backdrop)
         end
     end
 

@@ -9,6 +9,7 @@
 - Haste
 - Tukz
 - Elv
+- Repooc
 
 # Sites
 - [https://www.wowhead.com/](https://www.wowhead.com/)
@@ -115,6 +116,9 @@
 
 - Coolkids (SunUI)
     - Media/Icons/SunUI
+
+- LynUI, ElvUI Shadow & Light
+    - Media/Icons/LynUI
 
 - 小华子COME @ www.iconfont.cn
     - Media/Icons/Misc.tga

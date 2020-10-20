@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[202] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/10/20",
     IMPORTANT = {
         ["zhCN"] = {
             "QQ 群号之前写错了, 正确的是: 336069019"

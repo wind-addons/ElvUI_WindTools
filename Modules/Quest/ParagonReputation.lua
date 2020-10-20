@@ -3,34 +3,37 @@ local PR = W:NewModule("ParagonReputation", "AceHook-3.0", "AceEvent-3.0")
 local S = W:GetModule("Skins")
 
 local _G = _G
-local mod = mod
 local floor = floor
-local select = select
-local unpack = unpack
 local format = format
+local mod = mod
+local select = select
 local tremove = tremove
+local unpack = unpack
+
 local BreakUpLargeNumbers = BreakUpLargeNumbers
 local CreateFrame = CreateFrame
-local GetWatchedFactionInfo = GetWatchedFactionInfo
+local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
+local GameTooltip_AddQuestRewardsToTooltip = GameTooltip_AddQuestRewardsToTooltip
+local GameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
 local GetFactionInfo = GetFactionInfo
 local GetFactionInfoByID = GetFactionInfoByID
-local GetNumFactions = GetNumFactions
-local GetQuestLogIndexByID = GetQuestLogIndexByID
 local GetItemInfo = GetItemInfo
+local GetNumFactions = GetNumFactions
 local GetQuestLogCompletionText = GetQuestLogCompletionText
+local GetQuestLogIndexByID = GetQuestLogIndexByID
 local GetSelectedFaction = GetSelectedFaction
-local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
-local GameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
-local GameTooltip_AddQuestRewardsToTooltip = GameTooltip_AddQuestRewardsToTooltip
-local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
-local C_Reputation_GetFactionParagonInfo = C_Reputation.GetFactionParagonInfo
-local C_Timer_After = C_Timer.After
+local GetWatchedFactionInfo = GetWatchedFactionInfo
+local PlaySound = PlaySound
 local UIFrameFadeIn = UIFrameFadeIn
 local UIFrameFadeOut = UIFrameFadeOut
-local PlaySound = PlaySound
 
-local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
+local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
+local C_Reputation_GetFactionParagonInfo = C_Reputation.GetFactionParagonInfo
+local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
+local C_Timer_After = C_Timer.After
+
 local FONT_COLOR_CODE_CLOSE = FONT_COLOR_CODE_CLOSE
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local HIGHLIGHT_FONT_COLOR_CODE = HIGHLIGHT_FONT_COLOR_CODE
 local NUM_FACTIONS_DISPLAYED = NUM_FACTIONS_DISPLAYED
 local REPUTATION_PROGRESS_FORMAT = REPUTATION_PROGRESS_FORMAT
@@ -90,7 +93,7 @@ function PR:SetupParagonTooltip(tt)
 	local _, _, rewardQuestID, hasRewardPending = C_Reputation_GetFactionParagonInfo(tt.factionID)
 	if hasRewardPending then
 		local factionName = GetFactionInfoByID(tt.factionID)
-		local questIndex = C_QuestLog.GetLogIndexForQuestID(rewardQuestID)
+		local questIndex = C_QuestLog_GetLogIndexForQuestID(rewardQuestID)
 		local description = GetQuestLogCompletionText(questIndex) or ""
 		_G.EmbeddedItemTooltip:SetText(L["Paragon"])
 		_G.EmbeddedItemTooltip:AddLine(description, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, 1)

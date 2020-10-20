@@ -85,14 +85,16 @@ local PredefinedType = {
                                 local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
                                 if
                                     gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" and
-                                        gameAccountInfo.wowProjectID == 1
+                                        gameAccountInfo.wowProjectID == 1 and
+                                        gameAccountInfo.factionName == E.myfaction
                                  then
                                     GuildInvite(gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName)
                                 end
                             end
                         elseif
                             accountInfo.gameAccountInfo.clientProgram == "WoW" and
-                                accountInfo.gameAccountInfo.wowProjectID == 1
+                                accountInfo.gameAccountInfo.wowProjectID == 1 and
+                                accountInfo.gameAccountInfo.factionName == E.myfaction
                          then
                             GuildInvite(
                                 accountInfo.gameAccountInfo.characterName ..

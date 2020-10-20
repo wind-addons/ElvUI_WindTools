@@ -4,24 +4,13 @@ W.Changelog[202] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "placeholder"
+            "QQ 群号之前写错了, 正确的是: 336069019"
         },
         ["zhTW"] = {
-            "placeholder"
+            "QQ 群號之前寫錯了, 正確的是: 336069019"
         },
         ["enUS"] = {
-            "placeholder"
-        }
-    },
-    NEW = {
-        ["zhCN"] = {
-            "placeholder"
-        },
-        ["zhTW"] = {
-            "placeholder"
-        },
-        ["enUS"] = {
-            "placeholder"
+            "I made mistake on the number of QQ Group, the correct one is 336069019."
         }
     },
     IMPROVEMENT = {
@@ -68,14 +57,14 @@ W.Changelog[202] = {
             "[Game Bar] Fix the bug occurred when player try to toggle the game bar.",
             "[Game Bar] Remove the auto garbage collection.",
             "[Game Bar] The additional text only be updated on event fired.",
-            "[Game Bar] Use ElvUI Time datatext tooltip instead of the old time tooltip.",
-            "[Game Bar] Disable Hearthstones from Shadowlands temprarily.",
+            "[Game Bar] Use ElvUI Time data text tooltip instead of the old one.",
+            "[Game Bar] Disable Hearthstones from Shadowlands temporarily.",
             "[Chat Bar] Fix the bug that several buttons do not show if the name of world channel not be set.",
             "[Emote] Fix the bug that the selector cannot be shown.",
             "[Friend List] Fix the icon of COD MW2.",
-            "[No Kanji Math] Fix the db error.",
+            "[No Kanji Math] Fix the database error.",
             "[Objective Tracker] Remove the temp fix.",
-            "[Switch Button] Fix the auto hide with Objective Tracker.",
+            "[Switch Button] Fix the auto-hide with Objective Tracker.",
             "[Skins] Change the skin of Extra Action Bar.",
             "[Skins] Immersion Skin will not hide the number anymore.",
             "[Paragon Reputation] Fix the API usage for 9.0.",

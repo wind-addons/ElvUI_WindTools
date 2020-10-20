@@ -11,7 +11,7 @@
 ## OptionalDeps: Blizzard_PetJournal, SharedMedia
 ## X-Curse-Project-ID: 300361
 ## X-WoWI-ID: 25687
-## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & All mentioned in CREDITS.md
+## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & others in CREDITS.md
 
 Libraries\Load_Libraries.xml
 Initialize.lua

@@ -280,6 +280,10 @@ function MF:Remember(frame)
 end
 
 function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
+    if InCombatLockdown() then
+        return
+    end
+
     if not frame.windFrameName or not self.db.rememberPositions then
         return
     end

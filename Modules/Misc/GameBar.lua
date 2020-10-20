@@ -208,7 +208,7 @@ local ButtonTypes = {
         name = L["Collections"],
         icon = W.Media.Icons.barCollections,
         macro = {
-            LeftButton = [[
+            LeftButton = [[/click CollectionsJournalCloseButton
 /click CollectionsMicroButton
 /click CollectionsJournalTab1
 ]]
@@ -364,7 +364,7 @@ local ButtonTypes = {
         name = L["Pet Journal"],
         icon = W.Media.Icons.barPetJournal,
         macro = {
-            LeftButton = [[
+            LeftButton = [[/click CollectionsJournalCloseButton
 /click CollectionsMicroButton
 /click CollectionsJournalTab2
 ]]
@@ -413,10 +413,9 @@ local ButtonTypes = {
         name = L["Toy Box"],
         icon = W.Media.Icons.barToyBox,
         macro = {
-            LeftButton = [[
+            LeftButton = [[/click CollectionsJournalCloseButton
 /click CollectionsMicroButton
-/click CollectionsJournalTab3
-]]
+/click CollectionsJournalTab3]]
         },
         tooltips = {
             L["Toy Box"]

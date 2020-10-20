@@ -3,18 +3,30 @@ local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
 local _G = _G
-local select, pairs, ipairs, tonumber = select, pairs, ipairs, tonumber
-local strfind, format = strfind, format
-local GetTime, CanInspect = GetTime, CanInspect
+local format = format
+local ipairs = ipairs
+local pairs = pairs
+local select = select
+local strfind = strfind
+local tonumber = tonumber
 
-local UnitExists, UnitLevel, UnitGUID, UnitRace = UnitExists, UnitLevel, UnitGUID, UnitRace
-local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
-local SetAchievementComparisonUnit = SetAchievementComparisonUnit
-local GetStatistic, GetComparisonStatistic = GetStatistic, GetComparisonStatistic
-local IsAddOnLoaded, HideUIPanel = IsAddOnLoaded, HideUIPanel
-local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
-local InCombatLockdown = InCombatLockdown
 local AchievementFrame_DisplayComparison = AchievementFrame_DisplayComparison
+local AchievementFrame_LoadUI = AchievementFrame_LoadUI
+local CanInspect = CanInspect
+local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
+local GetComparisonStatistic = GetComparisonStatistic
+local GetStatistic = GetStatistic
+local GetTime = GetTime
+local HideUIPanel = HideUIPanel
+local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
+local SetAchievementComparisonUnit = SetAchievementComparisonUnit
+local UnitExists = UnitExists
+local UnitGUID = UnitGUID
+local UnitLevel = UnitLevel
+local UnitRace = UnitRace
+
+local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison
@@ -409,12 +421,17 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
 
     local guid = UnitGUID(unit)
 
+    if not _G.AchievementFrame then
+        AchievementFrame_LoadUI()
+    end
+
     if not cache[guid] or (GetTime() - cache[guid].timer) > 600 then
         if guid == E.myguid then
             UpdateProgression(guid, E.myfaction)
         else
             ClearAchievementComparisonUnit()
-            if not loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then
+
+            if not loadedComparison then
                 AchievementFrame_DisplayComparison(unit)
                 HideUIPanel(_G.AchievementFrame)
                 ClearAchievementComparisonUnit()

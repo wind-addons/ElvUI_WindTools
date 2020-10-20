@@ -460,14 +460,8 @@ options.worldMap = {
             name = L["Remove Fog"],
             desc = L["Remove Fog of War from your world map."]
         },
-        clearCache = {
-            order = 4,
-            type = "toggle",
-            name = L["Clear Cache"],
-            desc = L["Run Lua garbage collection periodically."]
-        },
         scale = {
-            order = 5,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Scale"],

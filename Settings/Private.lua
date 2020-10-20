@@ -11,7 +11,6 @@ V.maps = {
 	worldMap = {
 		enable = true,
 		reveal = true,
-		clearCache = true,
 		scale = {
 			enable = true,
 			size = 1.24

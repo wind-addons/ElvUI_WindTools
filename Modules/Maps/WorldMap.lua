@@ -19,26 +19,6 @@ local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_Timer_After = C_Timer.After
 
--- 提供一个方式进行垃圾回收
-do
-    local isWaiting = false
-    function WM:collectGarbageAfter(time)
-        if isWaiting then
-            return
-        end
-
-        isWaiting = true
-
-        C_Timer_After(
-            time,
-            function()
-                collectgarbage("collect")
-                isWaiting = false
-            end
-        )
-    end
-end
-
 -- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
 -- UiMapArtID = {
 --     TextureWidth:TextureHeight:offsetX:offsetY = WorldMapOverlayTileFileDataID
@@ -2569,10 +2549,6 @@ function WM:HandleMap(map, fullUpdate)
                 end
             end
         end
-    end
-
-    if self.db.clearCache then
-        self:collectGarbageAfter(30)
     end
 end
 

@@ -27,6 +27,7 @@ function SB:CreateButton(text)
     button.text:SetJustifyH("LEFT")
     button.text:Point("LEFT", button, "RIGHT")
 
+    RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
     return button
 end
 
@@ -156,8 +157,6 @@ function SB:CreateBar()
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
 
-    RegisterStateDriver(frame, "visibility", "[petbattle] hide; show")
-
     self.bar = frame
 
     self:UpdateLayout()
@@ -185,11 +184,14 @@ function SB:AutoHideWithObjectiveFrame()
         return
     end
 
-    if self.db.hideWithObjectiveTracker and _G.ObjectiveTrackerFrame.collapsed then
-        self.bar:Hide()
-    else
-        self.bar:Show()
+    if self.db.hideWithObjectiveTracker then
+        if _G.ObjectiveTrackerFrame.collapsed or not _G.ObjectiveTrackerFrame.HeaderMenu:IsShown() then
+            self.bar:Hide()
+            return
+        end
     end
+
+    self.bar:Show()
 end
 
 function SB:PLAYER_ENTERING_WORLD()
@@ -205,6 +207,8 @@ function SB:Initialize()
 
     self:SecureHook("ObjectiveTracker_Collapse", "AutoHideWithObjectiveFrame")
     self:SecureHook("ObjectiveTracker_Expand", "AutoHideWithObjectiveFrame")
+    self:SecureHook(_G.ObjectiveTrackerFrame.HeaderMenu, "Show", "AutoHideWithObjectiveFrame")
+    self:SecureHook(_G.ObjectiveTrackerFrame.HeaderMenu, "Hide", "AutoHideWithObjectiveFrame")
     self:CreateBar()
 
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -220,7 +224,7 @@ function SB:ProfileUpdate()
         if not self.bar then
             self:CreateBar()
         else
-            self.bar:Show()
+            self:AutoHideWithObjectiveFrame()
             self:UpdateLayout()
         end
 

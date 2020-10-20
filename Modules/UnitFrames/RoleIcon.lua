@@ -20,6 +20,11 @@ local RoleIconTextures = {
         HEALER = W.Media.Icons.sunUIHealer,
         DAMAGER = W.Media.Icons.sunUIDPS
     },
+    LYNUI = {
+        TANK = W.Media.Icons.lynUITank,
+        HEALER = W.Media.Icons.lynUIHealer,
+        DAMAGER = W.Media.Icons.lynUIDPS
+    },
     DEFAULT = {
         TANK = E.Media.Textures.Tank,
         HEALER = E.Media.Textures.Healer,

@@ -50,6 +50,10 @@ AddMedia("sunUITank", "SunUI\\Tank.tga", "Icons")
 AddMedia("sunUIDPS", "SunUI\\DPS.tga", "Icons")
 AddMedia("sunUIHealer", "SunUI\\Healer.tga", "Icons")
 
+AddMedia("lynUITank", "LynUI\\Tank.tga", "Icons")
+AddMedia("lynUIDPS", "LynUI\\DPS.tga", "Icons")
+AddMedia("lynUIHealer", "LynUI\\Healer.tga", "Icons")
+
 AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")

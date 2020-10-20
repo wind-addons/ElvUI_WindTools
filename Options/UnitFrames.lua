@@ -93,6 +93,12 @@ do
     icons = icons .. E:TextureString(W.Media.Icons.sunUIHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.sunUIDPS, ":16:16")
     SampleStrings.sunui = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.lynUITank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.lynUIHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.lynUIDPS, ":16:16")
+    SampleStrings.lynui = icons
 end
 
 options.roleIcon = {
@@ -136,6 +142,7 @@ options.roleIcon = {
                 HEXAGON = SampleStrings.hexagon,
                 FFXIV = SampleStrings.ffxiv,
                 SUNUI = SampleStrings.sunui,
+                LYNUI = SampleStrings.lynui,
                 DEFAULT = SampleStrings.elvui
             }
         }

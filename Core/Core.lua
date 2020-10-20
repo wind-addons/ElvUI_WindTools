@@ -76,7 +76,6 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
     button1 = L["Open Changelog"],
     button2 = CANCEL,
     OnAccept = function(self)
-        E.global.WT.Version = W.Version
         E:ToggleOptionsUI("WindTools,information,changelog")
     end,
     hideOnEscape = 1
@@ -87,6 +86,7 @@ function W:CheckInstalledVersion()
     if not InCombatLockdown() then
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
+            E.global.WT.Version = W.Version
         else
             local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
             print(

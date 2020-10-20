@@ -53,16 +53,16 @@ function W:Initialize()
 end
 
 do
-    local Entered = false
+    local firstTime = false
     function W:PLAYER_ENTERING_WORLD()
-        if Entered then
+        if not firstTime then
             C_Timer_After(
                 10,
                 function()
                     W:CheckInstalledVersion()
                 end
             )
-            Entered = true
+            firstTime = true
         end
 
         C_Timer_After(

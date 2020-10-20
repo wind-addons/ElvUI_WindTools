@@ -146,6 +146,10 @@ function CT:UpdateRoleIcons()
     local pack = self.db.enable and self.db.roleIconStyle or "DEFAULT"
     local sizeString = self.db.enable and format(":%d:%d", self.db.roleIconSize, self.db.roleIconSize) or ":16:16"
 
+    if pack ~= "DEFAULT" and pack ~= "BLIZZARD" then
+        sizeString = sizeString and (sizeString..":0:0:64:64:2:62:0:58")
+    end
+
     if pack == "FFXIV" then
         roleIcons = {
             TANK = E:TextureString(W.Media.Icons.ffxivTank, sizeString),

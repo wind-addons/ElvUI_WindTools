@@ -120,6 +120,8 @@ local function Skin_WeakAuras(f, fType)
                     else
                         self:SetTexCoordOld(left + cLeft * (down - top), left + cRight * (down - top), top, down)
                     end
+                else
+                    self:SetTexCoordOld(cLeft, cRight, cTop, cDown)
                 end
             end
             f.icon:SetTexCoord(f.icon:GetTexCoord())

@@ -429,17 +429,17 @@ function MF:HandleElvUIBag()
                     frame:StartMoving()
                 end
             )
-            f:SetScript(
-                "OnEnter",
-                function(frame)
+            if f.helpButton then
+                f.helpButton:SetScript('OnEnter', function(frame)
                     local GameTooltip = _G.GameTooltip
-                    GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+                    GameTooltip:SetOwner(frame, 'ANCHOR_TOPLEFT', 0, 4)
                     GameTooltip:ClearLines()
                     GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
                     GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
                     GameTooltip:Show()
-                end
-            )
+                end)
+            end
+            
             f.WTMoveFramesHandled = true
         end
 

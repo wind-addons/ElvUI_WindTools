@@ -15,6 +15,8 @@ local unpack = unpack
 local wipe = wipe
 
 local AbbreviateNumbers = AbbreviateNumbers
+local BNGetNumFriends = BNGetNumFriends
+local BNSendWhisper = BNSendWhisper
 local CanGuildInvite = CanGuildInvite
 local CloseDropDownMenus = CloseDropDownMenus
 local CreateFrame = CreateFrame
@@ -34,9 +36,13 @@ local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
 local UnitPlayerControlled = UnitPlayerControlled
 
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_AddFriend = C_FriendList.AddFriend
 local C_FriendList_SendWho = C_FriendList.SendWho
+local C_Timer_After = C_Timer.After
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 local HP = HP
@@ -57,6 +63,7 @@ local PredefinedType = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
+            BN_FRIEND = true,
             CHAT_ROSTER = true,
             TARGET = true,
             FOCUS = true,
@@ -64,7 +71,38 @@ local PredefinedType = {
             RAF_RECRUIT = true
         },
         func = function(frame)
-            if frame.chatTarget then
+            if frame.bnetIDAccount then
+                local numBNOnlineFriend = select(2, BNGetNumFriends())
+                for i = 1, numBNOnlineFriend do
+                    local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+                    if
+                        accountInfo and accountInfo.bnetAccountID == frame.bnetIDAccount and accountInfo.gameAccountInfo and
+                            accountInfo.gameAccountInfo.isOnline
+                     then
+                        local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+                        if numGameAccounts and numGameAccounts > 0 then
+                            for j = 1, numGameAccounts do
+                                local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+                                if
+                                    gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" and
+                                        gameAccountInfo.wowProjectID == 1
+                                 then
+                                    GuildInvite(gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName)
+                                end
+                            end
+                        elseif
+                            accountInfo.gameAccountInfo.clientProgram == "WoW" and
+                                accountInfo.gameAccountInfo.wowProjectID == 1
+                         then
+                            GuildInvite(
+                                accountInfo.gameAccountInfo.characterName ..
+                                    "-" .. accountInfo.gameAccountInfo.realmName
+                            )
+                        end
+                        return
+                    end
+                end
+            elseif frame.chatTarget then
                 GuildInvite(frame.chatTarget)
             elseif frame.name then
                 local playerName = frame.name
@@ -293,8 +331,14 @@ local PredefinedType = {
         },
         func = function(frame)
             local name
+            local SendChatMessage = SendChatMessage
 
-            if frame.chatTarget then
+            if frame.bnetIDAccount then
+                SendChatMessage = function(message)
+                    BNSendWhisper(frame.bnetIDAccount, message)
+                end
+                name = "BN"
+            elseif frame.chatTarget then
                 name = frame.chatTarget
             elseif frame.name then
                 if frame.server and frame.server ~= E.myrealm then
@@ -308,41 +352,72 @@ local PredefinedType = {
 
             local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
 
-            SendChatMessage(
-                format(
-                    "(%s) %s: %.1f %s: %s",
-                    select(2, GetSpecializationInfo(GetSpecialization())) .. select(1, UnitClass("player")),
-                    ITEM_LEVEL_ABBR,
-                    select(2, GetAverageItemLevel()),
-                    HP,
-                    AbbreviateNumbers(UnitHealthMax("player"))
-                ),
-                "WHISPER",
-                nil,
-                name
+            C_Timer_After(
+                0.1,
+                function()
+                    SendChatMessage(
+                        format(
+                            "(%s) %s: %.1f %s: %s",
+                            select(2, GetSpecializationInfo(GetSpecialization())) .. select(1, UnitClass("player")),
+                            ITEM_LEVEL_ABBR,
+                            select(2, GetAverageItemLevel()),
+                            HP,
+                            AbbreviateNumbers(UnitHealthMax("player"))
+                        ),
+                        "WHISPER",
+                        nil,
+                        name
+                    )
+                end
             )
+
             -- 致命
-            SendChatMessage(
-                format(" - %s: %.2f%%", CRITICAL, max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))),
-                "WHISPER",
-                nil,
-                name
+            C_Timer_After(
+                0.3,
+                function()
+                    SendChatMessage(
+                        format(
+                            " - %s: %.2f%%",
+                            CRITICAL,
+                            max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))
+                        ),
+                        "WHISPER",
+                        nil,
+                        name
+                    )
+                end
             )
             -- 加速
-            SendChatMessage(format(" - %s: %.2f%%", STAT_HASTE, GetHaste()), "WHISPER", nil, name)
+            C_Timer_After(
+                0.5,
+                function()
+                    SendChatMessage(format(" - %s: %.2f%%", STAT_HASTE, GetHaste()), "WHISPER", nil, name)
+                end
+            )
             -- 精通
-            SendChatMessage(format(" - %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()), "WHISPER", nil, name)
+            C_Timer_After(
+                0.7,
+                function()
+                    SendChatMessage(format(" - %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()), "WHISPER", nil, name)
+                end
+            )
 
             -- 臨機應變
-            SendChatMessage(
-                format(
-                    " - %s: %.2f%%",
-                    STAT_VERSATILITY,
-                    GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)
-                ),
-                "WHISPER",
-                nil,
-                name
+            C_Timer_After(
+                0.9,
+                function()
+                    SendChatMessage(
+                        format(
+                            " - %s: %.2f%%",
+                            STAT_VERSATILITY,
+                            GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) +
+                                GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)
+                        ),
+                        "WHISPER",
+                        nil,
+                        name
+                    )
+                end
             )
             -- 汲取
             --SendChatMessage(format(" - %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal()), "WHISPER", nil, name)
@@ -593,6 +668,8 @@ function CM:ShowMenu(frame)
     -- 预组队伍右键
     -- dropdown.Button == _G.LFGListFrameDropDownButton
 
+    -- E:Dump(dropdown)
+
     wipe(self.cache)
     self.cache = {
         which = dropdown.which,
@@ -600,7 +677,8 @@ function CM:ShowMenu(frame)
         unit = dropdown.unit,
         server = dropdown.server,
         chatTarget = dropdown.chatTarget,
-        communityClubID = dropdown.communityClubID
+        communityClubID = dropdown.communityClubID,
+        bnetIDAccount = dropdown.bnetIDAccount
     }
 
     if self.cache.which then

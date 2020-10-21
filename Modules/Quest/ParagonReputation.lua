@@ -226,14 +226,13 @@ function PR:CreateToast()
 end
 
 function PR:QUEST_ACCEPTED(event, questID)
-	local questID = questID
-	if PR.db.toast.enable and PARAGON_QUEST_ID[questID] then
+	if self.db.toast.enable and PARAGON_QUEST_ID[questID] then
 		local name = GetFactionInfoByID(PARAGON_QUEST_ID[questID][1])
-		local text = GetQuestLogCompletionText(C_QuestLog.GetLogIndexForQuestID(questID))
+		local text = GetQuestLogCompletionText(C_QuestLog_GetLogIndexForQuestID(questID))
 		if ACTIVE_TOAST then
 			WAITING_TOAST[#WAITING_TOAST + 1] = {name, text} --Toast is already active, put this info on the line.
 		else
-			PR:ShowToast(name, text)
+			self:ShowToast(name, text)
 		end
 	end
 end
@@ -309,7 +308,7 @@ function PR:ChangeReputationBars()
 						" " ..
 							format(REPUTATION_PROGRESS_FORMAT, BreakUpLargeNumbers(value), BreakUpLargeNumbers(threshold)) ..
 								FONT_COLOR_CODE_CLOSE
-					
+
 					local count = floor(currentValue / threshold)
 					if hasRewardPending then
 						count = count - 1
@@ -325,11 +324,11 @@ function PR:ChangeReputationBars()
 						factionRow.standingText = BreakUpLargeNumbers(value)
 					elseif PR.db.text == "PARAGONPLUS" then
 						if count > 0 then
-							factionStanding:SetText(L["Paragon"].." x "..count)
-							factionRow.standingText = (L["Paragon"].." x "..count)
+							factionStanding:SetText(L["Paragon"] .. " x " .. count)
+							factionRow.standingText = (L["Paragon"] .. " x " .. count)
 						else
-							factionStanding:SetText(L["Paragon"].." + ")
-							factionRow.standingText = (L["Paragon"].." + ")
+							factionStanding:SetText(L["Paragon"] .. " + ")
+							factionRow.standingText = (L["Paragon"] .. " + ")
 						end
 					elseif PR.db.text == "VALUE" then
 						factionStanding:SetText(" " .. BreakUpLargeNumbers(value) .. " / " .. BreakUpLargeNumbers(threshold))

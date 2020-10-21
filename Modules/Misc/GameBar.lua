@@ -581,7 +581,7 @@ function GB:ConstructTimeArea()
                 E:UIFrameFadeIn(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 1)
             end
 
-            DT.tooltip:SetOwner(panel.text, "ANCHOR_BOTTOM", 0, -5)
+            DT.tooltip:SetOwner(panel.text, self.db.tooltipsAnchor, 0, -5)
 
             if IsModifierKeyDown() then
                 DT.RegisteredDataTexts["System"].eventFunc()

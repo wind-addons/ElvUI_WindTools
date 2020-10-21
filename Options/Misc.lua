@@ -590,24 +590,51 @@ options.gameBar = {
                 GB:UpdateTime()
             end,
             args = {
-                mouseOver = {
+                bar = {
                     order = 1,
-                    type = "toggle",
-                    name = L["Mouse Over"],
-                    desc = L["Show the bar only mouse hovered the area."],
-                    set = function(info, value)
-                        E.db.WT.misc.gameBar[info[#info]] = value
-                        GB:UpdateBar()
-                    end
-                },
-                fadeTime = {
-                    order = 2,
-                    type = "range",
-                    name = L["Fade Time"],
-                    desc = L["The animation speed."],
-                    min = 0,
-                    max = 3,
-                    step = 0.01
+                    type = "group",
+                    name = L["Bar"],
+                    inline = true,
+                    args = {
+                        mouseOver = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Mouse Over"],
+                            desc = L["Show the bar only mouse hovered the area."],
+                            set = function(info, value)
+                                E.db.WT.misc.gameBar[info[#info]] = value
+                                GB:UpdateBar()
+                            end
+                        },
+                        fadeTime = {
+                            order = 2,
+                            type = "range",
+                            name = L["Fade Time"],
+                            desc = L["The animation speed."],
+                            min = 0,
+                            max = 3,
+                            step = 0.01
+                        },
+                        tooltipsAnchor = {
+                            order = 3,
+                            type = "select",
+                            name = L["Tooltip Anchor"],
+                            values = {
+                                ANCHOR_TOP = L["TOP"],
+                                ANCHOR_BOTTOM = L["BOTTOM"]
+                            }
+                        },
+                        visibility = {
+                            order = 4,
+                            type = "input",
+                            name = L["Visibility"],
+                            set = function(info, value)
+                                E.db.WT.misc.gameBar[info[#info]] = value
+                                GB:UpdateBar()
+                            end,
+                            width = "full"
+                        }
+                    }
                 },
                 normal = {
                     order = 3,
@@ -782,16 +809,6 @@ options.gameBar = {
                             }
                         }
                     }
-                },
-                visibility = {
-                    order = 6,
-                    type = "input",
-                    name = L["Visibility"],
-                    set = function(info, value)
-                        E.db.WT.misc.gameBar[info[#info]] = value
-                        GB:UpdateBar()
-                    end,
-                    width = "full"
                 }
             }
         },

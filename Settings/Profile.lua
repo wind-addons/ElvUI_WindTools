@@ -833,6 +833,7 @@ P.misc = {
         customNormalColor = {r = 1, g = 1, b = 1},
         customHoverColor = {r = 0, g = 0.659, b = 1},
         visibility = "[petbattle] hide; show",
+        tooltipsAnchor = "ANCHOR_BOTTOM",
         time = {
             localTime = true,
             twentyFour = true,

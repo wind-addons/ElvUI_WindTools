@@ -225,12 +225,11 @@ function PR:CreateToast()
 	PR.toast = toast
 end
 
-function PR:QUEST_ACCEPTED(event, ...)
-	local questIndex, questID = ...
-
+function PR:QUEST_ACCEPTED(event, questID)
+	local questID = questID
 	if PR.db.toast.enable and PARAGON_QUEST_ID[questID] then
 		local name = GetFactionInfoByID(PARAGON_QUEST_ID[questID][1])
-		local text = GetQuestLogCompletionText(questIndex)
+		local text = GetQuestLogCompletionText(C_QuestLog.GetLogIndexForQuestID(questID))
 		if ACTIVE_TOAST then
 			WAITING_TOAST[#WAITING_TOAST + 1] = {name, text} --Toast is already active, put this info on the line.
 		else

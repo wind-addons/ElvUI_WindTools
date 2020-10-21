@@ -30,10 +30,12 @@ function RM:ChangeShape()
     local newHeight = E.MinimapSize * heightPct
     local diff = E.MinimapSize - newHeight
 
+    Minimap:SetClampedToScreen(true)
     Minimap:SetMaskTexture(texturePath)
     Minimap:Size(E.MinimapSize, E.MinimapSize)
     Minimap:SetHitRectInsets(0, 0, (diff / 2) * E.mult, (diff / 2) * E.mult)
     Minimap:SetClampRectInsets(0, 0, 0, 0)
+    _G.MinimapMover:SetClampRectInsets(0, 0, (diff / 2) * E.mult, -(diff / 2) * E.mult)
     Minimap:ClearAllPoints()
     Minimap:Point("TOPLEFT", MMHolder, "TOPLEFT", E.Border, -E.Border + diff / 2)
     Minimap.backdrop:SetOutside(Minimap, 1, -(diff / 2) + 1)

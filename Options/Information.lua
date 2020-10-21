@@ -112,7 +112,11 @@ options.help = {
                 ["8"] = {
                     order = 8,
                     type = "description",
-                    name = "asdf12303116"
+                    name = format(
+                        "%s: %s",
+                        "Chen (@asdf12303116)",
+                        F.CreateClassColorString("一发径直入魂 @ 燃烧之刃 (CN)", "HUNTER")
+                    )
                 }
             }
         },

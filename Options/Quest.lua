@@ -650,6 +650,7 @@ options.paragonReputation = {
                     values = {
                         PARAGON = L["Paragon"] .. " (100/10000)",
                         EXALTED = L["Exalted"] .. " (100/10000)",
+                        PARAGONPLUS = L["Paragon"] .. " x 1".. " (100/10000)",
                         CURRENT = "100 (100/10000)",
                         VALUE = "100/10000",
                         DEFICIT = "9900"

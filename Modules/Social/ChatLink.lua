@@ -138,9 +138,7 @@ local function AddSpellInfo(Hyperlink)
     if CL.db.icon then
         local texture = GetSpellTexture(tonumber(id))
         local icon = format(IconString .. ":255:255:255|t", texture)
-        print(strsub(Hyperlink, -20))
         Hyperlink = icon .. " " .. Hyperlink
-        print(strsub(Hyperlink, -20))
     end
 
     return Hyperlink

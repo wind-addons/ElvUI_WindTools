@@ -581,7 +581,11 @@ function GB:ConstructTimeArea()
                 E:UIFrameFadeIn(panel.text, self.db.fadeTime, panel.text:GetAlpha(), 1)
             end
 
-            DT.tooltip:SetOwner(panel.text, self.db.tooltipsAnchor, 0, -5)
+            if self.db.tooltipsAnchor == "ANCHOR_TOP" then
+                DT.tooltip:SetOwner(panel, "ANCHOR_TOP", 0, 10)
+            else
+                DT.tooltip:SetOwner(panel.text, "ANCHOR_BOTTOM", 0, -10)
+            end
 
             if IsModifierKeyDown() then
                 DT.RegisteredDataTexts["System"].eventFunc()
@@ -766,7 +770,12 @@ function GB:ButtonOnEnter(button)
     end
     E:UIFrameFadeIn(button.hoverTex, self.db.fadeTime, button.hoverTex:GetAlpha(), 1)
     if button.tooltips then
-        DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
+        if self.db.tooltipsAnchor == "ANCHOR_TOP" then
+            DT.tooltip:SetOwner(button, "ANCHOR_TOP", 0, 20)
+        else
+            DT.tooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -10)
+        end
+
         if type(button.tooltips) == "table" then
             DT.tooltip:ClearLines()
             for index, line in ipairs(button.tooltips) do

@@ -74,8 +74,9 @@ options.help = {
                     order = 1,
                     type = "description",
                     name = format(
-                        "%s: %s",
+                        "%s: %s | %s",
                         "fang2hou",
+                        E.InfoColor.."houshuu".."|r",
                         F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
                     )
                 },
@@ -92,7 +93,7 @@ options.help = {
                 ["4"] = {
                     order = 4,
                     type = "description",
-                    name = "MouJiaoZi: 某餃子"
+                    name = format("%s: %s", "MouJiaoZi", E.InfoColor.."某餃子".."|r")
                 },
                 ["5"] = {
                     order = 5,
@@ -113,9 +114,10 @@ options.help = {
                     order = 8,
                     type = "description",
                     name = format(
-                        "%s: %s",
-                        "Chen (@asdf12303116)",
-                        F.CreateClassColorString("一发径直入魂 @ 燃烧之刃 (CN)", "HUNTER")
+                        "%s: %s | %s",
+                        "asdf12303116",
+                        E.InfoColor.."Chen".."|r",
+                        F.CreateClassColorString("一发径直入魂 @ 燃烧之刃(CN)", "HUNTER")
                     )
                 }
             }

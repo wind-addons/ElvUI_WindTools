@@ -422,6 +422,11 @@ function MF:HandleElvUIBag()
 
     if self.db.moveElvUIBags then
         local f = B:GetContainerFrame()
+
+        if not f then
+            return
+        end
+
         if not f.WTMoveFramesHandled then
             f:SetScript(
                 "OnDragStart",

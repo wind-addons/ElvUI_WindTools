@@ -71,7 +71,12 @@ local PARAGON_QUEST_ID = {
 	[54458] = {2160, 166295}, --Proudmoore Admiralty
 	[54457] = {2162, 166294}, --Storm's Wake
 	[54454] = {2159, 166300}, --The 7th Legion
-	[55976] = {2400, 169939} --Waveblade Ankoan
+	[55976] = {2400, 169939}, --Waveblade Ankoan
+	--Shadowlands
+	[61100] = {2413, 180648}, --Court of Harvesters
+	[61097] = {2407, 180647}, --The Ascended
+	[61095] = {2410, 180646}, --The Undying Army
+	[61098] = {2465, 180649} --The Wild Hunt
 }
 
 function PR:ColorWatchbar(bar)

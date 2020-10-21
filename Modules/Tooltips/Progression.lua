@@ -10,7 +10,6 @@ local select = select
 local strfind = strfind
 local tonumber = tonumber
 
-local AchievementFrame_DisplayComparison = AchievementFrame_DisplayComparison
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
 local CanInspect = CanInspect
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
@@ -421,7 +420,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
 
     local guid = UnitGUID(unit)
 
-    if not _G.AchievementFrame then
+    if not IsAddOnLoaded("Blizzard_AchievementUI") then
         AchievementFrame_LoadUI()
     end
 
@@ -431,8 +430,8 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
         else
             ClearAchievementComparisonUnit()
 
-            if not loadedComparison then
-                AchievementFrame_DisplayComparison(unit)
+            if not loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then
+                _G.AchievementFrame_DisplayComparison(unit)
                 HideUIPanel(_G.AchievementFrame)
                 ClearAchievementComparisonUnit()
                 loadedComparison = true

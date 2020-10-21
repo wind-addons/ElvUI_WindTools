@@ -138,7 +138,7 @@ local function AddSpellInfo(Hyperlink)
     if CL.db.icon then
         local texture = GetSpellTexture(tonumber(id))
         local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " " .. Hyperlink
+        Hyperlink = icon .. " |cff71d5ff" .. Hyperlink .. "|r" -- I dk why the color is needed, but worked!
     end
 
     return Hyperlink
@@ -230,7 +230,6 @@ function CL:Initialize()
     ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", self.Filter)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", self.Filter)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", self.Filter)
-
     self.Initialized = true
 end
 

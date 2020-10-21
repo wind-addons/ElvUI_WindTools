@@ -53,7 +53,7 @@ local abbrList = {
 
 local function AddItemInfo(Hyperlink)
     local id = strmatch(Hyperlink, "Hitem:(%d-):")
-    if (not id) then
+    if not id then
         return
     end
     id = tonumber(id)
@@ -131,14 +131,16 @@ end
 local function AddSpellInfo(Hyperlink)
     -- 法术图标
     local id = strmatch(Hyperlink, "Hspell:(%d-):")
-    if (not id) then
+    if not id then
         return
     end
 
     if CL.db.icon then
         local texture = GetSpellTexture(tonumber(id))
         local icon = format(IconString .. ":255:255:255|t", texture)
+        print(strsub(Hyperlink, -20))
         Hyperlink = icon .. " " .. Hyperlink
+        print(strsub(Hyperlink, -20))
     end
 
     return Hyperlink
@@ -147,7 +149,7 @@ end
 local function AddEnchantInfo(Hyperlink)
     -- 附魔图标
     local id = strmatch(Hyperlink, "Henchant:(%d-)\124")
-    if (not id) then
+    if not id then
         return
     end
 
@@ -163,7 +165,7 @@ end
 local function AddPvPTalentInfo(Hyperlink)
     -- PVP 天赋
     local id = strmatch(Hyperlink, "Hpvptal:(%d-)|")
-    if (not id) then
+    if not id then
         return
     end
 
@@ -179,7 +181,7 @@ end
 local function AddTalentInfo(Hyperlink)
     -- 天赋
     local id = strmatch(Hyperlink, "Htalent:(%d-)|")
-    if (not id) then
+    if not id then
         return
     end
 
@@ -194,11 +196,11 @@ end
 
 function CL:Filter(event, msg, ...)
     if CL.db.enable then
-        msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
-        msg = msg:gsub("(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
-        msg = msg:gsub("(|Henchant:%d+|h.-|h)", AddEnchantInfo)
-        msg = msg:gsub("(|Htalent:%d+|h.-|h)", AddTalentInfo)
-        msg = msg:gsub("(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
+        msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
+        msg = gsub(msg, "(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
+        msg = gsub(msg, "(|Henchant:%d+|h.-|h)", AddEnchantInfo)
+        msg = gsub(msg, "(|Htalent:%d+|h.-|h)", AddTalentInfo)
+        msg = gsub(msg, "(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
     end
     return false, msg, ...
 end

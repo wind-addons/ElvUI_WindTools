@@ -310,7 +310,11 @@ function PR:ChangeReputationBars()
 						" " ..
 							format(REPUTATION_PROGRESS_FORMAT, BreakUpLargeNumbers(value), BreakUpLargeNumbers(threshold)) ..
 								FONT_COLOR_CODE_CLOSE
-
+					
+					local count = floor(currentValue / threshold)
+					if hasRewardPending then
+						count = count - 1
+					end
 					if PR.db.text == "PARAGON" then
 						factionStanding:SetText(L["Paragon"])
 						factionRow.standingText = L["Paragon"]
@@ -320,6 +324,14 @@ function PR:ChangeReputationBars()
 					elseif PR.db.text == "CURRENT" then
 						factionStanding:SetText(BreakUpLargeNumbers(value))
 						factionRow.standingText = BreakUpLargeNumbers(value)
+					elseif PR.db.text == "PARAGONPLUS" then
+						if count > 0 then
+							factionStanding:SetText(L["Paragon"].." x "..count)
+							factionRow.standingText = (L["Paragon"].." x "..count)
+						else
+							factionStanding:SetText(L["Paragon"].." + ")
+							factionRow.standingText = (L["Paragon"].." + ")
+						end
 					elseif PR.db.text == "VALUE" then
 						factionStanding:SetText(" " .. BreakUpLargeNumbers(value) .. " / " .. BreakUpLargeNumbers(threshold))
 						factionRow.standingText = (" " .. BreakUpLargeNumbers(value) .. " / " .. BreakUpLargeNumbers(threshold))
@@ -337,10 +349,6 @@ function PR:ChangeReputationBars()
 						factionRow.rolloverText = nil
 					end
 					if factionIndex == GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
-						local count = floor(currentValue / threshold)
-						if hasRewardPending then
-							count = count - 1
-						end
 						if count > 0 then
 							_G.ReputationDetailFactionName:SetText(name .. " |cffffffffx" .. count .. "|r")
 						end

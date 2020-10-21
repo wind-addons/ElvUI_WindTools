@@ -9,7 +9,7 @@ local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
 function S:ElvUI_ActionBar_SkinBar(bar, type)
-    if not (bar and bar.backdrop) then
+    if not (E.private.WT.skins.shadow and bar and bar.backdrop) then
         return
     end
 

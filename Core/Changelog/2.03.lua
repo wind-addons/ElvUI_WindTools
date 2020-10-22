@@ -14,9 +14,9 @@ W.Changelog[203] = {
             "[遊戲條] 添加了鼠標提示在上的設定. 感謝 @Merathilis"
         },
         ["enUS"] = {
-            "[Contacs] New module. (Item - Contacts)",
+            "[Contacts] New module. (Item - Contacts)",
             "[Paragon Reputation] Add a new text style.",
-            "[Game Bar] Add new option for showing tooltip on top rather than bottom. Thanks @Merathilis"
+            "[Game Bar] Add new option for showing tooltip on top rather than the bottom. Thanks @Merathilis"
         }
     },
     IMPROVEMENT = {
@@ -24,7 +24,7 @@ W.Changelog[203] = {
             "修复更新记录提示函数.",
             "[游戏条] 部分按钮支持战斗中点击.",
             "[移动框体] 修复了可能出现的 ElvUI 背包拖拽提示不消失问题.",
-            "[移动框体] 修复了 ElvUI 背包不存在時依舊進行處理的問題.",
+            "[移动框体] 修复了 ElvUI 背包不存在时依旧进行处理的问题.",
             "[美化皮肤] 修复了保持宽高比的 WeakAuras 图标美化会导致材质拉伸的问题.",
             "[美化皮肤] 修复了可能发生的 ElvUI 动作条皮肤美化错误.",
             "[右键菜单] 公会邀请可以邀请战网好友了.",
@@ -61,8 +61,8 @@ W.Changelog[203] = {
             "[Skins] Fix the bug that Skins try to show/hide shadow even the shadow was not added. ",
             "[Context Menu] Guild invite now available on Battle.net friends.",
             "[Context Menu] Fix Report Stats function on Battle.net friends.",
-            "[Chat Link] Fix the problem that you cannot preivew the mount via clicking the link.",
-            "[Progression] Fix the bug occured when you try to inspect other players.",
+            "[Chat Link] Fix the problem that you cannot preview the mount via clicking the link.",
+            "[Progression] Fix the bug occurred when you try to inspect other players.",
             "[Paragon Reputation] Fix the option key error.",
             "[Paragon Reputation] Fix the tips of rewards.",
             "[Paragon Reputation] Add support for SL.",

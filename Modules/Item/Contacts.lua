@@ -149,7 +149,7 @@ function CT:ConstructButtons()
         end
     )
 
-    -- Alts
+    -- Alternate Character
     local altsButton = CreateFrame("Button", "WTContactsAltsButton", self.frame, "SecureActionButtonTemplate")
     altsButton:Size(25)
     SetButtonTexture(altsButton, W.Media.Icons.barCharacter, 0.945, 0.769, 0.059)
@@ -164,6 +164,7 @@ function CT:ConstructButtons()
         end
     )
 
+    -- Online Friends
     local friendsButton = CreateFrame("Button", "WTContactsFriendsButton", self.frame, "SecureActionButtonTemplate")
     friendsButton:Size(25)
     SetButtonTexture(friendsButton, W.Media.Icons.barFriends, 0.345, 0.667, 0.867)
@@ -178,6 +179,7 @@ function CT:ConstructButtons()
         end
     )
 
+    -- Guild Members
     local guildButton = CreateFrame("Button", "WTContactsGuildButton", self.frame, "SecureActionButtonTemplate")
     guildButton:Size(25)
     SetButtonTexture(guildButton, W.Media.Icons.barGuild, 0.180, 0.800, 0.443)
@@ -192,6 +194,7 @@ function CT:ConstructButtons()
         end
     )
 
+    -- My Favorites
     local favoriteButton = CreateFrame("Button", "WTContactsFavoriteButton", self.frame, "SecureActionButtonTemplate")
     favoriteButton:Size(25)
     SetButtonTexture(favoriteButton, W.Media.Icons.favorite, 0.769, 0.118, 0.227)

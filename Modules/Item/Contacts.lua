@@ -1,16 +1,19 @@
 local W, F, E, L = unpack(select(2, ...))
-local CT = W:NewModule("Contacts", "AceEvent-3.0")
+local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
 
 function CT:ConstructFrame()
+    if self.frame then
+        return
+    end
+
     local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
     frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
     frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
     frame:CreateBackdrop("Transparent")
-
     frame:EnableMouse(true)
 
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
@@ -22,6 +25,134 @@ function CT:ConstructFrame()
         local MF = W:GetModule("MoveFrames")
         MF:HandleFrame("WTContacts", "MailFrame")
     end
+
+    self.frame = frame
+end
+
+function CT:ConstructButtons()
+    local function SetButtonTexture(button, texture)
+        local normalTex = button:CreateTexture(nil, "ARTWORK")
+        normalTex:Point("CENTER")
+        normalTex:Size(button:GetSize())
+        normalTex:SetTexture(texture)
+        normalTex:SetVertexColor(1, 1, 1)
+        button.normalTex = normalTex
+
+        local hoverTex = button:CreateTexture(nil, "ARTWORK")
+        hoverTex:Point("CENTER")
+        hoverTex:Size(button:GetSize())
+        hoverTex:SetTexture(texture)
+        hoverTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+        hoverTex:SetAlpha(0)
+        button.hoverTex = hoverTex
+
+        button:SetScript(
+            "OnEnter",
+            function()
+                E:UIFrameFadeIn(button.hoverTex, (1 - button.hoverTex:GetAlpha()) * 0.62, button.hoverTex:GetAlpha(), 1)
+            end
+        )
+
+        button:SetScript(
+            "OnLeave",
+            function()
+                E:UIFrameFadeOut(button.hoverTex, button.hoverTex:GetAlpha() * 0.62, button.hoverTex:GetAlpha(), 0)
+            end
+        )
+    end
+    
+    -- Toggle frame
+    local toggleButton = CreateFrame("Button", "WTContactsToggleButton", _G.SendMailFrame, "SecureActionButtonTemplate")
+    toggleButton:Size(24)
+    SetButtonTexture(toggleButton, W.Media.Icons.list)
+    toggleButton:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", -24, 36)
+    toggleButton:RegisterForClicks("AnyUp")
+
+    toggleButton:SetScript(
+        "OnClick",
+        function()
+            if self.frame:IsShown() then
+                self.db.forceHide = true
+                self.frame:Hide()
+            else
+                self.db.forceHide = nil
+                self.frame:Show()
+            end
+        end
+    )
+
+    -- 150 = 10 + 25 + 10 + 25 + 10 + 25 + 10 + 25 + 10
+    -- Alts
+    local altsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    altsButton:Size(25)
+    SetButtonTexture(altsButton, W.Media.Icons.barCharacter)
+    altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
+    altsButton:RegisterForClicks("AnyUp")
+
+    altsButton:SetScript(
+        "OnClick",
+        function()
+            print("alts function")
+        end
+    )
+
+    local altsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    altsButton:Size(25)
+    SetButtonTexture(altsButton, W.Media.Icons.barCharacter)
+    altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
+    altsButton:RegisterForClicks("AnyUp")
+
+    altsButton:SetScript(
+        "OnClick",
+        function()
+            print("alts function")
+        end
+    )
+
+    local friendsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    friendsButton:Size(25)
+    SetButtonTexture(friendsButton, W.Media.Icons.barFriends)
+    friendsButton:Point("LEFT", altsButton, "RIGHT", 10, 0)
+    friendsButton:RegisterForClicks("AnyUp")
+
+    friendsButton:SetScript(
+        "OnClick",
+        function()
+            print("friends function")
+        end
+    )
+
+    local guildButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    guildButton:Size(25)
+    SetButtonTexture(guildButton, W.Media.Icons.barGuild)
+    guildButton:Point("LEFT", friendsButton, "RIGHT", 10, 0)
+    guildButton:RegisterForClicks("AnyUp")
+
+    guildButton:SetScript(
+        "OnClick",
+        function()
+            print("guild function")
+        end
+    )
+
+    local favoriteButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    favoriteButton:Size(25)
+    SetButtonTexture(favoriteButton, W.Media.Icons.favorite)
+    favoriteButton:Point("LEFT", guildButton, "RIGHT", 10, 0)
+    favoriteButton:RegisterForClicks("AnyUp")
+
+    favoriteButton:SetScript(
+        "OnClick",
+        function()
+            print("favorite function")
+        end
+    )
+
+    self.toggleButton = toggleButton
+    self.altsButton = altsButton
+    self.friendsButton = friendsButton
+    self.guildButton = guildButton
+    self.favoriteButton = favoriteButton
 end
 
 function CT:Initialize()

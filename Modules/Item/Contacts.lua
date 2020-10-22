@@ -575,12 +575,20 @@ function CT:ChangeCategory(type)
     self:UpdatePage(1)
 end
 
--- Debug
-CT.Initialize = E.noop
-function CT:TestInitialize()
+function CT:SendMailFrame_OnShow()
+    if self.db.forceHide then
+        self.frame:Hide()
+    else
+        self.frame:Show()
+        self:ChangeCategory()
+    end
+end
+
+function CT:Initialize()
     self:UpdateAltsTable()
     self.db = E.db.WT.item.contacts
-    if not self.db.enable then
+
+    if not self.db.enable or self.Initialized then
         return
     end
 
@@ -589,11 +597,23 @@ function CT:TestInitialize()
     self:ConstructNameButtons()
     self:ConstructPageController()
 
-    self:SecureHookScript(_G.SendMailFrame, "OnShow", "ChangeCategory")
+    self:SecureHookScript(_G.SendMailFrame, "OnShow", "SendMailFrame_OnShow")
+    self.Initialized = true
 end
 
 function CT:ProfileUpdate()
     self.db = E.db.WT.item.contacts
+
+    if self.db.enable then
+        self:Initialize()
+        self.frame:Show()
+        self.toggleButton:Show()
+    else
+        if self.Initialized then
+            self.frame:Hide()
+            self.toggleButton:Hide()
+        end
+    end
 end
 
 W:RegisterModule(CT:GetName())

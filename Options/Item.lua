@@ -7,6 +7,7 @@ local AK = W:GetModule("AlreadyKnown")
 local FL = W:GetModule("FastLoot")
 local TD = W:GetModule("Trade")
 local EB = W:GetModule("ExtraItemsBar")
+local CT = W:GetModule("Contacts")
 
 local format = format
 local pairs = pairs
@@ -676,3 +677,179 @@ options.trade = {
         }
     }
 }
+
+options.contacts = {
+    order = 6,
+    type = "group",
+    name = L["Contacts"],
+    get = function(info)
+        return E.db.WT.item.contacts[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.contacts[info[#info]] = value
+        CT:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add a address book frame besides the mail frame."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        }
+    }
+}
+
+do
+    local selectedKey
+
+    options.contacts.args.alts = {
+        order = 2,
+        type = "group",
+        inline = true,
+        name = L["Alts"],
+        args = {
+            listTable = {
+                order = 1,
+                type = "select",
+                name = L["Alt List"],
+                get = function()
+                    return selectedKey
+                end,
+                set = function(_, value)
+                    selectedKey = value
+                end,
+                values = function()
+                    local result = {}
+                    for realm, factions in pairs(E.global.WT.item.contacts.alts) do
+                        for _, characters in pairs(factions) do
+                            for name, class in pairs(characters) do
+                                result[name .. "-" .. realm] = F.CreateClassColorString(name .. "-" .. realm, class)
+                            end
+                        end
+                    end
+                    return result
+                end
+            },
+            deleteButton = {
+                order = 2,
+                type = "execute",
+                name = L["Delete"],
+                desc = L["Delete the selected item."],
+                func = function()
+                    if selectedKey then
+                        for realm, factions in pairs(E.global.WT.item.contacts.alts) do
+                            for faction, characters in pairs(factions) do
+                                for name, class in pairs(characters) do
+                                    if name .. "-" .. realm == selectedKey then
+                                        E.global.WT.item.contacts.alts[realm][faction][name] = nil
+                                        selectedKey = nil
+                                        return
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            }
+        }
+    }
+end
+
+do
+    local selectedKey
+    local tempName, tempRealm
+
+    options.contacts.args.favorite = {
+        order = 3,
+        type = "group",
+        inline = true,
+        name = L["Favorites"],
+        args = {
+            name = {
+                order = 1,
+                type = "input",
+                name = L["Name"],
+                get = function()
+                    return tempName
+                end,
+                set = function(_, value)
+                    tempName = value
+                end
+            },
+            realm = {
+                order = 2,
+                type = "input",
+                name = L["Realm"],
+                get = function()
+                    return tempRealm
+                end,
+                set = function(_, value)
+                    tempRealm = value
+                end
+            },
+            addButton = {
+                order = 3,
+                type = "execute",
+                name = L["Add"],
+                func = function()
+                    if tempName and tempRealm then
+                        E.global.WT.item.contacts.favorites[tempName.."-"..tempRealm] = true
+                        tempName = nil
+                        tempRealm = nil
+                    else
+                        print(L["Please set the name and relam first."])
+                    end
+                end
+            },
+            betterOption = {
+                order = 4,
+                type = "description",
+                name = " ",
+                width = "full"
+            },
+            listTable = {
+                order = 5,
+                type = "select",
+                name = L["Favorite List"],
+                get = function()
+                    return selectedKey
+                end,
+                set = function(_, value)
+                    selectedKey = value
+                end,
+                values = function()
+                    local result = {}
+                    for fullName in pairs(E.global.WT.item.contacts.favorites) do
+                        result[fullName] = fullName
+                    end
+                    return result
+                end
+            },
+            deleteButton = {
+                order = 6,
+                type = "execute",
+                name = L["Delete"],
+                desc = L["Delete the selected item."],
+                func = function()
+                    if selectedKey then
+                        E.global.WT.item.contacts.favorites[selectedKey] = nil
+                    end
+                end
+            }
+        }
+    }
+end

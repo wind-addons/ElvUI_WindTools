@@ -283,6 +283,9 @@ P.combat = {
 }
 
 P.item = {
+    contacts = {
+        enable = true,
+    },
     delete = {
         enable = true,
         delKey = true,

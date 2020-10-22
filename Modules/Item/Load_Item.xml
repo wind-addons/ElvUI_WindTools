@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='AlreadyKnown.lua'/>
+	<Script file='Contacts.lua'/>
 	<Script file='DeleteItem.lua'/>
 	<Script file='ExtraItemBar.lua'/>
 	<Script file='FastLoot.lua'/>

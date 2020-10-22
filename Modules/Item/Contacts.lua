@@ -6,14 +6,29 @@ local ES = E:GetModule("Skins")
 local _G = _G
 
 local BNGetNumFriends = BNGetNumFriends
+local CreateFrame = CreateFrame
+local GameTooltip = _G.GameTooltip
+local GetClassColor = GetClassColor
+local IsInGuild = IsInGuild
+local floor = floor
+local format = format
+local pairs = pairs
+local select = select
+local tinsert = tinsert
+local unpack = unpack
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
-local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
-local C_Club_GetGuildClubId = C_Club.GetGuildClubId
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_Club_GetClubMembers = C_Club.GetClubMembers
+local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_Club_GetMemberInfo = C_Club.GetMemberInfo
 local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
+local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
+local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+
+local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
+local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 local guildClubID
 local currentPageIndex
@@ -461,9 +476,9 @@ function CT:BuildFriendsData()
     data = {}
 
     local tempKey = {}
-    local numWoWFriend = C_FriendList.GetNumOnlineFriends()
+    local numWoWFriend = C_FriendList_GetNumOnlineFriends()
     for i = 1, numWoWFriend do
-        local info = C_FriendList.GetFriendInfoByIndex(i)
+        local info = C_FriendList_GetFriendInfoByIndex(i)
         if info.connected then
             local name, realm = F.SplitCJKString("-", info.name)
             realm = realm or E.myrealm
@@ -492,37 +507,37 @@ function CT:BuildFriendsData()
                         gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" and
                             gameAccountInfo.wowProjectID == 1 and
                             gameAccountInfo.factionName and
-                            gameAccountInfo.factionName == E.myfaction
+                            gameAccountInfo.factionName == E.myfaction and
+                            not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName]
                      then
-                        if not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName] then
-                            tinsert(
-                                data,
-                                {
-                                    name = gameAccountInfo.characterName,
-                                    realm = gameAccountInfo.realmName,
-                                    class = GetNonLocalizedClass(gameAccountInfo.className),
-                                    BNName = accountInfo.accountName
-                                }
-                            )
-                        end
+                        tinsert(
+                            data,
+                            {
+                                name = gameAccountInfo.characterName,
+                                realm = gameAccountInfo.realmName,
+                                class = GetNonLocalizedClass(gameAccountInfo.className),
+                                BNName = accountInfo.accountName
+                            }
+                        )
                     end
                 end
             elseif
                 accountInfo.gameAccountInfo.clientProgram == "WoW" and accountInfo.gameAccountInfo.wowProjectID == 1 and
                     accountInfo.gameAccountInfo.factionName and
-                    accountInfo.gameAccountInfo.factionName == E.myfaction
+                    accountInfo.gameAccountInfo.factionName == E.myfaction and
+                    not tempKey[
+                        accountInfo.gameAccountInfo.characterName .. "-" .. accountInfo.gameAccountInfo.realmName
+                    ]
              then
-                if not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName] then
-                    tinsert(
-                        data,
-                        {
-                            name = accountInfo.gameAccountInfo.characterName,
-                            realm = accountInfo.gameAccountInfo.realmName,
-                            class = GetNonLocalizedClass(accountInfo.gameAccountInfo.className),
-                            BNName = accountInfo.accountName
-                        }
-                    )
-                end
+                tinsert(
+                    data,
+                    {
+                        name = accountInfo.gameAccountInfo.characterName,
+                        realm = accountInfo.gameAccountInfo.realmName,
+                        class = GetNonLocalizedClass(accountInfo.gameAccountInfo.className),
+                        BNName = accountInfo.accountName
+                    }
+                )
             end
         end
     end

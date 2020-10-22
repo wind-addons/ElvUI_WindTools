@@ -5,30 +5,6 @@ local ES = E:GetModule("Skins")
 
 local _G = _G
 
-function CT:ConstructFrame()
-    if self.frame then
-        return
-    end
-
-    local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
-    frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
-    frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
-    frame:CreateBackdrop("Transparent")
-    frame:EnableMouse(true)
-
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        S:CreateShadow(frame.backdrop)
-    end
-
-    -- Register move frames
-    if E.private.WT.misc.moveBlizzardFrames then
-        local MF = W:GetModule("MoveFrames")
-        MF:HandleFrame("WTContacts", "MailFrame")
-    end
-
-    self.frame = frame
-end
-
 local function SetButtonTexture(button, texture)
     local normalTex = button:CreateTexture(nil, "ARTWORK")
     normalTex:Point("CENTER")
@@ -58,6 +34,30 @@ local function SetButtonTexture(button, texture)
             E:UIFrameFadeOut(button.hoverTex, button.hoverTex:GetAlpha() * 0.62, button.hoverTex:GetAlpha(), 0)
         end
     )
+end
+
+function CT:ConstructFrame()
+    if self.frame then
+        return
+    end
+
+    local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
+    frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
+    frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
+    frame:CreateBackdrop("Transparent")
+    frame:EnableMouse(true)
+
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
+        S:CreateShadow(frame.backdrop)
+    end
+
+    -- Register move frames
+    if E.private.WT.misc.moveBlizzardFrames then
+        local MF = W:GetModule("MoveFrames")
+        MF:HandleFrame("WTContacts", "MailFrame")
+    end
+
+    self.frame = frame
 end
 
 function CT:ConstructButtons()
@@ -232,7 +232,9 @@ function CT:SetButtonTooltip(button)
     GameTooltip:Show()
 end
 
-function CT:Initialize()
+-- Debug
+CT.Initialize = E.noop
+function CT:TestInitialize()
     self.altsTable = E.global.WT.item.contacts.alts
 
     if not self.altsTable[E.myrealm] then
@@ -249,6 +251,11 @@ function CT:Initialize()
     end
 
     self.customTable = E.global.WT.item.contacts.custom
+
+    self:ConstructFrame()
+    self:ConstructButtons()
+    self:ConstructNameButtons()
+    self:ConstructPageController()
 end
 
 function CT:ProfileUpdate()

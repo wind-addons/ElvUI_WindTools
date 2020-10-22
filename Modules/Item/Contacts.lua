@@ -36,7 +36,7 @@ local function GetNonLocalizedClass(className)
     end
 end
 
-local function SetButtonTexture(button, texture)
+local function SetButtonTexture(button, texture, r, g, b)
     local normalTex = button:CreateTexture(nil, "ARTWORK")
     normalTex:Point("CENTER")
     normalTex:Size(button:GetSize())
@@ -48,21 +48,24 @@ local function SetButtonTexture(button, texture)
     hoverTex:Point("CENTER")
     hoverTex:Size(button:GetSize())
     hoverTex:SetTexture(texture)
-    hoverTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+    if not r or not g or not b then
+        r, g, b = unpack(E.media.rgbvaluecolor)
+    end
+    hoverTex:SetVertexColor(r, g, b)
     hoverTex:SetAlpha(0)
     button.hoverTex = hoverTex
 
     button:SetScript(
         "OnEnter",
         function()
-            E:UIFrameFadeIn(button.hoverTex, (1 - button.hoverTex:GetAlpha()) * 0.62, button.hoverTex:GetAlpha(), 1)
+            E:UIFrameFadeIn(button.hoverTex, (1 - button.hoverTex:GetAlpha()) * 0.382, button.hoverTex:GetAlpha(), 1)
         end
     )
 
     button:SetScript(
         "OnLeave",
         function()
-            E:UIFrameFadeOut(button.hoverTex, button.hoverTex:GetAlpha() * 0.62, button.hoverTex:GetAlpha(), 0)
+            E:UIFrameFadeOut(button.hoverTex, button.hoverTex:GetAlpha() * 0.382, button.hoverTex:GetAlpha(), 0)
         end
     )
 end
@@ -116,7 +119,7 @@ function CT:ConstructButtons()
     -- Alts
     local altsButton = CreateFrame("Button", "WTContactsAltsButton", self.frame, "SecureActionButtonTemplate")
     altsButton:Size(25)
-    SetButtonTexture(altsButton, W.Media.Icons.barCharacter)
+    SetButtonTexture(altsButton, W.Media.Icons.barCharacter, 0.945, 0.769, 0.059)
     altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
     altsButton:RegisterForClicks("AnyUp")
 
@@ -129,7 +132,7 @@ function CT:ConstructButtons()
 
     local friendsButton = CreateFrame("Button", "WTContactsFriendsButton", self.frame, "SecureActionButtonTemplate")
     friendsButton:Size(25)
-    SetButtonTexture(friendsButton, W.Media.Icons.barFriends)
+    SetButtonTexture(friendsButton, W.Media.Icons.barFriends, 0.345, 0.667, 0.867)
     friendsButton:Point("LEFT", altsButton, "RIGHT", 10, 0)
     friendsButton:RegisterForClicks("AnyUp")
 
@@ -142,7 +145,7 @@ function CT:ConstructButtons()
 
     local guildButton = CreateFrame("Button", "WTContactsGuildButton", self.frame, "SecureActionButtonTemplate")
     guildButton:Size(25)
-    SetButtonTexture(guildButton, W.Media.Icons.barGuild)
+    SetButtonTexture(guildButton, W.Media.Icons.barGuild, 0.180, 0.800, 0.443)
     guildButton:Point("LEFT", friendsButton, "RIGHT", 10, 0)
     guildButton:RegisterForClicks("AnyUp")
 
@@ -155,7 +158,7 @@ function CT:ConstructButtons()
 
     local favoriteButton = CreateFrame("Button", "WTContactsFavoriteButton", self.frame, "SecureActionButtonTemplate")
     favoriteButton:Size(25)
-    SetButtonTexture(favoriteButton, W.Media.Icons.favorite)
+    SetButtonTexture(favoriteButton, W.Media.Icons.favorite, 0.769, 0.118, 0.227)
     favoriteButton:Point("LEFT", guildButton, "RIGHT", 10, 0)
     favoriteButton:RegisterForClicks("AnyUp")
 
@@ -488,6 +491,19 @@ function CT:BuildGuildData()
     end
 end
 
+function CT:BuildFavoriteData()
+    data = {}
+    for name, realm in pairs(E.global.WT.item.contacts.custom) do
+        tinsert(
+            data,
+            {
+                name = name,
+                realm = realm
+            }
+        )
+    end
+end
+
 function CT:ChangeCategory(type)
     type = type or "ALTS"
 
@@ -497,6 +513,8 @@ function CT:ChangeCategory(type)
         self:BuildFriendsData()
     elseif type == "GUILD" then
         self:BuildGuildData()
+    elseif type == "FAVORITE" then
+        self:BuildFavoriteData()
     else
         self:BuildAltsData()
     end
@@ -513,8 +531,6 @@ function CT:TestInitialize()
     if not self.db.enable then
         return
     end
-
-    self.customTable = E.global.WT.item.contacts.custom
 
     self:ConstructFrame()
     self:ConstructButtons()

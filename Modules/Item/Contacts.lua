@@ -115,7 +115,6 @@ function CT:ConstructButtons()
         end
     )
 
-    -- 150 = 10 + 25 + 10 + 25 + 10 + 25 + 10 + 25 + 10
     -- Alts
     local altsButton = CreateFrame("Button", "WTContactsAltsButton", self.frame, "SecureActionButtonTemplate")
     altsButton:Size(25)
@@ -412,6 +411,12 @@ function CT:UpdatePage(pageIndex)
     self.slider:SetValue(pageIndex)
     self.slider:SetMinMaxValues(1, floor(numData / 14) + 1)
     self.slider.pageIndicater:SetText(format("%d / %d", pageIndex, floor(numData / 14) + 1))
+
+    if numData <= 14 then
+        self.slider:Hide()
+    else
+        self.slider:Show()
+    end
 end
 
 function CT:UpdateAltsTable()

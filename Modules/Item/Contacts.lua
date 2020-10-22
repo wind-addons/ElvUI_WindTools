@@ -83,7 +83,7 @@ function CT:ConstructButtons()
 
     -- 150 = 10 + 25 + 10 + 25 + 10 + 25 + 10 + 25 + 10
     -- Alts
-    local altsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local altsButton = CreateFrame("Button", "WTContactsAltsButton", self.frame, "SecureActionButtonTemplate")
     altsButton:Size(25)
     SetButtonTexture(altsButton, W.Media.Icons.barCharacter)
     altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
@@ -96,20 +96,7 @@ function CT:ConstructButtons()
         end
     )
 
-    local altsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
-    altsButton:Size(25)
-    SetButtonTexture(altsButton, W.Media.Icons.barCharacter)
-    altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
-    altsButton:RegisterForClicks("AnyUp")
-
-    altsButton:SetScript(
-        "OnClick",
-        function()
-            print("alts function")
-        end
-    )
-
-    local friendsButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local friendsButton = CreateFrame("Button", "WTContactsFriendsButton", self.frame, "SecureActionButtonTemplate")
     friendsButton:Size(25)
     SetButtonTexture(friendsButton, W.Media.Icons.barFriends)
     friendsButton:Point("LEFT", altsButton, "RIGHT", 10, 0)
@@ -122,7 +109,7 @@ function CT:ConstructButtons()
         end
     )
 
-    local guildButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local guildButton = CreateFrame("Button", "WTContactsGuildButton", self.frame, "SecureActionButtonTemplate")
     guildButton:Size(25)
     SetButtonTexture(guildButton, W.Media.Icons.barGuild)
     guildButton:Point("LEFT", friendsButton, "RIGHT", 10, 0)
@@ -135,7 +122,7 @@ function CT:ConstructButtons()
         end
     )
 
-    local favoriteButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local favoriteButton = CreateFrame("Button", "WTContactsFavoriteButton", self.frame, "SecureActionButtonTemplate")
     favoriteButton:Size(25)
     SetButtonTexture(favoriteButton, W.Media.Icons.favorite)
     favoriteButton:Point("LEFT", guildButton, "RIGHT", 10, 0)
@@ -219,7 +206,7 @@ function CT:ConstructNameButtons()
 end
 
 function CT:ConstructPageController()
-    local pagePrevButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local pagePrevButton = CreateFrame("Button", "WTContactsPagePrevButton", self.frame, "SecureActionButtonTemplate")
     pagePrevButton:Size(14)
     SetButtonTexture(pagePrevButton, E.Media.Textures.ArrowUp)
     pagePrevButton.normalTex:SetRotation(ES.ArrowRotation.left)
@@ -227,7 +214,7 @@ function CT:ConstructPageController()
     pagePrevButton:Point("BOTTOMLEFT", self.frame, "BOTTOMLEFT", 8, 8)
     pagePrevButton:RegisterForClicks("AnyUp")
 
-    local pageNextButton = CreateFrame("Button", "WTContactsToggleButton", self.frame, "SecureActionButtonTemplate")
+    local pageNextButton = CreateFrame("Button", "WTContactsPageNextButton", self.frame, "SecureActionButtonTemplate")
     pageNextButton:Size(14)
     SetButtonTexture(pageNextButton, E.Media.Textures.ArrowUp)
     pageNextButton.normalTex:SetRotation(ES.ArrowRotation.right)

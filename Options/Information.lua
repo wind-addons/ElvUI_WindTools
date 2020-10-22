@@ -268,7 +268,8 @@ do -- 特别感谢
         "|cff0070deAzilroka|r",
         "Haste",
         "Tukz",
-        "Elv"
+        "Elv",
+        "Repooc"
     }
 
     local nameString = strjoin(", ", unpack(nameList))

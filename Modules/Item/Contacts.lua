@@ -382,7 +382,7 @@ function CT:UpdatePage(pageIndex)
                     button.faction = temp.faction
                     button.BNName = temp.BNName
                 end
-                button:SetText(F.CreateClassColorString(button.name, button.class))
+                button:SetText(button.class and F.CreateClassColorString(button.name, button.class) or button.name)
                 button:Show()
             else
                 button:Hide()
@@ -543,7 +543,9 @@ end
 
 function CT:BuildFavoriteData()
     data = {}
-    for name, realm in pairs(E.global.WT.item.contacts.custom) do
+    for fullName in pairs(E.global.WT.item.contacts.favorites) do
+        local name, realm = F.SplitCJKString("-", fullName)
+        realm = realm or E.myrealm
         tinsert(
             data,
             {

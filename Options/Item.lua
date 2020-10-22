@@ -699,7 +699,7 @@ options.contacts = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Add a address book frame besides the mail frame."],
+                    name = L["Add a contact frame beside the mail frame."],
                     fontSize = "medium"
                 }
             }
@@ -807,11 +807,11 @@ do
                 name = L["Add"],
                 func = function()
                     if tempName and tempRealm then
-                        E.global.WT.item.contacts.favorites[tempName.."-"..tempRealm] = true
+                        E.global.WT.item.contacts.favorites[tempName .. "-" .. tempRealm] = true
                         tempName = nil
                         tempRealm = nil
                     else
-                        print(L["Please set the name and relam first."])
+                        print(L["Please set the name and realm first."])
                     end
                 end
             },
@@ -843,7 +843,6 @@ do
                 order = 6,
                 type = "execute",
                 name = L["Delete"],
-                desc = L["Delete the selected item."],
                 func = function()
                     if selectedKey then
                         E.global.WT.item.contacts.favorites[selectedKey] = nil

@@ -187,6 +187,7 @@ function CT:ConstructNameButtons()
 
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+        F.SetFontOutline(button.Text)
         ES:HandleButton(button)
         S:CreateShadow(button.backdrop, 2, 1, 1, 1, true)
         if button.backdrop.shadow then

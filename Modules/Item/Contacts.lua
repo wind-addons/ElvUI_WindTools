@@ -10,7 +10,12 @@ local BNGetNumFriends = BNGetNumFriends
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_Club_GetGuildClubId = C_Club.GetGuildClubId
+local C_Club_GetClubMembers = C_Club.GetClubMembers
+local C_Club_GetMemberInfo = C_Club.GetMemberInfo
+local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
 
+local guildClubID
 local currentPageIndex
 local data
 
@@ -311,12 +316,24 @@ function CT:UpdatePage(pageIndex)
             local temp = data[(pageIndex - 1) * 14 + i]
             local button = self.frame.nameButtons[i]
             if temp then
-                button.name = temp.name
-                button.realm = temp.realm
-                button.class = temp.class
-                button.faction = temp.faction
-                button.BNName = temp.BNName
-                button:SetText(F.CreateClassColorString(temp.name, temp.class))
+                if temp.memberID then -- Only get guild member info if needed
+                    local info = C_Club_GetMemberInfo(guildClubID, temp.memberID)
+                    local name, realm = F.SplitCJKString("-", info.name)
+                    local classInfo = C_CreatureInfo_GetClassInfo(info.classID)
+                    realm = realm or E.myrealm
+                    button.name = name
+                    button.realm = realm
+                    button.class = classInfo.classFile
+                    button:SetText(F.CreateClassColorString(name, classInfo.classFile))
+                else
+                    button.name = temp.name
+                    button.realm = temp.realm
+                    button.class = temp.class
+                    button.faction = temp.faction
+                    button.BNName = temp.BNName
+                    button:SetText(F.CreateClassColorString(temp.name, temp.class))
+                end
+
                 button:Show()
             else
                 button:Hide()
@@ -452,6 +469,24 @@ function CT:BuildFriendsData()
     end
 end
 
+function CT:BuildGuildData()
+    data = {}
+    if not IsInGuild() then
+        return
+    end
+
+    guildClubID = C_Club_GetGuildClubId()
+    local members = C_Club_GetClubMembers(guildClubID)
+    for _, member in pairs(members) do
+        tinsert(
+            data,
+            {
+                memberID = member
+            }
+        )
+    end
+end
+
 function CT:ChangeCategory(type)
     type = type or "ALTS"
 
@@ -459,6 +494,8 @@ function CT:ChangeCategory(type)
         self:BuildAltsData()
     elseif type == "FRIENDS" then
         self:BuildFriendsData()
+    elseif type == "GUILD" then
+        self:BuildGuildData()
     else
         self:BuildAltsData()
     end

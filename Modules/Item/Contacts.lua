@@ -94,7 +94,7 @@ function CT:ConstructButtons()
     altsButton:SetScript(
         "OnClick",
         function()
-            self:SetToAlts()
+            self:ChangeCategory("ALTS")
         end
     )
 
@@ -107,7 +107,7 @@ function CT:ConstructButtons()
     friendsButton:SetScript(
         "OnClick",
         function()
-            print("friends function")
+            self:ChangeCategory("FRIENDS")
         end
     )
 
@@ -120,7 +120,7 @@ function CT:ConstructButtons()
     guildButton:SetScript(
         "OnClick",
         function()
-            print("guild function")
+            self:ChangeCategory("GUILD")
         end
     )
 
@@ -133,7 +133,7 @@ function CT:ConstructButtons()
     favoriteButton:SetScript(
         "OnClick",
         function()
-            print("favorite function")
+            self:ChangeCategory("FAVORITE")
         end
     )
 
@@ -348,14 +348,17 @@ function CT:BuildAltsData()
     end
 end
 
-function CT:SetToAlts()
-    self:BuildAltsData()
+function CT:ChangeCategory(type)
+    type = type or "ALTS"
+
+    if type == "ALTS" then
+        self:BuildAltsData()
+    else
+        self:BuildAltsData()
+    end
+
     currentPageIndex = 1
     self:UpdatePage(1)
-end
-
-function CT:Test()
-    CT:SetToAlts()
 end
 
 -- Debug
@@ -374,7 +377,7 @@ function CT:TestInitialize()
     self:ConstructNameButtons()
     self:ConstructPageController()
 
-    self:SecureHookScript(_G.SendMailFrame, "OnShow", "SetToAlts")
+    self:SecureHookScript(_G.SendMailFrame, "OnShow", "ChangeCategory")
 end
 
 function CT:ProfileUpdate()

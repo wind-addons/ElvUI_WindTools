@@ -429,7 +429,9 @@ end
 do -- 媒体文件
     local mediaFilesCreditList = {
         ["Iconfont (Alibaba)"] = {
-            "Media/Icons/GameBar"
+            "Media/Icons/GameBar",
+            "Media/Icons/List.tga",
+            "Media/Icons/Favorite.tga"
         },
         ["Ferous Media (Ferous)"] = {
             "Media/Texture/Vignetting.tga"

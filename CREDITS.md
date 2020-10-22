@@ -94,6 +94,8 @@
 # Medias
 - Iconfont (Alibaba)
     - Media/Icons/GameBar
+    - Media/Icons/List.tga
+    - Media/Icons/Favorite.tga
 
 - Ferous Media (Ferous)
     - Media/Texture/Vignetting.tga

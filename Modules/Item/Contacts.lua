@@ -4,6 +4,8 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+local currentPageIndex
+local data
 
 local function SetButtonTexture(button, texture)
     local normalTex = button:CreateTexture(nil, "ARTWORK")
@@ -92,7 +94,7 @@ function CT:ConstructButtons()
     altsButton:SetScript(
         "OnClick",
         function()
-            print("alts function")
+            self:SetToAlts()
         end
     )
 
@@ -154,10 +156,7 @@ function CT:ConstructNameButtons()
             button:Point("TOP", self.frame.nameButtons[i - 1], "BOTTOM", 0, -5)
         end
 
-        button:SetText("123")
-        button.class = "MONK"
-        button.name = "Tabimonk"
-        button.realm = "暗影之月"
+        button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         ES:HandleButton(button)
         S:CreateShadow(button.backdrop, 2, 1, 1, 1, true)
@@ -171,11 +170,12 @@ function CT:ConstructNameButtons()
                 if mouseButton == "LeftButton" then
                     if _G.SendMailNameEditBox then
                         local playerName = self.name
-                        if self.realm ~= E.myrealm then
-                            playerName = playerName .. "-" .. self.realm
+                        if playerName then
+                            if self.realm and self.realm ~= E.myrealm then
+                                playerName = playerName .. "-" .. self.realm
+                            end
+                            _G.SendMailNameEditBox:SetText(playerName)
                         end
-
-                        _G.SendMailNameEditBox:SetText(playerName)
                     end
                 end
             end
@@ -201,6 +201,7 @@ function CT:ConstructNameButtons()
             end
         )
 
+        button:Hide()
         self.frame.nameButtons[i] = button
     end
 end
@@ -214,6 +215,16 @@ function CT:ConstructPageController()
     pagePrevButton:Point("BOTTOMLEFT", self.frame, "BOTTOMLEFT", 8, 8)
     pagePrevButton:RegisterForClicks("AnyUp")
 
+    pagePrevButton:SetScript(
+        "OnClick",
+        function(_, mouseButton)
+            if mouseButton == "LeftButton" then
+                currentPageIndex = currentPageIndex - 1
+                self:UpdatePage(currentPageIndex)
+            end
+        end
+    )
+
     local pageNextButton = CreateFrame("Button", "WTContactsPageNextButton", self.frame, "SecureActionButtonTemplate")
     pageNextButton:Size(14)
     SetButtonTexture(pageNextButton, E.Media.Textures.ArrowUp)
@@ -221,15 +232,91 @@ function CT:ConstructPageController()
     pageNextButton.hoverTex:SetRotation(ES.ArrowRotation.right)
     pageNextButton:Point("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -8, 8)
     pageNextButton:RegisterForClicks("AnyUp")
+
+    pageNextButton:SetScript(
+        "OnClick",
+        function(_, mouseButton)
+            if mouseButton == "LeftButton" then
+                currentPageIndex = currentPageIndex + 1
+                self:UpdatePage(currentPageIndex)
+            end
+        end
+    )
+
+    self.pagePrevButton = pagePrevButton
+    self.pageNextButton = pageNextButton
 end
 
 function CT:SetButtonTooltip(button)
     GameTooltip:ClearLines()
     GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT", 8, 20)
-    GameTooltip:SetText(button.name)
-    GameTooltip:AddDoubleLine(L["Name"], button.name, 1, 1, 1, GetClassColor(button.class))
-    GameTooltip:AddDoubleLine(L["Realm"], button.realm, 1, 1, 1, unpack(E.media.rgbvaluecolor))
+    GameTooltip:SetText(button.name or "")
+    GameTooltip:AddDoubleLine(L["Name"], button.name or "", 1, 1, 1, GetClassColor(button.class))
+    GameTooltip:AddDoubleLine(L["Realm"], button.realm or "", 1, 1, 1, unpack(E.media.rgbvaluecolor))
     GameTooltip:Show()
+end
+
+function CT:UpdatePage(pageIndex)
+    local numData = data and #data or 0
+
+    -- Name buttons
+    if numData ~= 0 then
+        for i = 1, 14 do
+            local temp = data[(pageIndex - 1) * 14 + i]
+            local button = self.frame.nameButtons[i]
+            if temp then
+                button.name = temp.name
+                button.realm = temp.realm
+                button.class = temp.class
+                button:SetText(F.CreateClassColorString(temp.name, temp.class))
+                button:Show()
+            else
+                button:Hide()
+            end
+        end
+    end
+
+    -- Previous page button
+    if pageIndex == 1 then
+        self.pagePrevButton:Hide()
+    else
+        self.pagePrevButton:Show()
+    end
+
+    -- Next page button
+    if pageIndex * 14 - numData >= 0 then
+        self.pageNextButton:Hide()
+    else
+        self.pageNextButton:Show()
+    end
+end
+
+function CT:BuildAltsData()
+    data = {}
+    for realm, characters in pairs(self.altsTable) do
+        for name, class in pairs(characters) do
+            if not (name == E.myname and realm == E.myrealm) then
+                tinsert(
+                    data,
+                    {
+                        name = name,
+                        realm = realm,
+                        class = class
+                    }
+                )
+            end
+        end
+    end
+end
+
+function CT:SetToAlts()
+    self:BuildAltsData()
+    currentPageIndex = 1
+    self:UpdatePage(1)
+end
+
+function CT:Test()
+    CT:SetToAlts()
 end
 
 -- Debug
@@ -242,7 +329,7 @@ function CT:TestInitialize()
     end
 
     if not self.altsTable[E.myrealm][E.myname] then
-        self.altsTable[E.myrealm][E.myname] = true
+        self.altsTable[E.myrealm][E.myname] = E.myclass
     end
 
     self.db = E.db.WT.item.contacts

@@ -4,8 +4,32 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+
+local BNGetNumFriends = BNGetNumFriends
+
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+
 local currentPageIndex
 local data
+
+local function GetNonLocalizedClass(className)
+    for class, localizedName in pairs(LOCALIZED_CLASS_NAMES_MALE) do
+        if className == localizedName then
+            return class
+        end
+    end
+
+    -- For deDE and frFR
+    if W.Locale == "deDE" or W.Locale == "frFR" then
+        for class, localizedName in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do
+            if className == localizedName then
+                return class
+            end
+        end
+    end
+end
 
 local function SetButtonTexture(button, texture)
     local normalTex = button:CreateTexture(nil, "ARTWORK")
@@ -254,6 +278,10 @@ function CT:SetButtonTooltip(button)
     GameTooltip:AddDoubleLine(L["Name"], button.name or "", 1, 1, 1, GetClassColor(button.class))
     GameTooltip:AddDoubleLine(L["Realm"], button.realm or "", 1, 1, 1, unpack(E.media.rgbvaluecolor))
 
+    if button.BNName then
+        GameTooltip:AddDoubleLine(L["Battle.net Tag"], button.BNName, 1, 1, 1, 1, 1, 1)
+    end
+
     if button.faction then
         local text, r, g, b
         if button.faction == "Horde" then
@@ -287,11 +315,16 @@ function CT:UpdatePage(pageIndex)
                 button.realm = temp.realm
                 button.class = temp.class
                 button.faction = temp.faction
+                button.BNName = temp.BNName
                 button:SetText(F.CreateClassColorString(temp.name, temp.class))
                 button:Show()
             else
                 button:Hide()
             end
+        end
+    else
+        for i = 1, 14 do
+            self.frame.nameButtons[i]:Hide()
         end
     end
 
@@ -348,11 +381,84 @@ function CT:BuildAltsData()
     end
 end
 
+function CT:BuildFriendsData()
+    data = {}
+
+    local tempKey = {}
+    local numWoWFriend = C_FriendList.GetNumOnlineFriends()
+    for i = 1, numWoWFriend do
+        local info = C_FriendList.GetFriendInfoByIndex(i)
+        if info.connected then
+            local name, realm = F.SplitCJKString("-", info.name)
+            realm = realm or E.myrealm
+            tinsert(
+                data,
+                {
+                    name = name,
+                    realm = realm,
+                    class = GetNonLocalizedClass(info.className)
+                }
+            )
+            tempKey[name .. "-" .. realm] = true
+        end
+    end
+
+    local numBNOnlineFriend = select(2, BNGetNumFriends())
+
+    for i = 1, numBNOnlineFriend do
+        local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+        if accountInfo and accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.isOnline then
+            local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+            if numGameAccounts and numGameAccounts > 0 then
+                for j = 1, numGameAccounts do
+                    local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+                    if
+                        gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" and
+                            gameAccountInfo.wowProjectID == 1 and
+                            gameAccountInfo.factionName and
+                            gameAccountInfo.factionName == E.myfaction
+                     then
+                        if not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName] then
+                            tinsert(
+                                data,
+                                {
+                                    name = gameAccountInfo.characterName,
+                                    realm = gameAccountInfo.realmName,
+                                    class = GetNonLocalizedClass(gameAccountInfo.className),
+                                    BNName = accountInfo.accountName
+                                }
+                            )
+                        end
+                    end
+                end
+            elseif
+                accountInfo.gameAccountInfo.clientProgram == "WoW" and accountInfo.gameAccountInfo.wowProjectID == 1 and
+                    accountInfo.gameAccountInfo.factionName and
+                    accountInfo.gameAccountInfo.factionName == E.myfaction
+             then
+                if not tempKey[gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName] then
+                    tinsert(
+                        data,
+                        {
+                            name = accountInfo.gameAccountInfo.characterName,
+                            realm = accountInfo.gameAccountInfo.realmName,
+                            class = GetNonLocalizedClass(accountInfo.gameAccountInfo.className),
+                            BNName = accountInfo.accountName
+                        }
+                    )
+                end
+            end
+        end
+    end
+end
+
 function CT:ChangeCategory(type)
     type = type or "ALTS"
 
     if type == "ALTS" then
         self:BuildAltsData()
+    elseif type == "FRIENDS" then
+        self:BuildFriendsData()
     else
         self:BuildAltsData()
     end

@@ -185,7 +185,7 @@ function CT:ConstructNameButtons()
         if i == 1 then
             button:Point("TOP", self.frame, "TOP", 0, -45)
         else
-            button:Point("TOP", self.frame.nameButtons[i - 1], "BOTTOM", 0, -5)
+            button:Point("TOP", self.frame.nameButtons[i - 1], "BOTTOM", 0, -4)
         end
 
         button:SetText("")
@@ -276,8 +276,34 @@ function CT:ConstructPageController()
         end
     )
 
+    local slider = CreateFrame("Slider", "WTContactsSlider", self.frame, "BackdropTemplate")
+    slider:Size(80, 20)
+    slider:Point("BOTTOM", self.frame, "BOTTOM", 0, 8)
+    slider:SetOrientation("HORIZONTAL")
+    slider:SetValueStep(1)
+    slider:SetValue(1)
+    slider:SetMinMaxValues(1, 10)
+
+    slider:SetScript(
+        "OnValueChanged",
+        function(_, newValue)
+            if newValue then
+                currentPageIndex = newValue
+                self:UpdatePage(currentPageIndex)
+            end
+        end
+    )
+
+    ES:HandleSliderFrame(slider)
+
+    local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+    pageIndicater:Point("BOTTOM", slider, "TOP", 0, 5)
+    F.SetFontOutline(pageIndicater, "Montserrat" .. (W.CompatibleFont and " (en)" or ""))
+    slider.pageIndicater = pageIndicater
+
     self.pagePrevButton = pagePrevButton
     self.pageNextButton = pageNextButton
+    self.slider = slider
 end
 
 function CT:SetButtonTooltip(button)
@@ -328,16 +354,16 @@ function CT:UpdatePage(pageIndex)
                     button.name = name
                     button.realm = realm
                     button.class = classInfo.classFile
-                    button:SetText(F.CreateClassColorString(name, classInfo.classFile))
+                    button.BNName = nil
+                    button.faction = E.myfaction
                 else
                     button.name = temp.name
                     button.realm = temp.realm
                     button.class = temp.class
                     button.faction = temp.faction
                     button.BNName = temp.BNName
-                    button:SetText(F.CreateClassColorString(temp.name, temp.class))
                 end
-
+                button:SetText(F.CreateClassColorString(button.name, button.class))
                 button:Show()
             else
                 button:Hide()
@@ -362,6 +388,11 @@ function CT:UpdatePage(pageIndex)
     else
         self.pageNextButton:Show()
     end
+
+    -- Slider
+    self.slider:SetValue(pageIndex)
+    self.slider:SetMinMaxValues(1, floor(numData / 14) + 1)
+    self.slider.pageIndicater:SetText(format("%d / %d", pageIndex, floor(numData / 14) + 1))
 end
 
 function CT:UpdateAltsTable()

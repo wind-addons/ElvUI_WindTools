@@ -21,6 +21,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 3. **Fast Loot**: Make the auto-loot more efficiently.
 4. **Trade**: Say thanks to the trade target with one-click.
 5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
+6. **Contacts**: Add a contact frame beside the mail frame.
 
 ## Combat
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more! 

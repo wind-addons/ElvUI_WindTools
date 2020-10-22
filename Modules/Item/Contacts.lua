@@ -253,6 +253,24 @@ function CT:SetButtonTooltip(button)
     GameTooltip:SetText(button.name or "")
     GameTooltip:AddDoubleLine(L["Name"], button.name or "", 1, 1, 1, GetClassColor(button.class))
     GameTooltip:AddDoubleLine(L["Realm"], button.realm or "", 1, 1, 1, unpack(E.media.rgbvaluecolor))
+
+    if button.faction then
+        local text, r, g, b
+        if button.faction == "Horde" then
+            text = L["Horde"]
+            r = 0.906
+            g = 0.298
+            b = 0.235
+        else
+            text = L["Alliance"]
+            r = 0.204
+            g = 0.596
+            b = 0.859
+        end
+
+        GameTooltip:AddDoubleLine(L["Faction"], text or "", 1, 1, 1, r, g, b)
+    end
+
     GameTooltip:Show()
 end
 
@@ -268,6 +286,7 @@ function CT:UpdatePage(pageIndex)
                 button.name = temp.name
                 button.realm = temp.realm
                 button.class = temp.class
+                button.faction = temp.faction
                 button:SetText(F.CreateClassColorString(temp.name, temp.class))
                 button:Show()
             else
@@ -291,19 +310,39 @@ function CT:UpdatePage(pageIndex)
     end
 end
 
+function CT:UpdateAltsTable()
+    if not self.altsTable then
+        self.altsTable = E.global.WT.item.contacts.alts
+    end
+    if not self.altsTable[E.myrealm] then
+        self.altsTable[E.myrealm] = {}
+    end
+
+    if not self.altsTable[E.myrealm][E.myfaction] then
+        self.altsTable[E.myrealm][E.myfaction] = {}
+    end
+
+    if not self.altsTable[E.myrealm][E.myfaction][E.myname] then
+        self.altsTable[E.myrealm][E.myfaction][E.myname] = E.myclass
+    end
+end
+
 function CT:BuildAltsData()
     data = {}
-    for realm, characters in pairs(self.altsTable) do
-        for name, class in pairs(characters) do
-            if not (name == E.myname and realm == E.myrealm) then
-                tinsert(
-                    data,
-                    {
-                        name = name,
-                        realm = realm,
-                        class = class
-                    }
-                )
+    for realm, factions in pairs(self.altsTable) do
+        for faction, characters in pairs(factions) do
+            for name, class in pairs(characters) do
+                if not (name == E.myname and realm == E.myrealm) then
+                    tinsert(
+                        data,
+                        {
+                            name = name,
+                            realm = realm,
+                            class = class,
+                            faction = faction
+                        }
+                    )
+                end
             end
         end
     end
@@ -322,16 +361,7 @@ end
 -- Debug
 CT.Initialize = E.noop
 function CT:TestInitialize()
-    self.altsTable = E.global.WT.item.contacts.alts
-
-    if not self.altsTable[E.myrealm] then
-        self.altsTable[E.myrealm] = {}
-    end
-
-    if not self.altsTable[E.myrealm][E.myname] then
-        self.altsTable[E.myrealm][E.myname] = E.myclass
-    end
-
+    self:UpdateAltsTable()
     self.db = E.db.WT.item.contacts
     if not self.db.enable then
         return
@@ -343,6 +373,8 @@ function CT:TestInitialize()
     self:ConstructButtons()
     self:ConstructNameButtons()
     self:ConstructPageController()
+
+    self:SecureHookScript(_G.SendMailFrame, "OnShow", "SetToAlts")
 end
 
 function CT:ProfileUpdate()

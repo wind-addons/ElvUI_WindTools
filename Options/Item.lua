@@ -720,7 +720,7 @@ do
         order = 2,
         type = "group",
         inline = true,
-        name = L["Alts"],
+        name = L["Alternate Character"],
         args = {
             listTable = {
                 order = 1,
@@ -777,7 +777,7 @@ do
         order = 3,
         type = "group",
         inline = true,
-        name = L["Favorites"],
+        name = L["My Favorites"],
         args = {
             name = {
                 order = 1,

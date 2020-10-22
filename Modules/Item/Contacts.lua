@@ -85,6 +85,24 @@ local function SetButtonTexture(button, texture, r, g, b)
     )
 end
 
+local function SetButtonTooltip(button, text)
+    button:HookScript(
+        "OnEnter",
+        function()
+            GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+            GameTooltip:ClearLines()
+            GameTooltip:SetText(text)
+        end
+    )
+
+    button:HookScript(
+        "OnLeave",
+        function()
+            GameTooltip:Hide()
+        end
+    )
+end
+
 function CT:ConstructFrame()
     if self.frame then
         return
@@ -114,6 +132,7 @@ function CT:ConstructButtons()
     local toggleButton = CreateFrame("Button", "WTContactsToggleButton", _G.SendMailFrame, "SecureActionButtonTemplate")
     toggleButton:Size(24)
     SetButtonTexture(toggleButton, W.Media.Icons.list)
+    SetButtonTooltip(toggleButton, L["Toggle Contacts"])
     toggleButton:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", -24, 38)
     toggleButton:RegisterForClicks("AnyUp")
 
@@ -134,6 +153,7 @@ function CT:ConstructButtons()
     local altsButton = CreateFrame("Button", "WTContactsAltsButton", self.frame, "SecureActionButtonTemplate")
     altsButton:Size(25)
     SetButtonTexture(altsButton, W.Media.Icons.barCharacter, 0.945, 0.769, 0.059)
+    SetButtonTooltip(altsButton, L["Alternate Character"])
     altsButton:Point("TOPLEFT", self.frame, "TOPLEFT", 10, -10)
     altsButton:RegisterForClicks("AnyUp")
 
@@ -147,6 +167,7 @@ function CT:ConstructButtons()
     local friendsButton = CreateFrame("Button", "WTContactsFriendsButton", self.frame, "SecureActionButtonTemplate")
     friendsButton:Size(25)
     SetButtonTexture(friendsButton, W.Media.Icons.barFriends, 0.345, 0.667, 0.867)
+    SetButtonTooltip(friendsButton, L["Online Friends"])
     friendsButton:Point("LEFT", altsButton, "RIGHT", 10, 0)
     friendsButton:RegisterForClicks("AnyUp")
 
@@ -160,6 +181,7 @@ function CT:ConstructButtons()
     local guildButton = CreateFrame("Button", "WTContactsGuildButton", self.frame, "SecureActionButtonTemplate")
     guildButton:Size(25)
     SetButtonTexture(guildButton, W.Media.Icons.barGuild, 0.180, 0.800, 0.443)
+    SetButtonTooltip(guildButton, L["Guild Members"])
     guildButton:Point("LEFT", friendsButton, "RIGHT", 10, 0)
     guildButton:RegisterForClicks("AnyUp")
 
@@ -173,6 +195,7 @@ function CT:ConstructButtons()
     local favoriteButton = CreateFrame("Button", "WTContactsFavoriteButton", self.frame, "SecureActionButtonTemplate")
     favoriteButton:Size(25)
     SetButtonTexture(favoriteButton, W.Media.Icons.favorite, 0.769, 0.118, 0.227)
+    SetButtonTooltip(favoriteButton, L["My Favorites"])
     favoriteButton:Point("LEFT", guildButton, "RIGHT", 10, 0)
     favoriteButton:RegisterForClicks("AnyUp")
 

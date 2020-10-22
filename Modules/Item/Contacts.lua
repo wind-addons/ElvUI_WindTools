@@ -297,9 +297,28 @@ function CT:ConstructPageController()
     ES:HandleSliderFrame(slider)
 
     local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-    pageIndicater:Point("BOTTOM", slider, "TOP", 0, 5)
+    pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)
     F.SetFontOutline(pageIndicater, "Montserrat" .. (W.CompatibleFont and " (en)" or ""))
     slider.pageIndicater = pageIndicater
+
+    -- Mouse wheel control
+    self.frame:EnableMouseWheel(true)
+    self.frame:SetScript(
+        "OnMouseWheel",
+        function(_, delta)
+            if delta > 0 then
+                if pagePrevButton:IsShown() then
+                    currentPageIndex = currentPageIndex - 1
+                    self:UpdatePage(currentPageIndex)
+                end
+            else
+                if pageNextButton:IsShown() then
+                    currentPageIndex = currentPageIndex + 1
+                    self:UpdatePage(currentPageIndex)
+                end
+            end
+        end
+    )
 
     self.pagePrevButton = pagePrevButton
     self.pageNextButton = pageNextButton

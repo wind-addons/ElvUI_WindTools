@@ -73,6 +73,9 @@ AddMedia("qq", "QQ.tga", "Icons")
 AddMedia("github", "Github.tga", "Icons")
 AddMedia("nga", "NGA.tga", "Icons")
 
+AddMedia("favorite", "Favorite.tga", "Icons")
+AddMedia("list", "List.tga", "Icons")
+
 AddMedia("barAchievements", "GameBar\\Achievements.tga", "Icons")
 AddMedia("barBags", "GameBar\\Bags.tga", "Icons")
 AddMedia("barCharacter", "GameBar\\Character.tga", "Icons")

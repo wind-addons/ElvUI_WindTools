@@ -34,7 +34,9 @@ W.Changelog[203] = {
             "[巅峰声望] 修复了一处设定索引错误.",
             "[巅峰声望] 修复了巅峰箱子无法提示的错误.",
             "[巔峰聲望] 更新了对 9.0 的支持.",
-            "[矩形小地图] 添加了对移动窗体的限制."
+            "[矩形小地图] 添加了对移动窗体的限制.",
+            "[交接] 修复了部分多任务时可能不交接的问题.",
+            "[团队标记] 修复了战斗中可能发生的错误.",
         },
         ["zhTW"] = {
             "修復更新記錄提示函數.",
@@ -50,7 +52,9 @@ W.Changelog[203] = {
             "[巔峰聲望] 修復了一處設定索引錯誤.",
             "[巔峰聲望] 修復了巔峰箱子無法提示的錯誤.",
             "[巔峰聲望] 支援 9.0 新陣營.",
-            "[矩形小地图] 新增了對移動框架的限制."
+            "[矩形小地图] 新增了對移動框架的限制.",
+            "[交接] 修復了多任務時可能不交接的問題.",
+            "[團隊標記] 修復了戰鬥中可能發生的錯誤."
         },
         ["enUS"] = {
             "Fix changelog alert function.",
@@ -66,7 +70,9 @@ W.Changelog[203] = {
             "[Paragon Reputation] Fix the option key error.",
             "[Paragon Reputation] Fix the tips of rewards.",
             "[Paragon Reputation] Add support for SL.",
-            "[Rectangle Minimap] Add the limit for minimap mover."
+            "[Rectangle Minimap] Add the limit for minimap mover.",
+            "[Turn In] Fix the bugs that the automation stops on multiple quests.",
+            "[Raid Markers] Fix the errors in combat."
         }
     }
 }

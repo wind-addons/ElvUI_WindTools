@@ -31,6 +31,7 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCritChance = GetSpellCritChance
 local GetVersatilityBonus = GetVersatilityBonus
 local GuildInvite = GuildInvite
+local IsAddOnLoaded = IsAddOnLoaded
 local SendChatMessage = SendChatMessage
 local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
@@ -693,8 +694,13 @@ function CM:ShowMenu(frame)
             frame:SetHeight(frame:GetHeight() + menuHeight)
 
             self.menu:ClearAllPoints()
-            self.menu:Point("BOTTOMLEFT", 0, 16)
-            self.menu:Point("BOTTOMRIGHT", 0, 16)
+            if IsAddOnLoaded("RaiderIO") then
+                self.menu:Point("BOTTOMLEFT", 0, 47)
+                self.menu:Point("BOTTOMRIGHT", 0, 47)
+            else
+                self.menu:Point("BOTTOMLEFT", 0, 16)
+                self.menu:Point("BOTTOMRIGHT", 0, 16)
+            end
             self.menu:Show()
         end
     end

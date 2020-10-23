@@ -92,6 +92,7 @@ V.skins = {
 	},
 	addons = {
 		ace3 = true,
+		azerothAutoPilot = true,
 		bigWigs = true,
 		bugSack = true,
 		hekili = true,

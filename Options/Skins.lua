@@ -683,6 +683,11 @@ options.addons = {
             type = "toggle",
             name = L["Ace3"]
         },
+        azerothAutoPilot = {
+            order = 10,
+            type = "toggle",
+            name = L["Azeroth Auto Pilot"]
+        },
         bigWigs = {
             order = 10,
             type = "toggle",

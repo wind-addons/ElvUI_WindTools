@@ -219,27 +219,31 @@ local function IsIgnored()
 end
 
 local function AttemptAutoComplete(event)
-    if GetNumAutoQuestPopUps() > 0 then
+    if event == "PLAYER_REGEN_ENABLED" then
+        TI:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    end
+
+    local numPopups = GetNumAutoQuestPopUps()
+    if numPopups > 0 then
         if UnitIsDeadOrGhost("player") then
             TI:RegisterEvent("PLAYER_REGEN_ENABLED")
             return
         end
 
-        local questID, popUpType = GetAutoQuestPopUp(1)
-        local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
-        if not tagInfo or not tagInfo.worldQuestType then
-            if popUpType == "OFFER" then
-                ShowQuestOffer(C_QuestLog_GetLogIndexForQuestID(questID))
-            else
-                ShowQuestComplete(C_QuestLog_GetLogIndexForQuestID(questID))
+        for i = 1, numPopups do
+            local questID, popUpType = GetAutoQuestPopUp(i)
+            local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
+            if not tagInfo or not tagInfo.worldQuestType then
+                if popUpType == "OFFER" then
+                    ShowQuestOffer(C_QuestLog_GetLogIndexForQuestID(questID))
+                else
+                    ShowQuestComplete(C_QuestLog_GetLogIndexForQuestID(questID))
+                end
             end
+            return
         end
     else
         C_Timer_After(1, AttemptAutoComplete)
-    end
-
-    if event == "PLAYER_REGEN_ENABLED" then
-        TI:UnregisterEvent("PLAYER_REGEN_ENABLED")
     end
 end
 

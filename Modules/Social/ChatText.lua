@@ -26,22 +26,8 @@ local wipe = wipe
 
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
-local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
 local BetterDate = BetterDate
-local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
-local C_Club_GetClubInfo = C_Club.GetClubInfo
-local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_Social_GetLastItem = C_Social.GetLastItem
-local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
-local ChatEdit_SetLastTellTarget = ChatEdit_SetLastTellTarget
-local ChatFrame_CanChatGroupPerformExpressionExpansion = ChatFrame_CanChatGroupPerformExpressionExpansion
-local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
-local ChatFrame_ResolvePrefixedChannelName = ChatFrame_ResolvePrefixedChannelName
-local ChatHistory_GetAccessID = ChatHistory_GetAccessID
-local Chat_GetChatCategory = Chat_GetChatCategory
-local FCFManager_ShouldSuppressMessage = FCFManager_ShouldSuppressMessage
-local FCFManager_ShouldSuppressMessageFlash = FCFManager_ShouldSuppressMessageFlash
-local FCF_StartAlertFlash = FCF_StartAlertFlash
+local ChatChannelRuleset_Mentor = Enum.ChatChannelRuleset.Mentor
 local FlashClientIcon = FlashClientIcon
 local GMChatFrame_IsGM = GMChatFrame_IsGM
 local GMError = GMError
@@ -62,13 +48,18 @@ local IsInRaid = IsInRaid
 local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
-local Social_GetShareAchievementLink = Social_GetShareAchievementLink
-local Social_GetShareItemLink = Social_GetShareItemLink
 local StaticPopup_Visible = StaticPopup_Visiblelocal
 local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
+
+local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
+local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
+local C_Club_GetClubInfo = C_Club.GetClubInfo
+local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
+local C_Social_GetLastItem = C_Social.GetLastItem
+local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
 
 CT.cache = {}
 local lfgRoles = {}
@@ -138,6 +129,50 @@ CT.cache.blizzardRoleIcons = {
     DPS = _G.INLINE_DAMAGER_ICON
 }
 
+-- copied from ChatFrame.lua
+local function GetPFlag(
+    arg1,
+    arg2,
+    arg3,
+    arg4,
+    arg5,
+    arg6,
+    arg7,
+    arg8,
+    arg9,
+    arg10,
+    arg11,
+    arg12,
+    arg13,
+    arg14,
+    arg15,
+    arg16,
+    arg17)
+    -- Renaming for clarity:
+    local specialFlag = arg6
+    --local zoneChannelID = arg7;
+    --local localChannelID = arg8;
+
+    if specialFlag ~= "" then
+        if specialFlag == "GM" or specialFlag == "DEV" then
+            -- Add Blizzard Icon if  this was sent by a GM/DEV
+            return "|TInterface\\ChatFrame\\UI-ChatIcon-Blizz:12:20:0:0:32:16:4:28:0:16|t "
+        elseif specialFlag == "GUIDE" then
+            if C_PlayerMentorship_IsActivePlayerConsideredNewcomer() then
+                return _G.NPEV2_CHAT_USER_TAG_GUIDE .. " " -- possibly unable to save global string with trailing whitespace...
+            end
+        elseif specialFlag == "NEWCOMER" then
+            if IsActivePlayerMentor() then
+                return _G.NPEV2_CHAT_USER_TAG_NEWCOMER
+            end
+        else
+            return _G["CHAT_FLAG_" .. specialFlag]
+        end
+    end
+
+    return ""
+end
+
 function CT:UpdateRoleIcons()
     if not self.db then
         return
@@ -147,7 +182,7 @@ function CT:UpdateRoleIcons()
     local sizeString = self.db.enable and format(":%d:%d", self.db.roleIconSize, self.db.roleIconSize) or ":16:16"
 
     if pack ~= "DEFAULT" and pack ~= "BLIZZARD" then
-        sizeString = sizeString and (sizeString..":0:0:64:64:2:62:0:58")
+        sizeString = sizeString and (sizeString .. ":0:0:64:64:2:62:0:58")
     end
 
     if pack == "FFXIV" then
@@ -386,7 +421,7 @@ function CT:ChatFrame_MessageEventHandler(
     arg12,
     arg13,
     arg14,
-    _,
+    arg15,
     arg16,
     arg17,
     isHistory,
@@ -414,6 +449,11 @@ function CT:ChatFrame_MessageEventHandler(
 
         local chatType = strsub(event, 10)
         local info = _G.ChatTypeInfo[chatType]
+
+        --If it was a GM whisper, dispatch it to the GMChat addon.
+        if arg6 == "GM" and chatType == "WHISPER" then
+            return
+        end
 
         local chatFilters = _G.ChatFrame_GetMessageEventFilters(event)
         if chatFilters then
@@ -473,8 +513,6 @@ function CT:ChatFrame_MessageEventHandler(
             end
         end
 
-        arg2 = E.NameReplacements[arg2] or arg2
-
         -- data from populated guid info
         local nameWithRealm, realm
         local data = CH:GetPlayerInfoByGUID(arg12)
@@ -507,27 +545,26 @@ function CT:ChatFrame_MessageEventHandler(
         local channelLength = strlen(arg4)
         local infoType = chatType
         if
-            (chatType == "COMMUNITIES_CHANNEL") or
+            chatType == "COMMUNITIES_CHANNEL" or
                 ((strsub(chatType, 1, 7) == "CHANNEL") and (chatType ~= "CHANNEL_LIST") and
                     ((arg1 ~= "INVITE") or (chatType ~= "CHANNEL_NOTICE_USER")))
          then
             if arg1 == "WRONG_PASSWORD" then
-                local staticPopup = _G[StaticPopup_Visible("CHAT_CHANNEL_PASSWORD") or ""]
-                if staticPopup and strupper(staticPopup.data) == strupper(arg9) then
-                    -- Don't display invalid password messages if we're going to prompt for a password (bug 102312)
-                    return
+                local _, popup = _G.StaticPopup_Visible("CHAT_CHANNEL_PASSWORD")
+                if popup and strupper(popup.data) == strupper(arg9) then
+                    return -- Don't display invalid password messages if we're going to prompt for a password (bug 102312)
                 end
             end
 
-            local found = 0
+            local found = false
             for index, value in pairs(frame.channelList) do
                 if channelLength > strlen(value) then
                     -- arg9 is the channel name without the number in front...
                     if ((arg7 > 0) and (frame.zoneChannelList[index] == arg7)) or (strupper(value) == strupper(arg9)) then
-                        found = 1
+                        found = true
                         infoType = "CHANNEL" .. arg8
                         info = _G.ChatTypeInfo[infoType]
-                        if (chatType == "CHANNEL_NOTICE") and (arg1 == "YOU_LEFT") then
+                        if chatType == "CHANNEL_NOTICE" and arg1 == "YOU_LEFT" then
                             frame.channelList[index] = nil
                             frame.zoneChannelList[index] = nil
                         end
@@ -535,12 +572,12 @@ function CT:ChatFrame_MessageEventHandler(
                     end
                 end
             end
-            if (found == 0) or not info then
+            if not found or not info then
                 return true
             end
         end
 
-        local chatGroup = Chat_GetChatCategory(chatType)
+        local chatGroup = _G.Chat_GetChatCategory(chatType)
         local chatTarget
         if chatGroup == "CHANNEL" then
             chatTarget = tostring(arg8)
@@ -552,7 +589,7 @@ function CT:ChatFrame_MessageEventHandler(
             end
         end
 
-        if FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
+        if _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
             return true
         end
 
@@ -611,7 +648,7 @@ function CT:ChatFrame_MessageEventHandler(
             if arg12 == E.myguid and C_Social_IsSocialEnabled() then
                 local itemID, creationContext = GetItemInfoFromHyperlink(arg1)
                 if itemID and C_Social_GetLastItem() == itemID then
-                    arg1 = arg1 .. " " .. Social_GetShareItemLink(creationContext, true)
+                    arg1 = arg1 .. " " .. _G.Social_GetShareItemLink(creationContext, true)
                 end
             end
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
@@ -626,7 +663,7 @@ function CT:ChatFrame_MessageEventHandler(
             if arg12 == E.myguid and C_Social_IsSocialEnabled() then
                 local achieveID = GetAchievementInfoFromHyperlink(arg1)
                 if achieveID then
-                    arg1 = arg1 .. " " .. Social_GetShareAchievementLink(achieveID, true)
+                    arg1 = arg1 .. " " .. _G.Social_GetShareAchievementLink(achieveID, true)
                 end
             end
             frame:AddMessage(
@@ -648,7 +685,7 @@ function CT:ChatFrame_MessageEventHandler(
                 if achieveID then
                     local isGuildAchievement = select(12, GetAchievementInfo(achieveID))
                     if isGuildAchievement then
-                        message = message .. " " .. Social_GetShareAchievementLink(achieveID, true)
+                        message = message .. " " .. _G.Social_GetShareAchievementLink(achieveID, true)
                     end
                 end
             end
@@ -766,38 +803,50 @@ function CT:ChatFrame_MessageEventHandler(
                 )
             end
         elseif chatType == "CHANNEL_NOTICE" then
-            local globalstring
-            if arg1 == "TRIAL_RESTRICTED" then
-                globalstring = _G.CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL
+            local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
+            local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
+
+            if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == ChatChannelRuleset_Mentor then
+                _G.ChatFrame_UpdateDefaultChatTarget(frame)
+                _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
             else
-                globalstring = _G["CHAT_" .. arg1 .. "_NOTICE_BN"]
-                if not globalstring then
-                    globalstring = _G["CHAT_" .. arg1 .. "_NOTICE"]
+                if arg1 == "YOU_LEFT" then
+                    _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox, arg8)
+                end
+
+                local globalstring
+                if arg1 == "TRIAL_RESTRICTED" then
+                    globalstring = _G.CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL
+                else
+                    globalstring = _G["CHAT_" .. arg1 .. "_NOTICE_BN"]
                     if not globalstring then
-                        GMError(("Missing global string for %q"):format("CHAT_" .. arg1 .. "_NOTICE"))
-                        return
+                        globalstring = _G["CHAT_" .. arg1 .. "_NOTICE"]
+                        if not globalstring then
+                            GMError(("Missing global string for %q"):format("CHAT_" .. arg1 .. "_NOTICE"))
+                            return
+                        end
                     end
                 end
+
+                frame:AddMessage(
+                    format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)),
+                    info.r,
+                    info.g,
+                    info.b,
+                    info.id,
+                    accessID,
+                    typeID,
+                    isHistory,
+                    historyTime
+                )
             end
-            local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(chatType), arg8)
-            local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12)
-            frame:AddMessage(
-                format(globalstring, arg8, ChatFrame_ResolvePrefixedChannelName(arg4)),
-                info.r,
-                info.g,
-                info.b,
-                info.id,
-                accessID,
-                typeID,
-                isHistory,
-                historyTime
-            )
         elseif chatType == "BN_INLINE_TOAST_ALERT" then
             local globalstring = _G["BN_INLINE_TOAST_" .. arg1]
             if not globalstring then
                 GMError(("Missing global string for %q"):format("BN_INLINE_TOAST_" .. arg1))
                 return
             end
+
             local message
             if arg1 == "FRIEND_REQUEST" then
                 message = globalstring
@@ -813,26 +862,23 @@ function CT:ChatFrame_MessageEventHandler(
                 local client = accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.clientProgram
                 if client and client ~= "" then
                     local characterName =
-                        BNet_GetValidatedCharacterName(
+                        _G.BNet_GetValidatedCharacterName(
                         accountInfo.gameAccountInfo.characterName,
                         accountInfo.battleTag,
                         client
                     ) or ""
-                    local characterNameText = BNet_GetClientEmbeddedTexture(client, 14) .. characterName
+                    local characterNameText = _G.BNet_GetClientEmbeddedTexture(client, 14) .. characterName
                     local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
-                    local playerLink =
-                        GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
+                    local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
                 else
                     local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
-                    local playerLink =
-                        GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
+                    local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
                 end
             else
                 local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
-                local playerLink =
-                    GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
+                local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                 message = format(globalstring, playerLink)
             end
             frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
@@ -840,8 +886,7 @@ function CT:ChatFrame_MessageEventHandler(
             if arg1 ~= "" then
                 arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
                 local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
-                local playerLink =
-                    GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
+                local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                 frame:AddMessage(
                     format(_G.BN_INLINE_TOAST_BROADCAST, playerLink, arg1),
                     info.r,
@@ -887,7 +932,7 @@ function CT:ChatFrame_MessageEventHandler(
                 CH:ChatFrame_ReplaceIconAndGroupExpressions(
                 arg1,
                 arg17,
-                not ChatFrame_CanChatGroupPerformExpressionExpansion(chatGroup)
+                not _G.ChatFrame_CanChatGroupPerformExpressionExpansion(chatGroup)
             ) -- If arg17 is true, don't convert to raid icons
 
             --Remove groups of many spaces
@@ -960,26 +1005,31 @@ function CT:ChatFrame_MessageEventHandler(
 
             local message = arg1
             if arg14 then --isMobile
-                message = ChatFrame_GetMobileEmbeddedTexture(info.r, info.g, info.b) .. message
+                message = _G.ChatFrame_GetMobileEmbeddedTexture(info.r, info.g, info.b) .. message
             end
 
             -- Player Flags
-            local pflag, chatIcon, pluginChatIcon = "", nil, CH:GetPluginIcon(playerName)
-            if type(chatIcon) == "function" then
-                local icon, prettify = chatIcon()
-                if prettify and not CH:MessageIsProtected(message) then
-                    message = prettify(message)
-                end
-                chatIcon = icon or ""
-            end
+            local pflag =
+                GetPFlag(
+                arg1,
+                arg2,
+                arg3,
+                arg4,
+                arg5,
+                arg6,
+                arg7,
+                arg8,
+                arg9,
+                arg10,
+                arg11,
+                arg12,
+                arg13,
+                arg14,
+                arg15,
+                arg16,
+                arg17
+            )
 
-            if arg6 ~= "" then -- Blizzard Flags
-                if arg6 == "GM" or arg6 == "DEV" then -- Blizzard Icon, this was sent by a GM or Dev.
-                    pflag = [[|TInterface\ChatFrame\UI-ChatIcon-Blizz:12:20:0:0:32:16:4:28:0:16|t]]
-                else -- Away/Busy
-                    pflag = _G["CHAT_FLAG_" .. arg6] or ""
-                end
-            end
             -- LFG Role Flags
             local lfgRole = lfgRoles[playerName]
             if
@@ -990,14 +1040,6 @@ function CT:ChatFrame_MessageEventHandler(
                         chatType == "INSTANCE_CHAT_LEADER")
              then
                 pflag = pflag .. lfgRole
-            end
-            -- Special Chat Icon
-            if chatIcon then
-                pflag = pflag .. chatIcon
-            end
-            -- Plugin Chat Icon
-            if pluginChatIcon then
-                pflag = pflag .. pluginChatIcon
             end
 
             if usingDifferentLanguage then
@@ -1049,7 +1091,7 @@ function CT:ChatFrame_MessageEventHandler(
             if channelLength > 0 then
                 body =
                     "|Hchannel:channel:" ..
-                    arg8 .. "|h[" .. ChatFrame_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
+                    arg8 .. "|h[" .. _G.ChatFrame_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
             end
 
             if CH.db.shortChannels and (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") then
@@ -1060,8 +1102,8 @@ function CT:ChatFrame_MessageEventHandler(
                 body = filter(body)
             end
 
-            local accessID = ChatHistory_GetAccessID(chatGroup, chatTarget)
-            local typeID = ChatHistory_GetAccessID(infoType, chatTarget, arg12 or arg13)
+            local accessID = _G.ChatHistory_GetAccessID(chatGroup, chatTarget)
+            local typeID = _G.ChatHistory_GetAccessID(infoType, chatTarget, arg12 or arg13)
 
             local alertType =
                 notChatHistory and not CH.SoundTimer and not strfind(event, "_INFORM") and
@@ -1078,7 +1120,7 @@ function CT:ChatFrame_MessageEventHandler(
         end
 
         if notChatHistory and (chatType == "WHISPER" or chatType == "BN_WHISPER") then
-            ChatEdit_SetLastTellTarget(arg2, chatType)
+            _G.ChatEdit_SetLastTellTarget(arg2, chatType)
             FlashClientIcon()
         end
 
@@ -1087,9 +1129,9 @@ function CT:ChatFrame_MessageEventHandler(
                 (frame == _G.DEFAULT_CHAT_FRAME and info.flashTabOnGeneral) or
                     (frame ~= _G.DEFAULT_CHAT_FRAME and info.flashTab)
              then
-                if not _G.CHAT_OPTIONS.HIDE_FRAME_ALERTS or chatType == "WHISPER" or chatType == "BN_WHISPER" then --BN_WHISPER FIXME
-                    if not FCFManager_ShouldSuppressMessageFlash(frame, chatGroup, chatTarget) then
-                        FCF_StartAlertFlash(frame) --This would taint if we were not using LibChatAnims
+                if not _G.CHAT_OPTIONS.HIDE_FRAME_ALERTS or chatType == "WHISPER" or chatType == "BN_WHISPER" then
+                    if not _G.FCFManager_ShouldSuppressMessageFlash(frame, chatGroup, chatTarget) then
+                        _G.FCF_StartAlertFlash(frame) --This would taint if we were not using LibChatAnims
                     end
                 end
             end

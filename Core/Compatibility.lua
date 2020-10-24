@@ -41,7 +41,7 @@ function W:ConstructCompatibiltyFrame()
     local desc = frame:CreateFontString(nil, "ARTWORK")
     desc:FontTemplate()
     desc:SetJustifyH("LEFT")
-    desc:Width(400)
+    desc:Width(420)
     F.SetFontOutline(desc, nil, "-1")
     desc:SetText(
         format(
@@ -58,7 +58,7 @@ function W:ConstructCompatibiltyFrame()
     local tex = frame:CreateTexture("WTCompatibiltyFrameIllustration", "ARTWORK")
     tex:Size(64)
     tex:SetTexture(W.Media.Textures.illMurloc1)
-    tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -20)
+    tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -25)
 
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
@@ -67,7 +67,7 @@ function W:ConstructCompatibiltyFrame()
     scrollFrameParent:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -32, 30)
     ES:HandleScrollBar(scrollFrameParent.ScrollBar)
     local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", scrollFrameParent)
-    scrollFrame:Size(scrollFrameParent:GetSize())
+    scrollFrame:SetSize(scrollFrameParent:GetSize())
 
     scrollFrameParent:SetScrollChild(scrollFrame)
     frame.scrollFrameParent = scrollFrameParent

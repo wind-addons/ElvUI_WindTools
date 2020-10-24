@@ -41,7 +41,7 @@ function W:ConstructCompatibiltyFrame()
     local desc = frame:CreateFontString(nil, "ARTWORK")
     desc:FontTemplate()
     desc:SetJustifyH("LEFT")
-    desc:Width(530)
+    desc:Width(400)
     F.SetFontOutline(desc, nil, "-1")
     desc:SetText(
         format(
@@ -54,6 +54,11 @@ function W:ConstructCompatibiltyFrame()
         )
     )
     desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
+
+    local tex = frame:CreateTexture("WTCompatibiltyFrameIllustration", "ARTWORK")
+    tex:Size(64)
+    tex:SetTexture(W.Media.Textures.illMurloc1)
+    tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -20)
 
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
@@ -168,10 +173,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.item.extraItemsBar.enable = true
                 E.db.mui.autoButtons.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.item.extraItemsBar.enable = false
+                E.db.mui.autoButtons.enable = true
             end
         }
     )
@@ -187,10 +194,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.misc.gameBar.enable = true
                 E.db.mui.microBar.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.misc.gameBar.enable = false
+                E.db.mui.microBar.enable = true
             end
         }
     )
@@ -206,10 +215,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.item.contacts.enable = true
                 E.db.mui.mail.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.item.contacts.enable = false
+                E.db.mui.mail.enable = true
             end
         }
     )
@@ -225,10 +236,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.private.WT.tooltips.icon = true
                 E.db.mui.tooltip.tooltipIcon = false
             end,
             disableWTModule = function()
                 E.private.WT.tooltips.icon = false
+                E.db.mui.tooltip.tooltipIcon = true
             end
         }
     )
@@ -244,10 +257,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.tooltips.groupInfo.enable = true
                 E.db.mui.misc.lfgInfo.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.tooltips.groupInfo.enable = false
+                E.db.mui.misc.lfgInfo.enable = true
             end
         }
     )
@@ -263,10 +278,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.quest.paragonReputation.enable = true
                 E.db.mui.misc.paragon.enable = false
             end,
             disableWTModule = function()
-                E.db.WT.quest.paragonReputation = false
+                E.db.WT.quest.paragonReputation.enable = false
+                E.db.mui.misc.paragon.enable = true
             end
         }
     )
@@ -282,10 +299,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.social.chatText.enable = true
                 E.db.mui.unitframes.roleIcons = false
             end,
             disableWTModule = function()
                 E.db.WT.social.chatText.enable = false
+                E.db.mui.unitframes.roleIcons = true
             end
         }
     )
@@ -301,10 +320,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.combat.combatAlert.enable = true
                 E.db.mui.CombatAlert.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.combat.combatAlert.enable = false
+                E.db.mui.CombatAlert.enable = true
             end
         }
     )
@@ -320,10 +341,12 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.db.WT.maps.whoClicked.enable = true
                 E.db.mui.maps.minimap.ping.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.maps.whoClicked.enable = false
+                E.db.mui.maps.minimap.ping.enable = true
             end
         }
     )
@@ -339,10 +362,33 @@ function W:CheckCompatibility()
                 return false
             end,
             disableMUIModule = function()
+                E.private.WT.maps.minimapButtons.enable = true
                 E.db.mui.smb.enable = false
             end,
             disableWTModule = function()
                 E.private.WT.maps.minimapButtons.enable = false
+                E.db.mui.smb.enable = true
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Rectangle Minimap"],
+        L["Rectangle Minimap"],
+        {
+            check = function()
+                if E.db.WT.maps.rectangleMinimap.enable and E.db.mui.maps.minimap.rectangle then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.WT.maps.rectangleMinimap.enable = true
+                E.db.mui.maps.minimap.rectangle = false
+            end,
+            disableWTModule = function()
+                E.db.WT.maps.rectangleMinimap.enable = false
+                E.db.mui.maps.minimap.rectangle = true
             end
         }
     )

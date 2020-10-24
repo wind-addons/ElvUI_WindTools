@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local MF = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
+local MF = W.Modules.MoveFrames
 local B = E:GetModule("Bags")
 
 local _G = _G

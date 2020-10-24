@@ -92,7 +92,6 @@ local function GetInspectItemListFrame(parent)
         local itemfont = "ChatFontNormal"
         local frame = CreateFrame("Frame", nil, parent)
         local height = parent:GetHeight()
-        end
         height = height < 424 and 424 or height
 
         frame:Size(160, height - 2)

@@ -1,6 +1,8 @@
 local W, F, E, L = unpack(select(2, ...))
-local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0")
--- Modified from TinyInspect
+local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") -- Modified from TinyInspect
+local S = W:GetModule("Skins")
+local ES = E:GetModule("Skins")
+local MF = W:GetModule("MoveFrames")
 
 local _G = _G
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
@@ -88,26 +90,42 @@ end
 local function GetInspectItemListFrame(parent)
     if not parent.inspectFrame then
         local itemfont = "ChatFontNormal"
-        local frame = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+        local frame = CreateFrame("Frame", nil, parent)
         local height = parent:GetHeight()
-        if (height < 424) then
-            height = 424
         end
-        frame:Size(160, height)
+        height = height < 424 and 424 or height
+
+        frame:Size(160, height - 2)
         frame:SetFrameLevel(0)
-        frame:Point("TOPLEFT", parent, "TOPRIGHT", 0, 0)
+        frame:Point("LEFT", parent, "RIGHT", 5, 0)
         frame:CreateBackdrop("Transparent")
+        S:CreateShadow(frame.backdrop)
         frame.portrait = CreateFrame("Frame", nil, frame, "GarrisonFollowerPortraitTemplate")
-        frame.portrait:Point("TOPLEFT", frame, "TOPLEFT", 18, -16)
+        frame.portrait:Point("TOPLEFT", frame, "TOPLEFT", 16, -10)
         frame.portrait:SetScale(0.8)
-        frame.title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLargeOutline")
-        frame.title:Point("TOPLEFT", frame, "TOPLEFT", 66, -18)
-        frame.level = frame:CreateFontString(nil, "ARTWORK", itemfont)
-        frame.level:Point("TOPLEFT", frame, "TOPLEFT", 66, -42)
-        frame.level:SetFont(frame.level:GetFont(), 14, "THINOUTLINE")
+        frame.title = frame:CreateFontString(nil, "ARTWORK")
+        F.SetFontWithDB(
+            frame.title,
+            {
+                name = E.db.general.font,
+                size = 16,
+                style = "OUTLINE"
+            }
+        )
+        frame.title:Point("TOPLEFT", frame, "TOPLEFT", 66, -14)
+        frame.level = frame:CreateFontString(nil, "ARTWORK")
+        frame.level:Point("TOPLEFT", frame, "TOPLEFT", 66, -38)
+        F.SetFontWithDB(
+            frame.level,
+            {
+                name = E.db.general.font,
+                size = 14,
+                style = "OUTLINE"
+            }
+        )
 
         local itemframe
-        local fontsize = GetLocale():sub(1, 2) == "zh" and 12 or 9
+        local fontsize = W.Locale:sub(1, 2) == "zh" and 12 or 9
         local backdrop = {
             bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
             edgeFile = "Interface\\Buttons\\WHITE8X8",
@@ -127,7 +145,7 @@ local function GetInspectItemListFrame(parent)
                 itemframe:Point("TOPLEFT", frame["item" .. (i - 1)], "BOTTOMLEFT")
             end
             itemframe.label = CreateFrame("Frame", nil, itemframe, "BackdropTemplate")
-            itemframe.label:Size(38, 16)
+            itemframe.label:Size(38, 18)
             itemframe.label:Point("LEFT")
             itemframe.label:SetBackdrop(backdrop)
             itemframe.label:SetBackdropBorderColor(0, 0.9, 0.9, 0.2)
@@ -138,20 +156,36 @@ local function GetInspectItemListFrame(parent)
             itemframe.label.text:Point("CENTER", 1, 0)
             itemframe.label.text:SetText(v.name)
             itemframe.label.text:SetTextColor(0, 0.9, 0.9)
-            itemframe.levelString = itemframe:CreateFontString(nil, "ARTWORK", itemfont)
+            itemframe.levelString = itemframe:CreateFontString(nil, "ARTWORK")
+            F.SetFontWithDB(
+                itemframe.levelString,
+                {
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    size = 13,
+                    style = "OUTLINE"
+                }
+            )
             itemframe.levelString:Point("LEFT", itemframe.label, "RIGHT", 4, 0)
             itemframe.levelString:SetJustifyH("RIGHT")
-            itemframe.itemString = itemframe:CreateFontString(nil, "ARTWORK", itemfont)
+            itemframe.itemString = itemframe:CreateFontString(nil, "ARTWORK")
+            F.SetFontWithDB(
+                itemframe.itemString,
+                {
+                    name = E.db.general.font,
+                    size = 13,
+                    style = "OUTLINE"
+                }
+            )
             itemframe.itemString:SetHeight(16)
             itemframe.itemString:Point("LEFT", itemframe.levelString, "RIGHT", 2, 0)
             itemframe:SetScript(
                 "OnEnter",
                 function(self)
                     local r, g, b, a = self.label:GetBackdropColor()
-                    if (a) then
+                    if a then
                         self.label:SetBackdropColor(r, g, b, a + 0.5)
                     end
-                    if (self.link or (self.level and self.level > 0)) then
+                    if self.link or (self.level and self.level > 0) then
                         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
                         GameTooltip:SetInventoryItem(self:GetParent().unit, self.index)
                         GameTooltip:Show()
@@ -162,7 +196,7 @@ local function GetInspectItemListFrame(parent)
                 "OnLeave",
                 function(self)
                     local r, g, b, a = self.label:GetBackdropColor()
-                    if (a) then
+                    if a then
                         self.label:SetBackdropColor(r, g, b, abs(a - 0.5))
                     end
                     GameTooltip:Hide()
@@ -181,12 +215,10 @@ local function GetInspectItemListFrame(parent)
             LibEvent:trigger("INSPECT_ITEMFRAME_CREATED", itemframe)
         end
 
-        frame.closeButton = CreateFrame("Button", nil, frame)
-        frame.closeButton:Size(12, 12)
-        frame.closeButton:SetScale(0.85)
-        frame.closeButton:Point("BOTTOMLEFT", 5, 6)
-        frame.closeButton:SetNormalTexture("Interface\\Cursor\\Item")
-        frame.closeButton:GetNormalTexture():SetTexCoord(0, 12 / 32, 12 / 32, 0)
+        frame.closeButton =
+            CreateFrame("Button", "WTCompatibiltyFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
+        frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
+        ES:HandleCloseButton(frame.closeButton)
         frame.closeButton:SetScript(
             "OnClick",
             function(self)
@@ -200,6 +232,12 @@ local function GetInspectItemListFrame(parent)
                 frame:Hide()
             end
         )
+
+        if MF and MF.db and MF.db.moveBlizzardFrames then
+            MF:HandleFrame(frame.backdrop, parent.MoveFrame or parent)
+            frame.MoveFrame = frame.backdrop.MoveFrame
+        end
+
         parent.inspectFrame = frame
         LibEvent:trigger("INSPECT_FRAME_CREATED", frame, parent)
     end
@@ -211,6 +249,7 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     if not parent:IsShown() then
         return
     end
+
     local frame = GetInspectItemListFrame(parent)
     local class = select(2, UnitClass(unit))
     local color = RAID_CLASS_COLORS[class] or NORMAL_FONT_COLOR
@@ -288,10 +327,6 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     frame:Show()
 
     LibEvent:trigger("INSPECT_FRAME_SHOWN", frame, parent, ilevel)
-    frame:SetBackdrop(frame.backdrop)
-    frame:SetBackdropColor(0, 0, 0, 0.9)
-    frame:SetBackdropBorderColor(color.r, color.g, color.b)
-
     return frame
 end
 

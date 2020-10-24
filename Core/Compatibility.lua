@@ -5,7 +5,7 @@ local ES = E:GetModule("Skins")
 
 function W:ConstructCompatibiltyFrame()
     local frame = CreateFrame("Frame", "WTCompatibiltyFrame", E.UIParent)
-    frame:Size(600, 500)
+    frame:Size(550, 500)
     frame:Point("CENTER")
     frame:CreateBackdrop("Transparent")
     S:CreateShadow(frame)
@@ -32,25 +32,55 @@ function W:ConstructCompatibiltyFrame()
         end
     )
 
+    local title = frame:CreateFontString(nil, "ARTWORK")
+    title:FontTemplate()
+    F.SetFontOutline(title, nil, "2")
+    title:SetText(L["WindTools"] .. " - " .. L["Compatibility Check"])
+    title:Point("TOP", frame, "TOP", 0, -10)
+
+    local desc = frame:CreateFontString(nil, "ARTWORK")
+    desc:FontTemplate()
+    desc:SetJustifyH("LEFT")
+    desc:Width(530)
+    F.SetFontOutline(desc, nil, "-1")
+    desc:SetText(
+        format(
+            "%s\n%s\n%s",
+            L[
+                "There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."
+            ],
+            L["Choose the module you preferred to use in-game."],
+            format(L["Have a good time with %s!"], L["WindTools"])
+        )
+    )
+    desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
+
+    local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", frame, "BackdropTemplate")
+    scrollFrame:CreateBackdrop("Transparent")
+    scrollFrame:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
+    scrollFrame:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
+    frame.scrollFrame = scrollFrame
+
     W.CompatibiltyFrame = frame
 end
 
 function W:AddButtonToCompatibiltyFrame(data)
     local frame = self.CompatibiltyFrame
     frame.numModules = frame.numModules + 1
+
     local leftButton =
         CreateFrame(
         "Button",
         "WTCompatibiltyFrameLeftButton" .. frame.numModules,
-        frame,
+        frame.scrollFrame,
         "OptionsButtonTemplate, BackdropTemplate"
     )
     leftButton.Text:SetText(format("%s\n%s", data.module1, data.plugin1))
     leftButton.Text:SetJustifyH("CENTER")
     leftButton.Text:SetJustifyV("CENTER")
     F.SetFontOutline(leftButton.Text, E.db.general.font)
-    leftButton:Size(230, 40)
-    leftButton:Point("TOPLEFT", frame, "TOPLEFT", 15, -frame.numModules * 50)
+    leftButton:Size(220, 40)
+    leftButton:Point("TOPLEFT", frame.scrollFrame, "TOPLEFT", 15, -frame.numModules * 50 + 40)
     ES:HandleButton(leftButton)
     leftButton:SetScript(
         "OnClick",
@@ -60,19 +90,26 @@ function W:AddButtonToCompatibiltyFrame(data)
         end
     )
 
+    local middleTexture = frame:CreateTexture("WTCompatibiltyFrameMiddleTexture" .. frame.numModules, "ARTWORK")
+    middleTexture:Point("CENTER")
+    middleTexture:Size(24)
+    middleTexture:SetTexture(W.Media.Icons.convert)
+    middleTexture:SetVertexColor(1, 1, 1)
+    middleTexture:Point("CENTER", frame.scrollFrame, "TOP", 0, -frame.numModules * 50 + 20)
+
     local rightButton =
         CreateFrame(
         "Button",
         "WTCompatibiltyFrameRightButton" .. frame.numModules,
-        frame,
+        frame.scrollFrame,
         "OptionsButtonTemplate, BackdropTemplate"
     )
     rightButton.Text:SetText(format("%s\n%s", data.module2, data.plugin2))
     rightButton.Text:SetJustifyH("CENTER")
     rightButton.Text:SetJustifyV("CENTER")
     F.SetFontOutline(rightButton.Text, E.db.general.font)
-    rightButton:Size(230, 40)
-    rightButton:Point("TOPRIGHT", frame, "TOPRIGHT", -15, -frame.numModules * 50)
+    rightButton:Size(220, 40)
+    rightButton:Point("TOPRIGHT", frame.scrollFrame, "TOPRIGHT", -15, -frame.numModules * 50 + 40)
     ES:HandleButton(rightButton)
     rightButton:SetScript(
         "OnClick",

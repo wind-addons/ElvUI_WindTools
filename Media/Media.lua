@@ -75,6 +75,7 @@ AddMedia("nga", "NGA.tga", "Icons")
 
 AddMedia("favorite", "Favorite.tga", "Icons")
 AddMedia("list", "List.tga", "Icons")
+AddMedia("convert", "Convert.tga", "Icons")
 
 AddMedia("barAchievements", "GameBar\\Achievements.tga", "Icons")
 AddMedia("barBags", "GameBar\\Bags.tga", "Icons")

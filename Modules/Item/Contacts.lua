@@ -4,12 +4,6 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
-
-local BNGetNumFriends = BNGetNumFriends
-local CreateFrame = CreateFrame
-local GameTooltip = _G.GameTooltip
-local GetClassColor = GetClassColor
-local IsInGuild = IsInGuild
 local floor = floor
 local format = format
 local pairs = pairs
@@ -17,13 +11,16 @@ local select = select
 local tinsert = tinsert
 local unpack = unpack
 
+local BNGetNumFriends = BNGetNumFriends
+local CreateFrame = CreateFrame
+local GameTooltip = _G.GameTooltip
+local GetClassColor = GetClassColor
+local GetGuildRosterInfo = GetGuildRosterInfo
+local IsInGuild = IsInGuild
+
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
-local C_Club_GetClubMembers = C_Club.GetClubMembers
-local C_Club_GetGuildClubId = C_Club.GetGuildClubId
-local C_Club_GetMemberInfo = C_Club.GetMemberInfo
-local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 
@@ -405,14 +402,13 @@ function CT:UpdatePage(pageIndex)
             local temp = data[(pageIndex - 1) * 14 + i]
             local button = self.frame.nameButtons[i]
             if temp then
-                if temp.memberID then -- Only get guild member info if needed
-                    local info = C_Club_GetMemberInfo(guildClubID, temp.memberID)
-                    local name, realm = F.SplitCJKString("-", info.name)
-                    local classInfo = C_CreatureInfo_GetClassInfo(info.classID)
+                if temp.memberIndex then -- Only get guild member info if needed
+                    local fullname, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(temp.memberIndex)
+                    local name, realm = F.SplitCJKString("-", fullname)
                     realm = realm or E.myrealm
                     button.name = name
                     button.realm = realm
-                    button.class = classInfo.classFile
+                    button.class = className
                     button.BNName = nil
                     button.faction = E.myfaction
                 else
@@ -575,15 +571,9 @@ function CT:BuildGuildData()
         return
     end
 
-    guildClubID = C_Club_GetGuildClubId()
-    local members = C_Club_GetClubMembers(guildClubID)
-    for _, member in pairs(members) do
-        tinsert(
-            data,
-            {
-                memberID = member
-            }
-        )
+    local totalMembers = GetNumGuildMembers()
+    for i = 1, totalMembers do
+        tinsert(data, {memberIndex = i})
     end
 end
 

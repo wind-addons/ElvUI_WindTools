@@ -41,7 +41,7 @@ W.Changelog[203] = {
             "[进度] 修复了观察对象时可能发生的报错.",
             "[巅峰声望] 修复了一处设定索引错误.",
             "[巅峰声望] 修复了巅峰箱子无法提示的错误.",
-            "[巔峰聲望] 更新了对 9.0 的支持.",
+            "[巅峰声望] 更新了对 9.0 的支持.",
             "[矩形小地图] 添加了对移动窗体的限制.",
             "[交接] 修复了部分多任务时可能不交接的问题.",
             "[团队标记] 修复了战斗中可能发生的错误.",
@@ -74,7 +74,7 @@ W.Changelog[203] = {
         ["enUS"] = {
             "Fix changelog alert function.",
             "[Game Bar] A part of buttons support click in combat.",
-            "[Game Bar] Add several special Hearthstones.  Thanks @Merathilis",
+            "[Game Bar] Add several special Hearthstones. Thanks @Merathilis",
             "[Move Frames] Fix the bug that tooltips on ElvUI Bags may not hide.",
             "[Move Frames] Fix the bug that the module try to handle ElvUI Bags even it not exist.",
             '[Skins] Fix the bug that WeakAuras Icons option "keep aspect ratio" not worked.',

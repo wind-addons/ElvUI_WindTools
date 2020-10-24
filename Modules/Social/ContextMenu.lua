@@ -694,13 +694,18 @@ function CM:ShowMenu(frame)
             frame:SetHeight(frame:GetHeight() + menuHeight)
 
             self.menu:ClearAllPoints()
+            local offset = 16
             if IsAddOnLoaded("RaiderIO") then
-                self.menu:Point("BOTTOMLEFT", 0, 47)
-                self.menu:Point("BOTTOMRIGHT", 0, 47)
-            else
-                self.menu:Point("BOTTOMLEFT", 0, 16)
-                self.menu:Point("BOTTOMRIGHT", 0, 16)
+                for _, child in pairs {_G.DropDownList1:GetChildren()} do
+                    local name = child:IsShown() and child:GetName()
+                    if name and strfind(name, "^LibDropDownExtensionCustomDropDown") then
+                        offset = 47
+                    end
+                end
             end
+
+            self.menu:Point("BOTTOMLEFT", 0, offset)
+            self.menu:Point("BOTTOMRIGHT", 0, offset)
             self.menu:Show()
         end
     end

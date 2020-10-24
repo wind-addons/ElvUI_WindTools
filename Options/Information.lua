@@ -665,11 +665,14 @@ E.PopupDialogs.WINDTOOLS_RESET_ALL_MODULES = {
 }
 
 E.PopupDialogs.WINDTOOLS_IMPORT_SETTING = {
-    text = L["Are you sure you want to import %s %s?"],
+    text = format("%s\n%s", L["Are you sure you want to import the profile?"], E.InfoColor .. L["[ %s by %s ]"]),
     button1 = _G.ACCEPT,
     button2 = _G.CANCEL,
-    OnAccept = function(_, functionName)
-        W[functionName]()
+    OnAccept = function(_, UISetName)
+        if UISetName then
+            W[UISetName .. "Profile"]()
+            W[UISetName .. "Private"]()
+        end
     end,
     whileDead = 1,
     hideOnEscape = true
@@ -681,38 +684,26 @@ options.reset = {
     childGroups = "select",
     name = L["Reset"],
     args = {
-        Fang2houUI = {
+        import = {
             order = 0,
             type = "group",
             inline = true,
-            name = L["Fang2hou UI"],
+            name = L["Import Profile"],
             args = {
-                profile = {
+                Fang2houUI = {
                     order = 1,
                     type = "execute",
-                    name = L["Import Profile"],
-                    desc = L["Override the ElvUI profile with Fang2hou UI profile."],
+                    name = L["Fang2hou UI"],
+                    desc = format(
+                        "%s\n%s",
+                        format(
+                            L["Override your ElvUI profile with %s profile."],
+                            E.InfoColor .. L["Fang2hou UI"] .. "|r"
+                        ),
+                        E.NewSign .. L["Support 16:9, 21:9 and 32:9!"]
+                    ),
                     func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_IMPORT_SETTING",
-                            L["Fang2hou UI"],
-                            L["Pofile"],
-                            "Fang2houUIProfile"
-                        )
-                    end
-                },
-                private = {
-                    order = 2,
-                    type = "execute",
-                    name = L["Import Private"],
-                    desc = L["Update the character settings such as texture, skins, etc."],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_IMPORT_SETTING",
-                            L["Fang2hou UI"],
-                            L["Private"],
-                            "Fang2houUIPrivate"
-                        )
+                        E:StaticPopup_Show("WINDTOOLS_IMPORT_SETTING", L["Fang2hou UI"], "Fang2hou", nil, "Fang2houUI")
                     end
                 }
             }

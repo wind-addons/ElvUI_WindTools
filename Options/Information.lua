@@ -198,6 +198,19 @@ options.help = {
                 }
             }
         },
+        compatibilityCheck = {
+            order = 998,
+            type = "toggle",
+            name = L["Compatibility Check"],
+            desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
+            get = function(info)
+                return E.private.WT.core.compatibilityCheck
+            end,
+            set = function(info, value)
+                E.private.WT.core.compatibilityCheck = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
         debugMode = {
             order = 999,
             type = "toggle",

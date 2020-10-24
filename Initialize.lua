@@ -55,15 +55,21 @@ end
 
 do
     local firstTime = false
+    local checked = false
     function W:PLAYER_ENTERING_WORLD()
         if not firstTime then
             C_Timer_After(
-                10,
+                7,
                 function()
-                    W:CheckInstalledVersion()
+                    self:CheckInstalledVersion()
                 end
             )
             firstTime = true
+        end
+
+        if not (checked or _G.ElvUIInstallFrame) then
+            self:CheckCompatibility()
+            checked = true
         end
 
         C_Timer_After(
@@ -72,8 +78,6 @@ do
                 collectgarbage("collect")
             end
         )
-
-        self:CheckCompatibility()
     end
 end
 

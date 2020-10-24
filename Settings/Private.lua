@@ -231,5 +231,6 @@ V.unitFrames = {
 }
 
 V.core = {
-	debugMode = false
+	debugMode = false,
+	compatibilityCheck = true,
 }

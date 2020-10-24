@@ -4,13 +4,13 @@ W.Changelog[204] = {
     RELEASE_DATE = "TBD",
     NEW = {
         ["zhCN"] = {
-            "Placeholder"
+            "[额外物品条] 添加了渐隐时间, 最大最小透明度的功能和选项."
         },
         ["zhTW"] = {
-            "Placeholder"
+            "[額外物品條] 新增了漸隱時間, 最大最小透明度的功能和設定."
         },
         ["enUS"] = {
-            "Placeholder"
+            "[Extra Item Bar] Add the support and options of fade time and alpha."
         }
     },
     IMPROVEMENT = {

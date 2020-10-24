@@ -69,8 +69,26 @@ options.extraItemsBar = {
                 return not E.db.WT.item.extraItemsBar.enable
             end,
             args = {
-                list = {
+                addToList = {
                     order = 1,
+                    type = "input",
+                    name = L["New Item ID"],
+                    get = function()
+                        return ""
+                    end,
+                    set = function(_, value)
+                        local itemID = tonumber(value)
+                        local itemName = select(1, GetItemInfo(itemID))
+                        if itemName then
+                            tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
+                            EB:UpdateBars()
+                        else
+                            print(L["The item ID is invalid."])
+                        end
+                    end
+                },
+                list = {
+                    order = 2,
                     type = "select",
                     name = L["List"],
                     get = function()
@@ -86,24 +104,6 @@ options.extraItemsBar = {
                             result[key] = select(1, GetItemInfo(value))
                         end
                         return result
-                    end
-                },
-                addToList = {
-                    order = 2,
-                    type = "input",
-                    name = L["New Item ID"],
-                    get = function()
-                        return ""
-                    end,
-                    set = function(_, value)
-                        local itemID = tonumber(value)
-                        local itemName = select(1, GetItemInfo(itemID))
-                        if itemName then
-                            tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
-                            EB:UpdateBars()
-                        else
-                            print(L["The item ID is invalid."])
-                        end
                     end
                 },
                 deleteButton = {

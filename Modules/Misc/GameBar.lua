@@ -449,9 +449,7 @@ local ButtonTypes = {
         name = L["Toy Box"],
         icon = W.Media.Icons.barToyBox,
         macro = {
-            LeftButton = [[/click CollectionsJournalCloseButton
-/click CollectionsMicroButton
-/click CollectionsJournalTab3]]
+            LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab3"
         },
         tooltips = {
             L["Toy Box"]

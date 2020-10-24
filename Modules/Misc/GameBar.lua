@@ -478,7 +478,7 @@ function GB:ConstructBar()
     local bar = CreateFrame("Frame", "WTGameBar", E.UIParent)
     bar:Size(800, 60)
     bar:Point("TOP", 0, -20)
-    bar:SetFrameStrata("DIALOG")
+    bar:SetFrameStrata("HIGH")
 
     bar:SetScript(
         "OnEnter",

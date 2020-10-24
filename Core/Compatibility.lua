@@ -55,11 +55,26 @@ function W:ConstructCompatibiltyFrame()
     )
     desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
 
-    local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", frame, "BackdropTemplate")
-    scrollFrame:CreateBackdrop("Transparent")
-    scrollFrame:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
-    scrollFrame:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
+    local scrollFrameParent =
+        CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
+    scrollFrameParent:CreateBackdrop("Transparent")
+    scrollFrameParent:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
+    scrollFrameParent:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -35, 30)
+    ES:HandleScrollBar(scrollFrameParent.ScrollBar)
+    local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", scrollFrameParent)
+    scrollFrame:Size(scrollFrameParent:GetSize())
+
+    scrollFrameParent:SetScrollChild(scrollFrame)
+    frame.scrollFrameParent = scrollFrameParent
     frame.scrollFrame = scrollFrame
+
+    local bottomDesc = frame:CreateFontString(nil, "ARTWORK")
+    bottomDesc:FontTemplate()
+    bottomDesc:SetJustifyH("LEFT")
+    bottomDesc:Width(530)
+    F.SetFontOutline(bottomDesc, nil, "-1")
+    bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
+    bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     W.CompatibiltyFrame = frame
 end
@@ -80,7 +95,7 @@ function W:AddButtonToCompatibiltyFrame(data)
     leftButton.Text:SetJustifyV("CENTER")
     F.SetFontOutline(leftButton.Text, E.db.general.font)
     leftButton:Size(220, 40)
-    leftButton:Point("TOPLEFT", frame.scrollFrame, "TOPLEFT", 15, -frame.numModules * 50 + 40)
+    leftButton:Point("TOPLEFT", frame.scrollFrame, "TOPLEFT", 5, -frame.numModules * 50 + 45)
     ES:HandleButton(leftButton)
     leftButton:SetScript(
         "OnClick",
@@ -90,12 +105,13 @@ function W:AddButtonToCompatibiltyFrame(data)
         end
     )
 
-    local middleTexture = frame:CreateTexture("WTCompatibiltyFrameMiddleTexture" .. frame.numModules, "ARTWORK")
+    local middleTexture =
+        frame.scrollFrame:CreateTexture("WTCompatibiltyFrameMiddleTexture" .. frame.numModules, "ARTWORK")
     middleTexture:Point("CENTER")
     middleTexture:Size(24)
     middleTexture:SetTexture(W.Media.Icons.convert)
     middleTexture:SetVertexColor(1, 1, 1)
-    middleTexture:Point("CENTER", frame.scrollFrame, "TOP", 0, -frame.numModules * 50 + 20)
+    middleTexture:Point("CENTER", frame.scrollFrame, "TOP", 0, -frame.numModules * 50 + 25)
 
     local rightButton =
         CreateFrame(
@@ -109,7 +125,7 @@ function W:AddButtonToCompatibiltyFrame(data)
     rightButton.Text:SetJustifyV("CENTER")
     F.SetFontOutline(rightButton.Text, E.db.general.font)
     rightButton:Size(220, 40)
-    rightButton:Point("TOPRIGHT", frame.scrollFrame, "TOPRIGHT", -15, -frame.numModules * 50 + 40)
+    rightButton:Point("TOPRIGHT", frame.scrollFrame, "TOPRIGHT", -5, -frame.numModules * 50 + 45)
     ES:HandleButton(rightButton)
     rightButton:SetScript(
         "OnClick",

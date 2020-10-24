@@ -145,6 +145,7 @@ L["Block Shadow"] = true
 L["Boss"] = true
 L["Bots"] = true
 L["BugSack"] = true
+L["Burning Blade"] = true
 L["Button"] = true
 L["Button #%d"] = true
 L["Button Groups"] = true

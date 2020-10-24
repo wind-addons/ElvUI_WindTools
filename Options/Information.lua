@@ -117,7 +117,7 @@ options.help = {
                         "%s: %s | %s",
                         "asdf12303116",
                         E.InfoColor.."Chen".."|r",
-                        F.CreateClassColorString("一发径直入魂 @ 燃烧之刃(CN)", "HUNTER")
+                        F.CreateClassColorString("一发径直入魂 @ "..L["Burning Blade"].."(CN)", "HUNTER")
                     )
                 }
             }
@@ -272,17 +272,17 @@ options.credits = {
 
 do -- 特别感谢
     local nameList = {
-        "|cffd12727Blazeflack|r",
         "|cffff7d0aMerathilis|r",
-        "|cffff7d0aBenik|r",
         "|cfffff0cdsiweia|r",
+        "Repooc",
         "|cfffff0cdloudsoul|r",
-        E:TextGradient("Simpy", 1.00, 1.00, 0.60, 0.53, 1.00, 0.40),
         "|cff0070deAzilroka|r",
+        "|cffd12727Blazeflack|r",
+        E:TextGradient("Simpy", 1.00, 1.00, 0.60, 0.53, 1.00, 0.40),
+        "|cffff7d0aBenik|r",
         "Haste",
         "Tukz",
         "Elv",
-        "Repooc"
     }
 
     local nameString = strjoin(", ", unpack(nameList))
@@ -323,7 +323,8 @@ do -- 本地化
             "PodVibe @ CurseForge"
         },
         ["Deutsche (deDE)"] = {
-            "imna1975 @ CurseForge"
+            "imna1975 @ CurseForge",
+            "|cffff7d0aMerathilis|r",
         }
     }
 
@@ -441,6 +442,9 @@ end
 
 do -- 媒体文件
     local mediaFilesCreditList = {
+        ["迷时鸟 @ NGA.cn"] = {
+            "Media/Texture/Illustration"
+        },
         ["Iconfont (Alibaba)"] = {
             "Media/Icons/GameBar",
             "Media/Icons/List.tga",

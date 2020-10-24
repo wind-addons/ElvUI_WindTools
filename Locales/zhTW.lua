@@ -145,6 +145,7 @@ L["Block Shadow"] = "方塊陰影"
 L["Boss"] = "首領"
 L["Bots"] = "機器人"
 L["BugSack"] = true
+L["Burning Blade"] = true
 L["Button"] = "按鍵"
 L["Button #%d"] = "第 %d 個按鍵"
 L["Button Groups"] = "按鍵组"

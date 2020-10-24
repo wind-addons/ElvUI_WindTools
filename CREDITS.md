@@ -1,15 +1,15 @@
 # Special Thanks
-- Blazeflack
 - Merathilis
-- Benik
 - siweia
+- Repooc
 - loudsoul
-- Simpy
 - Azilroka
+- Blazeflack
+- Simpy
+- Benik
 - Haste
 - Tukz
 - Elv
-- Repooc
 
 # Sites
 - [https://www.wowhead.com/](https://www.wowhead.com/)
@@ -22,6 +22,7 @@
     - PodVibe @ CurseForge
 - Deutsche (deDE)
     - imna1975 @ CurseForge
+    - Merathilis
 
 # Codes
 - Announcement
@@ -92,6 +93,9 @@
     - cadcamzy (EUI)
 
 # Medias
+- 迷时鸟 @ NGA.cn
+    - Media/Texture/Illustration
+
 - Iconfont (Alibaba)
     - Media/Icons/GameBar
     - Media/Icons/List.tga

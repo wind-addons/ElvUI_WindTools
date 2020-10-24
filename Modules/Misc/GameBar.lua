@@ -202,14 +202,35 @@ local ButtonTypes = {
         name = L["Collections"],
         icon = W.Media.Icons.barCollections,
         macro = {
-            LeftButton = [[/click CollectionsJournalCloseButton
-/click CollectionsMicroButton
-/click CollectionsJournalTab1
-]]
+            LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab1",
+            RightButton = "/click MountJournalSummonRandomFavoriteButton"
         },
-        tooltips = {
-            L["Collections"]
-        }
+        tooltips = function(button)
+            DT.tooltip:ClearLines()
+            DT.tooltip:SetText(L["Collections"])
+            DT.tooltip:AddLine("\n")
+            DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Collections"], 1, 1, 1)
+            DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Mount"], 1, 1, 1)
+            DT.tooltip:Show()
+
+            button.tooltipsUpdateTimer =
+                C_Timer_NewTicker(
+                1,
+                function()
+                    DT.tooltip:ClearLines()
+                    DT.tooltip:SetText(L["Collections"])
+                    DT.tooltip:AddLine("\n")
+                    DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Collections"], 1, 1, 1)
+                    DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Mount"], 1, 1, 1)
+                    DT.tooltip:Show()
+                end
+            )
+        end,
+        tooltipsLeave = function(button)
+            if button.tooltipsUpdateTimer and button.tooltipsUpdateTimer.Cancel then
+                button.tooltipsUpdateTimer:Cancel()
+            end
+        end
     },
     ENCOUNTER_JOURNAL = {
         name = L["Encounter Journal"],

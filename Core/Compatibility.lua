@@ -198,6 +198,139 @@ function W:CheckCompatibility()
         }
     )
 
+    self:CheckCompatibilityMerathilisUI(
+        format("%s-%s", L["Tooltip"], L["Add Icon"]),
+        L["Tooltip Icons"],
+        {
+            check = function()
+                if E.private.WT.tooltips.icon and E.db.mui.tooltip.tooltipIcon then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.tooltip.tooltipIcon = false
+            end,
+            disableWTModule = function()
+                E.private.WT.tooltips.icon = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Group Info"],
+        L["LFG Info"],
+        {
+            check = function()
+                if E.db.WT.tooltips.groupInfo.enable and E.db.mui.misc.lfgInfo.enable then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.misc.lfgInfo.enable = false
+            end,
+            disableWTModule = function()
+                E.db.WT.tooltips.groupInfo.enable = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Paragon Reputation"],
+        L["Paragon Reputation"],
+        {
+            check = function()
+                if E.db.WT.quest.paragonReputation.enable and E.db.mui.misc.paragon.enable then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.misc.paragon.enable = false
+            end,
+            disableWTModule = function()
+                E.db.WT.quest.paragonReputation = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        format("%s (%s|cffff0000*|r)", L["Chat Text"], L["Role Icon"]),
+        L["Role Icon"],
+        {
+            check = function()
+                if E.db.WT.social.chatText.enable and E.db.mui.unitframes.roleIcons then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.unitframes.roleIcons = false
+            end,
+            disableWTModule = function()
+                E.db.WT.social.chatText.enable = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Combat Alert"],
+        L["Combat Alert"],
+        {
+            check = function()
+                if E.db.WT.combat.combatAlert.enable and E.db.mui.CombatAlert.enable then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.CombatAlert.enable = false
+            end,
+            disableWTModule = function()
+                E.db.WT.combat.combatAlert.enable = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Who Clicked Minimap"],
+        L["Minimap Ping"],
+        {
+            check = function()
+                if E.db.WT.maps.whoClicked.enable and E.db.mui.maps.minimap.ping.enable then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.maps.minimap.ping.enable = false
+            end,
+            disableWTModule = function()
+                E.db.WT.maps.whoClicked.enable = false
+            end
+        }
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Minimap Buttons"],
+        L["Minimap Buttons"],
+        {
+            check = function()
+                if E.private.WT.maps.minimapButtons.enable and E.db.mui.maps.minimap.ping.enable then
+                    return true
+                end
+                return false
+            end,
+            disableMUIModule = function()
+                E.db.mui.smb.enable = false
+            end,
+            disableWTModule = function()
+                E.private.WT.maps.minimapButtons.enable = false
+            end
+        }
+    )
+
     if self.CompatibiltyFrame.numModules > 0 then
         self.CompatibiltyFrame:Show()
     end

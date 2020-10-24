@@ -2,4 +2,5 @@
 ..\FrameXML\UI.xsd">
     <Script file="LibRangeCheck-2.0\LibRangeCheck-2.0.lua"/>
     <Include file="LibObjectiveProgress-1.0\embed.xml"/>
+    <Include file="TinyLibs\lib.xml"/>
 </Ui>

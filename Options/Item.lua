@@ -213,7 +213,7 @@ do -- Add options for bars
                 fadeTime = {
                     order = 3,
                     type = "range",
-                    name = L["FadeTime"],
+                    name = L["Fade Time"],
                     min = 0,
                     max = 2,
                     step = 0.01

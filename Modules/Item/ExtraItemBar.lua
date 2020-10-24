@@ -310,7 +310,14 @@ function EB:SetUpButton(button, questItemData, slotID)
         function(self)
             local bar = self:GetParent()
             if EB.db["bar" .. bar.id].mouseOver then
-                E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+                local db = EB.db["bar" .. bar.id]
+                local alphaCurrent = bar:GetAlpha()
+                E:UIFrameFadeIn(
+                    bar,
+                    db.fadeTime * (db.alphaMax - alphaCurrent) / (db.alphaMax - db.alphaMin),
+                    alphaCurrent,
+                    db.alphaMax
+                )
             end
             GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
             GameTooltip:ClearLines()
@@ -330,7 +337,14 @@ function EB:SetUpButton(button, questItemData, slotID)
         function(self)
             local bar = self:GetParent()
             if EB.db["bar" .. bar.id].mouseOver then
-                E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), 0)
+                local db = EB.db["bar" .. bar.id]
+                local alphaCurrent = bar:GetAlpha()
+                E:UIFrameFadeOut(
+                    bar,
+                    db.fadeTime * (alphaCurrent - db.alphaMin) / (db.alphaMax - db.alphaMin),
+                    alphaCurrent,
+                    db.alphaMin
+                )
             end
             GameTooltip:Hide()
         end
@@ -441,7 +455,13 @@ function EB:CreateBar(id)
         "OnEnter",
         function(self)
             if barDB.mouseOver then
-                E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
+                local alphaCurrent = bar:GetAlpha()
+                E:UIFrameFadeIn(
+                    bar,
+                    barDB.fadeTime * (barDB.alphaMax - alphaCurrent) / (barDB.alphaMax - barDB.alphaMin),
+                    alphaCurrent,
+                    barDB.alphaMax
+                )
             end
         end
     )
@@ -450,7 +470,13 @@ function EB:CreateBar(id)
         "OnLeave",
         function(self)
             if barDB.mouseOver then
-                E:UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
+                local alphaCurrent = bar:GetAlpha()
+                E:UIFrameFadeOut(
+                    bar,
+                    barDB.fadeTime * (alphaCurrent - barDB.alphaMin) / (barDB.alphaMax - barDB.alphaMin),
+                    alphaCurrent,
+                    barDB.alphaMin
+                )
             end
         end
     )
@@ -649,10 +675,13 @@ function EB:UpdateBar(id)
         end
     end
 
+    bar.alphaMin = barDB.alphaMin
+    bar.alphaMax = barDB.alphaMax
+
     if barDB.mouseOver then
-        bar:SetAlpha(0)
+        bar:SetAlpha(barDB.alphaMin)
     else
-        bar:SetAlpha(1)
+        bar:SetAlpha(barDB.alphaMax)
     end
 end
 

@@ -38,6 +38,7 @@ local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
 local InspectFrame = InspectFrame
+local IsAddOnLoaded = IsAddOnLoaded
 local IsCorruptedItem = IsCorruptedItem
 local PaperDollFrame = PaperDollFrame
 local SetPortraitTexture = SetPortraitTexture
@@ -1021,6 +1022,11 @@ end
 function IL:Initialize()
     self.db = E.db.WT.item.inspect
 
+    if IsAddOnLoaded("TinyInspect") then
+		self.StopRunning = "TinyInspect"
+		return
+    end
+    
     if not self.db.enable or self.Initialized then
         return
     end

@@ -13,13 +13,6 @@ local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
 
 local guids, inspecting = {}, false
 
-local testDB = {
-    enable = true,
-    player = true,
-    inspect = true,
-    playerOnInspect = true
-}
-
 local slots = {
     {index = 1, name = HEADSLOT},
     {index = 2, name = NECKSLOT},
@@ -99,6 +92,10 @@ local function GetInspectSpec(unit)
         end
     end
     return specName or ""
+end
+
+local function GetStateValue(unit, state, value, default)
+    return value or default
 end
 
 -- Gems
@@ -300,6 +297,161 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     return num * 18
 end
 
+local function ShowInspectItemStatsFrame(frame, unit)
+    if (not frame.expandButton) then
+        local expandButton = CreateFrame("Button", nil, frame)
+        expandButton:Size(12, 12)
+        expandButton:Point("TOPRIGHT", -5, -5)
+        expandButton:SetNormalTexture("Interface\\Cursor\\Item")
+        expandButton:GetNormalTexture():SetTexCoord(12 / 32, 0, 0, 12 / 32)
+        expandButton:SetScript(
+            "OnClick",
+            function(self)
+                local parent = self:GetParent()
+                ToggleFrame(parent.statsFrame)
+                if (parent.statsFrame:IsShown()) then
+                    ShowInspectItemStatsFrame(parent, parent.unit)
+                end
+            end
+        )
+        frame.expandButton = expandButton
+    end
+    if not frame.statsFrame then
+        local statsFrame = CreateFrame("Frame", nil, frame)
+        statsFrame:CreateBackdrop("Transparent")
+        S:CreateShadow(statsFrame.backdrop)
+        statsFrame:Size(197, 157)
+        statsFrame:Point("TOPLEFT", frame, "TOPRIGHT", 5, 0)
+        for i = 1, 20 do
+            statsFrame["stat" .. i] = CreateFrame("FRAME", nil, statsFrame, "CharacterStatFrameTemplate")
+            statsFrame["stat" .. i]:EnableMouse(false)
+            statsFrame["stat" .. i]:SetWidth(197)
+            statsFrame["stat" .. i]:Point("TOPLEFT", 0, -17 * i + 13)
+            statsFrame["stat" .. i].Background:SetVertexColor(0, 0, 0)
+            statsFrame["stat" .. i].Value:Point("RIGHT", -64, 0)
+            statsFrame["stat" .. i].PlayerValue =
+                statsFrame["stat" .. i]:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+            statsFrame["stat" .. i].PlayerValue:Point("LEFT", statsFrame["stat" .. i], "RIGHT", -54, 0)
+            F.SetFontOutline(statsFrame["stat" .. i].Label, E.db.general.font)
+            F.SetFontOutline(statsFrame["stat" .. i].Value, E.db.general.font)
+            F.SetFontOutline(statsFrame["stat" .. i].PlayerValue, E.db.general.font)
+        end
+        local mask = statsFrame:CreateTexture()
+        mask:SetTexture("Interface\\Buttons\\WHITE8X8")
+        mask:Point("TOPLEFT", statsFrame.backdrop, "TOPRIGHT", -60, 0)
+        mask:Point("BOTTOMRIGHT", statsFrame.backdrop, "BOTTOMRIGHT", 0, 0)
+        mask:SetBlendMode("ADD")
+        mask:SetVertexColor(1, 1, 1)
+        mask:SetAlpha(0.2)
+
+        if MF and MF.db and MF.db.moveBlizzardFrames then
+            MF:HandleFrame(statsFrame.backdrop, frame.MoveFrame or frame)
+            statsFrame.MoveFrame = statsFrame.backdrop.MoveFrame
+        end
+
+        frame.statsFrame = statsFrame
+    end
+    if (not frame.statsFrame:IsShown()) then
+        return
+    end
+    local inspectStats, playerStats = {}, {}
+    local _, inspectItemLevel = LibItemInfo:GetUnitItemLevel(unit, inspectStats)
+    local _, playerItemLevel = LibItemInfo:GetUnitItemLevel("player", playerStats)
+    local baseInfo = {}
+    tinsert(baseInfo, {label = LEVEL, iv = UnitLevel(unit), pv = UnitLevel("player")})
+    tinsert(
+        baseInfo,
+        {
+            label = HEALTH,
+            iv = AbbreviateLargeNumbers(UnitHealthMax(unit)),
+            pv = AbbreviateLargeNumbers(UnitHealthMax("player"))
+        }
+    )
+    tinsert(
+        baseInfo,
+        {label = STAT_AVERAGE_ITEM_LEVEL, iv = format("%.1f", inspectItemLevel), pv = format("%.1f", playerItemLevel)}
+    )
+    local index = 1
+    for _, v in pairs(baseInfo) do
+        frame.statsFrame["stat" .. index].Label:SetText(v.label)
+        frame.statsFrame["stat" .. index].Label:SetTextColor(0.2, 1, 1)
+        frame.statsFrame["stat" .. index].Value:SetText(v.iv)
+        frame.statsFrame["stat" .. index].Value:SetTextColor(0, 0.7, 0.9)
+        frame.statsFrame["stat" .. index].PlayerValue:SetText(v.pv)
+        frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(0, 0.7, 0.9)
+        frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
+        frame.statsFrame["stat" .. index]:Show()
+        index = index + 1
+    end
+    for k, v in pairs(inspectStats) do
+        if (v.r + v.g + v.b < 1.2) then
+            frame.statsFrame["stat" .. index].Label:SetText(k)
+            frame.statsFrame["stat" .. index].Label:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].Value:SetText(GetStateValue(unit, k, v.value))
+            frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].PlayerValue:SetText(
+                GetStateValue("player", k, playerStats[k] and playerStats[k].value, "-")
+            )
+            frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
+            frame.statsFrame["stat" .. index]:Show()
+            index = index + 1
+        end
+    end
+    for k, v in pairs(playerStats) do
+        if (not inspectStats[k] and v.r + v.g + v.b < 1.2) then
+            frame.statsFrame["stat" .. index].Label:SetText(k)
+            frame.statsFrame["stat" .. index].Label:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].Value:SetText("-")
+            frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].PlayerValue:SetText(GetStateValue("player", k, v.value))
+            frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
+            frame.statsFrame["stat" .. index]:Show()
+            index = index + 1
+        end
+    end
+    for k, v in pairs(inspectStats) do
+        if (v.r + v.g + v.b > 1.2) then
+            frame.statsFrame["stat" .. index].Label:SetText(k)
+            frame.statsFrame["stat" .. index].Label:SetTextColor(1, 0.82, 0)
+            frame.statsFrame["stat" .. index].Value:SetText(v.value)
+            frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
+            if (playerStats[k]) then
+                frame.statsFrame["stat" .. index].PlayerValue:SetText(playerStats[k].value)
+                frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(
+                    playerStats[k].r,
+                    playerStats[k].g,
+                    playerStats[k].b
+                )
+            else
+                frame.statsFrame["stat" .. index].PlayerValue:SetText("-")
+            end
+            frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
+            frame.statsFrame["stat" .. index]:Show()
+            index = index + 1
+        end
+    end
+    for k, v in pairs(playerStats) do
+        if (not inspectStats[k] and v.r + v.g + v.b > 1.2) then
+            frame.statsFrame["stat" .. index].Label:SetText(k)
+            frame.statsFrame["stat" .. index].Label:SetTextColor(1, 0.82, 0)
+            frame.statsFrame["stat" .. index].Value:SetText("-")
+            frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].PlayerValue:SetText(v.value)
+            frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
+            frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
+            frame.statsFrame["stat" .. index]:Show()
+            index = index + 1
+        end
+    end
+    frame.statsFrame:SetHeight(index * 17 - 10)
+    while (frame.statsFrame["stat" .. index]) do
+        frame.statsFrame["stat" .. index]:Hide()
+        index = index + 1
+    end
+end
+
 -- Gem Plugin
 local function Plugin_GemAndEnchant(unit, parent, itemLevel, maxLevel)
     local frame = parent.inspectFrame
@@ -333,8 +485,9 @@ local function Plugin_Spec(unit, parent, itemLevel, maxLevel)
         frame.specicon = frame:CreateTexture(nil, "BORDER")
         frame.specicon:SetTexCoord(unpack(E.TexCoords))
         frame.specicon:Size(35)
-        frame.specicon:Point("TOPRIGHT", -22, -16)
+        frame.specicon:Point("TOPRIGHT", -12, -15)
         frame.specicon:SetAlpha(0.4)
+        frame.specicon:CreateBackdrop()
         frame.spectext = frame:CreateFontString(nil, "BORDER")
         F.SetFontWithDB(
             frame.spectext,
@@ -344,7 +497,7 @@ local function Plugin_Spec(unit, parent, itemLevel, maxLevel)
                 style = "OUTLINE"
             }
         )
-        frame.spectext:Point("BOTTOM", frame.specicon, "BOTTOM")
+        frame.spectext:Point("BOTTOM", frame.specicon, "BOTTOM", 0, 2)
         frame.spectext:SetJustifyH("CENTER")
         frame.spectext:SetAlpha(0.5)
     end
@@ -364,6 +517,24 @@ local function Plugin_Spec(unit, parent, itemLevel, maxLevel)
         frame.spectext:SetText("")
         frame.specicon:Hide()
     end
+end
+
+-- Stats Plugin
+local function Plugin_Stats(unit, parent, itemLevel, maxLevel)
+    local frame = parent.inspectFrame
+    if not frame then
+        return
+    end
+    if unit == "player" then
+        return
+    end
+    if not IL.db or not IL.db.stats then
+        if frame.statsFrame then
+            frame.statsFrame:Hide()
+        end
+        return
+    end
+    ShowInspectItemStatsFrame(frame, unit)
 end
 
 local function GetInspectItemListFrame(parent)
@@ -438,7 +609,7 @@ local function GetInspectItemListFrame(parent)
             F.SetFontWithDB(
                 itemframe.levelString,
                 {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = E.db.general.font,
                     size = 13,
                     style = "OUTLINE"
                 }
@@ -493,10 +664,8 @@ local function GetInspectItemListFrame(parent)
             LibEvent:trigger("INSPECT_ITEMFRAME_CREATED", itemframe)
         end
 
-        frame.closeButton =
-            CreateFrame("Button", "WTCompatibiltyFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
-        frame.closeButton:Size(frame.closeButton:GetWidth() - 2)
-        frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
+        frame.closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton, BackdropTemplate")
+        frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 5, 5)
         ES:HandleCloseButton(frame.closeButton)
         frame.closeButton:SetScript(
             "OnClick",
@@ -608,6 +777,9 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     LibEvent:trigger("INSPECT_FRAME_SHOWN", frame, parent, ilevel)
     Plugin_Spec(unit, parent, ilevel, maxLevel)
     Plugin_GemAndEnchant(unit, parent, ilevel, maxLevel)
+    if W.Locale == "koKR" or W.Locale == "enUS" or W.Locale == "zhCN" or W.Locale == "zhTW" then
+        Plugin_Stats(unit, parent, itemLevel, maxLevel)
+    end
 
     return frame
 end
@@ -762,7 +934,7 @@ function IL:Inspect()
                 frame.statsFrame:SetParent(frame)
             end
             if frame.statsFrame then
-                frame.statsFrame:Point("TOPLEFT", frame.statsFrame:GetParent(), "TOPRIGHT", 1, -1)
+                frame.statsFrame:Point("TOPLEFT", frame.statsFrame:GetParent(), "TOPRIGHT", 5, 0)
             end
         end
     )

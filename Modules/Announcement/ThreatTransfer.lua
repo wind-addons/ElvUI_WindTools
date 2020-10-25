@@ -31,19 +31,18 @@ function A:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
     end
 
     if ThreatTransferList[spellId] then
-        local needAnnounce = false
+        local needAnnounce = true
 
         if config.onlyNotTank then
             local role = UnitGroupRolesAssigned(destName)
             if role == "TANK" then
                 needAnnounce = false
+                if config.forceSourceIsPlayer and sourceGUID == E.myguid then
+                    needAnnounce = true
+                elseif config.forceDestIsPlayer and destGUID == E.myguid then
+                    needAnnounce = true
+                end
             end
-        end
-
-        if config.forceSourceIsPlayer and sourceGUID == E.myguid then
-            needAnnounce = true
-        elseif config.forceDestIsPlayer and destGUID == E.myguid then
-            needAnnounce = true
         end
 
         if needAnnounce then

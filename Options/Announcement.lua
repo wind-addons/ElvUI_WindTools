@@ -1789,7 +1789,7 @@ options.threatTransfer = {
             type = "toggle",
             name = L["Enable"],
             set = function(info, value)
-                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                E.db.WT.announcement.threatTransfer[info[#info]] = value
                 A:ResetAuthority()
             end
         },
@@ -1799,7 +1799,7 @@ options.threatTransfer = {
             name = L["Raid Warning"],
             desc = L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."],
             set = function(info, value)
-                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                E.db.WT.announcement.threatTransfer[info[#info]] = value
                 A:ResetAuthority()
             end
         },
@@ -1815,7 +1815,7 @@ options.threatTransfer = {
                     name = L["Only Not Tank"],
                     desc = L["Only announce when the target is not a tank."],
                     set = function(info, value)
-                        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                        E.db.WT.announcement.threatTransfer[info[#info]] = value
                         A:ResetAuthority()
                     end
                 },
@@ -1823,13 +1823,19 @@ options.threatTransfer = {
                     order = 2,
                     type = "toggle",
                     name = L["Source"],
-                    desc = L["Force to announce if the spell which is cast by you."]
+                    desc = L["Force to announce if the spell which is cast by you."],
+                    hidden = function()
+                        return not E.db.WT.announcement.threatTransfer.onlyNotTank
+                    end
                 },
                 forceDestIsPlayer = {
                     order = 3,
                     type = "toggle",
                     name = L["Target"],
-                    desc = L["Force to announce if the target is you."]
+                    desc = L["Force to announce if the target is you."],
+                    hidden = function()
+                        return not E.db.WT.announcement.threatTransfer.onlyNotTank
+                    end
                 }
             }
         },

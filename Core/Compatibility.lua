@@ -49,7 +49,7 @@ function W:ConstructCompatibiltyFrame()
             L[
                 "There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."
             ],
-            L["Choose the module you preferred to use in-game."],
+            L["Choose the module you would like to |cff00ff00use|r."],
             format(L["Have a good time with %s!"], L["WindTools"])
         )
     )
@@ -78,7 +78,10 @@ function W:ConstructCompatibiltyFrame()
     bottomDesc:SetJustifyH("LEFT")
     bottomDesc:Width(530)
     F.SetFontOutline(bottomDesc, nil, "-1")
-    bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
+    bottomDesc:SetText(
+        E.NewSign .. L["If you find the WindTools module conflicts with another addon, alert me via Discord."]
+    )
+    --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     W.CompatibiltyFrame = frame
@@ -289,21 +292,21 @@ function W:CheckCompatibility()
     )
 
     self:CheckCompatibilityMerathilisUI(
-        format("%s (%s|cffff0000*|r)", L["Chat Text"], L["Role Icon"]),
+        L["Role Icon"],
         L["Role Icon"],
         {
             check = function()
-                if E.db.WT.social.chatText.enable and E.db.mui.unitframes.roleIcons then
+                if E.private.WT.unitFrames.roleIcon.enable and E.db.mui.unitframes.roleIcons then
                     return true
                 end
                 return false
             end,
             disableMUIModule = function()
-                E.db.WT.social.chatText.enable = true
+                E.private.WT.unitFrames.roleIcon.enable = true
                 E.db.mui.unitframes.roleIcons = false
             end,
             disableWTModule = function()
-                E.db.WT.social.chatText.enable = false
+                E.private.WT.unitFrames.roleIcon.enable = false
                 E.db.mui.unitframes.roleIcons = true
             end
         }
@@ -356,7 +359,7 @@ function W:CheckCompatibility()
         L["Minimap Buttons"],
         {
             check = function()
-                if E.private.WT.maps.minimapButtons.enable and E.db.mui.maps.minimap.ping.enable then
+                if E.private.WT.maps.minimapButtons.enable and E.db.mui.smb.enable then
                     return true
                 end
                 return false

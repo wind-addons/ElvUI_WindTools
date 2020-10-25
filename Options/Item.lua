@@ -130,26 +130,8 @@ options.extraItemsBar = {
                 return not E.db.WT.item.extraItemsBar.enable
             end,
             args = {
-                list = {
-                    order = 1,
-                    type = "select",
-                    name = L["List"],
-                    get = function()
-                        return customListSelected2
-                    end,
-                    set = function(_, value)
-                        customListSelected2 = value
-                    end,
-                    values = function()
-                        local result = {}
-                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            result[key] = value
-                        end
-                        return result
-                    end
-                },
                 addToList = {
-                    order = 2,
+                    order = 1,
                     type = "input",
                     name = L["New Item ID"],
                     get = function()
@@ -164,6 +146,24 @@ options.extraItemsBar = {
                         else
                             print(L["The item ID is invalid."])
                         end
+                    end
+                },
+                list = {
+                    order = 2,
+                    type = "select",
+                    name = L["List"],
+                    get = function()
+                        return customListSelected2
+                    end,
+                    set = function(_, value)
+                        customListSelected2 = value
+                    end,
+                    values = function()
+                        local result = {}
+                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
+                            result[key] = value
+                        end
+                        return result
                     end
                 },
                 deleteButton = {

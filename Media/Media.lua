@@ -95,6 +95,7 @@ AddMedia("barSpellBook", "GameBar\\SpellBook.tga", "Icons")
 AddMedia("barTalents", "GameBar\\Talents.tga", "Icons")
 AddMedia("barToyBox", "GameBar\\ToyBox.tga", "Icons")
 
+AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
 AddMedia("illMurloc1", "Illustration\\Murloc1.tga", "Textures")
 
 do

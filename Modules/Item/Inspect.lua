@@ -8,6 +8,8 @@ local _G = _G
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
+local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
+local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
 
 local guids, inspecting = {}, false
 
@@ -17,6 +19,7 @@ local testDB = {
     inspect = true,
     playerOnInspect = true
 }
+
 local slots = {
     {index = 1, name = HEADSLOT},
     {index = 2, name = NECKSLOT},
@@ -36,7 +39,18 @@ local slots = {
     {index = 17, name = SECONDARYHANDSLOT}
 }
 
--- TinyInspect API
+local EnchantParts = {
+    [2] = {1, NECKSLOT},
+    [11] = {1, FINGER1SLOT},
+    [12] = {1, FINGER1SLOT},
+    --  [15] = {1, BACKSLOT},
+    [16] = {1, MAINHANDSLOT}
+    --    [17] = {1, SECONDARYHANDSLOT},
+    --  [3]  = {0, SHOULDERSLOT},
+    --  [9]  = {0, WRISTSLOT},
+    --  [10] = {0, HANDSSLOT},
+}
+
 local function ReInspect(unit)
     local guid = UnitGUID(unit)
     if not guid then
@@ -85,6 +99,271 @@ local function GetInspectSpec(unit)
         end
     end
     return specName or ""
+end
+
+-- Gems
+--創建圖標框架
+local function CreateIconFrame(frame, index)
+    local icon = CreateFrame("Button", nil, frame)
+    icon.index = index
+    icon:Hide()
+    icon:Size(16, 16)
+    icon:SetScript(
+        "OnEnter",
+        function(self)
+            if (self.itemLink) then
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+                GameTooltip:SetHyperlink(self.itemLink)
+                GameTooltip:Show()
+            elseif (self.spellID) then
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+                GameTooltip:SetSpellByID(self.spellID)
+                GameTooltip:Show()
+            elseif (self.title) then
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+                GameTooltip:SetText(self.title)
+                GameTooltip:Show()
+            end
+        end
+    )
+    icon:SetScript(
+        "OnLeave",
+        function(self)
+            GameTooltip:Hide()
+        end
+    )
+    icon:SetScript(
+        "OnDoubleClick",
+        function(self)
+            if (self.itemLink or self.title) then
+                ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
+                ChatEdit_InsertLink(self.itemLink or self.title)
+            end
+        end
+    )
+    icon.bg = icon:CreateTexture(nil, "BACKGROUND")
+    icon.bg:Size(16, 16)
+    icon.bg:Point("CENTER")
+    icon.bg:SetTexture(W.Media.Textures.inspectGemBG)
+    icon.texture = icon:CreateTexture(nil, "BORDER")
+    icon.texture:Size(12, 12)
+    icon.texture:Point("CENTER")
+    icon.texture:SetMask("Interface\\FriendsFrame\\Battlenet-Portrait")
+    frame["xicon" .. index] = icon
+    return frame["xicon" .. index]
+end
+
+--隱藏所有圖標框架
+local function HideAllIconFrame(frame)
+    local index = 1
+    while (frame["xicon" .. index]) do
+        frame["xicon" .. index].title = nil
+        frame["xicon" .. index].itemLink = nil
+        frame["xicon" .. index].spellID = nil
+        frame["xicon" .. index]:Hide()
+        index = index + 1
+    end
+    LibSchedule:RemoveTask("InspectGemAndEnchant", true)
+end
+
+--獲取可用的圖標框架
+local function GetIconFrame(frame)
+    local index = 1
+    while (frame["xicon" .. index]) do
+        if (not frame["xicon" .. index]:IsShown()) then
+            return frame["xicon" .. index]
+        end
+        index = index + 1
+    end
+    return CreateIconFrame(frame, index)
+end
+
+--執行圖標更新
+local function onExecute(self)
+    if (self.dataType == "item") then
+        local _, itemLink, quality, _, _, _, _, _, _, texture = GetItemInfo(self.data)
+        if (texture) then
+            local r, g, b = GetItemQualityColor(quality or 0)
+            self.icon.bg:SetVertexColor(r, g, b)
+            self.icon.texture:SetTexture(texture)
+            if (not self.icon.itemLink) then
+                self.icon.itemLink = itemLink
+            end
+            return true
+        end
+    elseif (self.dataType == "spell") then
+        local _, _, texture = GetSpellInfo(self.data)
+        if (texture) then
+            self.icon.texture:SetTexture(texture)
+            return true
+        end
+    end
+end
+
+--Schedule模式更新圖標
+local function UpdateIconTexture(icon, texture, data, dataType)
+    if (not texture) then
+        LibSchedule:AddTask(
+            {
+                identity = "InspectGemAndEnchant" .. icon.index,
+                timer = 0.1,
+                elasped = 0.5,
+                expired = GetTime() + 3,
+                onExecute = onExecute,
+                icon = icon,
+                data = data,
+                dataType = dataType
+            }
+        )
+    end
+end
+
+--讀取並顯示圖標
+local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
+    if (not ItemLink) then
+        return 0
+    end
+    local num, info, qty = LibItemGem:GetItemGemInfo(ItemLink)
+    local _, quality, texture, icon, r, g, b
+    for i, v in ipairs(info) do
+        icon = GetIconFrame(frame)
+        if (v.link) then
+            _, _, quality, _, _, _, _, _, _, texture = GetItemInfo(v.link)
+            r, g, b = GetItemQualityColor(quality or 0)
+            icon.bg:SetVertexColor(r, g, b)
+            icon.texture:SetTexture(texture or "Interface\\Cursor\\Quest")
+            UpdateIconTexture(icon, texture, v.link, "item")
+        else
+            icon.bg:SetVertexColor(1, 0.82, 0, 0.5)
+            icon.texture:SetTexture("Interface\\Cursor\\Quest")
+        end
+        icon.title = v.name
+        icon.itemLink = v.link
+        icon:ClearAllPoints()
+        icon:Point("LEFT", anchorFrame, "RIGHT", i == 1 and 6 or 1, 0)
+        icon:Show()
+        anchorFrame = icon
+    end
+    local enchantItemID, enchantID = LibItemEnchant:GetEnchantItemID(ItemLink)
+    local enchantSpellID = LibItemEnchant:GetEnchantSpellID(ItemLink)
+    if (enchantItemID) then
+        num = num + 1
+        icon = GetIconFrame(frame)
+        _, ItemLink, quality, _, _, _, _, _, _, texture = GetItemInfo(enchantItemID)
+        r, g, b = GetItemQualityColor(quality or 0)
+        icon.bg:SetVertexColor(r, g, b)
+        icon.texture:SetTexture(texture)
+        UpdateIconTexture(icon, texture, enchantItemID, "item")
+        icon.itemLink = ItemLink
+        icon:ClearAllPoints()
+        icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+        icon:Show()
+        anchorFrame = icon
+    elseif (enchantSpellID) then
+        num = num + 1
+        icon = GetIconFrame(frame)
+        _, _, texture = GetSpellInfo(enchantSpellID)
+        icon.bg:SetVertexColor(1, 0.82, 0)
+        icon.texture:SetTexture(texture)
+        UpdateIconTexture(icon, texture, enchantSpellID, "spell")
+        icon.spellID = enchantSpellID
+        icon:ClearAllPoints()
+        icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+        icon:Show()
+        anchorFrame = icon
+    elseif (enchantID) then
+        num = num + 1
+        icon = GetIconFrame(frame)
+        icon.title = "#" .. enchantID
+        icon.bg:SetVertexColor(0.1, 0.1, 0.1)
+        icon.texture:SetTexture("Interface\\FriendsFrame\\InformationIcon")
+        icon:ClearAllPoints()
+        icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+        icon:Show()
+        anchorFrame = icon
+    elseif (not enchantID and EnchantParts[itemframe.index]) then
+        if (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
+        else
+            num = num + 1
+            icon = GetIconFrame(frame)
+            icon.title = ENCHANTS .. ": " .. EnchantParts[itemframe.index][2]
+            icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
+            icon.texture:SetTexture(
+                "Interface\\Cursor\\" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
+            )
+            icon:ClearAllPoints()
+            icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+            icon:Show()
+            anchorFrame = icon
+        end
+    end
+    return num * 18
+end
+
+-- Gem Plugin
+local function Plugin_GemAndEnchant(unit, parent, itemLevel, maxLevel)
+    local frame = parent.inspectFrame
+    if (not frame) then
+        return
+    end
+    local i = 1
+    local itemframe
+    local width, iconWidth = frame:GetWidth(), 0
+    HideAllIconFrame(frame)
+    while (frame["item" .. i]) do
+        itemframe = frame["item" .. i]
+        iconWidth = ShowGemAndEnchant(frame, itemframe.link, itemframe.itemString, itemframe)
+        if (width < itemframe.width + iconWidth + 36) then
+            width = itemframe.width + iconWidth + 36
+        end
+        i = i + 1
+    end
+    if (width > frame:GetWidth()) then
+        frame:SetWidth(width)
+    end
+end
+
+-- Spec Plugin
+local function Plugin_Spec(unit, parent, itemLevel, maxLevel)
+    local frame = parent.inspectFrame
+    if (not frame) then
+        return
+    end
+    if (not frame.specicon) then
+        frame.specicon = frame:CreateTexture(nil, "BORDER")
+        frame.specicon:SetTexCoord(unpack(E.TexCoords))
+        frame.specicon:Size(35)
+        frame.specicon:Point("TOPRIGHT", -22, -16)
+        frame.specicon:SetAlpha(0.4)
+        frame.spectext = frame:CreateFontString(nil, "BORDER")
+        F.SetFontWithDB(
+            frame.spectext,
+            {
+                name = E.db.general.font,
+                size = 10,
+                style = "OUTLINE"
+            }
+        )
+        frame.spectext:Point("BOTTOM", frame.specicon, "BOTTOM")
+        frame.spectext:SetJustifyH("CENTER")
+        frame.spectext:SetAlpha(0.5)
+    end
+    local _, specID, specName, specIcon
+    if (unit == "player") then
+        specID = GetSpecialization()
+        _, specName, _, specIcon = GetSpecializationInfo(specID)
+    else
+        specID = GetInspectSpecialization(unit)
+        _, specName, _, specIcon = GetSpecializationInfoByID(specID)
+    end
+    if (specIcon) then
+        frame.spectext:SetText(specName)
+        frame.specicon:SetTexture(specIcon)
+        frame.specicon:Show()
+    else
+        frame.spectext:SetText("")
+        frame.specicon:Hide()
+    end
 end
 
 local function GetInspectItemListFrame(parent)
@@ -216,6 +495,7 @@ local function GetInspectItemListFrame(parent)
 
         frame.closeButton =
             CreateFrame("Button", "WTCompatibiltyFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
+        frame.closeButton:Size(frame.closeButton:GetWidth() - 2)
         frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
         ES:HandleCloseButton(frame.closeButton)
         frame.closeButton:SetScript(
@@ -326,6 +606,9 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     frame:Show()
 
     LibEvent:trigger("INSPECT_FRAME_SHOWN", frame, parent, ilevel)
+    Plugin_Spec(unit, parent, ilevel, maxLevel)
+    Plugin_GemAndEnchant(unit, parent, ilevel, maxLevel)
+
     return frame
 end
 

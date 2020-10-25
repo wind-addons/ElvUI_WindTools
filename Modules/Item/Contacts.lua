@@ -16,6 +16,7 @@ local CreateFrame = CreateFrame
 local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
+local GetNumGuildMembers = GetNumGuildMembers
 local IsInGuild = IsInGuild
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo

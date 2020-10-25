@@ -8,6 +8,7 @@ local max = max
 local pairs = pairs
 local select = select
 local strbyte = strbyte
+local strfind = strfind
 local strlower = strlower
 local strsub = strsub
 local tonumber = tonumber

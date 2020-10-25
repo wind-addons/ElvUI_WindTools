@@ -3,6 +3,11 @@ local MF = W.Modules.MoveFrames
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local format = format
+
+local CreateFrame = CreateFrame
+local IsAddOnLoaded = IsAddOnLoaded
+
 function W:ConstructCompatibiltyFrame()
     local frame = CreateFrame("Frame", "WTCompatibiltyFrame", E.UIParent)
     frame:Size(550, 500)
@@ -72,7 +77,6 @@ function W:ConstructCompatibiltyFrame()
     --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
-
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
     scrollFrameParent:CreateBackdrop("Transparent")
@@ -86,7 +90,6 @@ function W:ConstructCompatibiltyFrame()
     frame.scrollFrameParent = scrollFrameParent
     frame.scrollFrame = scrollFrame
 
-    
     W.CompatibiltyFrame = frame
 end
 

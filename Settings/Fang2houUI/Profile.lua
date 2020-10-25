@@ -1,5 +1,8 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+local _G = _G
+local select = select
+
 local worldChannel
 if W.Locale == "zhCN" then
     worldChannel = "大脚世界频道"

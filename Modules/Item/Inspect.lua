@@ -4,12 +4,57 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
 
-local _G = _G
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
 local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
+
+local _G = _G
+local abs = abs
+local floor = floor
+local format = format
+local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local max = max
+local pairs = pairs
+local select = select
+local strlen = strlen
+local time = time
+local tinsert = tinsert
+local unpack = unpack
+
+local AbbreviateLargeNumbers = AbbreviateLargeNumbers
+local CreateFrame = CreateFrame
+local GameTooltip = _G.GameTooltip
+local GetInspectSpecialization = GetInspectSpecialization
+local GetItemInfo = GetItemInfo
+local GetItemQualityColor = GetItemQualityColor
+local GetItemQualityColor = GetItemQualityColor
+local GetRealmName = GetRealmName
+local GetSpecialization = GetSpecialization
+local GetSpecializationInfo = GetSpecializationInfo
+local GetSpecializationInfoByID = GetSpecializationInfoByID
+local GetSpellInfo = GetSpellInfo
+local GetTime = GetTime
+local InspectFrame = InspectFrame
+local IsCorruptedItem = IsCorruptedItem
+local PaperDollFrame = PaperDollFrame
+local SetPortraitTexture = SetPortraitTexture
+local ToggleFrame = ToggleFrame
+local UnitClass = UnitClass
+local UnitGUID = UnitGUID
+local UnitHealthMax = UnitHealthMax
+local UnitLevel = UnitLevel
+local UnitName = UnitName
+
+local ENCHANTS = ENCHANTS
+local HEALTH = HEALTH
+local LEVEL = LEVEL
+local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
+local UNIT_NAME_FONT = UNIT_NAME_FONT
 
 local guids, inspecting = {}, false
 
@@ -133,8 +178,8 @@ local function CreateIconFrame(frame, index)
         "OnDoubleClick",
         function(self)
             if (self.itemLink or self.title) then
-                ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
-                ChatEdit_InsertLink(self.itemLink or self.title)
+                _G.ChatEdit_ActivateChat(_G.ChatEdit_ChooseBoxForSend())
+                _G.ChatEdit_InsertLink(self.itemLink or self.title)
             end
         end
     )
@@ -538,7 +583,9 @@ local function Plugin_Stats(unit, parent, itemLevel, maxLevel)
 end
 
 local function GetInspectItemListFrame(parent)
-    if not IL.db or not IL.db.enable then return end
+    if not IL.db or not IL.db.enable then
+        return
+    end
     if not parent.inspectFrame then
         local itemfont = "ChatFontNormal"
         local frame = CreateFrame("Frame", nil, parent)
@@ -656,8 +703,8 @@ local function GetInspectItemListFrame(parent)
                 "OnDoubleClick",
                 function(self)
                     if (self.link) then
-                        ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
-                        ChatEdit_InsertLink(self.link)
+                        _G.ChatEdit_ActivateChat(_G.ChatEdit_ChooseBoxForSend())
+                        _G.ChatEdit_InsertLink(self.link)
                     end
                 end
             )
@@ -695,7 +742,9 @@ local function GetInspectItemListFrame(parent)
 end
 
 local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
-    if not IL.db or not IL.db.enable then return end
+    if not IL.db or not IL.db.enable then
+        return
+    end
     if not parent:IsShown() then
         return
     end
@@ -717,7 +766,7 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     local width = 160
     local formats = "%3s"
     if (maxLevel) then
-        formats = "%" .. string.len(floor(maxLevel)) .. "s"
+        formats = "%" .. strlen(floor(maxLevel)) .. "s"
     end
     for i, v in ipairs(slots) do
         _, level, name, link, quality = LibItemInfo:GetUnitItemInfo(unit, v.index)
@@ -780,7 +829,7 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     Plugin_Spec(unit, parent, ilevel, maxLevel)
     Plugin_GemAndEnchant(unit, parent, ilevel, maxLevel)
     if W.Locale == "koKR" or W.Locale == "enUS" or W.Locale == "zhCN" or W.Locale == "zhTW" then
-        Plugin_Stats(unit, parent, itemLevel, maxLevel)
+        Plugin_Stats(unit, parent, ilevel, maxLevel)
     end
 
     return frame

@@ -3,6 +3,10 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
+local strfind = strfind
+
+local CreateFrame = CreateFrame
 
 function S:AAP_SkinOrderList()
     local frame = _G.AAPQOrderList

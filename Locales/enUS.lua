@@ -386,6 +386,7 @@ L["Interval"] = true
 L["Inverse Direction"] = true
 L["It will fix the problem if your cursor has abnormal movement."] = true
 L["Item"] = true
+L["Item Level"] = true
 L["Just for Chinese and Korean players"] = true
 L["Key Binding"] = true
 L["Korea"] = true

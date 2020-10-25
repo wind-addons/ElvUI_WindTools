@@ -60,11 +60,24 @@ function W:ConstructCompatibiltyFrame()
     tex:SetTexture(W.Media.Textures.illMurloc1)
     tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -25)
 
+    local bottomDesc = frame:CreateFontString(nil, "ARTWORK")
+    bottomDesc:FontTemplate()
+    bottomDesc:SetJustifyH("LEFT")
+    bottomDesc:Width(530)
+    F.SetFontOutline(bottomDesc, nil, "-1")
+    bottomDesc:SetText(
+        E.NewSign ..
+            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"])
+    )
+    --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
+    bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
+
+
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
     scrollFrameParent:CreateBackdrop("Transparent")
     scrollFrameParent:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
-    scrollFrameParent:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -32, 30)
+    scrollFrameParent:Point("BOTTOMRIGHT", bottomDesc, "TOPRIGHT", -22, 10)
     ES:HandleScrollBar(scrollFrameParent.ScrollBar)
     local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", scrollFrameParent)
     scrollFrame:SetSize(scrollFrameParent:GetSize())
@@ -73,17 +86,7 @@ function W:ConstructCompatibiltyFrame()
     frame.scrollFrameParent = scrollFrameParent
     frame.scrollFrame = scrollFrame
 
-    local bottomDesc = frame:CreateFontString(nil, "ARTWORK")
-    bottomDesc:FontTemplate()
-    bottomDesc:SetJustifyH("LEFT")
-    bottomDesc:Width(530)
-    F.SetFontOutline(bottomDesc, nil, "-1")
-    bottomDesc:SetText(
-        E.NewSign .. L["If you find the WindTools module conflicts with another addon, alert me via Discord."]
-    )
-    --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
-    bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
-
+    
     W.CompatibiltyFrame = frame
 end
 

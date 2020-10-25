@@ -433,6 +433,13 @@ P.item = {
             },
             include = "CUSTOM"
         }
+    },
+    inspect = {
+        enable = true,
+        player = true,
+        inspect = true,
+        stats = true,
+        playerOnInspect = true
     }
 }
 

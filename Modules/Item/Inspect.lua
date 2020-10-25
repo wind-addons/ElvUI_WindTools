@@ -538,6 +538,7 @@ local function Plugin_Stats(unit, parent, itemLevel, maxLevel)
 end
 
 local function GetInspectItemListFrame(parent)
+    if not IL.db or not IL.db.enable then return end
     if not parent.inspectFrame then
         local itemfont = "ChatFontNormal"
         local frame = CreateFrame("Frame", nil, parent)
@@ -694,6 +695,7 @@ local function GetInspectItemListFrame(parent)
 end
 
 local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
+    if not IL.db or not IL.db.enable then return end
     if not parent:IsShown() then
         return
     end
@@ -965,16 +967,21 @@ function IL:Player()
 end
 
 function IL:Test()
-    self:Player()
-    self:Inspect()
 end
 
 function IL:Initialize()
-    self.db = testDB
+    self.db = E.db.WT.item.inspect
 
-    if not self.db.enable then
+    if not self.db.enable or self.Initialized then
         return
     end
+
+    self:Player()
+    self:Inspect()
+
+    self.Initialized = true
 end
+
+IL.ProfileUpdate = IL.Initialize
 
 W:RegisterModule(IL:GetName())

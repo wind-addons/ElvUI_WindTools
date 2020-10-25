@@ -187,7 +187,7 @@ L["Chat Copy Frame"] = true
 L["Chat Data Panels"] = true
 L["Chat Link"] = true
 L["Chat Text"] = true
-L["Choose the module you preferred to use in-game."] = true
+L["Choose the module you would like to |cff00ff00use|r."] = true
 L["Class Bars"] = true
 L["Class Color"] = true
 L["Clear All Sets"] = true
@@ -360,6 +360,7 @@ L["If the game language is different from the primary language in this server, y
 L["If the quest is suggested with multi-players, add the number of players to the message."] = true
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = true
 L["If you add the NPC into the list, all automation will do not work for it."] = true
+L["If you find the WindTools module conflicts with another addon, alert me via Discord."] = true
 L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."] = true
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = true
 L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = true

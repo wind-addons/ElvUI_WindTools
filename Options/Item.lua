@@ -577,6 +577,9 @@ options.alreadyKnown = {
             order = 2,
             type = "toggle",
             name = L["Enable"],
+            disabled = function()
+                return AK.StopRunning
+            end,
             set = function(info, value)
                 E.db.WT.item.alreadyKnown[info[#info]] = value
                 AK:ToggleSetting()
@@ -587,6 +590,9 @@ options.alreadyKnown = {
             order = 3,
             name = L["Mode"],
             type = "select",
+            disabled = function()
+                return AK.StopRunning
+            end,
             values = {
                 COLOR = L["Custom Color"],
                 MONOCHROME = L["Monochrome"]
@@ -596,6 +602,9 @@ options.alreadyKnown = {
             order = 4,
             type = "color",
             name = L["Color"],
+            disabled = function()
+                return AK.StopRunning
+            end,
             hidden = function()
                 return not (E.db.WT.item.alreadyKnown.mode == "COLOR")
             end,
@@ -781,6 +790,9 @@ options.Inspect = {
         },
         enable = {
             order = 1,
+            disabled = function()
+                return IL.StopRunning
+            end,
             type = "toggle",
             name = L["Enable"],
             width = "full"
@@ -791,7 +803,7 @@ options.Inspect = {
             inline = true,
             name = L["Lists"],
             disabled = function()
-                return not E.db.WT.item.inspect.enable
+                return IL.StopRunning or not E.db.WT.item.inspect.enable
             end,
             args = {
                 player = {
@@ -817,7 +829,7 @@ options.Inspect = {
                 return not E.db.WT.item.inspect.inspect
             end,
             disabled = function()
-                return not E.db.WT.item.inspect.enable
+                return IL.StopRunning or not E.db.WT.item.inspect.enable
             end,
             args = {
                 playerOnInspect = {

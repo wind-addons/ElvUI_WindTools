@@ -252,18 +252,27 @@ options.moveFrames = {
         moveBlizzardFrames = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            disabled = function()
+                return MF.StopRunning
+            end
         },
         moveElvUIBags = {
             order = 2,
             type = "toggle",
-            name = L["Move ElvUI Bags"]
+            name = L["Move ElvUI Bags"],
+            disabled = function()
+                return MF.StopRunning
+            end
         },
         remember = {
             order = 3,
             type = "group",
             inline = true,
             name = L["Remember Positions"],
+            disabled = function()
+                return MF.StopRunning
+            end,
             args = {
                 rememberPositions = {
                     order = 1,

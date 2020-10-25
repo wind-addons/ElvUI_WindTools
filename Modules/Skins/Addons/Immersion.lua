@@ -83,7 +83,14 @@ function S:Immersion()
     -- 对话主窗口文字
     F.SetFontOutline(talkBox.NameFrame.Name)
     F.SetFontOutline(talkBox.TextFrame.Text)
-    F.SetFontOutline(talkBox.TextFrame.SpeechProgress, "Montserrat" .. (W.CompatibleFont and " (en)" or ""), "-2")
+    F.SetFontWithDB(
+        talkBox.TextFrame.SpeechProgress,
+        {
+            name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+            size = 13,
+            style = "OUTLINE"
+        }
+    )
 
     -- 关闭按钮
     ES:HandleCloseButton(talkBox.MainFrame.CloseButton)

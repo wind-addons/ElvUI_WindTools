@@ -187,7 +187,7 @@ L["Chat Copy Frame"] = "聊天复制框体"
 L["Chat Data Panels"] = "聊天数据面板"
 L["Chat Link"] = "聊天链接"
 L["Chat Text"] = "聊天文本"
-L["Choose the module you would like to |cff00ff00use|r."] = true
+L["Choose the module you would like to |cff00ff00use|r."] = "请选择你要|cff00ff00使用|r的模块."
 L["Class Bars"] = "职业条"
 L["Class Color"] = "职业色"
 L["Clear All Sets"] = "清除全部设定"
@@ -360,7 +360,7 @@ L["If the game language is different from the primary language in this server, y
 L["If the quest is suggested with multi-players, add the number of players to the message."] = "如果任务被建议为多人完成时, 添加人数到消息中."
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = "如果奖励列表中存在多个物品, 将会自动选择最高售价的物品."
 L["If you add the NPC into the list, all automation will do not work for it."] = "如果你添加某个 NPC 进入列表, 所有的自动化操作将不再作用于它."
-L["If you find the WindTools module conflicts with another addon, alert me via Discord."] = true
+L["If you find the %s module conflicts with another addon, alert me via Discord."] = "如果你发现 %s 的模块与其他插件冲突, 可以通过 Discord 来告知我."
 L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."] = "如果你对翻译 %s或提升翻译质量有兴趣, 我期望能和你在 Discord 频道相遇."
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = "如果你有发言权限, 这将会优先使用团队警告频道(/rw), 而不是团队频道(/r)."
 L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = "如果你同时安装了其他 ElvUI 增强插件, 不推荐启用调试模式."

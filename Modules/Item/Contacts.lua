@@ -13,6 +13,7 @@ local unpack = unpack
 
 local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame
+local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
@@ -101,6 +102,46 @@ local function SetButtonTooltip(button, text)
     )
 end
 
+function CT:ShowContextText(button)
+    local menu = {
+        {
+            text = button.name,
+            isTitle = true,
+            notCheckable = true
+        }
+    }
+    if not button.class then -- My favoirite do not have it
+        tinsert(
+            menu,
+            {
+                text = L["Remove From Favorites"],
+                func = function()
+                    if button.name and button.realm then
+                        E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = nil
+                        self:ChangeCategory("FAVORITE")
+                    end
+                end,
+                notCheckable = true
+            }
+        )
+    else
+        tinsert(
+            menu,
+            {
+                text = L["Add To Favorites"],
+                func = function()
+                    if button.name and button.realm then
+                        E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = true
+                    end
+                end,
+                notCheckable = true
+            }
+        )
+    end
+
+    EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
+end
+
 function CT:ConstructFrame()
     if self.frame then
         return
@@ -123,6 +164,8 @@ function CT:ConstructFrame()
     end
 
     self.frame = frame
+
+    self.contextMenuFrame = CreateFrame("Frame", "WTContactsContextMenu", E.UIParent, "UIDropDownMenuTemplate")
 end
 
 function CT:ConstructButtons()
@@ -248,6 +291,8 @@ function CT:ConstructNameButtons()
                             _G.SendMailNameEditBox:SetText(playerName)
                         end
                     end
+                elseif mouseButton == "RightButton" then
+                    CT:ShowContextText(self)
                 end
             end
         )

@@ -6,13 +6,9 @@ local SB = W:GetModule("SwitchButtons")
 local OT = W:GetModule("ObjectiveTracker")
 
 local pairs = pairs
-local print = print
 local tonumber = tonumber
 local tostring = tostring
 
-local UnitExists = UnitExists
-local UnitName = UnitName
-local UnitPlayerControlled = UnitPlayerControlled
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 local ReputationFrame_Update = ReputationFrame_Update
 
@@ -410,19 +406,7 @@ options.turnIn = {
                     name = L["Add Target"],
                     desc = L["Make sure you select the NPC as your target."],
                     func = function()
-                        if not UnitExists("target") then
-                            print(L["Target is not exists."])
-                            return
-                        end
-                        if UnitPlayerControlled("target") then
-                            print(L["Target is not an NPC."])
-                            return
-                        end
-                        local npcID = TI:GetNPCID("target")
-                        if npcID then
-                            local list = E.db.WT.quest.turnIn.customIgnoreNPCs
-                            list[npcID] = UnitName("target")
-                        end
+                        TI:AddTargetToBlacklist()
                     end
                 },
                 deleteButton = {

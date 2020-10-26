@@ -3,6 +3,7 @@ local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
 local next = next
+local print = print
 local select = select
 local strmatch = strmatch
 local tonumber = tonumber
@@ -30,8 +31,11 @@ local ShowQuestComplete = ShowQuestComplete
 local ShowQuestOffer = ShowQuestOffer
 local StaticPopup_FindVisible = StaticPopup_FindVisible
 local StaticPopup_OnClick = StaticPopup_OnClick
+local UnitExists = UnitExists
 local UnitGUID = UnitGUID
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitName = UnitName
+local UnitPlayerControlled = UnitPlayerControlled
 
 local C_GossipInfo_GetActiveQuests = C_GossipInfo.GetActiveQuests
 local C_GossipInfo_GetAvailableQuests = C_GossipInfo.GetAvailableQuests
@@ -512,6 +516,22 @@ function TI:Initialize()
     self:RegisterEvent("QUEST_AUTOCOMPLETE")
 
     self.initialized = true
+end
+
+function TI:AddTargetToBlacklist()
+    if not UnitExists("target") then
+        print(L["Target is not exists."])
+        return
+    end
+    if UnitPlayerControlled("target") then
+        print(L["Target is not an NPC."])
+        return
+    end
+    local npcID = self:GetNPCID("target")
+    if npcID then
+        local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+        list[npcID] = UnitName("target")
+    end
 end
 
 function TI:ProfileUpdate()

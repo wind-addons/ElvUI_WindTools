@@ -18,6 +18,7 @@ S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
 S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
 S.updateProfile = {} -- 配置更新后的更新表
 S.aceWidgets = {}
+S.enteredLoad = {}
 
 --[[
     查询是否符合开启条件
@@ -193,6 +194,32 @@ function S:AddCallbackForAddon(addonName, func)
 end
 
 --[[
+    注册进入游戏后执行的回调
+    @param {string} name 函数名
+    @param {function} [func=S.name] 回调函数
+]]
+function S:AddCallbackForEnterWorld(name, func)
+    tinsert(self.enteredLoad, func or self[name])
+end
+
+--[[
+    根据进入游戏事件唤起回调
+    @param {string} addonName 插件名
+]]
+function S:PLAYER_ENTERING_WORLD()
+    if not E.initialized or not E.private.WT.skins.enable then
+        return
+    end
+
+    print(1)
+
+    for index, func in next, self.enteredLoad do
+        xpcall(func, errorhandler, self)
+        self.enteredLoad[index] = nil
+    end
+end
+
+--[[
     注册更新回调
     @param {string} name 函数名
     @param {function} [func=S.name] 回调函数
@@ -308,4 +335,5 @@ function S:Initialize()
 end
 
 S:RegisterEvent("ADDON_LOADED")
+S:RegisterEvent("PLAYER_ENTERING_WORLD")
 W:RegisterModule(S:GetName())

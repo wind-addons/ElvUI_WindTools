@@ -3,7 +3,6 @@ local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
 local next = next
-local print = print
 local select = select
 local strmatch = strmatch
 local tonumber = tonumber
@@ -497,6 +496,49 @@ function TI:PLAYER_REGEN_ENABLED()
     AttemptAutoComplete("PLAYER_REGEN_ENABLED")
 end
 
+function TI:AddTargetToBlacklist()
+    if not UnitExists("target") then
+        F.Print(L["Target is not exists."])
+        return
+    end
+    if UnitPlayerControlled("target") then
+        F.Print(L["Target is not an NPC."])
+        return
+    end
+    local npcID = self:GetNPCID("target")
+    if npcID then
+        local list = E.db.WT.quest.turnIn.customIgnoreNPCs
+        list[npcID] = UnitName("target")
+        F.Print(format(L["%s has been added to the ignore list."], list[npcID]))
+    end
+end
+
+_G.SLASH_WINDTOOLS_TURN_IN1 = "/wti"
+_G.SLASH_WINDTOOLS_TURN_IN2 = "/windturnin"
+_G.SLASH_WINDTOOLS_TURN_IN3 = "/windquestturnin"
+SlashCmdList["WINDTOOLS_TURN_IN"] = function(msg)
+    if msg and strlen(msg) > 0 then
+        msg = strupper(msg)
+        if msg == "ON" or msg == "1" or msg == "TRUE" or msg == "ENABLE" then
+            TI.db.enable = true
+        elseif msg == "OFF" or msg == "0" or msg == "FALSE" or msg == "DISABLE" then
+            TI.db.enable = false
+        elseif msg == "ADDTARGET" or msg == "ADD" or msg == "IGNORE" or msg == "ADD TARGET" then
+            TI:AddTargetToBlacklist()
+            return
+        end
+    else
+        TI.db.enable = not TI.db.enable
+    end
+    TI:ProfileUpdate()
+    local SB = W:GetModule("SwitchButtons")
+    if SB then
+        SB:ProfileUpdate()
+    end
+
+    F.Print(format("%s %s", L["Turn In"], TI.db.enable and L["Enabled"] or L["Disabled"]))
+end
+
 function TI:Initialize()
     self.db = E.db.WT.quest.turnIn
     if not self.db.enable or self.initialized then
@@ -516,22 +558,6 @@ function TI:Initialize()
     self:RegisterEvent("QUEST_AUTOCOMPLETE")
 
     self.initialized = true
-end
-
-function TI:AddTargetToBlacklist()
-    if not UnitExists("target") then
-        print(L["Target is not exists."])
-        return
-    end
-    if UnitPlayerControlled("target") then
-        print(L["Target is not an NPC."])
-        return
-    end
-    local npcID = self:GetNPCID("target")
-    if npcID then
-        local list = E.db.WT.quest.turnIn.customIgnoreNPCs
-        list[npcID] = UnitName("target")
-    end
 end
 
 function TI:ProfileUpdate()

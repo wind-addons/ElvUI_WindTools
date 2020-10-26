@@ -4,13 +4,13 @@ W.Changelog[205] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "placeholder",
+            "感谢 헬리오스의방패, 불광불급옹, 다크어쌔신 及 크림슨프릴 的辛苦付出, 韩语已经获得全面的支持.",
         },
         ["zhTW"] = {
-            "placeholder",
+            "感謝 헬리오스의방패, 불광불급옹, 다크어쌔신 及 크림슨프릴 的辛苦付出, 韓文已獲得完整支援.",
         },
         ["enUS"] = {
-            "placeholder",
+            "Thanks to the excellent work by 헬리오스의방패, 불광불급옹, 다크어쌔신 and 크림슨프릴. Korean is now fully supported.",
         }
     },
     NEW = {

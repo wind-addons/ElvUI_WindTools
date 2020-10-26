@@ -543,7 +543,8 @@ function CB:Initialize()
         "ALL,WINDTOOLS",
         function()
             return CB.db.enable
-        end
+        end,
+        "WindTools,social,chatBar"
     )
 
     if self.db.autoHide then

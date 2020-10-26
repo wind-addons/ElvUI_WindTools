@@ -236,7 +236,8 @@ function CE:CreateInterface()
         "ALL,WINDTOOLS",
         function()
             return self.db.enable
-        end
+        end,
+        "WindTools,social,emote"
     )
 end
 

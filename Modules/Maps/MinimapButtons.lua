@@ -475,7 +475,8 @@ function MB:CreateFrames()
 		"ALL,WINDTOOLS",
 		function()
 			return E.private.WT.maps.minimapButtons.enable
-		end
+		end,
+		"WindTools,maps,minimapButtons"
 	)
 end
 

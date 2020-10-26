@@ -375,7 +375,8 @@ function C:ConstructFrames()
         "ALL,WINDTOOLS",
         function()
             return E.db.WT.combat.combatAlert.enable
-        end
+        end,
+        "WindTools,combat,combatAlert"
     )
 
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")

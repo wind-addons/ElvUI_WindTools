@@ -535,7 +535,8 @@ function GB:ConstructBar()
         "ALL,WINDTOOLS",
         function()
             return GB.db and GB.db.enable
-        end
+        end,
+        "WindTools,misc,gameBar"
     )
 end
 

@@ -426,7 +426,8 @@ function EB:CreateBar(id)
         "ALL,WINDTOOLS",
         function()
             return EB.db.enable and barDB.enable
-        end
+        end,
+        "WindTools,item,extraItemBar"
     )
 
     -- 建立条

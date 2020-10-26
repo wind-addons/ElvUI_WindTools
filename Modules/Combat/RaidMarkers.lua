@@ -208,7 +208,8 @@ function RM:CreateBar()
 		"ALL,WINDTOOLS",
 		function()
 			return E.db.WT.combat.raidMarkers.enable
-		end
+		end,
+		"WindTools,combat,raidMarkers"
 	)
 end
 

@@ -175,7 +175,8 @@ function SB:CreateBar()
         "ALL,WINDTOOLS",
         function()
             return E.db.WT.quest.switchButtons.enable
-        end
+        end,
+        "WindTools,quest,switchButtons"
     )
 end
 

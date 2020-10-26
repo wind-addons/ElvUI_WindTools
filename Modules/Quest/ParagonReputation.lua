@@ -387,7 +387,8 @@ function PR:Initialize()
 		"WINDTOOLS,ALL",
 		function()
 			return PR.db.toast.enable
-		end
+		end,
+		"WindTools,quest,paragonReputation"
 	)
 
 	self.initialized = true

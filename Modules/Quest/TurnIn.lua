@@ -23,6 +23,7 @@ local GetQuestItemInfo = GetQuestItemInfo
 local GetQuestItemLink = GetQuestItemLink
 local GetQuestReward = GetQuestReward
 local GetTrackingInfo = GetTrackingInfo
+local IsModifierKeyDown = IsModifierKeyDown
 local IsQuestCompletable = IsQuestCompletable
 local QuestGetAutoAccept = QuestGetAutoAccept
 local QuestInfoItem_OnClick = QuestInfoItem_OnClick
@@ -222,6 +223,10 @@ local function IsIgnored()
     local npcID = TI:GetNPCID()
 
     if ignoreQuestNPC[npcID] then
+        return true
+    end
+
+    if TI.db and TI.db.modifierKeyPause and IsModifierKeyDown() then
         return true
     end
 
@@ -516,7 +521,7 @@ end
 _G.SLASH_WINDTOOLS_TURN_IN1 = "/wti"
 _G.SLASH_WINDTOOLS_TURN_IN2 = "/windturnin"
 _G.SLASH_WINDTOOLS_TURN_IN3 = "/windquestturnin"
-SlashCmdList["WINDTOOLS_TURN_IN"] = function(msg)
+_G.SlashCmdList["WINDTOOLS_TURN_IN"] = function(msg)
     if msg and strlen(msg) > 0 then
         msg = strupper(msg)
         if msg == "ON" or msg == "1" or msg == "TRUE" or msg == "ENABLE" then

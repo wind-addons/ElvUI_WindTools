@@ -677,6 +677,7 @@ P.quest = {
         darkmoon = true,
         followerAssignees = true,
         rogueClassHallInsignia = true,
+        modifierKeyPause = true,
         customIgnoreNPCs = {}
     }
 }

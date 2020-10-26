@@ -211,8 +211,6 @@ function S:PLAYER_ENTERING_WORLD()
         return
     end
 
-    print(1)
-
     for index, func in next, self.enteredLoad do
         xpcall(func, errorhandler, self)
         self.enteredLoad[index] = nil

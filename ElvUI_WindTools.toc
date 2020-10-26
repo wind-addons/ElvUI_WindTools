@@ -8,7 +8,7 @@
 ## Notes: Customizable enhancements for ElvUI.
 ## Notes-zhCN: 用于 ElvUI 的可自定义增强.
 ## Notes-zhTW: 用於 ElvUI 的可自定增強.
-## Notes-koKR: Customizable enhancements for ElvUI.
+## Notes-koKR: ElvUI에 많은 기능을 추가하고 사용자가 설정할 수 있습니다.
 ## RequiredDeps: ElvUI
 ## OptionalDeps: Blizzard_PetJournal, SharedMedia
 ## X-Curse-Project-ID: 300361

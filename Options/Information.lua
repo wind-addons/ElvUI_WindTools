@@ -327,10 +327,9 @@ do -- 本地化
             "|cffff7d0aMerathilis|r"
         },
         ["한국어 (koKR)"] = {
-            "|cff45aaf2r201026|r: " ..
-                F.CreateClassColorString("헬리오스의방패<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "WARRIOR"),
+            F.CreateClassColorString("헬리오스의방패<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "WARRIOR"),
             F.CreateClassColorString("불광불급옹<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "HUNTER"),
-            F.CreateClassColorString("다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "PRIEST"), -- unknown class, no armory
+            F.CreateClassColorString("다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "DEMONHUNTER"),
             F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE")
         }
     }

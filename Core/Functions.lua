@@ -163,6 +163,19 @@ function F.DebugMessage(module, text)
 end
 
 --[[
+    打印信息
+    @param {string} text 文本
+]]
+function F.Print(text)
+    if not text then
+        return
+    end
+
+    local message = format("%s: %s", L["WindTools"], text)
+    print(message)
+end
+
+--[[
     延迟去除全部模块函数钩子
     @param {table/string} module Ace3 模块或自定义字符串
 ]]

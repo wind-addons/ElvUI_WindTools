@@ -56,7 +56,8 @@ W.Changelog[204] = {
             "[联系人] 优化公会成员信息获取方式. 感谢 fgprodigal",
             "[游戏条] 右键藏品按钮可以召唤随机偏好坐骑. 感谢 Merathilis",
             "[游戏条] 右键小伙伴手册按钮可以召唤随机偏好小伙伴. 感谢 Merathilis",
-            "[交接] 修复了停用后不重载界面继续交接的问题."
+            "[交接] 修复了停用后不重载界面继续交接的问题.",
+            "[通告] 修复了仇恨转移技能的通报逻辑."
         },
         ["zhTW"] = {
             "優化部分設定項目的佈局.",
@@ -65,7 +66,8 @@ W.Changelog[204] = {
             "[聯絡人] 優化公會成員信息獲取方式. 感謝 fgprodigal",
             "[遊戲條] 右鍵收藏按鈕可以召喚隨機偏好坐騎. 感謝 Merathilis",
             "[遊戲條] 右鍵寵物日誌按鈕可以召喚隨機偏好寵物. 感謝 Merathilis",
-            "[交接] 修復了停用後在重載 UI 前依舊會進行交接的問題."
+            "[交接] 修復了停用後在重載 UI 前依舊會進行交接的問題.",
+            "[通告] 修復了仇恨轉移技能的通報邏輯."
         },
         ["enUS"] = {
             "Optimize the layout of options.",
@@ -74,7 +76,8 @@ W.Changelog[204] = {
             "[Contacts] Obtaining information from guild members now get more robust. Thanks fgprodigal",
             "[Game Bar] Right-click the Collections Button to summon favorite mounts randomly. Thanks Merathilis",
             "[Game Bar] Right-click the Pet Journal Button to summon favorite pets randomly. Thanks Merathilis",
-            "[Turn In] Fix the bug that disabling the module will not stop module until reloading."
+            "[Turn In] Fix the bug that disabling the module will not stop module until reloading.",
+            "[Announcement] Fix the logic of threat transfer spells."
         }
     }
 }

@@ -887,7 +887,7 @@ do
     }
 end
 
-options.Inspect = {
+options.inspect = {
     order = 7,
     type = "group",
     name = L["Inspect"],

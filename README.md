@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.03-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.04-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) 
 </div>
@@ -22,6 +22,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 4. **Trade**: Say thanks to the trade target with one-click.
 5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
 6. **Contacts**: Add a contact frame beside the mail frame.
+7. **Inspect**: Add an equipment list beside the character panel and inspect frame.
 
 ## Combat
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more! 

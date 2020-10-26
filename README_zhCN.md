@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.03-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.04-green.svg?longCache=true&style=for-the-badge"/>
 <br>
 </div>
 
@@ -21,6 +21,7 @@
 4. **交易**: 快速感谢交易目标.
 5. **额外物品条**: 支持添加 3 个条来放置任务物品, 药水, 药剂, 战旗, 等等. 按钮大小, 背景, 顺序和按钮组都可自定义.
 6. **联系人**: 在邮件框体旁添加一个联系人框体.
+7. **裝備觀察**: 在人物面板和观察装备框体旁添加一个装备列表.
 
 ## 战斗
 1. **团队标记**: 添加一个标记条, 支持标记, 光柱, 开怪倒数/取消, 团队确认以及高级战斗记录开关.  

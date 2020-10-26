@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.03-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.04-green.svg?longCache=true&style=for-the-badge"/>
 <br>
 </div>
 
@@ -21,6 +21,7 @@
 4. **交易**: 快速感謝交易目標.
 5. **額外物品條**: 支持添加 3 個條來放置任務物品, 藥水, 藥劑, 戰旗, 等等. 按鍵大小, 背景, 順序和按鍵組都可自訂.
 6. **聯絡人**: 在郵件框架旁添加一個聯絡人框架.
+7. **裝備觀察**: 添加一個裝備列表到人物面板和觀察面板旁.
 
 ## 戰鬥
 1. **團隊標記**: 添加一個標記條, 支持標記, 光柱, 開怪倒數/取消, 團隊確認以及高級戰鬥記錄開關.

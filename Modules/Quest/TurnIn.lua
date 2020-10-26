@@ -2,9 +2,12 @@ local W, F, E, L = unpack(select(2, ...))
 local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
+local format = format
 local next = next
 local select = select
+local strlen = strlen
 local strmatch = strmatch
+local strupper = strupper
 local tonumber = tonumber
 local wipe = wipe
 

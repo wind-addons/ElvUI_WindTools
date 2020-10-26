@@ -386,18 +386,18 @@ function W:CheckCompatibility()
         L["Rectangle Minimap"],
         {
             check = function()
-                if E.db.WT.maps.rectangleMinimap.enable and E.db.mui.maps.minimap.rectangle then
+                if E.db.WT.maps.rectangleMinimap.enable and E.db.mui.maps.minimap.rectangleMinimap.enable then
                     return true
                 end
                 return false
             end,
             disableMUIModule = function()
                 E.db.WT.maps.rectangleMinimap.enable = true
-                E.db.mui.maps.minimap.rectangle = false
+                E.db.mui.maps.minimap.rectangleMinimap.enable = false
             end,
             disableWTModule = function()
                 E.db.WT.maps.rectangleMinimap.enable = false
-                E.db.mui.maps.minimap.rectangle = true
+                E.db.mui.maps.minimap.rectangleMinimap.enable = true
             end
         }
     )

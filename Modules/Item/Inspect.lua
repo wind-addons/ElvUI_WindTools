@@ -1017,9 +1017,6 @@ function IL:Player()
 end
 
 function IL:Initialize()
-end
-
-function IL:Test()
     self.db = E.db.WT.item.inspect
 
     if IsAddOnLoaded("TinyInspect") then

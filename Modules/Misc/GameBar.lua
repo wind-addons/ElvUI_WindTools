@@ -203,7 +203,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barCollections,
         macro = {
             LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab1",
-            RightButton = "/click MountJournalSummonRandomFavoriteButton"
+            RightButton = "/run CollectionsJournal_LoadUI()\n/click MountJournalSummonRandomFavoriteButton"
         },
         tooltips = function(button)
             DT.tooltip:ClearLines()
@@ -380,7 +380,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barPetJournal,
         macro = {
             LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab2",
-            RightButton = "/click PetJournalSummonRandomFavoritePetButton"
+            RightButton = "/run CollectionsJournal_LoadUI()\n/click PetJournalSummonRandomFavoritePetButton"
         },
         tooltips = function(button)
             DT.tooltip:ClearLines()

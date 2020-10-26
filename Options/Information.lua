@@ -325,6 +325,9 @@ do -- 本地化
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",
             "|cffff7d0aMerathilis|r"
+        },
+        ["한국어 (koKR)"] = {
+            "불광"
         }
     }
 

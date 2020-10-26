@@ -23,6 +23,8 @@
 - Deutsche (deDE)
     - imna1975 @ CurseForge
     - Merathilis
+- 한국어 (koKR)
+    - 불광
 
 # Codes
 - Announcement

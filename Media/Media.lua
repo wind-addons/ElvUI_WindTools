@@ -23,6 +23,10 @@ do
 	end
 end
 
+function F.GetCompatibleFont(name)
+	return name .. (W.CompatibleFont and " (en)" or "")
+end
+
 local function AddMedia(name, file, type)
 	W.Media[type][name] = MediaPath .. type .. "\\" .. file
 end

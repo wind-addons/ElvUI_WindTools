@@ -320,6 +320,7 @@ options.turnIn = {
             name = L["Enable"],
             set = function(info, value)
                 E.db.WT.quest.turnIn[info[#info]] = value
+                TI:ProfileUpdate()
                 SB:ProfileUpdate()
             end,
             width = "full"

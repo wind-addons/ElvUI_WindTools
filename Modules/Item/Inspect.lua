@@ -1,14 +1,14 @@
 local W, F, E, L = unpack(select(2, ...))
 local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") -- Modified from TinyInspect
 local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
+local ES = E:GetModule("Skins")
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
-local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
+local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
-local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
+local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 
 local _G = _G
 local abs = abs
@@ -37,10 +37,8 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
-local InspectFrame = InspectFrame
 local IsAddOnLoaded = IsAddOnLoaded
 local IsCorruptedItem = IsCorruptedItem
-local PaperDollFrame = PaperDollFrame
 local SetPortraitTexture = SetPortraitTexture
 local ToggleFrame = ToggleFrame
 local UnitClass = UnitClass
@@ -746,6 +744,7 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     if not IL.db or not IL.db.enable then
         return
     end
+
     if not parent:IsShown() then
         return
     end
@@ -931,7 +930,7 @@ function IL:Inspect()
     LibEvent:attachEvent(
         "UNIT_INVENTORY_CHANGED",
         function(_, unit)
-            if InspectFrame and InspectFrame.unit and InspectFrame.unit == unit then
+            if _G.InspectFrame and _G.InspectFrame.unit and _G.InspectFrame.unit == unit then
                 ReInspect(unit)
             end
         end
@@ -944,8 +943,9 @@ function IL:Inspect()
             if not self.db or not self.db.inspect then
                 return
             end
-            if (InspectFrame and InspectFrame.unit and UnitGUID(InspectFrame.unit) == data.guid) then
-                local frame = ShowInspectItemListFrame(InspectFrame.unit, InspectFrame, data.ilevel, data.maxLevel)
+            if (_G.InspectFrame and _G.InspectFrame.unit and UnitGUID(_G.InspectFrame.unit) == data.guid) then
+                local frame =
+                    ShowInspectItemListFrame(_G.InspectFrame.unit, _G.InspectFrame, data.ilevel, data.maxLevel)
                 LibEvent:trigger("INSPECT_FRAME_COMPARE", frame)
             end
         end
@@ -993,7 +993,7 @@ function IL:Inspect()
 end
 
 function IL:Player()
-    PaperDollFrame:HookScript(
+    _G.PaperDollFrame:HookScript(
         "OnShow",
         function(frame)
             if not self.db or not self.db.player then
@@ -1016,17 +1016,17 @@ function IL:Player()
     )
 end
 
-function IL:Test()
+function IL:Initialize()
 end
 
-function IL:Initialize()
+function IL:Test()
     self.db = E.db.WT.item.inspect
 
     if IsAddOnLoaded("TinyInspect") then
-		self.StopRunning = "TinyInspect"
-		return
+        self.StopRunning = "TinyInspect"
+        return
     end
-    
+
     if not self.db.enable or self.Initialized then
         return
     end

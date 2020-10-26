@@ -103,6 +103,10 @@ local function SetButtonTooltip(button, text)
 end
 
 function CT:ShowContextText(button)
+    if not button.name then
+        return
+    end
+
     local menu = {
         {
             text = button.name,
@@ -110,13 +114,14 @@ function CT:ShowContextText(button)
             notCheckable = true
         }
     }
+    
     if not button.class then -- My favoirite do not have it
         tinsert(
             menu,
             {
                 text = L["Remove From Favorites"],
                 func = function()
-                    if button.name and button.realm then
+                    if button.realm then
                         E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = nil
                         self:ChangeCategory("FAVORITE")
                     end
@@ -130,7 +135,7 @@ function CT:ShowContextText(button)
             {
                 text = L["Add To Favorites"],
                 func = function()
-                    if button.name and button.realm then
+                    if button.realm then
                         E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = true
                     end
                 end,

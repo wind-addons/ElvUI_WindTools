@@ -29,4 +29,49 @@ function S:BigWigs_Plugins()
     self:RawHook(barLib, "CreateBar", "BigWigs_CreateBar")
 end
 
+function S:BigWigs_QueueTimer()
+    if _G.BigWigsLoader then
+        _G.BigWigsLoader.RegisterMessage(
+            "WindTools",
+            "BigWigs_FrameCreated",
+            function(_, frame, name)
+                if name == "QueueTimer" then
+                    local parent = frame:GetParent()
+                    frame:StripTextures()
+                    frame:CreateBackdrop("Transparent")
+                    self:CreateShadow(frame.backdrop)
+                    frame:SetStatusBarTexture(E.media.normTex)
+                    frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+                    frame:Size(parent:GetWidth(), 10)
+                    frame:ClearAllPoints()
+                    frame:Point("TOPLEFT", parent, "BOTTOMLEFT", 0, -5)
+                    frame:Point("TOPRIGHT", parent, "BOTTOMRIGHT", 0, -5)
+                    frame.text.SetFormattedText = function(self, _, time)
+                        self:SetText(format("%d", time))
+                    end
+                    F.SetFontWithDB(
+                        frame.text,
+                        {
+                            name = F.GetCompatibleFont("Montserrat"),
+                            size = 16,
+                            style = "OUTLINE"
+                        }
+                    )
+                    frame.text:ClearAllPoints()
+                    frame.text:Point("TOP", frame, "TOP", 0, -3)
+                end
+            end
+        )
+
+        -- Delete AddOnSkins ugly skin on it :(
+        C_Timer.After(
+            2,
+            function()
+                _G.BigWigsLoader.UnregisterMessage("AddOnSkins", "BigWigs_FrameCreated")
+            end
+        )
+    end
+end
+
 S:AddCallbackForAddon("BigWigs_Plugins")
+S:AddCallbackForEnterWorld("BigWigs_QueueTimer")

@@ -153,6 +153,7 @@ L["Boss"] = "우두머리"
 L["Bots"] = "수리 로봇"
 L["BugSack"] = true
 L["Burning Blade"] = true
+L["Burning Legion"] = "불타는 군단"
 L["Button"] = "버튼"
 L["Button #%d"] = "%d 버튼"
 L["Button Groups"] = "버튼 그룹"
@@ -369,7 +370,7 @@ L["If the quest is suggested with multi-players, add the number of players to th
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = "보상 목록에 여러 아이템이 있는 경우 판매가가 가장 높은 보상을 선택합니다."
 L["If you add the NPC into the list, all automation will do not work for it."] = "NPC를 제외 목록에 추가하면 모든 자동화가 작동하지 않습니다."
 L["If you find the %s module conflicts with another addon, alert me via Discord."] = "%s 모듈이 다른 애드온과 충돌하는 것을 발견하면 Discord를 통해 알려주세요."
-L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."] = "%s 번역이나 번역 품질 향상에 관심이 있다면 Discord로 방문을 부탁드립니다!\n\n|cffffd200한글화|r : 헬리오스의방패 (불타는군단) - |cff45aaf2r201026|r\n도움을 주신 분들 : 불타는군단 <주부월드> 불광불급옹, 다크어쌔신, 크림슨프릴"
+L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."] = "%s 번역이나 번역 품질 향상에 관심이 있다면 Discord로 방문을 부탁드립니다!"
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = "권한이 있는 경우 공격대 채널(/r)이 아닌 공격대 경보 채널(/rw)에 메시지가 표시됩니다."
 L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."] = "다른 ElvUI 플러그인을 설치한 경우 디버그 모드를 활성화하는 것은 권장하지 않습니다."
 L["Ignore List"] = "제외 목록"

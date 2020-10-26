@@ -153,6 +153,7 @@ L["Boss"] = "首领"
 L["Bots"] = "机器人"
 L["BugSack"] = true
 L["Burning Blade"] = "燃烧之刃"
+L["Burning Legion"] = "燃烧军团"
 L["Button"] = "按钮"
 L["Button #%d"] = "第 %d 个按钮"
 L["Button Groups"] = "按钮组"

@@ -153,6 +153,7 @@ L["Boss"] = "Босс"
 L["Bots"] = true
 L["BugSack"] = true
 L["Burning Blade"] = true
+L["Burning Legion"] = true
 L["Button"] = true
 L["Button #%d"] = true
 L["Button Groups"] = true

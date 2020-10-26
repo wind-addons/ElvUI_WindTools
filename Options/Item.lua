@@ -747,114 +747,6 @@ options.contacts = {
     }
 }
 
-options.Inspect = {
-    order = 7,
-    type = "group",
-    name = L["Inspect"],
-    get = function(info)
-        return E.db.WT.item.inspect[info[#info]]
-    end,
-    set = function(info, value)
-        E.db.WT.item.inspect[info[#info]] = value
-        IL:ProfileUpdate()
-    end,
-    args = {
-        desc = {
-            order = 0,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = function()
-                        if IL.StopRunning then
-                            return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
-                                IL.StopRunning
-                            )
-                        else
-                            return format(
-                                "%s\n%s",
-                                L["This module will add an equipment list beside the character panel and inspect frame."],
-                                L[
-                                    "This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."
-                                ]
-                            )
-                        end
-                    end,
-                    fontSize = "medium"
-                }
-            }
-        },
-        enable = {
-            order = 1,
-            disabled = function()
-                return IL.StopRunning
-            end,
-            type = "toggle",
-            name = L["Enable"],
-            width = "full"
-        },
-        lists = {
-            order = 2,
-            type = "group",
-            inline = true,
-            name = L["Lists"],
-            disabled = function()
-                return IL.StopRunning or not E.db.WT.item.inspect.enable
-            end,
-            args = {
-                player = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Player"],
-                    desc = L["Add a frame to your character panel."]
-                },
-                inspect = {
-                    order = 2,
-                    type = "toggle",
-                    name = L["Inspect"],
-                    desc = L["Add a frame to Inspect Frame."]
-                }
-            }
-        },
-        additional = {
-            order = 3,
-            type = "group",
-            inline = true,
-            name = L["Additional Information"],
-            hidden = function()
-                return not E.db.WT.item.inspect.inspect
-            end,
-            disabled = function()
-                return IL.StopRunning or not E.db.WT.item.inspect.enable
-            end,
-            args = {
-                playerOnInspect = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Always Show Mine"],
-                    desc = L["Display character equipments list when you inspect someone."]
-                },
-                stats = {
-                    order = 3,
-                    type = "toggle",
-                    name = L["Statistics"],
-                    hidden = function()
-                        if W.Locale == "koKR" or W.Locale == "enUS" or W.Locale == "zhCN" or W.Locale == "zhTW" then
-                            return false
-                        end
-                        return true
-                    end,
-                    desc = L["Add statistics information for comparison."]
-                }
-            }
-        }
-    }
-}
-
 do
     local selectedKey
 
@@ -994,3 +886,111 @@ do
         }
     }
 end
+
+options.Inspect = {
+    order = 7,
+    type = "group",
+    name = L["Inspect"],
+    get = function(info)
+        return E.db.WT.item.inspect[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.inspect[info[#info]] = value
+        IL:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = function()
+                        if IL.StopRunning then
+                            return format(
+                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                IL.StopRunning
+                            )
+                        else
+                            return format(
+                                "%s\n%s",
+                                L["This module will add an equipment list beside the character panel and inspect frame."],
+                                L[
+                                    "This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."
+                                ]
+                            )
+                        end
+                    end,
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            disabled = function()
+                return IL.StopRunning
+            end,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        lists = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Lists"],
+            disabled = function()
+                return IL.StopRunning or not E.db.WT.item.inspect.enable
+            end,
+            args = {
+                player = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Player"],
+                    desc = L["Add a frame to your character panel."]
+                },
+                inspect = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Inspect"],
+                    desc = L["Add a frame to Inspect Frame."]
+                }
+            }
+        },
+        additional = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Additional Information"],
+            hidden = function()
+                return not E.db.WT.item.inspect.inspect
+            end,
+            disabled = function()
+                return IL.StopRunning or not E.db.WT.item.inspect.enable
+            end,
+            args = {
+                playerOnInspect = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Always Show Mine"],
+                    desc = L["Display character equipments list when you inspect someone."]
+                },
+                stats = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Statistics"],
+                    hidden = function()
+                        if W.Locale == "koKR" or W.Locale == "enUS" or W.Locale == "zhCN" or W.Locale == "zhTW" then
+                            return false
+                        end
+                        return true
+                    end,
+                    desc = L["Add statistics information for comparison."]
+                }
+            }
+        }
+    }
+}

@@ -13,7 +13,8 @@ function W:ConstructCompatibiltyFrame()
     frame:Size(550, 500)
     frame:Point("CENTER")
     frame:CreateBackdrop("Transparent")
-    S:CreateShadow(frame)
+    S:CreateShadowModule(frame.backdrop)
+    S:MerathilisUISkin(frame.backdrop)
     frame.numModules = 0
     frame:Hide()
     frame:SetScript(

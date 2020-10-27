@@ -125,7 +125,8 @@ function CE:CreateInterface()
     _G.WTCustomEmoteFrameDialogBG:Hide()
     frame:StripTextures()
     frame:CreateBackdrop("Transparent")
-    frame:CreateShadow()
+    S:CreateShadowModule(frame.backdrop)
+    S:MerathilisUISkin(frame.backdrop)
     S:HandleCloseButton(_G.WTCustomEmoteFrameClose)
 
     -- 定位

@@ -114,7 +114,7 @@ function CT:ShowContextText(button)
             notCheckable = true
         }
     }
-    
+
     if not button.class then -- My favoirite do not have it
         tinsert(
             menu,
@@ -158,9 +158,8 @@ function CT:ConstructFrame()
     frame:CreateBackdrop("Transparent")
     frame:EnableMouse(true)
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        S:CreateShadow(frame.backdrop)
-    end
+    S:CreateShadowModule(frame.backdrop)
+    S:MerathilisUISkin(frame.backdrop)
 
     -- Register move frames
     if E.private.WT.misc.moveBlizzardFrames then

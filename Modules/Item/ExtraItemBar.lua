@@ -232,9 +232,7 @@ function EB:CreateButton(name, barDB)
 
     button:StyleButton()
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        S:CreateShadow(button)
-    end
+    S:CreateShadowModule(button)
 
     return button
 end
@@ -707,9 +705,8 @@ function EB:CreateAll()
 
     for i = 1, 3 do
         self:CreateBar(i)
-        if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-            S:CreateShadow(self.bars[i].backdrop)
-        end
+        S:CreateShadowModule(self.bars[i].backdrop)
+        S:MerathilisUISkin(self.bars[i].backdrop)
     end
 end
 

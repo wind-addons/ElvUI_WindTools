@@ -49,8 +49,22 @@ options.general = {
             type = "toggle",
             name = L["Enable"]
         },
-        general = {
+        merathilisUISkin = {
             order = 2,
+            type = "toggle",
+            name = format(L["Use %s Skins"], L["MerathilisUI"]),
+            desc = format(
+                "%s\n|cffff0000%s|r: %s",
+                format(L["Add skins for all modules inside %s with %s functions."], L["WindTools"], L["MerathilisUI"]),
+                L["Notice"],
+                format(L["It doesn't means that the %s Skins will not be applied."], L["WindTools"])
+            ),
+            hidden = function()
+                return not IsAddOnLoaded("ElvUI_MerathilisUI")
+            end
+        },
+        general = {
+            order = 3,
             type = "group",
             name = L["General"],
             inline = true,
@@ -71,7 +85,7 @@ options.general = {
             }
         },
         shadow = {
-            order = 3,
+            order = 4,
             type = "group",
             name = L["Shadow"],
             inline = true,
@@ -712,7 +726,7 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Rematch"],
-            hidden = true,
+            hidden = true
         },
         tinyInspect = {
             order = 10,

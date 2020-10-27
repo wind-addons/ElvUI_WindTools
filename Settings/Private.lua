@@ -84,6 +84,7 @@ V.skins = {
 	enable = true,
 	windtools = true,
 	removeParchment = true,
+	merathilisUISkin = true,
 	shadow = true,
 	color = {
 		r = 0,

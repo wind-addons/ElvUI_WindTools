@@ -306,6 +306,31 @@ function S:DisableAddOnSkin(key)
     end
 end
 
+function S:CreateShadowModule(frame)
+    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
+        self:CreateShadow(frame)
+    end
+end
+
+do
+    local isLoaded
+
+    local function IsMerathilisUILoaded()
+        if isLoaded == nil then
+            isLoaded = IsAddOnLoaded("ElvUI_MerathilisUI")
+        end
+        return isLoaded
+    end
+
+    function S:MerathilisUISkin(frame)
+        if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() then
+            if frame.Styling then
+                frame:Styling()
+            end
+        end
+    end
+end
+
 -- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     if not E.private.WT.skins.enable then

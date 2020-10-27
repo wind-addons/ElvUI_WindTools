@@ -461,9 +461,8 @@ function MB:CreateFrames()
 
 	self:SkinMinimapButtons()
 
-	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-		S:CreateShadow(self.bar.backdrop)
-	end
+	S:CreateShadowModule(self.bar.backdrop)
+	S:MerathilisUISkin(self.bar.backdrop)
 
 	E:CreateMover(
 		self.barAnchor,

@@ -97,6 +97,9 @@
 - Extra Items Bar
     - cadcamzy (EUI)
 
+- Inpect
+    - loudsoul (TinyInspect)
+
 # Medias
 - 迷时鸟 @ NGA.cn
     - Media/Texture/Illustration

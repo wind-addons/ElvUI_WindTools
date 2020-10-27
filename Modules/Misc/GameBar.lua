@@ -518,9 +518,12 @@ function GB:ConstructBar()
     bar.rightPanel = rightPanel
 
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        S:CreateShadow(leftPanel.backdrop)
-        S:CreateShadow(middlePanel.backdrop)
-        S:CreateShadow(rightPanel.backdrop)
+        S:CreateShadowModule(leftPanel.backdrop)
+        S:CreateShadowModule(middlePanel.backdrop)
+        S:CreateShadowModule(rightPanel.backdrop)
+        S:MerathilisUISkin(leftPanel.backdrop)
+        S:MerathilisUISkin(middlePanel.backdrop)
+        S:MerathilisUISkin(rightPanel.backdrop)
     end
 
     self.bar = bar

@@ -399,6 +399,7 @@ L["It doesn't means that the %s Skins will not be applied."] = true
 L["It will fix the problem if your cursor has abnormal movement."] = "커서의 움직임이 비정상적인 경우 이 옵션이 문제를 해결할 수 있습니다."
 L["Item"] = "아이템"
 L["Item Level"] = "아이템 레벨"
+L["Item Name"] = true
 L["Just for Chinese and Korean players"] = "한국 및 중국 전용"
 L["Key Binding"] = "단축키 글씨 설정"
 L["Korea"] = "대한민국"

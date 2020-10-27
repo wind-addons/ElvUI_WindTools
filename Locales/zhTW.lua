@@ -399,6 +399,7 @@ L["It doesn't means that the %s Skins will not be applied."] = "這並不代表�
 L["It will fix the problem if your cursor has abnormal movement."] = "如果你發現光標有異常移動, 該選項將修復這個問題."
 L["Item"] = "物品"
 L["Item Level"] = "物品等級"
+L["Item Name"] = "物品名"
 L["Just for Chinese and Korean players"] = "僅針對中文及韓文玩家"
 L["Key Binding"] = "按鍵綁定"
 L["Korea"] = "南韓"

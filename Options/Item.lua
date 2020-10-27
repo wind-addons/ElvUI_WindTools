@@ -991,6 +991,129 @@ options.inspect = {
                     desc = L["Add statistics information for comparison."]
                 }
             }
+        },
+        levelText = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Item Level"],
+            get = function(info)
+                return E.db.WT.item.inspect.levelText[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.inspect.levelText[info[#info]] = value
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        equipText = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Item Name"],
+            get = function(info)
+                return E.db.WT.item.inspect.equipText[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.inspect.equipText[info[#info]] = value
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        statsText = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Statistics"],
+            get = function(info)
+                return E.db.WT.item.inspect.statsText[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.inspect.statsText[info[#info]] = value
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
         }
     }
 }

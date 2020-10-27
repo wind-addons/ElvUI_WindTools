@@ -377,9 +377,9 @@ local function ShowInspectItemStatsFrame(frame, unit)
             statsFrame["stat" .. i].PlayerValue =
                 statsFrame["stat" .. i]:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
             statsFrame["stat" .. i].PlayerValue:Point("LEFT", statsFrame["stat" .. i], "RIGHT", -54, 0)
-            F.SetFontOutline(statsFrame["stat" .. i].Label, E.db.general.font)
-            F.SetFontOutline(statsFrame["stat" .. i].Value, E.db.general.font)
-            F.SetFontOutline(statsFrame["stat" .. i].PlayerValue, E.db.general.font)
+            F.SetFontWithDB(statsFrame["stat" .. i].Label, IL.db.statsText)
+            F.SetFontWithDB(statsFrame["stat" .. i].Value, IL.db.statsText)
+            F.SetFontWithDB(statsFrame["stat" .. i].PlayerValue, IL.db.statsText)
         end
         local mask = statsFrame:CreateTexture()
         mask:SetTexture("Interface\\Buttons\\WHITE8X8")
@@ -395,8 +395,15 @@ local function ShowInspectItemStatsFrame(frame, unit)
         end
 
         frame.statsFrame = statsFrame
+    elseif IL.db and IL.db.levelText and IL.db.equipText then
+        for i = 1, 20 do
+            F.SetFontWithDB(statsFrame["stat" .. i].Label, IL.db.statsText)
+            F.SetFontWithDB(statsFrame["stat" .. i].Value, IL.db.statsText)
+            F.SetFontWithDB(statsFrame["stat" .. i].PlayerValue, IL.db.statsText)
+        end
     end
-    if (not frame.statsFrame:IsShown()) then
+
+    if not frame.statsFrame:IsShown() then
         return
     end
     local inspectStats, playerStats = {}, {}
@@ -655,25 +662,16 @@ local function GetInspectItemListFrame(parent)
             itemframe.label.text:SetText(v.name)
             itemframe.label.text:SetTextColor(0, 0.9, 0.9)
             itemframe.levelString = itemframe:CreateFontString(nil, "ARTWORK")
-            F.SetFontWithDB(
-                itemframe.levelString,
-                {
-                    name = E.db.general.font,
-                    size = 13,
-                    style = "OUTLINE"
-                }
-            )
+            if IL.db and IL.db.levelText then
+                F.SetFontWithDB(itemframe.levelString, IL.db.levelText)
+            end
+
             itemframe.levelString:Point("LEFT", itemframe.label, "RIGHT", 4, 0)
             itemframe.levelString:SetJustifyH("RIGHT")
             itemframe.itemString = itemframe:CreateFontString(nil, "ARTWORK")
-            F.SetFontWithDB(
-                itemframe.itemString,
-                {
-                    name = E.db.general.font,
-                    size = 13,
-                    style = "OUTLINE"
-                }
-            )
+            if IL.db and IL.db.equipText then
+                F.SetFontWithDB(itemframe.itemString, IL.db.equipText)
+            end
             itemframe.itemString:SetHeight(16)
             itemframe.itemString:Point("LEFT", itemframe.levelString, "RIGHT", 2, 0)
             itemframe:SetScript(
@@ -737,6 +735,18 @@ local function GetInspectItemListFrame(parent)
 
         parent.inspectFrame = frame
         LibEvent:trigger("INSPECT_FRAME_CREATED", frame, parent)
+    else
+        for i in ipairs(slots) do
+            local itemframe = parent.inspectFrame["item" .. i]
+            if itemframe then
+                if IL.db and IL.db.levelText then
+                    F.SetFontWithDB(itemframe.levelString, IL.db.levelText)
+                end
+                if IL.db and IL.db.equipText then
+                    F.SetFontWithDB(itemframe.itemString, IL.db.equipText)
+                end
+            end
+        end
     end
 
     return parent.inspectFrame

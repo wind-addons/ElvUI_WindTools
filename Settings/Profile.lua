@@ -328,7 +328,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -340,7 +340,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -368,7 +368,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -380,7 +380,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -408,7 +408,7 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             countFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -420,7 +420,7 @@ P.item = {
                 }
             },
             bindFont = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE",
                 xOffset = 0,
@@ -439,7 +439,22 @@ P.item = {
         player = true,
         inspect = true,
         stats = true,
-        playerOnInspect = true
+        playerOnInspect = true,
+        levelText = {
+            name = F.GetCompatibleFont("Montserrat"),
+            size = 17,
+            style = "OUTLINE"
+        },
+        equipText = {
+            name = E.db.general.font,
+            size = 13,
+            style = "OUTLINE"
+        },
+        statsText = {
+            name = E.db.general.font,
+            size = 13,
+            style = "OUTLINE"
+        }
     }
 }
 
@@ -712,7 +727,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -735,7 +750,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -758,7 +773,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -781,7 +796,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -804,7 +819,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -827,7 +842,7 @@ P.unitFrames = {
                 offsetX = 0,
                 offsetY = 0,
                 font = {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    name = F.GetCompatibleFont("Montserrat"),
                     size = 12,
                     style = "OUTLINE"
                 }
@@ -861,7 +876,7 @@ P.misc = {
             interval = 10,
             alwaysSystemInfo = false,
             font = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 25,
                 style = "OUTLINE"
             }
@@ -877,7 +892,7 @@ P.misc = {
             x = 3,
             y = -3,
             font = {
-                name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
                 style = "OUTLINE"
             }

@@ -31,7 +31,7 @@ locales = [
         "IMPORTANT": "Important",
         "NEW": "New",
         "IMPROVEMENT": "Improvement",
-        "REALEASE_DATE_STRING": "{} Released"
+        "RELEASED_STRING": "{} Released"
     },
     {
         "language": "zhCN",
@@ -39,7 +39,7 @@ locales = [
         "IMPORTANT": "重要",
         "NEW": "新增",
         "IMPROVEMENT": "改善",
-        "REALEASE_DATE_STRING": "{} 发布"
+        "RELEASED_STRING": "{} 发布"
     },
     {
         "language": "zhTW",
@@ -47,7 +47,15 @@ locales = [
         "IMPORTANT": "重要",
         "NEW": "新增",
         "IMPROVEMENT": "改善",
-        "REALEASE_DATE_STRING": "{} 發布"
+        "RELEASED_STRING": "{} 發布"
+    },
+    {
+        "language": "koKR",
+        "VERSION": "버전",
+        "IMPORTANT": "중요 사항",
+        "NEW": "신규 사항",
+        "IMPROVEMENT": "개선 사항",
+        "RELEASED_STRING": "{} Released"
     }
 ]
 
@@ -69,7 +77,7 @@ parts = [
 with open("CHANGELOG.md", "w", encoding="utf8") as f:
     for locale in locales:
         f.write("# {}: {:.2f}\n".format(locale["VERSION"], latest_version))
-        f.write(locale["REALEASE_DATE_STRING"].format(
+        f.write(locale["RELEASED_STRING"].format(
             changelog["RELEASE_DATE"])+"\n")
 
         for part in parts:

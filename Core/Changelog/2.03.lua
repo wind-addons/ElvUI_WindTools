@@ -20,6 +20,12 @@ W.Changelog[203] = {
             "[Paragon Reputation] Add a new text style.",
             "[Game Bar] Add new option for showing tooltip on top rather than the bottom. Thanks @Merathilis",
             "[Skins] Add skin for Azeroth Auto Pilot."
+        },
+        ["koKR"] = {
+            "[우편 연락처] 새로운 모듈이 추가됨 (아이템 - 우편연락처)",
+            "[불멸의 동맹] 새로운 문자 스타일 추가",
+            "[게임 바] 툴팁이 생성되는 위치를 상단과 하단으로 설정할 수 있는 옵션 추가 Thanks @Merathilis",
+            "[스킨] 스킨추가 - Azeroth Auto Pilot."
         }
     },
     IMPROVEMENT = {
@@ -94,6 +100,30 @@ W.Changelog[203] = {
             "[Turn In] Fix the bugs that the automation stops on multiple quests.",
             "[Raid Markers] Fix the errors in combat.",
             "[Extra Item Bar] Fix the bug occurred if the number of potions over 12."
+        },
+        ["koKR"] = {
+            "변경사항 알림 기능 수정",
+            "[게임 바] 일부 버튼은 전투 중 클릭을 지원합니다.",
+            "[게임 바] 몇 가지 특별한 귀환석을 추가합니다. Thanks @Merathilis",
+            "[프레임 이동] ElvUI 가방의 툴팁이 숨겨지지 않는 버그를 수정했습니다.",
+            "[프레임 이동] ElvUI Bag이 존재하지 않더라도 모듈이 처리하려고하는 버그 수정.",
+            "[스킨] WeakAuras 아이콘 옵션 가로 세로 비 유지가 작동하지 않는 버그 수정.",
+            "[스킨] 그림자가 추가되지 않은 경우에도 스킨이 그림자를 보이거나 숨기는 버그를 수정하였습니다.",
+            "[스킨] 영어가 아닌 클라이언트에서 Immersion 페이지 번호 수정.",
+            "[스킨] 누락 된 퀘스트 팝업 프레임 스킨을 추가합니다.",
+            "[우클릭 메뉴] 이제 Battle.net 친구에게 길드 초대가 가능합니다.",
+            "[우클릭 메뉴] Battle.net 친구의 통계보고 기능 수정.",
+            "[우클릭 메뉴] Raider.IO와 함께 로드되었을 때 위치를 수정합니다.",
+            "[채팅 링크] 링크를 클릭해도 탈것을 미리 볼수 없는 문제 수정.",
+            "[채팅 문자] 새로운 ElvUI 채팅 기능에 적합합니다.",
+            "[진행 상태] 다른 플레이어를 검사하려고 할 때 발생하던 버그를 수정했습니다.",
+            "[불멸의 동맹] 옵션 키 오류 수정.",
+            "[불멸의 동맹] 보상의 툴팁을 수정합니다.",
+            "[불멸의 동맹] SL 지원 추가.",
+            "[미니맵 비율 조정] 미니맵 이동 제한을 추가합니다.",
+            "[자동 수락] 여러 퀘스트에서 자동화가 멈추는 버그 수정.",
+            "[공격대 징표] 전투 중 오류 수정.",
+            "[아이템 바] 물약 개수가 12 개 이상일 경우 발생하던 버그를 수정했습니다."
         }
     }
 }

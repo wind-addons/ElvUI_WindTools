@@ -20,6 +20,12 @@ W.Changelog[204] = {
             "Add the support of right-click the mover to open options.",
             "Add the compatibility check frame of ElvUI_MerathilisUI.",
             "Remove compatible mode of TinyInspect, the modified lite TinyInspect will be added."
+        },
+        ["koKR"] = {
+            "불완전하지만 한국어에 대한 지원을 처음 추가했습니다.",
+            "프레임 이동 창에서 마우스 오른쪽 버튼으로 설정을 열수 있는 기능을 추가합니다.",
+            "ElvUI_MerathilisUI의 호환성 검사 프레임을 추가합니다.",
+            "TinyInspect의 호환 모드를 제거하고, 수정된 라이트 TinyInspect가 추가됩니다."
         }
     },
     NEW = {
@@ -46,6 +52,14 @@ W.Changelog[204] = {
             "[Turn In] Add new slash command /wti [add|ignore] to add target to the ignore list.",
             "[Turn In] Add the feature and options of pause automation if you pressed the modified key.",
             "[Contacts] Add new context menu to buttons, making manage favorites easier."
+        },
+        ["koKR"] = {
+            "[살펴보기] 아이템 카테고리의 새로운 모듈이 추가되었습니다. TinyInspect에서 포팅 되었습니다. Thanks loudsoul.",
+            "[아이템 바] 마우스 오버 시 사라지는 시간, 투명도 설정 등 관련 옵션을 추가합니다.",
+            "[자동수락] 새 슬래시 명령 /wti [on | off]를 추가하여 모듈을 활성화 / 비활성화합니다.",
+            "[자동수락] 제외 목록에 대상을 추가하기 위한 새 슬래시 명령 /wti [add | ignore]를 추가합니다.",
+            "[자동수락] 설정 키를 누른 경우 자동화 일시 중지 기능을 추가합니다.",
+            "[우편 연락처] 버튼에 새로운 컨텍스트 메뉴를 추가하여 즐겨찾기를 보다 쉽게 관리할 수 있습니다."
         }
     },
     IMPROVEMENT = {
@@ -78,6 +92,15 @@ W.Changelog[204] = {
             "[Game Bar] Right-click the Pet Journal Button to summon favorite pets randomly. Thanks Merathilis",
             "[Turn In] Fix the bug that disabling the module will not stop module until reloading.",
             "[Announcement] Fix the logic of threat transfer spells."
+        },
+        ["koKR"] = {
+            "옵션 레이아웃을 최적화합니다.",
+            "기본 프로필(Fang2hou UI)의 가져오기 프로세스를 최적화합니다.",
+            "[우 클릭 메뉴] Raider.IO 메뉴와 겹치지 않는 더 나은 위치로 수정했습니다.",
+            "[연락처] 길드원으로부터 정보를 얻는 것이 이제 더욱 강력 해졌습니다. Thanks fgprodigal",
+            "[게임 바] 컬렉션 버튼을 마우스 오른쪽 버튼으로 클릭하면 좋아하는 탈것이 무작위로 소환됩니다. Thanks Merathilis",
+            "[게임 바] 애완동물도감 버튼을 마우스 오른쪽 버튼으로 클릭하면 좋아하는 애완동물을 무작위로 소환할 수 있습니다. Thanks Merathilis",
+            "[자동 수락] 모듈을 비활성화해도 다시 로드 할 때까지 모듈이 중지되지 않는 버그를 수정합니다."
         }
     }
 }

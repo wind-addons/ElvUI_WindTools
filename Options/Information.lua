@@ -552,11 +552,6 @@ options.changelog = {
     args = {}
 }
 
-local locale = E.global.general.locale
-if locale ~= "zhCN" and locale ~= "zhTW" then
-    locale = "enUS"
-end
-
 for version, data in pairs(W.Changelog) do
     local versionString = format("%d.%02d", version / 100, mod(version, 100))
 
@@ -583,7 +578,8 @@ for version, data in pairs(W.Changelog) do
         fontSize = "large"
     }
 
-    if data.IMPORTANT and #data.IMPORTANT[locale] > 0 then
+    local importantPart = data.IMPORTANT and (data.IMPORTANT[E.global.general.locale] or data.IMPORTANT["enUS"])
+    if importantPart and #importantPart > 0 then
         page.importantHeader = {
             order = 3,
             type = "header",
@@ -594,7 +590,7 @@ for version, data in pairs(W.Changelog) do
             type = "description",
             name = function()
                 local text = ""
-                for index, line in ipairs(data.IMPORTANT[locale]) do
+                for index, line in ipairs(importantPart) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
                 return text .. "\n"
@@ -603,7 +599,8 @@ for version, data in pairs(W.Changelog) do
         }
     end
 
-    if data.NEW and #data.NEW[locale] > 0 then
+    local newPart = data.NEW and (data.NEW[E.global.general.locale] or data.NEW["enUS"])
+    if newPart and #newPart > 0 then
         page.newHeader = {
             order = 5,
             type = "header",
@@ -614,7 +611,7 @@ for version, data in pairs(W.Changelog) do
             type = "description",
             name = function()
                 local text = ""
-                for index, line in ipairs(data.NEW[locale]) do
+                for index, line in ipairs(newPart) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
                 return text .. "\n"
@@ -623,7 +620,8 @@ for version, data in pairs(W.Changelog) do
         }
     end
 
-    if data.IMPROVEMENT and #data.IMPROVEMENT[locale] > 0 then
+    local improvementPart = data.IMPROVEMENT and (data.IMPROVEMENT[E.global.general.locale] or data.IMPROVEMENT["enUS"])
+    if improvementPart and #improvementPart > 0 then
         page.improvementHeader = {
             order = 7,
             type = "header",
@@ -634,7 +632,7 @@ for version, data in pairs(W.Changelog) do
             type = "description",
             name = function()
                 local text = ""
-                for index, line in ipairs(data.IMPROVEMENT[locale]) do
+                for index, line in ipairs(improvementPart) do
                     text = text .. format("%02d", index) .. ". " .. line .. "\n"
                 end
                 return text .. "\n"

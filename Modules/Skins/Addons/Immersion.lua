@@ -14,6 +14,7 @@ function S:Immersion_ReskinTitleButton(frame)
             button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
             self:CreateShadow(button.backdrop)
+	        self:MerathilisUISkin(button.backdrop)
 
             button.Hilite:StripTextures()
             button.Overlay:StripTextures()
@@ -64,6 +65,7 @@ function S:Immersion()
     talkBox.backdrop:Point("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
     talkBox.backdrop:Point("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
     self:CreateShadow(talkBox.backdrop)
+    self:MerathilisUISkin(talkBox.backdrop)
 
     -- 使用 ElvUI 边框变蓝来替换原高亮特效
     talkBox.Hilite:StripTextures()
@@ -111,6 +113,7 @@ function S:Immersion()
     elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)
     elements.backdrop:Point("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
     S:CreateShadow(elements.backdrop)
+    S:MerathilisUISkin(elements.backdrop)
 
     -- 任务细节窗口文字
     local content = elements.Content

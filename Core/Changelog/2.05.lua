@@ -40,13 +40,16 @@ W.Changelog[205] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "兼容性检查工具更新."
+            "兼容性检查工具更新.",
+            "[游戏条] 现在不会挡住全屏的世界地图了."
         },
         ["zhTW"] = {
-            "兼容性确认工具更新."
+            "兼容性确认工具更新.",
+            "[遊戲條] 現在不會遮擋全屏世界地圖了."
         },
         ["enUS"] = {
-            "Compatiblility check updated."
+            "Compatiblility check updated.",
+            "[Game Bar] The world map in full-screen mode will display in front of the game bar."
         },
         ["koKR"] = {
             "호환성 검사가 업데이트되었습니다."

@@ -17,7 +17,7 @@ W.Changelog[205] = {
         },
         ["koKR"] = {
             "이제 한국어가 완전히 지원됩니다. 헬리오스의방패, 불광불급옹, 다크어쎄신, 크림슨프릴의 훌륭한 작업 덕분입니다.",
-            "Add support of MerathilisUI Skins on frames created by WindTools."
+            "WindTools의 모듈 프레임에 MerathilisUI 스킨 지원을 추가합니다."
         }
     },
     NEW = {
@@ -35,7 +35,7 @@ W.Changelog[205] = {
         },
         ["koKR"] = {
             "[스킨] Bigwigs 큐 타이머 스킨 추가.",
-            "[Inspect] Add options of font styles."
+            "[살펴보기] 글꼴 스타일 옵션을 추가합니다."
         }
     },
     IMPROVEMENT = {

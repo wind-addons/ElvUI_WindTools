@@ -77,11 +77,33 @@ function W:ConstructCompatibiltyFrame()
     --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
+    local completeButton =
+        CreateFrame(
+        "Button",
+        "WTCompatibiltyFrameCompleteButton",
+        frame,
+        "OptionsButtonTemplate, BackdropTemplate"
+    )
+    completeButton.Text:SetText(L["Complete"])
+    completeButton.Text:SetJustifyH("CENTER")
+    completeButton.Text:SetJustifyV("CENTER")
+    F.SetFontOutline(completeButton.Text, E.db.general.font, "4")
+    completeButton:Size(350, 35)
+    completeButton:Point("BOTTOM", bottomDesc, "TOP", 0, 10)
+    ES:HandleButton(completeButton)
+    completeButton:SetScript(
+        "OnClick",
+        function()
+            frame:Hide()
+        end
+    )
+
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
     scrollFrameParent:CreateBackdrop("Transparent")
     scrollFrameParent:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
-    scrollFrameParent:Point("BOTTOMRIGHT", bottomDesc, "TOPRIGHT", -22, 10)
+    scrollFrameParent:Point("RIGHT", frame, "RIGHT", -22, 0)
+    scrollFrameParent:Point("BOTTOM", completeButton, "TOP", 0, 10)
     ES:HandleScrollBar(scrollFrameParent.ScrollBar)
     local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", scrollFrameParent)
     scrollFrame:SetSize(scrollFrameParent:GetSize())

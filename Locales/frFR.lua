@@ -215,6 +215,7 @@ L["Communities"] = true
 L["Community"] = true
 L["Compact"] = true
 L["Compatibility Check"] = true
+L["Complete"] = true
 L["Completed"] = true
 L["Confirmed"] = true
 L["Contacts"] = true

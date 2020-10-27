@@ -215,6 +215,7 @@ L["Communities"] = "커뮤니티"
 L["Community"] = "커뮤니티"
 L["Compact"] = "콤팩트"
 L["Compatibility Check"] = "호환성 확인"
+L["Complete"] = true
 L["Completed"] = "완료"
 L["Confirmed"] = "확인"
 L["Contacts"] = "우편 연락처"

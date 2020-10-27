@@ -113,9 +113,14 @@ function W:AddButtonToCompatibiltyFrame(data)
     ES:HandleButton(leftButton)
     leftButton:SetScript(
         "OnClick",
-        function()
+        function(self)
             data.func1()
             frame.configChanged = true
+            local name = gsub(self:GetName(), "LeftButton", "MiddleTexture")
+            if _G[name] then
+                _G[name]:SetTexture(E.Media.Textures.ArrowUp)
+                _G[name]:SetRotation(ES.ArrowRotation.left)
+            end
         end
     )
 
@@ -143,9 +148,14 @@ function W:AddButtonToCompatibiltyFrame(data)
     ES:HandleButton(rightButton)
     rightButton:SetScript(
         "OnClick",
-        function()
+        function(self)
             data.func2()
             frame.configChanged = true
+            local name = gsub(self:GetName(), "RightButton", "MiddleTexture")
+            if _G[name] then
+                _G[name]:SetTexture(E.Media.Textures.ArrowUp)
+                _G[name]:SetRotation(ES.ArrowRotation.right)
+            end
         end
     )
 end
@@ -171,6 +181,7 @@ end
 
 function W:CheckCompatibility()
     self:ConstructCompatibiltyFrame()
+
     self:CheckCompatibilityMerathilisUI(
         L["Extra Items Bar"],
         L["AutoButtons"],

@@ -11,7 +11,7 @@ end
 
 function S:SkinSkipButton(frame)
     if frame and frame.CloseDialog then
-        self:CreateShadow(frame.CloseDialog)
+        self:CreateBackdropShadowAfterElvUISkins(frame.CloseDialog)
     end
 end
 

@@ -128,6 +128,17 @@ function S:ElvUI_ActionBars()
         end
     end
 
+    -- Flyout
+    self:SecureHook(
+        AB,
+        "SetupFlyoutButton",
+        function(_, button)
+            if button and button.backdrop and not button.backdrop.shadow then
+                self:CreateShadow(button.backdrop)
+            end
+        end
+    )
+
     -- 按键绑定
     if _G.ElvUIBindPopupWindow then
         self:ElvUI_ActionBar_LoadKeyBinder()

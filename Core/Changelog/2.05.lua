@@ -23,28 +23,35 @@ W.Changelog[205] = {
     NEW = {
         ["zhCN"] = {
             "[装备观察] 添加了字体风格的选项.",
+            "[交接] 添加了自动跳过过场动画的功能和选项.",
             "[美化皮肤] 添加了 Bigwigs 进入副本倒计时美化.",
             "[美化皮肤] 添加了克罗米时间线选择框体美化.",
             "[美化皮肤] 添加了艾泽里特特质重置框体美化.",
-            "[美化皮肤] 添加了艾泽里特特质装备框体美化.",
+            "[美化皮肤] 添加了艾泽里特特质装备框体美化."
         },
         ["zhTW"] = {
             "[裝備觀察] 新增了字體風格的設定.",
+            "[交接] 添加了自動跳過過場動畫的功能和設定.",
             "[美化皮膚] 新增了 Bigwigs 進入副本倒計時美化.",
             "[美化皮膚] 添加了克羅米時間線選擇框架美化.",
             "[美化皮膚] 添加了艾澤里特特質重置框架美化.",
-            "[美化皮膚] 添加了艾澤里特特質裝備框架美化.",
+            "[美化皮膚] 添加了艾澤里特特質裝備框架美化."
         },
         ["enUS"] = {
             "[Inspect] Add options of font styles.",
+            "[Turn In] Add the feature and options for auto-skip cut scene.",
             "[Skins] Add skin for Bigwigs queue timer.",
             "[Skins] Add skin for Chromie Time.",
             "[Skins] Add skin for Azerite empowered item.",
-            "[Skins] Add skin for Azerite Respec.",
+            "[Skins] Add skin for Azerite Respec."
         },
         ["koKR"] = {
             "[스킨] Bigwigs 큐 타이머 스킨 추가.",
-            "[살펴보기] 글꼴 스타일 옵션을 추가합니다."
+            "[Turn In] Add the feature and options for auto-skip cut scene.",
+            "[살펴보기] 글꼴 스타일 옵션을 추가합니다.",
+            "[Skins] Add skin for Chromie Time.",
+            "[Skins] Add skin for Azerite empowered item.",
+            "[Skins] Add skin for Azerite Respec."
         }
     },
     IMPROVEMENT = {
@@ -64,10 +71,10 @@ W.Changelog[205] = {
         },
         ["enUS"] = {
             "Media files updated.",
-            "Compatiblility check updated.",
+            "Compatibility check updated.",
             "[Game Bar] The world map in full-screen mode will display in front of the game bar.",
             "[Skins] Better skin for skip cut scene confirmation dialog.",
-            "[Inspect] Better style for portrait."
+            "[Inspect] Better style for the portrait."
         },
         ["koKR"] = {
             "Media files updated.",

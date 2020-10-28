@@ -22,16 +22,25 @@ W.Changelog[205] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[装备观察] 添加了字体风格的选项.",
             "[美化皮肤] 添加了 Bigwigs 进入副本倒计时美化.",
-            "[装备观察] 添加了字体风格的选项."
+            "[美化皮肤] 添加了克罗米时间线选择框体美化.",
+            "[美化皮肤] 添加了艾泽里特特质重置框体美化.",
+            "[美化皮肤] 添加了艾泽里特特质装备框体美化.",
         },
         ["zhTW"] = {
+            "[裝備觀察] 新增了字體風格的設定.",
             "[美化皮膚] 新增了 Bigwigs 進入副本倒計時美化.",
-            "[裝備觀察] 新增了字體風格的設定."
+            "[美化皮膚] 添加了克羅米時間線選擇框架美化.",
+            "[美化皮膚] 添加了艾澤里特特質重置框架美化.",
+            "[美化皮膚] 添加了艾澤里特特質裝備框架美化.",
         },
         ["enUS"] = {
+            "[Inspect] Add options of font styles.",
             "[Skins] Add skin for Bigwigs queue timer.",
-            "[Inspect] Add options of font styles."
+            "[Skins] Add skin for Chromie Time.",
+            "[Skins] Add skin for Azerite empowered item.",
+            "[Skins] Add skin for Azerite Respec.",
         },
         ["koKR"] = {
             "[스킨] Bigwigs 큐 타이머 스킨 추가.",
@@ -40,19 +49,32 @@ W.Changelog[205] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "媒体文件更新.",
             "兼容性检查工具更新.",
-            "[游戏条] 现在不会挡住全屏的世界地图了."
+            "[游戏条] 现在不会挡住全屏的世界地图了.",
+            "[美化皮肤] 优化了跳过过场动画的提示背景美化.",
+            "[装备观察] 优化了人物头像的风格."
         },
         ["zhTW"] = {
+            "媒體文件更新.",
             "兼容性确认工具更新.",
-            "[遊戲條] 現在不會遮擋全屏世界地圖了."
+            "[遊戲條] 現在不會遮擋全屏世界地圖了.",
+            "[美化皮膚] 優化了跳過過場動畫的提示背景美化.",
+            "[裝備觀察] 優化了人物頭像的風格."
         },
         ["enUS"] = {
+            "Media files updated.",
             "Compatiblility check updated.",
-            "[Game Bar] The world map in full-screen mode will display in front of the game bar."
+            "[Game Bar] The world map in full-screen mode will display in front of the game bar.",
+            "[Skins] Better skin for skip cut scene confirmation dialog.",
+            "[Inspect] Better style for portrait."
         },
         ["koKR"] = {
-            "호환성 검사가 업데이트되었습니다."
+            "Media files updated.",
+            "호환성 검사가 업데이트되었습니다.",
+            "[Game Bar] The world map in full-screen mode will display in front of the game bar.",
+            "[Skins] Better skin for skip cut scene confirmation dialog.",
+            "[Inspect] Better style for portrait."
         }
     }
 }

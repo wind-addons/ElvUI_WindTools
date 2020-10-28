@@ -3,7 +3,9 @@ local MF = W.Modules.MoveFrames
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local _G = _G
 local format = format
+local gsub = gsub
 
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded

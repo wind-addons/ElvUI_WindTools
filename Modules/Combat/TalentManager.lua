@@ -16,11 +16,13 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
+local GetItemIcon = GetItemIcon
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
 local GetTalentTierInfo = GetTalentTierInfo
 local IsAddOnLoaded = IsAddOnLoaded
+local Item = Item
 local LearnTalents = LearnTalents
 
 local ACCEPT = _G.ACCEPT
@@ -269,7 +271,6 @@ function TM:CreateItemButton(parent, itemID, itemName, width, height)
     tex:SetTexture(GetItemIcon(itemID))
 
     button.tex = tex
-    button.cooldown = cooldown
     button:StyleButton()
 
     S:CreateShadow(button, nil, 0, 0.659, 1, true)

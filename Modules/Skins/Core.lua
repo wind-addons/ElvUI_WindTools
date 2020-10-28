@@ -161,6 +161,14 @@ function S:SetTransparentBackdrop(frame)
 end
 
 --[[
+    游戏系统输出错误
+    @param {string} err 错误
+]]
+local function errorhandler(err)
+    return _G.geterrorhandler()(err)
+end
+
+--[[
     注册回调
     @param {string} name 函数名
     @param {function} [func=S.name] 回调函数
@@ -224,14 +232,6 @@ end
 ]]
 function S:AddCallbackForUpdate(name, func)
     tinsert(self.updateProfile, func or self[name])
-end
-
---[[
-    游戏系统输出错误
-    @param {string} err 错误
-]]
-local function errorhandler(err)
-    return _G.geterrorhandler()(err)
 end
 
 --[[

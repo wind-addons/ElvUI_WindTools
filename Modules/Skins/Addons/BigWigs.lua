@@ -2,7 +2,11 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local unpack = unpack
+local format = format
+
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_Timer_After = C_Timer.After
 
 function S:BigWigs_CreateBar(barLib, ...)
     local bar = self.hooks[barLib]["CreateBar"](barLib, ...)
@@ -63,8 +67,7 @@ function S:BigWigs_QueueTimer()
             end
         )
 
-        -- Delete AddOnSkins ugly skin on it :(
-        C_Timer.After(
+        C_Timer_After(
             2,
             function()
                 _G.BigWigsLoader.UnregisterMessage("AddOnSkins", "BigWigs_FrameCreated")

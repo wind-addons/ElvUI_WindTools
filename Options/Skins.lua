@@ -5,6 +5,8 @@ local S = W:GetModule("Skins")
 
 local pairs = pairs
 
+local IsAddOnLoaded = IsAddOnLoaded
+
 options.desc = {
     order = 1,
     type = "group",

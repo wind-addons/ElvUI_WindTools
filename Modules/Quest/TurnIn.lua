@@ -14,6 +14,7 @@ local wipe = wipe
 local AcceptQuest = AcceptQuest
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
+local GameMovieFinished = GameMovieFinished
 local GetAutoQuestPopUp = GetAutoQuestPopUp
 local GetInstanceInfo = GetInstanceInfo
 local GetItemInfo = GetItemInfo

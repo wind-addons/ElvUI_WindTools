@@ -49,13 +49,13 @@ W.Changelog[205] = {
             "[Talent Manager] Add item buttons to talent frame."
         },
         ["koKR"] = {
-            "[스킨] Bigwigs 큐 타이머 스킨 추가.",
-            "[Turn In] Add the feature and options for auto-skip cut scene.",
             "[살펴보기] 글꼴 스타일 옵션을 추가합니다.",
-            "[Skins] Add skin for Chromie Time.",
-            "[Skins] Add skin for Azerite empowered item.",
-            "[Skins] Add skin for Azerite Respec.",
-            "[Talent Manager] Add item buttons to talent frame."
+            "[자동수락] 컷신 자동 넘김 기능과 관련 옵션을 추가합니다.",
+            "[살펴보기] 글꼴 스타일 옵션을 추가합니다.",
+            "[스킨] Bigwigs 큐 타이머 스킨 추가.",
+            "[스킨] 아제라이트 장비 스킨 추가.",
+            "[스킨] 아제라이트 재연마 스킨 추가.",
+            "[특성관리자] 특성 창에 아이템 버튼이 추가되었습니다."
         }
     },
     IMPROVEMENT = {
@@ -81,11 +81,11 @@ W.Changelog[205] = {
             "[Inspect] Better style for the portrait."
         },
         ["koKR"] = {
-            "Media files updated.",
+            "미디어 파일이 업데이트되었습니다.",
             "호환성 검사가 업데이트되었습니다.",
-            "[Game Bar] The world map in full-screen mode will display in front of the game bar.",
-            "[Skins] Better skin for skip cut scene confirmation dialog.",
-            "[Inspect] Better style for portrait."
+            "[게임 바] 이제 전체 화면 모드의 월드 맵을 게임 바가 가리지 않습니다.",
+            "[스킨] 컷신 건너 뛰기 확인 대화 상자의 스킨을 최적화 했습니다.",
+            "[살펴보기] 캐릭터 초상화 스타일을 최적화했습니다."
         }
     }
 }

@@ -81,6 +81,7 @@ W.Changelog[205] = {
             "[游戏条] 现在不会挡住全屏的世界地图了.",
             "[游戏条] 更换了炉石列表的生成逻辑.",
             "[美化皮肤] 优化了跳过过场动画的提示背景美化.",
+            "[美化皮肤] 优化了鼠标提示美化.",
             "[装备观察] 优化了人物头像的风格."
         },
         ["zhTW"] = {
@@ -89,6 +90,7 @@ W.Changelog[205] = {
             "[遊戲條] 現在不會遮擋全屏世界地圖了.",
             "[遊戲條] 更換了爐石列表的生成邏輯.",
             "[美化皮膚] 優化了跳過過場動畫的提示背景美化.",
+            "[美化皮膚] 優化了浮動提示美化.",
             "[裝備觀察] 優化了人物頭像的風格."
         },
         ["enUS"] = {
@@ -97,6 +99,7 @@ W.Changelog[205] = {
             "[Game Bar] The world map in full-screen mode will display in front of the game bar.",
             "[Game Bar] New logic for generating the table of HearthStones.",
             "[Skins] Better skin for skip cut scene confirmation dialog.",
+            "[Skins] The skin for tooltips have been optimized.",
             "[Inspect] Better style for the portrait."
         },
         ["koKR"] = {
@@ -105,6 +108,7 @@ W.Changelog[205] = {
             "[게임 바] 이제 전체 화면 모드의 월드 맵을 게임 바가 가리지 않습니다.",
             "[게임 바] 귀환석 목록 생성 로직이 변경되었습니다.",
             "[스킨] 컷신 건너 뛰기 확인 대화 상자의 스킨을 최적화 했습니다.",
+            "[Skins] The skin for tooltips have been optimized.",
             "[살펴보기] 캐릭터 초상화 스타일을 최적화했습니다."
         }
     }

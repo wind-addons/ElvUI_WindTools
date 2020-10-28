@@ -418,6 +418,52 @@ local ButtonTypes = {
         tooltips = {
             L["Toy Box"]
         }
+    },
+    VOLUME = {
+        name = L["Volume"],
+        icon = W.Media.Icons.barVolume,
+        click = {
+            LeftButton = function()
+                local vol = C_CVar_GetCVar("Sound_MasterVolume")
+                vol = vol and tonumber(vol) or 0
+                C_CVar_SetCVar("Sound_MasterVolume", min(vol + 0.1, 1))
+            end,
+            RightButton = function()
+                local vol = C_CVar_GetCVar("Sound_MasterVolume")
+                vol = vol and tonumber(vol) or 0
+                C_CVar_SetCVar("Sound_MasterVolume", max(vol - 0.1, 0))
+            end
+        },
+        tooltips = function(button)
+            local vol = C_CVar_GetCVar("Sound_MasterVolume")
+            vol = vol and tonumber(vol) or 0
+            DT.tooltip:ClearLines()
+            DT.tooltip:SetText(L["Volume"] .. format(": %d%%", vol))
+            DT.tooltip:AddLine("\n")
+            DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Increase the volume"] .. " (+10%)", 1, 1, 1)
+            DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Decrease the volume"] .. " (-10%)", 1, 1, 1)
+            DT.tooltip:Show()
+
+            button.tooltipsUpdateTimer =
+                C_Timer_NewTicker(
+                0.3,
+                function()
+                    local vol = C_CVar_GetCVar("Sound_MasterVolume")
+                    vol = vol and tonumber(vol) or 0
+                    DT.tooltip:ClearLines()
+                    DT.tooltip:SetText(L["Volume"] .. format(": %d%%", vol * 100))
+                    DT.tooltip:AddLine("\n")
+                    DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Increase the volume"] .. " (+10%)", 1, 1, 1)
+                    DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Decrease the volume"] .. " (-10%)", 1, 1, 1)
+                    DT.tooltip:Show()
+                end
+            )
+        end,
+        tooltipsLeave = function(button)
+            if button.tooltipsUpdateTimer and button.tooltipsUpdateTimer.Cancel then
+                button.tooltipsUpdateTimer:Cancel()
+            end
+        end
     }
 }
 

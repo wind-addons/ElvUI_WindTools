@@ -11,6 +11,7 @@ local format = format
 local gsub = gsub
 local ipairs = ipairs
 local max = max
+local min = min
 local mod = mod
 local pairs = pairs
 local select = select
@@ -49,6 +50,8 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_SetCVar = C_CVar.SetCVar
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
@@ -206,32 +209,12 @@ local ButtonTypes = {
             LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab1",
             RightButton = "/run CollectionsJournal_LoadUI()\n/click MountJournalSummonRandomFavoriteButton"
         },
-        tooltips = function(button)
-            DT.tooltip:ClearLines()
-            DT.tooltip:SetText(L["Collections"])
-            DT.tooltip:AddLine("\n")
-            DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Collections"], 1, 1, 1)
-            DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Mount"], 1, 1, 1)
-            DT.tooltip:Show()
-
-            button.tooltipsUpdateTimer =
-                C_Timer_NewTicker(
-                1,
-                function()
-                    DT.tooltip:ClearLines()
-                    DT.tooltip:SetText(L["Collections"])
-                    DT.tooltip:AddLine("\n")
-                    DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Collections"], 1, 1, 1)
-                    DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Mount"], 1, 1, 1)
-                    DT.tooltip:Show()
-                end
-            )
-        end,
-        tooltipsLeave = function(button)
-            if button.tooltipsUpdateTimer and button.tooltipsUpdateTimer.Cancel then
-                button.tooltipsUpdateTimer:Cancel()
-            end
-        end
+        tooltips = {
+            L["Collections"],
+            "\n",
+            LeftButtonIcon .. " " .. L["Show Collections"],
+            RightButtonIcon .. " " .. L["Random Favorite Mount"]
+        }
     },
     ENCOUNTER_JOURNAL = {
         name = L["Encounter Journal"],
@@ -383,32 +366,12 @@ local ButtonTypes = {
             LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab2",
             RightButton = "/run CollectionsJournal_LoadUI()\n/click PetJournalSummonRandomFavoritePetButton"
         },
-        tooltips = function(button)
-            DT.tooltip:ClearLines()
-            DT.tooltip:SetText(L["Pet Journal"])
-            DT.tooltip:AddLine("\n")
-            DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Pet Journal"], 1, 1, 1)
-            DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Pet"], 1, 1, 1)
-            DT.tooltip:Show()
-
-            button.tooltipsUpdateTimer =
-                C_Timer_NewTicker(
-                1,
-                function()
-                    DT.tooltip:ClearLines()
-                    DT.tooltip:SetText(L["Pet Journal"])
-                    DT.tooltip:AddLine("\n")
-                    DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Show Pet Journal"], 1, 1, 1)
-                    DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Random Favorite Pet"], 1, 1, 1)
-                    DT.tooltip:Show()
-                end
-            )
-        end,
-        tooltipsLeave = function(button)
-            if button.tooltipsUpdateTimer and button.tooltipsUpdateTimer.Cancel then
-                button.tooltipsUpdateTimer:Cancel()
-            end
-        end
+        tooltips = {
+            L["Pet Journal"],
+            "\n",
+            LeftButtonIcon .. " " .. L["Show Pet Journal"],
+            RightButtonIcon .. " " .. L["Random Favorite Pet"]
+        }
     },
     SCREENSHOT = {
         name = L["Screenshot"],

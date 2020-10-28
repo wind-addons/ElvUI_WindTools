@@ -397,9 +397,9 @@ local function ShowInspectItemStatsFrame(frame, unit)
         frame.statsFrame = statsFrame
     elseif IL.db and IL.db.levelText and IL.db.equipText then
         for i = 1, 20 do
-            F.SetFontWithDB(statsFrame["stat" .. i].Label, IL.db.statsText)
-            F.SetFontWithDB(statsFrame["stat" .. i].Value, IL.db.statsText)
-            F.SetFontWithDB(statsFrame["stat" .. i].PlayerValue, IL.db.statsText)
+            F.SetFontWithDB(frame.statsFrame["stat" .. i].Label, IL.db.statsText)
+            F.SetFontWithDB(frame.statsFrame["stat" .. i].Value, IL.db.statsText)
+            F.SetFontWithDB(frame.statsFrame["stat" .. i].PlayerValue, IL.db.statsText)
         end
     end
 

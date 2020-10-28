@@ -159,8 +159,142 @@ options.general = {
     }
 }
 
-options.blizzard = {
+options.font = {
     order = 3,
+    type = "group",
+    name = L["Font"],
+    args = {
+        errorMessage = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Error Mesage"],
+            get = function(info)
+                return E.private.WT.skins.errorMessage[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.errorMessage[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        imeLabel = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Input Method Editor"] .. " - " .. L["Label"],
+            get = function(info)
+                return E.private.WT.skins.ime.label[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.ime.label[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        },
+        imeCandidate = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Input Method Editor"] .. " - " .. L["Candidate"],
+            get = function(info)
+                return E.private.WT.skins.ime.candidate[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.ime.candidate[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
+        }
+    }
+}
+
+options.blizzard = {
+    order = 4,
     type = "group",
     name = L["Blizzard"],
     get = function(info)
@@ -511,7 +645,7 @@ for key, value in pairs(options.blizzard.args) do
 end
 
 options.elvui = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["ElvUI"],
     get = function(info)
@@ -667,7 +801,7 @@ for key, value in pairs(options.elvui.args) do
 end
 
 options.addons = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Addons"],
     get = function(info)

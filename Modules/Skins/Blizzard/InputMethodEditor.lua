@@ -20,9 +20,9 @@ function S:InputMethodEditor()
             if langIcon then
                 langIcon:StripTextures()
                 langIcon:CreateBackdrop("Transparent")
-                langIcon:SetSize(20, 22)
+                langIcon:Size(20, 22)
                 langIcon:ClearAllPoints()
-                langIcon:SetPoint("TOPLEFT", editBox, "TOPRIGHT", 7, 0)
+                langIcon:Point("TOPLEFT", editBox, "TOPRIGHT", 7, 0)
                 self:CreateShadow(langIcon)
             end
         end
@@ -41,9 +41,9 @@ function S:InputMethodEditor()
     for i = 1, 10 do
         local cf = IMECandidatesFrame["c" .. i]
         if cf then
-            F.SetFontOutline(cf.label, E.media.normFont)
-            F.SetFontOutline(cf.candidate, E.media.normFont)
-            cf.candidate:SetWidth(1000) -- 去除候选词句的显示宽度限制
+            F.SetFontWithDB(cf.label, E.private.WT.skins.ime.label)
+            F.SetFontWithDB(cf.candidate, E.private.WT.skins.ime.candidate)
+            cf.candidate:Width(1000) -- 去除候选词句的显示宽度限制
         end
     end
 end

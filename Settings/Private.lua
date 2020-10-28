@@ -87,6 +87,23 @@ V.skins = {
 	removeParchment = true,
 	merathilisUISkin = true,
 	shadow = true,
+	ime = {
+		label = {
+			name = F.GetCompatibleFont("Montserrat"),
+			size = 14,
+			style = "OUTLINE"
+		},
+		candidate = {
+			name = E.db.general.font,
+			size = E.db.general.fontSize,
+			style = "OUTLINE"
+		}
+	},
+	errorMessage = {
+		name = E.db.general.font,
+		size = E.db.general.fontSize,
+		style = "OUTLINE"
+	},
 	color = {
 		r = 0,
 		g = 0,
@@ -237,5 +254,5 @@ V.unitFrames = {
 
 V.core = {
 	debugMode = false,
-	compatibilityCheck = true,
+	compatibilityCheck = true
 }

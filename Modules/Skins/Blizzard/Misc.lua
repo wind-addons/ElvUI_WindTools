@@ -52,8 +52,13 @@ function S:BlizzardMiscFrames()
     end
 
     -- 错误提示
-    F.SetFontOutline(_G.UIErrorsFrame)
-    F.SetFontOutline(_G.ActionStatus.Text)
+    if _G.UIErrorsFrame then
+        F.SetFontWithDB(_G.UIErrorsFrame, E.private.WT.skins.errorMessage)
+    end
+
+    if _G.ActionStatus.Text then
+        F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.errorMessage)
+    end
 
     -- 灵魂医者传送按钮
     self:CreateShadow(_G.GhostFrameContentsFrame)
@@ -64,7 +69,7 @@ function S:BlizzardMiscFrames()
     -- 举报玩家
     self:CreateShadow(_G.PlayerReportFrame)
     self:CreateShadow(_G.ReportCheatingDialog)
-    
+
     -- 分离物品
     self:CreateShadow(_G.StackSplitFrame)
 

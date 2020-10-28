@@ -119,6 +119,7 @@ V.skins = {
 		challenges = true,
 		channels = true,
 		character = true,
+		chromieTime = true,
 		collections = true,
 		communities = true,
 		debugTools = true,

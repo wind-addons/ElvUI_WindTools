@@ -13,6 +13,7 @@
 	<Script file='Challenges.lua'/>
 	<Script file='Channels.lua'/>
 	<Script file='Character.lua'/>
+	<Script file='ChromieTime.lua'/>
 	<Script file='Collections.lua'/>
 	<Script file='Communities.lua'/>
 	<Script file='DebugTools.lua'/>

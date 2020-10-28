@@ -277,6 +277,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Character"]
         },
+        chromieTime = {
+            order = 10,
+            type = "toggle",
+            name = L["Chromie Time"]
+        },
         collections = {
             order = 10,
             type = "toggle",

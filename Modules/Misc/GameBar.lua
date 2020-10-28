@@ -44,6 +44,7 @@ local ToggleAllBags = ToggleAllBags
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
 local ToggleFriendsFrame = ToggleFriendsFrame
+local ToggleSpellBook = ToggleSpellBook
 local ToggleTimeManager = ToggleTimeManager
 local UnregisterStateDriver = UnregisterStateDriver
 
@@ -371,6 +372,22 @@ local ButtonTypes = {
             "\n",
             LeftButtonIcon .. " " .. L["Show Pet Journal"],
             RightButtonIcon .. " " .. L["Random Favorite Pet"]
+        }
+    },
+    PROFESSION = {
+        name = L["Profession"],
+        icon = W.Media.Icons.barProfession,
+        click = {
+            LeftButton = function()
+                if not InCombatLockdown() then
+                    ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
+                else
+                    _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+                end
+            end
+        },
+        tooltips = {
+            L["Profession"]
         }
     },
     SCREENSHOT = {

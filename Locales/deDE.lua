@@ -848,10 +848,10 @@ L["You can customize the global shadow color, disable some skins, set the level 
 L["You can customize the sentence templates, channels, etc."] = true
 L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."] = true
 L["You can separate the groups with a comma."] = true
-L["Your Pet"] = true
-L["Your name"] = true
-L["Your spell link"] = true
-L["[ %s by %s ]"] = true
+L["Your Pet"] = "Dein Begleiter"
+L["Your name"] = "Dein Name"
+L["Your spell link"] = "Dein Zauber Link"
+L["[ %s by %s ]"] = " %s von %s "
 L["[ABBR] Announcement"] = "ANN"
 L["[ABBR] Back"] = "Back"
 L["[ABBR] Castle Nathria"] = "CS"

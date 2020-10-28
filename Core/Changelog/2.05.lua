@@ -27,15 +27,17 @@ W.Changelog[205] = {
             "[美化皮肤] 添加了 Bigwigs 进入副本倒计时美化.",
             "[美化皮肤] 添加了克罗米时间线选择框体美化.",
             "[美化皮肤] 添加了艾泽里特特质重置框体美化.",
-            "[美化皮肤] 添加了艾泽里特特质装备框体美化."
+            "[美化皮肤] 添加了艾泽里特特质装备框体美化.",
+            "[天赋管家] 添加了物品按钮到天赋面板."
         },
         ["zhTW"] = {
             "[裝備觀察] 新增了字體風格的設定.",
-            "[交接] 添加了自動跳過過場動畫的功能和設定.",
+            "[交接] 新增了自動跳過過場動畫的功能和設定.",
             "[美化皮膚] 新增了 Bigwigs 進入副本倒計時美化.",
-            "[美化皮膚] 添加了克羅米時間線選擇框架美化.",
-            "[美化皮膚] 添加了艾澤里特特質重置框架美化.",
-            "[美化皮膚] 添加了艾澤里特特質裝備框架美化."
+            "[美化皮膚] 新增了克羅米時間線選擇框架美化.",
+            "[美化皮膚] 新增了艾澤里特特質重置框架美化.",
+            "[美化皮膚] 新增了艾澤里特特質裝備框架美化.",
+            "[天賦管家] 新增了物品按鍵到天賦面板."
         },
         ["enUS"] = {
             "[Inspect] Add options of font styles.",
@@ -43,7 +45,8 @@ W.Changelog[205] = {
             "[Skins] Add skin for Bigwigs queue timer.",
             "[Skins] Add skin for Chromie Time.",
             "[Skins] Add skin for Azerite empowered item.",
-            "[Skins] Add skin for Azerite Respec."
+            "[Skins] Add skin for Azerite Respec.",
+            "[Talent Manager] Add item buttons to talent frame."
         },
         ["koKR"] = {
             "[스킨] Bigwigs 큐 타이머 스킨 추가.",
@@ -51,7 +54,8 @@ W.Changelog[205] = {
             "[살펴보기] 글꼴 스타일 옵션을 추가합니다.",
             "[Skins] Add skin for Chromie Time.",
             "[Skins] Add skin for Azerite empowered item.",
-            "[Skins] Add skin for Azerite Respec."
+            "[Skins] Add skin for Azerite Respec.",
+            "[Talent Manager] Add item buttons to talent frame."
         }
     },
     IMPROVEMENT = {

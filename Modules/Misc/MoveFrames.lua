@@ -125,6 +125,9 @@ local BlizzardFramesOnDemand = {
         "ChannelFrame",
         "CreateChannelPopup"
     },
+    ["Blizzard_ChromieTimeUI"] = {
+        "ChromieTimeFrame"
+    },
     ["Blizzard_Collections"] = {
         "CollectionsJournal",
         "WardrobeFrame"

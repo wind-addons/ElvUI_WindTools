@@ -401,6 +401,7 @@ L["Inverse Direction"] = "역방향"
 L["It doesn't means that the %s Skins will not be applied."] = "%s 스킨이 적용되지 않는다는 의미는 아닙니다."
 L["It will fix the problem if your cursor has abnormal movement."] = "커서의 움직임이 비정상적인 경우 이 옵션이 문제를 해결할 수 있습니다."
 L["Item"] = "아이템"
+L["Item Buttons"] = true
 L["Item Level"] = "아이템 레벨"
 L["Item Name"] = "아이템 이름"
 L["Just for Chinese and Korean players"] = "한국 및 중국 전용 (채팅에 '、' 입력 시 자동으로 '/'로 변경합니다.)"

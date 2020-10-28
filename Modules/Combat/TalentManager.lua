@@ -31,6 +31,7 @@ function TM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_TalentUI" then
         self:UnregisterEvent("ADDON_LOADED")
         self:BuildFrame()
+        self:UpdateItemButtons()
     end
 end
 
@@ -249,6 +250,82 @@ function TM:SetButtonTooltip(button)
     end
 
     GameTooltip:Show()
+end
+
+function TM:CreateItemButton(parent, itemID, itemName, width, height)
+    local button = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackdropTemplate")
+    button:Size(width, height or width)
+    button:SetTemplate("Default")
+    button:SetClampedToScreen(true)
+    button:SetAttribute("type", "item")
+    button:SetAttribute("item", itemName)
+    button:EnableMouse(true)
+    button:RegisterForClicks("AnyUp")
+
+    local tex = button:CreateTexture(nil, "OVERLAY", nil)
+    tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
+    tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
+    tex:SetTexCoord(unpack(E.TexCoords))
+    tex:SetTexture(GetItemIcon(itemID))
+
+    button.tex = tex
+    button.cooldown = cooldown
+    button:StyleButton()
+
+    S:CreateShadow(button, nil, 0, 0.659, 1, true)
+    button.shadow:Hide()
+
+    button:SetScript(
+        "OnEnter",
+        function()
+            button.shadow:Show()
+            GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT")
+            GameTooltip:SetItemByID(itemID)
+            GameTooltip:Show()
+        end
+    )
+
+    button:SetScript(
+        "OnLeave",
+        function()
+            button.shadow:Hide()
+            GameTooltip:Hide()
+        end
+    )
+
+    return button
+end
+
+function TM:UpdateItemButtons()
+    if self.db and self.db.itemButtons then
+        if not self.itemButtons then
+            self.itemButtons = {}
+            local frame = _G.PlayerTalentFrameTalents
+            local item1 = Item:CreateFromItemID(141446)
+            local item2 = Item:CreateFromItemID(153646)
+            item1:ContinueOnItemLoad(
+                function()
+                    self.itemButtons[1] = self:CreateItemButton(frame, 141446, item1:GetItemName(), 36)
+                    self.itemButtons[1]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 79, -31)
+                end
+            )
+            item2:ContinueOnItemLoad(
+                function()
+                    self.itemButtons[2] = self:CreateItemButton(frame, 153646, item2:GetItemName(), 36)
+                    self.itemButtons[2]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 121, -31)
+                end
+            )
+        end
+        for _, button in pairs(self.itemButtons) do
+            button:Show()
+        end
+    else
+        if self.itemButtons then
+            for _, button in pairs(self.itemButtons) do
+                button:Hide()
+            end
+        end
+    end
 end
 
 function TM:BuildFrame()

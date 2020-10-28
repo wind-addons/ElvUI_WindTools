@@ -413,8 +413,17 @@ options.talentManager = {
             type = "toggle",
             name = L["Enable"]
         },
-        clearSets = {
+        itemButtons = {
             order = 3,
+            type = "toggle",
+            name = L["Item Buttons"],
+            set = function(_, value)
+                E.private.WT.combat.talentManager.itemButtons = value
+                TM:UpdateItemButtons()
+            end
+        },
+        clearSets = {
+            order = 4,
             type = "execute",
             name = L["Clear All Sets"],
             func = function()

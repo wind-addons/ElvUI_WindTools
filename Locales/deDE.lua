@@ -401,6 +401,7 @@ L["Inverse Direction"] = true
 L["It doesn't means that the %s Skins will not be applied."] = true
 L["It will fix the problem if your cursor has abnormal movement."] = true
 L["Item"] = true
+L["Item Buttons"] = true
 L["Item Level"] = "Itemlevel"
 L["Item Name"] = true
 L["Just for Chinese and Korean players"] = true

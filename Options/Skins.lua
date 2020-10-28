@@ -232,6 +232,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Auction House"]
         },
+        azerite = {
+            order = 10,
+            type = "toggle",
+            name = L["Azerite"]
+        },
         azeriteEssence = {
             order = 10,
             type = "toggle",

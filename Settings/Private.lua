@@ -110,6 +110,7 @@ V.skins = {
 		adventureMap = true,
 		alerts = true,
 		auctionHouse = true,
+		azerite = true,
 		azeriteEssence = true,
 		azeriteRespec = true,
 		barberShop = true,

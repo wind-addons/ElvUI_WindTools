@@ -111,6 +111,7 @@ V.skins = {
 		alerts = true,
 		auctionHouse = true,
 		azeriteEssence = true,
+		azeriteRespec = true,
 		barberShop = true,
 		blackMarket = true,
 		calendar = true,

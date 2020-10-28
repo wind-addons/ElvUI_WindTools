@@ -766,9 +766,20 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     local color = RAID_CLASS_COLORS[class] or NORMAL_FONT_COLOR
     frame.unit = unit
     frame.portrait:SetLevel(UnitLevel(unit))
-    frame.portrait.PortraitRingQuality:SetVertexColor(color.r, color.g, color.b)
-    frame.portrait.LevelBorder:SetVertexColor(color.r, color.g, color.b)
+    frame.portrait:StripTextures()
     SetPortraitTexture(frame.portrait.Portrait, unit)
+    frame:CreateBackdrop("Transparent")
+    F.SetFontWithDB(
+        frame.portrait.Level,
+        {
+            name = F.GetCompatibleFont("Montserrat"),
+            size = 16,
+            style = "OUTLINE"
+        }
+    )
+    frame.portrait.Level:ClearAllPoints()
+    frame.portrait.Level:Point("BOTTOMRIGHT", frame.portrait, "BOTTOMRIGHT")
+
     frame.title:SetText(UnitName(unit))
     frame.title:SetTextColor(color.r, color.g, color.b)
     frame.level:SetText(format("%s %0d", L["Item Level"], ilevel))

@@ -23,6 +23,7 @@ local unpack = unpack
 
 local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame
+local CreateFromMixins = CreateFromMixins
 local GetGameTime = GetGameTime
 local GetItemCooldown = GetItemCooldown
 local GetItemIcon = GetItemIcon
@@ -32,6 +33,7 @@ local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGuild = IsInGuild
 local IsModifierKeyDown = IsModifierKeyDown
+local ItemMixin = ItemMixin
 local RegisterStateDriver = RegisterStateDriver
 local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
@@ -50,7 +52,6 @@ local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccount
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
-local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
 
@@ -1130,7 +1131,6 @@ function GB:PLAYER_ENTERING_WORLD()
     C_Timer_After(
         1,
         function()
-            self:UpdateHearthStoneTable()
             if InCombatLockdown() then
                 self:RegisterEvent("PLAYER_REGEN_ENABLED")
             else
@@ -1198,24 +1198,39 @@ end
 
 function GB:UpdateHomeButton()
     ButtonTypes.HOME.item = {
-        item1 = C_Item_GetItemNameByID(self.db.home.left),
-        item2 = C_Item_GetItemNameByID(self.db.home.right)
+        item1 = HeartstonesTable[self.db.home.left],
+        item2 = HeartstonesTable[self.db.home.right]
     }
 end
 
 function GB:UpdateHearthStoneTable()
     HeartstonesTable = {}
 
-    for _, id in pairs(Heartstones) do
-        HeartstonesTable[tostring(id)] = C_Item_GetItemNameByID(id)
+    local index = 0
+    local itemEngine = CreateFromMixins(ItemMixin)
+
+    local function GetNextHearthStoneInfo()
+        index = index + 1
+        if Heartstones[index] then
+            itemEngine:SetItemID(Heartstones[index])
+            itemEngine:ContinueOnItemLoad(
+                function()
+                    HeartstonesTable[tostring(Heartstones[index])] = itemEngine:GetItemName()
+                    GetNextHearthStoneInfo()
+                end
+            )
+        else
+            self:UpdateHomeButton()
+            if self.Initialized then
+                self:UpdateButtons()
+            end
+        end
     end
+
+    GetNextHearthStoneInfo()
 end
 
 function GB:GetHearthStoneTable()
-    if not HeartstonesTable then
-        self:UpdateHearthStoneTable()
-    end
-
     return HeartstonesTable
 end
 

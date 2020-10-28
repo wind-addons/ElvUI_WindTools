@@ -693,6 +693,7 @@ P.quest = {
         followerAssignees = true,
         rogueClassHallInsignia = true,
         modifierKeyPause = true,
+        skipCutScene = true,
         customIgnoreNPCs = {}
     }
 }

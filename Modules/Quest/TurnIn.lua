@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local TI = W:NewModule("TurnIn", "AceEvent-3.0")
+local TI = W:NewModule("TurnIn", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local format = format
@@ -288,6 +288,16 @@ function TI:GetNPCID(unit)
     return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
+function TI:AutoSkipCutScene()
+    if self.db then
+        if not self.db.skipCutScene or self.db.modifierKeyPause and IsModifierKeyDown() then
+            return
+        end
+    end
+
+    GameMovieFinished()
+end
+
 function TI:QUEST_GREETING()
     if IsIgnored() then
         return
@@ -549,10 +559,11 @@ end
 
 function TI:Initialize()
     self.db = E.db.WT.quest.turnIn
-    if not self.db.enable or self.initialized then
+    if not self.db.enable or self.Initialized then
         return
     end
 
+    self:SecureHook("MovieFrame_PlayMovie", "AutoSkipCutScene")
     self:RegisterEvent("QUEST_GREETING")
     self:RegisterEvent("GOSSIP_SHOW")
     self:RegisterEvent("GOSSIP_CONFIRM")
@@ -565,13 +576,14 @@ function TI:Initialize()
     self:RegisterEvent("PLAYER_LOGIN")
     self:RegisterEvent("QUEST_AUTOCOMPLETE")
 
-    self.initialized = true
+    self.Initialized = true
 end
 
 function TI:ProfileUpdate()
     self:Initialize()
 
-    if self.initialized and not self.db.enable then
+    if self.Initialized and not self.db.enable then
+        self:Unhook("MovieFrame_PlayMovie")
         self:UnregisterEvent("QUEST_GREETING")
         self:UnregisterEvent("GOSSIP_SHOW")
         self:UnregisterEvent("GOSSIP_CONFIRM")
@@ -584,7 +596,7 @@ function TI:ProfileUpdate()
         self:UnregisterEvent("PLAYER_LOGIN")
         self:UnregisterEvent("QUEST_AUTOCOMPLETE")
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-        self.initialized = false
+        self.Initialized = false
     end
 end
 

@@ -367,8 +367,17 @@ options.turnIn = {
             end,
             width = 1.667
         },
-        custom = {
+        skipCutScene = {
             order = 7,
+            type = "toggle",
+            name = L["Skip Cut Scene"],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
+            width = 1.667
+        },
+        custom = {
+            order = 8,
             type = "group",
             inline = true,
             name = L["Ignored NPCs"],

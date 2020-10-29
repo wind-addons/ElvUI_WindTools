@@ -101,7 +101,7 @@ V.skins = {
 	},
 	errorMessage = {
 		name = E.db.general.font,
-		size = E.db.general.fontSize,
+		size = 15,
 		style = "OUTLINE"
 	},
 	color = {

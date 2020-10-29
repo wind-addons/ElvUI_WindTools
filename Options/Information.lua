@@ -707,7 +707,7 @@ options.reset = {
                         E.NewSign .. L["Support 16:9, 21:9 and 32:9!"]
                     ),
                     func = function()
-                        E:StaticPopup_Show("WINDTOOLS_IMPORT_SETTING", L["Fang2hou UI"], "Fang2hou", nil, "Fang2houUI")
+                        E:StaticPopup_Show("WINDTOOLS_IMPORT_SETTING", L["Fang2hou UI"], "Fang2hou", "Fang2houUI")
                     end
                 }
             }

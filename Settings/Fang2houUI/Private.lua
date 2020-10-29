@@ -35,7 +35,6 @@ function W:Fang2houUIPrivate()
     E.private["WT"]["maps"]["minimapButtons"]["inverseDirection"] = true
     E.private["WT"]["maps"]["minimapButtons"]["backdropSpacing"] = 0
     E.private["WT"]["maps"]["minimapButtons"]["buttonSize"] = 29
-    E.private["nameplates"]["enable"] = false
     E.private["skins"]["parchmentRemoverEnable"] = true
     E.private["theme"] = "default"
 

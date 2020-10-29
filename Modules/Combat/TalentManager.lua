@@ -307,13 +307,47 @@ function TM:UpdateItemButtons()
             item1:ContinueOnItemLoad(
                 function()
                     self.itemButtons[1] = self:CreateItemButton(frame, 141446, item1:GetItemName(), 36)
-                    self.itemButtons[1]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 79, -31)
+                    if not _G.PlayerTalentFrame and not _G.PlayerTalentFrame.backdrop then
+                        C_Timer_After(
+                            1,
+                            function()
+                                if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
+                                    self.itemButtons[1]:Point(
+                                        "TOPLEFT",
+                                        _G.PlayerTalentFrame.backdrop,
+                                        "TOPLEFT",
+                                        79,
+                                        -31
+                                    )
+                                end
+                            end
+                        )
+                    else
+                        self.itemButtons[1]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 79, -31)
+                    end
                 end
             )
             item2:ContinueOnItemLoad(
                 function()
                     self.itemButtons[2] = self:CreateItemButton(frame, 153646, item2:GetItemName(), 36)
-                    self.itemButtons[2]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 121, -31)
+                    if not _G.PlayerTalentFrame and not _G.PlayerTalentFrame.backdrop then
+                        C_Timer_After(
+                            1,
+                            function()
+                                if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
+                                    self.itemButtons[2]:Point(
+                                        "TOPLEFT",
+                                        _G.PlayerTalentFrame.backdrop,
+                                        "TOPLEFT",
+                                        121,
+                                        -31
+                                    )
+                                end
+                            end
+                        )
+                    else
+                        self.itemButtons[2]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 121, -31)
+                    end
                 end
             )
         end

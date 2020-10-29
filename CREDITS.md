@@ -108,6 +108,7 @@
     - Media/Icons/GameBar
     - Media/Icons/List.tga
     - Media/Icons/Favorite.tga
+    - Media/Textures/ArrowDown.tga
 
 - Ferous Media (Ferous)
     - Media/Texture/Vignetting.tga

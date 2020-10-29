@@ -289,14 +289,15 @@ function TI:GetNPCID(unit)
     return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
-function TI:AutoSkipCutScene()
-    if self.db then
-        if not self.db.skipCutScene or self.db.modifierKeyPause and IsModifierKeyDown() then
+function TI:MovieFrame_PlayMovie(...)
+    if self.db and self.db.enable then
+        if self.db.skipCutScene and not (self.db.modifierKeyPause and IsModifierKeyDown()) then
+            GameMovieFinished()
             return
         end
     end
 
-    GameMovieFinished()
+    self.hooks.MovieFrame_PlayMovie(...)
 end
 
 function TI:QUEST_GREETING()
@@ -564,7 +565,10 @@ function TI:Initialize()
         return
     end
 
-    self:SecureHook("MovieFrame_PlayMovie", "AutoSkipCutScene")
+    if not self:IsHooked("MovieFrame_PlayMovie") then
+        self:RawHook("MovieFrame_PlayMovie", true)
+    end
+
     self:RegisterEvent("QUEST_GREETING")
     self:RegisterEvent("GOSSIP_SHOW")
     self:RegisterEvent("GOSSIP_CONFIRM")
@@ -584,7 +588,6 @@ function TI:ProfileUpdate()
     self:Initialize()
 
     if self.Initialized and not self.db.enable then
-        self:Unhook("MovieFrame_PlayMovie")
         self:UnregisterEvent("QUEST_GREETING")
         self:UnregisterEvent("GOSSIP_SHOW")
         self:UnregisterEvent("GOSSIP_CONFIRM")

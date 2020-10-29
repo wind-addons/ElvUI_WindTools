@@ -37,6 +37,7 @@ W.Changelog[205] = {
             "[美化皮肤] 添加了克罗米时间线选择框体美化.",
             "[美化皮肤] 添加了艾泽里特特质重置框体美化.",
             "[美化皮肤] 添加了艾泽里特特质装备框体美化.",
+            "[美化皮肤] 添加了离开载具按钮美化.",
             "[天赋管家] 添加了物品按钮到天赋面板.",
             "[游戏条] 添加了音量按钮.",
             "[游戏条] 添加了专业技能按钮."
@@ -49,6 +50,7 @@ W.Changelog[205] = {
             "[美化皮膚] 新增了克羅米時間線選擇框架美化.",
             "[美化皮膚] 新增了艾澤里特特質重置框架美化.",
             "[美化皮膚] 新增了艾澤里特特質裝備框架美化.",
+            "[美化皮膚] 新增了離開載具按鍵美化.",
             "[天賦管家] 新增了物品按鍵到天賦面板.",
             "[遊戲條] 新增了音量按鍵.",
             "[遊戲條] 新增了專業技能按鍵."
@@ -61,6 +63,7 @@ W.Changelog[205] = {
             "[Skins] Add skin for Chromie Time.",
             "[Skins] Add skin for Azerite empowered item.",
             "[Skins] Add skin for Azerite Respec.",
+            "[Skins] Add skin for Vehicle Leave Button.",
             "[Talent Manager] Add item buttons to talent frame.",
             "[Game Bar] Add Volume button.",
             "[Game Bar] Add Profession button."
@@ -73,6 +76,7 @@ W.Changelog[205] = {
             "[스킨] 크로미의 시간 스킨 추가.",
             "[스킨] 아제라이트 장비 스킨 추가.",
             "[스킨] 아제라이트 재연마 스킨 추가.",
+            "[Skins] Add skin for Vehicle Leave Button.",
             "[특성관리자] 특성 창에 아이템 버튼이 추가되었습니다.",
             "[게임 바] 볼륨 버튼이 추가되었습니다.",
             "[게임 바] 전문 기술 버튼이 추가되었습니다."

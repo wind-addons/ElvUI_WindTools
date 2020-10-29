@@ -13,7 +13,7 @@
 下載點: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 發布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :heart: 鳴謝
-特別鳴謝 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.
+特別鳴謝 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
 [完整鳴謝名单](CREDITS.md)
 
 # :sweat_drops: 功能

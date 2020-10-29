@@ -13,7 +13,7 @@
 下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :heart: 鸣谢
-特別感谢 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.
+特別感谢 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
 [完整鸣谢名单](CREDITS.md)
 
 # :sweat_drops: 功能

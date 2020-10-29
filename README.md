@@ -12,7 +12,7 @@
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :heart: Credits
-Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.
+Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
 [All credits](CREDITS.md)
 
 # :sweat_drops: Features

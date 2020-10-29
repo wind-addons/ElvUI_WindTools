@@ -129,7 +129,7 @@ W.Changelog[205] = {
             "[스킨] 툴팁 스킨이 최적화되었습니다.",
             "[살펴보기] 캐릭터 초상화 스타일을 최적화했습니다.",
             "[친구 목록] COD(Call of Duty) 게임 지원 추가.",
-            "[Switch Buttons] Fix the bug that the buttons not display properly without reload."
+            "[스위치 버튼] 리로드 하지 않으면 버튼이 제대로 표시되지 않는 버그를 수정합니다."
         }
     }
 }

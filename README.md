@@ -1,15 +1,19 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.04-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.05-green.svg?longCache=true&style=for-the-badge"/>
 
-[简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) 
+[简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
 
 # :white_check_mark: Status
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-Join-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/JMz5Zsk)
 
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
+
+# :heart: Credits
+Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.
+[All credits](CREDITS.md)
 
 # :sweat_drops: Features
 ## Media Files
@@ -100,9 +104,6 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 8. **Game Bar**: A system bar in modern style; Support customization.
 
 More features are coming soon.
-
-# :heart: Credits
-[All credits](CREDITS.md)
 
 -----
 <br>

@@ -1,7 +1,9 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.04-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.05-green.svg?longCache=true&style=for-the-badge"/>
+
+简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
 </div>
 
@@ -9,6 +11,10 @@
 ![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/nA44TeZ)
 
 下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
+
+# :heart: 鸣谢
+特別感谢 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.
+[完整鸣谢名单](CREDITS.md)
 
 # :sweat_drops: 功能
 ## 素材
@@ -98,9 +104,6 @@
 8. **游戏条**: 添加一个美观且实用的游戏条.
 
 更多功能加入中...
-
-# :heart: 鸣谢
-[完整鸣谢名单](CREDITS.md)
 
 -----
 <br>

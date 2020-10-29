@@ -7,25 +7,29 @@ W.Changelog[205] = {
             "感谢 헬리오스의방패, 불광불급옹, 다크어쎄신 及 크림슨프릴 的辛苦付出, 韩语已经获得全面的支持.",
             "支持使用 MerathilisUI 皮肤模块美化 Wind 工具箱内的模块窗口.",
             "修复且优化了默认配置 (Fang2houUI) 的导入. 你可以在 [信息]-[重置] 中找到它.",
-            "[美化皮肤] 添加了全新的字体子模块."
+            "[美化皮肤] 添加了全新的字体子模块.",
+            "[通告] 嘲讽通告和任务通告默认关闭."
         },
         ["zhTW"] = {
             "感謝 헬리오스의방패, 불광불급옹, 다크어쎄신 及 크림슨프릴 的辛苦付出, 韓文已獲得完整支援.",
             "支援 MerathilisUI 皮膚模組美化 Wind 工具箱內的模組窗口",
             "修復且優化了默認配置 (Fang2houUI) 的導入. 你可以在 [信息]-[重置] 中找到它.",
-            "[美化皮膚] 新增了全新的字體子模組."
+            "[美化皮膚] 新增了全新的字體子模組.",
+            "[通告] 嘲諷通告和任務通告默認關閉."
         },
         ["enUS"] = {
             "Thanks to the excellent work by 헬리오스의방패, 불광불급옹, 다크어쎄신 and 크림슨프릴. Korean is now fully supported.",
             "Add support of MerathilisUI Skins on frames created by WindTools.",
             "Fixed and updated the default profile (Fang2houUI) importing. You can find it in [Information]-[Reset].",
-            "[Skins] Add new font submodule."
+            "[Skins] Add new font submodule.",
+            "[Announcement] The default setting of Taunt and Quest will be disabled."
         },
         ["koKR"] = {
             "이제 한국어가 완전히 지원됩니다. 헬리오스의방패, 불광불급옹, 다크어쎄신, 크림슨프릴의 훌륭한 작업 덕분입니다.",
             "WindTools의 모듈 프레임에 MerathilisUI 스킨 지원을 추가합니다.",
             "Fixed and updated the default profile (Fang2houUI) importing. You can find it in [Information]-[Reset].",
-            "[스킨] 새로운 글꼴 서브 모듈을 추가합니다."
+            "[스킨] 새로운 글꼴 서브 모듈을 추가합니다.",
+            "[Announcement] The default setting of Taunt and Quest will be disabled."
         }
     },
     NEW = {

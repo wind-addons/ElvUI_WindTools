@@ -51,7 +51,7 @@ P.announcement = {
         }
     },
     quest = {
-        enable = true,
+        enable = false,
         paused = true,
         includeDetails = true,
         channel = {
@@ -91,7 +91,7 @@ P.announcement = {
         }
     },
     taunt = {
-        enable = true,
+        enable = false,
         player = {
             player = {
                 enable = true,

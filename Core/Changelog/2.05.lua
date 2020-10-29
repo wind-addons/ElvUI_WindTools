@@ -95,7 +95,8 @@ W.Changelog[205] = {
             "[美化皮肤] 优化了跳过过场动画的提示背景美化.",
             "[美化皮肤] 优化了鼠标提示美化.",
             "[装备观察] 优化了人物头像的风格.",
-            "[好友列表] 支持新的 COD 游戏."
+            "[好友列表] 支持新的 COD 游戏.",
+            "[切换按键] 修复了不重载界面时按键显示不正确的问题."
         },
         ["zhTW"] = {
             "媒體文件更新.",
@@ -105,7 +106,8 @@ W.Changelog[205] = {
             "[美化皮膚] 優化了跳過過場動畫的提示背景美化.",
             "[美化皮膚] 優化了浮動提示美化.",
             "[裝備觀察] 優化了人物頭像的風格.",
-            "[好友列表] 支援新的 COD 遊戲."
+            "[好友列表] 支援新的 COD 遊戲.",
+            "[切換按鍵] 修復了不重載 UI 時按鍵顯示不正確的問題."
         },
         ["enUS"] = {
             "Media files updated.",
@@ -115,7 +117,8 @@ W.Changelog[205] = {
             "[Skins] Better skin for skip cut scene confirmation dialog.",
             "[Skins] The skin for tooltips have been optimized.",
             "[Inspect] Better style for the portrait.",
-            "[Friend List] Add support for new COD game."
+            "[Friend List] Add support for new COD game.",
+            "[Switch Buttons] Fix the bug that the buttons not display properly without reload."
         },
         ["koKR"] = {
             "미디어 파일이 업데이트되었습니다.",
@@ -125,7 +128,8 @@ W.Changelog[205] = {
             "[스킨] 컷신 건너 뛰기 확인 대화 상자의 스킨을 최적화 했습니다.",
             "[스킨] 툴팁 스킨이 최적화되었습니다.",
             "[살펴보기] 캐릭터 초상화 스타일을 최적화했습니다.",
-            "[친구 목록] COD(Call of Duty) 게임 지원 추가."
+            "[친구 목록] COD(Call of Duty) 게임 지원 추가.",
+            "[Switch Buttons] Fix the bug that the buttons not display properly without reload."
         }
     }
 }

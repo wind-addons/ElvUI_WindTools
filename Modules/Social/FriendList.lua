@@ -58,6 +58,10 @@ local GameIcons = {
         Modern = MediaPath .. "GameIcons\\OW"
     },
     [BNET_CLIENT_COD] = {Default = BNet_GetClientTexture(BNET_CLIENT_COD), Modern = MediaPath .. "GameIcons\\COD"},
+    [BNET_CLIENT_COD_BOCW] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD_BOCW),
+        Modern = MediaPath .. "GameIcons\\COD"
+    },
     [BNET_CLIENT_COD_MW] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
         Modern = MediaPath .. "GameIcons\\COD_MW"
@@ -108,6 +112,7 @@ local BNColor = {
     [BNET_CLIENT_OVERWATCH] = {r = 1, g = 1, b = 1}, -- 守望先锋
     [BNET_CLIENT_COD] = {r = 0, g = 0.8, b = 0}, -- 使命召唤
     [BNET_CLIENT_COD_MW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争 2
+    [BNET_CLIENT_COD_BOCW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：冷战
     -- 命运 2 因为已经分家了，不会出现了，下面为自定客户端代码
     [BNET_CLIENT_WOW .. "C"] = {r = 0.866, g = 0.690, b = 0.180}, -- 魔兽世界怀旧版
     ["BSAp"] = {r = 0.509, g = 0.772, b = 1} -- 手机战网 App

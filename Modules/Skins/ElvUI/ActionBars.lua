@@ -83,6 +83,7 @@ function S:ElvUI_ActionBars()
     if not (E.private.actionbar.enable and E.private.WT.skins.elvui.enable) then
         return
     end
+
     if not (E.private.WT.skins.elvui.actionBarsButton or E.private.WT.skins.elvui.actionBarsBackdrop) then
         return
     end
@@ -118,8 +119,29 @@ function S:ElvUI_ActionBars()
     end
 
     -- 离开载具
-    self:CreateShadow(_G.MainMenuBarVehicleLeaveButton)
+    do
+        local button =  _G.MainMenuBarVehicleLeaveButton
+        self:CreateShadow(button.backdrop)
+        local tex = button:GetNormalTexture()
+        if tex then
+            tex:SetTexture(W.Media.Textures.arrowDown)
+            tex:SetTexCoord(0, 1, 0, 1)
+            tex:SetVertexColor(1, 1, 1)
+        end
 
+        tex = button:GetPushedTexture()
+        if tex then
+            tex:SetTexture(W.Media.Textures.arrowDown)
+            tex:SetTexCoord(0, 1, 0, 1)
+            tex:SetVertexColor(1, 0, 0)
+        end
+
+        tex = button:GetHighlightTexture()
+        if tex then
+            tex:SetTexture(nil)
+            tex:Hide()
+        end
+    end
     -- 额外动作条
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]

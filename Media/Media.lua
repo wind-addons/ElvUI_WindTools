@@ -45,6 +45,7 @@ AddMedia("vignetting", "Vignetting.tga", "Textures")
 AddMedia("sword", "Sword.tga", "Textures")
 AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
+AddMedia("arrowDown", "ArrowDown.tga", "Textures")
 
 AddMedia("ffxivTank", "FFXIV/Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV/DPS.tga", "Icons")

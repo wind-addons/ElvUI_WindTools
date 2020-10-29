@@ -27,9 +27,9 @@ W.Changelog[205] = {
         ["koKR"] = {
             "이제 한국어가 완전히 지원됩니다. 헬리오스의방패, 불광불급옹, 다크어쎄신, 크림슨프릴의 훌륭한 작업 덕분입니다.",
             "WindTools의 모듈 프레임에 MerathilisUI 스킨 지원을 추가합니다.",
-            "Fixed and updated the default profile (Fang2houUI) importing. You can find it in [Information]-[Reset].",
+            "기본 프로필 (Fang2houUI) 가져오기를 수정하고 업데이트했습니다. [정보]-[리셋]에서 확인할 수 있습니다.",
             "[스킨] 새로운 글꼴 서브 모듈을 추가합니다.",
-            "[Announcement] The default setting of Taunt and Quest will be disabled."
+            "[알림] 도발 및 퀘스트의 기본 설정이 비활성화로 변경되었습니다."
         }
     },
     NEW = {
@@ -80,7 +80,7 @@ W.Changelog[205] = {
             "[스킨] 크로미의 시간 스킨 추가.",
             "[스킨] 아제라이트 장비 스킨 추가.",
             "[스킨] 아제라이트 재연마 스킨 추가.",
-            "[Skins] Add skin for Vehicle Leave Button.",
+            "[스킨] 탈것 내리기 버튼 스킨 추가.",
             "[특성관리자] 특성 창에 아이템 버튼이 추가되었습니다.",
             "[게임 바] 볼륨 버튼이 추가되었습니다.",
             "[게임 바] 전문 기술 버튼이 추가되었습니다."
@@ -125,7 +125,7 @@ W.Changelog[205] = {
             "[스킨] 컷신 건너 뛰기 확인 대화 상자의 스킨을 최적화 했습니다.",
             "[스킨] 툴팁 스킨이 최적화되었습니다.",
             "[살펴보기] 캐릭터 초상화 스타일을 최적화했습니다.",
-            "[Friend List] Add support for new COD game."
+            "[친구 목록] COD(Call of Duty) 게임 지원 추가."
         }
     }
 }

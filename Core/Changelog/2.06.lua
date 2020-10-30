@@ -20,6 +20,20 @@ W.Changelog[206] = {
             "Compatibility check now can work with any version of other addons."
         }
     },
+    NEW = {
+        ["zhCN"] = {
+            "添加 Shadow & Light 兼容性检查."
+        },
+        ["zhTW"] = {
+            "新增了 Shadow & Light 兼容性確認."
+        },
+        ["enUS"] = {
+            "Add compatibility check for Shadow & Light."
+        },
+        ["koKR"] = {
+            "Add compatibility check for Shadow & Light."
+        }
+    },
     IMPROVEMENT = {
         ["zhCN"] = {
             "[天赋管家] 修复了有时候无法显示物品按钮的问题.",

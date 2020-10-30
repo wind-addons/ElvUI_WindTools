@@ -81,12 +81,7 @@ function W:ConstructCompatibiltyFrame()
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     local completeButton =
-        CreateFrame(
-        "Button",
-        "WTCompatibiltyFrameCompleteButton",
-        frame,
-        "OptionsButtonTemplate, BackdropTemplate"
-    )
+        CreateFrame("Button", "WTCompatibiltyFrameCompleteButton", frame, "OptionsButtonTemplate, BackdropTemplate")
     completeButton.Text:SetText(L["Complete"])
     completeButton.Text:SetJustifyH("CENTER")
     completeButton.Text:SetJustifyV("CENTER")
@@ -185,20 +180,64 @@ function W:AddButtonToCompatibiltyFrame(data)
     )
 end
 
-function W:CheckCompatibilityMerathilisUI(WTModuleName, MUIModuleName, Functions)
+function W:CheckCompatibilityMerathilisUI(WTModuleName, MUIModuleName, WTDB, MUIDB)
     if not IsAddOnLoaded("ElvUI_MerathilisUI") then
         return
     end
 
-    if Functions.check and Functions.check() then
+    if not (WTDB and MUIDB and type(WTDB) == "string" and type(MUIDB) == "string") then
+        return
+    end
+
+    local realWTDB = E
+    local lastWTTable, lastWTKey
+    for _, key in ipairs {strsplit(".", WTDB)} do
+        if key and strlen(key) > 0 then
+            if realWTDB[key] ~= nil then
+                if type(realWTDB[key]) == "boolean" then
+                    lastWTTable = realWTDB
+                    lastWTKey = key
+                end
+                realWTDB = realWTDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
+                return
+            end
+        end
+    end
+
+    local realMUIDB = E
+    local lastMUITable, lastMUIKey
+    for _, key in ipairs {strsplit(".", MUIDB)} do
+        if key and strlen(key) > 0 then
+            if realMUIDB[key] ~= nil then
+                if type(realMUIDB[key]) == "boolean" then
+                    lastMUITable = realMUIDB
+                    lastMUIKey = key
+                end
+                realMUIDB = realMUIDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. MUIDB)
+                return
+            end
+        end
+    end
+
+    if realMUIDB == true and realWTDB == true then
         self:AddButtonToCompatibiltyFrame(
             {
                 module1 = WTModuleName,
                 plugin1 = L["WindTools"],
-                func1 = Functions.disableMUIModule,
+                func1 = function()
+                    lastMUITable[lastMUIKey] = false
+                    lastWTTable[lastWTKey] = true
+                end,
                 module2 = MUIModuleName,
                 plugin2 = L["MerathilisUI"],
-                func2 = Functions.disableWTModule
+                func2 = function()
+                    lastMUITable[lastMUIKey] = true
+                    lastWTTable[lastWTKey] = false
+                end
             }
         )
     end
@@ -210,232 +249,73 @@ function W:CheckCompatibility()
     self:CheckCompatibilityMerathilisUI(
         L["Extra Items Bar"],
         L["AutoButtons"],
-        {
-            check = function()
-                if E.db.WT.item.extraItemsBar.enable and E.db.mui.autoButtons.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.item.extraItemsBar.enable = true
-                E.db.mui.autoButtons.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.item.extraItemsBar.enable = false
-                E.db.mui.autoButtons.enable = true
-            end
-        }
+        "db.WT.item.extraItemsBar.enable",
+        "db.mui.autoButtons.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Game Bar"],
         L["Micro Bar"],
-        {
-            check = function()
-                if E.db.WT.misc.gameBar.enable and E.db.mui.microBar.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.misc.gameBar.enable = true
-                E.db.mui.microBar.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.misc.gameBar.enable = false
-                E.db.mui.microBar.enable = true
-            end
-        }
+        "db.WT.misc.gameBar.enable",
+        "db.mui.microBar.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
-        L["Contacts"],
-        L["Mail"],
-        {
-            check = function()
-                if E.db.WT.item.contacts.enable and E.db.mui.mail.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.item.contacts.enable = true
-                E.db.mui.mail.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.item.contacts.enable = false
-                E.db.mui.mail.enable = true
-            end
-        }
-    )
+    self:CheckCompatibilityMerathilisUI(L["Contacts"], L["Mail"], "db.WT.item.contacts.enable", "db.mui.mail.enable")
 
     self:CheckCompatibilityMerathilisUI(
         format("%s-%s", L["Tooltip"], L["Add Icon"]),
         L["Tooltip Icons"],
-        {
-            check = function()
-                if E.private.WT.tooltips.icon and E.db.mui.tooltip.tooltipIcon then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.private.WT.tooltips.icon = true
-                E.db.mui.tooltip.tooltipIcon = false
-            end,
-            disableWTModule = function()
-                E.private.WT.tooltips.icon = false
-                E.db.mui.tooltip.tooltipIcon = true
-            end
-        }
+        "private.WT.tooltips.icon",
+        "db.mui.tooltip.tooltipIcon"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Group Info"],
         L["LFG Info"],
-        {
-            check = function()
-                if E.db.WT.tooltips.groupInfo.enable and E.db.mui.misc.lfgInfo.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.tooltips.groupInfo.enable = true
-                E.db.mui.misc.lfgInfo.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.tooltips.groupInfo.enable = false
-                E.db.mui.misc.lfgInfo.enable = true
-            end
-        }
+        "db.WT.tooltips.groupInfo.enable",
+        "db.mui.misc.lfgInfo.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Paragon Reputation"],
         L["Paragon Reputation"],
-        {
-            check = function()
-                if E.db.WT.quest.paragonReputation.enable and E.db.mui.misc.paragon.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.quest.paragonReputation.enable = true
-                E.db.mui.misc.paragon.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.quest.paragonReputation.enable = false
-                E.db.mui.misc.paragon.enable = true
-            end
-        }
+        "db.WT.quest.paragonReputation.enable",
+        "db.mui.misc.paragon.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Role Icon"],
         L["Role Icon"],
-        {
-            check = function()
-                if E.private.WT.unitFrames.roleIcon.enable and E.db.mui.unitframes.roleIcons then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.private.WT.unitFrames.roleIcon.enable = true
-                E.db.mui.unitframes.roleIcons = false
-            end,
-            disableWTModule = function()
-                E.private.WT.unitFrames.roleIcon.enable = false
-                E.db.mui.unitframes.roleIcons = true
-            end
-        }
+        "private.WT.unitFrames.roleIcon.enable",
+        "db.mui.unitframes.roleIcons"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Combat Alert"],
         L["Combat Alert"],
-        {
-            check = function()
-                if E.db.WT.combat.combatAlert.enable and E.db.mui.CombatAlert.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.combat.combatAlert.enable = true
-                E.db.mui.CombatAlert.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.combat.combatAlert.enable = false
-                E.db.mui.CombatAlert.enable = true
-            end
-        }
+        "db.WT.combat.combatAlert.enable",
+        "db.mui.CombatAlert.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Who Clicked Minimap"],
         L["Minimap Ping"],
-        {
-            check = function()
-                if E.db.WT.maps.whoClicked.enable and E.db.mui.maps.minimap.ping.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.maps.whoClicked.enable = true
-                E.db.mui.maps.minimap.ping.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.maps.whoClicked.enable = false
-                E.db.mui.maps.minimap.ping.enable = true
-            end
-        }
+        "db.WT.maps.whoClicked.enable",
+        "db.mui.maps.minimap.ping.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Minimap Buttons"],
         L["Minimap Buttons"],
-        {
-            check = function()
-                if E.private.WT.maps.minimapButtons.enable and E.db.mui.smb.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.private.WT.maps.minimapButtons.enable = true
-                E.db.mui.smb.enable = false
-            end,
-            disableWTModule = function()
-                E.private.WT.maps.minimapButtons.enable = false
-                E.db.mui.smb.enable = true
-            end
-        }
+        "private.WT.maps.minimapButtons.enable",
+        "db.mui.smb.enable"
     )
 
     self:CheckCompatibilityMerathilisUI(
         L["Rectangle Minimap"],
         L["Rectangle Minimap"],
-        {
-            check = function()
-                if E.db.WT.maps.rectangleMinimap.enable and E.db.mui.maps.minimap.rectangleMinimap.enable then
-                    return true
-                end
-                return false
-            end,
-            disableMUIModule = function()
-                E.db.WT.maps.rectangleMinimap.enable = true
-                E.db.mui.maps.minimap.rectangleMinimap.enable = false
-            end,
-            disableWTModule = function()
-                E.db.WT.maps.rectangleMinimap.enable = false
-                E.db.mui.maps.minimap.rectangleMinimap.enable = true
-            end
-        }
+        "db.WT.maps.rectangleMinimap.enable",
+        "db.mui.maps.minimap.rectangleMinimap.enable"
     )
 
     if self.CompatibiltyFrame.numModules > 0 then

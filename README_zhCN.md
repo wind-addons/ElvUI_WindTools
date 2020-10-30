@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.05-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.06-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>

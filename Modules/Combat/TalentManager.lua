@@ -307,7 +307,7 @@ function TM:UpdateItemButtons()
             item1:ContinueOnItemLoad(
                 function()
                     self.itemButtons[1] = self:CreateItemButton(frame, 141446, item1:GetItemName(), 36)
-                    if not _G.PlayerTalentFrame and not _G.PlayerTalentFrame.backdrop then
+                    if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
                         C_Timer_After(
                             1,
                             function()
@@ -330,7 +330,7 @@ function TM:UpdateItemButtons()
             item2:ContinueOnItemLoad(
                 function()
                     self.itemButtons[2] = self:CreateItemButton(frame, 153646, item2:GetItemName(), 36)
-                    if not _G.PlayerTalentFrame and not _G.PlayerTalentFrame.backdrop then
+                    if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
                         C_Timer_After(
                             1,
                             function()

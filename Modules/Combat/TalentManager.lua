@@ -25,6 +25,8 @@ local IsAddOnLoaded = IsAddOnLoaded
 local Item = Item
 local LearnTalents = LearnTalents
 
+local C_Timer_After = C_Timer.After
+
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 local MAX_TALENT_TIERS = _G.MAX_TALENT_TIERS

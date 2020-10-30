@@ -243,9 +243,74 @@ function W:CheckCompatibilityMerathilisUI(WTModuleName, MUIModuleName, WTDB, MUI
     end
 end
 
+function W:CheckCompatibilityShadowAndLight(WTModuleName, SLModuleName, WTDB, SLDB)
+    if not IsAddOnLoaded("ElvUI_SLE") then
+        return
+    end
+
+    if not (WTDB and SLDB and type(WTDB) == "string" and type(SLDB) == "string") then
+        return
+    end
+
+    local realWTDB = E
+    local lastWTTable, lastWTKey
+    for _, key in ipairs {strsplit(".", WTDB)} do
+        if key and strlen(key) > 0 then
+            if realWTDB[key] ~= nil then
+                if type(realWTDB[key]) == "boolean" then
+                    lastWTTable = realWTDB
+                    lastWTKey = key
+                end
+                realWTDB = realWTDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
+                return
+            end
+        end
+    end
+
+    local realSLDB = E
+    local lastSLTable, lastSLKey
+    for _, key in ipairs {strsplit(".", SLDB)} do
+        if key and strlen(key) > 0 then
+            if realSLDB[key] ~= nil then
+                if type(realSLDB[key]) == "boolean" then
+                    lastSLTable = realSLDB
+                    lastSLKey = key
+                end
+                realSLDB = realSLDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. SLDB)
+                return
+            end
+        end
+    end
+
+    if realSLDB == true and realWTDB == true then
+        self:AddButtonToCompatibiltyFrame(
+            {
+                module1 = WTModuleName,
+                plugin1 = L["WindTools"],
+                func1 = function()
+                    lastSLTable[lastSLKey] = false
+                    lastWTTable[lastWTKey] = true
+                end,
+                module2 = SLModuleName,
+                plugin2 = L["Shadow & Light"],
+                func2 = function()
+                    lastSLTable[lastSLKey] = true
+                    lastWTTable[lastWTKey] = false
+                end
+            }
+        )
+    end
+end
+
 function W:CheckCompatibility()
     self:ConstructCompatibiltyFrame()
 
+
+    -- Merathilis UI
     self:CheckCompatibilityMerathilisUI(
         L["Extra Items Bar"],
         L["AutoButtons"],
@@ -337,6 +402,21 @@ function W:CheckCompatibility()
         L["Hide Player Brackets"],
         "db.WT.social.chatText.removeBrackets",
         "db.mui.chat.hidePlayerBrackets"
+    )
+
+    -- S&L
+    self:CheckCompatibilityShadowAndLight(
+        L["Move Frames"],
+        L["Move Blizzard frames"],
+        "private.WT.misc.moveBlizzardFrames",
+        "private.sle.module.blizzmove.enable"
+    )
+
+    self:CheckCompatibilityShadowAndLight(
+        L["Rectangle Minimap"],
+        L["Rectangle Minimap"],
+        "db.WT.maps.rectangleMinimap.enable",
+        "private.sle.minimap.rectangle"
     )
 
     if self.CompatibiltyFrame.numModules > 0 then

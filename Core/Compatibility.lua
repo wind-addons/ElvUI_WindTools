@@ -318,6 +318,27 @@ function W:CheckCompatibility()
         "db.mui.maps.minimap.rectangleMinimap.enable"
     )
 
+    self:CheckCompatibilityMerathilisUI(
+        L["Chat Bar"],
+        L["Chat Bar"],
+        "db.WT.social.chatBar.enable",
+        "db.mui.chat.chatBar.enable"
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        L["Raid Markers"],
+        L["Raid Markers"],
+        "db.WT.combat.raidMarkers.enable",
+        "db.mui.raidmarkers.enable"
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        format("%s-%s", L["Chat Text"], L["Remove Brackets"]),
+        L["Hide Player Brackets"],
+        "db.WT.social.chatText.removeBrackets",
+        "db.mui.chat.hidePlayerBrackets"
+    )
+
     if self.CompatibiltyFrame.numModules > 0 then
         self.CompatibiltyFrame:Show()
     end

@@ -16,8 +16,8 @@ W.Changelog[206] = {
             "Compatibility check now can work with any version of other addons."
         },
         ["koKR"] = {
-            "[EMERGENCY FIX] Fix the compatibility with MerathilisUI stable version.",
-            "Compatibility check now can work with any version of other addons."
+            "[긴급 수정] MerathilisUI 안정 버전과의 호환성 수정.",
+            "이제 다른 플러그인의 모든 버전에 호환성 확인을 적용할 수 있습니다."
         }
     },
     NEW = {
@@ -31,7 +31,7 @@ W.Changelog[206] = {
             "Add compatibility check for Shadow & Light."
         },
         ["koKR"] = {
-            "Add compatibility check for Shadow & Light."
+            "Shadow & Light에 대한 호환성 검사를 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -51,9 +51,9 @@ W.Changelog[206] = {
             "[Contacts] Add options for default page."
         },
         ["koKR"] = {
-            "[Talent Manager] Fix the bug that item buttons may not be displayed.",
-            "[Announcement] Add support of Greater Mystical Cauldron. Thanks Seiryuu-sama",
-            "[Contacts] Add options for default page."
+            "[특성 관리자] 아이템 버튼이 표시되지 않는 버그를 수정했습니다.",
+            "[알림] 상급 신비로운 가마솥 지원 추가. Thanks Seiryuu-sama",
+            "[우편 연락처] 기본 페이지 옵션을 추가합니다."
         }
     }
 }

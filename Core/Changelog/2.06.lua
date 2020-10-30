@@ -4,23 +4,21 @@ W.Changelog[206] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "[紧急修复] 修复了与 MerathilisUI 稳定版的兼容性.",
             "兼容性检查现可适用于任何版本的其他插件."
         },
         ["zhTW"] = {
+            "[緊急修復] 修復了與 MerathilisUI 穩定版的相容性.",
             "兼容性確認現在可以適用於任何版本的其他插件."
         },
         ["enUS"] = {
+            "[EMERGENCY FIX] Fix the compatibility with MerathilisUI stable version.",
             "Compatibility check now can work with any version of other addons."
         },
         ["koKR"] = {
+            "[EMERGENCY FIX] Fix the compatibility with MerathilisUI stable version.",
             "Compatibility check now can work with any version of other addons."
         }
-    },
-    NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
     },
     IMPROVEMENT = {
         ["zhCN"] = {

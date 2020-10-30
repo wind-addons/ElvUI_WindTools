@@ -284,7 +284,8 @@ P.combat = {
 
 P.item = {
     contacts = {
-        enable = true
+        enable = true,
+        defaultPage = "ALTS"
     },
     delete = {
         enable = true,

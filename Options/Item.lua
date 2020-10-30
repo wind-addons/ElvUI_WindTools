@@ -741,8 +741,18 @@ options.contacts = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"],
-            width = "full"
+            name = L["Enable"]
+        },
+        defaultPage = {
+            order = 2,
+            type = "select",
+            name = L["Default Page"],
+            values = {
+                ALTS = L["Alternate Character"],
+                FRIENDS = L["Online Friends"],
+                GUILD = L["Guild Members"],
+                FAVORITE = L["My Favorites"]
+            }
         }
     }
 }

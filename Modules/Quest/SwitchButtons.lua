@@ -7,6 +7,7 @@ local _G = _G
 
 local CreateFrame = CreateFrame
 local RegisterStateDriver = RegisterStateDriver
+local UnregisterStateDriver = UnregisterStateDriver
 
 function SB:CreateButton(text)
     if not self.db or not self.bar then

@@ -6,6 +6,10 @@ local ES = E:GetModule("Skins")
 local _G = _G
 local format = format
 local gsub = gsub
+local ipairs = ipairs
+local strlen = strlen
+local strsplit = strsplit
+local type = type
 
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded

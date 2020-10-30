@@ -37,19 +37,23 @@ W.Changelog[206] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "[天赋管家] 修复了有时候无法显示物品按钮的问题.",
-            "[通告] 实用技能添加了强效秘法药锅的支持."
+            "[通告] 实用技能添加了强效秘法药锅的支持.",
+            "[联系人] 现在可以设定默认开启的页面了."
         },
         ["zhTW"] = {
             "[天賦管家] 修復了有時候無法顯示物品按鍵的問題.",
-            "[通告] 實用技能添加了強效神秘大鍋的支持."
+            "[通告] 實用技能添加了強效神秘大鍋的支持.",
+            "[聯絡人] 新增了預設頁面的設定."
         },
         ["enUS"] = {
-            "[Talent Manager] Fix the bug that item buttons may not been displayed.",
-            "[Announcement] Add support of Greater Mystical Cauldron. Thanks Seiryuu-sama"
+            "[Talent Manager] Fix the bug that item buttons may not be displayed.",
+            "[Announcement] Add support of Greater Mystical Cauldron. Thanks Seiryuu-sama",
+            "[Contacts] Add options for default page."
         },
         ["koKR"] = {
-            "[Talent Manager] Fix the bug that item buttons may not been displayed.",
-            "[Announcement] Add support of Greater Mystical Cauldron. Thanks Seiryuu-sama"
+            "[Talent Manager] Fix the bug that item buttons may not be displayed.",
+            "[Announcement] Add support of Greater Mystical Cauldron. Thanks Seiryuu-sama",
+            "[Contacts] Add options for default page."
         }
     }
 }

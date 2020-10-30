@@ -309,7 +309,6 @@ end
 function W:CheckCompatibility()
     self:ConstructCompatibiltyFrame()
 
-
     -- Merathilis UI
     self:CheckCompatibilityMerathilisUI(
         L["Extra Items Bar"],
@@ -417,6 +416,13 @@ function W:CheckCompatibility()
         L["Rectangle Minimap"],
         "db.WT.maps.rectangleMinimap.enable",
         "private.sle.minimap.rectangle"
+    )
+
+    self:CheckCompatibilityShadowAndLight(
+        L["Raid Markers"],
+        L["Raid Markers"],
+        "db.WT.combat.raidMarkers.enable",
+        "db.sle.raidmarkers.enable"
     )
 
     if self.CompatibiltyFrame.numModules > 0 then

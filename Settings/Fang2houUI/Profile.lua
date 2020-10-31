@@ -6,7 +6,7 @@ local select = select
 local worldChannel
 if W.Locale == "zhCN" then
     worldChannel = "大脚世界频道"
-else
+elseif W.Locale == "zhTW" then
     worldChannel = "組隊頻道"
 end
 

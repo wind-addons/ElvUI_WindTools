@@ -544,14 +544,12 @@ function GB:ConstructBar()
     rightPanel:CreateBackdrop("Transparent")
     bar.rightPanel = rightPanel
 
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        S:CreateShadowModule(leftPanel.backdrop)
-        S:CreateShadowModule(middlePanel.backdrop)
-        S:CreateShadowModule(rightPanel.backdrop)
-        S:MerathilisUISkin(leftPanel.backdrop)
-        S:MerathilisUISkin(middlePanel.backdrop)
-        S:MerathilisUISkin(rightPanel.backdrop)
-    end
+    S:CreateShadowModule(leftPanel.backdrop)
+    S:CreateShadowModule(middlePanel.backdrop)
+    S:CreateShadowModule(rightPanel.backdrop)
+    S:MerathilisUISkin(leftPanel.backdrop)
+    S:MerathilisUISkin(middlePanel.backdrop)
+    S:MerathilisUISkin(rightPanel.backdrop)
 
     self.bar = bar
 

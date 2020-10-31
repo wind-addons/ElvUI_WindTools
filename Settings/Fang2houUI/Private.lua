@@ -1,6 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
-local IsAddOnloaded = IsAddOnloaded
+local IsAddOnLoaded = IsAddOnLoaded
 
 function W:Fang2houUIPrivate()
     if W.Locale == "zhTW" then
@@ -40,7 +40,7 @@ function W:Fang2houUIPrivate()
     E.private["skins"]["parchmentRemoverEnable"] = true
     E.private["theme"] = "default"
 
-    if IsAddOnloaded("Plater") or IsAddOnloaded("Kui_Nameplates") then
+    if IsAddOnLoaded("Plater") or IsAddOnLoaded("Kui_Nameplates") then
         E.private["nameplates"]["enable"] = false
     end
 

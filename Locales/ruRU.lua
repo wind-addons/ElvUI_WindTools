@@ -397,6 +397,7 @@ L["Include Details"] = true
 L["Include Player"] = true
 L["Increase the volume"] = true
 L["Information"] = "Информация"
+L["Inherit Global Fade"] = "Использовать глобальную прозрачность"
 L["Input Method Editor"] = true
 L["Inspect"] = true
 L["Instance"] = true

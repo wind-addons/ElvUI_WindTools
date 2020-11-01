@@ -397,6 +397,7 @@ L["Include Details"] = true
 L["Include Player"] = true
 L["Increase the volume"] = "Lautstärke erhöhen"
 L["Information"] = "Informationen"
+L["Inherit Global Fade"] = "Globales verblassen vererben"
 L["Input Method Editor"] = true
 L["Inspect"] = true
 L["Instance"] = "Instanz"

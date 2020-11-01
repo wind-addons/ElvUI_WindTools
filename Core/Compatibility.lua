@@ -407,6 +407,13 @@ function W:CheckCompatibility()
         "db.mui.chat.hidePlayerBrackets"
     )
 
+    self:CheckCompatibilityMerathilisUI(
+        format("%s-%s", L["Talent Manager"], L["Item Buttons"]),
+        L["Codex Buttons"],
+        "private.WT.combat.talentManager.itemButtons",
+        "db.mui.misc.respec"
+    )
+
     -- S&L
     self:CheckCompatibilityShadowAndLight(
         L["Move Frames"],

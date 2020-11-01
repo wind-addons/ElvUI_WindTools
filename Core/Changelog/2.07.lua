@@ -31,9 +31,9 @@ W.Changelog[207] = {
             "[Extra Item Bar] Now you can choose to inherit the ElvUI global fade."
         },
         ["koKR"] = {
-            "Cleanup codes.",
-            "Update default profile.",
-            "[Extra Item Bar] Now you can choose to inherit the ElvUI global fade."
+            "코드 정리.",
+            "기본 프로필 업데이트.",
+            "[아이템 바] ElvUI의 페이드 설정을 상속 하도록 선택할 수 있습니다."
         }
     }
 }

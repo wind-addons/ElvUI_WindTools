@@ -858,6 +858,11 @@ options.addons = {
             type = "toggle",
             name = L["BigWigs"]
         },
+        bigWigsQueueTimer = {
+            order = 10,
+            type = "toggle",
+            name = L["BigWigs Queue Timer"]
+        },
         bugSack = {
             order = 10,
             type = "toggle",

@@ -113,6 +113,7 @@ V.skins = {
 		ace3 = true,
 		azerothAutoPilot = true,
 		bigWigs = true,
+		bigWigsQueueTimer = true,
 		bugSack = true,
 		hekili = true,
 		immersion = true,

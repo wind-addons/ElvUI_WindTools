@@ -6,7 +6,6 @@ local unpack = unpack
 local format = format
 
 local C_Timer_NewTicker = C_Timer.NewTicker
-local C_Timer_After = C_Timer.After
 
 function S:BigWigs_CreateBar(barLib, ...)
     local bar = self.hooks[barLib]["CreateBar"](barLib, ...)
@@ -34,6 +33,10 @@ function S:BigWigs_Plugins()
 end
 
 function S:BigWigs_QueueTimer()
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bigWigsQueueTimer then
+        return
+    end
+
     if _G.BigWigsLoader then
         _G.BigWigsLoader.RegisterMessage(
             "WindTools",
@@ -67,7 +70,7 @@ function S:BigWigs_QueueTimer()
             end
         )
 
-        C_Timer_After(
+        E:Delay(
             2,
             function()
                 _G.BigWigsLoader.UnregisterMessage("AddOnSkins", "BigWigs_FrameCreated")

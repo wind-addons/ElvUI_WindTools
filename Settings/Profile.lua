@@ -697,7 +697,6 @@ P.quest = {
         followerAssignees = true,
         rogueClassHallInsignia = true,
         modifierKeyPause = true,
-        skipCutScene = false,
         customIgnoreNPCs = {}
     }
 }
@@ -858,6 +857,7 @@ P.unitFrames = {
 
 P.misc = {
     disableTalkingHead = false,
+    skipCutScene = false,
     gameBar = {
         enable = true,
         mouseOver = false,

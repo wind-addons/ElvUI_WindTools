@@ -6,6 +6,7 @@
 	<Script file='Math.lua'/>
 	<Script file='Mute.lua'/>
 	<Script file='PauseToSlash.lua'/>
+	<Script file='SkipCutScene.lua'/>
 	<Script file='Tags.lua'/>
 	<Script file='Transmog.lua'/>
 	<!-- Others -->

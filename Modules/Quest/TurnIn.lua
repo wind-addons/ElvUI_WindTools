@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local TI = W:NewModule("TurnIn", "AceEvent-3.0", "AceHook-3.0")
+local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
 local format = format
@@ -14,7 +14,6 @@ local wipe = wipe
 local AcceptQuest = AcceptQuest
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
-local GameMovieFinished = GameMovieFinished
 local GetAutoQuestPopUp = GetAutoQuestPopUp
 local GetInstanceInfo = GetInstanceInfo
 local GetItemInfo = GetItemInfo
@@ -289,17 +288,6 @@ function TI:GetNPCID(unit)
     return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
-function TI:MovieFrame_PlayMovie(...)
-    if self.db and self.db.enable then
-        if self.db.skipCutScene and not (self.db.modifierKeyPause and IsModifierKeyDown()) then
-            GameMovieFinished()
-            return
-        end
-    end
-
-    self.hooks.MovieFrame_PlayMovie(...)
-end
-
 function TI:QUEST_GREETING()
     if IsIgnored() then
         return
@@ -563,10 +551,6 @@ function TI:Initialize()
     self.db = E.db.WT.quest.turnIn
     if not self.db.enable or self.Initialized then
         return
-    end
-
-    if not self:IsHooked("MovieFrame_PlayMovie") then
-        self:RawHook("MovieFrame_PlayMovie", true)
     end
 
     self:RegisterEvent("QUEST_GREETING")

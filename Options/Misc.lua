@@ -21,6 +21,12 @@ options.general = {
     order = 1,
     type = "group",
     name = L["General"],
+    get = function(info)
+        return E.db.WT.misc[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc[info[#info]] = value
+    end,
     args = {
         pauseToSlash = {
             order = 1,
@@ -66,13 +72,12 @@ options.general = {
             type = "toggle",
             name = L["Disable Talking Head"],
             desc = L["Disable Blizzard Talking Head."],
-            get = function(info)
-                return E.db.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.db.WT.misc[info[#info]] = value
-            end
-        }
+        },
+        skipCutScene = {
+            order = 5,
+            type = "toggle",
+            name = L["Skip Cut Scene"],
+        },
     }
 }
 

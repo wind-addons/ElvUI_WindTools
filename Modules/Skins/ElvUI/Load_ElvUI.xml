@@ -14,7 +14,6 @@
 	<Script file='Option.lua'/>
 	<Script file='Panels.lua'/>
 	<Script file='RaidUtility.lua'/>
-	<Script file='RoleIcons.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='StatusReport.lua'/>
 	<Script file='TotemBar.lua'/>

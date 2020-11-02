@@ -3,6 +3,8 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
+local C_SpecializationInfo_IsInitialized = C_SpecializationInfo.IsInitialized
+
 function S:BlizzardTalent()
     if not E.global.general.showMissingTalentAlert then
         return
@@ -32,6 +34,54 @@ function S:Blizzard_TalentUI()
     for i = 1, 3 do
         self:ReskinTab(_G["PlayerTalentFrameTab" .. i])
     end
+
+    hooksecurefunc(
+        "PlayerTalentFrame_UpdateSpecFrame",
+        function(self, spec)
+            if not C_SpecializationInfo_IsInitialized() then
+                return
+            end
+
+            local scrollChild = self.spellsScroll.child
+            local playerTalentSpec = GetSpecialization(nil, self.isPet, _G.PlayerSpecTab2:GetChecked() and 2 or 1)
+            local shownSpec = spec or playerTalentSpec or 1
+            local role = select(5, GetSpecializationInfo(shownSpec, nil, self.isPet, nil, sex))
+
+            if role and scrollChild.roleIcon then
+                if not scrollChild.roleIcon.backdrop then
+                    scrollChild.roleIcon:CreateBackdrop("Transparent")
+                end
+                scrollChild.roleIcon:SetTexture(W.Media.Textures.ROLES)
+                scrollChild.roleIcon:SetTexCoord(F.GetRoleTexCoord(role))
+            end
+
+            local buttons = {
+                "PlayerTalentFrameSpecializationSpecButton",
+                "PlayerTalentFramePetSpecializationSpecButton"
+            }
+
+            for _, name in pairs(buttons) do
+                for i = 1, 4 do
+                    local button = _G[name .. i]
+
+                    if button and button.backdrop then
+                        button.backdrop:SetTemplate("Transparent")
+                    end
+
+                    local roleIcon = button.roleIcon
+                    local role = GetSpecializationRole(i, false, button.isPet)
+                    if role and roleIcon then
+                        if not roleIcon.backdrop then
+                            roleIcon:CreateBackdrop("Transparent")
+                        end
+                        roleIcon:SetTexture(W.Media.Textures.ROLES)
+                        roleIcon:Size(20)
+                        roleIcon:SetTexCoord(F.GetRoleTexCoord(role))
+                    end
+                end
+            end
+        end
+    )
 end
 
 S:AddCallback("BlizzardTalent")

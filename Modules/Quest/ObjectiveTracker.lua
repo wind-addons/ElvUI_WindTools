@@ -185,49 +185,6 @@ function OT:ColorfulProgression(text)
     text:SetText(info)
 end
 
-function OT:ChangeQuestTitleColor()
-    if not IsAddOnLoaded("Blizzard_ObjectiveTracker") then
-        return
-    end
-
-    local config = self.db.titleColor
-    if not config then
-        return
-    end
-
-    if config.enable and self.db.enable then
-        _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
-            r = config.classColor and classColor.r or config.customColorNormal.r,
-            g = config.classColor and classColor.g or config.customColorNormal.g,
-            b = config.classColor and classColor.b or config.customColorNormal.b
-        }
-
-        _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"] = {
-            r = config.classColor and classColor.r or config.customColorHighlight.r,
-            g = config.classColor and classColor.g or config.customColorHighlight.g,
-            b = config.classColor and classColor.b or config.customColorHighlight.b
-        }
-
-        self.titleColorChanged = true
-    elseif (not config.enable or not self.db.enable) and self.titleColorChanged then
-        _G.OBJECTIVE_TRACKER_COLOR["Header"] = {
-            r = SystemCache["TitleNormalColor"].r,
-            g = SystemCache["TitleNormalColor"].g,
-            b = SystemCache["TitleNormalColor"].b
-        }
-
-        _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"] = {
-            r = SystemCache["TitleHighlightColor"].r,
-            g = SystemCache["TitleHighlightColor"].g,
-            b = SystemCache["TitleHighlightColor"].b
-        }
-
-        self.titleColorChanged = false
-    end
-
-    ObjectiveTracker_Update()
-end
-
 do
     local dash = _G.OBJECTIVE_TRACKER_DASH_WIDTH
     function OT:UpdateTextWidth()

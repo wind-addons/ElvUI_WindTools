@@ -130,8 +130,6 @@ function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
                     self:CreateBackdropShadowAfterElvUISkins(frame, tried - 1)
                 end
             )
-        else
-            F.DebugMessage(S, format("[2]无法找到 %s 的ElvUI美化背景！", frame:GetName()))
         end
     end
 end

@@ -2,6 +2,12 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
+local select = select
+
+local GetSpecialization = GetSpecialization
+local GetSpecializationInfo = GetSpecializationInfo
+local GetSpecializationRole = GetSpecializationRole
 
 local C_SpecializationInfo_IsInitialized = C_SpecializationInfo.IsInitialized
 
@@ -35,7 +41,7 @@ function S:Blizzard_TalentUI()
         self:ReskinTab(_G["PlayerTalentFrameTab" .. i])
     end
 
-    hooksecurefunc(
+    self:SecureHook(
         "PlayerTalentFrame_UpdateSpecFrame",
         function(self, spec)
             if not C_SpecializationInfo_IsInitialized() then
@@ -45,7 +51,7 @@ function S:Blizzard_TalentUI()
             local scrollChild = self.spellsScroll.child
             local playerTalentSpec = GetSpecialization(nil, self.isPet, _G.PlayerSpecTab2:GetChecked() and 2 or 1)
             local shownSpec = spec or playerTalentSpec or 1
-            local role = select(5, GetSpecializationInfo(shownSpec, nil, self.isPet, nil, sex))
+            local role = select(5, GetSpecializationInfo(shownSpec, nil, self.isPet))
 
             if role and scrollChild.roleIcon then
                 if not scrollChild.roleIcon.backdrop then

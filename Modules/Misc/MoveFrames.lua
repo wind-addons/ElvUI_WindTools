@@ -148,9 +148,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_DeathRecap"] = {
         "DeathRecapFrame"
     },
-    -- ["Blizzard_EncounterJournal"] = {
-    --     "EncounterJournal"
-    -- },
+    ["Blizzard_EncounterJournal"] = {
+        "EncounterJournal"
+    },
     ["Blizzard_FlightMap"] = {
         "FlightMapFrame"
     },

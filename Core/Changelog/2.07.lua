@@ -32,7 +32,8 @@ W.Changelog[207] = {
             "[额外物品条] 可以选择继承 ElvUI 全局渐隐了.",
             "[任务列表] 修复了修改风格可能带来的污染.",
             "[切换按钮] 修复了有可能被暴雪追踪框体挡住的问题.",
-            "[美化皮肤] 添加天赋界面的图标美化."
+            "[美化皮肤] 添加天赋界面的图标美化.",
+            "[移动框体] 重新启用地下城手册的移动."
         },
         ["zhTW"] = {
             "清理代碼",
@@ -43,7 +44,8 @@ W.Changelog[207] = {
             "[額外物品條] 可以選擇繼承 ElvUI 全局漸隱了.",
             "[任務列表] 修復了修改風格可能帶來的污染.",
             "[切換按鈕] 修復了有可能被暴雪追蹤框架擋住的問題.",
-            "[美化皮膚] 新增了天賦介面的圖示美化."
+            "[美化皮膚] 新增了天賦介面的圖示美化.",
+            "[移動框架] 重新啟用地下城手冊的移動."
         },
         ["enUS"] = {
             "Cleanup codes.",
@@ -54,7 +56,8 @@ W.Changelog[207] = {
             "[Extra Item Bar] Now you can choose to inherit the ElvUI global fade.",
             "[Objective Tracker] Fix the taint by changing style.",
             "[Switch Buttons] Fix the bug that sometimes it might be hided by Blizzard Objective Tracker.",
-            "[Skins] Apply new role icons in Talent UI."
+            "[Skins] Apply new role icons in Talent UI.",
+            "[Move Frames] Reenable the moving of encounter journal."
         },
         ["koKR"] = {
             "코드 정리.",
@@ -65,7 +68,8 @@ W.Changelog[207] = {
             "[아이템 바] ElvUI의 페이드 설정을 상속 하도록 선택할 수 있습니다.",
             "[퀘스트 추적기] 스타일 수정으로 발생할 수 있는 오염 문제 수정",
             "[스위치 버튼] 블리자드 기본 퀘스트 추적기에 의해 차단될 수 있는 문제를 수정했습니다.",
-            "[스킨] 특성 UI에 새로운 역할 아이콘을 적용합니다."
+            "[스킨] 특성 UI에 새로운 역할 아이콘을 적용합니다.",
+            "[Move Frames] Reenable the moving of encounter journal."
         }
     }
 }

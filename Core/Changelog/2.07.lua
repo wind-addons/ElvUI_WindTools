@@ -13,7 +13,7 @@ W.Changelog[207] = {
             "[Turn In] Skip Cut Scene => [Misc] General-Skip Cut Scene"
         },
         ["koKR"] = {
-            "[Turn In] Skip Cut Scene => [Misc] General-Skip Cut Scene"
+            "[자동 수락] 컷신 건너뛰기 설정이 => [기타] 일반 - 컷신 건너뛰기로 이동했습니다."
         }
     },
     NEW = {
@@ -50,10 +50,9 @@ W.Changelog[207] = {
         ["koKR"] = {
             "코드 정리.",
             "기본 프로필 업데이트.",
-            "Update compatibility check.",
-            "[Friend List] Fix the bug occurred if the name cannot been obtained.",
-            "[Turn In] Skip Cut Scene => [Misc] General-Skip Cut Scene",
-            "[Misc] Skip Cut Scene will display a message after skipping, you can click the link inside the message to replay the cut scene.",
+            "호환성 검사 업데이트.",
+            "[친구 목록] 가끔 이름을 얻을 수 없는 오류를 수정했습니다.",
+            "[기타] 컷신을 건너뛰면 메시지가 표시되며 링크를 클릭하여 리플레이할 수 있습니다.",
             "[아이템 바] ElvUI의 페이드 설정을 상속 하도록 선택할 수 있습니다."
         }
     }

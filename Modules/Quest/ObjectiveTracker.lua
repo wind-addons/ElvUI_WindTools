@@ -15,7 +15,6 @@ local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local classColor = _G.RAID_CLASS_COLORS[E.myclass]
-
 local color = {
     start = {
         r = 1.000,
@@ -229,11 +228,14 @@ function OT:ChangeQuestTitleColor()
     ObjectiveTracker_Update()
 end
 
-function OT:UpdateTextWidth()
-    if self.db.noDash then
-        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - 12
-    else
-        _G.OBJECTIVE_TRACKER_TEXT_WIDTH = _G.OBJECTIVE_TRACKER_LINE_WIDTH - _G.OBJECTIVE_TRACKER_DASH_WIDTH - 12
+do
+    local dash = _G.OBJECTIVE_TRACKER_DASH_WIDTH
+    function OT:UpdateTextWidth()
+        if self.db.noDash then
+            _G.OBJECTIVE_TRACKER_DASH_WIDTH = 0
+        else
+            _G.OBJECTIVE_TRACKER_DASH_WIDTH = dash
+        end
     end
 end
 

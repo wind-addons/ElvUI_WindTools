@@ -54,6 +54,12 @@ local function SetTextColorHook(text)
             end
             SetTextColorOld(self, r, g, b, a)
         end
+        text:SetTextColor(
+            _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
+            _G.OBJECTIVE_TRACKER_COLOR["Header"].g,
+            _G.OBJECTIVE_TRACKER_COLOR["Header"].b,
+            1
+        )
         text.windHooked = true
     end
 end
@@ -230,12 +236,6 @@ function OT:Initialize()
             for _, child in pairs {_G.ObjectiveTrackerBlocksFrame:GetChildren()} do
                 if child and child.HeaderText then
                     SetTextColorHook(child.HeaderText)
-                    child.HeaderText:SetTextColor(
-                        _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
-                        _G.OBJECTIVE_TRACKER_COLOR["Header"].g,
-                        _G.OBJECTIVE_TRACKER_COLOR["Header"].b,
-                        1
-                    )
                 end
             end
         end

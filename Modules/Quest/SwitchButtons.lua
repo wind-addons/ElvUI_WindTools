@@ -150,8 +150,9 @@ function SB:CreateBar()
     frame:SetFrameStrata("BACKGROUND")
     self.barAnchor = frame
 
-    frame = CreateFrame("Frame", nil, E.UIParent)
+    frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
     frame:SetFrameStrata("LOW")
+    frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)

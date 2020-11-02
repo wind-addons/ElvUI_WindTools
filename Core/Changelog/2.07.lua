@@ -64,8 +64,8 @@ W.Changelog[207] = {
             "[기타] 컷신을 건너뛰면 메시지가 표시되며 링크를 클릭하여 리플레이할 수 있습니다.",
             "[아이템 바] ElvUI의 페이드 설정을 상속 하도록 선택할 수 있습니다.",
             "[퀘스트 추적기] 스타일 수정으로 발생할 수 있는 오염 문제 수정",
-            "[Switch Buttons] Fix the bug that sometimes it might be hided by Blizzard Objective Tracker.",
-            "[Skins] Apply new role icons in Talent UI."
+            "[스위치 버튼] 블리자드 기본 퀘스트 추적기에 의해 차단될 수 있는 문제를 수정했습니다.",
+            "[스킨] 특성 UI에 새로운 역할 아이콘을 적용합니다."
         }
     }
 }

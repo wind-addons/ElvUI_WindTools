@@ -259,8 +259,9 @@ function FL:UpdateFriendButton(button)
         button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
 
         if button.summonButton:IsShown() then
-            button.gameIcon:Point("TOPRIGHT", -50, -2)
+            button.gameIcon:Hide()
         else
+            button.gameIcon:Show()
             button.gameIcon:Point("TOPRIGHT", -21, -2)
         end
     end

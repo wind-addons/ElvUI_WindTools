@@ -76,8 +76,8 @@ W.Changelog[207] = {
             "[스위치 버튼] 블리자드 기본 퀘스트 추적기에 의해 차단될 수 있는 문제를 수정했습니다.",
             "[스킨] 특성 UI에 새로운 역할 아이콘을 적용합니다.",
             "[프레임 이동] 모험 안내서 창 이동을 다시 활성화했습니다.",
-            "[Game Bar] Fix the tooltip of volume.",
-            "[Talent Manager] Auto-update the spec after transport."
+            "[게임 바] 볼륨의 툴팁을 수정합니다.",
+            "[특성 관리자] 전문화 변경 시 자동으로 업데이트됩니다."
         }
     }
 }

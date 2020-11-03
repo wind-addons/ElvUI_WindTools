@@ -621,6 +621,11 @@ function TM:PLAYER_SPECIALIZATION_CHANGED(_, unit)
     end
 end
 
+function TM:PLAYER_ENTERING_WORLD()
+    self:UpdatePlayerInfo()
+    self:UpdateSetButtons()
+end
+
 function TM:Initialize()
     self.db = E.private.WT.combat.talentManager
     if not self.db.enable then
@@ -631,6 +636,7 @@ function TM:Initialize()
     self:UpdatePlayerInfo()
     self:BuildFrame()
 
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 end
 

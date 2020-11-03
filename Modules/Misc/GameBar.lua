@@ -455,7 +455,7 @@ local ButtonTypes = {
             local vol = C_CVar_GetCVar("Sound_MasterVolume")
             vol = vol and tonumber(vol) or 0
             DT.tooltip:ClearLines()
-            DT.tooltip:SetText(L["Volume"] .. format(": %d%%", vol))
+            DT.tooltip:SetText(L["Volume"] .. format(": %d%%", vol * 100))
             DT.tooltip:AddLine("\n")
             DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Increase the volume"] .. " (+10%)", 1, 1, 1)
             DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Decrease the volume"] .. " (-10%)", 1, 1, 1)

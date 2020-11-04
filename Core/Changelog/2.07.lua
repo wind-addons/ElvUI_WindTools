@@ -27,7 +27,7 @@ W.Changelog[207] = {
             "[Skins] Add options for thicker shadow."
         },
         ["koKR"] = {
-            "[Skins] Add options for thicker shadow."
+            "[스킨] 그림자 두께 조절 옵션을 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -84,7 +84,7 @@ W.Changelog[207] = {
             "기본 프로필 업데이트.",
             "호환성 검사 업데이트.",
             "[친구 목록] 가끔 이름을 얻을 수 없는 오류를 수정했습니다.",
-            "[Friend List] Fix the bug that the summon button and game icon are overlapped.",
+            "[친구 목록] 게임 아이콘과 파티초대 버튼이 겹치는 현상을 수정하였습니다.",
             "[기타] 컷신을 건너뛰면 메시지가 표시되며 링크를 클릭하여 리플레이할 수 있습니다.",
             "[아이템 바] ElvUI의 페이드 설정을 상속 하도록 선택할 수 있습니다.",
             "[퀘스트 추적기] 스타일 수정으로 발생할 수 있는 오염 문제 수정",
@@ -93,7 +93,7 @@ W.Changelog[207] = {
             "[프레임 이동] 모험 안내서 창 이동을 다시 활성화했습니다.",
             "[게임 바] 볼륨의 툴팁을 수정합니다.",
             "[특성 관리자] 전문화 변경 시 자동으로 업데이트됩니다.",
-            "[Chat Bar] Fix a potential bug."
+            "[채팅 바] 잠재적인 버그를 수정했습니다."
         }
     }
 }

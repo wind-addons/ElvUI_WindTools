@@ -100,8 +100,17 @@ options.general = {
                     type = "toggle",
                     name = L["Enable"]
                 },
-                color = {
+                increasedSize = {
                     order = 2,
+                    type = "range",
+                    name = L["Increase Size"],
+                    desc = L["Make shadow thicker."],
+                    min = 0,
+                    max = 10,
+                    step = 1
+                },
+                color = {
+                    order = 3,
                     type = "color",
                     name = L["Shadow Color"],
                     hasAlpha = false,

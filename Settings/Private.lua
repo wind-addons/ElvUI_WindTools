@@ -87,6 +87,7 @@ V.skins = {
 	removeParchment = true,
 	merathilisUISkin = true,
 	shadow = true,
+	increasedSize = 0,
 	ime = {
 		label = {
 			name = F.GetCompatibleFont("Montserrat"),

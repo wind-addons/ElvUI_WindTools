@@ -69,11 +69,14 @@ function S:CreateShadow(frame, size, r, g, b, force)
     g = g or E.private.WT.skins.color.g or 0
     b = b or E.private.WT.skins.color.b or 0
 
+    size = size or 4
+    size = size + E.private.WT.skins.increasedSize or 0
+
     local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     shadow:SetFrameStrata(frame:GetFrameStrata())
     shadow:SetFrameLevel(frame:GetFrameLevel() or 1)
-    shadow:SetOutside(frame, size or 4, size or 4)
-    shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size or 5)})
+    shadow:SetOutside(frame, size, size)
+    shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size+1)})
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 

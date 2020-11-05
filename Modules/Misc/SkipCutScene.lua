@@ -11,18 +11,23 @@ local strsub = strsub
 
 local GameMovieFinished = GameMovieFinished
 
+local initialized = false
+
 function M:SkipCutScene()
-    local MovieFrame_PlayMovieOld = _G.MovieFrame_PlayMovie
-    local ChatFrame_OnHyperlinkShowOld = _G.ChatFrame_OnHyperlinkShow
+    if not E.private.WT.misc.skipCutScene or initialized then
+        return
+    end
+
+    local PlayMovie = _G.MovieFrame_PlayMovie
 
     _G.MovieFrame_PlayMovie = function(frame, movieID, override)
-        if E.db and E.db.WT and E.db.WT.misc and E.db.WT.misc.skipCutScene and not override then
+        if E.private.WT and E.private.WT.misc.skipCutScene and not override then
             GameMovieFinished()
             F.Print(format("%s |cff71d5ff|Hwtcutscene:%s|h[%s]|h|r", L["Skipped the cutscene."], movieID, L["Replay"]))
             return
         end
 
-        MovieFrame_PlayMovieOld(frame, movieID)
+        PlayMovie(frame, movieID)
     end
 
     local SetHyperlink = _G.ItemRefTooltip.SetHyperlink
@@ -36,6 +41,8 @@ function M:SkipCutScene()
         end
         SetHyperlink(self, data, ...)
     end
+
+    initialized = true
 end
 
 M:AddCallback("SkipCutScene")

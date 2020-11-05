@@ -36,6 +36,7 @@ V.misc = {
 	saveArtifact = true,
 	pauseToSlash = true,
 	noKanjiMath = false,
+	skipCutScene = false,
 	moveBlizzardFrames = true,
 	moveElvUIBags = true,
 	rememberPositions = true,

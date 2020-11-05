@@ -77,6 +77,13 @@ options.general = {
             order = 5,
             type = "toggle",
             name = L["Skip Cut Scene"],
+            get = function(info)
+                return E.private.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc[info[#info]] = value
+                M:SkipCutScene()
+            end
         },
     }
 }

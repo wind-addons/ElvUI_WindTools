@@ -2557,6 +2557,17 @@ function WM:Reveal()
         return
     end
 
+    -- Exclude some areas; Thanks Leatrix_Maps
+    if E.myfraction == "Alliance" then
+        RevealDatabase[556]["223:279:194:0"] = gsub(RevealDatabase[556]["223:279:194:0"], "1037663", "")
+    elseif E.myfraction == "Horde" then
+        RevealDatabase[542]["267:257:336:327"] = gsub(RevealDatabase[542]["267:257:336:327"], "1003342", "")
+    end
+
+    RevealDatabase[521] = nil -- Throne of Thunder
+    RevealDatabase[1176] = nil -- The Dredge (Darkshore)
+    RevealDatabase[67]["453:340:0:0"] = nil -- Veiled Sea (Darkshore)
+
     for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
         self:SecureHook(pin, "RefreshOverlays", "HandleMap")
     end

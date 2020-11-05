@@ -61,10 +61,9 @@ local function AddItemInfo(Hyperlink)
     -- 获取物品实际等级
     if CL.db.level or CL.db.slot then
         local text, level, extraname, slot
-        local link = strmatch(Hyperlink, "|H(.-)|h")
         ItemLevelTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
         ItemLevelTooltip:ClearLines()
-        ItemLevelTooltip:SetHyperlink(link)
+        ItemLevelTooltip:SetHyperlink(Hyperlink)
 
         if CL.db.level then
             for i = 2, 5 do
@@ -72,7 +71,7 @@ local function AddItemInfo(Hyperlink)
                 if leftText then
                     text = leftText:GetText() or ""
                     level = strmatch(text, ItemLevelPattern)
-                    if (level) then
+                    if level then
                         break
                     end
                 end
@@ -108,13 +107,13 @@ local function AddItemInfo(Hyperlink)
             end
         end
 
-        if (level and extraname) then
+        if level and extraname then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1:" .. extraname .. "]|h")
-        elseif (level and slot) then
+        elseif level and slot then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. "-" .. slot .. ":%1]|h")
-        elseif (level) then
+        elseif level then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
-        elseif (slot) then
+        elseif slot then
             Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. ":%1]|h")
         end
     end

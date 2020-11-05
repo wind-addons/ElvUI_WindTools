@@ -160,13 +160,6 @@ function S:ElvUI_ActionBars()
             end
         end
     )
-
-    -- 按键绑定
-    if _G.ElvUIBindPopupWindow then
-        self:ElvUI_ActionBar_LoadKeyBinder()
-    else
-        self:SecureHook(AB, "LoadKeyBinder", "ElvUI_ActionBar_LoadKeyBinder")
-    end
 end
 
 S:AddCallback("ElvUI_ActionBars")

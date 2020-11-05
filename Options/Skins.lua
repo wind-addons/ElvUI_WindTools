@@ -397,6 +397,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Barber Shop"]
         },
+        binding = {
+            order = 10,
+            type = "toggle",
+            name = L["Binding"]
+        },
         blackMarket = {
             order = 10,
             type = "toggle",

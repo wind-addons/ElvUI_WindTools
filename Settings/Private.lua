@@ -135,6 +135,7 @@ V.skins = {
 		azeriteEssence = true,
 		azeriteRespec = true,
 		barberShop = true,
+		binding = true,
 		blackMarket = true,
 		calendar = true,
 		challenges = true,

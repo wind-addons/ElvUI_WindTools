@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[207] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/11/07",
     IMPORTANT = {
         ["zhCN"] = {
             "[交接] 跳过过场动画 => [其他] 一般设定-跳过过场动画"

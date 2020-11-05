@@ -47,7 +47,9 @@ W.Changelog[207] = {
             "[游戏条] 修复了音量的鼠标提示.",
             "[天赋管家] 在传送后自动更新专精.",
             "[聊天条] 修复了一个潜在的错误.",
-            "[聊天链接] 修复了一个潜在的错误."
+            "[聊天链接] 修复了一个潜在的错误.",
+            "[世界地图] 更新了迷雾去除数据库.",
+            "[世界地图] 修复了部分地区因为迷雾去除无法显示地图的错误."
         },
         ["zhTW"] = {
             "清理代碼",
@@ -65,7 +67,9 @@ W.Changelog[207] = {
             "[遊戲條] 修復了音量的浮動提示.",
             "[天賦管家] 在傳送後自動更新專精.",
             "[聊天條] 修復了一個潛在的錯誤.",
-            "[聊天鏈接] 修復了一個潛在的錯誤."
+            "[聊天鏈接] 修復了一個潛在的錯誤.",
+            "[世界地圖] 更新了迷霧去除數據庫.",
+            "[世界地圖] 修復了部分地區因為迷霧去除無法顯示地圖的錯誤."
         },
         ["enUS"] = {
             "Cleanup codes.",
@@ -83,7 +87,9 @@ W.Changelog[207] = {
             "[Game Bar] Fix the tooltip of volume.",
             "[Talent Manager] Auto-update the spec after transport.",
             "[Chat Bar] Fix a potential bug.",
-            "[Chat Link] Fix a potential bug."
+            "[Chat Link] Fix a potential bug.",
+            "[World Map] Update reveal database.",
+            "[World Map] Fix the bug that the reveal not worked on several areas."
         },
         ["koKR"] = {
             "코드 정리.",
@@ -101,7 +107,9 @@ W.Changelog[207] = {
             "[게임 바] 볼륨의 툴팁을 수정합니다.",
             "[특성 관리자] 전문화 변경 시 자동으로 업데이트됩니다.",
             "[채팅 바] 잠재적인 버그를 수정했습니다.",
-            "[채팅 링크] 잠재적인 버그를 수정했습니다."
+            "[채팅 링크] 잠재적인 버그를 수정했습니다.",
+            "[World Map] Update reveal database.",
+            "[World Map] Fix the bug that the reveal not worked on several areas."
         }
     }
 }

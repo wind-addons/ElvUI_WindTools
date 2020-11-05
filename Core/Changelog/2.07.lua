@@ -108,8 +108,8 @@ W.Changelog[207] = {
             "[특성 관리자] 전문화 변경 시 자동으로 업데이트됩니다.",
             "[채팅 바] 잠재적인 버그를 수정했습니다.",
             "[채팅 링크] 잠재적인 버그를 수정했습니다.",
-            "[World Map] Update reveal database.",
-            "[World Map] Fix the bug that the reveal not worked on several areas."
+            "[월드 맵] 안개 제거 데이터베이스 업데이트.",
+            "[월드 맵] 안개 제거로 인해 일부 지역에서 지도가 표시되지 않는 버그를 수정했습니다."
         }
     }
 }

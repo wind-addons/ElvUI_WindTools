@@ -146,6 +146,7 @@ L["Besides the raid spells, it also provides numerous features to help you be a 
 L["Better visualization of Paragon Factions on the Reputation Frame."] = "평판 창에 불멸의 동맹 보상을 위한 특별한 시각 효과를 설정합니다.\n변경 내용이 적용되지 않을 경우 UI를 리로드하세요."
 L["BigWigs"] = true
 L["BigWigs Queue Timer"] = "BigWigs 대기열 타이머"
+L["Binding"] = true
 L["Black Market"] = "암시장"
 L["Blacklist"] = "블랙리스트"
 L["Blizzard"] = true

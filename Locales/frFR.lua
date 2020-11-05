@@ -146,6 +146,7 @@ L["Besides the raid spells, it also provides numerous features to help you be a 
 L["Better visualization of Paragon Factions on the Reputation Frame."] = true
 L["BigWigs"] = true
 L["BigWigs Queue Timer"] = true
+L["Binding"] = "Raccourcis"
 L["Black Market"] = true
 L["Blacklist"] = "Liste noire"
 L["Blizzard"] = true

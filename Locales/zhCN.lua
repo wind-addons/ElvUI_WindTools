@@ -146,6 +146,7 @@ L["Besides the raid spells, it also provides numerous features to help you be a 
 L["Better visualization of Paragon Factions on the Reputation Frame."] = "在声望界面中更显著的提示你的巅峰声望情况."
 L["BigWigs"] = true
 L["BigWigs Queue Timer"] = "BigWigs 进本计时条"
+L["Binding"] = "绑定"
 L["Black Market"] = "黑市拍卖行"
 L["Blacklist"] = "黑名单"
 L["Blizzard"] = "暴雪原生"

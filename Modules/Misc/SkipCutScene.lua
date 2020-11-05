@@ -24,14 +24,16 @@ function M:SkipCutScene()
         MovieFrame_PlayMovieOld(frame, movieID)
     end
 
-    _G.ChatFrame_OnHyperlinkShow = function(...)
-        local link = select(2, ...)
-        local movieID = link and strmatch(link, "wtcutscene:(%d+)")
-        if movieID then
-            _G.MovieFrame_PlayMovie(_G.MovieFrame, movieID, true)
-            return
+    local SetHyperlink = _G.ItemRefTooltip.SetHyperlink
+    function _G.ItemRefTooltip:SetHyperlink(data, ...)
+        if strsub(data, 1, 10) == "wtcutscene" then
+            local movieID = strmatch(data, "wtcutscene:(%d+)")
+            if movieID then
+                _G.MovieFrame_PlayMovie(_G.MovieFrame, movieID, true)
+                return
+            end
         end
-        ChatFrame_OnHyperlinkShowOld(...)
+        SetHyperlink(self, data, ...)
     end
 end
 

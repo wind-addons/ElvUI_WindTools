@@ -7,6 +7,7 @@ local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local select = select
 local strmatch = strmatch
+local strsub = strsub
 
 local GameMovieFinished = GameMovieFinished
 

@@ -9,6 +9,8 @@ local pairs = pairs
 local sort = sort
 local wipe = wipe
 
+local IsAddOnLoaded = IsAddOnLoaded
+
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 
@@ -123,6 +125,33 @@ end
 
 function T:GroupInfo()
     T:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")
+
+    -- Meeting Stone Hook
+    if IsAddOnLoaded("MeetingStone") then
+        local NetEaseEnv = LibStub("NetEaseEnv-1.0")
+        if NetEaseEnv then
+            local NEG
+            for k in pairs(NetEaseEnv._NSInclude) do
+                if type(k) == "table" then
+                    NEG = k
+                end
+            end
+
+            if NEG and NEG.MainPanel then
+                T:SecureHook(
+                    NEG.MainPanel,
+                    "OpenActivityTooltip",
+                    function(panel, activity, tooltip)
+                        local id = activity and activity:GetID()
+                        tooltip = tooltip or panel.GameTooltip
+                        if tooltip and id then
+                            T:AddGroupInfo(tooltip, id)
+                        end
+                    end
+                )
+            end
+        end
+    end
 end
 
 T:AddCallback("GroupInfo")

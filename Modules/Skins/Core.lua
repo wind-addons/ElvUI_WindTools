@@ -76,7 +76,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
     shadow:SetFrameStrata(frame:GetFrameStrata())
     shadow:SetFrameLevel(frame:GetFrameLevel() or 1)
     shadow:SetOutside(frame, size, size)
-    shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size+1)})
+    shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size + 1)})
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 
@@ -263,7 +263,7 @@ function S:ADDON_LOADED(_, addonName)
     end
 end
 
-function S:UpdateWidgetEarly(AceGUI)
+function S:ReskinWidgets(AceGUI)
     for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
         S:UpdateWidget(AceGUI, name, oldFunc)
     end
@@ -275,26 +275,34 @@ function S:UpdateWidget(lib, name, oldFunc)
         self.aceWidgets[name] = nil
     end
 end
+do
+    local alreadyWidgetHooked = false
+    local alreadyDialogSkined = false
+    function S:LibStub_NewLibrary(_, major)
+        if major == "AceGUI-3.0" and not alreadyWidgetHooked then
+            AceGUI = _G.LibStub("AceGUI-3.0")
+            self:ReskinWidgets(AceGUI)
+            self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+            alreadyWidgetHooked = true
+        elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkined then
+            self:AceConfigDialog()
+            alreadyDialogSkined = true
+        end
+    end
 
-function S:LibStub_NewLibrary(_, major)
-    if major == "AceGUI-3.0" then
-        if self:IsHooked(_G.LibStub, "NewLibrary") then
-            self:Unhook(_G.LibStub, "NewLibrary")
+    function S:HookEarly()
+        local AceGUI = _G.LibStub("AceGUI-3.0")
+        if AceGUI and not alreadyWidgetHooked then
+            self:ReskinWidgets(AceGUI)
+            self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+            alreadyWidgetHooked = true
         end
 
-        AceGUI = _G.LibStub("AceGUI-3.0")
-        S:UpdateWidgetEarly(AceGUI)
-        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-    end
-end
-
-function S:Hook_Ace3()
-    local AceGUI = _G.LibStub("AceGUI-3.0")
-    if AceGUI then
-        S:UpdateWidgetEarly(AceGUI)
-        self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-    else
-        self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
+        local AceConfigDialog = _G.LibStub("AceConfigDialog-3.0")
+        if AceConfigDialog and not alreadyDialogSkined then
+            self:AceConfigDialog()
+            alreadyDialogSkined = true
+        end
     end
 end
 
@@ -350,7 +358,8 @@ function S:Initialize()
         end
     end
 
-    self:Hook_Ace3()
+    self:HookEarly()
+    self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
 
     -- 去除羊皮纸
     if E.private.WT.skins.removeParchment then

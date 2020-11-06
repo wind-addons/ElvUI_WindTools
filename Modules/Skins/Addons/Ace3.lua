@@ -15,4 +15,11 @@ function S:Ace3_Frame(Constructor)
     return SkinedConstructor
 end
 
+function S:AceConfigDialog()
+    local lib = _G.LibStub("AceConfigDialog-3.0")
+    if lib.popup then
+        self:CreateShadow(lib.popup)
+    end
+end
+
 S:AddCallbackForAceGUIWidget("Frame", S.Ace3_Frame)

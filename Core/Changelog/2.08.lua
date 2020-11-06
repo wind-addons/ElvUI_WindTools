@@ -43,21 +43,25 @@ W.Changelog[208] = {
             "[队伍信息] 支持网易集合石.",
             "[美化皮肤] 优化 Ace3 皮肤.",
             "[美化皮肤] 优化职业大厅条皮肤.",
+            "[游戏条] LFG 按钮优先使用网易集合石."
         },
         ["zhTW"] = {
             "[隊伍信息] 支援網易集合石.",
             "[美化皮膚] 優化 Ace3 皮膚.",
             "[美化皮膚] 優化職業大廳皮膚.",
+            "[遊戲條] LFG 按鍵優先使用網易集合石"
         },
         ["enUS"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
             "[Skins] Optimize order hall bar skin.",
+            "[Game Bar] LFG Button support NetEase Meeting Stone"
         },
         ["koKR"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
             "[Skins] Optimize order hall bar skin.",
+            "[Game Bar] LFG Button support NetEase Meeting Stone"
         }
     }
 }

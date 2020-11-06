@@ -47,6 +47,14 @@ local function SkinListTitle(self)
         button.backdrop:SetOutside(button, -2, 0)
     end
 
+    local scrollBar = self:GetScrollBar()
+
+    if scrollBar then
+        ES:HandleNextPrevButton(scrollBar.ScrollUpButton, "up")
+        ES:HandleNextPrevButton(scrollBar.ScrollDownButton, "down")
+        ES:HandleScrollBar(scrollBar)
+    end
+
     self.windStyle = true
 end
 

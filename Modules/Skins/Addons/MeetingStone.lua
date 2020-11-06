@@ -4,16 +4,20 @@ local ES = E:GetModule("Skins")
 
 local module
 
-local function SkinViaRawHook(object, method, func)
+local function SkinViaRawHook(object, method, func, noLabel)
     local NetEaseGUI = LibStub("NetEaseGUI-2.0")
     local module = NetEaseGUI and NetEaseGUI:GetClass(object)
     if module and module[method] then
         local original = module[method]
         module[method] = function(self, ...)
             original(self, ...)
-            if not self.windStyle then
+            if noLabel then
                 func(self, ...)
-                self.windStyle = true
+            else
+                if not self.windStyle then
+                    func(self, ...)
+                    self.windStyle = true
+                end
             end
         end
     end
@@ -88,11 +92,10 @@ function S:MeetingStone()
     )
 
     -- DropMenu
-    module = NetEaseGUI:GetClass("DropMenu")
-    if module and module.Open then
-        local OpenOld = module.Open
-        function module:Open(level, menuTable, owner, ...)
-            OpenOld(self, level, menuTable, owner, ...)
+    SkinViaRawHook(
+        "DropMenu",
+        "Open",
+        function(self, level)
             level = level or 1
             local menu = self.menuList[level]
             if menu and not menu.windStyle then
@@ -100,8 +103,9 @@ function S:MeetingStone()
                 menu:CreateBackdrop()
                 self.windStyle = true
             end
-        end
-    end
+        end,
+        true
+    )
 
     -- DropMenuItem
     SkinViaRawHook(
@@ -123,6 +127,23 @@ function S:MeetingStone()
         function(self)
             ES:HandleScrollBar(self)
         end
+    )
+
+    -- List elements
+    SkinViaRawHook(
+        "ListView",
+        "UpdateItems",
+        function(self)
+            for i = 1, #self.buttons do
+                local button = self:GetButton(i)
+                if button:IsShown() and not button.windStyle then
+                    button:StripTextures()
+                    ES:HandleButton(button)
+                    button.windStyle = true
+                end
+            end
+        end,
+        true
     )
 
     -- Browse Panel (查找活动)

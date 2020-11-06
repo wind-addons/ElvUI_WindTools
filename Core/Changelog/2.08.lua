@@ -10,10 +10,10 @@ W.Changelog[208] = {
             "[移動框架] 默認關閉記憶功能, 如果出錯可以嘗試清除記錄."
         },
         ["enUS"] = {
-            "[Move Frames] Disable by default, try to clear the history of moving if frames get messed."
+            "[Move Frames] Disable remember position by default, try to clear the history of moving if frames get messed."
         },
         ["koKR"] = {
-            "[Move Frames] Disable by default, try to clear the history of moving if frames get messed."
+            "[Move Frames] Disable remember position by default, try to clear the history of moving if frames get messed."
         }
     },
     NEW = {

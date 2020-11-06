@@ -2,6 +2,13 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local pairs = pairs
+local type = type
+
+local CreateFrame = CreateFrame
+local LibStub = LibStub
+
+local NEG
 local module
 
 local function SkinViaRawHook(object, method, func, noLabel)

@@ -7,9 +7,11 @@ local _G = _G
 local format = format
 local pairs = pairs
 local sort = sort
+local type = type
 local wipe = wipe
 
 local IsAddOnLoaded = IsAddOnLoaded
+local LibStub = LibStub
 
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo

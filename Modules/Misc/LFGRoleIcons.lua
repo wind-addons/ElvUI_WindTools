@@ -1,6 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
+local hooksecurefunc = hooksecurefunc
+local tinsert = tinsert
+local tremove = tremove
+
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 

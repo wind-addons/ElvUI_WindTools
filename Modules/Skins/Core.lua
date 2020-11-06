@@ -7,6 +7,7 @@ local format = format
 local next = next
 local pairs = pairs
 local tinsert = tinsert
+local type = type
 local xpcall = xpcall
 
 local AceGUI

@@ -4,6 +4,7 @@ local WM = W:NewModule("WorldMap", "AceHook-3.0")
 local _G = _G
 local ceil = ceil
 local collectgarbage = collectgarbage
+local gsub = gsub
 local ipairs = ipairs
 local mod = mod
 local pairs = pairs

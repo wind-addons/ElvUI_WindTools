@@ -12,6 +12,7 @@ function S:Blizzard_OrderHallUI()
 
     local bar = _G.OrderHallCommandBar
     if bar then
+        self:CreateShadow(OrderHallCommandBar.backdrop)
         F.SetFontOutline(bar.AreaName)
         F.SetFontOutline(bar.Currency)
         bar.AreaName:ClearAllPoints()

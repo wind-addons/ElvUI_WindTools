@@ -199,6 +199,10 @@ function S:AddCallbackForAddon(addonName, func)
         addon = self.addonsToLoad[addonName]
     end
 
+    if type(func) == "string" then
+        func = self[func]
+    end
+
     tinsert(addon, func or self[addonName])
 end
 

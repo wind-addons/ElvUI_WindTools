@@ -3,41 +3,57 @@ local W = unpack(select(2, ...))
 W.Changelog[208] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[移动框体] 默认关闭记忆功能, 如果出错可以尝试清除记录."
+        },
+        ["zhTW"] = {
+            "[移動框架] 默認關閉記憶功能, 如果出錯可以嘗試清除記錄."
+        },
+        ["enUS"] = {
+            "[Move Frames] Disable by default, try to clear the history of moving if frames get messed."
+        },
+        ["koKR"] = {
+            "[Move Frames] Disable by default, try to clear the history of moving if frames get messed."
+        }
     },
     NEW = {
         ["zhCN"] = {
             "[美化皮肤] 添加了网易集合石的美化.",
+            "[美化皮肤] 添加了网易集合石加强版的美化.",
             "[其他] 添加了预组队伍彩色定位图标的功能."
         },
         ["zhTW"] = {
             "[美化皮膚] 新增了網易集合石的美化.",
+            "[美化皮膚] 新增了網易集合石加強版的美化.",
             "[其他] 新增了預組隊伍彩色定位圖示的功能."
         },
         ["enUS"] = {
             "[Skins] Add skin for NetEase Meeting Stone.",
+            "[Skins] Add skin for NetEase Meeting Stone Plus.",
             "[Misc] Add new feature that using a colorful icon replaces the Blizzard LFG role icons."
         },
         ["koKR"] = {
             "[Skins] Add skin for NetEase Meeting Stone.",
+            "[Skins] Add skin for NetEase Meeting Stone Plus.",
             "[Misc] Add new feature that using a colorful icon replaces the Blizzard LFG role icons."
         }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "[队伍信息] 支持网易集合石."
+            "[队伍信息] 支持网易集合石.",
+            "[美化皮肤] 优化 Ace3 皮肤."
         },
         ["zhTW"] = {
-            "[隊伍信息] 支援網易集合石."
+            "[隊伍信息] 支援網易集合石.",
+            "[美化皮膚] 優化 Ace3 皮膚."
         },
         ["enUS"] = {
-            "[Party Info] Add support of NetEase Meeting Stone."
+            "[Party Info] Add support of NetEase Meeting Stone.",
+            "[Skins] Optimize Ace3 skins."
         },
         ["koKR"] = {
-            "[Party Info] Add support of NetEase Meeting Stone."
+            "[Party Info] Add support of NetEase Meeting Stone.",
+            "[Skins] Optimize Ace3 skins."
         }
     }
 }

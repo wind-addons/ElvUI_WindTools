@@ -329,6 +329,14 @@ function S:MeetingStone()
             SkinListTitle(RecentPanel.MemberList)
         end
     end
+
+    -- Broker Panel (悬浮框)
+    local BrokerPanel = NEG.DataBroker.BrokerPanel
+    if BrokerPanel then
+        BrokerPanel:SetBackdrop(nil)
+        BrokerPanel:CreateBackdrop("Transparent")
+        self:CreateShadow(BrokerPanel.backdrop)
+    end
 end
 
 S:AddCallbackForAddon("MeetingStone")

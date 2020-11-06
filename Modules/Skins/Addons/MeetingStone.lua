@@ -35,6 +35,21 @@ local function SkinDropDown(self)
     self.windStyle = true
 end
 
+local function SkinListTitle(self)
+    if self.windStyle then
+        return
+    end
+
+    for _, button in pairs(self.sortButtons) do
+        button:StripTextures()
+        ES:HandleButton(button)
+        button.backdrop:ClearAllPoints()
+        button.backdrop:SetOutside(button, -2, 0)
+    end
+
+    self.windStyle = true
+end
+
 function S:MeetingStone()
     -- if not E.private.WT.skins.enable or not E.private.WT.skins.addons.hekili then
     --     return
@@ -169,6 +184,10 @@ function S:MeetingStone()
             SkinDropDown(BrowsePanel.ActivityDropdown)
         end
 
+        if BrowsePanel.ActivityList then
+            SkinListTitle(BrowsePanel.ActivityList)
+        end
+
         if BrowsePanel.NoResultBlocker then
             ES:HandleButton(BrowsePanel.NoResultBlocker.Button)
             F.SetFontOutline(BrowsePanel.NoResultBlocker.Label)
@@ -267,6 +286,10 @@ function S:MeetingStone()
                 end
             end
         end
+
+        if ManagerPanel.RightPart and ManagerPanel.RightPart.ApplicantList then
+            SkinListTitle(ManagerPanel.RightPart.ApplicantList)
+        end
     end
 
     -- Recent Panel (最近玩友)
@@ -300,6 +323,10 @@ function S:MeetingStone()
 
         if RecentPanel.BatchDeleteButton then
             ES:HandleButton(RecentPanel.BatchDeleteButton)
+        end
+
+        if RecentPanel.MemberList then
+            SkinListTitle(RecentPanel.MemberList)
         end
     end
 end

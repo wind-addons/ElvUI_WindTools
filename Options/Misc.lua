@@ -69,9 +69,9 @@ options.general = {
             end
         },
         lfgRoleIcons = {
-            order = 5,
+            order = 6,
             type = "toggle",
-            name = L["Skip Cut Scene"]
+            name = L["LFG Role Icons"]
         }
     }
 }

@@ -271,8 +271,7 @@ function S:MeetingStone()
         end
 
         if ManagerPanel.LeftPart and ManagerPanel.LeftPart.CreateWidget then
-            local subpage = ManagerPanel.LeftPart.CreateWidget
-            for _, child in pairs {subpage:GetChildren()} do
+            for _, child in pairs {ManagerPanel.LeftPart.CreateWidget:GetChildren()} do
                 for _, subChild in pairs {child:GetChildren()} do
                     if subChild.MenuButton and subChild.Text then
                         SkinDropDown(subChild)
@@ -290,6 +289,8 @@ function S:MeetingStone()
                         ES:HandleEditBox(subChild)
                         subChild.backdrop:ClearAllPoints()
                         subChild.backdrop:SetOutside(subChild, -1, -2)
+                    elseif subChild:GetObjectType() == "CheckButton" then
+                        ES:HandleCheckBox(subChild)
                     end
                 end
             end

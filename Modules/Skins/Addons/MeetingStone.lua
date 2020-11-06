@@ -27,7 +27,7 @@ local function SkinDropDown(self)
     self:CreateBackdrop("Transparent")
     self.backdrop:ClearAllPoints()
     self.backdrop:SetOutside(self, 1, -3)
-    ES:HandleNextPrevButton(self.MenuButton)
+    ES:HandleNextPrevButton(self.MenuButton, "down")
     self.windStyle = true
 end
 
@@ -116,6 +116,15 @@ function S:MeetingStone()
         end
     )
 
+    -- Scroll Bar
+    SkinViaRawHook(
+        "PageScrollBar",
+        "Constructor",
+        function(self)
+            ES:HandleScrollBar(self)
+        end
+    )
+
     -- Browse Panel (查找活动)
     local BrowsePanel = NEG.BrowsePanel
     if BrowsePanel then
@@ -167,6 +176,73 @@ function S:MeetingStone()
                     ES:HandleEditBox(child.MaxBox)
                     child.MinBox:StripTextures()
                     ES:HandleEditBox(child.MinBox)
+                end
+            end
+        end
+    end
+
+    -- Manager Panel (管理活动)
+    local ManagerPanel = NEG.ManagerPanel
+    if ManagerPanel then
+        for _, child in pairs {ManagerPanel:GetChildren()} do
+            if child.CreateWidget then
+                ManagerPanel.LeftPart = child
+            elseif child.ApplicantList then
+                ManagerPanel.RightPart = child
+            end
+        end
+
+        if ManagerPanel.RefreshButton then
+            ES:HandleButton(ManagerPanel.RefreshButton)
+            ManagerPanel.RefreshButton.backdrop:ClearAllPoints()
+            ManagerPanel.RefreshButton.backdrop:SetOutside(ManagerPanel.RefreshButton, -1, -2)
+        end
+
+        for _, child in pairs {ManagerPanel.LeftPart:GetChildren()} do
+            if child:GetNumRegions() == 3 then
+                for _, region in pairs {child:GetRegions()} do
+                    if region.GetObjectType and region:GetObjectType() == "Texture" then
+                        if region.GetTexture then
+                            local tex = region:GetTexture()
+                            if tex and tex == "Interface\\FriendsFrame\\UI-ChannelFrame-VerticalBar" then
+                                child:StripTextures()
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        if ManagerPanel.LeftPart and ManagerPanel.LeftPart.CreateButton then
+            ES:HandleButton(ManagerPanel.LeftPart.CreateButton)
+        end
+
+        if ManagerPanel.LeftPart and ManagerPanel.LeftPart.DisbandButton then
+            ES:HandleButton(ManagerPanel.LeftPart.DisbandButton)
+        end
+
+        if ManagerPanel.LeftPart and ManagerPanel.LeftPart.CreateWidget then
+            local subpage = ManagerPanel.LeftPart.CreateWidget
+            for _, child in pairs {subpage:GetChildren()} do
+                for _, subChild in pairs {child:GetChildren()} do
+                    if subChild.MenuButton and subChild.Text then
+                        SkinDropDown(subChild)
+                    elseif subChild.tLeft and subChild.tRight then
+                        for _, region in pairs {subChild:GetRegions()} do
+                            if region.GetObjectType and region:GetObjectType() == "Texture" then
+                                if region.GetTexture then
+                                    local tex = region:GetTexture()
+                                    if tex and tex == "Interface\\Common\\Common-Input-Border" then
+                                        region:StripTextures()
+                                    end
+                                end
+                            end
+                        end
+                        ES:HandleEditBox(subChild)
+                        subChild.backdrop:ClearAllPoints()
+                        subChild.backdrop:SetOutside(subChild, -1, -2)
+                    end
                 end
             end
         end

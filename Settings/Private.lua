@@ -120,6 +120,7 @@ V.skins = {
 		bugSack = true,
 		hekili = true,
 		immersion = true,
+		meetingStone = true,
 		rematch = false,
 		tinyInspect = true,
 		weakAuras = true,

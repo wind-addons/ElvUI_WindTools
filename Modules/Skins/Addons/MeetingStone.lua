@@ -51,9 +51,9 @@ local function SkinListTitle(self)
 end
 
 function S:MeetingStone()
-    -- if not E.private.WT.skins.enable or not E.private.WT.skins.addons.hekili then
-    --     return
-    -- end
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.meetingStone then
+        return
+    end
 
     local NetEaseEnv = LibStub("NetEaseEnv-1.0")
     local NetEaseGUI = LibStub("NetEaseGUI-2.0")

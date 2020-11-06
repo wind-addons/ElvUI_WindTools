@@ -892,6 +892,11 @@ options.addons = {
             type = "toggle",
             name = L["Immersion"]
         },
+        meetingStone = {
+            order = 10,
+            type = "toggle",
+            name = L["NetEase Meeting Stone"]
+        },
         rematch = {
             order = 10,
             type = "toggle",

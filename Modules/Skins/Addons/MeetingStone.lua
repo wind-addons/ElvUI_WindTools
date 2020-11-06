@@ -2,6 +2,35 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local module
+
+local function SkinViaRawHook(object, method, func)
+    local NetEaseGUI = LibStub("NetEaseGUI-2.0")
+    local module = NetEaseGUI and NetEaseGUI:GetClass(object)
+    if module and module[method] then
+        local original = module[method]
+        module[method] = function(self, ...)
+            original(self, ...)
+            if not self.windStyle then
+                func(self, ...)
+                self.windStyle = true
+            end
+        end
+    end
+end
+
+local function SkinDropDown(self)
+    if self.windStyle then
+        return
+    end
+    self:StripTextures()
+    self:CreateBackdrop("Transparent")
+    self.backdrop:ClearAllPoints()
+    self.backdrop:SetOutside(self, 1, -3)
+    ES:HandleNextPrevButton(self.MenuButton)
+    self.windStyle = true
+end
+
 function S:MeetingStone()
     -- if not E.private.WT.skins.enable or not E.private.WT.skins.addons.hekili then
     --     return
@@ -40,27 +69,52 @@ function S:MeetingStone()
     end
 
     -- Tabs
-    local module = NetEaseGUI:GetClass("BottomTabButton")
-    if module and module.SetStatus then
-        local SetStatusOld = module.SetStatus
-        function module:SetStatus(status)
-            SetStatusOld(self, status)
-            if self and not self.windStyle then
-                self.tActiveLeft:StripTextures()
-                self.tActiveRight:StripTextures()
-                self.tActiveMid:StripTextures()
-                self.tLeft:StripTextures()
-                self.tRight:StripTextures()
-                self.tMid:StripTextures()
-                self:GetHighlightTexture():StripTextures()
-                self:CreateBackdrop("Transparent")
-                self.backdrop:Point("TOPLEFT", 6, E.PixelMode and -1 or -3)
-                self.backdrop:Point("BOTTOMRIGHT", -6, 3)
-                S:CreateShadow(self.backdrop)
+    SkinViaRawHook(
+        "BottomTabButton",
+        "SetStatus",
+        function(self)
+            self.tActiveLeft:StripTextures()
+            self.tActiveRight:StripTextures()
+            self.tActiveMid:StripTextures()
+            self.tLeft:StripTextures()
+            self.tRight:StripTextures()
+            self.tMid:StripTextures()
+            self:GetHighlightTexture():StripTextures()
+            self:CreateBackdrop("Transparent")
+            self.backdrop:Point("TOPLEFT", 6, E.PixelMode and -1 or -3)
+            self.backdrop:Point("BOTTOMRIGHT", -6, 3)
+            S:CreateShadow(self.backdrop)
+        end
+    )
+
+    -- DropMenu
+    module = NetEaseGUI:GetClass("DropMenu")
+    if module and module.Open then
+        local OpenOld = module.Open
+        function module:Open(level, menuTable, owner, ...)
+            OpenOld(self, level, menuTable, owner, ...)
+            level = level or 1
+            local menu = self.menuList[level]
+            if menu and not menu.windStyle then
+                menu:StripTextures()
+                menu:CreateBackdrop()
                 self.windStyle = true
             end
         end
     end
+
+    -- DropMenuItem
+    SkinViaRawHook(
+        "DropMenuItem",
+        "SetHasArrow",
+        function(self)
+            if self.Arrow then
+                self.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+                self.Arrow:SetRotation(ES.ArrowRotation.right)
+                self.Arrow:SetVertexColor(1, 1, 1)
+            end
+        end
+    )
 
     -- Browse Panel (查找活动)
     local BrowsePanel = NEG.BrowsePanel
@@ -82,11 +136,73 @@ function S:MeetingStone()
         end
 
         if BrowsePanel.ActivityDropdown then
-            BrowsePanel.ActivityDropdown:StripTextures()
-            BrowsePanel.ActivityDropdown:CreateBackdrop("Transparent")
-            BrowsePanel.ActivityDropdown.backdrop:ClearAllPoints()
-            BrowsePanel.ActivityDropdown.backdrop:SetOutside(BrowsePanel.ActivityDropdown, 1, -3)
-            ES:HandleNextPrevButton(BrowsePanel.ActivityDropdown.MenuButton)
+            SkinDropDown(BrowsePanel.ActivityDropdown)
+        end
+
+        if BrowsePanel.NoResultBlocker then
+            ES:HandleButton(BrowsePanel.NoResultBlocker.Button)
+            F.SetFontOutline(BrowsePanel.NoResultBlocker.Label)
+        end
+
+        if BrowsePanel.AdvFilterPanel then
+            local panel = BrowsePanel.AdvFilterPanel
+            ES:HandlePortraitFrame(panel)
+            S:CreateShadow(panel.backdrop)
+            for _, child in pairs {panel:GetChildren()} do
+                if child.GetObjectType and child:GetObjectType() == "Button" then
+                    if child.GetText and child:GetText() ~= "" and child:GetText() ~= nil then
+                        ES:HandleButton(child)
+                        child.backdrop:ClearAllPoints()
+                        child.backdrop:SetOutside(child, -1, 0)
+                    else
+                        ES:HandleCloseButton(child)
+                    end
+                end
+            end
+
+            for _, child in pairs {panel.Inset:GetChildren()} do
+                if child.Check and child.MaxBox and child.MinBox then
+                    ES:HandleCheckBox(child.Check)
+                    child.MaxBox:StripTextures()
+                    ES:HandleEditBox(child.MaxBox)
+                    child.MinBox:StripTextures()
+                    ES:HandleEditBox(child.MinBox)
+                end
+            end
+        end
+    end
+
+    -- Recent Panel (最近玩友)
+    local RecentPanel = NEG.RecentPanel
+    if RecentPanel then
+        if RecentPanel.ActivityDropdown then
+            SkinDropDown(RecentPanel.ActivityDropdown)
+        end
+
+        if RecentPanel.ClassDropdown then
+            SkinDropDown(RecentPanel.ClassDropdown)
+        end
+
+        if RecentPanel.RoleDropdown then
+            SkinDropDown(RecentPanel.RoleDropdown)
+        end
+
+        if RecentPanel.SearchInput then
+            for _, region in pairs {RecentPanel.SearchInput:GetRegions()} do
+                if region.GetObjectType and region:GetObjectType() == "Texture" then
+                    if region.GetTexture then
+                        local tex = region:GetTexture()
+                        if tex and tex == "Interface\\Common\\Common-Input-Border" then
+                            region:StripTextures()
+                        end
+                    end
+                end
+            end
+            ES:HandleEditBox(RecentPanel.SearchInput)
+        end
+
+        if RecentPanel.BatchDeleteButton then
+            ES:HandleButton(RecentPanel.BatchDeleteButton)
         end
     end
 end

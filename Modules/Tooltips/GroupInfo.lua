@@ -39,7 +39,7 @@ local function GetIconString(role, mode)
     return format(template, UF.RoleIconTextures[role])
 end
 
-function T:AddGroupInfo(tooltip, resultID)
+function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
     local config = E.db.WT.tooltips.groupInfo
     if not config or not config.enable then
         return
@@ -118,8 +118,10 @@ function T:AddGroupInfo(tooltip, resultID)
 
     wipe(cache)
 
-    tooltip:ClearAllPoints()
-    tooltip:SetPoint("TOPLEFT", _G.LFGListFrame, "TOPRIGHT", 10, 0)
+    if not isMeetingStone then
+        tooltip:ClearAllPoints()
+        tooltip:SetPoint("TOPLEFT", _G.LFGListFrame, "TOPRIGHT", 10, 0)
+    end
     tooltip:Show()
 end
 
@@ -145,7 +147,7 @@ function T:GroupInfo()
                         local id = activity and activity:GetID()
                         tooltip = tooltip or panel.GameTooltip
                         if tooltip and id then
-                            T:AddGroupInfo(tooltip, id)
+                            T:AddGroupInfo(tooltip, id, true)
                         end
                     end
                 )

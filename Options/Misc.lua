@@ -22,69 +22,57 @@ options.general = {
     type = "group",
     name = L["General"],
     get = function(info)
-        return E.db.WT.misc[info[#info]]
+        return E.private.WT.misc[info[#info]]
     end,
     set = function(info, value)
-        E.db.WT.misc[info[#info]] = value
+        E.private.WT.misc[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
         pauseToSlash = {
             order = 1,
             type = "toggle",
             name = L["Pause to slash"],
-            desc = L["Just for Chinese and Korean players"],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
+            desc = L["Just for Chinese and Korean players"]
         },
         saveArtifact = {
             order = 2,
             type = "toggle",
             name = L["Save Artifact"],
-            desc = L["Allow you to save outfits even if the artifact in it."],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
+            desc = L["Allow you to save outfits even if the artifact in it."]
         },
         noKanjiMath = {
             order = 3,
             type = "toggle",
             name = L["Math Without Kanji"],
-            desc = L["Use alphabet rather than kanji (Only for Chinese players)"],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.misc[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
+            desc = L["Use alphabet rather than kanji (Only for Chinese players)"]
         },
         disableTalkingHead = {
             order = 4,
             type = "toggle",
             name = L["Disable Talking Head"],
             desc = L["Disable Blizzard Talking Head."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
         },
         skipCutScene = {
             order = 5,
             type = "toggle",
             name = L["Skip Cut Scene"],
-            get = function(info)
-                return E.private.WT.misc[info[#info]]
-            end,
             set = function(info, value)
                 E.private.WT.misc[info[#info]] = value
                 M:SkipCutScene()
             end
         },
+        lfgRoleIcons = {
+            order = 5,
+            type = "toggle",
+            name = L["Skip Cut Scene"]
+        }
     }
 }
 

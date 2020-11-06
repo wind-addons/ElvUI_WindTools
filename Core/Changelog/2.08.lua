@@ -55,13 +55,13 @@ W.Changelog[208] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
             "[Skins] Optimize order hall bar skin.",
-            "[Game Bar] LFG Button support NetEase Meeting Stone"
+            "[Game Bar] LFG Button support NetEase Meeting Stone."
         },
         ["koKR"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
             "[Skins] Optimize order hall bar skin.",
-            "[Game Bar] LFG Button support NetEase Meeting Stone"
+            "[Game Bar] LFG Button support NetEase Meeting Stone."
         }
     }
 }

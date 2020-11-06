@@ -349,4 +349,5 @@ function S:MeetingStone()
 end
 
 S:AddCallbackForAddon("MeetingStone")
+S:AddCallbackForAddon("MeetingStonePlus", "MeetingStone")
 S:DisableAddOnSkin("MeetingStone")

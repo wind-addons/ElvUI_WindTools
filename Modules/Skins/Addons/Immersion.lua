@@ -14,20 +14,11 @@ function S:Immersion_ReskinTitleButton(frame)
             button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
             self:CreateShadow(button.backdrop)
-	        self:MerathilisUISkin(button.backdrop)
+            self:MerathilisUISkin(button.backdrop)
 
             button.Hilite:StripTextures()
             button.Overlay:StripTextures()
-            button.BottomEdge:StripTextures()
-            button.BottomLeftCorner:StripTextures()
-            button.BottomRightCorner:StripTextures()
-            button.Center:StripTextures()
-            button.LeftEdge:StripTextures()
-            button.RightEdge:StripTextures()
-            button.TopEdge:StripTextures()
-            button.TopLeftCorner:StripTextures()
-            button.TopRightCorner:StripTextures()
-
+            button:SetBackdrop(nil)
             F.SetFontOutline(button.Label)
             button.windStyle = true
         end
@@ -43,9 +34,31 @@ function S:AttemptReskinButton()
 end
 
 function S:Immersion_Show()
+    self:Immersion_SpeechProgressText()
     self:Immersion_ReskinTitleButton(_G.ImmersionFrame)
     self.reskinButtonAttemptCount = 0
     self.reskinButtonTimer = self:ScheduleRepeatingTimer("AttemptReskinButton", 0.1)
+end
+
+do -- If there is no speech progress text in first time, the skin will not be apply
+    local reskin = false
+    function S:Immersion_SpeechProgressText()
+        if reskin then
+            return
+        end
+        local talkBox = _G.ImmersionFrame and _G.ImmersionFrame.TalkBox
+        if talkBox and talkBox.TextFrame and talkBox.TextFrame.SpeechProgress then
+            F.SetFontWithDB(
+                talkBox.TextFrame.SpeechProgress,
+                {
+                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                    size = 13,
+                    style = "OUTLINE"
+                }
+            )
+            reskin = true
+        end
+    end
 end
 
 function S:Immersion()
@@ -85,29 +98,13 @@ function S:Immersion()
     -- 对话主窗口文字
     F.SetFontOutline(talkBox.NameFrame.Name)
     F.SetFontOutline(talkBox.TextFrame.Text)
-    F.SetFontWithDB(
-        talkBox.TextFrame.SpeechProgress,
-        {
-            name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
-            size = 13,
-            style = "OUTLINE"
-        }
-    )
 
     -- 关闭按钮
     ES:HandleCloseButton(talkBox.MainFrame.CloseButton)
 
     -- 去除任务细节窗口 (下窗口) 背景
     local elements = talkBox.Elements
-    elements.BottomEdge:StripTextures()
-    elements.BottomLeftCorner:StripTextures()
-    elements.BottomRightCorner:StripTextures()
-    elements.Center:StripTextures()
-    elements.LeftEdge:StripTextures()
-    elements.RightEdge:StripTextures()
-    elements.TopEdge:StripTextures()
-    elements.TopLeftCorner:StripTextures()
-    elements.TopRightCorner:StripTextures()
+    elements:SetBackdrop(nil)
     elements:CreateBackdrop("Transparent")
     elements.backdrop:ClearAllPoints()
     elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)

@@ -285,6 +285,19 @@ options.moveFrames = {
                     func = function()
                         E.private.WT.misc.framePositions = {}
                     end
+                },
+                notice = {
+                    order = 999,
+                    type = "description",
+                    name = format(
+                        "|cffff0000%s|r %s",
+                        L["Notice"],
+                        format(
+                            L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
+                            L["Remember Positions"],
+                            "|cff3498db" .. L["Clear History"] .. "|r"
+                        )
+                    )
                 }
             }
         }

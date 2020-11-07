@@ -13,7 +13,7 @@ W.Changelog[208] = {
             "[Move Frames] Disable remember position by default, try to clear the history of moving if frames get messed."
         },
         ["koKR"] = {
-            "[프레임 이동] 메모리 기능은 기본적으로 꺼져 있으며 문제가 발생하면 기록을 지울 수 있습니다."
+            "[프레임 이동] 위치 기억 기능은 기본적으로 꺼져 있으며 문제가 발생하면 기록을 지워 해결할 수 있습니다."
         }
     },
     NEW = {
@@ -38,8 +38,8 @@ W.Changelog[208] = {
         ["koKR"] = {
             "[스킨] NetEase Meeting Stone 애드온 스킨 추가.",
             "[스킨] NetEase Meeting Stone Plus 애드온 스킨 추가.",
-            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons.",
-            "[게임 바] Game Menu 버튼이 추가되었습니다."
+            "[기타] 블리자드 파티 찾기 및 NetEase Meeting Stone 애드온의 스킨 설정을 위한 새로운 모듈 [파티 찾기 목록]이 추가되었습니다.",
+            "[게임 바] 게임 메뉴 버튼이 추가되었습니다."
         }
     },
     IMPROVEMENT = {

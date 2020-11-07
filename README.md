@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.08-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.07-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.10-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.08-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -92,6 +92,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 10. **BugSack Skin**: Apply skin for BugSack.
 11. **TinyInspect Skin**: Apply skin for TinyInspect.
 12. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
+12. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

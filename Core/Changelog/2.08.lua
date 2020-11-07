@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[208] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/11/08",
     IMPORTANT = {
         ["zhCN"] = {
             "[移动框体] 默认关闭记忆功能, 如果出错可以尝试清除记录."

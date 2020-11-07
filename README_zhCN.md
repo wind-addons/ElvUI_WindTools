@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.08-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.07-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.10-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.08-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -92,6 +92,8 @@
 9. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
 10. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
 11. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+12. **Azeroth Auto Pilot 美化**: 为 Azeroth Auto Pilot 的主要窗口添加美化.
+13. **网易集合石美化**: 为网易的集合石插件添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

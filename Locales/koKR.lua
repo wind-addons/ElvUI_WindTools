@@ -336,6 +336,7 @@ L["Friend List"] = "친구 목록"
 L["G"] = "길드"
 L["Game Bar"] = "게임 바"
 L["Game Icons"] = "게임 아이콘"
+L["Game Menu"] = true
 L["Garrison"] = "주둔지"
 L["General"] = "일반"
 L["Github"] = true

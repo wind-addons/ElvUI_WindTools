@@ -336,6 +336,7 @@ L["Friend List"] = "好友列表"
 L["G"] = "公会"
 L["Game Bar"] = "游戏条"
 L["Game Icons"] = "游戏图标"
+L["Game Menu"] = "游戏菜单"
 L["Garrison"] = "要塞"
 L["General"] = "一般"
 L["Github"] = true

@@ -336,6 +336,7 @@ L["Friend List"] = true
 L["G"] = "Г"
 L["Game Bar"] = true
 L["Game Icons"] = true
+L["Game Menu"] = true
 L["Garrison"] = "Гарнизон"
 L["General"] = "Общие"
 L["Github"] = true

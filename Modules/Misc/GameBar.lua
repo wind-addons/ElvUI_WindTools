@@ -23,6 +23,8 @@ local type = type
 local unpack = unpack
 
 local BNGetNumFriends = BNGetNumFriends
+local CloseAllWindows = CloseAllWindows
+local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local CreateFromMixins = CreateFromMixins
 local GetGameTime = GetGameTime
@@ -30,14 +32,17 @@ local GetItemCooldown = GetItemCooldown
 local GetItemIcon = GetItemIcon
 local GetNumGuildMembers = GetNumGuildMembers
 local GetTime = GetTime
+local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGuild = IsInGuild
 local IsModifierKeyDown = IsModifierKeyDown
 local ItemMixin = ItemMixin
+local PlaySound = PlaySound
 local RegisterStateDriver = RegisterStateDriver
 local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
+local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local ToggleAchievementFrame = ToggleAchievementFrame
 local ToggleAllBags = ToggleAllBags
@@ -278,6 +283,38 @@ local ButtonTypes = {
             end
             button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
         end
+    },
+    GAMEMENU = {
+        name = L["Game Menu"],
+        icon = W.Media.Icons.barGameMenu,
+        click = {
+            LeftButton = function()
+                if not InCombatLockdown() then
+                    -- Open game menu | From ElvUI
+                    if not _G.GameMenuFrame:IsShown() then
+                        if _G.VideoOptionsFrame:IsShown() then
+                            _G.VideoOptionsFrameCancel:Click()
+                        elseif _G.AudioOptionsFrame:IsShown() then
+                            _G.AudioOptionsFrameCancel:Click()
+                        elseif _G.InterfaceOptionsFrame:IsShown() then
+                            _G.InterfaceOptionsFrameCancel:Click()
+                        end
+                        CloseMenus()
+                        CloseAllWindows()
+                        PlaySound(850) --IG_MAINMENU_OPEN
+                        ShowUIPanel(_G.GameMenuFrame)
+                    else
+                        PlaySound(854) --IG_MAINMENU_QUIT
+                        HideUIPanel(_G.GameMenuFrame)
+                    end
+                else
+                    _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+                end
+            end
+        },
+        tooltips = {
+            L["Game Menu"]
+        }
     },
     GROUP_FINDER = {
         name = L["Group Finder"],

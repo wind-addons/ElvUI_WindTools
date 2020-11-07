@@ -42,26 +42,38 @@ W.Changelog[208] = {
         ["zhCN"] = {
             "[队伍信息] 支持网易集合石.",
             "[美化皮肤] 优化 Ace3 皮肤.",
+            "[美化皮肤] 优化 Immersion 皮肤.",
             "[美化皮肤] 优化职业大厅条皮肤.",
-            "[游戏条] LFG 按钮优先使用网易集合石."
+            "[美化皮肤] 优化玩家选择界面皮肤.",
+            "[游戏条] LFG 按钮优先使用网易集合石.",
+            "[跳过过场动画] 修复了部分动画无法被处理的问题."
         },
         ["zhTW"] = {
             "[隊伍信息] 支援網易集合石.",
             "[美化皮膚] 優化 Ace3 皮膚.",
+            "[美化皮膚] 優化 Immersion 皮膚.",
             "[美化皮膚] 優化職業大廳皮膚.",
-            "[遊戲條] LFG 按鍵優先使用網易集合石"
+            "[美化皮膚] 優化玩家選擇皮膚.",
+            "[遊戲條] LFG 按鍵優先使用網易集合石",
+            "[跳過過場動畫] 修復了部分動畫無法被處理的問題."
         },
         ["enUS"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
+            "[Skins] Optimize Immersion skins.",
             "[Skins] Optimize order hall bar skin.",
-            "[Game Bar] LFG Button support NetEase Meeting Stone."
+            "[Skins] Optimize player choice frame skin.",
+            "[Game Bar] LFG Button support NetEase Meeting Stone.",
+            "[Skip Cut Scene] Fix the bug that some cut scene cannot be handled."
         },
         ["koKR"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
+            "[Skins] Optimize Immersion skins.",
             "[Skins] Optimize order hall bar skin.",
-            "[Game Bar] LFG Button support NetEase Meeting Stone."
+            "[Skins] Optimize player choice frame skin.",
+            "[Game Bar] LFG Button support NetEase Meeting Stone.",
+            "[Skip Cut Scene] Fix the bug that some cut scene cannot be handled."
         }
     }
 }

@@ -338,7 +338,7 @@ do
 
         if isLoaded then
             MER = _G.ElvUI_MerathilisUI and _G.ElvUI_MerathilisUI[1]
-            MERS = MER and MER:GetModule('MER_Skins')
+            MERS = MER and MER:GetModule("MER_Skins")
         end
 
         return isLoaded

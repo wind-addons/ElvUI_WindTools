@@ -15,7 +15,7 @@ local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 
 local function ReskinIcon(parent, icon, role, class)
-   -- Same role icon with ElvUI
+   -- Beautiful square icons
    if role then
       icon:SetTexture(W.Media.Textures.ROLES)
       icon:SetTexCoord(F.GetRoleTexCoord(role))

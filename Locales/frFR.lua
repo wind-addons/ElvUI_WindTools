@@ -781,6 +781,7 @@ L["The width of the buttons."] = true
 L["Theater of Pain"] = true
 L["There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."] = true
 L["There is no more whisper targets"] = true
+L["This cutscene cannot be skipped."] = true
 L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = true
 L["This module provides several easy-to-use methods of deleting items."] = true
 L["This module provides the feature that repositions the frames with drag and drop."] = true

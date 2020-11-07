@@ -91,7 +91,8 @@ function S:MeetingStone()
     local MainPanel = NEG.MainPanel
     if MainPanel then
         ES:HandlePortraitFrame(MainPanel)
-        S:CreateShadow(MainPanel.backdrop)
+        self:CreateShadow(MainPanel.backdrop)
+        self:MerathilisUISkin(MainPanel)
         MainPanel.PortraitFrame:Hide()
         local close =
             CreateFrame("Button", "WTMeetingStoneCloseButton", MainPanel, "UIPanelCloseButton, BackdropTemplate")
@@ -118,6 +119,7 @@ function S:MeetingStone()
             self.backdrop:Point("TOPLEFT", 6, E.PixelMode and -1 or -3)
             self.backdrop:Point("BOTTOMRIGHT", -6, 3)
             S:CreateShadow(self.backdrop)
+            S:MerathilisUITab(self)
         end
     )
 
@@ -352,6 +354,7 @@ function S:MeetingStone()
         BrokerPanel:SetBackdrop(nil)
         BrokerPanel:CreateBackdrop("Transparent")
         self:CreateShadow(BrokerPanel.backdrop)
+        self:MerathilisUISkin(BrokerPanel)
     end
 end
 

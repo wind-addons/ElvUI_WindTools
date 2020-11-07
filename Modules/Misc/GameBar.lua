@@ -549,7 +549,10 @@ if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
         end
     }
     ButtonTypes.GROUP_FINDER.tooltips = {
-        L["NetEase Meeting Stone"]
+        L["Group Finder"],
+        "\n",
+        LeftButtonIcon .. " " .. L["Group Finder"],
+        RightButtonIcon .. " " .. L["NetEase Meeting Stone"]
     }
 end
 

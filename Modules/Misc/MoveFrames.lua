@@ -235,9 +235,6 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_TalentUI"] = {
         "PlayerTalentFrame"
     },
-    ["Blizzard_TalkingHeadUI"] = {
-        "TalkingHeadFrame"
-    },
     ["Blizzard_TimeManager"] = {
         "TimeManagerFrame"
     },

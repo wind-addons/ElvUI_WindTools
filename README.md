@@ -92,7 +92,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 10. **BugSack Skin**: Apply skin for BugSack.
 11. **TinyInspect Skin**: Apply skin for TinyInspect.
 12. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
-12. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
+13. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

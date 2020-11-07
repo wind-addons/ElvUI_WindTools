@@ -13,14 +13,6 @@ function S:Blizzard_PlayerChoiceUI()
         return
     end
     self:CreateShadow(_G.PlayerChoiceFrame)
-
-    for i = 1, 4 do
-        local option = frame["Option" .. i]
-        if option then
-            F.SetFontOutline(option.OptionText.textObject)
-            F.SetFontOutline(option.Header.Text)
-        end
-    end
 end
 
 S:AddCallbackForAddon("Blizzard_PlayerChoiceUI")

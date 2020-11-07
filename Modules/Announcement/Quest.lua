@@ -3,7 +3,7 @@ local A = W:GetModule("Announcement")
 
 local _G = _G
 local pairs = pairs
-local strfind  = strfind
+local strfind = strfind
 
 local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
 local GetQuestLink = GetQuestLink
@@ -25,7 +25,7 @@ local function GetQuests()
 		-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
 		-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
 
-		if not skip then 
+		if not skip then
 			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
 
 			-- 基础任务信息, 用于后续生成句子使用
@@ -137,7 +137,7 @@ function A:Quest()
 									isDetailInfo = true
 								end
 
-								mainInfo = "[" .. questCache.title .. "]" .. " " .. questCache[queryIndex].item .. " "
+								mainInfo = questCache.link .. " " .. questCache[queryIndex].item .. " "
 								mainInfoColored = questCache.link .. " " .. questCache[queryIndex].item .. " "
 
 								mainInfo = mainInfo .. progressInfo
@@ -150,7 +150,7 @@ function A:Quest()
 			end
 		else -- 新的任务
 			if not questCache.worldQuestType then -- 屏蔽世界任务的接收, 路过不报告
-				mainInfo = "[" .. questCache.title .. "]" .. " " .. L["Accepted"]
+				mainInfo = questCache.link .. " " .. L["Accepted"]
 				mainInfoColored = questCache.link .. " " .. F.CreateColorString(L["Accepted"], {r = 1.000, g = 0.980, b = 0.396})
 				needAnnounce = true
 			end
@@ -158,8 +158,6 @@ function A:Quest()
 
 		if needAnnounce then
 			local message = extraInfo .. mainInfo
-			-- TODO: 疑似PTR无法发出带有链接的信息
-			-- print(gsub(message, "\124", "\124\124"))
 			if not E.db.WT.quest.switchButtons.enable or not config.paused then
 				self:SendMessage(message, self:GetChannel(config.channel))
 			end

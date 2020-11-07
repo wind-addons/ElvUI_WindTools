@@ -535,6 +535,13 @@ if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
     ButtonTypes.GROUP_FINDER.click = {
         LeftButton = function()
             if not InCombatLockdown() then
+                _G.ToggleLFDParentFrame()
+            else
+                _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+            end
+        end,
+        RightButton = function()
+            if not InCombatLockdown() then
                 MeetingStone:Toggle()
             else
                 _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)

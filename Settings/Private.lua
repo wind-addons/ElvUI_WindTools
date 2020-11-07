@@ -49,6 +49,30 @@ V.misc = {
 			[63796] = false,
 			[229385] = false
 		}
+	},
+	lfgList = {
+		enable = true,
+		reskinIcon = true,
+		icon = {
+			reskin = true,
+			custom = true,
+			pack = "SUNUI",
+			size = 16,
+			border = false,
+			alpha = 1
+		},
+		line = {
+			enable = true,
+			tex = "WindTools Glow",
+			width = 16,
+			height = 3,
+			offsetX = 0,
+			offsetY = -1,
+			alpha = 1
+		},
+		raiderIO = {
+			enable = false
+		}
 	}
 }
 

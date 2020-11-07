@@ -68,11 +68,6 @@ options.general = {
                 E.private.WT.misc[info[#info]] = value
                 M:SkipCutScene()
             end
-        },
-        lfgRoleIcons = {
-            order = 6,
-            type = "toggle",
-            name = L["LFG Role Icons"]
         }
     }
 }

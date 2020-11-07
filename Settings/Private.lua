@@ -37,7 +37,6 @@ V.misc = {
 	pauseToSlash = true,
 	noKanjiMath = false,
 	skipCutScene = false,
-	lfgRoleIcons = true,
 	moveBlizzardFrames = true,
 	moveElvUIBags = true,
 	rememberPositions = false,

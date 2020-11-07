@@ -3,6 +3,7 @@ local options = W.options.misc.args
 local LSM = E.Libs.LSM
 local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
+local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
 
 local format = format
@@ -1005,3 +1006,201 @@ do
         end
     }
 end
+
+local SampleStrings = {}
+do
+    local icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
+    SampleStrings.ffxiv = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.hexagonDPS, ":16:16")
+    SampleStrings.hexagon = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, ":16:16:0:0:64:64:2:56:2:56") .. " "
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.Healer, ":16:16:0:0:64:64:2:56:2:56") .. " "
+    icons = icons .. E:TextureString(CT.cache.elvuiRoleIconsPath.DPS, ":16:16")
+    SampleStrings.elvui = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.sunUITank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.sunUIDPS, ":16:16")
+    SampleStrings.sunui = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.lynUITank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.lynUIHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.lynUIDPS, ":16:16")
+    SampleStrings.lynui = icons
+end
+
+options.lfgList = {
+    order = 8,
+    type = "group",
+    name = L["LFG List"],
+    get = function(info)
+        return E.private.WT.misc.lfgList[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.misc.lfgList[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Reskinning the role icons."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        icon = {
+            order = 3,
+            type = "group",
+            name = L["Icon"],
+            disabled = function()
+                return not E.private.WT.misc.lfgList.enable
+            end,
+            get = function(info)
+                return E.private.WT.misc.lfgList.icon[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.lfgList.icon[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                reskin = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Reskin Icon"],
+                    desc = L["Change role icons."]
+                },
+                pack = {
+                    order = 2,
+                    type = "select",
+                    name = L["Style"],
+                    desc = L["Change the icons indicate the role."],
+                    hidden = function()
+                        return not E.private.WT.misc.lfgList.icon.reskin
+                    end,
+                    values = {
+                        SQUARE = L["Square"],
+                        HEXAGON = SampleStrings.hexagon,
+                        FFXIV = SampleStrings.ffxiv,
+                        SUNUI = SampleStrings.sunui,
+                        LYNUI = SampleStrings.lynui,
+                        DEFAULT = SampleStrings.elvui
+                    }
+                },
+                border = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Border"]
+                },
+                size = {
+                    order = 4,
+                    type = "range",
+                    name = L["Size"],
+                    min = 1,
+                    max = 20,
+                    step = 1
+                },
+                alpha = {
+                    order = 5,
+                    type = "range",
+                    name = L["Alpha"],
+                    min = 0,
+                    max = 1,
+                    step = 0.01
+                }
+            }
+        },
+        line = {
+            order = 4,
+            type = "group",
+            name = L["Line"],
+            disabled = function()
+                return not E.private.WT.misc.lfgList.enable
+            end,
+            get = function(info)
+                return E.private.WT.misc.lfgList.line[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.lfgList.line[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add a line in class color."]
+                },
+                tex = {
+                    order = 2,
+                    type = "select",
+                    name = L["Texture"],
+                    dialogControl = "LSM30_Statusbar",
+                    values = LSM:HashTable("statusbar")
+                },
+                width = {
+                    order = 4,
+                    type = "range",
+                    name = L["Width"],
+                    min = 1,
+                    max = 20,
+                    step = 1
+                },
+                height = {
+                    order = 4,
+                    type = "range",
+                    name = L["Height"],
+                    min = 1,
+                    max = 20,
+                    step = 1
+                },
+                offsetX = {
+                    order = 5,
+                    type = "range",
+                    name = L["X-Offset"],
+                    min = -20,
+                    max = 20,
+                    step = 1
+                },
+                offsetY = {
+                    order = 6,
+                    type = "range",
+                    name = L["Y-Offset"],
+                    min = -20,
+                    max = 20,
+                    step = 1
+                },
+                alpha = {
+                    order = 7,
+                    type = "range",
+                    name = L["Alpha"],
+                    min = 0,
+                    max = 1,
+                    step = 0.01
+                }
+            }
+        }
+    }
+}

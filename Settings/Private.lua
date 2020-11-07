@@ -52,11 +52,9 @@ V.misc = {
 	},
 	lfgList = {
 		enable = true,
-		reskinIcon = true,
 		icon = {
 			reskin = true,
-			custom = true,
-			pack = "SUNUI",
+			pack = "SQUARE",
 			size = 16,
 			border = false,
 			alpha = 1

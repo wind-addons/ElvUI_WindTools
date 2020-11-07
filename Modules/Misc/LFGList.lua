@@ -66,7 +66,7 @@ function LL:ReskinIcon(parent, icon, role, class)
     -- Beautiful square icons
     if role then
         if self.db.icon.reskin then
-            if not self.db.icon.custom then
+            if self.db.icon.pack == "SQUARE" then
                 icon:SetTexture(W.Media.Textures.ROLES)
                 icon:SetTexCoord(F.GetRoleTexCoord(role))
             else
@@ -153,7 +153,7 @@ function LL:Initialize()
     if not self.db.enable then
         return
     end
-    
+
     HandleMeetingStone()
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
 end

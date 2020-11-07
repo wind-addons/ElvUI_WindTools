@@ -328,11 +328,19 @@ end
 
 do
     local isLoaded
+    local MER
+    local MERS
 
     local function IsMerathilisUILoaded()
         if isLoaded == nil then
             isLoaded = IsAddOnLoaded("ElvUI_MerathilisUI")
         end
+
+        if isLoaded then
+            MER = _G.ElvUI_MerathilisUI and _G.ElvUI_MerathilisUI[1]
+            MERS = MER and MER:GetModule('MER_Skins')
+        end
+
         return isLoaded
     end
 
@@ -341,6 +349,12 @@ do
             if frame.Styling then
                 frame:Styling()
             end
+        end
+    end
+
+    function S:MerathilisUITab(tab)
+        if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() and MERS then
+            MERS:ReskinTab(tab)
         end
     end
 end

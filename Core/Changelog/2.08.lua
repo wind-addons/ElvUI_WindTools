@@ -13,7 +13,7 @@ W.Changelog[208] = {
             "[Move Frames] Disable remember position by default, try to clear the history of moving if frames get messed."
         },
         ["koKR"] = {
-            "[Move Frames] Disable remember position by default, try to clear the history of moving if frames get messed."
+            "[프레임 이동] 메모리 기능은 기본적으로 꺼져 있으며 문제가 발생하면 기록을 지울 수 있습니다."
         }
     },
     NEW = {
@@ -33,9 +33,9 @@ W.Changelog[208] = {
             "[Misc] Add new feature that using a colorful icon replaces the Blizzard LFG role icons."
         },
         ["koKR"] = {
-            "[Skins] Add new skin for NetEase Meeting Stone.",
-            "[Skins] Add new skin for NetEase Meeting Stone Plus.",
-            "[Misc] Add new feature that using a colorful icon replaces the Blizzard LFG role icons."
+            "[스킨] NetEase Meeting Stone 애드온 스킨 추가.",
+            "[스킨] NetEase Meeting Stone Plus 애드온 스킨 추가.",
+            "[기타] 파티 찾기에서 블리자드의 역할 아이콘을 대체하는 새로운 다양한 아이콘을 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -79,17 +79,17 @@ W.Changelog[208] = {
             "[Who Clicked] Prevent event fires multiple times."
         },
         ["koKR"] = {
-            "[Party Info] Add support of NetEase Meeting Stone.",
-            "[Skins] Optimize Ace3 skins.",
-            "[Skins] Optimize Immersion skins.",
-            "[Skins] Optimize order hall bar skin.",
-            "[Skins] Optimize player choice frame skin.",
-            "[Game Bar] LFG Button support NetEase Meeting Stone.",
-            "[Game Bar] Fix the mover size calculation if there is no button in one side.",
-            "[Skip Cut Scene] Fix the bug that some cut scene cannot be handled.",
-            "[Announcement] Fix the bug that it not worked when player in an instance group.",
-            "[Announcement] Use quest link rather than the text of quest title.",
-            "[Who Clicked] Prevent event fires multiple times."
+            "[파티 정보] NetEase Meeting Stone 애드온 지원.",
+            "[스킨] Ace3 스킨 최적화.",
+            "[스킨] Immersion 스킨 최적화.",
+            "[스킨] 직업 전당 바 스킨 최적화.",
+            "[스킨] 플레이어 선택 인터페이스 스킨 최적화.",
+            "[게임 바] 파티 찾기 버튼이 NetEase Meeting Stone 애드온을 지원합니다.",
+            "[게임 바] 한쪽에 버튼이 없는 경우 움직이는 프레임의 크기가 잘못되는 문제 수정.",
+            "[컷신 건너 뛰기] 일부 컷신이 처리되지 않는 버그 수정.",
+            "[알림] 간혹 인스턴스에서 알림을 받을 수 없는 문제를 수정했습니다.",
+            "[알림] 퀘스트 제목 대신 퀘스트 링크를 사용합니다.",
+            "[미니맵을 클릭한 사람] 동일한 이벤트가 여러 번 표시되지 않도록 방지합니다."
         }
     }
 }

@@ -86,6 +86,10 @@ AddMedia("lynUITank", "LynUI/Tank.tga", "Icons")
 AddMedia("lynUIDPS", "LynUI/DPS.tga", "Icons")
 AddMedia("lynUIHealer", "LynUI/Healer.tga", "Icons")
 
+AddMedia("fang2houUITank", "Fang2houUI/Tank.tga", "Icons")
+AddMedia("fang2houUIDPS", "Fang2houUI/DPS.tga", "Icons")
+AddMedia("fang2houUIHealer", "Fang2houUI/Healer.tga", "Icons")
+
 AddMedia("announcement", "Announcement.tga", "Icons")
 AddMedia("calendar", "Calendar.tga", "Icons")
 AddMedia("chat", "Chat.tga", "Icons")

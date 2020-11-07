@@ -44,15 +44,15 @@ function M:LFGRoleIcons()
                local icon = Enumerate["Icon" .. i]
                if icon and icon.SetTexture then
                   if #cache.TANK > 0 then
-                     icon:SetTexture(W.Media.Icons.lynUITank)
+                     icon:SetTexture(W.Media.Icons.fang2houUITank)
                      SetClassColor(icon, cache.TANK[1])
                      tremove(cache.TANK, 1)
                   elseif #cache.HEALER > 0 then
-                     icon:SetTexture(W.Media.Icons.lynUIHealer)
+                     icon:SetTexture(W.Media.Icons.fang2houUIHealer)
                      SetClassColor(icon, cache.HEALER[1])
                      tremove(cache.HEALER, 1)
                   elseif #cache.DAMAGER > 0 then
-                     icon:SetTexture(W.Media.Icons.lynUIDPS)
+                     icon:SetTexture(W.Media.Icons.fang2houUIDPS)
                      SetClassColor(icon, cache.DAMAGER[1])
                      tremove(cache.DAMAGER, 1)
                   else

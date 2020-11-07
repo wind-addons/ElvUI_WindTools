@@ -103,7 +103,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 7. **Tags**: Additional tags like range, health text without the sign, class color.
 8. **Game Bar**: A system bar in modern style; Support customization.
 9. **Skip Cut Scene**: Skip most cut scenes; Press the modified key to stop it temporarily.
-10. **LFG Role Icons**: Reskin the icons inside LFG group list with a bar in class color.
+10. **LFG List**: Reskin the icons inside LFG group list with a bar in class color.
 
 More features are coming soon.
 

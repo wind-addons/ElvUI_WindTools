@@ -20,22 +20,22 @@ W.Changelog[208] = {
         ["zhCN"] = {
             "[美化皮肤] 添加了网易集合石的美化.",
             "[美化皮肤] 添加了网易集合石加强版的美化.",
-            "[其他] 添加了预组队伍彩色定位图标的功能."
+            "[其他] 添加新的模块 [预组列表], 用于美化预组队伍和集合石的定位图标."
         },
         ["zhTW"] = {
             "[美化皮膚] 新增了網易集合石的美化.",
             "[美化皮膚] 新增了網易集合石加強版的美化.",
-            "[其他] 新增了預組隊伍彩色定位圖示的功能."
+            "[其他] 添加新的模組 [預組列表], 可美化預組隊伍和集合石的定位圖示."
         },
         ["enUS"] = {
             "[Skins] Add new skin for NetEase Meeting Stone.",
             "[Skins] Add new skin for NetEase Meeting Stone Plus.",
-            "[Misc] Add new feature that using a colorful icon replaces the Blizzard LFG role icons."
+            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons."
         },
         ["koKR"] = {
             "[스킨] NetEase Meeting Stone 애드온 스킨 추가.",
             "[스킨] NetEase Meeting Stone Plus 애드온 스킨 추가.",
-            "[기타] 파티 찾기에서 블리자드의 역할 아이콘을 대체하는 새로운 다양한 아이콘을 추가합니다."
+            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons."
         }
     },
     IMPROVEMENT = {

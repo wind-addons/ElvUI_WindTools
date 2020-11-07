@@ -20,22 +20,26 @@ W.Changelog[208] = {
         ["zhCN"] = {
             "[美化皮肤] 添加了网易集合石的美化.",
             "[美化皮肤] 添加了网易集合石加强版的美化.",
-            "[其他] 添加新的模块 [预组列表], 用于美化预组队伍和集合石的定位图标."
+            "[其他] 添加新的模块 [预组列表], 用于美化预组队伍和集合石的定位图标.",
+            "[游戏条] 添加了游戏菜单按钮."
         },
         ["zhTW"] = {
             "[美化皮膚] 新增了網易集合石的美化.",
             "[美化皮膚] 新增了網易集合石加強版的美化.",
-            "[其他] 添加新的模組 [預組列表], 可美化預組隊伍和集合石的定位圖示."
+            "[其他] 添加新的模組 [預組列表], 可美化預組隊伍和集合石的定位圖示.",
+            "[遊戲條] 新增了遊戲選項按鍵."
         },
         ["enUS"] = {
             "[Skins] Add new skin for NetEase Meeting Stone.",
             "[Skins] Add new skin for NetEase Meeting Stone Plus.",
-            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons."
+            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons.",
+            "[Game Bar] Add Game Menu button."
         },
         ["koKR"] = {
             "[스킨] NetEase Meeting Stone 애드온 스킨 추가.",
             "[스킨] NetEase Meeting Stone Plus 애드온 스킨 추가.",
-            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons."
+            "[Misc] Add new module [LFG List] for skinning Blizzard LFG / NetEase Meeting Stone role icons.",
+            "[게임 바] Game Menu 버튼이 추가되었습니다."
         }
     },
     IMPROVEMENT = {

@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
+local UF = E:GetModule("UnitFrames")
 
 local hooksecurefunc = hooksecurefunc
 local tinsert = tinsert
@@ -8,9 +9,33 @@ local tremove = tremove
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 
-local function SetClassColor(icon, class)
-   local color = E:ClassColor(class, false)
-   icon:SetVertexColor(color.r, color.g, color.b)
+local function ReskinIcon(parent, icon, role, class)
+   -- Same role icon with ElvUI
+   if role then
+      icon:SetTexture(W.Media.Textures.ROLES)
+      icon:SetTexCoord(F.GetRoleTexCoord(role))
+      icon:Size(16)
+      icon:SetAlpha(0.9)
+   else
+      icon:SetAlpha(0)
+   end
+
+   -- Create bar in class color behind
+   if not icon.back then
+      local back = parent:CreateTexture(nil, "ARTWORK")
+      back:SetTexture("Interface/Buttons/WHITE8X8")
+      back:Size(16, 3)
+      back:Point("TOP", icon, "BOTTOM", 0, -1)
+      icon.back = back
+   end
+
+   if class then
+      local color = E:ClassColor(class, false)
+      icon.back:SetVertexColor(color.r, color.g, color.b)
+      icon.back:SetAlpha(0.618)
+   else
+      icon.back:SetAlpha(0)
+   end
 end
 
 function M:LFGRoleIcons()
@@ -44,19 +69,16 @@ function M:LFGRoleIcons()
                local icon = Enumerate["Icon" .. i]
                if icon and icon.SetTexture then
                   if #cache.TANK > 0 then
-                     icon:SetTexture(W.Media.Icons.fang2houUITank)
-                     SetClassColor(icon, cache.TANK[1])
+                     ReskinIcon(Enumerate, icon, "TANK", cache.TANK[1])
                      tremove(cache.TANK, 1)
                   elseif #cache.HEALER > 0 then
-                     icon:SetTexture(W.Media.Icons.fang2houUIHealer)
-                     SetClassColor(icon, cache.HEALER[1])
+                     ReskinIcon(Enumerate, icon, "HEALER", cache.HEALER[1])
                      tremove(cache.HEALER, 1)
                   elseif #cache.DAMAGER > 0 then
-                     icon:SetTexture(W.Media.Icons.fang2houUIDPS)
-                     SetClassColor(icon, cache.DAMAGER[1])
+                     ReskinIcon(Enumerate, icon, "DAMAGER", cache.DAMAGER[1])
                      tremove(cache.DAMAGER, 1)
                   else
-                     icon:SetTexture(nil)
+                     ReskinIcon(Enumerate, icon)
                   end
                end
             end

@@ -67,9 +67,6 @@ V.misc = {
 			offsetX = 0,
 			offsetY = -1,
 			alpha = 1
-		},
-		raiderIO = {
-			enable = false
 		}
 	}
 }

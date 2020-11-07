@@ -38,14 +38,32 @@ function S:Immersion_Show()
     self:Immersion_ReskinTitleButton(_G.ImmersionFrame)
     self.reskinButtonAttemptCount = 0
     self.reskinButtonTimer = self:ScheduleRepeatingTimer("AttemptReskinButton", 0.1)
-    E:Delay(0.1, S.Immersion_ReskinRewards, S)
+    E:Delay(0.1, S.Immersion_ReskinItems, S)
 end
 
-function S:Immersion_ReskinRewards()
-    for i=1, 20 do
-        local rButton = _G["ImmersionQuestInfoItem"..i]
+function S:Immersion_ReskinItems()
+    for i = 1, 20 do
+        local rButton = _G["ImmersionQuestInfoItem" .. i]
         if not rButton then
-            return
+            break
+        end
+
+        if not rButton.windStyle then
+            if rButton.NameFrame then
+                rButton.NameFrame:StripTextures()
+                rButton.NameFrame:CreateBackdrop("Transparent")
+                rButton.NameFrame.backdrop:ClearAllPoints()
+                rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
+                self:CreateShadow(rButton.NameFrame.backdrop)
+            end
+            rButton.windStyle = true
+        end
+    end
+
+    for i = 1, 20 do
+        local rButton = _G["ImmersionProgressItem" .. i]
+        if not rButton then
+            break
         end
 
         if not rButton.windStyle then
@@ -130,6 +148,7 @@ function S:Immersion()
     elements.backdrop:ClearAllPoints()
     elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)
     elements.backdrop:Point("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
+    F.SetFontOutline(elements.Progress.ReqText)
     S:CreateShadow(elements.backdrop)
     S:MerathilisUISkin(elements.backdrop)
 

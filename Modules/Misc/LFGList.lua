@@ -82,8 +82,14 @@ function LL:ReskinIcon(parent, icon, role, class)
         end
 
         icon:SetAlpha(self.db.icon.alpha)
+        if icon.backdrop then
+            icon.backdrop:SetAlpha(self.db.icon.alpha)
+        end
     else
         icon:SetAlpha(0)
+        if icon.backdrop then
+            icon.backdrop:SetAlpha(0)
+        end
     end
 
     -- Create bar in class color behind

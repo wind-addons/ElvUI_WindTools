@@ -72,7 +72,7 @@ W.Changelog[208] = {
         ["enUS"] = {
             "[Party Info] Add support of NetEase Meeting Stone.",
             "[Skins] Optimize Ace3 skins.",
-            "[Skins] Optimize Immersion skins.",
+            "[Skins] Optimize Immersion skin.",
             "[Skins] Optimize order hall bar skin.",
             "[Skins] Optimize player choice frame skin.",
             "[Game Bar] LFG Button support NetEase Meeting Stone.",

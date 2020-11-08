@@ -436,6 +436,13 @@ function W:CheckCompatibility()
         "db.sle.raidmarkers.enable"
     )
 
+    self:CheckCompatibilityShadowAndLight(
+        format("%s-%s", L["Skins"], L["Scenario"]),
+        format("%s-%s", L["Skins"], _G.OBJECTIVES_TRACKER_LABEL),
+        "private.WT.skins.blizzard.scenario",
+        "private.sle.skins.objectiveTracker.enable"
+    )
+
     if self.CompatibiltyFrame.numModules > 0 then
         self.CompatibiltyFrame:Show()
     end

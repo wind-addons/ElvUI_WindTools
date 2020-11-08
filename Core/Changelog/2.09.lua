@@ -10,16 +10,20 @@ W.Changelog[209] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[美化皮肤] 添加了 Premade Groups Filter 的美化."
+            "[美化皮肤] 添加了 Premade Groups Filter 的美化.",
+            "[美化皮肤] 添加了 REHack 的美化.",
         },
         ["zhTW"] = {
-            "[美化皮膚] 新增了 Premade Groups Filter 的美化."
+            "[美化皮膚] 新增了 Premade Groups Filter 的美化.",
+            "[美化皮膚] 新增了 REHack 的美化.",
         },
         ["enUS"] = {
-            "[Skins] Add new skin for Premade Groups Filter."
+            "[Skins] Add new skin for Premade Groups Filter.",
+            "[Skins] Add new skin for REHack.",
         },
         ["koKR"] = {
-            "[스킨] Premade Groups Filter 애드온 스킨 추가."
+            "[스킨] Premade Groups Filter 애드온 스킨 추가.",
+            "[스킨] REHack 애드온 스킨 추가.",
         }
     },
     IMPROVEMENT = {

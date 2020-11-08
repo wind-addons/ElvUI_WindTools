@@ -3,6 +3,8 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
+local strmatch = strmatch
 
 function S:PremadeGroupsFilter_SetPoint(frame, point, relativeFrame, relativePoint, x, y)
     if point == "TOPLEFT" and relativePoint == "TOPRIGHT" then

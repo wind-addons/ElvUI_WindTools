@@ -53,7 +53,6 @@ local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
-local C_Timer_After = C_Timer.After
 
 local quests, choiceQueue = {}
 
@@ -257,15 +256,15 @@ local function AttemptAutoComplete(event)
             local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
             if not tagInfo or not tagInfo.worldQuestType then
                 if popUpType == "OFFER" then
-                    ShowQuestOffer(C_QuestLog_GetLogIndexForQuestID(questID))
+                    ShowQuestOffer(questID)
                 else
-                    ShowQuestComplete(C_QuestLog_GetLogIndexForQuestID(questID))
+                    ShowQuestComplete(questID)
                 end
             end
             return
         end
     else
-        C_Timer_After(1, AttemptAutoComplete)
+        E:Delay(1, AttemptAutoComplete)
     end
 end
 

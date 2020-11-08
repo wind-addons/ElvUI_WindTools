@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local type = type
 
@@ -171,6 +172,27 @@ function S:MeetingStone()
                 if button:IsShown() and not button.windStyle then
                     button:StripTextures()
                     ES:HandleButton(button)
+
+                    local selectedTex = button.backdrop:CreateTexture(nil)
+                    local classColor = E:ClassColor(E.myclass)
+                    selectedTex:SetTexture(E.media.blankTex)
+                    selectedTex:SetVertexColor(classColor.r, classColor.g, classColor.b, 0.4)
+                    selectedTex:SetInside()
+                    selectedTex:Hide()
+                    button.backdrop.selectedTex = selectedTex
+
+                    hooksecurefunc(
+                        button,
+                        "SetChecked",
+                        function(_, isChecked)
+                            if isChecked then
+                                selectedTex:Show()
+                            else
+                                selectedTex:Hide()
+                            end
+                        end
+                    )
+
                     button.windStyle = true
                 end
             end

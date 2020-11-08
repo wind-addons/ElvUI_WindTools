@@ -128,6 +128,12 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
 end
 
 function T:GroupInfo()
+    if IsAddOnLoaded("PremadeGroupsFilter") then
+        if _G.PremadeGroupsFilter and _G.PremadeGroupsFilter.Debug then
+            _G.PremadeGroupsFilter.Debug.OnLFGListSearchEntryOnEnter = E.noop
+        end
+    end
+
     T:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")
 
     -- Meeting Stone Hook

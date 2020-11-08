@@ -6,6 +6,7 @@
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>
 	<Script file='MeetingStone.lua'/>
+	<Script file='PremadeGroupFilter.lua'/>
 	<Script file='Rematch.lua'/>
 	<Script file='TinyInspect.lua'/>
 	<Script file='WeakAuras.lua'/>

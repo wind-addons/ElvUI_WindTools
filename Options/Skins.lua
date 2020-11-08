@@ -830,7 +830,7 @@ options.addons = {
     end,
     args = {
         enableAll = {
-            order = 0,
+            order = 1,
             type = "execute",
             name = L["Enable All"],
             func = function()
@@ -841,7 +841,7 @@ options.addons = {
             end
         },
         disableAll = {
-            order = 1,
+            order = 2,
             type = "execute",
             name = L["Disable All"],
             func = function()
@@ -851,8 +851,27 @@ options.addons = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end
         },
+        descGroup = {
+            order = 3,
+            type = "group",
+            name = " ",
+            inline = true,
+            args = {
+                desc = {
+                    order = 1,
+                    type = "description",
+                    name = format(
+                        "|cffff0000%s|r %s",
+                        L["Notice"],
+                        L["Skins only work if you installed and loaded the addon."]
+                    ),
+                    width = "full",
+                    fontSize = "medium"
+                }
+            }
+        },
         betterOption = {
-            order = 2,
+            order = 9,
             type = "description",
             name = " ",
             width = "full"
@@ -896,6 +915,11 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["NetEase Meeting Stone"]
+        },
+        premadeGroupsFilter = {
+            order = 10,
+            type = "toggle",
+            name = L["Premade Groups Filter"]
         },
         rematch = {
             order = 10,

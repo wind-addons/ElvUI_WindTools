@@ -139,6 +139,7 @@ V.skins = {
 		hekili = true,
 		immersion = true,
 		meetingStone = true,
+		premadeGroupsFilter = true,
 		rematch = false,
 		tinyInspect = true,
 		weakAuras = true,

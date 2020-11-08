@@ -24,15 +24,19 @@ W.Changelog[209] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "兼容性检查工具更新.",
             "[预组列表] 修复了图标背景无法正确隐藏的问题."
         },
         ["zhTW"] = {
+            "相容性確認工具更新.",
             "[預組列表] 修復了圖示背景無法正確隱藏的問題."
         },
         ["enUS"] = {
+            "Update compatibility check.",
             "[LFG List] Fix the bug that the backdrop of the icon cannot be hidden properly."
         },
         ["koKR"] = {
+            "호환성 검사 업데이트.",
             "[파티 찾기 목록] Fix the bug that the backdrop of the icon cannot be hidden properly."
         }
     }

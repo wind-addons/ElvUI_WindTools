@@ -140,6 +140,7 @@ V.skins = {
 		immersion = true,
 		meetingStone = true,
 		premadeGroupsFilter = true,
+		rehack = true,
 		rematch = false,
 		tinyInspect = true,
 		weakAuras = true,

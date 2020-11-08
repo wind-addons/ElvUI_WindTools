@@ -921,6 +921,11 @@ options.addons = {
             type = "toggle",
             name = L["Premade Groups Filter"]
         },
+        rehack = {
+            order = 10,
+            type = "toggle",
+            name = L["REHack"]
+        },
         rematch = {
             order = 10,
             type = "toggle",

@@ -176,7 +176,7 @@ function S:MeetingStone()
                     local selectedTex = button.backdrop:CreateTexture(nil)
                     local classColor = E:ClassColor(E.myclass)
                     selectedTex:SetTexture(E.media.blankTex)
-                    selectedTex:SetVertexColor(classColor.r, classColor.g, classColor.b, 0.4)
+                    selectedTex:SetVertexColor(classColor.r, classColor.g, classColor.b, 0.25)
                     selectedTex:SetInside()
                     selectedTex:Hide()
                     button.backdrop.selectedTex = selectedTex

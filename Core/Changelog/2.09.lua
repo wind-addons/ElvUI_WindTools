@@ -37,7 +37,7 @@ W.Changelog[209] = {
         },
         ["koKR"] = {
             "호환성 검사 업데이트.",
-            "[파티 찾기 목록] Fix the bug that the backdrop of the icon cannot be hidden properly."
+            "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다."
         }
     }
 }

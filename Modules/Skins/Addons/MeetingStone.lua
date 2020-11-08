@@ -171,6 +171,9 @@ function S:MeetingStone()
                 local button = self:GetButton(i)
                 if button:IsShown() and not button.windStyle then
                     button:StripTextures()
+                    if button.Icon then -- prevent cause error in ElvUI Skin functions
+                        button.Icon.GetTexture = button.Icon.GetTexture or E.noop
+                    end
                     ES:HandleButton(button)
 
                     local selectedTex = button.backdrop:CreateTexture(nil)

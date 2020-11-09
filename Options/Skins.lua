@@ -929,8 +929,7 @@ options.addons = {
         rematch = {
             order = 10,
             type = "toggle",
-            name = L["Rematch"],
-            hidden = true
+            name = L["Rematch"]
         },
         tinyInspect = {
             order = 10,

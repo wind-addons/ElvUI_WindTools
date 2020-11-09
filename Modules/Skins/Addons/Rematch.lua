@@ -20,14 +20,10 @@ function S:Rematch()
     end
 
     -- 背景
-    ES:HandleBlizzardRegions(frame, nil, true)
-    frame.NineSlice:Kill()
-    frame.portrait:Kill()
-    frame.Bg:Kill()
-    frame.TopTileStreaks:Kill()
+    frame:StripTextures()
+    frame.portrait:Hide()
     frame:CreateBackdrop()
     self:CreateShadow(frame)
-
     ES:HandleCloseButton(frame.CloseButton)
 
     -- 标题
@@ -192,6 +188,25 @@ function S:Rematch()
     ES:HandleButton(_G.RematchBottomPanel.SaveButton)
     ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
     ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
+    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
+
+    hooksecurefunc(
+        frame,
+        "SetupUseRematchButton",
+        function()
+            if _G.UseRematchButton then
+                ES:HandleCheckBox(_G.UseRematchButton)
+            end
+        end
+    )
+
+    -- 新建标签页
+    _G.RematchDialog:StripTextures()
+    _G.RematchDialog:CreateBackdrop("Transparent")
+    self:CreateShadow(_G.RematchDialog)
+    ES:HandleCloseButton(_G.RematchDialog.CloseButton)
+    ES:HandleButton(_G.RematchDialog.Accept)
+    ES:HandleButton(_G.RematchDialog.Cancel)
 
     -- 移动支持
     if MF and MF.db and MF.db.moveBlizzardFrames then

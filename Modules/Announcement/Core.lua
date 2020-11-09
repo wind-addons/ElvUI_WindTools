@@ -68,10 +68,12 @@ end
 ]]
 function A:GetChannel(channelDB)
     local inInstance, instanceType = IsInInstance()
-    inInstance = inInstance and (instanceType == "party" or instanceType == "raid")
-    if inInstance or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
+    if
+        inInstance and instanceType == "party" or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or
+            IsInRaid(LE_PARTY_CATEGORY_INSTANCE)
+     then
         return channelDB.instance
-    elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
+    elseif inInstance and instanceType == "raid" or IsInRaid(LE_PARTY_CATEGORY_HOME) then
         return channelDB.raid
     elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
         return channelDB.party

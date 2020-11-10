@@ -59,7 +59,7 @@ local whiteList = {
 }
 
 local acceptedFrames = {
-    "BagSync_MinimapButton",
+	"BagSync_MinimapButton"
 }
 
 local moveButtons = {}
@@ -187,7 +187,9 @@ function MB:SkinButton(frame)
 				if t and type(t) ~= "number" and (t:find("Border") or t:find("Background") or t:find("AlphaMask")) then
 					region:SetTexture(nil)
 				else
-					if name == "BagSync_MinimapButton" then region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon") end
+					if name == "BagSync_MinimapButton" then
+						region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
+					end
 					region:ClearAllPoints()
 					region:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
 					region:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)

@@ -25,7 +25,8 @@ local IgnoreList = {
 		"DroodFocusMinimapButton",
 		"QueueStatusMinimapButton",
 		"TimeManagerClockButton",
-		"MinimapZoneTextButton"
+		"MinimapZoneTextButton",
+		"Narci_MinimapButton"
 	},
 	startWith = {
 		"Archy",
@@ -57,6 +58,10 @@ local whiteList = {
 	"LibDBIcon"
 }
 
+local acceptedFrames = {
+    "BagSync_MinimapButton",
+}
+
 local moveButtons = {}
 
 function MB:ResetGarrisonSize()
@@ -72,7 +77,22 @@ function MB:SkinButton(frame)
 		tinsert(IgnoreList.full, "GameTimeFrame")
 	end
 
-	if frame == nil or frame:GetName() == nil or (frame:GetObjectType() ~= "Button") or not frame:IsVisible() then
+	if frame == nil or frame:GetName() == nil or not frame:IsVisible() then
+		return
+	end
+	local tmp
+	local frameType = frame:GetObjectType()
+	if frameType == "Button" then
+		tmp = 1
+	elseif frameType == "Frame" then
+		for _, f in pairs(acceptedFrames) do
+			if frame:GetName() == f then
+				tmp = 2
+				break
+			end
+		end
+	end
+	if not tmp then
 		return
 	end
 
@@ -105,7 +125,7 @@ function MB:SkinButton(frame)
 		end
 	end
 
-	if name ~= "GarrisonLandingPageMinimapButton" then
+	if name ~= "GarrisonLandingPageMinimapButton" and tmp ~= 2 then
 		frame:SetPushedTexture(nil)
 		frame:SetDisabledTexture(nil)
 		frame:SetHighlightTexture(nil)
@@ -135,7 +155,9 @@ function MB:SkinButton(frame)
 	end
 
 	if not frame.isSkinned then
-		frame:HookScript("OnClick", self.DelayedUpdateLayout)
+		if tmp ~= 2 then
+			frame:HookScript("OnClick", self.DelayedUpdateLayout)
+		end
 		for _, region in pairs({frame:GetRegions()}) do
 			local original = {}
 			original.Width, original.Height = frame:GetSize()
@@ -165,6 +187,7 @@ function MB:SkinButton(frame)
 				if t and type(t) ~= "number" and (t:find("Border") or t:find("Background") or t:find("AlphaMask")) then
 					region:SetTexture(nil)
 				else
+					if name == "BagSync_MinimapButton" then region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon") end
 					region:ClearAllPoints()
 					region:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
 					region:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)

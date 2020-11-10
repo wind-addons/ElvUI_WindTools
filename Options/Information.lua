@@ -119,6 +119,11 @@ options.help = {
                         E.InfoColor .. "Chen" .. "|r",
                         F.CreateClassColorString("一发径直入魂 @ " .. L["Burning Blade"] .. "(CN)", "HUNTER")
                     )
+                },
+                ["9"] = {
+                    order = 9,
+                    type = "description",
+                    name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. "(CN)")
                 }
             }
         },

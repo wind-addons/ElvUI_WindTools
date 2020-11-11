@@ -55,9 +55,9 @@ W.Changelog[209] = {
             "호환성 검사 업데이트.",
             "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
-            "[Announcement] Roll back the status detection of party.",
-            "[Minimap Buttons] Exclude Narcissus minimap icon. Thanks @ryanfys",
-            "[Minimap Buttons] Add support of BagSync. Thanks @ryanfys"
+            "[알림] 파티 상태 확인 로직 롤백.",
+            "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",
+            "[미니맵 버튼 통합 바] BagSync 아이콘을 지원합니다. Thanks @ryanfys"
         }
     }
 }

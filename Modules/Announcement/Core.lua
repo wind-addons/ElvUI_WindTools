@@ -67,13 +67,9 @@ end
     @return {string} 频道
 ]]
 function A:GetChannel(channelDB)
-    local inInstance, instanceType = IsInInstance()
-    if
-        inInstance and instanceType == "party" or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or
-            IsInRaid(LE_PARTY_CATEGORY_INSTANCE)
-     then
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
         return channelDB.instance
-    elseif inInstance and instanceType == "raid" or IsInRaid(LE_PARTY_CATEGORY_HOME) then
+    elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
         return channelDB.raid
     elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
         return channelDB.party

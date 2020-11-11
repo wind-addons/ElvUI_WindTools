@@ -10,7 +10,6 @@ local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
 local GetSpellInfo = GetSpellInfo
 local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
-local C_Timer_After = C_Timer.After
 
 -- 忽略列表
 local IgnoreList = {
@@ -267,12 +266,7 @@ end
 
 function MB.DelayedUpdateLayout()
 	if MB.db.orientation ~= "NOANCHOR" then
-		C_Timer_After(
-			.1,
-			function()
-				MB:UpdateLayout()
-			end
-		)
+		E:Delay(1, MB.UpdateLayout, MB)
 	end
 end
 
@@ -457,14 +451,8 @@ function MB:UpdateMouseOverConfig()
 end
 
 function MB:StartSkinning()
-	MB:UnregisterEvent("ADDON_LOADED")
-
-	C_Timer_After(
-		5,
-		function()
-			MB:SkinMinimapButtons()
-		end
-	)
+	self:UnregisterEvent("ADDON_LOADED")
+	E:Delay(5, self.SkinMinimapButtons, self)
 end
 
 function MB:CreateFrames()
@@ -514,8 +502,9 @@ function MB:SetUpdateHook()
 end
 
 function MB:PLAYER_ENTERING_WORLD()
-	self:SetUpdateHook()
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	self:SetUpdateHook()
+	E:Delay(1, self.SkinMinimapButtons, self)
 end
 
 function MB:Initialize()

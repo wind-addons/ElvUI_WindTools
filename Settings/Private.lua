@@ -108,6 +108,11 @@ V.skins = {
 	merathilisUISkin = true,
 	shadow = true,
 	increasedSize = 0,
+	color = {
+		r = 0,
+		g = 0,
+		b = 0
+	},
 	ime = {
 		label = {
 			name = F.GetCompatibleFont("Montserrat"),
@@ -124,11 +129,6 @@ V.skins = {
 		name = E.db.general.font,
 		size = 15,
 		style = "OUTLINE"
-	},
-	color = {
-		r = 0,
-		g = 0,
-		b = 0
 	},
 	addons = {
 		ace3 = true,

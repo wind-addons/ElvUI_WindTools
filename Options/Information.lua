@@ -1362,7 +1362,7 @@ options.reset = {
             name = AddColor(L["Skins"]),
             args = {
                 general = {
-                    order = 2,
+                    order = 1,
                     type = "execute",
                     name = L["General"],
                     func = function()
@@ -1374,22 +1374,26 @@ options.reset = {
                                 E.private.WT.skins.enable = V.skins.enable
                                 E.private.WT.skins.windtools = V.skins.windtools
                                 E.private.WT.skins.removeParchment = V.skins.removeParchment
+                                E.private.WT.skins.merathilisUISkin = V.skins.merathilisUISkin
+                                E.private.WT.skins.shadow = V.skins.shadow
+                                E.private.WT.skins.increasedSize = V.skins.increasedSize
                                 E.private.WT.skins.color = V.skins.color
                             end
                         )
                     end
                 },
-                addons = {
+                font = {
                     order = 2,
                     type = "execute",
-                    name = L["Addons"],
+                    name = L["Font"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Addons"],
+                            L["Font"],
                             nil,
                             function()
-                                E.private.WT.skins.addons = V.skins.addons
+                                E.private.WT.skins.ime = V.skins.ime
+                                E.private.WT.skins.errorMessage = V.skins.errorMessage
                             end
                         )
                     end
@@ -1410,7 +1414,7 @@ options.reset = {
                     end
                 },
                 elvui = {
-                    order = 3,
+                    order = 4,
                     type = "execute",
                     name = L["ElvUI"],
                     func = function()
@@ -1420,6 +1424,21 @@ options.reset = {
                             nil,
                             function()
                                 E.private.WT.skins.elvui = V.skins.elvui
+                            end
+                        )
+                    end
+                },
+                addons = {
+                    order = 5,
+                    type = "execute",
+                    name = L["Addons"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Addons"],
+                            nil,
+                            function()
+                                E.private.WT.skins.addons = V.skins.addons
                             end
                         )
                     end

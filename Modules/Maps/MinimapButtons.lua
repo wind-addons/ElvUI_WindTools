@@ -4,12 +4,23 @@ local S = W:GetModule("Skins")
 local MM = E:GetModule("Minimap")
 
 local _G = _G
-local tinsert, type, pairs, select = tinsert, type, pairs, select
-local ceil, floor, min, strlen, strsub, strfind = ceil, floor, min, strlen, strsub, strfind
-local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
-local CreateFrame, InCombatLockdown = CreateFrame, InCombatLockdown
+local ceil = ceil
+local floor = floor
+local min = min
+local pairs = pairs
+local select = select
+local strfind = strfind
+local strlen = strlen
+local strsub = strsub
+local tinsert = tinsert
+local type = type
+local unpack = unpack
+
+local CreateFrame = CreateFrame
 local GetSpellInfo = GetSpellInfo
-local RegisterStateDriver, UnregisterStateDriver = RegisterStateDriver, UnregisterStateDriver
+local InCombatLockdown = InCombatLockdown
+local RegisterStateDriver = RegisterStateDriver
+local UnregisterStateDriver = UnregisterStateDriver
 
 -- 忽略列表
 local IgnoreList = {
@@ -171,7 +182,7 @@ function MB:SkinButton(frame)
 					if not self.db.mouseOver then
 						return
 					end
-					UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
+					E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
 				end
 			)
 			frame.OldSetScript = frame.SetScript
@@ -189,7 +200,7 @@ function MB:SkinButton(frame)
 					if not self.db.mouseOver then
 						return
 					end
-					UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
+					E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
 				end
 			)
 			frame.OldSetScript = frame.SetScript
@@ -290,7 +301,7 @@ function MB:SkinButton(frame)
 				if not self.db.mouseOver then
 					return
 				end
-				UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
+				E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
 			end
 		)
 
@@ -303,7 +314,7 @@ function MB:SkinButton(frame)
 				if not self.db.mouseOver then
 					return
 				end
-				UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
+				E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
 			end
 		)
 

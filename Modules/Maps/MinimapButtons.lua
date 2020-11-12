@@ -365,9 +365,9 @@ function MB:UpdateLayout()
 
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			if not self.db.backdrop then
-				frame.shadow:Show()
+				frame.backdrop.shadow:Show()
 			else
-				frame.shadow:Hide()
+				frame.backdrop.shadow:Hide()
 			end
 		end
 

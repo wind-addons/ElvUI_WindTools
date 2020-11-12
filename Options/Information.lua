@@ -1497,8 +1497,8 @@ options.reset = {
                                 E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
                                 E.private.WT.misc.saveArtifact = V.misc.saveArtifact
                                 E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
-                                E.db.WT.misc.disableTalkingHead = p.misc.disableTalkingHead
-                                E.db.WT.misc.skipCutScene = p.misc.skipCutScene
+                                E.db.WT.misc.disableTalkingHead = P.misc.disableTalkingHead
+                                E.db.WT.misc.skipCutScene = P.misc.skipCutScene
                             end
                         )
                     end

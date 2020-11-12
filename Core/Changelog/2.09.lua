@@ -45,7 +45,9 @@ W.Changelog[209] = {
             "[美化皮肤] 优化了 WeakAuras 设定的美化.",
             "[通告] 回调队伍判定.",
             "[小地图按钮] 除外 Narcissus 小地图图标. 感谢 @ryanfys",
-            "[小地图按钮] 添加对 BagSync 的支持. 感谢 @ryanfys"
+            "[小地图按钮] 添加对 BagSync 的支持. 感谢 @ryanfys",
+            "[小地图按钮] 添加对 Guild Roster Manager 的支持.",
+            "[小地图按钮] 添加高亮边框."
         },
         ["zhTW"] = {
             "清理代碼.",
@@ -57,7 +59,9 @@ W.Changelog[209] = {
             "[美化皮膚] 優化 WeakAuras 設定皮膚.",
             "[通告] 回調隊伍判定.",
             "[小地圖按鍵] 除外 Narcissus 小地圖圖示. 感謝 @ryanfys",
-            "[小地圖按鍵] 添加對 BagSync 的支持. 感謝 @ryanfys"
+            "[小地圖按鍵] 新增對 BagSync 的支持. 感謝 @ryanfys",
+            "[小地圖按鍵] 新增對 Guild Roster Manager 的支持.",
+            "[小地圖按鍵] 新增高亮邊框."
         },
         ["enUS"] = {
             "Cleanup codes.",
@@ -69,7 +73,9 @@ W.Changelog[209] = {
             "[Skins] Optimize WeakAura Options skin.",
             "[Announcement] Roll back the status detection of party.",
             "[Minimap Buttons] Exclude Narcissus minimap icon. Thanks @ryanfys",
-            "[Minimap Buttons] Add support of BagSync. Thanks @ryanfys"
+            "[Minimap Buttons] Add support of BagSync. Thanks @ryanfys",
+            "[Minimap Buttons] Add support of Guild Roster Manager.",
+            "[Minimap Buttons] Add highlight border."
         },
         ["koKR"] = {
             "코드 정리.",
@@ -81,7 +87,9 @@ W.Changelog[209] = {
             "[스킨] WeakAura Options 스킨 최적화.",
             "[알림] 파티 상태 확인 로직 롤백.",
             "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",
-            "[미니맵 버튼 통합 바] BagSync 아이콘을 지원합니다. Thanks @ryanfys"
+            "[미니맵 버튼 통합 바] BagSync 아이콘을 지원합니다. Thanks @ryanfys",
+            "[미니맵 버튼 통합 바] Guild Roster Manager 아이콘을 지원합니다.",
+            "[Minimap Buttons] Add highlight border."
         }
     }
 }

@@ -1279,8 +1279,10 @@ options.reset = {
                             function()
                                 E.private.WT.tooltips.icon = V.tooltips.icon
                                 E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
+                                E.private.WT.tooltips.objectiveProgressAccuracy = V.tooltips.objectiveProgressAccuracy
                                 E.db.WT.tooltips.yOffsetOfHealthBar = P.tooltips.yOffsetOfHealthBar
                                 E.db.WT.tooltips.yOffsetOfHealthText = P.tooltips.yOffsetOfHealthText
+                                E.db.WT.tooltips.groupInfo = P.tooltips.groupInfo
                             end
                         )
                     end
@@ -1296,21 +1298,6 @@ options.reset = {
                             nil,
                             function()
                                 E.private.WT.tooltips.progression = V.tooltips.progression
-                            end
-                        )
-                    end
-                },
-                groupInfo = {
-                    order = 3,
-                    type = "execute",
-                    name = L["Group Info"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Group Info"],
-                            nil,
-                            function()
-                                E.db.WT.tooltips.groupInfo = P.tooltips.groupInfo
                             end
                         )
                     end

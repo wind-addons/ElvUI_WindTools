@@ -230,7 +230,7 @@ function MB:SkinButton(frame)
 
 		frame:CreateBackdrop("Tranparent")
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-			S:CreateShadow(frame)
+			S:CreateShadow(frame.backdrop)
 		end
 
 		frame:HookScript(
@@ -245,6 +245,7 @@ function MB:SkinButton(frame)
 				end
 			end
 		)
+
 		frame:HookScript(
 			"OnLeave",
 			function()

@@ -920,17 +920,17 @@ options.reset = {
             inline = true,
             name = AddColor(L["Item"]),
             args = {
-                alreadyKnown = {
+                extraItemsBar = {
                     order = 1,
                     type = "execute",
-                    name = L["Already Known"],
+                    name = L["Extra Items Bar"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Already Known"],
+                            L["Extra Items Bar"],
                             nil,
                             function()
-                                E.db.WT.item.alreadyKnown = P.item.alreadyKnown
+                                E.db.WT.item.extraItemsBar = P.item.extraItemsBar
                             end
                         )
                     end
@@ -950,8 +950,23 @@ options.reset = {
                         )
                     end
                 },
-                fastLoot = {
+                alreadyKnown = {
                     order = 3,
+                    type = "execute",
+                    name = L["Already Known"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Already Known"],
+                            nil,
+                            function()
+                                E.db.WT.item.alreadyKnown = P.item.alreadyKnown
+                            end
+                        )
+                    end
+                },
+                fastLoot = {
+                    order = 4,
                     type = "execute",
                     name = L["Fast Loot"],
                     func = function()
@@ -966,7 +981,7 @@ options.reset = {
                     end
                 },
                 trade = {
-                    order = 4,
+                    order = 5,
                     type = "execute",
                     name = L["Trade"],
                     func = function()
@@ -980,17 +995,33 @@ options.reset = {
                         )
                     end
                 },
-                extraItemsBar = {
-                    order = 5,
+                contacts = {
+                    order = 6,
                     type = "execute",
-                    name = L["Extra Items Bar"],
+                    name = L["Contacts"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Extra Items Bar"],
+                            L["Contacts"],
                             nil,
                             function()
-                                E.db.WT.item.extraItemsBar = P.item.extraItemsBar
+                                E.db.WT.item.contacts = P.item.contacts
+                                E.global.WT.item.contacts = G.item.contacts
+                            end
+                        )
+                    end
+                },
+                inspect = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Inspect"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Inspect"],
+                            nil,
+                            function()
+                                E.db.WT.item.inspect = P.item.inspect
                             end
                         )
                     end

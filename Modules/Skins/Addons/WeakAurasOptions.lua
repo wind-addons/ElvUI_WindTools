@@ -129,28 +129,29 @@ function S:WeakAuras_ShowOptions()
         return
     end
 
-    -- 建立新的背景
+    -- Remove background
     frame:SetBackdrop(nil)
     frame:CreateBackdrop("Transparent")
     S:CreateShadow(frame)
 
-    -- 尺寸修改图标位置位移
+    for _, region in pairs {frame:GetRegions()} do
+        if region:GetObjectType() == "Texture" then
+            region:SetTexture(nil)
+            region.SetTexture = E.noop
+        end
+    end
+
+    -- Change position of resize buttons
     frame.bottomLeftResizer:ClearAllPoints()
     frame.bottomLeftResizer:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", -5, -5)
     frame.bottomRightResizer:ClearAllPoints()
     frame.bottomRightResizer:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
 
-    for _, region in pairs {frame:GetRegions()} do
-        if region.GetTexture then
-            region:StripTextures()
-        end
-    end
-
     for _, child in pairs {frame:GetChildren()} do
         local numRegions = child:GetNumRegions()
         local numChildren = child:GetNumChildren()
 
-        if numRegions == 1 then -- 标题
+        if numRegions == 1 then -- Title
             local firstRegion = child:GetRegions()
             local text = firstRegion.GetText and firstRegion:GetText()
             if text and strfind(text, "^WeakAuras%s%d") then
@@ -161,7 +162,7 @@ function S:WeakAuras_ShowOptions()
             end
         end
 
-        if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then -- 右上按钮
+        if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then -- Top right buttons(close & collapse)
             for _, region in pairs {child:GetRegions()} do
                 region:StripTextures()
             end

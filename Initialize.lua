@@ -11,8 +11,6 @@ local tonumber = tonumber
 
 local GetAddOnMetadata = GetAddOnMetadata
 
-local C_Timer_After = C_Timer.After
-
 -- 注册 Wind 工具箱为 Ace3 插件
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
@@ -58,12 +56,7 @@ do
     local checked = false
     function W:PLAYER_ENTERING_WORLD()
         if not firstTime then
-            C_Timer_After(
-                7,
-                function()
-                    self:CheckInstalledVersion()
-                end
-            )
+            E:Delay(7, self.CheckInstalledVersion, self)
             firstTime = true
         end
 
@@ -72,12 +65,7 @@ do
             checked = true
         end
 
-        C_Timer_After(
-            1,
-            function()
-                collectgarbage("collect")
-            end
-        )
+        E:Delay(1, collectgarbage, "collect")
     end
 end
 

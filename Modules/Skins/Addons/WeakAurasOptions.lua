@@ -147,6 +147,27 @@ function S:WeakAuras_ShowOptions()
     frame.bottomRightResizer:ClearAllPoints()
     frame.bottomRightResizer:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
 
+    -- Filter editbox
+    if _G.WeakAurasFilterInput then
+        local inputBox = _G.WeakAurasFilterInput
+        local rightPart
+        ES:HandleEditBox(inputBox)
+        for i = 1, inputBox:GetNumPoints() do
+            local point, relativeFrame = inputBox:GetPoint(i)
+            if point == "RIGHT" then
+                rightPart = relativeFrame
+                break
+            end
+        end
+        if rightPart then
+            inputBox:SetHeight(inputBox:GetHeight()+3)
+            inputBox:ClearAllPoints()
+            inputBox:Point("TOP", frame, "TOP", 0, -43)
+            inputBox:Point("LEFT", frame, "LEFT", 18, 0)
+            inputBox:Point("RIGHT", rightPart, "LEFT", -2, 0)
+        end
+    end
+
     for _, child in pairs {frame:GetChildren()} do
         local numRegions = child:GetNumRegions()
         local numChildren = child:GetNumChildren()

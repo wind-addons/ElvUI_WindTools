@@ -161,13 +161,35 @@ function MB:SkinButton(frame)
 				"OnEnter",
 				function()
 					onEnter(frame)
+					if frame.backdrop.SetBackdropBorderColor then
+						frame.backdrop:SetBackdropBorderColor(
+							E.db.general.valuecolor.r,
+							E.db.general.valuecolor.g,
+							E.db.general.valuecolor.b
+						)
+					end
 					if not self.db.mouseOver then
 						return
 					end
 					UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
-					if frame.SetBackdropBorderColor then
-						frame:SetBackdropBorderColor(.7, .7, 0)
+				end
+			)
+			frame.OldSetScript = frame.SetScript
+			frame.SetScript = E.noop
+		end
+		if frame:HasScript("OnLeave") then
+			local onLeave = frame:GetScript("OnLeave")
+			frame:SetScript(
+				"OnLeave",
+				function()
+					onLeave(frame)
+					if frame.backdrop.SetBackdropBorderColor then
+						frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 					end
+					if not self.db.mouseOver then
+						return
+					end
+					UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
 				end
 			)
 			frame.OldSetScript = frame.SetScript
@@ -258,26 +280,30 @@ function MB:SkinButton(frame)
 		frame:HookScript(
 			"OnEnter",
 			function()
+				if frame.backdrop.SetBackdropBorderColor then
+					frame.backdrop:SetBackdropBorderColor(
+						E.db.general.valuecolor.r,
+						E.db.general.valuecolor.g,
+						E.db.general.valuecolor.b
+					)
+				end
 				if not self.db.mouseOver then
 					return
 				end
 				UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
-				if frame.SetBackdropBorderColor then
-					frame:SetBackdropBorderColor(.7, .7, 0)
-				end
 			end
 		)
 
 		frame:HookScript(
 			"OnLeave",
 			function()
+				if frame.backdrop.SetBackdropBorderColor then
+					frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+				end
 				if not self.db.mouseOver then
 					return
 				end
 				UIFrameFadeOut(self.bar, 0.2, self.bar:GetAlpha(), 0)
-				if frame.SetBackdropBorderColor then
-					frame:SetBackdropBorderColor(0, 0, 0)
-				end
 			end
 		)
 

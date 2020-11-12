@@ -130,15 +130,7 @@ function S:WeakAuras_ShowOptions()
     end
 
     -- 建立新的背景
-    frame.LeftEdge:Kill()
-    frame.TopEdge:Kill()
-    frame.RightEdge:Kill()
-    frame.BottomEdge:Kill()
-    frame.TopLeftCorner:Kill()
-    frame.TopRightCorner:Kill()
-    frame.BottomLeftCorner:Kill()
-    frame.BottomRightCorner:Kill()
-    frame.Center:Kill()
+    frame:SetBackdrop(nil)
     frame:CreateBackdrop("Transparent")
     S:CreateShadow(frame)
 
@@ -260,15 +252,7 @@ function S:WeakAuras_TextEditor()
         return
     end
 
-    frame.TopEdge:Kill()
-    frame.LeftEdge:Kill()
-    frame.RightEdge:Kill()
-    frame.BottomEdge:Kill()
-    frame.TopLeftCorner:Kill()
-    frame.TopRightCorner:Kill()
-    frame.BottomLeftCorner:Kill()
-    frame.BottomRightCorner:Kill()
-    frame.Center:Kill()
+    frame:SetBackdrop(nil)
     frame:CreateBackdrop("Transparent")
     S:CreateShadow(frame)
 

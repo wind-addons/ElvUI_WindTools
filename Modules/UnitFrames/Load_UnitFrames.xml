@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='CastBar.lua'/>
 	<Script file='QuickFocus.lua'/>
 	<Script file='RoleIcon.lua'/>
 </Ui>

@@ -3,10 +3,18 @@ local W = unpack(select(2, ...))
 W.Changelog[209] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "由于 ElvUI-单位框体 已更新相同功能, 移除 [单位框体-施法条] 模块."
+        },
+        ["zhTW"] = {
+            "由于 ElvUI-單位框架 已更新相同功能, 移除 [單位框架-施法條] 模組."
+        },
+        ["enUS"] = {
+            "Because ElvUI unitframes added new font setting, [Unitframes-Cast Bar] module has been removed."
+        },
+        ["koKR"] = {
+            "Because ElvUI unitframes added new font setting, [Unitframes-Cast Bar] module has been removed."
+        }
     },
     NEW = {
         ["zhCN"] = {

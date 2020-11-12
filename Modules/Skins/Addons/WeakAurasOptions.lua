@@ -10,8 +10,6 @@ local unpack = unpack
 
 local IsAddOnLoaded = IsAddOnLoaded
 
-local C_Timer_After = C_Timer.After
-
 local function TryHandleButtonAfter(name, times)
     times = times or 0
     if times > 10 then
@@ -29,12 +27,7 @@ local function TryHandleButtonAfter(name, times)
 
     if not handled then
         times = times + 1
-        C_Timer_After(
-            .01,
-            function()
-                TryHandleButtonAfter(name, times)
-            end
-        )
+        E:Dealy(0.02, TryHandleButtonAfterm, name, times)
     end
 end
 
@@ -58,12 +51,7 @@ local function TryHandleTextureAfter(name, times)
 
     if not handled then
         times = times + 1
-        C_Timer_After(
-            .05,
-            function()
-                TryHandleTextureAfter(name, times)
-            end
-        )
+        E:Dealy(0.05, TryHandleButtonAfterm, name, times)
     end
 end
 

@@ -27,7 +27,7 @@ local function TryHandleButtonAfter(name, times)
 
     if not handled then
         times = times + 1
-        E:Dealy(0.02, TryHandleButtonAfterm, name, times)
+        E:Delay(0.02, TryHandleButtonAfter, name, times)
     end
 end
 
@@ -51,7 +51,7 @@ local function TryHandleTextureAfter(name, times)
 
     if not handled then
         times = times + 1
-        E:Dealy(0.05, TryHandleButtonAfterm, name, times)
+        E:Delay(0.05, TryHandleButtonAfter, name, times)
     end
 end
 

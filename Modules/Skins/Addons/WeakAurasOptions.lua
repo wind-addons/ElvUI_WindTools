@@ -13,26 +13,28 @@ local wipe = wipe
 local IsAddOnLoaded = IsAddOnLoaded
 
 local buttons = {}
+local expandButtons = {}
 
-local function TryHandleButtonAfter(name, times)
-    times = times or 0
-    if times > 10 then
+local function ReskinExpandButtons()
+    if #expandButtons == 0 then
         return
     end
 
-    local handled = false
-
-    for i = 1, 2 do
-        if _G[name .. i] then
-            ES:HandleButton(_G[name .. i])
-            handled = true
+    local newList = {}
+    for i = 1, #expandButtons do
+        local handled = false
+        for j = 1, 2 do
+            if _G[expandButtons[i] .. j] then
+                ES:HandleButton(_G[expandButtons[i] .. j])
+                handled = true
+            end
+        end
+        if not handled then
+            tinsert(newList, expandButtons[i])
         end
     end
-
-    if not handled then
-        times = times + 1
-        E:Delay(0.02, TryHandleButtonAfter, name, times)
-    end
+    wipe(expandButtons)
+    expandButtons = newList
 end
 
 local function ReskinButtons()
@@ -47,7 +49,10 @@ local function ReskinButtons()
         for _, child in pairs {button:GetChildren()} do
             if child.model or child.texture or child.mask or child.region or child.defaultIcon then
                 for _, region in pairs {child:GetRegions()} do
-                    if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
+                    if
+                        region:GetObjectType() == "Texture" and
+                            region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2"
+                     then
                         region:Kill()
                         handled = true
                     end
@@ -60,6 +65,27 @@ local function ReskinButtons()
     end
     wipe(buttons)
     buttons = newList
+end
+
+local function ReskinNormalButton(button, next)
+    if button.Left and button.Middle and button.Right and button.Text then
+        ES:HandleButton(button)
+    end
+    if next then
+        for _, child in pairs {button:GetChildren()} do
+            if child:GetObjectType() == "Button" then
+                ReskinNormalButton(child)
+            end
+        end
+    end
+end
+
+local function ReskinChildButton(frame)
+    for _, child in pairs {frame:GetChildren()} do
+        if child:GetObjectType() == "Button" then
+            ReskinNormalButton(child, true)
+        end
+    end
 end
 
 function S:WeakAurasMultiLineEditBox(Constructor)
@@ -82,8 +108,12 @@ function S:WeakAurasMultiLineEditBox(Constructor)
         widget.frame.backdrop:Point("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
         widget.frame.backdrop:Point("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
 
-        local expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
-        TryHandleButtonAfter(expandButtonName)
+        local expandButtonName = widget.button:GetName()
+        if expandButtonName then
+            expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
+            tinsert(expandButtons, expandButtonName)
+        end
+        E:Delay(0.02, ReskinExpandButtons)
         return widget
     end
 
@@ -134,6 +164,8 @@ function S:WeakAurasNewButton(Constructor)
     return SkinedConstructor
 end
 
+
+
 function S:WeakAuras_ShowOptions()
     local frame = _G.WeakAurasOptions
     if not frame or frame.windStyle then
@@ -152,8 +184,18 @@ function S:WeakAuras_ShowOptions()
         end
     end
 
-    -- Template buttons
+    -- Buttons
     ReskinButtons()
+    ReskinExpandButtons()
+
+    for _, child in pairs {frame:GetChildren()} do
+        if child:GetObjectType() == "Button" then
+            ReskinNormalButton(child, true)
+        elseif child:GetObjectType() == "Frame" then
+            ReskinChildButton(child)
+            ReskinNormalButton(child, true)
+        end
+    end
 
     -- Change position of resize buttons
     frame.bottomLeftResizer:ClearAllPoints()

@@ -13,7 +13,7 @@ W.Changelog[209] = {
             "Because ElvUI unitframes added new font setting, [Unitframes-Cast Bar] module has been removed."
         },
         ["koKR"] = {
-            "Because ElvUI unitframes added new font setting, [Unitframes-Cast Bar] module has been removed."
+            "ElvUI 유닛프레임에 새로운 글꼴 설정이 추가되었기 때문에 [유닛프레임 - 시전 바] 모듈이 제거되었습니다."
         }
     },
     NEW = {
@@ -65,7 +65,7 @@ W.Changelog[209] = {
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다.",
-            "[LFG List] Icon reskin now also works on Raid group and custom group.",
+            "[파티 찾기 목록] 이제 새로운 역할 아이콘은 파티 구성하기의 공격대 및 사용자 설정 그룹에서도 작동합니다.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[알림] 파티 상태 확인 로직 롤백.",
             "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",

@@ -491,14 +491,14 @@ function MB:UpdateMouseOverConfig()
 		self.bar:SetScript(
 			"OnEnter",
 			function(self)
-				UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
+				E:UIFrameFadeIn(self, (1 - self:GetAlpha()) * 0.382, self:GetAlpha(), 1)
 			end
 		)
 
 		self.bar:SetScript(
 			"OnLeave",
 			function(self)
-				UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
+				E:UIFrameFadeOut(self, self:GetAlpha() * 0.382, self:GetAlpha(), 0)
 			end
 		)
 

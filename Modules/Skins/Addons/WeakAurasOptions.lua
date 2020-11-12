@@ -96,6 +96,9 @@ function S:WeakAurasDisplayButton(Constructor)
         widget.icon:SetTexCoord(unpack(E.TexCoords))
         TryHandleTextureAfter(widget.frame:GetName())
         ES:HandleEditBox(widget.renamebox)
+        widget.frame.highlight:SetTexture(E.media.blankTex)
+        widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
+        widget.frame.highlight:SetInside()
         return widget
     end
 
@@ -160,7 +163,7 @@ function S:WeakAuras_ShowOptions()
             end
         end
         if rightPart then
-            inputBox:SetHeight(inputBox:GetHeight()+3)
+            inputBox:SetHeight(inputBox:GetHeight() + 3)
             inputBox:ClearAllPoints()
             inputBox:Point("TOP", frame, "TOP", 0, -43)
             inputBox:Point("LEFT", frame, "LEFT", 18, 0)

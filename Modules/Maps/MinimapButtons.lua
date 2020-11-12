@@ -151,6 +151,28 @@ function MB:SkinButton(frame)
 
 	if name == "GRM_MinimapButton" then
 		frame.GRM_MinimapButtonBorder:Hide()
+		frame:SetPushedTexture(nil)
+		frame:SetHighlightTexture(nil)
+		frame.SetPushedTexture = E.noop
+		frame.SetHighlightTexture = E.noop
+		if frame:HasScript("OnEnter") then
+			local onEnter = frame:GetScript("OnEnter")
+			frame:SetScript(
+				"OnEnter",
+				function()
+					onEnter(frame)
+					if not self.db.mouseOver then
+						return
+					end
+					UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
+					if frame.SetBackdropBorderColor then
+						frame:SetBackdropBorderColor(.7, .7, 0)
+					end
+				end
+			)
+			frame.OldSetScript = frame.SetScript
+			frame.SetScript = E.noop
+		end
 	end
 
 	if not frame.isSkinned then

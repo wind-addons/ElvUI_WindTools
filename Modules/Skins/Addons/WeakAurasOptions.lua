@@ -6,7 +6,9 @@ local _G = _G
 local gsub = gsub
 local pairs = pairs
 local strfind = strfind
+local tinsert = tinsert
 local unpack = unpack
+local wipe = wipe
 
 local IsAddOnLoaded = IsAddOnLoaded
 

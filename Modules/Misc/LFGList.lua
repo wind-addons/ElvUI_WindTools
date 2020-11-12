@@ -156,13 +156,13 @@ end
 
 function LL:UpdateRoleCount(RoleCount)
     if RoleCount.TankIcon then
-        self:ReskinIcon(_, RoleCount.TankIcon, "TANK")
+        self:ReskinIcon(nil, RoleCount.TankIcon, "TANK")
     end
     if RoleCount.HealerIcon then
-        self:ReskinIcon(_, RoleCount.HealerIcon, "HEALER")
+        self:ReskinIcon(nil, RoleCount.HealerIcon, "HEALER")
     end
     if RoleCount.DamagerIcon then
-        self:ReskinIcon(_, RoleCount.DamagerIcon, "DAMAGER")
+        self:ReskinIcon(nil, RoleCount.DamagerIcon, "DAMAGER")
     end
 end
 

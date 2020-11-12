@@ -4,6 +4,7 @@ local S = W:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local unpack = unpack
 

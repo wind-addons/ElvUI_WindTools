@@ -93,7 +93,7 @@ function LL:ReskinIcon(parent, icon, role, class)
     end
 
     -- Create bar in class color behind
-    if self.db.line.enable then
+    if class and self.db.line.enable then
         if not icon.line then
             local line = parent:CreateTexture(nil, "ARTWORK")
             line:SetTexture(LSM:Fetch("statusbar", self.db.line.tex) or E.media.normTex)
@@ -154,6 +154,18 @@ function LL:UpdateEnumerate(Enumerate)
     end
 end
 
+function LL:UpdateRoleCount(RoleCount)
+    if RoleCount.TankIcon then
+        self:ReskinIcon(_, RoleCount.TankIcon, "TANK")
+    end
+    if RoleCount.HealerIcon then
+        self:ReskinIcon(_, RoleCount.HealerIcon, "HEALER")
+    end
+    if RoleCount.DamagerIcon then
+        self:ReskinIcon(_, RoleCount.DamagerIcon, "DAMAGER")
+    end
+end
+
 function LL:Initialize()
     self.db = E.private.WT.misc.lfgList
     if not self.db.enable then
@@ -162,6 +174,7 @@ function LL:Initialize()
 
     HandleMeetingStone()
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
+    self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
 end
 
 W:RegisterModule(LL:GetName())

@@ -10,6 +10,8 @@ local unpack = unpack
 
 local IsAddOnLoaded = IsAddOnLoaded
 
+local buttons = {}
+
 local function TryHandleButtonAfter(name, times)
     times = times or 0
     if times > 10 then
@@ -31,28 +33,31 @@ local function TryHandleButtonAfter(name, times)
     end
 end
 
-local function TryHandleTextureAfter(name, times)
-    times = times or 0
-    if times > 10 then
+local function ReskinButtons()
+    if #buttons == 0 then
         return
     end
 
-    local handled = false
-
-    if _G[name] then
-        for _, child in pairs {_G[name]:GetChildren()} do
+    local newList = {}
+    for i = 1, #buttons do
+        local handled = false
+        local button = buttons[i]
+        for _, child in pairs {button:GetChildren()} do
             if child.model or child.texture or child.mask or child.region or child.defaultIcon then
-                local firstRegion = child:GetRegions()
-                firstRegion:SetTexture("")
-                handled = true
+                for _, region in pairs {child:GetRegions()} do
+                    if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
+                        region:Kill()
+                        handled = true
+                    end
+                end
             end
         end
+        if not handled then
+            tinsert(newList, button)
+        end
     end
-
-    if not handled then
-        times = times + 1
-        E:Delay(0.05, TryHandleButtonAfter, name, times)
-    end
+    wipe(buttons)
+    buttons = newList
 end
 
 function S:WeakAurasMultiLineEditBox(Constructor)
@@ -94,11 +99,12 @@ function S:WeakAurasDisplayButton(Constructor)
         widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
         widget.frame.background:SetAlpha(0)
         widget.icon:SetTexCoord(unpack(E.TexCoords))
-        TryHandleTextureAfter(widget.frame:GetName())
         ES:HandleEditBox(widget.renamebox)
         widget.frame.highlight:SetTexture(E.media.blankTex)
         widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
         widget.frame.highlight:SetInside()
+        tinsert(buttons, widget.frame)
+        E:Delay(0.1, ReskinButtons)
         return widget
     end
 
@@ -119,7 +125,7 @@ function S:WeakAurasNewButton(Constructor)
         widget.icon:Size(35)
         widget.icon:ClearAllPoints()
         widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
-        TryHandleTextureAfter(widget.frame:GetName())
+        tinsert(buttons, widget.frame)
         return widget
     end
 
@@ -143,6 +149,9 @@ function S:WeakAuras_ShowOptions()
             region.SetTexture = E.noop
         end
     end
+
+    -- Template buttons
+    ReskinButtons()
 
     -- Change position of resize buttons
     frame.bottomLeftResizer:ClearAllPoints()

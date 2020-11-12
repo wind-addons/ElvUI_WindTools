@@ -78,22 +78,23 @@
 ## 单位框体
 1. **快速焦点**: 通过自定义鼠标按键和组合键来快速设定焦点.
 2. **职责图标**: 自定义单位框体上的职责图标组.
-3. **施法条**: 为 ElvUI 的施法条提供更多自定义选项.
 
 ## 美化外观
 1. **屏幕暗角**: 让游戏更加有电影的感觉!
 2. **暴雪框体美化**: 在 ElvUI 美化皮肤之上, 进行框体和文字的美化.
 3. **ElvUI 框体美化**: 为 ElvUI 模块添加美化.
 4. **WindTools 框体美化**: 为 WindTools 模块添加美化.
-5. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
-6. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
-7. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
-8. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
+5. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
+6. **Azeroth Auto Pilot 美化**: 为 Azeroth Auto Pilot 的主要窗口添加美化.
+7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
+8. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
 9. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
-10. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
-11. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-12. **Azeroth Auto Pilot 美化**: 为 Azeroth Auto Pilot 的主要窗口添加美化.
-13. **网易集合石美化**: 为网易的集合石插件添加美化.
+10. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
+11. **网易集合石美化**: 为网易的集合石插件添加美化.
+12. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
+13. **REHack 美化**: 为 REHack 的主要窗口添加美化.
+14. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+15. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

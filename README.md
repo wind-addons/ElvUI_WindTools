@@ -77,22 +77,23 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 ## Unit Frames
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
 2. **Role Icon**: Change the icon pack of role icons.
-3. **Cast Bar**: Add more custom options to ElvUI cast bars.
 
 ## Skins
 1. **Vignetting**: Add the shadowed border inner game interface.
 2. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
 3. **ElvUI Frame Skins**: Reskin ElvUI modules.
 4. **WindTools Skins**: Reskin WindTools modules.
-5. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
-6. **Ace3 Skins**: Apply skin for Ace3-GUI widgets.
-7. **Immersion Skin**: Apply skin for Immersion.
-8. **Bigwigs Skin**: Apply skin for Bigwigs.
+5. **Ace3 Skins**: Apply skin for Ace3-GUI widgets.
+6. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
+7. **Bigwigs Skin**: Apply skin for Bigwigs.
+8. **BugSack Skin**: Apply skin for BugSack.
 9. **Hekili Skin**: Apply skin for Hekili.
-10. **BugSack Skin**: Apply skin for BugSack.
-11. **TinyInspect Skin**: Apply skin for TinyInspect.
-12. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
-13. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
+10. **Immersion Skin**: Apply skin for Immersion.
+11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
+12. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
+13. **REHack Skin**: Apply skin for REHack.
+14. **TinyInspect Skin**: Apply skin for TinyInspect.
+15. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

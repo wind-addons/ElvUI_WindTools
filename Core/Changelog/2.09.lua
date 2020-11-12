@@ -36,37 +36,49 @@ W.Changelog[209] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "清理代码.",
+            "重置模块工具更新.",
             "兼容性检查工具更新.",
             "[预组列表] 修复了图标背景无法正确隐藏的问题.",
             "[预组列表] 对于团队副本队伍, 自定义队伍也会进行美化了.",
             "[美化皮肤] 优化了网易集合石的美化.",
+            "[美化皮肤] 优化了 WeakAuras 设定的美化.",
             "[通告] 回调队伍判定.",
             "[小地图按钮] 除外 Narcissus 小地图图标. 感谢 @ryanfys",
             "[小地图按钮] 添加对 BagSync 的支持. 感谢 @ryanfys"
         },
         ["zhTW"] = {
+            "清理代碼.",
+            "重置模組工具更新",
             "相容性確認工具更新.",
             "[預組列表] 修復了圖示背景無法正確隱藏的問題.",
             "[預組列表] 对于团队副本队伍, 自定义队伍也会进行美化了.",
             "[美化皮膚] 優化網易集合石皮膚.",
+            "[美化皮膚] 優化 WeakAuras 設定皮膚.",
             "[通告] 回調隊伍判定.",
             "[小地圖按鍵] 除外 Narcissus 小地圖圖示. 感謝 @ryanfys",
             "[小地圖按鍵] 添加對 BagSync 的支持. 感謝 @ryanfys"
         },
         ["enUS"] = {
+            "Cleanup codes.",
+            "Update module reseting buttons.",
             "Update compatibility check.",
             "[LFG List] Fix the bug that the backdrop of the icon cannot be hidden properly.",
             "[LFG List] Icon reskin now also works on Raid group and custom group.",
             "[Skins] Optimize NetEase Meeting Stone skin.",
+            "[Skins] Optimize WeakAura Options skin.",
             "[Announcement] Roll back the status detection of party.",
             "[Minimap Buttons] Exclude Narcissus minimap icon. Thanks @ryanfys",
             "[Minimap Buttons] Add support of BagSync. Thanks @ryanfys"
         },
         ["koKR"] = {
+            "코드 정리.",
+            "Update module reseting buttons.",
             "호환성 검사 업데이트.",
             "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다.",
             "[파티 찾기 목록] 이제 새로운 역할 아이콘은 파티 구성하기의 공격대 및 사용자 설정 그룹에서도 작동합니다.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
+            "[스킨] WeakAura Options 스킨 최적화.",
             "[알림] 파티 상태 확인 로직 롤백.",
             "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",
             "[미니맵 버튼 통합 바] BagSync 아이콘을 지원합니다. Thanks @ryanfys"

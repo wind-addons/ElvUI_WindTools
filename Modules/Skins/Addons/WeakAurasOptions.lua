@@ -164,8 +164,6 @@ function S:WeakAurasNewButton(Constructor)
     return SkinedConstructor
 end
 
-
-
 function S:WeakAuras_ShowOptions()
     local frame = _G.WeakAurasOptions
     if not frame or frame.windStyle then
@@ -175,7 +173,7 @@ function S:WeakAuras_ShowOptions()
     -- Remove background
     frame:SetBackdrop(nil)
     frame:CreateBackdrop("Transparent")
-    S:CreateShadow(frame)
+    self:CreateShadow(frame.backdrop)
 
     for _, region in pairs {frame:GetRegions()} do
         if region:GetObjectType() == "Texture" then
@@ -328,6 +326,18 @@ function S:WeakAuras_ShowOptions()
                 ES:HandleButton(child)
             end
         end
+    end
+
+    -- Snippets Frame
+    local snippetsFrame = _G.WeakAurasSnippets
+    if snippetsFrame then
+        snippetsFrame:ClearAllPoints()
+        snippetsFrame:Point("TOPLEFT", frame, "TOPRIGHT", 5, 0)
+        snippetsFrame:Point("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
+        snippetsFrame:StripTextures()
+        snippetsFrame:CreateBackdrop("Transparent")
+        self:CreateShadow(snippetsFrame.backdrop)
+        ReskinChildButton(snippetsFrame)
     end
 
     frame.windStyle = true

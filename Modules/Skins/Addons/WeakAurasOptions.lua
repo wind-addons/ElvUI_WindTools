@@ -151,14 +151,36 @@ function S:WeakAuras_ShowOptions()
         local numRegions = child:GetNumRegions()
         local numChildren = child:GetNumChildren()
 
-        if numRegions == 1 then -- Title
+        if numRegions == 1 then
+            local recognized = false
+
             local firstRegion = child:GetRegions()
             local text = firstRegion.GetText and firstRegion:GetText()
-            if text and strfind(text, "^WeakAuras%s%d") then
+            if text and strfind(text, "^WeakAuras%s%d") then -- Title
                 child:SetFrameLevel(3)
                 child:CreateBackdrop()
                 S:CreateShadow(child.backdrop)
                 F.SetFontOutline(firstRegion)
+                recognized = true
+            end
+
+            if not recognized then
+                if child:GetNumPoints() == 3 then
+                    local point, _, relativePoint, xOfs, yOfs = child:GetPoint(1)
+                    if point == "TOP" and relativePoint == "TOP" and xOfs == 0 and yOfs == -46 then
+                        for _, subchild in pairs {child:GetChildren()} do
+                            if subchild.obj and subchild.backdrop then -- top panel backdrop
+                                subchild.backdrop:Hide()
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        if numChildren == 2 then
+            if child.obj and child.backdrop then -- bottom panel backdrop
+                child.backdrop:Hide()
             end
         end
 

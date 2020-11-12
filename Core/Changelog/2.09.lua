@@ -30,6 +30,7 @@ W.Changelog[209] = {
         ["zhCN"] = {
             "兼容性检查工具更新.",
             "[预组列表] 修复了图标背景无法正确隐藏的问题.",
+            "[预组列表] 对于团队副本队伍, 自定义队伍也会进行美化了.",
             "[美化皮肤] 优化了网易集合石的美化.",
             "[通告] 回调队伍判定.",
             "[小地图按钮] 除外 Narcissus 小地图图标. 感谢 @ryanfys",
@@ -38,6 +39,7 @@ W.Changelog[209] = {
         ["zhTW"] = {
             "相容性確認工具更新.",
             "[預組列表] 修復了圖示背景無法正確隱藏的問題.",
+            "[預組列表] 对于团队副本队伍, 自定义队伍也会进行美化了.",
             "[美化皮膚] 優化網易集合石皮膚.",
             "[通告] 回調隊伍判定.",
             "[小地圖按鍵] 除外 Narcissus 小地圖圖示. 感謝 @ryanfys",
@@ -46,6 +48,7 @@ W.Changelog[209] = {
         ["enUS"] = {
             "Update compatibility check.",
             "[LFG List] Fix the bug that the backdrop of the icon cannot be hidden properly.",
+            "[LFG List] Icon reskin now also works on Raid group and custom group.",
             "[Skins] Optimize NetEase Meeting Stone skin.",
             "[Announcement] Roll back the status detection of party.",
             "[Minimap Buttons] Exclude Narcissus minimap icon. Thanks @ryanfys",
@@ -54,6 +57,7 @@ W.Changelog[209] = {
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다.",
+            "[LFG List] Icon reskin now also works on Raid group and custom group.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[알림] 파티 상태 확인 로직 롤백.",
             "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",

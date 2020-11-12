@@ -911,6 +911,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                quickKeystone = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Quick Keystone"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Quick Keystone"],
+                            nil,
+                            function()
+                                E.db.WT.combat.quickKeystone = P.combat.quickKeystone
+                            end
+                        )
+                    end
                 }
             }
         },

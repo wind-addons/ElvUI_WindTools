@@ -1432,47 +1432,54 @@ options.reset = {
             inline = true,
             name = AddColor(L["Misc"]),
             args = {
-                disableTalkingHead = {
+                general = {
                     order = 1,
                     type = "execute",
-                    name = L["Disable Talking Head"],
+                    name = L["General"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Disable Talking Head"],
-                            nil,
-                            function()
-                                E.private.WT.misc.disableTalkingHead = V.misc.disableTalkingHead
-                            end
-                        )
-                    end
-                },
-                transmog = {
-                    order = 2,
-                    type = "execute",
-                    name = L["Transmog"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Transmog"],
-                            nil,
-                            function()
-                                E.private.WT.misc.saveArtifact = V.misc.saveArtifact
-                            end
-                        )
-                    end
-                },
-                pauseToSlash = {
-                    order = 3,
-                    type = "execute",
-                    name = L["Pause to slash"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Pause to slash"],
+                            L["General"],
                             nil,
                             function()
                                 E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
+                                E.private.WT.misc.saveArtifact = V.misc.saveArtifact
+                                E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
+                                E.db.WT.misc.disableTalkingHead = p.misc.disableTalkingHead
+                                E.db.WT.misc.skipCutScene = p.misc.skipCutScene
+                            end
+                        )
+                    end
+                },
+                moveFrames = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Move Frames"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Move Frames"],
+                            nil,
+                            function()
+                                E.private.WT.misc.moveBlizzardFrames = V.misc.moveBlizzardFrames
+                                E.private.WT.misc.moveElvUIBags = V.misc.moveElvUIBags
+                                E.private.WT.misc.rememberPositions = V.misc.rememberPositions
+                                E.private.WT.misc.framePositions = V.misc.framePositions
+                            end
+                        )
+                    end
+                },
+                mute = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Mute"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Mute"],
+                            nil,
+                            function()
+                                E.private.WT.misc.mute = V.misc.mute
                             end
                         )
                     end
@@ -1492,41 +1499,8 @@ options.reset = {
                         )
                     end
                 },
-                moveFrames = {
-                    order = 5,
-                    type = "execute",
-                    name = L["Move Frames"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Move Frames"],
-                            nil,
-                            function()
-                                E.private.WT.misc.moveBlizzardFrames = V.misc.moveBlizzardFrames
-                                E.private.WT.misc.moveElvUIBags = V.misc.moveElvUIBags
-                                E.private.WT.misc.rememberPositions = V.misc.rememberPositions
-                                E.private.WT.misc.framePositions = V.misc.framePositions
-                            end
-                        )
-                    end
-                },
-                mute = {
-                    order = 6,
-                    type = "execute",
-                    name = L["Mute"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Mute"],
-                            nil,
-                            function()
-                                E.private.WT.misc.mute = V.misc.mute
-                            end
-                        )
-                    end
-                },
                 gameBar = {
-                    order = 7,
+                    order = 5,
                     type = "execute",
                     name = L["Game Bar"],
                     func = function()
@@ -1536,6 +1510,21 @@ options.reset = {
                             nil,
                             function()
                                 E.db.WT.misc.gameBar = P.misc.gameBar
+                            end
+                        )
+                    end
+                },
+                lfgList = {
+                    order = 6,
+                    type = "execute",
+                    name = L["LFG List"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["LFG List"],
+                            nil,
+                            function()
+                                E.private.WT.misc.lfgList = V.misc.lfgList
                             end
                         )
                     end

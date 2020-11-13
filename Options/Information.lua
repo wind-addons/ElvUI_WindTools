@@ -691,7 +691,6 @@ E.PopupDialogs.WINDTOOLS_IMPORT_SETTING = {
 options.reset = {
     order = 4,
     type = "group",
-    childGroups = "select",
     name = L["Reset"],
     args = {
         import = {
@@ -1594,3 +1593,109 @@ options.reset = {
         }
     }
 }
+
+do
+    local text = ""
+
+    E.PopupDialogs.WINDTOOLS_IMPORT_STRING = {
+        text = format(
+            "%s\n|cffff0000%s|r",
+            L["Are you sure you want to import this string?"],
+            format(L["It will override your %s setting."], L["WindTools"])
+        ),
+        button1 = _G.ACCEPT,
+        button2 = _G.CANCEL,
+        OnAccept = function()
+            F.Profiles.ImportByString(text)
+            -- ReloadUI()
+        end,
+        whileDead = 1,
+        hideOnEscape = true
+    }
+
+    options.profiles = {
+        order = 5,
+        type = "group",
+        name = L["Profiles"],
+        args = {
+            desc = {
+                order = 1,
+                type = "group",
+                inline = true,
+                name = L["Description"],
+                args = {
+                    feature = {
+                        order = 1,
+                        type = "description",
+                        name = L["Import and export your WindTools settings."],
+                        fontSize = "medium"
+                    }
+                }
+            },
+            textArea = {
+                order = 2,
+                type = "group",
+                inline = true,
+                name = format("%s %s", L["WindTools"], L["String"]),
+                args = {
+                    text = {
+                        order = 1,
+                        type = "input",
+                        name = " ",
+                        multiline = 15,
+                        width = "full",
+                        get = function()
+                            return text
+                        end,
+                        set = function(_, value)
+                            text = value
+                        end
+                    },
+                    importButton = {
+                        order = 2,
+                        type = "execute",
+                        name = L["Import"],
+                        func = function()
+                            if text ~= "" then
+                                E:StaticPopup_Show("WINDTOOLS_IMPORT_STRING")
+                            end
+                        end
+                    },
+                    exportAllButton = {
+                        order = 3,
+                        type = "execute",
+                        name = L["Export All"],
+                        desc = format(L["Export all setting of %s."], L["WindTools"]),
+                        func = function()
+                            text = F.Profiles.GetOutputString(true, true)
+                        end
+                    },
+                    exportProfileButton = {
+                        order = 4,
+                        type = "execute",
+                        name = L["Export Profile"],
+                        desc = format(
+                            L["Export the setting of %s that stored in ElvUI Profile database."],
+                            L["WindTools"]
+                        ),
+                        func = function()
+                            text = F.Profiles.GetOutputString(true, false)
+                        end
+                    },
+                    exportPrivateButton = {
+                        order = 5,
+                        type = "execute",
+                        name = L["Export Private"],
+                        desc = format(
+                            L["Export the setting of %s that stored in ElvUI Private database."],
+                            L["WindTools"]
+                        ),
+                        func = function()
+                            text = F.Profiles.GetOutputString(false, true)
+                        end
+                    }
+                }
+            }
+        }
+    }
+end

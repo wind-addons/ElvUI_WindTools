@@ -8,8 +8,8 @@ function S:HelpFrame()
         return
     end
 
-    self:CreateShadow(_G.HelpFrame)
-    self:CreateShadow(_G.HelpFrame.Header)
+    self:CreateBackdropShadow(_G.HelpFrame)
+    self:CreateShadow(_G.HelpFrame.Header.backdrop)
 end
 
 S:AddCallback("HelpFrame")

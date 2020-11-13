@@ -30,7 +30,7 @@ function S:BlizzardMiscFrames()
     }
 
     for _, frame in pairs(miscFrames) do
-        self:CreateShadow(_G[frame])
+        self:CreateBackdropShadow(_G[frame])
     end
 
     -- 跳过剧情
@@ -46,8 +46,12 @@ function S:BlizzardMiscFrames()
 
     -- 下拉菜单
     for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
-        if _G["DropDownList" .. i] then
-            self:CreateShadow(_G["DropDownList" .. i])
+        local bg = _G["DropDownList" .. i .. "MenuBackdrop"]
+        if bg then
+            if not bg.backdrop then
+                bg:CreateBackdrop("Transparent")
+            end
+            self:CreateBackdropShadow(bg)
         end
     end
 

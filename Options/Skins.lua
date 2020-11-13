@@ -372,6 +372,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Alert Frames"]
         },
+        artifact = {
+            order = 10,
+            type = "toggle",
+            name = L["Artifact"]
+        },
         auctionHouse = {
             order = 10,
             type = "toggle",

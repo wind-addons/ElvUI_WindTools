@@ -152,6 +152,7 @@ V.skins = {
 		addonManager = true,
 		adventureMap = true,
 		alerts = true,
+		artifact = true,
 		auctionHouse = true,
 		azerite = true,
 		azeriteEssence = true,

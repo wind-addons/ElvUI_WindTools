@@ -117,6 +117,7 @@ L["Are you sure you want to reset %s module?"] = true
 L["Armor Category"] = true
 L["Armory"] = true
 L["Arrangement direction of the bar."] = true
+L["Artifact"] = true
 L["Auction House"] = true
 L["Auras"] = "Ауры"
 L["Auto Compare"] = true

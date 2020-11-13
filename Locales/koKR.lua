@@ -117,6 +117,7 @@ L["Are you sure you want to reset %s module?"] = "%s 모듈을 재설정하시�
 L["Armor Category"] = "방어구 카테고리"
 L["Armory"] = "전투정보실"
 L["Arrangement direction of the bar."] = "바의 배열 방향"
+L["Artifact"] = true
 L["Auction House"] = "경매장"
 L["Auras"] = "오라"
 L["Auto Compare"] = "자동 비교"

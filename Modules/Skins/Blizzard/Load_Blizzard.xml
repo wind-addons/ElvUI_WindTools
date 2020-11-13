@@ -3,6 +3,7 @@
 	<Script file='AddonManager.lua'/>
 	<Script file='AdventureMap.lua'/>
 	<Script file='Alerts.lua'/>
+	<Script file='Artifact.lua'/>
 	<Script file='AuctionHouse.lua'/>
 	<Script file='Azerite.lua'/>
 	<Script file='AzeriteEssence.lua'/>

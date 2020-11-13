@@ -117,6 +117,7 @@ L["Are you sure you want to reset %s module?"] = "你確定要重置 %s 模組�
 L["Armor Category"] = "護甲分類"
 L["Armory"] = "英雄榜"
 L["Arrangement direction of the bar."] = "條的增長方向."
+L["Artifact"] = "神兵"
 L["Auction House"] = "拍賣"
 L["Auras"] = "光環"
 L["Auto Compare"] = "自動比對裝備"

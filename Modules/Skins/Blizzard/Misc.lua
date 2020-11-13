@@ -82,6 +82,9 @@ function S:BlizzardMiscFrames()
 
     -- 颜色选择器
     self:CreateShadow(_G.ColorPickerFrame)
+
+    -- What's new
+    self:CreateBackdropShadow(_G.SplashFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

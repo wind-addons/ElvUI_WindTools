@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[209] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/11/13",
     IMPORTANT = {
         ["zhCN"] = {
             "新增 [信息]-[配置文件], 支持以字符串的方式进行导入导出 Wind 工具箱配置.",

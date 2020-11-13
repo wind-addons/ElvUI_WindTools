@@ -85,15 +85,15 @@ W.Changelog[209] = {
             "모듈 리셋 항목 업데이트.",
             "호환성 검사 업데이트.",
             "[파티 찾기 목록] 아이콘 배경이 제대로 숨겨지지 않던 문제를 수정했습니다.",
-            "[파티 찾기 목록] 이제 새로운 역할 아이콘은 파티 구성하기의 공격대 및 사용자 설정 그룹에서도 작동합니다.",
+            "[파티 찾기 목록] 이제 새로운 역할 아이콘이 파티 구성하기의 공격대 및 사용자 설정 그룹에서도 작동합니다.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[스킨] WeakAura Options 스킨 최적화.",
             "[알림] 파티 상태 확인 로직 롤백.",
             "[미니맵 버튼 통합 바] Narcissus 아이콘을 통합바에 추가하지 않습니다. Thanks @ryanfys",
             "[미니맵 버튼 통합 바] BagSync 아이콘을 지원합니다. Thanks @ryanfys",
             "[미니맵 버튼 통합 바] Guild Roster Manager 아이콘을 지원합니다.",
-            "[Minimap Buttons] Add highlight border.",
-            "[Minimap Buttons] Better animation for showing on mouseover."
+            "[미니맵 버튼 통합 바] 하이라이트 테두리를 추가합니다.",
+            "[미니맵 버튼 통합 바] 마우스 오버 시 보이는 애니메이션을 개선하였습니다."
         }
     }
 }

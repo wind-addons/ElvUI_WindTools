@@ -10,15 +10,15 @@ function S:Blizzard_Communities()
 
     if _G.CommunitiesFrame then
         local f = _G.CommunitiesFrame
-        self:CreateShadow(f)
+        self:CreateBackdropShadowAfterElvUISkins(f)
         self:CreateShadow(f.ChatTab)
         self:CreateShadow(f.RosterTab)
         self:CreateShadow(f.GuildBenefitsTab)
         self:CreateShadow(f.GuildInfoTab)
-        self:CreateShadow(f.GuildMemberDetailFrame)
-        self:CreateShadow(f.ClubFinderInvitationFrame)
+        self:CreateBackdropShadowAfterElvUISkins(f.GuildMemberDetailFrame)
+        self:CreateBackdropShadowAfterElvUISkins(f.ClubFinderInvitationFrame)
         if _G.CommunitiesGuildLogFrame then
-            self:CreateShadow(_G.CommunitiesGuildLogFrame)
+            self:CreateBackdropShadowAfterElvUISkins(_G.CommunitiesGuildLogFrame)
         end
     end
 
@@ -32,12 +32,12 @@ function S:Blizzard_Communities()
             self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            self:CreateShadow(f.RequestToJoinFrame)
+            self:CreateBackdropShadowAfterElvUISkins(f.RequestToJoinFrame)
         end
     end
 
     -- 搜寻公会
-    if _G.ClubFinderGuildFinderFrame then
+    if _G.ClubFinderCommunityAndGuildFinderFrame then
         local f = _G.ClubFinderGuildFinderFrame
         if f.ClubFinderPendingTab then
             self:CreateShadow(f.ClubFinderPendingTab)
@@ -46,12 +46,12 @@ function S:Blizzard_Communities()
             self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            self:CreateShadow(f.RequestToJoinFrame)
+            self:CreateBackdropShadowAfterElvUISkins(f.RequestToJoinFrame)
         end
     end
 
     -- 公会招募
-    self:CreateShadow(_G.CommunitiesFrame.RecruitmentDialog)
+    self:CreateBackdropShadowAfterElvUISkins(_G.CommunitiesFrame.RecruitmentDialog)
 end
 
 S:AddCallbackForAddon("Blizzard_Communities")

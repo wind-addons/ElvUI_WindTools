@@ -4,38 +4,42 @@ W.Changelog[209] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "新增 [信息]-[配置文件], 支持以字符串的方式进行导入导出 Wind 工具箱配置.",
             "由于 ElvUI-单位框体 已更新相同功能, 移除 [单位框体-施法条] 模块."
         },
         ["zhTW"] = {
-            "由于 ElvUI-單位框架 已更新相同功能, 移除 [單位框架-施法條] 模組."
+            "新增 [信息]-[設定檔], 支持以字符串的形式進行導入導出 Wind 工具箱設定.",
+            "由于 [ElvUI]-[單位框架] 已更新相同功能, 移除 [單位框架]-[施法條] 模組."
         },
         ["enUS"] = {
-            "Because ElvUI unitframes added new font setting, [Unitframes-Cast Bar] module has been removed."
+            "New! [Information]-[Profiles]: you can import and export your WindTools setting via string format.",
+            "Because [ElvUI]-[Unitframes] added new font setting, [Unitframes]-[Cast Bar] module has been removed."
         },
         ["koKR"] = {
-            "ElvUI 유닛프레임에 새로운 글꼴 설정이 추가되었기 때문에 [유닛프레임 - 시전 바] 모듈이 제거되었습니다."
+            "New! [Information]-[Profiles]: you can import and export your WindTools setting via string format.",
+            "[ElvUI]-[유닛프레임] 에 새로운 글꼴 설정이 추가되었기 때문에 [유닛프레임] - [시전 바] 모듈이 제거되었습니다."
         }
     },
     NEW = {
         ["zhCN"] = {
             "[美化皮肤] 添加了 Premade Groups Filter 的美化.",
             "[美化皮肤] 添加了 REHack 的美化.",
-            "[美化皮肤] 添加了神器界面的美化.",
+            "[美化皮肤] 添加了神器界面的美化."
         },
         ["zhTW"] = {
             "[美化皮膚] 新增了 Premade Groups Filter 的美化.",
             "[美化皮膚] 新增了 REHack 的美化.",
-            "[美化皮膚] 新增了神兵武器介面的美化.",
+            "[美化皮膚] 新增了神兵武器介面的美化."
         },
         ["enUS"] = {
             "[Skins] Add new skin for Premade Groups Filter.",
             "[Skins] Add new skin for REHack.",
-            "[Skins] Add new skin for Artifact.",
+            "[Skins] Add new skin for Artifact."
         },
         ["koKR"] = {
             "[스킨] Premade Groups Filter 애드온 스킨 추가.",
             "[스킨] REHack 애드온 스킨 추가.",
-            "[스킨] Artifact 인터페이스 스킨 추가.",
+            "[스킨] Artifact 인터페이스 스킨 추가."
         }
     },
     IMPROVEMENT = {

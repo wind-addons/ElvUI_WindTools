@@ -30,7 +30,7 @@ function S:BlizzardMiscFrames()
     }
 
     for _, frame in pairs(miscFrames) do
-        self:CreateBackdropShadow(_G[frame])
+        self:CreateBackdropShadowAfterElvUISkins(_G[frame])
     end
 
     -- 跳过剧情

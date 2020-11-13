@@ -32,11 +32,19 @@ function F.Profiles.ExactString(dataString)
     return data
 end
 
-function F.Profiles.GetOutputString()
-    local profileData = E:CopyTable(profileData, E.db.WT)
-    local privateData = E:CopyTable(privateData, E.private.WT)
-    profileData = E:RemoveTableDuplicates(profileData, P)
-    privateData = E:RemoveTableDuplicates(privateData, V)
+function F.Profiles.GetOutputString(profile, private)
+    local profileData = {}
+    if profile then
+        profileData = E:CopyTable(profileData, E.db.WT)
+        profileData = E:RemoveTableDuplicates(profileData, P)
+    end
+
+    local privateData = {}
+    if private then
+        local privateData = E:CopyTable(privateData, E.private.WT)
+        privateData = E:RemoveTableDuplicates(privateData, V)
+    end
+    
     outputString = F.Profiles.GenerateString(profileData) .. "{}" .. F.Profiles.GenerateString(privateData)
     return outputString
 end
@@ -47,8 +55,8 @@ function F.Profiles.ImportByString(importString)
         F.Print("Error importing profile. String is invalid or corrupted!")
     end
 
-    local profileData = ExactString(profileString)
-    local priavteData = ExactString(privateString)
+    local profileData = F.Profiles.ExactString(profileString)
+    local priavteData = F.Profiles.ExactString(privateString)
 
     E:CopyTable(E.db.WT, P)
     E:CopyTable(E.db.WT, profileData)

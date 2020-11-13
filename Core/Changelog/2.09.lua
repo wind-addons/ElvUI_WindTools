@@ -16,7 +16,7 @@ W.Changelog[209] = {
             "Because [ElvUI]-[Unitframes] added new font setting, [Unitframes]-[Cast Bar] module has been removed."
         },
         ["koKR"] = {
-            "New! [Information]-[Profiles]: you can import and export your WindTools setting via string format.",
+            "새기능! [정보]-[프로필] : 문자열 방식으로 WindTools 설정을 가져오고 내보낼 수 있습니다.",
             "[ElvUI]-[유닛프레임] 에 새로운 글꼴 설정이 추가되었기 때문에 [유닛프레임] - [시전 바] 모듈이 제거되었습니다."
         }
     },

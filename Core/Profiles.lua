@@ -3,6 +3,8 @@ local D = E:GetModule("Distributor")
 local LibCompress = E.Libs.Compress
 local LibBase64 = E.Libs.Base64
 
+local format = format
+
 F.Profiles = {}
 
 function F.Profiles.GenerateString(data)
@@ -25,7 +27,6 @@ function F.Profiles.ExactString(dataString)
     local success, data = D:Deserialize(decompressedData)
 
     if not success then
-        F.Print("Error deserializing:", profileData)
         return
     end
 
@@ -44,9 +45,8 @@ function F.Profiles.GetOutputString(profile, private)
         local privateData = E:CopyTable(privateData, E.private.WT)
         privateData = E:RemoveTableDuplicates(privateData, V)
     end
-    
-    outputString = F.Profiles.GenerateString(profileData) .. "{}" .. F.Profiles.GenerateString(privateData)
-    return outputString
+
+    return F.Profiles.GenerateString(profileData) .. "{}" .. F.Profiles.GenerateString(privateData)
 end
 
 function F.Profiles.ImportByString(importString)

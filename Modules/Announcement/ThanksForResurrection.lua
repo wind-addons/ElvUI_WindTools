@@ -3,7 +3,6 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 local GetSpellLink = GetSpellLink
-local C_Timer_After = C_Timer.After
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 
 local ResurrectionSpellList = {
@@ -31,7 +30,7 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 
 	-- 格式化自定义字符串
 	local function FormatMessage(message)
-		destName = destName:gsub("%-[^|]+", "")
+		destName = gsub(destName, "%-[^|]+", "")
 		local sourceNameWithoutServer = gsub(sourceName, "%-[^|]+", "")
 		message = gsub(message, "%%player%%", destName)
 		message = gsub(message, "%%target%%", sourceNameWithoutServer)
@@ -49,11 +48,14 @@ function A:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spe
 		end
 
 		if sourceGUID ~= E.myguid and destGUID == E.myguid then
-			C_Timer_After(
+			E:Delay(
 				config.delay,
-				function()
-					A:SendMessage(FormatMessage(config.normalText), A:GetChannel(config.channel), nil, sourceName)
-				end
+				A.SendMessage,
+				A,
+				FormatMessage(config.normalText),
+				A:GetChannel(config.channel),
+				nil,
+				sourceName
 			)
 		end
 	end

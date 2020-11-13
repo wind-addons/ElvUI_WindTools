@@ -1627,7 +1627,7 @@ do
                     feature = {
                         order = 1,
                         type = "description",
-                        name = L["Import and export your WindTools settings."],
+                        name = format(L["Import and export your %s settings."], L["WindTools"]),
                         fontSize = "medium"
                     }
                 }

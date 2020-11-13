@@ -65,26 +65,26 @@ function S:BlizzardMiscFrames()
     end
 
     -- 灵魂医者传送按钮
-    self:CreateShadow(_G.GhostFrameContentsFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.GhostFrameContentsFrame)
 
     -- 跳过剧情
-    self:CreateShadow(_G.CinematicFrameCloseDialog)
+    self:CreateBackdropShadowAfterElvUISkins(_G.CinematicFrameCloseDialog)
 
     -- 举报玩家
-    self:CreateShadow(_G.PlayerReportFrame)
-    self:CreateShadow(_G.ReportCheatingDialog)
+    self:CreateBackdropShadowAfterElvUISkins(_G.PlayerReportFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.ReportCheatingDialog)
 
     -- 分离物品
-    self:CreateShadow(_G.StackSplitFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.StackSplitFrame)
 
     -- 聊天设定
-    self:CreateShadow(_G.ChatConfigFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.ChatConfigFrame)
 
     -- 颜色选择器
-    self:CreateShadow(_G.ColorPickerFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.ColorPickerFrame)
 
     -- What's new
-    self:CreateBackdropShadow(_G.SplashFrame)
+    self:CreateBackdropShadowAfterElvUISkins(_G.SplashFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

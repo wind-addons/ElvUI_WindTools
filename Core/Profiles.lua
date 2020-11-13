@@ -3,6 +3,8 @@ local D = E:GetModule("Distributor")
 local LibCompress = E.Libs.Compress
 local LibBase64 = E.Libs.Base64
 
+F.Profiles = {}
+
 function F.Profiles.GenerateString(data)
     local exportString = D:Serialize(data)
     local compressedData = LibCompress:Compress(exportString)

@@ -608,6 +608,11 @@ local function GetInspectItemListFrame(parent)
         frame.portrait = CreateFrame("Frame", nil, frame, "GarrisonFollowerPortraitTemplate")
         frame.portrait:Point("TOPLEFT", frame, "TOPLEFT", 16, -10)
         frame.portrait:SetScale(0.8)
+        local portraitBorder = frame:CreateTexture(nil, "BACKGROUND")
+        portraitBorder:SetTexture(W.Media.Textures.inspectGemBG)
+        portraitBorder:Point("TOPLEFT", frame.portrait.Portrait, "TOPLEFT", -3, 4)
+        portraitBorder:Point("BOTTOMRIGHT", frame.portrait.Portrait, "BOTTOMRIGHT", 4, -4)
+        frame.portraitBorder = portraitBorder
         frame.title = frame:CreateFontString(nil, "ARTWORK")
         F.SetFontWithDB(
             frame.title,
@@ -768,6 +773,9 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
     frame.portrait:SetLevel(UnitLevel(unit))
     frame.portrait:StripTextures()
     SetPortraitTexture(frame.portrait.Portrait, unit)
+    if frame.portraitBorder then
+        frame.portraitBorder:SetVertexColor(color.r, color.g, color.b)
+    end
     frame:CreateBackdrop("Transparent")
     F.SetFontWithDB(
         frame.portrait.Level,

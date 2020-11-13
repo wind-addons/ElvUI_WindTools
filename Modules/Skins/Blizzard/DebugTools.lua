@@ -9,15 +9,10 @@ function S:Blizzard_DebugTools()
         return
     end
 
-    if E.private.skins.blizzard.tooltip then
-        self:CreateShadow(_G.FrameStackTooltip)
-        self:CreateShadow(_G.EventTraceTooltip)
-    end
+    self:CreateBackdropShadowAfterElvUISkins(_G.TableAttributeDisplay)
+    self:CreateBackdropShadowAfterElvUISkins(_G.EventTraceFrame)
 
-    self:CreateShadow(_G.TableAttributeDisplay)
-    self:CreateShadow(_G.EventTraceFrame)
-
-    self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateShadow")
+    self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
 end
 
 if _G.IsAddOnLoaded('Blizzard_DebugTools') then

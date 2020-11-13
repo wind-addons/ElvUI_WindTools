@@ -29,7 +29,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
 
     -- 格式化自定义字符串
     local function FormatMessage(message)
-        sourceName = sourceName:gsub("%-[^|]+", "")
+        sourceName = gsub(sourceName, "%-[^|]+", "")
         message = gsub(message, "%%player%%", sourceName)
         message = gsub(message, "%%target%%", destName)
         message = gsub(message, "%%player_spell%%", GetSpellLink(spellId))

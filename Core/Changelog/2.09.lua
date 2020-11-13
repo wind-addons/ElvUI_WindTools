@@ -35,7 +35,7 @@ W.Changelog[209] = {
         ["koKR"] = {
             "[스킨] Premade Groups Filter 애드온 스킨 추가.",
             "[스킨] REHack 애드온 스킨 추가.",
-            "[Skins] Add new skin for Artifact.",
+            "[스킨] Artifact 인터페이스 스킨 추가.",
         }
     },
     IMPROVEMENT = {

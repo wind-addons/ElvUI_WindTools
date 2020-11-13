@@ -36,6 +36,10 @@ local TargetToWorld = {
 }
 
 function RM:UpdateBar()
+	if not self.bar then
+		return
+	end
+
 	if not self.db.enable then
 		self.bar:Hide()
 		return
@@ -129,7 +133,7 @@ function RM:ToggleSettings()
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	end
 
-	if not self.db.enable then
+	if self.bar and not self.db.enable then
 		UnregisterStateDriver(self.bar, "visibility")
 		self.bar:Hide()
 		return
@@ -139,13 +143,15 @@ function RM:ToggleSettings()
 	self:UpdateBar()
 
 	-- 注册团队状况显隐
-	RegisterStateDriver(
-		self.bar,
-		"visibility",
-		self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
-			self.db.visibility == "ALWAYS" and "[petbattle] hide; show" or
-			"[group] show; [petbattle] hide; hide"
-	)
+	if self.bar and self.db and self.db.visibility then
+		RegisterStateDriver(
+			self.bar,
+			"visibility",
+			self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
+				self.db.visibility == "ALWAYS" and "[petbattle] hide; show" or
+				"[group] show; [petbattle] hide; hide"
+		)
+	end
 
 	-- 鼠标显隐
 	if self.db.mouseOver then

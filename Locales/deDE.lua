@@ -763,6 +763,7 @@ L["Target name"] = true
 L["Taunt"] = true
 L["Taxi"] = true
 L["Temporary Move"] = "Temporäres Bewegen"
+L["Test"] = true
 L["Text"] = "Text"
 L["Texture"] = "Textur"
 L["Thank you for using %s!"] = true

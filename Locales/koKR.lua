@@ -763,6 +763,7 @@ L["Target name"] = "대상 이름"
 L["Taunt"] = "도발"
 L["Taxi"] = true
 L["Temporary Move"] = "임시 이동"
+L["Test"] = "테스트"
 L["Text"] = "문자"
 L["Texture"] = "텍스쳐"
 L["Thank you for using %s!"] = "%s를 사용해 주셔서 감사합니다!"

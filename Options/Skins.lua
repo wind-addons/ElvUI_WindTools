@@ -934,7 +934,7 @@ options.addons = {
         rematch = {
             order = 10,
             type = "toggle",
-            name = L["Rematch"].." |cffff0000[Still on work]|r"
+            name = L["Rematch"].." |cffff0000["..L["Test"].."]|r"
         },
         tinyInspect = {
             order = 10,

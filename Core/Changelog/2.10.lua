@@ -21,7 +21,8 @@ W.Changelog[210] = {
             "[美化皮肤] 优化 WeakAuras 设定美化的性能.",
             "[美化皮肤] 优化好友界面的美化.",
             "[美化皮肤] 优化社区界面的美化.",
-            "[通告] 单人情况下部分设定默认不再通报."
+            "[通告] 单人情况下部分设定默认不再通报.",
+            "[额外物品条] 宠物对战时自动隐藏."
         },
         ["zhTW"] = {
             "[預組隊伍] 修復條顯示不正確的問題.",
@@ -29,7 +30,8 @@ W.Changelog[210] = {
             "[美化皮膚] 優化 WeakAuras 設定美化的性能.",
             "[美化皮膚] 優化好友框架美化.",
             "[美化皮膚] 優化社群框架美化.",
-            "[通告] 單人情況下部分設定默認不再通報."
+            "[通告] 單人情況下部分設定默認不再通報.",
+            "[額外物品條] 寵物對戰時自動隱藏."
         },
         ["enUS"] = {
             "[LFG List] Fix the bug that the line does not hide properly.",
@@ -37,7 +39,8 @@ W.Changelog[210] = {
             "[Skins] Optimize the performance of WeakAuras Options skins.",
             "[Skins] Optimize Friends skin.",
             "[Skins] Optimize Communities skin.",
-            "[Announcement] Change the default channel setting of solo to NONE."
+            "[Announcement] Change the default channel setting of solo to NONE.",
+            "[Extra Item Bar] Auto hide on pet battle."
         },
         ["koKR"] = {
             "[LFG List] Fix the bug that the line does not hide properly.",
@@ -45,7 +48,8 @@ W.Changelog[210] = {
             "[Skins] Optimize the performance of WeakAuras Options skins.",
             "[Skins] Optimize Friends skin.",
             "[Skins] Optimize Communities skin.",
-            "[Announcement] Change the default channel setting of solo to NONE."
+            "[Announcement] Change the default channel setting of solo to NONE.",
+            "[Extra Item Bar] Auto hide on pet battle."
         }
     }
 }

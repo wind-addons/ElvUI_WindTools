@@ -45,28 +45,6 @@ function S:WeakAuras_RegisterRegionOptions(name, createFunction, icon, displayNa
     self.hooks[_G.WeakAuras]["RegisterRegionOptions"](name, createFunction, icon, displayName, createThumbnail, ...)
 end
 
-local function ReskinExpandButtons()
-    if #expandButtons == 0 then
-        return
-    end
-
-    local newList = {}
-    for i = 1, #expandButtons do
-        local handled = false
-        for j = 1, 2 do
-            if _G[expandButtons[i] .. j] then
-                ES:HandleButton(_G[expandButtons[i] .. j])
-                handled = true
-            end
-        end
-        if not handled then
-            tinsert(newList, expandButtons[i])
-        end
-    end
-    wipe(expandButtons)
-    expandButtons = newList
-end
-
 local function ReskinNormalButton(button, next)
     if button.Left and button.Middle and button.Right and button.Text then
         ES:HandleButton(button)
@@ -108,12 +86,26 @@ function S:WeakAurasMultiLineEditBox(Constructor)
         widget.frame.backdrop:Point("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
         widget.frame.backdrop:Point("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
 
-        -- local expandButtonName = widget.button:GetName()
-        -- if expandButtonName then
-        --     expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
-        --     tinsert(expandButtons, expandButtonName)
-        -- end
-        -- E:Delay(0.02, ReskinExpandButtons)
+        local onShow = widget.frame:GetScript("OnShow")
+        widget.frame:SetScript(
+            "OnShow",
+            function(frame)
+                onShow(frame)
+                if frame.windStyle then
+                    return
+                end
+                local self = frame.obj
+                local option = self.userdata.option
+                local numExtraButtons = 0
+                if (option and option.arg and option.arg.extraFunctions) then
+                    numExtraButtons = #option.arg.extraFunctions
+                    for i = 1, #option.arg.extraFunctions do
+                        ES:HandleButton(self.extraButtons[i])
+                    end
+                end
+                frame.windStyle = true
+            end
+        )
         return widget
     end
 

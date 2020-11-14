@@ -81,36 +81,56 @@ function MB:ResetGarrisonSize()
 	_G.GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
 end
 
-function MB:SetButtonMouseOver(button, frame)
-	frame:HookScript(
-		"OnEnter",
-		function()
-			if button.backdrop.SetBackdropBorderColor then
-				button.backdrop:SetBackdropBorderColor(
-					E.db.general.valuecolor.r,
-					E.db.general.valuecolor.g,
-					E.db.general.valuecolor.b
-				)
-			end
-			if not self.db.mouseOver then
-				return
-			end
-			E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
-		end
-	)
+function MB:SetButtonMouseOver(button, frame, rawhook)
+	if not frame.HookScript then
+		return
+	end
 
-	frame:HookScript(
-		"OnLeave",
-		function()
-			if button.backdrop.SetBackdropBorderColor then
-				button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-			end
-			if not self.db.mouseOver then
-				return
-			end
-			E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
+	local function ButtonOnEnter()
+		if button.backdrop.SetBackdropBorderColor then
+			button.backdrop:SetBackdropBorderColor(
+				E.db.general.valuecolor.r,
+				E.db.general.valuecolor.g,
+				E.db.general.valuecolor.b
+			)
 		end
-	)
+		if not self.db.mouseOver then
+			return
+		end
+		E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
+	end
+
+	local function ButtonOnLeave()
+		if button.backdrop.SetBackdropBorderColor then
+			button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		end
+		if not self.db.mouseOver then
+			return
+		end
+		E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
+	end
+
+	if not rawhook then
+		frame:HookScript("OnEnter", ButtonOnEnter)
+		frame:HookScript("OnLeave", ButtonOnLeave)
+	else
+		local OriginalOnEnter = frame:GetScript("OnEnter") or E.noop
+		local OriginalOnLeave = frame:GetScript("OnLeave") or E.noop
+		frame:SetScript(
+			"OnEnter",
+			function()
+				OriginalOnEnter(frame)
+				ButtonOnEnter()
+			end
+		)
+		frame:SetScript(
+			"OnLeave",
+			function()
+				OriginalOnLeave(frame)
+				ButtonOnLeave()
+			end
+		)
+	end
 end
 
 function MB:SkinButton(frame)
@@ -198,42 +218,7 @@ function MB:SkinButton(frame)
 		frame.SetPushedTexture = E.noop
 		frame.SetHighlightTexture = E.noop
 		if frame:HasScript("OnEnter") then
-			local onEnter = frame:GetScript("OnEnter")
-			frame:SetScript(
-				"OnEnter",
-				function()
-					onEnter(frame)
-					if frame.backdrop.SetBackdropBorderColor then
-						frame.backdrop:SetBackdropBorderColor(
-							E.db.general.valuecolor.r,
-							E.db.general.valuecolor.g,
-							E.db.general.valuecolor.b
-						)
-					end
-					if not self.db.mouseOver then
-						return
-					end
-					E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
-				end
-			)
-			frame.OldSetScript = frame.SetScript
-			frame.SetScript = E.noop
-		end
-		if frame:HasScript("OnLeave") then
-			local onLeave = frame:GetScript("OnLeave")
-			frame:SetScript(
-				"OnLeave",
-				function()
-					onLeave(frame)
-					if frame.backdrop.SetBackdropBorderColor then
-						frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-					end
-					if not self.db.mouseOver then
-						return
-					end
-					E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
-				end
-			)
+			self:SetButtonMouseOver(frame, frame, true)
 			frame.OldSetScript = frame.SetScript
 			frame.SetScript = E.noop
 		end
@@ -320,7 +305,7 @@ function MB:SkinButton(frame)
 
 		frame:CreateBackdrop("Tranparent")
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-			S:CreateShadow(frame.backdrop)
+			S:CreateBackdropShadow(frame)
 		end
 
 		self:SetButtonMouseOver(frame, frame)
@@ -328,8 +313,8 @@ function MB:SkinButton(frame)
 		if name == "Narci_MinimapButton" then
 			self:SetButtonMouseOver(frame, frame.Panel)
 			for _, child in pairs {frame.Panel:GetChildren()} do
-				if child.SetScript then
-					self:SetButtonMouseOver(frame, child)
+				if child.SetScript and not child.Highlight then
+					self:SetButtonMouseOver(frame, child, true)
 				end
 			end
 		end

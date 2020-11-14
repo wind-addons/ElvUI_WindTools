@@ -57,10 +57,8 @@ function SB:UpdateButton(button, enable)
 
     if enable ~= button:IsShown() then
         if enable then
-            RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
             button:Show()
         else
-            UnregisterStateDriver(button, "visibility")
             button:Hide()
         end
     end
@@ -129,12 +127,9 @@ function SB:UpdateLayout()
 
     if xOffset ~= 0 then
         self.bar:Show()
-        self.barAnchor:Show()
         self.bar:Size(xOffset + 1, 20)
-        self.barAnchor:Size(xOffset + 1, 20)
     else
         self.bar:Hide()
-        self.barAnchor:Hide()
     end
 
     self:AutoHideWithObjectiveFrame()
@@ -145,17 +140,11 @@ function SB:CreateBar()
         return
     end
 
-    local frame = CreateFrame("Frame", nil, E.UIParent)
+    local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
     frame:Point("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
-    frame:SetFrameStrata("BACKGROUND")
-    self.barAnchor = frame
-
-    frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")
-    frame:ClearAllPoints()
-    frame:SetPoint("CENTER", self.barAnchor, "CENTER", 0, 0)
 
     self.bar = frame
 
@@ -166,8 +155,8 @@ function SB:CreateBar()
     end
 
     E:CreateMover(
-        self.barAnchor,
-        "WTSwitchButtonBarAnchor",
+        frame,
+        "WTSwitchButtonBarMover",
         L["Switch Buttons Bar"],
         nil,
         nil,
@@ -186,10 +175,17 @@ function SB:AutoHideWithObjectiveFrame()
     end
 
     if self.db.hideWithObjectiveTracker then
+        if self.bar.visibilitySet then
+            UnregisterStateDriver(self.bar, "visibility")
+            self.bar.visibilitySet = false
+        end
         if _G.ObjectiveTrackerFrame.collapsed or not _G.ObjectiveTrackerFrame.HeaderMenu:IsShown() then
             self.bar:Hide()
             return
         end
+    elseif not self.bar.visibilitySet then
+        RegisterStateDriver(self.bar, "visibility", "[petbattle]hide;show")
+        self.bar.visibilitySet = true
     end
 
     self.bar:Show()

@@ -81,6 +81,38 @@ function MB:ResetGarrisonSize()
 	_G.GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
 end
 
+function MB:SetButtonMouseOver(button, frame)
+	frame:HookScript(
+		"OnEnter",
+		function()
+			if button.backdrop.SetBackdropBorderColor then
+				button.backdrop:SetBackdropBorderColor(
+					E.db.general.valuecolor.r,
+					E.db.general.valuecolor.g,
+					E.db.general.valuecolor.b
+				)
+			end
+			if not self.db.mouseOver then
+				return
+			end
+			E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
+		end
+	)
+
+	frame:HookScript(
+		"OnLeave",
+		function()
+			if button.backdrop.SetBackdropBorderColor then
+				button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			end
+			if not self.db.mouseOver then
+				return
+			end
+			E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
+		end
+	)
+end
+
 function MB:SkinButton(frame)
 	if not self.db.calendar then
 		tinsert(IgnoreList.full, "GameTimeFrame")
@@ -243,10 +275,14 @@ function MB:SkinButton(frame)
 					if name == "BagSync_MinimapButton" then
 						region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
 					end
+
+					if name ~= "Narci_MinimapButton" then
+						region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+					end
 					region:ClearAllPoints()
 					region:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
 					region:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
-					region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
 					region:SetDrawLayer("ARTWORK")
 					if (name == "GameTimeFrame") then
 						if t == [[Interface\Calendar\UI-Calendar-Button]] then
@@ -287,35 +323,16 @@ function MB:SkinButton(frame)
 			S:CreateShadow(frame.backdrop)
 		end
 
-		frame:HookScript(
-			"OnEnter",
-			function()
-				if frame.backdrop.SetBackdropBorderColor then
-					frame.backdrop:SetBackdropBorderColor(
-						E.db.general.valuecolor.r,
-						E.db.general.valuecolor.g,
-						E.db.general.valuecolor.b
-					)
-				end
-				if not self.db.mouseOver then
-					return
-				end
-				E:UIFrameFadeIn(self.bar, (1 - self.bar:GetAlpha()) * 0.382, self.bar:GetAlpha(), 1)
-			end
-		)
+		self:SetButtonMouseOver(frame, frame)
 
-		frame:HookScript(
-			"OnLeave",
-			function()
-				if frame.backdrop.SetBackdropBorderColor then
-					frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		if name == "Narci_MinimapButton" then
+			self:SetButtonMouseOver(frame, frame.Panel)
+			for _, child in pairs {frame.Panel:GetChildren()} do
+				if child.SetScript then
+					self:SetButtonMouseOver(frame, child)
 				end
-				if not self.db.mouseOver then
-					return
-				end
-				E:UIFrameFadeOut(self.bar, self.bar:GetAlpha() * 0.382, self.bar:GetAlpha(), 0)
 			end
-		)
+		end
 
 		tinsert(moveButtons, name)
 

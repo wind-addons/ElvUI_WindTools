@@ -13,7 +13,6 @@ function S:FriendsFrame()
         _G.FriendsFrame,
         _G.QuickJoinFrame,
         _G.AddFriendFrame,
-        _G.BNToastFrame,
         _G.RecruitAFriendFrame.SplashFrame,
         _G.RecruitAFriendRewardsFrame,
         _G.RecruitAFriendRecruitmentFrame,
@@ -23,6 +22,8 @@ function S:FriendsFrame()
     for _, frame in pairs(frames) do
         self:CreateBackdropShadowAfterElvUISkins(frame)
     end
+
+    self:CreateShadow(_G.BNToastFrame)
 
     for i = 1, 4 do
         self:ReskinTab(_G["FriendsFrameTab" .. i])

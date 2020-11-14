@@ -163,6 +163,11 @@ function S:WeakAuras()
         return
     end
 
+    -- Handle the options region type registration
+    if _G.WeakAuras and _G.WeakAuras.RegisterRegionOptions then
+        self:RawHook(_G.WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
+    end
+
     local regionTypes = _G.WeakAuras.regionTypes
     local Create_Icon, Modify_Icon = regionTypes.icon.create, regionTypes.icon.modify
     local Create_AuraBar, Modify_AuraBar = regionTypes.aurabar.create, regionTypes.aurabar.modify

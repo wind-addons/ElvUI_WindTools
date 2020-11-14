@@ -15,6 +15,36 @@ local IsAddOnLoaded = IsAddOnLoaded
 local buttons = {}
 local expandButtons = {}
 
+local function RemoveBorder(frame)
+    for _, region in pairs {frame:GetRegions()} do
+        if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
+            region:Kill()
+        end
+    end
+end
+
+function S:WeakAuras_RegisterRegionOptions(name, createFunction, icon, displayName, createThumbnail, ...)
+    if type(icon) == "function" then
+        local OldIcon = icon
+        icon = function()
+            local f = OldIcon()
+            RemoveBorder(f)
+            return f
+        end
+    end
+
+    if type(createThumbnail) == "function" then
+        local OldCreateThumbnail = createThumbnail
+        createThumbnail = function()
+            local f = OldCreateThumbnail()
+            RemoveBorder(f)
+            return f
+        end
+    end
+
+    self.hooks[_G.WeakAuras]["RegisterRegionOptions"](name, createFunction, icon, displayName, createThumbnail, ...)
+end
+
 local function ReskinExpandButtons()
     if #expandButtons == 0 then
         return
@@ -35,36 +65,6 @@ local function ReskinExpandButtons()
     end
     wipe(expandButtons)
     expandButtons = newList
-end
-
-local function ReskinButtons()
-    if #buttons == 0 then
-        return
-    end
-
-    local newList = {}
-    for i = 1, #buttons do
-        local handled = false
-        local button = buttons[i]
-        for _, child in pairs {button:GetChildren()} do
-            if child.model or child.texture or child.mask or child.region or child.defaultIcon then
-                for _, region in pairs {child:GetRegions()} do
-                    if
-                        region:GetObjectType() == "Texture" and
-                            region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2"
-                     then
-                        region:Kill()
-                        handled = true
-                    end
-                end
-            end
-        end
-        if not handled then
-            tinsert(newList, button)
-        end
-    end
-    wipe(buttons)
-    buttons = newList
 end
 
 local function ReskinNormalButton(button, next)
@@ -108,12 +108,12 @@ function S:WeakAurasMultiLineEditBox(Constructor)
         widget.frame.backdrop:Point("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
         widget.frame.backdrop:Point("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
 
-        local expandButtonName = widget.button:GetName()
-        if expandButtonName then
-            expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
-            tinsert(expandButtons, expandButtonName)
-        end
-        E:Delay(0.02, ReskinExpandButtons)
+        -- local expandButtonName = widget.button:GetName()
+        -- if expandButtonName then
+        --     expandButtonName = gsub(widget.button:GetName(), "Button", "ExpandButton")
+        --     tinsert(expandButtons, expandButtonName)
+        -- end
+        -- E:Delay(0.02, ReskinExpandButtons)
         return widget
     end
 
@@ -135,8 +135,6 @@ function S:WeakAurasDisplayButton(Constructor)
         widget.frame.highlight:SetTexture(E.media.blankTex)
         widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
         widget.frame.highlight:SetInside()
-        tinsert(buttons, widget.frame)
-        E:Delay(0.1, ReskinButtons)
         return widget
     end
 
@@ -157,7 +155,6 @@ function S:WeakAurasNewButton(Constructor)
         widget.icon:Size(35)
         widget.icon:ClearAllPoints()
         widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
-        tinsert(buttons, widget.frame)
         return widget
     end
 
@@ -183,8 +180,7 @@ function S:WeakAuras_ShowOptions()
     end
 
     -- Buttons
-    ReskinButtons()
-    ReskinExpandButtons()
+    -- ReskinExpandButtons()
 
     for _, child in pairs {frame:GetChildren()} do
         if child:GetObjectType() == "Button" then

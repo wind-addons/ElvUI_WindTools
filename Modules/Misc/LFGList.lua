@@ -102,13 +102,11 @@ function LL:ReskinIcon(parent, icon, role, class)
             icon.line = line
         end
 
-        if class then
-            local color = E:ClassColor(class, false)
-            icon.line:SetVertexColor(color.r, color.g, color.b)
-            icon.line:SetAlpha(self.db.line.alpha)
-        else
-            icon.line:SetAlpha(0)
-        end
+        local color = E:ClassColor(class, false)
+        icon.line:SetVertexColor(color.r, color.g, color.b)
+        icon.line:SetAlpha(self.db.line.alpha)
+    elseif icon.line then
+        icon.line:SetAlpha(0)
     end
 end
 

@@ -82,7 +82,7 @@ with open("CHANGELOG.md", "w", encoding="utf8") as f:
 
         for part in parts:
             try:
-                if len(changelog[part["name"]]) > 0:
+                if len(changelog[part["name"]]["zhTW"]) > 0:
                     f.write("## {} {}\n".format(
                         part["emoji"], locale[part["name"]]))
                     for line in changelog[part["name"]][locale["language"]]:

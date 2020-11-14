@@ -35,8 +35,7 @@ local IgnoreList = {
 		"DroodFocusMinimapButton",
 		"QueueStatusMinimapButton",
 		"TimeManagerClockButton",
-		"MinimapZoneTextButton",
-		"Narci_MinimapButton"
+		"MinimapZoneTextButton"
 	},
 	startWith = {
 		"Archy",

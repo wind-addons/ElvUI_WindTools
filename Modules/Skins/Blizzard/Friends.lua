@@ -21,7 +21,7 @@ function S:FriendsFrame()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateShadow(frame)
+        self:CreateBackdropShadowAfterElvUISkins(frame)
     end
 
     for i = 1, 4 do

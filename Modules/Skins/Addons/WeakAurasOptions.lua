@@ -7,6 +7,7 @@ local gsub = gsub
 local pairs = pairs
 local strfind = strfind
 local tinsert = tinsert
+local type = type
 local unpack = unpack
 local wipe = wipe
 
@@ -97,7 +98,7 @@ function S:WeakAurasMultiLineEditBox(Constructor)
                 local self = frame.obj
                 local option = self.userdata.option
                 local numExtraButtons = 0
-                if (option and option.arg and option.arg.extraFunctions) then
+                if option and option.arg and option.arg.extraFunctions then
                     numExtraButtons = #option.arg.extraFunctions
                     for i = 1, #option.arg.extraFunctions do
                         ES:HandleButton(self.extraButtons[i])

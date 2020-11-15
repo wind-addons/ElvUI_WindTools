@@ -871,6 +871,7 @@ L["Volume"] = "볼륨"
 L["Warboard"] = "영웅의 부름 게시판"
 L["Warlock"] = "흑마법사"
 L["Warrior"] = "전사"
+L["Waypoint"] = true
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true
 L["Weapon Category"] = "무기 카테고리"

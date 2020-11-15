@@ -871,6 +871,7 @@ L["Volume"] = "音量"
 L["Warboard"] = "布告牌"
 L["Warlock"] = "术士"
 L["Warrior"] = "战士"
+L["Waypoint"] = "标记点"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 设定"
 L["Weapon Category"] = "武器分类"

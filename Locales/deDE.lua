@@ -871,6 +871,7 @@ L["Volume"] = "Lautstärke"
 L["Warboard"] = "Heldenaufruf"
 L["Warlock"] = "Hexenmeister"
 L["Warrior"] = "Krieger"
+L["Waypoint"] = true
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true
 L["Weapon Category"] = true

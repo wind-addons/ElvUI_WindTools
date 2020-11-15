@@ -871,6 +871,7 @@ L["Volume"] = true
 L["Warboard"] = "Hero's Call Board"
 L["Warlock"] = true
 L["Warrior"] = true
+L["Waypoint"] = true
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true
 L["Weapon Category"] = true

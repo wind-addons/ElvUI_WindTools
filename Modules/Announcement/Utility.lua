@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
-local gsub
+local gsub = gsub
 local tostring = tostring
 local GetSpellLink = GetSpellLink
 local InCombatLockdown = InCombatLockdown

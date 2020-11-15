@@ -2,10 +2,13 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
+local Rematch = Rematch
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local next = next
 local pairs = pairs
+local select = select
 local unpack = unpack
 
 local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI

@@ -10,47 +10,14 @@ local unpack = unpack
 
 local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 
-function S:Rematch()
-    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
-        return
-    end
-
-    local frame = _G.RematchJournal
-    if not frame then
-        return
-    end
-
-    -- 背景
-    frame:StripTextures()
-    frame.portrait:Hide()
-    frame:CreateBackdrop()
-    self:CreateShadow(frame)
-    ES:HandleCloseButton(frame.CloseButton)
-
+function S:Rematch_Top()
     -- 标题
-    frame.TitleBg:StripTextures()
-    F.SetFontOutline(frame.TitleText)
+    _G.RematchJournal.TitleBg:StripTextures()
+    F.SetFontOutline(_G.RematchJournal.TitleText)
 
     -- 宠物数目
-    local childName = {
-        "BorderBottomLeft",
-        "BorderBottomMiddle",
-        "BorderBottomRight",
-        "BorderLeftMiddle",
-        "BorderRightMiddle",
-        "BorderTopLeft",
-        "BorderTopMiddle",
-        "BorderTopRight",
-        "Bg"
-    }
-
-    local PetCount = _G.RematchToolbar.PetCount
-
-    if PetCount then
-        for _, name in pairs(childName) do
-            PetCount[name]:Hide()
-        end
-        PetCount:SetHighlightTexture(nil)
+    if _G.RematchToolbar.PetCount then
+        local PetCount = _G.RematchToolbar.PetCount
         PetCount.SetHighlightTexture = E.noop
         PetCount:StripTextures()
         PetCount:CreateBackdrop()
@@ -78,15 +45,50 @@ function S:Rematch()
     HandleIconButton(_G.RematchLesserPetTreatButton)
     HandleIconButton(_G.RematchPetTreatButton)
     HandleIconButton(_G.RematchToolbar.SummonRandom)
+end
 
-    -- 左半边
+function S:Rematch_Bottom()
+    -- Tabs
+    for _, tab in pairs {_G.RematchJournal.PanelTabs:GetChildren()} do
+        tab:StripTextures()
+        tab:CreateBackdrop("Transparent")
+        tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
+        tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
+        F.SetFontOutline(tab.Text)
+        self:CreateBackdropShadowAfterElvUISkins(tab)
+    end
+
+    -- Buttons
+    ES:HandleButton(_G.RematchBottomPanel.SummonButton)
+    ES:HandleButton(_G.RematchBottomPanel.SaveButton)
+    ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
+    ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
+    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
+
+    hooksecurefunc(
+        _G.RematchJournal,
+        "SetupUseRematchButton",
+        function()
+            if _G.UseRematchButton then
+                ES:HandleCheckBox(_G.UseRematchButton)
+            end
+        end
+    )
+end
+
+function S:Rematch_TopLeft()
     for _, region in pairs {_G.RematchPetPanel.Top:GetRegions()} do
         region:Hide()
     end
-    ES:HandleEditBox(_G.RematchPetPanel.Top.SearchBox)
-    _G.RematchPetPanel.Top.SearchBox:ClearAllPoints()
-    _G.RematchPetPanel.Top.SearchBox:Point("LEFT", _G.RematchPetPanel.Top.Toggle, "RIGHT", 2, 0)
-    _G.RematchPetPanel.Top.SearchBox:Point("RIGHT", _G.RematchPetPanel.Top.Filter, "LEFT", -2, 0)
+
+    if _G.RematchPetPanel.Top.SearchBox then
+        local searchBox = _G.RematchPetPanel.Top.SearchBox
+        ES:HandleEditBox(searchBox)
+        searchBox.backdrop:SetOutside(0, 0)
+        searchBox:ClearAllPoints()
+        searchBox:Point("TOPLEFT", _G.RematchPetPanel.Top.Toggle, "TOPRIGHT", 2, 0)
+        searchBox:Point("BOTTOMRIGHT", _G.RematchPetPanel.Top.Filter, "BOTTOMLEFT", -2, 0)
+    end
 
     ES:HandleButton(_G.RematchPetPanel.Top.Toggle)
     _G.RematchPetPanel.Top.Toggle:StripTextures()
@@ -132,9 +134,9 @@ function S:Rematch()
             self:SetNormalTexture("")
             self:SetPushedTexture("")
             if self.up then
-                self.Texture:SetRotation(ES.ArrowRotation["up"])
+                self.Texture:SetRotation(ES.ArrowRotation.up)
             else
-                self.Texture:SetRotation(ES.ArrowRotation["down"])
+                self.Texture:SetRotation(ES.ArrowRotation.down)
             end
         end
     )
@@ -143,17 +145,26 @@ function S:Rematch()
 
     _G.RematchPetPanel.Top.Filter.Arrow:SetTexture(E.Media.Textures.ArrowUp)
     _G.RematchPetPanel.Top.Filter.Arrow:SetRotation(ES.ArrowRotation.right)
+end
 
-    -- 中间
-    ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
-    ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
+function S:Rematch()
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
+        return
+    end
 
-    -- 右边
-    ES:HandleButton(_G.RematchTeamPanel.Top.Teams)
-    _G.RematchTeamPanel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
-    _G.RematchTeamPanel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
+    local frame = _G.RematchJournal
+    if not frame then
+        return
+    end
 
-    -- 右侧队伍标签页
+    -- Background
+    frame:StripTextures()
+    frame.portrait:Hide()
+    frame:CreateBackdrop()
+    self:CreateShadow(frame)
+    ES:HandleCloseButton(frame.CloseButton)
+
+    -- Right tabs
     self:SecureHook(
         _G.RematchTeamTabs,
         "Update",
@@ -174,34 +185,7 @@ function S:Rematch()
         end
     )
 
-    -- 右下角标签页
-    for _, tab in pairs {frame.PanelTabs:GetChildren()} do
-        tab:StripTextures()
-        tab:CreateBackdrop("Transparent")
-        tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
-        tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
-        F.SetFontOutline(tab.Text)
-        self:CreateBackdropShadowAfterElvUISkins(tab)
-    end
-
-    -- 下方按钮
-    ES:HandleButton(_G.RematchBottomPanel.SummonButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
-    ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
-    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
-
-    hooksecurefunc(
-        frame,
-        "SetupUseRematchButton",
-        function()
-            if _G.UseRematchButton then
-                ES:HandleCheckBox(_G.UseRematchButton)
-            end
-        end
-    )
-
-    -- 新建标签页
+    -- New Group
     _G.RematchDialog:StripTextures()
     _G.RematchDialog:CreateBackdrop("Transparent")
     self:CreateShadow(_G.RematchDialog)
@@ -209,7 +193,20 @@ function S:Rematch()
     ES:HandleButton(_G.RematchDialog.Accept)
     ES:HandleButton(_G.RematchDialog.Cancel)
 
-    -- 移动支持
+    self:Rematch_Top()
+    self:Rematch_TopLeft()
+    self:Rematch_Bottom()
+
+    -- 中间
+    ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
+    ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
+
+    -- 右边
+    ES:HandleButton(_G.RematchTeamPanel.Top.Teams)
+    _G.RematchTeamPanel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+    _G.RematchTeamPanel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
+
+    -- Compatible with Move Frames module
     if MF and MF.db and MF.db.moveBlizzardFrames then
         if not _G.CollectionsJournal then
             CollectionsJournal_LoadUI()

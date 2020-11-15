@@ -2623,7 +2623,7 @@ function WM:USER_WAYPOINT_UPDATED()
         if self.db and self.db.autoTrackWaypoint then
             E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
         end
-        self:HookPin()
+        E:Delay(0.15, self.HookPin, self)
     end
 end
 
@@ -2641,7 +2641,10 @@ function WM:Initialize()
 
     self:Scale()
     self:Reveal()
-    self:HookPin()
+
+    if self.db.rightClickToClear then
+        self:SecureHook(_G.WorldMapFrame, "Show", "HookPin")
+    end
 
     if self.db.autoTrackWaypoint or self.db.rightClickToClear then
         self:RegisterEvent("USER_WAYPOINT_UPDATED")

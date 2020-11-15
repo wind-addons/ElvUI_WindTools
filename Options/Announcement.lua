@@ -119,9 +119,7 @@ options.quest = {
                         NONE = L["None"],
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -133,9 +131,7 @@ options.quest = {
                         PARTY = L["Party"],
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -147,9 +143,7 @@ options.quest = {
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -464,9 +458,7 @@ options.interrupt = {
                             values = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
-                                EMOTE = L["Emote"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                EMOTE = L["Emote"]
                             }
                         },
                         party = {
@@ -477,9 +469,7 @@ options.interrupt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -491,9 +481,7 @@ options.interrupt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -505,9 +493,7 @@ options.interrupt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -591,9 +577,7 @@ options.interrupt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -605,9 +589,7 @@ options.interrupt = {
                                 PARTY = L["Party"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -619,9 +601,7 @@ options.interrupt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -819,9 +799,7 @@ options.taunt = {
                             values = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
-                                EMOTE = L["Emote"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                EMOTE = L["Emote"]
                             }
                         },
                         party = {
@@ -832,9 +810,7 @@ options.taunt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -846,9 +822,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -860,9 +834,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -992,9 +964,7 @@ options.taunt = {
                             values = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
-                                EMOTE = L["Emote"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                EMOTE = L["Emote"]
                             }
                         },
                         party = {
@@ -1005,9 +975,7 @@ options.taunt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -1019,9 +987,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -1033,9 +999,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -1202,9 +1166,7 @@ options.taunt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -1216,9 +1178,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -1230,9 +1190,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -1368,9 +1326,7 @@ options.taunt = {
                                 NONE = L["None"],
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
-                                PARTY = L["Party"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                PARTY = L["Party"]
                             }
                         },
                         instance = {
@@ -1382,9 +1338,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                INSTANCE_CHAT = L["Instance"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                INSTANCE_CHAT = L["Instance"]
                             }
                         },
                         raid = {
@@ -1396,9 +1350,7 @@ options.taunt = {
                                 SELF = L["Self(Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
-                                RAID = L["Raid"],
-                                YELL = L["Yell"],
-                                SAY = L["Say"]
+                                RAID = L["Raid"]
                             }
                         }
                     }
@@ -1509,9 +1461,7 @@ options.combatResurrection = {
                     values = {
                         NONE = L["None"],
                         SELF = L["Self(Chat Frame)"],
-                        EMOTE = L["Emote"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        EMOTE = L["Emote"]
                     }
                 },
                 party = {
@@ -1521,9 +1471,7 @@ options.combatResurrection = {
                     values = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -1534,9 +1482,7 @@ options.combatResurrection = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -1547,9 +1493,7 @@ options.combatResurrection = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -1611,9 +1555,7 @@ options.utility = {
                     values = {
                         NONE = L["None"],
                         SELF = L["Self(Chat Frame)"],
-                        EMOTE = L["Emote"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        EMOTE = L["Emote"]
                     }
                 },
                 party = {
@@ -1623,9 +1565,7 @@ options.utility = {
                     values = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -1636,9 +1576,7 @@ options.utility = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -1649,9 +1587,7 @@ options.utility = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -1873,9 +1809,7 @@ options.threatTransfer = {
                     values = {
                         NONE = L["None"],
                         SELF = L["Self(Chat Frame)"],
-                        EMOTE = L["Emote"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        EMOTE = L["Emote"]
                     }
                 },
                 party = {
@@ -1885,9 +1819,7 @@ options.threatTransfer = {
                     values = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -1898,9 +1830,7 @@ options.threatTransfer = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -1911,9 +1841,7 @@ options.threatTransfer = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -1993,9 +1921,7 @@ options.goodbye = {
                     values = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -2006,9 +1932,7 @@ options.goodbye = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -2019,9 +1943,7 @@ options.goodbye = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -2168,9 +2090,7 @@ options.thanksForResurrection = {
                         NONE = L["None"],
                         WHISPER = L["Whisper"],
                         SELF = L["Self(Chat Frame)"],
-                        EMOTE = L["Emote"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        EMOTE = L["Emote"]
                     }
                 },
                 party = {
@@ -2182,9 +2102,7 @@ options.thanksForResurrection = {
                         WHISPER = L["Whisper"],
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -2197,9 +2115,7 @@ options.thanksForResurrection = {
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -2212,9 +2128,7 @@ options.thanksForResurrection = {
                         SELF = L["Self(Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }
@@ -2276,9 +2190,7 @@ options.resetInstance = {
                     values = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
-                        PARTY = L["Party"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        PARTY = L["Party"]
                     }
                 },
                 instance = {
@@ -2289,9 +2201,7 @@ options.resetInstance = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        INSTANCE_CHAT = L["Instance"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        INSTANCE_CHAT = L["Instance"]
                     }
                 },
                 raid = {
@@ -2302,9 +2212,7 @@ options.resetInstance = {
                         NONE = L["None"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
-                        RAID = L["Raid"],
-                        YELL = L["Yell"],
-                        SAY = L["Say"]
+                        RAID = L["Raid"]
                     }
                 }
             }

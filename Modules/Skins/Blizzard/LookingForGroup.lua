@@ -21,12 +21,14 @@ function S:LookingForGroupFrames()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateShadow(frame)
+        self:CreateBackdropShadowAfterElvUISkins(frame)
     end
 
     for i = 1, 3 do
         self:ReskinTab(_G["PVEFrameTab" .. i])
     end
+
+    F.SetFontOutline(_G.LFDQueueFrameRandomScrollFrameChildFrameDescription, E.db.general.font, "-1")
 end
 
 S:AddCallback("LookingForGroupFrames")

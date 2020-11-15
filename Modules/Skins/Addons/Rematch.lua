@@ -89,6 +89,9 @@ local function ReskinCard(card) -- modified from NDui
     end
 
     card:SetBackdrop(nil)
+    card:CreateBackdrop("Transparent")
+    S:CreateShadow(card.backdrop)
+
     if card.Source then
         card.Source:StripTextures()
     end
@@ -220,6 +223,7 @@ function S:Rematch_LeftBottom()
 
     list.Background:Kill()
     list:CreateBackdrop()
+    list.backdrop:SetOutside(list, -1, -1)
     ReskinScrollBar(list.ScrollFrame.ScrollBar)
 end
 
@@ -252,10 +256,11 @@ function S:Rematch_Footer()
     )
 end
 
-function S:Rematch_Dialog()
+function S:Rematch_Dialog() -- Modified from NDui
     if not _G.RematchDialog then
         return
     end
+
     -- Background
     local dialog = _G.RematchDialog
     dialog:StripTextures()
@@ -297,6 +302,40 @@ function S:Rematch_Dialog()
 
     -- Checkbox
     ES:HandleCheckBox(dialog.CheckButton)
+
+    -- Collection
+    local collection = dialog.CollectionReport
+    hooksecurefunc(
+        Rematch,
+        "ShowCollectionReport",
+        function()
+            for i = 1, 4 do
+                local bar = collection.RarityBar[i]
+                bar:SetTexture(E.media.normTex)
+            end
+            if not collection.RarityBarBorder.backdrop then
+                collection.RarityBarBorder:StripTextures()
+                collection.RarityBarBorder:CreateBackdrop("Transparent")
+                collection.RarityBarBorder.backdrop:SetInside(collection.RarityBarBorder, 6, 5)
+            end
+        end
+    )
+
+    hooksecurefunc(
+        collection,
+        "UpdateChart",
+        function()
+            for i = 1, 10 do
+                local col = collection.Chart.Columns[i]
+                col.Bar:SetTexture(E.media.blankTex)
+                col.IconBorder:Hide()
+            end
+        end
+    )
+    collection.Chart:StripTextures()
+    collection.Chart:CreateBackdrop("Transparent")
+    ES:HandleRadioButton(collection.ChartTypesRadioButton)
+    ES:HandleRadioButton(collection.ChartSourcesRadioButton)
 end
 
 function S:Rematch_PetCard()

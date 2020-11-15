@@ -124,7 +124,7 @@ function S:WeakAurasDisplayButton(Constructor)
         ES:HandleButton(widget.frame)
         widget.frame.background:SetAlpha(0)
         widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
-        widget.frame.backdrop.color = {widget.frame.backdrop.Center:SetVertexColor()}
+        widget.frame.backdrop.color = {widget.frame.backdrop.Center:GetVertexColor()}
         hooksecurefunc(
             widget.frame.background,
             "Hide",

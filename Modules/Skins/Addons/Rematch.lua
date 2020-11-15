@@ -11,6 +11,39 @@ local unpack = unpack
 local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 local CreateFrame = CreateFrame
 
+local function ReskinIconButton(button)
+    button:StyleButton(nil, true)
+    if button.IconBorder then
+        button.IconBorder:Hide()
+    end
+
+    if button.Texture then
+        button.Texture:SetTexCoord(unpack(E.TexCoords))
+    end
+
+    if button.Icon then
+        button.Icon:CreateBackdrop()
+    end
+
+    if button.Selected then
+        button.Selected:SetTexture(E.media.blankTex)
+        button.Selected:SetVertexColor(1, 1, 1, 0.3)
+    end
+end
+
+local function ReskinCloseButton(button)
+    ES:HandleCloseButton(button)
+    button.Icon = E.noop
+    button.SetNormalTexture = E.noop
+    button.SetPushedTexture = E.noop
+    button.SetHighlightTexture = E.noop
+end
+
+local function ReskinEditBox(editBox)
+    ES:HandleEditBox(editBox)
+    editBox.backdrop:SetOutside(0, 0)
+end
+
 function S:Rematch_Top()
     -- 标题
     _G.RematchJournal.TitleBg:StripTextures()
@@ -30,22 +63,12 @@ function S:Rematch_Top()
     end
 
     -- 右上按钮
-    local function HandleIconButton(frame)
-        frame:StyleButton(nil, true)
-        if frame.IconBorder then
-            frame.IconBorder:Hide()
-        end
-        if frame.Icon then
-            frame.Icon:CreateBackdrop()
-        end
-    end
-
-    HandleIconButton(_G.RematchHealButton)
-    HandleIconButton(_G.RematchBandageButton)
-    HandleIconButton(_G.RematchToolbar.SafariHat)
-    HandleIconButton(_G.RematchLesserPetTreatButton)
-    HandleIconButton(_G.RematchPetTreatButton)
-    HandleIconButton(_G.RematchToolbar.SummonRandom)
+    ReskinIconButton(_G.RematchHealButton)
+    ReskinIconButton(_G.RematchBandageButton)
+    ReskinIconButton(_G.RematchToolbar.SafariHat)
+    ReskinIconButton(_G.RematchLesserPetTreatButton)
+    ReskinIconButton(_G.RematchPetTreatButton)
+    ReskinIconButton(_G.RematchToolbar.SummonRandom)
 end
 
 function S:Rematch_Bottom()
@@ -84,8 +107,7 @@ function S:Rematch_TopLeft()
 
     if _G.RematchPetPanel.Top.SearchBox then
         local searchBox = _G.RematchPetPanel.Top.SearchBox
-        ES:HandleEditBox(searchBox)
-        searchBox.backdrop:SetOutside(0, 0)
+        ReskinEditBox(searchBox)
         searchBox:ClearAllPoints()
         searchBox:Point("TOPLEFT", _G.RematchPetPanel.Top.Toggle, "TOPRIGHT", 2, 0)
         searchBox:Point("BOTTOMRIGHT", _G.RematchPetPanel.Top.Filter, "BOTTOMLEFT", -2, 0)
@@ -148,6 +170,53 @@ function S:Rematch_TopLeft()
     _G.RematchPetPanel.Top.Filter.Arrow:SetRotation(ES.ArrowRotation.right)
 end
 
+function S:Rematch_Dialog()
+    if not _G.RematchDialog then
+        return
+    end
+    -- Background
+    local dialog = _G.RematchDialog
+    dialog:StripTextures()
+    dialog.Prompt:StripTextures()
+    dialog:CreateBackdrop("Transparent")
+    self:CreateShadow(dialog.backdrop)
+
+    -- Buttons
+    ReskinCloseButton(dialog.CloseButton)
+    ES:HandleButton(dialog.Accept)
+    ES:HandleButton(dialog.Cancel)
+
+    -- Icon selector
+    ReskinIconButton(dialog.Slot)
+    ReskinEditBox(dialog.EditBox)
+    dialog.TeamTabIconPicker:StripTextures()
+    dialog.TeamTabIconPicker:CreateBackdrop()
+    ES:HandleScrollBar(dialog.TeamTabIconPicker.ScrollFrame.ScrollBar)
+    hooksecurefunc(
+        _G.RematchTeamTabs,
+        "UpdateTabIconPickerList",
+        function()
+            -- modified from NDui
+            local buttons = dialog.TeamTabIconPicker.ScrollFrame.buttons
+            for i = 1, #buttons do
+                local line = buttons[i]
+                for j = 1, 10 do
+                    local button = line.Icons[j]
+                    if button and not button.windStyle then
+                        button:Size(26, 26)
+                        button.Icon = button.Texture
+                        ReskinIconButton(button)
+                        button.windStyle = true
+                    end
+                end
+            end
+        end
+    )
+
+    -- Checkbox
+    ES:HandleCheckBox(dialog.CheckButton)
+end
+
 function S:Rematch()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
         return
@@ -185,17 +254,13 @@ function S:Rematch()
         end
     )
 
-    -- New Group
-    _G.RematchDialog:StripTextures()
-    _G.RematchDialog:CreateBackdrop("Transparent")
-    self:CreateShadow(_G.RematchDialog)
-    ES:HandleCloseButton(_G.RematchDialog.CloseButton)
-    ES:HandleButton(_G.RematchDialog.Accept)
-    ES:HandleButton(_G.RematchDialog.Cancel)
-
+    -- Main Window
     self:Rematch_Top()
     self:Rematch_TopLeft()
     self:Rematch_Bottom()
+
+    -- Misc
+    self:Rematch_Dialog()
 
     -- 中间
     ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)

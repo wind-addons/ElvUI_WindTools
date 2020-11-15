@@ -460,8 +460,14 @@ options.worldMap = {
             name = L["Remove Fog"],
             desc = L["Remove Fog of War from your world map."]
         },
-        scale = {
+        autoTrackWaypoint = {
             order = 4,
+            type = "toggle",
+            name = L["Auto Track Waypoint"],
+            desc = L["Auto track the waypoint after setting."]
+        },
+        scale = {
+            order = 5,
             type = "group",
             inline = true,
             name = L["Scale"],

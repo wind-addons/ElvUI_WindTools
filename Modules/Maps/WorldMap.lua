@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local WM = W:NewModule("WorldMap", "AceHook-3.0")
+local WM = W:NewModule("WorldMap", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local ceil = ceil
@@ -18,6 +18,8 @@ local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControll
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
+local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
+local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
 local C_Timer_After = C_Timer.After
 
 -- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
@@ -2589,6 +2591,12 @@ function WM:Scale()
     end
 end
 
+function WM:USER_WAYPOINT_UPDATED()
+    if C_Map_HasUserWaypoint() then
+        E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
+    end
+end
+
 function WM:Initialize()
     if IsAddOnLoaded("Mapster") then
         self.StopRunning = "Mapster"
@@ -2603,6 +2611,10 @@ function WM:Initialize()
 
     self:Scale()
     self:Reveal()
+
+    if self.db.autoTrackWaypoint then
+        self:RegisterEvent("USER_WAYPOINT_UPDATED")
+    end
 end
 
 W:RegisterModule(WM:GetName())

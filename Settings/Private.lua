@@ -12,6 +12,7 @@ V.maps = {
 	worldMap = {
 		enable = true,
 		reveal = true,
+		autoTrackWaypoint = false,
 		scale = {
 			enable = true,
 			size = 1.24

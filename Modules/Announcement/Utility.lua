@@ -1,8 +1,8 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
-local gsub, tostring = gsub, tostring
-local UnitInRaid, UnitInParty = UnitInRaid, UnitInParty
+local gsub
+local tostring = tostring
 local GetSpellLink = GetSpellLink
 local InCombatLockdown = InCombatLockdown
 
@@ -144,7 +144,7 @@ function A:Utility(event, sourceName, spellId)
         return
     end
 
-    if sourceName ~= E.myname and not UnitInRaid(sourceName) and not UnitInParty(sourceName) then
+    if not self:PlayerIsInGroup(sourceName) then
         return
     end
 

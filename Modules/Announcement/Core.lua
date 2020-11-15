@@ -19,6 +19,8 @@ local IsInRaid = IsInRaid
 local SendChatMessage = SendChatMessage
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
@@ -98,6 +100,14 @@ function A:GetPetInfo(petName)
     end
 
     return nil, nil
+end
+
+function A:PlayerIsInGroup(name)
+    if name and (name == E.myname or UnitInRaid(name) or UnitInParty(name)) then
+        return true
+    end
+
+    return false
 end
 
 function A:Initialize()

@@ -29,6 +29,10 @@ function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
         return
     end
 
+    if not self:PlayerIsInGroup(sourceName) then
+        return
+    end
+
     if not self:CheckAuthority("COMBAT_RESURRECTION") then
         return
     end

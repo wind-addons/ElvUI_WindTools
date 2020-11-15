@@ -15,7 +15,7 @@ local UnitInRaid = UnitInRaid
 function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     local config = self.db.interrupt
 
-    if not config.enable or config.onlyInstance and not IsInInstance() then
+    if not config.enable or config.onlyInstance and (not IsInInstance() or IsPartyLFG()) then
         return
     end
 
@@ -39,6 +39,10 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
 
     if sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet") then
         -- 自己及宠物打断
+        if not self:PlayerIsInGroup(sourceName) then
+            return
+        end
+
         if config.player.enable then
             self:SendMessage(FormatMessage(config.player.text), self:GetChannel(config.player.channel))
         end
@@ -50,7 +54,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
             sourceName = self:GetPetInfo(sourceName)
         end
 
-        if not UnitInRaid(sourceName) and not UnitInParty(sourceName) then
+        if not self:PlayerIsInGroup(sourceName) then
             return
         end
 

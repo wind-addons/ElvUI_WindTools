@@ -45,6 +45,10 @@ function A:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
             end
         end
 
+        if not self:PlayerIsInGroup(sourceName) then
+            return
+        end
+
         if needAnnounce then
             self:SendMessage(
                 FormatMessage(config.text, sourceName, destName, spellId),

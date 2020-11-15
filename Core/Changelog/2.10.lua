@@ -52,16 +52,16 @@ W.Changelog[210] = {
             "[Switch Buttons] Even if not set to hide with objective tracker, the buttons will also hide on pet battle."
         },
         ["koKR"] = {
-            "[LFG List] Fix the bug that the line does not hide properly.",
-            "[Minimap Buttons] Handle Narcissus icon with the new style, you can disable handling in Narcissus configuration if you want.",
-            "[Skins] Optimize the performance of WeakAuras Options skins.",
-            "[Skins] Optimize Friends skin.",
-            "[Skins] Optimize Communities skin.",
-            "[Skins] Optimize PVE frame skin.",
-            "[Skins] Optimize WeakAura Options skin.",
-            "[Announcement] Change the default channel setting of solo to NONE.",
-            "[Extra Item Bar] Auto hide on pet battle.",
-            "[Switch Buttons] Even if not set to hide with objective tracker, the buttons will also hide on pet battle."
+            "[파티 찾기 목록] 클래스 라인이 잘못 표시되는 문제를 수정합니다.",
+            "[미니맵 버튼 통합 바] 새로운 스타일의 Narcissus 아이콘과 호환되며 마음에 들지 않으면 Narcissus 설정에서 사용을 취소할 수 있습니다.",
+            "[스킨] WeakAuras Options 스킨의 성능을 최적화합니다.",
+            "[스킨] 친구목록 스킨 최적화.",
+            "[스킨] 커뮤니티 스킨 최적화.",
+            "[스킨] PVE 프레임 스킨 최적화.",
+            "[스킨] WeakAuras Options 스킨 최적화.",
+            "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
+            "[아이템 바] 애완동물 대전시 자동으로 숨겨집니다..",
+            "[스위치 버튼] 자동 숨기기 옵션이 꺼져 있어도 애완동물 대전시에는 버튼이 숨겨집니다."
         }
     }
 }

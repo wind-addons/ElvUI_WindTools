@@ -4,6 +4,7 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local gsub = gsub
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 local tinsert = tinsert

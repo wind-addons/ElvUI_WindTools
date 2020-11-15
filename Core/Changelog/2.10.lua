@@ -9,10 +9,18 @@ W.Changelog[210] = {
         ["koKR"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[世界地图] 添加了选项在标记后自动进行追踪."
+        },
+        ["zhTW"] = {
+            "[世界地圖] 新增了選項在標記後自動進行追蹤."
+        },
+        ["enUS"] = {
+            "[World Map] Add new option that auto-tracking the waypoint after setting."
+        },
+        ["koKR"] = {
+            "[World Map] Add new option that auto-tracking the waypoint after setting."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

@@ -38,6 +38,7 @@ W.Changelog[210] = {
             "[通告] 单人情况下部分设定默认不再通报.",
             "[通告] 由于之前的 API 改动, 去除说和大喊频道设定.",
             "[通告] 队伍中时不再通报非队伍成员的行为.",
+            "[通告] 修复随机队伍中不通报的问题.",
             "[额外物品条] 宠物对战时自动隐藏.",
             "[切换按钮] 就算不随任务列表自动显示隐藏, 也会在宠物对战时进行隐藏."
         },
@@ -52,6 +53,7 @@ W.Changelog[210] = {
             "[通告] 單人情況下部分設定默認不再通報.",
             "[通告] 由於之前的 API 改動, 去除說和大喊頻道設定.",
             "[通告] 隊伍中時不再通報非隊伍成員的行為.",
+            "[通告] 修復隨機隊伍中不通報的問題.",
             "[額外物品條] 寵物對戰時自動隱藏.",
             "[切換按鍵] 就算不設定隨任務追蹤自動顯隱, 也會在寵物對戰時隱藏."
         },
@@ -66,6 +68,7 @@ W.Changelog[210] = {
             "[Announcement] Change the default channel setting of solo to NONE.",
             "[Announcement] Remove say and yell channel because previous Blizzard API changes.",
             "[Announcement] Do not announce actions from the player who is not in your party anymore.",
+            "[Announcement] Fix the bug that the module not work in LFG group.",
             "[Extra Item Bar] Auto hide on pet battle.",
             "[Switch Buttons] Even if not set to hide with objective tracker, the buttons will also hide on pet battle."
         },
@@ -80,6 +83,7 @@ W.Changelog[210] = {
             "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
             "[Announcement] Remove say and yell channel because previous Blizzard API changes.",
             "[Announcement] Do not announce actions from the player who is not in your party anymore.",
+            "[Announcement] Fix the bug that the module not work in LFG group.",
             "[아이템 바] 애완동물 대전시 자동으로 숨겨집니다..",
             "[스위치 버튼] 자동 숨기기 옵션이 꺼져 있어도 애완동물 대전시에는 버튼이 숨겨집니다."
         }

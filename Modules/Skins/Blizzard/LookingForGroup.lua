@@ -28,7 +28,13 @@ function S:LookingForGroupFrames()
         self:ReskinTab(_G["PVEFrameTab" .. i])
     end
 
-    F.SetFontOutline(_G.LFDQueueFrameRandomScrollFrameChildFrameDescription, E.db.general.font, "-1")
+    if _G.LFDQueueFrameRandomScrollFrameChildFrame then
+        local frame = _G.LFDQueueFrameRandomScrollFrameChildFrame
+        F.SetFontOutline(frame.title, E.db.general.font)
+        F.SetFontOutline(frame.description, E.db.general.font)
+        F.SetFontOutline(frame.rewardsLabel, E.db.general.font)
+        F.SetFontOutline(frame.rewardsDescription, E.db.general.font)
+    end
 end
 
 S:AddCallback("LookingForGroupFrames")

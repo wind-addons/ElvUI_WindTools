@@ -14,8 +14,8 @@ local xpcall = xpcall
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
-local IsInInstance = IsInInstance
 local IsInRaid = IsInRaid
+local IsPartyLFG = IsPartyLFG
 local SendChatMessage = SendChatMessage
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local UnitIsGroupLeader = UnitIsGroupLeader
@@ -69,7 +69,7 @@ end
     @return {string} 频道
 ]]
 function A:GetChannel(channelDB)
-    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
+    if IsPartyLFG() or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
         return channelDB.instance
     elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
         return channelDB.raid

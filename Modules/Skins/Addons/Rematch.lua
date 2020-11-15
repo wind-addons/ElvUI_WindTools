@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E:GetModule("Skins")
 local S = W:GetModule("Skins")
+local ES = E:GetModule("Skins")
 local MF = W:GetModule("MoveFrames")
 
 local _G = _G
@@ -9,6 +9,7 @@ local pairs = pairs
 local unpack = unpack
 
 local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
+local CreateFrame = CreateFrame
 
 function S:Rematch_Top()
     -- 标题
@@ -152,17 +153,16 @@ function S:Rematch()
         return
     end
 
-    local frame = _G.RematchJournal
-    if not frame then
+    if not _G.RematchJournal then
         return
     end
 
     -- Background
-    frame:StripTextures()
-    frame.portrait:Hide()
-    frame:CreateBackdrop()
-    self:CreateShadow(frame)
-    ES:HandleCloseButton(frame.CloseButton)
+    _G.RematchJournal:StripTextures()
+    _G.RematchJournal.portrait:Hide()
+    _G.RematchJournal:CreateBackdrop()
+    self:CreateShadow(_G.RematchJournal.backdrop)
+    ES:HandleCloseButton(_G.RematchJournal.CloseButton)
 
     -- Right tabs
     self:SecureHook(
@@ -205,15 +205,16 @@ function S:Rematch()
     ES:HandleButton(_G.RematchTeamPanel.Top.Teams)
     _G.RematchTeamPanel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
     _G.RematchTeamPanel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
-
+    _G.RematchJournal.NineSlice:Kill()
     -- Compatible with Move Frames module
     if MF and MF.db and MF.db.moveBlizzardFrames then
         if not _G.CollectionsJournal then
             CollectionsJournal_LoadUI()
         end
-        MF:HandleFrame(frame, _G.CollectionsJournal)
-        MF:HandleFrame(frame.backdrop, _G.CollectionsJournal)
-        MF:HandleFrame(_G.RematchBottomPanel, _G.CollectionsJournal)
+        _G.RematchJournal.moveHandler = CreateFrame("Frame", nil, _G.RematchJournal)
+        _G.RematchJournal.moveHandler:SetAllPoints(_G.RematchJournal.TitleBg)
+        MF:HandleFrame(_G.RematchJournal.moveHandler, _G.CollectionsJournal)
+        MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
         MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
     end
 end

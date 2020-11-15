@@ -121,8 +121,23 @@ function S:WeakAurasDisplayButton(Constructor)
     local function SkinedConstructor()
         local widget = Constructor()
         ES:HandleButton(widget.frame)
-        widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
         widget.frame.background:SetAlpha(0)
+        widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
+        widget.frame.backdrop.color = {widget.frame.backdrop.Center:SetVertexColor()}
+        hooksecurefunc(
+            widget.frame.background,
+            "Hide",
+            function()
+                widget.frame.backdrop.Center:SetVertexColor(1, 0, 0, 0.3)
+            end
+        )
+        hooksecurefunc(
+            widget.frame.background,
+            "Show",
+            function()
+                widget.frame.backdrop.Center:SetVertexColor(unpack(widget.frame.backdrop.color))
+            end
+        )
         widget.icon:SetTexCoord(unpack(E.TexCoords))
         ES:HandleEditBox(widget.renamebox)
         widget.frame.highlight:SetTexture(E.media.blankTex)

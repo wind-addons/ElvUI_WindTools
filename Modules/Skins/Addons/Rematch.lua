@@ -29,6 +29,11 @@ local function ReskinIconButton(button)
         button.Selected:SetTexture(E.media.blankTex)
         button.Selected:SetVertexColor(1, 1, 1, 0.3)
     end
+
+    if button.hover and button.Icon then
+        button.hover:ClearAllPoints()
+        button.hover:SetAllPoints(button.Icon)
+    end
 end
 
 local function ReskinCloseButton(button)
@@ -44,7 +49,72 @@ local function ReskinEditBox(editBox)
     editBox.backdrop:SetOutside(0, 0)
 end
 
-function S:Rematch_Top()
+local function ReskinScrollBar(scrollBar)
+    ES:HandleScrollBar(scrollBar)
+    scrollBar.Thumb.backdrop:ClearAllPoints()
+    scrollBar.Thumb.backdrop:Point("TOPLEFT", scrollBar.Thumb, "TOPLEFT", 3, -3)
+    scrollBar.Thumb.backdrop:Point("BOTTOMRIGHT", scrollBar.Thumb, "BOTTOMRIGHT", -1, 3)
+
+    ES:HandleButton(scrollBar.BottomButton)
+    local tex = scrollBar.BottomButton:GetNormalTexture()
+    tex:SetTexture(E.media.blankTex)
+    tex:SetVertexColor(1, 1, 1, 0)
+
+    tex = scrollBar.BottomButton:GetPushedTexture()
+    tex:SetTexture(E.media.blankTex)
+    tex:SetVertexColor(1, 1, 1, 0.3)
+
+    ES:HandleButton(scrollBar.TopButton)
+    tex = scrollBar.TopButton:GetNormalTexture()
+    tex:SetTexture(E.media.blankTex)
+    tex:SetVertexColor(1, 1, 1, 0)
+
+    tex = scrollBar.TopButton:GetPushedTexture()
+    tex:SetTexture(E.media.blankTex)
+    tex:SetVertexColor(1, 1, 1, 0.3)
+end
+
+local function ReskinXPBar(bar)
+    if not bar then
+        return
+    end
+    bar:StripTextures()
+    bar:SetStatusBarTexture(E.media.normTex)
+    bar:CreateBackdrop("Transparent")
+end
+
+local function ReskinCard(card) -- modified from NDui
+    if not card then
+        return
+    end
+
+    card:SetBackdrop(nil)
+    if card.Source then
+        card.Source:StripTextures()
+    end
+
+    card.Middle:StripTextures()
+
+    if card.Middle.XP then
+        ReskinXPBar(card.Middle.XP)
+        card.Middle.XP:Height(15)
+    end
+
+    if card.Middle.Lore then
+        F.SetFontOutline(card.Middle.Lore, E.db.general.font)
+        card.Middle.Lore:SetTextColor(1, 1, 1, 1)
+    end
+
+    if card.Bottom.AbilitiesBG then
+        card.Bottom.AbilitiesBG:Hide()
+    end
+
+    if card.Bottom.BottomBG then
+        card.Bottom.BottomBG:Hide()
+    end
+end
+
+function S:Rematch_Header()
     -- 标题
     _G.RematchJournal.TitleBg:StripTextures()
     F.SetFontOutline(_G.RematchJournal.TitleText)
@@ -71,36 +141,7 @@ function S:Rematch_Top()
     ReskinIconButton(_G.RematchToolbar.SummonRandom)
 end
 
-function S:Rematch_Bottom()
-    -- Tabs
-    for _, tab in pairs {_G.RematchJournal.PanelTabs:GetChildren()} do
-        tab:StripTextures()
-        tab:CreateBackdrop("Transparent")
-        tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
-        tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
-        F.SetFontOutline(tab.Text)
-        self:CreateBackdropShadowAfterElvUISkins(tab)
-    end
-
-    -- Buttons
-    ES:HandleButton(_G.RematchBottomPanel.SummonButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
-    ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
-    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
-
-    hooksecurefunc(
-        _G.RematchJournal,
-        "SetupUseRematchButton",
-        function()
-            if _G.UseRematchButton then
-                ES:HandleCheckBox(_G.UseRematchButton)
-            end
-        end
-    )
-end
-
-function S:Rematch_TopLeft()
+function S:Rematch_LeftTop()
     for _, region in pairs {_G.RematchPetPanel.Top:GetRegions()} do
         region:Hide()
     end
@@ -170,6 +211,47 @@ function S:Rematch_TopLeft()
     _G.RematchPetPanel.Top.Filter.Arrow:SetRotation(ES.ArrowRotation.right)
 end
 
+function S:Rematch_LeftBottom()
+    if not _G.RematchPetPanel.List then
+        return
+    end
+
+    local list = _G.RematchPetPanel.List
+
+    list.Background:Kill()
+    list:CreateBackdrop()
+    ReskinScrollBar(list.ScrollFrame.ScrollBar)
+end
+
+function S:Rematch_Footer()
+    -- Tabs
+    for _, tab in pairs {_G.RematchJournal.PanelTabs:GetChildren()} do
+        tab:StripTextures()
+        tab:CreateBackdrop("Transparent")
+        tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
+        tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
+        F.SetFontOutline(tab.Text)
+        self:CreateBackdropShadowAfterElvUISkins(tab)
+    end
+
+    -- Buttons
+    ES:HandleButton(_G.RematchBottomPanel.SummonButton)
+    ES:HandleButton(_G.RematchBottomPanel.SaveButton)
+    ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
+    ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
+    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
+
+    hooksecurefunc(
+        _G.RematchJournal,
+        "SetupUseRematchButton",
+        function()
+            if _G.UseRematchButton then
+                ES:HandleCheckBox(_G.UseRematchButton)
+            end
+        end
+    )
+end
+
 function S:Rematch_Dialog()
     if not _G.RematchDialog then
         return
@@ -217,6 +299,31 @@ function S:Rematch_Dialog()
     ES:HandleCheckBox(dialog.CheckButton)
 end
 
+function S:Rematch_PetCard()
+    if not _G.RematchPetCard then
+        return
+    end
+
+    local petCard = _G.RematchPetCard
+    petCard:StripTextures()
+    petCard.Title:StripTextures()
+    petCard:CreateBackdrop("Transparent")
+    self:CreateShadow(petCard.backdrop)
+    ReskinCloseButton(petCard.CloseButton)
+    ES:HandleNextPrevButton(petCard.PinButton, "up")
+    petCard.PinButton:ClearAllPoints()
+    petCard.PinButton:Point("TOPLEFT", 3, -3)
+    ReskinCard(petCard.Front)
+    ReskinCard(petCard.Back)
+
+    for i = 1, 6 do
+        local button = petCard.Front.Bottom.Abilities[i]
+        button.IconBorder:Kill()
+        select(8, button:GetRegions()):SetTexture(nil)
+        ReskinIconButton(button.Icon)
+    end
+end
+
 function S:Rematch()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
         return
@@ -233,34 +340,32 @@ function S:Rematch()
     self:CreateShadow(_G.RematchJournal.backdrop)
     ES:HandleCloseButton(_G.RematchJournal.CloseButton)
 
+    -- Main Window
+    self:Rematch_Header()
+    self:Rematch_LeftTop()
+    self:Rematch_LeftBottom()
+    self:Rematch_Footer()
+
+    -- Misc
+    self:Rematch_Dialog()
+    self:Rematch_PetCard()
+
     -- Right tabs
     self:SecureHook(
         _G.RematchTeamTabs,
         "Update",
-        function()
-            if _G.RematchTeamTabs and _G.RematchTeamTabs.Layout then
-                for _, tab in pairs {_G.RematchTeamTabs.Layout:GetChildren()} do
-                    if not tab.windStyle then
-                        tab:StripTextures()
-                        tab.Icon:CreateBackdrop()
-                        self:CreateShadow(tab.Icon.backdrop)
-                        tab:StyleButton(nil, true)
-                        tab.hover:ClearAllPoints()
-                        tab.hover:SetAllPoints(tab.Icon)
-                        tab.windStyle = true
-                    end
+        function(tabs)
+            for _, tab in next, tabs.Tabs do
+                if tab and not tab.windStyle then
+                    tab.Background:Kill()
+                    ReskinIconButton(tab)
+                    self:CreateShadow(tab.Icon.backdrop)
+                    tab:Size(40, 40)
+                    tab.windStyle = true
                 end
             end
         end
     )
-
-    -- Main Window
-    self:Rematch_Top()
-    self:Rematch_TopLeft()
-    self:Rematch_Bottom()
-
-    -- Misc
-    self:Rematch_Dialog()
 
     -- 中间
     ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)

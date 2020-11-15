@@ -205,7 +205,7 @@ function S:Rematch()
     ES:HandleButton(_G.RematchTeamPanel.Top.Teams)
     _G.RematchTeamPanel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
     _G.RematchTeamPanel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
-    _G.RematchJournal.NineSlice:Kill()
+
     -- Compatible with Move Frames module
     if MF and MF.db and MF.db.moveBlizzardFrames then
         if not _G.CollectionsJournal then

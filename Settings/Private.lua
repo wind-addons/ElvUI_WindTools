@@ -13,6 +13,7 @@ V.maps = {
 		enable = true,
 		reveal = true,
 		autoTrackWaypoint = true,
+		rightClickToClear = true,
 		scale = {
 			enable = true,
 			size = 1.24

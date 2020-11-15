@@ -466,8 +466,14 @@ options.worldMap = {
             name = L["Auto Track Waypoint"],
             desc = L["Auto track the waypoint after setting."]
         },
-        scale = {
+        rightClickToClear = {
             order = 5,
+            type = "toggle",
+            name = L["Right Click To Clear"],
+            desc = L["Right click the waypoint to clear it."]
+        },
+        scale = {
+            order = 6,
             type = "group",
             inline = true,
             name = L["Scale"],

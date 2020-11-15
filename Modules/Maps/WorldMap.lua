@@ -16,6 +16,7 @@ local IsAddOnLoaded = IsAddOnLoaded
 local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
+local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
@@ -2591,9 +2592,36 @@ function WM:Scale()
     end
 end
 
+function WM:HookPin()
+    if not self.db or not self.db.rightClickToClear then
+        return
+    end
+
+    local EnumerateAllPins = _G.WorldMapFrame:EnumerateAllPins()
+    local pin = EnumerateAllPins()
+    while pin do
+        if pin.pinTemplate and pin.pinTemplate == "WaypointLocationPinTemplate" then
+            self:SecureHook(
+                pin,
+                "OnMouseClickAction",
+                function(_, button)
+                    if button == "RightButton" then
+                        C_Map_ClearUserWaypoint()
+                    end
+                end
+            )
+            break
+        end
+        pin = EnumerateAllPins()
+    end
+end
+
 function WM:USER_WAYPOINT_UPDATED()
     if C_Map_HasUserWaypoint() then
-        E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
+        if self.db and self.db.autoTrackWaypoint then
+            E:Delay(0.1, C_SuperTrack_SetSuperTrackedUserWaypoint, true)
+        end
+        self:HookPin()
     end
 end
 
@@ -2611,8 +2639,9 @@ function WM:Initialize()
 
     self:Scale()
     self:Reveal()
+    self:HookPin()
 
-    if self.db.autoTrackWaypoint then
+    if self.db.autoTrackWaypoint or self.db.rightClickToClear then
         self:RegisterEvent("USER_WAYPOINT_UPDATED")
     end
 end

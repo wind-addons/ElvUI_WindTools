@@ -10,16 +10,20 @@ W.Changelog[210] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[世界地图] 添加了选项在标记后自动进行追踪."
+            "[世界地图] 添加了标记后自动进行追踪功能.",
+            "[世界地图] 添加了右键标记清除功能.",
         },
         ["zhTW"] = {
-            "[世界地圖] 新增了選項在標記後自動進行追蹤."
+            "[世界地圖] 新增了標記後自動進行追蹤功能.",
+            "[世界地图] 新增了右鍵標記清除功能."
         },
         ["enUS"] = {
-            "[World Map] Add new option that auto-tracking the waypoint after setting."
+            "[World Map] Add new feature that auto-tracking the waypoint after setting.",
+            "[World Map] Add new feature that right clicking the waypoint to clear it.",
         },
         ["koKR"] = {
-            "[World Map] Add new option that auto-tracking the waypoint after setting."
+            "[World Map] Add new feature that auto-tracking the waypoint after setting.",
+            "[World Map] Add new feature that right clicking the waypoint to clear it.",
         }
     },
     IMPROVEMENT = {

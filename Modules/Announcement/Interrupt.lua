@@ -8,6 +8,7 @@ local strsub = strsub
 
 local GetSpellLink = GetSpellLink
 local IsInInstance = IsInInstance
+local IsPartyLFG = IsPartyLFG
 local UnitGUID = UnitGUID
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid

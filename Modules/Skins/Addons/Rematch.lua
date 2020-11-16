@@ -164,6 +164,16 @@ local function ReskinInset(frame)
     frame.backdrop.Center:SetVertexColor(1, 1, 1, 0.3)
 end
 
+local function ReskinTooltip(tooltip)
+    if not tooltip then
+        return
+    end
+
+    tooltip:StripTextures()
+    tooltip:CreateBackdrop("Transparent")
+    S:CreateShadow(tooltip.backdrop)
+end
+
 local function ReskinPetList(list) -- modified from NDui
     local buttons = list.ScrollFrame.Buttons
     if not buttons then
@@ -657,6 +667,19 @@ function S:Rematch()
             end
 
             self:Rematch_Middle()
+
+            -- Tooltip
+            ReskinTooltip(_G.RematchTooltip)
+            ReskinTooltip(_G.RematchTableTooltip)
+            for i = 1, 3 do
+                local menu = _G.Rematch:GetMenuFrame(i, UIParent)
+                menu:StripTextures()
+                menu:CreateBackdrop("Transparent")
+                S:CreateShadow(menu.backdrop)
+                menu.Title:StripTextures()
+                menu.Title:CreateBackdrop()
+                menu.Title.backdrop:SetBackdropColor(1, 0.8, 0, 0.25)
+            end
 
             -- Compatible with Move Frames module
             if MF and MF.db and MF.db.moveBlizzardFrames then

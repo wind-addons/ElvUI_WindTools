@@ -76,6 +76,19 @@ local function ReskinEditBox(editBox)
     editBox.backdrop:SetOutside(0, 0)
 end
 
+local function ReskinDropdown(dropdown) -- modified from NDui
+    dropdown:SetBackdrop(nil)
+    dropdown:StripTextures()
+    dropdown:CreateBackdrop()
+    dropdown.backdrop:SetInside(dropdown, 2, 2)
+    if dropdown.Icon then
+		dropdown.Icon:SetAlpha(1)
+		dropdown.Icon:CreateBackdrop()
+	end
+    local arrow = dropdown:GetChildren()
+    ES:HandleNextPrevButton(arrow, "down")
+end
+
 local function ReskinScrollBar(scrollBar)
     ES:HandleScrollBar(scrollBar)
     scrollBar.Thumb.backdrop:ClearAllPoints()
@@ -467,6 +480,10 @@ function S:Rematch_Dialog() -- Modified from NDui
     -- Checkbox
     ES:HandleCheckBox(dialog.CheckButton)
 
+    -- Dropdown
+    ReskinDropdown(dialog.SaveAs.Target)
+	ReskinDropdown(dialog.TabPicker)
+
     -- Collection
     local collection = dialog.CollectionReport
     hooksecurefunc(
@@ -496,8 +513,10 @@ function S:Rematch_Dialog() -- Modified from NDui
             end
         end
     )
+    ReskinDropdown(collection.ChartTypeComboBox)
     collection.Chart:StripTextures()
     collection.Chart:CreateBackdrop("Transparent")
+    collection.Chart.backdrop:SetInside(collection.Chart, 2, 2)
     ES:HandleRadioButton(collection.ChartTypesRadioButton)
     ES:HandleRadioButton(collection.ChartSourcesRadioButton)
 end
@@ -567,6 +586,28 @@ function S:Rematch()
     self:Rematch_LeftBottom()
     self:Rematch_Right()
     self:Rematch_Footer()
+    hooksecurefunc(
+        _G.RematchJournal,
+        "ConfigureJournal",
+        function()
+            if _G.RematchJournal.windStyle then
+                return
+            end
+
+            self:Rematch_Middle()
+
+            -- Compatible with Move Frames module
+            if MF and MF.db and MF.db.moveBlizzardFrames then
+                if not _G.CollectionsJournal then
+                    CollectionsJournal_LoadUI()
+                end
+                MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
+                MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
+            end
+
+            RematchJournal.windStyle = true
+        end
+    )
 
     -- Misc
     self:Rematch_Dialog()

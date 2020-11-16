@@ -367,6 +367,9 @@ function S:Rematch_Right()
     if panel then
         panel.Top:StripTextures()
         ReskinEditBox(panel.Top.SearchBox)
+        panel.Top.SearchBox:ClearAllPoints()
+        panel.Top.SearchBox:Point("TOPLEFT", panel.Top, "TOPLEFT", 3, -3)
+        panel.Top.SearchBox:Point("RIGHT", panel.Top.Teams, "LEFT", -2, 0)
         ReskinFilterButton(panel.Top.Teams)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
@@ -585,9 +588,6 @@ function S:Rematch()
                 if not _G.CollectionsJournal then
                     CollectionsJournal_LoadUI()
                 end
-                _G.RematchJournal.moveHandler = CreateFrame("Frame", nil, _G.RematchJournal)
-                _G.RematchJournal.moveHandler:SetAllPoints(_G.RematchJournal.TitleBg)
-                MF:HandleFrame(_G.RematchJournal.moveHandler, _G.CollectionsJournal)
                 MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
                 MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
             end

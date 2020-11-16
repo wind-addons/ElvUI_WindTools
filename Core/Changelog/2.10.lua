@@ -25,9 +25,9 @@ W.Changelog[210] = {
             "[Raid Markers] Add new option for disabling tooltip."
         },
         ["koKR"] = {
-            "[World Map] Add new feature that auto-tracking the waypoint after setting.",
-            "[World Map] Add new feature that right clicking the waypoint to clear it.",
-            "[Raid Markers] Add new option for disabling tooltip."
+            "[월드맵] 지도 핀을 배치하면 즉시 추적하여 화면에 표시하는 기능을 추가합니다.",
+            "[월드맵] 지도 핀을 마우스 오른쪽 클릭으로 삭제하는 기능을 추가합니다.",
+            "[공격대 징표] 툴팁을 비활성화하는 옵션을 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -89,9 +89,9 @@ W.Changelog[210] = {
             "[스킨] PVE 프레임 스킨 최적화.",
             "[스킨] WeakAuras Options 스킨 최적화.",
             "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
-            "[Announcement] Because the limitation of API, say and yell now will be convert to self when you not in the instance.",
-            "[Announcement] Do not announce actions from the player who is not in your party anymore.",
-            "[Announcement] Fix the bug that the module not work in LFG group.",
+            "[알림] API의 한계로 인하여 플레이어가 인스턴스에 있지 않을 때 일반, 외치기는 나에게(채팅창)으로 변환 됩니다.",
+            "[알림] 같은 파티원이나 공격대원이 아닌 다른 플레이어의 행동은 알리지 않습니다.",
+            "[알림] 파티 찾기 그룹에서 모듈이 동작하지 않는 버그를 수정했습니다.",
             "[아이템 바] 애완동물 대전시 자동으로 숨겨집니다..",
             "[스위치 버튼] 자동 숨기기 옵션이 꺼져 있어도 애완동물 대전시에는 버튼이 숨겨집니다."
         }

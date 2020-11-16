@@ -11,19 +11,23 @@ W.Changelog[210] = {
     NEW = {
         ["zhCN"] = {
             "[世界地图] 添加了标记后自动进行追踪功能.",
-            "[世界地图] 添加了右键标记清除功能."
+            "[世界地图] 添加了右键标记清除功能.",
+            "[团队标记] 添加了隐藏鼠标提示的功能."
         },
         ["zhTW"] = {
             "[世界地圖] 新增了標記後自動進行追蹤功能.",
-            "[世界地图] 新增了右鍵標記清除功能."
+            "[世界地图] 新增了右鍵標記清除功能.",
+            "[團隊標記] 新增了隱藏浮動提示的功能."
         },
         ["enUS"] = {
             "[World Map] Add new feature that auto-tracking the waypoint after setting.",
-            "[World Map] Add new feature that right clicking the waypoint to clear it."
+            "[World Map] Add new feature that right clicking the waypoint to clear it.",
+            "[Raid Markers] Add new option for disabling tooltip."
         },
         ["koKR"] = {
             "[World Map] Add new feature that auto-tracking the waypoint after setting.",
-            "[World Map] Add new feature that right clicking the waypoint to clear it."
+            "[World Map] Add new feature that right clicking the waypoint to clear it.",
+            "[Raid Markers] Add new option for disabling tooltip."
         }
     },
     IMPROVEMENT = {

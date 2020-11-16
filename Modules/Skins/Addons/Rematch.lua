@@ -197,8 +197,9 @@ local function ReskinTeamList()
         for i = 1, 3 do
             local loadout = _G.RematchLoadoutPanel.Loadouts[i]
             if loadout and not loadout.windStyle then
-                ReskinInset(loadout)
+                loadout:StripTextures()
                 ES:HandleButton(loadout)
+                loadout.backdrop:SetInside(loadout, 2, 2)
                 ReskinIconButton(loadout.Pet.Pet)
                 if loadout.Pet.Pet.Level then
                     loadout.Pet.Pet.Level.Text:SetTextColor(1, 1, 1)

@@ -82,9 +82,9 @@ local function ReskinDropdown(dropdown) -- modified from NDui
     dropdown:CreateBackdrop()
     dropdown.backdrop:SetInside(dropdown, 2, 2)
     if dropdown.Icon then
-		dropdown.Icon:SetAlpha(1)
-		dropdown.Icon:CreateBackdrop()
-	end
+        dropdown.Icon:SetAlpha(1)
+        dropdown.Icon:CreateBackdrop()
+    end
     local arrow = dropdown:GetChildren()
     ES:HandleNextPrevButton(arrow, "down")
 end
@@ -171,44 +171,55 @@ local function ReskinPetList(list) -- modified from NDui
     end
     for i = 1, #buttons do
         local button = buttons[i]
-        if button.Pet then
-            button.Pet:CreateBackdrop()
+        if not button.windStyle then
+            if button.Pet then
+                button.Pet:CreateBackdrop()
 
-            if button.Rarity then
-                button.Pet.backdrop:SetBackdropBorderColor(button.Rarity:GetVertexColor())
-                button.Rarity:SetTexture(nil)
+                if button.Rarity then
+                    button.Pet.backdrop:SetBackdropBorderColor(button.Rarity:GetVertexColor())
+                    button.Rarity:SetTexture(nil)
+                end
+                if button.LevelBack then
+                    button.LevelBack:SetTexture(nil)
+                end
+                button.LevelText:SetTextColor(1, 1, 1)
+                button.LevelText:FontTemplate()
+                parent = button.Pet
             end
-            if button.LevelBack then
-                button.LevelBack:SetTexture(nil)
+
+            if button.Back then
+                button.Back:SetTexture(nil)
             end
-            button.LevelText:SetTextColor(1, 1, 1)
-            button.LevelText:FontTemplate()
-            parent = button.Pet
-        end
 
-        if button.Back then
-            button.Back:SetTexture(nil)
-        end
-
-        for _, child in pairs {button:GetChildren()} do
-            if child:GetNumChildren() == 0 and child:GetNumRegions() == 8 then
-                child:StripTextures()
-                child.tex = child:CreateTexture(nil)
-                child.tex:SetInside(child, 1, 1)
-                child.tex:SetTexture(E.media.blankTex)
-                child.tex:SetVertexColor(1, 1, 1, 0.3)
-                break
+            for _, child in pairs {button:GetChildren()} do
+                if child:GetNumChildren() == 0 and child:GetNumRegions() == 8 then
+                    child:StripTextures()
+                    child.tex = child:CreateTexture(nil)
+                    child.tex:SetInside(child, 1, 1)
+                    child.tex:SetTexture(E.media.blankTex)
+                    child.tex:SetVertexColor(1, 1, 1, 0.3)
+                    break
+                end
             end
-        end
 
-        ES:HandleButton(button)
+            ES:HandleButton(button)
+            if not button.Pet then
+                button.backdrop:SetInside(button, 1, 1)
+            end
+
+            if not button.Back:IsShown() then -- Description
+                button.backdrop:Hide()
+            end
+
+            button.windStyle = true
+        end
     end
 end
 
-local function ReskinTeamList()
-    if _G.RematchLoadoutPanel then
+local function ReskinTeamList(panel)
+    if panel then
         for i = 1, 3 do
-            local loadout = _G.RematchLoadoutPanel.Loadouts[i]
+            local loadout = panel.Loadouts[i]
             if loadout and not loadout.windStyle then
                 loadout:StripTextures()
                 ES:HandleButton(loadout)
@@ -335,7 +346,7 @@ function S:Rematch_LeftBottom()
 
     list.Background:Kill()
     list:CreateBackdrop()
-    list.backdrop:SetOutside(list, -1, -1)
+    list.backdrop:SetInside(list, 1, 2)
     ReskinScrollBar(list.ScrollFrame.ScrollBar)
 
     hooksecurefunc(_G.RematchPetPanel.List, "Update", ReskinPetList)
@@ -363,14 +374,23 @@ function S:Rematch_Middle() -- Modified from NDui
     end
 
     ReskinInset(_G.RematchLoadedTeamPanel)
-    ReskinTeamList()
+    ReskinTeamList(_G.RematchLoadoutPanel)
     hooksecurefunc(_G.RematchLoadoutPanel, "UpdateLoadouts", ReskinTeamList)
 
-    -- Team Panel
-    panel = _G.RematchTeamPanel and _G.RematchTeamPanel.TargetPanel
+    -- Target Panel
+    panel = _G.RematchLoadoutPanel and _G.RematchLoadoutPanel.TargetPanel
     if panel then
-        panel:StripTextures()
+        panel.Top:StripTextures()
         ReskinButton(panel.Top.BackButton)
+        ReskinEditBox(panel.Top.SearchBox)
+        panel.Top.SearchBox:ClearAllPoints()
+        panel.Top.SearchBox:Point("TOPLEFT", panel.Top, "TOPLEFT", 3, -3)
+        panel.Top.SearchBox:Point("RIGHT", panel.Top.BackButton, "LEFT", -2, 0)
+        panel.List.Background:Kill()
+        panel.List:CreateBackdrop()
+        panel.List.backdrop:SetInside(panel.List, 2, 2)
+        ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
+        hooksecurefunc(panel.List, "Update", ReskinPetList)
     end
 end
 
@@ -386,7 +406,7 @@ function S:Rematch_Right()
         ReskinFilterButton(panel.Top.Teams)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
-        panel.List.backdrop:SetOutside(panel.List, -2, -2)
+        panel.List.backdrop:SetInside(panel.List, 0, 2)
         ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
         hooksecurefunc(panel.List, "Update", ReskinPetList)
     end
@@ -398,7 +418,7 @@ function S:Rematch_Right()
         ReskinFilterButton(panel.Top.Teams)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
-        panel.List.backdrop:SetOutside(panel.List, -2, -2)
+        panel.List.backdrop:SetInside(panel.List, 2, 2)
         ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
         hooksecurefunc(panel.List, "Update", ReskinPetList)
     end
@@ -482,7 +502,7 @@ function S:Rematch_Dialog() -- Modified from NDui
 
     -- Dropdown
     ReskinDropdown(dialog.SaveAs.Target)
-	ReskinDropdown(dialog.TabPicker)
+    ReskinDropdown(dialog.TabPicker)
 
     -- Collection
     local collection = dialog.CollectionReport

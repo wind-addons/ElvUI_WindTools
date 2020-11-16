@@ -11,7 +11,7 @@ W.Changelog[210] = {
     NEW = {
         ["zhCN"] = {
             "[世界地图] 添加了标记后自动进行追踪功能.",
-            "[世界地图] 添加了右键标记清除功能.",
+            "[世界地图] 添加了右键标记清除功能."
         },
         ["zhTW"] = {
             "[世界地圖] 新增了標記後自動進行追蹤功能.",
@@ -19,11 +19,11 @@ W.Changelog[210] = {
         },
         ["enUS"] = {
             "[World Map] Add new feature that auto-tracking the waypoint after setting.",
-            "[World Map] Add new feature that right clicking the waypoint to clear it.",
+            "[World Map] Add new feature that right clicking the waypoint to clear it."
         },
         ["koKR"] = {
             "[World Map] Add new feature that auto-tracking the waypoint after setting.",
-            "[World Map] Add new feature that right clicking the waypoint to clear it.",
+            "[World Map] Add new feature that right clicking the waypoint to clear it."
         }
     },
     IMPROVEMENT = {
@@ -36,7 +36,7 @@ W.Changelog[210] = {
             "[美化皮肤] 优化 PVE 界面的美化.",
             "[美化皮肤] 优化了 WeakAuras 设定的美化.",
             "[通告] 单人情况下部分设定默认不再通报.",
-            "[通告] 由于之前的 API 改动, 去除说和大喊频道设定.",
+            "[通告] 由于 API 限制, 说和大喊频道将会在不可用时自动转换为输出到聊天框.",
             "[通告] 队伍中时不再通报非队伍成员的行为.",
             "[通告] 修复随机队伍中不通报的问题.",
             "[额外物品条] 宠物对战时自动隐藏.",
@@ -51,7 +51,7 @@ W.Changelog[210] = {
             "[美化皮膚] 優化 PVE 框架美化.",
             "[美化皮膚] 優化 WeakAuras 設定美化.",
             "[通告] 單人情況下部分設定默認不再通報.",
-            "[通告] 由於之前的 API 改動, 去除說和大喊頻道設定.",
+            "[通告] 由於 API 限制, 說和大喊頻道將會在不可用時自動轉換為輸出到聊天框.",
             "[通告] 隊伍中時不再通報非隊伍成員的行為.",
             "[通告] 修復隨機隊伍中不通報的問題.",
             "[額外物品條] 寵物對戰時自動隱藏.",
@@ -66,7 +66,7 @@ W.Changelog[210] = {
             "[Skins] Optimize PVE frame skin.",
             "[Skins] Optimize WeakAura Options skin.",
             "[Announcement] Change the default channel setting of solo to NONE.",
-            "[Announcement] Remove say and yell channel because previous Blizzard API changes.",
+            "[Announcement] Because the limitation of API, say and yell now will be convert to self when you not in the instance.",
             "[Announcement] Do not announce actions from the player who is not in your party anymore.",
             "[Announcement] Fix the bug that the module not work in LFG group.",
             "[Extra Item Bar] Auto hide on pet battle.",
@@ -81,7 +81,7 @@ W.Changelog[210] = {
             "[스킨] PVE 프레임 스킨 최적화.",
             "[스킨] WeakAuras Options 스킨 최적화.",
             "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
-            "[Announcement] Remove say and yell channel because previous Blizzard API changes.",
+            "[Announcement] Because the limitation of API, say and yell now will be convert to self when you not in the instance.",
             "[Announcement] Do not announce actions from the player who is not in your party anymore.",
             "[Announcement] Fix the bug that the module not work in LFG group.",
             "[아이템 바] 애완동물 대전시 자동으로 숨겨집니다..",

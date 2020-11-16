@@ -207,10 +207,37 @@ local function ReskinPetList(list) -- modified from NDui
                 button.backdrop:SetInside(button, 1, 1)
             end
 
-            if not button.Back:IsShown() then -- Description
+            if button.Back then
+                button.Back:SetTexture(nil)
+            end
+
+            if not button.Back:IsShown() then
                 button.backdrop:Hide()
             end
 
+            button.windStyle = true
+        else
+            if button.Back:IsShown() then
+                button.backdrop:Show()
+            else
+                button.backdrop:Hide()
+            end
+        end
+    end
+end
+
+local function ReskinOptions(list)
+    local buttons = list.ScrollFrame.Buttons
+    if not buttons then
+        return
+    end
+    for i = 1, #buttons do
+        local button = buttons[i]
+        if not button.windStyle then
+            ES:HandleButton(button)
+            button.backdrop:SetInside(button, 1, 1)
+            button.HeaderBack:StripTextures()
+            button.HeaderBack = button.backdrop
             button.windStyle = true
         end
     end
@@ -394,7 +421,7 @@ function S:Rematch_Middle() -- Modified from NDui
     end
 end
 
-function S:Rematch_Right()
+function S:Rematch_Right() -- Modified from NDui
     -- Team Panel
     local panel = _G.RematchTeamPanel
     if panel then
@@ -415,12 +442,27 @@ function S:Rematch_Right()
     panel = _G.RematchQueuePanel
     if panel then
         panel.Top:StripTextures()
-        ReskinFilterButton(panel.Top.Teams)
+        ReskinFilterButton(panel.Top.QueueButton)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
         panel.List.backdrop:SetInside(panel.List, 2, 2)
         ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
         hooksecurefunc(panel.List, "Update", ReskinPetList)
+    end
+
+    -- Option Panel
+    panel = _G.RematchOptionPanel
+    if panel then
+        panel.Top:StripTextures()
+        ReskinEditBox(panel.Top.SearchBox)
+        for i = 1, 4 do
+            ReskinIconButton(panel.Growth.Corners[i])
+        end
+        panel.List.Background:Kill()
+        panel.List:CreateBackdrop()
+        panel.List.backdrop:SetInside(panel.List, 2, 2)
+        ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
+        hooksecurefunc(panel.List, "Update", ReskinOptions)
     end
 end
 

@@ -14,6 +14,7 @@ local xpcall = xpcall
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
+local IsInInstance = IsInInstance
 local IsInRaid = IsInRaid
 local IsPartyLFG = IsPartyLFG
 local SendChatMessage = SendChatMessage
@@ -37,23 +38,30 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
     if channel == "NONE" then
         return
     end
-    -- 聊天框输出
+
+    -- Change channel if it is protected by Blizzard
+    if channel == "YELL" or channel == "SAY" then
+        if not IsInInstance() then
+            channel = "SELF"
+        end
+    end
+
     if channel == "SELF" then
         _G.ChatFrame1:AddMessage(text)
         return
     end
-    -- 密语
+
     if channel == "WHISPER" then
         if whisper_target then
             SendChatMessage(text, channel, nil, whisper_target)
         end
         return
     end
-    -- 表情频道前置冒号以优化显示
+
     if channel == "EMOTE" then
         text = ": " .. text
     end
-    -- 如果允许团队警告
+
     if channel == "RAID" and raid_warning and IsInRaid(LE_PARTY_CATEGORY_HOME) then
         if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or IsEveryoneAssistant() then
             channel = "RAID_WARNING"

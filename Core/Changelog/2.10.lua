@@ -10,21 +10,25 @@ W.Changelog[210] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[美化皮肤] 添加了 Rematch 的美化.",
             "[世界地图] 添加了标记后自动进行追踪功能.",
             "[世界地图] 添加了右键标记清除功能.",
             "[团队标记] 添加了隐藏鼠标提示的功能."
         },
         ["zhTW"] = {
+            "[美化皮膚] 新增了 Rematch 的美化.",
             "[世界地圖] 新增了標記後自動進行追蹤功能.",
             "[世界地图] 新增了右鍵標記清除功能.",
             "[團隊標記] 新增了隱藏浮動提示的功能."
         },
         ["enUS"] = {
+            "[Skins] Add new skin for Rematch.",
             "[World Map] Add new feature that auto-tracking the waypoint after setting.",
             "[World Map] Add new feature that right clicking the waypoint to clear it.",
             "[Raid Markers] Add new option for disabling tooltip."
         },
         ["koKR"] = {
+            "[스킨] Rematch 애드온 스킨 추가.",
             "[월드맵] 지도 핀을 배치하면 즉시 추적하여 화면에 표시하는 기능을 추가합니다.",
             "[월드맵] 지도 핀을 마우스 오른쪽 클릭으로 삭제하는 기능을 추가합니다.",
             "[공격대 징표] 툴팁을 비활성화하는 옵션을 추가합니다."

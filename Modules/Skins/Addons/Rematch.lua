@@ -274,6 +274,11 @@ function S:Rematch_LeftBottom()
     hooksecurefunc(_G.RematchQueuePanel.List, "Update", ReskinPetList)
 end
 
+function S:Rematch_Middle() -- Modified from NDui
+    ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
+    ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
+end
+
 function S:Rematch_Right()
     -- Team Panel
     local panel = _G.RematchTeamPanel
@@ -441,34 +446,7 @@ function S:Rematch_PetCard()
     end
 end
 
-function S:Rematch()
-    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
-        return
-    end
-
-    if not _G.RematchJournal then
-        return
-    end
-
-    -- Background
-    _G.RematchJournal:StripTextures()
-    _G.RematchJournal.portrait:Hide()
-    _G.RematchJournal:CreateBackdrop()
-    self:CreateShadow(_G.RematchJournal.backdrop)
-    ES:HandleCloseButton(_G.RematchJournal.CloseButton)
-
-    -- Main Window
-    self:Rematch_Header()
-    self:Rematch_LeftTop()
-    self:Rematch_LeftBottom()
-    self:Rematch_Right()
-    self:Rematch_Footer()
-
-    -- Misc
-    self:Rematch_Dialog()
-    self:Rematch_PetCard()
-
-    -- Right tabs
+function S:Rematch_RightTabs()
     self:SecureHook(
         _G.RematchTeamTabs,
         "Update",
@@ -485,9 +463,36 @@ function S:Rematch()
         end
     )
 
-    -- 中间
-    ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
-    ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
+end
+
+function S:Rematch()
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rematch then
+        return
+    end
+
+    if not _G.RematchJournal then
+        return
+    end
+
+    -- Background
+    _G.RematchJournal:StripTextures()
+    _G.RematchJournal.portrait:Hide()
+    _G.RematchJournal:CreateBackdrop()
+    self:CreateShadow(_G.RematchJournal.backdrop)
+    ES:HandleCloseButton(_G.RematchJournal.CloseButton)
+
+    -- Main
+    self:Rematch_Header()
+    self:Rematch_LeftTop()
+    self:Rematch_LeftBottom()
+    self:Rematch_Middle()
+    self:Rematch_Right()
+    self:Rematch_Footer()
+
+    -- Misc
+    self:Rematch_Dialog()
+    self:Rematch_PetCard()
+    self:Rematch_RightTabs()
 
     -- Compatible with Move Frames module
     if MF and MF.db and MF.db.moveBlizzardFrames then

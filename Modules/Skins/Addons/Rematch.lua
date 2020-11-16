@@ -120,6 +120,31 @@ local function ReskinCard(card) -- modified from NDui
     end
 end
 
+local function ReskinPetList(list) -- modified from NDui
+    local buttons = list.ScrollFrame.Buttons
+	if not buttons then return end
+    for i = 1, #buttons do
+		local button = buttons[i]
+        if button.Back then
+            button.Back:SetTexture(nil)
+        end
+
+        for _, child in pairs{button:GetChildren()} do
+            if child:GetNumChildren() == 0 and child:GetNumRegions() == 8 then
+                child:StripTextures()
+                child.tex = child:CreateTexture(nil)
+                child.tex:SetAllPoints(child)
+                child.tex:SetTexture(E.media.blankTex)
+                child.tex:SetVertexColor(1, 1, 1, 0.3)
+                break
+            end
+        end
+
+
+        ES:HandleButton(button)
+    end
+end
+
 function S:Rematch_Header()
     -- 标题
     _G.RematchJournal.TitleBg:StripTextures()
@@ -228,6 +253,11 @@ function S:Rematch_LeftBottom()
     list:CreateBackdrop()
     list.backdrop:SetOutside(list, -1, -1)
     ReskinScrollBar(list.ScrollFrame.ScrollBar)
+
+    hooksecurefunc(_G.RematchPetPanel.List, "Update", ReskinPetList)
+	hooksecurefunc(_G.RematchQueuePanel.List, "Update", ReskinPetList)
+    hooksecurefunc(_G.RematchTeamPanel.List, "Update", ReskinPetList)
+
 end
 
 function S:Rematch_Footer()

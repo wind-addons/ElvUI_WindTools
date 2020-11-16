@@ -8,8 +8,12 @@ function S:HelpFrame()
         return
     end
 
-    self:CreateBackdropShadow(_G.HelpFrame)
-    self:CreateShadow(_G.HelpFrame.Header.backdrop)
+    if _G.HelpFrame then
+        self:CreateBackdropShadow(_G.HelpFrame)
+        if _G.HelpFrame.Header then
+            self:CreateBackdropShadowAfterElvUISkins(_G.HelpFrame.Header)
+        end
+    end
 end
 
 S:AddCallback("HelpFrame")

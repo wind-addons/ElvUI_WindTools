@@ -325,10 +325,12 @@ function RM:CreateButtons()
 			function(self)
 				local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 				self:SetBackdropBorderColor(.7, .7, 0)
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-				GameTooltip:SetText(tooltipTitle .. " " .. icon)
-				GameTooltip:AddLine(tooltipText, 1, 1, 1)
-				GameTooltip:Show()
+				if RM.db.tooltip then
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+					GameTooltip:SetText(tooltipTitle .. " " .. icon)
+					GameTooltip:AddLine(tooltipText, 1, 1, 1)
+					GameTooltip:Show()
+				end
 			end
 		)
 
@@ -336,7 +338,9 @@ function RM:CreateButtons()
 			"OnLeave",
 			function(self)
 				self:SetBackdropBorderColor(0, 0, 0)
-				GameTooltip:Hide()
+				if RM.db.tooltip then
+					GameTooltip:Hide()
+				end
 			end
 		)
 

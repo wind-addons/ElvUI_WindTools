@@ -709,6 +709,7 @@ L["Show a alert when you enter or leave combat."] = true
 L["Show a backdrop of the bar."] = "Zeige einen Hintergrund auf der Leiste."
 L["Show an icon for items and spells."] = true
 L["Show the bar only mouse hovered the area."] = true
+L["Show the tooltip when you mouse over the button."] = true
 L["Side Button 4"] = true
 L["Side Button 5"] = true
 L["Sites"] = true

@@ -266,6 +266,7 @@ P.combat = {
     raidMarkers = {
         enable = true,
         mouseOver = false,
+        tooltip = true,
         visibility = "DEFAULT",
         backdrop = true,
         backdropSpacing = 3,

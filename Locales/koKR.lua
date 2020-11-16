@@ -709,6 +709,7 @@ L["Show a alert when you enter or leave combat."] = "전투를 시작하거나 �
 L["Show a backdrop of the bar."] = "바의 배경을 표시합니다."
 L["Show an icon for items and spells."] = "아이템과 주문에 대한 아이콘을 표시합니다."
 L["Show the bar only mouse hovered the area."] = "마우스 오버 시에만 게임 바를 표시합니다."
+L["Show the tooltip when you mouse over the button."] = true
 L["Side Button 4"] = "측면 버튼 4"
 L["Side Button 5"] = "측면 버튼 5"
 L["Sites"] = true

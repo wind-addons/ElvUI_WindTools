@@ -709,6 +709,7 @@ L["Show a alert when you enter or leave combat."] = "在你進入或是離開戰
 L["Show a backdrop of the bar."] = "顯示條背景."
 L["Show an icon for items and spells."] = "為物品和法術顯示一個圖標."
 L["Show the bar only mouse hovered the area."] = "僅在滑鼠經過區域時顯示條."
+L["Show the tooltip when you mouse over the button."] = "滑鼠置於按鈕上時顯示浮動提示."
 L["Side Button 4"] = "側鍵 4"
 L["Side Button 5"] = "側鍵 5"
 L["Sites"] = "網站"

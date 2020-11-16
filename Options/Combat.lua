@@ -71,8 +71,14 @@ options.raidMarkers = {
                     name = L["Mouse Over"],
                     desc = L["Only show raid markers bar when you mouse over it."]
                 },
-                modifier = {
+                tooltip = {
                     order = 3,
+                    type = "toggle",
+                    name = L["Tooltip"],
+                    desc = L["Show the tooltip when you mouse over the button."]
+                },
+                modifier = {
+                    order = 4,
                     type = "select",
                     name = L["Modifier Key"],
                     desc = L["Set the modifier key for placing world markers."],

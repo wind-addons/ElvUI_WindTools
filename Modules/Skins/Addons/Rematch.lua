@@ -122,14 +122,31 @@ end
 
 local function ReskinPetList(list) -- modified from NDui
     local buttons = list.ScrollFrame.Buttons
-	if not buttons then return end
+    if not buttons then
+        return
+    end
     for i = 1, #buttons do
-		local button = buttons[i]
+        local button = buttons[i]
+        if button.Pet then
+            button.Pet:CreateBackdrop()
+
+            if button.Rarity then
+                button.Pet.backdrop:SetBackdropBorderColor(button.Rarity:GetVertexColor())
+                button.Rarity:SetTexture(nil)
+            end
+            if button.LevelBack then
+                button.LevelBack:SetTexture(nil)
+            end
+            button.LevelText:SetTextColor(1, 1, 1)
+            button.LevelText:FontTemplate()
+            parent = button.Pet
+        end
+
         if button.Back then
             button.Back:SetTexture(nil)
         end
 
-        for _, child in pairs{button:GetChildren()} do
+        for _, child in pairs {button:GetChildren()} do
             if child:GetNumChildren() == 0 and child:GetNumRegions() == 8 then
                 child:StripTextures()
                 child.tex = child:CreateTexture(nil)
@@ -139,7 +156,6 @@ local function ReskinPetList(list) -- modified from NDui
                 break
             end
         end
-
 
         ES:HandleButton(button)
     end
@@ -255,9 +271,8 @@ function S:Rematch_LeftBottom()
     ReskinScrollBar(list.ScrollFrame.ScrollBar)
 
     hooksecurefunc(_G.RematchPetPanel.List, "Update", ReskinPetList)
-	hooksecurefunc(_G.RematchQueuePanel.List, "Update", ReskinPetList)
+    hooksecurefunc(_G.RematchQueuePanel.List, "Update", ReskinPetList)
     hooksecurefunc(_G.RematchTeamPanel.List, "Update", ReskinPetList)
-
 end
 
 function S:Rematch_Footer()

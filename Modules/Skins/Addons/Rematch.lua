@@ -15,27 +15,31 @@ local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 local CreateFrame = CreateFrame
 
 local function ReskinIconButton(button)
-    button:StyleButton(nil, true)
-    if button.IconBorder then
-        button.IconBorder:Hide()
-    end
+    if button and not button.windStyle then
+        button:StyleButton(nil, true)
+        if button.IconBorder then
+            button.IconBorder:Hide()
+        end
 
-    if button.Texture then
-        button.Texture:SetTexCoord(unpack(E.TexCoords))
-    end
+        if button.Texture then
+            button.Texture:SetTexCoord(unpack(E.TexCoords))
+        end
 
-    if button.Icon then
-        button.Icon:CreateBackdrop()
-    end
+        if button.Icon then
+            button.Icon:CreateBackdrop()
+        end
 
-    if button.Selected then
-        button.Selected:SetTexture(E.media.blankTex)
-        button.Selected:SetVertexColor(1, 1, 1, 0.3)
-    end
+        if button.Selected then
+            button.Selected:SetTexture(E.media.blankTex)
+            button.Selected:SetVertexColor(1, 1, 1, 0.3)
+        end
 
-    if button.hover and button.Icon then
-        button.hover:ClearAllPoints()
-        button.hover:SetAllPoints(button.Icon)
+        if button.hover and button.Icon then
+            button.hover:ClearAllPoints()
+            button.hover:SetAllPoints(button.Icon)
+        end
+
+        button.windStyle = true
     end
 end
 
@@ -48,9 +52,10 @@ local function ReskinCloseButton(button)
 end
 
 local function ReskinButton(button)
-    for _, region in pairs{button:GetRegions()} do
+    for _, region in pairs {button:GetRegions()} do
         if region:GetObjectType() == "Texture" then
             region:SetTexture(nil)
+            region.OldSetTexture = region.SetTexture
             region.SetTexture = E.noop
         end
     end
@@ -62,7 +67,7 @@ local function ReskinFilterButton(button)
         return
     end
     ReskinButton(button)
-    button.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+    button.Arrow:OldSetTexture(E.Media.Textures.ArrowUp)
     button.Arrow:SetRotation(ES.ArrowRotation.right)
 end
 
@@ -139,6 +144,13 @@ local function ReskinCard(card) -- modified from NDui
     end
 end
 
+local function ReskinInset(frame)
+    frame:StripTextures()
+    frame:CreateBackdrop()
+    frame.backdrop:SetInside(frame, 2, 2)
+    frame.backdrop.Center:SetVertexColor(1, 1, 1, 0.3)
+end
+
 local function ReskinPetList(list) -- modified from NDui
     local buttons = list.ScrollFrame.Buttons
     if not buttons then
@@ -169,7 +181,7 @@ local function ReskinPetList(list) -- modified from NDui
             if child:GetNumChildren() == 0 and child:GetNumRegions() == 8 then
                 child:StripTextures()
                 child.tex = child:CreateTexture(nil)
-                child.tex:SetAllPoints(child)
+                child.tex:SetInside(child, 1, 1)
                 child.tex:SetTexture(E.media.blankTex)
                 child.tex:SetVertexColor(1, 1, 1, 0.3)
                 break
@@ -177,6 +189,33 @@ local function ReskinPetList(list) -- modified from NDui
         end
 
         ES:HandleButton(button)
+    end
+end
+
+local function ReskinTeamList()
+    if _G.RematchLoadoutPanel then
+        for i = 1, 3 do
+            local loadout = _G.RematchLoadoutPanel.Loadouts[i]
+            if loadout and not loadout.windStyle then
+                ReskinInset(loadout)
+                ES:HandleButton(loadout)
+                ReskinIconButton(loadout.Pet.Pet)
+                if loadout.Pet.Pet.Level then
+                    loadout.Pet.Pet.Level.Text:SetTextColor(1, 1, 1)
+                    loadout.Pet.Pet.Level.Text:FontTemplate()
+                    loadout.Pet.Pet.Level.BG:SetTexture(nil)
+                end
+                ReskinXPBar(loadout.HP)
+                ReskinXPBar(loadout.XP)
+                loadout.XP:SetSize(255, 7)
+                loadout.HP.MiniHP:SetText("HP")
+                for j = 1, 3 do
+                    ReskinIconButton(loadout.Abilities[j])
+                end
+
+                loadout.windStyle = true
+            end
+        end
     end
 end
 
@@ -295,16 +334,13 @@ function S:Rematch_Middle() -- Modified from NDui
         panel:StripTextures()
         panel:CreateBackdrop()
         ReskinButton(panel.TargetButton)
-        if panel.ModelBorder then
-            panel.ModelBorder:SetBackdrop(nil)
-            panel.ModelBorder:DisableDrawLayer("BACKGROUND")
-            panel.ModelBorder:CreateBackdrop("Transparent")
-        else
-            panel.ModelBorder = E.noop
-        end
+        panel.ModelBorder:SetBackdrop(nil)
+        panel.ModelBorder:DisableDrawLayer("BACKGROUND")
+        panel.ModelBorder:CreateBackdrop("Transparent")
+        panel.ModelBorder.backdrop:SetInside(panel.ModelBorder, 4, 3)
         ReskinButton(panel.LoadSaveButton)
         for i = 1, 3 do
-            local button  = panel["Pet" .. i]
+            local button = panel["Pet" .. i]
             if button then
                 button:StripTextures()
                 ReskinIconButton(button)
@@ -312,7 +348,12 @@ function S:Rematch_Middle() -- Modified from NDui
         end
     end
 
-    panel = _G.RematchLoadoutPanel and _G.RematchLoadoutPanel.TargetPanel
+    ReskinInset(_G.RematchLoadedTeamPanel)
+    ReskinTeamList()
+    hooksecurefunc(_G.RematchLoadoutPanel, "UpdateLoadouts", ReskinTeamList)
+
+    -- Team Panel
+    panel = _G.RematchTeamPanel and _G.RematchTeamPanel.TargetPanel
     if panel then
         panel:StripTextures()
         ReskinButton(panel.Top.BackButton)
@@ -483,7 +524,7 @@ function S:Rematch_PetCard()
 end
 
 function S:Rematch_RightTabs()
-    self:SecureHook(
+    hooksecurefunc(
         _G.RematchTeamTabs,
         "Update",
         function(tabs)
@@ -520,7 +561,6 @@ function S:Rematch()
     self:Rematch_Header()
     self:Rematch_LeftTop()
     self:Rematch_LeftBottom()
-    self:Rematch_Middle()
     self:Rematch_Right()
     self:Rematch_Footer()
 
@@ -529,17 +569,31 @@ function S:Rematch()
     self:Rematch_PetCard()
     self:Rematch_RightTabs()
 
-    -- Compatible with Move Frames module
-    if MF and MF.db and MF.db.moveBlizzardFrames then
-        if not _G.CollectionsJournal then
-            CollectionsJournal_LoadUI()
+    hooksecurefunc(
+        _G.RematchJournal,
+        "ConfigureJournal",
+        function()
+            if _G.RematchJournal.windStyle then
+                return
+            end
+
+            self:Rematch_Middle()
+
+            -- Compatible with Move Frames module
+            if MF and MF.db and MF.db.moveBlizzardFrames then
+                if not _G.CollectionsJournal then
+                    CollectionsJournal_LoadUI()
+                end
+                _G.RematchJournal.moveHandler = CreateFrame("Frame", nil, _G.RematchJournal)
+                _G.RematchJournal.moveHandler:SetAllPoints(_G.RematchJournal.TitleBg)
+                MF:HandleFrame(_G.RematchJournal.moveHandler, _G.CollectionsJournal)
+                MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
+                MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
+            end
+
+            RematchJournal.windStyle = true
         end
-        _G.RematchJournal.moveHandler = CreateFrame("Frame", nil, _G.RematchJournal)
-        _G.RematchJournal.moveHandler:SetAllPoints(_G.RematchJournal.TitleBg)
-        MF:HandleFrame(_G.RematchJournal.moveHandler, _G.CollectionsJournal)
-        MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
-        MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
-    end
+    )
 end
 
 S:AddCallbackForAddon("Rematch")

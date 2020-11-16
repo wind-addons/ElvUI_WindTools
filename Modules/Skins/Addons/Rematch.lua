@@ -47,6 +47,25 @@ local function ReskinCloseButton(button)
     button.SetHighlightTexture = E.noop
 end
 
+local function ReskinButton(button)
+    for _, region in pairs{button:GetRegions()} do
+        if region:GetObjectType() == "Texture" then
+            region:SetTexture(nil)
+            region.SetTexture = E.noop
+        end
+    end
+    ES:HandleButton(button, true)
+end
+
+local function ReskinFilterButton(button)
+    if not button then
+        return
+    end
+    ReskinButton(button)
+    button.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+    button.Arrow:SetRotation(ES.ArrowRotation.right)
+end
+
 local function ReskinEditBox(editBox)
     ES:HandleEditBox(editBox)
     editBox.backdrop:SetOutside(0, 0)
@@ -58,7 +77,7 @@ local function ReskinScrollBar(scrollBar)
     scrollBar.Thumb.backdrop:Point("TOPLEFT", scrollBar.Thumb, "TOPLEFT", 3, -3)
     scrollBar.Thumb.backdrop:Point("BOTTOMRIGHT", scrollBar.Thumb, "BOTTOMRIGHT", -1, 3)
 
-    ES:HandleButton(scrollBar.BottomButton)
+    ReskinButton(scrollBar.BottomButton)
     local tex = scrollBar.BottomButton:GetNormalTexture()
     tex:SetTexture(E.media.blankTex)
     tex:SetVertexColor(1, 1, 1, 0)
@@ -67,7 +86,7 @@ local function ReskinScrollBar(scrollBar)
     tex:SetTexture(E.media.blankTex)
     tex:SetVertexColor(1, 1, 1, 0.3)
 
-    ES:HandleButton(scrollBar.TopButton)
+    ReskinButton(scrollBar.TopButton)
     tex = scrollBar.TopButton:GetNormalTexture()
     tex:SetTexture(E.media.blankTex)
     tex:SetVertexColor(1, 1, 1, 0)
@@ -201,7 +220,7 @@ function S:Rematch_LeftTop()
         searchBox:Point("BOTTOMRIGHT", _G.RematchPetPanel.Top.Filter, "BOTTOMLEFT", -2, 0)
     end
 
-    ES:HandleButton(_G.RematchPetPanel.Top.Toggle)
+    ReskinButton(_G.RematchPetPanel.Top.Toggle)
     _G.RematchPetPanel.Top.Toggle:StripTextures()
 
     _G.RematchPetPanel.Top.Toggle.Texture = _G.RematchPetPanel.Top.Toggle:CreateTexture(nil, "OVERLAY")
@@ -251,11 +270,7 @@ function S:Rematch_LeftTop()
             end
         end
     )
-
-    ES:HandleButton(_G.RematchPetPanel.Top.Filter)
-
-    _G.RematchPetPanel.Top.Filter.Arrow:SetTexture(E.Media.Textures.ArrowUp)
-    _G.RematchPetPanel.Top.Filter.Arrow:SetRotation(ES.ArrowRotation.right)
+    ReskinFilterButton(_G.RematchPetPanel.Top.Filter)
 end
 
 function S:Rematch_LeftBottom()
@@ -275,8 +290,33 @@ function S:Rematch_LeftBottom()
 end
 
 function S:Rematch_Middle() -- Modified from NDui
-    ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
-    ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
+    local panel = _G.RematchLoadoutPanel and _G.RematchLoadoutPanel.Target
+    if panel then
+        panel:StripTextures()
+        panel:CreateBackdrop()
+        ReskinButton(panel.TargetButton)
+        if panel.ModelBorder then
+            panel.ModelBorder:SetBackdrop(nil)
+            panel.ModelBorder:DisableDrawLayer("BACKGROUND")
+            panel.ModelBorder:CreateBackdrop("Transparent")
+        else
+            panel.ModelBorder = E.noop
+        end
+        ReskinButton(panel.LoadSaveButton)
+        for i = 1, 3 do
+            local button  = panel["Pet" .. i]
+            if button then
+                button:StripTextures()
+                ReskinIconButton(button)
+            end
+        end
+    end
+
+    panel = _G.RematchLoadoutPanel and _G.RematchLoadoutPanel.TargetPanel
+    if panel then
+        panel:StripTextures()
+        ReskinButton(panel.Top.BackButton)
+    end
 end
 
 function S:Rematch_Right()
@@ -285,9 +325,7 @@ function S:Rematch_Right()
     if panel then
         panel.Top:StripTextures()
         ReskinEditBox(panel.Top.SearchBox)
-        ES:HandleButton(panel.Top.Teams)
-        panel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
-        panel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
+        ReskinFilterButton(panel.Top.Teams)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
         panel.List.backdrop:SetOutside(panel.List, -2, -2)
@@ -299,9 +337,7 @@ function S:Rematch_Right()
     panel = _G.RematchQueuePanel
     if panel then
         panel.Top:StripTextures()
-        ES:HandleButton(panel.Top.QueueButton)
-        panel.Top.QueueButton.Arrow:SetTexture(E.Media.Textures.ArrowUp)
-        panel.Top.QueueButton.Arrow:SetRotation(ES.ArrowRotation.right)
+        ReskinFilterButton(panel.Top.Teams)
         panel.List.Background:Kill()
         panel.List:CreateBackdrop()
         panel.List.backdrop:SetOutside(panel.List, -2, -2)
@@ -322,10 +358,10 @@ function S:Rematch_Footer()
     end
 
     -- Buttons
-    ES:HandleButton(_G.RematchBottomPanel.SummonButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveButton)
-    ES:HandleButton(_G.RematchBottomPanel.SaveAsButton)
-    ES:HandleButton(_G.RematchBottomPanel.FindBattleButton)
+    ReskinButton(_G.RematchBottomPanel.SummonButton)
+    ReskinButton(_G.RematchBottomPanel.SaveButton)
+    ReskinButton(_G.RematchBottomPanel.SaveAsButton)
+    ReskinButton(_G.RematchBottomPanel.FindBattleButton)
     ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
 
     hooksecurefunc(
@@ -353,8 +389,8 @@ function S:Rematch_Dialog() -- Modified from NDui
 
     -- Buttons
     ReskinCloseButton(dialog.CloseButton)
-    ES:HandleButton(dialog.Accept)
-    ES:HandleButton(dialog.Cancel)
+    ReskinButton(dialog.Accept)
+    ReskinButton(dialog.Cancel)
 
     -- Icon selector
     ReskinIconButton(dialog.Slot)
@@ -462,7 +498,6 @@ function S:Rematch_RightTabs()
             end
         end
     )
-
 end
 
 function S:Rematch()

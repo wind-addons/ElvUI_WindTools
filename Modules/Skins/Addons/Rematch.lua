@@ -272,7 +272,37 @@ function S:Rematch_LeftBottom()
 
     hooksecurefunc(_G.RematchPetPanel.List, "Update", ReskinPetList)
     hooksecurefunc(_G.RematchQueuePanel.List, "Update", ReskinPetList)
-    hooksecurefunc(_G.RematchTeamPanel.List, "Update", ReskinPetList)
+end
+
+function S:Rematch_Right()
+    -- Team Panel
+    local panel = _G.RematchTeamPanel
+    if panel then
+        panel.Top:StripTextures()
+        ReskinEditBox(panel.Top.SearchBox)
+        ES:HandleButton(panel.Top.Teams)
+        panel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+        panel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
+        panel.List.Background:Kill()
+        panel.List:CreateBackdrop()
+        panel.List.backdrop:SetOutside(panel.List, -2, -2)
+        ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
+        hooksecurefunc(panel.List, "Update", ReskinPetList)
+    end
+
+    -- Queue Panel
+    panel = _G.RematchQueuePanel
+    if panel then
+        panel.Top:StripTextures()
+        ES:HandleButton(panel.Top.QueueButton)
+        panel.Top.QueueButton.Arrow:SetTexture(E.Media.Textures.ArrowUp)
+        panel.Top.QueueButton.Arrow:SetRotation(ES.ArrowRotation.right)
+        panel.List.Background:Kill()
+        panel.List:CreateBackdrop()
+        panel.List.backdrop:SetOutside(panel.List, -2, -2)
+        ReskinScrollBar(panel.List.ScrollFrame.ScrollBar)
+        hooksecurefunc(panel.List, "Update", ReskinPetList)
+    end
 end
 
 function S:Rematch_Footer()
@@ -431,6 +461,7 @@ function S:Rematch()
     self:Rematch_Header()
     self:Rematch_LeftTop()
     self:Rematch_LeftBottom()
+    self:Rematch_Right()
     self:Rematch_Footer()
 
     -- Misc
@@ -457,11 +488,6 @@ function S:Rematch()
     -- 中间
     ES:HandleButton(_G.RematchLoadoutPanel.Target.TargetButton)
     ES:HandleButton(_G.RematchLoadoutPanel.TargetPanel.Top.BackButton)
-
-    -- 右边
-    ES:HandleButton(_G.RematchTeamPanel.Top.Teams)
-    _G.RematchTeamPanel.Top.Teams.Arrow:SetTexture(E.Media.Textures.ArrowUp)
-    _G.RematchTeamPanel.Top.Teams.Arrow:SetRotation(ES.ArrowRotation.right)
 
     -- Compatible with Move Frames module
     if MF and MF.db and MF.db.moveBlizzardFrames then

@@ -16,7 +16,7 @@ local UnitInRaid = UnitInRaid
 function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     local config = self.db.interrupt
 
-    if not config.enable or config.onlyInstance and (not IsInInstance() or IsPartyLFG()) then
+    if not config.enable or config.onlyInstance and (not IsInInstance() or not IsPartyLFG()) then
         return
     end
 

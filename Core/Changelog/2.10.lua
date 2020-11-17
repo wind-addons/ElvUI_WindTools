@@ -3,10 +3,18 @@ local W = unpack(select(2, ...))
 W.Changelog[210] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 重写部分美化核心函数, 如果遇到问题请报告.",
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 重寫部分美化核心參數, 如果遇到問題請報告.",
+        },
+        ["enUS"] = {
+            "[Skins] Rewrite some core functions, please let me know if the skins not working properly."
+        },
+        ["koKR"] = {
+            "[Skins] Rewrite some core functions, please let me know if the skins not working properly."
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -40,6 +48,9 @@ W.Changelog[210] = {
             "[小地图图标] 以新风格兼容 Narcissus 图标, 如果你不喜欢可以在 Narcissus 设置中取消加入条.",
             "[美化皮肤] 优化了 WeakAuras 设定美化的性能.",
             "[美化皮肤] 优化了帮助框体的美化.",
+            "[美化皮肤] 优化了成就框体的美化.",
+            "[美化皮肤] 优化了理发店框体的美化.",
+            "[美化皮肤] 优化了要塞框体的美化.",
             "[美化皮肤] 优化了好友界面的美化.",
             "[美化皮肤] 优化了社区界面的美化.",
             "[美化皮肤] 优化了 PVE 界面的美化.",
@@ -56,6 +67,9 @@ W.Changelog[210] = {
             "[小地圖圖標] 以新風格兼容 Narcissus 圖標, 如果你不喜歡可以在 Narcissus 設置中取消加入條.",
             "[美化皮膚] 優化了 WeakAuras 設定美化的性能.",
             "[美化皮膚] 優化了帮助框架美化.",
+            "[美化皮膚] 優化了成就框架美化.",
+            "[美化皮膚] 優化了理髮店框架美化.",
+            "[美化皮膚] 優化了要塞框架美化.",
             "[美化皮膚] 優化了好友框架美化.",
             "[美化皮膚] 優化了社群框架美化.",
             "[美化皮膚] 優化了 PVE 框架美化.",
@@ -72,6 +86,9 @@ W.Changelog[210] = {
             "[Minimap Buttons] Handle Narcissus icon with the new style, you can disable handling in Narcissus configuration if you want.",
             "[Skins] Optimize the performance of WeakAuras Options skins.",
             "[Skins] Optimize Help skin.",
+            "[Skins] Optimize Achievement skin.",
+            "[Skins] Optimize Barbershop skin.",
+            "[Skins] Optimize Garrison skin.",
             "[Skins] Optimize Friends skin.",
             "[Skins] Optimize Communities skin.",
             "[Skins] Optimize PVE frame skin.",
@@ -88,6 +105,9 @@ W.Changelog[210] = {
             "[미니맵 버튼 통합 바] 새로운 스타일의 Narcissus 아이콘과 호환되며 마음에 들지 않으면 Narcissus 설정에서 사용을 취소할 수 있습니다.",
             "[스킨] WeakAuras Options 스킨의 성능을 최적화합니다.",
             "[Skins] Optimize Help skin.",
+            "[Skins] Optimize Achievement skin.",
+            "[Skins] Optimize Barbershop skin.",
+            "[Skins] Optimize Garrison skin.",
             "[스킨] 친구목록 스킨 최적화.",
             "[스킨] 커뮤니티 스킨 최적화.",
             "[스킨] PVE 프레임 스킨 최적화.",

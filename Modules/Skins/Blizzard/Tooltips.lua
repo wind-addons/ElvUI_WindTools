@@ -40,7 +40,10 @@ function S:TooltipFrames()
         _G.ReputationParagonTooltip,
         _G.ShoppingTooltip1,
         _G.ShoppingTooltip2,
-        _G.WarCampaignTooltip
+        _G.WarCampaignTooltip,
+        _G.LibDBIconTooltip,
+        _G.AceGUITooltip,
+        _G.AceConfigDialogTooltip
     }
 
     for _, tt in pairs(styleTT) do

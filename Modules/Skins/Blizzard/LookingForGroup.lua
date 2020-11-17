@@ -21,7 +21,7 @@ function S:LookingForGroupFrames()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateBackdropShadowAfterElvUISkins(frame)
+        self:CreateBackdropShadow(frame)
     end
 
     for i = 1, 3 do

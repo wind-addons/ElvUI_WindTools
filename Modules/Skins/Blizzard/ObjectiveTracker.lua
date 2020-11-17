@@ -42,11 +42,11 @@ function S:SkinProgressBars(_, _, line)
     local label = bar.Label
 
     -- 条阴影
-    self:CreateBackdropShadowAfterElvUISkins(bar)
+    self:CreateBackdropShadow(bar)
 
     -- 稍微移动下图标位置，防止阴影重叠，更加美观！
     if icon then
-        self:CreateBackdropShadowAfterElvUISkins(progressBar)
+        self:CreateBackdropShadow(progressBar)
         icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0)
     end
 
@@ -69,7 +69,7 @@ function S:SkinTimerBars(_, _, line)
     if bar.windStyle then
         return
     end
-    self:CreateBackdropShadowAfterElvUISkins(bar)
+    self:CreateBackdropShadow(bar)
 end
 
 function S:ObjectiveTrackerFrame()

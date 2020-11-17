@@ -484,7 +484,7 @@ function S:Rematch_Footer()
         tab.backdrop:Point("TOPLEFT", 10, E.PixelMode and -1 or -3)
         tab.backdrop:Point("BOTTOMRIGHT", -10, 3)
         F.SetFontOutline(tab.Text)
-        self:CreateBackdropShadowAfterElvUISkins(tab)
+        self:CreateBackdropShadow(tab)
     end
 
     -- Buttons

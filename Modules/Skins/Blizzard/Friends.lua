@@ -20,7 +20,7 @@ function S:FriendsFrame()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateBackdropShadowAfterElvUISkins(frame)
+        self:CreateBackdropShadow(frame)
     end
 
     self:CreateShadow(_G.BNToastFrame)

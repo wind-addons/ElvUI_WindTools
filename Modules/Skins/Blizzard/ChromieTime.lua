@@ -8,7 +8,7 @@ function S:Blizzard_ChromieTimeUI()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.ChromieTimeFrame)
+    self:CreateBackdropShadow(_G.ChromieTimeFrame)
     F.SetFontOutline(_G.ChromieTimeFrame.Title.Text)
     F.SetFontOutline(_G.ChromieTimeFrame.SelectButton.Text)
 end

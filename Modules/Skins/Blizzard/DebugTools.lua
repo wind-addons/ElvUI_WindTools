@@ -9,8 +9,8 @@ function S:Blizzard_DebugTools()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.TableAttributeDisplay)
-    self:CreateBackdropShadowAfterElvUISkins(_G.EventTraceFrame)
+    self:CreateBackdropShadow(_G.TableAttributeDisplay)
+    self:CreateBackdropShadow(_G.EventTraceFrame)
 
     self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
 end

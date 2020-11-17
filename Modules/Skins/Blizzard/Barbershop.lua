@@ -9,11 +9,11 @@ function S:Blizzard_CharacterCustomize()
     end
     local frame = _G.CharCustomizeFrame
 
-    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ResetCameraButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ZoomOutButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ZoomInButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.RotateLeftButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.RotateRightButton)
+    self:CreateBackdropShadow(frame.SmallButtons.ResetCameraButton)
+    self:CreateBackdropShadow(frame.SmallButtons.ZoomOutButton)
+    self:CreateBackdropShadow(frame.SmallButtons.ZoomInButton)
+    self:CreateBackdropShadow(frame.SmallButtons.RotateLeftButton)
+    self:CreateBackdropShadow(frame.SmallButtons.RotateRightButton)
 
     hooksecurefunc(
         frame,
@@ -21,10 +21,10 @@ function S:Blizzard_CharacterCustomize()
         function(list)
             for button in list.selectionPopoutPool:EnumerateActive() do
                 if not button.windStyle then
-                    self:CreateBackdropShadowAfterElvUISkins(button.DecrementButton)
-                    self:CreateBackdropShadowAfterElvUISkins(button.IncrementButton)
-                    self:CreateBackdropShadowAfterElvUISkins(button.SelectionPopoutButton)
-                    self:CreateBackdropShadowAfterElvUISkins(button.SelectionPopoutButton.Popout)
+                    self:CreateBackdropShadow(button.DecrementButton)
+                    self:CreateBackdropShadow(button.IncrementButton)
+                    self:CreateBackdropShadow(button.SelectionPopoutButton)
+                    self:CreateBackdropShadow(button.SelectionPopoutButton.Popout)
                     button.windStyle = true
                 end
             end
@@ -39,9 +39,9 @@ function S:Blizzard_BarbershopUI()
 
     local frame = _G.BarberShopFrame
 
-    self:CreateBackdropShadowAfterElvUISkins(frame.ResetButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.CancelButton)
-    self:CreateBackdropShadowAfterElvUISkins(frame.AcceptButton)
+    self:CreateBackdropShadow(frame.ResetButton)
+    self:CreateBackdropShadow(frame.CancelButton)
+    self:CreateBackdropShadow(frame.AcceptButton)
 end
 
 S:AddCallbackForAddon("Blizzard_CharacterCustomize")

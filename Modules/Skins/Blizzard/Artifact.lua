@@ -8,7 +8,7 @@ function S:Blizzard_ArtifactUI()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.ArtifactFrame)
+    self:CreateBackdropShadow(_G.ArtifactFrame)
 
     for i = 1, 2 do
 		S:ReskinTab(_G['ArtifactFrameTab' .. i])

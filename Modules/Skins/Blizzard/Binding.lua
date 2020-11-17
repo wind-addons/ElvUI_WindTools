@@ -9,7 +9,7 @@ function S:Blizzard_BindingUI()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.QuickKeybindFrame)
+    self:CreateBackdropShadow(_G.QuickKeybindFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_BindingUI")

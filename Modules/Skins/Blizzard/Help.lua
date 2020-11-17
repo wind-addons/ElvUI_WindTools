@@ -11,7 +11,7 @@ function S:HelpFrame()
     if _G.HelpFrame then
         self:CreateBackdropShadow(_G.HelpFrame)
         if _G.HelpFrame.Header then
-            self:CreateBackdropShadowAfterElvUISkins(_G.HelpFrame.Header)
+            self:CreateBackdropShadow(_G.HelpFrame.Header, true)
         end
     end
 end

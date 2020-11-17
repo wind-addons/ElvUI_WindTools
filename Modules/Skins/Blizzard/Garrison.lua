@@ -66,7 +66,7 @@ function S:Blizzard_GarrisonUI()
     end
     for _, tab in pairs(tabs) do
         if tab then
-            self:CreateBackdropShadowAfterElvUISkins(tab)
+            self:CreateBackdropShadow(tab)
         end
     end
 end

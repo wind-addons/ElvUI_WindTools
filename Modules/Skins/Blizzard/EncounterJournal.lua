@@ -45,7 +45,7 @@ function S:Blizzard_EncounterJournal()
     }
 
     for _, tab in pairs(tabs) do
-        self:CreateBackdropShadowAfterElvUISkins(tab)
+        self:CreateBackdropShadow(tab)
     end
 end
 

@@ -9,7 +9,7 @@ function S:SkinAlert(alert)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(alert)
+    self:CreateBackdropShadow(alert)
 
     F.SetFrameFontOutline(alert)
 
@@ -25,7 +25,7 @@ function S:SkinAchievementAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Unlocked)
     F.SetFontOutline(frame.Name, nil, "+2")
@@ -53,7 +53,7 @@ function S:SkinGuildChallengeAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
     F.SetFrameFontOutline(frame)
 
     frame.windStyle = true
@@ -64,7 +64,7 @@ function S:SkinCriteriaAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Unlocked)
     F.SetFontOutline(frame.Name)
@@ -86,7 +86,7 @@ function S:SkinMoneyWonAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
     F.SetFontOutline(frame.Label)
     F.SetFontOutline(frame.Amount, nil, "+1")
 
@@ -107,7 +107,7 @@ function S:SkinNewRecipeLearnedAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
     F.SetFontOutline(frame.Name)
     F.SetFontOutline(frame.Title, nil, "+2")
 
@@ -124,7 +124,7 @@ function S:SkinInvasionAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     for _, child in pairs({frame:GetChildren()}) do
         if child.template and child.template == "Default" then
@@ -173,7 +173,7 @@ function S:SkinWorldQuestCompleteAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     for _, child in pairs({frame:GetChildren()}) do
         if child.template and child.template == "Default" then
@@ -199,7 +199,7 @@ function S:SkinLootUpgradeAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.TitleText)
     frame.TitleText:ClearAllPoints()
@@ -224,7 +224,7 @@ function S:SkinLootAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Label)
     F.SetFontOutline(frame.RollValue)
@@ -237,7 +237,7 @@ function S:SkinLegendaryItemAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     frame.Icon:ClearAllPoints()
     frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 16, 0)
@@ -266,7 +266,7 @@ function S:SkinDigsiteCompleteAlert(frame)
     if not frame or frame.windStyle then
         return
     end
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Title)
     F.SetFontOutline(frame.DigsiteType, nil, "+2")
@@ -279,7 +279,7 @@ function S:SkinRafRewardDeliveredAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Title, nil, "+1")
     frame.Title:ClearAllPoints()
@@ -301,7 +301,7 @@ function S:SkinNewItemAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Label)
     frame.Label:ClearAllPoints()
@@ -329,7 +329,7 @@ function S:SkinGarrisonBuildingAlert(frame)
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(frame)
+    self:CreateBackdropShadow(frame)
 
     frame.Icon:ClearAllPoints()
     frame.Icon:Point("LEFT", frame.backdrop, "LEFT", 12, 0)

@@ -8,7 +8,7 @@ function S:Blizzard_AzeriteUI()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.AzeriteEmpoweredItemUI)
+    self:CreateBackdropShadow(_G.AzeriteEmpoweredItemUI)
     if _G.AzeriteEmpoweredItemUITitleText then
         F.SetFontOutline(_G.AzeriteEmpoweredItemUITitleText)
     end

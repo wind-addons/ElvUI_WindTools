@@ -11,7 +11,7 @@ end
 
 function S:SkinSkipButton(frame)
     if frame and frame.CloseDialog then
-        self:CreateBackdropShadowAfterElvUISkins(frame.CloseDialog)
+        self:CreateBackdropShadow(frame.CloseDialog)
     end
 end
 
@@ -30,7 +30,7 @@ function S:BlizzardMiscFrames()
     }
 
     for _, frame in pairs(miscFrames) do
-        self:CreateBackdropShadowAfterElvUISkins(_G[frame])
+        self:CreateBackdropShadow(_G[frame])
     end
 
     -- 跳过剧情
@@ -72,26 +72,26 @@ function S:BlizzardMiscFrames()
     end
 
     -- 灵魂医者传送按钮
-    self:CreateBackdropShadowAfterElvUISkins(_G.GhostFrameContentsFrame)
+    self:CreateBackdropShadow(_G.GhostFrameContentsFrame)
 
     -- 跳过剧情
-    self:CreateBackdropShadowAfterElvUISkins(_G.CinematicFrameCloseDialog)
+    self:CreateBackdropShadow(_G.CinematicFrameCloseDialog)
 
     -- 举报玩家
-    self:CreateBackdropShadowAfterElvUISkins(_G.PlayerReportFrame)
-    self:CreateBackdropShadowAfterElvUISkins(_G.ReportCheatingDialog)
+    self:CreateBackdropShadow(_G.PlayerReportFrame)
+    self:CreateBackdropShadow(_G.ReportCheatingDialog)
 
     -- 分离物品
-    self:CreateBackdropShadowAfterElvUISkins(_G.StackSplitFrame)
+    self:CreateBackdropShadow(_G.StackSplitFrame)
 
     -- 聊天设定
-    self:CreateBackdropShadowAfterElvUISkins(_G.ChatConfigFrame)
+    self:CreateBackdropShadow(_G.ChatConfigFrame)
 
     -- 颜色选择器
-    self:CreateBackdropShadowAfterElvUISkins(_G.ColorPickerFrame)
+    self:CreateBackdropShadow(_G.ColorPickerFrame)
 
     -- What's new
-    self:CreateBackdropShadowAfterElvUISkins(_G.SplashFrame)
+    self:CreateBackdropShadow(_G.SplashFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

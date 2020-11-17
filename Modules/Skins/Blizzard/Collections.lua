@@ -8,9 +8,9 @@ function S:Blizzard_Collections()
         return
     end
 
-    self:CreateBackdropShadowAfterElvUISkins(_G.CollectionsJournal)
-    self:CreateBackdropShadowAfterElvUISkins(_G.WardrobeFrame)
-    self:CreateBackdropShadowAfterElvUISkins(_G.WardrobeOutfitEditFrame)
+    self:CreateBackdropShadow(_G.CollectionsJournal)
+    self:CreateBackdropShadow(_G.WardrobeFrame)
+    self:CreateBackdropShadow(_G.WardrobeOutfitEditFrame)
 
     for i = 1, 5 do
         self:ReskinTab(_G["CollectionsJournalTab" .. i])

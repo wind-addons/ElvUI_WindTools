@@ -703,7 +703,7 @@ function S:Rematch()
         _G.RematchJournal,
         "ConfigureJournal",
         function()
-            if _G.RematchJournal.windStyle then
+            if _G.RematchJournal.skinLoaded then
                 return
             end
 
@@ -718,7 +718,7 @@ function S:Rematch()
                 MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
             end
 
-            RematchJournal.windStyle = true
+            RematchJournal.skinLoaded = true
         end
     )
 end

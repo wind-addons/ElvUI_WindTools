@@ -11,10 +11,7 @@ function S:MirrorTimers()
 
     for i = 1, MIRRORTIMER_NUMTIMERS do
         local statusBar = _G["MirrorTimer" .. i .. "StatusBar"]
-        if statusBar.backdrop then
-            statusBar.backdrop:SetTemplate("Tranparent")
-            self:CreateShadow(statusBar.backdrop)
-        end
+        self:CreateBackdropShadow(statusBar, true)
     end
 end
 

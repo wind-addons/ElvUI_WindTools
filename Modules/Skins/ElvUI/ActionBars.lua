@@ -16,7 +16,7 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
     if E.private.WT.skins.elvui.actionBarsBackdrop then
         if bar.db.backdrop then
             if not bar.backdrop.shadow then
-                self:CreateShadow(bar.backdrop)
+                self:CreateBackdropShadow(bar)
             end
             bar.backdrop.shadow:Show()
         else
@@ -30,17 +30,17 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
         if type == "PLAYER" then
             for i = 1, NUM_ACTIONBAR_BUTTONS do
                 local button = bar.buttons[i]
-                self:CreateShadow(button.backdrop)
+                self:CreateBackdropShadow(button, true)
             end
         elseif type == "PET" then
             for i = 1, NUM_PET_ACTION_SLOTS do
                 local button = _G["PetActionButton" .. i]
-                self:CreateShadow(button.backdrop)
+                self:CreateBackdropShadow(button, true)
             end
         elseif type == "STANCE" then
             for i = 1, NUM_STANCE_SLOTS do
                 local button = _G["ElvUI_StanceBarButton" .. i]
-                self:CreateShadow(button.backdrop)
+                self:CreateBackdropShadow(button, true)
             end
         end
     end
@@ -121,7 +121,7 @@ function S:ElvUI_ActionBars()
     -- 离开载具
     do
         local button =  _G.MainMenuBarVehicleLeaveButton
-        self:CreateShadow(button.backdrop)
+        self:CreateBackdropShadow(button, true)
         local tex = button:GetNormalTexture()
         if tex then
             tex:SetTexture(W.Media.Textures.arrowDown)
@@ -145,9 +145,7 @@ function S:ElvUI_ActionBars()
     -- 额外动作条
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]
-        if button and button.backdrop then
-            self:CreateShadow(button.backdrop)
-        end
+        self:CreateBackdropShadow(button.backdrop, true)
     end
 
     -- Flyout
@@ -155,9 +153,7 @@ function S:ElvUI_ActionBars()
         AB,
         "SetupFlyoutButton",
         function(_, button)
-            if button and button.backdrop and not button.backdrop.shadow then
-                self:CreateShadow(button.backdrop)
-            end
+            self:CreateBackdropShadow(button, true)
         end
     )
 end

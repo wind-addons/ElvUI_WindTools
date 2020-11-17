@@ -17,7 +17,7 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
     stageBlock.backdrop:Point("TOPLEFT", stageBlock.NormalBG, "TOPLEFT", 4, -4)
     stageBlock.backdrop:Point("BOTTOMRIGHT", stageBlock.NormalBG, "BOTTOMRIGHT", -20, 6)
 
-    self:CreateShadow(stageBlock.backdrop)
+    self:CreateBackdropShadow(stageBlock)
 end
 
 function S:ScenarioStage()

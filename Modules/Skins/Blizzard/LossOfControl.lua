@@ -10,7 +10,7 @@ function S:Blizzard_LossOfControlFrame_SetUpDisplay(s)
     if not s.Icon.backdrop then
         s.Icon:CreateBackdrop()
     end
-    self:CreateShadow(s.Icon.backdrop)
+    self:CreateBackdropShadow(s.Icon, true)
 
     s.AbilityName:ClearAllPoints()
     s.AbilityName:Point("TOPLEFT", s.Icon, "TOPRIGHT", 10, 0)

@@ -19,7 +19,8 @@ function S:Blizzard_AzeriteRespecUI()
             end
         end
     end
-    self:CreateShadow(_G.AzeriteRespecFrame.backdrop)
+    
+    self:CreateBackdropShadow(_G.AzeriteRespecFrame)
     F.SetFontOutline(_G.AzeriteRespecFrame.TitleText)
 end
 

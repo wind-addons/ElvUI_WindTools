@@ -5,7 +5,7 @@ local UF = E:GetModule("UnitFrames")
 local _G = _G
 
 function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
-    self:CreateShadow(frame.Castbar.backdrop)
+    self:CreateBackdropShadow(frame.Castbar, true)
     if not frame.db.castbar.iconAttached then
         self:CreateShadow(frame.Castbar.ButtonIcon.bg)
     end

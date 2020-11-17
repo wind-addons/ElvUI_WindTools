@@ -8,8 +8,8 @@ function S:Blizzard_TimeManager()
         return
     end
 
-    self:CreateShadow(_G.TimeManagerFrame.backdrop)
-    self:CreateShadow(_G.StopwatchFrame.backdrop)
+    self:CreateBackdropShadow(_G.TimeManagerFrame)
+    self:CreateBackdropShadow(_G.StopwatchFrame)
     _G.StopwatchTicker:ClearAllPoints()
     _G.StopwatchTicker:Point("BOTTOMRIGHT", _G.StopwatchFrame, "BOTTOMRIGHT", -49, 1)
 end

@@ -6,9 +6,7 @@ local _G = _G
 local pairs = pairs
 
 function S:ElvUI_SkinDataBar(_, name)
-    if _G[name] then
-        self:CreateShadow(_G[name].backdrop)
-    end
+    self:CreateBackdropShadow(_G[name], true)
 end
 
 function S:ElvUI_DataBars()

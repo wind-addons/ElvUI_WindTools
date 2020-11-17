@@ -14,9 +14,8 @@ function S:ElvUI_AltPowerBar()
     if not bar then
         return
     end
-
-    bar.backdrop:SetTemplate("Transparent")
-    self:CreateShadow(bar.backdrop)
+    
+    self:CreateBackdropShadow(bar)
 end
 
 S:AddCallback("ElvUI_AltPowerBar")

@@ -11,9 +11,9 @@ function S:LootFrame()
     F.SetFontOutline(_G.BonusRollFrame.PromptFrame.InfoFrame.Cost)
     F.SetFontOutline(_G.BonusRollFrame.PromptFrame.InfoFrame.Label)
     
-    self:CreateShadow(_G.BonusRollFrame)
-    self:CreateShadow(_G.BonusRollLootWonFrame.backdrop)
-    self:CreateShadow(_G.BonusRollMoneyWonFrame.backdrop)
+    self:CreateBackdropShadow(_G.BonusRollFrame)
+    self:CreateBackdropShadow(_G.BonusRollLootWonFrame)
+    self:CreateBackdropShadow(_G.BonusRollMoneyWonFrame)
 end
 
 S:AddCallback("LootFrame")

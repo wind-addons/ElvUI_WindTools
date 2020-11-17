@@ -9,8 +9,8 @@ function S:ElvUI_ChatPanels()
         return
     end
 
-    self:CreateShadow(_G.LeftChatPanel.backdrop)
-    self:CreateShadow(_G.RightChatPanel.backdrop)
+    self:CreateBackdropShadow(_G.LeftChatPanel, true)
+    self:CreateBackdropShadow(_G.RightChatPanel, true)
 end
 
 S:AddCallback("ElvUI_ChatPanels")

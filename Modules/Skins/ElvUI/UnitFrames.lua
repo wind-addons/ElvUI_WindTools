@@ -30,7 +30,7 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
         local shadow = f.Power.backdrop.shadow
         if f.POWERBAR_DETACHED then
             if not shadow then
-                self:CreateShadow(f.Power.backdrop)
+                self:CreateBackdropShadow(f.Power, true)
             else
                 shadow:Show()
             end

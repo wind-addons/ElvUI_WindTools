@@ -17,9 +17,8 @@ end
 
 function S:SkinItemButton(_, block)
     local item = block.itemButton
-    if item and not item.windStyle then
-        self:CreateShadow(item.backdrop)
-        item.windStyle = true
+    if item then
+        self:CreateBackdropShadow(item, true)
     end
 end
 

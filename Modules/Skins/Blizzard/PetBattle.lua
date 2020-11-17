@@ -30,16 +30,16 @@ function S:PetBattle()
     F.SetFontOutline(_G.PetBattleFrame.ActiveEnemy.Name)
 
     self:CreateShadow(_G.PetBattleFrame.Ally2.HealthBarBackdrop)
-    self:CreateShadow(_G.PetBattleFrame.Ally2.backdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.Ally2)
 
-    self:CreateShadow(_G.PetBattleFrame.Ally3.backdrop)
     self:CreateShadow(_G.PetBattleFrame.Ally3.HealthBarBackdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.Ally3)
 
     self:CreateShadow(_G.PetBattleFrame.Enemy2.HealthBarBackdrop)
-    self:CreateShadow(_G.PetBattleFrame.Enemy2.backdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy2.backdrop)
 
-    self:CreateShadow(_G.PetBattleFrame.Enemy3.backdrop)
     self:CreateShadow(_G.PetBattleFrame.Enemy3.HealthBarBackdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy3)
 end
 
 S:AddCallback("PetBattle")

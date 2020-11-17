@@ -243,7 +243,6 @@ local function ReskinPetList(list) -- modified from NDui
                 end
                 button.LevelText:SetTextColor(1, 1, 1)
                 button.LevelText:FontTemplate()
-                parent = button.Pet
             end
 
             if button.Back then
@@ -456,11 +455,11 @@ function S:Rematch_LeftTop()
         typeBar:SetBackdrop(nil)
         typeBar:CreateBackdrop()
         for i = 1, 10 do
-            ReskinIconButton(RematchPetPanel.Top.TypeBar.Buttons[i])
+            ReskinIconButton(_G.RematchPetPanel.Top.TypeBar.Buttons[i])
         end
 
         for i = 1, 4 do
-            local tab = RematchPetPanel.Top.TypeBar.Tabs[i]
+            local tab = _G.RematchPetPanel.Top.TypeBar.Tabs[i]
             if tab then
                 tab:StripTextures()
                 tab:CreateBackdrop("Transparent")
@@ -480,7 +479,7 @@ function S:Rematch_LeftTop()
             end
         end
 
-        local results = RematchPetPanel.Results
+        local results = _G.RematchPetPanel.Results
 
         local qualityBar = typeBar.QualityBar
         if qualityBar then
@@ -494,7 +493,7 @@ function S:Rematch_LeftTop()
         end
     end
 
-    local results = RematchPetPanel.Results
+    local results = _G.RematchPetPanel.Results
     if results then
         results:StripTextures()
     end
@@ -881,7 +880,7 @@ function S:Rematch_SkinLoad()
     ReskinTooltip(_G.RematchTableTooltip)
     ReskinTooltip(_G.FloatingPetBattleAbilityTooltip)
     for i = 1, 3 do
-        local menu = _G.Rematch:GetMenuFrame(i, UIParent)
+        local menu = _G.Rematch:GetMenuFrame(i, _G.UIParent)
         menu:StripTextures()
         menu:CreateBackdrop("Transparent")
         S:CreateBackdropShadow(menu)
@@ -899,7 +898,7 @@ function S:Rematch_SkinLoad()
         MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
     end
 
-    RematchJournal.skinLoaded = true
+    _G.RematchJournal.skinLoaded = true
 end
 
 function S:Rematch()

@@ -12,6 +12,7 @@ local tonumber = tonumber
 local wipe = wipe
 
 local AcceptQuest = AcceptQuest
+local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
 local GetAutoQuestPopUp = GetAutoQuestPopUp
@@ -30,6 +31,7 @@ local IsModifierKeyDown = IsModifierKeyDown
 local IsQuestCompletable = IsQuestCompletable
 local QuestGetAutoAccept = QuestGetAutoAccept
 local QuestInfoItem_OnClick = QuestInfoItem_OnClick
+local QuestIsFromAreaTrigger = QuestIsFromAreaTrigger
 local ShowQuestComplete = ShowQuestComplete
 local ShowQuestOffer = ShowQuestOffer
 local StaticPopup_FindVisible = StaticPopup_FindVisible
@@ -50,9 +52,10 @@ local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
-local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
+local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
+local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
 local quests, choiceQueue = {}
 
@@ -250,17 +253,13 @@ local function AttemptAutoComplete(event)
             return
         end
 
-        for i = 1, numPopups do
-            local questID, popUpType = GetAutoQuestPopUp(i)
-            local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
-            if not tagInfo or not tagInfo.worldQuestType then
-                if popUpType == "OFFER" then
-                    ShowQuestOffer(questID)
-                elseif popUpType == "COMPLETE" then
-                    ShowQuestComplete(questID)
-                end
+        local questID, popUpType = GetAutoQuestPopUp(1)
+        if not C_QuestLog_IsWorldQuest(questID) then
+            if popUpType == "OFFER" then
+                ShowQuestOffer(questID)
+            elseif popUpType == "COMPLETE" then
+                ShowQuestComplete(questID)
             end
-            return
         end
     end
 end
@@ -291,18 +290,11 @@ function TI:QUEST_GREETING()
 
     local active = C_GossipInfo_GetNumActiveQuests()
     if active > 0 then
-        local logQuests = GetQuestLogQuests(true)
-        for index = 1, active do
-            local info = C_GossipInfo_GetActiveQuests()[index]
-            if info.isComplete then
-                local questID = logQuests[info.title]
-                if not questID then
-                    C_GossipInfo_SelectActiveQuest(index)
-                else
-                    if not IsWorldQuestType(questID) then
-                        C_GossipInfo_SelectActiveQuest(index)
-                    end
-                end
+        for index, questInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
+            local questID = questInfo.questID
+            local isWorldQuest = questID and C_QuestLog_IsWorldQuest(questID)
+            if questInfo.isComplete and (not questID or not isWorldQuest) then
+                C_GossipInfo_SelectActiveQuest(index)
             end
         end
     end

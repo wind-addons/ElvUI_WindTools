@@ -819,6 +819,7 @@ for key, value in pairs(options.elvui.args) do
     end
 end
 
+-- If the skin is in development, add this: .." |cffff0000["..L["Test"].."]|r"
 options.addons = {
     order = 6,
     type = "group",
@@ -934,7 +935,7 @@ options.addons = {
         rematch = {
             order = 10,
             type = "toggle",
-            name = L["Rematch"].." |cffff0000["..L["Test"].."]|r"
+            name = L["Rematch"]
         },
         tinyInspect = {
             order = 10,

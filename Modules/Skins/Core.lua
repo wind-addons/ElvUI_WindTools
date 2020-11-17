@@ -108,12 +108,49 @@ function S:CreateBackdropShadow(frame)
 end
 
 --[[
+    创建阴影于 ElvUI 美化背景
+    @param {object} frame 窗体
+]]
+function S:CreateBackdropShadowAfterElvUISkins(frame)
+    if not frame or frame.windStyle then
+        return
+    end
+
+    if frame.backdrop then
+        frame.backdrop:SetTemplate("Transparent")
+        if E.private.WT.skins.shadow then
+            self:CreateShadow(frame.backdrop)
+        end
+        frame.windStyle = true
+    elseif frame.CreateBackdrop then
+        self:SecureHook(
+            frame,
+            "CreateBackdrop",
+            function()
+                if self:IsHooked(frame, "CreateBackdrop") then
+                    self:Unhook(frame, "CreateBackdrop")
+                end
+                if frame.backdrop then
+                    frame.backdrop:SetTemplate("Transparent")
+                    if E.private.WT.skins.shadow then
+                        if E.private.WT.skins.shadow then
+                            self:CreateShadow(frame.backdrop)
+                        end
+                    end
+                    frame.windStyle = true
+                end
+            end
+        )
+    end
+end
+
+--[[
     创建阴影于 ElvUI 美化背景（延迟等待 ElvUI 美化加载完毕）
     2 秒内未能美化会报错~
     @param {object} frame 窗体
     @param {string} [tried=20] 尝试次数
 ]]
-function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
+function S:TryCreateBackdropShadowAfterElvUISkins(frame, tried)
     if not frame or frame.windStyle then
         return
     end
@@ -131,7 +168,7 @@ function S:CreateBackdropShadowAfterElvUISkins(frame, tried)
             E:Delay(
                 0.1,
                 function()
-                    self:CreateBackdropShadowAfterElvUISkins(frame, tried - 1)
+                    self:TryCreateBackdropShadowAfterElvUISkins(frame, tried - 1)
                 end
             )
         end

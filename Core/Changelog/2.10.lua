@@ -13,7 +13,7 @@ W.Changelog[210] = {
             "[Skins] Rewrite some core functions, please let me know if the skins not working properly."
         },
         ["koKR"] = {
-            "[Skins] Rewrite some core functions, please let me know if the skins not working properly."
+            "[스킨] 일부 핵심 기능을 다시 작성하였습니다. 스킨이 제대로 작동하지 않는 경우 알려주세요."
         }
     },
     NEW = {
@@ -103,17 +103,17 @@ W.Changelog[210] = {
         ["koKR"] = {
             "[파티 찾기 목록] 클래스 라인이 잘못 표시되는 문제를 수정합니다.",
             "[미니맵 버튼 통합 바] 새로운 스타일의 Narcissus 아이콘과 호환되며 마음에 들지 않으면 Narcissus 설정에서 사용을 취소할 수 있습니다.",
-            "[스킨] WeakAuras Options 스킨의 성능을 최적화합니다.",
-            "[Skins] Optimize Help skin.",
-            "[Skins] Optimize Achievement skin.",
-            "[Skins] Optimize Barbershop skin.",
-            "[Skins] Optimize Garrison skin.",
+            "[스킨] 위크오라 옵션 스킨의 성능을 최적화합니다.",
+            "[Skins] 도움말 스킨 최적화.",
+            "[Skins] 업적 스킨 최적화.",
+            "[Skins] 미용실 스킨 최적화.",
+            "[Skins] 주둔지 스킨 최적화.",
             "[스킨] 친구목록 스킨 최적화.",
             "[스킨] 커뮤니티 스킨 최적화.",
             "[스킨] PVE 프레임 스킨 최적화.",
-            "[스킨] WeakAuras Options 스킨 최적화.",
+            "[스킨] 위크오라 옵션 스킨 최적화.",
             "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
-            "[알림] API의 한계로 인하여 플레이어가 인스턴스에 있지 않을 때 일반, 외치기는 나에게(채팅창)으로 변환 됩니다.",
+            "[알림] API의 한계로 인하여 플레이어가 인스턴스에 있지 않을 때 일반, 외치기는 나에게(채팅창)으로 변환됩니다.",
             "[알림] 같은 파티원이나 공격대원이 아닌 다른 플레이어의 행동은 알리지 않습니다.",
             "[알림] 파티 찾기 그룹에서 모듈이 동작하지 않는 버그를 수정했습니다.",
             "[아이템 바] 애완동물 대전시 자동으로 숨겨집니다.",

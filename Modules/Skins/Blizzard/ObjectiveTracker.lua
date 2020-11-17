@@ -15,11 +15,16 @@ function S:SkinOjectiveTrackerHeaders()
     end
 end
 
-function S:SkinItemButton(_, block)
-    local item = block.itemButton
-    if item then
-        self:CreateBackdropShadow(item, true)
+function S:SkinItemButton(block)
+    if InCombatLockdown() then
+        return
     end
+
+    local item = block and block.itemButton
+    if not item then
+        return
+    end
+    self:CreateBackdropShadow(item, true)
 end
 
 function S:SkinFindGroupButton(block)
@@ -81,6 +86,7 @@ function S:ObjectiveTrackerFrame()
 
     self:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
     self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
+    self:SecureHook("QuestObjectiveSetupBlockButton_Item", "SkinItemButton")
     self:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
     self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
     self:SecureHook(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
@@ -90,8 +96,6 @@ function S:ObjectiveTrackerFrame()
     self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
     self:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
     self:SecureHook(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    self:SecureHook(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", "SkinItemButton")
-    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", "SkinItemButton")
 end
 
 S:AddCallback("ObjectiveTrackerFrame")

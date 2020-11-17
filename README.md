@@ -38,7 +38,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 1. **Who Clicked?**: Display the name of players who clicked the minimap.  
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
 3. **Minimap Buttons**: Collect all the minimap buttons to a bar.  
-4. **World Map**: Remove the fog of war; Scale the world map.
+4. **World Map**: Remove the fog of war, scale the world map, right click to clear waypoint, etc.
 
 ## Quest
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.

@@ -8,11 +8,11 @@ function S:MailFrame()
         return
     end
 
-    self:CreateShadow(_G.MailFrame)
-    self:CreateShadow(_G.OpenMailFrame)
+    self:CreateBackdropShadow(_G.MailFrame)
+    self:CreateBackdropShadow(_G.OpenMailFrame)
 
     for i = 1, 2 do
-        self:CreateBackdropShadow(_G["MailFrameTab" .. i])
+        self:ReskinTab(_G["MailFrameTab" .. i])
     end
 end
 

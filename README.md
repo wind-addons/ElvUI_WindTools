@@ -92,8 +92,9 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
 12. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
 13. **REHack Skin**: Apply skin for REHack.
-14. **TinyInspect Skin**: Apply skin for TinyInspect.
-15. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+14. **Rematch Skin**: Apply skin for Rematch.
+15. **TinyInspect Skin**: Apply skin for TinyInspect.
+16. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

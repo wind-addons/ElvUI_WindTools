@@ -1330,7 +1330,7 @@ function GB:UpdateGuildButton()
 
     for i = 1, 2 * NUM_PANEL_BUTTONS do
         if self.buttons[i].type == "GUILD" then
-            self.buttons[i].notificationTex:SetShown(not isShown)
+            self.buttons[i].notificationTex:SetShown(isShown)
         end
     end
 end

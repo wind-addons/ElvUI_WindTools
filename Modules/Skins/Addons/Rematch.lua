@@ -197,10 +197,15 @@ local function ReskinCard(card) -- modified from NDui
 end
 
 local function ReskinInset(frame)
+    if not frame or frame.windStyle then
+        return
+    end
+
     frame:StripTextures()
     frame:CreateBackdrop()
     frame.backdrop:SetInside(frame, 2, 2)
     frame.backdrop.Center:SetVertexColor(1, 1, 1, 0.3)
+    frame.windStyle = true
 end
 
 local function ReskinTooltip(tooltip)
@@ -223,6 +228,11 @@ local function ReskinPetList(list) -- modified from NDui
         if not button.windStyle then
             if button.Pet then
                 button.Pet:CreateBackdrop()
+
+                if button.Status then
+                    button.Status:SetTexture(E.media.blankTex)
+                    button.Status:SetVertexColor(1, 0, 0, 0.3)
+                end
 
                 if button.Rarity then
                     button.Pet.backdrop:SetBackdropBorderColor(button.Rarity:GetVertexColor())
@@ -254,6 +264,8 @@ local function ReskinPetList(list) -- modified from NDui
             ES:HandleButton(button)
             if not button.Pet then
                 button.backdrop:SetInside(button, 1, 1)
+            else
+                button.backdrop:SetInside(button, 1, 0)
             end
 
             if button.Back then
@@ -758,29 +770,32 @@ function S:Rematch_Standalone()
         self:CreateBackdropShadow(tab)
     end
 
-    ReskinFlyout(_G.RematchMiniPanel.Flyout)
     -- Mini Panel
-    hooksecurefunc(
-        _G.RematchMiniPanel,
-        "Update",
-        function(panel)
-            panel.Background:Kill()
-            local pets = panel.Pets
-            for i = 1, 3 do
-                local button = panel.Pets[i]
-                ReskinIconButton(button)
-                button.Icon.backdrop:SetBackdropBorderColor(button.IconBorder:GetVertexColor())
-                local abilities = button.Abilities
-                if abilities then
-                    for j = 1, #abilities do
-                        ReskinIconButton(abilities[j])
+    local mini = _G.RematchMiniPanel
+    if mini then
+        ReskinFlyout(mini.Flyout)
+        hooksecurefunc(
+            mini,
+            "Update",
+            function(panel)
+                panel.Background:Kill()
+                local pets = panel.Pets
+                for i = 1, 3 do
+                    local button = panel.Pets[i]
+                    ReskinIconButton(button)
+                    button.Icon.backdrop:SetBackdropBorderColor(button.IconBorder:GetVertexColor())
+                    local abilities = button.Abilities
+                    if abilities then
+                        for j = 1, #abilities do
+                            ReskinIconButton(abilities[j])
+                        end
                     end
+                    ReskinXPBar(button.HP)
+                    ReskinXPBar(button.XP)
                 end
-                ReskinXPBar(button.HP)
-                ReskinXPBar(button.XP)
             end
-        end
-    )
+        )
+    end
 end
 
 function S:Rematch_SkinLoad()
@@ -789,6 +804,28 @@ function S:Rematch_SkinLoad()
     end
 
     S:Rematch_Middle()
+
+    -- Mini frame target
+    if _G.RematchMiniPanel.Target then
+        local panel = _G.RematchMiniPanel.Target
+        local greenCheckTex = panel.GreenCheck and panel.GreenCheck:GetTexture()
+        panel:StripTextures()
+        if greenCheckTex then
+            panel.GreenCheck:SetTexture(greenCheckTex)
+        end
+        panel:CreateBackdrop()
+        panel.ModelBorder:SetBackdrop(nil)
+        panel.ModelBorder:DisableDrawLayer("BACKGROUND")
+        panel.ModelBorder:CreateBackdrop("Transparent")
+        panel.ModelBorder.backdrop:SetInside(panel.ModelBorder, 4, 3)
+        ReskinButton(panel.LoadButton)
+        for i = 1, 3 do
+            local button = panel.Pets[i]
+            if button then
+                ReskinIconButton(button)
+            end
+        end
+    end
 
     -- Tooltip
     ReskinTooltip(_G.RematchTooltip)
@@ -832,9 +869,6 @@ function S:Rematch()
     self:CreateBackdropShadow(_G.RematchJournal, true)
     ES:HandleCloseButton(_G.RematchJournal.CloseButton)
 
-    -- Standalone frame
-    self:Rematch_Standalone()
-
     -- Main
     self:Rematch_Header()
     self:Rematch_LeftTop()
@@ -847,6 +881,7 @@ function S:Rematch()
     self:Rematch_AbilityCard()
     self:Rematch_PetCard()
     self:Rematch_RightTabs()
+    self:Rematch_Standalone()
     ReskinInset(_G.RematchLoadedTeamPanel)
     hooksecurefunc(_G.RematchJournal, "ConfigureJournal", self.Rematch_SkinLoad)
     hooksecurefunc(_G.RematchFrame, "ConfigureFrame", self.Rematch_SkinLoad)

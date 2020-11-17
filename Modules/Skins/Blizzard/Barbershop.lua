@@ -9,11 +9,27 @@ function S:Blizzard_CharacterCustomize()
     end
     local frame = _G.CharCustomizeFrame
 
-    self:CreateShadow(frame.SmallButtons.ResetCameraButton)
-    self:CreateShadow(frame.SmallButtons.ZoomOutButton)
-    self:CreateShadow(frame.SmallButtons.ZoomInButton)
-    self:CreateShadow(frame.SmallButtons.RotateLeftButton)
-    self:CreateShadow(frame.SmallButtons.RotateRightButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ResetCameraButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ZoomOutButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.ZoomInButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.RotateLeftButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.SmallButtons.RotateRightButton)
+
+    hooksecurefunc(
+        frame,
+        "SetSelectedCatgory",
+        function(list)
+            for button in list.selectionPopoutPool:EnumerateActive() do
+                if not button.windStyle then
+                    self:CreateBackdropShadowAfterElvUISkins(button.DecrementButton)
+                    self:CreateBackdropShadowAfterElvUISkins(button.IncrementButton)
+                    self:CreateBackdropShadowAfterElvUISkins(button.SelectionPopoutButton)
+                    self:CreateBackdropShadowAfterElvUISkins(button.SelectionPopoutButton.Popout)
+                    button.windStyle = true
+                end
+            end
+        end
+    )
 end
 
 function S:Blizzard_BarbershopUI()
@@ -23,9 +39,9 @@ function S:Blizzard_BarbershopUI()
 
     local frame = _G.BarberShopFrame
 
-    self:CreateShadow(frame.ResetButton)
-    self:CreateShadow(frame.CancelButton)
-    self:CreateShadow(frame.AcceptButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.ResetButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.CancelButton)
+    self:CreateBackdropShadowAfterElvUISkins(frame.AcceptButton)
 end
 
 S:AddCallbackForAddon("Blizzard_CharacterCustomize")

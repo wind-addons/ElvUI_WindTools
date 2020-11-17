@@ -4,10 +4,10 @@ W.Changelog[210] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "[美化皮肤] 重写部分美化核心函数, 如果遇到问题请报告.",
+            "[美化皮肤] 重写部分美化核心函数, 如果遇到问题请报告."
         },
         ["zhTW"] = {
-            "[美化皮膚] 重寫部分美化核心參數, 如果遇到問題請報告.",
+            "[美化皮膚] 重寫部分美化核心參數, 如果遇到問題請報告."
         },
         ["enUS"] = {
             "[Skins] Rewrite some core functions, please let me know if the skins not working properly."
@@ -54,6 +54,7 @@ W.Changelog[210] = {
             "[美化皮肤] 优化了好友界面的美化.",
             "[美化皮肤] 优化了社区界面的美化.",
             "[美化皮肤] 优化了 PVE 界面的美化.",
+            "[美化皮肤] 优化了鼠标提示的美化.",
             "[美化皮肤] 优化了 WeakAuras 设定的美化.",
             "[通告] 单人情况下部分设定默认不再通报.",
             "[通告] 由于 API 限制, 说和大喊频道将会在不可用时自动转换为输出到聊天框.",
@@ -73,6 +74,7 @@ W.Changelog[210] = {
             "[美化皮膚] 優化了好友框架美化.",
             "[美化皮膚] 優化了社群框架美化.",
             "[美化皮膚] 優化了 PVE 框架美化.",
+            "[美化皮膚] 優化了浮動提示美化.",
             "[美化皮膚] 優化了 WeakAuras 設定美化.",
             "[通告] 單人情況下部分設定默認不再通報.",
             "[通告] 由於 API 限制, 說和大喊頻道將會在不可用時自動轉換為輸出到聊天框.",
@@ -92,6 +94,7 @@ W.Changelog[210] = {
             "[Skins] Optimize Friends skin.",
             "[Skins] Optimize Communities skin.",
             "[Skins] Optimize PVE frame skin.",
+            "[Skins] Optimize tooltips skin.",
             "[Skins] Optimize WeakAura Options skin.",
             "[Announcement] Change the default channel setting of solo to NONE.",
             "[Announcement] Because the limitation of API, say and yell now will be convert to self when you not in the instance.",
@@ -111,6 +114,7 @@ W.Changelog[210] = {
             "[스킨] 친구목록 스킨 최적화.",
             "[스킨] 커뮤니티 스킨 최적화.",
             "[스킨] PVE 프레임 스킨 최적화.",
+            "[스킨] 툴팁 스킨 최적화.",
             "[스킨] 위크오라 옵션 스킨 최적화.",
             "[알림] 솔로 플레이 상황에서 일부 설정은 기본적으로 알림을 받지 않도록 변경하였습니다.",
             "[알림] API의 한계로 인하여 플레이어가 인스턴스에 있지 않을 때 일반, 외치기는 나에게(채팅창)으로 변환됩니다.",

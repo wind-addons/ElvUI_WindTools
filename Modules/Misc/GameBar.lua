@@ -1318,6 +1318,10 @@ function GB:ProfileUpdate()
 end
 
 function GB:UpdateGuildButton()
+    if not self.db or not self.db.notification then 
+        return
+    end
+
     if not _G.GuildMicroButton or not _G.GuildMicroButton.NotificationOverlay then
         return
     end
@@ -1326,7 +1330,7 @@ function GB:UpdateGuildButton()
 
     for i = 1, 2 * NUM_PANEL_BUTTONS do
         if self.buttons[i].type == "GUILD" then
-            self.buttons[i].notificationTex:SetShown(isShown)
+            self.buttons[i].notificationTex:SetShown(not isShown)
         end
     end
 end

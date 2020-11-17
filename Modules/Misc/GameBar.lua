@@ -343,7 +343,8 @@ local ButtonTypes = {
         },
         eventHandler = function(button, event, message)
             button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
-        end
+        end,
+        notification = true,
     },
     HOME = {
         name = L["Home"],
@@ -984,6 +985,12 @@ function GB:ConstructButton()
     hoverTex:SetAlpha(0)
     button.hoverTex = hoverTex
 
+    local notificationTex = button:CreateTexture(nil, "OVERLAY")
+    notificationTex:SetTexture(W.Media.Icons.barNotification)
+    notificationTex:Point("TOPRIGHT")
+    notificationTex:Size(0.38 * self.db.buttonSize)
+    button.notificationTex = notificationTex
+
     local additionalText = button:CreateFontString(nil, "OVERLAY")
     additionalText:Point(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
     F.SetFontWithDB(additionalText, self.db.additionalText.font)
@@ -997,12 +1004,14 @@ function GB:ConstructButton()
     tinsert(self.buttons, button)
 end
 
-function GB:UpdateButton(button, config)
+function GB:UpdateButton(button, buttonType)
     if InCombatLockdown() then
         return
     end
 
+    local config = ButtonTypes[buttonType]
     button:Size(self.db.buttonSize)
+    button.type = buttonType
     button.name = config.name
     button.tooltips = config.tooltips
     button.tooltipsLeave = config.tooltipsLeave
@@ -1025,7 +1034,7 @@ function GB:UpdateButton(button, config)
         button:SetAttribute("item2", config.item.item2 or "")
     end
 
-    -- 普通状态
+    -- Normal
     local r, g, b = 1, 1, 1
     if self.db.normalColor == "CUSTOM" then
         r = self.db.customNormalColor.r
@@ -1044,7 +1053,7 @@ function GB:UpdateButton(button, config)
     button.normalTex:Size(self.db.buttonSize)
     button.normalTex:SetVertexColor(r, g, b)
 
-    -- 鼠标滑过状态
+    -- Mouseover
     r, g, b = 1, 1, 1
     if self.db.hoverColor == "CUSTOM" then
         r = self.db.customHoverColor.r
@@ -1063,8 +1072,7 @@ function GB:UpdateButton(button, config)
     button.hoverTex:Size(self.db.buttonSize)
     button.hoverTex:SetVertexColor(r, g, b)
 
-    -- 设定额外文字
-
+    -- Additional text
     if button.registeredEvents then
         for _, event in pairs(button.registeredEvents) do
             button:UnregisterEvent(event)
@@ -1115,6 +1123,16 @@ function GB:UpdateButton(button, config)
     else
         button.additionalText:Hide()
     end
+
+    button.notificationTex:Hide()
+    if config.notification then
+        if config.notificationColor then
+            local c = config.notificationColor
+            button.notificationTex:SetVertexColor(c.r, c.g, c.b, c.a)
+        else
+            button.notificationTex:SetVertexColor(r, g, b, 1)
+        end
+    end
 end
 
 function GB:ConstructButtons()
@@ -1130,9 +1148,10 @@ end
 
 function GB:UpdateButtons()
     for i = 1, NUM_PANEL_BUTTONS do
-        self:UpdateButton(self.buttons[i], ButtonTypes[self.db.left[i]])
-        self:UpdateButton(self.buttons[i + NUM_PANEL_BUTTONS], ButtonTypes[self.db.right[i]])
+        self:UpdateButton(self.buttons[i], self.db.left[i])
+        self:UpdateButton(self.buttons[i + NUM_PANEL_BUTTONS], self.db.right[i])
     end
+    self:UpdateGuildButton()
 end
 
 function GB:UpdateLayout()
@@ -1262,6 +1281,7 @@ function GB:Initialize()
     self:UpdateBar()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+    self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
     self.Initialized = true
 end
 
@@ -1293,6 +1313,20 @@ function GB:ProfileUpdate()
         if self.Initialized then
             UnregisterStateDriver(self.bar, "visibility")
             self.bar:Hide()
+        end
+    end
+end
+
+function GB:UpdateGuildButton()
+    if not _G.GuildMicroButton or not _G.GuildMicroButton.NotificationOverlay then
+        return
+    end
+
+    local isShown = _G.GuildMicroButton.NotificationOverlay:IsShown()
+
+    for i = 1, 2 * NUM_PANEL_BUTTONS do
+        if self.buttons[i].type == "GUILD" then
+            self.buttons[i].notificationTex:SetShown(isShown)
         end
     end
 end

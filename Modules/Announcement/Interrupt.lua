@@ -40,7 +40,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
 
     if sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet") then
         -- 自己及宠物打断
-        if not self:PlayerIsInGroup(sourceName) then
+        if not self:IsGroupMember(sourceName) then
             return
         end
 
@@ -55,7 +55,7 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
             sourceName = self:GetPetInfo(sourceName)
         end
 
-        if not self:PlayerIsInGroup(sourceName) then
+        if not self:IsGroupMember(sourceName) then
             return
         end
 

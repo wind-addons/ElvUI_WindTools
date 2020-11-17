@@ -29,7 +29,7 @@ function A:CombatResurrection(sourceGUID, sourceName, destName, spellId)
         return
     end
 
-    if not self:PlayerIsInGroup(sourceName) then
+    if not self:IsGroupMember(sourceName) then
         return
     end
 

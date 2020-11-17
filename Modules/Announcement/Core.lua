@@ -110,7 +110,7 @@ function A:GetPetInfo(petName)
     return nil, nil
 end
 
-function A:PlayerIsInGroup(name)
+function A:IsGroupMember(name)
     if name and (name == E.myname or UnitInRaid(name) or UnitInParty(name)) then
         return true
     end

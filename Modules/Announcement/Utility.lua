@@ -144,7 +144,7 @@ function A:Utility(event, sourceName, spellId)
         return
     end
 
-    if not self:PlayerIsInGroup(sourceName) then
+    if not self:IsGroupMember(sourceName) then
         return
     end
 

@@ -45,7 +45,7 @@ function A:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
             end
         end
 
-        if not self:PlayerIsInGroup(sourceName) then
+        if not self:IsGroupMember(sourceName) then
             return
         end
 

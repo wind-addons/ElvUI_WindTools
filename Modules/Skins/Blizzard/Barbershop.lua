@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_CharacterCustomize()
     if not self:CheckDB("barber", "barberShop") then

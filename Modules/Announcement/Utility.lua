@@ -144,7 +144,8 @@ function A:Utility(event, sourceName, spellId)
         return
     end
 
-    if not self:IsGroupMember(sourceName) then
+    local groupStatus = self:IsGroupMember(sourceName)
+    if not groupStatus or groupStatus == 3 then
         return
     end
 

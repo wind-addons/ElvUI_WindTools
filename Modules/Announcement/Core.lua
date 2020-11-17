@@ -111,8 +111,14 @@ function A:GetPetInfo(petName)
 end
 
 function A:IsGroupMember(name)
-    if name and (name == E.myname or UnitInRaid(name) or UnitInParty(name)) then
-        return true
+    if name then
+        if UnitInParty(name) then
+            return 1
+        elseif UnitInRaid(name) then
+            return 2
+        elseif name == E.myname then
+            return 3
+        end
     end
 
     return false

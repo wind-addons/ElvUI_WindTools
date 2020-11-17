@@ -257,7 +257,7 @@ local function AttemptAutoComplete(event)
             if not tagInfo or not tagInfo.worldQuestType then
                 if popUpType == "OFFER" then
                     ShowQuestOffer(questID)
-                else
+                elseif popUpType == "COMPLETE" then
                     ShowQuestComplete(questID)
                 end
             end
@@ -398,7 +398,11 @@ function TI:QUEST_DETAIL()
         return
     end
 
-    if not QuestGetAutoAccept() then
+    if QuestIsFromAreaTrigger() then
+        AcceptQuest()
+    elseif QuestGetAutoAccept() then
+        AcknowledgeAutoAcceptQuest()
+    elseif not C_QuestLog_IsQuestTrivial(GetQuestID()) or IsTrackingHidden() then
         AcceptQuest()
     end
 end

@@ -244,8 +244,7 @@ local function AttemptAutoComplete(event)
         TI:UnregisterEvent("PLAYER_REGEN_ENABLED")
     end
 
-    local numPopups = GetNumAutoQuestPopUps()
-    if numPopups > 0 then
+    if GetNumAutoQuestPopUps() > 0 then
         if UnitIsDeadOrGhost("player") then
             TI:RegisterEvent("PLAYER_REGEN_ENABLED")
             return
@@ -263,8 +262,6 @@ local function AttemptAutoComplete(event)
             end
             return
         end
-    else
-        E:Delay(1, AttemptAutoComplete)
     end
 end
 

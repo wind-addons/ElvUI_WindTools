@@ -3,6 +3,7 @@ local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G
 local format = format
+local ipairs = ipairs
 local next = next
 local select = select
 local strlen = strlen

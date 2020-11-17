@@ -4,6 +4,8 @@ local S = W:GetModule("Skins")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+local InCombatLockdown = InCombatLockdown
+
 function S:SkinOjectiveTrackerHeaders()
     local frame = _G.ObjectiveTrackerFrame.MODULES
     if frame then

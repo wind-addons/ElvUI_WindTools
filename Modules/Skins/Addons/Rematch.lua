@@ -130,7 +130,7 @@ local function ReskinCard(card) -- modified from NDui
 
     card:SetBackdrop(nil)
     card:CreateBackdrop("Transparent")
-    S:CreateShadow(card.backdrop)
+    S:CreateBackdropShadow(card)
 
     if card.Source then
         card.Source:StripTextures()
@@ -171,7 +171,7 @@ local function ReskinTooltip(tooltip)
 
     tooltip:StripTextures()
     tooltip:CreateBackdrop("Transparent")
-    S:CreateShadow(tooltip.backdrop)
+    S:CreateBackdropShadow(tooltip)
 end
 
 local function ReskinPetList(list) -- modified from NDui
@@ -515,7 +515,7 @@ function S:Rematch_Dialog() -- Modified from NDui
     dialog:StripTextures()
     dialog.Prompt:StripTextures()
     dialog:CreateBackdrop("Transparent")
-    self:CreateShadow(dialog.backdrop)
+    self:CreateBackdropShadow(dialog)
 
     -- Buttons
     ReskinCloseButton(dialog.CloseButton)
@@ -602,7 +602,7 @@ function S:Rematch_PetCard()
     petCard:StripTextures()
     petCard.Title:StripTextures()
     petCard:CreateBackdrop("Transparent")
-    self:CreateShadow(petCard.backdrop)
+    self:CreateBackdropShadow(petCard)
     ReskinCloseButton(petCard.CloseButton)
     ES:HandleNextPrevButton(petCard.PinButton, "up")
     petCard.PinButton:ClearAllPoints()
@@ -627,7 +627,7 @@ function S:Rematch_RightTabs()
                 if tab and not tab.windStyle then
                     tab.Background:Kill()
                     ReskinIconButton(tab)
-                    self:CreateShadow(tab.Icon.backdrop)
+                    self:CreateBackdropShadow(tab.Icon)
                     tab:Size(40, 40)
                     tab.windStyle = true
                 end
@@ -649,7 +649,7 @@ function S:Rematch()
     _G.RematchJournal:StripTextures()
     _G.RematchJournal.portrait:Hide()
     _G.RematchJournal:CreateBackdrop()
-    self:CreateShadow(_G.RematchJournal.backdrop)
+    self:CreateBackdropShadow(_G.RematchJournal, true)
     ES:HandleCloseButton(_G.RematchJournal.CloseButton)
 
     -- Main
@@ -675,7 +675,7 @@ function S:Rematch()
                 local menu = _G.Rematch:GetMenuFrame(i, UIParent)
                 menu:StripTextures()
                 menu:CreateBackdrop("Transparent")
-                S:CreateShadow(menu.backdrop)
+                S:CreateBackdropShadow(menu)
                 menu.Title:StripTextures()
                 menu.Title:CreateBackdrop()
                 menu.Title.backdrop:SetBackdropColor(1, 0.8, 0, 0.25)

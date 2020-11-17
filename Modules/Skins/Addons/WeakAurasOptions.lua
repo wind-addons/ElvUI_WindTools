@@ -179,7 +179,7 @@ function S:WeakAuras_ShowOptions()
     -- Remove background
     frame:SetBackdrop(nil)
     frame:CreateBackdrop("Transparent")
-    self:CreateShadow(frame.backdrop)
+    self:CreateBackdropShadow(frame)
 
     for _, region in pairs {frame:GetRegions()} do
         if region:GetObjectType() == "Texture" then
@@ -239,7 +239,7 @@ function S:WeakAuras_ShowOptions()
             if text and strfind(text, "^WeakAuras%s%d") then -- Title
                 child:SetFrameLevel(3)
                 child:CreateBackdrop()
-                S:CreateShadow(child.backdrop)
+                S:CreateBackdropShadow(child, true)
                 F.SetFontOutline(firstRegion)
                 recognized = true
             end
@@ -341,7 +341,7 @@ function S:WeakAuras_ShowOptions()
         snippetsFrame:Point("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
         snippetsFrame:StripTextures()
         snippetsFrame:CreateBackdrop("Transparent")
-        self:CreateShadow(snippetsFrame.backdrop)
+        self:CreateBackdropShadow(snippetsFrame)
         ReskinChildButton(snippetsFrame)
     end
 

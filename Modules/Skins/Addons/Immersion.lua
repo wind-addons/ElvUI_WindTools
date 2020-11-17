@@ -13,7 +13,7 @@ function S:Immersion_ReskinTitleButton(frame)
             button.backdrop:ClearAllPoints()
             button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
-            self:CreateShadow(button.backdrop)
+            self:CreateBackdropShadow(button)
             self:MerathilisUISkin(button.backdrop)
 
             button.Hilite:StripTextures()
@@ -54,7 +54,7 @@ function S:Immersion_ReskinItems()
                 rButton.NameFrame:CreateBackdrop("Transparent")
                 rButton.NameFrame.backdrop:ClearAllPoints()
                 rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
-                self:CreateShadow(rButton.NameFrame.backdrop)
+                self:CreateBackdropShadow(rButton.NameFrame)
             end
             rButton.windStyle = true
         end
@@ -72,7 +72,7 @@ function S:Immersion_ReskinItems()
                 rButton.NameFrame:CreateBackdrop("Transparent")
                 rButton.NameFrame.backdrop:ClearAllPoints()
                 rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
-                self:CreateShadow(rButton.NameFrame.backdrop)
+                self:CreateBackdropShadow(rButton.NameFrame)
             end
             rButton.windStyle = true
         end
@@ -116,7 +116,7 @@ function S:Immersion()
     talkBox.backdrop:ClearAllPoints()
     talkBox.backdrop:Point("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
     talkBox.backdrop:Point("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
-    self:CreateShadow(talkBox.backdrop)
+    self:CreateBackdropShadow(talkBox)
     self:MerathilisUISkin(talkBox.backdrop)
 
     -- 使用 ElvUI 边框变蓝来替换原高亮特效
@@ -149,7 +149,7 @@ function S:Immersion()
     elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)
     elements.backdrop:Point("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
     F.SetFontOutline(elements.Progress.ReqText)
-    S:CreateShadow(elements.backdrop)
+    S:CreateBackdropShadow(elements)
     S:MerathilisUISkin(elements.backdrop)
 
     -- 任务细节窗口文字

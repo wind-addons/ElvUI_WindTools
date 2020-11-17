@@ -126,7 +126,7 @@ local function Skin_WeakAuras(f, fType)
             end
             f.icon:SetTexCoord(f.icon:GetTexCoord())
             f:CreateBackdrop()
-            S:CreateShadow(f.backdrop)
+            S:CreateBackdropShadow(f, true)
             f.backdrop.Center:StripTextures()
             f.backdrop:SetFrameLevel(0)
             f.backdrop.icon = f.icon
@@ -147,7 +147,7 @@ local function Skin_WeakAuras(f, fType)
             f:CreateBackdrop()
             f.backdrop.Center:StripTextures()
             f.backdrop:SetFrameLevel(0)
-            S:CreateShadow(f.backdrop)
+            S:CreateBackdropShadow(f, true)
             f.icon:SetTexCoord(unpack(E.TexCoords))
             f.icon.SetTexCoord = E.noop
             f.iconFrame:SetAllPoints(f.icon)

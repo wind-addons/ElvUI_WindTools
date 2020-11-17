@@ -15,7 +15,7 @@ function S:BugSack_Open()
     -- 背景
     BugSackFrame:StripTextures()
     BugSackFrame:CreateBackdrop("Transparent")
-    S:CreateShadow(BugSackFrame.backdrop)
+    S:CreateBackdropShadow(BugSackFrame)
 
     -- 关闭按钮
     for _, child in pairs {_G.BugSackFrame:GetChildren()} do
@@ -58,7 +58,7 @@ function S:BugSack_Open()
     for _, tab in pairs(tabs) do
         ES:HandleTab(tab)
         tab.backdrop:SetTemplate("Transparent")
-        S:CreateShadow(tab.backdrop)
+        S:CreateBackdropShadow(tab)
 
         local point, relativeTo, relativePoint, xOffset, yOffset = tab:GetPoint(1)
         tab:ClearAllPoints()

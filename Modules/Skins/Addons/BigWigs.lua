@@ -13,7 +13,7 @@ function S:BigWigs_CreateBar(barLib, ...)
     if E.private.WT.skins.shadow then
         self:CreateShadow(bar, 5)
         bar.candyBarIconFrame:CreateBackdrop()
-        self:CreateShadow(bar.candyBarIconFrame.backdrop)
+        self:CreateBackdropShadow(bar.candyBarIconFrame, true)
     end
 
     return bar
@@ -46,7 +46,7 @@ function S:BigWigs_QueueTimer()
                     local parent = frame:GetParent()
                     frame:StripTextures()
                     frame:CreateBackdrop("Transparent")
-                    self:CreateShadow(frame.backdrop)
+                    self:CreateBackdropShadow(frame)
                     frame:SetStatusBarTexture(E.media.normTex)
                     frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
                     frame:Size(parent:GetWidth(), 10)

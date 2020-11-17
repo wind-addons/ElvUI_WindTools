@@ -92,7 +92,7 @@ function S:MeetingStone()
     local MainPanel = NEG.MainPanel
     if MainPanel then
         ES:HandlePortraitFrame(MainPanel)
-        self:CreateShadow(MainPanel.backdrop)
+        self:CreateBackdropShadow(MainPanel)
         self:MerathilisUISkin(MainPanel)
         MainPanel.PortraitFrame:Hide()
         local close =
@@ -119,7 +119,7 @@ function S:MeetingStone()
             self:CreateBackdrop("Transparent")
             self.backdrop:Point("TOPLEFT", 6, E.PixelMode and -1 or -3)
             self.backdrop:Point("BOTTOMRIGHT", -6, 3)
-            S:CreateShadow(self.backdrop)
+            S:CreateBackdropShadow(self)
             S:MerathilisUITab(self)
         end
     )
@@ -238,7 +238,7 @@ function S:MeetingStone()
         if BrowsePanel.AdvFilterPanel then
             local panel = BrowsePanel.AdvFilterPanel
             ES:HandlePortraitFrame(panel)
-            S:CreateShadow(panel.backdrop)
+            S:CreateBackdropShadow(panel, true)
             for _, child in pairs {panel:GetChildren()} do
                 if child.GetObjectType and child:GetObjectType() == "Button" then
                     if child.GetText and child:GetText() ~= "" and child:GetText() ~= nil then
@@ -378,7 +378,7 @@ function S:MeetingStone()
     if BrokerPanel then
         BrokerPanel:SetBackdrop(nil)
         BrokerPanel:CreateBackdrop("Transparent")
-        self:CreateShadow(BrokerPanel.backdrop)
+        self:CreateBackdropShadow(BrokerPanel)
         self:MerathilisUISkin(BrokerPanel)
     end
 end

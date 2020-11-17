@@ -28,7 +28,7 @@ function S:PremadeGroupsFilter()
     frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", -1, 0)
     frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
 
-    self:CreateShadow(frame.backdrop)
+    self:CreateBackdropShadow(frame, true)
     self:MerathilisUISkin(frame)
 
     -- Because we added shadow, moving the frame a little bit right looks better

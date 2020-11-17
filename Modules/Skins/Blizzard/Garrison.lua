@@ -23,7 +23,7 @@ function S:GarrisonTooltips()
 
     for _, tooltip in pairs(tooltips) do
         if tooltip then
-            self:CreateShadow(tooltip)
+            self:CreateBackdropShadow(tooltip)
         end
     end
 end
@@ -61,13 +61,11 @@ function S:Blizzard_GarrisonUI()
 
     for _, frame in pairs(frames) do
         if frame then
-            self:CreateShadow(frame)
+            self:CreateBackdropShadow(frame)
         end
     end
     for _, tab in pairs(tabs) do
-        if tab then
-            self:CreateBackdropShadow(tab)
-        end
+        self:ReskinTab(tab)
     end
 end
 

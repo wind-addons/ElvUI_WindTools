@@ -596,6 +596,7 @@ L["Potions"] = "药水"
 L["Power"] = "能量条"
 L["Prefix"] = "前綴"
 L["Premade Groups Filter"] = true
+L["Press modifier key (Shift, Ctrl, Alt) to stop the automation temporarily."] = "按住修饰键 (Shift, Ctrl, Alt) 来暂停自动交接."
 L["Press the |cffffd200Delete|r key as confirmation."] = "可通过按下 |cffffd200Delete|r 键确认."
 L["Press { to active the emote select window."] = "按下 { （英文左大括号）来激活窗口"
 L["Preview"] = "预览"

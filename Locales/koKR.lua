@@ -596,6 +596,7 @@ L["Potions"] = "물약"
 L["Power"] = "자원"
 L["Prefix"] = "접두사"
 L["Premade Groups Filter"] = true
+L["Press modifier key (Shift, Ctrl, Alt) to stop the automation temporarily."] = true
 L["Press the |cffffd200Delete|r key as confirmation."] = "|cffffd200Delete|r key를 눌러 확인합니다."
 L["Press { to active the emote select window."] = "{ 를 눌러 이모티콘 선택 창을 엽니다."
 L["Preview"] = "미리보기"

@@ -596,6 +596,7 @@ L["Potions"] = true
 L["Power"] = "Ресурс"
 L["Prefix"] = true
 L["Premade Groups Filter"] = true
+L["Press modifier key (Shift, Ctrl, Alt) to stop the automation temporarily."] = true
 L["Press the |cffffd200Delete|r key as confirmation."] = true
 L["Press { to active the emote select window."] = true
 L["Preview"] = "Предпросмотр"

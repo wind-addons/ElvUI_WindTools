@@ -309,7 +309,11 @@ options.turnIn = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Make quest acceptance and completion automatically."],
+                    name = format(
+                        "%s\n%s",
+                        L["Make quest acceptance and completion automatically."],
+                        L["Press modifier key (Shift, Ctrl, Alt) to stop the automation temporarily."]
+                    ),
                     fontSize = "medium"
                 }
             }

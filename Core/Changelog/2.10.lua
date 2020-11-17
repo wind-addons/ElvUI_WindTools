@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[210] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/11/17",
     IMPORTANT = {
         ["zhCN"] = {
             "[美化皮肤] 重写部分美化核心函数, 如果遇到问题请报告."

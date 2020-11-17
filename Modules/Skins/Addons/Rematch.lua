@@ -448,7 +448,56 @@ function S:Rematch_LeftTop()
             end
         end
     )
+
     ReskinFilterButton(_G.RematchPetPanel.Top.Filter)
+
+    local typeBar = _G.RematchPetPanel.Top.TypeBar
+    if typeBar then -- Modified from NDui
+        typeBar:SetBackdrop(nil)
+        typeBar:CreateBackdrop()
+        for i = 1, 10 do
+            ReskinIconButton(RematchPetPanel.Top.TypeBar.Buttons[i])
+        end
+
+        for i = 1, 4 do
+            local tab = RematchPetPanel.Top.TypeBar.Tabs[i]
+            if tab then
+                tab:StripTextures()
+                tab:CreateBackdrop("Transparent")
+                tab.backdrop:SetInside(tab, 2, 2)
+                if tab.HasStuff then
+                    tab.HasStuff:SetTexture(E.media.blankTex)
+                    tab.HasStuff:SetVertexColor(0, 0, 1, 0.2)
+                    tab.HasStuff:SetInside(tab, 3, 3)
+                end
+                if tab.Selected then
+                    tab.Selected:StripTextures()
+                    tab.Selected.windSelected = tab.Selected:CreateTexture(nil)
+                    tab.Selected.windSelected:SetTexture(E.media.blankTex)
+                    tab.Selected.windSelected:SetVertexColor(1, 1, 1, 0.2)
+                    tab.Selected.windSelected:SetInside(tab.Selected, 3, 3)
+                end
+            end
+        end
+
+        local results = RematchPetPanel.Results
+
+        local qualityBar = typeBar.QualityBar
+        if qualityBar then
+            local buttons = {"HealthButton", "PowerButton", "SpeedButton", "Level25Button", "RareButton"}
+            for _, name in pairs(buttons) do
+                local button = qualityBar[name]
+                if button then
+                    ReskinIconButton(button)
+                end
+            end
+        end
+    end
+
+    local results = RematchPetPanel.Results
+    if results then
+        results:StripTextures()
+    end
 end
 
 function S:Rematch_LeftBottom()

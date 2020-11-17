@@ -16,7 +16,7 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
     if E.private.WT.skins.elvui.actionBarsBackdrop then
         if bar.db.backdrop then
             if not bar.backdrop.shadow then
-                self:CreateBackdropShadow(bar)
+                self:CreateBackdropShadow(bar, true)
             end
             bar.backdrop.shadow:Show()
         else

@@ -36,7 +36,7 @@ function S:PetBattle()
     self:CreateBackdropShadow(_G.PetBattleFrame.Ally3)
 
     self:CreateShadow(_G.PetBattleFrame.Enemy2.HealthBarBackdrop)
-    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy2.backdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy2)
 
     self:CreateShadow(_G.PetBattleFrame.Enemy3.HealthBarBackdrop)
     self:CreateBackdropShadow(_G.PetBattleFrame.Enemy3)

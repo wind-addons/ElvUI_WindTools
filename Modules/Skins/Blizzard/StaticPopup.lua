@@ -10,9 +10,7 @@ function S:StaticPopup()
 
     for i = 1, 4 do
         local f = _G["StaticPopup" .. i]
-        if f then
-            self:CreateBackdropShadow(f)
-        end
+        self:CreateBackdropShadow(f)
     end
 end
 

@@ -7,8 +7,10 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
     if widgetSetID then
         return
     end
+
     if not stageBlock.backdrop then
         stageBlock:CreateBackdrop("Transparent")
+        self:CreateBackdropShadow(stageBlock)
     end
 
     stageBlock.NormalBG:StripTextures()
@@ -16,8 +18,6 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
     stageBlock.backdrop:ClearAllPoints()
     stageBlock.backdrop:Point("TOPLEFT", stageBlock.NormalBG, "TOPLEFT", 4, -4)
     stageBlock.backdrop:Point("BOTTOMRIGHT", stageBlock.NormalBG, "BOTTOMRIGHT", -20, 6)
-
-    self:CreateBackdropShadow(stageBlock)
 end
 
 function S:ScenarioStage()

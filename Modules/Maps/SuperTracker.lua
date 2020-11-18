@@ -12,7 +12,16 @@ function ST:ReskinDistanceText()
         return
     end
 
-    F.SetFontOutline(_G.SuperTrackedFrame.DistanceText)
+    if not self.db or not self.db.distanceText or not self.db.distanceText.enable then
+        return
+    end
+
+    F.SetFontWithDB(_G.SuperTrackedFrame.DistanceText, self.db.distanceText)
+    _G.SuperTrackedFrame.DistanceText:SetTextColor(
+        self.db.distanceText.color.r,
+        self.db.distanceText.color.g,
+        self.db.distanceText.color.b
+    )
 end
 
 function ST:HookPin()

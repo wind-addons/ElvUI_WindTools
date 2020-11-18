@@ -50,13 +50,22 @@ options.superTracker = {
                     order = 1,
                     type = "toggle",
                     name = L["Auto Track Waypoint"],
-                    desc = L["Auto track the waypoint after setting."]
+                    desc = L["Auto track the waypoint after setting."],
+                    width = 1.5,
                 },
                 rightClickToClear = {
                     order = 2,
                     type = "toggle",
                     name = L["Right Click To Clear"],
-                    desc = L["Right click the waypoint to clear it."]
+                    desc = L["Right click the waypoint to clear it."],
+                    width = 1.5,
+                },
+                noLimit = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["No Distance Limitation"],
+                    desc = L["Force to track the target even if it over 1000 yds."],
+                    width = 1.5,
                 }
             }
         },

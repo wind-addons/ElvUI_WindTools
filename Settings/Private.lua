@@ -11,6 +11,7 @@ V.combat = {
 V.maps = {
 	superTracker = {
 		enable = true,
+		noLimit = true,
 		autoTrackWaypoint = true,
 		rightClickToClear = true,
 		distanceText = {

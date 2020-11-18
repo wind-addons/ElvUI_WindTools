@@ -50,6 +50,18 @@ function ST:HookPin()
     end
 end
 
+function ST:NoLimit()
+    if not _G.SuperTrackedFrame then
+        return
+    end
+
+    if not self.db or not self.db.noLimit then
+        return
+    end
+
+    _G.SuperTrackedFrame:SetTargetAlphaForState(_G.Enum.NavigationState.Invalid, 1)
+end
+
 function ST:USER_WAYPOINT_UPDATED()
     if C_Map_HasUserWaypoint() then
         if self.db and self.db.autoTrackWaypoint then
@@ -62,6 +74,7 @@ end
 function ST:ADDON_LOADED(_, addon)
     if addon == "Blizzard_QuestNavigation" then
         self:UnregisterEvent("ADDON_LOADED")
+        self:NoLimit()
         self:ReskinDistanceText()
     end
 end
@@ -87,6 +100,7 @@ function ST:Initialize()
         return
     end
 
+    self:NoLimit()
     self:ReskinDistanceText()
 end
 

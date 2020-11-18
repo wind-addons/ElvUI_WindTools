@@ -1048,38 +1048,23 @@ options.reset = {
             inline = true,
             name = AddColor(L["Maps"]),
             args = {
-                minimapButtons = {
+                superTracker = {
                     order = 1,
                     type = "execute",
-                    name = L["Minimap Buttons"],
+                    name = L["Super Tracker"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Minimap Buttons"],
+                            L["Super Tracker"],
                             nil,
                             function()
-                                E.private.WT.maps.minimapButtons = V.maps.minimapButtons
-                            end
-                        )
-                    end
-                },
-                rectangleMinimap = {
-                    order = 2,
-                    type = "execute",
-                    name = L["Rectangle Minimap"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Rectangle Minimap"],
-                            nil,
-                            function()
-                                E.db.WT.maps.rectangleMinimap = P.maps.rectangleMinimap
+                                E.private.WT.maps.superTracker = V.maps.superTracker
                             end
                         )
                     end
                 },
                 whoClicked = {
-                    order = 3,
+                    order = 2,
                     type = "execute",
                     name = L["Who Clicked Minimap"],
                     func = function()
@@ -1093,8 +1078,38 @@ options.reset = {
                         )
                     end
                 },
-                worldMap = {
+                rectangleMinimap = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Rectangle Minimap"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Rectangle Minimap"],
+                            nil,
+                            function()
+                                E.db.WT.maps.rectangleMinimap = P.maps.rectangleMinimap
+                            end
+                        )
+                    end
+                },
+                minimapButtons = {
                     order = 4,
+                    type = "execute",
+                    name = L["Minimap Buttons"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Minimap Buttons"],
+                            nil,
+                            function()
+                                E.private.WT.maps.minimapButtons = V.maps.minimapButtons
+                            end
+                        )
+                    end
+                },
+                worldMap = {
+                    order = 5,
                     type = "execute",
                     name = L["World Map"],
                     func = function()

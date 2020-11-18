@@ -3,12 +3,20 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
+function S:GuildInviteFrame()
+    if not self:CheckDB("guild") then
+        return
+    end
+
+    self:CreateBackdropShadow(_G.GuildInviteFrame)
+end
+
 function S:Blizzard_GuildUI()
     if not self:CheckDB("guild") then
         return
     end
 
-    self:CreateShadow(_G.GuildFrame)
+    self:CreateBackdropShadow(_G.GuildFrame)
 
     for i = 1, 5 do
         self:ReskinTab(_G["GuildFrameTab" .. i])
@@ -16,3 +24,4 @@ function S:Blizzard_GuildUI()
 end
 
 S:AddCallbackForAddon("Blizzard_GuildUI")
+S:AddCallback("GuildInviteFrame")

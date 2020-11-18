@@ -34,10 +34,10 @@ W.Changelog[211] = {
             "[Game Bar] Add an indicator of unread messages to Guild button."
         },
         ["koKR"] = {
-            "[Turn In] Optimize the logic of auto turn in. Thanks siweia @ NDui",
+            "[자동 수락] 자동 수락 로직을 최적화합니다. Thanks siweia @ NDui",
             "[스킨] Rematch 스킨 최적화.",
-            "[Skins] Fix the quest item skin.",
-            "[Game Bar] Add an indicator of unread messages to Guild button."
+            "[스킨] 퀘스트 아이템 스킨 수정.",
+            "[게임 바] 읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다."
         }
     }
 }

@@ -8,8 +8,120 @@ local WM = W:GetModule("WorldMap")
 
 local format = format
 
-options.whoClicked = {
+options.superTracker = {
     order = 1,
+    type = "group",
+    name = L["Super Tracker"],
+    get = function(info)
+        return E.private.WT.maps.superTracker[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.maps.superTracker[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Additional features for waypoint."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        general = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["General"],
+            args = {
+                autoTrackWaypoint = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Auto Track Waypoint"],
+                    desc = L["Auto track the waypoint after setting."]
+                },
+                rightClickToClear = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Right Click To Clear"],
+                    desc = L["Right click the waypoint to clear it."]
+                }
+            }
+        },
+        distanceText = {
+            order = 4,
+            type = "group",
+            name = L["Distance Text"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.maps.superTracker.distanceText[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.maps.superTracker.distanceText[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                },
+                color = {
+                    order = 4,
+                    type = "color",
+                    name = L["Color"],
+                    get = function(info)
+                        local db = E.private.WT.maps.superTracker.distanceText[info[#info]]
+                        local default = V.maps.superTracker.distanceText[info[#info]]
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b, a)
+                        local db = E.private.WT.maps.superTracker.distanceText[info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, nil
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                }
+            }
+        }
+    }
+}
+
+options.whoClicked = {
+    order = 2,
     type = "group",
     name = L["Who Clicked Minimap"],
     get = function(info)
@@ -190,7 +302,7 @@ options.whoClicked = {
 }
 
 options.rectangleMinimap = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Rectangle Minimap"],
     get = function(info)
@@ -234,7 +346,7 @@ options.rectangleMinimap = {
 }
 
 options.minimapButtons = {
-    order = 3,
+    order = 4,
     type = "group",
     name = L["Minimap Buttons"],
     args = {
@@ -414,7 +526,7 @@ options.minimapButtons = {
 }
 
 options.worldMap = {
-    order = 4,
+    order = 5,
     type = "group",
     name = L["World Map"],
     get = function(info)
@@ -459,28 +571,8 @@ options.worldMap = {
             name = L["Remove Fog"],
             desc = L["Remove Fog of War from your world map."]
         },
-        Waypoint = {
-            order = 4,
-            type = "group",
-            inline = true,
-            name = L["Waypoint"],
-            args = {
-                autoTrackWaypoint = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Auto Track Waypoint"],
-                    desc = L["Auto track the waypoint after setting."]
-                },
-                rightClickToClear = {
-                    order = 2,
-                    type = "toggle",
-                    name = L["Right Click To Clear"],
-                    desc = L["Right click the waypoint to clear it."]
-                }
-            }
-        },
         scale = {
-            order = 5,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Scale"],

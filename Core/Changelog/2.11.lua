@@ -13,7 +13,7 @@ W.Changelog[211] = {
             "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker]."
         },
         ["koKR"] = {
-            "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker]."
+            "[지도]-[월드맵]의 <지도 핀> 기능이 [지도]-[슈퍼 트래커]의 새로운 기능으로 변경되었습니다."
         }
     },
     NEW = {
@@ -36,10 +36,10 @@ W.Changelog[211] = {
             "[Skins] Add new skin for party level sync dialog."
         },
         ["koKR"] = {
-            "[Super Tracker] Add a new feature that custom the distance text.",
-            "[Super Tracker] Add a new feature that removes the limitation of track distance.",
-            "[스킨] Add new skin for guild invite dialog.",
-            "[스킨] Add new skin for party level sync dialog."
+            "[슈퍼 트래커] 거리 문자를 설정하는 기능을 추가하였습니다.",
+            "[슈퍼 트래커] 표시 거리 제한을 해제하는 기능을 추가하였습니다.",
+            "[스킨] 길드 초대 대화 상자에 새로운 스킨을 추가하였습니다.",
+            "[스킨] 파티 레벨 동기화 대화 상자에 새로운 스킨을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -69,7 +69,7 @@ W.Changelog[211] = {
             "[스킨] Rematch 스킨 최적화.",
             "[스킨] 퀘스트 아이템 스킨 수정.",
             "[게임 바] 읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다.",
-            "[Objective Tracker] Fix some bugs in options."
+            "[퀘스트 추적기] 옵션의 일부 버그를 수정하였습니다."
         }
     }
 }

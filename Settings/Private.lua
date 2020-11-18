@@ -46,6 +46,7 @@ V.maps = {
 }
 
 V.misc = {
+	autoScreenshot = false,
 	saveArtifact = true,
 	pauseToSlash = true,
 	noKanjiMath = false,

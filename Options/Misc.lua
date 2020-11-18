@@ -68,7 +68,13 @@ options.general = {
                 E.private.WT.misc[info[#info]] = value
                 M:SkipCutScene()
             end
-        }
+        },
+        autoScreenshot = {
+            order = 6,
+            type = "toggle",
+            name = L["Auto Screenshot"],
+            desc = L["Screenshot after you earned an achievement automatically."]
+        },
     }
 }
 

@@ -105,7 +105,7 @@ options.objectiveTracker = {
             end,
             set = function(info, value)
                 E.private.WT.quest.objectiveTracker.titleColor[info[#info]] = value
-                OT:ChangeQuestTitleColor()
+                E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
                 enable = {

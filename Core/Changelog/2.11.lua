@@ -4,34 +4,42 @@ W.Changelog[211] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "[地图]-[世界地图] 追踪点 => [地图]-[超级追踪], 并新增了一些自定义功能."
+            "[地图]-[世界地图] 追踪点 => [地图]-[超级追踪]."
         },
         ["zhTW"] = {
-            "[地圖]-[世界地圖] 追蹤點 => [地圖]-[超級追蹤], 同時新增了一些自訂功能."
+            "[地圖]-[世界地圖] 追蹤點 => [地圖]-[超級追蹤]."
         },
         ["enUS"] = {
-            "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker], also some customizable options been added."
+            "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker]."
         },
         ["koKR"] = {
-            "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker], also some customizable options been added."
+            "[Maps]-[World Map] Waypoint => [Maps]-[Super Tracker]."
         }
     },
     NEW = {
         ["zhCN"] = {
+            "[超级追踪] 添加了自定义距离文字的功能.",
+            "[超级追踪] 添加了解除追踪距离限制的功能.",
             "[美化皮肤] 添加了公会邀请窗口的美化.",
             "[美化皮肤] 添加了队伍等级同步窗口的美化."
         },
         ["zhTW"] = {
+            "[超級追蹤] 新增了自訂距離文字的功能.",
+            "[超級追蹤] 新增了解除追蹤距離限制的功能.",
             "[美化皮膚] 新增了公會邀請窗口的美化.",
             "[美化皮膚] 新增了隊伍等級同步窗口的美化."
         },
         ["enUS"] = {
+            "[Super Tracker] Add a new feature that custom the distance text.",
+            "[Super Tracker] Add a new feature that removes the limitation of track distance.",
             "[Skins] Add new skin for guild invite dialog.",
-            "[Skins] Add new skin for group level sync dialog."
+            "[Skins] Add new skin for party level sync dialog."
         },
         ["koKR"] = {
+            "[Super Tracker] Add a new feature that custom the distance text.",
+            "[Super Tracker] Add a new feature that removes the limitation of track distance.",
             "[스킨] Add new skin for guild invite dialog.",
-            "[스킨] Add new skin for group level sync dialog."
+            "[스킨] Add new skin for party level sync dialog."
         }
     },
     IMPROVEMENT = {

@@ -21,16 +21,15 @@ local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
-local C_Timer_After = C_Timer.After
 
--- 每张地图的结构如下: (可通过数据挖掘 WorldMapOverlay 及 WorldMapOverlayTile 两个表获取)
+-- STRUCTURE: (do data mining on WorldMapOverlay and WorldMapOverlayTile tables)
 -- UiMapArtID = {
 --     TextureWidth:TextureHeight:offsetX:offsetY = WorldMapOverlayTileFileDataID
 --     ...
 -- }
 
--- 迷雾数据
--- 生成工具: https://github.com/fang2hou/WindToolsScripts/tree/master/MapOverlay
+-- Fog data
+-- Tool: https://github.com/fang2hou/WindToolsScripts/tree/master/MapOverlay
 local RevealDatabase = {
     [2] = {
         ["162:157:399:440"] = "440583",
@@ -2459,7 +2458,6 @@ local RevealDatabase = {
     }
 }
 
--- 用于储存显现的覆盖层
 local overlayTextures = {}
 
 function WM:HandleMap(map, fullUpdate)

@@ -9,11 +9,20 @@ V.combat = {
 }
 
 V.maps = {
+	superTracker = {
+		enable = true,
+		autoTrackWaypoint = true,
+		rightClickToClear = true,
+		text = {
+			enable = true,
+			name = E.db.general.font,
+			size = E.db.general.fontSize + 2,
+			style = "OUTLINE"
+		}
+	},
 	worldMap = {
 		enable = true,
 		reveal = true,
-		autoTrackWaypoint = true,
-		rightClickToClear = true,
 		scale = {
 			enable = true,
 			size = 1.24

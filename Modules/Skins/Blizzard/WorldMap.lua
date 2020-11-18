@@ -29,6 +29,14 @@ function S:WorldMapFrame()
             QuestMapFrame.DetailsFrame.RewardsFrame:CreateBackdrop("Transparent")
         end
     end
+
+    hooksecurefunc(
+        _G.QuestSessionManager,
+        "NotifyDialogShow",
+        function(_, dialog)
+            self:CreateBackdropShadow(dialog)
+        end
+    )
 end
 
 S:AddCallback("WorldMapFrame")

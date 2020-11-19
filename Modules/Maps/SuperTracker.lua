@@ -5,6 +5,7 @@ local _G = _G
 
 local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
+local C_Navigation_GetDistance = C_Navigation.GetDistance
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
 
 function ST:ReskinDistanceText()
@@ -59,7 +60,18 @@ function ST:NoLimit()
         return
     end
 
-    _G.SuperTrackedFrame:SetTargetAlphaForState(_G.Enum.NavigationState.Invalid, 1)
+    self:RawHook(
+        _G.SuperTrackedFrame,
+        "GetTargetAlphaBaseValue",
+        function(frame)
+            if C_Navigation_GetDistance() > 999 then
+                return 1
+            else
+                return self.hooks[_G.SuperTrackedFrame]["GetTargetAlphaBaseValue"](frame)
+            end
+        end,
+        true
+    )
 end
 
 function ST:USER_WAYPOINT_UPDATED()

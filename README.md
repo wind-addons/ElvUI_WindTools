@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.12-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.10-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.13-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.11-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -38,7 +38,8 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 1. **Who Clicked?**: Display the name of players who clicked the minimap.  
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
 3. **Minimap Buttons**: Collect all the minimap buttons to a bar.  
-4. **World Map**: Remove the fog of war, scale the world map, right click to clear waypoint, etc.
+4. **World Map**: Remove the fog of war; scale the world map.
+5. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
 
 ## Quest
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.

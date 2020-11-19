@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.12-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.10-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.13-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.11-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -39,7 +39,8 @@
 1. **小地圖點擊者**: 當他人點擊小地圖時, 顯示名字, 可設置戰鬥中, 文字風格等.
 2. **矩形小地圖**: 為小地圖設置不同的長短邊.
 3. **小地圖按鍵**: 添加一個條來收集小地圖圖標.
-4. **世界地圖**: 世界地圖尺寸修改, 世界地圖迷霧去除, 右鍵清除標記點等.
+4. **世界地圖**: 世界地圖尺寸修改, 世界地圖迷霧去除.
+5. **超級追蹤**: 右鍵清除標記點, 解鎖距離限制等.
 
 ## 任務
 1. **任務列表**: 自訂任務追踪框架的文字風格, 排列等等!

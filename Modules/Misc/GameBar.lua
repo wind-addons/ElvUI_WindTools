@@ -235,14 +235,8 @@ local ButtonTypes = {
     FRIENDS = {
         name = L["Friend List"],
         icon = W.Media.Icons.barFriends,
-        click = {
-            LeftButton = function()
-                if not InCombatLockdown() then
-                    ToggleFriendsFrame(1)
-                else
-                    _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-                end
-            end
+        macro = {
+            LeftButton = "/friend"
         },
         additionalText = function()
             local number = C_FriendList_GetNumOnlineFriends() or 0
@@ -344,7 +338,7 @@ local ButtonTypes = {
         eventHandler = function(button, event, message)
             button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
         end,
-        notification = true,
+        notification = true
     },
     HOME = {
         name = L["Home"],
@@ -1318,7 +1312,7 @@ function GB:ProfileUpdate()
 end
 
 function GB:UpdateGuildButton()
-    if not self.db or not self.db.notification then 
+    if not self.db or not self.db.notification then
         return
     end
 

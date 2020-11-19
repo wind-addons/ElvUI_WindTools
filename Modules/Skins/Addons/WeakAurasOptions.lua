@@ -7,6 +7,7 @@ local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
+local strlower = strlower
 local tinsert = tinsert
 local type = type
 local unpack = unpack
@@ -19,8 +20,11 @@ local expandButtons = {}
 
 local function RemoveBorder(frame)
     for _, region in pairs {frame:GetRegions()} do
-        if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
-            region:Kill()
+        if region:GetObjectType() == "Texture" then
+            local tex = region:GetTexture()
+            if tex and strfind(strlower(tex), "quickslot2") then
+                region:Kill()
+            end
         end
     end
 end

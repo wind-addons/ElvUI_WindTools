@@ -29,25 +29,29 @@ W.Changelog[211] = {
             "[超级追踪] 添加了自定义距离文字的功能.",
             "[超级追踪] 添加了解除追踪距离限制的功能.",
             "[美化皮肤] 添加了公会邀请窗口的美化.",
-            "[美化皮肤] 添加了队伍等级同步窗口的美化."
+            "[美化皮肤] 添加了队伍等级同步窗口的美化.",
+            "[其他] 添加了获得成就自动截图功能."
         },
         ["zhTW"] = {
             "[超級追蹤] 新增了自訂距離文字的功能.",
             "[超級追蹤] 新增了解除追蹤距離限制的功能.",
             "[美化皮膚] 新增了公會邀請窗口的美化.",
-            "[美化皮膚] 新增了隊伍等級同步窗口的美化."
+            "[美化皮膚] 新增了隊伍等級同步窗口的美化.",
+            "[其他] 新增了獲得成就後自動擷圖的功能."
         },
         ["enUS"] = {
             "[Super Tracker] Add a new feature that custom the distance text.",
             "[Super Tracker] Add a new feature that removes the limitation of track distance.",
             "[Skins] Add new skin for guild invite dialog.",
-            "[Skins] Add new skin for party level sync dialog."
+            "[Skins] Add new skin for party level sync dialog.",
+            "[Misc] Add new feature that auto screen shot after you earned an achievement."
         },
         ["koKR"] = {
             "[슈퍼 트래커] 거리 문자를 설정하는 기능을 추가하였습니다.",
             "[슈퍼 트래커] 표시 거리 제한을 해제하는 기능을 추가하였습니다.",
             "[스킨] 길드 초대 대화 상자에 새로운 스킨을 추가하였습니다.",
-            "[스킨] 파티 레벨 동기화 대화 상자에 새로운 스킨을 추가하였습니다."
+            "[스킨] 파티 레벨 동기화 대화 상자에 새로운 스킨을 추가하였습니다.",
+            "[Misc] Add new feature that auto screen shot after you earned an achievement."
         }
     },
     IMPROVEMENT = {

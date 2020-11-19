@@ -158,15 +158,50 @@ local function Skin_WeakAuras(f, fType)
     end
 end
 
+local function RemoveBorder(frame)
+    for _, region in pairs {frame:GetRegions()} do
+        if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
+            region:Kill()
+        end
+    end
+end
+
+local function ReskinRegionConfig()
+    if not _G.WeakAuras or not _G.WeakAuras.RegisterRegionOptions then
+        return
+    end
+
+    local oldFunction = _G.WeakAuras.RegisterRegionOptions
+
+    _G.WeakAuras.RegisterRegionOptions = function(name, createFunction, icon, displayName, createThumbnail, ...)
+        if type(icon) == "function" then
+            local OldIcon = icon
+            icon = function()
+                local f = OldIcon()
+                RemoveBorder(f)
+                return f
+            end
+        end
+
+        if type(createThumbnail) == "function" then
+            local OldCreateThumbnail = createThumbnail
+            createThumbnail = function()
+                local f = OldCreateThumbnail()
+                RemoveBorder(f)
+                return f
+            end
+        end
+
+        oldFunction(name, createFunction, icon, displayName, createThumbnail, ...)
+    end
+end
+
 function S:WeakAuras()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAuras then
         return
     end
 
-    -- Handle the options region type registration
-    if _G.WeakAuras and _G.WeakAuras.RegisterRegionOptions then
-        self:RawHook(_G.WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
-    end
+    ReskinRegionConfig()
 
     local regionTypes = _G.WeakAuras.regionTypes
     local Create_Icon, Modify_Icon = regionTypes.icon.create, regionTypes.icon.modify

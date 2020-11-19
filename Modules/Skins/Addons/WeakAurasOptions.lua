@@ -17,36 +17,6 @@ local IsAddOnLoaded = IsAddOnLoaded
 local buttons = {}
 local expandButtons = {}
 
-local function RemoveBorder(frame)
-    for _, region in pairs {frame:GetRegions()} do
-        if region:GetObjectType() == "Texture" and region:GetTexture() == "Interface\\BUTTONS\\UI-Quickslot2" then
-            region:Kill()
-        end
-    end
-end
-
-function S:WeakAuras_RegisterRegionOptions(name, createFunction, icon, displayName, createThumbnail, ...)
-    if type(icon) == "function" then
-        local OldIcon = icon
-        icon = function()
-            local f = OldIcon()
-            RemoveBorder(f)
-            return f
-        end
-    end
-
-    if type(createThumbnail) == "function" then
-        local OldCreateThumbnail = createThumbnail
-        createThumbnail = function()
-            local f = OldCreateThumbnail()
-            RemoveBorder(f)
-            return f
-        end
-    end
-
-    self.hooks[_G.WeakAuras]["RegisterRegionOptions"](name, createFunction, icon, displayName, createThumbnail, ...)
-end
-
 local function ReskinNormalButton(button, next)
     if button.Left and button.Middle and button.Right and button.Text then
         ES:HandleButton(button)
@@ -384,7 +354,6 @@ function S:WeakAurasOptions()
     end
 
     self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
-    -- self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
 end
 
 S:AddCallbackForAddon("WeakAurasOptions")

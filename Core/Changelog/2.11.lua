@@ -51,7 +51,7 @@ W.Changelog[211] = {
             "[슈퍼 트래커] 표시 거리 제한을 해제하는 기능을 추가하였습니다.",
             "[스킨] 길드 초대 대화 상자에 새로운 스킨을 추가하였습니다.",
             "[스킨] 파티 레벨 동기화 대화 상자에 새로운 스킨을 추가하였습니다.",
-            "[Misc] Add new feature that auto screen shot after you earned an achievement."
+            "[기타] 업적 달성 시 자동으로 스크린샷을 촬영하는 기능을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -93,7 +93,7 @@ W.Changelog[211] = {
             "[퀘스트 추적기] 옵션의 일부 버그를 수정하였습니다.",
             "[게임 바] 이제 전투 중에도 친구 버튼을 사용할 수 있습니다.",
             "[친구 목록] 게임 아이콘이 리메이크 되었으며 COD CW(Call of Duty: Black Ops Cold War) 및 WoW 어둠땅 버전 아이콘이 추가되었습니다.",
-            "[Inspect] Align equipment name."
+            "[살펴보기] 장비 이름을 정렬하였습니다."
         }
     }
 }

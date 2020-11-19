@@ -48,7 +48,7 @@ local GameIcons = {
     [BNET_CLIENT_SC] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC), Modern = MediaPath .. "GameIcons\\SC"},
     [BNET_CLIENT_SC2] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC2), Modern = MediaPath .. "GameIcons\\SC2"},
     [BNET_CLIENT_APP] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\App"},
-    ["BSAp"] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\MApp"},
+    ["BSAp"] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\Mobile"},
     [BNET_CLIENT_HEROES] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_HEROES),
         Modern = MediaPath .. "GameIcons\\HotS"
@@ -60,7 +60,7 @@ local GameIcons = {
     [BNET_CLIENT_COD] = {Default = BNet_GetClientTexture(BNET_CLIENT_COD), Modern = MediaPath .. "GameIcons\\COD"},
     [BNET_CLIENT_COD_BOCW] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_BOCW),
-        Modern = MediaPath .. "GameIcons\\COD"
+        Modern = MediaPath .. "GameIcons\\COD_CW"
     },
     [BNET_CLIENT_COD_MW] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),

@@ -4,11 +4,13 @@ local ES = E:GetModule("Skins")
 
 local _G = _G
 
-local strsplit, strmatch = strsplit, strmatch
+local strmatch = strmatch
+local strsplit = strsplit
 local pairs = pairs
+
 local CreateFrame = CreateFrame
-local DeleteCursorItem = DeleteCursorItem
 local StaticPopupDialogs = _G.StaticPopupDialogs
+
 local STATICPOPUP_NUMDIALOGS = STATICPOPUP_NUMDIALOGS
 local DELETE_ITEM_CONFIRM_STRING = DELETE_ITEM_CONFIRM_STRING
 
@@ -48,7 +50,7 @@ function DI:AddKeySupport(dialog)
 		"OnKeyDown",
 		function(self, key)
 			if key == "DELETE" then
-				DeleteCursorItem()
+				dialog.button1:Enable()
 			end
 		end
 	)

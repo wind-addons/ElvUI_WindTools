@@ -19,9 +19,9 @@ W.Changelog[211] = {
             "[Delete] Due to the change of Blizzard API, after pressing Delete you also need to confirm by click."
         },
         ["koKR"] = {
-            "Support WoW build 9.0.2.",
+            "WoW 9.0.2 버전 지원",
             "[지도]-[월드맵]의 <지도 핀> 기능이 [지도]-[슈퍼 트래커]의 새로운 기능으로 변경되었습니다.",
-            "[Delete] Due to the change of Blizzard API, after pressing Delete you also need to confirm by click."
+            "[빠른 아이템 파괴] Blizzard API의 변경으로 인해 이제 Delete 키를 누른 후 클릭하여 확인해야 합니다."
         }
     },
     NEW = {
@@ -84,8 +84,8 @@ W.Changelog[211] = {
             "[스킨] 퀘스트 아이템 스킨 수정.",
             "[게임 바] 읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다.",
             "[퀘스트 추적기] 옵션의 일부 버그를 수정하였습니다.",
-            "[Game Bar] Friend button now can be used in combat.",
-            "[Friend List] Renew the game icons, add new icons for COD CW and WoW Shadowlands."
+            "[게임 바] 이제 전투 중에도 친구 버튼을 사용할 수 있습니다.",
+            "[친구 목록] 게임 아이콘이 리메이크 되었으며 COD CW(Call of Duty: Black Ops Cold War) 및 WoW 어둠땅 버전 아이콘이 추가되었습니다."
         }
     }
 }

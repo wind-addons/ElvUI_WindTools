@@ -589,6 +589,28 @@ local function Plugin_Stats(unit, parent, itemLevel, maxLevel)
     ShowInspectItemStatsFrame(frame, unit)
 end
 
+local function RefreshAlign(frame)
+    local maxWidth = 0
+    for i in ipairs(slots) do
+        local itemframe = frame["item" .. i]
+        if itemframe then
+            local width = itemframe.levelString:GetStringWidth()
+            if width > maxWidth then
+                maxWidth = width
+            end
+        end
+    end
+
+    if maxWidth > 0 then
+        for i in ipairs(slots) do
+            local itemframe = frame["item" .. i]
+            if itemframe then
+                itemframe.levelString:Width(maxWidth + 1)
+            end
+        end
+    end
+end
+
 local function GetInspectItemListFrame(parent)
     if not IL.db or not IL.db.enable then
         return
@@ -754,25 +776,7 @@ local function GetInspectItemListFrame(parent)
         end
     end
 
-    local maxWidth = 0
-    for i in ipairs(slots) do
-        local itemframe = parent.inspectFrame["item" .. i]
-        if itemframe then
-            local width = itemframe.levelString:GetStringWidth()
-            if width > maxWidth then
-                maxWidth = width
-            end
-        end
-    end
-
-    if maxWidth > 0 then
-        for i in ipairs(slots) do
-            local itemframe = parent.inspectFrame["item" .. i]
-            if itemframe then
-                itemframe.levelString:Width(maxWidth + 1)
-            end
-        end
-    end
+    E:Delay(0.2, RefreshAlign, parent.inspectFrame)
 
     return parent.inspectFrame
 end

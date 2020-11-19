@@ -29,8 +29,6 @@ jobs:
 
       - name: 创建包
         uses: BigWigsMods/packager@master
-        with:
-          args: -g 9.0.1 # 前夕后删除
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}

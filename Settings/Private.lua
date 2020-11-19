@@ -19,7 +19,8 @@ V.maps = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,
 			style = "OUTLINE",
-			color = {r = 1, g = 1, b = 1}
+			color = {r = 1, g = 1, b = 1},
+			onlyNumber = false
 		}
 	},
 	worldMap = {

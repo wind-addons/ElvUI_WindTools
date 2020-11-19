@@ -51,21 +51,21 @@ options.superTracker = {
                     type = "toggle",
                     name = L["Auto Track Waypoint"],
                     desc = L["Auto track the waypoint after setting."],
-                    width = 1.5,
+                    width = 1.5
                 },
                 rightClickToClear = {
                     order = 2,
                     type = "toggle",
                     name = L["Right Click To Clear"],
                     desc = L["Right click the waypoint to clear it."],
-                    width = 1.5,
+                    width = 1.5
                 },
                 noLimit = {
                     order = 3,
                     type = "toggle",
                     name = L["No Distance Limitation"],
                     desc = L["Force to track the target even if it over 1000 yds."],
-                    width = 1.5,
+                    width = 1.5
                 }
             }
         },
@@ -123,6 +123,12 @@ options.superTracker = {
                         db.r, db.g, db.b, db.a = r, g, b, nil
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
+                },
+                onlyNumber = {
+                    order = 5,
+                    type = "toggle",
+                    name = L["Only Number"],
+                    desc = L["Remove the unit from distance text."]
                 }
             }
         }

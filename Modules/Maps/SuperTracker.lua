@@ -3,6 +3,8 @@ local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 
+local IsAddOnLoaded = IsAddOnLoaded
+
 local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
 local C_Navigation_GetDistance = C_Navigation.GetDistance

@@ -754,6 +754,26 @@ local function GetInspectItemListFrame(parent)
         end
     end
 
+    local maxWidth = 0
+    for i in ipairs(slots) do
+        local itemframe = parent.inspectFrame["item" .. i]
+        if itemframe then
+            local width = itemframe.levelString:GetStringWidth()
+            if width > maxWidth then
+                maxWidth = width
+            end
+        end
+    end
+
+    if maxWidth > 0 then
+        for i in ipairs(slots) do
+            local itemframe = parent.inspectFrame["item" .. i]
+            if itemframe then
+                itemframe.levelString:Width(maxWidth + 1)
+            end
+        end
+    end
+
     return parent.inspectFrame
 end
 

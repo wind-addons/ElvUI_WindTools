@@ -62,7 +62,8 @@ W.Changelog[211] = {
             "[游戏条] 公会按钮现在可以显示未读提示了.",
             "[任务列表] 修复了部分设定报错.",
             "[游戏条] 好友按钮现在可以在战斗中打开.",
-            "[好友列表] 重新制作了游戏图标, 添加 COD CW 及 WoW 暗影国度版本图标."
+            "[好友列表] 重新制作了游戏图标, 添加 COD CW 及 WoW 暗影国度版本图标.",
+            "[装备观察] 装备名对齐."
         },
         ["zhTW"] = {
             "[交接] 優化了一些邏輯. 感谢 siweia @ NDui.",
@@ -71,7 +72,8 @@ W.Changelog[211] = {
             "[遊戲條] 公會按鍵現在可以顯示未讀提示了.",
             "[任務列表] 修復了部分設定報錯.",
             "[遊戲條] 好友按鍵現在p可以在戰鬥中開啟介面.",
-            "[好友列表] 重新製作了遊戲圖示, 添加 COD CW 及 WoW 暗影之境版本圖示."
+            "[好友列表] 重新製作了遊戲圖示, 添加 COD CW 及 WoW 暗影之境版本圖示.",
+            "[裝備觀察] 裝備名對齊."
         },
         ["enUS"] = {
             "[Turn In] Optimize the logic of auto turn in. Thanks siweia @ NDui",
@@ -80,7 +82,8 @@ W.Changelog[211] = {
             "[Game Bar] Add an indicator of unread messages to Guild button.",
             "[Objective Tracker] Fix some bugs in options.",
             "[Game Bar] Friend button now can be used in combat.",
-            "[Friend List] Renew the game icons, add new icons for COD CW and WoW Shadowlands."
+            "[Friend List] Renew the game icons, add new icons for COD CW and WoW Shadowlands.",
+            "[Inspect] Align equipment name."
         },
         ["koKR"] = {
             "[자동 수락] 자동 수락 로직을 최적화합니다. Thanks siweia @ NDui",
@@ -89,7 +92,8 @@ W.Changelog[211] = {
             "[게임 바] 읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다.",
             "[퀘스트 추적기] 옵션의 일부 버그를 수정하였습니다.",
             "[게임 바] 이제 전투 중에도 친구 버튼을 사용할 수 있습니다.",
-            "[친구 목록] 게임 아이콘이 리메이크 되었으며 COD CW(Call of Duty: Black Ops Cold War) 및 WoW 어둠땅 버전 아이콘이 추가되었습니다."
+            "[친구 목록] 게임 아이콘이 리메이크 되었으며 COD CW(Call of Duty: Black Ops Cold War) 및 WoW 어둠땅 버전 아이콘이 추가되었습니다.",
+            "[Inspect] Align equipment name."
         }
     }
 }

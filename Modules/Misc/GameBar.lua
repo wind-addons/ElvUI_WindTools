@@ -344,7 +344,7 @@ local ButtonTypes = {
         eventHandler = function(button, event, message)
             button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
         end,
-        notification = true,
+        notification = true
     },
     HOME = {
         name = L["Home"],
@@ -1318,7 +1318,7 @@ function GB:ProfileUpdate()
 end
 
 function GB:UpdateGuildButton()
-    if not self.db or not self.db.notification then 
+    if not self.db or not self.db.notification then
         return
     end
 

@@ -8,7 +8,7 @@ latest_version = 0
 for _, _, files in os.walk("Core/Changelog", topdown=False):
     for file in files:
         version = re.sub(r"(\.lua)|(^.*\.xml)", "", file)
-        if version:
+        if version and not version == "_template":
             version = float(version)
             if version > latest_version:
                 latest_version = version

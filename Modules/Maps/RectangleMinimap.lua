@@ -3,6 +3,7 @@ local RM = W:NewModule("RectangleMinimap", "AceEvent-3.0", "AceHook-3.0")
 local MM = E:GetModule("Minimap")
 
 local _G = _G
+local ceil = ceil
 local floor = floor
 local format = format
 local pairs = pairs
@@ -29,16 +30,17 @@ function RM:ChangeShape()
     local heightPct = fileID / 128
     local newHeight = E.MinimapSize * heightPct
     local diff = E.MinimapSize - newHeight
+    local halfDiff = ceil(diff / 2)
 
     Minimap:SetClampedToScreen(true)
     Minimap:SetMaskTexture(texturePath)
     Minimap:Size(E.MinimapSize, E.MinimapSize)
-    Minimap:SetHitRectInsets(0, 0, (diff / 2) * E.mult, (diff / 2) * E.mult)
+    Minimap:SetHitRectInsets(0, 0, halfDiff * E.mult, halfDiff * E.mult)
     Minimap:SetClampRectInsets(0, 0, 0, 0)
-    _G.MinimapMover:SetClampRectInsets(0, 0, (diff / 2) * E.mult, -(diff / 2) * E.mult)
+    _G.MinimapMover:SetClampRectInsets(0, 0, halfDiff * E.mult, -halfDiff * E.mult)
     Minimap:ClearAllPoints()
-    Minimap:Point("TOPLEFT", MMHolder, "TOPLEFT", E.Border, -E.Border + diff / 2)
-    Minimap.backdrop:SetOutside(Minimap, 1, -(diff / 2) + 1)
+    Minimap:Point("TOPLEFT", MMHolder, "TOPLEFT", E.Border, -E.Border + halfDiff)
+    Minimap.backdrop:SetOutside(Minimap, 1, -halfDiff + 1)
     MinimapBackdrop:SetOutside(Minimap.backdrop)
 
     if Minimap.location then

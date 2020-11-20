@@ -12,3 +12,4 @@ ignore:
   - README_zhTW.md
   - Title.png
   - generate_changelog.py
+  - Core/Changelog/template.lua

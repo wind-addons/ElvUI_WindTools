@@ -15,9 +15,17 @@ W.Changelog[212] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[游戏条] 好友按钮回滚到上个版本."
+        },
+        ["zhTW"] = {
+            "[遊戲條] 好友按鍵回滾到上個版本."
+        },
+        ["enUS"] = {
+            "[Game Bar] Roll back the change of Friends button."
+        },
+        ["koKR"] = {
+            "[Game Bar] Roll back the change of Friends button."
+        }
     }
 }

@@ -25,7 +25,7 @@ W.Changelog[212] = {
             "[Game Bar] Roll back the change of Friends button."
         },
         ["koKR"] = {
-            "[Game Bar] Roll back the change of Friends button."
+            "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다."
         }
     }
 }

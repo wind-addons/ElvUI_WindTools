@@ -156,6 +156,9 @@
 - 29ga @ www.iconfont.cn
     - Media/Icons/Chat.tga
 
+- Sukiki情绪化 @ www.iconfont.cn
+    - Media/Icons/Rest.tga
+
 - 王乐城愚人云端 @ www.iconfont.cn
     - Media/Texture/WindToolsSmall.tga
 

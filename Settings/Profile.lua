@@ -447,7 +447,7 @@ P.item = {
         playerOnInspect = true,
         levelText = {
             name = F.GetCompatibleFont("Montserrat"),
-            size = 17,
+            size = 13,
             style = "OUTLINE"
         },
         equipText = {

@@ -626,7 +626,8 @@ P.social = {
         useClassColor = true,
         textures = {
             game = "Modern",
-            status = "Square"
+            status = "Square",
+            factionIcon = false,
         },
         areaColor = {
             r = 1,

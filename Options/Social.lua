@@ -1146,7 +1146,13 @@ options.friendList = {
                         D3 = L["Diablo 3"],
                         Square = L["Square"]
                     }
-                }
+                },
+                factionIcon = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Faction Icon"],
+                    desc = L["Use faction icon instead of WoW icon."],
+                },
             }
         },
         name = {

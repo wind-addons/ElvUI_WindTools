@@ -256,7 +256,8 @@ function FL:UpdateFriendButton(button)
         end
 
         -- 游戏图标
-        local iconTex = GameIcons[faction or game][self.db.textures.game]
+        local iconGroup = self.db.textures.factionIcon and faction or game
+        local iconTex = GameIcons[iconGroup][self.db.textures.game]
         button.gameIcon:SetTexture(iconTex)
         button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
 

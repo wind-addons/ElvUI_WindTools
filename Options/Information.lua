@@ -390,7 +390,8 @@ do -- 插件代码
         },
         [L["Misc"]] = {
             "Warbaby (爱不易)",
-            "zaCade (FixTransmogOutfits)"
+            "zaCade (FixTransmogOutfits)",
+            "oyg123 @ NGA.cn"
         },
         [L["Paragon Reputation"]] = {
             "Fail (Paragon Reputation)"

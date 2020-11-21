@@ -60,6 +60,7 @@
 - Misc
     - Warbaby (爱不易)
     - zaCade (FixTransmogOutfits)
+    - oyg123 @ NGA.cn
 
 - Paragon Reputation
     - Fail (Paragon Reputation)

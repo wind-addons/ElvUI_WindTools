@@ -421,6 +421,13 @@ function W:CheckCompatibility()
         "db.mui.maps.superTracker.enable"
     )
 
+    self:CheckCompatibilityMerathilisUI(
+        L["Instance Difficulty"],
+        L["Raid Difficulty"],
+        "private.WT.maps.instanceDifficulty.enable",
+        "db.mui.maps.minimap.difficulty"
+    )
+
     -- S&L
     self:CheckCompatibilityShadowAndLight(
         L["Move Frames"],

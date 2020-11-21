@@ -636,6 +636,7 @@ L["RIGHT"] = true
 L["RL"] = "RL"
 L["Raid"] = "Cadres de raid"
 L["Raid Buttons"] = true
+L["Raid Difficulty"] = true
 L["Raid Finder"] = true
 L["Raid Info"] = true
 L["Raid Markers"] = true

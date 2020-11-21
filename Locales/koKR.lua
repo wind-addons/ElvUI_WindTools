@@ -636,6 +636,7 @@ L["RIGHT"] = "오른쪽"
 L["RL"] = "공대장"
 L["Raid"] = "공격대"
 L["Raid Buttons"] = "공격대 도구 버튼"
+L["Raid Difficulty"] = true
 L["Raid Finder"] = "공격대 찾기"
 L["Raid Info"] = "공격대 정보"
 L["Raid Markers"] = "공격대 징표"

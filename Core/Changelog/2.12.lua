@@ -3,10 +3,22 @@ local W = unpack(select(2, ...))
 W.Changelog[212] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "Tip: If you want to level up with Turn In, don't forget to uncheck the auto select reward!",
+            "Fang2hou UI have been updated! You can find import button in [Information]-[Reset]"
+        },
+        ["zhTW"] = {
+            "提醒: 如果你打算使用自动交接来升级, 别忘了取消勾选自动选择奖励!",
+            "Fang2hou UI 更新了! 你可以在 [信息]-[重置] 界面中找到导入按钮."
+        },
+        ["enUS"] = {
+            "提醒: 如果你打算使用自動交接來升級, 別忘記取消勾選自動選擇獎勵!",
+            "Fang2hou UI 更新了! 你可以在 [信息]-[重置] 介面中找到導入按鍵."
+        },
+        ["koKR"] = {
+            "Tip: If you want to level up with Turn In, don't forget to uncheck the auto select reward!",
+            "Fang2hou UI have been updated! You can find import button in [Information]-[Reset]"
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -38,6 +50,7 @@ W.Changelog[212] = {
         ["zhCN"] = {
             "[矩形小地图] 修复了有时上方会有一条横线的问题.",
             "[额外物品条] 就算条中没有按钮, 现在也会进行尺寸更新了.",
+            "[额外物品条] 物品 ID 更新至暗影国度版本.",
             "[游戏条] 好友按钮回滚到上个版本.",
             "[美化皮肤] 添加遗漏的 ElvUI 聊天面板选项.",
             "[聊天链接] 修复了切换配置可能导致的错误.",
@@ -47,6 +60,7 @@ W.Changelog[212] = {
         ["zhTW"] = {
             "[矩形小地圖] 修復了有時上方會有一條橫線的問題.",
             "[額外物品條] 就算條中沒有按鍵, 現在也會進行尺寸更新了.",
+            "[額外物品條] 物品 ID 更新至暗影之境版本.",
             "[遊戲條] 好友按鍵回滾到上個版本.",
             "[美化皮膚] 添加遺漏的 ElvUI 對話框架設置.",
             "[聊天鏈接] 修復了切換配置可能導致的錯誤.",
@@ -56,6 +70,7 @@ W.Changelog[212] = {
         ["enUS"] = {
             "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
             "[Extra Item Bar] Resize the bar even if there is no button on it.",
+            "[Extra Item Bar] Update item ID to Shadowlands patch.",
             "[Game Bar] Roll back the change of Friends button.",
             "[Skins] Add the missing option of ElvUI Chat Panels.",
             "[Chat Link] Fix the error occurred in switching profile.",
@@ -66,6 +81,7 @@ W.Changelog[212] = {
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",
+            "[Extra Item Bar] Update item ID to Shadowlands patch.",
             "[스킨] 누락된 ElvUI 채팅 패널 옵션을 추가했습니다.",
             "[채팅 링크] 프로필 변경으로 인해 발생할 수 있는 오류를 수정했습니다.",
             "[친구 목록] Battle.net 친구 정보 획득 시 발생할 수 있는 오류를 수정했습니다.",

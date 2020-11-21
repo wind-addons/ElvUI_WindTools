@@ -1136,6 +1136,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                instanceDifficulty = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Instance Difficulty"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Super Tracker"],
+                            nil,
+                            function()
+                                E.private.WT.maps.instanceDifficulty = V.maps.instanceDifficulty
+                            end
+                        )
+                    end
                 }
             }
         },

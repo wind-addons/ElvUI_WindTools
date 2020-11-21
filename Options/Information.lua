@@ -77,7 +77,7 @@ options.help = {
                         "%s: %s | %s",
                         "fang2hou",
                         E.InfoColor .. "houshuu" .. "|r",
-                        F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
+                        F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. " (TW)", "MONK")
                     )
                 },
                 ["2"] = {
@@ -88,7 +88,11 @@ options.help = {
                 ["3"] = {
                     order = 3,
                     type = "description",
-                    name = "mcc1"
+                    name = format(
+                        "%s: %s",
+                        "mcc1",
+                        F.CreateClassColorString("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
+                    )
                 },
                 ["4"] = {
                     order = 4,
@@ -117,13 +121,13 @@ options.help = {
                         "%s: %s | %s",
                         "asdf12303116",
                         E.InfoColor .. "Chen" .. "|r",
-                        F.CreateClassColorString("一发径直入魂 @ " .. L["Burning Blade"] .. "(CN)", "HUNTER")
+                        F.CreateClassColorString("一发径直入魂 @ " .. L["Burning Blade"] .. " (CN)", "HUNTER")
                     )
                 },
                 ["9"] = {
                     order = 9,
                     type = "description",
-                    name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. "(CN)")
+                    name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. " (CN)")
                 }
             }
         },

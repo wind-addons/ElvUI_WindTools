@@ -460,6 +460,7 @@ L["Left Click: Toggle"] = true
 L["Left Panel"] = true
 L["Let your teammates know the progress of quests."] = true
 L["Level"] = true
+L["Lights Hope"] = true
 L["Limit"] = true
 L["Line"] = true
 L["List"] = true

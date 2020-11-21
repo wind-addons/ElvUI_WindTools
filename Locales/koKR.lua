@@ -460,6 +460,7 @@ L["Left Click: Toggle"] = "왼쪽 클릭: 토글"
 L["Left Panel"] = "왼쪽 패널"
 L["Let your teammates know the progress of quests."] = "팀원에게 퀘스트 진행 상황을 알립니다."
 L["Level"] = "레벨"
+L["Lights Hope"] = true
 L["Limit"] = "제한"
 L["Line"] = "라인"
 L["List"] = "목록"

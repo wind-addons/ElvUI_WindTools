@@ -504,7 +504,7 @@ function EB:CreateBar(id)
     bar.id = id
     bar:ClearAllPoints()
     bar:SetParent(anchor)
-    bar:SetPoint("CENTER", anchor, "CENTER", 0, 0)
+    bar:Point("CENTER", anchor, "CENTER", 0, 0)
     bar:Size(200, 40)
     bar:CreateBackdrop("Transparent")
     bar:SetFrameStrata("LOW")
@@ -648,7 +648,26 @@ function EB:UpdateBar(id)
         end
     end
 
-    -- 隐藏其余按钮
+    -- Resize bar
+    local numRows = ceil((buttonID - 1) / barDB.buttonsPerRow)
+    local numCols = buttonID > barDB.buttonsPerRow and barDB.buttonsPerRow or (buttonID - 1)
+    local newBarWidth = 2 * barDB.backdropSpacing + numCols * barDB.buttonWidth + (numCols - 1) * barDB.spacing
+    local newBarHeight = 2 * barDB.backdropSpacing + numRows * barDB.buttonHeight + (numRows - 1) * barDB.spacing
+    bar:Size(newBarWidth, newBarHeight)
+
+    -- Update anchor size
+    local numMoverRows = ceil(barDB.numButtons / barDB.buttonsPerRow)
+    local numMoverCols = barDB.buttonsPerRow
+    local newMoverWidth =
+        2 * barDB.backdropSpacing + numMoverCols * barDB.buttonWidth + (numMoverCols - 1) * barDB.spacing
+    local newMoverHeight =
+        2 * barDB.backdropSpacing + numMoverRows * barDB.buttonHeight + (numMoverRows - 1) * barDB.spacing
+    bar:GetParent():Size(newMoverWidth, newMoverHeight)
+
+    bar:ClearAllPoints()
+    bar:Point(barDB.anchor)
+
+    -- Hide buttons not in use
     if buttonID == 1 then
         if bar.register then
             UnregisterStateDriver(bar, "visibility")
@@ -663,25 +682,6 @@ function EB:UpdateBar(id)
             bar.buttons[hideButtonID]:Hide()
         end
     end
-
-    -- 计算新的条大小
-    local numRows = ceil((buttonID - 1) / barDB.buttonsPerRow)
-    local numCols = buttonID > barDB.buttonsPerRow and barDB.buttonsPerRow or (buttonID - 1)
-    local newBarWidth = 2 * barDB.backdropSpacing + numCols * barDB.buttonWidth + (numCols - 1) * barDB.spacing
-    local newBarHeight = 2 * barDB.backdropSpacing + numRows * barDB.buttonHeight + (numRows - 1) * barDB.spacing
-    bar:Size(newBarWidth, newBarHeight)
-
-    -- 移动框
-    local numMoverRows = ceil(barDB.numButtons / barDB.buttonsPerRow)
-    local numMoverCols = barDB.buttonsPerRow
-    local newMoverWidth =
-        2 * barDB.backdropSpacing + numMoverCols * barDB.buttonWidth + (numMoverCols - 1) * barDB.spacing
-    local newMoverHeight =
-        2 * barDB.backdropSpacing + numMoverRows * barDB.buttonHeight + (numMoverRows - 1) * barDB.spacing
-    bar:GetParent():Size(newMoverWidth, newMoverHeight)
-
-    bar:ClearAllPoints()
-    bar:Point(barDB.anchor)
 
     for i = 1, buttonID - 1 do
         -- 重新定位图标
@@ -736,7 +736,7 @@ function EB:UpdateBar(id)
     end
     bar:Show()
 
-    -- 切换阴影
+    -- Toggle shadow
     if barDB.backdrop then
         bar.backdrop:Show()
         if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then

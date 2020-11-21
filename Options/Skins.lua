@@ -753,6 +753,11 @@ options.elvui = {
             type = "toggle",
             name = L["Chat Data Panels"]
         },
+        chatPanels = {
+            order = 10,
+            type = "toggle",
+            name = L["Chat Panels"]
+        },
         classBars = {
             order = 10,
             type = "toggle",

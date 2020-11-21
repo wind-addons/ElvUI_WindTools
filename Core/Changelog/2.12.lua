@@ -28,10 +28,10 @@ W.Changelog[212] = {
             "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
         },
         ["koKR"] = {
-            "[Tags] Add [smart-power], e.g. rogue is current power (120), mage is percentage(100%).",
-            "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
-            "[Misc] Add new feature that showing the move speed in character panel.",
-            "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
+            "[태그] 신규 태그 [smart-power]가 자원 카테고리에 추가되었습니다. 적용 예 : 도적은 (120), 마법사는 (100%)",
+            "[태그] 신규 태그 [smart-power-nosign]이 자원 카테고리에 추가되었습니다. 적용 예 : 도적은 (120), 마법사는 (100)",
+            "[기타] 캐릭터 창에 이동 속도를 보여주는 새로운 기능을 추가합니다.",
+            "신규 모듈 [지도]-[인스턴스 난이도]가 추가되었습니다. 미니맵의 인스턴스 난이도를 문자 형식으로 변경합니다. Thanks Merathilis."
         }
     },
     IMPROVEMENT = {
@@ -63,13 +63,13 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
-            "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
-            "[Extra Item Bar] Resize the bar even if there is no button on it.",
+            "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
+            "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",
-            "[Skins] Add the missing option of ElvUI Chat Panels.",
-            "[Chat Link] Fix the error occurred in switching profile.",
-            "[Friend List] Fix the bug in fetching information of Battle.net friends",
-            "[Friend List] Add an option for faction icons, and set WoW icons as default."
+            "[스킨] 누락된 ElvUI 채팅 패널 옵션을 추가했습니다.",
+            "[채팅 링크] 프로필 변경으로 인해 발생할 수 있는 오류를 수정했습니다.",
+            "[친구 목록] Battle.net 친구 정보 획득 시 발생할 수 있는 오류를 수정했습니다.",
+            "[친구 목록] 진영 아이콘 옵션을 추가하고 WoW 아이콘을 기본값으로 설정합니다."
         }
     }
 }

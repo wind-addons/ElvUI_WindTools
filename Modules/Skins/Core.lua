@@ -54,7 +54,7 @@ end
     @param {number} [b=阴影全局B值] B 通道数值（0~1）
 ]]
 function S:CreateShadow(frame, size, r, g, b, force)
-    if not E.private.WT.skins.shadow and not force then
+    if not (E.private.WT.skins and E.private.WT.skins.shadow) and not force then
         return
     end
 
@@ -98,9 +98,7 @@ function S:CreateBackdropShadow(frame, defaultTemplate)
         if not defaultTemplate then
             frame.backdrop:SetTemplate("Transparent")
         end
-        if E.private.WT.skins.shadow then
-            self:CreateShadow(frame.backdrop)
-        end
+        self:CreateShadow(frame.backdrop)
         frame.windStyle = true
     elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
         self:SecureHook(
@@ -114,11 +112,7 @@ function S:CreateBackdropShadow(frame, defaultTemplate)
                     if not defaultTemplate then
                         frame.backdrop:SetTemplate("Transparent")
                     end
-                    if E.private.WT.skins.shadow then
-                        if E.private.WT.skins.shadow then
-                            self:CreateShadow(frame.backdrop)
-                        end
-                    end
+                    self:CreateShadow(frame.backdrop)
                     frame.windStyle = true
                 end
             end

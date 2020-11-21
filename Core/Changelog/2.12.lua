@@ -11,19 +11,23 @@ W.Changelog[212] = {
     NEW = {
         ["zhCN"] = {
             "[标签] 添加了 [smart-power], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100%).",
-            "[标签] 添加了 [smart-power-nosign], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100)."
+            "[标签] 添加了 [smart-power-nosign], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100).",
+            "[其他] 添加了在人物面板显示移动速度的功能."
         },
         ["zhTW"] = {
             "[標籤] 新增了 [smart-power], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100%).",
-            "[標籤] 新增了 [smart-power-nosign], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100)."
+            "[標籤] 新增了 [smart-power-nosign], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100).",
+            "[其他] 新增了在人物面板顯示移動速度的功能."
         },
         ["enUS"] = {
             "[Tags] Add [smart-power], e.g. rogue is current power (120), mage is percentage(100%).",
-            "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100)."
+            "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
+            "[Misc] Add new feature that showing the move speed in character panel."
         },
         ["koKR"] = {
             "[Tags] Add [smart-power], e.g. rogue is current power (120), mage is percentage(100%).",
-            "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100)."
+            "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
+            "[Misc] Add new feature that showing the move speed in character panel."
         }
     },
     IMPROVEMENT = {

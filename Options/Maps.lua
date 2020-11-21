@@ -653,7 +653,7 @@ options.instanceDifficulty = {
         hideBlizzard = {
             order = 3,
             type = "toggle",
-            name = L["Hide Blizzard"],
+            name = L["Hide Blizzard Indicator"],
         },
         font = {
             order = 4,

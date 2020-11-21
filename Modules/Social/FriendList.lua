@@ -175,38 +175,40 @@ function FL:UpdateFriendButton(button)
     elseif button.buttonType == FRIENDS_BUTTON_TYPE_BNET and BNConnected() then
         -- 战网好友
         local friendAccountInfo = C_BattleNet_GetFriendAccountInfo(button.id)
-        realID = friendAccountInfo.accountName
+        if friendAccountInfo then
+            realID = friendAccountInfo.accountName
 
-        local gameAccountInfo = friendAccountInfo.gameAccountInfo
-        game = gameAccountInfo.clientProgram
+            local gameAccountInfo = friendAccountInfo.gameAccountInfo
+            game = gameAccountInfo.clientProgram
 
-        if gameAccountInfo.isOnline then
-            if friendAccountInfo.isAFK or gameAccountInfo.isGameAFK then
-                status = "AFK"
-            elseif friendAccountInfo.isDND or gameAccountInfo.isGameBusy then
-                status = "DND"
+            if gameAccountInfo.isOnline then
+                if friendAccountInfo.isAFK or gameAccountInfo.isGameAFK then
+                    status = "AFK"
+                elseif friendAccountInfo.isDND or gameAccountInfo.isGameBusy then
+                    status = "DND"
+                else
+                    status = "Online"
+                end
             else
-                status = "Online"
+                status = "Offline"
             end
-        else
-            status = "Offline"
-        end
 
-        -- 如果是魔兽正式服/怀旧服，进一步获取角色信息
-        if game == BNET_CLIENT_WOW then
-            name = gameAccountInfo.characterName or ""
-            level = gameAccountInfo.characterLevel or 0
-            faction = gameAccountInfo.factionName or nil
-            class = gameAccountInfo.className or ""
-            area = gameAccountInfo.areaName or ""
+            -- 如果是魔兽正式服/怀旧服，进一步获取角色信息
+            if game == BNET_CLIENT_WOW then
+                name = gameAccountInfo.characterName or ""
+                level = gameAccountInfo.characterLevel or 0
+                faction = gameAccountInfo.factionName or nil
+                class = gameAccountInfo.className or ""
+                area = gameAccountInfo.areaName or ""
 
-            if gameAccountInfo.wowProjectID == 2 then
-                game = BNET_CLIENT_WOW .. "C" -- 标注怀旧服好友
-                local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
-                server = serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC
-                server = server .. "*"
-            else
-                server = gameAccountInfo.realmDisplayName or ""
+                if gameAccountInfo.wowProjectID == 2 then
+                    game = BNET_CLIENT_WOW .. "C" -- 标注怀旧服好友
+                    local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
+                    server = serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC
+                    server = server .. "*"
+                else
+                    server = gameAccountInfo.realmDisplayName or ""
+                end
             end
         end
     end

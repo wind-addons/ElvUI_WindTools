@@ -8,6 +8,8 @@ local select = select
 local strlen = strlen
 local strlower = strlower
 local strsub = strsub
+local tonumber = tonumber
+
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
@@ -98,6 +100,30 @@ function M:Tags()
 			else
 				return originalString
 			end
+		end
+	end
+
+	-- Smart power
+	E.oUF.Tags.Events["smart-power"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	E.oUF.Tags.Methods["smart-power"] = function(unit)
+		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
+		local power = tonumber(maxPower)
+		if power and power < 1000 then
+			return maxPower
+		else
+			return E.oUF.Tags.Methods["power:percent"](unit)
+		end
+	end
+
+	-- Smart power without %
+	E.oUF.Tags.Events["smart-power-nosign"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	E.oUF.Tags.Methods["smart-power-nosign"] = function(unit)
+		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
+		local power = tonumber(maxPower)
+		if power and power < 1000 then
+			return maxPower
+		else
+			return E.oUF.Tags.Methods["power:percent-nosign"](unit)
 		end
 	end
 end

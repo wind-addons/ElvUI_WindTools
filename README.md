@@ -40,6 +40,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 3. **Minimap Buttons**: Collect all the minimap buttons to a bar.  
 4. **World Map**: Remove the fog of war; scale the world map.
 5. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
+6. **Instance Difficulty**: Reskin the instance diffculty in text style.
 
 ## Quest
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.

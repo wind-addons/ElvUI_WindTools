@@ -101,6 +101,9 @@
 - Inpect
     - loudsoul (TinyInspect)
 
+- Instance Difficulty
+    - Merathilis (ElvUI MerathilisUI)
+
 # Medias
 - 迷时鸟 @ NGA.cn
     - Media/Texture/Illustration

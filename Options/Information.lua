@@ -432,6 +432,12 @@ do -- 插件代码
         },
         [L["Extra Items Bar"]] = {
             "cadcamzy (EUI)"
+        },
+        [L["Inpect"]] = {
+            "loudsoul (TinyInspect)"
+        },
+        [L["Instance Difficulty"]] = {
+            "Merathilis (ElvUI MerathilisUI)"
         }
     }
 

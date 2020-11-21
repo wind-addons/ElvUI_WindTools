@@ -2,6 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local ID = W:NewModule("InstanceDifficulty", "AceEvent-3.0")
 
 local _G = _G
+local format = format
+local pairs = pairs
+local select = select
+
+local CreateFrame = CreateFrame
+local GetInstanceInfo = GetInstanceInfo
+local IsInInstance = IsInInstance
+
 local C_ChallengeMode_GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
 
 function ID:UpdateFrame()

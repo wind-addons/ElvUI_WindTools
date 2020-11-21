@@ -109,7 +109,7 @@ function M:Tags()
 		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
 		local power = tonumber(maxPower)
 		if power and power < 1000 then
-			return maxPower
+			return E.oUF.Tags.Methods["power:current"](unit)
 		else
 			return E.oUF.Tags.Methods["power:percent"](unit)
 		end
@@ -121,7 +121,7 @@ function M:Tags()
 		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
 		local power = tonumber(maxPower)
 		if power and power < 1000 then
-			return maxPower
+			return E.oUF.Tags.Methods["power:current"](unit)
 		else
 			return E.oUF.Tags.Methods["power:percent-nosign"](unit)
 		end

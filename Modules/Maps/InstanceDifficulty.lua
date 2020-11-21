@@ -86,7 +86,7 @@ function ID:ConstructFrame()
     frame:Point("TOPLEFT", _G.MMHolder, "TOPLEFT", 10, -10)
 
     local text = frame:CreateFontString(nil, "OVERLAY")
-    text:FontTemplate()
+    F.SetFontWithDB(text, self.db.font)
     text:Point("CENTER")
     frame.text = text
 
@@ -108,6 +108,10 @@ function ID:ConstructFrame()
 end
 
 function ID:UpdateBlizzardDifficulty()
+    if not self or not self.db or not self.db.hideBlizzard then
+        return
+    end
+
     local frames = {
         "MiniMapInstanceDifficulty",
         "GuildInstanceDifficulty",
@@ -122,7 +126,7 @@ function ID:UpdateBlizzardDifficulty()
 end
 
 function ID:Initialize()
-    self.db = E.private.WT.maps.difficulty
+    self.db = E.private.WT.maps.instanceDifficulty
 
     if not self.db or not self.db.enable then
         return

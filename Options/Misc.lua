@@ -74,7 +74,7 @@ options.general = {
             type = "toggle",
             name = L["Auto Screenshot"],
             desc = L["Screenshot after you earned an achievement automatically."]
-        },
+        }
     }
 }
 
@@ -422,6 +422,14 @@ do
         noSign = {
             tag = "[power:percent-nosign]",
             text = L["The percentage of current power without percent sign"]
+        },
+        smart = {
+            tag = "[smart-power]",
+            text = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"]
+        },
+        smartNoSign = {
+            tag = "[smart-power-nosign]",
+            text = L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"]
         }
     }
 

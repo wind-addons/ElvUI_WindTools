@@ -54,6 +54,7 @@ V.misc = {
 	skipCutScene = false,
 	moveBlizzardFrames = true,
 	moveElvUIBags = true,
+	moveSpeed = false,
 	rememberPositions = false,
 	framePositions = {},
 	tags = true,

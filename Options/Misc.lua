@@ -74,6 +74,12 @@ options.general = {
             type = "toggle",
             name = L["Auto Screenshot"],
             desc = L["Screenshot after you earned an achievement automatically."]
+        },
+        moveSpeed = {
+            order = 7,
+            type = "toggle",
+            name = L["Move Speed"],
+            desc = L["Show move speed in character panel."]
         }
     }
 }

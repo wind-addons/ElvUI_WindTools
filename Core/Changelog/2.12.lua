@@ -36,28 +36,36 @@ W.Changelog[212] = {
             "[额外物品条] 就算条中没有按钮, 现在也会进行尺寸更新了.",
             "[游戏条] 好友按钮回滚到上个版本.",
             "[美化皮肤] 添加遗漏的 ElvUI 聊天面板选项.",
-            "[聊天链接] 修复了切换配置可能导致的错误."
+            "[聊天链接] 修复了切换配置可能导致的错误.",
+            "[好友列表] 修复了一个战网好友信息获取时可能发生的错误.",
+            "[好友列表] 添加了一个阵营图标的开关, 默认显示魔兽的游戏图标."
         },
         ["zhTW"] = {
             "[矩形小地圖] 修復了有時上方會有一條橫線的問題.",
             "[額外物品條] 就算條中沒有按鍵, 現在也會進行尺寸更新了.",
             "[遊戲條] 好友按鍵回滾到上個版本.",
             "[美化皮膚] 添加遺漏的 ElvUI 對話框架設置.",
-            "[聊天鏈接] 修復了切換配置可能導致的錯誤."
+            "[聊天鏈接] 修復了切換配置可能導致的錯誤.",
+            "[好友列表] 修復了一個戰網好友信息獲取時可能發生的錯誤.",
+            "[好友列表] 新增了一個陣營圖示的開關, 預設顯示魔獸的遊戲圖示."
         },
         ["enUS"] = {
             "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
             "[Extra Item Bar] Resize the bar even if there is no button on it.",
             "[Game Bar] Roll back the change of Friends button.",
             "[Skins] Add the missing option of ElvUI Chat Panels.",
-            "[Chat Link] Fix the error occurred in switching profile."
+            "[Chat Link] Fix the error occurred in switching profile.",
+            "[Friend List] Fix the bug in fetching information of Battle.net friends",
+            "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
             "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
             "[Extra Item Bar] Resize the bar even if there is no button on it.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",
             "[Skins] Add the missing option of ElvUI Chat Panels.",
-            "[Chat Link] Fix the error occurred in switching profile."
+            "[Chat Link] Fix the error occurred in switching profile.",
+            "[Friend List] Fix the bug in fetching information of Battle.net friends",
+            "[Friend List] Add an option for faction icons, and set WoW icons as default."
         }
     }
 }

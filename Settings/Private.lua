@@ -9,8 +9,14 @@ V.combat = {
 }
 
 V.maps = {
-	difficulty = {
+	instanceDifficulty = {
 		enable = true,
+		hideBlizzard = true,
+		font = {
+			name = E.db.general.font,
+			size = E.db.general.fontSize,
+			style = "OUTLINE",
+		}
 	},
 	superTracker = {
 		enable = true,

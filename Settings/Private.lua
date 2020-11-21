@@ -9,6 +9,9 @@ V.combat = {
 }
 
 V.maps = {
+	difficulty = {
+		enable = true,
+	},
 	superTracker = {
 		enable = true,
 		noLimit = false,

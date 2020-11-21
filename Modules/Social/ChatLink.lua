@@ -227,8 +227,6 @@ function CL:ProfileUpdate()
     if self.db.enable and not self.Initialized then
         self:Initialize()
     end
-
-    self:PLAYER_ENTERING_WORLD()
 end
 
 W:RegisterModule(CL:GetName())

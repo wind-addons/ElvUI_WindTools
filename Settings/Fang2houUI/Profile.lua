@@ -310,7 +310,7 @@ local function BuildProfile()
             ["VehicleSeatMover"] = "RIGHT,RightChatMover,LEFT,-20,0",
             ["WTChatBarMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,45,25",
             ["ExperienceBarMover"] = "TOP,MinimapMover,BOTTOM,0,-2",
-            ["PetAB"] = "BOTTOM,ElvAB_1,TOP,0,15",
+            ["PetAB"] = "BOTTOM,ElvAB_1,TOP,0,8",
             ["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,300,292",
             ["ElvUF_PetMover"] = "TOPRIGHT,ElvUF_PlayerMover,TOPLEFT,-5,0",
             ["WTExtraItemsBar2Mover"] = "BOTTOMLEFT,RightChatMover,TOPLEFT,-2,3",

@@ -32,6 +32,7 @@ function W:Fang2houUIPrivate()
     E.private["WT"]["maps"]["superTracker"]["distanceText"]["name"] = F.GetCompatibleFont("Montserrat")
     E.private["WT"]["maps"]["superTracker"]["distanceText"]["onlyNumber"] = true
     E.private["WT"]["maps"]["superTracker"]["noLimit"] = true
+    E.private["WT"]["maps"]["instanceDifficulty"]["enable"] = true
     E.private["WT"]["maps"]["worldMap"]["scale"]["size"] = 1.2
     E.private["WT"]["misc"]["autoScreenshot"] = true
     E.private["WT"]["misc"]["moveSpeed"] = true

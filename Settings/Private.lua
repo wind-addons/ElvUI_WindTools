@@ -10,7 +10,7 @@ V.combat = {
 
 V.maps = {
 	instanceDifficulty = {
-		enable = true,
+		enable = false,
 		hideBlizzard = true,
 		font = {
 			name = E.db.general.font,

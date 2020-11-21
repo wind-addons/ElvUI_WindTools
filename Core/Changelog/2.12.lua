@@ -12,22 +12,26 @@ W.Changelog[212] = {
         ["zhCN"] = {
             "[标签] 添加了 [smart-power], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100%).",
             "[标签] 添加了 [smart-power-nosign], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100).",
-            "[其他] 添加了在人物面板显示移动速度的功能."
+            "[其他] 添加了在人物面板显示移动速度的功能.",
+            "添加 [地图]-[副本难度] 模块, 支持美化副本难度为文字风格. 感谢 Merathilis."
         },
         ["zhTW"] = {
             "[標籤] 新增了 [smart-power], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100%).",
             "[標籤] 新增了 [smart-power-nosign], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100).",
-            "[其他] 新增了在人物面板顯示移動速度的功能."
+            "[其他] 新增了在人物面板顯示移動速度的功能.",
+            "新增 [地圖]-[副本難度] 模組, 支持美化副本難度為文字風格. 感謝 Merathilis."
         },
         ["enUS"] = {
             "[Tags] Add [smart-power], e.g. rogue is current power (120), mage is percentage(100%).",
             "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
-            "[Misc] Add new feature that showing the move speed in character panel."
+            "[Misc] Add new feature that showing the move speed in character panel.",
+            "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
         },
         ["koKR"] = {
             "[Tags] Add [smart-power], e.g. rogue is current power (120), mage is percentage(100%).",
             "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
-            "[Misc] Add new feature that showing the move speed in character panel."
+            "[Misc] Add new feature that showing the move speed in character panel.",
+            "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
         }
     },
     IMPROVEMENT = {

@@ -927,6 +927,11 @@ options.addons = {
             type = "toggle",
             name = L["NetEase Meeting Stone"]
         },
+        myslot = {
+            order = 10,
+            type = "toggle",
+            name = L["Myslot"]
+        },
         premadeGroupsFilter = {
             order = 10,
             type = "toggle",

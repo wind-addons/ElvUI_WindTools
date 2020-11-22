@@ -166,6 +166,7 @@ V.skins = {
 		hekili = true,
 		immersion = true,
 		meetingStone = true,
+		myslot = true,
 		premadeGroupsFilter = true,
 		rehack = true,
 		rematch = true,

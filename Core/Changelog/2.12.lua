@@ -64,6 +64,7 @@ W.Changelog[212] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "优化部分设定布局.",
             "[通告] 技能 ID 更新至暗影国度版本.",
             "[天赋管家] 添加对 PvP 天赋的支持.",
             "[天赋管家] 添加了一个状态图标用于显示是否可以进行天赋变更.",
@@ -79,6 +80,7 @@ W.Changelog[212] = {
             "[好友列表] 添加了一个阵营图标的开关, 默认显示魔兽的游戏图标."
         },
         ["zhTW"] = {
+            "優化部分設定佈局.",
             "[通告] 技能 ID 更新至暗影之境版本.",
             "[天賦管家] 新增了對 PvP 天賦的支持.",
             "[天賦管家] 新增了一個狀態圖示用於顯示目前是否可以進行天賦變更.",
@@ -94,6 +96,7 @@ W.Changelog[212] = {
             "[好友列表] 新增了一個陣營圖示的開關, 預設顯示魔獸的遊戲圖示."
         },
         ["enUS"] = {
+            "Optimize layout of partial options.",
             "[Announcement] Update ability ID to Shadowlands patch.",
             "[Talent Manager] Add support for PvP talents.",
             "[Talent Manager] Add a status icon for showing the status of the permission of changing talents.",
@@ -109,6 +112,7 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
+            "Optimize layout of partial options.",
             "[Announcement] Update ability ID to Shadowlands patch.",
             "[특성 관리자] PvP 특성에 대한 지원이 추가되었습니다.",
             "[특성 관리자] 특성 변경 가능 여부를 표시하는 상태 아이콘을 추가하였습니다.",

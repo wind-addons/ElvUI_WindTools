@@ -493,6 +493,7 @@ L["Math Without Kanji"] = true
 L["Media Files"] = true
 L["MerathilisUI"] = "|cffff7d0aMerathilisUI|r"
 L["Merchant"] = "상인"
+L["Message From the Author"] = true
 L["Micro Bar"] = "메뉴 모음 바"
 L["Micro Menu"] = true
 L["Middle Button"] = "중앙 버튼"

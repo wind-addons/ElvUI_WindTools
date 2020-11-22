@@ -29,49 +29,56 @@ options.help = {
     type = "group",
     name = L["Help"],
     args = {
-        description = {
-            order = 1,
-            type = "description",
-            fontSize = "medium",
-            name = format(
-                "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s",
-                format(L["Thank you for using %s!"], L["WindTools"]),
-                format(
-                    L[
-                        "%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
-                    ],
-                    L["WindTools"]
-                ),
-                format(
-                    L[
-                        "In Shadowlands (9.0) pre-patch, %s has been rewritten, such that possibly there are bugs somewhere."
-                    ],
-                    L["WindTools"]
-                ),
-                format(
-                    L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
-                    L["QQ Group"],
-                    L["Discord"],
-                    L["Github"],
-                    L["NGA.cn"]
-                ),
-                format(L["The localization of %s is community-driven."], L["WindTools"]),
-                format(
-                    L[
-                        "If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."
-                    ],
-                    L["WindTools"]
-                )
-            )
-        },
         contact = {
-            order = 2,
+            order = 1,
             type = "group",
             inline = true,
-            name = " ",
+            name = L["Message From the Author"],
             args = {
-                nga = {
+                description = {
                     order = 1,
+                    type = "description",
+                    fontSize = "medium",
+                    name = format(
+                        "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s",
+                        format(L["Thank you for using %s!"], L["WindTools"]),
+                        format(
+                            L[
+                                "%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
+                            ],
+                            L["WindTools"]
+                        ),
+                        format(
+                            L[
+                                "In Shadowlands (9.0) pre-patch, %s has been rewritten, such that possibly there are bugs somewhere."
+                            ],
+                            L["WindTools"]
+                        ),
+                        format(
+                            L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
+                            L["QQ Group"],
+                            L["Discord"],
+                            L["Github"],
+                            L["NGA.cn"]
+                        ),
+                        format(L["The localization of %s is community-driven."], L["WindTools"]),
+                        format(
+                            L[
+                                "If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."
+                            ],
+                            L["WindTools"]
+                        )
+                    )
+                },
+                betterAlign = {
+                    order = 2,
+                    type = "description",
+                    fontSize = "medium",
+                    name = " ",
+                    width = "full"
+                },
+                nga = {
+                    order = 3,
                     type = "execute",
                     name = L["NGA.cn"],
                     image = W.Media.Icons.nga,
@@ -81,7 +88,7 @@ options.help = {
                     width = 0.7
                 },
                 discord = {
-                    order = 2,
+                    order = 4,
                     type = "execute",
                     name = L["Discord"],
                     image = W.Media.Icons.discord,
@@ -91,7 +98,7 @@ options.help = {
                     width = 0.7
                 },
                 qq = {
-                    order = 3,
+                    order = 5,
                     type = "execute",
                     name = L["QQ Group"],
                     image = W.Media.Icons.qq,
@@ -101,7 +108,7 @@ options.help = {
                     width = 0.7
                 },
                 github = {
-                    order = 4,
+                    order = 6,
                     type = "execute",
                     name = L["Github"],
                     image = W.Media.Icons.github,

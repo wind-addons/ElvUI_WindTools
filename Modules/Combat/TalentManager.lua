@@ -18,7 +18,7 @@ local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
 local GetItemCooldown = GetItemCooldown
-local GetItemCount= GetItemCount
+local GetItemCount = GetItemCount
 local GetItemIcon = GetItemIcon
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpecialization = GetSpecialization
@@ -30,21 +30,18 @@ local IsResting = IsResting
 local Item = Item
 local LearnPvpTalent = LearnPvpTalent
 local LearnTalents = LearnTalents
-
+local UnitLevel = UnitLevel
 
 local AuraUtil_FindAuraByName = AuraUtil.FindAuraByName
 local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
-
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 local MAX_TALENT_TIERS = _G.MAX_TALENT_TIERS
 
-
 -- [id] = {minLevel, maxLevel}
 local itemList = {
     tome = {
-        -- {64399, 10, 50}, -- debug
         {141446, 10, 50},
         {141640, 10, 50},
         {143780, 10, 50},
@@ -707,6 +704,8 @@ function TM:BuildItemButtons()
             for _, data in ipairs(itemList.tome) do
                 local button = self:CreateItemButton(frame, data[1], 36)
                 if button then
+                    button.min = data[2]
+                    button.max = data[3]
                     tinsert(self.itemButtons.tome, button)
                 end
             end
@@ -714,6 +713,8 @@ function TM:BuildItemButtons()
             for _, data in ipairs(itemList.codex) do
                 local button = self:CreateItemButton(frame, data[1], 36)
                 if button then
+                    button.min = data[2]
+                    button.max = data[3]
                     tinsert(self.itemButtons.codex, button)
                 end
             end
@@ -727,7 +728,7 @@ function TM:UpdateStatus(_, unit)
     if not unit == "player" then
         return
     end
-    
+
     if self:IsPlayerCanChangeTalent() then
         self.itemButtonsAnchor.status:SetVertexColor(0.18, 0.835, 0.451, 1)
     else
@@ -749,7 +750,9 @@ function TM:UpdateItemButtons()
         -- Update layout
         local lastButton
         for _, button in pairs(self.itemButtons.tome) do
-            local count = GetItemCount(button.itemID, nil, true)
+            local level = UnitLevel("player")
+            local allow = level and level >= button.min and level <= button.max
+            local count = allow and GetItemCount(button.itemID, nil, true)
             if count and count > 0 then
                 button.count:SetText(count)
                 button:ClearAllPoints()
@@ -766,7 +769,9 @@ function TM:UpdateItemButtons()
         end
 
         for _, button in pairs(self.itemButtons.codex) do
-            local count = GetItemCount(button.itemID, nil, true)
+            local level = UnitLevel("player")
+            local allow = level and level >= button.min and level <= button.max
+            local count = allow and GetItemCount(button.itemID, nil, true)
             if count and count > 0 then
                 button.count:SetText(count)
                 button:ClearAllPoints()

@@ -433,8 +433,13 @@ options.talentManager = {
                 TM:UpdateItemButtons()
             end
         },
-        clearSets = {
+        statusIcon = {
             order = 5,
+            type = "toggle",
+            name = L["Status Icon"]
+        },
+        clearSets = {
+            order = 6,
             type = "execute",
             name = L["Clear All Sets"],
             func = function()

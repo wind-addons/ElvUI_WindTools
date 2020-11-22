@@ -683,45 +683,49 @@ function TM:CreateItemButton(parent, itemID, width, height)
 end
 
 function TM:BuildItemButtons()
-    if self.db and self.db.itemButtons then
-        if not self.itemButtons then
-            local frame = CreateFrame("Frame", nil, _G.PlayerTalentFrame)
-            frame:Size(500, 40)
-            frame:Point("TOPLEFT", 0, -31)
-            self.itemButtonsAnchor = frame
+    if not self.db or self.itemButtonsAnchor then
+        return
+    end
 
-            local status = frame:CreateTexture(nil, "ARTWORK")
-            status:SetTexture(W.Media.Textures.exchange)
-            status:Size(32, 32)
-            status:Point("LEFT", 20, 0)
-            frame.status = status
+    local frame = CreateFrame("Frame", nil, _G.PlayerTalentFrame)
+    frame:Size(500, 40)
+    frame:Point("TOPLEFT", 0, -31)
+    self.itemButtonsAnchor = frame
 
-            self.itemButtons = {
-                tome = {},
-                codex = {}
-            }
+    if self.db.statusIcon then
+        local status = frame:CreateTexture(nil, "ARTWORK")
+        status:SetTexture(W.Media.Textures.exchange)
+        status:Size(32, 32)
+        status:Point("LEFT", 20, 0)
+        frame.status = status
+    end
 
-            for _, data in ipairs(itemList.tome) do
-                local button = self:CreateItemButton(frame, data[1], 36)
-                if button then
-                    button.min = data[2]
-                    button.max = data[3]
-                    tinsert(self.itemButtons.tome, button)
-                end
-            end
+    if self.db.itemButtons then
+        self.itemButtons = {
+            tome = {},
+            codex = {}
+        }
 
-            for _, data in ipairs(itemList.codex) do
-                local button = self:CreateItemButton(frame, data[1], 36)
-                if button then
-                    button.min = data[2]
-                    button.max = data[3]
-                    tinsert(self.itemButtons.codex, button)
-                end
+        for _, data in ipairs(itemList.tome) do
+            local button = self:CreateItemButton(frame, data[1], 36)
+            if button then
+                button.min = data[2]
+                button.max = data[3]
+                tinsert(self.itemButtons.tome, button)
             end
         end
 
-        self:UpdateItemButtons()
+        for _, data in ipairs(itemList.codex) do
+            local button = self:CreateItemButton(frame, data[1], 36)
+            if button then
+                button.min = data[2]
+                button.max = data[3]
+                tinsert(self.itemButtons.codex, button)
+            end
+        end
     end
+
+    self:UpdateItemButtons()
 end
 
 function TM:UpdateStatus(_, unit)
@@ -729,10 +733,12 @@ function TM:UpdateStatus(_, unit)
         return
     end
 
-    if self:IsPlayerCanChangeTalent() then
-        self.itemButtonsAnchor.status:SetVertexColor(0.18, 0.835, 0.451, 1)
-    else
-        self.itemButtonsAnchor.status:SetVertexColor(1, 0.278, 0.341, 1)
+    if self.db.statusIcon and self.itemButtonsAnchor.status then
+        if self:IsPlayerCanChangeTalent() then
+            self.itemButtonsAnchor.status:SetVertexColor(0.18, 0.835, 0.451, 1)
+        else
+            self.itemButtonsAnchor.status:SetVertexColor(1, 0.278, 0.341, 1)
+        end
     end
 end
 

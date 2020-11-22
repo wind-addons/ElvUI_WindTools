@@ -5,6 +5,7 @@ V.combat = {
 		enable = true,
 		itemButtons = true,
 		pvpTalent = false,
+		statusIcon = true,
 		sets = {}
 	}
 }

@@ -80,7 +80,7 @@ do
     end
     function TM:IsPlayerCanChangeTalent()
         if IsResting() then
-            return
+            return true
         end
         for _, aura in pairs(auras) do
             if aura and AuraUtil_FindAuraByName(aura, "player", "HELPFUL") then

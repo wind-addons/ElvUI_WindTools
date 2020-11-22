@@ -735,15 +735,17 @@ function TM:BuildItemButtons()
 end
 
 function TM:UpdateStatus(event, unit)
-    if event == UNIT_AURA and not unit == "player" then
+    if event == "UNIT_AURA" and not unit == "player" then
         return
     end
 
     if self.db.statusIcon and self.itemButtonsAnchor.status then
         if self:IsPlayerCanChangeTalent() then
-            self.itemButtonsAnchor.status:SetVertexColor(0.18, 0.835, 0.451, 1)
+            self.itemButtonsAnchor.status:SetVertexColor(unpack(E.media.rgbvaluecolor))
+            self.itemButtonsAnchor.status:SetAlpha(1)
         else
-            self.itemButtonsAnchor.status:SetVertexColor(1, 0.278, 0.341, 1)
+            self.itemButtonsAnchor.status:SetVertexColor(1, 1, 1)
+            self.itemButtonsAnchor.status:SetAlpha(0.3)
         end
     end
 end

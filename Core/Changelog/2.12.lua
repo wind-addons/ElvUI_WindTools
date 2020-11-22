@@ -30,6 +30,7 @@ W.Changelog[212] = {
             "[标签] 添加了 [smart-power-nosign], 比如潜行者会自动变为完整能量(120), 法师会变为百分数(100).",
             "[其他] 添加了在人物面板显示移动速度的功能.",
             "[美化皮肤] 添加了 Myslot 的美化.",
+            '[额外物品条] 添加了 "POTIONSL" (暗影国度版本药水), "FLASKSL" (暗影国度版本药剂) 物品分类.',
             "添加 [地图]-[副本难度] 模块, 支持美化副本难度为文字风格. 感谢 Merathilis."
         },
         ["zhTW"] = {
@@ -37,6 +38,7 @@ W.Changelog[212] = {
             "[標籤] 新增了 [smart-power-nosign], 盜賊等職業會自動變為完整格式(120), 法師會變為百分數(100).",
             "[其他] 新增了在人物面板顯示移動速度的功能.",
             "[美化皮膚] 新增了 Myslot 的美化.",
+            '[額外物品條] 新增了 "POTIONSL" (暗影之境版本藥水), "FLASKSL" (暗影之境版本藥劑) 物品分組.',
             "新增 [地圖]-[副本難度] 模組, 支持美化副本難度為文字風格. 感謝 Merathilis."
         },
         ["enUS"] = {
@@ -44,6 +46,7 @@ W.Changelog[212] = {
             "[Tags] Add [smart-power-nosign], e.g. rogue is current power (120), mage is percentage(100).",
             "[Misc] Add new feature that showing the move speed in character panel.",
             "[Skins] Add new skin for Myslot.",
+            '[Extra Item Bar] Add new item group "POTIONSL" (Shadowlands potions) and "FLASKSL" (Shadowlands flasks).',
             "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
         },
         ["koKR"] = {
@@ -51,6 +54,7 @@ W.Changelog[212] = {
             "[태그] 신규 태그 [smart-power-nosign]이 자원 카테고리에 추가되었습니다. 적용 예 : 도적은 (120), 마법사는 (100)",
             "[기타] 캐릭터 창에 이동 속도를 보여주는 새로운 기능을 추가합니다.",
             "[스킨] Myslot 애드온 스킨 추가.",
+            '[Extra Item Bar] Add new item group "POTIONSL" (Shadowlands potions) and "FLASKSL" (Shadowlands flasks).',
             "신규 모듈 [지도]-[인스턴스 난이도]가 추가되었습니다. 미니맵의 인스턴스 난이도를 문자 형식으로 변경합니다. Thanks Merathilis."
         }
     },

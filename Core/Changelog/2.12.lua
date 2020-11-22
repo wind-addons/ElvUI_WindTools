@@ -49,6 +49,8 @@ W.Changelog[212] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "[天赋管家] 添加对 PvP 天赋的支持.",
+            "[天赋管家] 添加了一个状态图标用于显示是否可以进行天赋变更.",
+            "[天赋管家] 重写了物品按键, 现在可以智能识别人物等级进行显示了.",
             "[矩形小地图] 修复了有时上方会有一条横线的问题.",
             "[额外物品条] 就算条中没有按钮, 现在也会进行尺寸更新了.",
             "[额外物品条] 物品 ID 更新至暗影国度版本.",
@@ -59,7 +61,9 @@ W.Changelog[212] = {
             "[好友列表] 添加了一个阵营图标的开关, 默认显示魔兽的游戏图标."
         },
         ["zhTW"] = {
-            "[天賦管家] 添加對 PvP 天賦的支持.",
+            "[天賦管家] 新增了對 PvP 天賦的支持.",
+            "[天賦管家] 新增了一個狀態圖示用於顯示目前是否可以進行天賦變更.",
+            "[天賦管家] 重寫了物品按鍵, 現在可以根據人物等級來調整顯示了.",
             "[矩形小地圖] 修復了有時上方會有一條橫線的問題.",
             "[額外物品條] 就算條中沒有按鍵, 現在也會進行尺寸更新了.",
             "[額外物品條] 物品 ID 更新至暗影之境版本.",
@@ -71,6 +75,8 @@ W.Changelog[212] = {
         },
         ["enUS"] = {
             "[Talent Manager] Add support for PvP talents.",
+            "[Talent Manager] Add a status icon for showing the status of the permission of changing talents.",
+            "[Talent Manager] Rewrite the item buttons, now it supports auto-hiding the items based on the character level.",
             "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
             "[Extra Item Bar] Resize the bar even if there is no button on it.",
             "[Extra Item Bar] Update item ID to Shadowlands patch.",
@@ -81,7 +87,9 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
-            "[특성 관리자] vP 특성에 대한 지원이 추가되었습니다.",
+            "[특성 관리자] PvP 특성에 대한 지원이 추가되었습니다.",
+            "[특성 관리자] Add a status icon for showing the status of the permission of changing talents.",
+            "[특성 관리자] Rewrite the item buttons, now it supports auto-hiding the items based on the character level.",
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[아이템 바] 어둠땅 패치로 인해 아이템 ID를 업데이트했습니다.",

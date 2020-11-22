@@ -705,7 +705,7 @@ function EB:UpdateBar(id)
                     end
                 end
             elseif module == "FOODSL" then -- Foods (Shadowlands only)
-                for _, foodID in pairs(foodssShadowlands) do
+                for _, foodID in pairs(foodsShadowlands) do
                     local count = GetItemCount(foodID)
                     if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})

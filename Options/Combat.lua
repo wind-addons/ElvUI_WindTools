@@ -419,8 +419,13 @@ options.talentManager = {
             type = "toggle",
             name = L["Enable"]
         },
-        itemButtons = {
+        pvpTalent = {
             order = 3,
+            type = "toggle",
+            name = L["PvP Talents"]
+        },
+        itemButtons = {
+            order = 4,
             type = "toggle",
             name = L["Item Buttons"],
             set = function(_, value)
@@ -429,7 +434,7 @@ options.talentManager = {
             end
         },
         clearSets = {
-            order = 4,
+            order = 5,
             type = "execute",
             name = L["Clear All Sets"],
             func = function()

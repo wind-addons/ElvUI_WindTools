@@ -501,7 +501,9 @@ do -- Add options for bars
                         FormatDesc("QUEST", L["Quest Items"]),
                         FormatDesc("EQUIP", L["Equipments"]),
                         FormatDesc("POTION", L["Potions"]),
+                        FormatDesc("POTIONSL", format("%s (%s)", L["Potions"], L["Shadowlands"])),
                         FormatDesc("FLASK", L["Flasks"]),
+                        FormatDesc("FLASKSL", format("%s (%s)", L["Flasks"], L["Shadowlands"])),
                         FormatDesc("BANNER", L["Banners"]),
                         FormatDesc("UTILITY", L["Utilities"]),
                         FormatDesc("CUSTOM", L["Custom Items"])

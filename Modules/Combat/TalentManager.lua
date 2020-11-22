@@ -17,14 +17,15 @@ local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
 local GetItemIcon = GetItemIcon
+local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
 local GetTalentTierInfo = GetTalentTierInfo
 local IsAddOnLoaded = IsAddOnLoaded
 local Item = Item
-local LearnTalents = LearnTalents
 local LearnPvpTalent = LearnPvpTalent
+local LearnTalents = LearnTalents
 
 local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
 

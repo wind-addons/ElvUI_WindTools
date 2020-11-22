@@ -476,6 +476,8 @@ function TM:BuildFrame()
             self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateItemButtons")
             self:RegisterEvent("PLAYER_LEVEL_UP", "UpdateItemButtons")
             self:RegisterEvent("UNIT_AURA", "UpdateStatus")
+            self:RegisterEvent("ZONE_CHANGED", "UpdateStatus")
+            self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateStatus")
             self.itemButtonsAnchor:Show()
             self:UpdateStatus(nil, "player")
             self:UpdateItemButtons()
@@ -489,6 +491,8 @@ function TM:BuildFrame()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
             self:UnregisterEvent("PLAYER_LEVEL_UP")
             self:UnregisterEvent("UNIT_AURA")
+            self:UnregisterEvent("ZONE_CHANGED")
+            self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
             self.itemButtonsAnchor:Hide()
         end
     )
@@ -501,6 +505,8 @@ function TM:BuildFrame()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
             self:UnregisterEvent("PLAYER_LEVEL_UP")
             self:UnregisterEvent("UNIT_AURA")
+            self:UnregisterEvent("ZONE_CHANGED")
+            self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
             self.itemButtonsAnchor:Hide()
         end
     )
@@ -728,8 +734,8 @@ function TM:BuildItemButtons()
     self:UpdateItemButtons()
 end
 
-function TM:UpdateStatus(_, unit)
-    if not unit == "player" then
+function TM:UpdateStatus(event, unit)
+    if event == UNIT_AURA and not unit == "player" then
         return
     end
 

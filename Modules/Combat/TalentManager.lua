@@ -33,11 +33,32 @@ local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 local MAX_TALENT_TIERS = _G.MAX_TALENT_TIERS
 
+-- 227041
+-- [id] = {minLevel, maxLevel}
+local itemList = {
+    tome = {
+        -- {64399, 10, 50}, -- debug
+        {141446, 10, 50},
+        {141640, 10, 50},
+        {143780, 10, 50},
+        {143785, 10, 50},
+        {153647, 50, 59},
+        {173049, 51, 60}
+    },
+    codex = {
+        -- {140192, 10, 50}, -- debug
+        {141333, 10, 50},
+        {141641, 10, 50},
+        {153646, 10, 59},
+        {173048, 51, 60}
+    }
+}
+
 function TM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_TalentUI" then
         self:UnregisterEvent("ADDON_LOADED")
         self:BuildFrame()
-        self:UpdateItemButtons()
+        self:BuildItemButtons()
     end
 end
 
@@ -302,116 +323,6 @@ function TM:SetButtonTooltip(button)
     GameTooltip:Show()
 end
 
-function TM:CreateItemButton(parent, itemID, width, height)
-    local button = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackdropTemplate")
-    button:Size(width, height or width)
-    button:SetTemplate("Default")
-    button:SetClampedToScreen(true)
-    button:SetAttribute("type", "item")
-    button:SetAttribute("item", "item:"..itemID)
-    button:EnableMouse(true)
-    button:RegisterForClicks("AnyUp")
-
-    local tex = button:CreateTexture(nil, "OVERLAY", nil)
-    tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
-    tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
-    tex:SetTexCoord(unpack(E.TexCoords))
-    tex:SetTexture(GetItemIcon(itemID))
-
-    button.tex = tex
-    button:StyleButton()
-
-    button:SetScript(
-        "OnEnter",
-        function(self)
-            if self.SetBackdropBorderColor then
-                self:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
-            end
-            GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT")
-            GameTooltip:SetItemByID(itemID)
-            GameTooltip:Show()
-        end
-    )
-
-    button:SetScript(
-        "OnLeave",
-        function(self)
-            if self.SetBackdropBorderColor then
-                self:SetBackdropBorderColor(unpack(E.media.bordercolor))
-            end
-            GameTooltip:Hide()
-        end
-    )
-
-    return button
-end
-
-function TM:UpdateItemButtons()
-    if self.db and self.db.itemButtons then
-        if not self.itemButtons then
-            self.itemButtons = {}
-            local frame = _G.PlayerTalentFrameTalents
-            local item1 = Item:CreateFromItemID(141446)
-            local item2 = Item:CreateFromItemID(153646)
-            item1:ContinueOnItemLoad(
-                function()
-                    self.itemButtons[1] = self:CreateItemButton(frame, 141446, item1:GetItemName(), 36)
-                    if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
-                        E:Delay(
-                            1,
-                            function()
-                                if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
-                                    self.itemButtons[1]:Point(
-                                        "TOPLEFT",
-                                        _G.PlayerTalentFrame.backdrop,
-                                        "TOPLEFT",
-                                        79,
-                                        -31
-                                    )
-                                end
-                            end
-                        )
-                    else
-                        self.itemButtons[1]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 79, -31)
-                    end
-                end
-            )
-            item2:ContinueOnItemLoad(
-                function()
-                    self.itemButtons[2] = self:CreateItemButton(frame, 153646, 36)
-                    if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
-                        E:Delay(
-                            1,
-                            function()
-                                if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
-                                    self.itemButtons[2]:Point(
-                                        "TOPLEFT",
-                                        _G.PlayerTalentFrame.backdrop,
-                                        "TOPLEFT",
-                                        121,
-                                        -31
-                                    )
-                                end
-                            end
-                        )
-                    else
-                        self.itemButtons[2]:Point("TOPLEFT", _G.PlayerTalentFrame.backdrop, "TOPLEFT", 121, -31)
-                    end
-                end
-            )
-        end
-        for _, button in pairs(self.itemButtons) do
-            button:Show()
-        end
-    else
-        if self.itemButtons then
-            for _, button in pairs(self.itemButtons) do
-                button:Hide()
-            end
-        end
-    end
-end
-
 function TM:BuildFrame()
     if not IsAddOnLoaded("Blizzard_TalentUI") then
         self:RegisterEvent("ADDON_LOADED")
@@ -517,6 +428,7 @@ function TM:BuildFrame()
 
     if not _G.PlayerTalentFrameTalents:IsShown() then
         frame:Hide()
+        self.itemButtonsAnchor:Hide()
     end
 
     self:SecureHook(
@@ -527,6 +439,8 @@ function TM:BuildFrame()
             else
                 frame:Hide()
             end
+            self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateItemButtons")
+            self.itemButtonsAnchor:Show()
         end
     )
 
@@ -534,6 +448,8 @@ function TM:BuildFrame()
         "PlayerTalentFrame_HideTalentTab",
         function()
             frame:Hide()
+            self:UnregisterEvent("BAG_UPDATE_DELAYED")
+            self.itemButtonsAnchor:Hide()
         end
     )
 
@@ -542,6 +458,8 @@ function TM:BuildFrame()
         "Hide",
         function()
             frame:Hide()
+            self:UnregisterEvent("BAG_UPDATE_DELAYED")
+            self.itemButtonsAnchor:Hide()
         end
     )
 
@@ -655,6 +573,153 @@ function TM:Enviroment()
 
     -- 按钮右键菜单
     self.contextMenuFrame = CreateFrame("Frame", "WTTalentManagerContextMenu", E.UIParent, "UIDropDownMenuTemplate")
+end
+
+function TM:CreateItemButton(parent, itemID, width, height)
+    local button = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackdropTemplate")
+    button:Size(width, height or width)
+    button:SetTemplate("Default")
+    button:SetClampedToScreen(true)
+    button:SetAttribute("type", "item")
+    button:SetAttribute("item", "item:" .. itemID)
+    button.itemID = itemID
+    button:EnableMouse(true)
+    button:RegisterForClicks("AnyUp")
+
+    local tex = button:CreateTexture(nil, "OVERLAY", nil)
+    tex:Point("TOPLEFT", button, "TOPLEFT", 1, -1)
+    tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
+    tex:SetTexCoord(unpack(E.TexCoords))
+    tex:SetTexture(GetItemIcon(itemID))
+
+    local count = button:CreateFontString(nil, "OVERLAY")
+    count:SetTextColor(1, 1, 1, 1)
+    count:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
+    count:SetJustifyH("RIGHT")
+    count:FontTemplate()
+
+    local cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate")
+    E:RegisterCooldown(cooldown)
+
+    button.tex = tex
+    button.count = count
+    button.cooldown = button.cooldown
+
+    button:StyleButton()
+
+    button:SetScript(
+        "OnEnter",
+        function(self)
+            if self.SetBackdropBorderColor then
+                self:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+            end
+            GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT")
+            GameTooltip:SetItemByID(itemID)
+            GameTooltip:Show()
+        end
+    )
+
+    button:SetScript(
+        "OnLeave",
+        function(self)
+            if self.SetBackdropBorderColor then
+                self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+            end
+            GameTooltip:Hide()
+        end
+    )
+
+    button:SetScript(
+        "OnUpdate",
+        function()
+            local start, duration, enable = GetItemCooldown(itemID)
+            CooldownFrame_Set(cooldown, start, duration, enable)
+        end
+    )
+
+    return button
+end
+
+function TM:BuildItemButtons()
+    if self.db and self.db.itemButtons then
+        if not self.itemButtons then
+            self.itemButtonsAnchor = CreateFrame("Frame", nil, _G.PlayerTalentFrame)
+            self.itemButtonsAnchor:Size(500, 40)
+            self.itemButtonsAnchor:Point("TOPLEFT", 79, -31)
+            self.itemButtons = {
+                tome = {},
+                codex = {}
+            }
+
+            for _, data in ipairs(itemList.tome) do
+                local button = self:CreateItemButton(self.itemButtonsAnchor, data[1], 36)
+                if button then
+                    tinsert(self.itemButtons.tome, button)
+                end
+            end
+
+            for _, data in ipairs(itemList.codex) do
+                local button = self:CreateItemButton(self.itemButtonsAnchor, data[1], 36)
+                if button then
+                    tinsert(self.itemButtons.codex, button)
+                end
+            end
+        end
+
+        self:UpdateItemButtons()
+    end
+end
+
+function TM:UpdateItemButtons()
+    local frame = _G.PlayerTalentFrameTalents
+    if not frame or not frame:IsShown() then
+        return
+    end
+
+    if not self.itemButtons then
+        return
+    end
+
+    if self.db and self.db.itemButtons then
+        -- Update layout
+        local lastButton
+        for _, button in pairs(self.itemButtons.tome) do
+            local count = GetItemCount(button.itemID, nil, true)
+            if count and count > 0 then
+                button.count:SetText(count)
+                button:ClearAllPoints()
+                if lastButton then
+                    button:Point("LEFT", lastButton, "RIGHT", 13, 0)
+                else
+                    button:Point("LEFT")
+                end
+                lastButton = button
+                button:Show()
+            else
+                button:Hide()
+            end
+        end
+
+        for _, button in pairs(self.itemButtons.codex) do
+            local count = GetItemCount(button.itemID, nil, true)
+            if count and count > 0 then
+                button.count:SetText(count)
+                button:ClearAllPoints()
+                if lastButton then
+                    button:Point("LEFT", lastButton, "RIGHT", 3, 0)
+                else
+                    button:Point("LEFT")
+                end
+                lastButton = button
+                button:Show()
+            else
+                button:Hide()
+            end
+        end
+        self.itemButtonsAnchor:Show()
+    else
+        self.itemButtonsAnchor:Hide()
+    end
 end
 
 function TM:PLAYER_SPECIALIZATION_CHANGED(_, unit)

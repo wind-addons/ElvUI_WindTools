@@ -135,6 +135,7 @@ AddMedia("buttonLock", "Button/Lock.tga", "Icons")
 AddMedia("buttonUnlock", "Button/Unlock.tga", "Icons")
 
 AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
+AddMedia("exchange", "Exchange.tga", "Textures")
 AddMedia("illMurloc1", "Illustration/Murloc1.tga", "Textures")
 
 do

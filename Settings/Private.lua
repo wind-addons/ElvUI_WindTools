@@ -4,6 +4,7 @@ V.combat = {
 	talentManager = {
 		enable = true,
 		itemButtons = true,
+		pvpTalent = false,
 		sets = {}
 	}
 }

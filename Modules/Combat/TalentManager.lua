@@ -24,8 +24,10 @@ local GetTalentTierInfo = GetTalentTierInfo
 local IsAddOnLoaded = IsAddOnLoaded
 local Item = Item
 local LearnTalents = LearnTalents
+local LearnPvpTalent = LearnPvpTalent
 
 local C_Timer_After = C_Timer.After
+local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
@@ -41,6 +43,7 @@ end
 
 function TM:SaveSet(setName)
     local talentString = self:GetTalentString()
+    local pvpTalentTable = self.db.pvpTalent and self:GetPvPTalentTable()
 
     if not self.db.sets[self.specID] then
         self.db.sets[self.specID] = {}
@@ -62,7 +65,8 @@ function TM:SaveSet(setName)
             self.db.sets[self.specID],
             {
                 setName = setName,
-                talentString = talentString
+                talentString = talentString,
+                pvpTalentTable = pvpTalentTable
             }
         )
         self:UpdateSetButtons()
@@ -71,9 +75,12 @@ end
 
 function TM:UpdateSet(setName)
     local talentString = self:GetTalentString()
+    local pvpTalentTable = self.db.pvpTalent and self:GetPvPTalentTable()
+
     for key, data in pairs(self.db.sets[self.specID]) do
         if data.setName == setName then
             data.talentString = talentString
+            data.pvpTalentTable = pvpTalentTable
             self:UpdateSetButtons()
             return
         end
@@ -108,35 +115,44 @@ function TM:DeleteSet(specID, setName)
     end
 end
 
-function TM:SetTalent(talentString)
-    if not talentString or talentString == "" then
-        return
-    end
+function TM:SetTalent(talentString, pvpTalentTable)
+    if talentString and talentString ~= "" then
+        local talentTable = {}
+        gsub(
+            talentString,
+            "[0-9]",
+            function(char)
+                tinsert(talentTable, char)
+            end
+        )
 
-    local talentTable = {}
-    gsub(
-        talentString,
-        "[0-9]",
-        function(char)
-            tinsert(talentTable, char)
+        if #talentTable < MAX_TALENT_TIERS then
+            F.DebugMessage(TM, L["Talent string is not valid."])
         end
-    )
 
-    if #talentTable < MAX_TALENT_TIERS then
-        F.DebugMessage(TM, L["Talent string is not valid."])
-    end
+        local talentIDs = {}
+        for tier = 1, MAX_TALENT_TIERS do
+            local isAvilable, column = GetTalentTierInfo(tier, 1)
+            if isAvilable and talentTable[tier] ~= 0 and talentTable[tier] ~= column then
+                local talentID = GetTalentInfo(tier, talentTable[tier], 1)
+                tinsert(talentIDs, talentID)
+            end
+        end
 
-    local talentIDs = {}
-    for tier = 1, MAX_TALENT_TIERS do
-        local isAvilable, column = GetTalentTierInfo(tier, 1)
-        if isAvilable and talentTable[tier] ~= 0 and talentTable[tier] ~= column then
-            local talentID = GetTalentInfo(tier, talentTable[tier], 1)
-            tinsert(talentIDs, talentID)
+        if #talentIDs > 1 then
+            LearnTalents(unpack(talentIDs))
         end
     end
 
-    if #talentIDs > 1 then
-        LearnTalents(unpack(talentIDs))
+    if self.db.pvpTalent and pvpTalentTable then
+        for i = 1, 3 do
+            if pvpTalentTable[i] then
+                local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(i)
+                if slotInfo.enabled and slotInfo.selectedTalentID ~= pvpTalentTable[i] then
+                    LearnPvpTalent(pvpTalentTable[i], i)
+                end
+            end
+        end
     end
 end
 
@@ -147,6 +163,15 @@ function TM:GetTalentString()
         talentString = talentString .. (isAvilable and column or 0)
     end
     return talentString
+end
+
+function TM:GetPvPTalentTable()
+    local pvpTalentTable = {}
+    for tier = 1, 3 do
+        local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(tier)
+        tinsert(pvpTalentTable, slotInfo.enabled and slotInfo.selectedTalentID)
+    end
+    return pvpTalentTable
 end
 
 function TM:UpdatePlayerInfo()
@@ -176,6 +201,7 @@ function TM:UpdateSetButtons()
         button.setName = db[i].setName
         button.specID = self.specID
         button.talentString = db[i].talentString
+        button.pvpTalentTable = db[i].pvpTalentTable
         button:Show()
     end
 
@@ -189,6 +215,7 @@ function TM:UpdateSetButtons()
         button.setName = nil
         button.specID = nil
         button.talentString = nil
+        button.pvpTalentTable = nil
         button:Hide()
     end
 end
@@ -236,6 +263,16 @@ function TM:GetTalentTooltipLine(tier, column)
     end
 end
 
+function TM:GetPvPTalentTooltipLine(id)
+    local lineTemplate = "|T%s:12:14:0:0:32:32:2:30:4:28|t %s"
+    if not id then
+        return format(lineTemplate, 134400, L["Not set"])
+    else
+        local _, name, icon = GetPvpTalentInfoByID(id)
+        return format(lineTemplate, icon, name)
+    end
+end
+
 function TM:SetButtonTooltip(button)
     local talentTable = {}
     gsub(
@@ -251,6 +288,15 @@ function TM:SetButtonTooltip(button)
     for tier = 1, MAX_TALENT_TIERS do
         local text = self:GetTalentTooltipLine(tier, talentTable[tier], 1)
         GameTooltip:AddLine(text, 1, 1, 1)
+    end
+
+    if self.db.pvpTalent then
+        GameTooltip:AddLine(" ", 1, 1, 1)
+        GameTooltip:AddLine("PvP", 1, 1, 1)
+        for i = 1, 3 do
+            local text = self:GetPvPTalentTooltipLine(button.pvpTalentTable and button.pvpTalentTable[i])
+            GameTooltip:AddLine(text, 1, 1, 1)
+        end
     end
 
     GameTooltip:Show()
@@ -441,7 +487,7 @@ function TM:BuildFrame()
             "OnClick",
             function(self, mouseButton)
                 if mouseButton == "LeftButton" then
-                    TM:SetTalent(self.talentString)
+                    TM:SetTalent(self.talentString, self.pvpTalentTable)
                 elseif mouseButton == "RightButton" then
                     TM:ShowContextText(self)
                 end

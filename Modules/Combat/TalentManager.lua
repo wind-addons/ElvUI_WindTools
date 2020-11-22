@@ -4,18 +4,21 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
-
 local format = format
 local gsub = gsub
+local ipairs = ipairs
 local pairs = pairs
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
 local unpack = unpack
 
+local CooldownFrame_Set = CooldownFrame_Set
 local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
+local GetItemCooldown = GetItemCooldown
+local GetItemCount= GetItemCount
 local GetItemIcon = GetItemIcon
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpecialization = GetSpecialization
@@ -23,17 +26,21 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
 local GetTalentTierInfo = GetTalentTierInfo
 local IsAddOnLoaded = IsAddOnLoaded
+local IsResting = IsResting
 local Item = Item
 local LearnPvpTalent = LearnPvpTalent
 local LearnTalents = LearnTalents
 
+
+local AuraUtil_FindAuraByName = AuraUtil.FindAuraByName
 local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
+
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 local MAX_TALENT_TIERS = _G.MAX_TALENT_TIERS
 
--- 227041
+
 -- [id] = {minLevel, maxLevel}
 local itemList = {
     tome = {
@@ -46,13 +53,43 @@ local itemList = {
         {173049, 51, 60}
     },
     codex = {
-        -- {140192, 10, 50}, -- debug
         {141333, 10, 50},
         {141641, 10, 50},
         {153646, 10, 59},
         {173048, 51, 60}
     }
 }
+
+do
+    local auras = {}
+    for _, data in pairs(itemList.tome) do
+        local item = Item:CreateFromItemID(data[1])
+        item:ContinueOnItemLoad(
+            function()
+                tinsert(auras, item:GetItemName())
+            end
+        )
+    end
+    for _, data in pairs(itemList.codex) do
+        local item = Item:CreateFromItemID(data[1])
+        item:ContinueOnItemLoad(
+            function()
+                tinsert(auras, item:GetItemName())
+            end
+        )
+    end
+    function TM:IsPlayerCanChangeTalent()
+        if IsResting() then
+            return
+        end
+        for _, aura in pairs(auras) do
+            if aura and AuraUtil_FindAuraByName(aura, "player", "HELPFUL") then
+                return true
+            end
+        end
+        return false
+    end
+end
 
 function TM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_TalentUI" then
@@ -441,7 +478,10 @@ function TM:BuildFrame()
             end
             self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateItemButtons")
             self:RegisterEvent("PLAYER_LEVEL_UP", "UpdateItemButtons")
+            self:RegisterEvent("UNIT_AURA", "UpdateStatus")
             self.itemButtonsAnchor:Show()
+            self:UpdateStatus(nil, "player")
+            self:UpdateItemButtons()
         end
     )
 
@@ -451,6 +491,7 @@ function TM:BuildFrame()
             frame:Hide()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
             self:UnregisterEvent("PLAYER_LEVEL_UP")
+            self:UnregisterEvent("UNIT_AURA")
             self.itemButtonsAnchor:Hide()
         end
     )
@@ -462,6 +503,7 @@ function TM:BuildFrame()
             frame:Hide()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
             self:UnregisterEvent("PLAYER_LEVEL_UP")
+            self:UnregisterEvent("UNIT_AURA")
             self.itemButtonsAnchor:Hide()
         end
     )
@@ -646,23 +688,31 @@ end
 function TM:BuildItemButtons()
     if self.db and self.db.itemButtons then
         if not self.itemButtons then
-            self.itemButtonsAnchor = CreateFrame("Frame", nil, _G.PlayerTalentFrame)
-            self.itemButtonsAnchor:Size(500, 40)
-            self.itemButtonsAnchor:Point("TOPLEFT", 79, -31)
+            local frame = CreateFrame("Frame", nil, _G.PlayerTalentFrame)
+            frame:Size(500, 40)
+            frame:Point("TOPLEFT", 0, -31)
+            self.itemButtonsAnchor = frame
+
+            local status = frame:CreateTexture(nil, "ARTWORK")
+            status:SetTexture(W.Media.Textures.exchange)
+            status:Size(32, 32)
+            status:Point("LEFT", 20, 0)
+            frame.status = status
+
             self.itemButtons = {
                 tome = {},
                 codex = {}
             }
 
             for _, data in ipairs(itemList.tome) do
-                local button = self:CreateItemButton(self.itemButtonsAnchor, data[1], 36)
+                local button = self:CreateItemButton(frame, data[1], 36)
                 if button then
                     tinsert(self.itemButtons.tome, button)
                 end
             end
 
             for _, data in ipairs(itemList.codex) do
-                local button = self:CreateItemButton(self.itemButtonsAnchor, data[1], 36)
+                local button = self:CreateItemButton(frame, data[1], 36)
                 if button then
                     tinsert(self.itemButtons.codex, button)
                 end
@@ -670,6 +720,18 @@ function TM:BuildItemButtons()
         end
 
         self:UpdateItemButtons()
+    end
+end
+
+function TM:UpdateStatus(_, unit)
+    if not unit == "player" then
+        return
+    end
+    
+    if self:IsPlayerCanChangeTalent() then
+        self.itemButtonsAnchor.status:SetVertexColor(0.18, 0.835, 0.451, 1)
+    else
+        self.itemButtonsAnchor.status:SetVertexColor(1, 0.278, 0.341, 1)
     end
 end
 
@@ -692,9 +754,9 @@ function TM:UpdateItemButtons()
                 button.count:SetText(count)
                 button:ClearAllPoints()
                 if lastButton then
-                    button:Point("LEFT", lastButton, "RIGHT", 13, 0)
+                    button:Point("LEFT", lastButton, "RIGHT", 3, 0)
                 else
-                    button:Point("LEFT")
+                    button:Point("LEFT", 79, 0)
                 end
                 lastButton = button
                 button:Show()
@@ -709,9 +771,9 @@ function TM:UpdateItemButtons()
                 button.count:SetText(count)
                 button:ClearAllPoints()
                 if lastButton then
-                    button:Point("LEFT", lastButton, "RIGHT", 3, 0)
+                    button:Point("LEFT", lastButton, "RIGHT", 13, 0)
                 else
-                    button:Point("LEFT")
+                    button:Point("LEFT", 79, 0)
                 end
                 lastButton = button
                 button:Show()

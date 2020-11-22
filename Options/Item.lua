@@ -504,8 +504,8 @@ do -- Add options for bars
                         FormatDesc("POTIONSL", format("%s (%s)", L["Potions"], L["Shadowlands"])),
                         FormatDesc("FLASK", L["Flasks"]),
                         FormatDesc("FLASKSL", format("%s (%s)", L["Flasks"], L["Shadowlands"])),
-                        FormatDesc("FOOD", L["Foods"]),
-                        FormatDesc("FOODSL", format("%s (%s)", L["Foods"], L["Shadowlands"])),
+                        FormatDesc("FOOD", L["Food"]),
+                        FormatDesc("FOODSL", format("%s (%s)", L["Food"], L["Shadowlands"])),
                         FormatDesc("BANNER", L["Banners"]),
                         FormatDesc("UTILITY", L["Utilities"]),
                         FormatDesc("CUSTOM", L["Custom Items"])

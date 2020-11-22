@@ -34,7 +34,7 @@ options.help = {
             type = "description",
             fontSize = "medium",
             name = format(
-                "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s\n\n",
+                "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s",
                 format(L["Thank you for using %s!"], L["WindTools"]),
                 format(
                     L[
@@ -64,8 +64,61 @@ options.help = {
                 )
             )
         },
-        contributors = {
+        contact = {
             order = 2,
+            type = "group",
+            inline = true,
+            name = " ",
+            args = {
+                nga = {
+                    order = 1,
+                    type = "execute",
+                    name = L["NGA.cn"],
+                    image = W.Media.Icons.nga,
+                    func = function()
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=12142815")
+                    end,
+                    width = 0.7
+                },
+                discord = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Discord"],
+                    image = W.Media.Icons.discord,
+                    func = function()
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, discordURL)
+                    end,
+                    width = 0.7
+                },
+                qq = {
+                    order = 3,
+                    type = "execute",
+                    name = L["QQ Group"],
+                    image = W.Media.Icons.qq,
+                    func = function()
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "336069019")
+                    end,
+                    width = 0.7
+                },
+                github = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Github"],
+                    image = W.Media.Icons.github,
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_EDITBOX",
+                            nil,
+                            nil,
+                            "https://github.com/fang2hou/ElvUI_WindTools/issues"
+                        )
+                    end,
+                    width = 0.7
+                }
+            }
+        },
+        contributors = {
+            order = 3,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -132,7 +185,7 @@ options.help = {
             }
         },
         version = {
-            order = 3,
+            order = 4,
             name = L["Version"],
             type = "group",
             inline = true,
@@ -151,59 +204,6 @@ options.help = {
                     order = 3,
                     type = "description",
                     name = L["WoW Build"] .. ": " .. AddColor(format("%s (%s)", E.wowpatch, E.wowbuild))
-                }
-            }
-        },
-        contact = {
-            order = 4,
-            type = "group",
-            inline = true,
-            name = " ",
-            args = {
-                nga = {
-                    order = 1,
-                    type = "execute",
-                    name = L["NGA.cn"],
-                    image = W.Media.Icons.nga,
-                    func = function()
-                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=12142815")
-                    end,
-                    width = 0.7
-                },
-                discord = {
-                    order = 2,
-                    type = "execute",
-                    name = L["Discord"],
-                    image = W.Media.Icons.discord,
-                    func = function()
-                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, discordURL)
-                    end,
-                    width = 0.7
-                },
-                qq = {
-                    order = 3,
-                    type = "execute",
-                    name = L["QQ Group"],
-                    image = W.Media.Icons.qq,
-                    func = function()
-                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "336069019")
-                    end,
-                    width = 0.7
-                },
-                github = {
-                    order = 4,
-                    type = "execute",
-                    name = L["Github"],
-                    image = W.Media.Icons.github,
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_EDITBOX",
-                            nil,
-                            nil,
-                            "https://github.com/fang2hou/ElvUI_WindTools/issues"
-                        )
-                    end,
-                    width = 0.7
                 }
             }
         },

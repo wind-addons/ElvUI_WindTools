@@ -398,7 +398,7 @@ P.item = {
             include = "POTION,FLASK,UTILITY"
         },
         bar3 = {
-            enable = false,
+            enable = true,
             mouseOver = false,
             globalFade = false,
             fadeTime = 0.3,
@@ -436,7 +436,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "CUSTOM"
+            include = "FOOD,CUSTOM"
         }
     },
     inspect = {

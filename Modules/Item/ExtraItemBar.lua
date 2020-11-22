@@ -172,6 +172,97 @@ local flasksShadowlands = {
     171280 --永恆精煉藥劑
 }
 
+-- Foods (Crafted by cooking)
+local foods = {
+    133557, --椒鹽火腿
+    133561, --酥炸蘚鰓鱸魚
+    133562, --醃漬風暴魟魚
+    133563, --法隆納氣泡飲
+    133564, --香料烤肋排
+    133565, --脈燒肋排
+    133566, --蘇拉瑪爾海陸大餐
+    133567, --梭子魚莫古嘎古
+    133568, --鯉香風暴魟魚
+    133569, --卓格巴風味鮭魚
+    133570, --飢腸盛宴
+    133571, --艾薩拉沙拉
+    133572, --夜裔精緻拼盤
+    133573, --種籽風味炸魚盤
+    133574, --魚卜魯特餐
+    133575, --風乾鯖魚肉
+    133576, --韃靼熊排
+    133577, --戰士雜煮
+    133578, --澎湃盛宴
+    133579, --蘇拉瑪爾豪宴
+    133681, --香脆培根
+    142334, --香料龍隼煎蛋捲
+    154881, --庫爾提拉米蘇
+    154882, --蜜汁烤後腿
+    154883, --鴉莓塔
+    154884, --沼澤炸魚薯條
+    154885, --蒙達吉
+    154886, --香料笛鯛
+    154887, --羅亞肉餅
+    154889, --燒烤鯰魚
+    154891, --調味腰內肉
+    156525, --艦上盛宴
+    156526, --豐盛的船長饗宴
+    163781, --禍心巫術香腸
+    165755, --蜂蜜餡餅
+    166240, --血潤盛宴
+    166343, --野莓麵包
+    166344, --精心調味的肉排和馬鈴薯
+    166804, --波拉勒斯血腸
+    168310, --機當勞的「大機克」
+    168312, --噴香燉魚
+    168313, --烘焙港口薯
+    168314, --比爾通肉乾
+    168315, --超澎湃饗宴
+    169280, --串烤鰻魚肉
+    172040, --奶油糖醃製肋排
+    172041, --刺鰭舒芙蕾佐炸物
+    172042, --意外可口盛宴
+    172043, --暴食享樂盛宴
+    172044, --肉桂燉骨魚
+    172045, --陰暗皇冠肉排凍
+    172046, --魚子醬餅乾
+    172047, --蜜糖鰤魚蛋糕
+    172048, --肉餡蘋果餃子
+    172049, --蘋果醬彩色餡餃
+    172050, --蜜汁銀鰓香腸
+    172051, --濃醬牛排
+    172060, --靜謐魂食
+    172061, --天使雞翅
+    172062, --燉煮腿肉
+    172063, --炸骨魚
+    172068, --醃肉奶昔
+    172069, --香蕉牛肉布丁
+    184682 --特大號香檸魚排
+}
+
+-- Foods added in Shadowlands (Crafted by cooking)
+local foodsShadowlands = {
+    172040, --奶油糖醃製肋排
+    172041, --刺鰭舒芙蕾佐炸物
+    172042, --意外可口盛宴
+    172043, --暴食享樂盛宴
+    172044, --肉桂燉骨魚
+    172045, --陰暗皇冠肉排凍
+    172046, --魚子醬餅乾
+    172047, --蜜糖鰤魚蛋糕
+    172048, --肉餡蘋果餃子
+    172049, --蘋果醬彩色餡餃
+    172050, --蜜汁銀鰓香腸
+    172051, --濃醬牛排
+    172060, --靜謐魂食
+    172061, --天使雞翅
+    172062, --燉煮腿肉
+    172063, --炸骨魚
+    172068, --醃肉奶昔
+    172069, --香蕉牛肉布丁
+    184682 --特大號香檸魚排
+}
+
 -- 战旗
 local banners = {
     63359, -- 合作旌旗
@@ -600,6 +691,24 @@ function EB:UpdateBar(id)
                     local count = GetItemCount(flaskID)
                     if count and count > 0 and not self.db.blackList[flaskID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
+                end
+            elseif module == "FOOD" then -- Foods
+                for _, foodID in pairs(foods) do
+                    local count = GetItemCount(foodID)
+                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
+                end
+            elseif module == "FOODSL" then -- Foods (Shadowlands only)
+                for _, foodID in pairs(foodssShadowlands) do
+                    local count = GetItemCount(foodID)
+                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end

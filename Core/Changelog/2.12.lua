@@ -64,12 +64,14 @@ W.Changelog[212] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[通告] 技能 ID 更新至暗影国度版本.",
             "[天赋管家] 添加对 PvP 天赋的支持.",
             "[天赋管家] 添加了一个状态图标用于显示是否可以进行天赋变更.",
             "[天赋管家] 重写了物品按键, 现在可以智能识别人物等级进行显示了.",
             "[矩形小地图] 修复了有时上方会有一条横线的问题.",
             "[额外物品条] 就算条中没有按钮, 现在也会进行尺寸更新了.",
             "[额外物品条] 物品 ID 更新至暗影国度版本.",
+            "[额外物品条] 条 3 现在默认启用.",
             "[游戏条] 好友按钮回滚到上个版本.",
             "[美化皮肤] 添加遗漏的 ElvUI 聊天面板选项.",
             "[聊天链接] 修复了切换配置可能导致的错误.",
@@ -77,12 +79,14 @@ W.Changelog[212] = {
             "[好友列表] 添加了一个阵营图标的开关, 默认显示魔兽的游戏图标."
         },
         ["zhTW"] = {
+            "[通告] 技能 ID 更新至暗影之境版本.",
             "[天賦管家] 新增了對 PvP 天賦的支持.",
             "[天賦管家] 新增了一個狀態圖示用於顯示目前是否可以進行天賦變更.",
             "[天賦管家] 重寫了物品按鍵, 現在可以根據人物等級來調整顯示了.",
             "[矩形小地圖] 修復了有時上方會有一條橫線的問題.",
             "[額外物品條] 就算條中沒有按鍵, 現在也會進行尺寸更新了.",
             "[額外物品條] 物品 ID 更新至暗影之境版本.",
+            "[額外物品條] 條 3 現在默認開啟.",
             "[遊戲條] 好友按鍵回滾到上個版本.",
             "[美化皮膚] 添加遺漏的 ElvUI 對話框架設置.",
             "[聊天鏈接] 修復了切換配置可能導致的錯誤.",
@@ -90,12 +94,14 @@ W.Changelog[212] = {
             "[好友列表] 新增了一個陣營圖示的開關, 預設顯示魔獸的遊戲圖示."
         },
         ["enUS"] = {
+            "[Announcement] Update ability ID to Shadowlands patch.",
             "[Talent Manager] Add support for PvP talents.",
             "[Talent Manager] Add a status icon for showing the status of the permission of changing talents.",
             "[Talent Manager] Rewrite the item buttons, now it supports auto-hiding the items based on the character level.",
             "[Rectangle Minimap] Fix the bug that sometimes there is a line in the top of the minimap.",
             "[Extra Item Bar] Resize the bar even if there is no button on it.",
             "[Extra Item Bar] Update item ID to Shadowlands patch.",
+            "[Extra Item Bar] Bar 3 is enabled by default.",
             "[Game Bar] Roll back the change of Friends button.",
             "[Skins] Add the missing option of ElvUI Chat Panels.",
             "[Chat Link] Fix the error occurred in switching profile.",
@@ -103,12 +109,14 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
+            "[Announcement] Update ability ID to Shadowlands patch.",
             "[특성 관리자] PvP 특성에 대한 지원이 추가되었습니다.",
             "[특성 관리자] 특성 변경 가능 여부를 표시하는 상태 아이콘을 추가하였습니다.",
             "[특성 관리자] 아이템 버튼을 다시 작업하였습니다. 이제 케릭터 레벨에 따라 항목을 자동으로 숨길수 있습니다.",
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[아이템 바] 어둠땅 패치로 인해 아이템 ID를 업데이트했습니다.",
+            "[Extra Item Bar] Bar 3 is enabled by default.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",
             "[스킨] 누락된 ElvUI 채팅 패널 옵션을 추가했습니다.",
             "[채팅 링크] 프로필 변경으로 인해 발생할 수 있는 오류를 수정했습니다.",

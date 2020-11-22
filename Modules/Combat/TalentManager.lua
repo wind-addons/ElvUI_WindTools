@@ -440,6 +440,7 @@ function TM:BuildFrame()
                 frame:Hide()
             end
             self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateItemButtons")
+            self:RegisterEvent("PLAYER_LEVEL_UP", "UpdateItemButtons")
             self.itemButtonsAnchor:Show()
         end
     )
@@ -449,6 +450,7 @@ function TM:BuildFrame()
         function()
             frame:Hide()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
+            self:UnregisterEvent("PLAYER_LEVEL_UP")
             self.itemButtonsAnchor:Hide()
         end
     )
@@ -459,6 +461,7 @@ function TM:BuildFrame()
         function()
             frame:Hide()
             self:UnregisterEvent("BAG_UPDATE_DELAYED")
+            self:UnregisterEvent("PLAYER_LEVEL_UP")
             self.itemButtonsAnchor:Hide()
         end
     )

@@ -16,8 +16,8 @@ W.Changelog[212] = {
             "Fang2hou UI 更新了! 你可以在 [信息]-[重置] 介面中找到導入按鍵."
         },
         ["koKR"] = {
-            "Tip: If you want to level up with Turn In, don't forget to uncheck the auto select reward!",
-            "Fang2hou UI have been updated! You can find import button in [Information]-[Reset]"
+            "팁: 레벨업 중 자동 수락을 사용할 생각이라면, 보상 자동 선택 옵션을 꺼두는 것을 잊지 마세요!",
+            "Fang2hou UI가 업데이트되었습니다! 가져오기 버튼은 [정보]-[리셋]에서 찾을 수 있습니다."
         }
     },
     NEW = {
@@ -81,7 +81,7 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
-            "[Talent Manager] Add support for PvP talents.",
+            "[특성 관리자] vP 특성에 대한 지원이 추가되었습니다.",
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",

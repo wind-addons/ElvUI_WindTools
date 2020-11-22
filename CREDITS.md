@@ -98,7 +98,7 @@
 - Extra Items Bar
     - cadcamzy (EUI)
 
-- Inpect
+- Inspect
     - loudsoul (TinyInspect)
 
 - Instance Difficulty

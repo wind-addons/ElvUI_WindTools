@@ -433,7 +433,7 @@ do -- 插件代码
         [L["Extra Items Bar"]] = {
             "cadcamzy (EUI)"
         },
-        [L["Inpect"]] = {
+        [L["Inspect"]] = {
             "loudsoul (TinyInspect)"
         },
         [L["Instance Difficulty"]] = {

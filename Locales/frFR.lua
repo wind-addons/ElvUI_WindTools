@@ -624,6 +624,7 @@ L["Progression"] = true
 L["Provoke all(Monk)"] = true
 L["Put the keystone from bag automatically."] = true
 L["Puts a overlay on already known learnable items on vendors and AH."] = true
+L["PvP Talents"] = true
 L["QQ Group"] = true
 L["Quest"] = true
 L["Quest Frames"] = "Fenêtre de Quête"

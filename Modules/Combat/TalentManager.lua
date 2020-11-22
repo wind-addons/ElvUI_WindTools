@@ -26,7 +26,6 @@ local Item = Item
 local LearnTalents = LearnTalents
 local LearnPvpTalent = LearnPvpTalent
 
-local C_Timer_After = C_Timer.After
 local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
 
 local ACCEPT = _G.ACCEPT
@@ -356,7 +355,7 @@ function TM:UpdateItemButtons()
                 function()
                     self.itemButtons[1] = self:CreateItemButton(frame, 141446, item1:GetItemName(), 36)
                     if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
-                        C_Timer_After(
+                        E:Delay(
                             1,
                             function()
                                 if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
@@ -379,7 +378,7 @@ function TM:UpdateItemButtons()
                 function()
                     self.itemButtons[2] = self:CreateItemButton(frame, 153646, item2:GetItemName(), 36)
                     if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
-                        C_Timer_After(
+                        E:Delay(
                             1,
                             function()
                                 if _G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop then
@@ -498,9 +497,7 @@ function TM:BuildFrame()
             "OnEnter",
             function(self)
                 TM:SetButtonTooltip(self)
-                if self.backdrop.shadow then
-                    self.backdrop.shadow:Show()
-                end
+                self.backdrop.shadow:Show()
             end
         )
 
@@ -508,9 +505,7 @@ function TM:BuildFrame()
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                if self.backdrop.shadow then
-                    self.backdrop.shadow:Hide()
-                end
+                self.backdrop.shadow:Hide()
             end
         )
 

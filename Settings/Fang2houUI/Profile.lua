@@ -1169,7 +1169,7 @@ local function BuildProfile()
                         }
                     },
                     ["pvp"] = {
-                        ["position"] = "RIGHT"
+                        ["position"] = "CENTER"
                     }
                 },
                 ["targettarget"] = {

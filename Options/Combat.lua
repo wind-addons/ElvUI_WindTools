@@ -428,15 +428,13 @@ options.talentManager = {
             order = 4,
             type = "toggle",
             name = L["Item Buttons"],
-            set = function(_, value)
-                E.private.WT.combat.talentManager.itemButtons = value
-                TM:UpdateItemButtons()
-            end
+            desc = L["Add tomb and codex buttons."]
         },
         statusIcon = {
             order = 5,
             type = "toggle",
-            name = L["Status Icon"]
+            name = L["Status Icon"],
+            desc = L["Add an icon indicates the status of the permission of changing talents."]
         },
         clearSets = {
             order = 6,

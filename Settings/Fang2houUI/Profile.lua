@@ -233,7 +233,6 @@ local function BuildProfile()
                         ["buttonsPerRow"] = 6
                     },
                     ["bar3"] = {
-                        ["enable"] = true,
                         ["countFont"] = {
                             ["size"] = 10
                         },

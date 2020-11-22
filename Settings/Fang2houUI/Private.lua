@@ -39,7 +39,7 @@ function W:Fang2houUIPrivate()
     E.private["WT"]["misc"]["mute"]["enable"] = true
     E.private["WT"]["misc"]["mute"]["mount"][63796] = true
     E.private["WT"]["misc"]["mute"]["mount"][229385] = true
-    E.private["WT"]["misc"]["skipCutScene"] = true
+    E.private["WT"]["misc"]["skipCutScene"] = false
     E.private["general"]["chatBubbleFont"] = "聊天"
     E.private["general"]["chatBubbleFontOutline"] = "OUTLINE"
     E.private["general"]["chatBubbles"] = "nobackdrop"

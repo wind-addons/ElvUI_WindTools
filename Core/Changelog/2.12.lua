@@ -88,8 +88,8 @@ W.Changelog[212] = {
         },
         ["koKR"] = {
             "[특성 관리자] PvP 특성에 대한 지원이 추가되었습니다.",
-            "[특성 관리자] Add a status icon for showing the status of the permission of changing talents.",
-            "[특성 관리자] Rewrite the item buttons, now it supports auto-hiding the items based on the character level.",
+            "[특성 관리자] 특성 변경 가능 여부를 표시하는 상태 아이콘을 추가하였습니다.",
+            "[특성 관리자] 아이템 버튼을 다시 작업하였습니다. 이제 케릭터 레벨에 따라 항목을 자동으로 숨길수 있습니다.",
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[아이템 바] 어둠땅 패치로 인해 아이템 ID를 업데이트했습니다.",

@@ -302,13 +302,13 @@ function TM:SetButtonTooltip(button)
     GameTooltip:Show()
 end
 
-function TM:CreateItemButton(parent, itemID, itemName, width, height)
+function TM:CreateItemButton(parent, itemID, width, height)
     local button = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(width, height or width)
     button:SetTemplate("Default")
     button:SetClampedToScreen(true)
     button:SetAttribute("type", "item")
-    button:SetAttribute("item", itemName)
+    button:SetAttribute("item", "item:"..itemID)
     button:EnableMouse(true)
     button:RegisterForClicks("AnyUp")
 
@@ -321,13 +321,12 @@ function TM:CreateItemButton(parent, itemID, itemName, width, height)
     button.tex = tex
     button:StyleButton()
 
-    S:CreateShadow(button, nil, 0, 0.659, 1, true)
-    button.shadow:Hide()
-
     button:SetScript(
         "OnEnter",
-        function()
-            button.shadow:Show()
+        function(self)
+            if self.SetBackdropBorderColor then
+                self:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+            end
             GameTooltip:SetOwner(button, "ANCHOR_BOTTOMRIGHT")
             GameTooltip:SetItemByID(itemID)
             GameTooltip:Show()
@@ -336,8 +335,10 @@ function TM:CreateItemButton(parent, itemID, itemName, width, height)
 
     button:SetScript(
         "OnLeave",
-        function()
-            button.shadow:Hide()
+        function(self)
+            if self.SetBackdropBorderColor then
+                self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+            end
             GameTooltip:Hide()
         end
     )
@@ -377,7 +378,7 @@ function TM:UpdateItemButtons()
             )
             item2:ContinueOnItemLoad(
                 function()
-                    self.itemButtons[2] = self:CreateItemButton(frame, 153646, item2:GetItemName(), 36)
+                    self.itemButtons[2] = self:CreateItemButton(frame, 153646, 36)
                     if not (_G.PlayerTalentFrame and _G.PlayerTalentFrame.backdrop) then
                         E:Delay(
                             1,

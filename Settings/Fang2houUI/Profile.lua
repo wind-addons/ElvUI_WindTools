@@ -292,7 +292,7 @@ local function BuildProfile()
         ["movers"] = {
             ["WTRaidMarkersBarAnchor"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-45,25",
             ["TopCenterContainerMover"] = "TOP,ElvUIParent,TOP,0,-75",
-            ["ThreatBarMover"] = "TOP,ElvUF_TargetMover,BOTTOM,0,-20",
+            ["ThreatBarMover"] = "TOP,ElvUF_TargetMover,BOTTOM,0,-17",
             ["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,140",
             ["ElvUF_RaidMover"] = "RIGHT,ElvUIParent,CENTER,-150,0",
             ["LeftChatMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,43,35",

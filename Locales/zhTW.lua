@@ -347,6 +347,7 @@ L["Focus the target by modifier key + click."] = "使用修飾鍵 + 滑鼠點擊
 L["Follower Assignees"] = "追隨者徵募官"
 L["Font"] = "字型"
 L["Font Setting"] = "字型設定"
+L["Foods"] = "食物"
 L["Force to announce if the spell which is cast by you."] = "強制通告你使用的法術."
 L["Force to announce if the target is you."] = "強制通告以你為目標的法術."
 L["Force to track the target even if it over 1000 yds."] = "強制追蹤超過 1000 碼的目標."

@@ -347,6 +347,7 @@ L["Focus the target by modifier key + click."] = true
 L["Follower Assignees"] = true
 L["Font"] = "Police"
 L["Font Setting"] = true
+L["Foods"] = true
 L["Force to announce if the spell which is cast by you."] = true
 L["Force to announce if the target is you."] = true
 L["Force to track the target even if it over 1000 yds."] = true

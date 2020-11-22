@@ -92,11 +92,12 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 9. **Hekili Skin**: Apply skin for Hekili.
 10. **Immersion Skin**: Apply skin for Immersion.
 11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
-12. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-13. **REHack Skin**: Apply skin for REHack.
-14. **Rematch Skin**: Apply skin for Rematch.
-15. **TinyInspect Skin**: Apply skin for TinyInspect.
-16. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+12. **Myslot Skin**: Apply skin for Myslot.
+13. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
+14. **REHack Skin**: Apply skin for REHack.
+15. **Rematch Skin**: Apply skin for Rematch.
+16. **TinyInspect Skin**: Apply skin for TinyInspect.
+17. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.
@@ -109,6 +110,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 8. **Game Bar**: A system bar in modern style; Support customization.
 9. **Skip Cut Scene**: Skip most cut scenes; Press the modified key to stop it temporarily.
 10. **LFG List**: Reskin the icons inside LFG group list with a bar in class color.
+11. **Move Speed**: Add move speed to the list in character panel.
 
 More features are coming soon.
 

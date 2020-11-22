@@ -93,11 +93,12 @@
 9. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化.
 10. **Immersion 美化**: 為 Immersion 對話窗口, 按鍵提供全方位的美化.
 11. **網易集合石美化**: 為網易的集合石添加美化.
-12. **Premade Groups Filter 美化**: 為 Premade Groups Filter 的主要窗口添加美化.
-13. **REHack 美化**: 為 REHack 的主要窗口添加美化.
-14. **Rematch 美化**: 為 Rematch 的主要窗口添加美化.
-15. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
-16. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
+12. **Myslot 美化**: 為 Myslot 的主要窗口添加美化.
+13. **Premade Groups Filter 美化**: 為 Premade Groups Filter 的主要窗口添加美化.
+14. **REHack 美化**: 為 REHack 的主要窗口添加美化.
+15. **Rematch 美化**: 為 Rematch 的主要窗口添加美化.
+16. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
+17. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
 
 ## 其他
 1. **CVars 編輯器**: 一些常用功能 CVars 的開關.
@@ -110,6 +111,7 @@
 8. **遊戲條**: 添加一個美觀且實用的遊戲條.
 9. **跳過過場動畫**: 跳過大部分過場動畫; 按下修飾鍵可暫時停用.
 10. **預組列表**: 美化預組隊伍列表的圖標, 並添加一個職業顏色條.
+11. **移動速度**: 在人物面板顯示移動速度.
 
 更多功能加入中...
 

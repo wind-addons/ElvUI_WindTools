@@ -1,6 +1,6 @@
 ## Interface: 90002
 ## Author: fang2hou
-## Version: 2.11
+## Version: 2.12
 ## Title: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0T|r|cff60b1e8o|r|cff98c0d5o|r|cffc1ccc6l|r|cffc1ccc6s|r
 ## Title-zhCN: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r |cff469ff0工|r|cffA8D0E5具|r|cffdedede箱|r
 ## Title-zhTW: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r |cff469ff0工|r|cffA8D0E5具|r|cffdedede箱|r
@@ -10,7 +10,7 @@
 ## Notes-zhTW: 用於 ElvUI 的自訂增強.
 ## Notes-koKR: ElvUI에 많은 기능을 추가하고 사용자가 설정할 수 있습니다.
 ## RequiredDeps: ElvUI
-## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus
+## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, Myslot
 ## X-Curse-Project-ID: 300361
 ## X-WoWI-ID: 25687
 ## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & others in CREDITS.md

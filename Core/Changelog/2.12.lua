@@ -49,7 +49,7 @@ W.Changelog[212] = {
             "[Misc] Add new feature that showing the move speed in character panel.",
             "[Skins] Add new skin for Myslot.",
             '[Extra Item Bar] Add new item group "POTIONSL" (Shadowlands potions) and "FLASKSL" (Shadowlands flasks).',
-            '[Extra Item Bar] Add new item group "FOOD" (foods) and "FOODSL" (Shadowlands foods).',
+            '[Extra Item Bar] Add new item group "FOOD" (food) and "FOODSL" (Shadowlands food).',
             "New module [Maps]-[Instance Difficulty] supports reskin the difficulty indicator to text style. Thanks Merathilis."
         },
         ["koKR"] = {

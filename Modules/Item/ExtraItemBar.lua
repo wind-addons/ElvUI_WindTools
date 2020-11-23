@@ -172,8 +172,8 @@ local flasksShadowlands = {
     171280 --永恆精煉藥劑
 }
 
--- Foods (Crafted by cooking)
-local foods = {
+-- Food (Crafted by cooking)
+local food = {
     133557, --椒鹽火腿
     133561, --酥炸蘚鰓鱸魚
     133562, --醃漬風暴魟魚
@@ -240,8 +240,8 @@ local foods = {
     184682 --特大號香檸魚排
 }
 
--- Foods added in Shadowlands (Crafted by cooking)
-local foodsShadowlands = {
+-- Food added in Shadowlands (Crafted by cooking)
+local foodShadowlands = {
     172040, --奶油糖醃製肋排
     172041, --刺鰭舒芙蕾佐炸物
     172042, --意外可口盛宴
@@ -695,8 +695,8 @@ function EB:UpdateBar(id)
                         buttonID = buttonID + 1
                     end
                 end
-            elseif module == "FOOD" then -- Foods
-                for _, foodID in pairs(foods) do
+            elseif module == "FOOD" then -- Food
+                for _, foodID in pairs(food) do
                     local count = GetItemCount(foodID)
                     if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
@@ -704,8 +704,8 @@ function EB:UpdateBar(id)
                         buttonID = buttonID + 1
                     end
                 end
-            elseif module == "FOODSL" then -- Foods (Shadowlands only)
-                for _, foodID in pairs(foodsShadowlands) do
+            elseif module == "FOODSL" then -- Food (Shadowlands only)
+                for _, foodID in pairs(foodShadowlands) do
                     local count = GetItemCount(foodID)
                     if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})

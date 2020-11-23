@@ -19,9 +19,9 @@ W.Changelog[212] = {
             "Fang2hou UI have been updated! You can find import button in [Information]-[Reset]"
         },
         ["koKR"] = {
-            "Tip: Don't forgot disabling the [Skip Cutscene] in [Misc], if you want to watch new scenes!",
+            "팁: 새로운 컷신을 보고 싶다면 [기타]에서 [컷신 건너뛰기]를 비활성화하는 것을 잊지 마세요!",
             "팁: 레벨업 중 자동 수락을 사용할 생각이라면, 보상 자동 선택 옵션을 꺼두는 것을 잊지 마세요!",
-            "Fang2hou UI가 업데이트되었습니다! 가져오기 버튼은 [정보]-[리셋]에서 찾을 수 있습니다."
+            "Fang2hou UI 프로필이 업데이트되었습니다! 가져오기 버튼은 [정보]-[리셋]에서 찾을 수 있습니다."
         }
     },
     NEW = {
@@ -57,8 +57,8 @@ W.Changelog[212] = {
             "[태그] 신규 태그 [smart-power-nosign]이 자원 카테고리에 추가되었습니다. 적용 예 : 도적은 (120), 마법사는 (100)",
             "[기타] 캐릭터 창에 이동 속도를 보여주는 새로운 기능을 추가합니다.",
             "[스킨] Myslot 애드온 스킨 추가.",
-            '[Extra Item Bar] Add new item group "POTIONSL" (Shadowlands potions) and "FLASKSL" (Shadowlands flasks).',
-            '[Extra Item Bar] Add new item group "FOOD" (foods) and "FOODSL" (Shadowlands foods).',
+            '[아이템 바] 새로운 아이템 그룹 "POTIONSL" (어둠땅 물약) 과 "FLASKSL" (어둠땅 영약)이 추가 되었습니다.',
+            '[아이템 바] 새로운 아이템 그룹 "FOOD" (음식) 과 "FOODSL" (어둠땅 음식)이 추가 되었습니다.',
             "신규 모듈 [지도]-[인스턴스 난이도]가 추가되었습니다. 미니맵의 인스턴스 난이도를 문자 형식으로 변경합니다. Thanks Merathilis."
         }
     },
@@ -112,15 +112,15 @@ W.Changelog[212] = {
             "[Friend List] Add an option for faction icons, and set WoW icons as default."
         },
         ["koKR"] = {
-            "Optimize layout of partial options.",
-            "[Announcement] Update ability ID to Shadowlands patch.",
+            "일부 설정의 레이아웃을 최적화합니다.",
+            "[알림] 스킬 ID가 어둠땅 버전으로 업데이트되었습니다.",
             "[특성 관리자] PvP 특성에 대한 지원이 추가되었습니다.",
             "[특성 관리자] 특성 변경 가능 여부를 표시하는 상태 아이콘을 추가하였습니다.",
             "[특성 관리자] 아이템 버튼을 다시 작업하였습니다. 이제 케릭터 레벨에 따라 항목을 자동으로 숨길수 있습니다.",
             "[미니맵 비율 조정] 가끔씩 미니맵 상단에 선이 나타나는 버그를 수정합니다.",
             "[아이템 바] 아이템 바에 버튼이 없어도 바의 크기를 조정할 수 있습니다.",
             "[아이템 바] 어둠땅 패치로 인해 아이템 ID를 업데이트했습니다.",
-            "[Extra Item Bar] Bar 3 is enabled by default.",
+            "[아이템 바] 이제 3번 아이템 바는 기본적으로 활성화되어 있습니다.",
             "[게임 바] 친구 버튼이 이전 버전으로 롤백 되었습니다.",
             "[스킨] 누락된 ElvUI 채팅 패널 옵션을 추가했습니다.",
             "[채팅 링크] 프로필 변경으로 인해 발생할 수 있는 오류를 수정했습니다.",

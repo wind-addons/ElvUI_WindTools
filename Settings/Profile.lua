@@ -859,7 +859,6 @@ P.unitFrames = {
 
 P.misc = {
     disableTalkingHead = false,
-    skipCutScene = false,
     gameBar = {
         enable = true,
         mouseOver = false,

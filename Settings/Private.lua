@@ -198,6 +198,7 @@ V.skins = {
 		communities = true,
 		covenantRenown = true,
 		covenantPreview = true,
+		covenantSanctum = true,
 		debugTools = true,
 		dressingRoom = true,
 		encounterJournal = true,

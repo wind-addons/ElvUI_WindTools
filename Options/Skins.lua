@@ -457,6 +457,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Covenant Preview"]
         },
+        covenantSanctum = {
+            order = 10,
+            type = "toggle",
+            name = L["Covenant Sanctum"]
+        },
         debugTools = {
             order = 10,
             type = "toggle",

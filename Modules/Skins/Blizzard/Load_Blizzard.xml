@@ -20,6 +20,7 @@
 	<Script file='Communities.lua'/>
 	<Script file='CovenantRenown.lua'/>
 	<Script file='CovenantPreview.lua'/>
+	<Script file='CovenantSanctum.lua'/>
 	<Script file='DebugTools.lua'/>
 	<Script file='DressingRoom.lua'/>
 	<Script file='EncounterJournal.lua'/>

@@ -34,12 +34,12 @@ W.Changelog[213] = {
             "[Skins] Add new skin for Blizzard Soulbinds."
         },
         ["koKR"] = {
-            "[Objective Frame] Add new option for moving maw buff frame to right. Disabled by default.",
-            "[Objective Frame] Add new option for making header shorter. Enabled by default",
-            "[Skins] Add new skin for Blizzard Covenant Preview.",
-            "[Skins] Add new skin for Blizzard Covenant Renown.",
-            "[Skins] Add new skin for Blizzard Covenant Sanctum.",
-            "[Skins] Add new skin for Blizzard Soulbinds."
+            "[퀘스트 추적기] 령 능력 버프 창을 오른쪽으로 열어주는 새로운 옵션을 추가합니다. 기본적으로 비활성화되어 있습니다.",
+            "[퀘스트 추적기] 제목을 약어로 표시하는 새로운 옵션을 추가합니다. 기본적으로 활성화되어 있습니다.",
+            "[스킨] Blizzard 성약단 공물 보기 프레임에 새로운 스킨을 추가합니다.",
+            "[스킨] Blizzard 성약단 영예 프레임에 새로운 스킨을 추가합니다.",
+            "[스킨] Blizzard 성약단 성소 프레임에 새로운 스킨을 추가합니다.",
+            "[스킨] Blizzard 성약단 영혼결속 프레임에 새로운 스킨을 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -71,13 +71,13 @@ W.Changelog[213] = {
             "[Reset] Update [Misc] - [General] resetting."
         },
         ["koKR"] = {
-            "[Skins] Optimize the skins on Torghast ability choice.",
-            "[Skins] Optimize the skins on Blizzard Quest Frame.",
-            "[Skins] Optimize the skins on Blizzard Gossip Frame.",
-            "[Talent Manager] Fix the taint may occur when you toggle talent UI in combat",
-            "[Talent Manager] Now after gains the buff from the Kyrian Steward, the status icon will be updated.",
-            "[Rectangle Minimap] Optimize the display in Torghast.",
-            "[Reset] Update [Misc] - [General] resetting."
+            "[스킨] 토르가스트 령 능력 선택 스킨을 최적화 합니다.",
+            "[스킨] Blizzard 퀘스트 프레임 스킨을 최적화 합니다.",
+            "[스킨] Blizzard NPC 대화 창 스킨을 최적화 합니다.",
+            "[특성 관리자] 전투 중 특성 UI를 전환할 때 오류가 발생할 수 있는 문제를 수정하였습니다.",
+            "[특성 관리자] 이제 키리안 청지기에게 특성 변경 버프를 받을 때 상태 아이콘이 올바르게 업데이트됩니다.",
+            "[미니맵 비율 조정] 토르가스트에서 디스플레이를 최적화했습니다.",
+            "[리셋] 업데이트 [기타] - [일반] 재설정."
         }
     }
 }

@@ -47,8 +47,8 @@ function RM:ChangeShape()
         _G.HybridMinimap.CircleMask:StripTextures()
         _G.HybridMinimap.MapCanvas:SetMaskTexture(texturePath)
         Minimap.backdrop:SetFrameStrata(_G.HybridMinimap.MapCanvas:GetFrameStrata())
-        Minimap.backdrop:SetFrameLevel(_G.HybridMinimap.MapCanvas:GetFrameLevel()-1)
-        Minimap.backdrop.Center:SetVertexColor(0,0,0,1)
+        Minimap.backdrop:SetFrameLevel(_G.HybridMinimap.MapCanvas:GetFrameLevel() - 1)
+        Minimap.backdrop.Center:SetVertexColor(0, 0, 0, 1)
     end
 
     if Minimap.location then

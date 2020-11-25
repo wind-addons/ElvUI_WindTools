@@ -105,11 +105,11 @@ V.quest = {
 		percentage = false,
 		colorfulPercentage = false,
 		showMawBuffRight = false,
-		shortHeader = true,
 		header = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,
-			style = "OUTLINE"
+			style = "OUTLINE",
+			shortHeader = true,
 		},
 		title = {
 			name = E.db.general.font,

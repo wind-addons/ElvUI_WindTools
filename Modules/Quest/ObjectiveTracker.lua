@@ -94,7 +94,7 @@ function OT:ChangeQuestHeaderStyle()
         local modules = frame[i]
         if modules and modules.Header and modules.Header.Text then
             F.SetFontWithDB(modules.Header.Text, self.db.header)
-            if self.db.shortHeader then
+            if self.db.header.shortHeader then
                 modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
             end
         end

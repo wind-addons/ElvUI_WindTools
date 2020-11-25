@@ -76,19 +76,6 @@ options.objectiveTracker = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
         },
-        shortHeader = {
-            order = 3,
-            type = "toggle",
-            name = L["Short Header"],
-            desc = L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."],
-            disabled = function()
-                return not E.private.WT.quest.objectiveTracker.enable
-            end,
-            set = function(info, value)
-                E.private.WT.quest.objectiveTracker[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end,
-        },
         progress = {
             order = 4,
             type = "group",
@@ -218,7 +205,13 @@ options.objectiveTracker = {
                     min = 5,
                     max = 60,
                     step = 1
-                }
+                },
+                shortHeader = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Short Header"],
+                    desc = L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."],
+                },
             }
         },
         title = {

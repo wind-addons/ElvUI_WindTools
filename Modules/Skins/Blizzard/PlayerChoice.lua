@@ -12,7 +12,7 @@ function S:Blizzard_PlayerChoiceUI()
     if not frame then
         return
     end
-    self:CreateShadow(_G.PlayerChoiceFrame)
+    self:CreateBackdropShadow(_G.PlayerChoiceFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_PlayerChoiceUI")

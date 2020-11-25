@@ -104,6 +104,7 @@ V.quest = {
 		colorfulProgress = true,
 		percentage = false,
 		colorfulPercentage = false,
+		showMawBuffRight = fasle,
 		header = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,

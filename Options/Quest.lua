@@ -64,8 +64,16 @@ options.objectiveTracker = {
             end,
             name = L["No Dash"]
         },
-        progress = {
+        showMawBuffRight = {
             order = 3,
+            type = "toggle",
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
+            name = L["Show Maw Buff On Right"]
+        },
+        progress = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Progress"],
@@ -93,7 +101,7 @@ options.objectiveTracker = {
             }
         },
         titleColor = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Title Color"],
@@ -152,7 +160,7 @@ options.objectiveTracker = {
             }
         },
         header = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Header"],
@@ -197,7 +205,7 @@ options.objectiveTracker = {
             }
         },
         title = {
-            order = 6,
+            order = 7,
             type = "group",
             inline = true,
             name = L["Title"],
@@ -242,7 +250,7 @@ options.objectiveTracker = {
             }
         },
         info = {
-            order = 7,
+            order = 8,
             type = "group",
             inline = true,
             name = L["Information"],

@@ -29,6 +29,7 @@ local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsResting = IsResting
 local Item = Item
+local Spell = Spell
 local LearnPvpTalent = LearnPvpTalent
 local LearnTalents = LearnTalents
 local UnitLevel = UnitLevel

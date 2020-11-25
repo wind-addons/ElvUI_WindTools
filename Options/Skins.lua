@@ -447,6 +447,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Communities"]
         },
+        covenantPreview = {
+            order = 10,
+            type = "toggle",
+            name = L["Covenant Preview"]
+        },
         debugTools = {
             order = 10,
             type = "toggle",

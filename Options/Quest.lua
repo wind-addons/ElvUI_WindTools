@@ -67,10 +67,14 @@ options.objectiveTracker = {
         showMawBuffRight = {
             order = 3,
             type = "toggle",
+            name = L["Maw Buff On Right"],
             disabled = function()
                 return not E.private.WT.quest.objectiveTracker.enable
             end,
-            name = L["Show Maw Buff On Right"]
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
         },
         progress = {
             order = 4,

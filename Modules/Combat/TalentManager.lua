@@ -60,6 +60,7 @@ local itemList = {
 
 do
     local auras = {}
+    local buffs = {325012}
     for _, data in pairs(itemList.tome) do
         local item = Item:CreateFromItemID(data[1])
         item:ContinueOnItemLoad(
@@ -73,6 +74,14 @@ do
         item:ContinueOnItemLoad(
             function()
                 tinsert(auras, item:GetItemName())
+            end
+        )
+    end
+    for _, data in pairs(buffs) do
+        local spell = Spell:CreateFromSpellID(data)
+        spell:ContinueOnSpellLoad(
+            function()
+                tinsert(auras, spell:GetSpellName())
             end
         )
     end

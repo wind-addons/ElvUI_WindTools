@@ -145,6 +145,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_Contribution"] = {
         "ContributionCollectionFrame"
     },
+    ["Blizzard_CovenantRenown"] = {
+        "CovenantRenownFrame"
+    },
     ["Blizzard_DeathRecap"] = {
         "DeathRecapFrame"
     },

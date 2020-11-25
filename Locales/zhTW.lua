@@ -490,6 +490,7 @@ L["Make sure you select the NPC as your target."] = "請確保你已經選擇了
 L["Make the additional percentage text be colored."] = "使得額外的百分比文字為彩色顯示."
 L["Maps"] = "地圖"
 L["Math Without Kanji"] = "無漢字計數"
+L["Maw Buff On Right"] = "爬塔 Buff 在右"
 L["Media Files"] = "媒體檔案"
 L["MerathilisUI"] = "|cffff7d0aMerathilisUI|r"
 L["Merchant"] = "商人"

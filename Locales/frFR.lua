@@ -490,6 +490,7 @@ L["Make sure you select the NPC as your target."] = true
 L["Make the additional percentage text be colored."] = true
 L["Maps"] = "Cartes"
 L["Math Without Kanji"] = true
+L["Maw Buff On Right"] = true
 L["Media Files"] = true
 L["MerathilisUI"] = "|cffff7d0aMerathilisUI|r"
 L["Merchant"] = true

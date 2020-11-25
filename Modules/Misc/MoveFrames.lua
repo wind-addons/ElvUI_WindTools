@@ -231,6 +231,9 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_ScrappingMachineUI"] = {
         "ScrappingMachineFrame"
+    },    
+    ["Blizzard_Soulbinds"] = {
+        "SoulbindViewer"
     },
     ["Blizzard_SubscriptionInterstitialUI"] = {
         "SubscriptionInterstitialFrame"

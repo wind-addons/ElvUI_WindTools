@@ -59,14 +59,15 @@ W.Changelog[213] = {
             "[Skins] Optimize the skins on Torghast ability choice.",
             "[Skins] Optimize the skins on Blizzard Quest Frame.",
             "[Skins] Optimize the skins on Blizzard Gossip Frame.",
-            "[Talent Manager] Fix the taint may occurred when you toggle talent UI in combat",
+            "[Talent Manager] Fix the taint may occur when you toggle talent UI in combat",
+            "[Talent Manager] Now after gains the buff from the Kyrian Steward, the status icon will be updated.",
             "[Reset] Update [Misc] - [General] resetting."
         },
         ["koKR"] = {
             "[Skins] Optimize the skins on Torghast ability choice.",
             "[Skins] Optimize the skins on Blizzard Quest Frame.",
             "[Skins] Optimize the skins on Blizzard Gossip Frame.",
-            "[Talent Manager] Fix the taint may occurred when you toggle talent UI in combat",
+            "[Talent Manager] Fix the taint may occur when you toggle talent UI in combat",
             "[Talent Manager] Now after gains the buff from the Kyrian Steward, the status icon will be updated.",
             "[Reset] Update [Misc] - [General] resetting."
         }

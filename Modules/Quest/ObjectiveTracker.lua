@@ -224,7 +224,7 @@ function OT:ShowMawBuffRight()
     if not self.db.enable or not self.db.showMawBuffRight then
         return
     end
-    local mawBuffsBlock = ScenarioBlocksFrame.MawBuffsBlock
+    local mawBuffsBlock = _G.ScenarioBlocksFrame.MawBuffsBlock
     local list = mawBuffsBlock and mawBuffsBlock.Container.List
     if list then
         list:ClearAllPoints()

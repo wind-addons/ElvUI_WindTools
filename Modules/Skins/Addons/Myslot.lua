@@ -5,6 +5,9 @@ local ES = E:GetModule("Skins")
 local _G = _G
 local LibStub = _G.LibStub
 
+local pairs = pairs
+local floor = floor
+
 function S:Myslot()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.myslot then
         return

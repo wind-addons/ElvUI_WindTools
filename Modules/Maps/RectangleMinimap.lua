@@ -113,7 +113,7 @@ function RM:Initialize()
     self:RegisterEvent("ADDON_LOADED")
 end
 
-function RM:ADDON_LOADED()
+function RM:ADDON_LOADED(_, addon)
     if addon == "Blizzard_HybridMinimap" then
         self:ChangeShape()
         self:UnregisterEvent("ADDON_LOADED")

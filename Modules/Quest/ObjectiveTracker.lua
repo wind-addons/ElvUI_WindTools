@@ -14,6 +14,12 @@ local tonumber = tonumber
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
+local replaceRule = {
+    ["『譴罪之塔』托迦司"] = L["Torghast"],
+    ["托加斯特，罪魂之塔"] = L["Torghast"],
+    ["Torghast, Tower of the Damned"] = L["Torghast"],
+}
+
 local classColor = _G.RAID_CLASS_COLORS[E.myclass]
 local color = {
     start = {
@@ -88,6 +94,9 @@ function OT:ChangeQuestHeaderStyle()
         local modules = frame[i]
         if modules and modules.Header and modules.Header.Text then
             F.SetFontWithDB(modules.Header.Text, self.db.header)
+            if self.db.shortHeader then
+                modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
+            end
         end
     end
 end
@@ -200,6 +209,15 @@ do
             _G.OBJECTIVE_TRACKER_DASH_WIDTH = dash
         end
     end
+end
+
+function OT:ShortTitle(str)
+    for longName, shortName in pairs(replaceRule) do
+        if longName == str then
+            return shortName
+        end
+    end
+    return str
 end
 
 function OT:ShowMawBuffRight()

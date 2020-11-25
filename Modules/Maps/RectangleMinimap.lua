@@ -44,8 +44,11 @@ function RM:ChangeShape()
     MinimapBackdrop:SetOutside(Minimap.backdrop)
 
     if _G.HybridMinimap then
-        local MapCanvas = _G.HybridMinimap.MapCanvas
-        MapCanvas:SetMaskTexture(texturePath)
+        _G.HybridMinimap.CircleMask:StripTextures()
+        _G.HybridMinimap.MapCanvas:SetMaskTexture(texturePath)
+        Minimap.backdrop:SetFrameStrata(_G.HybridMinimap.MapCanvas:GetFrameStrata())
+        Minimap.backdrop:SetFrameLevel(_G.HybridMinimap.MapCanvas:GetFrameLevel()-1)
+        Minimap.backdrop.Center:SetVertexColor(0,0,0,1)
     end
 
     if Minimap.location then

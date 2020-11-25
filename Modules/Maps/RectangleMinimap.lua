@@ -43,8 +43,10 @@ function RM:ChangeShape()
     Minimap.backdrop:SetOutside(Minimap, 1, -halfDiff + 1)
     MinimapBackdrop:SetOutside(Minimap.backdrop)
 
-    local MapCanvas = _G.HybridMinimap.MapCanvas
-    MapCanvas:SetMaskTexture(texturePath)
+    if _G.HybridMinimap then
+        local MapCanvas = _G.HybridMinimap.MapCanvas
+        MapCanvas:SetMaskTexture(texturePath)
+    end
 
     if Minimap.location then
         Minimap.location:ClearAllPoints()
@@ -110,6 +112,7 @@ end
 
 function RM:ADDON_LOADED()
     if addon == "Blizzard_HybridMinimap" then
+        self:ChangeShape()
         self:UnregisterEvent("ADDON_LOADED")
     end
 end

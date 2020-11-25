@@ -18,6 +18,7 @@
 	<Script file='ChromieTime.lua'/>
 	<Script file='Collections.lua'/>
 	<Script file='Communities.lua'/>
+	<Script file='CovenantRenown.lua'/>
 	<Script file='CovenantPreview.lua'/>
 	<Script file='DebugTools.lua'/>
 	<Script file='DressingRoom.lua'/>

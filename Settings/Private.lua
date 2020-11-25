@@ -196,6 +196,7 @@ V.skins = {
 		chromieTime = true,
 		collections = true,
 		communities = true,
+		covenantRenown = true,
 		covenantPreview = true,
 		debugTools = true,
 		dressingRoom = true,

@@ -447,6 +447,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Communities"]
         },
+        covenantRenown = {
+            order = 10,
+            type = "toggle",
+            name = L["Covenant Renown"]
+        },
         covenantPreview = {
             order = 10,
             type = "toggle",

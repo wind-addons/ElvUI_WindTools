@@ -40,7 +40,8 @@ function S:Blizzard_GarrisonUI()
         _G.GarrisonShipyardFrame,
         _G.OrderHallMissionFrame,
         _G.OrderHallCommandBar,
-        _G.BFAMissionFrame
+        _G.BFAMissionFrame,
+        _G.CovenantMissionFrame
     }
 
     local tabs = {
@@ -56,7 +57,9 @@ function S:Blizzard_GarrisonUI()
         _G.OrderHallMissionFrameTab3,
         _G.BFAMissionFrameTab1,
         _G.BFAMissionFrameTab2,
-        _G.BFAMissionFrameTab3
+        _G.BFAMissionFrameTab3,
+        _G.CovenantMissionFrameTab1,
+        _G.CovenantMissionFrameTab2
     }
 
     for _, frame in pairs(frames) do

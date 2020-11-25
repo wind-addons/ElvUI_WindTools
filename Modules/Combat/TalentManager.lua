@@ -25,6 +25,7 @@ local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTalentInfo = GetTalentInfo
 local GetTalentTierInfo = GetTalentTierInfo
+local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsResting = IsResting
 local Item = Item
@@ -462,7 +463,9 @@ function TM:BuildFrame()
 
     if not _G.PlayerTalentFrameTalents:IsShown() then
         frame:Hide()
-        self.itemButtonsAnchor:Hide()
+        if not InCombatLockdown() then
+            self.itemButtonsAnchor:Hide()
+        end
     end
 
     self:SecureHook(
@@ -478,9 +481,11 @@ function TM:BuildFrame()
             self:RegisterEvent("UNIT_AURA", "UpdateStatus")
             self:RegisterEvent("ZONE_CHANGED", "UpdateStatus")
             self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateStatus")
-            self.itemButtonsAnchor:Show()
-            self:UpdateStatus(nil, "player")
-            self:UpdateItemButtons()
+            if not InCombatLockdown() then
+                self.itemButtonsAnchor:Show()
+                self:UpdateStatus(nil, "player")
+                self:UpdateItemButtons()
+            end
         end
     )
 
@@ -493,7 +498,9 @@ function TM:BuildFrame()
             self:UnregisterEvent("UNIT_AURA")
             self:UnregisterEvent("ZONE_CHANGED")
             self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-            self.itemButtonsAnchor:Hide()
+            if not InCombatLockdown() then
+                self.itemButtonsAnchor:Hide()
+            end
         end
     )
 
@@ -507,7 +514,9 @@ function TM:BuildFrame()
             self:UnregisterEvent("UNIT_AURA")
             self:UnregisterEvent("ZONE_CHANGED")
             self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-            self.itemButtonsAnchor:Hide()
+            if not InCombatLockdown() then
+                self.itemButtonsAnchor:Hide()
+            end
         end
     )
 
@@ -735,6 +744,10 @@ function TM:BuildItemButtons()
 end
 
 function TM:UpdateStatus(event, unit)
+    if InCombatLockdown() then
+        return
+    end
+
     if event == "UNIT_AURA" and not unit == "player" then
         return
     end

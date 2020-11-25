@@ -52,6 +52,7 @@
 	<Script file='RaidInfo.lua'/>
 	<Script file='Scenario.lua'/>
 	<Script file='ScrappingMachine.lua'/>
+	<Script file='Soulbinds.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='SubscriptionInterstitial.lua'/>

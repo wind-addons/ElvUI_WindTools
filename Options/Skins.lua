@@ -597,6 +597,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Scrapping Machine"]
         },
+        soulbinds = {
+            order = 10,
+            type = "toggle",
+            name = L["Soulbinds"]
+        },
         spellBook = {
             order = 10,
             type = "toggle",

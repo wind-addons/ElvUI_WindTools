@@ -17,7 +17,7 @@ V.maps = {
 		font = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize,
-			style = "OUTLINE",
+			style = "OUTLINE"
 		}
 	},
 	superTracker = {
@@ -228,6 +228,7 @@ V.skins = {
 		raidInfo = true,
 		scenario = true,
 		scrappingMachine = true,
+		soulbinds = true,
 		spellBook = true,
 		staticPopup = true,
 		subscriptionInterstitial = true,

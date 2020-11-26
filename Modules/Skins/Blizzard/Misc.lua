@@ -6,7 +6,7 @@ local pairs = pairs
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()
-    self:CreateShadow(_G.DeathRecapFrame)
+    self:CreateBackdropShadow(_G.DeathRecapFrame)
 end
 
 function S:SkinSkipButton(frame)

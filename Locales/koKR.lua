@@ -109,6 +109,7 @@ L["Always Show Info"] = "항상 표시"
 L["Always Show Mine"] = "자신의 것은 항상 표시"
 L["Americas & Oceania"] = "미주 및 오세아니아"
 L["Anchor Point"] = "기준 위치"
+L["Anima Diversion"] = true
 L["Animation"] = "애니메이션"
 L["Animation Duration"] = "애니메이션 지속 시간"
 L["Animation Size"] = "애니메이션 크기"

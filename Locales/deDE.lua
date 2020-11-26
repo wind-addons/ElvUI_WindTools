@@ -109,6 +109,7 @@ L["Always Show Info"] = true
 L["Always Show Mine"] = true
 L["Americas & Oceania"] = true
 L["Anchor Point"] = "Ankerpunkt"
+L["Anima Diversion"] = true
 L["Animation"] = true
 L["Animation Duration"] = true
 L["Animation Size"] = true

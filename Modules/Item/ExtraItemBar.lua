@@ -43,6 +43,7 @@ local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 -- Potion (require level >= 40)
 local potions = {
     5512, --治療石
+    177278, -- 寧靜之瓶
     114124, --幽靈藥水
     115531, --迴旋艾斯蘭藥水
     116925, --舊式的自由行動藥水
@@ -121,6 +122,7 @@ local potions = {
 -- Potion added in Shadowlands (require level >= 50)
 local potionsShadowlands = {
     5512, -- 治療石
+    177278, -- 寧靜之瓶
     171263, --靈魂純淨藥水
     171264, --靈視藥水
     171266, --魂隱藥水

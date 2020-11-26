@@ -9,7 +9,7 @@ function S:Blizzard_FlightMap()
         return
     end
 
-    self:CreateShadow(_G.FlightMapFrame)
+    self:CreateBackdropShadow(_G.FlightMapFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_FlightMap")

@@ -372,6 +372,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Alert Frames"]
         },
+        animaDiversion = {
+            order = 10,
+            type = "toggle",
+            name = L["Anima Diversion"]
+        },
         artifact = {
             order = 10,
             type = "toggle",

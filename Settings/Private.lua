@@ -182,6 +182,7 @@ V.skins = {
 		addonManager = true,
 		adventureMap = true,
 		alerts = true,
+		animaDiversion = true,
 		artifact = true,
 		auctionHouse = true,
 		azerite = true,

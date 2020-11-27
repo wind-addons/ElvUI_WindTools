@@ -409,7 +409,7 @@ end
 
 function TI:QUEST_ITEM_UPDATE()
     if choiceQueue and self[choiceQueue] then
-        self[choiceQueue]()
+        self[choiceQueue](self)
     end
 end
 

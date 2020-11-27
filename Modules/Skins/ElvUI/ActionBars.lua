@@ -70,13 +70,12 @@ end
 function S:ElvUI_ActionBar_LoadKeyBinder()
     local frame = _G.ElvUIBindPopupWindow
     if not frame then
+        self:SecureHook(AB, "LoadKeyBinder", "ElvUI_ActionBar_LoadKeyBinder")
         return
     end
 
     self:CreateShadow(frame)
-
-    frame.header:SetFrameLevel(frame.header:GetFrameLevel() + 2)
-    self:CreateShadow(frame.header)
+    self:CreateBackdropShadow(frame.header, true)
 end
 
 function S:ElvUI_ActionBars()
@@ -120,7 +119,7 @@ function S:ElvUI_ActionBars()
 
     -- 离开载具
     do
-        local button =  _G.MainMenuBarVehicleLeaveButton
+        local button = _G.MainMenuBarVehicleLeaveButton
         self:CreateBackdropShadow(button, true)
         local tex = button:GetNormalTexture()
         if tex then
@@ -156,6 +155,9 @@ function S:ElvUI_ActionBars()
             self:CreateBackdropShadow(button, true)
         end
     )
+
+    -- Keybind
+    self:ElvUI_ActionBar_LoadKeyBinder()
 end
 
 S:AddCallback("ElvUI_ActionBars")

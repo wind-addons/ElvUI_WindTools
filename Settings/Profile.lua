@@ -354,7 +354,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "QUEST,BANNER,EQUIP"
+            include = "QUEST,BANNER,EQUIP,TORGHAST"
         },
         bar2 = {
             enable = true,

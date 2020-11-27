@@ -174,6 +174,14 @@ local flasksShadowlands = {
     171280 --永恆精煉藥劑
 }
 
+local torghastItems = {
+    168207, --掠奪的靈魄能量球
+    170540, --飢餓的靈魄能量球
+    176331, --精華掩蔽藥水
+    176409, --活力虹吸精華
+    176443 --消逝狂亂藥水
+}
+
 -- Food (Crafted by cooking)
 local food = {
     133557, --椒鹽火腿
@@ -693,6 +701,15 @@ function EB:UpdateBar(id)
                     local count = GetItemCount(flaskID)
                     if count and count > 0 and not self.db.blackList[flaskID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
+                end
+            elseif module == "TORGHAST" then -- Torghast Items
+                for _, itemID in pairs(torghastItems) do
+                    local count = GetItemCount(itemID)
+                    if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end

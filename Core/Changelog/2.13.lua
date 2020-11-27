@@ -16,7 +16,8 @@ W.Changelog[213] = {
             "[美化皮肤] 添加了盟约圣所界面的美化.",
             "[美化皮肤] 添加了盟约名望界面的美化.",
             "[美化皮肤] 添加了灵魂羁绊界面的美化.",
-            "[美化皮肤] 添加了心能传导器界面的美化."
+            "[美化皮肤] 添加了心能传导器界面的美化.",
+            '[额外物品条] 添加了 "TORGHAST" (托加斯特道具) 物品分类.'
         },
         ["zhTW"] = {
             "[任務列表] 提供一個顯示爬塔 Buff 在右邊的選項. 默認關閉",
@@ -25,7 +26,8 @@ W.Changelog[213] = {
             "[美化皮膚] 新增了誓盟聖所介面的美化.",
             "[美化皮膚] 新增了誓盟名望介面的美化.",
             "[美化皮膚] 新增了魂絆介面的美化.",
-            "[美化皮膚] 新增了靈魄傳導器介面的美化."
+            "[美化皮膚] 新增了靈魄傳導器介面的美化.",
+            '[額外物品條] 新增了 "TORGHAST" (托迦司道具) 物品分組.'
         },
         ["enUS"] = {
             "[Objective Frame] Add new option for moving maw buff frame to right. Disabled by default.",
@@ -34,7 +36,8 @@ W.Changelog[213] = {
             "[Skins] Add new skin for Blizzard Covenant Renown.",
             "[Skins] Add new skin for Blizzard Covenant Sanctum.",
             "[Skins] Add new skin for Blizzard Soulbinds.",
-            "[Skins] Add new skin for Blizzard Anima Diversion."
+            "[Skins] Add new skin for Blizzard Anima Diversion.",
+            '[Extra Item Bar] Add new item group "TORGHAST" (Torghast Items).'
         },
         ["koKR"] = {
             "[퀘스트 추적기] 령 능력 버프 창을 오른쪽으로 열어주는 새로운 옵션을 추가합니다. 기본적으로 비활성화되어 있습니다.",
@@ -43,7 +46,8 @@ W.Changelog[213] = {
             "[스킨] 블리자드 성약단 영예 프레임에 새로운 스킨을 추가합니다.",
             "[스킨] 블리자드 성약단 성소 프레임에 새로운 스킨을 추가합니다.",
             "[스킨] 블리자드 성약단 영혼결속 프레임에 새로운 스킨을 추가합니다.",
-            "[스킨] 령 전환 프레임에 새로운 스킨을 추가합니다."
+            "[스킨] 령 전환 프레임에 새로운 스킨을 추가합니다.",
+            '[Extra Item Bar] Add new item group "TORGHAST" (Torghast Items).'
         }
     },
     IMPROVEMENT = {

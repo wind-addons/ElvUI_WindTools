@@ -876,6 +876,7 @@ L["Tooltip Anchor"] = true
 L["Tooltip Icons"] = true
 L["Tooltips"] = true
 L["Torghast"] = true
+L["Torghast Items"] = true
 L["Totem"] = true
 L["Totem Bar"] = true
 L["Toy Box"] = true

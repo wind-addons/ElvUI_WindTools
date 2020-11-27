@@ -876,6 +876,7 @@ L["Tooltip Anchor"] = "툴팁 생성 위치"
 L["Tooltip Icons"] = "툴팁 아이콘"
 L["Tooltips"] = "툴팁"
 L["Torghast"] = "토르가스트"
+L["Torghast Items"] = true
 L["Totem"] = "토템"
 L["Totem Bar"] = "토템 바"
 L["Toy Box"] = "장난감 상자"

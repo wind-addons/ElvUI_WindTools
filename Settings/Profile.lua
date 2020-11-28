@@ -395,7 +395,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "POTION,FLASK,UTILITY"
+            include = "POTIONSL,FLASKSL,UTILITY"
         },
         bar3 = {
             enable = true,
@@ -436,7 +436,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "MAGEFOOD,FOOD,CUSTOM"
+            include = "MAGEFOOD,FOODSL,CUSTOM"
         }
     },
     inspect = {

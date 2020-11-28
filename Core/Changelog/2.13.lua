@@ -1,19 +1,23 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[213] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2020/11/28",
     IMPORTANT = {
         ["zhCN"] = {
-            "[移动框体] 为避免出错, 记住位置将不再作用于冒险指南."
+            "[移动框体] 为避免出错, 记住位置将不再作用于冒险指南.",
+            "[额外物品条] 现在默认设置为暗影国度版本的药水合剂和食物, 如果你想要旧版本的, 可以自行在每个条的设定中修改分类群组."
         },
         ["zhTW"] = {
-            "[移動框架] 為避免出錯, 記住位置將不再作用於地城導覽手冊."
+            "[移動框架] 為避免出錯, 記住位置將不再作用於地城導覽手冊.",
+            "[額外物品條] 現在默認設置為暗影之境版本的藥水藥劑和食物, 如果想要包括舊版本的, 可以自行在每個條的設定中修改分類群組."
         },
         ["enUS"] = {
-            "[Move Frames] To avoid errors, Remember Position will no longer work on the encounter journal."
+            "[Move Frames] To avoid errors, Remember Position will no longer work on the encounter journal.",
+            "[Extra Item Bar] The default setting has been changed to only Shadowlands version for potions, flasks, and food, if you want to add the old items, change the item groups inside the bar setting."
         },
         ["koKR"] = {
-            "[프레임 이동] 오류를 방지하기 위해 모험 안내서 창에서는 위치 기억이 사용되지 않습니다."
+            "[프레임 이동] 오류를 방지하기 위해 모험 안내서 창에서는 위치 기억이 사용되지 않습니다.",
+            "[Extra Item Bar] The default setting has been changed to only Shadowlands version for potions, flasks, and food, if you want to add the old items, change the item groups inside the bar setting."
         }
     },
     NEW = {
@@ -26,7 +30,7 @@ W.Changelog[213] = {
             "[美化皮肤] 添加了灵魂羁绊界面的美化.",
             "[美化皮肤] 添加了心能传导器界面的美化.",
             '[额外物品条] 添加了 "TORGHAST" (托加斯特道具) 物品分类.',
-            '[额外物品条] 添加了 "MAGEFOOD" (法师制造食物) 物品分类.',
+            '[额外物品条] 添加了 "MAGEFOOD" (法师制造食物) 物品分类.'
         },
         ["zhTW"] = {
             "[任務列表] 提供一個顯示爬塔 Buff 在右邊的選項. 默認關閉",
@@ -37,7 +41,7 @@ W.Changelog[213] = {
             "[美化皮膚] 新增了魂絆介面的美化.",
             "[美化皮膚] 新增了靈魄傳導器介面的美化.",
             '[額外物品條] 新增了 "TORGHAST" (托迦司道具) 物品分組.',
-            '[額外物品條] 新增了 "MAGEFOOD" (法師製作食物) 物品分組.',
+            '[額外物品條] 新增了 "MAGEFOOD" (法師製作食物) 物品分組.'
         },
         ["enUS"] = {
             "[Objective Frame] Add new option for moving maw buff frame to right. Disabled by default.",
@@ -48,7 +52,7 @@ W.Changelog[213] = {
             "[Skins] Add new skin for Blizzard Soulbinds.",
             "[Skins] Add new skin for Blizzard Anima Diversion.",
             '[Extra Item Bar] Add new item group "TORGHAST" (Torghast Items).',
-            '[Extra Item Bar] Add new item group "MAGEFOOD" (Food crafted by mage).',
+            '[Extra Item Bar] Add new item group "MAGEFOOD" (Food crafted by mage).'
         },
         ["koKR"] = {
             "[퀘스트 추적기] 령 능력 버프 창을 오른쪽으로 열어주는 새로운 옵션을 추가합니다. 기본적으로 비활성화되어 있습니다.",
@@ -59,7 +63,7 @@ W.Changelog[213] = {
             "[스킨] 블리자드 성약단 영혼결속 스킨을 추가합니다.",
             "[스킨] 블리자드 령 전도체 스킨을 추가합니다.",
             '[아이템 바] 새로운 아이템 그룹 "TORGHAST" (토르가스트 아이템)를 추가했습니다.',
-            '[아이템 바] 새로운 아이템 그룹 "MAGEFOOD" (마법사 창조 음식)를 추가했습니다.',
+            '[아이템 바] 새로운 아이템 그룹 "MAGEFOOD" (마법사 창조 음식)를 추가했습니다.'
         }
     },
     IMPROVEMENT = {

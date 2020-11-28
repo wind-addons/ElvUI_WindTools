@@ -28,8 +28,8 @@ W.Changelog[214] = {
             "[Extra Item Bar] Fix the text of food crafted by mage in item group tooltips."
         },
         ["koKR"] = {
-            "[Progression] Fix the statastic of Sanguine Depths.",
-            "[Extra Item Bar] Fix the text of food crafted by mage in item group tooltips."
+            "[진행 상태] 핏빛 심연의 통계치를 수정합니다.",
+            "[아이템 바] 아이템 그룹 툴팁에서 마법사 창조 음식 텍스트를 수정했습니다."
         }
     }
 }

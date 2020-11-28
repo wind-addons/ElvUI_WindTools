@@ -507,7 +507,7 @@ do -- Add options for bars
                         FormatDesc("TORGHAST", L["Torghast Items"]),
                         FormatDesc("FOOD", L["Food"]),
                         FormatDesc("FOODSL", format("%s (%s)", L["Food"], L["Shadowlands"])),
-                        FormatDesc("FOODSL", format("%s (%s)", L["Food"], L["Crafted by mage"])),
+                        FormatDesc("MAGEFOOD", format("%s (%s)", L["Food"], L["Crafted by mage"])),
                         FormatDesc("BANNER", L["Banners"]),
                         FormatDesc("UTILITY", L["Utilities"]),
                         FormatDesc("CUSTOM", L["Custom Items"])

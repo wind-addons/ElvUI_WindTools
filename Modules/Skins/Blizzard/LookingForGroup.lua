@@ -13,6 +13,7 @@ function S:LookingForGroupFrames()
         _G.PVEFrame,
         _G.LFGDungeonReadyDialog,
         _G.LFGDungeonReadyStatus,
+        _G.LFDRoleCheckPopup,
         _G.ReadyCheckFrame,
         _G.QueueStatusFrame,
         _G.LFDReadyCheckPopup,

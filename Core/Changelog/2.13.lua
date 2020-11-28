@@ -13,7 +13,7 @@ W.Changelog[213] = {
             "[Move Frames] To avoid errors, Remember Position will no longer work on the encounter journal."
         },
         ["koKR"] = {
-            "[Move Frames] To avoid errors, Remember Position will no longer work on the encounter journal."
+            "[프레임 이동] 오류를 방지하기 위해 모험 안내서 창에서는 위치 기억이 사용되지 않습니다."
         }
     },
     NEW = {
@@ -59,7 +59,7 @@ W.Changelog[213] = {
             "[스킨] 블리자드 성약단 영혼결속 스킨을 추가합니다.",
             "[스킨] 블리자드 령 전도체 스킨을 추가합니다.",
             '[아이템 바] 새로운 아이템 그룹 "TORGHAST" (토르가스트 아이템)를 추가했습니다.',
-            '[Extra Item Bar] Add new item group "MAGEFOOD" (Food crafted by mage).',
+            '[아이템 바] 새로운 아이템 그룹 "MAGEFOOD" (마법사 창조 음식)를 추가했습니다.',
         }
     },
     IMPROVEMENT = {

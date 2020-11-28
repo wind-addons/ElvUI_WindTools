@@ -222,7 +222,7 @@ local dungeonAchievements = {
     ["Theater of Pain"] = 14407,
     ["De Other Side"] = 14389,
     ["Spires of Ascension"] = 14401,
-    ["Sanguine Depths"] = 14202
+    ["Sanguine Depths"] = 14205
 }
 
 local function GetLevelColoredString(level, short)

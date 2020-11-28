@@ -251,6 +251,7 @@ L["Counter"] = true
 L["Covenant Preview"] = true
 L["Covenant Renown"] = true
 L["Covenant Sanctum"] = true
+L["Crafted by mage"] = true
 L["Credits"] = "Благодарности"
 L["Credits & help."] = true
 L["Ctrl Key"] = true

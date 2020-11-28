@@ -251,6 +251,7 @@ L["Counter"] = "개수 글씨 설정"
 L["Covenant Preview"] = "성약단 공물 보기"
 L["Covenant Renown"] = "성약단 영예"
 L["Covenant Sanctum"] = "성약단 성소"
+L["Crafted by mage"] = true
 L["Credits"] = "크레딧"
 L["Credits & help."] = true
 L["Ctrl Key"] = true

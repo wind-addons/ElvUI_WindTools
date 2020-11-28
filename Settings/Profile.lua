@@ -436,7 +436,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "FOOD,CUSTOM"
+            include = "MAGEFOOD,FOOD,CUSTOM"
         }
     },
     inspect = {

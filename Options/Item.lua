@@ -495,7 +495,7 @@ do -- Add options for bars
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(
-                        "%s %s\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                        "%s %s\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
                         L["Set the type and order of button groups."],
                         L["You can separate the groups with a comma."],
                         FormatDesc("QUEST", L["Quest Items"]),
@@ -507,6 +507,7 @@ do -- Add options for bars
                         FormatDesc("TORGHAST", L["Torghast Items"]),
                         FormatDesc("FOOD", L["Food"]),
                         FormatDesc("FOODSL", format("%s (%s)", L["Food"], L["Shadowlands"])),
+                        FormatDesc("FOODSL", format("%s (%s)", L["Food"], L["Crafted by mage"])),
                         FormatDesc("BANNER", L["Banners"]),
                         FormatDesc("UTILITY", L["Utilities"]),
                         FormatDesc("CUSTOM", L["Custom Items"])

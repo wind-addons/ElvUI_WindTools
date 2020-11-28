@@ -273,6 +273,21 @@ local foodShadowlands = {
     184682 --特大號香檸魚排
 }
 
+-- Food crafted by mage
+local conjuredManaFood = {
+    34062, --魔法法力軟餅
+    43518, --魔法法力派
+    43523, --魔法法力餡餅
+    65499, --魔法法力蛋糕
+    65500, --魔法法力餅乾
+    65515, --魔法法力布朗尼
+    65516, --魔法法力杯子蛋糕
+    65517, --魔法法力棒棒糖
+    80610, --魔法法力布丁
+    80618, --魔法法力甜餅
+    113509 --魔法法力餐包
+}
+
 -- 战旗
 local banners = {
     63359, -- 合作旌旗
@@ -725,6 +740,15 @@ function EB:UpdateBar(id)
                 end
             elseif module == "FOODSL" then -- Food (Shadowlands only)
                 for _, foodID in pairs(foodShadowlands) do
+                    local count = GetItemCount(foodID)
+                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
+                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
+                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                        buttonID = buttonID + 1
+                    end
+                end
+            elseif module == "MAGEFOOD" then -- Food crafted by mage
+                for _, foodID in pairs(conjuredManaFood) do
                     local count = GetItemCount(foodID)
                     if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
                         self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})

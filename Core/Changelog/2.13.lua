@@ -17,7 +17,7 @@ W.Changelog[213] = {
         },
         ["koKR"] = {
             "[프레임 이동] 오류를 방지하기 위해 모험 안내서 창에서는 위치 기억이 사용되지 않습니다.",
-            "[Extra Item Bar] The default setting has been changed to only Shadowlands version for potions, flasks, and food, if you want to add the old items, change the item groups inside the bar setting."
+            "[아이템 바] 물약, 영약, 음식에 대한 기본 설정이 어둠 땅 버전으로만 변경되었습니다. 오래된 아이템을 추가하려면 바 설정에서 아이템 그룹을 변경하세요."
         }
     },
     NEW = {

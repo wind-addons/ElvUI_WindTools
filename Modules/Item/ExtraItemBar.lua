@@ -343,6 +343,19 @@ local UpdateAfterCombat = {
     [3] = false
 }
 
+local moduleList = {
+    ["POTION"] = potions,
+    ["POTIONSL"] = potionsShadowlands,
+    ["FLASK"] = flasks,
+    ["FLASKSL"] = flasksShadowlands,
+    ["TORGHAST"] = torghastItems,
+    ["FOOD"] = food,
+    ["FOODSL"] = foodShadowlands,
+    ["MAGEFOOD"] = conjuredManaFood,
+    ["BANNER"] = banners,
+    ["UTILITY"] = utilities
+}
+
 function EB:CreateButton(name, barDB)
     local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
     button:Size(barDB.buttonWidth, barDB.buttonHeight)
@@ -674,102 +687,25 @@ function EB:UpdateBar(id)
 
     local buttonID = 1
 
+    local function AddButtons(list)
+        for _, itemID in pairs(list) do
+            local count = GetItemCount(itemID)
+            if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
+                self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
+                self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+                buttonID = buttonID + 1
+            end
+        end
+    end
+
     for _, module in ipairs {strsplit("[, ]", barDB.include)} do
         if buttonID <= barDB.numButtons then
-            if module == "QUEST" then -- 更新任务物品
+            if moduleList[module] then
+                AddButtons(moduleList[module])
+            elseif module == "QUEST" then -- 更新任务物品
                 for _, data in pairs(questItemList) do
                     if not self.db.blackList[data.itemID] then
                         self:SetUpButton(bar.buttons[buttonID], data)
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "POTION" then -- 更新药水
-                for _, potionID in pairs(potions) do
-                    local count = GetItemCount(potionID)
-                    if count and count > 0 and not self.db.blackList[potionID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "POTIONSL" then -- Potions (Shadowlands only)
-                for _, potionID in pairs(potionsShadowlands) do
-                    local count = GetItemCount(potionID)
-                    if count and count > 0 and not self.db.blackList[potionID] then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = potionID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "FLASK" then -- Flasks
-                for _, flaskID in pairs(flasks) do
-                    local count = GetItemCount(flaskID)
-                    if count and count > 0 and not self.db.blackList[flaskID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "FLASKSL" then -- Flasks (Shadowlands only)
-                for _, flaskID in pairs(flasksShadowlands) do
-                    local count = GetItemCount(flaskID)
-                    if count and count > 0 and not self.db.blackList[flaskID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = flaskID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "TORGHAST" then -- Torghast Items
-                for _, itemID in pairs(torghastItems) do
-                    local count = GetItemCount(itemID)
-                    if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "FOOD" then -- Food
-                for _, foodID in pairs(food) do
-                    local count = GetItemCount(foodID)
-                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "FOODSL" then -- Food (Shadowlands only)
-                for _, foodID in pairs(foodShadowlands) do
-                    local count = GetItemCount(foodID)
-                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "MAGEFOOD" then -- Food crafted by mage
-                for _, foodID in pairs(conjuredManaFood) do
-                    local count = GetItemCount(foodID)
-                    if count and count > 0 and not self.db.blackList[foodID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = foodID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "BANNER" then -- 更新战旗
-                for _, bannerID in pairs(banners) do
-                    local count = GetItemCount(bannerID)
-                    if count and count > 0 and not self.db.blackList[bannerID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = bannerID})
-                        bar.buttons[buttonID]:Size(barDB.buttonWidth, barDB.buttonHeight)
-                        buttonID = buttonID + 1
-                    end
-                end
-            elseif module == "UTILITY" then -- 更新实用工具
-                for _, utilityID in pairs(utilities) do
-                    local count = GetItemCount(utilityID)
-                    if count and count > 0 and not self.db.blackList[utilityID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = utilityID})
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end
@@ -784,14 +720,7 @@ function EB:UpdateBar(id)
                     end
                 end
             elseif module == "CUSTOM" then -- 更新自定义列表
-                for _, itemID in pairs(self.db.customList) do
-                    local count = GetItemCount(itemID)
-                    if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
-                        self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-                        buttonID = buttonID + 1
-                    end
-                end
+                AddButtons(self.db.customList)
             end
         end
     end

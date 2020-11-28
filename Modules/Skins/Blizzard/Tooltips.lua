@@ -51,6 +51,8 @@ function S:TooltipFrames()
             self:CreateShadow(tt)
         end
     end
+    
+    self:CreateBackdropShadow(_G.FloatingBattlePetTooltip)
 
     self:SecureHook(TT, "SetStyle", "TTSetStyle")
     self:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TTGameTooltip_SetDefaultAnchor")

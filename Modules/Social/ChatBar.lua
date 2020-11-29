@@ -240,7 +240,7 @@ function CB:UpdateBar()
 
         if show then
             local chatFunc = function(self, mouseButton)
-                if mouseButton ~= "LeftButton" then
+                if mouseButton ~= "LeftButton" or not db.cmd then
                     return
                 end
                 local currentText = DefaultChatFrame.editBox:GetText()

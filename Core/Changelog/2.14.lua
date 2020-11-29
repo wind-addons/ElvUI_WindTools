@@ -42,10 +42,10 @@ W.Changelog[214] = {
         ["koKR"] = {
             "[진행 상태] 핏빛 심연의 통계치를 수정합니다.",
             "[아이템 바] 아이템 그룹 툴팁에서 마법사 창조 음식 텍스트를 수정했습니다.",
-            "[Skins] Optimize the skins on Pet Tooltip.",
-            "[Skins] Optimize the skins on LFD Ready Popup.",
-            "[Chat Bar] Fix a potential bug.",
-            "[Turn In] Fix a potential bug."
+            "[스킨] 펫 툴팁 최적화.",
+            "[스킨] 던전 찾기 준비 확인 팝업 스킨 최적화.",
+            "[채팅 바] 잠재적인 버그를 수정하였습니다.",
+            "[자동 수락] 잠재적인 버그를 수정하였습니다."
         }
     }
 }

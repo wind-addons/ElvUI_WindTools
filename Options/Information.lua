@@ -1666,7 +1666,7 @@ do
         button2 = _G.CANCEL,
         OnAccept = function()
             F.Profiles.ImportByString(text)
-            -- ReloadUI()
+            ReloadUI()
         end,
         whileDead = 1,
         hideOnEscape = true

@@ -172,7 +172,12 @@ options.help = {
                 ["7"] = {
                     order = 7,
                     type = "description",
-                    name = "keludechu"
+                    name = format(
+                        "%s: %s | %s",
+                        "keludechu",
+                        E.InfoColor .. "水稻" .. "|r",
+                        F.CreateClassColorString("Surtr @ " .. L["Blanchard"] .. " (CN)", "WARLOCK")
+                    )
                 },
                 ["8"] = {
                     order = 8,

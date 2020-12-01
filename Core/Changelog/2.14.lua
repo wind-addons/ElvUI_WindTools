@@ -19,7 +19,7 @@ W.Changelog[214] = {
             "[Extra Item Bar] Add the mount in Torghast."
         },
         ["koKR"] = {
-            "[Extra Item Bar] Add the mount in Torghast."
+            "[아이템 바] 토르가스트 탈것 추가"
         }
     },
     IMPROVEMENT = {

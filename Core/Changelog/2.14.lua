@@ -9,10 +9,18 @@ W.Changelog[214] = {
         ["koKR"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[额外物品条] 添加了塔内坐骑.",
+        },
+        ["zhTW"] = {
+            "[額外物品條] 新增了塔內坐騎."
+        },
+        ["enUS"] = {
+            "[Extra Item Bar] Add the mount in Torghast."
+        },
+        ["koKR"] = {
+            "[Extra Item Bar] Add the mount in Torghast."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

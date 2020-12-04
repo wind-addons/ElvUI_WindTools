@@ -17,7 +17,7 @@ local ObjectiveTracker_Update = ObjectiveTracker_Update
 local replaceRule = {
     ["『譴罪之塔』托迦司"] = L["Torghast"],
     ["托加斯特，罪魂之塔"] = L["Torghast"],
-    ["Torghast, Tower of the Damned"] = L["Torghast"],
+    ["Torghast, Tower of the Damned"] = L["Torghast"]
 }
 
 local classColor = _G.RAID_CLASS_COLORS[E.myclass]
@@ -224,6 +224,12 @@ function OT:ShowMawBuffRight()
     if not self.db.enable or not self.db.showMawBuffRight then
         return
     end
+
+    local B = E:GetModule("Blizzard")
+    if B.SetupTorghastBuffFrame then
+        B.SetupTorghastBuffFrame = E.noop
+    end
+
     local mawBuffsBlock = _G.ScenarioBlocksFrame.MawBuffsBlock
     local list = mawBuffsBlock and mawBuffsBlock.Container.List
     if list then

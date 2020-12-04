@@ -23,7 +23,7 @@ W.Changelog[214] = {
         },
         ["koKR"] = {
             "[아이템 바] 토르가스트 탈것 추가",
-            '[Extra Item Bar] Add new item group "FOODVENDOR" (food sold by vendors).'
+            '[아이템 바] 새로운 아이템 그룹 "FOODVENDOR" (상인 판매 음식) 추가'
         }
     },
     IMPROVEMENT = {
@@ -62,10 +62,10 @@ W.Changelog[214] = {
             "[아이템 바] 아이템 그룹 툴팁에서 마법사 창조 음식 텍스트를 수정했습니다.",
             "[스킨] 펫 툴팁 최적화.",
             "[스킨] 던전 찾기 준비 확인 팝업 스킨 최적화.",
-            "[Skins] Fix the icon in misson complate alerts.",
+            "[스킨] 성약단 임무 완료 시 상자 아이콘이 표시되지 않는 현상을 수정하였습니다.",
             "[채팅 바] 잠재적인 버그를 수정하였습니다.",
             "[자동 수락] 잠재적인 버그를 수정하였습니다.",
-            "[Game Bar] You can set Home button to wormhole generators now."
+            "[게임 바] 이제 홈 버튼을 웜홀 생성기로 설정할 수 있습니다."
         }
     }
 }

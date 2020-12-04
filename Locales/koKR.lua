@@ -162,6 +162,7 @@ L["BigWigs Queue Timer"] = "BigWigs 대기열 타이머"
 L["Binding"] = "단축키"
 L["Black Market"] = "암시장"
 L["Blacklist"] = "블랙리스트"
+L["Blanchard"] = true
 L["Blizzard"] = true
 L["Blizzard Buttons"] = "블리자드 버튼"
 L["Blizzard Shop"] = "블리자드 샵"

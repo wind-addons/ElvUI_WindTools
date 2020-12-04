@@ -162,6 +162,7 @@ L["BigWigs Queue Timer"] = true
 L["Binding"] = "Raccourcis"
 L["Black Market"] = true
 L["Blacklist"] = "Liste noire"
+L["Blanchard"] = true
 L["Blizzard"] = true
 L["Blizzard Buttons"] = true
 L["Blizzard Shop"] = true

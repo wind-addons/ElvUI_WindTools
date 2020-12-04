@@ -13,8 +13,8 @@ function S:SkinAlert(alert)
 
     F.SetFrameFontOutline(alert)
 
-    if alert.EncounterIcon then
-        alert.EncounterIcon:Hide()
+    if alert.EncounterIcon and alert.EncounterIcon.PortraitBorder then
+        alert.EncounterIcon.PortraitBorder:Hide()
     end
 
     alert.windStyle = true

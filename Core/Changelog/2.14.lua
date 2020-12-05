@@ -11,19 +11,23 @@ W.Changelog[214] = {
     NEW = {
         ["zhCN"] = {
             "[额外物品条] 添加了塔内坐骑.",
-            '[额外物品条] 添加了 "FOODVENDOR" (商人食物) 物品分类.'
+            '[额外物品条] 添加了 "FOODVENDOR" (商人食物) 物品分类.',
+            "[静音] 添加了布兰契的选项."
         },
         ["zhTW"] = {
             "[額外物品條] 新增了塔內坐騎.",
-            '[額外物品條] 新增了 "FOODVENDOR" (商人食物) 物品分組.'
+            '[額外物品條] 新增了 "FOODVENDOR" (商人食物) 物品分組.',
+            "[靜音] 新增了布蘭契的選項."
         },
         ["enUS"] = {
             "[Extra Item Bar] Add the mount in Torghast.",
-            '[Extra Item Bar] Add new item group "FOODVENDOR" (food sold by vendors).'
+            '[Extra Item Bar] Add new item group "FOODVENDOR" (food sold by vendors).',
+            "[Mute] Add an option for Blanchy."
         },
         ["koKR"] = {
             "[아이템 바] 토르가스트 탈것 추가",
-            '[아이템 바] 새로운 아이템 그룹 "FOODVENDOR" (상인 판매 음식) 추가'
+            '[아이템 바] 새로운 아이템 그룹 "FOODVENDOR" (상인 판매 음식) 추가',
+            "[Mute] Add an option for Blanchy."
         }
     },
     IMPROVEMENT = {
@@ -35,7 +39,8 @@ W.Changelog[214] = {
             "[美化皮肤] 修复了盟约任务完成提示框体图标不显示的错误.",
             "[聊天条] 修复了一个潛在的报错.",
             "[交接] 修复了一个潛在的报错.",
-            "[游戏条] 现在可以设定家按钮为虫洞发生器了."
+            "[游戏条] 现在可以设定家按钮为虫洞发生器了.",
+            "[跳过过场动画] 等级 60 的人物进入噬渊将不再提示无法跳过."
         },
         ["zhTW"] = {
             "[進度] 修復了血紅深淵的傳奇極差次數統計.",
@@ -45,7 +50,8 @@ W.Changelog[214] = {
             "[美化皮膚] 修復了誓盟任務完成提示框架圖示不顯示的錯誤.",
             "[聊天條] 修復了一個潛在的錯誤.",
             "[交接] 修復了一個潛在的錯誤.",
-            "[遊戲條] 現在可以設定按鈕為蟲洞產生器了."
+            "[遊戲條] 現在可以設定按鈕為蟲洞產生器了.",
+            "[跳過過場動畫] 等級 60 的人物進入淵吼時將不再提示無法跳過."
         },
         ["enUS"] = {
             "[Progression] Fix the statastic of Sanguine Depths.",
@@ -55,7 +61,8 @@ W.Changelog[214] = {
             "[Skins] Fix the icon in misson complate alerts.",
             "[Chat Bar] Fix a potential bug.",
             "[Turn In] Fix a potential bug.",
-            "[Game Bar] You can set Home button to wormhole generators now."
+            "[Game Bar] You can set Home button to wormhole generators now.",
+            "[Skip Cut Scene] The message will not show when level 60 character entering The Maw."
         },
         ["koKR"] = {
             "[진행 상태] 핏빛 심연의 통계치를 수정합니다.",
@@ -65,7 +72,8 @@ W.Changelog[214] = {
             "[스킨] 성약단 임무 완료 시 상자 아이콘이 표시되지 않는 현상을 수정하였습니다.",
             "[채팅 바] 잠재적인 버그를 수정하였습니다.",
             "[자동 수락] 잠재적인 버그를 수정하였습니다.",
-            "[게임 바] 이제 홈 버튼을 웜홀 생성기로 설정할 수 있습니다."
+            "[게임 바] 이제 홈 버튼을 웜홀 생성기로 설정할 수 있습니다.",
+            "[Skip Cut Scene] The message will not show when level 60 character entering The Maw."
         }
     }
 }

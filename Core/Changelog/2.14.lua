@@ -27,7 +27,7 @@ W.Changelog[214] = {
         ["koKR"] = {
             "[아이템 바] 토르가스트 탈것 추가",
             '[아이템 바] 새로운 아이템 그룹 "FOODVENDOR" (상인 판매 음식) 추가',
-            "[Mute] Add an option for Blanchy."
+            "[음소거] 블랑쉬에 관한 옵션을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -73,7 +73,7 @@ W.Changelog[214] = {
             "[채팅 바] 잠재적인 버그를 수정하였습니다.",
             "[자동 수락] 잠재적인 버그를 수정하였습니다.",
             "[게임 바] 이제 홈 버튼을 웜홀 생성기로 설정할 수 있습니다.",
-            "[Skip Cut Scene] The message will not show when level 60 character entering The Maw."
+            "[컷신 건너뛰기] 60 레벨 캐릭터는 나락에 들어갈 때 건너뛸 수 없다는 메시지가 표시되지 않습니다."
         }
     }
 }

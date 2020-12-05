@@ -73,7 +73,8 @@ V.misc = {
 		enable = false,
 		mount = {
 			[63796] = false,
-			[229385] = false
+			[229385] = false,
+			[339588] = false
 		}
 	},
 	lfgList = {
@@ -109,7 +110,7 @@ V.quest = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,
 			style = "OUTLINE",
-			shortHeader = true,
+			shortHeader = true
 		},
 		title = {
 			name = E.db.general.font,

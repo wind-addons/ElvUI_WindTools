@@ -41,6 +41,10 @@ local MountSE = {
         1593234, -- creature/ban-lu/vo_72_ban-lu_23_m.ogg
         1593235, -- creature/ban-lu/vo_72_ban-lu_24_m.ogg
         1593236 -- creature/ban-lu/vo_72_ban-lu_25_m.ogg
+    },
+    [339588] = {
+        -- 罪奔者布蘭契
+        3587276 -- Part of SoundKit(s): 157142, 160875, 166787, 167500, 167947, 172866
     }
 }
 

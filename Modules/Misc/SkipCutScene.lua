@@ -12,6 +12,7 @@ local strsub = strsub
 local CinematicFrame_CancelCinematic = CinematicFrame_CancelCinematic
 local IsModifierKeyDown = IsModifierKeyDown
 local GameMovieFinished = GameMovieFinished
+local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 
 do
     local alreadySkipped = false
@@ -40,7 +41,9 @@ do
                 3.5,
                 function()
                     if not alreadySkipped then
-                        F.Print(L["This cutscene cannot be skipped."])
+                        if not (C_Map_GetBestMapForUnit("player") == 1670 and E.mylevel == 60) then
+                            F.Print(L["This cutscene cannot be skipped."])
+                        end
                     else
                         alreadySkipped = false
                     end

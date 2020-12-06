@@ -32,6 +32,7 @@ W.Changelog[214] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[团队标记] 现在可以对调正常点击和修饰键点击的功能了.",
             "[进度] 修复了赤红深渊的传奇击杀次数统计.",
             "[额外物品条] 修复了设定时鼠标提示中法师制作食物的文本.",
             "[美化皮肤] 优化了小宠物鼠标提示的美化.",
@@ -43,6 +44,7 @@ W.Changelog[214] = {
             "[跳过过场动画] 等级 60 的人物进入噬渊将不再提示无法跳过."
         },
         ["zhTW"] = {
+            "[團隊標記] 現在可以對調正常點擊和修飾鍵點擊的功能了.",
             "[進度] 修復了血紅深淵的傳奇極差次數統計.",
             "[額外物品條] 修復了設定時浮動提示中法師製造食物的文字.",
             "[美化皮膚] 優化了小寵物浮動提示的美化.",
@@ -54,6 +56,7 @@ W.Changelog[214] = {
             "[跳過過場動畫] 等級 60 的人物進入淵吼時將不再提示無法跳過."
         },
         ["enUS"] = {
+            "[Raid Marker] Now you can swap the functionality of normal click and click with modifier keys.",
             "[Progression] Fix the statastic of Sanguine Depths.",
             "[Extra Item Bar] Fix the text of food crafted by mage in item group tooltips.",
             "[Skins] Optimize the skins on Pet Tooltip.",
@@ -65,6 +68,7 @@ W.Changelog[214] = {
             "[Skip Cut Scene] The message will not show when level 60 character entering The Maw."
         },
         ["koKR"] = {
+            "[Raid Marker] Now you can swap the functionality of normal click and click with modifier keys.",
             "[진행 상태] 핏빛 심연의 통계치를 수정합니다.",
             "[아이템 바] 아이템 그룹 툴팁에서 마법사 창조 음식 텍스트를 수정했습니다.",
             "[스킨] 펫 툴팁 최적화.",

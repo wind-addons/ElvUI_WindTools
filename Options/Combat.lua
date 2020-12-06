@@ -43,7 +43,7 @@ options.raidMarkers = {
             order = 3,
             type = "toggle",
             name = L["Inverse Mode"],
-            desc = L["Swap the feature of left button and right button."],
+            desc = L["Swap the functionality of normal click and click with modifier keys."],
             get = function(info)
                 return E.db.WT.combat.raidMarkers[info[#info]]
             end,

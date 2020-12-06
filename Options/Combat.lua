@@ -39,8 +39,25 @@ options.raidMarkers = {
                 RM:ProfileUpdate()
             end
         },
-        visibilityConfig = {
+        inverse = {
             order = 3,
+            type = "toggle",
+            name = L["Inverse Mode"],
+            desc = L["Swap the feature of left button and right button."],
+            get = function(info)
+                return E.db.WT.combat.raidMarkers[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.raidMarkers[info[#info]] = value
+                RM:ToggleSettings()
+            end,
+            disabled = function()
+                return not E.db.WT.combat.raidMarkers.enable
+            end,
+            width = 2
+        },
+        visibilityConfig = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Visibility"],
@@ -91,7 +108,7 @@ options.raidMarkers = {
             }
         },
         barConfig = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Raid Markers Bar"],
@@ -134,7 +151,7 @@ options.raidMarkers = {
             }
         },
         raidButtons = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Raid Buttons"],
@@ -177,7 +194,7 @@ options.raidMarkers = {
             }
         },
         buttonsConfig = {
-            order = 6,
+            order = 7,
             type = "group",
             inline = true,
             name = L["Buttons"],
@@ -202,7 +219,7 @@ options.raidMarkers = {
                     step = 1
                 },
                 spacing = {
-                    order = 3,
+                    order = 2,
                     type = "range",
                     name = L["Button Spacing"],
                     desc = L["The spacing between buttons."],

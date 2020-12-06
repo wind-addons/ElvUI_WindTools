@@ -118,9 +118,20 @@ function RM:UpdateButtons()
 			button:SetAttribute("shift-type*", nil)
 			button:SetAttribute("alt-type*", nil)
 			button:SetAttribute("ctrl-type*", nil)
+
 			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
-			button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
-			button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
+
+			if not self.db.inverse then
+				button:SetAttribute("macrotext1", format("/tm %d", i))
+				button:SetAttribute("macrotext2", "/tm 9")
+				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
+				button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
+			else
+				button:SetAttribute("macrotext1", format("/wm %d", TargetToWorld[i]))
+				button:SetAttribute("macrotext2", format("/cwm %d", TargetToWorld[i]))
+				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/tm %d", i))
+				button:SetAttribute(format("%s-macrotext2", self.db.modifier), "/tm 9")
+			end
 		end
 	end
 end
@@ -242,34 +253,60 @@ function RM:CreateButtons()
 			tex:SetTexture(format("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d", i))
 
 			button:SetAttribute("type*", "macro")
-			button:SetAttribute("macrotext1", format("/tm %d", i))
-			button:SetAttribute("macrotext2", "/tm 9")
-
 			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
-			button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
-			button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
+
+			if not self.db.inverse then
+				button:SetAttribute("macrotext1", format("/tm %d", i))
+				button:SetAttribute("macrotext2", "/tm 9")
+				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
+				button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
+			else
+				button:SetAttribute("macrotext1", format("/wm %d", TargetToWorld[i]))
+				button:SetAttribute("macrotext2", format("/cwm %d", TargetToWorld[i]))
+				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/tm %d", i))
+				button:SetAttribute(format("%s-macrotext2", self.db.modifier), "/tm 9")
+			end
 
 			button.isMarkButton = true
 		elseif i == 9 then -- 清除按钮
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
 			button:SetAttribute("type", "click")
-			button:SetScript(
-				"OnClick",
-				function(self)
-					if _G[format("Is%sKeyDown", RM.modifierString)]() then
-						ClearRaidMarker()
-					else
-						local now = GetTime()
-						if now - lastClear > 1 then -- limiting
-							lastClear = now
-							for i = 1, 9 do
-								SetRaidTarget("player", i)
+			if not self.db.inverse then
+				button:SetScript(
+					"OnClick",
+					function(self)
+						if _G[format("Is%sKeyDown", RM.modifierString)]() then
+							ClearRaidMarker()
+						else
+							local now = GetTime()
+							if now - lastClear > 1 then -- limiting
+								lastClear = now
+								for i = 1, 9 do
+									SetRaidTarget("player", i)
+								end
 							end
 						end
 					end
-				end
-			)
+				)
+			else
+				button:SetScript(
+					"OnClick",
+					function(self)
+						if _G[format("Is%sKeyDown", RM.modifierString)]() then
+							local now = GetTime()
+							if now - lastClear > 1 then -- limiting
+								lastClear = now
+								for i = 1, 9 do
+									SetRaidTarget("player", i)
+								end
+							end
+						else
+							ClearRaidMarker()
+						end
+					end
+				)
+			end
 		elseif i == 10 then -- 准备确认 & 战斗记录
 			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
 			button:SetAttribute("type*", "macro")
@@ -297,21 +334,41 @@ function RM:CreateButtons()
 		local tooltipText = ""
 
 		if i < 9 then
-			tooltipText =
-				format(
-				"%s\n%s\n%s\n%s",
-				L["Left Click to mark the target with this mark."],
-				L["Right Click to clear the mark on the target."],
-				format(L["%s + Left Click to place this worldmarker."], RM.modifierString),
-				format(L["%s + Right Click to clear this worldmarker."], RM.modifierString)
-			)
+			if not self.db.inverse then
+				tooltipText =
+					format(
+					"%s\n%s\n%s\n%s",
+					L["Left Click to mark the target with this mark."],
+					L["Right Click to clear the mark on the target."],
+					format(L["%s + Left Click to place this worldmarker."], RM.modifierString),
+					format(L["%s + Right Click to clear this worldmarker."], RM.modifierString)
+				)
+			else
+				tooltipText =
+					format(
+					"%s\n%s\n%s\n%s",
+					L["Left Click to place this worldmarker."],
+					L["Right Click to clear this worldmarker."],
+					format(L["%s + Left Click to mark the target with this mark."], RM.modifierString),
+					format(L["%s + Right Click to clear the mark on the target."], RM.modifierString)
+				)
+			end
 		elseif i == 9 then
-			tooltipText =
-				format(
-				"%s\n%s",
-				L["Click to clear all marks."],
-				format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
-			)
+			if not self.db.inverse then
+				tooltipText =
+					format(
+					"%s\n%s",
+					L["Click to clear all marks."],
+					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
+				)
+			else
+				tooltipText =
+					format(
+					"%s\n%s",
+					L["Click to remove all worldmarkers."],
+					format(L["%s + Click to clear all marks."], RM.modifierString)
+				)
+			end
 		elseif i == 10 then
 			tooltipText = format("%s\n%s", L["Left Click to ready check."], L["Right click to toggle advanced combat logging."])
 		elseif i == 11 then

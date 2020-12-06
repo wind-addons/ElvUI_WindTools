@@ -276,7 +276,8 @@ P.combat = {
         modifier = "shift",
         readyCheck = true,
         countDown = true,
-        countDownTime = 5
+        countDownTime = 5,
+        inverse = false
     },
     quickKeystone = {
         enable = true

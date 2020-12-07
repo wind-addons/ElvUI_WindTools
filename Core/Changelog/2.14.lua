@@ -68,7 +68,7 @@ W.Changelog[214] = {
             "[Skip Cut Scene] The message will not show when level 60 character entering The Maw."
         },
         ["koKR"] = {
-            "[Raid Marker] Now you can swap the functionality of normal click and click with modifier keys.",
+            "[공격대 징표] 이제 일반 클릭과 기능키와 함께 클릭할 때의 기능을 전환할 수 있습니다.",
             "[진행 상태] 핏빛 심연의 통계치를 수정합니다.",
             "[아이템 바] 아이템 그룹 툴팁에서 마법사 창조 음식 텍스트를 수정했습니다.",
             "[스킨] 펫 툴팁 최적화.",

@@ -648,15 +648,25 @@ options.instanceDifficulty = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"],
+            name = L["Enable"]
+        },
+        align = {
+            order = 3,
+            type = "select",
+            name = L["Text Align"],
+            values = {
+                LEFT = L["Left"],
+                CENTER = L["Center"],
+                RIGHT = L["Right"]
+            }
         },
         hideBlizzard = {
-            order = 3,
+            order = 4,
             type = "toggle",
-            name = L["Hide Blizzard Indicator"],
+            name = L["Hide Blizzard Indicator"]
         },
         font = {
-            order = 4,
+            order = 5,
             type = "group",
             name = L["Font"],
             inline = true,

@@ -95,7 +95,7 @@ function ID:ConstructFrame()
 
     local text = frame:CreateFontString(nil, "OVERLAY")
     F.SetFontWithDB(text, self.db.font)
-    text:Point("CENTER")
+    text:Point(self.db.align or "LEFT")
     frame.text = text
 
     E:CreateMover(

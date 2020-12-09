@@ -19,7 +19,7 @@ W.Changelog[215] = {
             "[Instance Difficulty] Add a new option of text-align."
         },
         ["koKR"] = {
-            "[Instance Difficulty] Add a new option of text-align."
+            "[인스턴스 난이도] 텍스트 정렬 옵션을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -36,8 +36,8 @@ W.Changelog[215] = {
             "[Extra Item Bar] UTILITY (utilities) category add some Shadowlands crafting items like armor kit."
         },
         ["koKR"] = {
-            "Amend some parts of the previous changelog.",
-            "[Extra Item Bar] UTILITY (utilities) category add some Shadowlands crafting items like armor kit."
+            "이전 변경 로그의 일부 수정.",
+            "[아이템 바] UTILITY (유틸리티) 카테고리에 방어구 강화, 기름, 숫돌 같은 어둠땅 제작 아이템이 추가 되였습니다."
         }
     }
 }

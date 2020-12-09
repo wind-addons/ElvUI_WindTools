@@ -40,7 +40,9 @@ function S:RaidUtility()
         self:CreateShadow(frame)
     end
 
-    self:SecureHookScript(_G.RaidUtility_ShowButton, "OnClick", "RaidUtility_ShowButton_OnClick")
+    if _G.RaidUtility_ShowButton then
+        self:SecureHookScript(_G.RaidUtility_ShowButton, "OnClick", "RaidUtility_ShowButton_OnClick")
+    end
 end
 
 S:AddCallback("RaidUtility")

@@ -16,8 +16,6 @@ local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local RegisterStateDriver = RegisterStateDriver
 local SetRaidTarget = SetRaidTarget
-local UIFrameFadeIn = UIFrameFadeOut
-local UIFrameFadeOut = UIFrameFadeOut
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_PartyInfo_DoCountdown = C_PartyInfo.DoCountdown

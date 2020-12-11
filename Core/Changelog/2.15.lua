@@ -43,9 +43,9 @@ W.Changelog[215] = {
         },
         ["koKR"] = {
             "이전 변경 로그의 일부 수정.",
-            "[Skins] Fix a potential bug of Raid Utility skin.",
+            "[스킨] 공격대 도구 스킨의 잠재적인 버그를 수정하였습니다.",
             "[아이템 바] UTILITY (유틸리티) 카테고리에 방어구 강화, 기름, 숫돌 같은 어둠땅 제작 아이템이 추가 되였습니다.",
-            "[Inpect] Fix the Shadowlands enchant info. Thanks loudsoul."
+            "[살펴보기] 어둠땅 마법 부여 정보를 수정하였습니다. Thanks loudsoul."
         }
     }
 }

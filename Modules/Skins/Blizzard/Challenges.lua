@@ -8,7 +8,7 @@ function S:Blizzard_ChallengesUI()
         return
     end
 
-    self:CreateShadow(_G.ChallengesKeystoneFrame)
+    self:CreateBackdropShadow(_G.ChallengesKeystoneFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_ChallengesUI")

@@ -672,6 +672,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Warboard"]
         },
+        weeklyRewards = {
+            order = 10,
+            type = "toggle",
+            name = L["Weekly Rewards"]
+        },
         worldMap = {
             order = 10,
             type = "toggle",

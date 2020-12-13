@@ -246,6 +246,7 @@ V.skins = {
 		trainer = true,
 		tutorial = true,
 		warboard = true,
+		weeklyRewards = true,
 		worldMap = true
 	},
 	elvui = {

@@ -932,6 +932,7 @@ L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 設定"
 L["Weapon Category"] = "武器分類"
 L["Weekly"] = "每週"
+L["Weekly Rewards"] = "每週獎勵寶庫"
 L["Welcome to %s %s!"] = "歡迎來到 %s %s!"
 L["Whisper"] = "密語"
 L["Whisper Cycle"] = "密語獨立循環"

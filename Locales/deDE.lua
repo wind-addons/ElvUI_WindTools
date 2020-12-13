@@ -932,6 +932,7 @@ L["WeakAuras"] = true
 L["WeakAuras Options"] = true
 L["Weapon Category"] = "Waffenkategorie"
 L["Weekly"] = "Wöchentlich"
+L["Weekly Rewards"] = true
 L["Welcome to %s %s!"] = "Willkommrn zu %s %s!"
 L["Whisper"] = "Flüstern"
 L["Whisper Cycle"] = true

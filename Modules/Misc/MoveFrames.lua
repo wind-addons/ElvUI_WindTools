@@ -261,6 +261,9 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_WarfrontsPartyPoseUI"] = {
         "WarfrontsPartyPoseFrame"
+    },
+    ["Blizzard_WeeklyRewards"] = {
+        "WeeklyRewardsFrame"
     }
 }
 

@@ -144,7 +144,7 @@ do
         C_Timer_After(
             0.5,
             function()
-                if not IsInGroup() then
+                if IsInGroup() then
                     A:SendInterruptConfig()
                     A:SendUtilityConfig()
                     A:SendCombatResurrectionConfig()

@@ -144,11 +144,13 @@ do
         C_Timer_After(
             0.5,
             function()
-                A:SendInterruptConfig()
-                A:SendUtilityConfig()
-                A:SendCombatResurrectionConfig()
-                A:SendTauntConfig()
-                A:SendThreatTransferConfig()
+                if not IsInGroup() then
+                    A:SendInterruptConfig()
+                    A:SendUtilityConfig()
+                    A:SendCombatResurrectionConfig()
+                    A:SendTauntConfig()
+                    A:SendThreatTransferConfig()
+                end
                 waitSend = false
             end
         )

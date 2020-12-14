@@ -22,7 +22,7 @@ W.Changelog[215] = {
             "[Instance Difficulty] Add a new option of text-align."
         },
         ["koKR"] = {
-            "[Skins] Add skin for weekly rewards.",
+            "[스킨] 주간 보상 스킨 추가.",
             "[인스턴스 난이도] 텍스트 정렬 옵션을 추가하였습니다."
         }
     },
@@ -62,13 +62,13 @@ W.Changelog[215] = {
         },
         ["koKR"] = {
             "이전 변경 로그의 일부 수정.",
-            "[Announcement] Fix the bug that may occur after leaving from a group.",
-            "[Game Bar] Right-click Encounter Journal button now will open Weekly Rewards.",
-            "[Move Frame] Add support for weekly rewards.",
+            "[알림] 파티를 떠난 후 발생할 수 있는 오류를 수정하였습니다.",
+            "[게임 바] 모험 안내서를 마우스 오른쪽 버튼으로 클릭하면 주간 보상 금고를 확인할 수 있습니다.",
+            "[프레임 이동] 주간 보상 (위대한 금고) 창을 이동할 수 있습니다.",
             "[스킨] 공격대 도구 스킨의 잠재적인 버그를 수정하였습니다.",
-            "[Skins] Optimize Mythic Dungeon Keystone skin.",
+            "[스킨] 쐐기던전의 쐐기돌 스킨을 최적화하였습니다.",
             "[아이템 바] UTILITY (유틸리티) 카테고리에 방어구 강화, 기름, 숫돌 같은 어둠땅 제작 아이템이 추가 되였습니다.",
-            "[Extra Item Bar] Update Torghast item list.",
+            "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
             "[살펴보기] 어둠땅 마법 부여 정보를 수정하였습니다. Thanks loudsoul."
         }
     }

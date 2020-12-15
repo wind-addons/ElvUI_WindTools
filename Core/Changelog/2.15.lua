@@ -10,18 +10,22 @@ W.Changelog[215] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[其他] 添加了隐藏制造者姓名的功能及选项.", 
             "[美化皮肤] 添加了每周奖励宝库的界面美化.",
             "[副本难度] 添加了一个文字对齐选项."
         },
         ["zhTW"] = {
+            "[其他] 新增了隱藏製作者姓名的功能及設定.",
             "[美化皮膚] 新增了每週獎勵寶庫的界面美化.",
             "[副本難度] 新增了一個文字對齊選項."
         },
         ["enUS"] = {
+            "[Misc] Add new feature and option of hiding crafter name.",
             "[Skins] Add skin for weekly rewards.",
             "[Instance Difficulty] Add a new option of text-align."
         },
         ["koKR"] = {
+            "[Misc] Add new feature and option of hiding crafter name.",
             "[스킨] 주간 보상 스킨 추가.",
             "[인스턴스 난이도] 텍스트 정렬 옵션을 추가하였습니다."
         }

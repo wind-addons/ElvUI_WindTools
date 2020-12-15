@@ -63,7 +63,7 @@ end
 ]]
 function M:CallLoadedAddon(addonName, object)
     for _, func in next, object do
-        xpcall(func, errorhandler)
+        xpcall(func, errorhandler, self)
     end
 
     self.addonsToLoad[addonName] = nil
@@ -86,7 +86,7 @@ end
 
 function M:Initialize()
     for index, func in next, self.nonAddonsToLoad do
-        xpcall(func, errorhandler)
+        xpcall(func, errorhandler, self)
         self.nonAddonsToLoad[index] = nil
     end
 

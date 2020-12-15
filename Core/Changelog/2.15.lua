@@ -25,8 +25,8 @@ W.Changelog[215] = {
             "[Instance Difficulty] Add a new option of text-align."
         },
         ["koKR"] = {
-            "[Misc] Add new feature and option of hiding crafter name.",
-            "[스킨] 주간 보상 스킨 추가.",
+            "[기타] 제작자의 이름을 숨겨주는 새로운 옵션을 추가하였습니다.",
+            "[스킨] 주간 보상(위대한 금고) 스킨 추가.",
             "[인스턴스 난이도] 텍스트 정렬 옵션을 추가하였습니다."
         }
     },

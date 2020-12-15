@@ -80,6 +80,18 @@ options.general = {
             type = "toggle",
             name = L["Move Speed"],
             desc = L["Show move speed in character panel."]
+        },
+        hideCrafter = {
+            order = 8,
+            type = "toggle",
+            name = L["Hide Crafter"],
+            desc = L["Hide crafter name in the item tooltip."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
         }
     }
 }

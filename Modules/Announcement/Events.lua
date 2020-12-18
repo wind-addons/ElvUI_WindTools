@@ -10,7 +10,8 @@ A.EventList = {
     "COMBAT_LOG_EVENT_UNFILTERED",
     "GROUP_ROSTER_UPDATE",
     "LFG_COMPLETION_REWARD",
-    "QUEST_LOG_UPDATE"
+    "QUEST_LOG_UPDATE",
+    "ZONE_CHANGED_NEW_AREA"
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -66,5 +67,9 @@ function A:CHAT_MSG_ADDON(_, prefix, text)
 end
 
 function A:GROUP_ROSTER_UPDATE()
+    self:UpdatePartyInfo()
+end
+
+function A:ZONE_CHANGED_NEW_AREA()
     self:UpdatePartyInfo()
 end

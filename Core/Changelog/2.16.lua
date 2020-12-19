@@ -19,7 +19,7 @@ W.Changelog[216] = {
             "[Mute] support Mawsworn Soulhunter."
         },
         ["koKR"] = {
-            "[Mute] support Mawsworn Soulhunter."
+            "[음소거] 나락살이 영혼사냥꾼 지원"
         }
     },
     IMPROVEMENT = {
@@ -33,7 +33,7 @@ W.Changelog[216] = {
             "[Skins] Add skins for custom DataText panels."
         },
         ["koKR"] = {
-            "[Skins] Add skins for custom DataText panels."
+            "[스킨] 사용자 정보 문자 스킨을 추가하였습니다."
         }
     }
 }

@@ -75,7 +75,8 @@ V.misc = {
 		mount = {
 			[63796] = false,
 			[229385] = false,
-			[339588] = false
+			[339588] = false,
+			[312762] = false
 		}
 	},
 	lfgList = {

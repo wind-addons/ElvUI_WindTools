@@ -45,6 +45,26 @@ local MountSE = {
     [339588] = {
         -- 罪奔者布蘭契
         3587276 -- Part of SoundKit(s): 157142, 160875, 166787, 167500, 167947, 172866
+    },
+    [312762] = {
+        -- 淵誓獵魂犬
+        3745490, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_01_168902.ogg
+        3745492, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_02_168902.ogg
+        3745494, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_03_168902.ogg
+        3745496, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_04_168902.ogg
+        3745498, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_05_168902.ogg
+        3745500, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_06_168902.ogg
+        3745502, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_07_168902.ogg
+        3745504, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_08_168902.ogg
+        3745506, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_09_168902.ogg
+        3745508, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_10_168902.ogg
+        3745510, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_11_168902.ogg
+        3745512, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_12_168902.ogg
+        3745514, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_13_168902.ogg
+        3745516, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_14_168902.ogg
+        3745518, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_15_168902.ogg
+        3745520, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_16_168902.ogg
+        3745566 --sound/creature/talethi's_target/mon_talethi's_target_fidget02_01_168903.ogg
     }
 }
 

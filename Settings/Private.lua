@@ -263,6 +263,7 @@ V.skins = {
 		classBars = true,
 		chatCopyFrame = true,
 		dataBars = true,
+		dataPanels = true,
 		miniMap = true,
 		option = true,
 		panels = true,

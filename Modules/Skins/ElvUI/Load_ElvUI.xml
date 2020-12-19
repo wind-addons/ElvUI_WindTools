@@ -10,6 +10,7 @@
 	<Script file='ClassBars.lua'/>
 	<Script file='CopyChatFrame.lua'/>
 	<Script file='DataBars.lua'/>
+	<Script file='DataPanels.lua'/>
 	<Script file='MiniMap.lua'/>
 	<Script file='Option.lua'/>
 	<Script file='Panels.lua'/>

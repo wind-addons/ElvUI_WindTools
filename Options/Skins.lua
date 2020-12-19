@@ -803,6 +803,11 @@ options.elvui = {
             type = "toggle",
             name = L["Data Bars"]
         },
+        dataPanels = {
+            order = 10,
+            type = "toggle",
+            name = L["Data Panels"]
+        },
         miniMap = {
             order = 10,
             type = "toggle",

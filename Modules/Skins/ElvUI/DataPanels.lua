@@ -17,7 +17,6 @@ function S:ElvUI_DataPanels()
 
     if DT.PanelPool.InUse then
         for name, frame in pairs(DT.PanelPool.InUse) do
-            print(frame:GetName())
             self:CreateShadow(frame)
         end
     end

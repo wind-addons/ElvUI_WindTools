@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
 local _G = _G
+local strmatch = strmatch
 
 function M:RemoveCraftInformation(tooltip)
     if not E.db.WT.misc.hideCrafter then

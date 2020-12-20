@@ -12,7 +12,6 @@ local IsInRaid = IsInRaid
 
 local C_ChatInfo_RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
-local C_Timer_After = C_Timer.After
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
@@ -141,7 +140,7 @@ do
         cache = {}
 
         waitSend = true
-        C_Timer_After(
+        E:Delay(
             0.5,
             function()
                 if IsInGroup() then

@@ -67,9 +67,9 @@ function A:CHAT_MSG_ADDON(_, prefix, text)
 end
 
 function A:GROUP_ROSTER_UPDATE()
-    self:UpdatePartyInfo()
+    self:ResetAuthority()
 end
 
 function A:ZONE_CHANGED_NEW_AREA()
-    self:UpdatePartyInfo()
+    self:ResetAuthority()
 end

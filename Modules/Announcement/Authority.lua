@@ -36,10 +36,6 @@ local channelLevel = {
 -- 缓存最高权限
 local cache = {}
 
-function A:GetCache() -- TODO: 删除
-    return cache
-end
-
 local function GetBestChannel()
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
         return "INSTANCE_CHAT"

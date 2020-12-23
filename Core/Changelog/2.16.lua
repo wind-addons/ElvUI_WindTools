@@ -23,7 +23,7 @@ W.Changelog[216] = {
         },
         ["koKR"] = {
             "[음소거] 나락살이 영혼사냥꾼 지원",
-            "[Extra Item Bar] Add new tooltip options for each bar."
+            "[아이템 바] 각 바에 새로운 툴팁 옵션을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -41,7 +41,7 @@ W.Changelog[216] = {
         },
         ["koKR"] = {
             "[스킨] 사용자 정보 문자 스킨을 추가하였습니다.",
-            "[Chat Link] Add support for more channels."
+            "[체팅 링크] 더 많은 채널을 추가하였습니다."
         }
     }
 }

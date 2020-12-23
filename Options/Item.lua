@@ -263,7 +263,12 @@ do -- Add options for bars
                                 return not E.db.WT.item.extraItemsBar.enable or
                                     E.db.WT.item.extraItemsBar["bar" .. i].globalFade
                             end
-                        }
+                        },
+                        tooltip = {
+                            order = 6,
+                            type = "toggle",
+                            name = L["Tooltip"]
+                        },
                     }
                 },
                 backdrop = {

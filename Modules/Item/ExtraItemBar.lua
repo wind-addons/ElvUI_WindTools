@@ -572,16 +572,18 @@ function EB:SetUpButton(button, questItemData, slotID)
                 )
             end
 
-            GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
-            GameTooltip:ClearLines()
+            if barDB.tooltip then
+                GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, -2)
+                GameTooltip:ClearLines()
 
-            if self.slotID then
-                GameTooltip:SetInventoryItem("player", self.slotID)
-            else
-                GameTooltip:SetItemByID(self.itemID)
+                if self.slotID then
+                    GameTooltip:SetInventoryItem("player", self.slotID)
+                else
+                    GameTooltip:SetItemByID(self.itemID)
+                end
+
+                GameTooltip:Show()
             end
-
-            GameTooltip:Show()
         end
     )
 

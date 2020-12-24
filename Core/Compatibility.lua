@@ -310,6 +310,69 @@ function W:CheckCompatibilityShadowAndLight(WTModuleName, SLModuleName, WTDB, SL
     end
 end
 
+function W:CheckCompatibilitymMediaTag(WTModuleName, MTModuleName, WTDB, MTDB)
+    if not IsAddOnLoaded("ElvUI_mMediaTag") then
+        return
+    end
+
+    if not (WTDB and MTDB and type(WTDB) == "string" and type(MTDB) == "string") then
+        return
+    end
+
+    local realWTDB = E
+    local lastWTTable, lastWTKey
+    for _, key in ipairs {strsplit(".", WTDB)} do
+        if key and strlen(key) > 0 then
+            if realWTDB[key] ~= nil then
+                if type(realWTDB[key]) == "boolean" then
+                    lastWTTable = realWTDB
+                    lastWTKey = key
+                end
+                realWTDB = realWTDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
+                return
+            end
+        end
+    end
+
+    local realMTDB = E
+    local lastMTTable, lastMTKey
+    for _, key in ipairs {strsplit(".", MTDB)} do
+        if key and strlen(key) > 0 then
+            if realMTDB[key] ~= nil then
+                if type(realMTDB[key]) == "boolean" then
+                    lastMTTable = realMTDB
+                    lastMTKey = key
+                end
+                realMTDB = realMTDB[key]
+            else
+                F.DebugMessage("Compatibility", "DB Error: " .. MTDB)
+                return
+            end
+        end
+    end
+
+    if realMTDB == true and realWTDB == true then
+        self:AddButtonToCompatibiltyFrame(
+            {
+                module1 = WTModuleName,
+                plugin1 = L["WindTools"],
+                func1 = function()
+                    lastMTTable[lastMTKey] = false
+                    lastWTTable[lastWTKey] = true
+                end,
+                module2 = MTModuleName,
+                plugin2 = L["mMediaTag"],
+                func2 = function()
+                    lastMTTable[lastMTKey] = true
+                    lastWTTable[lastWTKey] = false
+                end
+            }
+        )
+    end
+end
+
 function W:CheckCompatibility()
     self:ConstructCompatibiltyFrame()
 
@@ -455,6 +518,13 @@ function W:CheckCompatibility()
         format("%s-%s", L["Skins"], _G.OBJECTIVES_TRACKER_LABEL),
         "private.WT.skins.blizzard.scenario",
         "private.sle.skins.objectiveTracker.enable"
+    )
+
+    self:CheckCompatibilitymMediaTag(
+        format("%s-%s", L["Tooltips"], L["Icon"]),
+        L["Tooltip Icon"],
+        "private.WT.tooltips.icon",
+        "db.mMediaTag.mTIcon"
     )
 
     if self.CompatibiltyFrame.numModules > 0 then

@@ -457,6 +457,13 @@ function W:CheckCompatibility()
     )
 
     self:CheckCompatibilityMerathilisUI(
+        L["Chat Link"],
+        L["Chat Link"],
+        "db.WT.social.chatLink.enable",
+        "db.mui.chat.chatLink.enable"
+    )
+
+    self:CheckCompatibilityMerathilisUI(
         L["Raid Markers"],
         L["Raid Markers"],
         "db.WT.combat.raidMarkers.enable",

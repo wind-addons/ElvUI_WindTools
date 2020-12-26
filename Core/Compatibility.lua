@@ -529,7 +529,7 @@ function W:CheckCompatibility()
 
     self:CheckCompatibilitymMediaTag(
         format("%s-%s", L["Tooltips"], L["Icon"]),
-        L["Tooltip Icon"],
+        L["Tooltip Icons"],
         "private.WT.tooltips.icon",
         "db.mMediaTag.mTIcon"
     )

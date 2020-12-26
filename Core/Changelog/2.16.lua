@@ -11,18 +11,22 @@ W.Changelog[216] = {
     NEW = {
         ["zhCN"] = {
             "[静音] 添加了渊誓猎魂犬的选项.",
+            "[静音] 添加了乌龟人的选项.",
             "[额外物品条] 为每个条添加了鼠标提示的选项."
         },
         ["zhTW"] = {
             "[靜音] 新增了淵誓獵魂犬的選項.",
+            "[靜音] 新增了托爾托人的選項.",
             "[額外物品條] 為每個條添加了鼠標提示的選項."
         },
         ["enUS"] = {
             "[Mute] support Mawsworn Soulhunter.",
+            "[Mute] support Tortollan.",
             "[Extra Item Bar] Add new tooltip options for each bar."
         },
         ["koKR"] = {
             "[음소거] 나락살이 영혼사냥꾼 지원",
+            "[Mute] support Tortollan.",
             "[아이템 바] 각 바에 새로운 툴팁 옵션을 추가하였습니다."
         }
     },

@@ -372,6 +372,26 @@ options.mute = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {}
+        },
+        other = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Others"],
+            get = function(info)
+                return E.private.WT.misc.mute[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.mute[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                ["Tortollan"] = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Tortollan"]
+                }
+            }
         }
     }
 }

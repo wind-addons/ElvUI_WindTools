@@ -25,8 +25,8 @@ W.Changelog[216] = {
             "[Extra Item Bar] Add new tooltip options for each bar."
         },
         ["koKR"] = {
-            "[음소거] 나락살이 영혼사냥꾼 지원",
-            "[Mute] support Tortollan.",
+            "[음소거] 나락살이 영혼사냥꾼 추가",
+            "[움소거] 토트톨란 추가",
             "[아이템 바] 각 바에 새로운 툴팁 옵션을 추가하였습니다."
         }
     },

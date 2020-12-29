@@ -69,7 +69,7 @@ W.Changelog[216] = {
             "[아이템 바] 치명적인 야성의 북을 UTILITY (유틸리티) 카테고리에 추가하였습니다.",
             "[스킨] 사용자 정보 문자 스킨을 추가하였습니다.",
             "[체팅 링크] 더 많은 채널을 추가하였습니다.",
-            "[Game Bar] Now you can toggle sound by clicking middle mouse button on Volume."
+            "[게임 바] 이제 볼륨 아이콘을 마우스 가운데 버튼 클릭으로 ON/OFF 전환할 수 있습니다."
         }
     }
 }

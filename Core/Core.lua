@@ -27,7 +27,7 @@ W.Changelog = {}
 
 -- 快捷键注册
 _G.BINDING_CATEGORY_ELVUI_WINDTOOLS = L["WindTools"]
-for i = 1, 3 do
+for i = 1, 4 do
     _G["BINDING_HEADER_WTEXTRAITEMSBAR" .. i] =
         F.CreateColorString(L["Extra Items Bar"] .. " " .. i, E.db.general.valuecolor)
     for j = 1, 12 do

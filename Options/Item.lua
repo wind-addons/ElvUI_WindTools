@@ -184,7 +184,7 @@ options.extraItemsBar = {
 }
 
 do -- Add options for bars
-    for i = 1, 3 do
+    for i = 1, 4 do
         options.extraItemsBar.args["bar" .. i] = {
             order = i + 2,
             type = "group",

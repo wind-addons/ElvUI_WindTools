@@ -44,28 +44,32 @@ W.Changelog[216] = {
             "[额外物品条] 更新托加斯特物品列表.",
             "[额外物品条] 添加死亡凶蛮战鼓到 UTILITY (实用工具) 分组.",
             "[美化皮肤] 新增了自定义数据文字面板的美化.",
-            "[聊天链接] 适配更多的频道."
+            "[聊天链接] 适配更多的频道.",
+            "[游戏条] 音量按钮支持中键开关全部声音."
         },
         ["zhTW"] = {
             "相容性確認工具更新.",
             "[額外物品條] 更新托伽司物品列表.",
             "[額外物品條] 新增致命兇殘之鼓到 UTILITY (實用工具) 分組.",
             "[美化皮膚] 新增了自訂資訊文字面板的美化.",
-            "[聊天鏈接] 適配更多頻道."
+            "[聊天鏈接] 適配更多頻道.",
+            "[遊戲條] 音量按鍵支援中鍵開關全部聲音."
         },
         ["enUS"] = {
             "Update compatibility check.",
             "[Extra Item Bar] Update Torghast item list.",
             "[Extra Item Bar] Add Drums of Deathly Ferocity to UTILITY (utilities) category.",
             "[Skins] Add skins for custom DataText panels.",
-            "[Chat Link] Add support for more channels."
+            "[Chat Link] Add support for more channels.",
+            "[Game Bar] Now you can toggle sound by clicking middle mouse button on Volume."
         },
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
             "[아이템 바] 치명적인 야성의 북을 UTILITY (유틸리티) 카테고리에 추가하였습니다.",
             "[스킨] 사용자 정보 문자 스킨을 추가하였습니다.",
-            "[체팅 링크] 더 많은 채널을 추가하였습니다."
+            "[체팅 링크] 더 많은 채널을 추가하였습니다.",
+            "[Game Bar] Now you can toggle sound by clicking middle mouse button on Volume."
         }
     }
 }

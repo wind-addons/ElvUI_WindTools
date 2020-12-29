@@ -13,7 +13,7 @@ W.Changelog[216] = {
             "[Extra Item Bar] Add 4th and 5th item bar."
         },
         ["koKR"] = {
-            "[Extra Item Bar] Add 4th and 5th item bar."
+            "[아이템 바] 4번째와 5번째 아이템 바를 추가하였습니다."
         }
     },
     NEW = {
@@ -63,7 +63,7 @@ W.Changelog[216] = {
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
-            "[Extra Item Bar] Add Drums of Deathly Ferocity to UTILITY (utilities) category.",
+            "[아이템 바] 치명적인 야성의 북을 UTILITY (유틸리티) 카테고리에 추가하였습니다.",
             "[스킨] 사용자 정보 문자 스킨을 추가하였습니다.",
             "[체팅 링크] 더 많은 채널을 추가하였습니다."
         }

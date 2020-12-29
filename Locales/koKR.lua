@@ -776,6 +776,7 @@ L["Social"] = "소셜"
 L["Solo"] = "솔플"
 L["Soulbinds"] = "영혼결속"
 L["Sound"] = "소리"
+L["Sound ON/OFF"] = true
 L["Source"] = "시전자일 때"
 L["Spacing"] = "간격"
 L["Special Thanks"] = true

@@ -776,6 +776,7 @@ L["Social"] = true
 L["Solo"] = true
 L["Soulbinds"] = true
 L["Sound"] = true
+L["Sound ON/OFF"] = true
 L["Source"] = true
 L["Spacing"] = true
 L["Special Thanks"] = true

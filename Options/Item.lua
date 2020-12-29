@@ -63,7 +63,7 @@ options.extraItemsBar = {
             name = L["Enable"]
         },
         custom = {
-            order = 6,
+            order = 10,
             type = "group",
             name = L["Custom Items"],
             disabled = function()
@@ -123,7 +123,7 @@ options.extraItemsBar = {
             }
         },
         blackList = {
-            order = 7,
+            order = 11,
             type = "group",
             name = L["Blacklist"],
             disabled = function()
@@ -184,7 +184,7 @@ options.extraItemsBar = {
 }
 
 do -- Add options for bars
-    for i = 1, 4 do
+    for i = 1, 5 do
         options.extraItemsBar.args["bar" .. i] = {
             order = i + 2,
             type = "group",
@@ -268,7 +268,7 @@ do -- Add options for bars
                             order = 6,
                             type = "toggle",
                             name = L["Tooltip"]
-                        },
+                        }
                     }
                 },
                 backdrop = {

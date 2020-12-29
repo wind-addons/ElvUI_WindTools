@@ -648,7 +648,7 @@ function EB:UpdateButtonSize(button, barDB)
 end
 
 function EB:PLAYER_REGEN_ENABLED()
-    for i = 1, 4 do
+    for i = 1, 5 do
         if UpdateAfterCombat[i] then
             self:UpdateBar(i)
             UpdateAfterCombat[i] = false
@@ -941,7 +941,7 @@ function EB:UpdateBar(id)
 end
 
 function EB:UpdateBars()
-    for i = 1, 4 do
+    for i = 1, 5 do
         self:UpdateBar(i)
     end
 end
@@ -959,7 +959,7 @@ end
 function EB:CreateAll()
     self.bars = {}
 
-    for i = 1, 4 do
+    for i = 1, 5 do
         self:CreateBar(i)
         S:CreateShadowModule(self.bars[i].backdrop)
         S:MerathilisUISkin(self.bars[i].backdrop)
@@ -971,7 +971,7 @@ function EB:UpdateBinding()
         return
     end
 
-    for i = 1, 4 do
+    for i = 1, 5 do
         for j = 1, 12 do
             local button = self.bars[i].buttons[j]
             if button then

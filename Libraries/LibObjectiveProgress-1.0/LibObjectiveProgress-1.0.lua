@@ -1,11 +1,10 @@
 --[[
 LibObjectiveProgress: Core API
 Developed by: Simca@Malfurion (MMOSimca)
-Modified by: houshuu @ NGA
 ]]--
 
 -- Set major/minor version
-local MAJOR, MINOR = "LibObjectiveProgress-1.0", 42
+local MAJOR, MINOR = "LibObjectiveProgress-1.0", 64
 assert(LibStub, MAJOR .. " requires LibStub")
 
 -- Initialize library
@@ -13,8 +12,8 @@ local LOP, oldversion = LibStub:NewLibrary(MAJOR, MINOR)
 if not LOP then return end
 
 -- Localized function references
-local GetNumQuestLogEntries = _G.GetNumQuestLogEntries
-local GetQuestLogTitle = _G.GetQuestLogTitle
+local CQL_GetNumQuestLogEntries = _G.C_QuestLog.GetNumQuestLogEntries
+local CQL_GetInfo = _G.C_QuestLog.GetInfo
 
 
 function LOP:GetNPCWeightByMap(mapID, npcID, isTeeming, isAlternate)
@@ -51,18 +50,16 @@ function LOP:GetNPCWeightByCurrentQuests(npcID)
     local questTable = nil
     
     -- Get NPC weight for all quests in log
-    local numEntries = C_QuestLog.GetNumQuestLogEntries()
+    local numEntries = CQL_GetNumQuestLogEntries()
     for questLogIndex = 1, numEntries do
-        local info = C_QuestLog.GetInfo(questLogIndex)
-        local isHeader = info.isHeader
-        local questID = info.questID
+        local questInfo = CQL_GetInfo(questLogIndex)
 
         -- If this row isn't a header, has a valid questID, and has a valid weight, then initialize the table and record the questID/weight pair
-        if not isHeader and questID ~= 0 then
-            local weight = LOP:GetNPCWeightByQuest(questID, npcID)
+        if questInfo and not questInfo.isHeader and questInfo.questID ~= 0 then
+            local weight = LOP:GetNPCWeightByQuest(questInfo.questID, npcID)
             if weight then
                 questTable = questTable or {}
-                questTable[questID] = weight
+                questTable[questInfo.questID] = weight
             end
         end
     end

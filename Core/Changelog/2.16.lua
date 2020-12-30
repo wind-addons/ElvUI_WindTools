@@ -39,7 +39,7 @@ W.Changelog[216] = {
             "[음소거] 나락살이 영혼사냥꾼 추가",
             "[음소거] 토트톨란 추가",
             "[아이템 바] 각 바에 새로운 툴팁 옵션을 추가하였습니다.",
-            "[Skins] Add new skin for Mythic Dungeon Tools."
+            "[스킨] Mythic Dungeon Tools 스킨 추가."
         }
     },
     IMPROVEMENT = {

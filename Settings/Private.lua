@@ -175,6 +175,7 @@ V.skins = {
 		immersion = true,
 		meetingStone = true,
 		myslot = true,
+		mythicDungeonTools = true,
 		premadeGroupsFilter = true,
 		rehack = true,
 		rematch = true,

@@ -967,6 +967,11 @@ options.addons = {
             type = "toggle",
             name = L["Myslot"]
         },
+        mythicDungeonTools = {
+            order = 10,
+            type = "toggle",
+            name = L["Mythic Dungeon Tools"]
+        },
         premadeGroupsFilter = {
             order = 10,
             type = "toggle",

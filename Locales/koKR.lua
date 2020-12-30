@@ -550,6 +550,7 @@ L["My %pet_role% %pet% taunted %target% successfully!"] = "%pet_role% %pet% -> %
 L["My Favorites"] = "나의 즐겨찾기"
 L["Myslot"] = true
 L["Mythic"] = "신화"
+L["Mythic Dungeon Tools"] = true
 L["Mythic Dungeons"] = "신화 던전"
 L["NGA.cn"] = true
 L["Name"] = "이름"

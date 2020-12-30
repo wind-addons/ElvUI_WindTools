@@ -550,6 +550,7 @@ L["My %pet_role% %pet% taunted %target% successfully!"] = true
 L["My Favorites"] = true
 L["Myslot"] = true
 L["Mythic"] = "Mytisch"
+L["Mythic Dungeon Tools"] = true
 L["Mythic Dungeons"] = true
 L["NGA.cn"] = true
 L["Name"] = "Name"

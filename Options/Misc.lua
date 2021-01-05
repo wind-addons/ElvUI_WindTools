@@ -390,6 +390,11 @@ options.mute = {
                     order = 1,
                     type = "toggle",
                     name = L["Tortollan"]
+                },
+                ["AccursedKeepsake"] = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["AccursedKeepsake"]
                 }
             }
         }

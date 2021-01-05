@@ -105,26 +105,6 @@ local OtherSE = {
         1998120, -- sound/creature/tortollan_male/vo_801_tortollan_male_12_m.ogg
         1998121, -- sound/creature/tortollan_male/vo_801_tortollan_male_13_m.ogg
         1998122 -- sound/creature/tortollan_male/vo_801_tortollan_male_14_m.ogg
-    },
-    ["AccursedKeepsake"] = {
-        -- 受詛咒的紀念物
-        3635292, -- sound/creature/mawshade/mon_mawshade_aggro_00_161095.ogg
-        3635290, -- sound/creature/mawshade/mon_mawshade_aggro_01_161095.ogg
-        3635288, -- sound/creature/mawshade/mon_mawshade_aggro_02_161095.ogg
-        3635286, -- sound/creature/mawshade/mon_mawshade_aggro_03_161095.ogg
-        3635284, -- sound/creature/mawshade/mon_mawshade_aggro_04_161095.ogg
-        3635416, -- sound/creature/mawshade/mon_mawshade_alert_00_161094.ogg
-        3635414, -- sound/creature/mawshade/mon_mawshade_alert_01_161094.ogg
-        3635412, -- sound/creature/mawshade/mon_mawshade_alert_02_161094.ogg
-        3635330, -- sound/creature/mawshade/mon_mawshade_death_00_161100.ogg
-        3635328, -- sound/creature/mawshade/mon_mawshade_death_01_161100.ogg
-        3635326, -- sound/creature/mawshade/mon_mawshade_death_02_161100.ogg
-        3635324, -- sound/creature/mawshade/mon_mawshade_death_03_161100.ogg
-        3635322, -- sound/creature/mawshade/mon_mawshade_death_04_161100.ogg
-        3635320, -- sound/creature/mawshade/mon_mawshade_death_05_161100.ogg
-        3747229, -- sound/creature/mawsworn/mon_mawsworn_loop_01_171773.ogg
-        3747231, -- sound/creature/mawsworn/mon_mawsworn_loop_02_171773.ogg
-        3747239 -- sound/creature/mawsworn/mon_mawsworn_loop_03_171773.ogg
     }
 }
 

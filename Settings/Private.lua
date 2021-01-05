@@ -80,7 +80,6 @@ V.misc = {
 		},
 		other = {
 			["Tortollan"] = false
-			["AccursedKeepsake"] = false
 		}
 	},
 	lfgList = {

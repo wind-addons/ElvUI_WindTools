@@ -325,5 +325,6 @@ V.unitFrames = {
 
 V.core = {
 	debugMode = false,
-	compatibilityCheck = true
+	compatibilityCheck = true,
+	loginMessage = true
 }

@@ -87,7 +87,7 @@ function W:CheckInstalledVersion()
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
             E.global.WT.Version = W.Version
-        else
+        elseif E.private.WT.core.loginMessage then
             local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
             print(
                 format(

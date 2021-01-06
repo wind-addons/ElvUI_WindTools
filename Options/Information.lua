@@ -219,6 +219,17 @@ options.help = {
                 }
             }
         },
+        loginMessage = {
+            order = 997,
+            type = "toggle",
+            name = L["Login Message"],
+            get = function(info)
+                return E.private.WT.core.loginMessage
+            end,
+            set = function(info, value)
+                E.private.WT.core.loginMessage = value
+            end
+        },
         compatibilityCheck = {
             order = 998,
             type = "toggle",

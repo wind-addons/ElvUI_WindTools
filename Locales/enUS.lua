@@ -489,6 +489,7 @@ L["List"] = true
 L["Lists"] = true
 L["Local Time"] = true
 L["Localization"] = true
+L["Login Message"] = true
 L["Looking For Group"] = true
 L["Loot Frames"] = true
 L["Loss Of Control"] = true

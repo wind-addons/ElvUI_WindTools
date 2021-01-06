@@ -18,24 +18,28 @@ W.Changelog[216] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[信息] 在 [帮助] 选项卡中添加了登陆信息的选项.",
             "[静音] 添加了渊誓猎魂犬的选项.",
             "[静音] 添加了乌龟人的选项.",
             "[额外物品条] 为每个条添加了鼠标提示的选项.",
             "[美化皮肤] 添加了 Mythic Dungeon Tools 的皮肤."
         },
         ["zhTW"] = {
+            "[信息] 在 [幫助] 選項卡中新增了登入資訊的選項.",
             "[靜音] 新增了淵誓獵魂犬的選項.",
             "[靜音] 新增了托爾托人的選項.",
             "[額外物品條] 為每個條添加了鼠標提示的選項.",
             "[美化皮膚] 新增了 Mythic Dungeon Tools 的美化."
         },
         ["enUS"] = {
+            "[Information] Add an option of login message inside Help tab.",
             "[Mute] support Mawsworn Soulhunter.",
             "[Mute] support Tortollan.",
             "[Extra Item Bar] Add new tooltip options for each bar.",
             "[Skins] Add new skin for Mythic Dungeon Tools."
         },
         ["koKR"] = {
+            "[Information] Add an option of login message inside Help tab.",
             "[음소거] 나락살이 영혼사냥꾼 추가",
             "[음소거] 토트톨란 추가",
             "[아이템 바] 각 바에 새로운 툴팁 옵션을 추가하였습니다.",

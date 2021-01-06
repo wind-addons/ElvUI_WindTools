@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[216] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2021/01/06",
     IMPORTANT = {
         ["zhCN"] = {
             "[额外物品条] 条数量增加到 5."

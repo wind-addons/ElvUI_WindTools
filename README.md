@@ -93,11 +93,12 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 10. **Immersion Skin**: Apply skin for Immersion.
 11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
 12. **Myslot Skin**: Apply skin for Myslot.
-13. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-14. **REHack Skin**: Apply skin for REHack.
-15. **Rematch Skin**: Apply skin for Rematch.
-16. **TinyInspect Skin**: Apply skin for TinyInspect.
-17. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+13. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
+14. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
+15. **REHack Skin**: Apply skin for REHack.
+16. **Rematch Skin**: Apply skin for Rematch.
+17. **TinyInspect Skin**: Apply skin for TinyInspect.
+18. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

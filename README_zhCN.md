@@ -94,11 +94,12 @@
 10. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
 11. **网易集合石美化**: 为网易的集合石插件添加美化.
 12. **Myslot 美化**: 为 Myslot 的主要窗口添加美化.
-13. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
-14. **REHack 美化**: 为 REHack 的主要窗口添加美化.
-15. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
-16. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-17. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+13. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化.
+14. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
+15. **REHack 美化**: 为 REHack 的主要窗口添加美化.
+16. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
+17. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

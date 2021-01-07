@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W:GetModule("Skins")
+local ES = E:GetModule("Skins")
 
 local _G = _G
 local pairs = pairs
@@ -92,6 +93,18 @@ function S:BlizzardMiscFrames()
 
     -- What's new
     self:CreateBackdropShadow(_G.SplashFrame)
+
+    -- UIWidget
+    self:SecureHook(
+        ES,
+        "SkinStatusBarWidget",
+        function(_, widgetFrame)
+            local bar = widgetFrame.Bar
+            if bar then
+                self:CreateBackdropShadow(bar)
+            end
+        end
+    )
 end
 
 S:AddCallback("BlizzardMiscFrames")

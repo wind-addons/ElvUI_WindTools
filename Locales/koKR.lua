@@ -2,8 +2,8 @@
 local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "koKR")
 
-L["%player% casted %spell% -> %target%"] = "%player% 시전 %spell% -> %target%"
-L["%player% casted %spell%, today's special is Anchovy Pie!"] = "%player%님이 %spell% 시전 중! 물빵 가져 가세요!!"
+L["%player% cast %spell% -> %target%"] = "%player% 시전 %spell% -> %target%"
+L["%player% cast %spell%, today's special is Anchovy Pie!"] = "%player%님이 %spell% 시전 중! 물빵 가져 가세요!!"
 L["%player% failed on taunting %target%!"] = "%player% -> %target% 도발 실패!"
 L["%player% interrupted %target%'s %target_spell%!"] = "%player%님이 %target%의 %target_spell% 차단!"
 L["%player% is casting %spell%, please assist!"] = "%player%님이 %spell% 시전 중입니다. 도와 주세요!"

@@ -2,8 +2,8 @@
 local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhCN")
 
-L["%player% casted %spell% -> %target%"] = "%player%使用了%spell% -> %target%"
-L["%player% casted %spell%, today's special is Anchovy Pie!"] = "%player%使用了%spell%, 各位快来领面包哦!"
+L["%player% cast %spell% -> %target%"] = "%player%使用了%spell% -> %target%"
+L["%player% cast %spell%, today's special is Anchovy Pie!"] = "%player%使用了%spell%, 各位快来领面包哦!"
 L["%player% failed on taunting %target%!"] = "%player%嘲讽%target%失败!"
 L["%player% interrupted %target%'s %target_spell%!"] = "%player%打断了%target%的%target_spell%!"
 L["%player% is casting %spell%, please assist!"] = "%player%正在进行 %spell%, 请配合点门哦!"

@@ -2,8 +2,8 @@
 local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
 
-L["%player% casted %spell% -> %target%"] = true
-L["%player% casted %spell%, today's special is Anchovy Pie!"] = true
+L["%player% cast %spell% -> %target%"] = true
+L["%player% cast %spell%, today's special is Anchovy Pie!"] = true
 L["%player% failed on taunting %target%!"] = true
 L["%player% interrupted %target%'s %target_spell%!"] = true
 L["%player% is casting %spell%, please assist!"] = true

@@ -2311,3 +2311,76 @@ options.resetInstance = {
         }
     }
 }
+
+options.keystone = {
+    order = 9,
+    type = "group",
+    name = L["Keystone"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Announce the new mythic keystone."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        text = {
+            order = 3,
+            type = "input",
+            name = L["Text"],
+            width = 2.5
+        },
+        useDefaultText = {
+            order = 4,
+            type = "execute",
+            func = function(info)
+                E.db.WT.announcement.keystone.text = P.announcement.keystone.text
+            end,
+            name = L["Default Text"]
+        },
+        channel = {
+            order = 5,
+            name = L["Channel"],
+            type = "group",
+            inline = true,
+            get = function(info)
+                return E.db.WT.announcement.keystone[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.keystone[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                party = {
+                    order = 1,
+                    name = L["In Party"],
+                    type = "select",
+                    values = {
+                        NONE = L["None"],
+                        EMOTE = L["Emote"],
+                        PARTY = L["Party"],
+                        YELL = L["Yell"],
+                        SAY = L["Say"]
+                    }
+                }
+            }
+        }
+    }
+}

@@ -2346,7 +2346,8 @@ options.keystone = {
             order = 3,
             type = "input",
             name = L["Text"],
-            width = 2.5
+            desc = FormatDesc("%keystone%", L["Keystone"]),
+            width = 2
         },
         useDefaultText = {
             order = 4,

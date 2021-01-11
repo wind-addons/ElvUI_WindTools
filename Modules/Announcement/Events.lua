@@ -10,6 +10,7 @@ A.EventList = {
     "COMBAT_LOG_EVENT_UNFILTERED",
     "GROUP_ROSTER_UPDATE",
     "LFG_COMPLETION_REWARD",
+    "PLAYER_ENTERING_WORLD",
     "QUEST_LOG_UPDATE",
     "ZONE_CHANGED_NEW_AREA"
 }
@@ -49,8 +50,13 @@ function A:LFG_COMPLETION_REWARD()
     self:Goodbye()
 end
 
+function A:PLAYER_ENTERING_WORLD()
+    self:Keystone("PLAYER_ENTERING_WORLD")
+end
+
 function A:CHALLENGE_MODE_COMPLETED()
     self:Goodbye()
+    self:Keystone("CHALLENGE_MODE_COMPLETED")
 end
 
 -- TODO: SCENARIO_COMPLETED 场景完成事件

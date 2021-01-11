@@ -77,13 +77,16 @@ end
     @return {string} 频道
 ]]
 function A:GetChannel(channelDB)
-    if IsPartyLFG() or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
+    if
+        (IsPartyLFG() or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and
+            channelDB.instance
+     then
         return channelDB.instance
-    elseif IsInRaid(LE_PARTY_CATEGORY_HOME) then
+    elseif IsInRaid(LE_PARTY_CATEGORY_HOME) and channelDB.raid then
         return channelDB.raid
-    elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+    elseif IsInGroup(LE_PARTY_CATEGORY_HOME) and channelDB.party then
         return channelDB.party
-    elseif channelDB.solo then
+    elseif channelDB.solo and channelDB.solo then
         return channelDB.solo
     end
     return "NONE"

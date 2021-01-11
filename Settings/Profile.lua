@@ -243,6 +243,13 @@ P.announcement = {
                 text = L["%player% opened %spell%!"]
             }
         }
+    },
+    keystone = {
+        enable = true,
+        text = L["My new keystone is %keystone%."],
+        channel = {
+            party = "PARTY"
+        }
     }
 }
 

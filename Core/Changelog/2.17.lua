@@ -22,8 +22,8 @@ W.Changelog[217] = {
             "[Skins] Add new skins for UI widget. (e.g. charge of HoS first boss)"
         },
         ["koKR"] = {
-            "[Announcement] Add support for new keystone announcement.",
-            "[Skins] Add new skins for UI widget. (e.g. charge of HoS first boss)"
+            "[알림] 쐐기돌 획득 알림을 추가하였습니다.",
+            "[스킨] 새로운 UI 위젯 추가 (예: 속죄의 전당 1넴 할리아스의 령 충전)"
         }
     },
     IMPROVEMENT = {
@@ -40,7 +40,7 @@ W.Changelog[217] = {
             "[Extra Item Bar] Update Torghast item list.",
         },
         ["koKR"] = {
-            "Edited some option description.",
+            "일부 옵션의 설명을 수정했습니다.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
         }
     }

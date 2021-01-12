@@ -51,12 +51,12 @@ function A:LFG_COMPLETION_REWARD()
 end
 
 function A:PLAYER_ENTERING_WORLD()
-    self:Keystone("PLAYER_ENTERING_WORLD")
+    E:Delay(2, self.Keystone, self, "PLAYER_ENTERING_WORLD")
 end
 
 function A:CHALLENGE_MODE_COMPLETED()
     self:Goodbye()
-    self:Keystone("CHALLENGE_MODE_COMPLETED")
+    E:Delay(2, self.Keystone, self, "CHALLENGE_MODE_COMPLETED")
 end
 
 -- TODO: SCENARIO_COMPLETED 场景完成事件

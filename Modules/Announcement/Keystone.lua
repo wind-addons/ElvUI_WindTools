@@ -32,6 +32,8 @@ function A:Keystone(event)
         cache.keystoneLevel = keystoneLevel
     elseif event == "CHALLENGE_MODE_COMPLETED" then
         if cache.mapID ~= mapID or cache.keystoneLevel ~= keystoneLevel then
+            cache.mapID = mapID
+            cache.keystoneLevel = keystoneLevel
             for bagIndex = 0, NUM_BAG_SLOTS do
                 for slotIndex = 1, GetContainerNumSlots(bagIndex) do
                     local itemID = GetContainerItemID(bagIndex, slotIndex)

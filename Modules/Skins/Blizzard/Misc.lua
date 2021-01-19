@@ -105,6 +105,28 @@ function S:BlizzardMiscFrames()
             end
         end
     )
+
+    self:SecureHook(
+        _G.UIWidgetTemplateStatusBarMixin,
+        "Setup",
+        function(widgetFrame)
+            local bar = widgetFrame.Bar
+            if bar then
+                self:CreateBackdropShadow(bar)
+            end
+        end
+    )
+    
+    self:SecureHook(
+        _G.UIWidgetTemplateCaptureBarMixin,
+        "Setup",
+        function(widgetFrame)
+            local bar = widgetFrame.Bar
+            if bar then
+                self:CreateBackdropShadow(bar)
+            end
+        end
+    )
 end
 
 S:AddCallback("BlizzardMiscFrames")

@@ -29,18 +29,22 @@ W.Changelog[217] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "优化设定文本.",
+            "[进度] 移除了过时的副本.",
             "[额外物品条] 更新托加斯特物品列表.",
         },
         ["zhTW"] = {
             "優化設定文字.",
+            "[進度] 移除了過時的副本.",
             "[額外物品條] 更新托伽司物品列表.",
         },
         ["enUS"] = {
             "Edited some option description.",
+            "[Progression] Remove outdated instances.",
             "[Extra Item Bar] Update Torghast item list.",
         },
         ["koKR"] = {
             "일부 옵션의 설명을 수정했습니다.",
+            "[Progression] Remove outdated instances.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
         }
     }

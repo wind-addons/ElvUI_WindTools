@@ -27,14 +27,14 @@ local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 
 --[[
-    发送消息
-    @param {string} text 欲发送的字符串
-    @param {string} channel 频道
-    @param {boolean} raid_warning 允许使用团队警告
-    @param {string} whisper_target 密语目标
+    Send Message
+    @param {string} text The text you want to send to others
+    @param {string} channel the channel in Blizzard codes format
+    @param {boolean} raidWarning Let the function send raid warning if possible
+    @param {string} whisperTarget The target if the channel is whisper
 ]]
-function A:SendMessage(text, channel, raid_warning, whisper_target)
-    -- 忽视不通告讯息
+function A:SendMessage(text, channel, raidWarning, whisperTarget)
+    -- Skip if the channel is NONE
     if channel == "NONE" then
         return
     end
@@ -52,8 +52,8 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
     end
 
     if channel == "WHISPER" then
-        if whisper_target then
-            SendChatMessage(text, channel, nil, whisper_target)
+        if whisperTarget then
+            SendChatMessage(text, channel, nil, whisperTarget)
         end
         return
     end
@@ -62,7 +62,7 @@ function A:SendMessage(text, channel, raid_warning, whisper_target)
         text = ": " .. text
     end
 
-    if channel == "RAID" and raid_warning and IsInRaid(LE_PARTY_CATEGORY_HOME) then
+    if channel == "RAID" and raidWarning and IsInRaid(LE_PARTY_CATEGORY_HOME) then
         if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or IsEveryoneAssistant() then
             channel = "RAID_WARNING"
         end

@@ -288,8 +288,7 @@ V.tooltips = {
 		enable = true,
 		raids = {
 			enable = true,
-			["Castle Nathria"] = true,
-			["Ny'alotha, The Waking City"] = true
+			["Castle Nathria"] = true
 		},
 		mythicDungeons = {
 			enable = true,

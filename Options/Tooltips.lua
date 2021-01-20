@@ -206,7 +206,6 @@ options.progression = {
 
 do
     local raids = {
-        "Ny'alotha, The Waking City",
         "Castle Nathria"
     }
 

@@ -33,8 +33,7 @@ local compareGUID
 local cache = {}
 
 local tiers = {
-    "Castle Nathria",
-    "Ny'alotha, The Waking City"
+    "Castle Nathria"
 }
 
 local levels = {
@@ -64,10 +63,6 @@ local locales = {
     ["Castle Nathria"] = {
         short = L["[ABBR] Castle Nathria"],
         full = L["Castle Nathria"]
-    },
-    ["Ny'alotha, The Waking City"] = {
-        short = L["[ABBR] Ny'alotha, The Waking City"],
-        full = L["Ny'alotha, The Waking City"]
     },
     ["The Necrotic Wake"] = {
         short = L["[ABBR] The Necrotic Wake"],
@@ -104,64 +99,6 @@ local locales = {
 }
 
 local raidAchievements = {
-    ["Ny'alotha, The Waking City"] = {
-        ["Mythic"] = {
-            14082,
-            14094,
-            14098,
-            14105,
-            14110,
-            14115,
-            14120,
-            14211,
-            14126,
-            14130,
-            14134,
-            14138
-        },
-        ["Heroic"] = {
-            14080,
-            14093,
-            14097,
-            14104,
-            14109,
-            14114,
-            14119,
-            14210,
-            14125,
-            14129,
-            14133,
-            14137
-        },
-        ["Normal"] = {
-            14079,
-            14091,
-            14096,
-            14102,
-            14108,
-            14112,
-            14118,
-            14208,
-            14124,
-            14128,
-            14132,
-            14136
-        },
-        ["Raid Finder"] = {
-            14078,
-            14089,
-            14095,
-            14101,
-            14107,
-            14111,
-            14117,
-            14207,
-            14123,
-            14127,
-            14131,
-            14135
-        }
-    },
     ["Castle Nathria"] = {
         ["Mythic"] = {
             14421,

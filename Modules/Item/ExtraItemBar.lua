@@ -950,6 +950,7 @@ end
 function EB:UpdateQuestItemAndEquipment()
     UpdateQuestItemList()
     UpdateEquipmentList()
+
     self:UpdateBars()
 end
 
@@ -958,9 +959,15 @@ function EB:UpdateQuestItem()
     self:UpdateBars()
 end
 
-function EB:UpdateEquipment()
-    UpdateEquipmentList()
-    self:UpdateBars()
+function EB:ITEM_LOCKED()
+    E:Delay(
+        1,
+        function()
+            UpdateEquipmentList()
+            self:UpdateBars()
+            E:Dump(equipmentList)
+        end
+    )
 end
 
 function EB:CreateAll()
@@ -1007,7 +1014,7 @@ function EB:Initialize()
     self:UpdateBinding()
 
     self:RegisterEvent("UNIT_INVENTORY_CHANGED", "UpdateQuestItemAndEquipment")
-    self:RegisterEvent("ITEM_LOCKED", "UpdateEquipment")
+    self:RegisterEvent("ITEM_LOCKED")
     self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateBars")
     self:RegisterEvent("ZONE_CHANGED", "UpdateBars")
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateBars")

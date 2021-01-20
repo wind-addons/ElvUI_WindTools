@@ -777,6 +777,7 @@ L["Skipped the cutscene."] = true
 L["Slow Mode"] = true
 L["Smart Tab"] = true
 L["Social"] = true
+L["Sold by vendor"] = true
 L["Solo"] = true
 L["Soulbinds"] = true
 L["Sound"] = true

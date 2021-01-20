@@ -44,7 +44,7 @@ W.Changelog[217] = {
         },
         ["koKR"] = {
             "일부 옵션의 설명을 수정했습니다.",
-            "[Progression] Remove outdated instances.",
+            "[진행상태] 오래된 인스턴스 삭제.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
         }
     }

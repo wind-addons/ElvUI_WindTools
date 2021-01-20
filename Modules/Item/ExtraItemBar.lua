@@ -965,7 +965,6 @@ function EB:ITEM_LOCKED()
         function()
             UpdateEquipmentList()
             self:UpdateBars()
-            E:Dump(equipmentList)
         end
     )
 end

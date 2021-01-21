@@ -959,14 +959,23 @@ function EB:UpdateQuestItem()
     self:UpdateBars()
 end
 
-function EB:ITEM_LOCKED()
-    E:Delay(
-        1,
-        function()
-            UpdateEquipmentList()
-            self:UpdateBars()
+do
+    local InUpdating = false
+    function EB:ITEM_LOCKED()
+        if InUpdating then
+            return
         end
-    )
+
+        InUpdating = true
+        E:Delay(
+            1,
+            function()
+                UpdateEquipmentList()
+                self:UpdateBars()
+                InUpdating = false
+            end
+        )
+    end
 end
 
 function EB:CreateAll()

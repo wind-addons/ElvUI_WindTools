@@ -806,7 +806,11 @@ function GB:ConstructTimeArea()
                 DT.RegisteredDataTexts["System"].eventFunc()
                 DT.RegisteredDataTexts["System"].onEnter()
             elseif mouseButton == "LeftButton" then
-                ToggleCalendar()
+                if not InCombatLockdown() then
+                    ToggleCalendar()
+                else
+                    _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+                end
             elseif mouseButton == "RightButton" then
                 ToggleTimeManager()
             end

@@ -54,10 +54,10 @@ W.Changelog[217] = {
         ["koKR"] = {
             "일부 옵션의 설명을 수정했습니다.",
             "[진행상태] 오래된 인스턴스 삭제.",
-            "[Game Bar] Prevent the taint by toggling calendar in combat.",
-            "[Game Bar] Add charge inforamtion into the tooltip of Home button.",
+            "[게임 바] 전투 중 달력을 열수 없도록 수정.",
+            "[게임 바] 홈 버튼의 툴팁에 사용 가능한 개수를 표시합니다.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
-            "[Extra Item Bar] Optimize the update of bars."
+            "[아이템 바] 업데이트 로직을 최적화했습니다."
         }
     }
 }

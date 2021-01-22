@@ -46,7 +46,6 @@ local BlizzardFrames = {
     "ReportCheatingDialog",
     "SpellBookFrame",
     "SplashFrame",
-    "StackSplitFrame",
     "TabardFrame",
     "TaxiFrame",
     "TradeFrame",

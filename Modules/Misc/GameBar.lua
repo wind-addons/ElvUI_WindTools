@@ -29,6 +29,7 @@ local CreateFrame = CreateFrame
 local CreateFromMixins = CreateFromMixins
 local GetGameTime = GetGameTime
 local GetItemCooldown = GetItemCooldown
+local GetItemCount = GetItemCount
 local GetItemIcon = GetItemIcon
 local GetNumGuildMembers = GetNumGuildMembers
 local GetTime = GetTime

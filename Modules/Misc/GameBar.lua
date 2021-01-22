@@ -138,6 +138,11 @@ local function AddDoubleLineForItem(itemID, prefix)
         cooldownTimeString = format("%02d:%02d", min, sec)
     end
 
+    if itemID == 180817 then
+        local charge = GetItemCount(itemID, nil, true)
+        name = name .. format(" (%d)", charge)
+    end
+
     DT.tooltip:AddDoubleLine(
         prefix .. icon .. " " .. name,
         canUse and L["Ready"] or cooldownTimeString,

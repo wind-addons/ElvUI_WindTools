@@ -947,11 +947,19 @@ function EB:UpdateBars()
     end
 end
 
-function EB:UpdateQuestItemAndEquipment()
-    UpdateQuestItemList()
-    UpdateEquipmentList()
+do
+    local lastUpdateTime = 0
+    function EB:UNIT_INVENTORY_CHANGED()
+        local now = GetTime()
+        if now - lastUpdateTime < 0.25 then
+            return
+        end
+        lastUpdateTime = now
+        UpdateQuestItemList()
+        UpdateEquipmentList()
 
-    self:UpdateBars()
+        self:UpdateBars()
+    end
 end
 
 function EB:UpdateQuestItem()
@@ -1021,7 +1029,7 @@ function EB:Initialize()
     self:UpdateBars()
     self:UpdateBinding()
 
-    self:RegisterEvent("UNIT_INVENTORY_CHANGED", "UpdateQuestItemAndEquipment")
+    self:RegisterEvent("UNIT_INVENTORY_CHANGED")
     self:RegisterEvent("ITEM_LOCKED")
     self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateBars")
     self:RegisterEvent("ZONE_CHANGED", "UpdateBars")

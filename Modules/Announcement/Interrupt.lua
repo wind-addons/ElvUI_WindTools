@@ -40,10 +40,6 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
 
     if sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet") then
         -- 自己及宠物打断
-        if not self:IsGroupMember(sourceName) then
-            return
-        end
-
         if config.player.enable then
             self:SendMessage(FormatMessage(config.player.text), self:GetChannel(config.player.channel))
         end

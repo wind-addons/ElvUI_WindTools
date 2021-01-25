@@ -133,13 +133,12 @@ do
             return
         end
 
-        cache = {}
-
         waitSend = true
         E:Delay(
             0.5,
             function()
                 if IsInGroup() then
+                    cache = {}
                     A:SendInterruptConfig()
                     A:SendUtilityConfig()
                     A:SendCombatResurrectionConfig()

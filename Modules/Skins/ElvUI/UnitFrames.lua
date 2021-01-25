@@ -5,7 +5,7 @@ local UF = E:GetModule("UnitFrames")
 local _G = _G
 
 function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
-    self:CreateShadow(f)
+    self:CreateBackdropShadow(f.Health, true)
 end
 
 function S:ElvUI_UnitFrames_Configure_Threat(_, f)
@@ -19,8 +19,13 @@ function S:ElvUI_UnitFrames_Configure_Threat(_, f)
         if not unit or parent.unit ~= unit then
             return
         end
-        if parent.db and parent.db.threatStyle == "GLOW" and parent.shadow then
-            parent.shadow:SetShown(not threat.MainGlow:IsShown())
+        if parent.db and parent.db.threatStyle == "GLOW" then
+            if parent.Health and parent.Health.backdrop and parent.Health.backdrop.shadow then
+                parent.Health.backdrop.shadow:SetShown(not threat.MainGlow:IsShown())
+            end
+            if parent.Power and parent.Power.backdrop and parent.Power.backdrop.shadow and parent.USE_POWERBAR_OFFSET then
+                parent.Power.backdrop.shadow:SetShown(not threat.MainGlow:IsShown())
+            end
         end
     end
 end
@@ -28,7 +33,7 @@ end
 function S:ElvUI_UnitFrames_Configure_Power(_, f)
     if f.USE_POWERBAR then
         local shadow = f.Power.backdrop.shadow
-        if f.POWERBAR_DETACHED then
+        if f.POWERBAR_DETACHED or f.USE_POWERBAR_OFFSET then
             if not shadow then
                 self:CreateBackdropShadow(f.Power, true)
             else

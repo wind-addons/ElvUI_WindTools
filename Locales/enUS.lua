@@ -439,7 +439,6 @@ L["Improvement"] = true
 L["In Instance"] = true
 L["In Party"] = true
 L["In Raid"] = true
-L["In Shadowlands (9.0) pre-patch, %s has been rewritten, such that possibly there are bugs somewhere."] = true
 L["Include Details"] = true
 L["Include Player"] = true
 L["Increase Size"] = true

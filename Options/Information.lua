@@ -40,17 +40,11 @@ options.help = {
                     type = "description",
                     fontSize = "medium",
                     name = format(
-                        "%s\n\n%s\n\n%s\n\n%s\n\n%s\n%s",
+                        "%s\n\n%s\n\n%s\n\n%s\n\n%s",
                         format(L["Thank you for using %s!"], L["WindTools"]),
                         format(
                             L[
                                 "%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
-                            ],
-                            L["WindTools"]
-                        ),
-                        format(
-                            L[
-                                "In Shadowlands (9.0) pre-patch, %s has been rewritten, such that possibly there are bugs somewhere."
                             ],
                             L["WindTools"]
                         ),

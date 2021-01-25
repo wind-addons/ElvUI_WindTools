@@ -92,25 +92,34 @@ function A:GetChannel(channelDB)
     return "NONE"
 end
 
-function A:GetPetInfo(petName)
-    E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
-    E.ScanTooltip:ClearLines()
-    E.ScanTooltip:SetUnit(petName)
-    local details = E.ScanTooltip.TextLeft2:GetText()
+do
+    local delimiterList = {
+        ["zhCN"] = "的",
+        ["zhTW"] = "的",
+        ["enUS"] = "'s",
+        ["koKR"] = "의"
+    }
 
-    if not details then
-        return
+    function A:GetPetInfo(petName)
+        E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
+        E.ScanTooltip:ClearLines()
+        E.ScanTooltip:SetUnit(petName)
+        local details = E.ScanTooltip.TextLeft2:GetText()
+
+        if not details then
+            return
+        end
+
+        local delimiter = delimiterList[W.Locale] or "'s"
+        local raw = {F.SplitCJKString(delimiter, details)}
+
+        local owner, role = raw[1], raw[#raw]
+        if owner and role then
+            return owner, role
+        end
+
+        return nil, nil
     end
-
-    local delimiter = W.ChineseLocale and "的" or "'s"
-    local raw = {F.SplitCJKString(delimiter, details)}
-
-    local owner, role = raw[1], raw[#raw]
-    if owner and role then
-        return owner, role
-    end
-
-    return nil, nil
 end
 
 function A:IsGroupMember(name)

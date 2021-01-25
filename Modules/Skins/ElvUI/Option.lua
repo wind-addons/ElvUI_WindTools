@@ -17,6 +17,10 @@ function S:ElvUI_SkinInstall()
 end
 
 function S:ElvUI_SkinMoverPopup()
+    if not _G.ElvUIMoverPopupWindow then
+        return
+    end
+
     self:CreateShadow(_G.ElvUIMoverPopupWindow)
     self:CreateShadow(_G.ElvUIMoverPopupWindow.header)
 end

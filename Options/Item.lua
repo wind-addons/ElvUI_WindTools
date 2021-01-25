@@ -516,6 +516,7 @@ do -- Add options for bars
                         FormatDesc("MAGEFOOD", format("%s (%s)", L["Food"], L["Crafted by mage"])),
                         FormatDesc("BANNER", L["Banners"]),
                         FormatDesc("UTILITY", L["Utilities"]),
+                        FormatDesc("OPENABLE", L["Openable Items"]),
                         FormatDesc("CUSTOM", L["Custom Items"])
                     ),
                     width = "full"

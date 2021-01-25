@@ -363,7 +363,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "QUEST,BANNER,EQUIP,TORGHAST"
+            include = "QUEST,BANNER,EQUIP,TORGHAST,OPENABLE"
         },
         bar2 = {
             enable = true,

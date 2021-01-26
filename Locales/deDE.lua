@@ -594,6 +594,7 @@ L["Only show the bar when you mouse over it."] = "Zeige Leiste nur an, wenn mit 
 L["Open Changelog"] = true
 L["Open the passageway to Rogue Class Hall automatically."] = true
 L["Open the window of follower recruit automatically."] = true
+L["Openable Items"] = true
 L["Options"] = "Einstellungen"
 L["Orderhall"] = "Klassenhalle"
 L["Orientation"] = "Orientierung"

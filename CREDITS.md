@@ -28,6 +28,9 @@
     - 불광불급옹<주부월드> @ 불타는 군단
     - 다크어쌔신<주부월드> @ 불타는 군단
     - 크림슨프릴<주부월드> @ 불타는 군단
+- русский язык (ruRU)
+    - Evgeniy-ONiX @ Github
+    - dadec666 @ Github
 
 # Codes
 - Announcement

@@ -345,6 +345,12 @@ end
 
 do -- 本地化
     local localizationList = {
+        ["한국어 (koKR)"] = {
+            F.CreateClassColorString("헬리오스의방패<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "WARRIOR"),
+            F.CreateClassColorString("불광불급옹<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "HUNTER"),
+            F.CreateClassColorString("다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "DEMONHUNTER"),
+            F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE")
+        },
         ["français (frFR)"] = {
             "PodVibe @ CurseForge"
         },
@@ -352,11 +358,9 @@ do -- 本地化
             "imna1975 @ CurseForge",
             "|cffff7d0aMerathilis|r"
         },
-        ["한국어 (koKR)"] = {
-            F.CreateClassColorString("헬리오스의방패<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "WARRIOR"),
-            F.CreateClassColorString("불광불급옹<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "HUNTER"),
-            F.CreateClassColorString("다크어쌔신<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "DEMONHUNTER"),
-            F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE")
+        ["русский язык (ruRU)"] = {
+            "Evgeniy-ONiX @ Github",
+            "dadec666 @ Github"
         }
     }
 

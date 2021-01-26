@@ -16,7 +16,7 @@ W.Changelog[217] = {
             "Add basic support for Spanish and Portuguese. You can report the translation problem in our Discord anytime."
         },
         ["koKR"] = {
-            "Russian translation updated. Thanks Evgeniy-ONiX",
+            "러시아어 번역 업데이트. Thanks Evgeniy-ONiX",
             "스페인어 및 포르투갈어에 대한 지원을 추가합니다. 번역 관련 문제는 언제든지 Discord로 알려주시기 바랍니다."
         }
     },
@@ -79,7 +79,7 @@ W.Changelog[217] = {
             "일부 옵션의 설명을 수정했습니다.",
             "[알림] 한국 클라이언트에서 하수인의 주인을 정확하게 인식할 수 있습니다.",
             "[알림] 하수인에 의한 차단 알림을 수정합니다.",
-            "[Announcement] Fix announcement sent by multiple users.",
+            "[알림] 가끔 반복되는 알림 문제를 수정했습니다.",
             "[진행상태] 오래된 인스턴스 삭제.",
             "[게임 바] 전투 중 달력을 열수 없도록 수정.",
             "[게임 바] 홈 버튼의 툴팁에 사용 가능한 개수를 표시합니다.",

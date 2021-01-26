@@ -169,7 +169,8 @@ local BlizzardFramesOnDemand = {
         "GarrisonRecruitSelectFrame",
         "GarrisonShipyardFrame",
         "OrderHallMissionFrame",
-        "BFAMissionFrame"
+        "BFAMissionFrame",
+        "CovenantMissionFrame"
     },
     ["Blizzard_GMChatUI"] = {
         "GMChatStatusFrame"

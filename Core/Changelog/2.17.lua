@@ -4,15 +4,19 @@ W.Changelog[217] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "俄语翻译大幅更新. 感谢 Evgeniy-ONiX",
             "新增了对西班牙语和葡萄牙语的支持. 任何翻译问题可随时来 Discord 反馈."
         },
         ["zhTW"] = {
+            "俄語翻譯大幅更新. 感謝 Evgeniy-ONiX",
             "支援西班牙語及葡萄牙語. 任何翻譯問題可隨時來 Discord 進行回報."
         },
         ["enUS"] = {
+            "Russian translation updated. Thanks Evgeniy-ONiX",
             "Add basic support for Spanish and Portuguese. You can report the translation problem in our Discord anytime."
         },
         ["koKR"] = {
+            "Russian translation updated. Thanks Evgeniy-ONiX",
             "스페인어 및 포르투갈어에 대한 지원을 추가합니다. 번역 관련 문제는 언제든지 Discord로 알려주시기 바랍니다."
         }
     },
@@ -39,6 +43,7 @@ W.Changelog[217] = {
             "优化设定文本.",
             "[通告] 韩语客户端中宠物主人现在可以被正确识别.",
             "[通告] 修复了宠物打断无法通告的问题.",
+            "[通告] 修复了有时重复通告的问题.",
             "[进度] 移除了过时的副本.",
             "[游戏条] 禁止战斗中开启日历造成污染.",
             "[游戏条] 家按钮的鼠标提示将会显示物品可用次数.",
@@ -50,6 +55,7 @@ W.Changelog[217] = {
             "優化設定文字.",
             "[通告] 韓文客戶端中寵物主人現可被正確識別.",
             "[通告] 修復了寵物打斷無法通告的問題.",
+            "[通告] 修復了有時重複通告的問題.",
             "[進度] 移除了過時的副本.",
             "[遊戲條] 禁止在戰鬥中開啟行事曆導致污染.",
             "[遊戲條] 家按鍵的滑鼠提示將會顯示物品的可用次數.",
@@ -61,6 +67,7 @@ W.Changelog[217] = {
             "Edited some option description.",
             "[Announcement] The owner of the pet can be recognized correctly in Korean client.",
             "[Announcement] Fix the announcement of the interrupts by pets.",
+            "[Announcement] Fix announcement sent by multiple users.",
             "[Progression] Remove outdated instances.",
             "[Game Bar] Prevent the taint by toggling calendar in combat.",
             "[Game Bar] Add charge information into the tooltip of Home button.",
@@ -72,6 +79,7 @@ W.Changelog[217] = {
             "일부 옵션의 설명을 수정했습니다.",
             "[알림] 한국 클라이언트에서 하수인의 주인을 정확하게 인식할 수 있습니다.",
             "[알림] 하수인에 의한 차단 알림을 수정합니다.",
+            "[Announcement] Fix announcement sent by multiple users.",
             "[진행상태] 오래된 인스턴스 삭제.",
             "[게임 바] 전투 중 달력을 열수 없도록 수정.",
             "[게임 바] 홈 버튼의 툴팁에 사용 가능한 개수를 표시합니다.",

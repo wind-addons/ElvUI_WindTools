@@ -145,11 +145,13 @@ do
 		LSM:Register("font", "Accidental Presidency (en)", MediaPath .. "Fonts/AccidentalPresidency.ttf", region)
 		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat-ExtraBold.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
+		LSM:Register("font", "Visitor (en)", MediaPath .. "Fonts/Visitor.ttf", region)
 		W.CompatibleFont = true
 	else
 		LSM:Register("font", "Accidental Presidency", MediaPath .. "Fonts/AccidentalPresidency.ttf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Montserrat", MediaPath .. "Fonts/Montserrat-ExtraBold.ttf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Roadway", MediaPath .. "Fonts/Roadway.ttf", LSM.LOCALE_BIT_western)
+		LSM:Register("font", "Visitor", MediaPath .. "Fonts/Visitor.ttf", LSM.LOCALE_BIT_western)
 		W.CompatibleFont = false
 	end
 end

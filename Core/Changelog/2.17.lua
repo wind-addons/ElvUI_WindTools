@@ -43,11 +43,11 @@ W.Changelog[217] = {
             '[Extra Item Bar] Add new item group "OPENABLE" (openable items).'
         },
         ["koKR"] = {
-            "Add some English fonts from ElvUI for non-english users.",
-            "Add a new statusbar texture.",
+            "영어를 사용하지 않는 사용자를 위해 ElvUI의 영어 폰트 일부를 추가하였습니다.",
+            "새로운 상태 바 텍스처를 추가하였습니다.",
             "[알림] 쐐기돌 획득 알림을 추가하였습니다.",
             "[스킨] 새로운 UI 위젯 추가 (예: 속죄의 전당 1넴 할리아스의 령 충전)",
-            '[Extra Item Bar] Add new item group "OPENABLE" (openable items).'
+            '[아이템 바] 새로운 아이템 그룹 "OPENABLE" (열 수 있는 아이템) 을 추가하였습니다.'
         }
     },
     IMPROVEMENT = {
@@ -96,16 +96,16 @@ W.Changelog[217] = {
         ["koKR"] = {
             "일부 옵션의 설명을 수정했습니다.",
             "[알림] 한국 클라이언트에서 하수인의 주인을 정확하게 인식할 수 있습니다.",
-            "[알림] 하수인에 의한 차단 알림을 수정합니다.",
+            "[알림] 하수인에 의한 차단 알림을 수정했습니다.",
             "[알림] 가끔 반복되는 알림 문제를 수정했습니다.",
-            "[진행상태] 오래된 인스턴스 삭제.",
-            "[게임 바] 전투 중 달력을 열수 없도록 수정.",
+            "[진행상태] 오래된 인스턴스를 삭제했습니다.",
+            "[게임 바] 전투 중 달력을 열수 없도록 수정하였습니다.",
             "[게임 바] 홈 버튼의 툴팁에 사용 가능한 개수를 표시합니다.",
-            "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
+            "[아이템 바] 토르가스트 아이템 리스트를 업데이트하였습니다.",
             "[아이템 바] 업데이트 로직을 최적화했습니다.",
-            "[Extra Item Bar] Charm of Eternal Winter(https://www.wowhead.com/item=183040/charm-of-eternal-winter?bonus=6805) will be added in blacklist by default.",
+            "[아이템 바] 사냥꾼 알티모르의 드롭 아이템 영원한 겨울의 부적 목걸이는 기본적으로 블랙리스트에 추가됩니다.",
             '[스킨] ElvUI 파워 바를 "OFFSET"스타일로 설정했을 때 그림자 위치가 잘못되던 문제를 수정했습니다.',
-            "[Move Frames] Add support of moving covenant mission frame."
+            "[프레임 이동] 성약단 임무 탁자의 프레임 이동을 추가하였습니다."
         }
     }
 }

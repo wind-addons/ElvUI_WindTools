@@ -77,5 +77,5 @@ function A:GROUP_ROSTER_UPDATE()
 end
 
 function A:ZONE_CHANGED_NEW_AREA()
-    self:ResetAuthority()
+    --self:ResetAuthority()
 end

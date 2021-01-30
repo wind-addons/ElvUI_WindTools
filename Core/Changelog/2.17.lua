@@ -22,20 +22,32 @@ W.Changelog[217] = {
     },
     NEW = {
         ["zhCN"] = {
+            "添加了部分 ElvUI 內英文字体.",
+            "添加了一个 Light 材质.",
             "[通告] 添加了新史诗钥石的通报.",
-            "[美化皮肤] 添加了新的 UI 组件美化. (比如: 赎罪老一充能)"
+            "[美化皮肤] 添加了新的 UI 组件美化. (比如: 赎罪老一充能)",
+            '[额外物品条] 添加了 "OPENABLE" (可打开物品) 物品分类.'
         },
         ["zhTW"] = {
+            "添加了部分 ElvUI 內英文字型.",
+            "新增了一個 Light 材質.",
             "[通告] 新增了新傳奇鑰石通報.",
-            "[美化皮膚] 新增了 UI 組件美化. (比如: 贖罪一王充能)"
+            "[美化皮膚] 新增了 UI 組件美化. (比如: 贖罪一王充能)",
+            '[額外物品條] 新增了 "OPENABLE" (可開啟物品) 物品分組.'
         },
         ["enUS"] = {
+            "Add some English fonts from ElvUI for non-english users.",
+            "Add a new statusbar texture.",
             "[Announcement] Add support for new keystone announcement.",
-            "[Skins] Add new skins for UI widget. (e.g. charge of HoS first boss)"
+            "[Skins] Add new skins for UI widget. (e.g. charge of HoS first boss)",
+            '[Extra Item Bar] Add new item group "OPENABLE" (openable items).'
         },
         ["koKR"] = {
+            "Add some English fonts from ElvUI for non-english users.",
+            "Add a new statusbar texture.",
             "[알림] 쐐기돌 획득 알림을 추가하였습니다.",
-            "[스킨] 새로운 UI 위젯 추가 (예: 속죄의 전당 1넴 할리아스의 령 충전)"
+            "[스킨] 새로운 UI 위젯 추가 (예: 속죄의 전당 1넴 할리아스의 령 충전)",
+            '[Extra Item Bar] Add new item group "OPENABLE" (openable items).'
         }
     },
     IMPROVEMENT = {
@@ -49,7 +61,9 @@ W.Changelog[217] = {
             "[游戏条] 家按钮的鼠标提示将会显示物品可用次数.",
             "[额外物品条] 更新托加斯特物品列表.",
             "[额外物品条] 优化了条更新的逻辑.",
-            '[美化皮肤] 修复了设定能量条为"偏移"风格时, 阴影位置不正确的问题.'
+            "[额外物品条] 永冬护符将默认加入黑名单.",
+            '[美化皮肤] 修复了设定能量条为"偏移"风格时, 阴影位置不正确的问题.',
+            "[移动框体] 盟约指挥桌框架现在可以被移动了."
         },
         ["zhTW"] = {
             "優化設定文字.",
@@ -61,7 +75,9 @@ W.Changelog[217] = {
             "[遊戲條] 家按鍵的滑鼠提示將會顯示物品的可用次數.",
             "[額外物品條] 更新托伽司物品列表.",
             "[額外物品條] 優化了條更新的邏輯.",
-            '[美化皮膚] 修復了設定能量條為"偏移"風格的時候, 陰影位置不正確的問題.'
+            "[額外物品條] 恆冬符咒將默認加入黑名單.",
+            '[美化皮膚] 修復了設定能量條為"偏移"風格的時候, 陰影位置不正確的問題.',
+            "[移動框架] 誓盟指揮台框架現在可以被移動了."
         },
         ["enUS"] = {
             "Edited some option description.",
@@ -73,7 +89,9 @@ W.Changelog[217] = {
             "[Game Bar] Add charge information into the tooltip of Home button.",
             "[Extra Item Bar] Update Torghast item list.",
             "[Extra Item Bar] Optimize the update of bars.",
-            '[Skins] Fix the issue that the shadow not in right place with the ElvUI power bar in "OFFSET" style.'
+            "[Extra Item Bar] Charm of Eternal Winter will be added in blacklist by default.",
+            '[Skins] Fix the issue that the shadow not in right place with the ElvUI power bar in "OFFSET" style.',
+            "[Move Frames] Add support of moving covenant mission frame."
         },
         ["koKR"] = {
             "일부 옵션의 설명을 수정했습니다.",
@@ -85,7 +103,9 @@ W.Changelog[217] = {
             "[게임 바] 홈 버튼의 툴팁에 사용 가능한 개수를 표시합니다.",
             "[아이템 바] 토르가스트 아이템 리스트 업데이트.",
             "[아이템 바] 업데이트 로직을 최적화했습니다.",
-            '[스킨] ElvUI 파워 바를 "OFFSET"스타일로 설정했을 때 그림자 위치가 잘못되던 문제를 수정했습니다.'
+            "[Extra Item Bar] Charm of Eternal Winter(https://www.wowhead.com/item=183040/charm-of-eternal-winter?bonus=6805) will be added in blacklist by default.",
+            '[스킨] ElvUI 파워 바를 "OFFSET"스타일로 설정했을 때 그림자 위치가 잘못되던 문제를 수정했습니다.',
+            "[Move Frames] Add support of moving covenant mission frame."
         }
     }
 }

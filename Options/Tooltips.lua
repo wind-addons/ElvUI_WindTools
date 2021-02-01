@@ -200,6 +200,29 @@ options.progression = {
                     name = L["Enable"]
                 }
             }
+        },
+        special = {
+            order = 3,
+            type = "group",
+            name = L["Special Achievements"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.tooltips.progression.special[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.tooltips.progression.special[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            disabled = function()
+                return not E.private.WT.tooltips.progression.enable
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                }
+            }
         }
     }
 }
@@ -218,6 +241,10 @@ do
         "De Other Side",
         "Spires of Ascension",
         "Sanguine Depths"
+    }
+
+    local special = {
+        "Shadowlands Keystone Master: Season One"
     }
 
     for index, name in ipairs(raids) do
@@ -239,6 +266,19 @@ do
             disabled = function()
                 return not (E.private.WT.tooltips.progression.enable and
                     E.private.WT.tooltips.progression.mythicDungeons.enable)
+            end
+        }
+    end
+
+    for index, name in ipairs(special) do
+        options.progression.args.special.args[name] = {
+            order = index + 2,
+            type = "toggle",
+            name = L[name],
+            width = "full",
+            disabled = function()
+                return not (E.private.WT.tooltips.progression.enable and
+                    E.private.WT.tooltips.progression.special.enable)
             end
         }
     end

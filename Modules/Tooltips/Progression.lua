@@ -363,7 +363,7 @@ local function SetProgressionInfo(guid, tt)
         tt:AddLine(" ")
         for name, achievementID in pairs(specialAchievements) do
             if db.special[name] then
-                local left = format("%s", locales[name].short)
+                local left = format("%s:", locales[name].short)
                 local right = cache[guid].info.special[name]
 
                 tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)

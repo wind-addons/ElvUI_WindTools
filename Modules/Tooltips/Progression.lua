@@ -95,6 +95,10 @@ local locales = {
     ["Sanguine Depths"] = {
         short = L["[ABBR] Sanguine Depths"],
         full = L["Sanguine Depths"]
+    },
+    ["Shadowlands Keystone Master: Season One"] = {
+        short = L["[ABBR] Shadowlands Keystone Master: Season One"],
+        full = L["Shadowlands Keystone Master: Season One"]
     }
 }
 
@@ -162,6 +166,10 @@ local dungeonAchievements = {
     ["Sanguine Depths"] = 14205
 }
 
+local specialAchievements = {
+    ["Shadowlands Keystone Master: Season One"] = 14532
+}
+
 local function GetLevelColoredString(level, short)
     local color = "ff8000"
 
@@ -185,12 +193,40 @@ local function GetBossKillTimes(guid, achievementID)
     return tonumber(func(achievementID), 10) or 0
 end
 
+local function GetAchievementInfoByID(guid, achievementID)
+    local completed, month, day, year
+    if guid == E.myguid then
+        completed, month, day, year = select(4, GetAchievementInfo(achievementID))
+    else
+        completed, month, day, year = GetAchievementComparisonInfo(achievementID)
+    end
+    return completed, month, day, year
+end
+
 local function UpdateProgression(guid, faction)
     local db = E.private.WT.tooltips.progression
 
     cache[guid] = cache[guid] or {}
     cache[guid].info = cache[guid].info or {}
     cache[guid].timer = GetTime()
+
+    -- 成就
+    if db.special.enable then
+        for name, achievementID in pairs(specialAchievements) do
+            if db.special[name] then
+                local completed, month, day, year = GetAchievementInfoByID(guid, 14532)
+                print(completed)
+                local completedString = "|cffdddddd" .. L["Not Completed"] .. "|r"
+                if completed then
+                    completedString = gsub(L["%month%-%day%-%year%"], "%%month%%", month)
+                    completedString = gsub(completedString, "%%day%%", day)
+                    completedString = gsub(completedString, "%%year%%", year)
+                end
+                cache[guid].info.special = {}
+                cache[guid].info.special[name] = completedString
+            end
+        end
+    end
 
     -- 团本
     if db.raids.enable then
@@ -253,6 +289,26 @@ local function SetProgressionInfo(guid, tt)
         local found = false
 
         if leftTipText then
+            if db.special.enable then -- 成就
+                for name, achievementID in pairs(specialAchievements) do
+                    if db.special[name] then
+                        if strfind(leftTipText, locales[name].short) then
+                            local rightTip = _G["GameTooltipTextRight" .. i]
+                            leftTip:SetText(locales[name].short .. ":")
+                            rightTip:SetText(cache[guid].info.special[name])
+                            updated = true
+                            found = true
+                            break
+                        end
+                        if found then
+                            break
+                        end
+                    end
+                end
+            end
+
+            found = false
+
             if db.raids.enable then -- 团本进度
                 for _, tier in ipairs(tiers) do
                     if db.raids[tier] then
@@ -303,6 +359,18 @@ local function SetProgressionInfo(guid, tt)
     end
 
     local icon = F.GetIconString(W.Media.Textures.smallLogo, 12)
+
+    if db.special.enable then -- 成就
+        tt:AddLine(" ")
+        for name, achievementID in pairs(specialAchievements) do
+            if db.special[name] then
+                local left = format("%s", locales[name].short)
+                local right = cache[guid].info.special[name]
+
+                tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+            end
+        end
+    end
 
     if db.raids.enable then -- 团本进度
         tt:AddLine(" ")

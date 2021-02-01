@@ -290,6 +290,10 @@ V.tooltips = {
 			enable = true,
 			["Castle Nathria"] = true
 		},
+		special = {
+			enable = true,
+			["Shadowlands Keystone Master: Season One"] = true
+		},
 		mythicDungeons = {
 			enable = true,
 			["The Necrotic Wake"] = true,

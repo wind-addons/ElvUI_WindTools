@@ -11,8 +11,7 @@ A.EventList = {
     "GROUP_ROSTER_UPDATE",
     "LFG_COMPLETION_REWARD",
     "PLAYER_ENTERING_WORLD",
-    "QUEST_LOG_UPDATE",
-    "ZONE_CHANGED_NEW_AREA"
+    "QUEST_LOG_UPDATE"
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -74,8 +73,4 @@ end
 
 function A:GROUP_ROSTER_UPDATE()
     self:ResetAuthority()
-end
-
-function A:ZONE_CHANGED_NEW_AREA()
-    --self:ResetAuthority()
 end

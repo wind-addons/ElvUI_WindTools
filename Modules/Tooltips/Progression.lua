@@ -215,12 +215,11 @@ local function UpdateProgression(guid, faction)
         for name, achievementID in pairs(specialAchievements) do
             if db.special[name] then
                 local completed, month, day, year = GetAchievementInfoByID(guid, 14532)
-                print(completed)
                 local completedString = "|cffdddddd" .. L["Not Completed"] .. "|r"
                 if completed then
                     completedString = gsub(L["%month%-%day%-%year%"], "%%month%%", month)
                     completedString = gsub(completedString, "%%day%%", day)
-                    completedString = gsub(completedString, "%%year%%", year)
+                    completedString = gsub(completedString, "%%year%%", 2000 + year)
                 end
                 cache[guid].info.special = {}
                 cache[guid].info.special[name] = completedString

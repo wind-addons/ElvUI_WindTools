@@ -26,28 +26,32 @@ W.Changelog[217] = {
             "添加了一个 Light 材质.",
             "[通告] 添加了新史诗钥石的通报.",
             "[美化皮肤] 添加了新的 UI 组件美化. (比如: 赎罪老一充能)",
-            '[额外物品条] 添加了 "OPENABLE" (可打开物品) 物品分类.'
+            '[额外物品条] 添加了 "OPENABLE" (可打开物品) 物品分类.',
+            "[进度] 新增了对 [暗影国度钥石大师: 第一赛季] 的追踪."
         },
         ["zhTW"] = {
             "添加了部分 ElvUI 內英文字型.",
             "新增了一個 Light 材質.",
             "[通告] 新增了新傳奇鑰石通報.",
             "[美化皮膚] 新增了 UI 組件美化. (比如: 贖罪一王充能)",
-            '[額外物品條] 新增了 "OPENABLE" (可開啟物品) 物品分組.'
+            '[額外物品條] 新增了 "OPENABLE" (可開啟物品) 物品分組.',
+            "[進度] 新增了對 [暗影之境鑰石王: 第一季] 的追蹤."
         },
         ["enUS"] = {
             "Add some English fonts from ElvUI for non-english users.",
             "Add a new statusbar texture.",
             "[Announcement] Add support for new keystone announcement.",
             "[Skins] Add new skins for UI widget. (e.g. charge of HoS first boss)",
-            '[Extra Item Bar] Add new item group "OPENABLE" (openable items).'
+            '[Extra Item Bar] Add new item group "OPENABLE" (openable items).',
+            "[Progression] Add the tracker for [Shadowlands Keystone Master: Season One]."
         },
         ["koKR"] = {
             "영어를 사용하지 않는 사용자를 위해 ElvUI의 영어 폰트 일부를 추가하였습니다.",
             "새로운 상태 바 텍스처를 추가하였습니다.",
             "[알림] 쐐기돌 획득 알림을 추가하였습니다.",
             "[스킨] 새로운 UI 위젯 추가 (예: 속죄의 전당 1넴 할리아스의 령 충전)",
-            '[아이템 바] 새로운 아이템 그룹 "OPENABLE" (열 수 있는 아이템) 을 추가하였습니다.'
+            '[아이템 바] 새로운 아이템 그룹 "OPENABLE" (열 수 있는 아이템) 을 추가하였습니다.',
+            "[Progression] Add the tracker for [Shadowlands Keystone Master: Season One]."
         }
     },
     IMPROVEMENT = {

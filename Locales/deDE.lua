@@ -1,5 +1,4 @@
-﻿-- 此本地化文件由项目内的自动脚本生成
--- translate by Dlarge
+-- 此本地化文件由项目内的自动脚本生成
 local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "deDE")
 
@@ -35,7 +34,7 @@ L["1. Customize the font of Objective Tracker."] = "1. Passe die Schriftart vom 
 L["2. Add colorful progress text to the quest."] = "2. Füge der Quest einen farblichen Fortschrittstext hinzu."
 L["24 Hours"] = "24 Stunden"
 L["A simple editor for CVars."] = "Ein einfacher Editor für CVars."
-L["AFK"] = true
+L["AFK"] = "AFK"
 L["AFK Mode"] = "AFK Modus"
 L["Abbreviation"] = "Abkürzung"
 L["Abbreviation Customization"] = "Anpassung der Abkürzung"
@@ -296,7 +295,7 @@ L["Description"] = "Beschreibung"
 L["Diablo 3"] = true
 L["Disable"] = "Deaktivieren"
 L["Disable All"] = "Deaktiviere Alle"
-L["Disable Blizzard Talking Head."] = "Deaktiviere Blizzard`s Sprechenden Kopf"	
+L["Disable Blizzard Talking Head."] = "Deaktiviere Blizzard`s Sprechenden Kopf"
 L["Disable Talking Head"] = "Deaktiviere den Sprechenden Kopf"
 L["Disable announcement in open world."] = "Deaktivieren Sie die Ansage in der offenen Welt."
 L["Disable some annoying sound effects."] = "Deaktiviere einige störende Soundeffekte."

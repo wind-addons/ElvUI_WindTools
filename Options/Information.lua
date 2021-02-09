@@ -356,7 +356,8 @@ do -- 本地化
         },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",
-            "|cffff7d0aMerathilis|r"
+            "|cffff7d0aMerathilis|r",
+            "Dlarge"
         },
         ["русский язык (ruRU)"] = {
             "Evgeniy-ONiX @ Github",

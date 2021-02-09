@@ -23,6 +23,7 @@
 - Deutsche (deDE)
     - imna1975 @ CurseForge
     - Merathilis
+    - Dlarge
 - 한국어 (koKR)
     - 헬리오스의방패<주부월드> @ 불타는 군단
     - 불광불급옹<주부월드> @ 불타는 군단

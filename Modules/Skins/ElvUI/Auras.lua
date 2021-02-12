@@ -18,6 +18,7 @@ function S:ElvUI_Auras()
 
     self:SecureHook(A, "CreateIcon", "ElvUI_Auras_SkinIcon")
     self:SecureHook(A, "UpdateAura", "ElvUI_Auras_SkinIcon")
+    self:SecureHook(A, "UpdateTempEnchant", "ElvUI_Auras_SkinIcon")
 end
 
 S:AddCallback("ElvUI_Auras")

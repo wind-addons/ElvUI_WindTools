@@ -143,17 +143,15 @@ do
 	if LSM["LOCALE_BIT_" .. locale] then
 		local region = LSM["LOCALE_BIT_" .. locale]
 		LSM:Register("font", "Accidental Presidency (en)", MediaPath .. "Fonts/AccidentalPresidency.ttf", region)
-		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat-ExtraBold.ttf", region)
+		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
-		LSM:Register("font", "Minecraftia (en)", MediaPath .. "Fonts/Minecraftia.ttf", region)
 		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Media/Fonts/Homespun.ttf", region)
 		LSM:Register("font", "ContinuumMedium (en)", "Interface/Addons/ElvUI/Media/Fonts/ContinuumMedium.ttf", region)
 		W.CompatibleFont = true
 	else
 		LSM:Register("font", "Accidental Presidency", MediaPath .. "Fonts/AccidentalPresidency.ttf", LSM.LOCALE_BIT_western)
-		LSM:Register("font", "Montserrat", MediaPath .. "Fonts/Montserrat-ExtraBold.ttf", LSM.LOCALE_BIT_western)
+		LSM:Register("font", "Montserrat", MediaPath .. "Fonts/Montserrat.ttf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Roadway", MediaPath .. "Fonts/Roadway.ttf", LSM.LOCALE_BIT_western)
-		LSM:Register("font", "Minecraftia", MediaPath .. "Fonts/Minecraftia.ttf", LSM.LOCALE_BIT_western)
 		W.CompatibleFont = false
 	end
 end

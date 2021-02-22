@@ -502,7 +502,7 @@ function W:CheckCompatibility()
        L["Talent Manager"],
        L["Talent Manager"],
        "private.WT.combat.talentManager.enable",
-       "mui.talents.talentManager.enable"
+       "db.mui.talents.talentManager.enable"
     )
 
     -- S&L

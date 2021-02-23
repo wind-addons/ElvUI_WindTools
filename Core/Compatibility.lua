@@ -534,6 +534,7 @@ function W:CheckCompatibility()
         "private.sle.skins.objectiveTracker.enable"
     )
 
+    -- mMediaTag
     self:CheckCompatibilitymMediaTag(
         format("%s-%s", L["Tooltips"], L["Icon"]),
         L["Tooltip Icons"],

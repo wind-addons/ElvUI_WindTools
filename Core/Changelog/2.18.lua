@@ -13,7 +13,7 @@ W.Changelog[218] = {
             "German translation updated. Thanks Dlarge"
         },
         ["koKR"] = {
-            "German translation updated. Thanks Dlarge"
+            "독일어 번역이 업데이트 되였습니다. Thanks Dlarge"
         }
     },
     NEW = {
@@ -37,7 +37,7 @@ W.Changelog[218] = {
         },
         ["koKR"] = {
             "호환성 검사 업데이트.",
-            "[Inspect] Update enchant database."
+            "[살펴보기] 마법부여 데이터가 업데이트 되였습니다."
         }
     }
 }

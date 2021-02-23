@@ -1,10 +1,12 @@
 -------------------------------------
 -- 物品附魔信息庫 Author: M
 -------------------------------------
-local MAJOR, MINOR = "LibItemEnchant.7000", 2
+local MAJOR, MINOR = "LibItemEnchant.7000", 3
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 
-if not lib then return end
+if not lib then
+    return
+end
 
 -- Thanks to RRRRBUA(NGA) 七曜·星の痕(NGA)
 local EnchantItemDB = {

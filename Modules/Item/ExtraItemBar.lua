@@ -172,7 +172,9 @@ local flasks = {
 local flasksShadowlands = {
     171276, --鬼靈威力精煉藥劑
     171278, --鬼靈耐力精煉藥劑
-    171280 --永恆精煉藥劑
+    171280, --永恆精煉藥劑
+
+    181468 --帷幕强化符文
 }
 
 local torghastItems = {

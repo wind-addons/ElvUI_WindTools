@@ -49,7 +49,7 @@ W.Changelog[218] = {
             "호환성 검사 업데이트.",
             "[살펴보기] 마법부여 데이터가 업데이트 되였습니다. Thanks KurtzPT",
             "[아이템 바] 영약 항목에 장막에 감싸인 증강의 룬이 추가되였습니다.",
-            "[Friend List] Use the Blizzard game icon while the custom icon is not available."
+            "[친구 목록] 아이콘 팩을 사용할 수 없을 경우 블리자드 기본 아이콘을 사용합니다."
         }
     }
 }

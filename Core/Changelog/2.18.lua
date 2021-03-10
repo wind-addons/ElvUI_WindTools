@@ -4,15 +4,19 @@ W.Changelog[218] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "插件支持版本号更新到 9.0.5.",
             "德语翻译大幅更新. 感谢 Dlarge"
         },
         ["zhTW"] = {
+            "插件支援版本更新到 9.0.5.",
             "德語翻譯大幅更新. 感謝 Dlarge"
         },
         ["enUS"] = {
+            "Bump toc version to 9.0.5.",
             "German translation updated. Thanks Dlarge"
         },
         ["koKR"] = {
+            "Bump toc version to 9.0.5.",
             "독일어 번역이 업데이트 되였습니다. Thanks Dlarge"
         }
     },

@@ -16,7 +16,7 @@ W.Changelog[218] = {
             "German translation updated. Thanks Dlarge"
         },
         ["koKR"] = {
-            "Bump toc version to 9.0.5.",
+            "9.0.5 버전 대응 업데이트.",
             "독일어 번역이 업데이트 되였습니다. Thanks Dlarge"
         }
     },
@@ -45,7 +45,7 @@ W.Changelog[218] = {
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[살펴보기] 마법부여 데이터가 업데이트 되였습니다. Thanks KurtzPT",
-            "[Extra Item Bar] Add veiled augment rune(https://www.wowhead.com/item=181468/veiled-augment-rune) to FLASK group."
+            "[아이템 바] 영약 항목에 장막에 감싸인 증강의 룬이 추가되였습니다."
         }
     }
 }

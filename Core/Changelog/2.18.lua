@@ -30,22 +30,26 @@ W.Changelog[218] = {
         ["zhCN"] = {
             "兼容性检查工具更新.",
             "[装备观察] 更新附魔数据库. 感谢 KurtzPT",
-            "[额外物品条] 添加 帷幕强化符文 到 FLASK 组别."
+            "[额外物品条] 添加 帷幕强化符文 到 FLASK 组别.",
+            "[好友列表] 在图标包不可用时调用暴雪图标."
         },
         ["zhTW"] = {
             "相容性確認工具更新.",
             "[裝備觀察] 更新附魔資料庫. 感謝 KurtzPT",
-            "[額外物品條] 新增 朦朧增強符文 到 FLASK 組."
+            "[額外物品條] 新增 朦朧增強符文 到 FLASK 組.",
+            "[好友列表] 在圖示包不可用時, 使用暴雪遊戲圖示."
         },
         ["enUS"] = {
             "Update compatibility check.",
             "[Inspect] Update enchant database. Thanks KurtzPT",
-            "[Extra Item Bar] Add veiled augment rune to FLASK group."
+            "[Extra Item Bar] Add veiled augment rune to FLASK group.",
+            "[Friend List] Use the Blizzard game icon while the custom icon is not available."
         },
         ["koKR"] = {
             "호환성 검사 업데이트.",
             "[살펴보기] 마법부여 데이터가 업데이트 되였습니다. Thanks KurtzPT",
-            "[Extra Item Bar] Add veiled augment rune(https://www.wowhead.com/item=181468/veiled-augment-rune) to FLASK group."
+            "[Extra Item Bar] Add veiled augment rune(https://www.wowhead.com/item=181468/veiled-augment-rune) to FLASK group.",
+            "[Friend List] Use the Blizzard game icon while the custom icon is not available."
         }
     }
 }

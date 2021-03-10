@@ -222,7 +222,8 @@ function FL:UpdateFriendButton(button)
         local buttonTitle, buttonText
 
         -- 名字
-        local realIDString = realID and self.db.useGameColor and F.CreateColorString(realID, BNColor[game]) or realID
+        local realIDString =
+            realID and self.db.useGameColor and BNColor[game] and F.CreateColorString(realID, BNColor[game]) or realID
 
         local nameString = name
         local classColor = GetClassColor(class)
@@ -257,7 +258,7 @@ function FL:UpdateFriendButton(button)
 
         -- 游戏图标
         local iconGroup = self.db.textures.factionIcon and faction or game
-        local iconTex = GameIcons[iconGroup][self.db.textures.game]
+        local iconTex = GameIcons[iconGroup][self.db.textures.game] or BNet_GetClientTexture(game)
         button.gameIcon:SetTexture(iconTex)
         button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
 

@@ -29,8 +29,8 @@ W.Changelog[219] = {
             "[Extra Item Bar] Readd the description of CUSTOM group in the tooltip."
         },
         ["koKR"] = {
-            "[Extra Item Bar] Add Soulful Healing Potion(get name by macro '/run print(GetItemInfo(180317))') to POTION list.",
-            "[Extra Item Bar] Readd the description of CUSTOM group in the tooltip."
+            "[아이템 바] 혼백의 치유 물약을 POTION 리스트에 추가하였습니다.",
+            "[아이템 바] 그룹 안내 툴팁에 CUSTOM 그룹의 설명을 다시 추가하였습니다."
         }
     }
 }

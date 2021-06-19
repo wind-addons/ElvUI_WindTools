@@ -1162,7 +1162,7 @@ options.lfgList = {
                     order = 2,
                     type = "select",
                     name = L["Style"],
-                    desc = L["Change the icons indicate the role."],
+                    desc = L["Change the icons that indicate the role."],
                     hidden = function()
                         return not E.private.WT.misc.lfgList.icon.reskin
                     end,

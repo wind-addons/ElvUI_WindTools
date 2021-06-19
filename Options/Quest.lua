@@ -477,7 +477,7 @@ options.switchButtons = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Add a bar contains buttons to enable/disable modules quickly."],
+                    name = L["Add a bar that contains buttons to enable/disable modules quickly."],
                     fontSize = "medium"
                 }
             }

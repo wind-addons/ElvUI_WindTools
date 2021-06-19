@@ -732,7 +732,7 @@ do
                         order = 1,
                         type = "select",
                         name = L["Style"],
-                        desc = L["Change the icons indicate the role."],
+                        desc = L["Change the icons that indicate the role."],
                         values = {
                             HEXAGON = SampleStrings.hexagon,
                             FFXIV = SampleStrings.ffxiv,

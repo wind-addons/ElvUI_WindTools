@@ -499,7 +499,7 @@ end
 
 function TI:AddTargetToBlacklist()
     if not UnitExists("target") then
-        F.Print(L["Target is not exists."])
+        F.Print(L["Target does not exist."])
         return
     end
     if UnitPlayerControlled("target") then

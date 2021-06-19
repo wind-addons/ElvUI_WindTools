@@ -1116,7 +1116,7 @@ options.friendList = {
             order = 2,
             type = "group",
             inline = true,
-            name = L["Enhanced Texuture"],
+            name = L["Enhanced Texture"],
             get = function(info)
                 return E.db.WT.social.friendList.textures[info[#info]]
             end,

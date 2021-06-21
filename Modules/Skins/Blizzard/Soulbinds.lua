@@ -8,7 +8,7 @@ function S:Blizzard_Soulbinds()
         return
     end
 
-    self:CreateBackdropShadow(_G.SoulbindViewer)
+    self:CreateShadow(_G.SoulbindViewer)
 end
 
 S:AddCallbackForAddon("Blizzard_Soulbinds")

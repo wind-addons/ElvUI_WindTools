@@ -11,6 +11,7 @@ function S:FriendsFrame()
 
     local frames = {
         _G.FriendsFrame,
+        _G.FriendsFriendsFrame,
         _G.QuickJoinFrame,
         _G.AddFriendFrame,
         _G.RecruitAFriendFrame.SplashFrame,
@@ -20,7 +21,7 @@ function S:FriendsFrame()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateBackdropShadow(frame)
+        self:CreateShadow(frame)
     end
 
     self:CreateShadow(_G.BNToastFrame)

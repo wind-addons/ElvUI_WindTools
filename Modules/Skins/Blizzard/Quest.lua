@@ -8,9 +8,9 @@ function S:BlizzardQuestFrames()
         return
     end
 
-    self:CreateBackdropShadow(_G.QuestFrame)
-    self:CreateBackdropShadow(_G.QuestModelScene)
-    self:CreateBackdropShadow(_G.QuestLogPopupDetailFrame)
+    self:CreateShadow(_G.QuestFrame)
+    self:CreateShadow(_G.QuestModelScene)
+    self:CreateShadow(_G.QuestLogPopupDetailFrame)
 
     F.SetFontOutline(_G.QuestNPCModelNameText)
 end

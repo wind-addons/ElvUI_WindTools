@@ -8,7 +8,7 @@ function S:Blizzard_CovenantSanctum()
         return
     end
 
-    self:CreateBackdropShadow(_G.CovenantSanctumFrame)
+    self:CreateShadow(_G.CovenantSanctumFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_CovenantSanctum")

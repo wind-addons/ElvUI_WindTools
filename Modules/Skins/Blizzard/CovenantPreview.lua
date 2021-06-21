@@ -8,7 +8,7 @@ function S:Blizzard_CovenantPreviewUI()
         return
     end
 
-    self:CreateBackdropShadow(_G.CovenantPreviewFrame)
+    self:CreateShadow(_G.CovenantPreviewFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_CovenantPreviewUI")

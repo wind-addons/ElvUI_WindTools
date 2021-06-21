@@ -31,7 +31,7 @@ function S:BlizzardMiscFrames()
     }
 
     for _, frame in pairs(miscFrames) do
-        self:CreateBackdropShadow(_G[frame])
+        self:CreateShadow(_G[frame])
     end
 
     -- 跳过剧情
@@ -86,13 +86,13 @@ function S:BlizzardMiscFrames()
     self:CreateBackdropShadow(_G.StackSplitFrame)
 
     -- 聊天设定
-    self:CreateBackdropShadow(_G.ChatConfigFrame)
+    self:CreateShadow(_G.ChatConfigFrame)
 
     -- 颜色选择器
-    self:CreateBackdropShadow(_G.ColorPickerFrame)
+    self:CreateShadow(_G.ColorPickerFrame)
 
     -- What's new
-    self:CreateBackdropShadow(_G.SplashFrame)
+    self:CreateShadow(_G.SplashFrame)
 
     -- UIWidget
     self:SecureHook(

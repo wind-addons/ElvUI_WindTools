@@ -8,7 +8,7 @@ function S:MerchantFrame()
         return
     end
 
-    self:CreateBackdropShadow(_G.MerchantFrame)
+    self:CreateShadow(_G.MerchantFrame)
 
     for i = 1, 2 do
         self:CreateBackdropShadow(_G["MerchantFrameTab" .. i])

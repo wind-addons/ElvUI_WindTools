@@ -37,6 +37,7 @@ function S:Blizzard_GarrisonUI()
         _G.GarrisonCapacitiveDisplayFrame,
         _G.GarrisonMissionFrame,
         _G.GarrisonLandingPage,
+        _G.GarrisonBuildingFrame,
         _G.GarrisonShipyardFrame,
         _G.OrderHallMissionFrame,
         _G.OrderHallCommandBar,
@@ -64,7 +65,7 @@ function S:Blizzard_GarrisonUI()
 
     for _, frame in pairs(frames) do
         if frame then
-            self:CreateBackdropShadow(frame)
+            self:CreateShadow(frame)
         end
     end
     for _, tab in pairs(tabs) do

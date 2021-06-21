@@ -8,7 +8,7 @@ function S:Blizzard_AnimaDiversionUI()
         return
     end
 
-    self:CreateBackdropShadow(_G.AnimaDiversionFrame)
+    self:CreateShadow(_G.AnimaDiversionFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_AnimaDiversionUI")

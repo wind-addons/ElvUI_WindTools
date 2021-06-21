@@ -5,8 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_SkinStatusReport()
-    self:CreateShadow(_G.ElvUIStatusReport)
-    self:CreateShadow(_G.ElvUIStatusPlugins)
+    self:CreateBackdropShadow(_G.ElvUIStatusReport)
+    self:CreateBackdropShadow(_G.ElvUIStatusPlugins)
 end
 
 function S:ElvUI_StatusReport()

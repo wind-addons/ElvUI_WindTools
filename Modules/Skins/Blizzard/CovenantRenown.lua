@@ -8,7 +8,7 @@ function S:Blizzard_CovenantRenown()
         return
     end
 
-    self:CreateBackdropShadow(_G.CovenantRenownFrame)
+    self:CreateShadow(_G.CovenantRenownFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_CovenantRenown")

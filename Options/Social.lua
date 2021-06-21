@@ -66,7 +66,7 @@ options.chatBar = {
                     order = 1,
                     type = "toggle",
                     name = L["Auto Hide"],
-                    desc = L["Hide channels not exist."]
+                    desc = L["Hide channels that do not exist."]
                 },
                 mouseOver = {
                     order = 2,

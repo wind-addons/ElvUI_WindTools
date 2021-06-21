@@ -30,16 +30,25 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
         if type == "PLAYER" then
             for i = 1, NUM_ACTIONBAR_BUTTONS do
                 local button = bar.buttons[i]
+                button:CreateBackdrop()
+                button.backdrop:ClearAllPoints()
+                button.backdrop:SetOutside(button, 0, 0)
                 self:CreateBackdropShadow(button, true)
             end
         elseif type == "PET" then
             for i = 1, NUM_PET_ACTION_SLOTS do
                 local button = _G["PetActionButton" .. i]
+                button:CreateBackdrop()
+                button.backdrop:ClearAllPoints()
+                button.backdrop:SetOutside(button, 0, 0)
                 self:CreateBackdropShadow(button, true)
             end
         elseif type == "STANCE" then
             for i = 1, NUM_STANCE_SLOTS do
                 local button = _G["ElvUI_StanceBarButton" .. i]
+                button:CreateBackdrop()
+                button.backdrop:ClearAllPoints()
+                button.backdrop:SetOutside(button, 0, 0)
                 self:CreateBackdropShadow(button, true)
             end
         end

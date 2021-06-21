@@ -16,10 +16,29 @@ local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_ClassColor_GetClassColor = C_ClassColor.GetClassColor
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 
-local BNET_CLIENT_APP, BNET_CLIENT_CLNT, BNET_CLIENT_COD = BNET_CLIENT_APP, BNET_CLIENT_CLNT, BNET_CLIENT_COD
-local BNET_CLIENT_COD_MW, BNET_CLIENT_D3, BNET_CLIENT_HEROES = BNET_CLIENT_COD_MW, BNET_CLIENT_D3, BNET_CLIENT_HEROES
-local BNET_CLIENT_OVERWATCH, BNET_CLIENT_SC, BNET_CLIENT_SC2 = BNET_CLIENT_OVERWATCH, BNET_CLIENT_SC, BNET_CLIENT_SC2
-local BNET_CLIENT_WC3, BNET_CLIENT_WOW, BNET_CLIENT_WTCG = BNET_CLIENT_WC3, BNET_CLIENT_WOW, BNET_CLIENT_WTCG
+local BNET_CLIENT_WOW = BNET_CLIENT_WOW
+local BNET_CLIENT_SC2 = BNET_CLIENT_SC2
+local BNET_CLIENT_D3 = BNET_CLIENT_D3
+local BNET_CLIENT_WTCG = BNET_CLIENT_WTCG
+local BNET_CLIENT_APP = BNET_CLIENT_APP
+local BNET_CLIENT_HEROES = BNET_CLIENT_HEROES
+local BNET_CLIENT_OVERWATCH = BNET_CLIENT_OVERWATCH
+local BNET_CLIENT_CLNT = BNET_CLIENT_CLNT
+local BNET_CLIENT_SC = BNET_CLIENT_SC
+local BNET_CLIENT_DESTINY2 = BNET_CLIENT_DESTINY2
+local BNET_CLIENT_COD = BNET_CLIENT_COD
+local BNET_CLIENT_COD_MW = BNET_CLIENT_COD_MW
+local BNET_CLIENT_COD_MW2 = BNET_CLIENT_COD_MW2
+local BNET_CLIENT_COD_BOCW = BNET_CLIENT_COD_BOCW
+local BNET_CLIENT_WC3 = BNET_CLIENT_WC3
+local BNET_CLIENT_ARCADE = BNET_CLIENT_ARCADE
+local BNET_CLIENT_CRASH4 = BNET_CLIENT_CRASH4
+local BNET_CLIENT_D2 = BNET_CLIENT_D2
+
+local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
+local WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC
+local WOW_PROJECT_CLASSIC_TBC = 5
+
 local FRIENDS_TEXTURE_AFK, FRIENDS_TEXTURE_DND = FRIENDS_TEXTURE_AFK, FRIENDS_TEXTURE_DND
 local FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE = FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
@@ -43,6 +62,11 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
         Modern = MediaPath .. "GameIcons\\WoW"
     },
+    [BNET_CLIENT_WOW .. "C_TBC"] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
+        Modern = MediaPath .. "GameIcons\\WoWC"
+    },
+    [BNET_CLIENT_D2] = {Default = BNet_GetClientTexture(BNET_CLIENT_D2), Modern = MediaPath .. "GameIcons\\D2"},
     [BNET_CLIENT_D3] = {Default = BNet_GetClientTexture(BNET_CLIENT_D3), Modern = MediaPath .. "GameIcons\\D3"},
     [BNET_CLIENT_WTCG] = {Default = BNet_GetClientTexture(BNET_CLIENT_WTCG), Modern = MediaPath .. "GameIcons\\HS"},
     [BNET_CLIENT_SC] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC), Modern = MediaPath .. "GameIcons\\SC"},
@@ -70,7 +94,19 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW2),
         Modern = MediaPath .. "GameIcons\\COD_MW2"
     },
-    [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. "GameIcons\\WC3"}
+    [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. "GameIcons\\WC3"},
+    [BNET_CLIENT_CLNT] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_CLNT),
+        Modern = BNet_GetClientTexture(BNET_CLIENT_CLNT)
+    },
+    [BNET_CLIENT_CRASH4] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_CRASH4),
+        Modern = MediaPath .. "GameIcons\\CRASH4"
+    },
+    [BNET_CLIENT_ARCADE] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_ARCADE),
+        Modern = BNet_GetClientTexture(BNET_CLIENT_ARCADE)
+    }
 }
 
 local StatusIcons = {
@@ -96,6 +132,7 @@ local StatusIcons = {
 
 local MaxLevel = {
     [BNET_CLIENT_WOW .. "C"] = 60,
+    [BNET_CLIENT_WOW .. "C_TBC"] = 70,
     [BNET_CLIENT_WOW] = W.MaxLevelForPlayerExpansion
 }
 
@@ -193,7 +230,7 @@ function FL:UpdateFriendButton(button)
                 status = "Offline"
             end
 
-            -- 如果是魔兽正式服/怀旧服，进一步获取角色信息
+            -- Fetch version if friend playing WoW
             if game == BNET_CLIENT_WOW then
                 name = gameAccountInfo.characterName or ""
                 level = gameAccountInfo.characterLevel or 0
@@ -201,10 +238,17 @@ function FL:UpdateFriendButton(button)
                 class = gameAccountInfo.className or ""
                 area = gameAccountInfo.areaName or ""
 
-                if gameAccountInfo.wowProjectID == 2 then
-                    game = BNET_CLIENT_WOW .. "C" -- 标注怀旧服好友
+                if gameAccountInfo.wowProjectID == WOW_PROJECT_CLASSIC then
+                    game = BNET_CLIENT_WOW .. "C" -- Classic
                     local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
                     server = serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC
+                    server = server .. "*"
+                elseif gameAccountInfo.wowProjectID == WOW_PROJECT_CLASSIC_TBC then
+                    game = BNET_CLIENT_WOW .. "C_TBC" -- TBC
+                    local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
+                    server =
+                        serverStrings[#serverStrings] or
+                        BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. " (" .. CINEMATIC_NAME_2 .. ")"
                     server = server .. "*"
                 else
                     server = gameAccountInfo.realmDisplayName or ""
@@ -261,6 +305,7 @@ function FL:UpdateFriendButton(button)
         local iconTex = GameIcons[iconGroup][self.db.textures.game] or BNet_GetClientTexture(game)
         button.gameIcon:SetTexture(iconTex)
         button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
+        button.gameIcon:SetAlpha(1)
 
         if button.summonButton:IsShown() then
             button.gameIcon:Hide()

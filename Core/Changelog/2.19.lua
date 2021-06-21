@@ -3,16 +3,36 @@ local W = unpack(select(2, ...))
 W.Changelog[219] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "新增了法语支持. 感谢 xan2622"
+        },
+        ["zhTW"] = {
+            "支援法文. 感謝 xan2622"
+        },
+        ["enUS"] = {
+            "Add french localization. Thanks xan2622"
+        },
+        ["koKR"] = {
+            "Add french localization. Thanks xan2622"
+        }
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[好友列表] 为新的游戏添加了图标.",
+            "[好友列表] 增加了对燃烧的远征怀旧服的识别支持."
+        },
+        ["zhTW"] = {
+            "[好友列表] 為新的遊戲增加了圖標.",
+            "[好友列表] 增加了對燃燒的遠征經典版的支援."
+        },
+        ["enUS"] = {
+            "[Friend List] Add new icons for new games.",
+            "[Friend List] Add support of Classic TBC."
+        },
+        ["koKR"] = {
+            "[Friend List] Add new icons for new games.",
+            "[Friend List] Add support of Classic TBC."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

@@ -13,7 +13,7 @@ W.Changelog[219] = {
             "Add french localization. Thanks xan2622"
         },
         ["koKR"] = {
-            "Add french localization. Thanks xan2622"
+            "프랑스어 현지화를 추가 하였습니다. Thanks xan2622"
         }
     },
     NEW = {
@@ -30,8 +30,8 @@ W.Changelog[219] = {
             "[Friend List] Add support of Classic TBC."
         },
         ["koKR"] = {
-            "[Friend List] Add new icons for new games.",
-            "[Friend List] Add support of Classic TBC."
+            "[친구 목록] 새로운 게임 아이콘 추가.",
+            "[친구 목록] 불타는 성전 클래식 지원 추가."
         }
     },
     IMPROVEMENT = {

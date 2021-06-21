@@ -11,7 +11,6 @@
 	<Script file='PauseToSlash.lua'/>
 	<Script file='SkipCutScene.lua'/>
 	<Script file='Tags.lua'/>
-	<Script file='Transmog.lua'/>
 	<!-- Others -->
 	<Script file='LFGList.lua'/>
 	<Script file='GameBar.lua'/>

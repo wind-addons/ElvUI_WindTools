@@ -36,20 +36,14 @@ options.general = {
             name = L["Pause to slash"],
             desc = L["Just for Chinese and Korean players"]
         },
-        saveArtifact = {
-            order = 2,
-            type = "toggle",
-            name = L["Save Artifact"],
-            desc = L["Allow you to save outfits even if the artifact in it."]
-        },
         noKanjiMath = {
-            order = 3,
+            order = 2,
             type = "toggle",
             name = L["Math Without Kanji"],
             desc = L["Use alphabet rather than kanji (Only for Chinese players)"]
         },
         disableTalkingHead = {
-            order = 4,
+            order = 3,
             type = "toggle",
             name = L["Disable Talking Head"],
             desc = L["Disable Blizzard Talking Head."],
@@ -61,7 +55,7 @@ options.general = {
             end
         },
         skipCutScene = {
-            order = 5,
+            order = 4,
             type = "toggle",
             name = L["Skip Cut Scene"],
             set = function(info, value)
@@ -70,19 +64,19 @@ options.general = {
             end
         },
         autoScreenshot = {
-            order = 6,
+            order = 5,
             type = "toggle",
             name = L["Auto Screenshot"],
             desc = L["Screenshot after you earned an achievement automatically."]
         },
         moveSpeed = {
-            order = 7,
+            order = 6,
             type = "toggle",
             name = L["Move Speed"],
             desc = L["Show move speed in character panel."]
         },
         hideCrafter = {
-            order = 8,
+            order = 7,
             type = "toggle",
             name = L["Hide Crafter"],
             desc = L["Hide crafter name in the item tooltip."],

@@ -4,16 +4,24 @@ W.Changelog[219] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "新增了法语支持. 感谢 xan2622"
+            "新增了法语支持. 感谢 xan2622",
+            "随着 9.1 及 ElvUI 的更新, 部分功能和皮肤可能会失效, 欢迎通过各种渠道进行反馈.",
+            "Rematch 皮肤暂时停用, 缓慢修复中."
         },
         ["zhTW"] = {
-            "支援法文. 感謝 xan2622"
+            "支援法文. 感謝 xan2622",
+            "隨 9.1 及 ElvUI 之更新, 部分功能和美化可能會失效, 您可以通過各種渠道反饋.",
+            "Rematch 皮膚暫時停用, 緩慢修復中."
         },
         ["enUS"] = {
-            "Add french localization. Thanks xan2622"
+            "Add french localization. Thanks xan2622",
+            "Because of the game and ElvUI latest changes, some skins and features may not work properly. If you find something weird, feel free to feedback.",
+            "Disable Rematch Skins temporarily. slowly refactoring..."
         },
         ["koKR"] = {
-            "프랑스어 현지화를 추가 하였습니다. Thanks xan2622"
+            "프랑스어 현지화를 추가 하였습니다. Thanks xan2622",
+            "Because of the game and ElvUI latest changes, some skins and features may not work properly. If you find something weird, feel free to feedback.",
+            "Disable Rematch Skins temporarily. slowly refactoring..."
         }
     },
     NEW = {
@@ -40,7 +48,6 @@ W.Changelog[219] = {
             "[额外物品条] 补全了鼠标提示中自定义物品相关的设定说明."
         },
         ["zhTW"] = {
-            
             "[額外物品條] 新增了靈性治療藥水到 POTION (藥水) 分類.",
             "[額外物品條] 補全了滑鼠提示中自訂物品相關的設定說明."
         },

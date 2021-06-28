@@ -982,11 +982,11 @@ options.addons = {
             type = "toggle",
             name = L["REHack"]
         },
-        rematch = {
-            order = 10,
-            type = "toggle",
-            name = L["Rematch"]
-        },
+        -- rematch = {
+        --     order = 10,
+        --     type = "toggle",
+        --     name = L["Rematch"]
+        -- },
         tinyInspect = {
             order = 10,
             type = "toggle",

@@ -20,8 +20,8 @@ W.Changelog[219] = {
         },
         ["koKR"] = {
             "프랑스어 현지화를 추가 하였습니다. Thanks xan2622",
-            "Because of the game and ElvUI latest changes, some skins and features may not work properly. If you find something weird, feel free to feedback.",
-            "Disable Rematch Skins temporarily. slowly refactoring..."
+            "게임 및 ElvUI 최신 변경 사항으로 인해 일부 스킨 및 기능이 제대로 작동하지 않을 수 있습니다. 이상한 점을 발견하면 언제든지 의견을 보내주세요.",
+            "Rematch 스킨을 일시적으로 비활성화합니다. 천천히 수정할 예정입니다.."
         }
     },
     NEW = {

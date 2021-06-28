@@ -10,15 +10,15 @@ function S:Blizzard_Communities()
 
     if _G.CommunitiesFrame then
         local f = _G.CommunitiesFrame
-        self:CreateBackdropShadow(f)
+        self:CreateShadow(f)
         self:CreateShadow(f.ChatTab)
         self:CreateShadow(f.RosterTab)
         self:CreateShadow(f.GuildBenefitsTab)
         self:CreateShadow(f.GuildInfoTab)
-        self:CreateBackdropShadow(f.GuildMemberDetailFrame)
-        self:CreateBackdropShadow(f.ClubFinderInvitationFrame)
+        self:CreateShadow(f.GuildMemberDetailFrame)
+        self:CreateShadow(f.ClubFinderInvitationFrame)
         if _G.CommunitiesGuildLogFrame then
-            self:CreateBackdropShadow(_G.CommunitiesGuildLogFrame)
+            self:CreateShadow(_G.CommunitiesGuildLogFrame)
         end
     end
 
@@ -32,7 +32,7 @@ function S:Blizzard_Communities()
             self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            self:CreateBackdropShadow(f.RequestToJoinFrame)
+            self:CreateShadow(f.RequestToJoinFrame)
         end
     end
 
@@ -46,7 +46,7 @@ function S:Blizzard_Communities()
             self:CreateShadow(f.ClubFinderSearchTab)
         end
         if f.RequestToJoinFrame then
-            self:CreateBackdropShadow(f.RequestToJoinFrame)
+            self:CreateShadow(f.RequestToJoinFrame)
         end
     end
 

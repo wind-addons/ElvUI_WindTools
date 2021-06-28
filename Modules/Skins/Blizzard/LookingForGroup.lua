@@ -22,7 +22,7 @@ function S:LookingForGroupFrames()
     }
 
     for _, frame in pairs(frames) do
-        self:CreateBackdropShadow(frame)
+        self:CreateShadow(frame)
     end
 
     for i = 1, 3 do

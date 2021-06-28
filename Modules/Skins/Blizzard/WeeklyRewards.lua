@@ -8,7 +8,7 @@ function S:Blizzard_WeeklyRewards()
         return
     end
 
-    self:CreateBackdropShadow(_G.WeeklyRewardsFrame)
+    self:CreateShadow(_G.WeeklyRewardsFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_WeeklyRewards")

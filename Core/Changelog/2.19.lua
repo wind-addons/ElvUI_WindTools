@@ -4,21 +4,25 @@ W.Changelog[219] = {
     RELEASE_DATE = "2021/06/29",
     IMPORTANT = {
         ["zhCN"] = {
+            "支持 9.1 游戏版本.",
             "新增了法语支持. 感谢 xan2622",
             "随着 9.1 及 ElvUI 的更新, 部分功能和皮肤可能会失效, 欢迎通过各种渠道进行反馈.",
             "Rematch 皮肤暂时停用, 缓慢修复中."
         },
         ["zhTW"] = {
+            "支援 9.1 遊戲版本.",
             "支援法文. 感謝 xan2622",
             "隨 9.1 及 ElvUI 之更新, 部分功能和美化可能會失效, 您可以通過各種渠道反饋.",
             "Rematch 皮膚暫時停用, 緩慢修復中."
         },
         ["enUS"] = {
+            "Support WoW build 9.1.",
             "Add french localization. Thanks xan2622",
             "Because of the game and ElvUI latest changes, some skins and features may not work properly. If you find something weird, feel free to feedback.",
             "Disable Rematch Skins temporarily. slowly refactoring..."
         },
         ["koKR"] = {
+            "WoW 9.1 버전 지원",
             "프랑스어 현지화를 추가 하였습니다. Thanks xan2622",
             "게임 및 ElvUI 최신 변경 사항으로 인해 일부 스킨 및 기능이 제대로 작동하지 않을 수 있습니다. 이상한 점을 발견하면 언제든지 의견을 보내주세요.",
             "Rematch 스킨을 일시적으로 비활성화합니다. 천천히 수정할 예정입니다.."

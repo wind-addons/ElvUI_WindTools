@@ -20,6 +20,7 @@
 # Localization
 - français (frFR)
     - PodVibe @ CurseForge
+    - xan2622 @ Github
 - Deutsche (deDE)
     - imna1975 @ CurseForge
     - Merathilis
@@ -63,7 +64,6 @@
 
 - Misc
     - Warbaby (爱不易)
-    - zaCade (FixTransmogOutfits)
     - oyg123 @ NGA.cn
 
 - Paragon Reputation

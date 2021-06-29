@@ -352,7 +352,8 @@ do -- 本地化
             F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE")
         },
         ["français (frFR)"] = {
-            "PodVibe @ CurseForge"
+            "PodVibe @ CurseForge",
+            "xan2622 @ Github"
         },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",
@@ -416,7 +417,6 @@ do -- 插件代码
         },
         [L["Misc"]] = {
             "Warbaby (爱不易)",
-            "zaCade (FixTransmogOutfits)",
             "oyg123 @ NGA.cn"
         },
         [L["Paragon Reputation"]] = {

@@ -8,8 +8,7 @@ local pairs = pairs
 function S:Immersion_ReskinTitleButton(frame)
     for _, button in pairs {frame.TitleButtons:GetChildren()} do
         if button and not button.windStyle then
-            ES:HandleButton(button)
-            button.backdrop:SetTemplate("Transparent")
+            ES:HandleButton(button, nil, nil, nil, true, "Transparent")
             button.backdrop:ClearAllPoints()
             button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)

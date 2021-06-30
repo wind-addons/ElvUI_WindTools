@@ -13,7 +13,7 @@ W.Changelog[220] = {
             "Fixed Weakaura Options Skin."
         },
         ["koKR"] = {
-            "Fixed Weakaura Options Skin."
+            "Weakaura 설정창 스킨 수정."
         }
     },
     NEW = {

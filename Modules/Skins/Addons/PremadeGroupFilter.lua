@@ -21,9 +21,10 @@ function S:PremadeGroupsFilter()
     end
 
     local frame = _G.PremadeGroupsFilterDialog
-    ES:HandlePortraitFrame(frame)
+    ES:HandlePortraitFrame(frame, true)
 
     -- Extend 1 pixel looks as same height as PVEFrame
+    frame.backdrop:SetTemplate("Transparent")
     frame.backdrop:ClearAllPoints()
     frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", -1, 0)
     frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)

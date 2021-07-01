@@ -50,7 +50,7 @@ local function SkinListTitle(self)
 
     for _, button in pairs(self.sortButtons) do
         button:StripTextures()
-        ES:HandleButton(button)
+        ES:HandleButton(button, nil, nil, nil, true, "Transparent")
         button.backdrop:ClearAllPoints()
         button.backdrop:SetOutside(button, -2, 0)
     end
@@ -92,7 +92,7 @@ function S:MeetingStone()
     local MainPanel = NEG.MainPanel
     if MainPanel then
         ES:HandlePortraitFrame(MainPanel)
-        self:CreateBackdropShadow(MainPanel)
+        self:CreateShadow(MainPanel)
         self:MerathilisUISkin(MainPanel)
         MainPanel.PortraitFrame:Hide()
         local close =
@@ -207,19 +207,19 @@ function S:MeetingStone()
     local BrowsePanel = NEG.BrowsePanel
     if BrowsePanel then
         if BrowsePanel.RefreshButton then
-            ES:HandleButton(BrowsePanel.RefreshButton)
+            ES:HandleButton(BrowsePanel.RefreshButton, nil, nil, nil, true, "Transparent")
             BrowsePanel.RefreshButton.backdrop:ClearAllPoints()
             BrowsePanel.RefreshButton.backdrop:SetOutside(BrowsePanel.RefreshButton, -1, -1)
         end
 
         if BrowsePanel.AdvButton then
-            ES:HandleButton(BrowsePanel.AdvButton)
+            ES:HandleButton(BrowsePanel.AdvButton, nil, nil, nil, true, "Transparent")
             BrowsePanel.AdvButton.backdrop:ClearAllPoints()
             BrowsePanel.AdvButton.backdrop:SetOutside(BrowsePanel.AdvButton, -1, -1)
         end
 
         if BrowsePanel.SignUpButton then
-            ES:HandleButton(BrowsePanel.SignUpButton)
+            ES:HandleButton(BrowsePanel.SignUpButton, nil, nil, nil, true, "Transparent")
         end
 
         if BrowsePanel.ActivityDropdown then
@@ -231,7 +231,7 @@ function S:MeetingStone()
         end
 
         if BrowsePanel.NoResultBlocker then
-            ES:HandleButton(BrowsePanel.NoResultBlocker.Button)
+            ES:HandleButton(BrowsePanel.NoResultBlocker.Button, nil, nil, nil, true, "Transparent")
             F.SetFontOutline(BrowsePanel.NoResultBlocker.Label)
         end
 
@@ -242,7 +242,7 @@ function S:MeetingStone()
             for _, child in pairs {panel:GetChildren()} do
                 if child.GetObjectType and child:GetObjectType() == "Button" then
                     if child.GetText and child:GetText() ~= "" and child:GetText() ~= nil then
-                        ES:HandleButton(child)
+                        ES:HandleButton(child, nil, nil, nil, true, "Transparent")
                         child.backdrop:ClearAllPoints()
                         child.backdrop:SetOutside(child, -1, 0)
                     else
@@ -275,7 +275,7 @@ function S:MeetingStone()
         end
 
         if ManagerPanel.RefreshButton then
-            ES:HandleButton(ManagerPanel.RefreshButton)
+            ES:HandleButton(ManagerPanel.RefreshButton, nil, nil, nil, true, "Transparent")
             ManagerPanel.RefreshButton.backdrop:ClearAllPoints()
             ManagerPanel.RefreshButton.backdrop:SetOutside(ManagerPanel.RefreshButton, -1, -2)
         end
@@ -297,11 +297,11 @@ function S:MeetingStone()
         end
 
         if ManagerPanel.LeftPart and ManagerPanel.LeftPart.CreateButton then
-            ES:HandleButton(ManagerPanel.LeftPart.CreateButton)
+            ES:HandleButton(ManagerPanel.LeftPart.CreateButton, nil, nil, nil, true, "Transparent")
         end
 
         if ManagerPanel.LeftPart and ManagerPanel.LeftPart.DisbandButton then
-            ES:HandleButton(ManagerPanel.LeftPart.DisbandButton)
+            ES:HandleButton(ManagerPanel.LeftPart.DisbandButton, nil, nil, nil, true, "Transparent")
         end
 
         if ManagerPanel.LeftPart and ManagerPanel.LeftPart.CreateWidget then
@@ -365,7 +365,7 @@ function S:MeetingStone()
         end
 
         if RecentPanel.BatchDeleteButton then
-            ES:HandleButton(RecentPanel.BatchDeleteButton)
+            ES:HandleButton(RecentPanel.BatchDeleteButton, nil, nil, nil, true, "Transparent")
         end
 
         if RecentPanel.MemberList then

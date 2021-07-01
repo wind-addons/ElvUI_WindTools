@@ -220,6 +220,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_OrderHallUI"] = {
         "OrderHallTalentFrame"
     },
+    ["Blizzard_PlayerChoice"] = {
+        "PlayerChoiceFrame"
+    },
     ["Blizzard_PVPMatch"] = {
         "PVPMatchResults"
     },

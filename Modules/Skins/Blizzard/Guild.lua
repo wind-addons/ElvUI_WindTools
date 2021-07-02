@@ -16,7 +16,7 @@ function S:Blizzard_GuildUI()
         return
     end
 
-    self:CreateBackdropShadow(_G.GuildFrame)
+    self:CreateShadow(_G.GuildFrame)
 
     for i = 1, 5 do
         self:ReskinTab(_G["GuildFrameTab" .. i])

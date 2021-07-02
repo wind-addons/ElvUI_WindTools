@@ -174,7 +174,7 @@ function S:MeetingStone()
                     if button.Icon then -- prevent cause error in ElvUI Skin functions
                         button.Icon.GetTexture = button.Icon.GetTexture or E.noop
                     end
-                    ES:HandleButton(button)
+                    ES:HandleButton(button, nil, nil, nil, true, "Transparent")
 
                     local selectedTex = button.backdrop:CreateTexture(nil)
                     local classColor = E:ClassColor(E.myclass)

@@ -13,7 +13,7 @@ W.Changelog[221] = {
             "[Filter] Fix the bug that player cannot join party via Battle.net."
         },
         ["koKR"] = {
-            "[Filter] Fix the bug that player cannot join party via Battle.net."
+            "[필터] 플레이어가 Battle.net을 통해 파티에 참여할 수 없는 버그를 수정했습니다."
         }
     },
     NEW = {
@@ -30,8 +30,8 @@ W.Changelog[221] = {
             "[World Map] Reveal map can handle new areas in 9.1."
         },
         ["koKR"] = {
-            "[Move Frames] Add support of Player Choice Frame.",
-            "[World Map] Reveal map can handle new areas in 9.1."
+            "[프레임 이동] 플레이어가 프레임을 선택할 수 있습니다.",
+            "[월드맵] 9.1의 새로운 지역에서 안개를 제거합니다."
         }
     },
     IMPROVEMENT = {
@@ -60,12 +60,12 @@ W.Changelog[221] = {
             "[Paragon Reputation] Change the default format to Blizzard style."
         },
         ["koKR"] = {
-            "[Skins] Fixed Guild Skin.",
-            "[Skins] Premade Groups Filter 스킨 수정.",
-            "[Skins] NetEase MeetingStone 스킨 수정.",
-            "[Skins] Fixed skins for debug tools.",
-            "[Extra Item Bar] Add some items from Korthia.",
-            "[Paragon Reputation] Change the default format to Blizzard style."
+            "[스킨] 길드 스킨 수정",
+            "[스킨] Premade Groups Filter 스킨 수정.",
+            "[스킨] NetEase MeetingStone 스킨 수정.",
+            "[스킨] 디버그 툴 스킨 수정.",
+            "[아이템 바] 코르시아의 일부 아이템이 추가되였습니다.",
+            "[불멸의 동맹] 기본 형식을 블리자드 스타일로 수정합니다."
         }
     }
 }

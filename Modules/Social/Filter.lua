@@ -3,6 +3,7 @@ local FT = W:NewModule("Filter", "AceEvent-3.0")
 
 local ConsoleExec = ConsoleExec
 local GetCVar = GetCVar
+local C_BattleNet = C_BattleNet
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 
 do

@@ -4,6 +4,7 @@ local T = W:GetModule("Tooltips")
 
 local _G = _G
 local format = format
+local gsub = gsub
 local ipairs = ipairs
 local pairs = pairs
 local select = select
@@ -13,6 +14,8 @@ local tonumber = tonumber
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
 local CanInspect = CanInspect
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
+local GetAchievementComparisonInfo = GetAchievementComparisonInfo
+local GetAchievementInfo = GetAchievementInfo
 local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime

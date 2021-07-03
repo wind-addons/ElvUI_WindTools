@@ -12,8 +12,9 @@ do
         if updated then
             return
         end
+
         -- Solution from https://nga.178.com/read.php?tid=27432996
-        C_BattleNet.GetFriendGameAccountInfo = function(...)
+        function C_BattleNet.GetFriendGameAccountInfo(...)
             local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(...)
             gameAccountInfo.isInCurrentRegion = true
             return gameAccountInfo

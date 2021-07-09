@@ -37,6 +37,7 @@ local ChannelList = {
     "GUILD",
     "OFFICER"
 }
+
 local ChannelListWithWhisper = {
     "SAY",
     "YELL",

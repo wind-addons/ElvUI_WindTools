@@ -238,7 +238,7 @@ function S:MeetingStone()
         if BrowsePanel.AdvFilterPanel then
             local panel = BrowsePanel.AdvFilterPanel
             ES:HandlePortraitFrame(panel)
-            S:CreateBackdropShadow(panel, true)
+            S:CreateShadow(panel)
             for _, child in pairs {panel:GetChildren()} do
                 if child.GetObjectType and child:GetObjectType() == "Button" then
                     if child.GetText and child:GetText() ~= "" and child:GetText() ~= nil then

@@ -43,7 +43,6 @@ local GetNumGroupMembers = GetNumGroupMembers
 local GetPlayerCommunityLink = GetPlayerCommunityLink
 local GetPlayerLink = GetPlayerLink
 local InCombatLockdown = InCombatLockdown
-local IsActivePlayerMentor = IsActivePlayerMentor
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
 local PlaySoundFile = PlaySoundFile
@@ -57,9 +56,9 @@ local UnitName = UnitName
 
 local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
+local C_ChatInfo_GetChannelRulesetForChannelID = C_ChatInfo.GetChannelRulesetForChannelID
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_PlayerMentorship_IsActivePlayerConsideredNewcomer = C_PlayerMentorship.IsActivePlayerConsideredNewcomer
 local C_Social_GetLastItem = C_Social.GetLastItem
 local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
 
@@ -152,19 +151,29 @@ local function GetPFlag(
     arg17)
     -- Renaming for clarity:
     local specialFlag = arg6
-    --local zoneChannelID = arg7;
-    --local localChannelID = arg8;
+    local zoneChannelID = arg7
+    --local localChannelID = arg8
 
     if specialFlag ~= "" then
         if specialFlag == "GM" or specialFlag == "DEV" then
-            -- Add Blizzard Icon if  this was sent by a GM/DEV
+            -- Add Blizzard Icon if this was sent by a GM/DEV
             return "|TInterface\\ChatFrame\\UI-ChatIcon-Blizz:12:20:0:0:32:16:4:28:0:16|t "
         elseif specialFlag == "GUIDE" then
-            if C_PlayerMentorship_IsActivePlayerConsideredNewcomer() then
-                return _G.NPEV2_CHAT_USER_TAG_GUIDE .. " " -- possibly unable to save global string with trailing whitespace...
+            if
+                _G.ChatFrame_GetMentorChannelStatus(
+                    CHATCHANNELRULESET_MENTOR,
+                    C_ChatInfo_GetChannelRulesetForChannelID(zoneChannelID)
+                ) == CHATCHANNELRULESET_MENTOR
+             then
+                return NPEV2_CHAT_USER_TAG_GUIDE
             end
         elseif specialFlag == "NEWCOMER" then
-            if IsActivePlayerMentor() then
+            if
+                _G.ChatFrame_GetMentorChannelStatus(
+                    PLAYERMENTORSHIPSTATUS_NEWCOMER,
+                    C_ChatInfo_GetChannelRulesetForChannelID(zoneChannelID)
+                ) == PLAYERMENTORSHIPSTATUS_NEWCOMER
+             then
                 return _G.NPEV2_CHAT_USER_TAG_NEWCOMER
             end
         else
@@ -173,6 +182,29 @@ local function GetPFlag(
     end
 
     return ""
+end
+
+local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
+	-- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
+	-- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
+	-- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
+	-- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
+	-- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
+	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
+		return false
+	end
+
+	-- Only add if the user is joining a channel
+	if eventType ~= "YOU_CHANGED" then
+		return false
+	end
+
+	-- Only add regional channels
+	if not C_ChatInfo_IsChannelRegionalForChannelID(channelID) then
+		return false
+	end
+
+	return _G.ChatFrame_AddChannel(chatFrame, C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
 end
 
 function CT:UpdateRoleIcons()
@@ -433,21 +465,44 @@ function CT:ChatFrame_MessageEventHandler(
     -- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
     -- we also send isHistory and historyTime into CH:AddMessage so that we don't have to override the timestamp.
     local noBrackets = CT.db.removeBrackets
+    local notChatHistory, historySavedName  --we need to extend the arguments on CH.ChatFrame_MessageEventHandler so we can properly handle saved names without overriding
+    if isHistory == "ElvUI_ChatHistory" then
+        if historyBTag then
+            arg2 = historyBTag
+        end -- swap arg2 (which is a |k string) to btag name
+        historySavedName = historyName
+    else
+        notChatHistory = true
+    end
+
+    if _G.TextToSpeechFrame_MessageEventHandler and notChatHistory then
+        _G.TextToSpeechFrame_MessageEventHandler(
+            frame,
+            event,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+            arg8,
+            arg9,
+            arg10,
+            arg11,
+            arg12,
+            arg13,
+            arg14,
+            arg15,
+            arg16,
+            arg17
+        )
+    end
 
     if strsub(event, 1, 8) == "CHAT_MSG" then
         if arg16 then
             return true
         end -- hiding sender in letterbox: do NOT even show in chat window (only shows in cinematic frame)
-
-        local notChatHistory, historySavedName  --we need to extend the arguments on CH.ChatFrame_MessageEventHandler so we can properly handle saved names without overriding
-        if isHistory == "ElvUI_ChatHistory" then
-            if historyBTag then
-                arg2 = historyBTag
-            end -- swap arg2 (which is a |k string) to btag name
-            historySavedName = historyName
-        else
-            notChatHistory = true
-        end
 
         local chatType = strsub(event, 10)
         local info = _G.ChatTypeInfo[chatType]
@@ -546,7 +601,12 @@ function CT:ChatFrame_MessageEventHandler(
 
         local channelLength = strlen(arg4)
         local infoType = chatType
-        if
+
+        if type == "VOICE_TEXT" then -- the code here looks weird but its how blizzard has it ~Simpy
+            local leader = UnitIsGroupLeader(arg2)
+            infoType, type = _G.VoiceTranscription_DetermineChatTypeVoiceTranscription_DetermineChatType(leader)
+            info = _G.ChatTypeInfo[infoType]
+        elseif
             chatType == "COMMUNITIES_CHANNEL" or
                 ((strsub(chatType, 1, 7) == "CHANNEL") and (chatType ~= "CHANNEL_LIST") and
                     ((arg1 ~= "INVITE") or (chatType ~= "CHANNEL_NOTICE_USER")))
@@ -562,10 +622,12 @@ function CT:ChatFrame_MessageEventHandler(
             for index, value in pairs(frame.channelList) do
                 if channelLength > strlen(value) then
                     -- arg9 is the channel name without the number in front...
-                    if ((arg7 > 0) and (frame.zoneChannelList[index] == arg7)) or (strupper(value) == strupper(arg9)) then
+                    if (arg7 > 0 and frame.zoneChannelList[index] == arg7) or (strupper(value) == strupper(arg9)) then
                         found = true
+
                         infoType = "CHANNEL" .. arg8
                         info = _G.ChatTypeInfo[infoType]
+
                         if chatType == "CHANNEL_NOTICE" and arg1 == "YOU_LEFT" then
                             frame.channelList[index] = nil
                             frame.zoneChannelList[index] = nil
@@ -574,22 +636,17 @@ function CT:ChatFrame_MessageEventHandler(
                     end
                 end
             end
+
             if not found or not info then
-                return true
+                local eventType, channelID = arg1, arg7
+                if not ChatFrame_CheckAddChannel(self, eventType, channelID) then
+                    return true
+                end
             end
         end
 
         local chatGroup = _G.Chat_GetChatCategory(chatType)
-        local chatTarget
-        if chatGroup == "CHANNEL" then
-            chatTarget = tostring(arg8)
-        elseif chatGroup == "WHISPER" or chatGroup == "BN_WHISPER" then
-            if not (strsub(arg2, 1, 2) == "|K") then
-                chatTarget = strupper(arg2)
-            else
-                chatTarget = arg2
-            end
-        end
+        local chatTarget = _G.FCFManager_GetChatTarget(chatGroup, arg2, arg8)
 
         if _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
             return true

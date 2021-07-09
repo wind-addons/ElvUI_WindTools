@@ -27,7 +27,6 @@ local wipe = wipe
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
 local BetterDate = BetterDate
-local ChatChannelRuleset_Mentor = Enum.ChatChannelRuleset.Mentor
 local FlashClientIcon = FlashClientIcon
 local GMChatFrame_IsGM = GMChatFrame_IsGM
 local GMError = GMError
@@ -51,12 +50,15 @@ local RemoveNewlines = RemoveNewlines
 local StaticPopup_Visible = StaticPopup_Visiblelocal
 local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
 local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local C_ChatInfo_GetChannelRulesetForChannelID = C_ChatInfo.GetChannelRulesetForChannelID
+local C_ChatInfo_GetChannelShortcutForChannelID = C_ChatInfo.GetChannelShortcutForChannelID
+local C_ChatInfo_IsChannelRegionalForChannelID = C_ChatInfo.IsChannelRegionalForChannelID
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local C_Social_GetLastItem = C_Social.GetLastItem
@@ -66,6 +68,9 @@ CT.cache = {}
 local lfgRoles = {}
 local initRecord = {}
 
+local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
+local NPEV2_CHAT_USER_TAG_GUIDE = gsub(NPEV2_CHAT_USER_TAG_GUIDE, '(|A.-|a).+', '%1')
+local PLAYERMENTORSHIPSTATUS_NEWCOMER = Enum.PlayerMentorshipStatus.Newcomer
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
 
@@ -865,7 +870,7 @@ function CT:ChatFrame_MessageEventHandler(
             local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
             local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
 
-            if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == ChatChannelRuleset_Mentor then
+            if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
                 _G.ChatFrame_UpdateDefaultChatTarget(frame)
                 _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
             else

@@ -13,10 +13,12 @@ local function SetupOptions()
 
     local inTower = IsInJailersTower()
 
-    if inTower then
-        _G.PlayerChoiceFrame.shadow:Hide()
-    else
-        _G.PlayerChoiceFrame.shadow:Show()
+    if _G.PlayerChoiceFrame.shadow then
+        if inTower then
+            _G.PlayerChoiceFrame.shadow:Hide()
+        else
+            _G.PlayerChoiceFrame.shadow:Show()
+        end
     end
 end
 

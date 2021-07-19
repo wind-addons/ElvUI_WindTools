@@ -186,7 +186,13 @@ local torghastItems = {
     176443, --消逝狂亂藥水
     168035, --淵喉污鼠韁繩
     170499, --淵喉巡者韁繩
-    174464 --鬼靈鞍具
+    174464, --鬼靈鞍具
+    186678, --Mawforged Weapons Cache, 渊铸武器箱, 나락벼림 무기 보관함
+    186679, --Scroll of Domination, 统御卷轴, 지배의 두루마리
+    186615, --Mirror of the Conjured Twin, 召唤双子之镜, 창조된 쌍둥이의 거울
+    186636, --Cage of Mawrats, 一笼子噬渊鼠, 나락쥐 우리
+    186043, --Torghast Portal Manipulator, 托加斯特传送门操纵器, 토르가스트 차원문 조작기
+    186614  --Soul Jar, 灵魂缶, 영혼 단지
 }
 
 -- Food (Crafted by cooking)

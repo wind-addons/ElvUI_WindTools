@@ -59,6 +59,8 @@ local itemList = {
     }
 }
 
+local afterCombatFunctions = {}
+
 do
     local auras = {}
     local buffs = {325012}
@@ -774,6 +776,11 @@ function TM:UpdateStatus(event, unit)
 end
 
 function TM:UpdateItemButtons()
+    if InCombatLockdown() then
+        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+
     local frame = _G.PlayerTalentFrameTalents
     if not frame or not frame:IsShown() then
         return
@@ -827,6 +834,11 @@ function TM:UpdateItemButtons()
     else
         self.itemButtonsAnchor:Hide()
     end
+end
+
+function TM:PLAYER_REGEN_ENABLED()
+    self:UpdateItemButtons()
+    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function TM:PLAYER_SPECIALIZATION_CHANGED(_, unit)

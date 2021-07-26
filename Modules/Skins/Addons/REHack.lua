@@ -25,7 +25,6 @@ local function StripEdgeTextures(frame)
     end
 end
 
-
 function S:REHack()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rehack then
         return

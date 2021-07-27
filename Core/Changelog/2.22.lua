@@ -19,7 +19,7 @@ W.Changelog[222] = {
             "[Progression] Add support for Sanctum of Domination and Tazavesh, the Veiled Market."
         },
         ["koKR"] = {
-            "[Progression] Add support for Sanctum of Domination and Tazavesh, the Veiled Market."
+            "[진행 상태] 지배의 성소와 미지의 시장 타자베쉬가 추가되였습니다."
         }
     },
     IMPROVEMENT = {
@@ -52,11 +52,11 @@ W.Changelog[222] = {
         },
         ["koKR"] = {
             "[아이템 바] 더 많은 코르시아 아이템이 추가되였습니다.",
-            "[Extra Item Bar] Add more reward boxes.",
+            "[아이템 바] 더 많은 보상 상자가 추가 되였습니다.",
             "[채팅 문자] 최신 버전의 ElvUI 채팅 모듈과 호환됩니다.",
             "[스킨] 토르가스트에서 령 능력 선택시 테두리가 나오는 문제를 수정하였습니다.",
-            "[Skins] Fix the position of shadows on unitframes.",
-            "[Skins] Fixed ReHack Skin.",
+            "[스킨] 유닛 프레임의 그림자 위치가 수정되었습니다.",
+            "[스킨] ReHack 스킨 수정.",
             "[특성 관리자] 전투 중 간헐적으로 버튼 업데이트로 인해 발생하는 문제를 수정하였습니다."
         }
     }

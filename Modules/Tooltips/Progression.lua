@@ -36,7 +36,8 @@ local compareGUID
 local cache = {}
 
 local tiers = {
-    "Castle Nathria"
+    "Castle Nathria",
+    "Sanctum of Domination"
 }
 
 local levels = {
@@ -91,6 +92,10 @@ local locales = {
         short = L["[ABBR] De Other Side"],
         full = L["De Other Side"]
     },
+    ["Sanctum of Domination"] = {
+        short = L["[ABBR] Sanctum of Domination"],
+        full = L["Sanctum of Domination"]
+    },
     ["Spires of Ascension"] = {
         short = L["[ABBR] Spires of Ascension"],
         full = L["Spires of Ascension"]
@@ -102,6 +107,14 @@ local locales = {
     ["Shadowlands Keystone Master: Season One"] = {
         short = L["[ABBR] Shadowlands Keystone Master: Season One"],
         full = L["Shadowlands Keystone Master: Season One"]
+    },
+    ["Shadowlands Keystone Master: Season Two"] = {
+        short = L["[ABBR] Shadowlands Keystone Master: Season Two"],
+        full = L["Shadowlands Keystone Master: Season Two"]
+    },
+    ["Tazavesh, the Veiled Market"] = {
+        short = L["[ABBR] Tazavesh, the Veiled Market"],
+        full = L["Tazavesh, the Veiled Market"]
     }
 }
 
@@ -155,6 +168,56 @@ local raidAchievements = {
             14454,
             14458
         }
+    },
+    ["Sanctum of Domination"] = {
+        ["Mythic"] = {
+            15139,
+            15143,
+            15147,
+            15151,
+            15155,
+            15159,
+            15163,
+            15167,
+            15172,
+            15176
+        },
+        ["Heroic"] = {
+            15138,
+            15142,
+            15146,
+            15150,
+            15154,
+            15158,
+            15162,
+            15166,
+            15171,
+            15175
+        },
+        ["Normal"] = {
+            15137,
+            15141,
+            15145,
+            15149,
+            15153,
+            15157,
+            15161,
+            15165,
+            15170,
+            15174
+        },
+        ["Raid Finder"] = {
+            15136,
+            15140,
+            15144,
+            15148,
+            15152,
+            15156,
+            15160,
+            15164,
+            15169,
+            15173
+        }
     }
 }
 
@@ -166,11 +229,13 @@ local dungeonAchievements = {
     ["Theater of Pain"] = 14407,
     ["De Other Side"] = 14389,
     ["Spires of Ascension"] = 14401,
-    ["Sanguine Depths"] = 14205
+    ["Sanguine Depths"] = 14205,
+    ["Tazavesh, the Veiled Market"] = 15168
 }
 
 local specialAchievements = {
-    ["Shadowlands Keystone Master: Season One"] = 14532
+    ["Shadowlands Keystone Master: Season One"] = 14532,
+    ["Shadowlands Keystone Master: Season Two"] = 15078
 }
 
 local function GetLevelColoredString(level, short)
@@ -215,16 +280,16 @@ local function UpdateProgression(guid, faction)
 
     -- 成就
     if db.special.enable then
+        cache[guid].info.special = {}
         for name, achievementID in pairs(specialAchievements) do
             if db.special[name] then
-                local completed, month, day, year = GetAchievementInfoByID(guid, 14532)
+                local completed, month, day, year = GetAchievementInfoByID(guid, achievementID)
                 local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
                 if completed then
                     completedString = gsub(L["%month%-%day%-%year%"], "%%month%%", month)
                     completedString = gsub(completedString, "%%day%%", day)
                     completedString = gsub(completedString, "%%year%%", 2000 + year)
                 end
-                cache[guid].info.special = {}
                 cache[guid].info.special[name] = completedString
             end
         end
@@ -288,6 +353,7 @@ local function SetProgressionInfo(guid, tt)
     for i = 1, tt:NumLines() do
         local leftTip = _G["GameTooltipTextLeft" .. i]
         local leftTipText = leftTip:GetText()
+
         local found = false
 
         if leftTipText then
@@ -300,9 +366,6 @@ local function SetProgressionInfo(guid, tt)
                             rightTip:SetText(cache[guid].info.special[name])
                             updated = true
                             found = true
-                            break
-                        end
-                        if found then
                             break
                         end
                     end
@@ -345,9 +408,6 @@ local function SetProgressionInfo(guid, tt)
                             rightTip:SetText(cache[guid].info.mythicDungeons[name])
                             updated = true
                             found = true
-                            break
-                        end
-                        if found then
                             break
                         end
                     end

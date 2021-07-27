@@ -287,11 +287,13 @@ V.tooltips = {
 		enable = true,
 		raids = {
 			enable = true,
-			["Castle Nathria"] = true
+			["Castle Nathria"] = true,
+			["Sanctum of Domination"] = true
 		},
 		special = {
 			enable = true,
-			["Shadowlands Keystone Master: Season One"] = true
+			["Shadowlands Keystone Master: Season One"] = true,
+			["Shadowlands Keystone Master: Season Two"] = true
 		},
 		mythicDungeons = {
 			enable = true,
@@ -302,7 +304,8 @@ V.tooltips = {
 			["Theater of Pain"] = true,
 			["De Other Side"] = true,
 			["Spires of Ascension"] = true,
-			["Sanguine Depths"] = true
+			["Sanguine Depths"] = true,
+			["Tazavesh, the Veiled Market"] = true
 		}
 	}
 }

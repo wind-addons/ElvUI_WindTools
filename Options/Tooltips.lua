@@ -229,7 +229,8 @@ options.progression = {
 
 do
     local raids = {
-        "Castle Nathria"
+        "Castle Nathria",
+        "Sanctum of Domination"
     }
 
     local dungeons = {
@@ -240,11 +241,13 @@ do
         "Theater of Pain",
         "De Other Side",
         "Spires of Ascension",
-        "Sanguine Depths"
+        "Sanguine Depths",
+        "Tazavesh, the Veiled Market"
     }
 
     local special = {
-        "Shadowlands Keystone Master: Season One"
+        "Shadowlands Keystone Master: Season One",
+        "Shadowlands Keystone Master: Season Two"
     }
 
     for index, name in ipairs(raids) do

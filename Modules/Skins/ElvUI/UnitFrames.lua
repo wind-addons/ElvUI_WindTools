@@ -5,6 +5,10 @@ local UF = E:GetModule("UnitFrames")
 local _G = _G
 
 function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.shadow then
+        return
+    end
+
     if f.Health.backdrop and not f.Health.backdrop.shadow then
         self:CreateBackdropShadow(f.Health, true)
         f.Health.backdrop.shadow:ClearAllPoints()

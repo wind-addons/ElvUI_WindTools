@@ -436,6 +436,7 @@ do -- 插件代码
             "loudsoul (TinyChat)"
         },
         [L["Tooltips"]] = {
+            "siweia (NDui)",
             "Tevoll (ElvUI Enhanced Again)",
             "MMOSimca (Simple Objective Progress)"
         },

@@ -83,6 +83,7 @@
     - loudsoul (TinyChat)
 
 - Tooltips
+    - siweia (NDui)
     - Tevoll (ElvUI Enhanced Again)
     - MMOSimca (Simple Objective Progress)
 

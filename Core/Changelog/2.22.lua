@@ -23,7 +23,7 @@ W.Changelog[222] = {
         },
         ["koKR"] = {
             "[진행 상태] 지배의 성소와 미지의 시장 타자베쉬가 추가되였습니다.",
-            "[Tooltips] Add support for the level of shards of domination."
+            "[툴팁] 지배의 조각 등급을 표시할 수 있습니다."
         }
     },
     IMPROVEMENT = {

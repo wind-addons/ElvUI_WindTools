@@ -3,6 +3,7 @@ local S = W:GetModule("Skins")
 local ES = E:GetModule("Skins")
 
 local _G = _G
+local pairs = pairs
 local unpack = unpack
 
 local DeleteRegions = {

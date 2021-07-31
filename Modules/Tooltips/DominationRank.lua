@@ -3,6 +3,8 @@ local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
 -- modified from NDui
+local _G = _G
+
 local format = format
 local select = select
 local strfind = strfind
@@ -153,10 +155,10 @@ function T:DominationRank()
         return
     end
 
-    GameTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
-    ItemRefTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
-    ShoppingTooltip1:HookScript("OnTooltipSetItem", Domination_CheckStatus)
-    EmbeddedItemTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
+    _G.GameTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
+    _G.ItemRefTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
+    _G.ShoppingTooltip1:HookScript("OnTooltipSetItem", Domination_CheckStatus)
+    _G.EmbeddedItemTooltip:HookScript("OnTooltipSetItem", Domination_CheckStatus)
 end
 
 T:AddCallback("DominationRank")

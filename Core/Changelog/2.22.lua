@@ -10,16 +10,20 @@ W.Changelog[222] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[进度] 新增了统御圣所, 集市的支持."
+            "[进度] 新增了统御圣所, 集市的支持.",
+            "[鼠标提示] 新增了统御碎片的等级显示."
         },
         ["zhTW"] = {
-            "[進度] 新增支援統御聖所, 市集."
+            "[進度] 新增支援統御聖所, 市集.",
+            "[浮動提示] 新增統御碎片等級顯示."
         },
         ["enUS"] = {
-            "[Progression] Add support for Sanctum of Domination and Tazavesh, the Veiled Market."
+            "[Progression] Add support for Sanctum of Domination and Tazavesh, the Veiled Market.",
+            "[Tooltips] Add support for the level of shards of domination."
         },
         ["koKR"] = {
-            "[진행 상태] 지배의 성소와 미지의 시장 타자베쉬가 추가되였습니다."
+            "[진행 상태] 지배의 성소와 미지의 시장 타자베쉬가 추가되였습니다.",
+            "[Tooltips] Add support for the level of shards of domination."
         }
     },
     IMPROVEMENT = {

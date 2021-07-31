@@ -38,10 +38,16 @@ options.general = {
             name = L["Additional Information"],
             args = {
                 icon = {
-                    order = 3,
+                    order = 1,
                     type = "toggle",
                     name = L["Add Icon"],
                     desc = L["Show an icon for items and spells."]
+                },
+                dominationRank = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Domination Rank"],
+                    desc = L["Show the rank of shards."]
                 }
             }
         },

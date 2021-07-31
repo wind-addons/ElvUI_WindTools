@@ -281,6 +281,7 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	dominationRank = true,
 	objectiveProgress = true,
 	objectiveProgressAccuracy = 1,
 	progression = {

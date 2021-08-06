@@ -25,75 +25,68 @@ function M:Tags()
 	end
 
 	-- 距离 (4 - 6)
-	E.oUF.Tags.Methods["range"] = function(unit)
-		if not unit then
-			return
-		end
+	E:AddTag(
+		"range",
+		nil,
+		function(unit)
+			if not unit then
+				return
+			end
 
-		local min, max = RC:GetRange(unit)
-		if min and max then
-			return format("%s - %s", RC:GetRange(unit))
-		end
+			local min, max = RC:GetRange(unit)
+			if min and max then
+				return format("%s - %s", RC:GetRange(unit))
+			end
 
-		return ""
-	end
+			return ""
+		end
+	)
 
 	-- 距离预测中值 (5)
-	E.oUF.Tags.Methods["range:expectation"] = function(unit)
-		if not unit then
-			return
-		end
+	E:AddTag(
+		"range:expectation",
+		nil,
+		function(unit)
+			if not unit then
+				return
+			end
 
-		local min, max = RC:GetRange(unit)
-		if min and max then
-			return format("%s", floor((min + max) / 2))
-		end
+			local min, max = RC:GetRange(unit)
+			if min and max then
+				return format("%s", floor((min + max) / 2))
+			end
 
-		return ""
-	end
+			return ""
+		end
+	)
 
 	-- 职业颜色
-	E.oUF.Tags.Methods["classcolor:player"] = function()
-		return GetClassColorString(E.myclass)
-	end
+	E:AddTag(
+		"classcolor:player",
+		nil,
+		function()
+			return GetClassColorString(E.myclass)
+		end
+	)
 
 	for i = 1, GetNumClasses() do
 		local upperText = select(2, GetClassInfo(i))
 		local tag = "classcolor:" .. strlower(upperText)
-		E.oUF.Tags.Methods[tag] = function()
-			return GetClassColorString(upperText)
-		end
+		E:AddTag(
+			tag,
+			nil,
+			function()
+				return GetClassColorString(upperText)
+			end
+		)
 	end
 
 	-- 血量百分比 去除百分号
-	E.oUF.Tags.Events["health:percent-nosign"] = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED"
-	E.oUF.Tags.Methods["health:percent-nosign"] = function(unit)
-		local originalString = E.oUF.Tags.Methods["health:percent"](unit)
-		local length = strlen(originalString)
-		if strsub(originalString, length, length) == "%" then
-			return strsub(originalString, 1, length - 1)
-		else
-			return originalString
-		end
-	end
-
-	-- 无状态血量百分比 去除百分号
-	E.oUF.Tags.Events["health:percent-nostatus-nosign"] = "UNIT_HEALTH UNIT_MAXHEALTH"
-	E.oUF.Tags.Methods["health:percent-nostatus-nosign"] = function(unit)
-		local originalString = E.oUF.Tags.Methods["health:percent-nostatus"](unit)
-		local length = strlen(originalString)
-		if strsub(originalString, length, length) == "%" then
-			return strsub(originalString, 1, length - 1)
-		else
-			return originalString
-		end
-	end
-
-	-- 能量百分比 去除百分号
-	E.oUF.Tags.Events["power:percent-nosign"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-	E.oUF.Tags.Methods["power:percent-nosign"] = function(unit)
-		local originalString = E.oUF.Tags.Methods["power:percent"](unit)
-		if originalString then
+	E:AddTag(
+		"health:percent-nosign",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			local originalString = E.oUF.Tags.Methods["health:percent"](unit)
 			local length = strlen(originalString)
 			if strsub(originalString, length, length) == "%" then
 				return strsub(originalString, 1, length - 1)
@@ -101,31 +94,69 @@ function M:Tags()
 				return originalString
 			end
 		end
-	end
+	)
+
+	-- 无状态血量百分比 去除百分号
+	E:AddTag(
+		"health:percent-nostatus-nosign",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			local originalString = E.oUF.Tags.Methods["health:percent-nostatus"](unit)
+			local length = strlen(originalString)
+			if strsub(originalString, length, length) == "%" then
+				return strsub(originalString, 1, length - 1)
+			else
+				return originalString
+			end
+		end
+	)
+
+	-- 能量百分比 去除百分号
+	E:AddTag(
+		"power:percent-nosign",
+		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
+		function(unit)
+			local originalString = E.oUF.Tags.Methods["power:percent"](unit)
+			if originalString then
+				local length = strlen(originalString)
+				if strsub(originalString, length, length) == "%" then
+					return strsub(originalString, 1, length - 1)
+				else
+					return originalString
+				end
+			end
+		end
+	)
 
 	-- Smart power
-	E.oUF.Tags.Events["smart-power"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-	E.oUF.Tags.Methods["smart-power"] = function(unit)
-		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-		local power = tonumber(maxPower)
-		if power and power < 1000 then
-			return E.oUF.Tags.Methods["power:current"](unit)
-		else
-			return E.oUF.Tags.Methods["power:percent"](unit)
+	E:AddTag(
+		"smart-power",
+		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
+		function(unit)
+			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
+			local power = tonumber(maxPower)
+			if power and power < 1000 then
+				return E.oUF.Tags.Methods["power:current"](unit)
+			else
+				return E.oUF.Tags.Methods["power:percent"](unit)
+			end
 		end
-	end
+	)
 
 	-- Smart power without %
-	E.oUF.Tags.Events["smart-power-nosign"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
-	E.oUF.Tags.Methods["smart-power-nosign"] = function(unit)
-		local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-		local power = tonumber(maxPower)
-		if power and power < 1000 then
-			return E.oUF.Tags.Methods["power:current"](unit)
-		else
-			return E.oUF.Tags.Methods["power:percent-nosign"](unit)
+	E:AddTag(
+		"smart-power-nosign",
+		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
+		function(unit)
+			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
+			local power = tonumber(maxPower)
+			if power and power < 1000 then
+				return E.oUF.Tags.Methods["power:current"](unit)
+			else
+				return E.oUF.Tags.Methods["power:percent-nosign"](unit)
+			end
 		end
-	end
+	)
 end
 
 M:AddCallback("Tags")

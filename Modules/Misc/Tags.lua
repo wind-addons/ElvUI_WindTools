@@ -27,7 +27,7 @@ function M:Tags()
 	-- 距离 (4 - 6)
 	E:AddTag(
 		"range",
-		nil,
+		0.1,
 		function(unit)
 			if not unit then
 				return
@@ -45,7 +45,7 @@ function M:Tags()
 	-- 距离预测中值 (5)
 	E:AddTag(
 		"range:expectation",
-		nil,
+		0.1,
 		function(unit)
 			if not unit then
 				return
@@ -63,7 +63,7 @@ function M:Tags()
 	-- 职业颜色
 	E:AddTag(
 		"classcolor:player",
-		nil,
+		1e10,
 		function()
 			return GetClassColorString(E.myclass)
 		end
@@ -74,7 +74,7 @@ function M:Tags()
 		local tag = "classcolor:" .. strlower(upperText)
 		E:AddTag(
 			tag,
-			nil,
+			1e10,
 			function()
 				return GetClassColorString(upperText)
 			end

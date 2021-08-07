@@ -3,7 +3,9 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local select = select
 
+local GetInstanceInfo = GetInstanceInfo
 local IsInJailersTower = IsInJailersTower
 
 local function SetupOptions()
@@ -11,10 +13,11 @@ local function SetupOptions()
         S:CreateShadow(_G.PlayerChoiceFrame)
     end
 
-    local inTower = IsInJailersTower()
+    local instanceType = select(2, GetInstanceInfo())
+    local needDisable = IsInJailersTower() or instanceType == "party" or instanceType == "raid"
 
     if _G.PlayerChoiceFrame.shadow then
-        if inTower then
+        if needDisable then
             _G.PlayerChoiceFrame.shadow:Hide()
         else
             _G.PlayerChoiceFrame.shadow:Show()

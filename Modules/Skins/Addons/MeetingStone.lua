@@ -9,6 +9,7 @@ local type = type
 local CreateFrame = CreateFrame
 local LibStub = LibStub
 
+local MTSAddon
 local NEG
 local module
 
@@ -73,6 +74,7 @@ function S:MeetingStone()
 
     local NetEaseEnv = LibStub("NetEaseEnv-1.0")
     local NetEaseGUI = LibStub("NetEaseGUI-2.0")
+    local MTSAddon = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
 
     if not NetEaseEnv or not NetEaseGUI then
         return
@@ -89,7 +91,7 @@ function S:MeetingStone()
     end
 
     -- Main Panel
-    local MainPanel = NEG.MainPanel
+    local MainPanel = NEG.MainPanel or MTSAddon and MTSAddon:GetModule("MainPanel")
     if MainPanel then
         ES:HandlePortraitFrame(MainPanel)
         self:CreateShadow(MainPanel)
@@ -204,7 +206,7 @@ function S:MeetingStone()
     )
 
     -- Browse Panel (查找活动)
-    local BrowsePanel = NEG.BrowsePanel
+    local BrowsePanel = NEG.BrowsePanel or MTSAddon and MTSAddon:GetModule("BrowsePanel")
     if BrowsePanel then
         if BrowsePanel.RefreshButton then
             ES:HandleButton(BrowsePanel.RefreshButton, nil, nil, nil, true, "Transparent")
@@ -212,10 +214,20 @@ function S:MeetingStone()
             BrowsePanel.RefreshButton.backdrop:SetOutside(BrowsePanel.RefreshButton, -1, -1)
         end
 
+        -- Meeting Stone EX element (大秘境)
+        if BrowsePanel.ExSearchButton then
+            ES:HandleButton(BrowsePanel.ExSearchButton, nil, nil, nil, true, "Transparent")
+            BrowsePanel.ExSearchButton.backdrop:ClearAllPoints()
+            BrowsePanel.ExSearchButton.backdrop:SetOutside(BrowsePanel.ExSearchButton, -1, -1)
+        end
+
         if BrowsePanel.AdvButton then
             ES:HandleButton(BrowsePanel.AdvButton, nil, nil, nil, true, "Transparent")
             BrowsePanel.AdvButton.backdrop:ClearAllPoints()
             BrowsePanel.AdvButton.backdrop:SetOutside(BrowsePanel.AdvButton, -1, -1)
+            if BrowsePanel.AdvButton.Shine then
+                BrowsePanel.AdvButton.Shine:Hide()
+            end
         end
 
         if BrowsePanel.SignUpButton then
@@ -261,10 +273,34 @@ function S:MeetingStone()
                 end
             end
         end
+
+        -- Meeting Stone EX element (大秘境过滤)
+        if BrowsePanel.ExSearchPanel then
+            local panel = BrowsePanel.ExSearchPanel
+            ES:HandlePortraitFrame(panel)
+            S:CreateShadow(panel)
+            for _, child in pairs {panel:GetChildren()} do
+                if child.GetObjectType and child:GetObjectType() == "Button" then
+                    if child.GetText and child:GetText() ~= "" and child:GetText() ~= nil then
+                        ES:HandleButton(child, nil, nil, nil, true, "Transparent")
+                        child.backdrop:ClearAllPoints()
+                        child.backdrop:SetOutside(child, -1, 0)
+                    else
+                        ES:HandleCloseButton(child)
+                    end
+                end
+            end
+
+            for _, child in pairs {panel.Inset:GetChildren()} do
+                if child.Check then
+                    ES:HandleCheckBox(child.Check)
+                end
+            end
+        end
     end
 
     -- Manager Panel (管理活动)
-    local ManagerPanel = NEG.ManagerPanel
+    local ManagerPanel = NEG.ManagerPanel or MTSAddon and MTSAddon:GetModule("ManagerPanel")
     if ManagerPanel then
         for _, child in pairs {ManagerPanel:GetChildren()} do
             if child.CreateWidget then
@@ -336,7 +372,7 @@ function S:MeetingStone()
     end
 
     -- Recent Panel (最近玩友)
-    local RecentPanel = NEG.RecentPanel
+    local RecentPanel = NEG.RecentPanel or MTSAddon and MTSAddon:GetModule("RecentPanel")
     if RecentPanel then
         if RecentPanel.ActivityDropdown then
             SkinDropDown(RecentPanel.ActivityDropdown)
@@ -374,12 +410,29 @@ function S:MeetingStone()
     end
 
     -- Broker Panel (悬浮框)
-    local BrokerPanel = NEG.DataBroker.BrokerPanel
-    if BrokerPanel then
-        BrokerPanel:SetBackdrop(nil)
-        BrokerPanel:CreateBackdrop("Transparent")
-        self:CreateBackdropShadow(BrokerPanel)
-        self:MerathilisUISkin(BrokerPanel)
+    local DataBroker = NEG.DataBroker or MTSAddon and MTSAddon:GetModule("DataBroker")
+    if DataBroker then
+        local BrokerPanel = DataBroker.BrokerPanel
+        if BrokerPanel then
+            BrokerPanel:SetBackdrop(nil)
+            BrokerPanel:CreateBackdrop("Transparent")
+            self:CreateBackdropShadow(BrokerPanel)
+            self:MerathilisUISkin(BrokerPanel)
+        end
+    end
+
+    -- Meeting Stone EX element (屏蔽玩家列表)
+    local IgnoreListPanel = NEG.IgnoreListPanel or MTSAddon and MTSAddon:GetModule("IgnoreListPanel")
+    if IgnoreListPanel then
+        if IgnoreListPanel.IgnoreList then
+            SkinListTitle(IgnoreListPanel.IgnoreList)
+        end
+
+        for _, child in pairs {IgnoreListPanel:GetChildren()} do
+            if child.GetObjectType and child:GetObjectType() == "Button" and child.Left and child.Right then
+                ES:HandleButton(child)
+            end
+        end
     end
 end
 

@@ -3,10 +3,18 @@ local W = unpack(select(2, ...))
 W.Changelog[224] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 支持了 Meeting Stone EX 组件."
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 支援 Meeting Stone Ex 組件."
+        },
+        ["enUS"] = {
+            "[Skins] Add support of Meeting Stone EX."
+        },
+        ["koKR"] = {
+            "[Skins] Add support of Meeting Stone EX."
+        }
     },
     NEW = {
         ["zhCN"] = {},

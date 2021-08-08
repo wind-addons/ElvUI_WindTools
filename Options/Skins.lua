@@ -482,6 +482,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Encounter Journal"]
         },
+        eventTrace = {
+            order = 10,
+            type = "toggle",
+            name = L["Event Trace"]
+        },
         friends = {
             order = 10,
             type = "toggle",

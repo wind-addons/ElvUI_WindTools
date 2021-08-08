@@ -1172,7 +1172,10 @@ options.friendList = {
                 hideMaxLevel = {
                     order = 2,
                     type = "toggle",
-                    name = L["Hide Max Level"]
+                    name = L["Hide Max Level"],
+                    disabled = function()
+                        return not E.db.WT.social.friendList.level
+                    end,
                 },
                 useGameColor = {
                     order = 3,

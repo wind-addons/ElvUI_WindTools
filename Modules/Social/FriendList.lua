@@ -277,8 +277,10 @@ function FL:UpdateFriendButton(button)
             nameString = F.CreateColorString(name, classColor)
         end
 
-        if level and level ~= 0 and MaxLevel[game] and (level ~= MaxLevel[game] or not self.db.hideMaxLevel) then
-            nameString = nameString .. F.CreateColorString(": " .. level, GetQuestDifficultyColor(level))
+        if self.db.level then
+            if level and level ~= 0 and MaxLevel[game] and (level ~= MaxLevel[game] or not self.db.hideMaxLevel) then
+                nameString = nameString .. F.CreateColorString(": " .. level, GetQuestDifficultyColor(level))
+            end
         end
 
         if nameString and realIDString then

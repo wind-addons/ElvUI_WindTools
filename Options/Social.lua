@@ -1164,24 +1164,29 @@ options.friendList = {
                 return not E.db.WT.social.friendList.enable
             end,
             args = {
-                hideMaxLevel = {
+                level = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Level"]
+                },
+                hideMaxLevel = {
+                    order = 2,
                     type = "toggle",
                     name = L["Hide Max Level"]
                 },
                 useGameColor = {
-                    order = 2,
+                    order = 3,
                     type = "toggle",
                     name = L["Use Game Color"],
                     desc = L["Change the color of the name to the in-playing game style."]
                 },
                 useClassColor = {
-                    order = 3,
+                    order = 4,
                     type = "toggle",
                     name = L["Use Class Color"]
                 },
                 font = {
-                    order = 4,
+                    order = 5,
                     type = "group",
                     name = L["Font Setting"],
                     get = function(info)

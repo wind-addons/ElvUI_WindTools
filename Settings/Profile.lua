@@ -718,6 +718,7 @@ P.social = {
     },
     friendList = {
         enable = true,
+        level = true,
         hideMaxLevel = true,
         useGameColor = true,
         useClassColor = true,

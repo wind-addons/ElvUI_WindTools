@@ -13,7 +13,7 @@ W.Changelog[224] = {
             "[Skins] Add support of Meeting Stone EX."
         },
         ["koKR"] = {
-            "[Skins] Add support of Meeting Stone EX."
+            "[스킨] Meeting Stone EX 스킨 추가."
         }
     },
     NEW = {
@@ -36,8 +36,8 @@ W.Changelog[224] = {
             "[Skins] Fix the shadows of PlayerChoiceFrame in mythic dungeons."
         },
         ["koKR"] = {
-            "[Tags] Optimize the performance of additional tags.",
-            "[Skins] Fix the shadows of PlayerChoiceFrame in mythic dungeons."
+            "[태그] 추가된 태그의 성능을 최적화하였습니다.",
+            "[스킨] 쐐기돌 던전에서 령 능력 선택 창의 그림자를 수정합니다."
         }
     }
 }

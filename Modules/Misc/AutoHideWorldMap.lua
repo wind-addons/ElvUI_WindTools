@@ -2,10 +2,11 @@ local W, F, E, L = unpack(select(2, ...))
 local AHW = W:NewModule("AutoHideWorldMap", "AceEvent-3.0")
 
 local _G = _G
+local HideUIPanel = HideUIPanel
 
 function AHW:PLAYER_REGEN_DISABLED()
     if _G.WorldMapFrame:IsShown() then
-        _G.WorldMapFrame:Hide()
+        HideUIPanel(_G.WorldMapFrame)
     end
 end
 

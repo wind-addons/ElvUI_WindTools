@@ -59,6 +59,7 @@ V.maps = {
 }
 
 V.misc = {
+	autoHideWorldMap = false,
 	autoScreenshot = false,
 	pauseToSlash = true,
 	noKanjiMath = false,

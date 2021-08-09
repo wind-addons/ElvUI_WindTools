@@ -86,6 +86,12 @@ options.general = {
             set = function(info, value)
                 E.db.WT.misc[info[#info]] = value
             end
+        },
+        autoHideWorldMap = {
+            order = 8,
+            type = "toggle",
+            name = L["Auto Hide Map"],
+            desc = L["Automatically close world map if player enters combat."]
         }
     }
 }

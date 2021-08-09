@@ -12,6 +12,7 @@
 	<Script file='SkipCutScene.lua'/>
 	<Script file='Tags.lua'/>
 	<!-- Others -->
+	<Script file='AutoHideWorldMap.lua'/>
 	<Script file='LFGList.lua'/>
 	<Script file='GameBar.lua'/>
 	<Script file='MoveFrames.lua'/>

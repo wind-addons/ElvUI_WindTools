@@ -17,10 +17,26 @@ W.Changelog[224] = {
         }
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[其他] 添加了进入战斗自动关闭世界地图功能.",
+            "[美化皮肤] 添加了事件追踪工具的美化.",
+            "[好友列表] 添加了完全隐藏等级的选项."
+        },
+        ["zhTW"] = {
+            "[其他] 新增了進入戰鬥自動關閉世界地圖功能.",
+            "[美化皮膚] 新增了事件追蹤工具的美化.",
+            "[好友列表] 新增了一個完全隱藏等級的選項."
+        },
+        ["enUS"] = {
+            "[Misc] Add new features to close world map after player enters combat.",
+            "[Skins] Add new skin for Blizzard Event Trace.",
+            "[Friend List] Add an option to hide level information completely." 
+        },
+        ["koKR"] = {
+            "[Misc] Add new features to close world map after player enters combat.",
+            "[Skins] Add new skin for Blizzard Event Trace.",
+            "[Friend List] Add an option to hide level information completely."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

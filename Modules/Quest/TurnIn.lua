@@ -85,10 +85,16 @@ local ignoreQuestNPC = {
     [154534] = true, -- 大杂院阿畅
     [150987] = true, -- 肖恩·维克斯，斯坦索姆
     [150563] = true, -- 斯卡基特，麦卡贡订单日常
-    [143555] = true -- 山德·希尔伯曼，祖达萨PVP军需官
+    [143555] = true, -- 山德·希尔伯曼，祖达萨PVP军需官
+    [168430] = true, -- 戴克泰丽丝，格里恩挑战
+    [160248] = true, -- 档案员费安，罪魂碎片
+    [127037] = true, -- 纳毕鲁
+    [326027] = true, -- 运输站回收生成器DX-82
+    [45400] = true -- Fiona's Caravan
 }
 
 local ignoreGossipNPC = {
+    [45400] = true, -- Fiona's Caravan
     -- Bodyguards
     [86945] = true, -- Aeda Brightdawn (Horde)
     [86933] = true, -- Vivianne (Horde)
@@ -117,7 +123,15 @@ local ignoreGossipNPC = {
     [155101] = true, -- 元素精华融合器
     [155261] = true, -- 肖恩·维克斯，斯坦索姆
     [150122] = true, -- 荣耀堡法师
-    [150131] = true -- 萨尔玛法师
+    [150131] = true, -- 萨尔玛法师
+    [173021] = true, -- 刻符牛头人
+    [171589] = true, -- 德莱文将军
+    [171787] = true, -- 文官阿得赖斯提斯
+    [171795] = true, -- 月莓女勋爵
+    [171821] = true, -- 德拉卡女男爵
+    [172558] = true, -- 艾拉·引路者（导师）
+    [172572] = true, -- 瑟蕾丝特·贝利文科（导师）
+    [175513] = true -- 纳斯利亚审判官，傲慢
 }
 
 local rogueClassHallInsignia = {

@@ -206,7 +206,7 @@ function S:MeetingStone()
     )
 
     -- Browse Panel (查找活动)
-    local BrowsePanel = NEG.BrowsePanel or MTSAddon and MTSAddon:GetModule("BrowsePanel")
+    local BrowsePanel = NEG.BrowsePanel or MTSAddon and MTSAddon:GetModule("BrowsePanel", true)
     if BrowsePanel then
         if BrowsePanel.RefreshButton then
             ES:HandleButton(BrowsePanel.RefreshButton, nil, nil, nil, true, "Transparent")
@@ -221,6 +221,7 @@ function S:MeetingStone()
             BrowsePanel.ExSearchButton.backdrop:SetOutside(BrowsePanel.ExSearchButton, -1, -1)
         end
 
+        -- Advanced Filter (高级过滤)
         if BrowsePanel.AdvButton then
             ES:HandleButton(BrowsePanel.AdvButton, nil, nil, nil, true, "Transparent")
             BrowsePanel.AdvButton.backdrop:ClearAllPoints()
@@ -300,7 +301,7 @@ function S:MeetingStone()
     end
 
     -- Manager Panel (管理活动)
-    local ManagerPanel = NEG.ManagerPanel or MTSAddon and MTSAddon:GetModule("ManagerPanel")
+    local ManagerPanel = NEG.ManagerPanel or MTSAddon and MTSAddon:GetModule("ManagerPanel", true)
     if ManagerPanel then
         for _, child in pairs {ManagerPanel:GetChildren()} do
             if child.CreateWidget then
@@ -372,7 +373,7 @@ function S:MeetingStone()
     end
 
     -- Recent Panel (最近玩友)
-    local RecentPanel = NEG.RecentPanel or MTSAddon and MTSAddon:GetModule("RecentPanel")
+    local RecentPanel = NEG.RecentPanel or MTSAddon and MTSAddon:GetModule("RecentPanel", true)
     if RecentPanel then
         if RecentPanel.ActivityDropdown then
             SkinDropDown(RecentPanel.ActivityDropdown)
@@ -410,7 +411,7 @@ function S:MeetingStone()
     end
 
     -- Broker Panel (悬浮框)
-    local DataBroker = NEG.DataBroker or MTSAddon and MTSAddon:GetModule("DataBroker")
+    local DataBroker = NEG.DataBroker or MTSAddon and MTSAddon:GetModule("DataBroker", true)
     if DataBroker then
         local BrokerPanel = DataBroker.BrokerPanel
         if BrokerPanel then
@@ -422,7 +423,7 @@ function S:MeetingStone()
     end
 
     -- Meeting Stone EX element (屏蔽玩家列表)
-    local IgnoreListPanel = NEG.IgnoreListPanel or MTSAddon and MTSAddon:GetModule("IgnoreListPanel")
+    local IgnoreListPanel = NEG.IgnoreListPanel or MTSAddon and MTSAddon:GetModule("IgnoreListPanel", true)
     if IgnoreListPanel then
         if IgnoreListPanel.IgnoreList then
             SkinListTitle(IgnoreListPanel.IgnoreList)

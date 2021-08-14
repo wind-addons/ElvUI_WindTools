@@ -43,7 +43,7 @@ W.Changelog[224] = {
             "[기타] 전투 진입 시 자동으로 월드맵을 닫는 기능을 추가하였습니다.",
             "[스킨] Blizzard Event Trace 스킨 추가.",
             "[친구 목록] 레벨을 완전히 숨기는 옵션이 추가되었습니다.",
-            "[Mute] Add an new option for Smolderheart."
+            "[음소거] 이글심장 관련 옵션을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -71,8 +71,8 @@ W.Changelog[224] = {
         ["koKR"] = {
             "[태그] 추가된 태그의 성능을 최적화하였습니다.",
             "[스킨] 쐐기돌 던전에서 령 능력 선택 창의 그림자를 수정합니다.",
-            "[Skins] Optimize the skin of NetEase Meeting Stone.",
-            "[Skins] Fix the backdrop of icons inside WeakAuras aurabars.",
+            "[스킨] NetEase Meeting Stone 스킨 최적화.",
+            "[스킨] WeakAuras 오라바 내부의 아이콘 배경을 수정했습니다.",
             "[자동 수락] 무시할 NPC 목록을 업데이트하였습니다."
         }
     }

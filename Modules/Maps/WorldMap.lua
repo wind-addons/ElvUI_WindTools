@@ -2649,6 +2649,11 @@ function WM:HandleMap(map, fullUpdate)
                     if fullUpdate then
                         map.textureLoadGroup:AddTexture(texture)
                     end
+
+                    if WM.db and WM.db.reveal.enable and WM.db.reveal.useColor then
+                        texture:SetVertexColor(WM.db.reveal.color.r, WM.db.reveal.color.g, WM.db.reveal.color.b, WM.db.reveal.color.a)
+                    end
+
                     tinsert(overlayTextures, texture)
                 end
             end
@@ -2657,7 +2662,7 @@ function WM:HandleMap(map, fullUpdate)
 end
 
 function WM:Reveal()
-    if not self.db.reveal then
+    if not self.db.reveal.enable then
         return
     end
 

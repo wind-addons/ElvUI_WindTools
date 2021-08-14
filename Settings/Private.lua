@@ -37,7 +37,11 @@ V.maps = {
 	},
 	worldMap = {
 		enable = true,
-		reveal = true,
+		reveal = {
+			enable = true,
+			useColor = false,
+			color = {r = 1, g = 1, b = 1, a = 1}
+		},
 		scale = {
 			enable = true,
 			size = 1.24

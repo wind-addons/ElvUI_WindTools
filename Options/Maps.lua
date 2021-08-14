@@ -582,9 +582,49 @@ options.worldMap = {
         },
         reveal = {
             order = 3,
-            type = "toggle",
-            name = L["Remove Fog"],
-            desc = L["Remove Fog of War from your world map."]
+            type = "group",
+            inline = true,
+            name = L["Reveal"],
+            get = function(info)
+                return E.private.WT.maps.worldMap.reveal[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.maps.worldMap.reveal[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Remove Fog of War from your world map."]
+                },
+                useColor = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Use Colored Fog"],
+                    desc = L["Style Fog of War with special color."]
+                },
+                color = {
+                    order = 3,
+                    type = "color",
+                    hasAlpha = true,
+                    name = L["Color"],
+                    disabled = function()
+                        return not E.private.WT.maps.worldMap.reveal.useColor
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.maps.worldMap.reveal[info[#info]]
+                        local default = V.maps.worldMap.reveal[info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        local db = E.private.WT.maps.worldMap.reveal[info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, a
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                }
+            }
         },
         scale = {
             order = 4,

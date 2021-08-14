@@ -2652,7 +2652,12 @@ function WM:HandleMap(map, fullUpdate)
                     end
 
                     if WM.db and WM.db.reveal.enable and WM.db.reveal.useColor then
-                        texture:SetVertexColor(WM.db.reveal.color.r, WM.db.reveal.color.g, WM.db.reveal.color.b, WM.db.reveal.color.a)
+                        texture:SetVertexColor(
+                            WM.db.reveal.color.r,
+                            WM.db.reveal.color.g,
+                            WM.db.reveal.color.b,
+                            WM.db.reveal.color.a
+                        )
                     end
 
                     tinsert(overlayTextures, texture)

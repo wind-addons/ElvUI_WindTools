@@ -603,6 +603,9 @@ options.worldMap = {
                     order = 2,
                     type = "toggle",
                     name = L["Use Colored Fog"],
+                    disabled = function()
+                        return not E.private.WT.maps.worldMap.reveal.enable
+                    end,
                     desc = L["Style Fog of War with special color."]
                 },
                 color = {
@@ -611,7 +614,8 @@ options.worldMap = {
                     hasAlpha = true,
                     name = L["Color"],
                     disabled = function()
-                        return not E.private.WT.maps.worldMap.reveal.useColor
+                        return not E.private.WT.maps.worldMap.reveal.useColor or
+                            not E.private.WT.maps.worldMap.reveal.enable
                     end,
                     get = function(info)
                         local db = E.private.WT.maps.worldMap.reveal[info[#info]]

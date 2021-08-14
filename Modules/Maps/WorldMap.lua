@@ -13,11 +13,12 @@ local tinsert = tinsert
 local tonumber = tonumber
 
 local IsAddOnLoaded = IsAddOnLoaded
-local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
+local TexturePool_HideAndClearAnchors = TexturePool_HideAndClearAnchors
 
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
+local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 -- STRUCTURE: (do data mining on WorldMapOverlay and WorldMapOverlayTile tables)
 -- UiMapArtID = {

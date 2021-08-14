@@ -3,6 +3,7 @@ local ES = E:GetModule("Skins")
 local S = W:GetModule("Skins")
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 local unpack = unpack

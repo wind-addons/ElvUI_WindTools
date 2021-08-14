@@ -8,7 +8,7 @@ W.Changelog[224] = {
             "[任务信息] 怪物数据库更新到最新."
         },
         ["zhTW"] = {
-            "[美化皮膚] 支援 Meeting Stone Ex 組件.",
+            "[美化皮膚] 支援 Meeting Stone EX 組件.",
             "[任務信息] 怪物數據資料更新到最新."
         },
         ["enUS"] = {

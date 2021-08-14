@@ -784,6 +784,7 @@ L["Skip Cut Scene"] = "Überspringe Zwischensequenzen"
 L["Skipped the cutscene."] = "Zwischensequenz übersprungen."
 L["Slow Mode"] = "Langsamer Modus"
 L["Smart Tab"] = true
+L["Smolderheart"] = "Loderherz"
 L["Social"] = true
 L["Sold by vendor"] = "Vom Verkäufer verkauft"
 L["Solo"] = true

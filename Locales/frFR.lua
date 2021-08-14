@@ -784,6 +784,7 @@ L["Skip Cut Scene"] = "Passer la cinématique"
 L["Skipped the cutscene."] = "Cnématique passée"
 L["Slow Mode"] = "Mode lent"
 L["Smart Tab"] = true
+L["Smolderheart"] = "Fume-Cœur"
 L["Social"] = "Social"
 L["Sold by vendor"] = "Vendu par le vendeur"
 L["Solo"] = "Solo"

@@ -784,6 +784,7 @@ L["Skip Cut Scene"] = true
 L["Skipped the cutscene."] = true
 L["Slow Mode"] = true
 L["Smart Tab"] = true
+L["Smolderheart"] = "Abrasacárdio"
 L["Social"] = true
 L["Sold by vendor"] = true
 L["Solo"] = true

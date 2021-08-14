@@ -784,6 +784,7 @@ L["Skip Cut Scene"] = "컷신 건너뛰기"
 L["Skipped the cutscene."] = "컷신을 건너뛰었습니다."
 L["Slow Mode"] = true
 L["Smart Tab"] = "스마트 탭"
+L["Smolderheart"] = true
 L["Social"] = "소셜"
 L["Sold by vendor"] = "상인 판매"
 L["Solo"] = "솔플"

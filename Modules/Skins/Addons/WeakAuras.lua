@@ -152,6 +152,21 @@ local function Skin_WeakAuras(f, fType)
             f.icon.SetTexCoord = E.noop
             f.iconFrame:SetAllPoints(f.icon)
             f.iconFrame:CreateBackdrop()
+            hooksecurefunc(
+                f.icon,
+                "Hide",
+                function()
+                    f.iconFrame.backdrop:SetShown(false)
+                end
+            )
+
+            hooksecurefunc(
+                f.icon,
+                "Show",
+                function()
+                    f.iconFrame.backdrop:SetShown(true)
+                end
+            )
 
             f.windStyle = true
         end

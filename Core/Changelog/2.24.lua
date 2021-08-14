@@ -61,6 +61,7 @@ W.Changelog[224] = {
             "[美化皮肤] 适配最新版本网易集合石.",
             "[美化皮肤] 修复 WeakAuras 的进度条内图标背景错误.",
             "[美化皮肤] 适当缩小 Immersion 任务文本字体大小.",
+            "[美化皮肤] 修复要塞内玩家选择框体的阴影.",
             "[交接] 更新了忽略 NPC 列表."
         },
         ["zhTW"] = {
@@ -69,6 +70,7 @@ W.Changelog[224] = {
             "[美化皮膚] 支援最新版本的網易集合石.",
             "[美化皮膚] 修復 WeakAuras 進度條內圖示背景錯誤.",
             "[美化皮膚] 適當縮小 Immersion 任務文本字體尺寸.",
+            "[美化皮膚] 修復要塞內玩家選擇框架的陰影.",
             "[交接] 更新了忽略 NPC 列表."
         },
         ["enUS"] = {
@@ -77,6 +79,7 @@ W.Changelog[224] = {
             "[Skins] Optimize the skin of NetEase Meeting Stone.",
             "[Skins] Fix the backdrop of icons inside WeakAuras aurabars.",
             "[Skins] Scale down the font size of Immersion quest text.",
+            "[Skins] Fix shadows on Player Choice Frame when player in garrison.",
             "[Turn In] Update ignore NPCs list."
         },
         ["koKR"] = {
@@ -85,6 +88,7 @@ W.Changelog[224] = {
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[스킨] WeakAuras 오라바 내부의 아이콘 배경을 수정했습니다.",
             "[스킨] Immersion 퀘스트 텍스트의 글꼴 크기를 줄입니다.",
+            "[Skins] Fix shadows on Player Choice Frame when player in garrison.",
             "[자동 수락] 무시할 NPC 목록을 업데이트하였습니다."
         }
     }

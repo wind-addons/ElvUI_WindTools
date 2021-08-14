@@ -79,7 +79,8 @@ V.misc = {
 			[312762] = false
 		},
 		other = {
-			["Tortollan"] = false
+			["Tortollan"] = false,
+			["Smolderheart"] = false
 		}
 	},
 	lfgList = {

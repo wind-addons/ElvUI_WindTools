@@ -105,6 +105,11 @@ local OtherSE = {
         1998120, -- sound/creature/tortollan_male/vo_801_tortollan_male_12_m.ogg
         1998121, -- sound/creature/tortollan_male/vo_801_tortollan_male_13_m.ogg
         1998122 -- sound/creature/tortollan_male/vo_801_tortollan_male_14_m.ogg
+    },
+    ["Smolderheart"] = {
+        -- Smolderheart
+        -- https://www.wowhead.com/item=180873/smolderheart
+        2066602 -- sound/spells/fx_fire_magic_loop_smoldering_a_01.ogg
     }
 }
 

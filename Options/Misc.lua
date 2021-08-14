@@ -390,6 +390,12 @@ options.mute = {
                     order = 1,
                     type = "toggle",
                     name = L["Tortollan"]
+                },
+                ["Smolderheart"] = {
+                    order = 2,
+                    type = "toggle",
+                    name = 180873,
+                    idType = "item"
                 }
             }
         }
@@ -403,6 +409,17 @@ do
             type = "toggle",
             name = GetSpellInfo(id)
         }
+    end
+
+    for _, option in pairs(options.mute.args.other.args) do
+        if type(option.name) == "number" then
+            if option.idType == "item" then
+                option.name = GetItemInfo(option.name)
+            elseif option.idType == "spell" then
+                option.name = GetSpellInfo(option.name)
+            end
+            option.idType = nil
+        end
     end
 end
 

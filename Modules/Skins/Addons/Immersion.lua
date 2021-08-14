@@ -86,13 +86,10 @@ do -- If there is no speech progress text in first time, the skin will not be ap
         end
         local talkBox = _G.ImmersionFrame and _G.ImmersionFrame.TalkBox
         if talkBox and talkBox.TextFrame and talkBox.TextFrame.SpeechProgress then
-            F.SetFontWithDB(
+            F.SetFontOutline(
                 talkBox.TextFrame.SpeechProgress,
-                {
-                    name = "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
-                    size = 13,
-                    style = "OUTLINE"
-                }
+                "Montserrat" .. (W.CompatibleFont and " (en)" or ""),
+                13
             )
             reskin = true
         end
@@ -135,7 +132,7 @@ function S:Immersion()
 
     -- 对话主窗口文字
     F.SetFontOutline(talkBox.NameFrame.Name)
-    F.SetFontOutline(talkBox.TextFrame.Text)
+    F.SetFontOutline(talkBox.TextFrame.Text, nil, 15)
 
     -- 关闭按钮
     ES:HandleCloseButton(talkBox.MainFrame.CloseButton)

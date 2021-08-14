@@ -19,7 +19,7 @@ W.Changelog[224] = {
             "[Objective Progress] Update mob data to latest version."
         },
         ["koKR"] = {
-            "Some color options now support alpha channel.",
+            "일부 색상 옵션은 알파 채널을 지원합니다.",
             "[스킨] Meeting Stone EX 스킨 추가.",
             "[목표 진행] 몬스터 데이터베이스가 최신 버전으로 업데이트되었습니다."
         }
@@ -51,7 +51,7 @@ W.Changelog[224] = {
             "[스킨] Blizzard Event Trace 스킨 추가.",
             "[친구 목록] 레벨을 완전히 숨기는 옵션이 추가되었습니다.",
             "[음소거] 이글심장 관련 옵션을 추가하였습니다.",
-            "[World Map] Add color option of Fog of War."
+            "[월드맵] 전쟁의 안개 관련 색상 옵션을 추가허셨습니다."
         }
     },
     IMPROVEMENT = {
@@ -84,7 +84,7 @@ W.Changelog[224] = {
             "[스킨] 쐐기돌 던전에서 령 능력 선택 창의 그림자를 수정합니다.",
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[스킨] WeakAuras 오라바 내부의 아이콘 배경을 수정했습니다.",
-            "[Skins] Scale down the font size of Immersion quest text.",
+            "[스킨] Immersion 퀘스트 텍스트의 글꼴 크기를 줄입니다.",
             "[자동 수락] 무시할 NPC 목록을 업데이트하였습니다."
         }
     }

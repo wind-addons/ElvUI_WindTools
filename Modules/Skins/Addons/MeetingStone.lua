@@ -208,6 +208,14 @@ function S:MeetingStone()
     -- Browse Panel (查找活动)
     local BrowsePanel = NEG.BrowsePanel or MTSAddon and MTSAddon:GetModule("BrowsePanel", true)
     if BrowsePanel then
+        -- Check Buttons: Auto join (自动进组) / Double Click Join (双击加入)
+        for _, child in pairs({BrowsePanel:GetChildren()}) do
+            if child.GetObjectType and child:GetObjectType() == "CheckButton" then
+                ES:HandleCheckBox(child)
+            end
+        end
+
+        -- Refresh (重置)
         if BrowsePanel.RefreshButton then
             ES:HandleButton(BrowsePanel.RefreshButton, nil, nil, nil, true, "Transparent")
             BrowsePanel.RefreshButton.backdrop:ClearAllPoints()
@@ -228,6 +236,21 @@ function S:MeetingStone()
             BrowsePanel.AdvButton.backdrop:SetOutside(BrowsePanel.AdvButton, -1, -1)
             if BrowsePanel.AdvButton.Shine then
                 BrowsePanel.AdvButton.Shine:Hide()
+            end
+        end
+
+        -- Auto Complete Frame (活动搜索框)
+        if BrowsePanel.AutoCompleteFrame then
+            BrowsePanel.AutoCompleteFrame:StripTextures()
+            BrowsePanel.AutoCompleteFrame:CreateBackdrop()
+            BrowsePanel.AutoCompleteFrame.backdrop:ClearAllPoints()
+            BrowsePanel.AutoCompleteFrame.backdrop:SetOutside(BrowsePanel.AutoCompleteFrame, 2, 2)
+            local scrollBar = BrowsePanel.AutoCompleteFrame:GetScrollBar()
+
+            if scrollBar then
+                ES:HandleNextPrevButton(scrollBar.ScrollUpButton, "up")
+                ES:HandleNextPrevButton(scrollBar.ScrollDownButton, "down")
+                ES:HandleScrollBar(scrollBar)
             end
         end
 

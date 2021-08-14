@@ -2661,6 +2661,13 @@ function WM:HandleMap(map, fullUpdate)
     end
 end
 
+-- from Leatrix_Maps
+local function TexturePool_ResetVertexColor(pool, texture)
+    texture:SetVertexColor(1, 1, 1)
+    texture:SetAlpha(1)
+    return TexturePool_HideAndClearAnchors(pool, texture)
+end
+
 function WM:Reveal()
     if not self.db.reveal.enable then
         return
@@ -2679,6 +2686,7 @@ function WM:Reveal()
 
     for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
         self:SecureHook(pin, "RefreshOverlays", "HandleMap")
+        pin.overlayTexturePool.resetterFunc = TexturePool_ResetVertexColor
     end
 end
 

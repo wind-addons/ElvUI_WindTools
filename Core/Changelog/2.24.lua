@@ -24,43 +24,55 @@ W.Changelog[224] = {
         ["zhCN"] = {
             "[其他] 添加了进入战斗自动关闭世界地图功能.",
             "[美化皮肤] 添加了事件追踪工具的美化.",
-            "[好友列表] 添加了完全隐藏等级的选项."
+            "[好友列表] 添加了完全隐藏等级的选项.",
+            "[静音] 添加了闷燃之心的选项."
         },
         ["zhTW"] = {
             "[其他] 新增了進入戰鬥自動關閉世界地圖功能.",
             "[美化皮膚] 新增了事件追蹤工具的美化.",
-            "[好友列表] 新增了一個完全隱藏等級的選項."
+            "[好友列表] 新增了一個完全隱藏等級的選項.",
+            "[靜音] 新增了燃心的選項."
         },
         ["enUS"] = {
             "[Misc] Add new features to close world map after player enters combat.",
             "[Skins] Add new skin for Blizzard Event Trace.",
-            "[Friend List] Add an option to hide level information completely." 
+            "[Friend List] Add an option to hide level information completely.",
+            "[Mute] Add an new option for Smolderheart."
         },
         ["koKR"] = {
             "[기타] 전투 진입 시 자동으로 월드맵을 닫는 기능을 추가하였습니다.",
             "[스킨] Blizzard Event Trace 스킨 추가.",
-            "[친구 목록] 레벨을 완전히 숨기는 옵션이 추가되었습니다."
+            "[친구 목록] 레벨을 완전히 숨기는 옵션이 추가되었습니다.",
+            "[Mute] Add an new option for Smolderheart."
         }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
             "[标签] 改善标签的运行性能.",
             "[美化皮肤] 修复大秘境内的玩家选择框体美化.",
+            "[美化皮肤] 适配最新版本网易集合石.",
+            "[美化皮肤] 修复 WeakAuras 的进度条内图标背景错误.",
             "[交接] 更新了忽略 NPC 列表."
         },
         ["zhTW"] = {
             "[標籤] 改善標籤的執行性能.",
             "[美化皮膚] 修復傳奇鑰石地下城中的玩家選擇框架美化.",
+            "[美化皮膚] 支援最新版本的網易集合石.",
+            "[美化皮膚] 修復 WeakAuras 進度條內圖示背景錯誤.",
             "[交接] 更新了忽略 NPC 列表."
         },
         ["enUS"] = {
             "[Tags] Optimize the performance of additional tags.",
             "[Skins] Fix the shadows of PlayerChoiceFrame in mythic dungeons.",
+            "[Skins] Optimize the skin of NetEase Meeting Stone.",
+            "[Skins] Fix the backdrop of icons inside WeakAuras aurabars.",
             "[Turn In] Update ignore NPCs list."
         },
         ["koKR"] = {
             "[태그] 추가된 태그의 성능을 최적화하였습니다.",
             "[스킨] 쐐기돌 던전에서 령 능력 선택 창의 그림자를 수정합니다.",
+            "[Skins] Optimize the skin of NetEase Meeting Stone.",
+            "[Skins] Fix the backdrop of icons inside WeakAuras aurabars.",
             "[자동 수락] 무시할 NPC 목록을 업데이트하였습니다."
         }
     }

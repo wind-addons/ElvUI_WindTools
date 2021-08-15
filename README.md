@@ -112,6 +112,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 9. **Skip Cut Scene**: Skip most cut scenes; Press the modified key to stop it temporarily.
 10. **LFG List**: Reskin the icons inside LFG group list with a bar in class color.
 11. **Move Speed**: Add move speed to the list in character panel.
+12. **Auto-hide World Map**: Hide world map if player enters the combat automatically.
 
 More features are coming soon.
 

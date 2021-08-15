@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[224] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2021/08/15",
     IMPORTANT = {
         ["zhCN"] = {
             "部分颜色选项支持了 Alpha 通道.",

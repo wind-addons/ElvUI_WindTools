@@ -88,7 +88,7 @@ W.Changelog[224] = {
             "[스킨] NetEase Meeting Stone 스킨 최적화.",
             "[스킨] WeakAuras 오라바 내부의 아이콘 배경을 수정했습니다.",
             "[스킨] Immersion 퀘스트 텍스트의 글꼴 크기를 줄입니다.",
-            "[Skins] Fix shadows on Player Choice Frame when player in garrison.",
+            "[스킨] 플레이어가 주둔지에 있을 때 령 선택 프레임의 그림자를 수정했습니다.",
             "[자동 수락] 무시할 NPC 목록을 업데이트하였습니다."
         }
     }

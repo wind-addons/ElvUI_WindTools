@@ -23,5 +23,6 @@
 	<Script file='Previous\2.21.lua'/>
 	<Script file='Previous\2.22.lua'/>
 	<Script file='Previous\2.23.lua'/>
-	<Script file='2.24.lua'/>
+	<Script file='Previous\2.24.lua'/>
+	<Script file='2.25.lua'/>
 </Ui>

@@ -19,7 +19,7 @@ W.Changelog[225] = {
             "[Misc] Add new features to close bags after player enters combat."
         },
         ["koKR"] = {
-            "[Misc] Add new features to close bags after player enters combat."
+            "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능 추가."
         }
     },
     IMPROVEMENT = {
@@ -33,7 +33,7 @@ W.Changelog[225] = {
             "[Misc] Some options now can be changed without reloading user interface."
         },
         ["koKR"] = {
-            "[Misc] Some options now can be changed without reloading user interface."
+            "[기타] 이제 일부 옵션은 사용자 인터페이스를 다시 로드하지 않고 변경할 수 있습니다."
         }
     }
 }

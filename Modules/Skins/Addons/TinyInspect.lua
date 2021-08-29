@@ -34,11 +34,7 @@ do
             return
         end
 
-        for _, regionKey in pairs(DeleteRegions) do
-            if frame[regionKey] then
-                frame[regionKey]:Kill()
-            end
-        end
+        self:StripEdgeTextures(frame)
 
         frame.closeButton:ClearAllPoints()
         frame.closeButton:SetPoint("BOTTOMLEFT", 3, 3)

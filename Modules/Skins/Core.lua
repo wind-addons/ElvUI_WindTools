@@ -372,6 +372,27 @@ do
     end
 end
 
+do
+    local DeleteRegions = {
+        "Center",
+        "BottomEdge",
+        "LeftEdge",
+        "RightEdge",
+        "TopEdge",
+        "BottomLeftCorner",
+        "BottomRightCorner",
+        "TopLeftCorner",
+        "TopRightCorner"
+    }
+    function S:StripEdgeTextures(frame)
+        for _, regionKey in pairs(DeleteRegions) do
+            if frame[regionKey] then
+                frame[regionKey]:Kill()
+            end
+        end
+    end
+end
+
 -- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     if not E.private.WT.skins.enable then

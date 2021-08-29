@@ -956,6 +956,8 @@ P.unitFrames = {
 }
 
 P.misc = {
+    autoHideBag = false,
+    autoHideWorldMap = false,
     disableTalkingHead = false,
     HideCrafter = false,
     gameBar = {

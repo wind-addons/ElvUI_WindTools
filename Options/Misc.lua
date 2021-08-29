@@ -91,7 +91,25 @@ options.general = {
             order = 8,
             type = "toggle",
             name = L["Auto Hide Map"],
-            desc = L["Automatically close world map if player enters combat."]
+            desc = L["Automatically close world map if player enters combat."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
+        },
+        autoHideBag = {
+            order = 9,
+            type = "toggle",
+            name = L["Auto Hide Bag"],
+            desc = L["Automatically close bag if player enters combat."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+            end
         }
     }
 }

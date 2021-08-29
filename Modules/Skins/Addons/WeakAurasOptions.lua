@@ -211,8 +211,8 @@ function S:WeakAuras_ShowOptions()
     frame.bottomRightResizer:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
 
     -- Filter editbox
-    if _G.WeakAurasFilterInput then
-        local inputBox = _G.WeakAurasFilterInput
+    if frame.filterInput then
+        local inputBox = frame.filterInput
         local rightPart
         ES:HandleEditBox(inputBox)
         for i = 1, inputBox:GetNumPoints() do

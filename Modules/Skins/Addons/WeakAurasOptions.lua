@@ -148,6 +148,17 @@ function S:WeakAurasDisplayButton(Constructor)
         widget.frame.highlight:SetTexture(E.media.blankTex)
         widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
         widget.frame.highlight:SetInside()
+
+        local SetIcon = widget.SetIcon
+        widget.SetIcon = function(frame, icon)
+            SetIcon(frame, icon)
+            if not (type(icon) == "string" or type(icon) == "number") then
+                if icon.icon and icon.icon.SetTexCoord then
+                    icon.icon:SetTexCoord(unpack(E.TexCoords))
+                end
+            end
+        end
+
         return widget
     end
 
@@ -168,10 +179,37 @@ function S:WeakAurasNewButton(Constructor)
         widget.icon:Size(35)
         widget.icon:ClearAllPoints()
         widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
+
+        local SetIcon = widget.SetIcon
+        widget.SetIcon = function(frame, icon)
+            SetIcon(frame, icon)
+            if not (type(icon) == "string" or type(icon) == "number") then
+                if icon.icon and icon.icon.SetTexCoord then
+                    icon.icon:SetTexCoord(unpack(E.TexCoords))
+                end
+            end
+        end
+
         return widget
     end
 
     return SkinedConstructor
+end
+
+function S:WeakAurasOptionMoverSizer()
+    if not _G.WeakAurasOptions or not _G.WeakAurasOptions.moversizer then
+        return
+    end
+
+    local frame = _G.WeakAurasOptions.moversizer
+
+    -- New Edge
+    self:StripEdgeTextures(frame)
+    frame:CreateBackdrop()
+    frame.backdrop:SetInside(frame, 2, 2)   
+    frame.backdrop.Center:Kill()
+    frame:SetBackdropBorderColor(1, 1, 1)
+    self:CreateShadow(frame.backdrop, 4, 1, 1, 1, true)
 end
 
 function S:WeakAuras_ShowOptions()
@@ -191,6 +229,9 @@ function S:WeakAuras_ShowOptions()
             region.SetTexture = E.noop
         end
     end
+
+    -- Mover Sizer
+    self:WeakAurasOptionMoverSizer()
 
     -- Buttons
     -- ReskinExpandButtons()

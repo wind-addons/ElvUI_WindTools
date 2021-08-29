@@ -23,9 +23,17 @@ W.Changelog[225] = {
         }
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[其他] 部分选项更改后不需要重载界面."
+        },
+        ["zhTW"] = {
+            "[其他] 部分選項更改後毋須重載介面."
+        },
+        ["enUS"] = {
+            "[Misc] Some options now can be changed without reloading user interface."
+        },
+        ["koKR"] = {
+            "[Misc] Some options now can be changed without reloading user interface."
+        }
     }
 }

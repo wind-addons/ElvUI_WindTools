@@ -266,7 +266,6 @@ do
                         button.Texture:Point("CENTER")
                         button.Texture:Size(16, 16)
                         button.Texture:SetRotation(ES.ArrowRotation[AnchorDict[anchor]])
-                        button.Texture:Point("CENTER")
 
                         button:HookScript(
                             "OnEnter",

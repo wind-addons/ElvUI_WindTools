@@ -324,6 +324,7 @@ function S:WeakAuras_ShowOptions()
     for _, child in pairs {frame:GetChildren()} do
         local numRegions = child:GetNumRegions()
         local numChildren = child:GetNumChildren()
+        local frameStrata = child:GetFrameStrata()
 
         if numRegions == 1 then
             local recognized = false
@@ -342,9 +343,9 @@ function S:WeakAuras_ShowOptions()
                 if child:GetNumPoints() == 3 then
                     local point, _, relativePoint, xOfs, yOfs = child:GetPoint(1)
                     if point == "TOP" and relativePoint == "TOP" and xOfs == 0 and yOfs == -46 then
-                        for _, subchild in pairs {child:GetChildren()} do
-                            if subchild.obj and subchild.backdrop then -- top panel backdrop
-                                subchild.backdrop:Hide()
+                        for _, subChild in pairs {child:GetChildren()} do
+                            if subChild.obj and subChild.backdrop then -- top panel backdrop
+                                subChild.backdrop:Hide()
                             end
                         end
                     end
@@ -421,6 +422,19 @@ function S:WeakAuras_ShowOptions()
                 child:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
             end
         end
+
+        -- tipPopup
+        if frameStrata == "FULLSCREEN" then
+            child:StripTextures()
+            child:CreateBackdrop("Transparent")
+            self:CreateShadow(child.backdrop)
+            for _, subChild in pairs {child:GetChildren()} do
+                if subChild.GetObjectType and subChild:GetObjectType() == "EditBox" then
+                    ES:HandleEditBox(subChild)
+                    subChild.backdrop:SetInside(nil, 0, 7)
+                end
+            end
+        end
     end
 
     local tooltipAnchor = _G.WeakAurasTooltipImportButton:GetParent()
@@ -490,4 +504,3 @@ S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
 S:AddCallbackForAceGUIWidget("WeakAurasNewButton")
-S:AddCallbackForAceGUIWidget("WeakAurasToolbarButton")

@@ -182,6 +182,60 @@ function S:WeakAurasDisplayButton(Constructor)
             end
         end
 
+        -- Expand Button
+        local expandButton = widget.expand
+        expandButton:StripTextures()
+        expandButton.SetNormalTexture = E.noop
+        expandButton.SetHighlightTexture = E.noop
+        expandButton.SetPushedTexture = E.noop
+
+        expandButton:CreateBackdrop()
+        expandButton.backdrop:SetInside(nil, 2, 2)
+        expandButton.backdrop:SetBackdropBorderColor(0, 0, 0)
+        expandButton.Texture = expandButton.backdrop:CreateTexture(nil, "OVERLAY")
+        expandButton.Texture:Size(12, 12)
+        expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+        expandButton.Texture:SetVertexColor(.5, .5, .5)
+        expandButton.Texture:Point("CENTER")
+        expandButton:HookScript(
+            "OnEnter",
+            function(self)
+                if not self.disabled and self.backdrop then
+                    self.backdrop:SetBackdropBorderColor(1, 1, 1)
+                end
+            end
+        )
+
+        expandButton:HookScript(
+            "OnLeave",
+            function(self)
+                if not self.disabled and self.backdrop then
+                    self.backdrop:SetBackdropBorderColor(0, 0, 0)
+                end
+            end
+        )
+
+        local DisableExpand = widget.DisableExpand
+        widget.DisableExpand = function(frame)
+            DisableExpand(frame)
+            expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+            expandButton.Texture:SetVertexColor(0.3, 0.3, 0.3)
+        end
+
+        local Expand = widget.Expand
+        widget.Expand = function(frame)
+            Expand(frame)
+            expandButton.Texture:SetTexture(W.Media.Icons.buttonMinus)
+            expandButton.Texture:SetVertexColor(1, 1, 1)
+        end
+
+        local Collapse = widget.Collapse
+        widget.Collapse = function(frame)
+            Collapse(frame)
+            expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+            expandButton.Texture:SetVertexColor(1, 1, 1)
+        end
+
         return widget
     end
 

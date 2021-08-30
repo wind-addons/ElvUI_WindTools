@@ -72,6 +72,19 @@ local function ReskinChildButton(frame)
     end
 end
 
+local function ApplyTextureCoords(tex, force)
+    if not tex or not tex.SetTexCoord then
+        return
+    end
+
+    if tex.windTexCoords and not force then
+        return
+    end
+
+    tex:SetTexCoord(unpack(E.TexCoords))
+    tex.windTexCoords = true
+end
+
 function S:WeakAurasMultiLineEditBox(Constructor)
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
         return Constructor
@@ -143,7 +156,9 @@ function S:WeakAurasDisplayButton(Constructor)
                 widget.frame.backdrop.Center:SetVertexColor(unpack(widget.frame.backdrop.color))
             end
         )
-        widget.icon:SetTexCoord(unpack(E.TexCoords))
+
+        ApplyTextureCoords(widget.icon)
+
         ES:HandleEditBox(widget.renamebox)
         widget.frame.highlight:SetTexture(E.media.blankTex)
         widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
@@ -152,10 +167,16 @@ function S:WeakAurasDisplayButton(Constructor)
         local SetIcon = widget.SetIcon
         widget.SetIcon = function(frame, icon)
             SetIcon(frame, icon)
-            if not (type(icon) == "string" or type(icon) == "number") then
-                if icon.icon and icon.icon.SetTexCoord then
-                    icon.icon:SetTexCoord(unpack(E.TexCoords))
-                end
+            if frame.iconRegion then
+                ApplyTextureCoords(frame.iconRegion.icon, true)
+            end
+        end
+
+        local UpdateThumbnail = widget.UpdateThumbnail
+        widget.UpdateThumbnail = function(frame)
+            UpdateThumbnail(frame)
+            if frame.thumbnail then
+                ApplyTextureCoords(frame.thumbnail.icon, true)
             end
         end
 
@@ -175,7 +196,7 @@ function S:WeakAurasNewButton(Constructor)
         ES:HandleButton(widget.frame, nil, nil, nil, true, "Transparent")
         widget.frame.background:SetAlpha(0)
         widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
-        widget.icon:SetTexCoord(unpack(E.TexCoords))
+        ApplyTextureCoords(widget.icon)
         widget.icon:Size(35)
         widget.icon:ClearAllPoints()
         widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
@@ -183,10 +204,16 @@ function S:WeakAurasNewButton(Constructor)
         local SetIcon = widget.SetIcon
         widget.SetIcon = function(frame, icon)
             SetIcon(frame, icon)
-            if not (type(icon) == "string" or type(icon) == "number") then
-                if icon.icon and icon.icon.SetTexCoord then
-                    icon.icon:SetTexCoord(unpack(E.TexCoords))
-                end
+            if frame.iconRegion then
+                ApplyTextureCoords(frame.iconRegion.icon, true)
+            end
+        end
+
+        local UpdateThumbnail = widget.UpdateThumbnail
+        widget.UpdateThumbnail = function(frame)
+            UpdateThumbnail(frame)
+            if frame.thumbnail then
+                ApplyTextureCoords(frame.thumbnail.icon, true)
             end
         end
 
@@ -270,7 +297,7 @@ function S:WeakAurasIconButton(Constructor)
         local widget = Constructor()
         widget.frame:CreateBackdrop()
         widget.frame.backdrop.Center:StripTextures()
-        widget.texture:SetTexCoord(unpack(E.TexCoords))
+        ApplyTextureCoords(widget.texture)
         widget.texture:SetInside(widget.frame, 3, 3)
         widget.frame.backdrop:SetInside(widget.frame, 2, 2)
 

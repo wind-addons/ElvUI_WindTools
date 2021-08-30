@@ -215,7 +215,7 @@ do
         frame:CreateBackdrop()
         frame.backdrop:SetInside(frame, 2, 2)
         frame.backdrop.Center:Kill()
-        frame:SetBackdropBorderColor(1, 1, 1)
+        frame.backdrop:SetBackdropBorderColor(1, 1, 1)
         self:CreateShadow(frame.backdrop, 4, 1, 1, 1, true)
 
         -- Mover Buttons

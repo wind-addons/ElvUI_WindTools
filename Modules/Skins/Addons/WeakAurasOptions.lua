@@ -196,20 +196,69 @@ function S:WeakAurasNewButton(Constructor)
     return SkinedConstructor
 end
 
-function S:WeakAurasOptionMoverSizer()
-    if not _G.WeakAurasOptions or not _G.WeakAurasOptions.moversizer then
-        return
+do
+    local AnchorDict = {
+        ["TOP"] = "up",
+        ["BOTTOM"] = "down",
+        ["LEFT"] = "left",
+        ["RIGHT"] = "right"
+    }
+    function S:WeakAurasOptionMoverSizer()
+        if not _G.WeakAurasOptions or not _G.WeakAurasOptions.moversizer then
+            return
+        end
+
+        local frame = _G.WeakAurasOptions.moversizer
+
+        -- Mover Edge
+        self:StripEdgeTextures(frame)
+        frame:CreateBackdrop()
+        frame.backdrop:SetInside(frame, 2, 2)
+        frame.backdrop.Center:Kill()
+        frame:SetBackdropBorderColor(1, 1, 1)
+        self:CreateShadow(frame.backdrop, 4, 1, 1, 1, true)
+
+        -- Mover Buttons
+        for _, child in pairs {frame:GetChildren()} do
+            local numChildren = child:GetNumChildren()
+            local numRegions = child:GetNumRegions()
+            if numChildren == 2 and numRegions == 0 then
+                for _, button in pairs {child:GetChildren()} do
+                    local anchor = button:GetPoint()
+                    if anchor then
+                        button:StripTextures()
+                        button:Size(16, 16)
+                        button:CreateBackdrop()
+                        self:CreateShadow(button.backdrop)
+                        button.Texture = button.backdrop:CreateTexture(nil, "OVERLAY")
+                        button.Texture:SetTexture(E.Media.Textures.ArrowUp)
+                        button.Texture:Point("CENTER")
+                        button.Texture:Size(16, 16)
+                        button.Texture:SetRotation(ES.ArrowRotation[AnchorDict[anchor]])
+                        button.Texture:Point("CENTER")
+
+                        button:HookScript(
+                            "OnEnter",
+                            function(self)
+                                if self.Texture then
+                                    self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+                                end
+                            end
+                        )
+
+                        button:HookScript(
+                            "OnLeave",
+                            function(self)
+                                if self.Texture then
+                                    self.Texture:SetVertexColor(1, 1, 1)
+                                end
+                            end
+                        )
+                    end
+                end
+            end
+        end
     end
-
-    local frame = _G.WeakAurasOptions.moversizer
-
-    -- New Edge
-    self:StripEdgeTextures(frame)
-    frame:CreateBackdrop()
-    frame.backdrop:SetInside(frame, 2, 2)   
-    frame.backdrop.Center:Kill()
-    frame:SetBackdropBorderColor(1, 1, 1)
-    self:CreateShadow(frame.backdrop, 4, 1, 1, 1, true)
 end
 
 function S:WeakAuras_ShowOptions()

@@ -412,17 +412,6 @@ function S:WeakAuras_ShowOptions()
             end
         end
 
-        -- Bottom Panel
-        if child.width == 300 and child.height == 19 then
-            local anchor = child:GetPoint()
-            if anchor == "BOTTOMRIGHT" or anchor == "BOTTOMLEFT" then
-                self:StripEdgeTextures(child)
-                child:ClearAllPoints()
-                child:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
-                child:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
-            end
-        end
-
         -- tipPopup
         if frameStrata == "FULLSCREEN" then
             child:StripTextures()
@@ -456,6 +445,23 @@ function S:WeakAuras_ShowOptions()
         snippetsFrame:CreateBackdrop("Transparent")
         self:CreateBackdropShadow(snippetsFrame)
         ReskinChildButton(snippetsFrame)
+    end
+
+    -- Top Panel
+    if frame.toolbarContainer.frame then
+        self:StripEdgeTextures(frame.toolbarContainer.frame)
+        frame.toolbarContainer.frame:ClearAllPoints()
+        frame.toolbarContainer.frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -20)
+        frame.toolbarContainer.frame:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -16, -20)
+        frame.toolbarContainer.frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 20, -38)
+    end
+
+    -- Bottom Panel
+    if frame.tipFrame.frame then
+        self:StripEdgeTextures(frame.tipFrame.frame)
+        frame.tipFrame.frame:ClearAllPoints()
+        frame.tipFrame.frame:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
+        frame.tipFrame.frame:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
     end
 
     frame.windStyle = true

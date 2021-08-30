@@ -352,12 +352,6 @@ function S:WeakAuras_ShowOptions()
             end
         end
 
-        if numChildren == 2 then
-            if child.obj and child.backdrop then -- bottom panel backdrop
-                child.backdrop:Hide()
-            end
-        end
-
         if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then -- Top right buttons(close & collapse)
             for _, region in pairs {child:GetRegions()} do
                 region:StripTextures()
@@ -414,6 +408,17 @@ function S:WeakAuras_ShowOptions()
                 end
 
                 button.windStyle = true
+            end
+        end
+
+        -- Bottom Panel
+        if child.width == 300 and child.height == 19 then
+            local anchor = child:GetPoint()
+            if anchor == "BOTTOMRIGHT" or anchor == "BOTTOMLEFT" then
+                self:StripEdgeTextures(child)
+                child:ClearAllPoints()
+                child:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
+                child:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
             end
         end
     end
@@ -485,3 +490,4 @@ S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
 S:AddCallbackForAceGUIWidget("WeakAurasNewButton")
+S:AddCallbackForAceGUIWidget("WeakAurasToolbarButton")

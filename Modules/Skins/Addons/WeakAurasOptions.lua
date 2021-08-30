@@ -164,6 +164,7 @@ function S:WeakAurasDisplayButton(Constructor)
         widget.frame.highlight:SetVertexColor(1, 1, 1, 0.15)
         widget.frame.highlight:SetInside()
 
+        -- Set Icon (Generally, Weakauras call this function to update the icon)
         local SetIcon = widget.SetIcon
         widget.SetIcon = function(frame, icon)
             SetIcon(frame, icon)
@@ -172,6 +173,7 @@ function S:WeakAurasDisplayButton(Constructor)
             end
         end
 
+        -- Update Thumbnail (After picking up the new icon for this aura, Weakauras will call this function)
         local UpdateThumbnail = widget.UpdateThumbnail
         widget.UpdateThumbnail = function(frame)
             UpdateThumbnail(frame)
@@ -201,6 +203,7 @@ function S:WeakAurasNewButton(Constructor)
         widget.icon:ClearAllPoints()
         widget.icon:Point("LEFT", widget.frame, "LEFT", 3, 0)
 
+        -- Set Icon (Generally, Weakauras call this function to update the icon)
         local SetIcon = widget.SetIcon
         widget.SetIcon = function(frame, icon)
             SetIcon(frame, icon)
@@ -209,6 +212,7 @@ function S:WeakAurasNewButton(Constructor)
             end
         end
 
+        -- Update Thumbnail (After picking up the new icon for this aura, Weakauras will call this function)
         local UpdateThumbnail = widget.UpdateThumbnail
         widget.UpdateThumbnail = function(frame)
             UpdateThumbnail(frame)

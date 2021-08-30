@@ -251,6 +251,41 @@ function S:WeakAurasDisplayButton(Constructor)
             end
         end
 
+        -- Group (verb) Button
+        if widget.group then
+            -- Expand Button
+            local groupButton = widget.group
+            groupButton:StripTextures()
+            groupButton.SetNormalTexture = E.noop
+            groupButton.SetHighlightTexture = E.noop
+            groupButton.SetPushedTexture = E.noop
+
+            groupButton:CreateBackdrop()
+            groupButton.backdrop:SetInside(nil, 2, 2)
+            groupButton.backdrop:SetBackdropBorderColor(0, 0, 0)
+            groupButton.Texture = groupButton.backdrop:CreateTexture(nil, "OVERLAY")
+            groupButton.Texture:Size(9, 9)
+            groupButton.Texture:SetTexture(W.Media.Icons.buttonForward)
+            groupButton.Texture:Point("CENTER")
+            groupButton:HookScript(
+                "OnEnter",
+                function(self)
+                    if not self.disabled and self.backdrop then
+                        self.backdrop:SetBackdropBorderColor(1, 1, 1)
+                    end
+                end
+            )
+
+            groupButton:HookScript(
+                "OnLeave",
+                function(self)
+                    if not self.disabled and self.backdrop then
+                        self.backdrop:SetBackdropBorderColor(0, 0, 0)
+                    end
+                end
+            )
+        end
+
         return widget
     end
 

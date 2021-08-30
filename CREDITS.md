@@ -171,6 +171,11 @@
 - 王乐城愚人云端 @ www.iconfont.cn
     - Media/Texture/WindToolsSmall.tga
 
+- LieutenantG @ www.iconfont.cn
+    - Media/Icons/Button/Minus.tga
+    - Media/Icons/Button/Plus.tga
+    - Media/Icons/Button/Forward.tga
+
 - TinyChat (loudsoul)
     - Media/Emotes
 

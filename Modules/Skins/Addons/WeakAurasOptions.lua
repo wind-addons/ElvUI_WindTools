@@ -205,7 +205,8 @@ function S:WeakAurasDisplayButton(Constructor)
 
             expandButton:CreateBackdrop()
             expandButton.backdrop:SetInside(nil, 2, 2)
-            expandButton.backdrop:SetBackdropBorderColor(0, 0, 0)
+            expandButton.backdrop.Center:Kill()
+            expandButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
             expandButton.Texture = expandButton.backdrop:CreateTexture(nil, "OVERLAY")
             expandButton.Texture:Size(12, 12)
             expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
@@ -224,7 +225,7 @@ function S:WeakAurasDisplayButton(Constructor)
                 "OnLeave",
                 function(self)
                     if not self.disabled and self.backdrop then
-                        self.backdrop:SetBackdropBorderColor(0, 0, 0)
+                        self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
                     end
                 end
             )
@@ -262,7 +263,8 @@ function S:WeakAurasDisplayButton(Constructor)
 
             groupButton:CreateBackdrop()
             groupButton.backdrop:SetInside(nil, 2, 2)
-            groupButton.backdrop:SetBackdropBorderColor(0, 0, 0)
+            groupButton.backdrop.Center:Kill()
+            groupButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
             groupButton.Texture = groupButton.backdrop:CreateTexture(nil, "OVERLAY")
             groupButton.Texture:Size(9, 9)
             groupButton.Texture:SetTexture(W.Media.Icons.buttonForward)
@@ -280,7 +282,7 @@ function S:WeakAurasDisplayButton(Constructor)
                 "OnLeave",
                 function(self)
                     if not self.disabled and self.backdrop then
-                        self.backdrop:SetBackdropBorderColor(0, 0, 0)
+                        self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
                     end
                 end
             )
@@ -293,6 +295,77 @@ function S:WeakAurasDisplayButton(Constructor)
 end
 
 S.WeakAurasNewButton = S.WeakAurasDisplayButton
+
+function S:WeakAurasLoadedHeaderButton(Constructor)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return Constructor
+    end
+
+    local function SkinedConstructor()
+        local widget = Constructor()
+
+        if widget.expand then
+            -- Expand Button
+            local expandButton = widget.expand
+            expandButton:StripTextures()
+            expandButton.SetNormalTexture = E.noop
+            expandButton.SetHighlightTexture = E.noop
+            expandButton.SetPushedTexture = E.noop
+
+            expandButton:CreateBackdrop()
+            expandButton.backdrop:SetInside(nil, 2, 2)
+            expandButton.backdrop.Center:Kill()
+            expandButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+            expandButton.Texture = expandButton.backdrop:CreateTexture(nil, "OVERLAY")
+            expandButton.Texture:Size(12, 12)
+            expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+            expandButton.Texture:SetVertexColor(.5, .5, .5)
+            expandButton.Texture:Point("CENTER")
+            expandButton:HookScript(
+                "OnEnter",
+                function(self)
+                    if not self.disabled and self.backdrop then
+                        self.backdrop:SetBackdropBorderColor(1, 1, 1)
+                    end
+                end
+            )
+
+            expandButton:HookScript(
+                "OnLeave",
+                function(self)
+                    if not self.disabled and self.backdrop then
+                        self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+                    end
+                end
+            )
+
+            local DisableExpand = widget.DisableExpand
+            widget.DisableExpand = function(frame)
+                DisableExpand(frame)
+                expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+                expandButton.Texture:SetVertexColor(0.3, 0.3, 0.3)
+            end
+
+            local Expand = widget.Expand
+            widget.Expand = function(frame)
+                Expand(frame)
+                expandButton.Texture:SetTexture(W.Media.Icons.buttonMinus)
+                expandButton.Texture:SetVertexColor(1, 1, 1)
+            end
+
+            local Collapse = widget.Collapse
+            widget.Collapse = function(frame)
+                Collapse(frame)
+                expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
+                expandButton.Texture:SetVertexColor(1, 1, 1)
+            end
+        end
+
+        return widget
+    end
+
+    return SkinedConstructor
+end
 
 do
     local AnchorDict = {
@@ -661,3 +734,4 @@ S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
 S:AddCallbackForAceGUIWidget("WeakAurasIconButton")
 S:AddCallbackForAceGUIWidget("WeakAurasNewButton")
+S:AddCallbackForAceGUIWidget("WeakAurasLoadedHeaderButton")

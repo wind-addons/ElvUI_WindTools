@@ -132,6 +132,8 @@ AddMedia("barNotification", "GameBar/Notification.tga", "Icons")
 
 AddMedia("buttonLock", "Button/Lock.tga", "Icons")
 AddMedia("buttonUnlock", "Button/Unlock.tga", "Icons")
+AddMedia("buttonMinus", "Button/Minus.tga", "Icons")
+AddMedia("buttonPlus", "Button/Plus.tga", "Icons")
 
 AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
 AddMedia("exchange", "Exchange.tga", "Textures")

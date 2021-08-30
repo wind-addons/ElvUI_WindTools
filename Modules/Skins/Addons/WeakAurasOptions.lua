@@ -261,6 +261,48 @@ do
     end
 end
 
+function S:WeakAurasIconButton(Constructor)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return Constructor
+    end
+
+    local function SkinedConstructor()
+        local widget = Constructor()
+        widget.frame:CreateBackdrop()
+        widget.frame.backdrop.Center:StripTextures()
+        widget.texture:SetTexCoord(unpack(E.TexCoords))
+        widget.texture:SetInside(widget.frame, 3, 3)
+        widget.frame.backdrop:SetInside(widget.frame, 2, 2)
+
+        local highlightTexture = widget.frame:GetHighlightTexture()
+        if highlightTexture then
+            highlightTexture:StripTextures()
+        end
+
+        widget.frame:HookScript(
+            "OnEnter",
+            function(self)
+                if self.backdrop then
+                    self.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+                end
+            end
+        )
+
+        widget.frame:HookScript(
+            "OnLeave",
+            function(self)
+                if self.backdrop then
+                    self.backdrop:SetBackdropBorderColor(0, 0, 0)
+                end
+            end
+        )
+
+        return widget
+    end
+
+    return SkinedConstructor
+end
+
 function S:WeakAuras_ShowOptions()
     local frame = _G.WeakAurasOptions
     if not frame or frame.windStyle then
@@ -464,6 +506,17 @@ function S:WeakAuras_ShowOptions()
         frame.tipFrame.frame:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
     end
 
+    if frame.iconPicker.frame then
+        for _, child in pairs {frame.iconPicker.frame:GetChildren()} do
+            if child.GetObjectType and child:GetObjectType() == "EditBox" then
+                child.Left:Kill()
+                child.Middle:Kill()
+                child.Right:Kill()
+                child:CreateBackdrop()
+            end
+        end
+    end
+
     frame.windStyle = true
 end
 
@@ -509,4 +562,5 @@ end
 S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
+S:AddCallbackForAceGUIWidget("WeakAurasIconButton")
 S:AddCallbackForAceGUIWidget("WeakAurasNewButton")

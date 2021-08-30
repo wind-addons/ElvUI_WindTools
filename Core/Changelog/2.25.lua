@@ -13,7 +13,7 @@ W.Changelog[225] = {
             "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
         },
         ["koKR"] = {
-            "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
+            "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다."
         }
     },
     NEW = {

@@ -3,10 +3,18 @@ local W = unpack(select(2, ...))
 W.Changelog[225] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 大幅改善了 WeakAuras 的设定美化."
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 大幅改善了 WeakAuras 的設定美化."
+        },
+        ["enUS"] = {
+            "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
+        },
+        ["koKR"] = {
+            "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
+        }
     },
     NEW = {
         ["zhCN"] = {

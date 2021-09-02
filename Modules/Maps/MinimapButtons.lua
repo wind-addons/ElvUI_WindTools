@@ -78,7 +78,7 @@ function MB:ResetGarrisonSize()
 		return
 	end
 
-	_G.GarrisonLandingPageMinimapButton:Size(self.db.buttonSize)
+	_G.GarrisonLandingPageMinimapButton:SetSize(self.db.buttonSize,self.db.buttonSize)
 end
 
 function MB:SetButtonMouseOver(button, frame, rawhook)
@@ -265,8 +265,8 @@ function MB:SkinButton(frame)
 						region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 					end
 					region:ClearAllPoints()
-					region:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
-					region:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
+					region:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -2)
+					region:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
 
 					region:SetDrawLayer("ARTWORK")
 					if (name == "GameTimeFrame") then
@@ -277,8 +277,8 @@ function MB:SkinButton(frame)
 						if not frame.windTex then
 							local tex = frame:CreateTexture()
 							tex:SetTexture(W.Media.Icons.calendar)
-							tex:Point("TOPLEFT", frame, "TOPLEFT", 2, -2)
-							tex:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
+							tex:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -2)
+							tex:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
 							frame.windTex = tex
 						end
 
@@ -367,12 +367,12 @@ function MB:UpdateLayout()
 			end
 
 			frame:ClearAllPoints()
-			frame:Size(original.Width, original.Height)
+			frame:SetSize(original.Width, original.Height)
 
 			if original.Point ~= nil then
 				frame:SetPoint(original.Point, original.relativeTo, original.relativePoint, original.xOfs, original.yOfs)
 			else
-				frame:Point("CENTER", _G.Minimap, "CENTER", -80, -34)
+				frame:SetPoint("CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
 			frame:SetFrameStrata(original.FrameStrata)
 			frame:SetFrameLevel(original.FrameLevel)
@@ -396,7 +396,7 @@ function MB:UpdateLayout()
 			frame:ClearAllPoints()
 			frame:SetFrameStrata("LOW")
 			frame:SetFrameLevel(20)
-			frame:Size(buttonSize)
+			frame:SetSize(buttonSize,buttonSize)
 
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
@@ -420,7 +420,7 @@ function MB:UpdateLayout()
 			end
 
 			frame:ClearAllPoints()
-			frame:Point(anchor, self.bar, anchor, offsetX, offsetY)
+			frame:SetPoint(anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
@@ -433,7 +433,7 @@ function MB:UpdateLayout()
 
 		if moveButton == "GameTimeFrame" then
 			frame.windToday:ClearAllPoints()
-			frame.windToday:Point("CENTER", frame, "CENTER", 0, -0.15 * buttonSize)
+			frame.windToday:SetPoint("CENTER", frame, "CENTER", 0, -0.15 * buttonSize)
 		end
 	end
 
@@ -448,8 +448,8 @@ function MB:UpdateLayout()
 			width, height = height, width
 		end
 
-		self.bar:Size(width, height)
-		self.barAnchor:Size(width, height)
+		self.bar:SetSize(width, height)
+		self.barAnchor:SetSize(width, height)
 		RegisterStateDriver(self.bar, "visibility", "[petbattle]hide;show")
 		self.bar:Show()
 	else
@@ -463,7 +463,7 @@ function MB:UpdateLayout()
 		anchor = direction and "TOP" or "BOTTOM"
 	end
 
-	self.bar:Point(anchor, self.barAnchor, anchor, 0, 0)
+	self.bar:SetPoint(anchor, self.barAnchor, anchor, 0, 0)
 
 	if self.db.backdrop then
 		self.bar.backdrop:Show()
@@ -522,7 +522,7 @@ function MB:CreateFrames()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
-	frame:Point("TOPRIGHT", _G.MMHolder, "BOTTOMRIGHT", 0, -5)
+	frame:SetPoint("TOPRIGHT", _G.MMHolder, "BOTTOMRIGHT", 0, -5)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 

@@ -32,16 +32,34 @@ W.Changelog[225] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "[其他] 部分选项更改后不需要重载界面."
+            "[其他] 部分选项更改后不需要重载界面.",
+            "[额外物品条] 修复了不启用自动缩放时背景错位的问题.",
+            "[游戏条] 修复了不启用自动缩放时背景错位的问题.",
+            "[团队标记] 修复了不启用自动缩放时背景错位的问题.",
+            "[小地图按钮] 修复了不启用自动缩放时背景错位的问题.",
+            "[战斗提醒] 修复了不启用自动缩放时错位的问题."
         },
         ["zhTW"] = {
-            "[其他] 部分選項更改後毋須重載介面."
+            "[其他] 部分選項更改後毋須重載介面.",
+            "[額外物品條] 修復了不啟用自動縮放時背景錯位的問題.",
+            "[遊戲條] 修復了不啟用自動縮放時背景錯位的問題.",
+            "[團隊標記] 修復了不啟用自動縮放時背景錯位的問題.",
+            "[小地圖按鍵] 修復了不啟用自動縮放時背景錯位的問題.",
+            "[戰鬥提醒] 修復了不啟用自動縮放時錯位的問題."
         },
         ["enUS"] = {
-            "[Misc] Some options now can be changed without reloading user interface."
+            "[Misc] Some options now can be changed without reloading user interface.",
+            "[Extra Item Bar] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Game Bar] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Raid Markers] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Combat Alert] Fix the scale issue when auto-scale disabled."
         },
         ["koKR"] = {
-            "[기타] 이제 일부 옵션은 사용자 인터페이스를 다시 로드하지 않고 변경할 수 있습니다."
+            "[기타] 이제 일부 옵션은 사용자 인터페이스를 다시 로드하지 않고 변경할 수 있습니다.",
+            "[Extra Item Bar] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Game Bar] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Raid Markers] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Combat Alert] Fix the scale issue when auto-scale disabled."
         }
     }
 }

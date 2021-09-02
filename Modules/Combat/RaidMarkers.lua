@@ -49,7 +49,7 @@ function RM:UpdateBar()
 	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 		button:ClearAllPoints()
-		button:Size(self.db.buttonSize)
+		button:SetSize(self.db.buttonSize, self.db.buttonSize)
 
 		if (i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown) then
 			button:Hide()
@@ -57,9 +57,9 @@ function RM:UpdateBar()
 			button:Show()
 			if self.db.orientation == "VERTICAL" then
 				if i == 1 then
-					button:Point("TOP", 0, -self.db.backdropSpacing)
+					button:SetPoint("TOP", 0, -self.db.backdropSpacing)
 				else
-					button:Point("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
+					button:SetPoint("TOP", previousButton, "BOTTOM", 0, -self.db.spacing)
 				end
 			else
 				if i == 1 then
@@ -81,8 +81,8 @@ function RM:UpdateBar()
 	end
 
 	self.bar:Show()
-	self.bar:Size(width, height)
-	self.barAnchor:Size(width, height)
+	self.bar:SetSize(width, height)
+	self.barAnchor:SetSize(width, height)
 
 	if self.db.backdrop then
 		self.bar.backdrop:Show()
@@ -192,7 +192,7 @@ function RM:CreateBar()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent, "SecureHandlerStateTemplate")
-	frame:Point("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
+	frame:SetPoint("BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", -1, 3)
 	frame:SetFrameStrata("DIALOG")
 	self.barAnchor = frame
 
@@ -237,15 +237,15 @@ function RM:CreateButtons()
 			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
 			button:SetTemplate("Transparent")
 		end
-		button:Size(self.db.buttonSize)
+		button:SetSize(self.db.buttonSize, self.db.buttonSize)
 
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			S:CreateShadow(button)
 		end
 
 		local tex = button:CreateTexture(nil, "ARTWORK")
-		tex:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
-		tex:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
+		tex:SetPoint("TOPLEFT", button, "TOPLEFT", 2, -2)
+		tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
 
 		if i < 9 then -- 标记
 			tex:SetTexture(format("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d", i))

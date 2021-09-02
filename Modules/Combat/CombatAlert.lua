@@ -16,7 +16,7 @@ function C:CreateAnimationFrame()
 
     local frame, anime
     frame = CreateFrame("Frame", nil, self.alert)
-    frame:Point("TOP", 0, 0)
+    frame:SetPoint("TOP", 0, 0)
     self.animationFrame = frame
 
     -- 盾
@@ -118,19 +118,19 @@ function C:UpdateAnimationFrame()
     local f = self.animationFrame
 
     -- 动画尺寸
-    f:Size(unpack(animationFrameSize))
+    f:SetSize(unpack(animationFrameSize))
 
     f.shield:Hide()
-    f.shield:Size(0.8 * textureSize, 0.8 * textureSize)
+    f.shield:SetSize(0.8 * textureSize, 0.8 * textureSize)
     f.shield.enter.moveToCenter:SetOffset(0, -shieldAnimationRange)
 
     f.swordLeftToRight:Hide()
-    f.swordLeftToRight:Size(textureSize, textureSize)
+    f.swordLeftToRight:SetSize(textureSize, textureSize)
     f.swordLeftToRight.enter.moveToCenter:SetOffset(swordAnimationRange, swordAnimationRange)
     f.swordLeftToRight.leave.moveToCorner:SetOffset(swordAnimationRange, swordAnimationRange)
 
     f.swordRightToLeft:Hide()
-    f.swordRightToLeft:Size(textureSize, textureSize)
+    f.swordRightToLeft:SetSize(textureSize, textureSize)
     f.swordRightToLeft.enter.moveToCenter:SetOffset(-swordAnimationRange, swordAnimationRange)
     f.swordRightToLeft.leave.moveToCorner:SetOffset(-swordAnimationRange, swordAnimationRange)
 
@@ -151,7 +151,7 @@ function C:CreateTextFrame()
 
     local frame = A.CreateAnimationFrame(nil, self.alert, "HIGH", 4, true)
     frame.text = frame:CreateFontString()
-    frame.text:Point("CENTER", 0, 0)
+    frame.text:SetPoint("CENTER", 0, 0)
     frame.text:SetJustifyV("MIDDLE")
     frame.text:SetJustifyH("CENTER")
 
@@ -195,7 +195,7 @@ function C:UpdateTextFrame()
     f:Hide()
     F.SetFontWithDB(f.text, self.db.font)
     f.text:SetText(self.db.enterText)
-    f:Size(f.text:GetStringWidth(), f.text:GetStringHeight())
+    f:SetSize(f.text:GetStringWidth(), f.text:GetStringHeight())
 
     -- 动画尺寸更新
     f.enter.moveUp:SetOffset(0, moveUpOffset)
@@ -258,9 +258,9 @@ function C:ShowAlert(alertType)
     if alertType == "ENTER" then
         if self.db.animation then
             -- 盾牌动画会由左到右的剑自动触发
-            a.shield:Point("CENTER", 0, shieldOffsetEnter)
-            a.swordLeftToRight:Point("CENTER", -swordOffsetEnter, -swordOffsetEnter)
-            a.swordRightToLeft:Point("CENTER", swordOffsetEnter, -swordOffsetEnter)
+            a.shield:SetPoint("CENTER", 0, shieldOffsetEnter)
+            a.swordLeftToRight:SetPoint("CENTER", -swordOffsetEnter, -swordOffsetEnter)
+            a.swordRightToLeft:SetPoint("CENTER", swordOffsetEnter, -swordOffsetEnter)
             a.swordLeftToRight:Show()
             a.swordRightToLeft:Show()
             a.swordLeftToRight.enter:Restart()
@@ -270,16 +270,16 @@ function C:ShowAlert(alertType)
         if self.db.text then
             t.text:SetText(self.db.enterText)
             F.SetFontColorWithDB(t.text, self.db.enterColor)
-            t:Size(t.text:GetStringWidth(), t.text:GetStringHeight())
-            t:Point("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetEnter)
+            t:SetSize(t.text:GetStringWidth(), t.text:GetStringHeight())
+            t:SetPoint("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetEnter)
             t:Show()
             t.enter:Restart()
         end
     else
         if self.db.animation then
-            a.shield:Point("CENTER", 0, shieldOffsetLeave)
-            a.swordLeftToRight:Point("CENTER", -swordOffsetLeave, -swordOffsetLeave)
-            a.swordRightToLeft:Point("CENTER", swordOffsetLeave, -swordOffsetLeave)
+            a.shield:SetPoint("CENTER", 0, shieldOffsetLeave)
+            a.swordLeftToRight:SetPoint("CENTER", -swordOffsetLeave, -swordOffsetLeave)
+            a.swordRightToLeft:SetPoint("CENTER", swordOffsetLeave, -swordOffsetLeave)
             a.shield:Show()
             a.swordLeftToRight:Show()
             a.swordRightToLeft:Show()
@@ -291,8 +291,8 @@ function C:ShowAlert(alertType)
         if self.db.text then
             t.text:SetText(self.db.leaveText)
             F.SetFontColorWithDB(t.text, self.db.leaveColor)
-            t:Size(t.text:GetStringWidth(), t.text:GetStringHeight())
-            t:Point("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetLeave)
+            t:SetSize(t.text:GetStringWidth(), t.text:GetStringHeight())
+            t:SetPoint("TOP", self.db.animation and self.animationFrame or self.alert, "BOTTOM", 0, textOffsetLeave)
             t:Show()
             t.leave:Restart()
         end
@@ -341,7 +341,7 @@ function C:UpdateMover()
     end
 
     if width ~= 0 and height ~= 0 then
-        self.alert:Size(width, height)
+        self.alert:SetSize(width, height)
     end
 end
 
@@ -357,7 +357,7 @@ end
 
 function C:ConstructFrames()
     self.alert = CreateFrame("Frame", nil, E.UIParent)
-    self.alert:Point("TOP", 0, -200)
+    self.alert:SetPoint("TOP", 0, -200)
     self:CreateAnimationFrame()
     self:CreateTextFrame()
 

@@ -56,10 +56,10 @@ W.Changelog[225] = {
         },
         ["koKR"] = {
             "[기타] 이제 일부 옵션은 사용자 인터페이스를 다시 로드하지 않고 변경할 수 있습니다.",
-            "[Extra Item Bar] Fix the backdrop scale issue when auto-scale disabled.",
-            "[Game Bar] Fix the backdrop scale issue when auto-scale disabled.",
-            "[Raid Markers] Fix the backdrop scale issue when auto-scale disabled.",
-            "[Combat Alert] Fix the scale issue when auto-scale disabled."
+            "[아이템 바] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
+            "[게임 바] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
+            "[공격대 징표] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
+            "[전투 알림] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다."
         }
     }
 }

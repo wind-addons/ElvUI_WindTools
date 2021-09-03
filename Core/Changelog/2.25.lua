@@ -4,15 +4,19 @@ W.Changelog[225] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "在模块载入前现在将会检查 ElvUI 版本是否受到支持.",
             "[美化皮肤] 大幅改善了 WeakAuras 的设定美化."
         },
         ["zhTW"] = {
+            "在模組載入前, 現在會檢查使用的 ElvUI 版本是否為支援版本.",
             "[美化皮膚] 大幅改善了 WeakAuras 的設定美化."
         },
         ["enUS"] = {
+            "ElvUI version will be checked once before modules loading.",
             "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
         },
         ["koKR"] = {
+            "ElvUI version will be checked once before modules loading.",
             "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다."
         }
     },

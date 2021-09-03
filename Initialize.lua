@@ -43,6 +43,10 @@ W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 -- 注册 ElvUI 模块
 function W:Initialize()
     -- 确保初始化顺序为 ElvUI -> WindTools -> 各模块
+    if not self:CheckElvUIVersion() then
+        return
+    end
+
     self.initialized = true
     self:InitializeModules()
 

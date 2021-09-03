@@ -13,11 +13,15 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
 local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 
+local ACCEPT = _G.ACCEPT
+local CANCEL = _G.CANCEL
+
 -- 一些常量
 W.Title = L["WindTools"]
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
+W.SupportElvUIVersion = 12.42
 
 -- 模块部分
 W.RegisteredModules = {}
@@ -69,6 +73,25 @@ function W.UpdateModules()
             pcall(module.ProfileUpdate, module)
         end
     end
+end
+
+E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
+    text = format(
+        "%s\n%s",
+        format(L["%s not been loaded since you are using an outdated version of ElvUI."], W.Title),
+        format(L["Please upgrade your ElvUI to %2.2f or newer version!"], W.SupportElvUIVersion)
+    ),
+    button1 = ACCEPT,
+    hideOnEscape = 1
+}
+
+-- Check ElvUI version, if not matched, show a popup to user
+function W:CheckElvUIVersion()
+    if W.SupportElvUIVersion > E.version then
+        E:StaticPopup_Show("WINDTOOLS_ELVUI_OUTDATED")
+        return false
+    end
+    return true
 end
 
 E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {

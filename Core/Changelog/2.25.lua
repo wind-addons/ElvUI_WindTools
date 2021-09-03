@@ -16,7 +16,7 @@ W.Changelog[225] = {
             "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
         },
         ["koKR"] = {
-            "ElvUI version will be checked once before modules loading.",
+            "이제 모듈이 로드되기 전에 ElvUI 버전이 지원되는지 확인합니다.",
             "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다."
         }
     },

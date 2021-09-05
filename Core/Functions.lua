@@ -3,12 +3,14 @@ local LSM = E.Libs.LSM
 
 local format = format
 local pairs = pairs
+local pcall = pcall
 local print = print
 local strbyte = strbyte
 local strfind = strfind
 local strlen = strlen
 local strsub = strsub
 local tinsert = tinsert
+local tremove = tremove
 local tonumber = tonumber
 local type = type
 local unpack = unpack

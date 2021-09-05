@@ -21,9 +21,15 @@ local replaceRule = {}
 local function AddQuestTitleToReplaceRule(questID, text)
     F.SetCallback(
         function(title)
-            replaceRule[title] = text
+            if title then
+                replaceRule[title] = text
+                ObjectiveTracker_Update()
+                return true
+            end
+            return false
         end,
         C_QuestLog_GetTitleForQuestID,
+        nil,
         questID
     )
 end

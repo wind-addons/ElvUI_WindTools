@@ -161,7 +161,7 @@ function S:ElvUI_ActionBars()
         AB,
         "SetupFlyoutButton",
         function(_, button)
-            self:CreateBackdropShadow(button, true)
+            self:CreateShadow(button)
         end
     )
 

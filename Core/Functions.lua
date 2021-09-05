@@ -236,16 +236,22 @@ function F.Round(number, decimals)
     return format(format("%%.%df", decimals), number)
 end
 
-function F.SetCallback(callback, target, ...)
-    local attemptedTimes = 0
-
-    while attemptedTimes < 10  do
-        local result = {pcall(target, ...)}
-        if result and result[1] == true and (#result < 2 or result[2] ~= nil) then
-            tremove(result, 1)
-            callback(unpack(result))
-            break
-        end
-        attemptedTimes = attemptedTimes + 1
+function F.SetCallback(callback, target, times, ...)
+    times = times or 0
+    if times >= 10 then
+        return
     end
+
+    if times < 10 then
+        local result = {pcall(target, ...)}
+        if result and result[1] == true then
+            tremove(result, 1)
+            if callback(unpack(result)) then
+                E:Delay(2, print, unpack(result))
+                return
+            end
+        end
+    end
+
+    E:Delay(0.1, F.SetCallback, callback, target, times+1, ...)
 end

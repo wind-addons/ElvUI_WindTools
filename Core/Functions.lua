@@ -233,3 +233,17 @@ end
 function F.Round(number, decimals)
     return format(format("%%.%df", decimals), number)
 end
+
+function F.SetCallback(callback, target, ...)
+    local attemptedTimes = 0
+
+    while attemptedTimes < 10  do
+        local result = {pcall(target, ...)}
+        if result and result[1] == true and (#result < 2 or result[2] ~= nil) then
+            tremove(result, 1)
+            callback(unpack(result))
+            break
+        end
+        attemptedTimes = attemptedTimes + 1
+    end
+end

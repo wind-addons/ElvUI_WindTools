@@ -14,11 +14,21 @@ local tonumber = tonumber
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
-local replaceRule = {
-    ["『譴罪之塔』托迦司"] = L["Torghast"],
-    ["托加斯特，罪魂之塔"] = L["Torghast"],
-    ["Torghast, Tower of the Damned"] = L["Torghast"]
-}
+local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
+
+local replaceRule = {}
+
+local function AddQuestTitleToReplaceRule(questID, text)
+    F.SetCallback(
+        function(title)
+            replaceRule[title] = text
+        end,
+        C_QuestLog_GetTitleForQuestID,
+        questID
+    )
+end
+
+AddQuestTitleToReplaceRule(57693, L["Torghast"])
 
 local classColor = _G.RAID_CLASS_COLORS[E.myclass]
 local color = {

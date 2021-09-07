@@ -55,7 +55,7 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
     end
 end
 
-function S:ElvUI_UnitFrames_UpdateAuraSettings(_, _, a)
+function S:ElvUI_UnitFrames_UpdateAuraSettings(_, a)
     self:CreateShadow(a)
 end
 

@@ -55,8 +55,46 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
     end
 end
 
-function S:ElvUI_UnitFrames_UpdateAuraSettings(_, a)
-    self:CreateShadow(a)
+function S:ElvUI_UnitFrames_UpdateAuraSettings(_, f)
+    self:CreateShadow(f)
+end
+
+function S:ElvUI_UnitFrames_Configure_AuraBars(_, f)
+    local auraBars = f.AuraBars
+    local db = f.db
+    if db.aurabar.enable then
+        for _, statusBar in ipairs(auraBars) do
+            self:ElvUI_UnitFrames_Construct_AuraBars(nil, statusBar)
+        end
+    end
+end
+
+function S:ElvUI_UnitFrames_Construct_AuraBars(_, f)
+    if f.windShadowBackdrop then
+        return
+    end
+
+    f.windShadowBackdrop = CreateFrame("Frame", nil, f)
+    f.windShadowBackdrop:SetFrameStrata(f:GetFrameStrata())
+    f.windShadowBackdrop:SetFrameLevel(f:GetFrameLevel() or 1)
+
+    -- |-- Icon --| --------------- Status Bar ---------------|
+    -- |----------------- windShadowBackdrop -----------------|
+
+    -- Right
+    f.windShadowBackdrop:Point("TOPRIGHT", f, "TOPRIGHT", 1, -1)
+    f.windShadowBackdrop:Point("BOTTOMRIGHT", f, "BOTTOMRIGHT", 1, 1)
+
+    -- Left
+    if f.icon and f.icon:IsShown() then
+        f.windShadowBackdrop:Point("TOPLEFT", f.icon, "TOPLEFT", -1, 1)
+        f.windShadowBackdrop:Point("BOTTOMLEFT", f.icon, "BOTTOMLEFT", -1, -1)
+    else
+        f.windShadowBackdrop:Point("TOPLEFT", f, "TOPLEFT",-1, 1)
+        f.windShadowBackdrop:Point("BOTTOMLEFT", f, "BOTTOMLEFT", -1, -1)
+    end
+
+    self:CreateShadow(f.windShadowBackdrop)
 end
 
 function S:ElvUI_UnitFrames()
@@ -67,17 +105,21 @@ function S:ElvUI_UnitFrames()
         return
     end
 
-    -- 低频度更新单位框体外围阴影
+    -- Update shadow of unit frames with low frequency
     self:SecureHook(UF, "UpdateNameSettings", "ElvUI_UnitFrames_UpdateNameSettings")
 
-    -- 在 oUF 更新仇恨值阴影时判断是否隐藏美化阴影
+    -- Auto hide/show shadow on oUF updating threat
     self:SecureHook(UF, "Configure_Threat", "ElvUI_UnitFrames_Configure_Threat")
 
-    -- 为分离的能量条提供阴影
+    -- Separated power bar
     self:SecureHook(UF, "Configure_Power", "ElvUI_UnitFrames_Configure_Power")
 
-    -- 为单位框体光环提供边缘美化
+    -- Auras
     self:SecureHook(UF, "UpdateAuraSettings", "ElvUI_UnitFrames_UpdateAuraSettings")
+
+    -- Status bar
+    self:SecureHook(UF, "Configure_AuraBars", "ElvUI_UnitFrames_Configure_AuraBars")
+    self:SecureHook(UF, "Construct_AuraBars", "ElvUI_UnitFrames_Construct_AuraBars")
 end
 
 S:AddCallback("ElvUI_UnitFrames")

@@ -96,27 +96,33 @@ function S:ElvUI_ActionBars()
         return
     end
 
-    -- 常规动作条
-    for id = 1, 10 do
-        local bar = _G["ElvUI_Bar" .. id]
-        self:ElvUI_ActionBar_SkinBar(bar, "PLAYER")
+    -- ElvUI action bar
+    if not E.private.actionbar.masque.actionbars then
+        for id = 1, 10 do
+            local bar = _G["ElvUI_Bar" .. id]
+            self:ElvUI_ActionBar_SkinBar(bar, "PLAYER")
+        end
+
+        self:SecureHook(AB, "PositionAndSizeBar", "ElvUI_ActionBar_PositionAndSizeBar")
     end
 
-    self:SecureHook(AB, "PositionAndSizeBar", "ElvUI_ActionBar_PositionAndSizeBar")
+    -- Pet bar
+    if not E.private.actionbar.masque.petBar then
+        self:ElvUI_ActionBar_SkinBar(_G.ElvUI_BarPet, "PET")
+        self:SecureHook(AB, "PositionAndSizeBarPet", "ElvUI_ActionBar_PositionAndSizeBarPet")
+    end
 
-    -- 宠物动作条
-    self:ElvUI_ActionBar_SkinBar(_G.ElvUI_BarPet, "PET")
-    self:SecureHook(AB, "PositionAndSizeBarPet", "ElvUI_ActionBar_PositionAndSizeBarPet")
-
-    -- 姿态条
-    self:ElvUI_ActionBar_SkinBar(_G.ElvUI_StanceBar, "STANCE")
-    self:SecureHook(AB, "PositionAndSizeBarShapeShift", "ElvUI_ActionBar_PositionAndSizeBarShapeShift")
+    -- Stance bar
+    if not E.private.actionbar.masque.stanceBar then
+        self:ElvUI_ActionBar_SkinBar(_G.ElvUI_StanceBar, "STANCE")
+        self:SecureHook(AB, "PositionAndSizeBarShapeShift", "ElvUI_ActionBar_PositionAndSizeBarShapeShift")
+    end
 
     if not E.private.WT.skins.elvui.actionBarsButton then
         return
     end
 
-    -- 特殊技能
+    -- Extra action bar
     self:SecureHook(_G.ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", "SkinZoneAbilities")
 
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
@@ -126,7 +132,7 @@ function S:ElvUI_ActionBars()
         end
     end
 
-    -- 离开载具
+    -- Vehicle leave button
     do
         local button = _G.MainMenuBarVehicleLeaveButton
         self:CreateBackdropShadow(button, true)
@@ -150,7 +156,8 @@ function S:ElvUI_ActionBars()
             tex:Hide()
         end
     end
-    -- 额外动作条
+
+    -- Extra action bar
     for i = 1, _G.ExtraActionBarFrame:GetNumChildren() do
         local button = _G["ExtraActionButton" .. i]
         self:CreateBackdropShadow(button.backdrop, true)

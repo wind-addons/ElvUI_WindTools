@@ -247,7 +247,6 @@ function F.SetCallback(callback, target, times, ...)
         if result and result[1] == true then
             tremove(result, 1)
             if callback(unpack(result)) then
-                E:Delay(2, print, unpack(result))
                 return
             end
         end

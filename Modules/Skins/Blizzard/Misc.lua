@@ -114,9 +114,13 @@ function S:BlizzardMiscFrames()
             if bar then
                 self:CreateBackdropShadow(bar)
             end
+
+            if widgetFrame.isJailersTowerBar and self:CheckDB(nil, "scenario") then
+                bar:SetWidth(235)
+            end
         end
     )
-    
+
     self:SecureHook(
         _G.UIWidgetTemplateCaptureBarMixin,
         "Setup",

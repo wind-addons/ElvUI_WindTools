@@ -22,10 +22,10 @@ W.Changelog[225] = {
             "[Objective Tracker] ElvUI already handling the maw buff list frame, removing the option for expanding maw buff list in right side."
         },
         ["koKR"] = {
-            "Update functions in core library.",
+            "핵심 기능 라이브러리 업데이트.",
             "이제 모듈이 로드되기 전에 ElvUI 버전이 지원되는지 확인합니다.",
             "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다.",
-            "[Objective Tracker] ElvUI already handling the maw buff list frame, removing the option for expanding maw buff list in right side."
+            "[퀘스트 추적기] ElvUI는 이미 령 버프 목록 프레임을 처리하고 있으므로 령 버프 목록을 오른쪽에서 확장하는 옵션을 제거했습니다."
         }
     },
     NEW = {
@@ -50,7 +50,7 @@ W.Changelog[225] = {
         ["koKR"] = {
             "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능을 추가했습니다.",
             "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
-            "[Skins] Add the skin of scenario UI in Torghast.",
+            "[스킨] 토르가스트의 시나리오 UI 스킨을 추가합니다.",
             "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }
     },
@@ -101,10 +101,10 @@ W.Changelog[225] = {
             "[공격대 징표] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[미니맵 버튼] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[전투 알림] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
-            "[Chat Bar] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
+            "[채팅 바] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
             "[스킨] ElvUI 유닛 프레임의 오라 스킨을 수정했습니다.",
             "[스킨] ElvUI 액션바의 플라이아웃 버튼 스킨을 수정하였습니다.",
-            "[Skins] The action bar skin will not be loaded if masque enabled.",
+            "[스킨] Masque가 활성화되면 액션 바 스킨이 자동으로 비활성화됩니다.",
             "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }

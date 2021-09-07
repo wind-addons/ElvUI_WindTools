@@ -97,7 +97,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         S:CreateShadow(button.backdrop, 3, nil, nil, nil, true)
 
         button.text = button:CreateFontString(nil, "OVERLAY")
-        button.text:Point("CENTER", button, "CENTER", 0, 0)
+        button.text:SetPoint("CENTER", button, "CENTER", 0, 0)
         F.SetFontWithDB(button.text, self.db.font)
         button.defaultFontSize = self.db.font.size
 
@@ -188,9 +188,9 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     end
 
     -- 尺寸和位置更新
-    self.bar[name]:Size(CB.db.buttonWidth, CB.db.buttonHeight)
+    self.bar[name]:SetSize(CB.db.buttonWidth, CB.db.buttonHeight)
     self.bar[name]:ClearAllPoints()
-    self.bar[name]:Point(anchorPoint, CB.bar, anchorPoint, x, y)
+    self.bar[name]:SetPoint(anchorPoint, CB.bar, anchorPoint, x, y)
 
     self.bar[name]:Show()
     return self.bar[name]
@@ -482,7 +482,7 @@ function CB:UpdateBar()
         self.bar:SetAlpha(1)
     end
 
-    self.bar:Size(width, height)
+    self.bar:SetSize(width, height)
 
     if self.db.backdrop then
         self.bar.backdrop:Show()
@@ -510,7 +510,7 @@ function CB:CreateBar()
     bar:SetFrameLevel(5) -- 高于 ElvUI 经验条
     bar:CreateBackdrop("Transparent")
     bar:ClearAllPoints()
-    bar:Point("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)
+    bar:SetPoint("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)
     S:CreateShadow(bar)
 
     self.bar = bar

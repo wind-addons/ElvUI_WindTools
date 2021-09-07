@@ -236,24 +236,6 @@ function OT:ShortTitle(str)
     return str
 end
 
-function OT:ShowMawBuffRight()
-    if not self.db.enable or not self.db.showMawBuffRight then
-        return
-    end
-
-    local B = E:GetModule("Blizzard")
-    if B.SetupTorghastBuffFrame then
-        B.SetupTorghastBuffFrame = E.noop
-    end
-
-    local mawBuffsBlock = _G.ScenarioBlocksFrame.MawBuffsBlock
-    local list = mawBuffsBlock and mawBuffsBlock.Container.List
-    if list then
-        list:ClearAllPoints()
-        list:Point("TOPLEFT", mawBuffsBlock.Container, "TOPRIGHT", 10, 0)
-    end
-end
-
 function OT:Initialize()
     self.db = E.private.WT.quest.objectiveTracker
     if not self.db.enable then
@@ -261,7 +243,6 @@ function OT:Initialize()
     end
 
     self:UpdateTextWidth()
-    self:ShowMawBuffRight()
 
     if not self.Initialized then
         local trackerModules = {

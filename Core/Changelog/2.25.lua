@@ -4,41 +4,53 @@ W.Changelog[225] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "核心函数库更新",
             "在模块载入前现在将会检查 ElvUI 版本是否受到支持.",
-            "[美化皮肤] 大幅改善了 WeakAuras 的设定美化."
+            "[美化皮肤] 大幅改善了 WeakAuras 的设定美化.",
+            "[任务列表] 由于 ElvUI 已经能够自动控制, 去除了爬塔 Buff 在右选项."
         },
         ["zhTW"] = {
+            "核心函數庫更新",
             "在模組載入前, 現在會檢查使用的 ElvUI 版本是否為支援版本.",
-            "[美化皮膚] 大幅改善了 WeakAuras 的設定美化."
+            "[美化皮膚] 大幅改善了 WeakAuras 的設定美化.",
+            "[任務列表] 由於 ElvUI 已經能夠自動控制, 去除了爬塔 Buff 在右選項."
         },
         ["enUS"] = {
+            "Update functions in core library.",
             "ElvUI version will be checked once before modules loading.",
-            "[Skins] Significantly improve the quality of the skin of WeakAuras Options."
+            "[Skins] Significantly improve the quality of the skin of WeakAuras Options.",
+            "[Objective Tracker] ElvUI already handling the maw buff list frame, removing the option for expanding maw buff list in right side."
         },
         ["koKR"] = {
+            "Update functions in core library.",
             "이제 모듈이 로드되기 전에 ElvUI 버전이 지원되는지 확인합니다.",
-            "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다."
+            "[스킨] WeakAuras 옵션의 스킨 품질을 대폭 개선합니다.",
+            "[Objective Tracker] ElvUI already handling the maw buff list frame, removing the option for expanding maw buff list in right side."
         }
     },
     NEW = {
         ["zhCN"] = {
             "[其他] 添加了进入战斗自动关闭背包功能.",
             "[美化皮肤] 新增了 ElvUI 光环条的美化.",
+            "[美化皮肤] 新增了爬塔场景事件界面的美化.",
             "[美化皮肤] 优化并新增了 ElvUI 施法条图标在内时的美化."
         },
         ["zhTW"] = {
             "[其他] 新增了進入戰鬥自動關閉背包功能.",
             "[美化皮膚] 新增了 ElvUI 光環條的美化.",
+            "[美化皮膚] 新增了爬塔場景事件介面的美化.",
             "[美化皮膚] 優化并新增了 ElvUI 施法條圖示在內時的美化."
         },
         ["enUS"] = {
             "[Misc] Add new features to close bags after player enters combat.",
             "[Skins] Add the skin of aura bars for ElvUI unit frames.",
+            "[Skins] Add the skin of scenario UI in Torghast.",
             "[Skins] Optimize the skin of ElvUI cast bars which contains an attached icon."
         },
         ["koKR"] = {
             "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능을 추가했습니다.",
             "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
+            "[Skins] Add the skin of scenario UI in Torghast.",
             "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }
     },

@@ -516,7 +516,6 @@ L["Make sure you select the NPC as your target."] = "S'assure que vous sélectio
 L["Make the additional percentage text be colored."] = "Met le texte de pourcentage supplémentaire en couleur."
 L["Maps"] = "Cartes"
 L["Math Without Kanji"] = "Maths sans Kanji"
-L["Maw Buff On Right"] = true
 L["Media Files"] = "Fichiers multimédias"
 L["MerathilisUI"] = "|cffff7d0aMerathilisUI|r"
 L["Merchant"] = "Vendeur"

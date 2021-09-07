@@ -516,7 +516,6 @@ L["Make sure you select the NPC as your target."] = "NPC를 대상으로 선택�
 L["Make the additional percentage text be colored."] = "추가된 진행률에 색상을 지정합니다."
 L["Maps"] = "지도"
 L["Math Without Kanji"] = true
-L["Maw Buff On Right"] = "령 능력 오른쪽 열기"
 L["Media Files"] = true
 L["MerathilisUI"] = "|cffff7d0aMerathilisUI|r"
 L["Merchant"] = "상인"

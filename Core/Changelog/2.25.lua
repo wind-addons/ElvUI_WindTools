@@ -37,9 +37,9 @@ W.Changelog[225] = {
             "[Skins] Optimize the skin of ElvUI cast bars which contains an attached icon."
         },
         ["koKR"] = {
-            "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능 추가.",
-            "[Skins] Add the skin of aura bars for ElvUI unit frames.",
-            "[Skins] Optimize the skin of ElvUI cast bars which contains an attached icon."
+            "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능을 추가했습니다.",
+            "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
+            "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }
     },
     IMPROVEMENT = {
@@ -81,11 +81,11 @@ W.Changelog[225] = {
             "[아이템 바] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[게임 바] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[공격대 징표] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
-            "[Minimap Buttons] Fix the backdrop scale issue when auto-scale disabled.",
+            "[미니맵 버튼] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[전투 알림] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
-            "[Skins] Fix the skin for auras on ElvUI unit frames.",
-            "[Skins] Fix the skin for flyout buttons in ElvUI action bar.",
-            "[Objective Tracker] Optimize the abbreviation feature for long titles."
+            "[스킨] ElvUI 유닛 프레임의 오라 스킨을 수정했습니다.",
+            "[스킨] ElvUI 액션바의 플라이아웃 버튼 스킨을 수정하였습니다.",
+            "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }
 }

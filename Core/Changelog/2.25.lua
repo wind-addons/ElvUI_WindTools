@@ -61,9 +61,11 @@ W.Changelog[225] = {
             "[游戏条] 修复了不启用自动缩放时背景错位的问题.",
             "[团队标记] 修复了不启用自动缩放时背景错位的问题.",
             "[小地图按钮] 修复了不启用自动缩放时背景错位的问题.",
+            "[聊天条] 修复了不启用自动缩放时背景错位的问题.",
             "[战斗提醒] 修复了不启用自动缩放时错位的问题.",
             "[美化皮肤] 修复了 ElvUI 单位框体的光环美化",
             "[美化皮肤] 修复了 ElvUI 动作条飞出按钮的美化.",
+            "[美化皮肤] 启用 Masque 的情况下会自动停用动作条美化.",
             "[任务列表] 优化了标题缩写功能."
         },
         ["zhTW"] = {
@@ -72,9 +74,11 @@ W.Changelog[225] = {
             "[遊戲條] 修復了不啟用自動縮放時背景錯位的問題.",
             "[團隊標記] 修復了不啟用自動縮放時背景錯位的問題.",
             "[小地圖按鍵] 修復了不啟用自動縮放時背景錯位的問題.",
+            "[聊天條] 修復了不啟用自動縮放時背景錯位的問題.",
             "[戰鬥提醒] 修復了不啟用自動縮放時錯位的問題.",
             "[美化皮膚] 修復了 ElvUI 單位框架的光環美化.",
             "[美化皮膚] 修復了 ElvUI 快捷列飛出按鍵的美化.",
+            "[美化皮膚] 啟用 Masque 的情況下會自動停用快捷列美化.",
             "[任務列表] 優化了標題縮寫功能."
         },
         ["enUS"] = {
@@ -83,9 +87,11 @@ W.Changelog[225] = {
             "[Game Bar] Fix the backdrop scale issue when auto-scale disabled.",
             "[Raid Markers] Fix the backdrop scale issue when auto-scale disabled.",
             "[Minimap Buttons] Fix the backdrop scale issue when auto-scale disabled.",
+            "[Chat Bar] Fix the backdrop scale issue when auto-scale disabled.",
             "[Combat Alert] Fix the scale issue when auto-scale disabled.",
             "[Skins] Fix the skin for auras on ElvUI unit frames.",
             "[Skins] Fix the skin for flyout buttons in ElvUI action bar.",
+            "[Skins] The action bar skin will not be loaded if masque enabled.",
             "[Objective Tracker] Optimize the abbreviation feature for long titles."
         },
         ["koKR"] = {
@@ -95,8 +101,10 @@ W.Changelog[225] = {
             "[공격대 징표] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[미니맵 버튼] 자동 크기 조정이 활성화되지 않았을 때 배경이 어긋나는 문제를 수정했습니다.",
             "[전투 알림] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
+            "[Chat Bar] 자동 크기 조정이 활성화되지 않았을 때 크기 문제를 수정했습니다.",
             "[스킨] ElvUI 유닛 프레임의 오라 스킨을 수정했습니다.",
             "[스킨] ElvUI 액션바의 플라이아웃 버튼 스킨을 수정하였습니다.",
+            "[Skins] The action bar skin will not be loaded if masque enabled.",
             "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }

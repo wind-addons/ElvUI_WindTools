@@ -66,6 +66,7 @@ W.Changelog[225] = {
             "[美化皮肤] 修复了 ElvUI 单位框体的光环美化",
             "[美化皮肤] 修复了 ElvUI 动作条飞出按钮的美化.",
             "[美化皮肤] 启用 Masque 的情况下会自动停用动作条美化.",
+            "[美化皮肤] 为暴雪的界面设定美化新增了独立选项.",
             "[任务列表] 优化了标题缩写功能."
         },
         ["zhTW"] = {
@@ -79,6 +80,7 @@ W.Changelog[225] = {
             "[美化皮膚] 修復了 ElvUI 單位框架的光環美化.",
             "[美化皮膚] 修復了 ElvUI 快捷列飛出按鍵的美化.",
             "[美化皮膚] 啟用 Masque 的情況下會自動停用快捷列美化.",
+            "[美化皮膚] 為暴雪的介面設定新增了獨立選項.",
             "[任務列表] 優化了標題縮寫功能."
         },
         ["enUS"] = {
@@ -92,6 +94,7 @@ W.Changelog[225] = {
             "[Skins] Fix the skin for auras on ElvUI unit frames.",
             "[Skins] Fix the skin for flyout buttons in ElvUI action bar.",
             "[Skins] The action bar skin will not be loaded if masque enabled.",
+            "[Skins] Add a new option for Blizzard interface options skin.",
             "[Objective Tracker] Optimize the abbreviation feature for long titles."
         },
         ["koKR"] = {
@@ -105,6 +108,7 @@ W.Changelog[225] = {
             "[스킨] ElvUI 유닛 프레임의 오라 스킨을 수정했습니다.",
             "[스킨] ElvUI 액션바의 플라이아웃 버튼 스킨을 수정하였습니다.",
             "[스킨] Masque가 활성화되면 액션 바 스킨이 자동으로 비활성화됩니다.",
+            "[Skins] Add a new option for Blizzard interface options skin.",
             "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }

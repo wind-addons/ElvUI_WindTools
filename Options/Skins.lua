@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 local S = W:GetModule("Skins")
 
 local pairs = pairs
+local type = type
 
 local IsAddOnLoaded = IsAddOnLoaded
 
@@ -935,77 +936,132 @@ options.addons = {
         azerothAutoPilot = {
             order = 10,
             type = "toggle",
-            name = L["Azeroth Auto Pilot"]
+            name = L["Azeroth Auto Pilot"],
+            addonName = "AAP-Core"
         },
         bigWigs = {
             order = 10,
             type = "toggle",
-            name = L["BigWigs"]
+            name = L["BigWigs"],
+            addonName = "BigWigs"
         },
         bigWigsQueueTimer = {
             order = 10,
             type = "toggle",
-            name = L["BigWigs Queue Timer"]
+            name = L["BigWigs Queue Timer"],
+            addonName = "BigWigs"
         },
         bugSack = {
             order = 10,
             type = "toggle",
-            name = L["BugSack"]
+            name = L["BugSack"],
+            addonName = "BugSack"
         },
         hekili = {
             order = 10,
             type = "toggle",
-            name = L["Hekili"]
+            name = L["Hekili"],
+            addonName = "Hekili"
         },
         immersion = {
             order = 10,
             type = "toggle",
-            name = L["Immersion"]
+            name = L["Immersion"],
+            addonName = "Immersion"
         },
         meetingStone = {
             order = 10,
             type = "toggle",
-            name = L["NetEase Meeting Stone"]
+            name = L["NetEase Meeting Stone"],
+            addonName = {"MeetingStone", "MeetingStonePlus"}
         },
         myslot = {
             order = 10,
             type = "toggle",
-            name = L["Myslot"]
+            name = L["Myslot"],
+            addonName = "Myslot"
         },
         mythicDungeonTools = {
             order = 10,
             type = "toggle",
-            name = L["Mythic Dungeon Tools"]
+            name = L["Mythic Dungeon Tools"],
+            addonName = "MythicDungeonTools"
         },
         premadeGroupsFilter = {
             order = 10,
             type = "toggle",
-            name = L["Premade Groups Filter"]
+            name = L["Premade Groups Filter"],
+            addonName = "PremadeGroupsFilter"
         },
         rehack = {
             order = 10,
             type = "toggle",
-            name = L["REHack"]
+            name = L["REHack"],
+            addonName = "REHack"
         },
         -- rematch = {
         --     order = 10,
         --     type = "toggle",
-        --     name = L["Rematch"]
+        --     name = L["Rematch"],
+        --     addonName = "Rematch"
         -- },
         tinyInspect = {
             order = 10,
             type = "toggle",
-            name = L["TinyInspect"]
+            name = L["TinyInspect"],
+            addonName = "TinyInspect"
         },
         weakAuras = {
             order = 10,
             type = "toggle",
-            name = L["WeakAuras"]
+            name = L["WeakAuras"],
+            addonName = "WeakAuras"
         },
         weakAurasOptions = {
             order = 10,
             type = "toggle",
-            name = L["WeakAuras Options"]
+            name = L["WeakAuras Options"],
+            addonName = "WeakAuras"
         }
     }
 }
+
+local function GenerateAddOnSkinsGetFunction(name)
+    if type(name) == "string" then
+        return function(info)
+            return IsAddOnLoaded(name) and E.private.WT.skins.addons[info[#info]]
+        end
+    elseif type(name) == "table" then
+        return function(info)
+            local isValid = false
+            for _, addon in pairs(name) do
+                isValid = isValid or IsAddOnLoaded(addon)
+            end
+            return isValid and E.private.WT.skins.addons[info[#info]]
+        end
+    end
+end
+
+local function GenerateAddOnSkinsDisabledFunction(name)
+    if type(name) == "string" then
+        return function(info)
+            return not IsAddOnLoaded(name) or not E.private.WT.skins.enable
+        end
+    elseif type(name) == "table" then
+        return function(info)
+            local isValid = false
+            for _, addon in pairs(name) do
+                isValid = isValid or IsAddOnLoaded(addon)
+            end
+            return not isValid or not E.private.WT.skins.enable
+        end
+    end
+end
+
+for _, option in pairs(options.addons.args) do
+    if option.addonName then
+        option.get = GenerateAddOnSkinsGetFunction(option.addonName)
+        option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
+        option.addonName = nil
+    end
+end

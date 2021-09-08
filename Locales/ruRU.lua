@@ -456,6 +456,7 @@ L["Input Method Editor"] = "Редактор метода ввода"
 L["Inspect"] = "Осмотр"
 L["Instance"] = "Подземелье"
 L["Instance Difficulty"] = "Сложность подземелья"
+L["Interface Options"] = true
 L["Interrupt"] = "Прерывание"
 L["Interrupted spell link"] = "Прерванная ссылка заклинания"
 L["Interval"] = "Интервал"

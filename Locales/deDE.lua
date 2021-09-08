@@ -456,6 +456,7 @@ L["Input Method Editor"] = "Eingabemethoden-Editor"
 L["Inspect"] = "Betrachten"
 L["Instance"] = "Instanz"
 L["Instance Difficulty"] = "Instanz Schwierigkeitsgrad"
+L["Interface Options"] = true
 L["Interrupt"] = "Unterbrechen"
 L["Interrupted spell link"] = "Unterbrochene Zauberverbindung"
 L["Interval"] = "Intervall"

@@ -456,6 +456,7 @@ L["Input Method Editor"] = true
 L["Inspect"] = "Inspecter"
 L["Instance"] = "Instance"
 L["Instance Difficulty"] = "Difficulté de l'instance"
+L["Interface Options"] = true
 L["Interrupt"] = "Interrompre"
 L["Interrupted spell link"] = "Lien de sort interrompu"
 L["Interval"] = "Intervalle"

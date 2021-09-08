@@ -3,6 +3,10 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
+local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local unpack = unpack
+
 function S:SkinMawBuffsContainer(container)
     container:StripTextures()
     container:GetHighlightTexture():Kill()
@@ -85,8 +89,8 @@ function S:ScenarioStage()
 
     self:SecureHook("ScenarioStage_CustomizeBlock")
     self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", "ScenarioStageWidgetContainer")
-    self:SkinMawBuffsContainer(ScenarioBlocksFrame.MawBuffsBlock.Container)
-    self:SkinMawBuffsContainer(MawBuffsBelowMinimapFrame.Container)
+    self:SkinMawBuffsContainer(_G.ScenarioBlocksFrame.MawBuffsBlock.Container)
+    self:SkinMawBuffsContainer(_G.MawBuffsBelowMinimapFrame.Container)
 end
 
 S:AddCallback("ScenarioStage")

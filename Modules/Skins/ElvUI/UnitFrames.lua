@@ -4,6 +4,10 @@ local UF = E:GetModule("UnitFrames")
 
 local _G = _G
 
+local ipairs = ipairs
+
+local CreateFrame = CreateFrame
+
 function S:ElvUI_UnitFrames_UpdateNameSettings(_, f)
     if not E.private.WT.skins.enable or not E.private.WT.skins.shadow then
         return

@@ -4,6 +4,8 @@ local UF = E:GetModule("UnitFrames")
 
 local _G = _G
 
+local CreateFrame = CreateFrame
+
 function S:ElvUI_UnitFrames_SkinCastBar(_, frame)
     if not frame.Castbar then
         return

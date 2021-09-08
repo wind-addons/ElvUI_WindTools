@@ -418,6 +418,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Black Market"]
         },
+        blizzardOptions = {
+            order = 10,
+            type = "toggle",
+            name = L["Interface Options"]
+        },
         calendar = {
             order = 10,
             type = "toggle",

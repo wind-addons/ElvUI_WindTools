@@ -21,19 +21,6 @@ function S:BlizzardMiscFrames()
         return
     end
 
-    -- 一些菜单框体
-    local miscFrames = {
-        "GameMenuFrame",
-        "InterfaceOptionsFrame",
-        "VideoOptionsFrame",
-        "AudioOptionsFrame",
-        "AutoCompleteBox"
-    }
-
-    for _, frame in pairs(miscFrames) do
-        self:CreateShadow(_G[frame])
-    end
-
     -- 跳过剧情
     self:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
     self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")

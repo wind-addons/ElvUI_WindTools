@@ -201,6 +201,7 @@ V.skins = {
 		barberShop = true,
 		binding = true,
 		blackMarket = true,
+		blizzardOptions = true,
 		calendar = true,
 		challenges = true,
 		channels = true,

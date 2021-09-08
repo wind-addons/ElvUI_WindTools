@@ -21,6 +21,9 @@ function S:BlizzardMiscFrames()
         return
     end
 
+    self:CreateShadow(_G.GameMenuFrame)
+    self:CreateShadow(_G.AutoCompleteBox)
+
     -- 跳过剧情
     self:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
     self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")

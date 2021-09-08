@@ -8,15 +8,13 @@ function S:BlizzardOptions()
         return
     end
 
-    local miscFrames = {
-        "GameMenuFrame",
+    local frames = {
         "InterfaceOptionsFrame",
         "VideoOptionsFrame",
-        "AudioOptionsFrame",
-        "AutoCompleteBox"
+        "AudioOptionsFrame"
     }
 
-    for _, frame in pairs(miscFrames) do
+    for _, frame in pairs(frames) do
         self:CreateShadow(_G[frame])
     end
 end

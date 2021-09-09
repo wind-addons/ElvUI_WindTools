@@ -3,6 +3,8 @@ local S = W:GetModule("Skins")
 
 local _G = _G
 
+local pairs = pairs
+
 function S:BlizzardOptions()
     if not self:CheckDB("blizzardOptions") then
         return

@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.41-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.24-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.44-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.25-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -114,8 +114,10 @@
 10. **預組列表**: 美化預組隊伍列表的圖標, 並添加一個職業顏色條.
 11. **移動速度**: 在人物面板顯示移動速度.
 12. **自動關閉地圖**: 在戰鬥開始時自動關閉地圖.
-
-更多功能加入中...
+13. **自動關閉背包**: 在戰鬥開始時自動關閉背包.
+14. **無漢字計數**: 在數值中使用英文字符來代替漢字.
+15. **自動擷圖**: 在你獲得成就後自動進行擷圖.
+16. **隐藏製作者**: 隱藏物品浮動提示中的製作者名字.
 
 -----
 <br>

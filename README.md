@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.41-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.24-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.44-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.25-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -112,9 +112,11 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 9. **Skip Cut Scene**: Skip most cut scenes; Press the modified key to stop it temporarily.
 10. **LFG List**: Reskin the icons inside LFG group list with a bar in class color.
 11. **Move Speed**: Add move speed to the list in character panel.
-12. **Auto-hide World Map**: Hide world map if player enters the combat automatically.
-
-More features are coming soon.
+12. **Auto hide World Map**: Hide world map if player enters the combat automatically.
+13. **Auto hide Bag**: Hide bags if player enters the combat automatically.
+14. **Math Without Kanji**: Replace Kanji with latin characters in values.
+15. **Auto Screenshot**: Screenshot after you earned an achievement automatically.
+16. **Hide Crafter**: Hide crafter name in the item tooltip.
 
 -----
 <br>

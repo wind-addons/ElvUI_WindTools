@@ -108,7 +108,7 @@ W.Changelog[225] = {
             "[스킨] ElvUI 유닛 프레임의 오라 스킨을 수정했습니다.",
             "[스킨] ElvUI 액션바의 플라이아웃 버튼 스킨을 수정하였습니다.",
             "[스킨] Masque가 활성화되면 액션 바 스킨이 자동으로 비활성화됩니다.",
-            "[Skins] Add a new option for Blizzard interface options skin.",
+            "[스킨] Blizzard 인터페이스 설정 스킨을 위한 별도의 옵션을 추가했습니다.",
             "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }

@@ -938,6 +938,12 @@ options.addons = {
             type = "toggle",
             name = L["Ace3"]
         },
+        angryKeystones = {
+            order = 10,
+            type = "toggle",
+            name = L["Angry Keystones"],
+            addonName = "AngryKeystones"
+        },
         azerothAutoPilot = {
             order = 10,
             type = "toggle",

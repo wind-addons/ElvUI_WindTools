@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Ace3.lua'/>
+	<Script file='AngryKeystone.lua'/>
 	<Script file='AzerothAutoPilot.lua'/>
 	<Script file='BigWigs.lua'/>
 	<Script file='BugSack.lua'/>

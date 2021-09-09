@@ -89,13 +89,6 @@ function S:Scenario_ChallengeMode_ShowBlock()
     block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
     block.StatusBar:SetHeight(10)
 
-    block.TimerFrame.Bar2:SetTexture(E.media.blankTex)
-    block.TimerFrame.Bar2:SetWidth(2)
-    block.TimerFrame.Bar2:SetAlpha(0.618)
-    block.TimerFrame.Bar3:SetTexture(E.media.blankTex)
-    block.TimerFrame.Bar3:SetWidth(2)
-    block.TimerFrame.Bar3:SetAlpha(0.618)
-
     select(3, block:GetRegions()):Hide()
 
     block.windStyle = true

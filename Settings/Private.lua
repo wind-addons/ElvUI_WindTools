@@ -170,6 +170,7 @@ V.skins = {
 	},
 	addons = {
 		ace3 = true,
+		angryKeystones = true,
 		azerothAutoPilot = true,
 		bigWigs = true,
 		bigWigsQueueTimer = true,

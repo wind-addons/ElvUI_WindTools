@@ -5,7 +5,10 @@ local _G = _G
 
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
+local select = select
 local unpack = unpack
+
+local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 
 function S:SkinMawBuffsContainer(container)
     container:StripTextures()
@@ -43,6 +46,59 @@ function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, t
         stageBlock.backdrop:SetInside(stageBlock.GlowTexture, 4, 2)
         self:CreateShadow(stageBlock.backdrop)
     end
+end
+
+function S:Scenario_ChallengeMode_ShowBlock()
+    local block = _G.ScenarioChallengeModeBlock
+
+    if not block then
+        return
+    end
+
+    -- Affix icon
+    for _, child in pairs {block:GetChildren()} do
+        if not child.windStyle and child.affixID then
+            child.Border:SetAlpha(0)
+            local texPath = select(3, C_ChallengeMode_GetAffixInfo(child.affixID))
+            child:CreateBackdrop("Transparent")
+            child.backdrop:ClearAllPoints()
+            child.backdrop:SetOutside(child.Portrait)
+            child.Portrait:SetTexture(texPath)
+            child.Portrait:SetTexCoord(unpack(E.TexCoords))
+            child.windStyle = true
+        end
+    end
+
+    if block.windStyle then
+        return
+    end
+    
+    -- Block background
+    block.TimerBG:Hide()
+    block.TimerBGBack:Hide()
+
+    block:CreateBackdrop("Transparent")
+    block.backdrop:ClearAllPoints()
+    block.backdrop:SetInside(block, 6, 2)
+    self:CreateBackdropShadow(block)
+
+    -- Time bar
+    block.StatusBar:CreateBackdrop()
+    block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
+    block.StatusBar:SetStatusBarTexture(E.media.normTex)
+    block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+    block.StatusBar:SetHeight(10)
+
+    block.TimerFrame.Bar2:SetTexture(E.media.blankTex)
+    block.TimerFrame.Bar2:SetWidth(2)
+    block.TimerFrame.Bar2:SetAlpha(0.618)
+    block.TimerFrame.Bar3:SetTexture(E.media.blankTex)
+    block.TimerFrame.Bar3:SetWidth(2)
+    block.TimerFrame.Bar3:SetAlpha(0.618)
+
+    select(3, block:GetRegions()):Hide()
+
+    block.windStyle = true
 end
 
 function S:ScenarioStageWidgetContainer()
@@ -88,6 +144,7 @@ function S:ScenarioStage()
     end
 
     self:SecureHook("ScenarioStage_CustomizeBlock")
+    self:SecureHook("Scenario_ChallengeMode_ShowBlock")
     self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", "ScenarioStageWidgetContainer")
     self:SkinMawBuffsContainer(_G.ScenarioBlocksFrame.MawBuffsBlock.Container)
     self:SkinMawBuffsContainer(_G.MawBuffsBelowMinimapFrame.Container)

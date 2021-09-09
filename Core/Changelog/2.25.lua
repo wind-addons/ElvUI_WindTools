@@ -33,24 +33,28 @@ W.Changelog[225] = {
             "[其他] 添加了进入战斗自动关闭背包功能.",
             "[美化皮肤] 新增了 ElvUI 光环条的美化.",
             "[美化皮肤] 新增了爬塔场景事件界面的美化.",
+            "[美化皮肤] 新增了史诗钥石地下城界面的美化.",
             "[美化皮肤] 优化并新增了 ElvUI 施法条图标在内时的美化."
         },
         ["zhTW"] = {
             "[其他] 新增了進入戰鬥自動關閉背包功能.",
             "[美化皮膚] 新增了 ElvUI 光環條的美化.",
             "[美化皮膚] 新增了爬塔場景事件介面的美化.",
+            "[美化皮膚] 新增了传奇鑰石地城介面的美化.",
             "[美化皮膚] 優化并新增了 ElvUI 施法條圖示在內時的美化."
         },
         ["enUS"] = {
             "[Misc] Add new features to close bags after player enters combat.",
             "[Skins] Add the skin of aura bars for ElvUI unit frames.",
             "[Skins] Add the skin of scenario UI in Torghast.",
+            "[Skins] Add the skin of timer in mythic plus.",
             "[Skins] Optimize the skin of ElvUI cast bars which contains an attached icon."
         },
         ["koKR"] = {
             "[기타] 전투가 시작되면 자동으로 가방을 닫는 기능을 추가했습니다.",
             "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
             "[스킨] 토르가스트의 시나리오 UI 스킨을 추가합니다.",
+            "[Skins] Add the skin of timer in mythic plus.",
             "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }
     },

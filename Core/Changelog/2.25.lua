@@ -4,7 +4,7 @@ W.Changelog[225] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "核心函数库更新",
+            "核心函数库更新.",
             "在模块载入前现在将会检查 ElvUI 版本是否受到支持.",
             "[美化皮肤] 大幅改善了 WeakAuras 的设定美化.",
             "[任务列表] 由于 ElvUI 已经能够自动控制, 去除了爬塔 Buff 在右选项."

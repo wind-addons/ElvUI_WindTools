@@ -68,6 +68,7 @@ W.Changelog[225] = {
             "[美化皮肤] 启用 Masque 的情况下会自动停用动作条美化.",
             "[美化皮肤] 为暴雪的界面设定美化新增了独立选项.",
             "[美化皮肤] 优化了世界地图上托加斯特鼠标提示的美化.",
+            "[美化皮肤] 优化了插件皮肤设定界面.",
             "[任务列表] 优化了标题缩写功能."
         },
         ["zhTW"] = {
@@ -83,6 +84,7 @@ W.Changelog[225] = {
             "[美化皮膚] 啟用 Masque 的情況下會自動停用快捷列美化.",
             "[美化皮膚] 為暴雪的介面設定新增了獨立選項.",
             "[美化皮膚] 優化了世界地圖上托伽司浮動提示的美化.",
+            "[美化皮膚] 優化了插件皮膚設定介面.",
             "[任務列表] 優化了標題縮寫功能."
         },
         ["enUS"] = {
@@ -98,6 +100,7 @@ W.Changelog[225] = {
             "[Skins] The action bar skin will not be loaded if masque enabled.",
             "[Skins] Add a new option for Blizzard interface options skin.",
             "[Skins] Optimize the skin for Torghast tooltip in world map.",
+            "[Skins] Optimize the option UI of addon skins.",
             "[Objective Tracker] Optimize the abbreviation feature for long titles."
         },
         ["koKR"] = {
@@ -113,6 +116,7 @@ W.Changelog[225] = {
             "[스킨] Masque가 활성화되면 액션 바 스킨이 자동으로 비활성화됩니다.",
             "[스킨] Blizzard 인터페이스 설정 스킨을 위한 별도의 옵션을 추가했습니다.",
             "[Skins] Optimize the skin for Torghast tooltip in world map.",
+            "[Skins] Optimize the option UI of addon skins.",
             "[퀘스트 추적기] 긴 제목에 대한 약어 기능을 최적화했습니다."
         }
     }

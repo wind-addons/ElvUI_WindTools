@@ -21,7 +21,7 @@ W.Title = L["WindTools"]
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-W.SupportElvUIVersion = 12.42
+W.SupportElvUIVersion = 12.44
 
 -- 模块部分
 W.RegisteredModules = {}

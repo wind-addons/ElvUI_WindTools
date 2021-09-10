@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[225] = {
-    RELEASE_DATE = "2021/09/09",
+    RELEASE_DATE = "2021/09/10",
     IMPORTANT = {
         ["zhCN"] = {
             "核心函数库更新.",
@@ -34,6 +34,7 @@ W.Changelog[225] = {
             "[美化皮肤] 新增了 ElvUI 光环条的美化.",
             "[美化皮肤] 新增了爬塔场景事件界面的美化.",
             "[美化皮肤] 新增了史诗钥石地下城界面的美化.",
+            "[美化皮肤] 新增了 ElvUI 小地图中键菜鸟的美化.",
             "[美化皮肤] 新增了 Angry Keystones 的美化.",
             "[美化皮肤] 优化并新增了 ElvUI 施法条图标在内时的美化."
         },
@@ -43,6 +44,7 @@ W.Changelog[225] = {
             "[美化皮膚] 新增了爬塔場景事件介面的美化.",
             "[美化皮膚] 新增了传奇鑰石地城介面的美化.",
             "[美化皮膚] 新增了 Angry Keystones 的美化.",
+            "[美化皮膚] 新增了 ElvUI 小地圖中鍵選單的美化.",
             "[美化皮膚] 優化并新增了 ElvUI 施法條圖示在內時的美化."
         },
         ["enUS"] = {
@@ -50,6 +52,7 @@ W.Changelog[225] = {
             "[Skins] Add the skin of aura bars for ElvUI unit frames.",
             "[Skins] Add the skin of scenario UI in Torghast.",
             "[Skins] Add the skin of timer in mythic plus.",
+            "[Skins] Add the skin of ElvUI minimap middle click menu.",
             "[Skins] Add the skin of Angry Keystones.",
             "[Skins] Optimize the skin of ElvUI cast bars which contains an attached icon."
         },
@@ -58,6 +61,7 @@ W.Changelog[225] = {
             "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
             "[스킨] 토르가스트의 시나리오 UI 스킨을 추가했습니다.",
             "[스킨] 신화+ 타이머 스킨을 추가했습니다.",
+            "[Skins] Add the skin of ElvUI minimap middle click menu.",
             "[스킨] Angry Keystones 애드온 스킨을 추가했습니다.",
             "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }

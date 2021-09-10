@@ -12,6 +12,7 @@ function S:ElvUI_MiniMap()
     end
 
     self:CreateShadow(_G.MMHolder)
+    self:CreateShadow(_G.MinimapRightClickMenu)
 end
 
 S:AddCallback("ElvUI_MiniMap")

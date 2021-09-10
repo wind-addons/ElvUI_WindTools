@@ -7,11 +7,9 @@ local print = print
 local strsub = strsub
 local tinsert = tinsert
 
-local GetCVarBool = GetCVarBool
 local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
-local ScriptErrorsFrame_OnError = ScriptErrorsFrame_OnError
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL

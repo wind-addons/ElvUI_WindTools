@@ -58,7 +58,7 @@ local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
-local quests, choiceQueue = {}
+local quests, choiceQueue = {}, nil
 
 local ignoreQuestNPC = {
     [88570] = true, -- Fate-Twister Tiklal
@@ -475,7 +475,7 @@ function TI:QUEST_COMPLETE()
     if choices <= 1 then
         GetQuestReward(1)
     elseif choices > 1 and self.db and self.db.selectReward then
-        local bestSellPrice, bestIndex = 0
+        local bestSellPrice, bestIndex = 0, nil
 
         for index = 1, choices do
             local link = GetQuestItemLink("choice", index)

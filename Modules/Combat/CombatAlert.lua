@@ -331,8 +331,8 @@ function C:UpdateMover()
     local height = 0
 
     if self.db.animation and self.animationFrame then
-        width = width + self.animationFrame:GetWidth() or 0
-        height = height + self.animationFrame:GetHeight() or 0
+        width = width + (self.animationFrame:GetWidth() or 0)
+        height = height + (self.animationFrame:GetHeight() or 0)
     end
 
     if self.db.text and self.textFrame then

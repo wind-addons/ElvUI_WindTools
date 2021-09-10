@@ -101,7 +101,7 @@ local function ReplaceEmote(value)
     for _, v in ipairs(emotes) do
         if (emote == v.key or emote == v.zhCN or emote == v.zhTW) then
             return "|T" ..
-                (v.texture or "Interface\\AddOns\\ElvUI_WindTools\\Media\\Emotes\\" .. v.key) ..
+                ((v.texture or "Interface\\AddOns\\ElvUI_WindTools\\Media\\Emotes\\") .. v.key) ..
                     ":" .. CE.db.size .. "|t"
         end
     end

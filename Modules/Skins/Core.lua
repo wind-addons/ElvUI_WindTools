@@ -71,7 +71,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
     b = b or E.private.WT.skins.color.b or 0
 
     size = size or 4
-    size = size + E.private.WT.skins.increasedSize or 0
+    size = size + (E.private.WT.skins.increasedSize or 0)
 
     local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     shadow:SetFrameStrata(frame:GetFrameStrata())

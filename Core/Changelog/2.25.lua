@@ -61,7 +61,7 @@ W.Changelog[225] = {
             "[스킨] ElvUI 유닛 프레임의 오라 바 스킨을 추가했습니다.",
             "[스킨] 토르가스트의 시나리오 UI 스킨을 추가했습니다.",
             "[스킨] 신화+ 타이머 스킨을 추가했습니다.",
-            "[Skins] Add the skin of ElvUI minimap middle click menu.",
+            "[스킨] ElvUI 미니맵 중간 클릭 메뉴의 스킨을 추가했습니다.",
             "[스킨] Angry Keystones 애드온 스킨을 추가했습니다.",
             "[스킨] ElvUI 캐스팅 바 아이콘을 최적화한 스킨을 추가했습니다."
         }

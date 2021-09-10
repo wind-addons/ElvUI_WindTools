@@ -70,7 +70,7 @@ function F.SetFontOutline(text, font, size)
         size = fontHeight + tonumber(size)
     end
 
-    if font and not strfind(font, "\.ttf") then
+    if font and not strfind(font, "%.ttf") and not strfind(font, "%.otf") then
         font = LSM:Fetch('font', font)
     end
 

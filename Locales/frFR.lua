@@ -113,6 +113,7 @@ L["Always Show Info"] = "Toujours afficher les informations"
 L["Always Show Mine"] = "Montrer aussi mon équipement à côté"
 L["Americas & Oceania"] = true
 L["Anchor Point"] = "Point d'ancrage"
+L["Angry Keystones"] = true
 L["Anima Diversion"] = true
 L["Animation"] = "Animation"
 L["Animation Duration"] = "Durée de l'animation"

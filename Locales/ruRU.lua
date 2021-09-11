@@ -113,6 +113,7 @@ L["Always Show Info"] = "Всегда отображать информацию"
 L["Always Show Mine"] = "Всегда отображать ваш список"
 L["Americas & Oceania"] = "Америка и Океания"
 L["Anchor Point"] = "Точка фиксации"
+L["Angry Keystones"] = true
 L["Anima Diversion"] = "Проводник анимы"
 L["Animation"] = "Анимация"
 L["Animation Duration"] = "Продолжительность анимации"

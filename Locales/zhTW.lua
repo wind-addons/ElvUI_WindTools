@@ -113,6 +113,7 @@ L["Always Show Info"] = "總是顯示文字"
 L["Always Show Mine"] = "總是顯示我的裝備"
 L["Americas & Oceania"] = "美洲和大洋洲"
 L["Anchor Point"] = "定位點"
+L["Angry Keystones"] = true
 L["Anima Diversion"] = "靈魄傳導器"
 L["Animation"] = "動畫"
 L["Animation Duration"] = "動畫時間"

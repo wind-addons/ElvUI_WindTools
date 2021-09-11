@@ -113,6 +113,7 @@ L["Always Show Info"] = "Zeige immer Infos"
 L["Always Show Mine"] = "Zeige immer meine"
 L["Americas & Oceania"] = true
 L["Anchor Point"] = "Ankerpunkt"
+L["Angry Keystones"] = true
 L["Anima Diversion"] = true
 L["Animation"] = true
 L["Animation Duration"] = "Animationsdauer"

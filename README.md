@@ -82,23 +82,24 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 
 ## Skins
 1. **Vignetting**: Add the shadowed border inner game interface.
-2. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
-3. **ElvUI Frame Skins**: Reskin ElvUI modules.
-4. **WindTools Skins**: Reskin WindTools modules.
-5. **Ace3 Skins**: Apply skin for Ace3-GUI widgets.
-6. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
-7. **Bigwigs Skin**: Apply skin for Bigwigs.
-8. **BugSack Skin**: Apply skin for BugSack.
-9. **Hekili Skin**: Apply skin for Hekili.
-10. **Immersion Skin**: Apply skin for Immersion.
-11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
-12. **Myslot Skin**: Apply skin for Myslot.
-13. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
-14. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-15. **REHack Skin**: Apply skin for REHack.
-16. **Rematch Skin**: Apply skin for Rematch.
-17. **TinyInspect Skin**: Apply skin for TinyInspect.
-18. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+2. **Angry Keystones Skin**: Apply skins for Angry Keystones mythic plus timer.
+3. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
+4. **ElvUI Frame Skins**: Reskin ElvUI modules.
+5. **WindTools Skins**: Reskin WindTools modules.
+6. **Ace3 Skins**: Apply skin for Ace3-GUI widgets.
+7. **Azeroth Auto Pilot Skin**: Apply skin for Azeroth Auto Pilot.
+8. **Bigwigs Skin**: Apply skin for Bigwigs.
+9. **BugSack Skin**: Apply skin for BugSack.
+10. **Hekili Skin**: Apply skin for Hekili.
+11. **Immersion Skin**: Apply skin for Immersion.
+12. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
+13. **Myslot Skin**: Apply skin for Myslot.
+14. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
+15. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
+16. **REHack Skin**: Apply skin for REHack.
+17. **Rematch Skin**: Apply skin for Rematch.
+18. **TinyInspect Skin**: Apply skin for TinyInspect.
+19. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

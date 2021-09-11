@@ -83,23 +83,24 @@
 
 ## 美化外观
 1. **屏幕暗角**: 让游戏更加有电影的感觉!
-2. **暴雪框体美化**: 在 ElvUI 美化皮肤之上, 进行框体和文字的美化.
-3. **ElvUI 框体美化**: 为 ElvUI 模块添加美化.
-4. **WindTools 框体美化**: 为 WindTools 模块添加美化.
-5. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
-6. **Azeroth Auto Pilot 美化**: 为 Azeroth Auto Pilot 的主要窗口添加美化.
-7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
-8. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
-9. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
-10. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
-11. **网易集合石美化**: 为网易的集合石插件添加美化.
-12. **Myslot 美化**: 为 Myslot 的主要窗口添加美化.
-13. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化.
-14. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
-15. **REHack 美化**: 为 REHack 的主要窗口添加美化.
-16. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
-17. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+2. **Angry Keystones 美化**: 美化 Angry Keystones 的史诗钥石地下城计时条.
+3. **暴雪框体美化**: 在 ElvUI 美化皮肤之上, 进行框体和文字的美化.
+4. **ElvUI 框体美化**: 为 ElvUI 模块添加美化.
+5. **WindTools 框体美化**: 为 WindTools 模块添加美化.
+6. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化.
+7. **Azeroth Auto Pilot 美化**: 为 Azeroth Auto Pilot 的主要窗口添加美化.
+8. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化.
+9. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化.
+10. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化.
+11. **Immersion 美化**: 为 Immersion 对话窗口, 按钮提供全方位的美化.
+12. **网易集合石美化**: 为网易的集合石插件添加美化.
+13. **Myslot 美化**: 为 Myslot 的主要窗口添加美化.
+14. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化.
+15. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
+16. **REHack 美化**: 为 REHack 的主要窗口添加美化.
+17. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
+18. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+19. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

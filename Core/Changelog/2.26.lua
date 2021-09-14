@@ -37,7 +37,7 @@ W.Changelog[226] = {
         },
         ["koKR"] = {
             "호환성 검사가 업데이트되었습니다.",
-            "[Minimap Buttons] Fix the issue that the garrison button is sometimes displayed in the wrong position."
+            "[미니맵 버튼 통합 바] 주둔지 버튼이 잘못된 위치에 표시되는 현상을 수정합니다."
         }
     }
 }

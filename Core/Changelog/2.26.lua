@@ -24,16 +24,20 @@ W.Changelog[226] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "兼容性检查工具更新."
+            "兼容性检查工具更新.",
+            "[小地图图标] 修复要塞按键的位置错误."
         },
         ["zhTW"] = {
-            "相容性確認工具更新."
+            "相容性確認工具更新.",
+            "[小地圖圖示] 修復要塞按鍵的位置錯誤."
         },
         ["enUS"] = {
-            "Compatibility check updated."
+            "Compatibility check updated.",
+            "[Minimap Buttons] Fix the issue that the garrison button is sometimes displayed in the wrong position."
         },
         ["koKR"] = {
-            "호환성 검사가 업데이트되었습니다."
+            "호환성 검사가 업데이트되었습니다.",
+            "[Minimap Buttons] Fix the issue that the garrison button is sometimes displayed in the wrong position."
         }
     }
 }

@@ -12,12 +12,12 @@ W.Changelog[226] = {
         ["enUS"] = {
             "Update functions in core library."
         },
-        ["koKR"] = {}
+        ["koKR"] = {
+            "핵심 기능 라이브러리 업데이트."
+        }
     },
     NEW = {
-        ["zhCN"] = {
-            "핵심 기능 라이브러리 업데이트."
-        },
+        ["zhCN"] = {},
         ["zhTW"] = {},
         ["enUS"] = {},
         ["koKR"] = {}

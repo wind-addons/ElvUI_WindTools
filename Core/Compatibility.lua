@@ -395,9 +395,16 @@ function W:CheckCompatibility()
 
     self:CheckCompatibilityMerathilisUI(
         format("%s-%s", L["Tooltip"], L["Add Icon"]),
-        L["Tooltip Icons"],
+        format("%s-%s", L["Tooltip"], L["Tooltip Icons"]),
         "private.WT.tooltips.icon",
         "db.mui.tooltip.tooltipIcon"
+    )
+
+    self:CheckCompatibilityMerathilisUI(
+        format("%s-%s", L["Tooltip"], L["Domination Rank"]),
+        format("%s-%s", L["Tooltip"], L["Domination Rank"]),
+        "private.WT.tooltips.dominationRank",
+        "db.mui.tooltip.dominationRank"
     )
 
     self:CheckCompatibilityMerathilisUI(
@@ -495,14 +502,7 @@ function W:CheckCompatibility()
         L["Instance Difficulty"],
         L["Raid Difficulty"],
         "private.WT.maps.instanceDifficulty.enable",
-        "db.mui.maps.minimap.difficulty"
-    )
-
-    self:CheckCompatibilityMerathilisUI(
-       L["Talent Manager"],
-       L["Talent Manager"],
-       "private.WT.combat.talentManager.enable",
-       "db.mui.talents.talentManager.enable"
+        "db.mui.maps.minimap.instanceDifficulty.enable"
     )
 
     -- S&L

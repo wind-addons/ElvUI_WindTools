@@ -78,7 +78,12 @@ function MB:ResetGarrisonSize()
 		return
 	end
 
-	_G.GarrisonLandingPageMinimapButton:SetSize(self.db.buttonSize,self.db.buttonSize)
+	_G.GarrisonLandingPageMinimapButton:SetSize(self.db.buttonSize, self.db.buttonSize)
+end
+
+function MB:UpdateGarrisonMinimapIcon()
+	self:ResetGarrisonSize()
+	self:UpdateLayout()
 end
 
 function MB:SetButtonMouseOver(button, frame, rawhook)
@@ -207,6 +212,7 @@ function MB:SkinButton(frame)
 			MB:RegisterEvent("ZONE_CHANGED", "ResetGarrisonSize")
 			MB:RegisterEvent("ZONE_CHANGED_INDOORS", "ResetGarrisonSize")
 			MB:RegisterEvent("GARRISON_SHOW_LANDING_PAGE", "ResetGarrisonSize")
+			MB:SecureHook("GarrisonLandingPageMinimapButton_UpdateIcon", "UpdateGarrisonMinimapIcon")
 		end
 		frame.isRegister = true
 	end
@@ -396,7 +402,7 @@ function MB:UpdateLayout()
 			frame:ClearAllPoints()
 			frame:SetFrameStrata("LOW")
 			frame:SetFrameLevel(20)
-			frame:SetSize(buttonSize,buttonSize)
+			frame:SetSize(buttonSize, buttonSize)
 
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)

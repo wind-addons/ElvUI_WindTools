@@ -542,6 +542,13 @@ function W:CheckCompatibility()
         "db.mMediaTag.mTIcon"
     )
 
+    self:CheckCompatibilitymMediaTag(
+        L["Objective Tracker"],
+        L["ObjectiveTracker Skin"],
+        "private.WT.quest.objectiveTracker.enable",
+        "db.mMediaTag.mObjectiveTracker.enable"
+    )
+
     if self.CompatibiltyFrame.numModules > 0 then
         self.CompatibiltyFrame:Show()
     end

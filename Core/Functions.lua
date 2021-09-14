@@ -157,11 +157,14 @@ function F.DebugMessage(module, text)
         module = "函数"
         text = "无模块名>" .. text
     end
+
     if type(module) ~= "string" and module.GetName then
         module = module:GetName()
     end
+
     local message = format("[WT - %s] %s", module, text)
-    print(message)
+
+    E:Delay(0.1, print, message)
 end
 
 --[[

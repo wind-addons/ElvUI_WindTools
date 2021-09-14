@@ -514,6 +514,20 @@ function W:CheckCompatibility()
     )
 
     self:CheckCompatibilityShadowAndLight(
+        format("%s-%s", L["Skins"], L["Shadow"]),
+        L["Enhanced Shadow"],
+        "private.WT.skins.shadow",
+        "private.sle.module.shadows.enable"
+    )
+
+    self:CheckCompatibilityShadowAndLight(
+        format("%s-%s", L["Tooltip"], L["Progression"]),
+        format("%s-%s", L["Tooltip"], L["Raid Progression"]),
+        "private.WT.tooltips.progression.enable",
+        "db.sle.tooltip.RaidProg.enable"
+    )
+
+    self:CheckCompatibilityShadowAndLight(
         L["Rectangle Minimap"],
         L["Rectangle Minimap"],
         "db.WT.maps.rectangleMinimap.enable",
@@ -532,6 +546,13 @@ function W:CheckCompatibility()
         format("%s-%s", L["Skins"], _G.OBJECTIVES_TRACKER_LABEL),
         "private.WT.skins.blizzard.scenario",
         "private.sle.skins.objectiveTracker.enable"
+    )
+
+    self:CheckCompatibilityShadowAndLight(
+        format("%s-%s", L["Item"], L["Fast Loot"]),
+        L["Loot"],
+        "db.WT.item.fastLoot.enable",
+        "db.sle.loot.enable"
     )
 
     -- mMediaTag

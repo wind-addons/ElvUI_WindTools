@@ -966,19 +966,22 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["BugSack"],
-            addonName = "BugSack"
+            addonName = "BugSack",
+            addonskinsKey = "BugSack"
         },
         hekili = {
             order = 10,
             type = "toggle",
             name = L["Hekili"],
-            addonName = "Hekili"
+            addonName = "Hekili",
+            addonskinsKey = "Hekili"
         },
         immersion = {
             order = 10,
             type = "toggle",
             name = L["Immersion"],
-            addonName = "Immersion"
+            addonName = "Immersion",
+            addonskinsKey = "Immersion"
         },
         meetingStone = {
             order = 10,
@@ -1002,13 +1005,15 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Premade Groups Filter"],
-            addonName = "PremadeGroupsFilter"
+            addonName = "PremadeGroupsFilter",
+            addonskinsKey = "PremadeGroupsFilter"
         },
         rehack = {
             order = 10,
             type = "toggle",
             name = L["REHack"],
-            addonName = "REHack"
+            addonName = "REHack",
+            addonskinsKey = "REHack"
         },
         -- rematch = {
         --     order = 10,
@@ -1020,7 +1025,8 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["TinyInspect"],
-            addonName = "TinyInspect"
+            addonName = "TinyInspect",
+            addonskinsKey = "TinyInspect"
         },
         weakAuras = {
             order = 10,
@@ -1053,6 +1059,23 @@ local function GenerateAddOnSkinsGetFunction(name)
     end
 end
 
+local function GenerateAddOnSkinsSetFunction(addonskinsKey)
+    if addonskinsKey then
+        return function(info, value)
+            E.private.WT.skins.addons[info[#info]] = value
+            if value then
+                S:DisableAddOnSkin(addonskinsKey)
+            end
+            E:StaticPopup_Show("PRIVATE_RL")
+        end
+    else
+        return function(info, value)
+            E.private.WT.skins.addons[info[#info]] = value
+            E:StaticPopup_Show("PRIVATE_RL")
+        end
+    end
+end
+
 local function GenerateAddOnSkinsDisabledFunction(name)
     if type(name) == "string" then
         return function(info)
@@ -1072,7 +1095,9 @@ end
 for _, option in pairs(options.addons.args) do
     if option.addonName then
         option.get = GenerateAddOnSkinsGetFunction(option.addonName)
+        option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
         option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
         option.addonName = nil
+        option.addonskinsKey = nil
     end
 end

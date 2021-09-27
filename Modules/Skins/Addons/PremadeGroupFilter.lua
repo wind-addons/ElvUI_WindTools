@@ -20,6 +20,8 @@ function S:PremadeGroupsFilter()
         return
     end
 
+    S:DisableAddOnSkin("PremadeGroupsFilter")
+
     local frame = _G.PremadeGroupsFilterDialog
     ES:HandlePortraitFrame(frame, true)
 
@@ -135,4 +137,3 @@ function S:PremadeGroupsFilter()
 end
 
 S:AddCallbackForAddon("PremadeGroupsFilter")
-S:DisableAddOnSkin("PremadeGroupsFilter")

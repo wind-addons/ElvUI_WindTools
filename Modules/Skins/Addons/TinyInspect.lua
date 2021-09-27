@@ -190,6 +190,8 @@ function S:TinyInspect()
         return
     end
 
+    S:DisableAddOnSkin("TinyInspect")
+
     if _G.ShowInspectItemListFrame then
         self:SecureHook("ShowInspectItemListFrame", "TinyInspect_SkinListPanel")
     end
@@ -200,4 +202,3 @@ function S:TinyInspect()
 end
 
 S:AddCallbackForAddon("TinyInspect")
-S:DisableAddOnSkin("TinyInspect")

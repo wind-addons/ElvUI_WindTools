@@ -81,8 +81,9 @@ function S:BugSack()
         return
     end
 
+    S:DisableAddOnSkin("BugSack")
+
     self:SecureHook(_G.BugSack, "OpenSack", "BugSack_Open")
 end
 
 S:AddCallbackForAddon("BugSack")
-S:DisableAddOnSkin("BugSack")

@@ -11,6 +11,8 @@ function S:REHack()
         return
     end
 
+    S:DisableAddOnSkin("REHack")
+    
     if _G.HackEditFrame then
         self:StripEdgeTextures(_G.HackEditFrame)
         _G.HackEditFrameBG:StripTextures()
@@ -61,4 +63,3 @@ function S:REHack()
 end
 
 S:AddCallbackForAddon("REHack")
-S:DisableAddOnSkin("REHack")

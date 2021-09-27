@@ -15,9 +15,10 @@ function S:Hekili()
         return
     end
 
+    S:DisableAddOnSkin("Hekili")
+
     local Hekili = LibStub("AceAddon-3.0"):GetAddon("Hekili")
     self:RawHook(Hekili, "CreateButton", "Hekili_CreateButton")
 end
 
 S:AddCallbackForAddon("Hekili")
-S:DisableAddOnSkin("Hekili")

@@ -139,6 +139,8 @@ local MaxLevel = {
 }
 
 local BNColor = {
+    [BNET_CLIENT_ARCADE] = {r = 0.509, g = 0.772, b = 1}, -- Arcade
+    [BNET_CLIENT_CRASH4] = {r = 0.509, g = 0.772, b = 1}, -- Crash
     [BNET_CLIENT_CLNT] = {r = 0.509, g = 0.772, b = 1}, -- 未知
     [BNET_CLIENT_APP] = {r = 0.509, g = 0.772, b = 1}, -- 战网
     [BNET_CLIENT_WC3] = {r = 0.796, g = 0.247, b = 0.145}, -- 魔兽争霸重置版 3
@@ -150,7 +152,8 @@ local BNColor = {
     [BNET_CLIENT_HEROES] = {r = 0, g = 0.8, b = 1}, -- 风暴英雄
     [BNET_CLIENT_OVERWATCH] = {r = 1, g = 1, b = 1}, -- 守望先锋
     [BNET_CLIENT_COD] = {r = 0, g = 0.8, b = 0}, -- 使命召唤
-    [BNET_CLIENT_COD_MW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争 2
+    [BNET_CLIENT_COD_MW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争
+    [BNET_CLIENT_COD_MW2] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争 2
     [BNET_CLIENT_COD_BOCW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：冷战
     -- 命运 2 因为已经分家了，不会出现了，下面为自定客户端代码
     [BNET_CLIENT_WOW .. "C"] = {r = 0.866, g = 0.690, b = 0.180}, -- 魔兽世界怀旧版

@@ -25,19 +25,23 @@ W.Changelog[226] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "兼容性检查工具更新.",
-            "[小地图图标] 修复要塞按键的位置错误."
+            "[小地图图标] 修复要塞按键的位置错误.",
+            '[通告] 所有通告的输出频道都能设定为 "自己(聊天框)" 了.'
         },
         ["zhTW"] = {
             "相容性確認工具更新.",
-            "[小地圖圖示] 修復要塞按鍵的位置錯誤."
+            "[小地圖圖示] 修復要塞按鍵的位置錯誤.",
+            '[通告] 所有通告的輸出頻道都能設定為 "自己(聊天框)" 了.'
         },
         ["enUS"] = {
             "Compatibility check updated.",
-            "[Minimap Buttons] Fix the issue that the garrison button is sometimes displayed in the wrong position."
+            "[Minimap Buttons] Fix the issue that the garrison button is sometimes displayed in the wrong position.",
+            '[Announcement] All channel options support "Self (Chat Frame)".'
         },
         ["koKR"] = {
             "호환성 검사가 업데이트되었습니다.",
-            "[미니맵 버튼 통합 바] 주둔지 버튼이 잘못된 위치에 표시되는 현상을 수정합니다."
+            "[미니맵 버튼 통합 바] 주둔지 버튼이 잘못된 위치에 표시되는 현상을 수정합니다.",
+            '[Announcement] All channel options support "Self (Chat Frame)".'
         }
     }
 }

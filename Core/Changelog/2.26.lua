@@ -41,7 +41,7 @@ W.Changelog[226] = {
         ["koKR"] = {
             "호환성 검사가 업데이트되었습니다.",
             "[미니맵 버튼 통합 바] 주둔지 버튼이 잘못된 위치에 표시되는 현상을 수정합니다.",
-            '[Announcement] All channel options support "Self (Chat Frame)".'
+            '[알림] 모든 채널에서 Self (Chat Frame) 옵션을 지원합니다.'
         }
     }
 }

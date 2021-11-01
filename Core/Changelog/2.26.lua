@@ -4,15 +4,19 @@ W.Changelog[226] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "支持 9.1.5 版本.",
             "核心函数库更新."
         },
         ["zhTW"] = {
+            "支援 9.1.5 版本",
             "核心函數庫更新."
         },
         ["enUS"] = {
+            "Support WoW 9.1.5.",
             "Update functions in core library."
         },
         ["koKR"] = {
+            "Support WoW 9.1.5.",
             "핵심 기능 라이브러리 업데이트."
         }
     },

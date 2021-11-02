@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[226] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2021/11/02",
     IMPORTANT = {
         ["zhCN"] = {
             "支持 9.1.5 版本.",

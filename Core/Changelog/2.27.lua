@@ -25,7 +25,7 @@ W.Changelog[227] = {
             "Fix texture misplacement of minimap icon."
         },
         ["koKR"] = {
-            "Fix texture misplacement of minimap icon."
+            "미니맵 아이콘의 잘못된 텍스처 위치를 수정합니다."
         }
     }
 }

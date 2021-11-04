@@ -260,6 +260,13 @@ function MB:SkinButton(frame)
 			if region:IsObjectType("Texture") then
 				local t = region:GetTexture()
 
+				-- Remove rings and backdrops of LibDBIcon icons
+				if t and strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" then
+					if region ~= frame.icon then
+						region:SetTexture(nil)
+					end
+				end
+
 				if t and type(t) ~= "number" and (t:find("Border") or t:find("Background") or t:find("AlphaMask")) then
 					region:SetTexture(nil)
 				else

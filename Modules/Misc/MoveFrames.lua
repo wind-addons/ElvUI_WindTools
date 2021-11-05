@@ -455,6 +455,7 @@ function MF:HandleAddon(_, addon)
     if addon == "Blizzard_Collections" then
         _G.CollectionsJournal:EnableMouse(false)
         _G.CollectionsJournal:SetMovable(false)
+        self.db.framePositions["CollectionsJournal"] = nil
     end
 end
 

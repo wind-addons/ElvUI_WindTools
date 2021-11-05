@@ -82,7 +82,7 @@ function S:BlizzardMiscFrames()
     self:CreateShadow(_G.ColorPickerFrame)
 
     -- What's new
-    self:CreateShadow(_G.SplashFrame)
+    -- self:CreateShadow(_G.SplashFrame)
 
     -- UIWidget
     self:SecureHook(

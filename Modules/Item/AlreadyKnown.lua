@@ -5,6 +5,7 @@ local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 local _G = _G
 local ceil = ceil
 local format = format
+local gsub = gsub
 local min = min
 local mod = mod
 local strmatch = strmatch
@@ -12,7 +13,6 @@ local strsplit = strsplit
 local tonumber = tonumber
 
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
-local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetGuildBankItemLink = GetGuildBankItemLink
 local GetItemInfo = GetItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
@@ -154,7 +154,7 @@ local function IsAlreadyKnown(itemLink)
 	end
 
 	Scanner:ClearLines()
-	Scanner:SetOwner(UIParent, "ANCHOR_NONE")
+	Scanner:SetOwner(_G.UIParent, "ANCHOR_NONE")
 	Scanner:SetHyperlink(itemLink)
 
 	local prefix = Scanner:GetName() .. "TextLeft"
@@ -218,13 +218,13 @@ do
 				index = NUM_SLOTS_PER_GUILDBANK_GROUP
 			end
 			local column = ceil((i - 0.5) / NUM_SLOTS_PER_GUILDBANK_GROUP)
-			local button = GuildBankFrame.Columns[column].Buttons[index]
+			local button = _G.GuildBankFrame.Columns[column].Buttons[index]
 			local itemLink = GetGuildBankItemLink(tab, i)
 
-			--if texture and texture == 132599 then -- Inv_box_petcarrier_01 (BattlePet, itemId 82800)
-			if itemLink and itemLink:match("item:82800") then -- Check if item is Caged Battlepet (dummy item 82800)
-				scantip:ClearLines()
-				local speciesId = scantip:SetGuildBankItem(tab, i)
+			if itemLink and itemLink:match("item:82800") then
+				Scanner:ClearLines()
+				Scanner:SetOwner(_G.UIParent, "ANCHOR_NONE")
+				local speciesId = Scanner:SetGuildBankItem(tab, i)
 
 				if speciesId and speciesId > 0 then
 					itemLink = format("|Hbattlepet:%d::::::|h[Dummy]|h", speciesId)
@@ -294,7 +294,7 @@ do
 			self:SecureHook(frame, "RefreshScrollFrame", "AuctionHouse")
 			numberOfHookedFunctions = numberOfHookedFunctions + 1
 		elseif addOnName == "Blizzard_GuildBankUI" then
-			self:SecureHook(GuildBankFrame, "Update", "GuildBank")
+			self:SecureHook(_G.GuildBankFrame, "Update", "GuildBank")
 			numberOfHookedFunctions = numberOfHookedFunctions + 1
 		end
 

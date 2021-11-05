@@ -4,6 +4,7 @@ local ACH = E.Libs.ACH
 
 local _G = _G
 local format = format
+local gsub = gsub
 local ipairs = ipairs
 local pairs = pairs
 local tostring = tostring

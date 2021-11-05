@@ -20,7 +20,6 @@ local BlizzardFrames = {
     "ChatConfigFrame",
     "CinematicFrame",
     "DestinyFrame",
-    "DressUpFrame",
     "FriendsFrame",
     "GameMenuFrame",
     "GossipFrame",
@@ -57,6 +56,9 @@ local BlizzardFrames = {
         "TokenFrame",
         "TokenFramePopup",
         "TokenFrameContainer"
+    },
+    ["DressUpFrame"] = {
+        "DressUpFrame.OutfitDetailsPanel"
     },
     ["MailFrame"] = {
         "SendMailFrame",
@@ -144,8 +146,14 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_Contribution"] = {
         "ContributionCollectionFrame"
     },
+    ["Blizzard_CovenantPreviewUI"] = {
+        "CovenantPreviewFrame"
+    },
     ["Blizzard_CovenantRenown"] = {
         "CovenantRenownFrame"
+    },
+    ["Blizzard_CovenantSanctum"] = {
+        "CovenantSanctumFrame"
     },
     ["Blizzard_DeathRecap"] = {
         "DeathRecapFrame"
@@ -170,7 +178,15 @@ local BlizzardFramesOnDemand = {
         "GarrisonShipyardFrame",
         "OrderHallMissionFrame",
         "BFAMissionFrame",
-        "CovenantMissionFrame"
+        ["CovenantMissionFrame"] = {
+            "CovenantMissionFrame.MissionTab",
+            "CovenantMissionFrame.MissionTab.MissionPage",
+            "CovenantMissionFrame.MissionTab.MissionPage.CostFrame",
+            "CovenantMissionFrame.MissionTab.MissionPage.StartMissionFrame",
+            "CovenantMissionFrameMissions.MaterialFrame",
+            "CovenantMissionFrameFollowersListScrollFrameScrollChild",
+            "CovenantMissionFrameFollowers.MaterialFrame"
+        }
     },
     ["Blizzard_GMChatUI"] = {
         "GMChatStatusFrame"
@@ -428,11 +444,18 @@ end
 
 function MF:HandleAddon(_, addon)
     local frameTable = BlizzardFramesOnDemand[addon]
+
     if not frameTable then
         return
     end
 
     self:HandleFramesWithTable(frameTable)
+
+    -- 9.1.5 temp fix
+    if addon == "Blizzard_Collections" then
+        _G.CollectionsJournal:EnableMouse(false)
+        _G.CollectionsJournal:SetMovable(false)
+    end
 end
 
 function MF:PLAYER_REGEN_ENABLED()

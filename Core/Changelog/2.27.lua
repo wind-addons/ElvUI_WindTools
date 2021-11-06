@@ -4,16 +4,16 @@ W.Changelog[227] = {
     RELEASE_DATE = "2021/11/07",
     IMPORTANT = {
         ["zhCN"] = {
-            "暂时屏蔽了收藏品界面(坐骑, 玩具箱等)的移动功能. (等待暴雪修复)"
+            "[移动框体] 暂时屏蔽了收藏品界面(坐骑, 玩具箱等)的移动功能. (等待暴雪修复)"
         },
         ["zhTW"] = {
-            "暫時屏蔽了收藏品介面(坐騎, 玩具箱等)的移動功能. (等待暴雪修復)"
+            "[移動框架] 暫時屏蔽了收藏品介面(坐騎, 玩具箱等)的移動功能. (等待暴雪修復)"
         },
         ["enUS"] = {
-            "Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
+            "[Move Frames] Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
         },
         ["koKR"] = {
-            "Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
+            "[프레임 이동] Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
         }
     },
     NEW = {

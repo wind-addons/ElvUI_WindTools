@@ -1,14 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
 local DT = E:GetModule("DataTexts")
-local RC = LibStub("LibRangeCheck-2.0")
+local RangeCheck = E.Libs.RangeCheck
 
 local strjoin = strjoin
+
 local UnitName = UnitName
+local UnitIsConnected = UnitIsConnected
+local UnitIsUnit = UnitIsUnit
 
 local displayString = ""
 local lastPanel
 local int = 1
-local curMin, curMax
+local curMinRange, curMaxRange
 local updateTargetRange = false
 local forceUpdate = false
 
@@ -24,15 +27,20 @@ local function OnUpdate(self, t)
 
 	int = 0.25
 
-	local min, max = RC:GetRange("target")
-	if not forceUpdate and (min == curMin and max == curMax) then
-		return
+	if UnitIsConnected("target") and not UnitIsUnit("target", "player") then
+		local minRange, maxRange = RangeCheck:GetRange("target")
+		if not forceUpdate and (minRange == curMinRange and maxRange == curMaxRange) then
+			return
+		end
+		curMinRange = minRange
+		curMaxRange = maxRange
+	else
+		curMinRange = nil
+		curMaxRange = nil
 	end
-
-	curMin = min
-	curMax = max
-	if min and max then
-		self.text:SetFormattedText(displayString, L["Distance"], min, max)
+	
+	if curMinRange and curMaxRange then
+		self.text:SetFormattedText(displayString, L["Distance"], curMinRange, curMaxRange)
 	else
 		self.text:SetText("")
 	end

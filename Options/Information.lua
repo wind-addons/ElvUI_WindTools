@@ -1117,7 +1117,7 @@ options.reset = {
                     end
                 },
                 itemLevel = {
-                    order = 7,
+                    order = 8,
                     type = "execute",
                     name = L["Item Level"],
                     func = function()

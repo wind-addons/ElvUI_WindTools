@@ -17,10 +17,18 @@ W.Changelog[227] = {
         }
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "新增 [物品等级] 模块. 用于为飞出按钮和分解机添加额外的物品等级文字."
+        },
+        ["zhTW"] = {
+            "新增 [物品等級] 模組. 用於為飛出按鍵和分解機添加額外的物品等級文字."
+        },
+        ["enUS"] = {
+            "Add new [Item Level] module. It adds an extra item level text to flyout buttons and scrapping machine."
+        },
+        ["koKR"] = {
+            "Add new [Item Level] module. It adds an extra item level text to flyout buttons and scrapping machine."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

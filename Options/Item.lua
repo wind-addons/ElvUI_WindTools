@@ -1338,7 +1338,7 @@ options.itemLevel = {
             }
         },
         scrappingMachine = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Scrapping Machine"],

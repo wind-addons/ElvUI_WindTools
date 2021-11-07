@@ -1115,6 +1115,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                itemLevel = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Item Level"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Item Level"],
+                            nil,
+                            function()
+                                E.db.WT.item.itemLevel = P.item.itemLevel
+                            end
+                        )
+                    end
                 }
             }
         },

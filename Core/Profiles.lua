@@ -56,11 +56,11 @@ function F.Profiles.ImportByString(importString)
     end
 
     local profileData = F.Profiles.ExactString(profileString)
-    local priavteData = F.Profiles.ExactString(privateString)
+    local privateData = F.Profiles.ExactString(privateString)
 
     E:CopyTable(E.db.WT, P)
     E:CopyTable(E.db.WT, profileData)
 
     E:CopyTable(E.private.WT, V)
-    E:CopyTable(E.private.WT, priavteData)
+    E:CopyTable(E.private.WT, privateData)
 end

@@ -30,9 +30,6 @@ addon[7] = G.WT
 _G["WindTools"] = addon
 W.Version = GetAddOnMetadata(addonName, "Version")
 
--- 注册库
--- E:AddLib("RC", "LibRangeCheck-2.0")
-
 -- 预处理 WindTools 模块
 W.Modules = {}
 W.Modules.Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0")

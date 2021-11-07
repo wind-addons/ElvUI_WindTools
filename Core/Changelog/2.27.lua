@@ -27,7 +27,7 @@ W.Changelog[227] = {
             "Add new [Item Level] module. It adds an extra item level text to flyout buttons and scrapping machine."
         },
         ["koKR"] = {
-            "[아이템 레벨] 모듈이 추가되었습니다. 펼침 버튼 및 분쇄기 사용시 아이템 레벨 텍스트를 추가하는 데 사용됩니다."
+            "[아이템 레벨] 모듈이 추가되었습니다. 장비 관리창의 아이템 펼침 버튼 및 자동분해기계 사용시 아이템 레벨 텍스트를 추가하는 데 사용됩니다."
         }
     },
     IMPROVEMENT = {

@@ -8,7 +8,8 @@ local FL = W:GetModule("FastLoot")
 local TD = W:GetModule("Trade")
 local EB = W:GetModule("ExtraItemsBar")
 local CT = W:GetModule("Contacts")
-local IL = W:GetModule("Inspect")
+local IS = W:GetModule("Inspect")
+local IL = W:GetModule("ItemLevel")
 
 local format = format
 local pairs = pairs
@@ -944,7 +945,7 @@ options.inspect = {
     end,
     set = function(info, value)
         E.db.WT.item.inspect[info[#info]] = value
-        IL:ProfileUpdate()
+        IS:ProfileUpdate()
     end,
     args = {
         desc = {
@@ -957,10 +958,10 @@ options.inspect = {
                     order = 1,
                     type = "description",
                     name = function()
-                        if IL.StopRunning then
+                        if IS.StopRunning then
                             return format(
                                 "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
-                                IL.StopRunning
+                                IS.StopRunning
                             )
                         else
                             return format(
@@ -979,7 +980,7 @@ options.inspect = {
         enable = {
             order = 1,
             disabled = function()
-                return IL.StopRunning
+                return IS.StopRunning
             end,
             type = "toggle",
             name = L["Enable"],
@@ -991,7 +992,7 @@ options.inspect = {
             inline = true,
             name = L["Lists"],
             disabled = function()
-                return IL.StopRunning or not E.db.WT.item.inspect.enable
+                return IS.StopRunning or not E.db.WT.item.inspect.enable
             end,
             args = {
                 player = {
@@ -1017,7 +1018,7 @@ options.inspect = {
                 return not E.db.WT.item.inspect.inspect
             end,
             disabled = function()
-                return IL.StopRunning or not E.db.WT.item.inspect.enable
+                return IS.StopRunning or not E.db.WT.item.inspect.enable
             end,
             args = {
                 playerOnInspect = {
@@ -1160,6 +1161,320 @@ options.inspect = {
                     min = 5,
                     max = 60,
                     step = 1
+                }
+            }
+        }
+    }
+}
+
+options.itemLevel = {
+    order = 8,
+    type = "group",
+    name = L["Item Level"],
+    get = function(info)
+        return E.db.WT.item.itemLevel[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.item.itemLevel[info[#info]] = value
+        IL:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add an extra item level text to some equipment buttons."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        flyout = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Flyout Button"],
+            disabled = function()
+                return not E.db.WT.item.itemLevel.enable
+            end,
+            get = function(info)
+                return E.db.WT.item.itemLevel.flyout[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.itemLevel.flyout[info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 0,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                font = {
+                    order = 1,
+                    type = "group",
+                    inline = true,
+                    name = L["Font"],
+                    get = function(info)
+                        return E.db.WT.item.itemLevel.flyout.font[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.item.itemLevel.flyout.font[info[#info]] = value
+                    end,
+                    disabled = function()
+                        return E.db.WT.item.itemLevel.flyout.useBagsFontSetting or not E.db.WT.item.itemLevel.enable
+                    end,
+                    args = {
+                        useBagsFontSetting = {
+                            order = 0,
+                            get = function(info)
+                                return E.db.WT.item.itemLevel.flyout[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.item.itemLevel.flyout[info[#info]] = value
+                            end,
+                            disabled = function()
+                                return not E.db.WT.item.itemLevel.enable
+                            end,
+                            type = "toggle",
+                            name = L["Use Bags Setting"],
+                            desc = L["Render the item level text with the setting in ElvUI bags."]
+                        },
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        }
+                    }
+                },
+                color = {
+                    order = 2,
+                    type = "group",
+                    inline = true,
+                    name = L["Color"],
+                    disabled = function()
+                        return E.db.WT.item.itemLevel.flyout.qualityColor or not E.db.WT.item.itemLevel.enable
+                    end,
+                    args = {
+                        qualityColor = {
+                            order = 0,
+                            get = function(info)
+                                return E.db.WT.item.itemLevel.flyout[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.item.itemLevel.flyout[info[#info]] = value
+                            end,
+                            disabled = function()
+                                return not E.db.WT.item.itemLevel.enable
+                            end,
+                            type = "toggle",
+                            name = L["Quality Color"]
+                        },
+                        color = {
+                            order = 6,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            get = function(info)
+                                local db = E.db.WT.item.itemLevel.flyout.font.color
+                                local default = P.item.itemLevel.flyout.font.color
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.db.WT.item.itemLevel.flyout.font.color
+                                db.r, db.g, db.b = r, g, b
+                                EB:UpdateBar(i)
+                            end
+                        }
+                    }
+                }
+            }
+        },
+        scrappingMachine = {
+            order = 2,
+            type = "group",
+            inline = true,
+            name = L["Scrapping Machine"],
+            disabled = function()
+                return not E.db.WT.item.itemLevel.enable
+            end,
+            get = function(info)
+                return E.db.WT.item.itemLevel.scrappingMachine[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.item.itemLevel.scrappingMachine[info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 0,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                font = {
+                    order = 1,
+                    type = "group",
+                    inline = true,
+                    name = L["Font"],
+                    get = function(info)
+                        return E.db.WT.item.itemLevel.scrappingMachine.font[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.item.itemLevel.scrappingMachine.font[info[#info]] = value
+                    end,
+                    disabled = function()
+                        return E.db.WT.item.itemLevel.scrappingMachine.useBagsFontSetting or
+                            not E.db.WT.item.itemLevel.enable
+                    end,
+                    args = {
+                        useBagsFontSetting = {
+                            order = 0,
+                            get = function(info)
+                                return E.db.WT.item.itemLevel.scrappingMachine[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.item.itemLevel.scrappingMachine[info[#info]] = value
+                            end,
+                            disabled = function()
+                                return not E.db.WT.item.itemLevel.enable
+                            end,
+                            type = "toggle",
+                            name = L["Use Bags Setting"],
+                            desc = L["Render the item level text with the setting in ElvUI bags."]
+                        },
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        }
+                    }
+                },
+                color = {
+                    order = 2,
+                    type = "group",
+                    inline = true,
+                    name = L["Color"],
+                    disabled = function()
+                        return E.db.WT.item.itemLevel.scrappingMachine.qualityColor or not E.db.WT.item.itemLevel.enable
+                    end,
+                    args = {
+                        qualityColor = {
+                            order = 0,
+                            get = function(info)
+                                return E.db.WT.item.itemLevel.scrappingMachine[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.db.WT.item.itemLevel.scrappingMachine[info[#info]] = value
+                            end,
+                            disabled = function()
+                                return not E.db.WT.item.itemLevel.enable
+                            end,
+                            type = "toggle",
+                            name = L["Quality Color"]
+                        },
+                        color = {
+                            order = 6,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            get = function(info)
+                                local db = E.db.WT.item.itemLevel.scrappingMachine.font.color
+                                local default = P.item.itemLevel.scrappingMachine.font.color
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.db.WT.item.itemLevel.scrappingMachine.font.color
+                                db.r, db.g, db.b = r, g, b
+                                EB:UpdateBar(i)
+                            end
+                        }
+                    }
                 }
             }
         }

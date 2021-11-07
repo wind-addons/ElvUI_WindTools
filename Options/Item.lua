@@ -1331,7 +1331,6 @@ options.itemLevel = {
                             set = function(info, r, g, b)
                                 local db = E.db.WT.item.itemLevel.flyout.font.color
                                 db.r, db.g, db.b = r, g, b
-                                EB:UpdateBar(i)
                             end
                         }
                     }
@@ -1471,7 +1470,6 @@ options.itemLevel = {
                             set = function(info, r, g, b)
                                 local db = E.db.WT.item.itemLevel.scrappingMachine.font.color
                                 db.r, db.g, db.b = r, g, b
-                                EB:UpdateBar(i)
                             end
                         }
                     }

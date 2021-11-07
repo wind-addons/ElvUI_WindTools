@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[227] = {
-    RELEASE_DATE = "2021/11/07",
+    RELEASE_DATE = "2021/11/08",
     IMPORTANT = {
         ["zhCN"] = {
             "[移动框体] 暂时屏蔽了收藏品界面(坐骑, 玩具箱等)的移动功能. (等待暴雪修复)"

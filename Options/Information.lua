@@ -462,6 +462,9 @@ do -- 插件代码
         },
         [L["Instance Difficulty"]] = {
             "Merathilis (ElvUI MerathilisUI)"
+        },
+        [L["Item Level"]] = {
+            "Merathilis (ElvUI MerathilisUI)"
         }
     }
 

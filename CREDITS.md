@@ -109,6 +109,9 @@
 - Instance Difficulty
     - Merathilis (ElvUI MerathilisUI)
 
+- Item Level
+    - Merathilis (ElvUI MerathilisUI)
+
 # Medias
 - 迷时鸟 @ NGA.cn
     - Media/Texture/Illustration

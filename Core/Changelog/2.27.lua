@@ -13,7 +13,7 @@ W.Changelog[227] = {
             "[Move Frames] Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
         },
         ["koKR"] = {
-            "[프레임 이동] Remove moving feature of collections journal for 9.1.5. (Until Blizzard fix it)"
+            "[프레임 이동] 수집 인터페이스(탈것, 장난감 상자 등)의 이동 기능을 일시적으로 차단했습니다.(블리자드에서 수정할 때 까지)"
         }
     },
     NEW = {
@@ -27,7 +27,7 @@ W.Changelog[227] = {
             "Add new [Item Level] module. It adds an extra item level text to flyout buttons and scrapping machine."
         },
         ["koKR"] = {
-            "Add new [Item Level] module. It adds an extra item level text to flyout buttons and scrapping machine."
+            "[아이템 레벨] 모듈이 추가되었습니다. 펼침 버튼 및 분쇄기 사용시 아이템 레벨 텍스트를 추가하는 데 사용됩니다."
         }
     },
     IMPROVEMENT = {
@@ -57,11 +57,11 @@ W.Changelog[227] = {
         },
         ["koKR"] = {
             "[미니맵 버튼 통합 바] 미니맵 아이콘의 잘못된 텍스처 위치를 수정합니다.",
-            "[미니맵 비율 조정] Fix the position of the minimap datatext.",
-            "[이미 알고 있는 항목] Fix bugs of 9.1.5 new guild bank.",
-            "[정보 문자] 거리 now use LibRangeCheck-ElvUI instead.",
-            '[태그] Remove "range" since ElvUI start to provide the same tag.',
-            '[태그] "range:expectation" now use LibRangeCheck-ElvUI instead.'
+            "[미니맵 비율 조정] 미니맵 정보 문자의 위치를 수정합니다.",
+            "[이미 알고 있는 항목] 9.1.5에서 발생한 길드 은행 관련 문제를 수정했습니다. ",
+            "[정보 문자] 거리는 이제 ElvUI의 내장된 거리 감지 라이브러리를 사용합니다.",
+            '[태그] ElvUI가 동일한 태그를 제공하므로 "range" 태그를 제거 하였습니다.',
+            '[태그] "range:expectation"은 이제 ElvUI에 내장된 거리 감지 라이브러리를 사용합니다.'
         }
     }
 }

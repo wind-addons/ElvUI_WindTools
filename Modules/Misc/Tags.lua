@@ -13,6 +13,8 @@ local tonumber = tonumber
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local UnitIsConnected = UnitIsConnected
+local UnitIsUnit = UnitIsUnit
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))

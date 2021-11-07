@@ -557,6 +557,43 @@ P.item = {
             size = 13,
             style = "OUTLINE"
         }
+    },
+    itemLevel = {
+        enable = true,
+        flyout = {
+            enable = true,
+            useBagsFontSetting = false,
+            qualityColor = true,
+            font = {
+                name = F.GetCompatibleFont("Montserrat"),
+                size = 11,
+                style = "OUTLINE",
+                xOffset = 0,
+                yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
+            }
+        },
+        scrappingMachine = {
+            enable = true,
+            useBagsFontSetting = false,
+            qualityColor = true,
+            font = {
+                name = F.GetCompatibleFont("Montserrat"),
+                size = 13,
+                style = "OUTLINE",
+                xOffset = 0,
+                yOffset = 0,
+                color = {
+                    r = 1,
+                    g = 1,
+                    b = 1
+                }
+            }
+        }
     }
 }
 

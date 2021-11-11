@@ -374,6 +374,10 @@ function W:CheckCompatibilitymMediaTag(WTModuleName, MTModuleName, WTDB, MTDB)
 end
 
 function W:CheckCompatibility()
+    if not E.private.WT.core.compatibilityCheck then
+        return
+    end
+    
     self:ConstructCompatibiltyFrame()
 
     -- Merathilis UI

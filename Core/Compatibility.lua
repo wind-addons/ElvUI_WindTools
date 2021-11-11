@@ -14,8 +14,8 @@ local type = type
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 
-function W:ConstructCompatibiltyFrame()
-    local frame = CreateFrame("Frame", "WTCompatibiltyFrame", E.UIParent)
+function W:ConstructCompatibilityFrame()
+    local frame = CreateFrame("Frame", "WTCompatibilityFrame", E.UIParent)
     frame:Size(550, 500)
     frame:Point("CENTER")
     frame:CreateBackdrop("Transparent")
@@ -34,7 +34,7 @@ function W:ConstructCompatibiltyFrame()
 
     MF:HandleFrame(frame)
 
-    local close = CreateFrame("Button", "WTCompatibiltyFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
+    local close = CreateFrame("Button", "WTCompatibilityFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
     close:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
     ES:HandleCloseButton(close)
     close:SetScript(
@@ -67,7 +67,7 @@ function W:ConstructCompatibiltyFrame()
     )
     desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
 
-    local tex = frame:CreateTexture("WTCompatibiltyFrameIllustration", "ARTWORK")
+    local tex = frame:CreateTexture("WTCompatibilityFrameIllustration", "ARTWORK")
     tex:Size(64)
     tex:SetTexture(W.Media.Textures.illMurloc1)
     tex:Point("TOPRIGHT", frame, "TOPRIGHT", -20, -25)
@@ -79,13 +79,13 @@ function W:ConstructCompatibiltyFrame()
     F.SetFontOutline(bottomDesc, nil, "-1")
     bottomDesc:SetText(
         E.NewSign ..
-            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"])
+            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"]).."\n".. L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."]
     )
     --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     local completeButton =
-        CreateFrame("Button", "WTCompatibiltyFrameCompleteButton", frame, "OptionsButtonTemplate, BackdropTemplate")
+        CreateFrame("Button", "WTCompatibilityFrameCompleteButton", frame, "OptionsButtonTemplate, BackdropTemplate")
     completeButton.Text:SetText(L["Complete"])
     completeButton.Text:SetJustifyH("CENTER")
     completeButton.Text:SetJustifyV("CENTER")
@@ -101,30 +101,30 @@ function W:ConstructCompatibiltyFrame()
     )
 
     local scrollFrameParent =
-        CreateFrame("ScrollFrame", "WTCompatibiltyFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
+        CreateFrame("ScrollFrame", "WTCompatibilityFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
     scrollFrameParent:CreateBackdrop("Transparent")
     scrollFrameParent:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
     scrollFrameParent:Point("RIGHT", frame, "RIGHT", -32, 0)
     scrollFrameParent:Point("BOTTOM", completeButton, "TOP", 0, 10)
     ES:HandleScrollBar(scrollFrameParent.ScrollBar)
-    local scrollFrame = CreateFrame("Frame", "WTCompatibiltyFrameScrollFrame", scrollFrameParent)
+    local scrollFrame = CreateFrame("Frame", "WTCompatibilityFrameScrollFrame", scrollFrameParent)
     scrollFrame:SetSize(scrollFrameParent:GetSize())
 
     scrollFrameParent:SetScrollChild(scrollFrame)
     frame.scrollFrameParent = scrollFrameParent
     frame.scrollFrame = scrollFrame
 
-    W.CompatibiltyFrame = frame
+    W.CompatibilityFrame = frame
 end
 
-function W:AddButtonToCompatibiltyFrame(data)
-    local frame = self.CompatibiltyFrame
+function W:AddButtonToCompatibilityFrame(data)
+    local frame = self.CompatibilityFrame
     frame.numModules = frame.numModules + 1
 
     local leftButton =
         CreateFrame(
         "Button",
-        "WTCompatibiltyFrameLeftButton" .. frame.numModules,
+        "WTCompatibilityFrameLeftButton" .. frame.numModules,
         frame.scrollFrame,
         "OptionsButtonTemplate, BackdropTemplate"
     )
@@ -149,7 +149,7 @@ function W:AddButtonToCompatibiltyFrame(data)
     )
 
     local middleTexture =
-        frame.scrollFrame:CreateTexture("WTCompatibiltyFrameMiddleTexture" .. frame.numModules, "ARTWORK")
+        frame.scrollFrame:CreateTexture("WTCompatibilityFrameMiddleTexture" .. frame.numModules, "ARTWORK")
     middleTexture:Point("CENTER")
     middleTexture:Size(20)
     middleTexture:SetTexture(W.Media.Icons.convert)
@@ -159,7 +159,7 @@ function W:AddButtonToCompatibiltyFrame(data)
     local rightButton =
         CreateFrame(
         "Button",
-        "WTCompatibiltyFrameRightButton" .. frame.numModules,
+        "WTCompatibilityFrameRightButton" .. frame.numModules,
         frame.scrollFrame,
         "OptionsButtonTemplate, BackdropTemplate"
     )
@@ -228,7 +228,7 @@ function W:CheckCompatibilityMerathilisUI(WTModuleName, MUIModuleName, WTDB, MUI
     end
 
     if realMUIDB == true and realWTDB == true then
-        self:AddButtonToCompatibiltyFrame(
+        self:AddButtonToCompatibilityFrame(
             {
                 module1 = WTModuleName,
                 plugin1 = L["WindTools"],
@@ -291,7 +291,7 @@ function W:CheckCompatibilityShadowAndLight(WTModuleName, SLModuleName, WTDB, SL
     end
 
     if realSLDB == true and realWTDB == true then
-        self:AddButtonToCompatibiltyFrame(
+        self:AddButtonToCompatibilityFrame(
             {
                 module1 = WTModuleName,
                 plugin1 = L["WindTools"],
@@ -354,7 +354,7 @@ function W:CheckCompatibilitymMediaTag(WTModuleName, MTModuleName, WTDB, MTDB)
     end
 
     if realMTDB == true and realWTDB == true then
-        self:AddButtonToCompatibiltyFrame(
+        self:AddButtonToCompatibilityFrame(
             {
                 module1 = WTModuleName,
                 plugin1 = L["WindTools"],
@@ -378,7 +378,7 @@ function W:CheckCompatibility()
         return
     end
     
-    self:ConstructCompatibiltyFrame()
+    self:ConstructCompatibilityFrame()
 
     -- Merathilis UI
     self:CheckCompatibilityMerathilisUI(
@@ -574,7 +574,7 @@ function W:CheckCompatibility()
         "db.mMediaTag.mObjectiveTracker.enable"
     )
 
-    if self.CompatibiltyFrame.numModules > 0 then
-        self.CompatibiltyFrame:Show()
+    if self.CompatibilityFrame.numModules > 0 then
+        self.CompatibilityFrame:Show()
     end
 end

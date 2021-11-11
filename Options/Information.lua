@@ -606,6 +606,15 @@ options.changelog = {
 
 for version, data in pairs(W.Changelog) do
     local versionString = format("%d.%02d", version / 100, mod(version, 100))
+    local dateTable = {strsplit('/', data.RELEASE_DATE)}
+    local dateString = data.RELEASE_DATE
+    if #dateTable == 3 then
+        dateString = L["%month%-%day%-%year%"]
+        dateString = gsub(dateString, "%%year%%", dateTable[1])
+        dateString = gsub(dateString, "%%month%%", dateTable[2])
+        dateString = gsub(dateString, "%%day%%", dateTable[3])
+    end
+
 
     options.changelog.args[tostring(version)] = {
         order = 1000 - version,
@@ -619,7 +628,7 @@ for version, data in pairs(W.Changelog) do
     page.date = {
         order = 1,
         type = "description",
-        name = "|cffbbbbbb" .. data.RELEASE_DATE .. " " .. L["Released"] .. "|r",
+        name = "|cffbbbbbb" .. dateString .. " " .. L["Released"] .. "|r",
         fontSize = "small"
     }
 

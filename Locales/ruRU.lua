@@ -3,7 +3,7 @@
 local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "ruRU")
 
-L["%month%-%day%-%year%"] = "%месяц%-%день%-%год%"
+L["%month%-%day%-%year%"] = true
 L["%player% cast %spell% -> %target%"] = "%player% применяет %spell% -> %target%"
 L["%player% cast %spell%, today's special is Anchovy Pie!"] = "%player% применяет %spell%, особенное блюдо сегодняшнего дня - пирог с анчоусами!"
 L["%player% failed on taunting %target%!"] = "%player% не удалось спровоцировать %target%!"

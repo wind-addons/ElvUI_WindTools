@@ -991,6 +991,7 @@ L["Y-Offset"] = true
 L["Yell"] = true
 L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."] = true
 L["You can customize the sentence templates, channels, etc."] = true
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = true
 L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."] = true
 L["You can separate the groups with a comma."] = true
 L["Your Pet"] = true

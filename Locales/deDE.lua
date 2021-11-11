@@ -991,6 +991,7 @@ L["Y-Offset"] = "Y-Versatz"
 L["Yell"] = "Schreien"
 L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."] = "Du kannst die globale Schattenfarbe anpassen, einige Skins deaktivieren, den Vignettierungsgrad festlegen usw."
 L["You can customize the sentence templates, channels, etc."] = "Du kannst die Satzvorlagen, Kanäle usw. anpassen."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = true
 L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."] = "Du kannst deine Vorschläge oder Fehler via %s, %s, %s, und in diesem Forum Thread %s posten."
 L["You can separate the groups with a comma."] = "Du kannst die Gruppen mit einem Komma separieren."
 L["Your Pet"] = "Dein Begleiter"

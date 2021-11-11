@@ -991,6 +991,7 @@ L["Y-Offset"] = "Отступ по Y"
 L["Yell"] = "Крик"
 L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."] = "Вы можете настроить глобальный цвет тени, отключить некоторые скины, установить уровень виньетирования и т.д."
 L["You can customize the sentence templates, channels, etc."] = "Вы можете настроить шаблоны предложений, каналы и т.д."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = true
 L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."] = "Вы можете отправлять свои предложения или сообщения об ошибках через %s, %s, %s и ветку в %s."
 L["You can separate the groups with a comma."] = "Вы можете разделять группы запятой."
 L["Your Pet"] = "Ваш питомец"

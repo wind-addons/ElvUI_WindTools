@@ -38,19 +38,10 @@ function S:BlizzardMiscFrames()
     -- 下拉菜单
     for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
         local f = _G["DropDownList" .. i .. "Backdrop"]
-        if f then
-            if not f.backdrop then
-                f:CreateBackdrop("Transparent")
-            end
-            self:CreateBackdropShadow(f)
-        end
-        local bg = _G["DropDownList" .. i .. "MenuBackdrop"]
-        if bg then
-            if not bg.backdrop then
-                bg:CreateBackdrop("Transparent")
-            end
-            self:CreateBackdropShadow(bg)
-        end
+        self:CreateShadow(f)
+
+        f = _G["DropDownList" .. i .. "MenuBackdrop"]
+        self:CreateShadow(f)
     end
 
     -- 错误提示

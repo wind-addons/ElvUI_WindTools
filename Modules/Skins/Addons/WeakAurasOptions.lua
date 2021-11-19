@@ -573,7 +573,7 @@ function S:WeakAuras_ShowOptions()
 
             if not button.windStyle and button.GetNormalTexture then
                 local normalTexturePath = button:GetNormalTexture():GetTexture()
-                if normalTexturePath == "Interface\\BUTTONS\\UI-Panel-CollapseButton-Up" then
+                if normalTexturePath == 252125 then
                     button:StripTextures()
 
                     button.Texture = button:CreateTexture(nil, "OVERLAY")

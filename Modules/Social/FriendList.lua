@@ -34,6 +34,7 @@ local BNET_CLIENT_WC3 = BNET_CLIENT_WC3
 local BNET_CLIENT_ARCADE = BNET_CLIENT_ARCADE
 local BNET_CLIENT_CRASH4 = BNET_CLIENT_CRASH4
 local BNET_CLIENT_D2 = BNET_CLIENT_D2
+local BNET_CLIENT_COD_VANGUARD = BNET_CLIENT_COD_VANGUARD
 
 local CINEMATIC_NAME_2 = CINEMATIC_NAME_2
 
@@ -108,6 +109,10 @@ local GameIcons = {
     [BNET_CLIENT_ARCADE] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_ARCADE),
         Modern = BNet_GetClientTexture(BNET_CLIENT_ARCADE)
+    },
+    [BNET_CLIENT_COD_VANGUARD] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD_VANGUARD),
+        Modern = MediaPath .. "GameIcons\\COD_VG"
     }
 }
 

@@ -13,7 +13,7 @@ W.Changelog[228] = {
             "Fix compatibility check option. You can find it in the bottom of (Information)-(Help)."
         },
         ["koKR"] = {
-            "Fix compatibility check option. You can find it in the bottom of (Information)-(Help)."
+            "호환성 체크 설정을 수정하였으며, (정보)-(도움말) 하단에서 확인하실 수 있습니다."
         }
     },
     NEW = {
@@ -45,11 +45,11 @@ W.Changelog[228] = {
             '[Friend List] Add a new game icon for "Call of Duty: Vanguard".'
         },
         ["koKR"] = {
-            "[Information] Optimize the date formats for various languages.",
-            "[Progression] Fix the formatting issue caused by translation.",
-            "[Skins] Fix transparent support of dropdown menus.",
-            "[Skins] Fix the skin of WeakAura Options.",
-            '[Friend List] Add a new game icon for "Call of Duty: Vanguard".'
+            "[정보] 언어별로 업데이트 로그의 날짜 표시를 최적화 하였습니다.",
+            "[진행 상태] 일부 언어 번역으로 인한 서식 오류를 수정했습니다.",
+            "[스킨] 드롭다운 메뉴의 배경 투명도를 수정했습니다.",
+            "[스킨] WeakAura 설정창의 스킨을 수정하였습니다.",
+            '[친구 목록] "Call of Duty: Vanguard" 의 게임 아이콘을 추가 하였습니다.'
         }
     }
 }

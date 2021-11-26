@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[228] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2021/11/26",
     IMPORTANT = {
         ["zhCN"] = {
             "修复了兼容性检查的设定. 你可以在 (信息)-(帮助) 的底部找到它."

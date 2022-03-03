@@ -87,7 +87,7 @@ function S:ObjectiveTrackerFrame()
     local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 
     self:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
-    -- self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
+    self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
     self:SecureHook("QuestObjectiveSetupBlockButton_Item", "SkinItemButton")
     self:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
     self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")

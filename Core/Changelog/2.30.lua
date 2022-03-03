@@ -19,7 +19,7 @@ W.Changelog[230] = {
             "[Extra Item Bar] Added new weekly reward items in 9.2 version. Thanks mcc1"
         },
         ["koKR"] = {
-            "[Extra Item Bar] Added new weekly reward items in 9.2 version. Thanks mcc1"
+            "[아이템 바] 9.2 버전의 신규 주간 보상 아이템들이 추가되였습니다. Thanks mcc1"
         }
     },
     IMPROVEMENT = {
@@ -39,9 +39,9 @@ W.Changelog[230] = {
             '[Extra Item Bar] Use the abbreviation "B" instead of "BUTTON".'
         },
         ["koKR"] = {
-            "[Skin] Fixed the skin of the group finder button.",
-            "[Objective Tracker] Fixed the possible problem of causing premade group UI taint.",
-            '[Extra Item Bar] Use the abbreviation "B" instead of "BUTTON".'
+            "[스킨] 파티 찾기 버튼의 스킨을 수정했습니다.",
+            "[퀘스트 추적기] 파티 구성하기 인터페이스의 오염을 일으킬 수 있는 문제를 수정했습니다.",
+            '[아이템 바] 단축키에 마우스 버튼을 포함하여 설정할 경우 아이템 바에 표시되는 "BUTTON"을 "B"로 축약하여 표시합니다.'
         }
     }
 }

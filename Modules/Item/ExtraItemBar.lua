@@ -1152,6 +1152,7 @@ function EB:UpdateBinding()
             if button then
                 local bindingName = format("CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)
                 local bindingText = GetBindingKey(bindingName) or ""
+                bindingText = gsub(bindingText, "BUTTON", "B")
                 bindingText = gsub(bindingText, "ALT--", "A")
                 bindingText = gsub(bindingText, "CTRL--", "C")
                 bindingText = gsub(bindingText, "SHIFT--", "S")

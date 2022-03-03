@@ -216,14 +216,11 @@ function OT:ColorfulProgression(text)
     text:SetText(info)
 end
 
-do
-    local dash = _G.OBJECTIVE_TRACKER_DASH_WIDTH
-    function OT:UpdateTextWidth()
-        if self.db.noDash then
-            _G.OBJECTIVE_TRACKER_DASH_WIDTH = 0
-        else
-            _G.OBJECTIVE_TRACKER_DASH_WIDTH = dash
-        end
+function OT:UpdateTextWidth()
+    if self.db.noDash then
+        _G.OBJECTIVE_DASH_STYLE_SHOW = 2
+    else
+        _G.OBJECTIVE_DASH_STYLE_SHOW = 1
     end
 end
 

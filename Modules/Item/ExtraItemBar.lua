@@ -123,7 +123,7 @@ local potions = {
 -- Potion added in Shadowlands (require level >= 50)
 local potionsShadowlands = {
     5512, -- 治療石
-    177278, -- 寧靜之瓶
+    177278, --寧靜之瓶
     171263, --靈魂純淨藥水
     171264, --靈視藥水
     171266, --魂隱藥水
@@ -144,7 +144,8 @@ local potionsShadowlands = {
     176811, --靈魄獻祭藥水
     180317, --靈性治療藥水
     183823, --暢行無阻藥水
-    184090 --導靈者之速藥水
+    184090, --導靈者之速藥水
+    187802, --宇宙治疗药水 (requires level >= 60)
 }
 
 -- Flasks (require level >= 40)

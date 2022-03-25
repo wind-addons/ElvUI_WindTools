@@ -1115,31 +1115,6 @@ function CT:ChatFrame_MessageEventHandler(
                 arg16,
                 arg17
             )
-            local chatIcon, pluginChatIcon = specialChatIcons[playerName], CH:GetPluginIcon(playerName)
-            if type(chatIcon) == "function" then
-                local icon, prettify, var1, var2, var3 = chatIcon()
-                if prettify and not CH:MessageIsProtected(message) then
-                    if chatType == "TEXT_EMOTE" and not usingDifferentLanguage and (showLink and arg2 ~= "") then
-                        var1, var2, var3 =
-                            strmatch(message, "^(.-)(" .. arg2 .. (realm and "%-" .. realm or "") .. ")(.-)$")
-                    end
-
-                    if var2 then
-                        if var1 ~= "" then
-                            var1 = prettify(var1)
-                        end
-                        if var3 ~= "" then
-                            var3 = prettify(var3)
-                        end
-
-                        message = var1 .. var2 .. var3
-                    else
-                        message = prettify(message)
-                    end
-                end
-
-                chatIcon = icon or ""
-            end
 
             -- LFG Role Flags
             local lfgRole = lfgRoles[playerName]

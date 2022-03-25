@@ -69,7 +69,7 @@ local lfgRoles = {}
 local initRecord = {}
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
-local NPEV2_CHAT_USER_TAG_GUIDE = gsub(NPEV2_CHAT_USER_TAG_GUIDE, '(|A.-|a).+', '%1')
+local NPEV2_CHAT_USER_TAG_GUIDE = gsub(NPEV2_CHAT_USER_TAG_GUIDE, "(|A.-|a).+", "%1")
 local PLAYERMENTORSHIPSTATUS_NEWCOMER = Enum.PlayerMentorshipStatus.Newcomer
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
@@ -190,26 +190,26 @@ local function GetPFlag(
 end
 
 local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
-	-- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
-	-- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
-	-- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
-	-- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
-	-- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
-	if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
-		return false
-	end
+    -- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
+    -- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
+    -- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
+    -- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
+    -- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
+    if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
+        return false
+    end
 
-	-- Only add if the user is joining a channel
-	if eventType ~= "YOU_CHANGED" then
-		return false
-	end
+    -- Only add if the user is joining a channel
+    if eventType ~= "YOU_CHANGED" then
+        return false
+    end
 
-	-- Only add regional channels
-	if not C_ChatInfo_IsChannelRegionalForChannelID(channelID) then
-		return false
-	end
+    -- Only add regional channels
+    if not C_ChatInfo_IsChannelRegionalForChannelID(channelID) then
+        return false
+    end
 
-	return _G.ChatFrame_AddChannel(chatFrame, C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
+    return _G.ChatFrame_AddChannel(chatFrame, C_ChatInfo_GetChannelShortcutForChannelID(channelID)) ~= nil
 end
 
 function CT:UpdateRoleIcons()
@@ -521,20 +521,23 @@ function CT:ChatFrame_MessageEventHandler(
         if chatFilters then
             for _, filterFunc in next, chatFilters do
                 local filter,
-                    newarg1,
-                    newarg2,
-                    newarg3,
-                    newarg4,
-                    newarg5,
-                    newarg6,
-                    newarg7,
-                    newarg8,
-                    newarg9,
-                    newarg10,
-                    newarg11,
-                    newarg12,
-                    newarg13,
-                    newarg14 =
+                    new1,
+                    new2,
+                    new3,
+                    new4,
+                    new5,
+                    new6,
+                    new7,
+                    new8,
+                    new9,
+                    new10,
+                    new11,
+                    new12,
+                    new13,
+                    new14,
+                    new15,
+                    new16,
+                    new17 =
                     filterFunc(
                     frame,
                     event,
@@ -551,26 +554,48 @@ function CT:ChatFrame_MessageEventHandler(
                     arg11,
                     arg12,
                     arg13,
-                    arg14
+                    arg14,
+                    arg15,
+                    arg16,
+                    arg17
                 )
                 if filter then
                     return true
-                elseif newarg1 then
-                    arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14 =
-                        newarg1,
-                        newarg2,
-                        newarg3,
-                        newarg4,
-                        newarg5,
-                        newarg6,
-                        newarg7,
-                        newarg8,
-                        newarg9,
-                        newarg10,
-                        newarg11,
-                        newarg12,
-                        newarg13,
-                        newarg14
+                elseif new1 then
+                    arg1,
+                        arg2,
+                        arg3,
+                        arg4,
+                        arg5,
+                        arg6,
+                        arg7,
+                        arg8,
+                        arg9,
+                        arg10,
+                        arg11,
+                        arg12,
+                        arg13,
+                        arg14,
+                        arg15,
+                        arg16,
+                        arg17 =
+                        new1,
+                        new2,
+                        new3,
+                        new4,
+                        new5,
+                        new6,
+                        new7,
+                        new8,
+                        new9,
+                        new10,
+                        new11,
+                        new12,
+                        new13,
+                        new14,
+                        new15,
+                        new16,
+                        new17
                 end
             end
         end
@@ -651,7 +676,7 @@ function CT:ChatFrame_MessageEventHandler(
         end
 
         local chatGroup = _G.Chat_GetChatCategory(chatType)
-        local chatTarget = _G.FCFManager_GetChatTarget(chatGroup, arg2, arg8)
+        local chatTarget = CH:FCFManager_GetChatTarget(chatGroup, arg2, arg8)
 
         if _G.FCFManager_ShouldSuppressMessage(frame, chatGroup, chatTarget) then
             return true
@@ -870,11 +895,11 @@ function CT:ChatFrame_MessageEventHandler(
             local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
             local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
 
-            if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
+            if E.Retail and arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
                 _G.ChatFrame_UpdateDefaultChatTarget(frame)
                 _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
             else
-                if arg1 == "YOU_LEFT" then
+                if E.Retail and arg1 == "YOU_LEFT" then
                     _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox, arg8)
                 end
 
@@ -919,19 +944,11 @@ function CT:ChatFrame_MessageEventHandler(
             elseif arg1 == "FRIEND_REMOVED" or arg1 == "BATTLETAG_FRIEND_REMOVED" then
                 message = format(globalstring, arg2)
             elseif arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" then
-                local accountInfo = C_BattleNet_GetAccountInfoByID(arg13)
-                if not accountInfo then
-                    return
-                end
-                local client = accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.clientProgram
-                if client and client ~= "" then
-                    local characterName =
-                        _G.BNet_GetValidatedCharacterName(
-                        accountInfo.gameAccountInfo.characterName,
-                        accountInfo.battleTag,
-                        client
-                    ) or ""
-                    local characterNameText = _G.BNet_GetClientEmbeddedTexture(client, 14) .. characterName
+                local _, _, battleTag, _, characterName, _, clientProgram = CH.BNGetFriendInfoByID(arg13)
+
+                if clientProgram and clientProgram ~= "" then
+                    local name = _G.BNet_GetValidatedCharacterName(characterName, battleTag, clientProgram) or ""
+                    local characterNameText = _G.BNet_GetClientEmbeddedTexture(clientProgram, 14) .. name
                     local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
                     local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
@@ -987,9 +1004,17 @@ function CT:ChatFrame_MessageEventHandler(
             local showLink = 1
             if strsub(chatType, 1, 7) == "MONSTER" or strsub(chatType, 1, 9) == "RAID_BOSS" then
                 showLink = nil
+
+                -- fix blizzard formatting errors from localization strings
+                arg1 = gsub(arg1, "%%%d", "%%s") -- replace %1 to %s (russian client specific?) [broken since BFA?]
+                arg1 = gsub(arg1, "(%d%%)([^%%%a])", "%1%%%2") -- escape percentages that need it [broken since SL?]
+                arg1 = gsub(arg1, "(%d%%)$", "%1%%") -- escape percentages on the end
             else
-                arg1 = gsub(arg1, "%%", "%%%%")
+                arg1 = gsub(arg1, "%%", "%%%%") -- escape any % characters, as it may otherwise cause an 'invalid option in format' error
             end
+
+            --Remove groups of many spaces
+            arg1 = RemoveExtraSpaces(arg1)
 
             -- Search for icon links and replace them with texture links.
             arg1 =
@@ -998,9 +1023,6 @@ function CT:ChatFrame_MessageEventHandler(
                 arg17,
                 not _G.ChatFrame_CanChatGroupPerformExpressionExpansion(chatGroup)
             ) -- If arg17 is true, don't convert to raid icons
-
-            --Remove groups of many spaces
-            arg1 = RemoveExtraSpaces(arg1)
 
             --ElvUI: Get class colored name for BattleNet friend
             if chatType == "BN_WHISPER" or chatType == "BN_WHISPER_INFORM" then
@@ -1093,6 +1115,31 @@ function CT:ChatFrame_MessageEventHandler(
                 arg16,
                 arg17
             )
+            local chatIcon, pluginChatIcon = specialChatIcons[playerName], CH:GetPluginIcon(playerName)
+            if type(chatIcon) == "function" then
+                local icon, prettify, var1, var2, var3 = chatIcon()
+                if prettify and not CH:MessageIsProtected(message) then
+                    if chatType == "TEXT_EMOTE" and not usingDifferentLanguage and (showLink and arg2 ~= "") then
+                        var1, var2, var3 =
+                            strmatch(message, "^(.-)(" .. arg2 .. (realm and "%-" .. realm or "") .. ")(.-)$")
+                    end
+
+                    if var2 then
+                        if var1 ~= "" then
+                            var1 = prettify(var1)
+                        end
+                        if var3 ~= "" then
+                            var3 = prettify(var3)
+                        end
+
+                        message = var1 .. var2 .. var3
+                    else
+                        message = prettify(message)
+                    end
+                end
+
+                chatIcon = icon or ""
+            end
 
             -- LFG Role Flags
             local lfgRole = lfgRoles[playerName]
@@ -1108,7 +1155,7 @@ function CT:ChatFrame_MessageEventHandler(
 
             if usingDifferentLanguage then
                 local languageHeader = "[" .. arg3 .. "] "
-                if showLink and (arg2 ~= "") then
+                if showLink and arg2 ~= "" then
                     body = format(_G["CHAT_" .. chatType .. "_GET"] .. languageHeader .. message, pflag .. playerLink)
                 else
                     body = format(_G["CHAT_" .. chatType .. "_GET"] .. languageHeader .. message, pflag .. arg2)
@@ -1159,7 +1206,7 @@ function CT:ChatFrame_MessageEventHandler(
             end
 
             if CH.db.shortChannels and (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") then
-                body = CH:HandleShortChannels(body)
+                body = CH:HandleShortChannels(body, CH.db.hideChannels)
             end
 
             for _, filter in ipairs(CH.PluginMessageFilters) do
@@ -1195,7 +1242,7 @@ function CT:ChatFrame_MessageEventHandler(
              then
                 if not _G.CHAT_OPTIONS.HIDE_FRAME_ALERTS or chatType == "WHISPER" or chatType == "BN_WHISPER" then
                     if not _G.FCFManager_ShouldSuppressMessageFlash(frame, chatGroup, chatTarget) then
-                        _G.FCF_StartAlertFlash(frame) --This would taint if we were not using LibChatAnims
+                        _G.FCF_StartAlertFlash(frame)
                     end
                 end
             end

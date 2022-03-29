@@ -118,7 +118,8 @@ local potions = {
     171370, --幽魂迅捷藥水
     176811, --靈魄獻祭藥水
     183823, --暢行無阻藥水
-    184090 --導靈者之速藥水
+    184090, --導靈者之速藥水
+    187802 --宇宙治療藥水
 }
 -- Potion added in Shadowlands (require level >= 50)
 local potionsShadowlands = {
@@ -144,7 +145,8 @@ local potionsShadowlands = {
     176811, --靈魄獻祭藥水
     180317, --靈性治療藥水
     183823, --暢行無阻藥水
-    184090 --導靈者之速藥水
+    184090, --導靈者之速藥水
+    187802
 }
 
 -- Flasks (require level >= 40)

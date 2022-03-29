@@ -1,12 +1,20 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[230] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/03/30",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            '[进度] 新增"暗影国度钥石大师: 第三赛季"到进度追踪, "暗影国度钥石大师: 第一赛季"的追踪将默认关闭.',
+        },
+        ["zhTW"] = {
+            '[进度] 新增"暗影之境鑰石王: 第三季"到進度追蹤, "暗影之境鑰石王: 第一季"的追蹤將預設關閉.',
+        },
+        ["enUS"] = {
+            '[Progression] Add "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
+        },
+        ["koKR"] = {
+            '[Progression] Add "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -24,19 +32,19 @@ W.Changelog[230] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "[聊天文字] 适配代码到 ElvUI 12.72 版本.",
+            "[聊天文字] 适配代码到 ElvUI 12.73 版本.",
             "[皮肤] 修复了寻求组队按钮的皮肤.",
             "[任务列表] 修复了可能会产生预组队界面污染的问题.",
             '[额外物品条] 使用缩写 "B" 来替代 "BUTTON".'
         },
         ["zhTW"] = {
-            "[聊天文字] 适配代码到 ElvUI 12.72 版本.",
+            "[聊天文字] 适配代码到 ElvUI 12.73 版本.",
             "[皮膚] 修復了尋求隊伍按鍵的皮膚.",
             "[任務列表] 修復了可能會產生預組隊伍介面污染的問題.",
             "[額外物品條] 使用縮寫「B」來替代「BUTTON」."
         },
         ["enUS"] = {
-            "[Chat Text] Update with codes from ElvUI 12.72.",
+            "[Chat Text] Update with codes from ElvUI 12.73.",
             "[Skin] Fixed the skin of the group finder button.",
             "[Objective Tracker] Fixed the possible problem of causing premade group UI taint.",
             '[Extra Item Bar] Use the abbreviation "B" instead of "BUTTON".'

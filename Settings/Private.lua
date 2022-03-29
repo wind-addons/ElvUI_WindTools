@@ -300,8 +300,9 @@ V.tooltips = {
 		},
 		special = {
 			enable = true,
-			["Shadowlands Keystone Master: Season One"] = true,
-			["Shadowlands Keystone Master: Season Two"] = true
+			["Shadowlands Keystone Master: Season One"] = false,
+			["Shadowlands Keystone Master: Season Two"] = true,
+			["Shadowlands Keystone Master: Season Three"] = true
 		},
 		mythicDungeons = {
 			enable = true,

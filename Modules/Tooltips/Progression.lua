@@ -104,6 +104,10 @@ local locales = {
         short = L["[ABBR] Sanguine Depths"],
         full = L["Sanguine Depths"]
     },
+    ["Tazavesh, the Veiled Market"] = {
+        short = L["[ABBR] Tazavesh, the Veiled Market"],
+        full = L["Tazavesh, the Veiled Market"]
+    },
     ["Shadowlands Keystone Master: Season One"] = {
         short = L["[ABBR] Shadowlands Keystone Master: Season One"],
         full = L["Shadowlands Keystone Master: Season One"]
@@ -112,9 +116,9 @@ local locales = {
         short = L["[ABBR] Shadowlands Keystone Master: Season Two"],
         full = L["Shadowlands Keystone Master: Season Two"]
     },
-    ["Tazavesh, the Veiled Market"] = {
-        short = L["[ABBR] Tazavesh, the Veiled Market"],
-        full = L["Tazavesh, the Veiled Market"]
+    ["Shadowlands Keystone Master: Season Three"] = {
+        short = L["[ABBR] Shadowlands Keystone Master: Season Three"],
+        full = L["Shadowlands Keystone Master: Season Three"]
     }
 }
 
@@ -235,7 +239,8 @@ local dungeonAchievements = {
 
 local specialAchievements = {
     ["Shadowlands Keystone Master: Season One"] = 14532,
-    ["Shadowlands Keystone Master: Season Two"] = 15078
+    ["Shadowlands Keystone Master: Season Two"] = 15078,
+    ["Shadowlands Keystone Master: Season Three"] = 15499
 }
 
 local function GetLevelColoredString(level, short)

@@ -296,7 +296,8 @@ V.tooltips = {
 		raids = {
 			enable = true,
 			["Castle Nathria"] = true,
-			["Sanctum of Domination"] = true
+			["Sanctum of Domination"] = true,
+			["Sepulcher of the First Ones"] = true
 		},
 		special = {
 			enable = true,

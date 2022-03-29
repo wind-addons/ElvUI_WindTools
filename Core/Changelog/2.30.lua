@@ -5,15 +5,19 @@ W.Changelog[230] = {
     IMPORTANT = {
         ["zhCN"] = {
             '[进度] 新增"暗影国度钥石大师: 第三赛季"到进度追踪, "暗影国度钥石大师: 第一赛季"的追踪将默认关闭.',
+            "[进度] 新增初诞者圣墓支持."
         },
         ["zhTW"] = {
             '[进度] 新增"暗影之境鑰石王: 第三季"到進度追蹤, "暗影之境鑰石王: 第一季"的追蹤將預設關閉.',
+            "[进度] 新增首創者聖塚支援."
         },
         ["enUS"] = {
             '[Progression] Add "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
+            "[Progression] Add the support of Sepulcher of the First Ones."
         },
         ["koKR"] = {
             '[Progression] Add "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
+            "[Progression] Add the support of 태초의 존재의 매장터."
         }
     },
     NEW = {

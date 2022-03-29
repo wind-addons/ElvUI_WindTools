@@ -24,22 +24,26 @@ W.Changelog[230] = {
         ["zhCN"] = {
             "[世界地图] 添加了 9.2 新区域的去除迷雾支持.",
             "[额外物品条] 新增了 9.2 版本中的新周常奖励物品. 感谢 mcc1",
-            "[额外物品条] 新增了宇宙治疗药水."
+            "[额外物品条] 新增了宇宙治疗药水.",
+            "[额外物品条] 新增了被统御的炉石."
         },
         ["zhTW"] = {
             "[世界地圖] 支援 9.2 新的區域去除地圖迷霧.",
             "[額外物品條] 新增了 9.2 版本中的新周常獎勵物品. 感謝 mcc1",
-            "[額外物品條] 新增了宇宙治療藥水."
+            "[額外物品條] 新增了宇宙治療藥水.",
+            "[額外物品條] 新增了統御的爐石."
         },
         ["enUS"] = {
             "[World Map] Reveal map can handle new areas in 9.2.",
             "[Extra Item Bar] Added new weekly reward items in 9.2 version. Thanks mcc1",
-            "[Extra Item Bar] Added cosmic healing potion."
+            "[Extra Item Bar] Added cosmic healing potion.",
+            "[Extra Item Bar] Added dominated hearthstone."
         },
         ["koKR"] = {
             "[월드맵] 9.2의 새로운 지역에서 안개를 제거합니다.",
             "[아이템 바] 9.2 버전의 신규 주간 보상 아이템들이 추가되였습니다. Thanks mcc1",
-            "[Extra Item Bar] Added 우주의 치유 물약."
+            "[Extra Item Bar] Added 우주의 치유 물약.",
+            "[Extra Item Bar] Added 지배의 귀환석."
         }
     },
     IMPROVEMENT = {

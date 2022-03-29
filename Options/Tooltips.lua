@@ -236,7 +236,8 @@ options.progression = {
 do
     local raids = {
         "Castle Nathria",
-        "Sanctum of Domination"
+        "Sanctum of Domination",
+        "Sepulcher of the First Ones"
     }
 
     local dungeons = {
@@ -253,7 +254,8 @@ do
 
     local special = {
         "Shadowlands Keystone Master: Season One",
-        "Shadowlands Keystone Master: Season Two"
+        "Shadowlands Keystone Master: Season Two",
+        "Shadowlands Keystone Master: Season Three"
     }
 
     for index, name in ipairs(raids) do

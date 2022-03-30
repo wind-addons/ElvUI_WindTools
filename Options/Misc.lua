@@ -5,6 +5,7 @@ local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
 local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
+local NLP = W:GetModule("NoLootPanel")
 
 local format = format
 local tonumber = tonumber
@@ -109,6 +110,19 @@ options.general = {
             end,
             set = function(info, value)
                 E.db.WT.misc[info[#info]] = value
+            end
+        },
+        noLootPanel = {
+            order = 10,
+            type = "toggle",
+            name = L["No Loot Panel"],
+            desc = L["Disable Blizzard loot info which auto showing after combat overed."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+                NLP:ProfileUpdate()
             end
         }
     }

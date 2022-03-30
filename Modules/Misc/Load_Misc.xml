@@ -16,4 +16,5 @@
 	<Script file='LFGList.lua'/>
 	<Script file='GameBar.lua'/>
 	<Script file='MoveFrames.lua'/>
+	<Script file='NoLootPanel.lua'/>
 </Ui>

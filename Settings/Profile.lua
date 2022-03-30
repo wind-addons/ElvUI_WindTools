@@ -997,6 +997,7 @@ P.misc = {
     autoHideWorldMap = false,
     disableTalkingHead = false,
     hideCrafter = false,
+    noLootPanel = false,
     gameBar = {
         enable = true,
         mouseOver = false,

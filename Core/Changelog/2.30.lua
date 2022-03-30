@@ -19,9 +19,9 @@ W.Changelog[230] = {
             "[Progression] Added the support of Sepulcher of the First Ones."
         },
         ["koKR"] = {
-            "[Other] Added a new feature of disabling loot info panel that auto showing after a combat.",
-            '[Progression] Added "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
-            "[Progression] Added the support of 태초의 존재의 매장터."
+            "[기타] 전투 후 자동으로 표시되는 전리품 정보 패널을 비활성화하는 새로운 기능을 추가했습니다.",
+            '[진행 상태] 추적 목록에 "어둠땅 쐐기돌 장인: 3 시즌"이 추가되었으며 "어둠땅 쐐기돌 장인: 1 시즌"의 추적은 기본적으로 비활성화됩니다.',
+            "[진행 상태] 태초의 존재의 매장터 진행 상태를 추가하였습니다."
         }
     },
     NEW = {
@@ -44,10 +44,10 @@ W.Changelog[230] = {
             "[Extra Item Bar] Added dominated hearthstone."
         },
         ["koKR"] = {
-            "[월드맵] 9.2의 새로운 지역에서 안개를 제거합니다.",
+            "[월드맵] 9.2의 새로운 지역의 안개를 제거합니다.",
             "[아이템 바] 9.2 버전의 신규 주간 보상 아이템들이 추가되였습니다. Thanks mcc1",
-            "[Extra Item Bar] Added 우주의 치유 물약.",
-            "[Extra Item Bar] Added 지배의 귀환석."
+            "[아이템 바] 우주의 치유 물약 추가.",
+            "[아이템 바] 지배의 귀환석 추가."
         }
     },
     IMPROVEMENT = {
@@ -73,7 +73,7 @@ W.Changelog[230] = {
             '[Extra Item Bar] Use the abbreviation "B" instead of "BUTTON".'
         },
         ["koKR"] = {
-            "[채팅 문자] ElvUI 12.72 버전의 코드로 업데이트했습니다.",
+            "[채팅 문자] ElvUI 12.73 버전의 코드로 업데이트했습니다.",
             "[스킨] 파티 찾기 버튼의 스킨을 수정했습니다.",
             "[스킨] 미용실의 스킨을 수정했습니다.",
             "[퀘스트 추적기] 파티 구성하기 인터페이스의 오염을 일으킬 수 있는 문제를 수정했습니다.",

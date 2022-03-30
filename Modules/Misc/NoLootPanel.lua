@@ -4,7 +4,6 @@ local NLP = W:NewModule("NoLootPanel", "AceHook-3.0")
 local _G = _G
 
 function NLP:ProfileUpdate()
-    print("refreshed")
     if E.db.WT.misc.noLootPanel then
         _G.BossBanner:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
     else

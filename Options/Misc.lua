@@ -5,7 +5,6 @@ local M = W:GetModule("Misc")
 local MF = W:GetModule("MoveFrames")
 local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
-local NLP = W:GetModule("NoLootPanel")
 
 local format = format
 local tonumber = tonumber
@@ -122,7 +121,7 @@ options.general = {
             end,
             set = function(info, value)
                 E.db.WT.misc[info[#info]] = value
-                NLP:ProfileUpdate()
+                M:LootPanel()
             end
         }
     }

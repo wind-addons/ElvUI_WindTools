@@ -25,8 +25,8 @@ W.Changelog[230] = {
             "[Progression] Added the support of Sepulcher of the First Ones."
         },
         ["koKR"] = {
-            '[Tooltip] "Add Icon" will no longer style the icons in tooltips.',
-            "[Skin] The tooltip skin will automatically style the icons in tooltips.",
+            '[툴팁] "아이콘 추가"는 더 이상 툴팁에 아이콘 스타일을 적용하지 않습니다.',
+            "[스킨] 툴팁 스킨은 자동으로 툴팁의 아이콘 스타일을 적용합니다.",
             "[기타] 전투 후 자동으로 표시되는 전리품 정보 패널을 비활성화하는 새로운 기능을 추가했습니다.",
             '[진행 상태] 추적 목록에 "어둠땅 쐐기돌 장인: 3 시즌"이 추가되었으며 "어둠땅 쐐기돌 장인: 1 시즌"의 추적은 기본적으로 비활성화됩니다.',
             "[진행 상태] 태초의 존재의 매장터 진행 상태를 추가하였습니다."

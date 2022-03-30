@@ -18,15 +18,33 @@ function S:Blizzard_CharacterCustomize()
 
     hooksecurefunc(
         frame,
-        "SetSelectedCatgory",
+        "SetSelectedCategory",
         function(list)
-            for button in list.selectionPopoutPool:EnumerateActive() do
-                if not button.windStyle then
-                    self:CreateBackdropShadow(button.DecrementButton)
-                    self:CreateBackdropShadow(button.IncrementButton)
-                    self:CreateBackdropShadow(button.SelectionPopoutButton)
-                    self:CreateBackdropShadow(button.SelectionPopoutButton.Popout)
-                    button.windStyle = true
+            if list.selectionPopoutPool then
+                for popout in list.selectionPopoutPool:EnumerateActive() do
+                    if not popout.windStyle then
+                        self:CreateShadow(popout.DecrementButton)
+                        self:CreateShadow(popout.IncrementButton)
+                        self:CreateBackdropShadow(popout.Button)
+                        self:CreateShadow(popout.Button.Popout)
+                        if popout.Label then
+                            F.SetFontOutline(popout.Label)
+                        end
+                        popout.windStyle = true
+                    end
+                end
+            end
+
+            local optionPool = list.pools and list.pools:GetPool("CharCustomizeOptionCheckButtonTemplate")
+            if optionPool then
+                for button in optionPool:EnumerateActive() do
+                    if not button.windStyle then
+                        self:CreateBackdropShadow(button.Button)
+                        if button.Label then
+                            F.SetFontOutline(button.Label)
+                        end
+                        button.windStyle = true
+                    end
                 end
             end
         end

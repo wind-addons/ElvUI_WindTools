@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[230] = {
-    RELEASE_DATE = "2022/03/30",
+    RELEASE_DATE = "2022/04/01",
     IMPORTANT = {
         ["zhCN"] = {
             "[鼠标提示] 添加图标选项将不再美化鼠标提示内的图标.",

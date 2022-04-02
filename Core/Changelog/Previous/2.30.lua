@@ -5,53 +5,53 @@ W.Changelog[230] = {
     IMPORTANT = {
         ["zhCN"] = {
             "[鼠标提示] 添加图标选项将不再美化鼠标提示内的图标.",
-            "[皮肤] 鼠标提示皮肤会自动针对鼠标提示内的图标进行美化.",
-            "[其他] 新增禁用战斗后拾取信息面板的功能.",
-            '[进度] 新增"暗影国度钥石大师: 第三赛季"到进度追踪, "暗影国度钥石大师: 第一赛季"的追踪将默认关闭.',
-            "[进度] 新增初诞者圣墓支持."
+            "[皮肤] 鼠标提示皮肤会自动针对鼠标提示内的图标进行美化."
         },
         ["zhTW"] = {
             "[浮動提示] 添加圖標選項將不再美化鼠標提示內的圖標.",
-            "[皮膚] 浮動提示皮膚會自動美化鼠標提示內的圖示.",
-            "[其他] 新增禁用戰鬥後拾取訊息面板的功能.",
-            '[进度] 新增"暗影之境鑰石王: 第三季"到進度追蹤, "暗影之境鑰石王: 第一季"的追蹤將預設關閉.',
-            "[进度] 新增首創者聖塚支援."
+            "[皮膚] 浮動提示皮膚會自動美化鼠標提示內的圖示."
         },
         ["enUS"] = {
             '[Tooltip] "Add Icon" will no longer style the icons in tooltips.',
-            "[Skin] The tooltip skin will automatically style the icons in tooltips.",
-            "[Other] Added a new feature of disabling loot info panel that auto showing after a combat.",
-            '[Progression] Added "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
-            "[Progression] Added the support of Sepulcher of the First Ones."
+            "[Skin] The tooltip skin will automatically style the icons in tooltips."
         },
         ["koKR"] = {
             '[툴팁] "아이콘 추가"는 더 이상 툴팁에 아이콘 스타일을 적용하지 않습니다.',
-            "[스킨] 툴팁 스킨은 자동으로 툴팁의 아이콘 스타일을 적용합니다.",
-            "[기타] 전투 후 자동으로 표시되는 전리품 정보 패널을 비활성화하는 새로운 기능을 추가했습니다.",
-            '[진행 상태] 추적 목록에 "어둠땅 쐐기돌 장인: 3 시즌"이 추가되었으며 "어둠땅 쐐기돌 장인: 1 시즌"의 추적은 기본적으로 비활성화됩니다.',
-            "[진행 상태] 태초의 존재의 매장터 진행 상태를 추가하였습니다."
+            "[스킨] 툴팁 스킨은 자동으로 툴팁의 아이콘 스타일을 적용합니다."
         }
     },
     NEW = {
         ["zhCN"] = {
+            "[其他] 新增禁用战斗后拾取信息面板的功能.",
+            '[进度] 新增"暗影国度钥石大师: 第三赛季"到进度追踪, "暗影国度钥石大师: 第一赛季"的追踪将默认关闭.',
+            "[进度] 新增初诞者圣墓支持.",
             "[世界地图] 添加了 9.2 新区域的去除迷雾支持.",
             "[额外物品条] 新增了 9.2 版本中的新周常奖励物品. 感谢 mcc1",
             "[额外物品条] 新增了宇宙治疗药水.",
             "[游戏条] 新增了被统御的炉石."
         },
         ["zhTW"] = {
+            "[其他] 新增禁用戰鬥後拾取訊息面板的功能.",
+            '[进度] 新增"暗影之境鑰石王: 第三季"到進度追蹤, "暗影之境鑰石王: 第一季"的追蹤將預設關閉.',
+            "[进度] 新增首創者聖塚支援.",
             "[世界地圖] 支援 9.2 新的區域去除地圖迷霧.",
             "[額外物品條] 新增了 9.2 版本中的新周常獎勵物品. 感謝 mcc1",
             "[額外物品條] 新增了宇宙治療藥水.",
             "[游戲條] 新增了統御的爐石."
         },
         ["enUS"] = {
+            "[Other] Added a new feature of disabling loot info panel that auto showing after a combat.",
+            '[Progression] Added "Shadowlands Keystone Master: Season Three" to tracking list, the tracking of "Shadowlands Keystone Master: Season One" will be disabled by default.',
+            "[Progression] Added the support of Sepulcher of the First Ones.",
             "[World Map] Reveal map can handle new areas in 9.2.",
             "[Extra Item Bar] Added new weekly reward items in 9.2 version. Thanks mcc1",
             "[Extra Item Bar] Added cosmic healing potion.",
             "[Game Bar] Added dominated hearthstone."
         },
         ["koKR"] = {
+            "[기타] 전투 후 자동으로 표시되는 전리품 정보 패널을 비활성화하는 새로운 기능을 추가했습니다.",
+            '[진행 상태] 추적 목록에 "어둠땅 쐐기돌 장인: 3 시즌"이 추가되었으며 "어둠땅 쐐기돌 장인: 1 시즌"의 추적은 기본적으로 비활성화됩니다.',
+            "[진행 상태] 태초의 존재의 매장터 진행 상태를 추가하였습니다.",
             "[월드맵] 9.2의 새로운 지역의 안개를 제거합니다.",
             "[아이템 바] 9.2 버전의 신규 주간 보상 아이템들이 추가되였습니다. Thanks mcc1",
             "[아이템 바] 우주의 치유 물약 추가.",

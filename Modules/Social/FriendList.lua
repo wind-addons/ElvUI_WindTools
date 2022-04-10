@@ -137,6 +137,14 @@ local StatusIcons = {
     }
 }
 
+local RegionLocales = {
+    [1] = L["America"],
+    [2] = L["Korea"],
+    [3] = L["Europe"],
+    [4] = L["Taiwan"],
+    [5] = L["China"]
+}
+
 local MaxLevel = {
     [BNET_CLIENT_WOW .. "C"] = 60,
     [BNET_CLIENT_WOW .. "C_TBC"] = 70,
@@ -195,7 +203,7 @@ function FL:UpdateFriendButton(button)
         return
     end
 
-    local game, realID, name, server, class, area, level, faction, status
+    local game, realID, name, server, class, area, level, faction, status, isInCurrentRegion, regionID
 
     -- 获取好友游戏情况
     if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
@@ -247,6 +255,8 @@ function FL:UpdateFriendButton(button)
                 faction = gameAccountInfo.factionName or nil
                 class = gameAccountInfo.className or ""
                 area = gameAccountInfo.areaName or ""
+                isInCurrentRegion = gameAccountInfo.isInCurrentRegion or false
+                regionID = gameAccountInfo.regionID or false
 
                 if gameAccountInfo.wowProjectID == WOW_PROJECT_CLASSIC then
                     game = BNET_CLIENT_WOW .. "C" -- Classic
@@ -307,6 +317,12 @@ function FL:UpdateFriendButton(button)
                 buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
             else
                 buttonText = F.CreateColorString(area, self.db.areaColor)
+            end
+
+            if not isInCurrentRegion and RegionLocales[regionID] then
+                buttonText =
+                    buttonText ..
+                    " " .. F.CreateColorString(format("[%s]", RegionLocales[regionID]), {r = 0.62, g = 0.62, b = 0.62})
             end
 
             button.info:SetText(buttonText)

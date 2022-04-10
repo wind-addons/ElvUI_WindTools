@@ -303,7 +303,7 @@ function FL:UpdateFriendButton(button)
 
         -- 地区
         if area then
-            if server and server ~= E.myrealm then
+            if server and server ~= "" and server ~= E.myrealm then
                 buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
             else
                 buttonText = F.CreateColorString(area, self.db.areaColor)

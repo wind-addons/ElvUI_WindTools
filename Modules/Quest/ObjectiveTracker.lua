@@ -142,9 +142,13 @@ function OT:HandleInfoText(text)
         if dash.SetText then
             F.SetFontWithDB(dash, self.db.info)
         end
-        dash:Show()
+        if line.Check and line.Check:IsShown() or line.state and line.state == "COMPLETED" then
+            dash:Hide()
+        else
+            dash:Show()
+        end
         text:ClearAllPoints()
-        text:Point("TOPLEFT", dash, "TOPRIGHT", 0, 0)
+        text:Point("TOPLEFT", dash, "TOPRIGHT", -1, 0)
     end
 end
 

@@ -1,6 +1,8 @@
 local W, F, E, L = unpack(select(2, ...))
 local M = W:GetModule("Misc")
 
+local CreateFrame = CreateFrame
+
 local C_PartyInfo_LeaveParty = C_PartyInfo.LeaveParty
 
 local function createInvisibleButton(name, buttonType, content)

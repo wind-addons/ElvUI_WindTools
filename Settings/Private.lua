@@ -208,6 +208,7 @@ V.skins = {
 		channels = true,
 		character = true,
 		chromieTime = true,
+		clickBinding = true,
 		collections = true,
 		communities = true,
 		covenantRenown = true,

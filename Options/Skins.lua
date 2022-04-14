@@ -453,6 +453,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Collections"]
         },
+        clickBinding = {
+            order = 10,
+            type = "toggle",
+            name = L["Click Binding"]
+        },
         communities = {
             order = 10,
             type = "toggle",

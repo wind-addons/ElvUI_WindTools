@@ -37,6 +37,12 @@ for i = 1, 5 do
     end
 end
 
+_G.BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA = L["WindTools"] .. " - " .. L["Extra"]
+_G.BINDING_HEADER_WTEXTRABUTTONS = L["Extra Buttons"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLogout:LeftButton"] = L["Logout"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveGroup:LeftButton"] = L["Leave Party"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L["Leave Party if soloing"]
+
 --[[
     注册 WindTools 模块
     @param {string} name 模块名

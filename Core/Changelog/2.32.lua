@@ -25,9 +25,9 @@ W.Changelog[232] = {
             "[Skins] Added new skin for click binding frame ."
         },
         ["koKR"] = {
-            "[Misc] Add some extra key binding features, you can change configuration in Blizzard Key Binding.",
-            "[Extra Item Bar] Added 깨달음을 얻은 중개자 보급품. Thanks mcc1",
-            "[Skins] Added new skin for click binding frame ."
+            "[기타] Blizzard 단축키 설정에 몇가지 추가 단축키 설정을 추가 했습니다.",
+            "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가 되였습니다. Thanks mcc1",
+            "[스킨] 클릭 바인딩 스킨을 추가 하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -44,8 +44,8 @@ W.Changelog[232] = {
             "[Friend List] Now you can show different account region info."
         },
         ["koKR"] = {
-            '[Quest List] Fixed the problem that the checked icon and dash overlap while the option "No Dash" is disabling.',
-            "[Friend List] Now you can show different account region info."
+            '[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.',
+            "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다."
         }
     }
 }

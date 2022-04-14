@@ -12,22 +12,34 @@ W.Changelog[232] = {
         ["zhCN"] = {
             "[其他] 新增了一些额外的按键绑定功能, 可以在暴雪的快捷键绑定中设置.",
             "[额外物品条] 新增了掮灵开悟者补给品. 感谢 mcc1",
-            "[美化皮肤] 新增了点击绑定界面的美化皮肤."
+            "[美化皮肤] 新增了暴雪点击绑定界面的美化皮肤.",
+            "[美化皮肤] 新增了 ElvUI 快捷键绑定皮肤.",
+            "[美化皮肤] 新增了 WeakAuras 设定中的模板界面皮肤.",
+            "[美化皮肤] 新增了社区设定界面皮肤."
         },
         ["zhTW"] = {
             "[其他] 新增了一些額外的按鍵綁定功能, 可以在暴雪的按鍵綁定中設置.",
             "[額外物品條] 新增了受啟迪的仲介者物資. 感謝 mcc1",
-            "[美化皮膚] 新增了點擊綁定介面的美化皮膚."
+            "[美化皮膚] 新增了暴雪點擊綁定介面的美化皮膚.",
+            "[美化皮膚] 新增了 WeakAuras 設定中的模板介面皮膚.",
+            "[美化皮膚] 新增了社群設定介面皮膚.",
+            "[美化皮膚] 新增了 ElvUI 按鍵綁定界面皮膚."
         },
         ["enUS"] = {
             "[Misc] Add some extra key binding features, you can change configuration in Blizzard Key Binding.",
             "[Extra Item Bar] Added enlightened broker supplies. Thanks mcc1",
-            "[Skins] Added new skin for click binding frame ."
+            "[Skins] Added new skin for Blizzard click binding frame.",
+            "[Skins] Added new skin for ElvUI Key Binding.",
+            "[Skins] Added new skin for WeakAuras Options templates.",
+            "[Skins] Added new skin for community settings."
         },
         ["koKR"] = {
             "[기타] Blizzard 단축키 설정에 몇가지 추가 단축키 설정을 추가 했습니다.",
             "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가 되였습니다. Thanks mcc1",
-            "[스킨] 클릭 바인딩 스킨을 추가 하였습니다."
+            "[스킨] Blizzard 클릭 바인딩 스킨을 추가 하였습니다.",
+            "[Skins] Added new skin for ElvUI Key Binding.",
+            "[Skins] Added new skin for WeakAuras Options templates.",
+            "[Skins] Added new skin for community settings."
         }
     },
     IMPROVEMENT = {
@@ -44,7 +56,7 @@ W.Changelog[232] = {
             "[Friend List] Now you can show different account region info."
         },
         ["koKR"] = {
-            '[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.',
+            "[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다."
         }
     }

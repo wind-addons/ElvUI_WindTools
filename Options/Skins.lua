@@ -943,6 +943,11 @@ options.addons = {
             type = "toggle",
             name = L["Ace3"]
         },
+        ace3DropdownBackdrop = {
+            order = 10,
+            type = "toggle",
+            name = L["Ace3 Dropdown Backdrop"]
+        },
         angryKeystones = {
             order = 10,
             type = "toggle",

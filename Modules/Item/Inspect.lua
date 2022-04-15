@@ -264,7 +264,7 @@ local function DynamicUpdateIconTexture(type, targetIcon, data)
         )
     elseif type == "spellId" then
         local spell = Spell:CreateFromSpellID(data)
-        spell:ContinueOnItemLoad(
+        spell:ContinueOnSpellLoad(
             function()
                 targetIcon.texture:SetTexture(spell:GetSpellIcon())
                 targetIcon.spellID = spell:GetSpellID()
@@ -272,7 +272,7 @@ local function DynamicUpdateIconTexture(type, targetIcon, data)
         )
     elseif type == "spellLink" then
         local spell = Item:CreateFromSpellLink(data)
-        spell:ContinueOnItemLoad(
+        spell:ContinueOnSpellLoad(
             function()
                 targetIcon.texture:SetTexture(spell:GetSpellIcon())
                 targetIcon.spellID = spell:GetSpellID()

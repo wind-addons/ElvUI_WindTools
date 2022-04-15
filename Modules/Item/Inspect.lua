@@ -240,20 +240,43 @@ local function onExecute(self)
     end
 end
 
---Schedule模式更新圖標
-local function UpdateIconTexture(icon, texture, data, dataType)
-    if (not texture) then
-        LibSchedule:AddTask(
-            {
-                identity = "InspectGemAndEnchant" .. icon.index,
-                timer = 0.1,
-                elasped = 0.5,
-                expired = GetTime() + 3,
-                onExecute = onExecute,
-                icon = icon,
-                data = data,
-                dataType = dataType
-            }
+-- Use Item and Spell Mixin to dynamically update information
+local function DynamicUpdateIconTexture(type, targetIcon, data)
+    if type == "itemId" then
+        local item = Item:CreateFromItemID(data)
+        item:ContinueOnItemLoad(
+            function()
+                local qualityColor = item:GetItemQualityColor()
+                targetIcon.bg:SetVertexColor(qualityColor.r, qualityColor.g, qualityColor.b)
+                targetIcon.texture:SetTexture(item:GetItemIcon())
+                targetIcon.itemLink = item:GetItemLink()
+            end
+        )
+    elseif type == "itemLink" then
+        local item = Item:CreateFromItemLink(data)
+        item:ContinueOnItemLoad(
+            function()
+                local qualityColor = item:GetItemQualityColor()
+                targetIcon.bg:SetVertexColor(qualityColor.r, qualityColor.g, qualityColor.b)
+                targetIcon.texture:SetTexture(item:GetItemIcon())
+                targetIcon.itemLink = item:GetItemLink()
+            end
+        )
+    elseif type == "spellId" then
+        local spell = Spell:CreateFromSpellID(data)
+        spell:ContinueOnItemLoad(
+            function()
+                targetIcon.texture:SetTexture(spell:GetSpellIcon())
+                targetIcon.spellID = spell:GetSpellID()
+            end
+        )
+    elseif type == "spellLink" then
+        local spell = Item:CreateFromSpellLink(data)
+        spell:ContinueOnItemLoad(
+            function()
+                targetIcon.texture:SetTexture(spell:GetSpellIcon())
+                targetIcon.spellID = spell:GetSpellID()
+            end
         )
     end
 end
@@ -268,11 +291,8 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     for i, v in ipairs(info) do
         icon = GetIconFrame(frame)
         if (v.link) then
-            _, _, quality, _, _, _, _, _, _, texture = GetItemInfo(v.link)
-            r, g, b = GetItemQualityColor(quality or 0)
-            icon.bg:SetVertexColor(r, g, b)
-            icon.texture:SetTexture(texture or "Interface\\Cursor\\Quest")
-            UpdateIconTexture(icon, texture, v.link, "item")
+            icon.texture:SetTexture("Interface\\Cursor\\Quest")
+            DynamicUpdateIconTexture("itemLink", icon, v.link)
         else
             icon.bg:SetVertexColor(1, 0.82, 0, 0.5)
             icon.texture:SetTexture("Interface\\Cursor\\Quest")
@@ -289,12 +309,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     if (enchantItemID) then
         num = num + 1
         icon = GetIconFrame(frame)
-        _, ItemLink, quality, _, _, _, _, _, _, texture = GetItemInfo(enchantItemID)
-        r, g, b = GetItemQualityColor(quality or 0)
-        icon.bg:SetVertexColor(r, g, b)
-        icon.texture:SetTexture(texture)
-        UpdateIconTexture(icon, texture, enchantItemID, "item")
-        icon.itemLink = ItemLink
+        DynamicUpdateIconTexture("itemId", icon, enchantItemID)
         icon:ClearAllPoints()
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
@@ -302,11 +317,8 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     elseif (enchantSpellID) then
         num = num + 1
         icon = GetIconFrame(frame)
-        _, _, texture = GetSpellInfo(enchantSpellID)
         icon.bg:SetVertexColor(1, 0.82, 0)
-        icon.texture:SetTexture(texture)
-        UpdateIconTexture(icon, texture, enchantSpellID, "spell")
-        icon.spellID = enchantSpellID
+        DynamicUpdateIconTexture("spellId", icon, enchantSpellID)
         icon:ClearAllPoints()
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()

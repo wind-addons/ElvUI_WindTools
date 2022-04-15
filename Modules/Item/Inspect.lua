@@ -77,14 +77,14 @@ local slots = {
 }
 
 local EnchantParts = {
-    [5]  = {1, CHESTSLOT},
-    [8]  = {1, FEETSLOT},
-    [9]  = {1, WRISTSLOT},
-    [10] = {1, HANDSSLOT},
+    [5] = {1, CHESTSLOT},
+    [8] = {1, FEETSLOT},
+    --[9]  = {0, WRISTSLOT},
     [11] = {1, FINGER0SLOT},
     [12] = {1, FINGER1SLOT},
     [15] = {1, BACKSLOT},
     [16] = {1, MAINHANDSLOT},
+    [17] = {1, SECONDARYHANDSLOT}
 }
 
 local function ReInspect(unit)
@@ -773,6 +773,8 @@ local function GetInspectItemListFrame(parent)
                 end
             end
         end
+
+        RefreshAlign(parent.inspectFrame)
     end
 
     E:Delay(0.2, RefreshAlign, parent.inspectFrame)

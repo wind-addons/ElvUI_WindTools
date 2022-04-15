@@ -44,18 +44,22 @@ W.Changelog[232] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[装备观察] 新增多种附魔显示, 优化图标显示逻辑.",
             "[任务列表] 修复了在停用取消标记功能时标记和完成图标重叠的问题.",
             "[好友列表] 现在可以显示不同账号地区的信息了."
         },
         ["zhTW"] = {
+            "[裝備觀察] 新增多種附魔顯示, 優化圖示顯示逻輯.",
             "[任務列表] 修復了在停用取消標記功能時標記和完成图示重疊的問題.",
             "[好友列表] 現在可以顯示不同賬號地區的資訊了."
         },
         ["enUS"] = {
+            "[Inspect] Added more enchants support, optimized icon display logic.",
             '[Quest List] Fixed the problem that the checked icon and dash overlap while the option "No Dash" is disabling.',
             "[Friend List] Now you can show different account region info."
         },
         ["koKR"] = {
+            "[Inspect] Added more enchants support, optimized icon display logic.",
             "[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다."
         }

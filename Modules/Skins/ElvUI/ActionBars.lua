@@ -8,12 +8,26 @@ local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
+local function HandleActionButton(button, useBackdrop)
+    if not button.windStyle then
+        button:SetTemplate("Transparent")
+        S:CreateShadow(button)
+    end
+
+    if useBackdrop then
+        button.shadow:Hide()
+    else
+        button.shadow:Show()
+    end
+end
+
 function S:ElvUI_ActionBar_SkinBar(bar, type)
     if not (E.private.WT.skins.shadow and bar and bar.backdrop) then
         return
     end
 
     if E.private.WT.skins.elvui.actionBarsBackdrop then
+        bar.backdrop:SetTemplate("Transparent")
         if bar.db.backdrop then
             if not bar.backdrop.shadow then
                 self:CreateBackdropShadow(bar, true)
@@ -30,26 +44,17 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
         if type == "PLAYER" then
             for i = 1, NUM_ACTIONBAR_BUTTONS do
                 local button = bar.buttons[i]
-                button:CreateBackdrop()
-                button.backdrop:ClearAllPoints()
-                button.backdrop:SetOutside(button, 0, 0)
-                self:CreateBackdropShadow(button, true)
+                HandleActionButton(button, bar.db.backdrop)
             end
         elseif type == "PET" then
             for i = 1, NUM_PET_ACTION_SLOTS do
                 local button = _G["PetActionButton" .. i]
-                button:CreateBackdrop()
-                button.backdrop:ClearAllPoints()
-                button.backdrop:SetOutside(button, 0, 0)
-                self:CreateBackdropShadow(button, true)
+                HandleActionButton(button, bar.db.backdrop)
             end
         elseif type == "STANCE" then
             for i = 1, NUM_STANCE_SLOTS do
                 local button = _G["ElvUI_StanceBarButton" .. i]
-                button:CreateBackdrop()
-                button.backdrop:ClearAllPoints()
-                button.backdrop:SetOutside(button, 0, 0)
-                self:CreateBackdropShadow(button, true)
+                HandleActionButton(button, bar.db.backdrop)
             end
         end
     end

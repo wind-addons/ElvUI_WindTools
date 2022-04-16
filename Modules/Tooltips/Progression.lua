@@ -524,7 +524,6 @@ local function SetProgressionInfo(guid, tt)
     if db.mythicDungeons.enable then -- 地下城进度
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("MythicDungeons"), 0, 0, true)
-        tt:AddDoubleLine(titleLeft, icon, nil, nil, nil, 1, 1, 1)
         for name, achievementID in pairs(dungeonAchievements) do
             if db.mythicDungeons[name] then
                 local left = format("%s:", locales[name].short)

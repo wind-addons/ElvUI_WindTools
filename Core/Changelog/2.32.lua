@@ -24,7 +24,8 @@ W.Changelog[232] = {
             "[美化皮肤] 新增了暴雪点击绑定界面的美化皮肤.",
             "[美化皮肤] 新增了 ElvUI 快捷键绑定皮肤.",
             "[美化皮肤] 新增了 WeakAuras 设定中的模板界面皮肤.",
-            "[美化皮肤] 新增了社区设定界面皮肤."
+            "[美化皮肤] 新增了社区设定界面皮肤.",
+            "[美化皮肤] 新增了 Ace3 下拉菜单皮肤.",
         },
         ["zhTW"] = {
             "[移動框架] 新增了一些新框架.",
@@ -33,7 +34,8 @@ W.Changelog[232] = {
             "[美化皮膚] 新增了暴雪點擊綁定介面的美化皮膚.",
             "[美化皮膚] 新增了 WeakAuras 設定中的模板介面皮膚.",
             "[美化皮膚] 新增了社群設定介面皮膚.",
-            "[美化皮膚] 新增了 ElvUI 按鍵綁定界面皮膚."
+            "[美化皮膚] 新增了 ElvUI 按鍵綁定界面皮膚.",
+            "[美化皮膚] 新增了 Ace3 下拉選單皮膚.",
         },
         ["enUS"] = {
             "[Move Frames] Add support of more frames.",
@@ -42,7 +44,8 @@ W.Changelog[232] = {
             "[Skins] Added new skin for Blizzard click binding frame.",
             "[Skins] Added new skin for ElvUI Key Binding.",
             "[Skins] Added new skin for WeakAuras Options templates.",
-            "[Skins] Added new skin for community settings."
+            "[Skins] Added new skin for community settings.",
+            "[Skins] Added new skin for Ace3 dropdown menu.",
         },
         ["koKR"] = {
             "[Move Frames] Add support of more frames.",
@@ -51,7 +54,8 @@ W.Changelog[232] = {
             "[스킨] Blizzard 클릭 바인딩 스킨을 추가 하였습니다.",
             "[Skins] Added new skin for ElvUI Key Binding.",
             "[Skins] Added new skin for WeakAuras Options templates.",
-            "[Skins] Added new skin for community settings."
+            "[Skins] Added new skin for community settings.",
+            "[Skins] Added new skin for Ace3 dropdown menu.",
         }
     },
     IMPROVEMENT = {

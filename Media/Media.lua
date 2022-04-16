@@ -28,7 +28,6 @@ do
 
 	function F.GetTextureString(texture, height, width, aspectRatio)
 		if aspectRatio then
-			print(type(texture))
 			return format(aspectRatioTemplate, texture)
 		else
 			width = width or height
@@ -53,6 +52,7 @@ do
 		end
 	end
 	AddMedia("logo", format("Title/%s.tga", titlePath), "Textures")
+end
 AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
 
 -- Custom Header

@@ -44,6 +44,7 @@ L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."] = "
 L["Accepted"] = "수락"
 L["Accuracy"] = "정확성"
 L["Ace3"] = true
+L["Ace3 Dropdown Backdrop"] = true
 L["Achievements"] = "업적"
 L["Actionbars Backdrop"] = "액션 바 배경"
 L["Actionbars Button"] = "액션 바 버튼"

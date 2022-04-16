@@ -123,7 +123,7 @@ local locales = {
     ["Tazavesh, the Veiled Market"] = {
         short = L["[ABBR] Tazavesh, the Veiled Market"],
         full = L["Tazavesh, the Veiled Market"]
-    },
+    }
 }
 
 local raidAchievements = {
@@ -439,7 +439,7 @@ local function SetProgressionInfo(guid, tt)
 
             found = false
 
-            if db.raids.enable then -- 团本进度
+            if not updated and db.raids.enable then -- 团本进度
                 for _, tier in ipairs(tiers) do
                     if db.raids[tier] then
                         for _, level in ipairs(levels) do
@@ -464,7 +464,7 @@ local function SetProgressionInfo(guid, tt)
 
             found = false
 
-            if db.mythicDungeons.enable then -- 地下城进度
+            if not updated and db.mythicDungeons.enable then -- 地下城进度
                 for name, achievementID in pairs(dungeonAchievements) do
                     if db.mythicDungeons[name] then
                         if strfind(leftTipText, locales[name].short) then

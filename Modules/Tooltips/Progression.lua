@@ -364,7 +364,7 @@ local function UpdateProgression(guid, faction)
         cache[guid].info.raids = {}
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
-                cache[guid].info.raids[tier] = {}
+                local tempInfo = {}
                 local bosses = raidAchievements[tier]
                 if bosses.separated then
                     bosses = bosses[faction]
@@ -379,11 +379,14 @@ local function UpdateProgression(guid, faction)
                     end
 
                     if alreadyKilled > 0 then
-                        cache[guid].info.raids[tier][level] = format("%d/%d", alreadyKilled, #bosses[level])
+                        tempInfo[level] = format("%d/%d", alreadyKilled, #bosses[level])
                         if alreadyKilled == #bosses[level] then
                             break -- 全通本难度后毋须扫描更低难度进度
                         end
                     end
+                end
+                if next(tempInfo) then
+                    cache[guid].info.raids[tier] = tempInfo
                 end
             end
         end
@@ -487,7 +490,7 @@ local function SetProgressionInfo(guid, tt)
 
     local icon = F.GetIconString(W.Media.Textures.smallLogo, 12)
 
-    if db.special.enable then -- 成就
+    if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then -- 成就
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("SpecialAchievements"), 0, 0, true)
         for _, specialAchievement in pairs(specialAchievements) do
@@ -501,13 +504,13 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.raids.enable then -- 团本进度
+    if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then -- 团本进度
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("Raids"), 0, 0, true)
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
                 for _, level in ipairs(levels) do
-                    if (cache[guid].info.raids[tier][level]) then
+                    if cache[guid].info.raids[tier] and cache[guid].info.raids[tier][level] then
                         local left = format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
                         local right = GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
 

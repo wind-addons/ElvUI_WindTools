@@ -296,9 +296,9 @@ local dungeonAchievements = {
 }
 
 local specialAchievements = {
-    ["Shadowlands Keystone Master: Season One"] = 14532,
-    ["Shadowlands Keystone Master: Season Two"] = 15078,
-    ["Shadowlands Keystone Master: Season Three"] = 15499
+    {14532, "Shadowlands Keystone Master: Season One"},
+    {15078, "Shadowlands Keystone Master: Season Two"},
+    {15499, "Shadowlands Keystone Master: Season Three"}
 }
 
 local function GetLevelColoredString(level, short)
@@ -344,14 +344,15 @@ local function UpdateProgression(guid, faction)
     -- 成就
     if db.special.enable then
         cache[guid].info.special = {}
-        for name, achievementID in pairs(specialAchievements) do
+        for _, specialAchievement in pairs(specialAchievements) do
+            local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
                 local completed, month, day, year = GetAchievementInfoByID(guid, achievementID)
                 local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
                 if completed then
-                    completedString = gsub(L["%month%-%day%-%year%"], "%%month%%", month)
+                    completedString = gsub(L["%month%-%day%-%year%"], "%%year%%", 2000 + year)
+                    completedString = gsub(completedString, "%%month%%", month)
                     completedString = gsub(completedString, "%%day%%", day)
-                    completedString = gsub(completedString, "%%year%%", 2000 + year)
                 end
                 cache[guid].info.special[name] = completedString
             end
@@ -421,7 +422,8 @@ local function SetProgressionInfo(guid, tt)
 
         if leftTipText then
             if db.special.enable then -- 成就
-                for name, achievementID in pairs(specialAchievements) do
+                for _, specialAchievement in pairs(specialAchievements) do
+                    local achievementID, name = unpack(specialAchievement)
                     if db.special[name] then
                         if strfind(leftTipText, locales[name].short) then
                             local rightTip = _G["GameTooltipTextRight" .. i]
@@ -487,7 +489,10 @@ local function SetProgressionInfo(guid, tt)
 
     if db.special.enable then -- 成就
         tt:AddLine(" ")
-        for name, achievementID in pairs(specialAchievements) do
+        tt:AddLine(L["Special Achievements"])
+
+        for _, specialAchievement in pairs(specialAchievements) do
+            local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
                 local left = format("%s:", locales[name].short)
                 local right = cache[guid].info.special[name]

@@ -39,6 +39,115 @@ do
 		end
 	end
 	AddMedia("logo", format("Title/%s.tga", titlePath), "Textures")
+AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
+
+-- Custom Header
+local CustomHeaders = {
+	width = 1024,
+	height = 128,
+	["SpecialAchievements"] = {
+		["zhCN"] = {
+			width = 200,
+			height = 23,
+			startX = 0,
+			startY = 0
+		},
+		["zhTW"] = {
+			width = 200,
+			height = 23,
+			startX = 0,
+			startY = 26
+		},
+		["koKR"] = {
+			width = 200,
+			height = 23,
+			startX = 0,
+			startY = 51
+		},
+		["enUS"] = {
+			width = 200,
+			height = 23,
+			startX = 0,
+			startY = 77
+		}
+	},
+	["Raids"] = {
+		["zhCN"] = {
+			width = 200,
+			height = 23,
+			startX = 204,
+			startY = 0
+		},
+		["zhTW"] = {
+			width = 200,
+			height = 23,
+			startX = 204,
+			startY = 26
+		},
+		["koKR"] = {
+			width = 200,
+			height = 23,
+			startX = 204,
+			startY = 51
+		},
+		["enUS"] = {
+			width = 200,
+			height = 23,
+			startX = 204,
+			startY = 77
+		}
+	},
+	["MythicDungeons"] = {
+		["zhCN"] = {
+			width = 200,
+			height = 23,
+			startX = 407,
+			startY = 0
+		},
+		["zhTW"] = {
+			width = 200,
+			height = 23,
+			startX = 407,
+			startY = 26
+		},
+		["koKR"] = {
+			width = 200,
+			height = 23,
+			startX = 407,
+			startY = 51
+		},
+		["enUS"] = {
+			width = 200,
+			height = 23,
+			startX = 407,
+			startY = 77
+		}
+	}
+}
+
+function F.GetCustomHeader(name, scale)
+	if not CustomHeaders[name] then
+		return
+	end
+
+	local config = CustomHeaders[name][E.global.general.locale] or CustomHeaders[name]["enUS"]
+	if not config then
+		return
+	end
+
+	scale = scale or 1
+	return format(
+		"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
+		W.Media.Textures.customHeaders,
+		ceil(config.height * scale),
+		ceil(config.width * scale),
+		CustomHeaders.width,
+		CustomHeaders.height,
+		config.startX,
+		config.startX + config.width,
+		config.startY,
+		config.startY + config.height
+	)
 end
 
 do

@@ -489,8 +489,7 @@ local function SetProgressionInfo(guid, tt)
 
     if db.special.enable then -- 成就
         tt:AddLine(" ")
-        tt:AddLine(L["Special Achievements"])
-
+        tt:AddLine(F.GetCustomHeader("SpecialAchievements"), 0, 0, true)
         for _, specialAchievement in pairs(specialAchievements) do
             local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
@@ -504,8 +503,7 @@ local function SetProgressionInfo(guid, tt)
 
     if db.raids.enable then -- 团本进度
         tt:AddLine(" ")
-        tt:AddDoubleLine(L["Raids"], icon, nil, nil, nil, 1, 1, 1)
-
+        tt:AddLine(F.GetCustomHeader("Raids"), 0, 0, true)
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
                 for _, level in ipairs(levels) do
@@ -522,7 +520,7 @@ local function SetProgressionInfo(guid, tt)
 
     if db.mythicDungeons.enable then -- 地下城进度
         tt:AddLine(" ")
-        local titleLeft = L["Mythic Dungeons"] .. " [" .. cache[guid].info.mythicDungeons.times .. "]"
+        tt:AddLine(F.GetCustomHeader("MythicDungeons"), 0, 0, true)
         tt:AddDoubleLine(titleLeft, icon, nil, nil, nil, 1, 1, 1)
         for name, achievementID in pairs(dungeonAchievements) do
             if db.mythicDungeons[name] then

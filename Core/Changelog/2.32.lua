@@ -13,7 +13,7 @@ W.Changelog[232] = {
             "[Move Frames] Improve the stability of the moving function."
         },
         ["koKR"] = {
-            "[Move Frames] Improve the stability of the moving function."
+            "[프레임 이동] 이동시 안전성을 향상 시켰습니다."
         }
     },
     NEW = {
@@ -48,14 +48,14 @@ W.Changelog[232] = {
             "[Skins] Added new skin for Ace3 dropdown menu.",
         },
         ["koKR"] = {
-            "[Move Frames] Add support of more frames.",
-            "[기타] Blizzard 단축키 설정에 몇가지 추가 단축키 설정을 추가 했습니다.",
-            "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가 되였습니다. Thanks mcc1",
-            "[스킨] Blizzard 클릭 바인딩 스킨을 추가 하였습니다.",
-            "[Skins] Added new skin for ElvUI Key Binding.",
-            "[Skins] Added new skin for WeakAuras Options templates.",
-            "[Skins] Added new skin for community settings.",
-            "[Skins] Added new skin for Ace3 dropdown menu.",
+            "[프레임 이동] 새로운 프레임을 추가했습니다.",
+            "[기타] Blizzard 단축키 설정에 추가로 몇가지 단축키 설정을 추가했습니다.",
+            "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가되였습니다. Thanks mcc1",
+            "[스킨] Blizzard 클릭 바인딩 인터페이스 스킨을 추가했습니다.",
+            "[스킨] ElvUI 키 바인팅 인터페이스 스킨을 추가했습니다",
+            "[스킨] WeakAuras 옵션 템플릿 인터페이스 스킨을 추가했습니다.",
+            "[스킨] 커뮤니티 설정 인터페이스 스킨을 추가했습니다",
+            "[스킨] Ace3 드롭다운 메뉴 스킨을 추가했습니다.",
         }
     },
     IMPROVEMENT = {
@@ -78,10 +78,10 @@ W.Changelog[232] = {
             "[Skins] Optimized ElvUI action bar skin."
         },
         ["koKR"] = {
-            "[Inspect] Added more enchants support, optimized icon display logic.",
+            "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",
             "[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다.",
-            "[Skins] Optimized ElvUI action bar skin."
+            "[스킨] ElvUI 액션바 스킨을 최적화했습니다."
         }
     }
 }

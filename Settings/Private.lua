@@ -309,15 +309,17 @@ V.tooltips = {
 		},
 		mythicDungeons = {
 			enable = true,
-			["The Necrotic Wake"] = true,
-			["Plaguefall"] = true,
-			["Mists of Tirna Scithe"] = true,
-			["Halls of Atonement"] = true,
-			["Theater of Pain"] = true,
+			showNoRecord = true,
 			["De Other Side"] = true,
-			["Spires of Ascension"] = true,
+			["Halls of Atonement"] = true,
+			["Mists of Tirna Scithe"] = true,
+			["Plaguefall"] = true,
 			["Sanguine Depths"] = true,
-			["Tazavesh, the Veiled Market"] = true
+			["Spires of Ascension"] = true,
+			["Tazavesh: So'leah's Gambit"] = true,
+			["Tazavesh: Streets of Wonder"] = true,
+			["The Necrotic Wake"] = true,
+			["Theater of Pain"] = true
 		}
 	}
 }

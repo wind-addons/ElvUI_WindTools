@@ -11,9 +11,9 @@ local pairs = pairs
 local select = select
 local strfind = strfind
 local tonumber = tonumber
+local unpack = unpack
 
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
-local CanInspect = CanInspect
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
 local GetAchievementComparisonInfo = GetAchievementComparisonInfo
 local GetAchievementInfo = GetAchievementInfo
@@ -21,19 +21,18 @@ local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
-local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
-local UnitGUID = UnitGUID
 local UnitLevel = UnitLevel
 local UnitRace = UnitRace
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
-local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
-    C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
+local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison

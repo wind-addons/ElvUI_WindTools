@@ -3,9 +3,17 @@ local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
 local _G = _G
+
 local next = next
+local pairs = pairs
+local select = select
 local tinsert = tinsert
+local type = type
 local xpcall = xpcall
+
+local CanInspect = CanInspect
+local IsShiftKeyDown = IsShiftKeyDown
+local UnitGUID = UnitGUID
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表

@@ -4,11 +4,26 @@ local T = W:GetModule("Tooltips")
 local LibOR = LibStub("LibOpenRaid-1.0", true)
 
 -- Modified from NDui_Plus Tooltips
-
-local strsub = strsub
+local format = format
+local pairs = pairs
+local select = select
+local strmatch = strmatch
 local strsplit = strsplit
+local strsub = strsub
 local tonumber = tonumber
+
+local Ambiguate = Ambiguate
+local GetNumGroupMembers = GetNumGroupMembers
+local GetRaidRosterInfo = GetRaidRosterInfo
+local GetUnitName = GetUnitName
+local IsAddOnLoaded = IsAddOnLoaded
+local IsInGroup = IsInGroup
+local IsInRaid = IsInRaid
 local UnitGUID = UnitGUID
+local UnitIsUnit = UnitIsUnit
+
+local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 local C_ChatInfo_RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage

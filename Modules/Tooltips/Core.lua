@@ -10,6 +10,7 @@ local xpcall = xpcall
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
 T.inspect = {}
+T.eventCallback = {}
 
 --[[
     注册回调
@@ -86,6 +87,25 @@ function T:InspectInfo(_, tt, triedTimes)
     end
 end
 
+function T:AddEventCallback(eventName, func)
+    if type(func) == "string" then
+        func = self[func]
+    end
+    if self.eventCallback[eventName] then
+        tinsert(self.eventCallback[eventName], func)
+    else
+        self.eventCallback[eventName] = {func}
+    end
+end
+
+function T:Event(event, ...)
+    if self.eventCallback[event] then
+        for _, func in next, self.eventCallback[event] do
+            xpcall(func, errorhandler, self, event, ...)
+        end
+    end
+end
+
 function T:Initialize()
     self.db = E.private.WT.tooltips
 
@@ -95,6 +115,9 @@ function T:Initialize()
     end
 
     T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
+    for name, _ in pairs(self.eventCallback) do
+        T:RegisterEvent(name, "Event")
+    end
 end
 
 function T:ProfileUpdate()

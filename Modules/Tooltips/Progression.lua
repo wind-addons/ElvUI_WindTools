@@ -570,6 +570,10 @@ local function SetProgressionInfo(guid, tt)
 end
 
 function T:AddProgression(_, tt, unit, numTries, r, g, b)
+    if (not unit) or (numTries > 3) or not CanInspect(unit) then
+        return
+    end
+
     if not E.private.WT.tooltips.progression.enable then
         return
     end

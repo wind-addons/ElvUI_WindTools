@@ -569,12 +569,31 @@ local function SetProgressionInfo(guid, tt)
     end
 end
 
-function T:AddProgression(_, tt, unit, numTries, r, g, b)
+function T:AddProgression(_, tt, unit, numTries, r, g, b, triedTimes)
     if (not unit) or (numTries > 3) or not CanInspect(unit) then
         return
     end
 
     if not E.private.WT.tooltips.progression.enable then
+        return
+    end
+
+    local isElvUITooltipItemLevelInfoAlreadyAdded = false
+
+    for i = 1, tt:NumLines() do
+        local leftTip = _G["GameTooltipTextLeft" .. i]
+        local leftTipText = leftTip:GetText()
+        if leftTipText and leftTipText == L["Item Level:"] then
+            isElvUITooltipItemLevelInfoAlreadyAdded = true
+            break
+        end
+    end
+
+    if not isElvUITooltipItemLevelInfoAlreadyAdded then
+        triedTimes = triedTimes or 0
+        if triedTimes < 20 then
+            E:Delay(0.1, T.AddProgression, T, ET, tt, unit, numTries, r, g, b, triedTimes + 1)
+        end
         return
     end
 

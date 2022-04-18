@@ -222,6 +222,11 @@ AddMedia("tools", "Hammer.tga", "Icons")
 AddMedia("tooltips", "Tooltips.tga", "Icons")
 AddMedia("unitFrames", "UnitFrames.tga", "Icons")
 
+AddMedia("covenantKyrian", "Covenants/Kyrian.tga", "Icons")
+AddMedia("covenantNecrolord", "Covenants/Necrolord.tga", "Icons")
+AddMedia("covenantNightFae", "Covenants/NightFae.tga", "Icons")
+AddMedia("covenantVenthyr", "Covenants/Venthyr.tga", "Icons")
+
 AddMedia("discord", "Discord.tga", "Icons")
 AddMedia("github", "Github.tga", "Icons")
 AddMedia("nga", "NGA.tga", "Icons")

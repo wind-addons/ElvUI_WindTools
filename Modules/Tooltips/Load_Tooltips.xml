@@ -2,6 +2,7 @@
 	<!-- Core -->
 	<Script file='Core.lua'/>
 	<!-- Submodule -->
+	<Script file='Covenant.lua'/>
 	<Script file='DominationRank.lua'/>
 	<Script file='GroupInfo.lua'/>
 	<Script file='HealthBar.lua'/>

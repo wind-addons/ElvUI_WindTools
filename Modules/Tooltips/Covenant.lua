@@ -220,6 +220,10 @@ local function HandleSpellCast(unit, _, spellID)
 end
 
 function T:Covenant(tt, unit, guid)
+    if not self.db.covenant then
+        return
+    end
+
     local covenantID
     if UnitIsUnit(unit, "player") then
         covenantID = C_Covenants_GetActiveCovenantID()
@@ -244,6 +248,10 @@ function T:Covenant(tt, unit, guid)
 end
 
 function T:InitializeCovenant()
+    if not self.db.covenant then
+        return
+    end
+
     DCLoaded = IsAddOnLoaded("Details_Covenants")
 
     for prefix in pairs(addonPrefixes) do
@@ -251,12 +259,11 @@ function T:InitializeCovenant()
     end
 
     HandleRosterUpdate()
+
+    self:AddEventCallback("CHAT_MSG_ADDON", HandleAddonMessage)
+    self:AddEventCallback("GROUP_ROSTER_UPDATE", HandleRosterUpdate)
+    self:AddEventCallback("UNIT_SPELLCAST_SUCCEEDED", HandleSpellCast)
+    self:AddInspectInfoCallback(1, "Covenant")
 end
 
 T:AddCallback("InitializeCovenant")
-
-T:AddInspectInfoCallback(1, "Covenant")
-
-T:AddEventCallback("CHAT_MSG_ADDON", HandleAddonMessage)
-T:AddEventCallback("GROUP_ROSTER_UPDATE", HandleRosterUpdate)
-T:AddEventCallback("UNIT_SPELLCAST_SUCCEEDED", HandleSpellCast)

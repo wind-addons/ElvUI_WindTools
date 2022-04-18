@@ -110,14 +110,15 @@ function T:Initialize()
     self.db = E.private.WT.tooltips
 
     for index, func in next, self.load do
-        xpcall(func, errorhandler)
+        xpcall(func, errorhandler, T)
         self.load[index] = nil
     end
 
-    T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
     for name, _ in pairs(self.eventCallback) do
         T:RegisterEvent(name, "Event")
     end
+
+    T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
 end
 
 function T:ProfileUpdate()

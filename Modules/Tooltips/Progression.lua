@@ -616,7 +616,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b, triedTimes)
         AchievementFrame_LoadUI()
     end
 
-    if not cache[guid] or (GetTime() - cache[guid].timer) > 600 then
+    if not cache[guid] or (GetTime() - cache[guid].timer) > 120 then
         if guid == E.myguid then
             UpdateProgression(guid, unit, E.myfaction)
         else

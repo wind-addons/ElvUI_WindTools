@@ -558,4 +558,4 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-T:AddInspectInfoCallback(1, "Progression")
+T:AddInspectInfoCallback(2, "Progression")

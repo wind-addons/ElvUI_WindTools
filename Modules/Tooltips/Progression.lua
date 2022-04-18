@@ -426,14 +426,15 @@ local function UpdateProgression(guid, unit, faction)
     end
 end
 
-local function SetProgressionInfo(guid, tt)
+local function SetProgressionInfo(tt, guid)
     if not cache[guid] then
         return
     end
 
     local db = E.private.WT.tooltips.progression
 
-    if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then -- 成就
+    -- Special Achievements
+    if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("SpecialAchievements"), 0, 0, true)
         for _, specialAchievement in pairs(specialAchievements) do
@@ -447,7 +448,8 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then -- 团本进度
+    -- Raids
+    if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("Raids"), 0, 0, true)
         for _, tier in ipairs(tiers) do
@@ -464,6 +466,7 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
+    -- Mythic+ scores
     local displayMythicDungeons = false
     if db.mythicDungeons.showNoRecord then
         displayMythicDungeons = true
@@ -476,7 +479,7 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then -- Mythic+ scores
+    if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
         tt:AddLine(" ")
         tt:AddLine(F.GetCustomHeader("MythicDungeons"), 0, 0, true)
         for id, name in pairs(mythicKeystoneDungeons) do
@@ -494,48 +497,15 @@ local function SetProgressionInfo(guid, tt)
     end
 end
 
-function T:AddProgression(_, tt, unit, numTries, r, g, b, triedTimes)
-    if (not unit) or (numTries > 3) or not CanInspect(unit) then
-        return
-    end
-
+function T:Progression(tt, unit, guid)
     if not E.private.WT.tooltips.progression.enable then
         return
     end
 
-    local isElvUITooltipItemLevelInfoAlreadyAdded = false
-
-    for i = 1, tt:NumLines() do
-        local leftTip = _G["GameTooltipTextLeft" .. i]
-        local leftTipText = leftTip:GetText()
-        if leftTipText and leftTipText == L["Item Level:"] then
-            isElvUITooltipItemLevelInfoAlreadyAdded = true
-            break
-        end
-    end
-
-    if not isElvUITooltipItemLevelInfoAlreadyAdded then
-        triedTimes = triedTimes or 0
-        if triedTimes < 20 then
-            E:Delay(0.1, T.AddProgression, T, ET, tt, unit, numTries, r, g, b, triedTimes + 1)
-        end
-        return
-    end
-
-    if InCombatLockdown() then
-        return
-    end
-
-    if not (unit and CanInspect(unit)) then
-        return
-    end
-
     local level = UnitLevel(unit)
-    if not (level and level == MAX_PLAYER_LEVEL) then
+    if not level or not level == MAX_PLAYER_LEVEL then
         return
     end
-
-    local guid = UnitGUID(unit)
 
     if not IsAddOnLoaded("Blizzard_AchievementUI") then
         AchievementFrame_LoadUI()
@@ -564,7 +534,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b, triedTimes)
         end
     end
 
-    SetProgressionInfo(guid, tt)
+    SetProgressionInfo(tt, guid)
 end
 
 function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
@@ -588,8 +558,4 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-function T:Progression()
-    T:SecureHook(ET, "AddInspectInfo", "AddProgression")
-end
-
-T:AddCallback("Progression")
+T:AddInspectInfoCallback(1, "Progression")

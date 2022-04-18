@@ -1,13 +1,15 @@
 local W, F, E, L = unpack(select(2, ...))
+local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
 local _G = _G
-local next  = next
+local next = next
 local tinsert = tinsert
 local xpcall = xpcall
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
+T.inspect = {}
 
 --[[
     注册回调
@@ -35,6 +37,55 @@ local function errorhandler(err)
     return _G.geterrorhandler()(err)
 end
 
+function T:AddInspectInfoCallback(priority, func)
+    if type(func) == "string" then
+        func = self[func]
+    end
+    T.inspect[priority] = func
+end
+
+function T:InspectInfo(_, tt, triedTimes)
+    if not IsShiftKeyDown() or tt:IsForbidden() then
+        return
+    end
+
+    local unit = select(2, tt:GetUnit())
+    if not unit or not CanInspect(unit) then
+        return
+    end
+
+    local guid = UnitGUID(unit)
+
+    -- If ElvUI is inspecting, just wait for 2 seconds
+    triedTimes = triedTimes or 0
+    if triedTimes > 20 then
+        return
+    end
+
+    if ET.db.inspectDataEnable then
+        local isElvUITooltipItemLevelInfoAlreadyAdded = false
+
+        for i = 1, tt:NumLines() do
+            local leftTip = _G["GameTooltipTextLeft" .. i]
+            local leftTipText = leftTip:GetText()
+            if leftTipText and leftTipText == L["Item Level:"] then
+                isElvUITooltipItemLevelInfoAlreadyAdded = true
+                break
+            end
+        end
+
+        if not isElvUITooltipItemLevelInfoAlreadyAdded then
+            E:Delay(0.1, T.InspectInfo, T, ET, tt, triedTimes + 1)
+            return
+        end
+    end
+
+    -- Run all registered callbacks
+    for _, func in next, self.inspect do
+        xpcall(func, errorhandler, self, tt, unit, guid)
+    end
+end
+
 function T:Initialize()
     self.db = E.private.WT.tooltips
 
@@ -42,6 +93,8 @@ function T:Initialize()
         xpcall(func, errorhandler)
         self.load[index] = nil
     end
+
+    T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
 end
 
 function T:ProfileUpdate()

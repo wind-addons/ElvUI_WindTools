@@ -290,6 +290,7 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	tierSet = true,
 	covenant = true,
 	dominationRank = true,
 	objectiveProgress = true,

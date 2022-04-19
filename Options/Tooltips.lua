@@ -49,8 +49,15 @@ options.general = {
                     name = L["Domination Rank"],
                     desc = L["Show the rank of shards."]
                 },
-                covenant = {
+                tierSet = {
                     order = 3,
+                    type = "toggle",
+                    name = L["Tier Set"],
+                    desc = L["Show the number of Tier Set equipments."] ..
+                        "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
+                },
+                covenant = {
+                    order = 4,
                     type = "toggle",
                     name = L["Covenant"],
                     desc = L["Show covenant information via the communition with third-party addons."] ..

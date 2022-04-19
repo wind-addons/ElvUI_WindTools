@@ -84,7 +84,7 @@ function T:InspectInfo(_, tt, triedTimes)
         end
 
         if not isElvUITooltipItemLevelInfoAlreadyAdded then
-            E:Delay(0.1, T.InspectInfo, T, ET, tt, triedTimes + 1)
+            E:Delay(0.2, T.InspectInfo, T, ET, tt, triedTimes + 1)
             return
         end
     end

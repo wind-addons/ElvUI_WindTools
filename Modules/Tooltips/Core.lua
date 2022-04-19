@@ -77,8 +77,21 @@ function T:InspectInfo(_, tt, triedTimes)
         for i = 1, tt:NumLines() do
             local leftTip = _G["GameTooltipTextLeft" .. i]
             local leftTipText = leftTip:GetText()
-            if leftTipText and leftTipText == L["Item Level:"] then
+            if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
                 isElvUITooltipItemLevelInfoAlreadyAdded = true
+                -- remove trash lines
+                for j = i + 1, tt:NumLines() do
+                    local left = _G["GameTooltipTextLeft" .. j]
+                    local right = _G["GameTooltipTextRight" .. j]
+                    if left then
+                        left:SetText("")
+                        left:Hide()
+                    end
+                    if right then
+                        right:SetText("")
+                        right:Hide()
+                    end
+                end
                 break
             end
         end

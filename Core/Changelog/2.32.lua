@@ -13,7 +13,7 @@ W.Changelog[232] = {
             "[Move Frames] Improve the stability of the moving function."
         },
         ["koKR"] = {
-            "[프레임 이동] 이동시 안전성을 향상 시켰습니다."
+            "[프레임 이동] 창 이동시 안전성을 향상 시켰습니다."
         }
     },
     NEW = {
@@ -57,9 +57,9 @@ W.Changelog[232] = {
             "[Skins] Added new skin for Ace3 dropdown menu."
         },
         ["koKR"] = {
-            "[Tooltips] Add covenant inforamation. Thanks NDui_Plus",
-            "[Tooltips] Add new mythic keystone dungeon score. Thanks NDui_Plus",
-            "[Tooltips] Add the number of tier set equipments. Thanks NDui",
+            "[툴팁] 성약단 정보를 추가하였습니다. Thanks NDui_Plus",
+            "[툴팁] 신화 쐐기돌 던전 점수를 추가하였습니다. Thanks NDui_Plus",
+            "[툴팁] 티어 셋트 장비의 수를 추가하였습니다. Thanks NDui",
             "[프레임 이동] 새로운 프레임을 추가했습니다.",
             "[기타] Blizzard 단축키 설정에 추가로 몇가지 단축키 설정을 추가했습니다.",
             "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가되였습니다. Thanks mcc1",
@@ -96,8 +96,8 @@ W.Changelog[232] = {
             "[Skins] Optimized ElvUI action bar skin."
         },
         ["koKR"] = {
-            "[Tooltips] Optimized performance.",
-            "[Tooltips] Removed mythic dungeon times.",
+            "[툴팁] 최적화를 통해 성능이 크게 향상되었습니다.",
+            "[툴팁] 신화 던전 시간 삭제.",
             "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",
             "[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다.",

@@ -101,7 +101,7 @@ end
 
 function T:ElvUIScanTooltipSetInventoryItem(tt, unit, slot)
     local guid = UnitGUID(unit)
-    if guid and not locked[guid] then
+    if guid and cache[guid] and not locked[guid] then
         local itemLink = select(2, tt:GetItem())
         local itemID = itemLink and strmatch(itemLink, "item:(%d+):")
         if itemID then

@@ -119,6 +119,17 @@ function T:ElvUIScanTooltipSetInventoryItem(tt, unit, slot)
 end
 
 function T:TierSet(tt, unit, guid)
+    -- ElvUI do not scan player itself
+    if guid == E.myguid then
+        ResetCache(nil, nil, guid)
+        for i = 1, 17 do
+            if i ~= 4 then
+                E:GetGearSlotInfo("player", i)
+            end
+        end
+        locked[guid] = true
+    end
+
     if not cache[guid] or #cache[guid] == 0 then
         return
     end

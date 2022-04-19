@@ -3,5 +3,6 @@
     <Script file="LibObjectiveProgress-1.0\LibObjectiveProgress-1.0.lua"/>
 	<Script file="LibObjectiveProgress-1.0\ProgressWeightData.lua"/>
     <Include file="TinyLibs\lib.xml"/>
+    <Include file="LibDeflate\lib.xml"/>
     <Include file="LibOpenRaid\lib.xml"/>
 </Ui>

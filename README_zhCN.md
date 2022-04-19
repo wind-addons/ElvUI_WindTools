@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.73-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.31-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.75-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.32-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -75,7 +75,10 @@
 2. **任务进度**: 添加部分任务的小怪百分比信息.
 3. **队伍信息**: 添加寻求组队的队伍信息到鼠标提示中.
 4. **生命条**: 调整生命条和生命文字偏移.
-5. **团队进度**: 添加各个团队副本和地下城的通关次数.
+5. **统御等级**: 添加统御等级到鼠标提示中.
+6. **套装**: 添加套装的数量到鼠标提示中.
+7. **盟约**: 添加经由第三方插件通信得来的盟约信息到鼠标提示中.
+8. **团队进度**: 添加各个团队副本的进度, 特殊成就和大秘境分数到鼠标提示中.
 
 ## 单位框体
 1. **快速焦点**: 通过自定义鼠标按键和组合键来快速设定焦点.

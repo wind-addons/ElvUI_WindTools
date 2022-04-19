@@ -1,7 +1,7 @@
 <div align="center">
 <img src="Title.png"/><br>
-<img src="https://img.shields.io/badge/ElvUI-12.73-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.31-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.75-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.32-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -74,7 +74,10 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 2. **Objective Progress**: Add the additional progress information of mobs.
 3. **Group Info**: Add LFG group information into tooltips.
 4. **Health Bar**: Set the offset of the health bar and health text in tooltips.
-5. **Progression**: Add the raid and dungeon progression information in the inspect tooltip.
+5. **Domination Rank**: Add domination rank in tooltips.
+6. **Tier Set**: Add the number of the equipments in the tier set in tooltips.
+7. **Covenant**: Add covenant info via third-party addons in the tooltips.
+8. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
 
 ## Unit Frames
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.

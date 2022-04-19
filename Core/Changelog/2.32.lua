@@ -20,6 +20,7 @@ W.Changelog[232] = {
         ["zhCN"] = {
             "[鼠标提示] 新增了盟约信息. 感谢 NDui_Plus",
             "[鼠标提示] 新增了史诗钥石地下城分数. 感谢 NDui_Plus",
+            "[鼠标提示] 新增了套装数量. 感谢 NDui",
             "[移动框体] 新增了一些新框体.",
             "[其他] 新增了一些额外的按键绑定功能, 可以在暴雪的快捷键绑定中设置.",
             "[额外物品条] 新增了掮灵开悟者补给品. 感谢 mcc1",
@@ -32,6 +33,7 @@ W.Changelog[232] = {
         ["zhTW"] = {
             "[浮動提示] 新增了誓盟信息. 感謝 NDui_Plus",
             "[浮動提示] 新增了傳奇鑰石地城分數. 感謝 NDui_Plus",
+            "[浮動提示] 新增了套裝數量. 感謝 NDui",
             "[移動框架] 新增了一些新框架.",
             "[其他] 新增了一些額外的按鍵綁定功能, 可以在暴雪的按鍵綁定中設置.",
             "[額外物品條] 新增了受啟迪的仲介者物資. 感謝 mcc1",
@@ -44,6 +46,7 @@ W.Changelog[232] = {
         ["enUS"] = {
             "[Tooltips] Add covenant inforamation. Thanks NDui_Plus",
             "[Tooltips] Add new mythic keystone dungeon score. Thanks NDui_Plus",
+            "[Tooltips] Add the number of tier set equipments. Thanks NDui",
             "[Move Frames] Add support of more frames.",
             "[Misc] Add some extra key binding features, you can change configuration in Blizzard Key Binding.",
             "[Extra Item Bar] Added enlightened broker supplies. Thanks mcc1",
@@ -56,6 +59,7 @@ W.Changelog[232] = {
         ["koKR"] = {
             "[Tooltips] Add covenant inforamation. Thanks NDui_Plus",
             "[Tooltips] Add new mythic keystone dungeon score. Thanks NDui_Plus",
+            "[Tooltips] Add the number of tier set equipments. Thanks NDui",
             "[프레임 이동] 새로운 프레임을 추가했습니다.",
             "[기타] Blizzard 단축키 설정에 추가로 몇가지 단축키 설정을 추가했습니다.",
             "[아이템 바] 깨달음을 얻은 중개자 보급품이 추가되였습니다. Thanks mcc1",

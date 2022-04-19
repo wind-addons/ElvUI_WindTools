@@ -53,7 +53,7 @@ options.general = {
                     order = 3,
                     type = "toggle",
                     name = L["Tier Set"],
-                    desc = L["Show the number of Tier Set equipments."] ..
+                    desc = L["Show the number of tier set equipments."] ..
                         "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
                 },
                 covenant = {

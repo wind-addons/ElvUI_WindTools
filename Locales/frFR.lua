@@ -807,6 +807,7 @@ L["Show an icon for items and spells."] = "Affiche l'icône des objets et les so
 L["Show covenant information via the communition with third-party addons."] = true
 L["Show move speed in character panel."] = "Afficher la vitesse de déplacement dans le panneau des personnages."
 L["Show the bar only mouse hovered the area."] = "Afficher la barre uniquement quand la souris a survolé la zone."
+L["Show the number of tier set equipments."] = true
 L["Show the rank of shards."] = true
 L["Show the tooltip when you mouse over the button."] = "Afficher l'infobulle lorsque vous passez la souris sur le bouton."
 L["Side Button 4"] = "Bouton latéral 4"
@@ -930,6 +931,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "Ce module embellira et redimensionnera les cartes."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = true
 L["Threat Transfer"] = "Transfert de menace"
+L["Tier Set"] = true
 L["Time"] = "Heure"
 L["Time Area Height"] = "Hauteur de la zone où se trouve l'heure"
 L["Time Area Width"] = "Largeur de la zone où se trouve l'heure"

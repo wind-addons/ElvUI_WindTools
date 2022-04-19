@@ -807,6 +807,7 @@ L["Show an icon for items and spells."] = true
 L["Show covenant information via the communition with third-party addons."] = true
 L["Show move speed in character panel."] = true
 L["Show the bar only mouse hovered the area."] = true
+L["Show the number of tier set equipments."] = true
 L["Show the rank of shards."] = true
 L["Show the tooltip when you mouse over the button."] = true
 L["Side Button 4"] = true
@@ -930,6 +931,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = true
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = true
 L["Threat Transfer"] = true
+L["Tier Set"] = true
 L["Time"] = "Tempo"
 L["Time Area Height"] = true
 L["Time Area Width"] = true

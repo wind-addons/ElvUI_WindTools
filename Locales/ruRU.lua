@@ -807,6 +807,7 @@ L["Show an icon for items and spells."] = "Показывать значок д�
 L["Show covenant information via the communition with third-party addons."] = true
 L["Show move speed in character panel."] = "Показать скорость передвижения на панели персонажа."
 L["Show the bar only mouse hovered the area."] = "Показать панель только при наведении мыши."
+L["Show the number of tier set equipments."] = true
 L["Show the rank of shards."] = "Показать ранг осколков."
 L["Show the tooltip when you mouse over the button."] = "Показывать всплывающую подсказку при наведении указателя мыши на кнопку."
 L["Side Button 4"] = "Боковая кнопка 4"
@@ -930,6 +931,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "Этот модуль поможет вам открывать карты и изменять их размер."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "Этот модуль будет записывать шепоты для переключения. \n Вы можете установить время истечения для получения краткого списка последних целей."
 L["Threat Transfer"] = "Перенаправление угрозы"
+L["Tier Set"] = true
 L["Time"] = "Время"
 L["Time Area Height"] = "Высота панели часов"
 L["Time Area Width"] = "Ширина панели часов"

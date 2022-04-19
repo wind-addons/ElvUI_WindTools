@@ -807,6 +807,7 @@ L["Show an icon for items and spells."] = "아이템과 주문에 대한 아이�
 L["Show covenant information via the communition with third-party addons."] = true
 L["Show move speed in character panel."] = "캐릭터 창에 이동 속도를 표시합니다."
 L["Show the bar only mouse hovered the area."] = "마우스 오버 시에만 게임 바를 표시합니다."
+L["Show the number of tier set equipments."] = true
 L["Show the rank of shards."] = "지배의 조각 등급을 표시합니다"
 L["Show the tooltip when you mouse over the button."] = "버튼 위에 마우스 오버 시 툴팁이 표시됩니다."
 L["Side Button 4"] = "측면 버튼 4"
@@ -930,6 +931,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "이 모듈은 지도를 표시하고 크기를 조정합니다."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "이 모듈은 귓속말을 기록합니다.\n최근 대상 목록을 만들기 위해 만료 시간을 설정할 수 있습니다."
 L["Threat Transfer"] = "위협 이전"
+L["Tier Set"] = true
 L["Time"] = "시간"
 L["Time Area Height"] = "시간 영역 높이"
 L["Time Area Width"] = "시간 영역 너비"

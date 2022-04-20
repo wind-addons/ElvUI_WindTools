@@ -9,6 +9,7 @@ function S:DressUpFrame()
     end
 
     self:CreateShadow(_G.DressUpFrame)
+    self:CreateBackdropShadow(_G.DressUpFrame.OutfitDetailsPanel)
 end
 
 S:AddCallback("DressUpFrame")

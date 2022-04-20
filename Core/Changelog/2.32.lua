@@ -77,7 +77,8 @@ W.Changelog[232] = {
             "[装备观察] 新增多种附魔显示, 优化图标显示逻辑.",
             "[任务列表] 修复了在停用取消标记功能时标记和完成图标重叠的问题.",
             "[好友列表] 现在可以显示不同账号地区的信息了.",
-            "[美化皮膚] 优化了 ElvUI 动作条皮肤."
+            "[美化皮膚] 优化了 ElvUI 动作条皮肤.",
+            "[美化皮膚] 优化了试衣间皮肤."
         },
         ["zhTW"] = {
             "[浮動提示] 大幅優化了性能.",
@@ -85,7 +86,8 @@ W.Changelog[232] = {
             "[裝備觀察] 新增多種附魔顯示, 優化圖示顯示逻輯.",
             "[任務列表] 修復了在停用取消標記功能時標記和完成图示重疊的問題.",
             "[好友列表] 現在可以顯示不同賬號地區的資訊了.",
-            "[美化皮膚] 優化了 ElvUI 快捷列皮膚."
+            "[美化皮膚] 優化了 ElvUI 快捷列皮膚.",
+            "[美化皮膚] 優化了試衣間皮膚."
         },
         ["enUS"] = {
             "[Tooltips] Optimized performance.",
@@ -93,7 +95,8 @@ W.Changelog[232] = {
             "[Inspect] Added more enchants support, optimized icon display logic.",
             '[Quest List] Fixed the problem that the checked icon and dash overlap while the option "No Dash" is disabling.',
             "[Friend List] Now you can show different account region info.",
-            "[Skins] Optimized ElvUI action bar skin."
+            "[Skins] Optimized ElvUI action bar skin.",
+            "[Skins] Optimized Dressing Room skin."
         },
         ["koKR"] = {
             "[툴팁] 최적화를 통해 성능이 크게 향상되었습니다.",
@@ -101,7 +104,8 @@ W.Changelog[232] = {
             "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",
             "[퀘스트 목록] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다.",
-            "[스킨] ElvUI 액션바 스킨을 최적화했습니다."
+            "[스킨] ElvUI 액션바 스킨을 최적화했습니다.",
+            "[스킨] 의상실 스킨을 최적화했습니다."
         }
     }
 }

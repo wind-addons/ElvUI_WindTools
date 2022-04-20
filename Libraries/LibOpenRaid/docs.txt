@@ -67,9 +67,8 @@ playerInfo = {
     .specId = number
     .renown = number, 
     .covenantId = number,
-    .talents = {talentId, talentId, talentId, ...}, 
-    .pvpTalents = {talentId, talentId, talentId},
-    .conduits = {spellId, conduitLevel, spellId, conduitLevel, spellId, conduitLevel, ...},
+    .talents = {talentId}, 
+    .conduits = {spellId},
 }
 
 Callbacks:
@@ -200,8 +199,7 @@ function MyAddonObject.OnPlayerUpdate(playerName, playerInfo, allPlayersInfo)
         local specId = playerInfo.specId
         local renown = playerInfo.renown
         local covenantId = playerInfo.covenantId
-        local talents = playerInfo.talents
-        local pvpTalents = playerInfo.pvpTalents
+        local talents = playerInfo.talents 
         local conduits = playerInfo.conduits
     end
 end
@@ -224,20 +222,6 @@ end
 --registering the callback:
 openRaidLib.RegisterCallback(MyAddonObject, "TalentUpdate", "OnTalentUpdate")
 
-===================================================================================================================================
-"PvPTalentUpdate": when a unit changed a pvp talent
-===================================================================================================================================
-
-function MyAddonObject.OnPvPTalentUpdate(playerName, pvpTalents, playerInfo, allPlayersInfo)
-    for i = 1, 3 do
-        local talentId = pvpTalents[i]
-        local talentID, name, icon, selected, available, spellID, unlocked, row, column, known, grantedByAura = GetPvpTalentInfoByID(talentId)
-        print(name)
-    end
-end
-
---registering the callback:
-openRaidLib.RegisterCallback(MyAddonObject, "PvPTalentUpdate", "OnPvPTalentUpdate")
 
 ===================================================================================================================================
 "OnPlayerDeath": when a player dies

@@ -10,7 +10,7 @@
 ## Notes-zhTW: 用於 ElvUI 的自訂增強.
 ## Notes-koKR: ElvUI에 많은 기능을 추가하고 사용자가 설정할 수 있습니다.
 ## RequiredDeps: ElvUI
-## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, MeetingStoneEX, MythicDungeonTools, Myslot, Details_Covenants
+## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, MeetingStoneEX, MythicDungeonTools, Myslot, Details, Details_Covenants
 ## X-Curse-Project-ID: 300361
 ## X-WoWI-ID: 25687
 ## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & others in CREDITS.md

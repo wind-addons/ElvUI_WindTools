@@ -73,23 +73,17 @@ function T:InspectInfo(_, tt, triedTimes)
 
     if ET.db.inspectDataEnable then
         local isElvUITooltipItemLevelInfoAlreadyAdded = false
-
         for i = 1, tt:NumLines() do
             local leftTip = _G["GameTooltipTextLeft" .. i]
             local leftTipText = leftTip:GetText()
             if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
                 isElvUITooltipItemLevelInfoAlreadyAdded = true
-                -- remove trash lines
+                -- do not render twice
                 for j = i + 1, tt:NumLines() do
                     local left = _G["GameTooltipTextLeft" .. j]
-                    local right = _G["GameTooltipTextRight" .. j]
-                    if left then
-                        left:SetText("")
-                        left:Hide()
-                    end
-                    if right then
-                        right:SetText("")
-                        right:Hide()
+                    if strfind(left:GetText(), "WindTools") then
+                        print("same")
+                        return
                     end
                 end
                 break
@@ -97,8 +91,7 @@ function T:InspectInfo(_, tt, triedTimes)
         end
 
         if not isElvUITooltipItemLevelInfoAlreadyAdded then
-            E:Delay(0.2, T.InspectInfo, T, ET, tt, triedTimes + 1)
-            return
+            return E:Delay(0.2, T.InspectInfo, T, ET, tt, triedTimes + 1)
         end
     end
 

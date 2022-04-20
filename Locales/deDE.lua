@@ -965,6 +965,7 @@ L["Tutorials"] = true
 L["Unblock the profanity filter."] = "Entsperre den Obszönitätsfilter."
 L["Uncheck this box, it will not send message if you cast the spell."] = "Deaktiviere dieses Kontrollkästchen, es wird keine Nachricht gesendet, wenn Du den Zauber wirkst."
 L["UnitFrames"] = "Einheitenfenster"
+L["Update"] = true
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "Aktualisiert den zusätzlichen Text jede 10 Sekunden anstatt jede Sekunde, wirkt sich auf den Speicher aus."
 L["Use %s Skins"] = "Verwende %s Skins"
 L["Use Bags Setting"] = "Tascheneinstellung verwenden"

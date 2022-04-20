@@ -965,6 +965,7 @@ L["Tutorials"] = "Didacticiels"
 L["Unblock the profanity filter."] = "Débloque le filtre à jurons."
 L["Uncheck this box, it will not send message if you cast the spell."] = "Décochez cette case, ça n'enverra pas de message si vous lancez le sort."
 L["UnitFrames"] = "Cadre d'unité"
+L["Update"] = true
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "Mettez à jour le texte supplémentaire toutes les 10 secondes plutôt que toutes les secondes afin que la mémoire utilisée soit plus faible."
 L["Use %s Skins"] = "Utiliser %s apparences"
 L["Use Bags Setting"] = true

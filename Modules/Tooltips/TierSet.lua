@@ -2,6 +2,16 @@ local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
 
+local _G = _G
+
+local pairs = pairs
+local select = select
+local strmatch = strmatch
+local tinsert = tinsert
+local tonumber = tonumber
+
+local UnitGUID = UnitGUID
+
 local cache = {}
 local locked = {}
 

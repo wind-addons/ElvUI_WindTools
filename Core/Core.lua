@@ -6,6 +6,7 @@ local pcall = pcall
 local print = print
 local strsub = strsub
 local tinsert = tinsert
+local tonumber = tonumber
 
 local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
@@ -109,7 +110,6 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 }
 
 function W:UpdateScripts(oldVersion, currentVersion)
-    print(currentVersion, oldVersion)
     if not oldVersion or not currentVersion then
         return
     end

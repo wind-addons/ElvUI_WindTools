@@ -59,95 +59,30 @@ AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
 
 -- Custom Header
 local CustomHeaders = {
-	width = 1024,
-	height = 128,
-	["SpecialAchievements"] = {
-		["zhCN"] = {
-			width = 200,
-			height = 23,
-			startX = 0,
-			startY = 0
-		},
-		["zhTW"] = {
-			width = 200,
-			height = 23,
-			startX = 0,
-			startY = 26
-		},
-		["koKR"] = {
-			width = 200,
-			height = 23,
-			startX = 0,
-			startY = 51
-		},
-		["enUS"] = {
-			width = 200,
-			height = 23,
-			startX = 0,
-			startY = 77
-		}
+	texWidth = 2048,
+	texHeight = 256,
+	headerWidth = 340,
+	headerHeight = 40,
+	type = {
+		-- OffsetX
+		SpecialAchievements = 0,
+		Raids = 348,
+		MythicDungeons = 693
 	},
-	["Raids"] = {
-		["zhCN"] = {
-			width = 200,
-			height = 23,
-			startX = 204,
-			startY = 0
-		},
-		["zhTW"] = {
-			width = 200,
-			height = 23,
-			startX = 204,
-			startY = 26
-		},
-		["koKR"] = {
-			width = 200,
-			height = 23,
-			startX = 204,
-			startY = 51
-		},
-		["enUS"] = {
-			width = 200,
-			height = 23,
-			startX = 204,
-			startY = 77
-		}
-	},
-	["MythicDungeons"] = {
-		["zhCN"] = {
-			width = 200,
-			height = 23,
-			startX = 407,
-			startY = 0
-		},
-		["zhTW"] = {
-			width = 200,
-			height = 23,
-			startX = 407,
-			startY = 26
-		},
-		["koKR"] = {
-			width = 200,
-			height = 23,
-			startX = 407,
-			startY = 51
-		},
-		["enUS"] = {
-			width = 200,
-			height = 23,
-			startX = 407,
-			startY = 77
-		}
+	languages = {
+		-- OffsetY
+		zhCN = 0,
+		zhTW = 52,
+		koKR = 103,
+		enUS = 155,
+		deDE = 206
 	}
 }
 
 function F.GetCustomHeader(name, scale)
-	if not CustomHeaders[name] then
-		return
-	end
-
-	local config = CustomHeaders[name][E.global.general.locale] or CustomHeaders[name]["enUS"]
-	if not config then
+	local offsetX = CustomHeaders.type[name]
+	local offsetY = CustomHeaders.languages[E.global.general.locale] or CustomHeaders.languages["enUS"]
+	if not offsetX or not offsetY then
 		return
 	end
 
@@ -155,14 +90,14 @@ function F.GetCustomHeader(name, scale)
 	return format(
 		"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
 		W.Media.Textures.customHeaders,
-		ceil(config.height * scale),
-		ceil(config.width * scale),
-		CustomHeaders.width,
-		CustomHeaders.height,
-		config.startX,
-		config.startX + config.width,
-		config.startY,
-		config.startY + config.height
+		ceil(CustomHeaders.headerHeight * scale),
+		ceil(CustomHeaders.headerWidth * scale),
+		CustomHeaders.texWidth,
+		CustomHeaders.texHeight,
+		offsetX,
+		offsetX + CustomHeaders.headerWidth,
+		offsetY,
+		offsetY + CustomHeaders.headerHeight
 	)
 end
 

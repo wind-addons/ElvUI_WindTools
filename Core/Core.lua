@@ -108,11 +108,34 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
     hideOnEscape = 1
 }
 
+function W:UpdateScripts(oldVersion, currentVersion)
+    print(currentVersion, oldVersion)
+    if not oldVersion or not currentVersion then
+        return
+    end
+
+    currentVersion = tonumber(currentVersion)
+    oldVersion = tonumber(oldVersion)
+
+    local function UpdateMessage(text)
+        F.Print(format("(%s |cff00a8ff%.2f|r -> |cff00a8ff%.2f|r) %s", L["Update"], oldVersion, currentVersion, text))
+    end
+
+    local doneIcon = " |TInterface\\RaidFrame\\ReadyCheck-Ready:0|t"
+
+    -- Clear the history of move frames.
+    if oldVersion >= 2.27 and oldVersion <= 2.31 and currentVersion >= 2.32 then
+        E.private.WT.misc.framePositions = {}
+        UpdateMessage(L["Move Frames"] .. doneIcon)
+    end
+end
+
 -- 检查安装版本, 提示更新记录
 function W:CheckInstalledVersion()
     if not InCombatLockdown() then
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
+            W:UpdateScripts(E.global.WT.Versionm, W.Version)
             E.global.WT.Version = W.Version
         elseif E.private.WT.core.loginMessage then
             local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)

@@ -54,6 +54,10 @@ function T:AddInspectInfoCallback(priority, func)
 end
 
 function T:InspectInfo(_, tt, triedTimes)
+    if tt.windInspectLoaded then
+        return
+    end
+
     if not IsShiftKeyDown() or tt:IsForbidden() then
         return
     end
@@ -65,7 +69,7 @@ function T:InspectInfo(_, tt, triedTimes)
 
     local guid = UnitGUID(unit)
 
-    -- If ElvUI is inspecting, just wait for 2 seconds
+    -- If ElvUI is inspecting, just wait for 4 seconds
     triedTimes = triedTimes or 0
     if triedTimes > 20 then
         return
@@ -78,14 +82,6 @@ function T:InspectInfo(_, tt, triedTimes)
             local leftTipText = leftTip:GetText()
             if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
                 isElvUITooltipItemLevelInfoAlreadyAdded = true
-                -- do not render twice
-                for j = i + 1, tt:NumLines() do
-                    local left = _G["GameTooltipTextLeft" .. j]
-                    if strfind(left:GetText(), "WindTools") then
-                        print("same")
-                        return
-                    end
-                end
                 break
             end
         end
@@ -99,6 +95,12 @@ function T:InspectInfo(_, tt, triedTimes)
     for _, func in next, self.inspect do
         xpcall(func, errorhandler, self, tt, unit, guid)
     end
+
+    tt.windInspectLoaded = true
+end
+
+function T:ElvUIRemoveTrashLines(_, tt)
+    tt.windInspectLoaded = false
 end
 
 function T:AddEventCallback(eventName, func)
@@ -133,6 +135,7 @@ function T:Initialize()
     end
 
     T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
+    T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
 end
 
 function T:ProfileUpdate()

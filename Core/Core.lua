@@ -135,7 +135,7 @@ function W:CheckInstalledVersion()
     if not InCombatLockdown() then
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
-            W:UpdateScripts(E.global.WT.Versionm, W.Version)
+            W:UpdateScripts(E.global.WT.Version, W.Version)
             E.global.WT.Version = W.Version
         elseif E.private.WT.core.loginMessage then
             local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)

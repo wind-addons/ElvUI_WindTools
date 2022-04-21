@@ -109,7 +109,7 @@ function W:OptionsCallback()
     E.Options.args.WindTools = {
         type = "group",
         childGroups = "tree",
-        name = F.GetIconString(W.Media.Textures.smallLogo, 14) .. " " .. W.Title,
+        name = icon .. " " .. W.Title,
         args = {
             logo = {
                 order = 1,

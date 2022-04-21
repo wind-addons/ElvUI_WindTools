@@ -17,7 +17,7 @@ W.Changelog[232] = {
         },
         ["koKR"] = {
             "[프레임 이동] 창 이동시 안전성을 향상 시켰습니다.",
-            "[Raid Marker] According to the change of Blizzard API limit rate, removing all raid markers now requires 3 seconds."
+            "[공격대 징표] Blizzard의 API 속도 제한에 따라 모든 레이드 마커를 제거하는 데 3초가 소요됩니다."
         }
     },
     NEW = {

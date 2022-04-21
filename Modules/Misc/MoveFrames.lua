@@ -299,9 +299,7 @@ local BlizzardFramesOnDemand = {
     }
 }
 
-local ignoredList = {
-    ["EncounterJournal"] = true
-}
+local ignoredList = {}
 
 function MF:IsIgnoredFrame(frame)
     local name = frame:GetName()

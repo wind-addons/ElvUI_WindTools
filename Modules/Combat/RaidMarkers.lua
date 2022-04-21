@@ -280,8 +280,8 @@ function RM:CreateButtons()
 							local now = GetTime()
 							if now - lastClear > 1 then -- limiting
 								lastClear = now
-								for i = 1, 9 do
-									SetRaidTarget("player", i)
+								for i = 8, 0, -1 do
+									E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
 								end
 							end
 						end
@@ -295,8 +295,8 @@ function RM:CreateButtons()
 							local now = GetTime()
 							if now - lastClear > 1 then -- limiting
 								lastClear = now
-								for i = 1, 9 do
-									SetRaidTarget("player", i)
+								for i = 8, 0, -1 do
+									E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
 								end
 							end
 						else
@@ -356,7 +356,7 @@ function RM:CreateButtons()
 				tooltipText =
 					format(
 					"%s\n%s",
-					L["Click to clear all marks."],
+					L["Click to clear all marks."] .. " (|cff2ecc71" .. L["takes 3s"] .. "|r)",
 					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
 				)
 			else

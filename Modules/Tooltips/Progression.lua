@@ -6,13 +6,14 @@ local _G = _G
 local format = format
 local gsub = gsub
 local ipairs = ipairs
+local next = next
 local pairs = pairs
 local select = select
 local strfind = strfind
 local tonumber = tonumber
+local unpack = unpack
 
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
-local CanInspect = CanInspect
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
 local GetAchievementComparisonInfo = GetAchievementComparisonInfo
 local GetAchievementInfo = GetAchievementInfo
@@ -20,15 +21,19 @@ local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
-local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
-local UnitGUID = UnitGUID
 local UnitLevel = UnitLevel
 local UnitRace = UnitRace
 
+local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
+local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
+    C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
+local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local loadedComparison
@@ -104,6 +109,18 @@ local locales = {
         short = L["[ABBR] Sanguine Depths"],
         full = L["Sanguine Depths"]
     },
+    ["Sepulcher of the First Ones"] = {
+        short = L["[ABBR] Sepulcher of the First Ones"],
+        full = L["Sepulcher of the First Ones"]
+    },
+    ["Tazavesh: Streets of Wonder"] = {
+        short = L["[ABBR] Tazavesh: Streets of Wonder"],
+        full = L["Tazavesh: Streets of Wonder"]
+    },
+    ["Tazavesh: So'leah's Gambit"] = {
+        short = L["[ABBR] Tazavesh: So'leah's Gambit"],
+        full = L["Tazavesh: So'leah's Gambit"]
+    },
     ["Shadowlands Keystone Master: Season One"] = {
         short = L["[ABBR] Shadowlands Keystone Master: Season One"],
         full = L["Shadowlands Keystone Master: Season One"]
@@ -112,9 +129,9 @@ local locales = {
         short = L["[ABBR] Shadowlands Keystone Master: Season Two"],
         full = L["Shadowlands Keystone Master: Season Two"]
     },
-    ["Tazavesh, the Veiled Market"] = {
-        short = L["[ABBR] Tazavesh, the Veiled Market"],
-        full = L["Tazavesh, the Veiled Market"]
+    ["Shadowlands Keystone Master: Season Three"] = {
+        short = L["[ABBR] Shadowlands Keystone Master: Season Three"],
+        full = L["Shadowlands Keystone Master: Season Three"]
     }
 }
 
@@ -218,24 +235,80 @@ local raidAchievements = {
             15169,
             15173
         }
+    },
+    ["Sepulcher of the First Ones"] = {
+        ["Mythic"] = {
+            15427,
+            15431,
+            15435,
+            15439,
+            15443,
+            15447,
+            15451,
+            15455,
+            15459,
+            15463,
+            15467
+        },
+        ["Heroic"] = {
+            15426,
+            15430,
+            15434,
+            15438,
+            15442,
+            15446,
+            15450,
+            15454,
+            15458,
+            15462,
+            15466
+        },
+        ["Normal"] = {
+            15425,
+            15429,
+            15433,
+            15437,
+            15441,
+            15445,
+            15449,
+            15453,
+            15457,
+            15461,
+            15465
+        },
+        ["Raid Finder"] = {
+            15424,
+            15428,
+            15432,
+            15436,
+            15440,
+            15444,
+            15448,
+            15452,
+            15456,
+            15460,
+            15464
+        }
     }
 }
 
-local dungeonAchievements = {
-    ["The Necrotic Wake"] = 14404,
-    ["Plaguefall"] = 14398,
-    ["Mists of Tirna Scithe"] = 14395,
-    ["Halls of Atonement"] = 14392,
-    ["Theater of Pain"] = 14407,
-    ["De Other Side"] = 14389,
-    ["Spires of Ascension"] = 14401,
-    ["Sanguine Depths"] = 14205,
-    ["Tazavesh, the Veiled Market"] = 15168
+local mythicKeystoneDungeons = {
+    [375] = "Mists of Tirna Scithe",
+    [376] = "The Necrotic Wake",
+    [377] = "De Other Side",
+    [378] = "Halls of Atonement",
+    [379] = "Plaguefall",
+    [380] = "Sanguine Depths",
+    [381] = "Spires of Ascension",
+    [382] = "Theater of Pain",
+    [391] = "Tazavesh: Streets of Wonder",
+    [392] = "Tazavesh: So'leah's Gambit"
 }
 
 local specialAchievements = {
-    ["Shadowlands Keystone Master: Season One"] = 14532,
-    ["Shadowlands Keystone Master: Season Two"] = 15078
+    {14532, "Shadowlands Keystone Master: Season One"},
+    {15078, "Shadowlands Keystone Master: Season Two"},
+    {15499, "Shadowlands Keystone Master: Season Three"}
 }
 
 local function GetLevelColoredString(level, short)
@@ -271,7 +344,7 @@ local function GetAchievementInfoByID(guid, achievementID)
     return completed, month, day, year
 end
 
-local function UpdateProgression(guid, faction)
+local function UpdateProgression(guid, unit, faction)
     local db = E.private.WT.tooltips.progression
 
     cache[guid] = cache[guid] or {}
@@ -281,14 +354,15 @@ local function UpdateProgression(guid, faction)
     -- 成就
     if db.special.enable then
         cache[guid].info.special = {}
-        for name, achievementID in pairs(specialAchievements) do
+        for _, specialAchievement in pairs(specialAchievements) do
+            local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
                 local completed, month, day, year = GetAchievementInfoByID(guid, achievementID)
                 local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
                 if completed then
-                    completedString = gsub(L["%month%-%day%-%year%"], "%%month%%", month)
+                    completedString = gsub(L["%month%-%day%-%year%"], "%%year%%", 2000 + year)
+                    completedString = gsub(completedString, "%%month%%", month)
                     completedString = gsub(completedString, "%%day%%", day)
-                    completedString = gsub(completedString, "%%year%%", 2000 + year)
                 end
                 cache[guid].info.special[name] = completedString
             end
@@ -300,7 +374,7 @@ local function UpdateProgression(guid, faction)
         cache[guid].info.raids = {}
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
-                cache[guid].info.raids[tier] = {}
+                local tempInfo = {}
                 local bosses = raidAchievements[tier]
                 if bosses.separated then
                     bosses = bosses[faction]
@@ -315,11 +389,14 @@ local function UpdateProgression(guid, faction)
                     end
 
                     if alreadyKilled > 0 then
-                        cache[guid].info.raids[tier][level] = format("%d/%d", alreadyKilled, #bosses[level])
+                        tempInfo[level] = format("%d/%d", alreadyKilled, #bosses[level])
                         if alreadyKilled == #bosses[level] then
                             break -- 全通本难度后毋须扫描更低难度进度
                         end
                     end
+                end
+                if next(tempInfo) then
+                    cache[guid].info.raids[tier] = tempInfo
                 end
             end
         end
@@ -328,103 +405,40 @@ local function UpdateProgression(guid, faction)
     -- 传奇地下城
     if db.mythicDungeons.enable then
         cache[guid].info.mythicDungeons = {}
+        local summary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
+        local runs = summary and summary.runs
 
-        -- 挑战模式次数
-        cache[guid].info.mythicDungeons.times = GetBossKillTimes(guid, 7399)
-
-        -- 传奇副本尾王击杀次数
-        for name, achievementID in pairs(dungeonAchievements) do
-            if db.mythicDungeons[name] then
-                cache[guid].info.mythicDungeons[name] = GetBossKillTimes(guid, achievementID)
+        if runs then
+            for _, info in ipairs(runs) do
+                local name =
+                    mythicKeystoneDungeons[info.challengeModeID] or C_ChallengeMode_GetMapUIInfo(info.challengeModeID)
+                local scoreColor =
+                    C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(info.mapScore) or HIGHLIGHT_FONT_COLOR
+                local levelColor = info.finishedSuccess and "|cffffffff" or "|cffaaaaaa"
+                cache[guid].info.mythicDungeons[name] =
+                    format(
+                    "%s (%s)",
+                    scoreColor:WrapTextInColorCode(info.mapScore),
+                    levelColor .. info.bestRunLevel .. "|r"
+                )
             end
         end
     end
 end
 
-local function SetProgressionInfo(guid, tt)
+local function SetProgressionInfo(tt, guid)
     if not cache[guid] then
         return
     end
 
     local db = E.private.WT.tooltips.progression
 
-    local updated = false
-
-    for i = 1, tt:NumLines() do
-        local leftTip = _G["GameTooltipTextLeft" .. i]
-        local leftTipText = leftTip:GetText()
-
-        local found = false
-
-        if leftTipText then
-            if db.special.enable then -- 成就
-                for name, achievementID in pairs(specialAchievements) do
-                    if db.special[name] then
-                        if strfind(leftTipText, locales[name].short) then
-                            local rightTip = _G["GameTooltipTextRight" .. i]
-                            leftTip:SetText(locales[name].short .. ":")
-                            rightTip:SetText(cache[guid].info.special[name])
-                            updated = true
-                            found = true
-                            break
-                        end
-                    end
-                end
-            end
-
-            found = false
-
-            if db.raids.enable then -- 团本进度
-                for _, tier in ipairs(tiers) do
-                    if db.raids[tier] then
-                        for _, level in ipairs(levels) do
-                            if strfind(leftTipText, locales[tier].short) and strfind(leftTipText, locales[level].full) then
-                                local rightTip = _G["GameTooltipTextRight" .. i]
-                                leftTip:SetText(
-                                    format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
-                                )
-                                rightTip:SetText(cache[guid].info.raids[tier][level])
-                                updated = true
-                                found = true
-                                break
-                            end
-                        end
-
-                        if found then
-                            break
-                        end
-                    end
-                end
-            end
-
-            found = false
-
-            if db.mythicDungeons.enable then -- 地下城进度
-                for name, achievementID in pairs(dungeonAchievements) do
-                    if db.mythicDungeons[name] then
-                        if strfind(leftTipText, locales[name].short) then
-                            local rightTip = _G["GameTooltipTextRight" .. i]
-                            leftTip:SetText(locales[name].short .. ":")
-                            rightTip:SetText(cache[guid].info.mythicDungeons[name])
-                            updated = true
-                            found = true
-                            break
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    if updated then
-        return
-    end
-
-    local icon = F.GetIconString(W.Media.Textures.smallLogo, 12)
-
-    if db.special.enable then -- 成就
+    -- Special Achievements
+    if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then
         tt:AddLine(" ")
-        for name, achievementID in pairs(specialAchievements) do
+        tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
+        for _, specialAchievement in pairs(specialAchievements) do
+            local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
                 local left = format("%s:", locales[name].short)
                 local right = cache[guid].info.special[name]
@@ -434,14 +448,14 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.raids.enable then -- 团本进度
+    -- Raids
+    if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
         tt:AddLine(" ")
-        tt:AddDoubleLine(L["Raids"], icon, nil, nil, nil, 1, 1, 1)
-
+        tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
                 for _, level in ipairs(levels) do
-                    if (cache[guid].info.raids[tier][level]) then
+                    if cache[guid].info.raids[tier] and cache[guid].info.raids[tier][level] then
                         local left = format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
                         local right = GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
 
@@ -452,48 +466,54 @@ local function SetProgressionInfo(guid, tt)
         end
     end
 
-    if db.mythicDungeons.enable then -- 地下城进度
+    -- Mythic+ scores
+    local displayMythicDungeons = false
+    if db.mythicDungeons.showNoRecord then
+        displayMythicDungeons = true
+    else
+        for name, _ in pairs(cache[guid].info.mythicDungeons) do
+            if db.mythicDungeons[name] then
+                displayMythicDungeons = true
+                break
+            end
+        end
+    end
+
+    if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
         tt:AddLine(" ")
-        local titleLeft = L["Mythic Dungeons"] .. " [" .. cache[guid].info.mythicDungeons.times .. "]"
-        tt:AddDoubleLine(titleLeft, icon, nil, nil, nil, 1, 1, 1)
-        for name, achievementID in pairs(dungeonAchievements) do
+        tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+        for id, name in pairs(mythicKeystoneDungeons) do
             if db.mythicDungeons[name] then
                 local left = format("%s:", locales[name].short)
                 local right = cache[guid].info.mythicDungeons[name]
-
-                tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+                if not right and db.mythicDungeons.showNoRecord then
+                    right = "|cff888888" .. L["No Record"] .. "|r"
+                end
+                if right then
+                    tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+                end
             end
         end
     end
 end
 
-function T:AddProgression(_, tt, unit, numTries, r, g, b)
+function T:Progression(tt, unit, guid)
     if not E.private.WT.tooltips.progression.enable then
         return
     end
 
-    if InCombatLockdown() then
-        return
-    end
-
-    if not (unit and CanInspect(unit)) then
-        return
-    end
-
     local level = UnitLevel(unit)
-    if not (level and level == MAX_PLAYER_LEVEL) then
+    if not level or not level == MAX_PLAYER_LEVEL then
         return
     end
-
-    local guid = UnitGUID(unit)
 
     if not IsAddOnLoaded("Blizzard_AchievementUI") then
         AchievementFrame_LoadUI()
     end
 
-    if not cache[guid] or (GetTime() - cache[guid].timer) > 600 then
+    if not cache[guid] or (GetTime() - cache[guid].timer) > 120 then
         if guid == E.myguid then
-            UpdateProgression(guid, E.myfaction)
+            UpdateProgression(guid, unit, E.myfaction)
         else
             ClearAchievementComparisonUnit()
 
@@ -514,7 +534,7 @@ function T:AddProgression(_, tt, unit, numTries, r, g, b)
         end
     end
 
-    SetProgressionInfo(guid, tt)
+    SetProgressionInfo(tt, guid)
 end
 
 function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
@@ -528,7 +548,7 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
         local race = select(3, UnitRace(unit))
         local faction = race and C_CreatureInfo_GetFactionInfo(race).groupTag
         if faction then
-            UpdateProgression(GUID, faction)
+            UpdateProgression(GUID, unit, faction)
             _G.GameTooltip:SetUnit(unit)
         end
     end
@@ -538,8 +558,4 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-function T:Progression()
-    T:SecureHook(ET, "AddInspectInfo", "AddProgression")
-end
-
-T:AddCallback("Progression")
+T:AddInspectInfoCallback(3, "Progression")

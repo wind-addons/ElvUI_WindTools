@@ -1,0 +1,10 @@
+tag 2526f459dd49c11b5a0936aa51f5de8fa4992f73 OpenRaidLibraryRetail.9.2.0.027
+Author:	Tercio Jose <terciob19@hotmail.com>
+Date:	Thu Apr 14 15:43:29 2022 -0300
+
+commit 502771b4658b0923c1f9e842eaa978c951cea6dc
+Author: Tercio Jose <terciob19@hotmail.com>
+Date:   Thu Apr 14 15:42:56 2022 -0300
+
+    Back compatibility with versions without pvp talents
+

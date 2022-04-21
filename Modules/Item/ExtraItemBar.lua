@@ -118,7 +118,8 @@ local potions = {
     171370, --幽魂迅捷藥水
     176811, --靈魄獻祭藥水
     183823, --暢行無阻藥水
-    184090 --導靈者之速藥水
+    184090, --導靈者之速藥水
+    187802 --宇宙治療藥水
 }
 -- Potion added in Shadowlands (require level >= 50)
 local potionsShadowlands = {
@@ -144,7 +145,8 @@ local potionsShadowlands = {
     176811, --靈魄獻祭藥水
     180317, --靈性治療藥水
     183823, --暢行無阻藥水
-    184090 --導靈者之速藥水
+    184090, --導靈者之速藥水
+    187802
 }
 
 -- Flasks (require level >= 40)
@@ -406,10 +408,12 @@ local utilities = {
     172233, --致命兇殘之鼓
     172346, --荒寂護甲片
     172347, --厚重荒寂護甲片
-    182749, --回收的琪瑞安之翼
+    182749 --回收的琪瑞安之翼
 }
 
 local openableItems = {
+    54537, --心型包
+    92794, --騎乘套票
     171209, --沾血的袋子
     171210, --一袋自然的恩賜
     171211, --汎希爾的錢包
@@ -534,7 +538,13 @@ local openableItems = {
     187575, --科西亞釣魚箱
     187576, --科西亞皮革箱
     187577, --科西亞肉類箱
+    187780, --受啟迪的仲介者物資
+    187781, --歐利亞寶箱
     187817, --科西亞水晶簇
+    190178, --原生補給品包
+    190610, --受啟迪者長老貢品
+    191040, --聖塚寶藏箱
+    191139 --受啟迪者長老貢品
 }
 
 -- 更新任务物品列表
@@ -864,7 +874,11 @@ function EB:CreateBar(id)
     bar:SetScript(
         "OnEnter",
         function(self)
-            if barDB.mouseOver then
+            if not barDB then
+                return
+            end
+
+            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeIn(
                     bar,
@@ -879,7 +893,11 @@ function EB:CreateBar(id)
     bar:SetScript(
         "OnLeave",
         function(self)
-            if barDB.mouseOver then
+            if not barDB then
+                return
+            end
+
+            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeOut(
                     bar,
@@ -1149,6 +1167,7 @@ function EB:UpdateBinding()
             if button then
                 local bindingName = format("CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)
                 local bindingText = GetBindingKey(bindingName) or ""
+                bindingText = gsub(bindingText, "BUTTON", "B")
                 bindingText = gsub(bindingText, "ALT--", "A")
                 bindingText = gsub(bindingText, "CTRL--", "C")
                 bindingText = gsub(bindingText, "SHIFT--", "S")

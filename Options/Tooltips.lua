@@ -48,6 +48,20 @@ options.general = {
                     type = "toggle",
                     name = L["Domination Rank"],
                     desc = L["Show the rank of shards."]
+                },
+                tierSet = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Tier Set"],
+                    desc = L["Show the number of tier set equipments."] ..
+                        "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
+                },
+                covenant = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Covenant"],
+                    desc = L["Show covenant information via the communition with third-party addons."] ..
+                        "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
                 }
             }
         },
@@ -204,6 +218,26 @@ options.progression = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"]
+                },
+                showNoRecord = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Show Dungeons with No Record"],
+                    width = 1.5
+                },
+                instances = {
+                    order = 3,
+                    type = "group",
+                    name = L["Instances"],
+                    inline = true,
+                    get = function(info)
+                        return E.private.WT.tooltips.progression.mythicDungeons[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.tooltips.progression.mythicDungeons[info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    args = {}
                 }
             }
         },
@@ -236,24 +270,27 @@ options.progression = {
 do
     local raids = {
         "Castle Nathria",
-        "Sanctum of Domination"
+        "Sanctum of Domination",
+        "Sepulcher of the First Ones"
     }
 
     local dungeons = {
-        "The Necrotic Wake",
-        "Plaguefall",
-        "Mists of Tirna Scithe",
-        "Halls of Atonement",
-        "Theater of Pain",
         "De Other Side",
-        "Spires of Ascension",
+        "Halls of Atonement",
+        "Mists of Tirna Scithe",
+        "Plaguefall",
         "Sanguine Depths",
-        "Tazavesh, the Veiled Market"
+        "Spires of Ascension",
+        "Tazavesh: So'leah's Gambit",
+        "Tazavesh: Streets of Wonder",
+        "The Necrotic Wake",
+        "Theater of Pain"
     }
 
     local special = {
         "Shadowlands Keystone Master: Season One",
-        "Shadowlands Keystone Master: Season Two"
+        "Shadowlands Keystone Master: Season Two",
+        "Shadowlands Keystone Master: Season Three"
     }
 
     for index, name in ipairs(raids) do
@@ -268,7 +305,7 @@ do
     end
 
     for index, name in ipairs(dungeons) do
-        options.progression.args.mythicDungeons.args[name] = {
+        options.progression.args.mythicDungeons.args.instances.args[name] = {
             order = index + 2,
             type = "toggle",
             name = L[name],

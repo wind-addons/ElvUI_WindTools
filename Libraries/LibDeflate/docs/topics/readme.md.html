@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>LibDeflate documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>LibDeflate</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Pure_Lua_compressor_and_decompressor_with_high_compression_ratio_using_DEFLATE_zlib_format">Pure Lua compressor and decompressor with high compression ratio using DEFLATE/zlib format </a></li>
+<li><a href="#Introduction">Introduction </a></li>
+<li><a href="#Supported_Lua_Versions">Supported Lua Versions </a></li>
+<li><a href="#Documentation">Documentation </a></li>
+<li><a href="#Limitation">Limitation </a></li>
+<li><a href="#Performance">Performance </a></li>
+<li><a href="#Download_And_Install">Download And Install </a></li>
+<li><a href="#Usage">Usage </a></li>
+<li><a href="#License">License </a></li>
+<li><a href="#Credits_and_Disclaimer">Credits and Disclaimer </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/benchmark.md.html">benchmark</a></li>
+  <li><a href="../topics/changelog.md.html">changelog</a></li>
+  <li><strong>readme</strong></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/example.lua.html">example.lua</a></li>
+</ul>
+<h2>Source</h2>
+<ul class="nowrap">
+  <li><a href="../source/LibDeflate.lua.html">LibDeflate.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<p><a href="https://www.travis-ci.org/SafeteeWoW/LibDeflate"><img src="https://www.travis-ci.org/SafeteeWoW/LibDeflate.svg?branch=master" alt="Build Status"/></a>
+<a href="https://ci.appveyor.com/project/SafeteeWoW/libdeflate/branch/master"><img src="https://ci.appveyor.com/api/projects/status/owdccv4jrc0g1s2x/branch/master?svg=true&amp;passingText=Windows%20Build%20passing&amp;failingText=Windows%20Build%20failing" alt="Build status"/></a>
+<a href="https://ci.appveyor.com/project/SafeteeWoW/libdeflate/branch/master"><img src="https://img.shields.io/appveyor/tests/SafeteeWoW/LibDeflate/master.svg" alt="AppVeyor tests branch"/></a>
+<a href="http://codecov.io/github/safeteeWoW/LibDeflate"><img src="http://codecov.io/github/safeteeWoW/LibDeflate/branch/master/graphs/badge.svg" alt="codecov.io"/></a>
+<a href="LICENSE.txt"><img src="https://img.shields.io/github/license/SafeteeWoW/LibDeflate.svg" alt="license"/></a>
+<a href="http://luarocks.org/modules/SafeteeWoW/libdeflate"><img src="https://img.shields.io/luarocks/v/SafeteeWoW/libdeflate.svg" alt="LuaRocks"/></a>
+<a href="https://github.com/SafeteeWoW/LibDeflate/issues"><img src="https://img.shields.io/github/issues/SafeteeWoW/LibDeflate.svg" alt="GitHub issues"/></a></p>
+
+<h1>LibDeflate</h1>
+<p><a name="Pure_Lua_compressor_and_decompressor_with_high_compression_ratio_using_DEFLATE_zlib_format_"></a></p>
+<h2>Pure Lua compressor and decompressor with high compression ratio using DEFLATE/zlib format.</h2>
+
+<p>Copyright (C) 2018-2019 Haoqian He</p>
+
+<p><a name="Introduction"></a></p>
+<h2>Introduction</h2>
+<p>LibDeflate is pure Lua compressor and decompressor with high compression ratio,
+which compresses almost as good as <a href="https://github.com/madler/zlib">zlib</a>. The
+purpose of this project is to give a reasonable good compression when you only
+have access to a pure Lua environment, without accessing to Lua C bindings or
+any external Lua libraries. LibDeflate does not have any dependencies except you
+need to have a working Lua interpreter.</p>
+
+<p>LibDeflate uses the following compression formats:
+1. <em>DEFLATE</em>, as defined by the specification
+<a href="https://tools.ietf.org/html/rfc1951">RFC1951</a>. DEFLATE is the default compression method of ZIP.
+2.  <em>zlib</em>, as defined by the specification
+<a href="https://tools.ietf.org/html/rfc1950">RFC1950</a>.
+zlib format uses DEFLATE formats to compress data and adds several bytes as
+headers and checksum.</p>
+
+<p>A simple C program utilizing <a href="https://github.com/madler/zlib">zlib</a> should be
+compatible with LibDeflate. If you are not sure how to write this program,
+goto the <a href="https://github.com/madler/zlib">zlib</a> repository, or read
+<a href="https://github.com/SafeteeWoW/LibDeflate/blob/master/tests/zdeflate.c">tests/zdeflate.c</a> in this repository.</p>
+
+<p><a name="Supported_Lua_Versions"></a></p>
+<h2>Supported Lua Versions</h2>
+<p>LibDeflate supports and is fully tested under Lua 5.1/5.2/5.3/5.4, LuaJIT 2.0/2.1,
+for Linux, MaxOS and Windows. Click the Travis CI(Linux/MaxOS) and
+Appveyor(Windows) badge on the top of this README for the test results. Click
+the CodeCov badge to see the test coverage (should be 100%).
+Note at the time of this release, Lua 5.4 final is not released yet.
+For Lua 5.4, This library is tested with its first beta version.</p>
+
+<p><a name="Documentation"></a></p>
+<h2>Documentation</h2>
+<p><a href="https://safeteewow.github.io/LibDeflate/source/LibDeflate.lua.html">Documentation</a> is hosted on Github.
+Beside run as a library, LibDeflate can also be run directly in commmandline.
+See the documentation for detail.</p>
+
+<p><a name="Limitation"></a></p>
+<h2>Limitation</h2>
+<p>Though many performance optimization has been done in the source code, as a
+pure Lua implementation, the compression speed of LibDeflate is significantly
+slower than a C compressor. LibDeflate aims to compress small files, and it is
+suggested to not compress files with the order of several Megabytes. If you
+need to compress files hundreds of MetaBytes, please use a C compressor, or a
+Lua compressor with C binding.</p>
+
+<p><a name="Performance"></a></p>
+<h2>Performance</h2>
+<p>Below is a simple benchmark compared with another pure Lua compressor <a href="https://www.wowace.com/projects/libcompress">LibCompress</a>.
+More benchmarks can be viewed in the <a href="https://safeteewow.github.io/LibDeflate/topics/benchmark.md.html">documentation</a>.</p>
+
+<ul>
+    <li>Interpreter: Lua 5.1.5</li>
+    <li>Input data: <a href="https://raw.githubusercontent.com/SafeteeWoW/LibDeflate/master/tests/data/warlockWeakAuras.txt">WeakAuras2 String</a>, Size: 132462 bytes</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>LibDeflate</th>
+<th>LibDeflate</th>
+<th>LibDeflate</th>
+<th>LibCompress</th>
+<th>LibCompress</th>
+<th>LibCompress</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>CompressDeflate Level 1</td>
+<td>CompressDeflate Level 5</td>
+<td>CompressDeflate Level 8</td>
+<td>Compress</td>
+<td>CompressLZW</td>
+<td>CompressHuffman</td>
+</tr>
+<tr>
+<td>compress ratio</td>
+<td>3.15</td>
+<td>3.68</td>
+<td>3.71</td>
+<td>1.36</td>
+<td>1.20</td>
+<td>1.36</td>
+</tr>
+<tr>
+<td>compress time(ms)</td>
+<td>70</td>
+<td>120</td>
+<td>200</td>
+<td>127</td>
+<td>58</td>
+<td>64</td>
+</tr>
+<tr>
+<td>decompress time(ms)</td>
+<td>35</td>
+<td>32</td>
+<td>32</td>
+<td>62</td>
+<td>36</td>
+<td>62</td>
+</tr>
+<tr>
+<td>compress+decompress time(ms)</td>
+<td>105</td>
+<td>152</td>
+<td>232</td>
+<td>189</td>
+<td>94</td>
+<td>126</td>
+</tr>
+</tbody>
+</table>
+
+
+
+<p>LibDeflate with compression level 1 compresses as fast as LibCompress, but already produces significantly smaller data than LibCompress. High compression level takes a bit more time to get better compression.</p>
+
+<p><a name="Download_And_Install"></a></p>
+<h2>Download And Install</h2>
+
+<ul>
+    <li><p>The <a href="https://github.com/SafeteeWoW/LibDeflate">official repository</a> locates on Github.
+    <a href="https://github.com/SafeteeWoW/LibDeflate/blob/master/LibDeflate.lua">LibDeflate.lua</a> is the only file of LibDeflate. Copy the file
+    to your LUA_PATH to install it.</p></li>
+    <li><p>To download as a World of Warcraft library, goto <a href="https://wow.curseforge.com/projects/libdeflate">LibDeflate Curseforge Page</a></p></li>
+    <li><p>You can also install via Luarocks using the command "luarocks install libdeflate"</p></li>
+    <li><p>To use after installation, <code>&lt;code&gt;require(&amp;quot;LibDeflate&amp;quot;)&lt;/code&gt;</code> (case sensitive) in your Lua interpreter,
+    or <code>&lt;code&gt;LibStub:GetLibrary(&amp;quot;LibDeflate&amp;quot;)&lt;/code&gt;</code> (case sensitive) for World of Warcraft.</p></li>
+</ul>
+
+
+<p><a name="Usage"></a></p>
+<h2>Usage</h2>
+<pre><code> local LibDeflate
+ if LibStub then -- You are using LibDeflate as WoW addon
+    LibDeflate = LibStub:GetLibrary("LibDeflate")
+ else
+    LibDeflate = require("LibDeflate")
+ end
+
+ local example_input = "12123123412345123456123456712345678123456789"
+
+ --- Compress using raw deflate format
+ local compress_deflate = LibDeflate:CompressDeflate(example_input)
+
+ -- decompress
+ local decompress_deflate = LibDeflate:DecompressDeflate(compress_deflate)
+
+ -- Check if the first return value of DecompressXXXX is non-nil to know if the
+ -- decompression succeeds.
+ if decompress_deflate == nil then
+    error("Decompression fails.")
+ else
+    -- Decompression succeeds.
+    assert(example_input == decompress_deflate)
+ end
+
+
+ -- To transmit through WoW addon channel, data must be encoded so NULL ("\000")
+ -- is not in the data.
+ local data_to_trasmit_WoW_addon = LibDeflate:EncodeForWoWAddonChannel(
+    compress_deflate)
+ -- When the receiver gets the data, decoded it first.
+ local data_decoded_WoW_addon = LibDeflate:DecodeForWoWAddonChannel(
+    data_to_trasmit_WoW_addon)
+ -- Then decomrpess it
+ local decompress_deflate = LibDeflate:DecompressDeflate(data_decoded_WoW_addon)
+
+ assert(decompress_deflate == example_input)
+
+ -- The compressed output is not printable. EncodeForPrint will convert to
+ -- a printable format, in case you want to export to the user to
+ -- copy and paste. This encoding will make the data 25% bigger.
+ local printable_compressed = LibDeflate:EncodeForPrint(compress_deflate)
+
+ -- DecodeForPrint to convert back.
+ -- DecodeForPrint will remove prefixed and trailing control or space characters
+ -- in the string before decode it.
+ assert(LibDeflate:DecodeForPrint(printable_compressed) == compress_deflate)
+</code></pre>
+
+<p>See Full examples in <a href="https://github.com/SafeteeWoW/LibDeflate/blob/master/examples/example.lua">examples/example.lua</a></p>
+
+<p><a name="License"></a></p>
+<h2>License</h2>
+<p>LibDeflate is licensed under GNU Lesser General Public License Version 3 or later.</p>
+
+<p><a name="Credits_and_Disclaimer"></a></p>
+<h2>Credits and Disclaimer</h2>
+
+<p>The following projects are used to the help to test the correctness
+of this program. The code of the main program (LibDeflate.lua) does not
+use their code directly, but uses their ideas and algorithms. Their original
+licenses shall be comply when used.</p>
+
+<ol>
+    <li><a href="http://www.zlib.net">zlib</a>, by Jean-loup Gailly (compression) and Mark Adler (decompression). Licensed under <a href="http://www.zlib.net/zlib_license.html">zlib License</a>.</li>
+    <li><a href="https://github.com/madler/zlib/tree/master/contrib/puff">puff</a>, by Mark Adler. Licensed under zlib License.</li>
+    <li><a href="https://www.wowace.com/projects/libcompress">LibCompress</a>, by jjsheets and Galmok of European Stormrage (Horde). Licensed under GPLv2.</li>
+    <li><a href="https://github.com/WeakAuras/WeakAuras2">WeakAuras2</a>. Licensed under GPLv2.</li>
+</ol>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2019-11-24 00:21:46 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

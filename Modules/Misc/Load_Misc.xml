@@ -4,7 +4,9 @@
 	<!-- Submodule -->
 	<Script file='AutoScreenShot.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
+	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='HideCrafter.lua'/>
+	<Script file='LootPanel.lua'/>
 	<Script file='Math.lua'/>
 	<Script file='MoveSpeed.lua'/>
 	<Script file='Mute.lua'/>

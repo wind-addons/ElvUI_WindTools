@@ -63,4 +63,8 @@
   <Binding name="CLICK WTExtraItemsBar5Button10:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>
   <Binding name="CLICK WTExtraItemsBar5Button11:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>
   <Binding name="CLICK WTExtraItemsBar5Button12:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>
+
+  <Binding name="CLICK WTExtraBindingButtonLogout:LeftButton" runOnUp="false" header="WTEXTRABUTTONS" category="BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA"/>
+  <Binding name="CLICK WTExtraBindingButtonLeaveGroup:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA"/>
+  <Binding name="CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA"/>
 </Bindings>

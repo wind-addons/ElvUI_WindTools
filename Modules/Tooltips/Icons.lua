@@ -23,20 +23,6 @@ local function SetTooltipIcon(self, icon)
     if title then
         title:SetFormattedText("|T%s:20:20:" .. newString .. ":%d|t %s", icon, 20, title:GetText())
     end
-
-    if self.NoWindItemIcon then
-        return
-    end
-    for i = 2, self:NumLines() do
-        local line = _G[self:GetName() .. "TextLeft" .. i]
-        if not line then
-            break
-        end
-        local text = line:GetText() or ""
-        if strfind(text, "|T.+|t") then
-            line:SetText(gsub(text, ":(%d+)|t", ":20:20:" .. newString .. "|t"))
-        end
-    end
 end
 
 local function NewTooltipHooker(method, func)
@@ -66,10 +52,6 @@ local HookItem =
     function(self)
         local _, link = self:GetItem()
         if link then
-            if IsAddOnLoaded("AzeriteTooltip") and C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID(link) then
-                self.NoWindItemIcon = true
-            end
-
             SetTooltipIcon(self, GetItemIcon(link))
         end
     end

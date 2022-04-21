@@ -110,6 +110,19 @@ options.general = {
             set = function(info, value)
                 E.db.WT.misc[info[#info]] = value
             end
+        },
+        noLootPanel = {
+            order = 10,
+            type = "toggle",
+            name = L["No Loot Panel"],
+            desc = L["Disable Blizzard loot info which auto showing after combat overed."],
+            get = function(info)
+                return E.db.WT.misc[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.misc[info[#info]] = value
+                M:LootPanel()
+            end
         }
     }
 }

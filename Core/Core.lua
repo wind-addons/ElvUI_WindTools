@@ -6,6 +6,7 @@ local pcall = pcall
 local print = print
 local strsub = strsub
 local tinsert = tinsert
+local tonumber = tonumber
 
 local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
@@ -19,7 +20,7 @@ W.Title = L["WindTools"]
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-W.SupportElvUIVersion = 12.45
+W.SupportElvUIVersion = 12.75
 
 -- 模块部分
 W.RegisteredModules = {}
@@ -36,6 +37,12 @@ for i = 1, 5 do
         _G[format("BINDING_NAME_CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)] = L["Button"] .. " " .. j
     end
 end
+
+_G.BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA = L["WindTools"] .. " - " .. L["Extra"]
+_G.BINDING_HEADER_WTEXTRABUTTONS = L["Extra Buttons"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLogout:LeftButton"] = L["Logout"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveGroup:LeftButton"] = L["Leave Party"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L["Leave Party if soloing"]
 
 --[[
     注册 WindTools 模块
@@ -102,11 +109,33 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
     hideOnEscape = 1
 }
 
+function W:UpdateScripts(oldVersion, currentVersion)
+    if not oldVersion or not currentVersion then
+        return
+    end
+
+    currentVersion = tonumber(currentVersion)
+    oldVersion = tonumber(oldVersion)
+
+    local function UpdateMessage(text)
+        F.Print(format("(%s |cff00a8ff%.2f|r -> |cff00a8ff%.2f|r) %s", L["Update"], oldVersion, currentVersion, text))
+    end
+
+    local doneIcon = " |TInterface\\RaidFrame\\ReadyCheck-Ready:0|t"
+
+    -- Clear the history of move frames.
+    if oldVersion >= 2.27 and oldVersion <= 2.31 and currentVersion >= 2.32 then
+        E.private.WT.misc.framePositions = {}
+        UpdateMessage(L["Move Frames"] .. doneIcon)
+    end
+end
+
 -- 检查安装版本, 提示更新记录
 function W:CheckInstalledVersion()
     if not InCombatLockdown() then
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
+            W:UpdateScripts(E.global.WT.Version, W.Version)
             E.global.WT.Version = W.Version
         elseif E.private.WT.core.loginMessage then
             local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)

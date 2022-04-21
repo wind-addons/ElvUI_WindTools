@@ -7,6 +7,10 @@ local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
 
 function S:SkinOjectiveTrackerHeaders()
+    if E.private and E.private.WT and E.private.WT.quest.objectiveTracker.enable then
+        return
+    end
+
     local frame = _G.ObjectiveTrackerFrame.MODULES
     if frame then
         for i = 1, #frame do
@@ -87,7 +91,7 @@ function S:ObjectiveTrackerFrame()
     local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 
     self:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
-    -- self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
+    self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
     self:SecureHook("QuestObjectiveSetupBlockButton_Item", "SkinItemButton")
     self:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
     self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")

@@ -453,6 +453,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Collections"]
         },
+        clickBinding = {
+            order = 10,
+            type = "toggle",
+            name = L["Click Binding"]
+        },
         communities = {
             order = 10,
             type = "toggle",
@@ -937,6 +942,11 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Ace3"]
+        },
+        ace3DropdownBackdrop = {
+            order = 10,
+            type = "toggle",
+            name = L["Ace3 Dropdown Backdrop"]
         },
         angryKeystones = {
             order = 10,

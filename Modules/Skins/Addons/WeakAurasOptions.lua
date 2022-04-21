@@ -28,6 +28,14 @@ local function RemoveBorder(frame)
     end
 end
 
+local function HandleAllChildButtons(frame)
+    for _, child in pairs {frame:GetChildren()} do
+        if child:IsObjectType("Button") then
+            ES:HandleButton(child)
+        end
+    end
+end
+
 function S:WeakAuras_RegisterRegionOptions(name, createFunction, icon, displayName, createThumbnail, ...)
     if type(icon) == "function" then
         local OldIcon = icon
@@ -728,7 +736,36 @@ function S:WeakAurasOptions()
     -- self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
 end
 
+function S:WeakAuras_CreateTemplateView(Private, frame)
+    local frame = self.hooks[_G.WeakAuras].CreateTemplateView(Private, frame)
+    HandleAllChildButtons(frame)
+    return frame
+end
+
+function S:WeakAurasTemplatesLoadTimerBody()
+    if _G.WeakAuras and _G.WeakAuras.CreateTemplateView then
+        self:CancelTimer(self.weakAurasTemplatesLoadTimer)
+        self.weakAurasTemplatesLoadTimer = nil
+        self:RawHook(_G.WeakAuras, "CreateTemplateView", "WeakAuras_CreateTemplateView")
+
+        if _G.WeakAurasOptions then
+            if _G.WeakAurasOptions.newView and _G.WeakAurasOptions.newView.frame then
+                HandleAllChildButtons(_G.WeakAurasOptions.newView.frame)
+            end
+        end
+    end
+end
+
+function S:WeakAurasTemplates()
+    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAuras then
+        return
+    end
+
+    self.weakAurasTemplatesLoadTimer = self:ScheduleRepeatingTimer("WeakAurasTemplatesLoadTimerBody", 0.1)
+end
+
 S:AddCallbackForAddon("WeakAurasOptions")
+S:AddCallbackForAddon("WeakAurasTemplates")
 S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox")
 S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton")
 S:AddCallbackForAceGUIWidget("WeakAurasIconButton")

@@ -1,5 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
+
+local ceil = ceil
 local format = format
 
 W.Media = {
@@ -16,10 +18,23 @@ local MediaPath = "Interface/Addons/ElvUI_WindTools/Media/"
     @returns {string} 图标字符串
 ]]
 do
-	local template = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
+	local cuttedIconTemplate = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
+	local textureTemplate = "|T%s:%d:%d|t"
+	local aspectRatioTemplate = "|T%s:0:aspectRatio|t"
 	local s = 14
-	function F.GetIconString(icon, size)
-		return format(template, icon, size or s, size or s)
+
+	function F.GetIconString(icon, height, width)
+		width = width or height
+		return format(cuttedIconTemplate, icon, height or s, width or s)
+	end
+
+	function F.GetTextureString(texture, height, width, aspectRatio)
+		if aspectRatio then
+			return format(aspectRatioTemplate, texture)
+		else
+			width = width or height
+			return format(textureTemplate, texture, height or s, width or s)
+		end
 	end
 end
 
@@ -39,6 +54,51 @@ do
 		end
 	end
 	AddMedia("logo", format("Title/%s.tga", titlePath), "Textures")
+end
+AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
+
+-- Custom Header
+local CustomHeaders = {
+	texWidth = 2048,
+	texHeight = 256,
+	headerWidth = 340,
+	headerHeight = 40,
+	type = {
+		-- OffsetX
+		SpecialAchievements = 0,
+		Raids = 348,
+		MythicDungeons = 693
+	},
+	languages = {
+		-- OffsetY
+		zhCN = 0,
+		zhTW = 52,
+		koKR = 103,
+		enUS = 155,
+		deDE = 206
+	}
+}
+
+function F.GetCustomHeader(name, scale)
+	local offsetX = CustomHeaders.type[name]
+	local offsetY = CustomHeaders.languages[E.global.general.locale] or CustomHeaders.languages["enUS"]
+	if not offsetX or not offsetY then
+		return
+	end
+
+	scale = scale or 1
+	return format(
+		"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
+		W.Media.Textures.customHeaders,
+		ceil(CustomHeaders.headerHeight * scale),
+		ceil(CustomHeaders.headerWidth * scale),
+		CustomHeaders.texWidth,
+		CustomHeaders.texHeight,
+		offsetX,
+		offsetX + CustomHeaders.headerWidth,
+		offsetY,
+		offsetY + CustomHeaders.headerHeight
+	)
 end
 
 do
@@ -98,6 +158,11 @@ AddMedia("skins", "Skins.tga", "Icons")
 AddMedia("tools", "Hammer.tga", "Icons")
 AddMedia("tooltips", "Tooltips.tga", "Icons")
 AddMedia("unitFrames", "UnitFrames.tga", "Icons")
+
+AddMedia("covenantKyrian", "Covenants/Kyrian.tga", "Icons")
+AddMedia("covenantNecrolord", "Covenants/Necrolord.tga", "Icons")
+AddMedia("covenantNightFae", "Covenants/NightFae.tga", "Icons")
+AddMedia("covenantVenthyr", "Covenants/Venthyr.tga", "Icons")
 
 AddMedia("discord", "Discord.tga", "Icons")
 AddMedia("github", "Github.tga", "Icons")

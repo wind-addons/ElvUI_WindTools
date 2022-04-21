@@ -77,7 +77,7 @@ local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
-local Heartstones = {
+local Hearthstones = {
     6948, -- 爐石
     54452, -- 以太傳送門
     64488, -- 旅店老闆的女兒
@@ -99,6 +99,8 @@ local Heartstones = {
     182773, -- 死靈領主爐石
     183716, -- 汎希爾罪孽石
     184353, -- 琪瑞安族爐石
+    188952, -- 統御的爐石
+    190237, -- 仲介者傳送矩陣
     ---------------------
     48933, --蟲洞產生器：北裂境
     87215, --蟲洞產生器：潘達利亞
@@ -112,7 +114,7 @@ local Heartstones = {
     180817 -- 移轉暗語
 }
 
-local HeartstonesTable
+local HearthstonesTable
 
 local function AddDoubleLineForItem(itemID, prefix)
     if type(itemID) == "string" then
@@ -121,7 +123,7 @@ local function AddDoubleLineForItem(itemID, prefix)
 
     prefix = prefix and prefix .. " " or ""
 
-    local name = HeartstonesTable[tostring(itemID)]
+    local name = HearthstonesTable[tostring(itemID)]
 
     if not name then
         return
@@ -1368,24 +1370,24 @@ end
 
 function GB:UpdateHomeButton()
     ButtonTypes.HOME.item = {
-        item1 = HeartstonesTable[self.db.home.left],
-        item2 = HeartstonesTable[self.db.home.right]
+        item1 = HearthstonesTable[self.db.home.left],
+        item2 = HearthstonesTable[self.db.home.right]
     }
 end
 
 function GB:UpdateHearthStoneTable()
-    HeartstonesTable = {}
+    HearthstonesTable = {}
 
     local index = 0
     local itemEngine = CreateFromMixins(ItemMixin)
 
     local function GetNextHearthStoneInfo()
         index = index + 1
-        if Heartstones[index] then
-            itemEngine:SetItemID(Heartstones[index])
+        if Hearthstones[index] then
+            itemEngine:SetItemID(Hearthstones[index])
             itemEngine:ContinueOnItemLoad(
                 function()
-                    HeartstonesTable[tostring(Heartstones[index])] = itemEngine:GetItemName()
+                    HearthstonesTable[tostring(Hearthstones[index])] = itemEngine:GetItemName()
                     GetNextHearthStoneInfo()
                 end
             )
@@ -1401,7 +1403,7 @@ function GB:UpdateHearthStoneTable()
 end
 
 function GB:GetHearthStoneTable()
-    return HeartstonesTable
+    return HearthstonesTable
 end
 
 function GB:GetAvailableButtons()

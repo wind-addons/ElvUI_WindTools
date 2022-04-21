@@ -22,6 +22,9 @@ function S:Blizzard_Communities()
         end
     end
 
+    -- Communities Settings
+    self:CreateShadow(_G.CommunitiesSettingsDialog)
+
     -- 搜寻社群
     if _G.ClubFinderCommunityAndGuildFinderFrame then
         local f = _G.ClubFinderCommunityAndGuildFinderFrame

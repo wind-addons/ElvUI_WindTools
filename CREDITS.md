@@ -84,6 +84,7 @@
 
 - Tooltips
     - siweia (NDui)
+    - Witnesscm (NDui_Plus)
     - Tevoll (ElvUI Enhanced Again)
     - MMOSimca (Simple Objective Progress)
 

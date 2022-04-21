@@ -170,6 +170,7 @@ V.skins = {
 	},
 	addons = {
 		ace3 = true,
+		ace3DropdownBackdrop = true,
 		angryKeystones = true,
 		azerothAutoPilot = true,
 		bigWigs = true,
@@ -208,6 +209,7 @@ V.skins = {
 		channels = true,
 		character = true,
 		chromieTime = true,
+		clickBinding = true,
 		collections = true,
 		communities = true,
 		covenantRenown = true,
@@ -288,6 +290,8 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	tierSet = true,
+	covenant = true,
 	dominationRank = true,
 	objectiveProgress = true,
 	objectiveProgressAccuracy = 1,
@@ -296,24 +300,28 @@ V.tooltips = {
 		raids = {
 			enable = true,
 			["Castle Nathria"] = true,
-			["Sanctum of Domination"] = true
+			["Sanctum of Domination"] = true,
+			["Sepulcher of the First Ones"] = true
 		},
 		special = {
 			enable = true,
-			["Shadowlands Keystone Master: Season One"] = true,
-			["Shadowlands Keystone Master: Season Two"] = true
+			["Shadowlands Keystone Master: Season One"] = false,
+			["Shadowlands Keystone Master: Season Two"] = true,
+			["Shadowlands Keystone Master: Season Three"] = true
 		},
 		mythicDungeons = {
 			enable = true,
-			["The Necrotic Wake"] = true,
-			["Plaguefall"] = true,
-			["Mists of Tirna Scithe"] = true,
-			["Halls of Atonement"] = true,
-			["Theater of Pain"] = true,
+			showNoRecord = true,
 			["De Other Side"] = true,
-			["Spires of Ascension"] = true,
+			["Halls of Atonement"] = true,
+			["Mists of Tirna Scithe"] = true,
+			["Plaguefall"] = true,
 			["Sanguine Depths"] = true,
-			["Tazavesh, the Veiled Market"] = true
+			["Spires of Ascension"] = true,
+			["Tazavesh: So'leah's Gambit"] = true,
+			["Tazavesh: Streets of Wonder"] = true,
+			["The Necrotic Wake"] = true,
+			["Theater of Pain"] = true
 		}
 	}
 }

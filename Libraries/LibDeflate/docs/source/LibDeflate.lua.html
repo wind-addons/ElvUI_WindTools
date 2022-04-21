@@ -1,0 +1,944 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>LibDeflate documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>LibDeflate</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Source</h2>
+<ul class="nowrap">
+  <li><strong>LibDeflate.lua</strong></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/benchmark.md.html">benchmark</a></li>
+  <li><a href="../topics/changelog.md.html">changelog</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/example.lua.html">example.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>File <code>LibDeflate.lua</code></h1>
+<p>LibDeflate 1.0.2-release <br>
+Pure Lua compressor and decompressor with high compression ratio using
+DEFLATE/zlib format.</p>
+<p>
+
+</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: LibDeflate &lt;2018-2020> Haoqian He</li>
+        <li><strong>License</strong>:  zlib License</p>
+
+<p>This library is implemented according to the following specifications. <br>
+Report a bug if LibDeflate is not fully compliant with those specs. <br>
+Both compressors and decompressors have been implemented in the library.<br>
+1. RFC1950: DEFLATE Compressed Data Format Specification version 1.3 <br>
+https://tools.ietf.org/html/rfc1951 <br>
+2. RFC1951: ZLIB Compressed Data Format Specification version 3.3 <br>
+https://tools.ietf.org/html/rfc1950 <br></p>
+
+<p>This library requires Lua 5.1/5.2/5.3/5.4 interpreter or LuaJIT v2.0+. <br>
+This library does not have any dependencies. <br>
+Note at the time of this release, Lua 5.4 final is not released yet. <br>
+For Lua 5.4, This library is tested with its rc6 version. <br>
+<br>
+This file "LibDeflate.lua" is the only source file of
+the library. <br>
+Submit suggestions or report bugs to
+https://github.com/safeteeWow/LibDeflate/issues</li>
+        <li><strong>Author</strong>: Haoqian He (Github: SafeteeWoW; World of Warcraft: Safetyy-Illidan(US))</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" ><a href="#LibDeflate:Adler32">LibDeflate:Adler32 (str)</a></td>
+	<td class="summary">Calculate the Adler-32 checksum of the string.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CompressDeflate">LibDeflate:CompressDeflate (str, configs)</a></td>
+	<td class="summary">Compress using the raw deflate format.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CompressDeflateWithDict">LibDeflate:CompressDeflateWithDict (str, dictionary, configs)</a></td>
+	<td class="summary">Compress using the raw deflate format with a preset dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CompressZlib">LibDeflate:CompressZlib (str, configs)</a></td>
+	<td class="summary">Compress using the zlib format.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CompressZlibWithDict">LibDeflate:CompressZlibWithDict (str, dictionary, configs)</a></td>
+	<td class="summary">Compress using the zlib format with a preset dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CreateCodec">LibDeflate:CreateCodec (reserved_chars, escape_chars, map_chars)</a></td>
+	<td class="summary">Create a custom codec with encoder and decoder.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:CreateDictionary">LibDeflate:CreateDictionary (str, strlen, adler32)</a></td>
+	<td class="summary">Create a preset dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecodeForPrint">LibDeflate:DecodeForPrint (str)</a></td>
+	<td class="summary">Decode the printable string produced by LibDeflate:EncodeForPrint.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecodeForWoWAddonChannel">LibDeflate:DecodeForWoWAddonChannel (str)</a></td>
+	<td class="summary">Decode the string produced by LibDeflate:EncodeForWoWAddonChannel</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecodeForWoWChatChannel">LibDeflate:DecodeForWoWChatChannel (str)</a></td>
+	<td class="summary">Decode the string produced by LibDeflate:EncodeForWoWChatChannel.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecompressDeflate">LibDeflate:DecompressDeflate (str)</a></td>
+	<td class="summary">Decompress a raw deflate compressed data.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecompressDeflateWithDict">LibDeflate:DecompressDeflateWithDict (str, dictionary)</a></td>
+	<td class="summary">Decompress a raw deflate compressed data with a preset dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecompressZlib">LibDeflate:DecompressZlib (str)</a></td>
+	<td class="summary">Decompress a zlib compressed data.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:DecompressZlibWithDict">LibDeflate:DecompressZlibWithDict (str, dictionary)</a></td>
+	<td class="summary">Decompress a zlib compressed data with a preset dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:EncodeForPrint">LibDeflate:EncodeForPrint (str)</a></td>
+	<td class="summary">Encode the string to make it printable.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:EncodeForWoWAddonChannel">LibDeflate:EncodeForWoWAddonChannel (str)</a></td>
+	<td class="summary">Encode the string to make it ready to be transmitted in World of
+ Warcraft addon channel.</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#LibDeflate:EncodeForWoWChatChannel">LibDeflate:EncodeForWoWChatChannel (str)</a></td>
+	<td class="summary">Encode the string to make it ready to be transmitted in World of
+ Warcraft chat channel.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" ><a href="#CommandlineOptions">CommandlineOptions</a></td>
+	<td class="summary">Commandline options</td>
+	</tr>
+	<tr>
+	<td class="name" ><a href="#compression_configs">compression_configs</a></td>
+	<td class="summary">The description to compression configuration table.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "LibDeflate:Adler32"></a>
+    <strong>LibDeflate:Adler32 (str)</strong>
+    </dt>
+    <dd>
+    Calculate the Adler-32 checksum of the string.  <br>
+ See RFC1950 Page 9 https://tools.ietf.org/html/rfc1950 for the
+ definition of Adler-32 checksum.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] the input string to calcuate its Adler-32 checksum.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [integer] The Adler-32 checksum, which is greater or equal to 0,
+ and less than 2^32 (4294967296).
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CompressDeflate"></a>
+    <strong>LibDeflate:CompressDeflate (str, configs)</strong>
+    </dt>
+    <dd>
+    Compress using the raw deflate format.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be compressed.
+        </li>
+        <li><span class="parameter">configs</span>
+         [table/nil] The configuration table to control the compression
+ . If nil, use the default configuration.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        [string] The compressed data.</li>
+        <li>
+         [integer] The number of bits padded at the end of output.
+ 0 &lt;= bits &lt; 8  <br>
+ This means the most significant "bits" of the last byte of the returned
+ compressed data are padding bits and they don't affect decompression.
+ You don't need to use this value unless you want to do some postprocessing
+ to the compressed data.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../source/LibDeflate.lua.html#compression_configs">compression_configs</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:DecompressDeflate">LibDeflate:DecompressDeflate</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CompressDeflateWithDict"></a>
+    <strong>LibDeflate:CompressDeflateWithDict (str, dictionary, configs)</strong>
+    </dt>
+    <dd>
+    Compress using the raw deflate format with a preset dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be compressed.
+        </li>
+        <li><span class="parameter">dictionary</span>
+         [table] The preset dictionary produced by
+ LibDeflate:CreateDictionary
+        </li>
+        <li><span class="parameter">configs</span>
+         [table/nil] The configuration table to control the compression
+ . If nil, use the default configuration.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        [string] The compressed data.</li>
+        <li>
+         [integer] The number of bits padded at the end of output.
+ 0 &lt;= bits &lt; 8  <br>
+ This means the most significant "bits" of the last byte of the returned
+ compressed data are padding bits and they don't affect decompression.
+ You don't need to use this value unless you want to do some postprocessing
+ to the compressed data.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../source/LibDeflate.lua.html#compression_configs">compression_configs</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:CreateDictionary">LibDeflate:CreateDictionary</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:DecompressDeflateWithDict">LibDeflate:DecompressDeflateWithDict</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CompressZlib"></a>
+    <strong>LibDeflate:CompressZlib (str, configs)</strong>
+    </dt>
+    <dd>
+    Compress using the zlib format.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] the data to be compressed.
+        </li>
+        <li><span class="parameter">configs</span>
+         [table/nil] The configuration table to control the compression
+ . If nil, use the default configuration.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        [string] The compressed data.</li>
+        <li>
+         [integer] The number of bits padded at the end of output.
+ Should always be 0.
+ Zlib formatted compressed data never has padding bits at the end.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../source/LibDeflate.lua.html#compression_configs">compression_configs</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:DecompressZlib">LibDeflate:DecompressZlib</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CompressZlibWithDict"></a>
+    <strong>LibDeflate:CompressZlibWithDict (str, dictionary, configs)</strong>
+    </dt>
+    <dd>
+    Compress using the zlib format with a preset dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] the data to be compressed.
+        </li>
+        <li><span class="parameter">dictionary</span>
+         [table] A preset dictionary produced
+ by LibDeflate:CreateDictionary()
+        </li>
+        <li><span class="parameter">configs</span>
+         [table/nil] The configuration table to control the compression
+ . If nil, use the default configuration.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        [string] The compressed data.</li>
+        <li>
+         [integer] The number of bits padded at the end of output.
+ Should always be 0.
+ Zlib formatted compressed data never has padding bits at the end.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../source/LibDeflate.lua.html#compression_configs">compression_configs</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:CreateDictionary">LibDeflate:CreateDictionary</a></li>
+         <li><a href="../source/LibDeflate.lua.html#LibDeflate:DecompressZlibWithDict">LibDeflate:DecompressZlibWithDict</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CreateCodec"></a>
+    <strong>LibDeflate:CreateCodec (reserved_chars, escape_chars, map_chars)</strong>
+    </dt>
+    <dd>
+    Create a custom codec with encoder and decoder.  <br>
+ This codec is used to convert an input string to make it not contain
+ some specific bytes.
+ This created codec and the parameters of this function do NOT take
+ localization into account. One byte (0-255) in the string is exactly one
+ character (0-255).
+ Credits to LibCompress.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">reserved_chars</span>
+         [string] The created encoder will ensure encoded
+ data does not contain any single character in reserved_chars. This parameter
+ should be non-empty.
+        </li>
+        <li><span class="parameter">escape_chars</span>
+         [string] The escape character(s) used in the created
+ codec. The codec converts any character included in reserved_chars /
+ escape_chars / map_chars to (one escape char + one character not in
+ reserved_chars / escape_chars / map_chars).
+ You usually only need to provide a length-1 string for this parameter.
+ Length-2 string is only needed when
+ reserved_chars + escape_chars + map_chars is longer than 127.
+ This parameter should be non-empty.
+        </li>
+        <li><span class="parameter">map_chars</span>
+         [string] The created encoder will map every
+ reserved_chars:sub(i, i) (1 &lt;= i &lt;= #map_chars) to map_chars:sub(i, i).
+ This parameter CAN be empty string.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+         [table/nil] If the codec cannot be created, return nil.<br>
+ If the codec can be created according to the given
+ parameters, return the codec, which is a encode/decode table.
+ The table contains two functions: <br>
+ t:Encode(str) returns the encoded string. <br>
+ t:Decode(str) returns the decoded string if succeeds. nil if fails.</li>
+        <li>
+         [nil/string] If the codec is successfully created, return nil.
+ If not, return a string that describes the reason why the codec cannot be
+ created.</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Create an encoder/decoder that maps all "\000" to "\003",
+</span><span class="comment">-- and escape "\001" (and "\002" and "\003") properly
+</span><span class="keyword">local</span> codec = LibDeflate:CreateCodec(<span class="string">"\000\001"</span>, <span class="string">"\002"</span>, <span class="string">"\003"</span>)
+
+<span class="keyword">local</span> encoded = codec:Encode(SOME_STRING)
+<span class="comment">-- "encoded" does not contain "\000" or "\001"
+</span><span class="keyword">local</span> decoded = codec:Decode(encoded)
+<span class="comment">-- assert(decoded == SOME_STRING)</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:CreateDictionary"></a>
+    <strong>LibDeflate:CreateDictionary (str, strlen, adler32)</strong>
+    </dt>
+    <dd>
+    Create a preset dictionary. </p>
+
+<p> This function is not fast, and the memory consumption of the produced
+ dictionary is about 50 times of the input string. Therefore, it is suggestted
+ to run this function only once in your program.</p>
+
+<p> It is very important to know that if you do use a preset dictionary,
+ compressors and decompressors MUST USE THE SAME dictionary. That is,
+ dictionary must be created using the same string. If you update your program
+ with a new dictionary, people with the old version won't be able to transmit
+ data with people with the new version. Therefore, changing the dictionary
+ must be very careful.</p>
+
+<p> The parameters "strlen" and "adler32" add a layer of verification to ensure
+ the parameter "str" is not modified unintentionally during the program
+ development.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string used as the preset dictionary. <br>
+ You should put stuffs that frequently appears in the dictionary
+ string and preferablely put more frequently appeared stuffs toward the end
+ of the string. <br>
+ Empty string and string longer than 32768 bytes are not allowed.
+        </li>
+        <li><span class="parameter">strlen</span>
+         [integer] The length of 'str'. Please pass in this parameter
+ as a hardcoded constant, in order to verify the content of 'str'. The value
+ of this parameter should be known before your program runs.
+        </li>
+        <li><span class="parameter">adler32</span>
+         [integer] The Adler-32 checksum of 'str'. Please pass in this
+ parameter as a hardcoded constant, in order to verify the content of 'str'.
+ The value of this parameter should be known before your program runs.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [table] The dictionary used for preset dictionary compression and
+ decompression.
+    </ol>
+
+    <h3>Raises:</h3>
+    error if 'strlen' does not match the length of 'str',
+ or if 'adler32' does not match the Adler-32 checksum of 'str'.
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> dict_str = <span class="string">"1234567890"</span>
+
+<span class="comment">-- print(dict_str:len(), LibDeflate:Adler32(dict_str))
+</span><span class="comment">-- Hardcode the print result below to verify it to avoid acciently
+</span><span class="comment">-- modification of 'str' during the program development.
+</span><span class="comment">-- string length: 10, Adler-32: 187433486,
+</span><span class="comment">-- Don't calculate string length and its Adler-32 at run-time.
+</span>
+<span class="keyword">local</span> dict = LibDeflate:CreateDictionary(dict_str, <span class="number">10</span>, <span class="number">187433486</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecodeForPrint"></a>
+    <strong>LibDeflate:DecodeForPrint (str)</strong>
+    </dt>
+    <dd>
+    Decode the printable string produced by LibDeflate:EncodeForPrint.
+ "str" will have its prefixed and trailing control characters or space
+ removed before it is decoded, so it is easier to use if "str" comes form
+ user copy and paste with some prefixed or trailing spaces.
+ Then decode fails if the string contains any characters cant be produced by
+ LibDeflate:EncodeForPrint. That means, decode fails if the string contains a
+ characters NOT one of 26 lowercase letters, 26 uppercase letters,
+ 10 numbers digits, left parenthese, or right parenthese.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be decoded
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [string/nil] The decoded string if succeeds. nil if fails.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecodeForWoWAddonChannel"></a>
+    <strong>LibDeflate:DecodeForWoWAddonChannel (str)</strong>
+    </dt>
+    <dd>
+    Decode the string produced by LibDeflate:EncodeForWoWAddonChannel
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be decoded.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [string/nil] The decoded string if succeeds. nil if fails.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:EncodeForWoWAddonChannel">LibDeflate:EncodeForWoWAddonChannel</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecodeForWoWChatChannel"></a>
+    <strong>LibDeflate:DecodeForWoWChatChannel (str)</strong>
+    </dt>
+    <dd>
+    Decode the string produced by LibDeflate:EncodeForWoWChatChannel.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be decoded.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [string/nil] The decoded string if succeeds. nil if fails.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:EncodeForWoWChatChannel">LibDeflate:EncodeForWoWChatChannel</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecompressDeflate"></a>
+    <strong>LibDeflate:DecompressDeflate (str)</strong>
+    </dt>
+    <dd>
+    Decompress a raw deflate compressed data.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be decompressed.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+         [string/nil] If the decompression succeeds, return the decompressed
+ data. If the decompression fails, return nil. You should check if this return
+ value is non-nil to know if the decompression succeeds.</li>
+        <li>
+         [integer] If the decompression succeeds, return the number of
+ unprocessed bytes in the input compressed data. This return value is a
+ positive integer if the input data is a valid compressed data appended by an
+ arbitary non-empty string. This return value is 0 if the input data does not
+ contain any extra bytes.<br>
+ If the decompression fails (The first return value of this function is nil),
+ this return value is undefined.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:CompressDeflate">LibDeflate:CompressDeflate</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecompressDeflateWithDict"></a>
+    <strong>LibDeflate:DecompressDeflateWithDict (str, dictionary)</strong>
+    </dt>
+    <dd>
+    Decompress a raw deflate compressed data with a preset dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be decompressed.
+        </li>
+        <li><span class="parameter">dictionary</span>
+         [table] The preset dictionary used by
+ LibDeflate:CompressDeflateWithDict when the compressed data is produced.
+ Decompression and compression must use the same dictionary.
+ Otherwise wrong decompressed data could be produced without generating any
+ error.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+         [string/nil] If the decompression succeeds, return the decompressed
+ data. If the decompression fails, return nil. You should check if this return
+ value is non-nil to know if the decompression succeeds.</li>
+        <li>
+         [integer] If the decompression succeeds, return the number of
+ unprocessed bytes in the input compressed data. This return value is a
+ positive integer if the input data is a valid compressed data appended by an
+ arbitary non-empty string. This return value is 0 if the input data does not
+ contain any extra bytes.<br>
+ If the decompression fails (The first return value of this function is nil),
+ this return value is undefined.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:CompressDeflateWithDict">LibDeflate:CompressDeflateWithDict</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecompressZlib"></a>
+    <strong>LibDeflate:DecompressZlib (str)</strong>
+    </dt>
+    <dd>
+    Decompress a zlib compressed data.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be decompressed
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+         [string/nil] If the decompression succeeds, return the decompressed
+ data. If the decompression fails, return nil. You should check if this return
+ value is non-nil to know if the decompression succeeds.</li>
+        <li>
+         [integer] If the decompression succeeds, return the number of
+ unprocessed bytes in the input compressed data. This return value is a
+ positive integer if the input data is a valid compressed data appended by an
+ arbitary non-empty string. This return value is 0 if the input data does not
+ contain any extra bytes.<br>
+ If the decompression fails (The first return value of this function is nil),
+ this return value is undefined.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:CompressZlib">LibDeflate:CompressZlib</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:DecompressZlibWithDict"></a>
+    <strong>LibDeflate:DecompressZlibWithDict (str, dictionary)</strong>
+    </dt>
+    <dd>
+    Decompress a zlib compressed data with a preset dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The data to be decompressed
+        </li>
+        <li><span class="parameter">dictionary</span>
+         [table] The preset dictionary used by
+ LibDeflate:CompressDeflateWithDict when the compressed data is produced.
+ Decompression and compression must use the same dictionary.
+ Otherwise wrong decompressed data could be produced without generating any
+ error.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+         [string/nil] If the decompression succeeds, return the decompressed
+ data. If the decompression fails, return nil. You should check if this return
+ value is non-nil to know if the decompression succeeds.</li>
+        <li>
+         [integer] If the decompression succeeds, return the number of
+ unprocessed bytes in the input compressed data. This return value is a
+ positive integer if the input data is a valid compressed data appended by an
+ arbitary non-empty string. This return value is 0 if the input data does not
+ contain any extra bytes.<br>
+ If the decompression fails (The first return value of this function is nil),
+ this return value is undefined.</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:CompressZlibWithDict">LibDeflate:CompressZlibWithDict</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:EncodeForPrint"></a>
+    <strong>LibDeflate:EncodeForPrint (str)</strong>
+    </dt>
+    <dd>
+    Encode the string to make it printable.  <br></p>
+
+<p> Credis to WeakAuras2, this function is equivalant to the implementation
+ it is using right now. <br>
+ The encoded string will be 25% larger than the origin string. However, every
+ single byte of the encoded string will be one of 64 printable ASCII
+ characters, which are can be easier copied, pasted and displayed.
+ (26 lowercase letters, 26 uppercase letters, 10 numbers digits,
+ left parenthese, or right parenthese)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be encoded.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [string] The encoded string.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:EncodeForWoWAddonChannel"></a>
+    <strong>LibDeflate:EncodeForWoWAddonChannel (str)</strong>
+    </dt>
+    <dd>
+    Encode the string to make it ready to be transmitted in World of
+ Warcraft addon channel.  <br>
+ The encoded string is guaranteed to contain no NULL ("\000") character.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be encoded.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The encoded string.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:DecodeForWoWAddonChannel">LibDeflate:DecodeForWoWAddonChannel</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "LibDeflate:EncodeForWoWChatChannel"></a>
+    <strong>LibDeflate:EncodeForWoWChatChannel (str)</strong>
+    </dt>
+    <dd>
+    Encode the string to make it ready to be transmitted in World of
+ Warcraft chat channel.  <br>
+ See also https://wow.gamepedia.com/ValidChatMessageCharacters
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         [string] The string to be encoded.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        [string] The encoded string.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../source/LibDeflate.lua.html#LibDeflate:DecodeForWoWChatChannel">LibDeflate:DecodeForWoWChatChannel</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "CommandlineOptions"></a>
+    <strong>CommandlineOptions</strong>
+    </dt>
+    <dd>
+    Commandline options
+
+
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">lua LibDeflate.lua [OPTION] [INPUT] [OUTPUT]
+-<span class="number">0</span>    store only. no compression.
+-<span class="number">1</span>    fastest compression.
+-<span class="number">9</span>    slowest <span class="keyword">and</span> best compression.
+-d    <span class="keyword">do</span> decompression instead of compression.
+<span class="comment">--dict &lt;filename&gt; specify the file that contains
+</span>he entire preset dictionary.
+-h    give this help.
+<span class="comment">--strategy &lt;fixed/huffman_only/dynamic&gt; specify a special compression strategy.
+</span>-v    <span class="global">print</span> the version <span class="keyword">and</span> copyright info.
+<span class="comment">--zlib  use zlib format instead of raw deflate.</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "compression_configs"></a>
+    <strong>compression_configs</strong>
+    </dt>
+    <dd>
+    The description to compression configuration table.  <br>
+ Any field can be nil to use its default. <br>
+ Table with keys other than those below is an invalid table.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">level</span>
+         The compression level ranged from 0 to 9. 0 is no compression.
+ 9 is the slowest but best compression. Use nil for default level.
+        </li>
+        <li><span class="parameter">strategy</span>
+         The compression strategy. "fixed" to only use fixed deflate
+ compression block. "dynamic" to only use dynamic block. "huffman_only" to
+ do no LZ77 compression. Only do huffman compression.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-06-26 22:05:55 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

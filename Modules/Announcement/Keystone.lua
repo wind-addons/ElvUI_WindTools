@@ -20,7 +20,7 @@ local cache = {}
 function A:Keystone(event)
     local config = self.db.keystone
 
-    if not config.enable then
+    if not config or not config.enable then
         return
     end
 

@@ -110,7 +110,7 @@ W.Changelog[232] = {
             "[Skins] Optimized Dressing Room skin."
         },
         ["koKR"] = {
-            "[Extra Item Bar] Fixed a possible config loading error.",
+            "[아이템바] 설정을 불러올 때 발생할 수 있는 오류를 수정하였습니다.",
             "[툴팁] 최적화를 통해 성능이 크게 향상되었습니다.",
             "[툴팁] 신화 던전 시간 삭제.",
             "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",

@@ -670,7 +670,6 @@ local function GetInspectItemListFrame(parent)
         )
 
         local itemframe
-        local fontsize = W.Locale:sub(1, 2) == "zh" and 12 or 9
         local backdrop = {
             bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
             edgeFile = "Interface\\Buttons\\WHITE8X8",
@@ -696,7 +695,9 @@ local function GetInspectItemListFrame(parent)
             itemframe.label:SetBackdropBorderColor(0, 0.9, 0.9, 0.2)
             itemframe.label:SetBackdropColor(0, 0.9, 0.9, 0.2)
             itemframe.label.text = itemframe.label:CreateFontString(nil, "ARTWORK")
-            itemframe.label.text:SetFont(UNIT_NAME_FONT, fontsize, "THINOUTLINE")
+            if IL.db and IL.db.equipText then
+                F.SetFontWithDB(itemframe.label.text, IL.db.slotText)
+            end
             itemframe.label.text:Size(34, 14)
             itemframe.label.text:Point("CENTER", 1, 0)
             itemframe.label.text:SetText(v.name)
@@ -778,11 +779,10 @@ local function GetInspectItemListFrame(parent)
     else
         for i in ipairs(slots) do
             local itemframe = parent.inspectFrame["item" .. i]
-            if itemframe then
-                if IL.db and IL.db.levelText then
+            if itemframe and IL.db then
+                if IL.db then
+                    F.SetFontWithDB(itemframe.label.text, IL.db.slotText)
                     F.SetFontWithDB(itemframe.levelString, IL.db.levelText)
-                end
-                if IL.db and IL.db.equipText then
                     F.SetFontWithDB(itemframe.itemString, IL.db.equipText)
                 end
             end

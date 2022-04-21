@@ -542,6 +542,11 @@ P.item = {
         inspect = true,
         stats = true,
         playerOnInspect = true,
+        slotText = {
+            name = E.db.general.font,
+            size = W.CompatibleFont and 12 or 9,
+            style = "OUTLINE"
+        },
         levelText = {
             name = F.GetCompatibleFont("Montserrat"),
             size = 13,

@@ -80,6 +80,7 @@ W.Changelog[232] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[额外物品条] 修复了一个可能出现的配置读取错误.",
             "[鼠标提示] 大幅优化了性能.",
             "[鼠标提示] 移除了史诗地下城次数显示.",
             "[装备观察] 新增多种附魔显示, 优化图标显示逻辑.",
@@ -89,6 +90,7 @@ W.Changelog[232] = {
             "[美化皮肤] 优化了试衣间皮肤."
         },
         ["zhTW"] = {
+            "[額外物品欄] 修復了一個可能出現的設置讀取錯誤.",
             "[浮動提示] 大幅優化了性能.",
             "[浮動提示] 移除了傳奇地城次數顯示.",
             "[裝備觀察] 新增多種附魔顯示, 優化圖示顯示逻輯.",
@@ -98,6 +100,7 @@ W.Changelog[232] = {
             "[美化皮膚] 優化了試衣間皮膚."
         },
         ["enUS"] = {
+            "[Extra Item Bar] Fixed a possible config loading error.",
             "[Tooltips] Optimized performance.",
             "[Tooltips] Removed mythic dungeon times.",
             "[Inspect] Added more enchants support, optimized icon display logic.",
@@ -107,6 +110,7 @@ W.Changelog[232] = {
             "[Skins] Optimized Dressing Room skin."
         },
         ["koKR"] = {
+            "[Extra Item Bar] Fixed a possible config loading error.",
             "[툴팁] 최적화를 통해 성능이 크게 향상되었습니다.",
             "[툴팁] 신화 던전 시간 삭제.",
             "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",

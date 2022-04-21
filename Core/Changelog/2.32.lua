@@ -4,16 +4,20 @@ W.Changelog[232] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "[移动框体] 提升了移动功能的稳定性."
+            "[移动框体] 提升了移动功能的稳定性.",
+            "[团队标记] 由于暴雪调整了 API 速率限制, 移除全部标记现在需要 3 秒."
         },
         ["zhTW"] = {
-            "[移動框架] 提升了移動功能的穩定性."
+            "[移動框架] 提升了移動功能的穩定性.",
+            "[團隊標記] 由於暴雪調整了 API 速率限制, 移除全部標記現在需要 3 秒."
         },
         ["enUS"] = {
-            "[Move Frames] Improve the stability of the moving function."
+            "[Move Frames] Improve the stability of the moving function.",
+            "[Raid Marker] According to the change of Blizzard API limit rate, removing all raid markers now requires 3 seconds."
         },
         ["koKR"] = {
-            "[프레임 이동] 창 이동시 안전성을 향상 시켰습니다."
+            "[프레임 이동] 창 이동시 안전성을 향상 시켰습니다.",
+            "[Raid Marker] According to the change of Blizzard API limit rate, removing all raid markers now requires 3 seconds."
         }
     },
     NEW = {

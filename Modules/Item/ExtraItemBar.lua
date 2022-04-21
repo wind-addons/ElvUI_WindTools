@@ -874,7 +874,11 @@ function EB:CreateBar(id)
     bar:SetScript(
         "OnEnter",
         function(self)
-            if barDB.mouseOver then
+            if not barDB then
+                return
+            end
+
+            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeIn(
                     bar,
@@ -889,7 +893,11 @@ function EB:CreateBar(id)
     bar:SetScript(
         "OnLeave",
         function(self)
-            if barDB.mouseOver then
+            if not barDB then
+                return
+            end
+
+            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeOut(
                     bar,

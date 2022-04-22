@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[232] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/04/22",
     IMPORTANT = {
         ["zhCN"] = {
             "[移动框体] 提升了移动功能的稳定性.",
@@ -121,8 +121,8 @@ W.Changelog[232] = {
             "[툴팁] 최적화를 통해 성능이 크게 향상되었습니다.",
             "[툴팁] 신화 던전 시간 삭제.",
             "[살펴보기] 더 많은 마법부여 지원, 최적화된 아이콘 표시 로직을 추가했습니다.",
-            "[Objective Tracker] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
-            "[Objective Tracker] Fixed the problem that the outline of header text cannot be customized.",
+            "[퀘스트 추적기] 표시 해제가 비활성화된 경우 표시 및 완료 아이콘이 겹치는 문제가 수정되었습니다.",
+            "[퀘스트 추적기] 헤더 텍스트의 외곽선을 커스터마이징할 수 없는 현상이 수정되었습니다.",
             "[친구 목록] 이제 다른 계정 지역에 대한 정보를 표시할 수 있습니다.",
             "[스킨] ElvUI 액션바 스킨을 최적화했습니다.",
             "[스킨] 의상실 스킨을 최적화했습니다."

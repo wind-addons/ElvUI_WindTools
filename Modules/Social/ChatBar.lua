@@ -511,7 +511,7 @@ function CB:CreateBar()
     bar:CreateBackdrop("Transparent")
     bar:ClearAllPoints()
     bar:SetPoint("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)
-    S:CreateShadow(bar)
+    S:CreateBackdropShadow(bar)
 
     self.bar = bar
 

@@ -804,6 +804,11 @@ options.elvui = {
             type = "toggle",
             name = L["Chat Panels"]
         },
+        chatVoicePanel = {
+            order = 10,
+            type = "toggle",
+            name = L["Chat Voice Panel"]
+        },
         classBars = {
             order = 10,
             type = "toggle",

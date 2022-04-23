@@ -104,6 +104,7 @@ function RM:SetUpdateHook()
         self.Initialized = true
     end
     self:ChangeShape()
+    E:Delay(1, self.ChangeShape, self)
 end
 
 function RM:PLAYER_ENTERING_WORLD()

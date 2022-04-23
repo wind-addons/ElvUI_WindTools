@@ -231,6 +231,7 @@ L["Chat Data Panels"] = true
 L["Chat Link"] = "채팅 링크"
 L["Chat Panels"] = "채팅 패널"
 L["Chat Text"] = "채팅 문자"
+L["Chat Voice Panel"] = true
 L["China"] = true
 L["Choose the module you would like to |cff00ff00use|r."] = "|cff00ff00사용|r할 모듈을 선택하십시오."
 L["Chromie Time"] = "크로미의 시간"
@@ -932,6 +933,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "이 모듈은 지도를 표시하고 크기를 조정합니다."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "이 모듈은 귓속말을 기록합니다.\n최근 대상 목록을 만들기 위해 만료 시간을 설정할 수 있습니다."
 L["Threat Transfer"] = "위협 이전"
+L["Ticket Status"] = true
 L["Tier Set"] = "티어 셋트"
 L["Time"] = "시간"
 L["Time Area Height"] = "시간 영역 높이"

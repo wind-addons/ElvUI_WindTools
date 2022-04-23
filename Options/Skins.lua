@@ -653,6 +653,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Taxi"]
         },
+        ticketStatus = {
+            order = 10,
+            type = "toggle",
+            name = L["Ticket Status"]
+        },
         timeManager = {
             order = 10,
             type = "toggle",

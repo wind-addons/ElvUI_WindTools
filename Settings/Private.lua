@@ -252,6 +252,7 @@ V.skins = {
 		talent = true,
 		talkingHead = true,
 		taxi = true,
+		ticketStatus = true,
 		timeManager = true,
 		tooltips = true,
 		trade = true,

@@ -231,6 +231,7 @@ L["Chat Data Panels"] = "Панели инфо-текстов чата"
 L["Chat Link"] = "Ссылки чата"
 L["Chat Panels"] = "Панели чата"
 L["Chat Text"] = "Текст чата"
+L["Chat Voice Panel"] = true
 L["China"] = true
 L["Choose the module you would like to |cff00ff00use|r."] = "Выберите модуль, который хотите использовать |cff00ff00use|r."
 L["Chromie Time"] = "Путишествия во времени"
@@ -932,6 +933,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "Этот модуль поможет вам открывать карты и изменять их размер."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "Этот модуль будет записывать шепоты для переключения. \n Вы можете установить время истечения для получения краткого списка последних целей."
 L["Threat Transfer"] = "Перенаправление угрозы"
+L["Ticket Status"] = true
 L["Tier Set"] = true
 L["Time"] = "Время"
 L["Time Area Height"] = "Высота панели часов"

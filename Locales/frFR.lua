@@ -231,6 +231,7 @@ L["Chat Data Panels"] = "Fenêtre de Données de discussion"
 L["Chat Link"] = "Lien de discussion"
 L["Chat Panels"] = "Panneaux de discussion"
 L["Chat Text"] = "Texte de discussion"
+L["Chat Voice Panel"] = true
 L["China"] = true
 L["Choose the module you would like to |cff00ff00use|r."] = "Choisissez le module que vous souhaitez |cff00ff00utiliser|r."
 L["Chromie Time"] = "Chromie Time"
@@ -932,6 +933,7 @@ L["This module will display a alert frame when entering and leaving combat.\nYou
 L["This module will help you to reveal and resize maps."] = "Ce module embellira et redimensionnera les cartes."
 L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = true
 L["Threat Transfer"] = "Transfert de menace"
+L["Ticket Status"] = true
 L["Tier Set"] = true
 L["Time"] = "Heure"
 L["Time Area Height"] = "Hauteur de la zone où se trouve l'heure"

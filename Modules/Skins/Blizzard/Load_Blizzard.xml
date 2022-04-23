@@ -63,6 +63,7 @@
 	<Script file='Talent.lua'/>
 	<Script file='TalkingHead.lua'/>
 	<Script file='Taxi.lua'/>
+	<Script file='TicketStatus.lua'/>
 	<Script file='TimeManager.lua'/>
 	<Script file='Tooltips.lua'/>
 	<Script file='Trade.lua'/>

@@ -10,7 +10,6 @@ local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
 local function HandleActionButton(button, useBackdrop)
     if not button.windStyle then
-        button:SetTemplate("Transparent")
         S:CreateShadow(button)
     end
 

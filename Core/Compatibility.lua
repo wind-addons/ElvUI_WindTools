@@ -456,7 +456,7 @@ function W:CheckCompatibility()
         L["Minimap Buttons"],
         L["Minimap Button Bar"],
         "private.WT.maps.minimapButtons.enable",
-        "db.eel.minimapbar.enable"
+        "db.eel.minimap.minimapbar.enable"
     )
 
     if self.CompatibilityFrame.numModules > 0 then

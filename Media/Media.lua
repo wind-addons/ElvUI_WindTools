@@ -212,8 +212,11 @@ do
 		LSM:Register("font", "Accidental Presidency (en)", MediaPath .. "Fonts/AccidentalPresidency.ttf", region)
 		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
-		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Media/Fonts/Homespun.ttf", region)
-		LSM:Register("font", "ContinuumMedium (en)", "Interface/Addons/ElvUI/Media/Fonts/ContinuumMedium.ttf", region)
+		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Homespun.ttf", region)
+		LSM:Register("font", "ContinuumMedium (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/ContinuumMedium.ttf", region)
+		LSM:Register("font", "Action Man (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/ActionMan.ttf", region)
+		LSM:Register("font", "Die Die Die (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/DieDieDie.ttf", region)
+		LSM:Register("font", "Expressway (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Expressway.ttf", region)
 		W.CompatibleFont = true
 	else
 		LSM:Register("font", "Accidental Presidency", MediaPath .. "Fonts/AccidentalPresidency.ttf", LSM.LOCALE_BIT_western)

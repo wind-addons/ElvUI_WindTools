@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0")
 local S = W:GetModule("Skins")
-local MM = E:GetModule("Minimap")
+local EM = E:GetModule("Minimap")
 
 local _G = _G
 local ceil = ceil
@@ -73,17 +73,57 @@ local acceptedFrames = {
 
 local moveButtons = {}
 
-function MB:ResetGarrisonSize()
-	if InCombatLockdown() then
-		return
-	end
+do
+	local modified = false
+	function MB:UpdateGarrisonMinimapIcon(icon)
+		icon = icon or _G.GarrisonLandingPageMinimapButton
 
-	_G.GarrisonLandingPageMinimapButton:SetSize(self.db.buttonSize, self.db.buttonSize)
+		if not icon then
+			return
+		end
+		icon:SetScale(E.uiscale)
+
+		local box = _G.GarrisonLandingPageTutorialBox
+		if box then
+			box:SetScale(E.uiscale)
+			box:SetClampedToScreen(true)
+		end
+
+		if not modified then
+			icon.AlertText:Hide()
+			icon.AlertText:SetAlpha(0)
+			icon.AlertText.Show = E.noop
+			icon.AlertText.Hide = E.noop
+
+			icon.AlertBG:SetAlpha(0)
+			icon.AlertBG:Hide()
+			icon.AlertBG.Show = E.noop
+			icon.AlertBG.Hide = E.noop
+
+			icon.AlertText.SetText = function(_, text)
+				if text then
+					print("|cff198ee1" .. (icon.title or L["Garrison"]) .. "|r: " .. text)
+				end
+			end
+
+			modified = true
+		end
+
+		self:UpdateLayout()
+	end
 end
 
-function MB:UpdateGarrisonMinimapIcon()
-	self:ResetGarrisonSize()
-	self:UpdateLayout()
+do
+	local originalFunction = EM.HandleGarrisonButton
+	function EM:HandleGarrisonButton()
+		local icon = _G.GarrisonLandingPageMinimapButton
+
+		if not icon or not icon.isWindMinimapButton or InCombatLockdown() then
+			return originalFunction(self)
+		else
+			return MB:UpdateGarrisonMinimapIcon(icon)
+		end
+	end
 end
 
 function MB:SetButtonMouseOver(button, frame, rawhook)
@@ -206,15 +246,10 @@ function MB:SkinButton(frame)
 	end
 
 	if name == "GarrisonLandingPageMinimapButton" and self.db.garrison then
-		frame:SetScale(1)
-		if not frame.isRegister then
-			MB:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ResetGarrisonSize")
-			MB:RegisterEvent("ZONE_CHANGED", "ResetGarrisonSize")
-			MB:RegisterEvent("ZONE_CHANGED_INDOORS", "ResetGarrisonSize")
-			MB:RegisterEvent("GARRISON_SHOW_LANDING_PAGE", "ResetGarrisonSize")
-			MB:SecureHook("GarrisonLandingPageMinimapButton_UpdateIcon", "UpdateGarrisonMinimapIcon")
+		if not frame.isWindMinimapButton then
+			frame.isWindMinimapButton = true
+			self:UpdateGarrisonMinimapIcon(_G.GarrisonLandingPageMinimapButton)
 		end
-		frame.isRegister = true
 	end
 
 	if name == "GRM_MinimapButton" then
@@ -412,7 +447,6 @@ function MB:UpdateLayout()
 			frame:SetFrameStrata("LOW")
 			frame:SetFrameLevel(20)
 			frame:SetSize(buttonSize, buttonSize)
-
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
@@ -569,11 +603,11 @@ function MB:CreateFrames()
 end
 
 function MB:SetUpdateHook()
-	if not self.Initialized then
-		self:SecureHook(MM, "SetGetMinimapShape", "UpdateLayout")
-		self:SecureHook(MM, "UpdateSettings", "UpdateLayout")
+	if not self.initialized then
+		self:SecureHook(EM, "SetGetMinimapShape", "UpdateLayout")
+		self:SecureHook(EM, "UpdateSettings", "UpdateLayout")
 		self:SecureHook(E, "UpdateAll", "UpdateLayout")
-		self.Initialized = true
+		self.initialized = true
 	end
 end
 

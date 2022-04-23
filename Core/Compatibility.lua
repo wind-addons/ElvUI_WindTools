@@ -32,9 +32,14 @@ function W:ConstructCompatibilityFrame()
         end
     )
 
+    frame:SetFrameStrata("TOOLTIP")
+    -- frame.backdrop:SetFrameStrata("TOOLTIP")
+    frame:SetFrameLevel(10000)
+
     MF:HandleFrame(frame)
 
-    local close = CreateFrame("Button", "WTCompatibilityFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
+    local close =
+        CreateFrame("Button", "WTCompatibilityFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")
     close:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
     ES:HandleCloseButton(close)
     close:SetScript(
@@ -47,7 +52,7 @@ function W:ConstructCompatibilityFrame()
     local title = frame:CreateFontString(nil, "ARTWORK")
     title:FontTemplate()
     F.SetFontOutline(title, nil, "2")
-    title:SetText(L["WindTools"] .. " - " .. L["Compatibility Check"])
+    title:SetText(L["WindTools"] .. " " .. L["Compatibility Check"])
     title:Point("TOP", frame, "TOP", 0, -10)
 
     local desc = frame:CreateFontString(nil, "ARTWORK")
@@ -56,16 +61,20 @@ function W:ConstructCompatibilityFrame()
     desc:Width(420)
     F.SetFontOutline(desc, nil, "-1")
     desc:SetText(
-        format(
-            "%s\n%s\n%s",
-            L[
-                "There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."
-            ],
-            L["Choose the module you would like to |cff00ff00use|r."],
-            format(L["Have a good time with %s!"], L["WindTools"])
-        )
+        L[
+            "There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."
+        ] ..
+            " " .. format(L["Have a good time with %s!"], L["WindTools"])
     )
     desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
+
+    local largeTip = frame:CreateFontString(nil, "ARTWORK")
+    largeTip:FontTemplate()
+    largeTip:SetJustifyH("CENTER")
+    largeTip:Width(500)
+    F.SetFontOutline(largeTip, nil, "7")
+    largeTip:SetText("|cff198ee1[|r " .. L["Choose the module you would like to |cff00ff00use|r."] .. " |cff198ee1]|r")
+    largeTip:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
 
     local tex = frame:CreateTexture("WTCompatibilityFrameIllustration", "ARTWORK")
     tex:Size(64)
@@ -79,7 +88,11 @@ function W:ConstructCompatibilityFrame()
     F.SetFontOutline(bottomDesc, nil, "-1")
     bottomDesc:SetText(
         E.NewSign ..
-            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"]).."\n".. L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."]
+            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"]) ..
+                "\n" ..
+                    L[
+                        "You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."
+                    ]
     )
     --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
@@ -103,7 +116,7 @@ function W:ConstructCompatibilityFrame()
     local scrollFrameParent =
         CreateFrame("ScrollFrame", "WTCompatibilityFrameScrollFrameParent", frame, "UIPanelScrollFrameTemplate")
     scrollFrameParent:CreateBackdrop("Transparent")
-    scrollFrameParent:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
+    scrollFrameParent:Point("TOPLEFT", largeTip, "BOTTOMLEFT", 0, -10)
     scrollFrameParent:Point("RIGHT", frame, "RIGHT", -32, 0)
     scrollFrameParent:Point("BOTTOM", completeButton, "TOP", 0, 10)
     ES:HandleScrollBar(scrollFrameParent.ScrollBar)
@@ -117,8 +130,8 @@ function W:ConstructCompatibilityFrame()
     W.CompatibilityFrame = frame
 end
 
-function W:AddButtonToCompatibilityFrame(data)
-    local frame = self.CompatibilityFrame
+local function AddButtonToCompatibilityFrame(data)
+    local frame = W.CompatibilityFrame
     frame.numModules = frame.numModules + 1
 
     local leftButton =
@@ -184,325 +197,175 @@ function W:AddButtonToCompatibilityFrame(data)
     )
 end
 
-function W:CheckCompatibilityMerathilisUI(WTModuleName, MUIModuleName, WTDB, MUIDB)
-    if not IsAddOnLoaded("ElvUI_MerathilisUI") then
-        return
-    end
+local function GetDatabaseRealValue(path)
+    local accessTable, accessKey, accessValue = nil, nil, E
 
-    if not (WTDB and MUIDB and type(WTDB) == "string" and type(MUIDB) == "string") then
-        return
-    end
-
-    local realWTDB = E
-    local lastWTTable, lastWTKey
-    for _, key in ipairs {strsplit(".", WTDB)} do
+    for _, key in ipairs {strsplit(".", path)} do
         if key and strlen(key) > 0 then
-            if realWTDB[key] ~= nil then
-                if type(realWTDB[key]) == "boolean" then
-                    lastWTTable = realWTDB
-                    lastWTKey = key
+            if accessValue[key] ~= nil then
+                if type(accessValue[key]) == "boolean" then
+                    accessTable = accessValue
+                    accessKey = key
                 end
-                realWTDB = realWTDB[key]
+                accessValue = accessValue[key]
             else
-                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
+                F.DebugMessage("Compatibility", "DB Path Error: " .. path)
                 return
             end
         end
     end
 
-    local realMUIDB = E
-    local lastMUITable, lastMUIKey
-    for _, key in ipairs {strsplit(".", MUIDB)} do
-        if key and strlen(key) > 0 then
-            if realMUIDB[key] ~= nil then
-                if type(realMUIDB[key]) == "boolean" then
-                    lastMUITable = realMUIDB
-                    lastMUIKey = key
-                end
-                realMUIDB = realMUIDB[key]
-            else
-                F.DebugMessage("Compatibility", "DB Error: " .. MUIDB)
-                return
-            end
-        end
-    end
+    return accessTable, accessKey, accessValue
+end
 
-    if realMUIDB == true and realWTDB == true then
-        self:AddButtonToCompatibilityFrame(
-            {
-                module1 = WTModuleName,
-                plugin1 = L["WindTools"],
-                func1 = function()
-                    lastMUITable[lastMUIKey] = false
-                    lastWTTable[lastWTKey] = true
-                end,
-                module2 = MUIModuleName,
-                plugin2 = L["MerathilisUI"],
-                func2 = function()
-                    lastMUITable[lastMUIKey] = true
-                    lastWTTable[lastWTKey] = false
-                end
-            }
-        )
+local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales)
+    return function(myModuleName, targetAddonModuleName, myDB, targetAddonDB)
+        if not IsAddOnLoaded(targetAddonName) then
+            return
+        end
+
+        if not (myDB and targetAddonDB and type(myDB) == "string" and type(targetAddonDB) == "string") then
+            return
+        end
+
+        local myTable, myKey, myValue = GetDatabaseRealValue(myDB)
+        local targetTable, targetKey, targetValue = GetDatabaseRealValue(targetAddonDB)
+
+        if myValue == true and targetValue == true then
+            AddButtonToCompatibilityFrame(
+                {
+                    module1 = myModuleName,
+                    plugin1 = L["WindTools"],
+                    func1 = function()
+                        myTable[myKey] = true
+                        targetTable[targetKey] = false
+                    end,
+                    module2 = targetAddonModuleName,
+                    plugin2 = targetAddonLocales,
+                    func2 = function()
+                        myTable[myKey] = false
+                        targetTable[targetKey] = true
+                    end
+                }
+            )
+        end
     end
 end
 
-function W:CheckCompatibilityShadowAndLight(WTModuleName, SLModuleName, WTDB, SLDB)
-    if not IsAddOnLoaded("ElvUI_SLE") then
-        return
-    end
-
-    if not (WTDB and SLDB and type(WTDB) == "string" and type(SLDB) == "string") then
-        return
-    end
-
-    local realWTDB = E
-    local lastWTTable, lastWTKey
-    for _, key in ipairs {strsplit(".", WTDB)} do
-        if key and strlen(key) > 0 then
-            if realWTDB[key] ~= nil then
-                if type(realWTDB[key]) == "boolean" then
-                    lastWTTable = realWTDB
-                    lastWTKey = key
-                end
-                realWTDB = realWTDB[key]
-            else
-                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
-                return
-            end
-        end
-    end
-
-    local realSLDB = E
-    local lastSLTable, lastSLKey
-    for _, key in ipairs {strsplit(".", SLDB)} do
-        if key and strlen(key) > 0 then
-            if realSLDB[key] ~= nil then
-                if type(realSLDB[key]) == "boolean" then
-                    lastSLTable = realSLDB
-                    lastSLKey = key
-                end
-                realSLDB = realSLDB[key]
-            else
-                F.DebugMessage("Compatibility", "DB Error: " .. SLDB)
-                return
-            end
-        end
-    end
-
-    if realSLDB == true and realWTDB == true then
-        self:AddButtonToCompatibilityFrame(
-            {
-                module1 = WTModuleName,
-                plugin1 = L["WindTools"],
-                func1 = function()
-                    lastSLTable[lastSLKey] = false
-                    lastWTTable[lastWTKey] = true
-                end,
-                module2 = SLModuleName,
-                plugin2 = L["Shadow & Light"],
-                func2 = function()
-                    lastSLTable[lastSLKey] = true
-                    lastWTTable[lastWTKey] = false
-                end
-            }
-        )
-    end
-end
-
-function W:CheckCompatibilitymMediaTag(WTModuleName, MTModuleName, WTDB, MTDB)
-    if not IsAddOnLoaded("ElvUI_mMediaTag") then
-        return
-    end
-
-    if not (WTDB and MTDB and type(WTDB) == "string" and type(MTDB) == "string") then
-        return
-    end
-
-    local realWTDB = E
-    local lastWTTable, lastWTKey
-    for _, key in ipairs {strsplit(".", WTDB)} do
-        if key and strlen(key) > 0 then
-            if realWTDB[key] ~= nil then
-                if type(realWTDB[key]) == "boolean" then
-                    lastWTTable = realWTDB
-                    lastWTKey = key
-                end
-                realWTDB = realWTDB[key]
-            else
-                F.DebugMessage("Compatibility", "DB Error: " .. WTDB)
-                return
-            end
-        end
-    end
-
-    local realMTDB = E
-    local lastMTTable, lastMTKey
-    for _, key in ipairs {strsplit(".", MTDB)} do
-        if key and strlen(key) > 0 then
-            if realMTDB[key] ~= nil then
-                if type(realMTDB[key]) == "boolean" then
-                    lastMTTable = realMTDB
-                    lastMTKey = key
-                end
-                realMTDB = realMTDB[key]
-            else
-                F.DebugMessage("Compatibility", "DB Error: " .. MTDB)
-                return
-            end
-        end
-    end
-
-    if realMTDB == true and realWTDB == true then
-        self:AddButtonToCompatibilityFrame(
-            {
-                module1 = WTModuleName,
-                plugin1 = L["WindTools"],
-                func1 = function()
-                    lastMTTable[lastMTKey] = false
-                    lastWTTable[lastWTKey] = true
-                end,
-                module2 = MTModuleName,
-                plugin2 = L["mMediaTag"],
-                func2 = function()
-                    lastMTTable[lastMTKey] = true
-                    lastWTTable[lastWTKey] = false
-                end
-            }
-        )
-    end
-end
+local CheckMerathilisUI = GetCheckCompatibilityFunction("ElvUI_MerathilisUI", L["MerathilisUI"])
+local CheckShadowAndLight = GetCheckCompatibilityFunction("ElvUI_SLE", L["Shadow & Light"])
+local CheckmMediaTag = GetCheckCompatibilityFunction("ElvUI_mMediaTag", L["mMediaTag"])
 
 function W:CheckCompatibility()
     if not E.private.WT.core.compatibilityCheck then
         return
     end
-    
+
     self:ConstructCompatibilityFrame()
 
     -- Merathilis UI
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Extra Items Bar"],
         L["AutoButtons"],
         "db.WT.item.extraItemsBar.enable",
         "db.mui.autoButtons.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
-        L["Game Bar"],
-        L["Micro Bar"],
-        "db.WT.misc.gameBar.enable",
-        "db.mui.microBar.enable"
-    )
+    CheckMerathilisUI(L["Game Bar"], L["Micro Bar"], "db.WT.misc.gameBar.enable", "db.mui.microBar.enable")
 
-    self:CheckCompatibilityMerathilisUI(L["Contacts"], L["Mail"], "db.WT.item.contacts.enable", "db.mui.mail.enable")
+    CheckMerathilisUI(L["Contacts"], L["Mail"], "db.WT.item.contacts.enable", "db.mui.mail.enable")
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         format("%s-%s", L["Tooltip"], L["Add Icon"]),
         format("%s-%s", L["Tooltip"], L["Tooltip Icons"]),
         "private.WT.tooltips.icon",
         "db.mui.tooltip.tooltipIcon"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         format("%s-%s", L["Tooltip"], L["Domination Rank"]),
         format("%s-%s", L["Tooltip"], L["Domination Rank"]),
         "private.WT.tooltips.dominationRank",
         "db.mui.tooltip.dominationRank"
     )
 
-    self:CheckCompatibilityMerathilisUI(
-        L["Group Info"],
-        L["LFG Info"],
-        "db.WT.tooltips.groupInfo.enable",
-        "db.mui.misc.lfgInfo.enable"
-    )
+    CheckMerathilisUI(L["Group Info"], L["LFG Info"], "db.WT.tooltips.groupInfo.enable", "db.mui.misc.lfgInfo.enable")
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Paragon Reputation"],
         L["Paragon Reputation"],
         "db.WT.quest.paragonReputation.enable",
         "db.mui.misc.paragon.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Role Icon"],
         L["Role Icon"],
         "private.WT.unitFrames.roleIcon.enable",
         "db.mui.unitframes.roleIcons"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Combat Alert"],
         L["Combat Alert"],
         "db.WT.combat.combatAlert.enable",
         "db.mui.CombatAlert.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Who Clicked Minimap"],
         L["Minimap Ping"],
         "db.WT.maps.whoClicked.enable",
         "db.mui.maps.minimap.ping.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Minimap Buttons"],
         L["Minimap Buttons"],
         "private.WT.maps.minimapButtons.enable",
         "db.mui.smb.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Rectangle Minimap"],
         L["Rectangle Minimap"],
         "db.WT.maps.rectangleMinimap.enable",
         "db.mui.maps.minimap.rectangleMinimap.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
-        L["Chat Bar"],
-        L["Chat Bar"],
-        "db.WT.social.chatBar.enable",
-        "db.mui.chat.chatBar.enable"
-    )
+    CheckMerathilisUI(L["Chat Bar"], L["Chat Bar"], "db.WT.social.chatBar.enable", "db.mui.chat.chatBar.enable")
 
-    self:CheckCompatibilityMerathilisUI(
-        L["Chat Link"],
-        L["Chat Link"],
-        "db.WT.social.chatLink.enable",
-        "db.mui.chat.chatLink.enable"
-    )
+    CheckMerathilisUI(L["Chat Link"], L["Chat Link"], "db.WT.social.chatLink.enable", "db.mui.chat.chatLink.enable")
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Raid Markers"],
         L["Raid Markers"],
         "db.WT.combat.raidMarkers.enable",
         "db.mui.raidmarkers.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         format("%s-%s", L["Chat Text"], L["Remove Brackets"]),
         L["Hide Player Brackets"],
         "db.WT.social.chatText.removeBrackets",
         "db.mui.chat.hidePlayerBrackets"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         format("%s-%s", L["Talent Manager"], L["Item Buttons"]),
         L["Codex Buttons"],
         "private.WT.combat.talentManager.itemButtons",
         "db.mui.misc.respec"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Super Tracker"],
         L["Super Tracker"],
         "private.WT.maps.superTracker.enable",
         "db.mui.maps.superTracker.enable"
     )
 
-    self:CheckCompatibilityMerathilisUI(
+    CheckMerathilisUI(
         L["Instance Difficulty"],
         L["Raid Difficulty"],
         "private.WT.maps.instanceDifficulty.enable",
@@ -510,49 +373,49 @@ function W:CheckCompatibility()
     )
 
     -- S&L
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         L["Move Frames"],
         L["Move Blizzard frames"],
         "private.WT.misc.moveBlizzardFrames",
         "private.sle.module.blizzmove.enable"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         format("%s-%s", L["Skins"], L["Shadow"]),
         L["Enhanced Shadow"],
         "private.WT.skins.shadow",
         "private.sle.module.shadows.enable"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         format("%s-%s", L["Tooltip"], L["Progression"]),
         format("%s-%s", L["Tooltip"], L["Raid Progression"]),
         "private.WT.tooltips.progression.enable",
         "db.sle.tooltip.RaidProg.enable"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         L["Rectangle Minimap"],
         L["Rectangle Minimap"],
         "db.WT.maps.rectangleMinimap.enable",
         "private.sle.minimap.rectangle"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         L["Raid Markers"],
         L["Raid Markers"],
         "db.WT.combat.raidMarkers.enable",
         "db.sle.raidmarkers.enable"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         format("%s-%s", L["Skins"], L["Scenario"]),
         format("%s-%s", L["Skins"], _G.OBJECTIVES_TRACKER_LABEL),
         "private.WT.skins.blizzard.scenario",
         "private.sle.skins.objectiveTracker.enable"
     )
 
-    self:CheckCompatibilityShadowAndLight(
+    CheckShadowAndLight(
         format("%s-%s", L["Item"], L["Fast Loot"]),
         L["Loot"],
         "db.WT.item.fastLoot.enable",
@@ -560,14 +423,14 @@ function W:CheckCompatibility()
     )
 
     -- mMediaTag
-    self:CheckCompatibilitymMediaTag(
+    CheckmMediaTag(
         format("%s-%s", L["Tooltips"], L["Icon"]),
         L["Tooltip Icons"],
         "private.WT.tooltips.icon",
         "db.mMediaTag.mTIcon"
     )
 
-    self:CheckCompatibilitymMediaTag(
+    CheckmMediaTag(
         L["Objective Tracker"],
         L["ObjectiveTracker Skin"],
         "private.WT.quest.objectiveTracker.enable",

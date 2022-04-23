@@ -267,7 +267,7 @@ function MB:SkinButton(frame)
 					end
 				end
 
-				if t and type(t) ~= "number" and (t:find("Border") or t:find("Background") or t:find("AlphaMask")) then
+				if t and type(t) ~= "number" and (strfind(t, "Border") or strfind(t, "Background") or strfind(t, "AlphaMask")) then
 					region:SetTexture(nil)
 				else
 					if name == "BagSync_MinimapButton" then
@@ -277,16 +277,13 @@ function MB:SkinButton(frame)
 					if name ~= "Narci_MinimapButton" then
 						region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 					end
+
 					region:ClearAllPoints()
 					region:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -2)
 					region:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
 
 					region:SetDrawLayer("ARTWORK")
 					if (name == "GameTimeFrame") then
-						if t == [[Interface\Calendar\UI-Calendar-Button]] then
-							region:SetAlpha(0)
-						end
-
 						if not frame.windTex then
 							local tex = frame:CreateTexture()
 							tex:SetTexture(W.Media.Icons.calendar)
@@ -306,6 +303,11 @@ function MB:SkinButton(frame)
 							region:SetTexCoord(0.0, 0.390625, 0.0, 0.78125)
 						else
 							region:SetTexCoord(0.0, 0.390625, 0.0, 0.78125)
+							if not frame.windTex or frame.windTex ~= region then
+								if not frame.backdrop or frame.backdrop ~= region then
+									region:SetTexture(nil)
+								end
+							end
 						end
 					end
 

@@ -255,6 +255,7 @@ end
 local CheckMerathilisUI = GetCheckCompatibilityFunction("ElvUI_MerathilisUI", L["MerathilisUI"])
 local CheckShadowAndLight = GetCheckCompatibilityFunction("ElvUI_SLE", L["Shadow & Light"])
 local CheckmMediaTag = GetCheckCompatibilityFunction("ElvUI_mMediaTag", L["mMediaTag"])
+local CheckElvUIEnhanced = GetCheckCompatibilityFunction("ElvUI_Enhanced", L["ElvUI Enhanced Again"])
 
 function W:CheckCompatibility()
     if not E.private.WT.core.compatibilityCheck then
@@ -435,6 +436,28 @@ function W:CheckCompatibility()
         L["ObjectiveTracker Skin"],
         "private.WT.quest.objectiveTracker.enable",
         "db.mMediaTag.mObjectiveTracker.enable"
+    )
+
+    -- Enhanced Again
+    CheckElvUIEnhanced(
+        L["Raid Markers"],
+        L["Raid Markers"],
+        "db.WT.combat.raidMarkers.enable",
+        "db.eel.raidmarkers.enable"
+    )
+
+    CheckElvUIEnhanced(
+        format("%s-%s", L["Tooltip"], L["Progression"]),
+        format("%s-%s", L["Tooltip"], L["Progression"]),
+        "private.WT.tooltips.progression.enable",
+        "db.eel.progression.enable"
+    )
+
+    CheckElvUIEnhanced(
+        L["Minimap Buttons"],
+        L["Minimap Button Bar"],
+        "private.WT.maps.minimapButtons.enable",
+        "db.eel.minimapbar.enable"
     )
 
     if self.CompatibilityFrame.numModules > 0 then

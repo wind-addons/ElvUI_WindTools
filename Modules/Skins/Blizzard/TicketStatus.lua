@@ -8,7 +8,7 @@ function S:Blizzard_TicketStatus()
         return
     end
 
-    self:CreateShadow(_G.TicketStatusFrame)
+    self:CreateShadow(_G.TicketStatusFrameButton)
 end
 
 S:AddCallback("Blizzard_TicketStatus")

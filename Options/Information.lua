@@ -782,30 +782,30 @@ options.reset = {
     type = "group",
     name = L["Reset"],
     args = {
-        import = {
-            order = 0,
-            type = "group",
-            inline = true,
-            name = L["Import Profile"],
-            args = {
-                Fang2houUI = {
-                    order = 1,
-                    type = "execute",
-                    name = L["Fang2hou UI"],
-                    desc = format(
-                        "%s\n%s",
-                        format(
-                            L["Override your ElvUI profile with %s profile."],
-                            E.InfoColor .. L["Fang2hou UI"] .. "|r"
-                        ),
-                        E.NewSign .. L["Support 16:9, 21:9 and 32:9!"]
-                    ),
-                    func = function()
-                        E:StaticPopup_Show("WINDTOOLS_IMPORT_SETTING", L["Fang2hou UI"], "Fang2hou", "Fang2houUI")
-                    end
-                }
-            }
-        },
+        -- import = {
+        --     order = 0,
+        --     type = "group",
+        --     inline = true,
+        --     name = L["Import Profile"],
+        --     args = {
+        --         Fang2houUI = {
+        --             order = 1,
+        --             type = "execute",
+        --             name = L["Fang2hou UI"],
+        --             desc = format(
+        --                 "%s\n%s",
+        --                 format(
+        --                     L["Override your ElvUI profile with %s profile."],
+        --                     E.InfoColor .. L["Fang2hou UI"] .. "|r"
+        --                 ),
+        --                 E.NewSign .. L["Support 16:9, 21:9 and 32:9!"]
+        --             ),
+        --             func = function()
+        --                 E:StaticPopup_Show("WINDTOOLS_IMPORT_SETTING", L["Fang2hou UI"], "Fang2hou", "Fang2houUI")
+        --             end
+        --         }
+        --     }
+        -- },
         announcement = {
             order = 1,
             type = "group",

@@ -440,7 +440,8 @@ do -- 插件代码
             "siweia (NDui)",
             "Witnesscm (NDui_Plus)",
             "Tevoll (ElvUI Enhanced Again)",
-            "MMOSimca (Simple Objective Progress)"
+            "MMOSimca (Simple Objective Progress)",
+            "Merathilis (ElvUI MerathilisUI)"
         },
         [L["Turn In"]] = {
             "p3lim (QuickQuest)",
@@ -607,7 +608,7 @@ options.changelog = {
 
 for version, data in pairs(W.Changelog) do
     local versionString = format("%d.%02d", version / 100, mod(version, 100))
-    local dateTable = {strsplit('/', data.RELEASE_DATE)}
+    local dateTable = {strsplit("/", data.RELEASE_DATE)}
     local dateString = data.RELEASE_DATE
     if #dateTable == 3 then
         dateString = L["%month%-%day%-%year%"]
@@ -615,7 +616,6 @@ for version, data in pairs(W.Changelog) do
         dateString = gsub(dateString, "%%month%%", dateTable[2])
         dateString = gsub(dateString, "%%day%%", dateTable[3])
     end
-
 
     options.changelog.args[tostring(version)] = {
         order = 1000 - version,

@@ -87,6 +87,7 @@
     - Witnesscm (NDui_Plus)
     - Tevoll (ElvUI Enhanced Again)
     - MMOSimca (Simple Objective Progress)
+    - Merathilis (ElvUI MerathilisUI)
 
 - Turn In
     - p3lim (QuickQuest)

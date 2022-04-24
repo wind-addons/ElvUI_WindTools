@@ -104,21 +104,83 @@ function T:QuestUtils_AddQuestCurrencyRewardsToTooltip(_, _, icon)
     self:ReskinRewardIcon(icon)
 end
 
+function T:AddFactionIcon(tt, unit, guid)
+    if UnitIsPlayer(unit) then
+        local faction = UnitFactionGroup(unit)
+        if faction and faction ~= "Neutral" then
+            if not tt.factionFrame then
+                local f = tt:CreateTexture(nil, "OVERLAY")
+                f:SetPoint("TOPRIGHT", 0, -5)
+                f:SetSize(35, 35)
+                f:SetBlendMode("ADD")
+                tt.factionFrame = f
+            end
+            tt.factionFrame:SetTexture("Interface\\FriendsFrame\\PlusManz-" .. faction)
+            tt.factionFrame:SetAlpha(0.5)
+        end
+    end
+end
+
+function T:ClearFactionIcon(tt)
+    if tt.factionFrame and tt.factionFrame:GetAlpha() ~= 0 then
+        tt.factionFrame:SetAlpha(0)
+    end
+end
+
+function T:AddPetIcon(tt, unit, guid)
+    if UnitIsBattlePet(unit) then
+        if not tt.petIcon then
+            local f = tt:CreateTexture(nil, "OVERLAY")
+            f:SetPoint("TOPRIGHT", -5, -5)
+            f:SetSize(35, 35)
+            f:SetBlendMode("ADD")
+            tt.petIcon = f
+        end
+        tt.petIcon:SetTexture("Interface\\PetBattles\\PetIcon-" .. PET_TYPE_SUFFIX[UnitBattlePetType(unit)])
+        tt.petIcon:SetTexCoord(.188, .883, 0, .348)
+        tt.petIcon:SetAlpha(1)
+    end
+end
+
+function T:ClearPetIcon(tt)
+    if tt.petIcon and tt.petIcon:GetAlpha() ~= 0 then
+        tt.petIcon:SetAlpha(0)
+    end
+end
+
+function T:AddPetID(tt, unit, guid)
+    if UnitIsBattlePet(unit) then
+        local speciesID = UnitBattlePetSpeciesID(unit)
+        speciesID = speciesID and F.CreateColorString(speciesID, E.db.general.valuecolor)
+        tt:AddDoubleLine(L["Pet ID"] .. ":", speciesID or ("|cffeeeeee" .. L["Unknown"] .. "|r"))
+    end
+end
+
 function T:Icons()
-    if not E.private.WT.tooltips.icon then
-        return
+    if E.private.WT.tooltips.icon then
+        HookItem(_G.GameTooltip)
+        HookSpell(_G.GameTooltip)
+        HookItem(_G.ItemRefTooltip)
+        HookSpell(_G.ItemRefTooltip)
+
+        self:SecureHook("EmbeddedItemTooltip_SetItemByQuestReward", "ReskinRewardIcon")
+        self:SecureHook("EmbeddedItemTooltip_SetItemByID", "ReskinRewardIcon")
+        self:SecureHook("EmbeddedItemTooltip_SetCurrencyByID", "ReskinRewardIcon")
+        self:SecureHook("QuestUtils_AddQuestCurrencyRewardsToTooltip")
+        self:SecureHook("GameTooltip_AnchorComparisonTooltips", "FixCompareItems")
     end
 
-    HookItem(_G.GameTooltip)
-    HookSpell(_G.GameTooltip)
-    HookItem(_G.ItemRefTooltip)
-    HookSpell(_G.ItemRefTooltip)
+    if E.private.WT.tooltips.factionIcon then
+        self:AddInspectInfoCallback(1, "AddFactionIcon", false, "ClearFactionIcon")
+    end
 
-    T:SecureHook("EmbeddedItemTooltip_SetItemByQuestReward", "ReskinRewardIcon")
-    T:SecureHook("EmbeddedItemTooltip_SetItemByID", "ReskinRewardIcon")
-    T:SecureHook("EmbeddedItemTooltip_SetCurrencyByID", "ReskinRewardIcon")
-    T:SecureHook("QuestUtils_AddQuestCurrencyRewardsToTooltip")
-    T:SecureHook("GameTooltip_AnchorComparisonTooltips", "FixCompareItems")
+    if E.private.WT.tooltips.petIcon then
+        self:AddInspectInfoCallback(2, "AddPetIcon", false, "ClearPetIcon")
+    end
+
+    if E.private.WT.tooltips.petId then
+        self:AddInspectInfoCallback(3, "AddPetID", false)
+    end
 end
 
 T:AddCallback("Icons")

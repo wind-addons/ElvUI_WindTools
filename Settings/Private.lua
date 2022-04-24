@@ -292,6 +292,9 @@ V.skins = {
 
 V.tooltips = {
 	icon = true,
+	factionIcon = true,
+	petIcon = true,
+	petId = true,
 	tierSet = true,
 	covenant = true,
 	dominationRank = true,

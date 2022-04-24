@@ -13,7 +13,7 @@ W.Changelog[233] = {
             "Import all ElvUI latin fonts to clients in asian."
         },
         ["koKR"] = {
-            "Import all ElvUI latin fonts to clients in asian."
+            "아시아 사용자들은 불러오지 못했던 ElvUI의 모든 라틴 글꼴들을 불러옵니다."
         }
     },
     NEW = {
@@ -33,9 +33,9 @@ W.Changelog[233] = {
             "[Skins] Added a skin for the ElvUI chat voice panel."
         },
         ["koKR"] = {
-            "ElvUI Enhanced Again에 대한 호환성 검사를 추가합니다.",
-            "[Skins] Added a skin for the GM ticket status frame.",
-            "[Skins] Added a skin for the ElvUI chat voice panel."
+            "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
+            "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",
+            "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -58,10 +58,10 @@ W.Changelog[233] = {
             "[Skins] Removed the code that making ElvUI action bar background to be transparent."
         },
         ["koKR"] = {
-            "[Rectangle Minimap] Improved stability.",
-            "[Minimap Buttons] Fixed the texture not removed problem within skinned calendar icon.",
-            "[Minimap Buttons] Fixed the position of garrison/covenant buttons.",
-            "[Skins] Removed the code that making ElvUI action bar background to be transparent."
+            "[미니맵 비율 조정] 안정성 향상.",
+            "[미니맵 버튼 통합 바] 달력 버튼의 텍스처를 제거할 수 없는 버그를 수정했습니다.",
+            "[미니맵 버튼 통합 바] 주둔지/성약 버튼이 잘못된 위치에 있던 문제를 수정했습니다.",
+            "[스킨] ElvUI 작업 표시줄 배경을 투명하게 하는 코드를 제거했습니다."
         }
     }
 }

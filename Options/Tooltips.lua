@@ -43,21 +43,39 @@ options.general = {
                     name = L["Add Icon"],
                     desc = L["Show an icon for items and spells."]
                 },
-                dominationRank = {
+                factionIcon = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Faction Icon"],
+                    desc = L["Show a faction icon in the top right of tooltips."]
+                },
+                petIcon = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Pet Icon"],
+                    desc = L["Add an icon for indicating the type of the pet."]
+                },
+                petId = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Pet ID"],
+                    desc = L["Show battle pet species ID in tooltips."]
+                },
+                dominationRank = {
+                    order = 5,
                     type = "toggle",
                     name = L["Domination Rank"],
                     desc = L["Show the rank of shards."]
                 },
                 tierSet = {
-                    order = 3,
+                    order = 6,
                     type = "toggle",
                     name = L["Tier Set"],
                     desc = L["Show the number of tier set equipments."] ..
                         "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
                 },
                 covenant = {
-                    order = 4,
+                    order = 7,
                     type = "toggle",
                     name = L["Covenant"],
                     desc = L["Show covenant information via the communition with third-party addons."] ..

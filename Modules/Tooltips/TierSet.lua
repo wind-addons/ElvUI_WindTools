@@ -165,7 +165,7 @@ function T:InitializeTierSet()
     T:Hook(ET, "INSPECT_READY", ResetCache)
     T:Hook(ET, "PopulateInspectGUIDCache", "ElvUITooltipPopulateInspectGUIDCache")
     T:SecureHook(E.ScanTooltip, "SetInventoryItem", "ElvUIScanTooltipSetInventoryItem")
-    T:AddInspectInfoCallback(1, "TierSet")
+    T:AddInspectInfoCallback(1, "TierSet", true)
 end
 
 T:AddCallback("InitializeTierSet")

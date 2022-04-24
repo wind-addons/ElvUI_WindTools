@@ -17,7 +17,8 @@ local UnitGUID = UnitGUID
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
-T.inspect = {}
+T.modifierInspect = {}
+T.normalInspect = {}
 T.eventCallback = {}
 
 --[[
@@ -46,11 +47,16 @@ local function errorhandler(err)
     return _G.geterrorhandler()(err)
 end
 
-function T:AddInspectInfoCallback(priority, func)
+function T:AddInspectInfoCallback(priority, func, useModifier)
     if type(func) == "string" then
         func = self[func]
     end
-    T.inspect[priority] = func
+
+    if useModifier then
+        T.modifierInspect[priority] = func
+    else
+        T.normalInspect[priority] = func
+    end
 end
 
 function T:InspectInfo(_, tt, triedTimes)
@@ -58,16 +64,22 @@ function T:InspectInfo(_, tt, triedTimes)
         return
     end
 
+    local unit = select(2, tt:GetUnit())
+    local guid = UnitGUID(unit)
+
+    -- Run all registered callbacks (normal)
+    for _, func in next, self.normalInspect do
+        xpcall(func, errorhandler, self, tt, unit, guid)
+    end
+
+    -- Hold Shift to show more inspect information
     if not IsShiftKeyDown() or tt:IsForbidden() then
         return
     end
 
-    local unit = select(2, tt:GetUnit())
-    if not unit or not CanInspect(unit) then
+    if not CanInspect(unit) then
         return
     end
-
-    local guid = UnitGUID(unit)
 
     -- If ElvUI is inspecting, just wait for 4 seconds
     triedTimes = triedTimes or 0
@@ -91,8 +103,8 @@ function T:InspectInfo(_, tt, triedTimes)
         end
     end
 
-    -- Run all registered callbacks
-    for _, func in next, self.inspect do
+    -- Run all registered callbacks (modifier)
+    for _, func in next, self.modifierInspect do
         xpcall(func, errorhandler, self, tt, unit, guid)
     end
 

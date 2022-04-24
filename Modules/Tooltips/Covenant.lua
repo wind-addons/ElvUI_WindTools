@@ -278,7 +278,7 @@ function T:InitializeCovenant()
     self:AddEventCallback("CHAT_MSG_ADDON", HandleAddonMessage)
     self:AddEventCallback("GROUP_ROSTER_UPDATE", HandleRosterUpdate)
     self:AddEventCallback("UNIT_SPELLCAST_SUCCEEDED", HandleSpellCast)
-    self:AddInspectInfoCallback(2, "Covenant")
+    self:AddInspectInfoCallback(2, "Covenant", true)
 end
 
 T:AddCallback("InitializeCovenant")

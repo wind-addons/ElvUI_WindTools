@@ -14,6 +14,7 @@ Code Rules:
     - Public callbacks are callbacks registered by an external addon.
 
 Change Log:
+    - added interrupts to cooldown tracker, new filter: "interrupt"
     - after encounter_end cooldowns now check for cooldowns reset.
     - each module now controls what to do with regen_enabled.
     - filter cooldowns done.
@@ -33,7 +34,7 @@ TODO:
 
 
 local major = "LibOpenRaid-1.0"
-local CONST_LIB_VERSION = 30
+local CONST_LIB_VERSION = 31
 LIB_OPEN_RAID_CAN_LOAD = false
 
 --declae the library within the LibStub
@@ -560,8 +561,7 @@ LIB_OPEN_RAID_CAN_LOAD = false
     openRaidLib.eventFunctions = eventFunctions
 
     eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-    eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "pet")
+    eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player", "pet")
     eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
     eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
     eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")

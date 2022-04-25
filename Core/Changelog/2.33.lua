@@ -4,22 +4,22 @@ W.Changelog[233] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "更新 LibOpenRaid 到版本 30.",
+            "更新 LibOpenRaid 到版本 31.",
             "为亚洲语系客户端引入全部的 ElvUI 拉丁字体.",
             "[快速焦点] 现在默认为不开启."
         },
         ["zhTW"] = {
-            "更新 LibOpenRaid 到版本 30.",
+            "更新 LibOpenRaid 到版本 31.",
             "为亞洲語系客戶端引入全部的 ElvUI 拉丁字型.",
             "[快速焦點] 現在預設為不開啟."
         },
         ["enUS"] = {
-            "Update LibOpenRaid to version 30.",
+            "Update LibOpenRaid to version 31.",
             "Import all ElvUI latin fonts to clients in asian.",
             "[Quick Focus] Change the default status of Quick Focus module to disabled."
         },
         ["koKR"] = {
-            "Update LibOpenRaid to version 30.",
+            "Update LibOpenRaid to version 31.",
             "아시아 사용자들은 불러오지 못했던 ElvUI의 모든 라틴 글꼴들을 불러옵니다.",
             "[Quick Focus] Change the default status of Quick Focus module to disabled."
         }

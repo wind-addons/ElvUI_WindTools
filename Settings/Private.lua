@@ -340,7 +340,7 @@ V.social = {
 
 V.unitFrames = {
 	quickFocus = {
-		enable = true,
+		enable = false,
 		modifier = "shift",
 		button = "BUTTON1"
 	},

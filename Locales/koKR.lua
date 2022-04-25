@@ -408,6 +408,7 @@ L["Guild Members"] = "길드 멤버"
 L["Halls of Atonement"] = "속죄의 전당"
 L["Have a good time with %s!"] = "%s와 즐거운 시간 보내세요!"
 L["Header"] = "헤더"
+L["Header Style"] = true
 L["Healer"] = "힐러"
 L["Health"] = "체력"
 L["Health Bar"] = "체력바"

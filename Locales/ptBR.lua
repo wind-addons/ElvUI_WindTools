@@ -408,6 +408,7 @@ L["Guild Members"] = true
 L["Halls of Atonement"] = true
 L["Have a good time with %s!"] = true
 L["Header"] = true
+L["Header Style"] = true
 L["Healer"] = "Curandeiro"
 L["Health"] = "Vida"
 L["Health Bar"] = "Barra de Vida"

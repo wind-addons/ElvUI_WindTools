@@ -408,6 +408,7 @@ L["Guild Members"] = "Члены гильдии"
 L["Halls of Atonement"] = "Чертоги Покаяния"
 L["Have a good time with %s!"] = "Удачи с %s!"
 L["Header"] = "Заголовок"
+L["Header Style"] = true
 L["Healer"] = "Лекарь"
 L["Health"] = "Здоровье"
 L["Health Bar"] = "Полоса здоровья"

@@ -408,6 +408,7 @@ L["Guild Members"] = "Gildenmitglied"
 L["Halls of Atonement"] = "Hallen der Sühne"
 L["Have a good time with %s!"] = "Viel Spaß mit %s!"
 L["Header"] = "Kopfzeile"
+L["Header Style"] = true
 L["Healer"] = "Heiler"
 L["Health"] = "Leben"
 L["Health Bar"] = "Lebensleiste"

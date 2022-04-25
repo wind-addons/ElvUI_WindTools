@@ -408,6 +408,7 @@ L["Guild Members"] = "Membres de la guilde"
 L["Halls of Atonement"] = "Salles de l'Expiation"
 L["Have a good time with %s!"] = "Amusez-vous bien avec %s !"
 L["Header"] = "Entête"
+L["Header Style"] = true
 L["Healer"] = "Soigneur"
 L["Health"] = "Vie"
 L["Health Bar"] = "Barre de vie"

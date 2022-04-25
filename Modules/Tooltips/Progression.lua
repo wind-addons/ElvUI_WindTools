@@ -436,7 +436,12 @@ local function SetProgressionInfo(tt, guid)
     -- Special Achievements
     if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Special Achievements"])
+        end
+
         for _, specialAchievement in pairs(specialAchievements) do
             local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
@@ -451,7 +456,11 @@ local function SetProgressionInfo(tt, guid)
     -- Raids
     if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Raids"])
+        end
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
                 for _, level in ipairs(levels) do
@@ -481,7 +490,11 @@ local function SetProgressionInfo(tt, guid)
 
     if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Mythic Dungeons"])
+        end
         for id, name in pairs(mythicKeystoneDungeons) do
             if db.mythicDungeons[name] then
                 local left = format("%s:", locales[name].short)

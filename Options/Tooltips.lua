@@ -193,8 +193,44 @@ options.progression = {
             name = L["Enable"],
             desc = L["Add progression information to tooltips."]
         },
-        raids = {
+        header = {
             order = 2,
+            type = "select",
+            name = L["Header Style"],
+            set = function(info, value)
+                E.private.WT.tooltips.progression[info[#info]] = value
+            end,
+            values = {
+                NONE = L["None"],
+                TEXT = L["Text"],
+                TEXTURE = L["Texture"]
+            }
+        },
+        special = {
+            order = 3,
+            type = "group",
+            name = L["Special Achievements"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.tooltips.progression.special[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.tooltips.progression.special[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            disabled = function()
+                return not E.private.WT.tooltips.progression.enable
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                }
+            }
+        },
+        raids = {
+            order = 4,
             type = "group",
             name = L["Raids"],
             inline = true,
@@ -217,7 +253,7 @@ options.progression = {
             }
         },
         mythicDungeons = {
-            order = 2,
+            order = 5,
             type = "group",
             name = L["Mythic Dungeons"],
             inline = true,
@@ -256,29 +292,6 @@ options.progression = {
                         E:StaticPopup_Show("PRIVATE_RL")
                     end,
                     args = {}
-                }
-            }
-        },
-        special = {
-            order = 3,
-            type = "group",
-            name = L["Special Achievements"],
-            inline = true,
-            get = function(info)
-                return E.private.WT.tooltips.progression.special[info[#info]]
-            end,
-            set = function(info, value)
-                E.private.WT.tooltips.progression.special[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end,
-            disabled = function()
-                return not E.private.WT.tooltips.progression.enable
-            end,
-            args = {
-                enable = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Enable"]
                 }
             }
         }

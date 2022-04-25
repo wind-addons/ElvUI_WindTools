@@ -302,6 +302,7 @@ V.tooltips = {
 	objectiveProgressAccuracy = 1,
 	progression = {
 		enable = true,
+		header = "TEXTURE",
 		raids = {
 			enable = true,
 			["Castle Nathria"] = true,

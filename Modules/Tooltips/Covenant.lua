@@ -154,13 +154,13 @@ local function HandleRosterUpdate()
         end
     end
 
-    LibOR.RequestAllPlayersInfo()
+    LibOR.RequestAllData()
 end
 
 local function GetCovenantID(unit, guid)
     local covenantID = cache[guid]
     if not covenantID then
-        local playerInfo = LibOR.playerInfoManager.GetPlayerInfo(GetUnitName(unit, true))
+        local playerInfo = LibOR.UnitInfoManager.GetUnitInfo(UnitName(unit))
         covenantID = playerInfo and playerInfo.covenantId
     end
 

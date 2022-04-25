@@ -1,10 +1,10 @@
-tag 2526f459dd49c11b5a0936aa51f5de8fa4992f73 OpenRaidLibraryRetail.9.2.0.027
+tag 0491e15b8047ff9989bc808c03caca02c1f9581b OpenRaidLibraryRetail.9.2.0.030
 Author:	Tercio Jose <terciob19@hotmail.com>
-Date:	Thu Apr 14 15:43:29 2022 -0300
+Date:	Sat Apr 23 14:00:11 2022 -0300
 
-commit 502771b4658b0923c1f9e842eaa978c951cea6dc
+commit 16a77c5d6517d524a89f233ac7c009b782a89bcc
 Author: Tercio Jose <terciob19@hotmail.com>
-Date:   Thu Apr 14 15:42:56 2022 -0300
+Date:   Sat Apr 23 13:58:58 2022 -0300
 
-    Back compatibility with versions without pvp talents
+    Added interrupts to cooldown tracker, new filter: "interrupt"
 

@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local T = W:GetModule("Tooltips")
-local LibOR = LibStub("LibOpenRaid-1.0", true)
+local LibOR, LibORVersion = LibStub("LibOpenRaid-1.0", true)
 
 -- Modified from NDui_Plus Tooltips
 local format = format
@@ -15,12 +15,12 @@ local tonumber = tonumber
 local Ambiguate = Ambiguate
 local GetNumGroupMembers = GetNumGroupMembers
 local GetRaidRosterInfo = GetRaidRosterInfo
-local GetUnitName = GetUnitName
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
 local UnitGUID = UnitGUID
 local UnitIsUnit = UnitIsUnit
+local UnitName = UnitName
 
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
@@ -128,6 +128,23 @@ local addonPrefixes = {
 local cache = {}
 local askedPlayers = {}
 
+local function RequestAllData()
+    if LibORVersion >= 28 then
+        LibOR.RequestAllData()
+    else
+        LibOR.RequestAllPlayersInfo()
+    end
+end
+
+local function GetUnitInfo(unit)
+    local name = UnitName(unit)
+    if LibORVersion >= 28 then
+        return LibOR.UnitInfoManager.GetUnitInfo(name)
+    else
+        return LibOR.playerInfoManager.GetPlayerInfo(name)
+    end
+end
+
 local function GetBestChannel()
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInRaid(LE_PARTY_CATEGORY_INSTANCE) then
         return "INSTANCE_CHAT"
@@ -154,13 +171,13 @@ local function HandleRosterUpdate()
         end
     end
 
-    LibOR.RequestAllData()
+    RequestAllData()
 end
 
 local function GetCovenantID(unit, guid)
     local covenantID = cache[guid]
     if not covenantID then
-        local playerInfo = LibOR.UnitInfoManager.GetUnitInfo(UnitName(unit))
+        local playerInfo = GetUnitInfo(unit)
         covenantID = playerInfo and playerInfo.covenantId
     end
 

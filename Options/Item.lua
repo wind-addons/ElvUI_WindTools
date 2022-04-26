@@ -10,6 +10,7 @@ local EB = W:GetModule("ExtraItemsBar")
 local CT = W:GetModule("Contacts")
 local IS = W:GetModule("Inspect")
 local IL = W:GetModule("ItemLevel")
+local EMP = W:GetModule("ExtendMerchantPages")
 
 local format = format
 local pairs = pairs
@@ -1516,6 +1517,59 @@ options.itemLevel = {
                     }
                 }
             }
+        }
+    }
+}
+
+options.extendMerchantPages = {
+    order = 8,
+    type = "group",
+    name = L["Extend Merchant Pages"],
+    get = function(info)
+        return E.private.WT.item.extendMerchantPages[info[#info]]
+    end,
+    set = function(info, value)
+        E.private.WT.item.extendMerchantPages[info[#info]] = value
+        E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    args = {
+        desc = {
+            order = 0,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = function()
+                        if EMP.StopRunning then
+                            return format(
+                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                EMP.StopRunning
+                            )
+                        else
+                            return L["Extends the merchant page to show more items."]
+                        end
+                    end,
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 1,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        numberOfPages = {
+            order = 2,
+            type = "range",
+            name = L["Number of Pages"],
+            desc = L["The number of pages shown in the merchant frame."],
+            min = 2,
+            max = 6,
+            step = 1
         }
     }
 }

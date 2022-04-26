@@ -10,6 +10,13 @@ V.combat = {
 	}
 }
 
+V.item = {
+	extendMerchantPages = {
+		enable = false,
+		numberOfPages = 2
+	}
+}
+
 V.maps = {
 	instanceDifficulty = {
 		enable = false,

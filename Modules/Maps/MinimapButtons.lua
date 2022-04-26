@@ -103,7 +103,7 @@ do
 
 			icon.AlertText.SetText = function(_, text)
 				if text then
-					print("|cff198ee1" .. (icon.title or L["Garrison"]) .. "|r: " .. text)
+					print(F.CreateColorString(icon.title or L["Garrison"], E.db.general.valuecolor) .. ": " .. text)
 				end
 			end
 

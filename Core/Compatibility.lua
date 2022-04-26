@@ -72,7 +72,14 @@ function W:ConstructCompatibilityFrame()
     largeTip:SetJustifyH("CENTER")
     largeTip:Width(500)
     F.SetFontOutline(largeTip, nil, "7")
-    largeTip:SetText("|cff198ee1[|r " .. L["Choose the module you would like to |cff00ff00use|r."] .. " |cff198ee1]|r")
+    largeTip:SetText(
+        format(
+            "%s %s %s",
+            F.CreateColorString("[", E.db.general.valuecolor),
+            L["Choose the module you would like to |cff00ff00use|r."],
+            F.CreateColorString("]", E.db.general.valuecolor)
+        )
+    )
     largeTip:Point("TOPLEFT", desc, "BOTTOMLEFT", 0, -10)
 
     local tex = frame:CreateTexture("WTCompatibilityFrameIllustration", "ARTWORK")

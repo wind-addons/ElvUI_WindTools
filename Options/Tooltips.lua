@@ -71,15 +71,21 @@ options.general = {
                     order = 6,
                     type = "toggle",
                     name = L["Tier Set"],
-                    desc = L["Show the number of tier set equipments."] ..
-                        "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
+                    desc = format(
+                        "%s\n%s",
+                        L["Show the number of tier set equipments."],
+                        F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
+                    )
                 },
                 covenant = {
                     order = 7,
                     type = "toggle",
                     name = L["Covenant"],
-                    desc = L["Show covenant information via the communition with third-party addons."] ..
-                        "\n|cff00a8ff" .. L["You need hold SHIFT to inspect someone."] .. "|r"
+                    desc = format(
+                        "%s\n%s",
+                        L["Show covenant information via the communition with third-party addons."],
+                        F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
+                    )
                 }
             }
         },

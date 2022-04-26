@@ -17,7 +17,7 @@ W.Changelog[233] = {
         },
         ["koKR"] = {
             "아시아 사용자들은 불러오지 못했던 ElvUI의 모든 라틴 글꼴들을 불러옵니다.",
-            "[Quick Focus] Change the default status of Quick Focus module to disabled."
+            "[빠른 주시] 빠른 주시 모듈의 기본 상태를 비활성화로 변경합니다."
         }
     },
     NEW = {
@@ -52,10 +52,10 @@ W.Changelog[233] = {
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
             "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",
             "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다.",
-            "[Tooltip] Added a faction icon for players. Thanks Merathilis",
-            "[Tooltip] Added a species icon for pets. Thanks Merathilis",
-            "[Tooltip] Added a species ID for pets. Thanks Merathilis",
-            "[Friend List] Added an option to use the note as name.",
+            "[툴팁] 플레이어 진영 아이콘을 추가하였습니다. Thanks Merathilis",
+            "[툴팁] 애완 동물 유형에 대한 아이콘을 추가하였습니다. Thanks Merathilis",
+            "[툴팁] 애완 동물의 종 ID를 추가하였습니다. Thanks Merathilis",
+            "[친구 목록] 이름 대신 메모 사용 옵션이 추가되었습니다",
         }
     },
     IMPROVEMENT = {
@@ -88,8 +88,8 @@ W.Changelog[233] = {
             "[미니맵 버튼 통합 바] 달력 버튼의 텍스처를 제거할 수 없는 버그를 수정했습니다.",
             "[미니맵 버튼 통합 바] 주둔지/성약 버튼이 잘못된 위치에 있던 문제를 수정했습니다.",
             "[스킨] ElvUI 작업 표시줄 배경을 투명하게 하는 코드를 제거했습니다.",
-            "[Tooltips] Compatible with new LibOpenRaid API.",
-            "[Tooltips] Support the customization of the progression display title."
+            "[툴팁] 새로운 LibOpenRaid API와 호환됩니다.",
+            "[툴팁] 진행 상태 제목의 사용자 정의를 지원합니다."
         }
     }
 }

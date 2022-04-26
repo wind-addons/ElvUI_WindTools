@@ -212,8 +212,14 @@ options.progression = {
                 TEXTURE = L["Texture"]
             }
         },
-        special = {
+        tips = {
             order = 3,
+            type = "description",
+            name = F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor) .. "\n",
+            fontSize = "large"
+        },
+        special = {
+            order = 4,
             type = "group",
             name = L["Special Achievements"],
             inline = true,
@@ -236,7 +242,7 @@ options.progression = {
             }
         },
         raids = {
-            order = 4,
+            order = 5,
             type = "group",
             name = L["Raids"],
             inline = true,
@@ -259,7 +265,7 @@ options.progression = {
             }
         },
         mythicDungeons = {
-            order = 5,
+            order = 6,
             type = "group",
             name = L["Mythic Dungeons"],
             inline = true,

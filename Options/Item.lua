@@ -1532,6 +1532,9 @@ options.extendMerchantPages = {
         E.private.WT.item.extendMerchantPages[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
+    disabled = function()
+        return EMP.StopRunning
+    end,
     args = {
         desc = {
             order = 0,

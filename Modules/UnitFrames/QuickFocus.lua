@@ -6,6 +6,7 @@ local ElvUF = E.oUF
 local _G = _G
 local format = format
 local next = next
+local pairs = pairs
 local strmatch = strmatch
 local strsub = strsub
 

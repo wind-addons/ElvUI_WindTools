@@ -10,11 +10,17 @@ local unpack = unpack
 local GetItemIcon = GetItemIcon
 local GetSpellTexture = GetSpellTexture
 local IsAddOnLoaded = IsAddOnLoaded
+local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
+local UnitBattlePetType = UnitBattlePetType
+local UnitFactionGroup = UnitFactionGroup
+local UnitIsBattlePet = UnitIsBattlePet
+local UnitIsPlayer = UnitIsPlayer
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 
 local newString = "0:0:64:64:5:59:5:59"
 
+local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
 _G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:" .. newString .. "|t |cffffffff%2$s|r %3$s"
 _G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:" .. newString .. "|t %2$s"
 

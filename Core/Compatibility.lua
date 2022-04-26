@@ -372,6 +372,13 @@ function W:CheckCompatibility()
         "db.mui.maps.minimap.instanceDifficulty.enable"
     )
 
+    CheckMerathilisUI(
+        format("%s-%s", L["Item"], L["Extend Merchant Pages"]),
+        L["Merchant"],
+        "private.WT.item.extendMerchantPages.enable",
+        "db.mui.merchant.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

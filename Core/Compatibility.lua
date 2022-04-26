@@ -218,11 +218,11 @@ local function GetDatabaseRealValue(path)
 end
 
 local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales)
-    return function(myModuleName, targetAddonModuleName, myDB, targetAddonDB)
-        if not IsAddOnLoaded(targetAddonName) then
-            return
-        end
+    if not IsAddOnLoaded(targetAddonName) then
+        return E.noop
+    end
 
+    return function(myModuleName, targetAddonModuleName, myDB, targetAddonDB)
         if not (myDB and targetAddonDB and type(myDB) == "string" and type(targetAddonDB) == "string") then
             return
         end

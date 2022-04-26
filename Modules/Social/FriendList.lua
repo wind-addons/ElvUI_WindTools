@@ -203,7 +203,7 @@ function FL:UpdateFriendButton(button)
         return
     end
 
-    local game, realID, name, server, class, area, level, faction, status, isInCurrentRegion, regionID
+    local game, realID, name, server, class, area, level, note, faction, status, isInCurrentRegion, regionID
 
     -- 获取好友游戏情况
     if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
@@ -214,6 +214,7 @@ function FL:UpdateFriendButton(button)
         level = friendInfo.level
         class = friendInfo.className
         area = friendInfo.area
+        note = friendInfo.notes
         faction = E.myfaction -- 同一阵营才能加好友的吧？
 
         if friendInfo.connected then
@@ -232,6 +233,7 @@ function FL:UpdateFriendButton(button)
         local friendAccountInfo = C_BattleNet_GetFriendAccountInfo(button.id)
         if friendAccountInfo then
             realID = friendAccountInfo.accountName
+            note = friendAccountInfo.note
 
             local gameAccountInfo = friendAccountInfo.gameAccountInfo
             game = gameAccountInfo.clientProgram
@@ -285,11 +287,21 @@ function FL:UpdateFriendButton(button)
     if game and game ~= "" then
         local buttonTitle, buttonText
 
-        -- 名字
+        -- Override Real ID or name with note
+        if self.db.useNoteAsName and note and note ~= "" then
+            if realID then
+                realID = note
+            else
+                name = note
+            end
+        end
+
+        -- Real ID
         local realIDString =
             realID and self.db.useGameColor and BNColor[game] and F.CreateColorString(realID, BNColor[game]) or realID
 
         local nameString = name
+
         local classColor = GetClassColor(class)
         if self.db.useClassColor and classColor then
             nameString = F.CreateColorString(name, classColor)

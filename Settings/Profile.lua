@@ -764,6 +764,7 @@ P.social = {
         hideMaxLevel = true,
         useGameColor = true,
         useClassColor = true,
+        useNoteAsName = false,
         textures = {
             game = "Modern",
             status = "Square",

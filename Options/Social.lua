@@ -1177,19 +1177,24 @@ options.friendList = {
                         return not E.db.WT.social.friendList.level
                     end,
                 },
-                useGameColor = {
+                useNoteAsName = {
                     order = 3,
+                    type = "toggle",
+                    name = L["Use Note As Name"],
+                },
+                useGameColor = {
+                    order = 4,
                     type = "toggle",
                     name = L["Use Game Color"],
                     desc = L["Change the color of the name to the in-playing game style."]
                 },
                 useClassColor = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Use Class Color"]
                 },
                 font = {
-                    order = 5,
+                    order = 6,
                     type = "group",
                     name = L["Font Setting"],
                     get = function(info)

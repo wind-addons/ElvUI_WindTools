@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = "고급 전투 기록을 �
 L["Rogue"] = "도적"
 L["Rogue Class Hall Insignia"] = "도적 - 그림자의 전당"
 L["Role Icon"] = "역할 아이콘"
+L["Role Symbols"] = true
 L["Roll"] = "주사위"
 L["Sanctum of Domination"] = "지배의 성소"
 L["Sanguine Depths"] = "핏빛 심연"

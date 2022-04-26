@@ -451,6 +451,13 @@ function W:CheckCompatibility()
         "db.mMediaTag.mObjectiveTracker.enable"
     )
 
+    CheckmMediaTag(
+        L["Role Icon"],
+        L["Role Symbols"],
+        "private.WT.unitFrames.roleIcon.enable",
+        "db.mMediaTag.mRoleSymbols.enable"
+    )
+
     -- Enhanced Again
     CheckElvUIEnhanced(
         L["Raid Markers"],

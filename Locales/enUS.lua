@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = true
 L["Rogue"] = true
 L["Rogue Class Hall Insignia"] = true
 L["Role Icon"] = true
+L["Role Symbols"] = true
 L["Roll"] = true
 L["Sanctum of Domination"] = true
 L["Sanguine Depths"] = true

@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = "Clic droit pour afficher 
 L["Rogue"] = "Voleur"
 L["Rogue Class Hall Insignia"] = "Domaine de Classe des Voleurs"
 L["Role Icon"] = "Icône de rôle"
+L["Role Symbols"] = true
 L["Roll"] = "Jet de dés"
 L["Sanctum of Domination"] = true
 L["Sanguine Depths"] = "Profondeurs Sanguines"

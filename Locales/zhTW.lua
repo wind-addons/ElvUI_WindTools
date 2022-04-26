@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = "右鍵點擊: 開關高�
 L["Rogue"] = "盜賊"
 L["Rogue Class Hall Insignia"] = "盜賊職業大廳傳送"
 L["Role Icon"] = "角色圖示"
+L["Role Symbols"] = "角色標記"
 L["Roll"] = "擲骰"
 L["Sanctum of Domination"] = "統御聖所"
 L["Sanguine Depths"] = "血紅深淵"

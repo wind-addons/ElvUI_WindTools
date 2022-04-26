@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = "Klicke mit der rechten Ma
 L["Rogue"] = "Schurke"
 L["Rogue Class Hall Insignia"] = "Schurken Klassenhallen Abzeichen"
 L["Role Icon"] = "Rollensymbol"
+L["Role Symbols"] = true
 L["Roll"] = "Würfeln"
 L["Sanctum of Domination"] = "Sanktum der Herrschafft"
 L["Sanguine Depths"] = "Blutige Tiefen"

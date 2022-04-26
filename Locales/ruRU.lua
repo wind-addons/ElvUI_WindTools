@@ -770,6 +770,7 @@ L["Right click to toggle advanced combat logging."] = "Щелкните прав
 L["Rogue"] = "Разбойник"
 L["Rogue Class Hall Insignia"] = "Знак отличия оплота класса разбойников"
 L["Role Icon"] = "Иконка роли"
+L["Role Symbols"] = true
 L["Roll"] = "Ролл"
 L["Sanctum of Domination"] = "Святилище Господства"
 L["Sanguine Depths"] = "Кровавые катакомбы"

@@ -456,7 +456,7 @@ function W:CheckCompatibility()
         L["Raid Markers"],
         L["Raid Markers"],
         "db.WT.combat.raidMarkers.enable",
-        "db.eel.raidmarkers.enable"
+        "db.eel.raidmarkerbar.enable"
     )
 
     CheckElvUIEnhanced(

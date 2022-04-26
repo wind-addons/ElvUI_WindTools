@@ -33,7 +33,7 @@ function W:ConstructCompatibilityFrame()
     )
 
     frame:SetFrameStrata("TOOLTIP")
-    frame:SetFrameLevel(9999)
+    frame:SetFrameLevel(9000)
 
     MF:HandleFrame(frame)
 

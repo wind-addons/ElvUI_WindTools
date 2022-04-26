@@ -27,7 +27,8 @@ W.Changelog[233] = {
             "[美化皮肤] 新增了 ElvUI 聊天语音面板的皮肤.",
             "[鼠标提示] 新增了玩家阵营的图标. 感谢 Merathilis",
             "[鼠标提示] 新增了宠物种类的图标. 感谢 Merathilis",
-            "[鼠标提示] 新增了宠物物种 ID. 感谢 Merathilis"
+            "[鼠标提示] 新增了宠物物种 ID. 感谢 Merathilis",
+            "[好友名单] 新增了「使用备注作为名字」的选项.",
         },
         ["zhTW"] = {
             "新增了對 ElvUI Enhanced Again 的兼容性檢查.",
@@ -35,7 +36,8 @@ W.Changelog[233] = {
             "[美化皮膚] 新增了 ElvUI 對話語音面板的皮膚.",
             "[滑鼠提示] 新增了玩家陣營的图示. 感謝 Merathilis",
             "[滑鼠提示] 新增了寵物種類的图示. 感謝 Merathilis",
-            "[滑鼠提示] 新增了寵物物種 ID. 感謝 Merathilis"
+            "[滑鼠提示] 新增了寵物物種 ID. 感謝 Merathilis",
+            "[好友名單] 新增了「使用備註作為名字」的選項.",
         },
         ["enUS"] = {
             "Added compatibility check for ElvUI Enhanced Again.",
@@ -43,7 +45,8 @@ W.Changelog[233] = {
             "[Skins] Added a skin for the ElvUI chat voice panel.",
             "[Tooltip] Added a faction icon for players. Thanks Merathilis",
             "[Tooltip] Added a species icon for pets. Thanks Merathilis",
-            "[Tooltip] Added a species ID for pets. Thanks Merathilis"
+            "[Tooltip] Added a species ID for pets. Thanks Merathilis",
+            "[Friend List] Added an option to use the note as name.",
         },
         ["koKR"] = {
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
@@ -51,7 +54,8 @@ W.Changelog[233] = {
             "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다.",
             "[Tooltip] Added a faction icon for players. Thanks Merathilis",
             "[Tooltip] Added a species icon for pets. Thanks Merathilis",
-            "[Tooltip] Added a species ID for pets. Thanks Merathilis"
+            "[Tooltip] Added a species ID for pets. Thanks Merathilis",
+            "[Friend List] Added an option to use the note as name.",
         }
     },
     IMPROVEMENT = {

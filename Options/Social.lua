@@ -1181,6 +1181,7 @@ options.friendList = {
                     order = 3,
                     type = "toggle",
                     name = L["Use Note As Name"],
+                    desc = L["Replace the Real ID or the character name of friends with your notes."],
                 },
                 useGameColor = {
                     order = 4,

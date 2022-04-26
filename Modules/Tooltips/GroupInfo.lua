@@ -128,7 +128,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
 end
 
 function T:GroupInfo()
-    if IsAddOnLoaded("PremadeGroupsFilter") then
+    if IsAddOnLoaded("PremadeGroupsFilter") and E.db.WT.tooltips.groupInfo.enable then
         F.Print(
             format(
                 L["%s detected, %s will be disabled automatically."],

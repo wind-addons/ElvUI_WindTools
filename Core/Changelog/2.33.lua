@@ -22,6 +22,8 @@ W.Changelog[233] = {
     },
     NEW = {
         ["zhCN"] = {
+            "兼容性检查界面更新.",
+            "添加更多关于 Merathilis UI, Shadow & Light 及 mMediaTag 的兼容性检查.",
             "新增了对 ElvUI Enhanced Again 的兼容性检查.",
             "新增模块 [商人页面扩展]",
             "[美化皮肤] 新增了客服工单状态框体的皮肤.",
@@ -32,6 +34,8 @@ W.Changelog[233] = {
             "[好友名单] 新增了「使用备注作为名字」的选项.",
         },
         ["zhTW"] = {
+            "兼容性檢查介面更新.",
+            "新增更多关于 Merathilis UI, Shadow & Light 及 mMediaTag 的兼容性檢查.",
             "新增了對 ElvUI Enhanced Again 的兼容性檢查.",
             "新增模組 [擴展商人頁面].",
             "[美化皮膚] 新增了 GM 工單狀態框架的皮膚.",
@@ -42,6 +46,8 @@ W.Changelog[233] = {
             "[好友名單] 新增了「使用備註作為名字」的選項.",
         },
         ["enUS"] = {
+            "Update compatibility check interface.",
+            "Add more compatibility check for Merathilis UI, Shadow & Light and mMediaTag.",
             "Added compatibility check for ElvUI Enhanced Again.",
             "New module [Extended Merchant Pages] .",
             "[Skins] Added a skin for the GM ticket status frame.",
@@ -52,6 +58,8 @@ W.Changelog[233] = {
             "[Friend List] Added an option to use the note as name.",
         },
         ["koKR"] = {
+            "Update compatibility check interface.",
+            "Add more compatibility check for Merathilis UI, Shadow & Light and mMediaTag.",
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
             "New module [Extended Merchant Pages] .",
             "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",

@@ -60,6 +60,7 @@ W.Changelog[233] = {
             "[小地图按钮] 修复了日历按钮的材质无法去除的错误.",
             "[小地图按钮] 修复了要塞/盟约按钮错位的问题.",
             "[美化皮肤] 移除了强制 ElvUI 动作条背景为透明的代码.",
+            "[鼠标提示] 兼容新的 LibOpenRaid API.",
             "[鼠标提示] 进度显示标题支持自定义."
         },
         ["zhTW"] = {
@@ -67,6 +68,7 @@ W.Changelog[233] = {
             "[小地圖按鍵] 修復了行事曆按鍵的材質無法去除的錯誤.",
             "[小地圖按鍵] 修復了要塞/盟約按鍵錯位的問題.",
             "[美化皮膚] 移除了強制 ElvUI 快捷列背景為透明的代碼.",
+            "[滑鼠提示] 兼容新的 LibOpenRaid API.",
             "[滑鼠提示] 进度顯示標題支援自定義."
         },
         ["enUS"] = {
@@ -74,14 +76,16 @@ W.Changelog[233] = {
             "[Minimap Buttons] Fixed the texture not removed problem within skinned calendar icon.",
             "[Minimap Buttons] Fixed the position of garrison/covenant buttons.",
             "[Skins] Removed the code that making ElvUI action bar background to be transparent.",
-            "[Tooltip] Support the customization of the progression display title."
+            "[Tooltips] Compatible with new LibOpenRaid API.",
+            "[Tooltips] Support the customization of the progression display title."
         },
         ["koKR"] = {
             "[미니맵 비율 조정] 안정성 향상.",
             "[미니맵 버튼 통합 바] 달력 버튼의 텍스처를 제거할 수 없는 버그를 수정했습니다.",
             "[미니맵 버튼 통합 바] 주둔지/성약 버튼이 잘못된 위치에 있던 문제를 수정했습니다.",
             "[스킨] ElvUI 작업 표시줄 배경을 투명하게 하는 코드를 제거했습니다.",
-            "[Tooltip] Support the customization of the progression display title."
+            "[Tooltips] Compatible with new LibOpenRaid API.",
+            "[Tooltips] Support the customization of the progression display title."
         }
     }
 }

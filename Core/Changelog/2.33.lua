@@ -23,6 +23,7 @@ W.Changelog[233] = {
     NEW = {
         ["zhCN"] = {
             "新增了对 ElvUI Enhanced Again 的兼容性检查.",
+            "新增模块 [商人页面扩展]",
             "[美化皮肤] 新增了客服工单状态框体的皮肤.",
             "[美化皮肤] 新增了 ElvUI 聊天语音面板的皮肤.",
             "[鼠标提示] 新增了玩家阵营的图标. 感谢 Merathilis",
@@ -32,6 +33,7 @@ W.Changelog[233] = {
         },
         ["zhTW"] = {
             "新增了對 ElvUI Enhanced Again 的兼容性檢查.",
+            "新增模組 [擴展商人頁面].",
             "[美化皮膚] 新增了 GM 工單狀態框架的皮膚.",
             "[美化皮膚] 新增了 ElvUI 對話語音面板的皮膚.",
             "[滑鼠提示] 新增了玩家陣營的图示. 感謝 Merathilis",
@@ -41,6 +43,7 @@ W.Changelog[233] = {
         },
         ["enUS"] = {
             "Added compatibility check for ElvUI Enhanced Again.",
+            "New module [Extended Merchant] .",
             "[Skins] Added a skin for the GM ticket status frame.",
             "[Skins] Added a skin for the ElvUI chat voice panel.",
             "[Tooltip] Added a faction icon for players. Thanks Merathilis",
@@ -50,6 +53,7 @@ W.Changelog[233] = {
         },
         ["koKR"] = {
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
+            "New module [Extended Merchant] .",
             "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",
             "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다.",
             "[툴팁] 플레이어 진영 아이콘을 추가하였습니다. Thanks Merathilis",
@@ -60,36 +64,44 @@ W.Changelog[233] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[快速焦点] 修复了对 ElvUI 框架的支持.",
             "[矩形小地图] 提升了稳定性.",
             "[小地图按钮] 修复了日历按钮的材质无法去除的错误.",
             "[小地图按钮] 修复了要塞/盟约按钮错位的问题.",
             "[美化皮肤] 移除了强制 ElvUI 动作条背景为透明的代码.",
             "[鼠标提示] 兼容新的 LibOpenRaid API.",
-            "[鼠标提示] 进度显示标题支持自定义."
+            "[鼠标提示] 进度显示标题支持自定义.",
+            "[鼠标提示] 在 PGF 插件载入时将会自动禁用队伍信息.",
         },
         ["zhTW"] = {
+            "[快速焦點] 修復了對 ElvUI 框架的支援.",
             "[矩形小地圖] 提升了穩定性.",
             "[小地圖按鍵] 修復了行事曆按鍵的材質無法去除的錯誤.",
             "[小地圖按鍵] 修復了要塞/盟約按鍵錯位的問題.",
             "[美化皮膚] 移除了強制 ElvUI 快捷列背景為透明的代碼.",
             "[滑鼠提示] 兼容新的 LibOpenRaid API.",
-            "[滑鼠提示] 进度顯示標題支援自定義."
+            "[滑鼠提示] 进度顯示標題支援自定義.",
+            "[滑鼠提示] 在 PGF 插件载入時將會自動禁用隊伍資訊.",
         },
         ["enUS"] = {
+            "[Quick Focus] Fixed the support for all ElvUI frames.",
             "[Rectangle Minimap] Improved stability.",
             "[Minimap Buttons] Fixed the texture not removed problem within skinned calendar icon.",
             "[Minimap Buttons] Fixed the position of garrison/covenant buttons.",
             "[Skins] Removed the code that making ElvUI action bar background to be transparent.",
             "[Tooltips] Compatible with new LibOpenRaid API.",
-            "[Tooltips] Support the customization of the progression display title."
+            "[Tooltips] Support the customization of the progression display title.",
+            "[Tooltips] Disable the team info when PGF is loaded.",
         },
         ["koKR"] = {
+            "[Quick Focus] Fixed the support for all ElvUI frames.",
             "[미니맵 비율 조정] 안정성 향상.",
             "[미니맵 버튼 통합 바] 달력 버튼의 텍스처를 제거할 수 없는 버그를 수정했습니다.",
             "[미니맵 버튼 통합 바] 주둔지/성약 버튼이 잘못된 위치에 있던 문제를 수정했습니다.",
             "[스킨] ElvUI 작업 표시줄 배경을 투명하게 하는 코드를 제거했습니다.",
             "[툴팁] 새로운 LibOpenRaid API와 호환됩니다.",
-            "[툴팁] 진행 상태 제목의 사용자 정의를 지원합니다."
+            "[툴팁] 진행 상태 제목의 사용자 정의를 지원합니다.",
+            "[Tooltips] Disable the team info when PGF is loaded.",
         }
     }
 }

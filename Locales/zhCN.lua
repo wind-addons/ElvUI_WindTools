@@ -24,6 +24,7 @@ L["%s + Left Click to mark the target with this mark."] = "%s + 点击 以标记
 L["%s + Left Click to place this worldmarker."] = "%s + 左键点击 放置这个光柱."
 L["%s + Right Click to clear the mark on the target."] = "%s + 右键点选 以清除目标的标记"
 L["%s + Right Click to clear this worldmarker."] = "%s + 右键点击 清除这个光柱."
+L["%s detected, %s will be disabled automatically."] = "检测到你正在使用 %s, %s 将被自动禁用."
 L["%s has been added to the ignore list."] = "%s 已被加入忽略名单."
 L["%s has been reset"] = "已重置 %s"
 L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."] = "%s是一个 ElvUI 插件, 包含了我的许多原创插件及其他作者的优秀插件功能."

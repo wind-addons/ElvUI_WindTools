@@ -24,6 +24,7 @@ L["%s + Left Click to mark the target with this mark."] = "%s + 왼쪽 클릭으
 L["%s + Left Click to place this worldmarker."] = "%s + 왼쪽 클릭하여 이 빛기둥 징표를 배치합니다."
 L["%s + Right Click to clear the mark on the target."] = "%s + 오른쪽 클릭으로 이 징표를 대상에서 제거합니다."
 L["%s + Right Click to clear this worldmarker."] = "%s + 오른쪽 클릭으로 이 빛기둥 징표를 제거합니다."
+L["%s detected, %s will be disabled automatically."] = true
 L["%s has been added to the ignore list."] = "%s NPC는 무시 목록에 추가되었습니다."
 L["%s has been reset"] = "%s 설정이 리셋되었습니다."
 L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."] = "%s는 자체 플러그인과 다른 플레이어가 개발한 여러 플러그인으로 구성된 ElvUI용 플러그인입니다."

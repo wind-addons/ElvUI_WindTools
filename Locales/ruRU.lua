@@ -24,6 +24,7 @@ L["%s + Left Click to mark the target with this mark."] = "%s + левая кн�
 L["%s + Left Click to place this worldmarker."] = "%s + левая кнопка мыши, чтобы разместить этот мировую метку."
 L["%s + Right Click to clear the mark on the target."] = "%s + правая кнопка мыши, чтобы удалить метку с цели."
 L["%s + Right Click to clear this worldmarker."] = "%s + правая кнопка мыши, чтобы очистить эту мировую метку."
+L["%s detected, %s will be disabled automatically."] = true
 L["%s has been added to the ignore list."] = "%s добавлен в список игнорирования."
 L["%s has been reset"] = "%s был сброшен"
 L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."] = "%s - это плагин для ElvUI, который состоит из моих оригинальных плагинов и нескольких плагинов, разработанных другими игроками."

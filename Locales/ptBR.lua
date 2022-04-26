@@ -24,6 +24,7 @@ L["%s + Left Click to mark the target with this mark."] = true
 L["%s + Left Click to place this worldmarker."] = true
 L["%s + Right Click to clear the mark on the target."] = true
 L["%s + Right Click to clear this worldmarker."] = true
+L["%s detected, %s will be disabled automatically."] = true
 L["%s has been added to the ignore list."] = true
 L["%s has been reset"] = true
 L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."] = true

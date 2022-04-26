@@ -24,6 +24,7 @@ L["%s + Left Click to mark the target with this mark."] = "%s + clic gauche pour
 L["%s + Left Click to place this worldmarker."] = "%s + clic gauche pour placer ce marqueur de terrain."
 L["%s + Right Click to clear the mark on the target."] = "%s + clic droit pour effacer la marque de la cible."
 L["%s + Right Click to clear this worldmarker."] = "%s + clic droit pour effacer ce marqueur de terrain."
+L["%s detected, %s will be disabled automatically."] = true
 L["%s has been added to the ignore list."] = "%s a été ajouté à la liste des joueurs ignorés."
 L["%s has been reset"] = "%s a été réinitialisé"
 L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."] = "%s est un plugin pour ElvUI composé de mes propres plugins et de plusieurs plugins développés par d'autres joueurs."

@@ -129,9 +129,14 @@ end
 
 function T:GroupInfo()
     if IsAddOnLoaded("PremadeGroupsFilter") then
-        if _G.PremadeGroupsFilter and _G.PremadeGroupsFilter.Debug then
-            _G.PremadeGroupsFilter.Debug.OnLFGListSearchEntryOnEnter = E.noop
-        end
+        F.Print(
+            format(
+                L["%s detected, %s will be disabled automatically."],
+                "|cffff0000" .. L["Premade Groups Filter"] .. "|r",
+                "|cff00a8ff" .. L["Tooltips"] .. " - " .. L["Group Info"] .. "|r"
+            )
+        )
+        E.db.WT.tooltips.groupInfo.enable = false
     end
 
     T:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")

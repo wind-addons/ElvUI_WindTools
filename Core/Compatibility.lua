@@ -422,6 +422,13 @@ function W:CheckCompatibility()
         "db.sle.loot.enable"
     )
 
+    CheckShadowAndLight(
+        format("%s-%s", L["Item"], L["Extend Merchant Pages"]),
+        L["Merchant"],
+        "private.WT.item.extendMerchantPages.enable",
+        "private.sle.skins.merchant.enable"
+    )
+
     -- mMediaTag
     CheckmMediaTag(
         format("%s-%s", L["Tooltips"], L["Icon"]),

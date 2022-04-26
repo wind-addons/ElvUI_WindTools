@@ -43,7 +43,7 @@ W.Changelog[233] = {
         },
         ["enUS"] = {
             "Added compatibility check for ElvUI Enhanced Again.",
-            "New module [Extended Merchant] .",
+            "New module [Extended Merchant Pages] .",
             "[Skins] Added a skin for the GM ticket status frame.",
             "[Skins] Added a skin for the ElvUI chat voice panel.",
             "[Tooltip] Added a faction icon for players. Thanks Merathilis",
@@ -53,7 +53,7 @@ W.Changelog[233] = {
         },
         ["koKR"] = {
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
-            "New module [Extended Merchant] .",
+            "New module [Extended Merchant Pages] .",
             "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",
             "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다.",
             "[툴팁] 플레이어 진영 아이콘을 추가하였습니다. Thanks Merathilis",

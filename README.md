@@ -31,6 +31,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
 6. **Contacts**: Add a contact frame beside the mail frame.
 7. **Inspect**: Add an equipment list beside the character panel and inspect frame.
+8. **Extended Merchant Pages**: Extend the merchant frame to show more items.
 
 ## Combat
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more! 

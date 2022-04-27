@@ -14,7 +14,7 @@ local function SetupOptions()
     end
 
     local instanceType, _, _, _, _, _, instanceID = select(2, GetInstanceInfo())
-    local needDisable = IsInJailersTower() or instanceType == "party" or instanceType == "raid"
+    local needDisable = IsInJailersTower() or instanceType == "party" or instanceType == "raid" or instanceID == 2374
 
     -- Hold shadow in garrison
     if needDisable then

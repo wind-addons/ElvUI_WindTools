@@ -36,11 +36,14 @@ local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local IsControlKeyDown = IsControlKeyDown
 local IsInGuild = IsInGuild
 local IsModifierKeyDown = IsModifierKeyDown
+local IsShiftKeyDown = IsShiftKeyDown
 local ItemMixin = ItemMixin
 local PlaySound = PlaySound
 local RegisterStateDriver = RegisterStateDriver
+local ReloadUI = ReloadUI
 local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
@@ -808,11 +811,16 @@ function GB:ConstructTimeArea()
     self.bar.middlePanel:SetScript(
         "OnClick",
         function(_, mouseButton)
-            if IsModifierKeyDown() then
-                collectgarbage("collect")
-                ResetCPUUsage()
-                DT.RegisteredDataTexts["System"].eventFunc()
-                DT.RegisteredDataTexts["System"].onEnter()
+            if IsShiftKeyDown() then
+                if IsControlKeyDown() then
+                    C_CVar_SetCVar("scriptProfile", C_CVar_GetCVar("scriptProfile") and 0 or 1)
+                    ReloadUI()
+                else
+                    collectgarbage("collect")
+                    ResetCPUUsage()
+                    DT.RegisteredDataTexts["System"].eventFunc()
+                    DT.RegisteredDataTexts["System"].onEnter()
+                end
             elseif mouseButton == "LeftButton" then
                 if not InCombatLockdown() then
                     ToggleCalendar()
@@ -1150,7 +1158,11 @@ function GB:UpdateButton(button, buttonType)
         end
 
         button.additionalText:ClearAllPoints()
-        button.additionalText:SetPoint(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
+        button.additionalText:SetPoint(
+            self.db.additionalText.anchor,
+            self.db.additionalText.x,
+            self.db.additionalText.y
+        )
         F.SetFontWithDB(button.additionalText, self.db.additionalText.font)
         button.additionalText:Show()
     else

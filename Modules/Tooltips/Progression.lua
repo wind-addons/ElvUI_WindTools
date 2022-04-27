@@ -42,7 +42,8 @@ local cache = {}
 
 local tiers = {
     "Castle Nathria",
-    "Sanctum of Domination"
+    "Sanctum of Domination",
+    "Sepulcher of the First Ones"
 }
 
 local levels = {

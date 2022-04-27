@@ -81,7 +81,8 @@ W.Changelog[233] = {
             "[鼠标提示] 兼容新的 LibOpenRaid API.",
             "[鼠标提示] 进度显示标题支持自定义.",
             "[鼠标提示] 在 PGF 插件载入时将会自动禁用队伍信息.",
-            "[鼠标提示] 修复初诞者圣墓的进度显示."
+            "[鼠标提示] 修复初诞者圣墓的进度显示.",
+            "[游戏条] Ctrl + Shift + 点击时间区域现在开始开关 CPU 使用统计."
         },
         ["zhTW"] = {
             "[快速焦點] 修復了對 ElvUI 框架的支援.",
@@ -93,7 +94,8 @@ W.Changelog[233] = {
             "[滑鼠提示] 兼容新的 LibOpenRaid API.",
             "[滑鼠提示] 进度顯示標題支援自定義.",
             "[滑鼠提示] 在 PGF 插件载入時將會自動禁用隊伍資訊.",
-            "[滑鼠提示] 修復首創者聖塚的進度顯示."
+            "[滑鼠提示] 修復首創者聖塚的進度顯示.",
+            "[遊戲條] Ctrl + Shift + 點擊時間區域現在開關 CPU 使用統計."
         },
         ["enUS"] = {
             "[Quick Focus] Fixed the support for all ElvUI frames.",
@@ -105,7 +107,8 @@ W.Changelog[233] = {
             "[Tooltips] Compatible with new LibOpenRaid API.",
             "[Tooltips] Support the customization of the progression display title.",
             "[Tooltips] Disable the team info when PGF is loaded.",
-            "[Tooltips] Fixed the progress scanning of Sepulcher of the First Ones (SFO)."
+            "[Tooltips] Fixed the progress scanning of Sepulcher of the First Ones (SFO).",
+            "[Gamebar] Now you can use Ctrl + Shift + click the time in the middle to toggle CPU usage statistics."
         },
         ["koKR"] = {
             "[Quick Focus] Fixed the support for all ElvUI frames.",
@@ -117,7 +120,8 @@ W.Changelog[233] = {
             "[툴팁] 새로운 LibOpenRaid API와 호환됩니다.",
             "[툴팁] 진행 상태 제목의 사용자 정의를 지원합니다.",
             "[Tooltips] Disable the team info when PGF is loaded.",
-            "[Tooltips] Fixed the progress scanning of Sepulcher of the First Ones (SFO)."
+            "[Tooltips] Fixed the progress scanning of Sepulcher of the First Ones (SFO).",
+            "[Gamebar] Now you can use Ctrl + Shift + click the time in the middle to toggle CPU usage statistics."
         }
     }
 }

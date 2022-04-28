@@ -19,7 +19,7 @@ W.Changelog[233] = {
             "[Quick Focus] Change the default status of Quick Focus module to disabled."
         },
         ["koKR"] = {
-            "Add Ko-fi and AiFaDian donation button, you can find it in [WindTools]-[Information]-[Help].",
+            "Ko-fi 및 AiFaDian 기부 항목이 추가되었으며, [윈드툴스]-[정보]-[도움말] 에서 확인하실 수 있습니다.",
             "아시아 사용자들은 불러오지 못했던 ElvUI의 모든 라틴 글꼴들을 불러옵니다.",
             "[빠른 주시] 빠른 주시 모듈의 기본 상태를 비활성화로 변경합니다."
         }
@@ -62,10 +62,10 @@ W.Changelog[233] = {
             "[Friend List] Added an option to use the note as name."
         },
         ["koKR"] = {
-            "Update compatibility check interface.",
-            "Add more compatibility check for Merathilis UI, Shadow & Light and mMediaTag.",
+            "호환성 검사 인터페이스가 업데이트되었습니다.",
+            "Merathilis UI, Shadow & Light, mMediaTag에 대한 호환성 검사를 추가했습니다.",
             "ElvUI Enhanced Again에 대한 호환성 검사를 추가하였습니다.",
-            "New module [Extended Merchant Pages] .",
+            "새로운 모듈 [상인 목록 확장]",
             "[스킨] GM 대기표 상태 스킨을 추가하였습니다.",
             "[스킨] ElvUI 채팅 보이스 패널 스킨을 추가하였습니다.",
             "[툴팁] 플레이어 진영 아이콘을 추가하였습니다. Thanks Merathilis",
@@ -115,17 +115,17 @@ W.Changelog[233] = {
             "[Gamebar] Now you can use Ctrl + Shift + click the time in the middle to toggle CPU usage statistics."
         },
         ["koKR"] = {
-            "[Quick Focus] Fixed the support for all ElvUI frames.",
+            "[빠른 주시] 모든 ElvUI 프레임에 대한 지원을 수정했습니다.",
             "[미니맵 비율 조정] 안정성 향상.",
             "[미니맵 버튼 통합 바] 달력 버튼의 텍스처를 제거할 수 없는 버그를 수정했습니다.",
             "[미니맵 버튼 통합 바] 주둔지/성약 버튼이 잘못된 위치에 있던 문제를 수정했습니다.",
             "[스킨] ElvUI 작업 표시줄 배경을 투명하게 하는 코드를 제거했습니다.",
-            "[Skins] Disable the shadow if player in 제레스 모르티스.",
+            "[스킨] 제레스 모르티스에 있는 동안 그림자가 더 이상 플레이어 선택 프레임에 추가되지 않습니다.",
             "[툴팁] 새로운 LibOpenRaid API와 호환됩니다.",
             "[툴팁] 진행 상태 제목의 사용자 정의를 지원합니다.",
-            "[Tooltips] Disable the team info when PGF is loaded.",
-            "[Tooltips] Fixed the progress scanning of Sepulcher of the First Ones (SFO).",
-            "[Gamebar] Now you can use Ctrl + Shift + click the time in the middle to toggle CPU usage statistics."
+            "[툴팁] Premade Groups Filter를 사용 중일 경우 파티 정보를 비활성화합니다.",
+            "[툴팁] 태초의 존재의 매장터(SFO)의 진행 상황 스캔을 수정했습니다.",
+            "[게임 바] 게임 바의 시계를 Ctrl + Shift 클릭 하면 CPU 사용량 통계가 표시됩니다."
         }
     }
 }

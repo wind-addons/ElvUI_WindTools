@@ -13,6 +13,7 @@
 ## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, MeetingStoneEX, MythicDungeonTools, Myslot, Details, Details_Covenants
 ## X-Curse-Project-ID: 300361
 ## X-WoWI-ID: 25687
+## X-Wago-ID: lQNlD9Ne
 ## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & others in CREDITS.md
 
 Libraries\Load_Libraries.xml

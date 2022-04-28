@@ -11,36 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 拉取分支
+      - name: Pull the latest version
         uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
-      - name: 初始化 Python 环境
+      - name: Initialize Python envoriment
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
       
-      - name: 安装 Python 相关依赖
+      - name: Install Python dependencies
         run: pip install git+https://github.com/SirAnthony/slpp
       
-      - name: 生成更新文档
+      - name: Run scripts to generate changelogs
         run: python generate_changelog.py
 
-      - name: 创建包
+      - name: Auto Packaging
         uses: BigWigsMods/packager@master
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
 
-      - name: 上传到 Github Actions
+      - name: Upload to Github Actions
         uses: actions/upload-artifact@v2
         with:
           name: ElvUI_WindTools
           path: .release/*.zip
 
-      - name: 发送失败信息到 Discord
+      - name: Send a message to Discord if meets a failure
         uses: nebularg/actions-discord-webhook@v1
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}

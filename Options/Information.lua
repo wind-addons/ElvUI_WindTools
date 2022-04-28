@@ -30,8 +30,33 @@ options.help = {
     type = "group",
     name = L["Help"],
     args = {
-        contact = {
+        kofi = {
             order = 1,
+            type = "execute",
+            name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateKofi, 14), L["Donate"], L["Ko-fi"]),
+            func = function()
+                E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://ko-fi.com/fang2hou")
+            end,
+            width = 1.2
+        },
+        aiFaDian = {
+            order = 2,
+            type = "execute",
+            name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateAiFaDian, 14), L["Donate"], L["AiFaDian"]),
+            func = function()
+                E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://afdian.net/@fang2hou")
+            end,
+            width = 1.2
+        },
+        betterAlign = {
+            order = 3,
+            type = "description",
+            fontSize = "medium",
+            name = " ",
+            width = "full"
+        },
+        contact = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -120,7 +145,7 @@ options.help = {
             }
         },
         contributors = {
-            order = 3,
+            order = 5,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -192,7 +217,7 @@ options.help = {
             }
         },
         version = {
-            order = 4,
+            order = 6,
             name = L["Version"],
             type = "group",
             inline = true,

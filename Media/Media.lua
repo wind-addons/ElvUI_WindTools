@@ -129,6 +129,9 @@ AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 AddMedia("arrowDown", "ArrowDown.tga", "Textures")
 
+AddMedia("donateKofi", "Ko-fi.tga", "Icons")
+AddMedia("donateAiFaDian", "AiFaDian.tga", "Icons")
+
 AddMedia("ffxivTank", "FFXIV/Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV/DPS.tga", "Icons")
 AddMedia("ffxivHealer", "FFXIV/Healer.tga", "Icons")

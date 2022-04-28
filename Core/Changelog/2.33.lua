@@ -4,18 +4,22 @@ W.Changelog[233] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "新增 Ko-fi 和爱发电捐助入口, 你可以在 [Wind 工具箱]-[信息]-[帮助] 中找到它.",
             "为亚洲语系客户端引入全部的 ElvUI 拉丁字体.",
             "[快速焦点] 现在默认为不开启."
         },
         ["zhTW"] = {
+            "新增 Ko-fi 和愛發電捐助入口, 你可以在 [Wind 工具箱]-[信息]-[幫助] 中找到它.",
             "为亞洲語系客戶端引入全部的 ElvUI 拉丁字型.",
             "[快速焦點] 現在預設為不開啟."
         },
         ["enUS"] = {
+            "Add Ko-fi and AiFaDian donation button, you can find it in [WindTools]-[Information]-[Help].",
             "Import all ElvUI latin fonts to clients in asian.",
             "[Quick Focus] Change the default status of Quick Focus module to disabled."
         },
         ["koKR"] = {
+            "Add Ko-fi and AiFaDian donation button, you can find it in [WindTools]-[Information]-[Help].",
             "아시아 사용자들은 불러오지 못했던 ElvUI의 모든 라틴 글꼴들을 불러옵니다.",
             "[빠른 주시] 빠른 주시 모듈의 기본 상태를 비활성화로 변경합니다."
         }

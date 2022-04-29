@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[233] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/04/29",
     IMPORTANT = {
         ["zhCN"] = {
             "新增 Ko-fi 和爱发电捐助入口, 你可以在 [Wind 工具箱]-[信息]-[帮助] 中找到它.",

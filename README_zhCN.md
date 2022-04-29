@@ -1,14 +1,14 @@
 <div align="center">
 <img src="Title.png"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.32-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.33-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
 </div>
 
 # :white_check_mark: 状态
-![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/badge/Wind%20Plugins-加入-grey.svg?longCache=true&color=7289DA&logo=discord)](https://discord.gg/nA44TeZ)
+![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/nA44TeZ) [![](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
 
 下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [Wago](https://addons.wago.io/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 

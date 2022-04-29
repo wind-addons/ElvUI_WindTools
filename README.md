@@ -7,7 +7,7 @@
 </div>
 
 # :white_check_mark: Status
-![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/nA44TeZ) [![](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
+![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/JMz5Zsk) [![](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
 
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [Wago](https://addons.wago.io/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 

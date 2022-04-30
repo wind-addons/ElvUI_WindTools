@@ -61,146 +61,153 @@ local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 local quests, choiceQueue = {}, nil
 
 local ignoreQuestNPC = {
-    [88570] = true, -- Fate-Twister Tiklal
-    [87391] = true, -- Fate-Twister Seress
-    [111243] = true, -- Archmage Lan'dalock
-    [108868] = true, -- Hunter's order hall
-    [101462] = true, -- Reaves
-    [43929] = true, -- 4000
-    [14847] = true, -- DarkMoon
-    [119388] = true, -- 酋长哈顿
-    [114719] = true, -- 商人塞林
-    [121263] = true, -- 大技师罗姆尔
-    [126954] = true, -- 图拉扬
-    [124312] = true, -- 图拉扬
-    [103792] = true, -- 格里伏塔
-    [101880] = true, -- 泰克泰克
-    [141584] = true, -- 祖尔温
-    [142063] = true, -- 特兹兰
-    [143388] = true, -- 德鲁扎
-    [98489] = true, -- 海难俘虏
-    [135690] = true, -- 亡灵舰长
-    [105387] = true, -- 安杜斯
-    [93538] = true, -- 达瑞妮斯
-    [154534] = true, -- 大杂院阿畅
-    [150987] = true, -- 肖恩·维克斯，斯坦索姆
-    [150563] = true, -- 斯卡基特，麦卡贡订单日常
-    [143555] = true, -- 山德·希尔伯曼，祖达萨PVP军需官
-    [168430] = true, -- 戴克泰丽丝，格里恩挑战
-    [160248] = true, -- 档案员费安，罪魂碎片
-    [127037] = true, -- 纳毕鲁
-    [326027] = true, -- 运输站回收生成器DX-82
-    [45400] = true -- Fiona's Caravan
+    [14847] = true, -- 薩杜斯‧帕里歐教授
+    [43929] = true, -- 布靈登4000型
+    [45400] = true, -- 菲歐娜的馬車
+    [87391] = true, -- 命運扭曲者瑟蕾絲
+    [88570] = true, -- 命運扭曲者提克拉
+    [93538] = true, -- 博學者達莉諾絲
+    [98489] = true, -- 船難俘虜
+    [101462] = true, -- 劫福斯
+    [101880] = true, -- 塔克塔克
+    [103792] = true, -- 格利夫塔
+    [105387] = true, -- 安德斯
+    [108868] = true, -- 塔陸亞
+    [111243] = true, -- 大法師朗達拉克
+    [114719] = true, -- 商人愷倫
+    [119388] = true, -- 哈圖恩族長
+    [121263] = true, -- 大工藝師羅穆爾
+    [124312] = true, -- 大主教圖拉揚
+    [126954] = true, -- 大主教圖拉揚
+    [127037] = true, -- 納比魯
+    [135690] = true, -- 恐衛上將黛特賽爾
+    [141584] = true, -- 祖爾凡
+    [142063] = true, -- 泰茲蘭
+    [143388] = true, -- 德露莎‧虛牙
+    [143555] = true, -- 山德‧銀法
+    [150563] = true, -- 史卡吉特
+    [150987] = true, -- 尚恩‧威克斯
+    [154534] = true, -- 芙菈斯
+    [160248] = true, -- 文獻管理員費恩
+    [162804] = true, -- 維娜里
+    [168430] = true -- 達提莉絲
 }
 
 local ignoreGossipNPC = {
-    [45400] = true, -- Fiona's Caravan
+    [45400] = true, -- 菲歐娜的馬車
     -- Bodyguards
-    [86945] = true, -- Aeda Brightdawn (Horde)
-    [86933] = true, -- Vivianne (Horde)
-    [86927] = true, -- Delvar Ironfist (Alliance)
-    [86934] = true, -- Defender Illona (Alliance)
-    [86682] = true, -- Tormmok
-    [86964] = true, -- Leorajh
-    [86946] = true, -- Talonpriest Ishaal
+    [86682] = true, -- 退役的戈利安百夫長
+    [86927] = true, -- 暴風之盾死亡騎士
+    [86933] = true, -- 戰爭之矛魔導師
+    [86934] = true, -- 薩塔防衛者
+    [86945] = true, -- 日誓術士
+    [86946] = true, -- 流亡的魔爪祭司
+    [86964] = true, -- 血鬃縛地者
     -- Sassy Imps
-    [95139] = true,
-    [95141] = true,
-    [95142] = true,
-    [95143] = true,
-    [95144] = true,
-    [95145] = true,
-    [95146] = true,
-    [95200] = true,
-    [95201] = true,
+    [95139] = true, -- 魔化小鬼
+    [95141] = true, -- 魔化小鬼
+    [95142] = true, -- 魔化小鬼
+    [95143] = true, -- 魔化小鬼
+    [95144] = true, -- 魔化小鬼
+    [95145] = true, -- 魔化小鬼
+    [95146] = true, -- 魔化小鬼
+    [95200] = true, -- 魔化小鬼
+    [95201] = true, -- 魔化小鬼
     -- Misc NPCs
-    [79740] = true, -- Warmaster Zog (Horde)
-    [79953] = true, -- Lieutenant Thorn (Alliance)
-    [84268] = true, -- Lieutenant Thorn (Alliance)
-    [84511] = true, -- Lieutenant Thorn (Alliance)
-    [84684] = true, -- Lieutenant Thorn (Alliance)
-    [117871] = true, -- War Councilor Victoria (Class Challenges @ Broken Shore)
-    [155101] = true, -- 元素精华融合器
-    [155261] = true, -- 肖恩·维克斯，斯坦索姆
-    [150122] = true, -- 荣耀堡法师
-    [150131] = true, -- 萨尔玛法师
-    [173021] = true, -- 刻符牛头人
-    [171589] = true, -- 德莱文将军
-    [171787] = true, -- 文官阿得赖斯提斯
-    [171795] = true, -- 月莓女勋爵
-    [171821] = true, -- 德拉卡女男爵
-    [172558] = true, -- 艾拉·引路者（导师）
-    [172572] = true, -- 瑟蕾丝特·贝利文科（导师）
-    [175513] = true -- 纳斯利亚审判官，傲慢
+    [79740] = true, -- 將領佐格 (部落)
+    [79953] = true, -- 索恩妮中尉 (聯盟)
+    [84268] = true, -- 索恩妮中尉 (聯盟)
+    [84511] = true, -- 索恩妮中尉 (聯盟)
+    [84684] = true, -- 索恩妮中尉 (聯盟)
+    [117871] = true, -- 戰事參謀維朵莉亞
+    [150122] = true, -- 榮譽堡法師
+    [150131] = true, -- 索爾瑪法師
+    [155101] = true, -- 元素精華融合器
+    [155261] = true, -- 尚恩‧威克斯
+    [165196] = true, -- 希奧塔
+    [171589] = true, -- 德瑞文將軍
+    [171787] = true, -- 軍政官阿德雷特斯
+    [171795] = true, -- 月莓女士
+    [171821] = true, -- 武鬥士梅維斯
+    [172558] = true, -- 伊萊雅‧引路者
+    [172572] = true, -- 瑟莉絲蒂‧佩利溫哥
+    [173021] = true, -- 刻符牛頭人
+    [175513] = true, -- 納撒亞審判官
+    [180458] = true, -- 戴納瑟斯王的幻象
+    [182681] = true, -- 強化控制臺
+    [183262] = true, -- 回響的創始機諾
+    [184587] = true -- 塔皮克斯
 }
 
 local rogueClassHallInsignia = {
-    [97004] = true, -- "Red" Jack Findle
-    [96782] = true, -- Lucian Trias
-    [93188] = true -- Mongar
+    [93188] = true, -- 蒙加
+    [96782] = true, -- 魯西安‧提亞斯
+    [97004] = true, -- 『赤紅』傑克‧芬朵
+    [107486] = true, -- 長舌造謠者
+    [167839] = true -- 部分注入的殘存之魂
 }
 
 local followerAssignees = {
-    [138708] = true, -- 半兽人迦罗娜
-    [135614] = true -- 马迪亚斯·肖尔大师
+    [135614] = true, -- 馬迪亞斯‧肖爾大師
+    [138708] = true -- 迦羅娜‧半血
 }
 
 local darkmoonNPC = {
-    [57850] = true, -- Teleportologist Fozlebub
-    [55382] = true, -- Darkmoon Faire Mystic Mage (Horde)
-    [54334] = true -- Darkmoon Faire Mystic Mage (Alliance)
+    [54334] = true, -- 暗月馬戲團秘法師 (聯盟)
+    [55382] = true, -- 暗月馬戲團秘法師 (部落)
+    [57850] = true -- 傳送學家法蘇羅寶布
 }
 
 local itemBlacklist = {
     -- Inscription weapons
-    [31690] = 79343, -- Inscribed Tiger Staff
-    [31691] = 79340, -- Inscribed Crane Staff
-    [31692] = 79341, -- Inscribed Serpent Staff
+    [79340] = true, -- 銘刻紅鶴法杖
+    [79341] = true, -- 銘刻玉蛟法杖
+    [79343] = true, -- 銘刻白虎法杖
     -- Darkmoon Faire artifacts
-    [29443] = 71635, -- Imbued Crystal
-    [29444] = 71636, -- Monstrous Egg
-    [29445] = 71637, -- Mysterious Grimoire
-    [29446] = 71638, -- Ornate Weapon
-    [29451] = 71715, -- A Treatise on Strategy
-    [29456] = 71951, -- Banner of the Fallen
-    [29457] = 71952, -- Captured Insignia
-    [29458] = 71953, -- Fallen Adventurer's Journal
-    [29464] = 71716, -- Soothsayer's Runes
+    [71635] = true, -- 灌魔水晶
+    [71636] = true, -- 怪異的蛋
+    [71637] = true, -- 詭秘魔典
+    [71638] = true, -- 華麗武器
+    [71715] = true, -- 戰略論
+    [71716] = true, -- 預卜者的符文
+    [71951] = true, -- 墮落者旌旗
+    [71952] = true, -- 奪來的徽記
+    [71953] = true, -- 逝去冒險者的日記
     -- Tiller Gifts
-    ["progress_79264"] = 79264, -- Ruby Shard
-    ["progress_79265"] = 79265, -- Blue Feather
-    ["progress_79266"] = 79266, -- Jade Cat
-    ["progress_79267"] = 79267, -- Lovely Apple
-    ["progress_79268"] = 79268, -- Marsh Lily
+    [79264] = true, -- 紅寶石裂片
+    [79265] = true, -- 藍羽
+    [79266] = true, -- 玉貓
+    [79267] = true, -- 可愛的蘋果
+    [79268] = true, -- 溼地百合
     -- Garrison scouting missives
-    ["38180"] = 122424, -- Scouting Missive: Broken Precipice
-    ["38193"] = 122423, -- Scouting Missive: Broken Precipice
-    ["38182"] = 122418, -- Scouting Missive: Darktide Roost
-    ["38196"] = 122417, -- Scouting Missive: Darktide Roost
-    ["38179"] = 122400, -- Scouting Missive: Everbloom Wilds
-    ["38192"] = 122404, -- Scouting Missive: Everbloom Wilds
-    ["38194"] = 122420, -- Scouting Missive: Gorian Proving Grounds
-    ["38202"] = 122419, -- Scouting Missive: Gorian Proving Grounds
-    ["38178"] = 122402, -- Scouting Missive: Iron Siegeworks
-    ["38191"] = 122406, -- Scouting Missive: Iron Siegeworks
-    ["38184"] = 122413, -- Scouting Missive: Lost Veil Anzu
-    ["38198"] = 122414, -- Scouting Missive: Lost Veil Anzu
-    ["38177"] = 122403, -- Scouting Missive: Magnarok
-    ["38190"] = 122399, -- Scouting Missive: Magnarok
-    ["38181"] = 122421, -- Scouting Missive: Mok'gol Watchpost
-    ["38195"] = 122422, -- Scouting Missive: Mok'gol Watchpost
-    ["38185"] = 122411, -- Scouting Missive: Pillars of Fate
-    ["38199"] = 122409, -- Scouting Missive: Pillars of Fate
-    ["38187"] = 122412, -- Scouting Missive: Shattrath Harbor
-    ["38201"] = 122410, -- Scouting Missive: Shattrath Harbor
-    ["38186"] = 122408, -- Scouting Missive: Skettis
-    ["38200"] = 122407, -- Scouting Missive: Skettis
-    ["38183"] = 122416, -- Scouting Missive: Socrethar's Rise
-    ["38197"] = 122415, -- Scouting Missive: Socrethar's Rise
-    ["38176"] = 122405, -- Scouting Missive: Stonefury Cliffs
-    ["38189"] = 122401, -- Scouting Missive: Stonefury Cliffs
+    [122399] = true, -- 偵察文件：麥奈洛克
+    [122400] = true, -- 偵察文件：永茂林野地
+    [122401] = true, -- 偵察文件：石怒崖
+    [122402] = true, -- 偵察文件：鋼鐵軍火廠
+    [122403] = true, -- 偵察文件：麥奈洛克
+    [122404] = true, -- 偵察文件：永茂林野地
+    [122405] = true, -- 偵察文件：石怒崖
+    [122406] = true, -- 偵察文件：鋼鐵軍火廠
+    [122407] = true, -- 偵察文件：司凱堤斯
+    [122408] = true, -- 偵察文件：司凱堤斯
+    [122409] = true, -- 偵察文件：命運之柱
+    [122410] = true, -- 偵察文件：撒塔斯港
+    [122411] = true, -- 偵察文件：命運之柱
+    [122412] = true, -- 偵察文件：撒塔斯港
+    [122413] = true, -- 偵察文件：失落的維爾安祖
+    [122414] = true, -- 偵察文件：失落的維爾安祖
+    [122415] = true, -- 偵察文件：索奎薩爾高地
+    [122416] = true, -- 偵察文件：索奎薩爾高地
+    [122417] = true, -- 偵察文件：暗潮棲息地
+    [122418] = true, -- 偵察文件：暗潮棲息地
+    [122419] = true, -- 偵察文件：戈利安試煉場
+    [122420] = true, -- 偵察文件：戈利安試煉場
+    [122421] = true, -- 偵察文件：莫克戈爾哨站
+    [122422] = true, -- 偵察文件：莫克戈爾哨站
+    [122423] = true, -- 偵察文件：破碎絕壁
+    [122424] = true, -- 偵察文件：破碎絕壁
     -- Misc
-    [31664] = 88604 -- Nat's Fishing Journal
+    [88604] = true -- 納特的釣魚手冊
 }
 
 local ignoreProgressNPC = {
@@ -444,10 +451,8 @@ function TI:QUEST_PROGRESS()
                 local link = GetQuestItemLink("required", index)
                 if link then
                     local id = tonumber(strmatch(link, "item:(%d+)"))
-                    for _, itemID in next, itemBlacklist do
-                        if itemID == id then
-                            return
-                        end
+                    if itemBlacklist[id] then
+                        return
                     end
                 else
                     choiceQueue = "QUEST_PROGRESS"

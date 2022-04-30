@@ -451,7 +451,7 @@ function TI:QUEST_COMPLETE()
         return
     end
 
-    if self:IsIgnored() then
+    if self:IsIgnoredNPC() then
         return
     end
 

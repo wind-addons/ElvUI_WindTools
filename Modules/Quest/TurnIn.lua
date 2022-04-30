@@ -235,7 +235,7 @@ local cashRewards = {
 local function IsTrackingHidden()
     for index = 1, GetNumTrackingTypes() do
         local name, _, active = GetTrackingInfo(index)
-        if name == (_G.MINIMAP_TRACKING_TRIVIAL_QUESTS or _G.MINIMAP_TRACKING_HIDDEN_QUESTS) then
+        if name == _G.MINIMAP_TRACKING_TRIVIAL_QUESTS then
             return active
         end
     end
@@ -244,24 +244,6 @@ end
 local function IsWorldQuestType(questID)
     local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
     return tagInfo.worldQuestType and true or false
-end
-
-local function IsIgnored()
-    local npcID = TI:GetNPCID()
-
-    if ignoreQuestNPC[npcID] then
-        return true
-    end
-
-    if TI.db and TI.db.modifierKeyPause and IsModifierKeyDown() then
-        return true
-    end
-
-    if TI.db and TI.db.customIgnoreNPCs and TI.db.customIgnoreNPCs[npcID] then
-        return true
-    end
-
-    return false
 end
 
 local function AttemptAutoComplete(event)
@@ -305,35 +287,49 @@ function TI:GetNPCID(unit)
     return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
+function TI:IsIgnored()
+    local npcID = self:GetNPCID()
+
+    if ignoreQuestNPC[npcID] then
+        return true
+    elseif self.db then
+        if self.db.modifierKeyPause and IsModifierKeyDown() then
+            return true
+        elseif self.db.customIgnoreNPCs and self.db.customIgnoreNPCs[npcID] then
+            return true
+        end
+    end
+
+    return false
+end
+
 function TI:QUEST_GREETING()
-    if IsIgnored() then
+    if self:IsIgnored() then
         return
     end
 
-    local active = C_GossipInfo_GetNumActiveQuests()
-    if active > 0 then
-        for index, questInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
-            local questID = questInfo.questID
-            local isWorldQuest = questID and C_QuestLog_IsWorldQuest(questID)
-            if questInfo.isComplete and (not questID or not isWorldQuest) then
+    local numQuests = C_GossipInfo_GetNumActiveQuests()
+    if numQuests > 0 then
+        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
+            local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
+            if gossipQuestUIInfo.isComplete and not isWorldQuest then
                 C_GossipInfo_SelectActiveQuest(index)
             end
         end
     end
 
-    local available = C_GossipInfo_GetNumAvailableQuests()
-    if available > 0 then
-        for index = 1, available do
-            local info = C_GossipInfo_GetAvailableQuests(index)
-            if not info.isTrivial and not info.isIgnored or IsTrackingHidden() then
-                C_GossipInfo_SelectActiveQuest(index)
+    local numQuests = C_GossipInfo_GetNumAvailableQuests()
+    if numQuests > 0 then
+        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
+            if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() then
+                C_GossipInfo_SelectAvailableQuest(index)
             end
         end
     end
 end
 
 function TI:GOSSIP_SHOW()
-    if IsIgnored() then
+    if self:IsIgnored() then
         return
     end
 
@@ -396,16 +392,16 @@ function TI:GOSSIP_SHOW()
     end
 end
 
-function TI:GOSSIP_CONFIRM()
+function TI:GOSSIP_CONFIRM(index)
     local npcID = self:GetNPCID()
     if npcID and darkmoonNPC[npcID] and self.db and self.db.darkmoon then
-        local dialog = StaticPopup_FindVisible("GOSSIP_CONFIRM")
-        StaticPopup_OnClick(dialog, 1)
+        C_GossipInfo_SelectOption(index, "", true)
+        StaticPopup_Hide("GOSSIP_CONFIRM")
     end
 end
 
 function TI:QUEST_DETAIL()
-    if IsIgnored() then
+    if self:IsIgnored() then
         return
     end
 
@@ -441,7 +437,7 @@ function TI:QUEST_PROGRESS()
             return
         end
 
-        if IsIgnored() then
+        if self:IsIgnored() then
             return
         end
 
@@ -466,7 +462,7 @@ function TI:QUEST_PROGRESS()
 end
 
 function TI:QUEST_COMPLETE()
-    if IsIgnored() then
+    if self:IsIgnored() then
         return
     end
 

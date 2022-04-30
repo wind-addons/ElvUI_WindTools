@@ -420,30 +420,32 @@ function TI:QUEST_PROGRESS()
         return
     end
 
-    if IsQuestCompletable() then
-        local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
-        if tagInfo and (tagInfo.tagID == 153 or tagInfo.worldQuestType) or self:IsIgnoredNPC() then
-            return
-        end
+    if not IsQuestCompletable() then
+        return
+    end
 
-        local requiredItems = GetNumQuestItems()
-        if requiredItems > 0 then
-            for index = 1, requiredItems do
-                local link = GetQuestItemLink("required", index)
-                if link then
-                    local id = GetItemInfoFromHyperlink(link)
-                    if id and itemBlacklist[id] then
-                        return CloseQuest()
-                    end
-                else
-                    choiceQueue = "QUEST_PROGRESS"
-                    return GetQuestItemInfo("required", index)
+    local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
+    if tagInfo and (tagInfo.tagID == 153 or tagInfo.worldQuestType) or self:IsIgnoredNPC() then
+        return
+    end
+
+    local requiredItems = GetNumQuestItems()
+    if requiredItems > 0 then
+        for index = 1, requiredItems do
+            local link = GetQuestItemLink("required", index)
+            if link then
+                local id = GetItemInfoFromHyperlink(link)
+                if id and itemBlacklist[id] then
+                    return CloseQuest()
                 end
+            else
+                choiceQueue = "QUEST_PROGRESS"
+                return GetQuestItemInfo("required", index)
             end
         end
-
-        CompleteQuest()
     end
+
+    CompleteQuest()
 end
 
 function TI:QUEST_COMPLETE()
@@ -476,9 +478,12 @@ function TI:QUEST_COMPLETE()
             end
         end
 
-        local button = bestIndex and _G.QuestInfoRewardsFrame.RewardButtons[bestIndex]
-        if button then
-            QuestInfoItem_OnClick(button)
+        if bestIndex then
+            if self.db and self.db.getBestReward then
+                GetQuestReward(bestIndex)
+            else
+                QuestInfoItem_OnClick(_G.QuestInfoRewardsFrame.RewardButtons[bestIndex])
+            end
         end
     end
 end

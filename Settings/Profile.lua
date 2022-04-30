@@ -838,6 +838,7 @@ P.quest = {
         mode = "ALL",
         smartChat = true,
         selectReward = true,
+        getBestReward = false,
         darkmoon = true,
         followerAssignees = true,
         pauseModifier = "SHIFT",

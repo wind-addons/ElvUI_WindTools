@@ -12,7 +12,7 @@ end
 
 function S:SkinSkipButton(frame)
     if frame and frame.CloseDialog then
-        self:CreateBackdropShadow(frame.CloseDialog)
+        self:CreateShadow(frame.CloseDialog)
     end
 end
 

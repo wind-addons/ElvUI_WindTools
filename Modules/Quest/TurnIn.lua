@@ -13,6 +13,7 @@ local tonumber = tonumber
 
 local AcceptQuest = AcceptQuest
 local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
+local AutoQuestPopupTracker_RemovePopUp = AutoQuestPopupTracker_RemovePopUp
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
 local GetAutoQuestPopUp = GetAutoQuestPopUp
@@ -431,10 +432,8 @@ function TI:QUEST_PROGRESS()
                 local link = GetQuestItemLink("required", index)
                 if link then
                     local id = GetItemInfoFromHyperlink(link)
-                    for _, itemID in next, itemBlacklist do
-                        if itemID == id then
-                            return CloseQuest()
-                        end
+                    if id and itemBlacklist[id] then
+                        return CloseQuest()
                     end
                 else
                     choiceQueue = "QUEST_PROGRESS"
@@ -500,6 +499,7 @@ function TI:AttemptAutoComplete(event)
         end
 
         local questID, popUpType = GetAutoQuestPopUp(1)
+
         if not C_QuestLog_IsWorldQuest(questID) then
             if popUpType == "OFFER" then
                 ShowQuestOffer(questID)
@@ -507,6 +507,8 @@ function TI:AttemptAutoComplete(event)
                 ShowQuestComplete(questID)
             end
         end
+
+        AutoQuestPopupTracker_RemovePopUp(questID)
     end
 end
 

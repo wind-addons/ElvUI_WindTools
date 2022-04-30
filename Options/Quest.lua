@@ -354,9 +354,9 @@ options.turnIn = {
             end,
             values = {
                 ANY = L["Any"],
-                ALT = L["Alt"],
-                CTRL = L["Ctrl"],
-                SHIFT = L["Shift"],
+                ALT = L["Alt Key"],
+                CTRL = L["Ctrl Key"],
+                SHIFT = L["Shift Key"],
                 NONE = L["None"]
             }
         },

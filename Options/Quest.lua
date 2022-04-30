@@ -198,8 +198,8 @@ options.objectiveTracker = {
                     order = 4,
                     type = "toggle",
                     name = L["Short Header"],
-                    desc = L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."],
-                },
+                    desc = L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."]
+                }
             }
         },
         title = {
@@ -315,11 +315,7 @@ options.turnIn = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = format(
-                        "%s\n%s",
-                        L["Make quest acceptance and completion automatically."],
-                        L["Press modifier key (Shift, Ctrl, Alt) to stop the automation temporarily."]
-                    ),
+                    name = L["Make quest acceptance and completion automatically."],
                     fontSize = "medium"
                 }
             }
@@ -335,49 +331,85 @@ options.turnIn = {
             end,
             width = "full"
         },
-        selectReward = {
+        mode = {
             order = 3,
+            type = "select",
+            name = L["Mode"],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
+            values = {
+                ALL = L["All"],
+                ACCEPT = L["Only Accept"],
+                COMPLETE = L["Only Complete"]
+            }
+        },
+        pauseModifier = {
+            order = 4,
+            type = "select",
+            name = L["Pause On Press"],
+            desc = L["Pause the automation by pressing a modifier key."],
+            disabled = function()
+                return not E.db.WT.quest.turnIn.enable
+            end,
+            values = {
+                ANY = L["Any"],
+                ALT = L["Alt"],
+                CTRL = L["Ctrl"],
+                SHIFT = L["Shift"],
+                NONE = L["None"]
+            }
+        },
+        selectReward = {
+            order = 5,
             type = "toggle",
             name = L["Select Reward"],
             desc = L[
                 "If there are multiple items in the reward list, it will select the reward with the highest sell price."
             ],
             disabled = function()
-                return not E.db.WT.quest.turnIn.enable
-            end,
-            width = 1.667
+                return not E.db.WT.quest.turnIn.enable or E.db.WT.quest.turnIn.mode == "ACCEPT"
+            end
         },
-        darkmoon = {
-            order = 4,
-            type = "toggle",
-            name = L["Dark Moon"],
-            desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
-            disabled = function()
-                return not E.db.WT.quest.turnIn.enable
-            end,
-            width = 1.667
-        },
-        followerAssignees = {
-            order = 5,
-            type = "toggle",
-            name = L["Follower Assignees"],
-            desc = L["Open the window of follower recruit automatically."],
-            disabled = function()
-                return not E.db.WT.quest.turnIn.enable
-            end,
-            width = 1.667
-        },
-        rogueClassHallInsignia = {
+        smartChat = {
             order = 6,
-            type = "toggle",
-            name = L["Rogue Class Hall Insignia"],
-            desc = L["Open the passageway to Rogue Class Hall automatically."],
+            type = "group",
+            inline = true,
+            name = L["Smart Chat"],
             disabled = function()
                 return not E.db.WT.quest.turnIn.enable
             end,
-            width = 1.667
+            args = {
+                smartChat = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Chat with NPCs smartly. It will automatically select the best option for you."],
+                    disabled = function()
+                        return not E.db.WT.quest.turnIn.enable
+                    end
+                },
+                darkmoon = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Dark Moon"],
+                    desc = L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."],
+                    disabled = function()
+                        return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
+                    end
+                },
+                followerAssignees = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Follower Assignees"],
+                    desc = L["Open the window of follower recruit automatically."],
+                    disabled = function()
+                        return not E.db.WT.quest.turnIn.enable or not E.db.WT.quest.turnIn.smartChat
+                    end
+                }
+            }
         },
-        custom = {
+        ignore = {
             order = 7,
             type = "group",
             inline = true,
@@ -386,21 +418,14 @@ options.turnIn = {
                 return not E.db.WT.quest.turnIn.enable
             end,
             args = {
-                modifierKeyPause = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Pause On Press"],
-                    desc = L["Pause the automation by pressing a modifier key."],
-                    width = "full"
-                },
                 description = {
-                    order = 2,
+                    order = 1,
                     type = "description",
                     name = "\n" .. L["If you add the NPC into the list, all automation will do not work for it."],
                     width = "full"
                 },
                 list = {
-                    order = 3,
+                    order = 2,
                     type = "select",
                     name = L["Ignore List"],
                     get = function()
@@ -419,7 +444,7 @@ options.turnIn = {
                     end
                 },
                 addButton = {
-                    order = 4,
+                    order = 3,
                     type = "execute",
                     name = L["Add Target"],
                     desc = L["Make sure you select the NPC as your target."],
@@ -428,7 +453,7 @@ options.turnIn = {
                     end
                 },
                 deleteButton = {
-                    order = 5,
+                    order = 4,
                     type = "execute",
                     name = L["Delete"],
                     desc = L["Delete the selected NPC."],

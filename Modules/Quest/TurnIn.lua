@@ -10,7 +10,6 @@ local strlen = strlen
 local strmatch = strmatch
 local strupper = strupper
 local tonumber = tonumber
-local wipe = wipe
 
 local AcceptQuest = AcceptQuest
 local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
@@ -19,6 +18,7 @@ local CompleteQuest = CompleteQuest
 local GetAutoQuestPopUp = GetAutoQuestPopUp
 local GetInstanceInfo = GetInstanceInfo
 local GetItemInfo = GetItemInfo
+local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
 local GetNumAutoQuestPopUps = GetNumAutoQuestPopUps
 local GetNumQuestChoices = GetNumQuestChoices
 local GetNumQuestItems = GetNumQuestItems
@@ -28,15 +28,17 @@ local GetQuestItemInfo = GetQuestItemInfo
 local GetQuestItemLink = GetQuestItemLink
 local GetQuestReward = GetQuestReward
 local GetTrackingInfo = GetTrackingInfo
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
 local IsModifierKeyDown = IsModifierKeyDown
 local IsQuestCompletable = IsQuestCompletable
+local IsShiftKeyDown = IsShiftKeyDown
 local QuestGetAutoAccept = QuestGetAutoAccept
 local QuestInfoItem_OnClick = QuestInfoItem_OnClick
 local QuestIsFromAreaTrigger = QuestIsFromAreaTrigger
 local ShowQuestComplete = ShowQuestComplete
 local ShowQuestOffer = ShowQuestOffer
-local StaticPopup_FindVisible = StaticPopup_FindVisible
-local StaticPopup_OnClick = StaticPopup_OnClick
+local StaticPopup_Hide = StaticPopup_Hide
 local UnitExists = UnitExists
 local UnitGUID = UnitGUID
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
@@ -52,8 +54,6 @@ local C_GossipInfo_GetOptions = C_GossipInfo.GetOptions
 local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
-local C_QuestLog_GetInfo = C_QuestLog.GetInfo
-local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
@@ -64,6 +64,7 @@ local ignoreQuestNPC = {
     [14847] = true, -- 薩杜斯‧帕里歐教授
     [43929] = true, -- 布靈登4000型
     [45400] = true, -- 菲歐娜的馬車
+    [77789] = true, -- 布靈登5000型
     [87391] = true, -- 命運扭曲者瑟蕾絲
     [88570] = true, -- 命運扭曲者提克拉
     [93538] = true, -- 博學者達莉諾絲
@@ -139,7 +140,7 @@ local ignoreGossipNPC = {
     [184587] = true -- 塔皮克斯
 }
 
-local rogueClassHallInsignia = {
+local smartChatNPCs = {
     [93188] = true, -- 蒙加
     [96782] = true, -- 魯西安‧提亞斯
     [97004] = true, -- 『赤紅』傑克‧芬朵
@@ -210,26 +211,29 @@ local itemBlacklist = {
     [88604] = true -- 納特的釣魚手冊
 }
 
-local ignoreProgressNPC = {
-    [119388] = true,
-    [127037] = true,
-    [126954] = true,
-    [124312] = true,
-    [141584] = true,
-    [326027] = true, -- 运输站回收生成器DX-82
-    [150563] = true -- 斯卡基特，麦卡贡订单日常
+local autoGossipTypes = {
+    ["taxi"] = true,
+    ["gossip"] = true,
+    ["banker"] = true,
+    ["vendor"] = true,
+    ["trainer"] = true
+}
+
+local ignoreInstances = {
+    [1571] = true, -- 枯法者
+    [1626] = true -- 群星庭院
 }
 
 local cashRewards = {
-    [45724] = 1e5, -- Champion's Purse
-    [64491] = 2e6, -- Royal Reward
+    [45724] = 1e5, -- 勇士的獎金
+    [64491] = 2e6, -- 皇家的獎賞
     -- Items from the Sixtrigger brothers quest chain in Stormheim
-    [138127] = 15, -- Mysterious Coin, 15 copper
-    [138129] = 11, -- Swatch of Priceless Silk, 11 copper
-    [138131] = 24, -- Magical Sprouting Beans, 24 copper
-    [138123] = 15, -- Shiny Gold Nugget, 15 copper
-    [138125] = 16, -- Crystal Clear Gemstone, 16 copper
-    [138133] = 27 -- Elixir of Endless Wonder, 27 copper
+    [138123] = 15, -- 亮晶晶的碎礦
+    [138125] = 16, -- 晶瑩剔透的寶石
+    [138127] = 15, -- 神秘硬幣
+    [138129] = 11, -- 無價絲布樣本
+    [138131] = 24, -- 發芽魔豆
+    [138133] = 27 -- 無盡好奇藥劑
 }
 
 local function IsTrackingHidden()
@@ -241,152 +245,120 @@ local function IsTrackingHidden()
     end
 end
 
-local function IsWorldQuestType(questID)
-    local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
-    return tagInfo.worldQuestType and true or false
-end
-
-local function AttemptAutoComplete(event)
-    if event == "PLAYER_REGEN_ENABLED" then
-        TI:UnregisterEvent("PLAYER_REGEN_ENABLED")
-    end
-
-    if GetNumAutoQuestPopUps() > 0 then
-        if UnitIsDeadOrGhost("player") then
-            TI:RegisterEvent("PLAYER_REGEN_ENABLED")
-            return
-        end
-
-        local questID, popUpType = GetAutoQuestPopUp(1)
-        if not C_QuestLog_IsWorldQuest(questID) then
-            if popUpType == "OFFER" then
-                ShowQuestOffer(questID)
-            elseif popUpType == "COMPLETE" then
-                ShowQuestComplete(questID)
-            end
-        end
-    end
-end
-
-local function GetQuestLogQuests(onlyComplete)
-    wipe(quests)
-
-    for index = 1, C_QuestLog_GetNumQuestLogEntries() do
-        local questInfo = C_QuestLog_GetInfo(index)
-        if not questInfo.isHeader then
-            if onlyComplete and questInfo.isComplete or not onlyComplete then
-                quests[questInfo.title] = questInfo.questID
-            end
-        end
-    end
-
-    return quests
-end
-
 function TI:GetNPCID(unit)
     return tonumber(strmatch(UnitGUID(unit or "npc") or "", "Creature%-.-%-.-%-.-%-.-%-(.-)%-"))
 end
 
-function TI:IsIgnored()
-    local npcID = self:GetNPCID()
+do
+    local modiferFunctionTable = {
+        ["SHIFT"] = IsShiftKeyDown,
+        ["CTRL"] = IsControlKeyDown,
+        ["ALT"] = IsAltKeyDown,
+        ["Any"] = IsModifierKeyDown,
+        ["NONE"] = function()
+            return false
+        end
+    }
 
-    if ignoreQuestNPC[npcID] then
-        return true
-    elseif self.db then
-        if self.db.modifierKeyPause and IsModifierKeyDown() then
-            return true
-        elseif self.db.customIgnoreNPCs and self.db.customIgnoreNPCs[npcID] then
+    function TI:IsPaused(moduleEvent)
+        if not self.db or moduleEvent and self.db.mode ~= "ALL" and moduleEvent ~= self.db.mode then
             return true
         end
+
+        return modiferFunctionTable[self.db.pauseModifier]()
+    end
+end
+
+function TI:IsIgnoredNPC(npcID)
+    npcID = npcID or self:GetNPCID()
+
+    if npcID and ignoreQuestNPC[npcID] then
+        return true
     end
 
-    return false
+    return npcID and self.db and self.db.customIgnoreNPCs and self.db.customIgnoreNPCs[npcID]
 end
 
 function TI:QUEST_GREETING()
-    if self:IsIgnored() then
+    if self:IsIgnoredNPC() then
         return
     end
 
-    local numQuests = C_GossipInfo_GetNumActiveQuests()
-    if numQuests > 0 then
+    if C_GossipInfo_GetNumActiveQuests() > 0 then
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
             local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
             if gossipQuestUIInfo.isComplete and not isWorldQuest then
-                C_GossipInfo_SelectActiveQuest(index)
+                if self:IsPaused("COMPLETE") then
+                    C_GossipInfo_SelectActiveQuest(index)
+                end
             end
         end
     end
 
-    local numQuests = C_GossipInfo_GetNumAvailableQuests()
-    if numQuests > 0 then
+    if C_GossipInfo_GetNumAvailableQuests() > 0 then
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
             if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() then
-                C_GossipInfo_SelectAvailableQuest(index)
+                if self:IsPaused("ACCEPT") then
+                    C_GossipInfo_SelectAvailableQuest(index)
+                end
             end
         end
     end
 end
 
 function TI:GOSSIP_SHOW()
-    if self:IsIgnored() then
+    local npcID = self:GetNPCID()
+    if self:IsIgnoredNPC(npcID) then
         return
     end
 
-    local npcID = self:GetNPCID()
-
-    local active = C_GossipInfo_GetNumActiveQuests()
-    if active > 0 then
-        local logQuests = GetQuestLogQuests(true)
-        for index = 1, active do
-            local info = C_GossipInfo_GetActiveQuests()[index]
-            if info.isComplete then
-                local questID = logQuests[info.title]
-                if not questID then
+    local numActiveQuests = C_GossipInfo_GetNumActiveQuests()
+    if numActiveQuests > 0 then
+        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
+            local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
+            if gossipQuestUIInfo.isComplete and not isWorldQuest then
+                if self:IsPaused("COMPLETE") then
                     C_GossipInfo_SelectActiveQuest(index)
-                else
-                    if not IsWorldQuestType(questID) then
-                        C_GossipInfo_SelectActiveQuest(index)
-                    end
                 end
             end
         end
     end
 
-    local available = C_GossipInfo_GetNumAvailableQuests()
-    if available > 0 then
-        for index = 1, available do
-            local info = C_GossipInfo_GetAvailableQuests()[index]
-            if not info.isTrivial and not info.isIgnored or IsTrackingHidden() then
-                C_GossipInfo_SelectAvailableQuest(index)
-            elseif info.isTrivial and npcID == 64337 then
-                C_GossipInfo_SelectAvailableQuest(index)
+    local numAvailableQuests = C_GossipInfo_GetNumAvailableQuests()
+    if numAvailableQuests > 0 then
+        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
+            if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() or npcID == 64437 then
+                if self:IsPaused("ACCEPT") then
+                    C_GossipInfo_SelectAvailableQuest(index)
+                end
             end
         end
     end
 
-    if rogueClassHallInsignia[npcID] then
-        if not self.db or not self.db.rogueClassHallInsignia then
-            return
-        end
+    if not (self.db and self.db.smartChat) then
+        return
+    end
+
+    if smartChatNPCs[npcID] then
         return C_GossipInfo_SelectOption(1)
     end
 
-    if available == 0 and active == 0 then
-        if C_GossipInfo_GetNumOptions() == 1 then
+    if numActiveQuests == 0 and numAvailableQuests == 0 then
+        local numOptions = C_GossipInfo_GetNumOptions()
+        if numOptions == 1 then
             if npcID == 57850 then
                 return C_GossipInfo_SelectOption(1)
             end
 
             local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
-            if instance ~= "raid" and not ignoreGossipNPC[npcID] and not (instance == "scenario" and mapID == 1626) then
-                local info = C_GossipInfo_GetOptions()
-                if info.type == "gossip" then
-                    C_GossipInfo_SelectOption(1)
-                    return
+            if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
+                local gossipInfoTable = C_GossipInfo_GetOptions()
+                local gType = gossipInfoTable[1] and gossipInfoTable[1].type
+                if gType and autoGossipTypes[gType] then
+                    return C_GossipInfo_SelectOption(1)
                 end
             end
-        elseif followerAssignees[npcID] and C_GossipInfo_GetNumOptions() > 1 and self.db and self.db.followerAssignees then
+        elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numOptions > 1 then
             return C_GossipInfo_SelectOption(1)
         end
     end
@@ -394,14 +366,22 @@ end
 
 function TI:GOSSIP_CONFIRM(index)
     local npcID = self:GetNPCID()
-    if npcID and darkmoonNPC[npcID] and self.db and self.db.darkmoon then
+    if self:IsPaused() or self:IsIgnoredNPC(npcID) then
+        return
+    end
+
+    if not (self.db and self.db.smartChat) then
+        return
+    end
+
+    if self.db and self.db.darkmoon and npcID and darkmoonNPC[npcID] then
         C_GossipInfo_SelectOption(index, "", true)
         StaticPopup_Hide("GOSSIP_CONFIRM")
     end
 end
 
 function TI:QUEST_DETAIL()
-    if self:IsIgnored() then
+    if self:IsPaused("ACCEPT") then
         return
     end
 
@@ -415,6 +395,10 @@ function TI:QUEST_DETAIL()
 end
 
 function TI:QUEST_ACCEPT_CONFIRM()
+    if self:IsPaused("ACCEPT") then
+        return
+    end
+
     AcceptQuest()
 end
 
@@ -431,13 +415,13 @@ function TI:QUEST_ITEM_UPDATE()
 end
 
 function TI:QUEST_PROGRESS()
+    if self:IsPaused("COMPLETE") then
+        return
+    end
+
     if IsQuestCompletable() then
         local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
-        if tagInfo and tagInfo.tagID == 153 or tagInfo and tagInfo.worldQuestType then
-            return
-        end
-
-        if self:IsIgnored() then
+        if tagInfo and (tagInfo.tagID == 153 or tagInfo.worldQuestType) or self:IsIgnoredNPC() then
             return
         end
 
@@ -446,13 +430,15 @@ function TI:QUEST_PROGRESS()
             for index = 1, requiredItems do
                 local link = GetQuestItemLink("required", index)
                 if link then
-                    local id = tonumber(strmatch(link, "item:(%d+)"))
-                    if itemBlacklist[id] then
-                        return
+                    local id = GetItemInfoFromHyperlink(link)
+                    for _, itemID in next, itemBlacklist do
+                        if itemID == id then
+                            return CloseQuest()
+                        end
                     end
                 else
                     choiceQueue = "QUEST_PROGRESS"
-                    return
+                    return GetQuestItemInfo("required", index)
                 end
             end
         end
@@ -462,13 +448,11 @@ function TI:QUEST_PROGRESS()
 end
 
 function TI:QUEST_COMPLETE()
-    if self:IsIgnored() then
+    if self:IsPaused("COMPLETE") then
         return
     end
 
-    -- Blingtron 6000 only!
-    local npcID = self:GetNPCID()
-    if npcID == 43929 or npcID == 77789 then
+    if self:IsIgnored() then
         return
     end
 
@@ -482,7 +466,7 @@ function TI:QUEST_COMPLETE()
             local link = GetQuestItemLink("choice", index)
             if link then
                 local itemSellPrice = select(11, GetItemInfo(link))
-                itemSellPrice = cashRewards[tonumber(strmatch(link, "item:(%d+):"))] or itemSellPrice
+                itemSellPrice = cashRewards[GetItemInfoFromHyperlink(link)] or itemSellPrice
 
                 if itemSellPrice > bestSellPrice then
                     bestSellPrice, bestIndex = itemSellPrice, index
@@ -500,16 +484,30 @@ function TI:QUEST_COMPLETE()
     end
 end
 
-function TI:PLAYER_LOGIN()
-    AttemptAutoComplete("PLAYER_LOGIN")
-end
+function TI:AttemptAutoComplete(event)
+    if event == "PLAYER_REGEN_ENABLED" then
+        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    end
 
-function TI:QUEST_AUTOCOMPLETE()
-    AttemptAutoComplete("QUEST_AUTOCOMPLETE")
-end
+    if self:IsPaused("COMPLETE") then
+        return
+    end
 
-function TI:PLAYER_REGEN_ENABLED()
-    AttemptAutoComplete("PLAYER_REGEN_ENABLED")
+    if GetNumAutoQuestPopUps() > 0 then
+        if UnitIsDeadOrGhost("player") then
+            self:RegisterEvent("PLAYER_REGEN_ENABLED", "AttemptAutoComplete")
+            return
+        end
+
+        local questID, popUpType = GetAutoQuestPopUp(1)
+        if not C_QuestLog_IsWorldQuest(questID) then
+            if popUpType == "OFFER" then
+                ShowQuestOffer(questID)
+            elseif popUpType == "COMPLETE" then
+                ShowQuestComplete(questID)
+            end
+        end
+    end
 end
 
 function TI:AddTargetToBlacklist()
@@ -532,6 +530,7 @@ end
 _G.SLASH_WINDTOOLS_TURN_IN1 = "/wti"
 _G.SLASH_WINDTOOLS_TURN_IN2 = "/windturnin"
 _G.SLASH_WINDTOOLS_TURN_IN3 = "/windquestturnin"
+
 _G.SlashCmdList["WINDTOOLS_TURN_IN"] = function(msg)
     if msg and strlen(msg) > 0 then
         msg = strupper(msg)
@@ -561,17 +560,17 @@ function TI:Initialize()
         return
     end
 
-    self:RegisterEvent("QUEST_GREETING")
-    self:RegisterEvent("GOSSIP_SHOW")
     self:RegisterEvent("GOSSIP_CONFIRM")
-    self:RegisterEvent("QUEST_DETAIL")
-    self:RegisterEvent("QUEST_ACCEPT_CONFIRM")
+    self:RegisterEvent("GOSSIP_SHOW")
+    self:RegisterEvent("PLAYER_LOGIN", "AttemptAutoComplete")
     self:RegisterEvent("QUEST_ACCEPTED")
-    self:RegisterEvent("QUEST_ITEM_UPDATE")
-    self:RegisterEvent("QUEST_PROGRESS")
+    self:RegisterEvent("QUEST_ACCEPT_CONFIRM")
     self:RegisterEvent("QUEST_COMPLETE")
-    self:RegisterEvent("PLAYER_LOGIN")
-    self:RegisterEvent("QUEST_AUTOCOMPLETE")
+    self:RegisterEvent("QUEST_DETAIL")
+    self:RegisterEvent("QUEST_GREETING")
+    self:RegisterEvent("QUEST_ITEM_UPDATE")
+    self:RegisterEvent("QUEST_LOG_UPDATE", "AttemptAutoComplete")
+    self:RegisterEvent("QUEST_PROGRESS")
 
     self.Initialized = true
 end
@@ -580,18 +579,18 @@ function TI:ProfileUpdate()
     self:Initialize()
 
     if self.Initialized and not self.db.enable then
-        self:UnregisterEvent("QUEST_GREETING")
-        self:UnregisterEvent("GOSSIP_SHOW")
         self:UnregisterEvent("GOSSIP_CONFIRM")
-        self:UnregisterEvent("QUEST_DETAIL")
-        self:UnregisterEvent("QUEST_ACCEPT_CONFIRM")
-        self:UnregisterEvent("QUEST_ACCEPTED")
-        self:UnregisterEvent("QUEST_ITEM_UPDATE")
-        self:UnregisterEvent("QUEST_PROGRESS")
-        self:UnregisterEvent("QUEST_COMPLETE")
+        self:UnregisterEvent("GOSSIP_SHOW")
         self:UnregisterEvent("PLAYER_LOGIN")
-        self:UnregisterEvent("QUEST_AUTOCOMPLETE")
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+        self:UnregisterEvent("QUEST_ACCEPTED")
+        self:UnregisterEvent("QUEST_ACCEPT_CONFIRM")
+        self:UnregisterEvent("QUEST_COMPLETE")
+        self:UnregisterEvent("QUEST_DETAIL")
+        self:UnregisterEvent("QUEST_GREETING")
+        self:UnregisterEvent("QUEST_ITEM_UPDATE")
+        self:UnregisterEvent("QUEST_LOG_UPDATE")
+        self:UnregisterEvent("QUEST_PROGRESS")
         self.Initialized = false
     end
 end

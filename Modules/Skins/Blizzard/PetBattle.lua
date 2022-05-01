@@ -21,25 +21,18 @@ function S:PetBattle()
         actionBar.shadow:Point("BOTTOMRIGHT", actionBar, "BOTTOMRIGHT", 5, -5)
     end
 
-    self:CreateShadow(_G.PetBattleFrame.ActiveAlly.HealthBarBackdrop)
-    self:CreateShadow(_G.PetBattleFrame.ActiveAlly.IconBackdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.ActiveAlly.ActualHealthBar)
+    self:CreateBackdropShadow(_G.PetBattleFrame.ActiveAlly.Icon)
     F.SetFontOutline(_G.PetBattleFrame.ActiveAlly.Name)
 
-    self:CreateShadow(_G.PetBattleFrame.ActiveEnemy.HealthBarBackdrop)
-    self:CreateShadow(_G.PetBattleFrame.ActiveEnemy.IconBackdrop)
+    self:CreateBackdropShadow(_G.PetBattleFrame.ActiveEnemy.ActualHealthBar)
+    self:CreateBackdropShadow(_G.PetBattleFrame.ActiveEnemy.Icon)
     F.SetFontOutline(_G.PetBattleFrame.ActiveEnemy.Name)
 
-    self:CreateShadow(_G.PetBattleFrame.Ally2.HealthBarBackdrop)
-    self:CreateBackdropShadow(_G.PetBattleFrame.Ally2)
-
-    self:CreateShadow(_G.PetBattleFrame.Ally3.HealthBarBackdrop)
-    self:CreateBackdropShadow(_G.PetBattleFrame.Ally3)
-
-    self:CreateShadow(_G.PetBattleFrame.Enemy2.HealthBarBackdrop)
-    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy2)
-
-    self:CreateShadow(_G.PetBattleFrame.Enemy3.HealthBarBackdrop)
-    self:CreateBackdropShadow(_G.PetBattleFrame.Enemy3)
+    self:CreateShadow(_G.PetBattleFrame.Ally2)
+    self:CreateShadow(_G.PetBattleFrame.Ally3)
+    self:CreateShadow(_G.PetBattleFrame.Enemy2)
+    self:CreateShadow(_G.PetBattleFrame.Enemy3)
 end
 
 S:AddCallback("PetBattle")

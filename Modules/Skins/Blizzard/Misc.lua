@@ -54,17 +54,17 @@ function S:BlizzardMiscFrames()
     end
 
     -- 灵魂医者传送按钮
-    self:CreateBackdropShadow(_G.GhostFrameContentsFrame)
+    self:CreateShadow(_G.GhostFrameContentsFrame)
 
     -- 跳过剧情
-    self:CreateBackdropShadow(_G.CinematicFrameCloseDialog)
+    self:CreateShadow(_G.CinematicFrameCloseDialog)
 
     -- 举报玩家
-    self:CreateBackdropShadow(_G.PlayerReportFrame)
-    self:CreateBackdropShadow(_G.ReportCheatingDialog)
+    self:CreateShadow(_G.PlayerReportFrame)
+    self:CreateShadow(_G.ReportCheatingDialog)
 
     -- 分离物品
-    self:CreateBackdropShadow(_G.StackSplitFrame)
+    self:CreateShadow(_G.StackSplitFrame)
 
     -- 聊天设定
     self:CreateShadow(_G.ChatConfigFrame)

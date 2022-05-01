@@ -857,7 +857,6 @@ P.tooltips = {
 }
 
 P.unitFrames = {
-    }
 }
 
 P.misc = {

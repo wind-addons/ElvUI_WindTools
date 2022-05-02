@@ -45,14 +45,10 @@ function A:ConfigureTextures(_, frame)
     else
         local isHorizontal = frame.Health:GetOrientation() == "HORIZONTAL"
         local isReverse = frame.Health:GetReverseFill()
+        local offset = isReverse and -3 or 3
 
-        glow:ClearAllPoints()
-        glow:SetHeight(16)
-
-        local offset = frame.Health:GetReverseFill() and -3 or 3
-
-        if isHorizontal then
-            do
+        if self.db.blizzardAbsorbOverlay then
+            if isHorizontal then
                 local anchor = isReverse and "RIGHT" or "LEFT"
                 overlay.SetOverlaySize = function(self, percent)
                     self:SetWidth(frame.Health:GetWidth() * percent)
@@ -60,31 +56,35 @@ function A:ConfigureTextures(_, frame)
                 end
                 overlay:SetPoint("TOP" .. anchor, pred.absorbBar, "TOP" .. anchor)
                 overlay:SetPoint("BOTTOM" .. anchor, pred.absorbBar, "BOTTOM" .. anchor)
-            end
-            do
-                local anchor = isReverse and "LEFT" or "RIGHT"
-                glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
-                glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
-            end
-        else
-            do
+            else
                 local anchor = isReverse and "TOP" or "BOTTOM"
 
                 overlay.SetOverlaySize = function(self, percent)
                     self:SetHeight(frame.Health:GetHeight() * percent)
                     self:SetTexCoord(0, overlay:GetWidth() / 32, 0, overlay:GetHeight() / 32)
                 end
+
                 overlay:SetPoint(anchor .. "LEFT", pred.absorbBar, anchor .. "LEFT")
                 overlay:SetPoint(anchor .. "RIGHT", pred.absorbBar, anchor .. "RIGHT")
             end
-            do
-                local anchor = isReverse and "BOTTOM" or "TOP"
-                glow:SetPoint("LEFT", frame.Health, anchor .. "LEFT", -2, offset)
-                glow:SetPoint("RIGHT", frame.Health, anchor .. "RIGHT", 2, offset)
-            end
+            overlay:Show()
         end
 
-        glow:Show()
+        if self.db.blizzardOverAbsorbGlow then
+            if isHorizontal then
+                local anchor = isReverse and "LEFT" or "RIGHT"
+                glow:ClearAllPoints()
+                glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
+                glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
+            else
+                local anchor = isReverse and "BOTTOM" or "TOP"
+                glow:SetHeight(16)
+                glow:ClearAllPoints()
+                glow:SetPoint("LEFT", frame.Health, anchor .. "LEFT", -2, offset)
+                glow:SetPoint("RIGHT", frame.Health, anchor .. "RIGHT", 2, offset)
+                glow:Show()
+            end
+        end
     end
 end
 
@@ -229,11 +229,11 @@ end
 function A:SetTexture_HealComm(module, obj, texture)
     local func = self.hooks[module].SetTexture_HealComm
 
-    if self.db and self.db.enable then
+    if self.db and self.db.enable and self.db.texture.enable then
         if self.db.texture.blizzardStyle then
             texture = "Interface/RaidFrame/Shield-Fill"
-        elseif self.db.texture.elvui then
-            texture = LSM:Fetch("statusbar", self.db.texture.elvui)
+        elseif self.db.texture.custom then
+            texture = LSM:Fetch("statusbar", self.db.texture.custom)
         end
     end
 
@@ -262,6 +262,17 @@ function A:ProfileUpdate()
     if not self.db or not self.db.enable then
         for frame in pairs(framePool) do
             self:CleanupFrame(frame)
+        end
+    end
+
+    UF:Update_AllFrames()
+end
+
+function A:ChangeDB(callback)
+    for frame in pairs(framePool) do
+        local db = frame and frame.db and frame.db.healPrediction
+        if db then
+            callback(db)
         end
     end
 end

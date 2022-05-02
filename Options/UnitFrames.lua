@@ -5,6 +5,8 @@ local LSM = E.Libs.LSM
 local A = W:GetModule("Absorb")
 local CT = W:GetModule("ChatText")
 
+local format = format
+
 options.quickFocus = {
     order = 1,
     type = "group",
@@ -225,7 +227,7 @@ options.absorb = {
                 changeColor = {
                     order = 4,
                     type = "execute",
-                    name = format(L["% style absorb color"], L["WindTools"]),
+                    name = format(L["%s style absorb color"], L["WindTools"]),
                     desc = L["Change the color of the absorb bar."],
                     func = function(info)
                         E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}

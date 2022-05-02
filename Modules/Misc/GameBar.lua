@@ -457,7 +457,10 @@ local ButtonTypes = {
         name = L["Screenshot"],
         icon = W.Media.Icons.barScreenShot,
         click = {
-            LeftButton = Screenshot,
+            LeftButton = function()
+                DT.tooltip:Hide()
+                Screenshot()
+            end,
             RightButton = function()
                 E:Delay(2, Screenshot)
             end

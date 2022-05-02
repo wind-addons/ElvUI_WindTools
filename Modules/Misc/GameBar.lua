@@ -66,7 +66,6 @@ local C_CVar_SetCVar = C_CVar.SetCVar
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
-local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
 
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0
@@ -106,14 +105,14 @@ local Hearthstones = {
     188952, -- 統御的爐石
     190237, -- 仲介者傳送矩陣
     ---------------------
-    48933, --蟲洞產生器：北裂境
-    87215, --蟲洞產生器：潘達利亞
-    132517, --達拉然內部蟲洞產生器
-    132524, --劫福斯蟲洞產生器模組
-    151652, --蟲洞產生器：阿古斯
-    168807, --蟲洞產生器：庫爾提拉斯
-    168808, --蟲洞產生器：贊達拉
-    172924, --蟲洞產生器：暗影之境
+    48933, -- 蟲洞產生器：北裂境
+    87215, -- 蟲洞產生器：潘達利亞
+    132517, -- 達拉然內部蟲洞產生器
+    132524, -- 劫福斯蟲洞產生器模組
+    151652, -- 蟲洞產生器：阿古斯
+    168807, -- 蟲洞產生器：庫爾提拉斯
+    168808, -- 蟲洞產生器：贊達拉
+    172924, -- 蟲洞產生器：暗影之境
     ---------------------
     180817 -- 移轉暗語
 }
@@ -162,8 +161,7 @@ local function AddDoubleLineForItem(itemID, prefix)
     )
 end
 
--- 假的数据面板! 为了 event 函数不报错
-
+-- Fake DataText for no errors throwed from ElvUI
 local VirtualDTEvent = {
     Friends = nil,
     Guild = "GUILD_ROSTER_UPDATE"
@@ -461,7 +459,7 @@ local ButtonTypes = {
         click = {
             LeftButton = Screenshot,
             RightButton = function()
-                C_Timer_After(2, Screenshot)
+                E:Delay(2, Screenshot)
             end
         },
         tooltips = {
@@ -984,7 +982,7 @@ function GB:ButtonOnEnter(button)
                 DTModule.onEnter()
             end
 
-            -- 如果 ElvUI 数据文字鼠标提示没有进行显示的话, 显示一个简单的说明
+            -- If ElvUI Datatext tooltip not shown, display a simple information (e.g. button name) to player
             if not DT.tooltip:IsShown() then
                 DT.tooltip:ClearLines()
                 DT.tooltip:SetText(button.name)
@@ -1242,7 +1240,7 @@ function GB:UpdateLayout()
         self.bar.leftPanel:SetSize(panelWidth, panelHeight)
     end
 
-    -- 右面板
+    -- Right Panel
     lastButton = nil
     for i = 1, NUM_PANEL_BUTTONS do
         local button = self.buttons[i + NUM_PANEL_BUTTONS]
@@ -1271,10 +1269,10 @@ function GB:UpdateLayout()
         self.bar.rightPanel:SetSize(panelWidth, panelHeight)
     end
 
-    -- 时间区域
+    -- Time Panel
     self.bar.middlePanel:SetSize(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
-    -- 更新移动区域尺寸
+    -- Update the size of moveable zones
     local areaWidth = 20 + self.bar.middlePanel:GetWidth()
     local leftWidth = self.bar.leftPanel:IsShown() and self.bar.leftPanel:GetWidth() or 0
     local rightWidth = self.bar.rightPanel:IsShown() and self.bar.rightPanel:GetWidth() or 0
@@ -1294,7 +1292,7 @@ function GB:PLAYER_REGEN_ENABLED()
 end
 
 function GB:PLAYER_ENTERING_WORLD()
-    C_Timer_After(
+    E:Delay(
         1,
         function()
             if InCombatLockdown() then

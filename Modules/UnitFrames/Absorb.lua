@@ -1,13 +1,13 @@
 local W, F, E, L = unpack(select(2, ...))
-local UF = E.UnitFrames
 local A = W:NewModule("Absorb", "AceHook-3.0")
+local LSM = E.Libs.LSM
+local UF = E.UnitFrames
 
 local _G = _G
-local LSM = E.Libs.LSM
-
 local pairs = pairs
+
+local CreateFrame = CreateFrame
 local UnitIsConnected = UnitIsConnected
-local hooksecurefunc = hooksecurefunc
 
 local framePool = {}
 
@@ -17,7 +17,7 @@ function A:ConstructTextures(frame)
     end
 
     if not frame.HealthPrediction.windAbsorbOverlay then
-        local overlay = frame.HealthPrediction.absorbBar:CreateTexture(nil, "ARKWORK", 60)
+        local overlay = frame.HealthPrediction.absorbBar:CreateTexture(nil, "OVERLAY", 10)
         overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
         frame.HealthPrediction.windAbsorbOverlay = overlay
     end
@@ -39,7 +39,7 @@ function A:ConfigureTextures(_, frame)
     local overlay = pred.windAbsorbOverlay
     local glow = pred.windOverAbsorbGlow
 
-    if not frame.db.health or not frame.Health then
+    if not frame.db.health or not frame.Health or not self.db.enable then
         overlay:Hide()
         glow:Hide()
     else
@@ -48,6 +48,7 @@ function A:ConfigureTextures(_, frame)
         local offset = isReverse and -3 or 3
 
         if self.db.blizzardAbsorbOverlay then
+            overlay:ClearAllPoints()
             if isHorizontal then
                 local anchor = isReverse and "RIGHT" or "LEFT"
                 overlay.SetOverlaySize = function(self, percent)
@@ -68,22 +69,25 @@ function A:ConfigureTextures(_, frame)
                 overlay:SetPoint(anchor .. "RIGHT", pred.absorbBar, anchor .. "RIGHT")
             end
             overlay:Show()
+        else
+            overlay:Hide()
         end
 
         if self.db.blizzardOverAbsorbGlow then
+            glow:ClearAllPoints()
             if isHorizontal then
                 local anchor = isReverse and "LEFT" or "RIGHT"
-                glow:ClearAllPoints()
                 glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
                 glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
             else
                 local anchor = isReverse and "BOTTOM" or "TOP"
                 glow:SetHeight(16)
-                glow:ClearAllPoints()
                 glow:SetPoint("LEFT", frame.Health, anchor .. "LEFT", -2, offset)
                 glow:SetPoint("RIGHT", frame.Health, anchor .. "RIGHT", 2, offset)
-                glow:Show()
             end
+            glow:Show()
+        else
+            glow:Hide()
         end
     end
 end
@@ -150,15 +154,6 @@ function A:SetupFrame(frame)
     end
 
     framePool[frame] = true
-end
-
-function A:CleanupFrame(frame)
-    if not frame or not frame.HealthPrediction then
-        return
-    end
-
-    frame.HealthPrediction.totalAbsorbOverlay:Hide()
-    frame.HealthPrediction.overAbsorbGlow:Hide()
 end
 
 function A:WaitForUnitframesLoad(triedTimes)
@@ -261,7 +256,7 @@ function A:ProfileUpdate()
 
     if not self.db or not self.db.enable then
         for frame in pairs(framePool) do
-            self:CleanupFrame(frame)
+            self:ConfigureTextures(frame)
         end
     end
 

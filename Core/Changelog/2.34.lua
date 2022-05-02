@@ -9,10 +9,18 @@ W.Changelog[234] = {
         ["koKR"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "新增模块: [吸收], 可以自定义 ElvUI 吸收盾材质, 同时增加暴雪风格的吸收火花."
+        },
+        ["zhTW"] = {
+            "新增模組: [吸收], 可以自定義 ElvUI 吸收盾材質, 同時增加暴雪風格的吸收火花."
+        },
+        ["enUS"] = {
+            "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark."
+        },
+        ["koKR"] = {
+            "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

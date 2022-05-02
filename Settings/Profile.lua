@@ -857,6 +857,16 @@ P.tooltips = {
 }
 
 P.unitFrames = {
+    absorb = {
+        enable = true,
+        texture = {
+            enable = true,
+            elvui = E.db.unitframe.statusbar,
+            blizzardStyle = true,
+        },
+        blizzardOverAbsorbGlow = true,
+        blizzardAbsorbOverlay = true,
+    }
 }
 
 P.misc = {

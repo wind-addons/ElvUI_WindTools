@@ -141,7 +141,7 @@ options.absorb = {
                     desc = L["The selected texture will override the ElvUI default absorb bar texture."],
                     disabled = function()
                         return not E.db.WT.unitFrames.absorb.enable or not E.db.WT.unitFrames.absorb.texture.enable or
-                            not E.db.WT.unitFrames.absorb.texture.blizzardStyle
+                            E.db.WT.unitFrames.absorb.texture.blizzardStyle
                     end,
                     dialogControl = "LSM30_Statusbar",
                     values = LSM:HashTable("statusbar")

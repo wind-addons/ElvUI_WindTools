@@ -186,17 +186,21 @@ options.absorb = {
                     order = 1,
                     type = "description",
                     name = format(
-                        L['The absorb style "%s" and "%s" is highly recommended with %s tweaks.'],
-                        F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
-                        F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
-                        L["WindTools"]
-                    ) .. L["Here are some buttons for helping you change the setting of all absorb bars by one-click."]
+                        "%s\n%s",
+                        format(
+                            L['The absorb style "%s" and "%s" is highly recommended with %s tweaks.'],
+                            F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
+                            F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
+                            L["WindTools"]
+                        ),
+                        L["Here are some buttons for helping you change the setting of all absorb bars by one-click."]
+                    )
                 },
                 setAllAbsorbStyleToOverflow = {
                     order = 2,
                     type = "execute",
                     name = format(
-                        L["Set All Absorb Style To %s"],
+                        L["Set All Absorb Style to %s"],
                         F.CreateColorString(L["Overflow"], E.db.general.valuecolor)
                     ),
                     func = function(info)
@@ -212,8 +216,8 @@ options.absorb = {
                     order = 3,
                     type = "execute",
                     name = format(
-                        L["Set All Absorb Style To %s"],
-                        F.CreateColorString(L["Overflow"], E.db.general.valuecolor)
+                        L["Set All Absorb Style to %s"],
+                        F.CreateColorString(L["Auto Height"], E.db.general.valuecolor)
                     ),
                     func = function(info)
                         A:ChangeDB(
@@ -231,6 +235,19 @@ options.absorb = {
                     desc = L["Change the color of the absorb bar."],
                     func = function(info)
                         E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
+                    end,
+                    width = 2
+                },
+                changeMaxOverflow = {
+                    order = 5,
+                    type = "execute",
+                    name = format(
+                        L["Set %s to %s"],
+                        F.CreateColorString(L["Max Overflow"], E.db.general.valuecolor),
+                        F.CreateColorString("0", E.db.general.valuecolor)
+                    ),
+                    func = function(info)
+                        E.db.unitframe.colors.healPrediction.maxOverflow = 0
                     end,
                     width = 2
                 }

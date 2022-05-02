@@ -275,6 +275,8 @@ function A:ChangeDB(callback)
             callback(db)
         end
     end
+
+    UF:Update_AllFrames()
 end
 
 W:RegisterModule(A:GetName())

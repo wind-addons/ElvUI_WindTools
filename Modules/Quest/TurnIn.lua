@@ -365,7 +365,7 @@ function TI:GOSSIP_SHOW()
     end
 end
 
-function TI:GOSSIP_CONFIRM(index)
+function TI:GOSSIP_CONFIRM(_, index)
     local npcID = self:GetNPCID()
     if self:IsPaused() or self:IsIgnoredNPC(npcID) then
         return

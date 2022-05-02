@@ -161,7 +161,7 @@ options.absorb = {
                     order = 1,
                     type = "toggle",
                     name = L["Blizzard Over Absorb Glow"],
-                    desc = L["Add a glow in the end of absorb bars to indicate the over absorb."],
+                    desc = L["Add a glow in the end of health bars to indicate the over absorb."],
                     width = 1.5
                 },
                 blizzardAbsorbOverlay = {
@@ -188,7 +188,7 @@ options.absorb = {
                     name = format(
                         "%s\n%s",
                         format(
-                            L['The absorb style "%s" and "%s" is highly recommended with %s tweaks.'],
+                            L["The absorb style %s and %s is highly recommended with %s tweaks."],
                             F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
                             F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
                             L["WindTools"]
@@ -235,6 +235,7 @@ options.absorb = {
                     desc = L["Change the color of the absorb bar."],
                     func = function(info)
                         E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
+                        E.db.unitframe.colors.healPrediction.overabsorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
                     end,
                     width = 2
                 },

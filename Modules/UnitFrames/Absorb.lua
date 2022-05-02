@@ -17,7 +17,7 @@ function A:ConstructTextures(frame)
     end
 
     if not frame.HealthPrediction.windAbsorbOverlay then
-        local overlay = frame.HealthPrediction.absorbBar:CreateTexture(nil, "OVERLAY", 11)
+        local overlay = frame.HealthPrediction.absorbBar:CreateTexture(nil, "ARKWORK", 60)
         overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
         frame.HealthPrediction.windAbsorbOverlay = overlay
     end
@@ -30,7 +30,7 @@ function A:ConstructTextures(frame)
     end
 end
 
-function A:ConfigureTextures(frame)
+function A:ConfigureTextures(_, frame)
     if not (frame and frame.db and frame.db.healPrediction and frame.db.healPrediction.enable) then
         return
     end
@@ -101,7 +101,7 @@ function A:HealthPrediction_OnUpdate(object, unit, _, _, absorb, _, hasOverAbsor
         return
     end
 
-    frame.windSmoothTweakBar:AddWork(
+    frame.windSmooth:DoJob(
         function()
             local overlay = pred.windAbsorbOverlay
             local glow = pred.windOverAbsorbGlow
@@ -112,14 +112,16 @@ function A:HealthPrediction_OnUpdate(object, unit, _, _, absorb, _, hasOverAbsor
                 if maxHealth > health + absorb then
                     overlay:SetOverlaySize(absorb / maxHealth)
                     overlay:Show()
-                elseif self.db.blizzardOverAbsorbGlow then
-                    if health == maxHealth and frameDB.absorbStyle == "OVERFLOW" then
-                        pred.absorbBar:SetValue(0)
-                    end
-                    overlay:SetOverlaySize((maxHealth - health) / maxHealth)
-                    overlay:Show()
                 else
-                    overlay:Hide()
+                    if frameDB.absorbStyle == "OVERFLOW" then
+                        if health == maxHealth and self.db.blizzardOverAbsorbGlow then
+                            pred.absorbBar:SetValue(0)
+                        end
+                        overlay:SetOverlaySize((maxHealth - health) / maxHealth)
+                        overlay:Show()
+                    else -- Do not show the overlay if in normal mode
+                        overlay:Hide()
+                    end
                 end
             end
 
@@ -142,7 +144,6 @@ function A:SetupFrame(frame)
 
     self:SmoothTweak(frame)
     self:ConstructTextures(frame)
-    self:ConfigureTextures(frame)
 
     if frame.HealthPrediction.PostUpdate then
         self:SecureHook(frame.HealthPrediction, "PostUpdate", "HealthPrediction_OnUpdate")
@@ -189,6 +190,7 @@ function A:WaitForUnitframesLoad(triedTimes)
             end
         end
         -- Refresh all frames to make sure the replacing of textures
+        self:SecureHook(UF, "Configure_HealComm", "ConfigureTextures")
         UF:Update_AllFrames()
     else
         E:Delay(0.5, self.WaitForUnitframesLoad, self, triedTimes + 1)
@@ -196,28 +198,32 @@ function A:WaitForUnitframesLoad(triedTimes)
 end
 
 function A:SmoothTweak(frame)
-    if frame.windSmoothTweakBar then
+    if frame.windSmooth then
         return
     end
 
-    frame.windSmoothTweakBar = CreateFrame("statusbar", nil, E.UIParent)
-    frame.windSmoothTweakBar.SetValue = function(self)
-        if self.work then
-            self.work()
-            self.work = nil
+    frame.windSmooth = CreateFrame("statusbar", nil, E.UIParent)
+
+    -- If triggered by ElvUI smooth, do the job
+    frame.windSmooth.SetValue = function(self)
+        if self.job then
+            self.job()
+            self.job = nil
         end
     end
 
-    frame.windSmoothTweakBar.AddWork = function(self, work)
+    -- Add the job to the smooth queue
+    frame.windSmooth.DoJob = function(self, job)
         if UF and UF.db and UF.db.smoothbars then
-            self.work = work
+            self.job = job
             self:SetValue(0)
         else
-            work()
+            job()
         end
     end
 
-    E:SetSmoothing(frame.windSmoothTweakBar, true)
+    -- Let ElvUI change the SetValue method
+    E:SetSmoothing(frame.windSmooth, true)
 end
 
 function A:SetTexture_HealComm(module, obj, texture)
@@ -231,7 +237,6 @@ function A:SetTexture_HealComm(module, obj, texture)
         end
     end
 
-    print(texture)
     return self.hooks[module].SetTexture_HealComm(module, obj, texture)
 end
 

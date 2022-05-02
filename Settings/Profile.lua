@@ -862,7 +862,7 @@ P.unitFrames = {
         texture = {
             enable = true,
             elvui = E.db.unitframe.statusbar,
-            blizzardStyle = true,
+            blizzardStyle = false,
         },
         blizzardOverAbsorbGlow = true,
         blizzardAbsorbOverlay = true,

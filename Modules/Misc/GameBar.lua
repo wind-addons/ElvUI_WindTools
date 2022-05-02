@@ -61,6 +61,7 @@ local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
@@ -813,7 +814,7 @@ function GB:ConstructTimeArea()
         function(_, mouseButton)
             if IsShiftKeyDown() then
                 if IsControlKeyDown() then
-                    C_CVar_SetCVar("scriptProfile", C_CVar_GetCVar("scriptProfile") and 0 or 1)
+                    C_CVar_SetCVar("scriptProfile", C_CVar_GetCVarBool("scriptProfile") and 0 or 1)
                     ReloadUI()
                 else
                     collectgarbage("collect")

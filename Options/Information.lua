@@ -1168,6 +1168,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                extendMerchantPages = {
+                    order = 9,
+                    type = "execute",
+                    name = L["Extend Merchant Pages"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Extend Merchant Pages"],
+                            nil,
+                            function()
+                                E.private.WT.item.extendMerchantPages = V.item.extendMerchantPages
+                            end
+                        )
+                    end
                 }
             }
         },
@@ -1482,6 +1497,12 @@ options.reset = {
                             nil,
                             function()
                                 E.private.WT.tooltips.icon = V.tooltips.icon
+                                E.private.WT.tooltips.factionIcon = V.tooltips.factionIcon
+                                E.private.WT.tooltips.petIcon = V.tooltips.petIcon
+                                E.private.WT.tooltips.petId = V.tooltips.petId
+                                E.private.WT.tooltips.tierSet = V.tooltips.tierSet
+                                E.private.WT.tooltips.covenant = V.tooltips.covenant
+                                E.private.WT.tooltips.dominationRank = V.tooltips.dominationRank
                                 E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
                                 E.private.WT.tooltips.objectiveProgressAccuracy = V.tooltips.objectiveProgressAccuracy
                                 E.db.WT.tooltips.yOffsetOfHealthBar = P.tooltips.yOffsetOfHealthBar
@@ -1529,8 +1550,23 @@ options.reset = {
                         )
                     end
                 },
-                roleIcon = {
+                absorb = {
                     order = 2,
+                    type = "execute",
+                    name = L["Absorb"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Absorb"],
+                            nil,
+                            function()
+                                E.db.WT.unitFrames.absorb = P.unitFrames.absorb
+                            end
+                        )
+                    end
+                },
+                roleIcon = {
+                    order = 3,
                     type = "execute",
                     name = L["Role Icon"],
                     func = function()
@@ -1543,7 +1579,7 @@ options.reset = {
                             end
                         )
                     end
-                }
+                },
             }
         },
         skins = {
@@ -1652,13 +1688,13 @@ options.reset = {
                             L["General"],
                             nil,
                             function()
-                                E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
-                                E.private.WT.misc.saveArtifact = V.misc.saveArtifact
-                                E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
                                 E.private.WT.misc.autoScreenshot = V.misc.autoScreenshot
-                                E.private.WT.misc.skipCutScene = V.misc.skipCutScene
                                 E.private.WT.misc.moveSpeed = V.misc.moveSpeed
                                 E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
+                                E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
+                                E.private.WT.misc.skipCutScene = V.misc.skipCutScene
+                                E.private.WT.misc.tags = V.misc.tags
+
                                 E.db.WT.misc.disableTalkingHead = P.misc.disableTalkingHead
                             end
                         )

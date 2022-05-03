@@ -71,15 +71,17 @@ V.maps = {
 
 V.misc = {
 	autoScreenshot = false,
-	pauseToSlash = true,
-	noKanjiMath = false,
-	skipCutScene = false,
-	moveBlizzardFrames = true,
-	moveElvUIBags = true,
 	moveSpeed = false,
-	rememberPositions = false,
-	framePositions = {},
+	noKanjiMath = false,
+	pauseToSlash = true,
+	skipCutScene = false,
 	tags = true,
+	moveFrames = {
+		enable = true,
+		elvUIBags = true,
+		rememberPositions = false,
+		framePositions = {}
+	},
 	mute = {
 		enable = false,
 		mount = {

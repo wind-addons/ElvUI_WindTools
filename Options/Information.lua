@@ -1710,10 +1710,7 @@ options.reset = {
                             L["Move Frames"],
                             nil,
                             function()
-                                E.private.WT.misc.moveBlizzardFrames = V.misc.moveBlizzardFrames
-                                E.private.WT.misc.moveElvUIBags = V.misc.moveElvUIBags
-                                E.private.WT.misc.rememberPositions = V.misc.rememberPositions
-                                E.private.WT.misc.framePositions = V.misc.framePositions
+                                E.private.WT.misc.moveFrames = V.misc.moveFrames
                             end
                         )
                     end

@@ -270,11 +270,14 @@ options.moveFrames = {
     type = "group",
     name = L["Move Frames"],
     get = function(info)
-        return E.private.WT.misc[info[#info]]
+        return E.private.WT.misc.moveFrames[info[#info]]
     end,
     set = function(info, value)
-        E.private.WT.misc[info[#info]] = value
+        E.private.WT.misc.moveFrames[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
+    end,
+    disabled = function()
+        return MF.StopRunning
     end,
     args = {
         desc = {
@@ -282,6 +285,7 @@ options.moveFrames = {
             type = "group",
             inline = true,
             name = L["Description"],
+            disabled = false,
             args = {
                 feature = {
                     order = 1,
@@ -300,37 +304,28 @@ options.moveFrames = {
                 }
             }
         },
-        moveBlizzardFrames = {
+        enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"],
-            disabled = function()
-                return MF.StopRunning
-            end
+            name = L["Enable"]
         },
-        moveElvUIBags = {
+        elvUIBags = {
             order = 2,
             type = "toggle",
-            name = L["Move ElvUI Bags"],
-            disabled = function()
-                return MF.StopRunning
-            end
+            name = L["Move ElvUI Bags"]
         },
         remember = {
             order = 3,
             type = "group",
             inline = true,
             name = L["Remember Positions"],
-            disabled = function()
-                return MF.StopRunning
-            end,
             args = {
                 rememberPositions = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
                     set = function(info, value)
-                        E.private.WT.misc[info[#info]] = value
+                        E.private.WT.misc.moveFrames[info[#info]] = value
                     end
                 },
                 clearHistory = {
@@ -338,21 +333,22 @@ options.moveFrames = {
                     type = "execute",
                     name = L["Clear History"],
                     func = function()
-                        E.private.WT.misc.framePositions = {}
+                        E.private.WT.misc.moveFrames.framePositions = {}
                     end
                 },
                 notice = {
                     order = 999,
                     type = "description",
                     name = format(
-                        "|cffff0000%s|r %s",
+                        "\n|cffff0000%s|r %s",
                         L["Notice"],
                         format(
                             L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
                             L["Remember Positions"],
-                            "|cff3498db" .. L["Clear History"] .. "|r"
+                            F.CreateColorString(L["Clear History"], E.db.general.valuecolor)
                         )
-                    )
+                    ),
+                    fontSize = "medium"
                 }
             }
         }

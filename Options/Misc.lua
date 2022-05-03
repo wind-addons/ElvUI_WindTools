@@ -276,9 +276,7 @@ options.moveFrames = {
         E.private.WT.misc.moveFrames[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
-    disabled = function()
-        return MF.StopRunning
-    end,
+
     args = {
         desc = {
             order = 0,
@@ -307,18 +305,27 @@ options.moveFrames = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            disabled = function()
+                return MF.StopRunning
+            end,
         },
         elvUIBags = {
             order = 2,
             type = "toggle",
-            name = L["Move ElvUI Bags"]
+            name = L["Move ElvUI Bags"],
+            disabled = function()
+                return MF.StopRunning or not E.private.WT.misc.moveFrames.enable
+            end,
         },
         remember = {
             order = 3,
             type = "group",
             inline = true,
             name = L["Remember Positions"],
+            disabled = function()
+                return MF.StopRunning or not E.private.WT.misc.moveFrames.enable
+            end,
             args = {
                 rememberPositions = {
                     order = 1,

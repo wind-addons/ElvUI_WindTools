@@ -1532,9 +1532,6 @@ options.extendMerchantPages = {
         E.private.WT.item.extendMerchantPages[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
-    disabled = function()
-        return EMP.StopRunning
-    end,
     args = {
         desc = {
             order = 0,
@@ -1563,7 +1560,10 @@ options.extendMerchantPages = {
             order = 1,
             type = "toggle",
             name = L["Enable"],
-            width = "full"
+            width = "full",
+            disabled = function()
+                return EMP.StopRunning
+            end
         },
         numberOfPages = {
             order = 2,
@@ -1572,7 +1572,10 @@ options.extendMerchantPages = {
             desc = L["The number of pages shown in the merchant frame."],
             min = 2,
             max = 6,
-            step = 1
+            step = 1,
+            disabled = function()
+                return EMP.StopRunning or not E.private.WT.item.extendMerchantPages.enable
+            end
         }
     }
 }

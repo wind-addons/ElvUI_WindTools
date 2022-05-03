@@ -16,8 +16,8 @@ W.Changelog[234] = {
             "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
         },
         ["koKR"] = {
-            "Added Italian language support",
-            "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
+            "이탈리아어 지원 추가",
+            "[프레임 이동] 설정 위치가 변경되면 이전 구성이 자동으로 복사되어 정리됩니다.",
         }
     },
     NEW = {
@@ -31,7 +31,7 @@ W.Changelog[234] = {
             "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark."
         },
         ["koKR"] = {
-            "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark."
+            "새로운 모듈 [Absorb], ElvUI의 Absorb Shield 텍스처를 커스터마이징 할 수 있으며, Blizzard 스타일의 Absorb Sparks를 추가할 수 있습니다."
         }
     },
     IMPROVEMENT = {
@@ -84,20 +84,20 @@ W.Changelog[234] = {
             "[Game Bar] Fixed the issue of Ctrl + Shift + click on the time area."
         },
         ["koKR"] = {
-            "Improved some options.",
-            "Improved upgrade assistant.",
-            "Update the module reset buttons with latest changes.",
-            "[Turn In] Greatly optimized module code.",
-            "[Turn In] Support customization of pause modifier key.",
-            "[Turn In] Support only auto-accepting or only auto-completing.",
-            "[Turn In] New feature: Get Best Reward, completing the quest with the most valuable reward.",
-            "[Turn In] New feature: Smart Chat, also included the old option of Rogue Class Hall Insignia.",
-            "[Skin] Fixed the shadow of the skip cutscene frame.",
-            "[Skin] Fixed the shadow of the report player frame.",
-            "[Skin] Fixed the shadow of the spirit healer frame.",
-            "[Skin] Fixed the shadow of the separate item frame.",
-            "[Game Bar] Automatically hide the tooltip when taking a screenshot.",
-            "[Game Bar] Fixed the issue of Ctrl + Shift + click on the time area."
+            "일부 설정 항목의 표시 최적화.",
+            "업데이트 도우미 최적화.",
+            "구성 재설정 모듈 업데이트.",
+            "[자동 수락] 모듈 코드 최적화. ",
+            "[자동 수락] 사용자 정의 일시 중지 키를 지원합니다.",
+            "[자동 수락] 자동 수락 또는 자동 완료만 지원합니다.",
+            "[자동 수락] 새로운 기능: 최고 보상 획득은 가장 높은 보상 아이템을 자동으로 선택하고 퀘스트를 완료합니다.",
+            "[자동 수락] 새로운 기능: 스마트 채팅에는 도적 클래스의 직업 전당 이동시 자동 선택 옵션도 포함되어 있습니다.",
+            "[스킨] 컷신 건너뛰기 프레임의 그림자 수정.",
+            "[스킨] Report player 프레임의 그림자 수정.",
+            "[스킨] Spirit healer 프레임의 그림자 수정.",
+            "[스킨] Separate item 프레임의 그림자 수정.",
+            "[게임 바] 스크린샷을 찍을 때 마우스 툴팁이 자동으로 숨겨집니다.",
+            "[게임 바] Ctrl + Shift + 시계를 클릭하면 CPU 사용량 통계가 활성화되지 않는 문제가 수정되었습니다."
         }
     }
 }

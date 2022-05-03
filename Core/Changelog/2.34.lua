@@ -4,15 +4,19 @@ W.Changelog[234] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "新增意大利语支持",
             "[移动框体] 配置文件表位置更改, 更新后会自动拷贝旧配置并清理.",
         },
         ["zhTW"] = {
+            "新增義大利語支援",
             "[移動框架] 配置文件表位置更改, 更新後會自動拷貝舊配置並清理.",
         },
         ["enUS"] = {
+            "Added Italian language support",
             "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
         },
         ["koKR"] = {
+            "Added Italian language support",
             "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
         }
     },

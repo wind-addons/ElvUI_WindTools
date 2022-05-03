@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[234] = {
-    RELEASE_DATE = "2022/05/03",
+    RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
             "[移动框体] 配置文件表位置更改, 更新后会自动拷贝旧配置并清理.",

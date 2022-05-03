@@ -117,16 +117,76 @@ function W:UpdateScripts(oldVersion, currentVersion)
     currentVersion = tonumber(currentVersion)
     oldVersion = tonumber(oldVersion)
 
+    local isFirstLine = true
+
     local function UpdateMessage(text)
-        F.Print(format("(%s |cff00a8ff%.2f|r -> |cff00a8ff%.2f|r) %s", L["Update"], oldVersion, currentVersion, text))
+        if isFirstLine then
+            isFirstLine = false
+            print(
+                E:TextGradient(
+                    "----------------------------------",
+                    0.910,
+                    0.314,
+                    0.357,
+                    0.976,
+                    0.835,
+                    0.431,
+                    0.953,
+                    0.925,
+                    0.761,
+                    0.078,
+                    0.694,
+                    0.671
+                )
+            )
+            F.Print(format("%s (|cff00a8ff%.2f|r -> |cff00a8ff%.2f|r)", L["Update"], oldVersion, currentVersion))
+        end
+
+        print(text)
     end
 
     local doneIcon = " |TInterface\\RaidFrame\\ReadyCheck-Ready:0|t"
 
     -- Clear the history of move frames.
-    if oldVersion >= 2.27 and oldVersion <= 2.31 and currentVersion >= 2.32 then
+    if oldVersion >= 2.27 and oldVersion <= 2.31 then
         E.private.WT.misc.framePositions = {}
-        UpdateMessage(L["Move Frames"] .. doneIcon)
+        UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"] .. doneIcon)
+    end
+
+    -- Copy old move frames options to its new db.
+    if oldVersion <= 2.33 then
+        local miscDB = E.private.WT.misc
+        miscDB.moveFrames.enable = miscDB.moveBlizzardFrames or miscDB.moveFrames.enable
+        miscDB.moveFrames.elvUIBags = miscDB.moveElvUIBags or miscDB.moveFrames.elvUIBags
+        miscDB.moveFrames.rememberPositions = miscDB.rememberPositions or miscDB.moveFrames.rememberPositions
+        miscDB.moveFrames.framePositions = miscDB.framePositions or miscDB.moveFrames.framePositions
+
+        miscDB.moveBlizzardFrames = nil
+        miscDB.moveElvUIBags = nil
+        miscDB.rememberPositions = nil
+        miscDB.framePositions = nil
+
+        UpdateMessage(L["Move Frames"] .. " - " .. L["Update Database"] .. "..." .. doneIcon)
+    end
+
+    if not isFirstLine then
+        print(
+            E:TextGradient(
+                "----------------------------------",
+                0.910,
+                0.314,
+                0.357,
+                0.976,
+                0.835,
+                0.431,
+                0.953,
+                0.925,
+                0.761,
+                0.078,
+                0.694,
+                0.671
+            )
+        )
     end
 end
 

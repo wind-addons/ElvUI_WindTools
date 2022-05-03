@@ -1,7 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local UF = E:GetModule("UnitFrames")
 local QF = W:NewModule("QuickFocus", "AceHook-3.0", "AceEvent-3.0")
-local ElvUF = E.oUF
 
 local _G = _G
 local format = format

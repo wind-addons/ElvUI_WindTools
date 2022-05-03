@@ -1,10 +1,10 @@
 ## Interface: 90200
 ## Author: fang2hou
 ## Version: 2.33
-## Title: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0T|r|cff60b1e8o|r|cff98c0d5o|r|cffc1ccc6l|r|cffc1ccc6s|r
-## Title-zhCN: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r |cff469ff0工|r|cffA8D0E5具|r|cffdedede箱|r
-## Title-zhTW: |cff1784d1ElvUI|r |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r |cff469ff0工|r|cffA8D0E5具|r|cffdedede箱|r
-## Title-koKR: |cff45aaf2W|r|cff4795efi|r|cff4a80ecn|r|cff498aedd|r|cff469ff0T|r|cff60b1e8o|r|cff98c0d5o|r|cffc1ccc6l|r|cffc1ccc6s|r
+## Title: |cff1784d1ElvUI|r |cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r
+## Title-zhCN: |cff1784d1ElvUI|r |cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |cff49b8e3工|r|cff42d3dd具|r|cff41d7dd箱|r
+## Title-zhTW: |cff1784d1ElvUI|r |cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |cff49b8e3工|r|cff42d3dd具|r|cff41d7dd箱|r
+## Title-koKR: |cff1784d1ElvUI|r |cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r
 ## Notes: Customizable enhancements for ElvUI.
 ## Notes-zhCN: 用于 ElvUI 的自定义增强.
 ## Notes-zhTW: 用於 ElvUI 的自訂增強.

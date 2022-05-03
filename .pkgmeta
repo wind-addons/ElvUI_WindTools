@@ -10,6 +10,6 @@ ignore:
   - README.md
   - README_zhCN.md
   - README_zhTW.md
-  - Title.png
+  - Title.svg
   - generate_changelog.py
   - Core/Changelog/template.lua

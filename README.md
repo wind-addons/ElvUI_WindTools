@@ -1,5 +1,5 @@
 <div align="center">
-<img src="Title.png"/><br>
+<img style="max-width: 100px;" src="Title.svg"/><br>
 <img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Version-2.32-green.svg?longCache=true&style=for-the-badge"/>
 

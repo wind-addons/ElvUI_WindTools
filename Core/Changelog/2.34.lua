@@ -1,12 +1,20 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[234] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/05/03",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[移动框体] 配置文件表位置更改, 更新后会自动拷贝旧配置并清理.",
+        },
+        ["zhTW"] = {
+            "[移動框架] 配置文件表位置更改, 更新後會自動拷貝舊配置並清理.",
+        },
+        ["enUS"] = {
+            "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
+        },
+        ["koKR"] = {
+            "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned.",
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -24,6 +32,9 @@ W.Changelog[234] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "优化了部分设定项的显示",
+            "优化了更新助手.",
+            "配置重置模块更新.",
             "[交接] 大幅优化了模块代码.",
             "[交接] 支持自定义暂停修饰键.",
             "[交接] 支持仅开启接受任务或仅开启完成任务.",
@@ -37,6 +48,9 @@ W.Changelog[234] = {
             "[游戏条] 修复了 Ctrl + Shift + 点击时间区域无法开启 CPU 占用统计的问题."
         },
         ["zhTW"] = {
+            "優化了部分設置項的顯示.",
+            "優化了更新助手.",
+            "配置重置模塊更新.",
             "[交接] 大幅优化了模組代碼.",
             "[交接] 支援自訂暫停修飾鍵.",
             "[交接] 支援仅開啟接受任務或仅開啟完成任務.",
@@ -50,6 +64,9 @@ W.Changelog[234] = {
             "[游戏條] 修復了 Ctrl + Shift + 點擊時間區域無法開啟 CPU 占用統計的問題."
         },
         ["enUS"] = {
+            "Improved some options.",
+            "Improved upgrade assistant.",
+            "Update the module reset buttons with latest changes.",
             "[Turn In] Greatly optimized module code.",
             "[Turn In] Support customization of pause modifier key.",
             "[Turn In] Support only auto-accepting or only auto-completing.",
@@ -63,6 +80,9 @@ W.Changelog[234] = {
             "[Game Bar] Fixed the issue of Ctrl + Shift + click on the time area."
         },
         ["koKR"] = {
+            "Improved some options.",
+            "Improved upgrade assistant.",
+            "Update the module reset buttons with latest changes.",
             "[Turn In] Greatly optimized module code.",
             "[Turn In] Support customization of pause modifier key.",
             "[Turn In] Support only auto-accepting or only auto-completing.",

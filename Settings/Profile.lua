@@ -858,11 +858,11 @@ P.tooltips = {
 
 P.unitFrames = {
     absorb = {
-        enable = true,
+        enable = false,
         texture = {
             enable = true,
             custom = E.db.unitframe.statusbar,
-            blizzardStyle = false,
+            blizzardStyle = true,
         },
         blizzardOverAbsorbGlow = true,
         blizzardAbsorbOverlay = true,

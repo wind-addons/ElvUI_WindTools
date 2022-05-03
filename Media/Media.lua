@@ -47,58 +47,77 @@ local function AddMedia(name, file, type)
 end
 
 do
-	local titlePath = "enUS"
-	if E.global.general.locale then
-		if E.global.general.locale == "zhCN" or E.global.general.locale == "zhTW" or E.global.general.locale == "koKR" then
-			titlePath = E.global.general.locale
-		end
-	end
-	AddMedia("logo", format("Title/%s.tga", titlePath), "Textures")
-end
-AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
+	AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
 
--- Custom Header
-local CustomHeaders = {
-	texWidth = 2048,
-	texHeight = 256,
-	headerWidth = 340,
-	headerHeight = 40,
-	type = {
-		-- OffsetX
-		SpecialAchievements = 0,
-		Raids = 348,
-		MythicDungeons = 693
-	},
-	languages = {
-		-- OffsetY
-		zhCN = 0,
-		zhTW = 52,
-		koKR = 103,
-		enUS = 155,
-		deDE = 206
+	-- Custom Header
+	local texTable = {
+		texWidth = 2048,
+		texHeight = 256,
+		headerWidth = 340,
+		headerHeight = 40,
+		type = {
+			-- OffsetX
+			SpecialAchievements = 0,
+			Raids = 348,
+			MythicDungeons = 693
+		},
+		languages = {
+			-- OffsetY
+			zhCN = 0,
+			zhTW = 52,
+			koKR = 103,
+			enUS = 155,
+			deDE = 206
+		}
 	}
-}
 
-function F.GetCustomHeader(name, scale)
-	local offsetX = CustomHeaders.type[name]
-	local offsetY = CustomHeaders.languages[E.global.general.locale] or CustomHeaders.languages["enUS"]
-	if not offsetX or not offsetY then
-		return
+	function F.GetCustomHeader(name, scale)
+		local offsetX = texTable.type[name]
+		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
+		if not offsetX or not offsetY then
+			return
+		end
+
+		scale = scale or 1
+		return format(
+			"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
+			W.Media.Textures.customHeaders,
+			ceil(texTable.headerHeight * scale),
+			ceil(texTable.headerWidth * scale),
+			texTable.texWidth,
+			texTable.texHeight,
+			offsetX,
+			offsetX + texTable.headerWidth,
+			offsetY,
+			offsetY + texTable.headerHeight
+		)
 	end
+end
 
-	scale = scale or 1
-	return format(
-		"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
-		W.Media.Textures.customHeaders,
-		ceil(CustomHeaders.headerHeight * scale),
-		ceil(CustomHeaders.headerWidth * scale),
-		CustomHeaders.texWidth,
-		CustomHeaders.texHeight,
-		offsetX,
-		offsetX + CustomHeaders.headerWidth,
-		offsetY,
-		offsetY + CustomHeaders.headerHeight
-	)
+do
+	AddMedia("title", "WindToolsTitle.tga", "Textures")
+
+	local texTable = {
+		texHeight = 1024,
+		titleHeight = 150,
+		languages = {
+			-- OffsetY
+			zhCN = 0,
+			zhTW = 160,
+			koKR = 320,
+			enUS = 480,
+			deDE = 640
+		}
+	}
+
+	function F.GetTitleTexCoord()
+		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
+		if not offsetY then
+			return
+		end
+
+		return {0, 1, offsetY / texTable.texHeight, (offsetY + texTable.titleHeight) / texTable.texHeight}
+	end
 end
 
 do

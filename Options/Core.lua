@@ -111,13 +111,28 @@ function W:OptionsCallback()
         childGroups = "tree",
         name = icon .. " " .. W.Title,
         args = {
-            logo = {
+            beforeLogo = {
                 order = 1,
+                type = "description",
+                fontSize = "medium",
+                name = " ",
+                width = "full"
+            },
+            logo = {
+                order = 2,
                 type = "description",
                 name = "",
                 image = function()
-                    return W.Media.Textures.logo, 512, 128
-                end
+                    return W.Media.Textures.title, 364, 106.667
+                end,
+                imageCoords = F.GetTitleTexCoord
+            },
+            afterLogo = {
+                order = 3,
+                type = "description",
+                fontSize = "medium",
+                name = " ",
+                width = "full"
             }
         }
     }

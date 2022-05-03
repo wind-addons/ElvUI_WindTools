@@ -190,9 +190,24 @@ function W:UpdateScripts(oldVersion, currentVersion)
     end
 end
 
+function W:ForBetaUser()
+    local miscDB = E.private.WT.misc
+    
+    miscDB.moveFrames.enable = miscDB.moveBlizzardFrames or miscDB.moveFrames.enable
+    miscDB.moveFrames.elvUIBags = miscDB.moveElvUIBags or miscDB.moveFrames.elvUIBags
+    miscDB.moveFrames.rememberPositions = miscDB.rememberPositions or miscDB.moveFrames.rememberPositions
+    miscDB.moveFrames.framePositions = miscDB.framePositions or miscDB.moveFrames.framePositions
+
+    miscDB.moveBlizzardFrames = nil
+    miscDB.moveElvUIBags = nil
+    miscDB.rememberPositions = nil
+    miscDB.framePositions = nil
+end
+
 -- 检查安装版本, 提示更新记录
 function W:CheckInstalledVersion()
     if not InCombatLockdown() then
+        W:ForBetaUser()
         if not E.global.WT.Version or E.global.WT.Version ~= W.Version then
             E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
             W:UpdateScripts(E.global.WT.Version, W.Version)

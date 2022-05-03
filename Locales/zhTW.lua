@@ -1014,6 +1014,7 @@ L["Uncheck this box, it will not send message if you cast the spell."] = "如果
 L["UnitFrames"] = "單位框架"
 L["Unknown"] = "未知"
 L["Update"] = "更新"
+L["Update Database"] = "更新數據庫"
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "附加文字的更新間隔將從 1 秒改為 10 秒以降低記憶體使用."
 L["Use %s Skins"] = "使用 %s 皮膚"
 L["Use Bags Setting"] = "使用背包設定"

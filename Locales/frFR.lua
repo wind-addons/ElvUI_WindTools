@@ -1014,6 +1014,7 @@ L["Uncheck this box, it will not send message if you cast the spell."] = "Décoc
 L["UnitFrames"] = "Cadre d'unité"
 L["Unknown"] = true
 L["Update"] = true
+L["Update Database"] = true
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "Mettez à jour le texte supplémentaire toutes les 10 secondes plutôt que toutes les secondes afin que la mémoire utilisée soit plus faible."
 L["Use %s Skins"] = "Utiliser %s apparences"
 L["Use Bags Setting"] = true

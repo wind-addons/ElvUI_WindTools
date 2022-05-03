@@ -1014,6 +1014,7 @@ L["Uncheck this box, it will not send message if you cast the spell."] = true
 L["UnitFrames"] = "Marco de Unidad"
 L["Unknown"] = true
 L["Update"] = true
+L["Update Database"] = true
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = true
 L["Use %s Skins"] = true
 L["Use Bags Setting"] = true

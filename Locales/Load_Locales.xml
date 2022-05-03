@@ -3,6 +3,7 @@
 	<Include file="esMX.lua"/>
 	<Include file="deDE.lua"/>
 	<Include file="frFR.lua"/>
+	<Include file="itIT.lua"/>
 	<Include file="koKR.lua"/>
 	<Include file="ptBR.lua"/>
 	<Include file="ruRU.lua"/>

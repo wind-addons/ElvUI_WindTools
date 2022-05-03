@@ -1014,6 +1014,7 @@ L["Uncheck this box, it will not send message if you cast the spell."] = "Сни
 L["UnitFrames"] = "Рамки юнитов"
 L["Unknown"] = "Неизвестно"
 L["Update"] = "Обновление"
+L["Update Database"] = true
 L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "Обновляет дополнительный текст каждые 10 секунд, а не каждую секунду, для уменьшения объема используемой памяти."
 L["Use %s Skins"] = "Использовать %s скины"
 L["Use Bags Setting"] = "Применить настройки сумок"

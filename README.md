@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.32-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.77-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.34-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -13,7 +13,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 
 # :smiling_face_with_three_hearts: Localization
 [ **100% Support** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
-[ **Working on Pregress** ] Español, français, Português
+[ **Working on Pregress** ] Español, français, Português, Italiano
 
 # :heart: Credits
 Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  

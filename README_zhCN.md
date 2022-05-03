@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.33-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.77-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.34-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -14,7 +14,7 @@
 
 # :smiling_face_with_three_hearts: 本地化
 [ **完整支持** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
-[ **努力优化中** ] Español, français, Português
+[ **努力优化中** ] Español, français, Português, Italiano
 
 # :heart: 鸣谢
 特別感谢 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  

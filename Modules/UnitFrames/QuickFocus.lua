@@ -91,9 +91,6 @@ function QF:WaitUnitframesLoad(triedTimes)
     end
 end
 
-function QF:Initializee()
-end
-
 function QF:Initialize()
     self.db = E.private.WT.unitFrames.quickFocus
     if not self.db or not self.db.enable then

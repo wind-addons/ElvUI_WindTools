@@ -1,5 +1,5 @@
 <div align="center">
-<img style="max-width: 100px;" src="Title.svg"/><br>
+<img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/版本-2.33-green.svg?longCache=true&style=for-the-badge"/>
 
@@ -87,7 +87,8 @@
 
 ## 单位框体
 1. **快速焦点**: 通过自定义鼠标按键和组合键来快速设定焦点.
-2. **职责图标**: 自定义单位框体上的职责图标组.
+2. **吸收**: 自定义 ElvUI 单位框体的吸收条材质, 添加暴雪风格的火花效果到生命条末尾.
+3. **职责图标**: 自定义单位框体上的职责图标组.
 
 ## 美化外观
 1. **屏幕暗角**: 让游戏更加有电影的感觉!

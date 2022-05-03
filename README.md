@@ -1,5 +1,5 @@
 <div align="center">
-<img style="max-width: 100px;" src="Title.svg"/><br>
+<img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Version-2.32-green.svg?longCache=true&style=for-the-badge"/>
 
@@ -86,7 +86,8 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 
 ## Unit Frames
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
-2. **Role Icon**: Change the icon pack of role icons.
+2. **Absorb**: Customize the texture of ElvUI absorb bar, and add Blizzard style absorb spark to the end of health bar.
+3. **Role Icon**: Change the icon pack of role icons.
 
 ## Skins
 1. **Vignetting**: Add the shadowed border inner game interface.

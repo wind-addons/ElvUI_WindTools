@@ -1,5 +1,5 @@
 <div align="center">
-<img style="max-width: 100px;" src="Title.svg"/><br>
+<img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.76-blue.svg?longCache=true&style=for-the-badge"/>
 <img src="https://img.shields.io/badge/版本-2.32-green.svg?longCache=true&style=for-the-badge"/>
 
@@ -87,7 +87,8 @@
 
 ## 單位框架
 1. **快速焦點**: 通過自訂鼠標按鍵和組合鍵來快速設定焦點.
-2. **職責圖標**: 自訂單位框架上的定位圖標組.
+2. **吸收**: 自訂 ElvUI 單位框架的吸收條材質, 添加暴雪風格的火花效果到生命條的末尾.
+3. **職責圖標**: 自訂單位框架上的定位圖標組.
 
 ## 美化外觀
 1. **屏幕暗角**: 讓遊戲更加有電影的感覺!

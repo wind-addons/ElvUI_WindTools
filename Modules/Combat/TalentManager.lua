@@ -533,7 +533,7 @@ function TM:BuildFrame()
     )
 
     -- 移动模块兼容
-    if E.private.WT.misc.moveBlizzardFrames then
+    if E.private.WT.misc.moveFrames.enable then
         local MF = W:GetModule("MoveFrames")
         MF:HandleFrame(frame:GetName(), "PlayerTalentFrame")
     end

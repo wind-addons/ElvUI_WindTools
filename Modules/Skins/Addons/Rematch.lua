@@ -890,7 +890,7 @@ function S:Rematch_SkinLoad()
     end
 
     -- Compatible with Move Frames module
-    if MF and MF.db and MF.db.moveBlizzardFrames then
+    if MF and MF.db and MF.db.enable then
         if not _G.CollectionsJournal then
             CollectionsJournal_LoadUI()
         end

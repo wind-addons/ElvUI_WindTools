@@ -390,7 +390,7 @@ function W:CheckCompatibility()
     CheckShadowAndLight(
         L["Move Frames"],
         L["Move Blizzard frames"],
-        "private.WT.misc.moveBlizzardFrames",
+        "private.WT.misc.moveFrames.enable",
         "private.sle.module.blizzmove.enable"
     )
 

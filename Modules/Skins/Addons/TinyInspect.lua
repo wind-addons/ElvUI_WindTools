@@ -80,7 +80,7 @@ do
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             MF:HandleFrame(inspectFrameHolder, parent.MoveFrame or parent)
             frame.MoveFrame = inspectFrameHolder.MoveFrame
         end
@@ -163,7 +163,7 @@ do
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             local parent = frame:GetParent()
             MF:HandleFrame(statsFrameHolder, parent.MoveFrame or parent)
         end

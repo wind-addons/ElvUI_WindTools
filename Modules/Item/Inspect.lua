@@ -402,7 +402,7 @@ local function ShowInspectItemStatsFrame(frame, unit)
         mask:SetVertexColor(1, 1, 1)
         mask:SetAlpha(0.2)
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             MF:HandleFrame(statsFrame.backdrop, frame.MoveFrame or frame)
             statsFrame.MoveFrame = statsFrame.backdrop.MoveFrame
         end
@@ -769,7 +769,7 @@ local function GetInspectItemListFrame(parent)
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             MF:HandleFrame(frame.backdrop, parent.MoveFrame or parent)
             frame.MoveFrame = frame.backdrop.MoveFrame
         end

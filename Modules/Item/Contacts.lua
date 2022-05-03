@@ -162,7 +162,7 @@ function CT:ConstructFrame()
     S:MerathilisUISkin(frame.backdrop)
 
     -- Register move frames
-    if E.private.WT.misc.moveBlizzardFrames then
+    if E.private.WT.misc.moveFrames.enable then
         local MF = W:GetModule("MoveFrames")
         MF:HandleFrame("WTContacts", "MailFrame")
     end

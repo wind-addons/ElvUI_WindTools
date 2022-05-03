@@ -386,6 +386,13 @@ function W:CheckCompatibility()
         "db.mui.merchant.enable"
     )
 
+    CheckMerathilisUI(
+        L["Absorb"],
+        L["Heal Prediction"],
+        "db.WT.unitFrames.absorb.enable",
+        "db.mui.unitframes.healPrediction.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

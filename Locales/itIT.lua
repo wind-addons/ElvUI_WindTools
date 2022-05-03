@@ -431,6 +431,7 @@ L["Halls of Atonement"] = true
 L["Have a good time with %s!"] = true
 L["Header"] = true
 L["Header Style"] = true
+L["Heal Prediction"] = true
 L["Healer"] = true
 L["Health"] = true
 L["Health Bar"] = true

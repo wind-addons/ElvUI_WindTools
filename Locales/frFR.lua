@@ -431,6 +431,7 @@ L["Halls of Atonement"] = "Salles de l'Expiation"
 L["Have a good time with %s!"] = "Amusez-vous bien avec %s !"
 L["Header"] = "Entête"
 L["Header Style"] = true
+L["Heal Prediction"] = "Soin prévisionnel"
 L["Healer"] = "Soigneur"
 L["Health"] = "Vie"
 L["Health Bar"] = "Barre de vie"

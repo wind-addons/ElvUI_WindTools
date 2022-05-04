@@ -19,7 +19,7 @@ W.Changelog[234] = {
             "[Move Frames] The location of settings are changed, the old settings will be copied and cleaned."
         },
         ["koKR"] = {
-            "Updated the overall designs.",
+            "전반적인 디자인을 업데이트했습니다.",
             "이탈리아어 지원 추가",
             "[프레임 이동] 설정 위치가 변경되면 이전 구성이 자동으로 복사되어 정리됩니다."
         }

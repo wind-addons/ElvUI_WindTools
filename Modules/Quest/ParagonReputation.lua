@@ -677,7 +677,7 @@ function PR:SetupParagonTooltip(tt)
 
 		_G.GameTooltip:ClearLines()
 		_G.GameTooltip:AddLine(
-			L["PARAGON"],
+			L["Paragon"],
 			E.db.general.valuecolor.r,
 			E.db.general.valuecolor.g,
 			E.db.general.valuecolor.b,

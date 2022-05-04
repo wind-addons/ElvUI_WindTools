@@ -360,6 +360,18 @@ function MB:SkinButton(frame)
 					self:SetButtonMouseOver(frame, child, true)
 				end
 			end
+		elseif name == "TomCats-MinimapButton" then
+			if _G["TomCats-MinimapButtonBorder"] then
+				_G["TomCats-MinimapButtonBorder"]:SetAlpha(0)
+			end
+			if _G["TomCats-MinimapButtonBackground"] then
+				_G["TomCats-MinimapButtonBackground"]:SetAlpha(0)
+			end
+			if _G["TomCats-MinimapButtonIcon"] then
+				_G["TomCats-MinimapButtonIcon"]:ClearAllPoints()
+				_G["TomCats-MinimapButtonIcon"]:SetInside(frame.backdrop)
+				_G["TomCats-MinimapButtonIcon"].SetPoint = E.noop
+			end
 		end
 
 		tinsert(moveButtons, name)

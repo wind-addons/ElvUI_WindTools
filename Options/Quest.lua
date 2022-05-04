@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
 local SB = W:GetModule("SwitchButtons")
 local OT = W:GetModule("ObjectiveTracker")
+local PR = W:GetModule("ParagonReputation")
 
 local pairs = pairs
 local tonumber = tonumber
@@ -661,7 +662,11 @@ options.paragonReputation = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.quest.paragonReputation[info[#info]] = value
+                PR:ProfileUpdate()
+            end
         },
         reputation_panel = {
             order = 3,

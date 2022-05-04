@@ -236,24 +236,16 @@ function MB:SkinButton(frame)
 		frame:SetPushedTexture(nil)
 		frame:SetDisabledTexture(nil)
 		frame:SetHighlightTexture(nil)
-	end
-
-	if name == "DBMMinimapButton" then
+	elseif name == "DBMMinimapButton" then
 		frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
-	end
-
-	if name == "SmartBuff_MiniMapButton" then
+	elseif name == "SmartBuff_MiniMapButton" then
 		frame:SetNormalTexture(select(3, GetSpellInfo(12051)))
-	end
-
-	if name == "GarrisonLandingPageMinimapButton" and self.db.garrison then
+	elseif name == "GarrisonLandingPageMinimapButton" and self.db.garrison then
 		if not frame.isWindMinimapButton then
 			frame.isWindMinimapButton = true
 			self:UpdateGarrisonMinimapIcon(_G.GarrisonLandingPageMinimapButton)
 		end
-	end
-
-	if name == "GRM_MinimapButton" then
+	elseif name == "GRM_MinimapButton" then
 		frame.GRM_MinimapButtonBorder:Hide()
 		frame:SetPushedTexture(nil)
 		frame:SetHighlightTexture(nil)

@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = "Talentmanager einblenden"
 L["Toggle minimap buttons bar."] = "Minimap Tastenleiste einblenden"
 L["Toggle raid markers bar."] = "Schlachtzugsmarkierungsleiste einblenden"
 L["Toggle the game bar."] = "Spielleiste einblenden"
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = "Zu viele Sets hier, bitte löschen Sie eines davon und versuchen Sie es erneut."
 L["Tooltip"] = "Tooltip"
 L["Tooltip Anchor"] = "Tooltip Anker"

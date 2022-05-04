@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = "특성 관리자 토글"
 L["Toggle minimap buttons bar."] = "미니맵 버튼 바 토글"
 L["Toggle raid markers bar."] = "공격대 징표 바 토글"
 L["Toggle the game bar."] = "게임 바 토글"
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = "세트가 너무 많습니다. 그 중 하나를 삭제하고 다시 시도하십시오."
 L["Tooltip"] = "툴팁"
 L["Tooltip Anchor"] = "툴팁 생성 위치"

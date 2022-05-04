@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = "Afficher le gestionnaire de talents"
 L["Toggle minimap buttons bar."] = "Afficher la barre de boutons de la minicarte."
 L["Toggle raid markers bar."] = "Affiche la barre des marqueurs pour les raids"
 L["Toggle the game bar."] = "Affiche la barre de jeu."
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = "Il y a trop d'ensembles, veuillez en supprimer un et réessayez."
 L["Tooltip"] = "Infobulle"
 L["Tooltip Anchor"] = "Ancrage de l'infobulle"

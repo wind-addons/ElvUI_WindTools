@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = true
 L["Toggle minimap buttons bar."] = true
 L["Toggle raid markers bar."] = true
 L["Toggle the game bar."] = true
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = true
 L["Tooltip"] = true
 L["Tooltip Anchor"] = true

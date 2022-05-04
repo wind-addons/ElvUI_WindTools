@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = "Переключить менеджер талан
 L["Toggle minimap buttons bar."] = "Переключить панель кнопок миникарты."
 L["Toggle raid markers bar."] = "Переключить панель меток рейда."
 L["Toggle the game bar."] = "Переключить игровую панель."
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = "Здесь слишком много наборов, удалите один из них и повторите попытку."
 L["Tooltip"] = "Подсказка"
 L["Tooltip Anchor"] = "Якорь всплывающих подсказок"

@@ -993,6 +993,7 @@ L["Toggle Talent Manager"] = "开关天赋管家"
 L["Toggle minimap buttons bar."] = "开关小地图按钮条."
 L["Toggle raid markers bar."] = "开关团队标记条."
 L["Toggle the game bar."] = "开关游戏条."
+L["TomCat's Tours"] = true
 L["Too many sets here, please delete one of them and try again."] = "已有过多设定, 请删除其中之一后进行重试."
 L["Tooltip"] = "鼠标提示"
 L["Tooltip Anchor"] = "鼠标提示锚点"

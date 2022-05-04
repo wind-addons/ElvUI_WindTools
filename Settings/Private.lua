@@ -91,8 +91,10 @@ V.misc = {
 			[312762] = false
 		},
 		other = {
+			["Crying"] = false,
 			["Tortollan"] = false,
-			["Smolderheart"] = false
+			["Smolderheart"] = false,
+			["Elegy of the Eternals"] = false
 		}
 	},
 	lfgList = {

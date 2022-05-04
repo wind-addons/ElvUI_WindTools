@@ -110,6 +110,47 @@ local OtherSE = {
         -- Smolderheart
         -- https://www.wowhead.com/item=180873/smolderheart
         2066602 -- sound/spells/fx_fire_magic_loop_smoldering_a_01.ogg
+    },
+    ["Elegy of the Eternals"] = {
+        -- Smolderheart
+        -- https://www.wowhead.com/item=188270/elegy-of-the-eternals
+        539295 -- sound/character/bloodelf/bloodelffemalecry01.ogg
+    },
+    ["Crying"] = {
+        539295, -- sound/character/bloodelf/bloodelffemalecry01.ogg
+        539355, -- sound/character/bloodelf/bloodelfmalecry01.ogg
+        539609, -- sound/character/draenei/draeneimalecry01.ogg
+        539674, -- sound/character/draenei/draeneifemalecry01.ogg
+        539792, -- sound/character/dwarf/dwarffemale/dwarffemalecry01.ogg
+        539875, -- sound/character/dwarf/dwarfmale/dwarfmalecry01.ogg
+        540264, -- sound/character/gnome/gnomemalecry01.ogg
+        540273, -- sound/character/gnome/gnomefemalecry01.ogg
+        540533, -- sound/character/human/female/humanfemalecry01.ogg
+        540736, -- sound/character/human/male/humanmalecry01.ogg
+        540873, -- sound/character/nightelf/nightelffemale/nightelffemalecry01.ogg
+        540957, -- sound/character/nightelf/nightelfmale/nightelfmalecry01.ogg
+        541149, -- sound/character/orc/female/orcfemalecry01.ogg
+        541240, -- sound/character/orc/orcmale/orcmalecry01.ogg
+        541450, -- sound/character/pcgilneanfemale/vo_pcgilneanfemale_cry03.ogg
+        541473, -- sound/character/pcgilneanfemale/vo_pcgilneanfemale_cry01.ogg
+        541525, -- sound/character/pcgilneanfemale/vo_pcgilneanfemale_cry02.ogg
+        541706, -- sound/character/pcgilneanmale/vo_pcgilneanmale_cry01.ogg
+        541796, -- sound/character/pcgoblinfemale/vo_pcgoblinfemale_cry02.ogg
+        541817, -- sound/character/pcgoblinfemale/vo_pcgoblinfemale_cry01.ogg
+        541915, -- sound/character/pcgoblinmale/vo_pcgoblinmale_cry01.ogg
+        541954, -- sound/character/pcgoblinmale/vo_pcgoblinmale_cry02.ogg
+        542003, -- sound/character/pcgoblinmale/vo_pcgoblinmale_cry03.ogg
+        542078, -- sound/character/pcworgenfemale/vo_pcworgenfemale_cry01.ogg
+        542258, -- sound/character/pcworgenmale/vo_pcworgenmale_cry01.ogg
+        542519, -- sound/character/scourge/scourgefemale/undeadfemalecry01.ogg
+        542601, -- sound/character/scourge/scourgemale/undeadmalecry01.ogg
+        542815, -- sound/character/tauren/female/taurenfemalecry01.ogg
+        542887, -- sound/character/tauren/taurenmale/taurenmalecry01.ogg
+        543084, -- sound/character/troll/trollfemalecry01.ogg
+        630076, -- sound/character/pcpandarenmale/vo_pcpandarenmale_cry02.ogg
+        630078, -- sound/character/pcpandarenmale/vo_pcpandarenmale_cry03.ogg
+        636425, -- sound/character/pcpandarenfemale/vo_pcpandarenfemale_cry02.ogg
+        636427 -- sound/character/pcpandarenfemale/vo_pcpandarenfemale_cry03.ogg
     }
 }
 

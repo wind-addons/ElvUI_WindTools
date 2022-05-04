@@ -12,7 +12,8 @@ local tostring = tostring
 
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
-local GetSpellInfo = GetSpellInfo
+local Item = Item
+local Spell = Spell
 
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
@@ -276,7 +277,6 @@ options.moveFrames = {
         E.private.WT.misc.moveFrames[info[#info]] = value
         E:StaticPopup_Show("PRIVATE_RL")
     end,
-
     args = {
         desc = {
             order = 0,
@@ -308,7 +308,7 @@ options.moveFrames = {
             name = L["Enable"],
             disabled = function()
                 return MF.StopRunning
-            end,
+            end
         },
         elvUIBags = {
             order = 2,
@@ -316,7 +316,7 @@ options.moveFrames = {
             name = L["Move ElvUI Bags"],
             disabled = function()
                 return MF.StopRunning or not E.private.WT.misc.moveFrames.enable
-            end,
+            end
         },
         remember = {
             order = 3,
@@ -425,10 +425,11 @@ options.mute = {
                     type = "toggle",
                     name = L["Tortollan"]
                 },
-                ["Smolderheart"] = {
+                ["Crying"] = {
                     order = 2,
                     type = "toggle",
-                    name = L["Smolderheart"]
+                    name = L["Crying"],
+                    desc = L["Mute crying sounds of all races."]
                 }
             }
         }
@@ -437,11 +438,46 @@ options.mute = {
 
 do
     for id in pairs(V.misc.mute.mount) do
-        options.mute.args.mount.args[tostring(id)] = {
-            order = id,
-            type = "toggle",
-            name = GetSpellInfo(id)
-        }
+        local spell = Spell:CreateFromSpellID(id)
+        spell:ContinueOnSpellLoad(
+            function()
+                local icon = spell:GetSpellTexture()
+                local name = spell:GetSpellName()
+
+                local iconString = F.GetIconString(icon)
+
+                options.mute.args.mount.args[tostring(id)] = {
+                    order = id,
+                    type = "toggle",
+                    name = iconString .. " " .. name
+                }
+            end
+        )
+    end
+
+    local itemList = {
+        ["Smolderheart"] = 180873,
+        ["Elegy of the Eternals"] = 188270
+    }
+
+    for name, id in pairs(itemList) do
+        local item = Item:CreateFromItemID(id)
+        item:ContinueOnItemLoad(
+            function()
+                local icon = item:GetItemIcon()
+                local name = item:GetItemName()
+                local color = item:GetItemQualityColor()
+
+                local iconString = F.GetIconString(icon)
+                local nameString = F.CreateColorString(name, color)
+
+                options.mute.args.other.args[name] = {
+                    order = id,
+                    type = "toggle",
+                    name = iconString .. " " .. nameString
+                }
+            end
+        )
     end
 end
 

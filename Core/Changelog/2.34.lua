@@ -26,16 +26,20 @@ W.Changelog[234] = {
     },
     NEW = {
         ["zhCN"] = {
-            "新增模块: [吸收], 可以自定义 ElvUI 吸收盾材质, 同时增加暴雪风格的吸收火花."
+            "新增模块: [吸收], 可以自定义 ElvUI 吸收盾材质, 同时增加暴雪风格的吸收火花.",
+            "[美化皮肤] 新增 TomCat's Tour 皮肤."
         },
         ["zhTW"] = {
-            "新增模組: [吸收], 可以自定義 ElvUI 吸收盾材質, 同時增加暴雪風格的吸收火花."
+            "新增模組: [吸收], 可以自定義 ElvUI 吸收盾材質, 同時增加暴雪風格的吸收火花.",
+            "[美化皮膚] 新增 TomCat's Tour 美化."
         },
         ["enUS"] = {
-            "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark."
+            "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark.",
+            "[Skin] Added a new skin for TomCat's Tour."
         },
         ["koKR"] = {
-            "새로운 모듈 [Absorb], ElvUI의 Absorb Shield 텍스처를 커스터마이징 할 수 있으며, Blizzard 스타일의 Absorb Sparks를 추가할 수 있습니다."
+            "새로운 모듈 [Absorb], ElvUI의 Absorb Shield 텍스처를 커스터마이징 할 수 있으며, Blizzard 스타일의 Absorb Sparks를 추가할 수 있습니다.",
+            "[Skin] Added a new skin for TomCat's Tour."
         }
     },
     IMPROVEMENT = {

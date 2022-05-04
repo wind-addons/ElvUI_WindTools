@@ -72,9 +72,6 @@ function S:BlizzardMiscFrames()
     -- 颜色选择器
     self:CreateShadow(_G.ColorPickerFrame)
 
-    -- What's new
-    -- self:CreateShadow(_G.SplashFrame)
-
     -- UIWidget
     self:SecureHook(
         ES,

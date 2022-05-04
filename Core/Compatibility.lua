@@ -208,7 +208,7 @@ local function GetDatabaseRealValue(path)
 
     for _, key in ipairs {strsplit(".", path)} do
         if key and strlen(key) > 0 then
-            if accessValue[key] ~= nil then
+            if accessValue and accessValue[key] ~= nil then
                 if type(accessValue[key]) == "boolean" then
                     accessTable = accessValue
                     accessKey = key

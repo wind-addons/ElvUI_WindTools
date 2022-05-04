@@ -33,7 +33,6 @@ local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
 local C_Timer_After = C_Timer.After
 
 local FONT_COLOR_CODE_CLOSE = FONT_COLOR_CODE_CLOSE
-local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local HIGHLIGHT_FONT_COLOR_CODE = HIGHLIGHT_FONT_COLOR_CODE
 local NUM_FACTIONS_DISPLAYED = NUM_FACTIONS_DISPLAYED
 local REPUTATION_PROGRESS_FORMAT = REPUTATION_PROGRESS_FORMAT
@@ -41,7 +40,8 @@ local REPUTATION_PROGRESS_FORMAT = REPUTATION_PROGRESS_FORMAT
 local ACTIVE_TOAST = false
 local WAITING_TOAST = {}
 
-local PARAGON_QUEST_ID = {
+-- from Paragon Reputation
+local paragonData = {
 	--Legion
 	[48976] = {
 		-- Argussian Reach
@@ -483,6 +483,87 @@ local PARAGON_QUEST_ID = {
 			}
 		}
 	},
+	[64867] = {
+		--The Enlightened
+		factionID = 2478,
+		cache = 187780,
+		rewards = {
+			{
+				-- Sphere of Enlightened Cogitation
+				type = TOY,
+				itemID = 190177
+			},
+			{
+				-- Schematic: Russet Bufonoid
+				type = BINDING_HEADER_OTHER,
+				itemID = 189471,
+				questID = 65394
+			},
+			{
+				-- Enlightened Portal Research
+				type = BINDING_HEADER_OTHER,
+				itemID = 190234,
+				questID = 65617
+			},
+			{
+				-- Ray Soul
+				type = BINDING_HEADER_OTHER,
+				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
+				itemID = 189973,
+				questID = 65506
+			},
+			{
+				-- Distinguished Blade of Cartel Al
+				type = ITEM_COSMETIC,
+				itemID = 190935
+			},
+			{
+				-- Edge of the Enlightened
+				type = ITEM_COSMETIC,
+				itemID = 190937
+			},
+			{
+				-- Standard of the Wandering Brokers
+				type = ITEM_COSMETIC,
+				itemID = 190934
+			},
+			{
+				-- Walking Staff of the Enlightened Journey
+				type = ITEM_COSMETIC,
+				itemID = 190939
+			},
+			{
+				-- Cape of the Regal Wanderer
+				type = ITEM_COSMETIC,
+				itemID = 190931
+			},
+			{
+				-- Dark Shawl of the Enlightened
+				type = ITEM_COSMETIC,
+				itemID = 190930
+			},
+			{
+				-- Ebony Protocloak
+				type = ITEM_COSMETIC,
+				itemID = 190929
+			},
+			{
+				-- Majestic Oracle's Drape
+				type = ITEM_COSMETIC,
+				itemID = 190933
+			},
+			{
+				-- Protohide Drape
+				type = ITEM_COSMETIC,
+				itemID = 190932
+			},
+			{
+				-- Sandtails Drape
+				type = ITEM_COSMETIC,
+				itemID = 190928
+			}
+		}
+	},
 	[61095] = {
 		--The Undying Army
 		factionID = 2410,
@@ -521,6 +602,20 @@ local PARAGON_QUEST_ID = {
 				-- Hungry Burrower
 				type = PET,
 				itemID = 180635
+			},
+			{
+				-- Mammoth Soul
+				type = BINDING_HEADER_OTHER,
+				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
+				itemID = 185054,
+				questID = 63610
+			},
+			{
+				-- Porcupine Soul
+				type = BINDING_HEADER_OTHER,
+				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
+				itemID = 187870,
+				questID = 64989
 			}
 		}
 	},
@@ -545,18 +640,18 @@ local PARAGON_QUEST_ID = {
 }
 
 function PR:ColorWatchbar(bar)
-	if not PR.db.enable then
+	if not self.db.enable then
 		return
 	end
 
 	local factionID = select(6, GetWatchedFactionInfo())
 	if factionID and C_Reputation_IsFactionParagon(factionID) then
-		bar:SetBarColor(PR.db.color.r, PR.db.color.g, PR.db.color.b)
+		bar:SetBarColor(self.db.color.r, self.db.color.g, self.db.color.b)
 	end
 end
 
 function PR:SetupParagonTooltip(tt)
-	if not PR.db.enable then
+	if not self.db.enable then
 		return
 	end
 
@@ -576,11 +671,12 @@ end
 
 function PR:Tooltip(bar, event)
 	if not bar.questID or not PARAGON_QUEST_ID[bar.questID] then
+	if not bar.questID or not paragonData[bar.questID] then
 		return
 	end
 
 	if event == "OnEnter" then
-		local name, link, quality = GetItemInfo(PARAGON_QUEST_ID[bar.questID].cache)
+		local name, link, quality = GetItemInfo(paragonData[bar.questID].cache)
 		if link then
 			_G.GameTooltip:SetOwner(bar, "ANCHOR_NONE")
 			_G.GameTooltip:SetPoint("LEFT", bar, "RIGHT", 10, 0)
@@ -692,8 +788,8 @@ function PR:CreateToast()
 end
 
 function PR:QUEST_ACCEPTED(event, questID)
-	if self.db.toast.enable and PARAGON_QUEST_ID[questID] then
-		local name = GetFactionInfoByID(PARAGON_QUEST_ID[questID].factionID)
+	if self.db.toast.enable and paragonData[questID] then
+		local name = GetFactionInfoByID(paragonData[questID].factionID)
 		local text = GetQuestLogCompletionText(C_QuestLog_GetLogIndexForQuestID(questID))
 		if ACTIVE_TOAST then
 			WAITING_TOAST[#WAITING_TOAST + 1] = {name, text} --Toast is already active, put this info on the line.

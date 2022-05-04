@@ -108,7 +108,8 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 16. **REHack Skin**: Apply skin for REHack.
 17. **Rematch Skin**: Apply skin for Rematch.
 18. **TinyInspect Skin**: Apply skin for TinyInspect.
-19. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+19. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
+20. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 1. **CVars Editor**: Simple editor for changing CVars.

@@ -109,7 +109,8 @@
 16. **REHack 美化**: 为 REHack 的主要窗口添加美化.
 17. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
 18. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-19. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+19. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
+20. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.

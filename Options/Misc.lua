@@ -429,7 +429,8 @@ options.mute = {
                     order = 2,
                     type = "toggle",
                     name = L["Crying"],
-                    desc = L["Mute crying sounds of all races."]
+                    desc = L["Mute crying sounds of all races."] ..
+                        "\n|cffff0000" .. L["It will affect the cry emote sound."] .. "|r"
                 }
             }
         }
@@ -456,12 +457,18 @@ do
     end
 
     local itemList = {
-        ["Smolderheart"] = 180873,
-        ["Elegy of the Eternals"] = 188270
+        ["Smolderheart"] = {
+            id = 180873,
+            desc = nil
+        },
+        ["Elegy of the Eternals"] = {
+            id = 188270,
+            desc = "|cffff0000" .. L["It will also affect the crying sound of all female Blood Elves."] .. "|r"
+        }
     }
 
-    for name, id in pairs(itemList) do
-        local item = Item:CreateFromItemID(id)
+    for name, data in pairs(itemList) do
+        local item = Item:CreateFromItemID(data.id)
         item:ContinueOnItemLoad(
             function()
                 local icon = item:GetItemIcon()
@@ -474,7 +481,8 @@ do
                 options.mute.args.other.args[name] = {
                     order = id,
                     type = "toggle",
-                    name = iconString .. " " .. nameString
+                    name = iconString .. " " .. nameString,
+                    desc = data.desc
                 }
             end
         )

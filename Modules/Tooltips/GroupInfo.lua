@@ -144,6 +144,8 @@ function T:GroupInfo()
     -- Meeting Stone Hook
     if IsAddOnLoaded("MeetingStone") then
         local NetEaseEnv = LibStub("NetEaseEnv-1.0")
+        local MTSAddon = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
+        
         if NetEaseEnv then
             local NEG
             for k in pairs(NetEaseEnv._NSInclude) do
@@ -152,9 +154,11 @@ function T:GroupInfo()
                 end
             end
 
-            if NEG and NEG.MainPanel then
+            local MainPanel = MTSAddon and MTSAddon:GetModule("MainPanel") or NEG.MainPanel
+
+            if MainPanel and MainPanel.OpenActivityTooltip then
                 T:SecureHook(
-                    NEG.MainPanel,
+                    MainPanel,
                     "OpenActivityTooltip",
                     function(panel, activity, tooltip)
                         local id = activity and activity:GetID()

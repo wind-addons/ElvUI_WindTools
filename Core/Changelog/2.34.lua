@@ -44,10 +44,10 @@ W.Changelog[234] = {
             "[Mute] You can mute Elegy of the Eternals sound effect now."
         },
         ["koKR"] = {
-            "새로운 모듈 [보호막], ElvUI의 Absorb Shield 텍스처를 커스터마이징 할 수 있으며, Blizzard 스타일의 Absorb Sparks를 추가할 수 있습니다.",
+            "새로운 모듈 [보호막], ElvUI 유닛프레임 체력바의 보호막, 흡수 텍스처를 커스터마이징 할 수 있으며, 블리자드 스타일의 효과를 추가할 수 있습니다.",
             "[스킨] TomCat's Tour 스킨 추가.",
-            "[Mute] Added a new option for crying sounds of all races.",
-            "[Mute] You can mute 영원한 존재의 비가 sound effect now."
+            "[음소거] 모든 종족의 울음 소리를 음소거 옵션에 추가하였습니다.",
+            "[음소거] 영원한 존재의 비가의 사운드 효과를 음소거 옵션에 추가하였습니다."
         }
     },
     IMPROVEMENT = {
@@ -120,16 +120,16 @@ W.Changelog[234] = {
             "[자동 수락] 자동 수락 또는 자동 완료만 지원합니다.",
             "[자동 수락] 새로운 기능: 최고 보상 획득은 가장 높은 보상 아이템을 자동으로 선택하고 퀘스트를 완료합니다.",
             "[자동 수락] 새로운 기능: 스마트 채팅에는 도적 클래스의 직업 전당 이동시 자동 선택 옵션도 포함되어 있습니다.",
-            "[Paragon Reputation] Greatly optimized module code.",
-            "[Paragon Reputation] Imported latest reputation data and reward item data from PR.",
+            "[불멸의 동맹] 모듈 코드가 크게 향상되었습니다.",
+            "[불멸의 동맹] 불멸의 동맹의 최신 평판 데이터 및 보상 아이템 데이터를 가져왔습니다.",
             "[스킨] 컷신 건너뛰기 프레임의 그림자 수정.",
             "[스킨] Report player 프레임의 그림자 수정.",
             "[스킨] Spirit healer 프레임의 그림자 수정.",
             "[스킨] Separate item 프레임의 그림자 수정.",
             "[게임 바] 스크린샷을 찍을 때 마우스 툴팁이 자동으로 숨겨집니다.",
             "[게임 바] Ctrl + Shift + 시계를 클릭하면 CPU 사용량 통계가 활성화되지 않는 문제가 수정되었습니다.",
-            "[아이템 바] 올리아 보관함(영웅 난이도)이 추가되였습니다. Thanks mcc1",
-            "[Minimap Buttons] Added some special rules for TomCat's Tour.",
+            "[아이템 바] 올리아 보관함(영웅 난이도)이 추가되었습니다. Thanks mcc1",
+            "[미니맵 버튼 통합 바] TomCat's Tour에 대한 몇 가지 특별한 규칙을 추가했습니다.",
         }
     }
 }

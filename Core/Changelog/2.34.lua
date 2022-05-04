@@ -39,7 +39,7 @@ W.Changelog[234] = {
         },
         ["koKR"] = {
             "새로운 모듈 [보호막], ElvUI의 Absorb Shield 텍스처를 커스터마이징 할 수 있으며, Blizzard 스타일의 Absorb Sparks를 추가할 수 있습니다.",
-            "[Skin] Added a new skin for TomCat's Tour."
+            "[스킨] TomCat's Tour 스킨 추가."
         }
     },
     IMPROVEMENT = {

@@ -1048,6 +1048,12 @@ options.addons = {
             addonName = "TinyInspect",
             addonskinsKey = "TinyInspect"
         },
+        tomCats = {
+            order = 10,
+            type = "toggle",
+            name = L["TomCat's Tours"],
+            addonName = "TomCats",
+        },
         weakAuras = {
             order = 10,
             type = "toggle",

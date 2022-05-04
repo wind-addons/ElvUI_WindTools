@@ -194,6 +194,7 @@ V.skins = {
 		rehack = true,
 		rematch = true,
 		tinyInspect = true,
+		tomCats = true,
 		weakAuras = true,
 		weakAurasOptions = true
 	},

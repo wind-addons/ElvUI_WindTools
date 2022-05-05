@@ -241,7 +241,7 @@ options.objectiveTracker = {
                             values = {
                                 GRADIENT = L["Gradient"],
                                 NORMAL = L["Normal"],
-                                CLASS = L["Class"]
+                                CLASS = L["Class Color"]
                             }
                         },
                         normalColor = {

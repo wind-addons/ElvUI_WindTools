@@ -654,7 +654,7 @@ local itemTypeLocales = {
 }
 
 function PR:ColorWatchbar(bar)
-	if not self.db.enable then
+	if not self.db or not self.db.enable then
 		return
 	end
 
@@ -665,7 +665,7 @@ function PR:ColorWatchbar(bar)
 end
 
 function PR:SetupParagonTooltip(tt)
-	if not self.db.enable then
+	if not self.db or not self.db.enable then
 		return
 	end
 
@@ -751,6 +751,10 @@ do
 	end
 
 	function PR:Tooltip(bar, event)
+		if not self.db or not self.db.enable then
+			return
+		end
+
 		if not bar.questID or not paragonData[bar.questID] then
 			return
 		end

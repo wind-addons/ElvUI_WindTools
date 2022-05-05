@@ -29,25 +29,33 @@ W.Changelog[234] = {
             "新增模块: [吸收], 可以自定义 ElvUI 吸收盾材质, 同时增加暴雪风格的吸收火花.",
             "[美化皮肤] 新增 TomCat's Tour 皮肤.",
             "[静音] 新增了全种族哭声的静音.",
-            "[静音] 新增了永恒者的挽歌的静音."
+            "[静音] 新增了永恒者的挽歌的静音.",
+            "[进度追踪] 支持自定义顶部文字颜色.",
+            "[进度追踪] 新增了装饰条功能, 默认开启."
         },
         ["zhTW"] = {
             "新增模組: [吸收], 可以自定義 ElvUI 吸收盾材質, 同時增加暴雪風格的吸收火花.",
             "[美化皮膚] 新增 TomCat's Tour 美化.",
             "[靜音] 新增了全種族哭聲的靜音.",
-            "[靜音] 新增了永恆輓歌的靜音."
+            "[靜音] 新增了永恆輓歌的靜音.",
+            "[進度追蹤] 支援自定義頂部文字顏色.",
+            "[進度追蹤] 新增了裝飾條功能, 預設開啟."
         },
         ["enUS"] = {
             "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark.",
             "[Skin] Added a new skin for TomCat's Tour.",
             "[Mute] Added a new option for crying sounds of all races.",
-            "[Mute] You can mute Elegy of the Eternals sound effect now."
+            "[Mute] You can mute Elegy of the Eternals sound effect now.",
+            "[Objective Tracker] Support customize the color of header text.",
+            "[Objective Tracker] Add new feature of cosmetic bar. It is ON by default."
         },
         ["koKR"] = {
             "새로운 모듈 [보호막], ElvUI 유닛프레임 체력바의 보호막, 흡수 텍스처를 커스터마이징 할 수 있으며, 블리자드 스타일의 효과를 추가할 수 있습니다.",
             "[스킨] TomCat's Tour 스킨 추가.",
             "[음소거] 모든 종족의 울음 소리를 음소거 옵션에 추가하였습니다.",
-            "[음소거] 영원한 존재의 비가의 사운드 효과를 음소거 옵션에 추가하였습니다."
+            "[음소거] 영원한 존재의 비가의 사운드 효과를 음소거 옵션에 추가하였습니다.",
+            "[Objective Tracker] Support customize the color of header text.",
+            "[Objective Tracker] Add new feature of cosmetic bar. It is ON by default."
         }
     },
     IMPROVEMENT = {
@@ -71,7 +79,7 @@ W.Changelog[234] = {
             "[游戏条] 立即截图时会自动隐藏鼠标提示.",
             "[游戏条] 修复了 Ctrl + Shift + 点击时间区域无法开启 CPU 占用统计的问题.",
             "[额外物品条] 新增了圣墓宝物箱(英雄难度). 感谢 mcc1",
-            "[小地图按钮] 新增了对 TomCat's Tour 的特别优化.",
+            "[小地图按钮] 新增了对 TomCat's Tour 的特别优化."
         },
         ["zhTW"] = {
             "優化了部分設置項的顯示.",
@@ -93,7 +101,7 @@ W.Changelog[234] = {
             "[游戏條] 立即截圖時會自動隱藏滑鼠提示.",
             "[游戏條] 修復了 Ctrl + Shift + 點擊時間區域無法開啟 CPU 占用統計的問題.",
             "[額外物品條] 新增了聖塚寶藏箱(英雄難度). 感謝 mcc1",
-            "[小地圖按鈕] 新增了對 TomCat's Tour 的特別優化.",
+            "[小地圖按鈕] 新增了對 TomCat's Tour 的特別優化."
         },
         ["enUS"] = {
             "Improved some options.",
@@ -115,7 +123,7 @@ W.Changelog[234] = {
             "[Game Bar] Automatically hide the tooltip when taking a screenshot.",
             "[Game Bar] Fixed the issue of Ctrl + Shift + click on the time area.",
             "[Extra Item Bar] Added cache of sepulcher treasures (Heroic). Thanks mcc1",
-            "[Minimap Buttons] Added some special rules for TomCat's Tour.",
+            "[Minimap Buttons] Added some special rules for TomCat's Tour."
         },
         ["koKR"] = {
             "일부 설정 항목의 표시 최적화.",
@@ -137,7 +145,7 @@ W.Changelog[234] = {
             "[게임 바] 스크린샷을 찍을 때 마우스 툴팁이 자동으로 숨겨집니다.",
             "[게임 바] Ctrl + Shift + 시계를 클릭하면 CPU 사용량 통계가 활성화되지 않는 문제가 수정되었습니다.",
             "[아이템 바] 올리아 보관함(영웅 난이도)이 추가되었습니다. Thanks mcc1",
-            "[미니맵 버튼 통합 바] TomCat's Tour에 대한 몇 가지 특별한 규칙을 추가했습니다.",
+            "[미니맵 버튼 통합 바] TomCat's Tour에 대한 몇 가지 특별한 규칙을 추가했습니다."
         }
     }
 }

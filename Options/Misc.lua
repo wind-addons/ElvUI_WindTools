@@ -423,14 +423,16 @@ options.mute = {
                 ["Tortollan"] = {
                     order = 1,
                     type = "toggle",
-                    name = L["Tortollan"]
+                    name = L["Tortollan"],
+                    width = 1.5
                 },
                 ["Crying"] = {
                     order = 2,
                     type = "toggle",
                     name = L["Crying"],
                     desc = L["Mute crying sounds of all races."] ..
-                        "\n|cffff0000" .. L["It will affect the cry emote sound."] .. "|r"
+                        "\n|cffff0000" .. L["It will affect the cry emote sound."] .. "|r",
+                    width = 1.5
                 }
             }
         }
@@ -450,7 +452,8 @@ do
                 options.mute.args.mount.args[tostring(id)] = {
                     order = id,
                     type = "toggle",
-                    name = iconString .. " " .. name
+                    name = iconString .. " " .. name,
+                    width = 1.5
                 }
             end
         )
@@ -482,7 +485,8 @@ do
                     order = id,
                     type = "toggle",
                     name = iconString .. " " .. nameString,
-                    desc = data.desc
+                    desc = data.desc,
+                    width = 1.5
                 }
             end
         )

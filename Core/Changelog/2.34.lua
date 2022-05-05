@@ -50,12 +50,12 @@ W.Changelog[234] = {
             "[Objective Tracker] Add new feature of cosmetic bar. It is ON by default."
         },
         ["koKR"] = {
-            "새로운 모듈 [보호막], ElvUI 유닛프레임 체력바의 보호막, 흡수 텍스처를 커스터마이징 할 수 있으며, 블리자드 스타일의 효과를 추가할 수 있습니다.",
+            "새로운 모듈 [피해흡수], ElvUI 유닛프레임 체력바의 피해흡수 텍스처를 커스터마이징 할 수 있으며, 블리자드 스타일의 효과를 추가할 수 있습니다.",
             "[스킨] TomCat's Tour 스킨 추가.",
             "[음소거] 모든 종족의 울음 소리를 음소거 옵션에 추가하였습니다.",
             "[음소거] 영원한 존재의 비가의 사운드 효과를 음소거 옵션에 추가하였습니다.",
-            "[Objective Tracker] Support customize the color of header text.",
-            "[Objective Tracker] Add new feature of cosmetic bar. It is ON by default."
+            "[퀘스트 추적기] 제목 글자색을 커스터마이징 할 수 있습니다.",
+            "[퀘스트 추적기] 새로운 기능인 장씩띠를 추가하였습니다. 기본적으로 활성화되어 있습니다."
         }
     },
     IMPROVEMENT = {
@@ -129,8 +129,8 @@ W.Changelog[234] = {
             "일부 설정 항목의 표시 최적화.",
             "업데이트 도우미 최적화.",
             "구성 재설정 모듈 업데이트.",
-            "[Inspect] Rebuild the enchantment database, there is no enchantment lost anymore.",
-            "[Inspect] No longer show the enchantment icon on the offhand item.",
+            "[살펴보기] 마법부여 데이터베이스를 재구축 하였습니다. 더 이상 잃어버린 마법은 없습니다.",
+            "[살펴보기] 더 이상 보조 아이템에 마법 부여 아이콘을 표시하지 않습니다.",
             "[자동 수락] 모듈 코드 최적화. ",
             "[자동 수락] 사용자 정의 일시 중지 키를 지원합니다.",
             "[자동 수락] 자동 수락 또는 자동 완료만 지원합니다.",

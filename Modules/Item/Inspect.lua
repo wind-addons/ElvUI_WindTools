@@ -5,7 +5,7 @@ local MF = W:GetModule("MoveFrames")
 local ES = E:GetModule("Skins")
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
-local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
+local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000.Wind")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")

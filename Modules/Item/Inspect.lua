@@ -57,6 +57,8 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
 local UNIT_NAME_FONT = UNIT_NAME_FONT
 
+local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
+
 local guids, inspecting = {}, false
 
 local slots = {
@@ -81,7 +83,6 @@ local slots = {
 local EnchantParts = {
     [5] = {1, CHESTSLOT},
     [8] = {1, FEETSLOT},
-    --[9]  = {0, WRISTSLOT},
     [11] = {1, FINGER0SLOT},
     [12] = {1, FINGER1SLOT},
     [15] = {1, BACKSLOT},
@@ -308,7 +309,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     end
     local enchantItemID, enchantID = LibItemEnchant:GetEnchantItemID(ItemLink)
     local enchantSpellID = LibItemEnchant:GetEnchantSpellID(ItemLink)
-    if (enchantItemID) then
+    if enchantItemID then
         num = num + 1
         icon = GetIconFrame(frame)
         DynamicUpdateIconTexture("itemId", icon, enchantItemID)
@@ -316,7 +317,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (enchantSpellID) then
+    elseif enchantSpellID then
         num = num + 1
         icon = GetIconFrame(frame)
         icon.bg:SetVertexColor(1, 0.82, 0)
@@ -325,7 +326,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (enchantID) then
+    elseif enchantID then
         num = num + 1
         icon = GetIconFrame(frame)
         icon.title = "#" .. enchantID
@@ -335,22 +336,28 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (not enchantID and EnchantParts[itemframe.index]) then
-        if (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
-        else
+    elseif not enchantID and EnchantParts[itemframe.index] then
+        if not (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
             num = num + 1
             icon = GetIconFrame(frame)
             icon.title = ENCHANTS .. ": " .. EnchantParts[itemframe.index][2]
             icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
             icon.texture:SetTexture(
-                "Interface\\Cursor\\" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
+                "Interface/Cursor/" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
             )
             icon:ClearAllPoints()
             icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
             icon:Show()
+            if itemframe.index == 17 then
+                local itemType = C_Item_GetItemInventoryTypeByID(ItemLink)
+                if itemType ~= 13 and itemType ~= 17 then
+                    icon:Hide()
+                end
+            end
             anchorFrame = icon
         end
     end
+
     return num * 18
 end
 
@@ -1094,14 +1101,14 @@ function IL:Initialize()
         return
     end
 
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
     self:Player()
     self:Inspect()
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 IL.ProfileUpdate = IL.Initialize

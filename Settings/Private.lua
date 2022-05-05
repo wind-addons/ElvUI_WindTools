@@ -129,7 +129,26 @@ V.quest = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,
 			style = "OUTLINE",
+			color = {r = 1, g = 1, b = 1},
 			shortHeader = true
+		},
+		cosmeticBar = {
+			enable = true,
+			texture = "WindTools Glow",
+			widthMode = "ABSOLUTE",
+			heightMode = "ABSOLUTE",
+			width = 212,
+			height = 2,
+			offsetX = 0,
+			offsetY = -13,
+			border = "SHADOW",
+			borderAlpha = 1,
+			color = {
+				mode = "GRADIENT",
+				normalColor = {r = 0.000, g = 0.659, b = 1.000, a = 1},
+				gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1},
+				gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
+			}
 		},
 		title = {
 			name = E.db.general.font,

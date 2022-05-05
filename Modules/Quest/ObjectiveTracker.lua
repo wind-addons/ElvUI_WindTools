@@ -1,5 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
+local S = W:GetModule("Skins")
+local LSM = E.Libs.LSM
 
 local _G = _G
 local abs = abs
@@ -100,6 +102,90 @@ local function GetProgressColor(progress)
     return {r = r, g = g, b = b}
 end
 
+function OT:CosmeticBar(header)
+    local bar = header.windCosmeticBar
+
+    if not self.db.cosmeticBar.enable then
+        if bar then
+            bar:Hide()
+            bar.backdrop:Hide()
+        end
+        return
+    end
+
+    if not bar then
+        bar = header:CreateTexture()
+        local backdrop = CreateFrame("Frame", nil, header)
+        backdrop:SetFrameStrata("BACKGROUND")
+        backdrop:SetTemplate()
+        backdrop:SetOutside(bar, 1, 1)
+        backdrop.Center:SetAlpha(0)
+        S:CreateShadow(backdrop, 2, nil, nil, nil, true)
+        bar.backdrop = backdrop
+        header.windCosmeticBar = bar
+    end
+
+    -- Border
+    if self.db.cosmeticBar.border == "NONE" then
+        bar.backdrop:Hide()
+    else
+        if self.db.cosmeticBar.border == "SHADOW" then
+            bar.backdrop.shadow:Show()
+        else
+            bar.backdrop.shadow:Hide()
+        end
+        bar.backdrop:Show()
+    end
+
+    -- Texture
+    bar:SetTexture(LSM:Fetch("statusbar", self.db.cosmeticBar.texture) or E.media.normTex)
+
+    -- Color
+    if self.db.cosmeticBar.color.mode == "CLASS" then
+        bar:SetVertexColor(classColor.r, classColor.g, classColor.b)
+    elseif self.db.cosmeticBar.color.mode == "NORMAL" then
+        bar:SetVertexColor(
+            self.db.cosmeticBar.color.normalColor.r,
+            self.db.cosmeticBar.color.normalColor.g,
+            self.db.cosmeticBar.color.normalColor.b,
+            self.db.cosmeticBar.color.normalColor.a
+        )
+    elseif self.db.cosmeticBar.color.mode == "GRADIENT" then
+        bar:SetVertexColor(1, 1, 1)
+        bar:SetGradientAlpha(
+            "HORIZONTAL",
+            self.db.cosmeticBar.color.gradientColor1.r,
+            self.db.cosmeticBar.color.gradientColor1.g,
+            self.db.cosmeticBar.color.gradientColor1.b,
+            self.db.cosmeticBar.color.gradientColor1.a,
+            self.db.cosmeticBar.color.gradientColor2.r,
+            self.db.cosmeticBar.color.gradientColor2.g,
+            self.db.cosmeticBar.color.gradientColor2.b,
+            self.db.cosmeticBar.color.gradientColor2.a
+        )
+    end
+
+    bar.backdrop:SetAlpha(self.db.cosmeticBar.borderAlpha)
+
+    -- Position
+    bar:ClearAllPoints()
+    bar:SetPoint("LEFT", header.Text, "LEFT", self.db.cosmeticBar.offsetX, self.db.cosmeticBar.offsetY)
+
+    -- Size
+    local width = self.db.cosmeticBar.width
+    local height = self.db.cosmeticBar.height
+    if self.db.cosmeticBar.widthMode == "DYNAMIC" then
+        width = width + header.Text:GetStringWidth()
+    end
+    if self.db.cosmeticBar.heightMode == "DYNAMIC" then
+        height = height + header.Text:GetStringHeight()
+    end
+
+    bar:SetSize(max(width, 1), max(height, 1))
+
+    bar:Show()
+end
+
 function OT:ChangeQuestHeaderStyle()
     local frame = _G.ObjectiveTrackerFrame.MODULES
     if not self.db or not frame then
@@ -109,7 +195,11 @@ function OT:ChangeQuestHeaderStyle()
     for i = 1, #frame do
         local modules = frame[i]
         if modules and modules.Header and modules.Header.Text then
+            self:CosmeticBar(modules.Header)
             F.SetFontWithDB(modules.Header.Text, self.db.header)
+            modules.Header.Text:SetShadowColor(0, 0, 0, 0)
+            modules.Header.Text.SetShadowColor = E.noop
+            modules.Header.Text:SetTextColor(self.db.header.color.r, self.db.header.color.g, self.db.header.color.b)
             if self.db.header.shortHeader then
                 modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
             end

@@ -424,7 +424,8 @@ options.mute = {
                     order = 1,
                     type = "toggle",
                     name = L["Tortollan"],
-                    width = 1.5
+                    width = 1.3
+					
                 },
                 ["Crying"] = {
                     order = 2,
@@ -432,7 +433,7 @@ options.mute = {
                     name = L["Crying"],
                     desc = L["Mute crying sounds of all races."] ..
                         "\n|cffff0000" .. L["It will affect the cry emote sound."] .. "|r",
-                    width = 1.5
+                    width = 1.3
                 }
             }
         }
@@ -486,7 +487,7 @@ do
                     type = "toggle",
                     name = iconString .. " " .. nameString,
                     desc = data.desc,
-                    width = 1.5
+                    width = 1.3
                 }
             end
         )

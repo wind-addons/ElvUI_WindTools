@@ -563,7 +563,7 @@ end
 
 function TI:Initialize()
     self.db = E.db.WT.quest.turnIn
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
@@ -579,13 +579,13 @@ function TI:Initialize()
     self:RegisterEvent("QUEST_LOG_UPDATE", "AttemptAutoComplete")
     self:RegisterEvent("QUEST_PROGRESS")
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function TI:ProfileUpdate()
     self:Initialize()
 
-    if self.Initialized and not self.db.enable then
+    if self.initialized and not self.db.enable then
         self:UnregisterEvent("GOSSIP_CONFIRM")
         self:UnregisterEvent("GOSSIP_SHOW")
         self:UnregisterEvent("PLAYER_LOGIN")
@@ -598,7 +598,7 @@ function TI:ProfileUpdate()
         self:UnregisterEvent("QUEST_ITEM_UPDATE")
         self:UnregisterEvent("QUEST_LOG_UPDATE")
         self:UnregisterEvent("QUEST_PROGRESS")
-        self.Initialized = false
+        self.initialized = false
     end
 end
 

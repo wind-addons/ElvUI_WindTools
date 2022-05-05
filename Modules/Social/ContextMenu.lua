@@ -720,7 +720,7 @@ end
 
 function CM:Initialize()
     self.db = E.db.WT.social.contextMenu
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
@@ -733,13 +733,13 @@ function CM:Initialize()
     self.tempButton = CreateFrame("Button", "WTContextMenuTempButton", E.UIParent, "SecureActionButtonTemplate")
     self.tempButton:SetAttribute("type1", "macro")
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function CM:ProfileUpdate()
     self.db = E.db.WT.social.contextMenu
     if self.db and self.db.enable then
-        if not self.Initialized then
+        if not self.initialized then
             self:Initialize()
         else
             self:UpdateMenu()

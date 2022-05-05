@@ -245,7 +245,7 @@ function OT:Initialize()
 
     self:UpdateTextWidth()
 
-    if not self.Initialized then
+    if not self.initialized then
         local trackerModules = {
             _G.UI_WIDGET_TRACKER_MODULE,
             _G.BONUS_OBJECTIVE_TRACKER_MODULE,
@@ -262,7 +262,7 @@ function OT:Initialize()
         self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
         self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
 
-        self.Initialized = true
+        self.initialized = true
     end
 
     E:Delay(

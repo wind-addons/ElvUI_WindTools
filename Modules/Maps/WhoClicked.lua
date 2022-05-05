@@ -91,7 +91,7 @@ function WC:Initialize()
 
     self:UpdateText()
     self:RegisterEvent("MINIMAP_PING")
-    self.Initialized = true
+    self.initialized = true
 end
 
 function WC:ProfileUpdate()
@@ -99,14 +99,14 @@ function WC:ProfileUpdate()
 
     if self.db and self.db.enable then
         self:UpdateText()
-        if not self.Initialized then
+        if not self.initialized then
             self:RegisterEvent("MINIMAP_PING")
-            self.Initialized = true
+            self.initialized = true
         end
     else
-        if self.Initialized then
+        if self.initialized then
             self:UnregisterEvent("MINIMAP_PING")
-            self.Initialized = false
+            self.initialized = false
         end
     end
 end

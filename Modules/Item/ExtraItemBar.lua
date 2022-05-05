@@ -1181,7 +1181,7 @@ end
 
 function EB:Initialize()
     self.db = E.db.WT.item.extraItemsBar
-    if not self.db or not self.db.enable or self.Initialized then
+    if not self.db or not self.db.enable or self.initialized then
         return
     end
 
@@ -1202,7 +1202,7 @@ function EB:Initialize()
     self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
     self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function EB:ProfileUpdate()
@@ -1211,7 +1211,7 @@ function EB:ProfileUpdate()
     if self.db.enable then
         UpdateQuestItemList()
         UpdateEquipmentList()
-    elseif self.Initialized then
+    elseif self.initialized then
         self:UnregisterEvent("UNIT_INVENTORY_CHANGED")
         self:UnregisterEvent("BAG_UPDATE_DELAYED")
         self:UnregisterEvent("ZONE_CHANGED")

@@ -225,13 +225,13 @@ function CL:Initialize()
     ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", self.Filter)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", self.Filter)
     ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", self.Filter)
-    self.Initialized = true
+    self.initialized = true
 end
 
 function CL:ProfileUpdate()
     self.db = E.db.WT.social.chatLink
 
-    if self.db.enable and not self.Initialized then
+    if self.db.enable and not self.initialized then
         self:Initialize()
     end
 end

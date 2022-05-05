@@ -1329,7 +1329,7 @@ function GB:Initialize()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
     self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
-    self.Initialized = true
+    self.initialized = true
 end
 
 function GB:ProfileUpdate()
@@ -1339,7 +1339,7 @@ function GB:ProfileUpdate()
     end
 
     if self.db.enable then
-        if self.Initialized then
+        if self.initialized then
             self.bar:Show()
             self:UpdateHomeButton()
             self:UpdateTimeFormat()
@@ -1357,7 +1357,7 @@ function GB:ProfileUpdate()
             end
         end
     else
-        if self.Initialized then
+        if self.initialized then
             UnregisterStateDriver(self.bar, "visibility")
             self.bar:Hide()
         end
@@ -1407,7 +1407,7 @@ function GB:UpdateHearthStoneTable()
             )
         else
             self:UpdateHomeButton()
-            if self.Initialized then
+            if self.initialized then
                 self:UpdateButtons()
             end
         end

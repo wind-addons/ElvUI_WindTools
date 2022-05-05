@@ -675,7 +675,7 @@ function CT:Initialize()
     self:UpdateAltsTable()
     self.db = E.db.WT.item.contacts
 
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
@@ -685,7 +685,7 @@ function CT:Initialize()
     self:ConstructPageController()
 
     self:SecureHookScript(_G.SendMailFrame, "OnShow", "SendMailFrame_OnShow")
-    self.Initialized = true
+    self.initialized = true
 end
 
 function CT:ProfileUpdate()
@@ -696,7 +696,7 @@ function CT:ProfileUpdate()
         self.frame:Show()
         self.toggleButton:Show()
     else
-        if self.Initialized then
+        if self.initialized then
             self.frame:Hide()
             self.toggleButton:Hide()
         end

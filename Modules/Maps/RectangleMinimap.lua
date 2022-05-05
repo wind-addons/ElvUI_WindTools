@@ -95,13 +95,13 @@ do
 end
 
 function RM:SetUpdateHook()
-    if not self.Initialized then
+    if not self.initialized then
         self:SecureHook(MM, "SetGetMinimapShape", "ChangeShape")
         self:SecureHook(MM, "UpdateSettings", "ChangeShape")
         self:SecureHook(MM, "Initialize", "ChangeShape")
         self:SecureHook(E, "UpdateAll", "ChangeShape")
         self:SecureHook(_G.MMHolder, "Size", "MMHolder_Size")
-        self.Initialized = true
+        self.initialized = true
     end
     self:ChangeShape()
     E:Delay(1, self.ChangeShape, self)

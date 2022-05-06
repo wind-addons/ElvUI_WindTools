@@ -170,8 +170,7 @@ local BlizzardFramesOnDemand = {
             "EncounterJournal.encounter.instance.loreScroll",
             "EncounterJournal.encounter.info.overviewScroll",
             "EncounterJournal.encounter.info.lootScroll",
-            "EncounterJournal.encounter.info.detailsScroll",
-            "EncounterJournal.encounter.info.model"
+            "EncounterJournal.encounter.info.detailsScroll"
         }
     },
     ["Blizzard_FlightMap"] = {

@@ -6,7 +6,7 @@
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='HideCrafter.lua'/>
-	<Script file='HotKeyOverCD.lua'/>
+	<Script file='HotKeyAboveCD.lua'/>
 	<Script file='LootPanel.lua'/>
 	<Script file='Math.lua'/>
 	<Script file='MoveSpeed.lua'/>

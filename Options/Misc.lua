@@ -125,13 +125,13 @@ options.general = {
                 M:LootPanel()
             end
         },
-        hotKeyOverCD = {
+        hotKeyAboveCD = {
             order = 11,
             type = "toggle",
-            name = L["HotKey Over CD"],
+            name = L["HotKey Above CD"],
             desc = format(
                 "%s\n%s %s",
-                L["Show hotkey over the ElvUI cooldown."],
+                L["Show hotkeys above the ElvUI cooldown animation."],
                 E.NewSign,
                 F.CreateColorString(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
             )

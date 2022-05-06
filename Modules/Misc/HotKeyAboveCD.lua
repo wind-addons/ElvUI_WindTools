@@ -15,8 +15,8 @@ local function HotKeyTweak(button)
     button.HotKey:SetParent(button.windHotKeyFrame)
 end
 
-function M:HotKeyOverCD()
-    if not E.private.actionbar.enable or not E.db.cooldown.enable or not E.private.WT.misc.hotKeyOverCD then
+function M:HotKeyAboveCD()
+    if not E.private.actionbar.enable or not E.db.cooldown.enable or not E.private.WT.misc.hotKeyAboveCD then
         return
     end
 
@@ -34,4 +34,4 @@ function M:HotKeyOverCD()
     end
 end
 
-M:AddCallback("HotKeyOverCD")
+M:AddCallback("HotKeyAboveCD")

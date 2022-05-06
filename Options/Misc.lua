@@ -124,6 +124,17 @@ options.general = {
                 E.db.WT.misc[info[#info]] = value
                 M:LootPanel()
             end
+        },
+        hotKeyOverCD = {
+            order = 11,
+            type = "toggle",
+            name = L["HotKey Over CD"],
+            desc = format(
+                "%s\n%s %s",
+                L["Show hotkey over the ElvUI cooldown."],
+                E.NewSign,
+                F.CreateColorString(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
+            )
         }
     }
 }
@@ -425,7 +436,6 @@ options.mute = {
                     type = "toggle",
                     name = L["Tortollan"],
                     width = 1.3
-					
                 },
                 ["Crying"] = {
                     order = 2,

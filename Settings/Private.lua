@@ -76,6 +76,7 @@ V.misc = {
 	pauseToSlash = true,
 	skipCutScene = false,
 	tags = true,
+	hotKeyOverCD = false,
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,

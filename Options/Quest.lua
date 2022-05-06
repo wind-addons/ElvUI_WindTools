@@ -423,7 +423,32 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
                                 OT:ChangeQuestHeaderStyle()
                             end
-                        }
+                        },
+                        preset4 = {
+                            order = 6,
+                            type = "execute",
+                            name = format(L["Preset %d"], 4),
+                            func = function()
+                                local db = E.private.WT.quest.objectiveTracker
+                                db.header.style = "OUTLINE"
+                                db.header.color = {r = 1, g = 1, b = 1}
+                                db.header.size = E.db.general.fontSize + 3
+                                db.cosmeticBar.texture = "Solid"
+                                db.cosmeticBar.widthMode = "ABSOLUTE"
+                                db.cosmeticBar.heightMode = "ABSOLUTE"
+                                db.cosmeticBar.width = 260
+                                db.cosmeticBar.height = 24
+                                db.cosmeticBar.offsetX = -7
+                                db.cosmeticBar.offsetY = 0
+                                db.cosmeticBar.border = "ONEPIXEL"
+                                db.cosmeticBar.borderAlpha = 1
+                                db.cosmeticBar.color.mode = "GRADIENT"
+                                db.cosmeticBar.color.normalColor = {r = 0.681, g = 0.681, b = 0.681, a = 0.681}
+                                db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
+                                db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
+                                OT:ChangeQuestHeaderStyle()
+                            end
+                        }						
                     }
                 }
             }

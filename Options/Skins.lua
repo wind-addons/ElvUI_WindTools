@@ -1,7 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.skins.args
 local LSM = E.Libs.LSM
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local pairs = pairs
 local type = type

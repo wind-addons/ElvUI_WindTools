@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local DT = E:GetModule("DataTexts")
 

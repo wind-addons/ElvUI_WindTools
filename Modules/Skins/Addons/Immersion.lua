@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E:GetModule("Skins")
-local S = W:GetModule("Skins")
+local ES = E.Skins
+local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs

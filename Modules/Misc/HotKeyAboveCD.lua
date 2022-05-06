@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local M = W:GetModule("Misc")
+local M = W.Modules.Misc
 local AB = E.ActionBars
 
 local hooksecurefunc = hooksecurefunc

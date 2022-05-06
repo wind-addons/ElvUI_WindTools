@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local EB = W:NewModule("ExtraItemsBar", "AceEvent-3.0")
-local S = W:GetModule("Skins")
-local AB = E:GetModule("ActionBars")
+local S = W.Modules.Skins
+local AB = E.ActionBars
 
 local _G = _G
 local ceil = ceil

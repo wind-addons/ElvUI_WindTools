@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local EMP = W:NewModule("ExtendMerchantPages", "AceHook-3.0")
-local ES = E:GetModule("Skins")
+local ES = E.Skins
 
 -- Modified from Extended Vendor UI & NDui_Plus
 local _G = _G

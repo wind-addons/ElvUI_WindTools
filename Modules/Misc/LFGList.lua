@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 local LL = W:NewModule("LFGList", "AceHook-3.0")
 local LSM = E.Libs.LSM
 

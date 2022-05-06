@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local floor = floor
@@ -163,7 +163,7 @@ function CT:ConstructFrame()
 
     -- Register move frames
     if E.private.WT.misc.moveFrames.enable then
-        local MF = W:GetModule("MoveFrames")
+        local MF = W.Modules.MoveFrames
         MF:HandleFrame("WTContacts", "MailFrame")
     end
 

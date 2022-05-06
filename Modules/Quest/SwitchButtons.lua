@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G

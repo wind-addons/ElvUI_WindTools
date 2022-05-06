@@ -1,6 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.tooltips.args
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 
 local ipairs = ipairs
 

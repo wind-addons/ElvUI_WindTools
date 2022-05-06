@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 local LOP = LibStub("LibObjectiveProgress-1.0")
 
 local _G = _G

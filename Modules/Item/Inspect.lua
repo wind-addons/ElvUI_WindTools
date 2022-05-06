@@ -1,8 +1,8 @@
 local W, F, E, L = unpack(select(2, ...))
 local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") -- Modified from TinyInspect
-local S = W:GetModule("Skins")
-local MF = W:GetModule("MoveFrames")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local MF = W.Modules.MoveFrames
+local ES = E.Skins
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000.Wind")

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 local LSM = E.Libs.LSM
 
 local _G = _G

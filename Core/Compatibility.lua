@@ -1,7 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local MF = W.Modules.MoveFrames
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local format = format

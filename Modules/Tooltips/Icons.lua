@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 
 local _G = _G
 local gsub = gsub

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 local LibOR, LibORVersion = LibStub("LibOpenRaid-1.0", true)
 
 -- Modified from NDui_Plus Tooltips

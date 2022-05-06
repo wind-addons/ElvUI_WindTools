@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local GameTooltip = _G.GameTooltip

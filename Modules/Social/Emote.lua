@@ -1,7 +1,7 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
 local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local ceil = ceil

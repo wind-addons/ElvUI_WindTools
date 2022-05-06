@@ -1,8 +1,8 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.misc.args
 local LSM = E.Libs.LSM
-local M = W:GetModule("Misc")
-local MF = W:GetModule("MoveFrames")
+local M = W.Modules.Misc
+local MF = W.Modules.MoveFrames
 local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
 

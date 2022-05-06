@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local TM = W:NewModule("TalentManager", "AceEvent-3.0", "AceHook-3.0")
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local format = format
@@ -534,7 +534,7 @@ function TM:BuildFrame()
 
     -- 移动模块兼容
     if E.private.WT.misc.moveFrames.enable then
-        local MF = W:GetModule("MoveFrames")
+        local MF = W.Modules.MoveFrames
         MF:HandleFrame(frame:GetName(), "PlayerTalentFrame")
     end
 

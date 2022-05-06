@@ -393,6 +393,13 @@ function W:CheckCompatibility()
         "db.mui.unitframes.healPrediction.enable"
     )
 
+    CheckMerathilisUI(
+        L["Objective Tracker"],
+        L["Objective Tracker"],
+        "private.WT.quest.objectiveTracker.enable",
+        "db.mui.blizzard.objectiveTracker.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

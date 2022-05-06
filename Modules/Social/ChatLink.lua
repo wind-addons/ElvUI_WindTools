@@ -19,7 +19,6 @@ local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
-local ItemLevelTooltip = E.ScanTooltip
 local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
 
 local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
@@ -58,16 +57,16 @@ local function AddItemInfo(Hyperlink)
     end
     id = tonumber(id)
 
-    -- 获取物品实际等级
+    -- Get real item level
     if CL.db.level or CL.db.slot then
         local text, level, extraname, slot
-        ItemLevelTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
-        ItemLevelTooltip:ClearLines()
-        ItemLevelTooltip:SetHyperlink(Hyperlink)
+        E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
+        E.ScanTooltip:ClearLines()
+        E.ScanTooltip:SetHyperlink(Hyperlink)
 
         if CL.db.level then
             for i = 2, 5 do
-                local leftText = _G[ItemLevelTooltip:GetName() .. "TextLeft" .. i]
+                local leftText = _G[E.ScanTooltip:GetName() .. "TextLeft" .. i]
                 if leftText then
                     text = leftText:GetText() or ""
                     level = strmatch(text, ItemLevelPattern)
@@ -78,14 +77,14 @@ local function AddItemInfo(Hyperlink)
             end
         end
 
-        -- 获取是护甲还是武器
+        -- Is the item a weapon?
         local type = select(6, GetItemInfo(id))
-        -- 护甲类
+        -- armor
         if type == _G.ARMOR and CL.db.armorCategory then
             local equipLoc = select(9, GetItemInfo(id))
             if equipLoc ~= "" then
                 if SearchArmorType[equipLoc] then
-                    -- 如果有护甲分类的
+                    -- if the item is armor, then get the armor category
                     local armorType = select(7, GetItemInfo(id))
                     if E.global.general.locale == "zhTW" or E.global.general.locale == "zhCN" then
                         slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
@@ -98,7 +97,7 @@ local function AddItemInfo(Hyperlink)
             end
         end
 
-        -- 武器类
+        -- weapon
         if type == _G.WEAPON and CL.db.weaponCategory then
             local equipLoc = select(9, GetItemInfo(id))
             if equipLoc ~= "" then
@@ -128,7 +127,7 @@ local function AddItemInfo(Hyperlink)
 end
 
 local function AddSpellInfo(Hyperlink)
-    -- 法术图标
+    -- spell icon
     local id = strmatch(Hyperlink, "Hspell:(%d-):")
     if not id then
         return
@@ -144,7 +143,7 @@ local function AddSpellInfo(Hyperlink)
 end
 
 local function AddEnchantInfo(Hyperlink)
-    -- 附魔图标
+    -- enchant
     local id = strmatch(Hyperlink, "Henchant:(%d-)\124")
     if not id then
         return
@@ -160,7 +159,7 @@ local function AddEnchantInfo(Hyperlink)
 end
 
 local function AddPvPTalentInfo(Hyperlink)
-    -- PVP 天赋
+    -- PVP talent
     local id = strmatch(Hyperlink, "Hpvptal:(%d-)|")
     if not id then
         return
@@ -176,7 +175,7 @@ local function AddPvPTalentInfo(Hyperlink)
 end
 
 local function AddTalentInfo(Hyperlink)
-    -- 天赋
+    -- talent
     local id = strmatch(Hyperlink, "Htalent:(%d-)|")
     if not id then
         return

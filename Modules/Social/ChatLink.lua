@@ -205,26 +205,33 @@ end
 function CL:Initialize()
     self.db = E.db.WT.social.chatLink
 
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_ACHIEVEMENT", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_COMMUNITIES_CHANNEL", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_EMOTE", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_OFFICER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_TRADESKILLS", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", self.Filter)
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", self.Filter)
+    local events = {
+        "CHAT_MSG_ACHIEVEMENT",
+        "CHAT_MSG_BATTLEGROUND",
+        "CHAT_MSG_BN_WHISPER",
+        "CHAT_MSG_CHANNEL",
+        "CHAT_MSG_COMMUNITIES_CHANNEL",
+        "CHAT_MSG_EMOTE",
+        "CHAT_MSG_GUILD",
+        "CHAT_MSG_INSTANCE_CHAT",
+        "CHAT_MSG_INSTANCE_CHAT_LEADER",
+        "CHAT_MSG_LOOT",
+        "CHAT_MSG_OFFICER",
+        "CHAT_MSG_PARTY",
+        "CHAT_MSG_PARTY_LEADER",
+        "CHAT_MSG_RAID",
+        "CHAT_MSG_RAID_LEADER",
+        "CHAT_MSG_SAY",
+        "CHAT_MSG_TRADESKILLS",
+        "CHAT_MSG_WHISPER",
+        "CHAT_MSG_WHISPER_INFORM",
+        "CHAT_MSG_YELL"
+    }
+
+    for _, event in pairs(events) do
+        ChatFrame_AddMessageEventFilter(event, self.Filter)
+    end
+
     self.initialized = true
 end
 

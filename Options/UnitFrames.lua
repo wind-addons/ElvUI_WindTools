@@ -169,7 +169,16 @@ options.absorb = {
                     type = "toggle",
                     name = L["Blizzard Absorb Overlay"],
                     desc = L["Add an additional overlay to the absorb bar."],
-                    width = 1.5
+                    width = 1.3
+                },
+                setColor = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Color"],
+                    func = function()
+                        E:ToggleOptionsUI("unitframe,allColorsGroup,healPrediction")
+                    end,
+                    width = 0.6
                 }
             }
         },
@@ -185,6 +194,7 @@ options.absorb = {
                 feature = {
                     order = 1,
                     type = "description",
+                    width = "full",
                     name = format(
                         "%s\n%s",
                         format(
@@ -210,7 +220,7 @@ options.absorb = {
                             end
                         )
                     end,
-                    width = 2
+                    width = 1.7
                 },
                 setAllAbsorbStyleToAutoHeight = {
                     order = 3,
@@ -226,7 +236,7 @@ options.absorb = {
                             end
                         )
                     end,
-                    width = 2
+                    width = 1.7
                 },
                 changeColor = {
                     order = 4,
@@ -237,7 +247,7 @@ options.absorb = {
                         E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
                         E.db.unitframe.colors.healPrediction.overabsorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
                     end,
-                    width = 2
+                    width = 1.7
                 },
                 changeMaxOverflow = {
                     order = 5,
@@ -250,7 +260,7 @@ options.absorb = {
                     func = function(info)
                         E.db.unitframe.colors.healPrediction.maxOverflow = 0
                     end,
-                    width = 2
+                    width = 1.7
                 }
             }
         }

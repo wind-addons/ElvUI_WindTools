@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[234] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/05/07",
     IMPORTANT = {
         ["zhCN"] = {
             "插件设计风格焕新.",

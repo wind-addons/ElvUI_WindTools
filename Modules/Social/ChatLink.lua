@@ -18,6 +18,8 @@ local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
+local C_Item_GetItemNameByID = C_Item.GetItemNameByID
+
 local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t"
 
 local SearchArmorType = {
@@ -54,6 +56,12 @@ local function AddItemInfo(link)
         return
     end
 
+    if CL.db.translateItem then
+        local localizedName = C_Item_GetItemNameByID(itemID)
+        if localizedName then
+            link = gsub(link, "|h%[(.+)%]|h", "|h[" .. localizedName .. "]|h")
+        end
+    end
 
     local level, slot
 

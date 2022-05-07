@@ -737,6 +737,7 @@ P.social = {
     },
     chatLink = {
         enable = true,
+        translateItem = true,
         level = true,
         icon = true,
         armorCategory = true,

@@ -10,6 +10,7 @@ function S:Blizzard_AuctionHouseUI()
     end
 
     self:CreateShadow(_G.AuctionHouseFrame)
+    self:CreateShadow(_G.AuctionHouseFrame.WoWTokenResults.GameTimeTutorial)
 
     local tabs = {_G.AuctionHouseFrameBuyTab, _G.AuctionHouseFrameSellTab, _G.AuctionHouseFrameAuctionsTab}
     for _, tab in pairs(tabs) do

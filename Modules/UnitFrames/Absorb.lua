@@ -16,17 +16,26 @@ function A:ConstructTextures(frame)
         return
     end
 
-    if not frame.HealthPrediction.windAbsorbOverlay then
-        local overlay = frame.HealthPrediction.absorbBar:CreateTexture(nil, "OVERLAY", 10)
-        overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
-        frame.HealthPrediction.windAbsorbOverlay = overlay
+    if not frame.windAbsorb then
+        local absorbFrame = CreateFrame("Frame", nil, frame)
+        absorbFrame:SetFrameStrata(frame.HealthPrediction.absorbBar:GetFrameStrata())
+        absorbFrame:SetFrameLevel(frame.HealthPrediction.absorbBar:GetFrameLevel() + 1)
+        frame.windAbsorb = absorbFrame
     end
 
-    if not frame.HealthPrediction.windOverAbsorbGlow then
-        local glow = frame.Health:CreateTexture(nil, "OVERLAY", 10)
+    local absorb = frame.windAbsorb
+
+    if not absorb.overlay then
+        local overlay = absorb:CreateTexture(nil, "OVERLAY", 10)
+        overlay:SetTexture("Interface/RaidFrame/Shield-Overlay", true, true)
+        absorb.overlay = overlay
+    end
+
+    if not absorb.glow then
+        local glow = absorb:CreateTexture(nil, "OVERLAY", 10)
         glow:SetTexture("Interface/RaidFrame/Shield-Overshield")
         glow:SetBlendMode("ADD")
-        frame.HealthPrediction.windOverAbsorbGlow = glow
+        absorb.glow = glow
     end
 end
 
@@ -36,8 +45,8 @@ function A:ConfigureTextures(_, frame)
     end
 
     local pred = frame.HealthPrediction
-    local overlay = pred.windAbsorbOverlay
-    local glow = pred.windOverAbsorbGlow
+    local overlay = frame.windAbsorb.overlay
+    local glow = frame.windAbsorb.glow
 
     if not frame.db.health or not frame.Health or not self.db.enable then
         overlay:Hide()
@@ -108,8 +117,8 @@ function A:HealthPrediction_OnUpdate(object, unit, _, _, absorb, _, hasOverAbsor
 
     frame.windSmooth:DoJob(
         function()
-            local overlay = pred.windAbsorbOverlay
-            local glow = pred.windOverAbsorbGlow
+            local overlay = frame.windAbsorb.overlay
+            local glow = frame.windAbsorb.glow
 
             if not self.db.blizzardAbsorbOverlay or maxHealth == health or absorb == 0 or not UnitIsConnected(unit) then
                 overlay:Hide()

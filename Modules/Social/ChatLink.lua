@@ -1,5 +1,5 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
-local CL = W:NewModule("ChatLink", "AceEvent-3.0")
+local CL = W:NewModule("ChatLink")
 
 local _G = _G
 local ceil = ceil
@@ -19,9 +19,7 @@ local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
-local ItemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
-
-local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
+local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t"
 
 local SearchArmorType = {
     INVTYPE_HEAD = true,
@@ -50,144 +48,128 @@ local abbrList = {
     INVTYPE_TRINKET = L["[ABBR] Trinket"]
 }
 
-local function AddItemInfo(Hyperlink)
-    local id = strmatch(Hyperlink, "Hitem:(%d-):")
+local function AddItemInfo(link)
+    local id = strmatch(link, "Hitem:(%d-):")
     if not id then
         return
     end
+
     id = tonumber(id)
 
-    -- Get real item level
-    if CL.db.level or CL.db.slot then
-        local text, level, extraname, slot
-        E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
-        E.ScanTooltip:ClearLines()
-        E.ScanTooltip:SetHyperlink(Hyperlink)
+    local level, slot
+    local equipType = select(6, GetItemInfo(id))
 
-        if CL.db.level then
-            for i = 2, 5 do
-                local leftText = _G[E.ScanTooltip:GetName() .. "TextLeft" .. i]
-                if leftText then
-                    text = leftText:GetText() or ""
-                    level = strmatch(text, ItemLevelPattern)
-                    if level then
-                        break
-                    end
-                end
-            end
-        end
+    -- Item Level
+    if CL.db.level then
+        level = F.GetRealItemLevelByLink(link)
+    end
 
-        -- Is the item a weapon?
-        local type = select(6, GetItemInfo(id))
-        -- armor
-        if type == _G.ARMOR and CL.db.armorCategory then
-            local equipLoc = select(9, GetItemInfo(id))
-            if equipLoc ~= "" then
-                if SearchArmorType[equipLoc] then
-                    -- if the item is armor, then get the armor category
-                    local armorType = select(7, GetItemInfo(id))
-                    if E.global.general.locale == "zhTW" or E.global.general.locale == "zhCN" then
-                        slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
-                    else
-                        slot = armorType .. " " .. (abbrList[equipLoc] or _G[equipLoc])
-                    end
+    -- armor
+    if equipType == _G.ARMOR and CL.db.armorCategory then
+        local equipLoc = select(9, GetItemInfo(id))
+        if equipLoc ~= "" then
+            if SearchArmorType[equipLoc] then
+                -- if the item is armor, then get the armor category
+                local armorType = select(7, GetItemInfo(id))
+                if E.global.general.locale == "zhTW" or E.global.general.locale == "zhCN" then
+                    slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
                 else
-                    slot = abbrList[equipLoc] or _G[equipLoc]
+                    slot = armorType .. " " .. (abbrList[equipLoc] or _G[equipLoc])
                 end
+            else
+                slot = abbrList[equipLoc] or _G[equipLoc]
             end
         end
+    end
 
-        -- weapon
-        if type == _G.WEAPON and CL.db.weaponCategory then
-            local equipLoc = select(9, GetItemInfo(id))
-            if equipLoc ~= "" then
-                local weaponType = select(7, GetItemInfo(id))
-                slot = weaponType or abbrList[equipLoc] or _G[equipLoc]
-            end
+    -- weapon
+    if equipType == _G.WEAPON and CL.db.weaponCategory then
+        local equipLoc = select(9, GetItemInfo(id))
+        if equipLoc ~= "" then
+            local weaponType = select(7, GetItemInfo(id))
+            slot = weaponType or abbrList[equipLoc] or _G[equipLoc]
         end
+    end
 
-        if level and extraname then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1:" .. extraname .. "]|h")
-        elseif level and slot then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. "-" .. slot .. ":%1]|h")
-        elseif level then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
-        elseif slot then
-            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h[" .. slot .. ":%1]|h")
-        end
+    if level and slot then
+        link = gsub(link, "|h%[(.-)%]|h", "|h[" .. level .. "-" .. slot .. ":%1]|h")
+    elseif level then
+        link = gsub(link, "|h%[(.-)%]|h", "|h[" .. level .. ":%1]|h")
+    elseif slot then
+        link = gsub(link, "|h%[(.-)%]|h", "|h[" .. slot .. ":%1]|h")
     end
 
     if CL.db.icon then
         local texture = GetItemIcon(id)
-        local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " " .. Hyperlink
+        local icon = format(ICON_STRING, texture)
+        link = icon .. " " .. link
     end
 
-    return Hyperlink
+    return link
 end
 
-local function AddSpellInfo(Hyperlink)
+local function AddSpellInfo(link)
     -- spell icon
-    local id = strmatch(Hyperlink, "Hspell:(%d-):")
+    local id = strmatch(link, "Hspell:(%d-):")
     if not id then
         return
     end
 
     if CL.db.icon then
         local texture = GetSpellTexture(tonumber(id))
-        local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " |cff71d5ff" .. Hyperlink .. "|r" -- I dk why the color is needed, but worked!
+        local icon = format(ICON_STRING, texture)
+        link = icon .. " |cff71d5ff" .. link .. "|r" -- I dk why the color is needed, but worked!
     end
 
-    return Hyperlink
+    return link
 end
 
-local function AddEnchantInfo(Hyperlink)
+local function AddEnchantInfo(link)
     -- enchant
-    local id = strmatch(Hyperlink, "Henchant:(%d-)\124")
+    local id = strmatch(link, "Henchant:(%d-)\124")
     if not id then
         return
     end
 
     if CL.db.icon then
         local texture = GetSpellTexture(tonumber(id))
-        local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " " .. Hyperlink
+        local icon = format(ICON_STRING, texture)
+        link = icon .. " " .. link
     end
 
-    return Hyperlink
+    return link
 end
 
-local function AddPvPTalentInfo(Hyperlink)
+local function AddPvPTalentInfo(link)
     -- PVP talent
-    local id = strmatch(Hyperlink, "Hpvptal:(%d-)|")
+    local id = strmatch(link, "Hpvptal:(%d-)|")
     if not id then
         return
     end
 
     if CL.db.icon then
         local texture = select(3, GetPvpTalentInfoByID(tonumber(id)))
-        local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " " .. Hyperlink
+        local icon = format(ICON_STRING, texture)
+        link = icon .. " " .. link
     end
 
-    return Hyperlink
+    return link
 end
 
-local function AddTalentInfo(Hyperlink)
+local function AddTalentInfo(link)
     -- talent
-    local id = strmatch(Hyperlink, "Htalent:(%d-)|")
+    local id = strmatch(link, "Htalent:(%d-)|")
     if not id then
         return
     end
 
     if CL.db.icon then
         local texture = select(3, GetTalentInfoByID(tonumber(id)))
-        local icon = format(IconString .. ":255:255:255|t", texture)
-        Hyperlink = icon .. " " .. Hyperlink
+        local icon = format(ICON_STRING, texture)
+        link = icon .. " " .. link
     end
 
-    return Hyperlink
+    return link
 end
 
 function CL:Filter(event, msg, ...)

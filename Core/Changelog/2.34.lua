@@ -32,7 +32,8 @@ W.Changelog[234] = {
             "[静音] 新增了永恒者的挽歌的静音.",
             "[进度追踪] 支持自定义顶部文字颜色.",
             "[进度追踪] 新增了装饰条功能, 默认开启.",
-            "[其他] 新增了显示键位于冷却动画之上的功能."
+            "[其他] 新增了显示键位于冷却动画之上的功能.",
+            "[其他] 新增了在公会新闻中显示物品等级的功能."
         },
         ["zhTW"] = {
             "新增模組: [吸收], 可以自定義 ElvUI 吸收盾材質, 同時增加暴雪風格的吸收火花.",
@@ -41,7 +42,8 @@ W.Changelog[234] = {
             "[靜音] 新增了永恆輓歌的靜音.",
             "[進度追蹤] 支援自定義頂部文字顏色.",
             "[進度追蹤] 新增了裝飾條功能, 預設開啟.",
-            "[其他] 新增了顯示鍵位於冷卻動畫之上的功能."
+            "[其他] 新增了顯示鍵位於冷卻動畫之上的功能.",
+            "[其他] 新增了在公會新聞中顯示物品等級的功能."
         },
         ["enUS"] = {
             "New module [Absorb], you can customize the texture of ElvUI absorb shield, and add Blizzard style absorb spark.",
@@ -50,7 +52,8 @@ W.Changelog[234] = {
             "[Mute] You can mute Elegy of the Eternals sound effect now.",
             "[Objective Tracker] Support customize the color of header text.",
             "[Objective Tracker] Add new feature of cosmetic bar. It is ON by default.",
-            "[Misc] Added a new option to show action bar hotkey above the cooldown animation."
+            "[Misc] Added a new option to show action bar hotkey above the cooldown animation.",
+            "[Misc] Added a new option to show item level in guild news."
         },
         ["koKR"] = {
             "새로운 모듈 [피해흡수], ElvUI 유닛프레임 체력바의 피해흡수 텍스처를 커스터마이징 할 수 있으며, 블리자드 스타일의 효과를 추가할 수 있습니다.",
@@ -59,7 +62,8 @@ W.Changelog[234] = {
             "[음소거] 영원한 존재의 비가의 사운드 효과를 음소거 옵션에 추가하였습니다.",
             "[퀘스트 추적기] 제목 글자색을 커스터마이징 할 수 있습니다.",
             "[퀘스트 추적기] 새로운 기능인 장씩띠를 추가하였습니다. 기본적으로 활성화되어 있습니다.",
-            "[기타] 쿨다운 애니메이션 위에 액션 바 단축키를 표시하는 새로운 옵션을 추가했습니다."
+            "[기타] 쿨다운 애니메이션 위에 액션 바 단축키를 표시하는 새로운 옵션을 추가했습니다.",
+            "[Misc] Added a new option to show item level in guild news."
         }
     },
     IMPROVEMENT = {

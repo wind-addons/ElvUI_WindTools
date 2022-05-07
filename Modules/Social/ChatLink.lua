@@ -13,8 +13,7 @@ local tostring = tostring
 local unpack = unpack
 
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
-local GetItemIcon = GetItemIcon
-local GetItemInfo = GetItemInfo
+local GetItemInfoInstant = GetItemInfoInstant
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
@@ -49,45 +48,39 @@ local abbrList = {
 }
 
 local function AddItemInfo(link)
-    local id = strmatch(link, "Hitem:(%d-):")
-    if not id then
+    local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(link)
+
+    if not itemID then
         return
     end
 
-    id = tonumber(id)
 
     local level, slot
-    local equipType = select(6, GetItemInfo(id))
 
-    -- Item Level
+    -- item Level
     if CL.db.level then
         level = F.GetRealItemLevelByLink(link)
     end
 
     -- armor
-    if equipType == _G.ARMOR and CL.db.armorCategory then
-        local equipLoc = select(9, GetItemInfo(id))
-        if equipLoc ~= "" then
-            if SearchArmorType[equipLoc] then
-                -- if the item is armor, then get the armor category
-                local armorType = select(7, GetItemInfo(id))
+    if itemType == _G.ARMOR and CL.db.armorCategory then
+        if itemEquipLoc ~= "" then
+            if SearchArmorType[itemEquipLoc] then
                 if E.global.general.locale == "zhTW" or E.global.general.locale == "zhCN" then
-                    slot = armorType .. (abbrList[equipLoc] or _G[equipLoc])
+                    slot = itemSubType .. (abbrList[itemEquipLoc] or _G[itemEquipLoc])
                 else
-                    slot = armorType .. " " .. (abbrList[equipLoc] or _G[equipLoc])
+                    slot = itemSubType .. " " .. (abbrList[itemEquipLoc] or _G[itemEquipLoc])
                 end
             else
-                slot = abbrList[equipLoc] or _G[equipLoc]
+                slot = abbrList[itemEquipLoc] or _G[itemEquipLoc]
             end
         end
     end
 
     -- weapon
-    if equipType == _G.WEAPON and CL.db.weaponCategory then
-        local equipLoc = select(9, GetItemInfo(id))
-        if equipLoc ~= "" then
-            local weaponType = select(7, GetItemInfo(id))
-            slot = weaponType or abbrList[equipLoc] or _G[equipLoc]
+    if itemType == _G.WEAPON and CL.db.weaponCategory then
+        if itemEquipLoc ~= "" then
+            slot = itemSubType or abbrList[itemEquipLoc] or _G[itemEquipLoc]
         end
     end
 
@@ -100,9 +93,7 @@ local function AddItemInfo(link)
     end
 
     if CL.db.icon then
-        local texture = GetItemIcon(id)
-        local icon = format(ICON_STRING, texture)
-        link = icon .. " " .. link
+        link = format(ICON_STRING, icon) .. " " .. link
     end
 
     return link

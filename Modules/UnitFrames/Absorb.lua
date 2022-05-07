@@ -79,6 +79,7 @@ function A:ConfigureTextures(_, frame)
                 local anchor = isReverse and "LEFT" or "RIGHT"
                 glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
                 glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
+                glow:SetRotation(rad(isReverse and 180 or 0))
             else
                 local anchor = isReverse and "BOTTOM" or "TOP"
                 glow:SetHeight(16)

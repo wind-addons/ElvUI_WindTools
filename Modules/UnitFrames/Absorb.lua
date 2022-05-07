@@ -194,11 +194,12 @@ function A:WaitForUnitframesLoad(triedTimes)
                 end
             end
         end
+
         -- Refresh all frames to make sure the replacing of textures
         self:SecureHook(UF, "Configure_HealComm", "ConfigureTextures")
         UF:Update_AllFrames()
     else
-        E:Delay(0.5, self.WaitForUnitframesLoad, self, triedTimes + 1)
+        E:Delay(0.3, self.WaitForUnitframesLoad, self, triedTimes + 1)
     end
 end
 

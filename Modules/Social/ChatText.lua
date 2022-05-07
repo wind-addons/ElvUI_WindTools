@@ -64,15 +64,15 @@ local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityC
 local C_Social_GetLastItem = C_Social.GetLastItem
 local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
 
-CT.cache = {}
-local lfgRoles = {}
-local initRecord = {}
-
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
 local NPEV2_CHAT_USER_TAG_GUIDE = gsub(NPEV2_CHAT_USER_TAG_GUIDE, "(|A.-|a).+", "%1")
 local PLAYERMENTORSHIPSTATUS_NEWCOMER = Enum.PlayerMentorshipStatus.Newcomer
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
+
+CT.cache = {}
+local lfgRoles = {}
+local initRecord = {}
 
 local elvuiAbbrStrings = {
     GUILD = L["G"],
@@ -135,7 +135,7 @@ CT.cache.blizzardRoleIcons = {
     DPS = _G.INLINE_DAMAGER_ICON
 }
 
--- copied from ChatFrame.lua
+-- From ElvUI Chat
 local function GetPFlag(
     arg1,
     arg2,
@@ -154,15 +154,12 @@ local function GetPFlag(
     arg15,
     arg16,
     arg17)
-    -- Renaming for clarity:
     local specialFlag = arg6
     local zoneChannelID = arg7
-    --local localChannelID = arg8
 
     if specialFlag ~= "" then
         if specialFlag == "GM" or specialFlag == "DEV" then
-            -- Add Blizzard Icon if this was sent by a GM/DEV
-            return "|TInterface\\ChatFrame\\UI-ChatIcon-Blizz:12:20:0:0:32:16:4:28:0:16|t "
+            return [[|TInterface\ChatFrame\UI-ChatIcon-Blizz:12:20:0:0:32:16:4:28:0:16|t ]]
         elseif specialFlag == "GUIDE" then
             if
                 _G.ChatFrame_GetMentorChannelStatus(
@@ -181,30 +178,22 @@ local function GetPFlag(
              then
                 return _G.NPEV2_CHAT_USER_TAG_NEWCOMER
             end
-        else
-            return _G["CHAT_FLAG_" .. specialFlag]
         end
     end
 
     return ""
 end
 
+-- From ElvUI Chat
 local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
-    -- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
-    -- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
-    -- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
-    -- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
-    -- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
     if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
         return false
     end
 
-    -- Only add if the user is joining a channel
     if eventType ~= "YOU_CHANGED" then
         return false
     end
 
-    -- Only add regional channels
     if not C_ChatInfo_IsChannelRegionalForChannelID(channelID) then
         return false
     end
@@ -442,7 +431,6 @@ function CT:HandleName(nameString)
     return nameString
 end
 
-E.NameReplacements = {}
 function CT:ChatFrame_MessageEventHandler(
     frame,
     event,
@@ -837,7 +825,7 @@ function CT:ChatFrame_MessageEventHandler(
                 globalstring = _G["CHAT_" .. arg1 .. "_NOTICE"]
             end
             if not globalstring then
-                GMError(("Missing global string for %q"):format("CHAT_" .. arg1 .. "_NOTICE_BN"))
+                GMError(format("Missing global string for %q", "CHAT_" .. arg1 .. "_NOTICE_BN"))
                 return
             end
             if arg5 ~= "" then
@@ -911,7 +899,7 @@ function CT:ChatFrame_MessageEventHandler(
                     if not globalstring then
                         globalstring = _G["CHAT_" .. arg1 .. "_NOTICE"]
                         if not globalstring then
-                            GMError(("Missing global string for %q"):format("CHAT_" .. arg1 .. "_NOTICE"))
+                            GMError(format("Missing global string for %q", "CHAT_" .. arg1 .. "_NOTICE"))
                             return
                         end
                     end
@@ -932,7 +920,7 @@ function CT:ChatFrame_MessageEventHandler(
         elseif chatType == "BN_INLINE_TOAST_ALERT" then
             local globalstring = _G["BN_INLINE_TOAST_" .. arg1]
             if not globalstring then
-                GMError(("Missing global string for %q"):format("BN_INLINE_TOAST_" .. arg1))
+                GMError(format("Missing global string for %q", "BN_INLINE_TOAST_" .. arg1))
                 return
             end
 
@@ -949,16 +937,16 @@ function CT:ChatFrame_MessageEventHandler(
                 if clientProgram and clientProgram ~= "" then
                     local name = _G.BNet_GetValidatedCharacterName(characterName, battleTag, clientProgram) or ""
                     local characterNameText = _G.BNet_GetClientEmbeddedTexture(clientProgram, 14) .. name
-                    local linkDisplayText = (noBrackets and "%s (%s)" or "[%s] (%s)"):format(arg2, characterNameText)
+                    local linkDisplayText = format(noBrackets and "%s (%s)" or "[%s] (%s)", arg2, characterNameText)
                     local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
                 else
-                    local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
+                    local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
                     local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
                 end
             else
-                local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
+                local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
                 local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                 message = format(globalstring, playerLink)
             end
@@ -966,7 +954,7 @@ function CT:ChatFrame_MessageEventHandler(
         elseif chatType == "BN_INLINE_TOAST_BROADCAST" then
             if arg1 ~= "" then
                 arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
-                local linkDisplayText = (noBrackets and "%s" or "[%s]"):format(arg2)
+                local linkDisplayText = format(noBrackets and "%s" or "[%s]", arg2)
                 local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                 frame:AddMessage(
                     format(_G.BN_INLINE_TOAST_BROADCAST, playerLink, arg1),
@@ -1039,7 +1027,7 @@ function CT:ChatFrame_MessageEventHandler(
             local usingEmote = (chatType == "EMOTE") or (chatType == "TEXT_EMOTE")
 
             if usingDifferentLanguage or not usingEmote then
-                playerLinkDisplayText = (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName))
+                playerLinkDisplayText = format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName))
             end
 
             local isCommunityType = chatType == "COMMUNITIES_CHANNEL"
@@ -1128,6 +1116,12 @@ function CT:ChatFrame_MessageEventHandler(
                 pflag = pflag .. lfgRole
             end
 
+            -- Plugin Chat Icon
+            local pluginChatIcon = CH:GetPluginIcon(playerName)
+            if pluginChatIcon then
+                pflag = pflag .. pluginChatIcon
+            end
+
             if usingDifferentLanguage then
                 local languageHeader = "[" .. arg3 .. "] "
                 if showLink and arg2 ~= "" then
@@ -1180,7 +1174,7 @@ function CT:ChatFrame_MessageEventHandler(
                     arg8 .. "|h[" .. _G.ChatFrame_ResolvePrefixedChannelName(arg4) .. "]|h " .. body
             end
 
-            if CH.db.shortChannels and (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") then
+            if (chatType ~= "EMOTE" and chatType ~= "TEXT_EMOTE") and (CH.db.shortChannels or CH.db.hideChannels) then
                 body = CH:HandleShortChannels(body, CH.db.hideChannels)
             end
 

@@ -30,6 +30,10 @@ end
     @param {function} [func=M.addonName] 插件回调函数
 ]]
 function M:AddCallbackForAddon(addonName, func)
+    if func and type(func) == "string" then
+        func = self[func]
+    end
+
     local addon = self.addonsToLoad[addonName]
     if not addon then
         self.addonsToLoad[addonName] = {}

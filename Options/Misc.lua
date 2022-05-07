@@ -499,7 +499,7 @@ do
                 local nameString = F.CreateColorString(name, color)
 
                 options.mute.args.other.args[name] = {
-                    order = id,
+                    order = data.id,
                     type = "toggle",
                     name = iconString .. " " .. nameString,
                     desc = data.desc,

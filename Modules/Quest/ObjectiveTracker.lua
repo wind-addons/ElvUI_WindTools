@@ -8,11 +8,13 @@ local abs = abs
 local format = format
 local floor = floor
 local ipairs = ipairs
+local max = max
 local min = min
 local pairs = pairs
 local strmatch = strmatch
 local tonumber = tonumber
 
+local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 

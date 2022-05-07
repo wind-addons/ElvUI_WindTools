@@ -1,6 +1,9 @@
 local W, F, E, L = unpack(select(2, ...))
 local M = W.Modules.Misc
 
+local format = format
+local gsub = gsub
+local hooksecurefunc = hooksecurefunc
 local strmatch = strmatch
 
 local cache = {}

@@ -5,6 +5,7 @@ local UF = E.UnitFrames
 
 local _G = _G
 local pairs = pairs
+local rad = rad
 
 local CreateFrame = CreateFrame
 local UnitIsConnected = UnitIsConnected

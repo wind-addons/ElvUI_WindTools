@@ -4,6 +4,8 @@ local S = W.Modules.Skins
 local _G = _G
 local pairs = pairs
 local select = select
+local tinsert = tinsert
+local unpack = unpack
 
 function S:EncounterJournal_DisplayInstance()
     local bossIndex = 1

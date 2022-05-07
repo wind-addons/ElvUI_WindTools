@@ -3,6 +3,9 @@ local M = W.Modules.Misc
 local AB = E.ActionBars
 
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+
+local CreateFrame = CreateFrame
 
 local function HotKeyTweak(button)
     if button.windHotKeyFrame or not button.cooldown then

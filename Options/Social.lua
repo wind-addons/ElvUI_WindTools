@@ -595,18 +595,24 @@ options.chatLink = {
                     type = "toggle",
                     name = L["Level"]
                 },
-                icon = {
+                translateItem = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Translate Item"],
+                    desc = L["Translate the name in item links into your language."]
+                },
+                icon = {
+                    order = 3,
                     type = "toggle",
                     name = L["Icon"]
                 },
                 armorCategory = {
-                    order = 3,
+                    order = 4,
                     type = "toggle",
                     name = L["Armor Category"]
                 },
                 weaponCategory = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Weapon Category"]
                 }
@@ -1151,8 +1157,8 @@ options.friendList = {
                     order = 3,
                     type = "toggle",
                     name = L["Faction Icon"],
-                    desc = L["Use faction icon instead of WoW icon."],
-                },
+                    desc = L["Use faction icon instead of WoW icon."]
+                }
             }
         },
         name = {
@@ -1175,13 +1181,13 @@ options.friendList = {
                     name = L["Hide Max Level"],
                     disabled = function()
                         return not E.db.WT.social.friendList.level
-                    end,
+                    end
                 },
                 useNoteAsName = {
                     order = 3,
                     type = "toggle",
                     name = L["Use Note As Name"],
-                    desc = L["Replace the Real ID or the character name of friends with your notes."],
+                    desc = L["Replace the Real ID or the character name of friends with your notes."]
                 },
                 useGameColor = {
                     order = 4,

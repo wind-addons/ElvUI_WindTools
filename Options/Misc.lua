@@ -135,6 +135,12 @@ options.general = {
                 E.NewSign,
                 F.CreateColorString(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
             )
+        },
+        guildNewsItemLevel = {
+            order = 12,
+            type = "toggle",
+            name = L["Guild News IL"],
+            desc = L["Show item level of each item in guild news."]
         }
     }
 }

@@ -24,8 +24,8 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 3 fonts, 2 textures and 2 ringtones.
 
 ## Item
-1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.  
-2. **Already Known**: Add a colored overlay to the recipes you have already learned.  
+1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.
+2. **Already Known**: Add a colored overlay to the recipes you have already learned.
 3. **Fast Loot**: Make the auto-loot more efficiently.
 4. **Trade**: Say thanks to the trade target with one-click.
 5. **Extra Item Bar**: Add bars to collect flasks, potions, quest items, and custom items automatically.
@@ -40,26 +40,26 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 4. **Quick Keystone**: Put the keystone from bag automatically.
 
 ## Map
-1. **Who Clicked?**: Display the name of players who clicked the minimap.  
+1. **Who Clicked?**: Display the name of players who clicked the minimap.
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
-3. **Minimap Buttons**: Collect all the minimap buttons to a bar.  
+3. **Minimap Buttons**: Collect all the minimap buttons to a bar.
 4. **World Map**: Remove the fog of war; scale the world map.
 5. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
 6. **Instance Difficulty**: Reskin the instance diffculty in text style.
 
 ## Quest
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.
-2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.  
-3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.  
-4. **Paragon Reputation**: Show the reputation bar even after reaching Paragon.  
+2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.
+3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.
+4. **Paragon Reputation**: Show colored reputation bars and rewards after reaching Paragon.
 
 ## Social
 1. **Chat Bar**: Add a bar contains channel buttons, roll, emote; Custom world channel and custom community channel is also supported.
-2. **Chat Link**: Add additional information, icons to the links.  
+2. **Chat Link**: Add additional information, icons to the links.
 3. **Chat Text**: Change the role icon sets; No brackets in the name; Better abbreviation.
-4. **Context Menu**: Add the following buttons to the context menu: guild invite, armory, who  
+4. **Context Menu**: Add the following buttons to the context menu: guild invite, armory, who.
 5. **Emote**: Add support for send and parse emotes.
-6. **Friend List**: Add colorful level, faction, area text into friend list.  
+6. **Friend List**: Add colorful level, faction, area text into friend list.
 7. **Filter**: Unblock `profanityFilter` CVars in Mainland China server.
 8. **Smart Tab**: Use Tab to cycle the chat channel; Save the whisper target cross character.
 
@@ -128,6 +128,8 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 14. **Math Without Kanji**: Replace Kanji with latin characters in values.
 15. **Auto Screenshot**: Screenshot after you earned an achievement automatically.
 16. **Hide Crafter**: Hide crafter name in the item tooltip.
+17. **HotKey Above CD**: Show hotkeys above the ElvUI cooldown animation.
+18. **Guild News Item Level**: Show item level of each item in guild news.
 
 -----
 <br>

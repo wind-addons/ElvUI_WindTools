@@ -36,6 +36,7 @@ function A:ConstructTextures(frame)
         local glow = absorb:CreateTexture(nil, "OVERLAY", 10)
         glow:SetTexture("Interface/RaidFrame/Shield-Overshield")
         glow:SetBlendMode("ADD")
+        glow:SetWidth(16)
         absorb.glow = glow
     end
 end
@@ -55,7 +56,6 @@ function A:ConfigureTextures(_, frame)
     else
         local isHorizontal = frame.Health:GetOrientation() == "HORIZONTAL"
         local isReverse = frame.Health:GetReverseFill()
-        local offset = isReverse and -3 or 3
 
         if self.db.blizzardAbsorbOverlay then
             overlay:ClearAllPoints()
@@ -86,15 +86,20 @@ function A:ConfigureTextures(_, frame)
         if self.db.blizzardOverAbsorbGlow then
             glow:ClearAllPoints()
             if isHorizontal then
+                local offset = isReverse and -3 or 3
                 local anchor = isReverse and "LEFT" or "RIGHT"
                 glow:SetPoint("TOP", frame.Health, "TOP" .. anchor, offset, 2)
                 glow:SetPoint("BOTTOM", frame.Health, "BOTTOM" .. anchor, offset, -2)
                 glow:SetRotation(rad(isReverse and 180 or 0))
             else
+                local offset = isReverse and 2 or -2
                 local anchor = isReverse and "BOTTOM" or "TOP"
-                glow:SetHeight(16)
-                glow:SetPoint("LEFT", frame.Health, anchor .. "LEFT", -2, offset)
-                glow:SetPoint("RIGHT", frame.Health, anchor .. "RIGHT", 2, offset)
+                local healthBarWidth = frame.Health:GetWidth()
+                local halfWidth = healthBarWidth / 2
+
+                glow:SetPoint("TOP", frame.Health, anchor, 0, halfWidth + 2 + offset)
+                glow:SetPoint("BOTTOM", frame.Health, anchor, 0, offset - 1 - halfWidth)
+                glow:SetRotation(rad(isReverse and 90 or 270))
             end
             glow:Show()
         else

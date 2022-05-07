@@ -5,6 +5,7 @@
 	<Script file='AutoScreenShot.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>
+	<Script file='GuildNewsItemLevel.lua'/>
 	<Script file='HideCrafter.lua'/>
 	<Script file='HotKeyAboveCD.lua'/>
 	<Script file='LootPanel.lua'/>

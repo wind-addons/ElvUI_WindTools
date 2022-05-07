@@ -77,6 +77,7 @@ V.misc = {
 	skipCutScene = false,
 	tags = true,
 	hotKeyAboveCD = false,
+	guildNewsItemLevel = true,
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,

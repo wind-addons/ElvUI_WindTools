@@ -12,7 +12,6 @@ local tostring = tostring
 
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
-local C_Timer_After = C_Timer.After
 local ChatFrame_AddChannel = ChatFrame_AddChannel
 local ChatFrame_OpenChat = ChatFrame_OpenChat
 local CreateFrame = CreateFrame
@@ -289,8 +288,8 @@ function CB:UpdateBar()
                     local command = format("/%s ", channelId)
                     if autoJoined then
                         -- 刚切过去要稍微过一会才能让聊天框反映为频道
-                        C_Timer_After(
-                            .5,
+                        E:Delay(
+                            0.5,
                             function()
                                 ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
                             end

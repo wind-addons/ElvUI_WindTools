@@ -44,7 +44,6 @@ local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccount
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_AddFriend = C_FriendList.AddFriend
 local C_FriendList_SendWho = C_FriendList.SendWho
-local C_Timer_After = C_Timer.After
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 local HP = HP
@@ -356,7 +355,7 @@ local PredefinedType = {
 
             local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
 
-            C_Timer_After(
+            E:Delay(
                 0.1,
                 function()
                     SendChatMessage(
@@ -376,7 +375,7 @@ local PredefinedType = {
             )
 
             -- 致命
-            C_Timer_After(
+            E:Delay(
                 0.3,
                 function()
                     SendChatMessage(
@@ -392,14 +391,14 @@ local PredefinedType = {
                 end
             )
             -- 加速
-            C_Timer_After(
+            E:Delay(
                 0.5,
                 function()
                     SendChatMessage(format(" - %s: %.2f%%", STAT_HASTE, GetHaste()), "WHISPER", nil, name)
                 end
             )
             -- 精通
-            C_Timer_After(
+            E:Delay(
                 0.7,
                 function()
                     SendChatMessage(format(" - %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()), "WHISPER", nil, name)
@@ -407,7 +406,7 @@ local PredefinedType = {
             )
 
             -- 臨機應變
-            C_Timer_After(
+            E:Delay(
                 0.9,
                 function()
                     SendChatMessage(

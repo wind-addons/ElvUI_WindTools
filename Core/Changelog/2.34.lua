@@ -66,8 +66,8 @@ W.Changelog[234] = {
             "[퀘스트 추적기] 제목 글자색을 커스터마이징 할 수 있습니다.",
             "[퀘스트 추적기] 새로운 기능인 장씩띠를 추가하였습니다. 기본적으로 활성화되어 있습니다.",
             "[기타] 쿨다운 애니메이션 위에 액션 바 단축키를 표시하는 새로운 옵션을 추가했습니다.",
-            "[Misc] Added a new option to show item level in guild news.",
-            "[Chat Link] Added a new feature for translating item name in links into your language."
+            "[기타] 길드 새 소식에 아이템 레벨을 표시하는 기능이 추가되었습니다.",
+            "[채팅 링크] 링크의 아이템 명을 플레이어의 언어로 번역하는 새로운 기능을 추가했습니다."
         }
     },
     IMPROVEMENT = {
@@ -169,7 +169,7 @@ W.Changelog[234] = {
             "[게임 바] Ctrl + Shift + 시계를 클릭하면 CPU 사용량 통계가 활성화되지 않는 문제가 수정되었습니다.",
             "[아이템 바] 올리아 보관함(영웅 난이도)이 추가되었습니다. Thanks mcc1",
             "[미니맵 버튼 통합 바] TomCat's Tour에 대한 몇 가지 특별한 규칙을 추가했습니다.",
-            "[Mute] Added more sound ID for 이글심장."
+            "[음소거] 이글심장 옵션에 더 많은 사운드 ID를 추가했습니다."
         }
     }
 }

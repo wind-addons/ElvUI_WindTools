@@ -109,7 +109,10 @@ local OtherSE = {
     ["Smolderheart"] = {
         -- Smolderheart
         -- https://www.wowhead.com/item=180873/smolderheart
-        2066602 -- sound/spells/fx_fire_magic_loop_smoldering_a_01.ogg
+        2066602, -- sound/spells/fx_fire_magic_loop_smoldering_a_01.ogg
+        2066603, -- sound/spells/fx_fire_magic_loop_smoldering_a_02.ogg
+        2066604, -- sound/spells/fx_fire_magic_loop_smoldering_b_01.ogg
+        2066605 -- sound/spells/fx_fire_magic_loop_smoldering_b_02.ogg
     },
     ["Elegy of the Eternals"] = {
         -- Smolderheart

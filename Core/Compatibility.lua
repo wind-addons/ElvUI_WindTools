@@ -76,7 +76,7 @@ function W:ConstructCompatibilityFrame()
         format(
             "%s %s %s",
             F.CreateColorString("[", E.db.general.valuecolor),
-            L["Choose the module you would like to |cff00ff00use|r."],
+            L["Choose the module you would like to |cff00ff00use|r"],
             F.CreateColorString("]", E.db.general.valuecolor)
         )
     )
@@ -163,6 +163,7 @@ local function AddButtonToCompatibilityFrame(data)
             if _G[name] then
                 _G[name]:SetTexture(E.Media.Textures.ArrowUp)
                 _G[name]:SetRotation(ES.ArrowRotation.left)
+                _G[name]:SetVertexColor(0, 1, 0)
             end
         end
     )
@@ -198,6 +199,7 @@ local function AddButtonToCompatibilityFrame(data)
             if _G[name] then
                 _G[name]:SetTexture(E.Media.Textures.ArrowUp)
                 _G[name]:SetRotation(ES.ArrowRotation.right)
+                _G[name]:SetVertexColor(1, 0, 0)
             end
         end
     )
@@ -438,9 +440,16 @@ function W:CheckCompatibility()
 
     CheckShadowAndLight(
         format("%s-%s", L["Skins"], L["Scenario"]),
-        format("%s-%s", L["Skins"], _G.OBJECTIVES_TRACKER_LABEL),
+        format("%s-%s", L["Skins"], L["Key Timers"]),
         "private.WT.skins.blizzard.scenario",
-        "private.sle.skins.objectiveTracker.enable"
+        "private.sle.skins.objectiveTracker.keyTimers.enable"
+    )
+
+    CheckShadowAndLight(
+        format("%s-%s", L["Objective Tracker"], L["Cosmetic Bar"]),
+        format("%s-%s", L["Skins"], L["Underline"]),
+        "private.WT.quest.objectiveTracker.enable",
+        "db.sle.skins.objectiveTracker.underline"
     )
 
     CheckShadowAndLight(

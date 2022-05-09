@@ -7,9 +7,11 @@ local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
 
 local format = format
+local select = select
 local tonumber = tonumber
 local tostring = tostring
 
+local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
 local Item = Item
@@ -18,6 +20,11 @@ local Spell = Spell
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
+
+local function GetClassColorString(class)
+    local hexString = select(4, GetClassColor(class))
+    return "|c" .. hexString
+end
 
 options.general = {
     order = 1,
@@ -559,12 +566,64 @@ do
     examples.health = {
         name = L["Health"],
         noSign = {
+            order = 1,
             tag = "[health:percent-nosign]",
-            text = L["The percentage of current health without percent sign"]
+            text = L["The percentage of current health without percent sign"] ..
+                format(" (%s)", L["Follow ElvUI Setting"])
+        },
+        noSign0 = {
+            order = 2,
+            tag = "[health:percent-nosign-0]",
+            text = L["The percentage of current health without percent sign"] ..
+                format(" (%s = 0)", L["Decimal Length"])
+        },
+        noSign1 = {
+            order = 3,
+            tag = "[health:percent-nosign-1]",
+            text = L["The percentage of current health without percent sign"] ..
+                format(" (%s = 1)", L["Decimal Length"])
+        },
+        noSign2 = {
+            order = 4,
+            tag = "[health:percent-nosign-2]",
+            text = L["The percentage of current health without percent sign"] ..
+                format(" (%s = 2)", L["Decimal Length"])
+        },
+        noSign3 = {
+            order = 5,
+            tag = "[health:percent-nosign-3]",
+            text = L["The percentage of current health without percent sign"] ..
+                format(" (%s = 3)", L["Decimal Length"])
         },
         noStatusNoSign = {
+            order = 6,
             tag = "[health:percent-nostatus-nosign]",
-            text = L["The percentage of health without percent sign and status"]
+            text = L["The percentage of health without percent sign and status"] ..
+                format(" (%s)", L["Follow ElvUI Setting"])
+        },
+        noStatusNoSign0 = {
+            order = 7,
+            tag = "[health:percent-nostatus-nosign-0]",
+            text = L["The percentage of health without percent sign and status"] ..
+                format(" (%s = 0)", L["Decimal Length"])
+        },
+        noStatusNoSign1 = {
+            order = 8,
+            tag = "[health:percent-nostatus-nosign-1]",
+            text = L["The percentage of health without percent sign and status"] ..
+                format(" (%s = 1)", L["Decimal Length"])
+        },
+        noStatusNoSign2 = {
+            order = 9,
+            tag = "[health:percent-nostatus-nosign-2]",
+            text = L["The percentage of health without percent sign and status"] ..
+                format(" (%s = 2)", L["Decimal Length"])
+        },
+        noStatusNoSign3 = {
+            order = 10,
+            tag = "[health:percent-nostatus-nosign-3]",
+            text = L["The percentage of health without percent sign and status"] ..
+                format(" (%s = 3)", L["Decimal Length"])
         }
     }
 
@@ -622,10 +681,11 @@ do
 
     for i = 1, GetNumClasses() do
         local upperText = select(2, GetClassInfo(i))
+        local coloredClassName = GetClassColorString(upperText) .. className[upperText] .. "|r"
         examples.color[upperText] = {
             order = i,
             tag = format("[classcolor:%s]", strlower(upperText)),
-            text = format(L["The color of %s"], className[upperText])
+            text = format(L["The color of %s"], coloredClassName)
         }
     end
 

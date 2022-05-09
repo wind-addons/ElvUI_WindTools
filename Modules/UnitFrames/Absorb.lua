@@ -42,7 +42,7 @@ function A:ConstructTextures(frame)
 end
 
 function A:ConfigureTextures(_, frame)
-    if not (frame and frame.db and frame.db.healPrediction and frame.db.healPrediction.enable) then
+    if not (frame and frame.db and frame.db.healPrediction and frame.db.healPrediction.enable and frame.windAbsorb) then
         return
     end
 

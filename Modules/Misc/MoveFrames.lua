@@ -6,6 +6,7 @@ local _G = _G
 local format = format
 local pairs = pairs
 local strsplit = strsplit
+local tremove = tremove
 local type = type
 
 local InCombatLockdown = InCombatLockdown

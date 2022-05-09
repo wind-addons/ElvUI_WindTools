@@ -13,12 +13,18 @@ local tonumber = tonumber
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
+end
+
+local function GetHealthPercent(unit, formatString)
+	return format(formatString, UnitHealth(unit) / UnitHealthMax(unit) * 100)
 end
 
 function M:Tags()
@@ -89,6 +95,71 @@ function M:Tags()
 			else
 				return originalString
 			end
+		end
+	)
+
+	-- Custom Decimal Length Health Tags
+	E:AddTag(
+		"health:percent-nostatus-0",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%d%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-1",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.1f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-2",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.2f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-3",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.3f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-0",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%d")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-1",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.1f")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-2",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.2f")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-3",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.3f")
 		end
 	)
 

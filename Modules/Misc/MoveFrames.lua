@@ -298,6 +298,12 @@ local BlizzardFramesOnDemand = {
     }
 }
 
+local function removeBlizzardFrames(name)
+    for i, n in pairs(BlizzardFrames) do
+        if n == name then
+            tremove(BlizzardFrames, i)
+            return
+        end
     end
 end
 

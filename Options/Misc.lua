@@ -335,8 +335,17 @@ options.moveFrames = {
                 return MF.StopRunning or not E.private.WT.misc.moveFrames.enable
             end
         },
-        remember = {
+        tradeSkillMasterCompatible = {
             order = 3,
+            type = "toggle",
+            name = L["TSM Compatible"],
+            desc = L["Fix the merchant frame showing when you using Trader Skill Master."],
+            disabled = function()
+                return MF.StopRunning or not E.private.WT.misc.moveFrames.enable
+            end
+        },
+        remember = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Remember Positions"],

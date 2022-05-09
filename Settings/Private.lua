@@ -81,6 +81,7 @@ V.misc = {
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,
+		tradeSkillMasterCompatible = true,
 		rememberPositions = false,
 		framePositions = {}
 	},

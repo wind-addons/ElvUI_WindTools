@@ -9,10 +9,18 @@ W.Changelog[235] = {
         ["koKR"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[标签] 增加了一些新的不同小数位数缩写的生命值标签."
+        },
+        ["zhTW"] = {
+            "[標籤] 增加了一些新的不同小數位數縮寫的生命值標籤."
+        },
+        ["enUS"] = {
+            "[Tags] Added some new different health tags with different decimal lengths."
+        },
+        ["koKR"] = {
+            "[Tags] Added some new different health tags with different decimal lengths."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

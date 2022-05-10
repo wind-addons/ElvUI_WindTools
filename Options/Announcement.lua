@@ -93,14 +93,24 @@ options.quest = {
                 SB:ProfileUpdate()
             end
         },
-        includeDetails = {
+        disableBlizzard = {
             order = 3,
+            type = "toggle",
+            name = L["Disable Blizzard"],
+            desc = L["Disable Blizzard quest progress message."],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:UpdateBlizzardQuestAnnouncement()
+            end
+        },
+        includeDetails = {
+            order = 4,
             type = "toggle",
             name = L["Include Details"],
             desc = L["Announce every time the progress has been changed."]
         },
         channel = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Channel"],
@@ -155,7 +165,7 @@ options.quest = {
             }
         },
         tag = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Tag"],
@@ -193,7 +203,7 @@ options.quest = {
             }
         },
         suggestedGroup = {
-            order = 6,
+            order = 7,
             type = "group",
             inline = true,
             name = L["Suggested Group"],
@@ -231,7 +241,7 @@ options.quest = {
             }
         },
         level = {
-            order = 7,
+            order = 8,
             type = "group",
             inline = true,
             name = L["Level"],
@@ -275,7 +285,7 @@ options.quest = {
             }
         },
         daily = {
-            order = 8,
+            order = 9,
             type = "group",
             inline = true,
             name = L["Daily"],
@@ -313,7 +323,7 @@ options.quest = {
             }
         },
         weekly = {
-            order = 9,
+            order = 10,
             type = "group",
             inline = true,
             name = L["Weekly"],

@@ -155,6 +155,7 @@ end
 
 function A:ProfileUpdate()
     self:Initialize()
+    self:UpdateBlizzardQuestAnnouncement()
 
     if self.db.enable or not self.initialized then
         return

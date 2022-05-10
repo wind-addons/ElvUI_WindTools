@@ -57,6 +57,29 @@ local function GetQuests()
 	return quests
 end
 
+do
+	local ERR_QUEST_ADD_ITEM_SII = ERR_QUEST_ADD_ITEM_SII
+	local ERR_QUEST_ADD_FOUND_SII = ERR_QUEST_ADD_FOUND_SII
+	local ERR_QUEST_ADD_KILL_SII = ERR_QUEST_ADD_KILL_SII
+	local ERR_QUEST_UNKNOWN_COMPLETE = ERR_QUEST_UNKNOWN_COMPLETE
+	local ERR_QUEST_OBJECTIVE_COMPLETE_S = ERR_QUEST_OBJECTIVE_COMPLETE_S
+
+	function A:UpdateBlizzardQuestAnnouncement()
+		local enable = false
+
+		if not self.db.quest or not self.db.quest.enable or not self.db.quest.disableBlizzard then
+			enable = true
+		end
+
+		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or E.noop
+		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or E.noop
+		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or E.noop
+		_G.TOAST_OBJECTIVE_COMPLETE = enable and TOAST_OBJECTIVE_COMPLETE or E.noop
+		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or E.noop
+		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or E.noop
+	end
+end
+
 function A:Quest()
 	local config = self.db.quest
 	if not config or not config.enable then

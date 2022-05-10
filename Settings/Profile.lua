@@ -53,6 +53,7 @@ P.announcement = {
     quest = {
         enable = false,
         paused = true,
+        disableBlizzard = true,
         includeDetails = true,
         channel = {
             party = "PARTY",

@@ -149,6 +149,7 @@ function A:Initialize()
 
     self:InitializeAuthority()
     self:ResetAuthority()
+    self:UpdateBlizzardQuestAnnouncement()
 
     self.initialized = true
 end

@@ -43,24 +43,28 @@ W.Changelog[235] = {
             "[交接] 修复了有时任务无法正常借取完成的问题",
             "[美化皮肤] 优化了拍卖行皮肤.",
             "[美化皮肤] 优化了暴雪 UI 组件皮肤.",
+            "[美化皮肤] 优化了成就进度皮肤.",
             "[移动框体] 新增一个选项用于提升与 Trade Skill Master 的兼容性."
         },
         ["zhTW"] = {
             "[交接] 修復了有時任務無法正常借取完成的問題",
             "[美化皮膚] 優化了拍賣行皮膚.",
             "[美化皮膚] 優化了暴雪 UI 組件皮膚.",
+            "[美化皮膚] 優化了成就進度皮膚.",
             "[移動框架] 新增一個選項用於提升與 Trade Skill Master 的相容性."
         },
         ["enUS"] = {
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
             "[Skins] Optimized Auction House skin.",
             "[Skins] Optimized Blizzard UI Widgets skin.",
+            "[Skins] Optimized achievement progress skin.",
             "[Move Frames] New option to improve compatibility with Trade Skill Master."
         },
         ["koKR"] = {
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
             "[Skins] Optimized Auction House skin.",
             "[Skins] Optimized Blizzard UI Widgets skin.",
+            "[Skins] Optimized 업적 진행 상황 skin.",
             "[Move Frames] New option to improve compatibility with Trade Skill Master."
         }
     }

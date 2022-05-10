@@ -129,20 +129,12 @@ local cache = {}
 local askedPlayers = {}
 
 local function RequestAllData()
-    if LibORVersion >= 28 then
-        LibOR.RequestAllData()
-    else
-        LibOR.RequestAllPlayersInfo()
-    end
+    LibOR.RequestAllData()
 end
 
 local function GetUnitInfo(unit)
     local name = UnitName(unit)
-    if LibORVersion >= 28 then
-        return LibOR.UnitInfoManager.GetUnitInfo(name)
-    else
-        return LibOR.playerInfoManager.GetPlayerInfo(name)
-    end
+    return LibOR.UnitInfoManager.GetUnitInfo(name)
 end
 
 local function GetBestChannel()

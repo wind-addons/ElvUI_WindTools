@@ -289,7 +289,7 @@ function TI:QUEST_GREETING()
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
             local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
             if gossipQuestUIInfo.isComplete and not isWorldQuest then
-                if self:IsPaused("COMPLETE") then
+                if not self:IsPaused("COMPLETE") then
                     C_GossipInfo_SelectActiveQuest(index)
                 end
             end
@@ -299,7 +299,7 @@ function TI:QUEST_GREETING()
     if C_GossipInfo_GetNumAvailableQuests() > 0 then
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
             if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() then
-                if self:IsPaused("ACCEPT") then
+                if not self:IsPaused("ACCEPT") then
                     C_GossipInfo_SelectAvailableQuest(index)
                 end
             end
@@ -318,7 +318,7 @@ function TI:GOSSIP_SHOW()
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
             local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
             if gossipQuestUIInfo.isComplete and not isWorldQuest then
-                if self:IsPaused("COMPLETE") then
+                if not self:IsPaused("COMPLETE") then
                     C_GossipInfo_SelectActiveQuest(index)
                 end
             end
@@ -329,7 +329,7 @@ function TI:GOSSIP_SHOW()
     if numAvailableQuests > 0 then
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
             if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() or npcID == 64437 then
-                if self:IsPaused("ACCEPT") then
+                if not self:IsPaused("ACCEPT") then
                     C_GossipInfo_SelectAvailableQuest(index)
                 end
             end

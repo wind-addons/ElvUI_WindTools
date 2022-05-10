@@ -24,7 +24,12 @@ local function GetClassColorString(class)
 end
 
 local function GetHealthPercent(unit, formatString)
-	return format(formatString, UnitHealth(unit) / UnitHealthMax(unit) * 100)
+	local healthMax = UnitHealthMax(unit)
+	if healthMax == 0 then
+		print(1)
+		return ""
+	end
+	return format(formatString, UnitHealth(unit) / healthMax * 100)
 end
 
 function M:Tags()

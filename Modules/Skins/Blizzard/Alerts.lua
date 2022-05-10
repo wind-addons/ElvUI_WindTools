@@ -66,8 +66,10 @@ function S:SkinCriteriaAlert(frame)
 
     self:CreateBackdropShadow(frame)
 
-    F.SetFontOutline(frame.Unlocked)
-    F.SetFontOutline(frame.Name)
+    frame:SetWidth(frame:GetWidth() + 10)
+
+    F.SetFontOutline(frame.Unlocked, nil, "-1")
+    F.SetFontOutline(frame.Name, nil, "+3")
 
     if frame.Icon.Texture.b then
         frame.Icon.Texture.b:Point("TOPLEFT", frame.Icon.Texture, "TOPLEFT", -1, 1)
@@ -75,7 +77,7 @@ function S:SkinCriteriaAlert(frame)
         S:CreateShadow(frame.Icon.Texture.b)
 
         frame.Icon.Texture:ClearAllPoints()
-        frame.Icon.Texture:Point("RIGHT", frame.backdrop, "LEFT", 50, 0)
+        frame.Icon.Texture:Point("LEFT", frame.backdrop, "LEFT", 10, 0)
     end
 
     frame.windStyle = true

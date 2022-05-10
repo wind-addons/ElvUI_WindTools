@@ -77,9 +77,14 @@ function S:BlizzardMiscFrames()
         ES,
         "SkinStatusBarWidget",
         function(_, widgetFrame)
-            local bar = widgetFrame.Bar
-            if bar then
-                self:CreateBackdropShadow(bar)
+            if widgetFrame.Label then
+                F.SetFontOutline(widgetFrame.Label)
+            end
+            if widgetFrame.Bar then
+                self:CreateBackdropShadow(widgetFrame.Bar)
+                if widgetFrame.Bar.Label then
+                    F.SetFontOutline(widgetFrame.Bar.Label)
+                end
             end
         end
     )
@@ -88,9 +93,15 @@ function S:BlizzardMiscFrames()
         _G.UIWidgetTemplateStatusBarMixin,
         "Setup",
         function(widgetFrame)
-            local bar = widgetFrame.Bar
-            if bar then
-                self:CreateBackdropShadow(bar)
+            if widgetFrame.Label then
+                F.SetFontOutline(widgetFrame.Label)
+            end
+
+            if widgetFrame.Bar then
+                self:CreateBackdropShadow(widgetFrame.Bar)
+                if widgetFrame.Bar.Label then
+                    F.SetFontOutline(widgetFrame.Bar.Label)
+                end
             end
 
             if widgetFrame.isJailersTowerBar and self:CheckDB(nil, "scenario") then

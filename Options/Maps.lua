@@ -123,12 +123,6 @@ options.superTracker = {
                         db.r, db.g, db.b, db.a = r, g, b, nil
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
-                },
-                onlyNumber = {
-                    order = 5,
-                    type = "toggle",
-                    name = L["Only Number"],
-                    desc = L["Remove the unit from distance text."]
                 }
             }
         }

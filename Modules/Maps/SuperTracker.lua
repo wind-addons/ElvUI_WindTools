@@ -2,7 +2,6 @@ local W, F, E, L = unpack(select(2, ...))
 local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
-local gsub = gsub
 
 local IsAddOnLoaded = IsAddOnLoaded
 
@@ -10,14 +9,6 @@ local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
 local C_Navigation_GetDistance = C_Navigation.GetDistance
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
-
-function ST:SetDistanceText(frame, text)
-    if self.db and self.db.distanceText and self.db.distanceText.enable and self.db.distanceText.onlyNumber then
-        text = gsub(text, "[^0-9]", "")
-    end
-
-    self.hooks[frame].SetText(frame, text)
-end
 
 function ST:ReskinDistanceText()
     if not _G.SuperTrackedFrame or not _G.SuperTrackedFrame.DistanceText then
@@ -95,7 +86,6 @@ function ST:ADDON_LOADED(_, addon)
         self:UnregisterEvent("ADDON_LOADED")
         self:NoLimit()
         self:ReskinDistanceText()
-        self:RawHook(_G.SuperTrackedFrame.DistanceText, "SetText", "SetDistanceText", true)
     end
 end
 
@@ -122,7 +112,6 @@ function ST:Initialize()
 
     self:NoLimit()
     self:ReskinDistanceText()
-    self:RawHook(_G.SuperTrackedFrame.DistanceText, "SetText", "SetDistanceText", true)
 end
 
 W:RegisterModule(ST:GetName())

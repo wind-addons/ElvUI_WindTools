@@ -44,6 +44,7 @@ W.Changelog[235] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[标签] smart-power 和 smart-power-long 现在固定使用整数.",
             "[通告] (任务) 优化了任务进度信息的显示.",
             "[右键菜单] 修复了属性报告功能.",
             "[超级追踪] 由于可能产生的污染, 移除了纯数字的选项.",
@@ -52,10 +53,12 @@ W.Changelog[235] = {
             "[美化皮肤] 优化了暴雪 UI 组件皮肤.",
             "[美化皮肤] 优化了弹出通知的皮肤.",
             "[美化皮肤] 修复了任务物品按钮的阴影.",
+            "[美化皮肤] 修复了额外物品投掷框体的阴影.",
             "[移动框体] 新增一个选项用于提升与 Trade Skill Master 的兼容性.",
             "[吸收] 修复了战斗中重载界面可能导致的污染."
         },
         ["zhTW"] = {
+            "[標籤] smart-power 和 smart-power-long 現在固定使用整數.",
             "[通告] (任務) 优化了任務進度訊息的顯示.",
             "[右鍵選單] 修復了屬性報告功能.",
             "[超級追蹤] 由於可能產生的汙染, 移除了僅數字的選項.",
@@ -64,10 +67,12 @@ W.Changelog[235] = {
             "[美化皮膚] 優化了暴雪 UI 組件皮膚.",
             "[美化皮膚] 優化了彈出通知皮膚.",
             "[美化皮膚] 修復了任務物品按鍵的陰影.",
+            "[美化皮膚] 修復了額外物品投擲框架的陰影.",
             "[移動框架] 新增一個選項用於提升與 Trade Skill Master 的相容性.",
             "[吸收] 修復了戰鬥中重載介面可能導致的汙染."
         },
         ["enUS"] = {
+            "[Tags] The tag: smart-power and smart-power-long will use integer.",
             "[Announcement] (Quest) Optimized quest progress info display.",
             "[Context Menu] Fixed a bug in stats report.",
             "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
@@ -76,10 +81,12 @@ W.Changelog[235] = {
             "[Skins] Optimized Blizzard UI Widgets skin.",
             "[Skins] Optimized alerts skin.",
             "[Skins] Fixed the shadow of quest item button.",
+            "[Skins] Fixed the shadow of bonus roll frame.",
             "[Move Frames] New option to improve compatibility with Trade Skill Master.",
             "[Absorb] Fixed a bug that the module may cause taint if reload ui in combat."
         },
         ["koKR"] = {
+            "[Tags] The tag: smart-power and smart-power-long will use integer.",
             "[Announcement] (Quest) Optimized quest progress info display.",
             "[Context Menu] Fixed a bug in stats report.",
             "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
@@ -88,6 +95,7 @@ W.Changelog[235] = {
             "[Skins] Optimized Blizzard UI Widgets skin.",
             "[Skins] Optimized alerts skin.",
             "[Skins] Fixed the shadow of quest item button.",
+            "[Skins] Fixed the shadow of bonus roll frame.",
             "[Move Frames] New option to improve compatibility with Trade Skill Master.",
             "[Absorb] Fixed a bug that the module may cause taint if reload ui in combat."
         }

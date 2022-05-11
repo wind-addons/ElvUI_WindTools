@@ -120,7 +120,7 @@ function A:HealthPrediction_OnUpdate(object, unit, _, _, absorb, _, hasOverAbsor
     local glow = frame.windAbsorb.glow
     local frameDB = frame and frame.db and frame.db.healPrediction
 
-    if not frameDB or not frameDB.enable or not framePool[frame] or not not overlay.SetOverlaySize then
+    if not frameDB or not frameDB.enable or not framePool[frame] or not overlay.SetOverlaySize then
         return
     end
 

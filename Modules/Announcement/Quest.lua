@@ -172,7 +172,9 @@ function A:Quest()
 		else -- 新的任务
 			if not questCache.worldQuestType then -- 屏蔽世界任务的接收, 路过不报告
 				mainInfo = questCache.link .. " " .. L["Accepted"]
-				mainInfoColored = questCache.link .. " " .. F.CreateColorString(L["Accepted"], {r = 1.000, g = 0.980, b = 0.396})
+				mainInfoColored =
+					questCache.link ..
+					" " .. F.CreateColorString(L["Accepted"], {r = 1, g = 1, b = 1}) .. format(" |T%s:0|t", W.Media.Icons.accept)
 				needAnnounce = true
 			end
 		end

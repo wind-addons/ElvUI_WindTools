@@ -26,7 +26,6 @@ end
 local function GetHealthPercent(unit, formatString)
 	local healthMax = UnitHealthMax(unit)
 	if healthMax == 0 then
-		print(1)
 		return ""
 	end
 	return format(formatString, UnitHealth(unit) / healthMax * 100)

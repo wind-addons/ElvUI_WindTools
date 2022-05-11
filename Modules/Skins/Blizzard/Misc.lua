@@ -105,7 +105,7 @@ function S:BlizzardMiscFrames()
             end
 
             if widgetFrame.isJailersTowerBar and self:CheckDB(nil, "scenario") then
-                bar:SetWidth(234)
+                widgetFrame.Bar:SetWidth(234)
             end
         end
     )

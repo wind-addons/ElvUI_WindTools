@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
+local gsub = gsub
 
 local IsAddOnLoaded = IsAddOnLoaded
 

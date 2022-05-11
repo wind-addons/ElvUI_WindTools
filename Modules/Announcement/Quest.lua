@@ -180,9 +180,11 @@ function A:Quest()
 			if not E.db.WT.quest.switchButtons.enable or not config.paused then
 				self:SendMessage(message, self:GetChannel(config.channel))
 			end
-
-			local messageColored = extraInfoColored .. mainInfoColored
-			_G.UIErrorsFrame:AddMessage(messageColored)
+			
+			if not isDetailInfo or self.db.quest.disableBlizzard then -- only show details if system do not show that
+				local messageColored = extraInfoColored .. mainInfoColored
+				_G.UIErrorsFrame:AddMessage(messageColored)
+			end
 		end
 	end
 

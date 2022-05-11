@@ -334,6 +334,28 @@ function S:SkinNewItemAlert(frame)
     frame.windStyle = true
 end
 
+function S:SkinGarrisonTalentAlert(frame)
+    if not frame or frame.windStyle then
+        return
+    end
+
+    self:CreateBackdropShadow(frame)
+
+    F.SetFontOutline(frame.Title, nil, "+5")
+    frame.Title:ClearAllPoints()
+    frame.Title:Point("TOP", frame.backdrop, "TOP", 26, -18)
+    frame.Title:SetJustifyH("MIDDLE")
+    frame.Title:SetJustifyV("TOP")
+
+    F.SetFontOutline(frame.Name)
+    frame.Name:ClearAllPoints()
+    frame.Name:Point("BOTTOM", frame.backdrop, "BOTTOM", 26, 15)
+    frame.Name:SetJustifyH("MIDDLE")
+    frame.Name:SetJustifyV("BOTTOM")
+
+    frame.windStyle = true
+end
+
 function S:SkinGarrisonBuildingAlert(frame)
     if not frame or frame.windStyle then
         return
@@ -378,7 +400,7 @@ function S:AlertFrames()
     -- 要塞
     self:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
-    self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinGarrisonTalentAlert")
     self:SecureHook(_G.GarrisonBuildingAlertSystem, "setUpFunction", "SkinGarrisonBuildingAlert")
     self:SecureHook(_G.GarrisonMissionAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")

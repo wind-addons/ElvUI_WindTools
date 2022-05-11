@@ -23,23 +23,28 @@ W.Changelog[235] = {
     NEW = {
         ["zhCN"] = {
             "[通告] (任务) 新增一个选项用于屏蔽暴雪自带的任务进度信息.",
-            "[标签] 增加了一些新的不同小数位数缩写的生命值标签."
+            "[标签] 增加了一些新的不同小数位数缩写的生命值标签.",
+            "[标签] 增加了 [absorbs-long] 用于显示完整护盾数值."
         },
         ["zhTW"] = {
             "[通告] (任務) 新增一個選項用於屏蔽暴雪自帶的任務進度訊息.",
-            "[標籤] 增加了一些新的不同小數位數縮寫的生命值標籤."
+            "[標籤] 增加了一些新的不同小數位數縮寫的生命值標籤.",
+            "[標籤] 增加了 [absorbs-long] 用於顯示完整護盾數值."
         },
         ["enUS"] = {
             "[Announcement] (Quest) Added an option to disable Blizzard quest progress info.",
-            "[Tags] Added some new different health tags with different decimal lengths."
+            "[Tags] Added some new different health tags with different decimal lengths.",
+            "[Tags] Added [absorbs-long] to display full absorb value."
         },
         ["koKR"] = {
             "[Announcement] (Quest) Added an option to disable Blizzard quest progress info.",
-            "[Tags] Added some new different health tags with different decimal lengths."
+            "[Tags] Added some new different health tags with different decimal lengths.",
+            "[Tags] Added [absorbs-long] to display full absorb value."
         }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[通告] (任务) 优化了任务进度信息的显示.",
             "[右键菜单] 修复了属性报告功能.",
             "[超级追踪] 由于可能产生的污染, 移除了纯数字的选项.",
             "[交接] 修复了有时任务无法正常借取完成的问题",
@@ -50,6 +55,7 @@ W.Changelog[235] = {
             "[吸收] 修复了战斗中重载界面可能导致的污染."
         },
         ["zhTW"] = {
+            "[通告] (任務) 优化了任務進度訊息的顯示.",
             "[右鍵選單] 修復了屬性報告功能.",
             "[超級追蹤] 由於可能產生的汙染, 移除了僅數字的選項.",
             "[交接] 修復了有時任務無法正常借取完成的問題",
@@ -60,6 +66,7 @@ W.Changelog[235] = {
             "[吸收] 修復了戰鬥中重載介面可能導致的汙染."
         },
         ["enUS"] = {
+            "[Announcement] (Quest) Optimized quest progress info display.",
             "[Context Menu] Fixed a bug in stats report.",
             "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
@@ -70,6 +77,7 @@ W.Changelog[235] = {
             "[Absorb] Fixed a bug that the module may cause taint if reload ui in combat."
         },
         ["koKR"] = {
+            "[Announcement] (Quest) Optimized quest progress info display.",
             "[Context Menu] Fixed a bug in stats report.",
             "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",

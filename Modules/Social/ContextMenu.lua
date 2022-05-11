@@ -344,13 +344,15 @@ local PredefinedType = {
             elseif frame.chatTarget then
                 name = frame.chatTarget
             elseif frame.name then
+                name = frame.name
                 if frame.server and frame.server ~= E.myrealm then
-                    name = frame.name .. "-" .. frame.server
+                    name = name .. "-" .. frame.server
                 end
             end
 
             if not name then
                 F.DebugMessage(CM, L["Cannot get the name."])
+                return
             end
 
             local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")

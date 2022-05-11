@@ -40,7 +40,7 @@ W.Changelog[235] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "[超级追踪] 修复了可能产生的污染.",
+            "[超级追踪] 由于可能产生的污染, 移除了纯数字的选项.",
             "[交接] 修复了有时任务无法正常借取完成的问题",
             "[美化皮肤] 优化了拍卖行皮肤.",
             "[美化皮肤] 优化了暴雪 UI 组件皮肤.",
@@ -48,7 +48,7 @@ W.Changelog[235] = {
             "[移动框体] 新增一个选项用于提升与 Trade Skill Master 的兼容性."
         },
         ["zhTW"] = {
-            "[超級追蹤] 修復了可能產生的汙染.",
+            "[超級追蹤] 由於可能產生的汙染, 移除了僅數字的選項.",
             "[交接] 修復了有時任務無法正常借取完成的問題",
             "[美化皮膚] 優化了拍賣行皮膚.",
             "[美化皮膚] 優化了暴雪 UI 組件皮膚.",
@@ -56,7 +56,7 @@ W.Changelog[235] = {
             "[移動框架] 新增一個選項用於提升與 Trade Skill Master 的相容性."
         },
         ["enUS"] = {
-            "[Super Tracker] Fixed a possible taint.",
+            "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
             "[Skins] Optimized Auction House skin.",
             "[Skins] Optimized Blizzard UI Widgets skin.",
@@ -64,7 +64,7 @@ W.Changelog[235] = {
             "[Move Frames] New option to improve compatibility with Trade Skill Master."
         },
         ["koKR"] = {
-            "[Super Tracker] Fixed a possible taint.",
+            "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
             "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
             "[Skins] Optimized Auction House skin.",
             "[Skins] Optimized Blizzard UI Widgets skin.",

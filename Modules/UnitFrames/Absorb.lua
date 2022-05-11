@@ -116,17 +116,20 @@ function A:HealthPrediction_OnUpdate(object, unit, _, _, absorb, _, hasOverAbsor
 
     local frame = object.frame
     local pred = frame.HealthPrediction
-
+    local overlay = frame.windAbsorb.overlay
+    local glow = frame.windAbsorb.glow
     local frameDB = frame and frame.db and frame.db.healPrediction
+
     if not frameDB or not frameDB.enable or not framePool[frame] then
+        return
+    end
+
+    if not overlay.SetOverlaySize or not glow.SetOverlaySize then
         return
     end
 
     frame.windSmooth:DoJob(
         function()
-            local overlay = frame.windAbsorb.overlay
-            local glow = frame.windAbsorb.glow
-
             if not self.db.blizzardAbsorbOverlay or maxHealth == health or absorb == 0 or not UnitIsConnected(unit) then
                 overlay:Hide()
             else

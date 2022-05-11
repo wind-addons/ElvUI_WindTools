@@ -565,62 +565,67 @@ do
 
     examples.health = {
         name = L["Health"],
-        noSign = {
+        absorbsLong = {
             order = 1,
+            tag = "[absorbs-long]",
+            text = L["The amount of absorbs without math unit"]
+        },
+        noSign = {
+            order = 2,
             tag = "[health:percent-nosign]",
             text = L["The percentage of current health without percent sign"] ..
                 format(" (%s)", L["Follow ElvUI Setting"])
         },
         noSign0 = {
-            order = 2,
+            order = 3,
             tag = "[health:percent-nosign-0]",
             text = L["The percentage of current health without percent sign"] ..
                 format(" (%s = 0)", L["Decimal Length"])
         },
         noSign1 = {
-            order = 3,
+            order = 4,
             tag = "[health:percent-nosign-1]",
             text = L["The percentage of current health without percent sign"] ..
                 format(" (%s = 1)", L["Decimal Length"])
         },
         noSign2 = {
-            order = 4,
+            order = 5,
             tag = "[health:percent-nosign-2]",
             text = L["The percentage of current health without percent sign"] ..
                 format(" (%s = 2)", L["Decimal Length"])
         },
         noSign3 = {
-            order = 5,
+            order = 6,
             tag = "[health:percent-nosign-3]",
             text = L["The percentage of current health without percent sign"] ..
                 format(" (%s = 3)", L["Decimal Length"])
         },
         noStatusNoSign = {
-            order = 6,
+            order = 7,
             tag = "[health:percent-nostatus-nosign]",
             text = L["The percentage of health without percent sign and status"] ..
                 format(" (%s)", L["Follow ElvUI Setting"])
         },
         noStatusNoSign0 = {
-            order = 7,
+            order = 8,
             tag = "[health:percent-nostatus-nosign-0]",
             text = L["The percentage of health without percent sign and status"] ..
                 format(" (%s = 0)", L["Decimal Length"])
         },
         noStatusNoSign1 = {
-            order = 8,
+            order = 9,
             tag = "[health:percent-nostatus-nosign-1]",
             text = L["The percentage of health without percent sign and status"] ..
                 format(" (%s = 1)", L["Decimal Length"])
         },
         noStatusNoSign2 = {
-            order = 9,
+            order = 10,
             tag = "[health:percent-nostatus-nosign-2]",
             text = L["The percentage of health without percent sign and status"] ..
                 format(" (%s = 2)", L["Decimal Length"])
         },
         noStatusNoSign3 = {
-            order = 10,
+            order = 11,
             tag = "[health:percent-nostatus-nosign-3]",
             text = L["The percentage of health without percent sign and status"] ..
                 format(" (%s = 3)", L["Decimal Length"])

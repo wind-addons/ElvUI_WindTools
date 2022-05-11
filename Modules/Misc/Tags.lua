@@ -13,6 +13,7 @@ local tonumber = tonumber
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitIsConnected = UnitIsConnected
@@ -35,6 +36,15 @@ function M:Tags()
 	if not E.private.WT.misc.tags then
 		return
 	end
+
+	E:AddTag(
+		"absorbs-long",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			return absorb ~= 0 and absorb or ""
+		end
+	)
 
 	-- 距离预测中值 (5)
 	E:AddTag(

@@ -24,22 +24,22 @@ W.Changelog[235] = {
         ["zhCN"] = {
             "[通告] (任务) 新增一个选项用于屏蔽暴雪自带的任务进度信息.",
             "[标签] 增加了一些新的不同小数位数缩写的生命值标签.",
-            "[标签] 增加了 [absorbs-long] 用于显示完整护盾数值."
+            "[标签] 增加了 absorbs-long 用于显示完整护盾数值."
         },
         ["zhTW"] = {
             "[通告] (任務) 新增一個選項用於屏蔽暴雪自帶的任務進度訊息.",
             "[標籤] 增加了一些新的不同小數位數縮寫的生命值標籤.",
-            "[標籤] 增加了 [absorbs-long] 用於顯示完整護盾數值."
+            "[標籤] 增加了 absorbs-long 用於顯示完整護盾數值."
         },
         ["enUS"] = {
             "[Announcement] (Quest) Added an option to disable Blizzard quest progress info.",
             "[Tags] Added some new different health tags with different decimal lengths.",
-            "[Tags] Added [absorbs-long] to display full absorb value."
+            "[Tags] Added absorbs-long to display full absorb value."
         },
         ["koKR"] = {
             "[Announcement] (Quest) Added an option to disable Blizzard quest progress info.",
             "[Tags] Added some new different health tags with different decimal lengths.",
-            "[Tags] Added [absorbs-long] to display full absorb value."
+            "[Tags] Added absorbs-long to display full absorb value."
         }
     },
     IMPROVEMENT = {

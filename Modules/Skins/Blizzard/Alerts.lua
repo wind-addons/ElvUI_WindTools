@@ -28,7 +28,8 @@ function S:SkinAchievementAlert(frame)
     self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Unlocked)
-    F.SetFontOutline(frame.Name, nil, "+2")
+    F.SetFontOutline(frame.Name, nil, "+4")
+    frame.Name.SetFont = E.noop
     F.SetFontOutline(frame.GuildName)
 
     if frame.Icon.Texture.b then
@@ -110,8 +111,8 @@ function S:SkinNewRecipeLearnedAlert(frame)
     end
 
     self:CreateBackdropShadow(frame)
-    F.SetFontOutline(frame.Name)
-    F.SetFontOutline(frame.Title, nil, "+2")
+    F.SetFontOutline(frame.Name, nil, "+4")
+    F.SetFontOutline(frame.Title)
 
     if frame.Icon.b then
         frame.Icon.b:Point("TOPLEFT", frame.Icon, "TOPLEFT", -1, 1)
@@ -229,6 +230,13 @@ function S:SkinLootAlert(frame)
     self:CreateBackdropShadow(frame)
 
     F.SetFontOutline(frame.Label)
+
+    if frame.Label and frame.Label.GetNumPoints and frame.Label:GetNumPoints() == 1 then
+        local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(0)
+        frame.Label:ClearAllPoints()
+        frame.Label:SetPoint(point, relativeTo, relativePoint, x + 1, y - 5)
+    end
+
     F.SetFontOutline(frame.RollValue)
     F.SetFontOutline(frame.ItemName)
 

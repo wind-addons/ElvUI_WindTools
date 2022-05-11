@@ -141,11 +141,7 @@ function A:Quest()
 								questCacheOld[queryIndex].numItems and
 								questCache[queryIndex].numItems > questCacheOld[queryIndex].numItems
 						 then -- 任务有了新的进展
-							local progressColor = {
-								r = 1 - 0.5 * questCache[queryIndex].numItems / questCache[queryIndex].numNeeded,
-								g = 0.5 + 0.5 * questCache[queryIndex].numItems / questCache[queryIndex].numNeeded,
-								b = 0.5
-							}
+							local progressColor = F.GetProgressColor(questCache[queryIndex].numItems / questCache[queryIndex].numNeeded)
 
 							local subGoalIsCompleted = questCache[queryIndex].numItems == questCache[queryIndex].numNeeded
 
@@ -185,10 +181,8 @@ function A:Quest()
 				self:SendMessage(message, self:GetChannel(config.channel))
 			end
 
-			if not isDetailInfo then -- 具体进度系统会提示
-				local messageColored = extraInfoColored .. mainInfoColored
-				_G.UIErrorsFrame:AddMessage(messageColored)
-			end
+			local messageColored = extraInfoColored .. mainInfoColored
+			_G.UIErrorsFrame:AddMessage(messageColored)
 		end
 	end
 

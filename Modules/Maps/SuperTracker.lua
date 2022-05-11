@@ -10,6 +10,14 @@ local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
 local C_Navigation_GetDistance = C_Navigation.GetDistance
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
 
+function ST:SetDistanceText(frame, text)
+    if self.db and self.db.distanceText and self.db.distanceText.enable and self.db.distanceText.onlyNumber then
+        text = gsub(text, "[^0-9]", "")
+    end
+
+    self.hooks[frame].SetText(frame, text)
+end
+
 function ST:ReskinDistanceText()
     if not _G.SuperTrackedFrame or not _G.SuperTrackedFrame.DistanceText then
         return
@@ -25,10 +33,6 @@ function ST:ReskinDistanceText()
         self.db.distanceText.color.g,
         self.db.distanceText.color.b
     )
-
-    if self.db.distanceText.onlyNumber then
-        _G.IN_GAME_NAVIGATION_RANGE = "%d"
-    end
 end
 
 function ST:HookPin()
@@ -90,6 +94,7 @@ function ST:ADDON_LOADED(_, addon)
         self:UnregisterEvent("ADDON_LOADED")
         self:NoLimit()
         self:ReskinDistanceText()
+        self:RawHook(_G.SuperTrackedFrame.DistanceText, "SetText", "SetDistanceText", true)
     end
 end
 
@@ -116,6 +121,7 @@ function ST:Initialize()
 
     self:NoLimit()
     self:ReskinDistanceText()
+    self:RawHook(_G.SuperTrackedFrame.DistanceText, "SetText", "SetDistanceText", true)
 end
 
 W:RegisterModule(ST:GetName())

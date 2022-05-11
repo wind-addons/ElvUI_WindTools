@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local A = W:NewModule("Absorb", "AceHook-3.0")
+local A = W:NewModule("Absorb", "AceHook-3.0", "AceEvent-3.0")
 local LSM = E.Libs.LSM
 local UF = E.UnitFrames
 
@@ -8,6 +8,7 @@ local pairs = pairs
 local rad = rad
 
 local CreateFrame = CreateFrame
+local InCombatLockdown = InCombatLockdown
 local UnitIsConnected = UnitIsConnected
 
 local framePool = {}
@@ -203,10 +204,19 @@ function A:WaitForUnitframesLoad(triedTimes)
 
         -- Refresh all frames to make sure the replacing of textures
         self:SecureHook(UF, "Configure_HealComm", "ConfigureTextures")
-        UF:Update_AllFrames()
+        if InCombatLockdown() then
+            self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        else
+            UF:Update_AllFrames()
+        end
     else
         E:Delay(0.3, self.WaitForUnitframesLoad, self, triedTimes + 1)
     end
+end
+
+function A:PLAYER_REGEN_ENABLED()
+    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    UF:Update_AllFrames()
 end
 
 function A:SmoothTweak(frame)

@@ -153,8 +153,7 @@ function A:Quest()
 								local progressInfo = questCache[queryIndex].numItems .. "/" .. questCache[queryIndex].numNeeded
 								local progressInfoColored = progressInfo
 								if subGoalIsCompleted then
-									local redayCheckIcon = "|TInterface/RaidFrame/ReadyCheck-Ready:15:15:-1:2:64:64:6:60:8:60|t"
-									progressInfoColored = progressInfoColored .. redayCheckIcon
+									progressInfoColored = progressInfoColored .. format(" |T%s:0|t", W.Media.Icons.complete)
 								else
 									isDetailInfo = true
 								end

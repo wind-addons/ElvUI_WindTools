@@ -18,6 +18,8 @@ local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
+local UnitPower = UnitPower
+local UnitPowerMax = UnitPowerMax
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
@@ -199,12 +201,17 @@ function M:Tags()
 		"smart-power",
 		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 		function(unit)
-			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-			local power = tonumber(maxPower)
-			if power and power < 1000 then
-				return E.oUF.Tags.Methods["power:current"](unit)
+			local maxPower = UnitPowerMax(unit)
+			local currentPower = UnitPower(unit)
+
+			if not currentPower then
+				return ""
+			end
+
+			if not maxPower or maxPower < 1000 then
+				return currentPower
 			else
-				return E.oUF.Tags.Methods["power:percent"](unit)
+				return currentPower and format("%d%%", floor(currentPower / maxPower * 100 + 0.5))
 			end
 		end
 	)
@@ -214,12 +221,17 @@ function M:Tags()
 		"smart-power-nosign",
 		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 		function(unit)
-			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-			local power = tonumber(maxPower)
-			if power and power < 1000 then
-				return E.oUF.Tags.Methods["power:current"](unit)
+			local maxPower = UnitPowerMax(unit)
+			local currentPower = UnitPower(unit)
+
+			if not currentPower then
+				return ""
+			end
+
+			if not maxPower or maxPower < 1000 then
+				return currentPower
 			else
-				return E.oUF.Tags.Methods["power:percent-nosign"](unit)
+				return currentPower and format("%d", floor(currentPower / maxPower * 100 + 0.5))
 			end
 		end
 	)

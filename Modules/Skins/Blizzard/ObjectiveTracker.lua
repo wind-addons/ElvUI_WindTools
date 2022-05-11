@@ -30,7 +30,7 @@ function S:SkinItemButton(block)
     if not item then
         return
     end
-    self:CreateBackdropShadow(item, true)
+    self:CreateShadow(item)
 end
 
 function S:SkinFindGroupButton(block)

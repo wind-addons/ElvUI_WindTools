@@ -1054,6 +1054,12 @@ options.addons = {
             name = L["TomCat's Tours"],
             addonName = "TomCats",
         },
+        warpDeplete = {
+            order = 10,
+            type = "toggle",
+            name = L["WarpDeplete"],
+            addonName = "WarpDeplete"
+        },
         weakAuras = {
             order = 10,
             type = "toggle",

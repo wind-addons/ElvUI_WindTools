@@ -218,6 +218,7 @@ V.skins = {
 		rematch = true,
 		tinyInspect = true,
 		tomCats = true,
+		warpDeplete = true,
 		weakAuras = true,
 		weakAurasOptions = true
 	},

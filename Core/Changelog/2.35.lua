@@ -16,8 +16,8 @@ W.Changelog[235] = {
             "Fixed a bug where unauthenticated players could not create a group."
         },
         ["koKR"] = {
-            "Update LibOpenRaid to version 33.",
-            "Fixed a bug where unauthenticated players could not create a group."
+            "LibOpenRaid를 버전 33으로 업그레이드하였습니다.",
+            "계정 인증을 받지 않은 플레이어들이 미리 구성된 팀을 만들 수 없는 문제를 수정했습니다."
         }
     },
     NEW = {
@@ -37,9 +37,9 @@ W.Changelog[235] = {
             "[Tags] Added absorbs-long to display full absorb value."
         },
         ["koKR"] = {
-            "[Announcement] (Quest) Added an option to disable Blizzard quest progress info.",
-            "[Tags] Added some new different health tags with different decimal lengths.",
-            "[Tags] Added absorbs-long to display full absorb value."
+            "[알림] (퀘스트) 블리자드 자체 미션 진행 정보를 차단하는 옵션이 추가되었습니다.",
+            "[태그] 단위 약어가 다른 몇 가지 새로운 체력 태그를 추가했습니다.",
+            "[태그] 전체 피해 흡수량을 표시하는 absorbs-long 태그가 추가되었습니다."
         }
     },
     IMPROVEMENT = {
@@ -86,18 +86,18 @@ W.Changelog[235] = {
             "[Absorb] Fixed a bug that the module may cause taint if reload ui in combat."
         },
         ["koKR"] = {
-            "[Tags] The tag: smart-power and smart-power-long will use integer.",
-            "[Announcement] (Quest) Optimized quest progress info display.",
-            "[Context Menu] Fixed a bug in stats report.",
-            "[Super Tracker] Bacause it may cause taint, the option of only number has been removed.",
-            "[Turn In] Fixed a bug that sometimes the module can not accept or complete quests.",
-            "[Skins] Optimized Auction House skin.",
-            "[Skins] Optimized Blizzard UI Widgets skin.",
-            "[Skins] Optimized alerts skin.",
-            "[Skins] Fixed the shadow of quest item button.",
-            "[Skins] Fixed the shadow of bonus roll frame.",
-            "[Move Frames] New option to improve compatibility with Trade Skill Master.",
-            "[Absorb] Fixed a bug that the module may cause taint if reload ui in combat."
+            "[태그] smart-power와 smart-power-long은 이제 정수를 고정적으로 사용합니다.",
+            "[알림] (퀘스트) 작업 진행 정보 표시를 최적화했습니다.",
+            "[우클릭 메뉴] stats report 버그 수정.",
+            "[슈퍼 트래커] 오류 가능성으로 인해 숫자 전용 옵션이 제거되었습니다.",
+            "[자동 수락] 간혹 퀘스트가 정상적으로 완료되지 않던 문제를 수정하였습니다.",
+            "[스킨] Auction House 스킨 최적화.",
+            "[스킨] Blizzard UI Widgets 스킨 최적화.",
+            "[스킨] alerts 스킨 최적화.",
+            "[스킨] 퀘스트 아이템 버튼 그림자 수정.",
+            "[스킨] 추가 전리품 주사위 프레임 그림자 수정.",
+            "[프레임 이동] Trade Skill Master와의 호환성을 향상시키는 옵션이 추가되었습니다.",
+            "[피해흡수] 전투 중 인터페이스를 다시 로드하여 발생할 수 있는 오류를 수정했습니다."
         }
     }
 }

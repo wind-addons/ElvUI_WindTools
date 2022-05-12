@@ -92,20 +92,27 @@ function S:BlizzardMiscFrames()
     self:SecureHook(
         _G.UIWidgetTemplateStatusBarMixin,
         "Setup",
-        function(widgetFrame)
-            if widgetFrame.Label then
-                F.SetFontOutline(widgetFrame.Label)
+        function(widget)
+            local forbidden = widget:IsForbidden()
+            local bar = widget.Bar
+            local id = widget.widgetSetID
+
+            if forbidden or id == 283 or not bar or not bar.backdrop then
+                return
             end
 
-            if widgetFrame.Bar then
-                self:CreateBackdropShadow(widgetFrame.Bar)
-                if widgetFrame.Bar.Label then
-                    F.SetFontOutline(widgetFrame.Bar.Label)
-                end
+            self:CreateBackdropShadow(bar)
+
+            if widget.Label then
+                F.SetFontOutline(widget.Label)
             end
 
-            if widgetFrame.isJailersTowerBar and self:CheckDB(nil, "scenario") then
-                widgetFrame.Bar:SetWidth(234)
+            if bar.Label then
+                F.SetFontOutline(bar.Label)
+            end
+
+            if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
+                bar:SetWidth(234)
             end
         end
     )
@@ -113,8 +120,8 @@ function S:BlizzardMiscFrames()
     self:SecureHook(
         _G.UIWidgetTemplateCaptureBarMixin,
         "Setup",
-        function(widgetFrame)
-            local bar = widgetFrame.Bar
+        function(widget)
+            local bar = widget.Bar
             if bar then
                 self:CreateBackdropShadow(bar)
             end

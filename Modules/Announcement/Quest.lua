@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local _G = _G
+local format = format
 local pairs = pairs
 local strfind = strfind
 

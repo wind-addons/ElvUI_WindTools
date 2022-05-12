@@ -4,12 +4,8 @@ local S = W.Modules.Skins
 local LSM = E.Libs.LSM
 
 local _G = _G
-local abs = abs
 local format = format
-local floor = floor
-local ipairs = ipairs
 local max = max
-local min = min
 local pairs = pairs
 local strmatch = strmatch
 local tonumber = tonumber

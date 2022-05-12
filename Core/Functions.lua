@@ -2,7 +2,9 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 
 local _G = _G
+local abs = abs
 local format = format
+local min = min
 local pairs = pairs
 local pcall = pcall
 local print = print

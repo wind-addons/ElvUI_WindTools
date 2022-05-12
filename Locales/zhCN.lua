@@ -1084,6 +1084,7 @@ L["Visual Effect"] = "视觉效果"
 L["Volume"] = "音量"
 L["Warboard"] = "布告牌"
 L["Warlock"] = "术士"
+L["WarpDeplete"] = true
 L["Warrior"] = "战士"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 设定"

@@ -1084,6 +1084,7 @@ L["Visual Effect"] = true
 L["Volume"] = true
 L["Warboard"] = "Tablero de ¡Se busca héroe!"
 L["Warlock"] = true
+L["WarpDeplete"] = true
 L["Warrior"] = true
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true

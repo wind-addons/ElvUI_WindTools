@@ -1084,6 +1084,7 @@ L["Visual Effect"] = "Visueller Effekt"
 L["Volume"] = "Lautstärke"
 L["Warboard"] = "Heldenaufruf"
 L["Warlock"] = "Hexenmeister"
+L["WarpDeplete"] = true
 L["Warrior"] = "Krieger"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras Optionen"

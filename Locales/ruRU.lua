@@ -1084,6 +1084,7 @@ L["Visual Effect"] = "Визуальный эффект"
 L["Volume"] = "Громкость"
 L["Warboard"] = "Доска приказов"
 L["Warlock"] = "Чернокнижник"
+L["WarpDeplete"] = true
 L["Warrior"] = "Воин"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true

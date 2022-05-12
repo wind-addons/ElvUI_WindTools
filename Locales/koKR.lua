@@ -1084,6 +1084,7 @@ L["Visual Effect"] = "시각 효과"
 L["Volume"] = "볼륨"
 L["Warboard"] = "영웅의 부름 게시판"
 L["Warlock"] = "흑마법사"
+L["WarpDeplete"] = true
 L["Warrior"] = "전사"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true

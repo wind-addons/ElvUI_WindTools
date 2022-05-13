@@ -71,7 +71,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 5. **Utility**: Alert the usage of bots, feast, toys, and more.
 6. **Threat Transfer**: If someone tries to transfer the threat to the other player, send a message.
 7. **Goodbye**: Say goodbye to teammates after the dungeon is completed.
-8. **Thanks For Resurrection**: Say thanks for the player who resurrected you
+8. **Thanks**: Say thanks for the player who helped you.
 9. **Reset Instance**: Alert teammates after instance resetting.
 
 ## Tooltip

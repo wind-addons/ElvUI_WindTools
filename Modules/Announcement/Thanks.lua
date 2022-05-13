@@ -50,7 +50,7 @@ function A:Thanks(sourceGUID, sourceName, destGUID, destName, spellId)
 		E:Delay(config.delay, A.SendMessage, A, FormatMessage(msg), A:GetChannel(config.channel), nil, sourceName)
 	end
 
-	if ResurrectionSpellList[spellId] then
+	if resurrectionSpells[spellId] then
 		if spellId == 20707 and not UnitIsDeadOrGhost("player") then
 			-- additional soulstone should be enhancement
 			Send(config.enhancement and config.enhancementText)

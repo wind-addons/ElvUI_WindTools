@@ -448,7 +448,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
                                 OT:ChangeQuestHeaderStyle()
                             end
-                        }						
+                        }
                     }
                 }
             }
@@ -908,8 +908,16 @@ options.switchButtons = {
             end,
             width = 1.5
         },
-        backdrop = {
+        tooltip = {
             order = 4,
+            type = "toggle",
+            disabled = function()
+                return not E.db.WT.quest.switchButtons.enable
+            end,
+            name = L["Tooltip"]
+        },
+        backdrop = {
+            order = 5,
             type = "toggle",
             disabled = function()
                 return not E.db.WT.quest.switchButtons.enable
@@ -917,7 +925,7 @@ options.switchButtons = {
             name = L["Bar Backdrop"]
         },
         font = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Font Setting"],

@@ -9,7 +9,9 @@ local CreateFrame = CreateFrame
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
-function SB:CreateButton(text)
+local GameTooltip = _G.GameTooltip
+
+function SB:CreateButton(text, tooltipText)
     if not self.db or not self.bar then
         return
     end
@@ -25,6 +27,25 @@ function SB:CreateButton(text)
     button.text:SetJustifyV("MIDDLE")
     button.text:SetJustifyH("LEFT")
     button.text:SetPoint("LEFT", button, "RIGHT")
+
+    local function onEnter()
+        if self.db.tooltip then
+            GameTooltip:SetOwner(button, "ANCHOR_TOP")
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(tooltipText, 1, 1, 1)
+            GameTooltip:Show()
+        end
+    end
+
+    local function enLeave()
+        if self.db.tooltip then
+            GameTooltip:Hide()
+        end
+    end
+
+    button:SetScript("OnEnter", onEnter)
+    button:SetScript("OnLeave", onLeave)
+
     return button
 end
 

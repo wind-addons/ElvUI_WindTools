@@ -827,13 +827,14 @@ P.quest = {
     },
     switchButtons = {
         enable = true,
+        tooltip = true,
+        backdrop = false,
         font = {
             name = E.db.general.font,
             size = 12,
             style = "OUTLINE",
             color = {r = 1, g = 0.82, b = 0}
         },
-        backdrop = false,
         announcement = true,
         turnIn = true
     },
@@ -866,10 +867,10 @@ P.unitFrames = {
         texture = {
             enable = true,
             custom = E.db.unitframe.statusbar,
-            blizzardStyle = true,
+            blizzardStyle = true
         },
         blizzardOverAbsorbGlow = true,
-        blizzardAbsorbOverlay = true,
+        blizzardAbsorbOverlay = true
     }
 }
 
@@ -946,6 +947,6 @@ P.misc = {
         hideBagAfterEnteringCombat = false,
         hideWorldMapAfterEnteringCombat = false,
         acceptResurrect = false,
-        acceptCombatResurrect = false,
+        acceptCombatResurrect = false
     }
 }

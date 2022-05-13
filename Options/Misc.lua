@@ -161,7 +161,8 @@ options.automation = {
             name = L["Enable"],
             set = function(info, value)
                 E.db.WT.misc.automation[info[#info]] = value
-            end
+            end,
+            width = "full"
         },
         hideWorldMapAfterEnteringCombat = {
             order = 3,
@@ -170,7 +171,8 @@ options.automation = {
             desc = L["Automatically close world map if player enters combat."],
             disabled = function()
                 return not E.db.WT.misc.automation.enable
-            end
+            end,
+            width = 1.5
         },
         hideBagAfterEnteringCombat = {
             order = 4,
@@ -179,7 +181,8 @@ options.automation = {
             desc = L["Automatically close bag if player enters combat."],
             disabled = function()
                 return not E.db.WT.misc.automation.enable
-            end
+            end,
+            width = 1.5
         },
         acceptResurrect = {
             order = 5,
@@ -188,7 +191,8 @@ options.automation = {
             desc = L["Accept resurrect from other player automatically when you not in combat."],
             disabled = function()
                 return not E.db.WT.misc.automation.enable
-            end
+            end,
+            width = 1.5
         },
         acceptCombatResurrect = {
             order = 6,
@@ -197,7 +201,8 @@ options.automation = {
             desc = L["Accept resurrect from other player automatically when you in combat."],
             disabled = function()
                 return not E.db.WT.misc.automation.enable
-            end
+            end,
+            width = 1.5
         },
         confirmSummon = {
             order = 7,
@@ -206,7 +211,8 @@ options.automation = {
             desc = L["Confirm summon from other player automatically."],
             disabled = function()
                 return not E.db.WT.misc.automation.enable
-            end
+            end,
+            width = 1.5
         }
     }
 }

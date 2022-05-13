@@ -6,5 +6,6 @@
 	<Script file='Developer.lua'/>
 	<Script file='Options.lua'/>
 	<Script file='Profiles.lua'/>
+	<Script file='Update.lua'/>
 	<Include file='Changelog\Load_Changelog.xml'/>
 </Ui>

@@ -262,6 +262,7 @@ V.skins = {
 		help = true,
 		inputMethodEditor = true,
 		inspect = true,
+		itemUpgrade = true,
 		lookingForGroup = true,
 		loot = true,
 		lossOfControl = true,

@@ -538,6 +538,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Inspect"]
         },
+        itemUpgrade = {
+            order = 10,
+            type = "toggle",
+            name = L["Item Upgrade"]
+        },
         lookingForGroup = {
             order = 10,
             type = "toggle",
@@ -1052,7 +1057,7 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["TomCat's Tours"],
-            addonName = "TomCats",
+            addonName = "TomCats"
         },
         warpDeplete = {
             order = 10,

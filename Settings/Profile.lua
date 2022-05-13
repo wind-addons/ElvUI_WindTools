@@ -872,8 +872,6 @@ P.unitFrames = {
 }
 
 P.misc = {
-    autoHideBag = false,
-    autoHideWorldMap = false,
     disableTalkingHead = false,
     hideCrafter = false,
     noLootPanel = false,
@@ -940,5 +938,12 @@ P.misc = {
             [6] = "PET_JOURNAL",
             [7] = "BAGS"
         }
+    },
+    automation = {
+        enable = true,
+        hideBagAfterEnteringCombat = false,
+        hideWorldMapAfterEnteringCombat = false,
+        acceptResurrect = false,
+        acceptCombatResurrect = false,
     }
 }

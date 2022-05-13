@@ -145,7 +145,7 @@ function W:UpdateScripts(oldVersion, currentVersion)
         print(text)
     end
 
-    local doneIcon = " |TInterface\\RaidFrame\\ReadyCheck-Ready:0|t"
+    local doneIcon = format(" |T%s:0|t", W.Media.Icons.accept)
 
     -- Clear the history of move frames.
     if oldVersion >= 2.27 and oldVersion <= 2.31 then
@@ -167,6 +167,19 @@ function W:UpdateScripts(oldVersion, currentVersion)
         miscDB.framePositions = nil
 
         UpdateMessage(L["Move Frames"] .. " - " .. L["Update Database"] .. "..." .. doneIcon)
+    end
+
+    if oldVersion <= 2.34 then
+        local miscDB = E.db.WT.misc
+        miscDB.automation.hideBagAfterEnteringCombat =
+            miscDB.autoHideBag or miscDB.automation.hideBagAfterEnteringCombat
+        miscDB.automation.hideWorldMapAfterEnteringCombat =
+            miscDB.autoHideWorldMap or miscDB.automation.hideWorldMapAfterEnteringCombat
+
+        miscDB.autoHideBag = nil
+        miscDB.autoHideWorldMap = nil
+
+        UpdateMessage(L["Automation"] .. " - " .. L["Update Database"] .. "..." .. doneIcon)
     end
 
     if not isFirstLine then
@@ -192,7 +205,7 @@ end
 
 function W:ForBetaUser()
     local miscDB = E.private.WT.misc
-    
+
     miscDB.moveFrames.enable = miscDB.moveBlizzardFrames or miscDB.moveFrames.enable
     miscDB.moveFrames.elvUIBags = miscDB.moveElvUIBags or miscDB.moveFrames.elvUIBags
     miscDB.moveFrames.rememberPositions = miscDB.rememberPositions or miscDB.moveFrames.rememberPositions

@@ -5,6 +5,7 @@ local M = W.Modules.Misc
 local MF = W.Modules.MoveFrames
 local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
+local AM = W:GetModule("Automation")
 
 local format = format
 local select = select
@@ -95,32 +96,8 @@ options.general = {
                 E.db.WT.misc[info[#info]] = value
             end
         },
-        autoHideWorldMap = {
-            order = 8,
-            type = "toggle",
-            name = L["Auto Hide Map"],
-            desc = L["Automatically close world map if player enters combat."],
-            get = function(info)
-                return E.db.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.db.WT.misc[info[#info]] = value
-            end
-        },
-        autoHideBag = {
-            order = 9,
-            type = "toggle",
-            name = L["Auto Hide Bag"],
-            desc = L["Automatically close bag if player enters combat."],
-            get = function(info)
-                return E.db.WT.misc[info[#info]]
-            end,
-            set = function(info, value)
-                E.db.WT.misc[info[#info]] = value
-            end
-        },
         noLootPanel = {
-            order = 10,
+            order = 8,
             type = "toggle",
             name = L["No Loot Panel"],
             desc = L["Disable Blizzard loot info which auto showing after combat overed."],
@@ -133,7 +110,7 @@ options.general = {
             end
         },
         hotKeyAboveCD = {
-            order = 11,
+            order = 9,
             type = "toggle",
             name = L["HotKey Above CD"],
             desc = format(
@@ -144,7 +121,7 @@ options.general = {
             )
         },
         guildNewsItemLevel = {
-            order = 12,
+            order = 10,
             type = "toggle",
             name = L["Guild News IL"],
             desc = L["Show item level of each item in guild news."]
@@ -152,8 +129,69 @@ options.general = {
     }
 }
 
-options.cvars = {
+options.automation = {
     order = 2,
+    type = "group",
+    name = L["Automation"],
+    get = function(info)
+        return E.db.WT.misc.automation[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc.automation[info[#info]] = value
+        AM:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Automate your game life."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.misc.automation[info[#info]] = value
+            end,
+        },
+        hideWorldMapAfterEnteringCombat = {
+            order = 3,
+            type = "toggle",
+            name = L["Auto Hide Map"],
+            desc = L["Automatically close world map if player enters combat."]
+        },
+        hideBagAfterEnteringCombat = {
+            order = 4,
+            type = "toggle",
+            name = L["Auto Hide Bag"],
+            desc = L["Automatically close bag if player enters combat."]
+        },
+        acceptResurrect = {
+            order = 5,
+            type = "toggle",
+            name = L["Accept Resurrect"],
+            desc = L["Accept resurrect from other player automatically when you not in combat."]
+        },
+        acceptCombatResurrect = {
+            order = 6,
+            type = "toggle",
+            name = L["Accept Combat Resurrect"],
+            desc = L["Accept resurrect from other player automatically when you in combat."]
+        },
+    }
+}
+
+options.cvars = {
+    order = 3,
     type = "group",
     name = L["CVars Editor"],
     get = function(info)

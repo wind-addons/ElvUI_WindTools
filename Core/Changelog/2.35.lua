@@ -43,7 +43,7 @@ W.Changelog[235] = {
             "[알림] (퀘스트) 블리자드 자체 미션 진행 정보를 차단하는 옵션이 추가되었습니다.",
             "[태그] 단위 약어가 다른 몇 가지 새로운 체력 태그를 추가했습니다.",
             "[태그] 전체 피해 흡수량을 표시하는 absorbs-long 태그가 추가되었습니다.",
-            "[Skin] Added a new skin for WarpDeplete."
+            "[스킨] WarpDeplete 스킨이 추가되었습니다."
         }
     },
     IMPROVEMENT = {

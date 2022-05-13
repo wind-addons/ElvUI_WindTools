@@ -548,6 +548,7 @@ L["Item Buttons"] = "Кнопки предметов"
 L["Item Level"] = "Уровень предметов"
 L["Item Level:"] = "Уровень предмета:"
 L["Item Name"] = "Название предмета"
+L["Item Upgrade"] = "Улучшение предметов"
 L["Just for Chinese and Korean players"] = "Только для китайских и корейских игроков"
 L["Key Binding"] = "Привязка клавиш"
 L["Key Timers"] = true

@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.78-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.34-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.79-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.35-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -110,7 +110,8 @@
 17. **Rematch 美化**: 為 Rematch 的主要窗口添加美化.
 18. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
 19. **TomCat's Tour 美化**: 為 TomCat's Tour 的浮動提示和標題添加美化.
-20. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
+20. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化.
+21. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
 
 ## 其他
 1. **CVars 編輯器**: 一些常用功能 CVars 的開關.
@@ -124,13 +125,12 @@
 9. **跳過過場動畫**: 跳過大部分過場動畫; 按下修飾鍵可暫時停用.
 10. **預組列表**: 美化預組隊伍列表的圖標, 並添加一個職業顏色條.
 11. **移動速度**: 在人物面板顯示移動速度.
-12. **自動關閉地圖**: 在戰鬥開始時自動關閉地圖.
-13. **自動關閉背包**: 在戰鬥開始時自動關閉背包.
-14. **無漢字計數**: 在數值中使用英文字符來代替漢字.
-15. **自動擷圖**: 在你獲得成就後自動進行擷圖.
-16. **隐藏製作者**: 隱藏物品浮動提示中的製作者名字.
-17. **按鍵在冷卻上方**: 調整層級關係, 讓按鍵顯示于 ElvUI 冷卻動畫上方.
-18. **公會新聞裝等**: 在公會新聞中顯示每件裝備的物品等級.
+12. **自動化**: 自動接受復活, 召喚及戰鬥中隱藏介面.
+13. **無漢字計數**: 在數值中使用英文字符來代替漢字.
+14. **自動擷圖**: 在你獲得成就後自動進行擷圖.
+15. **隐藏製作者**: 隱藏物品浮動提示中的製作者名字.
+16. **按鍵在冷卻上方**: 調整層級關係, 讓按鍵顯示于 ElvUI 冷卻動畫上方.
+17. **公會新聞裝等**: 在公會新聞中顯示每件裝備的物品等級.
 
 -----
 <br>

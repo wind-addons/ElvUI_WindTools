@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.78-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.34-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-12.79-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.35-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -110,7 +110,8 @@
 17. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
 18. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
 19. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
-20. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+20. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
+21. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 1. **CVars 编辑器**: 一些常用功能 CVars 的开关.
@@ -124,8 +125,7 @@
 9. **跳过过场动画**: 跳过大部分过场动画; 按下修饰键可暂时停用.
 10. **预组列表**: 美化预组建队伍列表的图标, 并添加一个职业颜色条.
 11. **移动速度**: 在人物面板显示移动速度.
-12. **自动关闭地图**: 在战斗开始时自动关闭世界地图.
-13. **自动关闭背包**: 在战斗开始时自动关闭背包.
+12. **自动化**: 自动接受复活, 召唤及在战斗中隐藏界面.
 14. **无汉字计数**: 在数值中使用英文字符代替汉字.
 15. **自动截图**: 在你获得成就后自动进行截图.
 16. **隐藏制造者**: 隐藏物品鼠标提示中的制造者姓名.

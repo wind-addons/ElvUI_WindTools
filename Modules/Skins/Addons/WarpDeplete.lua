@@ -4,16 +4,20 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-local function SkinWarpDeplete()
+local pairs = pairs
+
+function S:WarpDeplete_InitDisplay()
     for _, barFrame in pairs(_G.WarpDeplete.bars) do
         local bar = barFrame.bar
         if not bar.windStyle then
-            S:CreateShadow(bar)
+            bar:SetTemplate("Transparent")
+            self:CreateShadow(bar)
             bar.windStyle = true
         end
     end
 
-    S:CreateShadow(_G.WarpDeplete.forces.bar)
+    _G.WarpDeplete.forces.bar:SetTemplate("Transparent")
+    self:CreateShadow(_G.WarpDeplete.forces.bar)
 end
 
 function S:WarpDeplete()
@@ -26,9 +30,9 @@ function S:WarpDeplete()
     end
 
     if _G.WarpDeplete.bars then
-        SkinWarpDeplete()
+        self:WarpDeplete_InitDisplay()
     else
-        hooksecurefunc(_G.WarpDeplete, "InitDisplay", SkinWarpDeplete)
+        self:SecureHook(_G.WarpDeplete, "InitDisplay", "WarpDeplete_InitDisplay")
     end
 end
 

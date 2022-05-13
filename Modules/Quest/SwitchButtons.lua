@@ -37,7 +37,7 @@ function SB:CreateButton(text, tooltipText)
         end
     end
 
-    local function enLeave()
+    local function onLeave()
         if self.db.tooltip then
             GameTooltip:Hide()
         end

@@ -1,5 +1,9 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+local format = format
+local print = print
+local tonumber = tonumber
+
 local isFirstLine = true
 
 local doneIcon = format(" |T%s:0|t", W.Media.Icons.accept)

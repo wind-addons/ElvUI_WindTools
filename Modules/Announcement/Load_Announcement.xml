@@ -12,7 +12,7 @@
 	<Script file='Quest.lua'/>
 	<Script file='ResetInstance.lua'/>
 	<Script file='Taunt.lua'/>
-	<Script file='ThanksForResurrection.lua'/>
+	<Script file='Thanks.lua'/>
 	<Script file='ThreatTransfer.lua'/>
 	<Script file='Utility.lua'/>
 </Ui>

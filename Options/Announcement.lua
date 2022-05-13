@@ -2048,15 +2048,18 @@ options.goodbye = {
     }
 }
 
-options.thanksForResurrection = {
+options.thanks = {
     order = 10,
     type = "group",
-    name = L["Thanks For Resurrection"],
+    name = L["Thanks"],
     get = function(info)
-        return E.db.WT.announcement.thanksForResurrection[info[#info]]
+        return E.db.WT.announcement.thanks[info[#info]]
     end,
     set = function(info, value)
-        E.db.WT.announcement.thanksForResurrection[info[#info]] = value
+        E.db.WT.announcement.thanks[info[#info]] = value
+    end,
+    disabled = function()
+        return not E.db.WT.announcement.thanks.enable
     end,
     args = {
         desc = {
@@ -2068,7 +2071,7 @@ options.thanksForResurrection = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Say thanks to the target who resurrected you."],
+                    name = L["Say thanks to the target who helped you."],
                     fontSize = "medium"
                 }
             }
@@ -2076,25 +2079,38 @@ options.thanksForResurrection = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            disabled = false
         },
         delay = {
             order = 3,
             name = L["Delay (sec)"],
-            desc = format(L["Default is %s."], P.announcement.thanksForResurrection.delay),
+            desc = format(L["Default is %s."], P.announcement.thanks.delay),
             type = "range",
             min = 0,
             max = 20,
             step = 1
         },
-        soulstone = {
+        enhancement = {
             order = 4,
             type = "group",
             inline = true,
-            name = GetSpellInfo(20707),
+            name = L["Enhancement"],
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable or E.db.WT.announcement.thanks.enhancement
+            end,
             args = {
-                soulstoneText = {
+                enhancement = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    disabled = function()
+                        return not E.db.WT.announcement.thanks.enable
+                    end,
+                    width = "full"
+                },
+                enhancementText = {
+                    order = 2,
                     type = "input",
                     name = L["Text"],
                     desc = format(
@@ -2106,35 +2122,46 @@ options.thanksForResurrection = {
                     width = 2.5
                 },
                 useDefaultText = {
-                    order = 2,
+                    order = 3,
                     type = "execute",
                     func = function()
-                        E.db.WT.announcement.thanksForResurrection.soulstoneText =
-                            P.announcement.thanksForResurrection.soulstoneText
+                        E.db.WT.announcement.thanks.enhancementText = P.announcement.thanks.enhancementText
                     end,
                     name = L["Default Text"]
                 },
                 example = {
-                    order = 3,
+                    order = 4,
                     type = "description",
                     name = function()
-                        local message = E.db.WT.announcement.thanksForResurrection.soulstoneText
+                        local message = E.db.WT.announcement.thanks.enhancementText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%spell%%", GetSpellLink(61999))
+                        message = gsub(message, "%%spell%%", GetSpellLink(29166))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
             }
         },
-        normal = {
+        resurrection = {
             order = 5,
             type = "group",
             inline = true,
-            name = L["Other Spells"],
+            name = L["Resurrection"],
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable or E.db.WT.announcement.thanks.resurrection
+            end,
             args = {
-                normalText = {
+                resurrection = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    disabled = function()
+                        return not E.db.WT.announcement.thanks.enable
+                    end,
+                    width = "full"
+                },
+                resurrectionText = {
+                    order = 2,
                     type = "input",
                     name = L["Text"],
                     desc = format(
@@ -2146,19 +2173,18 @@ options.thanksForResurrection = {
                     width = 2.5
                 },
                 useDefaultText = {
-                    order = 2,
+                    order = 3,
                     type = "execute",
                     func = function()
-                        E.db.WT.announcement.thanksForResurrection.normalText =
-                            P.announcement.thanksForResurrection.normalText
+                        E.db.WT.announcement.thanks.resurrectionText = P.announcement.thanks.resurrectionText
                     end,
                     name = L["Default Text"]
                 },
                 example = {
-                    order = 3,
+                    order = 4,
                     type = "description",
                     name = function()
-                        local message = E.db.WT.announcement.thanksForResurrection.normalText
+                        local message = E.db.WT.announcement.thanks.resurrectionText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
                         message = gsub(message, "%%spell%%", GetSpellLink(61999))
@@ -2173,10 +2199,10 @@ options.thanksForResurrection = {
             type = "group",
             inline = true,
             get = function(info)
-                return E.db.WT.announcement.thanksForResurrection[info[#info - 1]][info[#info]]
+                return E.db.WT.announcement.thanks[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.announcement.thanksForResurrection[info[#info - 1]][info[#info]] = value
+                E.db.WT.announcement.thanks[info[#info - 1]][info[#info]] = value
             end,
             args = {
                 solo = {

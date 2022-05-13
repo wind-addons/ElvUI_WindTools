@@ -31,7 +31,7 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
         self:ThreatTransfer(sourceGUID, sourceName, destGUID, destName, spellId)
         self:CombatResurrection(sourceGUID, sourceName, destName, spellId)
         self:Utility(event, sourceName, spellId)
-        self:ThanksForResurrection(sourceGUID, sourceName, destGUID, destName, spellId)
+        self:Thanks(sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_SUMMON" then
         self:Utility(event, sourceName, spellId)
     elseif event == "SPELL_CREATE" then

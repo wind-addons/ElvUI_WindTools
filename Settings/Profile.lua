@@ -142,10 +142,12 @@ P.announcement = {
             }
         }
     },
-    thanksForResurrection = {
+    thanks = {
         enable = true,
-        normalText = L["%target%, thank you for using %spell% to revive me. :)"],
-        soulstoneText = L["%target%, thank you for soulstone. :)"],
+        resurrection = true,
+        enhancement = true,
+        resurrectionText = L["%target%, thank you for using %spell% to revive me. :)"],
+        enhancementText = L["%target%, thank you for %spell%. :)"],
         delay = 0,
         channel = {
             solo = "WHISPER",

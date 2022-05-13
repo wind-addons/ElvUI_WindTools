@@ -927,17 +927,17 @@ options.reset = {
                         )
                     end
                 },
-                thanksForResurrection = {
+                thanks = {
                     order = 6,
                     type = "execute",
-                    name = L["Thanks For Resurrection"],
+                    name = L["Thanks"],
                     func = function()
                         E:StaticPopup_Show(
                             "WINDTOOLS_RESET_MODULE",
-                            L["Thanks For Resurrection"],
+                            L["Thanks"],
                             nil,
                             function()
-                                E.db.WT.announcement.thanksForResurrection = P.announcement.thanksForResurrection
+                                E.db.WT.announcement.thanks = P.announcement.thanks
                             end
                         )
                     end

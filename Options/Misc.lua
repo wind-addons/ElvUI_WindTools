@@ -140,6 +140,9 @@ options.automation = {
         E.db.WT.misc.automation[info[#info]] = value
         AM:ProfileUpdate()
     end,
+    disabled = function()
+        return not E.db.WT.misc.automation.enable
+    end,
     args = {
         desc = {
             order = 1,
@@ -162,6 +165,7 @@ options.automation = {
             set = function(info, value)
                 E.db.WT.misc.automation[info[#info]] = value
             end,
+            disabled = false,
         },
         hideWorldMapAfterEnteringCombat = {
             order = 3,

@@ -93,7 +93,8 @@ function SB:UpdateLayout()
     local xOffset = 0
 
     if not self.bar.announcement then
-        self.bar.announcement = self:CreateButton(L["[ABBR] Announcement"])
+        self.bar.announcement =
+            self:CreateButton(L["[ABBR] Announcement"], L["Announce your quest progress to other players."])
         self.bar.announcement:SetScript(
             "OnClick",
             function()
@@ -103,7 +104,7 @@ function SB:UpdateLayout()
     end
 
     if not self.bar.turnIn then
-        self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"])
+        self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"], L["Auto accept and turn in quests."])
         self.bar.turnIn:SetScript(
             "OnClick",
             function()

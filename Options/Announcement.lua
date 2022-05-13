@@ -2058,9 +2058,6 @@ options.thanks = {
     set = function(info, value)
         E.db.WT.announcement.thanks[info[#info]] = value
     end,
-    disabled = function()
-        return not E.db.WT.announcement.thanks.enable
-    end,
     args = {
         desc = {
             order = 1,
@@ -2079,8 +2076,7 @@ options.thanks = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"],
-            disabled = false
+            name = L["Enable"]
         },
         delay = {
             order = 3,
@@ -2089,7 +2085,10 @@ options.thanks = {
             type = "range",
             min = 0,
             max = 20,
-            step = 1
+            step = 1,
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable
+            end
         },
         enhancement = {
             order = 4,
@@ -2097,7 +2096,7 @@ options.thanks = {
             inline = true,
             name = L["Enhancement"],
             disabled = function()
-                return not E.db.WT.announcement.thanks.enable or E.db.WT.announcement.thanks.enhancement
+                return not E.db.WT.announcement.thanks.enable or not E.db.WT.announcement.thanks.enhancement
             end,
             args = {
                 enhancement = {
@@ -2148,7 +2147,7 @@ options.thanks = {
             inline = true,
             name = L["Resurrection"],
             disabled = function()
-                return not E.db.WT.announcement.thanks.enable or E.db.WT.announcement.thanks.resurrection
+                return not E.db.WT.announcement.thanks.enable or not E.db.WT.announcement.thanks.resurrection
             end,
             args = {
                 resurrection = {
@@ -2203,6 +2202,9 @@ options.thanks = {
             end,
             set = function(info, value)
                 E.db.WT.announcement.thanks[info[#info - 1]][info[#info]] = value
+            end,
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable
             end,
             args = {
                 solo = {

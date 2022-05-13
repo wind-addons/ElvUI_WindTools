@@ -140,9 +140,6 @@ options.automation = {
         E.db.WT.misc.automation[info[#info]] = value
         AM:ProfileUpdate()
     end,
-    disabled = function()
-        return not E.db.WT.misc.automation.enable
-    end,
     args = {
         desc = {
             order = 1,
@@ -164,33 +161,44 @@ options.automation = {
             name = L["Enable"],
             set = function(info, value)
                 E.db.WT.misc.automation[info[#info]] = value
-            end,
-            disabled = false,
+            end
         },
         hideWorldMapAfterEnteringCombat = {
             order = 3,
             type = "toggle",
             name = L["Auto Hide Map"],
-            desc = L["Automatically close world map if player enters combat."]
+            desc = L["Automatically close world map if player enters combat."],
+            disabled = function()
+                return not E.db.WT.misc.automation.enable
+            end
         },
         hideBagAfterEnteringCombat = {
             order = 4,
             type = "toggle",
             name = L["Auto Hide Bag"],
-            desc = L["Automatically close bag if player enters combat."]
+            desc = L["Automatically close bag if player enters combat."],
+            disabled = function()
+                return not E.db.WT.misc.automation.enable
+            end
         },
         acceptResurrect = {
             order = 5,
             type = "toggle",
             name = L["Accept Resurrect"],
-            desc = L["Accept resurrect from other player automatically when you not in combat."]
+            desc = L["Accept resurrect from other player automatically when you not in combat."],
+            disabled = function()
+                return not E.db.WT.misc.automation.enable
+            end
         },
         acceptCombatResurrect = {
             order = 6,
             type = "toggle",
             name = L["Accept Combat Resurrect"],
-            desc = L["Accept resurrect from other player automatically when you in combat."]
-        },
+            desc = L["Accept resurrect from other player automatically when you in combat."],
+            disabled = function()
+                return not E.db.WT.misc.automation.enable
+            end
+        }
     }
 }
 

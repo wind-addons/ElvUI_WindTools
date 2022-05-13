@@ -24,7 +24,7 @@ function SB:CreateButton(text)
     button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
     button.text:SetJustifyV("MIDDLE")
     button.text:SetJustifyH("LEFT")
-    button.text:Point("LEFT", button, "RIGHT")
+    button.text:SetPoint("LEFT", button, "RIGHT")
     return button
 end
 
@@ -96,13 +96,13 @@ function SB:UpdateLayout()
     self:UpdateButton(self.bar.turnIn, self.db.turnIn)
 
     if self.db.announcement then
-        self.bar.announcement:Point("LEFT", xOffset, 0)
+        self.bar.announcement:SetPoint("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.announcement.buttonSize
         self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable and not E.db.WT.announcement.quest.paused)
     end
 
     if self.db.turnIn then
-        self.bar.turnIn:Point("LEFT", xOffset, 0)
+        self.bar.turnIn:SetPoint("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.turnIn.buttonSize
         self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
     end
@@ -141,7 +141,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
-    frame:Point("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
+    frame:SetPoint("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")

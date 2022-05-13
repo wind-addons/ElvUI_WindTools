@@ -198,6 +198,15 @@ options.automation = {
             disabled = function()
                 return not E.db.WT.misc.automation.enable
             end
+        },
+        confirmSummon = {
+            order = 7,
+            type = "toggle",
+            name = L["Confirm Summon"],
+            desc = L["Confirm summon from other player automatically."],
+            disabled = function()
+                return not E.db.WT.misc.automation.enable
+            end
         }
     }
 }

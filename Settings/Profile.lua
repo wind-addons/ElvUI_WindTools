@@ -943,10 +943,11 @@ P.misc = {
         }
     },
     automation = {
-        enable = true,
+        enable = false,
         hideBagAfterEnteringCombat = false,
         hideWorldMapAfterEnteringCombat = false,
         acceptResurrect = false,
-        acceptCombatResurrect = false
+        acceptCombatResurrect = false,
+        confirmSummon = false,
     }
 }

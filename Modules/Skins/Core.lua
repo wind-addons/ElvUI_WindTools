@@ -1,6 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local format = format

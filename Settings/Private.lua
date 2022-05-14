@@ -200,6 +200,30 @@ V.skins = {
 		size = 15,
 		style = "OUTLINE"
 	},
+	widgets = {
+		enable = true,
+		duration = 0.2,
+		button = {
+			enable = true,
+			backdrop = {
+				enable = true,
+				texture = "WindTools Glow",
+				color = {r = 0.145, g = 0.353, b = 0.698},
+				alpha = 1,
+				classColor = false,
+				animationType = "fade",
+				animationDuration = 0.2
+			},
+			text = {
+				enable = true,
+				font = {
+					name = E.db.general.font,
+					size = E.db.general.fontSize,
+					style = "OUTLINE"
+				}
+			}
+		}
+	},
 	addons = {
 		ace3 = true,
 		ace3DropdownBackdrop = true,

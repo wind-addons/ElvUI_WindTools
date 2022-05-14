@@ -310,3 +310,16 @@ do
         return {r = r, g = g, b = b}
     end
 end
+
+function F.SetVertexColorWithDB(tex, db)
+    if not tex or not tex.GetVertexColor then
+        F.DebugMessage("Function", "No texture to handling")
+        return
+    end
+    if not db or type(db) ~= "table" then
+        F.DebugMessage("Function", "No texture color database")
+        return
+    end
+
+    tex:SetVertexColor(db.r, db.g, db.b, db.a)
+end

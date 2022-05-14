@@ -72,7 +72,7 @@ function WS:HandleButton(_, button)
     local db = E.private.WT.skins.widgets.button
 
     if db.text.enable then
-        local text = button.Text or button:GetName() and _G[button:GetName() .. "Text"]
+        local text = button.Text or button.GetName and button:GetName() and _G[button:GetName() .. "Text"]
         if text and text.GetTextColor then
             F.SetFontWithDB(text, db.text.font)
         end

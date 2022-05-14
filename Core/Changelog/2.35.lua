@@ -21,7 +21,7 @@ W.Changelog[235] = {
         ["koKR"] = {
             "LibOpenRaid를 버전 33으로 업그레이드하였습니다.",
             "계정 인증을 받지 않은 플레이어들이 미리 구성된 팀을 만들 수 없는 문제를 수정했습니다.",
-            "[Announcement] 'Thank Ressurection' is now 'Thanks', and add the support of 마력 주입 and 정신 자극."
+            "[알림] '부활 감사합니다'가 '감사합니다'로 변경되었으며 마력 주입 및 정신 자극 알림을 지원합니다."
         }
     },
     NEW = {
@@ -50,12 +50,12 @@ W.Changelog[235] = {
             "[Skin] Added a new skin for item upgrade frame."
         },
         ["koKR"] = {
-            "[Misc] New 'Automation' module, which can help you automatically accept resurrection, summon and hide frames in combat.",
+            "[기타] 자동으로 부활, 소환 및 전투중 프레임을 감추는 데 도움이 되는 '자동화' 모듈을 추가했습니다.",
             "[알림] (퀘스트) 블리자드 자체 미션 진행 정보를 차단하는 옵션이 추가되었습니다.",
             "[태그] 단위 약어가 다른 몇 가지 새로운 체력 태그를 추가했습니다.",
             "[태그] 전체 피해 흡수량을 표시하는 absorbs-long 태그가 추가되었습니다.",
             "[스킨] WarpDeplete 스킨이 추가되었습니다.",
-            "[Skin] Added a new skin for 아이템 강화 창 frame."
+            "[스킨] 아이템 강화 창 스킨이 추가되었습니다."
         }
     },
     IMPROVEMENT = {
@@ -121,7 +121,7 @@ W.Changelog[235] = {
             "[스킨] 추가 전리품 주사위 프레임 그림자 수정.",
             "[프레임 이동] Trade Skill Master와의 호환성을 향상시키는 옵션이 추가되었습니다.",
             "[피해흡수] 전투 중 인터페이스를 다시 로드하여 발생할 수 있는 오류를 수정했습니다.",
-            "[Switch Buttons] Add tooltips for buttons."
+            "[스위치 버튼] 버튼에 대한 툴팁 추가."
         }
     }
 }

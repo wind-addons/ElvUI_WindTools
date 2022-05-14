@@ -60,24 +60,12 @@ local function CreateAnimation(texture, aType, direction, duration, data)
     end
 end
 
-function WS:HandleButton(
-    _,
-    button,
-    strip,
-    isDecline,
-    noStyle,
-    createBackdrop,
-    template,
-    noGlossTex,
-    overrideTex,
-    frameLevel,
-    regionsKill,
-    regionsZero)
-    if not E.private.WT.skins.enable or not button or button.windWidgetSkin then
+function WS:HandleButton(_, button)
+    if not button or button.windWidgetSkinned then
         return
     end
 
-    if not E.private.WT.skins.widgets.enable or not E.private.WT.skins.widgets.button.enable then
+    if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.button.enable then
         return
     end
 
@@ -90,13 +78,13 @@ function WS:HandleButton(
         end
     end
 
-    if db.backdrop.enable then
+    if button.template and db.backdrop.enable then
         -- Create background
         local bg = button:CreateTexture()
         bg:SetInside(button, 1, 1)
         bg:SetAlpha(0)
         bg:SetTexture(LSM:Fetch("statusbar", db.backdrop.texture) or E.media.normTex)
-        F.SetVertexColorWithDB(bg, db.backdrop.color)
+        F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
         -- Animations
         button.windAnimation = {
@@ -119,8 +107,13 @@ function WS:HandleButton(
 
         button:HookScript("OnEnter", Frame_OnEnter)
         button:HookScript("OnLeave", Frame_OnLeave)
-        button.SetBackdropBorderColor = E.noop
+
+        if db.backdrop.removeBorderEffect then
+            button.SetBackdropBorderColor = E.noop
+        end
     end
+
+    button.windWidgetSkinned = true
 end
 
 function WS:HandleTab(_, tab, noBackdrop, template)

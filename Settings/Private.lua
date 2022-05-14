@@ -217,7 +217,6 @@ V.skins = {
 				enable = true,
 				font = {
 					name = E.db.general.font,
-					size = E.db.general.fontSize,
 					style = "OUTLINE"
 				}
 			}

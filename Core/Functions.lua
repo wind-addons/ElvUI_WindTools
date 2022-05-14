@@ -31,12 +31,15 @@ function F.SetFontWithDB(text, db)
         F.DebugMessage("函数", "[1]找不到处理字体风格的字体")
         return
     end
+
     if not db or type(db) ~= "table" then
         F.DebugMessage("函数", "[1]找不到字体风格数据库")
         return
     end
 
-    text:FontTemplate(LSM:Fetch("font", db.name), db.size, db.style)
+    local fontName, fontHeight = text:GetFont()
+
+    text:FontTemplate(db.name and LSM:Fetch("font", db.name) or fontName, db.size or fontHeight, db.style or "NONE")
 end
 
 --[[

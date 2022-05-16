@@ -29,6 +29,7 @@ addon[7] = G.WT
 
 _G["WindTools"] = addon
 W.Version = GetAddOnMetadata(addonName, "Version")
+W.IsReloading = false
 
 -- 预处理 WindTools 模块
 W.Modules = {}
@@ -49,6 +50,7 @@ function W:Initialize()
 
     EP:RegisterPlugin(addonName, W.OptionsCallback)
     self:SecureHook(E, "UpdateAll", "UpdateModules")
+    self:SecureHook("ReloadUI", "UpdateReloadStatus")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("PLAYER_LOGOUT")
 end
@@ -75,7 +77,7 @@ do
             end
 
             if next(_G.ElvDB.WT.DisabledAddOns) then
-                E:Delay(5, self.PrintDebugEnviromentTip)
+                E:Delay(4, self.PrintDebugEnviromentTip)
             end
         end
 
@@ -83,8 +85,12 @@ do
     end
 end
 
+function W:UpdateReloadStatus()
+    W.IsReloading = true
+end
+
 function W:PLAYER_LOGOUT()
-    if _G.ElvDB and _G.ElvDB.WT then
+    if not self.IsReloading and _G.ElvDB and _G.ElvDB.WT then
         _G.ElvDB.WT = nil
     end
 end

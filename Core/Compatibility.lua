@@ -402,6 +402,20 @@ function W:CheckCompatibility()
         "db.mui.blizzard.objectiveTracker.enable"
     )
 
+    CheckMerathilisUI(
+        L["Button"],
+        L["Button"],
+        "private.WT.skins.widgets.button.enable",
+        "private.mui.skins.widgets.button.enable"
+    )
+
+    CheckMerathilisUI(
+        L["Check Box"],
+        L["Check Box"],
+        "private.WT.skins.widgets.checkBox.enable",
+        "private.mui.skins.widgets.checkBox.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

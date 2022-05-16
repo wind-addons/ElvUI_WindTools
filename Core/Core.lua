@@ -63,11 +63,11 @@ _G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L[
 
 --[[
     WindTools module registration
-    @param {string} name 模块名
+    @param {string} name The name of module
 ]]
 function W:RegisterModule(name)
     if not name then
-        F.DebugMessage(W, "注册模块名为空")
+        F.DebugMessage(W, "The name of module is required!")
         return
     end
     if self.initialized then
@@ -133,6 +133,6 @@ function W:CheckInstalledVersion()
         )
     end
 
-    W:ForBetaUser()
+    W:ForPreReleaseUser()
     W:UpdateScripts()
 end

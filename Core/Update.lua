@@ -18,14 +18,7 @@ local function UpdateMessage(text, from, to)
     print(text .. format("(|cff00a8ff%.2f|r -> |cff00a8ff%.2f|r)...", from, to) .. doneIcon)
 end
 
-function W:ForBetaUser()
-    local miscDB = E.db.WT.misc
-    miscDB.automation.hideBagAfterEnteringCombat = miscDB.autoHideBag or miscDB.automation.hideBagAfterEnteringCombat
-    miscDB.automation.hideWorldMapAfterEnteringCombat =
-        miscDB.autoHideWorldMap or miscDB.automation.hideWorldMapAfterEnteringCombat
-
-    miscDB.autoHideBag = nil
-    miscDB.autoHideWorldMap = nil
+function W:ForPreReleaseUser()
 end
 
 function W:UpdateScripts()

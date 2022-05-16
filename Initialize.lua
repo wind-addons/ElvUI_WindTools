@@ -55,7 +55,7 @@ end
 do
     local firstTime = false
     local checked = false
-    function W:PLAYER_ENTERING_WORLD()
+    function W:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
         if not firstTime then
             E:Delay(7, self.CheckInstalledVersion, self)
             firstTime = true
@@ -64,6 +64,12 @@ do
         if not (checked or _G.ElvUIInstallFrame) then
             self:CheckCompatibility()
             checked = true
+        end
+
+        if initLogin and _G.ElvDB then
+            ElvDB.WT = {
+                DisabledAddOns = {}
+            }
         end
 
         E:Delay(1, collectgarbage, "collect")

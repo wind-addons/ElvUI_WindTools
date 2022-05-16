@@ -118,9 +118,20 @@ function WS:HandleButton(_, button)
                 {db.backdrop.alpha, 0}
             )
         }
+        
+        self:SecureHookScript(button, "OnEnter", Frame_OnEnter)
+        self:SecureHookScript(button, "OnLeave", Frame_OnLeave)
 
-        button:HookScript("OnEnter", Frame_OnEnter)
-        button:HookScript("OnLeave", Frame_OnLeave)
+        -- Avoid the hook is flushed
+        self:SecureHook(button, "SetScript", function(frame, scriptType)
+            if scriptType == "OnEnter" then
+                self:Unhook(frame, "OnEnter")
+                self:SecureHookScript(frame, "OnEnter", Frame_OnEnter)
+            elseif scriptType == "OnLeave" then
+                self:Unhook(frame, "OnLeave")
+                self:SecureHookScript(frame, "OnLeave", Frame_OnLeave)
+            end
+        end)
 
         if db.backdrop.removeBorderEffect then
             button.SetBackdropBorderColor = E.noop

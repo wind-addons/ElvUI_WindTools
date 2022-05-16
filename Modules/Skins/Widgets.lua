@@ -4,6 +4,12 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local WS = W:NewModule("WidgetSkins", "AceHook-3.0", "AceEvent-3.0")
+S.Widgets = WS
+
+local function IsUglyYellow(...)
+    local r, g, b = ...
+    return abs(r - 1) + abs(g - 0.82) + abs(b) < 0.02
+end
 
 local function Frame_OnEnter(frame)
     if not frame:IsEnabled() or not frame.windAnimation then
@@ -116,8 +122,98 @@ function WS:HandleButton(_, button)
     button.windWidgetSkinned = true
 end
 
+do
+    ES.Ace3_RegisterAsWidget_ = ES.Ace3_RegisterAsWidget
+    function ES:Ace3_RegisterAsWidget(widget)
+        ES:Ace3_RegisterAsWidget_(widget)
+        WS:HandleButton(nil, widget)
+    end
+end
+
+function WS:HandleAce3CheckBox(check)
+    if not E.private.skins.checkBoxSkin then
+        return
+    end
+
+    local db = E.private.WT.skins.widgets.checkBox
+
+    if not check or not db or not db.enable then
+        return
+    end
+
+    if not check.windWidgetSkinned then
+        check:SetTexture(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+        check.SetTexture = E.noop
+        check.windWidgetSkinned = true
+    end
+
+    if IsUglyYellow(check:GetVertexColor()) then
+        F.SetVertexColorWithDB(check, db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color)
+    end
+end
+
+do
+    ES.Ace3_CheckBoxSetDesaturated_ = ES.Ace3_CheckBoxSetDesaturated
+    function ES.Ace3_CheckBoxSetDesaturated(check, value)
+        ES.Ace3_CheckBoxSetDesaturated_(check, value)
+        WS:HandleAce3CheckBox(check)
+    end
+end
+
+function WS:HandleCheckBox(_, check)
+    if not E.private.skins.checkBoxSkin then
+        return
+    end
+
+    local db = E.private.WT.skins.widgets.checkBox
+    if not check or not db or not db.enable then
+        return
+    end
+
+    if not check.windWidgetSkinned then
+        if check.GetCheckedTexture then
+            local tex = check:GetCheckedTexture()
+            if tex then
+                tex:SetTexture(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+                tex.SetTexture = E.noop
+                F.SetVertexColorWithDB(tex, db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color)
+                tex.SetVertexColor_ = tex.SetVertexColor
+                tex.SetVertexColor = function(tex, ...)
+                    if IsUglyYellow(...) then
+                        local color = db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color
+                        tex:SetVertexColor_(color.r, color.g, color.b, color.a)
+                    else
+                        tex:SetVertexColor_(...)
+                    end
+                end
+            end
+        end
+
+        if check.GetDisabledTexture then
+            local tex = check:GetDisabledTexture()
+            if tex then
+                tex.SetTexture_ = tex.SetTexture
+                tex.SetTexture = function(tex, texPath)
+                    if not texPath then
+                        return
+                    end
+
+                    if texPath == "" then
+                        tex:SetTexture_("")
+                    else
+                        tex:SetTexture_(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+                    end
+                end
+            end
+        end
+
+        check.windWidgetSkinned = true
+    end
+end
+
 function WS:HandleTab(_, tab, noBackdrop, template)
 end
 
 WS:SecureHook(ES, "HandleButton")
+WS:SecureHook(ES, "HandleCheckBox")
 WS:SecureHook(ES, "HandleTab")

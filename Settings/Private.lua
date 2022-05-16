@@ -220,6 +220,15 @@ V.skins = {
 					style = "OUTLINE"
 				}
 			}
+		},
+		checkBox = {
+			enable = true,
+			elvUISkin = {
+				enable = true,
+				texture = "WindTools Glow",
+				classColor = false,
+				color = {r = 0.322, g = 0.608, b = 0.961, a = 0.8}
+			}
 		}
 	},
 	addons = {

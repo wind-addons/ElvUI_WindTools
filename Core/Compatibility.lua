@@ -403,14 +403,14 @@ function W:CheckCompatibility()
     )
 
     CheckMerathilisUI(
-        L["Button"],
+        format("%s-%s-%s", L["Skins"], L["Widgets"], L["Button"]),
         L["Button"],
         "private.WT.skins.widgets.button.enable",
         "private.mui.skins.widgets.button.enable"
     )
 
     CheckMerathilisUI(
-        L["Check Box"],
+        format("%s-%s-%s", L["Skins"], L["Widgets"], L["Check Box"]),
         L["Check Box"],
         "private.WT.skins.widgets.checkBox.enable",
         "private.mui.skins.widgets.checkBox.enable"

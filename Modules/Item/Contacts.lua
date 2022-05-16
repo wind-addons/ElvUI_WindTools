@@ -276,11 +276,6 @@ function CT:ConstructNameButtons()
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         F.SetFontOutline(button.Text)
-        ES:HandleButton(button)
-        S:CreateShadow(button, 2, 1, 1, 1, true)
-        if button.shadow then
-            button.shadow:Hide()
-        end
 
         button:SetScript(
             "OnClick",
@@ -305,9 +300,6 @@ function CT:ConstructNameButtons()
             "OnEnter",
             function(self)
                 CT:SetButtonTooltip(self)
-                if self.shadow then
-                    self.shadow:Show()
-                end
             end
         )
 
@@ -315,11 +307,10 @@ function CT:ConstructNameButtons()
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                if self.shadow then
-                    self.shadow:Hide()
-                end
             end
         )
+
+        ES:HandleButton(button)
 
         button:Hide()
         self.frame.nameButtons[i] = button

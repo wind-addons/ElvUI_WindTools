@@ -91,6 +91,13 @@ function WS:HandleButton(_, button)
         bg:SetInside(button, 1, 1)
         bg:SetAlpha(0)
         bg:SetTexture(LSM:Fetch("statusbar", db.backdrop.texture) or E.media.normTex)
+
+        if button.Center then
+            local layer, subLayer = button.Center:GetDrawLayer()
+            subLayer = subLayer and subLayer + 1 or 0
+            bg:SetDrawLayer(layer, subLayer)
+        end
+
         F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
         -- Animations

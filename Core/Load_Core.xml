@@ -1,10 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file='Functions.lua'/>
+	<Include file='Functions\Load_Functions.xml'/>
 	<Script file='Animation.lua'/>
 	<Script file='Core.lua'/>
 	<Script file='Commands.lua'/>
 	<Script file='Compatibility.lua'/>
-	<Script file='Developer.lua'/>
 	<Script file='Options.lua'/>
 	<Script file='Profiles.lua'/>
 	<Script file='Update.lua'/>

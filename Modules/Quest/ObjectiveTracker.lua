@@ -28,6 +28,7 @@ do
         if not title then
             return
         end
+
         title =
             F.Strings.Replace(
             title,

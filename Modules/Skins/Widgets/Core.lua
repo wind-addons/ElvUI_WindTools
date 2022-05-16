@@ -6,6 +6,9 @@ local ES = E.Skins
 local WS = W:NewModule("WidgetSkins", "AceHook-3.0")
 S.Widgets = WS
 
+local abs = abs
+local strlower = strlower
+
 function WS.EnterAnimation(frame)
     if not frame:IsEnabled() or not frame.windAnimation then
         return

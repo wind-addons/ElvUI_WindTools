@@ -2,8 +2,22 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 local _G = _G
 
-local type = type
+local format = format
+local next = next
+local pairs = pairs
+local print = print
+local strlower = strlower
 local strsub = strsub
+local type = type
+local wipe = wipe
+
+local DisableAddOn = DisableAddOn
+local EnableAddOn = EnableAddOn
+local GetAddOnInfo = GetAddOnInfo
+local GetNumAddOns = GetNumAddOns
+local ReloadUI = ReloadUI
+
+local C_CVar_SetCVar = C_CVar.SetCVar
 
 local function AddCommand(name, keys, func)
     if not _G.SlashCmdList[name] then
@@ -49,11 +63,11 @@ do
                     end
                 end
 
-                SetCVar("scriptErrors", 1)
+                C_CVar_SetCVar("scriptErrors", 1)
                 ReloadUI()
             elseif switch == "off" or switch == "0" then
-                SetCVar("scriptProfile", 0)
-                SetCVar("scriptErrors", 0)
+                C_CVar_SetCVar("scriptProfile", 0)
+                C_CVar_SetCVar("scriptErrors", 0)
                 E:Print("Lua errors off.")
 
                 if E:IsAddOnEnabled("ElvUI_CPU") then

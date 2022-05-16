@@ -11,6 +11,7 @@ local function IsUglyYellow(...)
     return abs(r - 1) + abs(g - 0.82) + abs(b) < 0.02
 end
 
+-- Button
 local function Frame_OnEnter(frame)
     if not frame:IsEnabled() or not frame.windAnimation then
         return
@@ -122,6 +123,7 @@ function WS:HandleButton(_, button)
     button.windWidgetSkinned = true
 end
 
+-- Checkbox
 do
     ES.Ace3_RegisterAsWidget_ = ES.Ace3_RegisterAsWidget
     function ES:Ace3_RegisterAsWidget(widget)
@@ -211,6 +213,7 @@ function WS:HandleCheckBox(_, check)
     end
 end
 
+-- Tab
 function WS:HandleTab(_, tab, noBackdrop, template)
 end
 

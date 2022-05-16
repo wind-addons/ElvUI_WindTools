@@ -111,7 +111,7 @@ do
         end
 
         local delimiter = delimiterList[W.Locale] or "'s"
-        local raw = {F.SplitCJKString(delimiter, details)}
+        local raw = {F.Strings.Split(delimiter, details)}
 
         local owner, role = raw[1], raw[#raw]
         if owner and role then

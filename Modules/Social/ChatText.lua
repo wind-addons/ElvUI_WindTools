@@ -422,10 +422,10 @@ function CT:HandleName(nameString)
     end
 
     if strsub(nameString, strlen(nameString) - 1) == "|r" then -- 颜色
-        nameString = F.SplitCJKString("-", nameString)
+        nameString = F.Strings.Split("-", nameString)
         nameString = nameString .. "|r"
     else
-        nameString = F.SplitCJKString("-", nameString)
+        nameString = F.Strings.Split("-", nameString)
     end
 
     return nameString

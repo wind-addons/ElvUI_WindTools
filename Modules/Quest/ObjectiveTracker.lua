@@ -16,25 +16,12 @@ local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 
-local replaceRule = {}
-
-local function AddQuestTitleToReplaceRule(questID, text)
-    F.SetCallback(
-        function(title)
-            if title then
-                replaceRule[title] = text
-                ObjectiveTracker_Update()
-                return true
-            end
-            return false
-        end,
-        C_QuestLog_GetTitleForQuestID,
-        nil,
-        questID
-    )
-end
-
-AddQuestTitleToReplaceRule(57693, L["Torghast"])
+local replaceRule = {
+    [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
+    [L["Tazavesh: So'leah's Gambit"]] = L["[ABBR] Tazavesh: So'leah's Gambit"],
+    [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
+    [L["Torghast, Tower of the Damned"]] = L["[ABBR] Torghast, Tower of the Damned"],
+}
 
 local function SetTextColorHook(text)
     if not text.windHooked then

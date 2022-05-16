@@ -3,7 +3,7 @@ local tinsert = tinsert
 
 -- 移动框架添加 WindTools 分类
 tinsert(E.ConfigModeLayouts, "WINDTOOLS")
-E.ConfigModeLocalizedStrings["WINDTOOLS"] = L["WindTools"]
+E.ConfigModeLocalizedStrings["WINDTOOLS"] = W.Title
 
 E.PopupDialogs.WINDTOOLS_EDITBOX = {
     text = W.Title,

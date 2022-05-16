@@ -90,7 +90,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
     -- 隔断标题
     if config.title then
         tooltip:AddLine(" ")
-        tooltip:AddLine(L["WindTools"] .. " " .. L["Party Info"])
+        tooltip:AddLine(W.Title .. " " .. L["Party Info"])
     end
 
     -- 紧凑模式

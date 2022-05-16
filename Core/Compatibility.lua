@@ -51,7 +51,7 @@ function W:ConstructCompatibilityFrame()
     local title = frame:CreateFontString(nil, "ARTWORK")
     title:FontTemplate()
     F.SetFontOutline(title, nil, "2")
-    title:SetText(L["WindTools"] .. " " .. L["Compatibility Check"])
+    title:SetText(W.Title .. " " .. L["Compatibility Check"])
     title:Point("TOP", frame, "TOP", 0, -10)
 
     local desc = frame:CreateFontString(nil, "ARTWORK")
@@ -63,7 +63,7 @@ function W:ConstructCompatibilityFrame()
         L[
             "There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."
         ] ..
-            " " .. format(L["Have a good time with %s!"], L["WindTools"])
+            " " .. format(L["Have a good time with %s!"], W.Title)
     )
     desc:Point("TOPLEFT", frame, "TOPLEFT", 10, -40)
 
@@ -94,7 +94,7 @@ function W:ConstructCompatibilityFrame()
     F.SetFontOutline(bottomDesc, nil, "-1")
     bottomDesc:SetText(
         E.NewSign ..
-            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], L["WindTools"]) ..
+            format(L["If you find the %s module conflicts with another addon, alert me via Discord."], W.Title) ..
                 "\n" ..
                     L[
                         "You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."
@@ -243,7 +243,7 @@ local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales
             AddButtonToCompatibilityFrame(
                 {
                     module1 = myModuleName,
-                    plugin1 = L["WindTools"],
+                    plugin1 = W.Title,
                     func1 = function()
                         myTable[myKey] = true
                         targetTable[targetKey] = false

@@ -67,12 +67,12 @@ options.help = {
                     fontSize = "medium",
                     name = format(
                         "%s\n\n%s\n\n%s\n\n%s\n\n%s",
-                        format(L["Thank you for using %s!"], L["WindTools"]),
+                        format(L["Thank you for using %s!"], W.Title),
                         format(
                             L[
                                 "%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."
                             ],
-                            L["WindTools"]
+                            W.Title
                         ),
                         format(
                             L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
@@ -81,12 +81,12 @@ options.help = {
                             L["Github"],
                             L["NGA.cn"]
                         ),
-                        format(L["The localization of %s is community-driven."], L["WindTools"]),
+                        format(L["The localization of %s is community-driven."], W.Title),
                         format(
                             L[
                                 "If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."
                             ],
-                            L["WindTools"]
+                            W.Title
                         )
                     )
                 },
@@ -230,7 +230,7 @@ options.help = {
                 windtools = {
                     order = 2,
                     type = "description",
-                    name = L["WindTools"] .. ": " .. AddColor(W.Version)
+                    name = W.Title .. ": " .. AddColor(W.Version)
                 },
                 build = {
                     order = 3,
@@ -776,7 +776,7 @@ E.PopupDialogs.WINDTOOLS_RESET_MODULE = {
 }
 
 E.PopupDialogs.WINDTOOLS_RESET_ALL_MODULES = {
-    text = format(L["Reset all %s modules."], L["WindTools"]),
+    text = format(L["Reset all %s modules."], W.Title),
     button1 = _G.ACCEPT,
     button2 = _G.CANCEL,
     OnAccept = function()
@@ -1796,7 +1796,7 @@ do
         text = format(
             "%s\n|cffff0000%s|r",
             L["Are you sure you want to import this string?"],
-            format(L["It will override your %s setting."], L["WindTools"])
+            format(L["It will override your %s setting."], W.Title)
         ),
         button1 = _G.ACCEPT,
         button2 = _G.CANCEL,
@@ -1822,7 +1822,7 @@ do
                     feature = {
                         order = 1,
                         type = "description",
-                        name = format(L["Import and export your %s settings."], L["WindTools"]),
+                        name = format(L["Import and export your %s settings."], W.Title),
                         fontSize = "medium"
                     }
                 }
@@ -1831,7 +1831,7 @@ do
                 order = 2,
                 type = "group",
                 inline = true,
-                name = format("%s %s", L["WindTools"], L["String"]),
+                name = format("%s %s", W.Title, L["String"]),
                 args = {
                     text = {
                         order = 1,
@@ -1860,7 +1860,7 @@ do
                         order = 3,
                         type = "execute",
                         name = L["Export All"],
-                        desc = format(L["Export all setting of %s."], L["WindTools"]),
+                        desc = format(L["Export all setting of %s."], W.Title),
                         func = function()
                             text = F.Profiles.GetOutputString(true, true)
                         end
@@ -1871,7 +1871,7 @@ do
                         name = L["Export Profile"],
                         desc = format(
                             L["Export the setting of %s that stored in ElvUI Profile database."],
-                            L["WindTools"]
+                            W.Title
                         ),
                         func = function()
                             text = F.Profiles.GetOutputString(true, false)
@@ -1883,7 +1883,7 @@ do
                         name = L["Export Private"],
                         desc = format(
                             L["Export the setting of %s that stored in ElvUI Private database."],
-                            L["WindTools"]
+                            W.Title
                         ),
                         func = function()
                             text = F.Profiles.GetOutputString(false, true)

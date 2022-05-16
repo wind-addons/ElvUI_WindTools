@@ -201,7 +201,7 @@ options.absorb = {
                             L["The absorb style %s and %s is highly recommended with %s tweaks."],
                             F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
                             F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
-                            L["WindTools"]
+                            W.Title
                         ),
                         L["Here are some buttons for helping you change the setting of all absorb bars by one-click."]
                     )
@@ -241,7 +241,7 @@ options.absorb = {
                 changeColor = {
                     order = 4,
                     type = "execute",
-                    name = format(L["%s style absorb color"], L["WindTools"]),
+                    name = format(L["%s style absorb color"], W.Title),
                     desc = L["Change the color of the absorb bar."],
                     func = function(info)
                         E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}

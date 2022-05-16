@@ -183,7 +183,7 @@ function F.Print(text)
         return
     end
 
-    local message = format("%s: %s", L["WindTools"], text)
+    local message = format("%s: %s", W.Title, text)
     print(message)
 end
 

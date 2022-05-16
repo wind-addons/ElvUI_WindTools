@@ -72,6 +72,10 @@ do
             }
         end
 
+        if next(ElvDB.WT.DisabledAddOns) then
+            E:Delay(5, self.PrintDebugEnviromentTip)
+        end
+
         E:Delay(1, collectgarbage, "collect")
     end
 end

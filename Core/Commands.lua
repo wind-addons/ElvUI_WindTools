@@ -73,4 +73,47 @@ do
             end
         end
     )
+
+    function W.PrintDebugEnviromentTip()
+        print(
+            E:TextGradient(
+                "----------------------------------",
+                0.910,
+                0.314,
+                0.357,
+                0.976,
+                0.835,
+                0.431,
+                0.953,
+                0.925,
+                0.761,
+                0.078,
+                0.694,
+                0.671
+            )
+        )
+
+        F.Print(L["Debug Enviroment"])
+
+        print(L["You can use |cff00ff00/wtdebug off|r command to exit debug mode."])
+        print(format(L["After you stop debuging, %s will reenable the addons automatically."], W.Title))
+
+        print(
+            E:TextGradient(
+                "----------------------------------",
+                0.910,
+                0.314,
+                0.357,
+                0.976,
+                0.835,
+                0.431,
+                0.953,
+                0.925,
+                0.761,
+                0.078,
+                0.694,
+                0.671
+            )
+        )
+    end
 end

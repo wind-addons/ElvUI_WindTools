@@ -174,6 +174,29 @@ function F.DebugMessage(module, text)
     E:Delay(0.1, print, message)
 end
 
+
+do
+    local gradientLine = E:TextGradient(
+        "----------------------------------",
+        0.910,
+        0.314,
+        0.357,
+        0.976,
+        0.835,
+        0.431,
+        0.953,
+        0.925,
+        0.761,
+        0.078,
+        0.694,
+        0.671
+    )
+
+    function F.PrintGradientLine()
+        print(gradientLine)
+    end
+end
+
 --[[
     打印信息
     @param {string} text 文本

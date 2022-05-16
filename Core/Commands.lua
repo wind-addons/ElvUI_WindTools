@@ -45,7 +45,7 @@ do
                     local name = GetAddOnInfo(i)
                     if not AcceptableAddons[name] and E:IsAddOnEnabled(name) then
                         DisableAddOn(name, E.myname)
-                        ElvDB.WT.DisabledAddOns[name] = i
+                        _G.ElvDB.WT.DisabledAddOns[name] = i
                     end
                 end
 
@@ -60,60 +60,31 @@ do
                     DisableAddOn("ElvUI_CPU")
                 end
 
-                if next(ElvDB.WT.DisabledAddOns) then
-                    for name in pairs(ElvDB.WT.DisabledAddOns) do
+                if next(_G.ElvDB.WT.DisabledAddOns) then
+                    for name in pairs(_G.ElvDB.WT.DisabledAddOns) do
                         EnableAddOn(name, E.myname)
                     end
 
-                    wipe(ElvDB.WT.DisabledAddOns)
+                    wipe(_G.ElvDB.WT.DisabledAddOns)
                     ReloadUI()
                 end
             else
-                F.Print("/wtdebug on - /wtdebug off")
+                F.PrintGradientLine()
+                F.Print(L["Usage"] .. ": /wtdebug [on|off]")
+                print("on  ", L["Enable debug mode"])
+                print("      ", format(L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."], W.Title))
+                print("off ", L["Disable debug mode"])
+                print("      ", format(L["Reenable the addons that disabled by debug mode."], W.Title))
+                F.PrintGradientLine()
             end
         end
     )
 
     function W.PrintDebugEnviromentTip()
-        print(
-            E:TextGradient(
-                "----------------------------------",
-                0.910,
-                0.314,
-                0.357,
-                0.976,
-                0.835,
-                0.431,
-                0.953,
-                0.925,
-                0.761,
-                0.078,
-                0.694,
-                0.671
-            )
-        )
-
+        F.PrintGradientLine()
         F.Print(L["Debug Enviroment"])
-
         print(L["You can use |cff00ff00/wtdebug off|r command to exit debug mode."])
         print(format(L["After you stop debuging, %s will reenable the addons automatically."], W.Title))
-
-        print(
-            E:TextGradient(
-                "----------------------------------",
-                0.910,
-                0.314,
-                0.357,
-                0.976,
-                0.835,
-                0.431,
-                0.953,
-                0.925,
-                0.761,
-                0.078,
-                0.694,
-                0.671
-            )
-        )
+        F.PrintGradientLine()
     end
 end

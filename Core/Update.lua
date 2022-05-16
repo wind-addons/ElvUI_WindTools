@@ -11,23 +11,7 @@ local doneIcon = format(" |T%s:0|t", W.Media.Icons.accept)
 local function UpdateMessage(text, from, to)
     if isFirstLine then
         isFirstLine = false
-        print(
-            E:TextGradient(
-                "----------------------------------",
-                0.910,
-                0.314,
-                0.357,
-                0.976,
-                0.835,
-                0.431,
-                0.953,
-                0.925,
-                0.761,
-                0.078,
-                0.694,
-                0.671
-            )
-        )
+        F.PrintGradientLine()
         F.Print(L["Update"])
     end
 
@@ -99,23 +83,7 @@ function W:UpdateScripts()
     end
 
     if not isFirstLine then
-        print(
-            E:TextGradient(
-                "----------------------------------",
-                0.910,
-                0.314,
-                0.357,
-                0.976,
-                0.835,
-                0.431,
-                0.953,
-                0.925,
-                0.761,
-                0.078,
-                0.694,
-                0.671
-            )
-        )
+        F.PrintGradientLine()
     end
 
     E.global.WT.version = W.Version

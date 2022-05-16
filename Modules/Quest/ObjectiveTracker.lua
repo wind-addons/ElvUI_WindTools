@@ -16,12 +16,35 @@ local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 
-local replaceRule = {
-    [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
-    [L["Tazavesh: So'leah's Gambit"]] = L["[ABBR] Tazavesh: So'leah's Gambit"],
-    [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
-    [L["Torghast, Tower of the Damned"]] = L["[ABBR] Torghast, Tower of the Damned"],
-}
+do
+    local replaceRule = {
+        [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
+        [L["Tazavesh: So'leah's Gambit"]] = L["[ABBR] Tazavesh: So'leah's Gambit"],
+        [L["Tazavesh: Streets of Wonder"]] = L["[ABBR] Tazavesh: Streets of Wonder"],
+        [L["Torghast, Tower of the Damned"]] = L["[ABBR] Torghast, Tower of the Damned"]
+    }
+
+    function OT:ShortTitle(title)
+        if not title then
+            return
+        end
+        title =
+            F.Strings.Replace(
+            title,
+            {
+                ["，"] = ", ",
+                ["。"] = "."
+            }
+        )
+
+        for longName, shortName in pairs(replaceRule) do
+            if longName == title then
+                return shortName
+            end
+        end
+        return title
+    end
+end
 
 local function SetTextColorHook(text)
     if not text.windHooked then
@@ -273,15 +296,6 @@ function OT:UpdateTextWidth()
     else
         _G.OBJECTIVE_DASH_STYLE_SHOW = 1
     end
-end
-
-function OT:ShortTitle(str)
-    for longName, shortName in pairs(replaceRule) do
-        if longName == str then
-            return shortName
-        end
-    end
-    return str
 end
 
 function OT:Initialize()

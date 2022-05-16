@@ -88,8 +88,9 @@ function W:InitializeModules()
 end
 
 -- WindTools module update after profile switch
-function W.UpdateModules()
-    for _, moduleName in pairs(W.RegisteredModules) do
+function W:UpdateModules()
+    self:UpdateScripts()
+    for _, moduleName in pairs(self.RegisteredModules) do
         local module = W:GetModule(moduleName)
         if module.ProfileUpdate then
             pcall(module.ProfileUpdate, module)
@@ -132,7 +133,4 @@ function W:CheckInstalledVersion()
             )
         )
     end
-
-    W:ForPreReleaseUser()
-    W:UpdateScripts()
 end

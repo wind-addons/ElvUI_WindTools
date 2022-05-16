@@ -8,12 +8,8 @@ local min = min
 local pairs = pairs
 local pcall = pcall
 local print = print
-local strbyte = strbyte
 local strfind = strfind
-local strlen = strlen
 local strmatch = strmatch
-local strsub = strsub
-local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
 local type = type
@@ -174,9 +170,9 @@ function F.DebugMessage(module, text)
     E:Delay(0.1, print, message)
 end
 
-
 do
-    local gradientLine = E:TextGradient(
+    local gradientLine =
+        E:TextGradient(
         "----------------------------------",
         0.910,
         0.314,
@@ -228,41 +224,6 @@ function F.DelayUnhookAll(module)
     else
         F.DebugMessage(nil, "找不到模块！")
     end
-end
-
---[[
-    分割 CJK 字符串
-    @param {string} delimiter 分割符
-    @param {string} subject 待分割字符串
-    @return {table/string} 分割结果
-]]
-function F.SplitCJKString(delimiter, subject)
-    if not subject or subject == "" then
-        return {}
-    end
-
-    local length = strlen(delimiter)
-    local results = {}
-
-    local i = 0
-    local j = 0
-
-    while true do
-        j = strfind(subject, delimiter, i + length)
-        if strlen(subject) == i then
-            break
-        end
-
-        if j == nil then
-            tinsert(results, strsub(subject, i))
-            break
-        end
-
-        tinsert(results, strsub(subject, i, j - 1))
-        i = j + length
-    end
-
-    return unpack(results)
 end
 
 function F.Round(number, decimals)

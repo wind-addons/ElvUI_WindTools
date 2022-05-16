@@ -436,11 +436,6 @@ function TM:BuildFrame()
 
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
-        ES:HandleButton(button)
-        S:CreateShadow(button, nil, 1, 1, 1, true)
-        if button.shadow then
-            button.shadow:Hide()
-        end
 
         button:SetScript(
             "OnClick",
@@ -457,7 +452,6 @@ function TM:BuildFrame()
             "OnEnter",
             function(self)
                 TM:SetButtonTooltip(self)
-                self.shadow:Show()
             end
         )
 
@@ -465,9 +459,10 @@ function TM:BuildFrame()
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                self.shadow:Hide()
             end
         )
+
+        ES:HandleButton(button)
 
         button:Hide()
         frame.setButtons[i] = button

@@ -50,12 +50,13 @@ function W:Initialize()
     EP:RegisterPlugin(addonName, W.OptionsCallback)
     self:SecureHook(E, "UpdateAll", "UpdateModules")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    self:RegisterEvent("PLAYER_LOGOUT")
 end
 
 do
     local firstTime = false
     local checked = false
-    function W:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
+    function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
         if not firstTime then
             E:Delay(7, self.CheckInstalledVersion, self)
             firstTime = true
@@ -66,17 +67,25 @@ do
             checked = true
         end
 
-        if initLogin and _G.ElvDB then
-            ElvDB.WT = {
-                DisabledAddOns = {}
-            }
-        end
+        if _G.ElvDB then
+            if isInitialLogin or not _G.ElvDB.WT then
+                _G.ElvDB.WT = {
+                    DisabledAddOns = {}
+                }
+            end
 
-        if next(ElvDB.WT.DisabledAddOns) then
-            E:Delay(5, self.PrintDebugEnviromentTip)
+            if next(_G.ElvDB.WT.DisabledAddOns) then
+                E:Delay(5, self.PrintDebugEnviromentTip)
+            end
         end
 
         E:Delay(1, collectgarbage, "collect")
+    end
+end
+
+function W:PLAYER_LOGOUT()
+    if _G.ElvDB and _G.ElvDB.WT then
+        _G.ElvDB.WT = nil
     end
 end
 

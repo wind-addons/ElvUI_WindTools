@@ -48,7 +48,6 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 
         local group, onEnter, onLeave =
             self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
-        -- Animations
         tab.windAnimation = {
             bg = bg,
             group = group,

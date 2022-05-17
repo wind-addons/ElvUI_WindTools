@@ -4,6 +4,9 @@ local S = W.Modules.Skins
 local WS = S.Widgets
 local ES = E.Skins
 
+local _G = _G
+local unpack = unpack
+
 local RaiseFrameLevel = RaiseFrameLevel
 local LowerFrameLevel = LowerFrameLevel
 
@@ -32,7 +35,7 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 
     if db.backdrop.enable and (tab.template or tab.backdrop) then
         local parentFrame = tab.backdrop or tab
-        
+
         -- Create background
         local bg = parentFrame:CreateTexture()
         bg:SetInside(parentFrame, 1, 1)

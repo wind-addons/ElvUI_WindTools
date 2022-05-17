@@ -1361,8 +1361,310 @@ options.widgets = {
                 }
             }
         },
-        checkBox = {
+        tab = {
             order = 11,
+            type = "group",
+            name = L["Tab"],
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full",
+                    get = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.skins.widgets[info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                },
+                backdrop = {
+                    order = 2,
+                    type = "group",
+                    name = L["Additional Backdrop"],
+                    inline = true,
+                    get = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 2]].enable or
+                            not E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].enable
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            width = "full",
+                            disabled = function(info)
+                                return not E.private.WT.skins.widgets[info[#info - 2]].enable
+                            end
+                        },
+                        texture = {
+                            order = 2,
+                            type = "select",
+                            name = L["Texture"],
+                            dialogControl = "LSM30_Statusbar",
+                            values = LSM:HashTable("statusbar")
+                        },
+                        classColor = {
+                            order = 3,
+                            type = "toggle",
+                            name = L["Class Color"]
+                        },
+                        color = {
+                            order = 4,
+                            type = "color",
+                            name = L["Color"],
+                            hasAlpha = false,
+                            hidden = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].classColor
+                            end,
+                            get = function(info)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b = r, g, b
+                            end
+                        },
+                        alpha = {
+                            order = 5,
+                            type = "range",
+                            name = L["Alpha"],
+                            min = 0,
+                            max = 1,
+                            step = 0.01
+                        },
+                        animationType = {
+                            order = 6,
+                            type = "select",
+                            name = L["Animation Type"],
+                            desc = L["The type of animation activated when a button is hovered."],
+                            hidden = true,
+                            values = {
+                                FADE = L["Fade"]
+                            }
+                        },
+                        animationDuration = {
+                            order = 7,
+                            type = "range",
+                            name = L["Animation Duration"],
+                            desc = L["The duration of the animation in seconds."],
+                            min = 0,
+                            max = 3,
+                            step = 0.01
+                        }
+                    }
+                },
+                selected = {
+                    order = 3,
+                    type = "group",
+                    name = L["Selected Backdrop & Border"],
+                    inline = true,
+                    get = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 2]].enable or
+                            not E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].enable
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            width = "full",
+                            disabled = function(info)
+                                return not E.private.WT.skins.widgets[info[#info - 2]].enable
+                            end
+                        },
+                        texture = {
+                            order = 2,
+                            type = "select",
+                            name = L["Texture"],
+                            dialogControl = "LSM30_Statusbar",
+                            values = LSM:HashTable("statusbar")
+                        },
+                        backdropClassColor = {
+                            order = 4,
+                            type = "toggle",
+                            name = L["Backdrop Class Color"],
+                            width = 1.5
+                        },
+                        backdropColor = {
+                            order = 5,
+                            type = "color",
+                            name = L["Backdrop Color"],
+                            hasAlpha = true,
+                            hidden = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].backdropClassColor
+                            end,
+                            get = function(info)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b, db.a = r, g, b, a
+                            end
+                        },
+                        borderClassColor = {
+                            order = 4,
+                            type = "toggle",
+                            name = L["Border Class Color"],
+                            width = 1.5
+                        },
+                        borderColor = {
+                            order = 5,
+                            type = "color",
+                            name = L["Border Color"],
+                            hasAlpha = true,
+                            hidden = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].borderClassColor
+                            end,
+                            get = function(info)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                            end,
+                            set = function(info, r, g, b, a)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b, db.a = r, g, b, a
+                            end
+                        }
+                    }
+                },
+                text = {
+                    order = 4,
+                    type = "group",
+                    name = L["Text"],
+                    inline = true,
+                    get = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 2]].enable or
+                            not E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].enable
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            width = "full",
+                            disabled = function(info)
+                                return not E.private.WT.skins.widgets[info[#info - 2]].enable
+                            end
+                        },
+                        normalClassColor = {
+                            order = 2,
+                            type = "toggle",
+                            name = L["Normal Class Color"],
+                            width = 1.5
+                        },
+                        normalColor = {
+                            order = 3,
+                            type = "color",
+                            name = L["Normal Color"],
+                            hasAlpha = false,
+                            hidden = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].normalClassColor
+                            end,
+                            get = function(info)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b = r, g, b
+                            end
+                        },
+                        selectedClassColor = {
+                            order = 4,
+                            type = "toggle",
+                            name = L["Selected Class Color"],
+                            width = 1.5
+                        },
+                        selectedColor = {
+                            order = 5,
+                            type = "color",
+                            name = L["Selected Color"],
+                            hasAlpha = false,
+                            hidden = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].selectedClassColor
+                            end,
+                            get = function(info)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                            end,
+                            set = function(info, r, g, b)
+                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
+                                db.r, db.g, db.b = r, g, b
+                            end
+                        },
+                        font = {
+                            order = 6,
+                            type = "group",
+                            inline = true,
+                            name = L["Font Setting"],
+                            disabled = function(info)
+                                return not E.private.WT.skins.widgets[info[#info - 3]].enable or
+                                    not E.private.WT.skins.widgets[info[#info - 3]][info[#info - 2]].enable
+                            end,
+                            get = function(info)
+                                return E.private.WT.skins.widgets[info[#info - 3]][info[#info - 2]].font[info[#info]]
+                            end,
+                            set = function(info, value)
+                                E.private.WT.skins.widgets[info[#info - 3]][info[#info - 2]].font[info[#info]] = value
+                                E:StaticPopup_Show("PRIVATE_RL")
+                            end,
+                            args = {
+                                name = {
+                                    order = 1,
+                                    type = "select",
+                                    dialogControl = "LSM30_Font",
+                                    name = L["Font"],
+                                    values = LSM:HashTable("font")
+                                },
+                                style = {
+                                    order = 2,
+                                    type = "select",
+                                    name = L["Outline"],
+                                    values = {
+                                        NONE = L["None"],
+                                        OUTLINE = L["OUTLINE"],
+                                        MONOCHROME = L["MONOCHROME"],
+                                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                        THICKOUTLINE = L["THICKOUTLINE"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        checkBox = {
+            order = 12,
             type = "group",
             name = L["Check Box"],
             args = {

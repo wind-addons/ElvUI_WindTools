@@ -9,62 +9,89 @@ S.Widgets = WS
 local abs = abs
 local strlower = strlower
 
-function WS.EnterAnimation(frame)
-    if not frame:IsEnabled() or not frame.windAnimation then
-        return
-    end
-
-    if not frame.selected then
-        if frame.windAnimation.bgOnLeave:IsPlaying() then
-            frame.windAnimation.bgOnLeave:Stop()
-        end
-        frame.windAnimation.bgOnEnter:Play()
-    end
-end
-
-function WS.LeaveAnimation(frame)
-    if not frame:IsEnabled() or not frame.windAnimation then
-        return
-    end
-
-    if not frame.selected then
-        if frame.windAnimation.bgOnEnter:IsPlaying() then
-            frame.windAnimation.bgOnEnter:Stop()
-        end
-        frame.windAnimation.bgOnLeave:Play()
-    end
-end
-
 function WS.IsUglyYellow(...)
     local r, g, b = ...
     return abs(r - 1) + abs(g - 0.82) + abs(b) < 0.02
 end
 
-function WS.CreateAnimation(texture, aType, direction, duration, data)
+function WS.Animation(texture, aType, duration, data)
     local aType = strlower(aType)
     local group = texture:CreateAnimationGroup()
-    local event = direction == "in" and "OnPlay" or "OnFinished"
-
-    local startAlpha = data and data[1] or (direction == "in" and 0 or 1)
-    local endAlpha = data and data[2] or (direction == "in" and 1 or 0)
 
     if aType == "fade" then
-        group.anim = group:CreateAnimation("Alpha")
-        group.anim:SetFromAlpha(startAlpha)
-        group.anim:SetToAlpha(endAlpha)
-        group.anim:SetSmoothing(direction == "in" and "IN" or "OUT")
-        group.anim:SetDuration(duration)
-    elseif aType == "scale" then
-    end
+        local alpha = data
+        local anim = group:CreateAnimation("Alpha")
+        group.anim = anim
 
-    if group.anim then
+        -- Set the default status is waiting to play enter animation
+        anim.isEnterMode = true
+        anim:SetFromAlpha(0)
+        anim:SetToAlpha(alpha)
+        anim:SetSmoothing("in")
+        anim:SetDuration(duration)
+
         group:SetScript(
-            event,
+            "OnPlay",
             function()
-                texture:SetAlpha(endAlpha)
+                texture:SetAlpha(anim:GetFromAlpha())
             end
         )
-        group.anim:SetDuration(duration)
-        return group
+
+        group:SetScript(
+            "OnFinished",
+            function()
+                texture:SetAlpha(anim:GetToAlpha())
+            end
+        )
+
+        local restart = function()
+            if group:IsPlaying() then
+                group:Pause()
+                group:Restart()
+            else
+                group:Play()
+            end
+        end
+
+        local onEnter = function()
+            local remainingProgress = anim.isEnterMode and (1 - anim:GetProgress()) or anim:GetProgress()
+            local remainingDuration = remainingProgress * duration
+
+            anim:SetFromAlpha(alpha * (1 - remainingProgress))
+            anim:SetToAlpha(alpha)
+            anim:SetSmoothing("in")
+            anim:SetDuration(remainingDuration)
+            anim.isEnterMode = true
+            restart()
+        end
+
+        local onLeave = function()
+            local remainingProgress = anim.isEnterMode and anim:GetProgress() or (1 - anim:GetProgress())
+            local remainingDuration = remainingProgress * duration
+
+            anim:SetFromAlpha(alpha * remainingProgress)
+            anim:SetToAlpha(0)
+            anim:SetSmoothing("out")
+            anim:SetDuration(remainingDuration)
+            anim.isEnterMode = false
+            restart()
+        end
+
+        return group, onEnter, onLeave
+    elseif aType == "scale" then
     end
 end
+
+function WS:Ace3_RegisterAsWidget(_, widget)
+    local widgetType = widget.type
+
+    if not widgetType then
+        return
+    end
+
+    if widgetType == "Button" or widgetType == "Button-ElvUI" then
+        self:HandleButton(nil, widget)
+    end
+end
+
+WS:SecureHook(ES, "Ace3_RegisterAsWidget")

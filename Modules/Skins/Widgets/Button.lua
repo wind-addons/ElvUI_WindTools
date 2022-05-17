@@ -39,27 +39,18 @@ function WS:HandleButton(_, button)
 
         F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
+        local group, onEnter, onLeave =
+            self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
         -- Animations
         button.windAnimation = {
             bg = bg,
-            bgOnEnter = self.CreateAnimation(
-                bg,
-                db.backdrop.animationType,
-                "in",
-                db.backdrop.animationDuration,
-                {0, db.backdrop.alpha}
-            ),
-            bgOnLeave = self.CreateAnimation(
-                bg,
-                db.backdrop.animationType,
-                "out",
-                db.backdrop.animationDuration,
-                {db.backdrop.alpha, 0}
-            )
+            group = group,
+            onEnter = onEnter,
+            onLeave = onLeave
         }
 
-        self:SecureHookScript(button, "OnEnter", WS.EnterAnimation)
-        self:SecureHookScript(button, "OnLeave", WS.LeaveAnimation)
+        self:SecureHookScript(button, "OnEnter", onEnter)
+        self:SecureHookScript(button, "OnLeave", onLeave)
 
         -- Avoid the hook is flushed
         self:SecureHook(
@@ -68,10 +59,10 @@ function WS:HandleButton(_, button)
             function(frame, scriptType)
                 if scriptType == "OnEnter" then
                     self:Unhook(frame, "OnEnter")
-                    self:SecureHookScript(frame, "OnEnter", WS.EnterAnimation)
+                    self:SecureHookScript(frame, "OnEnter", onEnter)
                 elseif scriptType == "OnLeave" then
                     self:Unhook(frame, "OnLeave")
-                    self:SecureHookScript(frame, "OnLeave", WS.LeaveAnimation)
+                    self:SecureHookScript(frame, "OnLeave", onLeave)
                 end
             end
         )
@@ -82,14 +73,6 @@ function WS:HandleButton(_, button)
     end
 
     button.windWidgetSkinned = true
-end
-
-do
-    ES.Ace3_RegisterAsWidget_ = ES.Ace3_RegisterAsWidget
-    function ES:Ace3_RegisterAsWidget(widget)
-        ES:Ace3_RegisterAsWidget_(widget)
-        WS:HandleButton(nil, widget)
-    end
 end
 
 WS:SecureHook(ES, "HandleButton")

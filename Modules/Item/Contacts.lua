@@ -445,7 +445,7 @@ function CT:UpdatePage(pageIndex)
             if temp then
                 if temp.memberIndex then -- Only get guild member info if needed
                     local fullname, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(temp.memberIndex)
-                    local name, realm = F.Strings.Split("-", fullname)
+                    local name, realm = F.Strings.Split(fullname, "-")
                     realm = realm or E.myrealm
                     button.name = name
                     button.realm = realm
@@ -543,7 +543,7 @@ function CT:BuildFriendsData()
     for i = 1, numWoWFriend do
         local info = C_FriendList_GetFriendInfoByIndex(i)
         if info.connected then
-            local name, realm = F.Strings.Split("-", info.name)
+            local name, realm = F.Strings.Split(info.name, "-")
             realm = realm or E.myrealm
             tinsert(
                 data,
@@ -621,7 +621,7 @@ end
 function CT:BuildFavoriteData()
     data = {}
     for fullName in pairs(E.global.WT.item.contacts.favorites) do
-        local name, realm = F.Strings.Split("-", fullName)
+        local name, realm = F.Strings.Split(fullName, "-")
         realm = realm or E.myrealm
         tinsert(
             data,

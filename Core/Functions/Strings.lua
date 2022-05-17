@@ -129,7 +129,7 @@ function F.Strings.Replace(s, mapping)
     return newstr
 end
 
-function F.Strings.Split(delimiter, subject)
+function F.Strings.Split(subject, delimiter)
     if not subject or subject == "" then
         return {}
     end

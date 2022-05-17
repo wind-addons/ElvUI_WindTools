@@ -24,15 +24,17 @@ function WS:HandleButton(_, button)
         end
     end
 
-    if button.template and db.backdrop.enable then
+    if db.backdrop.enable and (button.template or button.backdrop) then
+        local parentFrame = button.backdrop or button
+
         -- Create background
-        local bg = button:CreateTexture()
-        bg:SetInside(button, 1, 1)
+        local bg = parentFrame:CreateTexture()
+        bg:SetInside(parentFrame, 1, 1)
         bg:SetAlpha(0)
         bg:SetTexture(LSM:Fetch("statusbar", db.backdrop.texture) or E.media.normTex)
 
-        if button.Center then
-            local layer, subLayer = button.Center:GetDrawLayer()
+        if parentFrame.Center then
+            local layer, subLayer = parentFrame.Center:GetDrawLayer()
             subLayer = subLayer and subLayer + 1 or 0
             bg:SetDrawLayer(layer, subLayer)
         end
@@ -67,7 +69,7 @@ function WS:HandleButton(_, button)
         )
 
         if db.backdrop.removeBorderEffect then
-            button.SetBackdropBorderColor = E.noop
+            parentFrame.SetBackdropBorderColor = E.noop
         end
     end
 

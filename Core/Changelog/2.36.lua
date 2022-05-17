@@ -13,7 +13,7 @@ W.Changelog[236] = {
             "Added /wtdebug command to enable debug mode. Please use this command test once before submitting a bug report."
         },
         ["koKR"] = {
-            "Added /wtdebug command to enable debug mode. Please use this command test once before submitting a bug report."
+            "디버그 모드를 활성화하기 위해 /wtdebug 명령을 추가했습니다. 버그를 제출하기 전에 이 명령을 사용하여 테스트하십시오."
         }
     },
     NEW = {
@@ -27,7 +27,7 @@ W.Changelog[236] = {
             "[Skins] Add new widgets skins, you can use it to change the global settings of ElvUI skin."
         },
         ["koKR"] = {
-            "[Skins] Add new widgets skins, you can use it to change the global settings of ElvUI skin."
+            "[스킨] 새 위젯 스킨이 추가 되였습니다. ElvUI 스킨의 전역 설정을 변경할 수 있습니다."
         }
     },
     IMPROVEMENT = {
@@ -47,9 +47,9 @@ W.Changelog[236] = {
             "[Talent Manager] Button hover effect changed to ElvUI style."
         },
         ["koKR"] = {
-            "[Objective Tracker] Added more abbreviations support of header text.",
-            "[Contacts] Button hover effect changed to ElvUI style.",
-            "[Talent Manager] Button hover effect changed to ElvUI style."
+            "[퀘스트 추적기] 제목에 더 많은 약어 지원을 추가했습니다.",
+            "[우편 연락처] 버튼 효과가 ElvUI 스타일로 변경되었습니다.",
+            "[특성 관리자] 버튼 효과가 ElvUI 스타일로 변경되었습니다."
         }
     }
 }

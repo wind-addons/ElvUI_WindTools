@@ -383,7 +383,6 @@ L["Druid"] = "德魯伊"
 L["Dyanamic"] = "動態"
 L["ElvUI"] = true
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"
-L["ElvUI Skin"] = "ElvUI 美化外觀"
 L["Emote"] = "表情"
 L["Emote Icon Size"] = "表情符號尺寸"
 L["Emote Selector"] = "表情選擇工具"

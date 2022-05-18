@@ -383,7 +383,6 @@ L["Druid"] = "Druide"
 L["Dyanamic"] = true
 L["ElvUI"] = "ElvUI"
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"
-L["ElvUI Skin"] = true
 L["Emote"] = "Émoticônes"
 L["Emote Icon Size"] = "Taille des émoticônes"
 L["Emote Selector"] = "Sélecteur d'émoticônes"

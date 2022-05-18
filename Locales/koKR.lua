@@ -383,7 +383,6 @@ L["Druid"] = "드루이드"
 L["Dyanamic"] = "유동"
 L["ElvUI"] = true
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"
-L["ElvUI Skin"] = "ElvUI 스킨"
 L["Emote"] = "감정 표현(이모티콘)"
 L["Emote Icon Size"] = "이모티콘 크기"
 L["Emote Selector"] = "이모티콘 선택"

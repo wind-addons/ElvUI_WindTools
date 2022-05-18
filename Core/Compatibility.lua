@@ -416,6 +416,13 @@ function W:CheckCompatibility()
         "private.mui.skins.widgets.checkBox.enable"
     )
 
+    CheckMerathilisUI(
+        format("%s-%s-%s", L["Skins"], L["Widgets"], L["Tab"]),
+        L["Check Box"],
+        "private.WT.skins.widgets.tab.enable",
+        "private.mui.skins.widgets.tab.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

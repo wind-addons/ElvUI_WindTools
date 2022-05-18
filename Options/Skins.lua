@@ -1667,88 +1667,67 @@ options.widgets = {
             order = 12,
             type = "group",
             name = L["Check Box"],
+            get = function(info)
+                return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.widgets[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
             args = {
                 enable = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    width = "full",
-                    get = function(info)
-                        return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
-                    end,
-                    set = function(info, value)
-                        E.private.WT.skins.widgets[info[#info - 1]][info[#info]] = value
-                        E:StaticPopup_Show("PRIVATE_RL")
+                    width = "full"
+                },
+                desc = {
+                    order = 2,
+                    type = "description",
+                    name = "|cffff0000" ..
+                        L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] .. "|r",
+                    hidden = function(info)
+                        return E.private.skins.checkBoxSkin
                     end
                 },
-                elvUISkin = {
-                    order = 2,
-                    type = "group",
-                    name = L["ElvUI Skin"],
-                    inline = true,
-                    get = function(info)
-                        return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
-                    end,
-                    set = function(info, value)
-                        E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]] = value
-                        E:StaticPopup_Show("PRIVATE_RL")
-                    end,
+                texture = {
+                    order = 3,
+                    type = "select",
+                    name = L["Texture"],
+                    dialogControl = "LSM30_Statusbar",
+                    values = LSM:HashTable("statusbar"),
                     disabled = function(info)
-                        return not E.private.WT.skins.widgets[info[#info - 2]].enable or
-                            not E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].enable
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
+                    end
+                },
+                classColor = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Class Color"],
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
+                    end
+                },
+                color = {
+                    order = 5,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = true,
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
                     end,
-                    args = {
-                        desc = {
-                            order = 1,
-                            type = "description",
-                            name = "|cffff0000" ..
-                                L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] ..
-                                    "|r",
-                            hidden = function(info)
-                                return E.private.skins.checkBoxSkin
-                            end
-                        },
-                        enable = {
-                            order = 2,
-                            type = "toggle",
-                            name = L["Enable"],
-                            width = "full",
-                            disabled = function(info)
-                                return not E.private.WT.skins.widgets[info[#info - 2]].enable or
-                                    not E.private.skins.checkBoxSkin
-                            end
-                        },
-                        texture = {
-                            order = 3,
-                            type = "select",
-                            name = L["Texture"],
-                            dialogControl = "LSM30_Statusbar",
-                            values = LSM:HashTable("statusbar")
-                        },
-                        classColor = {
-                            order = 4,
-                            type = "toggle",
-                            name = L["Class Color"]
-                        },
-                        color = {
-                            order = 5,
-                            type = "color",
-                            name = L["Color"],
-                            hasAlpha = true,
-                            hidden = function(info)
-                                return E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]].classColor
-                            end,
-                            get = function(info)
-                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
-                                local default = V.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
-                                return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
-                            end,
-                            set = function(info, r, g, b, a)
-                                local db = E.private.WT.skins.widgets[info[#info - 2]][info[#info - 1]][info[#info]]
-                                db.r, db.g, db.b, db.a = r, g, b, a
-                            end
-                        }
-                    }
+                    hidden = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 1]].classColor
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+                        local default = V.skins.widgets[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        local db = E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, a
+                    end
                 }
             }
         }

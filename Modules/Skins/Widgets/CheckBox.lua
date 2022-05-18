@@ -16,13 +16,13 @@ function WS:HandleAce3CheckBox(check)
     end
 
     if not check.windWidgetSkinned then
-        check:SetTexture(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+        check:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
         check.SetTexture = E.noop
         check.windWidgetSkinned = true
     end
 
     if self.IsUglyYellow(check:GetVertexColor()) then
-        F.SetVertexColorWithDB(check, db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color)
+        F.SetVertexColorWithDB(check, db.classColor and W.ClassColor or db.color)
     end
 end
 
@@ -48,13 +48,13 @@ function WS:HandleCheckBox(_, check)
         if check.GetCheckedTexture then
             local tex = check:GetCheckedTexture()
             if tex then
-                tex:SetTexture(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+                tex:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
                 tex.SetTexture = E.noop
-                F.SetVertexColorWithDB(tex, db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color)
+                F.SetVertexColorWithDB(tex, db.classColor and W.ClassColor or db.color)
                 tex.SetVertexColor_ = tex.SetVertexColor
                 tex.SetVertexColor = function(tex, ...)
                     if self.IsUglyYellow(...) then
-                        local color = db.elvUISkin.classColor and W.ClassColor or db.elvUISkin.color
+                        local color = db.classColor and W.ClassColor or db.color
                         tex:SetVertexColor_(color.r, color.g, color.b, color.a)
                     else
                         tex:SetVertexColor_(...)
@@ -75,7 +75,7 @@ function WS:HandleCheckBox(_, check)
                     if texPath == "" then
                         tex:SetTexture_("")
                     else
-                        tex:SetTexture_(LSM:Fetch("statusbar", db.elvUISkin.texture) or E.media.normTex)
+                        tex:SetTexture_(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
                     end
                 end
             end

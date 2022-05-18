@@ -4,5 +4,6 @@
     <!-- Submodule -->
 	<Script file='Button.lua'/>
 	<Script file='CheckBox.lua'/>
+	<Script file='Slider.lua'/>
 	<Script file='Tab.lua'/>
 </Ui>

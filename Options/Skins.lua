@@ -1730,6 +1730,65 @@ options.widgets = {
                     end
                 }
             }
+        },
+        slider = {
+            order = 13,
+            type = "group",
+            name = L["Slider"],
+            get = function(info)
+                return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.widgets[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                texture = {
+                    order = 2,
+                    type = "select",
+                    name = L["Texture"],
+                    dialogControl = "LSM30_Statusbar",
+                    values = LSM:HashTable("statusbar"),
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
+                    end
+                },
+                classColor = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Class Color"],
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
+                    end
+                },
+                color = {
+                    order = 4,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = true,
+                    disabled = function(info)
+                        return not E.private.WT.skins.widgets[info[#info - 1]].enable
+                    end,
+                    hidden = function(info)
+                        return E.private.WT.skins.widgets[info[#info - 1]].classColor
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+                        local default = V.skins.widgets[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        local db = E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, a
+                    end
+                }
+            }
         }
     }
 }

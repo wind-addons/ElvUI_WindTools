@@ -94,4 +94,17 @@ function WS:Ace3_RegisterAsWidget(_, widget)
     end
 end
 
+function WS:Ace3_RegisterAsContainer(_, widget)
+    local widgetType = widget.type
+
+    if not widgetType then
+        return
+    end
+
+    if widgetType == "TreeGroup" then
+        self:HandleTreeGroup(widget)
+    end
+end
+
 WS:SecureHook(ES, "Ace3_RegisterAsWidget")
+WS:SecureHook(ES, "Ace3_RegisterAsContainer")

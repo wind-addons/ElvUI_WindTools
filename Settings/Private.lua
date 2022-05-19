@@ -263,7 +263,27 @@ V.skins = {
 			texture = "WindTools Glow",
 			classColor = false,
 			color = {r = 0.322, g = 0.608, b = 0.961, a = 0.8}
-		}
+		},
+		treeGroupButton = {
+			enable = true,
+			backdrop = {
+				enable = true,
+				texture = "WindTools Glow",
+				classColor = false,
+				color = {r = 0.145, g = 0.353, b = 0.698},
+				alpha = 1,
+				animationType = "FADE",
+				animationDuration = 0.2,
+				removeBorderEffect = true
+			},
+			text = {
+				enable = true,
+				font = {
+					name = E.db.general.font,
+					style = "OUTLINE"
+				}
+			}
+		},
 	},
 	addons = {
 		ace3 = true,

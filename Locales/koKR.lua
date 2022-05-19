@@ -1081,6 +1081,7 @@ L["Trade Skill"] = true
 L["Trainer"] = true
 L["Translate Item"] = "아이템명 변역"
 L["Translate the name in item links into your language."] = "링크된 아이템명을 플레이어의 언어로 번역합니다."
+L["Tree Group Button"] = true
 L["Turn In"] = "자동 수락"
 L["Tutorials"] = true
 L["Unblock the profanity filter."] = "비속어 필터 차단을 해제하십시오."

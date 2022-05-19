@@ -1081,6 +1081,7 @@ L["Trade Skill"] = true
 L["Trainer"] = true
 L["Translate Item"] = true
 L["Translate the name in item links into your language."] = true
+L["Tree Group Button"] = true
 L["Turn In"] = true
 L["Tutorials"] = "Tutoriales"
 L["Unblock the profanity filter."] = true

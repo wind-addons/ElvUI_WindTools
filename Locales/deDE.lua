@@ -1081,6 +1081,7 @@ L["Trade Skill"] = "Handwerksskill"
 L["Trainer"] = "Ausbilder"
 L["Translate Item"] = "Übersetze Gegenstand"
 L["Translate the name in item links into your language."] = "Übersetze den Namen in Gegenstandlinks in Deiner Sprache."
+L["Tree Group Button"] = "Baumstrukturtaste"
 L["Turn In"] = "Annehmen"
 L["Tutorials"] = true
 L["Unblock the profanity filter."] = "Entsperre den Obszönitätsfilter."

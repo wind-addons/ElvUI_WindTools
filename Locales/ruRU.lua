@@ -1081,6 +1081,7 @@ L["Trade Skill"] = "Скилл обмена"
 L["Trainer"] = "Тренер"
 L["Translate Item"] = true
 L["Translate the name in item links into your language."] = "Переведите название в ссылках на товары на свой язык."
+L["Tree Group Button"] = true
 L["Turn In"] = "Сдать"
 L["Tutorials"] = "Обучение"
 L["Unblock the profanity filter."] = "Разблокируйте фильтр ненормативной лексики."

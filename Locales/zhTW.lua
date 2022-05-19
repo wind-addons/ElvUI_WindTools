@@ -1081,6 +1081,7 @@ L["Trade Skill"] = "商業技能"
 L["Trainer"] = "訓練師"
 L["Translate Item"] = "翻譯物品"
 L["Translate the name in item links into your language."] = "將物品連結的名稱翻譯到你的語言."
+L["Tree Group Button"] = true
 L["Turn In"] = "交接"
 L["Tutorials"] = "教學"
 L["Unblock the profanity filter."] = "解鎖不當言詞過濾器."

@@ -423,6 +423,13 @@ function W:CheckCompatibility()
         "private.mui.skins.widgets.tab.enable"
     )
 
+    CheckMerathilisUI(
+        format("%s-%s-%s", L["Skins"], L["Widgets"], L["Tree Group Button"]),
+        L["Check Box"],
+        "private.WT.skins.widgets.treeGroupButton.enable",
+        "private.mui.skins.widgets.treeGroupButton.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

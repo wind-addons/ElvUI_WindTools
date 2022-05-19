@@ -1468,7 +1468,7 @@ options.widgets = {
 									max = 3,
 									step = 0.01
 								},
-								,
+								},
 						},
 							text = {
 							order = 3,

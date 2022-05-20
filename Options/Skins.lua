@@ -1500,7 +1500,7 @@ options.widgets = {
 									order = 6,
 									type = "group",
 									inline = true,
-									name = L["Font Group"],
+									name = L["Font Setting"],
 									disabled = function(info)
 										return not E.private.WT.skins.widgets[info[#info - 3]].enable or
 											not E.private.WT.skins.widgets[info[#info - 3]][info[#info - 2]].enable

@@ -34,22 +34,26 @@ W.Changelog[236] = {
         ["zhCN"] = {
             "[任务列表] 新增了更多顶部缩写支持.",
             "[联系人] 按钮划过特效从阴影更改为 ElvUI 风格.",
-            "[天赋管家] 按钮划过特效从阴影更改为 ElvUI 风格."
+            "[天赋管家] 按钮划过特效从阴影更改为 ElvUI 风格.",
+            "[美化皮肤] 修复了 WeakAuras 设定的美化."
         },
         ["zhTW"] = {
             "[任務列表] 新增了更多頂部縮寫支援.",
             "[聯絡人] 按鈕划過特效從陰影更改為 ElvUI 風格.",
-            "[天賦管家] 按鈕划過特效從陰影更改為 ElvUI 風格."
+            "[天賦管家] 按鈕划過特效從陰影更改為 ElvUI 風格.",
+            "[美化皮膚] 修復了 WeakAuras 設定的美化."
         },
         ["enUS"] = {
             "[Objective Tracker] Added more abbreviations support of header text.",
             "[Contact] Button hover effect changed to ElvUI style.",
-            "[Talent Manager] Button hover effect changed to ElvUI style."
+            "[Talent Manager] Button hover effect changed to ElvUI style.",
+            "[Skins] Fixed the skin of WeakAuras Options."
         },
         ["koKR"] = {
             "[퀘스트 추적기] 제목에 더 많은 약어 지원을 추가했습니다.",
             "[우편 연락처] 버튼 효과가 ElvUI 스타일로 변경되었습니다.",
-            "[특성 관리자] 버튼 효과가 ElvUI 스타일로 변경되었습니다."
+            "[특성 관리자] 버튼 효과가 ElvUI 스타일로 변경되었습니다.",
+            "[Skins] Fixed the skin of WeakAuras Options."
         }
     }
 }

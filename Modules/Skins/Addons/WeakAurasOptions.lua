@@ -645,15 +645,6 @@ function S:WeakAuras_ShowOptions()
         end
     end
 
-    local tooltipAnchor = _G.WeakAurasTooltipImportButton:GetParent()
-    if tooltipAnchor then
-        for _, child in pairs {tooltipAnchor:GetChildren()} do
-            if child.Text then
-                ES:HandleButton(child)
-            end
-        end
-    end
-
     -- Snippets Frame
     local snippetsFrame = _G.WeakAurasSnippets
     if snippetsFrame then

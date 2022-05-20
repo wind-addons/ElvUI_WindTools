@@ -5,16 +5,16 @@ local WS = S.Widgets
 local ES = E.Skins
 
 function WS:HandleTreeGroup(widget)
+    if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.treeGroupButton.enable then
+        return
+    end
+
+    local db = E.private.WT.skins.widgets.treeGroupButton
+
     if widget.CreateButton then
         widget.CreateButton_ = widget.CreateButton
         widget.CreateButton = function(...)
             local button = widget.CreateButton_(...)
-
-            if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.treeGroupButton.enable then
-                return button
-            end
-
-            local db = E.private.WT.skins.widgets.treeGroupButton
 
             if db.text.enable then
                 local text = button.Text or button.GetName and button:GetName() and _G[button:GetName() .. "Text"]
@@ -37,7 +37,7 @@ function WS:HandleTreeGroup(widget)
                 button:SetHighlightTexture("")
 
                 local bg = button:CreateTexture()
-                bg:SetInside(button, 1, 0)
+                bg:SetInside(button, 2, 0)
                 bg:SetAlpha(0)
                 bg:SetTexture(LSM:Fetch("statusbar", db.backdrop.texture) or E.media.normTex)
 
@@ -77,8 +77,31 @@ function WS:HandleTreeGroup(widget)
                 )
             end
 
-            button.windWidgetSkinned = true
+            if db.selected.enable then
+                button:CreateBackdrop()
+                button.backdrop:SetInside(button, 2, 0)
+                local borderColor = db.selected.borderClassColor and W.ClassColor or db.selected.borderColor
+                local backdropColor = db.selected.backdropClassColor and W.ClassColor or db.selected.backdropColor
+                button.backdrop.Center:SetTexture(LSM:Fetch("statusbar", db.selected.texture) or E.media.glossTex)
+                button.backdrop:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, borderColor.a)
+                button.backdrop:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b, backdropColor.a)
+                button.backdrop:Hide()
 
+                button.LockHighlight_ = button.LockHighlight
+                button.LockHighlight = function(frame)
+                    if frame.backdrop then
+                        frame.backdrop:Show()
+                    end
+                end
+                button.UnlockHighlight_ = button.UnlockHighlight
+                button.UnlockHighlight = function(frame)
+                    if frame.backdrop then
+                        frame.backdrop:Hide()
+                    end
+                end
+            end
+
+            button.windWidgetSkinned = true
             return button
         end
     end

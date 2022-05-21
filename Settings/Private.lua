@@ -286,7 +286,7 @@ V.skins = {
 				backdropAlpha = 0.4,
 				borderClassColor = false,
 				borderColor = {r = 0.145, g = 0.353, b = 0.698},
-				borderAlpha = 1
+				borderAlpha = 0
 			},
 			text = {
 				enable = true,

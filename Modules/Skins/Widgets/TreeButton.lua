@@ -17,7 +17,8 @@ function WS:HandleTreeGroup(widget)
             local button = widget.CreateButton_(...)
 
             if db.text.enable then
-                local text = button.text or button.Text or button.GetName and button:GetName() and _G[button:GetName() .. "Text"]
+                local text =
+                    button.text or button.Text or button.GetName and button:GetName() and _G[button:GetName() .. "Text"]
                 if text and text.GetTextColor then
                     F.SetFontWithDB(text, db.text.font)
 
@@ -29,6 +30,8 @@ function WS:HandleTreeGroup(widget)
 
                         text.SetPoint_(text, point, arg1, arg2, arg3, arg4)
                     end
+
+                    button.windWidgetText = text
                 end
             end
 
@@ -96,17 +99,29 @@ function WS:HandleTreeGroup(widget)
                     db.selected.backdropAlpha
                 )
                 button.backdrop:Hide()
+            end
 
+            if db.selected.enable or db.text.enable then
                 button.LockHighlight_ = button.LockHighlight
                 button.LockHighlight = function(frame)
                     if frame.backdrop then
                         frame.backdrop:Show()
+                    end
+
+                    if frame.windWidgetText then
+                        local color = db.text.selectedClassColor and W.ClassColor or db.text.selectedColor
+                        frame.windWidgetText:SetTextColor(color.r, color.g, color.b)
                     end
                 end
                 button.UnlockHighlight_ = button.UnlockHighlight
                 button.UnlockHighlight = function(frame)
                     if frame.backdrop then
                         frame.backdrop:Hide()
+                    end
+
+                    if frame.windWidgetText then
+                        local color = db.text.normalClassColor and W.ClassColor or db.text.normalColor
+                        frame.windWidgetText:SetTextColor(color.r, color.g, color.b)
                     end
                 end
             end

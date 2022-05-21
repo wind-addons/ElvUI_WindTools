@@ -290,6 +290,10 @@ V.skins = {
 			},
 			text = {
 				enable = true,
+				normalClassColor = false,
+				normalColor = {r = 1, g = 0.82, b = 0},
+				selectedClassColor = false,
+				selectedColor = {r = 1, g = 1, b = 1},
 				font = {
 					name = E.db.general.font,
 					style = "OUTLINE"

@@ -14,8 +14,11 @@ function S:Blizzard_GuildBankUI()
         self:ReskinTab(_G["GuildBankFrameTab" .. i])
     end
 
-    for i = 1, 6 do
-        self:CreateShadow(_G["GuildBankTab" .. i .. "Button"])
+    for i = 1, 8 do
+        local tab = _G["GuildBankTab" .. i]
+        if tab then
+            self:CreateShadow(tab.Button)
+        end
     end
 end
 

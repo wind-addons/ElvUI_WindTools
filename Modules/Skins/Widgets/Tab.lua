@@ -26,7 +26,7 @@ function WS:HandleTab(_, tab, noBackdrop, template)
     local db = E.private.WT.skins.widgets.tab
 
     if db.text.enable then
-        local text = tab.Text or tab.GetName and tab:GetName() and _G[tab:GetName() .. "Text"]
+        local text = tab.text or tab.Text or tab.GetName and tab:GetName() and _G[tab:GetName() .. "Text"]
         if text and text.GetTextColor then
             F.SetFontWithDB(text, db.text.font)
             tab.windWidgetText = text

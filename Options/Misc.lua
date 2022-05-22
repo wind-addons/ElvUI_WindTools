@@ -322,12 +322,6 @@ options.cvars = {
                     type = "toggle",
                     name = L["Auto Compare"]
                 }
-                -- showQuestTrackingTooltips = {
-                --     order = 2,
-                --     type = "toggle",
-                --     name = L["Show Quest Info"],
-                --     desc = L["Add progress information (Ex. Mob 10/25)."]
-                -- }
             }
         },
         mouse = {

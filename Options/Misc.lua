@@ -631,32 +631,32 @@ do
         },
         noSign = {
             order = 2,
-            tag = "[health:percent-nosign]",
-            text = L["The percentage of current health without percent sign"] ..
+            tag = "[health:percent-nostatus]",
+            text = L["The percentage of current health without status"] ..
                 format(" (%s)", L["Follow ElvUI Setting"])
         },
         noSign0 = {
             order = 3,
-            tag = "[health:percent-nosign-0]",
-            text = L["The percentage of current health without percent sign"] ..
+            tag = "[health:percent-nostatus-0]",
+            text = L["The percentage of current health without status"] ..
                 format(" (%s = 0)", L["Decimal Length"])
         },
         noSign1 = {
             order = 4,
-            tag = "[health:percent-nosign-1]",
-            text = L["The percentage of current health without percent sign"] ..
+            tag = "[health:percent-nostatus-1]",
+            text = L["The percentage of current health without status"] ..
                 format(" (%s = 1)", L["Decimal Length"])
         },
         noSign2 = {
             order = 5,
-            tag = "[health:percent-nosign-2]",
-            text = L["The percentage of current health without percent sign"] ..
+            tag = "[health:percent-nostatus-2]",
+            text = L["The percentage of current health without status"] ..
                 format(" (%s = 2)", L["Decimal Length"])
         },
         noSign3 = {
             order = 6,
-            tag = "[health:percent-nosign-3]",
-            text = L["The percentage of current health without percent sign"] ..
+            tag = "[health:percent-nostatus-3]",
+            text = L["The percentage of current health without status"] ..
                 format(" (%s = 3)", L["Decimal Length"])
         },
         noStatusNoSign = {

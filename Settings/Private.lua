@@ -299,7 +299,7 @@ V.skins = {
 					style = "OUTLINE"
 				}
 			}
-		},
+		}
 	},
 	addons = {
 		ace3 = true,

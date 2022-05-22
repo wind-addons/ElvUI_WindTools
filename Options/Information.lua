@@ -1579,7 +1579,7 @@ options.reset = {
                             end
                         )
                     end
-                },
+                }
             }
         },
         skins = {
@@ -1669,6 +1669,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                widgets = {
+                    order = 6,
+                    type = "execute",
+                    name = L["Widgets"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Widgets"],
+                            nil,
+                            function()
+                                E.private.WT.skins.widgets = V.skins.widgets
+                            end
+                        )
+                    end
                 }
             }
         },
@@ -1693,9 +1708,11 @@ options.reset = {
                                 E.private.WT.misc.noKanjiMath = V.misc.noKanjiMath
                                 E.private.WT.misc.pauseToSlash = V.misc.pauseToSlash
                                 E.private.WT.misc.skipCutScene = V.misc.skipCutScene
-                                E.private.WT.misc.tags = V.misc.tags
-
+                                E.private.WT.misc.hotKeyAboveCD = V.misc.hotKeyAboveCD
+                                E.private.WT.misc.guildNewsItemLevel = V.misc.guildNewsItemLevel
                                 E.db.WT.misc.disableTalkingHead = P.misc.disableTalkingHead
+                                E.db.WT.misc.hideCrafter = P.misc.hideCrafter
+                                E.db.WT.misc.noLootPanel = P.misc.noLootPanel
                             end
                         )
                     end
@@ -1771,6 +1788,21 @@ options.reset = {
                             nil,
                             function()
                                 E.private.WT.misc.lfgList = V.misc.lfgList
+                            end
+                        )
+                    end
+                },
+                automation = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Automation"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Automation"],
+                            nil,
+                            function()
+                                E.db.WT.misc.automation = P.misc.automation
                             end
                         )
                     end
@@ -1869,10 +1901,7 @@ do
                         order = 4,
                         type = "execute",
                         name = L["Export Profile"],
-                        desc = format(
-                            L["Export the setting of %s that stored in ElvUI Profile database."],
-                            W.Title
-                        ),
+                        desc = format(L["Export the setting of %s that stored in ElvUI Profile database."], W.Title),
                         func = function()
                             text = F.Profiles.GetOutputString(true, false)
                         end
@@ -1881,10 +1910,7 @@ do
                         order = 5,
                         type = "execute",
                         name = L["Export Private"],
-                        desc = format(
-                            L["Export the setting of %s that stored in ElvUI Private database."],
-                            W.Title
-                        ),
+                        desc = format(L["Export the setting of %s that stored in ElvUI Private database."], W.Title),
                         func = function()
                             text = F.Profiles.GetOutputString(false, true)
                         end

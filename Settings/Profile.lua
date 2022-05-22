@@ -948,6 +948,6 @@ P.misc = {
         hideWorldMapAfterEnteringCombat = false,
         acceptResurrect = false,
         acceptCombatResurrect = false,
-        confirmSummon = false,
+        confirmSummon = false
     }
 }

@@ -198,6 +198,7 @@ L["Barber Shop"] = true
 L["Battle.net Tag"] = true
 L["Battleground"] = true
 L["Because of %s, this module will not be loaded."] = true
+L["Before you submit a bug, please enable debug mode with %s command and test one more time."] = true
 L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = true
 L["Better visualization of Paragon Factions on the Reputation Frame."] = true
 L["BigWigs"] = true

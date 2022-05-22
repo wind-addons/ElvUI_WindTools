@@ -66,7 +66,7 @@ options.help = {
                     type = "description",
                     fontSize = "medium",
                     name = format(
-                        "%s\n\n%s\n\n%s\n\n%s\n\n%s",
+                        "%s\n%s\n\n%s\n\n%s\n%s",
                         format(L["Thank you for using %s!"], W.Title),
                         format(
                             L[
@@ -141,6 +141,19 @@ options.help = {
                         )
                     end,
                     width = 0.7
+                },
+                debugModeTip = {
+                    order = 7,
+                    type = "description",
+                    fontSize = "medium",
+                    name = E.NewSign ..
+                        " |cffe74c3c" ..
+                            format(
+                                L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
+                                "|cff00ff00/wtdebug|r"
+                            ) ..
+                                "|r",
+                    width = "full"
                 }
             }
         },

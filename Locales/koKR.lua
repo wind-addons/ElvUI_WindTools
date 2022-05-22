@@ -198,6 +198,7 @@ L["Barber Shop"] = "미용실"
 L["Battle.net Tag"] = "베틀넷 태그"
 L["Battleground"] = "전장"
 L["Because of %s, this module will not be loaded."] = "%s 때문에 이 모듈을 로드하지 못하였습니다."
+L["Before you submit a bug, please enable debug mode with %s command and test one more time."] = true
 L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = "레이드 주문 외에도 친근한 플레이어가 될 수 있도록 다양한 기능을 제공합니다."
 L["Better visualization of Paragon Factions on the Reputation Frame."] = "평판 창에 불멸의 동맹 보상을 위한 특별한 시각 효과를 설정합니다.\n변경 내용이 적용되지 않을 경우 UI를 리로드하세요."
 L["BigWigs"] = true

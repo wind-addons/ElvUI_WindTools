@@ -198,6 +198,7 @@ L["Barber Shop"] = "美容沙龍"
 L["Battle.net Tag"] = "戰網 Tag"
 L["Battleground"] = "戰場"
 L["Because of %s, this module will not be loaded."] = "由於 %s 的存在, 這個模組將不會被載入."
+L["Before you submit a bug, please enable debug mode with %s command and test one more time."] = true
 L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = "除了副本技能, 更是提供了多種友好發言功能."
 L["Better visualization of Paragon Factions on the Reputation Frame."] = "在聲望介面中更顯著的提示你的巔峰聲望情況."
 L["BigWigs"] = true

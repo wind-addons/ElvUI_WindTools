@@ -4,6 +4,10 @@ local S = W.Modules.Skins
 local WS = S.Widgets
 local ES = E.Skins
 
+local _G = _G
+local abs = abs
+local type = type
+
 function WS:HandleTreeGroup(widget)
     if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.treeGroupButton.enable then
         return

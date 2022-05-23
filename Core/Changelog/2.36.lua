@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[236] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/05/23",
     IMPORTANT = {
         ["zhCN"] = {
             "新增了命令 /wtdebug 可以用于开启除错模式. 提交 Bug 前请务必使用这个命令进行测试."

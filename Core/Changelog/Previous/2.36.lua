@@ -56,12 +56,12 @@ W.Changelog[236] = {
             "[Skins] Fixed the skin of guild bank."
         },
         ["koKR"] = {
-            "[Tags] Fix some tags description.",
+            "[태그] 일부 태그의 설명을 수정하였습니다.",
             "[퀘스트 추적기] 제목에 더 많은 약어 지원을 추가했습니다.",
             "[우편 연락처] 버튼 효과가 ElvUI 스타일로 변경되었습니다.",
             "[특성 관리자] 버튼 효과가 ElvUI 스타일로 변경되었습니다.",
-            "[Skins] Fixed the skin of WeakAuras Options.",
-            "[Skins] Fixed the skin of guild bank."
+            "[스킨] WeakAuras Options 스킨 수정.",
+            "[스킨] 길드 은행 스킨 수정."
         }
     }
 }

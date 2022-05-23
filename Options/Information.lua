@@ -66,7 +66,7 @@ options.help = {
                     type = "description",
                     fontSize = "medium",
                     name = format(
-                        "%s\n%s\n\n%s\n\n%s\n%s",
+                        "%s\n\n%s\n\n%s\n\n%s\n\n%s",
                         format(L["Thank you for using %s!"], W.Title),
                         format(
                             L[

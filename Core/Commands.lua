@@ -15,9 +15,9 @@ local DisableAddOn = DisableAddOn
 local EnableAddOn = EnableAddOn
 local GetAddOnInfo = GetAddOnInfo
 local GetNumAddOns = GetNumAddOns
-local ReloadUI = ReloadUI
 
 local C_CVar_SetCVar = C_CVar.SetCVar
+local C_UI_Reload = C_UI.Reload
 
 local function AddCommand(name, keys, func)
     if not _G.SlashCmdList[name] then
@@ -64,7 +64,7 @@ do
                 end
 
                 C_CVar_SetCVar("scriptErrors", 1)
-                ReloadUI()
+                C_UI_Reload()
             elseif switch == "off" or switch == "0" then
                 C_CVar_SetCVar("scriptProfile", 0)
                 C_CVar_SetCVar("scriptErrors", 0)
@@ -80,7 +80,7 @@ do
                     end
 
                     wipe(_G.ElvDB.WT.DisabledAddOns)
-                    ReloadUI()
+                    C_UI_Reload()
                 end
             else
                 F.PrintGradientLine()
@@ -88,7 +88,7 @@ do
                 print("on  ", L["Enable debug mode"])
                 print("      ", format(L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."], W.Title))
                 print("off ", L["Disable debug mode"])
-                print("      ", format(L["Reenable the addons that disabled by debug mode."], W.Title))
+                print("      ", L["Reenable the addons that disabled by debug mode."])
                 F.PrintGradientLine()
             end
         end

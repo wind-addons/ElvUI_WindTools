@@ -11,6 +11,15 @@ function WS:HandleButton(_, button)
         return
     end
 
+    if not E.private.WT.skins.widgets then
+        self:RegisterLazyLoad(
+            button,
+            function()
+                self:HandleButton(nil, button)
+            end
+        )
+    end
+
     if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.button.enable then
         return
     end

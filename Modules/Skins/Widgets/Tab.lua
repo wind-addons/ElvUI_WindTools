@@ -19,6 +19,16 @@ function WS:HandleTab(_, tab, noBackdrop, template)
         return
     end
 
+    if not E.private.WT.skins.widgets then
+        self:RegisterLazyLoad(
+            tab,
+            function()
+                self:HandleTab(nil, tab)
+            end
+        )
+        return
+    end
+
     if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
         return
     end

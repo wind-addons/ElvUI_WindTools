@@ -3,11 +3,14 @@ local LSM = E.Libs.LSM
 local S = W.Modules.Skins
 local ES = E.Skins
 
-local WS = W:NewModule("WidgetSkins", "AceHook-3.0")
+local WS = W:NewModule("WidgetSkins", "AceHook-3.0", "AceEvent-3.0")
 S.Widgets = WS
 
 local abs = abs
+local pairs = pairs
+local pcall = pcall
 local strlower = strlower
+local type = type
 
 function WS.IsUglyYellow(...)
     local r, g, b = ...
@@ -108,3 +111,39 @@ end
 
 WS:SecureHook(ES, "Ace3_RegisterAsWidget")
 WS:SecureHook(ES, "Ace3_RegisterAsContainer")
+
+WS.LazyLoadTable = {}
+
+function WS:RegisterLazyLoad(frame, func)
+    if not frame then
+        F.DebugMessage(WS, "frame is nil.")
+        return
+    end
+
+    if type(func) ~= "function" then
+        if self[func] and type(self[func]) == "function" then
+            func = self[func]
+        else
+            F.DebugMessage(WS, func .. " is not a function.")
+            return
+        end
+    end
+
+    self.LazyLoadTable[frame] = func
+end
+
+function WS:LazyLoad()
+    for frame, func in pairs(self.LazyLoadTable) do
+        if frame and func then
+            pcall(func, self, frame)
+        end
+    end
+
+    self.LazyLoadTable = nil
+end
+
+function WS:PLAYER_ENTERING_WORLD()
+    self:LazyLoad()
+end
+
+WS:RegisterEvent("PLAYER_ENTERING_WORLD")

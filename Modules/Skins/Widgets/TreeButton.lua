@@ -13,6 +13,11 @@ function WS:HandleTreeGroup(widget)
         return
     end
 
+    if not E.private.WT.skins.widgets then
+        self:RegisterLazyLoad(widget, "HandleTreeGroup")
+        return
+    end
+
     local db = E.private.WT.skins.widgets.treeGroupButton
 
     if widget.CreateButton then

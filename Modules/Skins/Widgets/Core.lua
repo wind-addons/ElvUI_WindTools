@@ -139,10 +139,11 @@ function WS:LazyLoad()
         end
     end
 
-    self.LazyLoadTable = nil
+    wipe(self.LazyLoadTable)
 end
 
 function WS:PLAYER_ENTERING_WORLD()
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:LazyLoad()
 end
 

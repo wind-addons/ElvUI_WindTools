@@ -7,6 +7,7 @@ local securecall = securecall
 local AcceptResurrect = AcceptResurrect
 local HideUIPanel = HideUIPanel
 local UnitAffectingCombat = UnitAffectingCombat
+local UnitExists = UnitExists
 local PlayerCanTeleport = PlayerCanTeleport
 
 local C_SummonInfo_ConfirmSummon = C_SummonInfo.ConfirmSummon

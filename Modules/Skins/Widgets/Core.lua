@@ -11,6 +11,7 @@ local pairs = pairs
 local pcall = pcall
 local strlower = strlower
 local type = type
+local wipe = wipe
 
 function WS.IsUglyYellow(...)
     local r, g, b = ...

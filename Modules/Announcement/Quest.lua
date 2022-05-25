@@ -68,7 +68,7 @@ do
 	function A:UpdateBlizzardQuestAnnouncement()
 		local enable = false
 
-		if not self.db.quest or not self.db.quest.enable or not self.db.quest.disableBlizzard then
+		if not (self.db.enable and self.db.quest and self.db.quest.enable and self.db.quest.disableBlizzard) then
 			enable = true
 		end
 
@@ -181,7 +181,7 @@ function A:Quest()
 			if not E.db.WT.quest.switchButtons.enable or not config.paused then
 				self:SendMessage(message, self:GetChannel(config.channel))
 			end
-			
+
 			if not isDetailInfo or self.db.quest.disableBlizzard then -- only show details if system do not show that
 				local messageColored = extraInfoColored .. mainInfoColored
 				_G.UIErrorsFrame:AddMessage(messageColored)

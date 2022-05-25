@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='Core.lua'/>
 	<Script file='Developer.lua'/>
+	<Script file='Profiles.lua'/>
 	<Script file='Strings.lua'/>
 </Ui>

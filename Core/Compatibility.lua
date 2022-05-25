@@ -35,7 +35,9 @@ function W:ConstructCompatibilityFrame()
     frame:SetFrameStrata("TOOLTIP")
     frame:SetFrameLevel(9000)
 
-    MF:HandleFrame(frame)
+    if MF and MF.db and MF.db.enable then
+        MF:HandleFrame(frame)
+    end
 
     local close =
         CreateFrame("Button", "WTCompatibilityFrameCloseButton", frame, "UIPanelCloseButton, BackdropTemplate")

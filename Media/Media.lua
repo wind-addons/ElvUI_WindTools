@@ -197,6 +197,7 @@ AddMedia("qq", "QQ.tga", "Icons")
 AddMedia("convert", "Convert.tga", "Icons")
 AddMedia("favorite", "Favorite.tga", "Icons")
 AddMedia("list", "List.tga", "Icons")
+AddMedia("star", "Star.tga", "Icons")
 
 AddMedia("barAchievements", "GameBar/Achievements.tga", "Icons")
 AddMedia("barBags", "GameBar/Bags.tga", "Icons")

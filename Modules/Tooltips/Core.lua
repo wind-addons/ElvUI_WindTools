@@ -6,10 +6,10 @@ local _G = _G
 
 local next = next
 local pairs = pairs
+local pcall = pcall
 local select = select
 local tinsert = tinsert
 local type = type
-local xpcall = xpcall
 
 local CanInspect = CanInspect
 local IsShiftKeyDown = IsShiftKeyDown
@@ -40,14 +40,6 @@ function T:AddCallbackForUpdate(name, func)
     tinsert(self.updateProfile, func or self[name])
 end
 
---[[
-    游戏系统输出错误
-    @param {string} err 错误
-]]
-local function errorhandler(err)
-    return _G.geterrorhandler()(err)
-end
-
 function T:AddInspectInfoCallback(priority, inspectFunction, useModifier, clearFunction)
     if type(inspectFunction) == "string" then
         inspectFunction = self[inspectFunction]
@@ -74,7 +66,7 @@ function T:ClearInspectInfo(tt)
 
     -- Run all registered callbacks (clear)
     for _, func in next, self.clearInspect do
-        xpcall(func, errorhandler, self, tt)
+        pcall(func, self, tt)
     end
 end
 
@@ -93,7 +85,7 @@ function T:InspectInfo(_, tt, triedTimes)
 
     -- Run all registered callbacks (normal)
     for _, func in next, self.normalInspect do
-        xpcall(func, errorhandler, self, tt, unit, guid)
+        pcall(func, self, tt, unit, guid)
     end
 
     -- Hold Shift to show more inspect information
@@ -129,7 +121,7 @@ function T:InspectInfo(_, tt, triedTimes)
 
     -- Run all registered callbacks (modifier)
     for _, func in next, self.modifierInspect do
-        xpcall(func, errorhandler, self, tt, unit, guid)
+        pcall(func, self, tt, unit, guid)
     end
 
     tt.windInspectLoaded = true
@@ -153,7 +145,7 @@ end
 function T:Event(event, ...)
     if self.eventCallback[event] then
         for _, func in next, self.eventCallback[event] do
-            xpcall(func, errorhandler, self, event, ...)
+            pcall(func, self, event, ...)
         end
     end
 end
@@ -162,7 +154,7 @@ function T:Initialize()
     self.db = E.private.WT.tooltips
 
     for index, func in next, self.load do
-        xpcall(func, errorhandler, T)
+        pcall(func, T)
         self.load[index] = nil
     end
 
@@ -177,7 +169,7 @@ end
 
 function T:ProfileUpdate()
     for index, func in next, self.updateProfile do
-        xpcall(func, errorhandler, self)
+        pcall(func, self)
         self.updateProfile[index] = nil
     end
 end

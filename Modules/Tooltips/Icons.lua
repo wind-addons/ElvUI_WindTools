@@ -2,14 +2,10 @@ local W, F, E, L = unpack(select(2, ...))
 local T = W.Modules.Tooltips
 
 local _G = _G
-local gsub = gsub
-local pairs = pairs
-local strfind = strfind
 local unpack = unpack
 
 local GetItemIcon = GetItemIcon
 local GetSpellTexture = GetSpellTexture
-local IsAddOnLoaded = IsAddOnLoaded
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup

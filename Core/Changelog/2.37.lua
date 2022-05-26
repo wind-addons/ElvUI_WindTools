@@ -10,17 +10,21 @@ W.Changelog[237] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[进度] 新增了一个选项用于标记最高分地下城."
+            "[进度] 新增了一个选项用于标记最高分地下城.",
+            "[聊天链接] 支持显示传奇钥石地下城的图标."
         },
         ["zhTW"] = {
-            "[進度] 新增了一個選項用於標記最高分地下城."
+            "[進度] 新增了一個選項用於標記最高分地下城.",
+            "[聊天鏈接] 支援顯示傳奇鑰石地城的圖示."
         },
         ["enUS"] = {
-            "[Progression] Added an option to mark the highest score dungeon."
+            "[Progression] Added an option to mark the highest score dungeon.",
+            "[Chat Link] Support showing the icon of keystone dungeon."
         },
         ["koKR"] = {
-            "[Progression] 최고 점수 던전을 표시하는 옵션을 추가하였습니다."
-        },
+            "[Progression] 최고 점수 던전을 표시하는 옵션을 추가하였습니다.",
+            "[Chat Link] Support showing the icon of keystone dungeon."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

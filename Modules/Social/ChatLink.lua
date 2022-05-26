@@ -18,6 +18,7 @@ local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
+local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 
 local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t"
@@ -107,6 +108,21 @@ local function AddItemInfo(link)
     return link
 end
 
+local function AddKeystoneInfo(link)
+    local itemID, mapID, level = strmatch(link, "Hkeystone:(%d-):(%d-):(%d-):")
+    if not (itemID and mapID and level and itemID == "180653") then
+        return
+    end
+
+    local name, _, _, texture = C_ChallengeMode_GetMapUIInfo(tonumber(mapID))
+
+    if CL.db.icon then
+        link = format(ICON_STRING, texture) .. " " .. link
+    end
+
+    return link
+end
+
 local function AddSpellInfo(link)
     -- spell icon
     local id = strmatch(link, "Hspell:(%d-):")
@@ -174,6 +190,7 @@ end
 function CL:Filter(event, msg, ...)
     if CL.db.enable then
         msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
+        msg = gsub(msg, "(|Hkeystone:%d+:.-|h.-|h)", AddKeystoneInfo)
         msg = gsub(msg, "(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
         msg = gsub(msg, "(|Henchant:%d+|h.-|h)", AddEnchantInfo)
         msg = gsub(msg, "(|Htalent:%d+|h.-|h)", AddTalentInfo)

@@ -288,7 +288,8 @@ options.progression = {
                 markHighestScore = {
                     order = 2,
                     type = "toggle",
-                    name = L["Mark Highest Score"]
+                    name = L["Mark Highest Score"],
+                    desc = L["Add a small icon to indicate the highest score."]
                 },
                 showNoRecord = {
                     order = 3,

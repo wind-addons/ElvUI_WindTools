@@ -453,6 +453,7 @@ V.tooltips = {
 		},
 		mythicDungeons = {
 			enable = true,
+			markHighestScore = true,
 			showNoRecord = true,
 			["De Other Side"] = true,
 			["Halls of Atonement"] = true,

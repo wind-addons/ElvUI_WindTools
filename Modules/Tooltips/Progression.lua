@@ -36,6 +36,8 @@ local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMyth
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
+local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
+
 local loadedComparison
 local compareGUID
 local cache = {}
@@ -408,6 +410,7 @@ local function UpdateProgression(guid, unit, faction)
         cache[guid].info.mythicDungeons = {}
         local summary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
         local runs = summary and summary.runs
+        local tempHighestScore, tempHighestScoreDungeon
 
         if runs then
             for _, info in ipairs(runs) do
@@ -422,8 +425,17 @@ local function UpdateProgression(guid, unit, faction)
                     scoreColor:WrapTextInColorCode(info.mapScore),
                     levelColor .. info.bestRunLevel .. "|r"
                 )
+
+                if db.mythicDungeons.markHighestScore then
+                    if not tempHighestScore or info.mapScore > tempHighestScore then
+                        tempHighestScore = info.mapScore
+                        tempHighestScoreDungeon = name
+                    end
+                end
             end
         end
+
+        cache[guid].info.mythicDungeons.highestScoreDungeon = tempHighestScoreDungeon
     end
 end
 
@@ -490,6 +502,8 @@ local function SetProgressionInfo(tt, guid)
     end
 
     if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
+        local highestScoreDungeon = cache[guid].info.mythicDungeons.highestScoreDungeon
+
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
             tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
@@ -504,6 +518,9 @@ local function SetProgressionInfo(tt, guid)
                     right = "|cff888888" .. L["No Record"] .. "|r"
                 end
                 if right then
+                    if highestScoreDungeon and highestScoreDungeon == name then
+                        right = starIconString .. right
+                    end
                     tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
                 end
             end

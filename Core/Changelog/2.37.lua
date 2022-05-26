@@ -9,10 +9,18 @@ W.Changelog[237] = {
         ["koKR"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[进度] 新增了一个选项用于标记最高分地下城."
+        },
+        ["zhTW"] = {
+            "[進度] 新增了一個選項用於標記最高分地下城."
+        },
+        ["enUS"] = {
+            "[Progression] Added an option to mark the highest score dungeon."
+        },
+        ["koKR"] = {
+            "[Progression] 최고 점수 던전을 표시하는 옵션을 추가하였습니다."
+        },
     },
     IMPROVEMENT = {
         ["zhCN"] = {

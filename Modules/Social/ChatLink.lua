@@ -114,9 +114,8 @@ local function AddKeystoneInfo(link)
         return
     end
 
-    local name, _, _, texture = C_ChallengeMode_GetMapUIInfo(tonumber(mapID))
-
     if CL.db.icon then
+        local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
         link = format(ICON_STRING, texture) .. " " .. link
     end
 
@@ -189,8 +188,8 @@ end
 
 function CL:Filter(event, msg, ...)
     if CL.db.enable then
+        msg = gsub(msg, "(|cffa335ee|Hkeystone:%d+:.-|h.-|h|r)", AddKeystoneInfo)
         msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
-        msg = gsub(msg, "(|Hkeystone:%d+:.-|h.-|h)", AddKeystoneInfo)
         msg = gsub(msg, "(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
         msg = gsub(msg, "(|Henchant:%d+|h.-|h)", AddEnchantInfo)
         msg = gsub(msg, "(|Htalent:%d+|h.-|h)", AddTalentInfo)

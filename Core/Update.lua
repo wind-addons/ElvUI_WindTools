@@ -23,8 +23,13 @@ end
 
 function W:UpdateScripts()
     W:ForPreReleaseUser()
-    local currentVersion = tonumber(W.Version) -- Installed WindTools Version
-    local globalVersion = tonumber(E.global.WT.version or "0") -- Version in ElvUI Global
+    local currentVersion = tonumber(W.Version) -- installed WindTools Version
+    local globalVersion = tonumber(E.global.WT.version or "0") -- version in ElvUI Global
+
+    -- changelog display
+    if globalVersion == 0 or globalVersion ~= currentVersion then
+        self.showChangeLog = true
+    end
 
     -- from old updater
     if globalVersion == 0 then

@@ -112,7 +112,8 @@ function W:CheckInstalledVersion()
     if InCombatLockdown() then
         return
     end
-    if not E.global.WT.version or E.global.WT.version ~= W.Version then
+
+    if self.showChangeLog then
         E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
     end
 

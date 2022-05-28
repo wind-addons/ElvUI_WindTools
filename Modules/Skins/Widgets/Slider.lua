@@ -5,13 +5,14 @@ local WS = S.Widgets
 local ES = E.Skins
 
 function WS:HandleSliderFrame(_, slider)
-    if not E.private.WT.skins.widgets then
+    if not self:IsReady() then
         self:RegisterLazyLoad(
             slider,
             function()
                 self:HandleSliderFrame(nil, slider)
             end
         )
+        return
     end
 
     local db = E.private.WT.skins.widgets.slider

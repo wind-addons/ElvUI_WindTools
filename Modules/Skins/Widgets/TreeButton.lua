@@ -13,7 +13,7 @@ function WS:HandleTreeGroup(widget)
         return
     end
 
-    if not E.private.WT.skins.widgets then
+    if not self:IsReady() then
         self:RegisterLazyLoad(widget, "HandleTreeGroup")
         return
     end

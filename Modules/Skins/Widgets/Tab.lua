@@ -19,7 +19,7 @@ function WS:HandleTab(_, tab, noBackdrop, template)
         return
     end
 
-    if not E.private.WT.skins.widgets then
+    if not self:IsReady() then
         self:RegisterLazyLoad(
             tab,
             function()

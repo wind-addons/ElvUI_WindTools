@@ -115,6 +115,10 @@ WS:SecureHook(ES, "Ace3_RegisterAsContainer")
 
 WS.LazyLoadTable = {}
 
+function WS:IsReady()
+    return E.private and E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets
+end
+
 function WS:RegisterLazyLoad(frame, func)
     if not frame then
         F.DebugMessage(WS, "frame is nil.")

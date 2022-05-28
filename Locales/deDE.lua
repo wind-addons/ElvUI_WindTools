@@ -563,6 +563,7 @@ L["Item Buttons"] = "Item Tasten"
 L["Item Level"] = "Gegenstandslevel"
 L["Item Level:"] = "Gegenstandsstufe:"
 L["Item Name"] = "Gegenstandsname"
+L["Item Socketing"] = true
 L["Item Upgrade"] = "Gegenstandsaufwertung"
 L["Just for Chinese and Korean players"] = "Nur für chinesische und koreanische Spieler"
 L["Key Binding"] = "Tastenbelegung"

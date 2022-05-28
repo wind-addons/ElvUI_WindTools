@@ -563,6 +563,7 @@ L["Item Buttons"] = true
 L["Item Level"] = true
 L["Item Level:"] = true
 L["Item Name"] = true
+L["Item Socketing"] = true
 L["Item Upgrade"] = true
 L["Just for Chinese and Korean players"] = true
 L["Key Binding"] = true

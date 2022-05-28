@@ -21,7 +21,7 @@ local function GetQuests()
 
 	for questIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local questInfo = C_QuestLog_GetInfo(questIndex)
-		local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
+		local skip = (questInfo.isHeader or questInfo.isBounty or questInfo.isHidden) and not questInfo.isOnMap
 		-- isHeader: 任务分类(比如, "高嶺-高嶺部族" 任务, "高嶺"要排除掉)
 		-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
 		-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)

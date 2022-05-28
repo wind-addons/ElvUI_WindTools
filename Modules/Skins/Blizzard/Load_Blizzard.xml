@@ -38,6 +38,7 @@
 	<Script file='InputMethodEditor.lua'/>
 	<Script file='Inspect.lua'/>
 	<Script file='IslandsQueue.lua'/>
+	<Script file='ItemSocketing.lua'/>
 	<Script file='ItemUpgrade.lua'/>
 	<Script file='KeyBinding.lua'/>
 	<Script file='LookingForGroup.lua'/>

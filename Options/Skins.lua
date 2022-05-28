@@ -538,6 +538,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Inspect"]
         },
+        itemSocketing = {
+            order = 10,
+            type = "toggle",
+            name = L["Item Socketing"]
+        },
         itemUpgrade = {
             order = 10,
             type = "toggle",

@@ -363,6 +363,7 @@ V.skins = {
 		help = true,
 		inputMethodEditor = true,
 		inspect = true,
+		itemSocketing = true,
 		itemUpgrade = true,
 		lookingForGroup = true,
 		loot = true,

@@ -560,6 +560,7 @@ L["It will fix the problem if your cursor has abnormal movement."] = "Ceci réso
 L["It will override your %s setting."] = "Ceci remplacera votre paramètre %s."
 L["Item"] = "Objet"
 L["Item Buttons"] = "Boutons d'objets"
+L["Item Interaction"] = true
 L["Item Level"] = "Niveau d'objet"
 L["Item Level:"] = "Niveau de l'objet :"
 L["Item Name"] = "Nom d'objet"

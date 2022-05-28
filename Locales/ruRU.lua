@@ -560,6 +560,7 @@ L["It will fix the problem if your cursor has abnormal movement."] = "Это р�
 L["It will override your %s setting."] = "Это переопределит вашу настройку %s."
 L["Item"] = "Предметы"
 L["Item Buttons"] = "Кнопки предметов"
+L["Item Interaction"] = true
 L["Item Level"] = "Уровень предметов"
 L["Item Level:"] = "Уровень предмета:"
 L["Item Name"] = "Название предмета"

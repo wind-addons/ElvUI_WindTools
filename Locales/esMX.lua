@@ -560,6 +560,7 @@ L["It will fix the problem if your cursor has abnormal movement."] = true
 L["It will override your %s setting."] = true
 L["Item"] = true
 L["Item Buttons"] = true
+L["Item Interaction"] = true
 L["Item Level"] = true
 L["Item Level:"] = "Nivel de Objeto:"
 L["Item Name"] = true

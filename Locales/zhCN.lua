@@ -560,6 +560,7 @@ L["It will fix the problem if your cursor has abnormal movement."] = "如果你�
 L["It will override your %s setting."] = "这将会覆盖写入你的 %s配置."
 L["Item"] = "物品"
 L["Item Buttons"] = "物品按钮"
+L["Item Interaction"] = "物品交互"
 L["Item Level"] = "物品等级"
 L["Item Level:"] = "物品等级："
 L["Item Name"] = "物品名"

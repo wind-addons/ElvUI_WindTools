@@ -560,6 +560,7 @@ L["It will fix the problem if your cursor has abnormal movement."] = "커서의 
 L["It will override your %s setting."] = "%s의 설정을 덮어씁니다."
 L["Item"] = "아이템"
 L["Item Buttons"] = "아이템 버튼"
+L["Item Interaction"] = true
 L["Item Level"] = "아이템 레벨"
 L["Item Level:"] = "아이템 레벨"
 L["Item Name"] = "아이템 이름"

@@ -10,16 +10,20 @@ W.Changelog[238] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[美化皮肤] 新增物品插入框体皮肤."
+            "[美化皮肤] 新增物品插入框体皮肤.",
+            "[美化皮肤] 新增物品交互框体皮肤."
         },
         ["zhTW"] = {
-            "[美化皮膚] 新增物品插入框架皮膚."
+            "[美化皮膚] 新增物品插入框架皮膚.",
+            "[美化皮膚] 新增物品互動框架皮膚."
         },
         ["enUS"] = {
-            "[Skins] New item socketing frame skin."
+            "[Skins] New item socketing frame skin.",
+            "[Skins] New item interaction frame skin."
         },
         ["koKR"] = {
-            "[Skins] New item socketing frame skin."
+            "[Skins] New item socketing frame skin.",
+            "[Skins] New item interaction frame skin."
         }
     },
     IMPROVEMENT = {

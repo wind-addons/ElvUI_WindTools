@@ -213,7 +213,7 @@ function OT:HandleInfoText(text)
         if dash.SetText then
             F.SetFontWithDB(dash, self.db.info)
         end
-        if line.Check and line.Check:IsShown() or line.state and line.state == "COMPLETED" then
+        if line.Check and line.Check:IsShown() or line.state and line.state == "COMPLETED" or line.dashStyle == 2 then
             dash:Hide()
         else
             dash:Show()

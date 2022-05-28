@@ -15,9 +15,17 @@ W.Changelog[238] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 修正组件延后载入的逻辑."
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 修正組件延後載入的邏輯."
+        },
+        ["enUS"] = {
+            "[Skins] Fix the logic of widget skins lazy loading."
+        },
+        ["koKR"] = {
+            "[Skins] Fix the logic of widget skins lazy loading."
+        }
     }
 }

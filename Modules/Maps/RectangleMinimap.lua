@@ -108,8 +108,11 @@ function RM:SetUpdateHook()
 end
 
 function RM:PLAYER_ENTERING_WORLD()
-    self:SetUpdateHook()
-    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+    if self.initialized then
+        E:Delay(1, self.ChangeShape, self)
+    else
+        self:SetUpdateHook()
+    end
 end
 
 function RM:Initialize()

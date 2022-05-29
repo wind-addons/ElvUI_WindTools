@@ -57,9 +57,14 @@ function WS.Animation(texture, aType, duration, data)
             end
         end
 
+        local stop = function()
+            group:Stop()
+            texture:SetAlpha(0)
+        end
+
         local onEnter = function(frame)
             if frame.IsEnabled and not frame:IsEnabled() then
-                return
+                return stop()
             end
 
             local remainingProgress = anim.isEnterMode and (1 - anim:GetProgress()) or anim:GetProgress()
@@ -75,7 +80,7 @@ function WS.Animation(texture, aType, duration, data)
 
         local onLeave = function(frame)
             if frame.IsEnabled and not frame:IsEnabled() then
-                return
+                return stop()
             end
 
             local remainingProgress = anim.isEnterMode and anim:GetProgress() or (1 - anim:GetProgress())

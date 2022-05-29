@@ -47,8 +47,6 @@ function S:REHack()
         ES:HandleTab(_G.HackListFrameTab2)
         self:CreateBackdropShadow(_G.HackListFrameTab1)
         self:CreateBackdropShadow(_G.HackListFrameTab2)
-        self:MerathilisUITab(_G.HackListFrameTab1)
-        self:MerathilisUITab(_G.HackListFrameTab2)
 
         ES:HandleEditBox(_G.HackSearchEdit)
 

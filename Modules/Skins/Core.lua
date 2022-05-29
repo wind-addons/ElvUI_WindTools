@@ -365,12 +365,6 @@ do
             end
         end
     end
-
-    function S:MerathilisUITab(tab)
-        if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() and MERS then
-            MERS:ReskinTab(tab)
-        end
-    end
 end
 
 do

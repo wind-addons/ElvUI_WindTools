@@ -122,7 +122,6 @@ function S:MeetingStone()
             self.backdrop:Point("TOPLEFT", 6, E.PixelMode and -1 or -3)
             self.backdrop:Point("BOTTOMRIGHT", -6, 3)
             S:CreateBackdropShadow(self)
-            S:MerathilisUITab(self)
         end
     )
 

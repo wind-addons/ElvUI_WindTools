@@ -63,6 +63,11 @@ local IgnoreList = {
 	}
 }
 
+local TexCoordIgnoreList = {
+	["Narci_MinimapButton"] = true,
+	["ZygorGuidesViewerMapIcon"] = true
+}
+
 -- 框架名白名单
 local whiteList = {
 	"LibDBIcon"
@@ -302,7 +307,7 @@ function MB:SkinButton(frame)
 						region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
 					end
 
-					if name ~= "Narci_MinimapButton" then
+					if not TexCoordIgnoreList[name] then
 						region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 					end
 

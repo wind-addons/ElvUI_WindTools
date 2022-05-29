@@ -213,6 +213,15 @@ V.skins = {
 				animationDuration = 0.2,
 				removeBorderEffect = true
 			},
+			selected = {
+				enable = true,
+				backdropClassColor = false,
+				backdropColor = {r = 0.322, g = 0.608, b = 0.961},
+				backdropAlpha = 0.4,
+				borderClassColor = false,
+				borderColor = {r = 0.145, g = 0.353, b = 0.698},
+				borderAlpha = 1
+			},
 			text = {
 				enable = true,
 				font = {

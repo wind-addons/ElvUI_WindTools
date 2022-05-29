@@ -86,4 +86,34 @@ function WS:HandleButton(_, button)
     button.windWidgetSkinned = true
 end
 
+function WS:ElvUI_Config_SetButtonColor(_, btn)
+    if not E.private.WT or not E.private.WT.skins.enable then
+        return
+    end
+
+    if not E.private.WT.skins.widgets.button.enable or not E.private.WT.skins.widgets.button.selected.enable then
+        return
+    end
+
+    if not btn.SetBackdropColor then
+        return
+    end
+
+    local db = E.private.WT.skins.widgets.button
+
+    if btn:IsEnabled() then
+        local r1, g1, b1 = unpack(E.media.backdropcolor)
+        btn:SetBackdropColor(r1, g1, b1, 1)
+
+        local r2, g2, b2 = unpack(E.media.bordercolor)
+        btn:SetBackdropBorderColor(r2, g2, b2, 1)
+    else
+        local borderColor = db.selected.borderClassColor and W.ClassColor or db.selected.borderColor
+        local backdropColor = db.selected.backdropClassColor and W.ClassColor or db.selected.backdropColor
+        btn:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, db.selected.borderAlpha)
+        btn:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b, db.selected.backdropAlpha)
+    end
+end
+
 WS:SecureHook(ES, "HandleButton")
+WS:SecureHook(E, "Config_SetButtonColor", "ElvUI_Config_SetButtonColor")

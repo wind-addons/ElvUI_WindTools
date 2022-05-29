@@ -5,6 +5,7 @@ local WS = S.Widgets
 local ES = E.Skins
 
 local _G = _G
+local unpack = unpack
 
 function WS:HandleButton(_, button)
     if not button or button.windWidgetSkinned then

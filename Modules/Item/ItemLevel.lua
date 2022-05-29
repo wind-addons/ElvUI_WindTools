@@ -40,9 +40,8 @@ local function RefreshItemLevel(text, db, location)
     local item = Item:CreateFromItemLocation(location)
     item:ContinueOnItemLoad(
         function()
-            local itemLevel = item:GetCurrentItemLevel()
-            local qualityColor = item:GetItemQualityColor()
-            text:SetText(format("%s%s%s", qualityColor.hex, itemLevel, "|r"))
+            text:SetText(item:GetCurrentItemLevel())
+            F.SetFontColorWithDB(text, db.qualityColor and item:GetItemQualityColor() or db.font.color)
         end
     )
 end

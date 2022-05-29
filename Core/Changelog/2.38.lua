@@ -30,22 +30,26 @@ W.Changelog[238] = {
         ["zhCN"] = {
             "[通告] 任务通告现在支持当前地图的世界任务.",
             "[进度追踪] 修复标记的显示错误.",
-            "[美化皮肤] 修正组件延后载入的逻辑."
+            "[美化皮肤] 修正组件延后载入的逻辑.",
+            "[美化皮肤] 更新了对 ElvUI MerathilisUI 的兼容."
         },
         ["zhTW"] = {
             "[通告] 任務通告現在支持當前地圖的世界任務.",
             "[進度追蹤] 修復標記的顯示錯誤.",
-            "[美化皮膚] 修正組件延後載入的邏輯."
+            "[美化皮膚] 修正組件延後載入的邏輯.",
+            "[美化皮膚] 更新了對 ElvUI MerathilisUI 的兼容."
         },
         ["enUS"] = {
             "[Announcement] Now supports the world quests on the current map.",
             "[Objective Tracker] Fix the display error of the dashes.",
-            "[Skins] Fix the logic of widget skins lazy loading."
+            "[Skins] Fix the logic of widget skins lazy loading.",
+            "[Skins] Improved ElvUI MerathilisUI compatibility."
         },
         ["koKR"] = {
             "[Announcement] Now supports the world quests on the current map.",
             "[Objective Tracker] Fix the display error of the dashes.",
-            "[Skins] Fix the logic of widget skins lazy loading."
+            "[Skins] Fix the logic of widget skins lazy loading.",
+            "[Skins] Improved ElvUI MerathilisUI compatibility."
         }
     }
 }

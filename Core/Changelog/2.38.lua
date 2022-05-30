@@ -40,6 +40,7 @@ W.Changelog[238] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[表情] 修复了聊天气泡的表情显示.",
             "[矩形小地图] 修复了切换场景时可能产生的错位问题.",
             "[小地图按钮] 修复了 Zygor 小地图按钮的材质显示.",
             "[通告] 任务通告现在支持当前地图的世界任务.",
@@ -50,6 +51,7 @@ W.Changelog[238] = {
             "[美化皮肤] 对于停用的按键, 将不再显示动画效果."
         },
         ["zhTW"] = {
+            "[表情] 修復了聊天氣泡的表情顯示.",
             "[矩形小地圖] 修復了切換場景時可能產生的錯位問題.",
             "[小地圖按鈕] 修復了 Zygor 小地圖按鍵的材質顯示.",
             "[通告] 任務通告現在支持當前地圖的世界任務.",
@@ -60,6 +62,7 @@ W.Changelog[238] = {
             "[美化皮膚] 對於停用的按鍵, 將不再顯示動畫效果."
         },
         ["enUS"] = {
+            "[Emote] Fixed the emote code parsing in chat bubbles.",
             "[Rectangle Minimap] Fixed the position error of the minimap after changing maps.",
             "[Minimap Button] Fix the Zygor minimap button texture.",
             "[Announcement] Now supports the world quests on the current map.",
@@ -70,6 +73,7 @@ W.Changelog[238] = {
             "[Skins] No animation effect for disabled buttons."
         },
         ["koKR"] = {
+            "[Emote] Fixed the emote code parsing in chat bubbles.",
             "[Rectangle Minimap] Fixed the position error of the minimap after changing maps.",
             "[Minimap Button] Fix the Zygor minimap button texture.",
             "[Announcement] Now supports the world quests on the current map.",

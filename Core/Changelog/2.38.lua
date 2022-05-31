@@ -1,18 +1,22 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[238] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/06/01",
     IMPORTANT = {
         ["zhCN"] = {
+            "支持 9.2.5 游戏版本.",
             "[物品等级] 重写了模块, 以支持所有的飞出物品按钮的等级显示."
         },
         ["zhTW"] = {
+            "支援 9.2.5 遊戲版本.",
             "[物品等級] 重寫了模組, 以支援所有的飛出物品按鈕的等級顯示."
         },
         ["enUS"] = {
+            "Support WoW build 9.2.5.",
             "[Item Level] Rewrote the module, to support all the flyout buttons' item level."
         },
         ["koKR"] = {
+            "WoW 9.2.5 버전 지원",
             "[아이템 레벨] 모든 펼침 버튼에 대한 아이템 레벨 표시를 지원하도록 모듈이 재작성되었습니다."
         }
     },

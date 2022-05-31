@@ -121,37 +121,29 @@ function WS.Animation(texture, aType, duration, data)
         resultTable.group = group
 
         function resultTable.onEnter(frame)
-            if frame.IsEnabled and not frame:IsEnabled() then
-                return group:StopInstant()
+            if not texture:IsShown() then
+                return
             end
-
             group:ForcePlay(updateAlphaAnimation, true)
             currentAnimation:Update(frame, group)
         end
 
         function resultTable.onLeave(frame)
-            if frame.IsEnabled and not frame:IsEnabled() then
-                return group:StopInstant()
+            if not texture:IsShown() then
+                return
             end
-
             group:ForcePlay(updateAlphaAnimation, false)
         end
 
         function resultTable.onStatusChange(frame)
-            if frame.IsEnabled then
-                if frame:IsEnabled() then
-                    texture:Show()
-                else
-                    texture:Hide()
-                end
+            if frame.IsEnabled and frame:IsEnabled() then
+                texture:Show()
+            else
+                texture:Hide()
             end
         end
 
         function resultTable.fire(frame, event)
-            if frame.Text then
-                print(frame.Text:GetText())
-            end
-
             if frame.IsEnabled and not frame:IsEnabled() then
                 return group:StopInstant()
             end

@@ -13,7 +13,7 @@ W.Changelog[238] = {
             "[Item Level] Rewrote the module, to support all the flyout buttons' item level."
         },
         ["koKR"] = {
-            "[Item Level] Rewrote the module, to support all the flyout buttons' item level."
+            "[아이템 레벨] 모든 펼침 버튼에 대한 아이템 레벨 표시를 지원하도록 모듈이 재작성되었습니다."
         }
     },
     NEW = {
@@ -33,9 +33,9 @@ W.Changelog[238] = {
             "[Skins] New button widget selected background effect."
         },
         ["koKR"] = {
-            "[Skins] New item socketing frame skin.",
-            "[Skins] New item interaction frame skin.",
-            "[Skins] New button widget selected background effect."
+            "[스킨] 아이템 소켓 프레임 스킨 추가.",
+            "[스킨] 아이템 상호작용 프레임 스킨 추가.",
+            "[스킨] 버튼 배경 효과 선택을 추가했습니다."
         }
     },
     IMPROVEMENT = {
@@ -73,15 +73,15 @@ W.Changelog[238] = {
             "[Skins] No animation effect for disabled buttons."
         },
         ["koKR"] = {
-            "[Emote] Fixed the emote code parsing in chat bubbles.",
-            "[Rectangle Minimap] Fixed the position error of the minimap after changing maps.",
-            "[Minimap Button] Fix the Zygor minimap button texture.",
-            "[Announcement] Now supports the world quests on the current map.",
-            "[Objective Tracker] Fix the display error of the dashes.",
-            "[Objective Tracker] Minor change the default cosmetic bar setting.",
-            "[Skins] Fix the logic of widget skins lazy loading.",
-            "[Skins] Improved ElvUI MerathilisUI compatibility.",
-            "[Skins] No animation effect for disabled buttons."
+            "[감정 표현(이모티콘)] 말풍선의 이모티콘 표시를 수정했습니다.",
+            "[미니맵 비율 조정] 지도가 변경될 때 발생할 수 있는 오정렬 문제를 수정했습니다.",
+            "[미니맵 버튼] Zygor 미니맵 버튼의 텍스처 표시를 수정했습니다.",
+            "[알림] 퀘스트 알림은 이제 현재 지역에 대한 전역 퀘스트를 지원합니다.",
+            "[퀘스트 추적기] 마커 표시 버그 수정.",
+            "[퀘스트 추적기] 기본 장식띠 설정을 약간 변경했습니다.",
+            "[스킨] 위젯 스킨 지연 로딩 로직을 수정합니다.",
+            "[스킨] ElvUI MerathilisUI 호환성 개선.",
+            "[스킨] 비활성화된 버튼에 대한 애니메이션이 더 이상 표시되지 않습니다."
         }
     }
 }

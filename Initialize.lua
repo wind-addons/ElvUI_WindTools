@@ -55,9 +55,7 @@ end
 do
     local checked = false
     function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
-        if isInitialLogin then
-            E:Delay(7, self.CheckInstalledVersion, self)
-        end
+        E:Delay(7, self.CheckInstalledVersion, self)
 
         if not (checked or _G.ElvUIInstallFrame) then
             self:CheckCompatibility()

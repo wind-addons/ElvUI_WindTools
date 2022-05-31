@@ -61,17 +61,13 @@ function WS:HandleTreeGroup(widget)
 
                 F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
-                local group, onEnter, onLeave =
+                button.windAnimation =
                     self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
-                button.windAnimation = {
-                    bg = bg,
-                    group = group,
-                    onEnter = onEnter,
-                    onLeave = onLeave
-                }
 
-                self:SecureHookScript(button, "OnEnter", onEnter)
-                self:SecureHookScript(button, "OnLeave", onLeave)
+                self:SecureHookScript(button, "OnEnter", button.windAnimation.onEnter)
+                self:SecureHookScript(button, "OnLeave", button.windAnimation.onLeave)
+                self:SecureHook(button, "Disable", button.windAnimation.onStatusChange)
+                self:SecureHook(button, "Enable", button.windAnimation.onStatusChange)
 
                 -- Avoid the hook is flushed
                 self:SecureHook(

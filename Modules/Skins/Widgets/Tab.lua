@@ -60,17 +60,13 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 
         F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
-        local group, onEnter, onLeave =
+        tab.windAnimation =
             self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
-        tab.windAnimation = {
-            bg = bg,
-            group = group,
-            onEnter = onEnter,
-            onLeave = onLeave
-        }
 
-        self:SecureHookScript(tab, "OnEnter", onEnter)
-        self:SecureHookScript(tab, "OnLeave", onLeave)
+        self:SecureHookScript(tab, "OnEnter", tab.windAnimation.onEnter)
+        self:SecureHookScript(tab, "OnLeave", tab.windAnimation.onLeave)
+        self:SecureHook(tab, "Disable", tab.windAnimation.onStatusChange)
+        self:SecureHook(tab, "Enable", tab.windAnimation.onStatusChange)
 
         -- Avoid the hook is flushed
         self:SecureHook(

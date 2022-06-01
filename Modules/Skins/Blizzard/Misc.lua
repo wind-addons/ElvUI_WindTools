@@ -60,8 +60,7 @@ function S:BlizzardMiscFrames()
     self:CreateShadow(_G.CinematicFrameCloseDialog)
 
     -- 举报玩家
-    self:CreateShadow(_G.PlayerReportFrame)
-    self:CreateShadow(_G.ReportCheatingDialog)
+    self:CreateShadow(_G.ReportFrame)
 
     -- 分离物品
     self:CreateShadow(_G.StackSplitFrame)

@@ -59,7 +59,7 @@ do
 
         if isInitialLogin then
             if E.private.WT.core.loginMessage then
-                local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
+                local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)
                 print(
                     format(
                         icon ..
@@ -67,8 +67,8 @@ do
                                 L["%s %s Loaded."] ..
                                     " " ..
                                         L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
-                        W.Title,
-                        W.Version,
+                        self.Title,
+                        self.Version,
                         L["QQ Group"],
                         L["Discord"],
                         L["Github"],

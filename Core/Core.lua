@@ -133,5 +133,6 @@ function W:CheckInstalledVersion()
                 L["NGA.cn"]
             )
         )
+        self.showChangeLog = false
     end
 end

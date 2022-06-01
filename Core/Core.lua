@@ -115,24 +115,6 @@ function W:CheckInstalledVersion()
 
     if self.showChangeLog then
         E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
-    end
-
-    if E.private.WT.core.loginMessage then
-        local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-        print(
-            format(
-                icon ..
-                    " " ..
-                        L["%s %s Loaded."] ..
-                            " " .. L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
-                W.Title,
-                W.Version,
-                L["QQ Group"],
-                L["Discord"],
-                L["Github"],
-                L["NGA.cn"]
-            )
-        )
         self.showChangeLog = false
     end
 end

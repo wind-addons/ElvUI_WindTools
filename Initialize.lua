@@ -57,6 +57,27 @@ do
     function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
         E:Delay(7, self.CheckInstalledVersion, self)
 
+        if isInitialLogin then
+            if E.private.WT.core.loginMessage then
+                local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
+                print(
+                    format(
+                        icon ..
+                            " " ..
+                                L["%s %s Loaded."] ..
+                                    " " ..
+                                        L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
+                        W.Title,
+                        W.Version,
+                        L["QQ Group"],
+                        L["Discord"],
+                        L["Github"],
+                        L["NGA.cn"]
+                    )
+                )
+            end
+        end
+
         if not (checked or _G.ElvUIInstallFrame) then
             self:CheckCompatibility()
             checked = true

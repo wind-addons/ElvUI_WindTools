@@ -15,6 +15,8 @@ local LibStub = LibStub
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 
+local stopMeetingStoneRendering = false
+
 local RoleIconTextures = {
     FFXIV = {
         TANK = W.Media.Icons.ffxivTank,
@@ -43,21 +45,29 @@ local RoleIconTextures = {
     }
 }
 
-local function HandleMeetingStone()
-    if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
-        local NetEaseEnv = LibStub("NetEaseEnv-1.0")
+function LL:MemberDisplay_SetActivity(memberDisplay, activity)
+    memberDisplay.resultID = activity and activity.GetID and activity:GetID() or nil
+end
 
-        for k in pairs(NetEaseEnv._NSInclude) do
-            if type(k) == "table" then
-                local module = k.Addon and k.Addon.GetClass and k.Addon:GetClass("MemberDisplay")
-                if module and module.SetActivity then
-                    local original = module.SetActivity
-                    module.SetActivity = function(self, activity)
-                        self.resultID = activity and activity.GetID and activity:GetID() or nil
-                        original(self, activity)
-                    end
-                end
-            end
+function LL:HandleMeetingStone()
+    if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
+        local meetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
+
+        if not meetingStone then
+            return
+        end
+
+        local profile = meetingStone:GetModule("Profile")
+
+        -- Special check for MeetingStone Happy Version
+        if profile:GetSetting("showclassico") then
+            stopMeetingStoneRendering = true
+        end
+
+        local memberDisplay = meetingStone:GetClass("MemberDisplay")
+
+        if memberDisplay and memberDisplay.SetActivity then
+            self:Hook(memberDisplay, "SetActivity", "MemberDisplay_SetActivity")
         end
     end
 end
@@ -112,7 +122,8 @@ end
 
 function LL:UpdateEnumerate(Enumerate)
     local button = Enumerate:GetParent():GetParent()
-    if not button.resultID then
+
+    if not button.resultID or stopMeetingStoneRendering then
         return
     end
 
@@ -170,7 +181,7 @@ function LL:Initialize()
         return
     end
 
-    HandleMeetingStone()
+    self:HandleMeetingStone()
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
 end

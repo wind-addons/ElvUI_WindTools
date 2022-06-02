@@ -143,32 +143,32 @@ function T:GroupInfo()
 
     -- Meeting Stone Hook
     if IsAddOnLoaded("MeetingStone") then
-        local NetEaseEnv = LibStub("NetEaseEnv-1.0")
-        local MTSAddon = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
-        
-        if NetEaseEnv then
-            local NEG
-            for k in pairs(NetEaseEnv._NSInclude) do
-                if type(k) == "table" then
-                    NEG = k
-                end
-            end
+        local meetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
 
-            local MainPanel = MTSAddon and MTSAddon:GetModule("MainPanel") or NEG.MainPanel
+        if not meetingStone then
+            return
+        end
 
-            if MainPanel and MainPanel.OpenActivityTooltip then
-                T:SecureHook(
-                    MainPanel,
-                    "OpenActivityTooltip",
-                    function(panel, activity, tooltip)
-                        local id = activity and activity:GetID()
-                        tooltip = tooltip or panel.GameTooltip
-                        if tooltip and id then
-                            T:AddGroupInfo(tooltip, id, true)
-                        end
+        local profile = meetingStone:GetModule("Profile")
+
+        -- Special check for MeetingStone Happy Version
+        if profile:GetSetting("showclassico") ~= nil then
+            return
+        end
+
+        local mainPanel = meetingStone:GetModule("MainPanel")
+        if mainPanel and mainPanel.OpenActivityTooltip then
+            T:SecureHook(
+                mainPanel,
+                "OpenActivityTooltip",
+                function(panel, activity, tooltip)
+                    local id = activity and activity:GetID()
+                    tooltip = tooltip or panel.GameTooltip
+                    if tooltip and id then
+                        T:AddGroupInfo(tooltip, id, true)
                     end
-                )
-            end
+                end
+            )
         end
     end
 end

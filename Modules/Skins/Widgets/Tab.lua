@@ -75,10 +75,10 @@ function WS:HandleTab(_, tab, noBackdrop, template)
             function(frame, scriptType)
                 if scriptType == "OnEnter" then
                     self:Unhook(frame, "OnEnter")
-                    self:SecureHookScript(frame, "OnEnter", onEnter)
+                    self:SecureHookScript(frame, "OnEnter", button.windAnimation.onEnter)
                 elseif scriptType == "OnLeave" then
                     self:Unhook(frame, "OnLeave")
-                    self:SecureHookScript(frame, "OnLeave", onLeave)
+                    self:SecureHookScript(frame, "OnLeave", button.windAnimation.onLeave)
                 end
             end
         )

@@ -15,9 +15,17 @@ W.Changelog[243] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[聊天链接] 支持导灵器的链接图标."
+        },
+        ["zhTW"] = {
+            "[聊天鏈接] 支援靈印的鏈接圖示."
+        },
+        ["enUS"] = {
+            "[Chat Link] Support conduit link icon."
+        },
+        ["koKR"] = {
+            "[Chat Link] Support conduit link icon."
+        }
     }
 }

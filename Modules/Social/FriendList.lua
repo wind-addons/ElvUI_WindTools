@@ -35,6 +35,8 @@ local BNET_CLIENT_ARCADE = BNET_CLIENT_ARCADE
 local BNET_CLIENT_CRASH4 = BNET_CLIENT_CRASH4
 local BNET_CLIENT_D2 = BNET_CLIENT_D2
 local BNET_CLIENT_COD_VANGUARD = BNET_CLIENT_COD_VANGUARD
+local BNET_CLIENT_DI = BNET_CLIENT_DI
+local BNET_CLIENT_ARCLIGHT = BNET_CLIENT_ARCLIGHT
 
 local CINEMATIC_NAME_2 = CINEMATIC_NAME_2
 
@@ -113,6 +115,14 @@ local GameIcons = {
     [BNET_CLIENT_COD_VANGUARD] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_VANGUARD),
         Modern = MediaPath .. "GameIcons\\COD_VG"
+    },
+    [BNET_CLIENT_DI] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_DI),
+        Modern = MediaPath .. "GameIcons\\DI"
+    },
+    [BNET_CLIENT_ARCLIGHT] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_ARCLIGHT),
+        Modern = MediaPath .. "GameIcons\\ARCLIGHT"
     }
 }
 
@@ -168,6 +178,8 @@ local BNColor = {
     [BNET_CLIENT_COD_MW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争
     [BNET_CLIENT_COD_MW2] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争 2
     [BNET_CLIENT_COD_BOCW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：冷战
+    [BNET_CLIENT_DI] = {r = 0.768, g = 0.121, b = 0.231}, -- 暗黑破坏神: 不朽
+    [BNET_CLIENT_ARCLIGHT] = {r = 0.945, g = 0.757, b = 0.149}, -- 魔兽争霸: 弧光大作战
     -- 命运 2 因为已经分家了，不会出现了，下面为自定客户端代码
     [BNET_CLIENT_WOW .. "C"] = {r = 0.866, g = 0.690, b = 0.180}, -- 魔兽世界怀旧版
     ["BSAp"] = {r = 0.509, g = 0.772, b = 1} -- 手机战网 App

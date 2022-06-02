@@ -18,7 +18,7 @@ W.Title = L["WindTools"]
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-W.SupportElvUIVersion = 12.75
+W.SupportElvUIVersion = 12.80
 W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 
 W.RegisteredModules = {}

@@ -6,8 +6,10 @@ local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
 local collectgarbage = collectgarbage
+local format = format
 local hooksecurefunc = hooksecurefunc
 local next = next
+local print = print
 local tonumber = tonumber
 
 local GetAddOnMetadata = GetAddOnMetadata

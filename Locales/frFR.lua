@@ -970,6 +970,7 @@ L["Switch Buttons"] = true
 L["Switch Buttons Bar"] = true
 L["Sylvanas"] = "Sylvanas"
 L["THICKOUTLINE"] = "CONTOUREPAIS"
+L["TLDR Missions"] = true
 L["TOP"] = "HAUT"
 L["TOPLEFT"] = "HAUTGAUCHE"
 L["TOPRIGHT"] = "HAUTDROIT"

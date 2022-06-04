@@ -970,6 +970,7 @@ L["Switch Buttons"] = "Кнопка переключения"
 L["Switch Buttons Bar"] = "Кнопка переключения панели"
 L["Sylvanas"] = "Сильвана"
 L["THICKOUTLINE"] = true
+L["TLDR Missions"] = true
 L["TOP"] = true
 L["TOPLEFT"] = true
 L["TOPRIGHT"] = true

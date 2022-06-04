@@ -970,6 +970,7 @@ L["Switch Buttons"] = "切換按鍵"
 L["Switch Buttons Bar"] = "切換按鍵條"
 L["Sylvanas"] = "希瓦娜斯"
 L["THICKOUTLINE"] = "厚輪廓"
+L["TLDR Missions"] = true
 L["TOP"] = "上"
 L["TOPLEFT"] = "左上"
 L["TOPRIGHT"] = "右上"

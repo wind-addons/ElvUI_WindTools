@@ -1063,6 +1063,12 @@ options.addons = {
             addonName = "TinyInspect",
             addonskinsKey = "TinyInspect"
         },
+        tldrMissions = {
+            order = 10,
+            type = "toggle",
+            name = L["TLDR Missions"],
+            addonName = "TLDRMissions"
+        },
         tomCats = {
             order = 10,
             type = "toggle",

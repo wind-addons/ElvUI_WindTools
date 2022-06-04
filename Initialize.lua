@@ -97,6 +97,8 @@ do
             end
         end
 
+        self:GameFixing()
+
         E:Delay(1, collectgarbage, "collect")
     end
 end

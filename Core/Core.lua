@@ -118,3 +118,55 @@ function W:CheckInstalledVersion()
         self.showChangeLog = false
     end
 end
+
+function W:GameFixing()
+    -- fix ElvUI dropdown lib skin
+    do
+        local lib = LibStub("LibUIDropDownMenu-4.0")
+        if lib and not _G.L_UIDropDownMenu_CreateFrames then
+            _G.L_UIDropDownMenu_CreateFrames = lib.UIDropDownMenu_CreateFrames
+            E.Skins:SkinLibDropDownMenu("L")
+        end
+    end
+
+    -- fix duplicated party in lfg frame
+    -- from: https://wago.io/tWVx_hIx3/4
+    do
+        if not _G["ShowLFGRemoveDuplicates"] and not IsAddOnLoaded("LFMPlus") then
+            hooksecurefunc(
+                "LFGListUtil_SortSearchResults",
+                function(results, ...)
+                    if (not LFGListFrame.SearchPanel:IsShown()) then
+                        return
+                    end
+
+                    local applications = {}
+
+                    for _, resultId in ipairs(LFGListFrame.SearchPanel.applications) do
+                        applications[resultId] = true
+                    end
+
+                    local resultCount = #results
+                    local filteredCount = 0
+                    local filtered = {}
+
+                    for _, resultId in ipairs(results) do
+                        if not applications[resultId] then
+                            filteredCount = filteredCount + 1
+                            filtered[filteredCount] = resultId
+                        end
+                    end
+                    if filteredCount < resultCount then
+                        table.wipe(results)
+
+                        for i = 1, filteredCount do
+                            results[i] = filtered[i]
+                        end
+                    end
+                end
+            )
+
+            _G["ShowLFGRemoveDuplicates"] = true
+        end
+    end
+end

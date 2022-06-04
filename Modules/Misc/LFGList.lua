@@ -60,7 +60,12 @@ function LL:HandleMeetingStone()
         local profile = meetingStone:GetModule("Profile")
 
         -- Special check for MeetingStone Happy Version
-        if profile:GetSetting("showclassico") then
+        local showClassIco = profile:GetSetting("showclassico")
+        if profile.Getshowclassico then
+            showClassIco = profile:Getshowclassico()
+        end
+
+        if showClassIco then
             stopMeetingStoneRendering = true
         end
 

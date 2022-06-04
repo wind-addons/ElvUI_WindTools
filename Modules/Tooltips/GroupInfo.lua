@@ -152,7 +152,12 @@ function T:GroupInfo()
         local profile = meetingStone:GetModule("Profile")
 
         -- Special check for MeetingStone Happy Version
-        if profile:GetSetting("showclassico") ~= nil then
+        local showClassIco = profile:GetSetting("showclassico")
+        if profile.Getshowclassico then
+            showClassIco = profile:Getshowclassico()
+        end
+
+        if showClassIco ~= nil then
             return
         end
 

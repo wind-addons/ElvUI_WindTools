@@ -122,7 +122,7 @@ end
 function W:GameFixing()
     -- fix ElvUI dropdown lib skin
     do
-        local lib = LibStub("LibUIDropDownMenu-4.0")
+        local lib = LibStub("LibUIDropDownMenu-4.0", true)
         if lib and not _G.L_UIDropDownMenu_CreateFrames then
             _G.L_UIDropDownMenu_CreateFrames = lib.UIDropDownMenu_CreateFrames
             E.Skins:SkinLibDropDownMenu("L")

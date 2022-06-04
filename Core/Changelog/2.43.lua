@@ -40,18 +40,22 @@ W.Changelog[243] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "兼容了网易集合石开心版最新的改动.",
             "[美化皮肤] 移除了部分无用的设置.",
             "[聊天链接] 支持导灵器的链接图标."
         },
         ["zhTW"] = {
+            "兼容了網易集合石开心版最新的改动.",
             "[美化皮膚] 移除了部分無用的設定.",
             "[聊天鏈接] 支援靈印的鏈接圖示."
         },
         ["enUS"] = {
+            "Compatible with the latest changes of NetEase MeetingStone Happy Edit.",
             "[Skins] Removed some useless options.",
             "[Chat Link] Support conduit link icon."
         },
         ["koKR"] = {
+            "Compatible with the latest changes of NetEase MeetingStone Happy Edit.",
             "[Skins] Removed some useless options.",
             "[Chat Link] Support conduit link icon."
         }

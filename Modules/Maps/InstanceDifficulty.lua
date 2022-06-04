@@ -21,7 +21,7 @@ function ID:UpdateFrame()
     local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
     local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
     local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
-    local lfr = format("|cffff8000s|r", L["[ABBR] Looking for raid"])
+    local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
 
     if instanceType == "party" or instanceType == "raid" or instanceType == "scenario" then
         if (difficulty == 1) then -- Normal

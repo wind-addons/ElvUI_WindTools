@@ -327,6 +327,7 @@ V.skins = {
 		rehack = true,
 		rematch = true,
 		tinyInspect = true,
+		tldrMissions = true,
 		tomCats = true,
 		warpDeplete = true,
 		weakAuras = true,

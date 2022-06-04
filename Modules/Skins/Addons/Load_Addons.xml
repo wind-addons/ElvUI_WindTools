@@ -13,6 +13,7 @@
 	<Script file='REHack.lua'/>
 	<!-- <Script file='Rematch.lua'/> -->
 	<Script file='TinyInspect.lua'/>
+	<Script file='TLDRMissions.lua'/>
 	<Script file='TomCats.lua'/>
 	<Script file='WarpDeplete.lua'/>
 	<Script file='WeakAuras.lua'/>

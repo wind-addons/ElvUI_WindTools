@@ -1514,19 +1514,13 @@ options.widgets = {
                             dialogControl = "LSM30_Statusbar",
                             values = LSM:HashTable("statusbar")
                         },
-                        removeBorderEffect = {
-                            order = 3,
-                            type = "toggle",
-                            name = L["Remove Border Effect"],
-                            width = 1.5
-                        },
                         classColor = {
-                            order = 4,
+                            order = 3,
                             type = "toggle",
                             name = L["Class Color"]
                         },
                         color = {
-                            order = 5,
+                            order = 4,
                             type = "color",
                             name = L["Color"],
                             hasAlpha = false,
@@ -1544,7 +1538,7 @@ options.widgets = {
                             end
                         },
                         alpha = {
-                            order = 6,
+                            order = 5,
                             type = "range",
                             name = L["Alpha"],
                             min = 0,
@@ -1552,7 +1546,7 @@ options.widgets = {
                             step = 0.01
                         },
                         animationType = {
-                            order = 7,
+                            order = 6,
                             type = "select",
                             name = L["Animation Type"],
                             desc = L["The type of animation activated when a button is hovered."],
@@ -1562,7 +1556,7 @@ options.widgets = {
                             }
                         },
                         animationDuration = {
-                            order = 8,
+                            order = 7,
                             type = "range",
                             name = L["Animation Duration"],
                             desc = L["The duration of the animation in seconds."],

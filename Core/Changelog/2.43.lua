@@ -4,22 +4,18 @@ W.Changelog[243] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
-            "根据暴雪 9.2.5 的改动, 移除了部分游戏补丁.",
             "新增了对于 ElvUI 下拉窗体库支持的补丁. (自动载入, 不可设置)",
             "新增了修复预组建队伍界面中重复队伍显示的补丁. (自动载入, 不可设置)"
         },
         ["zhTW"] = {
-            "根據暴雪 9.2.5 的改动, 移除了部分遊戲补丁.",
             "新增了對於 ElvUI 下拉窗体庫支持的补丁. (自動載入, 不可設定)",
             "新增了修復預組隊伍界面中重複隊伍顯示的补丁. (自動載入, 不可設定)"
         },
         ["enUS"] = {
-            "Removed some game patches recording to the Blizzard's 9.2.5 code changes.",
             "Added a patch for ElvUI dropdown menu library support. (Load automatically and not configurable)",
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
-            "Removed some game patches recording to the Blizzard's 9.2.5 code changes.",
             "Added a patch for ElvUI dropdown menu library support. (Load automatically and not configurable)",
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         }

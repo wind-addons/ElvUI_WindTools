@@ -16,27 +16,27 @@ local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_ClassColor_GetClassColor = C_ClassColor.GetClassColor
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 
-local BNET_CLIENT_WOW = BNET_CLIENT_WOW
-local BNET_CLIENT_SC2 = BNET_CLIENT_SC2
-local BNET_CLIENT_D3 = BNET_CLIENT_D3
-local BNET_CLIENT_WTCG = BNET_CLIENT_WTCG
 local BNET_CLIENT_APP = BNET_CLIENT_APP
-local BNET_CLIENT_HEROES = BNET_CLIENT_HEROES
-local BNET_CLIENT_OVERWATCH = BNET_CLIENT_OVERWATCH
-local BNET_CLIENT_CLNT = BNET_CLIENT_CLNT
-local BNET_CLIENT_SC = BNET_CLIENT_SC
-local BNET_CLIENT_DESTINY2 = BNET_CLIENT_DESTINY2
-local BNET_CLIENT_COD = BNET_CLIENT_COD
-local BNET_CLIENT_COD_MW = BNET_CLIENT_COD_MW
-local BNET_CLIENT_COD_MW2 = BNET_CLIENT_COD_MW2
-local BNET_CLIENT_COD_BOCW = BNET_CLIENT_COD_BOCW
-local BNET_CLIENT_WC3 = BNET_CLIENT_WC3
 local BNET_CLIENT_ARCADE = BNET_CLIENT_ARCADE
+local BNET_CLIENT_ARCLIGHT = BNET_CLIENT_ARCLIGHT
+local BNET_CLIENT_CLNT = BNET_CLIENT_CLNT
+local BNET_CLIENT_COD = BNET_CLIENT_COD
+local BNET_CLIENT_COD_BOCW = BNET_CLIENT_COD_BOCW
+local BNET_CLIENT_COD_MW2 = BNET_CLIENT_COD_MW2
+local BNET_CLIENT_COD_MW = BNET_CLIENT_COD_MW
+local BNET_CLIENT_COD_VANGUARD = BNET_CLIENT_COD_VANGUARD
 local BNET_CLIENT_CRASH4 = BNET_CLIENT_CRASH4
 local BNET_CLIENT_D2 = BNET_CLIENT_D2
-local BNET_CLIENT_COD_VANGUARD = BNET_CLIENT_COD_VANGUARD
+local BNET_CLIENT_D3 = BNET_CLIENT_D3
+local BNET_CLIENT_DESTINY2 = BNET_CLIENT_DESTINY2
 local BNET_CLIENT_DI = BNET_CLIENT_DI
-local BNET_CLIENT_ARCLIGHT = BNET_CLIENT_ARCLIGHT
+local BNET_CLIENT_HEROES = BNET_CLIENT_HEROES
+local BNET_CLIENT_OVERWATCH = BNET_CLIENT_OVERWATCH
+local BNET_CLIENT_SC2 = BNET_CLIENT_SC2
+local BNET_CLIENT_SC = BNET_CLIENT_SC
+local BNET_CLIENT_WC3 = BNET_CLIENT_WC3
+local BNET_CLIENT_WOW = BNET_CLIENT_WOW
+local BNET_CLIENT_WTCG = BNET_CLIENT_WTCG
 
 local CINEMATIC_NAME_2 = CINEMATIC_NAME_2
 
@@ -58,11 +58,23 @@ local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
 local cache = {}
 
-local GameIcons = {
-    ["Alliance"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Alliance"},
-    ["Horde"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Horde"},
-    ["Neutral"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\WoW"},
-    [BNET_CLIENT_WOW] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\WoWSL"},
+local gameIcons = {
+    ["Alliance"] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
+        Modern = MediaPath .. "GameIcons\\Alliance"
+    },
+    ["Horde"] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
+        Modern = MediaPath .. "GameIcons\\Horde"
+    },
+    ["Neutral"] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
+        Modern = MediaPath .. "GameIcons\\WoW"
+    },
+    [BNET_CLIENT_WOW] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
+        Modern = MediaPath .. "GameIcons\\WoWSL"
+    },
     [BNET_CLIENT_WOW .. "C"] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
         Modern = MediaPath .. "GameIcons\\WoW"
@@ -71,13 +83,34 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
         Modern = MediaPath .. "GameIcons\\WoWC"
     },
-    [BNET_CLIENT_D2] = {Default = BNet_GetClientTexture(BNET_CLIENT_D2), Modern = MediaPath .. "GameIcons\\D2"},
-    [BNET_CLIENT_D3] = {Default = BNet_GetClientTexture(BNET_CLIENT_D3), Modern = MediaPath .. "GameIcons\\D3"},
-    [BNET_CLIENT_WTCG] = {Default = BNet_GetClientTexture(BNET_CLIENT_WTCG), Modern = MediaPath .. "GameIcons\\HS"},
-    [BNET_CLIENT_SC] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC), Modern = MediaPath .. "GameIcons\\SC"},
-    [BNET_CLIENT_SC2] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC2), Modern = MediaPath .. "GameIcons\\SC2"},
-    [BNET_CLIENT_APP] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\App"},
-    ["BSAp"] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\Mobile"},
+    [BNET_CLIENT_D2] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_D2),
+        Modern = MediaPath .. "GameIcons\\D2"
+    },
+    [BNET_CLIENT_D3] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_D3),
+        Modern = MediaPath .. "GameIcons\\D3"
+    },
+    [BNET_CLIENT_WTCG] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WTCG),
+        Modern = MediaPath .. "GameIcons\\HS"
+    },
+    [BNET_CLIENT_SC] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_SC),
+        Modern = MediaPath .. "GameIcons\\SC"
+    },
+    [BNET_CLIENT_SC2] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_SC2),
+        Modern = MediaPath .. "GameIcons\\SC2"
+    },
+    [BNET_CLIENT_APP] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_APP),
+        Modern = MediaPath .. "GameIcons\\App"
+    },
+    ["BSAp"] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_APP),
+        Modern = MediaPath .. "GameIcons\\Mobile"
+    },
     [BNET_CLIENT_HEROES] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_HEROES),
         Modern = MediaPath .. "GameIcons\\HotS"
@@ -86,7 +119,10 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_OVERWATCH),
         Modern = MediaPath .. "GameIcons\\OW"
     },
-    [BNET_CLIENT_COD] = {Default = BNet_GetClientTexture(BNET_CLIENT_COD), Modern = MediaPath .. "GameIcons\\COD"},
+    [BNET_CLIENT_COD] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_COD),
+        Modern = MediaPath .. "GameIcons\\COD"
+    },
     [BNET_CLIENT_COD_BOCW] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_BOCW),
         Modern = MediaPath .. "GameIcons\\COD_CW"
@@ -99,7 +135,10 @@ local GameIcons = {
         Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW2),
         Modern = MediaPath .. "GameIcons\\COD_MW2"
     },
-    [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. "GameIcons\\WC3"},
+    [BNET_CLIENT_WC3] = {
+        Default = BNet_GetClientTexture(BNET_CLIENT_WC3),
+        Modern = MediaPath .. "GameIcons\\WC3"
+    },
     [BNET_CLIENT_CLNT] = {
         Default = BNet_GetClientTexture(BNET_CLIENT_CLNT),
         Modern = BNet_GetClientTexture(BNET_CLIENT_CLNT)
@@ -126,7 +165,7 @@ local GameIcons = {
     }
 }
 
-local StatusIcons = {
+local statusIcons = {
     Default = {
         Online = FRIENDS_TEXTURE_ONLINE,
         Offline = FRIENDS_TEXTURE_OFFLINE,
@@ -293,7 +332,7 @@ function FL:UpdateFriendButton(button)
 
     -- 状态图标
     if status then
-        button.status:SetTexture(StatusIcons[self.db.textures.status][status])
+        button.status:SetTexture(statusIcons[self.db.textures.status][status])
     end
 
     if game and game ~= "" then
@@ -354,7 +393,7 @@ function FL:UpdateFriendButton(button)
 
         -- 游戏图标
         local iconGroup = self.db.textures.factionIcon and faction or game
-        local iconTex = GameIcons[iconGroup][self.db.textures.game] or BNet_GetClientTexture(game)
+        local iconTex = gameIcons[iconGroup][self.db.textures.game] or BNet_GetClientTexture(game)
         button.gameIcon:SetTexture(iconTex)
         button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
         button.gameIcon:SetAlpha(1)

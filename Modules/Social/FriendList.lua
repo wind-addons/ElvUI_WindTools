@@ -404,6 +404,10 @@ function FL:UpdateFriendButton(button)
             button.gameIcon:Show()
             button.gameIcon:Point("TOPRIGHT", -21, -2)
         end
+    else
+        if self.db.useNoteAsName and note and note ~= "" then
+            button.name:SetText(note)
+        end
     end
 
     -- 字体风格

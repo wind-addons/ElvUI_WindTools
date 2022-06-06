@@ -4,8 +4,8 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G
-local tinsert = tinsert
 local ipairs = ipairs
+local tinsert = tinsert
 
 local CreateFrame = CreateFrame
 

@@ -30,10 +30,10 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
 
 local locales = {
-    ["Kyrian"] = L["Kyrian"],
-    ["Venthyr"] = L["Venthyr"],
-    ["NightFae"] = L["NightFae"],
-    ["Necrolord"] = L["Necrolord"]
+    ["Kyrian"] = "|cff72cff8" .. L["Kyrian"] .. "|r",
+    ["Venthyr"] = "|cff971243" .. L["Venthyr"] .. "|r",
+    ["NightFae"] = "|cff1e88e5" .. L["NightFae"] .. "|r",
+    ["Necrolord"] = "|cff00897b" .. L["Necrolord"] .. "|r"
 }
 
 local covenantMap = {

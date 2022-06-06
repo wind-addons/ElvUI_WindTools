@@ -3,4 +3,5 @@
 	<Script file='Developer.lua'/>
 	<Script file='Profiles.lua'/>
 	<Script file='Strings.lua'/>
+	<Script file='Widgets.lua'/>
 </Ui>

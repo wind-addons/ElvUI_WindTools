@@ -6,6 +6,9 @@ local TM = W:GetModule("TalentManager")
 local QK = W:GetModule("QuickKeystone")
 local CH = W:GetModule("CovenantHelper")
 
+local format = format
+local ipairs = ipairs
+
 local options = W.options.combat.args
 
 local envs = {

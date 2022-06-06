@@ -1,6 +1,12 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local ES = E.Skins
 
+local _G = _G
+local type = type
+local unpack = unpack
+
+local CreateFrame = CreateFrame
+
 F.Widgets = {}
 
 local function createButton(parent, text, width, height, onClick)

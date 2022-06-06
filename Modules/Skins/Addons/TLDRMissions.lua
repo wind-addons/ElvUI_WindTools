@@ -126,7 +126,7 @@ function S:TLDRMissions()
 
     -- Toggle button in Mission Table
     if _G.TLDRMissionsToggleButton then
-        ES:HandleButton(TLDRMissionsToggleButton)
+        ES:HandleButton(_G.TLDRMissionsToggleButton)
     end
 
     -- Main GUI

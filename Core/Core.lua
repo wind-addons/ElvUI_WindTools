@@ -1,15 +1,22 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
+local _G = _G
 local format = format
+local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
 local pairs = pairs
 local pcall = pcall
 local print = print
 local strsub = strsub
 local tinsert = tinsert
+local tostring = tostring
+local wipe = wipe
 
 local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
+
 local C_LFGList = C_LFGList
 
 local ACCEPT = _G.ACCEPT
@@ -123,7 +130,7 @@ end
 function W:GameFixing()
     -- fix ElvUI dropdown lib skin
     do
-        local lib = LibStub("LibUIDropDownMenu-4.0", true)
+        local lib = _G.LibStub("LibUIDropDownMenu-4.0", true)
         if lib and not _G.L_UIDropDownMenu_CreateFrames then
             _G.L_UIDropDownMenu_CreateFrames = lib.UIDropDownMenu_CreateFrames
             E.Skins:SkinLibDropDownMenu("L")
@@ -137,13 +144,13 @@ function W:GameFixing()
             hooksecurefunc(
                 "LFGListUtil_SortSearchResults",
                 function(results, ...)
-                    if (not LFGListFrame.SearchPanel:IsShown()) then
+                    if (not _G.LFGListFrame.SearchPanel:IsShown()) then
                         return
                     end
 
                     local applications = {}
 
-                    for _, resultId in ipairs(LFGListFrame.SearchPanel.applications) do
+                    for _, resultId in ipairs(_G.LFGListFrame.SearchPanel.applications) do
                         applications[resultId] = true
                     end
 
@@ -158,7 +165,7 @@ function W:GameFixing()
                         end
                     end
                     if filteredCount < resultCount then
-                        table.wipe(results)
+                        wipe(results)
 
                         for i = 1, filteredCount do
                             results[i] = filtered[i]
@@ -196,7 +203,7 @@ function W:GameFixing()
                 end
             end
 
-            function LFGListEntryCreation_SetTitleFromActivityInfo(_)
+            function _G.LFGListEntryCreation_SetTitleFromActivityInfo(_)
             end
         end
     end

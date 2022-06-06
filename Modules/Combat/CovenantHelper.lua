@@ -4,13 +4,17 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G
+local tinsert = tinsert
+local ipairs = ipairs
+
+local CreateFrame = CreateFrame
 
 local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
 local C_Covenants_GetCovenantData = C_Covenants.GetCovenantData
 local C_Soulbinds_ActivateSoulbind = C_Soulbinds.ActivateSoulbind
 local C_Soulbinds_CanActivateSoulbind = C_Soulbinds.CanActivateSoulbind
-local C_Soulbinds_GetSoulbindData = C_Soulbinds.GetSoulbindData
 local C_Soulbinds_GetActiveSoulbindID = C_Soulbinds.GetActiveSoulbindID
+local C_Soulbinds_GetSoulbindData = C_Soulbinds.GetSoulbindData
 
 local function tryActivateSoulbind(soulbindID)
     if not soulbindID then
@@ -26,16 +30,6 @@ local function tryActivateSoulbind(soulbindID)
 
     C_Soulbinds_ActivateSoulbind(soulbindID)
     return true
-end
-
-local function setModelWithSoulbindID(modelFrame, soulbindID)
-    if not soulbindID or not (soulbindID <= 10 and soulbindID >= 1) or not soulbindID == 13 or not soulbindID == 18 then
-        return
-    end
-
-    local soulbindData = C_Soulbinds_GetSoulbindData(soulbindId)
-    local modelId = soulbindData.modelSceneData.creatureDisplayInfoID
-    modelFrame:SetDisplayInfo(modelId)
 end
 
 function CH:BuildAlert()

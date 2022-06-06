@@ -29,9 +29,10 @@ local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsResting = IsResting
 local Item = Item
-local Spell = Spell
 local LearnPvpTalent = LearnPvpTalent
 local LearnTalents = LearnTalents
+local Spell = Spell
+local UIParentLoadAddOn = UIParentLoadAddOn
 local UnitLevel = UnitLevel
 
 local AuraUtil_FindAuraByName = AuraUtil.FindAuraByName

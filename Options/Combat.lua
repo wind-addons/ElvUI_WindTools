@@ -449,16 +449,23 @@ options.talentManager = {
             name = L["Item Buttons"],
             desc = L["Add tomb and codex buttons."]
         },
-        statusIcon = {
+        soulbindButton = {
             order = 5,
+            type = "toggle",
+            name = L["Soulbind Buttons"],
+            desc = L["Add a button to open soulbind frame."]
+        },
+        statusIcon = {
+            order = 6,
             type = "toggle",
             name = L["Status Icon"],
             desc = L["Add an icon indicates the status of the permission of changing talents."]
         },
         clearSets = {
-            order = 6,
+            order = 7,
             type = "execute",
             name = L["Clear All Sets"],
+            desc = L["Delete all saved talent sets."],
             func = function()
                 E.private.WT.combat.talentManager.sets = {}
                 TM:UpdateSetButtons()

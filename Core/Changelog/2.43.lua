@@ -22,15 +22,19 @@ W.Changelog[243] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[美化皮肤] 新增了 TLDR Missions 的皮肤."
+            "新增 [盟约助手] 模块. 支持提示更换魂契和自动更换盟约技能.",
+            "[美化皮肤] 新增了 TLDR Missions 的皮肤.",
         },
         ["zhTW"] = {
+            "新增 [誓盟助手] 模組. 支持提示更換靈魂之約和自動更換誓盟技能.",
             "[美化皮膚] 新增了 TLDR Missions 的皮膚."
         },
         ["enUS"] = {
+            "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",
             "[Skins] New skin for TLDR Missions."
         },
         ["koKR"] = {
+            "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",P
             "[Skins] New skin for TLDR Missions."
         }
     },

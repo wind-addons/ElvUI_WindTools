@@ -34,7 +34,7 @@ W.Changelog[243] = {
             "[Skins] New skin for TLDR Missions."
         },
         ["koKR"] = {
-            "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",P
+            "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",
             "[Skins] New skin for TLDR Missions."
         }
     },

@@ -201,6 +201,7 @@ function CH:ShowReminder(message)
 
     local buttons = self.reminder.soulbindButtons
 
+    local numberOfAvailableSoulbinds = 0
     for index, soulbindData in ipairs(self.covenantCache[covenantID].soulbinds) do
         buttons[index].soulbindID = soulbindData.id
         buttons[index].soulbindName = soulbindData.name
@@ -214,9 +215,18 @@ function CH:ShowReminder(message)
             buttons[index].activeText:Hide()
             buttons[index].shadow:Hide()
         end
+
+        if C_Soulbinds_CanActivateSoulbind(soulbindData.id) then
+            buttons[index]:Enable()
+            numberOfAvailableSoulbinds = numberOfAvailableSoulbinds + 1
+        else
+            buttons[index]:Disable()
+        end
     end
 
-    self.reminder:Show()
+    if numberOfAvailableSoulbinds >= 2 then
+        self.reminder:Show()
+    end
 end
 
 function CH:AutoActivateSoulbind()

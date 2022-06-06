@@ -32,6 +32,41 @@ local function tryActivateSoulbind(soulbindID)
     return true
 end
 
+function CH:UpdateCovenantCache()
+    local soulbinds = {
+        {7, 13, 18},
+        {3, 8, 9},
+        {1, 2, 6},
+        {4, 5, 10}
+    }
+
+    self.covenantCache = {}
+
+    for covenantID, soulbindIDs in ipairs(soulbinds) do
+        local covenantData = C_Covenants_GetCovenantData(covenantID)
+        local cache = {
+            name = covenantData.name,
+            soulbinds = {}
+        }
+
+        for _, soulbindID in ipairs(soulbindIDs) do
+            local soulbindData = C_Soulbinds_GetSoulbindData(soulbindID)
+            if soulbindData then
+                tinsert(
+                    cache.soulbinds,
+                    {
+                        id = soulbindData.ID,
+                        name = soulbindData.name,
+                        modelID = soulbindData.modelSceneData.creatureDisplayInfoID
+                    }
+                )
+            end
+        end
+
+        tinsert(self.covenantCache, cache)
+    end
+end
+
 function CH:BuildAlert()
     local reminder = CreateFrame("Frame", nil, E.UIParent)
     reminder:SetPoint("TOP", 0, -400)
@@ -198,6 +233,10 @@ function CH:AutoActivateSoulbind()
     end
 end
 
+function CH:GetSoulbindData(covenantID)
+    return self.covenantCache[covenantID].soulbinds
+end
+
 function CH:SOULBIND_ACTIVATED(_, soulbindID)
     if soulbindID ~= 0 then
         self:UnregisterEvent("SOULBIND_ACTIVATED")
@@ -217,45 +256,6 @@ function CH:COVENANT_CHOSEN()
             self:UnregisterEvent("SOULBIND_ACTIVATED")
         end
     )
-end
-
-function CH:UpdateCovenantCache()
-    local soulbinds = {
-        {7, 13, 18},
-        {3, 8, 9},
-        {1, 2, 6},
-        {4, 5, 10}
-    }
-
-    self.covenantCache = {}
-
-    for covenantID, soulbindIDs in ipairs(soulbinds) do
-        local covenantData = C_Covenants_GetCovenantData(covenantID)
-        local cache = {
-            name = covenantData.name,
-            soulbinds = {}
-        }
-
-        for _, soulbindID in ipairs(soulbindIDs) do
-            local soulbindData = C_Soulbinds_GetSoulbindData(soulbindID)
-            if soulbindData then
-                tinsert(
-                    cache.soulbinds,
-                    {
-                        id = soulbindData.ID,
-                        name = soulbindData.name,
-                        modelID = soulbindData.modelSceneData.creatureDisplayInfoID
-                    }
-                )
-            end
-        end
-
-        tinsert(self.covenantCache, cache)
-    end
-end
-
-function CH:GetSoulbindData(covenantID)
-    return self.covenantCache[covenantID].soulbinds
 end
 
 function CH:Initialize()

@@ -283,8 +283,4 @@ end
 
 CH.ProfileUpdate = CH.Initialize
 
-WTTest = function()
-    CH:ShowReminder(L["Covenant Helper"])
-end
-
 W:RegisterModule(CH:GetName())

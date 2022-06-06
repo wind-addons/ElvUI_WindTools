@@ -4,8 +4,34 @@ local C = W:GetModule("CombatAlert")
 local RM = W:GetModule("RaidMarkers")
 local TM = W:GetModule("TalentManager")
 local QK = W:GetModule("QuickKeystone")
+local CH = W:GetModule("CovenantHelper")
 
 local options = W.options.combat.args
+
+local envs = {
+    covenantHelper = {
+        covenants = {
+            [1] = "|cff72cff8" .. L["Kyrian"] .. "|r",
+            [2] = "|cff971243" .. L["Venthyr"] .. "|r",
+            [3] = "|cff1e88e5" .. L["NightFae"] .. "|r",
+            [4] = "|cff00897b" .. L["Necrolord"] .. "|r"
+        },
+        soulbind = {
+            tempSoulbindData = nil,
+            selectedCovenant = nil,
+            selectedSoulbind = nil
+        },
+        soulbindData = {}
+    }
+}
+
+local function getSoulbindData(covenantID)
+    local data = envs.covenantHelper.soulbindData
+    if not data[covenantID] then
+        data[covenantID] = CH:GetSoulbindData(covenantID)
+    end
+    return data[covenantID]
+end
 
 options.raidMarkers = {
     order = 1,
@@ -505,6 +531,281 @@ options.quickKeystone = {
             type = "toggle",
             name = L["Enable"],
             width = "full"
+        }
+    }
+}
+
+options.covenantHelper = {
+    order = 4,
+    name = L["Covenant Helper"],
+    type = "group",
+    get = function(info)
+        return E.db.WT.combat.covenantHelper[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.combat.covenantHelper[info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Change the spells in action bars and the soulbind when you changing covenant."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.combat.covenantHelper[info[#info]] = value
+                CH:ProfileUpdate()
+            end,
+            width = "full"
+        },
+        soulbind = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Soulbind"],
+            get = function(info)
+                return E.db.WT.combat.covenantHelper[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.covenantHelper[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                desc = {
+                    order = 1,
+                    type = "group",
+                    inline = true,
+                    name = "|cff00ff00" .. L["Tips"] .. "|r",
+                    args = {
+                        desc = {
+                            order = 1,
+                            type = "description",
+                            name = format(
+                                "1. %s\n2. %s\n",
+                                L["The soulbind will be activate automatically if you set the rule of the character."],
+                                L["If the rule not set, it will display a popup to remind you of changing soulbind."]
+                            )
+                        }
+                    }
+                },
+                autoActivate = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Auto Activate"],
+                    desc = L["Automatically activate the soulbind when you changing covenant."]
+                },
+                showReminder = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Show Reminder"],
+                    desc = format(
+                        "%s\n|cffff0000%s|r",
+                        L["Show reminder after you changing covenant."],
+                        L["If you set auto activate rule for current player, it will not be displayed."]
+                    )
+                },
+                rule = {
+                    order = 4,
+                    type = "group",
+                    inline = true,
+                    name = L["Rules"],
+                    args = {
+                        tip = {
+                            order = 1,
+                            type = "description",
+                            name = function()
+                                local result = ""
+                                local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+                                local covenantTable = envs.covenantHelper.covenants
+                                if db and db[E.myname] then
+                                    for covenantID, covenantName in ipairs(covenantTable) do
+                                        local soulbindIndex = db[E.myname][covenantID]
+                                        local soudbindData = getSoulbindData(covenantID)
+                                        if soulbindIndex then
+                                            result =
+                                                result ..
+                                                format("%s => %s\n", covenantName, soudbindData[soulbindIndex].name)
+                                        end
+                                    end
+                                end
+
+                                if result ~= "" then
+                                    result = "|cff00ff00" .. L["Current Rules"] .. "|r\n" .. result
+                                else
+                                    result = "|cff00ff00" .. L["Current Rules"] .. "|r: " .. L["No Rules"]
+                                end
+
+                                return result
+                            end
+                        },
+                        covenant = {
+                            order = 2,
+                            type = "select",
+                            name = L["Covenant"],
+                            get = function(info)
+                                return envs.covenantHelper.soulbind.selectedCovenant
+                            end,
+                            set = function(info, value)
+                                envs.covenantHelper.soulbind.selectedSoulbind = nil
+                                envs.covenantHelper.soulbind.selectedCovenant = value
+                                envs.covenantHelper.soulbind.tempSoulbindData = getSoulbindData(value)
+                            end,
+                            values = function()
+                                return envs.covenantHelper.covenants
+                            end
+                        },
+                        soulbind = {
+                            order = 3,
+                            type = "select",
+                            name = L["Soulbind"],
+                            hidden = function()
+                                return not envs.covenantHelper.soulbind.tempSoulbindData
+                            end,
+                            get = function(info)
+                                return envs.covenantHelper.soulbind.selectedSoulbind
+                            end,
+                            set = function(info, value)
+                                envs.covenantHelper.soulbind.selectedSoulbind = value
+                            end,
+                            values = function()
+                                local valueTable = {
+                                    [99] = "|cffff0000" .. L["Remove Rule"] .. "|r"
+                                }
+                                for index, soulbind in ipairs(envs.covenantHelper.soulbind.tempSoulbindData) do
+                                    valueTable[index] = soulbind.name
+                                end
+                                return valueTable
+                            end
+                        },
+                        addButton = {
+                            order = 4,
+                            type = "execute",
+                            hidden = function()
+                                return not envs.covenantHelper.soulbind.selectedSoulbind
+                            end,
+                            disabled = function()
+                                local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+                                if db and db[E.myname] then
+                                    local savedSoulbind = db[E.myname][envs.covenantHelper.soulbind.selectedCovenant]
+                                    local selectedSoulbind = envs.covenantHelper.soulbind.selectedSoulbind
+                                    if savedSoulbind and savedSoulbind == selectedSoulbind then
+                                        return true
+                                    end
+                                end
+                                return false
+                            end,
+                            name = function()
+                                local buttonName = L["Add"]
+
+                                if envs.covenantHelper.soulbind.selectedSoulbind == 99 then
+                                    buttonName = L["Remove"]
+                                else
+                                    local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+                                    if db and db[E.myname] then
+                                        local selectedCovenant =
+                                            db[E.myname][envs.covenantHelper.soulbind.selectedCovenant]
+                                        if selectedCovenant and envs.covenantHelper.soulbind.selectedSoulbind then
+                                            buttonName = L["Update"]
+                                        end
+                                    end
+                                end
+
+                                return buttonName
+                            end,
+                            func = function()
+                                local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+
+                                if not db[E.myname] then
+                                    db[E.myname] = {}
+                                end
+
+                                if envs.covenantHelper.soulbind.selectedSoulbind == 99 then
+                                    db[E.myname][envs.covenantHelper.soulbind.selectedCovenant] = nil
+                                else
+                                    db[E.myname][envs.covenantHelper.soulbind.selectedCovenant] =
+                                        envs.covenantHelper.soulbind.selectedSoulbind
+                                end
+                            end
+                        }
+                    }
+                },
+                remindText = {
+                    order = 6,
+                    type = "group",
+                    inline = true,
+                    name = L["Remind Text"],
+                    get = function(info)
+                        return E.db.WT.combat.covenantHelper[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.combat.covenantHelper[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -50,
+                            max = 50,
+                            step = 1
+                        },
+                        test = {
+                            order = 6,
+                            type = "execute",
+                            name = L["Test"],
+                            func = function()
+                                CH:ShowReminder(L["Confirm your choice of the soulbind"])
+                            end
+                        }
+                    }
+                }
+            }
         }
     }
 }

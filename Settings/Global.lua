@@ -6,3 +6,11 @@ G.item = {
         favorites = {}
     }
 }
+
+G.combat = {
+    covenantHelper = {
+        soulbindRules = {
+            characters = {}
+        }
+    }
+}

@@ -136,7 +136,7 @@ function CH:BuildAlert()
     reminder.soulbindButtons[2]:SetPoint("BOTTOM", 0, 15)
     reminder.soulbindButtons[3]:SetPoint("BOTTOM", 160, 15)
 
-    -- reminder:Hide()
+    reminder:Hide()
 
     self.reminder = reminder
 

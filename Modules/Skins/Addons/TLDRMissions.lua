@@ -93,8 +93,7 @@ local function reskinAdvancedPanel(gui)
     ES:HandleRadioButton(gui.MostRadioButton)
     ES:HandleRadioButton(gui.LowestRadioButton)
     ES:HandleRadioButton(gui.HighestRadioButton)
-    ES:HandleRadioButton(gui.MoreTroopsRadioButton)
-    ES:HandleRadioButton(gui.LessTroopsRadioButton)
+    ES:HandleSliderFrame(gui.MinimumTroopsSlider)
 
     reskinCheckButton("FollowerXPSpecialTreatment")
     reskinDropdownButton("FollowerXPSpecialTreatment")
@@ -115,8 +114,6 @@ end
 local function reskinProfilePanel(gui)
     ES:HandleTab(gui.ProfileTabButton, nil, "Transparent")
     S:ReskinTab(gui.ProfileTabButton)
-
-
 end
 
 function S:TLDRMissions()

@@ -573,8 +573,28 @@ options.covenantHelper = {
             end,
             width = "full"
         },
-        soulbind = {
+        replaceSpells = {
             order = 3,
+            type = "group",
+            inline = true,
+            name = L["Replace Spells"],
+            get = function(info)
+                return E.db.WT.combat.covenantHelper[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.covenantHelper[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Replace covenant spells on action bars after changing covenant."],
+                }
+            }
+        },
+        soulbind = {
+            order = 4,
             type = "group",
             inline = true,
             name = L["Soulbind"],

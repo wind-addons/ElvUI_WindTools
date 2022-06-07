@@ -16,6 +16,24 @@ local C_Soulbinds_CanActivateSoulbind = C_Soulbinds.CanActivateSoulbind
 local C_Soulbinds_GetActiveSoulbindID = C_Soulbinds.GetActiveSoulbindID
 local C_Soulbinds_GetSoulbindData = C_Soulbinds.GetSoulbindData
 
+local covenantSkillList = {
+    signature = {324739, 300728, 310143, 324631},
+    class = {
+        HUNTER = {308491, 324149, 328231, 325028},
+        WARLOCK = {312321, 321792, 325640, 325289},
+        PRIEST = {325013, 323673, 327661, 324724},
+        PALADIN = {304971, 316958, 328278, 328204},
+        MAGE = {307443, 314793, 314791, 324220},
+        ROGUE = {323547, 323654, 328305, 328547},
+        DRUID = {326434, 323546, 323764, 325727},
+        SHAMAN = {324386, 320674, 328923, 326059},
+        WARRIOR = {307865, 317349, 325886, 324143},
+        DEATHKNIGHT = {312202, 311648, 324128, 315443},
+        MONK = {310454, 326860, 327104, 325216},
+        DEMONHUNTER = {306830, 317009, 323639, 329554}
+    }
+}
+
 local function tryActivateSoulbind(soulbindID)
     if not soulbindID then
         return false
@@ -30,6 +48,23 @@ local function tryActivateSoulbind(soulbindID)
 
     C_Soulbinds_ActivateSoulbind(soulbindID)
     return true
+end
+
+local function getSpellReplacement(currentSpellID, newCovenantID)
+    for covenantID = 1, 4 do
+        if currentSpellID == 300728 then
+            print(1111)
+        end
+        if covenantID ~= newCovenantID then
+            if covenantSkillList.signature[covenantID] == currentSpellID then
+                return covenantSkillList.signature[newCovenantID]
+            end
+
+            if covenantSkillList.class[E.myclass][covenantID] == currentSpellID then
+                return covenantSkillList.class[E.myclass][newCovenantID]
+            end
+        end
+    end
 end
 
 function CH:UpdateCovenantCache()
@@ -247,6 +282,35 @@ function CH:GetSoulbindData(covenantID)
     return self.covenantCache[covenantID].soulbinds
 end
 
+function CH:CheckActionbars(covenantID)
+    if not self.db or not self.db.enable or not self.db.replaceSpells.enable then
+        return
+    end
+
+    local queueID = 1
+    for actionBarIndex = 1, 11 do
+        for actionButtonIndex = 1, 12 do
+            local slotID = (actionBarIndex - 1) * 12 + actionButtonIndex
+            local actionType, id, subType = GetActionInfo(slotID)
+            if actionType == "spell" then
+                local replacement = getSpellReplacement(id, covenantID)
+                if replacement then
+                    E:Delay(
+                        queueID * 0.05,
+                        function()
+                            ClearCursor()
+                            PickupSpell(replacement)
+                            PlaceAction(slotID)
+                            ClearCursor()
+                        end
+                    )
+                    queueID = queueID + 1
+                end
+            end
+        end
+    end
+end
+
 function CH:SOULBIND_ACTIVATED(_, soulbindID)
     if soulbindID ~= 0 then
         self:UnregisterEvent("SOULBIND_ACTIVATED")
@@ -258,14 +322,22 @@ function CH:SOULBIND_ACTIVATED(_, soulbindID)
     end
 end
 
-function CH:COVENANT_CHOSEN()
+function CH:COVENANT_CHOSEN(_, covenantID)
+    if covenantID == 0 then
+        return
+    end
+
     self:RegisterEvent("SOULBIND_ACTIVATED")
+
+    -- Stop soulbinds check after 3 seconds
     E:Delay(
         3,
         function()
             self:UnregisterEvent("SOULBIND_ACTIVATED")
         end
     )
+
+    self:CheckActionbars(covenantID)
 end
 
 function CH:Initialize()

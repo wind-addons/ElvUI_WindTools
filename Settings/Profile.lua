@@ -294,6 +294,9 @@ P.combat = {
     },
     covenantHelper = {
         enable = true,
+        replaceSpells = {
+            enable = false,
+        },
         soulbind = {
             autoActivate = true,
             showReminder = true,

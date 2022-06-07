@@ -4,18 +4,22 @@ W.Changelog[243] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "在美化外观的设定中新增了一个按钮用来打开资源下载页面.",
             "新增了对于 ElvUI 下拉窗体库支持的补丁. (自动载入, 不可设置)",
             "新增了修复预组建队伍界面中重复队伍显示的补丁. (自动载入, 不可设置)"
         },
         ["zhTW"] = {
+            "在美化外觀的設定中新增了一個按鍵用來打開資源下載頁面.",
             "新增了對於 ElvUI 下拉窗体庫支持的补丁. (自動載入, 不可設定)",
             "新增了修復預組隊伍界面中重複隊伍顯示的补丁. (自動載入, 不可設定)"
         },
         ["enUS"] = {
+            "Added a button to open the additional resource download page in [Skins].",
             "Added a patch for ElvUI dropdown menu library support. (Load automatically and not configurable)",
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
+            "Added a button to open the additional resource download page in [Skins].",
             "ElvUI 드롭다운 라이브러리 지원을 위한 패치가 추가되었습니다. (자동으로 로딩되며, 설정할 수 없음)",
             "파티찾기 목록에서 중복된 팀 표시를 수정하기 위한 패치를 추가했습니다. (자동으로 로딩되며, 설정할 수 없음)"
         }

@@ -52,8 +52,31 @@ options.general = {
             type = "toggle",
             name = L["Enable"]
         },
-        merathilisUISkin = {
+        resourcePage = {
             order = 2,
+            type = "execute",
+            name = E.NewSign .. " " .. F.GetWindStyleText(L["More Resources"]),
+            desc = format(
+                "%s\n%s\n\n|cff00ff00%s|r (%s)\n%s\n%s\n%s",
+                L["Open the project page and download more resources."],
+                L["e.g. chat bubble texture with shadow (also in instance)"],
+                L["Tips"],
+                L["Editbox"],
+                L["CTRL+A: Select All"],
+                L["CTRL+C: Copy"],
+                L["CTRL+V: Paste"]
+            ),
+            func = function()
+                if E.global.general.locale == "zhCN" then
+                    E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://bbs.nga.cn/read.php?tid=31851882")
+                else
+                    E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://fang2hou.github.io/ElvUI_WindTools")
+                end
+            end,
+            width = 1.2
+        },
+        merathilisUISkin = {
+            order = 3,
             type = "toggle",
             name = format(L["Use %s Skins"], L["MerathilisUI"]),
             desc = format(
@@ -67,7 +90,7 @@ options.general = {
             end
         },
         general = {
-            order = 3,
+            order = 4,
             type = "group",
             name = L["General"],
             inline = true,
@@ -88,7 +111,7 @@ options.general = {
             }
         },
         shadow = {
-            order = 4,
+            order = 5,
             type = "group",
             name = L["Shadow"],
             inline = true,
@@ -132,7 +155,7 @@ options.general = {
             }
         },
         vignetting = {
-            order = 5,
+            order = 6,
             type = "group",
             name = L["Vignetting"],
             inline = true,

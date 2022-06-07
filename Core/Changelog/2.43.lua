@@ -45,6 +45,7 @@ W.Changelog[243] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "兼容了网易集合石开心版最新的改动.",
+            "[额外物品条] 使用厚重荒芜护甲片的时候将会自动选择装备.",
             "[美化皮肤] 移除了部分无用的设置.",
             "[聊天链接] 支持导灵器的链接图标.",
             "[副本难度] 修复随机难度的文本.",
@@ -53,6 +54,7 @@ W.Changelog[243] = {
         },
         ["zhTW"] = {
             "兼容了網易集合石开心版最新的改动.",
+            "[額外物品條] 使用厚重荒寂護甲片的時候將會自動選擇裝備.",
             "[美化皮膚] 移除了部分無用的設定.",
             "[聊天鏈接] 支援靈印的鏈接圖示.",
             "[副本難度] 修復隨機難度的文本.",
@@ -61,6 +63,7 @@ W.Changelog[243] = {
         },
         ["enUS"] = {
             "Compatible with the latest changes of NetEase MeetingStone Happy Edit.",
+            "[Extra Item Bar] The equipment will be selected automatically when you use Heavy Desolate Armor Kit.",
             "[Skins] Removed some useless options.",
             "[Chat Link] Support conduit link icon.",
             "[Dungeon Difficulty] Fix the text for LFG difficulty.",
@@ -69,6 +72,7 @@ W.Changelog[243] = {
         },
         ["koKR"] = {
             "NetEase MeetingStone Happy Edit의 최신 변경 사항과 호환됩니다.",
+            "[Extra Item Bar] The equipment will be selected automatically when you use Heavy Desolate Armor Kit.",
             "[스킨] 일부 쓸모없는 옵션을 제거했습니다.",
             "[채팅 링크] 도관 링크 시 아이콘 표시를 지원합니다.",
             "[던전 난이도] 파티찾기 난이도에 대한 텍스트를 수정합니다.",

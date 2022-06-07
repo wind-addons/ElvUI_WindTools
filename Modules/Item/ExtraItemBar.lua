@@ -786,8 +786,14 @@ function EB:SetUpButton(button, questItemData, slotID)
             button:SetAttribute("type", "macro")
             button:SetAttribute("macrotext", "/use " .. button.slotID)
         elseif button.itemName then
-            button:SetAttribute("type", "item")
-            button:SetAttribute("item", button.itemName)
+            if button.itemID == 172347 then
+                -- Heavy Desolate Armor Kit
+                button:SetAttribute("type", "macro")
+                button:SetAttribute("macrotext", "/use " .. button.itemName .. "\n/use 5")
+            else
+                button:SetAttribute("type", "item")
+                button:SetAttribute("item", button.itemName)
+            end
         end
     end
 end

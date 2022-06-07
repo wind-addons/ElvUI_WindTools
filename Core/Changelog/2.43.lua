@@ -16,8 +16,8 @@ W.Changelog[243] = {
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
-            "Added a patch for ElvUI dropdown menu library support. (Load automatically and not configurable)",
-            "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
+            "ElvUI 드롭다운 라이브러리 지원을 위한 패치가 추가되었습니다. (자동으로 로딩되며, 설정할 수 없음)",
+            "파티찾기 목록에서 중복된 팀 표시를 수정하기 위한 패치를 추가했습니다. (자동으로 로딩되며, 설정할 수 없음)"
         }
     },
     NEW = {
@@ -34,8 +34,8 @@ W.Changelog[243] = {
             "[Skins] New skin for TLDR Missions."
         },
         ["koKR"] = {
-            "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",
-            "[Skins] New skin for TLDR Missions."
+            "[성약단 도우미] 모듈이 추가되었습니다. 성약을 변경하고 자동으로 성약 스킬을 변경하도록 상기시켜줍니다.",
+            "[스킨] TLDR Missions 스킨이 추가되었습니다."
         }
     },
     IMPROVEMENT = {
@@ -61,11 +61,11 @@ W.Changelog[243] = {
             "[Friends List] Note as name now supports offline players."
         },
         ["koKR"] = {
-            "Compatible with the latest changes of NetEase MeetingStone Happy Edit.",
-            "[Skins] Removed some useless options.",
-            "[Chat Link] Support conduit link icon.",
-            "[Dungeon Difficulty] Fix the text for LFG difficulty.",
-            "[Friends List] Note as name now supports offline players."
+            "NetEase MeetingStone Happy Edit의 최신 변경 사항과 호환됩니다.",
+            "[스킨] 일부 쓸모없는 옵션을 제거했습니다.",
+            "[채팅 링크] 도관 링크 시 아이콘 표시를 지원합니다.",
+            "[던전 난이도] 파티찾기 난이도에 대한 텍스트를 수정합니다.",
+            "[친구 목록] 이름 대신 메모가 오프라인 플레이어에도 지원됩니다."
         }
     }
 }

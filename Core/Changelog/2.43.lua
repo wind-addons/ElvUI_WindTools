@@ -24,18 +24,22 @@ W.Changelog[243] = {
         ["zhCN"] = {
             "新增 [盟约助手] 模块. 支持提示更换魂契和自动更换盟约技能.",
             "[美化皮肤] 新增了 TLDR Missions 的皮肤.",
+            "[天赋管家] 在天赋框体中新增了一个按钮用于打开盟约魂契界面."
         },
         ["zhTW"] = {
             "新增 [誓盟助手] 模組. 支持提示更換靈魂之約和自動更換誓盟技能.",
-            "[美化皮膚] 新增了 TLDR Missions 的皮膚."
+            "[美化皮膚] 新增了 TLDR Missions 的皮膚.",
+            "[天賦管家] 在天賦框架中新增了一個按鍵用於打開誓盟靈魂之約界面."
         },
         ["enUS"] = {
             "Added [Covenant Helper] module. It will remind you to change your covenant and automatically change covenant skills.",
-            "[Skins] New skin for TLDR Missions."
+            "[Skins] New skin for TLDR Missions.",
+            "[Talent Manager] Added a button in talent frame to open the covenant souldbind viewer."
         },
         ["koKR"] = {
             "[성약단 도우미] 모듈이 추가되었습니다. 성약을 변경하고 자동으로 성약 스킬을 변경하도록 상기시켜줍니다.",
-            "[스킨] TLDR Missions 스킨이 추가되었습니다."
+            "[스킨] TLDR Missions 스킨이 추가되었습니다.",
+            "[Talent Manager] Added a button in talent frame to open the covenant souldbind viewer."
         }
     },
     IMPROVEMENT = {

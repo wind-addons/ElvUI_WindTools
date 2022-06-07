@@ -330,7 +330,7 @@ function MF:Remember(frame)
 end
 
 function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
-    if InCombatLockdown() then
+    if InCombatLockdown() or not self.db or self.StopRunning then
         return
     end
 

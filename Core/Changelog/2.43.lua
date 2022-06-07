@@ -44,28 +44,32 @@ W.Changelog[243] = {
             "[美化皮肤] 移除了部分无用的设置.",
             "[聊天链接] 支持导灵器的链接图标.",
             "[副本难度] 修复随机难度的文本.",
-            "[好友列表] 注释作为名字现在支持离线玩家."
+            "[好友列表] 注释作为名字现在支持离线玩家.",
+            "[移动框体] 修复了在启用别的移动框体插件时导致的报错."
         },
         ["zhTW"] = {
             "兼容了網易集合石开心版最新的改动.",
             "[美化皮膚] 移除了部分無用的設定.",
             "[聊天鏈接] 支援靈印的鏈接圖示.",
             "[副本難度] 修復隨機難度的文本.",
-            "[好友列表] 注記作為名字現在支持離線玩家."
+            "[好友列表] 注記作為名字現在支持離線玩家.",
+            "[移動框架] 修復了在啟用別的移動框架插件時導致的報錯."
         },
         ["enUS"] = {
             "Compatible with the latest changes of NetEase MeetingStone Happy Edit.",
             "[Skins] Removed some useless options.",
             "[Chat Link] Support conduit link icon.",
             "[Dungeon Difficulty] Fix the text for LFG difficulty.",
-            "[Friends List] Note as name now supports offline players."
+            "[Friends List] Note as name now supports offline players.",
+            "[Move Frames] Fix the error may caused by other move frame addons."
         },
         ["koKR"] = {
             "NetEase MeetingStone Happy Edit의 최신 변경 사항과 호환됩니다.",
             "[스킨] 일부 쓸모없는 옵션을 제거했습니다.",
             "[채팅 링크] 도관 링크 시 아이콘 표시를 지원합니다.",
             "[던전 난이도] 파티찾기 난이도에 대한 텍스트를 수정합니다.",
-            "[친구 목록] 이름 대신 메모가 오프라인 플레이어에도 지원됩니다."
+            "[친구 목록] 이름 대신 메모가 오프라인 플레이어에도 지원됩니다.",
+            "[Move Frames] Fix the error may caused by other move frame addons."
         }
     }
 }

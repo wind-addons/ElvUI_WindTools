@@ -41,8 +41,7 @@ local function tryActivateSoulbind(soulbindID)
 
     local result, errorDescription = C_Soulbinds_CanActivateSoulbind(soulbindID)
     if not result and errorDescription then
-        F.Print(L["Failed to auto-activate soulbind."])
-        F.Print(L["The reason is:"] .. " " .. errorDescription)
+        F.Print(format("%s |cffff0000%s|r", L["Failed to auto-activate soulbind."], errorDescription))
         return false
     end
 

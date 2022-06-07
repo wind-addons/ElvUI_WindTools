@@ -589,7 +589,7 @@ options.covenantHelper = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Replace covenant spells on action bars after changing covenant."],
+                    desc = L["Replace covenant spells on action bars after changing covenant."]
                 }
             }
         },
@@ -648,7 +648,7 @@ options.covenantHelper = {
                             order = 1,
                             type = "description",
                             name = function()
-                                local result = ""
+                                local result = {}
                                 local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
                                 local covenantTable = envs.covenantHelper.covenants
                                 if db and db[E.myname] then
@@ -656,20 +656,20 @@ options.covenantHelper = {
                                         local soulbindIndex = db[E.myname][covenantID]
                                         local soudbindData = getSoulbindData(covenantID)
                                         if soulbindIndex then
-                                            result =
-                                                result ..
-                                                format("%s => %s\n", covenantName, soudbindData[soulbindIndex].name)
+                                            tinsert(
+                                                result,
+                                                format("%s (%s)", covenantName, soudbindData[soulbindIndex].name)
+                                            )
                                         end
                                     end
                                 end
 
-                                if result ~= "" then
-                                    result = "|cff00ff00" .. L["Current Rules"] .. "|r\n" .. result
+                                if next(result) then
+                                    return "|cff00ff00" ..
+                                        L["Current Rules"] .. "|r\n" .. strjoin(" / ", unpack(result)) .. "\n\n"
                                 else
-                                    result = "|cff00ff00" .. L["Current Rules"] .. "|r: " .. L["No Rules"]
+                                    return "|cff00ff00" .. L["Current Rules"] .. "|r: " .. L["No Rules"] .. "\n\n"
                                 end
-
-                                return result
                             end
                         },
                         covenant = {

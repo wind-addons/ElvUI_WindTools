@@ -1049,7 +1049,6 @@ L["The number of pages shown in the merchant frame."] = "상인 판매창에 표
 L["The percentage of current health without status"] = "스탯을 제외한 현재 체력의 백분율"
 L["The percentage of current power without percent sign"] = "현재 자원의 백분율 (퍼센트 기호 제거)"
 L["The percentage of health without percent sign and status"] = "체력의 백분율 (퍼센트 기호 제거)"
-L["The reason is:"] = "그 이유는:"
 L["The selected texture will override the ElvUI default absorb bar texture."] = "선택한 텍스쳐는 ElvUI 기본 피해흡수 바 텍스처를 무시합니다."
 L["The size of the buttons."] = "버튼 크기입니다."
 L["The soulbind will be activate automatically if you set the rule of the character."] = "캐릭터에 대한 규칙을 설정하면 영혼결속이 자동으로 활성화됩니다."

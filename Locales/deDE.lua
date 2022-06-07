@@ -1049,7 +1049,6 @@ L["The number of pages shown in the merchant frame."] = "Die Anzahl der im Händ
 L["The percentage of current health without status"] = "Der Prozentsatz der aktuellen Gesundheit ohne Status"
 L["The percentage of current power without percent sign"] = "Der Prozentsatz der aktuellen Kraft ohne Prozentzeichen"
 L["The percentage of health without percent sign and status"] = "Der Prozentsatz der Gesundheit ohne Prozentzeichen und Status"
-L["The reason is:"] = true
 L["The selected texture will override the ElvUI default absorb bar texture."] = "Die ausgewählte Textur überschreibt die standardmäßige ElvUI Absorptionsleistentextur."
 L["The size of the buttons."] = "Die Größe der Tasten."
 L["The soulbind will be activate automatically if you set the rule of the character."] = true

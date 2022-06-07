@@ -1049,7 +1049,6 @@ L["The number of pages shown in the merchant frame."] = "商人框体显示的�
 L["The percentage of current health without status"] = "不带状态信息的当前生命值百分比"
 L["The percentage of current power without percent sign"] = "不带百分号的当前能量"
 L["The percentage of health without percent sign and status"] = "不带百分号和状态的当前生命量"
-L["The reason is:"] = "原因是:"
 L["The selected texture will override the ElvUI default absorb bar texture."] = "选定的材质会覆盖 ElvUI 默认吸收材质."
 L["The size of the buttons."] = "按钮的大小."
 L["The soulbind will be activate automatically if you set the rule of the character."] = "如果你为角色设置了规则, 魂契将会被自动激活."

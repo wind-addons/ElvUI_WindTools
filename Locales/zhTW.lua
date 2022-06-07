@@ -1049,7 +1049,6 @@ L["The number of pages shown in the merchant frame."] = "商人框架顯示的�
 L["The percentage of current health without status"] = "沒有狀態的目前生命值百分比"
 L["The percentage of current power without percent sign"] = "不帶百分號的當前能量"
 L["The percentage of health without percent sign and status"] = "不帶百分號和状态的當前血量"
-L["The reason is:"] = "原因是:"
 L["The selected texture will override the ElvUI default absorb bar texture."] = "選擇的材質將覆蓋ElvUI預設吸收條的材質."
 L["The size of the buttons."] = "按鍵的尺寸."
 L["The soulbind will be activate automatically if you set the rule of the character."] = "如果你為角色設定規則, 靈魂之約將會自動激活."

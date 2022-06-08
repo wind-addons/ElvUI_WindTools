@@ -74,7 +74,7 @@ function F.Developer.ThrowError(...)
     end
 
     local message = strjoin(" ", ...)
-    _G.geterrorhandler()(format("%s |cffe74c3c%s|r\n", W.Title, "[ERROR]") .. message)
+    _G.geterrorhandler()(format("%s |cffff3860%s|r\n", W.Title, "[ERROR]") .. message)
 end
 
 --[[
@@ -87,7 +87,7 @@ function F.Developer.LogInfo(...)
     end
 
     local message = strjoin(" ", ...)
-    print(format("%s |cff3498db%s|r\n", W.Title, "[INFO]") .. message)
+    print(format("%s |cff209cee%s|r ", W.Title, "[INFO]") .. message)
 end
 
 --[[
@@ -100,5 +100,47 @@ function F.Developer.LogWarning(...)
     end
 
     local message = strjoin(" ", ...)
-    print(format("%s |cfff1c40f%s|r\n", W.Title, "[WARNING]") .. message)
+    print(format("%s |cffffdd57%s|r ", W.Title, "[WARNING]") .. message)
+end
+
+--[[
+    Custom Logger [DEBUG]
+    @param ...string Message
+]]
+function F.Developer.LogDebug(...)
+    if not isDebugMode() then
+        return
+    end
+
+    local message = strjoin(" ", ...)
+    print(format("%s |cff00d1b2%s|r ", W.Title, "[DEBUG]") .. message)
+end
+
+
+--[[
+    Custom Logger Injection
+    @param table Module | string Module Name
+]]
+function F.Developer.InjectLogger(module)
+    if type(module) == "string" then
+        module = W:GetModule(module)
+    end
+
+    if not module or type(module) ~= "table" then
+        F.Developer.ThrowError("Module logger injection: Invalid module.")
+        return
+    end
+
+    if not module.Log then
+        module.Log = function(self, level, message)
+            local richMessage = format("|cfff6781d[%s]|r %s", self:GetName(), message)
+            if level == "info" then
+                F.Developer.LogInfo(richMessage)
+            elseif level == "warning" then
+                F.Developer.LogWarning(richMessage)
+            elseif level == "debug" then
+                F.Developer.LogDebug(richMessage)
+            end
+        end
+    end
 end

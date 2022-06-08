@@ -52,6 +52,18 @@ function W:Initialize()
     EP:RegisterPlugin(addonName, W.OptionsCallback)
     self:SecureHook(E, "UpdateAll", "UpdateModules")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+    for name, module in self:IterateModules() do
+        addon[2].Developer.InjectLogger(module)
+    end
+
+    hooksecurefunc(
+        W,
+        "NewModule",
+        function(_, name)
+            addon[2].Developer.InjectLogger(name)
+        end
+    )
 end
 
 do

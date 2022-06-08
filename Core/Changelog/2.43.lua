@@ -4,21 +4,29 @@ W.Changelog[243] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "登录信息, 兼容性检查的选项将会存储到全局设定中.",
+            "除错模式的选项变更为日志等级选项.",
             "在美化外观的设定中新增了一个按钮用来打开资源下载页面.",
             "新增了对于 ElvUI 下拉窗体库支持的补丁. (自动载入, 不可设置)",
             "新增了修复预组建队伍界面中重复队伍显示的补丁. (自动载入, 不可设置)"
         },
         ["zhTW"] = {
+            "登入訊息, 相容性檢查的選項將會保存全局設定中.",
+            "除錯模式的選項變更為日誌等級選項.",
             "在美化外觀的設定中新增了一個按鍵用來打開資源下載頁面.",
             "新增了對於 ElvUI 下拉窗体庫支持的补丁. (自動載入, 不可設定)",
             "新增了修復預組隊伍界面中重複隊伍顯示的补丁. (自動載入, 不可設定)"
         },
         ["enUS"] = {
+            "Login message, compatibility check option will be saved to ElvUI Global Database.",
+            "Debug mode option will be changed to log level option.",
             "Added a button to open the additional resource download page in [Skins].",
             "Added a patch for ElvUI dropdown menu library support. (Load automatically and not configurable)",
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
+            "로그인 메세지 표시, 호환성 확인 option will be saved to ElvUI Global Database.",
+            "Debug mode option will be changed to log level option.",
             "[스킨] 항목에 추가 리소스 다운로드 페이지를 여는 버튼을 추가했습니다.",
             "ElvUI 드롭다운 라이브러리 지원을 위한 패치가 추가되었습니다. (자동으로 로딩되며, 설정할 수 없음)",
             "파티찾기 목록에서 중복된 팀 표시를 수정하기 위한 패치를 추가했습니다. (자동으로 로딩되며, 설정할 수 없음)"
@@ -48,7 +56,7 @@ W.Changelog[243] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "兼容了网易集合石开心版最新的改动.",
+            "兼容了网易集合石开心版的最新改动.",
             "[额外物品条] 使用厚重荒芜护甲片的时候将会自动选择装备.",
             "[美化皮肤] 移除了部分无用的设置.",
             "[聊天链接] 支持导灵器的链接图标.",
@@ -57,7 +65,7 @@ W.Changelog[243] = {
             "[移动框体] 修复了在启用别的移动框体插件时导致的报错."
         },
         ["zhTW"] = {
-            "兼容了網易集合石开心版最新的改动.",
+            "兼容了網易集合石開心版的最新改动.",
             "[額外物品條] 使用厚重荒寂護甲片的時候將會自動選擇裝備.",
             "[美化皮膚] 移除了部分無用的設定.",
             "[聊天鏈接] 支援靈印的鏈接圖示.",

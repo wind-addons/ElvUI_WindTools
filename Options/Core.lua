@@ -103,7 +103,7 @@ gsub(
 function W:OptionsCallback()
     -- 标题
     local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-    E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " |cff00ff00" .. W.Version .. "|r"
+    E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " |cff00d1b2" .. W.Version .. "|r"
 
     -- 设置主界面
     E.Options.args.WindTools = {

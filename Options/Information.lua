@@ -48,17 +48,10 @@ options.help = {
             end,
             width = 1.2
         },
-        betterAlign2 = {
-            order = 3,
-            type = "description",
-            fontSize = "medium",
-            name = " ",
-            width = "full"
-        },
         betterAlign = {
             order = 4,
             type = "description",
-            fontSize = "medium",
+            fontSize = "small",
             name = " ",
             width = "full"
         },
@@ -91,7 +84,7 @@ options.help = {
             type = "select",
             name = L["Log Level"],
             desc = L["Only display log message that the level is higher than you choose."] ..
-                "\n|cffff0000" .. L["Set to 1 if you do not understand the meaning of log level."] .. "|r",
+                "\n|cffff3860" .. L["Set to 1 if you do not understand the meaning of log level."] .. "|r",
             get = function(info)
                 return E.global.WT.core.logLevel
             end,
@@ -99,7 +92,6 @@ options.help = {
                 E.global.WT.core.logLevel = value
             end,
             hidden = function()
-                
             end,
             values = {
                 [1] = "1 - |cffff3860[ERROR]|r",
@@ -108,15 +100,8 @@ options.help = {
                 [4] = "4 - |cff00d1b2[DEBUG]|r"
             }
         },
-        betterAlign2 = {
-            order = 8,
-            type = "description",
-            fontSize = "medium",
-            name = " ",
-            width = "full"
-        },
         contact = {
-            order = 9,
+            order = 8,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -153,7 +138,7 @@ options.help = {
                 betterAlign = {
                     order = 2,
                     type = "description",
-                    fontSize = "medium",
+                    fontSize = "small",
                     name = " ",
                     width = "full"
                 },
@@ -210,7 +195,7 @@ options.help = {
                         " |cffe74c3c" ..
                             format(
                                 L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
-                                "|cff00ff00/wtdebug|r"
+                                "|cff00d1b2/wtdebug|r"
                             ) ..
                                 "|r",
                     width = "full"
@@ -218,7 +203,7 @@ options.help = {
             }
         },
         contributors = {
-            order = 10,
+            order = 9,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -290,7 +275,7 @@ options.help = {
             }
         },
         version = {
-            order = 11,
+            order = 10,
             name = L["Version"],
             type = "group",
             inline = true,
@@ -1862,7 +1847,7 @@ do
 
     E.PopupDialogs.WINDTOOLS_IMPORT_STRING = {
         text = format(
-            "%s\n|cffff0000%s|r",
+            "%s\n|cffff3860%s|r",
             L["Are you sure you want to import this string?"],
             format(L["It will override your %s setting."], W.Title)
         ),

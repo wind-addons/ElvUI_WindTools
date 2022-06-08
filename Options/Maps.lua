@@ -558,7 +558,7 @@ options.worldMap = {
                     name = function()
                         if WM.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 WM.StopRunning
                             )
                         else

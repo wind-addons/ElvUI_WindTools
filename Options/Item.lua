@@ -602,7 +602,7 @@ options.alreadyKnown = {
                     name = function()
                         if AK.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 AK.StopRunning
                             )
                         else
@@ -961,7 +961,7 @@ options.inspect = {
                     name = function()
                         if IS.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 IS.StopRunning
                             )
                         else
@@ -1545,7 +1545,7 @@ options.extendMerchantPages = {
                     name = function()
                         if EMP.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 EMP.StopRunning
                             )
                         else

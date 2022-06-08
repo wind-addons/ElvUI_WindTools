@@ -47,7 +47,7 @@ local function tryActivateSoulbind(soulbindID)
 
     local result, errorDescription = C_Soulbinds_CanActivateSoulbind(soulbindID)
     if not result and errorDescription then
-        F.Print(format("%s |cffff0000%s|r", L["Failed to auto-activate soulbind."], errorDescription))
+        F.Print(format("%s |cffff3860%s|r", L["Failed to auto-activate soulbind."], errorDescription))
         return false
     end
 
@@ -168,7 +168,7 @@ function CH:BuildAlert()
         local activeText = soulbindButton:CreateFontString(nil, "OVERLAY")
         activeText:SetFont(E.media.normFont, 12, "OUTLINE")
         activeText:SetPoint("BOTTOM", 0, -6)
-        activeText:SetText("|cff00ff00" .. L["Active"] .. "|r")
+        activeText:SetText("|cff00d1b2" .. L["Active"] .. "|r")
         soulbindButton.activeText = activeText
 
         local model = CreateFrame("PlayerModel", nil, soulbindButton)

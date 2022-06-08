@@ -50,14 +50,15 @@ options.general = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = 0.7
         },
         resourcePage = {
             order = 2,
             type = "execute",
             name = E.NewSign .. " " .. F.GetWindStyleText(L["More Resources"]),
             desc = format(
-                "%s\n%s\n\n|cff00ff00%s|r (%s)\n%s\n%s\n%s",
+                "%s\n%s\n\n|cff00d1b2%s|r (%s)\n%s\n%s\n%s",
                 L["Open the project page and download more resources."],
                 L["e.g. chat bubble texture with shadow (also in instance)"],
                 L["Tips"],
@@ -79,8 +80,9 @@ options.general = {
             order = 3,
             type = "toggle",
             name = format(L["Use %s Skins"], L["MerathilisUI"]),
+            width = 1.2,
             desc = format(
-                "%s\n|cffff0000%s|r: %s",
+                "%s\n|cffff3860%s|r: %s",
                 format(L["Add skins for all modules inside %s with %s functions."], W.Title, L["MerathilisUI"]),
                 L["Notice"],
                 format(L["It doesn't mean that the %s Skins will not be applied."], W.Title)
@@ -923,7 +925,7 @@ for key, value in pairs(options.elvui.args) do
     end
 end
 
--- If the skin is in development, add this: .." |cffff0000["..L["Test"].."]|r"
+-- If the skin is in development, add this: .." |cffff3860["..L["Test"].."]|r"
 options.addons = {
     order = 6,
     type = "group",
@@ -971,7 +973,7 @@ options.addons = {
                     order = 1,
                     type = "description",
                     name = format(
-                        "|cffff0000%s|r %s",
+                        "|cffff3860%s|r %s",
                         L["Notice"],
                         L["Skins only work if you installed and loaded the addon."]
                     ),
@@ -2149,7 +2151,7 @@ options.widgets = {
                 desc = {
                     order = 2,
                     type = "description",
-                    name = "|cffff0000" ..
+                    name = "|cffff3860" ..
                         L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] .. "|r",
                     hidden = function(info)
                         return E.private.skins.checkBoxSkin

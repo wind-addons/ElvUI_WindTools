@@ -132,7 +132,7 @@ function T:GroupInfo()
         F.Print(
             format(
                 L["%s detected, %s will be disabled automatically."],
-                "|cffff0000" .. L["Premade Groups Filter"] .. "|r",
+                "|cffff3860" .. L["Premade Groups Filter"] .. "|r",
                 "|cff00a8ff" .. L["Tooltips"] .. " - " .. L["Group Info"] .. "|r"
             )
         )

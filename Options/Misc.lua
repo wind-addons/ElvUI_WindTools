@@ -374,7 +374,7 @@ options.moveFrames = {
                     name = function()
                         if MF.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 MF.StopRunning
                             )
                         else
@@ -439,7 +439,7 @@ options.moveFrames = {
                     order = 999,
                     type = "description",
                     name = format(
-                        "\n|cffff0000%s|r %s",
+                        "\n|cffff3860%s|r %s",
                         L["Notice"],
                         format(
                             L["%s may cause some frames to get messed, but you can use %s button to reset frames."],
@@ -523,7 +523,7 @@ options.mute = {
                     type = "toggle",
                     name = L["Crying"],
                     desc = L["Mute crying sounds of all races."] ..
-                        "\n|cffff0000" .. L["It will affect the cry emote sound."] .. "|r",
+                        "\n|cffff3860" .. L["It will affect the cry emote sound."] .. "|r",
                     width = 1.3
                 }
             }
@@ -558,7 +558,7 @@ do
         },
         ["Elegy of the Eternals"] = {
             id = 188270,
-            desc = "|cffff0000" .. L["It will also affect the crying sound of all female Blood Elves."] .. "|r"
+            desc = "|cffff3860" .. L["It will also affect the crying sound of all female Blood Elves."] .. "|r"
         }
     }
 

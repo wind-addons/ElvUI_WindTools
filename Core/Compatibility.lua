@@ -78,7 +78,7 @@ function W:ConstructCompatibilityFrame()
         format(
             "%s %s %s",
             F.CreateColorString("[", E.db.general.valuecolor),
-            L["Choose the module you would like to |cff00ff00use|r"],
+            L["Choose the module you would like to |cff00d1b2use|r"],
             F.CreateColorString("]", E.db.general.valuecolor)
         )
     )
@@ -102,7 +102,7 @@ function W:ConstructCompatibilityFrame()
                         "You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."
                     ]
     )
-    --bottomDesc:SetText("|cffff0000*|r " .. L["The feature is just a part of that module."])
+    --bottomDesc:SetText("|cffff3860*|r " .. L["The feature is just a part of that module."])
     bottomDesc:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     local completeButton =

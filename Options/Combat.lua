@@ -637,7 +637,7 @@ options.covenantHelper = {
                     type = "toggle",
                     name = L["Show Reminder"],
                     desc = format(
-                        "%s\n|cffff0000%s|r",
+                        "%s\n|cffff3860%s|r",
                         L["Show reminder after you changing covenant."],
                         L["If you set auto activate rule for current player, it will not be displayed."]
                     )
@@ -669,10 +669,10 @@ options.covenantHelper = {
                                 end
 
                                 if next(result) then
-                                    return "|cff00ff00" ..
+                                    return "|cff00d1b2" ..
                                         L["Current Rules"] .. "|r\n" .. strjoin(" / ", unpack(result)) .. "\n\n"
                                 else
-                                    return "|cff00ff00" .. L["Current Rules"] .. "|r: " .. L["No Rules"] .. "\n\n"
+                                    return "|cff00d1b2" .. L["Current Rules"] .. "|r: " .. L["No Rules"] .. "\n\n"
                                 end
                             end
                         },
@@ -707,7 +707,7 @@ options.covenantHelper = {
                             end,
                             values = function()
                                 local valueTable = {
-                                    [99] = "|cffff0000" .. L["Remove Rule"] .. "|r"
+                                    [99] = "|cffff3860" .. L["Remove Rule"] .. "|r"
                                 }
                                 for index, soulbind in ipairs(envs.covenantHelper.soulbind.tempSoulbindData) do
                                     valueTable[index] = soulbind.name

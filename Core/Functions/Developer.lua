@@ -6,6 +6,7 @@ local pairs = pairs
 local print = print
 local strjoin = strjoin
 local strlen = strlen
+local strlower = strlower
 local strrep = strrep
 local tostring = tostring
 local type = type
@@ -15,7 +16,7 @@ F.Developer = {}
 --[[
     Print pretty
     -- modified from https://www.cnblogs.com/leezj/p/4230271.html
-    @param {Any} object 随意变量或常量
+    @param {Any} Any Object
 ]]
 function F.Developer.Print(object)
     if type(object) == "table" then
@@ -121,6 +122,18 @@ function F.Developer.InjectLogger(module)
 
     if not module.Log then
         module.Log = function(self, level, message)
+            if not level or type(level) ~= "string" then
+                F.Developer.ThrowError("Invalid log level.")
+                return
+            end
+
+            if not message or type(message) ~= "string" then
+                F.Developer.ThrowError("Invalid log message.")
+                return
+            end
+
+            level = strlower(level)
+
             local richMessage = format("|cfff6781d[%s]|r %s", self:GetName(), message)
             if level == "info" then
                 F.Developer.LogInfo(richMessage)
@@ -128,6 +141,8 @@ function F.Developer.InjectLogger(module)
                 F.Developer.LogWarning(richMessage)
             elseif level == "debug" then
                 F.Developer.LogDebug(richMessage)
+            else
+                F.Developer.ThrowError("Logger level should be info, warning or debug.")
             end
         end
     end

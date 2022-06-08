@@ -1,7 +1,7 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 G.core = {
-    debugMode = false,
+    logLevel = 1,
     compatibilityCheck = true,
     loginMessage = true
 }

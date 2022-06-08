@@ -148,7 +148,7 @@ end
     @param {string} text 错误讯息
 ]]
 function F.DebugMessage(module, text)
-    if not (E.global and E.global.WT and E.global.WT.core.debugMode) then
+    if E.global.WT.core.logLevel < 4 then
         return
     end
 

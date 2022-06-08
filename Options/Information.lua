@@ -48,15 +48,75 @@ options.help = {
             end,
             width = 1.2
         },
-        betterAlign = {
+        betterAlign2 = {
             order = 3,
             type = "description",
             fontSize = "medium",
             name = " ",
             width = "full"
         },
-        contact = {
+        betterAlign = {
             order = 4,
+            type = "description",
+            fontSize = "medium",
+            name = " ",
+            width = "full"
+        },
+        loginMessage = {
+            order = 5,
+            type = "toggle",
+            name = L["Login Message"],
+            get = function(info)
+                return E.global.WT.core.loginMessage
+            end,
+            set = function(info, value)
+                E.global.WT.core.loginMessage = value
+            end
+        },
+        compatibilityCheck = {
+            order = 6,
+            type = "toggle",
+            name = L["Compatibility Check"],
+            desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
+            get = function(info)
+                return E.global.WT.core.compatibilityCheck
+            end,
+            set = function(info, value)
+                E.global.WT.core.compatibilityCheck = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end
+        },
+        logLevel = {
+            order = 7,
+            type = "select",
+            name = L["Log Level"],
+            desc = L["Only display log message that the level is higher than you choose."] ..
+                "\n|cffff0000" .. L["Set to 1 if you do not understand the meaning of log level."] .. "|r",
+            get = function(info)
+                return E.global.WT.core.logLevel
+            end,
+            set = function(info, value)
+                E.global.WT.core.logLevel = value
+            end,
+            hidden = function()
+                
+            end,
+            values = {
+                [1] = "1 - |cffff3860[ERROR]|r",
+                [2] = "2 - |cffffdd57[WARNING]|r",
+                [3] = "3 - |cff209cee[INFO]|r",
+                [4] = "4 - |cff00d1b2[DEBUG]|r"
+            }
+        },
+        betterAlign2 = {
+            order = 8,
+            type = "description",
+            fontSize = "medium",
+            name = " ",
+            width = "full"
+        },
+        contact = {
+            order = 9,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -158,7 +218,7 @@ options.help = {
             }
         },
         contributors = {
-            order = 5,
+            order = 10,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -230,7 +290,7 @@ options.help = {
             }
         },
         version = {
-            order = 6,
+            order = 11,
             name = L["Version"],
             type = "group",
             inline = true,
@@ -251,43 +311,6 @@ options.help = {
                     name = L["WoW Build"] .. ": " .. AddColor(format("%s (%s)", E.wowpatch, E.wowbuild))
                 }
             }
-        },
-        loginMessage = {
-            order = 997,
-            type = "toggle",
-            name = L["Login Message"],
-            get = function(info)
-                return E.global.WT.core.loginMessage
-            end,
-            set = function(info, value)
-                E.global.WT.core.loginMessage = value
-            end
-        },
-        compatibilityCheck = {
-            order = 998,
-            type = "toggle",
-            name = L["Compatibility Check"],
-            desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
-            get = function(info)
-                return E.global.WT.core.compatibilityCheck
-            end,
-            set = function(info, value)
-                E.global.WT.core.compatibilityCheck = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
-        },
-        debugMode = {
-            order = 999,
-            type = "toggle",
-            name = L["Debug Mode"],
-            desc = L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."],
-            get = function(info)
-                return E.global.WT.core.debugMode
-            end,
-            set = function(info, value)
-                E.global.WT.core.debugMode = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
         }
     }
 }

@@ -12,17 +12,9 @@ local type = type
 
 F.Developer = {}
 
-local function isDebugMode()
-    if E.global and E.global.WT and E.global.WT.core.debugMode then
-        return true
-    end
-
-    return false
-end
-
 --[[
-    高级打印函数
-    -- 参考自 https://www.cnblogs.com/leezj/p/4230271.html
+    Print pretty
+    -- modified from https://www.cnblogs.com/leezj/p/4230271.html
     @param {Any} object 随意变量或常量
 ]]
 function F.Developer.Print(object)
@@ -70,25 +62,8 @@ end
     @param ...string Error Message
 ]]
 function F.Developer.ThrowError(...)
-    if not isDebugMode() then
-        return
-    end
-
     local message = strjoin(" ", ...)
-    _G.geterrorhandler()(format("%s |cffff3860%s|r\n", W.Title, "[ERROR]") .. message)
-end
-
---[[
-    Custom Logger [INFO]
-    @param ...string Message
-]]
-function F.Developer.LogInfo(...)
-    if not isDebugMode() then
-        return
-    end
-
-    local message = strjoin(" ", ...)
-    print(format("%s |cff209cee%s|r ", W.Title, "[INFO]") .. message)
+    _G.geterrorhandler()(format("%s |cffff3860[ERROR]|r\n%s", W.Title, message))
 end
 
 --[[
@@ -96,12 +71,25 @@ end
     @param ...string Message
 ]]
 function F.Developer.LogWarning(...)
-    if not isDebugMode() then
+    if E.global.WT.core.logLevel < 2 then
         return
     end
 
     local message = strjoin(" ", ...)
-    print(format("%s |cffffdd57%s|r ", W.Title, "[WARNING]") .. message)
+    print(format("%s |cffffdd57[WARNING]|r %s", W.Title, message))
+end
+
+--[[
+    Custom Logger [INFO]
+    @param ...string Message
+]]
+function F.Developer.LogInfo(...)
+    if E.global.WT.core.logLevel < 3 then
+        return
+    end
+
+    local message = strjoin(" ", ...)
+    print(format("%s |cff209cee[INFO]|r %s", W.Title, message))
 end
 
 --[[
@@ -109,14 +97,13 @@ end
     @param ...string Message
 ]]
 function F.Developer.LogDebug(...)
-    if not isDebugMode() then
+    if E.global.WT.core.logLevel < 4 then
         return
     end
 
     local message = strjoin(" ", ...)
-    print(format("%s |cff00d1b2%s|r ", W.Title, "[DEBUG]") .. message)
+    print(format("%s |cff00d1b2[DEBUG]|r %s", W.Title, message))
 end
-
 
 --[[
     Custom Logger Injection

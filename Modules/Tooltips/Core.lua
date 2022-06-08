@@ -3,13 +3,12 @@ local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
 local _G = _G
-
 local next = next
 local pairs = pairs
-local pcall = pcall
 local select = select
 local tinsert = tinsert
 local type = type
+local xpcall = xpcall
 
 local CanInspect = CanInspect
 local IsShiftKeyDown = IsShiftKeyDown
@@ -66,7 +65,7 @@ function T:ClearInspectInfo(tt)
 
     -- Run all registered callbacks (clear)
     for _, func in next, self.clearInspect do
-        pcall(func, self, tt)
+        xpcall(func, F.Developer.ThrowError, self, tt)
     end
 end
 
@@ -85,7 +84,7 @@ function T:InspectInfo(_, tt, triedTimes)
 
     -- Run all registered callbacks (normal)
     for _, func in next, self.normalInspect do
-        pcall(func, self, tt, unit, guid)
+        xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
     end
 
     -- Hold Shift to show more inspect information
@@ -121,7 +120,7 @@ function T:InspectInfo(_, tt, triedTimes)
 
     -- Run all registered callbacks (modifier)
     for _, func in next, self.modifierInspect do
-        pcall(func, self, tt, unit, guid)
+        xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
     end
 
     tt.windInspectLoaded = true
@@ -145,7 +144,7 @@ end
 function T:Event(event, ...)
     if self.eventCallback[event] then
         for _, func in next, self.eventCallback[event] do
-            pcall(func, self, event, ...)
+            xpcall(func, F.Developer.ThrowError, self, event, ...)
         end
     end
 end
@@ -154,7 +153,7 @@ function T:Initialize()
     self.db = E.private.WT.tooltips
 
     for index, func in next, self.load do
-        pcall(func, T)
+        xpcall(func, F.Developer.ThrowError, self)
         self.load[index] = nil
     end
 
@@ -169,7 +168,7 @@ end
 
 function T:ProfileUpdate()
     for index, func in next, self.updateProfile do
-        pcall(func, self)
+        xpcall(func, F.Developer.ThrowError, self)
         self.updateProfile[index] = nil
     end
 end

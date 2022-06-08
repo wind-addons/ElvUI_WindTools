@@ -539,7 +539,7 @@ do
                 local icon = spell:GetSpellTexture()
                 local name = spell:GetSpellName()
 
-                local iconString = F.GetIconString(icon)
+                local iconString = F.GetIconString(icon, 12, 12)
 
                 options.mute.args.mount.args[tostring(id)] = {
                     order = id,
@@ -632,32 +632,27 @@ do
         noSign = {
             order = 2,
             tag = "[health:percent-nostatus]",
-            text = L["The percentage of current health without status"] ..
-                format(" (%s)", L["Follow ElvUI Setting"])
+            text = L["The percentage of current health without status"] .. format(" (%s)", L["Follow ElvUI Setting"])
         },
         noSign0 = {
             order = 3,
             tag = "[health:percent-nostatus-0]",
-            text = L["The percentage of current health without status"] ..
-                format(" (%s = 0)", L["Decimal Length"])
+            text = L["The percentage of current health without status"] .. format(" (%s = 0)", L["Decimal Length"])
         },
         noSign1 = {
             order = 4,
             tag = "[health:percent-nostatus-1]",
-            text = L["The percentage of current health without status"] ..
-                format(" (%s = 1)", L["Decimal Length"])
+            text = L["The percentage of current health without status"] .. format(" (%s = 1)", L["Decimal Length"])
         },
         noSign2 = {
             order = 5,
             tag = "[health:percent-nostatus-2]",
-            text = L["The percentage of current health without status"] ..
-                format(" (%s = 2)", L["Decimal Length"])
+            text = L["The percentage of current health without status"] .. format(" (%s = 2)", L["Decimal Length"])
         },
         noSign3 = {
             order = 6,
             tag = "[health:percent-nostatus-3]",
-            text = L["The percentage of current health without status"] ..
-                format(" (%s = 3)", L["Decimal Length"])
+            text = L["The percentage of current health without status"] .. format(" (%s = 3)", L["Decimal Length"])
         },
         noStatusNoSign = {
             order = 7,

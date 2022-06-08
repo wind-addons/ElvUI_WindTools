@@ -593,7 +593,23 @@ options.covenantHelper = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Replace covenant spells on action bars after changing covenant."]
+                    desc = L["Replace covenant spells on action bars after changing covenant."],
+                    width = 0.8
+                },
+                example = {
+                    order = 2,
+                    type = "description",
+                    name = function()
+                        local name, rank, icon = GetSpellInfo(324739)
+                        local kyrian = F.GetIconString(icon, 12, 12) .. " " .. name
+
+                        name, rank, icon = GetSpellInfo(310143)
+                        local nightfae = F.GetIconString(icon, 12, 12) .. " " .. name
+
+                        return L["Example"] .. ": " .. kyrian .. " > " .. nightfae
+                    end,
+                    fontSize = "medium",
+                    width = 2.5
                 }
             }
         },

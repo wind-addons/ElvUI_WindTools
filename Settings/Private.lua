@@ -499,9 +499,3 @@ V.unitFrames = {
 		roleIconStyle = "SUNUI"
 	}
 }
-
-V.core = {
-	debugMode = false,
-	compatibilityCheck = true,
-	loginMessage = true
-}

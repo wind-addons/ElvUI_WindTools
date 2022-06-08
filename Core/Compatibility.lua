@@ -268,7 +268,7 @@ local CheckmMediaTag = GetCheckCompatibilityFunction("ElvUI_mMediaTag", L["mMedi
 local CheckElvUIEnhanced = GetCheckCompatibilityFunction("ElvUI_Enhanced", L["ElvUI Enhanced Again"])
 
 function W:CheckCompatibility()
-    if not E.private.WT.core.compatibilityCheck then
+    if not E.global.WT.core.compatibilityCheck then
         return
     end
 

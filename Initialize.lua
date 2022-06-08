@@ -60,7 +60,7 @@ do
         E:Delay(7, self.CheckInstalledVersion, self)
 
         if isInitialLogin then
-            if E.private.WT.core.loginMessage then
+            if E.global.WT.core.loginMessage then
                 local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)
                 print(
                     format(

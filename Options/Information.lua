@@ -257,10 +257,10 @@ options.help = {
             type = "toggle",
             name = L["Login Message"],
             get = function(info)
-                return E.private.WT.core.loginMessage
+                return E.global.WT.core.loginMessage
             end,
             set = function(info, value)
-                E.private.WT.core.loginMessage = value
+                E.global.WT.core.loginMessage = value
             end
         },
         compatibilityCheck = {
@@ -269,10 +269,10 @@ options.help = {
             name = L["Compatibility Check"],
             desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
             get = function(info)
-                return E.private.WT.core.compatibilityCheck
+                return E.global.WT.core.compatibilityCheck
             end,
             set = function(info, value)
-                E.private.WT.core.compatibilityCheck = value
+                E.global.WT.core.compatibilityCheck = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end
         },
@@ -282,10 +282,10 @@ options.help = {
             name = L["Debug Mode"],
             desc = L["If you installed other ElvUI Plugins, enabling debug mode is not a suggestion."],
             get = function(info)
-                return E.private.WT.core.debugMode
+                return E.global.WT.core.debugMode
             end,
             set = function(info, value)
-                E.private.WT.core.debugMode = value
+                E.global.WT.core.debugMode = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end
         }

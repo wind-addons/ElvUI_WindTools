@@ -114,7 +114,7 @@ local PredefinedType = {
                 end
                 GuildInvite(playerName)
             else
-                self:Log("debug", "Cannot get the name.")
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -182,7 +182,7 @@ local PredefinedType = {
                 local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
-                self:Log("debug", "Cannot get the armory link.")
+                CM:Log("debug", "Cannot get the armory link.")
             end
         end,
         isHidden = function(frame)
@@ -232,7 +232,7 @@ local PredefinedType = {
                 end
                 C_FriendList_SendWho(playerName)
             else
-                self:Log("debug", "Cannot get the name.")
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -288,7 +288,7 @@ local PredefinedType = {
                 end
                 C_FriendList_AddFriend(playerName)
             else
-                self:Log("debug", "Cannot get the name.")
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -351,7 +351,7 @@ local PredefinedType = {
             end
 
             if not name then
-                self:Log("debug", "Cannot get the name.")
+                CM:Log("debug", "Cannot get the name.")
                 return
             end
 

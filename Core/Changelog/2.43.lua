@@ -25,8 +25,8 @@ W.Changelog[243] = {
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
-            "로그인 메세지 표시, 호환성 확인 option will be saved to ElvUI Global Database.",
-            "Debug mode option will be changed to log level option.",
+            "로그인 메시지 및 호환성 확인 옵션은 ElvUI 전역 설정에 저장됩니다.",
+            "디버그 모드 옵션이 로그 레벨 옵션으로 변경되었습니다.",
             "[스킨] 항목에 추가 리소스 다운로드 페이지를 여는 버튼을 추가했습니다.",
             "ElvUI 드롭다운 라이브러리 지원을 위한 패치가 추가되었습니다. (자동으로 로딩되며, 설정할 수 없음)",
             "파티찾기 목록에서 중복된 팀 표시를 수정하기 위한 패치를 추가했습니다. (자동으로 로딩되며, 설정할 수 없음)"

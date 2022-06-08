@@ -177,14 +177,6 @@ function S:SetTransparentBackdrop(frame)
 end
 
 --[[
-    游戏系统输出错误
-    @param {string} err 错误
-]]
-local function errorhandler(err)
-    return _G.geterrorhandler()(err)
-end
-
---[[
     注册回调
     @param {string} name 函数名
     @param {function} [func=S.name] 回调函数
@@ -240,7 +232,7 @@ function S:PLAYER_ENTERING_WORLD()
     end
 
     for index, func in next, self.enteredLoad do
-        xpcall(func, errorhandler, self)
+        xpcall(func, F.Developer.ThrowError, self)
         self.enteredLoad[index] = nil
     end
 end
@@ -261,7 +253,7 @@ end
 ]]
 function S:CallLoadedAddon(addonName, object)
     for _, func in next, object do
-        xpcall(func, errorhandler, self)
+        xpcall(func, F.Developer.ThrowError, self)
     end
 
     self.addonsToLoad[addonName] = nil
@@ -403,7 +395,7 @@ function S:Initialize()
     end
 
     for index, func in next, self.nonAddonsToLoad do
-        xpcall(func, errorhandler, self)
+        xpcall(func, F.Developer.ThrowError, self)
         self.nonAddonsToLoad[index] = nil
     end
 
@@ -421,6 +413,15 @@ function S:Initialize()
     if E.private.WT.skins.removeParchment then
         E.private.skins.parchmentRemoverEnable = true
     end
+end
+
+function S:ESProxy(funcName, frame, ...)
+    if not frame then
+        F.Developer.ThrowError("ESProxy: frame is nil")
+        return
+    end
+
+    ES[funcName](ES, frame, ...)
 end
 
 S:RegisterEvent("ADDON_LOADED")

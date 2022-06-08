@@ -16,7 +16,7 @@ local function reskinCheckButton(name)
     end
 
     frame:SetSize(22, 22)
-    ES:HandleCheckBox(frame)
+    S:ESProxy("HandleCheckBox", frame)
 end
 
 local function reskinDropdownButton(name)
@@ -32,7 +32,7 @@ local function reskinDropdownButton(name)
 
     dropDown:StripTextures()
     local button = dropDown.Button
-    ES:HandleButton(button)
+    S:ESProxy("HandleButton", button)
 
     local buttonWidth = button:GetWidth() or 24
     button:SetSize(buttonWidth - 4, buttonWidth - 4)
@@ -50,7 +50,7 @@ local function reskinDropdownButton(name)
 end
 
 local function reskinMainPanel(gui)
-    ES:HandleTab(gui.MainTabButton, nil, "Transparent")
+    S:ESProxy("HandleTab", gui.MainTabButton, nil, "Transparent")
     S:ReskinTab(gui.MainTabButton)
     gui.MainTabButton:ClearAllPoints()
     gui.MainTabButton:SetPoint("TOPLEFT", gui, "BOTTOMLEFT", 0, -1)
@@ -75,36 +75,36 @@ local function reskinMainPanel(gui)
     handleOptionLine("SanctumFeature")
     handleOptionLine("Sacrifice")
 
-    ES:HandleButton(gui.CalculateButton)
-    ES:HandleButton(gui.AbortButton)
-    ES:HandleButton(gui.SkipCalculationButton)
-    ES:HandleButton(gui.StartMissionButton)
-    ES:HandleButton(gui.SkipMissionButton)
-    ES:HandleButton(gui.CompleteMissionsButton)
+    S:ESProxy("HandleButton", gui.CalculateButton)
+    S:ESProxy("HandleButton", gui.AbortButton)
+    S:ESProxy("HandleButton", gui.SkipCalculationButton)
+    S:ESProxy("HandleButton", gui.StartMissionButton)
+    S:ESProxy("HandleButton", gui.SkipMissionButton)
+    S:ESProxy("HandleButton", gui.CompleteMissionsButton)
 end
 
 local function reskinAdvancedPanel(gui)
-    ES:HandleTab(gui.AdvancedTabButton, nil, "Transparent")
+    S:ESProxy("HandleTab", gui.AdvancedTabButton, nil, "Transparent")
     S:ReskinTab(gui.AdvancedTabButton)
 
-    ES:HandleRadioButton(gui.HardestRadioButton)
-    ES:HandleRadioButton(gui.EasiestRadioButton)
-    ES:HandleRadioButton(gui.FewestRadioButton)
-    ES:HandleRadioButton(gui.MostRadioButton)
-    ES:HandleRadioButton(gui.LowestRadioButton)
-    ES:HandleRadioButton(gui.HighestRadioButton)
-    ES:HandleSliderFrame(gui.MinimumTroopsSlider)
+    S:ESProxy("HandleRadioButton", gui.HardestRadioButton)
+    S:ESProxy("HandleRadioButton", gui.EasiestRadioButton)
+    S:ESProxy("HandleRadioButton", gui.FewestRadioButton)
+    S:ESProxy("HandleRadioButton", gui.MostRadioButton)
+    S:ESProxy("HandleRadioButton", gui.LowestRadioButton)
+    S:ESProxy("HandleRadioButton", gui.HighestRadioButton)
+    S:ESProxy("HandleSliderFrame", gui.MinimumTroopsSlider)
 
     reskinCheckButton("FollowerXPSpecialTreatment")
     reskinDropdownButton("FollowerXPSpecialTreatment")
     reskinDropdownButton("FollowerXPSpecialTreatmentAlgorithm")
 
-    ES:HandleSliderFrame(gui.LowerBoundLevelRestrictionSlider)
-    ES:HandleSliderFrame(gui.AnimaCostLimitSlider)
-    ES:HandleSliderFrame(gui.SimulationsPerFrameSlider)
-    ES:HandleEditBox(gui.MaxSimulationsEditBox)
-    ES:HandleSliderFrame(gui.DurationLowerSlider)
-    ES:HandleSliderFrame(gui.DurationHigherSlider)
+    S:ESProxy("HandleSliderFrame", gui.LowerBoundLevelRestrictionSlider)
+    S:ESProxy("HandleSliderFrame", gui.AnimaCostLimitSlider)
+    S:ESProxy("HandleSliderFrame", gui.SimulationsPerFrameSlider)
+    S:ESProxy("HandleEditBox", gui.MaxSimulationsEditBox)
+    S:ESProxy("HandleSliderFrame", gui.DurationLowerSlider)
+    S:ESProxy("HandleSliderFrame", gui.DurationHigherSlider)
 
     reskinCheckButton("AutoShowButton")
     reskinCheckButton("AllowProcessingAnywhereButton")
@@ -112,7 +112,7 @@ local function reskinAdvancedPanel(gui)
 end
 
 local function reskinProfilePanel(gui)
-    ES:HandleTab(gui.ProfileTabButton, nil, "Transparent")
+    S:ESProxy("HandleTab", gui.ProfileTabButton, nil, "Transparent")
     S:ReskinTab(gui.ProfileTabButton)
 end
 
@@ -123,13 +123,13 @@ function S:TLDRMissions()
 
     -- Toggle button in Mission Table
     if _G.TLDRMissionsToggleButton then
-        ES:HandleButton(_G.TLDRMissionsToggleButton)
+        self:ESProxy("HandleButton", _G.TLDRMissionsToggleButton)
     end
 
     -- Main GUI
     if _G.TLDRMissionsFrame then
         local gui = _G.TLDRMissionsFrame
-        ES:HandleCloseButton(gui.CloseButton)
+        self:ESProxy("HandleCloseButton", gui.CloseButton)
         gui:StripTextures()
         gui:SetTemplate("Transparent")
         self:CreateShadow(gui)

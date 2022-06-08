@@ -19,7 +19,7 @@ W.Changelog[243] = {
             "Added a patch for fixing the duplicate team display in the LFG list. (Load automatically and not configurable)"
         },
         ["koKR"] = {
-            "Added a button to open the additional resource download page in [Skins].",
+            "[스킨] 항목에 추가 리소스 다운로드 페이지를 여는 버튼을 추가했습니다.",
             "ElvUI 드롭다운 라이브러리 지원을 위한 패치가 추가되었습니다. (자동으로 로딩되며, 설정할 수 없음)",
             "파티찾기 목록에서 중복된 팀 표시를 수정하기 위한 패치를 추가했습니다. (자동으로 로딩되며, 설정할 수 없음)"
         }
@@ -43,7 +43,7 @@ W.Changelog[243] = {
         ["koKR"] = {
             "[성약단 도우미] 모듈이 추가되었습니다. 성약을 변경하고 자동으로 성약 스킬을 변경하도록 상기시켜줍니다.",
             "[스킨] TLDR Missions 스킨이 추가되었습니다.",
-            "[Talent Manager] Added a button in talent frame to open the covenant souldbind viewer."
+            "[특성 관리자] 특성 프레임에 성약단 영혼 결속 창을 열 수 있는 버튼을 추가했습니다."
         }
     },
     IMPROVEMENT = {
@@ -76,12 +76,12 @@ W.Changelog[243] = {
         },
         ["koKR"] = {
             "NetEase MeetingStone Happy Edit의 최신 변경 사항과 호환됩니다.",
-            "[Extra Item Bar] The equipment will be selected automatically when you use Heavy Desolate Armor Kit.",
+            "[아이템 바] 질긴 황폐 방어구 강화도구 사용 시 자동으로 장비가 선택되어 사용됩니다.",
             "[스킨] 일부 쓸모없는 옵션을 제거했습니다.",
             "[채팅 링크] 도관 링크 시 아이콘 표시를 지원합니다.",
             "[던전 난이도] 파티찾기 난이도에 대한 텍스트를 수정합니다.",
             "[친구 목록] 이름 대신 메모가 오프라인 플레이어에도 지원됩니다.",
-            "[Move Frames] Fix the error may caused by other move frame addons."
+            "[프레임 이동] 다른 프레임 이동 애드온으로 인해 발생할 수 있는 오류를 수정합니다."
         }
     }
 }

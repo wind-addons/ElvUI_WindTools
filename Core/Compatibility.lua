@@ -165,7 +165,7 @@ local function AddButtonToCompatibilityFrame(data)
             if _G[name] then
                 _G[name]:SetTexture(E.Media.Textures.ArrowUp)
                 _G[name]:SetRotation(ES.ArrowRotation.left)
-                _G[name]:SetVertexColor(0, 1, 0)
+                _G[name]:SetVertexColor(0, 0.82, 0.698)
             end
         end
     )
@@ -201,7 +201,7 @@ local function AddButtonToCompatibilityFrame(data)
             if _G[name] then
                 _G[name]:SetTexture(E.Media.Textures.ArrowUp)
                 _G[name]:SetRotation(ES.ArrowRotation.right)
-                _G[name]:SetVertexColor(1, 0, 0)
+                _G[name]:SetVertexColor(1, 0.22, 0.376)
             end
         end
     )

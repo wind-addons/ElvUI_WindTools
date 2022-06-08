@@ -219,7 +219,7 @@ local function GetDatabaseRealValue(path)
                 end
                 accessValue = accessValue[key]
             else
-                F.DebugMessage("Compatibility", "DB Path Error: " .. path)
+                F.Developer.LogWarning("[Compatibility] database path not found\n" .. path)
                 return
             end
         end

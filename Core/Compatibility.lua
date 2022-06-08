@@ -219,7 +219,7 @@ local function GetDatabaseRealValue(path)
                 end
                 accessValue = accessValue[key]
             else
-                F.Developer.LogWarning("[Compatibility] database path not found\n" .. path)
+                F.Developer.LogDebug("[Compatibility] database path not found\n" .. path)
                 return
             end
         end
@@ -431,6 +431,13 @@ function W:CheckCompatibility()
         "private.WT.skins.widgets.treeGroupButton.enable",
         "private.mui.skins.widgets.treeGroupButton.enable"
     )
+
+	CheckMerathilisUI(
+		format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras"]),
+		L["WeakAuras"],
+		"private.WT.skins.addons.weakAuras",
+		"private.mui.skins.addonSkins.wa"
+	)
 
     -- S&L
     CheckShadowAndLight(

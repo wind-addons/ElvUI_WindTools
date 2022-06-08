@@ -4,10 +4,16 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G
+local format = format
 local ipairs = ipairs
+local print = printp
 local tinsert = tinsert
 
+local ClearCursor = ClearCursor
 local CreateFrame = CreateFrame
+local GetActionInfo = GetActionInfo
+local PickupSpell = PickupSpell
+local PlaceAction = PlaceAction
 
 local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
 local C_Covenants_GetCovenantData = C_Covenants.GetCovenantData

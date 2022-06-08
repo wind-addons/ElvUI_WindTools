@@ -4,6 +4,7 @@ local _G = _G
 local format = format
 local pairs = pairs
 local print = print
+local strjoin = strjoin
 local strlen = strlen
 local strrep = strrep
 local tostring = tostring

@@ -8,6 +8,10 @@ local CH = W:GetModule("CovenantHelper")
 
 local format = format
 local ipairs = ipairs
+local next = next
+local strjoin = strjoin
+local tinsert = tinsert
+local unpack = unpack
 
 local options = W.options.combat.args
 

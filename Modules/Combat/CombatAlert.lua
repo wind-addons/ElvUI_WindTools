@@ -219,11 +219,11 @@ end
 -- 通知控制
 function C:ShowAlert(alertType)
     if not self.animationFrame then
-        F.DebugMessage(C, "找不到动画框架")
+        self:Log("debug", "not animation frame")
     end
 
     if not self.textFrame then
-        F.DebugMessage(C, "找不到文字框架")
+        self:Log("debug", "not text frame")
     end
 
     if isPlaying then

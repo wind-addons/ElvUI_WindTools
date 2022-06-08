@@ -24,12 +24,12 @@ local GetClassColor = GetClassColor
 ]]
 function F.SetFontWithDB(text, db)
     if not text or not text.GetFont then
-        F.DebugMessage("函数", "[1]找不到处理字体风格的字体")
+        F.Developer.LogDebug("Functions.SetFontWithDB: text not found")
         return
     end
 
     if not db or type(db) ~= "table" then
-        F.DebugMessage("函数", "[1]找不到字体风格数据库")
+        F.Developer.LogDebug("Functions.SetFontWithDB: db not found")
         return
     end
 
@@ -45,11 +45,11 @@ end
 ]]
 function F.SetFontColorWithDB(text, db)
     if not text or not text.GetFont then
-        F.DebugMessage("函数", "[2]找不到处理字体风格的字体")
+        F.Developer.LogDebug("Functions.SetFontColorWithDB: text not found")
         return
     end
     if not db or type(db) ~= "table" then
-        F.DebugMessage("函数", "[1]找不到字体颜色数据库")
+        F.Developer.LogDebug("Functions.SetFontColorWithDB: db not found")
         return
     end
 
@@ -64,7 +64,7 @@ end
 ]]
 function F.SetFontOutline(text, font, size)
     if not text or not text.GetFont then
-        F.DebugMessage("函数", "[3]找不到处理字体风格的字体")
+        F.Developer.LogDebug("Functions.SetFontOutline: text not found")
         return
     end
     local fontName, fontHeight = text:GetFont()
@@ -89,12 +89,12 @@ end
 ]]
 function F.CreateColorString(text, db)
     if not text or not type(text) == "string" then
-        F.DebugMessage("函数", "[4]找不到处理字体风格的字体")
+        F.Developer.LogDebug("Functions.CreateColorString: text not found")
         return
     end
 
     if not db or type(db) ~= "table" then
-        F.DebugMessage("函数", "[2]找不到字体颜色数据库")
+        F.Developer.LogDebug("Functions.CreateColorString: db not found")
         return
     end
 
@@ -110,11 +110,11 @@ end
 ]]
 function F.CreateClassColorString(text, englishClass)
     if not text or not type(text) == "string" then
-        F.DebugMessage("函数", "[5]找不到处理字体风格的字体")
+        F.Developer.LogDebug("Functions.CreateClassColorString: text not found")
         return
     end
     if not englishClass or type(englishClass) ~= "string" then
-        F.DebugMessage("函数", "[3]职业错误")
+        F.Developer.LogDebug("Functions.CreateClassColorString: class not found")
         return
     end
 
@@ -132,7 +132,7 @@ end
 ]]
 function F.SetFrameFontOutline(frame, font, size)
     if not frame or not frame.GetRegions then
-        F.DebugMessage("函数", "找不到处理字体风格的窗体")
+        F.Developer.LogDebug("Functions.SetFrameFontOutline: frame not found")
         return
     end
     for _, region in pairs({frame:GetRegions()}) do
@@ -140,34 +140,6 @@ function F.SetFrameFontOutline(frame, font, size)
             F.SetFontOutline(region, font, size)
         end
     end
-end
-
---[[
-    输出 Debug 信息
-    @param {table/string} module Ace3 模块或自定义字符串
-    @param {string} text 错误讯息
-]]
-function F.DebugMessage(module, text)
-    if E.global.WT.core.logLevel < 4 then
-        return
-    end
-
-    if not text then
-        return
-    end
-
-    if not module then
-        module = "函数"
-        text = "无模块名>" .. text
-    end
-
-    if type(module) ~= "string" and module.GetName then
-        module = module:GetName()
-    end
-
-    local message = format("[WT - %s] %s", module, text)
-
-    E:Delay(0.1, print, message)
 end
 
 do
@@ -219,10 +191,10 @@ function F.DelayUnhookAll(module)
         if module.UnhookAll then
             E:Delay(1, module.UnhookAll, module)
         else
-            F.DebugMessage(module, "无 AceHook 库函数！")
+            F.Developer.LogDebug("Functions.DelayUnhookAll: AceHook class not found!")
         end
     else
-        F.DebugMessage(nil, "找不到模块！")
+        F.Developer.LogDebug("Functions.DelayUnhookAll: Module not found!")
     end
 end
 
@@ -300,11 +272,11 @@ end
 
 function F.SetVertexColorWithDB(tex, db)
     if not tex or not tex.GetVertexColor then
-        F.DebugMessage("Function", "No texture to handling")
+        F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
         return
     end
     if not db or type(db) ~= "table" then
-        F.DebugMessage("Function", "No texture color database")
+        F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
         return
     end
 

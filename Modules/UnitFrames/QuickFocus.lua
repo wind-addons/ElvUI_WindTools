@@ -79,7 +79,7 @@ function QF:WaitUnitframesLoad(triedTimes)
     triedTimes = triedTimes or 0
 
     if triedTimes > 10 then
-        F.DebugMessage(self:GetName(), "Failed to load unitframes after 10 times, please try again later.")
+        self:Log("debug", "Failed to load unitframes after 10 times, please try again later.")
         return
     end
 

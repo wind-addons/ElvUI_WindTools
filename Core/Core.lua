@@ -75,7 +75,7 @@ _G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L[
 ]]
 function W:RegisterModule(name)
     if not name then
-        F.DebugMessage(W, "The name of module is required!")
+        F.Developer.ThrowError("The name of module is required!")
         return
     end
     if self.initialized then

@@ -127,9 +127,9 @@ function TM:SaveSet(setName)
     end
 
     if isSameName then
-        F.DebugMessage(TM, format(L["Already have a set named %s."], setName))
+        self:Log("warning", format(L["Already have a set named %s."], setName))
     elseif #self.db.sets[self.specID] == 15 then
-        F.DebugMessage(TM, L["Too many sets here, please delete one of them and try again."])
+        self:Log("warning", L["Too many sets here, please delete one of them and try again."])
     else
         tinsert(
             self.db.sets[self.specID],
@@ -197,7 +197,7 @@ function TM:SetTalent(talentString, pvpTalentTable)
         )
 
         if #talentTable < MAX_TALENT_TIERS then
-            F.DebugMessage(TM, L["Talent string is not valid."])
+            self:Log("warning", L["Talent string is not valid."])
         end
 
         local talentIDs = {}

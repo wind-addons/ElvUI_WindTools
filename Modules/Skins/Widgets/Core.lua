@@ -194,7 +194,7 @@ end
 
 function WS:RegisterLazyLoad(frame, func)
     if not frame then
-        F.DebugMessage(WS, "frame is nil.")
+        self:Log("debug", "frame is nil.")
         return
     end
 
@@ -202,7 +202,7 @@ function WS:RegisterLazyLoad(frame, func)
         if self[func] and type(self[func]) == "function" then
             func = self[func]
         else
-            F.DebugMessage(WS, func .. " is not a function.")
+            self:Log("debug", func .. " is not a function.")
             return
         end
     end

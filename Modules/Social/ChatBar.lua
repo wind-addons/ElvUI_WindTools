@@ -267,7 +267,7 @@ function CB:UpdateBar()
         local name = db.name
 
         if not name or name == "" then
-            F.DebugMessage(self, L["World channel no found, please setup again."])
+            self:Log("warning", L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
         else
             local chatFunc = function(self, mouseButton)
@@ -341,7 +341,7 @@ function CB:UpdateBar()
         local db = self.db.channels.community
         local name = db.name
         if not name or name == "" then
-            F.DebugMessage(self, L["Club channel no found, please setup again."])
+            self:Log("warning", L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
             local chatFunc = function(self, mouseButton)
@@ -350,8 +350,8 @@ function CB:UpdateBar()
                 end
                 local clubChannelId = GetCommuniryChannelByName(name)
                 if not clubChannelId then
-                    F.DebugMessage(
-                        CB,
+                    self:Log(
+                        "warning",
                         format(L["Club channel %s no found, please use the full name of the channel."], name)
                     )
                 else
@@ -389,7 +389,7 @@ function CB:UpdateBar()
                         _G.WTCustomEmoteFrame:Show()
                     end
                 else
-                    F.DebugMessage(CB, L["Please enable Emote module in WindTools Social category."])
+                    self:Log("warning", L["Please enable Emote module in WindTools Social category."])
                 end
             end
         end

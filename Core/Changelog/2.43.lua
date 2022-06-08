@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[243] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/06/08",
     IMPORTANT = {
         ["zhCN"] = {
             "登录信息, 兼容性检查的选项将会存储到全局设定中.",

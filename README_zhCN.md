@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.80-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.42-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.43-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -39,6 +39,7 @@
 2. **战斗提醒**: 进出战斗时将会出现一个动画, 可以自定义动画细节, 文字等.
 3. **天赋管家**: 在天赋界面提供一个额外的可开关窗口, 支持保存和快速设定天赋配置.
 4. **快速钥石**: 自动放置背包内的传奇地下城钥石.
+5. **盟约助手**: 当你更改盟约时, 变更动作条上的技能和灵魂羁绊.
 
 ## 地图
 1. **小地图点击者**: 当他人点击小地图时, 显示名字, 可设置战斗中, 文字风格等.

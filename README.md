@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.80-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.42-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-2.43-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -38,6 +38,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Talent Manager**: Save and change talents set with one-click.
 4. **Quick Keystone**: Put the keystone from bag automatically.
+5. **Covenant Helper**: Change the spells in action bars and the soulbind when you changing covenant.
 
 ## Map
 1. **Who Clicked?**: Display the name of players who clicked the minimap.

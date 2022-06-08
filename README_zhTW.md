@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.80-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.42-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.43-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -39,6 +39,7 @@
 2. **戰鬥提醒**: 進出戰鬥時將會出現一個動畫, 可以自訂動畫細節, 文字等.
 3. **天賦管家**: 在天賦界面提供一個額外的可開關窗口, 支持保存和快速設定天賦配置.
 4. **快速鑰石**: 自動放置背包中的傳奇地城鑰石.
+5. **誓盟助手**: 當你變更誓盟時, 修改動作條中的技能和靈魂之約.
 
 ## 地圖
 1. **小地圖點擊者**: 當他人點擊小地圖時, 顯示名字, 可設置戰鬥中, 文字風格等.

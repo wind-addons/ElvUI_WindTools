@@ -13,6 +13,8 @@ local strjoin = strjoin
 local tinsert = tinsert
 local unpack = unpack
 
+local GetSpellInfo = GetSpellInfo
+
 local options = W.options.combat.args
 
 local envs = {

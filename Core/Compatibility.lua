@@ -432,12 +432,19 @@ function W:CheckCompatibility()
         "private.mui.skins.widgets.treeGroupButton.enable"
     )
 
-	CheckMerathilisUI(
-		format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras"]),
-		L["WeakAuras"],
-		"private.WT.skins.addons.weakAuras",
-		"private.mui.skins.addonSkins.wa"
-	)
+    CheckMerathilisUI(
+        format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras"]),
+        L["WeakAuras"],
+        "private.WT.skins.addons.weakAuras",
+        "private.mui.skins.addonSkins.wa"
+    )
+
+    CheckMerathilisUI(
+        format("%s-%s-%s", L["Skins"], L["Addons"], L["WeakAuras Options"]),
+        L["WeakAuras Options"],
+        "private.WT.skins.addons.weakAurasOptions",
+        "private.mui.skins.addonSkins.waOptions"
+    )
 
     -- S&L
     CheckShadowAndLight(

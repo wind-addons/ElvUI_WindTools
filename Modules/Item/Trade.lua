@@ -26,7 +26,7 @@ function T:CreateThanksButton()
 end
 
 function T:TRADE_SHOW()
-    local targetName = GetUnitName("NPC")
+    local targetName = GetUnitName("NPC", true)
     if self.thanksButton then
         self.thanksButton.targetName = targetName
     end

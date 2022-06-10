@@ -59,8 +59,30 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
     end
 end
 
-function S:ElvUI_UnitFrames_UpdateAuraSettings(_, f)
-    self:CreateShadow(f)
+function S:ElvUI_UnitFrames_PostUpdateAura(_, _, button)
+    local db = UF.db.colors
+    local enemyNPC = not button.isFriend and not button.isPlayer
+    local r, g, b
+
+    if button.isDebuff then
+        if enemyNPC then
+            if db.auraByType then
+                r, g, b = 0.9, 0.1, 0.1
+            end
+        elseif
+            db.auraByDispels and button.debuffType and E.BadDispels[button.spellID] and
+                E:IsDispellableByMe(button.debuffType)
+         then
+            r, g, b = 0.05, 0.85, 0.94
+        elseif db.auraByType then
+            local color = _G.DebuffTypeColor[button.debuffType] or _G.DebuffTypeColor.none
+            r, g, b = color.r, color.g, color.b
+        end
+    elseif db.auraByDispels and button.isStealable and not button.isFriend then
+        r, g, b = 0.93, 0.91, 0.55
+    end
+
+    self:CreateShadow(button, 3, r, g, b)
 end
 
 function S:ElvUI_UnitFrames_Configure_AuraBars(_, f)
@@ -94,7 +116,7 @@ function S:ElvUI_UnitFrames_Construct_AuraBars(_, f)
         f.windShadowBackdrop:Point("TOPLEFT", f.icon, "TOPLEFT", -1, 1)
         f.windShadowBackdrop:Point("BOTTOMLEFT", f.icon, "BOTTOMLEFT", -1, -1)
     else
-        f.windShadowBackdrop:Point("TOPLEFT", f, "TOPLEFT",-1, 1)
+        f.windShadowBackdrop:Point("TOPLEFT", f, "TOPLEFT", -1, 1)
         f.windShadowBackdrop:Point("BOTTOMLEFT", f, "BOTTOMLEFT", -1, -1)
     end
 
@@ -119,7 +141,7 @@ function S:ElvUI_UnitFrames()
     self:SecureHook(UF, "Configure_Power", "ElvUI_UnitFrames_Configure_Power")
 
     -- Auras
-    self:SecureHook(UF, "UpdateAuraSettings", "ElvUI_UnitFrames_UpdateAuraSettings")
+    self:SecureHook(UF, "PostUpdateAura", "ElvUI_UnitFrames_PostUpdateAura")
 
     -- Status bar
     self:SecureHook(UF, "Configure_AuraBars", "ElvUI_UnitFrames_Configure_AuraBars")

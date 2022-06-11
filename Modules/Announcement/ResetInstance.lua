@@ -24,7 +24,7 @@ function A:ResetInstance(text)
         systemMessage = _G[systemMessage]
         if (strmatch(text, gsub(systemMessage, "%%s", ".+"))) then
             local instance = strmatch(text, gsub(systemMessage, "%%s", "(.+)"))
-            local prefix = config.prefix and "<WindTools> " or ""
+            local prefix = config.prefix and "<" .. W.PlainTitle .. "> " or ""
             self:SendMessage(format(prefix .. friendlyMessage, instance), self:GetChannel(config.channel))
             return
         end

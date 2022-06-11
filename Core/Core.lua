@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 
 local _G = _G
 local format = format
+local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local pairs = pairs
@@ -23,6 +24,7 @@ local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 
 W.Title = L["WindTools"]
+W.PlainTitle = gsub(W.Title, "|c........([^|]+)|r", "%1")
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()

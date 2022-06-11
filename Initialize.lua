@@ -44,15 +44,6 @@ function W:Initialize()
         return
     end
 
-    self.initialized = true
-
-    self:UpdateScripts() -- Database need update first
-    self:InitializeModules()
-
-    EP:RegisterPlugin(addonName, W.OptionsCallback)
-    self:SecureHook(E, "UpdateAll", "UpdateModules")
-    self:RegisterEvent("PLAYER_ENTERING_WORLD")
-
     for name, module in self:IterateModules() do
         addon[2].Developer.InjectLogger(module)
     end
@@ -64,6 +55,15 @@ function W:Initialize()
             addon[2].Developer.InjectLogger(name)
         end
     )
+
+    self.initialized = true
+
+    self:UpdateScripts() -- Database need update first
+    self:InitializeModules()
+
+    EP:RegisterPlugin(addonName, W.OptionsCallback)
+    self:SecureHook(E, "UpdateAll", "UpdateModules")
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 do

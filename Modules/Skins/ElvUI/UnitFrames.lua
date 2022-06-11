@@ -59,11 +59,17 @@ function S:ElvUI_UnitFrames_Configure_Power(_, f)
     end
 end
 
-function S:ElvUI_UnitFrames_PostUpdateAura(_, _, button)
+function S:ElvUI_UnitFrames_PostUpdateAura(uf, _, button)
+    if uf.isNameplate then
+        return
+    end
+
+    self:CreateLowerShadow(button)
+
     local db = UF.db.colors
     local enemyNPC = not button.isFriend and not button.isPlayer
-    local r, g, b
 
+    local r, g, b
     if button.isDebuff then
         if enemyNPC then
             if db.auraByType then
@@ -76,13 +82,13 @@ function S:ElvUI_UnitFrames_PostUpdateAura(_, _, button)
             r, g, b = 0.05, 0.85, 0.94
         elseif db.auraByType then
             local color = _G.DebuffTypeColor[button.debuffType] or _G.DebuffTypeColor.none
-            r, g, b = color.r, color.g, color.b
+            r, g, b = color.r * 0.6, color.g * 0.6, color.b * 0.6
         end
     elseif db.auraByDispels and button.isStealable and not button.isFriend then
         r, g, b = 0.93, 0.91, 0.55
     end
 
-    self:CreateShadow(button, 3, r, g, b)
+    self:UpdateShadowColor(button.shadow, r, g, b)
 end
 
 function S:ElvUI_UnitFrames_Configure_AuraBars(_, f)

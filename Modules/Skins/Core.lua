@@ -86,6 +86,27 @@ function S:CreateShadow(frame, size, r, g, b, force)
     frame.windStyle = true
 end
 
+function S:CreateLowerShadow(frame)
+    if not frame.shadow then
+        self:CreateShadow(frame)
+        local parentFrameLevel = frame:GetFrameLevel()
+        frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
+    end
+end
+
+function S:UpdateShadowColor(shadow, r, g, b)
+    if not shadow or not shadow.SetBackdropColor or not shadow.SetBackdropBorderColor then
+        return
+    end
+
+    r = r or E.private.WT.skins.color.r or 0
+    g = g or E.private.WT.skins.color.g or 0
+    b = b or E.private.WT.skins.color.b or 0
+
+    shadow:SetBackdropColor(r, g, b, 0)
+    shadow:SetBackdropBorderColor(r, g, b, 0.618)
+end
+
 --[[
     创建阴影于 ElvUI 美化背景
     @param {object} frame 窗体

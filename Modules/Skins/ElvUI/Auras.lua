@@ -18,14 +18,13 @@ function S:ElvUI_Auras_UpdateAura(_, button)
 
     if button.debuffType and (not button.debuffTypeWT or button.debuffTypeWT ~= button.debuffType) then
         local color = button.filter == "HARMFUL" and A.db.colorDebuffs and _G.DebuffTypeColor[button.debuffType]
+
         button.debuffTypeWT = button.debuffType
 
         if color then
-            r, g, b = color.r, color.g, color.b
+            self:UpdateShadowColor(button.shadow, color.r, color.g, color.b)
         end
     end
-
-    self:UpdateShadowColor(button.shadow, r, g, b)
 end
 
 function S:ElvUI_Auras_UpdateTempEnchant(_, button, index, expiration)

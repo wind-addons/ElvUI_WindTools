@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
-local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
@@ -24,7 +23,7 @@ function S:AAP_SkinOrderList()
         local close = CreateFrame("Button", "WTAAP_SBXOZ", frame, "UIPanelCloseButton, BackdropTemplate")
         close:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT")
         close:SetScript("OnClick", _G.AAP_SBXOZ:GetScript("OnClick"))
-        ES:HandleCloseButton(close)
+        self:ESProxy("HandleCloseButton", close)
         _G.AAP_SBXOZ:Hide()
         _G.AAP_SBXOZ = close
     end
@@ -51,10 +50,10 @@ function S:AAP_SkinQuestList()
     F.SetFontOutline(frame.Greetings2FS1, E.db.general.font)
     F.SetFontOutline(frame.Greetings2FS221, E.db.general.font)
     F.SetFontOutline(frame.Greetings2FS2, E.db.general.font)
-    ES:HandleEditBox(frame.Greetings2EB1)
+    self:ESProxy("HandleEditBox", frame.Greetings2EB1)
     F.SetFontOutline(frame.Greetings2FS3, E.db.general.font)
-    ES:HandleEditBox(frame.Greetings2EB2)
-    ES:HandleButton(frame.GreetingsHideB)
+    self:ESProxy("HandleEditBox", frame.Greetings2EB2)
+    self:ESProxy("HandleButton", frame.GreetingsHideB)
 
     local progressFrame = frame.QuestFrames.MyProgress
     if progressFrame then
@@ -83,13 +82,13 @@ function S:AAP_SkinOptionsFrame()
     frame.MainFrame:CreateBackdrop("Transparent")
     frame.MainFrame.texture:Kill()
     self:CreateBackdropShadow(frame.MainFrame)
-    ES:HandleButton(frame.ShowStuffs)
-    ES:HandleButton(frame.ShowStuffs2)
+    self:ESProxy("HandleButton", frame.ShowStuffs)
+    self:ESProxy("HandleButton", frame.ShowStuffs2)
     frame.ShowStuffs:Point("BOTTOMLEFT", frame.MainFrame, "BOTTOMLEFT", 0, 0)
     frame.ShowStuffs2:Point("BOTTOMLEFT", frame.ShowStuffs, "TOPLEFT", 0, 5)
-    ES:HandleButton(frame.Button1)
-    ES:HandleButton(frame.Button2)
-    ES:HandleButton(frame.Button3)
+    self:ESProxy("HandleButton", frame.Button1)
+    self:ESProxy("HandleButton", frame.Button2)
+    self:ESProxy("HandleButton", frame.Button3)
 
     local optionFrames = {
         frame.MainFrame.OptionsQuests,
@@ -101,13 +100,13 @@ function S:AAP_SkinOptionsFrame()
         if optionFrame then
             optionFrame.texture:StripTextures()
             for _, child in pairs {optionFrame:GetChildren()} do
-                local name = child:GetName()
-                if name then
-                    if strfind(name, "CheckButton") then
-                        ES:HandleCheckBox(child)
-                    elseif strfind(name, "Slider") then
-                        ES:HandleSliderFrame(child)
-                    end
+                local objectType = child:GetObjectType()
+                if objectType == "Button" then
+                    self:ESProxy("HandleButton", child)
+                elseif objectType == "CheckButton" then
+                    self:ESProxy("HandleCheckBox", child)
+                elseif objectType == "Slider" then
+                    self:ESProxy("HandleSliderFrame", child)
                 end
             end
         end
@@ -121,12 +120,13 @@ function S:AAP_SkinLoadInFrame()
     end
 
     frame:CreateBackdrop("Transparent")
+    self:CreateBackdropShadow(frame)
     frame.texture:Kill()
 
     F.SetFontOutline(frame.FS, E.db.general.font)
-    ES:HandleButton(frame.B1)
-    ES:HandleButton(frame.B2)
-    ES:HandleButton(frame.B3)
+    self:ESProxy("HandleButton", frame.B1)
+    self:ESProxy("HandleButton", frame.B2)
+    self:ESProxy("HandleButton", frame.B3)
 
     self:AAP_SkinRoutePlanFrame()
 end
@@ -138,10 +138,8 @@ function S:AAP_SkinRoutePlanFrame()
     end
 
     if frame.CloseButton then
-        local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton, BackdropTemplate")
-        close:Point("TOPRIGHT", frame.CloseButton, "TOPRIGHT", 10, 10)
-        close:SetScript("OnMouseUp", frame.CloseButton:GetScript("OnMouseUp"))
-        ES:HandleCloseButton(close)
+        local close = F.Widgets.New("CloseButton", frame, nil, frame.CloseButton:GetScript("OnMouseUp"))
+        close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
         frame.CloseButton:Hide()
         frame.CloseButton = close
     end

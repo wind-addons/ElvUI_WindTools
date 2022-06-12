@@ -20,10 +20,10 @@ function S:PremadeGroupsFilter()
         return
     end
 
-    S:DisableAddOnSkin("PremadeGroupsFilter")
+    self:DisableAddOnSkin("PremadeGroupsFilter")
 
     local frame = _G.PremadeGroupsFilterDialog
-    ES:HandlePortraitFrame(frame, true)
+    self:ESProxy("HandlePortraitFrame", frame, true)
 
     -- Extend 1 pixel looks as same height as PVEFrame
     frame.backdrop:SetTemplate("Transparent")
@@ -51,25 +51,25 @@ function S:PremadeGroupsFilter()
     end
 
     if frame.Expression then
-        ES:HandleEditBox(frame.Expression)
+        self:ESProxy("HandleEditBox", frame.Expression)
     end
 
     if frame.ResetButton then
-        ES:HandleButton(frame.ResetButton)
+        self:ESProxy("HandleButton", frame.ResetButton)
     end
 
     if frame.RefreshButton then
-        ES:HandleButton(frame.RefreshButton)
+        self:ESProxy("HandleButton", frame.RefreshButton)
     end
 
     if frame.MinimizeButton then
-        ES:HandleNextPrevButton(frame.MinimizeButton, "up", nil, true)
+        self:ESProxy("HandleNextPrevButton", frame.MinimizeButton, "up", nil, true)
         frame.MinimizeButton:ClearAllPoints()
         frame.MinimizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
     end
 
     if frame.MaximizeButton then
-        ES:HandleNextPrevButton(frame.MaximizeButton, "down", nil, true)
+        self:ESProxy("HandleNextPrevButton", frame.MaximizeButton, "down", nil, true)
         frame.MaximizeButton:ClearAllPoints()
         frame.MaximizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
     end
@@ -104,7 +104,7 @@ function S:PremadeGroupsFilter()
     for _, line in pairs(lines) do
         if frame[line] then
             if frame[line].Act then
-                ES:HandleCheckBox(frame[line].Act)
+                self:ESProxy("HandleCheckBox", frame[line].Act)
                 frame[line].Act:Size(24)
                 frame[line].Act:ClearAllPoints()
                 frame[line].Act:Point("LEFT", frame[line], "LEFT", 3, -3)
@@ -115,17 +115,17 @@ function S:PremadeGroupsFilter()
             end
 
             if frame[line].DropDown then
-                ES:HandleDropDownBox(frame[line].DropDown)
+                self:ESProxy("HandleDropDownBox", frame[line].DropDown)
             end
 
             if frame[line].Min then
-                ES:HandleEditBox(frame[line].Min)
+                self:ESProxy("HandleEditBox", frame[line].Min)
                 frame[line].Min.backdrop:ClearAllPoints()
                 frame[line].Min.backdrop:SetOutside(frame[line].Min, 0, 0)
             end
 
             if frame[line].Max then
-                ES:HandleEditBox(frame[line].Max)
+                self:ESProxy("HandleEditBox", frame[line].Max)
                 frame[line].Max.backdrop:ClearAllPoints()
                 frame[line].Max.backdrop:SetOutside(frame[line].Max, 0, 0)
             end
@@ -133,7 +133,7 @@ function S:PremadeGroupsFilter()
     end
 
     if _G.UsePFGButton then
-        ES:HandleCheckBox(_G.UsePFGButton)
+        self:ESProxy("HandleCheckBox", _G.UsePFGButton)
         _G.UsePFGButton:ClearAllPoints()
         _G.UsePFGButton:Point("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
     end

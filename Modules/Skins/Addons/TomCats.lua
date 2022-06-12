@@ -20,7 +20,7 @@ local atlasToQuality = {
     ["auctionhouse-itemicon-border-account"] = 8
 }
 
-local function HandleTomCatsIcon(icon)
+function S:TomCats_HandleTomCatsIcon(icon)
     if not icon or not icon:IsShown() then
         return
     end
@@ -31,7 +31,7 @@ local function HandleTomCatsIcon(icon)
             icon.Icon:RemoveMaskTexture(icon.Icon:GetMaskTexture(i))
         end
 
-        ES:HandleIcon(icon.Icon, true)
+        self:ESProxy("HandleIcon", icon.Icon, true)
         icon.IconBorder:SetAlpha(0)
     end
 
@@ -46,13 +46,13 @@ local function HandleTomCatsIcon(icon)
 
     if icon.CategoryIcon then
         icon.CategoryIcon:SetFrameLevel(icon:GetFrameLevel() + 2)
-        HandleTomCatsIcon(icon.CategoryIcon)
+        self:TomCats_HandleTomCatsIcon(icon.CategoryIcon)
     end
 end
 
 function S:TomCats_SkinTooltipItems(tt, owner)
     for _, item in pairs(tt.Loot) do
-        HandleTomCatsIcon(item)
+        self:TomCats_HandleTomCatsIcon(item)
     end
 end
 

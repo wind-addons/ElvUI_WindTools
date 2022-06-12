@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
-local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
@@ -11,8 +10,8 @@ function S:REHack()
         return
     end
 
-    S:DisableAddOnSkin("REHack")
-    
+    self:DisableAddOnSkin("REHack")
+
     if _G.HackEditFrame then
         self:StripEdgeTextures(_G.HackEditFrame)
         _G.HackEditFrameBG:StripTextures()
@@ -20,8 +19,8 @@ function S:REHack()
         self:CreateBackdropShadow(_G.HackEditFrame)
         self:MerathilisUISkin(_G.HackEditFrame)
         _G.HackEditFrameTitle:Kill()
-        ES:HandleCloseButton(_G.HackEditFrameClose)
-        ES:HandleScrollBar(_G.HackEditScrollFrameScrollBar)
+        self:ESProxy("HandleCloseButton", _G.HackEditFrameClose)
+        self:ESProxy("HandleScrollBar", _G.HackEditScrollFrameScrollBar)
 
         local SetPoint = _G.HackEditFrame.SetPoint
         _G.HackEditFrame.SetPoint = function(frame, point, relativeFrame, relativePoint, x, y)
@@ -43,19 +42,19 @@ function S:REHack()
         self:MerathilisUISkin(_G.HackListFrame)
         _G.HackListFrameTitle:Kill()
 
-        ES:HandleTab(_G.HackListFrameTab1)
-        ES:HandleTab(_G.HackListFrameTab2)
+        self:ESProxy("HandleTab", _G.HackListFrameTab1)
+        self:ESProxy("HandleTab", _G.HackListFrameTab2)
         self:CreateBackdropShadow(_G.HackListFrameTab1)
         self:CreateBackdropShadow(_G.HackListFrameTab2)
 
-        ES:HandleEditBox(_G.HackSearchEdit)
+        self:ESProxy("HandleEditBox", _G.HackSearchEdit)
 
-        ES:HandleCheckBox(_G.HackSearchName)
-        ES:HandleCheckBox(_G.HackSearchBody)
+        self:ESProxy("HandleCheckBox", _G.HackSearchName)
+        self:ESProxy("HandleCheckBox", _G.HackSearchBody)
         _G.HackSearchName:Size(20)
         _G.HackSearchBody:Size(20)
 
-        ES:HandleCloseButton(_G.HackListFrameClose)
+        self:ESProxy("HandleCloseButton", _G.HackListFrameClose)
         _G.HackEditBoxLineBG:SetColorTexture(0, 0, 0, 0.25)
     end
 end

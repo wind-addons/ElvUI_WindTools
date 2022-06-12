@@ -8,7 +8,7 @@ local pairs = pairs
 function S:Immersion_ReskinTitleButton(frame)
     for _, button in pairs {frame.TitleButtons:GetChildren()} do
         if button and not button.windStyle then
-            ES:HandleButton(button, nil, nil, nil, true, "Transparent")
+            self:ESProxy("HandleButton", button, nil, nil, nil, true, "Transparent")
             button.backdrop:ClearAllPoints()
             button.backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
             button.backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
@@ -133,7 +133,7 @@ function S:Immersion()
     F.SetFontOutline(talkBox.TextFrame.Text, nil, 15)
 
     -- Close Button
-    ES:HandleCloseButton(talkBox.MainFrame.CloseButton)
+    self:ESProxy("HandleCloseButton", talkBox.MainFrame.CloseButton)
 
     -- Reputation bar
     local repBar = talkBox.ReputationBar

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E.Skins
 local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -11,37 +11,37 @@ local unpack = unpack
 function S:WeakAuras_PrintProfile()
     local frame = _G.WADebugEditBox.Background
 
-    if frame and not frame.windStyle then
+    if frame and not frame.__windSkin then
         local textArea = _G.WADebugEditBoxScrollFrame:GetRegions()
-        ES:HandleScrollBar(_G.WADebugEditBoxScrollFrameScrollBar)
+        self:ESProxy("HandleScrollBar", _G.WADebugEditBoxScrollFrameScrollBar)
 
         frame:StripTextures()
-        frame:CreateBackdrop("Transparent")
-        S:CreateShadow(frame)
+        frame:SetTemplate("Transparent")
+        self:CreateShadow(frame)
 
         for _, child in pairs {frame:GetChildren()} do
             if child:GetNumRegions() == 3 then
                 child:StripTextures()
                 local subChild = child:GetChildren()
-                ES:HandleCloseButton(subChild)
                 subChild:ClearAllPoints()
                 subChild:Point("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
+                self:ESProxy("HandleCloseButton", subChild)
             end
         end
 
-        frame.windStyle = true
+        frame.__windSkin = true
     end
 end
 
 function S:ProfilingWindow_UpdateButtons(frame)
     -- 下方 4 个按钮
     for _, button in pairs {frame.statsFrame:GetChildren()} do
-        ES:HandleButton(button)
+        self:ESProxy("HandleButton", button)
     end
 
     -- 顶部 2 个按钮
     for _, button in pairs {frame.titleFrame:GetChildren()} do
-        if not button.windStyle and button.GetNormalTexture then
+        if not button.__windSkin and button.GetNormalTexture then
             local normalTexturePath = button:GetNormalTexture():GetTexture()
             if normalTexturePath == "Interface\\BUTTONS\\UI-Panel-CollapseButton-Up" then
                 button:StripTextures()
@@ -86,12 +86,12 @@ function S:ProfilingWindow_UpdateButtons(frame)
                 button:SetHitRectInsets(6, 6, 7, 7)
                 button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
             else
-                ES:HandleCloseButton(button)
+                self:ESProxy("HandleCloseButton", button)
                 button:ClearAllPoints()
                 button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 5)
             end
 
-            button.windStyle = true
+            button.__windSkin = true
         end
     end
 end
@@ -101,7 +101,7 @@ local function Skin_WeakAuras(f, fType)
     -- 1. Use ElvUI Skins functions
     -- 2. Fix the TexCoords
     if fType == "icon" then
-        if not f.windStyle then
+        if not f.__windSkin then
             f.icon.SetTexCoordOld = f.icon.SetTexCoord
             f.icon.SetTexCoord = function(self, ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
                 local cLeft, cRight, cTop, cDown
@@ -141,10 +141,10 @@ local function Skin_WeakAuras(f, fType)
                 end
             )
 
-            f.windStyle = true
+            f.__windSkin = true
         end
     elseif fType == "aurabar" then
-        if not f.windStyle then
+        if not f.__windSkin then
             f:CreateBackdrop()
             f.backdrop.Center:StripTextures()
             f.backdrop:SetFrameLevel(0)
@@ -169,7 +169,7 @@ local function Skin_WeakAuras(f, fType)
                 end
             )
 
-            f.windStyle = true
+            f.__windSkin = true
         end
     end
 end

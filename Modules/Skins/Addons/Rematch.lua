@@ -53,7 +53,7 @@ local function ReskinCloseButton(button)
     if not button then
         return
     end
-    ES:HandleCloseButton(button)
+    S:ESProxy("HandleCloseButton", button)
     button.Icon = E.noop
     button.SetNormalTexture = E.noop
     button.SetPushedTexture = E.noop
@@ -85,7 +85,7 @@ local function ReskinButton(button)
             region.SetTexture = E.noop
         end
     end
-    ES:HandleButton(button, true)
+    S:ESProxy("HandleButton", button, true)
 end
 
 local function ReskinFilterButton(button)
@@ -107,7 +107,7 @@ local function ReskinEditBox(editBox)
         editBox.SearchIcon:SetTexture(searchIconTex)
     end
 
-    ES:HandleEditBox(editBox)
+    S:ESProxy("HandleEditBox", editBox)
     editBox.backdrop:SetOutside(0, 0)
 end
 
@@ -121,11 +121,11 @@ local function ReskinDropdown(dropdown) -- modified from NDui
         dropdown.Icon:CreateBackdrop()
     end
     local arrow = dropdown:GetChildren()
-    ES:HandleNextPrevButton(arrow, "down")
+    S:ESProxy("HandleNextPrevButton", arrow, "down")
 end
 
 local function ReskinScrollBar(scrollBar)
-    ES:HandleScrollBar(scrollBar)
+    S:ESProxy("HandleScrollBar", scrollBar)
     scrollBar.Thumb.backdrop:ClearAllPoints()
     scrollBar.Thumb.backdrop:Point("TOPLEFT", scrollBar.Thumb, "TOPLEFT", 3, -3)
     scrollBar.Thumb.backdrop:Point("BOTTOMRIGHT", scrollBar.Thumb, "BOTTOMRIGHT", -1, 3)
@@ -260,7 +260,7 @@ local function ReskinPetList(list) -- modified from NDui
                 end
             end
 
-            ES:HandleButton(button)
+            S:ESProxy("HandleButton", button)
             if not button.Pet then
                 button.backdrop:SetInside(button, 1, 1)
             else
@@ -294,7 +294,7 @@ local function ReskinOptions(list)
     for i = 1, #buttons do
         local button = buttons[i]
         if not button.windStyle then
-            ES:HandleButton(button)
+            S:ESProxy("HandleButton", button)
             button.backdrop:SetInside(button, 1, 1)
             button.HeaderBack:StripTextures()
             button.HeaderBack = button.backdrop
@@ -309,7 +309,7 @@ local function ReskinTeamList(panel)
             local loadout = panel.Loadouts[i]
             if loadout and not loadout.windStyle then
                 loadout:StripTextures()
-                ES:HandleButton(loadout)
+                S:ESProxy("HandleButton", loadout)
                 loadout.backdrop:SetInside(loadout, 2, 2)
                 ReskinIconButton(loadout.Pet.Pet)
                 if loadout.Pet.Pet.Level then
@@ -617,14 +617,14 @@ function S:Rematch_Footer()
     ReskinButton(_G.RematchBottomPanel.SaveButton)
     ReskinButton(_G.RematchBottomPanel.SaveAsButton)
     ReskinButton(_G.RematchBottomPanel.FindBattleButton)
-    ES:HandleCheckBox(_G.RematchBottomPanel.UseDefault)
+    S:ESProxy("HandleCheckBox", _G.RematchBottomPanel.UseDefault)
 
     hooksecurefunc(
         _G.RematchJournal,
         "SetupUseRematchButton",
         function()
             if _G.UseRematchButton then
-                ES:HandleCheckBox(_G.UseRematchButton)
+                S:ESProxy("HandleCheckBox", _G.UseRematchButton)
             end
         end
     )
@@ -652,7 +652,7 @@ function S:Rematch_Dialog() -- Modified from NDui
     ReskinEditBox(dialog.EditBox)
     dialog.TeamTabIconPicker:StripTextures()
     dialog.TeamTabIconPicker:CreateBackdrop()
-    ES:HandleScrollBar(dialog.TeamTabIconPicker.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleScrollBar", dialog.TeamTabIconPicker.ScrollFrame.ScrollBar)
     hooksecurefunc(
         _G.RematchTeamTabs,
         "UpdateTabIconPickerList",
@@ -675,7 +675,7 @@ function S:Rematch_Dialog() -- Modified from NDui
     )
 
     -- Checkbox
-    ES:HandleCheckBox(dialog.CheckButton)
+    S:ESProxy("HandleCheckBox", dialog.CheckButton)
 
     -- Dropdown
     ReskinDropdown(dialog.SaveAs.Target)
@@ -733,8 +733,8 @@ function S:Rematch_Dialog() -- Modified from NDui
     collection.Chart:StripTextures()
     collection.Chart:CreateBackdrop("Transparent")
     collection.Chart.backdrop:SetInside(collection.Chart, 2, 2)
-    ES:HandleRadioButton(collection.ChartTypesRadioButton)
-    ES:HandleRadioButton(collection.ChartSourcesRadioButton)
+    S:ESProxy("HandleRadioButton", collection.ChartTypesRadioButton)
+    S:ESProxy("HandleRadioButton", collection.ChartSourcesRadioButton)
 end
 
 function S:Rematch_AbilityCard()
@@ -761,7 +761,7 @@ function S:Rematch_PetCard()
     card:CreateBackdrop("Transparent")
     self:CreateBackdropShadow(card)
     ReskinCloseButton(card.CloseButton)
-    ES:HandleNextPrevButton(card.PinButton, "up")
+    S:ESProxy("HandleNextPrevButton", card.PinButton, "up")
     card.PinButton:ClearAllPoints()
     card.PinButton:Point("TOPLEFT", 3, -3)
     ReskinCard(card.Front)
@@ -915,7 +915,7 @@ function S:Rematch()
     _G.RematchJournal.portrait:Hide()
     _G.RematchJournal:CreateBackdrop()
     self:CreateBackdropShadow(_G.RematchJournal, true)
-    ES:HandleCloseButton(_G.RematchJournal.CloseButton)
+    S:ESProxy("HandleCloseButton", _G.RematchJournal.CloseButton)
 
     -- Main
     self:Rematch_Header()

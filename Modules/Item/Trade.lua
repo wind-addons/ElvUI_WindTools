@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
 local T = W:NewModule("Trade", "AceEvent-3.0")
-local ES = E.Skins
 
 local _G = _G
 local CreateFrame = CreateFrame
@@ -8,21 +7,21 @@ local GetUnitName = GetUnitName
 local SendChatMessage = SendChatMessage
 
 function T:CreateThanksButton()
-    local frame = _G.TradeFrame
-    local button = CreateFrame("Button", "WTTradeThanksButton", frame, "UIPanelButtonTemplate")
-    button:Size(80, 20)
-    button:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 5, 5)
-    button:SetText(L["Thanks"])
-    button:SetScript(
-        "OnClick",
+    self.thanksButton =
+        F.Widgets.New(
+        "Button",
+        _G.TradeFrame,
+        L["Thanks"],
+        80,
+        20,
         function(self)
             if self.targetName then
                 SendChatMessage(T.db.thanksText, "WHISPER", nil, self.targetName)
             end
         end
     )
-    ES:HandleButton(button)
-    self.thanksButton = button
+
+    self.thanksButton:SetPoint("BOTTOMLEFT", _G.TradeFrame, "BOTTOMLEFT", 5, 5)
 end
 
 function T:TRADE_SHOW()

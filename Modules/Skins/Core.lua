@@ -129,6 +129,10 @@ end
 
 do
     local function createBackdropShadow(frame, defaultTemplate)
+        if not E.private.WT.skins or not E.private.WT.skins.shadow then
+            return
+        end
+
         if not defaultTemplate then
             frame.backdrop:SetTemplate("Transparent")
         end
@@ -165,26 +169,28 @@ do
             )
         end
     end
-end
 
---[[
-    创建阴影于 ElvUI 美化背景（延迟等待 ElvUI 美化加载完毕）
-    2 秒内未能美化会报错~
-    @param {object} frame 窗体
-    @param {string} [tried=20] 尝试次数
+    --[[
+    Create shadow of backdrop that created by ElvUI skin functionsp
+    The function is automatically repeat several times for waiting ElvUI done
+        the modifying/creating of backdrop
+    !!! It only check for 2 seconds (20 times in total)
+    @param {object} frame
+    @param {string} [tried=20] time
 ]]
-function S:TryCreateBackdropShadow(frame, tried)
-    if not frame or frame.__shadow then
-        return
-    end
+    function S:TryCreateBackdropShadow(frame, tried)
+        if not frame or frame.__shadow then
+            return
+        end
 
-    tried = tried or 20
+        tried = tried or 20
 
-    if frame.backdrop then
-        self:createBackdropShadow(frame)
-    else
-        if tried >= 0 then
-            E:Delay(0.1, self.TryCreateBackdropShadow, self, frame, tried - 1)
+        if frame.backdrop then
+            createBackdropShadow(frame)
+        else
+            if tried >= 0 then
+                E:Delay(0.1, self.TryCreateBackdropShadow, self, frame, tried - 1)
+            end
         end
     end
 end

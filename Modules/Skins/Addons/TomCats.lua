@@ -25,7 +25,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
         return
     end
 
-    if not icon.windStyle then
+    if not icon.__windSkin then
         local maskNum = icon.Icon:GetNumMaskTextures()
         for i = maskNum, 1 do
             icon.Icon:RemoveMaskTexture(icon.Icon:GetMaskTexture(i))
@@ -33,6 +33,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
 
         self:ESProxy("HandleIcon", icon.Icon, true)
         icon.IconBorder:SetAlpha(0)
+        icon.__windSkin = true
     end
 
     local atlas = icon.IconBorder:IsShown() and icon.IconBorder:GetAtlas()

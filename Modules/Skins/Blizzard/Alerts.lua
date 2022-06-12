@@ -5,7 +5,7 @@ local _G = _G
 local pairs = pairs
 
 function S:SkinAlert(alert)
-    if not alert or alert.windStyle then
+    if not alert or alert.__windSkin then
         return
     end
 
@@ -17,11 +17,11 @@ function S:SkinAlert(alert)
         alert.EncounterIcon.PortraitBorder:Hide()
     end
 
-    alert.windStyle = true
+    alert.__windSkin = true
 end
 
 function S:SkinAchievementAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -46,22 +46,22 @@ function S:SkinAchievementAlert(frame)
     frame.GuildBorder:ClearAllPoints()
     frame.GuildBorder:Point("TOPRIGHT", frame, "TOPRIGHT", -13, -12)
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinGuildChallengeAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
     self:CreateBackdropShadow(frame)
     F.SetFrameFontOutline(frame)
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinCriteriaAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -81,11 +81,11 @@ function S:SkinCriteriaAlert(frame)
         frame.Icon.Texture:Point("LEFT", frame.backdrop, "LEFT", 10, 0)
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinMoneyWonAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -102,11 +102,11 @@ function S:SkinMoneyWonAlert(frame)
     local xOffset = (180 - frame.Amount:GetStringWidth()) / 2
     frame.Amount:Point("BOTTOMLEFT", frame.Icon, "BOTTOMRIGHT", xOffset, 2)
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinNewRecipeLearnedAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -119,11 +119,11 @@ function S:SkinNewRecipeLearnedAlert(frame)
         frame.Icon.b:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 1, -1)
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinInvasionAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -168,11 +168,11 @@ function S:SkinInvasionAlert(frame)
         frame.ZoneName:SetJustifyH("MIDDLE")
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinWorldQuestCompleteAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -194,11 +194,11 @@ function S:SkinWorldQuestCompleteAlert(frame)
     F.SetFontOutline(frame.ToastText)
     F.SetFontOutline(frame.QuestName, nil, "+2")
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinLootUpgradeAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -220,11 +220,11 @@ function S:SkinLootUpgradeAlert(frame)
         text:SetJustifyV("BOTTOM")
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinLootAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
     self:CreateBackdropShadow(frame)
@@ -240,11 +240,11 @@ function S:SkinLootAlert(frame)
     F.SetFontOutline(frame.RollValue)
     F.SetFontOutline(frame.ItemName)
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinLegendaryItemAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
     self:CreateBackdropShadow(frame)
@@ -269,11 +269,11 @@ function S:SkinLegendaryItemAlert(frame)
         end
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinDigsiteCompleteAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
     self:CreateBackdropShadow(frame)
@@ -281,11 +281,11 @@ function S:SkinDigsiteCompleteAlert(frame)
     F.SetFontOutline(frame.Title)
     F.SetFontOutline(frame.DigsiteType, nil, "+2")
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinRafRewardDeliveredAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -303,11 +303,11 @@ function S:SkinRafRewardDeliveredAlert(frame)
     frame.Description:SetJustifyH("MIDDLE")
     frame.Description:SetJustifyV("TOP")
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinNewItemAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -331,11 +331,11 @@ function S:SkinNewItemAlert(frame)
         frame.Icon.b:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 1, -1)
     end
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinGarrisonTalentAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -353,11 +353,11 @@ function S:SkinGarrisonTalentAlert(frame)
     frame.Name:SetJustifyH("MIDDLE")
     frame.Name:SetJustifyV("BOTTOM")
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:SkinGarrisonBuildingAlert(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -378,7 +378,7 @@ function S:SkinGarrisonBuildingAlert(frame)
     frame.Name:SetJustifyH("MIDDLE")
     frame.Name:SetJustifyV("BOTTOM")
 
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:AlertFrames()

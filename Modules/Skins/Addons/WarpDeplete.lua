@@ -9,10 +9,10 @@ local pairs = pairs
 function S:WarpDeplete_InitDisplay()
     for _, barFrame in pairs(_G.WarpDeplete.bars) do
         local bar = barFrame.bar
-        if not bar.windStyle then
+        if not bar.__windSkin then
             bar:SetTemplate("Transparent")
-            self:CreateShadow(bar)
-            bar.windStyle = true
+            self:CreateLowerShadow(bar)
+            bar.__windSkin = true
         end
     end
 

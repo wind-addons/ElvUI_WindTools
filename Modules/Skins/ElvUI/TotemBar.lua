@@ -7,9 +7,9 @@ function S:ElvUI_UpdateTotemBar(TOTEMS)
     for i = 1, 4 do
         local button = TOTEMS.bar[i]
 
-        if button:IsShown() and not button.windStyle then
-            S:CreateShadow(button)
-            button.windStyle = true
+        if button:IsShown() and not button.__windSkin then
+            self:CreateShadow(button)
+            button.__windSkin = true
         end
     end
 end

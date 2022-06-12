@@ -14,14 +14,14 @@ function S:AngryKeystones()
         "Scenario_ChallengeMode_ShowBlock",
         function()
             local block = _G.ScenarioChallengeModeBlock
-            if block and block.TimerFrame and not block.TimerFrame.windStyle then
+            if block and block.TimerFrame and not block.TimerFrame.__windSkin then
                 block.TimerFrame.Bar2:SetTexture(E.media.blankTex)
                 block.TimerFrame.Bar2:SetWidth(2)
                 block.TimerFrame.Bar2:SetAlpha(0.618)
                 block.TimerFrame.Bar3:SetTexture(E.media.blankTex)
                 block.TimerFrame.Bar3:SetWidth(2)
                 block.TimerFrame.Bar3:SetAlpha(0.618)
-                block.TimerFrame.windStyle = true
+                block.TimerFrame.__windSkin = true
             end
         end
     )

@@ -2,7 +2,6 @@ local W, F, E, L = unpack(select(2, ...))
 local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") -- Modified from TinyInspect
 local S = W.Modules.Skins
 local MF = W.Modules.MoveFrames
-local ES = E.Skins
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000.Wind")
@@ -761,7 +760,7 @@ local function GetInspectItemListFrame(parent)
 
         frame.closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton, BackdropTemplate")
         frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 5, 5)
-        ES:HandleCloseButton(frame.closeButton)
+        S:ESProxy("HandleCloseButton", frame.closeButton)
         frame.closeButton:SetScript(
             "OnClick",
             function(self)

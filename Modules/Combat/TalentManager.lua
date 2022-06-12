@@ -1,7 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local TM = W:NewModule("TalentManager", "AceEvent-3.0", "AceHook-3.0")
 local S = W.Modules.Skins
-local ES = E.Skins
 
 local _G = _G
 local format = format
@@ -422,7 +421,7 @@ function TM:BuildFrame()
             E:StaticPopup_Show("WINDTOOLS_TALENT_MANAGER_NEW_SET", nil, nil, nextIndex)
         end
     )
-    ES:HandleButton(newButton)
+    S:ESProxy("HandleButton", newButton)
 
     -- 天赋设定按钮
     frame.setButtons = {}
@@ -464,7 +463,7 @@ function TM:BuildFrame()
             end
         )
 
-        ES:HandleButton(button)
+        S:ESProxy("HandleButton", button)
 
         button:Hide()
         frame.setButtons[i] = button

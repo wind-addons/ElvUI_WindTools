@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local EMP = W:NewModule("ExtendMerchantPages", "AceHook-3.0")
-local ES = E.Skins
+local S = W.Modules.Skins
 
 -- Modified from Extended Vendor UI & NDui_Plus
 local _G = _G
@@ -26,7 +26,6 @@ function EMP:SkinButton(i)
 
     local slot = _G["MerchantItem" .. i .. "SlotTexture"]
     item.Name:Point("LEFT", slot, "RIGHT", -5, 5)
-    -- item.Name:Size(110, 30)
 
     local button = _G["MerchantItem" .. i .. "ItemButton"]
     button:StripTextures()
@@ -40,7 +39,7 @@ function EMP:SkinButton(i)
     icon:Point("TOPLEFT", 1, -1)
     icon:Point("BOTTOMRIGHT", -1, 1)
 
-    ES:HandleIconBorder(button.IconBorder)
+    S:ESProxy("HandleIconBorder", button.IconBorder)
 end
 
 function EMP:UpdateMerchantPositions()

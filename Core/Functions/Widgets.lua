@@ -1,5 +1,5 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
-local ES = E.Skins
+local S = W.Modules.Skins
 
 local _G = _G
 local type = type
@@ -32,7 +32,7 @@ local function createButton(parent, text, width, height, onClick)
         frame:SetScript("OnClick", onClick)
     end
 
-    ES:HandleButton(frame)
+    S:ESProxy("HandleButton", frame)
 
     return frame
 end
@@ -55,7 +55,7 @@ local function createCloseButton(parent, size, onClick)
         )
     end
 
-    ES:HandleCloseButton(frame)
+    S:ESProxy("HandleCloseButton", frame)
 
     return frame
 end

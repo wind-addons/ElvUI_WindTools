@@ -1,7 +1,6 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
 local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
 local S = W.Modules.Skins
-local ES = E.Skins
 
 local _G = _G
 local ceil = ceil
@@ -128,7 +127,7 @@ function CE:CreateInterface()
     frame:CreateBackdrop("Transparent")
     S:CreateShadowModule(frame.backdrop)
     S:MerathilisUISkin(frame.backdrop)
-    ES:HandleCloseButton(_G.WTCustomEmoteFrameClose)
+    S:ESProxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
 
     -- 定位
     frame:SetWidth(column * (width + space) + 24)

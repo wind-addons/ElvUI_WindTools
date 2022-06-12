@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local DI = W:NewModule("DeleteItem", "AceEvent-3.0")
-local ES = E.Skins
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -74,7 +74,7 @@ function DI:ShowFillInButton(dialog)
 	if not self.fillInButton then
 		local button = CreateFrame("Button", "MyButton", E.UIParent, "UIPanelButtonTemplate")
 		button:SetFrameStrata("TOOLTIP")
-		ES:HandleButton(button)
+		S:ESProxy("HandleButton", button)
 		self.fillInButton = button
 	end
 

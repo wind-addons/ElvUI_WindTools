@@ -1,7 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W.Modules.Skins
-local ES = E.Skins
 
 local _G = _G
 local floor = floor
@@ -310,7 +309,7 @@ function CT:ConstructNameButtons()
             end
         )
 
-        ES:HandleButton(button)
+        S:ESProxy("HandleButton", button)
 
         button:Hide()
         self.frame.nameButtons[i] = button
@@ -372,7 +371,7 @@ function CT:ConstructPageController()
         end
     )
 
-    ES:HandleSliderFrame(slider)
+    S:ESProxy("HandleSliderFrame", slider)
 
     local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
     pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)

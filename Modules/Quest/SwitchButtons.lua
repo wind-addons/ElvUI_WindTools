@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
-local ES = E.Skins
 local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
@@ -16,7 +15,7 @@ function SB:CreateButton(text, tooltipText)
         return
     end
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-    ES:HandleCheckBox(button)
+    S:ESProxy("HandleCheckBox",button)
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateBackdropShadow(button)
     end

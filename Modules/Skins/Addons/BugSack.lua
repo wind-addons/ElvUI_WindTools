@@ -1,54 +1,95 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E.Skins
 local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
 
-function S:BugSack_Open()
-    local BugSackFrame = _G.BugSackFrame
-
-    if BugSackFrame.windStyle then
+function S:BugSack_InterfaceOptionOnShow(frame)
+    if frame.__windSkin then
         return
     end
 
-    -- 背景
-    BugSackFrame:StripTextures()
-    BugSackFrame:CreateBackdrop("Transparent")
-    S:CreateBackdropShadow(BugSackFrame)
+    if _G.BugSackFontSize then
+        local dropdown = _G.BugSackFontSize
+        self:ESProxy("HandleDropDownBox", dropdown)
 
-    -- 关闭按钮
-    for _, child in pairs {_G.BugSackFrame:GetChildren()} do
+        local point, relativeTo, relativePoint, xOffset, yOffset = dropdown:GetPoint(1)
+        dropdown:ClearAllPoints()
+        dropdown:SetPoint(point, relativeTo, relativePoint, xOffset - 1, yOffset)
+
+        dropdown.__windSkinMarked = true
+    end
+
+    if _G.BugSackSoundDropdown then
+        local dropdown = _G.BugSackSoundDropdown
+        self:ESProxy("HandleDropDownBox", dropdown)
+
+        local point, relativeTo, relativePoint = dropdown:GetPoint(1)
+        dropdown:ClearAllPoints()
+        dropdown:SetPoint(point, relativeTo, relativePoint)
+
+        dropdown.__windSkinMarked = true
+    end
+
+    for _, child in pairs {frame:GetChildren()} do
+        if child.__windSkinMarked then
+            child.__windSkinMarked = nil
+        else
+            local objectType = child:GetObjectType()
+            if objectType == "Button" then
+                self:ESProxy("HandleButton", child)
+            elseif objectType == "CheckButton" then
+                self:ESProxy("HandleCheckBox", child)
+
+                -- fix master channel checkbox position
+                local point, relativeTo, relativePoint = child:GetPoint(1)
+                if point == "LEFT" and relativeTo == _G.BugSackSoundDropdown then
+                    child:ClearAllPoints()
+                    child:SetPoint(point, relativeTo, relativePoint, 0, 3)
+                end
+            end
+        end
+    end
+
+    frame.__windSkin = true
+end
+
+function S:BugSack_OpenSack()
+    if _G.BugSackFrame.__windSkin then
+        return
+    end
+
+    local bugSackFrame = _G.BugSackFrame
+
+    bugSackFrame:StripTextures()
+    bugSackFrame:SetTemplate("Transparent")
+    self:CreateShadow(bugSackFrame)
+
+    for _, child in pairs {bugSackFrame:GetChildren()} do
         local numRegions = child:GetNumRegions()
 
         if numRegions == 1 then
             local text = child:GetRegions()
-            if text and text.SetText then
+            if text and text:GetObjectType() == "FontString" then
                 F.SetFontOutline(text)
-                text.windStyle = true
             end
         elseif numRegions == 4 then
-            ES:HandleCloseButton(child)
-            child.windStyle = true
+            self:ESProxy("HandleCloseButton", child)
         end
     end
 
-    -- 滚动条
-    ES:HandleScrollBar(_G.BugSackScrollScrollBar)
+    self:ESProxy("HandleScrollBar", _G.BugSackScrollScrollBar)
 
-    -- 滚动文字
     for _, region in pairs {_G.BugSackScrollText:GetRegions()} do
-        if region and region.SetText then
+        if region and region:GetObjectType() == "FontString" then
             F.SetFontOutline(region)
         end
     end
 
-    -- 下方 3 按钮
-    ES:HandleButton(_G.BugSackNextButton)
-    ES:HandleButton(_G.BugSackPrevButton)
-    ES:HandleButton(_G.BugSackSendButton)
+    self:ESProxy("HandleButton", _G.BugSackNextButton)
+    self:ESProxy("HandleButton", _G.BugSackPrevButton)
+    self:ESProxy("HandleButton", _G.BugSackSendButton)
 
-    -- 下方标签页
     local tabs = {
         _G.BugSackTabAll,
         _G.BugSackTabLast,
@@ -56,24 +97,21 @@ function S:BugSack_Open()
     }
 
     for _, tab in pairs(tabs) do
-        ES:HandleTab(tab)
-        tab.backdrop:SetTemplate("Transparent")
-        S:CreateBackdropShadow(tab)
+        self:ESProxy("HandleTab", tab)
+        self:CreateBackdropShadow(tab)
 
         local point, relativeTo, relativePoint, xOffset, yOffset = tab:GetPoint(1)
-        tab:ClearAllPoints()
-        if yOffset ~= 0 then
-            yOffset = -1
-        end
-        tab:Point(point, relativeTo, relativePoint, xOffset, yOffset)
 
-        local text = _G[tab:GetName() .. "Text"]
-        if text then
-            F.SetFontOutline(text)
+        tab:ClearAllPoints()
+
+        if yOffset ~= 0 then
+            yOffset = -2
         end
+
+        tab:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
     end
 
-    BugSackFrame.windStyle = true
+    bugSackFrame.__windSkin = true
 end
 
 function S:BugSack()
@@ -81,9 +119,13 @@ function S:BugSack()
         return
     end
 
-    S:DisableAddOnSkin("BugSack")
+    if not _G.BugSack then
+        return
+    end
 
-    self:SecureHook(_G.BugSack, "OpenSack", "BugSack_Open")
+    self:SecureHookScript(_G.BugSack.frame, "OnShow", "BugSack_InterfaceOptionOnShow")
+    self:SecureHook(_G.BugSack, "OpenSack", "BugSack_OpenSack")
+    self:DisableAddOnSkin("BugSack")
 end
 
 S:AddCallbackForAddon("BugSack")

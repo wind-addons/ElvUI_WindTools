@@ -16,17 +16,17 @@ local AceGUI
 local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 
-S.addonsToLoad = {} -- 等待插件载入后执行的美化函数表
-S.nonAddonsToLoad = {} -- 毋须等待插件的美化函数表
-S.updateProfile = {} -- 配置更新后的更新表
+S.addonsToLoad = {}
+S.nonAddonsToLoad = {}
+S.updateProfile = {}
 S.aceWidgets = {}
 S.enteredLoad = {}
 
 --[[
-    查询是否符合开启条件
-    @param {string} elvuiKey      ElvUI 数据库 Key
-    @param {string} windtoolsKey  WindTools 数据库 Key
-    @return {bool} 启用状态
+    Check the skin is enabled or not
+    @param {string} ElvUI Skins key
+    @param {string} WindTools Skins Key
+    @return {bool} isEnabledBoth
 ]]
 function S:CheckDB(elvuiKey, windtoolsKey)
     if elvuiKey then
@@ -47,19 +47,22 @@ function S:CheckDB(elvuiKey, windtoolsKey)
 end
 
 --[[
-    创建阴影
-    @param {object} frame 待美化的窗体
-    @param {number} size 阴影尺寸
-    @param {number} [r=阴影全局R值] R 通道数值（0~1）
-    @param {number} [g=阴影全局G值] G 通道数值（0~1）
-    @param {number} [b=阴影全局B值] B 通道数值（0~1）
+    Create shadow for frame
+    @param {object} frame
+    @param {number} size
+    @param {number} [r=gloabl shadow color R] R channel value（0~1）
+    @param {number} [g=gloabl shadow color G] G channel value（0~1）
+    @param {number} [b=gloabl shadow color G] B channel value（0~1）
+    @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
 ]]
 function S:CreateShadow(frame, size, r, g, b, force)
-    if not force and not E.private.WT.skins and not E.private.WT.skins.shadow then
-        return
+    if not force then
+        if not E.private.WT.skins or not E.private.WT.skins.shadow then
+            return
+        end
     end
 
-    if not frame or frame.__shadow or frame.shadow then
+    if not frame or frame.__shadow or frame.shadow and frame.shadow.__wind then
         return
     end
 
@@ -81,21 +84,38 @@ function S:CreateShadow(frame, size, r, g, b, force)
     shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = size + 1})
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
+    shadow.__wind = true -- mark the shadow created by WindTools
 
     frame.shadow = shadow
     frame.__shadow = 1 -- mark the current frame has shadow
 end
 
-function S:CreateLowerShadow(frame)
-    if not frame.shadow then
-        self:CreateShadow(frame)
-        local parentFrameLevel = frame:GetFrameLevel()
-        frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
+--[[
+    Create a shadow that the frame level is lower than the parent frame
+    @param {frame} frame
+    @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
+]]
+function S:CreateLowerShadow(frame, force)
+    if not force then
+        if not E.private.WT.skins or not E.private.WT.skins.shadow then
+            return
+        end
     end
+
+    self:CreateShadow(frame)
+    local parentFrameLevel = frame:GetFrameLevel()
+    frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
 end
 
+--[[
+    Update shadow that created by WindTools
+    @param {frame} shadow !!!!!NOT THE PARENT FRAME
+    @param {number} [r=gloabl shadow color R] R channel value（0~1）
+    @param {number} [g=gloabl shadow color G] G channel value（0~1）
+    @param {number} [b=gloabl shadow color G] B channel value（0~1）
+]]
 function S:UpdateShadowColor(shadow, r, g, b)
-    if not shadow or not shadow.SetBackdropColor or not shadow.SetBackdropBorderColor then
+    if not shadow or not shadow.__wind then
         return
     end
 
@@ -107,40 +127,43 @@ function S:UpdateShadowColor(shadow, r, g, b)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 end
 
-function S:createBackdropShadow(frame, defaultTemplate)
-    if not defaultTemplate then
-        frame.backdrop:SetTemplate("Transparent")
+do
+    local function createBackdropShadow(frame, defaultTemplate)
+        if not defaultTemplate then
+            frame.backdrop:SetTemplate("Transparent")
+        end
+
+        S:CreateShadow(frame.backdrop)
+
+        if frame.backdrop.shadow.__wind then
+            frame.__shadow = frame.backdrop.__shadow + 1
+        end
     end
 
-    self:CreateShadow(frame.backdrop)
+    --[[
+        Create a shadow for the backdrop of the frame
+        @param {frame} frame
+        @param {string} template
+    ]]
+    function S:CreateBackdropShadow(frame, template)
+        if not frame or frame.__shadow then
+            return
+        end
 
-    if frame.backdrop.__shadow then
-        frame.__shadow = 2 -- mark the backdrop is shadowed
-    end
-end
-
---[[
-    创建阴影于 ElvUI 美化背景
-    @param {object} frame 窗体
-]]
-function S:CreateBackdropShadow(frame, defaultTemplate)
-    if not frame or frame.__shadow then
-        return
-    end
-
-    if frame.backdrop then
-        self:createBackdropShadow(frame, defaultTemplate)
-    elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
-        self:SecureHook(
-            frame,
-            "CreateBackdrop",
-            function(...)
-                if self:IsHooked(frame, "CreateBackdrop") then
-                    self:Unhook(frame, "CreateBackdrop")
+        if frame.backdrop then
+            createBackdropShadow(frame, template)
+        elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
+            self:SecureHook(
+                frame,
+                "CreateBackdrop",
+                function(...)
+                    if self:IsHooked(frame, "CreateBackdrop") then
+                        self:Unhook(frame, "CreateBackdrop")
+                    end
+                    createBackdropShadow(...)
                 end
-                self:createBackdropShadow(...)
-            end
-        )
+            )
+        end
     end
 end
 
@@ -166,21 +189,21 @@ function S:TryCreateBackdropShadow(frame, tried)
     end
 end
 
+--[[
+    Reskin tab
+    @param {frame} tab
+]]
 function S:ReskinTab(tab)
     if not tab then
         return
-    end
-
-    if tab.GetName then
-        F.SetFontOutline(_G[tab:GetName() .. "Text"])
     end
 
     self:CreateBackdropShadow(tab)
 end
 
 --[[
-    设定窗体美化背景为透明风格
-    @param {object} frame 窗体
+    Smart set template to transparent
+    @param {object} frame
 ]]
 function S:SetTransparentBackdrop(frame)
     if frame.backdrop then
@@ -191,27 +214,27 @@ function S:SetTransparentBackdrop(frame)
 end
 
 --[[
-    注册回调
-    @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
+    Register a normal callback
+    @param {string} name
+    @param {function} [func=S.name] function
 ]]
 function S:AddCallback(name, func)
     tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
 --[[
-    注册 AceGUI Widget 回调
-    @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
+    Register AceGUI Widget callback
+    @param {string} name
+    @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForAceGUIWidget(name, func)
     self.aceWidgets[name] = func or self[name]
 end
 
 --[[
-    注册插件回调
-    @param {string} addonName 插件名
-    @param {function} [func=S.addonName] 插件回调函数
+    Register addon callback
+    @param {string} addonName
+    @param {function} [func=S.addonName] function
 ]]
 function S:AddCallbackForAddon(addonName, func)
     local addon = self.addonsToLoad[addonName]
@@ -228,17 +251,17 @@ function S:AddCallbackForAddon(addonName, func)
 end
 
 --[[
-    注册进入游戏后执行的回调
-    @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
+    Register a callback when game loading is finished
+    @param {string} name
+    @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForEnterWorld(name, func)
     tinsert(self.enteredLoad, func or self[name])
 end
 
 --[[
-    根据进入游戏事件唤起回调
-    @param {string} addonName 插件名
+    Load registered callbacks when game loading is finished
+    @param {string} addonName, the name of addon
 ]]
 function S:PLAYER_ENTERING_WORLD()
     if not E.initialized or not E.private.WT.skins.enable then
@@ -252,18 +275,18 @@ function S:PLAYER_ENTERING_WORLD()
 end
 
 --[[
-    注册更新回调
-    @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
+    Register a callback for updateing
+    @param {string} name
+    @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForUpdate(name, func)
     tinsert(self.updateProfile, func or self[name])
 end
 
 --[[
-    回调注册的插件函数
-    @param {string} addonName 插件名
-    @param {object} object 回调的函数
+    Callback loaded registered addon skins
+    @param {string} addonName, the name of addon
+    @param {table} object, the list of callbacks
 ]]
 function S:CallLoadedAddon(addonName, object)
     for _, func in next, object do
@@ -274,8 +297,8 @@ function S:CallLoadedAddon(addonName, object)
 end
 
 --[[
-    根据插件载入事件唤起回调
-    @param {string} addonName 插件名
+    Callback skins when addon loaded
+    @param {string} addonName, the name of addon
 ]]
 function S:ADDON_LOADED(_, addonName)
     if not E.initialized or not E.private.WT.skins.enable then
@@ -331,6 +354,10 @@ do
     end
 end
 
+--[[
+    Disable ugly AddOnSkin option for the specific addon
+    @param {frame} frame
+]]
 function S:DisableAddOnSkin(key)
     if _G.AddOnSkins then
         local AS = _G.AddOnSkins[1]
@@ -340,6 +367,10 @@ function S:DisableAddOnSkin(key)
     end
 end
 
+--[[
+    Add shadow WindTools modules
+    @param {frame} frame
+]]
 function S:CreateShadowModule(frame)
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         self:CreateShadow(frame)
@@ -364,6 +395,10 @@ do
         return isLoaded
     end
 
+    --[[
+        Trying apply MerathilisUI skin if the addon loaded
+        @param {frame} frame
+    ]]
     function S:MerathilisUISkin(frame)
         if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() then
             if frame.Styling then
@@ -374,7 +409,7 @@ do
 end
 
 do
-    local DeleteRegions = {
+    local regions = {
         "Center",
         "BottomEdge",
         "LeftEdge",
@@ -385,8 +420,13 @@ do
         "TopLeftCorner",
         "TopRightCorner"
     }
+
+    --[[
+        Strip edge textures
+        @param {frame} frame
+    ]]
     function S:StripEdgeTextures(frame)
-        for _, regionKey in pairs(DeleteRegions) do
+        for _, regionKey in pairs(regions) do
             if frame[regionKey] then
                 frame[regionKey]:Kill()
             end
@@ -394,6 +434,16 @@ do
     end
 end
 
+--[[
+    Reposit frame with parameters
+    @param {frame} frame
+    @param {frame} the frame relative to
+    @param {number} border size
+    @param {number} top offset
+    @param {number} bottom offset
+    @param {number} left offset
+    @param {number} right offset
+]]
 function S:Reposition(frame, target, border, top, bottom, left, right)
     frame:ClearAllPoints()
     frame:SetPoint("TOPLEFT", target, "TOPLEFT", -left - border, top + border)
@@ -402,17 +452,18 @@ function S:Reposition(frame, target, border, top, bottom, left, right)
     frame:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT", right + border, -bottom - border)
 end
 
--- 初始化，将不需要监视插件载入情况的函数全部进行执行
 function S:Initialize()
     if not E.private.WT.skins.enable then
         return
     end
 
+    -- normal skin modules
     for index, func in next, self.nonAddonsToLoad do
         xpcall(func, F.Developer.ThrowError, self)
         self.nonAddonsToLoad[index] = nil
     end
 
+    -- skin modules depend on addon loading
     for addonName, object in pairs(self.addonsToLoad) do
         local isLoaded, isFinished = IsAddOnLoaded(addonName)
         if isLoaded and isFinished then
@@ -423,7 +474,7 @@ function S:Initialize()
     self:HookEarly()
     self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
 
-    -- 去除羊皮纸
+    -- remove archment
     if E.private.WT.skins.removeParchment then
         E.private.skins.parchmentRemoverEnable = true
     end

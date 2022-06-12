@@ -55,11 +55,11 @@ end
     @param {number} [b=阴影全局B值] B 通道数值（0~1）
 ]]
 function S:CreateShadow(frame, size, r, g, b, force)
-    if not (E.private.WT.skins and E.private.WT.skins.shadow) and not force then
+    if not force and not E.private.WT.skins and not E.private.WT.skins.shadow then
         return
     end
 
-    if not frame or frame.windStyle or frame.shadow then
+    if not frame or frame.__shadow or frame.shadow then
         return
     end
 
@@ -83,7 +83,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 
     frame.shadow = shadow
-    frame.windStyle = true
+    frame.__shadow = 1 -- mark the current frame has shadow
 end
 
 function S:CreateLowerShadow(frame)
@@ -107,36 +107,38 @@ function S:UpdateShadowColor(shadow, r, g, b)
     shadow:SetBackdropBorderColor(r, g, b, 0.618)
 end
 
+function S:createBackdropShadow(frame, defaultTemplate)
+    if not defaultTemplate then
+        frame.backdrop:SetTemplate("Transparent")
+    end
+
+    self:CreateShadow(frame.backdrop)
+
+    if frame.backdrop.__shadow then
+        frame.__shadow = 2 -- mark the backdrop is shadowed
+    end
+end
+
 --[[
     创建阴影于 ElvUI 美化背景
     @param {object} frame 窗体
 ]]
 function S:CreateBackdropShadow(frame, defaultTemplate)
-    if not frame or frame.windStyle then
+    if not frame or frame.__shadow then
         return
     end
 
     if frame.backdrop then
-        if not defaultTemplate then
-            frame.backdrop:SetTemplate("Transparent")
-        end
-        self:CreateShadow(frame.backdrop)
-        frame.windStyle = true
+        self:createBackdropShadow(frame, defaultTemplate)
     elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
         self:SecureHook(
             frame,
             "CreateBackdrop",
-            function()
+            function(...)
                 if self:IsHooked(frame, "CreateBackdrop") then
                     self:Unhook(frame, "CreateBackdrop")
                 end
-                if frame.backdrop then
-                    if not defaultTemplate then
-                        frame.backdrop:SetTemplate("Transparent")
-                    end
-                    self:CreateShadow(frame.backdrop)
-                    frame.windStyle = true
-                end
+                self:createBackdropShadow(...)
             end
         )
     end
@@ -149,26 +151,17 @@ end
     @param {string} [tried=20] 尝试次数
 ]]
 function S:TryCreateBackdropShadow(frame, tried)
-    if not frame or frame.windStyle then
+    if not frame or frame.__shadow then
         return
     end
 
     tried = tried or 20
 
     if frame.backdrop then
-        frame.backdrop:SetTemplate("Transparent")
-        if E.private.WT.skins.shadow then
-            self:CreateShadow(frame.backdrop)
-        end
-        frame.windStyle = true
+        self:createBackdropShadow(frame)
     else
         if tried >= 0 then
-            E:Delay(
-                0.1,
-                function()
-                    self:TryCreateBackdropShadow(frame, tried - 1)
-                end
-            )
+            E:Delay(0.1, self.TryCreateBackdropShadow, self, frame, tried - 1)
         end
     end
 end
@@ -439,6 +432,11 @@ end
 function S:ESProxy(funcName, frame, ...)
     if not frame then
         F.Developer.ThrowError("ESProxy: frame is nil")
+        return
+    end
+
+    if not ES[funcName] then
+        F.Developer.ThrowError(format("ESProxy: %s is not exist in ElvUI Skins", funcName))
         return
     end
 

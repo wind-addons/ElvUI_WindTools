@@ -44,10 +44,7 @@ function S:ElvUI_Auras_UpdateTempEnchant(_, button, index, expiration)
 end
 
 function S:ElvUI_Auras()
-    if not E.private.auras.enable then
-        return
-    end
-    if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.auras) then
+    if not E.private.auras.enable or not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.auras then
         return
     end
 

@@ -8,9 +8,15 @@ local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
-local function HandleActionButton(button, useBackdrop)
-    if not button.windStyle then
-        S:CreateShadow(button)
+function S:ElvUI_ActionBar_SkinButton(button, useBackdrop)
+    self:CreateLowerShadow(button)
+
+    if not button.__windSkin then
+        if button.shadow and button.shadow.__wind then
+            self:BindShadowColorWithBorder(button.shadow, button)
+        end
+
+        button.__windSkin = true
     end
 
     if useBackdrop then
@@ -43,17 +49,17 @@ function S:ElvUI_ActionBar_SkinBar(bar, type)
         if type == "PLAYER" then
             for i = 1, NUM_ACTIONBAR_BUTTONS do
                 local button = bar.buttons[i]
-                HandleActionButton(button, bar.db.backdrop)
+                self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
             end
         elseif type == "PET" then
             for i = 1, NUM_PET_ACTION_SLOTS do
                 local button = _G["PetActionButton" .. i]
-                HandleActionButton(button, bar.db.backdrop)
+                self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
             end
         elseif type == "STANCE" then
             for i = 1, NUM_STANCE_SLOTS do
                 local button = _G["ElvUI_StanceBarButton" .. i]
-                HandleActionButton(button, bar.db.backdrop)
+                self:ElvUI_ActionBar_SkinButton(button, bar.db.backdrop)
             end
         end
     end

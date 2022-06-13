@@ -7,7 +7,7 @@ W.Changelog[244] = {
             "LibOpenRaid 升级到 43 版本."
         },
         ["zhTW"] = {
-            "LibOpenRaid 升級到 33 版本."
+            "LibOpenRaid 升級到 43 版本."
         },
         ["enUS"] = {
             "Update LibOpenRaid to version 43."

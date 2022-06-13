@@ -4,9 +4,6 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-local GetInventoryItemQuality = GetInventoryItemQuality
-local GetItemQualityColor = GetItemQualityColor
-
 function S:ElvUI_Auras_SkinIcon(_, button)
     if not button.__windSkin then
         self:CreateLowerShadow(button)

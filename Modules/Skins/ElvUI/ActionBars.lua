@@ -140,8 +140,12 @@ function S:ElvUI_ActionBars()
     do
         local button = _G.MainMenuBarVehicleLeaveButton
         self:CreateBackdropShadow(button, true)
+
         local tex = button:GetNormalTexture()
         if tex then
+            tex:ClearAllPoints()
+            tex:SetPoint("TOPLEFT", button, "TOPLEFT", 4, -4)
+            tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 4)
             tex:SetTexture(W.Media.Textures.arrowDown)
             tex:SetTexCoord(0, 1, 0, 1)
             tex:SetVertexColor(1, 1, 1)
@@ -149,6 +153,9 @@ function S:ElvUI_ActionBars()
 
         tex = button:GetPushedTexture()
         if tex then
+            tex:ClearAllPoints()
+            tex:SetPoint("TOPLEFT", button, "TOPLEFT", 4, -4)
+            tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 4)
             tex:SetTexture(W.Media.Textures.arrowDown)
             tex:SetTexCoord(0, 1, 0, 1)
             tex:SetVertexColor(1, 0, 0)

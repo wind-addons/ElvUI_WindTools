@@ -5,6 +5,7 @@ local ES = E.Skins
 
 local _G = _G
 local format = format
+local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
 local tinsert = tinsert

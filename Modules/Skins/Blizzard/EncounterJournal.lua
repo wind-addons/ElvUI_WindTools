@@ -13,7 +13,7 @@ function S:EncounterJournal_DisplayInstance()
 
     while bossID do
         local bossButton = _G["EncounterJournalBossButton" .. bossIndex]
-        if bossButton and not bossButton.windStyle then
+        if bossButton and not bossButton.__windSkin then
             self:CreateShadow(
                 bossButton,
                 nil,
@@ -38,7 +38,7 @@ function S:EncounterJournal_DisplayInstance()
             bossButton.text:ClearAllPoints()
             bossButton.text:Point("LEFT", bossButton, "LEFT", 105, 0)
             bossButton.text:Point("RIGHT", bossButton, "RIGHT", 0, 0)
-            bossButton.windStyle = true
+            bossButton.__windSkin = true
         end
         bossIndex = bossIndex + 1
         bossID = select(3, _G.EJ_GetEncounterInfoByIndex(bossIndex))

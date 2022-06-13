@@ -35,51 +35,43 @@ end
 
 function S:SkinFindGroupButton(block)
     if block.hasGroupFinderButton and block.groupFinderButton then
-        if block.groupFinderButton and not block.groupFinderButton.windStyle then
+        if block.groupFinderButton and not block.groupFinderButton.__windSkin then
             self:CreateShadow(block.groupFinderButton)
-            block.groupFinderButton.windStyle = true
+            block.groupFinderButton.__windSkin = true
         end
     end
 end
 
 function S:SkinProgressBars(_, _, line)
     local progressBar = line and line.ProgressBar
-    local bar = progressBar and progressBar.Bar
-    if not bar or progressBar.windStyle then
+
+    if not progressBar or not progressBar.Bar or progressBar.__windSkin then
         return
     end
-    local icon = bar.Icon
-    local label = bar.Label
 
-    -- 条阴影
-    self:CreateBackdropShadow(bar)
+    self:CreateBackdropShadow(progressBar.Bar)
 
-    -- 稍微移动下图标位置，防止阴影重叠，更加美观！
-    if icon then
+    -- move down the icon
+    if progressBar.Bar.Icon then
         self:CreateBackdropShadow(progressBar)
-        icon:Point("LEFT", bar, "RIGHT", E.PixelMode and 7 or 11, 0)
+        progressBar.Bar.Icon:Point("LEFT", progressBar.Bar, "RIGHT", E.PixelMode and 7 or 11, 0)
     end
 
-    -- 修正字体位置
-    if label then
-        label:ClearAllPoints()
-        label:Point("CENTER", bar, 0, 0)
-        F.SetFontOutline(label)
+    -- move text to center
+    if progressBar.Bar.Label then
+        progressBar.Bar.Label:ClearAllPoints()
+        progressBar.Bar.Label:Point("CENTER", progressBar.Bar, 0, 0)
+        F.SetFontOutline(progressBar.Bar.Label)
     end
 
-    -- 目标字样
+    -- change font style of header
     F.SetFontOutline(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
 
-    progressBar.windStyle = true
+    progressBar.__windSkin = true
 end
 
 function S:SkinTimerBars(_, _, line)
-    local timerBar = line and line.TimerBar
-    local bar = timerBar and timerBar.Bar
-    if bar.windStyle then
-        return
-    end
-    self:CreateBackdropShadow(bar)
+    self:CreateBackdropShadow(line and line.TimerBar and line.TimerBar.Bar)
 end
 
 function S:ObjectiveTrackerFrame()

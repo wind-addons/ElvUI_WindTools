@@ -9,9 +9,7 @@ local GetInstanceInfo = GetInstanceInfo
 local IsInJailersTower = IsInJailersTower
 
 local function SetupOptions()
-    if not _G.PlayerChoiceFrame.windStyle then
-        S:CreateShadow(_G.PlayerChoiceFrame)
-    end
+    S:CreateShadow(_G.PlayerChoiceFrame)
 
     local instanceType, _, _, _, _, _, instanceID = select(2, GetInstanceInfo())
     local needDisable = IsInJailersTower() or instanceType == "party" or instanceType == "raid" or instanceID == 2374

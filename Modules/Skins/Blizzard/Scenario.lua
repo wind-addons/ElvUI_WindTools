@@ -55,9 +55,31 @@ function S:Scenario_ChallengeMode_ShowBlock()
         return
     end
 
+    if not block.__windSkin then
+        -- Block background
+        block.TimerBG:Hide()
+        block.TimerBGBack:Hide()
+
+        block:CreateBackdrop("Transparent")
+        block.backdrop:ClearAllPoints()
+        block.backdrop:SetInside(block, 6, 2)
+        self:CreateBackdropShadow(block)
+
+        -- Time bar
+        block.StatusBar:CreateBackdrop()
+        block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
+        block.StatusBar:SetStatusBarTexture(E.media.normTex)
+        block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+        block.StatusBar:SetHeight(10)
+
+        select(3, block:GetRegions()):Hide()
+
+        block.__windSkin = true
+    end
+
     -- Affix icon
     for _, child in pairs {block:GetChildren()} do
-        if not child.windStyle and child.affixID then
+        if not child.__windSkin and child.affixID then
             child.Border:SetAlpha(0)
             local texPath = select(3, C_ChallengeMode_GetAffixInfo(child.affixID))
             child:CreateBackdrop("Transparent")
@@ -65,33 +87,9 @@ function S:Scenario_ChallengeMode_ShowBlock()
             child.backdrop:SetOutside(child.Portrait)
             child.Portrait:SetTexture(texPath)
             child.Portrait:SetTexCoord(unpack(E.TexCoords))
-            child.windStyle = true
+            child.__windSkin = true
         end
     end
-
-    if block.windStyle then
-        return
-    end
-    
-    -- Block background
-    block.TimerBG:Hide()
-    block.TimerBGBack:Hide()
-
-    block:CreateBackdrop("Transparent")
-    block.backdrop:ClearAllPoints()
-    block.backdrop:SetInside(block, 6, 2)
-    self:CreateBackdropShadow(block)
-
-    -- Time bar
-    block.StatusBar:CreateBackdrop()
-    block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
-    block.StatusBar:SetStatusBarTexture(E.media.normTex)
-    block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
-    block.StatusBar:SetHeight(10)
-
-    select(3, block:GetRegions()):Hide()
-
-    block.windStyle = true
 end
 
 function S:ScenarioStageWidgetContainer()
@@ -107,7 +105,7 @@ function S:ScenarioStageWidgetContainer()
 
         local bar = widgetFrame.TimerBar
 
-        if bar and not bar.windStyle then
+        if bar and not bar.__windSkin then
             hooksecurefunc(
                 bar,
                 "SetStatusBarAtlas",
@@ -117,14 +115,14 @@ function S:ScenarioStageWidgetContainer()
                 end
             )
             bar:CreateBackdrop("Transparent")
-            bar.windStyle = true
+            bar.__windSkin = true
         end
 
         if widgetFrame.CurrencyContainer then
             for currencyFrame in widgetFrame.currencyPool:EnumerateActive() do
-                if not currencyFrame.windStyle then
+                if not currencyFrame.__windSkin then
                     currencyFrame.Icon:SetTexCoord(unpack(E.TexCoords))
-                    currencyFrame.windStyle = true
+                    currencyFrame.__windSkin = true
                 end
             end
         end

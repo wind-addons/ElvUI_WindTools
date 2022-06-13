@@ -15,7 +15,7 @@ local CollectionsJournal_LoadUI = CollectionsJournal_LoadUI
 local CreateFrame = CreateFrame
 
 local function ReskinIconButton(button)
-    if button and not button.windStyle then
+    if button and not button.__windSkin then
         button:StyleButton(nil, true)
 
         if button.Status then
@@ -45,7 +45,7 @@ local function ReskinIconButton(button)
             button.hover:SetAllPoints(button.Icon)
         end
 
-        button.windStyle = true
+        button.__windSkin = true
     end
 end
 
@@ -197,7 +197,7 @@ local function ReskinCard(card) -- modified from NDui
 end
 
 local function ReskinInset(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -205,7 +205,7 @@ local function ReskinInset(frame)
     frame:CreateBackdrop()
     frame.backdrop:SetInside(frame, 2, 2)
     frame.backdrop.Center:SetVertexColor(1, 1, 1, 0.3)
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 local function ReskinTooltip(tooltip)
@@ -225,7 +225,7 @@ local function ReskinPetList(list) -- modified from NDui
     end
     for i = 1, #buttons do
         local button = buttons[i]
-        if not button.windStyle then
+        if not button.__windSkin then
             if button.Pet then
                 button.Pet:CreateBackdrop()
 
@@ -275,7 +275,7 @@ local function ReskinPetList(list) -- modified from NDui
                 button.backdrop:Hide()
             end
 
-            button.windStyle = true
+            button.__windSkin = true
         else
             if button.Back:IsShown() then
                 button.backdrop:Show()
@@ -293,12 +293,12 @@ local function ReskinOptions(list)
     end
     for i = 1, #buttons do
         local button = buttons[i]
-        if not button.windStyle then
+        if not button.__windSkin then
             S:ESProxy("HandleButton", button)
             button.backdrop:SetInside(button, 1, 1)
             button.HeaderBack:StripTextures()
             button.HeaderBack = button.backdrop
-            button.windStyle = true
+            button.__windSkin = true
         end
     end
 end
@@ -307,7 +307,7 @@ local function ReskinTeamList(panel)
     if panel then
         for i = 1, 3 do
             local loadout = panel.Loadouts[i]
-            if loadout and not loadout.windStyle then
+            if loadout and not loadout.__windSkin then
                 loadout:StripTextures()
                 S:ESProxy("HandleButton", loadout)
                 loadout.backdrop:SetInside(loadout, 2, 2)
@@ -325,14 +325,14 @@ local function ReskinTeamList(panel)
                     ReskinIconButton(loadout.Abilities[j])
                 end
 
-                loadout.windStyle = true
+                loadout.__windSkin = true
             end
         end
     end
 end
 
 local function ReskinFlyout(frame)
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -353,7 +353,7 @@ local function ReskinFlyout(frame)
             end
         end
     )
-    frame.windStyle = true
+    frame.__windSkin = true
 end
 
 function S:Rematch_Header()
@@ -663,11 +663,11 @@ function S:Rematch_Dialog() -- Modified from NDui
                 local line = buttons[i]
                 for j = 1, 10 do
                     local button = line.Icons[j]
-                    if button and not button.windStyle then
+                    if button and not button.__windSkin then
                         button:Size(26, 26)
                         button.Icon = button.Texture
                         ReskinIconButton(button)
-                        button.windStyle = true
+                        button.__windSkin = true
                     end
                 end
             end
@@ -781,12 +781,12 @@ function S:Rematch_RightTabs()
         "Update",
         function(tabs)
             for _, tab in next, tabs.Tabs do
-                if tab and not tab.windStyle then
+                if tab and not tab.__windSkin then
                     tab.Background:Kill()
                     ReskinIconButton(tab)
                     self:CreateBackdropShadow(tab.Icon)
                     tab:Size(40, 40)
-                    tab.windStyle = true
+                    tab.__windSkin = true
                 end
             end
         end

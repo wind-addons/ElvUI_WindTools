@@ -128,6 +128,41 @@ function S:UpdateShadowColor(shadow, r, g, b)
 end
 
 do
+    local function colorCallback(shadow, r, g, b)
+        if not r or not g or not b then
+            return
+        end
+
+        if r == E.db.general.bordercolor.r and g == E.db.general.bordercolor.g and b == E.db.general.bordercolor.b then
+            S:UpdateShadowColor(shadow)
+        else
+            S:UpdateShadowColor(shadow, r, g, b)
+        end
+    end
+
+    --[[
+        Change the color of shadow with the border color
+        @param {frame} shadow !!!!!NOT THE PARENT FRAME
+        @param {frame} borderParent, the target backdrop
+    ]]
+    function S:BindShadowColorWithBorder(shadow, borderParent)
+        if not shadow or not shadow.__wind or not borderParent or not borderParent.SetBackdropBorderColor then
+            return
+        end
+
+        hooksecurefunc(
+            borderParent,
+            "SetBackdropBorderColor",
+            function(_, ...)
+                colorCallback(shadow, ...)
+            end
+        )
+
+        colorCallback(shadow, borderParent:GetBackdropBorderColor())
+    end
+end
+
+do
     local function createBackdropShadow(frame, defaultTemplate)
         if not E.private.WT.skins or not E.private.WT.skins.shadow then
             return

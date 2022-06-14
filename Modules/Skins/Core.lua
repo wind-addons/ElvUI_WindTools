@@ -207,7 +207,7 @@ do
     end
 
     --[[
-    Create shadow of backdrop that created by ElvUI skin functionsp
+    Create shadow of backdrop that created by ElvUI skin function
     The function is automatically repeat several times for waiting ElvUI done
         the modifying/creating of backdrop
     !!! It only check for 2 seconds (20 times in total)
@@ -365,6 +365,7 @@ function S:UpdateWidget(lib, name, oldFunc)
         self.aceWidgets[name] = nil
     end
 end
+
 do
     local alreadyWidgetHooked = false
     local alreadyDialogSkined = false

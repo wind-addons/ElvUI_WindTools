@@ -42,8 +42,8 @@ function S:ProfilingWindow_UpdateButtons(frame)
     -- 顶部 2 个按钮
     for _, button in pairs {frame.titleFrame:GetChildren()} do
         if not button.__windSkin and button.GetNormalTexture then
-            local normalTexturePath = button:GetNormalTexture():GetTexture()
-            if normalTexturePath == "Interface\\BUTTONS\\UI-Panel-CollapseButton-Up" then
+            local normalTextureID = button:GetNormalTexture():GetTexture()
+            if normalTextureID == 252125 then
                 button:StripTextures()
 
                 button.Texture = button:CreateTexture(nil, "OVERLAY")

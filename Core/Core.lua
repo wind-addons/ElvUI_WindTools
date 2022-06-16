@@ -130,15 +130,6 @@ function W:CheckInstalledVersion()
 end
 
 function W:GameFixing()
-    -- fix ElvUI dropdown lib skin
-    do
-        local lib = _G.LibStub("LibUIDropDownMenu-4.0", true)
-        if lib and not _G.L_UIDropDownMenu_CreateFrames then
-            _G.L_UIDropDownMenu_CreateFrames = lib.UIDropDownMenu_CreateFrames
-            E.Skins:SkinLibDropDownMenu("L")
-        end
-    end
-
     -- fix duplicated party in lfg frame
     -- from: https://wago.io/tWVx_hIx3/4
     do

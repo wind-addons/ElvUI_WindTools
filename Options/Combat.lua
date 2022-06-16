@@ -19,6 +19,7 @@ local options = W.options.combat.args
 
 local envs = {
     covenantHelper = {
+        specializations = {},
         covenants = {
             [1] = "|cff72cff8" .. L["Kyrian"] .. "|r",
             [2] = "|cff971243" .. L["Venthyr"] .. "|r",
@@ -27,6 +28,7 @@ local envs = {
         },
         soulbind = {
             tempSoulbindData = nil,
+            selectedSpecialization = nil,
             selectedCovenant = nil,
             selectedSoulbind = nil
         },
@@ -40,6 +42,24 @@ local function getSoulbindData(covenantID)
         data[covenantID] = CH:GetSoulbindData(covenantID)
     end
     return data[covenantID]
+end
+
+local function getSpecilizations()
+    if not next(envs.covenantHelper.specializations) then
+        for i = 1, GetNumSpecializations() do
+            local id, name, _, icon = GetSpecializationInfo(i)
+
+            tinsert(
+                envs.covenantHelper.specializations,
+                {
+                    id = id,
+                    name = F.GetIconString(icon, 12, 12) .. " " .. name
+                }
+            )
+        end
+    end
+
+    return envs.covenantHelper.specializations
 end
 
 options.raidMarkers = {
@@ -673,35 +693,73 @@ options.covenantHelper = {
                                 local result = {}
                                 local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
                                 local covenantTable = envs.covenantHelper.covenants
+                                local specializationTable = getSpecilizations()
                                 if db and db[E.myname] then
-                                    for covenantID, covenantName in ipairs(covenantTable) do
-                                        local soulbindIndex = db[E.myname][covenantID]
-                                        local soudbindData = getSoulbindData(covenantID)
-                                        if soulbindIndex then
-                                            tinsert(
-                                                result,
-                                                format("%s (%s)", covenantName, soudbindData[soulbindIndex].name)
-                                            )
+                                    for specIndex, specData in ipairs(specializationTable) do
+                                        local specRecords = {}
+                                        for covenantID, covenantName in ipairs(covenantTable) do
+                                            if db[E.myname][specIndex] then
+                                                local soulbindIndex = db[E.myname][specIndex][covenantID]
+                                                if soulbindIndex then
+                                                    local soudbindData = getSoulbindData(covenantID)
+                                                    tinsert(
+                                                        specRecords,
+                                                        format(
+                                                            "%s (%s)",
+                                                            covenantName,
+                                                            soudbindData[soulbindIndex].name
+                                                        )
+                                                    )
+                                                end
+                                            end
+                                        end
+
+                                        if next(specRecords) then
+                                            tinsert(result, specData.name .. ": ")
+                                            tinsert(result, strjoin(" / ", unpack(specRecords)) .. "\n\n")
                                         end
                                     end
                                 end
 
                                 if next(result) then
                                     return "|cff00d1b2" ..
-                                        L["Current Rules"] .. "|r\n" .. strjoin(" / ", unpack(result)) .. "\n\n"
+                                        L["Current Rules"] .. "|r\n\n" .. strjoin("", unpack(result)) .. "\n"
                                 else
                                     return "|cff00d1b2" .. L["Current Rules"] .. "|r: " .. L["No Rules"] .. "\n\n"
                                 end
                             end
                         },
-                        covenant = {
+                        specialization = {
                             order = 2,
                             type = "select",
+                            name = L["Specialization"],
+                            get = function(info)
+                                return envs.covenantHelper.soulbind.selectedSpecialization
+                            end,
+                            set = function(_, value)
+                                envs.covenantHelper.soulbind.selectedSpecialization = value
+                                envs.covenantHelper.soulbind.selectedCovenant = nil
+                            end,
+                            values = function()
+                                local result = {}
+                                local specializationTable = getSpecilizations()
+                                for specIndex, specData in ipairs(specializationTable) do
+                                    result[specIndex] = specData.name
+                                end
+                                return result
+                            end
+                        },
+                        covenant = {
+                            order = 3,
+                            type = "select",
                             name = L["Covenant"],
+                            hidden = function()
+                                return not envs.covenantHelper.soulbind.selectedSpecialization
+                            end,
                             get = function(info)
                                 return envs.covenantHelper.soulbind.selectedCovenant
                             end,
-                            set = function(info, value)
+                            set = function(_, value)
                                 envs.covenantHelper.soulbind.selectedSoulbind = nil
                                 envs.covenantHelper.soulbind.selectedCovenant = value
                                 envs.covenantHelper.soulbind.tempSoulbindData = getSoulbindData(value)
@@ -711,7 +769,7 @@ options.covenantHelper = {
                             end
                         },
                         soulbind = {
-                            order = 3,
+                            order = 4,
                             type = "select",
                             name = L["Soulbind"],
                             hidden = function()
@@ -720,7 +778,7 @@ options.covenantHelper = {
                             get = function(info)
                                 return envs.covenantHelper.soulbind.selectedSoulbind
                             end,
-                            set = function(info, value)
+                            set = function(_, value)
                                 envs.covenantHelper.soulbind.selectedSoulbind = value
                             end,
                             values = function()
@@ -734,33 +792,37 @@ options.covenantHelper = {
                             end
                         },
                         addButton = {
-                            order = 4,
+                            order = 5,
                             type = "execute",
                             hidden = function()
                                 return not envs.covenantHelper.soulbind.selectedSoulbind
                             end,
                             disabled = function()
                                 local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
-                                if db and db[E.myname] then
-                                    local savedSoulbind = db[E.myname][envs.covenantHelper.soulbind.selectedCovenant]
-                                    local selectedSoulbind = envs.covenantHelper.soulbind.selectedSoulbind
-                                    if savedSoulbind and savedSoulbind == selectedSoulbind then
+                                local spec = envs.covenantHelper.soulbind.selectedSpecialization
+                                local covenant = envs.covenantHelper.soulbind.selectedCovenant
+                                local soulbind = envs.covenantHelper.soulbind.selectedSoulbind
+
+                                if db and db[E.myname] and db[E.myname][spec] then
+                                    if db[E.myname][spec][covenant] and db[E.myname][spec][covenant] == soulbind then
                                         return true
                                     end
                                 end
                                 return false
                             end,
                             name = function()
+                                local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+                                local spec = envs.covenantHelper.soulbind.selectedSpecialization
+                                local covenant = envs.covenantHelper.soulbind.selectedCovenant
+                                local soulbind = envs.covenantHelper.soulbind.selectedSoulbind
+
                                 local buttonName = L["Add"]
 
-                                if envs.covenantHelper.soulbind.selectedSoulbind == 99 then
+                                if soulbind == 99 then
                                     buttonName = L["Remove"]
                                 else
-                                    local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
-                                    if db and db[E.myname] then
-                                        local selectedCovenant =
-                                            db[E.myname][envs.covenantHelper.soulbind.selectedCovenant]
-                                        if selectedCovenant and envs.covenantHelper.soulbind.selectedSoulbind then
+                                    if db and db[E.myname] and db[E.myname][spec] then
+                                        if db[E.myname][spec][covenant] and soulbind then
                                             buttonName = L["Update"]
                                         end
                                     end
@@ -770,16 +832,22 @@ options.covenantHelper = {
                             end,
                             func = function()
                                 local db = E.global.WT.combat.covenantHelper.soulbindRules.characters
+                                local spec = envs.covenantHelper.soulbind.selectedSpecialization
+                                local covenant = envs.covenantHelper.soulbind.selectedCovenant
+                                local soulbind = envs.covenantHelper.soulbind.selectedSoulbind
 
                                 if not db[E.myname] then
                                     db[E.myname] = {}
                                 end
 
-                                if envs.covenantHelper.soulbind.selectedSoulbind == 99 then
-                                    db[E.myname][envs.covenantHelper.soulbind.selectedCovenant] = nil
+                                if not db[E.myname][spec] then
+                                    db[E.myname][spec] = {}
+                                end
+
+                                if soulbind == 99 then
+                                    db[E.myname][spec][covenant] = nil
                                 else
-                                    db[E.myname][envs.covenantHelper.soulbind.selectedCovenant] =
-                                        envs.covenantHelper.soulbind.selectedSoulbind
+                                    db[E.myname][spec][covenant] = soulbind
                                 end
                             end
                         }

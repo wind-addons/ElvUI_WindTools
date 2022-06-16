@@ -81,6 +81,11 @@ function W:UpdateScripts()
         UpdateMessage(L["Automation"] .. " - " .. L["Update Database"], profileVersion)
     end
 
+    if globalVersion < 2.44 then
+        E.global.WT.combat.covenantHelper.soulbindRules.characters = {}
+        UpdateMessage(L["Covenant Helper"] .. " - " .. L["Clear Database"], profileVersion)
+    end
+
     if not isFirstLine then
         F.PrintGradientLine()
     end

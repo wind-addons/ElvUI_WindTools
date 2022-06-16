@@ -55,8 +55,21 @@ options.help = {
             name = " ",
             width = "full"
         },
-        loginMessage = {
+        debugModeTip = {
             order = 5,
+            type = "description",
+            fontSize = "medium",
+            name = E.NewSign ..
+                " |cffe74c3c" ..
+                    format(
+                        L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
+                        "|cff00d1b2/wtdebug|r"
+                    ) ..
+                        "|r",
+            width = "full"
+        },
+        loginMessage = {
+            order = 6,
             type = "toggle",
             name = L["Login Message"],
             get = function(info)
@@ -67,7 +80,7 @@ options.help = {
             end
         },
         compatibilityCheck = {
-            order = 6,
+            order = 7,
             type = "toggle",
             name = L["Compatibility Check"],
             desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
@@ -80,7 +93,7 @@ options.help = {
             end
         },
         logLevel = {
-            order = 7,
+            order = 8,
             type = "select",
             name = L["Log Level"],
             desc = L["Only display log message that the level is higher than you choose."] ..
@@ -101,7 +114,7 @@ options.help = {
             }
         },
         contact = {
-            order = 8,
+            order = 9,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -186,19 +199,6 @@ options.help = {
                         )
                     end,
                     width = 0.7
-                },
-                debugModeTip = {
-                    order = 7,
-                    type = "description",
-                    fontSize = "medium",
-                    name = E.NewSign ..
-                        " |cffe74c3c" ..
-                            format(
-                                L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
-                                "|cff00d1b2/wtdebug|r"
-                            ) ..
-                                "|r",
-                    width = "full"
                 }
             }
         },

@@ -146,3 +146,14 @@ function S:TLDRMissions()
 end
 
 S:AddCallbackForAddon("TLDRMissions")
+
+-- Completely replace the 'AceGUI:Create' in TLDRMissions standalone libs
+if _G.TLDRMissions then
+    local aceGUIStandalone = _G.TLDRMissions.LibStub("AceGUI-3.0", true)
+    local aceGUIGlobel = _G.LibStub("AceGUI-3.0", true)
+    if aceGUIStandalone and aceGUIGlobel then
+        aceGUIStandalone.Create = function(_, ...)
+            return aceGUIGlobel:Create(...)
+        end
+    end
+end

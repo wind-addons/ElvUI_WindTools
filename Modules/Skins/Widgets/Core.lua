@@ -121,6 +121,8 @@ function WS.Animation(texture, aType, duration, data)
         resultTable.group = group
 
         function resultTable.onEnter(frame)
+            resultTable.onStatusChange(frame)
+            
             if not texture:IsShown() then
                 return
             end

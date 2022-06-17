@@ -13,6 +13,8 @@ local strjoin = strjoin
 local tinsert = tinsert
 local unpack = unpack
 
+local GetNumSpecializations = GetNumSpecializations
+local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellInfo = GetSpellInfo
 
 local options = W.options.combat.args

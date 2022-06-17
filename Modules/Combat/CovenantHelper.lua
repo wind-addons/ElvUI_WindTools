@@ -12,6 +12,7 @@ local tinsert = tinsert
 local ClearCursor = ClearCursor
 local CreateFrame = CreateFrame
 local GetActionInfo = GetActionInfo
+local GetSpecialization = GetSpecialization
 local PickupSpell = PickupSpell
 local PlaceAction = PlaceAction
 
@@ -274,9 +275,12 @@ function CH:AutoActivateSoulbind()
         return
     end
 
+    local currentSpecializationIndex = GetSpecialization()
     local covenantID = C_Covenants_GetActiveCovenantID()
     local soulbindIndex =
-        self.soulbindRules["characters"][E.myname] and self.soulbindRules["characters"][E.myname][covenantID]
+        self.soulbindRules["characters"][E.myname] and
+        self.soulbindRules["characters"][E.myname][currentSpecializationIndex] and
+        self.soulbindRules["characters"][E.myname][currentSpecializationIndex][covenantID]
 
     if soulbindIndex then
         return tryActivateSoulbind(self.covenantCache[covenantID].soulbinds[soulbindIndex].id)
@@ -345,6 +349,27 @@ function CH:COVENANT_CHOSEN(_, covenantID)
     self:CheckActionbars(covenantID)
 end
 
+do
+    local fired = false
+
+    function CH:ACTIVE_TALENT_GROUP_CHANGED()
+        if fired then
+            return
+        end
+        fired = true
+        self:RegisterEvent("SOULBIND_ACTIVATED")
+
+        -- Stop soulbinds check after 3 seconds
+        E:Delay(
+            3,
+            function()
+                self:UnregisterEvent("SOULBIND_ACTIVATED")
+                fired = false
+            end
+        )
+    end
+end
+
 function CH:Initialize()
     self.db = E.db.WT.combat.covenantHelper
     self.soulbindRules = E.global.WT.combat.covenantHelper.soulbindRules
@@ -357,8 +382,10 @@ function CH:Initialize()
 
     if self.db.enable then
         self:RegisterEvent("COVENANT_CHOSEN")
+        self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
     else
         self:UnregisterEvent("COVENANT_CHOSEN")
+        self:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
     end
 end
 

@@ -50,6 +50,8 @@ function RM:UpdateBar()
 		local button = self.bar.buttons[i]
 		button:ClearAllPoints()
 		button:SetSize(self.db.buttonSize, self.db.buttonSize)
+		button.tex:SetSize(self.db.buttonSize, self.db.buttonSize)
+		button.animGroup:Stop()
 
 		if (i == 10 and not self.db.readyCheck) or (i == 11 and not self.db.countDown) then
 			button:Hide()
@@ -101,12 +103,18 @@ function RM:UpdateButtons()
 	for i = 1, 11 do
 		local button = self.bar.buttons[i]
 
+		if self.db.buttonBackdrop then
+			button.backdrop:Show()
+		else
+			button.backdrop:Hide()
+		end
+
 		-- WindSkins 阴影处理
-		if button and button.shadow then
+		if button and button.backdrop.shadow then
 			if self.db.backdrop then
-				button.shadow:Hide()
+				button.backdrop.shadow:Hide()
 			else
-				button.shadow:Show()
+				button.backdrop.shadow:Show()
 			end
 		end
 
@@ -235,17 +243,18 @@ function RM:CreateButtons()
 		local button = self.bar.buttons[i]
 		if not button then
 			button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
-			button:SetTemplate("Transparent")
+			button:CreateBackdrop("Transparent")
 		end
 		button:SetSize(self.db.buttonSize, self.db.buttonSize)
 
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-			S:CreateShadow(button)
+			S:CreateBackdropShadow(button)
 		end
 
 		local tex = button:CreateTexture(nil, "ARTWORK")
-		tex:SetPoint("TOPLEFT", button, "TOPLEFT", 2, -2)
-		tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
+		tex:SetSize(self.db.buttonSize, self.db.buttonSize)
+		tex:SetPoint("CENTER")
+		button.tex = tex
 
 		if i < 9 then -- 标记
 			tex:SetTexture(format("Interface\\TargetingFrame\\UI-RaidTargetingIcon_%d", i))
@@ -375,9 +384,45 @@ function RM:CreateButtons()
 
 		local tooltipTitle = i <= 9 and L["Raid Markers"] or L["Raid Utility"]
 
+		local animGroup = tex:CreateAnimationGroup()
+		local scaleAnim = animGroup:CreateAnimation("Scale")
+		scaleAnim:SetTarget(tex)
+		scaleAnim:SetOrigin("CENTER", 0, 0)
+
+		button.animGroup = animGroup
+
+		animGroup:SetScript(
+			"OnPlay",
+			function()
+				tex:SetScale(1)
+			end
+		)
+
+		animGroup:SetScript(
+			"OnFinished",
+			function()
+				tex:SetScale(tex.__toScale)
+			end
+		)
+
 		button:SetScript(
 			"OnEnter",
 			function(self)
+				if RM.db.buttonAnimation then
+					local progress = animGroup:GetProgress()
+					local currentScale = tex:GetScale()
+					if progress ~= 0 then
+						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
+					end
+					animGroup:Stop()
+					tex.__fromScale = currentScale
+					tex.__toScale = 1.3
+					scaleAnim:SetFromScale(currentScale, currentScale)
+					scaleAnim:SetToScale(1.3, 1.3)
+					scaleAnim:SetDuration((1.3 - currentScale) * 0.618)
+					animGroup:Play()
+				end
+
 				local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
 				self:SetBackdropBorderColor(.7, .7, 0)
 				if RM.db.tooltip then
@@ -392,6 +437,21 @@ function RM:CreateButtons()
 		button:SetScript(
 			"OnLeave",
 			function(self)
+				if RM.db.buttonAnimation then
+					local progress = animGroup:GetProgress()
+					local currentScale = tex:GetScale()
+					if progress ~= 0 then
+						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
+					end
+					animGroup:Stop()
+					tex.__fromScale = currentScale
+					tex.__toScale = 1
+					scaleAnim:SetFromScale(currentScale, currentScale)
+					scaleAnim:SetToScale(1, 1)
+					scaleAnim:SetDuration((currentScale - 1) * 0.618)
+					animGroup:Play()
+				end
+
 				self:SetBackdropBorderColor(0, 0, 0)
 				if RM.db.tooltip then
 					GameTooltip:Hide()

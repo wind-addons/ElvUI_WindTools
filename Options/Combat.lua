@@ -283,6 +283,16 @@ options.raidMarkers = {
                     min = 1,
                     max = 30,
                     step = 1
+                },
+                buttonBackdrop = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Button Backdrop"]
+                },
+                buttonAnimation = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Button Animation"]
                 }
             }
         }

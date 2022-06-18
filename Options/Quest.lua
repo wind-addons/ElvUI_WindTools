@@ -502,11 +502,19 @@ options.objectiveTracker = {
                     name = L["Short Header"],
                     desc = L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."]
                 },
-                color = {
+                classColor = {
                     order = 5,
+                    type = "toggle",
+                    name = L["Use Class Color"]
+                },
+                color = {
+                    order = 6,
                     type = "color",
                     name = L["Color"],
                     hasAlpha = false,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or E.private.WT.quest.objectiveTracker.header.classColor
+                    end,
                     get = function(info)
                         local db = E.private.WT.quest.objectiveTracker.header.color
                         local default = V.quest.objectiveTracker.header.color

@@ -132,6 +132,7 @@ V.quest = {
 			name = E.db.general.font,
 			size = E.db.general.fontSize + 2,
 			style = "OUTLINE",
+			classColor = false,
 			color = {r = 1, g = 1, b = 1},
 			shortHeader = true
 		},

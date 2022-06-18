@@ -180,7 +180,12 @@ function OT:ChangeQuestHeaderStyle()
             F.SetFontWithDB(modules.Header.Text, self.db.header)
             modules.Header.Text:SetShadowColor(0, 0, 0, 0)
             modules.Header.Text.SetShadowColor = E.noop
-            modules.Header.Text:SetTextColor(self.db.header.color.r, self.db.header.color.g, self.db.header.color.b)
+
+            local r = self.db.header.classColor and W.ClassColor.r or self.db.header.color.r
+            local g = self.db.header.classColor and W.ClassColor.g or self.db.header.color.g
+            local b = self.db.header.classColor and W.ClassColor.b or self.db.header.color.b
+
+            modules.Header.Text:SetTextColor(r, g, b)
             if self.db.header.shortHeader then
                 modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
             end

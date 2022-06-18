@@ -58,7 +58,7 @@ options.objectiveTracker = {
             end
         },
         progress = {
-            order = 3,
+            order = 2,
             type = "group",
             inline = true,
             name = L["Progress"],
@@ -94,7 +94,7 @@ options.objectiveTracker = {
             }
         },
         cosmeticBar = {
-            order = 4,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Cosmetic Bar"],
@@ -454,7 +454,7 @@ options.objectiveTracker = {
             }
         },
         header = {
-            order = 5,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Header"],
@@ -513,7 +513,8 @@ options.objectiveTracker = {
                     name = L["Color"],
                     hasAlpha = false,
                     disabled = function()
-                        return not E.private.WT.quest.objectiveTracker.enable or E.private.WT.quest.objectiveTracker.header.classColor
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            E.private.WT.quest.objectiveTracker.header.classColor
                     end,
                     get = function(info)
                         local db = E.private.WT.quest.objectiveTracker.header.color
@@ -529,7 +530,7 @@ options.objectiveTracker = {
             }
         },
         titleColor = {
-            order = 6,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Title Color"],
@@ -674,6 +675,102 @@ options.objectiveTracker = {
                     min = 5,
                     max = 60,
                     step = 1
+                }
+            }
+        },
+        backdrop = {
+            order = 8,
+            type = "group",
+            inline = true,
+            name = L["Backdrop"],
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                OT:UpdateBackdrop()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                transparent = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Transparent"],
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.backdrop.enable
+                    end
+                },
+                betterAlign1 = {
+                    order = 3,
+                    type = "description",
+                    name = "",
+                    width = "full"
+                },
+                topLeftOffsetX = {
+                    order = 4,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.backdrop.enable
+                    end,
+                    name = L["Top Left Offset X"],
+                    type = "range",
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    width = 1.2
+                },
+                topLeftOffsetY = {
+                    order = 5,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.backdrop.enable
+                    end,
+                    name = L["Top Left Offset Y"],
+                    type = "range",
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    width = 1.2
+                },
+                betterAlign2 = {
+                    order = 6,
+                    type = "description",
+                    name = "",
+                    width = "full"
+                },
+                bottomRightOffsetX = {
+                    order = 7,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.backdrop.enable
+                    end,
+                    name = L["Bottom Right Offset X"],
+                    type = "range",
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    width = 1.2
+                },
+                bottomRightOffsetY = {
+                    order = 8,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.backdrop.enable
+                    end,
+                    name = L["Bottom Right Offset Y"],
+                    type = "range",
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    width = 1.2
                 }
             }
         }

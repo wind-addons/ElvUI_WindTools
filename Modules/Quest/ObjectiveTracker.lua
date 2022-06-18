@@ -304,6 +304,42 @@ function OT:UpdateTextWidth()
     end
 end
 
+function OT:UpdateBackdrop()
+    if not _G.ObjectiveTrackerBlocksFrame then
+        return
+    end
+
+    local db = self.db.backdrop
+    local backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+
+    if not db.enable then
+        if backdrop then
+            backdrop:Hide()
+        end
+        return
+    end
+
+    if not backdrop then
+        if self.db.backdrop.enable then
+            _G.ObjectiveTrackerBlocksFrame:CreateBackdrop()
+            backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+            S:CreateShadow(backdrop)
+        end
+    end
+
+    backdrop:Show()
+    backdrop:SetTemplate(db.transparent and "Transparent")
+    backdrop:ClearAllPoints()
+    backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerBlocksFrame, "TOPLEFT", db.topLeftOffsetX - 30, db.topLeftOffsetY + 10)
+    backdrop:SetPoint(
+        "BOTTOMRIGHT",
+        _G.ObjectiveTrackerBlocksFrame,
+        "BOTTOMRIGHT",
+        db.bottomRightOffsetX + 10,
+        db.bottomRightOffsetY - 10
+    )
+end
+
 function OT:Initialize()
     self.db = E.private.WT.quest.objectiveTracker
     if not self.db.enable then
@@ -311,6 +347,7 @@ function OT:Initialize()
     end
 
     self:UpdateTextWidth()
+    self:UpdateBackdrop()
 
     if not self.initialized then
         local trackerModules = {

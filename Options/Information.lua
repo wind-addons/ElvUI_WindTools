@@ -63,7 +63,7 @@ options.help = {
                 " |cffe74c3c" ..
                     format(
                         L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
-                        "|cff00d1b2/wtdebug|r"
+                        "|cff00d1b2/wtdebug on|r"
                     ) ..
                         "|r",
             width = "full"

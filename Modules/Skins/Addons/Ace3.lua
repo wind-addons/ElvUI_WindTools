@@ -34,6 +34,20 @@ function S:Ace3_DropdownPullout(Constructor)
     return SkinedConstructor
 end
 
+function S:Ace3_Window(Constructor)
+    if not (E.private.WT.skins.enable and E.private.WT.skins.addons.ace3 and E.private.WT.skins.shadow) then
+        return Constructor
+    end
+
+    local function SkinedConstructor()
+        local widget = Constructor()
+        S:CreateShadow(widget.frame)
+        return widget
+    end
+
+    return SkinedConstructor
+end
+
 function S:AceConfigDialog()
     local lib = _G.LibStub("AceConfigDialog-3.0")
     self:CreateShadow(lib.popup)
@@ -41,3 +55,4 @@ end
 
 S:AddCallbackForAceGUIWidget("Frame", S.Ace3_Frame)
 S:AddCallbackForAceGUIWidget("Dropdown-Pullout", S.Ace3_DropdownPullout)
+S:AddCallbackForAceGUIWidget("Window", S.Ace3_Window)

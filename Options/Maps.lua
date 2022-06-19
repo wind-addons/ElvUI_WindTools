@@ -8,6 +8,13 @@ local WM = W:GetModule("WorldMap")
 
 local format = format
 
+local envs = {
+    superTracker = {
+        inputCommand = nil,
+        selectedCommand = nil
+    }
+}
+
 options.superTracker = {
     order = 1,
     type = "group",
@@ -123,6 +130,126 @@ options.superTracker = {
                         db.r, db.g, db.b, db.a = r, g, b, nil
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
+                }
+            }
+        },
+        waypointParse = {
+            order = 5,
+            type = "group",
+            name = L["Waypoint Parse"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.maps.superTracker.waypointParse[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.maps.superTracker.waypointParse[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                worldMapInput = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Input Box"],
+                    desc = L["Add a input box to the world map."]
+                },
+                command = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Command"],
+                    desc = L["Enable to use the command to set the waypoint."]
+                },
+                commandConfiguration = {
+                    order = 4,
+                    type = "group",
+                    name = L["Command Configuration"],
+                    hidden = function()
+                        return not E.private.WT.maps.superTracker.waypointParse.command
+                    end,
+                    args = {
+                        commandInput = {
+                            order = 1,
+                            type = "input",
+                            name = L["New Command"],
+                            desc = L["The command to set a waypoint."],
+                            get = function(info)
+                                return envs.superTracker.inputCommand
+                            end,
+                            set = function(info, value)
+                                envs.superTracker.inputCommand = value
+                            end
+                        },
+                        addCommand = {
+                            order = 2,
+                            type = "execute",
+                            name = L["Add Command"],
+                            disabled = function()
+                                return not envs.superTracker.inputCommand
+                            end,
+                            func = function()
+                                if not envs.superTracker.inputCommand then
+                                    return
+                                end
+
+                                E.private.WT.maps.superTracker.waypointParse.commandKeys[envs.superTracker.inputCommand] =
+                                    true
+                                E:StaticPopup_Show("PRIVATE_RL")
+                            end
+                        },
+                        betterAlign = {
+                            order = 3,
+                            type = "description",
+                            name = " ",
+                            width = "full"
+                        },
+                        commandList = {
+                            order = 4,
+                            type = "select",
+                            name = L["Command List"],
+                            values = function()
+                                local keys = {}
+                                for k, _ in pairs(E.private.WT.maps.superTracker.waypointParse.commandKeys) do
+                                    keys[k] = k
+                                end
+                                return keys
+                            end,
+                            get = function(info)
+                                return envs.superTracker.selectedCommand
+                            end,
+                            set = function(info, value)
+                                envs.superTracker.selectedCommand = value
+                            end
+                        },
+                        deleteCommand = {
+                            order = 5,
+                            type = "execute",
+                            name = L["Delete Command"],
+                            desc = L["Delete the selected command."],
+                            confirm = function()
+                                return format(
+                                    L["Are you sure to delete the %s command?"],
+                                    F.CreateColorString(envs.superTracker.selectedCommand, E.db.general.valuecolor)
+                                )
+                            end,
+                            disabled = function()
+                                return not envs.superTracker.selectedCommand
+                            end,
+                            func = function()
+                                if not envs.superTracker.selectedCommand then
+                                    return
+                                end
+
+                                E.private.WT.maps.superTracker.waypointParse.commandKeys[
+                                        envs.superTracker.selectedCommand
+                                    ] = nil
+                                E:StaticPopup_Show("PRIVATE_RL")
+                            end
+                        }
+                    }
                 }
             }
         }

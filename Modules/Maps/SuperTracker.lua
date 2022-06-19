@@ -79,12 +79,19 @@ function ST:NoLimit()
     )
 end
 
-function ST.commandHandler(msg, preview)
+function ST.commandHandler(msg, isPreview)
+    -- Global Command Handler
+    if isPreview and type(isPreview) == "table" then
+        isPreview = false
+    end
+
     if not msg or msg == "" then
-        if not preview then
-            F.Print(L["The argument is invalid."])
+        if isPreview then
+            return false, L["No Arg"]
+        else
+            F.Print(L["The argument is needed."])
+            return
         end
-        return false, L["invalid"]
     end
 
     msg =
@@ -116,10 +123,12 @@ function ST.commandHandler(msg, preview)
     local words = {F.Strings.Split(msg .. " ", " ")}
 
     if #words < 3 then
-        if not preview then
+        if isPreview then
+            return false, L["invalid"]
+        else
             F.Print(L["The argument is invalid."])
+            return
         end
-        return false, L["invalid"]
     end
 
     for _, n in ipairs(words) do
@@ -131,25 +140,28 @@ function ST.commandHandler(msg, preview)
     end
 
     if #numbers < 2 then
-        if not preview then
+        if isPreview then
+            return false, L["invalid"]
+        else
             F.Print(L["The argument is invalid."])
+            return
         end
-        return false, L["invalid"]
     end
 
     if numbers[1] > 100 or numbers[2] > 100 then
-        if not preview then
+        if isPreview then
+            return false, L["illegal"]
+        else
             F.Print(L["The coordinates contain illegal number."])
+            return
         end
-        return false, L["illegal"]
     end
 
-    if preview then
+    if isPreview then
         local waypointString = numbers[1] .. ", " .. numbers[2]
         if numbers[3] then
             waypointString = waypointString .. ", " .. numbers[3]
         end
-
         return true, waypointString
     else
         ST:SetWaypoint(unpack(numbers))
@@ -186,14 +198,20 @@ function ST:SetWaypoint(x, y, z)
     end
 end
 
-function ST:Commands()
-    if not self.db.command.enable then
+function ST:WaypointParse()
+    if not self.db.waypointParse.enable then
         return
     end
 
-    W:AddCommand("SUPER_TRACKER", self.db.command.keys, self.commandHandler)
+    if self.db.waypointParse.command then
+        local keys = {}
+        for k, _ in pairs(self.db.waypointParse.commandKeys) do
+            tinsert(keys, k)
+        end
+        W:AddCommand("SUPER_TRACKER", keys, self.commandHandler)
+    end
 
-    if not self.db.command.worldMapInput then
+    if not self.db.waypointParse.worldMapInput then
         return
     end
 
@@ -262,7 +280,7 @@ function ST:Commands()
         editBox,
         format(
             "%s\n%s",
-            F.GetWindStyleText(L["Smart Waypoint Parser"]),
+            F.GetWindStyleText(L["Smart Waypoint"]),
             L["You can paste any text contains coordinates here, and press ENTER to set the waypoint in map."]
         ),
         "ANCHOR_TOPLEFT",
@@ -311,8 +329,7 @@ function ST:Initialize()
 
     self:NoLimit()
     self:ReskinDistanceText()
-    -- self:Commands()
-    E:Delay(5, self.Commands, self)
+    self:WaypointParse()
 end
 
 W:RegisterModule(ST:GetName())

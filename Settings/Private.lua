@@ -41,12 +41,13 @@ V.maps = {
 			style = "OUTLINE",
 			color = {r = 1, g = 1, b = 1}
 		},
-		command = {
+		waypointParse = {
 			enable = true,
 			worldMapInput = true,
-			keys = {
-				"wtgo",
-				"goto"
+			command = true,
+			commandKeys = {
+				["wtgo"] = true,
+				["goto"] = true,
 			}
 		}
 	},

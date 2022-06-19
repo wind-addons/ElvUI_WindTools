@@ -4,7 +4,7 @@ local E = unpack(ElvUI)
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "frFR")
 
 L["%month%-%day%-%year%"] = "%mois%-%jour%-%année%"
-L["%player% cast %spell% -> %target%"] = "%player% lance %spell% -> %cible%"
+L["%player% cast %spell% -> %target%"] = "%player% lance %spell% -> %target%"
 L["%player% cast %spell%, today's special is Anchovy Pie!"] = "%player% a lancé %spell%, la spécialité du jour c'est la tarte aux anchois !"
 L["%player% failed on taunting %target%!"] = "%player% a échoué à provoquer %target% !"
 L["%player% interrupted %target%'s %target_spell%!"] = "%player% a interrompu le sort %target_spell% de %target% !"

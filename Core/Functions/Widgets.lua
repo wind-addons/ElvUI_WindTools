@@ -109,6 +109,31 @@ local function createTextureButton(parent, texture, normalColor, hoverColor, wid
     return frame
 end
 
+local function createInput(parent, width, height, onEnterPressed)
+    local frame = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+
+    if width then
+        frame:SetWidth(width)
+    end
+
+    if height then
+        frame:SetHeight(height)
+    end
+
+    frame:SetScript("OnEnterPressed", onEnterPressed)
+
+    frame:SetScript(
+        "OnEscapePressed",
+        function(self)
+            self:ClearFocus()
+        end
+    )
+
+    S:ESProxy("HandleEditBox", frame)
+
+    return frame
+end
+
 function F.Widgets.New(widgetType, ...)
     if not widgetType then
         return
@@ -120,16 +145,20 @@ function F.Widgets.New(widgetType, ...)
         return createCloseButton(...)
     elseif widgetType == "TextureButton" then
         return createTextureButton(...)
+    elseif widgetType == "Input" then
+        return createInput(...)
     end
 end
 
-function F.Widgets.AddTooltip(frame, text, anchor)
+function F.Widgets.AddTooltip(frame, text, anchor, x, y)
     anchor = anchor or "ANCHOR_RIGHT"
+    x = x or 0
+    y = y or 0
     if type(text) == "string" then
         frame:HookScript(
             "OnEnter",
             function(self)
-                _G.GameTooltip:SetOwner(self, anchor)
+                _G.GameTooltip:SetOwner(self, anchor, x, y)
                 _G.GameTooltip:SetText(text)
             end
         )

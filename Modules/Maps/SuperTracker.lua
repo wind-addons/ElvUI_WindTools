@@ -79,7 +79,14 @@ function ST:NoLimit()
     )
 end
 
-function ST.commandHandler(msg)
+function ST.commandHandler(msg, preview)
+    if not msg or msg == "" then
+        if not preview then
+            F.Print(L["The argument is invalid."])
+        end
+        return false, L["invalid"]
+    end
+
     msg =
         F.Strings.Replace(
         msg,
@@ -89,6 +96,7 @@ function ST.commandHandler(msg)
             [","] = " ",
             ["，"] = " ",
             ["/"] = " ",
+            ["|"] = " ",
             ["＂"] = " ",
             ["'"] = " ",
             ['"'] = " ",
@@ -105,11 +113,13 @@ function ST.commandHandler(msg)
     )
 
     local numbers = {}
-    local words = {F.Strings.Split(msg.." ", " ")}
+    local words = {F.Strings.Split(msg .. " ", " ")}
 
     if #words < 3 then
-        F.Print(L["The argument is invalid."])
-        return
+        if not preview then
+            F.Print(L["The argument is invalid."])
+        end
+        return false, L["invalid"]
     end
 
     for _, n in ipairs(words) do
@@ -121,11 +131,29 @@ function ST.commandHandler(msg)
     end
 
     if #numbers < 2 then
-        F.Print(L["The argument is invalid."])
-        return
+        if not preview then
+            F.Print(L["The argument is invalid."])
+        end
+        return false, L["invalid"]
     end
 
-    ST:SetWaypoint(unpack(numbers))
+    if numbers[1] > 100 or numbers[2] > 100 then
+        if not preview then
+            F.Print(L["The coordinates contain illegal number."])
+        end
+        return false, L["illegal"]
+    end
+
+    if preview then
+        local waypointString = numbers[1] .. ", " .. numbers[2]
+        if numbers[3] then
+            waypointString = waypointString .. ", " .. numbers[3]
+        end
+
+        return true, waypointString
+    else
+        ST:SetWaypoint(unpack(numbers))
+    end
 end
 
 function ST:SetWaypoint(x, y, z)
@@ -145,12 +173,102 @@ function ST:SetWaypoint(x, y, z)
         z = z and z / 100
     end
 
+    if x > 1 or y > 1 or (z and z > 1) then
+        F.Print(L["The coordinates contain illegal number."])
+        return
+    end
+
     if C_Map_CanSetUserWaypointOnMap(mapID) then
         C_Map_SetUserWaypoint(UiMapPoint_CreateFromCoordinates(mapID, x, y, z))
         F.Print(format(L["Waypoint %s has been set."], waypointString))
     else
         self:Log("warning", L["Can not set waypoint on this map."])
     end
+end
+
+function ST:Commands()
+    if not self.db.command.enable then
+        return
+    end
+
+    W:AddCommand("SUPER_TRACKER", self.db.command.keys, self.commandHandler)
+
+    if not self.db.command.worldMapInput then
+        return
+    end
+
+    -- Input Text Edit Box
+    local editBox =
+        F.Widgets.New(
+        "Input",
+        _G.WorldMapFrame,
+        200,
+        20,
+        function(eb)
+            self.commandHandler(eb:GetText(), false)
+            eb:ClearFocus()
+        end
+    )
+
+    editBox:SetPoint("TOPLEFT", _G.WorldMapFrame, "TOPLEFT", 3, -8)
+    editBox:SetAutoFocus(false)
+
+    -- Placeholder
+    local placeholder = editBox:CreateFontString(nil, "ARTWORK")
+    placeholder:FontTemplate(nil, nil, "OUTLINE")
+    placeholder:SetText("|cff666666" .. L["Go to ..."] .. "|r")
+    placeholder:SetPoint("CENTER", editBox, "CENTER", 0, 0)
+
+    editBox:HookScript(
+        "OnEditFocusGained",
+        function()
+            placeholder:Hide()
+        end
+    )
+
+    editBox:HookScript(
+        "OnEditFocusLost",
+        function(eb)
+            local inputText = eb:GetText()
+            if not inputText or gsub(inputText, " ", "") == "" then
+                placeholder:Show()
+                return
+            end
+            placeholder:Hide()
+        end
+    )
+
+    -- Status Text
+    local statusText = editBox:CreateFontString(nil, "ARTWORK")
+    statusText:FontTemplate(nil, nil, "OUTLINE")
+    statusText:SetPoint("LEFT", editBox, "RIGHT", 5, 0)
+
+    -- worldquest-questmarker-questionmark
+    editBox:SetScript(
+        "OnTextChanged",
+        function(eb)
+            local inputText = eb:GetText()
+            if not inputText or gsub(inputText, " ", "") == "" then
+                statusText:SetText("")
+                return
+            end
+
+            local success, preview = self.commandHandler(inputText, true)
+            statusText:SetText("|cff" .. (success and "00d1b2" or "999999") .. preview .. "|r")
+        end
+    )
+
+    F.Widgets.AddTooltip(
+        editBox,
+        format(
+            "%s\n%s",
+            F.GetWindStyleText(L["Smart Waypoint Parser"]),
+            L["You can paste any text contains coordinates here, and press ENTER to set the waypoint in map."]
+        ),
+        "ANCHOR_TOPLEFT",
+        -13,
+        12
+    )
 end
 
 function ST:USER_WAYPOINT_UPDATED()
@@ -193,10 +311,8 @@ function ST:Initialize()
 
     self:NoLimit()
     self:ReskinDistanceText()
-
-    if self.db.command.enable then
-        W:AddCommand("SUPER_TRACKER", self.db.command.keys, self.commandHandler)
-    end
+    -- self:Commands()
+    E:Delay(5, self.Commands, self)
 end
 
 W:RegisterModule(ST:GetName())

@@ -43,6 +43,7 @@ V.maps = {
 		},
 		command = {
 			enable = true,
+			worldMapInput = true,
 			keys = {
 				"wtgo",
 				"goto"

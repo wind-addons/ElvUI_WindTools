@@ -19,7 +19,7 @@ W.Changelog[245] = {
             "[美化外观] 修复了 WeakAuras 的按钮皮肤错误."
         },
         ["zhTW"] = {
-            "[美化外觀] 修復了 WeakAuras 的按鈕皮膚錯誤."
+            "[美化外觀] 修復了 WeakAuras 的按鍵皮膚錯誤."
         },
         ["enUS"] = {
             "[Skins] Fixed the error of the button skin of WeakAuras."

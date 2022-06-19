@@ -40,6 +40,13 @@ V.maps = {
 			size = E.db.general.fontSize + 2,
 			style = "OUTLINE",
 			color = {r = 1, g = 1, b = 1}
+		},
+		command = {
+			enable = true,
+			keys = {
+				"wtgo",
+				"goto"
+			}
 		}
 	},
 	worldMap = {
@@ -134,7 +141,7 @@ V.quest = {
 			topLeftOffsetX = 0,
 			topLeftOffsetY = 0,
 			bottomRightOffsetX = 0,
-			bottomRightOffsetY = 0,
+			bottomRightOffsetY = 0
 		},
 		header = {
 			name = E.db.general.font,

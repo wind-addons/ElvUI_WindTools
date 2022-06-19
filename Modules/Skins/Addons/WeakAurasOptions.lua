@@ -117,13 +117,11 @@ function S:WeakAurasMultiLineEditBox(Constructor)
             "OnShow",
             function(frame)
                 onShow(frame)
-                local self = frame.obj
-
-                if not self then
+                if not frame.obj or not frame.obj.extraButtons then
                     return
                 end
 
-                for _, button in pairs(self.extraButtons) do
+                for _, button in pairs(frame.obj.extraButtons) do
                     if not button.__windSkin then
                         self:ESProxy("HandleButton", button)
                         button.__windSkin = true

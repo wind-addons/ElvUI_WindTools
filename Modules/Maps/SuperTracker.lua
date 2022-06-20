@@ -3,19 +3,27 @@ local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 
-local tonumber = tonumber
+local format = format
+local gsub = gsub
+local ipairs = ipairs
+local pairs = pairs
+local strmatch = strmatch
 local tinsert = tinsert
+local tonumber = tonumber
+local type = type
+local unpack = unpack
 
 local IsAddOnLoaded = IsAddOnLoaded
 
+local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
+
+local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
 local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
-local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
+local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 local C_Navigation_GetDistance = C_Navigation.GetDistance
 local C_SuperTrack_SetSuperTrackedUserWaypoint = C_SuperTrack.SetSuperTrackedUserWaypoint
-local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
-local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 
 function ST:ReskinDistanceText()
     if not _G.SuperTrackedFrame or not _G.SuperTrackedFrame.DistanceText then

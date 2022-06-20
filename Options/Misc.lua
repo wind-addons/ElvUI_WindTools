@@ -352,11 +352,11 @@ options.cvars = {
                 }
             }
         },
-        unitFrames = {
+        nameplate = {
             order = 6,
             type = "group",
             inline = true,
-            name = L["Unit Frames"],
+            name = L["Nameplate"],
             args = {
                 tip = {
                     order = 1,

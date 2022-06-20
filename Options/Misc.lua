@@ -237,13 +237,19 @@ options.cvars = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["A simple editor for CVars."],
+                    name = format(
+                        "%s\n%s |cffff3860%s|r %s",
+                        L["A simple editor for CVars."],
+                        E.NewSign,
+                        format(L["%s never lock the CVars."], W.Title),
+                        L["If you found the CVars changed automatically, please check other addons."]
+                    ),
                     fontSize = "medium"
                 }
             }
         },
         combat = {
-            order = 3,
+            order = 2,
             type = "group",
             inline = true,
             name = L["Combat"],
@@ -343,6 +349,54 @@ options.cvars = {
                     desc = L[
                         "Changes the rate at which your mouse pointer moves based on the speed you are moving the mouse."
                     ]
+                }
+            }
+        },
+        unitFrames = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Unit Frames"],
+            args = {
+                tip = {
+                    order = 1,
+                    type = "description",
+                    name = format(
+                        "%s\n|cff209cee-|r %s |cff00d1b2%s|r\n|cff209cee-|r %s |cff00d1b2%s|r\n|cff209cee-|r %s |cffff3860%s|r",
+                        L["To enable the name of friendly player in instances, you can set as following:"],
+                        L["Friendly Player Name"],
+                        L["On"],
+                        L["Nameplate Only Names"],
+                        L["On"],
+                        L["Debuff on Friendly Nameplates"],
+                        L["Off"]
+                    )
+                },
+                UnitNameFriendlyPlayerName = {
+                    order = 2,
+                    type = "toggle",
+                    width = 1.5,
+                    name = L["Friendly Player Name"],
+                    desc = L["Show friendly players' names in the game world."]
+                },
+                nameplateShowOnlyNames = {
+                    order = 3,
+                    type = "toggle",
+                    width = 1.5,
+                    name = L["Nameplate Only Names"],
+                    desc = L["Disable the health bar of nameplate."]
+                },
+                nameplateShowDebuffsOnFriendly = {
+                    order = 4,
+                    type = "toggle",
+                    width = 1.5,
+                    name = L["Debuff on Friendly Nameplates"]
+                },
+                nameplateMotion = {
+                    order = 5,
+                    type = "toggle",
+                    width = 1.5,
+                    name = L["Stack Nameplates"]
                 }
             }
         }

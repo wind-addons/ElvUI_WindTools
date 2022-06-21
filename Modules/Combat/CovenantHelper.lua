@@ -6,14 +6,17 @@ local ES = E.Skins
 local _G = _G
 local format = format
 local ipairs = ipairs
-local print = printp
+local select = select
 local tinsert = tinsert
 
 local ClearCursor = ClearCursor
 local CreateFrame = CreateFrame
 local GetActionInfo = GetActionInfo
 local GetSpecialization = GetSpecialization
+local GetSpellBookItemName = GetSpellBookItemName
+local GetSpellTabInfo = GetSpellTabInfo
 local PickupSpell = PickupSpell
+local PickupSpellBookItem = PickupSpellBookItem
 local PlaceAction = PlaceAction
 
 local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
@@ -22,6 +25,8 @@ local C_Soulbinds_ActivateSoulbind = C_Soulbinds.ActivateSoulbind
 local C_Soulbinds_CanActivateSoulbind = C_Soulbinds.CanActivateSoulbind
 local C_Soulbinds_GetActiveSoulbindID = C_Soulbinds.GetActiveSoulbindID
 local C_Soulbinds_GetSoulbindData = C_Soulbinds.GetSoulbindData
+
+local BOOKTYPE_SPELL = BOOKTYPE_SPELL
 
 local covenantSkillList = {
     signature = {324739, 300728, 310143, 324631},
@@ -57,6 +62,12 @@ local function tryActivateSoulbind(soulbindID)
 end
 
 local function getSpellReplacement(currentSpellID, newCovenantID)
+    -- Blessing of the Seasons (NightFae Paladin)
+    if currentSpellID == 328282 or currentSpellID == 328620 or currentSpellID == 328622 or currentSpellID == 328281 then
+        F.Developer.Print("is Paladin")
+        currentSpellID = 328278
+    end
+
     for covenantID = 1, 4 do
         if covenantID ~= newCovenantID then
             if covenantSkillList.signature[covenantID] == currentSpellID then
@@ -301,16 +312,36 @@ function CH:CheckActionbars(covenantID)
             if actionType == "spell" then
                 local replacement = getSpellReplacement(id, covenantID)
                 if replacement then
-                    E:Delay(
-                        queueID * 0.05,
-                        function()
-                            ClearCursor()
-                            PickupSpell(replacement)
-                            PlaceAction(slotID)
-                            ClearCursor()
-                        end
-                    )
-                    queueID = queueID + 1
+                    if replacement == 328278 then
+                        E:Delay(
+                            0.3,
+                            function()
+                                -- Blessing of the Seasons (NightFae Paladin)
+                                local offset, numSlots = select(3, GetSpellTabInfo(2))
+                                for i = offset + 1, offset + numSlots do
+                                    local newID = select(3, GetSpellBookItemName(i, BOOKTYPE_SPELL))
+                                    if newID == 328282 or newID == 328620 or newID == 328622 or newID == 328281 then
+                                        ClearCursor()
+                                        PickupSpellBookItem(i, BOOKTYPE_SPELL)
+                                        PlaceAction(slotID)
+                                        ClearCursor()
+                                        break
+                                    end
+                                end
+                            end
+                        )
+                    else
+                        E:Delay(
+                            queueID * 0.05,
+                            function()
+                                ClearCursor()
+                                PickupSpell(replacement)
+                                PlaceAction(slotID)
+                                ClearCursor()
+                            end
+                        )
+                        queueID = queueID + 1
+                    end
                 end
             end
         end

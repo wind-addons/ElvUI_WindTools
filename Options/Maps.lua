@@ -7,6 +7,7 @@ local RM = W:GetModule("RectangleMinimap")
 local WM = W:GetModule("WorldMap")
 
 local format = format
+local pairs = pairs
 
 local envs = {
     superTracker = {

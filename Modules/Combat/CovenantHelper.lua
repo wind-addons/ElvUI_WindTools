@@ -64,7 +64,6 @@ end
 local function getSpellReplacement(currentSpellID, newCovenantID)
     -- Blessing of the Seasons (NightFae Paladin)
     if currentSpellID == 328282 or currentSpellID == 328620 or currentSpellID == 328622 or currentSpellID == 328281 then
-        F.Developer.Print("is Paladin")
         currentSpellID = 328278
     end
 

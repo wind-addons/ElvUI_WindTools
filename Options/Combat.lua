@@ -298,7 +298,7 @@ options.raidMarkers = {
                     order = 5,
                     type = "range",
                     name = L["Button Animation Duration"],
-                    desc = L["The duration of the button animation."],
+                    desc = L["The duration of the button animation in seconds."],
                     hidden = function()
                         return not E.db.WT.combat.raidMarkers.buttonAnimation
                     end,

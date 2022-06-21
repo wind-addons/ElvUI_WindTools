@@ -293,7 +293,33 @@ options.raidMarkers = {
                     order = 4,
                     type = "toggle",
                     name = L["Button Animation"]
-                }
+                },
+                buttonAnimationDuration = {
+                    order = 5,
+                    type = "range",
+                    name = L["Button Animation Duration"],
+                    desc = L["The duration of the button animation."],
+                    hidden = function()
+                        return not E.db.WT.combat.raidMarkers.buttonAnimation
+                    end,
+                    min = 0.01,
+                    max = 2,
+                    step = 0.01,
+                    width = 1.2
+                },
+                buttonAnimationScale = {
+                    order = 6,
+                    type = "range",
+                    name = L["Button Animation Scale"],
+                    desc = L["The scale of the button animation."],
+                    hidden = function()
+                        return not E.db.WT.combat.raidMarkers.buttonAnimation
+                    end,
+                    min = 0.01,
+                    max = 5,
+                    step = 0.01,
+                    width = 1.2
+                },
             }
         }
     }

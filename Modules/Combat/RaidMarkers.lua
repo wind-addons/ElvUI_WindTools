@@ -416,10 +416,10 @@ function RM:CreateButtons()
 					end
 					animGroup:Stop()
 					tex.__fromScale = currentScale
-					tex.__toScale = 1.3
+					tex.__toScale = RM.db.buttonAnimationScale
 					scaleAnim:SetFromScale(currentScale, currentScale)
-					scaleAnim:SetToScale(1.3, 1.3)
-					scaleAnim:SetDuration((1.3 - currentScale) * 0.618)
+					scaleAnim:SetToScale(RM.db.buttonAnimationScale, RM.db.buttonAnimationScale)
+					scaleAnim:SetDuration((RM.db.buttonAnimationScale - currentScale) / (RM.db.buttonAnimationScale - 1) * RM.db.buttonAnimationDuration)
 					animGroup:Play()
 				end
 
@@ -448,7 +448,7 @@ function RM:CreateButtons()
 					tex.__toScale = 1
 					scaleAnim:SetFromScale(currentScale, currentScale)
 					scaleAnim:SetToScale(1, 1)
-					scaleAnim:SetDuration((currentScale - 1) * 0.618)
+					scaleAnim:SetDuration(RM.db.buttonAnimationDuration * (currentScale - 1) / (RM.db.buttonAnimationScale - 1))
 					animGroup:Play()
 				end
 

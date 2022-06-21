@@ -58,9 +58,6 @@ end
 
 local function getSpellReplacement(currentSpellID, newCovenantID)
     for covenantID = 1, 4 do
-        if currentSpellID == 300728 then
-            print(1111)
-        end
         if covenantID ~= newCovenantID then
             if covenantSkillList.signature[covenantID] == currentSpellID then
                 return covenantSkillList.signature[newCovenantID]

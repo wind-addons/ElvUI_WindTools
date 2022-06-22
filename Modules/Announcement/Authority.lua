@@ -140,6 +140,7 @@ do
                 if IsInGroup() then
                     cache = {}
                     A:SendInterruptConfig()
+                    A:SendDispelConfig()
                     A:SendUtilityConfig()
                     A:SendCombatResurrectionConfig()
                     A:SendTauntConfig()
@@ -151,7 +152,6 @@ do
     end
 end
 
--- 打断:
 -- INTERRUPT_OTHERS
 function A:SendInterruptConfig()
     if not self.db.interrupt.others.enable then
@@ -162,7 +162,16 @@ function A:SendInterruptConfig()
     self:SendMyLevel("INTERRUPT_OTHERS", channelLevel[channel])
 end
 
--- 实用技能
+-- DISPEL_OTHERS
+function A:SendDispelConfig()
+    if not self.db.dispel.others.enable then
+        return
+    end
+
+    local channel = self:GetChannel(self.db.dispel.others.channel)
+    self:SendMyLevel("DISPEL_OTHERS", channelLevel[channel])
+end
+
 -- UTILITY
 function A:SendUtilityConfig()
     if not self.db.utility.enable then
@@ -173,7 +182,6 @@ function A:SendUtilityConfig()
     self:SendMyLevel("UTILITY", channelLevel[channel])
 end
 
--- 战斗复活
 -- COMBAT_RESURRECTION
 function A:SendCombatResurrectionConfig()
     if not self.db.combatResurrection.enable then
@@ -193,7 +201,6 @@ function A:SendCombatResurrectionConfig()
     self:SendMyLevel("COMBAT_RESURRECTION", channelLevel[channel])
 end
 
--- 嘲讽
 -- TAUNT_OTHERS
 -- TAUNT_OTHERS_PET
 function A:SendTauntConfig()
@@ -212,7 +219,6 @@ function A:SendTauntConfig()
     end
 end
 
--- 仇恨转移
 -- THREAT_TRANSFER
 function A:SendThreatTransferConfig()
     if not self.db.threatTransfer.enable then

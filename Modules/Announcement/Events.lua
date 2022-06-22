@@ -24,7 +24,7 @@ end
 function A:COMBAT_LOG_EVENT_UNFILTERED()
     -- 参数列表
     -- https://wow.gamepedia.com/COMBAT_LOG_EVENT#Base_Parameters
-    local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, extraSpellId2 =
+    local timestamp, event, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, _, _, extraSpellId =
         CombatLogGetCurrentEventInfo()
 
     if event == "SPELL_CAST_SUCCESS" then
@@ -37,11 +37,15 @@ function A:COMBAT_LOG_EVENT_UNFILTERED()
     elseif event == "SPELL_CREATE" then
         self:Utility(event, sourceName, spellId)
     elseif event == "SPELL_INTERRUPT" then
-        self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId2)
+        self:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     elseif event == "SPELL_AURA_APPLIED" then
         self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     elseif event == "SPELL_MISSED" then
         self:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
+    elseif event == "SPELL_DISPEL" then
+        self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
+    elseif event == "SPELL_STOLEN" then
+        self:Dispel(sourceGUID, sourceName, destName, spellId, extraSpellId)
     end
 end
 

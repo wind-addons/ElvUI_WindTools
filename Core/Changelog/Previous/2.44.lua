@@ -17,7 +17,7 @@ W.Changelog[244] = {
         },
         ["koKR"] = {
             "LibOpenRaid를 버전 43으로 업그레이드하였습니다.",
-            "[Covenant Helper] soulbind auto-switch rule now support specialization, the previous configuration will be deleted once."
+            "[성약단 도우미] 영혼 결속 자동 전환 규칙은 이제 전문화 결속으로 변경되며 2.43 버전 이전의 구성은 제거됩니다."
         }
     },
     NEW = {
@@ -43,11 +43,11 @@ W.Changelog[244] = {
             "[Raid Markers] Add mouse enter and mouse leave animation."
         },
         ["koKR"] = {
-            "[Skins] Add the LibUIDropDownMenu skin.",
-            "[Objective Tracker] Add options for creating backdrop.",
-            "[Objective Tracker] Add a class color option in header text setting.",
-            "[Raid Markers] Add support for no button backdrop.",
-            "[Raid Markers] Add mouse enter and mouse leave animation."
+            "[스킨] LibUIDropDownMenu 스킨 추가.",
+            "[퀘스트 추적기] 배경 옵션이 추가되었습니다.",
+            "[퀘스트 추적기] 상단 텍스트에 직업 색상에 대한 옵션이 추가되었습니다.",
+            "[공격대 징표] 버튼 배경 삭제 옵션이 추가되었습니다.",
+            "[공격대 징표] 마우스 오버 애니메이션을 추가했습니다."
         }
     },
     IMPROVEMENT = {
@@ -85,15 +85,15 @@ W.Changelog[244] = {
             "[Trade] Thanks button now works with cross-server players."
         },
         ["koKR"] = {
-            "Added the support of new modules resetting.",
-            "Corrected the logger injection to the modules.",
-            "[Skins] Fixed the bug that the animation plays even if the button is disabled.",
-            "[Skins] Optimized the shadow color logic of auras.",
-            "[Skins] Optimized the Azeroth Auto Pilot skin.",
-            "[Skins] Optimized the BugSack skin.",
-            "[Skins] Optimized the WeakAuras skin.",
-            "[Skins] Optimized the TLDRMissions skin.",
-            "[Trade] Thanks button now works with cross-server players."
+            "신규 모듈에 대한 재설정 옵션이 추가되었습니다.",
+            "모듈에 대한 logger injection을 수정했습니다.
+            "[스킨] 주요 구성 요소를 사용할 수 없을 때 재생되는 애니메이션 효과를 수정했습니다.",
+            "[스킨] 오라의 그림자색 로직 최적화.",
+            "[스킨] Azeroth Auto Pilot 스킨 최적화.",
+            "[스킨] BugSack 스킨 최적화.",
+            "[스킨] WeakAuras 스킨 최적화.",
+            "[스킨] TLDRMissions 스킨 최적화.",
+            "[거래 창] 이제 감사 버튼이 다른 서버 간 캐릭터에서도 작동합니다."
         }
     }
 }

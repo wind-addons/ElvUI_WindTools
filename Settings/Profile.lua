@@ -28,7 +28,7 @@ P.announcement = {
         }
     },
     dispel = {
-        enable = true,
+        enable = false,
         onlyInstance = true,
         player = {
             enable = true,
@@ -322,7 +322,7 @@ P.combat = {
     covenantHelper = {
         enable = true,
         replaceSpells = {
-            enable = false,
+            enable = false
         },
         soulbind = {
             autoActivate = true,

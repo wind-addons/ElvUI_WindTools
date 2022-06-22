@@ -22,8 +22,8 @@ W.Changelog[245] = {
             "[CVars Editor] Added new nameplate options."
         },
         ["koKR"] = {
-            "[Super Tracker] Added a feature that automatically parses text to extract the coordinates and set the waypoint.",
-            "[CVars Editor] Added new nameplate options."
+            "[슈퍼 트래커] 텍스트의 좌표점을 자동으로 분석하여 좌표를 추출하고 웨이포인트를 설정하는 기능을 추가했습니다.",
+            "[CVars 설정] 네임플레이트 관련 옵션이 추가되었습니다."
         }
     },
     IMPROVEMENT = {
@@ -43,8 +43,8 @@ W.Changelog[245] = {
             "[Skins] Fixed the error of the button skin of WeakAuras."
         },
         ["koKR"] = {
-            "[Covenant Helper] Fixed the bug that caused the 사계의 축복 not be set.",
-            "[Covenant Helper] Fixed the bug that caused the 벤티르 spell not be set.",
+            "[성약단 도우미] 사계의 축복이 설정 되지 않는 버그를 수정하였습니다.",
+            "[성약단 도우미] 벤티르 주문이 설정되지 않던 현상이 수정되었습니다.",
             "[스킨] WeakAuras 버튼 스킨 오류를 수정했습니다."
         }
     }

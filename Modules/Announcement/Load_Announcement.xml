@@ -1,10 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
 	<Script file='Core.lua'/>
-	<!-- Authority Module -->
 	<Script file='Authority.lua'/>
-	<!-- Submodule -->
 	<Script file='Events.lua'/>
+	<!-- Submodule -->
+	<Script file='Dispel.lua'/>
 	<Script file='CombatResurrection.lua'/>
 	<Script file='Goodbye.lua'/>
 	<Script file='Interrupt.lua'/>

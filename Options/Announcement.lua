@@ -6,7 +6,6 @@ local SB = W:GetModule("SwitchButtons")
 local format = format
 local gsub = gsub
 local pairs = pairs
-local strupper = strupper
 local tonumber = tonumber
 
 local GetSpellLink = GetSpellLink
@@ -641,8 +640,284 @@ options.interrupt = {
     }
 }
 
-options.taunt = {
+options.dispel = {
     order = 5,
+    type = "group",
+    name = L["Dispel"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Send messages after the spell has been dispelled."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
+        },
+        onlyInstance = {
+            order = 3,
+            type = "toggle",
+            name = L["Only Instance"],
+            desc = L["Disable announcement in open world."]
+        },
+        player = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Player(Only you)"],
+            get = function(info)
+                return E.db.WT.announcement.dispel[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Your name"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["Your spell link"]),
+                        FormatDesc("%target_spell%", L["Dispelled spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.dispel[info[#info - 1]].text = P.announcement.dispel[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.dispel[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", E.myname)
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        solo = {
+                            order = 1,
+                            name = L["Solo"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        party = {
+                            order = 2,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        instance = {
+                            order = 3,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                INSTANCE_CHAT = L["Instance"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        raid = {
+                            order = 4,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                RAID = L["Raid"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        others = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Other Players"],
+            get = function(info)
+                return E.db.WT.announcement.dispel[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end,
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Name of the player"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["The spell link"]),
+                        FormatDesc("%target_spell%", L["Dispelled spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.dispel[info[#info - 1]].text = P.announcement.dispel[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.dispel[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", E.myname)
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end,
+                    args = {
+                        party = {
+                            order = 1,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        instance = {
+                            order = 2,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                PARTY = L["Party"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                INSTANCE_CHAT = L["Instance"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        raid = {
+                            order = 3,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                RAID = L["Raid"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+options.taunt = {
+    order = 6,
     type = "group",
     name = L["Taunt"],
     get = function(info)
@@ -1419,7 +1694,7 @@ options.taunt = {
 }
 
 options.combatResurrection = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Combat Resurrection"],
     get = function(info)
@@ -1571,7 +1846,7 @@ options.combatResurrection = {
 }
 
 options.utility = {
-    order = 7,
+    order = 8,
     type = "group",
     name = L["Utility"],
     get = function(info)
@@ -1776,7 +2051,7 @@ do
 end
 
 options.threatTransfer = {
-    order = 8,
+    order = 9,
     type = "group",
     name = L["Threat Transfer"],
     get = function(info)
@@ -1941,7 +2216,7 @@ options.threatTransfer = {
 }
 
 options.goodbye = {
-    order = 9,
+    order = 10,
     type = "group",
     name = L["Goodbye"],
     get = function(info)
@@ -2049,7 +2324,7 @@ options.goodbye = {
 }
 
 options.thanks = {
-    order = 10,
+    order = 11,
     type = "group",
     name = L["Thanks"],
     get = function(info)
@@ -2270,7 +2545,7 @@ options.thanks = {
 }
 
 options.resetInstance = {
-    order = 11,
+    order = 12,
     type = "group",
     name = L["Reset Instance"],
     get = function(info)
@@ -2363,7 +2638,7 @@ options.resetInstance = {
 }
 
 options.keystone = {
-    order = 9,
+    order = 13,
     type = "group",
     name = L["Keystone"],
     get = function(info)

@@ -2,8 +2,10 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local _G = _G
+local format = format
+local gsub = gsub
 local pairs = pairs
-local gsub, format, strmatch = gsub, format, strmatch
+local strmatch = strmatch
 
 local msgList = {
     INSTANCE_RESET_SUCCESS = L["%s has been reset"],

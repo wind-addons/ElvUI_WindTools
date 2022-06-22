@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local gsub = gsub
+
 local GetSpellLink = GetSpellLink
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 

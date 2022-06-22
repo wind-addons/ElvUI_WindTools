@@ -1,7 +1,11 @@
 local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
-local strsplit, gsub = strsplit, gsub
-local GetSpellLink, IsInGroup = GetSpellLink, IsInGroup
+
+local gsub = gsub
+local strsplit = strsplit
+
+local GetSpellLink = GetSpellLink
+local IsInGroup = IsInGroup
 
 local MonkProvokeAllCache = {}
 

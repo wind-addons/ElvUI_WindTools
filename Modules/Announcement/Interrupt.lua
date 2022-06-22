@@ -4,14 +4,11 @@ local A = W:GetModule("Announcement")
 local _G = _G
 local gsub = gsub
 local strsplit = strsplit
-local strsub = strsub
 
 local GetSpellLink = GetSpellLink
 local IsInInstance = IsInInstance
 local IsPartyLFG = IsPartyLFG
 local UnitGUID = UnitGUID
-local UnitInParty = UnitInParty
-local UnitInRaid = UnitInRaid
 
 function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     local config = self.db.interrupt

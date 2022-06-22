@@ -3,6 +3,7 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 local tostring = tostring
+
 local GetSpellLink = GetSpellLink
 local InCombatLockdown = InCombatLockdown
 

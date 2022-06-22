@@ -3,15 +3,9 @@ local A = W:NewModule("Announcement", "AceEvent-3.0")
 
 local _G = _G
 
-local assert = assert
 local format = format
-local next = next
 local pairs = pairs
-local strsub = strsub
-local tinsert = tinsert
-local xpcall = xpcall
 
-local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance

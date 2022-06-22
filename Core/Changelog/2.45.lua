@@ -11,19 +11,23 @@ W.Changelog[245] = {
     NEW = {
         ["zhCN"] = {
             "[超级追踪] 新增了智能解析文本中坐标点并设定的功能.",
-            "[CVars 编辑器] 新增了姓名板相关选项."
+            "[CVars 编辑器] 新增了姓名板相关选项.",
+            "[通告] 新增了驱散的通告, 默认关闭."
         },
         ["zhTW"] = {
             "[超級追蹤] 新增了智能解析文本中坐標點並設定的功能.",
-            "[CVars 編輯器] 新增了姓名板相關選項."
+            "[CVars 編輯器] 新增了姓名板相關選項.",
+            "[通告] 新增了驅散的通告, 預設關閉."
         },
         ["enUS"] = {
             "[Super Tracker] Added a feature that automatically parses text to extract the coordinates and set the waypoint.",
-            "[CVars Editor] Added new nameplate options."
+            "[CVars Editor] Added new nameplate options.",
+            "[Announcement] Added a new announcement for dispel, disabled by default."
         },
         ["koKR"] = {
             "[슈퍼 트래커] 텍스트의 좌표점을 자동으로 분석하여 좌표를 추출하고 웨이포인트를 설정하는 기능을 추가했습니다.",
-            "[CVars 설정] 네임플레이트 관련 옵션이 추가되었습니다."
+            "[CVars 설정] 네임플레이트 관련 옵션이 추가되었습니다.",
+            "[Announcement] Added a new announcement for dispel, disabled by default."
         }
     },
     IMPROVEMENT = {

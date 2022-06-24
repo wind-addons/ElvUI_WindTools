@@ -20,6 +20,18 @@ local atlasToQuality = {
     ["auctionhouse-itemicon-border-account"] = 8
 }
 
+function S:TomCats_Config()
+    self:ESProxy("HandleButton", _G.TomCats_Config.discoveriesButton)
+    self:ESProxy("HandleButton", _G.TomCats_ConfigDiscoveries.discoveriesButton)
+    self:ESProxy("HandleButton", _G.TomCats_ConfigDiscoveries.discoveriesResetCounterButton)
+    self:ESProxy("HandleSliderFrame", _G.TomCats_ConfigIconSizeSlider)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_betaFeatures)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_loveIsInTheAirMinimapButton)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_lunarFestivalMinimapButton)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_mapIconAnimation)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_minimapButton)
+end
+
 function S:TomCats_HandleTomCatsIcon(icon)
     if not icon or not icon:IsShown() then
         return
@@ -82,6 +94,7 @@ function S:TomCats()
         return
     end
 
+    self:TomCats_Config()
     TT:SetStyle(_G.TomCatsVignetteTooltip)
     self:SecureHook(_G.TomCatsVignetteTooltip, "SetOwner", "TomCats_SkinTooltipItems")
 

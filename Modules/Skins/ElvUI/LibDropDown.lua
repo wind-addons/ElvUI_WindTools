@@ -6,6 +6,17 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function S:ES_SkinLibDropDownMenu(_, prefix)
+    -- If ElvUI did't load WindTools DB
+    if not E.private.WT then
+        self:AddCallback(
+            "SkinLibDropDown" .. prefix,
+            function()
+                self:ES_SkinLibDropDownMenu(nil, prefix)
+            end
+        )
+        return
+    end
+
     if _G[prefix .. "_UIDropDownMenu_CreateFrames"] then
         local bd = _G[prefix .. "_DropDownList1Backdrop"]
         local mbd = _G[prefix .. "_DropDownList1MenuBackdrop"]

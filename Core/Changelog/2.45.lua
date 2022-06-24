@@ -38,7 +38,8 @@ W.Changelog[245] = {
             "[盟约助手] 修复了温西尔技能转换的问题.",
             "[美化外观] 修复了 WeakAuras 的按钮皮肤错误.",
             "[美化外观] 修复了 LibUIDropDownMenu 的皮肤错误.",
-            "[美化外观] 优化了 TomCat's Tour 皮肤."
+            "[美化外观] 优化了 TomCat's Tour 皮肤.",
+            "[美化外观] 优化了 Hekili 皮肤."
         },
         ["zhTW"] = {
             "优化翻譯文本.",
@@ -47,7 +48,8 @@ W.Changelog[245] = {
             "[誓盟助手] 修復了汎希爾族技能轉換的問題.",
             "[美化外觀] 修復了 WeakAuras 的按鍵皮膚錯誤.",
             "[美化外觀] 修復了 LibUIDropDownMenu 的皮膚錯誤.",
-            "[美化外觀] 優化了 TomCat's Tour 皮膚."
+            "[美化外觀] 優化了 TomCat's Tour 皮膚.",
+            "[美化外觀] 優化了 Hekili 皮膚."
         },
         ["enUS"] = {
             "Updated the translation text.",
@@ -56,7 +58,8 @@ W.Changelog[245] = {
             "[Covenant Helper] Fixed the bug that caused the Venthyr spell not be set.",
             "[Skins] Fixed the error of the button skin of WeakAuras.",
             "[Skins] Fixed the error of the dropdown skin of LibUIDropDownMenu.",
-            "[Skins] Optimized the TomCat's Tour skin."
+            "[Skins] Optimized TomCat's Tour skin.",
+            "[Skins] Optimized Hekili skin."
         },
         ["koKR"] = {
             "Updated the translation text.",
@@ -65,7 +68,8 @@ W.Changelog[245] = {
             "[성약단 도우미] 벤티르 주문이 설정되지 않던 현상이 수정되었습니다.",
             "[스킨] WeakAuras 버튼 스킨 오류를 수정했습니다.",
             "[Skins] Fixed the error of the dropdown skin of LibUIDropDownMenu.",
-            "[Skins] Optimized the TomCat's Tour skin."
+            "[Skins] Optimized TomCat's Tour skin.",
+            "[Skins] Optimized Hekili skin."
         }
     }
 }

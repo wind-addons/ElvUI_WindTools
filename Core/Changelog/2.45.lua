@@ -32,24 +32,40 @@ W.Changelog[245] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "优化了翻译文本.",
+            "[团队标记] 新增了动画的设定.",
             "[盟约助手] 修复了法夜圣骑士的四季祝福转换的问题.",
             "[盟约助手] 修复了温西尔技能转换的问题.",
-            "[美化外观] 修复了 WeakAuras 的按钮皮肤错误."
+            "[美化外观] 修复了 WeakAuras 的按钮皮肤错误.",
+            "[美化外观] 修复了 LibUIDropDownMenu 的皮肤错误.",
+            "[美化外观] 优化了 TomCat's Tour 皮肤."
         },
         ["zhTW"] = {
+            "优化翻譯文本.",
+            "[團隊標記] 新增了動畫的設定",
             "[誓盟助手] 修復了暗夜妖精聖騎士的四季祝福轉換的問題.",
             "[誓盟助手] 修復了汎希爾族技能轉換的問題.",
-            "[美化外觀] 修復了 WeakAuras 的按鍵皮膚錯誤."
+            "[美化外觀] 修復了 WeakAuras 的按鍵皮膚錯誤.",
+            "[美化外觀] 修復了 LibUIDropDownMenu 的皮膚錯誤.",
+            "[美化外觀] 優化了 TomCat's Tour 皮膚."
         },
         ["enUS"] = {
+            "Updated the translation text.",
+            "[Raid Markers] Added some options for animation.",
             "[Covenant Helper] Fixed the bug that caused the Blessing of the Seasons not be set.",
             "[Covenant Helper] Fixed the bug that caused the Venthyr spell not be set.",
-            "[Skins] Fixed the error of the button skin of WeakAuras."
+            "[Skins] Fixed the error of the button skin of WeakAuras.",
+            "[Skins] Fixed the error of the dropdown skin of LibUIDropDownMenu.",
+            "[Skins] Optimized the TomCat's Tour skin."
         },
         ["koKR"] = {
+            "Updated the translation text.",
+            "[Raid Markers] Added some options for animation.",
             "[성약단 도우미] 사계의 축복이 설정 되지 않는 버그를 수정하였습니다.",
             "[성약단 도우미] 벤티르 주문이 설정되지 않던 현상이 수정되었습니다.",
-            "[스킨] WeakAuras 버튼 스킨 오류를 수정했습니다."
+            "[스킨] WeakAuras 버튼 스킨 오류를 수정했습니다.",
+            "[Skins] Fixed the error of the dropdown skin of LibUIDropDownMenu.",
+            "[Skins] Optimized the TomCat's Tour skin."
         }
     }
 }

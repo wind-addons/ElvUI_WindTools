@@ -27,7 +27,7 @@ W.Changelog[245] = {
         ["koKR"] = {
             "[슈퍼 트래커] 텍스트의 좌표점을 자동으로 분석하여 좌표를 추출하고 웨이포인트를 설정하는 기능을 추가했습니다.",
             "[CVars 설정] 네임플레이트 관련 옵션이 추가되었습니다.",
-            "[Announcement] Added a new announcement for dispel, disabled by default."
+            "[알림] 해제가 알림 항목에 새롭게 추가 되였습니다. 기본 설정은 비활성 입니다."
         }
     },
     IMPROVEMENT = {
@@ -62,14 +62,14 @@ W.Changelog[245] = {
             "[Skins] Optimized Hekili skin."
         },
         ["koKR"] = {
-            "Updated the translation text.",
-            "[Raid Markers] Added some options for animation.",
+            "번역 텍스트를 업데이트했습니다.",
+            "[공격대 징표] 에니메이션과 관련된 몇가지 옵션을 추가 하였습니다.",
             "[성약단 도우미] 사계의 축복이 설정 되지 않는 버그를 수정하였습니다.",
             "[성약단 도우미] 벤티르 주문이 설정되지 않던 현상이 수정되었습니다.",
             "[스킨] WeakAuras 버튼 스킨 오류를 수정했습니다.",
-            "[Skins] Fixed the error of the dropdown skin of LibUIDropDownMenu.",
-            "[Skins] Optimized TomCat's Tour skin.",
-            "[Skins] Optimized Hekili skin."
+            "[스킨] LibUIDropDownMenu의 스킨 버그를 수정했습니다.",
+            "[스킨] TomCat's Tour 스킨 최적화.",
+            "[스킨] Hekili 스킨 최적화."
         }
     }
 }

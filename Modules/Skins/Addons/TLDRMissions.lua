@@ -121,14 +121,12 @@ function S:TLDRMissions()
         return
     end
 
-    -- Toggle button in Mission Table
-    if _G.TLDRMissionsToggleButton then
-        self:ESProxy("HandleButton", _G.TLDRMissionsToggleButton)
-    end
+    self:ESProxy("HandleButton", _G.TLDRMissionsToggleButton)
 
     -- Main GUI
     if _G.TLDRMissionsFrame then
         local gui = _G.TLDRMissionsFrame
+        self:ESProxy("HandleButton", gui.shortcutButton)
         self:ESProxy("HandleCloseButton", gui.CloseButton)
         gui:StripTextures()
         gui:SetTemplate("Transparent")

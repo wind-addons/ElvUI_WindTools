@@ -74,6 +74,7 @@ local function reskinMainPanel(gui)
     handleOptionLine("Gear")
     handleOptionLine("SanctumFeature")
     handleOptionLine("Sacrifice")
+    handleOptionLine("AnythingForXP")
 
     S:ESProxy("HandleButton", gui.CalculateButton)
     S:ESProxy("HandleButton", gui.AbortButton)

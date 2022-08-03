@@ -196,6 +196,7 @@ V.skins = {
     removeParchment = true,
     merathilisUISkin = true,
     shadow = true,
+    weakAurasShadow = true,
     increasedSize = 0,
     color = {
         r = 0,

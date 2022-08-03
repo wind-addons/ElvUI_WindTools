@@ -126,8 +126,17 @@ options.general = {
                     type = "toggle",
                     name = L["Enable"]
                 },
-                increasedSize = {
+                weakAurasShadow = {
                     order = 2,
+                    type = "toggle",
+                    name = L["WeakAuras Shadow"],
+                    hidden = function()
+                        return not E.private.WT.skins.enable or not E.private.WT.skins.shadow or
+                            not E.private.WT.skins.addons.weakAuras
+                    end
+                },
+                increasedSize = {
+                    order = 3,
                     type = "range",
                     name = L["Increase Size"],
                     desc = L["Make shadow thicker."],
@@ -136,7 +145,7 @@ options.general = {
                     step = 1
                 },
                 color = {
-                    order = 3,
+                    order = 4,
                     type = "color",
                     name = L["Shadow Color"],
                     hasAlpha = false,

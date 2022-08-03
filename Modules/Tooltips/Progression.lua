@@ -92,13 +92,13 @@ local locales = {
         short = L["[ABBR] Iron Docks"],
         full = L["Iron Docks"]
     },
-    ["Operation Mechagon: Junkyard"] = {
-        short = L["[ABBR] Operation Mechagon: Junkyard"],
-        full = L["Operation Mechagon: Junkyard"]
+    ["Operation: Mechagon - Junkyard"] = {
+        short = L["[ABBR] Operation: Mechagon - Junkyard"],
+        full = L["Operation: Mechagon - Junkyard"]
     },
-    ["Operation Mechagon: Workshop"] = {
-        short = L["[ABBR] Operation Mechagon: Workshop"],
-        full = L["Operation Mechagon: Workshop"]
+    ["Operation: Mechagon - Workshop"] = {
+        short = L["[ABBR] Operation: Mechagon - Workshop"],
+        full = L["Operation: Mechagon - Workshop"]
     },
     ["Return to Karazhan: Lower"] = {
         short = L["[ABBR] Return to Karazhan: Lower"],
@@ -296,8 +296,8 @@ local mythicKeystoneDungeons = {
     [169] = "Iron Docks",
     [227] = "Return to Karazhan: Lower",
     [234] = "Return to Karazhan: Upper",
-    [369] = "Operation Mechagon: Junkyard",
-    [370] = "Operation Mechagon: Workshop",
+    [369] = "Operation: Mechagon - Junkyard",
+    [370] = "Operation: Mechagon - Workshop",
     [391] = "Tazavesh: Streets of Wonder",
     [392] = "Tazavesh: So'leah's Gambit"
 }

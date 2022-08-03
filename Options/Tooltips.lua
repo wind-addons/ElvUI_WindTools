@@ -326,8 +326,8 @@ do
     local dungeons = {
         "Grimrail Depot",
         "Iron Docks",
-        "Operation Mechagon: Junkyard",
-        "Operation Mechagon: Workshop",
+        "Operation: Mechagon - Junkyard",
+        "Operation: Mechagon - Workshop",
         "Return to Karazhan: Lower",
         "Return to Karazhan: Upper",
         "Tazavesh: So'leah's Gambit",

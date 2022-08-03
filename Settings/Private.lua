@@ -47,7 +47,7 @@ V.maps = {
 			command = true,
 			commandKeys = {
 				["wtgo"] = true,
-				["goto"] = true,
+				["goto"] = true
 			}
 		}
 	},
@@ -479,7 +479,7 @@ V.tooltips = {
 		special = {
 			enable = true,
 			["Shadowlands Keystone Master: Season One"] = false,
-			["Shadowlands Keystone Master: Season Two"] = true,
+			["Shadowlands Keystone Master: Season Two"] = false,
 			["Shadowlands Keystone Master: Season Three"] = true,
 			["Shadowlands Keystone Master: Season Four"] = true
 		},
@@ -487,20 +487,14 @@ V.tooltips = {
 			enable = true,
 			markHighestScore = true,
 			showNoRecord = true,
-			-- ["De Other Side"] = true,
-			-- ["Halls of Atonement"] = true,
-			-- ["Mists of Tirna Scithe"] = true,
-			-- ["Plaguefall"] = true,
-			-- ["Sanguine Depths"] = true,
-			-- ["Spires of Ascension"] = true,
-			["Tazavesh: So'leah's Gambit"] = true,
-			["Tazavesh: Streets of Wonder"] = true,
-			["Operation Mechagon: Junkyard"] = true,
-			["Operation Mechagon: Workshop"] = true,
+			["Grimrail Depot"] = true,
+			["Iron Docks"] = true,
+			["Operation: Mechagon - Junkyard"] = true,
+			["Operation: Mechagon - Workshop"] = true,
 			["Return to Karazhan: Lower"] = true,
 			["Return to Karazhan: Upper"] = true,
-			["Grimrail Depot"] = true,
-			["Iron Docks"] = true
+			["Tazavesh: So'leah's Gambit"] = true,
+			["Tazavesh: Streets of Wonder"] = true
 		}
 	}
 }

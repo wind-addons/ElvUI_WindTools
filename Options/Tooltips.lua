@@ -324,22 +324,29 @@ do
     }
 
     local dungeons = {
-        "De Other Side",
-        "Halls of Atonement",
-        "Mists of Tirna Scithe",
-        "Plaguefall",
-        "Sanguine Depths",
-        "Spires of Ascension",
+        -- "De Other Side",
+        -- "Halls of Atonement",
+        -- "Mists of Tirna Scithe",
+        -- "Plaguefall",
+        -- "Sanguine Depths",
+        -- "Spires of Ascension",
+        -- "The Necrotic Wake",
+        -- "Theater of Pain,"		
         "Tazavesh: So'leah's Gambit",
         "Tazavesh: Streets of Wonder",
-        "The Necrotic Wake",
-        "Theater of Pain"
+        "Return to Karazhan: Lower",
+        "Return to Karazhan: Upper",		
+        "Operation Mechagon: Junkyard",
+        "Operation Mechagon: Workshop",
+		"Grimrail Depot",
+        "Iron Docks"
     }
 
     local special = {
         "Shadowlands Keystone Master: Season One",
         "Shadowlands Keystone Master: Season Two",
-        "Shadowlands Keystone Master: Season Three"
+        "Shadowlands Keystone Master: Season Three",
+		"Shadowlands Keystone Master: Season Four"
     }
 
     for index, name in ipairs(raids) do

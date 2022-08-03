@@ -124,6 +124,30 @@ local locales = {
         short = L["[ABBR] Tazavesh: So'leah's Gambit"],
         full = L["Tazavesh: So'leah's Gambit"]
     },
+    ["Return to Karazhan: Lower"] = {
+        short = L["[ABBR] Return to Karazhan: Lower"],
+        full = L["Return to Karazhan: Lower"]
+    },
+    ["Return to Karazhan: Upper"] = {
+        short = L["[ABBR] Return to Karazhan: Upper"],
+        full = L["Return to Karazhan: Upper"]
+    },
+    ["Operation Mechagon: Junkyard"] = {
+        short = L["[ABBR] Operation Mechagon: Junkyard"],
+        full = L["Operation Mechagon: Junkyard"]
+    },
+    ["Operation Mechagon: Workshop"] = {
+        short = L["[ABBR] Operation Mechagon: Workshop"],
+        full = L["Operation Mechagon: Workshop"]
+    },
+    ["Grimrail Depot"] = {
+        short = L["[ABBR] Grimrail Depot"],
+        full = L["Grimrail Depot"]
+    },
+    ["Iron Docks"] = {
+        short = L["[ABBR] Iron Docks"],
+        full = L["Iron Docks"]
+    },
     ["Shadowlands Keystone Master: Season One"] = {
         short = L["[ABBR] Shadowlands Keystone Master: Season One"],
         full = L["Shadowlands Keystone Master: Season One"]
@@ -135,6 +159,10 @@ local locales = {
     ["Shadowlands Keystone Master: Season Three"] = {
         short = L["[ABBR] Shadowlands Keystone Master: Season Three"],
         full = L["Shadowlands Keystone Master: Season Three"]
+    },
+    ["Shadowlands Keystone Master: Season Four"] = {
+        short = L["[ABBR] Shadowlands Keystone Master: Season Four"],
+        full = L["Shadowlands Keystone Master: Season Four"]
     }
 }
 
@@ -296,22 +324,29 @@ local raidAchievements = {
 }
 
 local mythicKeystoneDungeons = {
-    [375] = "Mists of Tirna Scithe",
-    [376] = "The Necrotic Wake",
-    [377] = "De Other Side",
-    [378] = "Halls of Atonement",
-    [379] = "Plaguefall",
-    [380] = "Sanguine Depths",
-    [381] = "Spires of Ascension",
-    [382] = "Theater of Pain",
+    -- [375] = "Mists of Tirna Scithe",
+    -- [376] = "The Necrotic Wake",
+    -- [377] = "De Other Side",
+    -- [378] = "Halls of Atonement",
+    -- [379] = "Plaguefall",
+    -- [380] = "Sanguine Depths",
+    -- [381] = "Spires of Ascension",
+    -- [382] = "Theater of Pain",
     [391] = "Tazavesh: Streets of Wonder",
-    [392] = "Tazavesh: So'leah's Gambit"
+    [392] = "Tazavesh: So'leah's Gambit",
+	-- [???] = "Return to Karazhan: Lower",
+	-- [???] = "Return to Karazhan: Upper",
+	-- [???] = "Operation Mechagon: Junkyard",
+	-- [???] = "Operation Mechagon: Workshop",
+	-- [???] = "Grimrail Depot",
+	-- [???] = "Iron Docks"
 }
 
 local specialAchievements = {
     {14532, "Shadowlands Keystone Master: Season One"},
     {15078, "Shadowlands Keystone Master: Season Two"},
-    {15499, "Shadowlands Keystone Master: Season Three"}
+    {15499, "Shadowlands Keystone Master: Season Three"},
+	{15690, "Shadowlands Keystone Master: Season Four"}
 }
 
 local function GetLevelColoredString(level, short)

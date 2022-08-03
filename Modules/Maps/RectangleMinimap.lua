@@ -59,9 +59,8 @@ function RM:ChangeShape()
     end
 
     if MinimapPanel:IsShown() then
-        MinimapPanel:ClearAllPoints()
-        MinimapPanel:Point("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff * E.mult)
-        MinimapPanel:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff * E.mult)
+        MinimapPanel:Point("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff)
+        MinimapPanel:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff)
     end
 
     self:MMHolder_Size()

@@ -1211,6 +1211,7 @@ L["Waypoint %s has been set."] = "%s 웨이포인트가 설정되었습니다."
 L["Waypoint Parse"] = "웨이포인트 분석"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true
+L["WeakAuras Shadow"] = true
 L["Weapon Category"] = "무기 카테고리"
 L["Weekly"] = "주간"
 L["Weekly Rewards"] = "주간 보상(위대한 금고)"

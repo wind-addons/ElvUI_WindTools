@@ -1211,6 +1211,7 @@ L["Waypoint %s has been set."] = true
 L["Waypoint Parse"] = true
 L["WeakAuras"] = true
 L["WeakAuras Options"] = true
+L["WeakAuras Shadow"] = true
 L["Weapon Category"] = true
 L["Weekly"] = true
 L["Weekly Rewards"] = true

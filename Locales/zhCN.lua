@@ -1211,6 +1211,7 @@ L["Waypoint %s has been set."] = "已设置 %s 路径点."
 L["Waypoint Parse"] = "路径点解析"
 L["WeakAuras"] = true
 L["WeakAuras Options"] = "WeakAuras 设定"
+L["WeakAuras Shadow"] = "WeakAuras 阴影"
 L["Weapon Category"] = "武器分类"
 L["Weekly"] = "每周"
 L["Weekly Rewards"] = "每周奖励宝库"

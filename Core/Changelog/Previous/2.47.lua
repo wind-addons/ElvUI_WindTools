@@ -19,7 +19,7 @@ W.Changelog[247] = {
             "[Skins] Add an option to disable the shadow effect of WeakAuras skin."
         },
         ["koKR"] = {
-            "[Skins] Add an option to disable the shadow effect of WeakAuras skin."
+            "[스킨] WeakAuras 스킨의 그림자 효과를 비활성화하는 옵션을 추가합니다."
         }
     },
     IMPROVEMENT = {
@@ -42,10 +42,10 @@ W.Changelog[247] = {
             "[Progression] Support season 4 new achievements and new dungeons."
         },
         ["koKR"] = {
-            "Clean up some codes.",
-            "Sync LFM+ taint fix solution.",
-            "[Rectangle Minimap] Fix the info text position.",
-            "[Progression] Support season 4 new achievements and new dungeons."
+            "일부 코드 정리.",
+            "LFM+ 오류 수정 솔루션 동기화",
+            "[미니맵 비율 조정] 정보 텍스트 위치를 수정합니다.",
+            "[진행 상태] 시즌 4의 새로운 도전 과제와 새로운 던전을 지원합니다."
         }
     }
 }

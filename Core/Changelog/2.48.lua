@@ -15,9 +15,17 @@ W.Changelog[248] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 修复 WeakAuras 阴影."
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 修復 WeakAuras 陰影."
+        },
+        ["enUS"] = {
+            "[Skins] Fix WeakAuras shadow."
+        },
+        ["koKR"] = {
+            "[Skins] Fix WeakAuras shadow."
+        }
     }
 }

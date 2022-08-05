@@ -127,7 +127,7 @@ local function Skin_WeakAuras(f, fType)
             end
             f.icon:SetTexCoord(f.icon:GetTexCoord())
             f:CreateBackdrop()
-            if E.private.skins.weakAurasShadow then
+            if E.private.WT.skins.weakAurasShadow then
                 S:CreateBackdropShadow(f, true)
             end
             f.backdrop.Center:StripTextures()

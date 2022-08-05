@@ -25,7 +25,7 @@ W.Changelog[248] = {
             "[Skins] Fix WeakAuras shadow."
         },
         ["koKR"] = {
-            "[Skins] Fix WeakAuras shadow."
+            "[스킨] WeakAuras 그림자 수정."
         }
     }
 }

@@ -7,23 +7,29 @@
 </div>
 
 # :white_check_mark: Status
-![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/JMz5Zsk) [![](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
+
+![Publish Badge](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/JMz5Zsk) [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
 
 Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [Wago](https://addons.wago.io/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github Release](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :smiling_face_with_three_hearts: Localization
+
 [ **100% Support** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
 [ **Working on Pregress** ] Español, français, Português, Italiano
 
 # :heart: Credits
+
 Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
 [All credits](CREDITS.md)
 
 # :sweat_drops: Features
+
 ## Media Files
+
 3 fonts, 2 textures and 2 ringtones.
 
 ## Item
+
 1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.
 2. **Already Known**: Add a colored overlay to the recipes you have already learned.
 3. **Fast Loot**: Make the auto-loot more efficiently.
@@ -34,13 +40,15 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 8. **Extended Merchant Pages**: Extend the merchant frame to show more items.
 
 ## Combat
-1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more! 
+
+1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more!
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Talent Manager**: Save and change talents set with one-click.
 4. **Quick Keystone**: Put the keystone from bag automatically.
 5. **Covenant Helper**: Change the spells in action bars and the soulbind when you changing covenant.
 
 ## Map
+
 1. **Who Clicked?**: Display the name of players who clicked the minimap.
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
 3. **Minimap Buttons**: Collect all the minimap buttons to a bar.
@@ -49,12 +57,14 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 6. **Instance Difficulty**: Reskin the instance diffculty in text style.
 
 ## Quest
+
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.
 2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.
 3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.
 4. **Paragon Reputation**: Show colored reputation bars and rewards after reaching Paragon.
 
 ## Social
+
 1. **Chat Bar**: Add a bar contains channel buttons, roll, emote; Custom world channel and custom community channel is also supported.
 2. **Chat Link**: Add additional information, icons to the links.
 3. **Chat Text**: Change the role icon sets; No brackets in the name; Better abbreviation.
@@ -65,6 +75,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 8. **Smart Tab**: Use Tab to cycle the chat channel; Save the whisper target cross character.
 
 ## Announcement
+
 1. **Quest**: Detailed quest progress.
 2. **Interrupt**: Send a message after the spell interrupt; Supports pet spells.
 3. **Taunt**: Send a message after the taunt spell cast; Supports pets and monk ox statue.
@@ -76,6 +87,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 9. **Reset Instance**: Alert teammates after instance resetting.
 
 ## Tooltip
+
 1. **Icons**: Add the icon of items and spells.
 2. **Objective Progress**: Add the additional progress information of mobs.
 3. **Group Info**: Add LFG group information into tooltips.
@@ -86,11 +98,13 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 8. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
 
 ## Unit Frames
+
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
 2. **Absorb**: Customize the texture of ElvUI absorb bar, and add Blizzard style absorb spark to the end of health bar.
 3. **Role Icon**: Change the icon pack of role icons.
 
 ## Skins
+
 1. **Vignetting**: Add the shadowed border inner game interface.
 2. **Angry Keystones Skin**: Apply skins for Angry Keystones mythic plus timer.
 3. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
@@ -114,6 +128,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 21. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
+
 1. **CVars Editor**: Simple editor for changing CVars.
 2. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.
 3. **Transmog**: Add support of saving artifacts in wardrobe outfits.

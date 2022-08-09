@@ -8,23 +8,29 @@
 </div>
 
 # :white_check_mark: 狀態
-![](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/nA44TeZ) [![](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
+
+![Publish Badge](https://img.shields.io/github/workflow/status/fang2hou/ElvUI_WindTools/publish_stable) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/nA44TeZ) [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
 
 下載點: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [Wago](https://addons.wago.io/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 發布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
 # :smiling_face_with_three_hearts: 本地化
+
 [ **完整支援** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
 [ **努力改善中** ] Español, français, Português, Italiano
 
 # :heart: 鳴謝
+
 特別鳴謝 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
 [完整鳴謝名单](CREDITS.md)
 
 # :sweat_drops: 功能
+
 ## 素材
+
 3 個字型, 2 個材質以及 2 個提示音.
 
 ## 物品
+
 1. **刪除物品**: 支持點擊確認刪除, 按鍵刪除, 自動填入 Delete.
 2. **已學配方上色**: 為已學習配方添加自訂顏色以進行區別.
 3. **快速拾取**: 更加快速的自動拾取, 快到拾取框架都不出現啦~
@@ -35,6 +41,7 @@
 8. **擴展商人頁面**: 擴展一次展現的商人頁面數量.
 
 ## 戰鬥
+
 1. **團隊標記**: 添加一個標記條, 支持標記, 光柱, 開怪倒數/取消, 團隊確認以及高級戰鬥記錄開關.
 2. **戰鬥提醒**: 進出戰鬥時將會出現一個動畫, 可以自訂動畫細節, 文字等.
 3. **天賦管家**: 在天賦界面提供一個額外的可開關窗口, 支持保存和快速設定天賦配置.
@@ -42,6 +49,7 @@
 5. **誓盟助手**: 當你變更誓盟時, 修改動作條中的技能和靈魂之約.
 
 ## 地圖
+
 1. **小地圖點擊者**: 當他人點擊小地圖時, 顯示名字, 可設置戰鬥中, 文字風格等.
 2. **矩形小地圖**: 為小地圖設置不同的長短邊.
 3. **小地圖按鍵**: 添加一個條來收集小地圖圖標.
@@ -50,12 +58,14 @@
 6. **副本難度**: 美化副本難度為文字風格.
 
 ## 任務
+
 1. **任務列表**: 自訂任務追踪框架的文字風格, 排列等等!
 2. **交接**: 自動交接任務, 包括一些例如追隨者招募框架的自動化, 可自訂黑名單.
 3. **切換按鍵**: 添加一個小型條來快速切換交接任務和任務通報的開啟/關閉.
 4. **巔峰聲望**: 優化崇拜後的聲望顯示, 支持彩色聲望條, 獎勵追蹤, 箱子數量追蹤, 及多種文字格式.
 
 ## 社交
+
 1. **聊天條**: 添加一個條來幫助你快速切換頻道, 支持自訂世界頻道, 自訂社群頻道, 發送表情, 擲骰子!
 2. **聊天鏈接**: 為聊天中的物品鏈接, 技能鏈接提供快速標識, 圖標等等.
 3. **聊天文字**: 更加全面的頻道縮寫, 替換角色定位圖標, 去除方括號, 去除服務器等等.
@@ -66,6 +76,7 @@
 8. **智能 Tab**: 使用 Tab 來進行聊天頻道循環, 可設置不常用頻道, 跨帳號密語歷史等.
 
 ## 通告
+
 1. **任務**: 讓隊友知道你的任務進度, 同時自己也能看到彩色的任務追踪.
 2. **打斷**: 打斷通告, 能夠識別打斷的寵物主人, 更可自訂文字格式.
 3. **嘲諷**: 嘲諷通告, 支持群嘲, 能夠識別嘲諷的寵物主人, 可自訂文字格式.
@@ -77,6 +88,7 @@
 9. **副本重置**: 副本重置後進行喊話.
 
 ## 浮動提示
+
 1. **圖標**: 添加物品圖標到浮動提示中.
 2. **任務進度**: 添加部分任務的小怪百分比信息.
 3. **隊伍信息**: 添加尋求組隊的隊伍信息到浮動提示中.
@@ -87,11 +99,13 @@
 8. **團隊進度**: 添加各個團隊副本的進度, 特殊成就和 M+ 分數到浮動提示中.
 
 ## 單位框架
+
 1. **快速焦點**: 通過自訂鼠標按鍵和組合鍵來快速設定焦點.
 2. **吸收**: 自訂 ElvUI 單位框架的吸收條材質, 添加暴雪風格的火花效果到生命條的末尾.
 3. **職責圖標**: 自訂單位框架上的定位圖標組.
 
 ## 美化外觀
+
 1. **屏幕暗角**: 讓遊戲更加有電影的感覺!
 2. **Angry Keystones 美化**: 美化 Angry Keystones 的傳奇鑰石地城的計時條.
 3. **暴雪框架美化**: 在 ElvUI 美化皮膚之上, 進行框架和文字的美化.
@@ -115,6 +129,7 @@
 21. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
 
 ## 其他
+
 1. **CVars 編輯器**: 一些常用功能 CVars 的開關.
 2. **移動框架**: 移動各種暴雪的框架, 快速移動 ElvUI 背包, 支持記憶/清除移動位置.
 3. **塑形**: 支持神兵加入塑形套裝.

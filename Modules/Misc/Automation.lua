@@ -33,7 +33,13 @@ function AM:CONFIRM_SUMMON()
         return
     end
 
-    C_SummonInfo_ConfirmSummon()
+    E:Delay(
+        0.6,
+        function()
+            C_SummonInfo_ConfirmSummon()
+            StaticPopup_Hide("CONFIRM_SUMMON")
+        end
+    )
 end
 
 function AM:PLAYER_REGEN_ENABLED()

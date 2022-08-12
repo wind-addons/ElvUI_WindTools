@@ -41,6 +41,20 @@ function FT:Initialize()
     self.db = E.db.WT.social.filter
 
     if self.db.unblockProfanityFilter then
+        hooksecurefunc(
+            _G.HelpFrame,
+            "Show",
+            function()
+                self:Log(
+                    "info",
+                    format(
+                        L["Because of you enabled the profanity filter by %s, customer service may not accessible."],
+                        W.Title
+                    )
+                )
+            end
+        )
+
         self:RegisterEvent("LOADING_SCREEN_DISABLED")
     end
 end

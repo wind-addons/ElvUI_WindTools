@@ -1,13 +1,13 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[248] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/08/18",
     IMPORTANT = {
         ["zhCN"] = {
-            "由于暴雪一直没有修复预组建队伍相关错误, 工具箱内置了一个修复方案, 但同时这会导致无法举报活动, 目前没有任何更好的解决方案. 如果你非常执着于举报, 可以暂时停用工具箱来进行举报."
+            "由于暴雪一直没有修复预组建队伍相关错误, 工具箱内置了一个修复方案, 但同时这会导致无法举报活动, 目前没有任何更好的解决方案. 如果你非常执着于举报广告, 可以暂时停用工具箱来进行举报."
         },
         ["zhTW"] = {
-            "由於暴雪一直沒有修復預組建隊伍相關錯誤, 工具箱內置了一個修復方案, 但同時這會導致無法举报活動, 目前沒有任何更好的解決方案. 如果你非常持續的举报, 可以暫時停用工具箱來進行举报."
+            "由於暴雪一直沒有修復預組建隊伍相關錯誤, 工具箱內置了一個修復方案, 但同時這會導致無法举报活動, 目前沒有任何更好的解決方案. 如果你非常執著于举报廣告, 可以暫時停用工具箱來進行举报."
         },
         ["enUS"] = {
             "Due to the bugs in Blizzard LFG list, a fix has been applied in WindTools forcely. But the fix will cause the taint of Blizzard report system. Actaully there is no better solution for now, so if you want to report the advertisement in LFG list, just disable WindTools temporarily."
@@ -33,7 +33,7 @@ W.Changelog[248] = {
             "[美化皮肤] 修复 ElvUI 信息文字框体背景隐藏时阴影依旧显示的问题."
         },
         ["zhTW"] = {
-            "[游戏條] 新增新版本炉石的支持. 感謝 Charles Yost",
+            "[游戏條] 新增新版本爐石的支持. 感謝 Charles Yost",
             "[自動化] 自動接受召喚時將會在接受後隱藏提示框.",
             "[自動化] 自動接受召喚调整到 0.6 秒後執行.",
             "[過濾器] 在啟用解鎖過濾器功能時, 開啟客服界面將會顯示提示.",

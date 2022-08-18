@@ -130,8 +130,8 @@ function W:CheckInstalledVersion()
 end
 
 function W:GameFixing()
-    -- fix duplicated party in lfg frame
-    -- from: https://wago.io/tWVx_hIx3/4
+    -- -- fix duplicated party in lfg frame
+    -- -- from: https://wago.io/tWVx_hIx3/4
     do
         if not _G["ShowLFGRemoveDuplicates"] and not IsAddOnLoaded("LFMPlus") then
             hooksecurefunc(

@@ -335,7 +335,7 @@ function FL:UpdateFriendButton(button)
 
                 if classicVersionTable[gameAccountInfo.wowProjectID] then
                     local versionInfomation = classicVersionTable[gameAccountInfo.wowProjectID]
-                    game = game .. versionInfomation.code
+                    game = versionInfomation.code
                     local versionSuffix = versionInfomation.name and " (" .. versionInfomation.name .. ")" or ""
                     local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
                     server = (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. versionSuffix) .. "*"

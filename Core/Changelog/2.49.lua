@@ -15,9 +15,17 @@ W.Changelog[249] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[好友列表] 新增了巫妖王之怒版本图标."
+        },
+        ["zhTW"] = {
+            "[好友列表] 新增了巫妖王之怒版本圖示."
+        },
+        ["enUS"] = {
+            "[Friend List] Add the new WotLK icon."
+        },
+        ["koKR"] = {
+            "[Friend List] Add the new WotLK icon."
+        }
     }
 }

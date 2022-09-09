@@ -2,33 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
 local UF = E:GetModule("UnitFrames")
 local T = W.Modules.Tooltips
+local LFGPI = W.Utilities.LFGPlayerInfo
 
 local _G = _G
 local format = format
-local pairs = pairs
-local sort = sort
-local type = type
-local wipe = wipe
+local ipairs = ipairs
 
 local IsAddOnLoaded = IsAddOnLoaded
 local LibStub = LibStub
-
-local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
-local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
-
-local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
-
-local displayOrder = {
-    [1] = "TANK",
-    [2] = "HEALER",
-    [3] = "DAMAGER"
-}
-
-local roleText = {
-    TANK = "|cff00a8ff" .. L["Tank"] .. "|r",
-    HEALER = "|cff2ecc71" .. L["Healer"] .. "|r",
-    DAMAGER = "|cffe74c3c" .. L["DPS"] .. "|r"
-}
 
 local function GetIconString(role, mode)
     local template
@@ -47,83 +28,42 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
         return
     end
 
-    local result = C_LFGList_GetSearchResultInfo(resultID)
+    LFGPI:Update(resultID)
 
-    if not result then
-        return
-    end
-
-    local cache = {
-        TANK = {},
-        HEALER = {},
-        DAMAGER = {}
-    }
-
-    local display = {
-        TANK = false,
-        HEALER = false,
-        DAMAGER = false
-    }
-
-    -- 缓存成员信息
-    for i = 1, result.numMembers do
-        local role, class = C_LFGList_GetSearchResultMemberInfo(resultID, i)
-
-        if not display[role] then
-            display[role] = true
-        end
-
-        if not cache[role][class] then
-            cache[role][class] = 0
-        end
-
-        cache[role][class] = cache[role][class] + 1
-    end
-
-    sort(
-        cache,
-        function(a, b)
-            return displayOrder[a] > displayOrder[b]
-        end
-    )
-
-    -- 隔断标题
+    -- split line
     if config.title then
         tooltip:AddLine(" ")
         tooltip:AddLine(W.Title .. " " .. L["Party Info"])
     end
 
-    -- 紧凑模式
+    -- compact Mode
     if config.mode == "COMPACT" then
         tooltip:AddLine(" ")
     end
 
-    -- 分定位显示
-    for i = 1, #displayOrder do
-        local role = displayOrder[i]
-        local members = cache[role]
-        if members and display[role] then
-            -- 非紧凑模式下添加一个分段标题
-            if config.mode == "NORMAL" then
-                tooltip:AddLine(" ")
-                tooltip:AddLine(GetIconString(role, "NORMAL") .. " " .. roleText[role])
-            end
+    -- add info
+    local template =
+        "{{classIcon}} {{specIcon}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}" ..
+        "{{amountStart}} x {{amount}}{{amountEnd}}"
+    local data = LFGPI:GetPartyInfo(template)
 
-            for class, counter in pairs(members) do
-                local numberText = counter ~= 1 and format(" × %d", counter) or ""
-                local icon = config.mode == "COMPACT" and GetIconString(role, "COMPACT") or ""
-                local className = F.CreateClassColorString(LOCALIZED_CLASS_NAMES_MALE[class], class)
-                tooltip:AddLine(icon .. className .. numberText)
-            end
+    for order, role in ipairs(LFGPI:GetRoleOrder()) do
+        if #data[role] > 0 and config.mode == "NORMAL" then
+            tooltip:AddLine(" ")
+            tooltip:AddLine(GetIconString(role, "NORMAL") .. " " .. LFGPI.GetColoredRoleName(role))
+        end
+
+        for _, line in ipairs(data[role]) do
+            local icon = config.mode == "COMPACT" and GetIconString(role, "COMPACT") or ""
+            tooltip:AddLine(icon .. line)
         end
     end
-
-    wipe(cache)
 
     if not isMeetingStone then
         tooltip:ClearAllPoints()
         tooltip:SetPoint("TOPLEFT", _G.LFGListFrame, "TOPRIGHT", 10, 0)
     end
+
     tooltip:Show()
 end
 

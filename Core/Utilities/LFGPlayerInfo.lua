@@ -49,12 +49,20 @@ for classID = 1, 13 do
     if classFile then
         classFileToID[classFile] = classID
 
+        if not localizedSpecNameToID[classFile] then
+            localizedSpecNameToID[classFile] = {}
+        end
+
+        if not localizedSpecNameToIcon[classFile] then
+            localizedSpecNameToIcon[classFile] = {}
+        end
+
         for specIndex = 1, 4 do
             -- Druid has the max amount of specs, which is 4
             local specId, localizedSpecName, _, icon = GetSpecializationInfoForClassID(classID, specIndex)
             if specId and localizedSpecName and icon then
-                localizedSpecNameToID[localizedSpecName] = specId
-                localizedSpecNameToIcon[localizedSpecName] = icon
+                localizedSpecNameToID[classFile][localizedSpecName] = specId
+                localizedSpecNameToIcon[classFile][localizedSpecName] = icon
             end
         end
     end
@@ -206,7 +214,7 @@ function U:Conduct(template, role, class, spec, amount)
                 return ""
             end
 
-            local icon = localizedSpecNameToIcon[spec]
+            local icon = localizedSpecNameToIcon[class] and localizedSpecNameToIcon[class][spec]
 
             if not icon then
                 self:Log("warning", format("spec:%s not found in localizedSpecNameToIcon.", spec))
@@ -246,7 +254,7 @@ function U:Conduct(template, role, class, spec, amount)
                 return ""
             end
 
-            local specID = localizedSpecNameToID[spec]
+            local specID = localizedSpecNameToID[class] and localizedSpecNameToID[class][spec]
 
             if not specID then
                 self:Log("warning", format("spec:%s not found in classFileToID.", spec))

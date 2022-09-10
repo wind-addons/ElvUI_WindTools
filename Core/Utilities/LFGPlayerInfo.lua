@@ -38,6 +38,27 @@ function U.GetColoredRoleName(role)
     return coloredRoleName[role]
 end
 
+local classFileToID = {} -- { ["WARRIOR"] = 1 }
+local localizedSpecNameToID = {} -- { ["Protection"] = 73 }
+local localizedSpecNameToIcon = {} -- { ["Protection"] = "Interface\\Icons\\ability_warrior_defensivestance" }
+
+-- Scan all specs and specilizations
+for classID = 1, 13 do
+    local classFile = select(2, GetClassInfo(classID)) -- "WARRIOR"
+
+    if classFile then
+        classFileToID[classFile] = classID
+
+        for specIndex = 1, 4 do
+            local specId, localizedSpecName, _, icon = GetSpecializationInfoForClassID(classID, specIndex)
+            if specId and localizedSpecName and icon then
+                localizedSpecNameToID[localizedSpecName] = specId
+                localizedSpecNameToIcon[localizedSpecName] = icon
+            end
+        end
+    end
+end
+
 -- Cache
 U.cache = {}
 
@@ -123,21 +144,8 @@ function U:Conduct(template, role, class, spec, amount)
                 self:Log("warning", "className not found, class is not given.")
                 return ""
             end
-            return "classIcon"
-        end
-    )
 
-    -- {{specIcon}}
-    result =
-        gsub(
-        result,
-        "{{specIcon}}",
-        function(sub)
-            if not spec then
-                self:Log("warning", "specIcon not found, spec is not given.")
-                return ""
-            end
-            return "specIcon"
+            return "classIcon"
         end
     )
 
@@ -155,17 +163,87 @@ function U:Conduct(template, role, class, spec, amount)
         end
     )
 
+    -- {{classId}}
+    result =
+        gsub(
+        result,
+        "{{classId}}",
+        function(sub)
+            if not class then
+                self:Log("warning", "classId not found, class is not given.")
+                return ""
+            end
+
+            local classID = classFileToID[class]
+
+            if not classID then
+                self:Log("warning", format("class:%s not found in classFileToID.", class))
+                return ""
+            end
+
+            return classID
+        end
+    )
+
+    -- {{specIcon}}
+    result =
+        gsub(
+        result,
+        "{{specIcon:([0-9,]-)}}",
+        function(sub)
+            if not spec then
+                self:Log("warning", "specIcon not found, spec is not given.")
+                return ""
+            end
+
+            local icon = localizedSpecNameToIcon[spec]
+
+            if not icon then
+                self:Log("warning", format("spec:%s not found in localizedSpecNameToIcon.", spec))
+                return ""
+            end
+
+            local size = {strsplit(",", sub)}
+            local height = size[1] and size[1] ~= "" and tonumber(size[1]) or 14
+            local width = size[2] and size[2] ~= "" and tonumber(size[2]) or height
+
+            return F.GetIconString(icon, height, width, true)
+        end
+    )
+
     -- {{specName}}
     result =
         gsub(
         result,
         "{{specName}}",
         function(sub)
-            if not class then
+            if not spec then
                 self:Log("warning", "specName not found, spec is not given.")
                 return ""
             end
             return spec
+        end
+    )
+
+    -- {{specId}}
+    result =
+        gsub(
+        result,
+        "{{specId}}",
+        function(sub)
+            if not class then
+                self:Log("warning", "specId not found, spec is not given.")
+                return ""
+            end
+
+            local specID = localizedSpecNameToID[spec]
+
+            if not specID then
+                self:Log("warning", format("spec:%s not found in classFileToID.", spec))
+                return ""
+            end
+
+            return specID
         end
     )
 

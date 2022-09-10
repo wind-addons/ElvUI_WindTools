@@ -16,7 +16,7 @@ local function GetIconString(role, mode)
     if mode == "NORMAL" then
         template = "|T%s:14:14:0:0:64:64:8:56:8:56|t"
     elseif mode == "COMPACT" then
-        template = "|T%s:18:18:0:0:64:64:8:56:8:56|t"
+        template = "|T%s:16:16:0:0:64:64:8:56:8:56|t"
     end
 
     return format(template, UF.RoleIconTextures[role])
@@ -55,7 +55,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
 
         for _, line in ipairs(data[role]) do
             local icon = config.mode == "COMPACT" and GetIconString(role, "COMPACT") or ""
-            tooltip:AddLine(icon .. line)
+            tooltip:AddLine(icon .. " " .. line)
         end
     end
 

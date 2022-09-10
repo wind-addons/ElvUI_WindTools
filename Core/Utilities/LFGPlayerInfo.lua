@@ -107,6 +107,7 @@ function U:Conduct(template, role, class, spec, amount)
     -- This function allow you do a very simple template rendering.
     -- The syntax like a mix of React and Vue.
     -- The field between `{{` and `}}` should NOT have any space.
+    -- The {{tagStart}} and {{tagEnd}} is a tag pair like HTML tag, but it has been designed for matching latest close tag.
     -- [Sample]
     -- {{classIcon}}{{specIcon}} {{classColorStart}}{{className}}{{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}
 
@@ -172,7 +173,7 @@ function U:Conduct(template, role, class, spec, amount)
     result =
         gsub(
         result,
-        "{{classColorStart}}(.+){{classColorEnd}}",
+        "{{classColorStart}}(.-){{classColorEnd}}",
         function(sub)
             if not class then
                 self:Log("warning", "className not found, class is not given.")
@@ -186,7 +187,7 @@ function U:Conduct(template, role, class, spec, amount)
     result =
         gsub(
         result,
-        "{{amountStart}}(.+){{amountEnd}}",
+        "{{amountStart}}(.-){{amountEnd}}",
         function(sub)
             if amount <= 1 then -- should not show amount if the amount is only one
                 return ""
@@ -205,7 +206,7 @@ function U:Conduct(template, role, class, spec, amount)
     result =
         gsub(
         result,
-        "{{classColorStart}}(.+){{classColorEnd}}",
+        "{{classColorStart}}(.-){{classColorEnd}}",
         function(sub)
             if not class then
                 self:Log("warning", "className not found, class is not given.")

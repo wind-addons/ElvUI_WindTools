@@ -3,6 +3,9 @@ local LSM = E.Libs.LSM
 
 local ceil = ceil
 local format = format
+local unpack = unpack
+
+local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 
 W.Media = {
 	Icons = {},
@@ -51,14 +54,11 @@ do
 
 	function F.GetTextureStringFromTexCoord(texture, width, size, texCoord)
 		width = width or size
-		F.Developer.Print(texCoord)
-
-		local proportionality = (texCoord[4] - texCoord[3]) / (texCoord[2] - texCoord[1]) -- height / width
 
 		return format(
 			textureWithTexCoordTemplate,
 			texture,
-			ceil(width * proportionality),
+			ceil(width * (texCoord[4] - texCoord[3]) / (texCoord[2] - texCoord[1])),
 			width,
 			0,
 			0,

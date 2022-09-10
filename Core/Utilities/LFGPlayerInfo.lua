@@ -1,10 +1,16 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 
-local gsub = gsub
 local format = format
+local gsub = gsub
+local ipairs = ipairs
+local strsplit = strsplit
+local tinsert = tinsert
+local tonumber = tonumber
 
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+
+local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 -- Initialize
 W.Utilities.LFGPlayerInfo = {}
@@ -72,7 +78,7 @@ end
 U.cache = {}
 
 function U.cache:Clear()
-    for _, role in pairs(roleOrder) do
+    for _, role in ipairs(roleOrder) do
         self[role] = {
             totalAmount = 0,
             playerList = {}
@@ -332,8 +338,8 @@ function U:GetPartyInfo(template)
 
         local members = self.cache[role]
 
-        for class, numberOfPlayersSortBySpec in pairs(members.playerList) do
-            for spec, numberOfPlayers in pairs(numberOfPlayersSortBySpec) do
+        for class, numberOfPlayersSortBySpec in ipairs(members.playerList) do
+            for spec, numberOfPlayers in ipairs(numberOfPlayersSortBySpec) do
                 local result = self:Conduct(template, role, class, spec, numberOfPlayers)
                 tinsert(dataTable[role], result)
             end

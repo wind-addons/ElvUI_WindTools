@@ -42,6 +42,7 @@ local classFileToID = {} -- { ["WARRIOR"] = 1 }
 local localizedSpecNameToID = {} -- { ["Protection"] = 73 }
 local localizedSpecNameToIcon = {} -- { ["Protection"] = "Interface\\Icons\\ability_warrior_defensivestance" }
 
+
 -- Scan all specs and specilizations
 for classID = 1, 13 do
     local classFile = select(2, GetClassInfo(classID)) -- "WARRIOR"

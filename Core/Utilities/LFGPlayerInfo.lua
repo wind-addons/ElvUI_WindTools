@@ -42,15 +42,15 @@ local classFileToID = {} -- { ["WARRIOR"] = 1 }
 local localizedSpecNameToID = {} -- { ["Protection"] = 73 }
 local localizedSpecNameToIcon = {} -- { ["Protection"] = "Interface\\Icons\\ability_warrior_defensivestance" }
 
-
--- Scan all specs and specilizations
 for classID = 1, 13 do
+    -- Scan all specs and specilizations, 13 is Evoker
     local classFile = select(2, GetClassInfo(classID)) -- "WARRIOR"
 
     if classFile then
         classFileToID[classFile] = classID
 
         for specIndex = 1, 4 do
+            -- Druid has the max amount of specs, which is 4
             local specId, localizedSpecName, _, icon = GetSpecializationInfoForClassID(classID, specIndex)
             if specId and localizedSpecName and icon then
                 localizedSpecNameToID[localizedSpecName] = specId
@@ -139,14 +139,23 @@ function U:Conduct(template, role, class, spec, amount)
     result =
         gsub(
         result,
-        "{{classIcon}}",
+        "{{classIcon:([0-9,]-)}}",
         function(sub)
             if not class then
                 self:Log("warning", "className not found, class is not given.")
                 return ""
             end
 
-            return "classIcon"
+            local size = {strsplit(",", sub)}
+            local height = size[1] and size[1] ~= "" and tonumber(size[1]) or 14
+            local width = size[2] and size[2] ~= "" and tonumber(size[2]) or height
+
+            return F.GetTextureStringFromTexCoord(
+                W.Media.Textures.CLASSES,
+                width,
+                {x = 256, y = 256},
+                {F.GetClassTexCoord(class)}
+            )
         end
     )
 

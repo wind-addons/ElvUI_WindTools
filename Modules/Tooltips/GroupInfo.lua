@@ -43,7 +43,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
 
     -- add info
     local template =
-        "{{classIcon:14}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}" ..
+        "{{classIcon:18}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}" ..
         "{{amountStart}} x {{amount}}{{amountEnd}}"
     local data = LFGPI:GetPartyInfo(template)
 

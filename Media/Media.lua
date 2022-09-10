@@ -19,11 +19,22 @@ local MediaPath = "Interface/Addons/ElvUI_WindTools/Media/"
 ]]
 do
 	local cuttedIconTemplate = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
+	local cuttedIconAspectRatioTemplate = "|T%s:%d:%d:0:0:64:64:%d:%d:%d:%d|t"
 	local textureTemplate = "|T%s:%d:%d|t"
 	local aspectRatioTemplate = "|T%s:0:aspectRatio|t"
 	local s = 14
 
-	function F.GetIconString(icon, height, width)
+	function F.GetIconString(icon, height, width, aspectRatio)
+		if aspectRatio and height and height > 0 and width and width > 0 then
+			local proportionality = height / width
+			local offset = ceil((54 - 54 * proportionality) / 2)
+			if proportionality > 1 then
+				return format(cuttedIconAspectRatioTemplate, icon, height, width, 5 + offset, 59 - offset, 5, 59)
+			elseif proportionality < 1 then
+				return format(cuttedIconAspectRatioTemplate, icon, height, width, 5, 59, 5 + offset, 59 - offset)
+			end
+		end
+
 		width = width or height
 		return format(cuttedIconTemplate, icon, height or s, width or s)
 	end

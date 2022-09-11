@@ -1,8 +1,13 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.tooltips.args
 local T = W.Modules.Tooltips
+local LFGPI = W.Utilities.LFGPlayerInfo
 
 local ipairs = ipairs
+
+local cache = {
+    groupInfo = {}
+}
 
 options.desc = {
     order = 1,
@@ -175,6 +180,92 @@ options.general = {
                         NORMAL = L["Normal"],
                         COMPACT = L["Compact"]
                     }
+                },
+                betterAlign1 = {
+                    order = 4,
+                    type = "description",
+                    name = "",
+                    width = "full"
+                },
+                template = {
+                    order = 5,
+                    type = "input",
+                    name = L["Template"],
+                    desc = L["Please click the button below to read reference."],
+                    width = "full",
+                    get = function(info)
+                        return cache.groupInfo.template or E.db.WT.tooltips[info[#info - 1]].template
+                    end,
+                    set = function(info, value)
+                        cache.groupInfo.template = value
+                    end
+                },
+                resourcePage = {
+                    order = 6,
+                    type = "execute",
+                    name = F.GetWindStyleText(L["Reference"]),
+                    desc = format(
+                        "|cff00d1b2%s|r (%s)\n%s\n%s\n%s",
+                        L["Tips"],
+                        L["Editbox"],
+                        L["CTRL+A: Select All"],
+                        L["CTRL+C: Copy"],
+                        L["CTRL+V: Paste"]
+                    ),
+                    func = function()
+                        if E.global.general.locale == "zhCN" or E.global.general.locale == "zhTW" then
+                            E:StaticPopup_Show(
+                                "WINDTOOLS_EDITBOX",
+                                nil,
+                                nil,
+                                "https://github.com/fang2hou/ElvUI_WindTools/wiki/预组建队伍玩家信息"
+                            )
+                        else
+                            E:StaticPopup_Show(
+                                "WINDTOOLS_EDITBOX",
+                                nil,
+                                nil,
+                                "https://github.com/fang2hou/ElvUI_WindTools/wiki/LFG-Player-Info"
+                            )
+                        end
+                    end
+                },
+                useDefaultTemplate = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Default"],
+                    func = function(info)
+                        E.db.WT.tooltips[info[#info - 1]].template = P.tooltips[info[#info - 1]].template
+                        cache.groupInfo.template = nil
+                    end
+                },
+                applyButton = {
+                    order = 8,
+                    type = "execute",
+                    name = L["Apply"],
+                    disabled = function()
+                        return not cache.groupInfo.template
+                    end,
+                    func = function(info)
+                        E.db.WT.tooltips[info[#info - 1]].template = cache.groupInfo.template
+                    end
+                },
+                betterAlign2 = {
+                    order = 9,
+                    type = "description",
+                    name = "",
+                    width = "full"
+                },
+                previewText = {
+                    order = 10,
+                    type = "description",
+                    name = function(info)
+                        return L["Preview"] ..
+                            ": " ..
+                                LFGPI:ConductPreview(
+                                    cache.groupInfo.template or E.db.WT.tooltips[info[#info - 1]].template
+                                )
+                    end
                 }
             }
         }

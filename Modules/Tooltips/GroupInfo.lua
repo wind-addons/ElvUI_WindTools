@@ -42,10 +42,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
     end
 
     -- add info
-    local template =
-        "{{classIcon:18}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}" ..
-        "{{amountStart}} x {{amount}}{{amountEnd}}"
-    local data = LFGPI:GetPartyInfo(template)
+    local data = LFGPI:GetPartyInfo(config.template)
 
     for order, role in ipairs(LFGPI:GetRoleOrder()) do
         if #data[role] > 0 and config.mode == "NORMAL" then

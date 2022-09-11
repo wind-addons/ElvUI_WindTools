@@ -24,19 +24,23 @@ W.Changelog[249] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
-            "[鼠标提示] 队伍信息现在可以显示更多的信息.",
+            "[鼠标提示] 队伍信息现在可以显示专精信息.",
+            "[鼠标提示] 队伍信息现在支持自定义模板渲染.",
             "[好友列表] 新增了巫妖王之怒版本图标."
         },
         ["zhTW"] = {
-            "[滑鼠提示] 隊伍資訊現在可以顯示更多的資訊.",
+            "[滑鼠提示] 隊伍資訊現在可以顯示專精資訊.",
+            "[滑鼠提示] 隊伍資訊現在支援自訂模板渲染.",
             "[好友列表] 新增了巫妖王之怒版本圖示."
         },
         ["enUS"] = {
-            "[Tooltip] The tooltip of the LFG group now can show more information.",
+            "[Tooltip] The tooltip of the LFG group now can show the spec information.",
+            "[Tooltip] The tooltip of the LFG group now supports custom template rendering.",
             "[Friend List] Add the new WotLK icon."
         },
         ["koKR"] = {
             "[Tooltip] The tooltip of the LFG group now can show more information.",
+            "[Tooltip] The tooltip of the LFG group now supports custom template rendering.",
             "[Friend List] Add the new WotLK icon."
         }
     }

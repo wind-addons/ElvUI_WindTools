@@ -3,9 +3,11 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local format = format
 local gsub = gsub
 local ipairs = ipairs
+local pairs = pairs
 local strsplit = strsplit
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
 
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
@@ -145,7 +147,7 @@ function U:Conduct(template, role, class, spec, amount)
     -- The field between `{{` and `}}` should NOT have any space.
     -- The {{tagStart}} and {{tagEnd}} is a tag pair like HTML tag, but it has been designed for matching latest close tag.
     -- [Sample]
-    -- {{classIcon}}{{specIcon}} {{classColorStart}}{{className}}{{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}
+    -- {{classIcon:14}}{{specIcon:14,18}} {{classColorStart}}{{className}}{{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}
 
     local result = template
 
@@ -299,8 +301,22 @@ function U:Conduct(template, role, class, spec, amount)
                     self:Log("warning", "amount not found, amount is not given.")
                     return ""
                 end
-                return gsub(sub, "{{amount}}", amount)
+                return gsub(sub, "{{amount}}", tostring(amount))
             end
+        end
+    )
+
+    -- {{amount}}
+    result =
+        gsub(
+        result,
+        "{{amount}}",
+        function()
+            if not amount then
+                self:Log("warning", "amount not found, amount is not given.")
+                return ""
+            end
+            return tostring(amount)
         end
     )
 
@@ -322,7 +338,13 @@ function U:Conduct(template, role, class, spec, amount)
 end
 
 function U:ConductPreview(template)
-    return self:Conduct(template, "TANK", E.myclass, E.myspec, 2)
+    if not template then
+        return ""
+    end
+
+    local specName = select(2, GetSpecializationInfoForClassID(10, 1)) -- Brewmaster
+
+    return self:Conduct(template, "TANK", "MONK", specName, 2)
 end
 
 function U:GetPartyInfo(template)
@@ -338,8 +360,8 @@ function U:GetPartyInfo(template)
 
         local members = self.cache[role]
 
-        for class, numberOfPlayersSortBySpec in ipairs(members.playerList) do
-            for spec, numberOfPlayers in ipairs(numberOfPlayersSortBySpec) do
+        for class, numberOfPlayersSortBySpec in pairs(members.playerList) do
+            for spec, numberOfPlayers in pairs(numberOfPlayersSortBySpec) do
                 local result = self:Conduct(template, role, class, spec, numberOfPlayers)
                 tinsert(dataTable[role], result)
             end

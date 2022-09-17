@@ -20,7 +20,7 @@ function WS:HandleTreeGroup(widget)
 
     local db = E.private.WT.skins.widgets.treeGroupButton
 
-    if widget.CreateButton then
+    if widget.CreateButton and not widget.CreateButton_ then
         widget.CreateButton_ = widget.CreateButton
         widget.CreateButton = function(...)
             local button = widget.CreateButton_(...)

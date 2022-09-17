@@ -1,7 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local ES = E.Skins
 local S = W.Modules.Skins
-local LibDD = LibStub("LibUIDropDownMenu-4.0")
 
 local _G = _G
 

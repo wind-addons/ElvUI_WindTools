@@ -4,6 +4,9 @@ local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
+
+local CreateFrame = CreateFrame
+
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()

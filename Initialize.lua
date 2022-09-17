@@ -38,6 +38,9 @@ W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0", "AceTimer-
 W.Modules.Tooltips = W:NewModule("Tooltips", "AceHook-3.0", "AceEvent-3.0")
 W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 
+-- Utilities namespace
+W.Utilities = {}
+
 function W:Initialize()
     -- ElvUI -> WindTools -> WindTools Modules
     if not self:CheckElvUIVersion() then

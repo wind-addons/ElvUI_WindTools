@@ -1,6 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
 local FT = W:NewModule("Filter", "AceEvent-3.0")
 
+local _G = _G
+local format = format
+local hooksecurefunc = hooksecurefunc
+
 local ConsoleExec = ConsoleExec
 local GetCVar = GetCVar
 local C_BattleNet = C_BattleNet

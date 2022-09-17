@@ -901,7 +901,8 @@ P.tooltips = {
     groupInfo = {
         enable = true,
         title = true,
-        mode = "NORMAL"
+        mode = "NORMAL",
+        template = "{{classIcon:18}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}"
     }
 }
 

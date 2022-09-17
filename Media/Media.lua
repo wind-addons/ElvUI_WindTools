@@ -3,6 +3,9 @@ local LSM = E.Libs.LSM
 
 local ceil = ceil
 local format = format
+local unpack = unpack
+
+local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 
 W.Media = {
 	Icons = {},
@@ -19,11 +22,23 @@ local MediaPath = "Interface/Addons/ElvUI_WindTools/Media/"
 ]]
 do
 	local cuttedIconTemplate = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
+	local cuttedIconAspectRatioTemplate = "|T%s:%d:%d:0:0:64:64:%d:%d:%d:%d|t"
 	local textureTemplate = "|T%s:%d:%d|t"
 	local aspectRatioTemplate = "|T%s:0:aspectRatio|t"
+	local textureWithTexCoordTemplate = "|T%s:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d|t"
 	local s = 14
 
-	function F.GetIconString(icon, height, width)
+	function F.GetIconString(icon, height, width, aspectRatio)
+		if aspectRatio and height and height > 0 and width and width > 0 then
+			local proportionality = height / width
+			local offset = ceil((54 - 54 * proportionality) / 2)
+			if proportionality > 1 then
+				return format(cuttedIconAspectRatioTemplate, icon, height, width, 5 + offset, 59 - offset, 5, 59)
+			elseif proportionality < 1 then
+				return format(cuttedIconAspectRatioTemplate, icon, height, width, 5, 59, 5 + offset, 59 - offset)
+			end
+		end
+
 		width = width or height
 		return format(cuttedIconTemplate, icon, height or s, width or s)
 	end
@@ -35,6 +50,25 @@ do
 			width = width or height
 			return format(textureTemplate, texture, height or s, width or s)
 		end
+	end
+
+	function F.GetTextureStringFromTexCoord(texture, width, size, texCoord)
+		width = width or size
+
+		return format(
+			textureWithTexCoordTemplate,
+			texture,
+			ceil(width * (texCoord[4] - texCoord[3]) / (texCoord[2] - texCoord[1])),
+			width,
+			0,
+			0,
+			size.x,
+			size.y,
+			texCoord[1] * size.x,
+			texCoord[2] * size.x,
+			texCoord[3] * size.y,
+			texCoord[4] * size.y
+		)
 	end
 end
 
@@ -140,6 +174,14 @@ do
 	end
 
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")
+end
+
+do
+	function F.GetClassTexCoord(role)
+		return unpack(CLASS_ICON_TCOORDS[role])
+	end
+
+	AddMedia("CLASSES", "UI-CLASSES-CIRCLES.blp", "Textures")
 end
 
 AddMedia("vignetting", "Vignetting.tga", "Textures")

@@ -4,11 +4,13 @@ local format = format
 local gsub = gsub
 local ipairs = ipairs
 local pairs = pairs
+local select = select
 local strsplit = strsplit
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 
+local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 

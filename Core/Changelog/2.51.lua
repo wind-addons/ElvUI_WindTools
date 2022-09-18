@@ -23,9 +23,17 @@ W.Changelog[251] = {
         ["koKR"] = {}
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhCN"] = {
+            "[美化皮肤] 修复了滑块皮肤与 ElvUI 开发版本不兼容的问题.",
+        },
+        ["zhTW"] = {
+            "[美化皮膚] 修復了滑塊皮膚與 ElvUI 開發版本不兼容的問題.",
+        },
+        ["enUS"] = {
+            "[Skins] Fix the slider skin that not compatible with ElvUI dev version.",
+        },
+        ["koKR"] = {
+            "[Skins] Fix the slider skin that not compatible with ElvUI dev version.",
+        }
     }
 }

@@ -187,6 +187,7 @@ function U:Conduct(template, role, class, spec, amount)
                 self:Log("warning", "className not found, class is not given.")
                 return ""
             end
+
             return LOCALIZED_CLASS_NAMES_MALE[class]
         end
     )
@@ -204,12 +205,7 @@ function U:Conduct(template, role, class, spec, amount)
 
             local classID = classFileToID[class]
 
-            if not classID then
-                self:Log("warning", format("class:%s not found in classFileToID.", class))
-                return ""
-            end
-
-            return classID
+            return classID or ""
         end
     )
 
@@ -224,18 +220,17 @@ function U:Conduct(template, role, class, spec, amount)
                 return ""
             end
 
-            local icon = localizedSpecNameToIcon[class] and localizedSpecNameToIcon[class][spec]
-
-            if not icon then
-                self:Log("warning", format("spec:%s not found in localizedSpecNameToIcon.", spec))
+            if spec == "Initial" then
                 return ""
             end
+
+            local icon = localizedSpecNameToIcon[class] and localizedSpecNameToIcon[class][spec]
 
             local size = {strsplit(",", sub)}
             local height = size[1] and size[1] ~= "" and tonumber(size[1]) or 14
             local width = size[2] and size[2] ~= "" and tonumber(size[2]) or height
 
-            return F.GetIconString(icon, height, width, true)
+            return icon and F.GetIconString(icon, height, width, true) or ""
         end
     )
 
@@ -249,6 +244,7 @@ function U:Conduct(template, role, class, spec, amount)
                 self:Log("warning", "specName not found, spec is not given.")
                 return ""
             end
+
             return spec
         end
     )
@@ -266,12 +262,7 @@ function U:Conduct(template, role, class, spec, amount)
 
             local specID = localizedSpecNameToID[class] and localizedSpecNameToID[class][spec]
 
-            if not specID then
-                self:Log("warning", format("spec:%s not found in classFileToID.", spec))
-                return ""
-            end
-
-            return specID
+            return specID or ""
         end
     )
 
@@ -285,6 +276,7 @@ function U:Conduct(template, role, class, spec, amount)
                 self:Log("warning", "className not found, class is not given.")
                 return ""
             end
+
             return F.CreateClassColorString(sub, class)
         end
     )

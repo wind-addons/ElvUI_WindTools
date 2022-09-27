@@ -6,6 +6,7 @@ local MF = W.Modules.MoveFrames
 local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
 local AM = W:GetModule("Automation")
+local SA = W:GetModule("SpellActivationAlert")
 
 local format = format
 local select = select
@@ -1555,6 +1556,85 @@ options.lfgList = {
                     step = 0.01
                 }
             }
+        }
+    }
+}
+options.spellActivationAlert = {
+    order = 9,
+    type = "group",
+    name = L["Spell Activation Alert"],
+    get = function(info)
+        return E.db.WT.misc.spellActivationAlert[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc.spellActivationAlert[info[#info]] = value
+        SA:Update()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Spell activation alert frame customizations."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        visability = {
+            order = 3,
+            type = "toggle",
+            name = L["Visablity"],
+            desc = L["Enable/Disable the spell activation alert frame."],
+            get = function(info)
+                return C_CVar_GetCVarBool("displaySpellActivationOverlays")
+            end,
+            set = function(info, value)
+                C_CVar_SetCVar("displaySpellActivationOverlays", value and "1" or "0")
+            end
+        },
+        opacity = {
+            order = 4,
+            type = "range",
+            name = L["Opacity"],
+            desc = L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"],
+            get = function(info)
+                return tonumber(C_CVar_GetCVar("spellActivationOverlayOpacity"))
+            end,
+            set = function(info, value)
+                C_CVar_SetCVar("spellActivationOverlayOpacity", value)
+                SA:Update()
+                SA:Preview()
+            end,
+            min = 0,
+            max = 1,
+            step = 0.01
+        },
+        scale = {
+            order = 5,
+            type = "range",
+            name = L["Scale"],
+            desc = L["Set the scale of the spell activation alert frame."],
+            min = 0.1,
+            max = 5,
+            step = 0.01,
+            disabled = function()
+                return not E.db.WT.misc.spellAlert.enable
+            end,
+            set = function(info, value)
+                E.db.WT.misc.spellActivationAlert[info[#info]] = value
+                SA:Update()
+                SA:Preview()
+            end,
         }
     }
 }

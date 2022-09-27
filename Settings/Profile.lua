@@ -923,6 +923,10 @@ P.misc = {
     disableTalkingHead = false,
     hideCrafter = false,
     noLootPanel = false,
+    spellActivationAlert = {
+        enable = false,
+        scale = 1
+    },
     gameBar = {
         enable = true,
         mouseOver = false,

@@ -1843,6 +1843,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                spellActivationAlert = {
+                    order = 8,
+                    type = "execute",
+                    name = L["Spell Activation Alert"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Spell Activation Alert"],
+                            nil,
+                            function()
+                                E.db.WT.misc.spellActivationAlert = P.misc.spellActivationAlert
+                            end
+                        )
+                    end
                 }
             }
         },

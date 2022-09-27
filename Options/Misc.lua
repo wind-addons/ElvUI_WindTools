@@ -1590,10 +1590,10 @@ options.spellActivationAlert = {
             type = "toggle",
             name = L["Enable"]
         },
-        visability = {
+        visibility = {
             order = 3,
             type = "toggle",
-            name = L["Visablity"],
+            name = L["Visibility"],
             desc = L["Enable/Disable the spell activation alert frame."],
             get = function(info)
                 return C_CVar_GetCVarBool("displaySpellActivationOverlays")

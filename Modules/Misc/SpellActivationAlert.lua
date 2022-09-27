@@ -46,7 +46,7 @@ function SA:Preview()
     for position, data in pairs(examples) do
         SpellActivationOverlay_ShowOverlay(
             _G.SpellActivationOverlayFrame,
-            151046,
+            123986,
             data[3],
             position,
             1,

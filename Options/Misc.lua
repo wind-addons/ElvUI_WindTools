@@ -1600,7 +1600,10 @@ options.spellActivationAlert = {
             end,
             set = function(info, value)
                 C_CVar_SetCVar("displaySpellActivationOverlays", value and "1" or "0")
-            end
+            end,
+            disabled = function()
+                return not E.db.WT.misc.spellActivationAlert.enable
+            end,
         },
         opacity = {
             order = 4,
@@ -1617,7 +1620,10 @@ options.spellActivationAlert = {
             end,
             min = 0,
             max = 1,
-            step = 0.01
+            step = 0.01,
+            disabled = function()
+                return not E.db.WT.misc.spellActivationAlert.enable
+            end,
         },
         scale = {
             order = 5,
@@ -1628,7 +1634,7 @@ options.spellActivationAlert = {
             max = 5,
             step = 0.01,
             disabled = function()
-                return not E.db.WT.misc.spellAlert.enable
+                return not E.db.WT.misc.spellActivationAlert.enable
             end,
             set = function(info, value)
                 E.db.WT.misc.spellActivationAlert[info[#info]] = value

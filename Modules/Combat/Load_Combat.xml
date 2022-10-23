@@ -3,5 +3,4 @@
 	<Script file='CovenantHelper.lua'/>
 	<Script file='QuickKeystone.lua'/>
 	<Script file='RaidMarkers.lua'/>
-	<Script file='TalentManager.lua'/>
 </Ui>

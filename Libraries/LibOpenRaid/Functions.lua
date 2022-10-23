@@ -138,7 +138,7 @@ function openRaidLib.GetUnitID(playerName)
 end
 
 
-local filterStringToCooldownType = {
+local filterStringToCooldownType = { --report: "filterStringToCooldownType doesn't include the new filters."
     ["defensive-raid"] = CONST_COOLDOWN_TYPE_DEFENSIVE_RAID,
     ["defensive-target"] = CONST_COOLDOWN_TYPE_DEFENSIVE_TARGET,
     ["defensive-personal"] = CONST_COOLDOWN_TYPE_DEFENSIVE_PERSONAL,
@@ -147,13 +147,15 @@ local filterStringToCooldownType = {
     ["interrupt"] = CONST_COOLDOWN_TYPE_INTERRUPT,
 }
 
-function openRaidLib.CooldownManager.DoesSpellPassFilter(spellId, filters)
+function openRaidLib.CooldownManager.DoesSpellPassFilters(spellId, filters)
     local allCooldownsData = LIB_OPEN_RAID_COOLDOWNS_INFO
     local cooldownData = allCooldownsData[spellId]
     if (cooldownData) then
         for filter in filters:gmatch("([^,%s]+)") do
             local cooldownType = filterStringToCooldownType[filter]
             if (cooldownData.type == cooldownType) then
+                return true
+            elseif (cooldownData[filter]) then --custom filter
                 return true
             end
         end
@@ -175,12 +177,49 @@ local getCooldownsForFilter = function(unitName, allCooldowns, unitDataFilteredC
 
         for spellId, cooldownInfo in pairs(allCooldowns) do
             local cooldownData = allCooldownsData[spellId]
-            if (cooldownData and cooldownData.type == filterStringToCooldownType[filter]) then
-                filterTable[spellId] = cooldownInfo
+            if (cooldownData) then
+                if (cooldownData.type == filterStringToCooldownType[filter]) then
+                    filterTable[spellId] = cooldownInfo
+
+                elseif (cooldownData[filter]) then --custom filter
+                    filterTable[spellId] = cooldownInfo
+                end
             end
         end
     end
     return filterTable
+end
+
+function openRaidLib.AddCooldownFilter(filterName, spells)
+    --integrity check
+    if (type(filterName) ~= "string") then
+        openRaidLib.DiagnosticError("Usage: openRaidLib.AddFilter(string: filterName, table: spells)", debugstack())
+        return false
+    end
+
+    if (type(spells) ~= "table") then
+        openRaidLib.DiagnosticError("Usage: openRaidLib.AddFilter(string: filterName, table: spells)", debugstack())
+        return false
+    end
+
+    --clear previous filter spell table of the same name
+    for spellId, cooldownData in pairs(LIB_OPEN_RAID_COOLDOWNS_INFO) do
+        cooldownData[filterName] = nil
+    end
+
+    local allCooldownsData = LIB_OPEN_RAID_COOLDOWNS_INFO
+    for spellIndex, spellId in ipairs(spells) do
+        local cooldownData = allCooldownsData[spellId]
+        cooldownData[filterName] = true
+    end
+
+    --tag all cache filters as dirt
+    local allUnitsCooldowns = openRaidLib.GetAllUnitsCooldown()
+    for unitName in pairs(allUnitsCooldowns) do
+        openRaidLib.CooldownManager.NeedRebuildFilters[unitName] = true
+    end
+
+    return true
 end
 
 --@allCooldowns: all cooldowns sent by an unit, {[spellId] = cooldownInfo}
@@ -216,4 +255,48 @@ function openRaidLib.FilterCooldowns(unitName, allCooldowns, filters)
     end
 
     return resultFilters
+end
+
+--use to check if a spell is a flask buff, return a table containing .tier{}
+function openRaidLib.GetFlaskInfoBySpellId(spellId)
+    return LIB_OPEN_RAID_FLASK_BUFF[spellId]
+end
+
+--return a number indicating the flask tier, if the aura isn't a flask return nil
+function openRaidLib.GetFlaskTierFromAura(auraInfo)
+    local flaskTable = openRaidLib.GetFlaskInfoBySpellId(auraInfo.spellId)
+    if (flaskTable) then
+        local points = auraInfo.points
+        if (points) then
+            for i = 1, #points do
+                local flaskTier = flaskTable.tier[points[i]]
+                if (flaskTier) then
+                    return flaskTier
+                end
+            end
+        end
+    end
+    return nil
+end
+
+--use to check if a spell is a food buff, return a table containing .tier{} .status{} .localized{}
+function openRaidLib.GetFoodInfoBySpellId(spellId)
+    return LIB_OPEN_RAID_FOOD_BUFF[spellId]
+end
+
+--return a number indicating the food tier, if the aura isn't a food return nil
+function openRaidLib.GetFoodTierFromAura(auraInfo)
+    local foodTable = openRaidLib.GetFoodInfoBySpellId(auraInfo.spellId)
+    if (foodTable) then
+        local points = auraInfo.points
+        if (points) then
+            for i = 1, #points do
+                local foodTier = foodTable.tier[points[i]]
+                if (foodTier) then
+                    return foodTier
+                end
+            end
+        end
+    end
+    return nil
 end

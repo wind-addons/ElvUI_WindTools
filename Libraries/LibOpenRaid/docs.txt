@@ -48,6 +48,15 @@ local isReady, normalizedPercent, timeLeft, charges, minValue, maxValue, current
 --by using a cooldown info
 local isReady, normalizedPercent, timeLeft, charges, minValue, maxValue, currentValue, cooldownDuration = openRaidLib.GetCooldownStatusFromCooldownInfo(cooldownInfo)
 
+--add spells to a custom filter
+--to change the spells in the filter just call it again with different spells, spells not included in the new table are removed from the filter
+--to remove the filter, call it with an empty table
+@filterName: any string containing alphanumeric characters
+@spells: a table containing spellIds {spellId, spellId, spellId, ...}
+openRaidLib.AddCooldownFilter(filterName, spells)
+
+--request information about a spell for all units in the raid, units which has this cooldown will report back with a "CooldownUpdate" event
+openRaidLib.RequestCooldownInfo(spellId)
 
 EQUIPMENT:
 local allPlayersGear = openRaidLib.GetAllUnitsGear()
@@ -129,6 +138,20 @@ local requestSent = openRaidLib.RequestKeystoneDataFromParty()
 --request to players in your raid to send their keystone information
 --this call fails if not in a raid group
 local requestSent = openRaidLib.RequestKeystoneDataFromRaid()
+
+
+FLASK and FOOD buffs
+--@spellId: a regular spellId
+local flaskInfo = openRaidLib.GetFlaskInfoBySpellId(spellId)
+
+--@auraInfo: UnitAuraInfo -> https://wowpedia.fandom.com/wiki/Struct_UnitAuraInfo see C_UnitAuras.GetAuraDataBySlot()
+local flaskTier = openRaidLib.GetFlaskTierFromAura(auraInfo)
+
+--@spellId: a regular spellId
+local foodInfo = openRaidLib.GetFoodInfoBySpellId(spellId)
+
+--@auraInfo: UnitAuraInfo -> https://wowpedia.fandom.com/wiki/Struct_UnitAuraInfo see C_UnitAuras.GetAuraDataBySlot()
+local foodTier = openRaidLib.GetFoodTierFromAura(auraInfo)
 
 
 Callbacks:
@@ -258,7 +281,7 @@ openRaidLib.RegisterCallback(MyAddonObject, "CooldownRemoved", "OnUnitLostCooldo
 ===================================================================================================================================
 
 function MyAddonObject.OnCooldownListWipe(allUnitsCooldowns)
-    --print ("is nil:", next(allUnitsCooldowns))
+    --print("is nil:", next(allUnitsCooldowns))
 end
 
 --registering the callback:
@@ -280,10 +303,10 @@ function MyAddonObject.OnGearUpdate(unitId, unitGear, allUnitsGear)
     local noEnchantTable = unitGear.noEnchants
     local noGemsTable = unitGear.noGems
 
-    for index, slotIdWithoutEnchant in ipairs (noEnchantTable) do
+    for index, slotIdWithoutEnchant in ipairs(noEnchantTable) do
     end
 
-    for index, slotIdWithEmptyGemSocket in ipairs (noGemsTable) do
+    for index, slotIdWithEmptyGemSocket in ipairs(noGemsTable) do
     end
 end
 
@@ -306,7 +329,7 @@ openRaidLib.RegisterCallback(MyAddonObject, "GearDurabilityUpdate", "OnGearDurab
 ===================================================================================================================================
 
 function MyAddonObject.OnGearListWiped(allUnitsGear)
-    --print ("is nil:", next(allUnitsGear))
+    --print("is nil:", next(allUnitsGear))
 end
 
 --registering the callback:

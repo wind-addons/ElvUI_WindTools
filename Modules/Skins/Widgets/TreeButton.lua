@@ -45,9 +45,14 @@ function WS:HandleTreeGroup(widget)
             end
 
             if db.backdrop.enable then
-                -- Create background
+                -- Clear original highlight texture
                 button:SetHighlightTexture("")
+                if button.highlight then
+                    button.highlight:SetTexture("")
+                    button.highlight:Hide()
+                end
 
+                -- Create background
                 local bg = button:CreateTexture()
                 bg:SetInside(button, 2, 0)
                 bg:SetAlpha(0)

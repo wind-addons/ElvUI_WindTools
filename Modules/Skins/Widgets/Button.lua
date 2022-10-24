@@ -57,8 +57,14 @@ function WS:HandleButton(_, button)
 
         self:SecureHookScript(button, "OnEnter", button.windAnimation.onEnter)
         self:SecureHookScript(button, "OnLeave", button.windAnimation.onLeave)
-        self:SecureHook(button, "Disable", button.windAnimation.onStatusChange)
-        self:SecureHook(button, "Enable", button.windAnimation.onStatusChange)
+
+        if button.Disable then
+            self:SecureHook(button, "Disable", button.windAnimation.onStatusChange)
+        end
+
+        if button.Enable then
+            self:SecureHook(button, "Enable", button.windAnimation.onStatusChange)
+        end
 
         -- Avoid the hook is flushed
         self:SecureHook(

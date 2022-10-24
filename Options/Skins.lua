@@ -482,6 +482,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Chromie Time"]
         },
+        classTalent = {
+            order = 10,
+            type = "toggle",
+            name = L["Class Talent"]
+        },
         collections = {
             order = 10,
             type = "toggle",
@@ -696,11 +701,6 @@ options.blizzard = {
             order = 10,
             type = "toggle",
             name = L["Subscription Interstitial"]
-        },
-        talent = {
-            order = 10,
-            type = "toggle",
-            name = L["Talents"]
         },
         talkingHead = {
             order = 10,

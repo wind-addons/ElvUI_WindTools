@@ -81,8 +81,8 @@ local moveButtons = {}
 
 do
 	local modified = false
-	function MB:UpdateGarrisonMinimapIcon(icon)
-		icon = icon or _G.GarrisonLandingPageMinimapButton
+	function MB:UpdateExpansionLandingPageMinimapIcon(icon)
+		icon = icon or _G.ExpansionLandingPageMinimapButton
 
 		if not icon then
 			return
@@ -120,14 +120,14 @@ do
 end
 
 do
-	local originalFunction = EM.HandleGarrisonButton
-	function EM:HandleGarrisonButton()
-		local icon = _G.GarrisonLandingPageMinimapButton
+	local originalFunction = EM.HandleExpansionButton
+	function EM:HandleExpansionButton()
+		local icon = _G.ExpansionLandingPageMinimapButton
 
 		if not icon or not icon.isWindMinimapButton or InCombatLockdown() then
 			return originalFunction(self)
 		else
-			return MB:UpdateGarrisonMinimapIcon(icon)
+			return MB:UpdateExpansionLandingPageMinimapIcon(icon)
 		end
 	end
 end
@@ -185,9 +185,7 @@ function MB:SetButtonMouseOver(button, frame, rawhook)
 end
 
 function MB:SkinButton(frame)
-	if not self.db.calendar then
-		tinsert(IgnoreList.full, "GameTimeFrame")
-	end
+	tinsert(IgnoreList.full, "GameTimeFrame")
 
 	if frame == nil or frame:GetName() == nil or not frame:IsVisible() then
 		return
@@ -237,23 +235,23 @@ function MB:SkinButton(frame)
 		end
 	end
 
-	if name ~= "GarrisonLandingPageMinimapButton" and tmp ~= 2 then
-		frame:SetPushedTexture(nil)
-		frame:SetDisabledTexture(nil)
-		frame:SetHighlightTexture(nil)
+	if name ~= "ExpansionLandingPageMinimapButton" and tmp ~= 2 then
+		frame:SetPushedTexture("")
+		frame:SetDisabledTexture("")
+		frame:SetHighlightTexture("")
 	elseif name == "DBMMinimapButton" then
 		frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
 	elseif name == "SmartBuff_MiniMapButton" then
 		frame:SetNormalTexture(select(3, GetSpellInfo(12051)))
-	elseif name == "GarrisonLandingPageMinimapButton" and self.db.garrison then
+	elseif name == "ExpansionLandingPageMinimapButton" and self.db.garrison then
 		if not frame.isWindMinimapButton then
 			frame.isWindMinimapButton = true
-			self:UpdateGarrisonMinimapIcon(_G.GarrisonLandingPageMinimapButton)
+			self:UpdateExpansionLandingPageMinimapIcon(_G.ExpansionLandingPageMinimapButton)
 		end
 	elseif name == "GRM_MinimapButton" then
 		frame.GRM_MinimapButtonBorder:Hide()
-		frame:SetPushedTexture(nil)
-		frame:SetHighlightTexture(nil)
+		frame:SetPushedTexture("")
+		frame:SetHighlightTexture("")
 		frame.SetPushedTexture = E.noop
 		frame.SetHighlightTexture = E.noop
 		if frame:HasScript("OnEnter") then
@@ -284,12 +282,7 @@ function MB:SkinButton(frame)
 
 			frame.original = original
 
-			if name == "GameTimeFrame" and region:IsObjectType("FontString") then
-				region:SetDrawLayer("ARTWORK")
-				region:SetParent(frame)
-				frame.windToday = region
-			end
-
+			-- TODO: Handling calendar
 			if region:IsObjectType("Texture") then
 				local t = region:GetTexture()
 
@@ -314,35 +307,7 @@ function MB:SkinButton(frame)
 					region:ClearAllPoints()
 					region:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -2)
 					region:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
-
 					region:SetDrawLayer("ARTWORK")
-					if (name == "GameTimeFrame") then
-						if not frame.windTex then
-							local tex = frame:CreateTexture()
-							tex:SetTexture(W.Media.Icons.calendar)
-							tex:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -2)
-							tex:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
-							frame.windTex = tex
-						end
-
-						if (region:GetName() == "GameTimeCalendarInvitesTexture") then
-							region:SetTexCoord(0.03125, 0.6484375, 0.03125, 0.8671875)
-							region:SetDrawLayer("ARTWORK", 1)
-						elseif (region:GetName() == "GameTimeCalendarInvitesGlow") then
-							region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-						elseif (region:GetName() == "GameTimeCalendarEventAlarmTexture") then
-							region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-						elseif (region:GetName() == "GameTimeTexture") then
-							region:SetTexCoord(0.0, 0.390625, 0.0, 0.78125)
-						else
-							region:SetTexCoord(0.0, 0.390625, 0.0, 0.78125)
-							if not frame.windTex or frame.windTex ~= region then
-								if not frame.backdrop or frame.backdrop ~= region then
-									region:SetTexture(nil)
-								end
-							end
-						end
-					end
 
 					if (name == "PS_MinimapButton") then
 						region.SetPoint = E.noop
@@ -538,8 +503,8 @@ function MB:SkinMinimapButtons()
 		self:SkinButton(child)
 	end
 
-	if self.db.garrison then
-		self:SkinButton(_G.GarrisonLandingPageMinimapButton)
+	if self.db.expansionLandingPage then
+		self:SkinButton(_G.ExpansionLandingPageMinimapButton)
 	end
 
 	self:UpdateLayout()
@@ -581,7 +546,7 @@ function MB:CreateFrames()
 	end
 
 	local frame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
-	frame:SetPoint("TOPRIGHT", _G.MMHolder, "BOTTOMRIGHT", 0, -5)
+	frame:SetPoint("TOPRIGHT", EM.holder, "BOTTOMRIGHT", 0, -5)
 	frame:SetFrameStrata("BACKGROUND")
 	self.barAnchor = frame
 

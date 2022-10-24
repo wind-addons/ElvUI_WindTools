@@ -65,8 +65,8 @@ V.maps = {
         spacing = 2,
         inverseDirection = false,
         orientation = "HORIZONTAL",
-        calendar = false,
-        garrison = false
+        -- calendar = false,
+        expansionLandingPage = false
     }
 }
 

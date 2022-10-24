@@ -652,17 +652,18 @@ options.minimapButtons = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
-                calendar = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Calendar"],
-                    desc = L["Add calendar button to the bar."]
-                },
-                garrison = {
+                -- calendar = {
+                --     order = 1,
+                --     type = "toggle",
+                --     name = L["Calendar"],
+                --     desc = L["Add calendar button to the bar."]
+                -- },
+                expansionLandingPage = {
                     order = 2,
                     type = "toggle",
-                    name = L["Garrison"],
-                    desc = L["Add garrison button to the bar."]
+                    name = L["Expansion Landing Page"],
+                    desc = L["Add expansion landing page (ex. garrison) to the bar."],
+                    width = 2
                 }
             }
         }

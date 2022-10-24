@@ -12,7 +12,6 @@ local IsInGuild = IsInGuild
 local LoadAddOn = LoadAddOn
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 local ShowUIPanel = ShowUIPanel
-local TalentFrame_LoadUI = TalentFrame_LoadUI
 local ToggleAchievementFrame = ToggleAchievementFrame
 local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
@@ -22,6 +21,7 @@ local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleGuildFinder = ToggleGuildFinder
 local ToggleGuildFrame = ToggleGuildFrame
 local ToggleHelpFrame = ToggleHelpFrame
+local ToggleTalentFrame = ToggleTalentFrame
 
 local MAINMENU_BUTTON = MAINMENU_BUTTON
 
@@ -46,10 +46,7 @@ local microMenu = {
 	{
 		text = TALENTS_BUTTON,
 		func = function()
-			if (not _G.PlayerTalentFrame) then
-				TalentFrame_LoadUI()
-			end
-			ShowUIPanel(_G.PlayerTalentFrame)
+			ToggleTalentFrame()
 		end,
 		notCheckable = true
 	},

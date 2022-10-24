@@ -647,6 +647,16 @@ options.blizzard = {
             type = "toggle",
             name = L["Pet Battle"]
         },
+        playerChoice = {
+            order = 10,
+            type = "toggle",
+            name = L["Player Choice"]
+        },
+        professions = {
+            order = 10,
+            type = "toggle",
+            name = L["Professions"]
+        },
         quest = {
             order = 10,
             type = "toggle",
@@ -721,11 +731,6 @@ options.blizzard = {
             order = 10,
             type = "toggle",
             name = L["Trade"]
-        },
-        tradeSkill = {
-            order = 10,
-            type = "toggle",
-            name = L["Trade Skill"]
         },
         trainer = {
             order = 10,

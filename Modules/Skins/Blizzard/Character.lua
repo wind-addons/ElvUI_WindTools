@@ -8,7 +8,7 @@ function S:CharacterFrame()
         return
     end
 
-    -- 角色面板
+    -- Character
     self:CreateShadow(_G.CharacterFrame)
     self:CreateShadow(_G.GearManagerDialogPopup)
     self:CreateShadow(_G.EquipmentFlyoutFrameButtons)
@@ -16,19 +16,21 @@ function S:CharacterFrame()
         self:ReskinTab(_G["CharacterFrameTab" .. i])
     end
 
-    -- 代币窗口
+    -- Token
     self:CreateShadow(_G.TokenFramePopup)
 
-    -- 去除人物模型背景
-    local CharacterModelFrame = _G.CharacterModelFrame
-    CharacterModelFrame:DisableDrawLayer("BACKGROUND")
-    CharacterModelFrame:DisableDrawLayer("BORDER")
-    CharacterModelFrame:DisableDrawLayer("OVERLAY")
-    if CharacterModelFrame.backdrop then
-        CharacterModelFrame.backdrop:Kill()
+    -- Remove the background
+    local modelScene = _G.CharacterModelScene
+    modelScene.BackgroundTopLeft:Hide()
+    modelScene.BackgroundTopRight:Hide()
+    modelScene.BackgroundBotLeft:Hide()
+    modelScene.BackgroundBotRight:Hide()
+    modelScene.BackgroundOverlay:Hide()
+    if modelScene.backdrop then
+        modelScene.backdrop:Kill()
     end
 
-    -- 声望
+    -- Reputation
     self:CreateShadow(_G.ReputationDetailFrame)
 end
 

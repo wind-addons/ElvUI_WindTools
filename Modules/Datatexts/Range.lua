@@ -38,7 +38,7 @@ local function OnUpdate(self, t)
 		curMinRange = nil
 		curMaxRange = nil
 	end
-	
+
 	if curMinRange and curMaxRange then
 		self.text:SetFormattedText(displayString, L["Distance"], curMinRange, curMaxRange)
 	else

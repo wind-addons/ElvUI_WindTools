@@ -232,7 +232,7 @@ function S:SkinLootAlert(frame)
     F.SetFontOutline(frame.Label)
 
     if frame.Label and frame.Label.GetNumPoints and frame.Label:GetNumPoints() == 1 then
-        local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(0)
+        local point, relativeTo, relativePoint, x, y = frame.Label:GetPoint(1)
         frame.Label:ClearAllPoints()
         frame.Label:SetPoint(point, relativeTo, relativePoint, x + 1, y - 5)
     end

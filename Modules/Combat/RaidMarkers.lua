@@ -335,7 +335,7 @@ function RM:CreateButtons()
 			end
 		end
 
-		button:RegisterForClicks("AnyDown")
+		button:RegisterForClicks("AnyUp")
 
 		-- 鼠标提示
 		local tooltipText = ""
@@ -417,9 +417,11 @@ function RM:CreateButtons()
 					animGroup:Stop()
 					tex.__fromScale = currentScale
 					tex.__toScale = RM.db.buttonAnimationScale
-					scaleAnim:SetFromScale(currentScale, currentScale)
-					scaleAnim:SetToScale(RM.db.buttonAnimationScale, RM.db.buttonAnimationScale)
-					scaleAnim:SetDuration((RM.db.buttonAnimationScale - currentScale) / (RM.db.buttonAnimationScale - 1) * RM.db.buttonAnimationDuration)
+					scaleAnim:SetScaleFrom(currentScale, currentScale)
+					scaleAnim:SetScaleTo(RM.db.buttonAnimationScale, RM.db.buttonAnimationScale)
+					scaleAnim:SetDuration(
+						(RM.db.buttonAnimationScale - currentScale) / (RM.db.buttonAnimationScale - 1) * RM.db.buttonAnimationDuration
+					)
 					animGroup:Play()
 				end
 
@@ -446,8 +448,8 @@ function RM:CreateButtons()
 					animGroup:Stop()
 					tex.__fromScale = currentScale
 					tex.__toScale = 1
-					scaleAnim:SetFromScale(currentScale, currentScale)
-					scaleAnim:SetToScale(1, 1)
+					scaleAnim:SetScaleFrom(currentScale, currentScale)
+					scaleAnim:SetScaleTo(1, 1)
 					scaleAnim:SetDuration(RM.db.buttonAnimationDuration * (currentScale - 1) / (RM.db.buttonAnimationScale - 1))
 					animGroup:Play()
 				end

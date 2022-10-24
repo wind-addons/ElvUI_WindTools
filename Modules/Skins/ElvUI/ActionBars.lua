@@ -4,8 +4,8 @@ local AB = E.ActionBars
 
 local _G = _G
 local pairs = pairs
-local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
-local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
+local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS or 10
+local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS or 10
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 
 function S:ElvUI_ActionBar_SkinButton(button, useBackdrop)

@@ -59,14 +59,14 @@ function S:Blizzard_EncounterJournal()
 
     -- Bottom tabs
     local tabs = {
-        _G.EncounterJournal.encounter.info.overviewTab,
-        _G.EncounterJournal.encounter.info.lootTab,
-        _G.EncounterJournal.encounter.info.bossTab,
-        _G.EncounterJournal.encounter.info.modelTab
+        _G.EncounterJournalSuggestTab,
+        _G.EncounterJournalDungeonTab,
+        _G.EncounterJournalRaidTab,
+        _G.EncounterJournalLootJournalTab
     }
 
     for _, tab in pairs(tabs) do
-        self:CreateShadow(tab)
+        self:ReskinTab(tab)
     end
 end
 

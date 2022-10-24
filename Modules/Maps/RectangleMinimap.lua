@@ -64,12 +64,12 @@ function RM:ChangeShape()
         MinimapPanel:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff)
     end
 
-    self:MMHolder_Size()
+    self:Minimap_Holder_Size()
 end
 
 do
     local isRunning
-    function RM:MMHolder_Size()
+    function RM:Minimap_Holder_Size()
         if isRunning then
             return
         end
@@ -77,7 +77,6 @@ do
         isRunning = true
 
         local MinimapPanel = _G.MinimapPanel
-        local MMHolder = _G.MMHolder
 
         local fileID = self.db.enable and self.db.heightPercentage and floor(self.db.heightPercentage * 128) or 128
         local newHeight = E.MinimapSize * fileID / 128
@@ -88,7 +87,7 @@ do
             1
         local holderHeight = newHeight + (panelSize - joinPanel)
 
-        MMHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
+        MM.holder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
         _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
         isRunning = false
     end
@@ -100,7 +99,7 @@ function RM:SetUpdateHook()
         self:SecureHook(MM, "UpdateSettings", "ChangeShape")
         self:SecureHook(MM, "Initialize", "ChangeShape")
         self:SecureHook(E, "UpdateAll", "ChangeShape")
-        self:SecureHook(_G.MMHolder, "Size", "MMHolder_Size")
+        self:SecureHook(MM.holder, "Size", "Minimap_Holder_Size")
         self.initialized = true
     end
     self:ChangeShape()

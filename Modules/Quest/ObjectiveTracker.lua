@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
+local C = W.Utilities.Color
 local S = W.Modules.Skins
 local LSM = E.Libs.LSM
 
@@ -49,36 +50,26 @@ end
 
 local function SetTextColorHook(text)
     if not text.windHooked then
-        local SetTextColorOld = text.SetTextColor
+        text.__WindSetTextColor = text.SetTextColor
         text.SetTextColor = function(self, r, g, b, a)
-            if
-                r == _G.OBJECTIVE_TRACKER_COLOR["Header"].r and g == _G.OBJECTIVE_TRACKER_COLOR["Header"].g and
-                    b == _G.OBJECTIVE_TRACKER_COLOR["Header"].b
-             then
+            local rgbTable = {r = r, g = g, b = b, a = a}
+
+            if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["Header"], rgbTable) then
                 if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
                     r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorNormal.r
                     g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorNormal.g
                     b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorNormal.b
                 end
-            elseif
-                r == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].r and
-                    g == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].g and
-                    b == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].b
-             then
+            elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"], rgbTable) then
                 if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
                     r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorHighlight.r
                     g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorHighlight.g
                     b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorHighlight.b
                 end
             end
-            SetTextColorOld(self, r, g, b, a)
+            self:__WindSetTextColor(r, g, b, a)
         end
-        text:SetTextColor(
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].g,
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].b,
-            1
-        )
+        text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], {a = 1}))
         text.windHooked = true
     end
 end
@@ -123,26 +114,15 @@ function OT:CosmeticBar(header)
 
     -- Color
     if self.db.cosmeticBar.color.mode == "CLASS" then
-        bar:SetVertexColor(W.ClassColor.r, W.ClassColor.g, W.ClassColor.b)
+        bar:SetVertexColor(C.ExtractColorFromTable(W.ClassColor))
     elseif self.db.cosmeticBar.color.mode == "NORMAL" then
-        bar:SetVertexColor(
-            self.db.cosmeticBar.color.normalColor.r,
-            self.db.cosmeticBar.color.normalColor.g,
-            self.db.cosmeticBar.color.normalColor.b,
-            self.db.cosmeticBar.color.normalColor.a
-        )
+        bar:SetVertexColor(C.ExtractColorFromTable(self.db.cosmeticBar.color.normalColor))
     elseif self.db.cosmeticBar.color.mode == "GRADIENT" then
         bar:SetVertexColor(1, 1, 1)
-        bar:SetGradientAlpha(
+        bar:SetGradient(
             "HORIZONTAL",
-            self.db.cosmeticBar.color.gradientColor1.r,
-            self.db.cosmeticBar.color.gradientColor1.g,
-            self.db.cosmeticBar.color.gradientColor1.b,
-            self.db.cosmeticBar.color.gradientColor1.a,
-            self.db.cosmeticBar.color.gradientColor2.r,
-            self.db.cosmeticBar.color.gradientColor2.g,
-            self.db.cosmeticBar.color.gradientColor2.b,
-            self.db.cosmeticBar.color.gradientColor2.a
+            C.CreateColorFromTable(self.db.cosmeticBar.color.gradientColor1),
+            C.CreateColorFromTable(self.db.cosmeticBar.color.gradientColor2)
         )
     end
 
@@ -330,7 +310,13 @@ function OT:UpdateBackdrop()
     backdrop:Show()
     backdrop:SetTemplate(db.transparent and "Transparent")
     backdrop:ClearAllPoints()
-    backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerBlocksFrame, "TOPLEFT", db.topLeftOffsetX - 30, db.topLeftOffsetY + 10)
+    backdrop:SetPoint(
+        "TOPLEFT",
+        _G.ObjectiveTrackerBlocksFrame,
+        "TOPLEFT",
+        db.topLeftOffsetX - 30,
+        db.topLeftOffsetY + 10
+    )
     backdrop:SetPoint(
         "BOTTOMRIGHT",
         _G.ObjectiveTrackerBlocksFrame,

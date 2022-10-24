@@ -3,7 +3,7 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-function S:Blizzard_TalkingHeadUI()
+function S:TalkingHead()
     if not self:CheckDB("talkinghead", "talkingHead") then
         return
     end
@@ -15,4 +15,4 @@ function S:Blizzard_TalkingHeadUI()
     self:CreateShadow(_G.TalkingHeadFrame)
 end
 
-S:AddCallbackForAddon("Blizzard_TalkingHeadUI")
+S:AddCallback("TalkingHead")

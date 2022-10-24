@@ -23,12 +23,10 @@ local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
 local GetNumAutoQuestPopUps = GetNumAutoQuestPopUps
 local GetNumQuestChoices = GetNumQuestChoices
 local GetNumQuestItems = GetNumQuestItems
-local GetNumTrackingTypes = GetNumTrackingTypes
 local GetQuestID = GetQuestID
 local GetQuestItemInfo = GetQuestItemInfo
 local GetQuestItemLink = GetQuestItemLink
 local GetQuestReward = GetQuestReward
-local GetTrackingInfo = GetTrackingInfo
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsModifierKeyDown = IsModifierKeyDown
@@ -55,6 +53,8 @@ local C_GossipInfo_GetOptions = C_GossipInfo.GetOptions
 local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
+local C_Minimap_GetNumTrackingTypes = C_Minimap.GetNumTrackingTypes
+local C_Minimap_GetTrackingInfo = C_Minimap.GetTrackingInfo
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
@@ -238,8 +238,8 @@ local cashRewards = {
 }
 
 local function IsTrackingHidden()
-    for index = 1, GetNumTrackingTypes() do
-        local name, _, active = GetTrackingInfo(index)
+    for index = 1, C_Minimap_GetNumTrackingTypes() do
+        local name, _, active = C_Minimap_GetTrackingInfo(index)
         if name == _G.MINIMAP_TRACKING_TRIVIAL_QUESTS then
             return active
         end

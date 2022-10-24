@@ -3,21 +3,21 @@ local M = W.Modules.Misc
 
 local _G = _G
 
-function M:TalkingHeadFrame_PlayCurrent()
-    if E.db.WT.misc.disableTalkingHead then
-        _G.TalkingHeadFrame_CloseImmediately()
+function M:TalkingHeadFrame_PlayCurrent(frame)
+    if frame and E.db.WT.misc.disableTalkingHead then
+        frame:CloseImmediately()
     end
 end
 
-function M:TalkingHead_LoadUI()
-    self:SecureHook("TalkingHeadFrame_PlayCurrent")
+function M:HookTalkingHeadPlayCurrent()
+    self:SecureHook(_G.TalkingHeadFrame, "PlayCurrent", "TalkingHeadFrame_PlayCurrent")
 end
 
 function M:DisableTalkingHead()
     if _G.TalkingHeadFrame then
-        M:SecureHook("TalkingHeadFrame_PlayCurrent")
+        self:HookTalkingHeadPlayCurrent()
     else
-        M:SecureHook("TalkingHead_LoadUI")
+        self:SecureHook("TalkingHead_LoadUI", "HookTalkingHeadPlayCurrent")
     end
 end
 

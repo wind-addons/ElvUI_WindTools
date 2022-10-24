@@ -72,7 +72,7 @@ function S:TooltipFrames()
 
     self:SecureHook(TT, "SetStyle", "TTSetStyle")
     self:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TTGameTooltip_SetDefaultAnchor")
-    self:SecureHook("QueueStatusFrame_Update", "CreateShadow")
+    self:SecureHook(_G.QueueStatusFrame, "Update", "CreateShadow")
     self:SecureHook(_G.GameTooltip, "Show", "StyleTooltipsIcons")
 end
 

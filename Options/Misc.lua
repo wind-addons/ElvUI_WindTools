@@ -1604,7 +1604,7 @@ options.spellActivationAlert = {
             end,
             disabled = function()
                 return not E.db.WT.misc.spellActivationAlert.enable
-            end,
+            end
         },
         opacity = {
             order = 4,
@@ -1624,7 +1624,7 @@ options.spellActivationAlert = {
             step = 0.01,
             disabled = function()
                 return not E.db.WT.misc.spellActivationAlert.enable
-            end,
+            end
         },
         scale = {
             order = 5,
@@ -1641,7 +1641,7 @@ options.spellActivationAlert = {
                 E.db.WT.misc.spellActivationAlert[info[#info]] = value
                 SA:Update()
                 SA:Preview()
-            end,
+            end
         }
     }
 }

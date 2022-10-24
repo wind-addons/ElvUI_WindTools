@@ -64,6 +64,31 @@ function ST:HookPin()
     end
 end
 
+function ST:HookDistanceText()
+    _G.SuperTrackedFrame.DistanceText.__WindSetText = _G.SuperTrackedFrame.DistanceText.SetText
+
+    self:SecureHook(
+        _G.SuperTrackedFrame.DistanceText,
+        "SetText",
+        function(frame, text)
+            if not self or not self.db or not text then
+                return
+            end
+
+            -- Fix the distance text if distance > 1000
+            if self.db.noLimit and strmatch(text, ".%d+") then
+                text = gsub(text, "%.%d+", "")
+            end
+
+            if self.db.noUnit then
+                text = gsub(text, "[^0-9].*$", "")
+            end
+
+            frame:__WindSetText(text)
+        end
+    )
+end
+
 function ST:NoLimit()
     if not _G.SuperTrackedFrame then
         return
@@ -338,6 +363,10 @@ function ST:Initialize()
     self:NoLimit()
     self:ReskinDistanceText()
     self:WaypointParse()
+
+    if self.db.noLimit or self.db.noUnit then
+        self:HookDistanceText()
+    end
 end
 
 W:RegisterModule(ST:GetName())

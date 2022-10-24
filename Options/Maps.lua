@@ -74,6 +74,13 @@ options.superTracker = {
                     name = L["No Distance Limitation"],
                     desc = L["Force to track the target even if it over 1000 yds."],
                     width = 1.5
+                },
+                noUnit = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["No Unit"],
+                    desc = L["Remove the unit in distance text."],
+                    width = 1.5
                 }
             }
         },

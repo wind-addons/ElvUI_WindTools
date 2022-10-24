@@ -23,6 +23,7 @@ V.maps = {
     superTracker = {
         enable = true,
         noLimit = false,
+        noUnit = true,
         autoTrackWaypoint = true,
         rightClickToClear = true,
         distanceText = {

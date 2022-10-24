@@ -790,7 +790,8 @@ do
         WARLOCK = L["Warlock"],
         MONK = L["Monk"],
         DRUID = L["Druid"],
-        DEMONHUNTER = L["Demonhunter"]
+        DEMONHUNTER = L["Demonhunter"],
+        EVOKER = L["Evoker"]
     }
 
     for i = 1, GetNumClasses() do

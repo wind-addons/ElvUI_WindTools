@@ -367,7 +367,7 @@ function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHis
     end
 
     if CH.db.timeStampFormat and CH.db.timeStampFormat ~= "NONE" then
-        local timeStamp = BetterDate(CH.db.timeStampFormat, historyTimestamp or time())
+        local timeStamp = BetterDate(CH.db.timeStampFormat, historyTimestamp or CH:GetChatTime())
         timeStamp = gsub(timeStamp, " ", "")
         timeStamp = gsub(timeStamp, "AM", " AM")
         timeStamp = gsub(timeStamp, "PM", " PM")
@@ -744,7 +744,7 @@ function CT:ChatFrame_MessageEventHandler(
                 end
             end
             frame:AddMessage(
-                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName)))),
+                format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
                 info.r,
                 info.g,
                 info.b,
@@ -756,7 +756,7 @@ function CT:ChatFrame_MessageEventHandler(
             )
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
             local message =
-                format(arg1, GetPlayerLink(arg2, (noBrackets and "%s" or "[%s]"):format(CT:HandleName(coloredName))))
+                format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName))))
             if C_Social_IsSocialEnabled() then
                 local achieveID = GetAchievementInfoFromHyperlink(arg1)
                 if achieveID then
@@ -936,7 +936,7 @@ function CT:ChatFrame_MessageEventHandler(
 
                 if clientProgram and clientProgram ~= "" then
                     local name = _G.BNet_GetValidatedCharacterName(characterName, battleTag, clientProgram) or ""
-                    local characterNameText = _G.BNet_GetClientEmbeddedTexture(clientProgram, 14) .. name
+                    local characterNameText = _G.BNet_GetClientEmbeddedAtlas(clientProgram, 14) .. name
                     local linkDisplayText = format(noBrackets and "%s (%s)" or "[%s] (%s)", arg2, characterNameText)
                     local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
                     message = format(globalstring, playerLink)
@@ -994,7 +994,7 @@ function CT:ChatFrame_MessageEventHandler(
                 showLink = nil
 
                 -- fix blizzard formatting errors from localization strings
-                arg1 = gsub(arg1, "%%%d", "%%s") -- replace %1 to %s (russian client specific?) [broken since BFA?]
+                -- arg1 = gsub(arg1, '%%%d', '%%s') -- replace %1 to %s (russian client specific?) [broken since BFA?]
                 arg1 = gsub(arg1, "(%d%%)([^%%%a])", "%1%%%2") -- escape percentages that need it [broken since SL?]
                 arg1 = gsub(arg1, "(%d%%)$", "%1%%") -- escape percentages on the end
             else
@@ -1201,7 +1201,9 @@ function CT:ChatFrame_MessageEventHandler(
 
         if notChatHistory and (chatType == "WHISPER" or chatType == "BN_WHISPER") then
             _G.ChatEdit_SetLastTellTarget(arg2, chatType)
-            FlashClientIcon()
+            if CH.db.flashClientIcon then
+                FlashClientIcon()
+            end
         end
 
         if notChatHistory and not frame:IsShown() then

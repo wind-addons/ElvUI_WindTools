@@ -15,7 +15,8 @@ local resurrectionSpells = {
 	[50769] = true, -- 復活
 	[61999] = true, -- 盟友復生
 	[115178] = true, -- 回命訣
-	[265116] = true -- 不穩定的時間轉移器
+	[265116] = true, -- 不穩定的時間轉移器
+	[361227] = true -- 返世
 }
 
 local enhancementsSpells = {

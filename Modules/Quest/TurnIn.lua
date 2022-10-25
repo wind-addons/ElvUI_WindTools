@@ -319,7 +319,7 @@ function TI:GOSSIP_SHOW()
             local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
             if gossipQuestUIInfo.isComplete and not isWorldQuest then
                 if not self:IsPaused("COMPLETE") then
-                    C_GossipInfo_SelectActiveQuest(index)
+                    C_GossipInfo_SelectActiveQuest(gossipQuestUIInfo.questID)
                 end
             end
         end
@@ -330,26 +330,33 @@ function TI:GOSSIP_SHOW()
         for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
             if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() or npcID == 64437 then
                 if not self:IsPaused("ACCEPT") then
-                    C_GossipInfo_SelectAvailableQuest(index)
+                    C_GossipInfo_SelectAvailableQuest(gossipQuestUIInfo.questID)
                 end
             end
         end
     end
+
+    local gossipOptions = C_GossipInfo_GetOptions()
+    local numGossipOptions = gossipOptions and #gossipOptions
+
+    if not numGossipOptions or numGossipOptions <= 0 then
+        return
+    end
+
+    local firstGossipOptionID = gossipOptions[1].gossipOptionID
 
     if not (self.db and self.db.smartChat) then
         return
     end
 
     if smartChatNPCs[npcID] then
-        return C_GossipInfo_SelectOption(1)
+        return C_GossipInfo_SelectOption(firstGossipOptionID)
     end
 
     if numActiveQuests == 0 and numAvailableQuests == 0 then
-        -- TODO: https://wowpedia.fandom.com/wiki/API_C_GossipInfo.GetOptions
-        local numOptions = C_GossipInfo_GetNumOptions()
-        if numOptions == 1 then
+        if numGossipOptions == 1 then
             if npcID == 57850 then
-                return C_GossipInfo_SelectOption(1)
+                return C_GossipInfo_SelectOption(firstGossipOptionID)
             end
 
             local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
@@ -357,11 +364,11 @@ function TI:GOSSIP_SHOW()
                 local gossipInfoTable = C_GossipInfo_GetOptions()
                 local gType = gossipInfoTable[1] and gossipInfoTable[1].type
                 if gType and autoGossipTypes[gType] then
-                    return C_GossipInfo_SelectOption(1)
+                    return C_GossipInfo_SelectOption(firstGossipOptionID)
                 end
             end
         elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numOptions > 1 then
-            return C_GossipInfo_SelectOption(1)
+            return C_GossipInfo_SelectOption(firstGossipOptionID)
         end
     end
 end

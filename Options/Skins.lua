@@ -1135,6 +1135,29 @@ options.addons = {
     }
 }
 
+-- TODO: Remove after fix work done
+local fixingAddonList = {
+    ["AngryKeystones"] = true,
+    ["AAP-Core"] = true,
+    ["BigWigs"] = true,
+    ["MeetingStone"] = true,
+    ["MeetingStonePlus"] = true,
+    ["PremadeGroupsFilter"] = true,
+    ["REHack"] = true,
+    ["TLDRMissions"] = true,
+    ["TomCats"] = true,
+    ["WarpDeplete"] = true,
+    ["WeakAuras"] = true
+}
+
+-- TODO: Remove after fix work done
+local function isInFixing(name)
+    if type(name) == "table" then
+        name = name[1]
+    end
+    return fixingAddonList[name]
+end
+
 local function GenerateAddOnSkinsGetFunction(name)
     if type(name) == "string" then
         return function(info)
@@ -1191,6 +1214,12 @@ for _, option in pairs(options.addons.args) do
         option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
         option.addonName = nil
         option.addonskinsKey = nil
+
+        -- TODO: Remove after fix work done
+        if isInFixing(option.name) then
+            option.name = option.name .. " |cffff0000(" .. L["Fixing"] .. ")|r"
+            option.disabled = true
+        end
     end
 end
 

@@ -115,6 +115,11 @@ function RM:PLAYER_ENTERING_WORLD()
 end
 
 function RM:Initialize()
+    -- TODO: Fixing
+    if true then
+        return
+    end
+
     self.db = E.db.WT.maps.rectangleMinimap
     if not self.db or not self.db.enable then
         return

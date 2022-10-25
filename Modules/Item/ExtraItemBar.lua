@@ -604,7 +604,7 @@ function EB:CreateButton(name, barDB)
     button:SetClampedToScreen(true)
     button:SetAttribute("type", "item")
     button:EnableMouse(false)
-    button:RegisterForClicks("AnyUp")
+    button:RegisterForClicks("AnyDown")
 
     local tex = button:CreateTexture(nil, "OVERLAY", nil)
     tex:SetPoint("TOPLEFT", button, "TOPLEFT", 1, -1)

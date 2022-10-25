@@ -162,7 +162,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
-    frame:SetPoint("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
+    frame:SetPoint("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -2)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")

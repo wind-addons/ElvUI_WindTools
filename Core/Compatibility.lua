@@ -41,6 +41,7 @@ function W:ConstructCompatibilityFrame()
 
     local close = F.Widgets.New("CloseButton", frame)
     close:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT")
+    close:SetFrameLevel(frame:GetFrameLevel() + 1)
 
     local title = frame:CreateFontString(nil, "ARTWORK")
     title:FontTemplate()
@@ -94,11 +95,10 @@ function W:ConstructCompatibilityFrame()
                         "You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."
                     ]
     )
-    --bottomDesc:SetText("|cffff3860*|r " .. L["The feature is just a part of that module."])
     bottomDesc:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 
     local completeButton =
-        CreateFrame("Button", "WTCompatibilityFrameCompleteButton", frame, "OptionsButtonTemplate, BackdropTemplate")
+        CreateFrame("Button", "WTCompatibilityFrameCompleteButton", frame, "UIPanelButtonTemplate, BackdropTemplate")
     completeButton.Text:SetText(L["Complete"])
     completeButton.Text:SetJustifyH("CENTER")
     completeButton.Text:SetJustifyV("CENTER")
@@ -139,7 +139,7 @@ local function AddButtonToCompatibilityFrame(data)
         "Button",
         "WTCompatibilityFrameLeftButton" .. frame.numModules,
         frame.scrollFrame,
-        "OptionsButtonTemplate, BackdropTemplate"
+        "UIPanelButtonTemplate, BackdropTemplate"
     )
     leftButton.Text:SetText(format("%s\n%s", data.module1, data.plugin1))
     leftButton.Text:SetJustifyH("CENTER")
@@ -175,7 +175,7 @@ local function AddButtonToCompatibilityFrame(data)
         "Button",
         "WTCompatibilityFrameRightButton" .. frame.numModules,
         frame.scrollFrame,
-        "OptionsButtonTemplate, BackdropTemplate"
+        "UIPanelButtonTemplate, BackdropTemplate"
     )
     rightButton.Text:SetText(format("%s\n%s", data.module2, data.plugin2))
     rightButton.Text:SetJustifyH("CENTER")

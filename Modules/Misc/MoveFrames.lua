@@ -198,6 +198,10 @@ local BlizzardFramesOnDemand = {
             "CovenantMissionFrame.MissionTab.MissionList.MaterialFrame",
             "CovenantMissionFrame.FollowerList.listScroll",
             "CovenantMissionFrame.FollowerList.MaterialFrame"
+        },
+        ["GarrisonLandingPage"] = {
+            "GarrisonLandingPageReportListListScrollFrame",
+            "GarrisonLandingPageFollowerListListScrollFrame"
         }
     },
     ["Blizzard_GenericTraitUI"] = {

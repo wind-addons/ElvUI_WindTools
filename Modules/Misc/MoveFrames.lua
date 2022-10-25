@@ -143,11 +143,13 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_Communities"] = {
         "ClubFinderGuildFinderFrame.RequestToJoinFrame",
-        ["CommunitiesFrame"] = {
-            "CommunitiesFrame.GuildMemberDetailFrame",
-            "CommunitiesFrame.NotificationSettingsDialog"
-        },
+        "ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame",
+        -- ["CommunitiesFrame"] = {
+        --     "CommunitiesFrame.GuildMemberDetailFrame",
+        --     "CommunitiesFrame.NotificationSettingsDialog"
+        -- }
         "CommunitiesFrame.RecruitmentDialog",
+        "CommunitiesSettingsDialog",
         "CommunitiesGuildLogFrame",
         "CommunitiesGuildNewsFiltersFrame",
         "CommunitiesGuildTextEditFrame"

@@ -335,7 +335,7 @@ function RM:CreateButtons()
 			end
 		end
 
-		button:RegisterForClicks("AnyUp")
+		button:RegisterForClicks("AnyDown")
 
 		-- 鼠标提示
 		local tooltipText = ""

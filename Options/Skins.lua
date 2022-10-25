@@ -1005,12 +1005,14 @@ options.addons = {
         ace3 = {
             order = 10,
             type = "toggle",
-            name = L["Ace3"]
+            name = L["Ace3"],
+            width = 1.5
         },
         ace3DropdownBackdrop = {
             order = 10,
             type = "toggle",
-            name = L["Ace3 Dropdown Backdrop"]
+            name = L["Ace3 Dropdown Backdrop"],
+            width = 1.5
         },
         angryKeystones = {
             order = 10,
@@ -1209,17 +1211,19 @@ end
 
 for _, option in pairs(options.addons.args) do
     if option.addonName then
-        option.get = GenerateAddOnSkinsGetFunction(option.addonName)
-        option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
-        option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
-        option.addonName = nil
-        option.addonskinsKey = nil
-
         -- TODO: Remove after fix work done
-        if isInFixing(option.name) then
+        if isInFixing(option.addonName) then
             option.name = option.name .. " |cffff0000(" .. L["Fixing"] .. ")|r"
             option.disabled = true
+        else
+            option.get = GenerateAddOnSkinsGetFunction(option.addonName)
+            option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
+            option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
         end
+
+        option.addonName = nil
+        option.addonskinsKey = nil
+        option.width = 1.5
     end
 end
 

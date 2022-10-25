@@ -810,12 +810,12 @@ P.social = {
         enable = true,
         level = true,
         hideMaxLevel = true,
-        useGameColor = true,
+        useClientColor = true,
         useClassColor = true,
         useNoteAsName = false,
         textures = {
-            game = "Modern",
-            status = "Square",
+            client = "modern",
+            status = "square",
             factionIcon = false
         },
         areaColor = {

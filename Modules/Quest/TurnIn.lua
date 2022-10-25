@@ -345,6 +345,7 @@ function TI:GOSSIP_SHOW()
     end
 
     if numActiveQuests == 0 and numAvailableQuests == 0 then
+        -- TODO: https://wowpedia.fandom.com/wiki/API_C_GossipInfo.GetOptions
         local numOptions = C_GossipInfo_GetNumOptions()
         if numOptions == 1 then
             if npcID == 57850 then

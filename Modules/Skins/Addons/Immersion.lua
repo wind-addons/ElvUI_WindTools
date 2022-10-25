@@ -135,6 +135,10 @@ function S:Immersion()
     -- Close Button
     self:ESProxy("HandleCloseButton", talkBox.MainFrame.CloseButton)
 
+    -- Indicator
+    talkBox.MainFrame.Indicator:ClearAllPoints()
+    talkBox.MainFrame.Indicator:SetPoint("RIGHT", talkBox.MainFrame.CloseButton, "LEFT", -2, 0)
+
     -- Reputation bar
     local repBar = talkBox.ReputationBar
     repBar:StripTextures()

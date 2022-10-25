@@ -12,7 +12,6 @@
 	<Script file='Barbershop.lua'/>
 	<Script file='Binding.lua'/>
 	<Script file='BlackMarket.lua'/>
-	<Script file='BlizzardOptions.lua'/>
 	<Script file='Calendar.lua'/>
 	<Script file='Challenges.lua'/>
 	<Script file='Channels.lua'/>
@@ -61,6 +60,7 @@
 	<Script file='RaidInfo.lua'/>
 	<Script file='Scenario.lua'/>
 	<Script file='ScrappingMachine.lua'/>
+	<Script file='SettingsPanel.lua'/>
 	<Script file='Soulbinds.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>

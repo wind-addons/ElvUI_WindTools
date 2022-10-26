@@ -49,7 +49,6 @@ local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local ToggleAchievementFrame = ToggleAchievementFrame
-local ToggleAllBags = ToggleAllBags
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
 local ToggleFriendsFrame = ToggleFriendsFrame
@@ -200,7 +199,9 @@ local ButtonTypes = {
         name = L["Bags"],
         icon = W.Media.Icons.barBags,
         click = {
-            LeftButton = ToggleAllBags
+            LeftButton = function()
+                _G.ToggleAllBags()
+            end
         },
         tooltips = "Bags"
     },

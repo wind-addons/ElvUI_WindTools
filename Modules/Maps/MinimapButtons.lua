@@ -32,7 +32,7 @@ local IgnoreList = {
 		"ElvUIConfigToggle",
 		"ElvUI_ConsolidatedBuffs",
 		"HelpOpenTicketButton",
-		"MMHolder",
+		"ElvUI_MinimapHolder",
 		"DroodFocusMinimapButton",
 		"QueueStatusMinimapButton",
 		"TimeManagerClockButton",

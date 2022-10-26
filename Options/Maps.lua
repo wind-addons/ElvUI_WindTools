@@ -448,8 +448,7 @@ options.whoClicked = {
 options.rectangleMinimap = {
     order = 3,
     type = "group",
-    disabled = true,
-    name = L["Rectangle Minimap"] .. " (" .. L["Fixing"] .. ")",
+    name = L["Rectangle Minimap"],
     get = function(info)
         return E.db.WT.maps.rectangleMinimap[info[#info]]
     end,

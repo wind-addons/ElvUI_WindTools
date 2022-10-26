@@ -318,13 +318,6 @@ local ButtonTypes = {
                 if not InCombatLockdown() then
                     -- Open game menu | From ElvUI
                     if not _G.GameMenuFrame:IsShown() then
-                        if _G.VideoOptionsFrame:IsShown() then
-                            _G.VideoOptionsFrameCancel:Click()
-                        elseif _G.AudioOptionsFrame:IsShown() then
-                            _G.AudioOptionsFrameCancel:Click()
-                        elseif _G.InterfaceOptionsFrame:IsShown() then
-                            _G.InterfaceOptionsFrameCancel:Click()
-                        end
                         CloseMenus()
                         CloseAllWindows()
                         PlaySound(850) --IG_MAINMENU_OPEN

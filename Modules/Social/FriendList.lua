@@ -391,6 +391,7 @@ function FL:UpdateFriendButton(button)
             else
                 button.gameIcon:SetTexture(texOrAtlas)
             end
+            button.gameIcon:SetAlpha(1)
         end
     else
         if self.db.useNoteAsName and note and note ~= "" then

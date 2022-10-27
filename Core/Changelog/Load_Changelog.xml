@@ -53,5 +53,6 @@
 	<Script file='Previous\2.51.lua'/>
 	<Script file='Previous\2.52.lua'/>
 	<Script file='Previous\2.53.lua'/>
-	<Script file='2.54.lua'/>
+	<Script file='Previous\2.54.lua'/>
+	<Script file='2.55.lua'/>
 </Ui>

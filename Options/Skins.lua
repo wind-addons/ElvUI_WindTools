@@ -452,11 +452,6 @@ options.blizzard = {
             type = "toggle",
             name = L["Black Market"]
         },
-        blizzardOptions = {
-            order = 10,
-            type = "toggle",
-            name = L["Interface Options"]
-        },
         calendar = {
             order = 10,
             type = "toggle",
@@ -681,6 +676,11 @@ options.blizzard = {
             order = 10,
             type = "toggle",
             name = L["Scrapping Machine"]
+        },
+        settingsPanel = {
+            order = 10,
+            type = "toggle",
+            name = L["Setting Panel"]
         },
         soulbinds = {
             order = 10,

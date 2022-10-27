@@ -117,7 +117,7 @@ options.help = {
             order = 8,
             type = "select",
             name = L["Button Fix"],
-            desc = L["Fix Blizzard Button Bug."],
+            desc = L["If some buttons not work, change this option may fix."],
             get = function(info)
                 return E.global.WT.core.buttonFix
             end,

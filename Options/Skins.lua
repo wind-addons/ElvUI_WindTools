@@ -1141,7 +1141,6 @@ options.addons = {
 local fixingAddonList = {
     ["AngryKeystones"] = true,
     ["AAP-Core"] = true,
-    ["BigWigs"] = true,
     ["MeetingStone"] = true,
     ["MeetingStonePlus"] = true,
     ["PremadeGroupsFilter"] = true,

@@ -2,7 +2,7 @@
 	<Script file='Ace3.lua'/>
 	<!-- <Script file='AngryKeystone.lua'/> -->
 	<!-- <Script file='AzerothAutoPilot.lua'/> -->
-	<!-- <Script file='BigWigs.lua'/> -->
+	<Script file='BigWigs.lua'/>
 	<Script file='BugSack.lua'/>
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>

@@ -220,8 +220,8 @@ function S:WeakAuras()
         end
     end
 
-    -- 效能分析
-    local profilingWindow = _G.WeakAuras.frames["RealTime Profiling Window"]
+    -- Real Time Profiling Window
+    local profilingWindow = _G.WeakAuras.RealTimeProfilingWindow
     if profilingWindow then
         self:CreateShadow(profilingWindow)
         self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")

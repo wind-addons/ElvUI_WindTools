@@ -1147,8 +1147,7 @@ local fixingAddonList = {
     ["REHack"] = true,
     ["TLDRMissions"] = true,
     ["TomCats"] = true,
-    ["WarpDeplete"] = true,
-    ["WeakAuras"] = true
+    ["WarpDeplete"] = true
 }
 
 -- TODO: Remove after fix work done

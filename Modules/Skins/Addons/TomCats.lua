@@ -52,7 +52,8 @@ function S:TomCats_HandleTomCatsIcon(icon)
     local quality = atlas and atlasToQuality[atlas]
 
     if quality then
-        icon.Icon.backdrop:SetBackdropBorderColor(GetItemQualityColor(quality))
+        local r, g, b = GetItemQualityColor(quality)
+        icon.Icon.backdrop:SetBackdropBorderColor(r, g, b)
     else
         icon.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
     end

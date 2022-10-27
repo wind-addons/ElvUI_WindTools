@@ -1146,7 +1146,6 @@ local fixingAddonList = {
     ["PremadeGroupsFilter"] = true,
     ["REHack"] = true,
     ["TLDRMissions"] = true,
-    ["TomCats"] = true,
     ["WarpDeplete"] = true
 }
 

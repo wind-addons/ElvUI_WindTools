@@ -113,6 +113,24 @@ options.help = {
                 [4] = "4 - |cff00d1b2[DEBUG]|r"
             }
         },
+        buttonFix = {
+            order = 8,
+            type = "select",
+            name = L["Button Fix"],
+            desc = L["Fix Blizzard Button Bug."],
+            get = function(info)
+                return E.global.WT.core.buttonFix
+            end,
+            set = function(info, value)
+                E.global.WT.core.buttonFix = value
+            end,
+            hidden = function()
+            end,
+            values = {
+                ["AnyDown"] = "AnyDown",
+                ["AnyUp"] = "AnyUp"
+            }
+        },
         contact = {
             order = 9,
             type = "group",

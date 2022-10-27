@@ -367,7 +367,7 @@ function TI:GOSSIP_SHOW()
                     return C_GossipInfo_SelectOption(firstGossipOptionID)
                 end
             end
-        elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numOptions > 1 then
+        elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numGossipOptions > 1 then
             return C_GossipInfo_SelectOption(firstGossipOptionID)
         end
     end

@@ -8,6 +8,8 @@ local pairs = pairs
 local strfind = strfind
 local unpack = unpack
 
+local WeakAuras = _G.WeakAuras
+
 function S:WeakAuras_PrintProfile()
     local frame = _G.WADebugEditBox.Background
 
@@ -181,8 +183,8 @@ function S:WeakAuras()
     end
 
     -- Handle the options region type registration
-    if _G.WeakAuras and _G.WeakAuras.RegisterRegionOptions then
-        self:RawHook(_G.WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
+    if WeakAuras and WeakAuras.RegisterRegionOptions then
+        self:RawHook(WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
     end
 
     -- Handle the options region type registration
@@ -199,11 +201,11 @@ function S:WeakAuras()
     self:SecureHook(WeakAuras.regionPrototype, "modifyFinish", OnPrototypeModifyFinish)
 
     -- Real Time Profiling Window
-    local profilingWindow = _G.WeakAuras.RealTimeProfilingWindow
+    local profilingWindow = WeakAuras.RealTimeProfilingWindow
     if profilingWindow then
         self:CreateShadow(profilingWindow)
         self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
-        self:SecureHook(_G.WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
+        self:SecureHook(WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
     end
 end
 

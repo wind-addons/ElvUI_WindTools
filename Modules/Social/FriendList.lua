@@ -6,6 +6,7 @@ local format = format
 local pairs = pairs
 local strmatch = strmatch
 local strsplit = strsplit
+local strupper = strupper
 
 local BNConnected = BNConnected
 local BNet_GetClientAtlas = BNet_GetClientAtlas
@@ -275,7 +276,7 @@ function FL:UpdateFriendButton(button)
             note = friendAccountInfo.note
 
             local gameAccountInfo = friendAccountInfo.gameAccountInfo
-            game = gameAccountInfo.clientProgram
+            gameCode = gameAccountInfo.clientProgram
             gameName = projectCodes[strupper(gameAccountInfo.clientProgram)]
 
             if gameAccountInfo.isOnline then
@@ -318,7 +319,7 @@ function FL:UpdateFriendButton(button)
         button.status:SetTexture(statusIcons[self.db.textures.status][status])
     end
 
-    if game and game ~= "" then
+    if gameName then
         local buttonTitle, buttonText
 
         -- override Real ID or name with note
@@ -331,7 +332,7 @@ function FL:UpdateFriendButton(button)
         end
 
         -- real ID
-        local clientColor = self.db.useClientColor and clientData[game] and clientData[game].color
+        local clientColor = self.db.useClientColor and clientData[gameName] and clientData[gameName].color
         local realIDString = realID and clientColor and F.CreateColorString(realID, clientColor) or realID
 
         -- name

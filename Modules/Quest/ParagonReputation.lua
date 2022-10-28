@@ -48,7 +48,7 @@ local WAITING_TOAST = {}
 
 -- from Paragon Reputation
 local paragonData = {
-	--Legion
+	-- Legion
 	[48976] = {
 		-- Argussian Reach
 		factionID = 2170,
@@ -173,10 +173,10 @@ local paragonData = {
 			}
 		}
 	},
-	--Battle for Azeroth
-	--Neutral
+	-- Battle for Azeroth
+	-- Neutral
 	[54453] = {
-		--Champions of Azeroth
+		-- Champions of Azeroth
 		factionID = 2164,
 		cache = 166298,
 		rewards = {
@@ -188,7 +188,7 @@ local paragonData = {
 		}
 	},
 	[58096] = {
-		--Rajani
+		-- Rajani
 		factionID = 2415,
 		cache = 174483,
 		rewards = {
@@ -200,7 +200,7 @@ local paragonData = {
 		}
 	},
 	[55348] = {
-		--Rustbolt Resistance
+		-- Rustbolt Resistance
 		factionID = 2391,
 		cache = 170061,
 		rewards = {
@@ -225,7 +225,7 @@ local paragonData = {
 		}
 	},
 	[54451] = {
-		--Tortollan Seekers
+		-- Tortollan Seekers
 		factionID = 2163,
 		cache = 166245,
 		rewards = {
@@ -237,7 +237,7 @@ local paragonData = {
 		}
 	},
 	[58097] = {
-		--Uldum Accord
+		-- Uldum Accord
 		factionID = 2417,
 		cache = 174484,
 		rewards = {
@@ -248,9 +248,9 @@ local paragonData = {
 			}
 		}
 	},
-	--Horde
+	-- Horde
 	[54460] = {
-		--Talanji's Expedition
+		-- Talanji's Expedition
 		factionID = 2156,
 		cache = 166282,
 		rewards = {
@@ -267,7 +267,7 @@ local paragonData = {
 		}
 	},
 	[54455] = {
-		--The Honorbound
+		-- The Honorbound
 		factionID = 2157,
 		cache = 166299,
 		rewards = {
@@ -279,7 +279,7 @@ local paragonData = {
 		}
 	},
 	[53982] = {
-		--The Unshackled
+		-- The Unshackled
 		factionID = 2373,
 		cache = 169940,
 		rewards = {
@@ -302,7 +302,7 @@ local paragonData = {
 		}
 	},
 	[54461] = {
-		--Voldunai
+		-- Voldunai
 		factionID = 2158,
 		cache = 166290,
 		rewards = {
@@ -319,7 +319,7 @@ local paragonData = {
 		}
 	},
 	[54462] = {
-		--Zandalari Empire
+		-- Zandalari Empire
 		factionID = 2103,
 		cache = 166292,
 		rewards = {
@@ -330,9 +330,9 @@ local paragonData = {
 			}
 		}
 	},
-	--Alliance
+	-- Alliance
 	[54456] = {
-		--Order of Embers
+		-- Order of Embers
 		factionID = 2161,
 		cache = 166297,
 		rewards = {
@@ -349,7 +349,7 @@ local paragonData = {
 		}
 	},
 	[54458] = {
-		--Proudmoore Admiralty
+		-- Proudmoore Admiralty
 		factionID = 2160,
 		cache = 166295,
 		rewards = {
@@ -366,7 +366,7 @@ local paragonData = {
 		}
 	},
 	[54457] = {
-		--Storm's Wake
+		-- Storm's Wake
 		factionID = 2162,
 		cache = 166294,
 		rewards = {
@@ -378,7 +378,7 @@ local paragonData = {
 		}
 	},
 	[54454] = {
-		--The 7th Legion
+		-- The 7th Legion
 		factionID = 2159,
 		cache = 166300,
 		rewards = {
@@ -390,7 +390,7 @@ local paragonData = {
 		}
 	},
 	[55976] = {
-		--Waveblade Ankoan
+		-- Waveblade Ankoan
 		factionID = 2400,
 		cache = 169939,
 		rewards = {
@@ -412,9 +412,9 @@ local paragonData = {
 			}
 		}
 	},
-	--Shadowlands
+	-- Shadowlands
 	[61100] = {
-		--Court of Harvesters
+		-- Court of Harvesters
 		factionID = 2413,
 		cache = 180648,
 		rewards = {
@@ -426,7 +426,7 @@ local paragonData = {
 		}
 	},
 	[64012] = {
-		--Death's Advance
+		-- Death's Advance
 		factionID = 2470,
 		cache = 186650,
 		rewards = {
@@ -450,7 +450,7 @@ local paragonData = {
 		}
 	},
 	[64266] = {
-		--The Archivist's Codex
+		-- The Archivist's Codex
 		factionID = 2472,
 		cache = 187028,
 		rewards = {
@@ -468,7 +468,7 @@ local paragonData = {
 		}
 	},
 	[61097] = {
-		--The Ascended
+		-- The Ascended
 		factionID = 2407,
 		cache = 180647,
 		rewards = {
@@ -490,7 +490,7 @@ local paragonData = {
 		}
 	},
 	[64867] = {
-		--The Enlightened
+		-- The Enlightened
 		factionID = 2478,
 		cache = 187780,
 		rewards = {
@@ -571,7 +571,7 @@ local paragonData = {
 		}
 	},
 	[61095] = {
-		--The Undying Army
+		-- The Undying Army
 		factionID = 2410,
 		cache = 180646,
 		rewards = {
@@ -594,7 +594,7 @@ local paragonData = {
 		}
 	},
 	[61098] = {
-		--The Wild Hunt
+		-- The Wild Hunt
 		factionID = 2465,
 		cache = 180649,
 		rewards = {
@@ -626,7 +626,7 @@ local paragonData = {
 		}
 	},
 	[64267] = {
-		--Ve'nari
+		-- Ve'nari
 		factionID = 2432,
 		cache = 187029,
 		rewards = {

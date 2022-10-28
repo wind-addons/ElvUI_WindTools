@@ -6,6 +6,7 @@
 ## Title-zhTW: |cff1784d1ElvUI|r |cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |cff49b8e3工|r|cff42d3dd具|r|cff41d7dd箱|r
 ## Title-koKR: |cff1784d1ElvUI|r |cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r
 ## Notes: Customizable enhancements for ElvUI.
+## Notes-deDE: Anpassbare Erweiterungen für ElvUI.
 ## Notes-zhCN: 用于 ElvUI 的自定义增强.
 ## Notes-zhTW: 用於 ElvUI 的自訂增強.
 ## Notes-koKR: ElvUI에 많은 기능을 추가하고 사용자가 설정할 수 있습니다.

@@ -17,8 +17,6 @@ function S:Hekili()
 
     self:DisableAddOnSkin("Hekili")
 
-    self:ESProxy("HandleButton", _G.HekiliOptionsButton)
-
     local Hekili = LibStub("AceAddon-3.0"):GetAddon("Hekili")
     self:RawHook(Hekili, "CreateButton", "Hekili_CreateButton")
 end

@@ -316,7 +316,10 @@ function FL:UpdateFriendButton(button)
 
     -- Status icon
     if status then
-        button.status:SetTexture(statusIcons[self.db.textures.status][status])
+        local pack = self.db.textures.status
+        if statusIcons[pack] then
+            button.status:SetTexture(statusIcons[pack][status])
+        end
     end
 
     if gameName then

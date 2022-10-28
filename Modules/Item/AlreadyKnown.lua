@@ -251,35 +251,30 @@ function AK:AuctionHouse(frame)
 
 	local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 
-	local numResults = frame.getNumEntries()
-	local buttons = HybridScrollFrame_GetButtons(frame.ScrollFrame)
-	local buttonCount = buttons and #buttons or 0
-	local offset = frame:GetScrollOffset()
-	local populateCount = min(buttonCount, numResults)
-	for i = 1, buttonCount do
-		local visible = i + offset <= numResults
-		local button = buttons[i]
-		if visible then
-			if button.rowData.itemKey.itemID then
+	for i = 1, frame.ScrollTarget:GetNumChildren() do
+		local child = select(i, frame.ScrollTarget:GetChildren())
+		if child.cells then
+			local button = child.cells[2]
+			local itemKey = button and button.rowData and button.rowData.itemKey
+			if itemKey and itemKey.itemID then
 				local itemLink
-				if button.rowData.itemKey.itemID == 82800 then -- BattlePet
-					itemLink = format("|Hbattlepet:%d::::::|h[Dummy]|h", button.rowData.itemKey.battlePetSpeciesID)
+				if itemKey.itemID == 82800 then
+					itemLink = format("|Hbattlepet:%d::::::|h[Dummy]|h", itemKey.battlePetSpeciesID)
 				else
-					itemLink = format("item:%d", button.rowData.itemKey.itemID)
+					itemLink = format("|Hitem:%d", itemKey.itemID)
 				end
 
 				if itemLink and IsAlreadyKnown(itemLink) then
-					button.SelectedHighlight:Show()
-					button.SelectedHighlight:SetVertexColor(r, g, b)
-					button.SelectedHighlight:SetAlpha(.2)
-					button.cells[2].Icon:SetVertexColor(r, g, b)
-					button.cells[2].IconBorder:SetVertexColor(r, g, b)
-					button.cells[2].Icon:SetDesaturated(self.db.mode == "MONOCHROME")
+					child.SelectedHighlight:Show()
+					child.SelectedHighlight:SetVertexColor(r, g, b)
+					child.SelectedHighlight:SetAlpha(.2)
+					button.Icon:SetVertexColor(r, g, b)
+					button.IconBorder:SetVertexColor(r, g, b)
 				else
-					button.SelectedHighlight:SetVertexColor(1, 1, 1)
-					button.cells[2].Icon:SetVertexColor(1, 1, 1)
-					button.cells[2].IconBorder:SetVertexColor(1, 1, 1)
-					button.cells[2].Icon:SetDesaturated(false)
+					child.SelectedHighlight:SetVertexColor(1, 1, 1)
+					button.Icon:SetVertexColor(1, 1, 1)
+					button.Icon:SetDesaturated(false)
+					button.IconBorder:SetVertexColor(1, 1, 1)
 				end
 			end
 		end
@@ -290,8 +285,8 @@ do
 	local numberOfHookedFunctions = 0
 	function AK:ADDON_LOADED(event, addOnName)
 		if addOnName == "Blizzard_AuctionHouseUI" then
-			local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList
-			self:SecureHook(frame, "RefreshScrollFrame", "AuctionHouse")
+			local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox
+			self:SecureHook(frame, "Update", "AuctionHouse")
 			numberOfHookedFunctions = numberOfHookedFunctions + 1
 		elseif addOnName == "Blizzard_GuildBankUI" then
 			self:SecureHook(_G.GuildBankFrame, "Update", "GuildBank")

@@ -18,7 +18,7 @@ function M:RemoveCraftInformation(tooltip)
         local line = _G[tooltipName .. "TextLeft" .. i]
         if line then
             local text = line:GetText()
-            if strmatch(text, "<(.+)>|r$") then
+            if text and strmatch(text, "<(.+)>|r$") then
                 line:SetText("")
             end
         end

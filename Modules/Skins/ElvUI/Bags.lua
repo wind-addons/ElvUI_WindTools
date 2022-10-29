@@ -20,6 +20,12 @@ function S:ElvUI_Bags()
     if _G.ElvUIVendorGraysFrame then
         self:CreateShadow(_G.ElvUIVendorGraysFrame)
     end
+
+    if E.private.bags.bagBar then
+        for _, buttons in pairs(B.BagBar.buttons) do
+            self:CreateShadow(buttons)
+        end
+    end
 end
 
 S:AddCallback("ElvUI_Bags")

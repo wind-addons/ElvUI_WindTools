@@ -7,11 +7,12 @@ local GetSpellLink = GetSpellLink
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 
 local CombatResurrectionList = {
-    [61999] = true, -- 盟友復生
     [20484] = true, -- 復生
     [20707] = true, -- 靈魂石
+    [61999] = true, -- 盟友復生
     [265116] = true, -- 不穩定的時間轉移器（工程學）
-    [345130] = true -- Disposable Spectrophasic Reanimator（工程學）
+    [345130] = true, -- 拋棄式光學相位復生器（工程學）
+    [391054] = true -- 代禱
 }
 
 -- 格式化自定义字符串

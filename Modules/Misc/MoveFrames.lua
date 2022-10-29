@@ -62,11 +62,6 @@ local BlizzardFrames = {
     ["DressUpFrame"] = {
         "DressUpFrame.OutfitDetailsPanel"
     },
-    ["MailFrame"] = {
-        "SendMailFrame",
-        "OpenMailFrame",
-        "OpenMailSender"
-    },
     ["WorldMapFrame"] = {
         "QuestMapFrame"
     }

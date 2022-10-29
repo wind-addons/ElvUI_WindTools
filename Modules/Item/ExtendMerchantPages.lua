@@ -18,27 +18,36 @@ function EMP:SkinButton(i)
     end
 
     local item = _G["MerchantItem" .. i]
-    item:Size(155, 45)
+    local button = _G["MerchantItem" .. i .. "ItemButton"]
+    local icon = _G["MerchantItem" .. i .. "ItemButtonIconTexture"]
+    local money = _G["MerchantItem" .. i .. "MoneyFrame"]
+    local nameFrame = _G["MerchantItem" .. i .. "NameFrame"]
+    local name = _G["MerchantItem" .. i .. "Name"]
+    local slot = _G["MerchantItem" .. i .. "SlotTexture"]
+
     item:StripTextures(true)
     item:CreateBackdrop("Transparent")
-    item.backdrop:Point("TOPLEFT", -3, 2)
+    item:Size(155, 45)
+    item.backdrop:Point("TOPLEFT", -1, 3)
     item.backdrop:Point("BOTTOMRIGHT", 2, -3)
 
-    local slot = _G["MerchantItem" .. i .. "SlotTexture"]
-    item.Name:Point("LEFT", slot, "RIGHT", -5, 5)
-
-    local button = _G["MerchantItem" .. i .. "ItemButton"]
     button:StripTextures()
     button:StyleButton()
     button:SetTemplate(nil, true)
-    button:Point("TOPLEFT", item, "TOPLEFT", 4, -4)
+    button:Size(40)
+    button:Point("TOPLEFT", item, "TOPLEFT", 4, -2)
 
-    local icon = button.icon
     icon:SetTexCoord(unpack(E.TexCoords))
-    icon:ClearAllPoints()
-    icon:Point("TOPLEFT", 1, -1)
-    icon:Point("BOTTOMRIGHT", -1, 1)
+    icon:SetInside()
 
+    nameFrame:Point("LEFT", slot, "RIGHT", -6, -17)
+
+    name:Point("LEFT", slot, "RIGHT", -4, 5)
+
+    money:ClearAllPoints()
+    money:Point("BOTTOMLEFT", button, "BOTTOMRIGHT", 3, 0)
+
+    S:HandleMerchantItem(i)
     S:ESProxy("HandleIconBorder", button.IconBorder)
 end
 

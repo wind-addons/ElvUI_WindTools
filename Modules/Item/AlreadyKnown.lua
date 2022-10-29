@@ -8,6 +8,7 @@ local format = format
 local gsub = gsub
 local min = min
 local mod = mod
+local select = select
 local strmatch = strmatch
 local strsplit = strsplit
 local tonumber = tonumber

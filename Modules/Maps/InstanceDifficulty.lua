@@ -9,6 +9,7 @@ local select = select
 
 local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
+local MinimapCluster = MinimapCluster
 local IsInInstance = IsInInstance
 
 local C_ChallengeMode_GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo

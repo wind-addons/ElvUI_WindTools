@@ -6,9 +6,15 @@ W.Changelog[258] = {
         ["zhCN"] = {
             "[移动框体] 暂时禁用了信箱框体的移动功能."
         },
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhTW"] = {
+            "[移動框架] 暫時禁用了信箱框架的移動功能."
+        },
+        ["enUS"] = {
+            "[Move Frames] Temporarily disabled the mailbox frame's move function."
+        },
+        ["koKR"] = {
+            "[이동 프레임] 우편함 프레임의 이동 기능을 일시적으로 비활성화했습니다."
+        }
     },
     NEW = {
         ["zhCN"] = {},

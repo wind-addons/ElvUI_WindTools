@@ -913,7 +913,7 @@ function PR:ChangeReputationBars(factionRow)
 		factionRow.__windHook = true
 	end
 
-	if factionRow.factionID and C_Reputation.IsFactionParagon(factionRow.factionID) then
+	if factionRow.factionID and C_Reputation_IsFactionParagon(factionRow.factionID) then
 		local currentValue, threshold, rewardQuestID, hasRewardPending =
 			C_Reputation_GetFactionParagonInfo(factionRow.factionID)
 		factionRow.name = factionRow.Container.Name:GetText()
@@ -994,9 +994,9 @@ function PR:ChangeReputationBars(factionRow)
 			end
 			factionRow.rolloverText = nil
 		end
-		if factionIndex == GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
+		if factionRow:GetOrderIndex() == GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
 			if count > 0 then
-				_G.ReputationDetailFactionName:SetText(name .. " |cffffffffx" .. count .. "|r")
+				_G.ReputationDetailFactionName:SetText(factionRow.name .. " |cffffffffx" .. count .. "|r")
 			end
 		end
 	else

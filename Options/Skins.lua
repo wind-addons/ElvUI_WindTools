@@ -1139,13 +1139,13 @@ options.addons = {
 
 -- TODO: Remove after fix work done
 local fixingAddonList = {
+    ["TinyInspect"] = true,
     ["AngryKeystones"] = true,
     ["AAP-Core"] = true,
     ["MeetingStone"] = true,
     ["MeetingStonePlus"] = true,
     ["PremadeGroupsFilter"] = true,
     ["REHack"] = true,
-    ["TLDRMissions"] = true,
     ["WarpDeplete"] = true
 }
 

@@ -117,7 +117,6 @@ function ID:ConstructFrame()
 end
 
 function ID:HideBlizzardDifficulty(difficultyFrame, isShown)
-    print(difficultyFrame, isShown)
     if not self.db or not self.db.hideBlizzard or not isShown then
         return
     end

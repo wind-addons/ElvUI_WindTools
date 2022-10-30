@@ -76,12 +76,16 @@ function ST:HookDistanceText()
             end
 
             -- Fix the distance text if distance > 1000
-            if self.db.noLimit and strmatch(text, ".%d+") then
-                text = gsub(text, "%.%d+", "")
+            if self.db.noLimit and strmatch(text, "%d%d%d%d.%d+") then
+                text = gsub(text, "(%d+)%.%d+", "%1")
             end
 
             if self.db.noUnit then
-                text = gsub(text, "[^0-9].*$", "")
+                local after, isChanged = gsub(text, "(.*)%s.*$", "%1")
+                if isChanged == 0 then
+                    after = gsub(text, "[^0-9%.].*$", "")
+                end
+                text = after
             end
 
             frame:__WindSetText(text)

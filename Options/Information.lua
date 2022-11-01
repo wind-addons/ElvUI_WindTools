@@ -123,6 +123,7 @@ options.help = {
             end,
             set = function(info, value)
                 E.global.WT.core.buttonFix = value
+                E:StaticPopup_Show("PRIVATE_RL")
             end,
             hidden = function()
             end,

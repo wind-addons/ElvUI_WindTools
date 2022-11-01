@@ -147,3 +147,18 @@ function F.Developer.InjectLogger(module)
         end
     end
 end
+
+
+--[[
+    Set delay for module initialization
+    @param table module
+    @param number delay
+]]
+function F.Developer.DelayInitialize(module, delay)
+    if module.Initialize then
+        module.Initialize_ = module.Initialize
+        module.Initialize = function(self, ...)
+            E:Delay(delay, self.Initialize_, self, ...)
+        end
+    end
+end

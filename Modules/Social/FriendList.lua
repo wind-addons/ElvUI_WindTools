@@ -322,6 +322,9 @@ function FL:UpdateFriendButton(button)
         end
     end
 
+    -- reset game icon with elvui style
+    button.gameIcon:SetTexCoord(.17, .83, .17, .83)
+
     if gameName then
         local buttonTitle, buttonText
 
@@ -394,8 +397,8 @@ function FL:UpdateFriendButton(button)
                 button.gameIcon:SetAtlas(texOrAtlas)
             else
                 button.gameIcon:SetTexture(texOrAtlas)
+                button.gameIcon:SetTexCoord(.1, .9, .1, .9)
             end
-            button.gameIcon:SetAlpha(1)
         end
     else
         if self.db.useNoteAsName and note and note ~= "" then

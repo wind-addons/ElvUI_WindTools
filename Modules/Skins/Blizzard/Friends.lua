@@ -4,13 +4,15 @@ local S = W.Modules.Skins
 local _G = _G
 local pairs = pairs
 
+local CreateColor = CreateColor
+
 function S:UpdateFriendButton(button)
     if not button.right then
         button.right = button:CreateTexture(nil, "BACKGROUND")
         button.right:SetWidth(button:GetWidth() / 2)
         button.right:SetHeight(32)
         button.right:SetPoint("LEFT", button, "CENTER", 0)
-        button.right:SetTexture(E.LSM:Fetch("statusbar", E.media.normTex))
+        button.right:SetTexture(E.Media.Textures.White8x8)
         button.right:SetGradient("HORIZONTAL", CreateColor(.243, .57, 1, 0), CreateColor(.243, .57, 1, .25))
 
         if button.gameIcon then

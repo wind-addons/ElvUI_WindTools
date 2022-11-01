@@ -773,6 +773,105 @@ options.objectiveTracker = {
                     width = 1.2
                 }
             }
+        },
+        menuTitle = {
+            order = 9,
+            type = "group",
+            inline = true,
+            name = L["Menu Title"] .. " (" .. L["it shows when objective tracker be collapsed."] .. ")",
+            disabled = function()
+                return not E.private.WT.quest.objectiveTracker.enable
+            end,
+            get = function(info)
+                return E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Change the color of quest titles."]
+                },
+                classColor = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Use Class Color"],
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.menuTitle.enable
+                    end
+                },
+                color = {
+                    order = 3,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = false,
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.menuTitle.enable or
+                            E.private.WT.quest.objectiveTracker.menuTitle.classColor
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                        local default = V.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.quest.objectiveTracker[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b = r, g, b
+                    end
+                },
+                font = {
+                    order = 4,
+                    type = "group",
+                    inline = true,
+                    name = L["Font"],
+                    disabled = function()
+                        return not E.private.WT.quest.objectiveTracker.enable or
+                            not E.private.WT.quest.objectiveTracker.menuTitle.enable
+                    end,
+                    get = function(info)
+                        return E.private.WT.quest.objectiveTracker[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.quest.objectiveTracker[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        }
+                    }
+                }
+            }
         }
     }
 }

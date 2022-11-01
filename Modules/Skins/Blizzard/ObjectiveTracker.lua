@@ -65,7 +65,9 @@ function S:SkinProgressBars(_, _, line)
     end
 
     -- change font style of header
-    F.SetFontOutline(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+    if not E.private.WT.quest.objectiveTracker.menuTitle.enable then
+        F.SetFontOutline(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+    end
 
     progressBar.__windSkin = true
 end

@@ -1430,7 +1430,7 @@ function GB:HandleRandomHomeButton(button, mouseButton, item)
         if #availableHearthstones > 0 then
             macro = "/castrandom " .. strjoin(",", unpack(availableHearthstones))
         else
-            macro = '/run UIErrorsFrame:AddMessage("' .. L["No Hearthstone found"] .. '", 1, 0, 0)'
+            macro = '/run UIErrorsFrame:AddMessage("' .. L["No Hearthstone Found!"] .. '", 1, 0, 0)'
         end
     end
 

@@ -2,6 +2,8 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local pairs = pairs
+local unpack = unpack
 
 function S:HandleMerchantItem(index)
     for currencyIndex = 1, 3 do

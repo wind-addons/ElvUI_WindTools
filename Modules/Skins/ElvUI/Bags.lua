@@ -3,6 +3,7 @@ local S = W.Modules.Skins
 local B = E:GetModule("Bags")
 
 local _G = _G
+local pairs = pairs
 
 function S:ElvUI_Bags()
     if not E.private.bags.enable then

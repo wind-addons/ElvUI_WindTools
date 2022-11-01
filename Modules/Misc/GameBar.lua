@@ -16,6 +16,7 @@ local mod = mod
 local pairs = pairs
 local select = select
 local strfind = strfind
+local strjoin = strjoin
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
@@ -1446,7 +1447,7 @@ end
 function GB:UpdateHearthStoneTable()
     hearthstonesAndToysData = {["RANDOM"] = L["Random Hearthstone"]}
 
-    hearthstonesTable = {}
+    local hearthstonesTable = {}
     for i = 1, #hearthstones do
         local itemID = hearthstones[i]
         hearthstonesTable[itemID] = true

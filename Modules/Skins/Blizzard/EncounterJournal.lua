@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local next = next
 local pairs = pairs
 local select = select
 local tinsert = tinsert

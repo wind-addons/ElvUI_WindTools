@@ -27,6 +27,7 @@ local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local CreateFromMixins = CreateFromMixins
+local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
 local GetGameTime = GetGameTime
 local GetItemCooldown = GetItemCooldown
 local GetItemCount = GetItemCount
@@ -41,6 +42,7 @@ local IsInGuild = IsInGuild
 local IsModifierKeyDown = IsModifierKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
 local ItemMixin = ItemMixin
+local PlayerHasToy = PlayerHasToy
 local PlaySound = PlaySound
 local RegisterStateDriver = RegisterStateDriver
 local ReloadUI = ReloadUI
@@ -66,6 +68,7 @@ local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0
 local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0
@@ -79,7 +82,27 @@ local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
-local Hearthstones = {
+local hearthstones = {
+    6948, -- 爐石
+    54452, -- 以太傳送門
+    64488, -- 旅店老闆的女兒
+    93672, -- 黑暗之門
+    142542, -- 城鎮傳送之書
+    162973, -- 冬天爺爺的爐石
+    163045, -- 無頭騎士的爐石
+    165669, -- 新年長者的爐石
+    165670, -- 傳播者充滿愛的爐石
+    165802, -- 貴族園丁的爐石
+    166746, -- 吞火者的爐石
+    166747, -- 啤酒節狂歡者的爐石
+    168907, -- 全像數位化爐石
+    172179, -- 永恆旅人的爐石
+    188952, -- 統御的爐石
+    190237, -- 仲介者傳送矩陣
+    193588 -- 時光行者的爐石
+}
+
+local hearthstoneAndToyIDList = {
     6948, -- 爐石
     54452, -- 以太傳送門
     64488, -- 旅店老闆的女兒
@@ -117,17 +140,23 @@ local Hearthstones = {
     180817 -- 移轉暗語
 }
 
-local HearthstonesTable
+local hearthstonesAndToysData
+local availableHearthstones
 
 local function AddDoubleLineForItem(itemID, prefix)
+    local isRandomHearthstone
     if type(itemID) == "string" then
-        itemID = tonumber(itemID)
+        if itemID == "RANDOM" then
+            isRandomHearthstone = true
+            itemID = 6948
+        else
+            itemID = tonumber(itemID)
+        end
     end
 
     prefix = prefix and prefix .. " " or ""
 
-    local name = HearthstonesTable[tostring(itemID)]
-
+    local name = hearthstonesAndToysData[tostring(itemID)]
     if not name then
         return
     end
@@ -147,6 +176,10 @@ local function AddDoubleLineForItem(itemID, prefix)
     if itemID == 180817 then
         local charge = GetItemCount(itemID, nil, true)
         name = name .. format(" (%d)", charge)
+    end
+
+    if isRandomHearthstone then
+        name = L["Random Hearthstone"]
     end
 
     DT.tooltip:AddDoubleLine(
@@ -1055,7 +1088,14 @@ function GB:UpdateButton(button, buttonType)
     button.tooltipsLeave = config.tooltipsLeave
 
     -- Click
-    if config.macro then
+    if
+        buttonType == "HOME" and
+            (config.item.item1 == L["Random Hearthstone"] or config.item.item2 == L["Random Hearthstone"])
+     then
+        button:SetAttribute("type*", "macro")
+        self:HandleRandomHomeButton(button, "left", config.item.item1)
+        self:HandleRandomHomeButton(button, "right", config.item.item2)
+    elseif config.macro then
         button:SetAttribute("type*", "macro")
         button:SetAttribute("macrotext1", config.macro.LeftButton or "")
         button:SetAttribute("macrotext2", config.macro.RightButton or config.macro.LeftButton or "")
@@ -1377,26 +1417,75 @@ function GB:UpdateGuildButton()
     end
 end
 
+function GB:HandleRandomHomeButton(button, mouseButton, item)
+    if not button or not mouseButton or not item or not availableHearthstones then
+        return
+    end
+
+    local attribute = mouseButton == "right" and "macrotext2" or "macrotext1"
+    local macro = "/use " .. item
+
+    if item == L["Random Hearthstone"] then
+        if #availableHearthstones > 0 then
+            macro = "/castrandom " .. strjoin(",", unpack(availableHearthstones))
+        else
+            macro = '/run UIErrorsFrame:AddMessage("' .. L["No Hearthstone found"] .. '", 1, 0, 0)'
+        end
+    end
+
+    button:SetAttribute(attribute, macro)
+end
+
 function GB:UpdateHomeButton()
     ButtonTypes.HOME.item = {
-        item1 = HearthstonesTable[self.db.home.left],
-        item2 = HearthstonesTable[self.db.home.right]
+        item1 = hearthstonesAndToysData[self.db.home.left],
+        item2 = hearthstonesAndToysData[self.db.home.right]
     }
 end
 
 function GB:UpdateHearthStoneTable()
-    HearthstonesTable = {}
+    hearthstonesAndToysData = {["RANDOM"] = L["Random Hearthstone"]}
+
+    hearthstonesTable = {}
+    for i = 1, #hearthstones do
+        local itemID = hearthstones[i]
+        hearthstonesTable[itemID] = true
+    end
+
+    local specialHearthstones = {
+        [1] = 184353, -- 琪瑞安族爐石
+        [2] = 182773, -- 死靈領主爐石
+        [3] = 180290, -- 暗夜妖精的爐石
+        [4] = 183716 -- 汎希爾罪孽石
+    }
+
+    for i = 1, 4 do
+        local isMaxLevel = select(3, GetAchievementCriteriaInfo(15646, i))
+        local itemID = specialHearthstones[i]
+        if isMaxLevel and itemID then
+            hearthstonesTable[itemID] = true
+        end
+    end
+
+    availableHearthstones = {}
 
     local index = 0
     local itemEngine = CreateFromMixins(ItemMixin)
 
     local function GetNextHearthStoneInfo()
         index = index + 1
-        if Hearthstones[index] then
-            itemEngine:SetItemID(Hearthstones[index])
+        if hearthstoneAndToyIDList[index] then
+            itemEngine:SetItemID(hearthstoneAndToyIDList[index])
             itemEngine:ContinueOnItemLoad(
                 function()
-                    HearthstonesTable[tostring(Hearthstones[index])] = itemEngine:GetItemName()
+                    local id = itemEngine:GetItemID()
+                    if hearthstonesTable[id] then
+                        if GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
+                            tinsert(availableHearthstones, id)
+                        end
+                    end
+
+                    hearthstonesAndToysData[tostring(hearthstoneAndToyIDList[index])] = itemEngine:GetItemName()
                     GetNextHearthStoneInfo()
                 end
             )
@@ -1412,7 +1501,7 @@ function GB:UpdateHearthStoneTable()
 end
 
 function GB:GetHearthStoneTable()
-    return HearthstonesTable
+    return hearthstonesAndToysData
 end
 
 function GB:GetAvailableButtons()

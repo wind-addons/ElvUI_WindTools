@@ -32,7 +32,7 @@ function S:Blizzard_EncounterJournal()
         self:CreateBackdropShadow(tab)
         local point, relativeTo, relativePoint, x, y = tab:GetPoint(1)
         if name == "overviewTab" then
-            tab:SetPoint(point, relativeTo, relativePoint, 16, -55)
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal, "TOPRIGHT", 9, -55)
         else
             tab:SetPoint(point, relativeTo, relativePoint, 0, -4)
         end

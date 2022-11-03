@@ -258,6 +258,10 @@ function MB:SkinButton(frame)
 			frame.OldSetScript = frame.SetScript
 			frame.SetScript = E.noop
 		end
+	elseif strsub(name, 1, strlen("TomCats-")) == "TomCats-" then
+		frame:SetPushedTexture("")
+		frame:SetDisabledTexture("")
+		frame:GetHighlightTexture():Kill()
 	elseif tmp ~= 2 then
 		frame:SetPushedTexture("")
 		frame:SetDisabledTexture("")

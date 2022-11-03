@@ -5,7 +5,7 @@ local _G = _G
 local CreateFrame = CreateFrame
 
 function S:UpdateVignetting()
-    local frame = W.VignettingFrame
+    local frame = self.VignettingFrame
     local level = E.db.WT.skins.vignetting.level / 100
     if frame and level then
         frame:SetAlpha(level)
@@ -17,31 +17,30 @@ function S:Vignetting()
         return
     end
 
-    local frame = CreateFrame("Frame", "ShadowBackground", E.UIParent)
-    frame:Point("TOPLEFT")
-    frame:Point("BOTTOMRIGHT")
+    local frame = CreateFrame("Frame", "ShadowBackground", _G.UIParent)
+    frame:SetPoint("TOPLEFT")
+    frame:SetPoint("BOTTOMRIGHT")
     frame:SetFrameLevel(0)
     frame:SetFrameStrata("BACKGROUND")
     frame.tex = frame:CreateTexture()
     frame.tex:SetTexture(W.Media.Textures.vignetting)
     frame.tex:SetAllPoints(frame)
 
-    W.VignettingFrame = frame
-
-    S:UpdateVignetting()
+    self.VignettingFrame = frame
+    self:UpdateVignetting()
 end
 
 function S:UpdateVignettingConfig()
     if not E.db.WT.skins.vignetting.enable then
-        if W.VignettingFrame then
-            W.VignettingFrame:Hide()
+        if self.VignettingFrame then
+            self.VignettingFrame:Hide()
         end
     else
-        if not W.VignettingFrame then
+        if not self.VignettingFrame then
             self:Vignetting()
             return
         end
-        W.VignettingFrame:Show()
+        self.VignettingFrame:Show()
         self:UpdateVignetting()
     end
 end

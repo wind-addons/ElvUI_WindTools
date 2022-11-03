@@ -54,7 +54,7 @@ local IgnoreList = {
 		"WestPointer",
 		"Cork",
 		"DugisArrowMinimapPoint",
-		"TTMinimapButton",
+		"TTMinimapButton"
 	},
 	partial = {
 		"Node",
@@ -236,18 +236,16 @@ function MB:SkinButton(frame)
 		end
 	end
 
-	if name ~= "ExpansionLandingPageMinimapButton" and tmp ~= 2 then
-		frame:SetPushedTexture("")
-		frame:SetDisabledTexture("")
-		frame:SetHighlightTexture("")
-	elseif name == "DBMMinimapButton" then
+	if name == "DBMMinimapButton" then
 		frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
 	elseif name == "SmartBuff_MiniMapButton" then
 		frame:SetNormalTexture(select(3, GetSpellInfo(12051)))
-	elseif name == "ExpansionLandingPageMinimapButton" and self.db.garrison then
-		if not frame.isWindMinimapButton then
-			frame.isWindMinimapButton = true
-			self:UpdateExpansionLandingPageMinimapIcon(_G.ExpansionLandingPageMinimapButton)
+	elseif name == "ExpansionLandingPageMinimapButton" then
+		if self.db.garrison then
+			if not frame.isWindMinimapButton then
+				frame.isWindMinimapButton = true
+				self:UpdateExpansionLandingPageMinimapIcon(_G.ExpansionLandingPageMinimapButton)
+			end
 		end
 	elseif name == "GRM_MinimapButton" then
 		frame.GRM_MinimapButtonBorder:Hide()
@@ -260,6 +258,10 @@ function MB:SkinButton(frame)
 			frame.OldSetScript = frame.SetScript
 			frame.SetScript = E.noop
 		end
+	elseif tmp ~= 2 then
+		frame:SetPushedTexture("")
+		frame:SetDisabledTexture("")
+		frame:SetHighlightTexture("")
 	end
 
 	if not frame.isSkinned then

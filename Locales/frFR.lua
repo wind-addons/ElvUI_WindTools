@@ -412,6 +412,7 @@ L["Drag"] = "Glisser"
 L["Dressing Room"] = "Vestiaire"
 L["Druid"] = "Druide"
 L["Dyanamic"] = true
+L["Edit Mode Manager"] = true
 L["Editbox"] = "Boîte d'édition"
 L["ElvUI"] = "ElvUI"
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"

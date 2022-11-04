@@ -412,6 +412,7 @@ L["Drag"] = "Ziehen"
 L["Dressing Room"] = "Umkleideraum"
 L["Druid"] = "Druide"
 L["Dyanamic"] = "Dynamisch"
+L["Edit Mode Manager"] = true
 L["Editbox"] = "Bearbeitungsfeld"
 L["ElvUI"] = true
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"

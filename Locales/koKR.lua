@@ -412,6 +412,7 @@ L["Drag"] = "끌기"
 L["Dressing Room"] = "의상실"
 L["Druid"] = "드루이드"
 L["Dyanamic"] = "유동"
+L["Edit Mode Manager"] = true
 L["Editbox"] = "편집 창"
 L["ElvUI"] = true
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"

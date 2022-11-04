@@ -412,6 +412,7 @@ L["Drag"] = "拖拽"
 L["Dressing Room"] = "試衣間"
 L["Druid"] = "德魯伊"
 L["Dyanamic"] = "動態"
+L["Edit Mode Manager"] = true
 L["Editbox"] = "輸入框"
 L["ElvUI"] = true
 L["ElvUI Enhanced Again"] = "|cff00c0faElvUI|r |cffff8000Enhanced|r |cff00c0faAgain|r"

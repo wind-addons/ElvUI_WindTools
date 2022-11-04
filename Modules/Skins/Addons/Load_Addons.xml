@@ -16,7 +16,7 @@
 	<!-- <Script file='TinyInspect.lua'/> -->
 	<Script file='TLDRMissions.lua'/>
 	<Script file='TomCats.lua'/>
-	<!-- <Script file='WarpDeplete.lua'/> -->
+	<Script file='WarpDeplete.lua'/>
 	<Script file='WeakAuras.lua'/>
 	<Script file='WeakAurasOptions.lua'/>
 </Ui>

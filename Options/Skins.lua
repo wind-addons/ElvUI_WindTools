@@ -1145,8 +1145,7 @@ local fixingAddonList = {
     ["MeetingStone"] = true,
     ["MeetingStonePlus"] = true,
     ["PremadeGroupsFilter"] = true,
-    ["REHack"] = true,
-    ["WarpDeplete"] = true
+    ["REHack"] = true
 }
 
 -- TODO: Remove after fix work done

@@ -186,7 +186,7 @@ V.quest = {
             font = {
                 name = E.db.general.font,
                 size = E.db.general.fontSize,
-                style = "OUTLINE",
+                style = "OUTLINE"
             }
         }
     }
@@ -384,6 +384,7 @@ V.skins = {
         covenantSanctum = true,
         debugTools = true,
         dressingRoom = true,
+        editModeManager = true,
         encounterJournal = true,
         eventTrace = true,
         flightMap = true,

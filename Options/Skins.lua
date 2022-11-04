@@ -522,6 +522,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Dressing Room"]
         },
+        editModeManager = {
+            order = 10,
+            type = "toggle",
+            name = L["Edit Mode Manager"]
+        },
         encounterJournal = {
             order = 10,
             type = "toggle",

@@ -468,7 +468,6 @@ V.tooltips = {
     petId = true,
     tierSet = true,
     covenant = true,
-    dominationRank = true,
     objectiveProgress = true,
     objectiveProgressAccuracy = 1,
     progression = {

@@ -66,14 +66,8 @@ options.general = {
                     name = L["Pet ID"],
                     desc = L["Show battle pet species ID in tooltips."]
                 },
-                dominationRank = {
-                    order = 5,
-                    type = "toggle",
-                    name = L["Domination Rank"],
-                    desc = L["Show the rank of shards."]
-                },
                 tierSet = {
-                    order = 6,
+                    order = 5,
                     type = "toggle",
                     name = L["Tier Set"],
                     desc = format(
@@ -83,7 +77,7 @@ options.general = {
                     )
                 },
                 covenant = {
-                    order = 7,
+                    order = 6,
                     type = "toggle",
                     name = L["Covenant"],
                     desc = format(

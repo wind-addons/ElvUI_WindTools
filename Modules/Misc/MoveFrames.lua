@@ -491,29 +491,6 @@ function MF:HandleAddon(_, addon)
             dialog:SetAllPoints()
         end
     end
-
-    if _G.BattlefieldFrame and _G.PVPParentFrame then
-        _G.BattlefieldFrame:SetParent(_G.PVPParentFrame)
-        _G.BattlefieldFrame:ClearAllPoints()
-        _G.BattlefieldFrame:SetAllPoints()
-    end
-
-    local skipHook = false
-    self:SecureHook(
-        _G.ContainerFrameSettingsManager,
-        "GetBagsShown",
-        function()
-            if skipHook then
-                return
-            end
-            skipHook = true
-            local bags = _G.ContainerFrameSettingsManager:GetBagsShown()
-            for _, bag in pairs(bags or {}) do
-                bag:ClearAllPoints()
-            end
-            skipHook = false
-        end
-    )
 end
 
 function MF:PLAYER_REGEN_ENABLED()
@@ -623,6 +600,29 @@ function MF:Initialize()
     end
 
     self:HandleElvUIBag()
+
+    if _G.BattlefieldFrame and _G.PVPParentFrame then
+        _G.BattlefieldFrame:SetParent(_G.PVPParentFrame)
+        _G.BattlefieldFrame:ClearAllPoints()
+        _G.BattlefieldFrame:SetAllPoints()
+    end
+
+    local skipHook = false
+    self:SecureHook(
+        _G.ContainerFrameSettingsManager,
+        "GetBagsShown",
+        function()
+            if skipHook then
+                return
+            end
+            skipHook = true
+            local bags = _G.ContainerFrameSettingsManager:GetBagsShown()
+            for _, bag in pairs(bags or {}) do
+                bag:ClearAllPoints()
+            end
+            skipHook = false
+        end
+    )
 end
 
 W:RegisterModule(MF:GetName())

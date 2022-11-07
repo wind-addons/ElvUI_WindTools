@@ -20,8 +20,9 @@ local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
 _G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:" .. newString .. "|t |cffffffff%2$s|r %3$s"
 _G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:" .. newString .. "|t %2$s"
 
-local function SetTooltipIcon(self, icon)
-    local title = icon and _G[self:GetName() .. "TextLeft1"]
+local function setTooltipIcon(self, icon)
+    local lineNumber = self == _G.GameTooltip and 1 or 2
+    local title = icon and _G[self:GetName() .. "TextLeft" .. lineNumber]
     if title then
         title:SetFormattedText("|T%s:20:20:" .. newString .. ":%d|t %s", icon, 20, title:GetText())
     end
@@ -54,7 +55,7 @@ local HookItem =
     function(self)
         local _, link = self:GetItem()
         if link then
-            SetTooltipIcon(self, GetItemIcon(link))
+            setTooltipIcon(self, GetItemIcon(link))
         end
     end
 )
@@ -65,7 +66,7 @@ local HookSpell =
     function(self)
         local name, id = self:GetSpell()
         if id then
-            SetTooltipIcon(self, GetSpellTexture(id))
+            setTooltipIcon(self, GetSpellTexture(id))
         end
     end
 )

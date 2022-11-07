@@ -167,8 +167,8 @@ local expansionData = {
 }
 
 local factionIcons = {
-    ["Alliance"] = MediaPath .. "Alliance",
-    ["Horde"] = MediaPath .. "Horde"
+    ["Alliance"] = MediaPath .. "GameIcons\\Alliance",
+    ["Horde"] = MediaPath .. "GameIcons\\Horde"
 }
 
 local statusIcons = {

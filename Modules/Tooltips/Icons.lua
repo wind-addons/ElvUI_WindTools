@@ -6,6 +6,7 @@ local unpack = unpack
 
 local GetItemIcon = GetItemIcon
 local GetSpellTexture = GetSpellTexture
+local TooltipDataProcessor = TooltipDataProcessor
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
@@ -14,7 +15,19 @@ local UnitIsPlayer = UnitIsPlayer
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 
+local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
+local Enum_TooltipDataType_Spell = Enum.TooltipDataType.Spell
+
 local newString = "0:0:64:64:5:59:5:59"
+
+local tooltips = {
+    "GameTooltip",
+    "ItemRefTooltip",
+    "ShoppingTooltip1",
+    "ShoppingTooltip2",
+    "ItemRefShoppingTooltip1",
+    "ItemRefShoppingTooltip2"
+}
 
 local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
 _G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:" .. newString .. "|t |cffffffff%2$s|r %3$s"
@@ -28,6 +41,7 @@ local function setTooltipIcon(self, icon)
     end
 end
 
+-- TODO: remove this after 10.0.2
 local function NewTooltipHooker(method, func)
     return function(tooltip)
         local modified = false
@@ -49,6 +63,7 @@ local function NewTooltipHooker(method, func)
     end
 end
 
+-- TODO: remove this after 10.0.2
 local HookItem =
     NewTooltipHooker(
     "OnTooltipSetItem",
@@ -60,6 +75,7 @@ local HookItem =
     end
 )
 
+-- TODO: remove this after 10.0.2
 local HookSpell =
     NewTooltipHooker(
     "OnTooltipSetSpell",
@@ -71,40 +87,62 @@ local HookSpell =
     end
 )
 
-function T:FixCompareItems(_, anchorFrame, shoppingTooltip1, shoppingTooltip2, _, secondaryItemShown)
-    local point = shoppingTooltip1:GetPoint(2)
-    if secondaryItemShown then
+local function alignShoppingTooltip(tt)
+    if not tt or not tt.GetNumPoints or tt:GetNumPoints() < 2 or not tt.__SetPoint then
+        return
+    end
+
+    local shoppingTooltip1 = _G.ShoppingTooltip1
+    local shoppingTooltip2 = _G.ShoppingTooltip2
+
+    local point, anchorFrame = shoppingTooltip1:GetPoint(2)
+    if shoppingTooltip2:IsShown() then
         if point == "TOP" then
             shoppingTooltip1:ClearAllPoints()
-            shoppingTooltip1:Point("TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
+            shoppingTooltip1:SetPoint("TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
             shoppingTooltip2:ClearAllPoints()
-            shoppingTooltip2:Point("TOPLEFT", shoppingTooltip1, "TOPRIGHT", 3, 0)
+            shoppingTooltip2:SetPoint("TOPLEFT", shoppingTooltip1, "TOPRIGHT", 3, 0)
         elseif point == "RIGHT" then
             shoppingTooltip1:ClearAllPoints()
-            shoppingTooltip1:Point("TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
+            shoppingTooltip1:SetPoint("TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
             shoppingTooltip2:ClearAllPoints()
-            shoppingTooltip2:Point("TOPRIGHT", shoppingTooltip1, "TOPLEFT", -3, 0)
+            shoppingTooltip2:SetPoint("TOPRIGHT", shoppingTooltip1, "TOPLEFT", -3, 0)
         end
     else
         if point == "LEFT" then
             shoppingTooltip1:ClearAllPoints()
-            shoppingTooltip1:Point("TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
+            shoppingTooltip1:SetPoint("TOPLEFT", anchorFrame, "TOPRIGHT", 3, 0)
         elseif point == "RIGHT" then
             shoppingTooltip1:ClearAllPoints()
-            shoppingTooltip1:Point("TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
+            shoppingTooltip1:SetPoint("TOPRIGHT", anchorFrame, "TOPLEFT", -3, 0)
         end
     end
 end
 
-function T:ReskinRewardIcon(icon)
-    if icon and icon.Icon then
-        icon.Icon:SetTexCoord(unpack(E.TexCoords))
-        icon.IconBorder:Hide()
+local function itemTooltipHandler(tt, data)
+    if not data.id or not tt.GetName or not F.In(tt:GetName(), tooltips) then
+        return
+    end
+
+    setTooltipIcon(tt, GetItemIcon(data.id))
+end
+
+local function spellTooltipHandler(tt)
+    if not tt.GetName or not F.In(tt:GetName(), tooltips) then
+        return
+    end
+
+    local _, id = tt:GetSpell()
+    if id then
+        setTooltipIcon(tt, GetSpellTexture(id))
     end
 end
 
-function T:QuestUtils_AddQuestCurrencyRewardsToTooltip(_, _, icon)
-    self:ReskinRewardIcon(icon)
+function T:ReskinRewardIcon(tt)
+    if tt and tt.Icon then
+        tt.Icon:SetTexCoord(unpack(E.TexCoords))
+        tt.IconBorder:Hide()
+    end
 end
 
 function T:AddFactionIcon(tt, unit, guid)
@@ -161,16 +199,22 @@ end
 
 function T:Icons()
     if E.private.WT.tooltips.icon then
-        HookItem(_G.GameTooltip)
-        HookSpell(_G.GameTooltip)
-        HookItem(_G.ItemRefTooltip)
-        HookSpell(_G.ItemRefTooltip)
+        -- TODO: remove this after 10.0.2
+        if E.wowpatch ~= "10.0.2" and not TooltipDataProcessor then
+            HookItem(_G.GameTooltip)
+            HookSpell(_G.GameTooltip)
+            HookItem(_G.ItemRefTooltip)
+            HookSpell(_G.ItemRefTooltip)
+        else
+            TooltipDataProcessor.AddTooltipPostCall(Enum_TooltipDataType_Item, itemTooltipHandler)
+            TooltipDataProcessor.AddTooltipPostCall(Enum_TooltipDataType_Spell, spellTooltipHandler)
+        end
 
-        self:SecureHook("EmbeddedItemTooltip_SetItemByQuestReward", "ReskinRewardIcon")
-        self:SecureHook("EmbeddedItemTooltip_SetItemByID", "ReskinRewardIcon")
-        self:SecureHook("EmbeddedItemTooltip_SetCurrencyByID", "ReskinRewardIcon")
-        self:SecureHook("QuestUtils_AddQuestCurrencyRewardsToTooltip")
-        self:SecureHook("GameTooltip_AnchorComparisonTooltips", "FixCompareItems")
+        _G.ShoppingTooltip1.__SetPoint = _G.ShoppingTooltip1.SetPoint
+        hooksecurefunc(_G.ShoppingTooltip1, "SetPoint", alignShoppingTooltip)
+
+        self:ReskinRewardIcon(_G.GameTooltip.ItemTooltip)
+        self:ReskinRewardIcon(_G.EmbeddedItemTooltip.ItemTooltip)
     end
 
     if E.private.WT.tooltips.factionIcon then

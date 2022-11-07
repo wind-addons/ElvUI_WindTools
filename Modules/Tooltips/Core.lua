@@ -69,7 +69,8 @@ function T:ClearInspectInfo(tt)
     end
 end
 
-function T:InspectInfo(_, tt, triedTimes)
+-- TODO: remove this after 10.0.2
+function T:SL_InspectInfo(_, tt, triedTimes)
     if tt:IsForbidden() or tt.windInspectLoaded then
         return
     end
@@ -114,13 +115,68 @@ function T:InspectInfo(_, tt, triedTimes)
         end
 
         if not isElvUITooltipItemLevelInfoAlreadyAdded then
-            return E:Delay(0.2, T.InspectInfo, T, ET, tt, triedTimes + 1)
+            return E:Delay(0.2, T.SL_InspectInfo, T, ET, tt, triedTimes + 1)
         end
     end
 
     -- Run all registered callbacks (modifier)
     for _, func in next, self.modifierInspect do
         xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
+    end
+
+    tt.windInspectLoaded = true
+end
+
+function T:InspectInfo(_, tt, data, triedTimes)
+    if tt:IsForbidden() or tt.windInspectLoaded then
+        return
+    end
+
+    local unit = select(2, tt:GetUnit())
+
+    if not unit or not data or not data.guid then
+        return
+    end
+
+    -- Run all registered callbacks (normal)
+    for _, func in next, self.normalInspect do
+        xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
+    end
+
+    -- Hold Shift to show more inspect information
+    if not IsShiftKeyDown() then
+        return
+    end
+
+    if not CanInspect(unit) then
+        return
+    end
+
+    -- If ElvUI is inspecting, just wait for 4 seconds
+    triedTimes = triedTimes or 0
+    if triedTimes > 20 then
+        return
+    end
+
+    if ET.db.inspectDataEnable then
+        local isElvUITooltipItemLevelInfoAlreadyAdded = false
+        for i = #(data.lines), tt:NumLines() do
+            local leftTip = _G["GameTooltipTextLeft" .. i]
+            local leftTipText = leftTip:GetText()
+            if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
+                isElvUITooltipItemLevelInfoAlreadyAdded = true
+                break
+            end
+        end
+
+        if not isElvUITooltipItemLevelInfoAlreadyAdded then
+            return E:Delay(0.2, T.InspectInfo, T, ET, tt, data, triedTimes + 1)
+        end
+    end
+
+    -- Run all registered callbacks (modifier)
+    for _, func in next, self.modifierInspect do
+        xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
     end
 
     tt.windInspectLoaded = true
@@ -161,7 +217,12 @@ function T:Initialize()
         T:RegisterEvent(name, "Event")
     end
 
-    T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
+    -- TODO: remove this after 10.0.2
+    if E.wowpatch ~= "10.0.2" then
+        T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "SL_InspectInfo")
+    else
+        T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
+    end
     T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
     T:SecureHookScript(_G.GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
 end

@@ -142,7 +142,7 @@ local BlizzardFramesOnDemand = {
         -- ["CommunitiesFrame"] = {
         --     "CommunitiesFrame.GuildMemberDetailFrame",
         --     "CommunitiesFrame.NotificationSettingsDialog"
-        -- }
+        -- },
         "CommunitiesFrame.RecruitmentDialog",
         "CommunitiesSettingsDialog",
         "CommunitiesGuildLogFrame",
@@ -325,7 +325,7 @@ function MF:Remember(frame)
     end
 
     local numPoints = frame:GetNumPoints()
-    if numPoints then
+    if numPoints and numPoints > 0 then
         self.db.framePositions[frame.windFrameName] = {}
         for index = 1, numPoints do
             local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
@@ -356,10 +356,12 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
     if not frame.isChangingPoint then
         frame.isChangingPoint = true
         local points = self.db.framePositions[frame.windFrameName]
+
         frame:ClearAllPoints()
         for _, point in pairs(points) do
-            frame:Point(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
+            frame:__SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
         end
+
         frame.isChangingPoint = nil
     end
 end
@@ -438,6 +440,7 @@ function MF:HandleFrame(frameName, mainFrameName)
 
     -- 注册调整位置的钩子
     if not self:IsHooked(frame.MoveFrame, "SetPoint") then
+        frame.MoveFrame.__SetPoint = frame.MoveFrame.SetPoint
         self:SecureHook(frame.MoveFrame, "SetPoint", "Reposition")
     end
 end
@@ -481,7 +484,36 @@ function MF:HandleAddon(_, addon)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion1.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion2.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion3.reward, "OnEnter", replacement)
+    elseif addOnName == "Blizzard_Communities" then
+        local dialog = _G.CommunitiesFrame.NotificationSettingsDialog
+        if dialog then
+            dialog:ClearAllPoints()
+            dialog:SetAllPoints()
+        end
     end
+
+    if _G.BattlefieldFrame and _G.PVPParentFrame then
+        _G.BattlefieldFrame:SetParent(_G.PVPParentFrame)
+        _G.BattlefieldFrame:ClearAllPoints()
+        _G.BattlefieldFrame:SetAllPoints()
+    end
+
+    local skipHook = false
+    self:SecureHook(
+        _G.ContainerFrameSettingsManager,
+        "GetBagsShown",
+        function()
+            if skipHook then
+                return
+            end
+            skipHook = true
+            local bags = _G.ContainerFrameSettingsManager:GetBagsShown()
+            for _, bag in pairs(bags or {}) do
+                bag:ClearAllPoints()
+            end
+            skipHook = false
+        end
+    )
 end
 
 function MF:PLAYER_REGEN_ENABLED()

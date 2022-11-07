@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
 local select = select
@@ -28,15 +29,52 @@ function S:Blizzard_EncounterJournal()
     end
 
     for _, name in next, {"overviewTab", "modelTab", "bossTab", "lootTab"} do
-        local tab = _G.EncounterJournal.encounter.info[name]
+        local info = _G.EncounterJournal.encounter.info
+        local tab = info[name]
         self:CreateBackdropShadow(tab)
-        local point, relativeTo, relativePoint, x, y = tab:GetPoint(1)
+
+        tab:ClearAllPoints()
         if name == "overviewTab" then
-            tab:SetPoint("TOPLEFT", _G.EncounterJournal, "TOPRIGHT", 9, -55)
-        else
-            tab:SetPoint(point, relativeTo, relativePoint, 0, -4)
+            tab:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    self:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
+                end
+            )
+        elseif name == "lootTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
+        elseif name == "bossTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
+        elseif name == "modelTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
         end
-        tab.SetPoint = E.noop
     end
 end
 

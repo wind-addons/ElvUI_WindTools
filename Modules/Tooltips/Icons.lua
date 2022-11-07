@@ -15,8 +15,9 @@ local UnitIsPlayer = UnitIsPlayer
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 
-local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
-local Enum_TooltipDataType_Spell = Enum.TooltipDataType.Spell
+-- TODO: cleanup this after 10.0.2
+local Enum_TooltipDataType_Item = TooltipDataProcessor and Enum.TooltipDataType.Item
+local Enum_TooltipDataType_Spell = TooltipDataProcessor and Enum.TooltipDataType.Spell
 
 local newString = "0:0:64:64:5:59:5:59"
 
@@ -200,7 +201,7 @@ end
 function T:Icons()
     if E.private.WT.tooltips.icon then
         -- TODO: remove this after 10.0.2
-        if E.wowpatch ~= "10.0.2" and not TooltipDataProcessor then
+        if not TooltipDataProcessor then
             HookItem(_G.GameTooltip)
             HookSpell(_G.GameTooltip)
             HookItem(_G.ItemRefTooltip)

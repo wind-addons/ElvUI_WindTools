@@ -12,6 +12,7 @@ local xpcall = xpcall
 
 local CanInspect = CanInspect
 local IsShiftKeyDown = IsShiftKeyDown
+local TooltipDataProcessor = TooltipDataProcessor
 local UnitGUID = UnitGUID
 
 T.load = {} -- 毋须等待插件的函数表
@@ -218,7 +219,7 @@ function T:Initialize()
     end
 
     -- TODO: remove this after 10.0.2
-    if E.wowpatch ~= "10.0.2" then
+    if not TooltipDataProcessor then
         T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "SL_InspectInfo")
     else
         T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")

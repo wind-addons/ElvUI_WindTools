@@ -6,7 +6,8 @@ local strmatch = strmatch
 
 local TooltipDataProcessor = TooltipDataProcessor
 
-local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
+-- TODO: cleanup this after 10.0.2
+local Enum_TooltipDataType_Item = TooltipDataProcessor and Enum.TooltipDataType.Item
 
 local tooltips = {
     "GameTooltip",
@@ -62,7 +63,7 @@ end
 
 function M:HideCrafter()
     -- TODO: remove this after 10.0.2
-    if E.wowpatch ~= "10.0.2" then
+    if not TooltipDataProcessor then
         self:SecureHookScript(_G.GameTooltip, "OnTooltipSetItem", "SL_RemoveCraftInformation")
         self:SecureHookScript(_G.ItemRefTooltip, "OnTooltipSetItem", "SL_RemoveCraftInformation")
     else

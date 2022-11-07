@@ -286,3 +286,17 @@ end
 function F.GetWindStyleText(text)
     return E:TextGradient(text, 0.32941, 0.52157, 0.93333, 0.29020, 0.70980, 0.89412, 0.25882, 0.84314, 0.86667)
 end
+
+function F.In(val, tbl)
+    if not val or not tbl or type(tbl) ~= "table" then
+        return false
+    end
+
+    for _, v in pairs(tbl) do
+        if v == val then
+            return true
+        end
+    end
+
+    return false
+end

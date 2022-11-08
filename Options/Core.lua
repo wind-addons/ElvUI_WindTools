@@ -149,4 +149,10 @@ function W:OptionsCallback()
             args = info.args
         }
     end
+
+    E.Options.args.WindTools.args["Tips"] = {
+        order = 10000,
+        type = "description",
+        name = E.NewSign .. L["If some buttons not works, use [Button Fix] in [Information] - [Help]."]
+    }
 end

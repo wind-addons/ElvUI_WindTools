@@ -3,6 +3,8 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local gsub = gsub
 local pairs = pairs
 local strrep = strrep
+local tostring = tostring
+local type = type
 
 -- 设定类别
 W.options = {

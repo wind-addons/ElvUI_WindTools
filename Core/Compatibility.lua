@@ -285,13 +285,6 @@ function W:CheckCompatibility()
         "db.mui.tooltip.tooltipIcon"
     )
 
-    CheckMerathilisUI(
-        format("%s-%s", L["Tooltip"], L["Domination Rank"]),
-        format("%s-%s", L["Tooltip"], L["Domination Rank"]),
-        "private.WT.tooltips.dominationRank",
-        "db.mui.tooltip.dominationRank"
-    )
-
     CheckMerathilisUI(L["Group Info"], L["LFG Info"], "db.WT.tooltips.groupInfo.enable", "db.mui.misc.lfgInfo.enable")
 
     CheckMerathilisUI(

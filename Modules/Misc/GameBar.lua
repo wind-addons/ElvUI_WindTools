@@ -306,8 +306,15 @@ local ButtonTypes = {
             end
         },
         additionalText = function()
-            local number = C_FriendList_GetNumOnlineFriends() or 0
             local numBNOnlineFriend = select(2, BNGetNumFriends())
+
+            if GB and GB.db and GB.db.friends and GB.db.friends.showAllFriends then
+                local friendsOnline = C_FriendList_GetNumFriends() or 0
+                local totalOnline = friendsOnline + numBNOnlineFriend
+                return totalOnline
+            end
+
+            local number = C_FriendList_GetNumOnlineFriends() or 0
 
             for i = 1, numBNOnlineFriend do
                 local accountInfo = C_BattleNet_GetFriendAccountInfo(i)

@@ -944,6 +944,9 @@ P.misc = {
         notification = true,
         visibility = "[petbattle] hide; show",
         tooltipsAnchor = "ANCHOR_BOTTOM",
+        friends = {
+            showAllFriends = false,
+        },
         time = {
             localTime = true,
             twentyFour = true,

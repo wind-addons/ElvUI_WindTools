@@ -28,7 +28,6 @@ local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local CreateFromMixins = CreateFromMixins
-local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
 local GetGameTime = GetGameTime
 local GetItemCooldown = GetItemCooldown
 local GetItemCount = GetItemCount
@@ -62,6 +61,8 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
+local C_CovenantSanctumUI_GetRenownLevel = C_CovenantSanctumUI.GetRenownLevel
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
@@ -1350,8 +1351,30 @@ function GB:PLAYER_ENTERING_WORLD()
     )
 end
 
+function GB:UpdateReknown()
+    local covenantID = C_Covenants_GetActiveCovenantID()
+    if not covenantID or covenantID == 0 then
+        return
+    end
+
+    if not self.covenantCache[E.myrealm] then
+        self.covenantCache[E.myrealm] = {}
+    end
+
+    if not self.covenantCache[E.myrealm][E.myname] then
+        self.covenantCache[E.myrealm][E.myname] = {}
+    end
+
+    local renownLevel = C_CovenantSanctumUI_GetRenownLevel()
+    if renownLevel then
+        self.covenantCache[E.myrealm][E.myname][tostring(covenantID)] = renownLevel
+    end
+end
+
 function GB:Initialize()
     self.db = E.db.WT.misc.gameBar
+    self.covenantCache = E.global.WT.misc.gameBar.covenantCache
+
     if not self.db or not self.db.enable then
         return
     end
@@ -1361,6 +1384,7 @@ function GB:Initialize()
         return
     end
 
+    self:UpdateReknown()
     self:UpdateHearthStoneTable()
     self:ConstructBar()
     self:ConstructTimeArea()
@@ -1370,6 +1394,19 @@ function GB:Initialize()
     self:UpdateLayout()
     self:UpdateBar()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    self:RegisterEvent(
+        "COVENANT_CHOSEN",
+        function()
+            E:Delay(
+                3,
+                function()
+                    self:UpdateReknown()
+                    self:UpdateHearthStoneTable()
+                    self:UpdateBar()
+                end
+            )
+        end
+    )
 
     self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
     self.initialized = true
@@ -1462,17 +1499,21 @@ function GB:UpdateHearthStoneTable()
 
     local specialHearthstones = {
         [1] = 184353, -- 琪瑞安族爐石
-        [2] = 182773, -- 死靈領主爐石
+        [2] = 183716, -- 汎希爾罪孽石
         [3] = 180290, -- 暗夜妖精的爐石
-        [4] = 183716 -- 汎希爾罪孽石
+        [4] = 182773 -- 死靈領主爐石
     }
 
     for i = 1, 4 do
-        local isMaxLevel = select(3, GetAchievementCriteriaInfo(15646, i))
-        local itemID = specialHearthstones[i]
-        if isMaxLevel and itemID then
-            hearthstonesTable[itemID] = true
-        end
+        local level =
+            self.covenantCache[E.myrealm] and self.covenantCache[E.myrealm][E.myname] and
+            self.covenantCache[E.myrealm][E.myname][tostring(i)]
+        local toyID = specialHearthstones[i]
+        local hasToy = PlayerHasToy(toyID) and C_ToyBox_IsToyUsable(toyID)
+
+        -- here we don't check the current active covenant.
+        -- because `/castrandom` cannot the current active covenant hearthstone.
+        hearthstonesTable[toyID] = (hasToy and level and level == 80) and true or false
     end
 
     availableHearthstones = {}

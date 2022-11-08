@@ -48,7 +48,6 @@ local C_GossipInfo_GetActiveQuests = C_GossipInfo.GetActiveQuests
 local C_GossipInfo_GetAvailableQuests = C_GossipInfo.GetAvailableQuests
 local C_GossipInfo_GetNumActiveQuests = C_GossipInfo.GetNumActiveQuests
 local C_GossipInfo_GetNumAvailableQuests = C_GossipInfo.GetNumAvailableQuests
-local C_GossipInfo_GetNumOptions = C_GossipInfo.GetNumOptions
 local C_GossipInfo_GetOptions = C_GossipInfo.GetOptions
 local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
@@ -212,14 +211,6 @@ local itemBlacklist = {
     [88604] = true -- 納特的釣魚手冊
 }
 
-local autoGossipTypes = {
-    ["taxi"] = true,
-    ["gossip"] = true,
-    ["banker"] = true,
-    ["vendor"] = true,
-    ["trainer"] = true
-}
-
 local ignoreInstances = {
     [1571] = true, -- 枯法者
     [1626] = true -- 群星庭院
@@ -361,9 +352,8 @@ function TI:GOSSIP_SHOW()
 
             local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
             if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
-                local gossipInfoTable = C_GossipInfo_GetOptions()
-                local gType = gossipInfoTable[1] and gossipInfoTable[1].type
-                if gType and autoGossipTypes[gType] then
+                local status = gossipOptions[1] and gossipOptions[1].status
+                if status and status == 0 then
                     return C_GossipInfo_SelectOption(firstGossipOptionID)
                 end
             end

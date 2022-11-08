@@ -119,12 +119,11 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 13. **Myslot Skin**: Apply skin for Myslot.
 14. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
 15. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-16. **REHack Skin**: Apply skin for REHack.
-17. **Rematch Skin**: Apply skin for Rematch.
-18. **TinyInspect Skin**: Apply skin for TinyInspect.
-19. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
-20. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
-21. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+16. **Rematch Skin**: Apply skin for Rematch.
+17. **TinyInspect Skin**: Apply skin for TinyInspect.
+18. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
+19. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
+20. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 
@@ -149,5 +148,5 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 -----
 <br>
 
->This repo is for the version of Shadowlands (9.0).  
->Check legacy version here: [ElvUI_WindTools (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)
+>This repo is for the version of Dragonflight (10.0).  
+>Check legacy version here: [ElvUI_WindTools 1.x (BfA)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

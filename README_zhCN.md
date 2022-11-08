@@ -120,12 +120,11 @@
 13. **Myslot 美化**: 为 Myslot 的主要窗口添加美化.
 14. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化.
 15. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
-16. **REHack 美化**: 为 REHack 的主要窗口添加美化.
-17. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
-18. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-19. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
-20. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
-21. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+16. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
+17. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+18. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
+19. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
+20. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 
@@ -141,14 +140,14 @@
 10. **预组列表**: 美化预组建队伍列表的图标, 并添加一个职业颜色条.
 11. **移动速度**: 在人物面板显示移动速度.
 12. **自动化**: 自动接受复活, 召唤及在战斗中隐藏界面.
-14. **无汉字计数**: 在数值中使用英文字符代替汉字.
-15. **自动截图**: 在你获得成就后自动进行截图.
-16. **隐藏制造者**: 隐藏物品鼠标提示中的制造者姓名.
-17. **键位在冷却上方**: 调整层级关系, 让按键显示于 ElvUI 冷却动画上方.
-18. **公会新闻装等**: 在公会新闻中显示每件装备的物品等级.
+13. **无汉字计数**: 在数值中使用英文字符代替汉字.
+14. **自动截图**: 在你获得成就后自动进行截图.
+15. **隐藏制造者**: 隐藏物品鼠标提示中的制造者姓名.
+16. **键位在冷却上方**: 调整层级关系, 让按键显示于 ElvUI 冷却动画上方.
+17. **公会新闻装等**: 在公会新闻中显示每件装备的物品等级.
 
 -----
 <br>
 
->这个仓库用来存放暗影国度版本的插件.  
->访问过去版本 [ElvUI_WindTools (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)
+>这个仓库用来存放巨龙时代版本的插件.  
+>访问过去版本 [ElvUI_WindTools 1.x (争霸艾泽拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)

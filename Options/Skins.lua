@@ -1089,13 +1089,6 @@ options.addons = {
             addonName = "PremadeGroupsFilter",
             addonskinsKey = "PremadeGroupsFilter"
         },
-        rehack = {
-            order = 10,
-            type = "toggle",
-            name = L["REHack"],
-            addonName = "REHack",
-            addonskinsKey = "REHack"
-        },
         -- rematch = {
         --     order = 10,
         --     type = "toggle",

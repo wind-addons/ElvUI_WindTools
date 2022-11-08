@@ -11,7 +11,6 @@
 	<Script file='Myslot.lua'/>
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
-	<!-- <Script file='REHack.lua'/> -->
 	<!-- <Script file='Rematch.lua'/> -->
 	<!-- <Script file='TinyInspect.lua'/> -->
 	<Script file='TLDRMissions.lua'/>

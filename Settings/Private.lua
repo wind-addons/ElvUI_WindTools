@@ -346,7 +346,6 @@ V.skins = {
         myslot = true,
         mythicDungeonTools = true,
         premadeGroupsFilter = true,
-        rehack = true,
         rematch = true,
         tinyInspect = true,
         tldrMissions = true,

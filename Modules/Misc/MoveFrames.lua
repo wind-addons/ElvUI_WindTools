@@ -139,10 +139,10 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_Communities"] = {
         "ClubFinderGuildFinderFrame.RequestToJoinFrame",
         "ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame",
-        -- ["CommunitiesFrame"] = {
-        --     "CommunitiesFrame.GuildMemberDetailFrame",
-        --     "CommunitiesFrame.NotificationSettingsDialog"
-        -- },
+        ["CommunitiesFrame"] = {
+            "CommunitiesFrame.GuildMemberDetailFrame",
+            "CommunitiesFrame.NotificationSettingsDialog"
+        },
         "CommunitiesFrame.RecruitmentDialog",
         "CommunitiesSettingsDialog",
         "CommunitiesGuildLogFrame",
@@ -484,7 +484,7 @@ function MF:HandleAddon(_, addon)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion1.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion2.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion3.reward, "OnEnter", replacement)
-    elseif addOnName == "Blizzard_Communities" then
+    elseif addon == "Blizzard_Communities" then
         local dialog = _G.CommunitiesFrame.NotificationSettingsDialog
         if dialog then
             dialog:ClearAllPoints()

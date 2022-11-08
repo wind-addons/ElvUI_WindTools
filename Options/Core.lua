@@ -153,6 +153,16 @@ function W:OptionsCallback()
     E.Options.args.WindTools.args["Tips"] = {
         order = 10000,
         type = "description",
-        name = E.NewSign .. L["If some buttons not works, use [Button Fix] in [Information] - [Help]."]
+        name = E.NewSign ..
+            gsub(
+                L["If some buttons not works, use [Button Fix] in [Information] - [Help]."],
+                "%[[^%[]+%]",
+                function(s)
+                    if type(s) ~= "string" then
+                        s = tostring(s)
+                    end
+                    return F.CreateColorString(s, {r = 0.204, g = 0.596, b = 0.859})
+                end
+            )
     }
 end

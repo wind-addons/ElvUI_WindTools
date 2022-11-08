@@ -739,18 +739,7 @@ for version, data in pairs(W.Changelog) do
             name = function()
                 local text = ""
                 for index, line in ipairs(newPart) do
-                    text =
-                        text ..
-                        format("%02d", index) ..
-                            ". " ..
-                                gsub(
-                                    line,
-                                    "%[.+%]",
-                                    function(s)
-                                        return AddColor(s)
-                                    end
-                                ) ..
-                                    "\n"
+                    text = text .. format("%02d", index) .. ". " .. gsub(line, "%[[^%[]+%]", AddColor) .. "\n"
                 end
                 return text .. "\n"
             end,
@@ -771,18 +760,7 @@ for version, data in pairs(W.Changelog) do
             name = function()
                 local text = ""
                 for index, line in ipairs(improvementPart) do
-                    text =
-                        text ..
-                        format("%02d", index) ..
-                            ". " ..
-                                gsub(
-                                    line,
-                                    "%[.+%]",
-                                    function(s)
-                                        return AddColor(s)
-                                    end
-                                ) ..
-                                    "\n"
+                    text = text .. format("%02d", index) .. ". " .. gsub(line, "%[[^%[]+%]", AddColor) .. "\n"
                 end
                 return text .. "\n"
             end,

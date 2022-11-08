@@ -10,19 +10,19 @@ W.Changelog[260] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[额外物品条] 新增火枪鞋到实用工具分类中. 感谢 Jaenichen",
+            "[额外物品条] 新增火枪鞋到实用工具分类中. 感谢 beejayjayn",
             "[美化皮肤] 新增编辑模式皮肤."
         },
         ["zhTW"] = {
-            "[額外物品條] 新增槍靴到實用工具分類中. 感謝 Jaenichen",
+            "[額外物品條] 新增槍靴到實用工具分類中. 感謝 beejayjayn",
             "[美化皮膚] 新增編輯模式皮膚."
         },
         ["enUS"] = {
-            "[ExtraItemBar] Add Gunshoes to Utility category. Thanks Jaenichen",
+            "[ExtraItemBar] Add Gunshoes to Utility category. Thanks beejayjayn",
             "[Skins] Add EditMode skin."
         },
         ["koKR"] = {
-            "[ExtraItemBar] Add Gunshoes to Utility category. Thanks Jaenichen",
+            "[ExtraItemBar] Add Gunshoes to Utility category. Thanks beejayjayn",
             "[Skins] Add EditMode skin."
         }
     },

@@ -419,7 +419,8 @@ do -- 本地化
         },
         ["français (frFR)"] = {
             "PodVibe @ CurseForge",
-            "xan2622 @ Github"
+            "xan2622 @ Github",
+            "Pristi#2836 @ Discord"
         },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",

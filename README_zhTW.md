@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-12.99-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.60-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-2.61-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -93,10 +93,9 @@
 2. **任務進度**: 添加部分任務的小怪百分比信息.
 3. **隊伍信息**: 添加尋求組隊的隊伍信息到浮動提示中.
 4. **生命條**: 調整生命條和生命文字偏移.
-5. **統御等級**: 添加統御等級到浮動提示中.
-6. **套裝**: 添加套裝的數量到浮動提示中.
-7. **誓盟**: 添加經由第三方插件通信所得之誓盟訊息到浮動提示中.
-8. **團隊進度**: 添加各個團隊副本的進度, 特殊成就和 M+ 分數到浮動提示中.
+5. **套裝**: 添加套裝的數量到浮動提示中.
+6. **誓盟**: 添加經由第三方插件通信所得之誓盟訊息到浮動提示中.
+7. **團隊進度**: 添加各個團隊副本的進度, 特殊成就和 M+ 分數到浮動提示中.
 
 ## 單位框架
 

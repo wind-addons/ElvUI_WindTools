@@ -99,6 +99,7 @@ function QF:Initialize()
     local button = CreateFrame("Button", "WTQuickFocusButton", E.UIParent, "SecureActionButtonTemplate")
     button:SetAttribute("type1", "macro")
     button:SetAttribute("macrotext", "/focus mouseover")
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
     SetOverrideBindingClick(button, true, self.db.modifier .. "-" .. self.db.button, "WTQuickFocusButton")
 
     self:RegisterEvent("PLAYER_REGEN_ENABLED")

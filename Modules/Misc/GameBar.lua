@@ -673,7 +673,7 @@ function GB:ConstructBar()
     middlePanel:SetSize(81, 50)
     middlePanel:SetPoint("CENTER")
     middlePanel:CreateBackdrop("Transparent")
-    middlePanel:RegisterForClicks(E.global.WT.core.buttonFix)
+    middlePanel:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
     bar.middlePanel = middlePanel
 
     local leftPanel = CreateFrame("Frame", "WTGameBarLeftPanel", bar)
@@ -1052,7 +1052,7 @@ function GB:ConstructButton()
 
     local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
     button:SetSize(self.db.buttonSize, self.db.buttonSize)
-    button:RegisterForClicks(E.global.WT.core.buttonFix)
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
     local normalTex = button:CreateTexture(nil, "ARTWORK")
     normalTex:SetPoint("CENTER")

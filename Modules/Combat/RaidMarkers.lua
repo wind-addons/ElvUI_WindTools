@@ -335,7 +335,7 @@ function RM:CreateButtons()
 			end
 		end
 
-		button:RegisterForClicks(E.global.WT.core.buttonFix)
+		button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
 		-- 鼠标提示
 		local tooltipText = ""

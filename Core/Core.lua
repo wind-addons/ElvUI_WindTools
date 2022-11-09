@@ -18,6 +18,7 @@ local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_LFGList = C_LFGList
 
 local ACCEPT = _G.ACCEPT
@@ -33,6 +34,8 @@ W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 
 W.RegisteredModules = {}
 W.Changelog = {}
+
+W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
 
 -- Alerts
 E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
@@ -53,6 +56,13 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
         E:ToggleOptionsUI("WindTools,information,changelog")
     end,
     hideOnEscape = 1
+}
+
+E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
+    text = L["You need to reload UI to make buttons work properly."],
+    button1 = ACCEPT,
+    button2 = CANCEL,
+    OnAccept = _G.ReloadUI
 }
 
 -- Keybinds
@@ -199,4 +209,13 @@ function W:GameFixing()
             end
         end
     end
+
+    self:RegisterEvent(
+        "CVAR_UPDATE",
+        function()
+            if W.UseKeyDown ~= C_CVar_GetCVarBool("ActionButtonUseKeyDown") then
+                E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
+            end
+        end
+    )
 end

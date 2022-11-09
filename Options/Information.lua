@@ -113,27 +113,8 @@ options.help = {
                 [4] = "4 - |cff00d1b2[DEBUG]|r"
             }
         },
-        buttonFix = {
-            order = 8,
-            type = "select",
-            name = L["Button Fix"],
-            desc = L["If some buttons not work, change this option may fix."],
-            get = function(info)
-                return E.global.WT.core.buttonFix
-            end,
-            set = function(info, value)
-                E.global.WT.core.buttonFix = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end,
-            hidden = function()
-            end,
-            values = {
-                ["AnyDown"] = "AnyDown",
-                ["AnyUp"] = "AnyUp"
-            }
-        },
         contact = {
-            order = 9,
+            order = 8,
             type = "group",
             inline = true,
             name = L["Message From the Author"],

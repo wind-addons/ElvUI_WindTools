@@ -212,8 +212,8 @@ function W:GameFixing()
 
     self:RegisterEvent(
         "CVAR_UPDATE",
-        function()
-            if W.UseKeyDown ~= C_CVar_GetCVarBool("ActionButtonUseKeyDown") then
+        function(_, cvar, value)
+            if cvar == "ActionButtonUseKeyDown" and W.UseKeyDown ~= (value == "1") then
                 E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
             end
         end

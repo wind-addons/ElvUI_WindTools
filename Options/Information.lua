@@ -114,7 +114,7 @@ options.help = {
             }
         },
         contact = {
-            order = 8,
+            order = 9,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -203,7 +203,7 @@ options.help = {
             }
         },
         contributors = {
-            order = 9,
+            order = 10,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -275,7 +275,7 @@ options.help = {
             }
         },
         version = {
-            order = 10,
+            order = 11,
             name = L["Version"],
             type = "group",
             inline = true,

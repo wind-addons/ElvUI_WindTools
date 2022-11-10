@@ -59,8 +59,13 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 }
 
 E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
-    text = L["You need to reload UI to make buttons work properly."],
-    button1 = ACCEPT,
+    text = format(
+        "%s\n%s\n\n|cffaaaaaa%s|r",
+        format(L["%s detects CVar %s has been changed."], W.Title, "|cff209ceeActionButtonUseKeyDown|r"),
+        L["It will cause some buttons not work properly before UI reloading."],
+        format(L["You can disable this alert in [%s] - [%s]"], W.Title, L["Advanced"])
+    ),
+    button1 = L["Reload UI"],
     button2 = CANCEL,
     OnAccept = _G.ReloadUI
 }
@@ -142,7 +147,7 @@ end
 function W:GameFixing()
     -- -- fix duplicated party in lfg frame
     -- -- from: https://wago.io/tWVx_hIx3/4
-    do
+    if E.global.WT.core.noDuplicatedParty then
         if not _G["ShowLFGRemoveDuplicates"] and not IsAddOnLoaded("LFMPlus") then
             hooksecurefunc(
                 "LFGListUtil_SortSearchResults",
@@ -183,7 +188,8 @@ function W:GameFixing()
 
     -- fix playstyle string
     -- from Premade Groups Filter & LFMPlus
-    do
+
+    if E.global.WT.core.fixPlaystyle then
         if C_LFGList.IsPlayerAuthenticatedForLFG(703) then
             function C_LFGList.GetPlaystyleString(playstyle, activityInfo)
                 if
@@ -210,12 +216,14 @@ function W:GameFixing()
         end
     end
 
-    self:RegisterEvent(
-        "CVAR_UPDATE",
-        function(_, cvar, value)
-            if cvar == "ActionButtonUseKeyDown" and W.UseKeyDown ~= (value == "1") then
-                E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
+    if E.global.WT.core.cvarAlert then
+        self:RegisterEvent(
+            "CVAR_UPDATE",
+            function(_, cvar, value)
+                if cvar == "ActionButtonUseKeyDown" and W.UseKeyDown ~= (value == "1") then
+                    E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
+                end
             end
-        end
-    )
+        )
+    end
 end

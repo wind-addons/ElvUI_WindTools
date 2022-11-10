@@ -137,7 +137,7 @@ options.help = {
                             L["QQ Group"],
                             L["Discord"],
                             L["KOOK"],
-                            L["Github"],
+                            L["GitHub"],
                             L["NGA.cn"]
                         ),
                         format(L["The localization of %s is community-driven."], W.Title),
@@ -199,7 +199,7 @@ options.help = {
                 github = {
                     order = 7,
                     type = "execute",
-                    name = L["Github"],
+                    name = L["GitHub"],
                     image = W.Media.Icons.github,
                     func = function()
                         E:StaticPopup_Show(

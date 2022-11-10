@@ -235,6 +235,7 @@ AddMedia("discord", "Discord.tga", "Icons")
 AddMedia("github", "Github.tga", "Icons")
 AddMedia("nga", "NGA.tga", "Icons")
 AddMedia("qq", "QQ.tga", "Icons")
+AddMedia("kook", "KOOK.tga", "Icons")
 
 AddMedia("convert", "Convert.tga", "Icons")
 AddMedia("favorite", "Favorite.tga", "Icons")

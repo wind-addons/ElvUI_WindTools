@@ -13,7 +13,7 @@ options.core = {
             order = 1,
             type = "toggle",
             name = L["Login Message"],
-            desc = L["The message will be shown in chat when you login."],
+            desc = L["The message will be shown in chat when you first login."],
             get = function(info)
                 return E.global.WT.core.loginMessage
             end,

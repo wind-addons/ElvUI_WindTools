@@ -6,8 +6,6 @@ local select = select
 local strlen = strlen
 local tonumber = tonumber
 
-local GetCVarBool = GetCVarBool
-local GetContainerNumFreeSlots = GetContainerNumFreeSlots
 local GetInventoryItemID = GetInventoryItemID
 local GetItemInfo = GetItemInfo
 local GetNumLootItems = GetNumLootItems
@@ -16,12 +14,15 @@ local IsModifiedClick = IsModifiedClick
 local IsFishingLoot = IsFishingLoot
 local LootSlot = LootSlot
 
+local C_Container_GetContainerNumFreeSlots = C_Container.GetContainerNumFreeSlots
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
+
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 function FL:GetFreeSlots()
 	local numFreeSlots = 0
 	for bag = 0, NUM_BAG_SLOTS do
-		numFreeSlots = numFreeSlots + tonumber((GetContainerNumFreeSlots(bag))) or 0
+		numFreeSlots = numFreeSlots + tonumber((C_Container_GetContainerNumFreeSlots(bag))) or 0
 	end
 	return numFreeSlots
 end
@@ -30,7 +31,7 @@ function FL:LOOT_READY()
 	local tDelay = 0
 	if GetTime() - tDelay >= self.db.limit then
 		tDelay = GetTime()
-		if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") and not IsFishingLoot() then
+		if C_CVar_GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") and not IsFishingLoot() then
 			for i = GetNumLootItems(), 1, -1 do
 				if self:GetFreeSlots() > 0 then
 					LootSlot(i)

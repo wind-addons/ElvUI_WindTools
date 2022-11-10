@@ -5,22 +5,22 @@ W.Changelog[262] = {
     IMPORTANT = {
         ["zhCN"] = {
             "面向中文用户新增了 KOOK (原开黑啦) 支持社区的邀请链接.",
-            "最低支持的 ElvUI 版本变更为 12.99.",
+            "最低支持的 ElvUI 版本变更为 13.00.",
             "按钮修复现在可以自动进行."
         },
         ["zhTW"] = {
             "面向中文用户新增了 KOOK (原開黑啦) 使用支援社群的邀請連結.",
-            "最低支援的 ElvUI 版本變更為 12.99.",
+            "最低支援的 ElvUI 版本變更為 13.00.",
             "按鈕修復現在可以自動進行."
         },
         ["enUS"] = {
             "Add a new invite link for KOOK (formerly known as KaiHeiLa) support community for Chinese users.",
-            "The minimum supported ElvUI version is now 12.99.",
+            "The minimum supported ElvUI version is now 13.00.",
             "The button fix now can be automatically executed."
         },
         ["koKR"] = {
             "Add a new invite link for KOOK (formerly known as KaiHeiLa) support community for Chinese users.",
-            "The minimum supported ElvUI version is now 12.99.",
+            "The minimum supported ElvUI version is now 13.00.",
             "The button fix now can be automatically executed."
         }
     },

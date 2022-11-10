@@ -63,7 +63,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
         end
     end
 
-    if not frame or frame.__shadow or frame.shadow and frame.shadow.__wind then
+    if not frame or frame.__windShadow or frame.shadow and frame.shadow.__wind then
         return
     end
 
@@ -88,7 +88,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
     shadow.__wind = true -- mark the shadow created by WindTools
 
     frame.shadow = shadow
-    frame.__shadow = 1 -- mark the current frame has shadow
+    frame.__windShadow = 1 -- mark the current frame has shadow
 end
 
 --[[
@@ -176,7 +176,7 @@ do
         S:CreateShadow(frame.backdrop)
 
         if frame.backdrop.shadow.__wind then
-            frame.__shadow = frame.backdrop.__shadow + 1
+            frame.__windShadow = frame.backdrop.__windShadow + 1
         end
     end
 
@@ -186,7 +186,7 @@ do
         @param {string} template
     ]]
     function S:CreateBackdropShadow(frame, template)
-        if not frame or frame.__shadow then
+        if not frame or frame.__windShadow then
             return
         end
 
@@ -215,7 +215,7 @@ do
     @param {string} [tried=20] time
 ]]
     function S:TryCreateBackdropShadow(frame, tried)
-        if not frame or frame.__shadow then
+        if not frame or frame.__windShadow then
             return
         end
 

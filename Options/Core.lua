@@ -95,9 +95,14 @@ W.options = {
     }
 }
 
-local tempString = strrep("Z", 12)
+local tempString = strrep("Z", 14)
+
+local r1, g1, b1 = HexToRGB("f0772f")
+local r2, g2, b2 = HexToRGB("f34a62")
+local r3, g3, b3 = HexToRGB("bb77ed")
+local r4, g4, b4 = HexToRGB("1cdce8")
 local tempString =
-    E:TextGradient(tempString, 0.910, 0.314, 0.357, 0.976, 0.835, 0.431, 0.953, 0.925, 0.761, 0.078, 0.694, 0.671)
+    E:TextGradient(tempString, r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4)
 
 local color = {}
 

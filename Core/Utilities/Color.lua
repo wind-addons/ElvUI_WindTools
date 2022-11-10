@@ -3,6 +3,9 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 W.Utilities.Color = {}
 local U = W.Utilities.Color
 
+local format = format
+local strsub = strsub
+
 local CreateColor = CreateColor
 
 function U.CreateColorFromTable(colorTable)
@@ -19,4 +22,13 @@ end
 
 function U.IsRGBEqual(color1, color2)
     return color1.r == color2.r and color1.g == color2.g and color1.b == color2.b
+end
+
+function U.HexToRGB(hex)
+    local rhex, ghex, bhex = strsub(hex, 1, 2), strsub(hex, 3, 4), strsub(hex, 5, 6)
+    return tonumber(rhex, 16) / 255, tonumber(ghex, 16) / 255, tonumber(bhex, 16) / 255
+end
+
+function U.RGBToHex(r, g, b)
+    return format("%02x%02x%02x", r * 255, g * 255, b * 255)
 end

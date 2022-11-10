@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+local HexToRGB = W.Utilities.Color.HexToRGB
 
 local gsub = gsub
 local pairs = pairs
@@ -78,8 +79,15 @@ W.options = {
         icon = W.Media.Icons.misc,
         args = {}
     },
-    information = {
+    advanced = {
         order = 111,
+        name = L["Advanced"],
+        desc = L["Advanced settings."],
+        icon = W.Media.Icons.information,
+        args = {}
+    },
+    information = {
+        order = 112,
         name = L["Information"],
         desc = L["Credits & help."],
         icon = W.Media.Icons.information,
@@ -87,7 +95,7 @@ W.options = {
     }
 }
 
-local tempString = strrep("Z", 11)
+local tempString = strrep("Z", 12)
 local tempString =
     E:TextGradient(tempString, 0.910, 0.314, 0.357, 0.976, 0.835, 0.431, 0.953, 0.925, 0.761, 0.078, 0.694, 0.671)
 

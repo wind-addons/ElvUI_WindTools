@@ -183,6 +183,10 @@ function OT:HandleTitleText(text)
 end
 
 function OT:HandleMenuText(text)
+    if not self.db.menuTitle.enable then
+        return
+    end
+
     F.SetFontWithDB(text, self.db.menuTitle.font)
     local height = text:GetStringHeight() + 2
     if height ~= text:GetHeight() then

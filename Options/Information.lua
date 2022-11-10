@@ -133,9 +133,10 @@ options.help = {
                             W.Title
                         ),
                         format(
-                            L["You can send your suggestions or bugs via %s, %s, %s, and the thread in %s."],
+                            L["You can send your suggestions or bugs via %s, %s, %s, %s and the thread in %s."],
                             L["QQ Group"],
                             L["Discord"],
+                            L["KOOK"],
                             L["Github"],
                             L["NGA.cn"]
                         ),
@@ -175,8 +176,18 @@ options.help = {
                     end,
                     width = 0.7
                 },
-                qq = {
+                kook = {
                     order = 5,
+                    type = "execute",
+                    name = L["KOOK"],
+                    image = W.Media.Icons.kook,
+                    func = function()
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://kook.top/ryxa8X")
+                    end,
+                    width = 0.7
+                },
+                qq = {
+                    order = 6,
                     type = "execute",
                     name = L["QQ Group"],
                     image = W.Media.Icons.qq,
@@ -186,7 +197,7 @@ options.help = {
                     width = 0.7
                 },
                 github = {
-                    order = 6,
+                    order = 7,
                     type = "execute",
                     name = L["Github"],
                     image = W.Media.Icons.github,

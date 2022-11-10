@@ -336,7 +336,6 @@ V.skins = {
         ace3 = true,
         ace3DropdownBackdrop = true,
         angryKeystones = true,
-        azerothAutoPilot = true,
         bigWigs = true,
         bigWigsQueueTimer = true,
         bugSack = true,

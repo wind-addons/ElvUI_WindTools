@@ -1025,12 +1025,6 @@ options.addons = {
             name = L["Angry Keystones"],
             addonName = "AngryKeystones"
         },
-        azerothAutoPilot = {
-            order = 10,
-            type = "toggle",
-            name = L["Azeroth Auto Pilot"],
-            addonName = "AAP-Core"
-        },
         bigWigs = {
             order = 10,
             type = "toggle",
@@ -1139,7 +1133,6 @@ options.addons = {
 local fixingAddonList = {
     ["TinyInspect"] = true,
     ["AngryKeystones"] = true,
-    ["AAP-Core"] = true,
     ["PremadeGroupsFilter"] = true,
     ["REHack"] = true
 }

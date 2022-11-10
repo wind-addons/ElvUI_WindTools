@@ -111,20 +111,19 @@
 4. **ElvUI 框架美化**: 為 ElvUI 模組添加美化.
 5. **WindTools 框架美化**: 為 WindTools 模組添加美化.
 6. **Ace3 美化**: 為 Ace3-GUI 的部分庫組件添加美化.
-7. **Azeroth Auto Pilot 美化**: 為 Azeroth Auto Pilot 的主要窗口添加美化.
-8. **Bigwigs 美化**: 為 Bigwigs 的條和設定界面添加美化.
-9. **BugSack 美化**: 為 BugSack 的錯誤提示窗口添加美化.
-10. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化.
-11. **Immersion 美化**: 為 Immersion 對話窗口, 按鍵提供全方位的美化.
-12. **網易集合石美化**: 為網易的集合石添加美化.
-13. **Myslot 美化**: 為 Myslot 的主要窗口添加美化.
-14. **Mythic Dungeon Tools 美化**: 為 Mythic Dungeon Tools 的主要窗口添加美化.
-15. **Premade Groups Filter 美化**: 為 Premade Groups Filter 的主要窗口添加美化.
-16. **Rematch 美化**: 為 Rematch 的主要窗口添加美化.
-17. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
-18. **TomCat's Tour 美化**: 為 TomCat's Tour 的浮動提示和標題添加美化.
-19. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化.
-20. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
+7. **Bigwigs 美化**: 為 Bigwigs 的條和設定界面添加美化.
+8. **BugSack 美化**: 為 BugSack 的錯誤提示窗口添加美化.
+9. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化.
+10. **Immersion 美化**: 為 Immersion 對話窗口, 按鍵提供全方位的美化.
+11. **網易集合石美化**: 為網易的集合石添加美化.
+12. **Myslot 美化**: 為 Myslot 的主要窗口添加美化.
+13. **Mythic Dungeon Tools 美化**: 為 Mythic Dungeon Tools 的主要窗口添加美化.
+14. **Premade Groups Filter 美化**: 為 Premade Groups Filter 的主要窗口添加美化.
+15. **Rematch 美化**: 為 Rematch 的主要窗口添加美化.
+16. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化.
+17. **TomCat's Tour 美化**: 為 TomCat's Tour 的浮動提示和標題添加美化.
+18. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化.
+19. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
 
 ## 其他
 

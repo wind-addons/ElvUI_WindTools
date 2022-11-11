@@ -405,7 +405,8 @@ do
     local raids = {
         "Castle Nathria",
         "Sanctum of Domination",
-        "Sepulcher of the First Ones"
+        "Sepulcher of the First Ones",
+        "Vault of the Incarnates"
     }
 
     local dungeons = {
@@ -419,11 +420,25 @@ do
         "Tazavesh: Streets of Wonder"
     }
 
+    -- DF S1
+    -- local dungeons = {
+    --     "Temple of the Jade Serpent",
+    --     "Shadowmoon Burial Grounds",
+    --     "Halls of Valor",
+    --     "Court of Stars",
+    --     "Ruby Life Pools",
+    --     "The Nokhud Offensive",
+    --     "The Azure Vault",
+    --     "Algeth'ar Academy",
+    -- }
+
     local special = {
         "Shadowlands Keystone Master: Season One",
         "Shadowlands Keystone Master: Season Two",
         "Shadowlands Keystone Master: Season Three",
-        "Shadowlands Keystone Master: Season Four"
+        "Shadowlands Keystone Master: Season Four",
+        "Dragonflight Keystone Master: Season One",
+        "Dragonflight Keystone Hero: Season One"
     }
 
     for index, name in ipairs(raids) do
@@ -431,6 +446,7 @@ do
             order = index + 1,
             type = "toggle",
             name = L[name],
+            width = "full",
             disabled = function()
                 return not (E.private.WT.tooltips.progression.enable and E.private.WT.tooltips.progression.raids.enable)
             end
@@ -442,6 +458,7 @@ do
             order = index + 2,
             type = "toggle",
             name = L[name],
+            width = "full",
             disabled = function()
                 return not (E.private.WT.tooltips.progression.enable and
                     E.private.WT.tooltips.progression.mythicDungeons.enable)

@@ -842,7 +842,7 @@ function EB:CreateButton(name, barDB)
     button:SetClampedToScreen(true)
     button:SetAttribute("type", "item")
     button:EnableMouse(false)
-    button:RegisterForClicks(E.global.WT.core.buttonFix)
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
     local tex = button:CreateTexture(nil, "OVERLAY", nil)
     tex:SetPoint("TOPLEFT", button, "TOPLEFT", 1, -1)
@@ -1432,7 +1432,7 @@ function EB:UpdateBinding()
     end
 end
 
-function EB:Initialize()
+function EB:Initialize_()
     self.db = E.db.WT.item.extraItemsBar
     if not self.db or not self.db.enable or self.initialized then
         return
@@ -1456,6 +1456,12 @@ function EB:Initialize()
     self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
     self.initialized = true
+end
+
+function EB:Initialize()
+    E:Delay(5, function()
+        EB:Initialize_()
+    end)
 end
 
 function EB:ProfileUpdate()

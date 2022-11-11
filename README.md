@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.99-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-2.61-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.00-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-3.00-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -118,11 +118,10 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 12. **Myslot Skin**: Apply skin for Myslot.
 13. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
 14. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-15. **Rematch Skin**: Apply skin for Rematch.
-16. **TinyInspect Skin**: Apply skin for TinyInspect.
-17. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
-18. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
-19. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+15. **TinyInspect Skin**: Apply skin for TinyInspect.
+16. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
+17. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
+18. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
 
 ## Misc
 

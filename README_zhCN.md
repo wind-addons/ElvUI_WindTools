@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-12.99-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-2.61-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.00-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.00-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -119,11 +119,10 @@
 12. **Myslot 美化**: 为 Myslot 的主要窗口添加美化.
 13. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化.
 14. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化.
-15. **Rematch 美化**: 为 Rematch 的主要窗口添加美化.
-16. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
-17. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
-18. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
-19. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+15. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
+16. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
+17. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
+18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 
 ## 其他
 

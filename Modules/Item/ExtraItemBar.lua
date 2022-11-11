@@ -1432,7 +1432,7 @@ function EB:UpdateBinding()
     end
 end
 
-function EB:Initialize_()
+function EB:Initialize()
     self.db = E.db.WT.item.extraItemsBar
     if not self.db or not self.db.enable or self.initialized then
         return
@@ -1456,12 +1456,6 @@ function EB:Initialize_()
     self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
     self.initialized = true
-end
-
-function EB:Initialize()
-    E:Delay(5, function()
-        EB:Initialize_()
-    end)
 end
 
 function EB:ProfileUpdate()

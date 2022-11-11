@@ -693,7 +693,7 @@ Public License instead of this License.  But first, please read
   5. 你不可以将本授权生效后的任意版本的软件 (ElvUI_WindTools) 及软件代码 (ElvUI_WindTools 代码) 变更合并或拷贝至旧版本软件之中.
   6. 在进行个体用户之间代码分发时, 你不得为软件或可用于软件的专属信息设定密码或障碍以求使用者使用额外之手段.
   7.1. 专属信息包括但不限于含有 ElvUI_WindTools 的 ElvUI (Tukui.org 提供之软件) 配置文件, ElvUI_WindTools 字符串.
-  7.2. 额外之手段包括但不限于进入腾讯 QQ 群, 注册账户, 购买会员, 订阅直播, 点击广告, 付费, 游戏内交易.
+  7.2. 额外之手段包括但不限于进入腾讯 QQ 群, 注册账户, 购买会员, 订阅直播, 点击广告, 付费, 捐款, 游戏内交易.
   8. 关于软件分发的最终解释权归于本软件作者 (fang2hou@GitHub).
 
 ENGLISH TRANSLATION, BUT NOT OFFICIAL TRANSLATION
@@ -716,5 +716,5 @@ ADDITIONAL TERMS AND CONDITIONS (Any conflicting items are subject to this)
   6. You may not merge or copy any version of the software (ElvUI_WindTools) or software code (ElvUI_WindTools code) from any version of the software (ElvUI_WindTools) after the effective date of this license into an older version of the software.
   7. When distributing code between individual users, you may not set passwords or barriers for the software or proprietary information that can be used in the software to allow users to use additional means.
   7.1. Proprietary information includes, but is not limited to, the ElvUI (software provided by Tukui.org) configuration file containing ElvUI_WindTools, the ElvUI_WindTools string.
-  7.2. Additional means include but are not limited to accessing Tencent QQ groups, registering accounts, purchasing memberships, subscribing to live streams, clicking on advertisements, paying fees, and in-game transactions.
+  7.2. Additional means include, but are not limited to, accessing Tencent QQ groups, registering accounts, purchasing memberships, subscribing to live streams, clicking on advertisements, paying fees, donations, and in-game transactions.
   8. The author of this software (fang2hou@GitHub) is the final authority for the distribution of the software.

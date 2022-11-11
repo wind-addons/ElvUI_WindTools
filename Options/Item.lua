@@ -30,7 +30,7 @@ local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
 end
 
-local function formatDescription(code, helpText)
+local function desc(code, helpText)
     return ImportantColorString(code) .. " = " .. helpText
 end
 
@@ -503,24 +503,27 @@ do -- Add options for bars
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(
-                        "%s %s\n" .. strrep("\n%s", 15),
+                        "%s %s\n" .. strrep("\n%s", 18),
                         L["Set the type and order of button groups."],
                         L["You can separate the groups with a comma."],
-                        formatDescription("QUEST", L["Quest Items"]),
-                        formatDescription("EQUIP", L["Equipments"]),
-                        formatDescription("POTION", L["Potions"]),
-                        formatDescription("POTIONSL", format("%s (%s)", L["Potions"], L["Shadowlands"])),
-                        formatDescription("FLASK", L["Flasks"]),
-                        formatDescription("FLASKSL", format("%s (%s)", L["Flasks"], L["Shadowlands"])),
-                        formatDescription("TORGHAST", L["Torghast Items"]),
-                        formatDescription("FOOD", L["Food"]),
-                        formatDescription("FOODSL", format("%s (%s)", L["Food"], L["Shadowlands"])),
-                        formatDescription("FOODVENDOR", format("%s (%s)", L["Food"], L["Sold by vendor"])),
-                        formatDescription("MAGEFOOD", format("%s (%s)", L["Food"], L["Crafted by mage"])),
-                        formatDescription("BANNER", L["Banners"]),
-                        formatDescription("UTILITY", L["Utilities"]),
-                        formatDescription("OPENABLE", L["Openable Items"]),
-                        formatDescription("CUSTOM", L["Custom Items"])
+                        desc("QUEST", L["Quest Items"]),
+                        desc("EQUIP", L["Equipments"]),
+                        desc("POTION", L["Potions"]),
+                        desc("POTIONSL", format("%s (%s)", L["Potions"], L["Shadowlands"])),
+                        desc("POTIONDF", format("%s (%s)", L["Potions"], L["Dragonflight"])),
+                        desc("FLASK", L["Flasks"]),
+                        desc("FLASKSL", format("%s (%s)", L["Flasks"], L["Shadowlands"])),
+                        desc("TORGHAST", L["Torghast Items"]),
+                        desc("FOOD", L["Food"]),
+                        desc("FOODSL", format("%s (%s)", L["Food"], L["Shadowlands"])),
+                        desc("FOODDF", format("%s (%s)", L["Food"], L["Dragonflight"])),
+                        desc("FOODVENDOR", format("%s (%s - %s)", L["Food"], L["Sold by vendor"], L["Dragonflight"])),
+                        desc("FOODVENDORSL", format("%s (%s - %s)", L["Food"], L["Sold by vendor"], L["Shadowlands"])),
+                        desc("MAGEFOOD", format("%s (%s)", L["Food"], L["Crafted by mage"])),
+                        desc("BANNER", L["Banners"]),
+                        desc("UTILITY", L["Utilities"]),
+                        desc("OPENABLE", L["Openable Items"]),
+                        desc("CUSTOM", L["Custom Items"])
                     ),
                     width = "full"
                 }

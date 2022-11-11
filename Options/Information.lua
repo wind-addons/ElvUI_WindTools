@@ -68,53 +68,8 @@ options.help = {
                         "|r",
             width = "full"
         },
-        loginMessage = {
-            order = 6,
-            type = "toggle",
-            name = L["Login Message"],
-            get = function(info)
-                return E.global.WT.core.loginMessage
-            end,
-            set = function(info, value)
-                E.global.WT.core.loginMessage = value
-            end
-        },
-        compatibilityCheck = {
-            order = 7,
-            type = "toggle",
-            name = L["Compatibility Check"],
-            desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
-            get = function(info)
-                return E.global.WT.core.compatibilityCheck
-            end,
-            set = function(info, value)
-                E.global.WT.core.compatibilityCheck = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end
-        },
-        logLevel = {
-            order = 8,
-            type = "select",
-            name = L["Log Level"],
-            desc = L["Only display log message that the level is higher than you choose."] ..
-                "\n|cffff3860" .. L["Set to 2 if you do not understand the meaning of log level."] .. "|r",
-            get = function(info)
-                return E.global.WT.core.logLevel
-            end,
-            set = function(info, value)
-                E.global.WT.core.logLevel = value
-            end,
-            hidden = function()
-            end,
-            values = {
-                [1] = "1 - |cffff3860[ERROR]|r",
-                [2] = "2 - |cffffdd57[WARNING]|r",
-                [3] = "3 - |cff209cee[INFO]|r",
-                [4] = "4 - |cff00d1b2[DEBUG]|r"
-            }
-        },
         contact = {
-            order = 9,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Message From the Author"],
@@ -214,7 +169,7 @@ options.help = {
             }
         },
         contributors = {
-            order = 10,
+            order = 7,
             name = L["Contributors (Github.com)"],
             type = "group",
             inline = true,
@@ -286,7 +241,7 @@ options.help = {
             }
         },
         version = {
-            order = 11,
+            order = 8,
             name = L["Version"],
             type = "group",
             inline = true,

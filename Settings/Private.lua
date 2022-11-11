@@ -498,7 +498,16 @@ V.tooltips = {
             ["Return to Karazhan: Lower"] = true,
             ["Return to Karazhan: Upper"] = true,
             ["Tazavesh: So'leah's Gambit"] = true,
-            ["Tazavesh: Streets of Wonder"] = true
+            ["Tazavesh: Streets of Wonder"] = true,
+            -- DF S1
+            ["Temple of the Jade Serpent"] = false,
+            ["Shadowmoon Burial Grounds"] = false,
+            ["Halls of Valor"] = false,
+            ["Court of Stars"] = false,
+            ["Ruby Life Pools"] = false,
+            ["The Nokhud Offensive"] = false,
+            ["The Azure Vault"] = false,
+            ["Algeth'ar Academy"] = false
         }
     }
 }

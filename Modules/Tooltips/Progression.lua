@@ -385,20 +385,17 @@ local mythicKeystoneDungeons = {
     [369] = "Operation: Mechagon - Junkyard",
     [370] = "Operation: Mechagon - Workshop",
     [391] = "Tazavesh: Streets of Wonder",
-    [392] = "Tazavesh: So'leah's Gambit"
+    [392] = "Tazavesh: So'leah's Gambit",
+    -- DF S1
+    [2] = "Temple of the Jade Serpent",
+    [165] = "Shadowmoon Burial Grounds",
+    [200] = "Halls of Valor",
+    [210] = "Court of Stars",
+    [399] = "Ruby Life Pools",
+    [400] = "The Nokhud Offensive",
+    [401] = "The Azure Vault",
+    [402] = "Algeth'ar Academy"
 }
-
--- DF S1
--- local mythicKeystoneDungeons = {
---     [2] = "Temple of the Jade Serpent",
---     [165] = "Shadowmoon Burial Grounds",
---     [200] = "Halls of Valor",
---     [210] = "Court of Stars",
---     [399] = "Ruby Life Pools",
---     [400] = "The Nokhud Offensive",
---     [401] = "The Azure Vault",
---     [402] = "Algeth'ar Academy"
--- }
 
 local specialAchievements = {
     {14532, "Shadowlands Keystone Master: Season One"},

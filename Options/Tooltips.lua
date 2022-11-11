@@ -417,20 +417,17 @@ do
         "Return to Karazhan: Lower",
         "Return to Karazhan: Upper",
         "Tazavesh: So'leah's Gambit",
-        "Tazavesh: Streets of Wonder"
+        "Tazavesh: Streets of Wonder",
+        -- DF S1
+        "Temple of the Jade Serpent",
+        "Shadowmoon Burial Grounds",
+        "Halls of Valor",
+        "Court of Stars",
+        "Ruby Life Pools",
+        "The Nokhud Offensive",
+        "The Azure Vault",
+        "Algeth'ar Academy",
     }
-
-    -- DF S1
-    -- local dungeons = {
-    --     "Temple of the Jade Serpent",
-    --     "Shadowmoon Burial Grounds",
-    --     "Halls of Valor",
-    --     "Court of Stars",
-    --     "Ruby Life Pools",
-    --     "The Nokhud Offensive",
-    --     "The Azure Vault",
-    --     "Algeth'ar Academy",
-    -- }
 
     local special = {
         "Shadowlands Keystone Master: Season One",

@@ -174,7 +174,7 @@ options.help = {
             type = "group",
             inline = true,
             args = {
-                ["1"] = {
+                ["fang2hou"] = {
                     order = 1,
                     type = "description",
                     name = format(
@@ -184,13 +184,8 @@ options.help = {
                         F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. " (TW)", "MONK")
                     )
                 },
-                ["2"] = {
+                ["mcc1"] = {
                     order = 2,
-                    type = "description",
-                    name = "someblu"
-                },
-                ["3"] = {
-                    order = 3,
                     type = "description",
                     name = format(
                         "%s: %s",
@@ -198,23 +193,13 @@ options.help = {
                         F.CreateClassColorString("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
                     )
                 },
-                ["4"] = {
+                ["someblu"] = {
+                    order = 3,
+                    type = "description",
+                    name = "someblu"
+                },
+                ["keludechu"] = {
                     order = 4,
-                    type = "description",
-                    name = format("%s: %s", "MouJiaoZi", E.InfoColor .. "某餃子" .. "|r")
-                },
-                ["5"] = {
-                    order = 5,
-                    type = "description",
-                    name = "404Polaris"
-                },
-                ["6"] = {
-                    order = 6,
-                    type = "description",
-                    name = "LiangYuxuan"
-                },
-                ["7"] = {
-                    order = 7,
                     type = "description",
                     name = format(
                         "%s: %s | %s",
@@ -223,8 +208,13 @@ options.help = {
                         F.CreateClassColorString("Surtr @ " .. L["Blanchard"] .. " (CN)", "WARLOCK")
                     )
                 },
-                ["8"] = {
-                    order = 8,
+                ["LiangYuxuan"] = {
+                    order = 5,
+                    type = "description",
+                    name = "LiangYuxuan"
+                },
+                ["asdf12303116"] = {
+                    order = 6,
                     type = "description",
                     name = format(
                         "%s: %s | %s",
@@ -233,10 +223,30 @@ options.help = {
                         F.CreateClassColorString("一发径直入魂 @ " .. L["Burning Blade"] .. " (CN)", "HUNTER")
                     )
                 },
-                ["9"] = {
+                ["KurtzPT"] = {
+                    order = 7,
+                    type = "description",
+                    name = "KurtzPT"
+                },
+                ["404Polaris"] = {
+                    order = 8,
+                    type = "description",
+                    name = "404Polaris"
+                },
+                ["ryanfys"] = {
                     order = 9,
                     type = "description",
                     name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. " (CN)")
+                },
+                ["MouJiaoZi"] = {
+                    order = 10,
+                    type = "description",
+                    name = format("%s: %s", "MouJiaoZi", E.InfoColor .. "某餃子" .. "|r")
+                },
+                ["Jaenichen"] = {
+                    order = 11,
+                    type = "description",
+                    name = format("%s: %s", "Jaenichen", E.InfoColor .. "beejayjayn" .. "|r")
                 }
             }
         },
@@ -366,8 +376,9 @@ do -- 本地化
         },
         ["français (frFR)"] = {
             "PodVibe @ CurseForge",
-            "xan2622 @ Github",
-            "Pristi#2836 @ Discord"
+            "xan2622 @ GitHub",
+            "Pristi#2836 @ Discord",
+            "Isilorn @ GitHub"
         },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",
@@ -375,8 +386,8 @@ do -- 本地化
             "|cff00c0faDlarge|r"
         },
         ["русский язык (ruRU)"] = {
-            "Evgeniy-ONiX @ Github",
-            "dadec666 @ Github"
+            "Evgeniy-ONiX @ GitHub",
+            "dadec666 @ GitHub"
         }
     }
 

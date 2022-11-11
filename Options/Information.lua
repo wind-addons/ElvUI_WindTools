@@ -519,14 +519,9 @@ do -- 媒体文件
             "Media/Texture/Vignetting.tga"
         },
         ["Icon made by Freepik from www.flaticon.com"] = {
-            "Media/Icons/Announcement.tga",
-            "Media/Texture/Combat.tga",
             "Media/Texture/Shield.tga",
             "Media/Texture/Sword.tga",
             "Media/Icons/Tooltips.tga"
-        },
-        ["Icon made by Pixel perfect from www.flaticon.com"] = {
-            "Media/Icons/Calendar.tga"
         },
         ["Marijan Petrovski @ PSDchat.com"] = {
             "Media/Icons/Hexagon"
@@ -537,32 +532,8 @@ do -- 媒体文件
         ["SunUI (Coolkids)"] = {
             "Media/Icons/SunUI"
         },
-        ["小华子COME @ www.iconfont.cn"] = {
-            "Media/Icons/Misc.tga"
-        },
-        ["KERRY_ZJX @ www.iconfont.cn"] = {
-            "Media/Icons/Combat.tga"
-        },
-        ["Jasmine_20863 @ www.iconfont.cn"] = {
-            "Media/Icons/Item.tga"
-        },
-        ["canisminor-weibo @ www.iconfont.cn"] = {
-            "Media/Icons/NGA.tga"
-        },
-        ["cg尐愳 @ www.iconfont.cn"] = {
-            "Media/Icons/Map.tga"
-        },
-        ["Marina·麥 @ www.iconfont.cn"] = {
-            "Media/Icons/Help.tga"
-        },
-        ["29ga @ www.iconfont.cn"] = {
-            "Media/Icons/Chat.tga"
-        },
         ["Sukiki情绪化 @ www.iconfont.cn"] = {
             "Media/Icons/Rest.tga"
-        },
-        ["王乐城愚人云端 @ www.iconfont.cn"] = {
-            "Media/Texture/WindToolsSmall.tga"
         },
         ["LieutenantG @ www.iconfont.cn"] = {
             "Media/Icons/Button/Minus.tga",

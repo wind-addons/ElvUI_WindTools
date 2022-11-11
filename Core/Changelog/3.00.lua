@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[300] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/11/12",
     IMPORTANT = {
         ["zhCN"] = {
             "坚决抵制插件出售行为! 更新授权以对插件分发进行限制, 今后请勿在任何非授权渠道分发本插件.",

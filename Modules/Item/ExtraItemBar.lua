@@ -387,6 +387,24 @@ local flasksDragonflight = {
     197722 -- 快手氣泡瓶
 }
 
+-- Runes
+local runes = {
+    160053, -- 戰鬥傷痕增強符文
+    181468, -- 朦朧增強符文
+    198491, -- 梵陀符文：洪荒化身牢獄
+    198492, -- 梵陀符文：洪荒化身牢獄
+    198493, -- 梵陀符文：洪荒化身牢獄
+    201325 -- 龍族增強符文
+}
+
+-- Runes added in Dragonflight
+local runesDragonflight = {
+    198491, -- 梵陀符文：洪荒化身牢獄
+    198492, -- 梵陀符文：洪荒化身牢獄
+    198493, -- 梵陀符文：洪荒化身牢獄
+    201325 -- 龍族增強符文
+}
+
 local torghastItems = {
     168035, --淵喉污鼠韁繩
     168207, --掠奪的靈魄能量球
@@ -801,6 +819,8 @@ local moduleList = {
     ["FLASKSL"] = flasksShadowlands,
     ["FLASKDF"] = flasksDragonflight,
     ["TORGHAST"] = torghastItems,
+    ["RUNE"] = runes,
+    ["RUNEDF"] = runesDragonflight,
     ["FOOD"] = food,
     ["FOODSL"] = foodShadowlands,
     ["FOODVENDOR"] = foodShadowlandsVendor,

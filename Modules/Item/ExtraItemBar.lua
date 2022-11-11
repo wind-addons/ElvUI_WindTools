@@ -405,25 +405,26 @@ local runesDragonflight = {
     201325 -- 龍族增強符文
 }
 
+-- The items in torghast
 local torghastItems = {
-    168035, --淵喉污鼠韁繩
-    168207, --掠奪的靈魄能量球
-    170499, --淵喉巡者韁繩
-    170540, --飢餓的靈魄能量球
-    174464, --鬼靈鞍具
-    176331, --精華掩蔽藥水
-    176409, --活力虹吸精華
-    176443, --消逝狂亂藥水
-    184662, --被徵用的靈魄能量球
-    185946, --长尾活力鼠
-    185947, --吸血打击饮剂
-    185950, --时霎奔行饮剂
-    186043, --托迦司傳送門操作卷軸
-    186614, --靈魂罐
-    186615, --召喚雙子之鏡
-    186636, --一籠淵喉污鼠
-    186678, --淵鑄武器箱
-    186679 --統御卷軸
+    168035, -- 淵喉污鼠韁繩
+    168207, -- 掠奪的靈魄能量球
+    170499, -- 淵喉巡者韁繩
+    170540, -- 飢餓的靈魄能量球
+    174464, -- 鬼靈鞍具
+    176331, -- 精華掩蔽藥水
+    176409, -- 活力虹吸精華
+    176443, -- 消逝狂亂藥水
+    184662, -- 被徵用的靈魄能量球
+    185946, -- 長尾爆炸鼠
+    185947, -- 汲取打擊藥劑
+    185950, -- 時光飛梭藥劑
+    186043, -- 托迦司傳送門操作卷軸
+    186614, -- 靈魂罐
+    186615, -- 召喚雙子之鏡
+    186636, -- 一籠淵喉污鼠
+    186678, -- 淵鑄武器箱
+    186679 -- 統御卷軸
 }
 
 -- Food (Crafted by cooking)
@@ -607,7 +608,7 @@ local conjuredManaFood = {
     113509 --魔法法力餐包
 }
 
--- 战旗
+-- Banners
 local banners = {
     18606, --聯盟戰旗
     18607, --部落戰旗
@@ -619,7 +620,7 @@ local banners = {
     64402 --協調戰旗
 }
 
--- 实用工具
+-- Utilities
 local utilities = {
     49040, --吉福斯
     109076, --哥布林滑翔工具組
@@ -773,7 +774,7 @@ local openableItems = {
     191040, --聖塚寶藏箱
     191041, --聖塚寶藏箱
     191139, --受啟迪者長老貢品
-    192438, --命定寶箱
+    192438 --命定寶箱
 }
 
 -- 更新任务物品列表
@@ -818,13 +819,13 @@ local moduleList = {
     ["FLASK"] = flasks,
     ["FLASKSL"] = flasksShadowlands,
     ["FLASKDF"] = flasksDragonflight,
-    ["TORGHAST"] = torghastItems,
     ["RUNE"] = runes,
     ["RUNEDF"] = runesDragonflight,
     ["FOOD"] = food,
     ["FOODSL"] = foodShadowlands,
     ["FOODVENDOR"] = foodShadowlandsVendor,
     ["MAGEFOOD"] = conjuredManaFood,
+    ["TORGHAST"] = torghastItems,
     ["BANNER"] = banners,
     ["UTILITY"] = utilities,
     ["OPENABLE"] = openableItems

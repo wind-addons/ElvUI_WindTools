@@ -41,7 +41,7 @@ W.options = {
         order = 105,
         name = L["Social"],
         desc = L["Make some enhancements on chat and friend frames."],
-        icon = W.Media.Icons.chat,
+        icon = W.Media.Icons.social,
         args = {}
     },
     announcement = {
@@ -83,7 +83,7 @@ W.options = {
         order = 111,
         name = L["Advanced"],
         desc = L["Advanced settings."],
-        icon = W.Media.Icons.information,
+        icon = W.Media.Icons.advanced,
         args = {}
     },
     information = {
@@ -101,8 +101,7 @@ local r1, g1, b1 = HexToRGB("f0772f")
 local r2, g2, b2 = HexToRGB("f34a62")
 local r3, g3, b3 = HexToRGB("bb77ed")
 local r4, g4, b4 = HexToRGB("1cdce8")
-local tempString =
-    E:TextGradient(tempString, r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4)
+local tempString = E:TextGradient(tempString, r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4)
 
 local color = {}
 

@@ -7,6 +7,7 @@ local CT = W:GetModule("ChatText")
 local GB = W:GetModule("GameBar")
 local AM = W:GetModule("Automation")
 local SA = W:GetModule("SpellActivationAlert")
+local LL = W:GetModule("LFGList")
 
 local format = format
 local select = select
@@ -1441,7 +1442,16 @@ options.lfgList = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Reskinning the role icons."],
+                    name = function()
+                        if LL.StopRunning then
+                            return format(
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                LL.StopRunning
+                            )
+                        else
+                            return L["QoLs for LFG list."]
+                        end
+                    end,
                     fontSize = "medium"
                 }
             }
@@ -1584,6 +1594,7 @@ options.lfgList = {
         }
     }
 }
+
 options.spellActivationAlert = {
     order = 9,
     type = "group",

@@ -181,6 +181,11 @@ function LL:UpdateRoleCount(RoleCount)
 end
 
 function LL:Initialize()
+    if IsAddOnLoaded("PremadeGroupsFilter") then
+        self.StopRunning = "PremadeGroupsFilter"
+        return
+    end
+
     self.db = E.private.WT.misc.lfgList
     if not self.db.enable then
         return

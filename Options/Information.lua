@@ -551,6 +551,9 @@ do -- 媒体文件
             "Media/Icons/Button/Plus.tga",
             "Media/Icons/Button/Forward.tga"
         },
+        ["IconPark"] = {
+            "Media/Icons/Categories",
+        },
         ["TinyChat (loudsoul)"] = {
             "Media/Emotes"
         },
@@ -601,6 +604,12 @@ options.changelog = {
     args = {}
 }
 
+local function renderChangeLogLine(line)
+    line = gsub(line, "%[!%]", E.NewSign)
+    line = gsub(line, "%[[^%[]+%]", AddColor)
+    return line
+end
+
 for version, data in pairs(W.Changelog) do
     local versionString = format("%d.%02d", version / 100, mod(version, 100))
     local dateTable = {strsplit("/", data.RELEASE_DATE)}
@@ -648,7 +657,7 @@ for version, data in pairs(W.Changelog) do
             name = function()
                 local text = ""
                 for index, line in ipairs(importantPart) do
-                    text = text .. format("%02d", index) .. ". " .. gsub(line, "%[[^%[]+%]", AddColor) .. "\n"
+                    text = text .. format("%02d", index) .. ". " .. renderChangeLogLine(line) .. "\n"
                 end
                 return text .. "\n"
             end,
@@ -669,7 +678,7 @@ for version, data in pairs(W.Changelog) do
             name = function()
                 local text = ""
                 for index, line in ipairs(newPart) do
-                    text = text .. format("%02d", index) .. ". " .. gsub(line, "%[[^%[]+%]", AddColor) .. "\n"
+                    text = text .. format("%02d", index) .. ". " .. renderChangeLogLine(line) .. "\n"
                 end
                 return text .. "\n"
             end,
@@ -690,7 +699,7 @@ for version, data in pairs(W.Changelog) do
             name = function()
                 local text = ""
                 for index, line in ipairs(improvementPart) do
-                    text = text .. format("%02d", index) .. ". " .. gsub(line, "%[[^%[]+%]", AddColor) .. "\n"
+                    text = text .. format("%02d", index) .. ". " .. renderChangeLogLine(line) .. "\n"
                 end
                 return text .. "\n"
             end,

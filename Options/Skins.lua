@@ -1133,7 +1133,6 @@ options.addons = {
 local fixingAddonList = {
     ["TinyInspect"] = true,
     ["AngryKeystones"] = true,
-    ["PremadeGroupsFilter"] = true,
     ["REHack"] = true
 }
 

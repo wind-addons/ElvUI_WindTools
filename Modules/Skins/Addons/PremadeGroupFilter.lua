@@ -28,8 +28,8 @@ function S:PremadeGroupsFilter()
     -- Extend 1 pixel looks as same height as PVEFrame
     frame.backdrop:SetTemplate("Transparent")
     frame.backdrop:ClearAllPoints()
-    frame.backdrop:Point("TOPLEFT", frame, "TOPLEFT", -1, 0)
-    frame.backdrop:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
+    frame.backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -1, 0)
+    frame.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
 
     self:CreateBackdropShadow(frame, true)
     self:MerathilisUISkin(frame)
@@ -62,46 +62,30 @@ function S:PremadeGroupsFilter()
         self:ESProxy("HandleButton", frame.RefreshButton)
     end
 
-    if frame.MinimizeButton then
-        self:ESProxy("HandleNextPrevButton", frame.MinimizeButton, "up", nil, true)
-        frame.MinimizeButton:ClearAllPoints()
-        frame.MinimizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
+    if frame.MaxMinButtonFrame.MinimizeButton then
+        self:ESProxy("HandleNextPrevButton", frame.MaxMinButtonFrame.MinimizeButton, "up", nil, true)
+        frame.MaxMinButtonFrame.MinimizeButton:ClearAllPoints()
+        frame.MaxMinButtonFrame.MinimizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
     end
 
-    if frame.MaximizeButton then
-        self:ESProxy("HandleNextPrevButton", frame.MaximizeButton, "down", nil, true)
-        frame.MaximizeButton:ClearAllPoints()
-        frame.MaximizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
+    if frame.MaxMinButtonFrame.MaximizeButton then
+        self:ESProxy("HandleNextPrevButton", frame.MaxMinButtonFrame.MaximizeButton, "down", nil, true)
+        frame.MaxMinButtonFrame.MaximizeButton:ClearAllPoints()
+        frame.MaxMinButtonFrame.MaximizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
     end
 
-    if frame.MoveableToggle then
-        frame.MoveableToggle:Size(16)
-        frame.MoveableToggle:ClearAllPoints()
-        frame.MoveableToggle:Point("TOPLEFT", frame, "TOPLEFT", 4, -4)
-        for _, region in pairs {frame.MoveableToggle:GetRegions()} do
-            if region.GetTexture and strmatch(region:GetTexture(), "Locked") then
-                region:SetTexture(W.Media.Icons.buttonLock)
-            else
-                region:SetTexture(W.Media.Icons.buttonUnlock)
-            end
-            region:Size(16)
-            region:ClearAllPoints()
-            region:SetAllPoints(frame.MoveableToggle)
-        end
-    end
-
-    local lines = {
-        "Difficulty",
-        "Ilvl",
-        "Noilvl",
-        "Defeated",
-        "Members",
-        "Tanks",
-        "Heals",
-        "Dps"
-    }
-
-    for _, line in pairs(lines) do
+    for _, line in pairs(
+        {
+            "Difficulty",
+            "Defeated",
+            "MPRating",
+            "PVPRating",
+            "Members",
+            "Tanks",
+            "Heals",
+            "Dps"
+        }
+    ) do
         if frame[line] then
             if frame[line].Act then
                 self:ESProxy("HandleCheckBox", frame[line].Act)
@@ -132,10 +116,16 @@ function S:PremadeGroupsFilter()
         end
     end
 
+    if frame.Sorting and frame.Sorting.SortingExpression then
+        self:ESProxy("HandleEditBox", frame.Sorting.SortingExpression)
+        frame.Sorting.SortingExpression.backdrop:ClearAllPoints()
+        frame.Sorting.SortingExpression.backdrop:SetOutside(frame.Sorting.SortingExpression, 1, -2)
+    end
+
     if _G.UsePFGButton then
         self:ESProxy("HandleCheckBox", _G.UsePFGButton)
         _G.UsePFGButton:ClearAllPoints()
-        _G.UsePFGButton:Point("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
+        _G.UsePFGButton:SetPoint("RIGHT", _G.LFGListFrame.SearchPanel.RefreshButton, "LEFT", -50, 0)
     end
 end
 

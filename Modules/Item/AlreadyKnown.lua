@@ -1,5 +1,4 @@
 local W, F, E, L = unpack(select(2, ...))
-local Scanner = E.Libs.ItemSearch.Scanner
 local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
@@ -154,13 +153,13 @@ local function IsAlreadyKnown(itemLink)
 		return false
 	end
 
-	Scanner:ClearLines()
-	Scanner:SetOwner(_G.UIParent, "ANCHOR_NONE")
-	Scanner:SetHyperlink(itemLink)
+	E.ScanTooltip:ClearLines()
+	E.ScanTooltip:SetOwner(E.UIParent, "ANCHOR_NONE")
+	E.ScanTooltip:SetHyperlink(itemLink)
 
-	local prefix = Scanner:GetName() .. "TextLeft"
+	local prefix = E.ScanTooltip:GetName() .. "TextLeft"
 
-	local lines = Scanner:NumLines()
+	local lines = E.ScanTooltip:NumLines()
 	local comboLevelClass = 0
 	local comboLevelTemp = 0
 

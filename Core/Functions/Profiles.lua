@@ -58,9 +58,13 @@ function F.Profiles.ImportByString(importString)
     local profileData = F.Profiles.ExactString(profileString)
     local privateData = F.Profiles.ExactString(privateString)
 
-    E:CopyTable(E.db.WT, P)
-    E:CopyTable(E.db.WT, profileData)
+    if type(next(profileData)) ~= "nil" then
+        E:CopyTable(E.db.WT, P)
+        E:CopyTable(E.db.WT, profileData)
+    end
 
-    E:CopyTable(E.private.WT, V)
-    E:CopyTable(E.private.WT, privateData)
+    if type(next(privateData)) ~= "nil" then
+        E:CopyTable(E.private.WT, V)
+        E:CopyTable(E.private.WT, privateData)
+    end
 end

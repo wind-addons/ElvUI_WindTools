@@ -18,7 +18,8 @@ options.desc = {
         feature = {
             order = 1,
             type = "description",
-            name = L["Add some additional information to your tooltips."],
+            name = L["Add some additional information to your tooltips."] ..
+                "\n" .. F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor),
             fontSize = "medium"
         }
     }
@@ -297,14 +298,8 @@ options.progression = {
                 TEXTURE = L["Texture"]
             }
         },
-        tips = {
-            order = 3,
-            type = "description",
-            name = F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor) .. "\n",
-            fontSize = "large"
-        },
         special = {
-            order = 4,
+            order = 3,
             type = "group",
             name = L["Special Achievements"],
             inline = true,
@@ -327,7 +322,7 @@ options.progression = {
             }
         },
         raids = {
-            order = 5,
+            order = 4,
             type = "group",
             name = L["Raids"],
             inline = true,
@@ -350,7 +345,7 @@ options.progression = {
             }
         },
         mythicDungeons = {
-            order = 6,
+            order = 5,
             type = "group",
             name = L["Mythic Dungeons"],
             inline = true,
@@ -426,7 +421,7 @@ do
         "Ruby Life Pools",
         "The Nokhud Offensive",
         "The Azure Vault",
-        "Algeth'ar Academy",
+        "Algeth'ar Academy"
     }
 
     local special = {

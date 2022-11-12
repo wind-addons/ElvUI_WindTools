@@ -159,6 +159,9 @@
   - Media/Icons/Button/Plus.tga
   - Media/Icons/Button/Forward.tga
 
+- IconPark
+  - Media/Icons/Categories
+
 - TinyChat (loudsoul)
   - Media/Emotes
 

@@ -78,6 +78,10 @@ for classID = 1, 13 do
     end
 end
 
+function U.GetIconTextureWithClassAndSpecName(class, spec)
+    return localizedSpecNameToIcon[class] and localizedSpecNameToIcon[class][spec]
+end
+
 -- Cache
 U.cache = {}
 

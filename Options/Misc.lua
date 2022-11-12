@@ -1491,6 +1491,7 @@ options.lfgList = {
                         return not E.private.WT.misc.lfgList.icon.reskin
                     end,
                     values = {
+                        SPEC = L["Specialization"],
                         SQUARE = L["Square"],
                         HEXAGON = SampleStrings.hexagon,
                         FFXIV = SampleStrings.ffxiv,

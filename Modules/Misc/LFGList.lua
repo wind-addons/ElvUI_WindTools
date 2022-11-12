@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 local LL = W:NewModule("LFGList", "AceHook-3.0")
 local LSM = E.Libs.LSM
+local LFGPI = W.Utilities.LFGPlayerInfo
 
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -77,15 +78,27 @@ function LL:HandleMeetingStone()
     end
 end
 
-function LL:ReskinIcon(parent, icon, role, class)
-    -- Beautiful square icons
+function LL:ReskinIcon(parent, icon, role, data)
+    local class = data and data[1]
+    local spec = data and data[2]
+
     if role then
         if self.db.icon.reskin then
-            if self.db.icon.pack == "SQUARE" then
+            -- if not class and spec info, use square style instead
+            local pack = self.db.icon.pack
+            if pack == "SPEC" and (not class or not spec) then
+                pack = "SQUARE"
+            end
+
+            if pack == "SQUARE" then
                 icon:SetTexture(W.Media.Textures.ROLES)
                 icon:SetTexCoord(F.GetRoleTexCoord(role))
+            elseif pack == "SPEC" then
+                local tex = LFGPI.GetIconTextureWithClassAndSpecName(class, spec)
+                icon:SetTexture(tex)
+                icon:SetTexCoord(unpack(E.TexCoords))
             else
-                icon:SetTexture(RoleIconTextures[self.db.icon.pack][role])
+                icon:SetTexture(RoleIconTextures[pack][role])
                 icon:SetTexCoord(0, 1, 0, 1)
             end
         end
@@ -145,8 +158,8 @@ function LL:UpdateEnumerate(Enumerate)
     }
 
     for i = 1, result.numMembers do
-        local role, class = C_LFGList_GetSearchResultMemberInfo(button.resultID, i)
-        tinsert(cache[role], class)
+        local role, class, _, spec = C_LFGList_GetSearchResultMemberInfo(button.resultID, i)
+        tinsert(cache[role], {class, spec})
     end
 
     for i = 5, 1, -1 do -- The index of icon starts from right

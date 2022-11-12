@@ -4,7 +4,7 @@ local S = W.Modules.Skins
 local _G = _G
 local InCombatLockdown = InCombatLockdown
 
-function S:ElvUI_SkinOptionsUI()
+function S:ElvUI_SkinOptions()
     if not InCombatLockdown() then
         self:CreateShadow(E:Config_GetWindow())
     end
@@ -25,13 +25,13 @@ function S:ElvUI_SkinMoverPopup()
     self:CreateShadow(_G.ElvUIMoverPopupWindow.header)
 end
 
-function S:ElvUI_OptionsUI()
+function S:ElvUI_Options()
     if not (E.private.WT.skins.elvui.enable and E.private.WT.skins.elvui.option) then
         return
     end
 
     -- 设定
-    self:SecureHook(E, "ToggleOptionsUI", "ElvUI_SkinOptionsUI")
+    self:SecureHook(E, "ToggleOptions", "ElvUI_SkinOptions")
 
     -- 安装
     if _G.ElvUIInstallFrame then
@@ -47,4 +47,4 @@ function S:ElvUI_OptionsUI()
     self:CreateShadow(_G.ElvUIBindPopupWindowHeader)
 end
 
-S:AddCallback("ElvUI_OptionsUI")
+S:AddCallback("ElvUI_Options")

@@ -144,7 +144,7 @@ function CH:BuildAlert()
         14,
         14,
         function()
-            return E:ToggleOptionsUI("WindTools,combat,covenantHelper")
+            return E:ToggleOptions("WindTools,combat,covenantHelper")
         end
     )
 

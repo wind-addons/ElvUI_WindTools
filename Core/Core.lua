@@ -53,7 +53,7 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
     button1 = L["Open Changelog"],
     button2 = CANCEL,
     OnAccept = function(self)
-        E:ToggleOptionsUI("WindTools,information,changelog")
+        E:ToggleOptions("WindTools,information,changelog")
     end,
     hideOnEscape = 1
 }

@@ -134,14 +134,14 @@ local microMenu = {
 	{
 		text = "|cfffe7b2cElvUI|r",
 		func = function()
-			E:ToggleOptionsUI()
+			E:ToggleOptions()
 		end,
 		notCheckable = true
 	},
 	{
 		text = W.Title,
 		func = function()
-			E:ToggleOptionsUI("WindTools")
+			E:ToggleOptions("WindTools")
 		end,
 		notCheckable = true
 	}

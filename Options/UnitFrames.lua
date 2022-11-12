@@ -176,7 +176,7 @@ options.absorb = {
                     type = "execute",
                     name = L["Color"],
                     func = function()
-                        E:ToggleOptionsUI("unitframe,allColorsGroup,healPrediction")
+                        E:ToggleOptions("unitframe,allColorsGroup,healPrediction")
                     end,
                     width = 0.6
                 }

@@ -190,6 +190,8 @@ AddMedia("shield", "Shield.tga", "Textures")
 AddMedia("smallLogo", "WindToolsSmall.tga", "Textures")
 AddMedia("arrowDown", "ArrowDown.tga", "Textures")
 
+AddMedia("leader", "Leader.tga", "Icons")
+
 AddMedia("complete", "Complete.tga", "Icons")
 AddMedia("accept", "Accept.tga", "Icons")
 

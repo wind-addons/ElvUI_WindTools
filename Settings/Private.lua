@@ -104,6 +104,7 @@ V.misc = {
     lfgList = {
         enable = true,
         icon = {
+            leader = true,
             reskin = true,
             pack = "SQUARE",
             size = 16,

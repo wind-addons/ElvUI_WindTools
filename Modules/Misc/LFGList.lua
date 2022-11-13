@@ -118,6 +118,7 @@ end
 function LL:ReskinIcon(parent, icon, role, data)
     local class = data and data[1]
     local spec = data and data[2]
+    local isLeader = data and data[3]
 
     if role then
         if self.db.icon.reskin then
@@ -155,6 +156,18 @@ function LL:ReskinIcon(parent, icon, role, data)
         if icon.backdrop then
             icon.backdrop:SetAlpha(0)
         end
+    end
+
+    if self.db.icon.leader then
+        if not icon.leader then
+            local leader = parent:CreateTexture(nil, "OVERLAY")
+            leader:SetTexture(W.Media.Icons.leader)
+            leader:Size(10, 8)
+            leader:SetPoint("BOTTOM", icon, "TOP", 0, 1)
+            icon.leader = leader
+        end
+
+        icon.leader:SetShown(isLeader)
     end
 
     -- Create bar in class color behind
@@ -197,7 +210,7 @@ function LL:UpdateEnumerate(Enumerate)
 
     for i = 1, result.numMembers do
         local role, class, _, spec = C_LFGList_GetSearchResultMemberInfo(button.resultID, i)
-        tinsert(cache[role], {class, spec})
+        tinsert(cache[role], {class, spec, i == 1})
     end
 
     for i = 5, 1, -1 do -- The index of icon starts from right

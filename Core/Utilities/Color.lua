@@ -8,6 +8,16 @@ local strsub = strsub
 
 local CreateColor = CreateColor
 
+local colors = {
+    greyLight = "b5b5b5",
+    primary = "00d1b2",
+    success = "48c774",
+    link = "3273dc",
+    info = "209cee",
+    danger = "ff3860",
+    warning = "ffdd57"
+}
+
 function U.CreateColorFromTable(colorTable)
     return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a)
 end
@@ -31,4 +41,24 @@ end
 
 function U.RGBToHex(r, g, b)
     return format("%02x%02x%02x", r * 255, g * 255, b * 255)
+end
+
+function U.StringWithHex(text, color)
+    return format("|cff%s%s|r", color, text)
+end
+
+function U.StringByTemplate(text, template)
+    return U.StringWithHex(text, colors[template])
+end
+
+function U.StringWithRGB(text, r, g, b)
+    if type(text) ~= "string" then
+        text = tostring(text)
+    end
+
+    if type(r) == "table" then
+        r, g, b = r.r, r.g, r.b
+    end
+
+    return U.StringWithHex(text, U.RGBToHex(r, g, b))
 end

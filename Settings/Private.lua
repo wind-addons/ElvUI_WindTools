@@ -118,6 +118,12 @@ V.misc = {
             offsetX = 0,
             offsetY = -1,
             alpha = 1
+        },
+        additionalText = {
+            enable = true,
+            target = "TITLE",
+            shortenDescription = true,
+            template = "{{score}} {{text}}"
         }
     }
 }

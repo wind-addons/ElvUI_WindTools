@@ -3,6 +3,7 @@ local S = W.Modules.Skins
 local LL = W:NewModule("LFGList", "AceHook-3.0")
 local LSM = E.Libs.LSM
 local LFGPI = W.Utilities.LFGPlayerInfo
+local C = W.Utilities.Color
 
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
@@ -13,8 +14,10 @@ local type = type
 local IsAddOnLoaded = IsAddOnLoaded
 local LibStub = LibStub
 
+local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 local stopMeetingStoneRendering = false
 
@@ -45,6 +48,40 @@ local RoleIconTextures = {
         DAMAGER = E.Media.Textures.DPS
     }
 }
+
+function LL:UpdateAdditionalText(button, score, best)
+    local db = self.db.additionalText
+
+    if not db.enable or not button.Name or not button.ActivityName then
+        return
+    end
+
+    if not db.template or not score or not best then
+        return
+    end
+
+    if commentText and db.shortenDescription then
+        local commentText = button.ActivityName:GetText()
+        commentText = gsub(commentText, "%([^%)]+%)", "")
+        button.ActivityName:SetText(commentText)
+    end
+
+    local target = button[db.target == "TITLE" and "Name" or "ActivityName"]
+
+    local text = target:GetText()
+
+    if db.target == "COMMENT" then
+        text = gsub(text, "%([^%)]+%)", "")
+    end
+
+    local result = db.template
+
+    result = gsub(result, "{{score}}", score)
+    result = gsub(result, "{{best}}", best)
+    result = gsub(result, "{{text}}", text)
+
+    target:SetText(result)
+end
 
 function LL:MemberDisplay_SetActivity(memberDisplay, activity)
     memberDisplay.resultID = activity and activity.GetID and activity:GetID() or nil
@@ -146,6 +183,7 @@ function LL:UpdateEnumerate(Enumerate)
     end
 
     local result = C_LFGList_GetSearchResultInfo(button.resultID)
+    local info = C_LFGList_GetActivityInfoTable(result.activityID)
 
     if not result then
         return
@@ -178,6 +216,22 @@ function LL:UpdateEnumerate(Enumerate)
                 self:ReskinIcon(Enumerate, icon)
             end
         end
+    end
+
+    if self.db.additionalText.enable and result and info and info.isMythicPlusActivity then
+        local scoreText, bestText
+
+        local score = result.leaderOverallDungeonScore or 0
+        local color = score and C_ChallengeMode_GetDungeonScoreRarityColor(score) or {r = 1.0, g = 1.0, b = 1.0}
+        scoreText = C.StringWithRGB(score, color)
+
+        local bestRun = result.leaderDungeonScoreInfo and result.leaderDungeonScoreInfo.bestRunLevel
+        if bestRun then
+            local template = result.leaderDungeonScoreInfo.finishedSuccess and "success" or "greyLight"
+            bestText = C.StringByTemplate("+" .. result.leaderDungeonScoreInfo.bestRunLevel, template)
+        end
+
+        self:UpdateAdditionalText(button, scoreText, bestText)
     end
 end
 

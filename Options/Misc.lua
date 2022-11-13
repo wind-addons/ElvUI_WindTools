@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
+local C = W.Utilities.Color
 local options = W.options.misc.args
 local LSM = E.Libs.LSM
 local M = W.Modules.Misc
@@ -1590,6 +1591,64 @@ options.lfgList = {
                     min = 0,
                     max = 1,
                     step = 0.01
+                }
+            }
+        },
+        additionalText = {
+            order = 5,
+            type = "group",
+            name = L["Additional Text"],
+            disabled = function()
+                return not E.private.WT.misc.lfgList.enable
+            end,
+            get = function(info)
+                return E.private.WT.misc.lfgList.additionalText[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.lfgList.additionalText[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add some additional informaiton into title or comment."],
+                    width = "full"
+                },
+                target = {
+                    order = 2,
+                    type = "select",
+                    name = L["Target"],
+                    values = {
+                        TITLE = L["Title"],
+                        COMMENT = L["Comment"]
+                    },
+                    width = 0.8
+                },
+                shortenDescription = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Shorten Description"],
+                    desc = L["Remove useless part from description."],
+                    width = 1.5
+                },
+                template = {
+                    order = 4,
+                    type = "input",
+                    name = L["Template"],
+                    desc = function()
+                        return format(
+                            "%s = %s\n%s = %s\n%s = %s",
+                            C.StringByTemplate("{{score}}", "primary"),
+                            L["Leader Score"],
+                            C.StringByTemplate("{{best}}", "primary"),
+                            L["Leader Best Run"],
+                            C.StringByTemplate("{{text}}", "primary"),
+                            L["Original Text"]
+                        )
+                    end,
+                    width = "full"
                 }
             }
         }

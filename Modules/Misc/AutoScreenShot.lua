@@ -2,10 +2,11 @@ local W, F, E, L = unpack(select(2, ...))
 local M = W.Modules.Misc
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 
 local alertFrame
 
-function M:DelayScreenshot(_one, _two, _three, tried)
+function M:DelayScreenshot(_, _, _, tried)
     if not tried then
         tried = 0
     end
@@ -13,8 +14,6 @@ function M:DelayScreenshot(_one, _two, _three, tried)
     if tried > 30 then
         return
     end
-
-    print(tried)
 
     E:Delay(
         0.5,

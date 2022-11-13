@@ -86,7 +86,7 @@ function W:UpdateScripts()
         UpdateMessage(L["Covenant Helper"] .. " - " .. L["Clear Database"], profileVersion)
     end
 
-    if globalVersion < 3.00 then
+    if privateVersion < 3.02 then
         E.private.WT.misc.moveFrames.rememberPositions = {}
         UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"], globalVersion)
     end

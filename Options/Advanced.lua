@@ -3,6 +3,10 @@ local options = W.options.advanced.args
 
 local _G = _G
 local format = format
+local tostring = tostring
+local type = type
+
+local ReloadUI = ReloadUI
 
 local function blue(string)
     if type(string) ~= "string" then

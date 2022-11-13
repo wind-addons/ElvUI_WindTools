@@ -6,11 +6,14 @@ local _G = _G
 local next = next
 local pairs = pairs
 local select = select
+local strsplit = strsplit
 local tinsert = tinsert
 local type = type
 local xpcall = xpcall
 
 local CanInspect = CanInspect
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
 local TooltipDataProcessor = TooltipDataProcessor
 local UnitGUID = UnitGUID

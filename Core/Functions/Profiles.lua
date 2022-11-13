@@ -3,6 +3,8 @@ local D = E:GetModule("Distributor")
 local LibDeflate = E.Libs.Deflate
 
 local format = format
+local next = next
+local type = type
 
 F.Profiles = {}
 

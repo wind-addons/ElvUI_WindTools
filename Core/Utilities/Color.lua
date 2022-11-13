@@ -5,6 +5,9 @@ local U = W.Utilities.Color
 
 local format = format
 local strsub = strsub
+local tonumber = tonumber
+local tostring = tostring
+local type = type
 
 local CreateColor = CreateColor
 

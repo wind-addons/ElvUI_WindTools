@@ -5,11 +5,13 @@ local LSM = E.Libs.LSM
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
 
+local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local tinsert = tinsert
 local tremove = tremove
 local type = type
+local unpack = unpack
 
 local IsAddOnLoaded = IsAddOnLoaded
 local LibStub = LibStub
@@ -60,7 +62,7 @@ function LL:UpdateAdditionalText(button, score, best)
         return
     end
 
-    if commentText and db.shortenDescription then
+    if db.shortenDescription then
         local commentText = button.ActivityName:GetText()
         commentText = gsub(commentText, "%([^%)]+%)", "")
         button.ActivityName:SetText(commentText)

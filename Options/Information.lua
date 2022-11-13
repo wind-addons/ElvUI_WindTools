@@ -11,8 +11,6 @@ local tostring = tostring
 local type = type
 local unpack = unpack
 
-local ReloadUI = ReloadUI
-
 local discordURL = "https://discord.gg/JMz5Zsk"
 if E.global.general.locale == "zhCN" or E.global.general.locale == "zhTW" then
     discordURL = "https://discord.gg/nA44TeZ"

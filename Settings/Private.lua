@@ -467,6 +467,7 @@ V.skins = {
 }
 
 V.tooltips = {
+    modifier = "SHIFT",
     icon = true,
     factionIcon = true,
     petIcon = true,

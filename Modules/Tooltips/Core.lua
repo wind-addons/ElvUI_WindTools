@@ -70,6 +70,31 @@ function T:ClearInspectInfo(tt)
     end
 end
 
+function T:CheckModifier()
+    if not self.db or self.db.modifier == "NONE" then
+        return true
+    end
+
+    local modifierStatus = {
+        SHIFT = IsShiftKeyDown(),
+        ALT = IsAltKeyDown(),
+        CTRL = IsControlKeyDown()
+    }
+
+    local results = {}
+    for _, modifier in next, {strsplit("_", self.db.modifier)} do
+        tinsert(results, modifierStatus[modifier] or false)
+    end
+
+    for _, v in next, results do
+        if not v then
+            return false
+        end
+    end
+
+    return true
+end
+
 -- TODO: remove this after 10.0.2
 function T:SL_InspectInfo(_, tt, triedTimes)
     if tt:IsForbidden() or tt.windInspectLoaded then
@@ -89,12 +114,7 @@ function T:SL_InspectInfo(_, tt, triedTimes)
         xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
     end
 
-    -- Hold Shift to show more inspect information
-    if not IsShiftKeyDown() then
-        return
-    end
-
-    if not CanInspect(unit) then
+    if not self:CheckModifier() or not CanInspect(unit) then
         return
     end
 
@@ -104,7 +124,7 @@ function T:SL_InspectInfo(_, tt, triedTimes)
         return
     end
 
-    if ET.db.inspectDataEnable then
+    if IsShiftKeyDown() and ET.db.inspectDataEnable then
         local isElvUITooltipItemLevelInfoAlreadyAdded = false
         for i = 1, tt:NumLines() do
             local leftTip = _G["GameTooltipTextLeft" .. i]
@@ -144,12 +164,7 @@ function T:InspectInfo(_, tt, data, triedTimes)
         xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
     end
 
-    -- Hold Shift to show more inspect information
-    if not IsShiftKeyDown() then
-        return
-    end
-
-    if not CanInspect(unit) then
+    if not self:CheckModifier() or not CanInspect(unit) then
         return
     end
 
@@ -159,7 +174,7 @@ function T:InspectInfo(_, tt, data, triedTimes)
         return
     end
 
-    if ET.db.inspectDataEnable then
+    if IsShiftKeyDown() and ET.db.inspectDataEnable then
         local isElvUITooltipItemLevelInfoAlreadyAdded = false
         for i = #(data.lines), tt:NumLines() do
             local leftTip = _G["GameTooltipTextLeft" .. i]

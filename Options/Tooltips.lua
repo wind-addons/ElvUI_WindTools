@@ -18,8 +18,7 @@ options.desc = {
         feature = {
             order = 1,
             type = "description",
-            name = L["Add some additional information to your tooltips."] ..
-                "\n" .. F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor),
+            name = L["Add some additional information to your tooltips."],
             fontSize = "medium"
         }
     }
@@ -37,8 +36,27 @@ options.general = {
         E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
-        additionalInformation = {
+        modifier = {
             order = 1,
+            type = "select",
+            name = L["Modifier"],
+            desc = format(L["The modifer key to show additional information from %s."], W.Title),
+            set = function(info, value)
+                E.private.WT.tooltips[info[#info]] = value
+            end,
+            values = {
+                NONE = L["None"],
+                SHIFT = L["Shift"],
+                CTRL = L["Ctrl"],
+                ALT = L["Alt"],
+                ALT_SHIFT = format("%s + %s", L["Alt"], L["Shift"]),
+                CTRL_SHIFT = format("%s + %s", L["Ctrl"], L["Shift"]),
+                CTRL_ALT = format("%s + %s", L["Ctrl"], L["Alt"]),
+                CTRL_ALT_SHIFT = format("%s + %s + %s", L["Ctrl"], L["Alt"], L["Shift"])
+            }
+        },
+        additionalInformation = {
+            order = 2,
             type = "group",
             inline = true,
             name = L["Additional Information"],
@@ -90,7 +108,7 @@ options.general = {
             }
         },
         objectiveProgressInformation = {
-            order = 2,
+            order = 3,
             type = "group",
             inline = true,
             name = L["Objective Progress"],
@@ -112,7 +130,7 @@ options.general = {
             }
         },
         healthBar = {
-            order = 3,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Health Bar"],
@@ -144,7 +162,7 @@ options.general = {
             }
         },
         groupInfo = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             get = function(info)

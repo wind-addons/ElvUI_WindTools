@@ -88,6 +88,7 @@ do
 		if not icon then
 			return
 		end
+		icon:SetIgnoreParentScale(true)
 		icon:SetScale(E.uiscale)
 
 		local box = _G.GarrisonLandingPageTutorialBox

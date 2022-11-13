@@ -1527,7 +1527,7 @@ options.lfgList = {
         line = {
             order = 4,
             type = "group",
-            name = L["Line"],
+            name = L["Class Line"],
             disabled = function()
                 return not E.private.WT.misc.lfgList.enable
             end,

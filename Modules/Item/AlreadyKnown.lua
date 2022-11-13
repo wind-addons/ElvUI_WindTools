@@ -222,9 +222,9 @@ do
 			local itemLink = GetGuildBankItemLink(tab, i)
 
 			if itemLink and itemLink:match("item:82800") then
-				Scanner:ClearLines()
-				Scanner:SetOwner(_G.UIParent, "ANCHOR_NONE")
-				local speciesId = Scanner:SetGuildBankItem(tab, i)
+				E.ScanTooltip:ClearLines()
+				E.ScanTooltip:SetOwner(E.UIParent, "ANCHOR_NONE")
+				local speciesId = E.ScanTooltip:SetGuildBankItem(tab, i)
 
 				if speciesId and speciesId > 0 then
 					itemLink = format("|Hbattlepet:%d::::::|h[Dummy]|h", speciesId)

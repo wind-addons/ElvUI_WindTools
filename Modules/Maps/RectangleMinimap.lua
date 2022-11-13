@@ -116,7 +116,7 @@ end
 
 function RM:Initialize()
     self.db = E.db.WT.maps.rectangleMinimap
-    if not self.db or not self.db.enable then
+    if not self.db or not self.db.enable or not M.Initialized then
         return
     end
 

@@ -18,21 +18,25 @@ W.Changelog[302] = {
     },
     NEW = {
         ["zhCN"] = {
+            "新增一个团队定位图标包 PhilMod. 感谢 FlickMasher @ Reddit",
             "[鼠标提示] 添加了一个选项用于自定义显示额外信息的按键.",
             "[预组列表] 添加了显示队长的选项.",
             "[预组列表] 添加了额外文字 (队长分数, 队长最佳成绩) 的选项.",
         },
         ["zhTW"] = {
+            "新增一個團隊定位圖示包 PhilMod. 感謝 FlickMasher @ Reddit",
             "[浮動提示] 添加了一個選項用於自定義顯示額外信息的按鍵.",
             "[預組列表] 添加了顯示隊長的選項.",
             "[預組列表] 添加了額外文字 (隊長分數, 隊長最佳成績) 的選項.",
         },
         ["enUS"] = {
+            "Added a new role icon pack PhilMod. Thanks FlickMasher @ Reddit",
             "[Tooltips] Added an option to customize the key to show extra information.",
             "[LFG List] Added an option to show the leader.",
             "[LFG List] Added an option to show additional text (leader score, leader best score).",
         },
         ["koKR"] = {
+            "Added a new role icon pack PhilMod. Thanks FlickMasher @ Reddit",
             "[Tooltips] Added an option to customize the key to show extra information.",
             "[LFG List] Added an option to show the leader.",
             "[LFG List] Added an option to show additional text (leader score, leader best score).",

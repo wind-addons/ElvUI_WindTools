@@ -24,6 +24,11 @@ local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonSco
 local stopMeetingStoneRendering = false
 
 local RoleIconTextures = {
+    PHILMOD = {
+        TANK = W.Media.Icons.philModTank,
+        HEALER = W.Media.Icons.philModHealer,
+        DAMAGER = W.Media.Icons.philModDPS
+    },
     FFXIV = {
         TANK = W.Media.Icons.ffxivTank,
         HEALER = W.Media.Icons.ffxivHealer,

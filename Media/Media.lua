@@ -202,6 +202,10 @@ AddMedia("ffxivTank", "FFXIV/Tank.tga", "Icons")
 AddMedia("ffxivDPS", "FFXIV/DPS.tga", "Icons")
 AddMedia("ffxivHealer", "FFXIV/Healer.tga", "Icons")
 
+AddMedia("philModTank", "PhilMod/Tank.tga", "Icons")
+AddMedia("philModDPS", "PhilMod/DPS.tga", "Icons")
+AddMedia("philModHealer", "PhilMod/Healer.tga", "Icons")
+
 AddMedia("hexagonTank", "Hexagon/Tank.tga", "Icons")
 AddMedia("hexagonDPS", "Hexagon/DPS.tga", "Icons")
 AddMedia("hexagonHealer", "Hexagon/Healer.tga", "Icons")

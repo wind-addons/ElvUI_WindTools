@@ -276,6 +276,12 @@ do
     SampleStrings.ffxiv = icons
 
     icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.philModTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModDPS, ":16:16")
+    SampleStrings.philMod = icons
+
+    icons = ""
     icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.hexagonHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.hexagonDPS, ":16:16")
@@ -339,6 +345,7 @@ options.roleIcon = {
             desc = L["Change the icons that indicate the role."],
             values = {
                 HEXAGON = SampleStrings.hexagon,
+                PHILMOD = SampleStrings.philMod,
                 FFXIV = SampleStrings.ffxiv,
                 SUNUI = SampleStrings.sunui,
                 LYNUI = SampleStrings.lynui,

@@ -273,6 +273,16 @@ function CT:UpdateRoleIcons()
         _G.INLINE_TANK_ICON = CT.cache.blizzardRoleIcons.Tank
         _G.INLINE_HEALER_ICON = CT.cache.blizzardRoleIcons.Healer
         _G.INLINE_DAMAGER_ICON = CT.cache.blizzardRoleIcons.DPS
+    elseif pack == "PHILMOD" then
+        roleIcons = {
+            TANK = E:TextureString(W.Media.Icons.philModTank, sizeString),
+            HEALER = E:TextureString(W.Media.Icons.philModHealer, sizeString),
+            DAMAGER = E:TextureString(W.Media.Icons.philModDPS, sizeString)
+        }
+
+        _G.INLINE_TANK_ICON = roleIcons.TANK
+        _G.INLINE_HEALER_ICON = roleIcons.HEALER
+        _G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
     end
 end
 

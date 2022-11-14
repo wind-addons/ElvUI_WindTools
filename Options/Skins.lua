@@ -1260,6 +1260,9 @@ options.widgets = {
             order = 10,
             type = "group",
             name = L["Button"],
+            desc = function(info)
+                return F.GetWidgetTipsString(info[#info])
+            end,
             args = {
                 enable = {
                     order = 1,
@@ -1274,8 +1277,19 @@ options.widgets = {
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
                 },
-                backdrop = {
+                tip = {
                     order = 2,
+                    type = "description",
+                    name = "",
+                    image = function()
+                        return W.Media.Textures.widgetsTips, 512, 170
+                    end,
+                    imageCoords = function(info)
+                        return F.GetWidgetTips(info[#info - 1])
+                    end
+                },
+                backdrop = {
+                    order = 3,
                     type = "group",
                     name = L["Additional Backdrop"],
                     inline = true,
@@ -1366,7 +1380,7 @@ options.widgets = {
                     }
                 },
                 selected = {
-                    order = 3,
+                    order = 4,
                     type = "group",
                     name = L["Selected Backdrop & Border"],
                     inline = true,
@@ -1458,7 +1472,7 @@ options.widgets = {
                     }
                 },
                 text = {
-                    order = 4,
+                    order = 5,
                     type = "group",
                     name = L["Text"],
                     inline = true,
@@ -1529,6 +1543,9 @@ options.widgets = {
             order = 11,
             type = "group",
             name = L["Tree Group Button"],
+            desc = function(info)
+                return F.GetWidgetTipsString(info[#info])
+            end,
             args = {
                 enable = {
                     order = 1,
@@ -1543,8 +1560,19 @@ options.widgets = {
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
                 },
-                backdrop = {
+                tip = {
                     order = 2,
+                    type = "description",
+                    name = "",
+                    image = function()
+                        return W.Media.Textures.widgetsTips, 512, 170
+                    end,
+                    imageCoords = function(info)
+                        return F.GetWidgetTips(info[#info - 1])
+                    end
+                },
+                backdrop = {
+                    order = 3,
                     type = "group",
                     name = L["Additional Backdrop"],
                     inline = true,
@@ -1629,7 +1657,7 @@ options.widgets = {
                     }
                 },
                 selected = {
-                    order = 3,
+                    order = 4,
                     type = "group",
                     name = L["Selected Backdrop & Border"],
                     inline = true,
@@ -1728,7 +1756,7 @@ options.widgets = {
                     }
                 },
                 text = {
-                    order = 4,
+                    order = 5,
                     type = "group",
                     name = L["Text"],
                     inline = true,
@@ -1847,6 +1875,9 @@ options.widgets = {
             order = 12,
             type = "group",
             name = L["Tab"],
+            desc = function(info)
+                return F.GetWidgetTipsString(info[#info])
+            end,
             args = {
                 enable = {
                     order = 1,
@@ -1861,8 +1892,19 @@ options.widgets = {
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
                 },
-                backdrop = {
+                tip = {
                     order = 2,
+                    type = "description",
+                    name = "",
+                    image = function()
+                        return W.Media.Textures.widgetsTips, 512, 170
+                    end,
+                    imageCoords = function(info)
+                        return F.GetWidgetTips(info[#info - 1])
+                    end
+                },
+                backdrop = {
+                    order = 3,
                     type = "group",
                     name = L["Additional Backdrop"],
                     inline = true,
@@ -1947,7 +1989,7 @@ options.widgets = {
                     }
                 },
                 selected = {
-                    order = 3,
+                    order = 4,
                     type = "group",
                     name = L["Selected Backdrop & Border"],
                     inline = true,
@@ -2046,7 +2088,7 @@ options.widgets = {
                     }
                 },
                 text = {
-                    order = 4,
+                    order = 5,
                     type = "group",
                     name = L["Text"],
                     inline = true,
@@ -2165,6 +2207,9 @@ options.widgets = {
             order = 13,
             type = "group",
             name = L["Check Box"],
+            desc = function(info)
+                return F.GetWidgetTipsString(info[#info])
+            end,
             get = function(info)
                 return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
             end,
@@ -2188,8 +2233,19 @@ options.widgets = {
                         return E.private.skins.checkBoxSkin
                     end
                 },
-                texture = {
+                tip = {
                     order = 3,
+                    type = "description",
+                    name = "",
+                    image = function()
+                        return W.Media.Textures.widgetsTips, 512, 170
+                    end,
+                    imageCoords = function(info)
+                        return F.GetWidgetTips(info[#info - 1])
+                    end
+                },
+                texture = {
+                    order = 4,
                     type = "select",
                     name = L["Texture"],
                     dialogControl = "LSM30_Statusbar",
@@ -2199,7 +2255,7 @@ options.widgets = {
                     end
                 },
                 classColor = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Class Color"],
                     disabled = function(info)
@@ -2207,7 +2263,7 @@ options.widgets = {
                     end
                 },
                 color = {
-                    order = 5,
+                    order = 6,
                     type = "color",
                     name = L["Color"],
                     hasAlpha = true,
@@ -2233,6 +2289,9 @@ options.widgets = {
             order = 14,
             type = "group",
             name = L["Slider"],
+            desc = function(info)
+                return F.GetWidgetTipsString(info[#info])
+            end,
             get = function(info)
                 return E.private.WT.skins.widgets[info[#info - 1]][info[#info]]
             end,
@@ -2247,8 +2306,19 @@ options.widgets = {
                     name = L["Enable"],
                     width = "full"
                 },
-                texture = {
+                tip = {
                     order = 2,
+                    type = "description",
+                    name = "",
+                    image = function()
+                        return W.Media.Textures.widgetsTips, 512, 170
+                    end,
+                    imageCoords = function(info)
+                        return F.GetWidgetTips(info[#info - 1])
+                    end
+                },
+                texture = {
+                    order = 3,
                     type = "select",
                     name = L["Texture"],
                     dialogControl = "LSM30_Statusbar",
@@ -2258,7 +2328,7 @@ options.widgets = {
                     end
                 },
                 classColor = {
-                    order = 3,
+                    order = 4,
                     type = "toggle",
                     name = L["Class Color"],
                     disabled = function(info)
@@ -2266,7 +2336,7 @@ options.widgets = {
                     end
                 },
                 color = {
-                    order = 4,
+                    order = 5,
                     type = "color",
                     name = L["Color"],
                     hasAlpha = true,

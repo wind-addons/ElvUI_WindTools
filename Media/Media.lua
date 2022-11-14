@@ -155,6 +155,74 @@ do
 end
 
 do
+	AddMedia("widgetsTips", "WidgetsTips.tga", "Textures")
+
+	local texTable = {
+		texWidth = 2048,
+		texHeight = 1024,
+		tipWidth = 512,
+		tipHeight = 170,
+		languages = {
+			zhCN = 0,
+			zhTW = 170,
+			enUS = 340
+		},
+		type = {
+			button = {0, 0},
+			checkBox = {512, 0},
+			tab = {1024, 0},
+			treeGroupButton = {1536, 0},
+			slider = {0, 510}
+		}
+	}
+
+	function F.GetWidgetTips(widgetType)
+		if not texTable.type[widgetType] then
+			return
+		end
+		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
+		if not offsetY then
+			return
+		end
+
+		local xStart = texTable.type[widgetType][1]
+		local yStart = texTable.type[widgetType][2] + offsetY
+		local xEnd = xStart + texTable.tipWidth
+		local yEnd = yStart + texTable.tipHeight
+
+		return {xStart / texTable.texWidth, xEnd / texTable.texWidth, yStart / texTable.texHeight, yEnd / texTable.texHeight}
+	end
+
+	function F.GetWidgetTipsString(widgetType)
+		if not texTable.type[widgetType] then
+			return
+		end
+		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
+		if not offsetY then
+			return
+		end
+
+		local xStart = texTable.type[widgetType][1]
+		local yStart = texTable.type[widgetType][2] + offsetY
+		local xEnd = xStart + texTable.tipWidth
+		local yEnd = yStart + texTable.tipHeight
+
+		return format(
+			"|T%s:%d:%d:0:0:%d:%d:%d:%d:%d:%d:255:255:255|t",
+			W.Media.Textures.widgetsTips,
+			ceil(texTable.tipHeight * 0.4),
+			ceil(texTable.tipWidth * 0.4),
+			texTable.texWidth,
+			texTable.texHeight,
+			xStart,
+			xEnd,
+			yStart,
+			yEnd
+		)
+	end
+end
+
+do
 	function F.GetRoleTexCoord(role)
 		if role == "TANK" then
 			return .32 / 9.03, 2.04 / 9.03, 2.65 / 9.03, 4.3 / 9.03

@@ -518,6 +518,9 @@ do -- 媒体文件
         ["迷时鸟 @ NGA.cn"] = {
             "Media/Texture/Illustration"
         },
+        ["FlickMasher @ Reddit"] = {
+            "Media/Icons/PhilMod"
+        },
         ["Iconfont (Alibaba)"] = {
             "Media/Icons/GameBar",
             "Media/Icons/List.tga",

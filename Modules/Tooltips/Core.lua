@@ -12,6 +12,7 @@ local type = type
 local xpcall = xpcall
 
 local CanInspect = CanInspect
+local GameTooltip =GameTooltip
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
@@ -98,7 +99,11 @@ function T:CheckModifier()
 end
 
 function T:InspectInfo(tt, data, triedTimes)
-    if tt:IsForbidden() or tt.windInspectLoaded then
+    if tt ~= GameTooltip or (tt.IsForbidden and tt:IsForbidden()) or (ET.db and not ET.db.visibility) then
+        return
+    end
+
+    if tt.windInspectLoaded then
         return
     end
 
@@ -123,7 +128,7 @@ function T:InspectInfo(tt, data, triedTimes)
         return
     end
 
-    if IsShiftKeyDown() and ET.db.inspectDataEnable then
+    if not InCombatLockdown() and IsShiftKeyDown() and ET.db.inspectDataEnable then
         local isElvUITooltipItemLevelInfoAlreadyAdded = false
         for i = #(data.lines), tt:NumLines() do
             local leftTip = _G["GameTooltipTextLeft" .. i]
@@ -172,10 +177,9 @@ end
 
 ET._GameTooltip_OnTooltipSetUnit = ET.GameTooltip_OnTooltipSetUnit
 function ET.GameTooltip_OnTooltipSetUnit(...)
-    local tt = ...
     ET._GameTooltip_OnTooltipSetUnit(...)
 
-    if not T or not T.initialized or not tt == _G.GameTooltip then
+    if not T or not T.initialized then
         return
     end
 
@@ -194,7 +198,7 @@ function T:Initialize()
     end
 
     T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
-    T:SecureHookScript(_G.GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
+    T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
 
     self.initialized = true
 end

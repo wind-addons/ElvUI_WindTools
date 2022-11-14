@@ -18,7 +18,9 @@ function WS:HandleTreeGroup(widget)
         return
     end
 
-    local db = E.private.WT.skins.widgets.treeGroupButton
+    local db =
+        E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and
+        E.private.WT.skins.widgets.treeGroupButton
 
     if widget.CreateButton and not widget.CreateButton_ then
         widget.CreateButton_ = widget.CreateButton

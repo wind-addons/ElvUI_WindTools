@@ -33,7 +33,7 @@ function WS:HandleTab(_, tab, noBackdrop, template)
         return
     end
 
-    local db = E.private.WT.skins.widgets.tab
+    local db = E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and E.private.WT.skins.widgets.tab
 
     if db.text.enable then
         local text = tab.text or tab.Text or tab.GetName and tab:GetName() and _G[tab:GetName() .. "Text"]

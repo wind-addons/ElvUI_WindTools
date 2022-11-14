@@ -44,7 +44,7 @@ function WS:HandleCheckBox(_, check)
         return
     end
 
-    local db = E.private.WT.skins.widgets.checkBox
+    local db = E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and E.private.WT.skins.widgets.checkBox
     if not check or not db or not db.enable then
         return
     end

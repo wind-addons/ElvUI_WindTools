@@ -15,7 +15,7 @@ function WS:HandleSliderFrame(_, slider)
         return
     end
 
-    local db = E.private.WT.skins.widgets.slider
+    local db = E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and E.private.WT.skins.widgets.slider
 
     if not slider or not db or not db.enable then
         return

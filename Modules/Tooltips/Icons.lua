@@ -7,7 +7,6 @@ local unpack = unpack
 
 local GetItemIcon = GetItemIcon
 local GetSpellTexture = GetSpellTexture
-local TooltipDataProcessor = TooltipDataProcessor
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
@@ -15,10 +14,10 @@ local UnitIsBattlePet = UnitIsBattlePet
 local UnitIsPlayer = UnitIsPlayer
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
+local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
 
--- TODO: cleanup this after 10.0.2
-local Enum_TooltipDataType_Item = TooltipDataProcessor and Enum.TooltipDataType.Item
-local Enum_TooltipDataType_Spell = TooltipDataProcessor and Enum.TooltipDataType.Spell
+local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
+local Enum_TooltipDataType_Spell = Enum.TooltipDataType.Spell
 
 local newString = "0:0:64:64:5:59:5:59"
 
@@ -42,52 +41,6 @@ local function setTooltipIcon(self, icon)
         title:SetFormattedText("|T%s:20:20:" .. newString .. ":%d|t %s", icon, 20, title:GetText())
     end
 end
-
--- TODO: remove this after 10.0.2
-local function NewTooltipHooker(method, func)
-    return function(tooltip)
-        local modified = false
-        tooltip:HookScript(
-            "OnTooltipCleared",
-            function()
-                modified = false
-            end
-        )
-        tooltip:HookScript(
-            method,
-            function(self, ...)
-                if not modified then
-                    modified = true
-                    func(self, ...)
-                end
-            end
-        )
-    end
-end
-
--- TODO: remove this after 10.0.2
-local HookItem =
-    NewTooltipHooker(
-    "OnTooltipSetItem",
-    function(self)
-        local _, link = self:GetItem()
-        if link then
-            setTooltipIcon(self, GetItemIcon(link))
-        end
-    end
-)
-
--- TODO: remove this after 10.0.2
-local HookSpell =
-    NewTooltipHooker(
-    "OnTooltipSetSpell",
-    function(self)
-        local name, id = self:GetSpell()
-        if id then
-            setTooltipIcon(self, GetSpellTexture(id))
-        end
-    end
-)
 
 local function alignShoppingTooltip(tt)
     if not tt or not tt.GetNumPoints or tt:GetNumPoints() < 2 or not tt.__SetPoint then
@@ -201,16 +154,8 @@ end
 
 function T:Icons()
     if E.private.WT.tooltips.icon then
-        -- TODO: remove this after 10.0.2
-        if not TooltipDataProcessor then
-            HookItem(_G.GameTooltip)
-            HookSpell(_G.GameTooltip)
-            HookItem(_G.ItemRefTooltip)
-            HookSpell(_G.ItemRefTooltip)
-        else
-            TooltipDataProcessor.AddTooltipPostCall(Enum_TooltipDataType_Item, itemTooltipHandler)
-            TooltipDataProcessor.AddTooltipPostCall(Enum_TooltipDataType_Spell, spellTooltipHandler)
-        end
+        TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Item, itemTooltipHandler)
+        TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Spell, spellTooltipHandler)
 
         _G.ShoppingTooltip1.__SetPoint = _G.ShoppingTooltip1.SetPoint
         hooksecurefunc(_G.ShoppingTooltip1, "SetPoint", alignShoppingTooltip)

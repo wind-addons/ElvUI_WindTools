@@ -15,7 +15,6 @@ local CanInspect = CanInspect
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
-local TooltipDataProcessor = TooltipDataProcessor
 local UnitGUID = UnitGUID
 
 T.load = {} -- 毋须等待插件的函数表
@@ -98,60 +97,7 @@ function T:CheckModifier()
     return true
 end
 
--- TODO: remove this after 10.0.2
-function T:SL_InspectInfo(_, tt, triedTimes)
-    if tt:IsForbidden() or tt.windInspectLoaded then
-        return
-    end
-
-    local unit = select(2, tt:GetUnit())
-
-    if not unit then
-        return
-    end
-
-    local guid = UnitGUID(unit)
-
-    -- Run all registered callbacks (normal)
-    for _, func in next, self.normalInspect do
-        xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
-    end
-
-    if not self:CheckModifier() or not CanInspect(unit) then
-        return
-    end
-
-    -- If ElvUI is inspecting, just wait for 4 seconds
-    triedTimes = triedTimes or 0
-    if triedTimes > 20 then
-        return
-    end
-
-    if IsShiftKeyDown() and ET.db.inspectDataEnable then
-        local isElvUITooltipItemLevelInfoAlreadyAdded = false
-        for i = 1, tt:NumLines() do
-            local leftTip = _G["GameTooltipTextLeft" .. i]
-            local leftTipText = leftTip:GetText()
-            if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
-                isElvUITooltipItemLevelInfoAlreadyAdded = true
-                break
-            end
-        end
-
-        if not isElvUITooltipItemLevelInfoAlreadyAdded then
-            return E:Delay(0.2, T.SL_InspectInfo, T, ET, tt, triedTimes + 1)
-        end
-    end
-
-    -- Run all registered callbacks (modifier)
-    for _, func in next, self.modifierInspect do
-        xpcall(func, F.Developer.ThrowError, self, tt, unit, guid)
-    end
-
-    tt.windInspectLoaded = true
-end
-
-function T:InspectInfo(_, tt, data, triedTimes)
+function T:InspectInfo(tt, data, triedTimes)
     if tt:IsForbidden() or tt.windInspectLoaded then
         return
     end
@@ -224,9 +170,20 @@ function T:Event(event, ...)
     end
 end
 
+ET._GameTooltip_OnTooltipSetUnit = ET.GameTooltip_OnTooltipSetUnit
+function ET.GameTooltip_OnTooltipSetUnit(...)
+    local tt = ...
+    ET._GameTooltip_OnTooltipSetUnit(...)
+
+    if not T or not T.initialized or not tt == _G.GameTooltip then
+        return
+    end
+
+    T:InspectInfo(...)
+end
+
 function T:Initialize()
     self.db = E.private.WT.tooltips
-
     for index, func in next, self.load do
         xpcall(func, F.Developer.ThrowError, self)
         self.load[index] = nil
@@ -236,14 +193,10 @@ function T:Initialize()
         T:RegisterEvent(name, "Event")
     end
 
-    -- TODO: remove this after 10.0.2
-    if not TooltipDataProcessor then
-        T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "SL_InspectInfo")
-    else
-        T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", "InspectInfo")
-    end
     T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
     T:SecureHookScript(_G.GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
+
+    self.initialized = true
 end
 
 function T:ProfileUpdate()

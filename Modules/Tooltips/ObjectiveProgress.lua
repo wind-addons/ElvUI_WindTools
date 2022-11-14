@@ -13,17 +13,18 @@ local tostring = tostring
 local UnitGUID = UnitGUID
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
+local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
+
+local Enum_TooltipDataType_Unit = Enum.TooltipDataType.Unit
 
 local accuracy
 
-function T:AddObjectiveProgress(tt)
-    if not tt or not tt.NumLines or tt:NumLines() == 0 then
+local function addObjectiveProgress(tt, data)
+    if not tt or not tt == _G.GameTooltip and not tt.NumLines or tt:NumLines() == 0 then
         return
     end
 
-    local name, unit = tt:GetUnit()
-    local GUID = unit and UnitGUID(unit)
-    local npcID = GUID and select(6, ("-"):split(GUID))
+    local npcID = select(6, strsplit("-", data.guid))
 
     if not npcID or npcID == "" then
         return
@@ -52,7 +53,7 @@ function T:ObjectiveProgress()
 
     accuracy = E.private.WT.tooltips.objectiveProgressAccuracy
 
-    T:SecureHookScript(_G.GameTooltip, "OnTooltipSetUnit", "AddObjectiveProgress")
+    TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Unit, addObjectiveProgress)
 end
 
 T:AddCallback("ObjectiveProgress")

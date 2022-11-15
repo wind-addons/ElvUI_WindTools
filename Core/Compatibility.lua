@@ -288,13 +288,6 @@ function W:CheckCompatibility()
     CheckMerathilisUI(L["Group Info"], L["LFG Info"], "db.WT.tooltips.groupInfo.enable", "db.mui.misc.lfgInfo.enable")
 
     CheckMerathilisUI(
-        L["Paragon Reputation"],
-        L["Paragon Reputation"],
-        "db.WT.quest.paragonReputation.enable",
-        "db.mui.misc.paragon.enable"
-    )
-
-    CheckMerathilisUI(
         L["Role Icon"],
         L["Role Icon"],
         "private.WT.unitFrames.roleIcon.enable",
@@ -345,13 +338,6 @@ function W:CheckCompatibility()
         L["Hide Player Brackets"],
         "db.WT.social.chatText.removeBrackets",
         "db.mui.chat.hidePlayerBrackets"
-    )
-
-    CheckMerathilisUI(
-        format("%s-%s", L["Talent Manager"], L["Item Buttons"]),
-        L["Codex Buttons"],
-        "private.WT.combat.talentManager.itemButtons",
-        "db.mui.misc.respec"
     )
 
     CheckMerathilisUI(

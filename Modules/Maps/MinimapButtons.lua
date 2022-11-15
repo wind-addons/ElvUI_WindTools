@@ -324,6 +324,13 @@ function MB:SkinButton(frame)
 			end
 		end
 
+		if frame.backdrop then
+			if name == "LibDBIcon10_Musician" then
+				frame.backdrop:Kill()
+				frame.backdrop = nil
+			end
+		end
+
 		frame:CreateBackdrop("Tranparent")
 		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 			S:CreateBackdropShadow(frame)

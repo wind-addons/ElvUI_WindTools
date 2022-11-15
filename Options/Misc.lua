@@ -680,6 +680,7 @@ do
     local examples = {}
 
     examples.health = {
+        order = 1,
         name = L["Health"],
         absorbsLong = {
             order = 1,
@@ -744,6 +745,7 @@ do
     }
 
     examples.power = {
+        order = 2,
         name = L["Power"],
         noSign = {
             tag = "[power:percent-nosign]",
@@ -760,6 +762,7 @@ do
     }
 
     examples.range = {
+        order = 3,
         name = L["Range"],
         normal = {
             tag = "[range]",
@@ -772,6 +775,7 @@ do
     }
 
     examples.color = {
+        order = 4,
         name = L["Color"],
         player = {
             order = 0,
@@ -806,28 +810,74 @@ do
         }
     end
 
-    local index = 11
+    for index, style in pairs(F.GetClassIconStyleList()) do
+        examples["classIcon_" .. style] = {
+            order = 5 + index,
+            name = L["Class Icon"] .. " - " .. style,
+            ["PLAYER_ICON"] = {
+                order = 1,
+                type = "description",
+                image = function()
+                    return F.GetClassIconWithStyle(E.myclass, style), 64, 64
+                end,
+                width = 1
+            },
+            ["PLAYER_TAG"] = {
+                order = 2,
+                text = L["The class icon of the player's class"],
+                tag = "[classicon-" .. style .. "]",
+                width = 1.5
+            }
+        }
+
+        for i = 1, GetNumClasses() do
+            local upperText = select(2, GetClassInfo(i))
+            local coloredClassName = GetClassColorString(upperText) .. className[upperText] .. "|r"
+            examples["classIcon_" .. style][upperText .. "_ALIGN"] = {
+                order = 3 * i,
+                type = "description"
+            }
+            examples["classIcon_" .. style][upperText .. "_ICON"] = {
+                order = 3 * i + 1,
+                type = "description",
+                image = function()
+                    return F.GetClassIconWithStyle(upperText, style), 64, 64
+                end,
+                width = 1
+            }
+            examples["classIcon_" .. style][upperText .. "_TAG"] = {
+                order = 3 * i + 2,
+                text = coloredClassName,
+                tag = "[classicon-" .. style .. ":" .. strlower(upperText) .. "]",
+                width = 1.5
+            }
+        end
+    end
+
     for cat, catTable in pairs(examples) do
         options.tags.args[cat] = {
-            order = index,
+            order = catTable.order,
             type = "group",
             name = catTable.name,
             args = {}
         }
-        index = index + 1
 
         local subIndex = 1
         for key, data in pairs(catTable) do
-            if key ~= "name" then
+            if not F.In(key, {"name", "order"}) then
                 options.tags.args[cat].args[key] = {
                     order = data.order or subIndex,
-                    type = "input",
-                    width = "full",
-                    name = data.text,
+                    type = data.type or "input",
+                    width = data.width or "full",
+                    name = data.text or "",
                     get = function()
                         return data.tag
                     end
                 }
+
+                if data.image then
+                    options.tags.args[cat].args[key].image = data.image
+                end
                 subIndex = subIndex + 1
             end
         end

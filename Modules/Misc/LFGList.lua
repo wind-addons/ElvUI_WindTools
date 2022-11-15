@@ -165,33 +165,35 @@ function LL:ReskinIcon(parent, icon, role, data)
         end
     end
 
-    if self.db.icon.leader then
-        if not icon.leader then
-            local leader = parent:CreateTexture(nil, "OVERLAY")
-            leader:SetTexture(W.Media.Icons.leader)
-            leader:Size(10, 8)
-            leader:SetPoint("BOTTOM", icon, "TOP", 0, 1)
-            icon.leader = leader
+    if parent then
+        if self.db.icon.leader then
+            if not icon.leader then
+                local leader = parent:CreateTexture(nil, "OVERLAY")
+                leader:SetTexture(W.Media.Icons.leader)
+                leader:Size(10, 8)
+                leader:SetPoint("BOTTOM", icon, "TOP", 0, 1)
+                icon.leader = leader
+            end
+
+            icon.leader:SetShown(isLeader)
         end
 
-        icon.leader:SetShown(isLeader)
-    end
+        -- Create bar in class color behind
+        if class and self.db.line.enable then
+            if not icon.line then
+                local line = parent:CreateTexture(nil, "ARTWORK")
+                line:SetTexture(LSM:Fetch("statusbar", self.db.line.tex) or E.media.normTex)
+                line:Size(self.db.line.width, self.db.line.height)
+                line:Point("TOP", icon, "BOTTOM", self.db.line.offsetX, self.db.line.offsetY)
+                icon.line = line
+            end
 
-    -- Create bar in class color behind
-    if class and self.db.line.enable then
-        if not icon.line then
-            local line = parent:CreateTexture(nil, "ARTWORK")
-            line:SetTexture(LSM:Fetch("statusbar", self.db.line.tex) or E.media.normTex)
-            line:Size(self.db.line.width, self.db.line.height)
-            line:Point("TOP", icon, "BOTTOM", self.db.line.offsetX, self.db.line.offsetY)
-            icon.line = line
+            local color = E:ClassColor(class, false)
+            icon.line:SetVertexColor(color.r, color.g, color.b)
+            icon.line:SetAlpha(self.db.line.alpha)
+        elseif parent and icon.line then
+            icon.line:SetAlpha(0)
         end
-
-        local color = E:ClassColor(class, false)
-        icon.line:SetVertexColor(color.r, color.g, color.b)
-        icon.line:SetAlpha(self.db.line.alpha)
-    elseif icon.line then
-        icon.line:SetAlpha(0)
     end
 end
 

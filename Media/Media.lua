@@ -244,12 +244,33 @@ do
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")
 end
 
-do
-	function F.GetClassTexCoord(role)
-		return unpack(CLASS_ICON_TCOORDS[role])
+function F.GetClassIconWithStyle(class, style)
+	if not class or not F.In(strupper(class), _G.CLASS_SORT_ORDER) then
+		return
 	end
 
-	AddMedia("CLASSES", "UI-CLASSES-CIRCLES.blp", "Textures")
+	if not style or not F.In(style, {"flat", "flatborder1", "flatborder2", "round", "square", "warcraftflat"}) then
+		return
+	end
+
+	return MediaPath .. "Icons/ClassIcon/" .. strlower(class) .. "_" .. style .. ".tga"
+end
+
+function F.GetClassIconStringWithStyle(class, style, width, height)
+	local path = F.GetClassIconWithStyle(class, style)
+	if not path then
+		return
+	end
+
+	if not width and not height then
+		return format("|T%s:0|t", path)
+	end
+
+	if not height then
+		height = width
+	end
+
+	return format("|T%s:%d:%d:0:0:64:64:0:64:0:64|t", path, height, width)
 end
 
 AddMedia("vignetting", "Vignetting.tga", "Textures")

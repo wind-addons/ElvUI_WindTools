@@ -172,12 +172,7 @@ function U:Conduct(template, role, class, spec, amount)
             local height = size[1] and size[1] ~= "" and tonumber(size[1]) or 14
             local width = size[2] and size[2] ~= "" and tonumber(size[2]) or height
 
-            return F.GetTextureStringFromTexCoord(
-                W.Media.Textures.CLASSES,
-                width,
-                {x = 256, y = 256},
-                {F.GetClassTexCoord(class)}
-            )
+            return F.GetClassIconStringWithStyle(class, "flatborder2", width, height)
         end
     )
 

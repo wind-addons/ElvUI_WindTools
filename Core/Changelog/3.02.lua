@@ -1,21 +1,29 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[302] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/11/16",
     IMPORTANT = {
         ["zhCN"] = {
+            "适配 ElvUI 13.02.",
+            "最低支持的 ElvUI 版本变更为 13.02.",
             "提升了与 MerathilisUI 的兼容性.",
             "[移动框体] 为了修复可能的错误, 本次更新会重置框体位置记忆."
         },
         ["zhTW"] = {
+            "適配 ElvUI 13.02.",
+            "最低支持的 ElvUI 版本變更為 13.02.",
             "提升了與 MerathilisUI 的兼容性.",
             "[移動框架] 為了修復可能的錯誤, 本次更新會重置框架位置記憶."
         },
         ["enUS"] = {
+            "Compatible with ElvUI 13.02.",
+            "The minimum supported ElvUI version has been changed to 13.02.",
             "Improved compatibility with MerathilisUI.",
             "[Move Frames] To fix possible errors, this update will reset frame positions."
         },
         ["koKR"] = {
+            "Compatible with ElvUI 13.02.",
+            "The minimum supported ElvUI version has been changed to 13.02.",
             "Improved compatibility with MerathilisUI.",
             "[Move Frames] To fix possible errors, this update will reset frame positions."
         }

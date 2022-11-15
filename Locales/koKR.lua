@@ -710,7 +710,6 @@ L["Miscellaneous modules."] = "기타 모듈"
 L["Mission Reports"] = "임무 보고서"
 L["Mode"] = "모드"
 L["Modern"] = "모던"
-L["Modifier"] = true
 L["Modifier Key"] = "기능키 설정"
 L["Modify the chat text style."] = "채팅 문자 스타일을 수정합니다."
 L["Modify the style of abbreviation of channels."] = "채널의 줄임말 스타일을 수정합니다."

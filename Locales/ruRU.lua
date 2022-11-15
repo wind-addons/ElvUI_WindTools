@@ -710,7 +710,6 @@ L["Miscellaneous modules."] = "Разные модули."
 L["Mission Reports"] = "Отчеты миссии"
 L["Mode"] = "Режим"
 L["Modern"] = "Современный"
-L["Modifier"] = true
 L["Modifier Key"] = "Клавиша-модификатор"
 L["Modify the chat text style."] = "Измените стиль текста чата."
 L["Modify the style of abbreviation of channels."] = "Измените стиль сокращения каналов."

@@ -710,7 +710,6 @@ L["Miscellaneous modules."] = true
 L["Mission Reports"] = true
 L["Mode"] = true
 L["Modern"] = true
-L["Modifier"] = true
 L["Modifier Key"] = true
 L["Modify the chat text style."] = true
 L["Modify the style of abbreviation of channels."] = true

@@ -48,6 +48,7 @@ function U.GetColoredRoleName(role)
     return coloredRoleName[role]
 end
 
+local classIconStyle = "flat"
 local classFileToID = {} -- { ["WARRIOR"] = 1 }
 local localizedSpecNameToID = {} -- { ["Protection"] = 73 }
 local localizedSpecNameToIcon = {} -- { ["Protection"] = "Interface\\Icons\\ability_warrior_defensivestance" }
@@ -172,7 +173,7 @@ function U:Conduct(template, role, class, spec, amount)
             local height = size[1] and size[1] ~= "" and tonumber(size[1]) or 14
             local width = size[2] and size[2] ~= "" and tonumber(size[2]) or height
 
-            return F.GetClassIconStringWithStyle(class, "flatborder2", width, height)
+            return F.GetClassIconStringWithStyle(class, classIconStyle, width, height)
         end
     )
 
@@ -362,4 +363,10 @@ function U:GetPartyInfo(template)
     end
 
     return dataTable
+end
+
+function U:SetClassIconStyle(style)
+    if style then
+        classIconStyle = style
+    end
 end

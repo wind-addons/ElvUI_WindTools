@@ -194,14 +194,32 @@ options.general = {
                         COMPACT = L["Compact"]
                     }
                 },
-                betterAlign1 = {
+                classIconStyle = {
                     order = 4,
+                    name = L["Class Icon Style"],
+                    type = "select",
+                    values = function()
+                        local result = {}
+                        for _, style in pairs(F.GetClassIconStyleList()) do
+                            local monkIcon = F.GetClassIconStringWithStyle("MONK", style)
+                            local druidIcon = F.GetClassIconStringWithStyle("DRUID", style)
+                            local evokerIcon = F.GetClassIconStringWithStyle("EVOKER", style)
+
+                            if monkIcon and druidIcon and evokerIcon then
+                                result[style] = format("%s %s %s", monkIcon, druidIcon, evokerIcon)
+                            end
+                        end
+                        return result
+                    end
+                },
+                betterAlign1 = {
+                    order = 5,
                     type = "description",
                     name = "",
                     width = "full"
                 },
                 template = {
-                    order = 5,
+                    order = 6,
                     type = "input",
                     name = L["Template"],
                     desc = L["Please click the button below to read reference."],
@@ -214,7 +232,7 @@ options.general = {
                     end
                 },
                 resourcePage = {
-                    order = 6,
+                    order = 7,
                     type = "execute",
                     name = F.GetWindStyleText(L["Reference"]),
                     desc = format(
@@ -244,7 +262,7 @@ options.general = {
                     end
                 },
                 useDefaultTemplate = {
-                    order = 7,
+                    order = 8,
                     type = "execute",
                     name = L["Default"],
                     func = function(info)
@@ -253,7 +271,7 @@ options.general = {
                     end
                 },
                 applyButton = {
-                    order = 8,
+                    order = 9,
                     type = "execute",
                     name = L["Apply"],
                     disabled = function()
@@ -264,20 +282,19 @@ options.general = {
                     end
                 },
                 betterAlign2 = {
-                    order = 9,
+                    order = 10,
                     type = "description",
                     name = "",
                     width = "full"
                 },
                 previewText = {
-                    order = 10,
+                    order = 11,
                     type = "description",
                     name = function(info)
-                        return L["Preview"] ..
-                            ": " ..
-                                LFGPI:ConductPreview(
-                                    cache.groupInfo.template or E.db.WT.tooltips[info[#info - 1]].template
-                                )
+                        LFGPI:SetClassIconStyle(E.db.WT.tooltips[info[#info - 1]].classIconStyle)
+                        local text =
+                            LFGPI:ConductPreview(cache.groupInfo.template or E.db.WT.tooltips[info[#info - 1]].template)
+                        return L["Preview"] .. ": " .. text
                     end
                 }
             }

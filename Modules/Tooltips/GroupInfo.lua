@@ -28,6 +28,7 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
         return
     end
 
+    LFGPI:SetClassIconStyle(config.classIconStyle)
     LFGPI:Update(resultID)
 
     -- split line

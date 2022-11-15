@@ -244,12 +244,16 @@ do
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")
 end
 
+function F.GetClassIconStyleList()
+	return {"flat", "flatborder", "flatborder2", "round", "square", "warcraftflat"}
+end
+
 function F.GetClassIconWithStyle(class, style)
 	if not class or not F.In(strupper(class), _G.CLASS_SORT_ORDER) then
 		return
 	end
 
-	if not style or not F.In(style, {"flat", "flatborder1", "flatborder2", "round", "square", "warcraftflat"}) then
+	if not style or not F.In(style, F.GetClassIconStyleList()) then
 		return
 	end
 

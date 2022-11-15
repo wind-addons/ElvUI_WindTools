@@ -397,5 +397,12 @@ LSM:Register("statusbar", "WindTools Glow", MediaPath .. "Textures/StatusbarGlow
 LSM:Register("statusbar", "WindTools Flat", MediaPath .. "Textures/StatusbarFlat.blp")
 LSM:Register("statusbar", "WindTools Light", MediaPath .. "Textures/StatusbarLight.tga")
 
+LSM:Register("statusbar", "ToxiUI Clean", MediaPath .. "Textures/ToxiUI/ToxiUI-clean.tga")
+LSM:Register("statusbar", "ToxiUI Dark", MediaPath .. "Textures/ToxiUI/ToxiUI-dark.tga")
+LSM:Register("statusbar", "ToxiUI Gradient 1", MediaPath .. "Textures/ToxiUI/ToxiUI-g1.tga")
+LSM:Register("statusbar", "ToxiUI Gradient 2", MediaPath .. "Textures/ToxiUI/ToxiUI-g2.tga")
+LSM:Register("statusbar", "ToxiUI Gradient 3", MediaPath .. "Textures/ToxiUI/ToxiUI-grad.tga")
+LSM:Register("statusbar", "ToxiUI Half", MediaPath .. "Textures/ToxiUI/ToxiUI-half.tga")
+
 LSM:Register("sound", "OnePlus Light", MediaPath .. "Sounds/OnePlusLight.ogg")
 LSM:Register("sound", "OnePlus Surprise", MediaPath .. "Sounds/OnePlusSurprise.ogg")

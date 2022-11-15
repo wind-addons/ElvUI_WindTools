@@ -319,31 +319,18 @@ options.credits = {
 
 do -- 特别感谢
     local nameList = {
-        "|cffff7d0aMerathilis|r",
-        "|cfffff0cdsiweia|r",
-        "Repooc",
-        "|cfffff0cdloudsoul|r",
-        "|cff0070deAzilroka|r",
-        "|cffd12727Blazeflack|r",
-        E:TextGradient("Simpy", 1.00, 1.00, 0.60, 0.53, 1.00, 0.40),
-        "|cffff7d0aBenik|r",
-        "Haste",
-        "Tukz",
-        "Elv"
+        "|cffa2c446Siweia|r (|cff68a2daN|r|cffd25348D|rui)",
+        "Loudsoul (|cffea5d5bTiny|rInspect, |cffea5d5bTiny|rTooltip)",
+        "|cffff7d0aMerathilis|r (ElvUI_Merathilis|cffff7d0aUI|r)",
+        "|cff00e4f5Toxi|r & |cffb5ffebNawuko|r (ElvUI_|cffffffffToxi|r|cff00e4f5UI|r)"
     }
 
-    local nameString = strjoin(", ", unpack(nameList))
+    local nameString = strjoin("\n", unpack(nameList))
 
     options.credits.args.specialThanks.args["1"] = {
         order = 1,
         type = "description",
-        name = format(L["Special thanks to %s."], nameString)
-    }
-
-    options.credits.args.specialThanks.args["2"] = {
-        order = 2,
-        type = "description",
-        name = L["I have learned a lot from their codes."]
+        name = nameString .. "\n" .. L["and whole ElvUI team."]
     }
 end
 
@@ -515,8 +502,14 @@ end
 
 do -- 媒体文件
     local mediaFilesCreditList = {
+        ["ToxiUI Team"] = {
+            "Media/Texture/ToxiUI"
+        },
         ["迷时鸟 @ NGA.cn"] = {
             "Media/Texture/Illustration"
+        },
+        ["Simaia"] = {
+            "Media/Icons/ClassIcon"
         },
         ["FlickMasher @ Reddit"] = {
             "Media/Icons/PhilMod"

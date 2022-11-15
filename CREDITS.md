@@ -123,8 +123,14 @@
 
 ## Medias
 
+- ToxiUI Team
+  - Media/Texture/ToxiUI
+
 - 迷时鸟 @ NGA.cn
   - Media/Texture/Illustration
+
+- Simaia
+  - Media/Icons/ClassIcon
 
 - FlickMasher @ Reddit
   - Media/Icons/PhilMod

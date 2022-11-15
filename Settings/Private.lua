@@ -122,7 +122,7 @@ V.misc = {
         },
         additionalText = {
             enable = true,
-            target = "TITLE",
+            target = "DESC",
             shortenDescription = true,
             template = "{{score}} {{text}}"
         }

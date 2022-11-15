@@ -1675,7 +1675,7 @@ options.lfgList = {
                     order = 1,
                     type = "toggle",
                     name = L["Enable"],
-                    desc = L["Add some additional informaiton into title or comment."],
+                    desc = L["Add some additional informaiton into title or description."],
                     width = "full"
                 },
                 target = {
@@ -1684,7 +1684,7 @@ options.lfgList = {
                     name = L["Target"],
                     values = {
                         TITLE = L["Title"],
-                        COMMENT = L["Comment"]
+                        DESC = L["Description"]
                     },
                     width = 0.8
                 },

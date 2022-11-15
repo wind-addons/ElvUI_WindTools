@@ -68,18 +68,14 @@ function LL:UpdateAdditionalText(button, score, best)
     end
 
     if db.shortenDescription then
-        local commentText = button.ActivityName:GetText()
-        commentText = gsub(commentText, "%([^%)]+%)", "")
-        button.ActivityName:SetText(commentText)
+        local descriptionText = button.ActivityName:GetText()
+        descriptionText = gsub(descriptionText, "%([^%)]+%)", "")
+        button.ActivityName:SetText(descriptionText)
     end
 
     local target = button[db.target == "TITLE" and "Name" or "ActivityName"]
 
     local text = target:GetText()
-
-    if db.target == "COMMENT" then
-        text = gsub(text, "%([^%)]+%)", "")
-    end
 
     local result = db.template
 

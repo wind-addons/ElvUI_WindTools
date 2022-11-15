@@ -13,6 +13,7 @@ local xpcall = xpcall
 
 local CanInspect = CanInspect
 local GameTooltip =GameTooltip
+local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsShiftKeyDown = IsShiftKeyDown

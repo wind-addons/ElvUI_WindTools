@@ -7,6 +7,7 @@ local floor = floor
 local format = format
 local next = next
 local select = select
+local strsplit = strsplit
 local tonumber = tonumber
 local tostring = tostring
 

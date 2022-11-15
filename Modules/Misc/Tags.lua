@@ -4,6 +4,7 @@ local RangeCheck = E.Libs.RangeCheck
 
 local floor = floor
 local format = format
+local pairs = pairs
 local select = select
 local strlen = strlen
 local strlower = strlower
@@ -13,6 +14,7 @@ local tonumber = tonumber
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local UnitClass = UnitClass
 local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax

@@ -1,8 +1,11 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local LSM = E.Libs.LSM
 
+local _G = _G
 local ceil = ceil
 local format = format
+local strlower = strlower
+local strupper = strupper
 local unpack = unpack
 
 local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS

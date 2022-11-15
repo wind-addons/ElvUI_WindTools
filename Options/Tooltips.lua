@@ -3,7 +3,9 @@ local options = W.options.tooltips.args
 local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
+local format = format
 local ipairs = ipairs
+local pairs = pairs
 
 local cache = {
     groupInfo = {}

@@ -34,11 +34,17 @@ local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
 _G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:" .. newString .. "|t |cffffffff%2$s|r %3$s"
 _G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:" .. newString .. "|t %2$s"
 
-local function setTooltipIcon(self, icon)
-    local lineNumber = self == _G.GameTooltip and 1 or 2
-    local title = icon and _G[self:GetName() .. "TextLeft" .. lineNumber]
-    if title then
-        title:SetFormattedText("|T%s:20:20:" .. newString .. ":%d|t %s", icon, 20, title:GetText())
+local function setTooltipIcon(tt, data, type)
+    local getIcon = type == Enum_TooltipDataType_Item and GetItemIcon or GetSpellTexture
+    local icon = getIcon and getIcon(data.id)
+    local iconString = icon and F.GetIconString(icon, 18, 18, true)
+
+    local rowNumber = tt == _G.GameTooltip and 1 or 2
+    local row = _G[tt:GetName() .. "TextLeft" .. rowNumber]
+    local existingText = row and row:GetText()
+
+    if iconString and existingText then
+        row:SetText(iconString .. " " .. existingText)
     end
 end
 
@@ -74,22 +80,13 @@ local function alignShoppingTooltip(tt)
     end
 end
 
-local function itemTooltipHandler(tt, data)
-    if not data.id or not tt.GetName or not F.In(tt:GetName(), tooltips) then
-        return
-    end
+local function getTooltipIconHandler(type)
+    return function(tt, data)
+        if not data or not data.id or not data.lines or not tt.GetName or not F.In(tt:GetName(), tooltips) then
+            return
+        end
 
-    setTooltipIcon(tt, GetItemIcon(data.id))
-end
-
-local function spellTooltipHandler(tt)
-    if not tt.GetName or not F.In(tt:GetName(), tooltips) then
-        return
-    end
-
-    local _, id = tt:GetSpell()
-    if id then
-        setTooltipIcon(tt, GetSpellTexture(id))
+        setTooltipIcon(tt, data, type)
     end
 end
 
@@ -154,8 +151,14 @@ end
 
 function T:Icons()
     if E.private.WT.tooltips.icon then
-        TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Item, itemTooltipHandler)
-        TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Spell, spellTooltipHandler)
+        TooltipDataProcessor_AddTooltipPostCall(
+            Enum_TooltipDataType_Item,
+            getTooltipIconHandler(Enum_TooltipDataType_Item)
+        )
+        TooltipDataProcessor_AddTooltipPostCall(
+            Enum_TooltipDataType_Spell,
+            getTooltipIconHandler(Enum_TooltipDataType_Spell)
+        )
 
         _G.ShoppingTooltip1.__SetPoint = _G.ShoppingTooltip1.SetPoint
         hooksecurefunc(_G.ShoppingTooltip1, "SetPoint", alignShoppingTooltip)

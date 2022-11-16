@@ -19,8 +19,6 @@ local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipP
 local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
 local Enum_TooltipDataType_Spell = Enum.TooltipDataType.Spell
 
-local newString = "0:0:64:64:5:59:5:59"
-
 local tooltips = {
     "GameTooltip",
     "ItemRefTooltip",
@@ -31,8 +29,8 @@ local tooltips = {
 }
 
 local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
-_G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:" .. newString .. "|t |cffffffff%2$s|r %3$s"
-_G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:" .. newString .. "|t %2$s"
+_G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:0:0:64:64:5:59:5:59|t |cffffffff%2$s|r %3$s"
+_G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:0:0:64:64:5:59:5:59|t %2$s"
 
 local function setTooltipIcon(tt, data, type)
     local getIcon = type == Enum_TooltipDataType_Item and GetItemIcon or GetSpellTexture

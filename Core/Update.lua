@@ -87,7 +87,8 @@ function W:UpdateScripts()
     end
 
     if privateVersion < 3.02 then
-        E.private.WT.misc.moveFrames.rememberPositions = {}
+        E.private.WT.misc.moveFrames.rememberPositions = false
+        E.private.WT.misc.moveFrames.framePositions = {}
         UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"], globalVersion)
     end
 

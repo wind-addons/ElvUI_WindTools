@@ -8,7 +8,7 @@ function S:GuildInviteFrame()
         return
     end
 
-    self:CreateBackdropShadow(_G.GuildInviteFrame)
+    self:CreateShadow(_G.GuildInviteFrame)
 end
 
 function S:Blizzard_GuildUI()

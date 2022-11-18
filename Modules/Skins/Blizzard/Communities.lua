@@ -18,6 +18,7 @@ local function updateClassIcon(row)
     local englishClassName = classId and select(2, GetClassInfo(classId))
     if englishClassName then
         row.Class:SetTexture(F.GetClassIconWithStyle(englishClassName, "flat"))
+        row.Class:SetTexCoord(0, 1, 0, 1)
     end
 end
 

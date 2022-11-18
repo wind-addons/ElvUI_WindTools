@@ -30,6 +30,7 @@ function S:TomCats_Config()
     self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_lunarFestivalMinimapButton)
     self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_mapIconAnimation)
     self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_minimapButton)
+    self:ESProxy("HandleCheckBox", _G.TomCats_Config.checkBox_primalStorms)
 end
 
 function S:TomCats_HandleTomCatsIcon(icon)
@@ -98,16 +99,56 @@ function S:TomCats()
     self:TomCats_Config()
     TT:SetStyle(_G.TomCatsVignetteTooltip)
     self:SecureHook(_G.TomCatsVignetteTooltip, "SetOwner", "TomCats_SkinTooltipItems")
-
     if _G.TomCatsVignettesSection and _G.TomCatsVignettesSection.Header then
         local header = _G.TomCatsVignettesSection.Header
         self:RawHook(header, "SetNormalAtlas", "TomCats_HeaderCollapseButton_SetNormalAtlas", true)
         self:RawHook(header, "SetPushedAtlas", "TomCats_HeaderCollapseButton_SetPushedAtlas", true)
         header:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
         header.SetHighlightTexture = E.noop
-        header:Size(16, 16)
+        header:SetSize(16, 16)
         header.topPadding = 16
         F.SetFontOutline(header.text)
+    end
+
+    local primalStormsFrame
+    for _, frame in pairs({_G.UIParent:GetChildren()}) do
+        if not primalStormsFrame then
+            if frame and frame.icon and frame.headerBar and frame.footerBar then
+                primalStormsFrame = frame
+            end
+        end
+    end
+
+    if primalStormsFrame then
+        if primalStormsFrame.icon then
+            if primalStormsFrame.icon.Background then
+                primalStormsFrame.icon.Background:SetAlpha(0)
+            end
+
+            if primalStormsFrame.icon.Border then
+                primalStormsFrame.icon.Border:SetAlpha(0)
+            end
+
+            if primalStormsFrame.icon.logo then
+                primalStormsFrame.icon.logo:ClearAllPoints()
+                primalStormsFrame.icon.logo:SetPoint("CENTER", primalStormsFrame, "BOTTOM")
+            end
+        end
+
+        if primalStormsFrame.headerBar then
+            primalStormsFrame.headerBar:SetAlpha(0)
+        end
+
+        if primalStormsFrame.footerBar then
+            primalStormsFrame.footerBar:SetAlpha(0)
+        end
+
+        if primalStormsFrame.title then
+            F.SetFontOutline(primalStormsFrame.title)
+        end
+
+        primalStormsFrame:SetTemplate("Transparent")
+        self:CreateShadow(primalStormsFrame)
     end
 end
 

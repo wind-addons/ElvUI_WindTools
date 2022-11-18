@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.advanced.args
+local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -1290,6 +1291,32 @@ do
                         func = function()
                             text = F.Profiles.GetOutputString(false, true)
                         end
+                    },
+                    betterAlign = {
+                        order = 6,
+                        type = "description",
+                        fontSize = "small",
+                        name = " ",
+                        width = "full"
+                    },
+                    tip = {
+                        order = 6,
+                        type = "description",
+                        name = format(
+                            "%s\n%s\n%s\n%s\n%s",
+                            C.StringByTemplate(L["I want to sync setting of WindTools!"], "info"),
+                            L["WindTools saves all data in ElvUI Profile and Private database."],
+                            L[
+                                "So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."
+                            ],
+                            L[
+                                "Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."
+                            ],
+                            L[
+                                "Check the setting of ElvUI Private database in ElvUI Options -> Profiles -> Private (tab)."
+                            ]
+                        ),
+                        width = "full"
                     }
                 }
             }

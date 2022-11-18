@@ -2,58 +2,54 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
+
+local function updateClassIcon(button)
+    if not button.expanded then
+        return
+    end
+
+    local memberInfo = button:GetMemberInfo()
+    if memberInfo and memberInfo.classID then
+        print(memberInfo.classID)
+    end
+end
 
 function S:Blizzard_Communities()
     if not self:CheckDB("communities") then
         return
     end
 
-    if _G.CommunitiesFrame then
-        local f = _G.CommunitiesFrame
-        self:CreateShadow(f)
-        self:CreateShadow(f.ChatTab)
-        self:CreateShadow(f.RosterTab)
-        self:CreateShadow(f.GuildBenefitsTab)
-        self:CreateShadow(f.GuildInfoTab)
-        self:CreateShadow(f.GuildMemberDetailFrame)
-        self:CreateShadow(f.ClubFinderInvitationFrame)
-        if _G.CommunitiesGuildLogFrame then
-            self:CreateShadow(_G.CommunitiesGuildLogFrame)
-        end
+    local CommunitiesFrame = _G.CommunitiesFrame
+    if not CommunitiesFrame then
+        return
     end
 
-    -- Communities Settings
+    self:CreateShadow(CommunitiesFrame)
+    self:CreateShadow(CommunitiesFrame.ChatTab)
+    self:CreateShadow(CommunitiesFrame.RosterTab)
+    self:CreateShadow(CommunitiesFrame.GuildBenefitsTab)
+    self:CreateShadow(CommunitiesFrame.GuildInfoTab)
+    self:CreateShadow(CommunitiesFrame.GuildMemberDetailFrame)
+    self:CreateShadow(CommunitiesFrame.ClubFinderInvitationFrame)
+
+    self:CreateShadow(_G.CommunitiesGuildLogFrame)
     self:CreateShadow(_G.CommunitiesSettingsDialog)
 
-    -- 搜寻社群
-    if _G.ClubFinderCommunityAndGuildFinderFrame then
-        local f = _G.ClubFinderCommunityAndGuildFinderFrame
-        if f.ClubFinderPendingTab then
-            self:CreateShadow(f.ClubFinderPendingTab)
-        end
-        if f.ClubFinderSearchTab then
-            self:CreateShadow(f.ClubFinderSearchTab)
-        end
-        if f.RequestToJoinFrame then
-            self:CreateShadow(f.RequestToJoinFrame)
-        end
+    local ClubFinderCommunityAndGuildFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
+    if ClubFinderCommunityAndGuildFinderFrame then
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab)
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab)
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame)
     end
 
-    -- 搜寻公会
-    if _G.ClubFinderCommunityAndGuildFinderFrame then
-        local f = _G.ClubFinderGuildFinderFrame
-        if f.ClubFinderPendingTab then
-            self:CreateShadow(f.ClubFinderPendingTab)
-        end
-        if f.ClubFinderSearchTab then
-            self:CreateShadow(f.ClubFinderSearchTab)
-        end
-        if f.RequestToJoinFrame then
-            self:CreateShadow(f.RequestToJoinFrame)
-        end
+    local ClubFinderCommunityAndGuildFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
+    if ClubFinderCommunityAndGuildFinderFrame then
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab)
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab)
+        self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame)
     end
 
-    -- 公会招募
     self:CreateBackdropShadow(_G.CommunitiesFrame.RecruitmentDialog)
 end
 

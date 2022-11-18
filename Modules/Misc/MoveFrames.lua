@@ -62,6 +62,14 @@ local BlizzardFrames = {
     ["DressUpFrame"] = {
         "DressUpFrame.OutfitDetailsPanel"
     },
+    ["MailFrame"] = {
+        "SendMailFrame",
+        "MailFrameInset",
+        ["OpenMailFrame"] = {
+            "OpenMailFrame.OpenMailSender",
+            "OpenMailFrame.OpenMailFrameInset"
+        }
+    },
     ["WorldMapFrame"] = {
         "QuestMapFrame"
     }
@@ -584,6 +592,11 @@ function MF:Initialize()
     -- Trade Skill Master Speical Handling
     if IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
         removeBlizzardFrames("MerchantFrame")
+    end
+
+    -- ElvUI Mail Frame Speical Handling
+    if _G.MailFrameInset then
+        _G.MailFrameInset:SetParent(_G.MailFrame)
     end
 
     -- 全局变量中已经存在的窗体

@@ -4,14 +4,18 @@ local S = W.Modules.Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-local function updateClassIcon(button)
-    if not button.expanded then
+local function updateClassIcon(row)
+    if not row.expanded then
         return
     end
 
-    local memberInfo = button:GetMemberInfo()
+    local memberInfo = row:GetMemberInfo()
     if memberInfo and memberInfo.classID then
-        print(memberInfo.classID)
+        local englishClassName = select(2, GetClassInfo(memberInfo.classID))
+        if englishClassName then
+            row.Class:SetTexture(F.GetClassIconWithStyle(englishClassName, "flat"))
+            row.Class:SetTexCoord(0, 1, 0, 1)
+        end
     end
 end
 
@@ -51,6 +55,24 @@ function S:Blizzard_Communities()
     end
 
     self:CreateBackdropShadow(_G.CommunitiesFrame.RecruitmentDialog)
+
+    hooksecurefunc(
+        CommunitiesFrame.MemberList,
+        "RefreshListDisplay",
+        function(memberList)
+            local target = memberList.ScrollBox:GetScrollTarget()
+            if not target or not target.GetChildren then
+                return
+            end
+
+            for _, row in pairs({target:GetChildren()}) do
+                if row and not row.__windSkinHook then
+                    hooksecurefunc(row, "RefreshExpandedColumns", updateClassIcon)
+                    row.__windSkinHook = true
+                end
+            end
+        end
+    )
 end
 
 S:AddCallbackForAddon("Blizzard_Communities")

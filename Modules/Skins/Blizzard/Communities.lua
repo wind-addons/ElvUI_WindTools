@@ -3,19 +3,21 @@ local S = W.Modules.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local select = select
+
+local GetClassInfo = GetClassInfo
 
 local function updateClassIcon(row)
-    if not row.expanded then
+    if not row or not row.expanded then
         return
     end
 
     local memberInfo = row:GetMemberInfo()
-    if memberInfo and memberInfo.classID then
-        local englishClassName = select(2, GetClassInfo(memberInfo.classID))
-        if englishClassName then
-            row.Class:SetTexture(F.GetClassIconWithStyle(englishClassName, "flat"))
-            row.Class:SetTexCoord(0, 1, 0, 1)
-        end
+    local classId = memberInfo and memberInfo.classID
+    local englishClassName = classId and select(2, GetClassInfo(classId))
+    if englishClassName then
+        row.Class:SetTexture(F.GetClassIconWithStyle(englishClassName, "flat"))
     end
 end
 

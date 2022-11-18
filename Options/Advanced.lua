@@ -370,21 +370,6 @@ options.reset = {
                         )
                     end
                 },
-                talentManager = {
-                    order = 3,
-                    type = "execute",
-                    name = L["Talent Manager"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Talent Manager"],
-                            nil,
-                            function()
-                                E.private.WT.combat.talentManager = V.combat.talentManager
-                            end
-                        )
-                    end
-                },
                 quickKeystone = {
                     order = 3,
                     type = "execute",

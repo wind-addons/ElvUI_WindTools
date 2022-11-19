@@ -38,7 +38,7 @@ function S:ElvUI_BagSell()
     end
 
     if B and B.SellFrame then
-        self:CreateShadow(B.SellFrame)
+        self:CreateBackdropShadow(B.SellFrame)
     end
 end
 

@@ -459,7 +459,7 @@ function TI:QUEST_COMPLETE()
     if choices <= 1 then
         GetQuestReward(1)
     elseif choices > 1 and self.db and self.db.selectReward then
-        local bestSellPrice, bestIndex = 0, nil
+        local bestSellPrice, bestIndex = 0
 
         for index = 1, choices do
             local link = GetQuestItemLink("choice", index)
@@ -476,12 +476,9 @@ function TI:QUEST_COMPLETE()
             end
         end
 
-        if bestIndex then
-            if self.db and self.db.getBestReward then
-                GetQuestReward(bestIndex)
-            else
-                QuestInfoItem_OnClick(_G.QuestInfoRewardsFrame.RewardButtons[bestIndex])
-            end
+        local button = bestIndex and _G.QuestInfoRewardsFrame.RewardButtons[bestIndex]
+        if button then
+            QuestInfoItem_OnClick(button)
         end
     end
 end

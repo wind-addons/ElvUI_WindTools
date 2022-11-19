@@ -453,15 +453,13 @@ function MF:HandleFrame(frameName, mainFrameName)
     end
 end
 
-function MF:HandleFramesWithTable(table)
-    for key, value in pairs(table) do
-        if type(key) == "number" and type(value) == "string" then
-            self:HandleFrame(value)
-        elseif type(key) == "string" and type(value) == "table" then
-            self:HandleFrame(key)
-            for _, subFrameName in pairs(value) do
-                self:HandleFrame(subFrameName, key)
-            end
+function MF:HandleFramesWithTable(table, parent)
+    for _key1, _frame1 in pairs(table) do
+        if type(_key1) == "number" and type(_frame1) == "string" then
+            self:HandleFrame(_frame1, parent)
+        elseif type(_key1) == "string" and type(_frame1) == "table" then
+            self:HandleFrame(_key1, parent)
+            self:HandleFramesWithTable(_frame1, _key1)
         end
     end
 end

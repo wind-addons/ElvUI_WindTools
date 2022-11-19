@@ -41,9 +41,9 @@ W.Changelog[303] = {
             "[Move Frames] Fix the movement of the mail frame.",
             "[Covenant Helper] Support Evoker.",
             "[Tooltip] Refactor the icon fetching function, fix some icons cannot be fetched correctly.",
-            "[Skins] Improv ElvUI Bags skin. Even if you don't enable the Bags skin, the Bags bar can still be skinn.",
-            "[Skins] Improv TomCats skin, support the latest prepatch event tracker.",
-            "[Skins] Improv Blizzard Community skin, using flat style icons in member list."
+            "[Skins] Improve ElvUI Bags skin. Even if you don't enable the Bags skin, the Bags bar can still be skinn.",
+            "[Skins] Improve TomCats skin, support the latest prepatch event tracker.",
+            "[Skins] Improve Blizzard Community skin, using flat style icons in member list."
         },
         ["koKR"] = {
             "[설정] 설정에 대한 설명을 추가했습니다.",

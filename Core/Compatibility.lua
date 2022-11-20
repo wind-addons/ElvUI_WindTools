@@ -417,6 +417,13 @@ function W:CheckCompatibility()
         "private.mui.skins.addonSkins.waOptions"
     )
 
+    CheckMerathilisUI(
+        L["Announcement"],
+        L["Announcement"],
+        "db.WT.announcement.enable",
+        "db.mui.announcement.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         L["Move Frames"],

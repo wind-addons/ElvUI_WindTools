@@ -3,7 +3,7 @@ local QK = W:NewModule("QuickKeystone", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local IsAddOnLoaded = IsAddOnLoaded
-local GetContainerNumSlots = GetContainerNumSlots
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemID = GetContainerItemID
 local UseContainerItem = UseContainerItem
 
@@ -14,9 +14,9 @@ local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 function QK:PutKeystone()
     for bagIndex = 0, NUM_BAG_SLOTS do
         for slotIndex = 1, GetContainerNumSlots(bagIndex) do
-            local itemID = GetContainerItemID(bagIndex, slotIndex)
+            local itemID = C_Container.GetContainerItemID(bagIndex, slotIndex)
             if itemID and C_Item_IsItemKeystoneByID(itemID) then
-                UseContainerItem(bagIndex, slotIndex)
+                C_Container.UseContainerItem(bagIndex, slotIndex)
                 return
             end
         end

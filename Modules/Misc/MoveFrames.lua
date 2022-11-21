@@ -266,7 +266,10 @@ local BlizzardFramesOnDemand = {
         "PlayerChoiceFrame"
     },
     ["Blizzard_Professions"] = {
-        "ProfessionsFrame"
+        ["ProfessionsFrame"] = {
+            "ProfessionsFrame.CraftingPage.CraftingOutputLog",
+            "ProfessionsFrame.CraftingPage.CraftingOutputLog.ScrollBox"
+        }
     },
     ["Blizzard_ProfessionsCustomerOrders"] = {
         ["ProfessionsCustomerOrdersFrame"] = {

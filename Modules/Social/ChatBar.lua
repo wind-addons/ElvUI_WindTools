@@ -344,7 +344,7 @@ function CB:UpdateBar()
             self:Log("warning", L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
-            local chatFunc = function(self, mouseButton)
+            local chatFunc = function(_, mouseButton)
                 if mouseButton ~= "LeftButton" then
                     return
                 end

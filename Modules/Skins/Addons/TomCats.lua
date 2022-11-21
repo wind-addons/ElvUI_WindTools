@@ -4,10 +4,16 @@ local ES = E.Skins
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
+
 local pairs = pairs
+local select = select
+local strsplit = strsplit
+local tonumber = tonumber
 local unpack = unpack
 
 local GetItemQualityColor = GetItemQualityColor
+local MerchantFrame = MerchantFrame
+local UnitGUID = UnitGUID
 
 local atlasToQuality = {
     ["auctionhouse-itemicon-border-gray"] = 0,
@@ -91,6 +97,101 @@ function S:TomCats_HeaderCollapseButton_SetPushedAtlas(button, atlas)
     self.hooks[button].SetPushedAtlas(button, atlas)
 end
 
+local function IsStormVendor()
+    local stormVendors = {
+        [195899] = true,
+        [195912] = true
+    }
+
+    local guid = UnitGUID("NPC")
+    if guid then
+        local creatureID = select(6, strsplit("-", guid))
+        return creatureID and stormVendors[tonumber(creatureID)]
+    end
+
+    return false
+end
+
+do
+    local primalStormsTransmogFrame
+    function S:TomCats_PrimalStormsTransmogFrame()
+        if IsStormVendor() then
+            if not primalStormsTransmogFrame then
+                for _, frame in pairs({_G.UIParent:GetChildren()}) do
+                    if not primalStormsTransmogFrame then
+                        if frame and frame.title and frame.icon and frame.headerBar and frame.items then
+                            primalStormsTransmogFrame = frame
+                        end
+                    end
+                end
+            end
+
+            if not primalStormsTransmogFrame then
+                return
+            end
+
+            if not primalStormsTransmogFrame.__windSkin then
+                primalStormsTransmogFrame:ClearAllPoints()
+                primalStormsTransmogFrame:SetPoint("TOPLEFT", MerchantFrame, "TOPRIGHT", 4, 0)
+
+                if not primalStormsTransmogFrame.MoveFrame then
+                    if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
+                        local MF = W.Modules.MoveFrames
+                        MF:HandleFrame(primalStormsTransmogFrame, MerchantFrame)
+                    end
+                end
+
+                if primalStormsTransmogFrame.icon then
+                    if primalStormsTransmogFrame.icon.Background then
+                        primalStormsTransmogFrame.icon.Background:SetAlpha(0)
+                    end
+
+                    if primalStormsTransmogFrame.icon.Border then
+                        primalStormsTransmogFrame.icon.Border:SetAlpha(0)
+                    end
+
+                    if primalStormsTransmogFrame.icon.logo then
+                        primalStormsTransmogFrame.icon.logo:ClearAllPoints()
+                        primalStormsTransmogFrame.icon.logo:SetPoint("CENTER", primalStormsTransmogFrame, "BOTTOM")
+                    end
+
+                    primalStormsTransmogFrame.icon.__windSkin = true
+                end
+
+                if primalStormsTransmogFrame.headerBar then
+                    primalStormsTransmogFrame.headerBar:SetAlpha(0)
+                end
+
+                if primalStormsTransmogFrame.footerBar then
+                    primalStormsTransmogFrame.footerBar:SetAlpha(0)
+                end
+
+                if primalStormsTransmogFrame.title then
+                    F.SetFontOutline(primalStormsTransmogFrame.title)
+                end
+
+                primalStormsTransmogFrame:SetTemplate("Transparent")
+                self:CreateShadow(primalStormsTransmogFrame)
+            end
+
+            if primalStormsTransmogFrame.items then
+                for _, item in pairs(primalStormsTransmogFrame.items) do
+                    if item and not item.__windSkin then
+                        if item.itemLabel then
+                            F.SetFontOutline(item.itemLabel)
+                        end
+                        if item.button then
+                            self:ESProxy("HandleButton", item.button)
+                        end
+
+                        item.__windSkin = true
+                    end
+                end
+            end
+        end
+    end
+end
+
 function S:TomCats()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.tomCats then
         return
@@ -113,7 +214,7 @@ function S:TomCats()
     local primalStormsFrame
     for _, frame in pairs({_G.UIParent:GetChildren()}) do
         if not primalStormsFrame then
-            if frame and frame.icon and frame.headerBar and frame.footerBar then
+            if frame and frame.title and frame.icon and frame.headerBar and frame.footerBar then
                 primalStormsFrame = frame
             end
         end
@@ -150,6 +251,8 @@ function S:TomCats()
         primalStormsFrame:SetTemplate("Transparent")
         self:CreateShadow(primalStormsFrame)
     end
+
+    self:SecureHookScript(MerchantFrame, "OnShow", "TomCats_PrimalStormsTransmogFrame")
 end
 
 S:AddCallbackForAddon("TomCats")

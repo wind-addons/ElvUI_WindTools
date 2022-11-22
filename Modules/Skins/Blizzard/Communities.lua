@@ -57,7 +57,7 @@ function S:Blizzard_Communities()
         self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame)
     end
 
-    self:CreateBackdropShadow(_G.CommunitiesFrame.RecruitmentDialog)
+    self:CreateShadow(_G.CommunitiesFrame.RecruitmentDialog)
 
     hooksecurefunc(
         CommunitiesFrame.MemberList,

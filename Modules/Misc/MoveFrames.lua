@@ -598,6 +598,7 @@ function MF:Initialize()
 
     -- ElvUI Mail Frame Speical Handling
     if _G.MailFrameInset then
+        _G.OpenMailFrameInset:SetParent(_G.OpenMailFrame)
         _G.MailFrameInset:SetParent(_G.MailFrame)
     end
 

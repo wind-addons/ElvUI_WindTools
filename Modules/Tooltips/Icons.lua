@@ -41,7 +41,7 @@ local function setTooltipIcon(tt, data, type)
     local row = _G[tt:GetName() .. "TextLeft" .. rowNumber]
     local existingText = row and row:GetText()
 
-    if iconString and existingText then
+    if iconString and existingText and not strfind(existingText, "^|T") then
         row:SetText(iconString .. " " .. existingText)
     end
 end

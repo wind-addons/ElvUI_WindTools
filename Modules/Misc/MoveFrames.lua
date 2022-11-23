@@ -44,6 +44,7 @@ local BlizzardFrames = {
     "RaidBrowserFrame",
     "RaidParentFrame",
     "ReadyCheckFrame",
+    "RecruitAFriendRewardsFrame",
     "ReportCheatingDialog",
     "SettingsPanel",
     "SpellBookFrame",

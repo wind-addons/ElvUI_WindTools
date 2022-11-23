@@ -9,6 +9,9 @@ function S:EditModeManager()
     end
 
     self:CreateBackdropShadow(_G.EditModeManagerFrame)
+    self:CreateBackdropShadow(_G.EditModeNewLayoutDialog)
+    self:CreateBackdropShadow(_G.EditModeUnsavedChangesDialog)
+    self:CreateBackdropShadow(_G.EditModeImportLayoutDialog)
 end
 
 S:AddCallback("EditModeManager")

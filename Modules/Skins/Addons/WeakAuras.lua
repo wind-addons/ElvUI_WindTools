@@ -26,7 +26,7 @@ function S:WeakAuras_PrintProfile()
                 child:StripTextures()
                 local subChild = child:GetChildren()
                 subChild:ClearAllPoints()
-                subChild:Point("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
+                subChild:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
                 self:ESProxy("HandleCloseButton", subChild)
             end
         end
@@ -47,11 +47,14 @@ function S:ProfilingWindow_UpdateButtons(frame)
             local normalTextureID = button:GetNormalTexture():GetTexture()
             if normalTextureID == 252125 then
                 button:StripTextures()
+                button.SetNormalTexture = E.noop
+                button.SetPushedTexture = E.noop
+                button.SetHighlightTexture = E.noop
 
                 button.Texture = button:CreateTexture(nil, "OVERLAY")
-                button.Texture:Point("CENTER")
+                button.Texture:SetPoint("CENTER")
                 button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-                button.Texture:Size(14, 14)
+                button.Texture:SetSize(14, 14)
 
                 button:HookScript(
                     "OnEnter",
@@ -74,8 +77,6 @@ function S:ProfilingWindow_UpdateButtons(frame)
                 button:HookScript(
                     "OnClick",
                     function(self)
-                        self:SetNormalTexture("")
-                        self:SetPushedTexture("")
                         self.Texture:Show("")
                         if self:GetParent():GetParent().minimized then
                             button.Texture:SetRotation(ES.ArrowRotation["down"])
@@ -86,11 +87,11 @@ function S:ProfilingWindow_UpdateButtons(frame)
                 )
 
                 button:SetHitRectInsets(6, 6, 7, 7)
-                button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
+                button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
             else
                 self:ESProxy("HandleCloseButton", button)
                 button:ClearAllPoints()
-                button:Point("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 5)
+                button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 1)
             end
 
             button.__windSkin = true

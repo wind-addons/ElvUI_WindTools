@@ -410,7 +410,8 @@ do -- 插件代码
             "crackpotx (ElvUI Micro Menu Datatext)"
         },
         [L["Already Known"]] = {
-            "ahak (Already Known?)"
+            "ahak (Already Known?)",
+            "siweia (NDui)"
         },
         [L["Fast Loot"]] = {
             "Leatrix (Leatrix Plus)"

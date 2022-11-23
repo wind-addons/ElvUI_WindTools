@@ -302,9 +302,8 @@ function FL:UpdateFriendButton(button)
                 isInCurrentRegion = gameAccountInfo.isInCurrentRegion or false
                 regionID = gameAccountInfo.regionID or false
 
-                if wowID and wowID ~= 1 then
-                    local expansion = expansionData[wowID]
-                    local suffix = expansion.suffix and " (" .. expansion.suffix .. ")" or ""
+                if wowID and wowID ~= 1 and expansionData[wowID] then
+                    local suffix = expansionData[wowID].suffix and " (" .. expansionData[wowID].suffix .. ")" or ""
                     local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
                     server = (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. suffix) .. "*"
                 else

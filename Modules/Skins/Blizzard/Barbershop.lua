@@ -23,8 +23,6 @@ function S:Blizzard_CharacterCustomize()
             if list.selectionPopoutPool then
                 for popout in list.selectionPopoutPool:EnumerateActive() do
                     if not popout.__windSkin then
-                        self:CreateShadow(popout.DecrementButton)
-                        self:CreateShadow(popout.IncrementButton)
                         self:CreateBackdropShadow(popout.Button)
                         self:CreateShadow(popout.Button.Popout)
                         if popout.Label then

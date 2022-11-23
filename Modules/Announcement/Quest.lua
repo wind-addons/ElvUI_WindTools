@@ -69,6 +69,9 @@ do
 	local ERR_QUEST_UNKNOWN_COMPLETE = ERR_QUEST_UNKNOWN_COMPLETE
 	local ERR_QUEST_OBJECTIVE_COMPLETE_S = ERR_QUEST_OBJECTIVE_COMPLETE_S
 
+	local noop = {}
+	noop.format = E.noop
+
 	function A:UpdateBlizzardQuestAnnouncement()
 		local enable = false
 
@@ -76,11 +79,11 @@ do
 			enable = true
 		end
 
-		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or E.noop
-		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or E.noop
-		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or E.noop
-		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or E.noop
-		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or E.noop
+		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or noop
+		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or noop
+		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or noop
+		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or noop
+		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or noop
 	end
 end
 

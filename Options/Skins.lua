@@ -1131,9 +1131,7 @@ options.addons = {
 
 -- TODO: Remove after fix work done
 local fixingAddonList = {
-    ["TinyInspect"] = true,
-    ["AngryKeystones"] = true,
-    ["REHack"] = true
+    ["AngryKeystones"] = true
 }
 
 -- TODO: Remove after fix work done

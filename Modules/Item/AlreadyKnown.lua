@@ -32,10 +32,6 @@ local C_TooltipInfo_GetGuildBankItem = C_TooltipInfo.GetGuildBankItem
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
 
 local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
-local Enum_ItemClass_Consumable = Enum.ItemClass.Consumable
-local Enum_ItemClass_ItemEnhancement = Enum.ItemClass.ItemEnhancement
-local Enum_ItemClass_Miscellaneous = Enum.ItemClass.Miscellaneous
-local Enum_ItemClass_Recipe = Enum.ItemClass.Recipe
 
 local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
 local COLLECTED = COLLECTED

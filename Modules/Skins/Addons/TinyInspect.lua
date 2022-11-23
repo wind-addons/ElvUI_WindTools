@@ -5,6 +5,8 @@ local MF = W.Modules.MoveFrames
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
+
 local CreateFrame = CreateFrame
 
 do

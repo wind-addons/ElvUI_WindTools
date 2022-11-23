@@ -8,172 +8,110 @@ local gsub = gsub
 local min = min
 local mod = mod
 local select = select
+local strfind = strfind
 local strmatch = strmatch
-local strsplit = strsplit
 local tonumber = tonumber
+local type = type
 
+local GetBuybackItemInfo = GetBuybackItemInfo
+local GetBuybackItemLink = GetBuybackItemLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
+local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetGuildBankItemLink = GetGuildBankItemLink
 local GetItemInfo = GetItemInfo
+local GetMerchantItemInfo = GetMerchantItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
-local HybridScrollFrame_GetButtons = HybridScrollFrame_GetButtons
+local GetMerchantNumItems = GetMerchantNumItems
+local GetNumBuybackItems = GetNumBuybackItems
 local IsAddOnLoaded = IsAddOnLoaded
 local SetItemButtonDesaturated = SetItemButtonDesaturated
-local SetItemButtonNameFrameVertexColor = SetItemButtonNameFrameVertexColor
-local SetItemButtonNormalTextureVertexColor = SetItemButtonNormalTextureVertexColor
-local SetItemButtonSlotVertexColor = SetItemButtonSlotVertexColor
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
-local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
+local C_TooltipInfo_GetGuildBankItem = C_TooltipInfo.GetGuildBankItem
+local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
 
-local S_PET_KNOWN = strmatch(_G.ITEM_PET_KNOWN, "[^%(]+")
-local S_ITEM_MIN_LEVEL = "^" .. gsub(_G.ITEM_MIN_LEVEL, "%%d", "(%%d+)")
-local S_ITEM_CLASSES_ALLOWED = "^" .. gsub(_G.ITEM_CLASSES_ALLOWED, "%%s", "(%%a+)")
+local Enum_ItemClass_Battlepet = Enum.ItemClass.Battlepet
+local Enum_ItemClass_Consumable = Enum.ItemClass.Consumable
+local Enum_ItemClass_ItemEnhancement = Enum.ItemClass.ItemEnhancement
+local Enum_ItemClass_Miscellaneous = Enum.ItemClass.Miscellaneous
+local Enum_ItemClass_Recipe = Enum.ItemClass.Recipe
 
-local knownTable = {}
+local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
+local COLLECTED = COLLECTED
+local ITEM_SPELL_KNOWN = ITEM_SPELL_KNOWN
+local MAX_GUILDBANK_SLOTS_PER_TAB = MAX_GUILDBANK_SLOTS_PER_TAB or 98
+local MERCHANT_ITEMS_PER_PAGE = MERCHANT_ITEMS_PER_PAGE
+local NUM_SLOTS_PER_GUILDBANK_GROUP = NUM_SLOTS_PER_GUILDBANK_GROUP or 14
 
-local questItems = {
-	[128491] = 39359,
-	[128251] = 39359,
-	[128250] = 39358,
-	[128489] = 39358,
-	[181313] = 62420,
-	[181314] = 62421,
-	[182165] = 62422,
-	[182166] = 62423,
-	[182168] = 62424,
-	[182169] = 62425,
-	[182170] = 62426,
-	[182171] = 62427,
-	[182172] = 62428,
-	[182174] = 62429,
-	[182175] = 62430,
-	[182176] = 62431,
-	[182177] = 62432,
-	[182178] = 62433,
-	[182179] = 62434,
-	[182180] = 62435,
-	[182181] = 62437,
-	[182182] = 62438,
-	[182183] = 62439,
-	[182184] = 62440,
-	[182185] = 62436
+local knowables = {
+	[Enum.ItemClass.Consumable] = true,
+	[Enum.ItemClass.Recipe] = true,
+	[Enum.ItemClass.Miscellaneous] = true,
+	[Enum.ItemClass.ItemEnhancement] = true
 }
+local knowns = {}
 
-local specialItems = {
-	[152964] = {141605, 11, 269}
-}
-
-local containerItems = {
-	[21740] = {
-		21724,
-		21725,
-		21726
-	},
-	[21741] = {
-		21730,
-		21731,
-		21732
-	},
-	[21742] = {
-		21727,
-		21728,
-		21729
-	},
-	[21743] = {
-		21733,
-		21734,
-		21735
-	},
-	[128319] = {
-		128318
-	}
-}
-
-local function IsAlreadyKnown(itemLink)
-	if knownTable[itemLink] then
+local function isPetCollected(speciesID)
+	if not speciesID or speciesID == 0 then
+		return
+	end
+	local numOwned = C_PetJournal_GetNumCollectedInfo(speciesID)
+	if numOwned > 0 then
 		return true
 	end
+end
 
-	local itemId = tonumber(itemLink:match("item:(%d+)"))
-
-	if not itemId then
-		return false
+local function IsAlreadyKnown(link, index)
+	if not link then
+		return
 	end
 
-	if questItems[itemId] then
-		if C_QuestLog_IsQuestFlaggedCompleted(questItems[itemId]) then
-			knownTable[itemLink] = true
-			return true
+	local linkType, linkID = strmatch(link, "|H(%a+):(%d+)")
+	linkID = tonumber(linkID)
+
+	if linkType == "battlepet" then
+		return isPetCollected(linkID)
+	elseif linkType == "item" then
+		local name, _, _, level, _, _, _, _, _, _, _, itemClassID = GetItemInfo(link)
+		if not name then
+			return
 		end
-		return false
-	elseif specialItems[itemId] then -- Check if we need special handling, this is most likely going to break with then next item we add to this
-		local specialData = specialItems[itemId]
-		local _, specialLink = GetItemInfo(specialData[1])
-		if specialLink then
-			local specialTbl = {strsplit(":", specialLink)}
-			local specialInfo = tonumber(specialTbl[specialData[2]])
-			if specialInfo == specialData[3] then
-				knownTable[itemLink] = true
-				return true
-			end
-		end
-		return false
-	elseif containerItems[itemId] then
-		local knownCount, totalCount = 0, 0
-		for ci = 1, #containerItems[itemId] do
-			totalCount = totalCount + 1
-			local thisItem = IsAlreadyKnown(format("item:%d", containerItems[itemId][ci])) -- Checkception
-			if thisItem then
-				knownCount = knownCount + 1
-			end
-		end
-		return (knownCount == totalCount)
-	elseif itemId == 152964 then
-		local _, specialLink = GetItemInfo(141605)
-		if specialLink then
-			local specialTbl = {strsplit(":", specialLink)}
-			local specialInfo = tonumber(specialTbl[11])
-			if specialInfo == 269 then
-				knownTable[itemLink] = true
-				return true
+
+		if itemClassID == Enum_ItemClass_Battlepet and index then
+			local data = C_TooltipInfo_GetGuildBankItem(GetCurrentGuildBankTab(), index)
+			if data then
+				local argVal = data.args and data.args[2]
+				if argVal.field == "battlePetSpeciesID" then
+					return isPetCollected(argVal.intVal)
+				end
 			end
 		else
-			return false
-		end
-	end
-
-	if itemLink:match("|H(.-):") == "battlepet" then
-		local _, battlepetId = strsplit(":", itemLink)
-		if C_PetJournal_GetNumCollectedInfo(battlepetId) > 0 then
-			knownTable[itemLink] = true
-			return true
-		end
-		return false
-	end
-
-	E.ScanTooltip:ClearLines()
-	E.ScanTooltip:SetOwner(E.UIParent, "ANCHOR_NONE")
-	E.ScanTooltip:SetHyperlink(itemLink)
-
-	local prefix = E.ScanTooltip:GetName() .. "TextLeft"
-
-	local lines = E.ScanTooltip:NumLines()
-	local comboLevelClass = 0
-	local comboLevelTemp = 0
-
-	for i = 2, lines do
-		local text = _G[prefix .. i]:GetText()
-		if text == _G.ITEM_SPELL_KNOWN or strmatch(text, S_PET_KNOWN) then
-			if lines - i <= 3 then
-				knownTable[itemLink] = true
+			if knowns[link] then
+				return true
 			end
-		elseif text == _G.TOY and _G[prefix .. i + 2] and _G[prefix .. i + 2]:GetText() == _G.ITEM_SPELL_KNOWN then
-			knownTable[itemLink] = true
+			if not knowables[itemClassID] then
+				return
+			end
+
+			local data = C_TooltipInfo_GetHyperlink(link, nil, nil, true)
+			if data then
+				for i = 1, #data.lines do
+					local lineData = data.lines[i]
+					local argVal = lineData and lineData.args
+					if argVal then
+						local text = argVal[2] and argVal[2].stringVal
+						if text then
+							if strfind(text, COLLECTED) or text == ITEM_SPELL_KNOWN then
+								knowns[link] = true
+								return true
+							end
+						end
+					end
+				end
+			end
 		end
 	end
-	return knownTable[itemLink] and true or false
 end
 
 function AK:Merchant()
@@ -181,64 +119,92 @@ function AK:Merchant()
 		return
 	end
 
-	local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+	local numItems = GetMerchantNumItems()
+	for i = 1, MERCHANT_ITEMS_PER_PAGE do
+		local index = (_G.MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE + i
+		if index > numItems then
+			return
+		end
 
-	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
-		local index = (((_G.MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE) + i)
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
-		local merchantButton = _G["MerchantItem" .. i]
-		local itemLink = GetMerchantItemLink(index)
-
-		if itemLink and IsAlreadyKnown(itemLink) then
-			SetItemButtonNameFrameVertexColor(merchantButton, r, g, b)
-			SetItemButtonSlotVertexColor(merchantButton, r, g, b)
-			SetItemButtonTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
-			SetItemButtonNormalTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
-
-			_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(self.db.mode == "MONOCHROME")
-		else
-			_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(false)
+		if itemButton and itemButton:IsShown() then
+			local _, _, _, _, numAvailable, isUsable = GetMerchantItemInfo(index)
+			if isUsable and IsAlreadyKnown(GetMerchantItemLink(index)) then
+				if self.db.mode == "MONOCHROME" then
+					_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(true)
+				else
+					local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+					if numAvailable == 0 then
+						r, g, b = r * .5, g * .5, b * .5
+					end
+					SetItemButtonTextureVertexColor(itemButton, 0.9 * r, 0.9 * g, 0.9 * b)
+				end
+			else
+				_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(false)
+			end
 		end
 	end
 end
 
-do
-	local MAX_GUILDBANK_SLOTS_PER_TAB = _G.MAX_GUILDBANK_SLOTS_PER_TAB or 98 -- These ain't Globals anymore in the new Mixin version so fallback for hardcoded version
-	local NUM_SLOTS_PER_GUILDBANK_GROUP = _G.NUM_SLOTS_PER_GUILDBANK_GROUP or 14
-	function AK:GuildBank()
-		if not self.db.enable then
+function AK:Buyback()
+	if not self.db.enable then
+		return
+	end
+
+	local numItems = GetNumBuybackItems()
+	for index = 1, BUYBACK_ITEMS_PER_PAGE do
+		if index > numItems then
 			return
 		end
-		local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 
-		local tab = GetCurrentGuildBankTab()
-		for i = 1, MAX_GUILDBANK_SLOTS_PER_TAB do
-			local index = mod(i, NUM_SLOTS_PER_GUILDBANK_GROUP)
-			if (index == 0) then
-				index = NUM_SLOTS_PER_GUILDBANK_GROUP
-			end
-			local column = ceil((i - 0.5) / NUM_SLOTS_PER_GUILDBANK_GROUP)
-			local button = _G.GuildBankFrame.Columns[column].Buttons[index]
-			local itemLink = GetGuildBankItemLink(tab, i)
-
-			if itemLink and itemLink:match("item:82800") then
-				E.ScanTooltip:ClearLines()
-				E.ScanTooltip:SetOwner(E.UIParent, "ANCHOR_NONE")
-				local speciesId = E.ScanTooltip:SetGuildBankItem(tab, i)
-
-				if speciesId and speciesId > 0 then
-					itemLink = format("|Hbattlepet:%d::::::|h[Dummy]|h", speciesId)
+		local button = _G["MerchantItem" .. index .. "ItemButton"]
+		if button and button:IsShown() then
+			local isUsable = select(6, GetBuybackItemInfo(index))
+			if isUsable and IsAlreadyKnown(GetBuybackItemLink(index)) then
+				if self.db.mode == "MONOCHROME" then
+					_G["MerchantItem" .. index .. "ItemButtonIconTexture"]:SetDesaturated(true)
+				else
+					local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+					SetItemButtonTextureVertexColor(button, 0.9 * r, 0.9 * g, 0.9 * b)
 				end
-			end
-
-			if itemLink and IsAlreadyKnown(itemLink) then
-				SetItemButtonTextureVertexColor(button, 0.9 * r, 0.9 * g, 0.9 * b)
-				button:GetNormalTexture():SetVertexColor(0.9 * r, 0.9 * g, 0.9 * b)
-				SetItemButtonDesaturated(button, self.db.mode == "MONOCHROME")
 			else
-				SetItemButtonTextureVertexColor(button, 1, 1, 1)
-				button:GetNormalTexture():SetVertexColor(1, 1, 1)
-				SetItemButtonDesaturated(button, false)
+				_G["MerchantItem" .. index .. "ItemButtonIconTexture"]:SetDesaturated(false)
+			end
+		end
+	end
+end
+
+function AK:GuildBank(frame)
+	if not self.db.enable then
+		return
+	end
+
+	if frame.mode ~= "bank" then
+		return
+	end
+
+	local tab = GetCurrentGuildBankTab()
+	for i = 1, MAX_GUILDBANK_SLOTS_PER_TAB do
+		local index = mod(i, NUM_SLOTS_PER_GUILDBANK_GROUP)
+		if index == 0 then
+			index = NUM_SLOTS_PER_GUILDBANK_GROUP
+		end
+
+		local column = ceil((i - 0.5) / NUM_SLOTS_PER_GUILDBANK_GROUP)
+		local button = frame.Columns[column].Buttons[index]
+		if button and button:IsShown() then
+			local texture, _, locked = GetGuildBankItemInfo(tab, i)
+			if texture and not locked then
+				if IsAlreadyKnown(GetGuildBankItemLink(tab, i), i) then
+					if self.db.mode == "MONOCHROME" then
+						SetItemButtonDesaturated(button, true)
+					else
+						local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+						SetItemButtonTextureVertexColor(button, r, g, b)
+					end
+				else
+					SetItemButtonDesaturated(button, false)
+				end
 			end
 		end
 	end
@@ -248,8 +214,6 @@ function AK:AuctionHouse(frame)
 	if not self.db.enable then
 		return
 	end
-
-	local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
 
 	for i = 1, frame.ScrollTarget:GetNumChildren() do
 		local child = select(i, frame.ScrollTarget:GetChildren())
@@ -265,16 +229,22 @@ function AK:AuctionHouse(frame)
 				end
 
 				if itemLink and IsAlreadyKnown(itemLink) then
-					child.SelectedHighlight:Show()
-					child.SelectedHighlight:SetVertexColor(r, g, b)
-					child.SelectedHighlight:SetAlpha(.2)
-					button.Icon:SetVertexColor(r, g, b)
-					button.IconBorder:SetVertexColor(r, g, b)
+					if self.db.mode == "MONOCHROME" then
+						button.Icon:SetDesaturated(true)
+					else
+						local r, g, b = self.db.color.r, self.db.color.g, self.db.color.b
+						child.SelectedHighlight:Show()
+						child.SelectedHighlight:SetVertexColor(r, g, b)
+						child.SelectedHighlight:SetAlpha(0.25)
+						button.Icon:SetVertexColor(r, g, b)
+						button.IconBorder:SetVertexColor(r, g, b)
+						button.Icon:SetDesaturated(false)
+					end
 				else
 					child.SelectedHighlight:SetVertexColor(1, 1, 1)
 					button.Icon:SetVertexColor(1, 1, 1)
-					button.Icon:SetDesaturated(false)
 					button.IconBorder:SetVertexColor(1, 1, 1)
+					button.Icon:SetDesaturated(false)
 				end
 			end
 		end
@@ -282,18 +252,17 @@ function AK:AuctionHouse(frame)
 end
 
 do
-	local numberOfHookedFunctions = 0
+	local numHooked = 0
 	function AK:ADDON_LOADED(event, addOnName)
 		if addOnName == "Blizzard_AuctionHouseUI" then
-			local frame = _G.AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox
-			self:SecureHook(frame, "Update", "AuctionHouse")
-			numberOfHookedFunctions = numberOfHookedFunctions + 1
+			self:SecureHook(_G.AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, "Update", "AuctionHouse")
+			numHooked = numHooked + 1
 		elseif addOnName == "Blizzard_GuildBankUI" then
 			self:SecureHook(_G.GuildBankFrame, "Update", "GuildBank")
-			numberOfHookedFunctions = numberOfHookedFunctions + 1
+			numHooked = numHooked + 1
 		end
 
-		if numberOfHookedFunctions == 2 then
+		if numHooked == 2 then
 			self:UnregisterEvent("ADDON_LOADED")
 		end
 	end
@@ -312,6 +281,7 @@ function AK:Initialize()
 	self.db = E.db.WT.item.alreadyKnown
 	self.initialized = true
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo", "Merchant")
+	self:SecureHook("MerchantFrame_UpdateBuybackInfo", "Buyback")
 	self:RegisterEvent("ADDON_LOADED")
 end
 

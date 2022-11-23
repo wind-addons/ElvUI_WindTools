@@ -10,8 +10,8 @@ function S:MirrorTimers()
     end
 
     for i = 1, MIRRORTIMER_NUMTIMERS do
-        local statusBar = _G["MirrorTimer" .. i .. "StatusBar"]
-        self:CreateBackdropShadow(statusBar, true)
+        local statusBar = _G["MirrorTimer" .. i]
+        self:CreateShadow(statusBar)
     end
 end
 

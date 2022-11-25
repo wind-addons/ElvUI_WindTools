@@ -16,11 +16,16 @@ local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
 local AutoQuestPopupTracker_RemovePopUp = AutoQuestPopupTracker_RemovePopUp
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
+local GetActiveQuestID = GetActiveQuestID
+local GetActiveTitle = GetActiveTitle
 local GetAutoQuestPopUp = GetAutoQuestPopUp
+local GetAvailableQuestInfo = GetAvailableQuestInfo
 local GetInstanceInfo = GetInstanceInfo
 local GetItemInfo = GetItemInfo
 local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
+local GetNumActiveQuests = GetNumActiveQuests
 local GetNumAutoQuestPopUps = GetNumAutoQuestPopUps
+local GetNumAvailableQuests = GetNumAvailableQuests
 local GetNumQuestChoices = GetNumQuestChoices
 local GetNumQuestItems = GetNumQuestItems
 local GetQuestID = GetQuestID
@@ -35,6 +40,8 @@ local IsShiftKeyDown = IsShiftKeyDown
 local QuestGetAutoAccept = QuestGetAutoAccept
 local QuestInfoItem_OnClick = QuestInfoItem_OnClick
 local QuestIsFromAreaTrigger = QuestIsFromAreaTrigger
+local SelectActiveQuest = SelectActiveQuest
+local SelectAvailableQuest = SelectAvailableQuest
 local ShowQuestComplete = ShowQuestComplete
 local ShowQuestOffer = ShowQuestOffer
 local StaticPopup_Hide = StaticPopup_Hide
@@ -276,23 +283,23 @@ function TI:QUEST_GREETING()
         return
     end
 
-    if C_GossipInfo_GetNumActiveQuests() > 0 then
-        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetActiveQuests()) do
-            local isWorldQuest = gossipQuestUIInfo.questID and C_QuestLog_IsWorldQuest(gossipQuestUIInfo.questID)
-            if gossipQuestUIInfo.isComplete and not isWorldQuest then
-                if not self:IsPaused("COMPLETE") then
-                    C_GossipInfo_SelectActiveQuest(index)
-                end
+    local active = GetNumActiveQuests()
+    if active > 0 then
+        for index = 1, active do
+            local _, isComplete = GetActiveTitle(index)
+            local questID = GetActiveQuestID(index)
+            if isComplete and not C_QuestLog_IsWorldQuest(questID) then
+                SelectActiveQuest(index)
             end
         end
     end
 
-    if C_GossipInfo_GetNumAvailableQuests() > 0 then
-        for index, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
-            if not gossipQuestUIInfo.isTrivial or IsTrackingHidden() then
-                if not self:IsPaused("ACCEPT") then
-                    C_GossipInfo_SelectAvailableQuest(index)
-                end
+    local available = GetNumAvailableQuests()
+    if available > 0 then
+        for index = 1, available do
+            local isTrivial = GetAvailableQuestInfo(index)
+            if not isTrivial or IsTrackingHidden() then
+                SelectAvailableQuest(index)
             end
         end
     end

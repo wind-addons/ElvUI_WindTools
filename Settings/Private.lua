@@ -372,6 +372,7 @@ V.skins = {
         azerite = true,
         azeriteEssence = true,
         azeriteRespec = true,
+        bags = true,
         barberShop = true,
         binding = true,
         blackMarket = true,

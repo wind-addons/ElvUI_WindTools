@@ -9,6 +9,7 @@
 	<Script file='Azerite.lua'/>
 	<Script file='AzeriteEssence.lua'/>
 	<Script file='AzeriteRespec.lua'/>
+	<Script file='Bags.lua'/>
 	<Script file='Barbershop.lua'/>
 	<Script file='Binding.lua'/>
 	<Script file='BlackMarket.lua'/>

@@ -3,6 +3,7 @@ local A = W:GetModule("Announcement")
 
 local _G = _G
 local format = format
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 
@@ -69,9 +70,6 @@ do
 	local ERR_QUEST_UNKNOWN_COMPLETE = ERR_QUEST_UNKNOWN_COMPLETE
 	local ERR_QUEST_OBJECTIVE_COMPLETE_S = ERR_QUEST_OBJECTIVE_COMPLETE_S
 
-	local noop = {}
-	noop.format = function() return "    " end
-
 	function A:UpdateBlizzardQuestAnnouncement()
 		local enable = false
 
@@ -79,17 +77,21 @@ do
 			enable = true
 		end
 
-		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or noop
-		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or noop
-		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or noop
-		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or noop
-		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or noop
+		_G.ERR_QUEST_ADD_ITEM_SII = enable and ERR_QUEST_ADD_ITEM_SII or "    "
+		_G.ERR_QUEST_ADD_FOUND_SII = enable and ERR_QUEST_ADD_FOUND_SII or "    "
+		_G.ERR_QUEST_ADD_KILL_SII = enable and ERR_QUEST_ADD_KILL_SII or "    "
+		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or "    "
+		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or "    "
 
-		hooksecurefunc(UIErrorsFrame, "AddMessage", function(frame, text)
-			if text == "   " then
-				frame:Clear()
+		hooksecurefunc(
+			_G.UIErrorsFrame,
+			"AddMessage",
+			function(frame, text)
+				if text == "   " then
+					frame:Clear()
+				end
 			end
-		end)
+		)
 	end
 end
 

@@ -61,11 +61,11 @@ options.superTracker = {
                     desc = L["Auto track the waypoint after setting."],
                     width = 1.5
                 },
-                rightClickToClear = {
+                middleClickToClear = {
                     order = 2,
                     type = "toggle",
-                    name = L["Right Click To Clear"],
-                    desc = L["Right click the waypoint to clear it."],
+                    name = L["Middle Click To Clear"],
+                    desc = L["Middle click the waypoint to clear it."],
                     width = 1.5
                 },
                 noLimit = {

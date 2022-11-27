@@ -385,22 +385,6 @@ options.reset = {
                             end
                         )
                     end
-                },
-                covenantHelper = {
-                    order = 4,
-                    type = "execute",
-                    name = L["Covenant Helper"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Covenant Helper"],
-                            nil,
-                            function()
-                                E.db.WT.combat.covenantHelper = P.combat.covenantHelper
-                                E.global.WT.combat.covenantHelper = G.combat.covenantHelper
-                            end
-                        )
-                    end
                 }
             }
         },

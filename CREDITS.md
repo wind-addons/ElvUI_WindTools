@@ -2,17 +2,10 @@
 
 ## Special Thanks
 
-- Merathilis
-- siweia
-- Repooc
-- loudsoul
-- Azilroka
-- Blazeflack
-- Simpy
-- Benik
-- Haste
-- Tukz
-- Elv
+- Siweia (NDui)
+- Loudsoul (TinyInspect, TinyTooltip)
+- Merathilis (ElvUI_MerathilisUI)
+- Tox, Nawuko (ElvUI_ToxiUI)
 
 ## Sites
 

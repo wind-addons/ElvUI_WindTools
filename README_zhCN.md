@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.05-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.06-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -20,14 +20,18 @@
 
 # :heart: 鸣谢
 
-特別感谢 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
+- Siweia (NDui)
+- Loudsoul (TinyInspect, TinyTooltip)
+- Merathilis (ElvUI_MerathilisUI)
+- Tox, Nawuko (ElvUI_ToxiUI)
+
 [完整鸣谢名单](CREDITS.md)
 
 # :sweat_drops: 功能
 
 ## 素材
 
-3 个字体, 2 个材质以及 2 个提示音.
+3 个字体, 5 个材质以及 2 个提示音.
 
 ## 物品
 
@@ -46,7 +50,6 @@
 2. **战斗提醒**: 进出战斗时将会出现一个动画, 可以自定义动画细节, 文字等.
 3. **天赋管家**: 在天赋界面提供一个额外的可开关窗口, 支持保存和快速设定天赋配置.
 4. **快速钥石**: 自动放置背包内的传奇地下城钥石.
-5. **盟约助手**: 当你更改盟约时, 变更动作条上的技能和灵魂羁绊.
 
 ## 地图
 
@@ -94,8 +97,7 @@
 3. **队伍信息**: 添加寻求组队的队伍信息到鼠标提示中.
 4. **生命条**: 调整生命条和生命文字偏移.
 5. **套装**: 添加套装的数量到鼠标提示中.
-6. **盟约**: 添加经由第三方插件通信得来的盟约信息到鼠标提示中.
-7. **团队进度**: 添加各个团队副本的进度, 特殊成就和大秘境分数到鼠标提示中.
+6. **团队进度**: 添加各个团队副本的进度, 特殊成就和大秘境分数到鼠标提示中.
 
 ## 单位框体
 
@@ -123,6 +125,7 @@
 16. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
 17. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
 18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+19. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBagsElvUISkin 插件)
 
 ## 其他
 

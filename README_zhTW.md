@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.05-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.06-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -20,14 +20,18 @@
 
 # :heart: 鳴謝
 
-特別鳴謝 Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
+- Siweia (NDui)
+- Loudsoul (TinyInspect, TinyTooltip)
+- Merathilis (ElvUI_MerathilisUI)
+- Tox, Nawuko (ElvUI_ToxiUI)
+
 [完整鳴謝名单](CREDITS.md)
 
 # :sweat_drops: 功能
 
 ## 素材
 
-3 個字型, 2 個材質以及 2 個提示音.
+3 個字型, 5 個材質以及 2 個提示音.
 
 ## 物品
 
@@ -46,7 +50,6 @@
 2. **戰鬥提醒**: 進出戰鬥時將會出現一個動畫, 可以自訂動畫細節, 文字等.
 3. **天賦管家**: 在天賦界面提供一個額外的可開關窗口, 支持保存和快速設定天賦配置.
 4. **快速鑰石**: 自動放置背包中的傳奇地城鑰石.
-5. **誓盟助手**: 當你變更誓盟時, 修改動作條中的技能和靈魂之約.
 
 ## 地圖
 
@@ -94,8 +97,7 @@
 3. **隊伍信息**: 添加尋求組隊的隊伍信息到浮動提示中.
 4. **生命條**: 調整生命條和生命文字偏移.
 5. **套裝**: 添加套裝的數量到浮動提示中.
-6. **誓盟**: 添加經由第三方插件通信所得之誓盟訊息到浮動提示中.
-7. **團隊進度**: 添加各個團隊副本的進度, 特殊成就和 M+ 分數到浮動提示中.
+6. **團隊進度**: 添加各個團隊副本的進度, 特殊成就和 M+ 分數到浮動提示中.
 
 ## 單位框架
 
@@ -123,6 +125,7 @@
 16. **TomCat's Tour 美化**: 為 TomCat's Tour 的浮動提示和標題添加美化.
 17. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化.
 18. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
+19. **AdiBags 美化**: 為 AdiBags 的條添加美化. (需要 AdiBagsElvUISkin 插件)
 
 ## 其他
 

@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.06-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-3.05-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-3.06-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -19,14 +19,18 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 
 # :heart: Credits
 
-Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Simpy, Benik, Haste, Tukz, Elv.  
+- Siweia (NDui)
+- Loudsoul (TinyInspect, TinyTooltip)
+- Merathilis (ElvUI_MerathilisUI)
+- Tox, Nawuko (ElvUI_ToxiUI)
+
 [All credits](CREDITS.md)
 
 # :sweat_drops: Features
 
 ## Media Files
 
-3 fonts, 2 textures and 2 ringtones.
+3 fonts, 5 textures and 2 ringtones.
 
 ## Item
 
@@ -45,7 +49,6 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Talent Manager**: Save and change talents set with one-click.
 4. **Quick Keystone**: Put the keystone from bag automatically.
-5. **Covenant Helper**: Change the spells in action bars and the soulbind when you changing covenant.
 
 ## Map
 
@@ -93,8 +96,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 3. **Group Info**: Add LFG group information into tooltips.
 4. **Health Bar**: Set the offset of the health bar and health text in tooltips.
 5. **Tier Set**: Add the number of the equipments in the tier set in tooltips.
-6. **Covenant**: Add covenant info via third-party addons in the tooltips.
-7. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
+6. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
 
 ## Unit Frames
 
@@ -122,6 +124,7 @@ Special thanks to Merathilis, siweia, Repooc, loudsoul, Azilroka, Blazeflack, Si
 16. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
 17. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
 18. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
+19. **AdiBags Skin**: Apply skin for AdiBags. (AdiBagsElvUISkin is needed)
 
 ## Misc
 

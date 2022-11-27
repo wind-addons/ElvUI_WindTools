@@ -1136,19 +1136,6 @@ options.addons = {
     }
 }
 
--- TODO: Remove after fix work done
-local fixingAddonList = {
-    ["AngryKeystones"] = true
-}
-
--- TODO: Remove after fix work done
-local function isInFixing(name)
-    if type(name) == "table" then
-        name = name[1]
-    end
-    return fixingAddonList[name]
-end
-
 local function GenerateAddOnSkinsGetFunction(name)
     if type(name) == "string" then
         return function(info)
@@ -1221,10 +1208,6 @@ for _, option in pairs(options.addons.args) do
                 option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
                 option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
             end
-        elseif isInFixing(option.addonName) then
-            -- TODO: Remove after fix work done
-            option.name = option.name .. " |cffff0000(" .. L["Fixing"] .. ")|r"
-            option.disabled = true
         else
             option.get = GenerateAddOnSkinsGetFunction(option.addonName)
             option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)

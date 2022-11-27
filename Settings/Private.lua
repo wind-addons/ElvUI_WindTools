@@ -359,7 +359,7 @@ V.skins = {
         tomCats = true,
         warpDeplete = true,
         weakAuras = true,
-        weakAurasOptions = true,
+        weakAurasOptions = true
     },
     blizzard = {
         enable = true,
@@ -485,7 +485,7 @@ V.tooltips = {
             ["Castle Nathria"] = true,
             ["Sanctum of Domination"] = true,
             ["Sepulcher of the First Ones"] = true,
-            ["Vault of the Incarnates"] = false
+            ["Vault of the Incarnates"] = true
         },
         special = {
             enable = true,
@@ -493,30 +493,22 @@ V.tooltips = {
             ["Shadowlands Keystone Master: Season Two"] = false,
             ["Shadowlands Keystone Master: Season Three"] = true,
             ["Shadowlands Keystone Master: Season Four"] = true,
-            ["Dragonflight Keystone Master: Season One"] = false,
-            ["Dragonflight Keystone Hero: Season One"] = false
+            ["Dragonflight Keystone Master: Season One"] = true,
+            ["Dragonflight Keystone Hero: Season One"] = true
         },
         mythicDungeons = {
             enable = true,
             markHighestScore = true,
             showNoRecord = true,
-            ["Grimrail Depot"] = true,
-            ["Iron Docks"] = true,
-            ["Operation: Mechagon - Junkyard"] = true,
-            ["Operation: Mechagon - Workshop"] = true,
-            ["Return to Karazhan: Lower"] = true,
-            ["Return to Karazhan: Upper"] = true,
-            ["Tazavesh: So'leah's Gambit"] = true,
-            ["Tazavesh: Streets of Wonder"] = true,
             -- DF S1
-            ["Temple of the Jade Serpent"] = false,
-            ["Shadowmoon Burial Grounds"] = false,
-            ["Halls of Valor"] = false,
-            ["Court of Stars"] = false,
-            ["Ruby Life Pools"] = false,
-            ["The Nokhud Offensive"] = false,
-            ["The Azure Vault"] = false,
-            ["Algeth'ar Academy"] = false
+            ["Temple of the Jade Serpent"] = true,
+            ["Shadowmoon Burial Grounds"] = true,
+            ["Halls of Valor"] = true,
+            ["Court of Stars"] = true,
+            ["Ruby Life Pools"] = true,
+            ["The Nokhud Offensive"] = true,
+            ["The Azure Vault"] = true,
+            ["Algeth'ar Academy"] = true
         }
     }
 }

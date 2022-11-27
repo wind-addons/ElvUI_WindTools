@@ -115,8 +115,27 @@ function S:Immersion()
 
     -- Use colored backdrop edge as highlight
     talkBox.Hilite:StripTextures()
-    talkBox:HookScript("OnEnter", ES.SetModifiedBackdrop)
-    talkBox:HookScript("OnLeave", ES.SetOriginalBackdrop)
+    talkBox:HookScript(
+        "OnEnter",
+        function(box)
+            ES.SetModifiedBackdrop(box)
+
+            if box.backdrop.shadow then
+                box.backdrop.shadow:SetBackdropBorderColor(box.backdrop:GetBackdropBorderColor())
+            end
+        end
+    )
+
+    talkBox:HookScript(
+        "OnLeave",
+        function(box)
+            ES.SetOriginalBackdrop(box)
+
+            if box.backdrop.shadow then
+                box.backdrop.shadow:SetBackdropBorderColor(box.backdrop:GetBackdropBorderColor())
+            end
+        end
+    )
 
     -- Remove background of model
     talkBox.PortraitFrame:StripTextures()

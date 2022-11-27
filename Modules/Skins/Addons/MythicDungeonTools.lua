@@ -1,9 +1,26 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 local ES = E.Skins
+local TT = E:GetModule("Tooltip")
 
 local _G = _G
 local CreateFrame = CreateFrame
+
+local function reskinTooltip(tt)
+    if not tt then
+        return
+    end
+    tt:StripTextures()
+    tt:SetTemplate("Transparent")
+    tt.CreateBackdrop = E.noop
+    tt.ClearBackdrop = E.noop
+    tt.SetBackdropColor = E.noop
+    if tt.backdrop and tt.backdrop.Hide then
+        tt.backdrop:Hide()
+    end
+    tt.backdrop = nil
+    S:CreateShadow(tt)
+end
 
 function S:MythicDungeonTools()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
@@ -16,6 +33,24 @@ function S:MythicDungeonTools()
 
     self:SecureHook(
         _G.MDT,
+        "ShowInterface",
+        function()
+            reskinTooltip(_G.MDT.tooltip)
+            reskinTooltip(_G.MDT.pullTooltip)
+
+            if _G.MDTFrame and _G.MDTFrame.DungeonSelectionGroup then
+                self:CreateShadow(_G.MDTFrame.DungeonSelectionGroup.frame)
+                local shadow = _G.MDTFrame.DungeonSelectionGroup.frame.shadow
+                shadow.LeftEdge:Hide()
+                shadow.TopEdge:Hide()
+                shadow.BottomLeftCorner:Hide()
+                shadow.TopLeftCorner:Hide()
+            end
+        end
+    )
+
+    self:SecureHook(
+        _G.MDT,
         "initToolbar",
         function()
             if _G.MDTFrame then
@@ -25,9 +60,6 @@ function S:MythicDungeonTools()
                 self:CreateShadow(virtualBackground)
                 self:CreateShadow(_G.MDTToolbarFrame)
             end
-
-            self:CreateShadow(_G.MDT.tooltip)
-            self:CreateShadow(_G.MDT.pullTooltip)
         end
     )
 end

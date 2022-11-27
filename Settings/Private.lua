@@ -342,6 +342,7 @@ V.skins = {
     addons = {
         ace3 = true,
         ace3DropdownBackdrop = true,
+        adiBags = true,
         angryKeystones = true,
         bigWigs = true,
         bigWigsQueueTimer = true,
@@ -358,7 +359,7 @@ V.skins = {
         tomCats = true,
         warpDeplete = true,
         weakAuras = true,
-        weakAurasOptions = true
+        weakAurasOptions = true,
     },
     blizzard = {
         enable = true,

@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.skins.args
 local LSM = E.Libs.LSM
 local S = W.Modules.Skins
+local C = W.Utilities.Color
 
 local pairs = pairs
 local type = type
@@ -1019,6 +1020,12 @@ options.addons = {
             name = L["Ace3 Dropdown Backdrop"],
             width = 1.5
         },
+        adiBags = {
+            order = 10,
+            type = "toggle",
+            name = L["AdiBags"],
+            addonName = "AdiBags"
+        },
         angryKeystones = {
             order = 10,
             type = "toggle",
@@ -1193,8 +1200,29 @@ end
 
 for _, option in pairs(options.addons.args) do
     if option.addonName then
-        -- TODO: Remove after fix work done
-        if isInFixing(option.addonName) then
+        if option.addonName == "AdiBags" then
+            local isAdiBagsLoaded = IsAddOnLoaded("AdiBags")
+            local isSkinLoaded = IsAddOnLoaded("AdiBagsElvUISkin")
+            if isAdiBagsLoaded and not isSkinLoaded then
+                local message =
+                    C.StringByTemplate(
+                    format(L["To enable this skin, you need download %s from CurseForge"], "AdiBagsElvUISkin"),
+                    "danger"
+                )
+                option.name = option.name .. " " .. message
+                option.get = function()
+                    return false
+                end
+                option.disabled = true
+                option.width = "full"
+                option.order = 11
+            else
+                option.get = GenerateAddOnSkinsGetFunction(option.addonName)
+                option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
+                option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
+            end
+        elseif isInFixing(option.addonName) then
+            -- TODO: Remove after fix work done
             option.name = option.name .. " |cffff0000(" .. L["Fixing"] .. ")|r"
             option.disabled = true
         else
@@ -1205,7 +1233,7 @@ for _, option in pairs(options.addons.args) do
 
         option.addonName = nil
         option.addonskinsKey = nil
-        option.width = 1.5
+        option.width = option.width or 1.5
     end
 end
 

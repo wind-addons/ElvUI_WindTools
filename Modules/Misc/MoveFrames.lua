@@ -18,6 +18,7 @@ local BlizzardFrames = {
     "AddonList",
     "AudioOptionsFrame",
     "BankFrame",
+    "BonusRollFrame",
     "ChatConfigFrame",
     "CinematicFrame",
     "ContainerFrameCombinedBags",
@@ -322,6 +323,10 @@ local BlizzardFramesOnDemand = {
     }
 }
 
+local temporarilyMovingFrame = {
+    ["BonusRollFrame"] = true
+}
+
 local function removeBlizzardFrames(name)
     for i, n in pairs(BlizzardFrames) do
         if n == name then
@@ -333,6 +338,10 @@ end
 
 function MF:Remember(frame)
     if not frame.windFrameName or not self.db.rememberPositions then
+        return
+    end
+
+    if temporarilyMovingFrame[frame.windFrameName] then
         return
     end
 
@@ -362,6 +371,11 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
     end
 
     if not self.db.framePositions[frame.windFrameName] then
+        return
+    end
+
+    if temporarilyMovingFrame[frame.windFrameName] then
+        self.db.framePositions[frame.windFrameName] = nil
         return
     end
 

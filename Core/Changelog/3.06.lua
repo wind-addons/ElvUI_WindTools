@@ -6,6 +6,7 @@ W.Changelog[306] = {
         ["zhCN"] = {
             "移除了 [战斗]-[盟约助手] 模块.",
             "移除了 [鼠标提示]-[盟约] 功能.",
+            "[鼠标提示] 套装信息变更为巨龙时代第一套套装.",
             "[超级追踪] 由于暴雪的限制, 快速取消标记从鼠标右键调整为鼠标中键.",
             "[进度] 默认追踪化身巨龙牢窟.",
             "[进度] 默认追踪巨龙时代第一赛季传奇钥石地下城.",
@@ -14,14 +15,16 @@ W.Changelog[306] = {
         ["zhTW"] = {
             "移除了 [戰鬥]-[盟約助手] 模組.",
             "移除了 [浮動提示]-[盟約] 功能.",
+            "[浮動提示] 套裝信息變更為巨龍崛起第一套套裝.",
             "[超級追蹤] 由於暴雪的限制, 快速取消標記從滑鼠右鍵調整為滑鼠中鍵.",
             "[進度] 默認追蹤洪荒化身牢獄.",
-            "[進度] 默認追蹤巨龍時代第一賽季傳奇鑰石地下城.",
+            "[進度] 默認追蹤巨龍崛起第一賽季傳奇鑰石地下城.",
             "[進度] 移除暗影國度第四賽季傳奇鑰石地下城支持."
         },
         ["enUS"] = {
             "Remove [Combat]-[Covenant Helper] module.",
             "Remove [Tooltip]-[Covenant] feature.",
+            "[Tooltip] Tier Set info changed to the first set in Dragonflight.",
             "[Super Tracker] Due to Blizzard's restriction, pin now can be quickly removed by middle button (right button previously).",
             "[Progress] Default tracking Vault of the Incarnates.",
             "[Progress] Default tracking all Dragonflight S1 Mythic+ Dungeons.",
@@ -30,6 +33,7 @@ W.Changelog[306] = {
         ["koKR"] = {
             "Remove [Combat]-[Covenant Helper] module.",
             "Remove [Tooltip]-[Covenant] feature.",
+            "[Tooltip] Tier Set info changed to the first set in Dragonflight.",
             "[Super Tracker] Due to Blizzard's restriction, pin now can be quickly removed by middle button (right button previously).",
             "[Progress] Default tracking Vault of the Incarnates.",
             "[Progress] Default tracking all Dragonflight S1 Mythic+ Dungeons.",

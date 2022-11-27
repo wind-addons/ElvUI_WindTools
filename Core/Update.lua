@@ -81,11 +81,6 @@ function W:UpdateScripts()
         UpdateMessage(L["Automation"] .. " - " .. L["Update Database"], profileVersion)
     end
 
-    if globalVersion < 2.44 then
-        E.global.WT.combat.covenantHelper.soulbindRules.characters = {}
-        UpdateMessage(L["Covenant Helper"] .. " - " .. L["Clear Database"], profileVersion)
-    end
-
     if privateVersion < 3.02 then
         E.private.WT.misc.moveFrames.rememberPositions = false
         E.private.WT.misc.moveFrames.framePositions = {}

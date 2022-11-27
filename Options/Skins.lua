@@ -438,6 +438,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Azerite Respec"]
         },
+        bags = {
+            order = 10,
+            type = "toggle",
+            name = L["Bags"]
+        },
         barberShop = {
             order = 10,
             type = "toggle",

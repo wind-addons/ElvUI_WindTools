@@ -1,5 +1,0 @@
-## Interface: 90205
-## Title: Library Open Raid
-## Notes: This is a library used by addons.
-
-lib.xml

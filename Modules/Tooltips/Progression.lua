@@ -681,7 +681,7 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-T:AddInspectInfoCallback(3, "Progression", true)
+T:AddInspectInfoCallback(2, "Progression", true)
 
 -- NOTE
 -- MapChallengeMode.dbc

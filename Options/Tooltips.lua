@@ -96,16 +96,6 @@ options.general = {
                         L["Show the number of tier set equipments."],
                         F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
                     )
-                },
-                covenant = {
-                    order = 6,
-                    type = "toggle",
-                    name = L["Covenant"],
-                    desc = format(
-                        "%s\n%s",
-                        L["Show covenant information via the communition with third-party addons."],
-                        F.CreateColorString(L["You need hold SHIFT to inspect someone."], E.db.general.valuecolor)
-                    )
                 }
             }
         },

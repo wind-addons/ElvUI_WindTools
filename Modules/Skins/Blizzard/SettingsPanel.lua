@@ -10,7 +10,7 @@ function S:SettingsPanel()
         return
     end
 
-    self:CreateShadow(_G.SettingsPanel)
+    self:CreateBackdropShadow(_G.SettingsPanel)
 end
 
 S:AddCallback("SettingsPanel")

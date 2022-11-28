@@ -90,7 +90,7 @@ W.Changelog[306] = {
             "[其他] 修復額外綁定按鍵功能."
         },
         ["enUS"] = {
-            "[Announcement] Remove quest progress will not cause pollution now.",
+            "[Announcement] Remove quest progress will not cause taint now.",
             "[Announcement] Fix the issue that new keystone cannot be announced. Thanks Urmus",
             "[Automation] Fix the issue that auto turn in will not work when there are multiple quests.",
             "[Move Frames] Now you can temporarily move the bonus roll frame.",
@@ -103,7 +103,7 @@ W.Changelog[306] = {
             "[Misc] Fix the issue that extra binding button not work."
         },
         ["koKR"] = {
-            "[Announcement] Remove quest progress will not cause pollution now.",
+            "[Announcement] Remove quest progress will not cause taint now.",
             "[Announcement] Fix the issue that new keystone cannot be announced. Thanks Urmus",
             "[Automation] Fix the issue that auto turn in will not work when there are multiple quests.",
             "[Move Frames] Now you can temporarily move the bonus roll frame.",

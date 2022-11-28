@@ -47,8 +47,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more!
 2. **Combat Alert**: Show an animation when you enter or leave combat.
-3. **Talent Manager**: Save and change talents set with one-click.
-4. **Quick Keystone**: Put the keystone from bag automatically.
+3. **Quick Keystone**: Put the keystone from bag automatically.
 
 ## Map
 

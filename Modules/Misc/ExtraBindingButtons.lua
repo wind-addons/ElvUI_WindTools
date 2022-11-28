@@ -6,7 +6,7 @@ local CreateFrame = CreateFrame
 local C_PartyInfo_LeaveParty = C_PartyInfo.LeaveParty
 
 local function createInvisibleButton(name, buttonType, content)
-    local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
+    local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate")
 
     if buttonType == "onclick" then
         button:SetScript("OnClick", content)
@@ -14,6 +14,8 @@ local function createInvisibleButton(name, buttonType, content)
         button:SetAttribute("type", "macro")
         button:SetAttribute("macrotext", content)
     end
+
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
     return button
 end

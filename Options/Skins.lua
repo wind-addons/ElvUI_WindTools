@@ -1198,7 +1198,7 @@ for _, option in pairs(options.addons.args) do
             if isAdiBagsLoaded and not isSkinLoaded then
                 local message =
                     C.StringByTemplate(
-                    format(L["To enable this skin, you need download %s from CurseForge"], "AdiBagsElvUISkin"),
+                    format(L["To enable this skin, you need download %s from CurseForge"], '"AdiBags ElvUI Skin"'),
                     "danger"
                 )
                 option.name = option.name .. " " .. message

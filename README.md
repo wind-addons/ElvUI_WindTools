@@ -123,7 +123,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 16. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
 17. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
 18. **WeakAuras Skin**: Apply skins for WeakAuras, WeakAuras option.
-19. **AdiBags Skin**: Apply skin for AdiBags. (AdiBagsElvUISkin is needed)
+19. **AdiBags Skin**: Apply skin for AdiBags. (AdiBags ElvUI Skin is needed)
 
 ## Misc
 

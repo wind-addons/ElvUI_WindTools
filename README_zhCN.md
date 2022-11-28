@@ -124,7 +124,7 @@
 16. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
 17. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
 18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
-19. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBagsElvUISkin 插件)
+19. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBags ElvUI Skin 插件)
 
 ## 其他
 

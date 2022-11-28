@@ -578,7 +578,7 @@ L["If you have an interest in translating %s or improving the quality of transla
 L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = "Если у Вас есть права, то это сообщение будет отправлено в объявление рейду (/rw), а не рейд (/r)."
 L["Ignore List"] = "Черный список"
 L["Ignored NPCs"] = "Игнорируемые NPC"
-L["Immersion"] = "Погружение"
+L["Immersion"] = true
 L["Import"] = "Импорт"
 L["Import Profile"] = "Импорт профиля"
 L["Import and export your %s settings."] = "Импортируйте и экспортируйте настройки %s."

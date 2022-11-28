@@ -1,9 +1,10 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[306] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/11/28",
     IMPORTANT = {
         ["zhCN"] = {
+            "ElvUI 最低支持版本变更为 13.06",
             "移除了 [战斗]-[盟约助手] 模块.",
             "移除了 [鼠标提示]-[盟约] 功能.",
             "[鼠标提示] 套装信息变更为巨龙时代第一套套装.",
@@ -13,6 +14,7 @@ W.Changelog[306] = {
             "[进度] 移除暗影国度第四赛季传奇钥石地下城支持."
         },
         ["zhTW"] = {
+            "ElvUI 最低支持版本變更為 13.06",
             "移除了 [戰鬥]-[盟約助手] 模組.",
             "移除了 [浮動提示]-[盟約] 功能.",
             "[浮動提示] 套裝信息變更為巨龍崛起第一套套裝.",
@@ -22,6 +24,7 @@ W.Changelog[306] = {
             "[進度] 移除暗影國度第四賽季傳奇鑰石地下城支持."
         },
         ["enUS"] = {
+            "ElvUI minimum supported version changed to 13.06",
             "Remove [Combat]-[Covenant Helper] module.",
             "Remove [Tooltip]-[Covenant] feature.",
             "[Tooltip] Tier Set info changed to the first set in Dragonflight.",
@@ -31,6 +34,7 @@ W.Changelog[306] = {
             "[Progress] Remove tracking support of all Shadowlands S4 Mythic+ Dungeons."
         },
         ["koKR"] = {
+            "ElvUI minimum supported version changed to 13.06",
             "Remove [Combat]-[Covenant Helper] module.",
             "Remove [Tooltip]-[Covenant] feature.",
             "[Tooltip] Tier Set info changed to the first set in Dragonflight.",
@@ -42,16 +46,20 @@ W.Changelog[306] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[美化皮肤] 新增了暴雪原生背包的皮肤."
+            "[美化皮肤] 新增了暴雪原生背包的皮肤.",
+            "[美化皮肤] 新增了 AdiBags 的皮肤."
         },
         ["zhTW"] = {
-            "[美化皮膚] 新增了暴雪原生背包的皮膚."
+            "[美化皮膚] 新增了暴雪原生背包的皮膚.",
+            "[美化皮膚] 新增了 AdiBags 的皮膚."
         },
         ["enUS"] = {
-            "[Skins] Add the skin for Blizzard bag."
+            "[Skins] Add the skin for Blizzard bag.",
+            "[Skins] Add the skin for AdiBags."
         },
         ["koKR"] = {
-            "[Skins] Add the skin for Blizzard bag."
+            "[Skins] Add the skin for Blizzard bag.",
+            "[Skins] Add the skin for AdiBags."
         }
     },
     IMPROVEMENT = {
@@ -64,7 +72,9 @@ W.Changelog[306] = {
             "[美化皮肤] 修复镜像计时条的皮肤.",
             "[美化皮肤] 修复 Angry Keystones 的皮肤.",
             "[美化皮肤] 更新 Mythic Dungeon Helper 皮肤.",
-            "[美化皮肤] 更新 Immersion 皮肤."
+            "[美化皮肤] 更新 Immersion 皮肤.",
+            "[美化皮肤] 更新设定面板皮肤.",
+            "[其他] 修复额外绑定按钮功能."
         },
         ["zhTW"] = {
             "[通告] 去除任務進度現在不會造成污染.",
@@ -75,29 +85,35 @@ W.Changelog[306] = {
             "[美化皮膚] 修復鏡像計時條的皮膚.",
             "[美化皮膚] 修復 Angry Keystones 的皮膚.",
             "[美化皮膚] 更新 Mythic Dungeon Helper 皮膚.",
-            "[美化皮膚] 更新 Immersion 皮膚."
+            "[美化皮膚] 更新 Immersion 皮膚.",
+            "[美化皮膚] 更新設定介面皮膚.",
+            "[其他] 修復額外綁定按鍵功能."
         },
         ["enUS"] = {
             "[Announcement] Remove quest progress will not cause pollution now.",
             "[Announcement] Fix the issue that new keystone cannot be announced. Thanks Urmus",
             "[Automation] Fix the issue that auto turn in will not work when there are multiple quests.",
-            "[Mover] Now you can temporarily move the bonus roll frame.",
-            "[Mover] Fix the error when moving the mailbox.",
+            "[Move Frames] Now you can temporarily move the bonus roll frame.",
+            "[Move Frames] Fix the error when moving the mailbox.",
             "[Skins] Fix the skin of mirror timer.",
             "[Skins] Fix the skin of Angry Keystones.",
             "[Skins] Update the skin of Mythic Dungeon Helper.",
-            "[Skins] Update the skin of Immersion."
+            "[Skins] Update the skin of Immersion.",
+            "[Skins] Update the skin of Blizzard Settings Panel.",
+            "[Misc] Fix the issue that extra binding button not work."
         },
         ["koKR"] = {
             "[Announcement] Remove quest progress will not cause pollution now.",
             "[Announcement] Fix the issue that new keystone cannot be announced. Thanks Urmus",
             "[Automation] Fix the issue that auto turn in will not work when there are multiple quests.",
-            "[Mover] Now you can temporarily move the bonus roll frame.",
-            "[Mover] Fix the error when moving the mailbox.",
+            "[Move Frames] Now you can temporarily move the bonus roll frame.",
+            "[Move Frames] Fix the error when moving the mailbox.",
             "[Skins] Fix the skin of mirror timer.",
             "[Skins] Fix the skin of Angry Keystones.",
             "[Skins] Update the skin of Mythic Dungeon Helper.",
-            "[Skins] Update the skin of Immersion."
+            "[Skins] Update the skin of Immersion.",
+            "[Skins] Update the skin of Blizzard Settings Panel.",
+            "[Misc] Fix the issue that extra binding button not work."
         }
     }
 }

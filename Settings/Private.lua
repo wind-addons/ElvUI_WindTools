@@ -398,6 +398,7 @@ V.skins = {
         flightMap = true,
         friends = true,
         garrison = true,
+        genericTraits = true,
         gossip = true,
         guild = true,
         guildBank = true,

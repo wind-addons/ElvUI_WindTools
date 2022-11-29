@@ -34,6 +34,7 @@
 	<Script file='FlightMap.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>
+	<Script file='GenericTrait.lua'/>
 	<Script file='Gossip.lua'/>
 	<Script file='Guild.lua'/>
 	<Script file='GuildBank.lua'/>

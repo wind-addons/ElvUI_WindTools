@@ -563,6 +563,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Garrison"]
         },
+        genericTrait = {
+            order = 10,
+            type = "toggle",
+            name = L["Generic Trait"]
+        },
         gossip = {
             order = 10,
             type = "toggle",

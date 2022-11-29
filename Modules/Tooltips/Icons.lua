@@ -36,14 +36,22 @@ _G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:0:0:64:64:5:59:5:59|t %2$s"
 local function setTooltipIcon(tt, data, type)
     local getIcon = type == Enum_TooltipDataType_Item and GetItemIcon or GetSpellTexture
     local icon = getIcon and getIcon(data.id)
+    local title = data.lines and data.lines[1] and data.lines[1].leftText
     local iconString = icon and F.GetIconString(icon, 18, 18, true)
 
-    local rowNumber = tt == _G.GameTooltip and 1 or 2
-    local row = _G[tt:GetName() .. "TextLeft" .. rowNumber]
-    local existingText = row and row:GetText()
+    if not title or not iconString then
+        return
+    end
 
-    if iconString and existingText and not strfind(existingText, "^|T") then
-        row:SetText(iconString .. " " .. existingText)
+    for i = 1, 5 do
+        local row = _G[tt:GetName() .. "TextLeft" .. i]
+        local existingText = row and row:GetText()
+        if existingText and strfind(existingText, title) then
+            if iconString and existingText and not strfind(existingText, "^|T") then
+                row:SetText(iconString .. " " .. existingText)
+            end
+            return
+        end
     end
 end
 

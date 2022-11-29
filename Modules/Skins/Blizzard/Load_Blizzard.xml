@@ -30,6 +30,7 @@
 	<Script file='EditModeManager.lua'/>
 	<Script file='EncounterJournal.lua'/>
 	<Script file='EventTrace.lua'/>
+	<Script file='ExpansionLandingPage.lua'/>
 	<Script file='FlightMap.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Garrison.lua'/>

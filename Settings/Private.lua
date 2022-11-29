@@ -394,6 +394,7 @@ V.skins = {
         editModeManager = true,
         encounterJournal = true,
         eventTrace = true,
+        expansionLandingPage = true,
         flightMap = true,
         friends = true,
         garrison = true,

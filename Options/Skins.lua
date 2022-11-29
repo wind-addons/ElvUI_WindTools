@@ -543,15 +543,20 @@ options.blizzard = {
             type = "toggle",
             name = L["Event Trace"]
         },
-        friends = {
+        expansionLandingPage = {
             order = 10,
             type = "toggle",
-            name = L["Friend List"]
+            name = L["Expansion Landing Page"]
         },
         flightMap = {
             order = 10,
             type = "toggle",
             name = L["Flight Map"]
+        },
+        friends = {
+            order = 10,
+            type = "toggle",
+            name = L["Friend List"]
         },
         garrison = {
             order = 10,

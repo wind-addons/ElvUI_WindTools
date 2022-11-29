@@ -51,6 +51,7 @@
 	<Script file='LossOfControl.lua'/>
 	<Script file='Macro.lua'/>
 	<Script file='Mail.lua'/>
+	<Script file='MajorFactions.lua'/>
 	<Script file='Merchant.lua'/>
 	<Script file='MicroButtons.lua'/>
 	<Script file='MirrorTimers.lua'/>

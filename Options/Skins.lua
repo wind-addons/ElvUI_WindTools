@@ -633,6 +633,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Mail Frame"]
         },
+        majorFactions = {
+            order = 10,
+            type = "toggle",
+            name = L["Major Factions"]
+        },
         merchant = {
             order = 10,
             type = "toggle",

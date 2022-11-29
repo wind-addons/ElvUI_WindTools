@@ -413,6 +413,7 @@ V.skins = {
         lossOfControl = true,
         macro = true,
         mail = true,
+        majorFactions = true,
         merchant = true,
         microButtons = true,
         mirrorTimers = true,

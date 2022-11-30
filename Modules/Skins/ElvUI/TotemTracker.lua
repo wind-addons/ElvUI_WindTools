@@ -3,6 +3,8 @@ local S = W.Modules.Skins
 
 local _G = _G
 
+local MAX_TOTEMS = MAX_TOTEMS
+
 function S:ElvUI_TotemTracker_Initialize()
     for i = 1, MAX_TOTEMS do
         local frame = _G["ElvUI_TotemTrackerTotem" .. i]

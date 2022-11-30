@@ -50,8 +50,6 @@ W.Changelog[308] = {
             "[Skins] Fix the skin of the adventure map.",
             "[Skins] Fix the skin of the ElvUI totem tracker.",
             "[Raid Markers] Fix the error that may be caused by the Lua math calculation error."
-        },
-        ["enUS"] = {},
-        ["koKR"] = {}
+        }
     }
 }

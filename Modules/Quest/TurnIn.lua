@@ -289,7 +289,9 @@ function TI:QUEST_GREETING()
             local _, isComplete = GetActiveTitle(index)
             local questID = GetActiveQuestID(index)
             if isComplete and not C_QuestLog_IsWorldQuest(questID) then
-                SelectActiveQuest(index)
+                if not self:IsPaused("COMPLETE") then
+                    SelectActiveQuest(index)
+                end
             end
         end
     end
@@ -299,7 +301,9 @@ function TI:QUEST_GREETING()
         for index = 1, available do
             local isTrivial = GetAvailableQuestInfo(index)
             if not isTrivial or IsTrackingHidden() then
-                SelectAvailableQuest(index)
+                if not self:IsPaused("ACCEPT") then
+                    SelectAvailableQuest(index)
+                end
             end
         end
     end

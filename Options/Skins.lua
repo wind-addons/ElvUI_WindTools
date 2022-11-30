@@ -683,6 +683,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Professions"]
         },
+        professionsCustomerOrders = {
+            order = 10,
+            type = "toggle",
+            name = L["Professions Customer Orders"]
+        },
         quest = {
             order = 10,
             type = "toggle",

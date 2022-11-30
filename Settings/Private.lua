@@ -423,6 +423,7 @@ V.skins = {
         petBattle = true,
         playerChoice = true,
         professions = true,
+        professionsCustomerOrders = true,
         quest = true,
         raidInfo = true,
         scenario = true,

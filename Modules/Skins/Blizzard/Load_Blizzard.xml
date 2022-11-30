@@ -61,6 +61,7 @@
 	<Script file='PetBattle.lua'/>
 	<Script file='PlayerChoice.lua'/>
 	<Script file='Professions.lua'/>
+	<Script file='ProfessionsCustomerOrders.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>
 	<Script file='Scenario.lua'/>

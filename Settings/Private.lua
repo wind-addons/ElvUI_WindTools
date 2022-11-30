@@ -466,7 +466,7 @@ V.skins = {
         raidUtility = true,
         staticPopup = true,
         statusReport = true,
-        totemBar = true,
+        totemTracker = true,
         unitFrames = true
     }
 }

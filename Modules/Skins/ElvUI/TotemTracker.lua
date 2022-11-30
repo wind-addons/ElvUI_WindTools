@@ -3,25 +3,27 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-function S:ElvUI_UpdateTotemTracker(totemTracker)
-    for i = 1, 4 do
-        local button = totemTracker.bar[i]
-
-        if button:IsShown() and not button.__windSkin then
-            self:CreateShadow(button)
-            button.__windSkin = true
+function S:ElvUI_TotemTracker_Initialize()
+    for i = 1, MAX_TOTEMS do
+        local frame = _G["ElvUI_TotemTrackerTotem" .. i]
+        if frame and not frame.__windSkin then
+            self:CreateShadow(frame)
+            frame.__windSkin = true
         end
     end
 end
 
 function S:ElvUI_TotemTracker()
-    if not (E.private.general.totemBar and E.private.WT.skins.elvui.totemBar) then
+    if not (E.private.general.totemTracker and E.private.WT.skins.elvui.totemTracker) then
         return
     end
 
     local totemTracker = E:GetModule("TotemTracker")
-
-    self:SecureHook(totemTracker, "Update", "ElvUI_UpdateTotemTracker")
+    if totemTracker.Initialized then
+        self:ElvUI_TotemTracker_Initialize()
+    else
+        self:SecureHook(totemTracker, "Initialize", "ElvUI_TotemTracker_Initialize")
+    end
 end
 
 S:AddCallback("ElvUI_TotemTracker")

@@ -944,10 +944,10 @@ options.elvui = {
             type = "toggle",
             name = L["Status Report"]
         },
-        totemBar = {
+        totemTracker = {
             order = 10,
             type = "toggle",
-            name = L["Totem Bar"]
+            name = L["Totem Tracker"]
         },
         unitFrames = {
             order = 10,

@@ -412,6 +412,9 @@ function RM:CreateButtons()
 				if RM.db.buttonAnimation then
 					local progress = animGroup:GetProgress()
 					local currentScale = tex:GetScale()
+					if not currentScale or currentScale <= 0 or currentScale > 10 then
+						currentScale = 1
+					end
 					if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
 						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
 					end
@@ -443,6 +446,9 @@ function RM:CreateButtons()
 				if RM.db.buttonAnimation then
 					local progress = animGroup:GetProgress()
 					local currentScale = tex:GetScale()
+					if not currentScale or currentScale <= 0 or currentScale > 10 then
+						currentScale = 1
+					end
 					if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
 						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
 					end

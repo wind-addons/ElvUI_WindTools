@@ -266,7 +266,12 @@ do
             return true
         end
 
-        return modiferFunctionTable[self.db.pauseModifier]()
+        local func = modiferFunctionTable[self.db.pauseModifier]
+        if func and func() then
+            return true
+        end
+
+        return false
     end
 end
 

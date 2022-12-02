@@ -163,8 +163,8 @@ options.extraItemsBar = {
                     end,
                     values = function()
                         local result = {}
-                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            result[key] = value
+                        for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
+                            result[key] = select(1, GetItemInfo(key))
                         end
                         return result
                     end

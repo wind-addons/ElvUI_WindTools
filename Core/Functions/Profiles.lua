@@ -8,6 +8,18 @@ local type = type
 
 F.Profiles = {}
 
+local generatedKeys = {
+    profile = {
+        item = {
+            extraItemsBar = {
+                customList = true,
+                blackList = true
+            }
+        }
+    },
+    private = {}
+}
+
 function F.Profiles.GenerateString(data)
     local exportString = D:Serialize(data)
     local compressedData = LibDeflate:CompressDeflate(exportString, LibDeflate.compressLevel)
@@ -39,12 +51,12 @@ function F.Profiles.GetOutputString(profile, private)
     local profileData = {}
     if profile then
         profileData = E:CopyTable(profileData, E.db.WT)
-        profileData = E:RemoveTableDuplicates(profileData, P)
+        profileData = E:RemoveTableDuplicates(profileData, P, generatedKeys.profile)
     end
 
     local privateData = {}
     if private then
-        local privateData = E:CopyTable(privateData, E.private.WT)
+        local privateData = E:CopyTable(privateData, E.private.WT, generatedKeys.private)
         privateData = E:RemoveTableDuplicates(privateData, V)
     end
 

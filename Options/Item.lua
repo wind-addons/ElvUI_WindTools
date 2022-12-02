@@ -81,13 +81,19 @@ options.extraItemsBar = {
                         return ""
                     end,
                     set = function(_, value)
-                        local itemID = tonumber(value)
-                        local itemName = select(1, GetItemInfo(itemID))
-                        if itemName then
-                            tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
-                            EB:UpdateBars()
-                        else
-                            print(L["The item ID is invalid."])
+                        local function _set()
+                            local itemID = tonumber(value)
+                            local itemName = select(1, GetItemInfo(itemID))
+                            if itemName then
+                                tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
+                                EB:UpdateBars()
+                            else
+                                error()
+                            end
+                        end
+
+                        if not pcall(_set) then
+                            F.Print(L["The item ID is invalid."])
                         end
                     end
                 },
@@ -105,7 +111,9 @@ options.extraItemsBar = {
                         local list = E.db.WT.item.extraItemsBar.customList
                         local result = {}
                         for key, value in pairs(list) do
-                            result[key] = select(1, GetItemInfo(value))
+                            local name = select(1, GetItemInfo(value))
+                            local tex = GetItemIcon(value)
+                            result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
                         end
                         return result
                     end
@@ -141,13 +149,19 @@ options.extraItemsBar = {
                         return ""
                     end,
                     set = function(_, value)
-                        local itemID = tonumber(value)
-                        local itemName = select(1, GetItemInfo(itemID))
-                        if itemName then
-                            E.db.WT.item.extraItemsBar.blackList[itemID] = itemName
-                            EB:UpdateBars()
-                        else
-                            print(L["The item ID is invalid."])
+                        local function _set()
+                            local itemID = tonumber(value)
+                            local itemName = select(1, GetItemInfo(itemID))
+                            if itemName then
+                                E.db.WT.item.extraItemsBar.blackList[itemID] = true
+                                return EB:UpdateBars()
+                            else
+                                error()
+                            end
+                        end
+
+                        if not pcall(_set) then
+                            F.Print(L["The item ID is invalid."])
                         end
                     end
                 },
@@ -163,8 +177,10 @@ options.extraItemsBar = {
                     end,
                     values = function()
                         local result = {}
-                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            result[key] = value
+                        for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
+                            local name = select(1, GetItemInfo(key))
+                            local tex = GetItemIcon(key)
+                            result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
                         end
                         return result
                     end

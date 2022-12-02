@@ -37,6 +37,7 @@ V.maps = {
             enable = true,
             worldMapInput = true,
             command = true,
+            virtualTomTom = true,
             commandKeys = {
                 ["wtgo"] = true,
                 ["goto"] = true

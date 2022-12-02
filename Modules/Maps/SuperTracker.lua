@@ -245,6 +245,11 @@ function ST:WaypointParse()
         for k, _ in pairs(self.db.waypointParse.commandKeys) do
             tinsert(keys, k)
         end
+        if self.db.waypointParse.virtualTomTom then
+            if not IsAddOnLoaded("TomTom") and not _G.SLASH_TOMTOM_WAY1 then
+                tinsert(keys, "way")
+            end
+        end
         W:AddCommand("SUPER_TRACKER", keys, self.commandHandler)
     end
 

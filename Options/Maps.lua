@@ -171,8 +171,17 @@ options.superTracker = {
                     name = L["Command"],
                     desc = L["Enable to use the command to set the waypoint."]
                 },
-                commandConfiguration = {
+                virtualTomTom = {
                     order = 4,
+                    type = "toggle",
+                    name = L["Virtual TomTom"],
+                    desc = L["Support TomTom-style /way command without TomTom."],
+                    hidden = function()
+                        return not E.private.WT.maps.superTracker.waypointParse.command
+                    end
+                },
+                commandConfiguration = {
+                    order = 5,
                     type = "group",
                     name = L["Command Configuration"],
                     hidden = function()

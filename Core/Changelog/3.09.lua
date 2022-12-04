@@ -30,35 +30,43 @@ W.Changelog[309] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[超级追踪] 支持暴雪路径点 TomTom 风格指令解析 (比如: /way 10,20), 不需要安装 TomTom.",
             "[额外物品条] 更新巨龙时代版本中的可开启物品. 感谢 mcc1"
         },
         ["zhTW"] = {
+            "[超級追蹤] 支援暴雪路徑點 TomTom 風格指令解析 (比如: /way 10,20), 不需要安裝 TomTom.",
             "[額外物品條] 更新巨龍崛起版本中的可開啟物品. 感謝 mcc1"
         },
         ["enUS"] = {
+            "[Super Tracker] Support TomTom style command parsing (e.g. /way 10,20) for Blizzard Waypoint, no need to install TomTom.",
             "[Extra Action Bars] Update openable item list for Dragonflight. Thanks mcc1"
         },
         ["koKR"] = {
+            "[Super Tracker] Support TomTom style command parsing (e.g. /way 10,20) for Blizzard Waypoint, no need to install TomTom.",
             "[Extra Action Bars] Update openable item list for Dragonflight. Thanks mcc1"
         }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[额外物品条] 自定义功能修复, 且增加物品图标方便筛选.",
             "[团队标记] 修复动画计算错误.",
             "[交接] 修复一个可能的错误.",
             "[美化皮肤] 修复场景皮肤."
         },
         ["zhTW"] = {
+            "[額外物品條] 自訂功能修復, 且增加物品圖示方便篩選.",
             "[團隊標記] 修復了動效計算錯誤.",
             "[交接] 修復一個可能的錯誤.",
             "[美化皮膚] 修復場景皮膚."
         },
         ["enUS"] = {
+            "[Extra Action Bars] Fix custom options and add item icon for easier selection.",
             "[Raid Markers] Fix animation calculation error.",
             "[Turn In] Fix a possible error.",
             "[Skins] Fix scenario skin."
         },
         ["koKR"] = {
+            "[Extra Action Bars] Fix custom options and add item icon for easier selection.",
             "[Raid Markers] Fix animation calculation error.",
             "[Turn In] Fix a possible error.",
             "[Skins] Fix scenario skin."

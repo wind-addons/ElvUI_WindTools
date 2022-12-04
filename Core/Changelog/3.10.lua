@@ -4,17 +4,17 @@ W.Changelog[310] = {
     RELEASE_DATE = "2022/12/05",
     IMPORTANT = {
         ["zhCN"] = {
-            "[美化皮肤] 修复一个逻辑错误."
+            "ElvUI 最低版本要求调整为 13.10."
         },
         ["zhTW"] = {
-            "[美化皮膚] 修復一個邏輯錯誤."
+            "ElvUI 最低版本要求調整為 13.10."
         },
         ["enUS"] = {
-            "[Skins] Fix a logic error."
+            "ElvUI minimum version requirement is adjusted to 13.10."
         },
         ["koKR"] = {
-            "[스킨] 로직 오류 수정."
-        },
+            "ElvUI minimum version requirement is adjusted to 13.10."
+        }
     },
     NEW = {
         ["zhCN"] = {},
@@ -24,16 +24,28 @@ W.Changelog[310] = {
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[矩形小地图] 适配 ElvUI 13.10.",
+            "[美化皮肤] ElvUI 小地图皮肤适配 ElvUI 13.10.",
+            "[美化皮肤] 修复一个逻辑错误.",
             "[小地图图标] 忽略随机队列图标."
         },
         ["zhTW"] = {
+            "[矩形小地圖] 適配 ElvUI 13.10.",
+            "[美化皮膚] ElvUI 小地圖皮膚適配 ElvUI 13.10.",
+            "[美化皮膚] 修復一個邏輯錯誤.",
             "[小地圖圖示] 忽略隨機隊列圖示."
         },
         ["enUS"] = {
+            "[Rectangle Minimap] Adapt to ElvUI 13.10.",
+            "[Skins] ElvUI Minimap skin adapt to ElvUI 13.10.",
+            "[Skins] Fix a logic error.",
             "[Minimap Icons] Ignore random queue icons."
         },
         ["koKR"] = {
-            "[미니맵 아이콘] 랜덤 대기열 아이콘 무시."
-        },
+            "[Rectangle Minimap] Adapt to ElvUI 13.10.",
+            "[Skins] ElvUI Minimap skin adapt to ElvUI 13.10.",
+            "[Skins] Fix a logic error.",
+            "[Minimap Icons] Ignore random queue icons."
+        }
     }
 }

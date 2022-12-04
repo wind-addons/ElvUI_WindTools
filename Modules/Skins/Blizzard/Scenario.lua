@@ -108,7 +108,7 @@ function S:ScenarioStageWidgetContainer()
         if bar and not bar.__windSkin then
             hooksecurefunc(
                 bar,
-                "SetStatusBarAtlas",
+                "SetStatusBarTexture",
                 function(frame)
                     frame:SetStatusBarTexture(E.media.normTex)
                     frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))

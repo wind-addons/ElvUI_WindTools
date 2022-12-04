@@ -219,7 +219,6 @@ local potionsShadowlands = {
 local potionsDragonflight = {
     -- Normal
     5512, -- 治療石
-    177278, -- 寧靜之瓶
     --- Dragonflight
     191351, -- 凍結死亡藥水
     191352, -- 凍結死亡藥水

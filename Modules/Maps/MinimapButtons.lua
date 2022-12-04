@@ -34,7 +34,6 @@ local IgnoreList = {
 		"HelpOpenTicketButton",
 		"ElvUI_MinimapHolder",
 		"DroodFocusMinimapButton",
-		"QueueStatusMinimapButton",
 		"TimeManagerClockButton",
 		"MinimapZoneTextButton"
 	},
@@ -54,7 +53,8 @@ local IgnoreList = {
 		"WestPointer",
 		"Cork",
 		"DugisArrowMinimapPoint",
-		"TTMinimapButton"
+		"TTMinimapButton",
+		"QueueStatusButton"
 	},
 	partial = {
 		"Node",

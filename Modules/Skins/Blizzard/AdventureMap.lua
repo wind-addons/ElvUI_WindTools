@@ -16,7 +16,9 @@ function S:Blizzard_AdventureMap()
 
     if AdventureMapQuestChoiceDialog.shadow then
         AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
-        AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
+        if AdventureMapQuestChoiceDialog.TopEdge then
+            AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
+        end
     end
 
     F.SetFontOutline(childFrame.TitleHeader)

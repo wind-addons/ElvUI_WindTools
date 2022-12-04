@@ -289,3 +289,14 @@ function F.In(val, tbl)
 
     return false
 end
+
+function F.IsNaN(val)
+    return tostring(val) == tostring(0/0)
+end
+
+function F.Or(val, default)
+    if not val or F.IsNaN(val) then
+        return default
+    end
+    return val
+end

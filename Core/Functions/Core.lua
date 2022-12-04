@@ -11,6 +11,7 @@ local print = print
 local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
+local tostring = tostring
 local tremove = tremove
 local type = type
 local unpack = unpack

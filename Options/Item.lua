@@ -12,8 +12,10 @@ local IS = W:GetModule("Inspect")
 local IL = W:GetModule("ItemLevel")
 local EMP = W:GetModule("ExtendMerchantPages")
 
+local error = error
 local format = format
 local pairs = pairs
+local pcall = pcall
 local print = print
 local select = select
 local strlower = strlower
@@ -21,6 +23,8 @@ local strrep = strrep
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
+
+local GetItemIcon = GetItemIcon
 local GetItemInfo = GetItemInfo
 
 local customListSelected1

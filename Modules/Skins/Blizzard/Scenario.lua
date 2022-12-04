@@ -106,12 +106,15 @@ function S:ScenarioStageWidgetContainer()
         local bar = widgetFrame.TimerBar
 
         if bar and not bar.__windSkin then
+            bar.__SetStatusBarTexture = frame.SetStatusBarTexture
             hooksecurefunc(
                 bar,
                 "SetStatusBarTexture",
                 function(frame)
-                    frame:SetStatusBarTexture(E.media.normTex)
-                    frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+                    if frame.__SetStatusBarTexture then
+                        frame:__SetStatusBarTexture(E.media.normTex)
+                        frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+                    end
                 end
             )
             bar:CreateBackdrop("Transparent")

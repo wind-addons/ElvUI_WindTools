@@ -5,7 +5,7 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:ElvUI_MiniMap()
-    if not E.private.general.minimap.enable or not M.holder then
+    if not E.private.general.minimap.enable or not M.MapHolder then
         return
     end
 
@@ -13,7 +13,7 @@ function S:ElvUI_MiniMap()
         return
     end
 
-    self:CreateShadow(M.holder)
+    self:CreateShadow(M.MapHolder)
     self:CreateShadow(_G.MinimapRightClickMenu)
 end
 

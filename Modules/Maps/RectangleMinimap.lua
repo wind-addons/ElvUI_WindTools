@@ -38,7 +38,7 @@ function RM:ChangeShape()
     Minimap:SetClampRectInsets(0, 0, 0, 0)
     _G.MinimapMover:SetClampRectInsets(0, 0, halfDiff * E.mult, -halfDiff * E.mult)
     Minimap:ClearAllPoints()
-    Minimap:Point("TOPLEFT", M.holder, "TOPLEFT", E.Border, -E.Border + halfDiff)
+    Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT", E.Border, -E.Border + halfDiff)
     Minimap.backdrop:SetOutside(Minimap, 1, -halfDiff + 1)
     MinimapBackdrop:SetOutside(Minimap.backdrop)
 
@@ -54,13 +54,13 @@ function RM:ChangeShape()
 
     if Minimap.location then
         Minimap.location:ClearAllPoints()
-        Minimap.location:Point("TOP", M.holder, "TOP", 0, -5)
+        Minimap.location:SetPoint("TOP", M.MapHolder, "TOP", 0, -5)
     end
 
     if MinimapPanel:IsShown() then
         MinimapPanel:ClearAllPoints()
-        MinimapPanel:Point("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff)
-        MinimapPanel:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff)
+        MinimapPanel:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff)
+        MinimapPanel:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff)
     end
 
     self:Minimap_Holder_Size()
@@ -86,7 +86,7 @@ do
             1
         local holderHeight = newHeight + (panelSize - joinPanel)
 
-        M.holder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
+        M.MapHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
         _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
         isRunning = false
     end
@@ -97,8 +97,7 @@ function RM:SetUpdateHook()
         self:SecureHook(M, "SetGetMinimapShape", "ChangeShape")
         self:SecureHook(M, "UpdateSettings", "ChangeShape")
         self:SecureHook(M, "Initialize", "ChangeShape")
-        self:SecureHook(E, "UpdateAll", "ChangeShape")
-        self:SecureHook(M.holder, "Size", "Minimap_Holder_Size")
+        self:SecureHook(M.MapHolder, "Size", "Minimap_Holder_Size")
         self.initialized = true
     end
     self:ChangeShape()

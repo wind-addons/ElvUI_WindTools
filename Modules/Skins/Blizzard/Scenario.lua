@@ -106,7 +106,7 @@ function S:ScenarioStageWidgetContainer()
         local bar = widgetFrame.TimerBar
 
         if bar and not bar.__windSkin then
-            bar.__SetStatusBarTexture = frame.SetStatusBarTexture
+            bar.__SetStatusBarTexture = bar.SetStatusBarTexture
             hooksecurefunc(
                 bar,
                 "SetStatusBarTexture",

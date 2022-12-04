@@ -395,7 +395,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "QUEST,BANNER,EQUIP,TORGHAST,OPENABLE"
+            include = "QUEST,BANNER,EQUIP,OPENABLE"
         },
         bar2 = {
             enable = true,
@@ -437,7 +437,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "POTIONSL,FLASKSL,UTILITY"
+            include = "POTIONDF,FLASKDF,UTILITY"
         },
         bar3 = {
             enable = true,
@@ -479,7 +479,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "MAGEFOOD,FOODVENDOR,FOODSL,CUSTOM"
+            include = "MAGEFOOD,FOODVENDOR,FOODDF,CUSTOM"
         },
         bar4 = {
             enable = false,

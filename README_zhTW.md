@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.10-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.10-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.11-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -125,6 +125,8 @@
 17. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化.
 18. **WeakAuras 美化**: 為 WeakAuras 的圖標, 光環條, 設定界面添加美化.
 19. **AdiBags 美化**: 為 AdiBags 的條添加美化. (需要 AdiBags ElvUI Skin 插件)
+20. **Simulationcraft 美化**: 為 Simulationcraft 的條添加美化.
+21. **RaiderIO 美化**: 為 RaiderIO 的條添加美化.
 
 ## 其他
 

@@ -93,7 +93,7 @@ function ID:ConstructFrame()
 
     local frame = CreateFrame("Frame", "WTInstanceDifficultyFrame", _G.Minimap)
     frame:Size(30, 20)
-    frame:Point("TOPLEFT", M.holder, "TOPLEFT", 10, -10)
+    frame:Point("TOPLEFT", M.MapHolder, "TOPLEFT", 10, -10)
 
     local text = frame:CreateFontString(nil, "OVERLAY")
     F.SetFontWithDB(text, self.db.font)

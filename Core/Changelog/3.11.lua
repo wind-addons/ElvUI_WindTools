@@ -48,7 +48,7 @@ W.Changelog[311] = {
             "[Extra Item Bar] Ignore Ruby Whelp Shell by default.",
             "[Announcement] Add Valdrakken portal support.",
             "[Announcement] Add new feasts added in Dragonflight.",
-            "[Handover] Smart dialog supports more quests.",
+            "[Turn In] Smart chat supports more quests.",
             "[Skins] Update BugSack skin."
         },
         ["koKR"] = {
@@ -56,7 +56,7 @@ W.Changelog[311] = {
             "[Extra Item Bar] Ignore Ruby Whelp Shell by default.",
             "[Announcement] Add Valdrakken portal support.",
             "[Announcement] Add new feasts added in Dragonflight.",
-            "[Handover] Smart dialog supports more quests.",
+            "[Turn In] Smart chat supports more quests.",
             "[Skins] Update BugSack skin."
         }
     }

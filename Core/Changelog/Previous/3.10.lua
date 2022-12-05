@@ -39,13 +39,13 @@ W.Changelog[310] = {
             "[Rectangle Minimap] Adapt to ElvUI 13.10.",
             "[Skins] ElvUI Minimap skin adapt to ElvUI 13.10.",
             "[Skins] Fix a logic error.",
-            "[Minimap Icons] Ignore random queue icons."
+            "[Minimap Icons] Ignore LFG queue icons."
         },
         ["koKR"] = {
             "[Rectangle Minimap] Adapt to ElvUI 13.10.",
             "[Skins] ElvUI Minimap skin adapt to ElvUI 13.10.",
             "[Skins] Fix a logic error.",
-            "[Minimap Icons] Ignore random queue icons."
+            "[Minimap Icons] Ignore LFG queue icons."
         }
     }
 }

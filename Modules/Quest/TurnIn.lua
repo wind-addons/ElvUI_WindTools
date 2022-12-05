@@ -380,7 +380,7 @@ function TI:GOSSIP_SHOW()
         elseif numGossipOptions > 1 then
             local maybeQuestIndexes = {}
             for index, gossipOption in ipairs(gossipOptions) do
-                if gossipOption.name and strfind(gossipOption.name, "^|cFF0000FF[^|]*" .. _G.QUESTS_LABEL .. "[^|]*|r") then
+                if gossipOption.name and strfind(gossipOption.name, "^|cFF0000FF") then
                     tinsert(maybeQuestIndexes, index)
                 end
             end

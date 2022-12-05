@@ -1121,6 +1121,13 @@ options.addons = {
         --     name = L["Rematch"],
         --     addonName = "Rematch"
         -- },
+        simulationcraft = {
+            order = 10,
+            type = "toggle",
+            name = L["Simulationcraft"],
+            addonName = "Simulationcraft",
+            addonskinsKey = "Simulationcraft"
+        },
         tinyInspect = {
             order = 10,
             type = "toggle",

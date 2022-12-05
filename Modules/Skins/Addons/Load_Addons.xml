@@ -12,6 +12,7 @@
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
 	<!-- <Script file='Rematch.lua'/> -->
+	<Script file='Simulationcraft.lua'/>
 	<Script file='TinyInspect.lua'/>
 	<Script file='TLDRMissions.lua'/>
 	<Script file='TomCats.lua'/>

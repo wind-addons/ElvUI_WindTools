@@ -355,6 +355,7 @@ V.skins = {
         mythicDungeonTools = true,
         premadeGroupsFilter = true,
         rematch = true,
+        simulationcraft = true,
         tinyInspect = true,
         tldrMissions = true,
         tomCats = true,

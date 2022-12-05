@@ -353,7 +353,8 @@ P.item = {
         enable = true,
         customList = {},
         blackList = {
-            [183040] = true
+            [183040] = true, -- 恆冬符咒
+            [193757] = true -- 晶紅幼龍之殼
         },
         bar1 = {
             enable = true,

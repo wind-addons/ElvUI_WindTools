@@ -354,6 +354,7 @@ V.skins = {
         myslot = true,
         mythicDungeonTools = true,
         premadeGroupsFilter = true,
+        raiderIO = true,
         rematch = true,
         simulationcraft = true,
         tinyInspect = true,

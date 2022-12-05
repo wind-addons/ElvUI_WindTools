@@ -11,6 +11,7 @@
 	<Script file='Myslot.lua'/>
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
+	<Script file='RaiderIO.lua'/>
 	<!-- <Script file='Rematch.lua'/> -->
 	<Script file='Simulationcraft.lua'/>
 	<Script file='TinyInspect.lua'/>

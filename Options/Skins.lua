@@ -1115,6 +1115,13 @@ options.addons = {
             addonName = "PremadeGroupsFilter",
             addonskinsKey = "PremadeGroupsFilter"
         },
+        raiderIO = {
+            order = 10,
+            type = "toggle",
+            name = L["RaiderIO"],
+            addonName = "RaiderIO",
+            addonskinsKey = "RaiderIO"
+        },
         -- rematch = {
         --     order = 10,
         --     type = "toggle",

@@ -13,6 +13,7 @@ function S:RaiderIO_DelayedSkinning()
     skinned = true
     if _G.RaiderIO_ProfileTooltip then
         _G.RaiderIO_ProfileTooltip:StripTextures()
+        _G.RaiderIO_ProfileTooltip.NineSlice:Kill()
         _G.RaiderIO_ProfileTooltip:SetTemplate("Transparent")
         local point, relativeTo, relativePoint, xOffset, yOffset = _G.RaiderIO_ProfileTooltip:GetPoint()
         if xOffset and yOffset and xOffset == 0 and yOffset == 0 then

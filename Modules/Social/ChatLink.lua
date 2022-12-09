@@ -61,6 +61,10 @@ local function AddItemInfo(link)
     if CL.db.translateItem then
         local localizedName = C_Item_GetItemNameByID(itemID)
         if localizedName then
+            local professionIcon = strmatch(link, "|A:Professions.-|a")
+            if professionIcon then
+                localizedName = localizedName .. " " .. professionIcon
+            end
             link = gsub(link, "|h%[(.+)%]|h", "|h[" .. localizedName .. "]|h")
         end
     end

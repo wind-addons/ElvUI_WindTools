@@ -595,24 +595,30 @@ options.chatLink = {
                     type = "toggle",
                     name = L["Level"]
                 },
-                translateItem = {
+                numbericalQualityTier = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Numberical Quality Tier"],
+                    desc = L["Display the numberical quality tier on the item link."]
+                },
+                translateItem = {
+                    order = 3,
                     type = "toggle",
                     name = L["Translate Item"],
                     desc = L["Translate the name in item links into your language."]
                 },
                 icon = {
-                    order = 3,
+                    order = 4,
                     type = "toggle",
                     name = L["Icon"]
                 },
                 armorCategory = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Armor Category"]
                 },
                 weaponCategory = {
-                    order = 5,
+                    order = 6,
                     type = "toggle",
                     name = L["Weapon Category"]
                 }

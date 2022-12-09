@@ -51,6 +51,14 @@ local abbrList = {
     INVTYPE_TRINKET = L["[ABBR] Trinket"]
 }
 
+local tierColor = {
+    ["1"] = "|cffa5493b",
+    ["2"] = "|cffaaaeb2",
+    ["3"] = "|cffe4c55b",
+    ["4"] = "|cff09d3ff",
+    ["5"] = "|cffe8ac1b"
+}
+
 local function AddItemInfo(link)
     local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(link)
 
@@ -67,6 +75,20 @@ local function AddItemInfo(link)
             end
             link = gsub(link, "|h%[(.+)%]|h", "|h[" .. localizedName .. "]|h")
         end
+    end
+
+    if CL.db.numbericalQualityTier then
+        link =
+            gsub(
+            link,
+            "|A:Professions%-ChatIcon%-Quality%-Tier(%d):(%d+):(%d+)::1|a",
+            function(tier, width, height)
+                if tierColor[tier] then
+                    return tierColor[tier] .. tier .. "|r"
+                end
+                return format("|A:Professions-ChatIcon-Quality-Tier%s:%s:%s::1|a", tier, width, height)
+            end
+        )
     end
 
     local level, slot

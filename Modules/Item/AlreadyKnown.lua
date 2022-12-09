@@ -199,6 +199,7 @@ function AK:GuildBank(frame)
 						SetItemButtonTextureVertexColor(button, r, g, b)
 					end
 				else
+					SetItemButtonTextureVertexColor(button, 1, 1, 1)
 					SetItemButtonDesaturated(button, false)
 				end
 			end

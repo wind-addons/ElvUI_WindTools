@@ -2,7 +2,9 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
-local LibStub = _G.LibStub
+local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local strfind = strfind
 
 local skinned = false
 

@@ -24,8 +24,8 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
 
-local GetItemIcon = GetItemIcon
-local GetItemInfo = GetItemInfo
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
+local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 
 local customListSelected1
 local customListSelected2
@@ -87,7 +87,7 @@ options.extraItemsBar = {
                     set = function(_, value)
                         local function _set()
                             local itemID = tonumber(value)
-                            local itemName = select(1, GetItemInfo(itemID))
+                            local itemName = C_Item_GetItemNameByID(itemID)
                             if itemName then
                                 tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
                                 EB:UpdateBars()
@@ -115,8 +115,8 @@ options.extraItemsBar = {
                         local list = E.db.WT.item.extraItemsBar.customList
                         local result = {}
                         for key, value in pairs(list) do
-                            local name = select(1, GetItemInfo(value))
-                            local tex = GetItemIcon(value)
+                            local name = C_Item_GetItemNameByID(value)
+                            local tex = C_Item_GetItemIconByID(value)
                             result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
                         end
                         return result
@@ -155,7 +155,7 @@ options.extraItemsBar = {
                     set = function(_, value)
                         local function _set()
                             local itemID = tonumber(value)
-                            local itemName = select(1, GetItemInfo(itemID))
+                            local itemName = C_Item_GetItemNameByID(itemID)
                             if itemName then
                                 E.db.WT.item.extraItemsBar.blackList[itemID] = true
                                 return EB:UpdateBars()
@@ -182,8 +182,8 @@ options.extraItemsBar = {
                     values = function()
                         local result = {}
                         for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            local name = select(1, GetItemInfo(key))
-                            local tex = GetItemIcon(key)
+                            local name = C_Item_GetItemNameByID(key)
+                            local tex = C_Item_GetItemIconByID(key)
                             result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
                         end
                         return result

@@ -364,7 +364,8 @@ function OT:Initialize()
             _G.WORLD_QUEST_TRACKER_MODULE,
             _G.CAMPAIGN_QUEST_TRACKER_MODULE,
             _G.QUEST_TRACKER_MODULE,
-            _G.ACHIEVEMENT_TRACKER_MODULE
+            _G.ACHIEVEMENT_TRACKER_MODULE,
+            _G.PROFESSION_RECIPE_TRACKER_MODULE
         }
 
         for _, module in pairs(trackerModules) do

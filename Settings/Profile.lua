@@ -354,7 +354,8 @@ P.item = {
         customList = {},
         blackList = {
             [183040] = true, -- 恆冬符咒
-            [193757] = true -- 晶紅幼龍之殼
+            [193757] = true, -- 晶紅幼龍之殼
+            [200563] = true -- 洪荒儀式龜殼
         },
         bar1 = {
             enable = true,

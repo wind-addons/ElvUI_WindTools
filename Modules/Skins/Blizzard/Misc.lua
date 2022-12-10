@@ -131,6 +131,19 @@ function S:BlizzardMiscFrames()
             end
         end
     )
+
+    self:RawHook(
+        ES,
+        "SkinTextWithStateWidget",
+        function(_, widgetFrame)
+            local text = widgetFrame.Text
+            if not text then
+                return
+            end
+            F.SetFontOutline(text)
+        end,
+        true
+    )
 end
 
 S:AddCallback("BlizzardMiscFrames")

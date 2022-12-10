@@ -79,11 +79,7 @@ function ID:UpdateFrame()
         self.frame.text:SetText("")
     end
 
-    if not inInstance then
-        self.frame:Hide()
-    else
-        self.frame:Show()
-    end
+    self.frame:SetShown(inInstance)
 end
 
 function ID:ConstructFrame()

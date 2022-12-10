@@ -22,7 +22,7 @@ local function SetupOptions()
     end
 
     if _G.PlayerChoiceFrame.shadow then
-        if needDisable then
+        if needDisable or not _G.PlayerChoiceFrame.Center or not _G.PlayerChoiceFrame.Center:IsShown() then
             _G.PlayerChoiceFrame.shadow:Hide()
         else
             _G.PlayerChoiceFrame.shadow:Show()

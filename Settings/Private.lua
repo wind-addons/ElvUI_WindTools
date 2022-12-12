@@ -99,7 +99,8 @@ V.misc = {
             ["Crying"] = false,
             ["Tortollan"] = false,
             ["Smolderheart"] = false,
-            ["Elegy of the Eternals"] = false
+            ["Elegy of the Eternals"] = false,
+            ["Dragon"] = false
         }
     },
     lfgList = {

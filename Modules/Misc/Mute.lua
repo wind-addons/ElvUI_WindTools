@@ -48,23 +48,23 @@ local MountSE = {
     },
     [312762] = {
         -- 淵誓獵魂犬
-        3745490, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_01_168902.ogg
-        3745492, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_02_168902.ogg
-        3745494, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_03_168902.ogg
-        3745496, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_04_168902.ogg
-        3745498, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_05_168902.ogg
-        3745500, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_06_168902.ogg
-        3745502, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_07_168902.ogg
-        3745504, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_08_168902.ogg
-        3745506, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_09_168902.ogg
-        3745508, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_10_168902.ogg
-        3745510, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_11_168902.ogg
-        3745512, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_12_168902.ogg
-        3745514, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_13_168902.ogg
-        3745516, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_14_168902.ogg
-        3745518, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_15_168902.ogg
-        3745520, --sound/creature/talethi's_target/mon_talethi's_target_fidget01_16_168902.ogg
-        3745566 --sound/creature/talethi's_target/mon_talethi's_target_fidget02_01_168903.ogg
+        3745490, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_01_168902.ogg
+        3745492, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_02_168902.ogg
+        3745494, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_03_168902.ogg
+        3745496, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_04_168902.ogg
+        3745498, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_05_168902.ogg
+        3745500, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_06_168902.ogg
+        3745502, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_07_168902.ogg
+        3745504, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_08_168902.ogg
+        3745506, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_09_168902.ogg
+        3745508, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_10_168902.ogg
+        3745510, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_11_168902.ogg
+        3745512, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_12_168902.ogg
+        3745514, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_13_168902.ogg
+        3745516, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_14_168902.ogg
+        3745518, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_15_168902.ogg
+        3745520, -- sound/creature/talethi's_target/mon_talethi's_target_fidget01_16_168902.ogg
+        3745566 -- sound/creature/talethi's_target/mon_talethi's_target_fidget02_01_168903.ogg
     }
 }
 
@@ -154,6 +154,120 @@ local OtherSE = {
         630078, -- sound/character/pcpandarenmale/vo_pcpandarenmale_cry03.ogg
         636425, -- sound/character/pcpandarenfemale/vo_pcpandarenfemale_cry02.ogg
         636427 -- sound/character/pcpandarenfemale/vo_pcpandarenfemale_cry03.ogg
+    },
+    ["Dragon"] = {
+        -- from https://wago.io/SDhHuZh3f
+        540108,
+        540119,
+        540182,
+        540188,
+        540197,
+        540211,
+        540213,
+        540218,
+        540221,
+        540243,
+        547436,
+        547714,
+        547715,
+        547716,
+        597932,
+        597968,
+        597986,
+        597989,
+        597998,
+        598004,
+        598010,
+        598016,
+        598028,
+        803545,
+        803547,
+        803549,
+        803551,
+        1489052,
+        1489053,
+        1563054,
+        1563055,
+        1563058,
+        3014246,
+        3014247,
+        4337227,
+        4543973,
+        4543977,
+        4543979,
+        4550997,
+        4550999,
+        4551001,
+        4551003,
+        4551005,
+        4551007,
+        4551009,
+        4551011,
+        4551013,
+        4551015,
+        4551017,
+        4627086,
+        4627088,
+        4627090,
+        4627092,
+        4633292,
+        4633294,
+        4633296,
+        4633298,
+        4633300,
+        4633302,
+        4633304,
+        4633306,
+        4633308,
+        4633310,
+        4633312,
+        4633314,
+        4633338,
+        4633340,
+        4633342,
+        4633344,
+        4633346,
+        4633348,
+        4633350,
+        4633354,
+        4633356,
+        4633370,
+        4633372,
+        4633374,
+        4633376,
+        4633378,
+        4633382,
+        4633392,
+        4634009,
+        4634011,
+        4634013,
+        4634015,
+        4634017,
+        4634019,
+        4634021,
+        4634908,
+        4634910,
+        4634912,
+        4634914,
+        4634916,
+        4634924,
+        4634926,
+        4634928,
+        4634930,
+        4634932,
+        4634942,
+        4634944,
+        4634946,
+        4663454,
+        4663456,
+        4663458,
+        4663460,
+        4663462,
+        4663464,
+        4663466,
+        4674593,
+        4674595,
+        4674599
     }
 }
 

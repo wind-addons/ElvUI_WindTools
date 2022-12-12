@@ -582,7 +582,14 @@ options.mute = {
                     desc = L["Mute crying sounds of all races."] ..
                         "\n|cffff3860" .. L["It will affect the cry emote sound."] .. "|r",
                     width = 1.3
-                }
+                },
+                ["Dragon"] = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Dragon"],
+                    desc = L["Mute the sound of dragons."],
+                    width = 1.3
+                },
             }
         }
     }

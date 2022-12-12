@@ -5,6 +5,7 @@ local MB = W:GetModule("MinimapButtons")
 local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
 local WM = W:GetModule("WorldMap")
+local ET = W:GetModule("EventTracker")
 
 local format = format
 local pairs = pairs
@@ -887,6 +888,67 @@ options.instanceDifficulty = {
                     min = 5,
                     max = 60,
                     step = 1
+                }
+            }
+        }
+    }
+}
+
+options.eventTracker = {
+    order = 7,
+    type = "group",
+    name = L["Event Tracker"],
+    get = function(info)
+        return E.db.WT.maps.eventTracker[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.maps.eventTracker[info[#info]] = value
+        ET:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add trackers for world events in the bottom of world map."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        event = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Events"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                communityFeast = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Community Feast"],
+                    width = 2
+                },
+                siegeOnDragonbaneKeep = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Siege On Dragonbane Keep"],
+                    width = 2
                 }
             }
         }

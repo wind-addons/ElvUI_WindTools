@@ -635,6 +635,13 @@ P.item = {
 }
 
 P.maps = {
+    eventTracker = {
+        enable = true,
+        event = {
+            communityFeast = true,
+            siegeOnDragonbaneKeep = true
+        }
+    },
     rectangleMinimap = {
         enable = false,
         heightPercentage = 0.8

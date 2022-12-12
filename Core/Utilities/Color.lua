@@ -25,6 +25,10 @@ function U.CreateColorFromTable(colorTable)
     return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a)
 end
 
+function U.RGBFromTemplate(template)
+    return U.HexToRGB(colors[template])
+end
+
 function U.ExtractColorFromTable(colorTable, override)
     local r = override and override.r or colorTable.r or 1
     local g = override and override.g or colorTable.g or 1

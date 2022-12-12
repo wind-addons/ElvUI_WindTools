@@ -3,6 +3,7 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
 local CreateFrame = CreateFrame
@@ -144,6 +145,16 @@ function S:BlizzardMiscFrames()
         end,
         true
     )
+
+    if _G.UIWidgetTemplateTextWithState then
+        hooksecurefunc(
+            _G.UIWidgetTemplateTextWithState,
+            "Setup",
+            function(widget)
+                ES:SkinTextWithStateWidget(widget)
+            end
+        )
+    end
 end
 
 S:AddCallback("BlizzardMiscFrames")

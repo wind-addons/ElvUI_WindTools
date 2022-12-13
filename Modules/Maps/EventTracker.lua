@@ -5,10 +5,12 @@ local C = W.Utilities.Color
 local ET = W:NewModule("EventTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
+local date = date
 local floor = floor
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
@@ -37,6 +39,21 @@ local eventList = {
     "SiegeOnDragonbaneKeep"
 }
 
+local colorPlatte = {
+    blue = {
+        {r = 0.32941, g = 0.52157, b = 0.93333, a = 1},
+        {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
+    },
+    red = {
+        {r = 0.92549, g = 0.00000, b = 0.54902, a = 1},
+        {r = 0.98824, g = 0.40392, b = 0.40392, a = 1}
+    },
+    running = {
+        {r = 0.00000, g = 0.94902, b = 0.37647, a = 1},
+        {r = 0.01961, g = 0.45882, b = 0.90196, a = 1}
+    }
+}
+
 local function reskinStatusBar(bar)
     bar:SetFrameLevel(bar:GetFrameLevel() + 1)
     bar:StripTextures()
@@ -47,8 +64,10 @@ end
 
 local functionFactory = {
     loopTimer = {
-        init = function(self, args)
+        init = function(self)
             self.icon = self:CreateTexture(nil, "ARTWORK")
+            self.icon:CreateBackdrop("Transparent")
+            self.icon.backdrop:SetOutside(self.icon, 1, 1)
             self.statusBar = CreateFrame("StatusBar", nil, self)
             self.name = self.statusBar:CreateFontString(nil, "OVERLAY")
             self.timerText = self.statusBar:CreateFontString(nil, "OVERLAY")
@@ -62,8 +81,8 @@ local functionFactory = {
             self.statusBar.spark:SetPoint("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
             self.statusBar.spark:SetSize(4, 26)
         end,
-        setup = function(self, args)
-            self.icon:SetTexture(args.icon)
+        setup = function(self)
+            self.icon:SetTexture(self.args.icon)
             self.icon:SetTexCoord(unpack(E.TexCoords))
             self.icon:SetSize(22, 22)
             self.icon:ClearAllPoints()
@@ -80,56 +99,123 @@ local functionFactory = {
             ET:SetFont(self.name, 13)
             self.name:ClearAllPoints()
             self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 30, -6)
-            self.name:SetText(args.label)
+            self.name:SetText(self.args.label)
 
             ET:SetFont(self.runningTip, 10)
-            self.runningTip:SetText(args.runningText)
+            self.runningTip:SetText(self.args.runningText)
             self.runningTip:SetPoint("CENTER", self.statusBar, "BOTTOM", 0, 0)
         end,
         ticker = {
             interval = 0.3,
-            onUpdate = function(self, args)
-                self.isCompleted = C_QuestLog_IsQuestFlaggedCompleted(args.questID)
-                self.icon:SetDesaturated(self.isCompleted)
+            dateUpdater = function(self)
+                self.isCompleted = C_QuestLog_IsQuestFlaggedCompleted(self.args.questID)
 
-                local timeOver = GetServerTime() - args.startTimestamp
-                timeOver = timeOver % args.interval
-                if timeOver < args.duration then
-                    -- event ending tracking timer
-                    local timeLeft = args.duration - timeOver
-                    self.timerText:SetText(C.StringByTemplate(secondToTime(timeLeft), "success"))
-                    self.statusBar:SetMinMaxValues(0, args.duration)
-                    self.statusBar:SetValue(timeOver)
-                    self.statusBar:SetStatusBarColor(C.RGBFromTemplate("success"))
-                    self.runningTip:Show()
-                    E:Flash(self.runningTip, 1, true)
+                local timeSinceStart = GetServerTime() - self.args.startTimestamp
+                self.timeOver = timeSinceStart % self.args.interval
+                self.nextEventIndex = floor(timeSinceStart / self.args.interval) + 1
+                self.nextEventTimestamp = self.args.startTimestamp + self.args.interval * self.nextEventIndex
+
+                if self.timeOver < self.args.duration then
+                    self.timeLeft = self.args.duration - self.timeOver
                     self.isRunning = true
                 else
+                    self.timeLeft = self.args.interval - self.timeOver
+                    self.isRunning = false
+                end
+            end,
+            uiUpdater = function(self)
+                self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
+
+                if self.isRunning then
+                    -- event ending tracking timer
+                    self.timerText:SetText(C.StringByTemplate(secondToTime(self.timeLeft), "success"))
+                    self.statusBar:SetMinMaxValues(0, self.args.duration)
+                    self.statusBar:SetValue(self.timeOver)
+                    local tex = self.statusBar:GetStatusBarTexture()
+                    tex:SetGradient(
+                        "HORIZONTAL",
+                        C.CreateColorFromTable(colorPlatte.running[1]),
+                        C.CreateColorFromTable(colorPlatte.running[2])
+                    )
+                    self.runningTip:Show()
+                    E:Flash(self.runningTip, 1, true)
+                else
                     -- normal tracking timer
-                    local timeLeft = args.interval - timeOver
-                    self.timerText:SetText(secondToTime(timeLeft))
-                    self.statusBar:SetMinMaxValues(0, args.interval)
-                    self.statusBar:SetValue(timeLeft)
-                    self.statusBar:SetStatusBarColor(unpack(args.barColor))
+                    self.timerText:SetText(secondToTime(self.timeLeft))
+                    self.statusBar:SetMinMaxValues(0, self.args.interval)
+                    self.statusBar:SetValue(self.timeLeft)
+
+                    if type(self.args.barColor[1]) == "number" then
+                        self.statusBar:SetStatusBarColor(unpack(self.args.barColor))
+                    else
+                        local tex = self.statusBar:GetStatusBarTexture()
+                        tex:SetGradient(
+                            "HORIZONTAL",
+                            C.CreateColorFromTable(self.args.barColor[1]),
+                            C.CreateColorFromTable(self.args.barColor[2])
+                        )
+                    end
+
                     E:StopFlash(self.runningTip)
                     self.runningTip:Hide()
-                    self.isRunning = false
+                end
+            end,
+            alert = function(self)
+                if not self.args["alertCache"] then
+                    self.args["alertCache"] = {}
+                end
+
+                if self.args["alertCache"][self.nextEventIndex] then
+                    return
+                end
+
+                if not self.args.alertSecond or self.isRunning then
+                    return
+                end
+
+                if self.args.stopAlertIfCompleted and self.isCompleted then
+                    return
+                end
+
+                if self.timeLeft < self.args.alertSecond then
+                    F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
+                    self.args["alertCache"][self.nextEventIndex] = true
                 end
             end
         },
         tooltip = {
-            onEnter = function(self, args)
+            onEnter = function(self)
                 _G.GameTooltip:ClearLines()
                 _G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 8)
-                _G.GameTooltip:SetText(F.GetIconString(args.icon, 16, 16) .. " " .. args.eventName, 1, 1, 1)
-                _G.GameTooltip:AddDoubleLine(L["Location"], args.location, 1, 1, 1)
-                _G.GameTooltip:AddDoubleLine(L["Interval"], secondToTime(args.interval), 1, 1, 1)
-                _G.GameTooltip:AddDoubleLine(L["Duration"], secondToTime(args.duration), 1, 1, 1)
+                _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
+
+                _G.GameTooltip:AddLine(" ")
+                _G.GameTooltip:AddDoubleLine(L["Location"], self.args.location, 1, 1, 1)
+
+                _G.GameTooltip:AddLine(" ")
+                _G.GameTooltip:AddDoubleLine(L["Interval"], secondToTime(self.args.interval), 1, 1, 1)
+                _G.GameTooltip:AddDoubleLine(L["Duration"], secondToTime(self.args.duration), 1, 1, 1)
+                if self.nextEventTimestamp then
+                    _G.GameTooltip:AddDoubleLine(
+                        L["Next Event"],
+                        date("%m/%d %H:%M:%S", self.nextEventTimestamp),
+                        1,
+                        1,
+                        1
+                    )
+                end
+
                 _G.GameTooltip:AddLine(" ")
                 if self.isRunning then
-                    _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["In Progress"], "success"), 1, 1, 1)
+                    _G.GameTooltip:AddDoubleLine(
+                        L["Status"],
+                        C.StringByTemplate(self.args.runningText, "success"),
+                        1,
+                        1,
+                        1
+                    )
                 else
-                    _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "danger"), 1, 1, 1)
+                    _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "greyLight"), 1, 1, 1)
                 end
 
                 if self.isCompleted then
@@ -152,7 +238,7 @@ local functionFactory = {
 
                 _G.GameTooltip:Show()
             end,
-            onLeave = function(self, args)
+            onLeave = function(self)
                 _G.GameTooltip:Hide()
             end
         }
@@ -168,7 +254,7 @@ local eventData = {
             questID = 70893,
             duration = 15 * 60,
             interval = 3.5 * 60 * 60,
-            barColor = {0, 120 / 255, 215 / 255},
+            barColor = colorPlatte.blue,
             eventName = L["Community Feast"],
             location = C_Map_GetMapInfo(2024).name,
             label = L["Feast"],
@@ -202,7 +288,7 @@ local eventData = {
             eventName = L["Siege On Dragonbane Keep"],
             label = L["Dragonbane Keep"],
             location = C_Map_GetMapInfo(2022).name,
-            barColor = {209 / 255, 52 / 255, 56 / 255},
+            barColor = colorPlatte.red,
             runningText = L["In Progress"],
             startTimestamp = (function()
                 local timestampTable = {
@@ -239,21 +325,22 @@ function trackers:get(event)
     local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
     frame:SetSize(220, 30)
 
+    frame.args = data.args
+
     if functionFactory[data.args.type] then
         local functions = functionFactory[data.args.type]
         if functions.init then
-            functions.init(frame, data.args)
+            functions.init(frame)
         end
 
         if functions.setup then
-            functions.setup(frame, data.args)
+            functions.setup(frame)
             frame.profileUpdate = function()
-                functions.setup(frame, data.args)
+                functions.setup(frame)
             end
         end
 
         if functions.ticker then
-            functions.ticker.onUpdate(frame, data.args)
             frame.tickerInstance =
                 C_Timer_NewTicker(
                 functions.ticker.interval,
@@ -261,10 +348,11 @@ function trackers:get(event)
                     if not (ET and ET.db and ET.db.enable) then
                         return
                     end
-                    if not _G.WorldMapFrame:IsShown() or not frame:IsShown() then
-                        return
+                    functions.ticker.dateUpdater(frame)
+                    functions.ticker.alert(frame)
+                    if _G.WorldMapFrame:IsShown() and frame:IsShown() then
+                        functions.ticker.uiUpdater(frame)
                     end
-                    functions.ticker.onUpdate(frame, data.args)
                 end
             )
         end
@@ -349,11 +437,23 @@ function ET:UpdateTrackers()
             if tracker.profileUpdate then
                 tracker.profileUpdate()
             end
+
+            tracker.args.desaturate = self.db[data.dbKey].desaturate
+
+            if self.db[data.dbKey].alert then
+                tracker.args.alert = true
+                tracker.args.alertSecond = self.db[data.dbKey].second
+                tracker.args.stopAlertIfCompleted = self.db[data.dbKey].stopAlertIfCompleted
+            else
+                tracker.args.alertSecond = nil
+                tracker.args.stopAlertIfCompleted = nil
+            end
+
             tracker:ClearAllPoints()
             if lastTracker then
                 tracker:SetPoint("LEFT", lastTracker, "RIGHT", self.db.spacing, 0)
             else
-                tracker:SetPoint("LEFT", self.frame, "LEFT", self.db.spacing / 2, 0)
+                tracker:SetPoint("LEFT", self.frame, "LEFT", self.db.spacing * 0.68, 0)
             end
             lastTracker = tracker
         end

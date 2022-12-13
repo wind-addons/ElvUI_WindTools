@@ -1017,19 +1017,32 @@ options.eventTracker = {
                     type = "toggle",
                     name = L["Enable"]
                 },
-                alert = {
+                desaturate = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Desaturate"],
+                    desc = L["Desaturate icon if the event is completed in this week."]
+                },
+                alert = {
+                    order = 3,
                     type = "toggle",
                     name = L["Alert"]
                 },
                 second = {
-                    order = 3,
+                    order = 4,
                     type = "range",
                     name = L["Alert Second"],
                     desc = L["Alert will be triggered when the remaining time is less than the set value."],
                     min = 0,
-                    max = 3600,
+                    max = 15000,
                     step = 1
+                },
+                stopAlertIfCompleted = {
+                    order = 5,
+                    type = "toggle",
+                    name = L["Stop Alert if Completed"],
+                    desc = L["Stop alert when the event is completed in this week."],
+                    width = 2
                 }
             }
         },
@@ -1051,19 +1064,32 @@ options.eventTracker = {
                     type = "toggle",
                     name = L["Enable"]
                 },
-                alert = {
+                desaturate = {
                     order = 2,
+                    type = "toggle",
+                    name = L["Desaturate"],
+                    desc = L["Desaturate icon if the event is completed in this week."]
+                },
+                alert = {
+                    order = 3,
                     type = "toggle",
                     name = L["Alert"]
                 },
                 second = {
-                    order = 3,
+                    order = 4,
                     type = "range",
                     name = L["Alert Second"],
                     desc = L["Alert will be triggered when the remaining time is less than the set value."],
                     min = 0,
-                    max = 3600,
+                    max = 15000,
                     step = 1
+                },
+                stopAlertIfCompleted = {
+                    order = 5,
+                    type = "toggle",
+                    name = L["Stop Alert if Completed"],
+                    desc = L["Stop alert when the event is completed in this week."],
+                    width = 2
                 }
             }
         }

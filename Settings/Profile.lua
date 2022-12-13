@@ -646,13 +646,17 @@ P.maps = {
         },
         communityFeast = {
             enable = true,
+            desaturate = false,
             alert = true,
-            second = 600
+            second = 600,
+            stopAlertIfCompleted = false
         },
         siegeOnDragonbaneKeep = {
             enable = true,
+            desaturate = false,
             alert = true,
-            second = 600
+            second = 600,
+            stopAlertIfCompleted = false
         }
     },
     rectangleMinimap = {

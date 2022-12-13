@@ -27,5 +27,8 @@ G.combat = {
 G.misc = {
     gameBar = {
         covenantCache = {}
+    },
+    skipped = {
+        movies = {},
     }
 }

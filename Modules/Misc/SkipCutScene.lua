@@ -41,7 +41,7 @@ do
                 3.5,
                 function()
                     if not alreadySkipped then
-                        if not (C_Map_GetBestMapForUnit("player") == 1670 and E.mylevel == 60) then
+                        if not (C_Map_GetBestMapForUnit("player") == 1670 and E.mylevel >= 60) then
                             F.Print(L["This cutscene cannot be skipped."])
                         end
                     else
@@ -64,8 +64,10 @@ do
 
         _G.MovieFrame_PlayMovie = function(frame, movieID, override)
             if E.private.WT and E.private.WT.misc.skipCutScene and not override then
-                if not IsModifierKeyDown() then
+                local needWatch = E.private.WT.misc.onlyStopWatched and not G.misc.skipped.movies[movieID]
+                if not IsModifierKeyDown() or not needWatch then
                     GameMovieFinished()
+                    G.misc.skipped.movies[movieID] = true
                     F.Print(
                         format(
                             "%s |cff71d5ff|Hwtcutscene:%s|h[%s]|h|r",

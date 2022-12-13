@@ -77,6 +77,7 @@ V.misc = {
     noKanjiMath = false,
     pauseToSlash = true,
     skipCutScene = false,
+    onlyStopWatched = true,
     tags = true,
     hotKeyAboveCD = false,
     guildNewsItemLevel = true,

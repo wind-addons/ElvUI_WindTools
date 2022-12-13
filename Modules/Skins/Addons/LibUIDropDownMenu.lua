@@ -3,6 +3,7 @@ local ES = E.Skins
 local S = W.Modules.Skins
 
 local _G = _G
+local pairs = pairs
 
 function S:LibUIDropDownMenu()
     local DD = _G.LibStub("LibUIDropDownMenu-4.0", true)

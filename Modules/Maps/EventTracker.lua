@@ -20,11 +20,6 @@ local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
 
-local eventList = {
-    "CommunityFeast",
-    "SiegeOnDragonbaneKeep"
-}
-
 local function secondToTime(second)
     local hour = floor(second / 3600)
     local min = floor((second - hour * 3600) / 60)
@@ -36,6 +31,11 @@ local function secondToTime(second)
         return format("%02d:%02d:%02d", hour, min, sec)
     end
 end
+
+local eventList = {
+    "CommunityFeast",
+    "SiegeOnDragonbaneKeep"
+}
 
 local function reskinStatusBar(bar)
     bar:SetFrameLevel(bar:GetFrameLevel() + 1)
@@ -73,16 +73,16 @@ local functionFactory = {
             self.statusBar:SetPoint("TOPLEFT", self, "LEFT", 26, 2)
             self.statusBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
 
-            self.timerText:SetFont(E.media.normFont, 13, "OUTLINE")
+            ET:SetFont(self.timerText, 13)
             self.timerText:ClearAllPoints()
             self.timerText:SetPoint("TOPRIGHT", self, "TOPRIGHT", -2, -6)
 
-            self.name:SetFont(E.media.normFont, 13, "OUTLINE")
+            ET:SetFont(self.name, 13)
             self.name:ClearAllPoints()
             self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 30, -6)
             self.name:SetText(args.label)
 
-            self.runningTip:SetFont(E.media.normFont, 10, "OUTLINE")
+            ET:SetFont(self.runningTip, 10)
             self.runningTip:SetText(args.runningText)
             self.runningTip:SetPoint("CENTER", self.statusBar, "BOTTOM", 0, 0)
         end,
@@ -247,6 +247,9 @@ function trackers:get(event)
 
         if functions.setup then
             functions.setup(frame, data.args)
+            frame.profileUpdate = function()
+                functions.setup(frame, data.args)
+            end
         end
 
         if functions.ticker then
@@ -255,7 +258,7 @@ function trackers:get(event)
                 C_Timer_NewTicker(
                 functions.ticker.interval,
                 function()
-                    if not (ET and ET.frame and ET.frame:IsShown()) then
+                    if not (ET and ET.db and ET.db.enable) then
                         return
                     end
                     if not _G.WorldMapFrame:IsShown() or not frame:IsShown() then
@@ -294,6 +297,25 @@ function trackers:disable(event)
     end
 end
 
+function ET:SetFont(target, size)
+    if not target or not size then
+        return
+    end
+
+    if not self.db or not self.db.font then
+        return
+    end
+
+    F.SetFontWithDB(
+        target,
+        {
+            name = self.db.font.name,
+            size = floor(size * self.db.font.scale),
+            style = self.db.font.outline
+        }
+    )
+end
+
 function ET:ConstructFrame()
     if not _G.WorldMapFrame or self.frame then
         return
@@ -315,18 +337,24 @@ function ET:ConstructFrame()
 end
 
 function ET:UpdateTrackers()
+    self:ConstructFrame()
+
+    self.frame:SetHeight(self.db.height)
+
     local lastTracker = nil
-
-    if not self.frame then
-        self:ConstructFrame()
-    end
-
     for _, event in ipairs(eventList) do
         local data = eventData[event]
-        local tracker = self.db.event[data.dbKey] and trackers:get(event) or trackers:disable(event)
+        local tracker = self.db[data.dbKey].enable and trackers:get(event) or trackers:disable(event)
         if tracker then
+            if tracker.profileUpdate then
+                tracker.profileUpdate()
+            end
             tracker:ClearAllPoints()
-            tracker:SetPoint("LEFT", lastTracker or self.frame, lastTracker and "RIGHT" or "LEFT", 4, 0)
+            if lastTracker then
+                tracker:SetPoint("LEFT", lastTracker, "RIGHT", self.db.spacing, 0)
+            else
+                tracker:SetPoint("LEFT", self.frame, "LEFT", self.db.spacing / 2, 0)
+            end
             lastTracker = tracker
         end
     end
@@ -343,7 +371,11 @@ function ET:Initialize()
 end
 
 function ET:ProfileUpdate()
-    self:Initialize()
+    if self.Initialize_ then
+        self:Initialize_()
+    else
+        self:Initialize()
+    end
     if self.frame then
         self.frame:SetShown(self.db.enable)
     end

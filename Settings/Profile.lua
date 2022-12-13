@@ -637,9 +637,22 @@ P.item = {
 P.maps = {
     eventTracker = {
         enable = true,
-        event = {
-            communityFeast = true,
-            siegeOnDragonbaneKeep = true
+        spacing = 10,
+        height = 38,
+        font = {
+            name = E.db.general.font,
+            scale = 1,
+            outline = "OUTLINE"
+        },
+        communityFeast = {
+            enable = true,
+            alert = true,
+            second = 600
+        },
+        siegeOnDragonbaneKeep = {
+            enable = true,
+            alert = true,
+            second = 600
         }
     },
     rectangleMinimap = {

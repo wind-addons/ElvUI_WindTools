@@ -923,13 +923,87 @@ options.eventTracker = {
         enable = {
             order = 2,
             type = "toggle",
-            name = L["Enable"]
+            name = L["Enable"],
+            width = "full"
         },
-        event = {
+        style = {
             order = 3,
             type = "group",
             inline = true,
-            name = L["Events"],
+            name = L["Style"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                height = {
+                    order = 1,
+                    type = "range",
+                    name = L["Height"],
+                    min = 20,
+                    max = 100,
+                    step = 1
+                },
+                spacing = {
+                    order = 2,
+                    type = "range",
+                    name = L["Spacing"],
+                    min = 0,
+                    max = 20,
+                    step = 1
+                }
+            }
+        },
+        font = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Font"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker.font[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker.font[info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                scale = {
+                    order = 2,
+                    type = "range",
+                    name = L["Scale"],
+                    min = 0.1,
+                    max = 5,
+                    step = 0.01
+                },
+                outline = {
+                    order = 3,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                }
+            }
+        },
+        communityFeast = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Community Feast"],
             get = function(info)
                 return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
             end,
@@ -938,17 +1012,58 @@ options.eventTracker = {
                 ET:ProfileUpdate()
             end,
             args = {
-                communityFeast = {
+                enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Community Feast"],
-                    width = 2
+                    name = L["Enable"]
                 },
-                siegeOnDragonbaneKeep = {
+                alert = {
                     order = 2,
                     type = "toggle",
-                    name = L["Siege On Dragonbane Keep"],
-                    width = 2
+                    name = L["Alert"]
+                },
+                second = {
+                    order = 3,
+                    type = "range",
+                    name = L["Alert Second"],
+                    desc = L["Alert will be triggered when the remaining time is less than the set value."],
+                    min = 0,
+                    max = 3600,
+                    step = 1
+                }
+            }
+        },
+        siegeOnDragonbaneKeep = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Siege On Dragonbane Keep"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                alert = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Alert"]
+                },
+                second = {
+                    order = 3,
+                    type = "range",
+                    name = L["Alert Second"],
+                    desc = L["Alert will be triggered when the remaining time is less than the set value."],
+                    min = 0,
+                    max = 3600,
+                    step = 1
                 }
             }
         }

@@ -372,7 +372,8 @@ do -- 本地化
         },
         ["русский язык (ruRU)"] = {
             "Evgeniy-ONiX @ GitHub",
-            "dadec666 @ GitHub"
+            "dadec666 @ GitHub",
+            "Hollicsh @ GitHub",
         }
     }
 

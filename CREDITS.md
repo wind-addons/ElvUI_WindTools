@@ -32,6 +32,7 @@
 - русский язык (ruRU)
   - Evgeniy-ONiX @ Github
   - dadec666 @ Github
+  - Hollicsh @ Github
 
 ## Codes
 

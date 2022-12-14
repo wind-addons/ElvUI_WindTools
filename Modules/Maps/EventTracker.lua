@@ -182,7 +182,7 @@ local functionFactory = {
                 if self.timeLeft <= self.args.alertSecond then
                     self.args["alertCache"][self.nextEventIndex] = true
                     F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
-                    PlaySoundFile(LSM:Fetch("sound",  self.args.soundFile), "Master")
+                    PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
                 end
             end
         },
@@ -412,13 +412,23 @@ function ET:ConstructFrame()
         return
     end
 
-    local frame = CreateFrame("Frame", "WTEventTracker", _G.WorldMapFrame)
-    frame:SetFrameStrata("MEDIUM")
-    frame:SetPoint("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 0, -3)
-    frame:SetPoint("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", 0, -3)
+    local blizzard = not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap)
+
+    local frame = CreateFrame("Frame", "WTEventTracker", _G.WorldMapFrame, blizzard and "TooltipBackdropTemplate")
+
+    if blizzard then
+        frame:SetPoint("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, -3)
+        frame:SetPoint("TOPRIGHT", _G.WorldMapFrame, "BOTTOMRIGHT", 2, -3)
+    else
+        frame:SetPoint("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 0, -3)
+        frame:SetPoint("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", 0, -3)
+
+        frame:SetTemplate("Transparent")
+        S:CreateShadowModule(frame)
+    end
+
     frame:SetHeight(30)
-    frame:SetTemplate("Transparent")
-    S:CreateShadowModule(frame)
+    frame:SetFrameStrata("MEDIUM")
 
     if E.private.WT.misc.moveFrames.enable then
         MF:HandleFrame(frame, _G.WorldMapFrame)

@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.10-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-3.12-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-3.13-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -57,6 +57,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 4. **World Map**: Remove the fog of war; scale the world map.
 5. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
 6. **Instance Difficulty**: Reskin the instance diffculty in text style.
+7. **Event Tracker**: Track the world events in the world map.
 
 ## Quest
 

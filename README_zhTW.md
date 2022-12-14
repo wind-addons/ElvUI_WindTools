@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.10-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.12-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.13-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -58,6 +58,7 @@
 4. **世界地圖**: 世界地圖尺寸修改, 世界地圖迷霧去除.
 5. **超級追蹤**: 右鍵清除標記點, 解鎖距離限制等.
 6. **副本難度**: 美化副本難度為文字風格.
+7. **事件追蹤器**: 在世界地圖下方新增一個世界事件追蹤器.
 
 ## 任務
 

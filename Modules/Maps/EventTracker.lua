@@ -180,9 +180,9 @@ local functionFactory = {
                 end
 
                 if self.timeLeft < self.args.alertSecond then
+                    self.args["alertCache"][self.nextEventIndex] = true
                     F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
                     PlaySoundFile(LSM:Fetch("sound",  self.args.soundFile), "Master")
-                    self.args["alertCache"][self.nextEventIndex] = true
                 end
             end
         },

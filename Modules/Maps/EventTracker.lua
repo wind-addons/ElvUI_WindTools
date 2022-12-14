@@ -471,16 +471,11 @@ function ET:Initialize()
 end
 
 function ET:ProfileUpdate()
-    if self.Initialize_ then
-        self:Initialize_()
-    else
-        self:Initialize()
-    end
+    self:Initialize()
+
     if self.frame then
         self.frame:SetShown(self.db.enable)
     end
 end
-
-F.Developer.DelayInitialize(ET, 5)
 
 W:RegisterModule(ET:GetName())

@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L, V, P, G = unpack(select(2, ...))
 local M = W.Modules.Misc
 
 local _G = _G
@@ -64,10 +64,9 @@ do
 
         _G.MovieFrame_PlayMovie = function(frame, movieID, override)
             if E.private.WT and E.private.WT.misc.skipCutScene and not override then
-                local needWatch = E.private.WT.misc.onlyStopWatched and not G.misc.skipped.movies[movieID]
+                local needWatch = E.private.WT.misc.onlyStopWatched and not E.global.WT.misc.watched.movies[movieID]
                 if not IsModifierKeyDown() or not needWatch then
                     GameMovieFinished()
-                    G.misc.skipped.movies[movieID] = true
                     F.Print(
                         format(
                             "%s |cff71d5ff|Hwtcutscene:%s|h[%s]|h|r",
@@ -81,6 +80,7 @@ do
             end
 
             PlayMovie(frame, movieID)
+            E.global.WT.misc.watched.movies[movieID] = true
         end
 
         local SetHyperlink = _G.ItemRefTooltip.SetHyperlink

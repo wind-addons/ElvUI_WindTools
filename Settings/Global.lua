@@ -28,7 +28,7 @@ G.misc = {
     gameBar = {
         covenantCache = {}
     },
-    skipped = {
+    watched = {
         movies = {},
     }
 }

@@ -648,6 +648,8 @@ P.maps = {
             enable = true,
             desaturate = false,
             alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
             second = 600,
             stopAlertIfCompleted = true
         },
@@ -655,6 +657,8 @@ P.maps = {
             enable = true,
             desaturate = false,
             alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
             second = 600,
             stopAlertIfCompleted = true
         }

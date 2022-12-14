@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 local MF = W.Modules.MoveFrames
 local C = W.Utilities.Color
+local LSM = E.Libs.LSM
 local ET = W:NewModule("EventTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
@@ -17,6 +18,7 @@ local CreateFrame = CreateFrame
 local GetCurrentRegion = GetCurrentRegion
 local GetLocale = GetLocale
 local GetServerTime = GetServerTime
+local PlaySoundFile = PlaySoundFile
 
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
@@ -179,6 +181,7 @@ local functionFactory = {
 
                 if self.timeLeft < self.args.alertSecond then
                     F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
+                    PlaySoundFile(LSM:Fetch("sound",  self.args.soundFile), "Master")
                     self.args["alertCache"][self.nextEventIndex] = true
                 end
             end
@@ -439,6 +442,7 @@ function ET:UpdateTrackers()
             end
 
             tracker.args.desaturate = self.db[data.dbKey].desaturate
+            tracker.args.soundFile = self.db[data.dbKey].soundFile
 
             if self.db[data.dbKey].alert then
                 tracker.args.alert = true

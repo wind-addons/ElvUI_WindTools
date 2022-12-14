@@ -1034,7 +1034,7 @@ options.eventTracker = {
                     name = L["Alert Second"],
                     desc = L["Alert will be triggered when the remaining time is less than the set value."],
                     min = 0,
-                    max = 15000,
+                    max = 3600,
                     step = 1
                 },
                 stopAlertIfCompleted = {
@@ -1081,7 +1081,7 @@ options.eventTracker = {
                     name = L["Alert Second"],
                     desc = L["Alert will be triggered when the remaining time is less than the set value."],
                     min = 0,
-                    max = 15000,
+                    max = 3600,
                     step = 1
                 },
                 stopAlertIfCompleted = {

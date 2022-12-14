@@ -1035,7 +1035,7 @@ options.eventTracker = {
                     hidden = function(info)
                         return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
                     end,
-                    desc = L["Play sound when the alert is triggered"]
+                    desc = L["Play sound when the alert is triggered."]
                 },
                 soundFile = {
                     order = 5,
@@ -1108,7 +1108,7 @@ options.eventTracker = {
                     hidden = function(info)
                         return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
                     end,
-                    desc = L["Play sound when the alert is triggered"]
+                    desc = L["Play sound when the alert is triggered."]
                 },
                 soundFile = {
                     order = 5,

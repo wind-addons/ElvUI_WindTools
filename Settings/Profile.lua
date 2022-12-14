@@ -649,14 +649,14 @@ P.maps = {
             desaturate = false,
             alert = true,
             second = 600,
-            stopAlertIfCompleted = false
+            stopAlertIfCompleted = true
         },
         siegeOnDragonbaneKeep = {
             enable = true,
             desaturate = false,
             alert = true,
             second = 600,
-            stopAlertIfCompleted = false
+            stopAlertIfCompleted = true
         }
     },
     rectangleMinimap = {

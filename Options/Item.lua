@@ -184,6 +184,9 @@ options.extraItemsBar = {
                         for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
                             local name = C_Item_GetItemNameByID(key)
                             local tex = C_Item_GetItemIconByID(key)
+                            if not name then
+                                name = C_Item_GetItemNameByID(key) or L["Unknown"]
+                            end
                             result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
                         end
                         return result

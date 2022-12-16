@@ -797,7 +797,7 @@ P.social = {
     },
     chatLink = {
         enable = true,
-        numbericalQualityTier = true,
+        numbericalQualityTier = false,
         translateItem = true,
         level = true,
         icon = true,

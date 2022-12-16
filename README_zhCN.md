@@ -9,7 +9,9 @@
 
 # :white_check_mark: 状态
 
-![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/WindDungeonHelper/publish_stable.yml?branch=3.13) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord)](https://discord.gg/nA44TeZ) [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink)](https://afdian.net/@fang2hou)
+![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.13&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
+
+[![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools)
 
 下载地址: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) | [Wago](https://addons.wago.io/addons/elvui-windtools) | [WowInterface](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) | [Github 发布](https://github.com/fang2hou/ElvUI_WindTools/releases)
 

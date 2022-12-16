@@ -37,7 +37,6 @@ local BUYBACK_ITEMS_PER_PAGE = BUYBACK_ITEMS_PER_PAGE
 local COLLECTED = COLLECTED
 local ITEM_SPELL_KNOWN = ITEM_SPELL_KNOWN
 local MAX_GUILDBANK_SLOTS_PER_TAB = MAX_GUILDBANK_SLOTS_PER_TAB or 98
-local MERCHANT_ITEMS_PER_PAGE = MERCHANT_ITEMS_PER_PAGE
 local NUM_SLOTS_PER_GUILDBANK_GROUP = NUM_SLOTS_PER_GUILDBANK_GROUP or 14
 
 local knowables = {
@@ -116,8 +115,8 @@ function AK:Merchant()
 	end
 
 	local numItems = GetMerchantNumItems()
-	for i = 1, MERCHANT_ITEMS_PER_PAGE do
-		local index = (_G.MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE + i
+	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
+		local index = (_G.MerchantFrame.page - 1) * _G.MERCHANT_ITEMS_PER_PAGE + i
 		if index > numItems then
 			return
 		end

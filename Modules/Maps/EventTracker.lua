@@ -64,6 +64,21 @@ local function reskinStatusBar(bar)
     E:RegisterStatusBar(bar)
 end
 
+local function getGradientText(text, colorTable)
+    if not text or not colorTable then
+        return text
+    end
+    return E:TextGradient(
+        text,
+        colorTable[1].r,
+        colorTable[1].g,
+        colorTable[1].b,
+        colorTable[2].r,
+        colorTable[2].g,
+        colorTable[2].b
+    )
+end
+
 local functionFactory = {
     loopTimer = {
         init = function(self)
@@ -181,7 +196,15 @@ local functionFactory = {
 
                 if self.timeLeft <= self.args.alertSecond then
                     self.args["alertCache"][self.nextEventIndex] = true
-                    F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
+                    local eventIconString = F.GetIconString(self.args.icon, 16, 16)
+                    local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+                    F.Print(
+                        format(
+                            L["%s will be started in %s!"],
+                            eventIconString .. " " .. gradientName,
+                            secondToTime(self.timeLeft)
+                        )
+                    )
                     if self.args.soundFile then
                         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
                     end

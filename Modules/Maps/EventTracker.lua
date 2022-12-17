@@ -194,7 +194,7 @@ local functionFactory = {
                     return
                 end
 
-                if self.args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                if self.args.filter and not self.args:filter() then
                     return
                 end
 
@@ -291,6 +291,12 @@ local eventData = {
             location = C_Map_GetMapInfo(2024).name,
             label = L["Feast"],
             runningText = L["Cooking"],
+            filter = function(args)
+                if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                    return false
+                end
+                return true
+            end,
             startTimestamp = (function()
                 local timestampTable = {
                     [1] = 1670776200, -- NA
@@ -322,6 +328,12 @@ local eventData = {
             location = C_Map_GetMapInfo(2022).name,
             barColor = colorPlatte.red,
             runningText = L["In Progress"],
+            filter = function(args)
+                if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                    return false
+                end
+                return true
+            end,
             startTimestamp = (function()
                 local timestampTable = {
                     [1] = 1670770800, -- NA

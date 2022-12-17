@@ -954,6 +954,20 @@ options.eventTracker = {
                     min = 0,
                     max = 20,
                     step = 1
+                },
+                backdrop = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Backdrop"]
+                },
+                yOffset = {
+                    order = 4,
+                    type = "range",
+                    name = L["Y-Offset"],
+                    desc = L["The offset of the frame from the bottom of world map. (Default is -3)"],
+                    min = -300,
+                    max = 300,
+                    step = 1
                 }
             }
         },

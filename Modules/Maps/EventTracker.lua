@@ -414,20 +414,7 @@ function ET:ConstructFrame()
         return
     end
 
-    local blizzard = not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap)
-
-    local frame = CreateFrame("Frame", "WTEventTracker", _G.WorldMapFrame, blizzard and "TooltipBackdropTemplate")
-
-    if blizzard then
-        frame:SetPoint("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, -3)
-        frame:SetPoint("TOPRIGHT", _G.WorldMapFrame, "BOTTOMRIGHT", 2, -3)
-    else
-        frame:SetPoint("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 0, -3)
-        frame:SetPoint("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", 0, -3)
-
-        frame:SetTemplate("Transparent")
-        S:CreateShadowModule(frame)
-    end
+    local frame = CreateFrame("Frame", "WTEventTracker", _G.WorldMapFrame)
 
     frame:SetHeight(30)
     frame:SetFrameStrata("MEDIUM")
@@ -443,6 +430,39 @@ function ET:UpdateTrackers()
     self:ConstructFrame()
 
     self.frame:SetHeight(self.db.height)
+
+    self.frame:ClearAllPoints()
+    if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.worldmap) then
+        self.frame:SetPoint("TOPLEFT", _G.WorldMapFrame, "BOTTOMLEFT", -2, self.db.yOffset)
+        self.frame:SetPoint("TOPRIGHT", _G.WorldMapFrame, "BOTTOMRIGHT", 2, self.db.yOffset)
+
+        if self.db.backdrop then
+            if not self.frame.backdrop then
+                self.frame.backdrop = CreateFrame("Frame", nil, self.frame, "TooltipBackdropTemplate")
+                self.frame.backdrop:SetAllPoints(self.frame)
+            end
+            self.frame.backdrop:Show()
+        else
+            if self.frame.backdrop then
+                self.frame.backdrop:Hide()
+            end
+        end
+    else
+        self.frame:SetPoint("TOPLEFT", _G.WorldMapFrame.backdrop, "BOTTOMLEFT", 1, self.db.yOffset)
+        self.frame:SetPoint("TOPRIGHT", _G.WorldMapFrame.backdrop, "BOTTOMRIGHT", -1, self.db.yOffset)
+
+        if self.db.backdrop then
+            if not self.frame.backdrop then
+                self.frame:CreateBackdrop("Transparent")
+                S:CreateShadowModule(self.frame.backdrop)
+            end
+            self.frame.backdrop:Show()
+        else
+            if self.frame.backdrop then
+                self.frame.backdrop:Hide()
+            end
+        end
+    end
 
     local lastTracker = nil
     for _, event in ipairs(eventList) do

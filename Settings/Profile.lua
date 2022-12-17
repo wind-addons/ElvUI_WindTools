@@ -653,7 +653,8 @@ P.maps = {
             sound = true,
             soundFile = "OnePlus Surprise",
             second = 600,
-            stopAlertIfCompleted = true
+            stopAlertIfCompleted = true,
+            stopAlertIfPlayerNotEnteredDragonlands = true
         },
         siegeOnDragonbaneKeep = {
             enable = true,
@@ -662,7 +663,8 @@ P.maps = {
             sound = true,
             soundFile = "OnePlus Surprise",
             second = 600,
-            stopAlertIfCompleted = true
+            stopAlertIfCompleted = true,
+            stopAlertIfPlayerNotEnteredDragonlands = true
         }
     },
     rectangleMinimap = {

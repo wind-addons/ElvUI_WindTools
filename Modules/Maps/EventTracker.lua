@@ -194,6 +194,10 @@ local functionFactory = {
                     return
                 end
 
+                if self.args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                    return
+                end
+
                 if self.timeLeft <= self.args.alertSecond then
                     self.args["alertCache"][self.nextEventIndex] = true
                     local eventIconString = F.GetIconString(self.args.icon, 16, 16)
@@ -503,6 +507,8 @@ function ET:UpdateTrackers()
                 tracker.args.alert = true
                 tracker.args.alertSecond = self.db[data.dbKey].second
                 tracker.args.stopAlertIfCompleted = self.db[data.dbKey].stopAlertIfCompleted
+                tracker.args.stopAlertIfPlayerNotEnteredDragonlands =
+                    self.db[data.dbKey].stopAlertIfPlayerNotEnteredDragonlands
             else
                 tracker.args.alertSecond = nil
                 tracker.args.stopAlertIfCompleted = nil

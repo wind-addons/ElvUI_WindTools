@@ -182,7 +182,9 @@ local functionFactory = {
                 if self.timeLeft <= self.args.alertSecond then
                     self.args["alertCache"][self.nextEventIndex] = true
                     F.Print(format(L["%s will be started in %s!"], self.args.eventName, secondToTime(self.timeLeft)))
-                    PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+                    if self.args.soundFile then
+                        PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+                    end
                 end
             end
         },
@@ -452,7 +454,7 @@ function ET:UpdateTrackers()
             end
 
             tracker.args.desaturate = self.db[data.dbKey].desaturate
-            tracker.args.soundFile = self.db[data.dbKey].soundFile
+            tracker.args.soundFile = self.db.sound and self.db[data.dbKey].soundFile
 
             if self.db[data.dbKey].alert then
                 tracker.args.alert = true

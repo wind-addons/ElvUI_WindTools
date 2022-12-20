@@ -3,6 +3,7 @@ local T = W.Modules.Tooltips
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local select = select
 local strfind = strfind
 local unpack = unpack
 

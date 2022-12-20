@@ -76,6 +76,10 @@ function S:Blizzard_Communities()
             end
         end
     )
+
+    local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel
+    self:CreateShadow(BossModel)
+    self:CreateShadow(BossModel.TextFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_Communities")

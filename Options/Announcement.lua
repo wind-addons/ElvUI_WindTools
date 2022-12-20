@@ -2711,3 +2711,24 @@ options.keystone = {
         }
     }
 }
+
+options.general = {
+    order = 14,
+    type = "group",
+    name = L["General"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info]] = value
+    end,
+    args = {
+        emoteFormat = {
+            order = 1,
+            type = "input",
+            name = L["Emote Format"],
+            desc = L["The text template used in emote channel."].."\n"..format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "info")),
+            width = 2
+        }
+    }
+}

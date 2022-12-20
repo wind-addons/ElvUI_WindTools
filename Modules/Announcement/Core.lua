@@ -53,7 +53,11 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
     end
 
     if channel == "EMOTE" then
-        text = ": " .. text
+        if self.db and self.db.emoteFormat then
+            text = format(self.db.emoteFormat, text)
+        else
+            text = ": " .. text
+        end
     end
 
     if channel == "RAID" and raidWarning and IsInRaid(LE_PARTY_CATEGORY_HOME) then

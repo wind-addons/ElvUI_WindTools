@@ -5,6 +5,7 @@ local GetLocale = GetLocale
 
 P.announcement = {
     enable = true,
+    emoteFormat = ": %s",
     combatResurrection = {
         enable = true,
         onlySourceIsPlayer = false,

@@ -3,6 +3,14 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 W.Utilities.Async = {}
 local U = W.Utilities.Async
 
+local ipairs = ipairs
+local pairs = pairs
+local select = select
+local type = type
+
+local Item = Item
+local Spell = Spell
+
 local cache = {
     item = {},
     spell = {}

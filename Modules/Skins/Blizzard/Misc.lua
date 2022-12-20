@@ -155,6 +155,15 @@ function S:BlizzardMiscFrames()
             end
         )
     end
+
+    -- Icon Selection Frames (After ElvUI Skin)
+    self:SecureHook(
+        ES,
+        "HandleIconSelectionFrame",
+        function(_, frame)
+            self:CreateShadow(frame)
+        end
+    )
 end
 
 S:AddCallback("BlizzardMiscFrames")

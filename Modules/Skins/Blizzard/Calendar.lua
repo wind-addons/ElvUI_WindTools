@@ -2,6 +2,9 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local next = next
+
+local CLASS_SORT_ORDER = CLASS_SORT_ORDER
 
 function S:Blizzard_Calendar()
     if not self:CheckDB("calendar") then

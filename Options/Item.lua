@@ -87,7 +87,7 @@ options.extraItemsBar = {
                     end,
                     set = function(_, value)
                         local itemID = tonumber(value)
-                        if async.WithItem(itemID) then
+                        if async.WithItemID(itemID) then
                             tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
                             EB:UpdateBars()
                         else
@@ -109,7 +109,7 @@ options.extraItemsBar = {
                         local list = E.db.WT.item.extraItemsBar.customList
                         local result = {}
                         for key, value in pairs(list) do
-                            async.WithItem(
+                            async.WithItemID(
                                 value,
                                 function(item)
                                     local name = item:GetItemName() or L["Unknown"]
@@ -153,7 +153,7 @@ options.extraItemsBar = {
                     end,
                     set = function(_, value)
                         local itemID = tonumber(value)
-                        if async.WithItem(itemID) then
+                        if async.WithItemID(itemID) then
                             E.db.WT.item.extraItemsBar.blackList[itemID] = true
                             EB:UpdateBars()
                         else
@@ -174,7 +174,7 @@ options.extraItemsBar = {
                     values = function()
                         local result = {}
                         for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            async.WithItem(
+                            async.WithItemID(
                                 key,
                                 function(item)
                                     local name = item:GetItemName() or L["Unknown"]

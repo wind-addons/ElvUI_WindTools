@@ -166,6 +166,6 @@ function W:OptionsCallback()
     end
 
     -- Data warmup
-    async.WithItemTable(E.db.WT.item.extraItemsBar.blackList, "key")
-    async.WithItemTable(E.db.WT.item.extraItemsBar.customList, "value")
+    async.WithItemIDTable(E.db.WT.item.extraItemsBar.blackList, "key")
+    async.WithItemIDTable(E.db.WT.item.extraItemsBar.customList, "value")
 end

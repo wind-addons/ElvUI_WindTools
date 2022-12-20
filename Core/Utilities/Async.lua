@@ -16,7 +16,7 @@ local cache = {
     spell = {}
 }
 
-function U.WithItem(itemID, callback)
+function U.WithItemID(itemID, callback)
     if type(itemID) ~= "number" then
         return
     end
@@ -52,7 +52,7 @@ function U.WithItem(itemID, callback)
     return itemInstance
 end
 
-function U.WithSpell(spellID, callback)
+function U.WithSpellID(spellID, callback)
     if type(spellID) ~= "number" then
         return
     end
@@ -89,7 +89,7 @@ function U.WithSpell(spellID, callback)
     return spellInstance
 end
 
-function U.WithItemTable(itemIDTable, tType, callback)
+function U.WithItemIDTable(itemIDTable, tType, callback)
     if type(itemIDTable) ~= "table" then
         return
     end
@@ -109,24 +109,24 @@ function U.WithItemTable(itemIDTable, tType, callback)
 
     if tType == "list" then
         for _, itemID in ipairs(itemIDTable) do
-            U.WithItem(itemID, callback)
+            U.WithItemID(itemID, callback)
         end
     end
 
     if tType == "value" then
         for _, itemID in pairs(itemIDTable) do
-            U.WithItem(itemID, callback)
+            U.WithItemID(itemID, callback)
         end
     end
 
     if tType == "key" then
         for itemID, _ in pairs(itemIDTable) do
-            U.WithItem(itemID, callback)
+            U.WithItemID(itemID, callback)
         end
     end
 end
 
-function U.WithSpellTable(spellIDTable, tType, callback)
+function U.WithSpellIDTable(spellIDTable, tType, callback)
     if type(spellIDTable) ~= "table" then
         return
     end
@@ -146,19 +146,41 @@ function U.WithSpellTable(spellIDTable, tType, callback)
 
     if tType == "list" then
         for _, spellID in ipairs(spellIDTable) do
-            U.WithSpell(spellID, callback)
+            U.WithSpellID(spellID, callback)
         end
     end
 
     if tType == "value" then
         for _, spellID in pairs(spellIDTable) do
-            U.WithSpell(spellID, callback)
+            U.WithSpellID(spellID, callback)
         end
     end
 
     if tType == "key" then
         for spellID, _ in pairs(spellIDTable) do
-            U.WithSpell(spellID, callback)
+            U.WithSpellID(spellID, callback)
         end
     end
+end
+
+function U.WithItemSlotID(itemSlotID, callback)
+    if type(itemSlotID) ~= "number" then
+        return
+    end
+
+    if not callback then
+        callback = function()
+        end
+    end
+
+    if type(callback) ~= "function" then
+        return
+    end
+
+    local itemID = GetInventoryItemID("player", itemSlotID)
+    if not itemID then
+        return
+    end
+
+    return U.WithItemID(itemID, callback)
 end

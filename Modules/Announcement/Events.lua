@@ -55,6 +55,7 @@ end
 
 function A:PLAYER_ENTERING_WORLD()
     E:Delay(2, self.Keystone, self, "PLAYER_ENTERING_WORLD")
+    E:Delay(4, self.ResetAuthority, self)
 end
 
 function A:CHALLENGE_MODE_COMPLETED()

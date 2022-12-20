@@ -139,12 +139,12 @@ do
             function()
                 if IsInGroup() then
                     cache = {}
-                    A:SendInterruptConfig()
-                    A:SendDispelConfig()
-                    A:SendUtilityConfig()
-                    A:SendCombatResurrectionConfig()
-                    A:SendTauntConfig()
-                    A:SendThreatTransferConfig()
+                    self:SendInterruptConfig()
+                    self:SendDispelConfig()
+                    self:SendUtilityConfig()
+                    self:SendCombatResurrectionConfig()
+                    self:SendTauntConfig()
+                    self:SendThreatTransferConfig()
                 end
                 waitSend = false
             end

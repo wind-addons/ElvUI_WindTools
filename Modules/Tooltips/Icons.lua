@@ -15,10 +15,17 @@ local UnitIsBattlePet = UnitIsBattlePet
 local UnitIsPlayer = UnitIsPlayer
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
+local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local C_EquipmentSet_GetEquipmentSetInfo = C_EquipmentSet.GetEquipmentSetInfo
+local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
 
 local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
 local Enum_TooltipDataType_Spell = Enum.TooltipDataType.Spell
+local Enum_TooltipDataType_Toy = Enum.TooltipDataType.Toy
+local Enum_TooltipDataType_Mount = Enum.TooltipDataType.Mount
+local Enum_TooltipDataType_Currency = Enum.TooltipDataType.Currency
+local Enum_TooltipDataType_EquipmentSet = Enum.TooltipDataType.EquipmentSet
 
 local tooltips = {
     "GameTooltip",
@@ -33,9 +40,30 @@ local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
 _G.BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT = "|T%1$s:16:16:0:0:64:64:5:59:5:59|t |cffffffff%2$s|r %3$s"
 _G.BONUS_OBJECTIVE_REWARD_FORMAT = "|T%1$s:16:16:0:0:64:64:5:59:5:59|t %2$s"
 
+local iconFunctions = {
+    [Enum_TooltipDataType_Item] = function(data)
+        return GetItemIcon(data.id)
+    end,
+    [Enum_TooltipDataType_Spell] = function(data)
+        return GetSpellTexture(data.id)
+    end,
+    [Enum_TooltipDataType_Toy] = function(data)
+        return GetItemIcon(data.id)
+    end,
+    [Enum_TooltipDataType_Mount] = function(data)
+        return select(3, C_MountJournal_GetMountInfoByID(data.id))
+    end,
+    [Enum_TooltipDataType_Currency] = function(data)
+        local info = C_CurrencyInfo_GetCurrencyInfo(data.id)
+        return info and info.iconFileID
+    end,
+    [Enum_TooltipDataType_EquipmentSet] = function(data)
+        return select(2, C_EquipmentSet_GetEquipmentSetInfo(data.id))
+    end
+}
+
 local function setTooltipIcon(tt, data, type)
-    local getIcon = type == Enum_TooltipDataType_Item and GetItemIcon or GetSpellTexture
-    local icon = getIcon and getIcon(data.id)
+    local icon = iconFunctions[type] and iconFunctions[type](data)
     local title = data.lines and data.lines[1] and data.lines[1].leftText
     local iconString = icon and F.GetIconString(icon, 18, 18, true)
 
@@ -43,7 +71,7 @@ local function setTooltipIcon(tt, data, type)
         return
     end
 
-    for i = 1, 5 do
+    for i = 1, 3 do
         local row = _G[tt:GetName() .. "TextLeft" .. i]
         local existingText = row and row:GetText()
         if existingText and strfind(existingText, title) then
@@ -87,14 +115,17 @@ local function alignShoppingTooltip(tt)
     end
 end
 
-local function getTooltipIconHandler(type)
-    return function(tt, data)
-        if not data or not data.id or not data.lines or not tt.GetName or not F.In(tt:GetName(), tooltips) then
-            return
-        end
+local function handle(type)
+    TooltipDataProcessor_AddTooltipPostCall(
+        type,
+        function(tt, data)
+            if not data or not data.id or not data.lines or not tt.GetName or not F.In(tt:GetName(), tooltips) then
+                return
+            end
 
-        setTooltipIcon(tt, data, type)
-    end
+            setTooltipIcon(tt, data, type)
+        end
+    )
 end
 
 function T:ReskinRewardIcon(tt)
@@ -158,14 +189,12 @@ end
 
 function T:Icons()
     if E.private.WT.tooltips.icon then
-        TooltipDataProcessor_AddTooltipPostCall(
-            Enum_TooltipDataType_Item,
-            getTooltipIconHandler(Enum_TooltipDataType_Item)
-        )
-        TooltipDataProcessor_AddTooltipPostCall(
-            Enum_TooltipDataType_Spell,
-            getTooltipIconHandler(Enum_TooltipDataType_Spell)
-        )
+        handle(Enum_TooltipDataType_Item)
+        handle(Enum_TooltipDataType_Spell)
+        handle(Enum_TooltipDataType_Toy)
+        handle(Enum_TooltipDataType_Mount)
+        handle(Enum_TooltipDataType_Currency)
+        handle(Enum_TooltipDataType_EquipmentSet)
 
         _G.ShoppingTooltip1.__SetPoint = _G.ShoppingTooltip1.SetPoint
         hooksecurefunc(_G.ShoppingTooltip1, "SetPoint", alignShoppingTooltip)

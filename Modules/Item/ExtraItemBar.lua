@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local EB = W:NewModule("ExtraItemsBar", "AceEvent-3.0")
+local async = W.Utilities.Async
 local S = W.Modules.Skins
 local AB = E.ActionBars
 
@@ -30,7 +31,6 @@ local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsItemInRange = IsItemInRange
 local IsUsableItem = IsUsableItem
-local Item = Item
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
@@ -1012,18 +1012,18 @@ function EB:SetUpButton(button, questItemData, slotID)
         button.questLogIndex = questItemData.questLogIndex
         button:SetBackdropBorderColor(0, 0, 0)
 
-        local item = Item:CreateFromItemID(questItemData.itemID)
-        item:ContinueOnItemLoad(
-            function()
+        async.WithItemID(
+            questItemData.itemID,
+            function(item)
                 button.itemName = item:GetItemName()
                 button.tex:SetTexture(item:GetItemIcon())
             end
         )
     elseif slotID then
         button.slotID = slotID
-        local item = Item:CreateFromEquipmentSlot(slotID)
-        item:ContinueOnItemLoad(
-            function()
+        async.WithItemSlotID(
+            slotID,
+            function(item)
                 if button.slotID == slotID then
                     button.itemName = item:GetItemName()
                     button.tex:SetTexture(item:GetItemIcon())

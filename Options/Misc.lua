@@ -601,6 +601,13 @@ options.mute = {
                     desc = L["Mute the sound of dragons."],
                     width = 1.3
                 },
+                ["Jewelcrafting"] = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Jewelcrafting"],
+                    desc = L["Mute the sound of jewelcrafting."],
+                    width = 1.3
+                }
             }
         }
     }

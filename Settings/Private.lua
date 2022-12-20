@@ -101,7 +101,8 @@ V.misc = {
             ["Tortollan"] = false,
             ["Smolderheart"] = false,
             ["Elegy of the Eternals"] = false,
-            ["Dragon"] = false
+            ["Dragon"] = false,
+            ["Jewelcrafting"] = false
         }
     },
     lfgList = {

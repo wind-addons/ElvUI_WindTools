@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.item.args
+local async = W.Utilities.Async
 local LSM = E.Libs.LSM
 
 local DI = W:GetModule("DeleteItem")
@@ -85,18 +86,11 @@ options.extraItemsBar = {
                         return ""
                     end,
                     set = function(_, value)
-                        local function _set()
-                            local itemID = tonumber(value)
-                            local itemName = C_Item_GetItemNameByID(itemID)
-                            if itemName then
-                                tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
-                                EB:UpdateBars()
-                            else
-                                error()
-                            end
-                        end
-
-                        if not pcall(_set) then
+                        local itemID = tonumber(value)
+                        if async.WithItem(itemID) then
+                            tinsert(E.db.WT.item.extraItemsBar.customList, itemID)
+                            EB:UpdateBars()
+                        else
                             F.Print(L["The item ID is invalid."])
                         end
                     end
@@ -115,9 +109,14 @@ options.extraItemsBar = {
                         local list = E.db.WT.item.extraItemsBar.customList
                         local result = {}
                         for key, value in pairs(list) do
-                            local name = C_Item_GetItemNameByID(value)
-                            local tex = C_Item_GetItemIconByID(value)
-                            result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
+                            async.WithItem(
+                                value,
+                                function(item)
+                                    local name = item:GetItemName() or L["Unknown"]
+                                    local tex = item:GetItemIcon()
+                                    result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
+                                end
+                            )
                         end
                         return result
                     end
@@ -153,18 +152,11 @@ options.extraItemsBar = {
                         return ""
                     end,
                     set = function(_, value)
-                        local function _set()
-                            local itemID = tonumber(value)
-                            local itemName = C_Item_GetItemNameByID(itemID)
-                            if itemName then
-                                E.db.WT.item.extraItemsBar.blackList[itemID] = true
-                                return EB:UpdateBars()
-                            else
-                                error()
-                            end
-                        end
-
-                        if not pcall(_set) then
+                        local itemID = tonumber(value)
+                        if async.WithItem(itemID) then
+                            E.db.WT.item.extraItemsBar.blackList[itemID] = true
+                            EB:UpdateBars()
+                        else
                             F.Print(L["The item ID is invalid."])
                         end
                     end
@@ -181,13 +173,15 @@ options.extraItemsBar = {
                     end,
                     values = function()
                         local result = {}
-                        for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
-                            local name = C_Item_GetItemNameByID(key)
-                            local tex = C_Item_GetItemIconByID(key)
-                            if not name then
-                                name = C_Item_GetItemNameByID(key) or L["Unknown"]
-                            end
-                            result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
+                        for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
+                            async.WithItem(
+                                key,
+                                function(item)
+                                    local name = item:GetItemName() or L["Unknown"]
+                                    local tex = item:GetItemIcon()
+                                    result[key] = F.GetIconString(tex, 14, 18, true) .. " " .. name
+                                end
+                            )
                         end
                         return result
                     end

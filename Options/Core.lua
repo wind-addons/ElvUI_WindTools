@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local HexToRGB = W.Utilities.Color.HexToRGB
+local async = W.Utilities.Async
 
 local gsub = gsub
 local pairs = pairs
@@ -163,4 +164,8 @@ function W:OptionsCallback()
             args = info.args
         }
     end
+
+    -- Data warmup
+    async.WithItemTable(E.db.WT.item.extraItemsBar.blackList, "key")
+    async.WithItemTable(E.db.WT.item.extraItemsBar.customList, "value")
 end

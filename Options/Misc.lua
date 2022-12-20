@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack(select(2, ...))
 local C = W.Utilities.Color
+local async = W.Utilities.Async
 local options = W.options.misc.args
 local LSM = E.Libs.LSM
 local M = W.Modules.Misc
@@ -18,8 +19,6 @@ local tostring = tostring
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
-local Item = Item
-local Spell = Spell
 
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
@@ -609,9 +608,9 @@ options.mute = {
 
 do
     for id in pairs(V.misc.mute.mount) do
-        local spell = Spell:CreateFromSpellID(id)
-        spell:ContinueOnSpellLoad(
-            function()
+        async.WithSpellID(
+            id,
+            function(spell)
                 local icon = spell:GetSpellTexture()
                 local name = spell:GetSpellName()
 
@@ -639,9 +638,9 @@ do
     }
 
     for name, data in pairs(itemList) do
-        local item = Item:CreateFromItemID(data.id)
-        item:ContinueOnItemLoad(
-            function()
+        async.WithItemID(
+            data.id,
+            function(item)
                 local icon = item:GetItemIcon()
                 local name = item:GetItemName()
                 local color = item:GetItemQualityColor()

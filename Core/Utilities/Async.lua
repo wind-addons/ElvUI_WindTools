@@ -177,10 +177,17 @@ function U.WithItemSlotID(itemSlotID, callback)
         return
     end
 
-    local itemID = GetInventoryItemID("player", itemSlotID)
-    if not itemID then
+    local itemInstance = Item:CreateFromEquipmentSlot(itemSlotID)
+    if itemInstance:IsItemEmpty() then
+        F.Developer.LogDebug("Failed to create item instance for itemSlotID: " .. itemSlotID)
         return
     end
 
-    return U.WithItemID(itemID, callback)
+    itemInstance:ContinueOnItemLoad(
+        function()
+            callback(itemInstance)
+        end
+    )
+
+    return itemInstance
 end

@@ -1108,6 +1108,30 @@ options.addons = {
             name = L["Mythic Dungeon Tools"],
             addonName = "MythicDungeonTools"
         },
+        omniCD = {
+            order = 10,
+            type = "toggle",
+            name = L["OmniCD"],
+            addonName = "OmniCD"
+        },
+        omniCDIcon = {
+            order = 10,
+            type = "toggle",
+            name = L["OmniCD Icon"],
+            hidden = function()
+                return not E.private.WT.skins.addons.omniCD
+            end,
+            addonName = "OmniCD"
+        },
+        omniCDStatusBar = {
+            order = 10,
+            type = "toggle",
+            name = L["OmniCD Status Bar"],
+            hidden = function()
+                return not E.private.WT.skins.addons.omniCD
+            end,
+            addonName = "OmniCD"
+        },
         premadeGroupsFilter = {
             order = 10,
             type = "toggle",
@@ -1256,6 +1280,7 @@ for _, option in pairs(options.addons.args) do
         option.addonName = nil
         option.addonskinsKey = nil
         option.width = option.width or 1.5
+        option.hidden = option.hidden or false
     end
 end
 

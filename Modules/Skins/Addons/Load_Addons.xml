@@ -10,6 +10,7 @@
 	<Script file='MeetingStone.lua'/>
 	<Script file='Myslot.lua'/>
 	<Script file='MythicDungeonTools.lua'/>
+	<Script file='OmniCD.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
 	<Script file='RaiderIO.lua'/>
 	<!-- <Script file='Rematch.lua'/> -->

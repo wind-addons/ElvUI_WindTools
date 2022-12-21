@@ -18,18 +18,26 @@ W.Changelog[315] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[美化皮肤] 新增了对 OmniCD 的支持.",
+            "[美化皮肤] Raider.IO 皮肤新增对最佳纪录框体的支持.",
             "[通告] 新增自定义表情通告模版的选项.",
             "[静音] 新增了珠宝制作声音静音功能."
         },
         ["zhTW"] = {
+            "[美化皮膚] 新增了對 OmniCD 的支援.",
+            "[美化皮膚] Raider.IO 皮膚新增對最佳紀錄框體的支援.",
             "[通告] 新增自定義表情通告模版的選項.",
             "[靜音] 新增了珠寶製作聲音靜音功能."
         },
         ["enUS"] = {
+            "[Skins] Add support for OmniCD.",
+            "[Skins] Update Raider.IO skin for best run frame.",
             "[Announcement] Add custom emote announcement template options.",
             "[Mute] Add mute sound for jewelcrafting."
         },
         ["koKR"] = {
+            "[Skins] Add support for OmniCD.",
+            "[Skins] Update Raider.IO skin for best run frame.",
             "[Announcement] Add custom emote announcement template options.",
             "[Mute] Add mute sound for jewelcrafting."
         }

@@ -627,6 +627,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                eventTracker = {
+                    order = 7,
+                    type = "execute",
+                    name = L["Event Tracker"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Event Tracker"],
+                            nil,
+                            function()
+                                E.db.WT.maps.eventTracker = P.maps.eventTracker
+                            end
+                        )
+                    end
                 }
             }
         },

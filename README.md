@@ -129,6 +129,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 19. **AdiBags Skin**: Apply skin for AdiBags. (AdiBags ElvUI Skin is needed)
 20. **Simulationcraft Skin**: Apply skin for Simulationcraft.
 21. **RadierIO Skin**: Apply skin for RadierIO.
+22. **OmniCD Skin**: Apply skin for OmniCD Config GUI, icons, and status bars.
 
 ## Misc
 

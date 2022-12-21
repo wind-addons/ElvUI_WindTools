@@ -130,6 +130,7 @@
 19. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBags ElvUI Skin 插件)
 20. **Simulationcraft 美化**: 为 Simulationcraft 的添加美化.
 21. **RaiderIO 美化**: 为 RaiderIO 的添加美化.
+22. **OmniCD 美化**: 为 OmniCD 的设定, 图标, 状态条添加美化.
 
 ## 其他
 

@@ -2,7 +2,7 @@
 -- 物品附魔信息庫 Author: M
 -------------------------------------
 
-local MAJOR, MINOR = "LibItemEnchant.7000.Wind", 3
+local MAJOR, MINOR = "LibItemEnchant.7000.Wind", 4
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not lib then

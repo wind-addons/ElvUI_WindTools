@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[315] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2022/12/22",
     IMPORTANT = {
         ["zhCN"] = {
             "使用异步处理来获取物品和法术信息."

@@ -9,6 +9,11 @@ function S:Blizzard_MajorFactions()
     end
 
     self:CreateShadow(_G.MajorFactionRenownFrame)
+
+    if _G.MajorFactionRenownFrame.LevelSkipButton then
+        local button = _G.MajorFactionRenownFrame.LevelSkipButton
+        S:ESProxy("HandleButton", button)
+    end
 end
 
 S:AddCallbackForAddon("Blizzard_MajorFactions")

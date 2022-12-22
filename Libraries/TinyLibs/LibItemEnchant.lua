@@ -9,7 +9,7 @@ if not lib then
     return
 end
 
--- Edition: fang2hou (WindTools) (2022-05-05)
+-- Edition: fang2hou (WindTools) (2022-12-23)
 -- Thanks to RRRRBUA(NGA) 七曜·星の痕(NGA) KibsItemLevel
 local EnchantItemDB = {
     [5275] = 109120, -- 奧格索普的彈藥分裂機
@@ -299,7 +299,7 @@ local EnchantItemDB = {
     [6655] = 200058 -- 附魔武器 - 微風獻祈
 }
 
--- Edition: fang2hou (WindTools) (2022-05-05)
+-- Edition: fang2hou (WindTools) (2022-12-23)
 -- Data from: M, RRRRBUA(NGA), KibsItemLevel, eltruism
 local EnchantSpellDB = {
     [15] = 2831, -- 製作護甲片

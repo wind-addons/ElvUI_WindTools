@@ -17,45 +17,58 @@ local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 
 local lastList
 
+local ignoreTagIDs = {
+	[128] = true, -- 特使任務
+	[265] = true -- 隱藏任務
+}
+
 local function GetQuests()
 	local quests = {}
 
 	for questIndex = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local questInfo = C_QuestLog_GetInfo(questIndex)
-		local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidde
-		-- isHeader: 任务分类(比如, "高嶺-高嶺部族" 任务, "高嶺"要排除掉)
-		-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
-		-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
+		if questInfo then
+			local skip = questInfo.isHeader or questInfo.isBounty or questInfo.isHidden
+			-- isHeader: 任务分类(比如, "高嶺-高嶺部族" 任务, "高嶺"要排除掉)
+			-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
+			-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
 
-		local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
+			if tagInfo and ignoreTagIDs[tagInfo.tagID] then
+				skip = true
+			end
 
-		if questInfo.isOnMap and tagInfo and tagInfo.worldQuestType then
-			skip = false
-		end
+			if questInfo.isOnMap and tagInfo and tagInfo.worldQuestType then
+				skip = false
+			end
 
-		if not skip then
-			-- 基础任务信息, 用于后续生成句子使用
-			quests[questInfo.questID] = {
-				title = questInfo.title,
-				questID = questInfo.questID,
-				level = questInfo.level,
-				suggestedGroup = questInfo.suggestedGroup,
-				isComplete = questInfo.isComplete,
-				frequency = questInfo.frequency,
-				tag = tagInfo and tagInfo.tagName,
-				worldQuestType = tagInfo and tagInfo.worldQuestType,
-				link = GetQuestLink(questInfo.questID)
-			}
+			if questInfo.isOnMap and tagInfo and tagInfo.tagID == 128 then
+				skip = false
+			end
 
-			-- 任务进度 (比如 1/2 杀死熊怪)
-			for queryIndex = 1, GetNumQuestLeaderBoards(questIndex) do
-				local queryText = GetQuestLogLeaderBoard(queryIndex, questIndex)
-				local _, _, numItems, numNeeded, itemName = strfind(queryText, "(%d+)/(%d+) ?(.*)")
-				quests[questInfo.questID][queryIndex] = {
-					item = itemName,
-					numItems = numItems,
-					numNeeded = numNeeded
+			if not skip then
+				-- 基础任务信息, 用于后续生成句子使用
+				quests[questInfo.questID] = {
+					title = questInfo.title,
+					questID = questInfo.questID,
+					level = questInfo.level,
+					suggestedGroup = questInfo.suggestedGroup,
+					isComplete = questInfo.isComplete,
+					frequency = questInfo.frequency,
+					tag = tagInfo and tagInfo.tagName,
+					worldQuestType = tagInfo and tagInfo.worldQuestType,
+					link = GetQuestLink(questInfo.questID)
 				}
+
+				-- 任务进度 (比如 1/2 杀死熊怪)
+				for queryIndex = 1, GetNumQuestLeaderBoards(questIndex) do
+					local queryText = GetQuestLogLeaderBoard(queryIndex, questIndex)
+					local _, _, numItems, numNeeded, itemName = strfind(queryText, "(%d+)/(%d+) ?(.*)")
+					quests[questInfo.questID][queryIndex] = {
+						item = itemName,
+						numItems = numItems,
+						numNeeded = numNeeded
+					}
+				end
 			end
 		end
 	end

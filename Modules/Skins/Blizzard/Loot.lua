@@ -14,6 +14,12 @@ function S:LootFrame()
     self:CreateShadow(_G.BonusRollFrame)
     self:CreateBackdropShadow(_G.BonusRollLootWonFrame)
     self:CreateBackdropShadow(_G.BonusRollMoneyWonFrame)
+
+    self:CreateShadow(_G.LootHistoryFrame)
+    _G.LootHistoryFrame:SetWidth(300)
+    self:CreateShadow(_G.LootHistoryFrame.ResizeButton)
+    _G.LootHistoryFrame.ResizeButton:SetWidth(300)
+    _G.LootHistoryFrame.ResizeButton:SetTemplate("Transparent")
 end
 
 S:AddCallback("LootFrame")

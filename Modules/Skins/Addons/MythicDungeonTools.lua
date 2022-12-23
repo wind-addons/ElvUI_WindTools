@@ -41,10 +41,12 @@ function S:MythicDungeonTools()
             if _G.MDTFrame and _G.MDTFrame.DungeonSelectionGroup then
                 self:CreateShadow(_G.MDTFrame.DungeonSelectionGroup.frame)
                 local shadow = _G.MDTFrame.DungeonSelectionGroup.frame.shadow
-                shadow.LeftEdge:Hide()
-                shadow.TopEdge:Hide()
-                shadow.BottomLeftCorner:Hide()
-                shadow.TopLeftCorner:Hide()
+                if shadow then
+                    shadow.LeftEdge:Hide()
+                    shadow.TopEdge:Hide()
+                    shadow.BottomLeftCorner:Hide()
+                    shadow.TopLeftCorner:Hide()
+                end
             end
         end
     )

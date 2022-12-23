@@ -334,6 +334,48 @@ options.font = {
                     step = 1
                 }
             }
+        },
+        rollResult = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Roll Result"],
+            get = function(info)
+                return E.private.WT.skins.rollResult[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.rollResult[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                style = {
+                    order = 2,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                },
+                size = {
+                    order = 3,
+                    name = L["Size"],
+                    type = "range",
+                    min = 5,
+                    max = 60,
+                    step = 1
+                }
+            }
         }
     }
 }

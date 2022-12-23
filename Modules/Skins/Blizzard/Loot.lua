@@ -5,18 +5,20 @@ local _G = _G
 
 local C_LootHistory_GetNumItems = C_LootHistory.GetNumItems
 
-local function LootHistoryFrame_Update()
+function S:LootHistoryFrame_FullUpdate()
     local numItems = C_LootHistory_GetNumItems()
     for i = 1, numItems do
         local frame = _G.LootHistoryFrame.itemFrames[i]
         if frame and not frame.__windSkin then
-            F.SetFontOutline(frame.WinnerRoll, "Accidental Presidency" .. (W.CompatibleFont and " (en)" or ""), 13)
+            F.SetFontWithDB(frame.WinnerRoll, E.private.WT.skins.rollResult)
             frame.__windSkin = true
         end
     end
 end
 
 function S:LootFrame()
+    self:SecureHook("LootHistoryFrame_FullUpdate")
+
     if not self:CheckDB("loot") then
         return
     end
@@ -33,8 +35,6 @@ function S:LootFrame()
     self:CreateShadow(_G.LootHistoryFrame.ResizeButton)
     _G.LootHistoryFrame.ResizeButton:SetWidth(300)
     _G.LootHistoryFrame.ResizeButton:SetTemplate("Transparent")
-
-    hooksecurefunc("LootHistoryFrame_FullUpdate", LootHistoryFrame_Update)
 end
 
 S:AddCallback("LootFrame")

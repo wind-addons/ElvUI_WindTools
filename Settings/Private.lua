@@ -470,6 +470,7 @@ V.skins = {
         classBars = true,
         dataBars = true,
         dataPanels = true,
+        lootRoll = true,
         miniMap = true,
         option = true,
         panels = true,

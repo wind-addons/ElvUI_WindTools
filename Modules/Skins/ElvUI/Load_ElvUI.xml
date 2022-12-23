@@ -13,6 +13,7 @@
 	<Script file='DataBars.lua'/>
 	<Script file='DataPanels.lua'/>
 	<Script file='LibDropDown.lua'/>
+	<Script file='LootRoll.lua'/>
 	<Script file='MiniMap.lua'/>
 	<Script file='Option.lua'/>
 	<Script file='Panels.lua'/>

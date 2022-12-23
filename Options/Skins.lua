@@ -919,6 +919,11 @@ options.elvui = {
             type = "toggle",
             name = L["Data Panels"]
         },
+        lootRoll = {
+            order = 10,
+            type = "toggle",
+            name = L["Loot Roll"]
+        },
         miniMap = {
             order = 10,
             type = "toggle",

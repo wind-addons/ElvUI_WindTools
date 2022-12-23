@@ -54,6 +54,8 @@ function A:LFG_COMPLETION_REWARD()
 end
 
 function A:PLAYER_ENTERING_WORLD()
+    self.playerEnteredWorld = true
+    self:Quest()
     E:Delay(2, self.Keystone, self, "PLAYER_ENTERING_WORLD")
     E:Delay(4, self.ResetAuthority, self)
 end
@@ -66,6 +68,9 @@ end
 -- TODO: SCENARIO_COMPLETED 场景完成事件
 
 function A:QUEST_LOG_UPDATE()
+    if not self.playerEnteredWorld then
+        return
+    end
     self:Quest()
 end
 

@@ -163,6 +163,7 @@ options.raidMarkers = {
             set = function(info, value)
                 E.db.WT.combat.raidMarkers[info[#info]] = value
                 RM:UpdateBar()
+                RM:UpdateCountDownButton()
             end,
             disabled = function()
                 return not E.db.WT.combat.raidMarkers.enable

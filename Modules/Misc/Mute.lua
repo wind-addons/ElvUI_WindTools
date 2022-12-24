@@ -109,13 +109,20 @@ local OtherSE = {
     ["Smolderheart"] = {
         -- Smolderheart
         -- https://www.wowhead.com/item=180873/smolderheart
+        -- Extra sound IDs from the below NGA thread
+        -- https://nga.178.com/read.php?tid=12142815&_ff=274&page=187#pid662027861Anchor
         2066602, -- sound/spells/fx_fire_magic_loop_smoldering_a_01.ogg
         2066603, -- sound/spells/fx_fire_magic_loop_smoldering_a_02.ogg
         2066604, -- sound/spells/fx_fire_magic_loop_smoldering_b_01.ogg
-        2066605 -- sound/spells/fx_fire_magic_loop_smoldering_b_02.ogg
+        2066605, -- sound/spells/fx_fire_magic_loop_smoldering_b_02.ogg
+        568250,
+        568631,
+        568803,
+        567970,
+        568904
     },
     ["Elegy of the Eternals"] = {
-        -- Smolderheart
+        -- Elegy of the Eternals
         -- https://www.wowhead.com/item=188270/elegy-of-the-eternals
         539295 -- sound/character/bloodelf/bloodelffemalecry01.ogg
     },

@@ -19,7 +19,7 @@ P.announcement = {
         }
     },
     goodbye = {
-        enable = true,
+        enable = false,
         text = L["Thanks all!"],
         delay = 3,
         channel = {
@@ -167,7 +167,7 @@ P.announcement = {
         }
     },
     thanks = {
-        enable = true,
+        enable = false,
         resurrection = true,
         enhancement = true,
         resurrectionText = L["%target%, thank you for using %spell% to revive me. :)"],

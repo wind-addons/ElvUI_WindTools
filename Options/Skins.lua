@@ -2497,16 +2497,25 @@ options.bigWigsSkin = {
                     return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "danger")
                 end
 
-                return C.StringByTemplate(
+                local warning =
+                    C.StringByTemplate(
                     format(
                         "%s\n%s\n\n",
                         format(L["The options below are only for BigWigs %s bar style."], W.Title),
                         format(L["You need to manually set the bar style to %s in BigWigs first."], W.Title)
                     ),
                     "warning"
-                ) ..
-                    L["How to change BigWigs bar style:"] ..
-                        "\n" .. L["Open BigWigs Options UI with /bw > Bars > Style."] .. "\n\n"
+                )
+
+                local tips =
+                    format(
+                    "%s\n%s\n%s\n\n",
+                    L["How to change BigWigs bar style:"],
+                    L["Open BigWigs Options UI with /bw > Bars > Style."],
+                    C.StringByTemplate(L["Don't forget to set you favorite bar texture in BigWigs option!"], "danger")
+                )
+
+                return warning .. tips
             end,
             fontSize = "medium"
         },

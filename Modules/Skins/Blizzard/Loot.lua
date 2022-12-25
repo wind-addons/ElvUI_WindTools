@@ -17,7 +17,7 @@ function S:LootHistoryFrame_FullUpdate()
 end
 
 function S:LootFrame()
-    self:SecureHook("LootHistoryFrame_FullUpdate")
+    -- self:SecureHook("LootHistoryFrame_FullUpdate")
 
     if not self:CheckDB("loot") then
         return
@@ -31,10 +31,10 @@ function S:LootFrame()
     self:CreateBackdropShadow(_G.BonusRollMoneyWonFrame)
 
     self:CreateShadow(_G.LootHistoryFrame)
-    _G.LootHistoryFrame:SetWidth(300)
     self:CreateShadow(_G.LootHistoryFrame.ResizeButton)
-    _G.LootHistoryFrame.ResizeButton:SetWidth(300)
     _G.LootHistoryFrame.ResizeButton:SetTemplate("Transparent")
+    -- _G.LootHistoryFrame:SetWidth(300)
+    -- _G.LootHistoryFrame.ResizeButton:SetWidth(300)
 end
 
 S:AddCallback("LootFrame")

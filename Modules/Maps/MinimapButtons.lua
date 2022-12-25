@@ -462,7 +462,7 @@ function MB:UpdateLayout()
 			frame:SetPoint(anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
-		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
+		if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow and frame.backdrop.shadow then
 			if not self.db.backdrop then
 				frame.backdrop.shadow:Show()
 			else

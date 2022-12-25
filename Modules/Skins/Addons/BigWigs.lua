@@ -335,7 +335,7 @@ function S:BigWigs_QueueTimer()
         E:Delay(
             2,
             function()
-                _G.BigWigsLoader.UnregisterMessage("WindTools", "BigWigs_FrameCreated")
+                _G.BigWigsLoader.UnregisterMessage("AddOnSkins", "BigWigs_FrameCreated")
             end
         )
     end

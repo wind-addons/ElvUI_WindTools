@@ -2480,3 +2480,317 @@ options.widgets = {
         }
     }
 }
+
+options.bigWigsSkin = {
+    order = 8,
+    type = "group",
+    name = L["BigWigs Skin"],
+    disabled = function()
+        return not E.private.WT.skins.enable or not IsAddOnLoaded("BigWigs")
+    end,
+    args = {
+        alert = {
+            order = 1,
+            type = "description",
+            name = function()
+                if not IsAddOnLoaded("BigWigs") then
+                    return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "danger")
+                end
+
+                return C.StringByTemplate(
+                    format(
+                        "%s\n%s\n\n",
+                        format(L["The options below are only for BigWigs %s bar style."], W.Title),
+                        format(L["You need to manually set the bar style to %s in BigWigs first."], W.Title)
+                    ),
+                    "warning"
+                ) ..
+                    L["How to change BigWigs bar style:"] ..
+                        "\n" .. L["Open BigWigs Options UI with /bw > Bars > Style."] .. "\n\n"
+            end,
+            fontSize = "medium"
+        },
+        bigWigsQueueTimer = {
+            order = 2,
+            get = function(info)
+                return E.private.WT.skins.addons.bigWigsQueueTimer
+            end,
+            set = function(info, value)
+                E.private.WT.skins.addons.bigWigsQueueTimer = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            type = "toggle",
+            name = L["BigWigs Queue Timer"],
+            disabled = false,
+            width = 1
+        },
+        bigWigs = {
+            order = 3,
+            get = function(info)
+                return E.private.WT.skins.addons.bigWigs
+            end,
+            set = function(info, value)
+                E.private.WT.skins.addons.bigWigs = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            type = "toggle",
+            name = L["BigWigs Bars"],
+            disabled = false,
+            width = 1
+        },
+        normalBar = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Normal Bar"],
+            get = function(info)
+                return E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]] = value
+            end,
+            disabled = function()
+                return not E.private.WT.skins.addons.bigWigs
+            end,
+            args = {
+                smooth = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Smooth"],
+                    desc = L["Smooth the bar animation with ElvUI."]
+                },
+                spark = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Spark"],
+                    desc = L["Show spark on the bar."]
+                },
+                colorOverride = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Color Override"],
+                    desc = L["Override the bar color."]
+                },
+                colorLeft = {
+                    order = 4,
+                    type = "color",
+                    name = L["Left Color"],
+                    desc = L["Gradient color of the left part of the bar."],
+                    hasAlpha = false,
+                    disabled = function(info)
+                        return not E.private.WT.skins.addons.bigWigs or
+                            not E.private.WT.skins.bigWigsSkin[info[#info - 1]].colorOverride
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                },
+                colorRight = {
+                    order = 5,
+                    type = "color",
+                    name = L["Right Color"],
+                    desc = L["Gradient color of the right part of the bar."],
+                    hasAlpha = false,
+                    disabled = function(info)
+                        return not E.private.WT.skins.addons.bigWigs or
+                            not E.private.WT.skins.bigWigsSkin[info[#info - 1]].colorOverride
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                }
+            }
+        },
+        emphasizedBar = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Emphasized Bar"],
+            get = function(info)
+                return E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]] = value
+            end,
+            disabled = function()
+                return not E.private.WT.skins.addons.bigWigs
+            end,
+            args = {
+                smooth = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Smooth"],
+                    desc = L["Smooth the bar animation with ElvUI."]
+                },
+                spark = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Spark"],
+                    desc = L["Show spark on the bar."]
+                },
+                colorOverride = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Color Override"],
+                    desc = L["Override the bar color."]
+                },
+                colorLeft = {
+                    order = 4,
+                    type = "color",
+                    name = L["Left Color"],
+                    desc = L["Gradient color of the left part of the bar."],
+                    hasAlpha = false,
+                    disabled = function(info)
+                        return not E.private.WT.skins.addons.bigWigs or
+                            not E.private.WT.skins.bigWigsSkin[info[#info - 1]].colorOverride
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                },
+                colorRight = {
+                    order = 5,
+                    type = "color",
+                    name = L["Right Color"],
+                    desc = L["Gradient color of the right part of the bar."],
+                    hasAlpha = false,
+                    disabled = function(info)
+                        return not E.private.WT.skins.addons.bigWigs or
+                            not E.private.WT.skins.bigWigsSkin[info[#info - 1]].colorOverride
+                    end,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                }
+            }
+        },
+        queueTimer = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Queue Timer"],
+            get = function(info)
+                return E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            disabled = function()
+                return not E.private.WT.skins.addons.bigWigsQueueTimer
+            end,
+            args = {
+                smooth = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Smooth"],
+                    desc = L["Smooth the bar animation with ElvUI."]
+                },
+                spark = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Spark"],
+                    desc = L["Show spark on the bar."]
+                },
+                colorLeft = {
+                    order = 3,
+                    type = "color",
+                    name = L["Left Color"],
+                    desc = L["Gradient color of the left part of the bar."],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                },
+                colorRight = {
+                    order = 4,
+                    type = "color",
+                    name = L["Right Color"],
+                    desc = L["Gradient color of the right part of the bar."],
+                    hasAlpha = false,
+                    get = function(info)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        local default = V.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b)
+                        local db = E.private.WT.skins.bigWigsSkin[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, 1
+                    end
+                },
+                countDown = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Count Down"],
+                    get = function(info)
+                        return E.private.WT.skins.bigWigsSkin[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.private.WT.skins.bigWigsSkin[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end,
+                    args = {
+                        name = {
+                            order = 1,
+                            type = "select",
+                            dialogControl = "LSM30_Font",
+                            name = L["Font"],
+                            values = LSM:HashTable("font")
+                        },
+                        style = {
+                            order = 2,
+                            type = "select",
+                            name = L["Outline"],
+                            values = {
+                                NONE = L["None"],
+                                OUTLINE = L["OUTLINE"],
+                                MONOCHROME = L["MONOCHROME"],
+                                MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"]
+                            }
+                        },
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

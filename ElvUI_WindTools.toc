@@ -12,7 +12,7 @@
 ## Notes-koKR: ElvUI에 많은 기능을 추가하고 사용자가 설정할 수 있습니다.
 ## Notes-ruRU: Добавляет множество улучшенных функций в ElvUI и даёт возможность их гибко настраивать.
 ## RequiredDeps: ElvUI
-## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, MeetingStoneEX, MythicDungeonTools, Myslot, Details, Details_Covenants, WeakAuras
+## OptionalDeps: Blizzard_PetJournal, Rematch, SharedMedia, MeetingStone, MeetingStonePlus, MeetingStoneEX, MythicDungeonTools, Myslot, Details, Details_Covenants, WeakAuras, BigWigs
 ## X-Credits: Blazeflack, Merathilis, Benik, siweia, loudsoul, Simpy, Azilroka, Haste, Tukz, Elv, Repooc & others in CREDITS.md
 ## X-Curse-Project-ID: 300361
 ## X-WoWI-ID: 25687

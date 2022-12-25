@@ -216,6 +216,33 @@ V.skins = {
         size = 13,
         style = "OUTLINE"
     },
+    bigWigsSkin = {
+        queueTimer = {
+            smooth = true,
+            spark = true,
+            colorLeft = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1},
+            colorRight = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1},
+            countDown = {
+                name = F.GetCompatibleFont("Montserrat"),
+                size = 16,
+                style = "OUTLINE"
+            }
+        },
+        normalBar = {
+            smooth = true,
+            spark = true,
+            colorOverride = true,
+            colorLeft = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1},
+            colorRight = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
+        },
+        emphasizedBar = {
+            smooth = true,
+            spark = true,
+            colorOverride = true,
+            colorLeft = {r = 0.92549, g = 0.00000, b = 0.54902, a = 1},
+            colorRight = {r = 0.98824, g = 0.40392, b = 0.40392, a = 1}
+        }
+    },
     color = {
         r = 0,
         g = 0,

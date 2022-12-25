@@ -425,6 +425,7 @@ L["Display the level of the item on the item link."] = "Отображение �
 L["Display the name of the player who clicked the minimap."] = "Отображение имени игрока, который щелкнул миникарту."
 L["Distance"] = "Дистанция"
 L["Distance Text"] = "Текст дистанции"
+L["Don't forget to set you favorite bar texture in BigWigs option!"] = true
 L["Donate"] = "Пожертвовать"
 L["Drag"] = "Тянуть"
 L["Dragon"] = "Дракон"

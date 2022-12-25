@@ -425,6 +425,7 @@ L["Display the level of the item on the item link."] = "在物品連結上顯示
 L["Display the name of the player who clicked the minimap."] = "顯示是誰點擊了小地圖."
 L["Distance"] = "距離"
 L["Distance Text"] = "距離文字"
+L["Don't forget to set you favorite bar texture in BigWigs option!"] = "別忘了在 BigWigs 選項中設定你最喜歡的計時條材質!"
 L["Donate"] = "捐助"
 L["Drag"] = "拖拽"
 L["Dragon"] = "巨龍"

@@ -425,6 +425,7 @@ L["Display the level of the item on the item link."] = true
 L["Display the name of the player who clicked the minimap."] = "Affiche le nom du joueur qui a cliqué sur la minicarte."
 L["Distance"] = "Distance"
 L["Distance Text"] = "Distance du texte"
+L["Don't forget to set you favorite bar texture in BigWigs option!"] = true
 L["Donate"] = "Faire un don"
 L["Drag"] = "Glisser"
 L["Dragon"] = true

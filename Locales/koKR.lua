@@ -425,6 +425,7 @@ L["Display the level of the item on the item link."] = true
 L["Display the name of the player who clicked the minimap."] = "미니맵을 클릭한 플레이어의 이름을 표시합니다."
 L["Distance"] = "거리"
 L["Distance Text"] = "거리 문자 설정"
+L["Don't forget to set you favorite bar texture in BigWigs option!"] = true
 L["Donate"] = "기부"
 L["Drag"] = "끌기"
 L["Dragon"] = true

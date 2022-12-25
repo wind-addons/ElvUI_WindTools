@@ -982,6 +982,7 @@ options.reset = {
                             function()
                                 E.private.WT.skins.ime = V.skins.ime
                                 E.private.WT.skins.errorMessage = V.skins.errorMessage
+                                E.private.WT.skins.rollResult = V.skins.rollResult
                             end
                         )
                     end
@@ -1042,6 +1043,21 @@ options.reset = {
                             nil,
                             function()
                                 E.private.WT.skins.widgets = V.skins.widgets
+                            end
+                        )
+                    end
+                },
+                bigWigsSkin = {
+                    order = 7,
+                    type = "execute",
+                    name = L["BigWigs Skin"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["BigWigs Skin"],
+                            nil,
+                            function()
+                                E.private.WT.skins.bigWigsSkin = V.skins.bigWigsSkin
                             end
                         )
                     end

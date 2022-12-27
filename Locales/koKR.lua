@@ -634,6 +634,7 @@ L["Inverse Direction"] = "역방향"
 L["Inverse Mode"] = "반대 모드"
 L["Iron Docks"] = "강철 선착장"
 L["It doesn't mean that the %s Skins will not be applied."] = "%s 스킨이 적용되지 않는다는 의미는 아닙니다."
+L["It only works when you enable the skin (%s)."] = true
 L["It will affect the cry emote sound."] = "이것은 우는 감정표현에도 영향을 미칩니다."
 L["It will alert you to reload UI when you change the CVar %s."] = true
 L["It will also affect the crying sound of all female Blood Elves."] = "또한 모든 여성 블러드 엘프의 울음 소리에도 영향을 미칩니다."

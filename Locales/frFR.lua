@@ -634,6 +634,7 @@ L["Inverse Direction"] = "Direction inversée"
 L["Inverse Mode"] = "Mode inversé"
 L["Iron Docks"] = true
 L["It doesn't mean that the %s Skins will not be applied."] = "Cela ne signifie pas que les apparences %s ne seront pas appliqués."
+L["It only works when you enable the skin (%s)."] = true
 L["It will affect the cry emote sound."] = "Cela affectera le son de l'émote de cri."
 L["It will alert you to reload UI when you change the CVar %s."] = true
 L["It will also affect the crying sound of all female Blood Elves."] = "Cela affectera également le son des pleurs de toutes les femmes Elfes de Sang."

@@ -33,6 +33,8 @@ local function GetQuests()
 			-- isBounty: 箱子任务(比如, "夜落精灵" 任务)
 			-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
 
+			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
+			
 			if tagInfo and ignoreTagIDs[tagInfo.tagID] then
 				skip = true
 			end

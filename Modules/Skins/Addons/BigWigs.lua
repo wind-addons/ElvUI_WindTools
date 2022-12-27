@@ -3,8 +3,13 @@ local S = W.Modules.Skins
 local C = W.Utilities.Color
 
 local _G = _G
-local unpack = unpack
 local format = format
+local pairs = pairs
+local tinsert = tinsert
+local tremove = tremove
+local unpack = unpack
+
+local CreateFrame = CreateFrame
 
 local C_Timer_NewTicker = C_Timer.NewTicker
 

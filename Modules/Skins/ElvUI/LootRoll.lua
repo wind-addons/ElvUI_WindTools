@@ -3,6 +3,9 @@ local M = E:GetModule("Misc")
 local S = W.Modules.Skins
 
 local _G = _G
+local pairs = pairs
+local tinsert = tinsert
+local unpack = unpack
 
 function S:ElvUI_SkinLootRollFrame(frame)
     if not frame or frame:IsForbidden() or frame.__windSkin then
@@ -18,7 +21,7 @@ function S:ElvUI_SkinLootRollFrame(frame)
         end
     end
 
-    points = {}
+    local points = {}
     for i = 1, frame.button:GetNumPoints() do
         tinsert(points, {frame.button:GetPoint(i)})
     end

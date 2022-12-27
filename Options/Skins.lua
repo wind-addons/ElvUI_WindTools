@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 local S = W.Modules.Skins
 local C = W.Utilities.Color
 
+local format = format
 local pairs = pairs
 local type = type
 

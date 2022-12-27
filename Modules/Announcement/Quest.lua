@@ -34,7 +34,7 @@ local function GetQuests()
 			-- isHidden: 自动接取的每周任务(比如, "征服者的獎勵" 每周 PvP 任务)
 
 			local tagInfo = C_QuestLog_GetQuestTagInfo(questInfo.questID)
-			
+
 			if tagInfo and ignoreTagIDs[tagInfo.tagID] then
 				skip = true
 			end

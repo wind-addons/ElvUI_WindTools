@@ -1,5 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
@@ -13,6 +14,59 @@ function S:LootHistoryFrame_FullUpdate()
         if frame and not frame.__windSkin then
             frame:SetWidth(256)
             F.SetFontWithDB(frame.WinnerRoll, E.private.WT.skins.rollResult)
+
+            frame.ToggleButton:SetNormalTexture(E.Media.Textures.ArrowUp)
+            frame.ToggleButton:SetPushedTexture(E.Media.Textures.ArrowUp)
+            frame.ToggleButton:SetDisabledTexture(E.Media.Textures.ArrowUp)
+            frame.ToggleButton:SetHighlightTexture(E.Media.Textures.ArrowUp)
+
+            local normalTex, disabledTex, pushedTex, highlightTex =
+                frame.ToggleButton:GetNormalTexture(),
+                frame.ToggleButton:GetDisabledTexture(),
+                frame.ToggleButton:GetPushedTexture(),
+                frame.ToggleButton:GetHighlightTexture()
+
+            normalTex:SetRotation(ES.ArrowRotation.down)
+
+            highlightTex:SetRotation(ES.ArrowRotation.down)
+            highlightTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+
+            pushedTex:SetRotation(ES.ArrowRotation.down)
+            pushedTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
+
+            disabledTex:SetRotation(ES.ArrowRotation.down)
+            disabledTex:SetAlpha(0.5)
+
+            frame.ToggleButton.SetNormalTexture = function(self, texture)
+                if texture == "Interface\\Buttons\\UI-MinusButton-UP" then
+                    normalTex:SetRotation(ES.ArrowRotation.up)
+                    self:SetHighlightTexture(nil, ES.ArrowRotation.up)
+                elseif texture == "Interface\\Buttons\\UI-PlusButton-UP" then
+                    normalTex:SetRotation(ES.ArrowRotation.down)
+                    self:SetHighlightTexture(nil, ES.ArrowRotation.down)
+                end
+            end
+
+            frame.ToggleButton.SetPushedTexture = function(self, texture)
+                if texture == "Interface\\Buttons\\UI-MinusButton-Down" then
+                    pushedTex:SetRotation(ES.ArrowRotation.up)
+                elseif texture == "Interface\\Buttons\\UI-PlusButton-Down" then
+                    pushedTex:SetRotation(ES.ArrowRotation.down)
+                end
+            end
+
+            frame.ToggleButton.SetDisabledTexture = function(self, texture)
+                if texture == "Interface\\Buttons\\UI-MinusButton-Disabled" then
+                    disabledTex:SetRotation(ES.ArrowRotation.up)
+                elseif texture == "Interface\\Buttons\\UI-PlusButton-Disabled" then
+                    disabledTex:SetRotation(ES.ArrowRotation.down)
+                end
+            end
+
+            frame.ToggleButton.SetHighlightTexture = function(self, _, arrow)
+                highlightTex:SetRotation(arrow)
+            end
+
             frame.__windSkin = true
         end
     end

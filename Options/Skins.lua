@@ -348,15 +348,20 @@ options.font = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
-                name = {
+                tip = {
                     order = 1,
+                    type = "description",
+                    name = format(L["It only works when you enable the skin (%s)."], format("%s - %s", L["Blizzard"], L["Loot"]))
+                },
+                name = {
+                    order = 2,
                     type = "select",
                     dialogControl = "LSM30_Font",
                     name = L["Font"],
                     values = LSM:HashTable("font")
                 },
                 style = {
-                    order = 2,
+                    order = 3,
                     type = "select",
                     name = L["Outline"],
                     values = {
@@ -368,7 +373,7 @@ options.font = {
                     }
                 },
                 size = {
-                    order = 3,
+                    order = 4,
                     name = L["Size"],
                     type = "range",
                     min = 5,

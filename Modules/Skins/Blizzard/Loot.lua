@@ -10,15 +10,30 @@ function S:LootHistoryFrame_FullUpdate()
     for i = 1, numItems do
         local frame = _G.LootHistoryFrame.itemFrames[i]
         if frame and not frame.__windSkin then
+            frame:SetWidth(256)
             F.SetFontWithDB(frame.WinnerRoll, E.private.WT.skins.rollResult)
+            frame.__windSkin = true
+        end
+    end
+
+    for _, frame in pairs(_G.LootHistoryFrame.unusedPlayerFrames) do
+        if frame and not frame.__windSkin then
+            frame:SetWidth(256)
+            F.SetFontWithDB(frame.RollText, E.private.WT.skins.rollResult)
+            frame.__windSkin = true
+        end
+    end
+
+    for _, frame in pairs(_G.LootHistoryFrame.usedPlayerFrames) do
+        if frame and not frame.__windSkin then
+            frame:SetWidth(256)
+            F.SetFontWithDB(frame.RollText, E.private.WT.skins.rollResult)
             frame.__windSkin = true
         end
     end
 end
 
 function S:LootFrame()
-    -- self:SecureHook("LootHistoryFrame_FullUpdate")
-
     if not self:CheckDB("loot") then
         return
     end
@@ -32,9 +47,12 @@ function S:LootFrame()
 
     self:CreateShadow(_G.LootHistoryFrame)
     self:CreateShadow(_G.LootHistoryFrame.ResizeButton)
+
     _G.LootHistoryFrame.ResizeButton:SetTemplate("Transparent")
-    -- _G.LootHistoryFrame:SetWidth(300)
-    -- _G.LootHistoryFrame.ResizeButton:SetWidth(300)
+    _G.LootHistoryFrame:SetWidth(300)
+    _G.LootHistoryFrame.ResizeButton:SetWidth(300)
+
+    self:SecureHook("LootHistoryFrame_FullUpdate")
 end
 
 S:AddCallback("LootFrame")

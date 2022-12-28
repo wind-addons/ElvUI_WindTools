@@ -16,7 +16,7 @@ function S:LootHistoryFrame_FullUpdate()
             F.SetFontWithDB(frame.WinnerRoll, E.private.WT.skins.rollResult)
 
             frame.ToggleButton:SetNormalTexture(E.Media.Textures.ArrowUp)
-            frame.ToggleButton:SetPushedTexture(E.Media.Textures.ArrowUp)
+            frame.ToggleButton:SetPushedTexture("")
             frame.ToggleButton:SetDisabledTexture(E.Media.Textures.ArrowUp)
             frame.ToggleButton:SetHighlightTexture(E.Media.Textures.ArrowUp)
 
@@ -28,11 +28,12 @@ function S:LootHistoryFrame_FullUpdate()
 
             normalTex:SetRotation(ES.ArrowRotation.down)
 
+            pushedTex:SetTexture("")
+            pushedTex.SetTexture = E.noop
+            pushedTex:Hide()
+
             highlightTex:SetRotation(ES.ArrowRotation.down)
             highlightTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
-
-            pushedTex:SetRotation(ES.ArrowRotation.down)
-            pushedTex:SetVertexColor(unpack(E.media.rgbvaluecolor))
 
             disabledTex:SetRotation(ES.ArrowRotation.down)
             disabledTex:SetAlpha(0.5)
@@ -47,13 +48,7 @@ function S:LootHistoryFrame_FullUpdate()
                 end
             end
 
-            frame.ToggleButton.SetPushedTexture = function(self, texture)
-                if texture == "Interface\\Buttons\\UI-MinusButton-Down" then
-                    pushedTex:SetRotation(ES.ArrowRotation.up)
-                elseif texture == "Interface\\Buttons\\UI-PlusButton-Down" then
-                    pushedTex:SetRotation(ES.ArrowRotation.down)
-                end
-            end
+            frame.ToggleButton.SetPushedTexture = E.noop
 
             frame.ToggleButton.SetDisabledTexture = function(self, texture)
                 if texture == "Interface\\Buttons\\UI-MinusButton-Disabled" then

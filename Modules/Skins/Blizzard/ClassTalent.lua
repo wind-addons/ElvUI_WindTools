@@ -14,6 +14,9 @@ function S:Blizzard_ClassTalentUI()
     for _, tab in pairs({_G.ClassTalentFrame.TabSystem:GetChildren()}) do
         self:ReskinTab(tab)
     end
+
+    self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
+    self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
 end
 
 S:AddCallbackForAddon("Blizzard_ClassTalentUI")

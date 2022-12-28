@@ -13,6 +13,7 @@ local ipairs = ipairs
 local pairs = pairs
 local type = type
 local unpack = unpack
+local tsort = table.sort
 
 local CreateFrame = CreateFrame
 local GetCurrentRegion = GetCurrentRegion
@@ -37,7 +38,8 @@ end
 
 local eventList = {
     "CommunityFeast",
-    "SiegeOnDragonbaneKeep"
+    "SiegeOnDragonbaneKeep",
+    "IskaaranFishingNet"
 }
 
 local colorPlatte = {
@@ -273,6 +275,202 @@ local functionFactory = {
                 _G.GameTooltip:Hide()
             end
         }
+    },
+    triggerTimer = {
+        init = function(self)
+            self.icon = self:CreateTexture(nil, "ARTWORK")
+            self.icon:CreateBackdrop("Transparent")
+            self.icon.backdrop:SetOutside(self.icon, 1, 1)
+            self.statusBar = CreateFrame("StatusBar", nil, self)
+            self.name = self.statusBar:CreateFontString(nil, "OVERLAY")
+            self.timerText = self.statusBar:CreateFontString(nil, "OVERLAY")
+            self.runningTip = self.statusBar:CreateFontString(nil, "OVERLAY")
+
+            reskinStatusBar(self.statusBar)
+
+            self.statusBar.spark = self.statusBar:CreateTexture(nil, "ARTWORK", nil, 1)
+            self.statusBar.spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
+            self.statusBar.spark:SetBlendMode("ADD")
+            self.statusBar.spark:SetPoint("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+            self.statusBar.spark:SetSize(4, 26)
+        end,
+        setup = function(self)
+            self.icon:SetTexture(self.args.icon)
+            self.icon:SetTexCoord(unpack(E.TexCoords))
+            self.icon:SetSize(22, 22)
+            self.icon:ClearAllPoints()
+            self.icon:SetPoint("LEFT", self, "LEFT", 0, 0)
+
+            self.statusBar:ClearAllPoints()
+            self.statusBar:SetPoint("TOPLEFT", self, "LEFT", 26, 2)
+            self.statusBar:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 0, 6)
+
+            ET:SetFont(self.timerText, 13)
+            self.timerText:ClearAllPoints()
+            self.timerText:SetPoint("TOPRIGHT", self, "TOPRIGHT", -2, -6)
+
+            ET:SetFont(self.name, 13)
+            self.name:ClearAllPoints()
+            self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 30, -6)
+            self.name:SetText(self.args.label)
+
+            ET:SetFont(self.runningTip, 10)
+            self.runningTip:SetText(self.args.runningText)
+            self.runningTip:SetPoint("CENTER", self.statusBar, "BOTTOM", 0, 0)
+        end,
+        ticker = {
+            interval = 0.3,
+            dateUpdater = function(self)
+                local db = ET:GetPlayerDB(self.dbKey)
+                if not db then
+                    return
+                end
+
+                -- local now = GetServerTime()
+
+                -- local newTimestamps = {}
+                -- self.timeData = {}
+
+                -- if db.timestamps then
+                --     for _, ts in ipairs(db.timestamps) do
+                --         if ts > now - 48 * 60 * 60 then
+                --             tinsert(newTimestamps, ts)
+                --             local timeOver = now - ts
+                --             tinsert(self.timeData, {timeStamp = ts, timeOver = timeOver})
+                --         end
+                --     end
+                -- end
+
+                -- tsort(
+                --     self.timeData,
+                --     function(a, b)
+                --         return a.timeStamp > b.timeStamp
+                --     end
+                -- )
+
+                -- db.timestamps = newTimestamps
+            end,
+            uiUpdater = function(self)
+                -- self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
+                -- if self.fired then
+                --     -- event ending tracking timer
+                --     self.timerText:SetText(C.StringByTemplate(secondToTime(self.timeLeft), "success"))
+                --     self.statusBar:SetMinMaxValues(0, self.args.duration)
+                --     self.statusBar:SetValue(self.timeOver)
+                --     local tex = self.statusBar:GetStatusBarTexture()
+                --     tex:SetGradient(
+                --         "HORIZONTAL",
+                --         C.CreateColorFromTable(colorPlatte.running[1]),
+                --         C.CreateColorFromTable(colorPlatte.running[2])
+                --     )
+                --     self.runningTip:Show()
+                --     E:Flash(self.runningTip, 1, true)
+                -- else
+                --     -- normal tracking timer
+                --     self.timerText:SetText(secondToTime(self.timeLeft))
+                --     self.statusBar:SetMinMaxValues(0, self.args.interval)
+                --     self.statusBar:SetValue(self.timeLeft)
+                --     if type(self.args.barColor[1]) == "number" then
+                --         self.statusBar:SetStatusBarColor(unpack(self.args.barColor))
+                --     else
+                --         local tex = self.statusBar:GetStatusBarTexture()
+                --         tex:SetGradient(
+                --             "HORIZONTAL",
+                --             C.CreateColorFromTable(self.args.barColor[1]),
+                --             C.CreateColorFromTable(self.args.barColor[2])
+                --         )
+                --     end
+                --     E:StopFlash(self.runningTip)
+                --     self.runningTip:Hide()
+                -- end
+            end,
+            alert = function(self)
+                -- if not self.args["alertCache"] then
+                --     self.args["alertCache"] = {}
+                -- end
+                -- if self.args["alertCache"][self.nextEventIndex] then
+                --     return
+                -- end
+                -- if not self.args.alertSecond or self.isRunning then
+                --     return
+                -- end
+                -- if self.args.stopAlertIfCompleted and self.isCompleted then
+                --     return
+                -- end
+                -- if self.args.filter and not self.args:filter() then
+                --     return
+                -- end
+                -- if self.timeLeft <= self.args.alertSecond then
+                --     self.args["alertCache"][self.nextEventIndex] = true
+                --     local eventIconString = F.GetIconString(self.args.icon, 16, 16)
+                --     local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+                --     F.Print(
+                --         format(
+                --             L["%s will be started in %s!"],
+                --             eventIconString .. " " .. gradientName,
+                --             secondToTime(self.timeLeft)
+                --         )
+                --     )
+                --     if self.args.soundFile then
+                --         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+                --     end
+                -- end
+            end
+        },
+        tooltip = {
+            onEnter = function(self)
+                -- _G.GameTooltip:ClearLines()
+                -- _G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 8)
+                -- _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
+                -- _G.GameTooltip:AddLine(" ")
+                -- _G.GameTooltip:AddDoubleLine(L["Location"], self.args.location, 1, 1, 1)
+                -- _G.GameTooltip:AddLine(" ")
+                -- _G.GameTooltip:AddDoubleLine(L["Interval"], secondToTime(self.args.interval), 1, 1, 1)
+                -- _G.GameTooltip:AddDoubleLine(L["Duration"], secondToTime(self.args.duration), 1, 1, 1)
+                -- if self.nextEventTimestamp then
+                --     _G.GameTooltip:AddDoubleLine(
+                --         L["Next Event"],
+                --         date("%m/%d %H:%M:%S", self.nextEventTimestamp),
+                --         1,
+                --         1,
+                --         1
+                --     )
+                -- end
+                -- _G.GameTooltip:AddLine(" ")
+                -- if self.isRunning then
+                --     _G.GameTooltip:AddDoubleLine(
+                --         L["Status"],
+                --         C.StringByTemplate(self.args.runningText, "success"),
+                --         1,
+                --         1,
+                --         1
+                --     )
+                -- else
+                --     _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "greyLight"), 1, 1, 1)
+                -- end
+                -- if self.isCompleted then
+                --     _G.GameTooltip:AddDoubleLine(
+                --         L["Weekly Reward"],
+                --         C.StringByTemplate(L["Completed"], "success"),
+                --         1,
+                --         1,
+                --         1
+                --     )
+                -- else
+                --     _G.GameTooltip:AddDoubleLine(
+                --         L["Weekly Reward"],
+                --         C.StringByTemplate(L["Not Completed"], "danger"),
+                --         1,
+                --         1,
+                --         1
+                --     )
+                -- end
+                -- _G.GameTooltip:Show()
+            end,
+            onLeave = function(self)
+                -- _G.GameTooltip:Hide()
+            end
+        }
     }
 }
 
@@ -350,6 +548,54 @@ local eventData = {
                 return timestampTable[region]
             end)()
         }
+    },
+    IskaaranFishingNet = {
+        dbKey = "iskaaranFishingNet",
+        fishingNetPosition = {
+            [1] = {x = 0.63585, y = 0.75349},
+            [2] = {x = 0.64514, y = 0.74178}
+        },
+        args = {
+            icon = 4687629,
+            type = "triggerTimer",
+            filter = E.noop,
+            eventName = L["Iskaaran Fishing Net"],
+            label = L["Fishing Net"],
+            events = {
+                {
+                    "UNIT_SPELLCAST_SUCCEEDED",
+                    function(unit, _, spellID)
+                        if spellID == 377883 and unit == "player" then
+                            local map = C_Map.GetBestMapForUnit("player")
+                            local position = C_Map.GetPlayerMapPosition(map, "player")
+                            if map == 2022 then
+                                local lengthMap = {}
+
+                                for i, netPos in ipairs(eventData.IskaaranFishingNet.fishingNetPosition) do
+                                    local length =
+                                        math.pow(position.x - netPos.x, 2) + math.pow(position.y - netPos.y, 2)
+                                    lengthMap[length] = i
+                                end
+
+                                local min = math.huge
+                                local netIndex = 0
+                                for i, length in pairs(lengthMap) do
+                                    if length < min then
+                                        min = length
+                                        netIndex = i
+                                    end
+                                end
+
+                                if netIndex ~= 0 then
+                                    local db = ET:GetPlayerDB(eventData.IskaaranFishingNet.dbKey)
+                                    db[netIndex] = GetServerTime()
+                                end
+                            end
+                        end
+                    end
+                }
+            }
+        }
     }
 }
 
@@ -368,10 +614,12 @@ function trackers:get(event)
     local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
     frame:SetSize(220, 30)
 
+    frame.dbKey = data.dbKey
     frame.args = data.args
 
     if functionFactory[data.args.type] then
         local functions = functionFactory[data.args.type]
+
         if functions.init then
             functions.init(frame)
         end
@@ -417,6 +665,12 @@ function trackers:get(event)
         end
     end
 
+    if data.args.events then
+        for _, event in ipairs(data.args.events) do
+            ET:AddEventHandler(event[1], event[2])
+        end
+    end
+
     self.pool[event] = frame
 
     return frame
@@ -426,6 +680,24 @@ function trackers:disable(event)
     if self.pool[event] then
         self.pool[event]:Hide()
     end
+end
+
+ET.eventHandlers = {}
+
+function ET:HandlerEvent(event, ...)
+    if self.eventHandlers[event] then
+        for _, handler in ipairs(self.eventHandlers[event]) do
+            handler(...)
+        end
+    end
+end
+
+function ET:AddEventHandler(event, handler)
+    if not self.eventHandlers[event] then
+        self.eventHandlers[event] = {}
+    end
+
+    tinsert(self.eventHandlers[event], handler)
 end
 
 function ET:SetFont(target, size)
@@ -462,6 +734,28 @@ function ET:ConstructFrame()
     end
 
     self.frame = frame
+end
+
+function ET:GetPlayerDB(key)
+    local globalDB = E.global.WT.maps.eventTracker
+
+    if not globalDB then
+        return
+    end
+
+    if not globalDB[E.myrealm] then
+        globalDB[E.myrealm] = {}
+    end
+
+    if not globalDB[E.myrealm][E.myname] then
+        globalDB[E.myrealm][E.myname] = {}
+    end
+
+    if not globalDB[E.myrealm][E.myname][key] then
+        globalDB[E.myrealm][E.myname][key] = {}
+    end
+
+    return globalDB[E.myrealm][E.myname][key]
 end
 
 function ET:UpdateTrackers()
@@ -544,7 +838,13 @@ function ET:Initialize()
     end
 
     self:UpdateTrackers()
+
+    for event in pairs(self.eventHandlers) do
+        self:RegisterEvent(event, "HandlerEvent")
+    end
 end
+
+F.Developer.DelayInitialize(ET, 2)
 
 function ET:ProfileUpdate()
     self:Initialize()

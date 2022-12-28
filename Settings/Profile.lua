@@ -666,6 +666,9 @@ P.maps = {
             second = 600,
             stopAlertIfCompleted = true,
             stopAlertIfPlayerNotEnteredDragonlands = true
+        },
+        iskaaranFishingNet = {
+            enable = true
         }
     },
     rectangleMinimap = {

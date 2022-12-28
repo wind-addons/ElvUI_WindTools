@@ -145,6 +145,7 @@ function S:ElvUI_ActionBars()
     -- Vehicle leave button
     do
         local button = _G.MainMenuBarVehicleLeaveButton
+        button.hover:SetAlpha(0)
         self:CreateBackdropShadow(button, true)
 
         local tex = button:GetNormalTexture()

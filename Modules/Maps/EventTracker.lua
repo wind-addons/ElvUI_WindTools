@@ -474,6 +474,13 @@ local functionFactory = {
     }
 }
 
+local env = {
+    fishingNetPosition = {
+        [1] = {x = 0.63585, y = 0.75349},
+        [2] = {x = 0.64514, y = 0.74178}
+    }
+}
+
 local eventData = {
     CommunityFeast = {
         dbKey = "communityFeast",
@@ -551,10 +558,6 @@ local eventData = {
     },
     IskaaranFishingNet = {
         dbKey = "iskaaranFishingNet",
-        fishingNetPosition = {
-            [1] = {x = 0.63585, y = 0.75349},
-            [2] = {x = 0.64514, y = 0.74178}
-        },
         args = {
             icon = 4687629,
             type = "triggerTimer",
@@ -565,32 +568,46 @@ local eventData = {
                 {
                     "UNIT_SPELLCAST_SUCCEEDED",
                     function(unit, _, spellID)
-                        if spellID == 377883 and unit == "player" then
-                            local map = C_Map.GetBestMapForUnit("player")
-                            local position = C_Map.GetPlayerMapPosition(map, "player")
-                            if map == 2022 then
-                                local lengthMap = {}
+                        if not unit or unit ~= "player" then
+                            return
+                        end
 
-                                for i, netPos in ipairs(eventData.IskaaranFishingNet.fishingNetPosition) do
-                                    local length =
-                                        math.pow(position.x - netPos.x, 2) + math.pow(position.y - netPos.y, 2)
-                                    lengthMap[length] = i
-                                end
+                        local map = C_Map.GetBestMapForUnit("player")
+                        local position = C_Map.GetPlayerMapPosition(map, "player")
+                        if map ~= 2022 then
+                            return
+                        end
 
-                                local min = math.huge
-                                local netIndex = 0
-                                for i, length in pairs(lengthMap) do
-                                    if length < min then
-                                        min = length
-                                        netIndex = i
-                                    end
-                                end
+                        local lengthMap = {}
 
-                                if netIndex ~= 0 then
-                                    local db = ET:GetPlayerDB(eventData.IskaaranFishingNet.dbKey)
-                                    db[netIndex] = GetServerTime()
-                                end
+                        for i, netPos in ipairs(env.fishingNetPosition) do
+                            local length = math.pow(position.x - netPos.x, 2) + math.pow(position.y - netPos.y, 2)
+                            lengthMap[i] = length
+                        end
+
+                        local min
+                        local netIndex = 0
+                        for i, length in pairs(lengthMap) do
+                            if not min or length < min then
+                                min = length
+                                netIndex = i
                             end
+                        end
+
+                        if not min or netIndex <= 0 then
+                            return
+                        end
+
+                        local db = ET:GetPlayerDB("iskaaranFishingNet")
+
+                        if spellID == 377887 then
+                            if db[netIndex] then
+                                db[netIndex] = 0
+                            end
+                            print("Fishing net " .. netIndex .. " end at " .. GetServerTime())
+                        elseif spellID == 377883 then
+                            db[netIndex] = GetServerTime()
+                            print("Fishing net " .. netIndex .. " start at " .. GetServerTime())
                         end
                     end
                 }

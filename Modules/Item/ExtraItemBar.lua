@@ -892,6 +892,7 @@ local openableItems = {
     200095, -- 充滿補給品的湯鍋
     200468, -- 大狩獵戰利品
     200513, -- 大狩獵戰利品
+    200515, -- 大狩獵戰利品
     200516, -- 大狩獵戰利品
     201754, -- 黑曜熔爐大師的寶箱
     201755, -- 黑曜熔爐大師的保險箱
@@ -1144,18 +1145,20 @@ function EB:SetUpButton(button, questItemData, slotID)
     if not InCombatLockdown() then
         button:EnableMouse(true)
         button:Show()
+        button:SetAttribute("type", "macro")
+
+        local macroText
         if button.slotID then
-            button:SetAttribute("type", "macro")
-            button:SetAttribute("macrotext", "/use " .. button.slotID)
+            macroText = "/use " .. button.slotID
         elseif button.itemName then
+            macroText = "/use item:" .. button.itemID
             if button.itemID == 172347 then
-                -- Heavy Desolate Armor Kit
-                button:SetAttribute("type", "macro")
-                button:SetAttribute("macrotext", "/use " .. button.itemName .. "\n/use 5")
-            else
-                button:SetAttribute("type", "item")
-                button:SetAttribute("item", button.itemName)
+                macroText = macroText .. "\n/use 5"
             end
+        end
+
+        if macroText then
+            button:SetAttribute("macrotext", macroText)
         end
     end
 end

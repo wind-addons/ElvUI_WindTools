@@ -668,7 +668,11 @@ P.maps = {
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         iskaaranFishingNet = {
-            enable = true
+            enable = true,
+            alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
+            disableAlertAfterHours = 48,
         }
     },
     rectangleMinimap = {

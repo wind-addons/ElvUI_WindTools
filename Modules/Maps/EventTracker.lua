@@ -14,13 +14,16 @@ local pairs = pairs
 local type = type
 local unpack = unpack
 local tsort = table.sort
+local math_pow = math.pow
 
 local CreateFrame = CreateFrame
 local GetCurrentRegion = GetCurrentRegion
 local GetServerTime = GetServerTime
 local PlaySoundFile = PlaySoundFile
 
+local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
+local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
 
@@ -51,9 +54,13 @@ local colorPlatte = {
         {r = 0.92549, g = 0.00000, b = 0.54902, a = 1},
         {r = 0.98824, g = 0.40392, b = 0.40392, a = 1}
     },
+    purple = {
+        {r = 0.27843, g = 0.46275, b = 0.90196, a = 1},
+        {r = 0.55686, g = 0.32941, b = 0.91373, a = 1}
+    },
     running = {
-        {r = 0.00000, g = 0.94902, b = 0.37647, a = 1},
-        {r = 0.01961, g = 0.45882, b = 0.90196, a = 1}
+        {r = 0.06667, g = 0.60000, b = 0.55686, a = 1},
+        {r = 0.21961, g = 0.93725, b = 0.49020, a = 1}
     }
 }
 
@@ -79,6 +86,13 @@ local function getGradientText(text, colorTable)
         colorTable[2].b
     )
 end
+
+local env = {
+    fishingNetPosition = {
+        [1] = {x = 0.63585, y = 0.75349},
+        [2] = {x = 0.64514, y = 0.74178}
+    }
+}
 
 local functionFactory = {
     loopTimer = {
@@ -321,163 +335,193 @@ local functionFactory = {
         ticker = {
             interval = 0.3,
             dateUpdater = function(self)
-                local db = ET:GetPlayerDB(self.dbKey)
+                if not C_QuestLog_IsQuestFlaggedCompleted(70871) then
+                    self.netTable = nil
+                    return
+                end
+
+                local db = ET:GetPlayerDB("iskaaranFishingNet")
                 if not db then
                     return
                 end
 
-                -- local now = GetServerTime()
-
-                -- local newTimestamps = {}
-                -- self.timeData = {}
-
-                -- if db.timestamps then
-                --     for _, ts in ipairs(db.timestamps) do
-                --         if ts > now - 48 * 60 * 60 then
-                --             tinsert(newTimestamps, ts)
-                --             local timeOver = now - ts
-                --             tinsert(self.timeData, {timeStamp = ts, timeOver = timeOver})
-                --         end
-                --     end
-                -- end
-
-                -- tsort(
-                --     self.timeData,
-                --     function(a, b)
-                --         return a.timeStamp > b.timeStamp
-                --     end
-                -- )
-
-                -- db.timestamps = newTimestamps
+                self.netTable = {}
+                local now = GetServerTime()
+                now = db[1] + 10 * 60 * 60 - 10
+                for netIndex = 1, #env.fishingNetPosition do
+                    if not db[netIndex] or db[netIndex] == 0 then
+                        self.netTable[netIndex] = "NOT_STARTED"
+                    else
+                        self.netTable[netIndex] = db[netIndex] + self.args.interval - now
+                    end
+                end
             end,
             uiUpdater = function(self)
-                -- self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
-                -- if self.fired then
-                --     -- event ending tracking timer
-                --     self.timerText:SetText(C.StringByTemplate(secondToTime(self.timeLeft), "success"))
-                --     self.statusBar:SetMinMaxValues(0, self.args.duration)
-                --     self.statusBar:SetValue(self.timeOver)
-                --     local tex = self.statusBar:GetStatusBarTexture()
-                --     tex:SetGradient(
-                --         "HORIZONTAL",
-                --         C.CreateColorFromTable(colorPlatte.running[1]),
-                --         C.CreateColorFromTable(colorPlatte.running[2])
-                --     )
-                --     self.runningTip:Show()
-                --     E:Flash(self.runningTip, 1, true)
-                -- else
-                --     -- normal tracking timer
-                --     self.timerText:SetText(secondToTime(self.timeLeft))
-                --     self.statusBar:SetMinMaxValues(0, self.args.interval)
-                --     self.statusBar:SetValue(self.timeLeft)
-                --     if type(self.args.barColor[1]) == "number" then
-                --         self.statusBar:SetStatusBarColor(unpack(self.args.barColor))
-                --     else
-                --         local tex = self.statusBar:GetStatusBarTexture()
-                --         tex:SetGradient(
-                --             "HORIZONTAL",
-                --             C.CreateColorFromTable(self.args.barColor[1]),
-                --             C.CreateColorFromTable(self.args.barColor[2])
-                --         )
-                --     end
-                --     E:StopFlash(self.runningTip)
-                --     self.runningTip:Hide()
-                -- end
+                if not self.netTable then
+                    return
+                end
+
+                local done = {}
+                local notStarted = {}
+                local waiting = {}
+
+                for netIndex, timeLeft in pairs(self.netTable) do
+                    if type(timeLeft) == "string" and timeLeft == "NOT_STARTED" then
+                        tinsert(notStarted, netIndex)
+                    else
+                        if type(timeLeft) == "number" then
+                            if timeLeft <= 0 then
+                                tinsert(done, netIndex)
+                            else
+                                tinsert(waiting, netIndex)
+                            end
+                        end
+                    end
+                end
+
+                local tip = ""
+
+                if #done == #env.fishingNetPosition then
+                    tip = C.StringByTemplate(L["All nets can be collected"], "success")
+                    self.timerText:SetText("")
+
+                    self.statusBar:GetStatusBarTexture():SetGradient(
+                        "HORIZONTAL",
+                        C.CreateColorFromTable(colorPlatte.running[1]),
+                        C.CreateColorFromTable(colorPlatte.running[2])
+                    )
+                    self.statusBar:SetMinMaxValues(0, 1)
+                    self.statusBar:SetValue(1)
+                elseif #waiting > 0 then
+                    if #done > 0 then
+                        local netsText = ""
+                        for i = 1, #done do
+                            netsText = netsText .. "#" .. done[i]
+                            if i ~= #done then
+                                netsText = netsText .. ", "
+                            end
+                        end
+                        tip = C.StringByTemplate(format(L["Net %s can be collected"], netsText), "success")
+                    else
+                        tip = L["Waiting"]
+                    end
+
+                    local maxTimeLeft = 0
+                    for _, index in pairs(waiting) do
+                        if self.netTable[index] > maxTimeLeft then
+                            maxTimeLeft = self.netTable[index]
+                        end
+                    end
+
+                    if type(self.args.barColor[1]) == "number" then
+                        self.statusBar:SetStatusBarColor(unpack(self.args.barColor))
+                    else
+                        self.statusBar:GetStatusBarTexture():SetGradient(
+                            "HORIZONTAL",
+                            C.CreateColorFromTable(self.args.barColor[1]),
+                            C.CreateColorFromTable(self.args.barColor[2])
+                        )
+                    end
+
+                    self.timerText:SetText(secondToTime(maxTimeLeft))
+                    self.statusBar:SetMinMaxValues(0, self.args.interval)
+                    self.statusBar:SetValue(maxTimeLeft)
+                else
+                    tip = C.StringByTemplate(L["No Nets Set"], "danger")
+                    self.timerText:SetText("")
+                    self.statusBar:SetMinMaxValues(0, 1)
+                    self.statusBar:SetValue(0)
+                end
+
+                self.runningTip:SetText(tip)
             end,
             alert = function(self)
-                -- if not self.args["alertCache"] then
-                --     self.args["alertCache"] = {}
-                -- end
-                -- if self.args["alertCache"][self.nextEventIndex] then
-                --     return
-                -- end
-                -- if not self.args.alertSecond or self.isRunning then
-                --     return
-                -- end
-                -- if self.args.stopAlertIfCompleted and self.isCompleted then
-                --     return
-                -- end
-                -- if self.args.filter and not self.args:filter() then
-                --     return
-                -- end
-                -- if self.timeLeft <= self.args.alertSecond then
-                --     self.args["alertCache"][self.nextEventIndex] = true
-                --     local eventIconString = F.GetIconString(self.args.icon, 16, 16)
-                --     local gradientName = getGradientText(self.args.eventName, self.args.barColor)
-                --     F.Print(
-                --         format(
-                --             L["%s will be started in %s!"],
-                --             eventIconString .. " " .. gradientName,
-                --             secondToTime(self.timeLeft)
-                --         )
-                --     )
-                --     if self.args.soundFile then
-                --         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
-                --     end
-                -- end
+                local db = ET:GetPlayerDB("iskaaranFishingNet")
+                if not db then
+                    return
+                end
+
+                if not self.args["alertCache"] then
+                    self.args["alertCache"] = {}
+                end
+
+                local needAnnounce = false
+                local readyNets = {}
+
+                for netIndex, timeLeft in pairs(self.netTable) do
+                    if type(timeLeft) == "number" and timeLeft <= 0 then
+                        if not self.args["alertCache"][netIndex] then
+                            self.args["alertCache"][netIndex] = {}
+                        end
+
+                        if not self.args["alertCache"][netIndex][db[netIndex]] then
+                            self.args["alertCache"][netIndex][db[netIndex]] = true
+                            local hour = self.args.disableAlertAfterHours
+                            if not hour or (hour * 60 * 60 + timeLeft) > 0 then
+                                tinsert(readyNets, netIndex)
+                                needAnnounce = true
+                            end
+                        end
+                    end
+                end
+
+                if needAnnounce then
+                    local netsText = ""
+                    for i = 1, #readyNets do
+                        netsText = netsText .. "#" .. readyNets[i]
+                        if i ~= #readyNets then
+                            netsText = netsText .. ", "
+                        end
+                    end
+
+                    local eventIconString = F.GetIconString(self.args.icon, 16, 16)
+                    local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+                    F.Print(
+                        format(eventIconString .. " " .. gradientName .. " " .. L["Net %s can be collected"], netsText)
+                    )
+                    if self.args.soundFile then
+                        PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
+                    end
+                end
             end
         },
         tooltip = {
             onEnter = function(self)
-                -- _G.GameTooltip:ClearLines()
-                -- _G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 8)
-                -- _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
-                -- _G.GameTooltip:AddLine(" ")
-                -- _G.GameTooltip:AddDoubleLine(L["Location"], self.args.location, 1, 1, 1)
-                -- _G.GameTooltip:AddLine(" ")
-                -- _G.GameTooltip:AddDoubleLine(L["Interval"], secondToTime(self.args.interval), 1, 1, 1)
-                -- _G.GameTooltip:AddDoubleLine(L["Duration"], secondToTime(self.args.duration), 1, 1, 1)
-                -- if self.nextEventTimestamp then
-                --     _G.GameTooltip:AddDoubleLine(
-                --         L["Next Event"],
-                --         date("%m/%d %H:%M:%S", self.nextEventTimestamp),
-                --         1,
-                --         1,
-                --         1
-                --     )
-                -- end
-                -- _G.GameTooltip:AddLine(" ")
-                -- if self.isRunning then
-                --     _G.GameTooltip:AddDoubleLine(
-                --         L["Status"],
-                --         C.StringByTemplate(self.args.runningText, "success"),
-                --         1,
-                --         1,
-                --         1
-                --     )
-                -- else
-                --     _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "greyLight"), 1, 1, 1)
-                -- end
-                -- if self.isCompleted then
-                --     _G.GameTooltip:AddDoubleLine(
-                --         L["Weekly Reward"],
-                --         C.StringByTemplate(L["Completed"], "success"),
-                --         1,
-                --         1,
-                --         1
-                --     )
-                -- else
-                --     _G.GameTooltip:AddDoubleLine(
-                --         L["Weekly Reward"],
-                --         C.StringByTemplate(L["Not Completed"], "danger"),
-                --         1,
-                --         1,
-                --         1
-                --     )
-                -- end
-                -- _G.GameTooltip:Show()
+                _G.GameTooltip:ClearLines()
+                _G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 8)
+                _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
+                _G.GameTooltip:AddLine(" ")
+
+                if #self.netTable == 0 then
+                    _G.GameTooltip:AddLine(C.StringByTemplate(L["No Nets Set"], "danger"))
+                    _G.GameTooltip:Show()
+                    return
+                end
+                _G.GameTooltip:AddLine(L["Fishing Nets"])
+
+                for netIndex, timeLeft in pairs(self.netTable) do
+                    local text
+                    if type(timeLeft) == "number" then
+                        if timeLeft <= 0 then
+                            text = C.StringByTemplate(L["Can be collected"], "success")
+                        else
+                            text = C.StringByTemplate(secondToTime(timeLeft), "info")
+                        end
+                    else
+                        if timeLeft == "NOT_STARTED" then
+                            text = C.StringByTemplate(L["Can be set"], "warning")
+                        end
+                    end
+
+                    _G.GameTooltip:AddDoubleLine(format(L["Net #%d"], netIndex), text, 1, 1, 1, 1, 1, 1)
+                end
+
+                _G.GameTooltip:Show()
             end,
             onLeave = function(self)
-                -- _G.GameTooltip:Hide()
+                _G.GameTooltip:Hide()
             end
         }
-    }
-}
-
-local env = {
-    fishingNetPosition = {
-        [1] = {x = 0.63585, y = 0.75349},
-        [2] = {x = 0.64514, y = 0.74178}
     }
 }
 
@@ -560,8 +604,10 @@ local eventData = {
         dbKey = "iskaaranFishingNet",
         args = {
             icon = 4687629,
+            interval = 10 * 60 * 60,
             type = "triggerTimer",
             filter = E.noop,
+            barColor = colorPlatte.purple,
             eventName = L["Iskaaran Fishing Net"],
             label = L["Fishing Net"],
             events = {
@@ -572,7 +618,7 @@ local eventData = {
                             return
                         end
 
-                        local map = C_Map.GetBestMapForUnit("player")
+                        local map = C_Map_GetBestMapForUnit("player")
                         local position = C_Map.GetPlayerMapPosition(map, "player")
                         if map ~= 2022 then
                             return
@@ -581,7 +627,7 @@ local eventData = {
                         local lengthMap = {}
 
                         for i, netPos in ipairs(env.fishingNetPosition) do
-                            local length = math.pow(position.x - netPos.x, 2) + math.pow(position.y - netPos.y, 2)
+                            local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
                             lengthMap[i] = length
                         end
 
@@ -600,12 +646,12 @@ local eventData = {
 
                         local db = ET:GetPlayerDB("iskaaranFishingNet")
 
-                        if spellID == 377887 then
+                        if spellID == 377887 then -- Get Fish
                             if db[netIndex] then
-                                db[netIndex] = 0
+                                db[netIndex] = nil
                             end
                             print("Fishing net " .. netIndex .. " end at " .. GetServerTime())
-                        elseif spellID == 377883 then
+                        elseif spellID == 377883 then -- Set Net
                             db[netIndex] = GetServerTime()
                             print("Fishing net " .. netIndex .. " start at " .. GetServerTime())
                         end
@@ -831,6 +877,7 @@ function ET:UpdateTrackers()
                 tracker.args.stopAlertIfCompleted = self.db[data.dbKey].stopAlertIfCompleted
                 tracker.args.stopAlertIfPlayerNotEnteredDragonlands =
                     self.db[data.dbKey].stopAlertIfPlayerNotEnteredDragonlands
+                tracker.args.disableAlertAfterHours = self.db[data.dbKey].disableAlertAfterHours
             else
                 tracker.args.alertSecond = nil
                 tracker.args.stopAlertIfCompleted = nil

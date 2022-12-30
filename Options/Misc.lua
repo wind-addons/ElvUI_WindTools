@@ -410,12 +410,14 @@ options.cvars = {
                 alwaysCompareItems = {
                     order = 1,
                     type = "toggle",
-                    name = L["Auto Compare"]
+                    name = L["Auto Compare"],
+                    width = 1.5
                 },
                 autoOpenLootHistory = {
                     order = 2,
                     type = "toggle",
-                    name = L["Auto Open Loot History"]
+                    name = L["Auto Open Loot History"],
+                    width = 1.5
                 }
             }
         }

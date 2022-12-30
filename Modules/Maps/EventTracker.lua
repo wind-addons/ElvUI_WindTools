@@ -604,10 +604,12 @@ local eventData = {
     IskaaranFishingNet = {
         dbKey = "iskaaranFishingNet",
         args = {
-            icon = 4687629,
+            icon = 2159815,
             interval = 10 * 60 * 60,
             type = "triggerTimer",
-            filter = E.noop,
+            filter = function()
+                return C_QuestLog_IsQuestFlaggedCompleted(70871)
+            end,
             barColor = colorPlatte.purple,
             eventName = L["Iskaaran Fishing Net"],
             label = L["Fishing Net"],
@@ -651,10 +653,8 @@ local eventData = {
                             if db[netIndex] then
                                 db[netIndex] = nil
                             end
-                            print("Fishing net " .. netIndex .. " end at " .. GetServerTime())
                         elseif spellID == 377883 then -- Set Net
-                            db[netIndex] = GetServerTime()
-                            print("Fishing net " .. netIndex .. " start at " .. GetServerTime())
+                            db[netIndex] = GetServerTime() - 2 -- cast time
                         end
                     end
                 }

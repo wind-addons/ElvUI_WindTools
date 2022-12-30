@@ -137,6 +137,8 @@ function CT:ShowContextText(button)
                     text = L["Remove This Alt"],
                     func = function()
                         E.global.WT.item.contacts.alts[button.realm][button.faction][button.name] = nil
+                        self:BuildAltsData()
+                        self:UpdatePage(currentPageIndex)
                     end,
                     notCheckable = true
                 }

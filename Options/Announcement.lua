@@ -2657,7 +2657,7 @@ options.keystone = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Announce the new mythic keystone."],
+                    name = L["Announce your mythic keystone."],
                     fontSize = "medium"
                 }
             }
@@ -2667,15 +2667,27 @@ options.keystone = {
             type = "toggle",
             name = L["Enable"]
         },
-        text = {
+        command = {
             order = 3,
+            type = "toggle",
+            name = L["!keys Command"],
+            desc = L["Send the keystone to party or guild chat when someone use !keys command."]
+        },
+        betterAlign = {
+            order = 4,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
+        text = {
+            order = 5,
             type = "input",
             name = L["Text"],
             desc = FormatDesc("%keystone%", L["Keystone"]),
             width = 2
         },
         useDefaultText = {
-            order = 4,
+            order = 6,
             type = "execute",
             func = function(info)
                 E.db.WT.announcement.keystone.text = P.announcement.keystone.text
@@ -2683,7 +2695,7 @@ options.keystone = {
             name = L["Default Text"]
         },
         channel = {
-            order = 5,
+            order = 7,
             name = L["Channel"],
             type = "group",
             inline = true,
@@ -2727,7 +2739,8 @@ options.general = {
             order = 1,
             type = "input",
             name = L["Emote Format"],
-            desc = L["The text template used in emote channel."].."\n"..format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "info")),
+            desc = L["The text template used in emote channel."] ..
+                "\n" .. format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "info")),
             width = 2
         }
     }

@@ -4,6 +4,7 @@ local ES = E.Skins
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
 
 local C_LootHistory_GetNumItems = C_LootHistory.GetNumItems
 

@@ -13,6 +13,7 @@ local ipairs = ipairs
 local pairs = pairs
 local type = type
 local unpack = unpack
+local tinsert = tinsert
 local tsort = table.sort
 local math_pow = math.pow
 
@@ -27,22 +28,17 @@ local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
 
-local function secondToTime(second)
-    local hour = floor(second / 3600)
-    local min = floor((second - hour * 3600) / 60)
-    local sec = floor(second - hour * 3600 - min * 60)
-
-    if hour == 0 then
-        return format("%02d:%02d", min, sec)
-    else
-        return format("%02d:%02d:%02d", hour, min, sec)
-    end
-end
-
 local eventList = {
     "CommunityFeast",
     "SiegeOnDragonbaneKeep",
     "IskaaranFishingNet"
+}
+
+local env = {
+    fishingNetPosition = {
+        [1] = {x = 0.63585, y = 0.75349},
+        [2] = {x = 0.64514, y = 0.74178}
+    }
 }
 
 local colorPlatte = {
@@ -63,6 +59,18 @@ local colorPlatte = {
         {r = 0.21961, g = 0.93725, b = 0.49020, a = 1}
     }
 }
+
+local function secondToTime(second)
+    local hour = floor(second / 3600)
+    local min = floor((second - hour * 3600) / 60)
+    local sec = floor(second - hour * 3600 - min * 60)
+
+    if hour == 0 then
+        return format("%02d:%02d", min, sec)
+    else
+        return format("%02d:%02d:%02d", hour, min, sec)
+    end
+end
 
 local function reskinStatusBar(bar)
     bar:SetFrameLevel(bar:GetFrameLevel() + 1)
@@ -86,13 +94,6 @@ local function getGradientText(text, colorTable)
         colorTable[2].b
     )
 end
-
-local env = {
-    fishingNetPosition = {
-        [1] = {x = 0.63585, y = 0.75349},
-        [2] = {x = 0.64514, y = 0.74178}
-    }
-}
 
 local functionFactory = {
     loopTimer = {
@@ -622,7 +623,7 @@ local eventData = {
                         end
 
                         local map = C_Map_GetBestMapForUnit("player")
-                        local position = C_Map.GetPlayerMapPosition(map, "player")
+                        local position = C_Map_GetPlayerMapPosition(map, "player")
                         if map ~= 2022 then
                             return
                         end
@@ -908,8 +909,6 @@ function ET:Initialize()
         self:RegisterEvent(event, "HandlerEvent")
     end
 end
-
-F.Developer.DelayInitialize(ET, 2)
 
 function ET:ProfileUpdate()
     self:Initialize()

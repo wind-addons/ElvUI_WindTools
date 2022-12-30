@@ -2,6 +2,7 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local gsub = gsub
+local strlower = strlower
 
 local C_Container_GetContainerItemID = C_Container.GetContainerItemID
 local C_Container_GetContainerItemLink = C_Container.GetContainerItemLink

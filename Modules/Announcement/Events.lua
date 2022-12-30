@@ -6,12 +6,15 @@ local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 A.EventList = {
     "CHALLENGE_MODE_COMPLETED",
     "CHAT_MSG_ADDON",
+    "CHAT_MSG_PARTY",
+    "CHAT_MSG_PARTY_LEADER",
+    "CHAT_MSG_GUILD",
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
     "GROUP_ROSTER_UPDATE",
     "LFG_COMPLETION_REWARD",
     "PLAYER_ENTERING_WORLD",
-    "QUEST_LOG_UPDATE"
+    "QUEST_LOG_UPDATE",
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -19,6 +22,18 @@ function A:CHAT_MSG_SYSTEM(event, text)
     local data = {}
 
     self:ResetInstance(text) -- 重置副本
+end
+
+function A:CHAT_MSG_PARTY(event, ...)
+    self:KeystoneLink(event, ...)
+end
+
+function A:CHAT_MSG_PARTY_LEADER(event, ...)
+    self:KeystoneLink(event, ...)
+end
+
+function A:CHAT_MSG_GUILD(event, ...)
+    self:KeystoneLink(event, ...)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()

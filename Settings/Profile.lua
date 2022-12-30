@@ -276,7 +276,8 @@ P.announcement = {
         text = L["My new keystone is %keystone%."],
         channel = {
             party = "PARTY"
-        }
+        },
+        command = true,
     }
 }
 

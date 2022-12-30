@@ -390,6 +390,8 @@ local functionFactory = {
                     )
                     self.statusBar:SetMinMaxValues(0, 1)
                     self.statusBar:SetValue(1)
+
+                    E:Flash(self.runningTip, 1, true)
                 elseif #waiting > 0 then
                     if #done > 0 then
                         local netsText = ""
@@ -424,11 +426,15 @@ local functionFactory = {
                     self.timerText:SetText(secondToTime(maxTimeLeft))
                     self.statusBar:SetMinMaxValues(0, self.args.interval)
                     self.statusBar:SetValue(maxTimeLeft)
+
+                    E:StopFlash(self.runningTip)
                 else
                     tip = C.StringByTemplate(L["No Nets Set"], "danger")
                     self.timerText:SetText("")
                     self.statusBar:SetMinMaxValues(0, 1)
                     self.statusBar:SetValue(0)
+
+                    E:StopFlash(self.runningTip)
                 end
 
                 self.runningTip:SetText(tip)
@@ -459,7 +465,7 @@ local functionFactory = {
                         if not self.args["alertCache"][netIndex][db[netIndex]] then
                             self.args["alertCache"][netIndex][db[netIndex]] = true
                             local hour = self.args.disableAlertAfterHours
-                            if not hour or (hour * 60 * 60 + timeLeft) > 0 then
+                            if not hour or hour == 0 or (hour * 60 * 60 + timeLeft) > 0 then
                                 tinsert(readyNets, netIndex)
                                 needAnnounce = true
                             end

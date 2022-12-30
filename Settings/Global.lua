@@ -32,3 +32,7 @@ G.misc = {
         movies = {},
     }
 }
+
+G.maps ={
+    eventTracker = {}
+}

@@ -836,6 +836,7 @@ do
                 order = 1,
                 type = "select",
                 name = L["Alt List"],
+                width = 1.5,
                 get = function()
                     return selectedKey
                 end,

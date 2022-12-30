@@ -347,7 +347,6 @@ local functionFactory = {
 
                 self.netTable = {}
                 local now = GetServerTime()
-                now = db[1] + 10 * 60 * 60 - 10
                 for netIndex = 1, #env.fishingNetPosition do
                     if not db[netIndex] or db[netIndex] == 0 then
                         self.netTable[netIndex] = "NOT_STARTED"
@@ -357,23 +356,21 @@ local functionFactory = {
                 end
             end,
             uiUpdater = function(self)
-                if not self.netTable then
-                    return
-                end
-
                 local done = {}
                 local notStarted = {}
                 local waiting = {}
 
-                for netIndex, timeLeft in pairs(self.netTable) do
-                    if type(timeLeft) == "string" and timeLeft == "NOT_STARTED" then
-                        tinsert(notStarted, netIndex)
-                    else
-                        if type(timeLeft) == "number" then
-                            if timeLeft <= 0 then
-                                tinsert(done, netIndex)
-                            else
-                                tinsert(waiting, netIndex)
+                if self.netTable then
+                    for netIndex, timeLeft in pairs(self.netTable) do
+                        if type(timeLeft) == "string" and timeLeft == "NOT_STARTED" then
+                            tinsert(notStarted, netIndex)
+                        else
+                            if type(timeLeft) == "number" then
+                                if timeLeft <= 0 then
+                                    tinsert(done, netIndex)
+                                else
+                                    tinsert(waiting, netIndex)
+                                end
                             end
                         end
                     end
@@ -436,6 +433,10 @@ local functionFactory = {
                 self.runningTip:SetText(tip)
             end,
             alert = function(self)
+                if not self.netTable then
+                    return
+                end
+
                 local db = ET:GetPlayerDB("iskaaranFishingNet")
                 if not db then
                     return
@@ -492,7 +493,7 @@ local functionFactory = {
                 _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
                 _G.GameTooltip:AddLine(" ")
 
-                if #self.netTable == 0 then
+                if not self.netTable or #self.netTable == 0 then
                     _G.GameTooltip:AddLine(C.StringByTemplate(L["No Nets Set"], "danger"))
                     _G.GameTooltip:Show()
                     return

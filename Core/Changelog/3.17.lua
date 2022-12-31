@@ -27,11 +27,11 @@ W.Changelog[317] = {
         },
         ["enUS"] = {
             "[Event Tracker] Add support for Iskaaran Fishing Net.",
-            "[Announce] Add support for !keys command."
+            "[Announcement] Add support for !keys command."
         },
         ["koKR"] = {
             "[Event Tracker] Add support for Iskaaran Fishing Net.",
-            "[Announce] Add support for !keys command."
+            "[Announcement] Add support for !keys command."
         }
     },
     IMPROVEMENT = {

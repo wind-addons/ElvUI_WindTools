@@ -647,11 +647,11 @@ local eventData = {
                         end
 
                         local map = C_Map_GetBestMapForUnit("player")
-                        local position = C_Map_GetPlayerMapPosition(map, "player")
-                        if map ~= 2022 then
+                        if not map or map ~= 2022 then
                             return
                         end
 
+                        local position = C_Map_GetPlayerMapPosition(map, "player")
                         local lengthMap = {}
 
                         for i, netPos in ipairs(env.fishingNetPosition) do

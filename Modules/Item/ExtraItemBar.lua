@@ -1456,11 +1456,23 @@ function EB:UpdateBar(id)
         end
 
         -- 调整文字风格
+        F.SetFontWithDB(
+            button.qualityTier,
+            {
+                size = barDB.qualityTier.size,
+                name = E.db.general.font,
+                style = "OUTLINE"
+            }
+        )
+
         F.SetFontWithDB(button.count, barDB.countFont)
         F.SetFontWithDB(button.bind, barDB.bindFont)
 
         F.SetFontColorWithDB(button.count, barDB.countFont.color)
         F.SetFontColorWithDB(button.bind, barDB.bindFont.color)
+
+        button.qualityTier:ClearAllPoints()
+        button.qualityTier:SetPoint("TOPLEFT", button, "TOPLEFT", barDB.qualityTier.xOffset, barDB.qualityTier.yOffset)
 
         button.count:ClearAllPoints()
         button.count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)

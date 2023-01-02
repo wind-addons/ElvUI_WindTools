@@ -18,6 +18,7 @@ local unpack = unpack
 local wipe = wipe
 
 local CooldownFrame_Set = CooldownFrame_Set
+local CreateAtlasMarkup = CreateAtlasMarkup
 local CreateFrame = CreateFrame
 local GameTooltip = _G.GameTooltip
 local GetBindingKey = GetBindingKey
@@ -903,7 +904,7 @@ local openableItems = {
     201818, -- 暮光保險箱
     202142, -- 龍禍要塞保險箱
     202171, -- 龍族錢包
-    202080  -- 密庫藏寶箱
+    202080 -- 密庫藏寶箱
 }
 
 -- 更新任务物品列表

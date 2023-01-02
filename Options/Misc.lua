@@ -331,21 +331,8 @@ options.cvars = {
                 }
             }
         },
-        tooltips = {
-            order = 4,
-            type = "group",
-            inline = true,
-            name = L["Tooltips"],
-            args = {
-                alwaysCompareItems = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Auto Compare"]
-                }
-            }
-        },
         mouse = {
-            order = 5,
+            order = 4,
             type = "group",
             inline = true,
             name = L["Mouse"],
@@ -367,7 +354,7 @@ options.cvars = {
             }
         },
         nameplate = {
-            order = 6,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Nameplate"],
@@ -411,6 +398,26 @@ options.cvars = {
                     type = "toggle",
                     width = 1.5,
                     name = L["Stack Nameplates"]
+                }
+            }
+        },
+        misc = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Misc"],
+            args = {
+                alwaysCompareItems = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Auto Compare"],
+                    width = 1.5
+                },
+                autoOpenLootHistory = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Auto Open Loot History"],
+                    width = 1.5
                 }
             }
         }

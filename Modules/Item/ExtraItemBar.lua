@@ -35,6 +35,8 @@ local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
+local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
+local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
 
 -- https://www.wowhead.com/beta/items/consumables/potions/name:Potion/min-level:40
 -- Potion (require level >= 40, Name: Potion, +Shadowlands, +Dragonflight, +Normal)
@@ -973,6 +975,19 @@ function EB:CreateButton(name, barDB)
     tex:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -1, 1)
     tex:SetTexCoord(unpack(E.TexCoords))
 
+    local qualityTier = button:CreateFontString(nil, "OVERLAY")
+    qualityTier:SetTextColor(1, 1, 1, 1)
+    qualityTier:SetPoint("TOPLEFT", button, "TOPLEFT")
+    qualityTier:SetJustifyH("CENTER")
+    F.SetFontWithDB(
+        qualityTier,
+        {
+            size = barDB.qualityTier.size,
+            name = E.db.general.font,
+            style = "OUTLINE"
+        }
+    )
+
     local count = button:CreateFontString(nil, "OVERLAY")
     count:SetTextColor(1, 1, 1, 1)
     count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT")
@@ -989,9 +1004,24 @@ function EB:CreateButton(name, barDB)
     E:RegisterCooldown(cooldown)
 
     button.tex = tex
+    button.qualityTier = qualityTier
     button.count = count
     button.bind = bind
     button.cooldown = cooldown
+
+    button.SetTier = function(self, itemIDOrLink)
+        local level =
+            C_TradeSkillUI_GetItemReagentQualityByItemInfo(itemIDOrLink) or
+            C_TradeSkillUI_GetItemCraftedQualityByItemInfo(itemIDOrLink)
+
+        if not level or level == 0 then
+            self.qualityTier:SetText("")
+            self.qualityTier:Hide()
+        else
+            self.qualityTier:SetText(CreateAtlasMarkup(format("Professions-Icon-Quality-Tier%d-Small", level)))
+            self.qualityTier:Show()
+        end
+    end
 
     button:StyleButton()
 
@@ -1001,24 +1031,25 @@ function EB:CreateButton(name, barDB)
     return button
 end
 
-function EB:SetUpButton(button, questItemData, slotID)
+function EB:SetUpButton(button, itemData, slotID)
     button.itemName = nil
     button.itemID = nil
     button.spellName = nil
     button.slotID = nil
     button.countText = nil
 
-    if questItemData then
-        button.itemID = questItemData.itemID
-        button.countText = GetItemCount(questItemData.itemID, nil, true)
-        button.questLogIndex = questItemData.questLogIndex
+    if itemData then
+        button.itemID = itemData.itemID
+        button.countText = GetItemCount(itemData.itemID, nil, true)
+        button.questLogIndex = itemData.questLogIndex
         button:SetBackdropBorderColor(0, 0, 0)
 
         async.WithItemID(
-            questItemData.itemID,
+            itemData.itemID,
             function(item)
                 button.itemName = item:GetItemName()
                 button.tex:SetTexture(item:GetItemIcon())
+                button:SetTier(itemData.itemID)
             end
         )
     elseif slotID then
@@ -1026,16 +1057,16 @@ function EB:SetUpButton(button, questItemData, slotID)
         async.WithItemSlotID(
             slotID,
             function(item)
-                if button.slotID == slotID then
-                    button.itemName = item:GetItemName()
-                    button.tex:SetTexture(item:GetItemIcon())
+                button.itemName = item:GetItemName()
+                button.tex:SetTexture(item:GetItemIcon())
 
-                    local color = item:GetItemQualityColor()
+                local color = item:GetItemQualityColor()
 
-                    if color then
-                        button:SetBackdropBorderColor(color.r, color.g, color.b)
-                    end
+                if color then
+                    button:SetBackdropBorderColor(color.r, color.g, color.b)
                 end
+
+                button:SetTier(item:GetItemID())
             end
         )
     end
@@ -1426,11 +1457,23 @@ function EB:UpdateBar(id)
         end
 
         -- 调整文字风格
+        F.SetFontWithDB(
+            button.qualityTier,
+            {
+                size = barDB.qualityTier.size,
+                name = E.db.general.font,
+                style = "OUTLINE"
+            }
+        )
+
         F.SetFontWithDB(button.count, barDB.countFont)
         F.SetFontWithDB(button.bind, barDB.bindFont)
 
         F.SetFontColorWithDB(button.count, barDB.countFont.color)
         F.SetFontColorWithDB(button.bind, barDB.bindFont.color)
+
+        button.qualityTier:ClearAllPoints()
+        button.qualityTier:SetPoint("TOPLEFT", button, "TOPLEFT", barDB.qualityTier.xOffset, barDB.qualityTier.yOffset)
 
         button.count:ClearAllPoints()
         button.count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", barDB.countFont.xOffset, barDB.countFont.yOffset)

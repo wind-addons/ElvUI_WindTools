@@ -367,8 +367,47 @@ do -- Add options for bars
                     max = 12,
                     step = 1
                 },
-                countFont = {
+                qualityTier = {
                     order = 12,
+                    type = "group",
+                    inline = true,
+                    name = L["Crafting Quality Tier"],
+                    get = function(info)
+                        return E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.item.extraItemsBar["bar" .. i][info[#info - 1]][info[#info]] = value
+                        EB:UpdateBar(i)
+                    end,
+                    args = {
+                        size = {
+                            order = 3,
+                            name = L["Size"],
+                            type = "range",
+                            min = 5,
+                            max = 60,
+                            step = 1
+                        },
+                        xOffset = {
+                            order = 4,
+                            name = L["X-Offset"],
+                            type = "range",
+                            min = -100,
+                            max = 100,
+                            step = 1
+                        },
+                        yOffset = {
+                            order = 5,
+                            name = L["Y-Offset"],
+                            type = "range",
+                            min = -100,
+                            max = 100,
+                            step = 1
+                        }
+                    }
+                },
+                countFont = {
+                    order = 13,
                     type = "group",
                     inline = true,
                     name = L["Counter"],
@@ -411,16 +450,16 @@ do -- Add options for bars
                             order = 4,
                             name = L["X-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         yOffset = {
                             order = 5,
                             name = L["Y-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         color = {
@@ -442,7 +481,7 @@ do -- Add options for bars
                     }
                 },
                 bindFont = {
-                    order = 13,
+                    order = 14,
                     type = "group",
                     inline = true,
                     name = L["Key Binding"],
@@ -485,16 +524,16 @@ do -- Add options for bars
                             order = 4,
                             name = L["X-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         yOffset = {
                             order = 5,
                             name = L["Y-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         color = {
@@ -516,7 +555,7 @@ do -- Add options for bars
                     }
                 },
                 include = {
-                    order = 14,
+                    order = 15,
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(
@@ -1350,16 +1389,16 @@ options.itemLevel = {
                             order = 4,
                             name = L["X-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         yOffset = {
                             order = 5,
                             name = L["Y-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         }
                     }
@@ -1489,16 +1528,16 @@ options.itemLevel = {
                             order = 4,
                             name = L["X-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         },
                         yOffset = {
                             order = 5,
                             name = L["Y-Offset"],
                             type = "range",
-                            min = -50,
-                            max = 50,
+                            min = -100,
+                            max = 100,
                             step = 1
                         }
                     }

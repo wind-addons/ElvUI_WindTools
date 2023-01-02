@@ -36,8 +36,8 @@ local eventList = {
 
 local env = {
     fishingNetPosition = {
-        [1] = {x = 0.63585, y = 0.75349},
-        [2] = {x = 0.64514, y = 0.74178}
+        [1] = {map = 2022, x = 0.63585, y = 0.75349},
+        [2] = {map = 2022, x = 0.64514, y = 0.74178}
     }
 }
 
@@ -647,7 +647,7 @@ local eventData = {
                         end
 
                         local map = C_Map_GetBestMapForUnit("player")
-                        if not map or map ~= 2022 then
+                        if not map then
                             return
                         end
 
@@ -660,8 +660,10 @@ local eventData = {
                         local lengthMap = {}
 
                         for i, netPos in ipairs(env.fishingNetPosition) do
-                            local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
-                            lengthMap[i] = length
+                            if map == netPos.map then
+                                local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
+                                lengthMap[i] = length
+                            end
                         end
 
                         local min

@@ -6,7 +6,7 @@ G.core = {
     fixPlaystyle = true,
     logLevel = 2,
     loginMessage = true,
-    noDuplicatedParty = true
+    noDuplicatedParty = false
 }
 
 G.item = {
@@ -29,10 +29,10 @@ G.misc = {
         covenantCache = {}
     },
     watched = {
-        movies = {},
+        movies = {}
     }
 }
 
-G.maps ={
+G.maps = {
     eventTracker = {}
 }

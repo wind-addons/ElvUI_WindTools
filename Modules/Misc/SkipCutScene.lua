@@ -22,7 +22,7 @@ do
         end
         CinematicFrame_CancelCinematic()
         E:Delay(
-            0.1,
+            0.5,
             function()
                 if not _G.CinematicFrame:IsShown() then
                     F.Print(L["Skipped the cutscene."])
@@ -65,7 +65,7 @@ do
         _G.MovieFrame_PlayMovie = function(frame, movieID, override)
             if E.private.WT and E.private.WT.misc.skipCutScene and not override then
                 local needWatch = E.private.WT.misc.onlyStopWatched and not E.global.WT.misc.watched.movies[movieID]
-                if not IsModifierKeyDown() or not needWatch then
+                if not IsModifierKeyDown() and not needWatch then
                     GameMovieFinished()
                     F.Print(
                         format(
@@ -79,8 +79,8 @@ do
                 end
             end
 
-            PlayMovie(frame, movieID)
             E.global.WT.misc.watched.movies[movieID] = true
+            PlayMovie(frame, movieID)
         end
 
         local SetHyperlink = _G.ItemRefTooltip.SetHyperlink

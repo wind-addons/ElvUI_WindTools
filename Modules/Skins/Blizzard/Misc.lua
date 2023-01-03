@@ -164,6 +164,9 @@ function S:BlizzardMiscFrames()
             self:CreateShadow(frame)
         end
     )
+
+    -- Battle.net
+    self:CreateShadow(_G.BattleTagInviteFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

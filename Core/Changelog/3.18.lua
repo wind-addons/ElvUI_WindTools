@@ -29,17 +29,17 @@ W.Changelog[318] = {
         ["zhTW"] = {
             "[CVars 編輯器] 新增了自動開啟骰裝介面的 CVar 選項.",
             "[額外物品條] 新增了製造物品品質的顯示.",
-            "[美化皮膚] 新增戰網好友請求框體的美化."
+            "[美化皮膚] 新增戰網好友請求框架的美化."
         },
         ["enUS"] = {
             "[CVars Editor] Add an option to automatically open the roll history frame.",
             "[Extra Item Bar] Add a feature to show the quality of crafted items.",
-            "[Skins] Add a skin for the Battle.net friend invite frame."
+            "[Skins] Add a skin for Battle.net friend invite frame."
         },
         ["koKR"] = {
             "[CVars Editor] Add an option to automatically open the roll history frame.",
             "[Extra Item Bar] Add a feature to show the quality of crafted items.",
-            "[Skins] Add a skin for the Battle.net friend invite frame."
+            "[Skins] Add a skin for Battle.net friend invite frame."
         }
     },
     IMPROVEMENT = {

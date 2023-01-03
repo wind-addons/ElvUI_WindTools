@@ -179,6 +179,9 @@ function A:Utility(event, sourceName, spellId)
         if TryAnnounce(spellId, sourceName, 261602) then
             return
         end -- 凱蒂的郵哨
+        if TryAnnounce(spellId, sourceName, 376664) then
+            return
+        end -- 歐胡納鷹棲所
         if TryAnnounce(spellId, sourceName, 195782) then
             return
         end -- 召喚月羽雕像

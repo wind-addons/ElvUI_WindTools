@@ -539,7 +539,6 @@ V.tooltips = {
             enable = true,
             markHighestScore = true,
             showNoRecord = true,
-            -- DF S1
             ["Temple of the Jade Serpent"] = true,
             ["Shadowmoon Burial Grounds"] = true,
             ["Halls of Valor"] = true,

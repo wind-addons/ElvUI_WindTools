@@ -408,28 +408,6 @@ local runesDragonflight = {
     201325 -- 龍族增強符文
 }
 
--- The items in torghast
-local torghastItems = {
-    168035, -- 淵喉污鼠韁繩
-    168207, -- 掠奪的靈魄能量球
-    170499, -- 淵喉巡者韁繩
-    170540, -- 飢餓的靈魄能量球
-    174464, -- 鬼靈鞍具
-    176331, -- 精華掩蔽藥水
-    176409, -- 活力虹吸精華
-    176443, -- 消逝狂亂藥水
-    184662, -- 被徵用的靈魄能量球
-    185946, -- 長尾爆炸鼠
-    185947, -- 汲取打擊藥劑
-    185950, -- 時光飛梭藥劑
-    186043, -- 托迦司傳送門操作卷軸
-    186614, -- 靈魂罐
-    186615, -- 召喚雙子之鏡
-    186636, -- 一籠淵喉污鼠
-    186678, -- 淵鑄武器箱
-    186679 -- 統御卷軸
-}
-
 -- https://www.wowhead.com/beta/items/consumables/food-and-drinks/min-req-level:40?filter=86;11;0
 -- Food (Crafted by cooking)
 local food = {
@@ -960,7 +938,6 @@ local moduleList = {
     ["FOODDF"] = foodDragonflight,
     ["FOODVENDOR"] = foodDragonflightVendor,
     ["MAGEFOOD"] = conjuredManaFood,
-    ["TORGHAST"] = torghastItems,
     ["BANNER"] = banners,
     ["UTILITY"] = utilities,
     ["OPENABLE"] = openableItems

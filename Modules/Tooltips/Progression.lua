@@ -43,9 +43,7 @@ local compareGUID
 local cache = {}
 
 local tiers = {
-    "Castle Nathria",
-    "Sanctum of Domination",
-    "Sepulcher of the First Ones"
+    "Vault of the Incarnates"
 }
 
 local levels = {
@@ -71,66 +69,6 @@ local locales = {
     ["Mythic"] = {
         short = L["[ABBR] Mythic"],
         full = L["Mythic"]
-    },
-    ["Castle Nathria"] = {
-        short = L["[ABBR] Castle Nathria"],
-        full = L["Castle Nathria"]
-    },
-    ["Sanctum of Domination"] = {
-        short = L["[ABBR] Sanctum of Domination"],
-        full = L["Sanctum of Domination"]
-    },
-    ["Sepulcher of the First Ones"] = {
-        short = L["[ABBR] Sepulcher of the First Ones"],
-        full = L["Sepulcher of the First Ones"]
-    },
-    ["Grimrail Depot"] = {
-        short = L["[ABBR] Grimrail Depot"],
-        full = L["Grimrail Depot"]
-    },
-    ["Iron Docks"] = {
-        short = L["[ABBR] Iron Docks"],
-        full = L["Iron Docks"]
-    },
-    ["Operation: Mechagon - Junkyard"] = {
-        short = L["[ABBR] Operation: Mechagon - Junkyard"],
-        full = L["Operation: Mechagon - Junkyard"]
-    },
-    ["Operation: Mechagon - Workshop"] = {
-        short = L["[ABBR] Operation: Mechagon - Workshop"],
-        full = L["Operation: Mechagon - Workshop"]
-    },
-    ["Return to Karazhan: Lower"] = {
-        short = L["[ABBR] Return to Karazhan: Lower"],
-        full = L["Return to Karazhan: Lower"]
-    },
-    ["Return to Karazhan: Upper"] = {
-        short = L["[ABBR] Return to Karazhan: Upper"],
-        full = L["Return to Karazhan: Upper"]
-    },
-    ["Tazavesh: Streets of Wonder"] = {
-        short = L["[ABBR] Tazavesh: Streets of Wonder"],
-        full = L["Tazavesh: Streets of Wonder"]
-    },
-    ["Tazavesh: So'leah's Gambit"] = {
-        short = L["[ABBR] Tazavesh: So'leah's Gambit"],
-        full = L["Tazavesh: So'leah's Gambit"]
-    },
-    ["Shadowlands Keystone Master: Season One"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season One"],
-        full = L["Shadowlands Keystone Master: Season One"]
-    },
-    ["Shadowlands Keystone Master: Season Two"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season Two"],
-        full = L["Shadowlands Keystone Master: Season Two"]
-    },
-    ["Shadowlands Keystone Master: Season Three"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season Three"],
-        full = L["Shadowlands Keystone Master: Season Three"]
-    },
-    ["Shadowlands Keystone Master: Season Four"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season Four"],
-        full = L["Shadowlands Keystone Master: Season Four"]
     },
     ["Dragonflight Keystone Master: Season One"] = {
         short = L["[ABBR] Dragonflight Keystone Master: Season One"],
@@ -179,160 +117,6 @@ local locales = {
 }
 
 local raidAchievements = {
-    ["Castle Nathria"] = {
-        ["Mythic"] = {
-            14421,
-            14425,
-            14429,
-            14433,
-            14437,
-            14441,
-            14445,
-            14449,
-            14453,
-            14457
-        },
-        ["Heroic"] = {
-            14420,
-            14424,
-            14428,
-            14432,
-            14436,
-            14440,
-            14444,
-            14448,
-            14452,
-            14456
-        },
-        ["Normal"] = {
-            14419,
-            14423,
-            14427,
-            14431,
-            14435,
-            14439,
-            14443,
-            14447,
-            14451,
-            14455
-        },
-        ["Raid Finder"] = {
-            14422,
-            14426,
-            14430,
-            14434,
-            14438,
-            14442,
-            14446,
-            14450,
-            14454,
-            14458
-        }
-    },
-    ["Sanctum of Domination"] = {
-        ["Mythic"] = {
-            15139,
-            15143,
-            15147,
-            15151,
-            15155,
-            15159,
-            15163,
-            15167,
-            15172,
-            15176
-        },
-        ["Heroic"] = {
-            15138,
-            15142,
-            15146,
-            15150,
-            15154,
-            15158,
-            15162,
-            15166,
-            15171,
-            15175
-        },
-        ["Normal"] = {
-            15137,
-            15141,
-            15145,
-            15149,
-            15153,
-            15157,
-            15161,
-            15165,
-            15170,
-            15174
-        },
-        ["Raid Finder"] = {
-            15136,
-            15140,
-            15144,
-            15148,
-            15152,
-            15156,
-            15160,
-            15164,
-            15169,
-            15173
-        }
-    },
-    ["Sepulcher of the First Ones"] = {
-        ["Mythic"] = {
-            15427,
-            15431,
-            15435,
-            15439,
-            15443,
-            15447,
-            15451,
-            15455,
-            15459,
-            15463,
-            15467
-        },
-        ["Heroic"] = {
-            15426,
-            15430,
-            15434,
-            15438,
-            15442,
-            15446,
-            15450,
-            15454,
-            15458,
-            15462,
-            15466
-        },
-        ["Normal"] = {
-            15425,
-            15429,
-            15433,
-            15437,
-            15441,
-            15445,
-            15449,
-            15453,
-            15457,
-            15461,
-            15465
-        },
-        ["Raid Finder"] = {
-            15424,
-            15428,
-            15432,
-            15436,
-            15440,
-            15444,
-            15448,
-            15452,
-            15456,
-            15460,
-            15464
-        }
-    },
     ["Vault of the Incarnates"] = {
         ["Mythic"] = {
             16387,
@@ -378,15 +162,6 @@ local raidAchievements = {
 }
 
 local mythicKeystoneDungeons = {
-    [166] = "Grimrail Depot",
-    [169] = "Iron Docks",
-    [227] = "Return to Karazhan: Lower",
-    [234] = "Return to Karazhan: Upper",
-    [369] = "Operation: Mechagon - Junkyard",
-    [370] = "Operation: Mechagon - Workshop",
-    [391] = "Tazavesh: Streets of Wonder",
-    [392] = "Tazavesh: So'leah's Gambit",
-    -- DF S1
     [2] = "Temple of the Jade Serpent",
     [165] = "Shadowmoon Burial Grounds",
     [200] = "Halls of Valor",
@@ -398,10 +173,6 @@ local mythicKeystoneDungeons = {
 }
 
 local specialAchievements = {
-    {14532, "Shadowlands Keystone Master: Season One"},
-    {15078, "Shadowlands Keystone Master: Season Two"},
-    {15499, "Shadowlands Keystone Master: Season Three"},
-    {15690, "Shadowlands Keystone Master: Season Four"},
     {16649, "Dragonflight Keystone Master: Season One"},
     {16650, "Dragonflight Keystone Hero: Season One"}
 }

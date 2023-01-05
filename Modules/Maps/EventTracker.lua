@@ -36,10 +36,15 @@ local eventList = {
 
 local env = {
     fishingNetPosition = {
+        -- Waking Shores
         [1] = {map = 2022, x = 0.63585, y = 0.75349},
         [2] = {map = 2022, x = 0.64514, y = 0.74178},
+        -- Thaldraszus
         [3] = {map = 2025, x = 0.56782, y = 0.65178},
-        [4] = {map = 2025, x = 0.57756, y = 0.65491}
+        [4] = {map = 2025, x = 0.57756, y = 0.65491},
+        -- Ohn'ahran Plains
+        [5] = {map = 2023, x = 0.80522, y = 0.78433},
+        [6] = {map = 2023, x = 0.80467, y = 0.77742}
     }
 }
 

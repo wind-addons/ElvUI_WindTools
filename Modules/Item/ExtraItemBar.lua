@@ -1499,9 +1499,19 @@ function EB:UpdateBar(id)
         bar:GetParent():SetParent(AB.fadeParent)
     else
         if barDB.mouseOver then
-            bar:SetAlpha(barDB.alphaMin)
+            E:Delay(
+                1,
+                function()
+                    bar:SetAlpha(barDB.alphaMin)
+                end
+            )
         else
-            bar:SetAlpha(barDB.alphaMax)
+            E:Delay(
+                1,
+                function()
+                    bar:SetAlpha(barDB.alphaMax)
+                end
+            )
         end
         bar:GetParent():SetParent(E.UIParent)
     end

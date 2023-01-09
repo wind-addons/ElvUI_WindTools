@@ -36,6 +36,7 @@ local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
+local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
 local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
 
@@ -1015,7 +1016,7 @@ function EB:CreateButton(name, barDB)
     return button
 end
 
-function EB:SetUpButton(button, itemData, slotID)
+function EB:SetUpButton(button, itemData, slotID, waitGroup)
     button.itemName = nil
     button.itemID = nil
     button.spellName = nil
@@ -1028,16 +1029,26 @@ function EB:SetUpButton(button, itemData, slotID)
         button.questLogIndex = itemData.questLogIndex
         button:SetBackdropBorderColor(0, 0, 0)
 
+        waitGroup.count = waitGroup.count + 1
         async.WithItemID(
             itemData.itemID,
             function(item)
                 button.itemName = item:GetItemName()
                 button.tex:SetTexture(item:GetItemIcon())
                 button:SetTier(itemData.itemID)
+                E:Delay(
+                    0.1,
+                    function()
+                        -- delay for quality tier fetching and text changing
+                        waitGroup.count = waitGroup.count - 1
+                    end
+                )
             end
         )
     elseif slotID then
         button.slotID = slotID
+
+        waitGroup.count = waitGroup.count + 1
         async.WithItemSlotID(
             slotID,
             function(item)
@@ -1051,6 +1062,14 @@ function EB:SetUpButton(button, itemData, slotID)
                 end
 
                 button:SetTier(item:GetItemID())
+
+                E:Delay(
+                    0.1,
+                    function()
+                        -- delay for quality tier fetching and text changing
+                        waitGroup.count = waitGroup.count - 1
+                    end
+                )
             end
         )
     end
@@ -1316,6 +1335,12 @@ function EB:UpdateBar(id)
     local bar = self.bars[id]
     local barDB = self.db["bar" .. id]
 
+    if bar.waitGroup and bar.waitGroup.ticker then
+        bar.waitGroup.ticker:Cancel()
+    end
+
+    bar.waitGroup = {count = 0}
+
     if InCombatLockdown() then
         self:UpdateBarTextOnCombat(id)
         UpdateAfterCombat[id] = true
@@ -1334,11 +1359,11 @@ function EB:UpdateBar(id)
 
     local buttonID = 1
 
-    local function AddButtons(list)
+    local function addButtons(list)
         for _, itemID in pairs(list) do
             local count = GetItemCount(itemID)
             if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-                self:SetUpButton(bar.buttons[buttonID], {itemID = itemID})
+                self:SetUpButton(bar.buttons[buttonID], {itemID = itemID}, nil, bar.waitGroup)
                 self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                 buttonID = buttonID + 1
             end
@@ -1348,11 +1373,11 @@ function EB:UpdateBar(id)
     for _, module in ipairs {strsplit("[, ]", barDB.include)} do
         if buttonID <= barDB.numButtons then
             if moduleList[module] then
-                AddButtons(moduleList[module])
+                addButtons(moduleList[module])
             elseif module == "QUEST" then -- 更新任务物品
                 for _, data in pairs(questItemList) do
                     if not self.db.blackList[data.itemID] then
-                        self:SetUpButton(bar.buttons[buttonID], data)
+                        self:SetUpButton(bar.buttons[buttonID], data, nil, bar.waitGroup)
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end
@@ -1361,13 +1386,13 @@ function EB:UpdateBar(id)
                 for _, slotID in pairs(equipmentList) do
                     local itemID = GetInventoryItemID("player", slotID)
                     if itemID and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-                        self:SetUpButton(bar.buttons[buttonID], nil, slotID)
+                        self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
                         self:UpdateButtonSize(bar.buttons[buttonID], barDB)
                         buttonID = buttonID + 1
                     end
                 end
             elseif module == "CUSTOM" then -- 更新自定义列表
-                AddButtons(self.db.customList)
+                addButtons(self.db.customList)
             end
         end
     end
@@ -1493,30 +1518,38 @@ function EB:UpdateBar(id)
         end
     end
 
-    bar.alphaMin = barDB.alphaMin
-    bar.alphaMax = barDB.alphaMax
+    local function updateAlpha()
+        bar.alphaMin = barDB.alphaMin
+        bar.alphaMax = barDB.alphaMax
 
-    if barDB.globalFade then
-        bar:SetAlpha(1)
-        bar:GetParent():SetParent(AB.fadeParent)
-    else
-        if barDB.mouseOver then
-            E:Delay(
-                1,
-                function()
-                    bar:SetAlpha(barDB.alphaMin)
-                end
-            )
+        if barDB.globalFade then
+            bar:SetAlpha(1)
+            bar:GetParent():SetParent(AB.fadeParent)
         else
-            E:Delay(
-                1,
-                function()
-                    bar:SetAlpha(barDB.alphaMax)
-                end
-            )
+            if barDB.mouseOver then
+                bar:SetAlpha(barDB.alphaMin)
+            else
+                bar:SetAlpha(barDB.alphaMax)
+            end
+            bar:GetParent():SetParent(E.UIParent)
         end
-        bar:GetParent():SetParent(E.UIParent)
+
+        if bar.waitGroup.ticker then
+            bar.waitGroup.ticker:Cancel()
+        end
+
+        bar.waitGroup = nil
     end
+
+    bar.waitGroup.ticker =
+        C_Timer_NewTicker(
+        0.1,
+        function()
+            if not bar.waitGroup or bar.waitGroup.count == 0 then
+                updateAlpha()
+            end
+        end
+    )
 end
 
 function EB:UpdateBars()

@@ -905,7 +905,6 @@ local function UpdateQuestItemList()
     end
 end
 
--- 更新装备物品列表
 local forceUsableItems = {
     [193634] = true -- 茂發種子
 }

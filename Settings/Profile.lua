@@ -411,7 +411,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "QUEST,BANNER,EQUIP,OPENABLE"
+            include = "QUEST,BANNER,EQUIP,PROF,OPENABLE"
         },
         bar2 = {
             enable = true,

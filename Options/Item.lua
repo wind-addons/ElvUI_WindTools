@@ -559,7 +559,7 @@ do -- Add options for bars
                     type = "input",
                     name = L["Button Groups"],
                     desc = format(
-                        "%s %s\n" .. strrep("\n%s", 19),
+                        "%s %s\n" .. strrep("\n%s", 20),
                         L["Set the type and order of button groups."],
                         L["You can separate the groups with a comma."],
                         desc("QUEST", L["Quest Items"]),
@@ -583,6 +583,7 @@ do -- Add options for bars
                         desc("BANNER", L["Banners"]),
                         desc("UTILITY", L["Utilities"]),
                         desc("OPENABLE", L["Openable Items"]),
+                        desc("PROF", L["Profession Items"]),
                         desc("CUSTOM", L["Custom Items"])
                     ),
                     width = "full"

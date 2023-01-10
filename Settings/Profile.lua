@@ -505,7 +505,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "MAGEFOOD,FOODVENDOR,FOODDF,CUSTOM"
+            include = "MAGEFOOD,FOODVENDOR,FOODDF,RUNE,CUSTOM"
         },
         bar4 = {
             enable = false,

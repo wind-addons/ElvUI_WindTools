@@ -4,11 +4,21 @@ W.Changelog[319] = {
     RELEASE_DATE = "2023/01/11",
     IMPORTANT = {
         ["zhCN"] = {
+            "兼容性助手更新.",
             "[额外物品条] 将巨龙时代铭文制造的可用于武器的符文从 UTILITY 分类移动到 RUNE 分类."
         },
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhTW"] = {
+            "相容性助手更新.",
+            "[额外物品条] 將巨龍崛起銘文製造的可用於武器的符文從 UTILITY 分類移動到 RUNE 分類."
+        },
+        ["enUS"] = {
+            "Compatibility check update.",
+            "[Extra Item Bar] Move DF weapon runes from UTILITY to RUNE category."
+        },
+        ["koKR"] = {
+            "Compatibility check update.",
+            "[Extra Item Bar] Move DF weapon runes from UTILITY to RUNE category."
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -33,14 +43,14 @@ W.Changelog[319] = {
             "[通告] 修复一个可能发生的任务通告错误.",
             "[额外物品条] 更新可开启物品列表.",
             "[额外物品条] 清理暗影国度版本中的一些实用物品.",
-            "[额外物品条] 条 1 默认设置中增加了 PROF 分类.",
-            "[额外物品条] 条 3 默认设置中增加了 RUNE 分类.",
+            "[额外物品条] 条 1 默认设置中增加了 PROF 物品分类.",
+            "[额外物品条] 条 3 默认设置中增加了 RUNE 物品分类.",
             "[额外物品条] 修复了品质图标在启用滑过显示时滞留.",
             "[额外物品条] 修复了启用全局渐隐时错误使用鼠标滑过动画的问题.",
             "[游戏条] 新增 1 个炉石玩具.",
             "[观察] 更新附魔 ID 数据库. 感谢 bgp314@NGA",
             "[鼠标提示] 目标进度数据更新至 10.0.2.",
-            "[矩形小地图] 越界的 HandyNotes 图标现在会自动隐藏."
+            "[矩形小地图] 越界的 HandyNotes 小地图图标现在会自动隐藏."
         },
         ["zhTW"] = {
             "[通告] 修復一個可能發生的任務通告錯誤.",
@@ -66,7 +76,7 @@ W.Changelog[319] = {
             "[Game Bar] Add a new Hearthstone toy.",
             "[Inspect] Update enchant ID database. Thanks bgp314@NGA",
             "[Tooltip] Objective progress data update to 10.0.2.",
-            "[Rectangle Minimap] HandyNotes icons that are out of bounds will now be hidden automatically."
+            "[Rectangle Minimap] HandyNotes icons in minimap that are out of bounds will now be hidden automatically."
         },
         ["koKR"] = {
             "[Announcement] Fix a possible quest announcement error.",
@@ -79,7 +89,7 @@ W.Changelog[319] = {
             "[Game Bar] Add a new Hearthstone toy.",
             "[Inspect] Update enchant ID database. Thanks bgp314@NGA",
             "[Tooltip] Objective progress data update to 10.0.2.",
-            "[Rectangle Minimap] HandyNotes icons that are out of bounds will now be hidden automatically."
+            "[Rectangle Minimap] HandyNotes icons in minimap that are out of bounds will now be hidden automatically."
         }
     }
 }

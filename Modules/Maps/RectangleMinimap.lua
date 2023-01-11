@@ -16,18 +16,21 @@ local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 
 function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
-    hooksecurefunc(
-        icon,
-        "SetPoint",
-        function(pin)
-            if self.db and self.db.enable and self.effectiveHeight then
-                local y = select(5, pin:GetPoint(1))
-                if y and abs(y) > self.effectiveHeight / 2 then
-                    icon:Hide()
+    if icon.SetPoint then
+        hooksecurefunc(
+            icon,
+            "SetPoint",
+            function(pin, arg1, arg2, arg3, arg4, arg5)
+                if self.db and self.db.enable and self.effectiveHeight and self.effectiveHeight > 0 then
+                    if arg1 and arg1 == "CENTER" and arg3 and arg3 == "CENTER" then
+                        if arg5 and abs(arg5) > self.effectiveHeight / 2 then
+                            pin:Hide()
+                        end
+                    end
                 end
             end
-        end
-    )
+        )
+    end
 end
 
 function RM:HandyNotesFix()

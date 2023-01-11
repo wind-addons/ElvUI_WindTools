@@ -1148,7 +1148,7 @@ local moduleList = {
     ["BANNER"] = banners,
     ["UTILITY"] = utilities,
     ["OPENABLE"] = openableItems,
-    ["PROF"] = professionItems,
+    ["PROF"] = professionItems
 }
 
 function EB:CreateButton(name, barDB)
@@ -1498,7 +1498,7 @@ function EB:CreateBar(id)
                 return
             end
 
-            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
+            if not barDB.globalFade and barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeIn(
                     bar,
@@ -1517,7 +1517,7 @@ function EB:CreateBar(id)
                 return
             end
 
-            if barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
+            if not barDB.globalFade and barDB.mouseOver and barDB.alphaMax and barDB.alphaMin then
                 local alphaCurrent = bar:GetAlpha()
                 E:UIFrameFadeOut(
                     bar,
@@ -1736,6 +1736,7 @@ function EB:UpdateBar(id)
             else
                 bar:SetAlpha(barDB.alphaMax)
             end
+
             bar:GetParent():SetParent(E.UIParent)
         end
 

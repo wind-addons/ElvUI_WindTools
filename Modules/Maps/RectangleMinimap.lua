@@ -9,6 +9,7 @@ local floor = floor
 local format = format
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
+local select = select
 local sqrt = sqrt
 
 local InCombatLockdown = InCombatLockdown
@@ -20,8 +21,8 @@ function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
         "SetPoint",
         function(pin)
             if self.db and self.db.enable and self.effectiveHeight then
-                local _, _, _, x, y = pin:GetPoint(1)
-                if abs(y) > self.effectiveHeight / 2 then
+                local y = select(5, pin:GetPoint(1))
+                if y and abs(y) > self.effectiveHeight / 2 then
                     icon:Hide()
                 end
             end

@@ -64,12 +64,14 @@ local function GetQuests()
 				-- 任务进度 (比如 1/2 杀死熊怪)
 				for queryIndex = 1, GetNumQuestLeaderBoards(questIndex) do
 					local queryText = GetQuestLogLeaderBoard(queryIndex, questIndex)
-					local _, _, numItems, numNeeded, itemName = strfind(queryText, "(%d+)/(%d+) ?(.*)")
-					quests[questInfo.questID][queryIndex] = {
-						item = itemName,
-						numItems = numItems,
-						numNeeded = numNeeded
-					}
+					if queryText then
+						local _, _, numItems, numNeeded, itemName = strfind(queryText, "(%d+)/(%d+) ?(.*)")
+						quests[questInfo.questID][queryIndex] = {
+							item = itemName,
+							numItems = numItems,
+							numNeeded = numNeeded
+						}
+					end
 				end
 			end
 		end

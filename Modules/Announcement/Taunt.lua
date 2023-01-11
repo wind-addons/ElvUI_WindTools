@@ -7,13 +7,13 @@ local strsplit = strsplit
 local GetSpellLink = GetSpellLink
 local IsInGroup = IsInGroup
 
-local MonkProvokeAllCache = {}
-
-local TauntSpellList = {
+local tauntSpells = {
     [355] = true, -- 嘲諷（戰士）
+    [1161] = true, -- 挑戰怒吼（戰士）
     [56222] = true, -- 黑暗赦令（死亡騎士）
     [6795] = true, -- 低吼（德魯伊 熊形態）
     [62124] = true, -- 清算之手（聖騎士）
+    [204079] = true, -- 屹立不搖（聖騎士）
     [116189] = true, -- 嘲心嘯（武僧）
     [118635] = true, -- 嘲心嘯（武僧圖騰 玄牛雕像 算作玩家群嘲）
     [196727] = true, -- 嘲心嘯（武僧守護者 玄牛怒兆）
@@ -23,13 +23,21 @@ local TauntSpellList = {
     [17735] = true -- 受難（術士寵物虛無行者）
 }
 
+local tauntAllSpells = {
+    [1161] = true, -- 挑戰怒吼（戰士）
+    [118635] = true, -- 嘲心嘯（武僧圖騰 玄牛雕像 算作玩家群嘲）
+    [204079] = true -- 屹立不搖（聖騎士）
+}
+
+local tauntAllCache = {}
+
 function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, spellId)
     local config = self.db.taunt
     if not config or not config.enable then
         return
     end
 
-    if not spellId or not sourceGUID or not destGUID or not TauntSpellList[spellId] then
+    if not spellId or not sourceGUID or not destGUID or not tauntSpells[spellId] then
         return
     end
 
@@ -67,12 +75,11 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
 
             if sourceName == E.myname then
                 if config.player.player.enable then
-                    if spellId == 118635 then
-                        -- 武僧群嘲防刷屏
-                        if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then
-                            MonkProvokeAllCache[sourceGUID] = timestamp
+                    if tauntAllSpells[spellId] then
+                        if not tauntAllCache[sourceGUID] or timestamp - tauntAllCache[sourceGUID] > 1 then
+                            tauntAllCache[sourceGUID] = timestamp
                             self:SendMessage(
-                                FormatMessageWithoutPet(config.player.player.provokeAllText),
+                                FormatMessageWithoutPet(config.player.player.tauntAllText),
                                 self:GetChannel(config.player.player.channel)
                             )
                         end
@@ -84,12 +91,11 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
                     end
                 end
             elseif config.others.player.enable and IsInGroup() then
-                if spellId == 118635 then
-                    -- 武僧群嘲防刷屏
-                    if not MonkProvokeAllCache[sourceGUID] or timestamp - MonkProvokeAllCache[sourceGUID] > 1 then
-                        MonkProvokeAllCache[sourceGUID] = timestamp
+                if tauntAllSpells[spellId] then
+                    if not tauntAllCache[sourceGUID] or timestamp - tauntAllCache[sourceGUID] > 1 then
+                        tauntAllCache[sourceGUID] = timestamp
                         self:SendMessage(
-                            FormatMessageWithoutPet(config.others.player.provokeAllText),
+                            FormatMessageWithoutPet(config.others.player.tauntAllText),
                             self:GetChannel(config.others.player.channel)
                         )
                     end

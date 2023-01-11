@@ -1006,13 +1006,13 @@ options.taunt = {
                         }
                     }
                 },
-                provokeAll = {
+                tauntAll = {
                     order = 3,
                     type = "group",
                     inline = true,
-                    name = L["Provoke all(Monk)"],
+                    name = L["Taunt All"],
                     args = {
-                        provokeAllText = {
+                        tauntAllText = {
                             order = 1,
                             type = "input",
                             name = L["Text"],
@@ -1027,8 +1027,8 @@ options.taunt = {
                             order = 2,
                             type = "execute",
                             func = function()
-                                E.db.WT.announcement.taunt.player.player.provokeAllText =
-                                    P.announcement.taunt.player.player.provokeAllText
+                                E.db.WT.announcement.taunt.player.player.tauntAllText =
+                                    P.announcement.taunt.player.player.tauntAllText
                             end,
                             name = L["Default Text"]
                         },
@@ -1036,9 +1036,8 @@ options.taunt = {
                             order = 3,
                             type = "description",
                             name = function()
-                                local message = E.db.WT.announcement.taunt.player.player.provokeAllText
+                                local message = E.db.WT.announcement.taunt.player.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%target%%", L["Sylvanas"])
                                 message = gsub(message, "%%spell%%", GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
@@ -1387,13 +1386,13 @@ options.taunt = {
                         }
                     }
                 },
-                provokeAll = {
+                tauntAll = {
                     order = 3,
                     type = "group",
                     inline = true,
-                    name = L["Provoke all(Monk)"],
+                    name = L["Taunt All"],
                     args = {
-                        provokeAllText = {
+                        tauntAllText = {
                             order = 1,
                             type = "input",
                             name = L["Text"],
@@ -1408,8 +1407,8 @@ options.taunt = {
                             order = 2,
                             type = "execute",
                             func = function()
-                                E.db.WT.announcement.taunt.others.player.provokeAllText =
-                                    P.announcement.taunt.others.player.provokeAllText
+                                E.db.WT.announcement.taunt.others.player.tauntAllText =
+                                    P.announcement.taunt.others.player.tauntAllText
                             end,
                             name = L["Default Text"]
                         },
@@ -1417,9 +1416,8 @@ options.taunt = {
                             order = 3,
                             type = "description",
                             name = function()
-                                local message = E.db.WT.announcement.taunt.others.player.provokeAllText
+                                local message = E.db.WT.announcement.taunt.others.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%target%%", L["Sylvanas"])
                                 message = gsub(message, "%%spell%%", GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end

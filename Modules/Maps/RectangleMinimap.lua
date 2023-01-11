@@ -24,7 +24,9 @@ function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
                 if self.db and self.db.enable and self.effectiveHeight and self.effectiveHeight > 0 then
                     if arg1 and arg1 == "CENTER" and arg3 and arg3 == "CENTER" then
                         if arg5 and abs(arg5) > self.effectiveHeight / 2 then
-                            pin:Hide()
+                            pin:SetAlpha(0)
+                        else
+                            pin:SetAlpha(1)
                         end
                     end
                 end

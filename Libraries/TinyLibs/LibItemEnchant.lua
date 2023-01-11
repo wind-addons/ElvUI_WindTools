@@ -10,7 +10,7 @@ if not lib then
 end
 
 -- Edition: fang2hou (WindTools) (2022-12-23)
--- Thanks to RRRRBUA(NGA) 七曜·星の痕(NGA) KibsItemLevel
+-- Thanks to RRRRBUA(NGA) 七曜·星の痕(NGA) bgp314(NGA) KibsItemLevel
 local EnchantItemDB = {
     [5275] = 109120, -- 奧格索普的彈藥分裂機
     [5276] = 109122, -- 百萬瓦特電絲

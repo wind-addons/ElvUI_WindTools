@@ -417,11 +417,13 @@ function W:CheckCompatibility()
         "private.mui.skins.addonSkins.waOptions"
     )
 
+    CheckMerathilisUI(L["Announcement"], L["Announcement"], "db.WT.announcement.enable", "db.mui.announcement.enable")
+
     CheckMerathilisUI(
-        L["Announcement"],
-        L["Announcement"],
-        "db.WT.announcement.enable",
-        "db.mui.announcement.enable"
+        L["Event Tracker"],
+        L["Event Tracker"],
+        "db.WT.maps.eventTracker.enable",
+        "db.mui.maps.eventTracker.enable"
     )
 
     -- S&L

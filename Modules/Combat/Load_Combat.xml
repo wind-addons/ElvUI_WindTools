@@ -2,4 +2,5 @@
 	<Script file='CombatAlert.lua'/>
 	<Script file='QuickKeystone.lua'/>
 	<Script file='RaidMarkers.lua'/>
+	<Include file="ClassHelper\Load_ClassHelper.xml"/>
 </Ui>

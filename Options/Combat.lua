@@ -3,6 +3,7 @@ local LSM = E.Libs.LSM
 local C = W:GetModule("CombatAlert")
 local RM = W:GetModule("RaidMarkers")
 local QK = W:GetModule("QuickKeystone")
+local CH = W:GetModule("ClassHelper")
 
 local format = format
 local unpack = unpack
@@ -476,6 +477,161 @@ options.quickKeystone = {
             type = "toggle",
             name = L["Enable"],
             width = "full"
+        }
+    }
+}
+
+local function addClassIcon(text, class)
+    return F.GetClassIconStringWithStyle(class, "flat", 16, 16) .. " " .. text
+end
+
+options.classHelper = {
+    order = 4,
+    name = L["Class Helper"],
+    type = "group",
+    get = function(info)
+        return E.db.WT.combat.classHelper[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.combat.classHelper[info[#info]] = value
+        CH:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["This module contains some custom tweaks for multiple classes."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        deathStrikeEstimator = {
+            order = 3,
+            name = addClassIcon(L["DS Estimator"], "DEATHKNIGHT"),
+            type = "group",
+            disabled = function()
+                local class = select(2, UnitClass("player"))
+                return E.myclass ~= "DEATHKNIGHT"
+            end,
+            get = function(info)
+                return E.db.WT.combat.classHelper[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.combat.classHelper[info[#info - 1]][info[#info]] = value
+                CH:UpdateHelper(info[#info - 1])
+            end,
+            args = {
+                desc = {
+                    order = 1,
+                    type = "group",
+                    inline = true,
+                    name = L["Description"],
+                    args = {
+                        feature = {
+                            order = 1,
+                            type = "description",
+                            name = L["Add a bar on unitframe to show the estimated heal of Death Strike."],
+                            fontSize = "medium"
+                        },
+                        requirement = {
+                            order = 1,
+                            type = "description",
+                            name = L["You need enable ElvUI Player Unitframe to use it."],
+                            fontSize = "medium"
+                        }
+                    }
+                },
+                enable = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = 1.2
+                },
+                onlyInCombat = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Only In Combat"],
+                    width = 1.2
+                },
+                hideIfTheBarOutside = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Hide If The Bar Outside"],
+                    width = 1.2
+                },
+                betterAlign = {
+                    order = 5,
+                    type = "description",
+                    name = " "
+                },
+                width = {
+                    order = 6,
+                    type = "range",
+                    name = L["Width"],
+                    min = 1,
+                    max = 20,
+                    step = 1
+                },
+                height = {
+                    order = 7,
+                    type = "range",
+                    name = L["Height"],
+                    min = 1,
+                    max = 300,
+                    step = 1
+                },
+                yOffset = {
+                    order = 8,
+                    type = "range",
+                    name = L["Y-Offset"],
+                    min = -300,
+                    max = 300,
+                    step = 1
+                },
+                color = {
+                    order = 9,
+                    type = "color",
+                    name = L["Color"],
+                    hasAlpha = true,
+                    get = function(info)
+                        local db = E.db.WT.combat.classHelper[info[#info - 1]][info[#info]]
+                        local default = P.combat.classHelper[info[#info - 1]][info[#info]]
+                        return db.r, db.g, db.b, db.a, default.r, default.g, default.b, default.a
+                    end,
+                    set = function(info, r, g, b, a)
+                        local db = E.db.WT.combat.classHelper[info[#info - 1]][info[#info]]
+                        db.r, db.g, db.b, db.a = r, g, b, a
+                        CH:UpdateHelper(info[#info - 1])
+                    end
+                },
+                sparkTexture = {
+                    order = 10,
+                    type = "toggle",
+                    name = L["Use Spark Texture"]
+                },
+                texture = {
+                    order = 11,
+                    type = "select",
+                    name = L["Texture"],
+                    dialogControl = "LSM30_Statusbar",
+                    values = LSM:HashTable("statusbar"),
+                    hidden = function()
+                        return E.db.WT.combat.classHelper.deathStrikeEstimator.sparkTexture
+                    end
+                }
+            }
         }
     }
 }

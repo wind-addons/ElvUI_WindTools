@@ -141,6 +141,10 @@ function A:Initialize()
         return
     end
 
+    if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
+        E.db.general.interruptAnnounce = "NONE"
+    end
+
     for _, event in pairs(self.EventList) do
         A:RegisterEvent(event)
     end
@@ -155,6 +159,10 @@ end
 function A:ProfileUpdate()
     self:Initialize()
     self:UpdateBlizzardQuestAnnouncement()
+
+    if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
+        E.db.general.interruptAnnounce = "NONE"
+    end
 
     if self.db.enable or not self.initialized then
         return

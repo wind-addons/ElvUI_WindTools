@@ -705,29 +705,34 @@ local eventData = {
                                 db[netIndex] = nil
                             end
                         elseif spellID == 377883 then -- Set Net
-                            local namePlates = C_NamePlate.GetNamePlates(true)
-                            if #namePlates > 0 then
-                                for _, namePlate in ipairs(namePlates) do
-                                    if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
-                                        local container = namePlate.UnitFrame.WidgetContainer
-                                        if container.timerWidgets then
-                                            for id, widget in pairs(container.timerWidgets) do
-                                                if
-                                                    env.fishingNetWidgetIDToIndex[id] and
-                                                        env.fishingNetWidgetIDToIndex[id] == netIndex
-                                                 then
-                                                    if widget.Bar and widget.Bar.value and widget.Bar.range then
-                                                        db[netIndex] = {
-                                                            time = GetServerTime() + widget.Bar.value,
-                                                            duration = widget.Bar.range
-                                                        }
+                            E:Delay(
+                                0.5,
+                                function()
+                                    local namePlates = C_NamePlate.GetNamePlates(true)
+                                    if #namePlates > 0 then
+                                        for _, namePlate in ipairs(namePlates) do
+                                            if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
+                                                local container = namePlate.UnitFrame.WidgetContainer
+                                                if container.timerWidgets then
+                                                    for id, widget in pairs(container.timerWidgets) do
+                                                        if
+                                                            env.fishingNetWidgetIDToIndex[id] and
+                                                                env.fishingNetWidgetIDToIndex[id] == netIndex
+                                                         then
+                                                            if widget.Bar and widget.Bar.value and widget.Bar.range then
+                                                                db[netIndex] = {
+                                                                    time = GetServerTime() + widget.Bar.value,
+                                                                    duration = widget.Bar.range
+                                                                }
+                                                            end
+                                                        end
                                                     end
                                                 end
                                             end
                                         end
                                     end
                                 end
-                            end
+                            )
                         end
                     end
                 }

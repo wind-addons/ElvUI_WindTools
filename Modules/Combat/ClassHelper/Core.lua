@@ -5,6 +5,7 @@ local eventHandlers = {}
 local cleuHandlers = {}
 local initFunctions = {}
 local profileUpdateFunctions = {}
+local checkRequirementFunctions = {}
 
 function CH:EventHandler(event, ...)
     if not eventHandlers[event] then
@@ -56,7 +57,6 @@ function CH:RegeisterHelper(helper)
         end
 
         eventHandlers[event][helper.name] = callback
-        print(event, helper.name, callback)
     end
 
     for subevent, callback in pairs(helper.cleuHandlers) do
@@ -64,33 +64,71 @@ function CH:RegeisterHelper(helper)
             cleuHandlers[subevent] = {}
         end
 
-        cleuHandlers[subevent][helper.name] = callback
+        cleuHandlers[subevent][helper.dbKey] = callback
     end
 
     if helper.init then
-        initFunctions[helper.name] = helper.init
+        initFunctions[helper.dbKey] = helper.init
     end
 
     if helper.profileUpdate then
-        profileUpdateFunctions[helper.name] = helper.profileUpdate
+        profileUpdateFunctions[helper.dbKey] = helper.profileUpdate
+    end
+
+    if helper.checkRequirements then
+        checkRequirementFunctions[helper.dbKey] = helper.checkRequirements
     end
 end
 
 function CH:Initialize()
-    for _, func in pairs(initFunctions) do
-        xpcall(func, F.Developer.ThrowError, self)
+    self.db = E.db.WT.combat.classHelper
+    if not self.db.enable then
+        return
+    end
+
+    for dbKey, checkRequirements in pairs(checkRequirementFunctions) do
+        if checkRequirements() then
+            if initFunctions[dbKey] then
+                xpcall(initFunctions[dbKey], F.Developer.ThrowError, self)
+            end
+
+            if profileUpdateFunctions[dbKey] then
+                xpcall(profileUpdateFunctions[dbKey], F.Developer.ThrowError, self, self.db[dbKey])
+            end
+        end
     end
 
     self:RegisterEvents()
 
-    E:Delay(1, print, "ClassHelper initialized")
+    self.initialized = true
 end
 
 F.Developer.DelayInitialize(CH, 2)
 
 function CH:ProfileUpdate()
-    for _, func in pairs(profileUpdateFunctions) do
-        xpcall(func, F.Developer.ThrowError, self)
+    self.db = E.db.WT.combat.classHelper
+    if not self.db.enable then
+        return
+    end
+
+    if not self.initialized then
+        self:Initialize()
+        return
+    end
+
+    for dbKey, func in pairs(profileUpdateFunctions) do
+        xpcall(func, F.Developer.ThrowError, self, self.db[dbKey])
+    end
+end
+
+function CH:UpdateHelper(dbKey)
+    if not self.initialized then
+        return
+    end
+
+    local func = profileUpdateFunctions[dbKey]
+    if func then
+        xpcall(func, F.Developer.ThrowError, self, self.db[dbKey])
     end
 end
 

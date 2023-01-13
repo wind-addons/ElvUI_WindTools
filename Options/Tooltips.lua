@@ -425,22 +425,10 @@ options.progression = {
 
 do
     local raids = {
-        "Castle Nathria",
-        "Sanctum of Domination",
-        "Sepulcher of the First Ones",
         "Vault of the Incarnates"
     }
 
     local dungeons = {
-        "Grimrail Depot",
-        "Iron Docks",
-        "Operation: Mechagon - Junkyard",
-        "Operation: Mechagon - Workshop",
-        "Return to Karazhan: Lower",
-        "Return to Karazhan: Upper",
-        "Tazavesh: So'leah's Gambit",
-        "Tazavesh: Streets of Wonder",
-        -- DF S1
         "Temple of the Jade Serpent",
         "Shadowmoon Burial Grounds",
         "Halls of Valor",
@@ -452,10 +440,6 @@ do
     }
 
     local special = {
-        "Shadowlands Keystone Master: Season One",
-        "Shadowlands Keystone Master: Season Two",
-        "Shadowlands Keystone Master: Season Three",
-        "Shadowlands Keystone Master: Season Four",
         "Dragonflight Keystone Master: Season One",
         "Dragonflight Keystone Hero: Season One"
     }

@@ -6,7 +6,10 @@ local QK = W:GetModule("QuickKeystone")
 local CH = W:GetModule("ClassHelper")
 
 local format = format
+local select = select
 local unpack = unpack
+
+local UnitClass = UnitClass
 
 local options = W.options.combat.args
 

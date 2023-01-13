@@ -27,6 +27,7 @@ local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_NamePlate_GetNamePlates = C_NamePlate.GetNamePlates
 
 local eventList = {
     "CommunityFeast",
@@ -708,7 +709,7 @@ local eventData = {
                             E:Delay(
                                 0.5,
                                 function()
-                                    local namePlates = C_NamePlate.GetNamePlates(true)
+                                    local namePlates = C_NamePlate_GetNamePlates(true)
                                     if #namePlates > 0 then
                                         for _, namePlate in ipairs(namePlates) do
                                             if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
@@ -1037,7 +1038,7 @@ W:AddCommand(
 
             local db = ET:GetPlayerDB("iskaaranFishingNet")
 
-            local namePlates = C_NamePlate.GetNamePlates(true)
+            local namePlates = C_NamePlate_GetNamePlates(true)
             if #namePlates > 0 then
                 for _, namePlate in ipairs(namePlates) do
                     if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
@@ -1071,7 +1072,7 @@ W:AddCommand(
                 return
             end
 
-            local namePlates = C_NamePlate.GetNamePlates(true)
+            local namePlates = C_NamePlate_GetNamePlates(true)
             if #namePlates > 0 then
                 for _, namePlate in ipairs(namePlates) do
                     if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
@@ -1079,13 +1080,13 @@ W:AddCommand(
                         if container.timerWidgets then
                             for id, widget in pairs(container.timerWidgets) do
                                 if widget.Bar and widget.Bar.value then
-                                    print("------------")
-                                    print("mapID", map)
-                                    print("mapName", C_Map_GetMapInfo(map).name)
-                                    print("position", position.x, position.y)
-                                    print("widgetID", id)
-                                    print("timeLeft", widget.Bar.value, secondToTime(widget.Bar.value))
-                                    print("------------")
+                                    F.Print("------------")
+                                    F.Print("mapID", map)
+                                    F.Print("mapName", C_Map_GetMapInfo(map).name)
+                                    F.Print("position", position.x, position.y)
+                                    F.Print("widgetID", id)
+                                    F.Print("timeLeft", widget.Bar.value, secondToTime(widget.Bar.value))
+                                    F.Print("------------")
                                 end
                             end
                         end

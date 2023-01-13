@@ -2,6 +2,29 @@ local W, F, E, L = unpack(select(2, ...))
 local CH = W:GetModule("ClassHelper")
 local LSM = E.Libs.LSM
 
+local _G = _G
+local math_max = math.max
+local pairs = pairs
+local tinsert = tinsert
+local tremove = tremove
+local wipe = wipe
+
+local CreateFrame = CreateFrame
+local GetCombatRatingBonus = GetCombatRatingBonus
+local GetTime = GetTime
+local GetVersatilityBonus = GetVersatilityBonus
+local InCombatLockdown = InCombatLockdown
+local IsPlayerSpell = IsPlayerSpell
+local UnitAura = UnitAura
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+
+local C_ClassTalents_GetActiveConfigID = C_ClassTalents.GetActiveConfigID
+local C_Traits_GetNodeInfo = C_Traits.GetNodeInfo
+
+local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
+
 -------------------------------------------------------------------------------
 -- Functions
 -------------------------------------------------------------------------------
@@ -226,7 +249,7 @@ function damageDB:calculate()
     end
 
     -- improved vampiric blood talent
-    local improv_vamp_info = C_Traits.GetNodeInfo(C_ClassTalents.GetActiveConfigID(), 76140)
+    local improv_vamp_info = C_Traits_GetNodeInfo(C_ClassTalents_GetActiveConfigID(), 76140)
     local num_improv_vamp = improv_vamp_info and improv_vamp_info.ranksPurchased or 0
     helper.env.auras[55233].mod = 0.3 + (num_improv_vamp * 0.05)
 
@@ -240,7 +263,7 @@ function damageDB:calculate()
     end
 
     local heal = self.totalDamage * healPercent
-    heal = math.max(healPercentMin * UnitHealthMax("player"), heal)
+    heal = math_max(healPercentMin * UnitHealthMax("player"), heal)
     helper.env.estimated = heal * vers_mult * aura_mult
 
     updateUI()

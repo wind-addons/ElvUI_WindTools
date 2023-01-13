@@ -1,6 +1,12 @@
 local W, F, E, L = unpack(select(2, ...))
 local CH = W:NewModule("ClassHelper", "AceEvent-3.0", "AceHook-3.0")
 
+local pairs = pairs
+local type = type
+local xpcall = xpcall
+
+local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+
 local eventHandlers = {}
 local cleuHandlers = {}
 local initFunctions = {}

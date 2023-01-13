@@ -385,6 +385,21 @@ options.reset = {
                             end
                         )
                     end
+                },
+                classHelper = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Class Helper"],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Class Helper"],
+                            nil,
+                            function()
+                                E.db.WT.combat.classHelper = P.combat.classHelper
+                            end
+                        )
+                    end
                 }
             }
         },

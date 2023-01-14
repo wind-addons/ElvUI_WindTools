@@ -509,7 +509,7 @@ options.classHelper = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["This module contains some custom tweaks for multiple classes."],
+                    name = L["This module contains small features for each classes."],
                     fontSize = "medium"
                 }
             }

@@ -43,7 +43,7 @@ function RM:HandyNotesFix()
 
     self.HereBeDragonsPinLib = lib
 
-    self:SecureHook(lib, "AddMinimapIconMap", "HereBeDragons_Pins_AddMinimapIconMap")
+    -- self:SecureHook(lib, "AddMinimapIconMap", "HereBeDragons_Pins_AddMinimapIconMap")
 end
 
 function RM:ChangeShape()

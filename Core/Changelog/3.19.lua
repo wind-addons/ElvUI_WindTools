@@ -49,8 +49,7 @@ W.Changelog[319] = {
             "[额外物品条] 修复了启用全局渐隐时错误使用鼠标滑过动画的问题.",
             "[游戏条] 新增 1 个炉石玩具.",
             "[观察] 更新附魔 ID 数据库. 感谢 bgp314@NGA",
-            "[鼠标提示] 目标进度数据更新至 10.0.2.",
-            "[矩形小地图] 越界的 HandyNotes 小地图图标现在会自动隐藏."
+            "[鼠标提示] 目标进度数据更新至 10.0.2."
         },
         ["zhTW"] = {
             "[通告] 修復一個可能發生的任務通告錯誤.",
@@ -62,8 +61,7 @@ W.Changelog[319] = {
             "[额外物品条] 修復了啟用全局漸隱時錯誤使用滑鼠滑過動畫的問題.",
             "[游戲條] 新增 1 個爐石玩具.",
             "[觀察] 更新附魔 ID 數據庫. 感謝 bgp314@NGA",
-            "[浮動提示] 目標進度數據更新至 10.0.2.",
-            "[矩形小地圖] 越界的 HandyNotes 小地圖圖示現在會自動隱藏."
+            "[浮動提示] 目標進度數據更新至 10.0.2."
         },
         ["enUS"] = {
             "[Announcement] Fix a possible quest announcement error.",
@@ -75,8 +73,7 @@ W.Changelog[319] = {
             "[Extra Item Bar] Fix the mouseover animation activation when global fade is enabled.",
             "[Game Bar] Add a new Hearthstone toy.",
             "[Inspect] Update enchant ID database. Thanks bgp314@NGA",
-            "[Tooltip] Objective progress data update to 10.0.2.",
-            "[Rectangle Minimap] HandyNotes icons in minimap that are out of bounds will now be hidden automatically."
+            "[Tooltip] Objective progress data update to 10.0.2."
         },
         ["koKR"] = {
             "[Announcement] Fix a possible quest announcement error.",
@@ -88,8 +85,7 @@ W.Changelog[319] = {
             "[Extra Item Bar] Fix the mouseover animation activation when global fade is enabled.",
             "[Game Bar] Add a new Hearthstone toy.",
             "[Inspect] Update enchant ID database. Thanks bgp314@NGA",
-            "[Tooltip] Objective progress data update to 10.0.2.",
-            "[Rectangle Minimap] HandyNotes icons in minimap that are out of bounds will now be hidden automatically."
+            "[Tooltip] Objective progress data update to 10.0.2."
         }
     }
 }

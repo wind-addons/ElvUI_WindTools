@@ -159,6 +159,11 @@ local function updateUI()
         return
     end
 
+    if E.myclass ~= "DEATHKNIGHT" or E.myspec ~= 1 then
+        tex:Hide()
+        return
+    end
+
     local health = UnitHealth("player")
     local maxHealth = UnitHealthMax("player")
     local percent = (health + helper.env.estimated) / maxHealth

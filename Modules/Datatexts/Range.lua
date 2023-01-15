@@ -59,7 +59,7 @@ local function OnEvent(self, event)
 	end
 end
 
-local function ValueColorUpdate(hex, r, g, b)
+local function ValueColorUpdate(hex)
 	displayString = strjoin("", "%s: ", hex, "%d|r - ", hex, "%d|r")
 
 	if lastPanel ~= nil then
@@ -67,6 +67,4 @@ local function ValueColorUpdate(hex, r, g, b)
 	end
 end
 
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
-DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"])
+DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"], nil, ValueColorUpdate)

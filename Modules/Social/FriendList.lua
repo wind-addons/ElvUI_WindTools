@@ -378,6 +378,11 @@ function FL:UpdateFriendButton(button)
             button.info:SetText(buttonText)
         end
 
+        -- temporary fix for upgrading db from old version
+        if self.db.textures.client ~= "blizzard" then
+            self.db.textures.client = "modern"
+        end
+
         -- game icon
         local texOrAtlas = clientData[gameName] and clientData[gameName]["icon"][self.db.textures.client]
 

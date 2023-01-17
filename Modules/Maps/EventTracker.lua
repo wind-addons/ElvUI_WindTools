@@ -524,11 +524,11 @@ local functionFactory = {
                     local netsText = ""
 
                     if readyNets[1] and readyNets[2] then
-                        netsText = netsText .. L["Net 1"] .. ", " .. L["Net 2"]
+                        netsText = netsText .. format(L["Net #%d"], 1) .. ", " .. format(L["Net #%d"], 2)
                     elseif readyNets[1] then
-                        netsText = netsText .. L["Net 1"]
+                        netsText = netsText .. format(L["Net #%d"], 1)
                     elseif readyNets[2] then
-                        netsText = netsText .. L["Net 2"]
+                        netsText = netsText .. format(L["Net #%d"], 2)
                     end
 
                     if bonusReady then

@@ -40,14 +40,18 @@ local env = {
         -- Waking Shores
         [1] = {map = 2022, x = 0.63585, y = 0.75349},
         [2] = {map = 2022, x = 0.64514, y = 0.74178},
+        -- Lava
+        [3] = {map = 2022, x = 0.33722, y = 0.65047},
+        [4] = {map = 2022, x = 0.34376, y = 0.64763},
         -- Thaldraszus
-        [3] = {map = 2025, x = 0.56782, y = 0.65178},
-        [4] = {map = 2025, x = 0.57756, y = 0.65491},
+        [5] = {map = 2025, x = 0.56782, y = 0.65178},
+        [6] = {map = 2025, x = 0.57756, y = 0.65491},
         -- Ohn'ahran Plains
-        [5] = {map = 2023, x = 0.80522, y = 0.78433},
-        [6] = {map = 2023, x = 0.80467, y = 0.77742}
+        [7] = {map = 2023, x = 0.80522, y = 0.78433},
+        [8] = {map = 2023, x = 0.80467, y = 0.77742}
     },
     fishingNetWidgetIDToIndex = {
+        -- data mining: https://wow.tools/dbc/?dbc=uiwidget&build=10.0.5.47621#page=1&colFilter[3]=exact%3A2087
         -- Waking Shores
         [4203] = 1,
         [4317] = 2

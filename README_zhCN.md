@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-13.17-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.19-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.18-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.20-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -51,6 +51,7 @@
 1. **团队标记**: 添加一个标记条, 支持标记, 光柱, 开怪倒数/取消, 团队确认以及高级战斗记录开关.
 2. **战斗提醒**: 进出战斗时将会出现一个动画, 可以自定义动画细节, 文字等.
 3. **快速钥石**: 自动放置背包内的传奇地下城钥石.
+4. **职业助手**: 针对各个职业特制的功能, 例如: DK 灵打治疗量预测
 
 ## 地图
 

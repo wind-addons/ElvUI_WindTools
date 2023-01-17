@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-13.17-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.19-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.18-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.20-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
@@ -51,6 +51,7 @@
 1. **團隊標記**: 添加一個標記條, 支持標記, 光柱, 開怪倒數/取消, 團隊確認以及高級戰鬥記錄開關.
 2. **戰鬥提醒**: 進出戰鬥時將會出現一個動畫, 可以自訂動畫細節, 文字等.
 3. **快速鑰石**: 自動放置背包中的傳奇地城鑰石.
+4. **職業助手**: 一些職業特製的功能, 如: DK 死亡打擊治療量預測
 
 ## 地圖
 

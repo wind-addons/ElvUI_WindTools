@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-13.17-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-3.19-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.18-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-3.20-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 </div>
@@ -50,6 +50,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more!
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Quick Keystone**: Put the keystone from bag automatically.
+4. **Class Helper**: Special features for each class. (e.g. DK: Death Strike Estimator)
 
 ## Map
 

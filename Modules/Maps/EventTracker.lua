@@ -498,6 +498,7 @@ local functionFactory = {
 
                 local needAnnounce = false
                 local readyNets = {}
+                local bonusReady = false
 
                 for netIndex, timeData in pairs(self.netTable) do
                     if type(timeData) == "table" and timeData.left <= 0 then
@@ -509,7 +510,10 @@ local functionFactory = {
                             self.args["alertCache"][netIndex][db[netIndex].time] = true
                             local hour = self.args.disableAlertAfterHours
                             if not hour or hour == 0 or (hour * 60 * 60 + timeData.left) > 0 then
-                                tinsert(readyNets, netIndex)
+                                readyNets[netIndex] = true
+                                if netIndex > 2 then
+                                    bonusReady = true
+                                end
                                 needAnnounce = true
                             end
                         end
@@ -518,18 +522,25 @@ local functionFactory = {
 
                 if needAnnounce then
                     local netsText = ""
-                    for i = 1, #readyNets do
-                        netsText = netsText .. "#" .. readyNets[i]
-                        if i ~= #readyNets then
+
+                    if readyNets[1] and readyNets[2] then
+                        netsText = netsText .. L["Net 1"] .. ", " .. L["Net 2"]
+                    elseif readyNets[1] then
+                        netsText = netsText .. L["Net 1"]
+                    elseif readyNets[2] then
+                        netsText = netsText .. L["Net 2"]
+                    end
+
+                    if bonusReady then
+                        if readyNets[1] or readyNets[2] then
                             netsText = netsText .. ", "
                         end
+                        netsText = netsText .. L["Bonus Net"]
                     end
 
                     local eventIconString = F.GetIconString(self.args.icon, 16, 16)
                     local gradientName = getGradientText(self.args.eventName, self.args.barColor)
-                    F.Print(
-                        format(eventIconString .. " " .. gradientName .. " " .. L["Net %s can be collected"], netsText)
-                    )
+                    F.Print(format(eventIconString .. " " .. gradientName .. " " .. L["%s can be collected"], netsText))
                     if self.args.soundFile then
                         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
                     end
@@ -550,6 +561,11 @@ local functionFactory = {
                 end
                 _G.GameTooltip:AddLine(L["Fishing Nets"])
 
+                local netIndex1Status  -- Always
+                local netIndex2Status  -- Always
+                local bonusNetStatus  -- Bonus
+                local bonusTimeLeft = 0
+
                 for netIndex, timeData in pairs(self.netTable) do
                     local text
                     if type(timeData) == "table" then
@@ -558,13 +574,31 @@ local functionFactory = {
                         else
                             text = C.StringByTemplate(secondToTime(timeData.left), "info")
                         end
+
+                        -- only show latest bonus net
+                        if netIndex > 2 and timeData.left > bonusTimeLeft then
+                            bonusTimeLeft = timeData.left
+                            bonusNetStatus = text
+                        end
                     else
                         if timeData == "NOT_STARTED" then
                             text = C.StringByTemplate(L["Can be set"], "warning")
                         end
                     end
 
-                    _G.GameTooltip:AddDoubleLine(format(L["Net #%d"], netIndex), text, 1, 1, 1, 1, 1, 1)
+                    if netIndex == 1 then
+                        netIndex1Status = text
+                    elseif netIndex == 2 then
+                        netIndex2Status = text
+                    end
+                end
+
+                _G.GameTooltip:AddDoubleLine(format(L["Net #%d"], 1), netIndex1Status)
+                _G.GameTooltip:AddDoubleLine(format(L["Net #%d"], 2), netIndex2Status)
+                if bonusNetStatus then
+                    _G.GameTooltip:AddDoubleLine(L["Bonus Net"], bonusNetStatus)
+                else -- no bonus net
+                    _G.GameTooltip:AddDoubleLine(L["Bonus Net"], C.StringByTemplate(L["Not Set"], "danger"))
                 end
 
                 _G.GameTooltip:Show()

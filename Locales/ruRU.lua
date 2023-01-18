@@ -1346,7 +1346,7 @@ L["You can paste any text contains coordinates here, and press ENTER to set the 
 L["You can send your suggestions or bugs via %s, %s, %s, %s and the thread in %s."] = "Вы можете отправлять свои предложения или сообщения об ошибках через %s, %s, %s, %s и ветку в %s."
 L["You can separate the groups with a comma."] = "Вы можете разделять группы запятой."
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "Вы можете использовать команду |cff00d1b2/wtdebug off|r для выхода из режима отладки."
-L["You need enable ElvUI Player Unitframe to use it."] = "Вам нужно включить фреймы игровка ElvUI, чтобы использовать это."
+L["You need enable ElvUI Player Unitframe to use it."] = "Вам нужно включить фреймы игрока ElvUI, чтобы использовать это."
 L["You need hold SHIFT to inspect someone."] = "Вам нужно удерживать SHIFT, чтобы осмотреть кого-либо."
 L["You need to manually set the bar style to %s in BigWigs first."] = "Сначала Вам нужно вручную установить стиль полосы на %s в BigWigs."
 L["Your Pet"] = "Ваш питомец"

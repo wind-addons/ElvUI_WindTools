@@ -4,25 +4,25 @@ W.Changelog[320] = {
     RELEASE_DATE = "2023/01/18",
     IMPORTANT = {
         ["zhCN"] = {
-            "适配 ElvUI 13.18 版本改动.",
+            "适配 ElvUI 13.20 版本改动.",
             "最低 ElvUI 支持版本更改为 13.18.",
             "[事件追踪器] 使用一个新的逻辑以解决渔网的时间不准确的问题.",
             "[事件追踪器] 如果你遇到额外渔网无法被正确记录, 请在渔网附近使用 '/wtet findNet' 命令, 并将输出内容通过 Discord 发送给我."
         },
         ["zhTW"] = {
-            "適配 ElvUI 13.18 版本改動.",
+            "適配 ElvUI 13.20 版本改動.",
             "最低 ElvUI 支援版本更改為 13.18.",
             "[事件追蹤器] 使用一個新的邏輯以解決漁網的時間不準確的問題.",
             "[事件追蹤器] 如果你遇到額外漁網無法被正確記錄, 請在漁網旁使用 '/wtet findNet' 命令, 並將輸出內容透過 Discord 發送給我."
         },
         ["enUS"] = {
-            "Compatible with ElvUI 13.18.",
+            "Compatible with ElvUI 13.20.",
             "Minimum ElvUI version changed to 13.18.",
             "[Event Tracker] Use a new logic to fix the inaccurate time of fishing net.",
             "[Event Tracker] If you think the bonus fishing net cannot be recorded correctly, please use the command '/wtet findNet' near the fishing net, and send the output to me via Discord."
         },
         ["koKR"] = {
-            "Compatible with ElvUI 13.18.",
+            "Compatible with ElvUI 13.20.",
             "Minimum ElvUI version changed to 13.18.",
             "[Event Tracker] Use a new logic to fix the inaccurate time of fishing net.",
             "[Event Tracker] If you think the bonus fishing net cannot be recorded correctly, please use the command '/wtet findNet' near the fishing net, and send the output to me via Discord."

@@ -22,7 +22,7 @@ local function GetIconString(role, mode)
     return format(template, UF.RoleIconTextures[role])
 end
 
-function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
+function T:AddGroupInfo(tooltip, resultID)
     local config = E.db.WT.tooltips.groupInfo
     if not config or not config.enable then
         return
@@ -57,11 +57,6 @@ function T:AddGroupInfo(tooltip, resultID, isMeetingStone)
         end
     end
 
-    if not isMeetingStone then
-        tooltip:ClearAllPoints()
-        tooltip:SetPoint("TOPLEFT", _G.LFGListFrame, "TOPRIGHT", 10, 0)
-    end
-
     tooltip:Show()
 end
 
@@ -78,42 +73,6 @@ function T:GroupInfo()
     end
 
     T:SecureHook("LFGListUtil_SetSearchEntryTooltip", "AddGroupInfo")
-
-    -- Meeting Stone Hook
-    if IsAddOnLoaded("MeetingStone") then
-        local meetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
-
-        if not meetingStone then
-            return
-        end
-
-        local profile = meetingStone:GetModule("Profile")
-
-        -- Special check for MeetingStone Happy Version
-        local showClassIco = profile:GetSetting("showclassico")
-        if profile.Getshowclassico then
-            showClassIco = profile:Getshowclassico()
-        end
-
-        if showClassIco ~= nil then
-            return
-        end
-
-        local mainPanel = meetingStone:GetModule("MainPanel")
-        if mainPanel and mainPanel.OpenActivityTooltip then
-            T:SecureHook(
-                mainPanel,
-                "OpenActivityTooltip",
-                function(panel, activity, tooltip)
-                    local id = activity and activity:GetID()
-                    tooltip = tooltip or panel.GameTooltip
-                    if tooltip and id then
-                        T:AddGroupInfo(tooltip, id, true)
-                    end
-                end
-            )
-        end
-    end
 end
 
 T:AddCallback("GroupInfo")

@@ -595,41 +595,6 @@ local ButtonTypes = {
     }
 }
 
--- Chinese player prefer to use Meeting Stone rather than Blizzard LFG
-if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
-    local NetEaseEnv = LibStub("NetEaseEnv-1.0")
-    local MeetingStone
-    for k in pairs(NetEaseEnv._NSInclude) do
-        if type(k) == "table" then
-            MeetingStone = k.Addon
-        end
-    end
-
-    ButtonTypes.GROUP_FINDER.macro = nil
-    ButtonTypes.GROUP_FINDER.click = {
-        LeftButton = function()
-            if not InCombatLockdown() then
-                _G.ToggleLFDParentFrame()
-            else
-                _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-            end
-        end,
-        RightButton = function()
-            if not InCombatLockdown() then
-                MeetingStone:Toggle()
-            else
-                _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-            end
-        end
-    }
-    ButtonTypes.GROUP_FINDER.tooltips = {
-        L["Group Finder"],
-        "\n",
-        LeftButtonIcon .. " " .. L["Group Finder"],
-        RightButtonIcon .. " " .. L["NetEase Meeting Stone"]
-    }
-end
-
 function GB:ShowAdvancedTimeTooltip(panel)
     DT.RegisteredDataTexts["Time"].onEnter()
     DT.RegisteredDataTexts["Time"].onLeave()

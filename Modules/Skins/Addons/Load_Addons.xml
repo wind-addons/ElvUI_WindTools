@@ -7,13 +7,11 @@
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>
 	<Script file='LibUIDropDownMenu.lua'/>
-	<Script file='MeetingStone.lua'/>
 	<Script file='Myslot.lua'/>
 	<Script file='MythicDungeonTools.lua'/>
 	<Script file='OmniCD.lua'/>
 	<Script file='PremadeGroupFilter.lua'/>
 	<Script file='RaiderIO.lua'/>
-	<!-- <Script file='Rematch.lua'/> -->
 	<Script file='Simulationcraft.lua'/>
 	<Script file='TinyInspect.lua'/>
 	<Script file='TLDRMissions.lua'/>

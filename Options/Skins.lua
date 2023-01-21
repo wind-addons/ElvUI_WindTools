@@ -1143,12 +1143,6 @@ options.addons = {
             addonName = "Immersion",
             addonskinsKey = "Immersion"
         },
-        meetingStone = {
-            order = 10,
-            type = "toggle",
-            name = L["NetEase Meeting Stone"],
-            addonName = {"MeetingStone", "MeetingStonePlus"}
-        },
         myslot = {
             order = 10,
             type = "toggle",

@@ -787,7 +787,6 @@ L["Nameplate"] = true
 L["Nameplate Only Names"] = true
 L["Net #%d"] = true
 L["Net %s can be collected"] = true
-L["NetEase Meeting Stone"] = "Pierre de rencontre de l'Effet du Néant"
 L["Nether Effect"] = "Effet du Néant"
 L["New"] = "Nouveau"
 L["New Command"] = "Nouvelle commande"

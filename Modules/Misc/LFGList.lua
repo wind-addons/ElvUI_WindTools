@@ -21,8 +21,6 @@ local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
-local stopMeetingStoneRendering = false
-
 local RoleIconTextures = {
     PHILMOD = {
         TANK = W.Media.Icons.philModTank,
@@ -88,34 +86,6 @@ end
 
 function LL:MemberDisplay_SetActivity(memberDisplay, activity)
     memberDisplay.resultID = activity and activity.GetID and activity:GetID() or nil
-end
-
-function LL:HandleMeetingStone()
-    if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
-        local meetingStone = LibStub("AceAddon-3.0"):GetAddon("MeetingStone")
-
-        if not meetingStone then
-            return
-        end
-
-        local profile = meetingStone:GetModule("Profile")
-
-        -- Special check for MeetingStone Happy Version
-        local showClassIco = profile:GetSetting("showclassico")
-        if profile.Getshowclassico then
-            showClassIco = profile:Getshowclassico()
-        end
-
-        if showClassIco then
-            stopMeetingStoneRendering = true
-        end
-
-        local memberDisplay = meetingStone:GetClass("MemberDisplay")
-
-        if memberDisplay and memberDisplay.SetActivity then
-            self:Hook(memberDisplay, "SetActivity", "MemberDisplay_SetActivity")
-        end
-    end
 end
 
 function LL:ReskinIcon(parent, icon, role, data)
@@ -196,7 +166,7 @@ end
 function LL:UpdateEnumerate(Enumerate)
     local button = Enumerate:GetParent():GetParent()
 
-    if not button.resultID or stopMeetingStoneRendering then
+    if not button.resultID then
         return
     end
 
@@ -276,7 +246,6 @@ function LL:Initialize()
         return
     end
 
-    self:HandleMeetingStone()
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
 end

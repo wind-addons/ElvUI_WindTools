@@ -385,7 +385,6 @@ V.skins = {
         bugSack = true,
         hekili = true,
         immersion = true,
-        meetingStone = true,
         myslot = true,
         mythicDungeonTools = true,
         omniCD = true,

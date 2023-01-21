@@ -787,7 +787,6 @@ L["Nameplate"] = "Индикатор здоровья"
 L["Nameplate Only Names"] = "Только имя в индикаторе здоровья"
 L["Net #%d"] = "Сеть #%d"
 L["Net %s can be collected"] = "Сеть %s можно собрать"
-L["NetEase Meeting Stone"] = true
 L["Nether Effect"] = "Эффект пустоты"
 L["New"] = "Новые"
 L["New Command"] = "Новая команда"

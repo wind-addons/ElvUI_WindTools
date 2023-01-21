@@ -787,7 +787,6 @@ L["Nameplate"] = "네임플레이트"
 L["Nameplate Only Names"] = "네임플레이트에는 이름만 표시됩니다."
 L["Net #%d"] = true
 L["Net %s can be collected"] = true
-L["NetEase Meeting Stone"] = true
 L["Nether Effect"] = "은신 효과"
 L["New"] = "신규 사항"
 L["New Command"] = "새 명령"

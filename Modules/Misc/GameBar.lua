@@ -217,6 +217,9 @@ local VirtualDT = {
         },
         GetScript = function()
             return E.noop
+        end,
+        IsMouseOver = function()
+            return false
         end
     }
 }

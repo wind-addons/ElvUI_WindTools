@@ -22,6 +22,11 @@ W.Changelog[321] = {
             "Happy Seollal Festival!",
             "The minimum ElvUI version is changed to 13.21.",
             "Remove all support for NetEase Meeting Stone."
+        },
+        ["ruRU"] = {
+            "Корейский Новый год!",
+            "Минимальная версия ElvUI изменена на 13.21.",
+            "Убрана вся поддержка NetEase Meeting Stone."
         }
     },
     NEW = {
@@ -43,6 +48,9 @@ W.Changelog[321] = {
         },
         ["koKR"] = {
             "Fix a possible error in the distance datatext. Thanks Azilroka"
+        },
+        ["ruRU"] = {
+            "Исправлена возможная ошибка в инфотексте о расстоянии. Спасибо, Azilroka"
         },
     }
 }

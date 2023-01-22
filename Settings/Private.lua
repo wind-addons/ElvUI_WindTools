@@ -132,11 +132,11 @@ V.misc = {
         },
         partyKeystone = {
             enable = true,
-            font =  {
+            font = {
                 name = E.db.general.font,
                 size = 12,
                 style = "OUTLINE"
-            },
+            }
         }
     }
 }
@@ -233,7 +233,9 @@ V.skins = {
             countDown = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 16,
-                style = "OUTLINE"
+                style = "OUTLINE",
+                offsetX = 0,
+                offsetY = -3
             }
         },
         normalBar = {

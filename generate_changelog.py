@@ -56,6 +56,14 @@ locales = [
         "NEW": "신규 사항",
         "IMPROVEMENT": "개선 사항",
         "RELEASED_STRING": "{} Released"
+    },
+    {
+        "language": "ruRU",
+        "VERSION": "Версия",
+        "IMPORTANT": "Важные",
+        "NEW": "Новые",
+        "IMPROVEMENT": "Улучшения",
+        "RELEASED_STRING": "{} Релиз"
     }
 ]
 

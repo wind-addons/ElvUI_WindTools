@@ -45,7 +45,6 @@ local function OnUpdate(self, t)
 	end
 
 	forceUpdate = false
-	lastPanel = self
 end
 
 local function OnEvent(self, event)

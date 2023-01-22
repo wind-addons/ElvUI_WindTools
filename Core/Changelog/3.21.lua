@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[321] = {
-    RELEASE_DATE = "2023/01/22",
+    RELEASE_DATE = "2023/01/23",
     IMPORTANT = {
         ["zhCN"] = {
             "新年快乐!",
@@ -31,10 +31,20 @@ W.Changelog[321] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[预组建列表] 新增在传奇钥石界面中显示队友钥石的功能."
         },
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {}
+        ["zhTW"] = {
+            "[預組列表] 新增在傳奇鑰石介面中顯示隊友鑰石的功能."
+        },
+        ["enUS"] = {
+            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+        },
+        ["koKR"] = {
+            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+        },
+        ["ruRU"] = {
+            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
@@ -51,6 +61,6 @@ W.Changelog[321] = {
         },
         ["ruRU"] = {
             "Исправлена возможная ошибка в инфотексте о расстоянии. Спасибо, Azilroka"
-        },
+        }
     }
 }

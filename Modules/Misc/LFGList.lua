@@ -75,6 +75,19 @@ local mythicKeystoneDungeons = {
     [402] = L["[ABBR] Algeth'ar Academy"]
 }
 
+local affixLoop = {
+    {10, 6, 14, 132},
+    {9, 11, 12, 132},
+    {10, 8, 3, 132},
+    {9, 6, 124, 132},
+    {10, 123, 1, 132},
+    {9, 8, 13, 132},
+    {10, 7, 124, 132},
+    {9, 123, 14, 132},
+    {10, 11, 13, 132},
+    {9, 7, 3, 132}
+}
+
 local function getKeystoneLevelColor(level)
     if level < 5 then
         return "ffffffff"
@@ -271,7 +284,7 @@ function LL:UpdateRoleCount(RoleCount)
 end
 
 function LL:InitializePartyKeystoneFrame()
-    local frame = CreateFrame("Frame", nil, _G.ChallengesFrame)
+    local frame = CreateFrame("Frame", "WTPartyKeystoneFrame", _G.ChallengesFrame)
     frame:SetSize(200, 150)
     frame:SetTemplate("Transparent")
 
@@ -421,6 +434,139 @@ function LL:RequestKeystoneData()
     E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
 
+function LL:InitalizeRightPanel()
+    if LL.rightPanel then
+        return
+    end
+
+    local frame = CreateFrame("Frame", nil, _G.PVEFrame)
+    frame:SetWidth(200)
+    frame:SetPoint("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 3, 0)
+    frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 3, 0)
+    frame:SetTemplate("Transparent")
+    S:CreateShadowModule(frame)
+
+    hooksecurefunc(
+        frame,
+        "Show",
+        function()
+            if _G.RaiderIO_ProfileTooltipAnchor then
+                if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
+                    _G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
+                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(arg1, arg2, arg3, arg4, arg5)
+                        if arg2 then
+                            arg2 = frame:IsShown() and frame or _G.PVEFrame
+                        end
+                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg3, arg3, arg4, arg5)
+                    end
+                end
+                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+                if #point > 0 then
+                    _G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
+                    _G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
+                end
+            end
+        end
+    )
+
+    hooksecurefunc(
+        frame,
+        "Hide",
+        function()
+            if _G.RaiderIO_ProfileTooltipAnchor then
+                if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
+                    _G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
+                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(arg1, arg2, arg3, arg4, arg5)
+                        if arg2 then
+                            arg2 = frame:IsShown() and frame or _G.PVEFrame
+                        end
+                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg3, arg3, arg4, arg5)
+                    end
+                end
+                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+                if #point > 0 then
+                    _G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
+                    _G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
+                end
+            end
+        end
+    )
+
+    local currAffixIndex = 0
+    local currAffixes = C_MythicPlus.GetCurrentAffixes()
+
+    if currAffixes then
+        for i = 1, #affixLoop do
+            local affixes = affixLoop[i]
+            if affixes[1] == currAffixes[1].id and affixes[2] == currAffixes[2].id and affixes[3] == currAffixes[3].id then
+                currAffixIndex = i
+                break
+            end
+        end
+    end
+
+    if currAffixIndex then
+        local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
+        if nextAffixIndex == 0 then
+            nextAffixIndex = #affixLoop
+        end
+
+        frame.affix = CreateFrame("Frame", nil, frame)
+        frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+        frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+        frame.affix:SetHeight(32)
+
+        local width = frame.affix:GetWidth()
+        local space = (width - 32 * 4) / 3
+        for i = 1, 4 do
+            local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+            affix:SetSize(32, 32)
+            affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * (32 + space), 0)
+            local fileDataID = select(3, C_ChallengeMode.GetAffixInfo(affixLoop[currAffixIndex][i]))
+            affix:SetTexture(fileDataID)
+            affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+        end
+
+        frame.affix:SetScript(
+            "OnEnter",
+            function()
+                _G.GameTooltip:SetOwner(frame, "ANCHOR_TOP")
+                _G.GameTooltip:ClearLines()
+                _G.GameTooltip:AddLine(L["Next Affixes"])
+                for i = 1, 4 do
+                    local name, description, fileDataID = C_ChallengeMode.GetAffixInfo(affixLoop[nextAffixIndex][i])
+                    _G.GameTooltip:AddLine(" ")
+                    _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))
+                    _G.GameTooltip:AddLine(description, 1, 1, 1, true)
+                end
+                _G.GameTooltip:Show()
+            end
+        )
+
+        frame.affix:SetScript(
+            "OnLeave",
+            function()
+                _G.GameTooltip:Hide()
+            end
+        )
+    end
+
+    LL.rightPanel = frame
+end
+
+function LL:UpdateRightPanel()
+    if not LL.rightPanel then
+        self:InitalizeRightPanel()
+    end
+
+    LL.rightPanel:Show()
+end
+
+function LL:PVEFrame_Show()
+    -- self:UpdateRightPanel()
+    self:RequestKeystoneData()
+end
+
 function LL:Initialize()
     if IsAddOnLoaded("PremadeGroupsFilter") then
         self.StopRunning = "PremadeGroupsFilter"
@@ -434,7 +580,7 @@ function LL:Initialize()
 
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
-    self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
+    self:SecureHook(_G.PVEFrame, "Show", "PVEFrame_Show")
 
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
     self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")
@@ -444,5 +590,7 @@ function LL:Initialize()
     E:Delay(2, self.RequestKeystoneData, self)
     E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
+
+F.Developer.DelayInitialize(LL, 1)
 
 W:RegisterModule(LL:GetName())

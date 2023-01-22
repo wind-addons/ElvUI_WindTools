@@ -1,25 +1,35 @@
 local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
-local LL = W:NewModule("LFGList", "AceHook-3.0")
+local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
 local LSM = E.Libs.LSM
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
+local openRaidLib = LibStub("LibOpenRaid-1.0", true)
 
+local _G = _G
+local floor = floor
+local format = format
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
+local select = select
 local tinsert = tinsert
+local tonumber = tonumber
 local tremove = tremove
 local type = type
 local unpack = unpack
 
+local CreateFrame = CreateFrame
+local GetUnitName = GetUnitName
 local IsAddOnLoaded = IsAddOnLoaded
-local LibStub = LibStub
+local IsInGroup = IsInGroup
+local UnitClassBase = UnitClassBase
 
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
+local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
-local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 local RoleIconTextures = {
     PHILMOD = {
@@ -53,6 +63,31 @@ local RoleIconTextures = {
         DAMAGER = E.Media.Textures.DPS
     }
 }
+
+local mythicKeystoneDungeons = {
+    [2] = L["[ABBR] Temple of the Jade Serpent"],
+    [165] = L["[ABBR] Shadowmoon Burial Grounds"],
+    [200] = L["[ABBR] Halls of Valor"],
+    [210] = L["[ABBR] Court of Stars"],
+    [399] = L["[ABBR] Ruby Life Pools"],
+    [400] = L["[ABBR] The Nokhud Offensive"],
+    [401] = L["[ABBR] The Azure Vault"],
+    [402] = L["[ABBR] Algeth'ar Academy"]
+}
+
+local function getKeystoneLevelColor(level)
+    if level < 5 then
+        return "ffffffff"
+    elseif level < 10 then
+        return "ff1eff00"
+    elseif level < 15 then
+        return "ff0070dd"
+    elseif level < 20 then
+        return "ffa335ee"
+    else
+        return "ffff8000"
+    end
+end
 
 function LL:UpdateAdditionalText(button, score, best)
     local db = self.db.additionalText
@@ -235,6 +270,135 @@ function LL:UpdateRoleCount(RoleCount)
     end
 end
 
+function LL:InitializePartyKeystoneFrame()
+    local frame = CreateFrame("Frame", nil, _G.ChallengesFrame)
+    frame:SetSize(200, 150)
+    frame:SetTemplate("Transparent")
+
+    frame:SetPoint("BOTTOMRIGHT", _G.ChallengesFrame, "BOTTOMRIGHT", -8, 85)
+
+    frame.lines = {}
+
+    frame.title = frame:CreateFontString(nil, "OVERLAY")
+    F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
+    frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -10)
+    frame.title:SetJustifyH("LEFT")
+    frame.title:SetText(W.Title .. " - " .. L["Keystone"])
+
+    for i = 1, 5 do
+        local yOffset = (2 + self.db.partyKeystone.font.size) * (i - 1) + 5
+
+        local rightText = frame:CreateFontString(nil, "OVERLAY")
+        F.SetFontWithDB(rightText, self.db.partyKeystone.font)
+        rightText:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, yOffset)
+        rightText:SetJustifyH("RIGHT")
+        rightText:SetWidth(90)
+
+        local leftText = frame:CreateFontString(nil, "OVERLAY")
+        F.SetFontWithDB(leftText, self.db.partyKeystone.font)
+        leftText:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -100, yOffset)
+        leftText:SetJustifyH("LEFT")
+        leftText:SetWidth(90)
+
+        frame.lines[i] = {
+            left = leftText,
+            right = rightText
+        }
+    end
+
+    LL.partyKeystoneFrame = frame
+end
+
+function LL:UpdatePartyKeystoneFrame()
+    if not self.db.partyKeystone.enable then
+        if LL.partyKeystoneFrame then
+            LL.partyKeystoneFrame:Hide()
+        end
+        return
+    end
+
+    if not LL.partyKeystoneFrame then
+        self:InitializePartyKeystoneFrame()
+    end
+
+    local frame = LL.partyKeystoneFrame
+
+    local scale = self.db.partyKeystone.font.size / 12
+    local heightIncrement = floor(8 * scale)
+    local blockWidth = floor(95 * scale)
+    local cache = {}
+
+    for i = 1, 5 do
+        local unitID = i == 1 and "player" or "party" .. i - 1
+        local data = openRaidLib.GetKeystoneInfo(unitID)
+        local mapID = data and data.mythicPlusMapID
+        if mapID and mythicKeystoneDungeons[mapID] then
+            local level = data.level
+            local playerClass = UnitClassBase(unitID)
+            local playerName = GetUnitName(unitID, false)
+            local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
+
+            tinsert(
+                cache,
+                {
+                    level = level,
+                    name = mythicKeystoneDungeons[mapID],
+                    player = F.CreateClassColorString(playerName, playerClass),
+                    icon = texture
+                }
+            )
+        end
+    end
+
+    F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
+
+    for i = 1, 5 do
+        local yOffset = (heightIncrement + self.db.partyKeystone.font.size) * (i - 1) + 10
+
+        F.SetFontWithDB(frame.lines[i].right, self.db.partyKeystone.font)
+        frame.lines[i].right:ClearAllPoints()
+        frame.lines[i].right:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, yOffset)
+        frame.lines[i].right:SetJustifyH("RIGHT")
+        frame.lines[i].right:SetWidth(blockWidth)
+
+        F.SetFontWithDB(frame.lines[i].left, self.db.partyKeystone.font)
+        frame.lines[i].left:ClearAllPoints()
+        frame.lines[i].left:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -blockWidth - 9, yOffset)
+        frame.lines[i].left:SetWidth(blockWidth)
+
+        if cache[i] then
+            frame.lines[i].right:SetText(cache[i].player)
+            frame.lines[i].left:SetText(
+                format(
+                    "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t |c%s%s (%s)|r",
+                    cache[i].icon,
+                    getKeystoneLevelColor(cache[i].level),
+                    cache[i].name,
+                    cache[i].level
+                )
+            )
+        else
+            frame.lines[i].right:SetText("")
+            frame.lines[i].left:SetText("")
+        end
+    end
+
+    frame:SetSize(
+        blockWidth * 2 + 20,
+        20 + (heightIncrement + self.db.partyKeystone.font.size) * #cache + self.db.partyKeystone.font.size
+    )
+    frame:Show()
+end
+
+function LL:RequestKeystoneData()
+    if IsInGroup() then
+        openRaidLib.RequestKeystoneDataFromParty()
+    end
+
+    E:Delay(0.5, self.UpdatePartyKeystoneFrame, self)
+    E:Delay(2, self.UpdatePartyKeystoneFrame, self)
+end
+
 function LL:Initialize()
     if IsAddOnLoaded("PremadeGroupsFilter") then
         self.StopRunning = "PremadeGroupsFilter"
@@ -248,6 +412,15 @@ function LL:Initialize()
 
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
+    self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
+
+    self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
+    self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")
+    self:RegisterEvent("PLAYER_ENTERING_WORLD", "RequestKeystoneData")
+
+    openRaidLib.RequestKeystoneDataFromParty()
+    E:Delay(2, self.RequestKeystoneData, self)
+    E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
 
 W:RegisterModule(LL:GetName())

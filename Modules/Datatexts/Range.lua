@@ -9,7 +9,6 @@ local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 
 local displayString = ""
-local lastPanel
 local int = 1
 local curMinRange, curMaxRange
 local updateTargetRange = false
@@ -59,12 +58,10 @@ local function OnEvent(self, event)
 	end
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(self, hex)
 	displayString = strjoin("", "%s: ", hex, "%d|r - ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+	OnEvent(self)
 end
 
 DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"], nil, ValueColorUpdate)

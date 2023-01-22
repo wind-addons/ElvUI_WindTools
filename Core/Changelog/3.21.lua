@@ -43,7 +43,7 @@ W.Changelog[321] = {
             "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
         },
         ["ruRU"] = {
-            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+            "[Список LFG] Добавлена возможность показывать ключи членов Вашей группы во фрейме M+."
         }
     },
     IMPROVEMENT = {

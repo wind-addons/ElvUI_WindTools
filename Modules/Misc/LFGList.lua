@@ -285,6 +285,24 @@ function LL:InitializePartyKeystoneFrame()
     frame.title:SetJustifyH("LEFT")
     frame.title:SetText(W.Title .. " - " .. L["Keystone"])
 
+    frame.button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    frame.button:SetSize(60, self.db.partyKeystone.font.size + 4)
+    F.SetFontWithDB(frame.button.Text, self.db.partyKeystone.font)
+    F.SetFontOutline(frame.button.Text, nil, "-2")
+    frame.button:SetText(L["More"])
+    frame.button:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
+    S:ESProxy("HandleButton", frame.button)
+    frame.button:SetScript(
+        "OnClick",
+        function()
+            if _G.SlashCmdList["KEYSTONE"] then
+                _G.SlashCmdList["KEYSTONE"]("")
+            else
+                F.Print(L["You need to install Details! first."])
+            end
+        end
+    )
+
     for i = 1, 5 do
         local yOffset = (2 + self.db.partyKeystone.font.size) * (i - 1) + 5
 
@@ -351,6 +369,10 @@ function LL:UpdatePartyKeystoneFrame()
     end
 
     F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
+
+    frame.button:SetSize(floor(60 * scale), self.db.partyKeystone.font.size + 4)
+    F.SetFontWithDB(frame.button.Text, self.db.partyKeystone.font)
+    F.SetFontOutline(frame.button.Text, nil, "-2")
 
     for i = 1, 5 do
         local yOffset = (heightIncrement + self.db.partyKeystone.font.size) * (i - 1) + 10

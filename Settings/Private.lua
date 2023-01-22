@@ -129,6 +129,14 @@ V.misc = {
             target = "DESC",
             shortenDescription = true,
             template = "{{score}} {{text}}"
+        },
+        partyKeystone = {
+            enable = true,
+            font =  {
+                name = E.db.general.font,
+                size = 12,
+                style = "OUTLINE"
+            },
         }
     }
 }

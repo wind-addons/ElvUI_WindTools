@@ -81,6 +81,7 @@ V.misc = {
     tags = true,
     hotKeyAboveCD = false,
     guildNewsItemLevel = true,
+    addCNFilter = false,
     moveFrames = {
         enable = true,
         elvUIBags = true,
@@ -139,7 +140,7 @@ V.misc = {
             }
         },
         rightPanel = {
-            enable = true,
+            enable = true
         }
     }
 }

@@ -75,6 +75,40 @@ local mythicKeystoneDungeons = {
     [402] = L["[ABBR] Algeth'ar Academy"]
 }
 
+local activityIDToMapID = {
+    [1192] = 2,
+    [1193] = 165,
+    [461] = 200,
+    [466] = 210,
+    [1176] = 399,
+    [1184] = 400,
+    [1180] = 401,
+    [1160] = 402
+}
+
+local vaultItemLevel = {
+    0,
+    382,
+    385,
+    385,
+    389,
+    389,
+    392,
+    395,
+    395,
+    398,
+    402,
+    405,
+    408,
+    408,
+    411,
+    415,
+    415,
+    418,
+    418,
+    421
+}
+
 local affixLoop = {
     {10, 6, 14, 132},
     {9, 11, 12, 132},
@@ -100,6 +134,28 @@ local function getKeystoneLevelColor(level)
     else
         return "ffff8000"
     end
+end
+
+function LL:GetPlayerDB(key)
+    local globalDB = E.global.WT.misc.lfgList
+
+    if not globalDB then
+        return
+    end
+
+    if not globalDB[E.myrealm] then
+        globalDB[E.myrealm] = {}
+    end
+
+    if not globalDB[E.myrealm][E.myname] then
+        globalDB[E.myrealm][E.myname] = {}
+    end
+
+    if not globalDB[E.myrealm][E.myname][key] then
+        globalDB[E.myrealm][E.myname][key] = {}
+    end
+
+    return globalDB[E.myrealm][E.myname][key]
 end
 
 function LL:UpdateAdditionalText(button, score, best)
@@ -439,7 +495,7 @@ function LL:RequestKeystoneData()
 end
 
 function LL:InitalizeRightPanel()
-    if LL.rightPanel then
+    if self.rightPanel then
         return
     end
 
@@ -453,18 +509,20 @@ function LL:InitalizeRightPanel()
     hooksecurefunc(
         frame,
         "Show",
-        function()
+        function(f)
             if _G.RaiderIO_ProfileTooltipAnchor then
+                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+
                 if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
                     _G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
-                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(arg1, arg2, arg3, arg4, arg5)
-                        if arg2 then
-                            arg2 = frame:IsShown() and frame or _G.PVEFrame
+                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(_, arg1, arg2, arg3, arg4, arg5)
+                        if arg2 and (arg2 == _G.PVEFrame or arg2 == f) then
+                            arg2 = f:IsShown() and f or _G.PVEFrame
                         end
-                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg3, arg3, arg4, arg5)
+                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg2, arg3, arg4, arg5)
                     end
                 end
-                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+
                 if #point > 0 then
                     _G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
                     _G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
@@ -476,18 +534,20 @@ function LL:InitalizeRightPanel()
     hooksecurefunc(
         frame,
         "Hide",
-        function()
+        function(f)
             if _G.RaiderIO_ProfileTooltipAnchor then
+                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+
                 if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
                     _G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
-                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(arg1, arg2, arg3, arg4, arg5)
-                        if arg2 then
-                            arg2 = frame:IsShown() and frame or _G.PVEFrame
+                    _G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(_, arg1, arg2, arg3, arg4, arg5)
+                        if arg2 and (arg2 == _G.PVEFrame or arg2 == f) then
+                            arg2 = f:IsShown() and f or _G.PVEFrame
                         end
-                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg3, arg3, arg4, arg5)
+                        _G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg2, arg3, arg4, arg5)
                     end
                 end
-                local point = {_G.RaiderIO_ProfileTooltipAnchor:GetPoint(1)}
+
                 if #point > 0 then
                     _G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
                     _G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
@@ -555,20 +615,517 @@ function LL:InitalizeRightPanel()
         )
     end
 
-    LL.rightPanel = frame
+    local filters = CreateFrame("Frame", nil, frame)
+    if frame.affix then
+        filters:SetPoint("TOPLEFT", frame.affix, "BOTTOMLEFT", 0, -10)
+        filters:SetPoint("TOPRIGHT", frame.affix, "BOTTOMRIGHT", 0, -10)
+    else
+        filters:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+        filters:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+    end
+
+    filters:SetHeight(6 * 8 + 28 * 4 + 32 * 3)
+    filters.buttons = {}
+
+    local filterButtonWidth = (filters:GetWidth() - 8) / 2
+
+    local function addSetActive(obj)
+        obj.SetActive = function(f, active)
+            local r, g, b = unpack(E.media.rgbvaluecolor)
+            if active then
+                f:SetBackdropBorderColor(r, g, b)
+                f:SetBackdropColor(r, g, b, 0.5)
+            else
+                f:SetBackdropBorderColor(0, 0, 0)
+                f:SetBackdropColor(0.3, 0.3, 0.3, 0.5)
+            end
+            f.active = active
+        end
+    end
+
+    for i, mapID in ipairs({2, 165, 200, 210, 399, 400, 401, 402}) do
+        local filterButton = CreateFrame("Frame", nil, filters)
+        filterButton:SetTemplate()
+        filterButton:SetSize(filterButtonWidth, 28)
+        local yOffset = -6 * floor((i + 1) / 2) - 28 * floor((i - 1) / 2)
+        local anchorPoint = i % 2 == 1 and "TOPLEFT" or "TOPRIGHT"
+        filterButton:SetPoint(anchorPoint, filters, anchorPoint, 0, yOffset)
+
+        filterButton.tex = filterButton:CreateTexture(nil, "ARTWORK")
+        filterButton.tex:SetSize(20, 20)
+        filterButton.tex:SetPoint("LEFT", filterButton, "LEFT", 4, 0)
+        local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
+        filterButton.tex:SetTexture(texture)
+
+        filterButton.name = filterButton:CreateFontString(nil, "OVERLAY")
+        filterButton.name:SetFont(E.media.normFont, 12, "OUTLINE")
+        filterButton.name:SetPoint("LEFT", filterButton.tex, "RIGHT", 8, 0)
+        filterButton.name:SetText(mythicKeystoneDungeons[mapID])
+
+        addSetActive(filterButton)
+
+        filterButton:SetScript(
+            "OnMouseDown",
+            function(btn, button)
+                if button == "LeftButton" then
+                    local dfDB = self:GetPlayerDB("dungeonFilter")
+                    btn:SetActive(not btn.active)
+                    dfDB[mapID] = btn.active
+                end
+            end
+        )
+
+        filters.buttons[mapID] = filterButton
+    end
+
+    -- Leader Overall Score
+    local leaderScore = CreateFrame("Frame", nil, filters)
+    leaderScore:SetSize(filters:GetWidth(), 32)
+    leaderScore:SetPoint("TOP", filters, "TOP", 0, -6 * 5 - 28 * 4)
+    leaderScore:SetTemplate()
+
+    leaderScore.text = leaderScore:CreateFontString(nil, "OVERLAY")
+    leaderScore.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    leaderScore.text:SetPoint("LEFT", leaderScore, "LEFT", 8, 0)
+    leaderScore.text:SetText(L["Leader Score Over"])
+
+    leaderScore.editBox = CreateFrame("EditBox", nil, leaderScore)
+    leaderScore.editBox:SetFont(E.media.normFont, 12, "OUTLINE")
+    leaderScore.editBox:SetSize(40, 20)
+    leaderScore.editBox:SetJustifyH("CENTER")
+    leaderScore.editBox:SetPoint("RIGHT", leaderScore, "RIGHT", -5, 0)
+    leaderScore.editBox:SetAutoFocus(false)
+    leaderScore.editBox:SetScript(
+        "OnEscapePressed",
+        function(editBox)
+            editBox:ClearFocus()
+        end
+    )
+
+    leaderScore.editBox:SetScript(
+        "OnEnterPressed",
+        function(editBox)
+            local dfDB = self:GetPlayerDB("dungeonFilter")
+
+            local text = editBox:GetText()
+            if text == "" then
+                text = 0
+                editBox:SetText(0)
+            end
+
+            dfDB.leaderScore = tonumber(text)
+            editBox:ClearFocus()
+        end
+    )
+
+    S:ESProxy("HandleEditBox", leaderScore.editBox)
+
+    addSetActive(leaderScore)
+
+    leaderScore:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" then
+                local dfDB = self:GetPlayerDB("dungeonFilter")
+                btn:SetActive(not btn.active)
+                dfDB.leaderScoreEnable = btn.active
+            end
+        end
+    )
+
+    filters.leaderScore = leaderScore
+
+    -- Leader Dungeon Score
+    local leaderDungeonScore = CreateFrame("Frame", nil, filters)
+    leaderDungeonScore:SetSize(filters:GetWidth(), 32)
+    leaderDungeonScore:SetPoint("TOP", filters, "TOP", 0, -6 * 6 - 28 * 4 - 32)
+    leaderDungeonScore:SetTemplate()
+
+    leaderDungeonScore.text = leaderDungeonScore:CreateFontString(nil, "OVERLAY")
+    leaderDungeonScore.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    leaderDungeonScore.text:SetPoint("LEFT", leaderDungeonScore, "LEFT", 8, 0)
+    leaderDungeonScore.text:SetText(L["Dungeon Score Over"])
+
+    leaderDungeonScore.editBox = CreateFrame("EditBox", nil, leaderDungeonScore)
+    leaderDungeonScore.editBox:SetFont(E.media.normFont, 12, "OUTLINE")
+    leaderDungeonScore.editBox:SetSize(40, 20)
+    leaderDungeonScore.editBox:SetJustifyH("CENTER")
+    leaderDungeonScore.editBox:SetPoint("RIGHT", leaderDungeonScore, "RIGHT", -5, 0)
+    leaderDungeonScore.editBox:SetAutoFocus(false)
+    leaderDungeonScore.editBox:SetScript(
+        "OnEscapePressed",
+        function(editBox)
+            editBox:ClearFocus()
+        end
+    )
+
+    leaderDungeonScore.editBox:SetScript(
+        "OnEnterPressed",
+        function(editBox)
+            local dfDB = self:GetPlayerDB("dungeonFilter")
+
+            local text = editBox:GetText()
+            if text == "" then
+                text = 0
+                editBox:SetText(0)
+            end
+
+            dfDB.leaderDungeonScore = tonumber(text)
+            editBox:ClearFocus()
+        end
+    )
+
+    S:ESProxy("HandleEditBox", leaderDungeonScore.editBox)
+
+    addSetActive(leaderDungeonScore)
+
+    leaderDungeonScore:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" then
+                local dfDB = self:GetPlayerDB("dungeonFilter")
+                btn:SetActive(not btn.active)
+                dfDB.leaderDungeonScoreEnable = btn.active
+            end
+        end
+    )
+
+    filters.leaderDungeonScore = leaderDungeonScore
+
+    -- Party Join
+    local joinTogether = CreateFrame("Frame", nil, filters)
+    joinTogether:SetSize(filters:GetWidth(), 32)
+    joinTogether:SetPoint("TOP", filters, "TOP", 0, -6 * 7 - 28 * 4 - 32 * 2)
+    joinTogether:SetTemplate()
+
+    joinTogether.text = joinTogether:CreateFontString(nil, "OVERLAY")
+    joinTogether.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    joinTogether.text:SetPoint("CENTER", joinTogether, "CENTER", 0, 0)
+    joinTogether.text:SetText(L["Join Together"])
+    joinTogether.text:SetJustifyH("CENTER")
+
+    joinTogether:SetScript(
+        "OnEnter",
+        function(btn)
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:AddLine(L["Join Together"], 1, 1, 1)
+            _G.GameTooltip:AddLine(
+                L["Enable this filter will only show the group that you can join with your friends."] ..
+                    " " ..
+                        L["It will check the role of current party members."] ..
+                            "\n\n" .. C.StringByTemplate(L["It only works when you in a group."], "danger"),
+                1,
+                1,
+                1,
+                true
+            )
+            _G.GameTooltip:Show()
+        end
+    )
+
+    joinTogether:SetScript(
+        "OnLeave",
+        function(btn)
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    addSetActive(joinTogether)
+
+    joinTogether:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" then
+                local dfDB = self:GetPlayerDB("dungeonFilter")
+                btn:SetActive(not btn.active)
+                dfDB.joinTogetherEnable = btn.active
+            end
+        end
+    )
+
+    filters.joinTogether = joinTogether
+
+    frame.filters = filters
+
+    local vaultStatus = CreateFrame("Frame", nil, frame)
+    vaultStatus:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
+    vaultStatus:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 10)
+    vaultStatus:SetHeight(32)
+    vaultStatus:SetTemplate()
+
+    vaultStatus.text = vaultStatus:CreateFontString(nil, "OVERLAY")
+    vaultStatus.text:SetFont(E.media.normFont, 13, "OUTLINE")
+    vaultStatus.text:SetPoint("CENTER", vaultStatus, "CENTER", 0, 0)
+    vaultStatus.text:SetJustifyH("CENTER")
+
+    vaultStatus:SetScript(
+        "OnEnter",
+        function(btn)
+            if not btn.cache then
+                return
+            end
+
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:AddLine(L["The Great Vault"], 1, 1, 1)
+            _G.GameTooltip:AddLine(" ")
+
+            for i = 1, 8 do
+                if btn.cache[i] then
+                    local level = btn.cache[i].level
+                    local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(btn.cache[i].mapID)
+                    _G.GameTooltip:AddDoubleLine(
+                        format(
+                            "|c%s%s|r |T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s",
+                            getKeystoneLevelColor(level),
+                            level,
+                            tex,
+                            name
+                        ),
+                        vaultItemLevel[min(level, 20)],
+                        1,
+                        1,
+                        1,
+                        (i == 1 or i == 4 or i == 8) and 0 or 1,
+                        1,
+                        (i == 1 or i == 4 or i == 8) and 0 or 1
+                    )
+                else
+                    break
+                end
+            end
+
+            if #btn.cache == 0 then
+                _G.GameTooltip:AddLine(L["No weekly runs found."], 1, 1, 1)
+            end
+
+            _G.GameTooltip:Show()
+        end
+    )
+
+    vaultStatus:SetScript(
+        "OnLeave",
+        function()
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    vaultStatus.update = function()
+        local vaultStatusCache = {}
+        local runHistory = C_MythicPlus.GetRunHistory(false, true)
+        local comparison = function(entry1, entry2)
+            if (entry1.level == entry2.level) then
+                return entry1.mapChallengeModeID < entry2.mapChallengeModeID
+            else
+                return entry1.level > entry2.level
+            end
+        end
+
+        sort(runHistory, comparison)
+
+        for i = 1, #runHistory do
+            local mapID = runHistory[i].mapChallengeModeID
+            tinsert(
+                vaultStatusCache,
+                {
+                    mapID = runHistory[i].mapChallengeModeID,
+                    level = runHistory[i].level,
+                    score = runHistory[i].score
+                }
+            )
+        end
+
+        local vaultItemString = "|cff666666" .. L["No Mythic+ Runs"] .. "|r"
+
+        if #vaultStatusCache > 0 then
+            vaultItemString =
+                format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[1].level), vaultStatusCache[1].level)
+        end
+
+        if #vaultStatusCache > 3 then
+            vaultItemString =
+                vaultItemString ..
+                " / " .. format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[4].level), vaultStatusCache[4].level)
+        end
+
+        if #vaultStatusCache > 7 then
+            vaultItemString =
+                vaultItemString ..
+                " / " .. format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[8].level), vaultStatusCache[8].level)
+        end
+
+        vaultStatus.cache = vaultStatusCache
+        vaultStatus.text:SetText(vaultItemString)
+    end
+
+    frame.vaultStatus = vaultStatus
+    self.rightPanel = frame
 end
 
 function LL:UpdateRightPanel()
-    if not LL.rightPanel then
+    if not self.db.rightPanel.enable then
+        if self.rightPanel then
+            self.rightPanel:Hide()
+        end
+        return
+    end
+
+    if
+        not (PVEFrame:IsVisible() and _G.LFGListFrame.activePanel == _G.LFGListFrame.SearchPanel and
+            _G.LFGListFrame.SearchPanel:IsVisible() and
+            _G.LFGListFrame.SearchPanel.categoryID == 2)
+     then
+        if self.rightPanel then
+            self.rightPanel:Hide()
+        end
+        return
+    end
+
+    if not self.rightPanel then
         self:InitalizeRightPanel()
     end
 
-    LL.rightPanel:Show()
+    if not _G.LFGListFrame.SearchPanel:IsShown() or not _G.LFGListFrame.SearchPanel.categoryID == 2 then
+        self.rightPanel:Hide()
+    end
+
+    local dfDB = self:GetPlayerDB("dungeonFilter")
+    for mapID, btn in pairs(self.rightPanel.filters.buttons) do
+        if dfDB[mapID] then
+            btn:SetActive(true)
+        else
+            btn:SetActive(false)
+        end
+    end
+
+    if dfDB.leaderScoreEnable then
+        self.rightPanel.filters.leaderScore:SetActive(true)
+    else
+        self.rightPanel.filters.leaderScore:SetActive(false)
+    end
+
+    self.rightPanel.filters.leaderScore.editBox:SetText(dfDB.leaderScore or 0)
+
+    if dfDB.leaderDungeonScoreEnable then
+        self.rightPanel.filters.leaderDungeonScore:SetActive(true)
+    else
+        self.rightPanel.filters.leaderDungeonScore:SetActive(false)
+    end
+
+    self.rightPanel.filters.leaderDungeonScore.editBox:SetText(dfDB.leaderDungeonScore or 0)
+
+    if dfDB.joinTogetherEnable then
+        self.rightPanel.filters.joinTogether:SetActive(true)
+    else
+        self.rightPanel.filters.joinTogether:SetActive(false)
+    end
+
+    self.rightPanel.vaultStatus.update()
+
+    self.rightPanel:Show()
 end
 
-function LL:PVEFrame_Show()
-    -- self:UpdateRightPanel()
-    self:RequestKeystoneData()
+function LL:ResortSearchResults(results)
+    if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
+        return
+    end
+
+    if not self.db.enable or not self.db.rightPanel.enable or not results or #results == 0 then
+        return false
+    end
+
+    local dfDB = self:GetPlayerDB("dungeonFilter")
+
+    local filterMap = {}
+    local numFilter = 0
+    for mapID, _ in pairs(mythicKeystoneDungeons) do
+        if dfDB[mapID] then
+            filterMap[mapID] = true
+            numFilter = numFilter + 1
+        end
+    end
+
+    local partyMember = {
+        TANK = 0,
+        HEALER = 0,
+        DAMAGER = 0
+    }
+
+    if dfDB.joinTogetherEnable then
+        local playerRole = UnitGroupRolesAssigned("player")
+        if partyMember[playerRole] then
+            partyMember[playerRole] = partyMember[playerRole] + 1
+        end
+
+        if IsInGroup() then
+            for i = 1, GetNumGroupMembers() do
+                local role = UnitGroupRolesAssigned("party" .. i)
+                if partyMember[role] then
+                    partyMember[role] = partyMember[role] + 1
+                end
+            end
+        end
+    end
+
+    for i = #results, 1, -1 do
+        local resultID = results[i]
+        local pendingStatus = select(3, C_LFGList.GetApplicationInfo(resultID))
+
+        if not pendingStatus then
+            local verified = false
+
+            local searchResultInfo = C_LFGList.GetSearchResultInfo(resultID)
+
+            if numFilter == 0 then
+                verified = true
+            else
+                local activityID = searchResultInfo.activityID
+                local mapID = activityIDToMapID[activityID]
+                if mapID and filterMap[mapID] then
+                    verified = true
+                end
+            end
+
+            if verified and dfDB.leaderScoreEnable and dfDB.leaderScore and dfDB.leaderScore > 0 then
+                local score = searchResultInfo.leaderOverallDungeonScore
+                if not score or score < dfDB.leaderScore then
+                    verified = false
+                end
+            end
+
+            if verified and dfDB.leaderDungeonScoreEnable and dfDB.leaderDungeonScore and dfDB.leaderDungeonScore > 0 then
+                local score =
+                    searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.mapScore
+                if not score or score < dfDB.leaderDungeonScore then
+                    verified = false
+                end
+            end
+
+            if verified and dfDB.joinTogetherEnable then
+                local roleCache = {
+                    TANK = partyMember.TANK,
+                    HEALER = partyMember.HEALER,
+                    DAMAGER = partyMember.DAMAGER
+                }
+
+                for i = 1, searchResultInfo.numMembers do
+                    local role = C_LFGList_GetSearchResultMemberInfo(resultID, i)
+                    if roleCache[role] then
+                        roleCache[role] = roleCache[role] + 1
+                    end
+                end
+
+                if roleCache.TANK > 1 or roleCache.HEALER > 1 or roleCache.DAMAGER > 3 then
+                    verified = false
+                end
+            end
+
+            if not verified then
+                tremove(results, i)
+            end
+        end
+    end
+
+    LFGListFrame.SearchPanel.totalResults = #results
 end
 
 function LL:Initialize()
@@ -584,7 +1141,9 @@ function LL:Initialize()
 
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
-    self:SecureHook(_G.PVEFrame, "Show", "PVEFrame_Show")
+    self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
+    self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
+    self:SecureHook("LFGListUtil_SortSearchResults", "ResortSearchResults")
 
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
     self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")

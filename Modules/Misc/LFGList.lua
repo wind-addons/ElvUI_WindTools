@@ -11,8 +11,11 @@ local floor = floor
 local format = format
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local min = min
 local pairs = pairs
 local select = select
+local sort = sort
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
@@ -23,13 +26,20 @@ local CreateFrame = CreateFrame
 local GetUnitName = GetUnitName
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
+local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local GetNumGroupMembers = GetNumGroupMembers
 
+local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
+local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
+local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 
 local RoleIconTextures = {
     PHILMOD = {
@@ -557,7 +567,7 @@ function LL:InitalizeRightPanel()
     )
 
     local currAffixIndex = 0
-    local currAffixes = C_MythicPlus.GetCurrentAffixes()
+    local currAffixes = C_MythicPlus_GetCurrentAffixes()
 
     if currAffixes then
         for i = 1, #affixLoop do
@@ -586,7 +596,7 @@ function LL:InitalizeRightPanel()
             local affix = frame.affix:CreateTexture(nil, "ARTWORK")
             affix:SetSize(32, 32)
             affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * (32 + space), 0)
-            local fileDataID = select(3, C_ChallengeMode.GetAffixInfo(affixLoop[currAffixIndex][i]))
+            local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
             affix:SetTexture(fileDataID)
             affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
         end
@@ -598,7 +608,7 @@ function LL:InitalizeRightPanel()
                 _G.GameTooltip:ClearLines()
                 _G.GameTooltip:AddLine(L["Next Affixes"])
                 for i = 1, 4 do
-                    local name, description, fileDataID = C_ChallengeMode.GetAffixInfo(affixLoop[nextAffixIndex][i])
+                    local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
                     _G.GameTooltip:AddLine(" ")
                     _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))
                     _G.GameTooltip:AddLine(description, 1, 1, 1, true)
@@ -911,7 +921,7 @@ function LL:InitalizeRightPanel()
 
     vaultStatus.update = function()
         local vaultStatusCache = {}
-        local runHistory = C_MythicPlus.GetRunHistory(false, true)
+        local runHistory = C_MythicPlus_GetRunHistory(false, true)
         local comparison = function(entry1, entry2)
             if (entry1.level == entry2.level) then
                 return entry1.mapChallengeModeID < entry2.mapChallengeModeID
@@ -970,7 +980,7 @@ function LL:UpdateRightPanel()
     end
 
     if
-        not (PVEFrame:IsVisible() and _G.LFGListFrame.activePanel == _G.LFGListFrame.SearchPanel and
+        not (_G.PVEFrame:IsVisible() and _G.LFGListFrame.activePanel == _G.LFGListFrame.SearchPanel and
             _G.LFGListFrame.SearchPanel:IsVisible() and
             _G.LFGListFrame.SearchPanel.categoryID == 2)
      then
@@ -1068,12 +1078,12 @@ function LL:ResortSearchResults(results)
 
     for i = #results, 1, -1 do
         local resultID = results[i]
-        local pendingStatus = select(3, C_LFGList.GetApplicationInfo(resultID))
+        local pendingStatus = select(3, C_LFGList_GetApplicationInfo(resultID))
 
         if not pendingStatus then
             local verified = false
 
-            local searchResultInfo = C_LFGList.GetSearchResultInfo(resultID)
+            local searchResultInfo = C_LFGList_GetSearchResultInfo(resultID)
 
             if numFilter == 0 then
                 verified = true
@@ -1125,7 +1135,7 @@ function LL:ResortSearchResults(results)
         end
     end
 
-    LFGListFrame.SearchPanel.totalResults = #results
+    _G.LFGListFrame.SearchPanel.totalResults = #results
 end
 
 function LL:Initialize()

@@ -38,6 +38,7 @@ local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 
@@ -350,10 +351,6 @@ function LL:UpdateRoleCount(RoleCount)
 end
 
 function LL:InitializePartyKeystoneFrame()
-    if not IsAddOnLoaded("Blizzard_ChallengesUI") then
-        LoadAddOn("Blizzard_ChallengesUI")
-    end
-
     local frame = CreateFrame("Frame", "WTPartyKeystoneFrame", _G.ChallengesFrame)
     frame:SetSize(200, 150)
     frame:SetTemplate("Transparent")
@@ -579,7 +576,7 @@ function LL:InitalizeRightPanel()
         end
     end
 
-    if currAffixIndex then
+    if currAffixIndex and currAffixIndex ~= 0 then
         local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
         if nextAffixIndex == 0 then
             nextAffixIndex = #affixLoop
@@ -1148,6 +1145,13 @@ function LL:Initialize()
     if not self.db.enable then
         return
     end
+
+    if not IsAddOnLoaded("Blizzard_ChallengesUI") then
+        LoadAddOn("Blizzard_ChallengesUI")
+    end
+
+    C_MythicPlus.RequestCurrentAffixes()
+    C_MythicPlus.RequestMapInfo()
 
     self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")

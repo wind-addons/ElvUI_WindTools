@@ -2,6 +2,7 @@
 	<!-- Core -->
 	<Script file='Core.lua'/>
 	<!-- Submodule -->
+	<Script file='AddCNFilter.lua'/>
 	<Script file='AutoScreenShot.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>

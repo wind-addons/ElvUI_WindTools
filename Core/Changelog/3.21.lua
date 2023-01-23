@@ -31,19 +31,24 @@ W.Changelog[321] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[预组建列表] 新增在传奇钥石界面中显示队友钥石的功能."
+            "[预组建列表] 新增在传奇钥石界面中显示队友钥石的功能.",
+            "[预组建列表] 新增一个右侧面板功能, 用于过滤队伍.",
         },
         ["zhTW"] = {
-            "[預組列表] 新增在傳奇鑰石介面中顯示隊友鑰石的功能."
+            "[預組列表] 新增在傳奇鑰石介面中顯示隊友鑰石的功能.",
+            "[預組列表] 新增一個右側面板功能, 用於過濾隊伍.",
         },
         ["enUS"] = {
-            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame.",
+            "[LFG List] Add a right panel feature to filter groups."
         },
         ["koKR"] = {
-            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame."
+            "[LFG List] Add a feature to show the keystone of your party members in the Mythic+ frame.",
+            "[LFG List] Add a right panel feature to filter groups."
         },
         ["ruRU"] = {
-            "[Список LFG] Добавлена возможность показывать ключи членов Вашей группы во фрейме M+."
+            "[Список LFG] Добавлена возможность показывать ключи членов Вашей группы во фрейме M+.",
+            "[Список LFG] Добавлена возможность фильтровать группы в правой панели."
         }
     },
     IMPROVEMENT = {

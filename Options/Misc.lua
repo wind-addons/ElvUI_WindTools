@@ -1810,6 +1810,29 @@ options.lfgList = {
                     }
                 }
             }
+        },
+        rightPanel = {
+            order = 7,
+            type = "group",
+            name = L["Right Panel"],
+            disabled = function()
+                return not E.private.WT.misc.lfgList.enable
+            end,
+            get = function(info)
+                return E.private.WT.misc.lfgList.rightPanel[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.misc.lfgList.rightPanel[info[#info]] = value
+                LL:UpdateRightPanel()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Add an additional frame to filter the groups."]
+                }
+            }
         }
     }
 }

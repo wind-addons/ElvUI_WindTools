@@ -284,6 +284,10 @@ function LL:UpdateRoleCount(RoleCount)
 end
 
 function LL:InitializePartyKeystoneFrame()
+    if not IsAddOnLoaded("Blizzard_ChallengesUI") then
+        LoadAddOn("Blizzard_ChallengesUI")
+    end
+
     local frame = CreateFrame("Frame", "WTPartyKeystoneFrame", _G.ChallengesFrame)
     frame:SetSize(200, 150)
     frame:SetTemplate("Transparent")
@@ -590,7 +594,5 @@ function LL:Initialize()
     E:Delay(2, self.RequestKeystoneData, self)
     E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
-
-F.Developer.DelayInitialize(LL, 1)
 
 W:RegisterModule(LL:GetName())

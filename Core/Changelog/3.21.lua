@@ -53,7 +53,7 @@ W.Changelog[321] = {
         ["ruRU"] = {
             "[Список LFG] Добавлена возможность показывать ключи членов Вашей группы во фрейме M+.",
             "[Список LFG] Добавлена возможность фильтровать группы в правой панели.",
-            "[Misc] Add a feature to view groups created by players who are using Simplified Chinese."
+            "[Разное] Добавлена возможность просмотра групп, созданных игроками, которые используют упрощенный китайский язык."
         }
     },
     IMPROVEMENT = {
@@ -74,8 +74,8 @@ W.Changelog[321] = {
             "Fix a possible error in the distance datatext. Thanks Azilroka"
         },
         ["ruRU"] = {
-            "[Skins] The position of the text of BigWigs queue timer bar can now be adjusted.",
-            "Исправлена возможная ошибка в инфотексте о расстоянии. Спасибо, Azilroka"
+            "[Скины] Положение текста строки таймера очереди BigWigs теперь можно настроить.",
+            "Исправлена возможная ошибка в инфотексте о расстоянии. Спасибо, Azilroka."
         }
     }
 }

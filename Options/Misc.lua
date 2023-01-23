@@ -139,6 +139,12 @@ options.general = {
             type = "toggle",
             name = L["Guild News IL"],
             desc = L["Show item level of each item in guild news."]
+        },
+        addCNFilter = {
+            order = 12,
+            type = "toggle",
+            name = L["Add CN Filter"],
+            desc = L["Let you can view the group created by Chinese players."]
         }
     }
 }

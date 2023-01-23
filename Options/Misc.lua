@@ -143,8 +143,8 @@ options.general = {
         addCNFilter = {
             order = 12,
             type = "toggle",
-            name = L["Add CN Filter"],
-            desc = L["Let you can view the group created by Chinese players."]
+            name = L["View SC Group"],
+            desc = L["Let you can view the group created by Simplified Chinese players."]
         }
     }
 }

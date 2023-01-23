@@ -137,6 +137,9 @@ V.misc = {
                 size = 12,
                 style = "OUTLINE"
             }
+        },
+        rightPanel = {
+            enable = true,
         }
     }
 }

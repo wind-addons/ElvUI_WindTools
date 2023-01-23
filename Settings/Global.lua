@@ -30,7 +30,8 @@ G.misc = {
     },
     watched = {
         movies = {}
-    }
+    },
+    lfgList = {}
 }
 
 G.maps = {

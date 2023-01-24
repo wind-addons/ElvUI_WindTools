@@ -16,7 +16,7 @@ W.Changelog[322] = {
             "Default disable PlayStyleString fix, if you encounter errors, you can enable it in [Advanced] - [Game Fix]."
         },
         ["ruRU"] = {
-            "По умолчанию отключено исправление PlayStyleString, если вы столкнетесь с ошибками, вы можете включить его в [Дополнительно] - [Исправление игры]."
+            "По умолчанию отключено исправление PlayStyleString, если Вы столкнетесь с ошибками, Вы можете включить его в [Дополнительно] - [Исправление игры]."
         }
     },
     NEW = {
@@ -60,12 +60,12 @@ W.Changelog[322] = {
             "[LFG List] Join Together is now Role Available, and can filter groups by specialization when solo."
         },
         ["ruRU"] = {
-            "Clean up unused code.",
-            "[Extra Item Bar] Add Feral Hide Drums to Utility Items.",
-            "[LFG List] The right panel can now be moved by dragging.",
-            "[LFG List] Add more tooltips for easy use.",
-            "[LFG List] Clicking the weekly reward progress can open the treasure frame.",
-            "[LFG List] Join Together is now Role Available, and can filter groups by specialization when solo."
+            "Удалён неиспользуемый код.",
+            "[Панель дополнительных предметов] Добавить Барабаны из дикой шкуры к полезным предметам.",
+            "[Список LFG] Правую панель теперь можно перемещать перетаскиванием.",
+            "[Список LFG] Добавлено больше всплывающих подсказок для удобства использования.",
+            "[Список LFG] Нажав на прогресс еженедельной награды, Вы можете открыть фрейм с сокровищами.",
+            "[Список LFG] 'Присоединиться вместе' теперь доступен по ролям и можно фильтровать группы по специализации, когда играете в одиночку."
         }
     }
 }

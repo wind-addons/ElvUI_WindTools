@@ -514,6 +514,10 @@ function LL:InitalizeRightPanel()
     frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 3, 0)
     frame:SetTemplate("Transparent")
     S:CreateShadowModule(frame)
+    if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
+        local MF = W.Modules.MoveFrames
+        MF:HandleFrame(frame, "PVEFrame")
+    end
 
     hooksecurefunc(
         frame,

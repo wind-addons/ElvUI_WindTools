@@ -738,6 +738,23 @@ function LL:InitalizeRightPanel()
     addSetActive(leaderScore)
 
     leaderScore:SetScript(
+        "OnEnter",
+        function(btn)
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:AddLine(L["Leader Score"], 1, 1, 1)
+            _G.GameTooltip:AddLine(L["The overall mythic+ score of the leader."], 1, 1, 1, true)
+            _G.GameTooltip:Show()
+        end
+    )
+
+    leaderScore:SetScript(
+        "OnLeave",
+        function(btn)
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    leaderScore:SetScript(
         "OnMouseDown",
         function(btn, button)
             if button == "LeftButton" then
@@ -795,6 +812,23 @@ function LL:InitalizeRightPanel()
     addSetActive(leaderDungeonScore)
 
     leaderDungeonScore:SetScript(
+        "OnEnter",
+        function(btn)
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:AddLine(L["Leader's Dungeon Score"], 1, 1, 1)
+            _G.GameTooltip:AddLine(L["The recruited dungeon mythic+ score of the leader."], 1, 1, 1, true)
+            _G.GameTooltip:Show()
+        end
+    )
+
+    leaderDungeonScore:SetScript(
+        "OnLeave",
+        function(btn)
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    leaderDungeonScore:SetScript(
         "OnMouseDown",
         function(btn, button)
             if button == "LeftButton" then
@@ -825,10 +859,12 @@ function LL:InitalizeRightPanel()
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
             _G.GameTooltip:AddLine(L["Role Available"], 1, 1, 1)
             _G.GameTooltip:AddLine(
-                L["Enable this filter will only show the group that fits you or your group members to join."] ..
-                    " " ..
-                        L["It will check the role of current party members if you are in a group."] ..
-                            L["Otherwise, it will filter with your current specialization."],
+                format(
+                    "%s %s %s",
+                    L["Enable this filter will only show the group that fits you or your group members to join."],
+                    L["It will check the role of current party members if you are in a group."],
+                    L["Otherwise, it will filter with your current specialization."]
+                ),
                 1,
                 1,
                 1,

@@ -33,7 +33,7 @@ W.Changelog[322] = {
             "[Misc] Add auto toggle chat bubble. Disabled by default."
         },
         ["ruRU"] = {
-            "[Misc] Add auto toggle chat bubble. Disabled by default."
+            "[Разное] Добавлено автопереключение облачков чата. Отключено по умолчанию."
         }
     },
     IMPROVEMENT = {

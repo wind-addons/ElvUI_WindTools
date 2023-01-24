@@ -30,6 +30,7 @@ W.Changelog[322] = {
         ["zhCN"] = {
             "过期代码清理.",
             "[额外物品条] 新增野性皮革战鼓到实用物品列表.",
+            "[额外物品条] 从商人食物列表中移除美味龙涎.",
             "[预组建列表] 右侧面板现在可以被拖动.",
             "[预组建列表] 添加更多说明方便使用.",
             "[预组建列表] 点击每周奖励进度可以打开宝库框体.",
@@ -38,6 +39,7 @@ W.Changelog[322] = {
         ["zhTW"] = {
             "過期代碼清理.",
             "[額外物品條] 新增野性皮革戰鼓到實用物品列表.",
+            "[額外物品條] 從商人食物列表中移除美味的龍涎.",
             "[預組建列表] 右側面板現在可以被拖動.",
             "[預組建列表] 添加更多說明方便使用.",
             "[預組建列表] 點擊每周獎勵進度可以打開寶庫框架.",
@@ -46,6 +48,7 @@ W.Changelog[322] = {
         ["enUS"] = {
             "Clean up unused code.",
             "[Extra Item Bar] Add Feral Hide Drums to Utility Items.",
+            "[Extra Item Bar] Remove Delicious Dragon Spittle from vendor food group.",
             "[LFG List] The right panel can now be moved by dragging.",
             "[LFG List] Add more tooltips for easy use.",
             "[LFG List] Clicking the weekly reward progress can open the treasure frame.",
@@ -54,6 +57,7 @@ W.Changelog[322] = {
         ["koKR"] = {
             "Clean up unused code.",
             "[Extra Item Bar] Add Feral Hide Drums to Utility Items.",
+            "[Extra Item Bar] Remove Delicious Dragon Spittle from vendor food group.",
             "[LFG List] The right panel can now be moved by dragging.",
             "[LFG List] Add more tooltips for easy use.",
             "[LFG List] Clicking the weekly reward progress can open the treasure frame.",
@@ -62,6 +66,7 @@ W.Changelog[322] = {
         ["ruRU"] = {
             "Удалён неиспользуемый код.",
             "[Панель дополнительных предметов] Добавить Барабаны из дикой шкуры к полезным предметам.",
+            "[Extra Item Bar] Remove Delicious Dragon Spittle from vendor food group.",
             "[Список LFG] Правую панель теперь можно перемещать перетаскиванием.",
             "[Список LFG] Добавлено больше всплывающих подсказок для удобства использования.",
             "[Список LFG] Нажав на прогресс еженедельной награды, Вы можете открыть фрейм с сокровищами.",

@@ -800,27 +800,27 @@ function LL:InitalizeRightPanel()
     filters.leaderDungeonScore = leaderDungeonScore
 
     -- Party Join
-    local joinTogether = CreateFrame("Frame", nil, filters)
-    joinTogether:SetSize(filters:GetWidth(), 32)
-    joinTogether:SetPoint("TOP", filters, "TOP", 0, -6 * 7 - 28 * 4 - 32 * 2)
-    joinTogether:SetTemplate()
+    local roleAvailable = CreateFrame("Frame", nil, filters)
+    roleAvailable:SetSize(filters:GetWidth(), 32)
+    roleAvailable:SetPoint("TOP", filters, "TOP", 0, -6 * 7 - 28 * 4 - 32 * 2)
+    roleAvailable:SetTemplate()
 
-    joinTogether.text = joinTogether:CreateFontString(nil, "OVERLAY")
-    joinTogether.text:SetFont(E.media.normFont, 11, "OUTLINE")
-    joinTogether.text:SetPoint("CENTER", joinTogether, "CENTER", 0, 0)
-    joinTogether.text:SetText(L["Join Together"])
-    joinTogether.text:SetJustifyH("CENTER")
+    roleAvailable.text = roleAvailable:CreateFontString(nil, "OVERLAY")
+    roleAvailable.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    roleAvailable.text:SetPoint("CENTER", roleAvailable, "CENTER", 0, 0)
+    roleAvailable.text:SetText(L["Role Available"])
+    roleAvailable.text:SetJustifyH("CENTER")
 
-    joinTogether:SetScript(
+    roleAvailable:SetScript(
         "OnEnter",
         function(btn)
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-            _G.GameTooltip:AddLine(L["Join Together"], 1, 1, 1)
+            _G.GameTooltip:AddLine(L["Role Available"], 1, 1, 1)
             _G.GameTooltip:AddLine(
-                L["Enable this filter will only show the group that you can join with your friends."] ..
+                L["Enable this filter will only show the group that fits you or your group members to join."] ..
                     " " ..
-                        L["It will check the role of current party members."] ..
-                            "\n\n" .. C.StringByTemplate(L["It only works when you in a group."], "danger"),
+                        L["It will check the role of current party members if you are in a group."] ..
+                            L["Otherwise, it will filter with your current specialization."],
                 1,
                 1,
                 1,
@@ -830,27 +830,27 @@ function LL:InitalizeRightPanel()
         end
     )
 
-    joinTogether:SetScript(
+    roleAvailable:SetScript(
         "OnLeave",
         function(btn)
             _G.GameTooltip:Hide()
         end
     )
 
-    addSetActive(joinTogether)
+    addSetActive(roleAvailable)
 
-    joinTogether:SetScript(
+    roleAvailable:SetScript(
         "OnMouseDown",
         function(btn, button)
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
-                dfDB.joinTogetherEnable = btn.active
+                dfDB.roleAvailableEnable = btn.active
             end
         end
     )
 
-    filters.joinTogether = joinTogether
+    filters.roleAvailable = roleAvailable
 
     frame.filters = filters
 
@@ -1020,10 +1020,10 @@ function LL:UpdateRightPanel()
 
     self.rightPanel.filters.leaderDungeonScore.editBox:SetText(dfDB.leaderDungeonScore or 0)
 
-    if dfDB.joinTogetherEnable then
-        self.rightPanel.filters.joinTogether:SetActive(true)
+    if dfDB.roleAvailableEnable then
+        self.rightPanel.filters.roleAvailable:SetActive(true)
     else
-        self.rightPanel.filters.joinTogether:SetActive(false)
+        self.rightPanel.filters.roleAvailable:SetActive(false)
     end
 
     self.rightPanel.vaultStatus.update()
@@ -1057,18 +1057,27 @@ function LL:ResortSearchResults(results)
         DAMAGER = 0
     }
 
-    if dfDB.joinTogetherEnable then
-        local playerRole = UnitGroupRolesAssigned("player")
-        if partyMember[playerRole] then
-            partyMember[playerRole] = partyMember[playerRole] + 1
-        end
-
+    if dfDB.roleAvailableEnable then
         if IsInGroup() then
-            for i = 1, GetNumGroupMembers() do
-                local role = UnitGroupRolesAssigned("party" .. i)
-                if partyMember[role] then
-                    partyMember[role] = partyMember[role] + 1
+            local playerRole = UnitGroupRolesAssigned("player")
+            if partyMember[playerRole] then
+                partyMember[playerRole] = partyMember[playerRole] + 1
+            end
+
+            local numMembers = GetNumGroupMembers()
+            if numMembers >= 2 then
+                for i = 1, numMembers - 1 do
+                    local role = UnitGroupRolesAssigned("party" .. i)
+                    if partyMember[role] then
+                        partyMember[role] = partyMember[role] + 1
+                    end
                 end
+            end
+        else
+            local specIndex = GetSpecialization()
+            local role = specIndex and select(5, GetSpecializationInfo(specIndex))
+            if partyMember[role] then
+                partyMember[role] = partyMember[role] + 1
             end
         end
     end
@@ -1107,7 +1116,7 @@ function LL:ResortSearchResults(results)
                 end
             end
 
-            if verified and dfDB.joinTogetherEnable then
+            if verified and dfDB.roleAvailableEnable then
                 local roleCache = {
                     TANK = partyMember.TANK,
                     HEALER = partyMember.HEALER,

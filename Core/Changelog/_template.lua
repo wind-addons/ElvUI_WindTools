@@ -6,18 +6,21 @@ W.Changelog[999] = {
         ["zhCN"] = {},
         ["zhTW"] = {},
         ["enUS"] = {},
-        ["koKR"] = {}
+        ["koKR"] = {},
+        ["ruRU"] = {}
     },
     NEW = {
         ["zhCN"] = {},
         ["zhTW"] = {},
         ["enUS"] = {},
-        ["koKR"] = {}
+        ["koKR"] = {},
+        ["ruRU"] = {}
     },
     IMPROVEMENT = {
         ["zhCN"] = {},
         ["zhTW"] = {},
         ["enUS"] = {},
-        ["koKR"] = {}
+        ["koKR"] = {},
+        ["ruRU"] = {}
     }
 }

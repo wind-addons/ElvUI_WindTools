@@ -20,11 +20,21 @@ W.Changelog[322] = {
         }
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {},
-        ["ruRU"] = {}
+        ["zhCN"] = {
+            "[其他] 新增了自动开关聊天泡泡功能. 默认关闭."
+        },
+        ["zhTW"] = {
+            "[其他] 新增了自動開關聊天泡泡功能. 默認關閉."
+        },
+        ["enUS"] = {
+            "[Misc] Add auto toggle chat bubble. Disabled by default."
+        },
+        ["koKR"] = {
+            "[Misc] Add auto toggle chat bubble. Disabled by default."
+        },
+        ["ruRU"] = {
+            "[Misc] Add auto toggle chat bubble. Disabled by default."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {

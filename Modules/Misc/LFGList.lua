@@ -23,15 +23,17 @@ local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
+local GetNumGroupMembers = GetNumGroupMembers
+local GetSpecialization = GetSpecialization
+local GetSpecializationInfo = GetSpecializationInfo
 local GetUnitName = GetUnitName
+local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
 local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local GetNumGroupMembers = GetNumGroupMembers
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
+local WeeklyRewards_LoadUI = WeeklyRewards_LoadUI
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
@@ -805,7 +807,7 @@ function LL:InitalizeRightPanel()
 
     filters.leaderDungeonScore = leaderDungeonScore
 
-    -- Party Join
+    -- Role Available
     local roleAvailable = CreateFrame("Frame", nil, filters)
     roleAvailable:SetSize(filters:GetWidth(), 32)
     roleAvailable:SetPoint("TOP", filters, "TOP", 0, -6 * 7 - 28 * 4 - 32 * 2)
@@ -911,6 +913,9 @@ function LL:InitalizeRightPanel()
                 _G.GameTooltip:AddLine(L["No weekly runs found."], 1, 1, 1)
             end
 
+            _G.GameTooltip:AddLine(" ")
+            _G.GameTooltip:AddLine(L["Click to open the weekly rewards frame."], 1, 1, 1)
+
             _G.GameTooltip:Show()
         end
     )
@@ -919,6 +924,18 @@ function LL:InitalizeRightPanel()
         "OnLeave",
         function()
             _G.GameTooltip:Hide()
+        end
+    )
+
+    vaultStatus:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" and not InCombatLockdown() then
+                WeeklyRewards_LoadUI()
+                if _G.WeeklyRewardsFrame then
+                    _G.WeeklyRewardsFrame:Show()
+                end
+            end
         end
     )
 

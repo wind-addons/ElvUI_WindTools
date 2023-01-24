@@ -912,6 +912,7 @@ function LL:InitalizeRightPanel()
     vaultStatus:SetScript(
         "OnEnter",
         function(btn)
+            btn.update()
             if not btn.cache then
                 return
             end
@@ -926,7 +927,7 @@ function LL:InitalizeRightPanel()
                     local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(btn.cache[i].mapID)
                     _G.GameTooltip:AddDoubleLine(
                         format(
-                            "|c%s%s|r |T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s",
+                            "|c%s%s|r  |T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s",
                             getKeystoneLevelColor(level),
                             level,
                             tex,

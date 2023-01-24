@@ -82,6 +82,7 @@ V.misc = {
     hotKeyAboveCD = false,
     guildNewsItemLevel = true,
     addCNFilter = false,
+    autoToggleChatBubble = false,
     moveFrames = {
         enable = true,
         elvUIBags = true,

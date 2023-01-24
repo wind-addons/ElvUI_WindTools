@@ -6,32 +6,27 @@ W.Changelog[321] = {
         ["zhCN"] = {
             "新年快乐!",
             "最低 ElvUI 支持版本更改为 13.21.",
-            "移除了针对网易集合石插件的支持.",
-            "默认关闭 PlayStyleString 修复, 如果你遇到错误可自行在 [高级] - [游戏修复] 中开启."
+            "移除了针对网易集合石插件的支持."
         },
         ["zhTW"] = {
             "新年快樂!",
             "最低 ElvUI 支援版本更改為 13.21.",
-            "移除了對於網易集合石插件的支援.",
-            "預設關閉 PlayStyleString 修復, 如果你遇到錯誤可自行在 [進階] - [遊戲修復] 中開啟."
+            "移除了對於網易集合石插件的支援."
         },
         ["enUS"] = {
             "Happy Spring Festival!",
             "The minimum ElvUI version is changed to 13.21.",
-            "Remove all support for NetEase Meeting Stone.",
-            "Default disable PlayStyleString fix, if you encounter errors, you can enable it in [Advanced] - [Game Fix]."
+            "Remove all support for NetEase Meeting Stone."
         },
         ["koKR"] = {
             "Happy Seollal Festival!",
             "The minimum ElvUI version is changed to 13.21.",
-            "Remove all support for NetEase Meeting Stone.",
-            "Default disable PlayStyleString fix, if you encounter errors, you can enable it in [Advanced] - [Game Fix]."
+            "Remove all support for NetEase Meeting Stone."
         },
         ["ruRU"] = {
             "Корейский Новый год!",
             "Минимальная версия ElvUI изменена на 13.21.",
-            "Убрана вся поддержка NetEase Meeting Stone.",
-            "По умолчанию отключено исправление PlayStyleString, если вы столкнетесь с ошибками, вы можете включить его в [Дополнительно] - [Исправление игры]."
+            "Убрана вся поддержка NetEase Meeting Stone."
         }
     },
     NEW = {

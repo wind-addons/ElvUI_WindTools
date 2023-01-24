@@ -211,6 +211,10 @@ local functionFactory = {
                 end
             end,
             alert = function(self)
+                if not ET.playerEnteredWorld then
+                    return
+                end
+
                 if not self.args["alertCache"] then
                     self.args["alertCache"] = {}
                 end
@@ -242,6 +246,7 @@ local functionFactory = {
                             secondToTime(self.timeLeft)
                         )
                     )
+
                     if self.args.soundFile then
                         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
                     end
@@ -483,6 +488,10 @@ local functionFactory = {
                 self.runningTip:SetText(tip)
             end,
             alert = function(self)
+                if not ET.playerEnteredWorld then
+                    return
+                end
+
                 if not self.netTable then
                     return
                 end
@@ -540,7 +549,9 @@ local functionFactory = {
 
                     local eventIconString = F.GetIconString(self.args.icon, 16, 16)
                     local gradientName = getGradientText(self.args.eventName, self.args.barColor)
+
                     F.Print(format(eventIconString .. " " .. gradientName .. " " .. L["%s can be collected"], netsText))
+
                     if self.args.soundFile then
                         PlaySoundFile(LSM:Fetch("sound", self.args.soundFile), "Master")
                     end
@@ -863,7 +874,18 @@ function trackers:disable(event)
     end
 end
 
-ET.eventHandlers = {}
+ET.eventHandlers = {
+    ["PLAYER_ENTERING_WORLD"] = {
+        function()
+            E:Delay(
+                10,
+                function()
+                    ET.playerEnteredWorld = true
+                end
+            )
+        end
+    }
+}
 
 function ET:HandlerEvent(event, ...)
     if self.eventHandlers[event] then

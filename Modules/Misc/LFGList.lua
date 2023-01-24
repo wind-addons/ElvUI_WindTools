@@ -611,7 +611,7 @@ function LL:InitalizeRightPanel()
             function()
                 _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
                 _G.GameTooltip:ClearLines()
-                _G.GameTooltip:AddLine(L["Next Affixes"])
+                _G.GameTooltip:AddLine(F.GetWindStyleText(L["Next Affixes"]))
                 for i = 1, 4 do
                     local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
                     _G.GameTooltip:AddLine(" ")
@@ -741,7 +741,7 @@ function LL:InitalizeRightPanel()
         "OnEnter",
         function(btn)
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-            _G.GameTooltip:AddLine(L["Leader Score"], 1, 1, 1)
+            _G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader Score"]), 1, 1, 1)
             _G.GameTooltip:AddLine(L["The overall mythic+ score of the leader."], 1, 1, 1, true)
             _G.GameTooltip:Show()
         end
@@ -815,7 +815,7 @@ function LL:InitalizeRightPanel()
         "OnEnter",
         function(btn)
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-            _G.GameTooltip:AddLine(L["Leader's Dungeon Score"], 1, 1, 1)
+            _G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader's Dungeon Score"]), 1, 1, 1)
             _G.GameTooltip:AddLine(L["The recruited dungeon mythic+ score of the leader."], 1, 1, 1, true)
             _G.GameTooltip:Show()
         end
@@ -857,7 +857,7 @@ function LL:InitalizeRightPanel()
         "OnEnter",
         function(btn)
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-            _G.GameTooltip:AddLine(L["Role Available"], 1, 1, 1)
+            _G.GameTooltip:AddLine(F.GetWindStyleText(L["Role Available"]), 1, 1, 1)
             _G.GameTooltip:AddLine(
                 format(
                     "%s %s %s",
@@ -918,7 +918,7 @@ function LL:InitalizeRightPanel()
             end
 
             _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-            _G.GameTooltip:AddLine(L["The Great Vault"], 1, 1, 1)
+            _G.GameTooltip:AddLine(F.GetWindStyleText(L["The Great Vault"]), 1, 1, 1)
             _G.GameTooltip:AddLine(" ")
 
             for i = 1, 8 do

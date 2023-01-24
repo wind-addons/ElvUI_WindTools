@@ -607,7 +607,7 @@ function LL:InitalizeRightPanel()
         frame.affix:SetScript(
             "OnEnter",
             function()
-                _G.GameTooltip:SetOwner(frame, "ANCHOR_TOP")
+                _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
                 _G.GameTooltip:ClearLines()
                 _G.GameTooltip:AddLine(L["Next Affixes"])
                 for i = 1, 4 do

@@ -505,6 +505,50 @@ function LL:RequestKeystoneData()
     E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
 
+LL.refreshRequestTimestamp = 0
+LL.scheduledRefreshTimestamp = 0
+LL.lastRefreshTimestamp = 0
+
+function LL:RefreshSearchAt(timestamp)
+    if self.refreshRequestTimestamp ~= timestamp then
+        return
+    end
+
+    local now = GetTime()
+
+    if now < self.lastRefreshTimestamp + 5 then
+        E:Delay(self.lastRefreshTimestamp + 5.05 - now, self.RefreshSearchAt, self, timestamp)
+        return
+    end
+
+    if
+        _G.PVEFrame:IsVisible() and _G.LFGListFrame.activePanel == _G.LFGListFrame.SearchPanel and
+            _G.LFGListFrame.SearchPanel:IsVisible() and
+            _G.LFGListFrame.SearchPanel.categoryID == 2
+     then
+        _G.LFGListFrame.SearchPanel.RefreshButton:Click()
+    end
+
+    self.lastRefreshTimestamp = timestamp
+end
+
+function LL:RefreshSearch()
+    if not self.db.rightPanel.enable or not self.db.rightPanel.autoRefresh then
+        return
+    end
+
+    local now = GetTime()
+
+    if self.refreshRequestTimestamp == now then
+        return
+    end
+
+    self.refreshRequestTimestamp = now
+    self.scheduledRefreshTimestamp = max(now + 1, self.lastRefreshTimestamp + 5)
+
+    E:Delay(1, self.RefreshSearchAt, self, now)
+end
+
 function LL:InitalizeRightPanel()
     if self.rightPanel then
         return
@@ -686,6 +730,7 @@ function LL:InitalizeRightPanel()
                     local dfDB = self:GetPlayerDB("dungeonFilter")
                     btn:SetActive(not btn.active)
                     dfDB[mapID] = btn.active
+                    LL:RefreshSearch()
                 end
             end
         )
@@ -728,8 +773,10 @@ function LL:InitalizeRightPanel()
                 editBox:SetText(0)
             end
 
-            dfDB.leaderScore = tonumber(text)
+            dfDB.leaderScore = tonumber(text) or 0
+            editBox:SetText(tostring(dfDB.leaderScore))
             editBox:ClearFocus()
+            LL:RefreshSearch()
         end
     )
 
@@ -761,6 +808,7 @@ function LL:InitalizeRightPanel()
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
                 dfDB.leaderScoreEnable = btn.active
+                LL:RefreshSearch()
             end
         end
     )
@@ -802,8 +850,10 @@ function LL:InitalizeRightPanel()
                 editBox:SetText(0)
             end
 
-            dfDB.leaderDungeonScore = tonumber(text)
+            dfDB.leaderDungeonScore = tonumber(text) or 0
+            editBox:SetText(tostring(dfDB.leaderDungeonScore))
             editBox:ClearFocus()
+            LL:RefreshSearch()
         end
     )
 
@@ -835,6 +885,7 @@ function LL:InitalizeRightPanel()
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
                 dfDB.leaderDungeonScoreEnable = btn.active
+                LL:RefreshSearch()
             end
         end
     )
@@ -890,6 +941,7 @@ function LL:InitalizeRightPanel()
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
                 dfDB.roleAvailableEnable = btn.active
+                LL:RefreshSearch()
             end
         end
     )
@@ -1227,6 +1279,12 @@ function LL:Initialize()
     self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
     self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
     self:SecureHook("LFGListUtil_SortSearchResults", "ResortSearchResults")
+    self:SecureHook(
+        "LFGListSearchPanel_DoSearch",
+        function()
+            LL.lastRefreshTimestamp = GetTime()
+        end
+    )
 
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
     self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")

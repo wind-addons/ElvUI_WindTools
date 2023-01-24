@@ -133,6 +133,7 @@ V.misc = {
         },
         partyKeystone = {
             enable = true,
+            
             font = {
                 name = E.db.general.font,
                 size = 12,
@@ -140,7 +141,9 @@ V.misc = {
             }
         },
         rightPanel = {
-            enable = true
+
+            enable = true,
+            autoRefresh = true,
         }
     }
 }

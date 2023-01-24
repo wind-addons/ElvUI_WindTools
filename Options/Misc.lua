@@ -1837,6 +1837,12 @@ options.lfgList = {
                     type = "toggle",
                     name = L["Enable"],
                     desc = L["Add an additional frame to filter the groups."]
+                },
+                autoRefresh = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Auto Refresh"],
+                    desc = L["Automatically refresh the list after you changing the filter."]
                 }
             }
         }

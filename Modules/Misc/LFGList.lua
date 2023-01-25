@@ -140,6 +140,37 @@ local affixLoop = {
     {9, 7, 3, 132}
 }
 
+local avaliableSortMode = {
+    "DEFAULT",
+    "DUNGEON_SCORE",
+    "OVERALL_SCORE"
+}
+
+local sortMode = {
+    ["DUNGEON_SCORE"] = {
+        text = L["Dungeon Score"],
+        tooltip = L["Leader's dungeon score"],
+        func = function(a, b)
+            local _a = (a and a.dungeonScore or 0)
+            local _b = (b and b.dungeonScore or 0)
+            return _a > _b and 1 or _a < _b and -1 or 0
+        end
+    },
+    ["OVERALL_SCORE"] = {
+        text = L["Overall Score"],
+        tooltip = L["Leader's overall score"],
+        func = function(a, b)
+            local _a = (a and a.overallScore or 0)
+            local _b = (b and b.overallScore or 0)
+            return _a > _b and 1 or _a < _b and -1 or 0
+        end
+    },
+    ["DEFAULT"] = {
+        text = L["Default"],
+        tooltip = L["Default"]
+    }
+}
+
 local function getKeystoneLevelColor(level)
     if level < 5 then
         return "ffffffff"
@@ -1085,6 +1116,130 @@ function LL:InitalizeRightPanel()
     end
 
     frame.vaultStatus = vaultStatus
+
+    local sortPanel = CreateFrame("Frame", nil, frame)
+    sortPanel:SetPoint("BOTTOMLEFT", vaultStatus, "TOPLEFT", 0, 8)
+    sortPanel:SetPoint("BOTTOMRIGHT", vaultStatus, "TOPRIGHT", 0, 8)
+    sortPanel:SetHeight(32)
+
+    local sortModeButton = CreateFrame("Frame", nil, sortPanel)
+    sortModeButton:SetPoint("LEFT", sortPanel, "LEFT", 0, 0)
+    sortModeButton:SetSize(32, 32)
+    sortModeButton:SetTemplate()
+    sortModeButton.tex = sortModeButton:CreateTexture(nil, "OVERLAY")
+    sortModeButton.tex:SetSize(24, 24)
+    sortModeButton.tex:SetPoint("CENTER", sortModeButton, "CENTER", 0, 0)
+    sortModeButton.tex:SetTexture(W.Media.Textures.arrowDown)
+    sortModeButton.tex:SetTexCoord(0, 1, 0, 1)
+    sortModeButton.tex:SetVertexColor(1, 1, 1)
+
+    addSetActive(sortModeButton)
+
+    sortModeButton:SetScript(
+        "OnEnter",
+        function(btn)
+            sortModeButton:SetActive(true)
+
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+            _G.GameTooltip:AddLine(btn.descending and L["Descending"] or L["Ascending"], 1, 1, 1)
+            _G.GameTooltip:Show()
+        end
+    )
+
+    sortModeButton:SetScript(
+        "OnLeave",
+        function()
+            sortModeButton:SetActive(false)
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    sortModeButton:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" then
+                local dfDB = self:GetPlayerDB("dungeonFilter")
+
+                btn.descending = not btn.descending
+                btn.tex:SetRotation(btn.descending and 0 or 3.14)
+                LL:RefreshSearch()
+                dfDB.sortDescending = btn.descending
+
+                _G.GameTooltip:ClearLines()
+                _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+                _G.GameTooltip:AddLine(btn.descending and L["Descending"] or L["Ascending"], 1, 1, 1)
+                _G.GameTooltip:Show()
+            end
+        end
+    )
+
+    sortPanel.sortModeButton = sortModeButton
+
+    local sortByButton = CreateFrame("Frame", nil, sortPanel)
+    sortByButton:SetPoint("LEFT", sortModeButton, "RIGHT", 6, 0)
+    sortByButton:SetPoint("RIGHT", sortPanel, "RIGHT", 0, 0)
+    sortByButton:SetHeight(32)
+    sortByButton:SetTemplate()
+
+    addSetActive(sortByButton)
+
+    sortByButton.text = sortByButton:CreateFontString(nil, "OVERLAY")
+    sortByButton.text:SetFont(E.media.normFont, 12, "OUTLINE")
+    sortByButton.text:SetPoint("CENTER", sortByButton, "CENTER", 0, 0)
+
+    sortByButton:SetScript(
+        "OnEnter",
+        function(btn)
+            sortByButton:SetActive(true)
+
+            local tooltip = btn.sortBy and sortMode[btn.sortBy] and sortMode[btn.sortBy].tooltip
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+            _G.GameTooltip:AddLine(tooltip or "", 1, 1, 1)
+            _G.GameTooltip:Show()
+        end
+    )
+
+    sortByButton:SetScript(
+        "OnLeave",
+        function()
+            sortByButton:SetActive(false)
+            _G.GameTooltip:Hide()
+        end
+    )
+
+    sortByButton:SetScript(
+        "OnMouseDown",
+        function(btn, button)
+            if button == "LeftButton" then
+                local dfDB = self:GetPlayerDB("dungeonFilter")
+
+                if btn.sortBy then
+                    local currentModeID
+                    for i, mode in ipairs(avaliableSortMode) do
+                        if mode == btn.sortBy then
+                            currentModeID = i
+                            break
+                        end
+                    end
+
+                    btn.sortBy = currentModeID and avaliableSortMode[currentModeID + 1] or avaliableSortMode[1]
+                end
+
+                sortByButton.text:SetText(sortMode[btn.sortBy].text)
+                LL:RefreshSearch()
+                dfDB.sortBy = btn.sortBy
+
+                local tooltip = btn.sortBy and sortMode[btn.sortBy] and sortMode[btn.sortBy].tooltip
+                _G.GameTooltip:ClearLines()
+                _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+                _G.GameTooltip:AddLine(tooltip or "", 1, 1, 1)
+                _G.GameTooltip:Show()
+            end
+        end
+    )
+
+    sortPanel.sortByButton = sortByButton
+    frame.sortPanel = sortPanel
     self.rightPanel = frame
 end
 
@@ -1147,6 +1302,27 @@ function LL:UpdateRightPanel()
     end
 
     self.rightPanel.vaultStatus.update()
+    self.rightPanel.vaultStatus:SetActive(false)
+
+    if dfDB.sortDescending then
+        self.rightPanel.sortPanel.sortModeButton.descending = true
+        self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(0)
+    else
+        self.rightPanel.sortPanel.sortModeButton.descending = false
+        self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(3.14)
+    end
+
+    self.rightPanel.sortPanel.sortModeButton:SetActive(false)
+
+    if dfDB.sortBy then
+        self.rightPanel.sortPanel.sortByButton.sortBy = dfDB.sortBy
+        self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[dfDB.sortBy].text)
+    else
+        self.rightPanel.sortPanel.sortByButton.sortBy = avaliableSortMode[1]
+        self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[avaliableSortMode[1]].text)
+    end
+
+    self.rightPanel.sortPanel.sortByButton:SetActive(false)
 
     self.rightPanel:Show()
 end
@@ -1177,6 +1353,8 @@ function LL:ResortSearchResults(results)
         DAMAGER = 0
     }
 
+    local sortDatabase = {}
+
     if dfDB.roleAvailableEnable then
         if IsInGroup() then
             local playerRole = UnitGroupRolesAssigned("player")
@@ -1202,14 +1380,31 @@ function LL:ResortSearchResults(results)
         end
     end
 
-    for i = #results, 1, -1 do
-        local resultID = results[i]
-        local pendingStatus = select(3, C_LFGList_GetApplicationInfo(resultID))
+    local pendingResults = {}
+    local waitForSortingResults = {}
 
-        if not pendingStatus then
+    for _, resultID in ipairs(results) do
+        local pendingStatus = select(3, C_LFGList_GetApplicationInfo(resultID))
+        if pendingStatus then
+            tinsert(pendingResults, resultID)
+        else
             local verified = false
 
+            local sortCache = {
+                id = resultID,
+                overallScore = 0,
+                dungeonScore = 0
+            }
+
             local searchResultInfo = C_LFGList_GetSearchResultInfo(resultID)
+
+            if searchResultInfo.leaderOverallDungeonScore then
+                sortCache.overallScore = searchResultInfo.leaderOverallDungeonScore
+            end
+
+            if searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.mapScore then
+                sortCache.dungeonScore = searchResultInfo.leaderDungeonScoreInfo.mapScore
+            end
 
             if numFilter == 0 then
                 verified = true
@@ -1222,16 +1417,13 @@ function LL:ResortSearchResults(results)
             end
 
             if verified and dfDB.leaderScoreEnable and dfDB.leaderScore and dfDB.leaderScore > 0 then
-                local score = searchResultInfo.leaderOverallDungeonScore
-                if not score or score < dfDB.leaderScore then
+                if not sortCache.overallScore or sortCache.overallScore < dfDB.leaderScore then
                     verified = false
                 end
             end
 
             if verified and dfDB.leaderDungeonScoreEnable and dfDB.leaderDungeonScore and dfDB.leaderDungeonScore > 0 then
-                local score =
-                    searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.mapScore
-                if not score or score < dfDB.leaderDungeonScore then
+                if not sortCache.dungeonScore or sortCache.dungeonScore < dfDB.leaderDungeonScore then
                     verified = false
                 end
             end
@@ -1255,10 +1447,37 @@ function LL:ResortSearchResults(results)
                 end
             end
 
-            if not verified then
-                tremove(results, i)
+            if verified then
+                tinsert(waitForSortingResults, sortCache)
             end
         end
+    end
+
+    local sortBy = dfDB.sortBy or avaliableSortMode[1]
+    local sortDescending = dfDB.sortDescending
+    if sortMode[sortBy].func then
+        table.sort(
+            waitForSortingResults,
+            function(a, b)
+                if not a or not b then
+                    return false
+                end
+
+                local result = sortMode[sortBy].func(a, b)
+                result = sortDescending and -result or result
+                return result == 1
+            end
+        )
+    end
+
+    wipe(results)
+
+    for _, result in ipairs(pendingResults) do
+        tinsert(results, result)
+    end
+
+    for _, result in ipairs(waitForSortingResults) do
+        tinsert(results, result.id)
     end
 
     _G.LFGListFrame.SearchPanel.totalResults = #results

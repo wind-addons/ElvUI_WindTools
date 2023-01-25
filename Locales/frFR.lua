@@ -1114,6 +1114,7 @@ L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to th
 L["Social"] = "Social"
 L["Sold by vendor"] = "Vendu par le vendeur"
 L["Solo"] = "Solo"
+L["Sort by"] = true
 L["Soulbinds"] = "Liens d'âme"
 L["Sound"] = "Son"
 L["Sound File"] = true

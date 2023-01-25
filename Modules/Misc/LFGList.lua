@@ -1329,6 +1329,10 @@ function LL:UpdateRightPanel()
     self.rightPanel.vaultStatus.update()
     self.rightPanel.vaultStatus:SetActive(false)
 
+    if dfDB.sortDescending == nil then
+        dfDB.sortDescending = true
+    end
+
     if dfDB.sortDescending then
         self.rightPanel.sortPanel.sortModeButton.descending = true
         self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(0)

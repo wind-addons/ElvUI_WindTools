@@ -790,7 +790,7 @@ function LL:InitalizeRightPanel()
     leaderScore:SetScript(
         "OnEnter",
         function(btn)
-            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
             _G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader Score"]), 1, 1, 1)
             _G.GameTooltip:AddLine(L["The overall mythic+ score of the leader."], 1, 1, 1, true)
             _G.GameTooltip:Show()
@@ -867,7 +867,7 @@ function LL:InitalizeRightPanel()
     leaderDungeonScore:SetScript(
         "OnEnter",
         function(btn)
-            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
             _G.GameTooltip:AddLine(F.GetWindStyleText(L["Leader's Dungeon Score"]), 1, 1, 1)
             _G.GameTooltip:AddLine(L["The recruited dungeon mythic+ score of the leader."], 1, 1, 1, true)
             _G.GameTooltip:Show()
@@ -910,7 +910,7 @@ function LL:InitalizeRightPanel()
     roleAvailable:SetScript(
         "OnEnter",
         function(btn)
-            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
             _G.GameTooltip:AddLine(F.GetWindStyleText(L["Role Available"]), 1, 1, 1)
             _G.GameTooltip:AddLine(
                 format(
@@ -959,6 +959,8 @@ function LL:InitalizeRightPanel()
     vaultStatus:SetHeight(32)
     vaultStatus:SetTemplate()
 
+    addSetActive(vaultStatus)
+
     vaultStatus.text = vaultStatus:CreateFontString(nil, "OVERLAY")
     vaultStatus.text:SetFont(E.media.normFont, 13, "OUTLINE")
     vaultStatus.text:SetPoint("CENTER", vaultStatus, "CENTER", 0, 0)
@@ -967,12 +969,14 @@ function LL:InitalizeRightPanel()
     vaultStatus:SetScript(
         "OnEnter",
         function(btn)
+            vaultStatus:SetActive(true)
+
             btn.update()
             if not btn.cache then
                 return
             end
 
-            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 4)
             _G.GameTooltip:AddLine(F.GetWindStyleText(L["The Great Vault"]), 1, 1, 1)
             _G.GameTooltip:AddLine(" ")
 
@@ -1015,6 +1019,7 @@ function LL:InitalizeRightPanel()
     vaultStatus:SetScript(
         "OnLeave",
         function()
+            vaultStatus:SetActive(false)
             _G.GameTooltip:Hide()
         end
     )

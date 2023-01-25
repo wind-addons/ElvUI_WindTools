@@ -21,19 +21,24 @@ W.Changelog[322] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[其他] 新增了自动开关聊天泡泡功能. 默认关闭."
+            "[其他] 新增了自动开关聊天泡泡功能. 默认关闭.",
+            "[预组建列表] 新增了排序功能."
         },
         ["zhTW"] = {
-            "[其他] 新增了自動開關聊天泡泡功能. 默認關閉."
+            "[其他] 新增了自動開關聊天泡泡功能. 默認關閉.",
+            "[預組列表] 新增了排序功能."
         },
         ["enUS"] = {
-            "[Misc] Add auto toggle chat bubble. Disabled by default."
+            "[Misc] Add auto toggle chat bubble. Disabled by default.",
+            "[LFG List] Add sorting support."
         },
         ["koKR"] = {
-            "[Misc] Add auto toggle chat bubble. Disabled by default."
+            "[Misc] Add auto toggle chat bubble. Disabled by default.",
+            "[LFG List] Add sorting support."
         },
         ["ruRU"] = {
-            "[Разное] Добавлено автопереключение облачков чата. Отключено по умолчанию."
+            "[Разное] Добавлено автопереключение облачков чата. Отключено по умолчанию.",
+            "[LFG List] Add sorting support."
         }
     },
     IMPROVEMENT = {

@@ -143,8 +143,8 @@ local affixLoop = {
 
 local avaliableSortMode = {
     "DEFAULT",
-    "DUNGEON_SCORE",
-    "OVERALL_SCORE"
+    "OVERALL_SCORE",
+    "DUNGEON_SCORE"
 }
 
 local sortMode = {
@@ -1191,7 +1191,7 @@ function LL:InitalizeRightPanel()
     sortByButton.title = sortByButton:CreateFontString(nil, "OVERLAY")
     sortByButton.title:SetFont(E.media.normFont, 12, "OUTLINE")
     sortByButton.title:SetPoint("CENTER", sortByButton, "TOP", 0, 0)
-    sortByButton.title:SetText(C.StringByTemplate(L["Sort by"], "warning"))
+    sortByButton.title:SetText(F.GetWindStyleText(L["Sort by"]))
     sortByButton.title:Hide()
 
     sortByButton:SetScript(

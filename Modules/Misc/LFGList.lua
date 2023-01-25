@@ -23,6 +23,7 @@ local tostring = tostring
 local tremove = tremove
 local type = type
 local unpack = unpack
+local wipe = wipe
 
 local CreateFrame = CreateFrame
 local GetNumGroupMembers = GetNumGroupMembers
@@ -149,7 +150,7 @@ local avaliableSortMode = {
 local sortMode = {
     ["DUNGEON_SCORE"] = {
         text = L["Dungeon Score"],
-        tooltip = L["Leader's dungeon score"],
+        tooltip = L["Leader's Dungeon Score"],
         func = function(a, b)
             local _a = (a and a.dungeonScore or 0)
             local _b = (b and b.dungeonScore or 0)
@@ -158,7 +159,7 @@ local sortMode = {
     },
     ["OVERALL_SCORE"] = {
         text = L["Overall Score"],
-        tooltip = L["Leader's overall score"],
+        tooltip = L["Leader's Overall Score"],
         func = function(a, b)
             local _a = (a and a.overallScore or 0)
             local _b = (b and b.overallScore or 0)
@@ -1123,7 +1124,7 @@ function LL:InitalizeRightPanel()
     sortPanel:SetHeight(32)
 
     local sortModeButton = CreateFrame("Frame", nil, sortPanel)
-    sortModeButton:SetPoint("LEFT", sortPanel, "LEFT", 0, 0)
+    sortModeButton:SetPoint("RIGHT", sortPanel, "RIGHT", 0, 0)
     sortModeButton:SetSize(32, 32)
     sortModeButton:SetTemplate()
     sortModeButton.tex = sortModeButton:CreateTexture(nil, "OVERLAY")
@@ -1140,7 +1141,7 @@ function LL:InitalizeRightPanel()
         function(btn)
             sortModeButton:SetActive(true)
 
-            _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+            _G.GameTooltip:SetOwner(btn, "ANCHOR_RIGHT", 4, -34)
             _G.GameTooltip:AddLine(btn.descending and L["Descending"] or L["Ascending"], 1, 1, 1)
             _G.GameTooltip:Show()
         end
@@ -1166,7 +1167,7 @@ function LL:InitalizeRightPanel()
                 dfDB.sortDescending = btn.descending
 
                 _G.GameTooltip:ClearLines()
-                _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
+                _G.GameTooltip:SetOwner(btn, "ANCHOR_RIGHT", 4, -34)
                 _G.GameTooltip:AddLine(btn.descending and L["Descending"] or L["Ascending"], 1, 1, 1)
                 _G.GameTooltip:Show()
             end
@@ -1176,8 +1177,8 @@ function LL:InitalizeRightPanel()
     sortPanel.sortModeButton = sortModeButton
 
     local sortByButton = CreateFrame("Frame", nil, sortPanel)
-    sortByButton:SetPoint("LEFT", sortModeButton, "RIGHT", 6, 0)
-    sortByButton:SetPoint("RIGHT", sortPanel, "RIGHT", 0, 0)
+    sortByButton:SetPoint("LEFT", sortPanel, "LEFT", 0, 0)
+    sortByButton:SetPoint("RIGHT", sortModeButton, "LEFT", -6, 0)
     sortByButton:SetHeight(32)
     sortByButton:SetTemplate()
 
@@ -1187,10 +1188,17 @@ function LL:InitalizeRightPanel()
     sortByButton.text:SetFont(E.media.normFont, 12, "OUTLINE")
     sortByButton.text:SetPoint("CENTER", sortByButton, "CENTER", 0, 0)
 
+    sortByButton.title = sortByButton:CreateFontString(nil, "OVERLAY")
+    sortByButton.title:SetFont(E.media.normFont, 12, "OUTLINE")
+    sortByButton.title:SetPoint("CENTER", sortByButton, "TOP", 0, 0)
+    sortByButton.title:SetText(C.StringByTemplate(L["Sort by"], "warning"))
+    sortByButton.title:Hide()
+
     sortByButton:SetScript(
         "OnEnter",
         function(btn)
             sortByButton:SetActive(true)
+            sortByButton.title:Show()
 
             local tooltip = btn.sortBy and sortMode[btn.sortBy] and sortMode[btn.sortBy].tooltip
             _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
@@ -1203,6 +1211,7 @@ function LL:InitalizeRightPanel()
         "OnLeave",
         function()
             sortByButton:SetActive(false)
+            sortByButton.title:Hide()
             _G.GameTooltip:Hide()
         end
     )
@@ -1234,9 +1243,25 @@ function LL:InitalizeRightPanel()
                 _G.GameTooltip:SetOwner(btn, "ANCHOR_LEFT", -4, -34)
                 _G.GameTooltip:AddLine(tooltip or "", 1, 1, 1)
                 _G.GameTooltip:Show()
+
+                sortByButton.UpdatePosition()
             end
         end
     )
+
+    sortByButton.UpdatePosition = function()
+        if sortByButton.sortBy == "DEFAULT" then
+            sortModeButton:Hide()
+            sortByButton:ClearAllPoints()
+            sortByButton:SetPoint("LEFT", sortPanel, "LEFT", 0, 0)
+            sortByButton:SetPoint("RIGHT", sortPanel, "RIGHT", 0, 0)
+        else
+            sortModeButton:Show()
+            sortByButton:ClearAllPoints()
+            sortByButton:SetPoint("LEFT", sortPanel, "LEFT", 0, 0)
+            sortByButton:SetPoint("RIGHT", sortModeButton, "LEFT", -6, 0)
+        end
+    end
 
     sortPanel.sortByButton = sortByButton
     frame.sortPanel = sortPanel
@@ -1323,6 +1348,7 @@ function LL:UpdateRightPanel()
     end
 
     self.rightPanel.sortPanel.sortByButton:SetActive(false)
+    self.rightPanel.sortPanel.sortByButton.UpdatePosition()
 
     self.rightPanel:Show()
 end
@@ -1454,9 +1480,8 @@ function LL:ResortSearchResults(results)
     end
 
     local sortBy = dfDB.sortBy or avaliableSortMode[1]
-    local sortDescending = dfDB.sortDescending
     if sortMode[sortBy].func then
-        table.sort(
+        sort(
             waitForSortingResults,
             function(a, b)
                 if not a or not b then
@@ -1464,7 +1489,7 @@ function LL:ResortSearchResults(results)
                 end
 
                 local result = sortMode[sortBy].func(a, b)
-                result = sortDescending and -result or result
+                result = dfDB.sortDescending and result or result * -1
                 return result == 1
             end
         )

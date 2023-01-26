@@ -352,7 +352,10 @@ options.font = {
                 tip = {
                     order = 1,
                     type = "description",
-                    name = format(L["It only works when you enable the skin (%s)."], format("%s - %s", L["Blizzard"], L["Loot"]))
+                    name = format(
+                        L["It only works when you enable the skin (%s)."],
+                        format("%s - %s", L["Blizzard"], L["Loot"])
+                    )
                 },
                 name = {
                     order = 2,
@@ -1193,12 +1196,12 @@ options.addons = {
             addonName = "RaiderIO",
             addonskinsKey = "RaiderIO"
         },
-        -- rematch = {
-        --     order = 10,
-        --     type = "toggle",
-        --     name = L["Rematch"],
-        --     addonName = "Rematch"
-        -- },
+        rareScanner = {
+            order = 10,
+            type = "toggle",
+            name = L["RareScanner"],
+            addonName = "RareScanner"
+        },
         simulationcraft = {
             order = 10,
             type = "toggle",
@@ -2812,7 +2815,7 @@ options.bigWigsSkin = {
                             min = -100,
                             max = 100,
                             step = 1
-                        },
+                        }
                     }
                 }
             }

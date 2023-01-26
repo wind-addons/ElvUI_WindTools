@@ -408,6 +408,7 @@ V.skins = {
         omniCDStatusBar = true,
         premadeGroupsFilter = true,
         raiderIO = true,
+        rareScanner = true,
         rematch = true,
         simulationcraft = true,
         tinyInspect = true,

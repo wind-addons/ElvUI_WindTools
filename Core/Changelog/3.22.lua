@@ -4,18 +4,28 @@ W.Changelog[322] = {
     RELEASE_DATE = "2022/01/25",
     IMPORTANT = {
         ["zhCN"] = {
+            "适配 10.0.5 改动.",
+            "最低 ElvUI 支持版本更改为 13.23.",
             "重新默认开启 PlayStyleString 修复."
         },
         ["zhTW"] = {
+            "適配 10.0.5 改動.",
+            "最低 ElvUI 支援版本更改為 13.23.",
             "重新默認開啟 PlayStyleString 修復."
         },
         ["enUS"] = {
+            "Adapt to 10.0.5 changes.",
+            "The minimum ElvUI version is changed to 13.23.",
             "Re-enable PlayStyleString fix by default."
         },
         ["koKR"] = {
+            "Adapt to 10.0.5 changes.",
+            "The minimum ElvUI version is changed to 13.23.",
             "Re-enable PlayStyleString fix by default."
         },
         ["ruRU"] = {
+            "Адаптация под изменения 10.0.5.",
+            "Минимальная версия ElvUI изменена на 13.23.",
             "Исправление для PlayStyleString включено по умолчанию."
         }
     },

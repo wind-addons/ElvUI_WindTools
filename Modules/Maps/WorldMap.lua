@@ -2779,12 +2779,6 @@ function WM:Scale()
 
     _G.WorldMapFrame:SetClampedToScreen(true)
     _G.WorldMapFrame:SetScale(self.db.scale.size)
-
-    _G.WorldMapFrame.ScrollContainer.GetCursorPosition = function(cursor)
-        local x, y = MapCanvasScrollControllerMixin_GetCursorPosition(cursor)
-        local scale = _G.WorldMapFrame:GetScale()
-        return x / scale, y / scale
-    end
 end
 
 function WM:Initialize()

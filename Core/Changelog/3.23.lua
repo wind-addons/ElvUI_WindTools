@@ -27,10 +27,20 @@ W.Changelog[323] = {
         },
     },
     IMPROVEMENT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {},
-        ["ruRU"] = {}
+        ["zhCN"] = {
+            "[额外物品条] 更新可开启物品列表."
+        },
+        ["zhTW"] = {
+            "[額外物品條] 更新可開啟物品列表."
+        },
+        ["enUS"] = {
+            "[Extra Item Bar] Updated the openable item list."
+        },
+        ["koKR"] = {
+            "[Extra Item Bar] Updated the openable item list."
+        },
+        ["ruRU"] = {
+            "[Extra Item Bar] Updated the openable item list."
+        },
     }
 }

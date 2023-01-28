@@ -3,6 +3,12 @@ local S = W.Modules.Skins
 local TT = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
+local _G = _G
+local floor = floor
+local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local unpack = unpack
+
 function S:RareScanner()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.rareScanner then
         return
@@ -101,6 +107,31 @@ function S:RareScanner()
                 end
             end
         )
+    end
+
+    for _, child in pairs({_G.WorldMapFrame:GetChildren()}) do
+        if child:GetObjectType() == "Frame" and child.EditBox and child.relativeFrame then
+            for _, region in pairs({child.EditBox:GetRegions()}) do
+                if region:GetObjectType() == "Texture" then
+                    if region:GetTexture() then
+                        region:SetTexture(nil)
+                    end
+                end
+            end
+
+            child.EditBox:SetTemplate("Transparent")
+            self:CreateShadow(child.EditBox)
+
+            child.EditBox:ClearAllPoints()
+            child.EditBox:SetAllPoints(child)
+
+            local w, h = child:GetSize()
+            child:SetSize(w, floor(h * 0.62))
+
+            child:ClearAllPoints()
+            child:SetPoint("TOP", _G.WorldMapFrame.ScrollContainer, "TOP", 0, -5)
+            break
+        end
     end
 end
 

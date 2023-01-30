@@ -1202,6 +1202,12 @@ options.addons = {
             name = L["RareScanner"],
             addonName = "RareScanner"
         },
+        simpleAddonManager = {
+            order = 10,
+            type = "toggle",
+            name = L["Simple Addon Manager"],
+            addonName = "SimpleAddonManager",
+        },
         simulationcraft = {
             order = 10,
             type = "toggle",

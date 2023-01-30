@@ -80,6 +80,33 @@ function S:Blizzard_Communities()
     local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel
     self:CreateShadow(BossModel)
     self:CreateShadow(BossModel.TextFrame)
+
+    hooksecurefunc(
+        CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox,
+        "Update",
+        function(button)
+            for _, child in next, {button.ScrollTarget:GetChildren()} do
+                if not child.IsSkinned then
+                    self:ESProxy("HandleIcon", child.Icon, true)
+                    child:StripTextures()
+                    child:CreateBackdrop("Transparent")
+                    child.backdrop:ClearAllPoints()
+                    child.backdrop:Point("TOPLEFT", child.Icon.backdrop)
+                    child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop)
+                    child.backdrop:SetWidth(child:GetWidth() - 5)
+                    child.IsSkinned = true
+                end
+
+                if not child.__windSkin then
+                    child.backdrop:ClearAllPoints()
+                    child.backdrop:Point("TOPLEFT", child.Icon.backdrop, -7, 5)
+                    child.backdrop:Point("BOTTOMLEFT", child.Icon.backdrop, -7, -5)
+                    child.backdrop:SetWidth(child:GetWidth() + 9)
+                    child.__windSkin = true
+                end
+            end
+        end
+    )
 end
 
 S:AddCallbackForAddon("Blizzard_Communities")

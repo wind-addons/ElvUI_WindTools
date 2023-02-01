@@ -391,7 +391,7 @@ function FL:UpdateFriendButton(button)
         -- game icon
         local texOrAtlas = clientData[gameName] and clientData[gameName]["icon"][self.db.textures.client]
 
-        if wowID then
+        if wowID and expansionData[wowID] then
             texOrAtlas = expansionData[wowID]["icon"][self.db.textures.client]
         end
 

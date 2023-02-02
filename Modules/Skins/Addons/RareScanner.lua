@@ -37,7 +37,15 @@ function S:RareScanner()
         scannerButton.FilterEntityButton:SetPushedTexture(W.Media.Icons.buttonMinus, true)
         scannerButton.FilterEntityButton:ClearAllPoints()
         scannerButton.FilterEntityButton:SetSize(16, 16)
-        scannerButton.FilterEntityButton:SetPoint("TOPLEFT", scannerButton, "TOPLEFT", 3, -3)
+        scannerButton.FilterEntityButton:SetPoint("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
+    end
+
+    if scannerButton.UnfilterEnabledButton then
+        self:ESProxy("HandleButton", scannerButton.UnfilterEnabledButton)
+        scannerButton.UnfilterEnabledButton:SetNormalTexture([[Interface\WorldMap\Skull_64]], true)
+        scanner_button.UnfilterEnabledButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
+        scannerButton.UnfilterEnabledButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)
+        scanner_button.UnfilterEnabledButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
     end
 
     if scannerButton.Title then

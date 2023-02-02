@@ -16,7 +16,7 @@ W.Changelog[323] = {
             "Adapt to ElvUI 13.24. (In development)"
         },
         ["ruRU"] = {
-            "Adapt to ElvUI 13.24. (In development)"
+            "Подготовка к ElvUI 13.24. (В разработке)"
         }
     },
     NEW = {
@@ -43,7 +43,7 @@ W.Changelog[323] = {
         ["ruRU"] = {
             "[Скины] Добавлен скин RareScanner.",
             "[Скины] Добавлен скин Simple Addon Manager.",
-            "[Skins] Add skin for The Trading Post."
+            "[Скины] Добавлен скин для Торговой лавки."
         }
     },
     IMPROVEMENT = {
@@ -64,8 +64,8 @@ W.Changelog[323] = {
             "[Skins] Update the Encounter Journal skin."
         },
         ["ruRU"] = {
-            "[Extra Item Bar] Update the openable item list.",
-            "[Skins] Update the Encounter Journal skin."
+            "[Панель дополнительных предметов] Обновление списка открываемых предметов.",
+            "[Скины] Обновлен скин Путеводитель по приключениям."
         }
     }
 }

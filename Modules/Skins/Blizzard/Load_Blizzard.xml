@@ -58,6 +58,7 @@
 	<Script file='Misc.lua'/>
 	<Script file='ObjectiveTracker.lua'/>
 	<Script file='OrderHall.lua'/>
+	<Script file='PerksProgram.lua'/>
 	<Script file='PetBattle.lua'/>
 	<Script file='PlayerChoice.lua'/>
 	<Script file='Professions.lua'/>

@@ -478,6 +478,7 @@ V.skins = {
         misc = true,
         objectiveTracker = true,
         orderHall = true,
+        perksProgram = true,
         petBattle = true,
         playerChoice = true,
         professions = true,

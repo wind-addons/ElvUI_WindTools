@@ -719,6 +719,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Orderhall"]
         },
+        perksProgram = {
+            order = 10,
+            type = "toggle",
+            name = L["Perks Program"]
+        },
         petBattle = {
             order = 10,
             type = "toggle",

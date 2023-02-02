@@ -31,6 +31,8 @@ function S:Blizzard_PerksProgram()
 
         self:CreateBackdropShadow(footer.LeaveButton)
         self:CreateBackdropShadow(footer.PurchaseButton)
+        S:ESProxy("HandleButton", footer.RefundButton, nil, nil, nil, true, nil, nil, nil, true)
+        self:CreateBackdropShadow(footer.RefundButton)
     end
 end
 

@@ -49,23 +49,28 @@ W.Changelog[323] = {
     IMPROVEMENT = {
         ["zhCN"] = {
             "[额外物品条] 更新可开启物品列表.",
-            "[美化皮肤] 更新地下城手册美化皮肤."
+            "[美化皮肤] 更新地下城手册美化皮肤.",
+            "[任务追踪] 新增对每月活动追踪的支持."
         },
         ["zhTW"] = {
             "[額外物品條] 更新可開啟物品列表.",
-            "[美化皮膚] 更新地城導覽手冊美化皮膚."
+            "[美化皮膚] 更新地城導覽手冊美化皮膚.",
+            "[任務追蹤] 新增對每月活動追蹤之支持."
         },
         ["enUS"] = {
             "[Extra Item Bar] Update the openable item list.",
-            "[Skins] Update the Encounter Journal skin."
+            "[Skins] Update the Encounter Journal skin.",
+            "[Objective Tracker] Add support for monthly activities tracking."
         },
         ["koKR"] = {
             "[Extra Item Bar] Update the openable item list.",
-            "[Skins] Update the Encounter Journal skin."
+            "[Skins] Update the Encounter Journal skin.",
+            "[Objective Tracker] Add support for monthly activities tracking."
         },
         ["ruRU"] = {
             "[Панель дополнительных предметов] Обновление списка открываемых предметов.",
-            "[Скины] Обновлен скин Путеводитель по приключениям."
+            "[Скины] Обновлен скин Путеводитель по приключениям.",
+            "[Objective Tracker] Add support for monthly activities tracking."
         }
     }
 }

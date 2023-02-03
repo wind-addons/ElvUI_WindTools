@@ -179,7 +179,7 @@ options.help = {
                         "%s: %s | %s",
                         "fang2hou",
                         E.InfoColor .. "houshuu" .. "|r",
-                        F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. " (TW)", "MONK")
+                        F.CreateClassColorString("Tabideath @ " .. L["Shadowmoon"] .. "(TW)", "DEATHKNIGHT")
                     )
                 },
                 ["mcc1"] = {

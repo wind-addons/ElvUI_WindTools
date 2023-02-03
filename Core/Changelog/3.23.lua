@@ -21,26 +21,31 @@ W.Changelog[323] = {
     },
     NEW = {
         ["zhCN"] = {
+            "[聊天文字] 为作者的角色添加了一个小图标.",
             "[美化皮肤] 新增了 RareScanner 的美化皮肤.",
             "[美化皮肤] 新增了 Simple Addon Manager 的美化皮肤.",
             "[美化皮肤] 新增了贸易站美化皮肤."
         },
         ["zhTW"] = {
+            "[聊天文字] 為作者的角色添加了一個小圖示.",
             "[美化皮膚] 新增了 RareScanner 的美化皮膚.",
             "[美化皮膚] 新增了 Simple Addon Manager 的美化皮膚.",
             "[美化皮膚] 新增了貿易站美化皮膚."
         },
         ["enUS"] = {
+            "[Chat Text] Add an icon for the author's character.",
             "[Skins] Add RareScanner skin.",
             "[Skins] Add Simple Addon Manager skin.",
             "[Skins] Add skin for The Trading Post."
         },
         ["koKR"] = {
+            "[Chat Text] Add an icon for the author's character.",
             "[스킨] RareScanner 스킨을 추가했습니다.",
             "[스킨] Simple Addon Manager 스킨을 추가했습니다.",
             "[Skins] Add skin for The Trading Post."
         },
         ["ruRU"] = {
+            "[Chat Text] Add an icon for the author's character.",
             "[Скины] Добавлен скин RareScanner.",
             "[Скины] Добавлен скин Simple Addon Manager.",
             "[Скины] Добавлен скин для Торговой лавки."

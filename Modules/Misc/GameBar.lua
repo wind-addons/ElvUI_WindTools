@@ -303,7 +303,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barEncounterJournal,
         macro = {
             LeftButton = "/click EJMicroButton",
-            RightButton = "/run WeeklyRewards_LoadUI(); WeeklyRewardsFrame:Show()"
+            RightButton = "/run WeeklyRewards_ShowUI()"
         },
         tooltips = {
             LeftButtonIcon .. " " .. L["Encounter Journal"],

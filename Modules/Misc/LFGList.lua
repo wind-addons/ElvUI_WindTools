@@ -1060,10 +1060,7 @@ function LL:InitalizeRightPanel()
         "OnMouseDown",
         function(btn, button)
             if button == "LeftButton" and not InCombatLockdown() then
-                WeeklyRewards_LoadUI()
-                if _G.WeeklyRewardsFrame then
-                    _G.WeeklyRewardsFrame:Show()
-                end
+                WeeklyRewards_ShowUI()
             end
         end
     )

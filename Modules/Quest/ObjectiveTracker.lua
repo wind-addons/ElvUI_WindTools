@@ -204,7 +204,7 @@ function OT:HandleInfoText(text)
     if self.db.noDash and text and text.GetText then
         rawText = text:GetText()
 
-        if strfind(rawText, "^%- ") then
+        if rawText and rawText ~= "" and strfind(rawText, "^%- ") then
             text:SetText(gsub(rawText, "^%- ", ""))
         end
     end

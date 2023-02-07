@@ -629,7 +629,7 @@ local eventData = {
             type = "loopTimer",
             questID = 70893,
             duration = 16 * 60,
-            interval = 3.5 * 60 * 60,
+            interval = 1.5 * 60 * 60,
             barColor = colorPlatte.blue,
             eventName = L["Community Feast"],
             location = C_Map_GetMapInfo(2024).name,
@@ -643,11 +643,11 @@ local eventData = {
             end,
             startTimestamp = (function()
                 local timestampTable = {
-                    [1] = 1670776200, -- NA
-                    [2] = 1670770800, -- KR
-                    [3] = 1670774400, -- EU
-                    [4] = 1670779800, -- TW
-                    [5] = 1670779800 -- CN
+                    [1] = 1675765800, -- NA
+                    [2] = 1675767600, -- KR
+                    [3] = 1675770300, -- EU
+                    [4] = 1675767600, -- TW
+                    [5] = 1675767600 -- CN
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR

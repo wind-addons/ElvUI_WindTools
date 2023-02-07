@@ -61,7 +61,7 @@ function S:SkinGuildChallengeAlert(frame)
 end
 
 function S:SkinCriteriaAlert(frame)
-    if not frame or frame.__windSkin then
+    if not frame or frame.__windSkin or not frame.hooked then
         return
     end
 
@@ -389,6 +389,7 @@ function S:AlertFrames()
     -- 成就
     self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
     self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
+    self:SecureHook(_G.MonthlyActivityAlertSystem, "setUpFunction", "SkinCriteriaAlert")
 
     -- 遭遇
     self:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")

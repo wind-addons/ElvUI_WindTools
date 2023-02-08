@@ -5,20 +5,20 @@ W.Changelog[323] = {
     IMPORTANT = {
         ["zhCN"] = {
             "如果你被台服工作室频繁刷屏, 试试我的新插件: Wind Chat Filter!",
-            "适配 ElvUI 13.24 版本. (开发中)"
+            "适配 ElvUI 13.25 版本."
         },
         ["zhTW"] = {
             "如果你被台服工作室頻繁刷屏, 試試我的新插件: Wind Chat Filter!",
-            "適配 ElvUI 13.24 版本. (開發中)"
+            "適配 ElvUI 13.25 版本."
         },
         ["enUS"] = {
-            "Adapt to ElvUI 13.24. (In development)"
+            "Adapt to ElvUI 13.25."
         },
         ["koKR"] = {
-            "Adapt to ElvUI 13.24. (In development)"
+            "Adapt to ElvUI 13.25."
         },
         ["ruRU"] = {
-            "Подготовка к ElvUI 13.24. (В разработке)"
+            "Подготовка к ElvUI 13.25."
         }
     },
     NEW = {
@@ -58,6 +58,7 @@ W.Changelog[323] = {
             "[额外物品条] 更新可开启物品列表.",
             "[美化皮肤] 更新地下城手册美化皮肤.",
             "[美化皮肤] 更新提醒框体皮肤.",
+            "[美化皮肤] 更新 Bigwigs 进本计时条皮肤.",
             "[任务追踪] 新增对每月活动追踪的支持.",
             "[事件追踪器] 修正盛宴计时."
         },
@@ -65,6 +66,7 @@ W.Changelog[323] = {
             "[額外物品條] 更新可開啟物品列表.",
             "[美化皮膚] 更新地城導覽手冊美化皮膚.",
             "[美化皮膚] 更新提醒框架美化皮膚.",
+            "[美化皮膚] 更新 Bigwigs 進本計時條美化皮膚.",
             "[任務追蹤] 新增對每月活動追蹤之支持.",
             "[事件追蹤器] 修正盛宴計時."
         },
@@ -72,6 +74,7 @@ W.Changelog[323] = {
             "[Extra Item Bar] Update the openable item list.",
             "[Skins] Update the Encounter Journal skin.",
             "[Skins] Update the Alert Frames skin.",
+            "[Skins] Update the Bigwigs Queue Timer skin.",
             "[Objective Tracker] Add support for monthly activities tracking.",
             "[Event Tracker] Fix the feast timer."
         },
@@ -79,6 +82,7 @@ W.Changelog[323] = {
             "[Extra Item Bar] Update the openable item list.",
             "[Skins] Update the Encounter Journal skin.",
             "[Skins] Update the Alert Frames skin.",
+            "[Skins] Update the Bigwigs Queue Timer skin.",
             "[Objective Tracker] Add support for monthly activities tracking.",
             "[Event Tracker] Fix the feast timer."
         },
@@ -86,6 +90,7 @@ W.Changelog[323] = {
             "[Панель дополнительных предметов] Обновление списка открываемых предметов.",
             "[Скины] Обновлен скин Путеводитель по приключениям.",
             "[Skins] Update the Alert Frames skin.",
+            "[Skins] Update the Bigwigs Queue Timer skin.",
             "[Трекер заданий] Добавлена поддержка ежемесячного отслеживания активности.",
             "[Event Tracker] Fix the feast timer."
         }

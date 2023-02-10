@@ -23,7 +23,7 @@ W.Changelog[323] = {
         },
         ["ruRU"] = {
             "Адаптация к ElvUI 13.25.",
-            "Update the enchant IDs."
+            "Обновлены идентификаторы чар."
         }
     },
     NEW = {

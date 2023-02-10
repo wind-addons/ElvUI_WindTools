@@ -5,20 +5,25 @@ W.Changelog[323] = {
     IMPORTANT = {
         ["zhCN"] = {
             "如果你被台服工作室频繁刷屏, 试试我的新插件: Wind Chat Filter!",
-            "适配 ElvUI 13.25 版本."
+            "适配 ElvUI 13.25 版本.",
+            "更新附魔 ID."
         },
         ["zhTW"] = {
             "如果你被台服工作室頻繁刷屏, 試試我的新插件: Wind Chat Filter!",
-            "適配 ElvUI 13.25 版本."
+            "適配 ElvUI 13.25 版本.",
+            "更新附魔 ID."
         },
         ["enUS"] = {
-            "Adapt to ElvUI 13.25."
+            "Adapt to ElvUI 13.25.",
+            "Update the enchant IDs."
         },
         ["koKR"] = {
-            "Adapt to ElvUI 13.25."
+            "Adapt to ElvUI 13.25.",
+            "Update the enchant IDs."
         },
         ["ruRU"] = {
-            "Адаптация к ElvUI 13.25."
+            "Адаптация к ElvUI 13.25.",
+            "Update the enchant IDs."
         }
     },
     NEW = {

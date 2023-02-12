@@ -11,6 +11,7 @@ local function ReskinScrollFrameItems(frame, template)
             if not btn.__windSkin then
                 F.SetFontOutline(btn.Name)
                 S:ESProxy("HandleCheckBox", btn.EnabledButton)
+                S:ESProxy("HandleCollapseTexture", btn.ExpandOrCollapseButton)
                 btn.__windSkin = true
             end
         end

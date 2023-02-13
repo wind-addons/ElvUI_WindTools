@@ -19,6 +19,11 @@ local CONST_BTALENT_VERSION_COVENANTS = 9
 
 local CONST_SPELLBOOK_CLASSSPELLS_TABID = 2
 local CONST_SPELLBOOK_GENERAL_TABID = 1
+local CONST_ISITEM_BY_TYPEID = {
+    [10] = true, --healing items
+    [11] = true, --attack items
+    [12] = true, --utility items
+}
 
 local GetItemInfo = GetItemInfo
 local GetItemStats = GetItemStats
@@ -296,20 +301,29 @@ end
 --return an integer between zero and one hundret indicating the player gear durability
 function openRaidLib.GearManager.GetPlayerGearDurability()
     local durabilityTotalPercent, totalItems = 0, 0
+    --hold the lowest item durability of all the player gear
+    --this prevent the case where the player has an average of 80% durability but an item with 15% durability
+    local lowestGearDurability = 100
+
     for i = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
         local durability, maxDurability = GetInventoryItemDurability(i)
         if (durability and maxDurability) then
             local itemDurability = durability / maxDurability * 100
+
+            if (itemDurability < lowestGearDurability) then
+                lowestGearDurability = itemDurability
+            end
+
             durabilityTotalPercent = durabilityTotalPercent + itemDurability
             totalItems = totalItems + 1
         end
     end
 
     if (totalItems == 0) then
-        return 100
+        return 100, lowestGearDurability
     end
 
-    return floor(durabilityTotalPercent / totalItems)
+    return floor(durabilityTotalPercent / totalItems), lowestGearDurability
 end
 
 function openRaidLib.GearManager.GetPlayerWeaponEnchant()
@@ -579,8 +593,10 @@ local updateCooldownAvailableList = function()
 
     --build a list of all spells assigned as cooldowns for the player class
     for spellID, spellData in pairs(LIB_OPEN_RAID_COOLDOWNS_INFO) do
-        if (spellData.class == playerClass or spellData.raceid == playerRaceId) then --need to implement here to get the racial as racial cooldowns does not carry a class
-            if (spellBookSpellList[spellID]) then
+        --type 10 is an item cooldown and does not have a class or raceid
+        if (spellData.class == playerClass or spellData.raceid == playerRaceId or CONST_ISITEM_BY_TYPEID[spellData.type]) then --need to implement here to get the racial as racial cooldowns does not carry a class
+            --type 10 is an item cooldown and does not have a spellbook entry
+            if (spellBookSpellList[spellID] or CONST_ISITEM_BY_TYPEID[spellData.type]) then
                 LIB_OPEN_RAID_PLAYERCOOLDOWNS[spellID] = spellData
             end
         end
@@ -709,8 +725,8 @@ end
 ---@return number buffDuration
 function openRaidLib.CooldownManager.GetPlayerCooldownStatus(spellId)
     --check if is a charge spell
-    local cooldownInfo = LIB_OPEN_RAID_COOLDOWNS_INFO[spellId]
-    if (cooldownInfo) then
+    local spellData = LIB_OPEN_RAID_COOLDOWNS_INFO[spellId]
+    if (spellData) then
         local buffDuration = getAuraDuration(spellId)
         local chargesAvailable, chargesTotal, start, duration = GetSpellCharges(spellId)
         if chargesAvailable then

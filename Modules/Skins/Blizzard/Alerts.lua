@@ -426,7 +426,7 @@ function S:AlertFrames()
     self:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
 
     -- Cosmetics
-    hooksecurefunc(_G.NewCosmeticAlertFrameSystem, "setUpFunction", "SkinNewItemAlert")
+    self:SecureHook(_G.NewCosmeticAlertFrameSystem, "setUpFunction", "SkinNewItemAlert")
 end
 
 S:AddCallback("AlertFrames")

@@ -30,12 +30,12 @@ local GetNumGroupMembers = GetNumGroupMembers
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTime = GetTime
-local GetUnitName = GetUnitName
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
 local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
+local UnitName = UnitName
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local WeeklyRewards_LoadUI = WeeklyRewards_LoadUI
 
@@ -472,7 +472,7 @@ function LL:UpdatePartyKeystoneFrame()
         if mapID and mythicKeystoneDungeons[mapID] then
             local level = data.level
             local playerClass = UnitClassBase(unitID)
-            local playerName = GetUnitName(unitID, false)
+            local playerName = UnitName(unitID)
             local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
 
             tinsert(

@@ -44,6 +44,11 @@ function S:FriendsFrame()
         return
     end
 
+    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame.Bg:SetTexture(nil)
+    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetTemplate("Transparent")
+    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:ClearAllPoints()
+    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point("TOPLEFT", FriendsFrame, "TOPRIGHT", 3, -1)
+
     local frames = {
         _G.FriendsFrame,
         _G.FriendsFriendsFrame,
@@ -51,6 +56,7 @@ function S:FriendsFrame()
         _G.RecruitAFriendFrame.SplashFrame,
         _G.RecruitAFriendRewardsFrame,
         _G.RecruitAFriendRecruitmentFrame,
+        _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame,
         _G.FriendsFrameBattlenetFrame.BroadcastFrame,
         _G.QuickJoinRoleSelectionFrame
     }

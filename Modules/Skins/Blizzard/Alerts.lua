@@ -386,19 +386,19 @@ function S:AlertFrames()
         return
     end
 
-    -- 成就
+    -- Achievements
     self:SecureHook(_G.AchievementAlertSystem, "setUpFunction", "SkinAchievementAlert")
     self:SecureHook(_G.CriteriaAlertSystem, "setUpFunction", "SkinCriteriaAlert")
     self:SecureHook(_G.MonthlyActivityAlertSystem, "setUpFunction", "SkinCriteriaAlert")
 
-    -- 遭遇
+    -- Encounters
     self:SecureHook(_G.DungeonCompletionAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GuildChallengeAlertSystem, "setUpFunction", "SkinGuildChallengeAlert")
     self:SecureHook(_G.InvasionAlertSystem, "setUpFunction", "SkinInvasionAlert")
     self:SecureHook(_G.ScenarioAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.WorldQuestCompleteAlertSystem, "setUpFunction", "SkinWorldQuestCompleteAlert")
 
-    -- 要塞
+    -- Garrisons
     self:SecureHook(_G.GarrisonFollowerAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GarrisonShipFollowerAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GarrisonTalentAlertSystem, "setUpFunction", "SkinGarrisonTalentAlert")
@@ -407,25 +407,26 @@ function S:AlertFrames()
     self:SecureHook(_G.GarrisonShipMissionAlertSystem, "setUpFunction", "SkinAlert")
     self:SecureHook(_G.GarrisonRandomMissionAlertSystem, "setUpFunction", "SkinAlert")
 
-    -- 拾取
+    -- Loot
     self:SecureHook(_G.LegendaryItemAlertSystem, "setUpFunction", "SkinLegendaryItemAlert")
     self:SecureHook(_G.LootAlertSystem, "setUpFunction", "SkinLootAlert")
     self:SecureHook(_G.LootUpgradeAlertSystem, "setUpFunction", "SkinLootUpgradeAlert")
     self:SecureHook(_G.MoneyWonAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
     self:SecureHook(_G.HonorAwardedAlertSystem, "setUpFunction", "SkinMoneyWonAlert")
+    self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
+    self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
 
-    -- 专业技能
+    -- Professions
     self:SecureHook(_G.DigsiteCompleteAlertSystem, "setUpFunction", "SkinDigsiteCompleteAlert")
     self:SecureHook(_G.NewRecipeLearnedAlertSystem, "setUpFunction", "SkinNewRecipeLearnedAlert")
 
-    -- 宠物 / 坐骑
+    -- Pets/Mounts
     self:SecureHook(_G.NewPetAlertSystem, "setUpFunction", "SkinNewItemAlert")
     self:SecureHook(_G.NewMountAlertSystem, "setUpFunction", "SkinNewItemAlert")
     self:SecureHook(_G.NewToyAlertSystem, "setUpFunction", "SkinNewItemAlert")
 
-    -- 其它
-    self:SecureHook(_G.EntitlementDeliveredAlertSystem, "setUpFunction", "SkinAlert")
-    self:SecureHook(_G.RafRewardDeliveredAlertSystem, "setUpFunction", "SkinRafRewardDeliveredAlert")
+    -- Cosmetics
+    hooksecurefunc(_G.NewCosmeticAlertFrameSystem, "setUpFunction", "SkinNewItemAlert")
 end
 
 S:AddCallback("AlertFrames")

@@ -402,7 +402,7 @@ function LL:InitializePartyKeystoneFrame()
     F.SetFontWithDB(frame.title, self.db.partyKeystone.font)
     frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -10)
     frame.title:SetJustifyH("LEFT")
-    frame.title:SetText(W.Title .. " - " .. L["Keystone"])
+    frame.title:SetText(F.GetWindStyleText(L["Party Keystone"]))
 
     frame.button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
     frame.button:SetSize(60, self.db.partyKeystone.font.size + 4)

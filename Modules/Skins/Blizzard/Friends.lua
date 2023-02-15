@@ -51,7 +51,8 @@ function S:FriendsFrame()
         _G.RecruitAFriendFrame.SplashFrame,
         _G.RecruitAFriendRewardsFrame,
         _G.RecruitAFriendRecruitmentFrame,
-        _G.FriendsFrameBattlenetFrame.BroadcastFrame
+        _G.FriendsFrameBattlenetFrame.BroadcastFrame,
+        _G.QuickJoinRoleSelectionFrame
     }
 
     for _, frame in pairs(frames) do

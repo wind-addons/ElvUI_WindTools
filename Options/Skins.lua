@@ -1118,6 +1118,12 @@ options.addons = {
             name = L["Angry Keystones"],
             addonName = "AngryKeystones"
         },
+        auctionator = {
+            order = 10,
+            type = "toggle",
+            name = L["Auctionator"],
+            addonName = "Auctionator"
+        },
         bigWigs = {
             order = 10,
             type = "toggle",

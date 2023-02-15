@@ -396,6 +396,7 @@ V.skins = {
         ace3DropdownBackdrop = true,
         adiBags = true,
         angryKeystones = true,
+        auctionator = true,
         bigWigs = true,
         bigWigsQueueTimer = true,
         bugSack = true,

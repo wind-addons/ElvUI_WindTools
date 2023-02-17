@@ -111,6 +111,18 @@ local function configRadioButtonGroup(frame)
     end
 end
 
+local function configCheckbox(frame)
+    S:ESProxy("HandleCheckBox", frame.CheckBox)
+end
+
+local function dropDownInternal(frame)
+    S:ESProxy("HandleDropDownBox", frame)
+end
+
+local function keyBindingConfig(frame)
+    S:ESProxy("HandleButton", frame.Button)
+end
+
 local function sellingBagFrame(frame)
     frame:CreateBackdrop("Transparent")
     S:ESProxy("HandleScrollBar", frame.ScrollBar)
@@ -153,7 +165,7 @@ end
 
 local function undercutScan(frame)
     for _, child in pairs({frame:GetChildren()}) do
-        if child:GetObjectType() == "Button" then
+        if child:IsObjectType("Button") then
             S:ESProxy("HandleButton", child)
         end
     end
@@ -380,40 +392,49 @@ local function splashFrame(frame)
     end
 end
 
+local function configSellingFrame(frame)
+    S:ESProxy("HandleButton", frame.UnhideAll)
+end
+
 function S:Auctionator()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.auctionator then
         return
     end
 
     -- widgets
+    hooksecurefunc(_G.AuctionatorBagClassListingMixin, "Init", reskin(bagClassListing))
+    hooksecurefunc(_G.AuctionatorBagItemContainerMixin, "OnLoad", reskin(bagItemContainer))
+    hooksecurefunc(_G.AuctionatorConfigCheckboxMixin, "OnLoad", reskin(configCheckbox))
     hooksecurefunc(
         _G.AuctionatorConfigHorizontalRadioButtonGroupMixin,
         "SetupRadioButtons",
         reskin(configRadioButtonGroup)
     )
-    hooksecurefunc(_G.AuctionatorConfigNumericInputMixin, "OnLoad", reskin(configNumericInput))
-    hooksecurefunc(_G.AuctionatorBagClassListingMixin, "Init", reskin(bagClassListing))
-    hooksecurefunc(_G.AuctionatorBagItemContainerMixin, "OnLoad", reskin(bagItemContainer))
-    hooksecurefunc(_G.AuctionatorSellingBagFrameMixin, "OnLoad", reskin(sellingBagFrame))
-    hooksecurefunc(_G.AuctionatorConfigMoneyInputMixin, "OnLoad", reskin(configMoneyInput))
-    hooksecurefunc(_G.AuctionatorFilterKeySelectorMixin, "OnLoad", reskin(filterKeySelector))
-    hooksecurefunc(_G.AuctionatorUndercutScanMixin, "OnLoad", reskin(undercutScan))
-    hooksecurefunc(_G.AuctionatorSaleItemMixin, "OnLoad", reskin(saleItem))
     hooksecurefunc(_G.AuctionatorConfigMinMaxMixin, "OnLoad", reskin(configMinMax))
-    hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
-    hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
-    hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
-    hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(tabRecentsContainer))
+    hooksecurefunc(_G.AuctionatorConfigMoneyInputMixin, "OnLoad", reskin(configMoneyInput))
+    hooksecurefunc(_G.AuctionatorConfigNumericInputMixin, "OnLoad", reskin(configNumericInput))
+    hooksecurefunc(_G.AuctionatorConfigRadioButtonGroupMixin, "SetupRadioButtons", reskin(configRadioButtonGroup))
+    hooksecurefunc(_G.AuctionatorDropDownInternalMixin, "Initialize", reskin(dropDownInternal))
+    hooksecurefunc(_G.AuctionatorFilterKeySelectorMixin, "OnLoad", reskin(filterKeySelector))
+    hooksecurefunc(_G.AuctionatorKeyBindingConfigMixin, "OnLoad", reskin(keyBindingConfig))
     hooksecurefunc(_G.AuctionatorResultsListingMixin, "OnShow", reskin(resultsListing))
+    hooksecurefunc(_G.AuctionatorSaleItemMixin, "OnLoad", reskin(saleItem))
+    hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
+    hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
+    hooksecurefunc(_G.AuctionatorSellingBagFrameMixin, "OnLoad", reskin(sellingBagFrame))
     hooksecurefunc(_G.AuctionatorSellingTabPricesContainerMixin, "OnLoad", reskin(sellingTabPricesContainer))
+    hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(tabRecentsContainer))
+    hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
+    hooksecurefunc(_G.AuctionatorUndercutScanMixin, "OnLoad", reskin(undercutScan))
 
     -- tab frames
-    hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
-    hooksecurefunc(_G.AuctionatorSellingTabMixin, "OnLoad", reskin(sellingTab))
     hooksecurefunc(_G.AuctionatorCancellingFrameMixin, "OnLoad", reskin(cancellingFrame))
     hooksecurefunc(_G.AuctionatorConfigTabMixin, "OnLoad", reskin(configTab))
+    hooksecurefunc(_G.AuctionatorSellingTabMixin, "OnLoad", reskin(sellingTab))
+    hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
 
     -- frames
+    hooksecurefunc(_G.AuctionatorConfigSellingFrameMixin, "OnLoad", reskin(configSellingFrame))
     hooksecurefunc(_G.AuctionatorExportTextFrameMixin, "OnLoad", reskin(exportTextFrame))
     hooksecurefunc(_G.AuctionatorListExportFrameMixin, "OnLoad", reskin(listExportFrame))
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))

@@ -53,6 +53,14 @@ local function HandleHeaders(frame)
     HandleListIcon(frame)
 end
 
+local function HandleTab(tab)
+    S:ESProxy("HandleTab", tab)
+    tab.Text:ClearAllPoints()
+    tab.Text:SetPoint("CENTER", tab, "CENTER", 0, 0)
+    tab.Text.__SetPoint = tab.Text.SetPoint
+    tab.Text.SetPoint = E.noop
+end
+
 local function reskin(func)
     return function(frame, ...)
         if frame.__windSkin then
@@ -65,6 +73,74 @@ local function reskin(func)
     end
 end
 
+local function bagClassListing(frame)
+    frame.SectionTitle:StripTextures()
+    S:ESProxy("HandleButton", frame.SectionTitle)
+end
+
+local function bagItemContainer(frame)
+    if frame.buttonPool and frame.buttonPool.creatorFunc then
+        local func = frame.buttonPool.creatorFunc
+        frame.buttonPool.creatorFunc = function(...)
+            local button = func(...)
+
+            button.Icon:ClearAllPoints()
+            button.Icon:SetSize(frame.iconSize - 4, frame.iconSize - 4)
+            button.Icon:SetPoint("CENTER", button, "CENTER", 0, 0)
+            button.EmptySlot:SetTexture(nil)
+            button.EmptySlot:Hide()
+
+            button:GetHighlightTexture():SetTexture(E.Media.Textures.White8x8)
+            button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.3)
+
+            button:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
+            button:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
+
+            S:ESProxy("HandleIcon", button.Icon, true)
+            S:ESProxy("HandleIconBorder", button.IconBorder, button.Icon.backdrop)
+
+            return button
+        end
+    end
+end
+
+local function configRadioButtonGroup(frame)
+    for _, child in pairs(frame.radioButtons) do
+        S:ESProxy("HandleRadioButton", child.RadioButton)
+    end
+end
+
+local function sellingBagFrame(frame)
+    frame:CreateBackdrop("Transparent")
+    S:ESProxy("HandleScrollBar", frame.ScrollBar)
+end
+
+local function configNumericInput(frame)
+    S:ESProxy("HandleEditBox", frame.InputBox)
+    frame.InputBox:SetTextInsets(0, 0, 0, 0)
+end
+
+local function configMoneyInput(frame)
+    S:ESProxy("HandleEditBox", frame.MoneyInput.CopperBox)
+    S:ESProxy("HandleEditBox", frame.MoneyInput.GoldBox)
+    S:ESProxy("HandleEditBox", frame.MoneyInput.SilverBox)
+
+    frame.MoneyInput.CopperBox:SetTextInsets(3, 0, 0, 0)
+    frame.MoneyInput.GoldBox:SetTextInsets(3, 0, 0, 0)
+    frame.MoneyInput.SilverBox:SetTextInsets(3, 0, 0, 0)
+
+    frame.MoneyInput.CopperBox:SetHeight(24)
+    frame.MoneyInput.GoldBox:SetHeight(24)
+    frame.MoneyInput.SilverBox:SetHeight(24)
+
+    frame.MoneyInput.CopperBox.Icon:ClearAllPoints()
+    frame.MoneyInput.CopperBox.Icon:SetPoint("RIGHT", frame.MoneyInput.CopperBox, "RIGHT", -10, 0)
+    frame.MoneyInput.GoldBox.Icon:ClearAllPoints()
+    frame.MoneyInput.GoldBox.Icon:SetPoint("RIGHT", frame.MoneyInput.GoldBox, "RIGHT", -10, 0)
+    frame.MoneyInput.SilverBox.Icon:ClearAllPoints()
+    frame.MoneyInput.SilverBox.Icon:SetPoint("RIGHT", frame.MoneyInput.SilverBox, "RIGHT", -10, 0)
+end
+
 local function configMinMax(frame)
     S:ESProxy("HandleEditBox", frame.MinBox)
     S:ESProxy("HandleEditBox", frame.MaxBox)
@@ -72,6 +148,33 @@ end
 
 local function filterKeySelector(frame)
     S:ESProxy("HandleDropDownBox", frame)
+end
+
+local function undercutScan(frame)
+    for _, child in pairs({frame:GetChildren()}) do
+        if child:GetObjectType() == "Button" then
+            S:ESProxy("HandleButton", child)
+        end
+    end
+end
+
+local function saleItem(frame)
+    frame.Icon:StripTextures()
+
+    S:ESProxy("HandleIcon", frame.Icon.Icon, true)
+    S:ESProxy("HandleIconBorder", frame.Icon.IconBorder, frame.Icon.Icon.backdrop)
+
+    S:ESProxy("HandleButton", frame.MaxButton)
+    frame.MaxButton:ClearAllPoints()
+    frame.MaxButton:SetPoint("TOPLEFT", frame.Quantity, "TOPRIGHT", 0, 0)
+    S:ESProxy("HandleButton", frame.PostButton)
+    S:ESProxy("HandleButton", frame.SkipButton)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child:IsObjectType("Button") and child.Icon then
+            S:ESProxy("HandleButton", child)
+        end
+    end
 end
 
 local function bottomTabButtons(frame)
@@ -109,17 +212,14 @@ local function scrollListRecents(frame)
 end
 
 local function tabRecentsContainer(frame)
-    S:ESProxy("HandleTab", frame.ListTab)
-    frame.ListTab.Text:ClearAllPoints()
-    frame.ListTab.Text:SetPoint("CENTER", frame.ListTab, "CENTER", 0, 0)
-    frame.ListTab.Text.__SetPoint = frame.ListTab.Text.SetPoint
-    frame.ListTab.Text.SetPoint = E.noop
+    HandleTab(frame.ListTab)
+    HandleTab(frame.RecentsTab)
+end
 
-    S:ESProxy("HandleTab", frame.RecentsTab)
-    frame.RecentsTab.Text:ClearAllPoints()
-    frame.RecentsTab.Text:SetPoint("CENTER", frame.RecentsTab, "CENTER", 0, 0)
-    frame.RecentsTab.Text.__SetPoint = frame.RecentsTab.Text.SetPoint
-    frame.RecentsTab.Text.SetPoint = E.noop
+local function sellingTabPricesContainer(frame)
+    HandleTab(frame.CurrentPricesTab)
+    HandleTab(frame.PriceHistoryTab)
+    HandleTab(frame.YourHistoryTab)
 end
 
 local function resultsListing(frame)
@@ -147,6 +247,24 @@ local function shoppingTab(frame)
     S:ESProxy("HandleButton", frame.ExportCSV)
 
     frame.ShoppingResultsInset:StripTextures()
+end
+
+local function sellingTab(frame)
+    frame.BagInset:StripTextures()
+    frame.HistoricalPriceInset:StripTextures()
+end
+
+local function cancellingFrame(frame)
+    S:ESProxy("HandleEditBox", frame.SearchFilter)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child:IsObjectType("Button") and child.Icon then
+            S:ESProxy("HandleButton", child)
+        end
+    end
+
+    frame.HistoricalPriceInset:StripTextures()
+    frame.HistoricalPriceInset:SetTemplate("Transparent")
 end
 
 local function configTab(frame)
@@ -267,16 +385,31 @@ function S:Auctionator()
     end
 
     -- widgets
+    hooksecurefunc(
+        _G.AuctionatorConfigHorizontalRadioButtonGroupMixin,
+        "SetupRadioButtons",
+        reskin(configRadioButtonGroup)
+    )
+    hooksecurefunc(_G.AuctionatorConfigNumericInputMixin, "OnLoad", reskin(configNumericInput))
+    hooksecurefunc(_G.AuctionatorBagClassListingMixin, "Init", reskin(bagClassListing))
+    hooksecurefunc(_G.AuctionatorBagItemContainerMixin, "OnLoad", reskin(bagItemContainer))
+    hooksecurefunc(_G.AuctionatorSellingBagFrameMixin, "OnLoad", reskin(sellingBagFrame))
+    hooksecurefunc(_G.AuctionatorConfigMoneyInputMixin, "OnLoad", reskin(configMoneyInput))
     hooksecurefunc(_G.AuctionatorFilterKeySelectorMixin, "OnLoad", reskin(filterKeySelector))
+    hooksecurefunc(_G.AuctionatorUndercutScanMixin, "OnLoad", reskin(undercutScan))
+    hooksecurefunc(_G.AuctionatorSaleItemMixin, "OnLoad", reskin(saleItem))
     hooksecurefunc(_G.AuctionatorConfigMinMaxMixin, "OnLoad", reskin(configMinMax))
     hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
     hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
     hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
     hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(tabRecentsContainer))
     hooksecurefunc(_G.AuctionatorResultsListingMixin, "OnShow", reskin(resultsListing))
+    hooksecurefunc(_G.AuctionatorSellingTabPricesContainerMixin, "OnLoad", reskin(sellingTabPricesContainer))
 
     -- tab frames
     hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
+    hooksecurefunc(_G.AuctionatorSellingTabMixin, "OnLoad", reskin(sellingTab))
+    hooksecurefunc(_G.AuctionatorCancellingFrameMixin, "OnLoad", reskin(cancellingFrame))
     hooksecurefunc(_G.AuctionatorConfigTabMixin, "OnLoad", reskin(configTab))
 
     -- frames

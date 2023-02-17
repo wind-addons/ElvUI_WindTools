@@ -65,6 +65,15 @@ local function reskin(func)
     end
 end
 
+local function configMinMax(frame)
+    S:ESProxy("HandleEditBox", frame.MinBox)
+    S:ESProxy("HandleEditBox", frame.MaxBox)
+end
+
+local function filterKeySelector(frame)
+    S:ESProxy("HandleDropDownBox", frame)
+end
+
 local function bottomTabButtons(frame)
     for _, details in ipairs(_G.Auctionator.Tabs.State.knownTabs) do
         local tabButtonFrameName = "AuctionatorTabs_" .. details.name
@@ -151,6 +160,62 @@ local function configTab(frame)
     S:ESProxy("HandleEditBox", frame.BugReportLink.InputBox)
 end
 
+local function shoppingItem(frame)
+    frame:StripTextures()
+    frame:SetTemplate("Transparent")
+    S:CreateShadow(frame)
+
+    S:ESProxy("HandleEditBox", frame.SearchContainer.SearchString)
+    S:ESProxy("HandleButton", frame.SearchContainer.ResetSearchStringButton)
+    frame.SearchContainer.ResetSearchStringButton:SetSize(20, 20)
+    frame.SearchContainer.ResetSearchStringButton:ClearAllPoints()
+    frame.SearchContainer.ResetSearchStringButton:SetPoint("LEFT", frame.SearchContainer.SearchString, "RIGHT", 3, 0)
+    S:ESProxy("HandleCheckBox", frame.SearchContainer.IsExact)
+
+    S:ESProxy("HandleButton", frame.FilterKeySelector.ResetButton)
+    frame.FilterKeySelector.ResetButton:SetSize(20, 20)
+    frame.FilterKeySelector.ResetButton:ClearAllPoints()
+    frame.FilterKeySelector.ResetButton:SetPoint("LEFT", frame.FilterKeySelector, "RIGHT", 0, 3)
+
+    S:ESProxy("HandleButton", frame.LevelRange.ResetButton)
+    frame.LevelRange.ResetButton:SetSize(20, 20)
+    frame.LevelRange.ResetButton:ClearAllPoints()
+    frame.LevelRange.ResetButton:SetPoint("LEFT", frame.LevelRange.MaxBox, "RIGHT", 3, 0)
+
+    S:ESProxy("HandleButton", frame.ItemLevelRange.ResetButton)
+    frame.ItemLevelRange.ResetButton:SetSize(20, 20)
+    frame.ItemLevelRange.ResetButton:ClearAllPoints()
+    frame.ItemLevelRange.ResetButton:SetPoint("LEFT", frame.ItemLevelRange.MaxBox, "RIGHT", 3, 0)
+
+    S:ESProxy("HandleButton", frame.PriceRange.ResetButton)
+    frame.PriceRange.ResetButton:SetSize(20, 20)
+    frame.PriceRange.ResetButton:ClearAllPoints()
+    frame.PriceRange.ResetButton:SetPoint("LEFT", frame.PriceRange.MaxBox, "RIGHT", 3, 0)
+
+    S:ESProxy("HandleButton", frame.CraftedLevelRange.ResetButton)
+    frame.CraftedLevelRange.ResetButton:SetSize(20, 20)
+    frame.CraftedLevelRange.ResetButton:ClearAllPoints()
+    frame.CraftedLevelRange.ResetButton:SetPoint("LEFT", frame.CraftedLevelRange.MaxBox, "RIGHT", 3, 0)
+
+    S:ESProxy("HandleDropDownBox", frame.QualityContainer.DropDown.DropDown)
+    S:ESProxy("HandleButton", frame.QualityContainer.ResetQualityButton)
+    frame.QualityContainer.ResetQualityButton:SetSize(20, 20)
+    frame.QualityContainer.ResetQualityButton:ClearAllPoints()
+    frame.QualityContainer.ResetQualityButton:SetPoint("LEFT", frame.QualityContainer.DropDown.DropDown, "RIGHT", 0, 3)
+
+    frame.TierContainer:ClearAllPoints()
+    frame.TierContainer:SetPoint("TOPLEFT", frame.QualityContainer, "BOTTOMLEFT", 0, -20)
+    S:ESProxy("HandleDropDownBox", frame.TierContainer.DropDown.DropDown)
+    S:ESProxy("HandleButton", frame.TierContainer.ResetTierButton)
+    frame.TierContainer.ResetTierButton:SetSize(20, 20)
+    frame.TierContainer.ResetTierButton:ClearAllPoints()
+    frame.TierContainer.ResetTierButton:SetPoint("LEFT", frame.TierContainer.DropDown.DropDown, "RIGHT", 0, 3)
+
+    S:ESProxy("HandleButton", frame.Finished)
+    S:ESProxy("HandleButton", frame.Cancel)
+    S:ESProxy("HandleButton", frame.ResetAllButton)
+end
+
 local function exportTextFrame(frame)
     frame:StripTextures()
     frame:SetTemplate("Transparent")
@@ -202,6 +267,8 @@ function S:Auctionator()
     end
 
     -- widgets
+    hooksecurefunc(_G.AuctionatorFilterKeySelectorMixin, "OnLoad", reskin(filterKeySelector))
+    hooksecurefunc(_G.AuctionatorConfigMinMaxMixin, "OnLoad", reskin(configMinMax))
     hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
     hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
     hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
@@ -216,6 +283,7 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorExportTextFrameMixin, "OnLoad", reskin(exportTextFrame))
     hooksecurefunc(_G.AuctionatorListExportFrameMixin, "OnLoad", reskin(listExportFrame))
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))
+    hooksecurefunc(_G.AuctionatorShoppingItemMixin, "OnLoad", reskin(shoppingItem))
     hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))
 end
 

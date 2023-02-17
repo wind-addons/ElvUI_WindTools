@@ -87,6 +87,7 @@ local function bagItemContainer(frame)
             button.Icon:ClearAllPoints()
             button.Icon:SetSize(frame.iconSize - 4, frame.iconSize - 4)
             button.Icon:SetPoint("CENTER", button, "CENTER", 0, 0)
+
             button.EmptySlot:SetTexture(nil)
             button.EmptySlot:Hide()
 

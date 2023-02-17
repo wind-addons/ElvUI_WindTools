@@ -63,7 +63,7 @@ function S:RaiderIO_DelayedSkinning()
         self:ESProxy("HandleScrollBar", configFrame.scrollbar)
 
         for _, frame in pairs({configFrame.buttonFrame:GetChildren()}) do
-            if frame:GetObjectType() == "Button" then
+            if frame:IsObjectType("Button") then
                 frame:SetScript("OnEnter", nil)
                 frame:SetScript("OnLeave", nil)
                 F.SetFontOutline(frame.text)
@@ -75,7 +75,7 @@ function S:RaiderIO_DelayedSkinning()
         if configFrame.scrollframe and configFrame.scrollframe.content then
             for _, line in pairs({configFrame.scrollframe.content:GetChildren()}) do
                 for _, child in pairs({line:GetChildren()}) do
-                    if child:GetObjectType() == "CheckButton" then
+                    if child:IsObjectType("CheckButton") then
                         self:ESProxy("HandleCheckBox", child)
                     end
                 end
@@ -111,6 +111,14 @@ function S:RaiderIO()
     self:DisableAddOnSkin("RaiderIO")
     self:AddCallbackForEnterWorld("RaiderIO_DelayedSkinning")
     self:SecureHook(_G.PVEFrame, "Show", "RaiderIO_GuildWeeklyFrame")
+
+    if _G.RaiderIO_SettingsPanel then
+        for _, child in pairs({_G.RaiderIO_SettingsPanel:GetChildren()}) do
+            if child:GetObjectType("Button") then
+                self:ESProxy("HandleButton", child)
+            end
+        end
+    end
 end
 
 S:AddCallbackForAddon("RaiderIO")

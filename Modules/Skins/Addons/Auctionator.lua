@@ -4,6 +4,55 @@ local S = W.Modules.Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+-- modified from ElvUI Auction House Skin
+local function HandleListIcon(frame)
+    if not frame.tableBuilder then
+        return
+    end
+
+    for i = 1, 22 do
+        local row = frame.tableBuilder.rows[i]
+        if row then
+            for j = 1, 5 do
+                local cell = row.cells and row.cells[j]
+                if cell and cell.Icon then
+                    if not cell.__windSkin then
+                        S:ESProxy("HandleIcon", cell.Icon)
+
+                        if cell.IconBorder then
+                            cell.IconBorder:Kill()
+                        end
+
+                        cell.__windSkin = true
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- modified from ElvUI Auction House Skin
+local function HandleHeaders(frame)
+    local maxHeaders = frame.HeaderContainer:GetNumChildren()
+    for i, header in next, {frame.HeaderContainer:GetChildren()} do
+        if not header.__windSkin then
+            header:DisableDrawLayer("BACKGROUND")
+
+            if not header.backdrop then
+                header:CreateBackdrop("Transparent")
+            end
+
+            header.__windSkin = true
+        end
+
+        if header.backdrop then
+            header.backdrop:Point("BOTTOMRIGHT", i < maxHeaders and -5 or 0, -2)
+        end
+    end
+
+    HandleListIcon(frame)
+end
+
 local function reskin(func)
     return function(frame, ...)
         if frame.__windSkin then
@@ -37,18 +86,69 @@ local function bottomTabButtons(frame)
     end
 end
 
-local function splashFrame(frame)
-    frame:StripTextures()
-    frame:SetTemplate("Transparent")
-    S:CreateShadow(frame)
+local function scrollListShoppingList(frame)
+    frame.Inset:StripTextures()
+    frame.Inset:SetTemplate("Transparent")
 
-    S:ESProxy("HandleCloseButton", frame.Close)
-    S:ESProxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
-    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+end
 
-    if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
-        W.Modules.MoveFrames:HandleFrame(frame)
+local function scrollListRecents(frame)
+    frame.Inset:StripTextures()
+    frame.Inset:SetTemplate("Transparent")
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+end
+
+local function tabRecentsContainer(frame)
+    S:ESProxy("HandleTab", frame.ListTab)
+    frame.ListTab.Text:ClearAllPoints()
+    frame.ListTab.Text:SetPoint("CENTER", frame.ListTab, "CENTER", 0, 0)
+    frame.ListTab.Text.__SetPoint = frame.ListTab.Text.SetPoint
+    frame.ListTab.Text.SetPoint = E.noop
+
+    S:ESProxy("HandleTab", frame.RecentsTab)
+    frame.RecentsTab.Text:ClearAllPoints()
+    frame.RecentsTab.Text:SetPoint("CENTER", frame.RecentsTab, "CENTER", 0, 0)
+    frame.RecentsTab.Text.__SetPoint = frame.RecentsTab.Text.SetPoint
+    frame.RecentsTab.Text.SetPoint = E.noop
+end
+
+local function resultsListing(frame)
+    frame.ScrollArea:SetTemplate("Transparent")
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollArea.ScrollBar)
+
+    HandleHeaders(frame)
+    hooksecurefunc(frame, "UpdateTable", HandleHeaders)
+end
+
+local function shoppingTab(frame)
+    if frame.OneItemSearch then
+        S:ESProxy("HandleEditBox", frame.OneItemSearch.SearchBox)
+        S:ESProxy("HandleButton", frame.OneItemSearch.SearchButton)
+        S:ESProxy("HandleButton", frame.OneItemSearch.ExtendedButton)
     end
+
+    S:ESProxy("HandleDropDownBox", frame.ListDropdown)
+
+    S:ESProxy("HandleButton", frame.AddItem)
+    S:ESProxy("HandleButton", frame.ManualSearch)
+    S:ESProxy("HandleButton", frame.SortItems)
+    S:ESProxy("HandleButton", frame.Import)
+    S:ESProxy("HandleButton", frame.Export)
+    S:ESProxy("HandleButton", frame.ExportCSV)
+
+    frame.ShoppingResultsInset:StripTextures()
+end
+
+local function configTab(frame)
+    frame.Bg:SetTexture(nil)
+    frame.NineSlice:SetTemplate("Transparent")
+
+    S:ESProxy("HandleButton", frame.OptionsButton)
+    S:ESProxy("HandleButton", frame.ScanButton)
+
+    S:ESProxy("HandleEditBox", frame.DiscordLink.InputBox)
+    S:ESProxy("HandleEditBox", frame.BugReportLink.InputBox)
 end
 
 local function exportTextFrame(frame)
@@ -82,47 +182,18 @@ local function listImportFrame(frame)
     S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
 end
 
-local function scrollListShoppingList(frame)
-    frame.Inset:StripTextures()
-    frame.Inset:SetTemplate("Transparent")
+local function splashFrame(frame)
+    frame:StripTextures()
+    frame:SetTemplate("Transparent")
+    S:CreateShadow(frame)
 
-    S:ESProxy("HandleScrollBar", frame.ScrollBar)
-end
+    S:ESProxy("HandleCloseButton", frame.Close)
+    S:ESProxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
+    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
 
-local function scrollListRecents(frame)
-    frame.Inset:StripTextures()
-    frame.Inset:SetTemplate("Transparent")
-
-    S:ESProxy("HandleScrollBar", frame.ScrollBar)
-end
-
-local function configTab(frame)
-    frame.Bg:SetTexture(nil)
-    frame.NineSlice:SetTemplate("Transparent")
-
-    S:ESProxy("HandleButton", frame.OptionsButton)
-    S:ESProxy("HandleButton", frame.ScanButton)
-
-    S:ESProxy("HandleEditBox", frame.DiscordLink.InputBox)
-    S:ESProxy("HandleEditBox", frame.BugReportLink.InputBox)
-end
-
-local function shoppingTab(frame)
-    if frame.OneItemSearch then
-        S:ESProxy("HandleEditBox", frame.OneItemSearch.SearchBox)
-        S:ESProxy("HandleButton", frame.OneItemSearch.SearchButton)
-        S:ESProxy("HandleButton", frame.OneItemSearch.ExtendedButton)
+    if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
+        W.Modules.MoveFrames:HandleFrame(frame)
     end
-
-    S:ESProxy("HandleDropDownBox", frame.ListDropdown)
-
-
-    S:ESProxy("HandleButton", frame.AddItem)
-    S:ESProxy("HandleButton", frame.ManualSearch)
-    S:ESProxy("HandleButton", frame.SortItems)
-    S:ESProxy("HandleButton", frame.Import)
-    S:ESProxy("HandleButton", frame.Export)
-    S:ESProxy("HandleButton", frame.ExportCSV)
 end
 
 function S:Auctionator()
@@ -130,15 +201,22 @@ function S:Auctionator()
         return
     end
 
-    hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))
+    -- widgets
+    hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
+    hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
+    hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
+    hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(tabRecentsContainer))
+    hooksecurefunc(_G.AuctionatorResultsListingMixin, "OnShow", reskin(resultsListing))
+
+    -- tab frames
+    hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
+    hooksecurefunc(_G.AuctionatorConfigTabMixin, "OnLoad", reskin(configTab))
+
+    -- frames
     hooksecurefunc(_G.AuctionatorExportTextFrameMixin, "OnLoad", reskin(exportTextFrame))
     hooksecurefunc(_G.AuctionatorListExportFrameMixin, "OnLoad", reskin(listExportFrame))
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))
-    hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
-    hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
-    hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
-    hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
-    hooksecurefunc(_G.AuctionatorConfigTabMixin, "OnLoad", reskin(configTab))
+    hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))
 end
 
 S:AddCallbackForAddon("Auctionator")

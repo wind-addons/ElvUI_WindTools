@@ -162,14 +162,27 @@ function CT:ShowContextText(button)
     EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
 end
 
+function CT:RepositionWithPostal()
+    if not self.frame or not _G.Postal_QuickAttachButton1 then
+        return
+    end
+
+    local width = _G.Postal_QuickAttachButton1:IsShown() and _G.Postal_QuickAttachButton1:GetWidth()
+    width = width and width + 2 or 0
+
+    self.frame:ClearAllPoints()
+    self.frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3 + width, -1)
+    self.frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153 + width, 1)
+end
+
 function CT:ConstructFrame()
     if self.frame then
         return
     end
 
     local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
-    frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
-    frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
+    frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
+    frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
     frame:CreateBackdrop("Transparent")
     frame:EnableMouse(true)
 
@@ -183,6 +196,43 @@ function CT:ConstructFrame()
     end
 
     self.frame = frame
+
+    if IsAddOnLoaded("Postal") then
+        self:RepositionWithPostal()
+
+        if _G.Postal_QuickAttachButton1 then
+            if not self.postalHooked then
+                self:SecureHook(_G.Postal_QuickAttachButton1, "Show", "RepositionWithPostal")
+                self:SecureHook(_G.Postal_QuickAttachButton1, "Hide", "RepositionWithPostal")
+                self.postalHooked = true
+            end
+        else
+            local Postal = LibStub("AceAddon-3.0"):GetAddon("Postal")
+            local Postal_QuickAttach = Postal and Postal:GetModule("QuickAttach")
+            if Postal_QuickAttach and Postal_QuickAttach.OnEnable then
+                self:SecureHook(
+                    Postal_QuickAttach,
+                    "OnEnable",
+                    function()
+                        self:RepositionWithPostal()
+                        if not self.postalHooked then
+                            self:SecureHook(_G.Postal_QuickAttachButton1, "Show", "RepositionWithPostal")
+                            self:SecureHook(_G.Postal_QuickAttachButton1, "Hide", "RepositionWithPostal")
+                            self.postalHooked = true
+                        end
+                    end
+                )
+
+                self:SecureHook(
+                    Postal_QuickAttach,
+                    "OnDisable",
+                    function()
+                        self:RepositionWithPostal()
+                    end
+                )
+            end
+        end
+    end
 
     self.contextMenuFrame = CreateFrame("Frame", "WTContactsContextMenu", E.UIParent, "UIDropDownMenuTemplate")
 end

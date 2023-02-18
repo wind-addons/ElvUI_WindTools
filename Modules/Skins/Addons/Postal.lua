@@ -64,6 +64,12 @@ local function postalSelect()
 
     S:ESProxy("HandleButton", _G.PostalSelectOpenButton)
     S:ESProxy("HandleButton", _G.PostalSelectReturnButton)
+
+    for i = 1, 7 do
+        local checkBox = _G["PostalInboxCB" .. i]
+        S:ESProxy("HandleCheckBox", checkBox)
+    end
+
     return true
 end
 
@@ -134,6 +140,15 @@ local function postalQuickAttach()
     return true
 end
 
+local function postalForward()
+    if not _G.OpenMailForwardButton then
+        return false
+    end
+
+    S:ESProxy("HandleButton", _G.OpenMailForwardButton)
+    return true
+end
+
 function S:Postal()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.postal then
         return
@@ -146,6 +161,7 @@ function S:Postal()
     local OpenAll = Postal:GetModule("OpenAll")
     local BlackBook = Postal:GetModule("BlackBook")
     local QuickAttach = Postal:GetModule("QuickAttach")
+    local Forward = Postal:GetModule("Forward")
 
     if not Postal or not Select or not OpenAll or not BlackBook or not QuickAttach then
         return
@@ -169,6 +185,10 @@ function S:Postal()
 
     if not postalQuickAttach() and QuickAttach.OnEnable then
         hooksecurefunc(QuickAttach, "OnEnable", postalQuickAttach)
+    end
+
+    if not postalForward() and Forward.OnEnable then
+        hooksecurefunc(Forward, "OnEnable", postalForward)
     end
 end
 

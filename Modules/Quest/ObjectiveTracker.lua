@@ -6,8 +6,10 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local format = format
+local gsub = gsub
 local max = max
 local pairs = pairs
+local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
 
@@ -202,7 +204,7 @@ end
 function OT:HandleInfoText(text)
     -- Sometimes Blizzard not use dash icon, just put a dash in front of text
     if self.db.noDash and text and text.GetText then
-        rawText = text:GetText()
+        local rawText = text:GetText()
 
         if rawText and rawText ~= "" and strfind(rawText, "^%- ") then
             text:SetText(gsub(rawText, "^%- ", ""))

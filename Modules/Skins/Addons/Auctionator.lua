@@ -3,6 +3,10 @@ local S = W.Modules.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local next = next
+local pairs = pairs
+local unpack = unpack
 
 -- modified from ElvUI Auction House Skin
 local function HandleListIcon(frame)

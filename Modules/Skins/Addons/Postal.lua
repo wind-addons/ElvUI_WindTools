@@ -3,7 +3,11 @@ local S = W.Modules.Skins
 local CT = W:GetModule("Contacts")
 
 local _G = _G
-local LibStub = _G.LibStub
+local floor = floor
+local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local tinsert = tinsert
+local unpack = unpack
 
 local function reskinArrowButton(button)
     local normalTexture = button:GetNormalTexture()
@@ -135,7 +139,7 @@ function S:Postal()
         return
     end
 
-    local Postal = LibStub("AceAddon-3.0"):GetAddon("Postal")
+    local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
     local Select = Postal:GetModule("Select")
     local OpenAll = Postal:GetModule("OpenAll")
     local BlackBook = Postal:GetModule("BlackBook")

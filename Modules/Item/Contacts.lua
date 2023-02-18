@@ -18,6 +18,7 @@ local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GetNumGuildMembers = GetNumGuildMembers
+local IsAddOnLoaded = IsAddOnLoaded
 local IsInGuild = IsInGuild
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
@@ -207,7 +208,7 @@ function CT:ConstructFrame()
                 self.postalHooked = true
             end
         else
-            local Postal = LibStub("AceAddon-3.0"):GetAddon("Postal")
+            local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
             local Postal_QuickAttach = Postal and Postal:GetModule("QuickAttach")
             if Postal_QuickAttach and Postal_QuickAttach.OnEnable then
                 self:SecureHook(

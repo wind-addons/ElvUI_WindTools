@@ -43,9 +43,9 @@ function S:RareScanner()
     if scannerButton.UnfilterEnabledButton then
         self:ESProxy("HandleButton", scannerButton.UnfilterEnabledButton)
         scannerButton.UnfilterEnabledButton:SetNormalTexture([[Interface\WorldMap\Skull_64]], true)
-        scanner_button.UnfilterEnabledButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
+        scannerButton.UnfilterEnabledButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
         scannerButton.UnfilterEnabledButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)
-        scanner_button.UnfilterEnabledButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
+        scannerButton.UnfilterEnabledButton:GetPushedTexture():SetTexCoord(0, 0.5, 0, 0.5)
     end
 
     if scannerButton.Title then

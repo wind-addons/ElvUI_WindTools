@@ -37,7 +37,7 @@ local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
 local UnitName = UnitName
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local WeeklyRewards_LoadUI = WeeklyRewards_LoadUI
+local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor

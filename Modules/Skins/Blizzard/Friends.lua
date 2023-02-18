@@ -44,10 +44,8 @@ function S:FriendsFrame()
         return
     end
 
-    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame.Bg:SetTexture(nil)
-    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetTemplate("Transparent")
     _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:ClearAllPoints()
-    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point("TOPLEFT", FriendsFrame, "TOPRIGHT", 3, -1)
+    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 3, -1)
 
     local frames = {
         _G.FriendsFrame,

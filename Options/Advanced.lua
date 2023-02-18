@@ -809,23 +809,8 @@ options.reset = {
                         )
                     end
                 },
-                filter = {
-                    order = 6,
-                    type = "execute",
-                    name = L["Filter"],
-                    func = function()
-                        E:StaticPopup_Show(
-                            "WINDTOOLS_RESET_MODULE",
-                            L["Filter"],
-                            nil,
-                            function()
-                                E.db.WT.social.filter = P.social.filter
-                            end
-                        )
-                    end
-                },
                 friendList = {
-                    order = 7,
+                    order = 6,
                     type = "execute",
                     name = L["Friend List"],
                     func = function()
@@ -840,7 +825,7 @@ options.reset = {
                     end
                 },
                 smartTab = {
-                    order = 8,
+                    order = 7,
                     type = "execute",
                     name = L["Smart Tab"],
                     func = function()

@@ -907,10 +907,6 @@ P.social = {
             style = "OUTLINE"
         }
     },
-    filter = {
-        enable = true,
-        unblockProfanityFilter = true
-    },
     contextMenu = {
         enable = true,
         armory = E.global.general.locale ~= "zhCN",

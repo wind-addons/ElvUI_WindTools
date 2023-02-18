@@ -14,7 +14,6 @@ local CL = W:GetModule("ChatLink")
 local CT = W:GetModule("ChatText")
 local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
-local FT = W:GetModule("Filter")
 local CM = W:GetModule("ContextMenu")
 local ST = W:GetModule("SmartTab")
 
@@ -1333,58 +1332,8 @@ options.friendList = {
     }
 }
 
-options.filter = {
-    order = 7,
-    type = "group",
-    name = L["Filter"],
-    get = function(info)
-        return E.db.WT.social.filter[info[#info]]
-    end,
-    set = function(info, value)
-        E.db.WT.social.filter[info[#info]] = value
-        FT:ProfileUpdate()
-    end,
-    args = {
-        desc = {
-            order = 0,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L["Unblock the profanity filter."],
-                    fontSize = "medium"
-                },
-                commingSoon = {
-                    order = 2,
-                    type = "description",
-                    name = L["More features are comming soon."],
-                    fontSize = "medium"
-                }
-            }
-        },
-        enable = {
-            order = 1,
-            type = "toggle",
-            name = L["Enable"],
-            width = "full"
-        },
-        unblockProfanityFilter = {
-            order = 2,
-            type = "toggle",
-            name = L["Profanity Filter"],
-            desc = L["Enable this option will unblock the setting of profanity filter. [CN Server]"],
-            disabled = function()
-                return not E.db.WT.social.filter.enable
-            end
-        }
-    }
-}
-
 options.smartTab = {
-    order = 8,
+    order = 7,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

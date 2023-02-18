@@ -1122,7 +1122,8 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Auctionator"],
-            addonName = "Auctionator"
+            addonName = "Auctionator",
+            addonskinsKey = "Auctionator"
         },
         bigWigs = {
             order = 10,

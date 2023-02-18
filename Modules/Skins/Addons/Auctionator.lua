@@ -405,6 +405,8 @@ function S:Auctionator()
         return
     end
 
+    self:DisableAddOnSkin("Auctionator")
+
     -- widgets
     hooksecurefunc(_G.AuctionatorBagClassListingMixin, "Init", reskin(bagClassListing))
     hooksecurefunc(_G.AuctionatorBagItemContainerMixin, "OnLoad", reskin(bagItemContainer))

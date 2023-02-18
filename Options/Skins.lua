@@ -1193,6 +1193,12 @@ options.addons = {
             end,
             addonName = "OmniCD"
         },
+        postal = {
+            order = 10,
+            type = "toggle",
+            name = L["Postal"],
+            addonName = "Postal"
+        },
         premadeGroupsFilter = {
             order = 10,
             type = "toggle",
@@ -1217,7 +1223,7 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Simple Addon Manager"],
-            addonName = "SimpleAddonManager",
+            addonName = "SimpleAddonManager"
         },
         simulationcraft = {
             order = 10,

@@ -407,6 +407,7 @@ V.skins = {
         omniCD = true,
         omniCDIcon = true,
         omniCDStatusBar = true,
+        postal = true,
         premadeGroupsFilter = true,
         raiderIO = true,
         rareScanner = true,

@@ -5,23 +5,28 @@ W.Changelog[324] = {
     IMPORTANT = {
         ["zhCN"] = {
             "代码清理.",
-            "更新 OpenRaid 库到最新版本."
+            "更新 OpenRaid 库到最新版本.",
+            "移除 [社交]-[语言过滤器] 模块."
         },
         ["zhTW"] = {
             "代碼清理.",
-            "更新 OpenRaid 函式庫至最新版本."
+            "更新 OpenRaid 函式庫至最新版本.",
+            "移除 [社交]-[語言過濾器] 模組."
         },
         ["enUS"] = {
             "Code cleanup.",
-            "Update OpenRaid library to the latest version."
+            "Update OpenRaid library to the latest version.",
+            "Remove [Social]-[Profanity Filter] module."
         },
         ["koKR"] = {
             "Code cleanup.",
-            "Update OpenRaid library to the latest version."
+            "Update OpenRaid library to the latest version.",
+            "Remove [Social]-[비속어 필터] module."
         },
         ["ruRU"] = {
             "Очистка кода (навести порядок).",
-            "Библиотека OpenRaid обновлена до последней версии."
+            "Библиотека OpenRaid обновлена до последней версии.",
+            "Remove [Social]-[Фильтр ненормативной лексики] module."
         }
     },
     NEW = {

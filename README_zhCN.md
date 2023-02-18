@@ -1,7 +1,7 @@
-<div align="center">
+<div align="center">rawText
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-13.23-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.23-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.26-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.24-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br>
@@ -9,7 +9,7 @@
 
 # :white_check_mark: 状态
 
-![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.23&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
+![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.24&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
 
 [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools)
 
@@ -129,9 +129,11 @@
 17. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
 18. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
 19. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBags ElvUI Skin 插件)
-20. **Simulationcraft 美化**: 为 Simulationcraft 的添加美化.
-21. **RaiderIO 美化**: 为 RaiderIO 的添加美化.
+20. **Simulationcraft 美化**: 为 Simulationcraft 添加美化.
+21. **RaiderIO 美化**: 为 RaiderIO 添加美化.
 22. **OmniCD 美化**: 为 OmniCD 的设定, 图标, 状态条添加美化.
+23. **Auctionator 美化**: 为 Auctionator 的全部框体添加美化.
+24. **Postal 美化**: 为 Postal 的常规按钮和快速附加按钮添加美化.
 
 ## 其他
 

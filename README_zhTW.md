@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/版本-3.24-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
-<br>
+<br><br>
 <img src="screenshot.png"/>
 <br>
 </div>

@@ -20,8 +20,8 @@ W.Changelog[324] = {
             "Update OpenRaid library to the latest version."
         },
         ["ruRU"] = {
-            "Code cleanup.",
-            "Update OpenRaid library to the latest version."
+            "Очистка кода (навести порядок).",
+            "Библиотека OpenRaid обновлена до последней версии."
         }
     },
     NEW = {
@@ -42,8 +42,8 @@ W.Changelog[324] = {
             "[Skins] Add Postal skin."
         },
         ["ruRU"] = {
-            "[Skins] Add Auctionator skin.",
-            "[Skins] Add Postal skin."
+            "[Скины] Добавлен скин Auctionator.",
+            "[Скины] Добавлен скин Postal."
         }
     },
     IMPROVEMENT = {
@@ -88,14 +88,14 @@ W.Changelog[324] = {
             "[LFGList] Use briefly title of party keystone."
         },
         ["ruRU"] = {
-            "[Extra Items Bar] Update openable item list.",
-            "[Extra Items Bar] Add Zapthrottle Soul Inhaler to the utility items list.",
-            "[Contacts] Fix a possible issue that may cause the contacts to initialize incorrectly.",
-            "[Contacts] If you are using Postal, the contacts frame will now automatically move to the right.",
-            "[Skins] Update alert frame skin.",
-            "[Skins] Update friend frame skin.",
-            "[Skins] Update RaiderIO skin.",
-            "[LFGList] Use briefly title of party keystone."
+            "[Панель дополнительных предметов] Обновлен список открываемых элементов.",
+            "[Панель дополнительных предметов] В список полезных предметов добавлен 'Дистанционный вдыхатель душ'.",
+            "[Контакты] Fix a possible issue that may cause the contacts to initialize incorrectly.",
+            "[Контакты] If you are using Postal, the contacts frame will now automatically move to the right.",
+            "[Скины] Обновлен скин оповещений.",
+            "[Скины] Обновлен скин друзей.",
+            "[Скины] Обновлен скин RaiderIO.",
+            "[Список LFG] Краткое отображение названия ключа М+ группы."
         }
     }
 }

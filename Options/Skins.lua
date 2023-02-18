@@ -1197,7 +1197,8 @@ options.addons = {
             order = 10,
             type = "toggle",
             name = L["Postal"],
-            addonName = "Postal"
+            addonName = "Postal",
+            addonskinsKey = "Postal"
         },
         premadeGroupsFilter = {
             order = 10,

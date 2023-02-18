@@ -139,6 +139,8 @@ function S:Postal()
         return
     end
 
+    self:DisableAddOnSkin("Postal")
+
     local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
     local Select = Postal:GetModule("Select")
     local OpenAll = Postal:GetModule("OpenAll")

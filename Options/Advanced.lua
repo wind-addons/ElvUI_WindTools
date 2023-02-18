@@ -7,7 +7,7 @@ local format = format
 local tostring = tostring
 local type = type
 
-local ReloadUI = ReloadUI
+local C_UI_Reload = C_UI.Reload
 
 local function blue(string)
     if type(string) ~= "string" then
@@ -130,7 +130,7 @@ E.PopupDialogs.WINDTOOLS_RESET_MODULE = {
     button2 = _G.CANCEL,
     OnAccept = function(_, func)
         func()
-        ReloadUI()
+        C_UI_Reload()
     end,
     whileDead = 1,
     hideOnEscape = true
@@ -143,7 +143,7 @@ E.PopupDialogs.WINDTOOLS_RESET_ALL_MODULES = {
     OnAccept = function()
         E.db.WT = P
         E.private.WT = V
-        ReloadUI()
+        C_UI_Reload()
     end,
     whileDead = 1,
     hideOnEscape = true
@@ -1244,7 +1244,7 @@ do
         button2 = _G.CANCEL,
         OnAccept = function()
             F.Profiles.ImportByString(text)
-            ReloadUI()
+            C_UI_Reload()
         end,
         whileDead = 1,
         hideOnEscape = true

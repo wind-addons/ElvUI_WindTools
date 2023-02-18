@@ -20,6 +20,7 @@ local IsAddOnLoaded = IsAddOnLoaded
 
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_LFGList = C_LFGList
+local C_UI_Reload = C_UI.Reload
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
@@ -67,7 +68,7 @@ E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
     ),
     button1 = L["Reload UI"],
     button2 = CANCEL,
-    OnAccept = _G.ReloadUI
+    OnAccept = C_UI_Reload
 }
 
 -- Keybinds

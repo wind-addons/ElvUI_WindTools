@@ -11,5 +11,6 @@ ignore:
   - README_zhCN.md
   - README_zhTW.md
   - Title.svg
+  - screenshot.png
   - generate_changelog.py
   - Core/Changelog/template.lua

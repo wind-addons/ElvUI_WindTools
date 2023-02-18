@@ -5,6 +5,8 @@
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br>
+<img src="screenshot.png"/>
+<br>
 </div>
 
 # :white_check_mark: 狀態

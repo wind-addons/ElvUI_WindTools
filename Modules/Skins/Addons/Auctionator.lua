@@ -338,13 +338,15 @@ local function shoppingItem(frame)
     frame.QualityContainer.ResetQualityButton:ClearAllPoints()
     frame.QualityContainer.ResetQualityButton:SetPoint("LEFT", frame.QualityContainer.DropDown.DropDown, "RIGHT", 0, 3)
 
-    frame.TierContainer:ClearAllPoints()
-    frame.TierContainer:SetPoint("TOPLEFT", frame.QualityContainer, "BOTTOMLEFT", 0, -20)
-    S:ESProxy("HandleDropDownBox", frame.TierContainer.DropDown.DropDown)
-    S:ESProxy("HandleButton", frame.TierContainer.ResetTierButton)
-    frame.TierContainer.ResetTierButton:SetSize(20, 20)
-    frame.TierContainer.ResetTierButton:ClearAllPoints()
-    frame.TierContainer.ResetTierButton:SetPoint("LEFT", frame.TierContainer.DropDown.DropDown, "RIGHT", 0, 3)
+    if frame.TierContainer then
+        frame.TierContainer:ClearAllPoints()
+        frame.TierContainer:SetPoint("TOPLEFT", frame.QualityContainer, "BOTTOMLEFT", 0, -20)
+        S:ESProxy("HandleDropDownBox", frame.TierContainer.DropDown.DropDown)
+        S:ESProxy("HandleButton", frame.TierContainer.ResetTierButton)
+        frame.TierContainer.ResetTierButton:SetSize(20, 20)
+        frame.TierContainer.ResetTierButton:ClearAllPoints()
+        frame.TierContainer.ResetTierButton:SetPoint("LEFT", frame.TierContainer.DropDown.DropDown, "RIGHT", 0, 3)
+    end
 
     S:ESProxy("HandleButton", frame.Finished)
     S:ESProxy("HandleButton", frame.Cancel)

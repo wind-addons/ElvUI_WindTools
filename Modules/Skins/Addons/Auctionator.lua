@@ -398,6 +398,15 @@ local function splashFrame(frame)
     end
 end
 
+local function itemHistoryFrame(frame)
+    frame:StripTextures()
+    frame:SetTemplate("Transparent")
+    S:CreateShadow(frame)
+
+    S:ESProxy("HandleButton", frame.Close)
+    S:ESProxy("HandleButton", frame.Dock)
+end
+
 local function configSellingFrame(frame)
     S:ESProxy("HandleButton", frame.UnhideAll)
 end
@@ -446,6 +455,7 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorExportTextFrameMixin, "OnLoad", reskin(exportTextFrame))
     hooksecurefunc(_G.AuctionatorListExportFrameMixin, "OnLoad", reskin(listExportFrame))
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))
+    hooksecurefunc(_G.AuctionatorItemHistoryFrameMixin, "Init", reskin(itemHistoryFrame))
     hooksecurefunc(_G.AuctionatorShoppingItemMixin, "OnLoad", reskin(shoppingItem))
     hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))
 end

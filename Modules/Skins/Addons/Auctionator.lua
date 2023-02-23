@@ -415,6 +415,10 @@ local function craftingInfoObjectiveTrackerFrame(frame)
     S:ESProxy("HandleButton", frame.SearchButton)
 end
 
+local function craftingInfoProfessionsFrame(frame)
+    S:ESProxy("HandleButton", frame.SearchButton)
+end
+
 function S:Auctionator()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.auctionator then
         return
@@ -461,6 +465,7 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))
     hooksecurefunc(_G.AuctionatorItemHistoryFrameMixin, "Init", reskin(itemHistoryFrame))
     hooksecurefunc(_G.AuctionatorCraftingInfoObjectiveTrackerFrameMixin, "OnLoad", reskin(craftingInfoObjectiveTrackerFrame))
+    hooksecurefunc(_G.AuctionatorCraftingInfoProfessionsFrameMixin, "OnLoad", reskin(craftingInfoProfessionsFrame))
     hooksecurefunc(_G.AuctionatorShoppingItemMixin, "OnLoad", reskin(shoppingItem))
     hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))
 end

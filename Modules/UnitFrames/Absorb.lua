@@ -250,7 +250,7 @@ end
 function A:SetTexture_HealComm(module, obj, texture)
     local func = self.hooks[module].SetTexture_HealComm
 
-    if self.db and self.db.enable and self.db.texture.enable then
+    if self.db and self.db.enable and self.db.texture and self.db.texture.enable then
         if self.db.texture.blizzardStyle then
             texture = "Interface/RaidFrame/Shield-Fill"
         elseif self.db.texture.custom then
@@ -263,11 +263,8 @@ end
 
 function A:Initialize()
     self.db = E.db.WT.unitFrames.absorb
-    if not self.db or not self.db.enable then
-        return
-    end
 
-    if self.initialized then
+    if not self.db or not self.db.enable or self.initialized then
         return
     end
 

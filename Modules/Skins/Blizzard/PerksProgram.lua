@@ -24,7 +24,9 @@ function S:Blizzard_PerksProgram()
     local footer = frame.FooterFrame
     if footer then
         self:CreateShadow(footer.TogglePlayerPreview)
-        footer.TogglePlayerPreview.shadow:SetAllPoints()
+        if footer.TogglePlayerPreview.shadow then
+            footer.TogglePlayerPreview.shadow:SetAllPoints()
+        end
 
         self:CreateBackdropShadow(footer.RotateButtonContainer.RotateLeftButton)
         self:CreateBackdropShadow(footer.RotateButtonContainer.RotateRightButton)

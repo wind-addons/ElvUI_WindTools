@@ -73,17 +73,17 @@ function A:LFG_COMPLETION_REWARD()
     self:Goodbye()
 end
 
-function A:PLAYER_ENTERING_WORLD()
+function A:PLAYER_ENTERING_WORLD(event, ...)
     self.playerEnteredWorld = true
     self:Quest()
-    E:Delay(2, self.Keystone, self, "PLAYER_ENTERING_WORLD")
+    E:Delay(2, self.Keystone, self, event)
     E:Delay(4, self.ResetAuthority, self)
     E:Delay(10, self.ResetAuthority, self)
 end
 
-function A:CHALLENGE_MODE_COMPLETED()
+function A:CHALLENGE_MODE_COMPLETED(event, ...)
     self:Goodbye()
-    E:Delay(2, self.Keystone, self, "CHALLENGE_MODE_COMPLETED")
+    E:Delay(2, self.Keystone, self, event)
 end
 
 -- TODO: SCENARIO_COMPLETED 场景完成事件

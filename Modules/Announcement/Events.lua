@@ -12,9 +12,10 @@ A.EventList = {
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
     "GROUP_ROSTER_UPDATE",
+    "ITEM_CHANGED",
     "LFG_COMPLETION_REWARD",
     "PLAYER_ENTERING_WORLD",
-    "QUEST_LOG_UPDATE",
+    "QUEST_LOG_UPDATE"
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -34,6 +35,10 @@ end
 
 function A:CHAT_MSG_GUILD(event, ...)
     self:KeystoneLink(event, ...)
+end
+
+function A:ITEM_CHANGED(event, ...)
+    E:Delay(0.5, self.Keystone, self, event)
 end
 
 function A:COMBAT_LOG_EVENT_UNFILTERED()

@@ -54,13 +54,13 @@ W.Changelog[325] = {
             "[Absorb] Fix an error when switching profile."
         },
         ["ruRU"] = {
-            "[Announcement] No longer announce you interrupt yourself by quake.",
-            "[Announcement] Add the announcement after you changed the keystone.",
-            "[Turn In] Fix the issue that you cannot pause some conversations with modifier key.",
-            "[Skins] Update Auctionator skin.",
-            "[Skins] Update ElvUI actionbar skin.",
-            "[Skins] Fix an error in TradeSkill skin.",
-            "[Absorb] Fix an error when switching profile."
+            "[Объявление] Больше не объявляет, что Вы прерываете себя Землетрясением.",
+            "[Объявление] Теперь будет уведомление при замене М+ ключа.",
+            "[Сдать квест] Исправлена проблема, из-за которой Вы не могли приостановить некоторые разговоры с помощью клавиши-модификатора.",
+            "[Скины] Обновлен скин Auctionator",
+            "[Скины] Обновлен скин панели действий ElvUI.",
+            "[Скины] Исправить ошибку в скине TradeSkill.",
+            "[Поглощение] Исправлена ошибка, которая могла возникнуть при переключении профиля."
         }
     }
 }

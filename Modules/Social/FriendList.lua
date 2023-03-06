@@ -239,8 +239,8 @@ function FL:UpdateFriendButton(button)
 
     if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
         -- WoW friends
-        gameCode = "WoW"
-        gameName = projectCodes["WOW"].name
+        wowID = WOW_PROJECT_MAINLINE
+        gameName = projectCodes["WOW"]
         local friendInfo = C_FriendList_GetFriendInfoByIndex(button.id)
         name, server = strsplit("-", friendInfo.name) -- server is nil if it's not a cross-realm friend
         level = friendInfo.level

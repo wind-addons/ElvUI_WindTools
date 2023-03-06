@@ -152,6 +152,13 @@ options.general = {
             name = L["Auto Toggle Chat Bubble"],
             desc = L["Only show chat bubble in instance."],
             width = 1.5
+        },
+        betterGuildMemberStatus = {
+            order = 14,
+            type = "toggle",
+            name = L["Better Guild Member Status"],
+            desc = L["Add an icon and the corresponding class color name to the guild member status change message for improved visual clarity."],
+            width = 1.5
         }
     }
 }

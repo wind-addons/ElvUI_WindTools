@@ -5,6 +5,7 @@
 	<Script file='AddCNFilter.lua'/>
 	<Script file='AutoScreenShot.lua'/>
 	<Script file='AutoToggleChatBubble.lua'/>
+	<Script file='BetterGuildMemberStatus.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='GuildNewsItemLevel.lua'/>

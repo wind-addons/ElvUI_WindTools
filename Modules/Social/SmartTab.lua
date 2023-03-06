@@ -211,7 +211,7 @@ function ST:GetNext(chatType, currentTarget)
                     -- 如果表内为空，则什么都不改变
                     newChatType = chatType
                     newTarget = currentTarget
-                    _G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0, 53, 5)
+                    _G.UIErrorsFrame:AddMessage(L["There is no more whisper targets"], 1, 0, 0)
                 end
             end
         else

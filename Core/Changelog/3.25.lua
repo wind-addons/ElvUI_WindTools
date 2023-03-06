@@ -10,11 +10,21 @@ W.Changelog[325] = {
         ["ruRU"] = {}
     },
     NEW = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {},
-        ["ruRU"] = {}
+        ["zhCN"] = {
+            "[其他] 新增公会成员状态提示增强功能."
+        },
+        ["zhTW"] = {
+            "[其他] 新增公會成員狀態提示增強功能."
+        },
+        ["enUS"] = {
+            "[Misc] Add a new feature for enhancing the guild member status change messages."
+        },
+        ["koKR"] = {
+            "[Misc] Add a new feature for enhancing the guild member status change messages."
+        },
+        ["ruRU"] = {
+            "[Misc] Add a new feature for enhancing the guild member status change messages."
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
@@ -24,7 +34,10 @@ W.Changelog[325] = {
             "[美化外观] 更新 Auctionator 皮肤.",
             "[美化外观] 更新 ElvUI 动作条皮肤.",
             "[美化外观] 修复贸易站皮肤的一个错误.",
-            "[吸收] 修复切换配置文件时可能造成的一个错误."
+            "[吸收] 修复切换配置文件时可能造成的一个错误.",
+            "[好友列表] 代码清理.",
+            "[好友列表] 修复了魔兽世界好友的美化.",
+            "[智能 Tab] 修复了错误信息 API 错误."
         },
         ["zhTW"] = {
             "[通告] 被地震打斷時不再通報自己打斷了自己.",
@@ -33,7 +46,10 @@ W.Changelog[325] = {
             "[美化外觀] 更新 Auctionator 皮膚.",
             "[美化外觀] 更新 ElvUI 動作條皮膚.",
             "[美化外觀] 修復貿易站皮膚的一個錯誤.",
-            "[吸收] 修復切換配置文件時可能造成的一個錯誤."
+            "[吸收] 修復切換配置文件時可能造成的一個錯誤.",
+            "[好友列表] 代碼清理.",
+            "[好友列表] 修復了魔獸世界好友的美化.",
+            "[智能 Tab] 修復了錯誤信息 API 錯誤."
         },
         ["enUS"] = {
             "[Announcement] No longer announce you interrupt yourself by quake.",
@@ -42,7 +58,10 @@ W.Changelog[325] = {
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
             "[Skins] Fix an error in TradeSkill skin.",
-            "[Absorb] Fix an error when switching profile."
+            "[Absorb] Fix an error when switching profile.",
+            "[Friend List] Code cleanup.",
+            "[Friend List] Fix the issue that the WoW friends are not skinned.",
+            "[Smart Tab] Fix the API usage of UI error message."
         },
         ["koKR"] = {
             "[Announcement] No longer announce you interrupt yourself by quake.",
@@ -51,7 +70,10 @@ W.Changelog[325] = {
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
             "[Skins] Fix an error in TradeSkill skin.",
-            "[Absorb] Fix an error when switching profile."
+            "[Absorb] Fix an error when switching profile.",
+            "[Friend List] Code cleanup.",
+            "[Friend List] Fix the issue that the WoW friends are not skinned.",
+            "[Smart Tab] Fix the API usage of UI error message."
         },
         ["ruRU"] = {
             "[Объявление] Больше не объявляет, что Вы прерываете себя Землетрясением.",
@@ -60,7 +82,10 @@ W.Changelog[325] = {
             "[Скины] Обновлен скин Auctionator",
             "[Скины] Обновлен скин панели действий ElvUI.",
             "[Скины] Исправить ошибку в скине TradeSkill.",
-            "[Поглощение] Исправлена ошибка, которая могла возникнуть при переключении профиля."
+            "[Поглощение] Исправлена ошибка, которая могла возникнуть при переключении профиля.",
+            "[Friend List] Code cleanup.",
+            "[Friend List] Fix the issue that the WoW friends are not skinned.",
+            "[Smart Tab] Fix the API usage of UI error message."
         }
     }
 }

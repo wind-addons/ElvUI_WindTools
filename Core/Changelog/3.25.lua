@@ -23,7 +23,7 @@ W.Changelog[325] = {
             "[Misc] Add a new feature for enhancing the guild member status change messages."
         },
         ["ruRU"] = {
-            "[Misc] Add a new feature for enhancing the guild member status change messages."
+            "[Разное] Добавлена новая функция для улучшения сообщений об изменении статуса члена гильдии."
         }
     },
     IMPROVEMENT = {
@@ -83,9 +83,9 @@ W.Changelog[325] = {
             "[Скины] Обновлен скин панели действий ElvUI.",
             "[Скины] Исправить ошибку в скине TradeSkill.",
             "[Поглощение] Исправлена ошибка, которая могла возникнуть при переключении профиля.",
-            "[Friend List] Code cleanup.",
-            "[Friend List] Fix the issue that the WoW friends are not skinned.",
-            "[Smart Tab] Fix the API usage of UI error message."
+            "[Список друзей] Чистка кода.",
+            "[Список друзей] Исправление проблемы, из-за которой вкладка Друзья WoW не имела скина.",
+            "[Умная вкладка] Исправлены сообщения об ошибках API."
         }
     }
 }

@@ -235,20 +235,7 @@ function FL:UpdateFriendButton(button)
         return
     end
 
-    local gameCode,
-        gameName,
-        realID,
-        name,
-        server,
-        class,
-        area,
-        level,
-        note,
-        faction,
-        status,
-        isInCurrentRegion,
-        regionID,
-        wowID
+    local gameName, realID, name, server, class, area, level, note, faction, status, isInCurrentRegion, regionID, wowID
 
     if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
         -- WoW friends
@@ -281,7 +268,6 @@ function FL:UpdateFriendButton(button)
             note = friendAccountInfo.note
 
             local gameAccountInfo = friendAccountInfo.gameAccountInfo
-            gameCode = gameAccountInfo.clientProgram
             gameName = projectCodes[strupper(gameAccountInfo.clientProgram)]
 
             if gameAccountInfo.isOnline then

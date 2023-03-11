@@ -2,20 +2,22 @@ local W, F, E, L = unpack(select(2, ...))
 local A = W:GetModule("Announcement")
 
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+local UnitName = UnitName
 
 A.EventList = {
     "CHALLENGE_MODE_COMPLETED",
     "CHAT_MSG_ADDON",
-    "CHAT_MSG_PARTY",
-    "CHAT_MSG_PARTY_LEADER",
     "CHAT_MSG_GUILD",
+    "CHAT_MSG_PARTY_LEADER",
+    "CHAT_MSG_PARTY",
     "CHAT_MSG_SYSTEM",
     "COMBAT_LOG_EVENT_UNFILTERED",
     "GROUP_ROSTER_UPDATE",
     "ITEM_CHANGED",
     "LFG_COMPLETION_REWARD",
     "PLAYER_ENTERING_WORLD",
-    "QUEST_LOG_UPDATE"
+    "QUEST_LOG_UPDATE",
+    "UNIT_SPELLCAST_SUCCEEDED",
 }
 
 -- CHAT_MSG_SYSTEM: text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons
@@ -104,4 +106,8 @@ end
 
 function A:GROUP_ROSTER_UPDATE()
     self:ResetAuthority()
+end
+
+function A:UNIT_SPELLCAST_SUCCEEDED(event, unitTarget, castGUID, spellId)
+    self:Utility(event, UnitName(unitTarget), spellId)
 end

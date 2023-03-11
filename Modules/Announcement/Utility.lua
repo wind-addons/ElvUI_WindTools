@@ -201,5 +201,9 @@ function A:Utility(event, sourceName, spellId)
         if TryAnnounce(spellId, sourceName, nil, PortalList, "portals") then
             return
         end --傳送門
+    elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
+        if TryAnnounce(spellId, sourceName, 384911) then
+            return
+        end -- 原子校準器
     end
 end

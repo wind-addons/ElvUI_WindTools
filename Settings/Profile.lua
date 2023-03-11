@@ -871,7 +871,9 @@ P.social = {
         roleIconSize = 16,
         roleIconStyle = "SUNUI",
         removeRealm = true,
-        customAbbreviation = {}
+        customAbbreviation = {},
+        betterGuildMemberStatus = true,
+        mergeGuildMemberAchievement = true
     },
     emote = {
         enable = true,

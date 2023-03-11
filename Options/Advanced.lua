@@ -1090,7 +1090,6 @@ options.reset = {
                                 E.private.WT.misc.guildNewsItemLevel = V.misc.guildNewsItemLevel
                                 E.private.WT.misc.addCNFilter = V.misc.addCNFilter
                                 E.private.WT.misc.autoToggleChatBubble = V.misc.autoToggleChatBubble
-                                E.private.WT.misc.betterGuildMemberStatus = V.misc.betterGuildMemberStatus
                                 E.db.WT.misc.disableTalkingHead = P.misc.disableTalkingHead
                                 E.db.WT.misc.hideCrafter = P.misc.hideCrafter
                                 E.db.WT.misc.noLootPanel = P.misc.noLootPanel

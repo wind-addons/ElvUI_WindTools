@@ -11,25 +11,42 @@ W.Changelog[325] = {
     },
     NEW = {
         ["zhCN"] = {
-            "[其他] 新增公会成员状态提示增强功能."
+            "[通告] 新增对原子重校器的支持.",
+            "[聊天文字] 新增公会成员状态提示增强功能.",
+            "[聊天文字] 新增公会成员上线消息增加邀请链接的功能.",
+            "[聊天文字] 新增合并成就消息的功能."
         },
         ["zhTW"] = {
-            "[其他] 新增公會成員狀態提示增強功能."
+            "[通告] 新增對原子校準器的支援.",
+            "[聊天文字] 新增公會成員狀態提示增強功能.",
+            "[聊天文字] 新增公會成員上線消息增加邀請鏈接的功能.",
+            "[聊天文字] 新增合併成就消息的功能."
         },
         ["enUS"] = {
-            "[Misc] Add a new feature for enhancing the guild member status change messages."
+            "[Announcement] Add support for Atomic Recalibrator.",
+            "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
+            "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
+            "[Chat Text] Add a new feature for merging the achievement messages."
         },
         ["koKR"] = {
-            "[Misc] Add a new feature for enhancing the guild member status change messages."
+            "[Announcement] Add support for 원자 재측정기.",
+            "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
+            "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
+            "[Chat Text] Add a new feature for merging the achievement messages."
         },
         ["ruRU"] = {
-            "[Разное] Добавлена новая функция для улучшения сообщений об изменении статуса члена гильдии."
+            "[Announcement] Add support for Атомный преобразователь.",
+            "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
+            "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
+            "[Chat Text] Add a new feature for merging the achievement messages."
         }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
+            "[聊天文字] 重构了设定项目.",
             "[通告] 被地震打断时不再通报自己打断了自己.",
             "[通告] 在更换钥石时现在也会进行通告.",
+            "[额外物品条] 更新专业物品列表",
             "[交接] 修复无法使用修饰键暂停部分对话的问题.",
             "[美化外观] 更新 Auctionator 皮肤.",
             "[美化外观] 更新 ElvUI 动作条皮肤.",
@@ -40,8 +57,10 @@ W.Changelog[325] = {
             "[智能 Tab] 修复了错误信息 API 错误."
         },
         ["zhTW"] = {
+            "[聊天文字] 重構了設定項目.",
             "[通告] 被地震打斷時不再通報自己打斷了自己.",
             "[通告] 在更換鑰石時現在也會進行通報.",
+            "[額外物品條] 更新專業物品列表",
             "[交接] 修復無法使用修飾鍵暫停部分對話的問題.",
             "[美化外觀] 更新 Auctionator 皮膚.",
             "[美化外觀] 更新 ElvUI 動作條皮膚.",
@@ -52,8 +71,10 @@ W.Changelog[325] = {
             "[智能 Tab] 修復了錯誤信息 API 錯誤."
         },
         ["enUS"] = {
+            "[Chat Text] Refactor the options.",
             "[Announcement] No longer announce you interrupt yourself by quake.",
             "[Announcement] Add the announcement after you changed the keystone.",
+            "[Extra Item Bar] Update the profession item list.",
             "[Turn In] Fix the issue that you cannot pause some conversations with modifier key.",
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
@@ -64,8 +85,10 @@ W.Changelog[325] = {
             "[Smart Tab] Fix the API usage of UI error message."
         },
         ["koKR"] = {
+            "[Chat Text] Refactor the options.",
             "[Announcement] No longer announce you interrupt yourself by quake.",
             "[Announcement] Add the announcement after you changed the keystone.",
+            "[Extra Item Bar] Update the profession item list.",
             "[Turn In] Fix the issue that you cannot pause some conversations with modifier key.",
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
@@ -76,8 +99,10 @@ W.Changelog[325] = {
             "[Smart Tab] Fix the API usage of UI error message."
         },
         ["ruRU"] = {
+            "[Chat Text] Refactor the options.",
             "[Объявление] Больше не объявляет, что Вы прерываете себя Землетрясением.",
             "[Объявление] Теперь будет уведомление при замене М+ ключа.",
+            "[Extra Item Bar] Update the profession item list.",
             "[Сдать квест] Исправлена проблема, из-за которой Вы не могли приостановить некоторые разговоры с помощью клавиши-модификатора.",
             "[Скины] Обновлен скин Auctionator",
             "[Скины] Обновлен скин панели действий ElvUI.",

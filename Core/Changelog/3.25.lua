@@ -35,10 +35,10 @@ W.Changelog[325] = {
             "[Chat Text] Add a new feature for merging the achievement messages."
         },
         ["ruRU"] = {
-            "[Announcement] Add support for Атомный преобразователь.",
-            "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
-            "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
-            "[Chat Text] Add a new feature for merging the achievement messages."
+            "[Анонс] Добавлена поддержка для Атомного преобразователя.",
+            "[Текст чата] Добавлена новая функция для улучшения сообщений об изменении статуса члена гильдии.",
+            "[Текст чата] Добавлена новая функция для добавления ссылки-приглашения в онлайн-сообщения члена гильдии.",
+            "[Текст чата] Добавлена новая функция для объединения сообщений о достижениях."
         }
     },
     IMPROVEMENT = {
@@ -99,10 +99,10 @@ W.Changelog[325] = {
             "[Smart Tab] Fix the API usage of UI error message."
         },
         ["ruRU"] = {
-            "[Chat Text] Refactor the options.",
+            "[Текст чата] Переработаны параметры.",
             "[Объявление] Больше не объявляет, что Вы прерываете себя Землетрясением.",
             "[Объявление] Теперь будет уведомление при замене М+ ключа.",
-            "[Extra Item Bar] Update the profession item list.",
+            "[Панель дополнительных предметов] Обновление списка предметов профессии.",
             "[Сдать квест] Исправлена проблема, из-за которой Вы не могли приостановить некоторые разговоры с помощью клавиши-модификатора.",
             "[Скины] Обновлен скин Auctionator",
             "[Скины] Обновлен скин панели действий ElvUI.",

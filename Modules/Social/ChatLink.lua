@@ -13,6 +13,7 @@ local tostring = tostring
 local unpack = unpack
 
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+local GetAchievementInfo = GetAchievementInfo
 local GetItemInfoInstant = GetItemInfoInstant
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpellTexture = GetSpellTexture
@@ -246,6 +247,24 @@ local function AddTalentInfo(link)
     return link
 end
 
+local function AddAchievementInfo(link)
+    -- achievement
+    local id = strmatch(link, "Hachievement:(%d+)")
+    if not id then
+        return
+    end
+
+    if CL.db.icon then
+        local texture = select(10, GetAchievementInfo(tonumber(id)))
+        local icon = texture and format(ICON_STRING, texture)
+        if icon then
+            link = icon .. " " .. link
+        end
+    end
+
+    return link
+end
+
 function CL:Filter(event, msg, ...)
     if CL.db.enable then
         msg = gsub(msg, "(|cff71d5ff|Hconduit:%d+:.-|h.-|h|r)", AddConduitIcon)
@@ -255,6 +274,7 @@ function CL:Filter(event, msg, ...)
         msg = gsub(msg, "(|Henchant:%d+|h.-|h)", AddEnchantInfo)
         msg = gsub(msg, "(|Htalent:%d+|h.-|h)", AddTalentInfo)
         msg = gsub(msg, "(|Hpvptal:%d+|h.-|h)", AddPvPTalentInfo)
+        msg = gsub(msg, "(|Hachievement:%d+:.-|h.-|h)", AddAchievementInfo)
     end
     return false, msg, ...
 end

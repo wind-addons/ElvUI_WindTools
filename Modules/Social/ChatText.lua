@@ -1517,6 +1517,7 @@ function CT.SendAchivementMessage()
                     _G.ChatFrame1:AddMessage(message, color.r, color.g, color.b)
                 end
             end
+            wipe(achievementMessageCache.byPlayer[event])
         end
     end
 end

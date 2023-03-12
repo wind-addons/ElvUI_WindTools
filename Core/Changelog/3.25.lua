@@ -24,31 +24,36 @@ W.Changelog[325] = {
             "[通告] 新增对原子重校器的支持.",
             "[聊天文字] 新增公会成员状态提示增强功能.",
             "[聊天文字] 新增公会成员上线消息增加邀请链接的功能.",
-            "[聊天文字] 新增合并成就消息的功能."
+            "[聊天文字] 新增合并成就消息的功能.",
+            "[聊天链接] 新增对成就链接图标的支持."
         },
         ["zhTW"] = {
             "[通告] 新增對原子校準器的支援.",
             "[聊天文字] 新增公會成員狀態提示增強功能.",
             "[聊天文字] 新增公會成員上線消息增加邀請鏈接的功能.",
-            "[聊天文字] 新增合併成就消息的功能."
+            "[聊天文字] 新增合併成就消息的功能.",
+            "[聊天鏈接] 新增對成就鏈接圖示的支援."
         },
         ["enUS"] = {
             "[Announcement] Add support for Atomic Recalibrator.",
             "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
             "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
-            "[Chat Text] Add a new feature for merging the achievement messages."
+            "[Chat Text] Add a new feature for merging the achievement messages.",
+            "[Chat Link] Add support for achievement link icon."
         },
         ["koKR"] = {
             "[Announcement] Add support for 원자 재측정기.",
             "[Chat Text] Add a new feature for enhancing the guild member status change messages.",
             "[Chat Text] Add a new feature for adding the invite link to the guild member online messages.",
-            "[Chat Text] Add a new feature for merging the achievement messages."
+            "[Chat Text] Add a new feature for merging the achievement messages.",
+            "[Chat Link] Add support for achievement link icon."
         },
         ["ruRU"] = {
             "[Анонс] Добавлена поддержка для Атомного преобразователя.",
             "[Текст чата] Добавлена новая функция для улучшения сообщений об изменении статуса члена гильдии.",
             "[Текст чата] Добавлена новая функция для добавления ссылки-приглашения в онлайн-сообщения члена гильдии.",
-            "[Текст чата] Добавлена новая функция для объединения сообщений о достижениях."
+            "[Текст чата] Добавлена новая функция для объединения сообщений о достижениях.",
+            "[Chat Link] Add support for achievement link icon."
         }
     },
     IMPROVEMENT = {

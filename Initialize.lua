@@ -84,13 +84,12 @@ do
                                 L["%s %s Loaded."] ..
                                     " " ..
                                         L[
-                                            "You can send your suggestions or bugs via %s, %s, %s, %s and the thread in %s."
+                                            "You can send your suggestions or bugs via %s, %s, %s and the thread in %s."
                                         ],
                         self.Title,
                         self.Version,
                         L["QQ Group"],
                         L["Discord"],
-                        L["KOOK"],
                         L["GitHub"],
                         L["NGA.cn"]
                     )

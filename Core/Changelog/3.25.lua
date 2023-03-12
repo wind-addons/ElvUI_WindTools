@@ -4,18 +4,23 @@ W.Changelog[325] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
         ["zhCN"] = {
+            "由于需要强制手机认证, 移除 KOOK 社区链接.",
             "[移动框体] 由于可能发生的错误, 停用了玩家选择框体的移动功能."
         },
         ["zhTW"] = {
+            "由於需要強制簡訊認證, 移除 KOOK 社區連結.",
             "[移動框架] 由於可能發生的錯誤, 停用了玩家選擇框架的移動功能."
         },
         ["enUS"] = {
+            "Remove the KOOK community link due to the need for forced SMS authentication.",
             "[Move Frames] Disable the support of player choice frame due to a possible error."
         },
         ["koKR"] = {
+            "Remove the KOOK community link due to the need for forced SMS authentication.",
             "[Move Frames] Disable the support of player choice frame due to a possible error."
         },
         ["ruRU"] = {
+            "Remove the KOOK community link due to the need for forced SMS authentication.",
             "[Перемещение фреймов] Отключено перемещение фрейма выбора игрока из-за возможных ошибок."
         }
     },

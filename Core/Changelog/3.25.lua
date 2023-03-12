@@ -3,11 +3,21 @@ local W = unpack(select(2, ...))
 W.Changelog[325] = {
     RELEASE_DATE = "TBD",
     IMPORTANT = {
-        ["zhCN"] = {},
-        ["zhTW"] = {},
-        ["enUS"] = {},
-        ["koKR"] = {},
-        ["ruRU"] = {}
+        ["zhCN"] = {
+            "[移动框体] 由于可能发生的错误, 停用了玩家选择框体的移动功能."
+        },
+        ["zhTW"] = {
+            "[移動框架] 由於可能發生的錯誤, 停用了玩家選擇框架的移動功能."
+        },
+        ["enUS"] = {
+            "[Move Frames] Disable the support of player choice frame due to a possible error."
+        },
+        ["koKR"] = {
+            "[Move Frames] Disable the support of player choice frame due to a possible error."
+        },
+        ["ruRU"] = {
+            "[Move Frames] Disable the support of player choice frame due to a possible error."
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -51,6 +61,7 @@ W.Changelog[325] = {
             "[美化外观] 更新 Auctionator 皮肤.",
             "[美化外观] 更新 ElvUI 动作条皮肤.",
             "[美化外观] 修复贸易站皮肤的一个错误.",
+            "[美化外观] 更新玩家选择框体皮肤.",
             "[吸收] 修复切换配置文件时可能造成的一个错误.",
             "[好友列表] 代码清理.",
             "[好友列表] 修复了魔兽世界好友的美化.",
@@ -65,6 +76,7 @@ W.Changelog[325] = {
             "[美化外觀] 更新 Auctionator 皮膚.",
             "[美化外觀] 更新 ElvUI 動作條皮膚.",
             "[美化外觀] 修復貿易站皮膚的一個錯誤.",
+            "[美化外觀] 更新玩家選擇框架皮膚.",
             "[吸收] 修復切換配置文件時可能造成的一個錯誤.",
             "[好友列表] 代碼清理.",
             "[好友列表] 修復了魔獸世界好友的美化.",
@@ -78,7 +90,8 @@ W.Changelog[325] = {
             "[Turn In] Fix the issue that you cannot pause some conversations with modifier key.",
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
-            "[Skins] Fix an error in TradeSkill skin.",
+            "[Skins] Fix an error in trading post skin.",
+            "[Skins] Update player choice frame skin.",
             "[Absorb] Fix an error when switching profile.",
             "[Friend List] Code cleanup.",
             "[Friend List] Fix the issue that the WoW friends are not skinned.",
@@ -92,7 +105,8 @@ W.Changelog[325] = {
             "[Turn In] Fix the issue that you cannot pause some conversations with modifier key.",
             "[Skins] Update Auctionator skin.",
             "[Skins] Update ElvUI actionbar skin.",
-            "[Skins] Fix an error in TradeSkill skin.",
+            "[Skins] Fix an error in trading post skin.",
+            "[Skins] Update player choice frame skin.",
             "[Absorb] Fix an error when switching profile.",
             "[Friend List] Code cleanup.",
             "[Friend List] Fix the issue that the WoW friends are not skinned.",
@@ -106,7 +120,8 @@ W.Changelog[325] = {
             "[Сдать квест] Исправлена проблема, из-за которой Вы не могли приостановить некоторые разговоры с помощью клавиши-модификатора.",
             "[Скины] Обновлен скин Auctionator",
             "[Скины] Обновлен скин панели действий ElvUI.",
-            "[Скины] Исправить ошибку в скине TradeSkill.",
+            "[Skins] Fix an error in trading post skin.",
+            "[Skins] Update player choice frame skin.",
             "[Поглощение] Исправлена ошибка, которая могла возникнуть при переключении профиля.",
             "[Список друзей] Чистка кода.",
             "[Список друзей] Исправление проблемы, из-за которой вкладка Друзья WoW не имела скина.",

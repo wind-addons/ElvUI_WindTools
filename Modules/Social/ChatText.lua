@@ -17,6 +17,7 @@ local strjoin = strjoin
 local strlen = strlen
 local strlower = strlower
 local strmatch = strmatch
+local strsplit = strsplit
 local strsub = strsub
 local strupper = strupper
 local time = time

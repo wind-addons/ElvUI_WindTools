@@ -20,7 +20,7 @@ W.Changelog[325] = {
             "[Move Frames] Disable the support of player choice frame due to a possible error."
         },
         ["ruRU"] = {
-            "Remove the KOOK community link due to the need for forced SMS authentication.",
+            "Удалена ссылка на сообщество KOOK в связи с необходимостью принудительной SMS-аутентификации.",
             "[Перемещение фреймов] Отключено перемещение фрейма выбора игрока из-за возможных ошибок."
         }
     },

@@ -102,7 +102,10 @@ local achievementMessageTemplateMultiplePlayers = L["%players% have earned the a
 
 local guildPlayerCache = {}
 local blockedMessageCache = {}
-local achievementMessageCache = {}
+local achievementMessageCache = {
+    byAchievement = {},
+    byPlayer = {}
+}
 
 local elvuiAbbrStrings = {
     GUILD = L["G"],
@@ -1469,6 +1472,54 @@ function CT.GuildMemberStatusMessageHandler(_, _, msg)
     return false
 end
 
+function CT.SendAchivementMessage()
+    if not CT.db or not CT.db.enable or not CT.db.mergeAchievement then
+        return
+    end
+
+    local channelData = {
+        {event = "CHAT_MSG_GUILD_ACHIEVEMENT", color = ChatTypeInfo.GUILD},
+        {event = "CHAT_MSG_ACHIEVEMENT", color = ChatTypeInfo.SYSTEM}
+    }
+
+    for _, data in ipairs(channelData) do
+        local event, color = data.event, data.color
+        if achievementMessageCache.byPlayer[event] then
+            for playerString, achievementTable in pairs(achievementMessageCache.byPlayer[event]) do
+                local players = {strsplit("=", playerString)}
+
+                local achievementLinks = {}
+                for achievementID in pairs(achievementTable) do
+                    tinsert(achievementLinks, GetAchievementLink(achievementID))
+                end
+
+                local message = nil
+
+                if #players == 1 then
+                    message = gsub(achievementMessageTemplate, "%%player%%", addSpaceForAsian(players[1]))
+                elseif #players > 1 then
+                    message =
+                        gsub(
+                        achievementMessageTemplateMultiplePlayers,
+                        "%%players%%",
+                        addSpaceForAsian(strjoin(", ", unpack(players)))
+                    )
+                end
+
+                if message then
+                    message =
+                        gsub(
+                        message,
+                        "%%achievement%%",
+                        addSpaceForAsian(strjoin(", ", unpack(achievementLinks)), true)
+                    )
+                    _G.ChatFrame1:AddMessage(message, color.r, color.g, color.b)
+                end
+            end
+        end
+    end
+end
+
 function CT.AchievementMessageHandler(_, event, ...)
     if not CT.db or not CT.db.enable or not CT.db.mergeAchievement then
         return
@@ -1481,11 +1532,16 @@ function CT.AchievementMessageHandler(_, event, ...)
         return
     end
 
-    if not achievementMessageCache[event] then
-        achievementMessageCache[event] = {}
+    if not achievementMessageCache.byAchievement[event] then
+        achievementMessageCache.byAchievement[event] = {}
     end
 
-    local cache = achievementMessageCache[event]
+    if not achievementMessageCache.byPlayer[event] then
+        achievementMessageCache.byPlayer[event] = {}
+    end
+
+    local cache = achievementMessageCache.byAchievement[event]
+    local cacheByPlayer = achievementMessageCache.byPlayer[event]
 
     local achievementID = strmatch(achievementMessage, "|Hachievement:(%d+):")
     if not achievementID then
@@ -1502,25 +1558,25 @@ function CT.AchievementMessageHandler(_, event, ...)
                     tinsert(players, k)
                 end
 
-                local link = GetAchievementLink(achievementID)
+                if #players >= 1 then
+                    local playerString = strjoin("=", unpack(players))
 
-                local message = nil
+                    if not cacheByPlayer[playerString] then
+                        cacheByPlayer[playerString] = {}
+                    end
 
-                if #players == 1 then
-                    message = gsub(achievementMessageTemplate, "%%player%%", addSpaceForAsian(players[1]))
-                elseif #players > 1 then
-                    message =
-                        gsub(
-                        achievementMessageTemplateMultiplePlayers,
-                        "%%players%%",
-                        addSpaceForAsian(strjoin(", ", unpack(players)))
-                    )
-                end
+                    cacheByPlayer[playerString][achievementID] = true
 
-                if message then
-                    message = gsub(message, "%%achievement%%", addSpaceForAsian(link, true))
-                    local color = event == "CHAT_MSG_GUILD_ACHIEVEMENT" and ChatTypeInfo.GUILD or ChatTypeInfo.SYSTEM
-                    _G.ChatFrame1:AddMessage(message, color.r, color.g, color.b)
+                    if not CT.waitForAchievementMessage then
+                        CT.waitForAchievementMessage = true
+                        C_Timer_After(
+                            0.2,
+                            function()
+                                CT.SendAchivementMessage()
+                                CT.waitForAchievementMessage = false
+                            end
+                        )
+                    end
                 end
 
                 cache[achievementID] = nil
@@ -1537,9 +1593,9 @@ function CT.AchievementMessageHandler(_, event, ...)
     local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
     local classIcon = F.GetClassIconStringWithStyle(playerInfo.englishClass, CT.db.classIconStyle, 16, 16)
 
-    if coloredName and classIcon and achievementMessageCache[achievementID] then
+    if coloredName and classIcon and cache[achievementID] then
         local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)
-        achievementMessageCache[achievementID][playerName] = true
+        cache[achievementID][playerName] = true
         return true
     end
 end
@@ -1566,10 +1622,10 @@ function CT:BetterSystemMessage()
         self.isSystemMessageHandled = true
     end
 
-    if self.db.mergeAchievement and not self.isGuildAchievementHandled then
+    if self.db.mergeAchievement and not self.isAchievementHandled then
         ChatFrame_AddMessageEventFilter("CHAT_MSG_ACHIEVEMENT", self.AchievementMessageHandler)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD_ACHIEVEMENT", self.AchievementMessageHandler)
-        self.isGuildAchievementHandled = true
+        self.isAchievementHandled = true
     end
 end
 

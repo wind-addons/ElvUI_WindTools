@@ -1,7 +1,7 @@
 local W = unpack(select(2, ...))
 
 W.Changelog[325] = {
-    RELEASE_DATE = "TBD",
+    RELEASE_DATE = "2023/03/13",
     IMPORTANT = {
         ["zhCN"] = {
             "由于需要强制手机认证, 移除 KOOK 社区链接.",

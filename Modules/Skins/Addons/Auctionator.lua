@@ -391,7 +391,7 @@ local function splashFrame(frame)
 
     S:ESProxy("HandleCloseButton", frame.Close)
     S:ESProxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
-    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
 
     if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
         W.Modules.MoveFrames:HandleFrame(frame)

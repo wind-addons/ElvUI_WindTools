@@ -163,6 +163,9 @@
   - Media/Icons/Button/Plus.tga
   - Media/Icons/Button/Forward.tga
 
+- Jodalo
+  - Media/Textures/StatusbarClean.tga
+
 - IconPark
   - Media/Icons/Categories
 

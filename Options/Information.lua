@@ -536,6 +536,9 @@ do -- 媒体文件
             "Media/Icons/Button/Plus.tga",
             "Media/Icons/Button/Forward.tga"
         },
+        ["Jodalo"] = {
+            "Media/Textures/StatusbarClean.tga"
+        },
         ["IconPark"] = {
             "Media/Icons/Categories"
         },

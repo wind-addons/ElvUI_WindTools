@@ -21,7 +21,7 @@ function W:Fang2houUIPrivate()
     elseif W.Locale == "koKR" then
         E.private["general"]["dmgfont"] = "데미지 글꼴"
     end
-    
+
     E.private["WT"]["maps"]["instanceDifficulty"]["font"]["size"] = 15
     E.private["WT"]["maps"]["minimapButtons"]["backdropSpacing"] = 0
     E.private["WT"]["maps"]["minimapButtons"]["buttonSize"] = 29

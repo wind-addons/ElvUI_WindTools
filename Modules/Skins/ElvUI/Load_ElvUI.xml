@@ -7,16 +7,19 @@
 	<Script file='CastBars.lua'/>
 	<Script file='ChatDataPanels.lua'/>
 	<Script file='ChatPanels.lua'/>
+	<Script file='ChatVoicePanel.lua'/>
 	<Script file='ClassBars.lua'/>
 	<Script file='CopyChatFrame.lua'/>
 	<Script file='DataBars.lua'/>
 	<Script file='DataPanels.lua'/>
+	<Script file='LibDropDown.lua'/>
+	<Script file='LootRoll.lua'/>
 	<Script file='MiniMap.lua'/>
 	<Script file='Option.lua'/>
 	<Script file='Panels.lua'/>
 	<Script file='RaidUtility.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='StatusReport.lua'/>
-	<Script file='TotemBar.lua'/>
+	<Script file='TotemTracker.lua'/>
 	<Script file='UnitFrames.lua'/>
 </Ui>

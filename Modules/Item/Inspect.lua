@@ -1,11 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
 local IL = W:NewModule("Inspect", "AceEvent-3.0", "AceHook-3.0") -- Modified from TinyInspect
-local S = W:GetModule("Skins")
-local MF = W:GetModule("MoveFrames")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local MF = W.Modules.MoveFrames
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
-local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
+local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000.Wind")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
@@ -57,6 +56,8 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
 local UNIT_NAME_FONT = UNIT_NAME_FONT
 
+local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
+
 local guids, inspecting = {}, false
 
 local slots = {
@@ -81,7 +82,6 @@ local slots = {
 local EnchantParts = {
     [5] = {1, CHESTSLOT},
     [8] = {1, FEETSLOT},
-    --[9]  = {0, WRISTSLOT},
     [11] = {1, FINGER0SLOT},
     [12] = {1, FINGER1SLOT},
     [15] = {1, BACKSLOT},
@@ -308,7 +308,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
     end
     local enchantItemID, enchantID = LibItemEnchant:GetEnchantItemID(ItemLink)
     local enchantSpellID = LibItemEnchant:GetEnchantSpellID(ItemLink)
-    if (enchantItemID) then
+    if enchantItemID then
         num = num + 1
         icon = GetIconFrame(frame)
         DynamicUpdateIconTexture("itemId", icon, enchantItemID)
@@ -316,7 +316,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (enchantSpellID) then
+    elseif enchantSpellID then
         num = num + 1
         icon = GetIconFrame(frame)
         icon.bg:SetVertexColor(1, 0.82, 0)
@@ -325,7 +325,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (enchantID) then
+    elseif enchantID then
         num = num + 1
         icon = GetIconFrame(frame)
         icon.title = "#" .. enchantID
@@ -335,22 +335,28 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
         icon:Show()
         anchorFrame = icon
-    elseif (not enchantID and EnchantParts[itemframe.index]) then
-        if (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
-        else
+    elseif not enchantID and EnchantParts[itemframe.index] then
+        if not (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
             num = num + 1
             icon = GetIconFrame(frame)
             icon.title = ENCHANTS .. ": " .. EnchantParts[itemframe.index][2]
             icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
             icon.texture:SetTexture(
-                "Interface\\Cursor\\" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
+                "Interface/Cursor/" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
             )
             icon:ClearAllPoints()
             icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
             icon:Show()
+            if itemframe.index == 17 then
+                local itemType = C_Item_GetItemInventoryTypeByID(ItemLink)
+                if itemType ~= 13 and itemType ~= 17 then
+                    icon:Hide()
+                end
+            end
             anchorFrame = icon
         end
     end
+
     return num * 18
 end
 
@@ -402,7 +408,7 @@ local function ShowInspectItemStatsFrame(frame, unit)
         mask:SetVertexColor(1, 1, 1)
         mask:SetAlpha(0.2)
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             MF:HandleFrame(statsFrame.backdrop, frame.MoveFrame or frame)
             statsFrame.MoveFrame = statsFrame.backdrop.MoveFrame
         end
@@ -754,7 +760,7 @@ local function GetInspectItemListFrame(parent)
 
         frame.closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton, BackdropTemplate")
         frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 5, 5)
-        ES:HandleCloseButton(frame.closeButton)
+        S:ESProxy("HandleCloseButton", frame.closeButton)
         frame.closeButton:SetScript(
             "OnClick",
             function(self)
@@ -769,7 +775,7 @@ local function GetInspectItemListFrame(parent)
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             MF:HandleFrame(frame.backdrop, parent.MoveFrame or parent)
             frame.MoveFrame = frame.backdrop.MoveFrame
         end
@@ -1094,14 +1100,14 @@ function IL:Initialize()
         return
     end
 
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
     self:Player()
     self:Inspect()
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 IL.ProfileUpdate = IL.Initialize

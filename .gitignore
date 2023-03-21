@@ -1,9 +1,5 @@
-# macOS 缓存文件
+# macOS cache
 .DS_Store
 
-# 临时媒体文件
+# media source
 Media/**/*.png
-
-# 自动打包的库文件
-# Libraries/LibObjectiveProgress-1.0
-# Libraries/LibRangeCheck-2.0

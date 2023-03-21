@@ -6,6 +6,7 @@ local _G = _G
 local format = format
 local pairs = pairs
 local strsplit = strsplit
+local tremove = tremove
 local type = type
 
 local InCombatLockdown = InCombatLockdown
@@ -17,8 +18,10 @@ local BlizzardFrames = {
     "AddonList",
     "AudioOptionsFrame",
     "BankFrame",
+    "BonusRollFrame",
     "ChatConfigFrame",
     "CinematicFrame",
+    "ContainerFrameCombinedBags",
     "DestinyFrame",
     "FriendsFrame",
     "GameMenuFrame",
@@ -26,7 +29,6 @@ local BlizzardFrames = {
     "GuildInviteFrame",
     "GuildRegistrarFrame",
     "HelpFrame",
-    "InterfaceOptionsFrame",
     "ItemTextFrame",
     "LFDRoleCheckPopup",
     "LFGDungeonReadyDialog",
@@ -35,14 +37,17 @@ local BlizzardFrames = {
     "MerchantFrame",
     "PetitionFrame",
     "PetStableFrame",
-    "PlayerReportFrame",
+    "ReportFrame",
+    "PVEFrame",
     "PVPReadyDialog",
     "QuestFrame",
     "QuestLogPopupDetailFrame",
     "RaidBrowserFrame",
     "RaidParentFrame",
     "ReadyCheckFrame",
+    "RecruitAFriendRewardsFrame",
     "ReportCheatingDialog",
+    "SettingsPanel",
     "SpellBookFrame",
     "SplashFrame",
     "TabardFrame",
@@ -54,20 +59,18 @@ local BlizzardFrames = {
         "PaperDollFrame",
         "ReputationFrame",
         "TokenFrame",
-        "TokenFramePopup",
-        "TokenFrameContainer"
+        "TokenFramePopup"
     },
     ["DressUpFrame"] = {
         "DressUpFrame.OutfitDetailsPanel"
     },
     ["MailFrame"] = {
         "SendMailFrame",
-        "OpenMailFrame",
-        "OpenMailSender"
-    },
-    ["PVEFrame"] = {
-        "LFGListApplicationViewerScrollFrame",
-        "LFGListSearchPanelScrollFrame"
+        "MailFrameInset",
+        ["OpenMailFrame"] = {
+            "OpenMailFrame.OpenMailSender",
+            "OpenMailFrame.OpenMailFrameInset"
+        }
     },
     ["WorldMapFrame"] = {
         "QuestMapFrame"
@@ -77,9 +80,8 @@ local BlizzardFrames = {
 local BlizzardFramesOnDemand = {
     ["Blizzard_AchievementUI"] = {
         ["AchievementFrame"] = {
-            "AchievementFrameHeader",
-            "AchievementFrameAchievementsContainer",
-            "AchievementFrameCategoriesContainer"
+            "AchievementFrame.Header",
+            "AchievementFrame.SearchResults"
         }
     },
     ["Blizzard_AlliedRacesUI"] = {
@@ -108,6 +110,11 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_BlackMarketUI"] = {
         "BlackMarketFrame"
+    },
+    ["Blizzard_ClassTalentUI"] = {
+        ["ClassTalentFrame"] = {
+            "ClassTalentFrame.TalentsTab.ButtonsParent"
+        }
     },
     ["Blizzard_Calendar"] = {
         ["CalendarFrame"] = {
@@ -141,10 +148,13 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_Communities"] = {
         "ClubFinderGuildFinderFrame.RequestToJoinFrame",
+        "ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame",
         ["CommunitiesFrame"] = {
-            "ClubFinderCommunityAndGuildFinderFrame.CommunityCards.ListScrollFrame"
+            "CommunitiesFrame.GuildMemberDetailFrame",
+            "CommunitiesFrame.NotificationSettingsDialog"
         },
         "CommunitiesFrame.RecruitmentDialog",
+        "CommunitiesSettingsDialog",
         "CommunitiesGuildLogFrame",
         "CommunitiesGuildNewsFiltersFrame",
         "CommunitiesGuildTextEditFrame"
@@ -166,13 +176,13 @@ local BlizzardFramesOnDemand = {
     },
     ["Blizzard_EncounterJournal"] = {
         ["EncounterJournal"] = {
-            "EncounterJournal.instanceSelect.scroll",
-            "EncounterJournal.encounter.instance.loreScroll",
+            "EncounterJournal.instanceSelect.ScrollBox",
             "EncounterJournal.encounter.info.overviewScroll",
-            "EncounterJournal.encounter.info.lootScroll",
-            "EncounterJournal.encounter.info.detailsScroll",
-            "EncounterJournal.encounter.info.model"
+            "EncounterJournal.encounter.info.detailsScroll"
         }
+    },
+    ["Blizzard_ExpansionLandingPage"] = {
+        "ExpansionLandingPage"
     },
     ["Blizzard_FlightMap"] = {
         "FlightMapFrame"
@@ -180,10 +190,6 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_GarrisonUI"] = {
         "GarrisonBuildingFrame",
         "GarrisonCapacitiveDisplayFrame",
-        ["GarrisonLandingPage"] = {
-            "GarrisonLandingPageReportListListScrollFrame",
-            "GarrisonLandingPageFollowerListListScrollFrame"
-        },
         "GarrisonMissionFrame",
         "GarrisonMonumentFrame",
         "GarrisonRecruiterFrame",
@@ -199,6 +205,15 @@ local BlizzardFramesOnDemand = {
             "CovenantMissionFrame.MissionTab.MissionList.MaterialFrame",
             "CovenantMissionFrame.FollowerList.listScroll",
             "CovenantMissionFrame.FollowerList.MaterialFrame"
+        },
+        ["GarrisonLandingPage"] = {
+            "GarrisonLandingPageReportListListScrollFrame",
+            "GarrisonLandingPageFollowerListListScrollFrame"
+        }
+    },
+    ["Blizzard_GenericTraitUI"] = {
+        ["GenericTraitFrame"] = {
+            "GenericTraitFrame.ButtonsParent"
         }
     },
     ["Blizzard_GMChatUI"] = {
@@ -240,14 +255,26 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_MacroUI"] = {
         "MacroFrame"
     },
+    ["Blizzard_MajorFactions"] = {
+        "MajorFactionRenownFrame"
+    },
     ["Blizzard_ObliterumUI"] = {
         "ObliterumForgeFrame"
     },
     ["Blizzard_OrderHallUI"] = {
         "OrderHallTalentFrame"
     },
-    ["Blizzard_PlayerChoice"] = {
-        "PlayerChoiceFrame"
+    ["Blizzard_Professions"] = {
+        ["ProfessionsFrame"] = {
+            "ProfessionsFrame.CraftingPage.CraftingOutputLog",
+            "ProfessionsFrame.CraftingPage.CraftingOutputLog.ScrollBox"
+        }
+    },
+    ["Blizzard_ProfessionsCustomerOrders"] = {
+        ["ProfessionsCustomerOrdersFrame"] = {
+            "ProfessionsCustomerOrdersFrame.Form",
+            "ProfessionsCustomerOrdersFrame.Form.CurrentListings"
+        }
     },
     ["Blizzard_PVPMatch"] = {
         "PVPMatchResults"
@@ -276,12 +303,6 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_TorghastLevelPicker"] = {
         "TorghastLevelPickerFrame"
     },
-    ["Blizzard_TradeSkillUI"] = {
-        ["TradeSkillFrame"] = {
-            "TradeSkillFrame.RecipeList",
-            "TradeSkillFrame.OptionalReagentList"
-        }
-    },
     ["Blizzard_TrainerUI"] = {
         "ClassTrainerFrame"
     },
@@ -299,14 +320,17 @@ local BlizzardFramesOnDemand = {
     }
 }
 
-local ignoredList = {}
+local temporarilyMovingFrame = {
+    ["BonusRollFrame"] = true
+}
 
-function MF:IsIgnoredFrame(frame)
-    local name = frame:GetName()
-    if name and ignoredList[name] then
-        return true
+local function removeBlizzardFrames(name)
+    for i, n in pairs(BlizzardFrames) do
+        if n == name then
+            tremove(BlizzardFrames, i)
+            return
+        end
     end
-    return false
 end
 
 function MF:Remember(frame)
@@ -314,12 +338,12 @@ function MF:Remember(frame)
         return
     end
 
-    if self:IsIgnoredFrame(frame) then
+    if temporarilyMovingFrame[frame.windFrameName] then
         return
     end
 
     local numPoints = frame:GetNumPoints()
-    if numPoints then
+    if numPoints and numPoints > 0 then
         self.db.framePositions[frame.windFrameName] = {}
         for index = 1, numPoints do
             local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
@@ -335,11 +359,7 @@ function MF:Remember(frame)
 end
 
 function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
-    if InCombatLockdown() then
-        return
-    end
-
-    if self:IsIgnoredFrame(frame) then
+    if InCombatLockdown() or not self.db or self.StopRunning then
         return
     end
 
@@ -351,13 +371,20 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
         return
     end
 
+    if temporarilyMovingFrame[frame.windFrameName] then
+        self.db.framePositions[frame.windFrameName] = nil
+        return
+    end
+
     if not frame.isChangingPoint then
         frame.isChangingPoint = true
         local points = self.db.framePositions[frame.windFrameName]
+
         frame:ClearAllPoints()
         for _, point in pairs(points) do
-            frame:Point(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
+            frame:__SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
         end
+
         frame.isChangingPoint = nil
     end
 end
@@ -436,19 +463,18 @@ function MF:HandleFrame(frameName, mainFrameName)
 
     -- 注册调整位置的钩子
     if not self:IsHooked(frame.MoveFrame, "SetPoint") then
+        frame.MoveFrame.__SetPoint = frame.MoveFrame.SetPoint
         self:SecureHook(frame.MoveFrame, "SetPoint", "Reposition")
     end
 end
 
-function MF:HandleFramesWithTable(table)
-    for key, value in pairs(table) do
-        if type(key) == "number" and type(value) == "string" then
-            self:HandleFrame(value)
-        elseif type(key) == "string" and type(value) == "table" then
-            self:HandleFrame(key)
-            for _, subFrameName in pairs(value) do
-                self:HandleFrame(subFrameName, key)
-            end
+function MF:HandleFramesWithTable(table, parent)
+    for _key1, _frame1 in pairs(table) do
+        if type(_key1) == "number" and type(_frame1) == "string" then
+            self:HandleFrame(_frame1, parent)
+        elseif type(_key1) == "string" and type(_frame1) == "table" then
+            self:HandleFrame(_key1, parent)
+            self:HandleFramesWithTable(_frame1, _key1)
         end
     end
 end
@@ -479,6 +505,12 @@ function MF:HandleAddon(_, addon)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion1.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion2.reward, "OnEnter", replacement)
         self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion3.reward, "OnEnter", replacement)
+    elseif addon == "Blizzard_Communities" then
+        local dialog = _G.CommunitiesFrame.NotificationSettingsDialog
+        if dialog then
+            dialog:ClearAllPoints()
+            dialog:SetAllPoints()
+        end
     end
 end
 
@@ -499,7 +531,7 @@ function MF:HandleElvUIBag()
         return
     end
 
-    if self.db.moveElvUIBags then
+    if self.db.elvUIBags then
         local f = B:GetContainerFrame()
 
         if not f then
@@ -555,37 +587,69 @@ function MF:HandleElvUIBag()
 end
 
 function MF:Initialize()
-    self.db = E.private.WT.misc
-    if not self.db then
-        return
-    end
-
     if IsAddOnLoaded("BlizzMove") then
-        MF.StopRunning = "BlizzMove"
+        self.StopRunning = "BlizzMove"
         return
     end
 
     if IsAddOnLoaded("MoveAnything") then
-        MF.StopRunning = "MoveAnything"
+        self.StopRunning = "MoveAnything"
         return
     end
 
-    if self.db.moveBlizzardFrames then
-        -- 全局变量中已经存在的窗体
-        self:HandleFramesWithTable(BlizzardFrames)
+    self.db = E.private.WT.misc.moveFrames
+    if not self.db or not self.db.enable then
+        return
+    end
 
-        -- 为后续载入插件注册事件
-        self:RegisterEvent("ADDON_LOADED", "HandleAddon")
+    -- Trade Skill Master Speical Handling
+    if IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
+        removeBlizzardFrames("MerchantFrame")
+    end
 
-        -- 检查当前已经载入的插件
-        for addon in pairs(BlizzardFramesOnDemand) do
-            if IsAddOnLoaded(addon) then
-                self:HandleAddon(nil, addon)
-            end
+    -- ElvUI Mail Frame Speical Handling
+    if _G.MailFrameInset then
+        _G.OpenMailFrameInset:SetParent(_G.OpenMailFrame)
+        _G.MailFrameInset:SetParent(_G.MailFrame)
+    end
+
+    -- 全局变量中已经存在的窗体
+    self:HandleFramesWithTable(BlizzardFrames)
+
+    -- 为后续载入插件注册事件
+    self:RegisterEvent("ADDON_LOADED", "HandleAddon")
+
+    -- 检查当前已经载入的插件
+    for addon in pairs(BlizzardFramesOnDemand) do
+        if IsAddOnLoaded(addon) then
+            self:HandleAddon(nil, addon)
         end
     end
 
     self:HandleElvUIBag()
+
+    if _G.BattlefieldFrame and _G.PVPParentFrame then
+        _G.BattlefieldFrame:SetParent(_G.PVPParentFrame)
+        _G.BattlefieldFrame:ClearAllPoints()
+        _G.BattlefieldFrame:SetAllPoints()
+    end
+
+    local skipHook = false
+    self:SecureHook(
+        _G.ContainerFrameSettingsManager,
+        "GetBagsShown",
+        function()
+            if skipHook then
+                return
+            end
+            skipHook = true
+            local bags = _G.ContainerFrameSettingsManager:GetBagsShown()
+            for _, bag in pairs(bags or {}) do
+                bag:ClearAllPoints()
+            end
+            skipHook = false
+        end
+    )
 end
 
 W:RegisterModule(MF:GetName())

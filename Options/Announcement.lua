@@ -6,7 +6,6 @@ local SB = W:GetModule("SwitchButtons")
 local format = format
 local gsub = gsub
 local pairs = pairs
-local strupper = strupper
 local tonumber = tonumber
 
 local GetSpellLink = GetSpellLink
@@ -93,14 +92,24 @@ options.quest = {
                 SB:ProfileUpdate()
             end
         },
-        includeDetails = {
+        disableBlizzard = {
             order = 3,
+            type = "toggle",
+            name = L["Disable Blizzard"],
+            desc = L["Disable Blizzard quest progress message."],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:UpdateBlizzardQuestAnnouncement()
+            end
+        },
+        includeDetails = {
+            order = 4,
             type = "toggle",
             name = L["Include Details"],
             desc = L["Announce every time the progress has been changed."]
         },
         channel = {
-            order = 4,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Channel"],
@@ -117,7 +126,7 @@ options.quest = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -131,7 +140,7 @@ options.quest = {
                     values = {
                         NONE = L["None"],
                         PARTY = L["Party"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         INSTANCE_CHAT = L["Instance"],
                         YELL = L["Yell"],
@@ -144,7 +153,7 @@ options.quest = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -155,7 +164,7 @@ options.quest = {
             }
         },
         tag = {
-            order = 5,
+            order = 6,
             type = "group",
             inline = true,
             name = L["Tag"],
@@ -193,7 +202,7 @@ options.quest = {
             }
         },
         suggestedGroup = {
-            order = 6,
+            order = 7,
             type = "group",
             inline = true,
             name = L["Suggested Group"],
@@ -231,7 +240,7 @@ options.quest = {
             }
         },
         level = {
-            order = 7,
+            order = 8,
             type = "group",
             inline = true,
             name = L["Level"],
@@ -275,7 +284,7 @@ options.quest = {
             }
         },
         daily = {
-            order = 8,
+            order = 9,
             type = "group",
             inline = true,
             name = L["Daily"],
@@ -313,7 +322,7 @@ options.quest = {
             }
         },
         weekly = {
-            order = 9,
+            order = 10,
             type = "group",
             inline = true,
             name = L["Weekly"],
@@ -463,7 +472,7 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 YELL = L["Yell"],
                                 SAY = L["Say"]
@@ -475,7 +484,7 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -488,7 +497,7 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 INSTANCE_CHAT = L["Instance"],
@@ -502,7 +511,7 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -589,7 +598,7 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -603,7 +612,7 @@ options.interrupt = {
                             values = {
                                 NONE = L["None"],
                                 PARTY = L["Party"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 INSTANCE_CHAT = L["Instance"],
                                 YELL = L["Yell"],
@@ -616,7 +625,283 @@ options.interrupt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                RAID = L["Raid"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+options.dispel = {
+    order = 5,
+    type = "group",
+    name = L["Dispel"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info - 1]][info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Send messages after the spell has been dispelled."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            set = function(info, value)
+                E.db.WT.announcement[info[#info - 1]][info[#info]] = value
+                A:ResetAuthority()
+            end
+        },
+        onlyInstance = {
+            order = 3,
+            type = "toggle",
+            name = L["Only Instance"],
+            desc = L["Disable announcement in open world."]
+        },
+        player = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Player(Only you)"],
+            get = function(info)
+                return E.db.WT.announcement.dispel[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Your name"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["Your spell link"]),
+                        FormatDesc("%target_spell%", L["Dispelled spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.dispel[info[#info - 1]].text = P.announcement.dispel[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.dispel[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", E.myname)
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        solo = {
+                            order = 1,
+                            name = L["Solo"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        party = {
+                            order = 2,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        instance = {
+                            order = 3,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                INSTANCE_CHAT = L["Instance"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        raid = {
+                            order = 4,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                RAID = L["Raid"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        others = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Other Players"],
+            get = function(info)
+                return E.db.WT.announcement.dispel[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end,
+                    width = "full"
+                },
+                text = {
+                    order = 2,
+                    type = "input",
+                    name = L["Text"],
+                    desc = format(
+                        "%s\n%s\n%s\n%s",
+                        FormatDesc("%player%", L["Name of the player"]),
+                        FormatDesc("%target%", L["Target name"]),
+                        FormatDesc("%player_spell%", L["The spell link"]),
+                        FormatDesc("%target_spell%", L["Dispelled spell link"])
+                    ),
+                    width = 2.5
+                },
+                useDefaultText = {
+                    order = 3,
+                    type = "execute",
+                    name = L["Use default text"],
+                    func = function(info)
+                        E.db.WT.announcement.dispel[info[#info - 1]].text = P.announcement.dispel[info[#info - 1]].text
+                    end
+                },
+                example = {
+                    order = 4,
+                    type = "description",
+                    name = function(info)
+                        local message = E.db.WT.announcement.dispel[info[#info - 1]].text
+                        message = gsub(message, "%%player%%", E.myname)
+                        message = gsub(message, "%%target%%", L["Sylvanas"])
+                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
+                    end
+                },
+                channel = {
+                    order = 5,
+                    type = "group",
+                    inline = true,
+                    name = L["Channel"],
+                    get = function(info)
+                        return E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.announcement.dispel[info[#info - 2]][info[#info - 1]][info[#info]] = value
+                        A:ResetAuthority()
+                    end,
+                    args = {
+                        party = {
+                            order = 1,
+                            name = L["In Party"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                PARTY = L["Party"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        instance = {
+                            order = 2,
+                            name = L["In Instance"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                PARTY = L["Party"],
+                                SELF = L["Self (Chat Frame)"],
+                                EMOTE = L["Emote"],
+                                INSTANCE_CHAT = L["Instance"],
+                                YELL = L["Yell"],
+                                SAY = L["Say"]
+                            }
+                        },
+                        raid = {
+                            order = 3,
+                            name = L["In Raid"],
+                            type = "select",
+                            values = {
+                                NONE = L["None"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -632,7 +917,7 @@ options.interrupt = {
 }
 
 options.taunt = {
-    order = 5,
+    order = 6,
     type = "group",
     name = L["Taunt"],
     get = function(info)
@@ -721,13 +1006,13 @@ options.taunt = {
                         }
                     }
                 },
-                provokeAll = {
+                tauntAll = {
                     order = 3,
                     type = "group",
                     inline = true,
-                    name = L["Provoke all(Monk)"],
+                    name = L["Taunt All"],
                     args = {
-                        provokeAllText = {
+                        tauntAllText = {
                             order = 1,
                             type = "input",
                             name = L["Text"],
@@ -742,8 +1027,8 @@ options.taunt = {
                             order = 2,
                             type = "execute",
                             func = function()
-                                E.db.WT.announcement.taunt.player.player.provokeAllText =
-                                    P.announcement.taunt.player.player.provokeAllText
+                                E.db.WT.announcement.taunt.player.player.tauntAllText =
+                                    P.announcement.taunt.player.player.tauntAllText
                             end,
                             name = L["Default Text"]
                         },
@@ -751,9 +1036,8 @@ options.taunt = {
                             order = 3,
                             type = "description",
                             name = function()
-                                local message = E.db.WT.announcement.taunt.player.player.provokeAllText
+                                local message = E.db.WT.announcement.taunt.player.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%target%%", L["Sylvanas"])
                                 message = gsub(message, "%%spell%%", GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
@@ -818,7 +1102,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 YELL = L["Yell"],
                                 SAY = L["Say"]
@@ -830,7 +1114,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -843,7 +1127,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 INSTANCE_CHAT = L["Instance"],
@@ -857,7 +1141,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -991,7 +1275,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 YELL = L["Yell"],
                                 SAY = L["Say"]
@@ -1003,7 +1287,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -1016,7 +1300,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 INSTANCE_CHAT = L["Instance"],
@@ -1030,7 +1314,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -1102,13 +1386,13 @@ options.taunt = {
                         }
                     }
                 },
-                provokeAll = {
+                tauntAll = {
                     order = 3,
                     type = "group",
                     inline = true,
-                    name = L["Provoke all(Monk)"],
+                    name = L["Taunt All"],
                     args = {
-                        provokeAllText = {
+                        tauntAllText = {
                             order = 1,
                             type = "input",
                             name = L["Text"],
@@ -1123,8 +1407,8 @@ options.taunt = {
                             order = 2,
                             type = "execute",
                             func = function()
-                                E.db.WT.announcement.taunt.others.player.provokeAllText =
-                                    P.announcement.taunt.others.player.provokeAllText
+                                E.db.WT.announcement.taunt.others.player.tauntAllText =
+                                    P.announcement.taunt.others.player.tauntAllText
                             end,
                             name = L["Default Text"]
                         },
@@ -1132,9 +1416,8 @@ options.taunt = {
                             order = 3,
                             type = "description",
                             name = function()
-                                local message = E.db.WT.announcement.taunt.others.player.provokeAllText
+                                local message = E.db.WT.announcement.taunt.others.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%target%%", L["Sylvanas"])
                                 message = gsub(message, "%%spell%%", GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
@@ -1200,7 +1483,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -1213,7 +1496,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 INSTANCE_CHAT = L["Instance"],
@@ -1227,7 +1510,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -1366,7 +1649,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 YELL = L["Yell"],
@@ -1379,7 +1662,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 INSTANCE_CHAT = L["Instance"],
@@ -1393,7 +1676,7 @@ options.taunt = {
                             type = "select",
                             values = {
                                 NONE = L["None"],
-                                SELF = L["Self(Chat Frame)"],
+                                SELF = L["Self (Chat Frame)"],
                                 EMOTE = L["Emote"],
                                 PARTY = L["Party"],
                                 RAID = L["Raid"],
@@ -1409,7 +1692,7 @@ options.taunt = {
 }
 
 options.combatResurrection = {
-    order = 6,
+    order = 7,
     type = "group",
     name = L["Combat Resurrection"],
     get = function(info)
@@ -1508,7 +1791,7 @@ options.combatResurrection = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         YELL = L["Yell"],
                         SAY = L["Say"]
@@ -1520,7 +1803,7 @@ options.combatResurrection = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -1533,7 +1816,7 @@ options.combatResurrection = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         INSTANCE_CHAT = L["Instance"],
@@ -1547,7 +1830,7 @@ options.combatResurrection = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -1561,7 +1844,7 @@ options.combatResurrection = {
 }
 
 options.utility = {
-    order = 7,
+    order = 8,
     type = "group",
     name = L["Utility"],
     get = function(info)
@@ -1613,7 +1896,7 @@ options.utility = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         YELL = L["Yell"],
                         SAY = L["Say"]
@@ -1625,7 +1908,7 @@ options.utility = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -1638,7 +1921,7 @@ options.utility = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         INSTANCE_CHAT = L["Instance"],
@@ -1652,7 +1935,7 @@ options.utility = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -1766,7 +2049,7 @@ do
 end
 
 options.threatTransfer = {
-    order = 8,
+    order = 9,
     type = "group",
     name = L["Threat Transfer"],
     get = function(info)
@@ -1878,7 +2161,7 @@ options.threatTransfer = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         YELL = L["Yell"],
                         SAY = L["Say"]
@@ -1890,7 +2173,7 @@ options.threatTransfer = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -1903,7 +2186,7 @@ options.threatTransfer = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         INSTANCE_CHAT = L["Instance"],
@@ -1917,7 +2200,7 @@ options.threatTransfer = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -1931,7 +2214,7 @@ options.threatTransfer = {
 }
 
 options.goodbye = {
-    order = 9,
+    order = 10,
     type = "group",
     name = L["Goodbye"],
     get = function(info)
@@ -2038,15 +2321,15 @@ options.goodbye = {
     }
 }
 
-options.thanksForResurrection = {
-    order = 10,
+options.thanks = {
+    order = 11,
     type = "group",
-    name = L["Thanks For Resurrection"],
+    name = L["Thanks"],
     get = function(info)
-        return E.db.WT.announcement.thanksForResurrection[info[#info]]
+        return E.db.WT.announcement.thanks[info[#info]]
     end,
     set = function(info, value)
-        E.db.WT.announcement.thanksForResurrection[info[#info]] = value
+        E.db.WT.announcement.thanks[info[#info]] = value
     end,
     args = {
         desc = {
@@ -2058,7 +2341,7 @@ options.thanksForResurrection = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Say thanks to the target who resurrected you."],
+                    name = L["Say thanks to the people who helped you."],
                     fontSize = "medium"
                 }
             }
@@ -2071,20 +2354,35 @@ options.thanksForResurrection = {
         delay = {
             order = 3,
             name = L["Delay (sec)"],
-            desc = format(L["Default is %s."], P.announcement.thanksForResurrection.delay),
+            desc = format(L["Default is %s."], P.announcement.thanks.delay),
             type = "range",
             min = 0,
             max = 20,
-            step = 1
+            step = 1,
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable
+            end
         },
-        soulstone = {
+        enhancement = {
             order = 4,
             type = "group",
             inline = true,
-            name = GetSpellInfo(20707),
+            name = L["Enhancement"],
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable or not E.db.WT.announcement.thanks.enhancement
+            end,
             args = {
-                soulstoneText = {
+                enhancement = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    disabled = function()
+                        return not E.db.WT.announcement.thanks.enable
+                    end,
+                    width = "full"
+                },
+                enhancementText = {
+                    order = 2,
                     type = "input",
                     name = L["Text"],
                     desc = format(
@@ -2096,35 +2394,46 @@ options.thanksForResurrection = {
                     width = 2.5
                 },
                 useDefaultText = {
-                    order = 2,
+                    order = 3,
                     type = "execute",
                     func = function()
-                        E.db.WT.announcement.thanksForResurrection.soulstoneText =
-                            P.announcement.thanksForResurrection.soulstoneText
+                        E.db.WT.announcement.thanks.enhancementText = P.announcement.thanks.enhancementText
                     end,
                     name = L["Default Text"]
                 },
                 example = {
-                    order = 3,
+                    order = 4,
                     type = "description",
                     name = function()
-                        local message = E.db.WT.announcement.thanksForResurrection.soulstoneText
+                        local message = E.db.WT.announcement.thanks.enhancementText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%spell%%", GetSpellLink(61999))
+                        message = gsub(message, "%%spell%%", GetSpellLink(29166))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
             }
         },
-        normal = {
+        resurrection = {
             order = 5,
             type = "group",
             inline = true,
-            name = L["Other Spells"],
+            name = L["Resurrection"],
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable or not E.db.WT.announcement.thanks.resurrection
+            end,
             args = {
-                normalText = {
+                resurrection = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    disabled = function()
+                        return not E.db.WT.announcement.thanks.enable
+                    end,
+                    width = "full"
+                },
+                resurrectionText = {
+                    order = 2,
                     type = "input",
                     name = L["Text"],
                     desc = format(
@@ -2136,19 +2445,18 @@ options.thanksForResurrection = {
                     width = 2.5
                 },
                 useDefaultText = {
-                    order = 2,
+                    order = 3,
                     type = "execute",
                     func = function()
-                        E.db.WT.announcement.thanksForResurrection.normalText =
-                            P.announcement.thanksForResurrection.normalText
+                        E.db.WT.announcement.thanks.resurrectionText = P.announcement.thanks.resurrectionText
                     end,
                     name = L["Default Text"]
                 },
                 example = {
-                    order = 3,
+                    order = 4,
                     type = "description",
                     name = function()
-                        local message = E.db.WT.announcement.thanksForResurrection.normalText
+                        local message = E.db.WT.announcement.thanks.resurrectionText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
                         message = gsub(message, "%%spell%%", GetSpellLink(61999))
@@ -2163,10 +2471,13 @@ options.thanksForResurrection = {
             type = "group",
             inline = true,
             get = function(info)
-                return E.db.WT.announcement.thanksForResurrection[info[#info - 1]][info[#info]]
+                return E.db.WT.announcement.thanks[info[#info - 1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.announcement.thanksForResurrection[info[#info - 1]][info[#info]] = value
+                E.db.WT.announcement.thanks[info[#info - 1]][info[#info]] = value
+            end,
+            disabled = function()
+                return not E.db.WT.announcement.thanks.enable
             end,
             args = {
                 solo = {
@@ -2176,7 +2487,7 @@ options.thanksForResurrection = {
                     values = {
                         NONE = L["None"],
                         WHISPER = L["Whisper"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         YELL = L["Yell"],
                         SAY = L["Say"]
@@ -2189,7 +2500,7 @@ options.thanksForResurrection = {
                     values = {
                         NONE = L["None"],
                         WHISPER = L["Whisper"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -2203,7 +2514,7 @@ options.thanksForResurrection = {
                     values = {
                         NONE = L["None"],
                         WHISPER = L["Whisper"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         INSTANCE_CHAT = L["Instance"],
@@ -2218,7 +2529,7 @@ options.thanksForResurrection = {
                     values = {
                         NONE = L["None"],
                         WHISPER = L["Whisper"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -2232,7 +2543,7 @@ options.thanksForResurrection = {
 }
 
 options.resetInstance = {
-    order = 11,
+    order = 12,
     type = "group",
     name = L["Reset Instance"],
     get = function(info)
@@ -2284,7 +2595,7 @@ options.resetInstance = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -2297,7 +2608,7 @@ options.resetInstance = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         INSTANCE_CHAT = L["Instance"],
@@ -2311,7 +2622,7 @@ options.resetInstance = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         RAID = L["Raid"],
@@ -2325,7 +2636,7 @@ options.resetInstance = {
 }
 
 options.keystone = {
-    order = 9,
+    order = 13,
     type = "group",
     name = L["Keystone"],
     get = function(info)
@@ -2344,7 +2655,7 @@ options.keystone = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Announce the new mythic keystone."],
+                    name = L["Announce your mythic keystone."],
                     fontSize = "medium"
                 }
             }
@@ -2354,15 +2665,27 @@ options.keystone = {
             type = "toggle",
             name = L["Enable"]
         },
-        text = {
+        command = {
             order = 3,
+            type = "toggle",
+            name = L["!keys Command"],
+            desc = L["Send the keystone to party or guild chat when someone use !keys command."]
+        },
+        betterAlign = {
+            order = 4,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
+        text = {
+            order = 5,
             type = "input",
             name = L["Text"],
             desc = FormatDesc("%keystone%", L["Keystone"]),
             width = 2
         },
         useDefaultText = {
-            order = 4,
+            order = 6,
             type = "execute",
             func = function(info)
                 E.db.WT.announcement.keystone.text = P.announcement.keystone.text
@@ -2370,7 +2693,7 @@ options.keystone = {
             name = L["Default Text"]
         },
         channel = {
-            order = 5,
+            order = 7,
             name = L["Channel"],
             type = "group",
             inline = true,
@@ -2387,7 +2710,7 @@ options.keystone = {
                     type = "select",
                     values = {
                         NONE = L["None"],
-                        SELF = L["Self(Chat Frame)"],
+                        SELF = L["Self (Chat Frame)"],
                         EMOTE = L["Emote"],
                         PARTY = L["Party"],
                         YELL = L["Yell"],
@@ -2395,6 +2718,28 @@ options.keystone = {
                     }
                 }
             }
+        }
+    }
+}
+
+options.general = {
+    order = 14,
+    type = "group",
+    name = L["General"],
+    get = function(info)
+        return E.db.WT.announcement[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.announcement[info[#info]] = value
+    end,
+    args = {
+        emoteFormat = {
+            order = 1,
+            type = "input",
+            name = L["Emote Format"],
+            desc = L["The text template used in emote channel."] ..
+                "\n" .. format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "info")),
+            width = 2
         }
     }
 }

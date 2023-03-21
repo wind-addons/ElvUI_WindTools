@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local MIRRORTIMER_NUMTIMERS = MIRRORTIMER_NUMTIMERS
@@ -10,8 +10,8 @@ function S:MirrorTimers()
     end
 
     for i = 1, MIRRORTIMER_NUMTIMERS do
-        local statusBar = _G["MirrorTimer" .. i .. "StatusBar"]
-        self:CreateBackdropShadow(statusBar, true)
+        local statusBar = _G["MirrorTimer" .. i]
+        self:CreateShadow(statusBar)
     end
 end
 

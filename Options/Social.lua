@@ -14,7 +14,6 @@ local CL = W:GetModule("ChatLink")
 local CT = W:GetModule("ChatText")
 local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
-local FT = W:GetModule("Filter")
 local CM = W:GetModule("ContextMenu")
 local ST = W:GetModule("SmartTab")
 
@@ -593,22 +592,41 @@ options.chatLink = {
                 level = {
                     order = 1,
                     type = "toggle",
-                    name = L["Level"]
+                    name = L["Level"],
+                    desc = L["Display the level of the item on the item link."],
+                    width = 1.5
                 },
-                icon = {
+                numbericalQualityTier = {
                     order = 2,
                     type = "toggle",
-                    name = L["Icon"]
+                    name = L["Numberical Quality Tier"],
+                    desc = L["Use numberical quality tier rather the icon on the item link."],
+                    width = 1.5
                 },
-                armorCategory = {
+                translateItem = {
                     order = 3,
                     type = "toggle",
-                    name = L["Armor Category"]
+                    name = L["Translate Item"],
+                    desc = L["Translate the name in item links into your language."],
+                    width = 1.5
                 },
-                weaponCategory = {
+                icon = {
                     order = 4,
                     type = "toggle",
-                    name = L["Weapon Category"]
+                    name = L["Icon"],
+                    width = 1.5
+                },
+                armorCategory = {
+                    order = 5,
+                    type = "toggle",
+                    name = L["Armor Category"],
+                    width = 1.5
+                },
+                weaponCategory = {
+                    order = 6,
+                    type = "toggle",
+                    name = L["Weapon Category"],
+                    width = 1.5
                 }
             }
         }
@@ -622,6 +640,12 @@ do
     icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
     SampleStrings.ffxiv = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.philModTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModDPS, ":16:16")
+    SampleStrings.philMod = icons
 
     icons = ""
     icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
@@ -689,52 +713,121 @@ do
                 name = L["Enable"],
                 width = "full"
             },
-            removeRealm = {
+            general = {
                 order = 2,
-                type = "toggle",
-                name = L["Remove Realm"],
-                disabled = function()
-                    return not E.db.WT.social.chatText.enable
-                end
-            },
-            removeBrackets = {
-                order = 3,
-                type = "toggle",
-                name = L["Remove Brackets"],
-                disabled = function()
-                    return not E.db.WT.social.chatText.enable
-                end
-            },
-            abbreviation = {
-                order = 4,
-                type = "select",
-                name = L["Abbreviation"],
-                desc = L["Modify the style of abbreviation of channels."],
-                disabled = function()
-                    return not E.db.WT.social.chatText.enable
-                end,
-                values = {
-                    NONE = L["None"],
-                    SHORT = L["Short"],
-                    DEFAULT = L["Default"]
-                }
-            },
-            roleIcon = {
-                order = 5,
                 type = "group",
                 inline = true,
-                name = L["Role Icon"],
+                name = L["General"],
                 disabled = function()
                     return not E.db.WT.social.chatText.enable
                 end,
+                get = function(info)
+                    return E.db.WT.social.chatText[info[#info]]
+                end,
+                set = function(info, value)
+                    E.db.WT.social.chatText[info[#info]] = value
+                    CT:ProfileUpdate()
+                end,
                 args = {
-                    roleIconStyle = {
+                    removeBrackets = {
                         order = 1,
+                        type = "toggle",
+                        name = L["Remove Brackets"]
+                    },
+                    classIconStyle = {
+                        order = 2,
                         type = "select",
-                        name = L["Style"],
+                        name = L["Class Icon Style"],
+                        desc = L["Select the style of class icon."],
+                        values = function()
+                            local v = {}
+                            for _, style in pairs(F.GetClassIconStyleList()) do
+                                local monkSample = F.GetClassIconStringWithStyle("MONK", style, 16, 16)
+                                local druidSample = F.GetClassIconStringWithStyle("DRUID", style, 16, 16)
+                                local paladinSample = F.GetClassIconStringWithStyle("PALADIN", style, 16, 16)
+
+                                local sample = monkSample .. " " .. druidSample .. " " .. paladinSample
+                                v[style] = sample
+                            end
+                            return v
+                        end
+                    }
+                }
+            },
+            enhancements = {
+                order = 3,
+                type = "group",
+                inline = true,
+                name = L["Enhancements"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end,
+                get = function(info)
+                    return E.db.WT.social.chatText[info[#info]]
+                end,
+                set = function(info, value)
+                    E.db.WT.social.chatText[info[#info]] = value
+                    CT:ProfileUpdate()
+                end,
+                args = {
+                    guildMemberStatus = {
+                        order = 1,
+                        type = "toggle",
+                        name = L["Guild Member Status"],
+                        desc = L["Enhance the message when a guild member comes online or goes offline."],
+                        width = 1.2
+                    },
+                    guildMemberStatusInviteLink = {
+                        order = 2,
+                        type = "toggle",
+                        name = L["Online Invite Link"],
+                        desc = L["Add an invite link to the guild member online message."],
+                        width = 1.2,
+                        disabled = function()
+                            return not E.db.WT.social.chatText.enable or not E.db.WT.social.chatText.guildMemberStatus
+                        end
+                    },
+                    mergeAchievement = {
+                        order = 3,
+                        type = "toggle",
+                        name = L["Merge Achievement"],
+                        desc = L["Merge the achievement message into one line."],
+                        width = 1.2
+                    }
+                }
+            },
+            characterName = {
+                order = 4,
+                type = "group",
+                inline = true,
+                name = L["Character Name"],
+                disabled = function()
+                    return not E.db.WT.social.chatText.enable
+                end,
+                get = function(info)
+                    return E.db.WT.social.chatText[info[#info]]
+                end,
+                set = function(info, value)
+                    E.db.WT.social.chatText[info[#info]] = value
+                    CT:ProfileUpdate()
+                end,
+                args = {
+                    removeRealm = {
+                        order = 1,
+                        type = "toggle",
+                        name = L["Remove Realm"],
+                        disabled = function()
+                            return not E.db.WT.social.chatText.enable
+                        end
+                    },
+                    roleIconStyle = {
+                        order = 2,
+                        type = "select",
+                        name = L["Role Icon Style"],
                         desc = L["Change the icons that indicate the role."],
                         values = {
                             HEXAGON = SampleStrings.hexagon,
+                            PHILMOD = SampleStrings.philMod,
                             FFXIV = SampleStrings.ffxiv,
                             SUNUI = SampleStrings.sunui,
                             LYNUI = SampleStrings.lynui,
@@ -743,17 +836,17 @@ do
                         }
                     },
                     roleIconSize = {
-                        order = 2,
+                        order = 3,
                         type = "range",
-                        name = L["Size"],
+                        name = L["Role Icon Size"],
                         min = 5,
                         max = 25,
                         step = 1
                     }
                 }
             },
-            customAbbreviation = {
-                order = 6,
+            channelAbbreviation = {
+                order = 5,
                 type = "group",
                 inline = true,
                 name = L["Abbreviation Customization"],
@@ -761,11 +854,32 @@ do
                     return not E.db.WT.social.chatText.enable
                 end,
                 args = {
-                    newRule = {
+                    abbreviation = {
                         order = 1,
+                        type = "select",
+                        name = L["Channel Abbreviation"],
+                        desc = L["Modify the style of abbreviation of channels."],
+                        disabled = function()
+                            return not E.db.WT.social.chatText.enable
+                        end,
+                        get = function(info)
+                            return E.db.WT.social.chatText[info[#info]]
+                        end,
+                        set = function(info, value)
+                            E.db.WT.social.chatText[info[#info]] = value
+                            CT:ProfileUpdate()
+                        end,
+                        values = {
+                            NONE = L["None"],
+                            SHORT = L["Short"],
+                            DEFAULT = L["Default"]
+                        }
+                    },
+                    newRule = {
+                        order = 2,
                         type = "group",
                         inline = true,
-                        name = L["New Rule"],
+                        name = L["New Channel Abbreviation Rule"],
                         args = {
                             channelName = {
                                 order = 1,
@@ -807,10 +921,10 @@ do
                         }
                     },
                     deleteRule = {
-                        order = 2,
+                        order = 3,
                         type = "group",
                         inline = true,
-                        name = L["Delete Rule"],
+                        name = L["Delete Channel Abbreviation Rule"],
                         args = {
                             list = {
                                 order = 1,
@@ -1128,13 +1242,13 @@ options.friendList = {
                 return not E.db.WT.social.friendList.enable
             end,
             args = {
-                game = {
+                client = {
                     name = L["Game Icons"],
                     order = 1,
                     type = "select",
                     values = {
-                        Default = L["Default"],
-                        Modern = L["Modern"]
+                        blizzard = L["Blizzard"],
+                        modern = L["Modern"]
                     }
                 },
                 status = {
@@ -1142,17 +1256,17 @@ options.friendList = {
                     order = 2,
                     type = "select",
                     values = {
-                        Default = L["Default"],
-                        D3 = L["Diablo 3"],
-                        Square = L["Square"]
+                        default = L["Default"],
+                        d3 = L["Diablo 3"],
+                        square = L["Square"]
                     }
                 },
                 factionIcon = {
                     order = 3,
                     type = "toggle",
                     name = L["Faction Icon"],
-                    desc = L["Use faction icon instead of WoW icon."],
-                },
+                    desc = L["Use faction icon instead of WoW icon."]
+                }
             }
         },
         name = {
@@ -1175,21 +1289,27 @@ options.friendList = {
                     name = L["Hide Max Level"],
                     disabled = function()
                         return not E.db.WT.social.friendList.level
-                    end,
+                    end
                 },
-                useGameColor = {
+                useNoteAsName = {
                     order = 3,
                     type = "toggle",
-                    name = L["Use Game Color"],
+                    name = L["Use Note As Name"],
+                    desc = L["Replace the Real ID or the character name of friends with your notes."]
+                },
+                useClientColor = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Use Client Color"],
                     desc = L["Change the color of the name to the in-playing game style."]
                 },
                 useClassColor = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Use Class Color"]
                 },
                 font = {
-                    order = 5,
+                    order = 6,
                     type = "group",
                     name = L["Font Setting"],
                     get = function(info)
@@ -1301,58 +1421,8 @@ options.friendList = {
     }
 }
 
-options.filter = {
-    order = 7,
-    type = "group",
-    name = L["Filter"],
-    get = function(info)
-        return E.db.WT.social.filter[info[#info]]
-    end,
-    set = function(info, value)
-        E.db.WT.social.filter[info[#info]] = value
-        FT:ProfileUpdate()
-    end,
-    args = {
-        desc = {
-            order = 0,
-            type = "group",
-            inline = true,
-            name = L["Description"],
-            args = {
-                feature = {
-                    order = 1,
-                    type = "description",
-                    name = L["Unblock the profanity filter."],
-                    fontSize = "medium"
-                },
-                commingSoon = {
-                    order = 2,
-                    type = "description",
-                    name = L["More features are comming soon."],
-                    fontSize = "medium"
-                }
-            }
-        },
-        enable = {
-            order = 1,
-            type = "toggle",
-            name = L["Enable"],
-            width = "full"
-        },
-        unblockProfanityFilter = {
-            order = 2,
-            type = "toggle",
-            name = L["Profanity Filter"],
-            desc = L["Enable this option will unblock the setting of profanity filter. [CN Server]"],
-            disabled = function()
-                return not E.db.WT.social.filter.enable
-            end
-        }
-    }
-}
-
 options.smartTab = {
-    order = 8,
+    order = 7,
     type = "group",
     name = L["Smart Tab"],
     get = function(info)

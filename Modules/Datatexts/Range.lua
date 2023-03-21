@@ -9,7 +9,6 @@ local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
 
 local displayString = ""
-local lastPanel
 local int = 1
 local curMinRange, curMaxRange
 local updateTargetRange = false
@@ -38,7 +37,7 @@ local function OnUpdate(self, t)
 		curMinRange = nil
 		curMaxRange = nil
 	end
-	
+
 	if curMinRange and curMaxRange then
 		self.text:SetFormattedText(displayString, L["Distance"], curMinRange, curMaxRange)
 	else
@@ -46,7 +45,6 @@ local function OnUpdate(self, t)
 	end
 
 	forceUpdate = false
-	lastPanel = self
 end
 
 local function OnEvent(self, event)
@@ -59,14 +57,10 @@ local function OnEvent(self, event)
 	end
 end
 
-local function ValueColorUpdate(hex, r, g, b)
+local function ValueColorUpdate(self, hex)
 	displayString = strjoin("", "%s: ", hex, "%d|r - ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+	OnEvent(self)
 end
 
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
-DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"])
+DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"], nil, ValueColorUpdate)

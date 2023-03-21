@@ -1,10 +1,12 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
-local MF = W:GetModule("MoveFrames")
+local S = W.Modules.Skins
+local ES = E.Skins
+local MF = W.Modules.MoveFrames
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
+
 local CreateFrame = CreateFrame
 
 do
@@ -40,9 +42,9 @@ do
         frame.closeButton:SetPoint("BOTTOMLEFT", 3, 3)
 
         if frame.specicon then
-            frame.specicon:SetMask(nil)
+            frame.specicon:SetMask("")
             frame.specicon:Size(35)
-            frame.specicon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+            frame.specicon:SetTexCoord(unpack(E.TexCoords))
         end
 
         if frame.spectext then
@@ -57,12 +59,10 @@ do
         end
 
         local inspectFrameHolder = CreateFrame("Frame", nil, parent)
-        inspectFrameHolder:Point("TOPLEFT", frame, "TOPLEFT", 0, -1)
-        inspectFrameHolder:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 1)
-        inspectFrameHolder:CreateBackdrop("Transparent")
-        inspectFrameHolder.backdrop:SetFrameLevel(frame:GetFrameLevel())
-        inspectFrameHolder.backdrop:SetFrameStrata(frame:GetFrameStrata())
-        self:CreateShadow(inspectFrameHolder, 5)
+        inspectFrameHolder:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+        inspectFrameHolder:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+        inspectFrameHolder:SetTemplate("Transparent")
+        self:CreateShadow(inspectFrameHolder)
 
         self:SecureHookScript(
             frame.closeButton,
@@ -80,7 +80,7 @@ do
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
             MF:HandleFrame(inspectFrameHolder, parent.MoveFrame or parent)
             frame.MoveFrame = inspectFrameHolder.MoveFrame
         end
@@ -130,14 +130,14 @@ do
         for _, region in pairs {statsFrame:GetRegions()} do
             if region:GetTexture() == "Interface\\Tooltips\\UI-Tooltip-Background" then
                 region:ClearAllPoints()
-                region:Point("TOPLEFT", statsFrame, "TOPRIGHT", -58, -1)
-                region:Point("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
+                region:SetPoint("TOPLEFT", statsFrame, "TOPRIGHT", -58, -1)
+                region:SetPoint("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
             end
         end
 
         local statsFrameHolder = CreateFrame("Frame", nil, frame)
-        statsFrameHolder:Point("TOPLEFT", statsFrame, "TOPLEFT", 0, -1)
-        statsFrameHolder:Point("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
+        statsFrameHolder:SetPoint("TOPLEFT", statsFrame, "TOPLEFT", 0, -1)
+        statsFrameHolder:SetPoint("BOTTOMRIGHT", statsFrame, "BOTTOMRIGHT", 0, 1)
         statsFrameHolder:CreateBackdrop("Transparent")
         statsFrameHolder.backdrop:SetFrameLevel(statsFrame:GetFrameLevel())
         statsFrameHolder.backdrop:SetFrameStrata(statsFrame:GetFrameStrata())
@@ -163,7 +163,7 @@ do
             end
         )
 
-        if MF and MF.db and MF.db.moveBlizzardFrames then
+        if MF and MF.db and MF.db.enable then
             local parent = frame:GetParent()
             MF:HandleFrame(statsFrameHolder, parent.MoveFrame or parent)
         end
@@ -178,7 +178,7 @@ do
             function(_, _, _, _, _, y)
                 if y ~= 0 then
                     statsFrame:ClearAllPoints()
-                    statsFrame:Point("TOPLEFT", statsFrame:GetParent(), "TOPRIGHT", 5, 0)
+                    statsFrame:SetPoint("TOPLEFT", statsFrame:GetParent(), "TOPRIGHT", 5, 0)
                 end
             end
         )

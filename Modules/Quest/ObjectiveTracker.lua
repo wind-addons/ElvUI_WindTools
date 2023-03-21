@@ -1,103 +1,147 @@
 local W, F, E, L = unpack(select(2, ...))
 local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
+local C = W.Utilities.Color
+local S = W.Modules.Skins
+local LSM = E.Libs.LSM
 
 local _G = _G
-local abs = abs
 local format = format
-local floor = floor
-local ipairs = ipairs
-local min = min
+local gsub = gsub
+local max = max
 local pairs = pairs
+local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
 
+local CreateFrame = CreateFrame
 local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 
-local replaceRule = {}
+do
+    local replaceRule = {}
 
-local function AddQuestTitleToReplaceRule(questID, text)
-    F.SetCallback(
-        function(title)
-            if title then
-                replaceRule[title] = text
-                ObjectiveTracker_Update()
-                return true
+    function OT:ShortTitle(title)
+        if not title then
+            return
+        end
+
+        title =
+            F.Strings.Replace(
+            title,
+            {
+                ["，"] = ", ",
+                ["。"] = "."
+            }
+        )
+
+        for longName, shortName in pairs(replaceRule) do
+            if longName == title then
+                return shortName
             end
-            return false
-        end,
-        C_QuestLog_GetTitleForQuestID,
-        nil,
-        questID
-    )
+        end
+        return title
+    end
 end
-
-AddQuestTitleToReplaceRule(57693, L["Torghast"])
-
-local classColor = _G.RAID_CLASS_COLORS[E.myclass]
-local color = {
-    start = {
-        r = 1.000,
-        g = 0.647,
-        b = 0.008
-    },
-    complete = {
-        r = 0.180,
-        g = 0.835,
-        b = 0.451
-    }
-}
 
 local function SetTextColorHook(text)
     if not text.windHooked then
-        local SetTextColorOld = text.SetTextColor
+        text.__WindSetTextColor = text.SetTextColor
         text.SetTextColor = function(self, r, g, b, a)
-            if
-                r == _G.OBJECTIVE_TRACKER_COLOR["Header"].r and g == _G.OBJECTIVE_TRACKER_COLOR["Header"].g and
-                    b == _G.OBJECTIVE_TRACKER_COLOR["Header"].b
-             then
+            local rgbTable = {r = r, g = g, b = b, a = a}
+
+            if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["Header"], rgbTable) then
                 if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
-                    r = OT.db.titleColor.classColor and classColor.r or OT.db.titleColor.customColorNormal.r
-                    g = OT.db.titleColor.classColor and classColor.g or OT.db.titleColor.customColorNormal.g
-                    b = OT.db.titleColor.classColor and classColor.b or OT.db.titleColor.customColorNormal.b
+                    r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorNormal.r
+                    g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorNormal.g
+                    b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorNormal.b
                 end
-            elseif
-                r == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].r and
-                    g == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].g and
-                    b == _G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].b
-             then
+            elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"], rgbTable) then
                 if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
-                    r = OT.db.titleColor.classColor and classColor.r or OT.db.titleColor.customColorHighlight.r
-                    g = OT.db.titleColor.classColor and classColor.g or OT.db.titleColor.customColorHighlight.g
-                    b = OT.db.titleColor.classColor and classColor.b or OT.db.titleColor.customColorHighlight.b
+                    r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorHighlight.r
+                    g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorHighlight.g
+                    b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorHighlight.b
                 end
             end
-            SetTextColorOld(self, r, g, b, a)
+            self:__WindSetTextColor(r, g, b, a)
         end
-        text:SetTextColor(
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].r,
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].g,
-            _G.OBJECTIVE_TRACKER_COLOR["Header"].b,
-            1
-        )
+        text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], {a = 1}))
         text.windHooked = true
     end
 end
 
-local function GetProgressColor(progress)
-    local r = (color.complete.r - color.start.r) * progress + color.start.r
-    local g = (color.complete.g - color.start.g) * progress + color.start.g
-    local b = (color.complete.r - color.start.b) * progress + color.start.b
+function OT:CosmeticBar(header)
+    local bar = header.windCosmeticBar
 
-    -- 色彩亮度补偿
-    local addition = 0.35
-    r = min(r + abs(0.5 - progress) * addition, r)
-    g = min(g + abs(0.5 - progress) * addition, g)
-    b = min(b + abs(0.5 - progress) * addition, b)
+    if not self.db.cosmeticBar.enable then
+        if bar then
+            bar:Hide()
+            bar.backdrop:Hide()
+        end
+        return
+    end
 
-    return {r = r, g = g, b = b}
+    if not bar then
+        bar = header:CreateTexture()
+        local backdrop = CreateFrame("Frame", nil, header)
+        backdrop:SetFrameStrata("BACKGROUND")
+        backdrop:SetTemplate()
+        backdrop:SetOutside(bar, 1, 1)
+        backdrop.Center:SetAlpha(0)
+        S:CreateShadow(backdrop, 2, nil, nil, nil, true)
+        bar.backdrop = backdrop
+        header.windCosmeticBar = bar
+    end
+
+    -- Border
+    if self.db.cosmeticBar.border == "NONE" then
+        bar.backdrop:Hide()
+    else
+        if self.db.cosmeticBar.border == "SHADOW" then
+            bar.backdrop.shadow:Show()
+        else
+            bar.backdrop.shadow:Hide()
+        end
+        bar.backdrop:Show()
+    end
+
+    -- Texture
+    bar:SetTexture(LSM:Fetch("statusbar", self.db.cosmeticBar.texture) or E.media.normTex)
+
+    -- Color
+    if self.db.cosmeticBar.color.mode == "CLASS" then
+        bar:SetVertexColor(C.ExtractColorFromTable(W.ClassColor))
+    elseif self.db.cosmeticBar.color.mode == "NORMAL" then
+        bar:SetVertexColor(C.ExtractColorFromTable(self.db.cosmeticBar.color.normalColor))
+    elseif self.db.cosmeticBar.color.mode == "GRADIENT" then
+        bar:SetVertexColor(1, 1, 1)
+        bar:SetGradient(
+            "HORIZONTAL",
+            C.CreateColorFromTable(self.db.cosmeticBar.color.gradientColor1),
+            C.CreateColorFromTable(self.db.cosmeticBar.color.gradientColor2)
+        )
+    end
+
+    bar.backdrop:SetAlpha(self.db.cosmeticBar.borderAlpha)
+
+    -- Position
+    bar:ClearAllPoints()
+    bar:SetPoint("LEFT", header.Text, "LEFT", self.db.cosmeticBar.offsetX, self.db.cosmeticBar.offsetY)
+
+    -- Size
+    local width = self.db.cosmeticBar.width
+    local height = self.db.cosmeticBar.height
+    if self.db.cosmeticBar.widthMode == "DYNAMIC" then
+        width = width + header.Text:GetStringWidth()
+    end
+    if self.db.cosmeticBar.heightMode == "DYNAMIC" then
+        height = height + header.Text:GetStringHeight()
+    end
+
+    bar:SetSize(max(width, 1), max(height, 1))
+
+    bar:Show()
 end
 
 function OT:ChangeQuestHeaderStyle()
@@ -109,7 +153,16 @@ function OT:ChangeQuestHeaderStyle()
     for i = 1, #frame do
         local modules = frame[i]
         if modules and modules.Header and modules.Header.Text then
+            self:CosmeticBar(modules.Header)
             F.SetFontWithDB(modules.Header.Text, self.db.header)
+            modules.Header.Text:SetShadowColor(0, 0, 0, 0)
+            modules.Header.Text.SetShadowColor = E.noop
+
+            local r = self.db.header.classColor and W.ClassColor.r or self.db.header.color.r
+            local g = self.db.header.classColor and W.ClassColor.g or self.db.header.color.g
+            local b = self.db.header.classColor and W.ClassColor.b or self.db.header.color.b
+
+            modules.Header.Text:SetTextColor(r, g, b)
             if self.db.header.shortHeader then
                 modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
             end
@@ -126,7 +179,38 @@ function OT:HandleTitleText(text)
     SetTextColorHook(text)
 end
 
+function OT:HandleMenuText(text)
+    if not self.db.menuTitle.enable then
+        return
+    end
+
+    F.SetFontWithDB(text, self.db.menuTitle.font)
+    local height = text:GetStringHeight() + 2
+    if height ~= text:GetHeight() then
+        text:SetHeight(height)
+    end
+
+    if not text.windHooked then
+        text.windHooked = true
+        if self.db.menuTitle.classColor then
+            text:SetTextColor(C.ExtractColorFromTable(W.ClassColor))
+        else
+            text:SetTextColor(C.ExtractColorFromTable(self.db.menuTitle.color))
+        end
+        text.SetTextColor = E.noop
+    end
+end
+
 function OT:HandleInfoText(text)
+    -- Sometimes Blizzard not use dash icon, just put a dash in front of text
+    if self.db.noDash and text and text.GetText then
+        local rawText = text:GetText()
+
+        if rawText and rawText ~= "" and strfind(rawText, "^%- ") then
+            text:SetText(gsub(rawText, "^%- ", ""))
+        end
+    end
+
     self:ColorfulProgression(text)
     F.SetFontWithDB(text, self.db.info)
     text:SetHeight(text:GetStringHeight())
@@ -142,7 +226,7 @@ function OT:HandleInfoText(text)
         if dash.SetText then
             F.SetFontWithDB(dash, self.db.info)
         end
-        if line.Check and line.Check:IsShown() or line.state and line.state == "COMPLETED" then
+        if line.Check and line.Check:IsShown() or line.state and line.state == "COMPLETED" or line.dashStyle == 2 then
             dash:Hide()
         else
             dash:Show()
@@ -205,14 +289,14 @@ function OT:ColorfulProgression(text)
     local progress = tonumber(current) / tonumber(required)
 
     if self.db.colorfulProgress then
-        info = F.CreateColorString(current .. "/" .. required, GetProgressColor(progress))
+        info = F.CreateColorString(current .. "/" .. required, F.GetProgressColor(progress))
         info = info .. " " .. details
     end
 
     if self.db.percentage then
         local percentage = format("[%.f%%]", progress * 100)
         if self.db.colorfulPercentage then
-            percentage = F.CreateColorString(percentage, GetProgressColor(progress))
+            percentage = F.CreateColorString(percentage, F.GetProgressColor(progress))
         end
         info = info .. " " .. percentage
     end
@@ -228,13 +312,46 @@ function OT:UpdateTextWidth()
     end
 end
 
-function OT:ShortTitle(str)
-    for longName, shortName in pairs(replaceRule) do
-        if longName == str then
-            return shortName
+function OT:UpdateBackdrop()
+    if not _G.ObjectiveTrackerBlocksFrame then
+        return
+    end
+
+    local db = self.db.backdrop
+    local backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+
+    if not db.enable then
+        if backdrop then
+            backdrop:Hide()
+        end
+        return
+    end
+
+    if not backdrop then
+        if self.db.backdrop.enable then
+            _G.ObjectiveTrackerBlocksFrame:CreateBackdrop()
+            backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+            S:CreateShadow(backdrop)
         end
     end
-    return str
+
+    backdrop:Show()
+    backdrop:SetTemplate(db.transparent and "Transparent")
+    backdrop:ClearAllPoints()
+    backdrop:SetPoint(
+        "TOPLEFT",
+        _G.ObjectiveTrackerBlocksFrame,
+        "TOPLEFT",
+        db.topLeftOffsetX - 30,
+        db.topLeftOffsetY + 10
+    )
+    backdrop:SetPoint(
+        "BOTTOMRIGHT",
+        _G.ObjectiveTrackerBlocksFrame,
+        "BOTTOMRIGHT",
+        db.bottomRightOffsetX + 10,
+        db.bottomRightOffsetY - 10
+    )
 end
 
 function OT:Initialize()
@@ -244,15 +361,18 @@ function OT:Initialize()
     end
 
     self:UpdateTextWidth()
+    self:UpdateBackdrop()
 
-    if not self.Initialized then
+    if not self.initialized then
         local trackerModules = {
             _G.UI_WIDGET_TRACKER_MODULE,
             _G.BONUS_OBJECTIVE_TRACKER_MODULE,
             _G.WORLD_QUEST_TRACKER_MODULE,
             _G.CAMPAIGN_QUEST_TRACKER_MODULE,
             _G.QUEST_TRACKER_MODULE,
-            _G.ACHIEVEMENT_TRACKER_MODULE
+            _G.ACHIEVEMENT_TRACKER_MODULE,
+            _G.PROFESSION_RECIPE_TRACKER_MODULE,
+            _G.MONTHLY_ACTIVITIES_TRACKER_MODULE
         }
 
         for _, module in pairs(trackerModules) do
@@ -262,7 +382,7 @@ function OT:Initialize()
         self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
         self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
 
-        self.Initialized = true
+        self.initialized = true
     end
 
     E:Delay(
@@ -275,6 +395,10 @@ function OT:Initialize()
             end
         end
     )
+
+    if _G.ObjectiveTrackerFrame.HeaderMenu then
+        self:HandleMenuText(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+    end
 
     ObjectiveTracker_Update()
 end

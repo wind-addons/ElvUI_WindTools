@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 
 function T:ChangeHealthBarPosition(_, tt)
     local barOffset = E.db.WT.tooltips.yOffsetOfHealthBar

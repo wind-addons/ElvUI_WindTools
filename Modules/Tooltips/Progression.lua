@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local ET = E:GetModule("Tooltip")
-local T = W:GetModule("Tooltips")
+local T = W.Modules.Tooltips
 
 local _G = _G
 local format = format
@@ -36,13 +36,14 @@ local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMyth
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
+local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
+
 local loadedComparison
 local compareGUID
 local cache = {}
 
 local tiers = {
-    "Castle Nathria",
-    "Sanctum of Domination"
+    "Vault of the Incarnates"
 }
 
 local levels = {
@@ -69,246 +70,111 @@ local locales = {
         short = L["[ABBR] Mythic"],
         full = L["Mythic"]
     },
-    ["Castle Nathria"] = {
-        short = L["[ABBR] Castle Nathria"],
-        full = L["Castle Nathria"]
+    ["Dragonflight Keystone Master: Season One"] = {
+        short = L["[ABBR] Dragonflight Keystone Master: Season One"],
+        full = L["Dragonflight Keystone Master: Season One"]
     },
-    ["The Necrotic Wake"] = {
-        short = L["[ABBR] The Necrotic Wake"],
-        full = L["The Necrotic Wake"]
+    ["Dragonflight Keystone Hero: Season One"] = {
+        short = L["[ABBR] Dragonflight Keystone Hero: Season One"],
+        full = L["Dragonflight Keystone Hero: Season One"]
     },
-    ["Plaguefall"] = {
-        short = L["[ABBR] Plaguefall"],
-        full = L["Plaguefall"]
+    ["Vault of the Incarnates"] = {
+        short = L["[ABBR] Vault of the Incarnates"],
+        full = L["Vault of the Incarnates"]
     },
-    ["Mists of Tirna Scithe"] = {
-        short = L["[ABBR] Mists of Tirna Scithe"],
-        full = L["Mists of Tirna Scithe"]
+    ["Temple of the Jade Serpent"] = {
+        short = L["[ABBR] Temple of the Jade Serpent"],
+        full = L["Temple of the Jade Serpent"]
     },
-    ["Halls of Atonement"] = {
-        short = L["[ABBR] Halls of Atonement"],
-        full = L["Halls of Atonement"]
+    ["Shadowmoon Burial Grounds"] = {
+        short = L["[ABBR] Shadowmoon Burial Grounds"],
+        full = L["Shadowmoon Burial Grounds"]
     },
-    ["Theater of Pain"] = {
-        short = L["[ABBR] Theater of Pain"],
-        full = L["Theater of Pain"]
+    ["Halls of Valor"] = {
+        short = L["[ABBR] Halls of Valor"],
+        full = L["Halls of Valor"]
     },
-    ["De Other Side"] = {
-        short = L["[ABBR] De Other Side"],
-        full = L["De Other Side"]
+    ["Court of Stars"] = {
+        short = L["[ABBR] Court of Stars"],
+        full = L["Court of Stars"]
     },
-    ["Sanctum of Domination"] = {
-        short = L["[ABBR] Sanctum of Domination"],
-        full = L["Sanctum of Domination"]
+    ["Ruby Life Pools"] = {
+        short = L["[ABBR] Ruby Life Pools"],
+        full = L["Ruby Life Pools"]
     },
-    ["Spires of Ascension"] = {
-        short = L["[ABBR] Spires of Ascension"],
-        full = L["Spires of Ascension"]
+    ["The Nokhud Offensive"] = {
+        short = L["[ABBR] The Nokhud Offensive"],
+        full = L["The Nokhud Offensive"]
     },
-    ["Sanguine Depths"] = {
-        short = L["[ABBR] Sanguine Depths"],
-        full = L["Sanguine Depths"]
+    ["The Azure Vault"] = {
+        short = L["[ABBR] The Azure Vault"],
+        full = L["The Azure Vault"]
     },
-    ["Sepulcher of the First Ones"] = {
-        short = L["[ABBR] Sepulcher of the First Ones"],
-        full = L["Sepulcher of the First Ones"]
-    },
-    ["Tazavesh: Streets of Wonder"] = {
-        short = L["[ABBR] Tazavesh: Streets of Wonder"],
-        full = L["Tazavesh: Streets of Wonder"]
-    },
-    ["Tazavesh: So'leah's Gambit"] = {
-        short = L["[ABBR] Tazavesh: So'leah's Gambit"],
-        full = L["Tazavesh: So'leah's Gambit"]
-    },
-    ["Shadowlands Keystone Master: Season One"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season One"],
-        full = L["Shadowlands Keystone Master: Season One"]
-    },
-    ["Shadowlands Keystone Master: Season Two"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season Two"],
-        full = L["Shadowlands Keystone Master: Season Two"]
-    },
-    ["Shadowlands Keystone Master: Season Three"] = {
-        short = L["[ABBR] Shadowlands Keystone Master: Season Three"],
-        full = L["Shadowlands Keystone Master: Season Three"]
+    ["Algeth'ar Academy"] = {
+        short = L["[ABBR] Algeth'ar Academy"],
+        full = L["Algeth'ar Academy"]
     }
 }
 
 local raidAchievements = {
-    ["Castle Nathria"] = {
+    ["Vault of the Incarnates"] = {
         ["Mythic"] = {
-            14421,
-            14425,
-            14429,
-            14433,
-            14437,
-            14441,
-            14445,
-            14449,
-            14453,
-            14457
+            16387,
+            16388,
+            16389,
+            16390,
+            16391,
+            16392,
+            16393,
+            16394
         },
         ["Heroic"] = {
-            14420,
-            14424,
-            14428,
-            14432,
-            14436,
-            14440,
-            14444,
-            14448,
-            14452,
-            14456
+            16379,
+            16380,
+            16381,
+            16382,
+            16383,
+            16384,
+            16385,
+            16386
         },
         ["Normal"] = {
-            14419,
-            14423,
-            14427,
-            14431,
-            14435,
-            14439,
-            14443,
-            14447,
-            14451,
-            14455
+            16371,
+            16372,
+            16373,
+            16374,
+            16375,
+            16376,
+            16377,
+            16378
         },
         ["Raid Finder"] = {
-            14422,
-            14426,
-            14430,
-            14434,
-            14438,
-            14442,
-            14446,
-            14450,
-            14454,
-            14458
-        }
-    },
-    ["Sanctum of Domination"] = {
-        ["Mythic"] = {
-            15139,
-            15143,
-            15147,
-            15151,
-            15155,
-            15159,
-            15163,
-            15167,
-            15172,
-            15176
-        },
-        ["Heroic"] = {
-            15138,
-            15142,
-            15146,
-            15150,
-            15154,
-            15158,
-            15162,
-            15166,
-            15171,
-            15175
-        },
-        ["Normal"] = {
-            15137,
-            15141,
-            15145,
-            15149,
-            15153,
-            15157,
-            15161,
-            15165,
-            15170,
-            15174
-        },
-        ["Raid Finder"] = {
-            15136,
-            15140,
-            15144,
-            15148,
-            15152,
-            15156,
-            15160,
-            15164,
-            15169,
-            15173
-        }
-    },
-    ["Sepulcher of the First Ones"] = {
-        ["Mythic"] = {
-            15427,
-            15431,
-            15435,
-            15439,
-            15443,
-            15447,
-            15451,
-            15455,
-            15459,
-            15463,
-            15467
-        },
-        ["Heroic"] = {
-            15426,
-            15430,
-            15434,
-            15438,
-            15442,
-            15446,
-            15450,
-            15454,
-            15458,
-            15462,
-            15466
-        },
-        ["Normal"] = {
-            15425,
-            15429,
-            15433,
-            15437,
-            15441,
-            15445,
-            15449,
-            15453,
-            15457,
-            15461,
-            15465
-        },
-        ["Raid Finder"] = {
-            15424,
-            15428,
-            15432,
-            15436,
-            15440,
-            15444,
-            15448,
-            15452,
-            15456,
-            15460,
-            15464
+            16359,
+            16361,
+            16362,
+            16366,
+            16367,
+            16368,
+            16369,
+            16370
         }
     }
 }
 
 local mythicKeystoneDungeons = {
-    [375] = "Mists of Tirna Scithe",
-    [376] = "The Necrotic Wake",
-    [377] = "De Other Side",
-    [378] = "Halls of Atonement",
-    [379] = "Plaguefall",
-    [380] = "Sanguine Depths",
-    [381] = "Spires of Ascension",
-    [382] = "Theater of Pain",
-    [391] = "Tazavesh: Streets of Wonder",
-    [392] = "Tazavesh: So'leah's Gambit"
+    [2] = "Temple of the Jade Serpent",
+    [165] = "Shadowmoon Burial Grounds",
+    [200] = "Halls of Valor",
+    [210] = "Court of Stars",
+    [399] = "Ruby Life Pools",
+    [400] = "The Nokhud Offensive",
+    [401] = "The Azure Vault",
+    [402] = "Algeth'ar Academy"
 }
 
 local specialAchievements = {
-    {14532, "Shadowlands Keystone Master: Season One"},
-    {15078, "Shadowlands Keystone Master: Season Two"},
-    {15499, "Shadowlands Keystone Master: Season Three"}
+    {16649, "Dragonflight Keystone Master: Season One"},
+    {16650, "Dragonflight Keystone Hero: Season One"}
 }
 
 local function GetLevelColoredString(level, short)
@@ -407,6 +273,7 @@ local function UpdateProgression(guid, unit, faction)
         cache[guid].info.mythicDungeons = {}
         local summary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
         local runs = summary and summary.runs
+        local tempHighestScore, tempHighestScoreDungeon
 
         if runs then
             for _, info in ipairs(runs) do
@@ -421,8 +288,17 @@ local function UpdateProgression(guid, unit, faction)
                     scoreColor:WrapTextInColorCode(info.mapScore),
                     levelColor .. info.bestRunLevel .. "|r"
                 )
+
+                if db.mythicDungeons.markHighestScore then
+                    if not tempHighestScore or info.mapScore > tempHighestScore then
+                        tempHighestScore = info.mapScore
+                        tempHighestScoreDungeon = name
+                    end
+                end
             end
         end
+
+        cache[guid].info.mythicDungeons.highestScoreDungeon = tempHighestScoreDungeon
     end
 end
 
@@ -436,7 +312,12 @@ local function SetProgressionInfo(tt, guid)
     -- Special Achievements
     if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Special Achievements"])
+        end
+
         for _, specialAchievement in pairs(specialAchievements) do
             local achievementID, name = unpack(specialAchievement)
             if db.special[name] then
@@ -451,7 +332,11 @@ local function SetProgressionInfo(tt, guid)
     -- Raids
     if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Raids"])
+        end
         for _, tier in ipairs(tiers) do
             if db.raids[tier] then
                 for _, level in ipairs(levels) do
@@ -480,8 +365,14 @@ local function SetProgressionInfo(tt, guid)
     end
 
     if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
+        local highestScoreDungeon = cache[guid].info.mythicDungeons.highestScoreDungeon
+
         tt:AddLine(" ")
-        tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+        if db.header == "TEXTURE" then
+            tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+        elseif db.header == "TEXT" then
+            tt:AddLine(L["Mythic Dungeons"])
+        end
         for id, name in pairs(mythicKeystoneDungeons) do
             if db.mythicDungeons[name] then
                 local left = format("%s:", locales[name].short)
@@ -490,6 +381,9 @@ local function SetProgressionInfo(tt, guid)
                     right = "|cff888888" .. L["No Record"] .. "|r"
                 end
                 if right then
+                    if highestScoreDungeon and highestScoreDungeon == name then
+                        right = starIconString .. right
+                    end
                     tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
                 end
             end
@@ -558,4 +452,75 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
-T:AddInspectInfoCallback(3, "Progression")
+T:AddInspectInfoCallback(2, "Progression", true)
+
+-- NOTE
+-- MapChallengeMode.dbc
+-- [2] = "Temple of the Jade Serpent",
+-- [56] = "Stormstout Brewery",
+-- [57] = "Gate of the Setting Sun",
+-- [58] = "Shado-Pan Monastery",
+-- [59] = "Siege of Niuzao Temple",
+-- [60] = "Mogu'shan Palace",
+-- [76] = "Scholomance",
+-- [77] = "Scarlet Halls",
+-- [78] = "Scarlet Monastery",
+-- [161] = "Skyreach",
+-- [163] = "Bloodmaul Slag Mines",
+-- [164] = "Auchindoun",
+-- [165] = "Shadowmoon Burial Grounds",
+-- [166] = "Grimrail Depot",
+-- [167] = "Upper Blackrock Spire",
+-- [168] = "The Everbloom",
+-- [169] = "Iron Docks",
+-- [197] = "Eye of Azshara",
+-- [198] = "Darkheart Thicket",
+-- [199] = "Black Rook Hold",
+-- [200] = "Halls of Valor",
+-- [206] = "Neltharion's Lair",
+-- [207] = "Vault of the Wardens",
+-- [208] = "Maw of Souls",
+-- [209] = "The Arcway",
+-- [210] = "Court of Stars",
+-- [227] = "Return to Karazhan: Lower",
+-- [233] = "Cathedral of Eternal Night",
+-- [234] = "Return to Karazhan: Upper",
+-- [239] = "Seat of the Triumvirate",
+-- [244] = "Atal'Dazar",
+-- [245] = "Freehold",
+-- [246] = "Tol Dagor",
+-- [247] = "The MOTHERLODE!!",
+-- [248] = "Waycrest Manor",
+-- [249] = "Kings' Rest",
+-- [250] = "Temple of Sethraliss",
+-- [251] = "The Underrot",
+-- [252] = "Shrine of the Storm",
+-- [353] = "Siege of Boralus",
+-- [369] = "Operation: Mechagon - Junkyard",
+-- [370] = "Operation: Mechagon - Workshop",
+-- [375] = "Mists of Tirna Scithe",
+-- [376] = "The Necrotic Wake",
+-- [377] = "De Other Side",
+-- [378] = "Halls of Atonement",
+-- [379] = "Plaguefall",
+-- [380] = "Sanguine Depths",
+-- [381] = "Spires of Ascension",
+-- [382] = "Theater of Pain",
+-- [391] = "Tazavesh: Streets of Wonder",
+-- [392] = "Tazavesh: So'leah's Gambit",
+-- [399] = "Ruby Life Pools",
+-- [400] = "The Nokhud Offensive",
+-- [401] = "The Azure Vault",
+-- [402] = "Algeth'ar Academy",
+-- [403] = "Uldaman: Legacy of Tyr",
+-- [404] = "Neltharus",
+-- [405] = "Brackenhide Hollow",
+-- [406] = "Halls of Infusion",
+
+-- PYTHON SCRIPT TO GENERATE THE TABLE
+-- USE FIRST 2 COLS OF MapChallengeMode.dbc
+-- _text = text.split("\n")
+-- for _t in _text:
+--     if "\t" in _t:
+--         s = _t.split("\t")
+--         print(f"[{s[1]}] = \"{s[0]},")

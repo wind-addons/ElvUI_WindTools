@@ -1,19 +1,25 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
 
 function S:Blizzard_AdventureMap()
-    if not self:CheckDB("AdventureMap", "adventureMap") then
+    if not self:CheckDB("adventureMap") then
         return
     end
 
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
     local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
-    S:CreateShadow(AdventureMapQuestChoiceDialog)
-    AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
+    self:CreateShadow(AdventureMapQuestChoiceDialog)
+
+    if AdventureMapQuestChoiceDialog.shadow then
+        AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
+        if AdventureMapQuestChoiceDialog.TopEdge then
+            AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
+        end
+    end
 
     F.SetFontOutline(childFrame.TitleHeader)
     F.SetFontOutline(childFrame.DescriptionText)

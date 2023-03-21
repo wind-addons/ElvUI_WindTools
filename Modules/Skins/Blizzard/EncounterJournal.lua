@@ -1,28 +1,13 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
+local next = next
 local pairs = pairs
 local select = select
-
-function S:EncounterJournal_DisplayInstance()
-    local bossIndex = 1
-    local bossID = select(3, _G.EJ_GetEncounterInfoByIndex(bossIndex))
-
-    while bossID do
-        local bossButton = _G["EncounterJournalBossButton" .. bossIndex]
-        if bossButton and not bossButton.windStyle then
-            self:CreateShadow(bossButton)
-            F.SetFontOutline(bossButton.text)
-            bossButton.text:ClearAllPoints()
-            bossButton.text:Point("LEFT", bossButton, "LEFT", 105, 0)
-            bossButton.text:Point("RIGHT", bossButton, "RIGHT", 0, 0)
-            bossButton.windStyle = true
-        end
-        bossIndex = bossIndex + 1
-        bossID = select(3, _G.EJ_GetEncounterInfoByIndex(bossIndex))
-    end
-end
+local tinsert = tinsert
+local unpack = unpack
 
 function S:Blizzard_EncounterJournal()
     if not self:CheckDB("encounterjournal", "encounterJournal") then
@@ -31,21 +16,66 @@ function S:Blizzard_EncounterJournal()
 
     self:CreateShadow(_G.EncounterJournal)
 
-    -- Boss 按钮
-    if E.private.skins.parchmentRemoverEnable then
-        S:SecureHook("EncounterJournal_DisplayInstance")
-    end
-
-    -- 下方标签页
+    -- Bottom tabs
     local tabs = {
-        _G.EncounterJournal.encounter.info.overviewTab,
-        _G.EncounterJournal.encounter.info.lootTab,
-        _G.EncounterJournal.encounter.info.bossTab,
-        _G.EncounterJournal.encounter.info.modelTab
+        _G.EncounterJournalMonthlyActivitiesTab,
+        _G.EncounterJournalSuggestTab,
+        _G.EncounterJournalDungeonTab,
+        _G.EncounterJournalRaidTab,
+        _G.EncounterJournalLootJournalTab
     }
 
     for _, tab in pairs(tabs) do
+        self:ReskinTab(tab)
+    end
+
+    for _, name in next, {"overviewTab", "modelTab", "bossTab", "lootTab"} do
+        local info = _G.EncounterJournal.encounter.info
+        local tab = info[name]
         self:CreateBackdropShadow(tab)
+
+        tab:ClearAllPoints()
+        if name == "overviewTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    self:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
+                end
+            )
+        elseif name == "lootTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
+        elseif name == "bossTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
+        elseif name == "modelTab" then
+            tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
+            hooksecurefunc(
+                tab,
+                "Point",
+                function(self)
+                    self:ClearAllPoints()
+                    tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
+                end
+            )
+        end
     end
 end
 

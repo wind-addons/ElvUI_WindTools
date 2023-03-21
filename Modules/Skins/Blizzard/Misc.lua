@@ -1,9 +1,13 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local pairs = pairs
+
+local CreateFrame = CreateFrame
+
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()
@@ -12,7 +16,7 @@ end
 
 function S:SkinSkipButton(frame)
     if frame and frame.CloseDialog then
-        self:CreateBackdropShadow(frame.CloseDialog)
+        self:CreateShadow(frame.CloseDialog)
     end
 end
 
@@ -54,17 +58,18 @@ function S:BlizzardMiscFrames()
     end
 
     -- 灵魂医者传送按钮
-    self:CreateBackdropShadow(_G.GhostFrameContentsFrame)
+    self:CreateShadow(_G.GhostFrameContentsFrame)
 
     -- 跳过剧情
-    self:CreateBackdropShadow(_G.CinematicFrameCloseDialog)
+    self:CreateShadow(_G.CinematicFrameCloseDialog)
 
     -- 举报玩家
-    self:CreateBackdropShadow(_G.PlayerReportFrame)
-    self:CreateBackdropShadow(_G.ReportCheatingDialog)
+    local reportFrameShadowContainer = CreateFrame("Frame", nil, _G.ReportFrame)
+    reportFrameShadowContainer:SetAllPoints(_G.ReportFrame)
+    self:CreateShadow(reportFrameShadowContainer)
 
     -- 分离物品
-    self:CreateBackdropShadow(_G.StackSplitFrame)
+    self:CreateShadow(_G.StackSplitFrame)
 
     -- 聊天设定
     self:CreateShadow(_G.ChatConfigFrame)
@@ -72,17 +77,19 @@ function S:BlizzardMiscFrames()
     -- 颜色选择器
     self:CreateShadow(_G.ColorPickerFrame)
 
-    -- What's new
-    -- self:CreateShadow(_G.SplashFrame)
-
     -- UIWidget
     self:SecureHook(
         ES,
         "SkinStatusBarWidget",
         function(_, widgetFrame)
-            local bar = widgetFrame.Bar
-            if bar then
-                self:CreateBackdropShadow(bar)
+            if widgetFrame.Label then
+                F.SetFontOutline(widgetFrame.Label)
+            end
+            if widgetFrame.Bar then
+                self:CreateBackdropShadow(widgetFrame.Bar)
+                if widgetFrame.Bar.Label then
+                    F.SetFontOutline(widgetFrame.Bar.Label)
+                end
             end
         end
     )
@@ -90,13 +97,26 @@ function S:BlizzardMiscFrames()
     self:SecureHook(
         _G.UIWidgetTemplateStatusBarMixin,
         "Setup",
-        function(widgetFrame)
-            local bar = widgetFrame.Bar
-            if bar then
-                self:CreateBackdropShadow(bar)
+        function(widget)
+            local forbidden = widget:IsForbidden()
+            local bar = widget.Bar
+            local id = widget.widgetSetID
+
+            if forbidden or id == 283 or not bar or not bar.backdrop then
+                return
             end
 
-            if widgetFrame.isJailersTowerBar and self:CheckDB(nil, "scenario") then
+            self:CreateBackdropShadow(bar)
+
+            if widget.Label then
+                F.SetFontOutline(widget.Label)
+            end
+
+            if bar.Label then
+                F.SetFontOutline(bar.Label)
+            end
+
+            if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
                 bar:SetWidth(234)
             end
         end
@@ -105,13 +125,48 @@ function S:BlizzardMiscFrames()
     self:SecureHook(
         _G.UIWidgetTemplateCaptureBarMixin,
         "Setup",
-        function(widgetFrame)
-            local bar = widgetFrame.Bar
+        function(widget)
+            local bar = widget.Bar
             if bar then
                 self:CreateBackdropShadow(bar)
             end
         end
     )
+
+    self:RawHook(
+        ES,
+        "SkinTextWithStateWidget",
+        function(_, widgetFrame)
+            local text = widgetFrame.Text
+            if not text then
+                return
+            end
+            F.SetFontOutline(text)
+        end,
+        true
+    )
+
+    if _G.UIWidgetTemplateTextWithState then
+        hooksecurefunc(
+            _G.UIWidgetTemplateTextWithState,
+            "Setup",
+            function(widget)
+                ES:SkinTextWithStateWidget(widget)
+            end
+        )
+    end
+
+    -- Icon Selection Frames (After ElvUI Skin)
+    self:SecureHook(
+        ES,
+        "HandleIconSelectionFrame",
+        function(_, frame)
+            self:CreateShadow(frame)
+        end
+    )
+
+    -- Battle.net
+    self:CreateShadow(_G.BattleTagInviteFrame)
 end
 
 S:AddCallback("BlizzardMiscFrames")

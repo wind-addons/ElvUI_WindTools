@@ -3,15 +3,9 @@ local A = W:NewModule("Announcement", "AceEvent-3.0")
 
 local _G = _G
 
-local assert = assert
 local format = format
-local next = next
 local pairs = pairs
-local strsub = strsub
-local tinsert = tinsert
-local xpcall = xpcall
 
-local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance
@@ -59,7 +53,11 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
     end
 
     if channel == "EMOTE" then
-        text = ": " .. text
+        if self.db and self.db.emoteFormat then
+            text = format(self.db.emoteFormat, text)
+        else
+            text = ": " .. text
+        end
     end
 
     if channel == "RAID" and raidWarning and IsInRaid(LE_PARTY_CATEGORY_HOME) then
@@ -111,7 +109,7 @@ do
         end
 
         local delimiter = delimiterList[W.Locale] or "'s"
-        local raw = {F.SplitCJKString(delimiter, details)}
+        local raw = {F.Strings.Split(details, delimiter)}
 
         local owner, role = raw[1], raw[#raw]
         if owner and role then
@@ -139,8 +137,12 @@ end
 function A:Initialize()
     self.db = E.db.WT.announcement
 
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
+    end
+
+    if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
+        E.db.general.interruptAnnounce = "NONE"
     end
 
     for _, event in pairs(self.EventList) do
@@ -149,14 +151,20 @@ function A:Initialize()
 
     self:InitializeAuthority()
     self:ResetAuthority()
+    self:UpdateBlizzardQuestAnnouncement()
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function A:ProfileUpdate()
     self:Initialize()
+    self:UpdateBlizzardQuestAnnouncement()
 
-    if self.db.enable or not self.Initialized then
+    if self.db.interrupt.enable and E.db.general.interruptAnnounce ~= "NONE" then
+        E.db.general.interruptAnnounce = "NONE"
+    end
+
+    if self.db.enable or not self.initialized then
         return
     end
 
@@ -166,7 +174,7 @@ function A:ProfileUpdate()
     end
 
     self:ResetAuthority()
-    self.Initialized = false
+    self.initialized = false
 end
 
 W:RegisterModule(A:GetName())

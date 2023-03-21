@@ -1,7 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local floor = floor
@@ -18,6 +18,7 @@ local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GetNumGuildMembers = GetNumGuildMembers
+local IsAddOnLoaded = IsAddOnLoaded
 local IsInGuild = IsInGuild
 
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
@@ -130,6 +131,21 @@ function CT:ShowContextText(button)
             }
         )
     else
+        if button.dType and button.dType == "alt" then
+            tinsert(
+                menu,
+                {
+                    text = L["Remove This Alt"],
+                    func = function()
+                        E.global.WT.item.contacts.alts[button.realm][button.faction][button.name] = nil
+                        self:BuildAltsData()
+                        self:UpdatePage(currentPageIndex)
+                    end,
+                    notCheckable = true
+                }
+            )
+        end
+
         tinsert(
             menu,
             {
@@ -147,14 +163,27 @@ function CT:ShowContextText(button)
     EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
 end
 
+function CT:RepositionWithPostal()
+    if not self.frame or not _G.Postal_QuickAttachButton1 then
+        return
+    end
+
+    local width = _G.Postal_QuickAttachButton1:IsShown() and _G.Postal_QuickAttachButton1:GetWidth()
+    width = width and width + 2 or 0
+
+    self.frame:ClearAllPoints()
+    self.frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3 + width, -1)
+    self.frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153 + width, 1)
+end
+
 function CT:ConstructFrame()
     if self.frame then
         return
     end
 
     local frame = CreateFrame("Frame", "WTContacts", _G.SendMailFrame)
-    frame:Point("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
-    frame:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
+    frame:SetPoint("TOPLEFT", _G.MailFrame, "TOPRIGHT", 3, -1)
+    frame:SetPoint("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", 153, 1)
     frame:CreateBackdrop("Transparent")
     frame:EnableMouse(true)
 
@@ -162,12 +191,49 @@ function CT:ConstructFrame()
     S:MerathilisUISkin(frame.backdrop)
 
     -- Register move frames
-    if E.private.WT.misc.moveBlizzardFrames then
-        local MF = W:GetModule("MoveFrames")
+    if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
+        local MF = W.Modules.MoveFrames
         MF:HandleFrame("WTContacts", "MailFrame")
     end
 
     self.frame = frame
+
+    if IsAddOnLoaded("Postal") then
+        self:RepositionWithPostal()
+
+        if _G.Postal_QuickAttachButton1 then
+            if not self.postalHooked then
+                self:SecureHook(_G.Postal_QuickAttachButton1, "Show", "RepositionWithPostal")
+                self:SecureHook(_G.Postal_QuickAttachButton1, "Hide", "RepositionWithPostal")
+                self.postalHooked = true
+            end
+        else
+            local Postal = _G.LibStub("AceAddon-3.0"):GetAddon("Postal")
+            local Postal_QuickAttach = Postal and Postal:GetModule("QuickAttach")
+            if Postal_QuickAttach and Postal_QuickAttach.OnEnable then
+                self:SecureHook(
+                    Postal_QuickAttach,
+                    "OnEnable",
+                    function()
+                        self:RepositionWithPostal()
+                        if not self.postalHooked then
+                            self:SecureHook(_G.Postal_QuickAttachButton1, "Show", "RepositionWithPostal")
+                            self:SecureHook(_G.Postal_QuickAttachButton1, "Hide", "RepositionWithPostal")
+                            self.postalHooked = true
+                        end
+                    end
+                )
+
+                self:SecureHook(
+                    Postal_QuickAttach,
+                    "OnDisable",
+                    function()
+                        self:RepositionWithPostal()
+                    end
+                )
+            end
+        end
+    end
 
     self.contextMenuFrame = CreateFrame("Frame", "WTContactsContextMenu", E.UIParent, "UIDropDownMenuTemplate")
 end
@@ -276,11 +342,6 @@ function CT:ConstructNameButtons()
         button:SetText("")
         button:RegisterForClicks("LeftButtonDown", "RightButtonDown")
         F.SetFontOutline(button.Text)
-        ES:HandleButton(button)
-        S:CreateShadow(button, 2, 1, 1, 1, true)
-        if button.shadow then
-            button.shadow:Hide()
-        end
 
         button:SetScript(
             "OnClick",
@@ -305,9 +366,6 @@ function CT:ConstructNameButtons()
             "OnEnter",
             function(self)
                 CT:SetButtonTooltip(self)
-                if self.shadow then
-                    self.shadow:Show()
-                end
             end
         )
 
@@ -315,11 +373,10 @@ function CT:ConstructNameButtons()
             "OnLeave",
             function(self)
                 GameTooltip:Hide()
-                if self.shadow then
-                    self.shadow:Hide()
-                end
             end
         )
+
+        S:ESProxy("HandleButton", button)
 
         button:Hide()
         self.frame.nameButtons[i] = button
@@ -381,7 +438,7 @@ function CT:ConstructPageController()
         end
     )
 
-    ES:HandleSliderFrame(slider)
+    S:ESProxy("HandleSliderFrame", slider)
 
     local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
     pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)
@@ -393,6 +450,10 @@ function CT:ConstructPageController()
     self.frame:SetScript(
         "OnMouseWheel",
         function(_, delta)
+            if not currentPageIndex then
+                return
+            end
+
             if delta > 0 then
                 if pagePrevButton:IsShown() then
                     currentPageIndex = currentPageIndex - 1
@@ -452,9 +513,10 @@ function CT:UpdatePage(pageIndex)
             local temp = data[(pageIndex - 1) * 14 + i]
             local button = self.frame.nameButtons[i]
             if temp then
+                button.dType = temp.dType
                 if temp.memberIndex then -- Only get guild member info if needed
                     local fullname, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(temp.memberIndex)
-                    local name, realm = F.SplitCJKString("-", fullname)
+                    local name, realm = F.Strings.Split(fullname, "-")
                     realm = realm or E.myrealm
                     button.name = name
                     button.realm = realm
@@ -471,6 +533,7 @@ function CT:UpdatePage(pageIndex)
                 button:SetText(button.class and F.CreateClassColorString(button.name, button.class) or button.name)
                 button:Show()
             else
+                button.dType = nil
                 button:Hide()
             end
         end
@@ -535,7 +598,8 @@ function CT:BuildAltsData()
                             name = name,
                             realm = realm,
                             class = class,
-                            faction = faction
+                            faction = faction,
+                            dType = "alt"
                         }
                     )
                 end
@@ -552,14 +616,15 @@ function CT:BuildFriendsData()
     for i = 1, numWoWFriend do
         local info = C_FriendList_GetFriendInfoByIndex(i)
         if info.connected then
-            local name, realm = F.SplitCJKString("-", info.name)
+            local name, realm = F.Strings.Split(info.name, "-")
             realm = realm or E.myrealm
             tinsert(
                 data,
                 {
                     name = name,
                     realm = realm,
-                    class = GetNonLocalizedClass(info.className)
+                    class = GetNonLocalizedClass(info.className),
+                    dType = "friend"
                 }
             )
             tempKey[name .. "-" .. realm] = true
@@ -588,7 +653,8 @@ function CT:BuildFriendsData()
                                 name = gameAccountInfo.characterName,
                                 realm = gameAccountInfo.realmName,
                                 class = GetNonLocalizedClass(gameAccountInfo.className),
-                                BNName = accountInfo.accountName
+                                BNName = accountInfo.accountName,
+                                dType = "bnfriend"
                             }
                         )
                     end
@@ -607,7 +673,8 @@ function CT:BuildFriendsData()
                         name = accountInfo.gameAccountInfo.characterName,
                         realm = accountInfo.gameAccountInfo.realmName,
                         class = GetNonLocalizedClass(accountInfo.gameAccountInfo.className),
-                        BNName = accountInfo.accountName
+                        BNName = accountInfo.accountName,
+                        dType = "bnfriend"
                     }
                 )
             end
@@ -617,26 +684,34 @@ end
 
 function CT:BuildGuildData()
     data = {}
+
     if not IsInGuild() then
         return
     end
 
     local totalMembers = GetNumGuildMembers()
     for i = 1, totalMembers do
-        tinsert(data, {memberIndex = i})
+        tinsert(
+            data,
+            {
+                memberIndex = i,
+                dType = "guild"
+            }
+        )
     end
 end
 
 function CT:BuildFavoriteData()
     data = {}
     for fullName in pairs(E.global.WT.item.contacts.favorites) do
-        local name, realm = F.SplitCJKString("-", fullName)
+        local name, realm = F.Strings.Split(fullName, "-")
         realm = realm or E.myrealm
         tinsert(
             data,
             {
                 name = name,
-                realm = realm
+                realm = realm,
+                dType = "favorite"
             }
         )
     end
@@ -667,7 +742,6 @@ function CT:SendMailFrame_OnShow()
         self.frame:Hide()
     else
         self.frame:Show()
-        self:ChangeCategory()
     end
 end
 
@@ -675,7 +749,7 @@ function CT:Initialize()
     self:UpdateAltsTable()
     self.db = E.db.WT.item.contacts
 
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
@@ -685,7 +759,9 @@ function CT:Initialize()
     self:ConstructPageController()
 
     self:SecureHookScript(_G.SendMailFrame, "OnShow", "SendMailFrame_OnShow")
-    self.Initialized = true
+
+    self:ChangeCategory()
+    self.initialized = true
 end
 
 function CT:ProfileUpdate()
@@ -696,7 +772,7 @@ function CT:ProfileUpdate()
         self.frame:Show()
         self.toggleButton:Show()
     else
-        if self.Initialized then
+        if self.initialized then
             self.frame:Hide()
             self.toggleButton:Hide()
         end

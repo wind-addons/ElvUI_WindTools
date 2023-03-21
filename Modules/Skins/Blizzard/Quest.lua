@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -13,6 +13,7 @@ function S:BlizzardQuestFrames()
     self:CreateShadow(_G.QuestLogPopupDetailFrame)
 
     F.SetFontOutline(_G.QuestNPCModelNameText)
+    self:CreateShadow(_G.QuestNPCModelTextFrame)
 end
 
 S:AddCallback("BlizzardQuestFrames")

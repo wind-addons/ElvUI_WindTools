@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -22,15 +22,13 @@ function S:Blizzard_CharacterCustomize()
         function(list)
             if list.selectionPopoutPool then
                 for popout in list.selectionPopoutPool:EnumerateActive() do
-                    if not popout.windStyle then
-                        self:CreateShadow(popout.DecrementButton)
-                        self:CreateShadow(popout.IncrementButton)
+                    if not popout.__windSkin then
                         self:CreateBackdropShadow(popout.Button)
                         self:CreateShadow(popout.Button.Popout)
                         if popout.Label then
                             F.SetFontOutline(popout.Label)
                         end
-                        popout.windStyle = true
+                        popout.__windSkin = true
                     end
                 end
             end
@@ -38,12 +36,12 @@ function S:Blizzard_CharacterCustomize()
             local optionPool = list.pools and list.pools:GetPool("CharCustomizeOptionCheckButtonTemplate")
             if optionPool then
                 for button in optionPool:EnumerateActive() do
-                    if not button.windStyle then
+                    if not button.__windSkin then
                         self:CreateBackdropShadow(button.Button)
                         if button.Label then
                             F.SetFontOutline(button.Label)
                         end
-                        button.windStyle = true
+                        button.__windSkin = true
                     end
                 end
             end

@@ -1,35 +1,26 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
-local select = select
 
-local GetInstanceInfo = GetInstanceInfo
-local IsInJailersTower = IsInJailersTower
-
-local function SetupOptions()
-    if not _G.PlayerChoiceFrame.windStyle then
-        S:CreateShadow(_G.PlayerChoiceFrame)
+local function SetupOptions(frame)
+    if frame.__windSkin then
+        return
     end
 
-    local instanceType, _, _, _, _, _, instanceID = select(2, GetInstanceInfo())
-    local needDisable = IsInJailersTower() or instanceType == "party" or instanceType == "raid"
+    S:CreateShadow(frame)
+    frame.shadow:SetShown(frame.template and frame.template == "Transparent")
 
-    -- Hold shadow in garrison
-    if needDisable then
-        if instanceID == 1159 then
-            needDisable = false
+    hooksecurefunc(
+        frame,
+        "SetTemplate",
+        function(_, template)
+            frame.shadow:SetShown(template and template == "Transparent")
         end
-    end
+    )
 
-    if _G.PlayerChoiceFrame.shadow then
-        if needDisable then
-            _G.PlayerChoiceFrame.shadow:Hide()
-        else
-            _G.PlayerChoiceFrame.shadow:Show()
-        end
-    end
+    frame.__windSkin = true
 end
 
 function S:Blizzard_PlayerChoice()

@@ -1,0 +1,10 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Core -->
+    <Script file='Core.lua'/>
+    <!-- Submodule -->
+	<Script file='Button.lua'/>
+	<Script file='CheckBox.lua'/>
+	<Script file='Slider.lua'/>
+	<Script file='Tab.lua'/>
+	<Script file='TreeButton.lua'/>
+</Ui>

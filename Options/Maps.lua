@@ -5,8 +5,17 @@ local MB = W:GetModule("MinimapButtons")
 local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
 local WM = W:GetModule("WorldMap")
+local ET = W:GetModule("EventTracker")
 
 local format = format
+local pairs = pairs
+
+local envs = {
+    superTracker = {
+        inputCommand = nil,
+        selectedCommand = nil
+    }
+}
 
 options.superTracker = {
     order = 1,
@@ -53,11 +62,11 @@ options.superTracker = {
                     desc = L["Auto track the waypoint after setting."],
                     width = 1.5
                 },
-                rightClickToClear = {
+                middleClickToClear = {
                     order = 2,
                     type = "toggle",
-                    name = L["Right Click To Clear"],
-                    desc = L["Right click the waypoint to clear it."],
+                    name = L["Middle Click To Clear"],
+                    desc = L["Middle click the waypoint to clear it."],
                     width = 1.5
                 },
                 noLimit = {
@@ -65,6 +74,13 @@ options.superTracker = {
                     type = "toggle",
                     name = L["No Distance Limitation"],
                     desc = L["Force to track the target even if it over 1000 yds."],
+                    width = 1.5
+                },
+                noUnit = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["No Unit"],
+                    desc = L["Remove the unit in distance text."],
                     width = 1.5
                 }
             }
@@ -123,12 +139,135 @@ options.superTracker = {
                         db.r, db.g, db.b, db.a = r, g, b, nil
                         E:StaticPopup_Show("PRIVATE_RL")
                     end
-                },
-                onlyNumber = {
-                    order = 5,
+                }
+            }
+        },
+        waypointParse = {
+            order = 5,
+            type = "group",
+            name = L["Waypoint Parse"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.maps.superTracker.waypointParse[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.maps.superTracker.waypointParse[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                enable = {
+                    order = 1,
                     type = "toggle",
-                    name = L["Only Number"],
-                    desc = L["Remove the unit from distance text."]
+                    name = L["Enable"]
+                },
+                worldMapInput = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Input Box"],
+                    desc = L["Add a input box to the world map."]
+                },
+                command = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Command"],
+                    desc = L["Enable to use the command to set the waypoint."]
+                },
+                virtualTomTom = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Virtual TomTom"],
+                    desc = L["Support TomTom-style /way command without TomTom."],
+                    hidden = function()
+                        return not E.private.WT.maps.superTracker.waypointParse.command
+                    end
+                },
+                commandConfiguration = {
+                    order = 5,
+                    type = "group",
+                    name = L["Command Configuration"],
+                    hidden = function()
+                        return not E.private.WT.maps.superTracker.waypointParse.command
+                    end,
+                    args = {
+                        commandInput = {
+                            order = 1,
+                            type = "input",
+                            name = L["New Command"],
+                            desc = L["The command to set a waypoint."],
+                            get = function(info)
+                                return envs.superTracker.inputCommand
+                            end,
+                            set = function(info, value)
+                                envs.superTracker.inputCommand = value
+                            end
+                        },
+                        addCommand = {
+                            order = 2,
+                            type = "execute",
+                            name = L["Add Command"],
+                            disabled = function()
+                                return not envs.superTracker.inputCommand
+                            end,
+                            func = function()
+                                if not envs.superTracker.inputCommand then
+                                    return
+                                end
+
+                                E.private.WT.maps.superTracker.waypointParse.commandKeys[envs.superTracker.inputCommand] =
+                                    true
+                                E:StaticPopup_Show("PRIVATE_RL")
+                            end
+                        },
+                        betterAlign = {
+                            order = 3,
+                            type = "description",
+                            name = " ",
+                            width = "full"
+                        },
+                        commandList = {
+                            order = 4,
+                            type = "select",
+                            name = L["Command List"],
+                            values = function()
+                                local keys = {}
+                                for k, _ in pairs(E.private.WT.maps.superTracker.waypointParse.commandKeys) do
+                                    keys[k] = k
+                                end
+                                return keys
+                            end,
+                            get = function(info)
+                                return envs.superTracker.selectedCommand
+                            end,
+                            set = function(info, value)
+                                envs.superTracker.selectedCommand = value
+                            end
+                        },
+                        deleteCommand = {
+                            order = 5,
+                            type = "execute",
+                            name = L["Delete Command"],
+                            desc = L["Delete the selected command."],
+                            confirm = function()
+                                return format(
+                                    L["Are you sure to delete the %s command?"],
+                                    F.CreateColorString(envs.superTracker.selectedCommand, E.db.general.valuecolor)
+                                )
+                            end,
+                            disabled = function()
+                                return not envs.superTracker.selectedCommand
+                            end,
+                            func = function()
+                                if not envs.superTracker.selectedCommand then
+                                    return
+                                end
+
+                                E.private.WT.maps.superTracker.waypointParse.commandKeys[
+                                        envs.superTracker.selectedCommand
+                                    ] = nil
+                                E:StaticPopup_Show("PRIVATE_RL")
+                            end
+                        }
+                    }
                 }
             }
         }
@@ -523,17 +662,18 @@ options.minimapButtons = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
-                calendar = {
-                    order = 1,
-                    type = "toggle",
-                    name = L["Calendar"],
-                    desc = L["Add calendar button to the bar."]
-                },
-                garrison = {
+                -- calendar = {
+                --     order = 1,
+                --     type = "toggle",
+                --     name = L["Calendar"],
+                --     desc = L["Add calendar button to the bar."]
+                -- },
+                expansionLandingPage = {
                     order = 2,
                     type = "toggle",
-                    name = L["Garrison"],
-                    desc = L["Add garrison button to the bar."]
+                    name = L["Expansion Landing Page"],
+                    desc = L["Add expansion landing page (ex. garrison) to the bar."],
+                    width = 2
                 }
             }
         }
@@ -564,7 +704,7 @@ options.worldMap = {
                     name = function()
                         if WM.StopRunning then
                             return format(
-                                "|cffff0000" .. L["Because of %s, this module will not be loaded."] .. "|r",
+                                "|cffff3860" .. L["Because of %s, this module will not be loaded."] .. "|r",
                                 WM.StopRunning
                             )
                         else
@@ -748,6 +888,351 @@ options.instanceDifficulty = {
                     min = 5,
                     max = 60,
                     step = 1
+                }
+            }
+        }
+    }
+}
+
+options.eventTracker = {
+    order = 7,
+    type = "group",
+    name = L["Event Tracker"],
+    get = function(info)
+        return E.db.WT.maps.eventTracker[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.maps.eventTracker[info[#info]] = value
+        ET:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Add trackers for world events in the bottom of world map."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        style = {
+            order = 3,
+            type = "group",
+            inline = true,
+            name = L["Style"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                height = {
+                    order = 1,
+                    type = "range",
+                    name = L["Height"],
+                    min = 20,
+                    max = 100,
+                    step = 1
+                },
+                spacing = {
+                    order = 2,
+                    type = "range",
+                    name = L["Spacing"],
+                    min = 0,
+                    max = 20,
+                    step = 1
+                },
+                backdrop = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Backdrop"]
+                },
+                yOffset = {
+                    order = 4,
+                    type = "range",
+                    name = L["Y-Offset"],
+                    desc = L["The offset of the frame from the bottom of world map. (Default is -3)"],
+                    min = -300,
+                    max = 300,
+                    step = 1
+                }
+            }
+        },
+        font = {
+            order = 4,
+            type = "group",
+            inline = true,
+            name = L["Font"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker.font[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker.font[info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                name = {
+                    order = 1,
+                    type = "select",
+                    dialogControl = "LSM30_Font",
+                    name = L["Font"],
+                    values = LSM:HashTable("font")
+                },
+                scale = {
+                    order = 2,
+                    type = "range",
+                    name = L["Scale"],
+                    min = 0.1,
+                    max = 5,
+                    step = 0.01
+                },
+                outline = {
+                    order = 3,
+                    type = "select",
+                    name = L["Outline"],
+                    values = {
+                        NONE = L["None"],
+                        OUTLINE = L["OUTLINE"],
+                        MONOCHROME = L["MONOCHROME"],
+                        MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
+                        THICKOUTLINE = L["THICKOUTLINE"]
+                    }
+                }
+            }
+        },
+        communityFeast = {
+            order = 5,
+            type = "group",
+            inline = true,
+            name = L["Community Feast"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                desaturate = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Desaturate"],
+                    desc = L["Desaturate icon if the event is completed in this week."]
+                },
+                alert = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Alert"]
+                },
+                sound = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Alert Sound"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end,
+                    desc = L["Play sound when the alert is triggered."]
+                },
+                soundFile = {
+                    order = 5,
+                    type = "select",
+                    dialogControl = "LSM30_Sound",
+                    name = L["Sound File"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert or
+                            not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+                    end,
+                    values = LSM:HashTable("sound")
+                },
+                second = {
+                    order = 6,
+                    type = "range",
+                    name = L["Alert Second"],
+                    desc = L["Alert will be triggered when the remaining time is less than the set value."],
+                    min = 0,
+                    max = 3600,
+                    step = 1,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                },
+                stopAlertIfCompleted = {
+                    order = 7,
+                    type = "toggle",
+                    name = L["Stop Alert if Completed"],
+                    desc = L["Stop alert when the event is completed in this week."],
+                    width = 1.5,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                },
+                stopAlertIfPlayerNotEnteredDragonlands = {
+                    order = 8,
+                    type = "toggle",
+                    name = L["Only DF Character"],
+                    desc = L["Stop alert when the player have not entered Dragonlands yet."],
+                    width = 1.5,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                }
+            }
+        },
+        siegeOnDragonbaneKeep = {
+            order = 6,
+            type = "group",
+            inline = true,
+            name = L["Siege On Dragonbane Keep"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                desaturate = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Desaturate"],
+                    desc = L["Desaturate icon if the event is completed in this week."]
+                },
+                alert = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Alert"]
+                },
+                sound = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Alert Sound"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end,
+                    desc = L["Play sound when the alert is triggered."]
+                },
+                soundFile = {
+                    order = 5,
+                    type = "select",
+                    dialogControl = "LSM30_Sound",
+                    name = L["Sound File"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert or
+                            not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+                    end,
+                    values = LSM:HashTable("sound")
+                },
+                second = {
+                    order = 6,
+                    type = "range",
+                    name = L["Alert Second"],
+                    desc = L["Alert will be triggered when the remaining time is less than the set value."],
+                    min = 0,
+                    max = 3600,
+                    step = 1,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                },
+                stopAlertIfCompleted = {
+                    order = 7,
+                    type = "toggle",
+                    name = L["Stop Alert if Completed"],
+                    desc = L["Stop alert when the event is completed in this week."],
+                    width = 1.5,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                },
+                stopAlertIfPlayerNotEnteredDragonlands = {
+                    order = 8,
+                    type = "toggle",
+                    name = L["Only DF Character"],
+                    desc = L["Stop alert when the player have not entered Dragonlands yet."],
+                    width = 1.5,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
+                }
+            }
+        },
+        iskaaranFishingNet = {
+            order = 7,
+            type = "group",
+            inline = true,
+            name = L["Iskaaran Fishing Net"],
+            get = function(info)
+                return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+                ET:ProfileUpdate()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                alert = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Alert"]
+                },
+                sound = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Alert Sound"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end,
+                    desc = L["Play sound when the alert is triggered."]
+                },
+                soundFile = {
+                    order = 4,
+                    type = "select",
+                    dialogControl = "LSM30_Sound",
+                    name = L["Sound File"],
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert or
+                            not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+                    end,
+                    values = LSM:HashTable("sound")
+                },
+                disableAlertAfterHours = {
+                    order = 5,
+                    type = "range",
+                    name = L["Alert Timeout"],
+                    desc = L["Alert will be disabled after the set value (hours)."],
+                    min = 0,
+                    max = 144,
+                    step = 1,
+                    hidden = function(info)
+                        return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+                    end
                 }
             }
         }

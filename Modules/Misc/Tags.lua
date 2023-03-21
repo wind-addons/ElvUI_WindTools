@@ -1,9 +1,10 @@
 local W, F, E, L = unpack(select(2, ...))
-local M = W:GetModule("Misc")
+local M = W.Modules.Misc
 local RangeCheck = E.Libs.RangeCheck
 
 local floor = floor
 local format = format
+local pairs = pairs
 local select = select
 local strlen = strlen
 local strlower = strlower
@@ -13,18 +14,41 @@ local tonumber = tonumber
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo
 local GetNumClasses = GetNumClasses
+local UnitClass = UnitClass
+local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit
+local UnitPower = UnitPower
+local UnitPowerMax = UnitPowerMax
 
 local function GetClassColorString(class)
 	local hexString = select(4, GetClassColor(class))
 	return "|c" .. hexString
 end
 
+local function GetHealthPercent(unit, formatString)
+	local healthMax = UnitHealthMax(unit)
+	if healthMax == 0 then
+		return ""
+	end
+	return format(formatString, UnitHealth(unit) / healthMax * 100)
+end
+
 function M:Tags()
 	if not E.private.WT.misc.tags then
 		return
 	end
+
+	E:AddTag(
+		"absorbs-long",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			return absorb ~= 0 and absorb or ""
+		end
+	)
 
 	-- 距离预测中值 (5)
 	E:AddTag(
@@ -92,6 +116,71 @@ function M:Tags()
 		end
 	)
 
+	-- Custom Decimal Length Health Tags
+	E:AddTag(
+		"health:percent-nostatus-0",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%d%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-1",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.1f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-2",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.2f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-3",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.3f%%")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-0",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%d")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-1",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.1f")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-2",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.2f")
+		end
+	)
+
+	E:AddTag(
+		"health:percent-nostatus-nosign-3",
+		"UNIT_HEALTH UNIT_MAXHEALTH",
+		function(unit)
+			return GetHealthPercent(unit, "%.3f")
+		end
+	)
+
 	-- 能量百分比 去除百分号
 	E:AddTag(
 		"power:percent-nosign",
@@ -114,12 +203,17 @@ function M:Tags()
 		"smart-power",
 		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 		function(unit)
-			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-			local power = tonumber(maxPower)
-			if power and power < 1000 then
-				return E.oUF.Tags.Methods["power:current"](unit)
+			local maxPower = UnitPowerMax(unit)
+			local currentPower = UnitPower(unit)
+
+			if not currentPower then
+				return ""
+			end
+
+			if not maxPower or maxPower < 1000 then
+				return currentPower
 			else
-				return E.oUF.Tags.Methods["power:percent"](unit)
+				return currentPower and format("%d%%", floor(currentPower / maxPower * 100 + 0.5))
 			end
 		end
 	)
@@ -129,15 +223,44 @@ function M:Tags()
 		"smart-power-nosign",
 		"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 		function(unit)
-			local maxPower = E.oUF.Tags.Methods["maxpp"](unit)
-			local power = tonumber(maxPower)
-			if power and power < 1000 then
-				return E.oUF.Tags.Methods["power:current"](unit)
+			local maxPower = UnitPowerMax(unit)
+			local currentPower = UnitPower(unit)
+
+			if not currentPower then
+				return ""
+			end
+
+			if not maxPower or maxPower < 1000 then
+				return currentPower
 			else
-				return E.oUF.Tags.Methods["power:percent-nosign"](unit)
+				return currentPower and format("%d", floor(currentPower / maxPower * 100 + 0.5))
 			end
 		end
 	)
+
+	-- Class Icons
+	for index, style in pairs(F.GetClassIconStyleList()) do
+		E:AddTag(
+			"classicon-" .. style,
+			"UNIT_NAME_UPDATE",
+			function(unit)
+				local englishClass = select(2, UnitClass(unit))
+				return englishClass and F.GetClassIconStringWithStyle(englishClass, style)
+			end
+		)
+		for i = 1, GetNumClasses() do
+			local englishClass = select(2, GetClassInfo(i))
+			if englishClass then
+				E:AddTag(
+					"classicon-" .. style .. ":" .. strlower(englishClass),
+					"UNIT_NAME_UPDATE",
+					function()
+						return F.GetClassIconStringWithStyle(englishClass, style)
+					end
+				)
+			end
+		end
+	end
 end
 
 M:AddCallback("Tags")

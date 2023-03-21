@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
@@ -10,6 +10,7 @@ function S:Blizzard_AuctionHouseUI()
     end
 
     self:CreateShadow(_G.AuctionHouseFrame)
+    self:CreateShadow(_G.AuctionHouseFrame.WoWTokenResults.GameTimeTutorial)
 
     local tabs = {_G.AuctionHouseFrameBuyTab, _G.AuctionHouseFrameSellTab, _G.AuctionHouseFrameAuctionsTab}
     for _, tab in pairs(tabs) do

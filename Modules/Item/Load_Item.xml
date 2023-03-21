@@ -2,6 +2,7 @@
 	<Script file='AlreadyKnown.lua'/>
 	<Script file='Contacts.lua'/>
 	<Script file='DeleteItem.lua'/>
+	<Script file='ExtendMerchantPages.lua'/>
 	<Script file='ExtraItemBar.lua'/>
 	<Script file='FastLoot.lua'/>
 	<Script file='Inspect.lua'/>

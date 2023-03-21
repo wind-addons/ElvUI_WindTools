@@ -44,7 +44,6 @@ local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccount
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_AddFriend = C_FriendList.AddFriend
 local C_FriendList_SendWho = C_FriendList.SendWho
-local C_Timer_After = C_Timer.After
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 local HP = HP
@@ -115,7 +114,7 @@ local PredefinedType = {
                 end
                 GuildInvite(playerName)
             else
-                F.DebugMessage(CM, L["Cannot get the name."])
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -183,7 +182,7 @@ local PredefinedType = {
                 local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
                 E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
             else
-                F.DebugMessage(CM, L["Cannot get the armory link."])
+                CM:Log("debug", "Cannot get the armory link.")
             end
         end,
         isHidden = function(frame)
@@ -233,7 +232,7 @@ local PredefinedType = {
                 end
                 C_FriendList_SendWho(playerName)
             else
-                F.DebugMessage(CM, L["Cannot get the name."])
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -289,7 +288,7 @@ local PredefinedType = {
                 end
                 C_FriendList_AddFriend(playerName)
             else
-                F.DebugMessage(CM, L["Cannot get the name."])
+                CM:Log("debug", "Cannot get the name.")
             end
         end,
         isHidden = function(frame)
@@ -345,18 +344,20 @@ local PredefinedType = {
             elseif frame.chatTarget then
                 name = frame.chatTarget
             elseif frame.name then
+                name = frame.name
                 if frame.server and frame.server ~= E.myrealm then
-                    name = frame.name .. "-" .. frame.server
+                    name = name .. "-" .. frame.server
                 end
             end
 
             if not name then
-                F.DebugMessage(CM, L["Cannot get the name."])
+                CM:Log("debug", "Cannot get the name.")
+                return
             end
 
             local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
 
-            C_Timer_After(
+            E:Delay(
                 0.1,
                 function()
                     SendChatMessage(
@@ -376,7 +377,7 @@ local PredefinedType = {
             )
 
             -- 致命
-            C_Timer_After(
+            E:Delay(
                 0.3,
                 function()
                     SendChatMessage(
@@ -392,14 +393,14 @@ local PredefinedType = {
                 end
             )
             -- 加速
-            C_Timer_After(
+            E:Delay(
                 0.5,
                 function()
                     SendChatMessage(format(" - %s: %.2f%%", STAT_HASTE, GetHaste()), "WHISPER", nil, name)
                 end
             )
             -- 精通
-            C_Timer_After(
+            E:Delay(
                 0.7,
                 function()
                     SendChatMessage(format(" - %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()), "WHISPER", nil, name)
@@ -407,7 +408,7 @@ local PredefinedType = {
             )
 
             -- 臨機應變
-            C_Timer_After(
+            E:Delay(
                 0.9,
                 function()
                     SendChatMessage(
@@ -720,7 +721,7 @@ end
 
 function CM:Initialize()
     self.db = E.db.WT.social.contextMenu
-    if not self.db.enable or self.Initialized then
+    if not self.db.enable or self.initialized then
         return
     end
 
@@ -733,13 +734,13 @@ function CM:Initialize()
     self.tempButton = CreateFrame("Button", "WTContextMenuTempButton", E.UIParent, "SecureActionButtonTemplate")
     self.tempButton:SetAttribute("type1", "macro")
 
-    self.Initialized = true
+    self.initialized = true
 end
 
 function CM:ProfileUpdate()
     self.db = E.db.WT.social.contextMenu
     if self.db and self.db.enable then
-        if not self.Initialized then
+        if not self.initialized then
             self:Initialize()
         else
             self:UpdateMenu()

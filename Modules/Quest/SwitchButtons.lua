@@ -1,6 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
 local SB = W:NewModule("SwitchButtons", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
@@ -9,12 +8,14 @@ local CreateFrame = CreateFrame
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
-function SB:CreateButton(text)
+local GameTooltip = _G.GameTooltip
+
+function SB:CreateButton(text, tooltipText)
     if not self.db or not self.bar then
         return
     end
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-    ES:HandleCheckBox(button)
+    S:ESProxy("HandleCheckBox",button)
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateBackdropShadow(button)
     end
@@ -24,7 +25,26 @@ function SB:CreateButton(text)
     button.text:SetText(F.CreateColorString(button.originalText, self.db.font.color))
     button.text:SetJustifyV("MIDDLE")
     button.text:SetJustifyH("LEFT")
-    button.text:Point("LEFT", button, "RIGHT")
+    button.text:SetPoint("LEFT", button, "RIGHT")
+
+    local function onEnter()
+        if self.db.tooltip then
+            GameTooltip:SetOwner(button, "ANCHOR_TOP")
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(tooltipText, 1, 1, 1)
+            GameTooltip:Show()
+        end
+    end
+
+    local function onLeave()
+        if self.db.tooltip then
+            GameTooltip:Hide()
+        end
+    end
+
+    button:SetScript("OnEnter", onEnter)
+    button:SetScript("OnLeave", onLeave)
+
     return button
 end
 
@@ -72,7 +92,8 @@ function SB:UpdateLayout()
     local xOffset = 0
 
     if not self.bar.announcement then
-        self.bar.announcement = self:CreateButton(L["[ABBR] Announcement"])
+        self.bar.announcement =
+            self:CreateButton(L["[ABBR] Announcement"], L["Announce your quest progress to other players."])
         self.bar.announcement:SetScript(
             "OnClick",
             function()
@@ -82,7 +103,7 @@ function SB:UpdateLayout()
     end
 
     if not self.bar.turnIn then
-        self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"])
+        self.bar.turnIn = self:CreateButton(L["[ABBR] Turn In"], L["Auto accept and turn in quests."])
         self.bar.turnIn:SetScript(
             "OnClick",
             function()
@@ -96,13 +117,13 @@ function SB:UpdateLayout()
     self:UpdateButton(self.bar.turnIn, self.db.turnIn)
 
     if self.db.announcement then
-        self.bar.announcement:Point("LEFT", xOffset, 0)
+        self.bar.announcement:SetPoint("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.announcement.buttonSize
         self.bar.announcement:SetChecked(E.db.WT.announcement.quest.enable and not E.db.WT.announcement.quest.paused)
     end
 
     if self.db.turnIn then
-        self.bar.turnIn:Point("LEFT", xOffset, 0)
+        self.bar.turnIn:SetPoint("LEFT", xOffset, 0)
         xOffset = xOffset + self.bar.turnIn.buttonSize
         self.bar.turnIn:SetChecked(E.db.WT.quest.turnIn.enable)
     end
@@ -141,7 +162,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
-    frame:Point("RIGHT", _G.ObjectiveFrameMover, "RIGHT", 0, -2)
+    frame:SetPoint("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -2)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")

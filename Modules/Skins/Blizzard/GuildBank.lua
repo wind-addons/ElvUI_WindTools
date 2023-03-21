@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -14,8 +14,11 @@ function S:Blizzard_GuildBankUI()
         self:ReskinTab(_G["GuildBankFrameTab" .. i])
     end
 
-    for i = 1, 6 do
-        self:CreateShadow(_G["GuildBankTab" .. i .. "Button"])
+    for i = 1, 8 do
+        local tab = _G["GuildBankTab" .. i]
+        if tab then
+            self:CreateShadow(tab.Button)
+        end
     end
 end
 

@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file='EventTracker.lua'/>
 	<Script file='InstanceDifficulty.lua'/>
 	<Script file='MinimapButtons.lua'/>
 	<Script file='RectangleMinimap.lua'/>

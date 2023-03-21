@@ -1,7 +1,6 @@
 local W, F, E, L, _, _, G = unpack(select(2, ...))
 local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
-local S = W:GetModule("Skins")
-local ES = E:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local ceil = ceil
@@ -128,7 +127,7 @@ function CE:CreateInterface()
     frame:CreateBackdrop("Transparent")
     S:CreateShadowModule(frame.backdrop)
     S:MerathilisUISkin(frame.backdrop)
-    ES:HandleCloseButton(_G.WTCustomEmoteFrameClose)
+    S:ESProxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
 
     -- 定位
     frame:SetWidth(column * (width + space) + 24)
@@ -255,11 +254,15 @@ end
 
 function CE:ParseChatBubbles()
     for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
-        if frame.backdrop and frame.backdrop.String then
-            local oldMessage = frame.backdrop.String:GetText()
-            local afterMessage = gsub(oldMessage, "%{.-%}", ReplaceEmote)
-            if oldMessage ~= afterMessage then
-                frame.backdrop.String:SetText(afterMessage)
+        local holder = frame:GetChildren()
+        if holder and not holder:IsForbidden() then
+            local str = holder and holder.String
+            if str then
+                local oldMessage = str:GetText()
+                local afterMessage = gsub(oldMessage, "%{.-%}", ReplaceEmote)
+                if oldMessage ~= afterMessage then
+                    str:SetText(afterMessage)
+                end
             end
         end
     end

@@ -6,9 +6,10 @@ local format = format
 local pairs = pairs
 local strmatch = strmatch
 local strsplit = strsplit
+local strupper = strupper
 
 local BNConnected = BNConnected
-local BNet_GetClientTexture = BNet_GetClientTexture
+local BNet_GetClientAtlas = BNet_GetClientAtlas
 local FriendsFrame_Update = FriendsFrame_Update
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 
@@ -16,120 +17,179 @@ local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_ClassColor_GetClassColor = C_ClassColor.GetClassColor
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 
-local BNET_CLIENT_WOW = BNET_CLIENT_WOW
-local BNET_CLIENT_SC2 = BNET_CLIENT_SC2
-local BNET_CLIENT_D3 = BNET_CLIENT_D3
-local BNET_CLIENT_WTCG = BNET_CLIENT_WTCG
-local BNET_CLIENT_APP = BNET_CLIENT_APP
-local BNET_CLIENT_HEROES = BNET_CLIENT_HEROES
-local BNET_CLIENT_OVERWATCH = BNET_CLIENT_OVERWATCH
-local BNET_CLIENT_CLNT = BNET_CLIENT_CLNT
-local BNET_CLIENT_SC = BNET_CLIENT_SC
-local BNET_CLIENT_DESTINY2 = BNET_CLIENT_DESTINY2
-local BNET_CLIENT_COD = BNET_CLIENT_COD
-local BNET_CLIENT_COD_MW = BNET_CLIENT_COD_MW
-local BNET_CLIENT_COD_MW2 = BNET_CLIENT_COD_MW2
-local BNET_CLIENT_COD_BOCW = BNET_CLIENT_COD_BOCW
-local BNET_CLIENT_WC3 = BNET_CLIENT_WC3
-local BNET_CLIENT_ARCADE = BNET_CLIENT_ARCADE
-local BNET_CLIENT_CRASH4 = BNET_CLIENT_CRASH4
-local BNET_CLIENT_D2 = BNET_CLIENT_D2
-local BNET_CLIENT_COD_VANGUARD = BNET_CLIENT_COD_VANGUARD
-
-local CINEMATIC_NAME_2 = CINEMATIC_NAME_2
-
-local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
-local WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC
-local WOW_PROJECT_CLASSIC_TBC = 5
-
-local FRIENDS_TEXTURE_AFK, FRIENDS_TEXTURE_DND = FRIENDS_TEXTURE_AFK, FRIENDS_TEXTURE_DND
-local FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE = FRIENDS_TEXTURE_OFFLINE, FRIENDS_TEXTURE_ONLINE
-local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
-local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
-
+local BNET_FRIEND_TOOLTIP_WOW_CLASSIC = BNET_FRIEND_TOOLTIP_WOW_CLASSIC
+local FRIENDS_BUTTON_TYPE_BNET = FRIENDS_BUTTON_TYPE_BNET
 local FRIENDS_BUTTON_TYPE_DIVIDER = FRIENDS_BUTTON_TYPE_DIVIDER
 local FRIENDS_BUTTON_TYPE_WOW = FRIENDS_BUTTON_TYPE_WOW
-local FRIENDS_BUTTON_TYPE_BNET = FRIENDS_BUTTON_TYPE_BNET
-local BNET_FRIEND_TOOLTIP_WOW_CLASSIC = BNET_FRIEND_TOOLTIP_WOW_CLASSIC
+local FRIENDS_TEXTURE_AFK = FRIENDS_TEXTURE_AFK
+local FRIENDS_TEXTURE_DND = FRIENDS_TEXTURE_DND
+local FRIENDS_TEXTURE_OFFLINE = FRIENDS_TEXTURE_OFFLINE
+local FRIENDS_TEXTURE_ONLINE = FRIENDS_TEXTURE_ONLINE
+local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
+local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
+local WOW_PROJECT_BURNING_CRUSADE_CLASSIC = 5
+local WOW_PROJECT_CLASSIC = 2
+local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
+local WOW_PROJECT_WRATH_CLASSIC = 11
 
 local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
 local cache = {}
 
-local GameIcons = {
-    ["Alliance"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Alliance"},
-    ["Horde"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\Horde"},
-    ["Neutral"] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\WoW"},
-    [BNET_CLIENT_WOW] = {Default = BNet_GetClientTexture(BNET_CLIENT_WOW), Modern = MediaPath .. "GameIcons\\WoWSL"},
-    [BNET_CLIENT_WOW .. "C"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. "GameIcons\\WoW"
+-- Manully code the atlas "battlenetclienticon"
+-- note: Destiny 2 is not included
+local projectCodes = {
+    ["ANBS"] = "Diablo Immortal",
+    ["Hero"] = "Heroes of the Storm",
+    ["OSI"] = "Diablo II",
+    ["S2"] = "StarCraft II",
+    ["VIPR"] = "Call of Duty: Black Ops 4",
+    ["W3"] = "WarCraft III",
+    ["APP"] = "Battle.net App",
+    ["FORE"] = "Call of Duty: Vanguard",
+    ["LAZR"] = "Call of Duty: MW2 Campaign Remastered",
+    ["RTRO"] = "Blizzard Arcade Collection",
+    ["WLBY"] = "Crash Bandicoot 4: It's About Time",
+    ["WTCG"] = "Hearthstone",
+    ["ZEUS"] = "Call of Duty: Blac Ops Cold War",
+    ["D3"] = "Diablo III",
+    ["GRY"] = "Warcraft Arclight Rumble",
+    ["ODIN"] = "Call of Duty: Mordern Warfare II",
+    ["S1"] = "StarCraft",
+    ["WOW"] = "World of Warcraft",
+    ["PRO"] = "Overwatch",
+    ["PRO-ZHCN"] = "Overwatch"
+}
+
+local clientData = {
+    ["Diablo Immortal"] = {
+        color = {r = 0.768, g = 0.121, b = 0.231}
     },
-    [BNET_CLIENT_WOW .. "C_TBC"] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_WOW),
-        Modern = MediaPath .. "GameIcons\\WoWC"
+    ["Heroes of the Storm"] = {
+        color = {r = 0, g = 0.8, b = 1}
     },
-    [BNET_CLIENT_D2] = {Default = BNet_GetClientTexture(BNET_CLIENT_D2), Modern = MediaPath .. "GameIcons\\D2"},
-    [BNET_CLIENT_D3] = {Default = BNet_GetClientTexture(BNET_CLIENT_D3), Modern = MediaPath .. "GameIcons\\D3"},
-    [BNET_CLIENT_WTCG] = {Default = BNet_GetClientTexture(BNET_CLIENT_WTCG), Modern = MediaPath .. "GameIcons\\HS"},
-    [BNET_CLIENT_SC] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC), Modern = MediaPath .. "GameIcons\\SC"},
-    [BNET_CLIENT_SC2] = {Default = BNet_GetClientTexture(BNET_CLIENT_SC2), Modern = MediaPath .. "GameIcons\\SC2"},
-    [BNET_CLIENT_APP] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\App"},
-    ["BSAp"] = {Default = BNet_GetClientTexture(BNET_CLIENT_APP), Modern = MediaPath .. "GameIcons\\Mobile"},
-    [BNET_CLIENT_HEROES] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_HEROES),
-        Modern = MediaPath .. "GameIcons\\HotS"
+    ["Diablo II"] = {
+        color = {r = 0.768, g = 0.121, b = 0.231}
     },
-    [BNET_CLIENT_OVERWATCH] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_OVERWATCH),
-        Modern = MediaPath .. "GameIcons\\OW"
+    ["StarCraft II"] = {
+        color = {r = 0.749, g = 0.501, b = 0.878}
     },
-    [BNET_CLIENT_COD] = {Default = BNet_GetClientTexture(BNET_CLIENT_COD), Modern = MediaPath .. "GameIcons\\COD"},
-    [BNET_CLIENT_COD_BOCW] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_COD_BOCW),
-        Modern = MediaPath .. "GameIcons\\COD_CW"
+    ["Call of Duty: Black Ops 4"] = {
+        color = {r = 0, g = 0.8, b = 0}
     },
-    [BNET_CLIENT_COD_MW] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW),
-        Modern = MediaPath .. "GameIcons\\COD_MW"
+    ["WarCraft III"] = {
+        color = {r = 0.796, g = 0.247, b = 0.145}
     },
-    [BNET_CLIENT_COD_MW2] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_COD_MW2),
-        Modern = MediaPath .. "GameIcons\\COD_MW2"
+    ["Battle.net App"] = {
+        color = {r = 0.509, g = 0.772, b = 1}
     },
-    [BNET_CLIENT_WC3] = {Default = BNet_GetClientTexture(BNET_CLIENT_WC3), Modern = MediaPath .. "GameIcons\\WC3"},
-    [BNET_CLIENT_CLNT] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_CLNT),
-        Modern = BNet_GetClientTexture(BNET_CLIENT_CLNT)
+    ["Call of Duty: Vanguard"] = {
+        color = {r = 0, g = 0.8, b = 0}
     },
-    [BNET_CLIENT_CRASH4] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_CRASH4),
-        Modern = MediaPath .. "GameIcons\\CRASH4"
+    ["Call of Duty: MW2 Campaign Remastered"] = {
+        color = {r = 0, g = 0.8, b = 0}
     },
-    [BNET_CLIENT_ARCADE] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_ARCADE),
-        Modern = BNet_GetClientTexture(BNET_CLIENT_ARCADE)
+    ["Blizzard Arcade Collection"] = {
+        color = {r = 0.509, g = 0.772, b = 1}
     },
-    [BNET_CLIENT_COD_VANGUARD] = {
-        Default = BNet_GetClientTexture(BNET_CLIENT_COD_VANGUARD),
-        Modern = MediaPath .. "GameIcons\\COD_VG"
+    ["Crash Bandicoot 4: It's About Time"] = {
+        color = {r = 0.509, g = 0.772, b = 1}
+    },
+    ["Hearthstone"] = {
+        color = {r = 1, g = 0.694, b = 0}
+    },
+    ["Call of Duty: Blac Ops Cold War"] = {
+        color = {r = 0, g = 0.8, b = 0}
+    },
+    ["Diablo III"] = {
+        color = {r = 0.768, g = 0.121, b = 0.231}
+    },
+    ["Warcraft Arclight Rumble"] = {
+        color = {r = 0.945, g = 0.757, b = 0.149}
+    },
+    ["Call of Duty: Mordern Warfare II"] = {
+        color = {r = 0, g = 0.8, b = 0}
+    },
+    ["StarCraft"] = {
+        color = {r = 0.749, g = 0.501, b = 0.878}
+    },
+    ["World of Warcraft"] = {
+        color = {r = 0.866, g = 0.690, b = 0.180}
+    },
+    ["Overwatch"] = {
+        color = {r = 1, g = 1, b = 1}
     }
 }
 
-local StatusIcons = {
-    Default = {
+for code, name in pairs(projectCodes) do
+    if clientData[name] then
+        if code ~= "PRO-ZHCN" then -- There is a special Overwatch Chinese version
+            clientData[name]["icon"] = {
+                modern = MediaPath .. "GameIcons\\" .. code,
+                blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", code)
+            }
+        end
+    end
+end
+
+local expansionData = {
+    [WOW_PROJECT_MAINLINE] = {
+        name = "Retail",
+        suffix = nil,
+        maxLevel = W.MaxLevelForPlayerExpansion,
+        icon = {
+            modern = MediaPath .. "GameIcons\\WOW_Retail",
+            blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
+        }
+    },
+    [WOW_PROJECT_CLASSIC] = {
+        name = "Classic",
+        suffix = "Classic",
+        maxLevel = 60,
+        icon = {
+            modern = MediaPath .. "GameIcons\\WOW_Classic",
+            blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
+        }
+    },
+    [WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = {
+        name = "TBC",
+        suffix = "TBC",
+        maxLevel = 70,
+        icon = {
+            modern = MediaPath .. "GameIcons\\WOW_TBC",
+            blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
+        }
+    },
+    [WOW_PROJECT_WRATH_CLASSIC] = {
+        name = "WotLK",
+        suffix = "WotLK",
+        maxLevel = 80,
+        icon = {
+            modern = MediaPath .. "GameIcons\\WOW_WotLK",
+            blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
+        }
+    }
+}
+
+local factionIcons = {
+    ["Alliance"] = MediaPath .. "GameIcons\\Alliance",
+    ["Horde"] = MediaPath .. "GameIcons\\Horde"
+}
+
+local statusIcons = {
+    default = {
         Online = FRIENDS_TEXTURE_ONLINE,
         Offline = FRIENDS_TEXTURE_OFFLINE,
         DND = FRIENDS_TEXTURE_DND,
         AFK = FRIENDS_TEXTURE_AFK
     },
-    Square = {
+    square = {
         Online = MediaPath .. "StatusIcons\\Square\\Online",
         Offline = MediaPath .. "StatusIcons\\Square\\Offline",
         DND = MediaPath .. "StatusIcons\\Square\\DND",
         AFK = MediaPath .. "StatusIcons\\Square\\AFK"
     },
-    D3 = {
+    d3 = {
         Online = MediaPath .. "StatusIcons\\D3\\Online",
         Offline = MediaPath .. "StatusIcons\\D3\\Offline",
         DND = MediaPath .. "StatusIcons\\D3\\DND",
@@ -137,40 +197,12 @@ local StatusIcons = {
     }
 }
 
-local RegionLocales = {
+local regionLocales = {
     [1] = L["America"],
     [2] = L["Korea"],
     [3] = L["Europe"],
     [4] = L["Taiwan"],
     [5] = L["China"]
-}
-
-local MaxLevel = {
-    [BNET_CLIENT_WOW .. "C"] = 60,
-    [BNET_CLIENT_WOW .. "C_TBC"] = 70,
-    [BNET_CLIENT_WOW] = W.MaxLevelForPlayerExpansion
-}
-
-local BNColor = {
-    [BNET_CLIENT_ARCADE] = {r = 0.509, g = 0.772, b = 1}, -- Arcade
-    [BNET_CLIENT_CRASH4] = {r = 0.509, g = 0.772, b = 1}, -- Crash
-    [BNET_CLIENT_CLNT] = {r = 0.509, g = 0.772, b = 1}, -- 未知
-    [BNET_CLIENT_APP] = {r = 0.509, g = 0.772, b = 1}, -- 战网
-    [BNET_CLIENT_WC3] = {r = 0.796, g = 0.247, b = 0.145}, -- 魔兽争霸重置版 3
-    [BNET_CLIENT_SC] = {r = 0.749, g = 0.501, b = 0.878}, -- 星际争霸 1
-    [BNET_CLIENT_SC2] = {r = 0.749, g = 0.501, b = 0.878}, -- 星际争霸 2
-    [BNET_CLIENT_D3] = {r = 0.768, g = 0.121, b = 0.231}, -- 暗黑破坏神 3
-    [BNET_CLIENT_WOW] = {r = 0.866, g = 0.690, b = 0.180}, -- 魔兽世界
-    [BNET_CLIENT_WTCG] = {r = 1, g = 0.694, b = 0}, -- 炉石传说
-    [BNET_CLIENT_HEROES] = {r = 0, g = 0.8, b = 1}, -- 风暴英雄
-    [BNET_CLIENT_OVERWATCH] = {r = 1, g = 1, b = 1}, -- 守望先锋
-    [BNET_CLIENT_COD] = {r = 0, g = 0.8, b = 0}, -- 使命召唤
-    [BNET_CLIENT_COD_MW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争
-    [BNET_CLIENT_COD_MW2] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：现代战争 2
-    [BNET_CLIENT_COD_BOCW] = {r = 0, g = 0.8, b = 0}, -- 使命召唤：冷战
-    -- 命运 2 因为已经分家了，不会出现了，下面为自定客户端代码
-    [BNET_CLIENT_WOW .. "C"] = {r = 0.866, g = 0.690, b = 0.180}, -- 魔兽世界怀旧版
-    ["BSAp"] = {r = 0.509, g = 0.772, b = 1} -- 手机战网 App
 }
 
 local function GetClassColor(className)
@@ -180,7 +212,7 @@ local function GetClassColor(className)
         end
     end
 
-    -- 德语及法语有分性别的职业名
+    -- Very special rules for deDE and frFR
     if W.Locale == "deDE" or W.Locale == "frFR" then
         for class, localizedName in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do
             if className == localizedName then
@@ -203,18 +235,19 @@ function FL:UpdateFriendButton(button)
         return
     end
 
-    local game, realID, name, server, class, area, level, faction, status, isInCurrentRegion, regionID
+    local gameName, realID, name, server, class, area, level, note, faction, status, isInCurrentRegion, regionID, wowID
 
-    -- 获取好友游戏情况
     if button.buttonType == FRIENDS_BUTTON_TYPE_WOW then
-        -- 角色游戏好友
-        game = BNET_CLIENT_WOW
+        -- WoW friends
+        wowID = WOW_PROJECT_MAINLINE
+        gameName = projectCodes["WOW"]
         local friendInfo = C_FriendList_GetFriendInfoByIndex(button.id)
-        name, server = strsplit("-", friendInfo.name) -- 如果是同一个服务器，server 为 nil
+        name, server = strsplit("-", friendInfo.name) -- server is nil if it's not a cross-realm friend
         level = friendInfo.level
         class = friendInfo.className
         area = friendInfo.area
-        faction = E.myfaction -- 同一阵营才能加好友的吧？
+        note = friendInfo.notes
+        faction = E.myfaction -- friend should in the same faction
 
         if friendInfo.connected then
             if friendInfo.afk then
@@ -228,13 +261,14 @@ function FL:UpdateFriendButton(button)
             status = "Offline"
         end
     elseif button.buttonType == FRIENDS_BUTTON_TYPE_BNET and BNConnected() then
-        -- 战网好友
+        -- Battle.net friends
         local friendAccountInfo = C_BattleNet_GetFriendAccountInfo(button.id)
         if friendAccountInfo then
             realID = friendAccountInfo.accountName
+            note = friendAccountInfo.note
 
             local gameAccountInfo = friendAccountInfo.gameAccountInfo
-            game = gameAccountInfo.clientProgram
+            gameName = projectCodes[strupper(gameAccountInfo.clientProgram)]
 
             if gameAccountInfo.isOnline then
                 if friendAccountInfo.isAFK or gameAccountInfo.isGameAFK then
@@ -249,7 +283,8 @@ function FL:UpdateFriendButton(button)
             end
 
             -- Fetch version if friend playing WoW
-            if game == BNET_CLIENT_WOW then
+            if gameName == "World of Warcraft" then
+                wowID = gameAccountInfo.wowProjectID
                 name = gameAccountInfo.characterName or ""
                 level = gameAccountInfo.characterLevel or 0
                 faction = gameAccountInfo.factionName or nil
@@ -258,18 +293,10 @@ function FL:UpdateFriendButton(button)
                 isInCurrentRegion = gameAccountInfo.isInCurrentRegion or false
                 regionID = gameAccountInfo.regionID or false
 
-                if gameAccountInfo.wowProjectID == WOW_PROJECT_CLASSIC then
-                    game = BNET_CLIENT_WOW .. "C" -- Classic
+                if wowID and wowID ~= 1 and expansionData[wowID] then
+                    local suffix = expansionData[wowID].suffix and " (" .. expansionData[wowID].suffix .. ")" or ""
                     local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
-                    server = serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC
-                    server = server .. "*"
-                elseif gameAccountInfo.wowProjectID == WOW_PROJECT_CLASSIC_TBC then
-                    game = BNET_CLIENT_WOW .. "C_TBC" -- TBC
-                    local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
-                    server =
-                        serverStrings[#serverStrings] or
-                        BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. " (" .. CINEMATIC_NAME_2 .. ")"
-                    server = server .. "*"
+                    server = (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. suffix) .. "*"
                 else
                     server = gameAccountInfo.realmDisplayName or ""
                 end
@@ -277,30 +304,44 @@ function FL:UpdateFriendButton(button)
         end
     end
 
-    -- 状态图标
+    -- Status icon
     if status then
-        button.status:SetTexture(StatusIcons[self.db.textures.status][status])
+        local pack = self.db.textures.status
+        if statusIcons[pack] then
+            button.status:SetTexture(statusIcons[pack][status])
+        end
     end
 
-    if game and game ~= "" then
+    -- reset game icon with elvui style
+    button.gameIcon:SetTexCoord(.17, .83, .17, .83)
+
+    if gameName then
         local buttonTitle, buttonText
 
-        -- 名字
-        local realIDString =
-            realID and self.db.useGameColor and BNColor[game] and F.CreateColorString(realID, BNColor[game]) or realID
-
-        local nameString = name
-        local classColor = GetClassColor(class)
-        if self.db.useClassColor and classColor then
-            nameString = F.CreateColorString(name, classColor)
+        -- override Real ID or name with note
+        if self.db.useNoteAsName and note and note ~= "" then
+            if realID then
+                realID = note
+            else
+                name = note
+            end
         end
 
-        if self.db.level then
-            if level and level ~= 0 and MaxLevel[game] and (level ~= MaxLevel[game] or not self.db.hideMaxLevel) then
+        -- real ID
+        local clientColor = self.db.useClientColor and clientData[gameName] and clientData[gameName].color
+        local realIDString = realID and clientColor and F.CreateColorString(realID, clientColor) or realID
+
+        -- name
+        local classColor = self.db.useClassColor and GetClassColor(class)
+        local nameString = name and classColor and F.CreateColorString(name, classColor) or name
+
+        if self.db.level and wowID and expansionData[wowID] and level and level ~= 0 then
+            if level ~= expansionData[wowID].maxLevel or not self.db.hideMaxLevel then
                 nameString = nameString .. F.CreateColorString(": " .. level, GetQuestDifficultyColor(level))
             end
         end
 
+        -- combine Real ID and Name
         if nameString and realIDString then
             buttonTitle = realIDString .. " \124\124 " .. nameString
         elseif nameString then
@@ -311,7 +352,7 @@ function FL:UpdateFriendButton(button)
 
         button.name:SetText(buttonTitle)
 
-        -- 地区
+        -- area
         if area then
             if server and server ~= "" and server ~= E.myrealm then
                 buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
@@ -319,31 +360,42 @@ function FL:UpdateFriendButton(button)
                 buttonText = F.CreateColorString(area, self.db.areaColor)
             end
 
-            if not isInCurrentRegion and RegionLocales[regionID] and not E.db.WT.social.filter.unblockProfanityFilter then
-                -- Unblocking profanity filter will change the region
-                local regionText = format("[%s]", RegionLocales[regionID])
-                buttonText = buttonText .. " " .. F.CreateColorString(regionText, {r = 0.62, g = 0.62, b = 0.62})
-            end
-
             button.info:SetText(buttonText)
         end
 
-        -- 游戏图标
-        local iconGroup = self.db.textures.factionIcon and faction or game
-        local iconTex = GameIcons[iconGroup][self.db.textures.game] or BNet_GetClientTexture(game)
-        button.gameIcon:SetTexture(iconTex)
-        button.gameIcon:Show() -- 普通角色好友暴雪隐藏了
-        button.gameIcon:SetAlpha(1)
+        -- temporary fix for upgrading db from old version
+        if self.db.textures.client ~= "blizzard" then
+            self.db.textures.client = "modern"
+        end
 
-        if button.summonButton:IsShown() then
-            button.gameIcon:Hide()
-        else
-            button.gameIcon:Show()
-            button.gameIcon:Point("TOPRIGHT", -21, -2)
+        -- game icon
+        local texOrAtlas = clientData[gameName] and clientData[gameName]["icon"][self.db.textures.client]
+
+        if wowID and expansionData[wowID] then
+            texOrAtlas = expansionData[wowID]["icon"][self.db.textures.client]
+        end
+
+        if self.db.textures.factionIcon then
+            if faction and factionIcons[faction] then
+                texOrAtlas = factionIcons[faction]
+            end
+        end
+
+        if texOrAtlas then
+            if self.db.textures.client == "blizzard" then
+                button.gameIcon:SetAtlas(texOrAtlas)
+            else
+                button.gameIcon:SetTexture(texOrAtlas)
+                button.gameIcon:SetTexCoord(.1, .9, .1, .9)
+            end
+        end
+    else
+        if self.db.useNoteAsName and note and note ~= "" then
+            button.name:SetText(note)
         end
     end
 
-    -- 字体风格
+    -- font style hack
     if not cache.name then
         local name, size, style = button.name:GetFont()
         cache.name = {
@@ -368,6 +420,7 @@ function FL:UpdateFriendButton(button)
     F.SetFontOutline(button.info)
     F.SetFontWithDB(button.info, self.db.infoFont)
 
+    -- favorite icon
     if button.Favorite:IsShown() then
         button.Favorite:ClearAllPoints()
         button.Favorite:Point("LEFT", button.name, "LEFT", button.name:GetStringWidth(), 0)

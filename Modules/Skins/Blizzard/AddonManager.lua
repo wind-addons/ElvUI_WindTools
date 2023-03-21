@@ -1,15 +1,18 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
+local pairs = pairs
 
 function S:Blizzard_AddonList_Update()
-    for i = 1, _G.MAX_ADDONS_DISPLAYED do
-        local entry = _G["AddonListEntry" .. i]
-        local string = _G["AddonListEntry" .. i .. "Title"]
-        F.SetFontOutline(string)
-        F.SetFontOutline(entry.Status)
-        F.SetFontOutline(entry.Reload)
+    local targets = _G.AddonList.ScrollBox.ScrollTarget
+    for _, target in pairs({targets:GetChildren()}) do
+        if not target.__windSkin and target.Title and target.Status and target.Reload then
+            F.SetFontOutline(target.Title)
+            F.SetFontOutline(target.Status)
+            F.SetFontOutline(target.Reload)
+            target.__windSkin = true
+        end
     end
 end
 

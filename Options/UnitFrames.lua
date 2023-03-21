@@ -2,7 +2,10 @@ local W, F, E, L, V, P, G = unpack(select(2, ...))
 local options = W.options.unitFrames.args
 local LSM = E.Libs.LSM
 
+local A = W:GetModule("Absorb")
 local CT = W:GetModule("ChatText")
+
+local format = format
 
 options.quickFocus = {
     order = 1,
@@ -67,6 +70,203 @@ options.quickFocus = {
     }
 }
 
+options.absorb = {
+    order = 2,
+    type = "group",
+    name = L["Absorb"],
+    get = function(info)
+        return E.db.WT.unitFrames.absorb[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.unitFrames.absorb[info[#info]] = value
+        A:ProfileUpdate()
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Modify the texture of the absorb bar."] ..
+                        "\n" .. L["Add the Blizzard over absorb glow and overlay to ElvUI unit frames."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full"
+        },
+        texture = {
+            order = 3,
+            type = "group",
+            name = L["Texture"],
+            disabled = function()
+                return not E.db.WT.unitFrames.absorb.enable
+            end,
+            inline = true,
+            get = function(info)
+                return E.db.WT.unitFrames.absorb.texture[info[#info]]
+            end,
+            set = function(info, value)
+                E.db.WT.unitFrames.absorb.texture[info[#info]] = value
+                A:ProfileUpdate()
+            end,
+            args = {
+                enable = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Enable"],
+                    desc = L["Enable the replacing of ElvUI absorb bar textures."]
+                },
+                blizzardStyle = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Blizzard Style"],
+                    desc = L["Use the texture from Blizzard Raid Frames."],
+                    disabled = function()
+                        return not E.db.WT.unitFrames.absorb.enable or not E.db.WT.unitFrames.absorb.texture.enable
+                    end
+                },
+                custom = {
+                    order = 3,
+                    type = "select",
+                    name = L["Custom Texture"],
+                    desc = L["The selected texture will override the ElvUI default absorb bar texture."],
+                    disabled = function()
+                        return not E.db.WT.unitFrames.absorb.enable or not E.db.WT.unitFrames.absorb.texture.enable or
+                            E.db.WT.unitFrames.absorb.texture.blizzardStyle
+                    end,
+                    dialogControl = "LSM30_Statusbar",
+                    values = LSM:HashTable("statusbar")
+                }
+            }
+        },
+        misc = {
+            order = 4,
+            type = "group",
+            name = L["Misc"],
+            inline = true,
+            disabled = function()
+                return not E.db.WT.unitFrames.absorb.enable
+            end,
+            args = {
+                blizzardOverAbsorbGlow = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Blizzard Over Absorb Glow"],
+                    desc = L["Add a glow in the end of health bars to indicate the over absorb."],
+                    width = 1.5
+                },
+                blizzardAbsorbOverlay = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Blizzard Absorb Overlay"],
+                    desc = L["Add an additional overlay to the absorb bar."],
+                    width = 1.3
+                },
+                setColor = {
+                    order = 4,
+                    type = "execute",
+                    name = L["Color"],
+                    func = function()
+                        E:ToggleOptions("unitframe,allColorsGroup,healPrediction")
+                    end,
+                    width = 0.6
+                }
+            }
+        },
+        elvui = {
+            order = 5,
+            type = "group",
+            name = L["ElvUI"],
+            inline = true,
+            disabled = function()
+                return not E.db.WT.unitFrames.absorb.enable
+            end,
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    width = "full",
+                    name = format(
+                        "%s\n%s",
+                        format(
+                            L["The absorb style %s and %s is highly recommended with %s tweaks."],
+                            F.CreateColorString(L["Overflow"], E.db.general.valuecolor),
+                            F.CreateColorString(L["Auto Height"], E.db.general.valuecolor),
+                            W.Title
+                        ),
+                        L["Here are some buttons for helping you change the setting of all absorb bars by one-click."]
+                    )
+                },
+                setAllAbsorbStyleToOverflow = {
+                    order = 2,
+                    type = "execute",
+                    name = format(
+                        L["Set All Absorb Style to %s"],
+                        F.CreateColorString(L["Overflow"], E.db.general.valuecolor)
+                    ),
+                    func = function(info)
+                        A:ChangeDB(
+                            function(db)
+                                db.absorbStyle = "OVERFLOW"
+                            end
+                        )
+                    end,
+                    width = 1.7
+                },
+                setAllAbsorbStyleToAutoHeight = {
+                    order = 3,
+                    type = "execute",
+                    name = format(
+                        L["Set All Absorb Style to %s"],
+                        F.CreateColorString(L["Auto Height"], E.db.general.valuecolor)
+                    ),
+                    func = function(info)
+                        A:ChangeDB(
+                            function(db)
+                                db.height = -1
+                            end
+                        )
+                    end,
+                    width = 1.7
+                },
+                changeColor = {
+                    order = 4,
+                    type = "execute",
+                    name = format(L["%s style absorb color"], W.Title),
+                    desc = L["Change the color of the absorb bar."],
+                    func = function(info)
+                        E.db.unitframe.colors.healPrediction.absorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
+                        E.db.unitframe.colors.healPrediction.overabsorbs = {r = 0.06, g = 0.83, b = 1, a = 1}
+                    end,
+                    width = 1.7
+                },
+                changeMaxOverflow = {
+                    order = 5,
+                    type = "execute",
+                    name = format(
+                        L["Set %s to %s"],
+                        F.CreateColorString(L["Max Overflow"], E.db.general.valuecolor),
+                        F.CreateColorString("0", E.db.general.valuecolor)
+                    ),
+                    func = function(info)
+                        E.db.unitframe.colors.healPrediction.maxOverflow = 0
+                    end,
+                    width = 1.7
+                }
+            }
+        }
+    }
+}
+
 local SampleStrings = {}
 do
     local icons = ""
@@ -74,6 +274,12 @@ do
     icons = icons .. E:TextureString(W.Media.Icons.ffxivHealer, ":16:16") .. " "
     icons = icons .. E:TextureString(W.Media.Icons.ffxivDPS, ":16:16")
     SampleStrings.ffxiv = icons
+
+    icons = ""
+    icons = icons .. E:TextureString(W.Media.Icons.philModTank, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModHealer, ":16:16") .. " "
+    icons = icons .. E:TextureString(W.Media.Icons.philModDPS, ":16:16")
+    SampleStrings.philMod = icons
 
     icons = ""
     icons = icons .. E:TextureString(W.Media.Icons.hexagonTank, ":16:16") .. " "
@@ -101,7 +307,7 @@ do
 end
 
 options.roleIcon = {
-    order = 2,
+    order = 3,
     type = "group",
     name = L["Role Icon"],
     get = function(info)
@@ -139,6 +345,7 @@ options.roleIcon = {
             desc = L["Change the icons that indicate the role."],
             values = {
                 HEXAGON = SampleStrings.hexagon,
+                PHILMOD = SampleStrings.philMod,
                 FFXIV = SampleStrings.ffxiv,
                 SUNUI = SampleStrings.sunui,
                 LYNUI = SampleStrings.lynui,

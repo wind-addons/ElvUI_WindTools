@@ -1,8 +1,7 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
-local C_Timer_After = C_Timer.After
 
 local function DeleteBackdrop(count)
     count = count or 0
@@ -14,7 +13,7 @@ local function DeleteBackdrop(count)
     if _G.InspectModelFrame.backdrop then
         _G.InspectModelFrame.backdrop:Kill()
     else
-        C_Timer_After(
+        E:Delay(
             0.05,
             function()
                 DeleteBackdrop(count + 1)

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E:GetModule("Skins")
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local gsub = gsub
@@ -31,7 +31,7 @@ end
 local function HandleAllChildButtons(frame)
     for _, child in pairs {frame:GetChildren()} do
         if child:IsObjectType("Button") then
-            ES:HandleButton(child)
+            S:ESProxy("HandleButton", child)
         end
     end
 end
@@ -60,7 +60,7 @@ end
 
 local function ReskinNormalButton(button, next)
     if button.Left and button.Middle and button.Right and button.Text then
-        ES:HandleButton(button)
+        S:ESProxy("HandleButton", button)
     end
     if next then
         for _, child in pairs {button:GetChildren()} do
@@ -99,37 +99,34 @@ function S:WeakAurasMultiLineEditBox(Constructor)
 
     local function SkinedConstructor()
         local widget = Constructor()
-        ES:HandleButton(widget.button)
+        self:ESProxy("HandleButton", widget.button)
 
         widget.scrollBG:SetAlpha(0)
         widget.scrollFrame:StripTextures()
-        ES:HandleScrollBar(widget.scrollBar)
+        self:ESProxy("HandleScrollBar", widget.scrollBar)
 
         widget.editBox:DisableDrawLayer("BACKGROUND")
         widget.frame:CreateBackdrop()
         widget.frame.backdrop:ClearAllPoints()
         widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
-        widget.frame.backdrop:Point("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
-        widget.frame.backdrop:Point("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
+        widget.frame.backdrop:SetPoint("TOPLEFT", widget.scrollFrame, "TOPLEFT", -5, 2)
+        widget.frame.backdrop:SetPoint("BOTTOMRIGHT", widget.scrollFrame, "BOTTOMRIGHT", 0, 0)
 
         local onShow = widget.frame:GetScript("OnShow")
         widget.frame:SetScript(
             "OnShow",
             function(frame)
                 onShow(frame)
-                if frame.windStyle then
+                if not frame.obj or not frame.obj.extraButtons then
                     return
                 end
-                local self = frame.obj
-                local option = self.userdata.option
-                local numExtraButtons = 0
-                if option and option.arg and option.arg.extraFunctions then
-                    numExtraButtons = #option.arg.extraFunctions
-                    for i = 1, #option.arg.extraFunctions do
-                        ES:HandleButton(self.extraButtons[i])
+
+                for _, button in pairs(frame.obj.extraButtons) do
+                    if not button.__windSkin then
+                        self:ESProxy("HandleButton", button)
+                        button.__windSkin = true
                     end
                 end
-                frame.windStyle = true
             end
         )
         return widget
@@ -146,7 +143,7 @@ function S:WeakAurasDisplayButton(Constructor)
     local function SkinedConstructor()
         local widget = Constructor()
         if widget.background then
-            ES:HandleButton(widget.frame, nil, nil, nil, true, "Transparent")
+            self:ESProxy("HandleButton", widget.frame, nil, nil, nil, true, "Transparent")
             widget.frame.background:SetAlpha(0)
             widget.frame.backdrop:SetFrameLevel(widget.frame:GetFrameLevel())
             widget.frame.backdrop.color = {widget.frame.backdrop.Center:GetVertexColor()}
@@ -171,7 +168,7 @@ function S:WeakAurasDisplayButton(Constructor)
         ApplyTextureCoords(widget.icon)
 
         if widget.renamebox then
-            ES:HandleEditBox(widget.renamebox)
+            self:ESProxy("HandleEditBox", widget.renamebox)
         end
 
         if widget.frame.highlight then
@@ -215,10 +212,10 @@ function S:WeakAurasDisplayButton(Constructor)
             expandButton.backdrop.Center:Kill()
             expandButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
             expandButton.Texture = expandButton.backdrop:CreateTexture(nil, "OVERLAY")
-            expandButton.Texture:Size(12, 12)
+            expandButton.Texture:SetSize(12, 12)
             expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
             expandButton.Texture:SetVertexColor(.5, .5, .5)
-            expandButton.Texture:Point("CENTER")
+            expandButton.Texture:SetPoint("CENTER")
             expandButton:HookScript(
                 "OnEnter",
                 function(self)
@@ -273,9 +270,9 @@ function S:WeakAurasDisplayButton(Constructor)
             groupButton.backdrop.Center:Kill()
             groupButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
             groupButton.Texture = groupButton.backdrop:CreateTexture(nil, "OVERLAY")
-            groupButton.Texture:Size(9, 9)
+            groupButton.Texture:SetSize(9, 9)
             groupButton.Texture:SetTexture(W.Media.Icons.buttonForward)
-            groupButton.Texture:Point("CENTER")
+            groupButton.Texture:SetPoint("CENTER")
             groupButton:HookScript(
                 "OnEnter",
                 function(self)
@@ -324,10 +321,10 @@ function S:WeakAurasLoadedHeaderButton(Constructor)
             expandButton.backdrop.Center:Kill()
             expandButton.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
             expandButton.Texture = expandButton.backdrop:CreateTexture(nil, "OVERLAY")
-            expandButton.Texture:Size(12, 12)
+            expandButton.Texture:SetSize(12, 12)
             expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
             expandButton.Texture:SetVertexColor(.5, .5, .5)
-            expandButton.Texture:Point("CENTER")
+            expandButton.Texture:SetPoint("CENTER")
             expandButton:HookScript(
                 "OnEnter",
                 function(self)
@@ -405,13 +402,13 @@ do
                     local anchor = button:GetPoint()
                     if anchor then
                         button:StripTextures()
-                        button:Size(16, 16)
+                        button:SetSize(16, 16)
                         button:CreateBackdrop()
-                        self:CreateShadow(button.backdrop)
+                        self:CreateBackdropShadow(button)
                         button.Texture = button.backdrop:CreateTexture(nil, "OVERLAY")
                         button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-                        button.Texture:Point("CENTER")
-                        button.Texture:Size(16, 16)
+                        button.Texture:SetPoint("CENTER")
+                        button.Texture:SetSize(16, 16)
                         button.Texture:SetRotation(ES.ArrowRotation[AnchorDict[anchor]])
 
                         button:HookScript(
@@ -482,7 +479,7 @@ end
 
 function S:WeakAuras_ShowOptions()
     local frame = _G.WeakAurasOptions
-    if not frame or frame.windStyle then
+    if not frame or frame.__windSkin then
         return
     end
 
@@ -515,15 +512,15 @@ function S:WeakAuras_ShowOptions()
 
     -- Change position of resize buttons
     frame.bottomLeftResizer:ClearAllPoints()
-    frame.bottomLeftResizer:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", -5, -5)
+    frame.bottomLeftResizer:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", -5, -5)
     frame.bottomRightResizer:ClearAllPoints()
-    frame.bottomRightResizer:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
+    frame.bottomRightResizer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
 
     -- Filter editbox
     if frame.filterInput then
         local inputBox = frame.filterInput
         local rightPart
-        ES:HandleEditBox(inputBox)
+        self:ESProxy("HandleEditBox", inputBox)
         for i = 1, inputBox:GetNumPoints() do
             local point, relativeFrame = inputBox:GetPoint(i)
             if point == "RIGHT" then
@@ -534,9 +531,9 @@ function S:WeakAuras_ShowOptions()
         if rightPart then
             inputBox:SetHeight(inputBox:GetHeight() + 3)
             inputBox:ClearAllPoints()
-            inputBox:Point("TOP", frame, "TOP", 0, -43)
-            inputBox:Point("LEFT", frame, "LEFT", 18, 0)
-            inputBox:Point("RIGHT", rightPart, "LEFT", -2, 0)
+            inputBox:SetPoint("TOP", frame, "TOP", 0, -43)
+            inputBox:SetPoint("LEFT", frame, "LEFT", 18, 0)
+            inputBox:SetPoint("RIGHT", rightPart, "LEFT", -2, 0)
         end
     end
 
@@ -578,15 +575,18 @@ function S:WeakAuras_ShowOptions()
             end
             local button = child:GetChildren()
 
-            if not button.windStyle and button.GetNormalTexture then
+            if not button.__windSkin and button.GetNormalTexture then
                 local normalTexturePath = button:GetNormalTexture():GetTexture()
                 if normalTexturePath == 252125 then
                     button:StripTextures()
+                    button.SetNormalTexture = E.noop
+                    button.SetPushedTexture = E.noop
+                    button.SetHighlightTexture = E.noop
 
                     button.Texture = button:CreateTexture(nil, "OVERLAY")
-                    button.Texture:Point("CENTER")
+                    button.Texture:SetPoint("CENTER")
                     button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-                    button.Texture:Size(14, 14)
+                    button.Texture:SetSize(14, 14)
 
                     button:HookScript(
                         "OnEnter",
@@ -609,8 +609,6 @@ function S:WeakAuras_ShowOptions()
                     button:HookScript(
                         "OnClick",
                         function(self)
-                            self:SetNormalTexture("")
-                            self:SetPushedTexture("")
                             if self:GetParent():GetParent().minimized then
                                 button.Texture:SetRotation(ES.ArrowRotation["down"])
                             else
@@ -620,14 +618,14 @@ function S:WeakAuras_ShowOptions()
                     )
 
                     button:SetHitRectInsets(6, 6, 7, 7)
-                    button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -25, -5)
+                    button:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT", -25, -1)
                 else
-                    ES:HandleCloseButton(button)
+                    self:ESProxy("HandleCloseButton", button)
                     button:ClearAllPoints()
-                    button:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", -3, -3)
+                    button:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT", -5, -3)
                 end
 
-                button.windStyle = true
+                button.__windSkin = true
             end
         end
 
@@ -638,18 +636,9 @@ function S:WeakAuras_ShowOptions()
             self:CreateShadow(child.backdrop)
             for _, subChild in pairs {child:GetChildren()} do
                 if subChild.GetObjectType and subChild:GetObjectType() == "EditBox" then
-                    ES:HandleEditBox(subChild)
+                    S:ESProxy("HandleEditBox", subChild)
                     subChild.backdrop:SetInside(nil, 0, 7)
                 end
-            end
-        end
-    end
-
-    local tooltipAnchor = _G.WeakAurasTooltipImportButton:GetParent()
-    if tooltipAnchor then
-        for _, child in pairs {tooltipAnchor:GetChildren()} do
-            if child.Text then
-                ES:HandleButton(child)
             end
         end
     end
@@ -658,8 +647,8 @@ function S:WeakAuras_ShowOptions()
     local snippetsFrame = _G.WeakAurasSnippets
     if snippetsFrame then
         snippetsFrame:ClearAllPoints()
-        snippetsFrame:Point("TOPLEFT", frame, "TOPRIGHT", 5, 0)
-        snippetsFrame:Point("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
+        snippetsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 5, 0)
+        snippetsFrame:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
         snippetsFrame:StripTextures()
         snippetsFrame:CreateBackdrop("Transparent")
         self:CreateBackdropShadow(snippetsFrame)
@@ -679,8 +668,8 @@ function S:WeakAuras_ShowOptions()
     if frame.tipFrame.frame then
         self:StripEdgeTextures(frame.tipFrame.frame)
         frame.tipFrame.frame:ClearAllPoints()
-        frame.tipFrame.frame:Point("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
-        frame.tipFrame.frame:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
+        frame.tipFrame.frame:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
+        frame.tipFrame.frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
     end
 
     if frame.iconPicker.frame then
@@ -694,37 +683,7 @@ function S:WeakAuras_ShowOptions()
         end
     end
 
-    frame.windStyle = true
-end
-
-function S:WeakAuras_TextEditor()
-    ES:HandleButton(_G.WASettingsButton)
-
-    local frame = _G.WASnippetsButton:GetParent()
-    if not frame then
-        return
-    end
-
-    for _, child in pairs {frame:GetChildren()} do
-        if child.Text then
-            ES:HandleButton(child)
-        end
-    end
-
-    frame = _G.WeakAurasSnippets
-    if not frame then
-        return
-    end
-
-    frame:SetBackdrop(nil)
-    frame:CreateBackdrop("Transparent")
-    S:CreateShadow(frame)
-
-    for _, child in pairs {frame:GetChildren()} do
-        if child.Text then
-            ES:HandleButton(child)
-        end
-    end
+    frame.__windSkin = true
 end
 
 function S:WeakAurasOptions()
@@ -733,7 +692,6 @@ function S:WeakAurasOptions()
     end
 
     self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
-    -- self:SecureHook(_G.WeakAuras, "TextEditor", "WeakAuras_TextEditor")
 end
 
 function S:WeakAuras_CreateTemplateView(Private, frame)

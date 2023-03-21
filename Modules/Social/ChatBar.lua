@@ -1,6 +1,6 @@
 local W, F, E, L = unpack(select(2, ...))
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 local LSM = E.Libs.LSM
 
 local _G = _G
@@ -12,7 +12,6 @@ local tostring = tostring
 
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_GuildInfo_IsGuildOfficer = C_GuildInfo.IsGuildOfficer
-local C_Timer_After = C_Timer.After
 local ChatFrame_AddChannel = ChatFrame_AddChannel
 local ChatFrame_OpenChat = ChatFrame_OpenChat
 local CreateFrame = CreateFrame
@@ -268,7 +267,7 @@ function CB:UpdateBar()
         local name = db.name
 
         if not name or name == "" then
-            F.DebugMessage(self, L["World channel no found, please setup again."])
+            self:Log("warning", L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
         else
             local chatFunc = function(self, mouseButton)
@@ -289,8 +288,8 @@ function CB:UpdateBar()
                     local command = format("/%s ", channelId)
                     if autoJoined then
                         -- 刚切过去要稍微过一会才能让聊天框反映为频道
-                        C_Timer_After(
-                            .5,
+                        E:Delay(
+                            0.5,
                             function()
                                 ChatFrame_OpenChat(command .. currentText, DefaultChatFrame)
                             end
@@ -342,17 +341,17 @@ function CB:UpdateBar()
         local db = self.db.channels.community
         local name = db.name
         if not name or name == "" then
-            F.DebugMessage(self, L["Club channel no found, please setup again."])
+            self:Log("warning", L["Club channel no found, please setup again."])
             self:DisableButton("CLUB")
         else
-            local chatFunc = function(self, mouseButton)
+            local chatFunc = function(_, mouseButton)
                 if mouseButton ~= "LeftButton" then
                     return
                 end
                 local clubChannelId = GetCommuniryChannelByName(name)
                 if not clubChannelId then
-                    F.DebugMessage(
-                        CB,
+                    self:Log(
+                        "warning",
                         format(L["Club channel %s no found, please use the full name of the channel."], name)
                     )
                 else
@@ -390,7 +389,7 @@ function CB:UpdateBar()
                         _G.WTCustomEmoteFrame:Show()
                     end
                 else
-                    F.DebugMessage(CB, L["Please enable Emote module in WindTools Social category."])
+                    self:Log("warning", L["Please enable Emote module in WindTools Social category."])
                 end
             end
         end
@@ -511,7 +510,7 @@ function CB:CreateBar()
     bar:CreateBackdrop("Transparent")
     bar:ClearAllPoints()
     bar:SetPoint("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 6, 3)
-    S:CreateShadow(bar)
+    S:CreateBackdropShadow(bar)
 
     self.bar = bar
 

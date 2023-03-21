@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local M = W:GetModule("Misc")
+local M = W.Modules.Misc
 
 local _G = _G
 local assert = assert
@@ -7,6 +7,7 @@ local format = format
 local next = next
 local pairs = pairs
 local tinsert = tinsert
+local type = type
 local xpcall = xpcall
 
 local IsAddOnLoaded = IsAddOnLoaded
@@ -30,6 +31,10 @@ end
     @param {function} [func=M.addonName] 插件回调函数
 ]]
 function M:AddCallbackForAddon(addonName, func)
+    if func and type(func) == "string" then
+        func = self[func]
+    end
+
     local addon = self.addonsToLoad[addonName]
     if not addon then
         self.addonsToLoad[addonName] = {}

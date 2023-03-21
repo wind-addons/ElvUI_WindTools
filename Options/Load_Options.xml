@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
 	<Script file='Core.lua'/>
+	<Script file='Advanced.lua'/>
 	<!-- Submodule -->
 	<Script file="Announcement.lua"/>
 	<Script file="Combat.lua"/>

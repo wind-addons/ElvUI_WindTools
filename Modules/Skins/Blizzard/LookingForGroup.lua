@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
@@ -36,6 +36,9 @@ function S:LookingForGroupFrames()
         F.SetFontOutline(frame.rewardsLabel, E.db.general.font)
         F.SetFontOutline(frame.rewardsDescription, E.db.general.font)
     end
+
+    -- if no party found, the button also need skin
+    S:ESProxy("HandleButton", _G.LFGListFrame.SearchPanel.ScrollBox.StartGroupButton)
 end
 
 S:AddCallback("LookingForGroupFrames")

@@ -1,17 +1,17 @@
 local W, F, E, L = unpack(select(2, ...))
-local ES = E:GetModule("Skins")
-local S = W:GetModule("Skins")
+local ES = E.Skins
+local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
 
 function S:Immersion_ReskinTitleButton(frame)
     for _, button in pairs {frame.TitleButtons:GetChildren()} do
-        if button and not button.windStyle then
-            ES:HandleButton(button, nil, nil, nil, true, "Transparent")
+        if button and not button.__windSkin then
+            self:ESProxy("HandleButton", button, nil, nil, nil, true, "Transparent")
             button.backdrop:ClearAllPoints()
-            button.backdrop:Point("TOPLEFT", button, "TOPLEFT", 3, -3)
-            button.backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
+            button.backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
+            button.backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 3)
             self:CreateBackdropShadow(button)
             self:MerathilisUISkin(button.backdrop)
 
@@ -19,7 +19,7 @@ function S:Immersion_ReskinTitleButton(frame)
             button.Overlay:StripTextures()
             button:SetBackdrop(nil)
             F.SetFontOutline(button.Label)
-            button.windStyle = true
+            button.__windSkin = true
         end
     end
 end
@@ -47,7 +47,7 @@ function S:Immersion_ReskinItems()
             break
         end
 
-        if not rButton.windStyle then
+        if not rButton.__windSkin then
             if rButton.NameFrame then
                 rButton.NameFrame:StripTextures()
                 rButton.NameFrame:CreateBackdrop("Transparent")
@@ -55,7 +55,7 @@ function S:Immersion_ReskinItems()
                 rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
                 self:CreateBackdropShadow(rButton.NameFrame)
             end
-            rButton.windStyle = true
+            rButton.__windSkin = true
         end
     end
 
@@ -65,7 +65,7 @@ function S:Immersion_ReskinItems()
             break
         end
 
-        if not rButton.windStyle then
+        if not rButton.__windSkin then
             if rButton.NameFrame then
                 rButton.NameFrame:StripTextures()
                 rButton.NameFrame:CreateBackdrop("Transparent")
@@ -73,7 +73,7 @@ function S:Immersion_ReskinItems()
                 rButton.NameFrame.backdrop:SetOutside(rButton.NameFrame, -18, -15)
                 self:CreateBackdropShadow(rButton.NameFrame)
             end
-            rButton.windStyle = true
+            rButton.__windSkin = true
         end
     end
 end
@@ -101,52 +101,86 @@ function S:Immersion()
 
     local frame = _G.ImmersionFrame
 
-    -- 谈话窗口 TalkBox
+    -- TalkBox
     local talkBox = frame.TalkBox
 
-    -- 美化背景
+    -- Backdrop
     talkBox.BackgroundFrame:StripTextures()
     talkBox:CreateBackdrop("Transparent")
     talkBox.backdrop:ClearAllPoints()
-    talkBox.backdrop:Point("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
-    talkBox.backdrop:Point("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
+    talkBox.backdrop:SetPoint("TOPLEFT", talkBox, "TOPLEFT", 10, -10)
+    talkBox.backdrop:SetPoint("BOTTOMRIGHT", talkBox, "BOTTOMRIGHT", -10, 10)
     self:CreateBackdropShadow(talkBox)
     self:MerathilisUISkin(talkBox.backdrop)
 
-    -- 使用 ElvUI 边框变蓝来替换原高亮特效
+    -- Use colored backdrop edge as highlight
     talkBox.Hilite:StripTextures()
-    talkBox:HookScript("OnEnter", ES.SetModifiedBackdrop)
-    talkBox:HookScript("OnLeave", ES.SetOriginalBackdrop)
+    talkBox:HookScript(
+        "OnEnter",
+        function(box)
+            ES.SetModifiedBackdrop(box)
 
-    -- 去除模型背景
+            if box.backdrop.shadow then
+                box.backdrop.shadow:SetBackdropBorderColor(box.backdrop:GetBackdropBorderColor())
+            end
+        end
+    )
+
+    talkBox:HookScript(
+        "OnLeave",
+        function(box)
+            ES.SetOriginalBackdrop(box)
+
+            if box.backdrop.shadow then
+                box.backdrop.shadow:SetBackdropBorderColor(box.backdrop:GetBackdropBorderColor())
+            end
+        end
+    )
+
+    -- Remove background of model
     talkBox.PortraitFrame:StripTextures()
     talkBox.MainFrame.Model.ModelShadow:StripTextures()
     talkBox.MainFrame.Model.PortraitBG:StripTextures()
 
-    -- 光泽去除
+    -- No Sheen
     talkBox.MainFrame.Sheen:StripTextures()
     talkBox.MainFrame.TextSheen:StripTextures()
     talkBox.MainFrame.Overlay:StripTextures()
 
-    -- 对话主窗口文字
+    -- Text
     F.SetFontOutline(talkBox.NameFrame.Name)
     F.SetFontOutline(talkBox.TextFrame.Text, nil, 15)
 
-    -- 关闭按钮
-    ES:HandleCloseButton(talkBox.MainFrame.CloseButton)
+    -- Close Button
+    self:ESProxy("HandleCloseButton", talkBox.MainFrame.CloseButton)
 
-    -- 去除任务细节窗口 (下窗口) 背景
+    -- Indicator
+    talkBox.MainFrame.Indicator:ClearAllPoints()
+    talkBox.MainFrame.Indicator:SetPoint("RIGHT", talkBox.MainFrame.CloseButton, "LEFT", -2, 0)
+
+    -- Reputation bar
+    local repBar = talkBox.ReputationBar
+    repBar:StripTextures()
+    repBar:SetStatusBarTexture(E.media.normTex)
+    repBar:CreateBackdrop()
+    repBar:ClearAllPoints()
+    repBar:SetPoint("TOPLEFT", talkBox, "TOPLEFT", 11, -11)
+    repBar:SetHeight(6)
+
+    E:RegisterStatusBar(repBar)
+
+    -- Backdrop of elements (bottom window)
     local elements = talkBox.Elements
     elements:SetBackdrop(nil)
     elements:CreateBackdrop("Transparent")
     elements.backdrop:ClearAllPoints()
-    elements.backdrop:Point("TOPLEFT", elements, "TOPLEFT", 10, -5)
-    elements.backdrop:Point("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
+    elements.backdrop:SetPoint("TOPLEFT", elements, "TOPLEFT", 10, -5)
+    elements.backdrop:SetPoint("BOTTOMRIGHT", elements, "BOTTOMRIGHT", -10, 5)
     F.SetFontOutline(elements.Progress.ReqText)
     S:CreateBackdropShadow(elements)
     S:MerathilisUISkin(elements.backdrop)
 
-    -- 任务细节窗口文字
+    -- Details
     local content = elements.Content
     F.SetFontOutline(content.ObjectivesHeader)
     F.SetFontOutline(content.ObjectivesText)
@@ -160,7 +194,7 @@ function S:Immersion()
     F.SetFontOutline(content.RewardsFrame.PlayerTitleText)
     F.SetFontOutline(content.RewardsFrame.SkillPointFrame.ValueText)
 
-    -- 按钮
+    -- Buttons
     self:SecureHookScript(frame, "OnEvent", "Immersion_ReskinTitleButton")
     self:SecureHook(frame, "Show", "Immersion_Show")
 end

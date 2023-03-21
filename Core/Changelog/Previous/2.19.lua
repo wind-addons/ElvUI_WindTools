@@ -53,7 +53,7 @@ W.Changelog[219] = {
         },
         ["zhTW"] = {
             "[額外物品條] 新增了靈性治療藥水到 POTION (藥水) 分類.",
-            "[額外物品條] 補全了滑鼠提示中自訂物品相關的設定說明."
+            "[額外物品條] 補全了浮動提示中自訂物品相關的設定說明."
         },
         ["enUS"] = {
             "[Extra Item Bar] Add Soulful Healing Potion to POTION list.",

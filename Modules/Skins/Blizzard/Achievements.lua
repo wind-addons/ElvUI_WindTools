@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -8,7 +8,7 @@ function S:Blizzard_AchievementUI()
         return
     end
 
-    S:CreateBackdropShadow(_G.AchievementFrame)
+    S:CreateShadow(_G.AchievementFrame)
 
     for i = 1, 3 do
         self:ReskinTab(_G["AchievementFrameTab" .. i])

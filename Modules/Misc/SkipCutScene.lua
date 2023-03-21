@@ -1,5 +1,5 @@
-local W, F, E, L = unpack(select(2, ...))
-local M = W:GetModule("Misc")
+local W, F, E, L, V, P, G = unpack(select(2, ...))
+local M = W.Modules.Misc
 
 local _G = _G
 local format = format
@@ -22,7 +22,7 @@ do
         end
         CinematicFrame_CancelCinematic()
         E:Delay(
-            0.1,
+            0.5,
             function()
                 if not _G.CinematicFrame:IsShown() then
                     F.Print(L["Skipped the cutscene."])
@@ -41,7 +41,7 @@ do
                 3.5,
                 function()
                     if not alreadySkipped then
-                        if not (C_Map_GetBestMapForUnit("player") == 1670 and E.mylevel == 60) then
+                        if not (C_Map_GetBestMapForUnit("player") == 1670 and E.mylevel >= 60) then
                             F.Print(L["This cutscene cannot be skipped."])
                         end
                     else
@@ -64,7 +64,8 @@ do
 
         _G.MovieFrame_PlayMovie = function(frame, movieID, override)
             if E.private.WT and E.private.WT.misc.skipCutScene and not override then
-                if not IsModifierKeyDown() then
+                local needWatch = E.private.WT.misc.onlyStopWatched and not E.global.WT.misc.watched.movies[movieID]
+                if not IsModifierKeyDown() and not needWatch then
                     GameMovieFinished()
                     F.Print(
                         format(
@@ -78,6 +79,7 @@ do
                 end
             end
 
+            E.global.WT.misc.watched.movies[movieID] = true
             PlayMovie(frame, movieID)
         end
 

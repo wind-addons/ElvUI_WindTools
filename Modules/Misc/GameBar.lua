@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 local GB = W:NewModule("GameBar", "AceEvent-3.0", "AceHook-3.0")
 local DT = E:GetModule("DataTexts")
 
@@ -16,6 +16,7 @@ local mod = mod
 local pairs = pairs
 local select = select
 local strfind = strfind
+local strjoin = strjoin
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
@@ -36,9 +37,12 @@ local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local IsControlKeyDown = IsControlKeyDown
 local IsInGuild = IsInGuild
 local IsModifierKeyDown = IsModifierKeyDown
+local IsShiftKeyDown = IsShiftKeyDown
 local ItemMixin = ItemMixin
+local PlayerHasToy = PlayerHasToy
 local PlaySound = PlaySound
 local RegisterStateDriver = RegisterStateDriver
 local ResetCPUUsage = ResetCPUUsage
@@ -46,7 +50,6 @@ local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
 local ToggleAchievementFrame = ToggleAchievementFrame
-local ToggleAllBags = ToggleAllBags
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
 local ToggleFriendsFrame = ToggleFriendsFrame
@@ -57,16 +60,20 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+local C_Covenants_GetActiveCovenantID = C_Covenants.GetActiveCovenantID
+local C_CovenantSanctumUI_GetRenownLevel = C_CovenantSanctumUI.GetRenownLevel
 local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_CVar_SetCVar = C_CVar.SetCVar
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
-local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
+local C_UI_Reload = C_UI.Reload
 
-local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0
-local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0
+local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0 -- Change this on 10.0.7 to: Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
+local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0 -- Change this on 10.0.7 to: Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower
 
 local NUM_PANEL_BUTTONS = 7
 local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
@@ -77,7 +84,28 @@ local ScrollButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:
 local friendOnline = gsub(_G.ERR_FRIEND_ONLINE_SS, "\124Hplayer:%%s\124h%[%%s%]\124h", "")
 local friendOffline = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 
-local Hearthstones = {
+local hearthstones = {
+    6948, -- 爐石
+    54452, -- 以太傳送門
+    64488, -- 旅店老闆的女兒
+    93672, -- 黑暗之門
+    142542, -- 城鎮傳送之書
+    162973, -- 冬天爺爺的爐石
+    163045, -- 無頭騎士的爐石
+    165669, -- 新年長者的爐石
+    165670, -- 傳播者充滿愛的爐石
+    165802, -- 貴族園丁的爐石
+    166746, -- 吞火者的爐石
+    166747, -- 啤酒節狂歡者的爐石
+    168907, -- 全像數位化爐石
+    172179, -- 永恆旅人的爐石
+    188952, -- 統御的爐石
+    190237, -- 仲介者傳送矩陣
+    193588, -- 時光行者的爐石
+    200630 -- 雍伊爾風之賢者爐石
+}
+
+local hearthstoneAndToyIDList = {
     6948, -- 爐石
     54452, -- 以太傳送門
     64488, -- 旅店老闆的女兒
@@ -101,30 +129,38 @@ local Hearthstones = {
     184353, -- 琪瑞安族爐石
     188952, -- 統御的爐石
     190237, -- 仲介者傳送矩陣
+    193588, -- 時光行者的爐石
+    200630, -- 雍伊爾風之賢者爐石
     ---------------------
-    48933, --蟲洞產生器：北裂境
-    87215, --蟲洞產生器：潘達利亞
-    132517, --達拉然內部蟲洞產生器
-    132524, --劫福斯蟲洞產生器模組
-    151652, --蟲洞產生器：阿古斯
-    168807, --蟲洞產生器：庫爾提拉斯
-    168808, --蟲洞產生器：贊達拉
-    172924, --蟲洞產生器：暗影之境
-    ---------------------
-    180817 -- 移轉暗語
+    48933, -- 蟲洞產生器：北裂境
+    87215, -- 蟲洞產生器：潘達利亞
+    132517, -- 達拉然內部蟲洞產生器
+    132524, -- 劫福斯蟲洞產生器模組
+    151652, -- 蟲洞產生器：阿古斯
+    168807, -- 蟲洞產生器：庫爾提拉斯
+    168808, -- 蟲洞產生器：贊達拉
+    172924, -- 蟲洞產生器：暗影之境
+    180817, -- 移轉暗語
+    198156 -- 龍洞產生器
 }
 
-local HearthstonesTable
+local hearthstonesAndToysData
+local availableHearthstones
 
 local function AddDoubleLineForItem(itemID, prefix)
+    local isRandomHearthstone
     if type(itemID) == "string" then
-        itemID = tonumber(itemID)
+        if itemID == "RANDOM" then
+            isRandomHearthstone = true
+            itemID = 6948
+        else
+            itemID = tonumber(itemID)
+        end
     end
 
     prefix = prefix and prefix .. " " or ""
 
-    local name = HearthstonesTable[tostring(itemID)]
-
+    local name = hearthstonesAndToysData[tostring(itemID)]
     if not name then
         return
     end
@@ -146,6 +182,10 @@ local function AddDoubleLineForItem(itemID, prefix)
         name = name .. format(" (%d)", charge)
     end
 
+    if isRandomHearthstone then
+        name = L["Random Hearthstone"]
+    end
+
     DT.tooltip:AddDoubleLine(
         prefix .. icon .. " " .. name,
         canUse and L["Ready"] or cooldownTimeString,
@@ -158,8 +198,7 @@ local function AddDoubleLineForItem(itemID, prefix)
     )
 end
 
--- 假的数据面板! 为了 event 函数不报错
-
+-- Fake DataText for no errors throwed from ElvUI
 local VirtualDTEvent = {
     Friends = nil,
     Guild = "GUILD_ROSTER_UPDATE"
@@ -167,17 +206,31 @@ local VirtualDTEvent = {
 
 local VirtualDT = {
     Friends = {
+        name = "Friends",
+        text = {
+            SetFormattedText = E.noop
+        }
+    },
+    System = {
+        name = "System"
+    },
+    Time = {
+        name = "Time",
         text = {
             SetFormattedText = E.noop
         }
     },
     Guild = {
+        name = "Guild",
         text = {
             SetFormattedText = E.noop,
             SetText = E.noop
         },
         GetScript = function()
             return E.noop
+        end,
+        IsMouseOver = function()
+            return false
         end
     }
 }
@@ -197,7 +250,9 @@ local ButtonTypes = {
         name = L["Bags"],
         icon = W.Media.Icons.barBags,
         click = {
-            LeftButton = ToggleAllBags
+            LeftButton = function()
+                _G.ToggleAllBags()
+            end
         },
         tooltips = "Bags"
     },
@@ -248,7 +303,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barEncounterJournal,
         macro = {
             LeftButton = "/click EJMicroButton",
-            RightButton = "/run WeeklyRewards_LoadUI(); WeeklyRewardsFrame:Show()"
+            RightButton = "/run WeeklyRewards_ShowUI()"
         },
         tooltips = {
             LeftButtonIcon .. " " .. L["Encounter Journal"],
@@ -268,8 +323,15 @@ local ButtonTypes = {
             end
         },
         additionalText = function()
-            local number = C_FriendList_GetNumOnlineFriends() or 0
             local numBNOnlineFriend = select(2, BNGetNumFriends())
+
+            if GB and GB.db and GB.db.friends and GB.db.friends.showAllFriends then
+                local friendsOnline = C_FriendList_GetNumFriends() or 0
+                local totalOnline = friendsOnline + numBNOnlineFriend
+                return totalOnline
+            end
+
+            local number = C_FriendList_GetNumOnlineFriends() or 0
 
             for i = 1, numBNOnlineFriend do
                 local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
@@ -315,13 +377,6 @@ local ButtonTypes = {
                 if not InCombatLockdown() then
                     -- Open game menu | From ElvUI
                     if not _G.GameMenuFrame:IsShown() then
-                        if _G.VideoOptionsFrame:IsShown() then
-                            _G.VideoOptionsFrameCancel:Click()
-                        elseif _G.AudioOptionsFrame:IsShown() then
-                            _G.AudioOptionsFrameCancel:Click()
-                        elseif _G.InterfaceOptionsFrame:IsShown() then
-                            _G.InterfaceOptionsFrameCancel:Click()
-                        end
                         CloseMenus()
                         CloseAllWindows()
                         PlaySound(850) --IG_MAINMENU_OPEN
@@ -455,9 +510,12 @@ local ButtonTypes = {
         name = L["Screenshot"],
         icon = W.Media.Icons.barScreenShot,
         click = {
-            LeftButton = Screenshot,
+            LeftButton = function()
+                DT.tooltip:Hide()
+                Screenshot()
+            end,
             RightButton = function()
-                C_Timer_After(2, Screenshot)
+                E:Delay(2, Screenshot)
             end
         },
         tooltips = {
@@ -551,41 +609,6 @@ local ButtonTypes = {
     }
 }
 
--- Chinese player prefer to use Meeting Stone rather than Blizzard LFG
-if IsAddOnLoaded("MeetingStone") or IsAddOnLoaded("MeetingStonePlus") then
-    local NetEaseEnv = LibStub("NetEaseEnv-1.0")
-    local MeetingStone
-    for k in pairs(NetEaseEnv._NSInclude) do
-        if type(k) == "table" then
-            MeetingStone = k.Addon
-        end
-    end
-
-    ButtonTypes.GROUP_FINDER.macro = nil
-    ButtonTypes.GROUP_FINDER.click = {
-        LeftButton = function()
-            if not InCombatLockdown() then
-                _G.ToggleLFDParentFrame()
-            else
-                _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-            end
-        end,
-        RightButton = function()
-            if not InCombatLockdown() then
-                MeetingStone:Toggle()
-            else
-                _G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-            end
-        end
-    }
-    ButtonTypes.GROUP_FINDER.tooltips = {
-        L["Group Finder"],
-        "\n",
-        LeftButtonIcon .. " " .. L["Group Finder"],
-        RightButtonIcon .. " " .. L["NetEase Meeting Stone"]
-    }
-end
-
 function GB:ShowAdvancedTimeTooltip(panel)
     DT.RegisteredDataTexts["Time"].onEnter()
     DT.RegisteredDataTexts["Time"].onLeave()
@@ -631,7 +654,7 @@ function GB:ConstructBar()
     middlePanel:SetSize(81, 50)
     middlePanel:SetPoint("CENTER")
     middlePanel:CreateBackdrop("Transparent")
-    middlePanel:RegisterForClicks("AnyUp")
+    middlePanel:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
     bar.middlePanel = middlePanel
 
     local leftPanel = CreateFrame("Frame", "WTGameBarLeftPanel", bar)
@@ -808,11 +831,16 @@ function GB:ConstructTimeArea()
     self.bar.middlePanel:SetScript(
         "OnClick",
         function(_, mouseButton)
-            if IsModifierKeyDown() then
-                collectgarbage("collect")
-                ResetCPUUsage()
-                DT.RegisteredDataTexts["System"].eventFunc()
-                DT.RegisteredDataTexts["System"].onEnter()
+            if IsShiftKeyDown() then
+                if IsControlKeyDown() then
+                    C_CVar_SetCVar("scriptProfile", C_CVar_GetCVarBool("scriptProfile") and 0 or 1)
+                    C_UI_Reload()
+                else
+                    collectgarbage("collect")
+                    ResetCPUUsage()
+                    DT.RegisteredDataTexts["System"].eventFunc()
+                    DT.RegisteredDataTexts["System"].onEnter()
+                end
             elseif mouseButton == "LeftButton" then
                 if not InCombatLockdown() then
                     ToggleCalendar()
@@ -975,7 +1003,7 @@ function GB:ButtonOnEnter(button)
                 DTModule.onEnter()
             end
 
-            -- 如果 ElvUI 数据文字鼠标提示没有进行显示的话, 显示一个简单的说明
+            -- If ElvUI Datatext tooltip not shown, display a simple information (e.g. button name) to player
             if not DT.tooltip:IsShown() then
                 DT.tooltip:ClearLines()
                 DT.tooltip:SetText(button.name)
@@ -1005,7 +1033,7 @@ function GB:ConstructButton()
 
     local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate")
     button:SetSize(self.db.buttonSize, self.db.buttonSize)
-    button:RegisterForClicks("AnyUp")
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
 
     local normalTex = button:CreateTexture(nil, "ARTWORK")
     normalTex:SetPoint("CENTER")
@@ -1050,7 +1078,14 @@ function GB:UpdateButton(button, buttonType)
     button.tooltipsLeave = config.tooltipsLeave
 
     -- Click
-    if config.macro then
+    if
+        buttonType == "HOME" and
+            (config.item.item1 == L["Random Hearthstone"] or config.item.item2 == L["Random Hearthstone"])
+     then
+        button:SetAttribute("type*", "macro")
+        self:HandleRandomHomeButton(button, "left", config.item.item1)
+        self:HandleRandomHomeButton(button, "right", config.item.item2)
+    elseif config.macro then
         button:SetAttribute("type*", "macro")
         button:SetAttribute("macrotext1", config.macro.LeftButton or "")
         button:SetAttribute("macrotext2", config.macro.RightButton or config.macro.LeftButton or "")
@@ -1150,7 +1185,11 @@ function GB:UpdateButton(button, buttonType)
         end
 
         button.additionalText:ClearAllPoints()
-        button.additionalText:SetPoint(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
+        button.additionalText:SetPoint(
+            self.db.additionalText.anchor,
+            self.db.additionalText.x,
+            self.db.additionalText.y
+        )
         F.SetFontWithDB(button.additionalText, self.db.additionalText.font)
         button.additionalText:Show()
     else
@@ -1229,7 +1268,7 @@ function GB:UpdateLayout()
         self.bar.leftPanel:SetSize(panelWidth, panelHeight)
     end
 
-    -- 右面板
+    -- Right Panel
     lastButton = nil
     for i = 1, NUM_PANEL_BUTTONS do
         local button = self.buttons[i + NUM_PANEL_BUTTONS]
@@ -1258,10 +1297,10 @@ function GB:UpdateLayout()
         self.bar.rightPanel:SetSize(panelWidth, panelHeight)
     end
 
-    -- 时间区域
+    -- Time Panel
     self.bar.middlePanel:SetSize(self.db.timeAreaWidth, self.db.timeAreaHeight)
 
-    -- 更新移动区域尺寸
+    -- Update the size of moveable zones
     local areaWidth = 20 + self.bar.middlePanel:GetWidth()
     local leftWidth = self.bar.leftPanel:IsShown() and self.bar.leftPanel:GetWidth() or 0
     local rightWidth = self.bar.rightPanel:IsShown() and self.bar.rightPanel:GetWidth() or 0
@@ -1281,7 +1320,7 @@ function GB:PLAYER_REGEN_ENABLED()
 end
 
 function GB:PLAYER_ENTERING_WORLD()
-    C_Timer_After(
+    E:Delay(
         1,
         function()
             if InCombatLockdown() then
@@ -1293,8 +1332,30 @@ function GB:PLAYER_ENTERING_WORLD()
     )
 end
 
+function GB:UpdateReknown()
+    local covenantID = C_Covenants_GetActiveCovenantID()
+    if not covenantID or covenantID == 0 then
+        return
+    end
+
+    if not self.covenantCache[E.myrealm] then
+        self.covenantCache[E.myrealm] = {}
+    end
+
+    if not self.covenantCache[E.myrealm][E.myname] then
+        self.covenantCache[E.myrealm][E.myname] = {}
+    end
+
+    local renownLevel = C_CovenantSanctumUI_GetRenownLevel()
+    if renownLevel then
+        self.covenantCache[E.myrealm][E.myname][tostring(covenantID)] = renownLevel
+    end
+end
+
 function GB:Initialize()
     self.db = E.db.WT.misc.gameBar
+    self.covenantCache = E.global.WT.misc.gameBar.covenantCache
+
     if not self.db or not self.db.enable then
         return
     end
@@ -1304,6 +1365,13 @@ function GB:Initialize()
         return
     end
 
+    for name, vDT in pairs(VirtualDT) do
+        if DT.RegisteredDataTexts[name] and DT.RegisteredDataTexts[name].applySettings then
+            DT.RegisteredDataTexts[name].applySettings(vDT, E.media.hexvaluecolor)
+        end
+    end
+
+    self:UpdateReknown()
     self:UpdateHearthStoneTable()
     self:ConstructBar()
     self:ConstructTimeArea()
@@ -1313,9 +1381,22 @@ function GB:Initialize()
     self:UpdateLayout()
     self:UpdateBar()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    self:RegisterEvent(
+        "COVENANT_CHOSEN",
+        function()
+            E:Delay(
+                3,
+                function()
+                    self:UpdateReknown()
+                    self:UpdateHearthStoneTable()
+                    self:UpdateBar()
+                end
+            )
+        end
+    )
 
     self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
-    self.Initialized = true
+    self.initialized = true
 end
 
 function GB:ProfileUpdate()
@@ -1325,7 +1406,7 @@ function GB:ProfileUpdate()
     end
 
     if self.db.enable then
-        if self.Initialized then
+        if self.initialized then
             self.bar:Show()
             self:UpdateHomeButton()
             self:UpdateTimeFormat()
@@ -1343,7 +1424,7 @@ function GB:ProfileUpdate()
             end
         end
     else
-        if self.Initialized then
+        if self.initialized then
             UnregisterStateDriver(self.bar, "visibility")
             self.bar:Hide()
         end
@@ -1368,32 +1449,85 @@ function GB:UpdateGuildButton()
     end
 end
 
+function GB:HandleRandomHomeButton(button, mouseButton, item)
+    if not button or not mouseButton or not item or not availableHearthstones then
+        return
+    end
+
+    local attribute = mouseButton == "right" and "macrotext2" or "macrotext1"
+    local macro = "/use " .. item
+
+    if item == L["Random Hearthstone"] then
+        if #availableHearthstones > 0 then
+            macro = "/castrandom " .. strjoin(",", unpack(availableHearthstones))
+        else
+            macro = '/run UIErrorsFrame:AddMessage("' .. L["No Hearthstone Found!"] .. '", 1, 0, 0)'
+        end
+    end
+
+    button:SetAttribute(attribute, macro)
+end
+
 function GB:UpdateHomeButton()
     ButtonTypes.HOME.item = {
-        item1 = HearthstonesTable[self.db.home.left],
-        item2 = HearthstonesTable[self.db.home.right]
+        item1 = hearthstonesAndToysData[self.db.home.left],
+        item2 = hearthstonesAndToysData[self.db.home.right]
     }
 end
 
 function GB:UpdateHearthStoneTable()
-    HearthstonesTable = {}
+    hearthstonesAndToysData = {["RANDOM"] = L["Random Hearthstone"]}
+
+    local hearthstonesTable = {}
+    for i = 1, #hearthstones do
+        local itemID = hearthstones[i]
+        hearthstonesTable[itemID] = true
+    end
+
+    local specialHearthstones = {
+        [1] = 184353, -- 琪瑞安族爐石
+        [2] = 183716, -- 汎希爾罪孽石
+        [3] = 180290, -- 暗夜妖精的爐石
+        [4] = 182773 -- 死靈領主爐石
+    }
+
+    for i = 1, 4 do
+        local level =
+            self.covenantCache[E.myrealm] and self.covenantCache[E.myrealm][E.myname] and
+            self.covenantCache[E.myrealm][E.myname][tostring(i)]
+        local toyID = specialHearthstones[i]
+        local hasToy = PlayerHasToy(toyID) and C_ToyBox_IsToyUsable(toyID)
+
+        -- here we don't check the current active covenant.
+        -- because `/castrandom` cannot the current active covenant hearthstone.
+        hearthstonesTable[toyID] = (hasToy and level and level == 80) and true or false
+    end
+
+    availableHearthstones = {}
 
     local index = 0
     local itemEngine = CreateFromMixins(ItemMixin)
 
     local function GetNextHearthStoneInfo()
         index = index + 1
-        if Hearthstones[index] then
-            itemEngine:SetItemID(Hearthstones[index])
+        if hearthstoneAndToyIDList[index] then
+            itemEngine:SetItemID(hearthstoneAndToyIDList[index])
             itemEngine:ContinueOnItemLoad(
                 function()
-                    HearthstonesTable[tostring(Hearthstones[index])] = itemEngine:GetItemName()
+                    local id = itemEngine:GetItemID()
+                    if hearthstonesTable[id] then
+                        if GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
+                            tinsert(availableHearthstones, id)
+                        end
+                    end
+
+                    hearthstonesAndToysData[tostring(hearthstoneAndToyIDList[index])] = itemEngine:GetItemName()
                     GetNextHearthStoneInfo()
                 end
             )
         else
             self:UpdateHomeButton()
-            if self.Initialized then
+            if self.initialized then
                 self:UpdateButtons()
             end
         end
@@ -1403,7 +1537,7 @@ function GB:UpdateHearthStoneTable()
 end
 
 function GB:GetHearthStoneTable()
-    return HearthstonesTable
+    return hearthstonesAndToysData
 end
 
 function GB:GetAvailableButtons()

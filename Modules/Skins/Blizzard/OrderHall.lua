@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -12,7 +12,7 @@ function S:Blizzard_OrderHallUI()
 
     local bar = _G.OrderHallCommandBar
     if bar then
-        self:CreateBackdropShadow(bar)
+        self:CreateShadow(bar)
         F.SetFontOutline(bar.AreaName)
         F.SetFontOutline(bar.Currency)
         bar.AreaName:ClearAllPoints()

@@ -1,5 +1,5 @@
 local W, F, E, L = unpack(select(2, ...))
-local S = W:GetModule("Skins")
+local S = W.Modules.Skins
 
 local _G = _G
 
@@ -8,7 +8,7 @@ function S:GuildInviteFrame()
         return
     end
 
-    self:CreateBackdropShadow(_G.GuildInviteFrame)
+    self:CreateShadow(_G.GuildInviteFrame)
 end
 
 function S:Blizzard_GuildUI()

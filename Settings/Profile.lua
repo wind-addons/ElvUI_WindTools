@@ -5,6 +5,7 @@ local GetLocale = GetLocale
 
 P.announcement = {
     enable = true,
+    emoteFormat = ": %s",
     combatResurrection = {
         enable = true,
         onlySourceIsPlayer = false,
@@ -18,13 +19,36 @@ P.announcement = {
         }
     },
     goodbye = {
-        enable = true,
+        enable = false,
         text = L["Thanks all!"],
         delay = 3,
         channel = {
             party = "PARTY",
             instance = "INSTANCE_CHAT",
             raid = "RAID"
+        }
+    },
+    dispel = {
+        enable = false,
+        onlyInstance = true,
+        player = {
+            enable = true,
+            text = L["I dispelled %target%'s %target_spell%!"],
+            channel = {
+                solo = "NONE",
+                party = "PARTY",
+                instance = "INSTANCE_CHAT",
+                raid = "RAID"
+            }
+        },
+        others = {
+            enable = false,
+            text = L["%player% dispelled %target%'s %target_spell%!"],
+            channel = {
+                party = "EMOTE",
+                instance = "NONE",
+                raid = "NONE"
+            }
         }
     },
     interrupt = {
@@ -34,7 +58,7 @@ P.announcement = {
             enable = true,
             text = L["I interrupted %target%'s %target_spell%!"],
             channel = {
-                solo = "SELF",
+                solo = "NONE",
                 party = "PARTY",
                 instance = "INSTANCE_CHAT",
                 raid = "RAID"
@@ -53,6 +77,7 @@ P.announcement = {
     quest = {
         enable = false,
         paused = true,
+        disableBlizzard = true,
         includeDetails = true,
         channel = {
             party = "PARTY",
@@ -95,7 +120,7 @@ P.announcement = {
         player = {
             player = {
                 enable = true,
-                provokeAllText = L["I taunted all enemies in 10 yards!"],
+                tauntAllText = L["I taunted all enemies!"],
                 successText = L["I taunted %target% successfully!"],
                 failedText = L["I failed on taunting %target%!"],
                 channel = {
@@ -120,7 +145,7 @@ P.announcement = {
         others = {
             player = {
                 enable = true,
-                provokeAllText = L["%player% taunted all enemies in 10 yards!"],
+                tauntAllText = L["%player% taunted all enemies!"],
                 successText = L["%player% taunted %target% successfully!"],
                 failedText = L["%player% failed on taunting %target%!"],
                 channel = {
@@ -141,10 +166,12 @@ P.announcement = {
             }
         }
     },
-    thanksForResurrection = {
-        enable = true,
-        normalText = L["%target%, thank you for using %spell% to revive me. :)"],
-        soulstoneText = L["%target%, thank you for soulstone. :)"],
+    thanks = {
+        enable = false,
+        resurrection = true,
+        enhancement = true,
+        resurrectionText = L["%target%, thank you for using %spell% to revive me. :)"],
+        enhancementText = L["%target%, thank you for %spell%. :)"],
         delay = 0,
         channel = {
             solo = "WHISPER",
@@ -204,6 +231,20 @@ P.announcement = {
                 raidWarning = false,
                 text = L["%player% used %spell%"]
             },
+            ["384911"] = {
+                -- 原子校準器
+                enable = true,
+                includePlayer = true,
+                raidWarning = false,
+                text = L["%player% used %spell%"]
+            },
+            ["376664"] = {
+                -- 歐胡納鷹棲所
+                enable = true,
+                includePlayer = true,
+                raidWarning = false,
+                text = L["%player% used %spell%"]
+            },
             ["195782"] = {
                 -- 召喚月羽雕像
                 enable = true,
@@ -249,11 +290,26 @@ P.announcement = {
         text = L["My new keystone is %keystone%."],
         channel = {
             party = "PARTY"
-        }
+        },
+        command = true
     }
 }
 
 P.combat = {
+    classHelper = {
+        enable = false,
+        deathStrikeEstimator = {
+            enable = false,
+            width = 4,
+            height = 30,
+            yOffset = 0,
+            sparkTexture = false,
+            texture = "ElvUI Blank",
+            color = {r = 1, g = 0.2, b = 0.2, a = 1},
+            onlyInCombat = false,
+            hideIfTheBarOutside = false
+        }
+    },
     combatAlert = {
         enable = true,
         speed = 1,
@@ -278,6 +334,10 @@ P.combat = {
         backdrop = true,
         backdropSpacing = 3,
         buttonSize = 30,
+        buttonBackdrop = true,
+        buttonAnimation = true,
+        buttonAnimationDuration = 0.2,
+        buttonAnimationScale = 1.33,
         spacing = 4,
         orientation = "HORIZONTAL",
         modifier = "shift",
@@ -323,7 +383,9 @@ P.item = {
         enable = true,
         customList = {},
         blackList = {
-            [183040] = true
+            [183040] = true, -- 恆冬符咒
+            [193757] = true, -- 晶紅幼龍之殼
+            [200563] = true -- 洪荒儀式龜殼
         },
         bar1 = {
             enable = true,
@@ -341,6 +403,11 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             tooltip = true,
+            qualityTier = {
+                size = 16,
+                xOffset = 0,
+                yOffset = 0
+            },
             countFont = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
@@ -365,7 +432,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "QUEST,BANNER,EQUIP,TORGHAST,OPENABLE"
+            include = "QUEST,BANNER,EQUIP,PROF,OPENABLE"
         },
         bar2 = {
             enable = true,
@@ -383,6 +450,11 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             tooltip = true,
+            qualityTier = {
+                size = 16,
+                xOffset = 0,
+                yOffset = 0
+            },
             countFont = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
@@ -407,7 +479,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "POTIONSL,FLASKSL,UTILITY"
+            include = "POTIONDF,FLASKDF,UTILITY"
         },
         bar3 = {
             enable = true,
@@ -425,6 +497,11 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             tooltip = true,
+            qualityTier = {
+                size = 16,
+                xOffset = 0,
+                yOffset = 0
+            },
             countFont = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
@@ -449,7 +526,7 @@ P.item = {
                     b = 1
                 }
             },
-            include = "MAGEFOOD,FOODVENDOR,FOODSL,CUSTOM"
+            include = "MAGEFOOD,FOODVENDOR,FOODDF,RUNE,CUSTOM"
         },
         bar4 = {
             enable = false,
@@ -467,6 +544,11 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             tooltip = true,
+            qualityTier = {
+                size = 16,
+                xOffset = 0,
+                yOffset = 0
+            },
             countFont = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
@@ -509,6 +591,11 @@ P.item = {
             anchor = "TOPLEFT",
             spacing = 3,
             tooltip = true,
+            qualityTier = {
+                size = 16,
+                xOffset = 0,
+                yOffset = 0
+            },
             countFont = {
                 name = F.GetCompatibleFont("Montserrat"),
                 size = 12,
@@ -603,6 +690,45 @@ P.item = {
 }
 
 P.maps = {
+    eventTracker = {
+        enable = true,
+        spacing = 10,
+        height = 38,
+        yOffset = -3,
+        backdrop = true,
+        font = {
+            name = E.db.general.font,
+            scale = 1,
+            outline = "OUTLINE"
+        },
+        communityFeast = {
+            enable = true,
+            desaturate = false,
+            alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
+            second = 600,
+            stopAlertIfCompleted = true,
+            stopAlertIfPlayerNotEnteredDragonlands = true
+        },
+        siegeOnDragonbaneKeep = {
+            enable = true,
+            desaturate = false,
+            alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
+            second = 600,
+            stopAlertIfCompleted = true,
+            stopAlertIfPlayerNotEnteredDragonlands = true
+        },
+        iskaaranFishingNet = {
+            enable = true,
+            alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
+            disableAlertAfterHours = 48
+        }
+    },
     rectangleMinimap = {
         enable = false,
         heightPercentage = 0.8
@@ -737,6 +863,8 @@ P.social = {
     },
     chatLink = {
         enable = true,
+        numbericalQualityTier = false,
+        translateItem = true,
         level = true,
         icon = true,
         armorCategory = true,
@@ -750,7 +878,11 @@ P.social = {
         roleIconSize = 16,
         roleIconStyle = "SUNUI",
         removeRealm = true,
-        customAbbreviation = {}
+        customAbbreviation = {},
+        classIconStyle = "flatborder2",
+        guildMemberStatus = true,
+        guildMemberStatusInviteLink = true,
+        mergeAchievement = true
     },
     emote = {
         enable = true,
@@ -762,11 +894,12 @@ P.social = {
         enable = true,
         level = true,
         hideMaxLevel = true,
-        useGameColor = true,
+        useClientColor = true,
         useClassColor = true,
+        useNoteAsName = false,
         textures = {
-            game = "Modern",
-            status = "Square",
+            client = "modern",
+            status = "square",
             factionIcon = false
         },
         areaColor = {
@@ -784,10 +917,6 @@ P.social = {
             size = 12,
             style = "OUTLINE"
         }
-    },
-    filter = {
-        enable = true,
-        unblockProfanityFilter = true
     },
     contextMenu = {
         enable = true,
@@ -822,23 +951,26 @@ P.quest = {
     },
     switchButtons = {
         enable = true,
+        tooltip = true,
+        backdrop = false,
         font = {
             name = E.db.general.font,
             size = 12,
             style = "OUTLINE",
             color = {r = 1, g = 0.82, b = 0}
         },
-        backdrop = false,
         announcement = true,
         turnIn = true
     },
     turnIn = {
         enable = true,
+        mode = "ALL",
+        smartChat = true,
         selectReward = true,
+        getBestReward = false,
         darkmoon = true,
         followerAssignees = true,
-        rogueClassHallInsignia = true,
-        modifierKeyPause = true,
+        pauseModifier = "SHIFT",
         customIgnoreNPCs = {}
     }
 }
@@ -849,160 +981,33 @@ P.tooltips = {
     groupInfo = {
         enable = true,
         title = true,
-        mode = "NORMAL"
+        mode = "NORMAL",
+        classIconStyle = "flat",
+        template = "{{classIcon:18}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}"
     }
 }
 
 P.unitFrames = {
-    castBar = {
+    absorb = {
         enable = false,
-        player = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
+        texture = {
+            enable = true,
+            custom = E.db.unitframe.statusbar,
+            blizzardStyle = true
         },
-        target = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
-        },
-        pet = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
-        },
-        focus = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
-        },
-        boss = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
-        },
-        arena = {
-            enable = false,
-            text = {
-                anchor = "LEFT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = E.db.general.font,
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            },
-            time = {
-                anchor = "RIGHT",
-                offsetX = 0,
-                offsetY = 0,
-                font = {
-                    name = F.GetCompatibleFont("Montserrat"),
-                    size = 12,
-                    style = "OUTLINE"
-                }
-            }
-        }
+        blizzardOverAbsorbGlow = true,
+        blizzardAbsorbOverlay = true
     }
 }
 
 P.misc = {
-    autoHideBag = false,
-    autoHideWorldMap = false,
     disableTalkingHead = false,
     hideCrafter = false,
     noLootPanel = false,
+    spellActivationAlert = {
+        enable = false,
+        scale = 1
+    },
     gameBar = {
         enable = true,
         mouseOver = false,
@@ -1020,6 +1025,9 @@ P.misc = {
         notification = true,
         visibility = "[petbattle] hide; show",
         tooltipsAnchor = "ANCHOR_BOTTOM",
+        friends = {
+            showAllFriends = false
+        },
         time = {
             localTime = true,
             twentyFour = true,
@@ -1066,5 +1074,13 @@ P.misc = {
             [6] = "PET_JOURNAL",
             [7] = "BAGS"
         }
+    },
+    automation = {
+        enable = false,
+        hideBagAfterEnteringCombat = false,
+        hideWorldMapAfterEnteringCombat = false,
+        acceptResurrect = false,
+        acceptCombatResurrect = false,
+        confirmSummon = false
     }
 }

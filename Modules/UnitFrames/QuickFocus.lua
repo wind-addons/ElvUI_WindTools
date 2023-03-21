@@ -1,9 +1,11 @@
 local W, F, E, L = unpack(select(2, ...))
+local UF = E:GetModule("UnitFrames")
 local QF = W:NewModule("QuickFocus", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 local format = format
 local next = next
+local pairs = pairs
 local strmatch = strmatch
 local strsub = strsub
 
@@ -11,10 +13,10 @@ local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local SetOverrideBindingClick = SetOverrideBindingClick
 
-local Pending = {}
+local pending = {}
 
 function QF:SetupFrame(frame)
-    if not frame or frame.WTQuickFocus then
+    if not frame or frame.windQuickFocus then
         return
     end
 
@@ -24,32 +26,67 @@ function QF:SetupFrame(frame)
 
     if not InCombatLockdown() then
         frame:SetAttribute(self.db.modifier .. "-type" .. strsub(self.db.button, 7, 7), "focus")
-        frame.WTQuickFocus = true
-        Pending[frame] = nil
+        frame.windQuickFocus = true
+        pending[frame] = nil
     else
-        Pending[frame] = true
-    end
-end
-
-function QF:CreateFrameHook(name, _, template)
-    if name and template == "SecureUnitButtonTemplate" then
-        self:SetupFrame(_G[name])
+        pending[frame] = true
     end
 end
 
 function QF:PLAYER_REGEN_ENABLED()
-    if next(Pending) then
-        for frame in next, Pending do
+    if next(pending) then
+        for frame in next, pending do
             self:SetupFrame(frame)
         end
     end
 end
 
 function QF:GROUP_ROSTER_UPDATE()
-    for _, object in next, E.oUF.objects do
-        if not object.WTQuickFocus then
-            self:SetupFrame(object)
+    if not UF or not UF.units then
+        return
+    end
+
+    for unit in pairs(UF.units) do
+        local frame = UF[unit]
+        if frame and not frame.windQuickFocus then
+            self:SetupFrame(frame)
         end
+    end
+
+    for unit in pairs(UF.groupunits) do
+        local frame = UF[unit]
+        if frame and not frame.windQuickFocus then
+            self:SetupFrame(frame)
+        end
+    end
+
+    for group, header in pairs(UF.headers) do
+        if header.GetChildren and header:GetNumChildren() > 0 then
+            for _, child in pairs {header:GetChildren()} do
+                if child.groupName and child.GetChildren and child:GetNumChildren() > 0 then
+                    for _, subChild in pairs {child:GetChildren()} do
+                        if subChild and not subChild.windQuickFocus then
+                            self:SetupFrame(subChild)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+function QF:WaitUnitframesLoad(triedTimes)
+    triedTimes = triedTimes or 0
+
+    if triedTimes > 10 then
+        self:Log("debug", "Failed to load unitframes after 10 times, please try again later.")
+        return
+    end
+
+    if not UF.unitstoload and not UF.unitgroupstoload and not UF.headerstoload then
+        self:GROUP_ROSTER_UPDATE()
+    else
+        E:Delay(0.5, self.WaitUnitframesLoad, self, triedTimes + 1)
     end
 end
 
@@ -62,12 +99,12 @@ function QF:Initialize()
     local button = CreateFrame("Button", "WTQuickFocusButton", E.UIParent, "SecureActionButtonTemplate")
     button:SetAttribute("type1", "macro")
     button:SetAttribute("macrotext", "/focus mouseover")
+    button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
     SetOverrideBindingClick(button, true, self.db.modifier .. "-" .. self.db.button, "WTQuickFocusButton")
 
-    self:SecureHook("CreateFrame", "CreateFrameHook")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
     self:RegisterEvent("GROUP_ROSTER_UPDATE")
-    self:GROUP_ROSTER_UPDATE()
+    self:WaitUnitframesLoad()
 end
 
 W:RegisterModule(QF:GetName())

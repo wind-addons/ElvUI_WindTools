@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local EB = W:NewModule("ExtraItemsBar", "AceEvent-3.0")
 local async = W.Utilities.Async
 local S = W.Modules.Skins

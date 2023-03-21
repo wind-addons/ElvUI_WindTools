@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local CM = W:NewModule("ContextMenu", "AceHook-3.0")
 
 local _G = _G

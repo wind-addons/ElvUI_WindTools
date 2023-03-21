@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack(select(2, ...))
+local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local HexToRGB = W.Utilities.Color.HexToRGB
 local async = W.Utilities.Async
 

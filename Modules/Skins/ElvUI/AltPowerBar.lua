@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local A = E:GetModule("Auras")
 local S = W.Modules.Skins
 

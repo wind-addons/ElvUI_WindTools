@@ -1,4 +1,4 @@
-local W = unpack(select(2, ...))
+local W = unpack((select(2, ...)))
 
 W.Changelog[247] = {
     RELEASE_DATE = "2022/08/04",

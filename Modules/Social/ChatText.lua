@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local CT = W:NewModule("ChatText")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM
@@ -76,8 +76,6 @@ local C_ChatInfo_IsChannelRegionalForChannelID = C_ChatInfo.IsChannelRegionalFor
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
-local C_Social_GetLastItem = C_Social.GetLastItem
-local C_Social_IsSocialEnabled = C_Social.IsSocialEnabled
 local C_Timer_After = C_Timer.After
 
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
@@ -835,13 +833,6 @@ function CT:ChatFrame_MessageEventHandler(
          then
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif chatType == "LOOT" then
-            -- Append [Share] hyperlink if this is a valid social item and you are the looter.
-            if arg12 == E.myguid and C_Social_IsSocialEnabled() then
-                local itemID, creationContext = GetItemInfoFromHyperlink(arg1)
-                if itemID and C_Social_GetLastItem() == itemID then
-                    arg1 = arg1 .. " " .. _G.Social_GetShareItemLink(creationContext, true)
-                end
-            end
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif strsub(chatType, 1, 7) == "COMBAT_" then
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
@@ -850,13 +841,6 @@ function CT:ChatFrame_MessageEventHandler(
         elseif strsub(chatType, 1, 10) == "BG_SYSTEM_" then
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif strsub(chatType, 1, 11) == "ACHIEVEMENT" then
-            -- Append [Share] hyperlink
-            if arg12 == E.myguid and C_Social_IsSocialEnabled() then
-                local achieveID = GetAchievementInfoFromHyperlink(arg1)
-                if achieveID then
-                    arg1 = arg1 .. " " .. _G.Social_GetShareAchievementLink(achieveID, true)
-                end
-            end
             frame:AddMessage(
                 format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
                 info.r,
@@ -871,15 +855,6 @@ function CT:ChatFrame_MessageEventHandler(
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
             local message =
                 format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName))))
-            if C_Social_IsSocialEnabled() then
-                local achieveID = GetAchievementInfoFromHyperlink(arg1)
-                if achieveID then
-                    local isGuildAchievement = select(12, GetAchievementInfo(achieveID))
-                    if isGuildAchievement then
-                        message = message .. " " .. _G.Social_GetShareAchievementLink(achieveID, true)
-                    end
-                end
-            end
             frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif chatType == "IGNORED" then
             frame:AddMessage(

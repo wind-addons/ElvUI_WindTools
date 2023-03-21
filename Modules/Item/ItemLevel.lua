@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local IL = W:NewModule("ItemLevel", "AceEvent-3.0", "AceHook-3.0")
 local B = E:GetModule("Bags")
 local LSM = E.Libs.LSM

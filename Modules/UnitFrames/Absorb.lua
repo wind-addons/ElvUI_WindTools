@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local A = W:NewModule("Absorb", "AceHook-3.0", "AceEvent-3.0")
 local LSM = E.Libs.LSM
 local UF = E.UnitFrames

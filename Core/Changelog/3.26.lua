@@ -22,7 +22,7 @@ W.Changelog[326] = {
         ["ruRU"] = {
             "Adapt to World of Warcraft 10.0.7.",
             "Adapt to ElvUI 13.28."
-        },
+        }
     },
     NEW = {
         ["zhCN"] = {
@@ -39,28 +39,28 @@ W.Changelog[326] = {
         },
         ["ruRU"] = {
             "Added a status bar texture WindTools Clean. Thanks Jodalo"
-        },
+        }
     },
     IMPROVEMENT = {
         ["zhCN"] = {
             "[游戏条] 修复 10.0.7 更新后无法正常加载的问题.",
-            "[聊天文字] 适配最新的 ElvUI 聊天模块.",
+            "[聊天文字] 适配最新的 ElvUI 聊天模块."
         },
         ["zhTW"] = {
             "[遊戲條] 修復 10.0.7 更新後無法正常加載的問題.",
-            "[聊天文字] 適配最新的 ElvUI 聊天模組.",
+            "[聊天文字] 適配最新的 ElvUI 聊天模組."
         },
         ["enUS"] = {
             "[Game Bar] Fix the problem that it can't be loaded normally after the 10.0.7 update.",
-            "[Chat Text] Adapt to the latest ElvUI chat module.",
+            "[Chat Text] Adapt to the latest ElvUI chat module."
         },
         ["koKR"] = {
             "[Game Bar] Fix the problem that it can't be loaded normally after the 10.0.7 update.",
-            "[Chat Text] Adapt to the latest ElvUI chat module.",
+            "[Chat Text] Adapt to the latest ElvUI chat module."
         },
         ["ruRU"] = {
             "[Game Bar] Fix the problem that it can't be loaded normally after the 10.0.7 update.",
-            "[Chat Text] Adapt to the latest ElvUI chat module.",
+            "[Chat Text] Adapt to the latest ElvUI chat module."
         }
     }
 }

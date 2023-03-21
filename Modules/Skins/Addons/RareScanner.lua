@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local TT = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips

@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local CT = W:NewModule("ChatText")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM

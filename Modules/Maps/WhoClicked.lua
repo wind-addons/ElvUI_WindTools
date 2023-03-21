@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local WC = W:NewModule("WhoClicked", "AceEvent-3.0")
 
 local _G = _G

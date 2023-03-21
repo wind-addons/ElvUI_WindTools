@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W.Modules.Skins
 local ES = E.Skins

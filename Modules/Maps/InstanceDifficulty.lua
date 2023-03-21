@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local ID = W:NewModule("InstanceDifficulty", "AceEvent-3.0", "AceHook-3.0")
 local M = E:GetModule("Minimap")
 

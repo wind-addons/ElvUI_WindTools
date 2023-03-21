@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local M = E:GetModule("Minimap")
 local S = W.Modules.Skins
 

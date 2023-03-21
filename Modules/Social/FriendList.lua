@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 
 local _G = _G

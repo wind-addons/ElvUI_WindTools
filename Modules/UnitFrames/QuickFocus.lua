@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local UF = E:GetModule("UnitFrames")
 local QF = W:NewModule("QuickFocus", "AceHook-3.0", "AceEvent-3.0")
 

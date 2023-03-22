@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local M = W.Modules.Misc
 
 local SA = W:NewModule("SpellActivationAlert", "AceEvent-3.0")

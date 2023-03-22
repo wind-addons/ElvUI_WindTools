@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack(select(2, ...))
+local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local C = W.Utilities.Color
 local async = W.Utilities.Async
 local options = W.options.misc.args

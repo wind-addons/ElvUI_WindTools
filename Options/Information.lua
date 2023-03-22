@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack(select(2, ...))
+local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local options = W.options.information.args
 local ACH = E.Libs.ACH
 
@@ -535,6 +535,9 @@ do -- 媒体文件
             "Media/Icons/Button/Minus.tga",
             "Media/Icons/Button/Plus.tga",
             "Media/Icons/Button/Forward.tga"
+        },
+        ["Jodalo"] = {
+            "Media/Textures/StatusbarClean.tga"
         },
         ["IconPark"] = {
             "Media/Icons/Categories"

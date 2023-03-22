@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local DI = W:NewModule("DeleteItem", "AceEvent-3.0")
 local S = W.Modules.Skins
 

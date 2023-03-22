@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local MB = W:NewModule("MinimapButtons", "AceEvent-3.0", "AceHook-3.0")
 local S = W.Modules.Skins
 local EM = E:GetModule("Minimap")

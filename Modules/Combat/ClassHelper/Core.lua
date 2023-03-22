@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local CH = W:NewModule("ClassHelper", "AceEvent-3.0", "AceHook-3.0")
 
 local pairs = pairs

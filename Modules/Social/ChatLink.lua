@@ -1,4 +1,4 @@
-local W, F, E, L, _, _, G = unpack(select(2, ...))
+local W, F, E, L, _, _, G = unpack((select(2, ...)))
 local CL = W:NewModule("ChatLink")
 
 local _G = _G

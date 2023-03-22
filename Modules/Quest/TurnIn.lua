@@ -1,4 +1,4 @@
-local W, F, E, L = unpack(select(2, ...))
+local W, F, E, L = unpack((select(2, ...)))
 local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 
 local _G = _G

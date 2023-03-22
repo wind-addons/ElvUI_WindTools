@@ -20,8 +20,8 @@ W.Changelog[326] = {
             "Adapt to ElvUI 13.28."
         },
         ["ruRU"] = {
-            "Adapt to World of Warcraft 10.0.7.",
-            "Adapt to ElvUI 13.28."
+            "Совместимость с World of Warcraft 10.0.7.",
+            "Совместимость с ElvUI 13.28."
         }
     },
     NEW = {
@@ -38,7 +38,7 @@ W.Changelog[326] = {
             "Added a status bar texture WindTools Clean. Thanks Jodalo"
         },
         ["ruRU"] = {
-            "Added a status bar texture WindTools Clean. Thanks Jodalo"
+            "Добавлена текстура строки состояния WindTools Clean. Спасибо, Jodalo"
         }
     },
     IMPROVEMENT = {
@@ -59,8 +59,8 @@ W.Changelog[326] = {
             "[Chat Text] Adapt to the latest ElvUI chat module."
         },
         ["ruRU"] = {
-            "[Game Bar] Fix the problem that it can't be loaded normally after the 10.0.7 update.",
-            "[Chat Text] Adapt to the latest ElvUI chat module."
+            "[Игровая панель] Исправлена проблема, из-за которой она не могла нормально загружаться после обновления 10.0.7.",
+            "[Текст чата] Адаптация к последнему модулю чата ElvUI."
         }
     }
 }

@@ -2,12 +2,10 @@
 -- 物品信息庫 Author: M
 ---------------------------------
 
-local MAJOR, MINOR = "LibItemInfo.7000", 5
+local MAJOR, MINOR = "LibItemInfo.7000", 6
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 
-if not lib then
-    return
-end
+if not lib then return end
 
 local locale = GetLocale()
 
@@ -21,15 +19,12 @@ local unittip = CreateFrame("GameTooltip", "LibItemLevelTooltip2", UIParent, "Ga
 
 --物品是否已經本地化
 function lib:HasLocalCached(item)
-    if (not item or item == "" or item == "0") then
-        return true
-    end
+    if (not item or item == "" or item == "0") then return true end
     if (tonumber(item)) then
         return select(10, GetItemInfo(tonumber(item)))
     else
         local id, gem1, gem2, gem3 = string.match(item, "item:(%d+):[^:]*:(%d-):(%d-):(%d-):")
-        return self:HasLocalCached(id) and self:HasLocalCached(gem1) and self:HasLocalCached(gem2) and
-            self:HasLocalCached(gem3)
+        return self:HasLocalCached(id) and self:HasLocalCached(gem1) and self:HasLocalCached(gem2) and self:HasLocalCached(gem3)
     end
 end
 
@@ -45,12 +40,12 @@ function lib:GetStatsViaTooltip(tip, stats)
                 statName = strtrim(statName)
                 statName = statName:gsub("與$", "") --zhTW
                 statName = statName:gsub("和$", "") --zhTW
-                statName = statName:gsub("，", "") --zhCN
+                statName = statName:gsub("，", "")  --zhCN
                 statName = statName:gsub("%s*&$", "") --enUS
                 statValue = statValue:gsub(",", "")
                 statValue = tonumber(statValue) or 0
                 if (not stats[statName]) then
-                    stats[statName] = {value = statValue, r = r, g = g, b = b}
+                    stats[statName] = { value = statValue, r = r, g = g, b = b }
                 else
                     stats[statName].value = stats[statName].value + statValue
                     if (g > stats[statName].g) then
@@ -82,7 +77,7 @@ if (locale == "koKR") then
                     statValue = statValue:gsub(",", "")
                     statValue = tonumber(statValue) or 0
                     if (not stats[statName]) then
-                        stats[statName] = {value = statValue, r = r, g = g, b = b}
+                        stats[statName] = { value = statValue, r = r, g = g, b = b }
                     else
                         stats[statName].value = stats[statName].value + statValue
                         if (g > stats[statName].g) then
@@ -98,8 +93,14 @@ if (locale == "koKR") then
     end
 end
 
+
 --獲取物品實際等級信息
-function lib:GetItemInfo(link, stats)
+function lib:GetItemInfo(link, stats, withoutExtra)
+    return self:GetItemInfoViaTooltip(link, stats, withoutExtra)
+end
+
+--獲取物品實際等級信息通過Tooltip
+function lib:GetItemInfoViaTooltip(link, stats)
     if (not link or link == "") then
         return 0, 0
     end
@@ -116,20 +117,19 @@ function lib:GetItemInfo(link, stats)
         if (_G[tooltip:GetName() .. "TextLeft" .. i]) then
             text = _G[tooltip:GetName() .. "TextLeft" .. i]:GetText() or ""
             level = string.match(text, ItemLevelPattern)
-            if (level) then
-                break
-            end
+            if (level) then break end
             level = string.match(text, ItemLevelPlusPat)
-            if (level) then
-                break
-            end
+            if (level) then break end
         end
     end
     self:GetStatsViaTooltip(tooltip, stats)
-    if (level and string.find(level, "+")) then
-        return 0, level, GetItemInfo(link)
+    if (level and string.find(level, "+")) then else
+        level = tonumber(level) or 0
+    end
+    if (withoutExtra) then
+        return 0, level
     else
-        return 0, tonumber(level) or 0, GetItemInfo(link)
+        return 0, level, GetItemInfo(link)
     end
 end
 
@@ -147,9 +147,7 @@ function lib:GetContainerItemLevel(pid, id)
             if (_G[tooltip:GetName() .. "TextLeft" .. i]) then
                 text = _G[tooltip:GetName() .. "TextLeft" .. i]:GetText() or ""
                 level = string.match(text, ItemLevelPattern)
-                if (level) then
-                    break
-                end
+                if (level) then break end
             end
         end
     end
@@ -158,9 +156,7 @@ end
 
 --獲取UNIT物品實際等級信息
 function lib:GetUnitItemInfo(unit, index, stats)
-    if (not UnitExists(unit)) then
-        return 1, -1
-    end
+    if (not UnitExists(unit)) then return 1, -1 end  --C_PaperDollInfo.GetInspectItemLevel
     unittip:SetOwner(UIParent, "ANCHOR_NONE")
     unittip:SetInventoryItem(unit, index)
     local link = GetInventoryItemLink(unit, index) or select(2, unittip:GetItem())
@@ -175,9 +171,7 @@ function lib:GetUnitItemInfo(unit, index, stats)
         if (_G[unittip:GetName() .. "TextLeft" .. i]) then
             text = _G[unittip:GetName() .. "TextLeft" .. i]:GetText() or ""
             level = string.match(text, ItemLevelPattern)
-            if (level) then
-                break
-            end
+            if (level) then break end
         end
     end
     self:GetStatsViaTooltip(unittip, stats)
@@ -186,8 +180,7 @@ function lib:GetUnitItemInfo(unit, index, stats)
     else
         local line = _G[unittip:GetName() .. "TextLeft1"]
         local r, g, b = line:GetTextColor()
-        local name =
-            ("|cff%.2x%.2x%.2x%s|r"):format((r or 1) * 255, (g or 1) * 255, (b or 1) * 255, line:GetText() or "")
+        local name = ("|cff%.2x%.2x%.2x%s|r"):format((r or 1)*255, (g or 1)*255, (b or 1)*255, line:GetText() or "")
         return 0, tonumber(level) or 0, name
     end
 end
@@ -211,10 +204,7 @@ function lib:GetUnitItemLevel(unit, stats)
     counts = counts + mcount + ocount
     if (mquality == 6 or oquality == 6) then
         total = total + max(mlevel, olevel) * 2
-    elseif
-        (oslot == "INVTYPE_2HWEAPON" or mslot == "INVTYPE_2HWEAPON" or mslot == "INVTYPE_RANGED" or
-            mslot == "INVTYPE_RANGEDRIGHT")
-     then
+    elseif (oslot == "INVTYPE_2HWEAPON" or mslot == "INVTYPE_2HWEAPON" or mslot == "INVTYPE_RANGED" or mslot == "INVTYPE_RANGEDRIGHT") then 
         total = total + max(mlevel, olevel) * 2
     else
         total = total + mlevel + olevel

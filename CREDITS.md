@@ -18,8 +18,10 @@
 
 - français (frFR)
   - PodVibe @ CurseForge
-  - xan2622 @ Github
+  - xan2622 @ GitHub
   - Pristi#2836 @ Discord
+- Español (esES/esMX)
+  - Keralin @ GitHub
 - Deutsche (deDE)
   - imna1975 @ CurseForge
   - Merathilis
@@ -30,9 +32,9 @@
   - 다크어쌔신<주부월드> @ 불타는 군단
   - 크림슨프릴<주부월드> @ 불타는 군단
 - русский язык (ruRU)
-  - Evgeniy-ONiX @ Github
-  - dadec666 @ Github
-  - Hollicsh @ Github
+  - Evgeniy-ONiX @ GitHub
+  - dadec666 @ GitHub
+  - Hollicsh @ GitHub
 
 ## Codes
 

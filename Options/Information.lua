@@ -354,6 +354,9 @@ do -- 本地化
             "Pristi#2836 @ Discord",
             "Isilorn @ GitHub"
         },
+        ["Español (esES/esMX)"] = {
+            "Keralin @ GitHub"
+        },
         ["Deutsche (deDE)"] = {
             "imna1975 @ CurseForge",
             "|cffff7d0aMerathilis|r",
@@ -362,7 +365,7 @@ do -- 本地化
         ["русский язык (ruRU)"] = {
             "Evgeniy-ONiX @ GitHub",
             "dadec666 @ GitHub",
-            "Hollicsh @ GitHub",
+            "Hollicsh @ GitHub"
         }
     }
 

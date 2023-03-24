@@ -95,7 +95,6 @@ local achievementMessageTemplate = L["%player% has earned the achievement %achie
 local achievementMessageTemplateMultiplePlayers = L["%players% have earned the achievement %achievement%!"]
 
 local guildPlayerCache = {}
-local blockedMessageCache = {}
 local achievementMessageCache = {
     byAchievement = {},
     byPlayer = {}
@@ -842,7 +841,9 @@ function CT:ChatFrame_MessageEventHandler(
                 chatType == "TARGETICONS" or
                 chatType == "BN_WHISPER_PLAYER_OFFLINE")
          then
-            frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
+            if chatType ~= "SYSTEM" or not CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, arg1) then
+                frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
+            end
         elseif chatType == "LOOT" then
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif strsub(chatType, 1, 7) == "COMBAT_" then
@@ -1416,68 +1417,6 @@ function CT:ToggleReplacement()
     end
 end
 
-function CT.GuildMemberStatusMessageHandler(_, _, msg)
-    if not CT.db or not CT.db.enable or not CT.db.guildMemberStatus then
-        return
-    end
-
-    local name, class, link, resultText
-
-    if blockedMessageCache[msg] then
-        return true
-    end
-
-    name = strmatch(msg, offlineMessagePattern)
-    if not name then
-        link, name = strmatch(msg, onlineMessagePattern)
-    end
-
-    if name then
-        class = guildPlayerCache[name]
-        if not class then
-            updateGuildPlayerCache(nil, "FORCE_UPDATE")
-            class = guildPlayerCache[name]
-        end
-    end
-
-    if class then
-        blockedMessageCache[msg] = true
-
-        C_Timer_After(
-            0.1,
-            function()
-                blockedMessageCache[msg] = nil
-            end
-        )
-
-        local displayName = CT.db.removeRealm and Ambiguate(name, "short") or name
-        local coloredName =
-            F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
-
-        coloredName = addSpaceForAsian(coloredName)
-        local classIcon = F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
-
-        if coloredName and classIcon then
-            if link then
-                resultText = format(onlineMessageTemplate, link, classIcon, coloredName)
-                if CT.db.guildMemberStatusInviteLink then
-                    local windInviteLink =
-                        format("|Hwtinvite:%s|h%s|h", link, C.StringByTemplate(format("[%s]", L["Invite"]), "info"))
-                    resultText = resultText .. " " .. windInviteLink
-                end
-                _G.ChatFrame1:AddMessage(resultText, C.RGBFromTemplate("success"))
-            else
-                resultText = format(offlineMessageTemplate, classIcon, coloredName)
-                _G.ChatFrame1:AddMessage(resultText, C.RGBFromTemplate("danger"))
-            end
-
-            return true
-        end
-    end
-
-    return false
-end
-
 function CT:SendAchivementMessage()
     if not self.db or not self.db.enable or not self.db.mergeAchievement then
         return
@@ -1615,14 +1554,59 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
     end
 end
 
-function CT:BetterSystemMessage()
-    if not self.db then
+function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
+    if not frame or not msg then
         return
     end
 
-    if self.db.guildMemberStatus and not self.isSystemMessageHandled then
-        ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", self.GuildMemberStatusMessageHandler)
+    if not CT.db or not CT.db.enable or not CT.db.guildMemberStatus then
+        return
+    end
 
+    local name, class, link, resultText
+
+    name = strmatch(msg, offlineMessagePattern)
+    if not name then
+        link, name = strmatch(msg, onlineMessagePattern)
+    end
+
+    if name then
+        class = guildPlayerCache[name]
+        if not class then
+            updateGuildPlayerCache(nil, "FORCE_UPDATE")
+            class = guildPlayerCache[name]
+        end
+    end
+
+    if class then
+        local displayName = CT.db.removeRealm and Ambiguate(name, "short") or name
+        local coloredName =
+            F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
+
+        coloredName = addSpaceForAsian(coloredName)
+        local classIcon = F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
+
+        if coloredName and classIcon then
+            if link then
+                resultText = format(onlineMessageTemplate, link, classIcon, coloredName)
+                if CT.db.guildMemberStatusInviteLink then
+                    local windInviteLink =
+                        format("|Hwtinvite:%s|h%s|h", link, C.StringByTemplate(format("[%s]", L["Invite"]), "info"))
+                    resultText = resultText .. " " .. windInviteLink
+                end
+                frame:AddMessage(resultText, C.RGBFromTemplate("success"))
+            else
+                resultText = format(offlineMessageTemplate, classIcon, coloredName)
+                frame:AddMessage(resultText, C.RGBFromTemplate("danger"))
+            end
+
+            return true
+        end
+    end
+end
+
+function CT:BetterSystemMessage()
+    if self.db and self.db.guildMemberStatus and not self.isSystemMessageHandled then
         local setHyperlink = _G.ItemRefTooltip.SetHyperlink
         function _G.ItemRefTooltip:SetHyperlink(data, ...)
             if strsub(data, 1, 8) == "wtinvite" then

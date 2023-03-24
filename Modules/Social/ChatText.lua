@@ -33,7 +33,6 @@ local Ambiguate = Ambiguate
 local BetterDate = BetterDate
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
-local ChatTypeInfo = ChatTypeInfo
 local FlashClientIcon = FlashClientIcon
 local GetAchievementLink = GetAchievementLink
 local GetBNPlayerCommunityLink = GetBNPlayerCommunityLink
@@ -854,20 +853,24 @@ function CT:ChatFrame_MessageEventHandler(
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif strsub(chatType, 1, 11) == "ACHIEVEMENT" then
             -- Append [Share] hyperlink
-            frame:AddMessage(
-                format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
-                info.r,
-                info.g,
-                info.b,
-                info.id,
-                nil,
-                nil,
-                isHistory,
-                historyTime
-            )
+            if not CT:ElvUIChat_AchievementMessageHandler(event, frame, arg1, data) then
+                frame:AddMessage(
+                    format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
+                    info.r,
+                    info.g,
+                    info.b,
+                    info.id,
+                    nil,
+                    nil,
+                    isHistory,
+                    historyTime
+                )
+            end
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
-            local message = format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", coloredName)))
-            frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
+            if not CT:ElvUIChat_AchievementMessageHandler(event, frame, arg1, data) then
+                local message = format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", coloredName)))
+                frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
+            end
         elseif chatType == "IGNORED" then
             frame:AddMessage(
                 format(_G.CHAT_IGNORED, arg2),
@@ -1475,77 +1478,86 @@ function CT.GuildMemberStatusMessageHandler(_, _, msg)
     return false
 end
 
-function CT.SendAchivementMessage()
-    if not CT.db or not CT.db.enable or not CT.db.mergeAchievement then
+function CT:SendAchivementMessage()
+    if not self.db or not self.db.enable or not self.db.mergeAchievement then
         return
     end
 
     local channelData = {
-        {event = "CHAT_MSG_GUILD_ACHIEVEMENT", color = ChatTypeInfo.GUILD},
-        {event = "CHAT_MSG_ACHIEVEMENT", color = ChatTypeInfo.SYSTEM}
+        {event = "CHAT_MSG_GUILD_ACHIEVEMENT", color = _G.ChatTypeInfo.GUILD},
+        {event = "CHAT_MSG_ACHIEVEMENT", color = _G.ChatTypeInfo.SYSTEM}
     }
 
     for _, data in ipairs(channelData) do
         local event, color = data.event, data.color
-        if achievementMessageCache.byPlayer[event] then
-            for playerString, achievementTable in pairs(achievementMessageCache.byPlayer[event]) do
-                local players = {strsplit("=", playerString)}
+        for frame, cache in pairs(achievementMessageCache.byPlayer) do
+            if cache and cache[event] then
+                for playerString, achievementTable in pairs(cache[event]) do
+                    local players = {strsplit("=", playerString)}
 
-                local achievementLinks = {}
-                for achievementID in pairs(achievementTable) do
-                    tinsert(achievementLinks, GetAchievementLink(achievementID))
-                end
+                    local achievementLinks = {}
+                    for achievementID in pairs(achievementTable) do
+                        tinsert(achievementLinks, GetAchievementLink(achievementID))
+                    end
 
-                local message = nil
+                    local message = nil
 
-                if #players == 1 then
-                    message = gsub(achievementMessageTemplate, "%%player%%", addSpaceForAsian(players[1]))
-                elseif #players > 1 then
-                    message =
-                        gsub(
-                        achievementMessageTemplateMultiplePlayers,
-                        "%%players%%",
-                        addSpaceForAsian(strjoin(", ", unpack(players)))
-                    )
-                end
+                    if #players == 1 then
+                        message = gsub(achievementMessageTemplate, "%%player%%", addSpaceForAsian(players[1]))
+                    elseif #players > 1 then
+                        message =
+                            gsub(
+                            achievementMessageTemplateMultiplePlayers,
+                            "%%players%%",
+                            addSpaceForAsian(strjoin(", ", unpack(players)))
+                        )
+                    end
 
-                if message then
-                    message =
-                        gsub(
-                        message,
-                        "%%achievement%%",
-                        addSpaceForAsian(strjoin(", ", unpack(achievementLinks)), true)
-                    )
-                    _G.ChatFrame1:AddMessage(message, color.r, color.g, color.b)
+                    if message then
+                        message =
+                            gsub(
+                            message,
+                            "%%achievement%%",
+                            addSpaceForAsian(strjoin(", ", unpack(achievementLinks)), true)
+                        )
+
+                        message = select(2, W:GetModule("ChatLink"):Filter("", message))
+                        frame:AddMessage(message, color.r, color.g, color.b)
+                    end
                 end
             end
-            wipe(achievementMessageCache.byPlayer[event])
+            wipe(cache)
         end
     end
 end
 
-function CT.AchievementMessageHandler(_, event, ...)
-    if not CT.db or not CT.db.enable or not CT.db.mergeAchievement then
+function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage, playerInfo)
+    if not frame or not event or not achievementMessage or not playerInfo then
         return
     end
 
-    local achievementMessage = select(1, ...)
-    local guid = select(12, ...)
-
-    if not guid then
+    if not self.db or not self.db.enable or not self.db.mergeAchievement then
         return
     end
 
-    if not achievementMessageCache.byAchievement[event] then
-        achievementMessageCache.byAchievement[event] = {}
+    if not achievementMessageCache.byAchievement[frame] then
+        achievementMessageCache.byAchievement[frame] = {}
     end
 
-    if not achievementMessageCache.byPlayer[event] then
-        achievementMessageCache.byPlayer[event] = {}
+    if not achievementMessageCache.byAchievement[frame][event] then
+        achievementMessageCache.byAchievement[frame][event] = {}
     end
 
-    local cache = achievementMessageCache.byAchievement[event]
-    local cacheByPlayer = achievementMessageCache.byPlayer[event]
+    if not achievementMessageCache.byPlayer[frame] then
+        achievementMessageCache.byPlayer[frame] = {}
+    end
+
+    if not achievementMessageCache.byPlayer[frame][event] then
+        achievementMessageCache.byPlayer[frame][event] = {}
+    end
+
+    local cache = achievementMessageCache.byAchievement[frame][event]
+    local cacheByPlayer = achievementMessageCache.byPlayer[frame][event]
 
     local achievementID = strmatch(achievementMessage, "|Hachievement:(%d+):")
     if not achievementID then
@@ -1571,13 +1583,13 @@ function CT.AchievementMessageHandler(_, event, ...)
 
                     cacheByPlayer[playerString][achievementID] = true
 
-                    if not CT.waitForAchievementMessage then
-                        CT.waitForAchievementMessage = true
+                    if not self.waitForAchievementMessage then
+                        self.waitForAchievementMessage = true
                         C_Timer_After(
                             0.2,
                             function()
-                                CT.SendAchivementMessage()
-                                CT.waitForAchievementMessage = false
+                                self:SendAchivementMessage()
+                                self.waitForAchievementMessage = false
                             end
                         )
                     end
@@ -1588,14 +1600,13 @@ function CT.AchievementMessageHandler(_, event, ...)
         )
     end
 
-    local playerInfo = CH:GetPlayerInfoByGUID(guid)
     if not playerInfo or not playerInfo.englishClass or not playerInfo.name or not playerInfo.nameWithRealm then
         return
     end
 
-    local displayName = CT.db.removeRealm and playerInfo.name or playerInfo.nameWithRealm
+    local displayName = self.db.removeRealm and playerInfo.name or playerInfo.nameWithRealm
     local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
-    local classIcon = F.GetClassIconStringWithStyle(playerInfo.englishClass, CT.db.classIconStyle, 16, 16)
+    local classIcon = F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
 
     if coloredName and classIcon and cache[achievementID] then
         local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)
@@ -1624,12 +1635,6 @@ function CT:BetterSystemMessage()
             setHyperlink(self, data, ...)
         end
         self.isSystemMessageHandled = true
-    end
-
-    if self.db.mergeAchievement and not self.isAchievementHandled then
-        ChatFrame_AddMessageEventFilter("CHAT_MSG_ACHIEVEMENT", self.AchievementMessageHandler)
-        ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD_ACHIEVEMENT", self.AchievementMessageHandler)
-        self.isAchievementHandled = true
     end
 end
 

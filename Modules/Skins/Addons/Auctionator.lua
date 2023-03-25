@@ -359,7 +359,7 @@ local function exportTextFrame(frame)
     S:CreateShadow(frame)
 
     S:ESProxy("HandleButton", frame.Close)
-    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function listExportFrame(frame)
@@ -371,7 +371,7 @@ local function listExportFrame(frame)
     S:ESProxy("HandleButton", frame.UnselectAll)
     S:ESProxy("HandleButton", frame.Export)
     S:ESProxy("HandleCloseButton", frame.CloseDialog)
-    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function listImportFrame(frame)
@@ -381,7 +381,7 @@ local function listImportFrame(frame)
 
     S:ESProxy("HandleButton", frame.Import)
     S:ESProxy("HandleCloseButton", frame.CloseDialog)
-    S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function splashFrame(frame)
@@ -464,7 +464,11 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorListExportFrameMixin, "OnLoad", reskin(listExportFrame))
     hooksecurefunc(_G.AuctionatorListImportFrameMixin, "OnLoad", reskin(listImportFrame))
     hooksecurefunc(_G.AuctionatorItemHistoryFrameMixin, "Init", reskin(itemHistoryFrame))
-    hooksecurefunc(_G.AuctionatorCraftingInfoObjectiveTrackerFrameMixin, "OnLoad", reskin(craftingInfoObjectiveTrackerFrame))
+    hooksecurefunc(
+        _G.AuctionatorCraftingInfoObjectiveTrackerFrameMixin,
+        "OnLoad",
+        reskin(craftingInfoObjectiveTrackerFrame)
+    )
     hooksecurefunc(_G.AuctionatorCraftingInfoProfessionsFrameMixin, "OnLoad", reskin(craftingInfoProfessionsFrame))
     hooksecurefunc(_G.AuctionatorShoppingItemMixin, "OnLoad", reskin(shoppingItem))
     hooksecurefunc(_G.AuctionatorSplashScreenMixin, "OnLoad", reskin(splashFrame))

@@ -1766,8 +1766,8 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex)
 
             local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, coloredName)
 
-            if self.db.bnetFriendFactionIcon then
                 local factionIcon = F.GetIconString(characterData.data.faction == "Horde" and 132485 or 132486, 14)
+            if self.db.factionIcon then
                 playerName = format("%s %s", factionIcon, playerName)
             end
 

@@ -83,11 +83,11 @@ CT.cache = {}
 local lfgRoles = {}
 local initRecord = {}
 
-local offlineMessageTemplate = "%s " .. _G.ERR_FRIEND_OFFLINE_S
+local offlineMessageTemplate = "%s" .. _G.ERR_FRIEND_OFFLINE_S
 local offlineMessagePattern = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "(.+)")
 offlineMessagePattern = format("^%s$", offlineMessagePattern)
 
-local onlineMessageTemplate = gsub(_G.ERR_FRIEND_ONLINE_SS, "%[%%s%]", "%%s %%s")
+local onlineMessageTemplate = gsub(_G.ERR_FRIEND_ONLINE_SS, "%[%%s%]", "%%s%%s")
 local onlineMessagePattern = gsub(_G.ERR_FRIEND_ONLINE_SS, "|Hplayer:%%s|h%[%%s%]|h", "|Hplayer:(.+)|h%%[(.+)%%]|h")
 onlineMessagePattern = format("^%s$", onlineMessagePattern)
 
@@ -1545,7 +1545,10 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
 
     local displayName = self.db.removeRealm and playerInfo.name or playerInfo.nameWithRealm
     local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
-    local classIcon = F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
+    local classIcon =
+        self.db.classIcon and
+        F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16) .. " " or
+        ""
 
     if coloredName and classIcon and cache[achievementID] then
         local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)
@@ -1584,7 +1587,8 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
             F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
 
         coloredName = addSpaceForAsian(coloredName)
-        local classIcon = F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
+        local classIcon =
+            self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16) .. " " or ""
 
         if coloredName and classIcon then
             if link then

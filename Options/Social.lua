@@ -734,8 +734,15 @@ do
                         type = "toggle",
                         name = L["Remove Brackets"]
                     },
-                    classIconStyle = {
+                    classIcon = {
                         order = 2,
+                        type = "toggle",
+                        name = L["Class Icon"],
+                        desc = L["Show the class icon before the player name."] ..
+                            "\n" .. L["This feature only works for message that sent by this module."]
+                    },
+                    classIconStyle = {
+                        order = 3,
                         type = "select",
                         name = L["Class Icon Style"],
                         desc = L["Select the style of class icon."],

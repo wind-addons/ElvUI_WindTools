@@ -89,6 +89,11 @@ CT.cache = {}
 local lfgRoles = {}
 local initRecord = {}
 
+local factionIconIDs = {
+    ["Alliance"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Alliance"]],
+    ["Horde"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Horde]]
+}
+
 local offlineMessageTemplate = "%s" .. _G.ERR_FRIEND_OFFLINE_S
 local offlineMessagePattern = gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "(.+)")
 offlineMessagePattern = format("^%s$", offlineMessagePattern)
@@ -1766,9 +1771,11 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex)
 
             local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, coloredName)
 
-                local factionIcon = F.GetIconString(characterData.data.faction == "Horde" and 132485 or 132486, 14)
             if self.db.factionIcon then
-                playerName = format("%s %s", factionIcon, playerName)
+                local factionIcon =
+                    factionIconIDs[characterData.data.faction] and
+                    F.GetIconString(factionIconIDs[characterData.data.faction], 18)
+                playerName = factionIcon and format("%s %s", factionIcon, playerName) or playerName
             end
 
             tinsert(

@@ -20,6 +20,7 @@ local GetSpellTexture = GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
+local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Soulbinds_GetConduitCollectionData = C_Soulbinds.GetConduitCollectionData
 
@@ -265,11 +266,30 @@ local function AddAchievementInfo(link)
     return link
 end
 
+local function AddCurrencyInfo(link)
+    -- currency
+    local id = strmatch(link, "Hcurrency:(%d+)")
+    if not id then
+        return
+    end
+
+    if CL.db.icon then
+        local info = C_CurrencyInfo_GetCurrencyInfo(id)
+        local icon = info and info.iconFileID and format(ICON_STRING, info.iconFileID)
+        if icon then
+            link = icon .. " " .. link
+        end
+    end
+
+    return link
+end
+
 function CL:Filter(event, msg, ...)
     if CL.db.enable then
         msg = gsub(msg, "(|cff71d5ff|Hconduit:%d+:.-|h.-|h|r)", AddConduitIcon)
         msg = gsub(msg, "(|cffa335ee|Hkeystone:%d+:.-|h.-|h|r)", AddKeystoneIcon)
         msg = gsub(msg, "(|Hitem:%d+:.-|h.-|h)", AddItemInfo)
+        msg = gsub(msg, "(|Hcurrency:%d+:.-|h.-|h)", AddCurrencyInfo)
         msg = gsub(msg, "(|Hspell:%d+:%d+|h.-|h)", AddSpellInfo)
         msg = gsub(msg, "(|Henchant:%d+|h.-|h)", AddEnchantInfo)
         msg = gsub(msg, "(|Htalent:%d+|h.-|h)", AddTalentInfo)

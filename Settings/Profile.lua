@@ -886,7 +886,7 @@ P.social = {
         mergeAchievement = true,
         bnetFriendOnline = true,
         bnetFriendOffline = false,
-        factionIcon = false
+        factionIcon = true
     },
     emote = {
         enable = true,

@@ -32,23 +32,28 @@ W.Changelog[327] = {
     NEW = {
         ["zhCN"] = {
             "[聊天文字] 新增战网好友魔兽世界角色状态提示.",
+            "[聊天链接] 为货币链接添加对应图标显示.",
             "[鼠标提示] 为成就提示添加对应图标显示."
         },
         ["zhTW"] = {
             "[聊天文字] 新增戰網好友魔獸世界角色狀態提示.",
+            "[聊天鏈接] 為貨幣鏈接添加對應圖示顯示.",
             "[浮動提示] 為成就提示添加對應圖示顯示."
         },
         ["enUS"] = {
             "[Chat Text] Add Battle.net friend WoW character status message.",
-            "[Tooltip] Add achievement icon to achievement tooltip."
+            "[Chat Link] Add the icon to currency link.",
+            "[Tooltip] Add the icon to achievement tooltip."
         },
         ["koKR"] = {
             "[대화창 글자] 배틀넷 친구의 WoW 캐릭터 상태 메시지를 추가했습니다.",
-            "[툴팁] 업적 툴팁에 업적 아이콘을 추가했습니다."
+            "[대화창 링크] 통화 링크에 아이콘을 추가했습니다.",
+            "[툴팁] 업적 툴팁에 아이콘을 추가했습니다."
         },
         ["ruRU"] = {
             "[Текст чата] Добавлено сообщение о статусе WoW-персонажа Battle.net-друга.",
-            "[Подсказка] Добавлен значок достижения в подсказку достижения."
+            "[Ссылки чата] Добавлен значок в ссылку на валюту.",
+            "[Подсказки] Добавлен значок в подсказку достижения."
         }
     },
     IMPROVEMENT = {
@@ -59,7 +64,7 @@ W.Changelog[327] = {
             "[聊天文字] 公会成员状态信息现在跟随系统频道设定.",
             "[聊天文字] 合并后的成就信息现在跟随系统频道设定.",
             "[聊天文字] 现在可以关闭显示职业图标.",
-            "[美化皮肤] 更新 Auctionator 皮肤.",
+            "[美化皮肤] 更新 Auctionator 皮肤."
         },
         ["zhTW"] = {
             "[預組列表] 修復右側面板中詞綴無法顯示的問題.",
@@ -68,7 +73,7 @@ W.Changelog[327] = {
             "[聊天文字] 公會成員狀態信息現在跟隨系統頻道設定.",
             "[聊天文字] 合併後的成就信息現在跟隨系統頻道設定.",
             "[聊天文字] 現在可以關閉顯示職業圖標.",
-            "[美化皮膚] 更新 Auctionator 皮膚.",
+            "[美化皮膚] 更新 Auctionator 皮膚."
         },
         ["enUS"] = {
             "[LFG List] Fix affixes not showing in right panel.",
@@ -77,7 +82,7 @@ W.Changelog[327] = {
             "[Chat Text] Guild member status message now follows system channel setting.",
             "[Chat Text] Merged achievement message now follows system channel setting.",
             "[Chat Text] Now you can disable showing class icon.",
-            "[Skins] Update Auctionator skin.",
+            "[Skins] Update Auctionator skin."
         },
         ["koKR"] = {
             "[파티 찾기 목록] 오른쪽 패널에 접두사가 표시되지 않는 문제를 수정했습니다.",

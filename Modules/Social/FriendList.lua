@@ -313,7 +313,7 @@ function FL:UpdateFriendButton(button)
     end
 
     -- reset game icon with elvui style
-    button.gameIcon:SetTexCoord(.17, .83, .17, .83)
+    button.gameIcon:SetTexCoord(0, 1, 0, 1)
 
     if gameName then
         local buttonTitle, buttonText
@@ -384,6 +384,7 @@ function FL:UpdateFriendButton(button)
         if texOrAtlas then
             if self.db.textures.client == "blizzard" then
                 button.gameIcon:SetAtlas(texOrAtlas)
+                button.gameIcon:SetTexCoord(0, 1, 0, 1)
             else
                 button.gameIcon:SetTexture(texOrAtlas)
                 button.gameIcon:SetTexCoord(.1, .9, .1, .9)

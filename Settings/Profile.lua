@@ -883,7 +883,10 @@ P.social = {
         classIconStyle = "flatborder2",
         guildMemberStatus = true,
         guildMemberStatusInviteLink = true,
-        mergeAchievement = true
+        mergeAchievement = true,
+        bnetFriendOnline = true,
+        bnetFriendOffline = false,
+        factionIcon = false
     },
     emote = {
         enable = true,

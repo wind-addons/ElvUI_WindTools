@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
-local CT = W:NewModule("ChatText")
+local CT = W:NewModule("ChatText", "AceEvent-3.0")
 local CH = E:GetModule("Chat")
 local LSM = E.Libs.LSM
 local C = W.Utilities.Color
@@ -31,6 +31,7 @@ local wipe = wipe
 
 local Ambiguate = Ambiguate
 local BetterDate = BetterDate
+local BNGetNumFriends = BNGetNumFriends
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local FlashClientIcon = FlashClientIcon
@@ -62,6 +63,9 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local C_ChatInfo_GetChannelRulesetForChannelID = C_ChatInfo.GetChannelRulesetForChannelID
 local C_ChatInfo_GetChannelShortcutForChannelID = C_ChatInfo.GetChannelShortcutForChannelID
@@ -72,12 +76,14 @@ local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
 local C_Texture_GetTitleIconTexture = C_Texture.GetTitleIconTexture
 local C_Timer_After = C_Timer.After
 
-local TitleIconVersion_Small = Enum.TitleIconVersion.Small
 local CHATCHANNELRULESET_MENTOR = Enum.ChatChannelRuleset.Mentor
 local NPEV2_CHAT_USER_TAG_GUIDE = gsub(NPEV2_CHAT_USER_TAG_GUIDE, "(|A.-|a).+", "%1")
-local PLAYERMENTORSHIPSTATUS_NEWCOMER = Enum.PlayerMentorshipStatus.Newcomer
+local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
 local PLAYER_NAME = format("%s-%s", E.myname, PLAYER_REALM)
+local PLAYERMENTORSHIPSTATUS_NEWCOMER = Enum.PlayerMentorshipStatus.Newcomer
+local TitleIconVersion_Small = Enum.TitleIconVersion.Small
+local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 
 CT.cache = {}
 local lfgRoles = {}
@@ -93,6 +99,9 @@ onlineMessagePattern = format("^%s$", onlineMessagePattern)
 
 local achievementMessageTemplate = L["%player% has earned the achievement %achievement%!"]
 local achievementMessageTemplateMultiplePlayers = L["%players% have earned the achievement %achievement%!"]
+
+local bnetFriendOnlineMessageTemplate = L["%players% (%bnet%) has come online."]
+local bnetFriendOfflineMessageTemplate = L["%players% (%bnet%) has gone offline."]
 
 local guildPlayerCache = {}
 local achievementMessageCache = {
@@ -1626,6 +1635,180 @@ function CT:BetterSystemMessage()
     end
 end
 
+local battleNetFriendsCharacters = {}
+local battleNetFriendStatusUpdateTime = {}
+
+local function getElementNumberOfTable(t)
+    if not t then
+        return 0
+    end
+
+    local count = 0
+    for _ in pairs(t) do
+        count = count + 1
+    end
+    return count
+end
+
+local function UpdateBattleNetFriendStatus(friendIndex)
+    local friendInfo = friendIndex and C_BattleNet_GetFriendAccountInfo(friendIndex)
+    if not friendInfo then
+        return
+    end
+
+    local savedCharacters = battleNetFriendsCharacters[friendInfo.bnetAccountID]
+    local numberOfSavedCharacters = getElementNumberOfTable(savedCharacters)
+    local characters = {}
+    local numberOfCharacters = 0
+
+    if battleNetFriendStatusUpdateTime[friendInfo.bnetAccountID] then
+        local timeSinceLastUpdate = time() - battleNetFriendStatusUpdateTime[friendInfo.bnetAccountID]
+        if timeSinceLastUpdate < 2 then
+            return
+        end
+    end
+
+    local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(friendIndex)
+    if numGameAccounts and numGameAccounts > 0 then
+        for accountIndex = 1, numGameAccounts do
+            local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(friendIndex, accountIndex)
+            if gameAccountInfo.wowProjectID == WOW_PROJECT_MAINLINE and gameAccountInfo.characterName then
+                numberOfCharacters = numberOfCharacters + 1
+                characters[gameAccountInfo.characterName] = {
+                    faction = gameAccountInfo.factionName,
+                    realm = gameAccountInfo.realmDisplayName,
+                    class = E:UnlocalizedClassName(gameAccountInfo.className)
+                }
+            end
+        end
+    end
+
+    local changed, changedCharacters
+
+    if numberOfSavedCharacters == 0 then
+        if numberOfCharacters > 0 then
+            changed = true
+            changedCharacters = {}
+
+            for character, data in pairs(characters) do
+                changedCharacters[character] = {
+                    type = "online",
+                    data = data
+                }
+            end
+        end
+    else
+        if numberOfCharacters ~= numberOfSavedCharacters then
+            changed = true
+            changedCharacters = {}
+
+            for character, data in pairs(characters) do
+                changedCharacters[character] = {
+                    type = "online",
+                    data = data
+                }
+            end
+
+            for character, data in pairs(savedCharacters) do
+                if not changedCharacters[character] then
+                    changedCharacters[character] = {
+                        type = "offline",
+                        data = data
+                    }
+                else
+                    changedCharacters[character] = nil
+                end
+            end
+        end
+    end
+
+    battleNetFriendsCharacters[friendInfo.bnetAccountID] = characters
+    battleNetFriendStatusUpdateTime[friendInfo.bnetAccountID] = time()
+    return changed, friendInfo.accountName, friendInfo.bnetAccountID, changedCharacters
+end
+
+function CT:PLAYER_ENTERING_WORLD(event)
+    updateGuildPlayerCache(nil, event)
+    for friendIndex = 1, BNGetNumFriends() do
+        UpdateBattleNetFriendStatus(friendIndex)
+    end
+
+    self.bnetFriendDataCached = true
+    self:UnregisterEvent(event)
+end
+
+function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex)
+    if not self.bnetFriendDataCached or not (self.db.bnetFriendOnline or self.db.bnetFriendOffline) then
+        return
+    end
+
+    local changed, accountName, accountID, characters = UpdateBattleNetFriendStatus(friendIndex)
+    if not changed then
+        return
+    end
+
+    local displayAccountName = format("|T-2387:10:10:0:0:32:32:0:32:0:32|t |cff82c5ff%s|r", accountName)
+    local bnetLink = GetBNPlayerLink(accountName, displayAccountName, accountID, 0, 0, 0)
+
+    local onlineCharacters = {}
+    local offlineCharacters = {}
+
+    for character, characterData in pairs(characters) do
+        local fullName = characterData.data.realm and format("%s-%s", character, characterData.data.realm) or character
+
+        -- to avoid duplicate message
+        if not guildPlayerCache[Ambiguate(fullName, "none")] then
+            local classIcon =
+                self.db.classIcon and
+                F.GetClassIconStringWithStyle(characterData.data.class, CT.db.classIconStyle, 16, 16) .. " " or
+                ""
+            local coloredName = F.CreateClassColorString(character, characterData.data.class)
+
+            local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, coloredName)
+
+            if self.db.bnetFriendFactionIcon then
+                local factionIcon = F.GetIconString(characterData.data.faction == "Horde" and 132485 or 132486, 14)
+                playerName = format("%s %s", factionIcon, playerName)
+            end
+
+            tinsert(
+                characterData.type == "online" and onlineCharacters or offlineCharacters,
+                addSpaceForAsian(playerName)
+            )
+        end
+    end
+
+    local function sendMessage(template, players, bnetLink, ...)
+        local message = gsub(template, "%%players%%", players)
+        message = gsub(message, "%%bnet%%", bnetLink)
+
+        for i = 1, NUM_CHAT_WINDOWS do
+            local chatFrame = _G["ChatFrame" .. i]
+            if chatFrame and chatFrame:IsEventRegistered("CHAT_MSG_BN_INLINE_TOAST_ALERT") then
+                chatFrame:AddMessage(message, ...)
+            end
+        end
+    end
+
+    if #onlineCharacters > 0 and self.db.bnetFriendOnline then
+        sendMessage(
+            bnetFriendOnlineMessageTemplate,
+            strjoin(", ", unpack(onlineCharacters)),
+            bnetLink,
+            C.RGBFromTemplate("success")
+        )
+    end
+
+    if #offlineCharacters > 0 and self.db.bnetFriendOffline then
+        sendMessage(
+            bnetFriendOfflineMessageTemplate,
+            strjoin(", ", unpack(offlineCharacters)),
+            bnetLink,
+            C.RGBFromTemplate("danger")
+        )
+    end
+end
+
 function CT:Initialize()
     self.db = E.db.WT.social.chatText
     if not self.db or not self.db.enable or not E.private.chat.enable then
@@ -1636,6 +1819,9 @@ function CT:Initialize()
     self:ToggleReplacement()
     self:CheckLFGRoles()
     self:BetterSystemMessage()
+
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    self:RegisterEvent("BN_FRIEND_INFO_CHANGED")
 end
 
 function CT:ProfileUpdate()

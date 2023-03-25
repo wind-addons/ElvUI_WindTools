@@ -758,6 +758,13 @@ do
                             end
                             return v
                         end
+                    },
+                    factionIcon = {
+                        order = 4,
+                        type = "toggle",
+                        name = L["Faction Icon"],
+                        desc = L["Show the faction icon before the player name."] ..
+                            "\n" .. L["This feature only works for message that sent by this module."]
                     }
                 }
             },
@@ -799,6 +806,28 @@ do
                         type = "toggle",
                         name = L["Merge Achievement"],
                         desc = L["Merge the achievement message into one line."],
+                        width = 1.2
+                    },
+                    bnetFriendOnline = {
+                        order = 4,
+                        type = "toggle",
+                        name = L["BNet Friend Online"],
+                        desc = L["Show a message when a Battle.net friend's wow character comes online."] ..
+                            "\n" ..
+                                L[
+                                    "The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."
+                                ],
+                        width = 1.2
+                    },
+                    bnetFriendOffline = {
+                        order = 5,
+                        type = "toggle",
+                        name = L["BNet Friend Offline"],
+                        desc = L["Show a message when a Battle.net friend's wow character goes offline."] ..
+                            "\n" ..
+                                L[
+                                    "The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."
+                                ],
                         width = 1.2
                     }
                 }

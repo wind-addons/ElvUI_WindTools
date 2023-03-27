@@ -1678,7 +1678,7 @@ local function UpdateBattleNetFriendStatus(friendIndex)
     local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(friendIndex)
     if numGameAccounts and numGameAccounts > 0 then
         for accountIndex = 1, numGameAccounts do
-            local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(friendIndex, accountIndex)
+            local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(friendIndex, accountIndex)
             if gameAccountInfo.wowProjectID == WOW_PROJECT_MAINLINE and gameAccountInfo.characterName then
                 numberOfCharacters = numberOfCharacters + 1
                 characters[gameAccountInfo.characterName] = {

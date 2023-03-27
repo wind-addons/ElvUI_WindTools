@@ -6,8 +6,10 @@ local hooksecurefunc = hooksecurefunc
 local select = select
 local strfind = strfind
 local tinsert = tinsert
+local tonumber = tonumber
 local unpack = unpack
 
+local GetAchievementInfo = GetAchievementInfo
 local GetItemIcon = GetItemIcon
 local GetSpellTexture = GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID

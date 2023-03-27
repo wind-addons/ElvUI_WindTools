@@ -89,7 +89,8 @@ CT.cache = {}
 local lfgRoles = {}
 local initRecord = {}
 
-local factionIconIDs = {
+local factionTextures = {
+    ["Neutral"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Classic]],
     ["Alliance"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Alliance]],
     ["Horde"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Horde]]
 }
@@ -1773,8 +1774,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex)
 
             if self.db.factionIcon then
                 local factionIcon =
-                    factionIconIDs[characterData.data.faction] and
-                    F.GetIconString(factionIconIDs[characterData.data.faction], 18)
+                    F.GetIconString(factionTextures[characterData.data.faction] or factionTextures["Neutral"], 18)
                 playerName = factionIcon and format("%s %s", factionIcon, playerName) or playerName
             end
 

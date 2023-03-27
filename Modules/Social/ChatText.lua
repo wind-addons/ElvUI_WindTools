@@ -90,7 +90,7 @@ local lfgRoles = {}
 local initRecord = {}
 
 local factionIconIDs = {
-    ["Alliance"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Alliance"]],
+    ["Alliance"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Alliance]],
     ["Horde"] = [[Interface\Addons\ElvUI_WindTools\Media\FriendList\GameIcons\Horde]]
 }
 

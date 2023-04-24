@@ -20,66 +20,65 @@ function ID:UpdateFrame()
     local numplayers = select(9, GetInstanceInfo())
     local mplusdiff = select(1, C_ChallengeMode_GetActiveKeystoneInfo()) or ""
 
-    local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
-    local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
-    local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
-    local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
-
     if instanceType == "party" or instanceType == "raid" or instanceType == "scenario" then
-        if (difficulty == 1) then -- Normal
-            self.frame.text:SetText("5" .. norm)
-        elseif difficulty == 2 then -- Heroic
-            self.frame.text:SetText("5" .. hero)
-        elseif difficulty == 3 then -- 10 Player
-            self.frame.text:SetText("10" .. norm)
-        elseif difficulty == 4 then -- 25 Player
-            self.frame.text:SetText("25" .. norm)
-        elseif difficulty == 5 then -- 10 Player (Heroic)
-            self.frame.text:SetText("10" .. hero)
-        elseif difficulty == 6 then -- 25 Player (Heroic)
-            self.frame.text:SetText("25" .. hero)
-        elseif difficulty == 7 then -- LFR (Legacy)
-            self.frame.text:SetText(lfr)
-        elseif difficulty == 8 then -- Mythic Keystone
-            self.frame.text:SetText(format("|cffff3860%s|r", L["[ABBR] Mythic Keystone"]) .. mplusdiff)
-        elseif difficulty == 9 then -- 40 Player
-            self.frame.text:SetText("40")
-        elseif difficulty == 11 or difficulty == 39 then -- Heroic Scenario / Heroic
-            self.frame.text:SetText(format("%s %s", hero, L["[ABBR] Scenario"]))
-        elseif difficulty == 12 or difficulty == 38 then -- Normal Scenario / Normal
-            self.frame.text:SetText(format("%s %s", norm, L["[ABBR] Scenario"]))
-        elseif difficulty == 40 then -- Mythic Scenario
-            self.frame.text:SetText(format("%s %s", myth, L["[ABBR] Scenario"]))
-        elseif difficulty == 14 then -- Normal Raid
-            self.frame.text:SetText(numplayers .. norm)
-        elseif difficulty == 15 then -- Heroic Raid
-            self.frame.text:SetText(numplayers .. hero)
-        elseif difficulty == 16 then -- Mythic Raid
-            self.frame.text:SetText(numplayers .. myth)
-        elseif difficulty == 17 then -- LFR
-            self.frame.text:SetText(numplayers .. lfr)
-        elseif difficulty == 18 or difficulty == 19 or difficulty == 20 or difficulty == 30 then -- Event / Event Scenario
-            self.frame.text:SetText(L["[ABBR] Event Scenario"])
-        elseif difficulty == 23 then -- Mythic Party
-            self.frame.text:SetText("5" .. myth)
-        elseif difficulty == 24 or difficulty == 33 then -- Timewalking /Timewalking Raid
-            self.frame.text:SetText(L["[ABBR] Timewalking"])
-        elseif difficulty == 25 or difficulty == 32 or difficulty == 34 or difficulty == 45 then -- World PvP Scenario / PvP / PvP Heroic
-            self.frame.text:SetText(format("|cffFFFF00%s |r", "PvP"))
-        elseif difficulty == 29 then -- PvEvP Scenario
-            self.frame.text:SetText("PvEvP")
-        elseif difficulty == 147 then -- Normal Scenario (Warfronts)
-            self.frame.text:SetText(L["[ABBR] Warfronts"])
-        elseif difficulty == 149 then -- Heroic Scenario (Warfronts)
-            self.frame.text:SetText(format("|cffff7d0aH|r%s", L["[ABBR] Warfronts"]))
+        local text = ID:GetTextForDifficulty(difficulty, false)
+
+        if not text then
+            self:Log("debug", format("difficutly %s not found", difficulty))
+            text = ""
         end
+
+        text = gsub(text, "%%mplus%%", mplusdiff)
+        text = gsub(text, "%%numPlayers%%", numplayers)
+        self.frame.text:SetText(text)
     elseif instanceType == "pvp" or instanceType == "arena" then
-        self.frame.text:SetText(format("|cffFFFF00%s|r", "PvP"))
+        self.frame.text:SetText(ID:GetTextForDifficulty(-1, false))
     else
         self.frame.text:SetText("")
     end
 
     self.frame:SetShown(inInstance)
+end
+
+function ID:GetTextForDifficulty(difficulty, useDefault)
+    local db = useDefault and V.maps.instanceDifficulty.difficulty.customStrings or self.db.difficulty.customStrings
+    local text = {
+        [-1] = db["PvP"],
+        [1] = db["5-player Normal"],
+        [2] = db["5-player Heroic"],
+        [3] = db["10-player Normal"],
+        [4] = db["25-player Normal"],
+        [5] = db["10-player Heroic"],
+        [6] = db["25-player Heroic"],
+        [7] = db["Looking for Raid"],
+        [8] = db["Mythic Keystone"],
+        [9] = db["40-player"],
+        [11] = db["Heroic Scenario"],
+        [12] = db["Normal Scenario"],
+        [14] = db["Normal Raid"],
+        [15] = db["Heroic Raid"],
+        [16] = db["Mythic Raid"],
+        [17] = db["Looking for raid"],
+        [18] = db["Event Scenario"],
+        [19] = db["Event Scenario"],
+        [20] = db["Event Scenario"],
+        [23] = db["Mythic Party"],
+        [24] = db["Timewalking"],
+        [25] = db["World PvP Scenario"],
+        [29] = db["PvEvP Scenario"],
+        [30] = db["Event Scenario"],
+        [32] = db["PvP"],
+        [33] = db["Timewalking Raid"],
+        [34] = db["PvP Heroic"],
+        [38] = db["Normal Scenario"],
+        [39] = db["Heroic Scenario"],
+        [40] = db["Mythic Scenario"],
+        [45] = db["PvP"],
+        [147] = db["Warfronts Normal"],
+        [149] = db["Warfronts Heroic"]
+    }
+
+    return text[difficulty]
 end
 
 function ID:ConstructFrame()

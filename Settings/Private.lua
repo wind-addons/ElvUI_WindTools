@@ -1,5 +1,10 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
+local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
+local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
+local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
+local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
+
 V.combat = {}
 
 V.item = {
@@ -18,6 +23,37 @@ V.maps = {
             name = E.db.general.font,
             size = E.db.general.fontSize,
             style = "OUTLINE"
+        },
+        difficulty = {
+            custom = false,
+            customStrings = {
+                ["PvP"] = format("|cffFFFF00%s|r", "PvP"),
+                ["5-player Normal"] = "5" .. norm,
+                ["5-player Heroic"] = "5" .. hero,
+                ["10-player Normal"] = "10" .. norm,
+                ["25-player Normal"] = "25" .. norm,
+                ["10-player Heroic"] = "10" .. hero,
+                ["25-player Heroic"] = "25" .. hero,
+                ["Looking for Raid"] = lfr,
+                ["Mythic Keystone"] = format("|cffff3860%s|r", L["[ABBR] Mythic Keystone"]) .. "%mplus%",
+                ["40-player"] = "40",
+                ["Heroic Scenario"] = format("%s %s", hero, L["[ABBR] Scenario"]),
+                ["Normal Scenario"] = format("%s %s", norm, L["[ABBR] Scenario"]),
+                ["Normal Raid"] = "%numPlayers%" .. norm,
+                ["Heroic Raid"] = "%numPlayers%" .. hero,
+                ["Mythic Raid"] = "%numPlayers%" .. myth,
+                ["Looking for raid"] = "%numPlayers%" .. lfr,
+                ["Event Scenario"] = L["[ABBR] Event Scenario"],
+                ["Mythic Party"] = "5" .. myth,
+                ["Timewalking"] = L["[ABBR] Timewalking"],
+                ["World PvP Scenario"] = format("|cffFFFF00%s |r", "PvP"),
+                ["PvEvP Scenario"] = "PvEvP",
+                ["Timewalking Raid"] = L["[ABBR] Timewalking"],
+                ["PvP Heroic"] = format("|cffFFFF00%s |r", "PvP"),
+                ["Mythic Scenario"] = format("%s %s", myth, L["[ABBR] Scenario"]),
+                ["Warfronts Normal"] = L["[ABBR] Warfronts"],
+                ["Warfronts Heroic"] = format("|cffff7d0aH|r%s", L["[ABBR] Warfronts"])
+            }
         }
     },
     superTracker = {

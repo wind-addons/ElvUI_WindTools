@@ -3,14 +3,15 @@ local M = W.Modules.Misc
 
 local _G = _G
 
-function M:TalkingHeadFrame_PlayCurrent(frame)
+function M:HideTalkingHeadFrame(frame)
     if frame and E.db.WT.misc.disableTalkingHead then
-        frame:CloseImmediately()
+        frame:Hide()
     end
 end
 
 function M:HookTalkingHeadPlayCurrent()
-    self:SecureHook(_G.TalkingHeadFrame, "PlayCurrent", "TalkingHeadFrame_PlayCurrent")
+    self:SecureHook(_G.TalkingHeadFrame, "PlayCurrent", "HideTalkingHeadFrame")
+    self:SecureHook(_G.TalkingHeadFrame, "Reset", "HideTalkingHeadFrame")
 end
 
 function M:DisableTalkingHead()

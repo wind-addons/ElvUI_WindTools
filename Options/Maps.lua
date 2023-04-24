@@ -1,6 +1,7 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local options = W.options.maps.args
 local LSM = E.Libs.LSM
+local C = W.Utilities.Color
 local MB = W:GetModule("MinimapButtons")
 local WC = W:GetModule("WhoClicked")
 local RM = W:GetModule("RectangleMinimap")
@@ -890,9 +891,88 @@ options.instanceDifficulty = {
                     step = 1
                 }
             }
+        },
+        difficulty = {
+            order = 6,
+            type = "group",
+            name = L["Difficulty"],
+            inline = true,
+            get = function(info)
+                return E.private.WT.maps.instanceDifficulty.difficulty[info[#info]]
+            end,
+            set = function(info, value)
+                E.private.WT.maps.instanceDifficulty.difficulty[info[#info]] = value
+                E:StaticPopup_Show("PRIVATE_RL")
+            end,
+            args = {
+                custom = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Custom"]
+                },
+                customStrings = {
+                    order = 2,
+                    type = "group",
+                    inline = true,
+                    name = L["Custom Strings"],
+                    hidden = function()
+                        return not E.private.WT.maps.instanceDifficulty.difficulty.custom
+                    end,
+                    args = {}
+                }
+            }
         }
     }
 }
+
+do
+    local order = 1
+    for k, v in pairs(V.maps.instanceDifficulty.difficulty.customStrings) do
+        options.instanceDifficulty.args.difficulty.args.customStrings.args[k] = {
+            order = order,
+            type = "group",
+            inline = true,
+            name = "* " .. v,
+            args = {
+                text = {
+                    order = 1,
+                    type = "input",
+                    name = L["Custom String"],
+                    desc = format(
+                        "%s\n%s\n%s\n\n%s\n%s",
+                        L["Placeholders:"],
+                        format("%s - %s", C.StringByTemplate("%mplus%", "info"), L["M+ level"]),
+                        format("%s - %s", C.StringByTemplate("%numPlayers%", "info"), L["Number of players"]),
+                        L["Custom color can be used by adding the following code:"],
+                        format(
+                            L["\124\124cff|cffff0000rr|r|cff00ff00gg|r|cff0000ffbb|r%s\124\124r"],
+                            L["Custom String"]
+                        )
+                    ),
+                    get = function()
+                        return E.private.WT.maps.instanceDifficulty.difficulty.customStrings[k]
+                    end,
+                    set = function(_, value)
+                        E.private.WT.maps.instanceDifficulty.difficulty.customStrings[k] =
+                            gsub(value, "\124\124", "\124")
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                },
+                useDefault = {
+                    order = 2,
+                    type = "execute",
+                    name = L["Use Default"],
+                    func = function()
+                        E.private.WT.maps.instanceDifficulty.difficulty.customStrings[k] = v
+                        E:StaticPopup_Show("PRIVATE_RL")
+                    end
+                }
+            }
+        }
+
+        order = order + 1
+    end
+end
 
 options.eventTracker = {
     order = 7,

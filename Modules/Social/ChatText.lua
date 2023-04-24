@@ -1768,7 +1768,8 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
         return
     end
 
-    local displayAccountName = format("%s |cff82c5ff%s|r", BNet_GetClientEmbeddedTexture(appTexture, 32, 32, 12), accountName)
+    local displayAccountName =
+        format("%s |cff82c5ff%s|r", BNet_GetClientEmbeddedTexture(appTexture, 32, 32, 12), accountName)
     local bnetLink = GetBNPlayerLink(accountName, displayAccountName, accountID, 0, 0, 0)
 
     local onlineCharacters = {}
@@ -1800,7 +1801,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
         end
     end
 
-    local function sendMessage(template, players, bnetLink, ...)
+    local function sendMessage(template, players, ...)
         local message = gsub(template, "%%players%%", players)
         message = gsub(message, "%%bnet%%", bnetLink)
 
@@ -1816,7 +1817,6 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
         sendMessage(
             bnetFriendOnlineMessageTemplate,
             strjoin(", ", unpack(onlineCharacters)),
-            bnetLink,
             C.RGBFromTemplate("success")
         )
     end
@@ -1825,7 +1825,6 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
         sendMessage(
             bnetFriendOfflineMessageTemplate,
             strjoin(", ", unpack(offlineCharacters)),
-            bnetLink,
             C.RGBFromTemplate("danger")
         )
     end

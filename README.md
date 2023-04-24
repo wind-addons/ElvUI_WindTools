@@ -62,7 +62,7 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 1. **Minimap Buttons**: Collect all the minimap buttons to a bar.
 1. **World Map**: Remove the fog of war; scale the world map.
 1. **Super Tracker**: Right click to clear waypoint; unlock the distance limitation, etc.
-1. **Instance Difficulty**: Reskin the instance diffculty in text style.
+1. **Instance Difficulty**: Reskin the instance difficulty in text style.
 1. **Event Tracker**: Track the world events in the world map.
 
 ## Quest

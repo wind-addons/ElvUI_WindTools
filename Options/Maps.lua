@@ -824,7 +824,7 @@ options.instanceDifficulty = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Reskin the instance diffculty in text style."],
+                    name = L["Reskin the instance difficulty in text style."],
                     fontSize = "medium"
                 }
             }

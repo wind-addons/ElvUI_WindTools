@@ -101,6 +101,35 @@ function S:TomCats()
         header.topPadding = 16
         F.SetFontOutline(header.text)
     end
+
+    E:Delay(
+        1,
+        function()
+            for _, frame in pairs({_G.UIParent:GetChildren()}) do
+                if frame and frame.title and frame.icon and frame.headerBar and frame.footerBar then
+                    if frame.icon.Background then
+                        frame.icon.Background:SetAlpha(0)
+                    end
+
+                    if frame.icon.Border then
+                        frame.icon.Border:SetAlpha(0)
+                    end
+
+                    if frame.icon.logo then
+                        frame.icon.logo:ClearAllPoints()
+                        frame.icon.logo:SetPoint("CENTER", frame, "BOTTOM", 0, -3)
+                    end
+
+                    frame.headerBar:SetAlpha(0)
+                    frame.footerBar:SetAlpha(0)
+                    F.SetFontOutline(frame.title)
+
+                    frame:SetTemplate("Transparent")
+                    self:CreateShadow(frame)
+                end
+            end
+        end
+    )
 end
 
 S:AddCallbackForAddon("TomCats")

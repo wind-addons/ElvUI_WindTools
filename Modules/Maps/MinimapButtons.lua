@@ -356,6 +356,7 @@ function MB:SkinButton(frame)
 				_G["TomCats-MinimapButtonIcon"]:ClearAllPoints()
 				_G["TomCats-MinimapButtonIcon"]:SetInside(frame.backdrop)
 				_G["TomCats-MinimapButtonIcon"].SetPoint = E.noop
+				_G["TomCats-MinimapButtonIcon"]:SetTexCoord(0, 0.65, 0, 0.65)
 			end
 		end
 

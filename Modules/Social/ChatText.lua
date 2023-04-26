@@ -1143,7 +1143,8 @@ function CT:ChatFrame_MessageEventHandler(
             end
 
             local showLink = 1
-            if strsub(chatType, 1, 7) == "MONSTER" or strsub(chatType, 1, 9) == "RAID_BOSS" then
+            local isMonster = strsub(chatType, 1, 7) == "MONSTER"
+            if isMonster or strsub(chatType, 1, 9) == "RAID_BOSS" then
                 showLink = nil
 
                 -- fix blizzard formatting errors from localization strings
@@ -1249,22 +1250,24 @@ function CT:ChatFrame_MessageEventHandler(
                 arg17
             )
 
-            -- LFG Role Flags
-            local lfgRole = lfgRoles[playerName]
-            if
-                lfgRole and
-                    (chatType == "PARTY_LEADER" or chatType == "PARTY" or chatType == "RAID" or
-                        chatType == "RAID_LEADER" or
-                        chatType == "INSTANCE_CHAT" or
-                        chatType == "INSTANCE_CHAT_LEADER")
-             then
-                pflag = pflag .. lfgRole
-            end
+            if not isMonster then
+                -- LFG Role Flags
+                local lfgRole = lfgRoles[playerName]
+                if
+                    lfgRole and
+                        (chatType == "PARTY_LEADER" or chatType == "PARTY" or chatType == "RAID" or
+                            chatType == "RAID_LEADER" or
+                            chatType == "INSTANCE_CHAT" or
+                            chatType == "INSTANCE_CHAT_LEADER")
+                 then
+                    pflag = pflag .. lfgRole
+                end
 
-            -- Plugin Chat Icon
-            local pluginChatIcon = CH:GetPluginIcon(playerName)
-            if pluginChatIcon then
-                pflag = pflag .. pluginChatIcon
+                -- Plugin Chat Icon
+                local pluginChatIcon = CH:GetPluginIcon(playerName)
+                if pluginChatIcon then
+                    pflag = pflag .. pluginChatIcon
+                end
             end
 
             if usingDifferentLanguage then

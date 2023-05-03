@@ -9,6 +9,7 @@ local WM = W:GetModule("WorldMap")
 local ET = W:GetModule("EventTracker")
 
 local format = format
+local gsub = gsub
 local pairs = pairs
 
 local envs = {
@@ -943,7 +944,7 @@ do
                         L["Placeholders"] .. ":",
                         format("%s - %s", C.StringByTemplate("%mplus%", "info"), L["M+ Level"]),
                         format("%s - %s", C.StringByTemplate("%numPlayers%", "info"), L["Number of Players"]),
-                        L["Custom color can be used by adding the following code"]..":",
+                        L["Custom color can be used by adding the following code"] .. ":",
                         format("\124\124cff|cffff0000rr|r|cff00ff00gg|r|cff0000ffbb|r%s\124\124r", L["Custom String"])
                     ),
                     get = function()

@@ -8,10 +8,10 @@ local unpack = unpack
 
 local C_LootHistory_GetNumItems = C_LootHistory.GetNumItems
 
-function S:LootHistoryFrame_FullUpdate()
+function S:GroupLootHistoryFrame_DoFullRefresh()
     local numItems = C_LootHistory_GetNumItems()
     for i = 1, numItems do
-        local frame = _G.LootHistoryFrame.itemFrames[i]
+        local frame = _G.GroupLootHistoryFrame.itemFrames[i]
         if frame and not frame.__windSkin then
             frame:SetWidth(256)
             F.SetFontWithDB(frame.WinnerRoll, E.private.WT.skins.rollResult)
@@ -67,7 +67,7 @@ function S:LootHistoryFrame_FullUpdate()
         end
     end
 
-    for _, frame in pairs(_G.LootHistoryFrame.unusedPlayerFrames) do
+    for _, frame in pairs(_G.GroupLootHistoryFrame.unusedPlayerFrames) do
         if frame and not frame.__windSkin then
             frame:SetWidth(256)
             F.SetFontWithDB(frame.RollText, E.private.WT.skins.rollResult)
@@ -75,7 +75,7 @@ function S:LootHistoryFrame_FullUpdate()
         end
     end
 
-    for _, frame in pairs(_G.LootHistoryFrame.usedPlayerFrames) do
+    for _, frame in pairs(_G.GroupLootHistoryFrame.usedPlayerFrames) do
         if frame and not frame.__windSkin then
             frame:SetWidth(256)
             F.SetFontWithDB(frame.RollText, E.private.WT.skins.rollResult)
@@ -96,14 +96,14 @@ function S:LootFrame()
     self:CreateBackdropShadow(_G.BonusRollLootWonFrame)
     self:CreateBackdropShadow(_G.BonusRollMoneyWonFrame)
 
-    self:CreateShadow(_G.LootHistoryFrame)
-    self:CreateShadow(_G.LootHistoryFrame.ResizeButton)
+    self:CreateShadow(_G.GroupLootHistoryFrame)
+    self:CreateShadow(_G.GroupLootHistoryFrame.ResizeButton)
 
-    _G.LootHistoryFrame.ResizeButton:SetTemplate("Transparent")
-    _G.LootHistoryFrame:SetWidth(300)
-    _G.LootHistoryFrame.ResizeButton:SetWidth(300)
+    _G.GroupLootHistoryFrame.ResizeButton:SetTemplate("Transparent")
+    _G.GroupLootHistoryFrame:SetWidth(300)
+    _G.GroupLootHistoryFrame.ResizeButton:SetWidth(300)
 
-    self:SecureHook("LootHistoryFrame_FullUpdate")
+    -- self:SecureHook(_G.GroupLootHistoryFrame, "DoFullRefresh", "GroupLootHistoryFrame_DoFullRefresh")
 end
 
 S:AddCallback("LootFrame")

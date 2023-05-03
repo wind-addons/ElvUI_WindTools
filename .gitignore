@@ -1,5 +1,2 @@
 # macOS cache
 .DS_Store
-
-# media source
-Media/**/*.png

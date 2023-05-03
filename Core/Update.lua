@@ -87,11 +87,6 @@ function W:UpdateScripts()
         UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"], globalVersion)
     end
 
-    if privateVersion < 3.29 then
-        E.private.WT.skins.rollResult = nil
-        UpdateMessage(L["Skins"] .. " - " .. L["Update Database"], privateVersion)
-    end
-
     if not isFirstLine then
         F.PrintGradientLine()
     end

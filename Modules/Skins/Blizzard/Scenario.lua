@@ -141,7 +141,6 @@ function S:ScenarioStage()
     self:SecureHook("Scenario_ChallengeMode_ShowBlock")
     self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", "ScenarioStageWidgetContainer")
     self:SkinMawBuffsContainer(_G.ScenarioBlocksFrame.MawBuffsBlock.Container)
-    self:SkinMawBuffsContainer(_G.MawBuffsBelowMinimapFrame.Container)
 end
 
 S:AddCallback("ScenarioStage")

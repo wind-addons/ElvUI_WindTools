@@ -23,7 +23,6 @@ local strupper = strupper
 local time = time
 local tinsert = tinsert
 local tonumber = tonumber
-local tostring = tostring
 local type = type
 local unpack = unpack
 local utf8sub = string.utf8sub
@@ -291,14 +290,21 @@ end
 
 -- From ElvUI Chat
 local function ChatFrame_CheckAddChannel(chatFrame, eventType, channelID)
+    -- This is called in the event that a user receives chat events for a channel that isn't enabled for any chat frames.
+    -- Minor hack, because chat channel filtering is backed by the client, but driven entirely from Lua.
+    -- This solves the issue of Guides abdicating their status, and then re-applying in the same game session, unless ChatFrame_AddChannel
+    -- is called, the channel filter will be off even though it's still enabled in the client, since abdication removes the chat channel and its config.
+    -- Only add to default (since multiple chat frames receive the event and we don't want to add to others)
     if chatFrame ~= _G.DEFAULT_CHAT_FRAME then
         return false
     end
 
+    -- Only add if the user is joining a channel
     if eventType ~= "YOU_CHANGED" then
         return false
     end
 
+    -- Only add regional channels
     if not C_ChatInfo_IsChannelRegionalForChannelID(channelID) then
         return false
     end
@@ -499,27 +505,30 @@ function CT:HandleShortChannels(msg)
 end
 
 function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHistory, historyTime)
-    local historyTimestamp  --we need to extend the arguments on AddMessage so we can properly handle times without overriding
-    if isHistory == "ElvUI_ChatHistory" then
-        historyTimestamp = historyTime
-    end
-
-    if CH.db.timeStampFormat and CH.db.timeStampFormat ~= "NONE" then
-        local timeStamp = BetterDate(CH.db.timeStampFormat, historyTimestamp or CH:GetChatTime())
-        timeStamp = gsub(timeStamp, " ", "")
-        timeStamp = gsub(timeStamp, "AM", " AM")
-        timeStamp = gsub(timeStamp, "PM", " PM")
-        if CH.db.useCustomTimeColor then
-            local color = CH.db.customTimeColor
-            local hexColor = E:RGBToHex(color.r, color.g, color.b)
-            msg = format("%s%s|r %s", hexColor, timeStamp, msg)
-        else
-            msg = format("%s %s", timeStamp, msg)
+    if not strmatch(msg, "^|Helvtime|h") and not strmatch(msg, "^|Hcpl:") then
+        local historyTimestamp  --we need to extend the arguments on AddMessage so we can properly handle times without overriding
+        if isHistory == "ElvUI_ChatHistory" then
+            historyTimestamp = historyTime
         end
-    end
 
-    if CH.db.copyChatLines then
-        msg = format("|Hcpl:%s|h%s|h %s", self:GetID(), E:TextureString(E.Media.Textures.ArrowRight, ":14"), msg)
+        if CH.db.timeStampFormat and CH.db.timeStampFormat ~= "NONE" then
+            local timeStamp = BetterDate(CH.db.timeStampFormat, historyTimestamp or CH:GetChatTime())
+            timeStamp = gsub(timeStamp, " ", "")
+            timeStamp = gsub(timeStamp, "AM", " AM")
+            timeStamp = gsub(timeStamp, "PM", " PM")
+
+            if CH.db.useCustomTimeColor then
+                local color = CH.db.customTimeColor
+                local hexColor = E:RGBToHex(color.r, color.g, color.b)
+                msg = format("|Helvtime|h%s[%s]|r|h %s", hexColor, timeStamp, msg)
+            else
+                msg = format("|Helvtime|h[%s]|h %s", timeStamp, msg)
+            end
+        end
+
+        if CH.db.copyChatLines then
+            msg = format("|Hcpl:%s|h%s|h %s", self:GetID(), E:TextureString(E.Media.Textures.ArrowRight, ":14"), msg)
+        end
     end
 
     self.OldAddMessage(self, msg, infoR, infoG, infoB, infoID, accessID, typeID)
@@ -529,6 +538,7 @@ function CT:CheckLFGRoles()
     if not CH.db.lfgIcons or not IsInGroup() then
         return
     end
+
     wipe(lfgRoles)
 
     local playerRole = UnitGroupRolesAssigned("player")
@@ -870,19 +880,17 @@ function CT:ChatFrame_MessageEventHandler(
             frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
         elseif strsub(chatType, 1, 11) == "ACHIEVEMENT" then
             -- Append [Share] hyperlink
-            if not CT:ElvUIChat_AchievementMessageHandler(event, frame, arg1, data) then
-                frame:AddMessage(
-                    format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
-                    info.r,
-                    info.g,
-                    info.b,
-                    info.id,
-                    nil,
-                    nil,
-                    isHistory,
-                    historyTime
-                )
-            end
+            frame:AddMessage(
+                format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", CT:HandleName(coloredName)))),
+                info.r,
+                info.g,
+                info.b,
+                info.id,
+                nil,
+                nil,
+                isHistory,
+                historyTime
+            )
         elseif strsub(chatType, 1, 18) == "GUILD_ACHIEVEMENT" then
             if not CT:ElvUIChat_AchievementMessageHandler(event, frame, arg1, data) then
                 local message = format(arg1, GetPlayerLink(arg2, format(noBrackets and "%s" or "[%s]", coloredName)))
@@ -1249,17 +1257,15 @@ function CT:ChatFrame_MessageEventHandler(
                 arg16,
                 arg17
             )
-
             if not isMonster then
                 -- LFG Role Flags
-                local lfgRole = lfgRoles[playerName]
-                if
-                    lfgRole and
-                        (chatType == "PARTY_LEADER" or chatType == "PARTY" or chatType == "RAID" or
-                            chatType == "RAID_LEADER" or
-                            chatType == "INSTANCE_CHAT" or
-                            chatType == "INSTANCE_CHAT_LEADER")
-                 then
+                local lfgRole =
+                    (chatType == "PARTY_LEADER" or chatType == "PARTY" or chatType == "RAID" or
+                    chatType == "RAID_LEADER" or
+                    chatType == "INSTANCE_CHAT" or
+                    chatType == "INSTANCE_CHAT_LEADER") and
+                    lfgRoles[playerName]
+                if lfgRole then
                     pflag = pflag .. lfgRole
                 end
 

@@ -41,6 +41,10 @@ W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 -- Utilities namespace
 W.Utilities = {}
 
+function WindTools_OnAddonCompartmentClick()
+    E:ToggleOptions("WindTools")
+end
+
 function W:Initialize()
     -- ElvUI -> WindTools -> WindTools Modules
     if not self:CheckElvUIVersion() then
@@ -83,9 +87,7 @@ do
                             " " ..
                                 L["%s %s Loaded."] ..
                                     " " ..
-                                        L[
-                                            "You can send your suggestions or bugs via %s, %s, %s and the thread in %s."
-                                        ],
+                                        L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."],
                         self.Title,
                         self.Version,
                         L["QQ Group"],

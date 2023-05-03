@@ -41,7 +41,7 @@ W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 -- Utilities namespace
 W.Utilities = {}
 
-function WindTools_OnAddonCompartmentClick()
+_G.WindTools_OnAddonCompartmentClick = function()
     E:ToggleOptions("WindTools")
 end
 

@@ -8,6 +8,7 @@ local floor = floor
 local format = format
 local pairs = pairs
 local select = select
+local sort = sort
 local tinsert = tinsert
 local unpack = unpack
 
@@ -715,6 +716,13 @@ function CT:BuildFavoriteData()
             }
         )
     end
+
+    sort(
+        data,
+        function(a, b)
+            return a.name < b.name
+        end
+    )
 end
 
 function CT:ChangeCategory(type)

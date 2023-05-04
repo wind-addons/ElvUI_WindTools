@@ -484,9 +484,22 @@ function S:WeakAuras_ShowOptions()
     end
 
     -- Remove background
-    frame:SetBackdrop(nil)
-    frame:CreateBackdrop("Transparent")
-    self:CreateBackdropShadow(frame)
+    frame:StripTextures()
+    self:ESProxy("HandleFrame", frame, true, nil, 0, 0, 0, 0)
+    self:CreateShadow(frame)
+
+    self:ESProxy("HandleCloseButton", frame.CloseButton)
+    if frame.MaxMinButtonFrame.MinimizeButton then
+        self:ESProxy("HandleNextPrevButton", frame.MaxMinButtonFrame.MinimizeButton, "up", nil, true)
+        frame.MaxMinButtonFrame.MinimizeButton:ClearAllPoints()
+        frame.MaxMinButtonFrame.MinimizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
+    end
+
+    if frame.MaxMinButtonFrame.MaximizeButton then
+        self:ESProxy("HandleNextPrevButton", frame.MaxMinButtonFrame.MaximizeButton, "down", nil, true)
+        frame.MaxMinButtonFrame.MaximizeButton:ClearAllPoints()
+        frame.MaxMinButtonFrame.MaximizeButton:Point("RIGHT", frame.CloseButton, "LEFT")
+    end
 
     for _, region in pairs {frame:GetRegions()} do
         if region:GetObjectType() == "Texture" then
@@ -499,8 +512,6 @@ function S:WeakAuras_ShowOptions()
     self:WeakAurasOptionMoverSizer()
 
     -- Buttons
-    -- ReskinExpandButtons()
-
     for _, child in pairs {frame:GetChildren()} do
         if child:GetObjectType() == "Button" then
             ReskinNormalButton(child, true)
@@ -509,12 +520,6 @@ function S:WeakAuras_ShowOptions()
             ReskinNormalButton(child, true)
         end
     end
-
-    -- Change position of resize buttons
-    frame.bottomLeftResizer:ClearAllPoints()
-    frame.bottomLeftResizer:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", -5, -5)
-    frame.bottomRightResizer:ClearAllPoints()
-    frame.bottomRightResizer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
 
     -- Filter editbox
     if frame.filterInput then
@@ -529,11 +534,11 @@ function S:WeakAuras_ShowOptions()
             end
         end
         if rightPart then
-            inputBox:SetHeight(inputBox:GetHeight() + 3)
+            inputBox:SetHeight(inputBox:GetHeight() + 5)
             inputBox:ClearAllPoints()
-            inputBox:SetPoint("TOP", frame, "TOP", 0, -43)
-            inputBox:SetPoint("LEFT", frame, "LEFT", 18, 0)
-            inputBox:SetPoint("RIGHT", rightPart, "LEFT", -2, 0)
+            inputBox:SetPoint("TOP", frame, "TOP", 0, -62)
+            inputBox:SetPoint("LEFT", frame, "LEFT", 19, 0)
+            inputBox:SetPoint("RIGHT", rightPart, "LEFT", -1, 0)
         end
     end
 
@@ -541,33 +546,6 @@ function S:WeakAuras_ShowOptions()
         local numRegions = child:GetNumRegions()
         local numChildren = child:GetNumChildren()
         local frameStrata = child:GetFrameStrata()
-
-        if numRegions == 1 then
-            local recognized = false
-
-            local firstRegion = child:GetRegions()
-            local text = firstRegion.GetText and firstRegion:GetText()
-            if text and strfind(text, "^WeakAuras%s%d") then -- Title
-                child:SetFrameLevel(3)
-                child:CreateBackdrop()
-                S:CreateBackdropShadow(child, true)
-                F.SetFontOutline(firstRegion)
-                recognized = true
-            end
-
-            if not recognized then
-                if child:GetNumPoints() == 3 then
-                    local point, _, relativePoint, xOfs, yOfs = child:GetPoint(1)
-                    if point == "TOP" and relativePoint == "TOP" and xOfs == 0 and yOfs == -46 then
-                        for _, subChild in pairs {child:GetChildren()} do
-                            if subChild.obj and subChild.backdrop then -- top panel backdrop
-                                subChild.backdrop:Hide()
-                            end
-                        end
-                    end
-                end
-            end
-        end
 
         if numRegions == 3 and numChildren == 1 and child.PixelSnapDisabled then -- Top right buttons(close & collapse)
             for _, region in pairs {child:GetRegions()} do
@@ -655,21 +633,42 @@ function S:WeakAuras_ShowOptions()
         ReskinChildButton(snippetsFrame)
     end
 
-    -- Top Panel
-    if frame.toolbarContainer.frame then
-        self:StripEdgeTextures(frame.toolbarContainer.frame)
-        frame.toolbarContainer.frame:ClearAllPoints()
-        frame.toolbarContainer.frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -20)
-        frame.toolbarContainer.frame:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -16, -20)
-        frame.toolbarContainer.frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 20, -38)
-    end
+    -- Top Panel Position Fix
+    if frame.toolbarContainer then
+        local importButton, newButton
+        for _, child in pairs {frame.toolbarContainer:GetChildren()} do
+            if child.obj and child.obj.type == "WeakAurasToolbarButton" then
+                if child:GetNumPoints() == 2 then
+                    local point, relativeFrame, relativePoint = child:GetPoint(1)
+                    if point == "RIGHT" and relativeFrame == frame.filterInput and relativePoint == "RIGHT" then
+                        local point, relativeFrame, relativePoint = child:GetPoint(2)
+                        if point == "BOTTOM" and relativeFrame == frame and relativePoint == "TOP" then
+                            importButton = child
+                        end
+                    end
+                end
+            end
+        end
 
-    -- Bottom Panel
-    if frame.tipFrame.frame then
-        self:StripEdgeTextures(frame.tipFrame.frame)
-        frame.tipFrame.frame:ClearAllPoints()
-        frame.tipFrame.frame:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 10)
-        frame.tipFrame.frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 10)
+        if importButton then
+            for _, child in pairs {frame.toolbarContainer:GetChildren()} do
+                if child.obj and child.obj.type == "WeakAurasToolbarButton" then
+                    if child:GetNumPoints() == 1 then
+                        local point, relativeFrame, relativePoint = child:GetPoint(1)
+                        if point == "RIGHT" and relativeFrame == importButton and relativePoint == "LEFT" then
+                            newButton = child
+                        end
+                    end
+                end
+            end
+        end
+
+        if importButton and newButton then
+            newButton:ClearAllPoints()
+            newButton:SetPoint("BOTTOMLEFT", frame.filterInput, "TOPLEFT", 0, 6)
+            importButton:ClearAllPoints()
+            importButton:SetPoint("LEFT", newButton, "RIGHT", 4, 0)
+        end
     end
 
     if frame.iconPicker.frame then

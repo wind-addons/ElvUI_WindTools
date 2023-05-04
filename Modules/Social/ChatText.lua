@@ -579,6 +579,14 @@ function CT:HandleName(nameString)
     return nameString
 end
 
+function CT:MayHaveBrackets(...)
+    local names = {...}
+    for i = 1, select("#", ...) do
+        names[i] = not CT.db.removeBrackets and "[" .. names[i] .. "]" or names[i]
+    end
+    return unpack(names)
+end
+
 function CT:ChatFrame_MessageEventHandler(
     frame,
     event,
@@ -1467,13 +1475,18 @@ function CT:SendAchivementMessage()
                     local message = nil
 
                     if #players == 1 then
-                        message = gsub(achievementMessageTemplate, "%%player%%", addSpaceForAsian(players[1]))
+                        message =
+                            gsub(
+                            achievementMessageTemplate,
+                            "%%player%%",
+                            addSpaceForAsian(self:MayHaveBrackets(players[1]))
+                        )
                     elseif #players > 1 then
                         message =
                             gsub(
                             achievementMessageTemplateMultiplePlayers,
                             "%%players%%",
-                            addSpaceForAsian(strjoin(", ", unpack(players)))
+                            addSpaceForAsian(strjoin(", ", self:MayHaveBrackets(unpack(players))))
                         )
                     end
 
@@ -1611,7 +1624,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
         local coloredName =
             F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
 
-        coloredName = addSpaceForAsian(coloredName)
+        coloredName = addSpaceForAsian(self:MayHaveBrackets(coloredName))
         local classIcon =
             self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16) .. " " or ""
 
@@ -1795,7 +1808,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
                 ""
             local coloredName = F.CreateClassColorString(character, characterData.data.class)
 
-            local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, coloredName)
+            local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, self:MayHaveBrackets(coloredName))
 
             if self.db.factionIcon then
                 local factionIcon =

@@ -103,7 +103,7 @@ function S:LootFrame()
     _G.GroupLootHistoryFrame:SetWidth(300)
     _G.GroupLootHistoryFrame.ResizeButton:SetWidth(300)
 
-    self:SecureHook(_G.LootHistoryFrame, "DoFullRefresh", "GroupLootHistoryFrame_DoFullRefresh") -- Monitor this, probably gets a rename soonish
+    -- self:SecureHook(_G.GroupLootHistoryFrame, "DoFullRefresh", "GroupLootHistoryFrame_DoFullRefresh")
 end
 
 S:AddCallback("LootFrame")

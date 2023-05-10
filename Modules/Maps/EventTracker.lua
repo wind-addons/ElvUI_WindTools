@@ -789,6 +789,22 @@ local eventData = {
             }
         }
     }
+    --[[ 10.1 stuff
+    ResearchersUnderFire = {
+        dbKey = "ResearchersUnderFire",
+        args = {
+            icon = 2159815,
+            type = "triggerTimer",
+            barColor = colorPlatte.purple,
+            eventName = L["Researchers Under Fire"],
+            label = L["Researchers Under Fire"],
+            runningText = L["Fire"],
+            filter = function(args)
+            end,
+            startTimestamp = (function()
+            end)()
+        }
+    }]]
 }
 
 local trackers = {

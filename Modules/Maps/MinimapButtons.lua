@@ -429,6 +429,8 @@ function MB:UpdateLayout()
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	end
 
+	sort(moveButtons)
+
 	local buttonsPerRow = self.db.buttonsPerRow
 	local numOfRows = ceil(#moveButtons / buttonsPerRow)
 	local spacing = self.db.spacing

@@ -80,7 +80,7 @@ local acceptedFrames = {
 
 local moveButtons = {}
 
-function MB:HandleLibIconButton(button, name)
+function MB:HandleLibDBIconButton(button, name)
 	if not strsub(name, 1, strlen("LibDBIcon")) == "LibDBIcon" then
 		return true
 	end
@@ -405,7 +405,7 @@ function MB:SkinButton(frame)
 
 		frame.isSkinned = true
 
-		if self:HandleLibIconButton(frame, name) then
+		if self:HandleLibDBIconButton(frame, name) then
 			tinsert(moveButtons, name)
 		end
 	end

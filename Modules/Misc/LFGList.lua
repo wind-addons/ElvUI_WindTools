@@ -84,48 +84,48 @@ local RoleIconTextures = {
 }
 
 local mythicKeystoneDungeons = {
-    [2] = L["[ABBR] Temple of the Jade Serpent"],
-    [165] = L["[ABBR] Shadowmoon Burial Grounds"],
-    [200] = L["[ABBR] Halls of Valor"],
-    [210] = L["[ABBR] Court of Stars"],
-    [399] = L["[ABBR] Ruby Life Pools"],
-    [400] = L["[ABBR] The Nokhud Offensive"],
-    [401] = L["[ABBR] The Azure Vault"],
-    [402] = L["[ABBR] Algeth'ar Academy"]
+    [206] = L["[ABBR] Neltharion's Lair"],
+    [245] = L["[ABBR] Freehold"],
+    [251] = L["[ABBR] The Underrot"],
+    [403] = L["[ABBR] Uldaman: Legacy of Tyr"],
+    [404] = L["[ABBR] Neltharus"],
+    [405] = L["[ABBR] Brackenhide Hollow"],
+    [406] = L["[ABBR] Halls of Infusion"],
+    [438] = L["[ABBR] The Vortex Pinnacle"]
 }
 
 local activityIDToMapID = {
-    [1192] = 2,
-    [1193] = 165,
-    [461] = 200,
-    [466] = 210,
-    [1176] = 399,
-    [1184] = 400,
-    [1180] = 401,
-    [1160] = 402
+    [462] = 206,
+    [518] = 245,
+    [507] = 251,
+    [1188] = 403,
+    [1172] = 404,
+    [1164] = 405,
+    [1168] = 406,
+    [1195] = 438
 }
 
 local vaultItemLevel = {
     0,
-    382,
-    385,
-    385,
-    389,
-    389,
-    392,
-    395,
-    395,
-    398,
-    402,
-    405,
-    408,
-    408,
-    411,
-    415,
     415,
     418,
-    418,
-    421
+    421,
+    421,
+    424,
+    424,
+    428,
+    428,
+    431,
+    431,
+    434,
+    434,
+    437,
+    437,
+    441,
+    441,
+    444,
+    444,
+    447
 }
 
 local affixLoop = {
@@ -627,7 +627,8 @@ function LL:InitalizeRightPanel()
         end
     end
 
-    if currAffixIndex and currAffixIndex ~= 0 then
+    -- Disable for now, because nobody knows the rotation
+    if currAffixIndex and currAffixIndex ~= 0 and not true then
         local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
         if nextAffixIndex == 0 then
             nextAffixIndex = #affixLoop
@@ -701,7 +702,19 @@ function LL:InitalizeRightPanel()
         end
     end
 
-    for i, mapID in ipairs({2, 165, 200, 210, 399, 400, 401, 402}) do
+    local mapIDs = {}
+    for key in pairs(mythicKeystoneDungeons) do
+        tinsert(mapIDs, key)
+    end
+
+    sort(
+        mapIDs,
+        function(a, b)
+            return a < b
+        end
+    )
+
+    for i, mapID in ipairs(mapIDs) do
         local filterButton = CreateFrame("Frame", nil, filters)
         filterButton:SetTemplate()
         filterButton:SetSize(filterButtonWidth, 28)

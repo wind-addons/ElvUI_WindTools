@@ -43,7 +43,8 @@ local compareGUID
 local cache = {}
 
 local tiers = {
-    "Vault of the Incarnates"
+    "Vault of the Incarnates",
+    "Aberrus, the Shadowed Crucible"
 }
 
 local levels = {
@@ -78,41 +79,53 @@ local locales = {
         short = L["[ABBR] Dragonflight Keystone Hero: Season One"],
         full = L["Dragonflight Keystone Hero: Season One"]
     },
+    ["Dragonflight Keystone Master: Season Two"] = {
+        short = L["[ABBR] Dragonflight Keystone Master: Season Two"],
+        full = L["Dragonflight Keystone Master: Season Two"]
+    },
+    ["Dragonflight Keystone Hero: Season Two"] = {
+        short = L["[ABBR] Dragonflight Keystone Hero: Season Two"],
+        full = L["Dragonflight Keystone Hero: Season Two"]
+    },
     ["Vault of the Incarnates"] = {
         short = L["[ABBR] Vault of the Incarnates"],
         full = L["Vault of the Incarnates"]
     },
-    ["Temple of the Jade Serpent"] = {
-        short = L["[ABBR] Temple of the Jade Serpent"],
-        full = L["Temple of the Jade Serpent"]
+    ["Aberrus, the Shadowed Crucible"] = {
+        short = L["[ABBR] Aberrus, the Shadowed Crucible"],
+        full = L["Aberrus, the Shadowed Crucible"]
     },
-    ["Shadowmoon Burial Grounds"] = {
-        short = L["[ABBR] Shadowmoon Burial Grounds"],
-        full = L["Shadowmoon Burial Grounds"]
+    ["Neltharion's Lair"] = {
+        short = L["[ABBR] Neltharion's Lair"],
+        full = L["Neltharion's Lair"]
     },
-    ["Halls of Valor"] = {
-        short = L["[ABBR] Halls of Valor"],
-        full = L["Halls of Valor"]
+    ["Freehold"] = {
+        short = L["[ABBR] Freehold"],
+        full = L["Freehold"]
     },
-    ["Court of Stars"] = {
-        short = L["[ABBR] Court of Stars"],
-        full = L["Court of Stars"]
+    ["The Underrot"] = {
+        short = L["[ABBR] The Underrot"],
+        full = L["The Underrot"]
     },
-    ["Ruby Life Pools"] = {
-        short = L["[ABBR] Ruby Life Pools"],
-        full = L["Ruby Life Pools"]
+    ["Uldaman: Legacy of Tyr"] = {
+        short = L["[ABBR] Uldaman: Legacy of Tyr"],
+        full = L["Uldaman: Legacy of Tyr"]
     },
-    ["The Nokhud Offensive"] = {
-        short = L["[ABBR] The Nokhud Offensive"],
-        full = L["The Nokhud Offensive"]
+    ["Neltharus"] = {
+        short = L["[ABBR] Neltharus"],
+        full = L["Neltharus"]
     },
-    ["The Azure Vault"] = {
-        short = L["[ABBR] The Azure Vault"],
-        full = L["The Azure Vault"]
+    ["Brackenhide Hollow"] = {
+        short = L["[ABBR] Brackenhide Hollow"],
+        full = L["Brackenhide Hollow"]
     },
-    ["Algeth'ar Academy"] = {
-        short = L["[ABBR] Algeth'ar Academy"],
-        full = L["Algeth'ar Academy"]
+    ["Halls of Infusion"] = {
+        short = L["[ABBR] Halls of Infusion"],
+        full = L["Halls of Infusion"]
+    },
+    ["The Vortex Pinnacle"] = {
+        short = L["[ABBR] The Vortex Pinnacle"],
+        full = L["The Vortex Pinnacle"]
     }
 }
 
@@ -158,23 +171,71 @@ local raidAchievements = {
             16369,
             16370
         }
+    },
+    ["Aberrus, the Shadowed Crucible"] = {
+        ["Mythic"] = {
+            18219,
+            18220,
+            18221,
+            18222,
+            18223,
+            18224,
+            18225,
+            18226,
+            18227
+        },
+        ["Heroic"] = {
+            18210,
+            18211,
+            18212,
+            18213,
+            18214,
+            18215,
+            18216,
+            18217,
+            18218
+        },
+        ["Normal"] = {
+            18189,
+            18190,
+            18191,
+            18192,
+            18194,
+            18195,
+            18196,
+            18197,
+            18198
+        },
+        ["Raid Finder"] = {
+            18180,
+            18181,
+            18182,
+            18183,
+            18184,
+            18185,
+            18186,
+            18188,
+            18187
+        }
     }
 }
 
 local mythicKeystoneDungeons = {
-    [2] = "Temple of the Jade Serpent",
-    [165] = "Shadowmoon Burial Grounds",
-    [200] = "Halls of Valor",
-    [210] = "Court of Stars",
-    [399] = "Ruby Life Pools",
-    [400] = "The Nokhud Offensive",
-    [401] = "The Azure Vault",
-    [402] = "Algeth'ar Academy"
+    [206] = "Neltharion's Lair",
+    [245] = "Freehold",
+    [251] = "The Underrot",
+    [403] = "Uldaman: Legacy of Tyr",
+    [404] = "Neltharus",
+    [405] = "Brackenhide Hollow",
+    [406] = "Halls of Infusion",
+    [438] = "The Vortex Pinnacle"
 }
 
 local specialAchievements = {
     {16649, "Dragonflight Keystone Master: Season One"},
-    {16650, "Dragonflight Keystone Hero: Season One"}
+    {16650, "Dragonflight Keystone Hero: Season One"},
+    {17844, "Dragonflight Keystone Master: Season Two"},
+    {17845, "Dragonflight Keystone Hero: Season Two"}
 }
 
 local function GetLevelColoredString(level, short)
@@ -454,69 +515,7 @@ end
 
 T:AddInspectInfoCallback(2, "Progression", true)
 
--- NOTE
--- MapChallengeMode.dbc
--- [2] = "Temple of the Jade Serpent",
--- [56] = "Stormstout Brewery",
--- [57] = "Gate of the Setting Sun",
--- [58] = "Shado-Pan Monastery",
--- [59] = "Siege of Niuzao Temple",
--- [60] = "Mogu'shan Palace",
--- [76] = "Scholomance",
--- [77] = "Scarlet Halls",
--- [78] = "Scarlet Monastery",
--- [161] = "Skyreach",
--- [163] = "Bloodmaul Slag Mines",
--- [164] = "Auchindoun",
--- [165] = "Shadowmoon Burial Grounds",
--- [166] = "Grimrail Depot",
--- [167] = "Upper Blackrock Spire",
--- [168] = "The Everbloom",
--- [169] = "Iron Docks",
--- [197] = "Eye of Azshara",
--- [198] = "Darkheart Thicket",
--- [199] = "Black Rook Hold",
--- [200] = "Halls of Valor",
--- [206] = "Neltharion's Lair",
--- [207] = "Vault of the Wardens",
--- [208] = "Maw of Souls",
--- [209] = "The Arcway",
--- [210] = "Court of Stars",
--- [227] = "Return to Karazhan: Lower",
--- [233] = "Cathedral of Eternal Night",
--- [234] = "Return to Karazhan: Upper",
--- [239] = "Seat of the Triumvirate",
--- [244] = "Atal'Dazar",
--- [245] = "Freehold",
--- [246] = "Tol Dagor",
--- [247] = "The MOTHERLODE!!",
--- [248] = "Waycrest Manor",
--- [249] = "Kings' Rest",
--- [250] = "Temple of Sethraliss",
--- [251] = "The Underrot",
--- [252] = "Shrine of the Storm",
--- [353] = "Siege of Boralus",
--- [369] = "Operation: Mechagon - Junkyard",
--- [370] = "Operation: Mechagon - Workshop",
--- [375] = "Mists of Tirna Scithe",
--- [376] = "The Necrotic Wake",
--- [377] = "De Other Side",
--- [378] = "Halls of Atonement",
--- [379] = "Plaguefall",
--- [380] = "Sanguine Depths",
--- [381] = "Spires of Ascension",
--- [382] = "Theater of Pain",
--- [391] = "Tazavesh: Streets of Wonder",
--- [392] = "Tazavesh: So'leah's Gambit",
--- [399] = "Ruby Life Pools",
--- [400] = "The Nokhud Offensive",
--- [401] = "The Azure Vault",
--- [402] = "Algeth'ar Academy",
--- [403] = "Uldaman: Legacy of Tyr",
--- [404] = "Neltharus",
--- [405] = "Brackenhide Hollow",
--- [406] = "Halls of Infusion",
-
+-- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
 -- PYTHON SCRIPT TO GENERATE THE TABLE
 -- USE FIRST 2 COLS OF MapChallengeMode.dbc
 -- _text = text.split("\n")

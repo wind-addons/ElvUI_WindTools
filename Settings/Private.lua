@@ -584,25 +584,28 @@ V.tooltips = {
         header = "TEXTURE",
         raids = {
             enable = true,
-            ["Vault of the Incarnates"] = true
+            ["Vault of the Incarnates"] = true,
+            ["Aberrus, the Shadowed Crucible"] = true
         },
         special = {
             enable = true,
             ["Dragonflight Keystone Master: Season One"] = true,
-            ["Dragonflight Keystone Hero: Season One"] = true
+            ["Dragonflight Keystone Hero: Season One"] = true,
+            ["Dragonflight Keystone Master: Season Two"] = true,
+            ["Dragonflight Keystone Hero: Season Two"] = true
         },
         mythicDungeons = {
             enable = true,
             markHighestScore = true,
             showNoRecord = true,
-            ["Temple of the Jade Serpent"] = true,
-            ["Shadowmoon Burial Grounds"] = true,
-            ["Halls of Valor"] = true,
-            ["Court of Stars"] = true,
-            ["Ruby Life Pools"] = true,
-            ["The Nokhud Offensive"] = true,
-            ["The Azure Vault"] = true,
-            ["Algeth'ar Academy"] = true
+            ["Neltharion's Lair"] = true,
+            ["Freehold"] = true,
+            ["The Underrot"] = true,
+            ["Uldaman: Legacy of Tyr"] = true,
+            ["Neltharus"] = true,
+            ["Brackenhide Hollow"] = true,
+            ["Halls of Infusion"] = true,
+            ["The Vortex Pinnacle"] = true
         }
     }
 }

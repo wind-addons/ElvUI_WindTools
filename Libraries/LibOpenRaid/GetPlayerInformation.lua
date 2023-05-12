@@ -504,12 +504,30 @@ local getSpellListAsHashTableFromSpellBook = function()
     local tabEnd = offset + numSpells
     for entryOffset = offset, tabEnd - 1 do
         local spellType, spellId = GetSpellBookItemInfo(entryOffset, "player")
-        if (spellId and LIB_OPEN_RAID_COOLDOWNS_INFO[spellId] and LIB_OPEN_RAID_COOLDOWNS_INFO[spellId].raceid == playerRaceId) then
-            spellId = C_SpellBook.GetOverrideSpell(spellId)
-            local spellName = GetSpellInfo(spellId)
-            local bIsPassive = IsPassiveSpell(spellId, "player")
-            if (spellName and not bIsPassive) then
-                completeListOfSpells[spellId] = true
+        local spellData = LIB_OPEN_RAID_COOLDOWNS_INFO[spellId]
+        if (spellData) then
+            local raceId = spellData.raceid
+            if (raceId) then
+                if (type(raceId) == "table") then
+                    if (raceId[playerRaceId]) then
+                        spellId = C_SpellBook.GetOverrideSpell(spellId)
+                        local spellName = GetSpellInfo(spellId)
+                        local bIsPassive = IsPassiveSpell(spellId, "player")
+                        if (spellName and not bIsPassive) then
+                            completeListOfSpells[spellId] = true
+                        end
+                    end
+
+                elseif (type(raceId) == "number") then
+                    if (raceId == playerRaceId) then
+                        spellId = C_SpellBook.GetOverrideSpell(spellId)
+                        local spellName = GetSpellInfo(spellId)
+                        local bIsPassive = IsPassiveSpell(spellId, "player")
+                        if (spellName and not bIsPassive) then
+                            completeListOfSpells[spellId] = true
+                        end
+                    end
+                end
             end
         end
     end
@@ -593,8 +611,23 @@ local updateCooldownAvailableList = function()
 
     --build a list of all spells assigned as cooldowns for the player class
     for spellID, spellData in pairs(LIB_OPEN_RAID_COOLDOWNS_INFO) do
-        --type 10 is an item cooldown and does not have a class or raceid
-        if (spellData.class == playerClass or spellData.raceid == playerRaceId or CONST_ISITEM_BY_TYPEID[spellData.type]) then --need to implement here to get the racial as racial cooldowns does not carry a class
+        --type 10 is an item cooldown and does not have a class or race id
+
+        local passRaceId = false
+        local raceId = spellData.raceid
+        if (raceId) then
+            if (type(raceId) == "table") then
+                if (raceId[playerRaceId]) then
+                    passRaceId = true
+                end
+            elseif (type(raceId) == "number") then
+                if (raceId == playerRaceId) then
+                    passRaceId = true
+                end
+            end
+        end
+
+        if (spellData.class == playerClass or passRaceId or CONST_ISITEM_BY_TYPEID[spellData.type]) then --need to implement here to get the racial as racial cooldowns does not carry a class
             --type 10 is an item cooldown and does not have a spellbook entry
             if (spellBookSpellList[spellID] or CONST_ISITEM_BY_TYPEID[spellData.type]) then
                 LIB_OPEN_RAID_PLAYERCOOLDOWNS[spellID] = spellData

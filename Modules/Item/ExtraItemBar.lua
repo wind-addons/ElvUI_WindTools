@@ -597,7 +597,8 @@ local foodDragonflight = {
     197792, -- 命定幸運籤餅
     197793, -- 雨莎的澎湃燉肉
     197794, -- 卡魯耶克的豪華盛宴
-    197795 -- 龍族佳餚大餐
+    197795, -- 龍族佳餚大餐
+    204072  -- 欺诈魔鬼蛋
 }
 
 -- https://www.wowhead.com/beta/items/consumables/food-and-drinks/min-req-level:65?filter=92:166;1:10;0:0

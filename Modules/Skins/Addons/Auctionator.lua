@@ -83,29 +83,34 @@ local function bagClassListing(frame)
 end
 
 local function bagItemContainer(frame)
-    if frame.buttonPool and frame.buttonPool.creatorFunc then
-        local func = frame.buttonPool.creatorFunc
-        frame.buttonPool.creatorFunc = function(...)
-            local button = func(...)
+    if frame.buttonPool then
+        hooksecurefunc(
+            frame.buttonPool,
+            "Acquire",
+            function(pool, button)
+                for button in pool:EnumerateActive() do
+                    if not button.__windSkin then
+                        button.Icon:ClearAllPoints()
+                        button.Icon:SetSize(frame.iconSize - 4, frame.iconSize - 4)
+                        button.Icon:SetPoint("CENTER", button, "CENTER", 0, 0)
 
-            button.Icon:ClearAllPoints()
-            button.Icon:SetSize(frame.iconSize - 4, frame.iconSize - 4)
-            button.Icon:SetPoint("CENTER", button, "CENTER", 0, 0)
+                        button.EmptySlot:SetTexture(nil)
+                        button.EmptySlot:Hide()
 
-            button.EmptySlot:SetTexture(nil)
-            button.EmptySlot:Hide()
+                        button:GetHighlightTexture():SetTexture(E.Media.Textures.White8x8)
+                        button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.3)
 
-            button:GetHighlightTexture():SetTexture(E.Media.Textures.White8x8)
-            button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.3)
+                        button:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
+                        button:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
 
-            button:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
-            button:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
+                        S:ESProxy("HandleIcon", button.Icon, true)
+                        S:ESProxy("HandleIconBorder", button.IconBorder, button.Icon.backdrop)
 
-            S:ESProxy("HandleIcon", button.Icon, true)
-            S:ESProxy("HandleIconBorder", button.IconBorder, button.Icon.backdrop)
-
-            return button
-        end
+                        button.__windSkin = true
+                    end
+                end
+            end
+        )
     end
 end
 
@@ -215,24 +220,6 @@ local function bottomTabButtons(frame)
     end
 end
 
-local function scrollListShoppingList(frame)
-    frame.Inset:StripTextures()
-    frame.Inset:SetTemplate("Transparent")
-
-    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
-end
-
-local function scrollListRecents(frame)
-    frame.Inset:StripTextures()
-    frame.Inset:SetTemplate("Transparent")
-    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
-end
-
-local function tabRecentsContainer(frame)
-    HandleTab(frame.ListTab)
-    HandleTab(frame.RecentsTab)
-end
-
 local function sellingTabPricesContainer(frame)
     HandleTab(frame.CurrentPricesTab)
     HandleTab(frame.PriceHistoryTab)
@@ -247,23 +234,32 @@ local function resultsListing(frame)
     hooksecurefunc(frame, "UpdateTable", HandleHeaders)
 end
 
-local function shoppingTab(frame)
-    if frame.OneItemSearch then
-        S:ESProxy("HandleEditBox", frame.OneItemSearch.SearchBox)
-        S:ESProxy("HandleButton", frame.OneItemSearch.SearchButton)
-        S:ESProxy("HandleButton", frame.OneItemSearch.ExtendedButton)
-    end
-
-    S:ESProxy("HandleDropDownBox", frame.ListDropdown)
-
-    S:ESProxy("HandleButton", frame.AddItem)
-    S:ESProxy("HandleButton", frame.ManualSearch)
-    S:ESProxy("HandleButton", frame.SortItems)
-    S:ESProxy("HandleButton", frame.Import)
-    S:ESProxy("HandleButton", frame.Export)
+local function shoppingTabFrame(frame)
+    S:ESProxy("HandleButton", frame.NewListButton)
+    S:ESProxy("HandleButton", frame.ImportButton)
+    S:ESProxy("HandleButton", frame.ExportButton)
     S:ESProxy("HandleButton", frame.ExportCSV)
 
     frame.ShoppingResultsInset:StripTextures()
+end
+
+local function shoppingTabSearchOptions(frame)
+    S:ESProxy("HandleEditBox", frame.SearchString)
+    S:ESProxy("HandleButton", frame.ResetSearchStringButton)
+    S:ESProxy("HandleButton", frame.SearchButton)
+    S:ESProxy("HandleButton", frame.MoreButton)
+    S:ESProxy("HandleButton", frame.AddToListButton)
+end
+
+local function shoppingTabContainer(frame)
+    frame.Inset:StripTextures()
+    frame.Inset:SetTemplate("Transparent")
+    S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+end
+
+local function shoppingTabContainerTabs(frame)
+    HandleTab(frame.ListsTab)
+    HandleTab(frame.RecentsTab)
 end
 
 local function sellingTab(frame)
@@ -444,11 +440,13 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorKeyBindingConfigMixin, "OnLoad", reskin(keyBindingConfig))
     hooksecurefunc(_G.AuctionatorResultsListingMixin, "OnShow", reskin(resultsListing))
     hooksecurefunc(_G.AuctionatorSaleItemMixin, "OnLoad", reskin(saleItem))
-    hooksecurefunc(_G.AuctionatorScrollListRecentsMixin, "OnLoad", reskin(scrollListRecents))
-    hooksecurefunc(_G.AuctionatorScrollListShoppingListMixin, "OnLoad", reskin(scrollListShoppingList))
+    hooksecurefunc(_G.AuctionatorShoppingTabFrameMixin, "OnLoad", reskin(shoppingTabFrame))
+    hooksecurefunc(_G.AuctionatorShoppingTabSearchOptionsMixin, "OnLoad", reskin(shoppingTabSearchOptions))
+    hooksecurefunc(_G.AuctionatorShoppingTabListsContainerMixin, "OnLoad", reskin(shoppingTabContainer))
+    hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(shoppingTabContainer))
+    hooksecurefunc(_G.AuctionatorShoppingTabContainerTabsMixin, "OnLoad", reskin(shoppingTabContainerTabs))
     hooksecurefunc(_G.AuctionatorSellingBagFrameMixin, "OnLoad", reskin(sellingBagFrame))
     hooksecurefunc(_G.AuctionatorSellingTabPricesContainerMixin, "OnLoad", reskin(sellingTabPricesContainer))
-    hooksecurefunc(_G.AuctionatorShoppingTabRecentsContainerMixin, "OnLoad", reskin(tabRecentsContainer))
     hooksecurefunc(_G.AuctionatorTabContainerMixin, "OnLoad", reskin(bottomTabButtons))
     hooksecurefunc(_G.AuctionatorUndercutScanMixin, "OnLoad", reskin(undercutScan))
 
@@ -456,7 +454,6 @@ function S:Auctionator()
     hooksecurefunc(_G.AuctionatorCancellingFrameMixin, "OnLoad", reskin(cancellingFrame))
     hooksecurefunc(_G.AuctionatorConfigTabMixin, "OnLoad", reskin(configTab))
     hooksecurefunc(_G.AuctionatorSellingTabMixin, "OnLoad", reskin(sellingTab))
-    hooksecurefunc(_G.AuctionatorShoppingTabMixin, "OnLoad", reskin(shoppingTab))
 
     -- frames
     hooksecurefunc(_G.AuctionatorConfigSellingFrameMixin, "OnLoad", reskin(configSellingFrame))

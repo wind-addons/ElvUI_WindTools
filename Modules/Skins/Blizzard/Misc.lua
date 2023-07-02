@@ -167,6 +167,12 @@ function S:BlizzardMiscFrames()
 
     -- Battle.net
     self:CreateShadow(_G.BattleTagInviteFrame)
+
+    -- BasicMessageDialog
+    local MessageDialog = _G.BasicMessageDialog
+    if MessageDialog then
+        self:CreateShadow(MessageDialog)
+    end
 end
 
 S:AddCallback("BlizzardMiscFrames")

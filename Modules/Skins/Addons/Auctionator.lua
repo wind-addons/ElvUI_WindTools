@@ -328,22 +328,6 @@ local function shoppingItem(frame)
     frame.CraftedLevelRange.ResetButton:ClearAllPoints()
     frame.CraftedLevelRange.ResetButton:SetPoint("LEFT", frame.CraftedLevelRange.MaxBox, "RIGHT", 3, 0)
 
-    S:ESProxy("HandleDropDownBox", frame.QualityContainer.DropDown.DropDown)
-    S:ESProxy("HandleButton", frame.QualityContainer.ResetQualityButton)
-    frame.QualityContainer.ResetQualityButton:SetSize(20, 20)
-    frame.QualityContainer.ResetQualityButton:ClearAllPoints()
-    frame.QualityContainer.ResetQualityButton:SetPoint("LEFT", frame.QualityContainer.DropDown.DropDown, "RIGHT", 0, 3)
-
-    if frame.TierContainer then
-        frame.TierContainer:ClearAllPoints()
-        frame.TierContainer:SetPoint("TOPLEFT", frame.QualityContainer, "BOTTOMLEFT", 0, -20)
-        S:ESProxy("HandleDropDownBox", frame.TierContainer.DropDown.DropDown)
-        S:ESProxy("HandleButton", frame.TierContainer.ResetTierButton)
-        frame.TierContainer.ResetTierButton:SetSize(20, 20)
-        frame.TierContainer.ResetTierButton:ClearAllPoints()
-        frame.TierContainer.ResetTierButton:SetPoint("LEFT", frame.TierContainer.DropDown.DropDown, "RIGHT", 0, 3)
-    end
-
     S:ESProxy("HandleButton", frame.Finished)
     S:ESProxy("HandleButton", frame.Cancel)
     S:ESProxy("HandleButton", frame.ResetAllButton)

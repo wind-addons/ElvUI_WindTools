@@ -648,7 +648,7 @@ local eventData = {
                     [3] = 1676017800, -- EU
                     [4] = 1675767600, -- TW
                     [5] = 1675767600, -- CN
-                    --[72] = 1675767600 -- TR -- ToDo: 10.1.5
+                    [72] = 1675767600
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR
@@ -686,7 +686,7 @@ local eventData = {
                     [3] = 1670774400, -- EU
                     [4] = 1670770800, -- TW
                     [5] = 1670770800, -- CN
-                    --[72] = 1670770800, -- TR -- ToDo: 10.1.5
+                    [72] = 1670770800 -- TR
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR

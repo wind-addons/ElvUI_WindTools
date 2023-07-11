@@ -628,7 +628,7 @@ function LL:InitalizeRightPanel()
     end
 
     -- Disable for now, because nobody knows the rotation
-    if currAffixIndex and currAffixIndex ~= 0 and not true then
+    if currAffixIndex and currAffixIndex ~= 0 then
         local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
         if nextAffixIndex == 0 then
             nextAffixIndex = #affixLoop
@@ -640,11 +640,11 @@ function LL:InitalizeRightPanel()
         frame.affix:SetHeight(32)
 
         local width = frame.affix:GetWidth()
-        local space = (width - 32 * 4) / 3
-        for i = 1, 4 do
+        local space = (width - 32 * 4) / 4
+        for i = 1, 3 do
             local affix = frame.affix:CreateTexture(nil, "ARTWORK")
             affix:SetSize(32, 32)
-            affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * (32 + space), 0)
+            affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
             local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
             affix:SetTexture(fileDataID)
             affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
@@ -656,7 +656,7 @@ function LL:InitalizeRightPanel()
                 _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
                 _G.GameTooltip:ClearLines()
                 _G.GameTooltip:AddLine(F.GetWindStyleText(L["Next Affixes"]))
-                for i = 1, 4 do
+                for i = 1, 3 do
                     local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
                     _G.GameTooltip:AddLine(" ")
                     _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))

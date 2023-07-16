@@ -721,7 +721,7 @@ P.maps = {
             stopAlertIfCompleted = true,
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
-				researchersUnderFire = {
+        researchersUnderFire = {
             enable = true,
             desaturate = false,
             alert = true,
@@ -731,7 +731,7 @@ P.maps = {
             stopAlertIfCompleted = true,
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
-				timeRiftThaldraszus = {
+        timeRiftThaldraszus = {
             enable = true,
             desaturate = false,
             alert = true,

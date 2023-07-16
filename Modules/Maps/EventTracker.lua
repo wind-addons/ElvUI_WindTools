@@ -69,7 +69,7 @@ local colorPlatte = {
         {r = 0.92549, g = 0.00000, b = 0.54902, a = 1},
         {r = 0.98824, g = 0.40392, b = 0.40392, a = 1}
     },
-		green = {
+    green = {
         {r = 0.40392, g = 0.92549, b = 0.54902, a = 1},
         {r = 0.00000, g = 0.98824, b = 0.40392, a = 1}
     },
@@ -77,7 +77,7 @@ local colorPlatte = {
         {r = 0.27843, g = 0.46275, b = 0.90196, a = 1},
         {r = 0.55686, g = 0.32941, b = 0.91373, a = 1}
     },
-		bronze = {
+    bronze = {
         {r = 0.83000, g = 0.42000, b = 0.10000, a = 1},
         {r = 0.56500, g = 0.40800, b = 0.16900, a = 1}
     },
@@ -168,15 +168,15 @@ local functionFactory = {
         ticker = {
             interval = 0.3,
             dateUpdater = function(self)
-								local completed = 0;
-								if (self.args.questIDs) and (type(self.args.questIDs) == "table") then
+                local completed = 0;
+                if (self.args.questIDs) and (type(self.args.questIDs) == "table") then
                     for _, questID in pairs(self.args.questIDs) do
                         if C_QuestLog_IsQuestFlaggedCompleted(questID) then
                             completed = completed + 1
-								        end
-								    end
+                        end
+                    end
                 end
-								self.isCompleted = (completed > 0)
+                self.isCompleted = (completed > 0)
 
                 local timeSinceStart = GetServerTime() - self.args.startTimestamp
                 self.timeOver = timeSinceStart % self.args.interval
@@ -306,25 +306,25 @@ local functionFactory = {
                     _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "greyLight"), 1, 1, 1)
                 end
 
-								if self.args.hasWeeklyReward then
-									if self.isCompleted then
-											_G.GameTooltip:AddDoubleLine(
-													L["Weekly Reward"],
-													C.StringByTemplate(L["Completed"], "success"),
-													1,
-													1,
-													1
-											)
-									else
-											_G.GameTooltip:AddDoubleLine(
-													L["Weekly Reward"],
-													C.StringByTemplate(L["Not Completed"], "danger"),
-													1,
-													1,
-													1
-											)
-									end
-								end
+                if self.args.hasWeeklyReward then
+                    if self.isCompleted then
+                        _G.GameTooltip:AddDoubleLine(
+                            L["Weekly Reward"],
+                            C.StringByTemplate(L["Completed"], "success"),
+                            1,
+                            1,
+                            1
+                        )
+                    else
+                        _G.GameTooltip:AddDoubleLine(
+                            L["Weekly Reward"],
+                            C.StringByTemplate(L["Not Completed"], "danger"),
+                            1,
+                            1,
+                            1
+                        )
+                    end
+                end
 
                 _G.GameTooltip:Show()
             end,
@@ -648,7 +648,7 @@ local eventData = {
             icon = 4687629,
             type = "loopTimer",
             questIDs = { 70893 },
-						hasWeeklyReward = true,
+            hasWeeklyReward = true,
             duration = 16 * 60,
             interval = 1.5 * 60 * 60,
             barColor = colorPlatte.blue,
@@ -687,7 +687,7 @@ local eventData = {
             icon = 236469,
             type = "loopTimer",
             questIDs = { 70866 },
-						hasWeeklyReward = true,
+            hasWeeklyReward = true,
             duration = 10 * 60,
             interval = 2 * 60 * 60,
             eventName = L["Siege On Dragonbane Keep"],
@@ -727,7 +727,7 @@ local eventData = {
             icon = 5140835,
             type = "loopTimer",
             questIDs = { 75627, 75628, 75629, 75630 },
-						hasWeeklyReward = true,
+            hasWeeklyReward = true,
             duration = 25 * 60,
             interval = 1 * 60 * 60,
             eventName = L["Researchers Under Fire"],
@@ -747,8 +747,8 @@ local eventData = {
                     [2] = 1670703360, -- KR
                     [3] = 1683804640, -- EU
                     [4] = 1670702460, -- TW
-                    [5] = 1670702460,	-- CN
-										[72] = 1670702460 -- TR
+                    [5] = 1670702460, -- CN
+                    [72] = 1670702460 -- TR
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR
@@ -760,13 +760,13 @@ local eventData = {
             end)()
         }
     },
-		TimeRiftThaldraszus = {
+    TimeRiftThaldraszus = {
         dbKey = "timeRiftThaldraszus",
         args = {
             icon = 237538,
             type = "loopTimer",
             --questIDs = { 0 },
-						hasWeeklyReward = false,
+            hasWeeklyReward = false,
             duration = 15 * 60,
             interval = 1 * 60 * 60,
             eventName = L["Time Rift Thaldraszus"],
@@ -786,8 +786,8 @@ local eventData = {
                     [2] = 1701852315, -- KR
                     [3] = 1701828015, -- EU
                     [4] = 1701852315, -- TW
-                    [5] = 1701852315,	-- CN
-										[72] = 1701852315 -- TR
+                    [5] = 1701852315, -- CN
+                    [72] = 1701852315 -- TR
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR

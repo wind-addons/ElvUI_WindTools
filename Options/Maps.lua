@@ -1257,7 +1257,7 @@ options.eventTracker = {
                 }
             }
         },
-				researchersUnderFire = {
+        researchersUnderFire = {
             order = 7,
             type = "group",
             inline = true,
@@ -1340,7 +1340,7 @@ options.eventTracker = {
                 }
             }
         },
-				timeRiftThaldraszus = {
+        timeRiftThaldraszus = {
             order = 8,
             type = "group",
             inline = true,

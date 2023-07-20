@@ -220,18 +220,23 @@ options.help = {
                     type = "description",
                     name = "404Polaris"
                 },
-                ["ryanfys"] = {
+                ["fubaWoW"] = {
                     order = 9,
+                    type = "description",
+                    name = "fubaWoW"
+                },
+                ["ryanfys"] = {
+                    order = 10,
                     type = "description",
                     name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. " (CN)")
                 },
                 ["MouJiaoZi"] = {
-                    order = 10,
+                    order = 11,
                     type = "description",
                     name = format("%s: %s", "MouJiaoZi", E.InfoColor .. "某餃子" .. "|r")
                 },
                 ["Jaenichen"] = {
-                    order = 11,
+                    order = 12,
                     type = "description",
                     name = format("%s: %s", "Jaenichen", E.InfoColor .. "beejayjayn" .. "|r")
                 }

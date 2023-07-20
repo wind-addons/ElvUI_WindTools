@@ -742,7 +742,7 @@ P.maps = {
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         iskaaranFishingNet = {
-            enable = true,
+            enable = false,
             alert = true,
             sound = true,
             soundFile = "OnePlus Surprise",

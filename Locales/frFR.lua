@@ -1293,6 +1293,7 @@ L["Time"] = "Heure"
 L["Time Area Height"] = "Hauteur de la zone où se trouve l'heure"
 L["Time Area Width"] = "Largeur de la zone où se trouve l'heure"
 L["Time Manager"] = "Gérer l'horloge"
+L["Time Rift Thaldraszus"] = true
 L["TinyInspect"] = "TinyInspect"
 L["Tips"] = "Conseils"
 L["Title"] = "Titre"

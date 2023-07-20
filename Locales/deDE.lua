@@ -1293,6 +1293,7 @@ L["Time"] = "Zeit"
 L["Time Area Height"] = "Zeitbereich Höhe"
 L["Time Area Width"] = "Zeitbereich Breite"
 L["Time Manager"] = "Zeitmanager"
+L["Time Rift Thaldraszus"] = true
 L["TinyInspect"] = true
 L["Tips"] = true
 L["Title"] = "Titel"

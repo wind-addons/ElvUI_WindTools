@@ -1293,6 +1293,7 @@ L["Time"] = "Время"
 L["Time Area Height"] = "Высота панели часов"
 L["Time Area Width"] = "Ширина панели часов"
 L["Time Manager"] = true
+L["Time Rift Thaldraszus"] = true
 L["TinyInspect"] = true
 L["Tips"] = "Советы"
 L["Title"] = "Название"

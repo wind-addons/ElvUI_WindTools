@@ -1293,6 +1293,7 @@ L["Time"] = "Tiempo"
 L["Time Area Height"] = true
 L["Time Area Width"] = true
 L["Time Manager"] = true
+L["Time Rift Thaldraszus"] = true
 L["TinyInspect"] = true
 L["Tips"] = "Consejos"
 L["Title"] = true

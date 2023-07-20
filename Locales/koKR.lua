@@ -1293,6 +1293,7 @@ L["Time"] = "시간"
 L["Time Area Height"] = "시간 영역 높이"
 L["Time Area Width"] = "시간 영역 너비"
 L["Time Manager"] = "시계"
+L["Time Rift Thaldraszus"] = true
 L["TinyInspect"] = true
 L["Tips"] = "팁"
 L["Title"] = "제목"

@@ -569,12 +569,22 @@ local getSpellListAsHashTableFromSpellBook = function()
                 spellId = C_SpellBook.GetOverrideSpell(spellId)
                 local spellName = GetSpellInfo(spellId)
                 local bIsPassive = IsPassiveSpell(spellId, "player")
+
                 if LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId] then
                     for _, overrideSpellId in pairs(LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId]) do
                         completeListOfSpells[overrideSpellId] = true
                     end
                 elseif (spellName and not bIsPassive) then
                     completeListOfSpells[spellId] = true
+
+                else
+                    if (not spellName) then
+                        --print("no spellname")
+                        --print(GetSpellInfo(spellId))
+                    elseif (bIsPassive) then
+                        --print("is passive")
+                        --print(GetSpellInfo(spellId))
+                    end
                 end
             end
         end
@@ -647,7 +657,7 @@ function openRaidLib.CooldownManager.GetPlayerCooldownList()
         --get the player specId
         local specId = openRaidLib.GetPlayerSpecId()
         if (specId) then
-            --get the cooldowns for the specialization
+            --get the cooldowns for the specializationid
             local playerCooldowns = LIB_OPEN_RAID_PLAYERCOOLDOWNS
             if (not playerCooldowns) then
                 openRaidLib.DiagnosticError("CooldownManager|GetPlayerCooldownList|LIB_OPEN_RAID_PLAYERCOOLDOWNS is nil")

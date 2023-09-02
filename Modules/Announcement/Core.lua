@@ -5,6 +5,7 @@ local _G = _G
 
 local format = format
 local pairs = pairs
+local time = time
 
 local IsEveryoneAssistant = IsEveryoneAssistant
 local IsInGroup = IsInGroup
@@ -19,6 +20,31 @@ local UnitInRaid = UnitInRaid
 
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
+
+A.history = {}
+
+function A:AddHistory(text, channel)
+    if not self.db.sameMessageInterval or self.db.sameMessageInterval == 0 then
+        return
+    end
+
+    self.history[text .. "_@@@_" .. channel] = time()
+end
+
+function A:CheckBeforeSend(text, channel)
+    if not self.db.sameMessageInterval or self.db.sameMessageInterval == 0 then
+        return true
+    end
+
+    local key = text .. "_@@@_" .. channel
+
+    if self.history[key] and time() < self.history[key] + self.db.sameMessageInterval then
+        return false
+    end
+
+    self.history[key] = time()
+    return true
+end
 
 --[[
     Send Message
@@ -66,7 +92,9 @@ function A:SendMessage(text, channel, raidWarning, whisperTarget)
         end
     end
 
-    SendChatMessage(text, channel)
+    if self:CheckBeforeSend(text, channel) then
+        SendChatMessage(text, channel)
+    end
 end
 
 --[[

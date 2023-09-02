@@ -10,15 +10,18 @@ local function SetupOptions(frame)
     end
 
     S:CreateShadow(frame)
-    frame.shadow:SetShown(frame.template and frame.template == "Transparent")
 
-    hooksecurefunc(
-        frame,
-        "SetTemplate",
-        function(_, template)
-            frame.shadow:SetShown(template and template == "Transparent")
-        end
-    )
+    if frame.shadow then
+        frame.shadow:SetShown(frame.template and frame.template == "Transparent")
+
+        hooksecurefunc(
+            frame,
+            "SetTemplate",
+            function(_, template)
+                frame.shadow:SetShown(template and template == "Transparent")
+            end
+        )
+    end
 
     frame.__windSkin = true
 end

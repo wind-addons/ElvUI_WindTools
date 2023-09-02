@@ -39,7 +39,7 @@ if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and not isExpansion_Dragonflight()) t
 end
 
 local major = "LibOpenRaid-1.0"
-local CONST_LIB_VERSION = 110
+local CONST_LIB_VERSION = 111
 
 if (LIB_OPEN_RAID_MAX_VERSION) then
     if (CONST_LIB_VERSION <= LIB_OPEN_RAID_MAX_VERSION) then
@@ -1595,7 +1595,7 @@ openRaidLib.internalCallback.RegisterCallback("onLeaveCombat", openRaidLib.UnitI
         local itemLevel = openRaidLib.GearManager.GetPlayerItemLevel()
 
         --repair status
-        local gearDurability = openRaidLib.GearManager.GetPlayerGearDurability()
+        local gearDurability, lowestItemDurability = openRaidLib.GearManager.GetPlayerGearDurability()
 
         --get weapon enchant
         local weaponEnchant, mainHandEnchantId, offHandEnchantId = openRaidLib.GearManager.GetPlayerWeaponEnchant()

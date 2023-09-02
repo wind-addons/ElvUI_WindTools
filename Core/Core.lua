@@ -63,7 +63,7 @@ E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
     text = format(
         "%s\n%s\n\n|cffaaaaaa%s|r",
         format(L["%s detects CVar %s has been changed."], W.Title, "|cff209ceeActionButtonUseKeyDown|r"),
-        L["It will cause some buttons not work properly before UI reloading."],
+        L["It will cause some buttons not to work properly before UI reloading."],
         format(L["You can disable this alert in [%s]-[%s]-[%s]"], W.Title, L["Advanced"], L["Game Fix"])
     ),
     button1 = L["Reload UI"],

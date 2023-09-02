@@ -42,7 +42,7 @@ options.general = {
             order = 1,
             type = "select",
             name = L["Modifier Key"],
-            desc = format(L["The modifer key to show additional information from %s."], W.Title),
+            desc = format(L["The modifier key to show additional information from %s."], W.Title),
             set = function(info, value)
                 E.private.WT.tooltips[info[#info]] = value
             end,

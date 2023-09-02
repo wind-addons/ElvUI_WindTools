@@ -78,7 +78,7 @@ options.general = {
             order = 5,
             type = "toggle",
             name = L["Only Watched"],
-            desc = L["Only skip watched cut scene. (some cut scene can't be skipped)"],
+            desc = L["Only skip watched cut scene. (some cut scenes can't be skipped)"],
             hidden = function()
                 return not E.private.WT.misc.skipCutScene
             end,
@@ -1055,7 +1055,7 @@ options.gameBar = {
                             order = 1,
                             type = "toggle",
                             name = L["Mouse Over"],
-                            desc = L["Show the bar only mouse hovered the area."],
+                            desc = L["Show the bar only when the mouse is hovered over the area."],
                             set = function(info, value)
                                 E.db.WT.misc.gameBar[info[#info]] = value
                                 GB:UpdateBar()
@@ -1390,7 +1390,7 @@ options.gameBar = {
                     order = 1,
                     type = "toggle",
                     name = L["Show All Friends"],
-                    desc = L["Show all friends rather than only friends who currently playing WoW."]
+                    desc = L["Show all friends rather than only friends who are currently playing WoW."]
                 }
             }
         },

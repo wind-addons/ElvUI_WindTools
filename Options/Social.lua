@@ -812,7 +812,7 @@ do
                         order = 4,
                         type = "toggle",
                         name = L["BNet Friend Online"],
-                        desc = L["Show a message when a Battle.net friend's wow character comes online."] ..
+                        desc = L["Show a message when a Battle.net friend's WoW character comes online."] ..
                             "\n" ..
                                 L[
                                     "The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."
@@ -823,7 +823,7 @@ do
                         order = 5,
                         type = "toggle",
                         name = L["BNet Friend Offline"],
-                        desc = L["Show a message when a Battle.net friend's wow character goes offline."] ..
+                        desc = L["Show a message when a Battle.net friend's WoW character goes offline."] ..
                             "\n" ..
                                 L[
                                     "The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."

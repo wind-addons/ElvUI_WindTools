@@ -19,8 +19,8 @@
 
 # :smiling_face_with_three_hearts: 本地化
 
-[ **完整支持** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
-[ **努力优化中** ] Español, français, Português, Italiano
+[ **完整支持** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch, français  
+[ **努力优化中** ] Español, Português, Italiano
 
 # :heart: 鸣谢
 

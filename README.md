@@ -19,8 +19,8 @@ Download Sites: [Curse](https://www.curseforge.com/wow/addons/elvui-windtools) |
 
 # :smiling_face_with_three_hearts: Localization
 
-[ **100% Support** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch  
-[ **Working on Pregress** ] Español, français, Português, Italiano
+[ **100% Support** ] 简体中文, 繁體中文, 한국어, ру́сский язы́к, English, Deutsch, français  
+[ **Working on Pregress** ] Español, Português, Italiano
 
 # :heart: Credits
 

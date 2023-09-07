@@ -15,8 +15,14 @@ function S:Blizzard_DeathRecap()
 end
 
 function S:SkinSkipButton(frame)
-    if frame and frame.CloseDialog then
-        self:CreateShadow(frame.CloseDialog)
+    if not frame then
+        return
+    end
+
+    local dialog = frame.closeDialog or frame.CloseDialog
+
+    if dialog then
+        self:CreateShadow(dialog)
     end
 end
 
@@ -29,7 +35,7 @@ function S:BlizzardMiscFrames()
     self:CreateShadow(_G.AutoCompleteBox)
 
     -- 跳过剧情
-    self:SecureHook("CinematicFrame_OnDisplaySizeChanged", "SkinSkipButton")
+    self:SecureHook("CinematicFrame_UpdateLettboxForAspectRatio", "SkinSkipButton")
     self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
 
     -- 聊天菜单

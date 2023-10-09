@@ -132,6 +132,13 @@ local function Skin_WeakAuras(f, fType)
             end
             f.backdrop.Center:StripTextures()
             f.backdrop:SetFrameLevel(0)
+            hooksecurefunc(
+                f,
+                "SetFrameStrata",
+                function()
+                    f.backdrop:SetFrameLevel(0)
+                end
+            )
             f.backdrop.icon = f.icon
             f.backdrop:HookScript(
                 "OnUpdate",
@@ -150,6 +157,13 @@ local function Skin_WeakAuras(f, fType)
             f:CreateBackdrop()
             f.backdrop.Center:StripTextures()
             f.backdrop:SetFrameLevel(0)
+            hooksecurefunc(
+                f,
+                "SetFrameStrata",
+                function()
+                    f.backdrop:SetFrameLevel(0)
+                end
+            )
             if E.private.WT.skins.weakAurasShadow then
                 S:CreateBackdropShadow(f, true)
             end

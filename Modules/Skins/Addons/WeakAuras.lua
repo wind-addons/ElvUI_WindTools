@@ -198,8 +198,25 @@ function S:WeakAuras()
         Skin_WeakAuras(region, region.regionType)
     end
 
-    self:SecureHook(WeakAuras.regionPrototype, "create", OnPrototypeCreate)
-    self:SecureHook(WeakAuras.regionPrototype, "modifyFinish", OnPrototypeModifyFinish)
+    -- from 雨夜独行客@NGA
+    hooksecurefunc(
+        WeakAuras,
+        "SetTextureOrAtlas",
+        function(icon)
+            local parent = icon:GetParent()
+            local region = parent.regionType and parent or parent:GetParent()
+            if region and region.regionType then
+                Skin_WeakAuras(region, region.regionType)
+            end
+        end
+    )
+
+    -- TODO: if WeakAruas2 add more blocks, use fork version entry point.
+    -- https://github.com/fang2hou/ElvUI_WindTools/wiki/WeakAuras2-Skins-FAQ
+    if _G.WeakAurasPrivate and _G.WeakAurasPrivate.regionPrototype then
+        self:SecureHook(_G.WeakAurasPrivate.regionPrototype, "create", OnPrototypeCreate)
+        self:SecureHook(_G.WeakAurasPrivate.regionPrototype, "modifyFinish", OnPrototypeModifyFinish)
+    end
 
     -- Real Time Profiling Window
     local profilingWindow = WeakAuras.RealTimeProfilingWindow

@@ -202,42 +202,31 @@ function S:WeakAuras()
         self:RawHook(WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
     end
 
-    -- Handle the options region type registration
-    -- from NDui
-    local function OnPrototypeCreate(region)
-        Skin_WeakAuras(region, region.regionType)
-    end
-
-    local function OnPrototypeModifyFinish(_, region)
-        Skin_WeakAuras(region, region.regionType)
-    end
-
     -- from 雨夜独行客@NGA
-    hooksecurefunc(
-        WeakAuras,
-        "SetTextureOrAtlas",
-        function(icon)
-            local parent = icon:GetParent()
-            local region = parent.regionType and parent or parent:GetParent()
-            if region and region.regionType then
-                Skin_WeakAuras(region, region.regionType)
+    if WeakAuras and WeakAuras.SetTextureOrAtlas then
+        hooksecurefunc(
+            WeakAuras,
+            "SetTextureOrAtlas",
+            function(icon)
+                local parent = icon:GetParent()
+                local region = parent.regionType and parent or parent:GetParent()
+                if region and region.regionType then
+                    Skin_WeakAuras(region, region.regionType)
+                end
             end
-        end
-    )
-
-    -- TODO: if WeakAruas2 add more blocks, use fork version entry point.
-    -- https://github.com/fang2hou/ElvUI_WindTools/wiki/WeakAuras2-Skins-FAQ
-    if _G.WeakAurasPrivate and _G.WeakAurasPrivate.regionPrototype then
-        self:SecureHook(_G.WeakAurasPrivate.regionPrototype, "create", OnPrototypeCreate)
-        self:SecureHook(_G.WeakAurasPrivate.regionPrototype, "modifyFinish", OnPrototypeModifyFinish)
+        )
     end
 
     -- Real Time Profiling Window
     local profilingWindow = WeakAuras.RealTimeProfilingWindow
     if profilingWindow then
         self:CreateShadow(profilingWindow)
-        self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
-        self:SecureHook(WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
+        if profilingWindow.UpdateButtons then
+            self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
+        end
+        if WeakAuras.PrintProfile then
+            self:SecureHook(WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
+        end
     end
 end
 

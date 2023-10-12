@@ -65,41 +65,53 @@ local function HandleTab(tab)
     tab.Text.SetPoint = E.noop
 end
 
-local function bagClassListing(frame)
-    frame.SectionTitle:StripTextures()
-    S:ESProxy("HandleButton", frame.SectionTitle)
+local function viewGroup(frame)
+    if frame.GroupTitle then
+        frame.GroupTitle:StripTextures()
+        S:ESProxy("HandleButton", frame.GroupTitle)
+    end
 end
 
-local function bagItemContainer(frame)
-    if frame.buttonPool then
-        hooksecurefunc(
-            frame.buttonPool,
-            "Acquire",
-            function(pool, button)
-                for button in pool:EnumerateActive() do
-                    if not button.__windSkin then
-                        button.Icon:ClearAllPoints()
-                        button.Icon:SetSize(frame.iconSize - 4, frame.iconSize - 4)
-                        button.Icon:SetPoint("CENTER", button, "CENTER", 0, 0)
+local function viewItem(frame)
+    if frame.Icon.GetNumPoints and frame.Icon:GetNumPoints() > 0 then
+        local pointsCache = {}
 
-                        button.EmptySlot:SetTexture(nil)
-                        button.EmptySlot:Hide()
+        for i = 1, frame.Icon:GetNumPoints() do
+            local point, relativeTo, relativePoint, xOfs, yOfs = frame.Icon:GetPoint(i)
 
-                        button:GetHighlightTexture():SetTexture(E.Media.Textures.White8x8)
-                        button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.3)
-
-                        button:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
-                        button:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
-
-                        S:ESProxy("HandleIcon", button.Icon, true)
-                        S:ESProxy("HandleIconBorder", button.IconBorder, button.Icon.backdrop)
-
-                        button.__windSkin = true
-                    end
-                end
+            if relativePoint == "TOPLEFT" then
+                xOfs = xOfs + 2
+                yOfs = yOfs - 2
+            elseif relativePoint == "BOTTOMRIGHT" then
+                xOfs = xOfs - 2
+                yOfs = yOfs + 2
             end
-        )
+
+            pointsCache[i] = {point, relativeTo, relativePoint, xOfs, yOfs}
+        end
+
+        frame.Icon:ClearAllPoints()
+
+        for i = 1, #pointsCache do
+            local pointData = pointsCache[i]
+            frame.Icon:SetPoint(pointData[1], pointData[2], pointData[3], pointData[4], pointData[5])
+        end
     end
+
+    frame.EmptySlot:SetTexture(nil)
+    frame.EmptySlot:Hide()
+
+    frame:GetHighlightTexture():SetTexture(E.Media.Textures.White8x8)
+    frame:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.3)
+
+    frame.IconSelectedHighlight:SetTexture(E.Media.Textures.White8x8)
+    frame.IconSelectedHighlight:SetVertexColor(1, 1, 1, 0.4)
+
+    frame:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
+    frame:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
+
+    S:ESProxy("HandleIcon", frame.Icon, true)
+    S:ESProxy("HandleIconBorder", frame.IconBorder, frame.Icon.backdrop)
 end
 
 local function configRadioButtonGroup(frame)
@@ -120,9 +132,15 @@ local function keyBindingConfig(frame)
     S:ESProxy("HandleButton", frame.Button)
 end
 
-local function sellingBagFrame(frame)
-    frame:CreateBackdrop("Transparent")
-    S:ESProxy("HandleScrollBar", frame.ScrollBar)
+local function bagUse(frame)
+    frame.View:CreateBackdrop("Transparent")
+    S:ESProxy("HandleTrimScrollBar", frame.View.ScrollBar)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child ~= frame.View then
+            S:ESProxy("HandleButton", child)
+        end
+    end
 end
 
 local function configNumericInput(frame)
@@ -413,8 +431,8 @@ function S:Auctionator()
     self:DisableAddOnSkin("Auctionator")
 
     -- widgets
-    tryPostHook("AuctionatorBagClassListingMixin", "Init", bagClassListing)
-    tryPostHook("AuctionatorBagItemContainerMixin", "OnLoad", bagItemContainer)
+    tryPostHook("AuctionatorGroupsViewGroupMixin", "SetName", viewGroup)
+    tryPostHook("AuctionatorGroupsViewItemMixin", "SetItemInfo", viewItem)
     tryPostHook("AuctionatorConfigCheckboxMixin", "OnLoad", configCheckbox)
     tryPostHook("AuctionatorConfigHorizontalRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
     tryPostHook("AuctionatorConfigMinMaxMixin", "OnLoad", configMinMax)
@@ -431,7 +449,7 @@ function S:Auctionator()
     tryPostHook("AuctionatorShoppingTabListsContainerMixin", "OnLoad", shoppingTabContainer)
     tryPostHook("AuctionatorShoppingTabRecentsContainerMixin", "OnLoad", shoppingTabContainer)
     tryPostHook("AuctionatorShoppingTabContainerTabsMixin", "OnLoad", shoppingTabContainerTabs)
-    tryPostHook("AuctionatorSellingBagFrameMixin", "OnLoad", sellingBagFrame)
+    tryPostHook("AuctionatorBagUseMixin", "OnLoad", bagUse)
     tryPostHook("AuctionatorSellingTabPricesContainerMixin", "OnLoad", sellingTabPricesContainer)
     tryPostHook("AuctionatorTabContainerMixin", "OnLoad", bottomTabButtons)
     tryPostHook("AuctionatorUndercutScanMixin", "OnLoad", undercutScan)

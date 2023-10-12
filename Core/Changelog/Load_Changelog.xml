@@ -100,5 +100,6 @@
 	<Script file='Previous\v3\3.36.lua'/>
 	<Script file='Previous\v3\3.37.lua'/>
 	<Script file='Previous\v3\3.38.lua'/>
-	<Script file='3.39.lua'/>
+	<Script file='Previous\v3\3.39.lua'/>
+	<Script file='3.40.lua'/>
 </Ui>

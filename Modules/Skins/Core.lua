@@ -104,8 +104,16 @@ function S:CreateLowerShadow(frame, force)
     end
 
     self:CreateShadow(frame)
-    local parentFrameLevel = frame:GetFrameLevel()
-    frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
+    if frame.shadow and frame.SetFrameStrata and frame.SetFrameLevel then
+        local function refreshFrameLevel()
+            local parentFrameLevel = frame:GetFrameLevel()
+            frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
+        end
+
+        -- avoid the shadow level is reset when the frame strata/level is changed
+        hooksecurefunc(frame, "SetFrameStrata", refreshFrameLevel)
+        hooksecurefunc(frame, "SetFrameLevel", refreshFrameLevel)
+    end
 end
 
 --[[

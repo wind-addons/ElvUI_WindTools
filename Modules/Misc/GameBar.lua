@@ -409,7 +409,7 @@ local ButtonTypes = {
         icon = W.Media.Icons.barGuild,
         macro = {
             LeftButton = "/click GuildMicroButton",
-            RightButton = "/script if not InCombatLockdown() then if not GuildFrame then GuildFrame_LoadUI() end ToggleFrame(GuildFrame) end"
+            RightButton = "/script if not InCombatLockdown() then if not GuildFrame or not GuildFrame:IsShown() then ToggleGuildFrame() end end"
         },
         additionalText = function()
             return IsInGuild() and select(2, GetNumGuildMembers()) or ""

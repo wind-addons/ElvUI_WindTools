@@ -429,9 +429,13 @@ options.combatAlert = {
                             values = {
                                 NONE = L["None"],
                                 OUTLINE = L["OUTLINE"],
+                                THICKOUTLINE = L["THICKOUTLINE"],
+                                SHADOW = L["SHADOW"],
+                                SHADOWOUTLINE = L["SHADOWOUTLINE"],
+                                SHADOWTHICKOUTLINE = L["SHADOWTHICKOUTLINE"],
                                 MONOCHROME = L["MONOCHROME"],
                                 MONOCHROMEOUTLINE = L["MONOCROMEOUTLINE"],
-                                THICKOUTLINE = L["THICKOUTLINE"]
+                                MONOCHROMETHICKOUTLINE = L["MONOCHROMETHICKOUTLINE"]
                             }
                         },
                         size = {

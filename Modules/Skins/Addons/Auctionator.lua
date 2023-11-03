@@ -65,6 +65,11 @@ local function HandleTab(tab)
     tab.Text.SetPoint = E.noop
 end
 
+local function buyIconName(frame)
+    S:ESProxy("HandleIcon", frame.Icon, true)
+    S:ESProxy("HandleIconBorder", frame.QualityBorder, frame.Icon.backdrop)
+end
+
 local function viewGroup(frame)
     if frame.GroupTitle then
         frame.GroupTitle:StripTextures()
@@ -405,6 +410,27 @@ local function craftingInfoProfessionsFrame(frame)
     S:ESProxy("HandleButton", frame.SearchButton)
 end
 
+local function buyCommodity(frame)
+    S:ESProxy("HandleButton", frame.BackButton)
+    frame:StripTextures()
+
+    local container = frame.DetailsContainer
+    if not container then
+        return
+    end
+
+    S:ESProxy("HandleButton", container.BuyButton)
+    S:ESProxy("HandleEditBox", container.Quantity)
+    container.Quantity:SetTextInsets(0, 0, 0, 0)
+
+    for _, child in pairs({frame:GetChildren()}) do
+        if child:IsObjectType("Button") and child.iconAtlas and child.iconAtlas == "UI-RefreshButton" then
+            S:ESProxy("HandleButton", child)
+            break
+        end
+    end
+end
+
 local function tryPostHook(...)
     local frame, method, hookFunc = ...
     if frame and method and _G[frame] and _G[frame][method] then
@@ -431,6 +457,7 @@ function S:Auctionator()
     self:DisableAddOnSkin("Auctionator")
 
     -- widgets
+    tryPostHook("AuctionatorBuyIconNameTemplateMixin", "SetItem", buyIconName)
     tryPostHook("AuctionatorGroupsViewGroupMixin", "SetName", viewGroup)
     tryPostHook("AuctionatorGroupsViewItemMixin", "SetItemInfo", viewItem)
     tryPostHook("AuctionatorConfigCheckboxMixin", "OnLoad", configCheckbox)
@@ -469,6 +496,7 @@ function S:Auctionator()
     tryPostHook("AuctionatorCraftingInfoProfessionsFrameMixin", "OnLoad", craftingInfoProfessionsFrame)
     tryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
     tryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
+    tryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
 end
 
 S:AddCallbackForAddon("Auctionator")

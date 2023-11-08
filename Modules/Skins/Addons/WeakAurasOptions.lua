@@ -55,7 +55,7 @@ function S:WeakAuras_RegisterRegionOptions(name, createFunction, icon, displayNa
         end
     end
 
-    self.hooks[_G.WeakAuras]["RegisterRegionOptions"](name, createFunction, icon, displayName, createThumbnail, ...)
+    self.hooks[_G.WeakAuras.Private]["RegisterRegionOptions"](name, createFunction, icon, displayName, createThumbnail, ...)
 end
 
 local function ReskinNormalButton(button, next)
@@ -687,6 +687,10 @@ end
 
 function S:WeakAurasOptions()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAurasOptions then
+        return
+    end
+
+    if not WeakAuras or not WeakAuras.Private then
         return
     end
 

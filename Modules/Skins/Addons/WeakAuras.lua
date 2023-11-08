@@ -197,15 +197,29 @@ function S:WeakAuras()
         return
     end
 
+    -- Only works for WeakAurasPatched
+    if not WeakAuras or not WeakAuras.Private then
+        local alertMessage =
+            format(
+            "%s: %s %s %s",
+            W.Title,
+            L["You are using Official WeakAuras, the skin of WeakAuras will not be loaded due to the limitation."],
+            L["If you want to use WeakAuras skin, please install |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)."],
+            L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."]
+        )
+        E:Delay(10, print, alertMessage)
+        return
+    end
+
     -- Handle the options region type registration
-    if WeakAuras and WeakAuras.RegisterRegionOptions then
-        self:RawHook(WeakAuras, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
+    if WeakAuras.Private.RegisterRegionOptions then
+        self:RawHook(WeakAuras.Private, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
     end
 
     -- from 雨夜独行客@NGA
-    if WeakAuras and WeakAuras.SetTextureOrAtlas then
+    if WeakAuras.Private.SetTextureOrAtlas then
         hooksecurefunc(
-            WeakAuras,
+            WeakAuras.Private,
             "SetTextureOrAtlas",
             function(icon)
                 local parent = icon:GetParent()

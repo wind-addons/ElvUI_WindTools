@@ -399,6 +399,7 @@ LSM:Register("statusbar", "WindTools Glow", MediaPath .. "Textures/StatusbarGlow
 LSM:Register("statusbar", "WindTools Flat", MediaPath .. "Textures/StatusbarFlat.blp")
 LSM:Register("statusbar", "WindTools Light", MediaPath .. "Textures/StatusbarLight.tga")
 LSM:Register("statusbar", "WindTools Clean", MediaPath .. "Textures/StatusbarClean.tga")
+LSM:Register("statusbar", "WindTools Background", MediaPath .. "Textures/StatusbarBackground.tga")
 
 LSM:Register("statusbar", "ToxiUI Clean", MediaPath .. "Textures/ToxiUI/ToxiUI-clean.tga")
 LSM:Register("statusbar", "ToxiUI Dark", MediaPath .. "Textures/ToxiUI/ToxiUI-dark.tga")

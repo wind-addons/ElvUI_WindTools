@@ -1,7 +1,7 @@
 <div align="center">rawText
 <img width="512" src="Title.svg"/><br><br>
-<img src="https://img.shields.io/badge/ElvUI-13.42-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.41-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/ElvUI-13.47-blue.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.42-green.svg?longCache=true&style=for-the-badge"/>
 
 简体中文 (zhCN) | [繁體中文 (zhTW)](README_zhTW.md) | [English (enUS)](README.md)
 <br><br>
@@ -11,7 +11,7 @@
 
 # :white_check_mark: 状态
 
-![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.41&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
+![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.42&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
 
 [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools)
 
@@ -128,7 +128,7 @@
 1. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化.
 1. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化.
 1. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化.
-1. **WeakAuras 美化**: 为 WeakAuras 的图标, 光环条, 设定界面添加美化.
+1. **WeakAurasPatched 美化**: 为 WeakAurasPatched 的图标, 光环条, 设定界面添加美化.
 1. **AdiBags 美化**: 为 AdiBags 的添加美化. (需要 AdiBags ElvUI Skin 插件)
 1. **Simulationcraft 美化**: 为 Simulationcraft 添加美化.
 1. **RaiderIO 美化**: 为 RaiderIO 添加美化.

@@ -856,8 +856,20 @@ options.contacts = {
             type = "toggle",
             name = L["Enable"]
         },
-        defaultPage = {
+        updateAlts = {
             order = 2,
+            type = "toggle",
+            name = L["Update Alts"],
+            desc = L["Update the alt list when you log in."],
+            get = function()
+                return E.global.WT.item.contacts.updateAlts
+            end,
+            set = function(_, value)
+                E.global.WT.item.contacts.updateAlts = value
+            end
+        },
+        defaultPage = {
+            order = 3,
             type = "select",
             name = L["Default Page"],
             values = {
@@ -874,7 +886,7 @@ do
     local selectedKey
 
     options.contacts.args.alts = {
-        order = 2,
+        order = 4,
         type = "group",
         inline = true,
         name = L["Alternate Character"],
@@ -922,6 +934,17 @@ do
                         end
                     end
                 end
+            },
+            clearAlts = {
+                order = 3,
+                type = "execute",
+                name = L["Clear All"],
+                desc = L["Clear the alt list."],
+                confirm = true,
+                confirmText = L["Are you sure to clear the alt list?"],
+                func = function()
+                    E.global.WT.item.contacts.alts = {}
+                end
             }
         }
     }
@@ -932,7 +955,7 @@ do
     local tempName, tempRealm
 
     options.contacts.args.favorite = {
-        order = 3,
+        order = 5,
         type = "group",
         inline = true,
         name = L["My Favorites"],

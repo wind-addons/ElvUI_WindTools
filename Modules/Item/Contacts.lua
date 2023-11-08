@@ -571,6 +571,10 @@ function CT:UpdatePage(pageIndex)
 end
 
 function CT:UpdateAltsTable()
+    if not E.global.WT.item.contacts.updateAlts then
+        return
+    end
+
     if not self.altsTable then
         self.altsTable = E.global.WT.item.contacts.alts
     end

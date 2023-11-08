@@ -12,7 +12,8 @@ G.core = {
 G.item = {
     contacts = {
         alts = {},
-        favorites = {}
+        favorites = {},
+        updateAlts = true
     }
 }
 

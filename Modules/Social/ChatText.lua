@@ -1967,7 +1967,16 @@ end
 
 function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
     if not appTexture then
-        self:BN_FRIEND_INFO_CHANGED(nil, friendIndex, -2462)
+        C_Texture_GetTitleIconTexture(
+            "App",
+            TitleIconVersion_Small,
+            function(success, texture)
+                if success then
+                    self:BN_FRIEND_INFO_CHANGED(_, friendIndex, texture)
+                end
+            end
+        )
+
         return
     end
 

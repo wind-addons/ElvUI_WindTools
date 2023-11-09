@@ -444,7 +444,9 @@ do
         "Dragonflight Keystone Master: Season One",
         "Dragonflight Keystone Hero: Season One",
         "Dragonflight Keystone Master: Season Two",
-        "Dragonflight Keystone Hero: Season Two"
+        "Dragonflight Keystone Hero: Season Two",
+        "Dragonflight Keystone Master: Season Three",
+        "Dragonflight Keystone Hero: Season Three",
     }
 
     for index, name in ipairs(raids) do

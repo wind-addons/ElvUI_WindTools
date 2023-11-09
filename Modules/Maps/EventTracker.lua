@@ -34,6 +34,7 @@ local eventList = {
     "SiegeOnDragonbaneKeep",
     "ResearchersUnderFire",
     "TimeRiftThaldraszus",
+    "SuperBloom",
     "IskaaranFishingNet"
 }
 
@@ -168,7 +169,7 @@ local functionFactory = {
         ticker = {
             interval = 0.3,
             dateUpdater = function(self)
-                local completed = 0;
+                local completed = 0
                 if (self.args.questIDs) and (type(self.args.questIDs) == "table") then
                     for _, questID in pairs(self.args.questIDs) do
                         if C_QuestLog_IsQuestFlaggedCompleted(questID) then
@@ -647,7 +648,7 @@ local eventData = {
         args = {
             icon = 4687629,
             type = "loopTimer",
-            questIDs = { 70893 },
+            questIDs = {70893},
             hasWeeklyReward = true,
             duration = 16 * 60,
             interval = 1.5 * 60 * 60,
@@ -686,7 +687,7 @@ local eventData = {
         args = {
             icon = 236469,
             type = "loopTimer",
-            questIDs = { 70866 },
+            questIDs = {70866},
             hasWeeklyReward = true,
             duration = 10 * 60,
             interval = 2 * 60 * 60,
@@ -726,7 +727,7 @@ local eventData = {
             --icon = 3922918,
             icon = 5140835,
             type = "loopTimer",
-            questIDs = { 75627, 75628, 75629, 75630 },
+            questIDs = {75627, 75628, 75629, 75630},
             hasWeeklyReward = true,
             duration = 25 * 60,
             interval = 1 * 60 * 60,
@@ -756,7 +757,7 @@ local eventData = {
                     region = 4
                 end
 
-            return timestampTable[region]
+                return timestampTable[region]
             end)()
         }
     },
@@ -795,7 +796,46 @@ local eventData = {
                     region = 4
                 end
 
-            return timestampTable[region]
+                return timestampTable[region]
+            end)()
+        }
+    },
+    SuperBloom = {
+        dbKey = "superBloom",
+        args = {
+            icon = 3939983,
+            type = "loopTimer",
+            --questIDs = { 0 },
+            hasWeeklyReward = true,
+            duration = 15 * 60,
+            interval = 1 * 60 * 60,
+            eventName = L["Superbloom"],
+            label = L["Superbloom Emerald Dream"],
+            location = C_Map_GetMapInfo(2200).name,
+            barColor = colorPlatte.green,
+            runningText = L["In Progress"],
+            filter = function(args)
+                if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                    return false
+                end
+                return true
+            end,
+            startTimestamp = (function()
+                local timestampTable = {
+                    [1] = 1701828010, -- NA
+                    [2] = 1701828010, -- KR
+                    [3] = 1701828010, -- EU
+                    [4] = 1701828010, -- TW
+                    [5] = 1701828010, -- CN
+                    [72] = 1701828010 -- TR
+                }
+                local region = GetCurrentRegion()
+                -- TW is not a real region, so we need to check the client language if player in KR
+                if region == 2 and W.Locale ~= "koKR" then
+                    region = 4
+                end
+
+                return timestampTable[region]
             end)()
         }
     },
@@ -892,22 +932,6 @@ local eventData = {
             }
         }
     }
-    --[[ 10.1 stuff
-    ResearchersUnderFire = {
-        dbKey = "ResearchersUnderFire",
-        args = {
-            icon = 2159815,
-            type = "triggerTimer",
-            barColor = colorPlatte.purple,
-            eventName = L["Researchers Under Fire"],
-            label = L["Researchers Under Fire"],
-            runningText = L["Fire"],
-            filter = function(args)
-            end,
-            startTimestamp = (function()
-            end)()
-        }
-    }]]
 }
 
 local trackers = {

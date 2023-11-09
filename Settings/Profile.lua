@@ -723,7 +723,7 @@ P.maps = {
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         researchersUnderFire = {
-            enable = true,
+            enable = false,
             desaturate = false,
             alert = true,
             sound = true,
@@ -740,6 +740,16 @@ P.maps = {
             soundFile = "OnePlus Surprise",
             second = 600,
             stopAlertIfCompleted = false,
+            stopAlertIfPlayerNotEnteredDragonlands = true
+        },
+        superBloom = {
+            enable = true,
+            desaturate = false,
+            alert = true,
+            sound = false,
+            soundFile = "OnePlus Surprise",
+            second = 600,
+            stopAlertIfCompleted = true,
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         iskaaranFishingNet = {

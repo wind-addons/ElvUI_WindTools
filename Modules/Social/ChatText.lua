@@ -1055,11 +1055,11 @@ function CT:ChatFrame_MessageEventHandler(
             local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
             local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
 
-            if E.Retail and arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
+            if arg1 == "YOU_CHANGED" and C_ChatInfo_GetChannelRuleset(arg8) == CHATCHANNELRULESET_MENTOR then
                 _G.ChatFrame_UpdateDefaultChatTarget(frame)
                 _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
             else
-                if E.Retail and arg1 == "YOU_LEFT" then
+                if arg1 == "YOU_LEFT" then
                     _G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox, arg8)
                 end
 
@@ -1160,7 +1160,7 @@ function CT:ChatFrame_MessageEventHandler(
                 message = format(globalstring, playerLink)
             end
 
-            frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
+            frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, nil, nil, nil, isHistory, historyTime)
         elseif chatType == "BN_INLINE_TOAST_BROADCAST" then
             if arg1 ~= "" then
                 arg1 = RemoveNewlines(RemoveExtraSpaces(arg1))
@@ -1263,9 +1263,11 @@ function CT:ChatFrame_MessageEventHandler(
             end
 
             -- beep boops
+            local historyType =
+                notChatHistory and not CH.SoundTimer and not strfind(event, "_INFORM") and historyTypes[event]
             local alertType =
-                notChatHistory and not CH.SoundTimer and not strfind(event, "_INFORM") and
-                CH.db.channelAlerts[historyTypes[event]]
+                (historyType ~= "CHANNEL" and CH.db.channelAlerts[historyType]) or
+                (historyType == "CHANNEL" and CH.db.channelAlerts.CHANNEL[arg9])
             if
                 alertType and alertType ~= "None" and arg2 ~= PLAYER_NAME and
                     (not CH.db.noAlertInCombat or not InCombatLockdown())
@@ -1504,9 +1506,6 @@ function CT:MessageFormatter(
         if lfgRole then
             pflag = pflag .. lfgRole
         end
-        -- Plugin Chat Icon
-        -- Plugin Chat Icon
-        local pluginChatIcon = CH:GetPluginIcon(playerName)
         -- Plugin Chat Icon
         local pluginChatIcon = CH:GetPluginIcon(playerName)
         if pluginChatIcon then

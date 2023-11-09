@@ -15,87 +15,88 @@ local UnitGUID = UnitGUID
 local cache = {}
 local locked = {}
 
--- https://www.wowhead.com/guide/vault-incarnates-dragonflight-class-tier-set-overview-primalist-bonuses
+-- https://www.wowhead.com/guide/raids/amirdrassil-the-dreams-hope/tier-sets
+-- JavaScript to get tier set ids (used in the specific class tier set page)
+-- var a = ""; document.querySelector(".icon-list > tbody").children.forEach((child) => {const name = child.querySelector("td > a").innerText; const id = child.querySelector("td > a").href.match(/item=([0-9]*)/)[1]; a += `[${id}] = true, -- ${name}\n` }); console.log(a);
 local tierSetsID = {
     -- HUNTER
-    [200387] = true,
-    [200389] = true,
-    [200390] = true,
-    [200391] = true,
-    [200392] = true,
+    [207216] = true, -- Blazing Dreamstalker's Finest Hunt
+    [207217] = true, -- Blazing Dreamstalker's Shellgreaves
+    [207218] = true, -- Blazing Dreamstalker's Flamewaker Horns
+    [207219] = true, -- Blazing Dreamstalker's Skinners
+    [207221] = true, -- Blazing Dreamstalker's Scaled Hauberk
     -- WARRIOR
-    [200423] = true,
-    [200425] = true,
-    [200426] = true,
-    [200427] = true,
-    [200428] = true,
+    [207180] = true, -- Molten Vanguard's Shouldervents
+    [207181] = true, -- Molten Vanguard's Steel Tassets
+    [207182] = true, -- Molten Vanguard's Domeplate
+    [207183] = true, -- Molten Vanguard's Crushers
+    [207185] = true, -- Molten Vanguard's Plackart
     -- PALADIN
-    [200414] = true,
-    [200416] = true,
-    [200417] = true,
-    [200418] = true,
-    [200419] = true,
+    [207189] = true, -- Zealous Pyreknight's Ailettes
+    [207190] = true, -- Zealous Pyreknight's Cuisses
+    [207191] = true, -- Zealous Pyreknight's Barbute
+    [207192] = true, -- Zealous Pyreknight's Jeweled Gauntlets
+    [207194] = true, -- Zealous Pyreknight's Warplate
     -- ROGUE
-    [200369] = true,
-    [200371] = true,
-    [200372] = true,
-    [200373] = true,
-    [200374] = true,
+    [207234] = true, -- Lucid Shadewalker's Bladed Spaulders
+    [207235] = true, -- Lucid Shadewalker's Chausses
+    [207236] = true, -- Lucid Shadewalker's Deathmask
+    [207237] = true, -- Lucid Shadewalker's Clawgrips
+    [207239] = true, -- Lucid Shadewalker's Cuirass
     -- PRIEST
-    [200326] = true,
-    [200327] = true,
-    [200328] = true,
-    [200324] = true,
-    [200329] = true,
+    [207279] = true, -- Shoulderguardians of Lunar Communion
+    [207280] = true, -- Leggings of Lunar Communion
+    [207281] = true, -- Crest of Lunar Communion
+    [207282] = true, -- Touch of Lunar Communion
+    [207284] = true, -- Cassock of Lunar Communion
     -- DK
-    [200405] = true,
-    [200407] = true,
-    [200408] = true,
-    [200409] = true,
-    [200410] = true,
+    [207198] = true, -- Skewers of the Risen Nightmare
+    [207199] = true, -- Greaves of the Risen Nightmare
+    [207200] = true, -- Piercing Gaze of the Risen Nightmare
+    [207201] = true, -- Thorns of the Risen Nightmare
+    [207203] = true, -- Casket of the Risen Nightmare
     -- SHAMAN
-    [200396] = true,
-    [200398] = true,
-    [200399] = true,
-    [200400] = true,
-    [200401] = true,
+    [207207] = true, -- Greatwolf Outcast's Companions
+    [207208] = true, -- Greatwolf Outcast's Fur-Lined Kilt
+    [207209] = true, -- Greatwolf Outcast's Jaws
+    [207210] = true, -- Greatwolf Outcast's Grips
+    [207212] = true, -- Greatwolf Outcast's Harness
     -- MAGE
-    [200315] = true,
-    [200317] = true,
-    [200318] = true,
-    [200319] = true,
-    [200320] = true,
+    [207288] = true, -- Wayward Chronomancer's Metronomes
+    [207289] = true, -- Wayward Chronomancer's Pantaloons
+    [207290] = true, -- Wayward Chronomancer's Chronocap
+    [207291] = true, -- Wayward Chronomancer's Gloves
+    [207293] = true, -- Wayward Chronomancer's Patchwork
     -- WARLOCK
-    [200335] = true,
-    [200336] = true,
-    [200337] = true,
-    [200333] = true,
-    [200338] = true,
+    [207270] = true, -- Devout Ashdevil's Hatespikes
+    [207271] = true, -- Devout Ashdevil's Tights
+    [207272] = true, -- Devout Ashdevil's Grimhorns
+    [207273] = true, -- Devout Ashdevil's Claws
+    [207275] = true, -- Devout Ashdevil's Razorhide
     -- MONK
-    [200360] = true,
-    [200362] = true,
-    [200363] = true,
-    [200364] = true,
-    [200365] = true,
+    [207243] = true, -- Mystic Heron's Hopeful Effigy
+    [207244] = true, -- Mystic Heron's Waders
+    [207245] = true, -- Mystic Heron's Hatsuburi
+    [207246] = true, -- Mystic Heron's Glovebills
+    [207248] = true, -- Mystic Heron's Burdens
     -- DRUID
-    [200351] = true,
-    [200353] = true,
-    [200354] = true,
-    [200355] = true,
-    [200356] = true,
+    [207252] = true, -- Benevolent Embersage's Wisdom
+    [207253] = true, -- Benevolent Embersage's Leggings
+    [207254] = true, -- Benevolent Embersage's Casque
+    [207255] = true, -- Benevolent Embersage's Talons
+    [207257] = true, -- Benevolent Embersage's Robe
     -- DH
-    [200342] = true,
-    [200344] = true,
-    [200345] = true,
-    [200346] = true,
-    [200347] = true,
-    [200356] = true,
+    [207261] = true, -- Screaming Torchfiend's Horned Memento
+    [207262] = true, -- Screaming Torchfiend's Blazewraps
+    [207263] = true, -- Screaming Torchfiend's Burning Scowl
+    [207264] = true, -- Screaming Torchfiend's Grasp
+    [207266] = true, -- Screaming Torchfiend's Binding
     -- EVOKER
-    [200378] = true,
-    [200380] = true,
-    [200381] = true,
-    [200382] = true,
-    [200383] = true
+    [207225] = true, -- Weyrnkeeper's Timeless Sandbrace
+    [207226] = true, -- Weyrnkeeper's Timeless Breeches
+    [207227] = true, -- Weyrnkeeper's Timeless Dracoif
+    [207228] = true, -- Weyrnkeeper's Timeless Clawguards
+    [207230] = true, -- Weyrnkeeper's Timeless Raiment
 }
 
 local formatSets = {

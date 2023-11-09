@@ -134,7 +134,7 @@ options.help = {
                     name = L["QQ Group"],
                     image = W.Media.Icons.qq,
                     func = function()
-                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "336069019")
+                        E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "948518444")
                     end,
                     width = 0.7
                 },

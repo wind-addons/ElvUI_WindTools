@@ -87,6 +87,14 @@ local locales = {
         short = L["[ABBR] Dragonflight Keystone Hero: Season Two"],
         full = L["Dragonflight Keystone Hero: Season Two"]
     },
+    ["Dragonflight Keystone Master: Season Three"] = {
+        short = L["[ABBR] Dragonflight Keystone Master: Season Three"],
+        full = L["Dragonflight Keystone Master: Season Three"]
+    },
+    ["Dragonflight Keystone Hero: Season Three"] = {
+        short = L["[ABBR] Dragonflight Keystone Hero: Season Three"],
+        full = L["Dragonflight Keystone Hero: Season Three"]
+    },
     ["Vault of the Incarnates"] = {
         short = L["[ABBR] Vault of the Incarnates"],
         full = L["Vault of the Incarnates"]
@@ -235,7 +243,9 @@ local specialAchievements = {
     {16649, "Dragonflight Keystone Master: Season One"},
     {16650, "Dragonflight Keystone Hero: Season One"},
     {17844, "Dragonflight Keystone Master: Season Two"},
-    {17845, "Dragonflight Keystone Hero: Season Two"}
+    {17845, "Dragonflight Keystone Hero: Season Two"},
+    {19011, "Dragonflight Keystone Master: Season Three"},
+    {19012, "Dragonflight Keystone Hero: Season Three"}
 }
 
 local function GetLevelColoredString(level, short)

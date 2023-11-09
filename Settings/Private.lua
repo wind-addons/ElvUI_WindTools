@@ -589,10 +589,12 @@ V.tooltips = {
         },
         special = {
             enable = true,
-            ["Dragonflight Keystone Master: Season One"] = true,
-            ["Dragonflight Keystone Hero: Season One"] = true,
+            ["Dragonflight Keystone Master: Season One"] = false,
+            ["Dragonflight Keystone Hero: Season One"] = false,
             ["Dragonflight Keystone Master: Season Two"] = true,
-            ["Dragonflight Keystone Hero: Season Two"] = true
+            ["Dragonflight Keystone Hero: Season Two"] = true,
+            ["Dragonflight Keystone Master: Season Three"] = true,
+            ["Dragonflight Keystone Hero: Season Three"] = true,
         },
         mythicDungeons = {
             enable = true,

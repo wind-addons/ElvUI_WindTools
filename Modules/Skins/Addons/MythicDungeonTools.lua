@@ -31,22 +31,33 @@ function S:MythicDungeonTools()
         return
     end
 
+    local skinned = false
+
     self:SecureHook(
         _G.MDT,
-        "ShowInterface",
-        function()
-            reskinTooltip(_G.MDT.tooltip)
-            reskinTooltip(_G.MDT.pullTooltip)
+        "Async",
+        function(_, _, name)
+            if name == "showInterface" and not skinned then
+                E:Delay(
+                    1,
+                    function()
+                        reskinTooltip(_G.MDT.tooltip)
+                        reskinTooltip(_G.MDT.pullTooltip)
 
-            if _G.MDTFrame and _G.MDTFrame.DungeonSelectionGroup then
-                self:CreateShadow(_G.MDTFrame.DungeonSelectionGroup.frame)
-                local shadow = _G.MDTFrame.DungeonSelectionGroup.frame.shadow
-                if shadow then
-                    shadow.LeftEdge:Hide()
-                    shadow.TopEdge:Hide()
-                    shadow.BottomLeftCorner:Hide()
-                    shadow.TopLeftCorner:Hide()
-                end
+                        if _G.MDTFrame and _G.MDTFrame.DungeonSelectionGroup then
+                            self:CreateShadow(_G.MDTFrame.DungeonSelectionGroup.frame)
+                            local shadow = _G.MDTFrame.DungeonSelectionGroup.frame.shadow
+                            if shadow then
+                                shadow.LeftEdge:Hide()
+                                shadow.TopEdge:Hide()
+                                shadow.BottomLeftCorner:Hide()
+                                shadow.TopLeftCorner:Hide()
+                            end
+                        end
+                    end
+                )
+
+                skinned = true
             end
         end
     )

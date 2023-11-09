@@ -3,19 +3,29 @@ W.Changelog[343] = {
     RELEASE_DATE = "2023/11/10",
     IMPORTANT = {
         ["zhCN"] = {
-            "QQ 1 群已达到人数上限, 新增 QQ 2 群: 948518444."
+            "QQ 1 群已达到人数上限, 新增 QQ 2 群: 948518444.",
+            "吸收盾错误修复请等待 ElvUI 进行修复.",
+            "部分玩家可能遇到无法点击 [显示消息] 的问题, 请暂时关闭 聊天文字 模块. 具体原因排查中."
         },
         ["zhTW"] = {
-            "QQ 1 群已達到人數上限, 新增 QQ 2 群: 948518444."
+            "QQ 1 群已達到人數上限, 新增 QQ 2 群: 948518444.",
+            "吸收盾錯誤修復請等待 ElvUI 進行修復.",
+            "部分玩家可能遇到無法點擊 [顯示消息] 的問題, 請暫時關閉 聊天文字 模組. 具體原因排查中."
         },
         ["enUS"] = {
-            "QQ support group 1 has reached the maximum number of member, please join QQ 2 support group: 948518444."
+            "QQ support group 1 has reached the maximum number of member, please join QQ 2 support group: 948518444.",
+            "Absorb shield error fix please wait for ElvUI to fix.",
+            "Some players may encounter the problem of not being able to click [Show Message], please temporarily turn off the Chat Text module. Specific reasons are being investigated."
         },
         ["koKR"] = {
-            "QQ 지원 그룹 1이 최대 회원 수에 도달했습니다. QQ 2 지원 그룹 : 948518444에 가입하십시오."
+            "QQ 지원 그룹 1이 최대 회원 수에 도달했습니다. QQ 2 지원 그룹 : 948518444에 가입하십시오.",
+            "흡수 방패 오류 수정은 ElvUI가 수정 할 때까지 기다려주십시오.",
+            "일부 플레이어는 [메시지 표시]를 클릭 할 수없는 문제가 발생할 수 있습니다. 일시적으로 채팅 텍스트 모듈을 비활성화하십시오. 구체적인 이유가 조사 중입니다."
         },
         ["ruRU"] = {
-            "Группа поддержки QQ 1 достигла максимального количества участников, присоединяйтесь к группе поддержки QQ 2: 948518444."
+            "Группа поддержки QQ 1 достигла максимального количества участников, присоединяйтесь к группе поддержки QQ 2: 948518444.",
+            "Исправление ошибки поглощения щита, пожалуйста, дождитесь исправления ElvUI.",
+            "Некоторые игроки могут столкнуться с проблемой невозможности нажатия [Показать сообщение], пожалуйста, временно отключите модуль текста чата. Конкретные причины расследуются."
         }
     },
     NEW = {

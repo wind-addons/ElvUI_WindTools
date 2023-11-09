@@ -1965,14 +1965,14 @@ function CT:PLAYER_ENTERING_WORLD(event)
     self:UnregisterEvent(event)
 end
 
-function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
-    if not appTexture then
+function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
+    if not appTexture and not noRetry then
         C_Texture_GetTitleIconTexture(
             "App",
             TitleIconVersion_Small,
             function(success, texture)
                 if success then
-                    self:BN_FRIEND_INFO_CHANGED(_, friendIndex, texture)
+                    self:BN_FRIEND_INFO_CHANGED(_, friendIndex, texture, true)
                 end
             end
         )
@@ -1989,8 +1989,8 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture)
         return
     end
 
-    local displayAccountName =
-        format("%s |cff82c5ff%s|r", BNet_GetClientEmbeddedTexture(appTexture, 32, 32, 12), accountName)
+    local appTextureString = appTexture and BNet_GetClientEmbeddedTexture(appTexture, 16, 16, 12) .. " " or ""
+    local displayAccountName = appTextureString .. format("|cff82c5ff%s|r", accountName)
     local bnetLink = GetBNPlayerLink(accountName, displayAccountName, accountID, 0, 0, 0)
 
     local onlineCharacters = {}

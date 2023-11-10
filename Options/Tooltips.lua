@@ -426,18 +426,19 @@ options.progression = {
 do
     local raids = {
         "Vault of the Incarnates",
-        "Aberrus, the Shadowed Crucible"
+        "Aberrus, the Shadowed Crucible",
+        "Amirdrassil, the Dream's Hope"
     }
 
     local dungeons = {
-        "Neltharion's Lair",
-        "Freehold",
-        "The Underrot",
-        "Uldaman: Legacy of Tyr",
-        "Neltharus",
-        "Brackenhide Hollow",
-        "Halls of Infusion",
-        "The Vortex Pinnacle"
+        "The Everbloom",
+        "Darkheart Thicket",
+        "Black Rook Hold",
+        "Atal'Dazar",
+        "Waycrest Manor",
+        "Throne of the Tides",
+        "Dawn of the Infinites: Galakrond's Fall",
+        "Dawn of the Infinites: Murozond's Rise"
     }
 
     local special = {
@@ -446,7 +447,7 @@ do
         "Dragonflight Keystone Master: Season Two",
         "Dragonflight Keystone Hero: Season Two",
         "Dragonflight Keystone Master: Season Three",
-        "Dragonflight Keystone Hero: Season Three",
+        "Dragonflight Keystone Hero: Season Three"
     }
 
     for index, name in ipairs(raids) do

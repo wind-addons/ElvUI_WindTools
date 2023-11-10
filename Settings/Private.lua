@@ -584,8 +584,9 @@ V.tooltips = {
         header = "TEXTURE",
         raids = {
             enable = true,
-            ["Vault of the Incarnates"] = true,
-            ["Aberrus, the Shadowed Crucible"] = true
+            ["Vault of the Incarnates"] = false,
+            ["Aberrus, the Shadowed Crucible"] = true,
+            ["Amirdrassil, the Dream's Hope"] = true
         },
         special = {
             enable = true,
@@ -594,20 +595,20 @@ V.tooltips = {
             ["Dragonflight Keystone Master: Season Two"] = true,
             ["Dragonflight Keystone Hero: Season Two"] = true,
             ["Dragonflight Keystone Master: Season Three"] = true,
-            ["Dragonflight Keystone Hero: Season Three"] = true,
+            ["Dragonflight Keystone Hero: Season Three"] = true
         },
         mythicDungeons = {
             enable = true,
             markHighestScore = true,
             showNoRecord = true,
-            ["Neltharion's Lair"] = true,
-            ["Freehold"] = true,
-            ["The Underrot"] = true,
-            ["Uldaman: Legacy of Tyr"] = true,
-            ["Neltharus"] = true,
-            ["Brackenhide Hollow"] = true,
-            ["Halls of Infusion"] = true,
-            ["The Vortex Pinnacle"] = true
+            ["The Everbloom"] = true,
+            ["Darkheart Thicket"] = true,
+            ["Black Rook Hold"] = true,
+            ["Atal'Dazar"] = true,
+            ["Waycrest Manor"] = true,
+            ["Throne of the Tides"] = true,
+            ["Dawn of the Infinites: Galakrond's Fall"] = true,
+            ["Dawn of the Infinites: Murozond's Rise"] = true
         }
     }
 }

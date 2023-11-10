@@ -103,40 +103,46 @@ local locales = {
         short = L["[ABBR] Aberrus, the Shadowed Crucible"],
         full = L["Aberrus, the Shadowed Crucible"]
     },
-    ["Neltharion's Lair"] = {
-        short = L["[ABBR] Neltharion's Lair"],
-        full = L["Neltharion's Lair"]
+    ["Amirdrassil, the Dream's Hope"] = {
+        short = L["[ABBR] Amirdrassil, the Dream's Hope"],
+        full = L["Amirdrassil, the Dream's Hope"]
     },
-    ["Freehold"] = {
-        short = L["[ABBR] Freehold"],
-        full = L["Freehold"]
+    ["Dawn of the Infinites: Galakrond's Fall"] = {
+        short = L["[ABBR] Dawn of the Infinites: Galakrond's Fall"],
+        full = L["Dawn of the Infinites: Galakrond's Fall"]
     },
-    ["The Underrot"] = {
-        short = L["[ABBR] The Underrot"],
-        full = L["The Underrot"]
+    ["Dawn of the Infinites: Murozond's Rise"] = {
+        short = L["[ABBR] Dawn of the Infinites: Murozond's Rise"],
+        full = L["Dawn of the Infinites: Murozond's Rise"]
     },
-    ["Uldaman: Legacy of Tyr"] = {
-        short = L["[ABBR] Uldaman: Legacy of Tyr"],
-        full = L["Uldaman: Legacy of Tyr"]
+    ["Waycrest Manor"] = {
+        short = L["[ABBR] Waycrest Manor"],
+        full = L["Waycrest Manor"]
     },
-    ["Neltharus"] = {
-        short = L["[ABBR] Neltharus"],
-        full = L["Neltharus"]
+    ["Atal'Dazar"] = {
+        short = L["[ABBR] Atal'Dazar"],
+        full = L["Atal'Dazar"]
     },
-    ["Brackenhide Hollow"] = {
-        short = L["[ABBR] Brackenhide Hollow"],
-        full = L["Brackenhide Hollow"]
+    ["Darkheart Thicket"] = {
+        short = L["[ABBR] Darkheart Thicket"],
+        full = L["Darkheart Thicket"]
     },
-    ["Halls of Infusion"] = {
-        short = L["[ABBR] Halls of Infusion"],
-        full = L["Halls of Infusion"]
+    ["Black Rook Hold"] = {
+        short = L["[ABBR] Black Rook Hold"],
+        full = L["Black Rook Hold"]
     },
-    ["The Vortex Pinnacle"] = {
-        short = L["[ABBR] The Vortex Pinnacle"],
-        full = L["The Vortex Pinnacle"]
+    ["The Everbloom"] = {
+        short = L["[ABBR] The Everbloom"],
+        full = L["The Everbloom"]
+    },
+    ["Throne of the Tides"] = {
+        short = L["[ABBR] Throne of the Tides"],
+        full = L["Throne of the Tides"]
     }
 }
 
+-- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/dragonflight/name:(Mythic+Amirdrassil%2C+the+Dream's+Hope)
+-- var a=""; document.querySelectorAll("tbody.clickable > tr a.listview-cleartext").forEach((h) => a+=h.href.match(/achievement=([0-9]*)/)[1]+',');console.log(a);
 local raidAchievements = {
     ["Vault of the Incarnates"] = {
         ["Mythic"] = {
@@ -225,18 +231,65 @@ local raidAchievements = {
             18188,
             18187
         }
+    },
+    ["Amirdrassil, the Dream's Hope"] = {
+        ["Mythic"] = {
+            19385,
+            19384,
+            19381,
+            19379,
+            19386,
+            19382,
+            19383,
+            19380,
+            19378
+        },
+        ["Heroic"] = {
+            19375,
+            19374,
+            19369,
+            19370,
+            19373,
+            19372,
+            19371,
+            19377,
+            19376
+        },
+        ["Normal"] = {
+            19366,
+            19362,
+            19365,
+            19361,
+            19367,
+            19368,
+            19360,
+            19364,
+            19363
+        },
+        ["Raid Finder"] = {
+            19348,
+            19356,
+            19355,
+            19354,
+            19353,
+            19359,
+            19352,
+            19357,
+            19358
+        }
     }
 }
 
+-- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
 local mythicKeystoneDungeons = {
-    [206] = "Neltharion's Lair",
-    [245] = "Freehold",
-    [251] = "The Underrot",
-    [403] = "Uldaman: Legacy of Tyr",
-    [404] = "Neltharus",
-    [405] = "Brackenhide Hollow",
-    [406] = "Halls of Infusion",
-    [438] = "The Vortex Pinnacle"
+    [168] = "The Everbloom",
+    [198] = "Darkheart Thicket",
+    [199] = "Black Rook Hold",
+    [244] = "Atal'Dazar",
+    [248] = "Waycrest Manor",
+    [456] = "Throne of the Tides",
+    [463] = "Dawn of the Infinites: Galakrond's Fall",
+    [464] = "Dawn of the Infinites: Murozond's Rise"
 }
 
 local specialAchievements = {
@@ -524,12 +577,3 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
 end
 
 T:AddInspectInfoCallback(2, "Progression", true)
-
--- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
--- PYTHON SCRIPT TO GENERATE THE TABLE
--- USE FIRST 2 COLS OF MapChallengeMode.dbc
--- _text = text.split("\n")
--- for _t in _text:
---     if "\t" in _t:
---         s = _t.split("\t")
---         print(f"[{s[1]}] = \"{s[0]},")

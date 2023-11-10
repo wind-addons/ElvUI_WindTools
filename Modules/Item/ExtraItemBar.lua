@@ -1237,6 +1237,14 @@ local professionItems = {
     210466  -- 焰誓裂斧
 }
 
+-- Seed
+-- from MerathilisUI
+local seeds = {
+	208047,
+	208066,
+	208067
+}
+
 -- 更新任务物品列表
 local questItemList = {}
 local function UpdateQuestItemList()
@@ -1292,7 +1300,8 @@ local moduleList = {
     ["BANNER"] = banners,
     ["UTILITY"] = utilities,
     ["OPENABLE"] = openableItems,
-    ["PROF"] = professionItems
+    ["PROF"] = professionItems,
+    ["SEEDS"] = seeds
 }
 
 function EB:CreateButton(name, barDB)

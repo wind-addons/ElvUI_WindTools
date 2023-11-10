@@ -54,13 +54,9 @@ function S:BlizzardMiscFrames()
         self:CreateShadow(f)
     end
 
-    -- 错误提示
-    if _G.UIErrorsFrame then
-        F.SetFontWithDB(_G.UIErrorsFrame, E.private.WT.skins.errorMessage)
-    end
-
+    -- Action Status
     if _G.ActionStatus.Text then
-        F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.errorMessage)
+        F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.actionStatus)
     end
 
     -- 灵魂医者传送按钮

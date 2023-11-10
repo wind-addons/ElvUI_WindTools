@@ -210,16 +210,16 @@ options.font = {
     type = "group",
     name = L["Font"],
     args = {
-        errorMessage = {
+        actionStatus = {
             order = 1,
             type = "group",
             inline = true,
-            name = L["Error Mesage"],
+            name = L["Action Status"],
             get = function(info)
-                return E.private.WT.skins.errorMessage[info[#info]]
+                return E.private.WT.skins.actionStatus[info[#info]]
             end,
             set = function(info, value)
-                E.private.WT.skins.errorMessage[info[#info]] = value
+                E.private.WT.skins.actionStatus[info[#info]] = value
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {

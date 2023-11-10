@@ -312,7 +312,7 @@ V.skins = {
             style = "OUTLINE"
         }
     },
-    errorMessage = {
+    actionStatus = {
         name = E.db.general.font,
         size = 15,
         style = "OUTLINE"

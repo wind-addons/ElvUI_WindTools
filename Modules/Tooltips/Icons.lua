@@ -15,8 +15,9 @@ local GetSpellTexture = GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
-local UnitIsBattlePet = UnitIsBattlePet
+local UnitIsBattlePetCompanion = UnitIsBattlePetCompanion
 local UnitIsPlayer = UnitIsPlayer
+local UnitIsWildBattlePet = UnitIsWildBattlePet
 
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
@@ -167,7 +168,7 @@ function T:ClearFactionIcon(tt)
 end
 
 function T:AddPetIcon(tt, unit, guid)
-    if UnitIsBattlePet(unit) then
+    if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
         if not tt.petIcon then
             local f = tt:CreateTexture(nil, "OVERLAY")
             f:SetPoint("TOPRIGHT", -5, -5)

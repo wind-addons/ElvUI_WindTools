@@ -84,48 +84,49 @@ local RoleIconTextures = {
 }
 
 local mythicKeystoneDungeons = {
-    [206] = L["[ABBR] Neltharion's Lair"],
-    [245] = L["[ABBR] Freehold"],
-    [251] = L["[ABBR] The Underrot"],
-    [403] = L["[ABBR] Uldaman: Legacy of Tyr"],
-    [404] = L["[ABBR] Neltharus"],
-    [405] = L["[ABBR] Brackenhide Hollow"],
-    [406] = L["[ABBR] Halls of Infusion"],
-    [438] = L["[ABBR] The Vortex Pinnacle"]
+    [168] = L["[ABBR] The Everbloom"],
+    [198] = L["[ABBR] Darkheart Thicket"],
+    [199] = L["[ABBR] Black Rook Hold"],
+    [244] = L["[ABBR] Atal'Dazar"],
+    [248] = L["[ABBR] Waycrest Manor"],
+    [456] = L["[ABBR] Throne of the Tides"],
+    [463] = L["[ABBR] Dawn of the Infinites: Galakrond's Fall"],
+    [464] = L["[ABBR] Dawn of the Infinites: Murozond's Rise"]
 }
 
+-- https://wago.tools/db2/GroupFinderActivity
 local activityIDToMapID = {
-    [462] = 206,
-    [518] = 245,
-    [507] = 251,
-    [1188] = 403,
-    [1172] = 404,
-    [1164] = 405,
-    [1168] = 406,
-    [1195] = 438
+    [184] = 168,
+    [460] = 198,
+    [463] = 199,
+    [502] = 244,
+    [530] = 248,
+    [1274] = 456,
+    [1247] = 463,
+    [1248] = 464
 }
 
 local vaultItemLevel = {
     0,
-    415,
-    418,
-    421,
-    421,
-    424,
-    424,
-    428,
-    428,
-    431,
-    431,
-    434,
-    434,
-    437,
-    437,
-    441,
     441,
     444,
     444,
-    447
+    447,
+    447,
+    450,
+    450,
+    454,
+    454,
+    457,
+    457,
+    460,
+    460,
+    463,
+    463,
+    467,
+    467,
+    470,
+    470
 }
 
 local affixLoop = {
@@ -628,51 +629,73 @@ function LL:InitalizeRightPanel()
     end
 
     -- Disable for now, because nobody knows the rotation
-    if currAffixIndex and currAffixIndex ~= 0 then
-        local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
-        if nextAffixIndex == 0 then
-            nextAffixIndex = #affixLoop
-        end
+    -- if currAffixIndex and currAffixIndex ~= 0 then
+    --     local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
+    --     if nextAffixIndex == 0 then
+    --         nextAffixIndex = #affixLoop
+    --     end
 
-        frame.affix = CreateFrame("Frame", nil, frame)
-        frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
-        frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-        frame.affix:SetHeight(32)
+    --     frame.affix = CreateFrame("Frame", nil, frame)
+    --     frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+    --     frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+    --     frame.affix:SetHeight(32)
 
-        local width = frame.affix:GetWidth()
-        local space = (width - 32 * 4) / 4
-        for i = 1, 3 do
-            local affix = frame.affix:CreateTexture(nil, "ARTWORK")
-            affix:SetSize(32, 32)
-            affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
-            local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
-            affix:SetTexture(fileDataID)
-            affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-        end
+    --     local width = frame.affix:GetWidth()
+    --     local space = (width - 32 * 4) / 4
+    --     for i = 1, 3 do
+    --         local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+    --         affix:SetSize(32, 32)
+    --         affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
+    --         local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
+    --         affix:SetTexture(fileDataID)
+    --         affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    --     end
 
-        frame.affix:SetScript(
-            "OnEnter",
-            function()
-                _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
-                _G.GameTooltip:ClearLines()
-                _G.GameTooltip:AddLine(F.GetWindStyleText(L["Next Affixes"]))
-                for i = 1, 3 do
-                    local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
-                    _G.GameTooltip:AddLine(" ")
-                    _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))
-                    _G.GameTooltip:AddLine(description, 1, 1, 1, true)
-                end
-                _G.GameTooltip:Show()
-            end
-        )
+    --     frame.affix:SetScript(
+    --         "OnEnter",
+    --         function()
+    --             _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
+    --             _G.GameTooltip:ClearLines()
+    --             _G.GameTooltip:AddLine(F.GetWindStyleText(L["Next Affixes"]))
+    --             for i = 1, 3 do
+    --                 local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
+    --                 _G.GameTooltip:AddLine(" ")
+    --                 _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))
+    --                 _G.GameTooltip:AddLine(description, 1, 1, 1, true)
+    --             end
+    --             _G.GameTooltip:Show()
+    --         end
+    --     )
 
-        frame.affix:SetScript(
-            "OnLeave",
-            function()
-                _G.GameTooltip:Hide()
-            end
-        )
+    --     frame.affix:SetScript(
+    --         "OnLeave",
+    --         function()
+    --             _G.GameTooltip:Hide()
+    --         end
+    --     )
+    -- end
+
+    ------------------------------
+    -- Temporarily affixes
+    ------------------------------
+    local affixIDs = {currAffixes[1].id, currAffixes[2].id, currAffixes[3].id}
+
+    frame.affix = CreateFrame("Frame", nil, frame)
+    frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+    frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+    frame.affix:SetHeight(32)
+
+    local width = frame.affix:GetWidth()
+    local space = (width - 32 * 4) / 4
+    for i = 1, 3 do
+        local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+        affix:SetSize(32, 32)
+        affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
+        local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixIDs[i]))
+        affix:SetTexture(fileDataID)
+        affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     end
+    ------------------------------
 
     local filters = CreateFrame("Frame", nil, frame)
     if frame.affix then

@@ -1,29 +1,34 @@
 local W = unpack((select(2, ...)))
 W.Changelog[344] = {
-    RELEASE_DATE = "2023/11/12",
+    RELEASE_DATE = "2023/11/13",
     IMPORTANT = {
         ["zhCN"] = {
-            "韩语翻译更新, 感谢 Sang Jeon@GitHub.",
+            "韩语翻译更新. 感谢 Sang Jeon@GitHub",
+            "俄语翻译更新. 感谢 Serafim1991@Discord",
             "错误信息的字体可以通过 ElvUI 设定了, 故移除错误信息的字体设定功能.",
             "由于还不清楚 10.2 的词缀循环规律, 故暂时移除预组队列表右侧面板中的词缀循环提示."
         },
         ["zhTW"] = {
-            "韓語翻譯更新, 感謝 Sang Jeon@GitHub.",
+            "韓語翻譯更新. 感謝 Sang Jeon@GitHub",
+            "俄語翻譯更新. 感謝 Serafim1991@Discord",
             "錯誤訊息的字體可以透過 ElvUI 設定了, 故移除錯誤訊息的字體設定功能.",
             "由於還不清楚 10.2 的詞綴循環規律, 故暫時移除預組列表右側面板中的詞綴循環提示."
         },
         ["enUS"] = {
-            "Korean translation updated, thanks to Sang Jeon@GitHub.",
+            "Korean translation updated. Thanks to Sang Jeon@GitHub",
+            "Russian translation updated. Thanks to Serafim1991@Discord",
             "The font of error messages can be set through ElvUI, so remove the font setting function of error messages.",
             "Since the affix cycle rules of 10.2 are not clear yet, the affix cycle tooltip in the right panel of the LFG List is temporarily disabled."
         },
         ["koKR"] = {
             "한국어 번역이 업데이트되었습니다. Sang Jeon@GitHub에 감사드립니다.",
+            "러시아어 번역이 업데이트되었습니다. Serafim1991@Discord에 감사드립니다.",
             "오류 메시지의 글꼴은 ElvUI를 통해 설정할 수 있으므로 오류 메시지의 글꼴 설정 기능을 제거합니다.",
             "10.2의 접두사 순환 규칙이 아직 명확하지 않으므로 파티 찾기 목록의 오른쪽 패널에 접두사 순환 툴팁을 일시적으로 비활성화했습니다."
         },
         ["ruRU"] = {
-            "Обновлен перевод на корейский язык, спасибо Sang Jeon@GitHub.",
+            "Обновлен перевод на корейский язык. спасибо Sang Jeon@GitHub",
+            "Обновлен перевод на русский язык. спасибо Serafim1991@Discord",
             "Шрифт сообщений об ошибках можно настроить через ElvUI, поэтому удалите функцию настройки шрифта сообщений об ошибках.",
             "Поскольку правила цикла приставок 10.2 еще не ясны, подсказка цикла приставок в правой панели списка LFG временно отключена."
         }

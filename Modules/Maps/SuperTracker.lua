@@ -13,10 +13,9 @@ local tonumber = tonumber
 local type = type
 local unpack = unpack
 
-local IsAddOnLoaded = IsAddOnLoaded
-
 local UiMapPoint_CreateFromCoordinates = UiMapPoint.CreateFromCoordinates
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
 local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
@@ -246,7 +245,7 @@ function ST:WaypointParse()
             tinsert(keys, k)
         end
         if self.db.waypointParse.virtualTomTom then
-            if not IsAddOnLoaded("TomTom") and not _G.SLASH_TOMTOM_WAY1 then
+            if not C_AddOns_IsAddOnLoaded("TomTom") and not _G.SLASH_TOMTOM_WAY1 then
                 tinsert(keys, "way")
             end
         end
@@ -364,7 +363,7 @@ function ST:Initialize()
         self:USER_WAYPOINT_UPDATED()
     end
 
-    if not IsAddOnLoaded("Blizzard_QuestNavigation") then
+    if not C_AddOns_IsAddOnLoaded("Blizzard_QuestNavigation") then
         self:RegisterEvent("ADDON_LOADED")
         return
     end

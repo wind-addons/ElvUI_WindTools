@@ -14,9 +14,9 @@ local strmatch = strmatch
 local tonumber = tonumber
 
 local CreateFrame = CreateFrame
-local IsAddOnLoaded = IsAddOnLoaded
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 
 do

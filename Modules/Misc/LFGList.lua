@@ -31,7 +31,6 @@ local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
 local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
@@ -39,6 +38,7 @@ local UnitName = UnitName
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -1510,7 +1510,7 @@ function LL:ResortSearchResults(results)
 end
 
 function LL:Initialize()
-    if IsAddOnLoaded("PremadeGroupsFilter") then
+    if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
         self.StopRunning = "PremadeGroupsFilter"
         return
     end
@@ -1520,7 +1520,7 @@ function LL:Initialize()
         return
     end
 
-    if not IsAddOnLoaded("Blizzard_ChallengesUI") then
+    if not C_AddOns_IsAddOnLoaded("Blizzard_ChallengesUI") then
         LoadAddOn("Blizzard_ChallengesUI")
     end
 

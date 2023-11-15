@@ -32,12 +32,12 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCritChance = GetSpellCritChance
 local GetVersatilityBonus = GetVersatilityBonus
 local GuildInvite = GuildInvite
-local IsAddOnLoaded = IsAddOnLoaded
 local SendChatMessage = SendChatMessage
 local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
 local UnitPlayerControlled = UnitPlayerControlled
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
@@ -697,7 +697,7 @@ function CM:ShowMenu(frame)
 
             self.menu:ClearAllPoints()
             local offset = 16
-            if IsAddOnLoaded("RaiderIO") then
+            if C_AddOns_IsAddOnLoaded("RaiderIO") then
                 for _, child in pairs {_G.DropDownList1:GetChildren()} do
                     local name = child:IsShown() and child:GetName()
                     if name and strfind(name, "^LibDropDownExtensionCustomDropDown") then

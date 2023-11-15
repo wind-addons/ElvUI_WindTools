@@ -10,7 +10,8 @@ local tremove = tremove
 local type = type
 
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
+
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local waitFrameList = {}
 
@@ -587,12 +588,12 @@ function MF:HandleElvUIBag()
 end
 
 function MF:Initialize()
-    if IsAddOnLoaded("BlizzMove") then
+    if C_AddOns_IsAddOnLoaded("BlizzMove") then
         self.StopRunning = "BlizzMove"
         return
     end
 
-    if IsAddOnLoaded("MoveAnything") then
+    if C_AddOns_IsAddOnLoaded("MoveAnything") then
         self.StopRunning = "MoveAnything"
         return
     end
@@ -603,7 +604,7 @@ function MF:Initialize()
     end
 
     -- Trade Skill Master Speical Handling
-    if IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
+    if C_AddOns_IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
         removeBlizzardFrames("MerchantFrame")
     end
 
@@ -621,7 +622,7 @@ function MF:Initialize()
 
     -- 检查当前已经载入的插件
     for addon in pairs(BlizzardFramesOnDemand) do
-        if IsAddOnLoaded(addon) then
+        if C_AddOns_IsAddOnLoaded(addon) then
             self:HandleAddon(nil, addon)
         end
     end

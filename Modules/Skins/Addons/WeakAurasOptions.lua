@@ -12,7 +12,7 @@ local type = type
 local unpack = unpack
 local wipe = wipe
 
-local IsAddOnLoaded = IsAddOnLoaded
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local buttons = {}
 local expandButtons = {}

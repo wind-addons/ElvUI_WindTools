@@ -8,7 +8,7 @@ local format = format
 local pairs = pairs
 local type = type
 
-local IsAddOnLoaded = IsAddOnLoaded
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 options.desc = {
     order = 1,
@@ -90,7 +90,7 @@ options.general = {
                 format(L["It doesn't mean that the %s Skins will not be applied."], W.Title)
             ),
             hidden = function()
-                return not IsAddOnLoaded("ElvUI_MerathilisUI")
+                return not C_AddOns_IsAddOnLoaded("ElvUI_MerathilisUI")
             end
         },
         general = {
@@ -1293,13 +1293,13 @@ options.addons = {
 local function GenerateAddOnSkinsGetFunction(name)
     if type(name) == "string" then
         return function(info)
-            return IsAddOnLoaded(name) and E.private.WT.skins.addons[info[#info]]
+            return C_AddOns_IsAddOnLoaded(name) and E.private.WT.skins.addons[info[#info]]
         end
     elseif type(name) == "table" then
         return function(info)
             local isValid = false
             for _, addon in pairs(name) do
-                isValid = isValid or IsAddOnLoaded(addon)
+                isValid = isValid or C_AddOns_IsAddOnLoaded(addon)
             end
             return isValid and E.private.WT.skins.addons[info[#info]]
         end
@@ -1326,13 +1326,13 @@ end
 local function GenerateAddOnSkinsDisabledFunction(name)
     if type(name) == "string" then
         return function(info)
-            return not IsAddOnLoaded(name) or not E.private.WT.skins.enable
+            return not C_AddOns_IsAddOnLoaded(name) or not E.private.WT.skins.enable
         end
     elseif type(name) == "table" then
         return function(info)
             local isValid = false
             for _, addon in pairs(name) do
-                isValid = isValid or IsAddOnLoaded(addon)
+                isValid = isValid or C_AddOns_IsAddOnLoaded(addon)
             end
             return not isValid or not E.private.WT.skins.enable
         end
@@ -1342,8 +1342,8 @@ end
 for _, option in pairs(options.addons.args) do
     if option.addonName then
         if option.addonName == "AdiBags" then
-            local isAdiBagsLoaded = IsAddOnLoaded("AdiBags")
-            local isSkinLoaded = IsAddOnLoaded("AdiBagsElvUISkin")
+            local isAdiBagsLoaded = C_AddOns_IsAddOnLoaded("AdiBags")
+            local isSkinLoaded = C_AddOns_IsAddOnLoaded("AdiBagsElvUISkin")
             if isAdiBagsLoaded and not isSkinLoaded then
                 local message =
                     C.StringByTemplate(
@@ -2542,14 +2542,14 @@ options.bigWigsSkin = {
     type = "group",
     name = L["BigWigs Skin"],
     disabled = function()
-        return not E.private.WT.skins.enable or not IsAddOnLoaded("BigWigs")
+        return not E.private.WT.skins.enable or not C_AddOns_IsAddOnLoaded("BigWigs")
     end,
     args = {
         alert = {
             order = 1,
             type = "description",
             name = function()
-                if not IsAddOnLoaded("BigWigs") then
+                if not C_AddOns_IsAddOnLoaded("BigWigs") then
                     return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "danger")
                 end
 

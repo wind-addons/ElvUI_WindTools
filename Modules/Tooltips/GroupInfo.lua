@@ -8,8 +8,9 @@ local _G = _G
 local format = format
 local ipairs = ipairs
 
-local IsAddOnLoaded = IsAddOnLoaded
 local LibStub = LibStub
+
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local function GetIconString(role, mode)
     local template
@@ -61,7 +62,7 @@ function T:AddGroupInfo(tooltip, resultID)
 end
 
 function T:GroupInfo()
-    if IsAddOnLoaded("PremadeGroupsFilter") and E.db.WT.tooltips.groupInfo.enable then
+    if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") and E.db.WT.tooltips.groupInfo.enable then
         F.Print(
             format(
                 L["%s detected, %s will be disabled automatically."],

@@ -3,8 +3,7 @@ local QK = W:NewModule("QuickKeystone", "AceHook-3.0", "AceEvent-3.0")
 
 local _G = _G
 
-local IsAddOnLoaded = IsAddOnLoaded
-
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Container_GetContainerItemID = C_Container.GetContainerItemID
 local C_Container_GetContainerNumSlots = C_Container.GetContainerNumSlots
 local C_Container_UseContainerItem = C_Container.UseContainerItem
@@ -52,7 +51,7 @@ end
 function QK:ProfileUpdate()
     self.db = E.db.WT.combat.quickKeystone
 
-    if IsAddOnLoaded("Blizzard_ChallengesUI") then
+    if C_AddOns_IsAddOnLoaded("Blizzard_ChallengesUI") then
         self:UpdateHook()
     else
         self:RegisterEvent("ADDON_LOADED", "UpdateHook")

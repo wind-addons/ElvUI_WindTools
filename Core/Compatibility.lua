@@ -12,7 +12,8 @@ local strsplit = strsplit
 local type = type
 
 local CreateFrame = CreateFrame
-local IsAddOnLoaded = IsAddOnLoaded
+
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 function W:ConstructCompatibilityFrame()
     local frame = CreateFrame("Frame", "WTCompatibilityFrame", E.UIParent)
@@ -221,7 +222,7 @@ local function GetDatabaseRealValue(path)
 end
 
 local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales)
-    if not IsAddOnLoaded(targetAddonName) then
+    if not C_AddOns_IsAddOnLoaded(targetAddonName) then
         return E.noop
     end
 

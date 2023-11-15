@@ -36,7 +36,6 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
-local IsAddOnLoaded = IsAddOnLoaded
 local IsCorruptedItem = IsCorruptedItem
 local Item = Item
 local SetPortraitTexture = SetPortraitTexture
@@ -56,6 +55,7 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
 local UNIT_NAME_FONT = UNIT_NAME_FONT
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
 
 local guids, inspecting = {}, false
@@ -1095,7 +1095,7 @@ end
 function IL:Initialize()
     self.db = E.db.WT.item.inspect
 
-    if IsAddOnLoaded("TinyInspect") then
+    if C_AddOns_IsAddOnLoaded("TinyInspect") then
         self.StopRunning = "TinyInspect"
         return
     end

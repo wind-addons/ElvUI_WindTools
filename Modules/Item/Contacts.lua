@@ -19,9 +19,9 @@ local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GetNumGuildMembers = GetNumGuildMembers
-local IsAddOnLoaded = IsAddOnLoaded
 local IsInGuild = IsInGuild
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
@@ -199,7 +199,7 @@ function CT:ConstructFrame()
 
     self.frame = frame
 
-    if IsAddOnLoaded("Postal") then
+    if C_AddOns_IsAddOnLoaded("Postal") then
         self:RepositionWithPostal()
 
         if _G.Postal_QuickAttachButton1 then

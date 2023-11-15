@@ -23,10 +23,10 @@ local GetMerchantItemInfo = GetMerchantItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
-local IsAddOnLoaded = IsAddOnLoaded
 local SetItemButtonDesaturated = SetItemButtonDesaturated
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_PetJournal_GetNumCollectedInfo = C_PetJournal.GetNumCollectedInfo
 local C_TooltipInfo_GetGuildBankItem = C_TooltipInfo.GetGuildBankItem
 local C_TooltipInfo_GetHyperlink = C_TooltipInfo.GetHyperlink
@@ -260,7 +260,7 @@ do
 end
 
 function AK:Initialize()
-	if IsAddOnLoaded("AlreadyKnown") then
+	if C_AddOns_IsAddOnLoaded("AlreadyKnown") then
 		self.StopRunning = "AlreadyKnonwn"
 		return
 	end
@@ -277,7 +277,7 @@ function AK:Initialize()
 end
 
 function AK:ToggleSetting()
-	if IsAddOnLoaded("AlreadyKnown") then
+	if C_AddOns_IsAddOnLoaded("AlreadyKnown") then
 		self.StopRunning = "AlreadyKnonwn"
 		return
 	end

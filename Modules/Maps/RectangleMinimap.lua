@@ -13,7 +13,8 @@ local select = select
 local sqrt = sqrt
 
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
+
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 function RM:HereBeDragons_Pins_AddMinimapIconMap(_, _, icon)
     if icon.SetPoint then
@@ -158,7 +159,7 @@ function RM:Initialize()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("ADDON_LOADED")
 
-    if IsAddOnLoaded("HandyNotes") then
+    if C_AddOns_IsAddOnLoaded("HandyNotes") then
         self:HandyNotesFix()
     end
 end

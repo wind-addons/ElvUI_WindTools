@@ -13,9 +13,9 @@ local wipe = wipe
 
 local DisableAddOn = DisableAddOn
 local EnableAddOn = EnableAddOn
-local GetAddOnInfo = GetAddOnInfo
 local GetNumAddOns = GetNumAddOns
 
+local C_AddOns_GetAddOnInfo = C_AddOns.GetAddOnInfo
 local C_CVar_SetCVar = C_CVar.SetCVar
 local C_UI_Reload = C_UI.Reload
 
@@ -57,7 +57,7 @@ do
             local switch = strlower(msg)
             if switch == "on" or switch == "1" then
                 for i = 1, GetNumAddOns() do
-                    local name = GetAddOnInfo(i)
+                    local name = C_AddOns_GetAddOnInfo(i)
                     if not AcceptableAddons[name] and E:IsAddOnEnabled(name) then
                         DisableAddOn(name, E.myname)
                         _G.ElvDB.WT.DisabledAddOns[name] = i

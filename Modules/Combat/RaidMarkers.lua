@@ -14,11 +14,11 @@ local ClearRaidMarker = ClearRaidMarker
 local CreateFrame = CreateFrame
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
 local RegisterStateDriver = RegisterStateDriver
 local SetRaidTarget = SetRaidTarget
 local UnregisterStateDriver = UnregisterStateDriver
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_PartyInfo_DoCountdown = C_PartyInfo.DoCountdown
 
 local lastClear = 0
@@ -243,10 +243,10 @@ function RM:UpdateCountDownButton()
 	end
 
 	local button = self.bar.buttons[11]
-	if IsAddOnLoaded("BigWigs") then
+	if C_AddOns_IsAddOnLoaded("BigWigs") then
 		button:SetAttribute("macrotext1", "/pull " .. self.db.countDownTime)
 		button:SetAttribute("macrotext2", "/pull 0")
-	elseif IsAddOnLoaded("DBM-Core") then
+	elseif C_AddOns_IsAddOnLoaded("DBM-Core") then
 		button:SetAttribute("macrotext1", "/dbm pull " .. self.db.countDownTime)
 		button:SetAttribute("macrotext2", "/dbm pull 0")
 	else
@@ -332,10 +332,10 @@ function RM:CreateButtons()
 			tex:SetTexture("Interface\\Icons\\Spell_unused2")
 			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
 			button:SetAttribute("type*", "macro")
-			if IsAddOnLoaded("BigWigs") then
+			if C_AddOns_IsAddOnLoaded("BigWigs") then
 				button:SetAttribute("macrotext1", "/pull " .. RM.db.countDownTime)
 				button:SetAttribute("macrotext2", "/pull 0")
-			elseif IsAddOnLoaded("DBM-Core") then
+			elseif C_AddOns_IsAddOnLoaded("DBM-Core") then
 				button:SetAttribute("macrotext1", "/dbm pull " .. RM.db.countDownTime)
 				button:SetAttribute("macrotext2", "/dbm pull 0")
 			else

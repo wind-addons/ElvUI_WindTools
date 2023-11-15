@@ -12,9 +12,9 @@ local strsplit = strsplit
 local tinsert = tinsert
 local tonumber = tonumber
 
-local IsAddOnLoaded = IsAddOnLoaded
 local TexturePool_HideAndClearAnchors = TexturePool_HideAndClearAnchors
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
@@ -2813,7 +2813,7 @@ function WM:Scale()
 end
 
 function WM:Initialize()
-    if IsAddOnLoaded("Mapster") then
+    if C_AddOns_IsAddOnLoaded("Mapster") then
         self.StopRunning = "Mapster"
         return
     end

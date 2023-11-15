@@ -16,7 +16,7 @@ local wipe = wipe
 local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_LFGList = C_LFGList
@@ -149,7 +149,7 @@ function W:GameFixing()
     -- -- fix duplicated party in lfg frame
     -- -- from: https://wago.io/tWVx_hIx3/4
     if E.global.WT.core.noDuplicatedParty then
-        if not _G["ShowLFGRemoveDuplicates"] and not IsAddOnLoaded("LFMPlus") then
+        if not _G["ShowLFGRemoveDuplicates"] and not C_AddOns_IsAddOnLoaded("LFMPlus") then
             hooksecurefunc(
                 "LFGListUtil_SortSearchResults",
                 function(results, ...)

@@ -10,7 +10,7 @@ local tinsert = tinsert
 local type = type
 local xpcall = xpcall
 
-local IsAddOnLoaded = IsAddOnLoaded
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 M.addonsToLoad = {} -- 等待插件载入后执行的函数表
 M.nonAddonsToLoad = {} -- 毋须等待插件的函数表
@@ -96,7 +96,7 @@ function M:Initialize()
     end
 
     for addonName, object in pairs(self.addonsToLoad) do
-        local isLoaded, isFinished = IsAddOnLoaded(addonName)
+        local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
         if isLoaded and isFinished then
             self:CallLoadedAddon(addonName, object)
         end

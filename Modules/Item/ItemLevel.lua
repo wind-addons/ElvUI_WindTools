@@ -12,8 +12,8 @@ local type = type
 local EquipmentManager_UnpackLocation = EquipmentManager_UnpackLocation
 local Item = Item
 local ItemLocation = ItemLocation
-local IsAddOnLoaded = IsAddOnLoaded
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_DoesItemExist = C_Item.DoesItemExist
 
 local EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION = EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION
@@ -129,7 +129,7 @@ function IL:ProfileUpdate()
 
     if self.db.enable and not self.initialized then
         self:SecureHook("EquipmentFlyout_UpdateItems", "FlyoutButton")
-        if not IsAddOnLoaded("Blizzard_ScrappingMachineUI") then
+        if not C_AddOns_IsAddOnLoaded("Blizzard_ScrappingMachineUI") then
             self:RegisterEvent("ADDON_LOADED")
         else
             self:HookScrappingMachine()

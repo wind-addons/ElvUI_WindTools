@@ -21,12 +21,12 @@ local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
-local IsAddOnLoaded = IsAddOnLoaded
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
 local UnitLevel = UnitLevel
 local UnitRace = UnitRace
 
+local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
     C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
@@ -525,7 +525,7 @@ function T:Progression(tt, unit, guid)
         return
     end
 
-    if not IsAddOnLoaded("Blizzard_AchievementUI") then
+    if not C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI") then
         AchievementFrame_LoadUI()
     end
 
@@ -535,7 +535,7 @@ function T:Progression(tt, unit, guid)
         else
             ClearAchievementComparisonUnit()
 
-            if not loadedComparison and select(2, IsAddOnLoaded("Blizzard_AchievementUI")) then
+            if not loadedComparison and select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
                 _G.AchievementFrame_DisplayComparison(unit)
                 HideUIPanel(_G.AchievementFrame)
                 ClearAchievementComparisonUnit()

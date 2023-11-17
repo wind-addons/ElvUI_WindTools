@@ -1476,7 +1476,7 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
             CooldownFrame_Set(self.cooldown, start, duration, enable)
             if (duration and duration > 0 and enable and enable == 0) then
                 self.tex:SetVertexColor(0.4, 0.4, 0.4)
-            elseif IsItemInRange(self.itemID, "target") == false then
+            elseif not InCombatLockdown() and IsItemInRange(self.itemID, "target") == false then
                 self.tex:SetVertexColor(1, 0, 0)
             else
                 self.tex:SetVertexColor(1, 1, 1)

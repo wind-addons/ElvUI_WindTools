@@ -513,7 +513,8 @@ function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHis
         end
 
         if CH.db.timeStampFormat and CH.db.timeStampFormat ~= "NONE" then
-            local timeStamp = BetterDate(CH.db.timeStampFormat, historyTimestamp or CH:GetChatTime())
+            local timeStamp =
+                BetterDate(CH.db.timeStampFormat, historyTimestamp or E:GetDateTime(CH.db.timeStampLocalTime, true))
             timeStamp = gsub(timeStamp, " ", "")
             timeStamp = gsub(timeStamp, "AM", " AM")
             timeStamp = gsub(timeStamp, "PM", " PM")

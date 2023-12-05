@@ -45,4 +45,32 @@ function S:ES_SkinLibDropDownMenu(_, prefix)
     end
 end
 
+do
+    local hooked = {}
+    function S:ES_SkinDropDownMenu(_, prefix)
+        if hooked[prefix] then
+            return
+        end
+
+        hooked[prefix] = true
+
+        hooksecurefunc(
+            "UIDropDownMenu_CreateFrames",
+            function(level, index)
+                local listFrameName = _G[prefix..level]:GetName()
+                local backdrop = _G[listFrameName .. "Backdrop"]
+                if backdrop and backdrop.template then
+                    self:CreateShadow(backdrop)
+                end
+
+                local menuBackdrop = _G[listFrameName .. "MenuBackdrop"]
+                if menuBackdrop and menuBackdrop.template then
+                    self:CreateShadow(menuBackdrop)
+                end
+            end
+        )
+    end
+end
+
 S:SecureHook(ES, "SkinLibDropDownMenu", "ES_SkinLibDropDownMenu")
+S:SecureHook(ES, "SkinDropDownMenu", "ES_SkinDropDownMenu")

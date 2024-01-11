@@ -939,6 +939,30 @@ function LL:InitalizeRightPanel()
     roleAvailable.text:SetText(L["Role Available"])
     roleAvailable.text:SetJustifyH("CENTER")
 
+    -- Need Tank
+    local needTank = CreateFrame("Frame", nil, filters)
+    needTank:SetSize(filters:GetWidth() / 2 - 6, 28)
+    needTank:SetPoint("TOPLEFT", filters, "TOPLEFT", 0, -6 * 8 - 28 * 4 - 32 * 3)
+    needTank:SetTemplate()
+
+    needTank.text = needTank:CreateFontString(nil, "OVERLAY")
+    needTank.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    needTank.text:SetPoint("CENTER", needTank, "CENTER", 0, 0)
+    needTank.text:SetText(L["Has Tank"])
+    needTank.text:SetJustifyH("CENTER")
+
+    -- Need Healer
+    local needHealer = CreateFrame("Frame", nil, filters)
+    needHealer:SetSize(filters:GetWidth() / 2 - 6, 28)
+    needHealer:SetPoint("TOPRIGHT", filters, "TOPRIGHT", 0, -6 * 8 - 28 * 4 - 32 * 3)
+    needHealer:SetTemplate()
+
+    needHealer.text = needHealer:CreateFontString(nil, "OVERLAY")
+    needHealer.text:SetFont(E.media.normFont, 11, "OUTLINE")
+    needHealer.text:SetPoint("CENTER", needHealer, "CENTER", 0, 0)
+    needHealer.text:SetText(L["Has Healer"])
+    needHealer.text:SetJustifyH("CENTER")
+
     roleAvailable:SetScript(
         "OnEnter",
         function(btn)
@@ -975,6 +999,13 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
+                if btn.active then
+                    needTank:SetActive(false)
+                    needHealer:SetActive(false)
+                    dfDB.needTankEnable = false
+                    dfDB.needHealerEnable = false
+                end
+
                 dfDB.roleAvailableEnable = btn.active
                 LL:RefreshSearch()
             end
@@ -982,18 +1013,6 @@ function LL:InitalizeRightPanel()
     )
 
     filters.roleAvailable = roleAvailable
-
-    -- Need Tank
-    local needTank = CreateFrame("Frame", nil, filters)
-    needTank:SetSize(filters:GetWidth() / 2 - 6, 28)
-    needTank:SetPoint("TOPLEFT", filters, "TOPLEFT", 0, -6 * 8 - 28 * 4 - 32 * 3)
-    needTank:SetTemplate()
-
-    needTank.text = needTank:CreateFontString(nil, "OVERLAY")
-    needTank.text:SetFont(E.media.normFont, 11, "OUTLINE")
-    needTank.text:SetPoint("CENTER", needTank, "CENTER", 0, 0)
-    needTank.text:SetText(L["Has Tank"])
-    needTank.text:SetJustifyH("CENTER")
 
     needTank:SetScript(
         "OnEnter",
@@ -1004,7 +1023,9 @@ function LL:InitalizeRightPanel()
                 format(
                     "%s %s",
                     L["Enable this filter will only show the group that have the tank already in party."],
-                    L["If you already have a tank in your group and you use the 'Role Available' filter, it won't find any match."]
+                    L[
+                        "If you already have a tank in your group and you use the 'Role Available' filter, it won't find any match."
+                    ]
                 ),
                 1,
                 1,
@@ -1030,6 +1051,10 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
+                if btn.active then
+                    roleAvailable:SetActive(false)
+                    dfDB.roleAvailableEnable = false
+                end
                 dfDB.needTankEnable = btn.active
                 LL:RefreshSearch()
             end
@@ -1037,18 +1062,6 @@ function LL:InitalizeRightPanel()
     )
 
     filters.needTank = needTank
-
-    -- Need Healer
-    local needHealer = CreateFrame("Frame", nil, filters)
-    needHealer:SetSize(filters:GetWidth() / 2 - 6, 28)
-    needHealer:SetPoint("TOPRIGHT", filters, "TOPRIGHT", 0, -6 * 8 - 28 * 4 - 32 * 3)
-    needHealer:SetTemplate()
-
-    needHealer.text = needHealer:CreateFontString(nil, "OVERLAY")
-    needHealer.text:SetFont(E.media.normFont, 11, "OUTLINE")
-    needHealer.text:SetPoint("CENTER", needHealer, "CENTER", 0, 0)
-    needHealer.text:SetText(L["Has Healer"])
-    needHealer.text:SetJustifyH("CENTER")
 
     needHealer:SetScript(
         "OnEnter",
@@ -1059,7 +1072,9 @@ function LL:InitalizeRightPanel()
                 format(
                     "%s %s",
                     L["Enable this filter will only show the group that have the healer already in party."],
-                    L["If you already have a healer in your group and you use the 'Role Available' filter, it won't find any match."]
+                    L[
+                        "If you already have a healer in your group and you use the 'Role Available' filter, it won't find any match."
+                    ]
                 ),
                 1,
                 1,
@@ -1085,6 +1100,10 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
+                if btn.active then
+                    roleAvailable:SetActive(false)
+                    dfDB.roleAvailableEnable = false
+                end
                 dfDB.needHealerEnable = btn.active
                 LL:RefreshSearch()
             end

@@ -6,6 +6,7 @@ local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local next = next
 local pairs = pairs
+local tostring = tostring
 local unpack = unpack
 
 -- modified from ElvUI Auction House Skin

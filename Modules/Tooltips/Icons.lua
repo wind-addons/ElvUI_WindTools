@@ -15,6 +15,7 @@ local GetSpellTexture = GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
+local UnitIsBattlePet = UnitIsBattlePet
 local UnitIsBattlePetCompanion = UnitIsBattlePetCompanion
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsWildBattlePet = UnitIsWildBattlePet

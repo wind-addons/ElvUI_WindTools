@@ -4,7 +4,9 @@ local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local format = format
 local pairs = pairs
+local print = print
 local strfind = strfind
 local unpack = unpack
 

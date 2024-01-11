@@ -44,7 +44,8 @@ local cache = {}
 
 local tiers = {
     "Vault of the Incarnates",
-    "Aberrus, the Shadowed Crucible"
+    "Aberrus, the Shadowed Crucible",
+    "Amirdrassil, the Dream's Hope"
 }
 
 local levels = {

@@ -4,7 +4,7 @@ Developed by: Simca@Malfurion (MMOSimca)
 ]]--
 
 -- Set major/minor version
-local MAJOR, MINOR = "LibObjectiveProgress-1.0", 66
+local MAJOR, MINOR = "LibObjectiveProgress-1.0", 67
 assert(LibStub, MAJOR .. " requires LibStub")
 
 -- Initialize library

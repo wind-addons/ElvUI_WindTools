@@ -863,12 +863,12 @@ local eventData = {
             startTimestamp = (function()
                 local timestampTable = {
                     -- need more accurate Timers
-                    [1] = 1701831615, -- NA
-                    [2] = 1701853215, -- KR
-                    [3] = 1705487400, -- EU
+                    [1] = 1701826200, -- NA
+                    [2] = 1701826200, -- KR
+                    [3] = 1701826200, -- EU
                     [4] = 1701826200, -- TW
                     [5] = 1701826200, -- CN
-                    [72] = 1701852315 -- TR
+                    [72] = 1701826200 -- TR
                 }
                 local region = GetCurrentRegion()
                 -- TW is not a real region, so we need to check the client language if player in KR

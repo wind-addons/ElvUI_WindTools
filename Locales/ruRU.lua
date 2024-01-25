@@ -41,7 +41,7 @@ L["%s may cause some frames to get messed, but you can use %s button to reset fr
 L["%s never lock the CVars."] = "%s никогда не блокирует CVars."
 L["%s not been loaded since you are using an outdated version of ElvUI."] = "%s не загружен, поскольку Вы используете устаревшую версию ElvUI."
 L["%s style absorb color"] = "Стиль %s цвета поглощения"
-L["%s will be started in %s!"] = "%s будет запущен в %s!"
+L["%s will be started in %s!"] = "%s будет запущен через %s!"
 L["%target%, thank you for %spell%. :)"] = "%target%, спасибо за %spell%. :)"
 L["%target%, thank you for using %spell% to revive me. :)"] = "%target%, спасибо за использование %spell%, чтобы оживить меня :)"
 L["'Absolute' mode means the height of the bar is fixed."] = "Режим 'Абсолют' означает, что высота полосы фиксирована."

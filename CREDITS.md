@@ -20,6 +20,8 @@
   - PodVibe @ CurseForge
   - xan2622 @ GitHub
   - Pristi#2836 @ Discord
+  - Isilorn @ GitHub
+  - ckeurk @ GitHub
 - Español (esES/esMX)
   - Keralin @ GitHub
 - Deutsche (deDE)
@@ -37,6 +39,7 @@
   - Evgeniy-ONiX @ GitHub
   - dadec666 @ GitHub
   - Hollicsh @ GitHub
+  - Denzeriko @ GitHub
 
 ## Codes
 

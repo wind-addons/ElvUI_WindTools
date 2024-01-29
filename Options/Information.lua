@@ -239,6 +239,11 @@ options.help = {
                     order = 12,
                     type = "description",
                     name = format("%s: %s", "Jaenichen", E.InfoColor .. "beejayjayn" .. "|r")
+                },
+                ["mattiagraziani-it"] = {
+                    order = 13,
+                    type = "description",
+                    name = "mattiagraziani-it"
                 }
             }
         },
@@ -359,7 +364,8 @@ do -- 本地化
             "PodVibe @ CurseForge",
             "xan2622 @ GitHub",
             "Pristi#2836 @ Discord",
-            "Isilorn @ GitHub"
+            "Isilorn @ GitHub",
+            "ckeurk @ GitHub"
         },
         ["Español (esES/esMX)"] = {
             "Keralin @ GitHub"
@@ -372,7 +378,8 @@ do -- 本地化
         ["русский язык (ruRU)"] = {
             "Evgeniy-ONiX @ GitHub",
             "dadec666 @ GitHub",
-            "Hollicsh @ GitHub"
+            "Hollicsh @ GitHub",
+            "Denzeriko @ GitHub"
         }
     }
 

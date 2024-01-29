@@ -1873,7 +1873,9 @@ options.lfgList = {
                             order = 3,
                             type = "toggle",
                             name = L["Auto Join"],
-                            desc = L["Automatically join the dungeon when clicking on the LFG row, without asking for role confirmation."]
+                            desc = L[
+                                "Automatically join the dungeon when clicking on the LFG row, without asking for role confirmation."
+                            ]
                         },
                         skipConfirmation = {
                             order = 4,
@@ -1895,9 +1897,25 @@ options.lfgList = {
                             name = format(
                                 "%s\n|cffff0000%s|r\n\n%s\n%s",
                                 L["Automatic filters behaviour"],
-                                L["!! - WARNING: Change this only if you know what you are doing - !!"],
-                                L["- |cff00aaffUnchecked|r: When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa"],
-                                L["- |cff00aaffChecked|r: No automatic removal of filters, might cause empty results if you already have the roles in your party"]
+                                format(
+                                    "!! - %s: %s - !!",
+                                    L["WARNING"],
+                                    L["Change this only if you know what you are doing"]
+                                ),
+                                format(
+                                    "- |cff00aaff%s|r: %s",
+                                    L["Unchecked"],
+                                    L[
+                                        "When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa."
+                                    ]
+                                ),
+                                format(
+                                    "- |cff00aaff%s|r: %s",
+                                    L["Checked"],
+                                    L[
+                                        "No automatic removal of filters, might cause empty results if you already have the roles in your party."
+                                    ]
+                                )
                             ),
                             fontSize = "medium"
                         },
@@ -1905,7 +1923,9 @@ options.lfgList = {
                             order = 2,
                             type = "toggle",
                             name = L["Disable safe filters"],
-                            desc = L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"]
+                            desc = L[
+                                "Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"
+                            ]
                         }
                     }
                 }

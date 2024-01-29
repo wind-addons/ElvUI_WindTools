@@ -615,26 +615,38 @@ function LL:InitalizeRightPanel()
         end
     )
 
-    hooksecurefunc("LFGListSearchEntry_OnClick", function (s, button)
-        if not self.db.rightPanel.autoJoin then return end
-    
-        local panel = LFGListFrame.SearchPanel
-        if button ~= "RightButton" and LFGListSearchPanelUtil_CanSelectResult(s.resultID) and panel.SignUpButton:IsEnabled() then
-            if panel.selectedResult ~= s.resultID then
-                LFGListSearchPanel_SelectResult(panel, s.resultID)
+    hooksecurefunc(
+        "LFGListSearchEntry_OnClick",
+        function(s, button)
+            if not self.db.rightPanel.autoJoin then
+                return
             end
-            LFGListSearchPanel_SignUp(panel)
-        end
-    end)
-    
-    LFGListApplicationDialog:HookScript("OnShow", function(s)
-        if not self.db.rightPanel.skipConfirmation then return end
-    
-        if s.SignUpButton:IsEnabled() and not IsShiftKeyDown() then
-            s.SignUpButton:Click()
-        end
-    end)
 
+            local panel = LFGListFrame.SearchPanel
+            if
+                button ~= "RightButton" and LFGListSearchPanelUtil_CanSelectResult(s.resultID) and
+                    panel.SignUpButton:IsEnabled()
+             then
+                if panel.selectedResult ~= s.resultID then
+                    LFGListSearchPanel_SelectResult(panel, s.resultID)
+                end
+                LFGListSearchPanel_SignUp(panel)
+            end
+        end
+    )
+
+    _G.LFGListApplicationDialog:HookScript(
+        "OnShow",
+        function(s)
+            if not self.db.rightPanel.skipConfirmation then
+                return
+            end
+
+            if s.SignUpButton:IsEnabled() and not IsShiftKeyDown() then
+                s.SignUpButton:Click()
+            end
+        end
+    )
 
     local currAffixIndex = 0
     local currAffixes = C_MythicPlus_GetCurrentAffixes()
@@ -1020,7 +1032,7 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
-                if btn.active and not self.db.rightPanel.disableSafeFilters then
+                if not self.db.rightPanel.disableSafeFilters and btn.active then
                     needTank:SetActive(false)
                     needHealer:SetActive(false)
                     dfDB.needTankEnable = false
@@ -1072,7 +1084,7 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
-                if btn.active and not self.db.rightPanel.disableSafeFilters then
+                if not self.db.rightPanel.disableSafeFilters and btn.active then
                     roleAvailable:SetActive(false)
                     dfDB.roleAvailableEnable = false
                 end
@@ -1121,7 +1133,7 @@ function LL:InitalizeRightPanel()
             if button == "LeftButton" then
                 local dfDB = self:GetPlayerDB("dungeonFilter")
                 btn:SetActive(not btn.active)
-                if btn.active and not self.db.rightPanel.disableSafeFilters then
+                if not self.db.rightPanel.disableSafeFilters and btn.active then
                     roleAvailable:SetActive(false)
                     dfDB.roleAvailableEnable = false
                 end
@@ -1512,9 +1524,6 @@ function LL:UpdateRightPanel()
 
     self.rightPanel.sortPanel.sortByButton:SetActive(false)
     self.rightPanel.sortPanel.sortByButton.UpdatePosition()
-
-
-
 
     self.rightPanel:Show()
 end

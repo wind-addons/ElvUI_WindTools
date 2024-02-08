@@ -143,6 +143,7 @@ local hearthstoneAndToyIDList = {
     168808, -- 蟲洞產生器：贊達拉
     172924, -- 蟲洞產生器：暗影之境
     180817, -- 移轉暗語
+    190196, -- 开悟者炉石 -- check me: Merathilis (name from wowhead)
     198156 -- 龍洞產生器
 }
 

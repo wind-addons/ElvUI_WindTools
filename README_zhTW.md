@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.55-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/版本-3.49-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/版本-3.50-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | 繁體中文 (zhTW) | [English (enUS)](README.md)
 <br><br>
@@ -11,7 +11,7 @@
 
 # :white_check_mark: 狀態
 
-![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.49&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
+![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.50&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/nA44TeZ) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
 
 [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools)
 
@@ -161,3 +161,4 @@
 
 >這個倉庫用來存放巨龍崛起版本的插件.  
 >訪問過往版本 [ElvUI_WindTools 1.x (決戰艾澤拉斯)](https://github.com/fang2hou/ElvUI_WindTools_BfA)
+

@@ -145,7 +145,8 @@ local hearthstoneAndToyIDList = {
     180817, -- 移轉暗語
     190196, -- 受啟迪的爐石
     198156, -- 龍洞產生器
-    208704 -- 深居者的土土石 
+    208704, -- 深居者的土土石
+    212337  -- 炉边之石
 }
 
 local hearthstonesAndToysData

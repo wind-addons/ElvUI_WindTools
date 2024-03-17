@@ -10,7 +10,6 @@ local format = format
 local hooksecurefunc = hooksecurefunc
 local next = next
 local print = print
-local tonumber = tonumber
 
 local GetAddOnMetadata = GetAddOnMetadata
 

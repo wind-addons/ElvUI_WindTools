@@ -108,16 +108,7 @@ local activityIDToMapID = {
 
 local vaultItemLevel = {
     0,
-    441,
-    444,
-    444,
-    447,
-    447,
-    450,
-    450,
     454,
-    454,
-    457,
     457,
     460,
     460,
@@ -126,7 +117,16 @@ local vaultItemLevel = {
     467,
     467,
     470,
-    470
+    470,
+    473,
+    473,
+    473,
+    476,
+    476,
+    476,
+    480,
+    480,
+    483
 }
 
 local affixLoop = {

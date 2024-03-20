@@ -1,6 +1,6 @@
 local W = unpack((select(2, ...)))
 
-W.Changelog[348] = {
+W.Changelog[352] = {
 	RELEASE_DATE = "2024/03/20",
 	IMPORTANT = {
 		["zhCN"] = {
@@ -31,5 +31,21 @@ W.Changelog[348] = {
 		["koKR"] = {},
 		["ruRU"] = {},
 	},
-	IMPROVEMENT = {},
+	IMPROVEMENT = {
+		["zhCN"] = {
+			"[预组队列表] 更新周奖励宝箱的装备等级列表.",
+		},
+		["zhTW"] = {
+			"[預組列表] 更新週獎勵寶箱的裝備等級列表.",
+		},
+		["enUS"] = {
+			"[LFG List] Update the item level list of the weekly reward chest.",
+		},
+		["koKR"] = {
+			"[파티 찾기 목록] 주간 보상 상자의 장비 레벨 목록을 업데이트했습니다.",
+		},
+		["ruRU"] = {
+			"Список поиска группы] Обновлен список уровней предметов еженедельного наградного сундука.",
+		},
+	},
 }

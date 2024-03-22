@@ -297,6 +297,8 @@ function FL:UpdateFriendButton(button)
                     local suffix = expansionData[wowID].suffix and " (" .. expansionData[wowID].suffix .. ")" or ""
                     local serverStrings = {strsplit(" - ", gameAccountInfo.richPresence)}
                     server = (serverStrings[#serverStrings] or BNET_FRIEND_TOOLTIP_WOW_CLASSIC .. suffix) .. "*"
+                elseif wowID and wowID == 1 and name == "" then
+                    server = gameAccountInfo.richPresence -- Plunderstorm
                 else
                     server = gameAccountInfo.realmDisplayName or ""
                 end
@@ -342,9 +344,9 @@ function FL:UpdateFriendButton(button)
         end
 
         -- combine Real ID and Name
-        if nameString and realIDString then
+        if nameString and nameString ~= "" and realIDString and realIDString ~= "" then
             buttonTitle = realIDString .. " \124\124 " .. nameString
-        elseif nameString then
+        elseif nameString and nameString ~= "" then
             buttonTitle = nameString
         else
             buttonTitle = realIDString or ""
@@ -354,10 +356,12 @@ function FL:UpdateFriendButton(button)
 
         -- area
         if area then
-            if server and server ~= "" and server ~= E.myrealm then
+            if area and area ~= "" and server and server ~= "" and server ~= E.myrealm then
                 buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
-            else
+            elseif area and area ~= "" then
                 buttonText = F.CreateColorString(area, self.db.areaColor)
+            else
+                buttonText = server or ""
             end
 
             button.info:SetText(buttonText)

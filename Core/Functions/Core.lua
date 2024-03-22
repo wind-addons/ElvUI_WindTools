@@ -119,6 +119,10 @@ function F.CreateClassColorString(text, englishClass)
         return
     end
 
+    if englishClass == "" then
+        return text
+    end
+
     local r, g, b = GetClassColor(englishClass)
     local hex = r and g and b and E:RGBToHex(r, g, b) or "|cffffffff"
 

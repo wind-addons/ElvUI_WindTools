@@ -505,37 +505,6 @@ function CT:HandleShortChannels(msg)
     return msg
 end
 
-function CT:AddMessage(msg, infoR, infoG, infoB, infoID, accessID, typeID, isHistory, historyTime)
-    if not strmatch(msg, "^|Helvtime|h") and not strmatch(msg, "^|Hcpl:") then
-        local historyTimestamp  --we need to extend the arguments on AddMessage so we can properly handle times without overriding
-        if isHistory == "ElvUI_ChatHistory" then
-            historyTimestamp = historyTime
-        end
-
-        if CH.db.timeStampFormat and CH.db.timeStampFormat ~= "NONE" then
-            local timeStamp =
-                BetterDate(CH.db.timeStampFormat, historyTimestamp or E:GetDateTime(CH.db.timeStampLocalTime, true))
-            timeStamp = gsub(timeStamp, " ", "")
-            timeStamp = gsub(timeStamp, "AM", " AM")
-            timeStamp = gsub(timeStamp, "PM", " PM")
-
-            if CH.db.useCustomTimeColor then
-                local color = CH.db.customTimeColor
-                local hexColor = E:RGBToHex(color.r, color.g, color.b)
-                msg = format("|Helvtime|h%s[%s]|r|h %s", hexColor, timeStamp, msg)
-            else
-                msg = format("|Helvtime|h[%s]|h %s", timeStamp, msg)
-            end
-        end
-
-        if CH.db.copyChatLines then
-            msg = format("|Hcpl:%s|h%s|h %s", self:GetID(), E:TextureString(E.Media.Textures.ArrowRight, ":14"), msg)
-        end
-    end
-
-    self.OldAddMessage(self, msg, infoR, infoG, infoB, infoID, accessID, typeID)
-end
-
 function CT:CheckLFGRoles()
     if not CH.db.lfgIcons or not IsInGroup() then
         return
@@ -1603,7 +1572,7 @@ function CT:ToggleReplacement()
                 local frame = _G[frameName]
                 local id = frame:GetID()
                 if id ~= 2 and frame.OldAddMessage then
-                    frame.AddMessage = CT.AddMessage
+                    frame.AddMessage = CH.AddMessage
                 end
             end
 
@@ -1784,9 +1753,8 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
     local displayName = self.db.removeRealm and playerInfo.name or playerInfo.nameWithRealm
     local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
     local classIcon =
-        self.db.classIcon and
-        F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16) .. " " or
-        ""
+        self.db.classIcon and F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
+    classIcon = classIcon .. " " or ""
 
     if coloredName and classIcon and cache[achievementID] then
         local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)
@@ -1825,8 +1793,8 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
             F.CreateClassColorString(displayName, link and guildPlayerCache[link] or guildPlayerCache[name])
 
         coloredName = addSpaceForAsian(self:MayHaveBrackets(coloredName))
-        local classIcon =
-            self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16) .. " " or ""
+        local classIcon = self.db.classIcon and F.GetClassIconStringWithStyle(class, CT.db.classIconStyle, 16, 16)
+        classIcon = classIcon and classIcon .. " " or ""
 
         if coloredName and classIcon then
             if link then
@@ -2004,22 +1972,25 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
         if not guildPlayerCache[Ambiguate(fullName, "none")] then
             local classIcon =
                 self.db.classIcon and
-                F.GetClassIconStringWithStyle(characterData.data.class, CT.db.classIconStyle, 16, 16) .. " " or
-                ""
+                F.GetClassIconStringWithStyle(characterData.data.class, CT.db.classIconStyle, 16, 16)
+            classIcon = classIcon and classIcon .. " " or ""
             local coloredName = F.CreateClassColorString(character, characterData.data.class)
 
-            local playerName = format("|Hplayer:%s|h%s%s|h", fullName, classIcon, self:MayHaveBrackets(coloredName))
+            local playerName =
+                coloredName and format("|Hplayer:%s|h%s%s|h", fullName, classIcon, self:MayHaveBrackets(coloredName))
 
             if self.db.factionIcon then
                 local factionIcon =
                     F.GetIconString(factionTextures[characterData.data.faction] or factionTextures["Neutral"], 18)
-                playerName = factionIcon and format("%s %s", factionIcon, playerName) or playerName
+                playerName = playerName and factionIcon and format("%s %s", factionIcon, playerName) or playerName
             end
 
-            tinsert(
-                characterData.type == "online" and onlineCharacters or offlineCharacters,
-                addSpaceForAsian(playerName)
-            )
+            if playerName then
+                tinsert(
+                    characterData.type == "online" and onlineCharacters or offlineCharacters,
+                    addSpaceForAsian(playerName)
+                )
+            end
         end
     end
 

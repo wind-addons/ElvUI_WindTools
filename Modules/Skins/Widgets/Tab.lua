@@ -91,11 +91,11 @@ do
     ES.Ace3_TabSetSelected_ = ES.Ace3_TabSetSelected
     function ES.Ace3_TabSetSelected(tab, selected)
         if not tab or not tab.backdrop then
-            return
+            return ES.Ace3_TabSetSelected_(tab, selected)
         end
 
         if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
-            return
+            return ES.Ace3_TabSetSelected_(tab, selected)
         end
 
         local db = E.private.WT.skins.widgets.tab
@@ -111,8 +111,7 @@ do
         end
 
         if not db.selected.enable then
-            ES.Ace3_TabSetSelected_(tab, selected)
-            return
+            return ES.Ace3_TabSetSelected_(tab, selected)
         end
 
         local borderColor = db.selected.borderClassColor and W.ClassColor or db.selected.borderColor

@@ -1754,7 +1754,7 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
     local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
     local classIcon =
         self.db.classIcon and F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
-    classIcon = classIcon .. " " or ""
+    classIcon = classIcon and classIcon .. " " or ""
 
     if coloredName and classIcon and cache[achievementID] then
         local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)

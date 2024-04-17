@@ -32,6 +32,29 @@ function S:RaiderIO_DelayedSkinning()
         end
     end
 
+    if _G.RaiderIO_SearchFrame then
+        _G.RaiderIO_SearchFrame:StripTextures()
+        _G.RaiderIO_SearchFrame:SetTemplate("Transparent")
+        self:CreateShadow(_G.RaiderIO_SearchFrame)
+        self:ESProxy("HandleCloseButton", _G.RaiderIO_SearchFrame.close)
+
+        --[[ PLEASE LOOK AT DIS]]
+        for _, child in pairs({_G.RaiderIO_SearchFrame:GetChildren()}) do
+            local numRegions = child:GetNumRegions()
+            if numRegions == 9 then
+                if child and child:GetObjectType() == "EditBox" then
+                    if not child.IsSkinned then
+                        child:DisableDrawLayer("BACKGROUND")
+                        child:DisableDrawLayer("BORDER")
+                        self:ESProxy("HandleEditBox", child)
+
+                        child.IsSkinned = true
+                    end
+                end
+            end
+        end
+    end
+
     local configFrame
 
     for _, frame in pairs {_G.UIParent:GetChildren()} do

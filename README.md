@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" src="Title.svg"/><br><br>
 <img src="https://img.shields.io/badge/ElvUI-13.61-blue.svg?longCache=true&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Version-3.53-green.svg?longCache=true&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-3.54-green.svg?longCache=true&style=for-the-badge"/>
 
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS)
 <br><br>
@@ -11,7 +11,7 @@
 
 # :white_check_mark: Status
 
-![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.53&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/JMz5Zsk) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
+![Publish Badge](https://img.shields.io/github/actions/workflow/status/fang2hou/ElvUI_WindTools/publish_stable.yml?branch=3.54&style=flat-square) [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=Discord&logo=discord&style=flat-square)](https://discord.gg/JMz5Zsk) [![Kofi](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-Ko--fi-blue?style=flat-square)](https://ko-fi.com/fang2hou) [![爱发电](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8FDonate-爱发电-pink?style=flat-square)](https://afdian.net/@fang2hou)
 
 [![Github Stars](https://img.shields.io/github/stars/fang2hou/ElvUI_WindTools?style=social)](https://github.com/fang2hou/ElvUI_WindTools)
 

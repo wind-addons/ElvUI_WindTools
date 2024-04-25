@@ -12,7 +12,6 @@ local format = format
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
-local max = max
 local min = min
 local pairs = pairs
 local select = select
@@ -21,7 +20,6 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
-local type = type
 local unpack = unpack
 local wipe = wipe
 
@@ -84,49 +82,39 @@ local RoleIconTextures = {
 }
 
 local mythicKeystoneDungeons = {
-    [168] = L["[ABBR] The Everbloom"],
-    [198] = L["[ABBR] Darkheart Thicket"],
-    [199] = L["[ABBR] Black Rook Hold"],
-    [244] = L["[ABBR] Atal'Dazar"],
-    [248] = L["[ABBR] Waycrest Manor"],
-    [456] = L["[ABBR] Throne of the Tides"],
-    [463] = L["[ABBR] Dawn of the Infinites: Galakrond's Fall"],
-    [464] = L["[ABBR] Dawn of the Infinites: Murozond's Rise"]
+    [399] = L["[ABBR] Ruby Life Pools"],
+    [400] = L["[ABBR] The Nokhud Offensive"],
+    [401] = L["[ABBR] The Azure Vault"],
+    [402] = L["[ABBR] Algeth'ar Academy"],
+    [403] = L["[ABBR] Uldaman: Legacy of Tyr"],
+    [404] = L["[ABBR] Neltharus"],
+    [405] = L["[ABBR] Brackenhide Hollow"],
+    [406] = L["[ABBR] Halls of Infusion"]
 }
 
 -- https://wago.tools/db2/GroupFinderActivity
 local activityIDToMapID = {
-    [184] = 168,
-    [460] = 198,
-    [463] = 199,
-    [502] = 244,
-    [530] = 248,
-    [1274] = 456,
-    [1247] = 463,
-    [1248] = 464
+    [1176] = 399,
+    [1184] = 400,
+    [1180] = 401,
+    [1160] = 402,
+    [1188] = 403,
+    [1172] = 404,
+    [1164] = 405,
+    [1168] = 406
 }
 
 local vaultItemLevel = {
     0,
-    454,
-    457,
-    460,
-    460,
-    463,
-    463,
-    467,
-    467,
-    470,
-    470,
-    473,
-    473,
-    473,
-    476,
-    476,
-    476,
-    480,
-    480,
-    483
+    509,
+    509,
+    512,
+    512,
+    515,
+    515,
+    519,
+    519,
+    522
 }
 
 local affixLoop = {
@@ -1186,7 +1174,7 @@ function LL:InitalizeRightPanel()
                             tex,
                             name
                         ),
-                        vaultItemLevel[min(level, 20)],
+                        vaultItemLevel[min(level, #vaultItemLevel)],
                         1,
                         1,
                         1,

@@ -592,23 +592,25 @@ V.tooltips = {
             enable = true,
             ["Dragonflight Keystone Master: Season One"] = false,
             ["Dragonflight Keystone Hero: Season One"] = false,
-            ["Dragonflight Keystone Master: Season Two"] = true,
-            ["Dragonflight Keystone Hero: Season Two"] = true,
+            ["Dragonflight Keystone Master: Season Two"] = false,
+            ["Dragonflight Keystone Hero: Season Two"] = false,
             ["Dragonflight Keystone Master: Season Three"] = true,
-            ["Dragonflight Keystone Hero: Season Three"] = true
+            ["Dragonflight Keystone Hero: Season Three"] = true,
+            ["Dragonflight Keystone Master: Season Four"] = true,
+            ["Dragonflight Keystone Hero: Season Four"] = true
         },
         mythicDungeons = {
             enable = true,
             markHighestScore = true,
             showNoRecord = true,
-            ["The Everbloom"] = true,
-            ["Darkheart Thicket"] = true,
-            ["Black Rook Hold"] = true,
-            ["Atal'Dazar"] = true,
-            ["Waycrest Manor"] = true,
-            ["Throne of the Tides"] = true,
-            ["Dawn of the Infinites: Galakrond's Fall"] = true,
-            ["Dawn of the Infinites: Murozond's Rise"] = true
+            ["Ruby Life Pools"] = true,
+            ["The Nokhud Offensive"] = true,
+            ["The Azure Vault"] = true,
+            ["Algeth'ar Academy"] = true,
+            ["Uldaman: Legacy of Tyr"] = true,
+            ["Neltharus"] = true,
+            ["Brackenhide Hollow"] = true,
+            ["Halls of Infusion"] = true
         }
     }
 }

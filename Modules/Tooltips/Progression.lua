@@ -9,7 +9,6 @@ local ipairs = ipairs
 local next = next
 local pairs = pairs
 local select = select
-local strfind = strfind
 local tonumber = tonumber
 local unpack = unpack
 
@@ -96,6 +95,14 @@ local locales = {
         short = L["[ABBR] Dragonflight Keystone Hero: Season Three"],
         full = L["Dragonflight Keystone Hero: Season Three"]
     },
+    ["Dragonflight Keystone Master: Season Four"] = {
+        short = L["[ABBR] Dragonflight Keystone Master: Season Four"],
+        full = L["Dragonflight Keystone Master: Season Four"]
+    },
+    ["Dragonflight Keystone Hero: Season Four"] = {
+        short = L["[ABBR] Dragonflight Keystone Hero: Season Four"],
+        full = L["Dragonflight Keystone Hero: Season Four"]
+    },
     ["Vault of the Incarnates"] = {
         short = L["[ABBR] Vault of the Incarnates"],
         full = L["Vault of the Incarnates"]
@@ -108,37 +115,37 @@ local locales = {
         short = L["[ABBR] Amirdrassil, the Dream's Hope"],
         full = L["Amirdrassil, the Dream's Hope"]
     },
-    ["Dawn of the Infinites: Galakrond's Fall"] = {
-        short = L["[ABBR] Dawn of the Infinites: Galakrond's Fall"],
-        full = L["Dawn of the Infinites: Galakrond's Fall"]
+    ["Ruby Life Pools"] = {
+        short = L["[ABBR] Ruby Life Pools"],
+        full = L["Ruby Life Pools"]
     },
-    ["Dawn of the Infinites: Murozond's Rise"] = {
-        short = L["[ABBR] Dawn of the Infinites: Murozond's Rise"],
-        full = L["Dawn of the Infinites: Murozond's Rise"]
+    ["The Nokhud Offensive"] = {
+        short = L["[ABBR] The Nokhud Offensive"],
+        full = L["The Nokhud Offensive"]
     },
-    ["Waycrest Manor"] = {
-        short = L["[ABBR] Waycrest Manor"],
-        full = L["Waycrest Manor"]
+    ["The Azure Vault"] = {
+        short = L["[ABBR] The Azure Vault"],
+        full = L["The Azure Vault"]
     },
-    ["Atal'Dazar"] = {
-        short = L["[ABBR] Atal'Dazar"],
-        full = L["Atal'Dazar"]
+    ["Algeth'ar Academy"] = {
+        short = L["[ABBR] Algeth'ar Academy"],
+        full = L["Algeth'ar Academy"]
     },
-    ["Darkheart Thicket"] = {
-        short = L["[ABBR] Darkheart Thicket"],
-        full = L["Darkheart Thicket"]
+    ["Uldaman: Legacy of Tyr"] = {
+        short = L["[ABBR] Uldaman: Legacy of Tyr"],
+        full = L["Uldaman: Legacy of Tyr"]
     },
-    ["Black Rook Hold"] = {
-        short = L["[ABBR] Black Rook Hold"],
-        full = L["Black Rook Hold"]
+    ["Neltharus"] = {
+        short = L["[ABBR] Neltharus"],
+        full = L["Neltharus"]
     },
-    ["The Everbloom"] = {
-        short = L["[ABBR] The Everbloom"],
-        full = L["The Everbloom"]
+    ["Brackenhide Hollow"] = {
+        short = L["[ABBR] Brackenhide Hollow"],
+        full = L["Brackenhide Hollow"]
     },
-    ["Throne of the Tides"] = {
-        short = L["[ABBR] Throne of the Tides"],
-        full = L["Throne of the Tides"]
+    ["Halls of Infusion"] = {
+        short = L["[ABBR] Halls of Infusion"],
+        full = L["Halls of Infusion"]
     }
 }
 
@@ -283,14 +290,14 @@ local raidAchievements = {
 
 -- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
 local mythicKeystoneDungeons = {
-    [168] = "The Everbloom",
-    [198] = "Darkheart Thicket",
-    [199] = "Black Rook Hold",
-    [244] = "Atal'Dazar",
-    [248] = "Waycrest Manor",
-    [456] = "Throne of the Tides",
-    [463] = "Dawn of the Infinites: Galakrond's Fall",
-    [464] = "Dawn of the Infinites: Murozond's Rise"
+    [399] = "Ruby Life Pools",
+    [400] = "The Nokhud Offensive",
+    [401] = "The Azure Vault",
+    [402] = "Algeth'ar Academy",
+    [403] = "Uldaman: Legacy of Tyr",
+    [404] = "Neltharus",
+    [405] = "Brackenhide Hollow",
+    [406] = "Halls of Infusion"
 }
 
 local specialAchievements = {
@@ -299,7 +306,9 @@ local specialAchievements = {
     {17844, "Dragonflight Keystone Master: Season Two"},
     {17845, "Dragonflight Keystone Hero: Season Two"},
     {19011, "Dragonflight Keystone Master: Season Three"},
-    {19012, "Dragonflight Keystone Hero: Season Three"}
+    {19012, "Dragonflight Keystone Hero: Season Three"},
+    {19782, "Dragonflight Keystone Master: Season Four"},
+    {19783, "Dragonflight Keystone Hero: Season Four"}
 }
 
 local function GetLevelColoredString(level, short)
@@ -444,7 +453,7 @@ local function SetProgressionInfo(tt, guid)
         end
 
         for _, specialAchievement in pairs(specialAchievements) do
-            local achievementID, name = unpack(specialAchievement)
+            local _, name = unpack(specialAchievement)
             if db.special[name] then
                 local left = format("%s:", locales[name].short)
                 local right = cache[guid].info.special[name]

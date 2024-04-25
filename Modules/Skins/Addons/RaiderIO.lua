@@ -38,7 +38,6 @@ function S:RaiderIO_DelayedSkinning()
         self:CreateShadow(_G.RaiderIO_SearchFrame)
         self:ESProxy("HandleCloseButton", _G.RaiderIO_SearchFrame.close)
 
-        --[[ PLEASE LOOK AT DIS]]
         for _, child in pairs({_G.RaiderIO_SearchFrame:GetChildren()}) do
             local numRegions = child:GetNumRegions()
             if numRegions == 9 then
@@ -47,6 +46,15 @@ function S:RaiderIO_DelayedSkinning()
                         child:DisableDrawLayer("BACKGROUND")
                         child:DisableDrawLayer("BORDER")
                         self:ESProxy("HandleEditBox", child)
+                        child:SetTextInsets(2, 2, 2, 2)
+                        child:SetHeight(30)
+
+                        if child:GetNumPoints() == 1 then
+                            local point, relativeTo, relativePoint, xOffset, yOffset = child:GetPoint(1)
+                            yOffset = -3
+                            child:ClearAllPoints()
+                            child:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
+                        end
 
                         child.IsSkinned = true
                     end

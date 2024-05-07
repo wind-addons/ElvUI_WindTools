@@ -987,7 +987,7 @@ function trackers:get(event)
     local data = eventData[event]
 
     local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
-    frame:SetSize(220, 30)
+    frame:SetSize(240, 30)
 
     frame.dbKey = data.dbKey
     frame.args = data.args
@@ -1182,8 +1182,7 @@ function ET:UpdateTrackers()
         end
     end
 
-    local lastTracker = nil
-    for _, event in ipairs(eventList) do
+    for eventIndex, event in ipairs(eventList) do
         local data = eventData[event]
         local tracker = self.db[data.dbKey].enable and trackers:get(event) or trackers:disable(event)
         if tracker then
@@ -1207,12 +1206,8 @@ function ET:UpdateTrackers()
             end
 
             tracker:ClearAllPoints()
-            if lastTracker then
-                tracker:SetPoint("LEFT", lastTracker, "RIGHT", self.db.spacing, 0)
-            else
-                tracker:SetPoint("LEFT", self.frame, "LEFT", self.db.spacing * 0.68, 0)
-            end
-            lastTracker = tracker
+            local row, col = floor((eventIndex - 1) / 4), (eventIndex - 1) % 4
+            tracker:SetPoint("TOPLEFT", self.frame, "TOPLEFT", (self.db.spacing + 240) * col + 5, -row * 30 - 2)
         end
     end
 end

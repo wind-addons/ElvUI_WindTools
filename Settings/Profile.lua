@@ -1,7 +1,4 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
-local _G = _G
-
-local GetLocale = GetLocale
 
 P.announcement = {
     enable = true,
@@ -694,7 +691,7 @@ P.maps = {
     eventTracker = {
         enable = true,
         spacing = 10,
-        height = 64,
+        height = 70,
         yOffset = -4,
         backdrop = true,
         font = {

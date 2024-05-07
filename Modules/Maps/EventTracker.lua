@@ -987,7 +987,7 @@ function trackers:get(event)
     local data = eventData[event]
 
     local frame = CreateFrame("Frame", "WTEventTracker" .. event, ET.frame)
-    frame:SetSize(240, 30)
+    frame:SetSize(236, 30)
 
     frame.dbKey = data.dbKey
     frame.args = data.args
@@ -1207,7 +1207,7 @@ function ET:UpdateTrackers()
 
             tracker:ClearAllPoints()
             local row, col = floor((eventIndex - 1) / 4), (eventIndex - 1) % 4
-            tracker:SetPoint("TOPLEFT", self.frame, "TOPLEFT", (self.db.spacing + 240) * col + 5, -row * 30 - 2)
+            tracker:SetPoint("TOPLEFT", self.frame, "TOPLEFT", (self.db.spacing + 236) * col + 13, -row * 30 - 5)
         end
     end
 end

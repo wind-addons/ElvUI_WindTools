@@ -166,6 +166,15 @@ local expansionData = {
             modern = MediaPath .. "GameIcons\\WOW_WotLK",
             blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
         }
+    },
+    [WOW_PROJECT_CATACLYSM_CLASSIC] = {
+        name = "Cata",
+        suffix = "Cata",
+        maxLevel = 85,
+        icon = {
+            modern = MediaPath .. "GameIcons\\WOW_Cata",
+            blizzard = BNet_GetClientAtlas("Battlenet-ClientIcon-", "WoW")
+        }
     }
 }
 

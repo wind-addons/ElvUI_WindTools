@@ -694,8 +694,8 @@ P.maps = {
     eventTracker = {
         enable = true,
         spacing = 10,
-        height = 38,
-        yOffset = -3,
+        height = 64,
+        yOffset = -4,
         backdrop = true,
         font = {
             name = E.db.general.font,
@@ -703,7 +703,7 @@ P.maps = {
             outline = "OUTLINE"
         },
         communityFeast = {
-            enable = false,
+            enable = true,
             desaturate = false,
             alert = true,
             sound = false,
@@ -713,7 +713,7 @@ P.maps = {
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         siegeOnDragonbaneKeep = {
-            enable = false,
+            enable = true,
             desaturate = false,
             alert = true,
             sound = false,
@@ -723,7 +723,7 @@ P.maps = {
             stopAlertIfPlayerNotEnteredDragonlands = true
         },
         researchersUnderFire = {
-            enable = false,
+            enable = true,
             desaturate = false,
             alert = true,
             sound = false,

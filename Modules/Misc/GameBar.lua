@@ -1061,7 +1061,7 @@ function GB:ConstructButton()
     additionalText:SetPoint(self.db.additionalText.anchor, self.db.additionalText.x, self.db.additionalText.y)
     F.SetFontWithDB(additionalText, self.db.additionalText.font)
     additionalText:SetJustifyH("CENTER")
-    additionalText:SetJustifyV("CENTER")
+    additionalText:SetJustifyV("MIDDLE")
     button.additionalText = additionalText
 
     self:HookScript(button, "OnEnter", "ButtonOnEnter")

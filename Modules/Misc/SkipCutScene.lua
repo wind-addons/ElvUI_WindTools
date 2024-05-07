@@ -3,9 +3,6 @@ local M = W.Modules.Misc
 
 local _G = _G
 local format = format
-local gsub = gsub
-local hooksecurefunc = hooksecurefunc
-local select = select
 local strmatch = strmatch
 local strsub = strsub
 

@@ -3,7 +3,6 @@ local WM = W:NewModule("WorldMap", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
 local ceil = ceil
-local collectgarbage = collectgarbage
 local gsub = gsub
 local ipairs = ipairs
 local mod = mod
@@ -18,7 +17,6 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
-local MapCanvasScrollControllerMixin_GetCursorPosition = MapCanvasScrollControllerMixin.GetCursorPosition
 
 -- STRUCTURE: (do data mining on WorldMapOverlay and WorldMapOverlayTile tables)
 -- UiMapArtID = {

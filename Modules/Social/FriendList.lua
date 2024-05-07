@@ -1,10 +1,7 @@
 local W, F, E, L = unpack((select(2, ...)))
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 
-local _G = _G
-local format = format
 local pairs = pairs
-local strmatch = strmatch
 local strsplit = strsplit
 local strupper = strupper
 

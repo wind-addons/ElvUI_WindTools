@@ -6,9 +6,6 @@ local ceil = ceil
 local format = format
 local strlower = strlower
 local strupper = strupper
-local unpack = unpack
-
-local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 
 W.Media = {
 	Icons = {},

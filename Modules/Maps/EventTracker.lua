@@ -14,7 +14,6 @@ local pairs = pairs
 local type = type
 local unpack = unpack
 local tinsert = tinsert
-local tsort = table.sort
 local math_pow = math.pow
 
 local CreateFrame = CreateFrame

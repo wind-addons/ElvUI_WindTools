@@ -3,19 +3,10 @@ local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G
-local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local strfind = strfind
-local tinsert = tinsert
 local type = type
 local unpack = unpack
-local wipe = wipe
-
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-
-local buttons = {}
-local expandButtons = {}
 
 local function RemoveBorder(frame)
     for _, region in pairs {frame:GetRegions()} do

@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
-local ES = E.Skins
 local MF = W.Modules.MoveFrames
 
 local _G = _G
@@ -10,18 +9,6 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 
 do
-    local DeleteRegions = {
-        "Center",
-        "BottomEdge",
-        "LeftEdge",
-        "RightEdge",
-        "TopEdge",
-        "BottomLeftCorner",
-        "BottomRightCorner",
-        "TopLeftCorner",
-        "TopRightCorner"
-    }
-
     function S:TinyInspect_SkinListPanel(unit, parent, ilevel, maxLevel)
         if not parent or not parent.inspectFrame then
             return

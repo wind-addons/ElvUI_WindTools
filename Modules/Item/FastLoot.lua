@@ -2,12 +2,8 @@ local W, F, E, L = unpack((select(2, ...)))
 local FL = W:NewModule("FastLoot", "AceEvent-3.0")
 
 local _G = _G
-local select = select
-local strlen = strlen
 local tonumber = tonumber
 
-local GetInventoryItemID = GetInventoryItemID
-local GetItemInfo = GetItemInfo
 local GetNumLootItems = GetNumLootItems
 local GetTime = GetTime
 local IsModifiedClick = IsModifiedClick

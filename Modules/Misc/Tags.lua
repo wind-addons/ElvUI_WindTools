@@ -9,7 +9,6 @@ local select = select
 local strlen = strlen
 local strlower = strlower
 local strsub = strsub
-local tonumber = tonumber
 
 local GetClassColor = GetClassColor
 local GetClassInfo = GetClassInfo

@@ -1,7 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
-local ES = E.Skins
-local TT = E:GetModule("Tooltip")
 
 local _G = _G
 local CreateFrame = CreateFrame

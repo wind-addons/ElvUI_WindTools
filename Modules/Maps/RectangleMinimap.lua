@@ -8,9 +8,6 @@ local ceil = ceil
 local floor = floor
 local format = format
 local hooksecurefunc = hooksecurefunc
-local pairs = pairs
-local select = select
-local sqrt = sqrt
 
 local InCombatLockdown = InCombatLockdown
 

@@ -2,7 +2,6 @@ local W, F, E, L = unpack((select(2, ...)))
 local T = W:NewModule("Trade", "AceEvent-3.0")
 
 local _G = _G
-local CreateFrame = CreateFrame
 local GetUnitName = GetUnitName
 local SendChatMessage = SendChatMessage
 

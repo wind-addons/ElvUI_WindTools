@@ -4,7 +4,6 @@ local TI = W:NewModule("TurnIn", "AceEvent-3.0")
 local _G = _G
 local format = format
 local ipairs = ipairs
-local next = next
 local select = select
 local strfind = strfind
 local strlen = strlen
@@ -67,7 +66,7 @@ local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
-local quests, choiceQueue = {}, nil
+local choiceQueue = nil
 
 local ignoreQuestNPC = {
     [14847] = true, -- 薩杜斯‧帕里歐教授

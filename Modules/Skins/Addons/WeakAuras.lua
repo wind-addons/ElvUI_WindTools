@@ -7,7 +7,6 @@ local hooksecurefunc = hooksecurefunc
 local format = format
 local pairs = pairs
 local print = print
-local strfind = strfind
 local unpack = unpack
 
 local WeakAuras = _G.WeakAuras
@@ -16,7 +15,6 @@ function S:WeakAuras_PrintProfile()
     local frame = _G.WADebugEditBox.Background
 
     if frame and not frame.__windSkin then
-        local textArea = _G.WADebugEditBoxScrollFrame:GetRegions()
         self:ESProxy("HandleScrollBar", _G.WADebugEditBoxScrollFrameScrollBar)
 
         frame:StripTextures()

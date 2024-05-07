@@ -4,14 +4,11 @@ local AK = W:NewModule("AlreadyKnown", "AceEvent-3.0", "AceHook-3.0")
 local _G = _G
 local ceil = ceil
 local format = format
-local gsub = gsub
-local min = min
 local mod = mod
 local select = select
 local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
-local type = type
 
 local GetBuybackItemInfo = GetBuybackItemInfo
 local GetBuybackItemLink = GetBuybackItemLink

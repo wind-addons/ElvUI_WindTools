@@ -6,7 +6,6 @@ local _G = _G
 local max = max
 local select = select
 local time = time
-local tonumber = tonumber
 
 local UnitClass = UnitClass
 local UnitName = UnitName

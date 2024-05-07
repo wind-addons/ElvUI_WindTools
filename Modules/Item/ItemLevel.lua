@@ -4,7 +4,6 @@ local B = E:GetModule("Bags")
 local LSM = E.Libs.LSM
 
 local _G = _G
-local format = format
 local pairs = pairs
 local select = select
 local type = type

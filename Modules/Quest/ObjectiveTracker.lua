@@ -16,9 +16,6 @@ local tonumber = tonumber
 local CreateFrame = CreateFrame
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
-
 do
     local replaceRule = {}
 

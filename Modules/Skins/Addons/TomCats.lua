@@ -1,19 +1,13 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
-local ES = E.Skins
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
 
 local pairs = pairs
-local select = select
-local strsplit = strsplit
-local tonumber = tonumber
 local unpack = unpack
 
 local GetItemQualityColor = GetItemQualityColor
-local MerchantFrame = MerchantFrame
-local UnitGUID = UnitGUID
 
 local atlasToQuality = {
     ["auctionhouse-itemicon-border-gray"] = 0,

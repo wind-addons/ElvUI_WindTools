@@ -2,8 +2,6 @@ local W, F, E, L = unpack((select(2, ...)))
 local M = W.Modules.Misc
 
 local _G = _G
-local assert = assert
-local format = format
 local next = next
 local pairs = pairs
 local tinsert = tinsert

@@ -87,6 +87,14 @@ function W:UpdateScripts()
         UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"], globalVersion)
     end
 
+    if profileVersion < 3.56 then
+        E.db.WT.maps.eventTracker.spacing = nil
+        E.db.WT.maps.eventTracker.height = nil
+        E.db.WT.maps.eventTracker.yOffset = nil
+        E.db.WT.maps.eventTracker.backdrop = nil
+        UpdateMessage(L["Event Tracker"] .. " - " .. L["Update Database"], profileVersion)
+    end
+
     if not isFirstLine then
         F.PrintGradientLine()
     end

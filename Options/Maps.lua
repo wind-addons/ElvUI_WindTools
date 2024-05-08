@@ -1022,43 +1022,74 @@ options.eventTracker = {
             inline = true,
             name = L["Style"],
             get = function(info)
-                return E.db.WT.maps.eventTracker[info[#info]]
+                return E.db.WT.maps.eventTracker[info[#info-1]][info[#info]]
             end,
             set = function(info, value)
-                E.db.WT.maps.eventTracker[info[#info]] = value
+                E.db.WT.maps.eventTracker[info[#info-1]][info[#info]] = value
                 ET:ProfileUpdate()
             end,
             args = {
-                height = {
+                backdrop = {
                     order = 1,
-                    type = "range",
-                    name = L["Height"],
-                    min = 20,
-                    max = 100,
-                    step = 1
+                    type = "toggle",
+                    name = L["Backdrop"],
+                    desc = L["Show a backdrop of the trackers."]
                 },
-                spacing = {
+                backdropYOffset = {
                     order = 2,
                     type = "range",
-                    name = L["Spacing"],
-                    min = 0,
+                    name = L["Y-Offset"],
+                    desc = L["The Y-Offset of the backdrop."],
+                    min = -20,
                     max = 20,
                     step = 1
                 },
-                backdrop = {
+                backdropSpacing = {
                     order = 3,
-                    type = "toggle",
-                    name = L["Backdrop"]
+                    type = "range",
+                    name = L["Backdrop Spacing"],
+                    desc = L["The spacing between the backdrop and the trackers."],
+                    min = -10,
+                    max = 20,
+                    step = 1
                 },
-                yOffset = {
+                trackerWidth = {
                     order = 4,
                     type = "range",
-                    name = L["Y-Offset"],
-                    desc = L["The offset of the frame from the bottom of the world map. (Default is -3)"],
-                    min = -300,
-                    max = 300,
+                    name = L["Width"],
+                    desc = L["The width of the tracker."],
+                    min = 50,
+                    max = 500,
                     step = 1
-                }
+                },
+                trackerHeight = {
+                    order = 5,
+                    type = "range",
+                    name = L["Height"],
+                    desc = L["The height of the tracker."],
+                    min = 2,
+                    max = 100,
+                    step = 1
+                },
+                trackerHorizontalSpacing = {
+                    order = 6,
+                    type = "range",
+                    name = L["Horizontal Spacing"],
+                    desc = L["The spacing between trackers."],
+                    min = -20,
+                    max = 20,
+                    step = 1
+                },
+                trackerVerticalSpacing = {
+                    order = 7,
+                    type = "range",
+                    name = L["Vertical Spacing"],
+                    desc = L["The spacing between the tracker and the world map."],
+                    min = -20,
+                    max = 20,
+                    step = 1
+                },
+
             }
         },
         font = {

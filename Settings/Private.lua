@@ -144,7 +144,7 @@ V.misc = {
         }
     },
     lfgList = {
-        enable = true,
+        enable = false,
         icon = {
             leader = true,
             reskin = true,

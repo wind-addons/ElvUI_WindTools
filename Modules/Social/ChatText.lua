@@ -1492,7 +1492,7 @@ function CT:MessageFormatter(
         end
     else
         if not showLink or arg2 == "" then
-            if chatType == "TEXT_EMOTE" or chatType == "GUILD_DEATHS" then
+            if chatType == "TEXT_EMOTE" then
                 body = message
             else
                 body = format(_G["CHAT_" .. chatType .. "_GET"] .. message, pflag .. arg2, arg2)

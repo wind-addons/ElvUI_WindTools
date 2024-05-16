@@ -237,7 +237,6 @@ function LL:ReskinIcon(parent, icon, role, data)
     local class = data and data[1]
     local spec = data and data[2]
     local isLeader = data and data[3]
-    print("Reskin - " .. class .. " - " .. spec)
 
     if role then
         if self.db.icon.reskin then
@@ -1585,6 +1584,10 @@ function LL:UpdateAdvancedFilters()
         advFilters.needsTank = partyMember.TANK > 0
         advFilters.needsHealer = partyMember.HEALER > 0
         advFilters.needsDamage = partyMember.DAMAGER > 0
+    else
+        advFilters.needsTank = false
+        advFilters.needsHealer = false
+        advFilters.needsDamage = false
     end
 
     advFilters.hasTank = dfDB.needTankEnable

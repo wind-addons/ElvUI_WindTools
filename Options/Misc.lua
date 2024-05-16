@@ -1636,6 +1636,14 @@ options.lfgList = {
                     min = 0,
                     max = 1,
                     step = 0.01
+                },
+                hideDefaultClassCircle = {
+                    order = 7,
+                    type = "toggle",
+                    name = L["Hide default class circles"],
+                    desc = L[
+                        "Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"
+                    ]
                 }
             }
         },

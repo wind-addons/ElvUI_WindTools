@@ -92,6 +92,8 @@ local mythicKeystoneDungeons = {
     [406] = {name = L["[ABBR] Halls of Infusion"], activityID = 304}
 }
 
+local seasonDungeonActivities = {315, 316, 317}
+
 -- https://wago.tools/db2/GroupFinderActivity
 local activityIDToMapID = {
     [1176] = 399,
@@ -235,6 +237,7 @@ function LL:ReskinIcon(parent, icon, role, data)
     local class = data and data[1]
     local spec = data and data[2]
     local isLeader = data and data[3]
+    print("Reskin - " .. class .. " - " .. spec)
 
     if role then
         if self.db.icon.reskin then
@@ -333,19 +336,26 @@ function LL:UpdateEnumerate(Enumerate)
 
     for i = 5, 1, -1 do -- The index of icon starts from right
         local icon = Enumerate["Icon" .. i]
-        if icon and icon.SetTexture then
+        local roleIcon = icon.RoleIcon
+        local classCircle = icon.ClassCircle
+
+        if roleIcon and roleIcon.SetTexture then
             if #cache.TANK > 0 then
-                self:ReskinIcon(Enumerate, icon, "TANK", cache.TANK[1])
+                self:ReskinIcon(Enumerate, roleIcon, "TANK", cache.TANK[1])
                 tremove(cache.TANK, 1)
             elseif #cache.HEALER > 0 then
-                self:ReskinIcon(Enumerate, icon, "HEALER", cache.HEALER[1])
+                self:ReskinIcon(Enumerate, roleIcon, "HEALER", cache.HEALER[1])
                 tremove(cache.HEALER, 1)
             elseif #cache.DAMAGER > 0 then
-                self:ReskinIcon(Enumerate, icon, "DAMAGER", cache.DAMAGER[1])
+                self:ReskinIcon(Enumerate, roleIcon, "DAMAGER", cache.DAMAGER[1])
                 tremove(cache.DAMAGER, 1)
             else
-                self:ReskinIcon(Enumerate, icon)
+                self:ReskinIcon(Enumerate, roleIcon)
             end
+        end
+
+        if classCircle and self.db.icon.hideDefaultClassCircle then
+            classCircle:Hide()
         end
     end
 
@@ -1572,26 +1582,15 @@ function LL:UpdateAdvancedFilters()
     
     -- Role available (Partyfit) -> Try to set correct filters based on group roles, juggling "needs/has" in the advFilters
     if dfDB.roleAvailableEnable then
-        if partyMember.TANK == 1 then
-            advFilters.needsTank = true
-        end
-        
-        if partyMember.HEALER == 1 then
-            advFilters.needsHealer = true
-        end
-
-        if partyMember.DAMAGER > 0 then
-            advFilters.needsDamage = true
-        end
-    else
-        advFilters.needsTank = false
-        advFilters.needsHealer = false
-        advFilters.needsDamage = false
+        advFilters.needsTank = partyMember.TANK > 0
+        advFilters.needsHealer = partyMember.HEALER > 0
+        advFilters.needsDamage = partyMember.DAMAGER > 0
     end
 
     advFilters.hasTank = dfDB.needTankEnable
     advFilters.hasHealer = dfDB.needHealerEnable
     advFilters.minimumRating = dfDB.leaderScoreEnable and dfDB.leaderScore or 0
+    MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating);
 
     local activities = {}
     local numActiveMaps = 0
@@ -1605,6 +1604,9 @@ function LL:UpdateAdvancedFilters()
     if numActiveMaps == 0 then
         for mapID, _ in pairs(mythicKeystoneDungeons) do
             table.insert(activities, mythicKeystoneDungeons[mapID].activityID)
+        end
+        for i = 1, #seasonDungeonActivities do
+            table.insert(activities, seasonDungeonActivities[i])
         end
     end
 
@@ -1728,6 +1730,7 @@ function LL.OnUpdateResultListEnclosure(lfg)
     return UpdateResultList;
 end
 
+
 function LL:Initialize()
     if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
         self.StopRunning = "PremadeGroupsFilter"
@@ -1750,7 +1753,6 @@ function LL:Initialize()
     self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
     self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
     self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
-    -- self:SecureHook("LFGListUtil_SortSearchResults", "ResortSearchResults")
     hooksecurefunc("LFGListSearchPanel_UpdateResultList", LL.OnUpdateResultListEnclosure(self))
     self:SecureHook(
         "LFGListSearchPanel_DoSearch",

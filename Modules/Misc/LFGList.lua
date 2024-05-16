@@ -561,10 +561,6 @@ function LL:InitalizeRightPanel()
         local MF = W.Modules.MoveFrames
         MF:HandleFrame(frame, "PVEFrame")
     end
-
-    frame:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
-    frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    frame:SetScript("OnEvent", self.LFGListEventHandler)
     
     hooksecurefunc(
         frame,
@@ -1767,6 +1763,8 @@ function LL:Initialize()
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
     self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")
     self:RegisterEvent("PLAYER_ENTERING_WORLD", "RequestKeystoneData")
+    self:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED", "LFGListEventHandler")
+    self:RegisterEvent("GROUP_ROSTER_UPDATE", "LFGListEventHandler")
 
     openRaidLib.RequestKeystoneDataFromParty()
     E:Delay(2, self.RequestKeystoneData, self)

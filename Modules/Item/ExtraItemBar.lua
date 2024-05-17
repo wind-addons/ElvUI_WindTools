@@ -999,6 +999,18 @@ local openableItems = {
     217728  -- 覺醒寶藏貯藏箱
 }
 
+local mopRemix ={
+    211279, -- 恆龍寶箱
+    223904, -- 非同步的榫輪寶石
+    223905, -- 非同步的變換寶石
+    223906, -- 非同步的技工寶石
+    223907, -- 非同步稜彩寶石
+    223908, -- 小型青銅寶箱
+    223909, -- 次級青銅寶箱
+    223910, -- 青銅寶箱
+    223911, -- 大型青銅寶箱
+}
+
 local bigDig = {
     205223, -- 裝飾半人馬斧頭
     211414, -- 繁花夢珍寶
@@ -1380,7 +1392,8 @@ local moduleList = {
     ["OPENABLE"] = openableItems,
     ["PROF"] = professionItems,
     ["SEEDS"] = seeds,
-    ["BIGDIG"] = bigDig
+    ["BIGDIG"] = bigDig,
+    ["MOPREMIX"] = mopRemix
 }
 
 function EB:CreateButton(name, barDB)

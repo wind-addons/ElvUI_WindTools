@@ -10,6 +10,7 @@ function S:DressUpFrame()
 
     self:CreateShadow(_G.DressUpFrame)
     self:CreateBackdropShadow(_G.DressUpFrame.OutfitDetailsPanel)
+    self:CreateBackdropShadow(_G.DressUpFrame.SetSelectionPanel) -- MOP Remix
 end
 
 S:AddCallback("DressUpFrame")

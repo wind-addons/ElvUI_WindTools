@@ -144,8 +144,10 @@ V.misc = {
         }
     },
     lfgList = {
-        enable = false,
+        enable = true,
         icon = {
+            enable = true,
+            hideDefaultClassCircle = true,
             leader = true,
             reskin = true,
             pack = "SQUARE",

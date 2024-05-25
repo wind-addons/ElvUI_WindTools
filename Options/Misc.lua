@@ -1586,20 +1586,25 @@ options.lfgList = {
                 E:StaticPopup_Show("PRIVATE_RL")
             end,
             args = {
-                leader = {
+                enable = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Enable"]
+                },
+                leader = {
+                    order = 2,
                     type = "toggle",
                     name = L["Leader"],
                     desc = L["Add an indicator for the leader."]
                 },
                 reskin = {
-                    order = 2,
+                    order = 3,
                     type = "toggle",
                     name = L["Reskin Icon"],
                     desc = L["Change role icons."]
                 },
                 pack = {
-                    order = 3,
+                    order = 4,
                     type = "select",
                     name = L["Style"],
                     desc = L["Change the icons that indicate the role."],
@@ -1617,12 +1622,12 @@ options.lfgList = {
                     }
                 },
                 border = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Border"]
                 },
                 size = {
-                    order = 5,
+                    order = 6,
                     type = "range",
                     name = L["Size"],
                     min = 1,
@@ -1630,7 +1635,7 @@ options.lfgList = {
                     step = 1
                 },
                 alpha = {
-                    order = 6,
+                    order = 7,
                     type = "range",
                     name = L["Alpha"],
                     min = 0,
@@ -1638,7 +1643,7 @@ options.lfgList = {
                     step = 0.01
                 },
                 hideDefaultClassCircle = {
-                    order = 7,
+                    order = 8,
                     type = "toggle",
                     name = L["Hide default class circles"],
                     desc = L[

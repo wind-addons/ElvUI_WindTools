@@ -94,18 +94,6 @@ local mythicKeystoneDungeons = {
 
 local seasonDungeonActivities = {315, 316, 317}
 
--- https://wago.tools/db2/GroupFinderActivity
-local activityIDToMapID = {
-    [1176] = 399,
-    [1184] = 400,
-    [1180] = 401,
-    [1160] = 402,
-    [1188] = 403,
-    [1172] = 404,
-    [1164] = 405,
-    [1168] = 406
-}
-
 local vaultItemLevel = {
     0,
     509,
@@ -467,7 +455,7 @@ function LL:UpdatePartyKeystoneFrame()
         local unitID = i == 1 and "player" or "party" .. i - 1
         local data = openRaidLib.GetKeystoneInfo(unitID)
         local mapID = data and data.mythicPlusMapID
-        if mapID and mythicKeystoneDungeons[mapID].name then
+        if mapID and mythicKeystoneDungeons[mapID] and mythicKeystoneDungeons[mapID].name then
             local level = data.level
             local playerClass = UnitClassBase(unitID)
             local playerName = UnitName(unitID)
@@ -561,7 +549,7 @@ function LL:InitalizeRightPanel()
         local MF = W.Modules.MoveFrames
         MF:HandleFrame(frame, "PVEFrame")
     end
-    
+
     hooksecurefunc(
         frame,
         "Show",
@@ -1570,11 +1558,11 @@ function LL:GetPartyRoles()
     return partyMember
 end
 
-function LL:UpdateAdvancedFilters() 
+function LL:UpdateAdvancedFilters()
     local advFilters = C_LFGList.GetAdvancedFilter()
     local partyMember = self:GetPartyRoles()
     local dfDB = self:GetPlayerDB("dungeonFilter")
-    
+
     -- Role available (Partyfit) -> Try to set correct filters based on group roles, juggling "needs/has" in the advFilters
     if dfDB.roleAvailableEnable then
         advFilters.needsTank = partyMember.TANK > 0
@@ -1589,7 +1577,7 @@ function LL:UpdateAdvancedFilters()
     advFilters.hasTank = dfDB.needTankEnable
     advFilters.hasHealer = dfDB.needHealerEnable
     advFilters.minimumRating = dfDB.leaderScoreEnable and dfDB.leaderScore or 0
-    MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating);
+    MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating)
 
     local activities = {}
     local numActiveMaps = 0
@@ -1614,7 +1602,7 @@ function LL:UpdateAdvancedFilters()
     C_LFGList.SaveAdvancedFilter(advFilters)
 end
 
-function LL.OnUpdateResultListEnclosure(lfg) 
+function LL.OnUpdateResultListEnclosure(lfg)
     function copy_table(t)
         local c = {}
         for k, v in pairs(t) do
@@ -1628,24 +1616,24 @@ function LL.OnUpdateResultListEnclosure(lfg)
         if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
             return
         end
-    
+
         if not lfg.db.enable or not lfg.db.rightPanel.enable or not results or #results == 0 then
             return false
         end
-    
+
         local dfDB = lfg:GetPlayerDB("dungeonFilter")
-    
+
         local partyMember = {
             TANK = 0,
             HEALER = 0,
             DAMAGER = 0
         }
-    
+
         local sortDatabase = {}
-    
+
         local pendingResults = {}
         local waitForSortingResults = {}
-        
+
         local partyMember = lfg:GetPartyRoles()
         for _, resultID in ipairs(results) do
             local pendingStatus = select(3, C_LFGList_GetApplicationInfo(resultID))
@@ -1664,7 +1652,7 @@ function LL.OnUpdateResultListEnclosure(lfg)
                 if searchResultInfo.leaderOverallDungeonScore then
                     sortCache.overallScore = searchResultInfo.leaderOverallDungeonScore
                 end
-    
+
                 if searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.mapScore then
                     sortCache.dungeonScore = searchResultInfo.leaderDungeonScoreInfo.mapScore
                 end
@@ -1676,16 +1664,16 @@ function LL.OnUpdateResultListEnclosure(lfg)
                         HEALER = 0,
                         DAMAGER = 0
                     }
-    
+
                     for i = 1, searchResultInfo.numMembers do
                         local role = C_LFGList_GetSearchResultMemberInfo(resultID, i)
                         if resultRoles[role] then
                             resultRoles[role] = resultRoles[role] + 1
                         end
                     end
-                    
+
                     if partyMember.DAMAGER + resultRoles.DAMAGER > 3 then
-                        verified = false;
+                        verified = false
                     end
                 end
 
@@ -1703,7 +1691,7 @@ function LL.OnUpdateResultListEnclosure(lfg)
                     if not a or not b then
                         return false
                     end
-    
+
                     local result = sortMode[sortBy].func(a, b)
                     result = dfDB.sortDescending and result or result * -1
                     return result == 1
@@ -1712,23 +1700,22 @@ function LL.OnUpdateResultListEnclosure(lfg)
         end
 
         wipe(results)
-    
+
         for _, result in ipairs(pendingResults) do
             tinsert(results, result)
         end
-    
+
         for _, result in ipairs(waitForSortingResults) do
             tinsert(results, result.id)
         end
-    
+
         _G.LFGListFrame.SearchPanel.results = results
         _G.LFGListFrame.SearchPanel.totalResults = #results
         LFGListSearchPanel_UpdateResults(_G.LFGListFrame.SearchPanel)
     end
 
-    return UpdateResultList;
+    return UpdateResultList
 end
-
 
 function LL:Initialize()
     if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
@@ -1748,8 +1735,11 @@ function LL:Initialize()
     C_MythicPlus.RequestCurrentAffixes()
     C_MythicPlus.RequestMapInfo()
 
-    self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
-    self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
+    if self.db.icon.enable then
+        self:SecureHook("LFGListGroupDataDisplayEnumerate_Update", "UpdateEnumerate")
+        self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
+    end
+
     self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
     self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
     hooksecurefunc("LFGListSearchPanel_UpdateResultList", LL.OnUpdateResultListEnclosure(self))

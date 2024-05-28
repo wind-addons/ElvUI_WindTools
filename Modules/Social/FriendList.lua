@@ -345,7 +345,7 @@ function FL:UpdateFriendButton(button)
         -- name
         local classColor = self.db.useClassColor and GetClassColor(class)
         local nameString = name and classColor and F.CreateColorString(name, classColor) or name
-        if timerunningSeasonID ~= "" then
+        if timerunningSeasonID ~= "" and nameString ~= nil then
             nameString = TimerunningUtil_AddSmallIcon(nameString) or nameString-- add timerunning tag
         end
 

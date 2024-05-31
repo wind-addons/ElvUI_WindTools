@@ -30,10 +30,11 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
+local IsShiftKeyDown = IsShiftKeyDown
 local LoadAddOn = LoadAddOn
 local UnitClassBase = UnitClassBase
-local UnitName = UnitName
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local UnitName = UnitName
 local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -41,9 +42,11 @@ local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
+local C_LFGList_GetAdvancedFilter = C_LFGList.GetAdvancedFilter
 local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
@@ -163,6 +166,14 @@ local function getKeystoneLevelColor(level)
     else
         return "ffff8000"
     end
+end
+
+local function copyTable(t)
+    local c = {}
+    for k, v in pairs(t) do
+        c[k] = v
+    end
+    return c
 end
 
 function LL:GetPlayerDB(key)
@@ -607,15 +618,15 @@ function LL:InitalizeRightPanel()
                 return
             end
 
-            local panel = LFGListFrame.SearchPanel
+            local panel = _G.LFGListFrame.SearchPanel
             if
-                button ~= "RightButton" and LFGListSearchPanelUtil_CanSelectResult(s.resultID) and
+                button ~= "RightButton" and _G.LFGListSearchPanelUtil_CanSelectResult(s.resultID) and
                     panel.SignUpButton:IsEnabled()
              then
                 if panel.selectedResult ~= s.resultID then
-                    LFGListSearchPanel_SelectResult(panel, s.resultID)
+                    _G.LFGListSearchPanel_SelectResult(panel, s.resultID)
                 end
-                LFGListSearchPanel_SignUp(panel)
+                _G.LFGListSearchPanel_SignUp(panel)
             end
         end
     )
@@ -1559,7 +1570,7 @@ function LL:GetPartyRoles()
 end
 
 function LL:UpdateAdvancedFilters()
-    local advFilters = C_LFGList.GetAdvancedFilter()
+    local advFilters = C_LFGList_GetAdvancedFilter()
     local partyMember = self:GetPartyRoles()
     local dfDB = self:GetPlayerDB("dungeonFilter")
 
@@ -1577,42 +1588,34 @@ function LL:UpdateAdvancedFilters()
     advFilters.hasTank = dfDB.needTankEnable
     advFilters.hasHealer = dfDB.needHealerEnable
     advFilters.minimumRating = dfDB.leaderScoreEnable and dfDB.leaderScore or 0
-    MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating)
+    _G.MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating)
 
     local activities = {}
     local numActiveMaps = 0
     for mapID, _ in pairs(mythicKeystoneDungeons) do
         if dfDB[mapID] then
-            table.insert(activities, mythicKeystoneDungeons[mapID].activityID)
+            tinsert(activities, mythicKeystoneDungeons[mapID].activityID)
             numActiveMaps = numActiveMaps + 1
         end
     end
 
     if numActiveMaps == 0 then
         for mapID, _ in pairs(mythicKeystoneDungeons) do
-            table.insert(activities, mythicKeystoneDungeons[mapID].activityID)
+            tinsert(activities, mythicKeystoneDungeons[mapID].activityID)
         end
         for i = 1, #seasonDungeonActivities do
-            table.insert(activities, seasonDungeonActivities[i])
+            tinsert(activities, seasonDungeonActivities[i])
         end
     end
 
     advFilters.activities = activities
 
-    C_LFGList.SaveAdvancedFilter(advFilters)
+    C_LFGList_SaveAdvancedFilter(advFilters)
 end
 
 function LL.OnUpdateResultListEnclosure(lfg)
-    function copy_table(t)
-        local c = {}
-        for k, v in pairs(t) do
-            c[k] = v
-        end
-        return c
-    end
-
-    function UpdateResultList(self)
-        local results = copy_table(self.results)
+    return function(self)
+        local results = copyTable(self.results)
         if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
             return
         end
@@ -1622,14 +1625,6 @@ function LL.OnUpdateResultListEnclosure(lfg)
         end
 
         local dfDB = lfg:GetPlayerDB("dungeonFilter")
-
-        local partyMember = {
-            TANK = 0,
-            HEALER = 0,
-            DAMAGER = 0
-        }
-
-        local sortDatabase = {}
 
         local pendingResults = {}
         local waitForSortingResults = {}
@@ -1711,10 +1706,8 @@ function LL.OnUpdateResultListEnclosure(lfg)
 
         _G.LFGListFrame.SearchPanel.results = results
         _G.LFGListFrame.SearchPanel.totalResults = #results
-        LFGListSearchPanel_UpdateResults(_G.LFGListFrame.SearchPanel)
+        _G.LFGListSearchPanel_UpdateResults(_G.LFGListFrame.SearchPanel)
     end
-
-    return UpdateResultList
 end
 
 function LL:Initialize()

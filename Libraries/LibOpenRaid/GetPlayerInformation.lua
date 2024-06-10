@@ -25,9 +25,37 @@ local CONST_ISITEM_BY_TYPEID = {
     [12] = true, --utility items
 }
 
-local GetItemInfo = GetItemInfo
-local GetItemStats = GetItemStats
 local GetInventoryItemLink = GetInventoryItemLink
+
+-- TWW compat
+-- TODO: Remove when TWW is released
+local GetItemStats = C_Item.GetItemStats
+local GetSpellInfo = GetSpellInfo or function(spellID) 
+    if not spellID then return nil end 
+
+    local spellInfo = C_Spell.GetSpellInfo(spellID) 
+    if spellInfo then 
+        return spellInfo.name, nil, spellInfo.iconID, spellInfo.castTime, spellInfo.minRange, 
+                spellInfo.maxRange, spellInfo.spellID, spellInfo.originalIconID 
+    end 
+end
+local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
+local GetSpellTabInfo = GetSpellTabInfo or (function(tabLine)
+    if not tabLine then return nil end 
+
+    local skillLine = C_SpellBook.GetSpellBookSkillLineInfo(tabLine)
+    if skillLine then
+        return skillLine.name, skillLine.iconID, skillLine.itemIndexOffset,
+        skillLine.numSpellBookItems, skillLine.isGuild, skillLine.specID
+    end
+end)
+local GetSpellBookItemInfo = GetSpellBookItemInfo or C_SpellBook.GetSpellBookItemType
+local IsPassiveSpell = IsPassiveSpell or C_SpellBook.isSpellPassive
+local GetNumSpellTabs = GetNumSpellTabs or C_SpellBook.GetNumSpellBookSkillLines
+local spellBookPlayerEnum = Enum.SpellBookSpellBank and Enum.SpellBookSpellBank.Player or "player"
+local HasPetSpells = HasPetSpells or C_SpellBook.HasPetSpells
+local GetOverrideSpell = C_SpellBook.GetOverrideSpell or C_Spell.GetOverrideSpell
 
 local isTimewalkWoW = function()
     local _, _, _, buildInfo = GetBuildInfo()
@@ -135,11 +163,13 @@ local getDragonflightTalentsAsIndexTable = function()
                         local definitionId = traitEntryInfo.definitionID
 
                         --definition info
-                        local traitDefinitionInfo = C_Traits.GetDefinitionInfo(definitionId)
-                        local spellId = traitDefinitionInfo.overriddenSpellID or traitDefinitionInfo.spellID
-                        local spellName, _, spellTexture = GetSpellInfo(spellId)
-                        if (spellName) then
-                            allTalents[#allTalents+1] = spellId
+                        if (definitionId) then
+                            local traitDefinitionInfo = C_Traits.GetDefinitionInfo(definitionId)
+                            local spellId = traitDefinitionInfo.overriddenSpellID or traitDefinitionInfo.spellID
+                            local spellName, _, spellTexture = GetSpellInfo(spellId)
+                            if (spellName) then
+                                allTalents[#allTalents+1] = spellId
+                            end
                         end
                     end
                 end
@@ -377,7 +407,7 @@ function openRaidLib.GearManager.GetPlayerGemsAndEnchantInfo()
                 --local itemStatsTable = {}
                 --fill the table above with information about the item
                 --GetItemStats(itemLink, itemStatsTable) --deprecated in 10.2.5
-                local itemStatsTable = C_Item.GetItemStats(itemLink)
+                local itemStatsTable = GetItemStats(itemLink)
 
                 --check if the item has a socket
                 if (itemStatsTable) then
@@ -418,7 +448,7 @@ function openRaidLib.GearManager.BuildPlayerEquipmentList()
                 openRaidLib.__errors[#openRaidLib.__errors+1] = "Fail to get Item Level: " .. (itemID or "invalid itemID") .. " " .. (itemLink and itemLink:gsub("|H", "") or "invalid itemLink")
             end
 
-            local itemStatsTable = C_Item.GetItemStats(itemLink)
+            local itemStatsTable = GetItemStats(itemLink)
             --GetItemStats(itemLink, itemStatsTable)
             local gemSlotsAvailable = itemStatsTable and itemStatsTable.EMPTY_SOCKET_PRISMATIC or 0
 
@@ -507,14 +537,14 @@ local getSpellListAsHashTableFromSpellBook = function()
     offset = offset + 1
     local tabEnd = offset + numSpells
     for entryOffset = offset, tabEnd - 1 do
-        local spellType, spellId = GetSpellBookItemInfo(entryOffset, "player")
+        local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
         local spellData = LIB_OPEN_RAID_COOLDOWNS_INFO[spellId]
         if (spellData) then
             local raceId = spellData.raceid
             if (raceId) then
                 if (type(raceId) == "table") then
                     if (raceId[playerRaceId]) then
-                        spellId = C_SpellBook.GetOverrideSpell(spellId)
+                        spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
                         local bIsPassive = IsPassiveSpell(spellId, "player")
                         if (spellName and not bIsPassive) then
@@ -524,7 +554,7 @@ local getSpellListAsHashTableFromSpellBook = function()
 
                 elseif (type(raceId) == "number") then
                     if (raceId == playerRaceId) then
-                        spellId = C_SpellBook.GetOverrideSpell(spellId)
+                        spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
                         local bIsPassive = IsPassiveSpell(spellId, "player")
                         if (spellName and not bIsPassive) then
@@ -543,10 +573,10 @@ local getSpellListAsHashTableFromSpellBook = function()
             offset = offset + 1
             local tabEnd = offset + numSpells
             for entryOffset = offset, tabEnd - 1 do
-                local spellType, spellId = GetSpellBookItemInfo(entryOffset, "player")
+                local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
                 if (spellId) then
                     if (spellType == "SPELL") then
-                        spellId = C_SpellBook.GetOverrideSpell(spellId)
+                        spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
                         local bIsPassive = IsPassiveSpell(spellId, "player")
                         if LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId] then
@@ -567,10 +597,10 @@ local getSpellListAsHashTableFromSpellBook = function()
     offset = offset + 1
     local tabEnd = offset + numSpells
     for entryOffset = offset, tabEnd - 1 do
-        local spellType, spellId = GetSpellBookItemInfo(entryOffset, "player")
+        local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
         if (spellId) then
             if (spellType == "SPELL") then
-                spellId = C_SpellBook.GetOverrideSpell(spellId)
+                spellId = GetOverrideSpell(spellId)
                 local spellName = GetSpellInfo(spellId)
                 local bIsPassive = IsPassiveSpell(spellId, "player")
 
@@ -605,7 +635,7 @@ local getSpellListAsHashTableFromSpellBook = function()
         for i = 1, numPetSpells do
             local spellName, _, unmaskedSpellId = GetSpellBookItemName(i, "pet")
             if (unmaskedSpellId) then
-                unmaskedSpellId = C_SpellBook.GetOverrideSpell(unmaskedSpellId)
+                unmaskedSpellId = GetOverrideSpell(unmaskedSpellId)
                 local bIsPassive = IsPassiveSpell(unmaskedSpellId, "pet")
                 if (spellName and not bIsPassive) then
                     completeListOfSpells[unmaskedSpellId] = true

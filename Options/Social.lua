@@ -600,11 +600,11 @@ options.chatLink = {
                     desc = L["Display the level of the item on the item link."],
                     width = 1.5
                 },
-                numbericalQualityTier = {
+                numericalQualityTier = {
                     order = 2,
                     type = "toggle",
-                    name = L["Numberical Quality Tier"],
-                    desc = L["Use numberical quality tier rather the icon on the item link."],
+                    name = L["Numerical Quality Tier"],
+                    desc = L["Use numerical quality tier rather the icon on the item link."],
                     width = 1.5
                 },
                 translateItem = {
@@ -1183,7 +1183,7 @@ options.emote = {
                 feature = {
                     order = 1,
                     type = "description",
-                    name = L["Parse emote expresstion from other players."],
+                    name = L["Parse emote expression from other players."],
                     fontSize = "medium"
                 }
             }

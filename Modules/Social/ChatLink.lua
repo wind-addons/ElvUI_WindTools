@@ -79,7 +79,7 @@ local function AddItemInfo(link)
         end
     end
 
-    if CL.db.numbericalQualityTier then
+    if CL.db.numericalQualityTier then
         link =
             gsub(
             link,

@@ -146,7 +146,7 @@ local hearthstoneAndToyIDList = {
     190196, -- 受啟迪的爐石
     198156, -- 龍洞產生器
     208704, -- 深居者的土土石
-    212337  -- 炉边之石
+    212337 -- 炉边之石
 }
 
 local hearthstonesAndToysData
@@ -533,8 +533,10 @@ local ButtonTypes = {
     SPELLBOOK = {
         name = L["Spell Book"],
         icon = W.Media.Icons.barSpellBook,
-        macro = {
-            LeftButton = "/click SpellbookMicroButton"
+        click = {
+            LeftButton = function()
+                _G.PlayerSpellsUtil.ToggleSpellBookFrame()
+            end
         },
         tooltips = {
             L["Spell Book"]
@@ -543,8 +545,10 @@ local ButtonTypes = {
     TALENTS = {
         name = L["Talents"],
         icon = W.Media.Icons.barTalents,
-        macro = {
-            LeftButton = "/click TalentMicroButton"
+        click = {
+            LeftButton = function()
+                _G.PlayerSpellsUtil.ToggleClassTalentFrame()
+            end
         },
         tooltips = {
             L["Talents"]

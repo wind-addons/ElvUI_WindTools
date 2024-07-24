@@ -1588,7 +1588,6 @@ function LL:UpdateAdvancedFilters()
     advFilters.hasTank = dfDB.needTankEnable
     advFilters.hasHealer = dfDB.needHealerEnable
     advFilters.minimumRating = dfDB.leaderScoreEnable and dfDB.leaderScore or 0
-    _G.MinRatingFrame.MinRating:SetNumber(advFilters.minimumRating)
 
     local activities = {}
     local numActiveMaps = 0

@@ -264,6 +264,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_OrderHallUI"] = {
         "OrderHallTalentFrame"
     },
+    ["Blizzard_PlayerSpells"] = {
+        "PlayerSpellsFrame"
+    },
     ["Blizzard_Professions"] = {
         ["ProfessionsFrame"] = {
             "ProfessionsFrame.CraftingPage.CraftingOutputLog",

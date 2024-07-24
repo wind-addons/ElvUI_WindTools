@@ -750,10 +750,20 @@ options.blizzard = {
             type = "toggle",
             name = L["Player Choice"]
         },
+        playerSpells = {
+            order = 10,
+            type = "toggle",
+            name = L["Player Spells"]
+        },
         professions = {
             order = 10,
             type = "toggle",
             name = L["Professions"]
+        },
+        professionBook = {
+            order = 10,
+            type = "toggle",
+            name = L["Professions Book"]
         },
         professionsCustomerOrders = {
             order = 10,
@@ -789,11 +799,6 @@ options.blizzard = {
             order = 10,
             type = "toggle",
             name = L["Soulbinds"]
-        },
-        spellBook = {
-            order = 10,
-            type = "toggle",
-            name = L["Spell Book"]
         },
         staticPopup = {
             order = 10,

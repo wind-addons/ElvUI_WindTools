@@ -61,7 +61,9 @@
 	<Script file='PerksProgram.lua'/>
 	<Script file='PetBattle.lua'/>
 	<Script file='PlayerChoice.lua'/>
+	<Script file='PlayerSpells.lua'/>
 	<Script file='Professions.lua'/>
+	<Script file='ProfessionsBook.lua'/>
 	<Script file='ProfessionsCustomerOrders.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='RaidInfo.lua'/>
@@ -69,7 +71,6 @@
 	<Script file='ScrappingMachine.lua'/>
 	<Script file='SettingsPanel.lua'/>
 	<Script file='Soulbinds.lua'/>
-	<Script file='SpellBook.lua'/>
 	<Script file='StaticPopup.lua'/>
 	<Script file='SubscriptionInterstitial.lua'/>
 	<Script file='TalkingHead.lua'/>

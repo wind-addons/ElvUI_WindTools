@@ -24,10 +24,13 @@ function S:WorldMapFrame()
         if QuestMapFrame.DetailsFrame.backdrop then
             QuestMapFrame.DetailsFrame.backdrop:SetTemplate("Transparent")
         end
-        if QuestMapFrame.DetailsFrame.RewardsFrame.backdrop then
-            QuestMapFrame.DetailsFrame.RewardsFrame.backdrop:SetTemplate("Transparent")
-        elseif QuestMapFrame.DetailsFrame.RewardsFrame then
-            QuestMapFrame.DetailsFrame.RewardsFrame:CreateBackdrop("Transparent")
+        local RewardsFrameContainer = QuestMapFrame.DetailsFrame.RewardsFrameContainer
+        if RewardsFrameContainer and RewardsFrameContainer.RewardsFrame then
+            if RewardsFrameContainer.RewardsFrame.backdrop then
+                RewardsFrameContainer.RewardsFrame.backdrop:SetTemplate("Transparent")
+            else
+                RewardsFrameContainer.RewardsFrame:CreateBackdrop("Transparent")
+            end
         end
     end
 

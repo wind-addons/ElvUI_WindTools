@@ -6,31 +6,41 @@ local hooksecurefunc = hooksecurefunc
 
 local InCombatLockdown = InCombatLockdown
 
-function S:SkinOjectiveTrackerHeaders()
+local trackers = {
+    _G.ScenarioObjectiveTracker,
+    _G.UIWidgetObjectiveTracker,
+    _G.CampaignQuestObjectiveTracker,
+    _G.QuestObjectiveTracker,
+    _G.AdventureObjectiveTracker,
+    _G.AchievementObjectiveTracker,
+    _G.MonthlyActivitiesObjectiveTracker,
+    _G.ProfessionsRecipeTracker,
+    _G.BonusObjectiveTracker,
+    _G.WorldQuestObjectiveTracker
+}
+
+function S:SkinOjectiveTrackerHeader(header)
+    if not header or not header.Text then
+        return
+    end
+
     if E.private and E.private.WT and E.private.WT.quest.objectiveTracker.enable then
         return
     end
 
-    local frame = _G.ObjectiveTrackerFrame.MODULES
-    if frame then
-        for i = 1, #frame do
-            if frame[i] then
-                F.SetFontOutline(frame[i].Header.Text)
+    F.SetFontOutline(header.Text)
+end
+
+function S:SkinQuestIcon(_, block)
+    for _, button in pairs {block.ItemButton, block.itemButton} do
+        if button then
+            if button.backdrop then
+                self:CreateBackdropShadow(button)
+            else
+                self:CreateShadow(button)
             end
         end
     end
-end
-
-function S:SkinItemButton(block)
-    if InCombatLockdown() then
-        return
-    end
-
-    local item = block and block.itemButton
-    if not item then
-        return
-    end
-    self:CreateShadow(item)
 end
 
 function S:SkinFindGroupButton(block)
@@ -42,19 +52,16 @@ function S:SkinFindGroupButton(block)
     end
 end
 
-function S:SkinProgressBars(_, _, line)
-    local progressBar = line and line.ProgressBar
-
+function S:SkinProgressBar(tracker, key)
+    local progressBar = tracker.usedProgressBars[key]
     if not progressBar or not progressBar.Bar or progressBar.__windSkin then
         return
     end
 
     self:CreateBackdropShadow(progressBar.Bar)
 
-    -- move down the icon
     if progressBar.Bar.Icon then
-        self:CreateBackdropShadow(progressBar)
-        progressBar.Bar.Icon:Point("LEFT", progressBar.Bar, "RIGHT", E.PixelMode and 7 or 11, 0)
+        self:CreateBackdropShadow(progressBar.Bar.Icon)
     end
 
     -- move text to center
@@ -72,30 +79,26 @@ function S:SkinProgressBars(_, _, line)
     progressBar.__windSkin = true
 end
 
-function S:SkinTimerBars(_, _, line)
-    self:CreateBackdropShadow(line and line.TimerBar and line.TimerBar.Bar)
+function S:SkinTimerBar(tracker, key)
+    local timerBar = tracker.usedTimerBars[key]
+    self:CreateBackdropShadow(timerBar and timerBar.Bar)
 end
 
-function S:ObjectiveTrackerFrame()
+function S:Blizzard_ObjectiveTracker()
     if not self:CheckDB("objectiveTracker") then
         return
     end
 
-    local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
-    local minimizeButton = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
+    local MainHeader = _G.ObjectiveTrackerFrame.Header
+    self:SkinOjectiveTrackerHeader(MainHeader)
 
-    self:SecureHook("ObjectiveTracker_Update", "SkinOjectiveTrackerHeaders")
-    self:SecureHook("QuestObjectiveSetupBlockButton_FindGroup", "SkinFindGroupButton")
-    self:SecureHook("QuestObjectiveSetupBlockButton_Item", "SkinItemButton")
-    self:SecureHook(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddProgressBar", "SkinProgressBars")
-    self:SecureHook(_G.QUEST_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    self:SecureHook(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
-    self:SecureHook(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", "SkinTimerBars")
+    for _, tracker in pairs(trackers) do
+        self:SkinOjectiveTrackerHeader(tracker.Header)
+
+        self:SecureHook(tracker, "AddBlock", "SkinQuestIcon")
+        self:SecureHook(tracker, "GetProgressBar", "SkinProgressBar")
+        self:SecureHook(tracker, "GetTimerBar", "SkinTimerBar")
+    end
 end
 
-S:AddCallback("ObjectiveTrackerFrame")
+S:AddCallback("Blizzard_ObjectiveTracker")

@@ -9,13 +9,14 @@ local select = select
 local unpack = unpack
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
+local scenarioStageBlock
 
-function S:SkinMawBuffsContainer(container)
+local function SkinMawBuffsContainer(container)
     container:StripTextures()
     container:GetHighlightTexture():Kill()
     container:GetPushedTexture():Kill()
     local pushed = container:CreateTexture()
-    self:Reposition(pushed, container, 0, -11, -11, -17, -4)
+    S:Reposition(pushed, container, 0, -11, -11, -17, -4)
     pushed:SetBlendMode("ADD")
     local vr, vg, vb = unpack(E.media.rgbvaluecolor)
     pushed:SetColorTexture(vr, vg, vb, 0.2)
@@ -26,74 +27,95 @@ function S:SkinMawBuffsContainer(container)
     container.SetPushedTextOffset = E.noop
 
     container:CreateBackdrop("Transparent")
-    self:Reposition(container.backdrop, container, 1, -10, -10, -16, -3)
-    self:CreateBackdropShadow(container)
+    S:Reposition(container.backdrop, container, 1, -10, -10, -16, -3)
+    S:CreateBackdropShadow(container)
 
     local blockList = container.List
     blockList:StripTextures()
     blockList:CreateBackdrop("Transparent")
-    self:Reposition(blockList.backdrop, blockList, 1, -11, -11, -6, -6)
-    self:CreateBackdropShadow(blockList)
+    S:Reposition(blockList.backdrop, blockList, 1, -11, -11, -6, -6)
+    S:CreateBackdropShadow(blockList)
 end
 
-function S:ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
-    stageBlock.NormalBG:SetTexture("")
-    stageBlock.FinalBG:SetTexture("")
+local function ScenarioObjectiveTrackerStage_UpdateStageBlock(block)
+    block.NormalBG:SetTexture("")
+    block.FinalBG:SetTexture("")
 
-    if not stageBlock.backdrop then
-        stageBlock:CreateBackdrop("Transparent")
-        stageBlock.backdrop:ClearAllPoints()
-        stageBlock.backdrop:SetInside(stageBlock.GlowTexture, 4, 2)
-        self:CreateShadow(stageBlock.backdrop)
-    end
-end
-
-function S:Scenario_ChallengeMode_ShowBlock()
-    local block = _G.ScenarioChallengeModeBlock
-
-    if not block then
-        return
-    end
-
-    if not block.__windSkin then
-        -- Block background
-        block.TimerBG:Hide()
-        block.TimerBGBack:Hide()
-
+    if not block.backdrop then
         block:CreateBackdrop("Transparent")
         block.backdrop:ClearAllPoints()
-        block.backdrop:SetInside(block, 6, 2)
-        self:CreateBackdropShadow(block)
-
-        -- Time bar
-        block.StatusBar:CreateBackdrop()
-        block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
-        block.StatusBar:SetStatusBarTexture(E.media.normTex)
-        block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
-        block.StatusBar:SetHeight(10)
-
-        select(3, block:GetRegions()):Hide()
-
-        block.__windSkin = true
+        block.backdrop:SetInside(block.GlowTexture, 4, 2)
+        S:CreateShadow(block.backdrop)
     end
+end
 
-    -- Affix icon
-    for _, child in pairs {block:GetChildren()} do
-        if not child.__windSkin and child.affixID then
-            child.Border:SetAlpha(0)
-            local texPath = select(3, C_ChallengeMode_GetAffixInfo(child.affixID))
-            child:CreateBackdrop("Transparent")
-            child.backdrop:ClearAllPoints()
-            child.backdrop:SetOutside(child.Portrait)
-            child.Portrait:SetTexture(texPath)
-            child.Portrait:SetTexCoord(unpack(E.TexCoords))
-            child.__windSkin = true
+local function ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
+    for frame in block.affixPool:EnumerateActive() do
+        if not frame.__windSkin and frame.affixID then
+            frame.Border:SetAlpha(0)
+            local texPath = select(3, C_ChallengeMode_GetAffixInfo(frame.affixID))
+            frame:CreateBackdrop("Transparent")
+            frame.backdrop:ClearAllPoints()
+            frame.backdrop:SetOutside(frame.Portrait)
+            frame.Portrait:SetTexture(texPath)
+            frame.Portrait:SetTexCoord(unpack(E.TexCoords))
+            frame.__windSkin = true
         end
     end
 end
 
-function S:ScenarioStageWidgetContainer()
-    local contianer = _G.ScenarioStageBlock.WidgetContainer
+local function ScenarioObjectiveTrackerChallengeMode_Activate(block)
+    if block.__windSkin then
+        return
+    end
+
+    -- Block background
+    block.TimerBG:Hide()
+    block.TimerBGBack:Hide()
+
+    block:CreateBackdrop("Transparent")
+    block.backdrop:ClearAllPoints()
+    block.backdrop:SetInside(block, 6, 2)
+    S:CreateBackdropShadow(block)
+
+    -- Time bar
+    block.StatusBar:CreateBackdrop()
+    block.StatusBar.backdrop:SetBackdropBorderColor(0.2, 0.2, 0.2, 0.6)
+    block.StatusBar:SetStatusBarTexture(E.media.normTex)
+    block.StatusBar:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+    block.StatusBar:SetHeight(12)
+
+    select(3, block:GetRegions()):Hide()
+
+    block.__windSkin = true
+end
+
+local function ScenarioObjectiveTracker_AddBlock(_, block)
+    if block then
+        -- Stage block
+        if block.Stage and block.WidgetContainer then
+            scenarioStageBlock = block
+            if not block.__windHooked then
+                hooksecurefunc(block, "UpdateStageBlock", ScenarioObjectiveTrackerStage_UpdateStageBlock)
+                block.__windHooked = true
+            end
+        end
+
+        -- Challenge mode block
+        if block.DeathCount and not block.__windHooked then
+            hooksecurefunc(block, "Activate", ScenarioObjectiveTrackerChallengeMode_Activate)
+            hooksecurefunc(block, "SetUpAffixes", ScenarioObjectiveTrackerChallengeMode_SetUpAffixes)
+            if block:IsActive() then
+                ScenarioObjectiveTrackerChallengeMode_Activate(block)
+                ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
+            end
+            block.__windHooked = true
+        end
+    end
+end
+
+local function ScenarioObjectiveTracker_Update(_, block)
+    local contianer = scenarioStageBlock and scenarioStageBlock.WidgetContainer
     if not contianer or not contianer.widgetFrames then
         return
     end
@@ -137,10 +159,9 @@ function S:ScenarioStage()
         return
     end
 
-    self:SecureHook("ScenarioStage_CustomizeBlock")
-    self:SecureHook("Scenario_ChallengeMode_ShowBlock")
-    self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", "ScenarioStageWidgetContainer")
-    self:SkinMawBuffsContainer(_G.ScenarioBlocksFrame.MawBuffsBlock.Container)
+    hooksecurefunc(_G.ScenarioObjectiveTracker, "Update", ScenarioObjectiveTracker_Update)
+    hooksecurefunc(_G.ScenarioObjectiveTracker, "AddBlock", ScenarioObjectiveTracker_AddBlock)
+    SkinMawBuffsContainer(_G.ScenarioObjectiveTracker.MawBuffsBlock.Container)
 end
 
 S:AddCallback("ScenarioStage")

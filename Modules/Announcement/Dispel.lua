@@ -5,7 +5,7 @@ local _G = _G
 local gsub = gsub
 local strsplit = strsplit
 
-local GetSpellLink = GetSpellLink
+local GetSpellLink = C_Spell.GetSpellLink
 local IsInInstance = IsInInstance
 local IsPartyLFG = IsPartyLFG
 local UnitGUID = UnitGUID

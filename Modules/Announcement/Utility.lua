@@ -4,7 +4,7 @@ local A = W:GetModule("Announcement")
 local gsub = gsub
 local tostring = tostring
 
-local GetSpellLink = GetSpellLink
+local GetSpellLink = C_Spell.GetSpellLink
 local InCombatLockdown = InCombatLockdown
 
 local BotList = {

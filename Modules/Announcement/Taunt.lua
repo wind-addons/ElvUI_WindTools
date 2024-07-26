@@ -4,7 +4,7 @@ local A = W:GetModule("Announcement")
 local gsub = gsub
 local strsplit = strsplit
 
-local GetSpellLink = GetSpellLink
+local GetSpellLink = C_Spell.GetSpellLink
 local IsInGroup = IsInGroup
 
 local tauntSpells = {

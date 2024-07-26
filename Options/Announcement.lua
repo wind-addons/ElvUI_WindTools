@@ -8,7 +8,7 @@ local gsub = gsub
 local pairs = pairs
 local tonumber = tonumber
 
-local GetSpellLink = GetSpellLink
+local GetSpellLink = C_Spell.GetSpellLink
 
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})

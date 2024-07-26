@@ -3,7 +3,7 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 
-local GetSpellLink = GetSpellLink
+local GetSpellLink = C_Spell.GetSpellLink
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 
 local CombatResurrectionList = {

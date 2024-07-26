@@ -20,7 +20,7 @@ local type = type
 local unpack = unpack
 
 local CreateFrame = CreateFrame
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo = C_Spell.GetSpellInfo
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver

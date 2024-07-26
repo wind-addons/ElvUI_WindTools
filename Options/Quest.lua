@@ -24,7 +24,7 @@ options.objectiveTracker = {
     end,
     set = function(info, value)
         E.private.WT.quest.objectiveTracker[info[#info]] = value
-        ObjectiveTracker_Update()
+        C_QuestLog.SortQuestWatches()
     end,
     args = {
         desc = {
@@ -106,7 +106,7 @@ options.objectiveTracker = {
             end,
             set = function(info, value)
                 E.private.WT.quest.objectiveTracker.cosmeticBar[info[#info]] = value
-                OT:ChangeQuestHeaderStyle()
+                OT:RefreshAllCosmeticBars()
             end,
             args = {
                 enable = {
@@ -231,7 +231,7 @@ options.objectiveTracker = {
                     end,
                     set = function(info, value)
                         E.private.WT.quest.objectiveTracker.cosmeticBar.color[info[#info]] = value
-                        OT:ChangeQuestHeaderStyle()
+                        OT:RefreshAllCosmeticBars()
                     end,
                     args = {
                         mode = {
@@ -262,7 +262,7 @@ options.objectiveTracker = {
                             set = function(info, r, g, b, a)
                                 local db = E.private.WT.quest.objectiveTracker.cosmeticBar.color.normalColor
                                 db.r, db.g, db.b, db.a = r, g, b, a
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         gradientColor1 = {
@@ -283,7 +283,7 @@ options.objectiveTracker = {
                             set = function(info, r, g, b, a)
                                 local db = E.private.WT.quest.objectiveTracker.cosmeticBar.color.gradientColor1
                                 db.r, db.g, db.b, db.a = r, g, b, a
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         gradientColor2 = {
@@ -304,7 +304,7 @@ options.objectiveTracker = {
                             set = function(info, r, g, b, a)
                                 local db = E.private.WT.quest.objectiveTracker.cosmeticBar.color.gradientColor2
                                 db.r, db.g, db.b, db.a = r, g, b, a
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         }
                     }
@@ -346,7 +346,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.normalColor = {r = 0.000, g = 0.659, b = 1.000, a = 1}
                                 db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         preset1 = {
@@ -371,7 +371,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.normalColor = {r = 0.000, g = 0.659, b = 1.000, a = 1}
                                 db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 0}
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         preset2 = {
@@ -396,7 +396,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.normalColor = {r = 0.000, g = 0.659, b = 1.000, a = 1}
                                 db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         preset3 = {
@@ -421,7 +421,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.normalColor = {r = 0.681, g = 0.681, b = 0.681, a = 0.681}
                                 db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         },
                         preset4 = {
@@ -446,7 +446,7 @@ options.objectiveTracker = {
                                 db.cosmeticBar.color.normalColor = {r = 0.681, g = 0.681, b = 0.681, a = 0.681}
                                 db.cosmeticBar.color.gradientColor1 = {r = 0.32941, g = 0.52157, b = 0.93333, a = 1}
                                 db.cosmeticBar.color.gradientColor2 = {r = 0.25882, g = 0.84314, b = 0.86667, a = 1}
-                                OT:ChangeQuestHeaderStyle()
+                                OT:RefreshAllCosmeticBars()
                             end
                         }
                     }
@@ -528,7 +528,7 @@ options.objectiveTracker = {
                     set = function(info, r, g, b)
                         local db = E.private.WT.quest.objectiveTracker.header.color
                         db.r, db.g, db.b = r, g, b
-                        OT:ChangeQuestHeaderStyle()
+                        OT:RefreshAllCosmeticBars()
                     end
                 }
             }

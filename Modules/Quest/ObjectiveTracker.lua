@@ -16,6 +16,19 @@ local tonumber = tonumber
 local CreateFrame = CreateFrame
 local ObjectiveTracker_Update = ObjectiveTracker_Update
 
+local trackers = {
+    _G.ScenarioObjectiveTracker,
+    _G.UIWidgetObjectiveTracker,
+    _G.CampaignQuestObjectiveTracker,
+    _G.QuestObjectiveTracker,
+    _G.AdventureObjectiveTracker,
+    _G.AchievementObjectiveTracker,
+    _G.MonthlyActivitiesObjectiveTracker,
+    _G.ProfessionsRecipeTracker,
+    _G.BonusObjectiveTracker,
+    _G.WorldQuestObjectiveTracker
+}
+
 do
     local replaceRule = {}
 
@@ -141,28 +154,20 @@ function OT:CosmeticBar(header)
     bar:Show()
 end
 
-function OT:ChangeQuestHeaderStyle()
-    local frame = _G.ObjectiveTrackerFrame.MODULES
-    if not self.db or not frame then
-        return
-    end
+function OT:ObjectiveTrackerModule_Update(tracker)
+    if tracker and tracker.Header and tracker.Header.Text then
+        self:CosmeticBar(tracker.Header)
+        F.SetFontWithDB(tracker.Header.Text, self.db.header)
+        tracker.Header.Text:SetShadowColor(0, 0, 0, 0)
+        tracker.Header.Text.SetShadowColor = E.noop
 
-    for i = 1, #frame do
-        local modules = frame[i]
-        if modules and modules.Header and modules.Header.Text then
-            self:CosmeticBar(modules.Header)
-            F.SetFontWithDB(modules.Header.Text, self.db.header)
-            modules.Header.Text:SetShadowColor(0, 0, 0, 0)
-            modules.Header.Text.SetShadowColor = E.noop
+        local r = self.db.header.classColor and W.ClassColor.r or self.db.header.color.r
+        local g = self.db.header.classColor and W.ClassColor.g or self.db.header.color.g
+        local b = self.db.header.classColor and W.ClassColor.b or self.db.header.color.b
 
-            local r = self.db.header.classColor and W.ClassColor.r or self.db.header.color.r
-            local g = self.db.header.classColor and W.ClassColor.g or self.db.header.color.g
-            local b = self.db.header.classColor and W.ClassColor.b or self.db.header.color.b
-
-            modules.Header.Text:SetTextColor(r, g, b)
-            if self.db.header.shortHeader then
-                modules.Header.Text:SetText(self:ShortTitle(modules.Header.Text:GetText()))
-            end
+        tracker.Header.Text:SetTextColor(r, g, b)
+        if self.db.header.shortHeader then
+            tracker.Header.Text:SetText(self:ShortTitle(tracker.Header.Text:GetText()))
         end
     end
 end
@@ -233,32 +238,9 @@ function OT:HandleInfoText(text)
     end
 end
 
-function OT:ChangeQuestFontStyle(_, block)
-    if not self.db or not block then
-        return
-    end
-
-    if block.HeaderText then
-        self:HandleTitleText(block.HeaderText)
-    end
-
-    if block.currentLine then
-        if block.currentLine.objectiveKey == 0 then -- 世界任务标题
-            self:HandleTitleText(block.currentLine.Text)
-        else
-            self:HandleInfoText(block.currentLine.Text)
-        end
-    end
-end
-
-function OT:ScenarioObjectiveBlock_UpdateCriteria()
-    if _G.ScenarioObjectiveBlock then
-        local childs = {_G.ScenarioObjectiveBlock:GetChildren()}
-        for _, child in pairs(childs) do
-            if child.Text then
-                self:HandleInfoText(child.Text)
-            end
-        end
+function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker)
+    for _, child in pairs({tracker:GetChildren()}) do
+        self:HandleInfoText(child.Text)
     end
 end
 
@@ -310,12 +292,12 @@ function OT:UpdateTextWidth()
 end
 
 function OT:UpdateBackdrop()
-    if not _G.ObjectiveTrackerBlocksFrame then
+    if not _G.ObjectiveTrackerFrame then
         return
     end
 
     local db = self.db.backdrop
-    local backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+    local backdrop = _G.ObjectiveTrackerFrame.backdrop
 
     if not db.enable then
         if backdrop then
@@ -326,8 +308,8 @@ function OT:UpdateBackdrop()
 
     if not backdrop then
         if self.db.backdrop.enable then
-            _G.ObjectiveTrackerBlocksFrame:CreateBackdrop()
-            backdrop = _G.ObjectiveTrackerBlocksFrame.backdrop
+            _G.ObjectiveTrackerFrame:CreateBackdrop()
+            backdrop = _G.ObjectiveTrackerFrame.backdrop
             S:CreateShadow(backdrop)
         end
     end
@@ -335,70 +317,89 @@ function OT:UpdateBackdrop()
     backdrop:Show()
     backdrop:SetTemplate(db.transparent and "Transparent")
     backdrop:ClearAllPoints()
-    backdrop:SetPoint(
-        "TOPLEFT",
-        _G.ObjectiveTrackerBlocksFrame,
-        "TOPLEFT",
-        db.topLeftOffsetX - 30,
-        db.topLeftOffsetY + 10
-    )
+    backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame, "TOPLEFT", db.topLeftOffsetX - 20, db.topLeftOffsetY + 10)
     backdrop:SetPoint(
         "BOTTOMRIGHT",
-        _G.ObjectiveTrackerBlocksFrame,
+        _G.ObjectiveTrackerFrame,
         "BOTTOMRIGHT",
         db.bottomRightOffsetX + 10,
         db.bottomRightOffsetY - 10
     )
 end
 
-function OT:Initialize()
-    self.db = E.private.WT.quest.objectiveTracker
-    if not self.db.enable then
+function OT:ReskinTextInsideBlock(_, block)
+    if not self.db then
         return
     end
 
-    self:UpdateTextWidth()
-    self:UpdateBackdrop()
-
-    if not self.initialized then
-        local trackerModules = {
-            _G.UI_WIDGET_TRACKER_MODULE,
-            _G.BONUS_OBJECTIVE_TRACKER_MODULE,
-            _G.WORLD_QUEST_TRACKER_MODULE,
-            _G.CAMPAIGN_QUEST_TRACKER_MODULE,
-            _G.QUEST_TRACKER_MODULE,
-            _G.ACHIEVEMENT_TRACKER_MODULE,
-            _G.PROFESSION_RECIPE_TRACKER_MODULE,
-            _G.MONTHLY_ACTIVITIES_TRACKER_MODULE,
-            _G.ADVENTURE_TRACKER_MODULE
-        }
-
-        for _, module in pairs(trackerModules) do
-            self:SecureHook(module, "AddObjective", "ChangeQuestFontStyle")
-        end
-
-        self:SecureHook("ObjectiveTracker_Update", "ChangeQuestHeaderStyle")
-        self:SecureHook(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", "ScenarioObjectiveBlock_UpdateCriteria")
-
-        self.initialized = true
+    if block.HeaderText then
+        self:HandleTitleText(block.HeaderText)
     end
 
+    for _, line in pairs(block.usedLines or {}) do
+        if line.objectiveKey == 0 then -- World Quest Title
+            self:HandleTitleText(line.Text)
+        else
+            self:HandleInfoText(line.Text)
+        end
+    end
+end
+
+function OT:RefreshAllCosmeticBars()
+    for _, tracker in pairs(trackers) do
+        if tracker.Header then
+            self:CosmeticBar(tracker.Header)
+        end
+    end
+    C_QuestLog.SortQuestWatches()
+end
+
+function OT:Initialize()
     E:Delay(
-        1,
+        3,
         function()
-            for _, child in pairs {_G.ObjectiveTrackerBlocksFrame:GetChildren()} do
-                if child and child.HeaderText then
-                    SetTextColorHook(child.HeaderText)
-                end
+            self.db = E.private.WT.quest.objectiveTracker
+            if not self.db.enable then
+                return
             end
+
+            self:UpdateTextWidth()
+            self:UpdateBackdrop()
+
+            if not self.initialized then
+                for _, tracker in pairs(trackers) do
+                    self:SecureHook(tracker, "Update", "ObjectiveTrackerModule_Update")
+                    self:SecureHook(tracker, "LayoutBlock", "ReskinTextInsideBlock")
+                end
+
+                self:SecureHook(
+                    _G.ScenarioObjectiveTracker,
+                    "UpdateCriteria",
+                    "ScenarioObjectiveTracker_UpdateCriteria"
+                )
+
+                self.initialized = true
+            end
+
+            -- E:Delay(
+            --     1,
+            --     function()
+            --         for _, child in pairs {_G.ObjectiveTrackerBlocksFrame:GetChildren()} do
+            --             if child and child.HeaderText then
+            --                 SetTextColorHook(child.HeaderText)
+            --             end
+            --         end
+            --     end
+            -- )
+
+            -- if _G.ObjectiveTrackerFrame.HeaderMenu then
+            --     self:HandleMenuText(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
+            -- end
+            C_QuestLog.SortQuestWatches()
+            E:Delay(0.1, function() C_QuestLog.SortQuestWatches() end)
+            E:Delay(0.2, function() C_QuestLog.SortQuestWatches() end)
         end
     )
-
-    if _G.ObjectiveTrackerFrame.HeaderMenu then
-        self:HandleMenuText(_G.ObjectiveTrackerFrame.HeaderMenu.Title)
-    end
-
-    ObjectiveTracker_Update()
 end
 
 W:RegisterModule(OT:GetName())

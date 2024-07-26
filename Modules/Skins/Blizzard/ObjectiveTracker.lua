@@ -31,7 +31,7 @@ function S:SkinOjectiveTrackerHeader(header)
     F.SetFontOutline(header.Text)
 end
 
-function S:SkinQuestIcon(_, block)
+function S:ReskinBlock(_, block)
     for _, button in pairs {block.ItemButton, block.itemButton} do
         if button then
             if button.backdrop then
@@ -41,14 +41,26 @@ function S:SkinQuestIcon(_, block)
             end
         end
     end
-end
 
-function S:SkinFindGroupButton(block)
-    if block.hasGroupFinderButton and block.groupFinderButton then
-        if block.groupFinderButton and not block.groupFinderButton.__windSkin then
-            self:CreateShadow(block.groupFinderButton)
-            block.groupFinderButton.__windSkin = true
-        end
+    if block.AddRightEdgeFrame then
+        hooksecurefunc(
+            block,
+            "AddRightEdgeFrame",
+            function(self)
+                local frame = self.rightEdgeFrame
+                if frame and frame.used then
+                    if frame.template == "QuestObjectiveFindGroupButtonTemplate" and not frame.__windSkin then
+                        frame:GetNormalTexture():SetAlpha(0)
+                        frame:GetPushedTexture():SetAlpha(0)
+                        frame:GetHighlightTexture():SetAlpha(0)
+                        S:ESProxy("HandleButton", frame, nil, nil, nil, true)
+                        frame.backdrop:SetInside(frame, 4, 4)
+                        S:CreateBackdropShadow(frame)
+                        frame.__windSkin = true
+                    end
+                end
+            end
+        )
     end
 end
 
@@ -95,7 +107,11 @@ function S:Blizzard_ObjectiveTracker()
     for _, tracker in pairs(trackers) do
         self:SkinOjectiveTrackerHeader(tracker.Header)
 
-        self:SecureHook(tracker, "AddBlock", "SkinQuestIcon")
+        for _, block in pairs(tracker.usedBlocks or {}) do
+            self:ReskinBlock(tracker, block)
+        end
+
+        self:SecureHook(tracker, "AddBlock", "ReskinBlock")
         self:SecureHook(tracker, "GetProgressBar", "SkinProgressBar")
         self:SecureHook(tracker, "GetTimerBar", "SkinTimerBar")
     end

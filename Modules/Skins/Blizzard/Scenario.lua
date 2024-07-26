@@ -47,6 +47,13 @@ local function ScenarioObjectiveTrackerStage_UpdateStageBlock(block)
         block.backdrop:SetInside(block.GlowTexture, 4, 2)
         S:CreateShadow(block.backdrop)
     end
+
+    hooksecurefunc(block, "UpdateFindGroupButton", function(self)
+        if self.findGroupButton and not self.findGroupButton.__windSkin then
+            S:CreateShadow(self.findGroupButton) -- Need more testing for this button
+            self.findGroupButton.__windSkin = true
+        end
+    end)
 end
 
 local function ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)

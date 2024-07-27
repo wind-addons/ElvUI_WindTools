@@ -48,7 +48,6 @@ local BlizzardFrames = {
     "RecruitAFriendRewardsFrame",
     "ReportCheatingDialog",
     "SettingsPanel",
-    "SpellBookFrame",
     "SplashFrame",
     "TabardFrame",
     "TaxiFrame",
@@ -272,6 +271,9 @@ local BlizzardFramesOnDemand = {
             "ProfessionsFrame.CraftingPage.CraftingOutputLog",
             "ProfessionsFrame.CraftingPage.CraftingOutputLog.ScrollBox"
         }
+    },
+    ["Blizzard_ProfessionsBook"] = {
+        "ProfessionsBookFrame"
     },
     ["Blizzard_ProfessionsCustomerOrders"] = {
         ["ProfessionsCustomerOrdersFrame"] = {

@@ -996,10 +996,10 @@ local openableItems = {
     217241, -- 覺醒晶紅之翼
     217242, -- 覺醒岩石之翼
     217243, -- 覺醒晶紅之翼
-    217728  -- 覺醒寶藏貯藏箱
+    217728 -- 覺醒寶藏貯藏箱
 }
 
-local mopRemix ={
+local mopRemix = {
     211279, -- 恆龍寶箱
     217722, -- 經驗之絲
     219264, -- 經驗時光絲線
@@ -1016,7 +1016,7 @@ local mopRemix ={
     226142, -- 大型永恆絲線捲
     226143, -- 永恆絲線捲
     226144, -- 次級永恆絲線捲
-    226145, -- 小型永恆絲線捲
+    226145 -- 小型永恆絲線捲
 }
 
 local bigDig = {
@@ -1057,7 +1057,7 @@ local bigDig = {
     213375, -- 埋起來的寶物袋
     213382, -- 部分的半人馬狩獵地圖
     213389, -- 遠古半人馬日記
-    213429  -- 周密的文物管理員附錄
+    213429 -- 周密的文物管理員附錄
 }
 
 -- Profession Items
@@ -1332,15 +1332,15 @@ local professionItems = {
     210463, -- 依偎夥伴
     210464, -- 埃達希爾防衛者之盾
     210465, -- 亡靈哨兵底座
-    210466  -- 焰誓裂斧
+    210466 -- 焰誓裂斧
 }
 
 -- Seed
 -- from MerathilisUI
 local seeds = {
-	208047,
-	208066,
-	208067
+    208047,
+    208066,
+    208067
 }
 
 -- 更新任务物品列表
@@ -1403,6 +1403,32 @@ local moduleList = {
     ["BIGDIG"] = bigDig,
     ["MOPREMIX"] = mopRemix
 }
+
+do
+    local fakeButton = {
+        HotKey = {
+            text = "",
+            SetText = function(self, text)
+                self.text = text
+            end,
+            GetText = function(self)
+                return self.text
+            end
+        }
+    }
+
+    function EB:GetBindingKeyWithElvUI(key)
+        local keybind = GetBindingKey(key)
+
+        if not keybind or keybind == "" then
+            return ""
+        end
+
+        fakeButton.HotKey:SetText(keybind)
+        AB:FixKeybindText(fakeButton)
+        return fakeButton.HotKey:GetText()
+    end
+end
 
 function EB:CreateButton(name, barDB)
     local button = CreateFrame("Button", name, E.UIParent, "SecureActionButtonTemplate, BackdropTemplate")
@@ -2076,13 +2102,7 @@ function EB:UpdateBinding()
             local button = self.bars[i].buttons[j]
             if button then
                 local bindingName = format("CLICK WTExtraItemsBar%dButton%d:LeftButton", i, j)
-                local bindingText = GetBindingKey(bindingName) or ""
-                bindingText = gsub(bindingText, "BUTTON", "B")
-                bindingText = gsub(bindingText, "ALT--", "A")
-                bindingText = gsub(bindingText, "CTRL--", "C")
-                bindingText = gsub(bindingText, "SHIFT--", "S")
-
-                button.bind:SetText(bindingText)
+                button.bind:SetText(self:GetBindingKeyWithElvUI(bindingName))
             end
         end
     end

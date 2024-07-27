@@ -34,18 +34,18 @@ function S:BlizzardMiscFrames()
     self:CreateShadow(_G.GameMenuFrame)
     self:CreateShadow(_G.AutoCompleteBox)
 
-    -- 跳过剧情
+    -- Skip Frame
     self:SecureHook("CinematicFrame_UpdateLettboxForAspectRatio", "SkinSkipButton")
     self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
 
-    -- 聊天菜单
+    -- Chat Menus
     local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
 
     for _, menu in pairs(chatMenus) do
         self:SecureHookScript(_G[menu], "OnShow", "CreateShadow")
     end
 
-    -- 下拉菜单
+    -- Dropdown Menu
     for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
         local f = _G["DropDownList" .. i .. "Backdrop"]
         self:CreateShadow(f)

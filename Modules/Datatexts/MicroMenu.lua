@@ -124,11 +124,14 @@ local function OnEvent(self, event, unit)
 end
 
 local function OnClick(self, button)
-	if button == "LeftButton" then
-		MenuUtil.CreateContextMenu(self, GenerateDayContextMenu)
+	if InCombatLockdown() then
+		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+		return
 	end
 
-	if button == "RightButton" then
+	if button == "LeftButton" then
+		MenuUtil.CreateContextMenu(self, GenerateDayContextMenu)
+	elseif button == "RightButton" then
 		ToggleFrame(GameMenuFrame)
 	end
 end

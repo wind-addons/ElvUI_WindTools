@@ -289,14 +289,6 @@ function OT:ColorfulProgression(text)
     text:SetText(info)
 end
 
-function OT:UpdateTextWidth()
-    if self.db.noDash then
-        _G.OBJECTIVE_DASH_STYLE_SHOW = 2
-    else
-        _G.OBJECTIVE_DASH_STYLE_SHOW = 1
-    end
-end
-
 function OT:UpdateBackdrop()
     if not _G.ObjectiveTrackerFrame then
         return
@@ -373,7 +365,6 @@ function OT:Initialize()
         return
     end
 
-    self:UpdateTextWidth()
     self:UpdateBackdrop()
 
     if not self.initialized then

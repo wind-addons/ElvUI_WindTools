@@ -243,7 +243,7 @@ function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker, numCriteria)
     if not self.db or not self.db.noDash then
         return
     end
-    local objectivesBlock = self.ObjectivesBlock
+    local objectivesBlock = tracker.ObjectivesBlock
     for criteriaIndex = 1, numCriteria do
         local existingLine = objectivesBlock:GetExistingLine(criteriaIndex)
         existingLine.Icon:Hide()

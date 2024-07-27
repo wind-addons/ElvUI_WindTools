@@ -6,9 +6,12 @@ local _G = _G
 local format = format
 
 local CreateFrame = CreateFrame
-local EasyMenu = EasyMenu
-local GameMenuFrame = _G.GameMenuFrame
+local InCombatLockdown = InCombatLockdown
 local IsInGuild = IsInGuild
+local ToggleFrame = ToggleFrame
+local UIErrorsFrame = UIErrorsFrame
+
+local MenuUtil_CreateContextMenu = MenuUtil.CreateContextMenu
 
 local dropdown =
 	CreateFrame("DropdownButton", "WTMicroMenuDatatextMenuDropDown", E.UIParent, "WowStyle1DropdownTemplate")
@@ -16,63 +19,63 @@ local dropdown =
 local function GenerateDayContextMenu(owner, rootDescription)
 	rootDescription:SetTag("WT_MICRO_MENU")
 
-	rootDescription:CreateTitle(MAINMENU_BUTTON)
+	rootDescription:CreateTitle(_G.MAINMENU_BUTTON)
 	rootDescription:CreateButton(
-		CHARACTER_BUTTON,
+		_G.CHARACTER_BUTTON,
 		function()
 			_G.ToggleCharacter("PaperDollFrame")
 		end
 	)
 	rootDescription:CreateButton(
-		SPELLBOOK,
+		_G.SPELLBOOK,
 		function()
 			_G.PlayerSpellsUtil.ToggleSpellBookFrame()
 		end
 	)
 	rootDescription:CreateButton(
-		TALENTS_BUTTON,
+		_G.TALENTS_BUTTON,
 		function()
 			_G.PlayerSpellsUtil.ToggleClassTalentFrame()
 		end
 	)
 	rootDescription:CreateButton(
-		ACHIEVEMENT_BUTTON,
+		_G.ACHIEVEMENT_BUTTON,
 		function()
 			_G.ToggleAchievementFrame()
 		end
 	)
 	rootDescription:CreateButton(
-		MOUNTS,
+		_G.MOUNTS,
 		function()
 			_G.ToggleCollectionsJournal(1)
 		end
 	)
 	rootDescription:CreateButton(
-		PETS,
+		_G.PETS,
 		function()
 			_G.ToggleCollectionsJournal(2)
 		end
 	)
 	rootDescription:CreateButton(
-		TOY_BOX,
+		_G.TOY_BOX,
 		function()
 			_G.ToggleCollectionsJournal(3)
 		end
 	)
 	rootDescription:CreateButton(
-		HEIRLOOMS,
+		_G.HEIRLOOMS,
 		function()
 			_G.ToggleCollectionsJournal(4)
 		end
 	)
 	rootDescription:CreateButton(
-		SOCIAL_BUTTON,
+		_G.SOCIAL_BUTTON,
 		function()
 			_G.ToggleFriendsFrame(1)
 		end
 	)
 	rootDescription:CreateButton(
-		ACHIEVEMENTS_GUILD_TAB,
+		_G.ACHIEVEMENTS_GUILD_TAB,
 		function()
 			if IsInGuild() then
 				_G.ToggleGuildFrame()
@@ -82,25 +85,25 @@ local function GenerateDayContextMenu(owner, rootDescription)
 		end
 	)
 	rootDescription:CreateButton(
-		COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVE .. " / " .. COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVP,
+		_G.COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVE .. " / " .. _G.COMPACT_UNIT_FRAME_PROFILE_AUTOACTIVATEPVP,
 		function()
 			_G.PVEFrame_ToggleFrame()
 		end
 	)
 	rootDescription:CreateButton(
-		RAID,
+		_G.RAID,
 		function()
 			_G.ToggleFriendsFrame(3)
 		end
 	)
 	rootDescription:CreateButton(
-		ENCOUNTER_JOURNAL,
+		_G.ENCOUNTER_JOURNAL,
 		function()
 			_G.ToggleEncounterJournal()
 		end
 	)
 	rootDescription:CreateButton(
-		HELP_BUTTON,
+		_G.HELP_BUTTON,
 		function()
 			_G.ToggleHelpFrame()
 		end
@@ -120,7 +123,7 @@ local function GenerateDayContextMenu(owner, rootDescription)
 end
 
 local function OnEvent(self, event, unit)
-	self.text:SetFormattedText("%s", MAINMENU_BUTTON)
+	self.text:SetFormattedText("%s", _G.MAINMENU_BUTTON)
 end
 
 local function OnClick(self, button)
@@ -130,9 +133,9 @@ local function OnClick(self, button)
 	end
 
 	if button == "LeftButton" then
-		MenuUtil.CreateContextMenu(self, GenerateDayContextMenu)
+		MenuUtil_CreateContextMenu(self, GenerateDayContextMenu)
 	elseif button == "RightButton" then
-		ToggleFrame(GameMenuFrame)
+		ToggleFrame(_G.GameMenuFrame)
 	end
 end
 

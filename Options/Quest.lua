@@ -10,7 +10,7 @@ local pairs = pairs
 local tonumber = tonumber
 local tostring = tostring
 
-local ObjectiveTracker_Update = ObjectiveTracker_Update
+local C_QuestLog_SortQuestWatches = C_QuestLog.SortQuestWatches
 local ReputationFrame_Update = ReputationFrame_Update
 
 local customListSelected
@@ -24,7 +24,7 @@ options.objectiveTracker = {
     end,
     set = function(info, value)
         E.private.WT.quest.objectiveTracker[info[#info]] = value
-        C_QuestLog.SortQuestWatches()
+        C_QuestLog_SortQuestWatches()
     end,
     args = {
         desc = {

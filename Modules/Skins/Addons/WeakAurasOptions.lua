@@ -672,7 +672,7 @@ function S:WeakAuras_ShowOptions()
     frame.__windSkin = true
 end
 
-function postHookPrivate(method, postHook)
+local function postHookPrivate(method, postHook)
     if not _G.WeakAuras or not _G.WeakAuras.OptionsPrivate then
         return
     end
@@ -722,7 +722,7 @@ function S:WeakAurasOptions()
         end
     end
 
-    for _, mod in ipairs {"UpdateFrame", "IconPicker", "ImportExport"} do
+    for _, mod in pairs {"UpdateFrame", "IconPicker", "ImportExport"} do
         postHookPrivate(
             mod,
             function(widget)

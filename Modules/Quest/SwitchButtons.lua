@@ -15,7 +15,7 @@ function SB:CreateButton(text, tooltipText)
         return
     end
     local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-    S:ESProxy("HandleCheckBox",button)
+    S:ESProxy("HandleCheckBox", button)
     if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
         S:CreateBackdropShadow(button)
     end
@@ -152,8 +152,6 @@ function SB:UpdateLayout()
     else
         self.bar:Hide()
     end
-
-    self:AutoHideWithObjectiveFrame()
 end
 
 function SB:CreateBar()
@@ -162,7 +160,7 @@ function SB:CreateBar()
     end
 
     local frame = CreateFrame("Frame", "WTSwitchButtonsBar", E.UIParent)
-    frame:SetPoint("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -2)
+    frame:SetPoint("TOPRIGHT", _G.ObjectiveTrackerFrame, "TOPRIGHT", -28, -5)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(5)
     frame:CreateBackdrop("Transparent")
@@ -190,26 +188,12 @@ function SB:CreateBar()
     )
 end
 
-function SB:AutoHideWithObjectiveFrame()
-    if not self.db.enable or not self.bar then
+function SB:UpdateVisibility()
+    if not self.db then
         return
     end
 
-    if self.db.hideWithObjectiveTracker then
-        if self.bar.visibilitySet then
-            UnregisterStateDriver(self.bar, "visibility")
-            self.bar.visibilitySet = false
-        end
-        if _G.ObjectiveTrackerFrame.collapsed or not _G.ObjectiveTrackerFrame.HeaderMenu:IsShown() then
-            self.bar:Hide()
-            return
-        end
-    elseif not self.bar.visibilitySet then
-        RegisterStateDriver(self.bar, "visibility", "[petbattle]hide;show")
-        self.bar.visibilitySet = true
-    end
-
-    self.bar:Show()
+    self.bar:SetParent(self.db.hideWithObjectiveTracker and _G.ObjectiveTrackerFrame or E.UIParent)
 end
 
 function SB:PLAYER_ENTERING_WORLD()
@@ -223,28 +207,22 @@ function SB:Initialize()
         return
     end
 
-    self:SecureHook("ObjectiveTracker_Collapse", "AutoHideWithObjectiveFrame")
-    self:SecureHook("ObjectiveTracker_Expand", "AutoHideWithObjectiveFrame")
-    self:SecureHook(_G.ObjectiveTrackerFrame.HeaderMenu, "Show", "AutoHideWithObjectiveFrame")
-    self:SecureHook(_G.ObjectiveTrackerFrame.HeaderMenu, "Hide", "AutoHideWithObjectiveFrame")
     self:CreateBar()
-
+    self:UpdateVisibility()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 function SB:ProfileUpdate()
     self.db = E.db.WT.quest.switchButtons
+
     if not self.db.enable then
         if self.bar then
             self.bar:Hide()
         end
     else
-        if not self.bar then
-            self:CreateBar()
-        else
-            self:AutoHideWithObjectiveFrame()
-            self:UpdateLayout()
-        end
+        self:CreateBar()
+        self:UpdateLayout()
+        self:UpdateVisibility()
     end
 end
 

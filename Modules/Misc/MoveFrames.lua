@@ -294,6 +294,9 @@ local BlizzardFramesOnDemand = {
     ["Blizzard_Soulbinds"] = {
         "SoulbindViewer"
     },
+    ["Blizzard_StableUI"] = {
+        "StableFrame"
+    },
     ["Blizzard_SubscriptionInterstitialUI"] = {
         "SubscriptionInterstitialFrame"
     },

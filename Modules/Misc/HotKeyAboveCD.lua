@@ -14,7 +14,7 @@ local function HotKeyTweak(button)
     button.windHotKeyFrame = CreateFrame("Frame", nil, button)
     button.windHotKeyFrame:SetAllPoints(button)
     button.windHotKeyFrame:SetFrameStrata("LOW")
-    button.windHotKeyFrame:SetFrameLevel(button.cooldown:GetFrameLevel() + 1)
+    button.windHotKeyFrame:SetFrameLevel(button.cooldown:GetFrameLevel() + 2)
     button.HotKey:SetParent(button.windHotKeyFrame)
 end
 

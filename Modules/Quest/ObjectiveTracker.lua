@@ -187,10 +187,6 @@ function OT:HandleMenuText(text)
     end
 
     F.SetFontWithDB(text, self.db.menuTitle.font)
-    local height = text:GetStringHeight() + 2
-    if height ~= text:GetHeight() then
-        text:SetHeight(height)
-    end
 
     if not text.windHooked then
         text.windHooked = true
@@ -390,7 +386,7 @@ function OT:Initialize()
         end
 
         self:SecureHook(_G.ScenarioObjectiveTracker, "UpdateCriteria", "ScenarioObjectiveTracker_UpdateCriteria")
-
+        self:HandleMenuText(_G.ObjectiveTrackerFrame.Header.Text)
         self.initialized = true
     end
 

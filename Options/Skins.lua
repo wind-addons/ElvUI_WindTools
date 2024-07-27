@@ -800,6 +800,11 @@ options.blizzard = {
             type = "toggle",
             name = L["Soulbinds"]
         },
+        stable = {
+            order = 10,
+            type = "toggle",
+            name = L["Stable"]
+        },
         staticPopup = {
             order = 10,
             type = "toggle",

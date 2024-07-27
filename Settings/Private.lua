@@ -531,6 +531,7 @@ V.skins = {
         scrappingMachine = true,
         settingsPanel = true,
         soulbinds = true,
+        stable = true,
         staticPopup = true,
         subscriptionInterstitial = true,
         talkingHead = true,

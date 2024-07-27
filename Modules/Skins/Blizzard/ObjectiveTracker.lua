@@ -19,7 +19,7 @@ local trackers = {
     _G.WorldQuestObjectiveTracker
 }
 
-function S:SkinOjectiveTrackerHeader(header)
+function S:ReskinOjectiveTrackerHeader(header)
     if not header or not header.Text then
         return
     end
@@ -31,7 +31,24 @@ function S:SkinOjectiveTrackerHeader(header)
     F.SetFontOutline(header.Text)
 end
 
-function S:ReskinBlock(_, block)
+function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
+    local frame = block.rightEdgeFrame
+    if not frame then
+        return
+    end
+
+    if frame.template == "QuestObjectiveFindGroupButtonTemplate" and not frame.__windSkin then
+        frame:GetNormalTexture():SetAlpha(0)
+        frame:GetPushedTexture():SetAlpha(0)
+        frame:GetHighlightTexture():SetAlpha(0)
+        self:ESProxy("HandleButton", frame, nil, nil, nil, true)
+        frame.backdrop:SetInside(frame, 4, 4)
+        self:CreateBackdropShadow(frame)
+        frame.__windSkin = true
+    end
+end
+
+function S:ReskinObjectiveTrackerBlock(_, block)
     for _, button in pairs {block.ItemButton, block.itemButton} do
         if button then
             if button.backdrop then
@@ -42,25 +59,11 @@ function S:ReskinBlock(_, block)
         end
     end
 
-    if block.AddRightEdgeFrame then
-        hooksecurefunc(
-            block,
-            "AddRightEdgeFrame",
-            function(self)
-                local frame = self.rightEdgeFrame
-                if frame and frame.used then
-                    if frame.template == "QuestObjectiveFindGroupButtonTemplate" and not frame.__windSkin then
-                        frame:GetNormalTexture():SetAlpha(0)
-                        frame:GetPushedTexture():SetAlpha(0)
-                        frame:GetHighlightTexture():SetAlpha(0)
-                        S:ESProxy("HandleButton", frame, nil, nil, nil, true)
-                        frame.backdrop:SetInside(frame, 4, 4)
-                        S:CreateBackdropShadow(frame)
-                        frame.__windSkin = true
-                    end
-                end
-            end
-        )
+    self:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
+
+    if block.AddRightEdgeFrame and not block.__windRightEdgeHooked then
+        self:SecureHook(block, "AddRightEdgeFrame", "ReskinObjectiveTrackerBlockRightEdgeButton")
+        block.__windRightEdgeHooked = true
     end
 end
 
@@ -102,16 +105,16 @@ function S:Blizzard_ObjectiveTracker()
     end
 
     local MainHeader = _G.ObjectiveTrackerFrame.Header
-    self:SkinOjectiveTrackerHeader(MainHeader)
+    self:ReskinOjectiveTrackerHeader(MainHeader)
 
     for _, tracker in pairs(trackers) do
-        self:SkinOjectiveTrackerHeader(tracker.Header)
+        self:ReskinOjectiveTrackerHeader(tracker.Header)
 
         for _, block in pairs(tracker.usedBlocks or {}) do
-            self:ReskinBlock(tracker, block)
+            self:ReskinObjectiveTrackerBlock(tracker, block)
         end
 
-        self:SecureHook(tracker, "AddBlock", "ReskinBlock")
+        self:SecureHook(tracker, "AddBlock", "ReskinObjectiveTrackerBlock")
         self:SecureHook(tracker, "GetProgressBar", "SkinProgressBar")
         self:SecureHook(tracker, "GetTimerBar", "SkinTimerBar")
     end

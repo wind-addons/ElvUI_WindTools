@@ -37,6 +37,10 @@ function S:ElvUI_DataPanels()
         return
     end
 
+    if _G.MinimapPanel then
+        createPanelShadow(_G.MinimapPanel)
+    end
+
     if DT.PanelPool.InUse then
         for name, frame in pairs(DT.PanelPool.InUse) do
             createPanelShadow(frame)

@@ -264,7 +264,9 @@ local BlizzardFramesOnDemand = {
         "OrderHallTalentFrame"
     },
     ["Blizzard_PlayerSpells"] = {
-        "PlayerSpellsFrame"
+        ["PlayerSpellsFrame"] = {
+            "PlayerSpellsFrame.SpecFrame.DisabledOverlay"
+        }
     },
     ["Blizzard_Professions"] = {
         ["ProfessionsFrame"] = {

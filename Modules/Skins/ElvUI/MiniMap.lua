@@ -13,7 +13,7 @@ function S:ElvUI_MiniMap()
         return
     end
 
-    self:CreateShadow(M.MapHolder)
+    self:CreateBackdropShadow(_G.Minimap)
     self:CreateShadow(_G.MinimapRightClickMenu)
 end
 

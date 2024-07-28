@@ -45,11 +45,7 @@ function RM:HandyNotesFix()
 end
 
 function RM:ChangeShape()
-    if not self.db then
-        return
-    end
-
-    if InCombatLockdown() then
+    if not self.db or InCombatLockdown() then
         return
     end
 
@@ -101,13 +97,13 @@ function RM:ChangeShape()
 end
 
 do
-    local isRunning
+    local mutex
     function RM:Minimap_Holder_Size()
-        if isRunning then
+        if mutex then
             return
         end
 
-        isRunning = true
+        mutex = true
 
         local MinimapPanel = _G.MinimapPanel
 
@@ -122,29 +118,33 @@ do
 
         M.MapHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
         _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
-        isRunning = false
+        mutex = false
     end
 end
 
 function RM:SetUpdateHook()
-    if not self.initialized then
+    if not self.initialized and M.Initialized then
         self:SecureHook(M, "SetGetMinimapShape", "ChangeShape")
         self:SecureHook(M, "UpdateSettings", "ChangeShape")
         self:SecureHook(M, "Initialize", "ChangeShape")
         self:SecureHook(M.MapHolder, "Size", "Minimap_Holder_Size")
         self.initialized = true
     end
+
     self:ChangeShape()
-    E:Delay(1, self.ChangeShape, self)
+end
+
+function RM:Blizzard_Minimap_Loaded()
+    self:SetUpdateHook()
+end
+
+function RM:Blizzard_HybridMinimap_Loaded()
+    self:SetUpdateHook()
 end
 
 function RM:PLAYER_ENTERING_WORLD()
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    if self.initialized then
-        E:Delay(1, self.ChangeShape, self)
-    else
-        self:SetUpdateHook()
-    end
+    self:SetUpdateHook()
 end
 
 function RM:Initialize()
@@ -153,17 +153,37 @@ function RM:Initialize()
         return
     end
 
-    self:RegisterEvent("PLAYER_ENTERING_WORLD")
-    self:RegisterEvent("ADDON_LOADED")
-
     if C_AddOns_IsAddOnLoaded("HandyNotes") then
         self:HandyNotesFix()
     end
+
+    self.addonLoadedCallbacks = {}
+    if not C_AddOns_IsAddOnLoaded("Blizzard_Minimap") then
+        tinsert(self.addonLoadedCallbacks, {"Blizzard_Minimap", self.Blizzard_Minimap_Loaded})
+    end
+
+    if not C_AddOns_IsAddOnLoaded("Blizzard_HybridMinimap") then
+        tinsert(self.addonLoadedCallbacks, {"Blizzard_HybridMinimap", self.Blizzard_HybridMinimap_Loaded})
+    end
+
+    if #self.addonLoadedCallbacks > 0 then
+        self:RegisterEvent("ADDON_LOADED")
+    end
+
+    self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 function RM:ADDON_LOADED(_, addon)
-    if addon == "Blizzard_HybridMinimap" then
-        self:ChangeShape()
+    for i = 1, #self.addonLoadedCallbacks do
+        local callback = self.addonLoadedCallbacks[i]
+        if callback[1] == addon then
+            callback[2](self)
+            tremove(self.addonLoadedCallbacks, i)
+            break
+        end
+    end
+
+    if #self.addonLoadedCallbacks == 0 then
         self:UnregisterEvent("ADDON_LOADED")
     end
 end

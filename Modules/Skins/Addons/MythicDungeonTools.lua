@@ -37,6 +37,13 @@ function S:MythicDungeonTools()
         function(_, _, name)
             if name == "showInterface" and not skinned then
                 E:Delay(
+                    0.1,
+                    function()
+                        S:ESProxy("HandleMaxMinFrame", _G.MDTFrame.MaxMinButtonFrame)
+                        S:ESProxy("HandleCloseButton", _G.MDTFrame.closeButton)
+                    end
+                )
+                E:Delay(
                     1,
                     function()
                         reskinTooltip(_G.MDT.tooltip)

@@ -3,7 +3,7 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-function S:CharacterFrame()
+function S:Blizzard_UIPanels_Game()
     if not self:CheckDB("character") then
         return
     end
@@ -32,6 +32,9 @@ function S:CharacterFrame()
 
     -- Reputation
     self:CreateShadow(_G.ReputationDetailFrame)
+
+    -- Currency Transfer Log
+    self:CreateShadow(_G.CurrencyTransferLog)
 end
 
-S:AddCallback("CharacterFrame")
+S:AddCallbackForAddon("Blizzard_UIPanels_Game")

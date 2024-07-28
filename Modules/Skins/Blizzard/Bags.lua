@@ -18,6 +18,19 @@ function S:ContainerFrame()
     end
 
     self:CreateShadow(_G.ContainerFrameCombinedBags)
+
+    -- Bank
+    self:CreateShadow(_G.BankFrame)
+
+    for _, frame in pairs({_G.BankSlotsFrame, _G.ReagentBankFrame, _G.AccountBankPanel}) do
+        if frame and frame.EdgeShadows then
+            frame.EdgeShadows:SetAlpha(0)
+        end
+    end
+
+    for _, tab in pairs(_G.BankFrame.Tabs) do
+        self:ReskinTab(tab)
+    end
 end
 
 S:AddCallback("ContainerFrame")

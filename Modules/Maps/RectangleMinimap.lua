@@ -50,27 +50,51 @@ function RM:ChangeShape()
     end
 
     local Minimap = _G.Minimap
-    local MinimapPanel = _G.MinimapPanel
-    local MinimapBackdrop = _G.MinimapBackdrop
+    local holder = M.MapHolder
+    local panel = _G.MinimapPanel
 
     local fileID = self.db.enable and self.db.heightPercentage and floor(self.db.heightPercentage * 128) or 128
-    local texturePath = format("Interface\\AddOns\\ElvUI_WindTools\\Media\\Textures\\MinimapMasks\\%d.tga", fileID)
+    local texturePath = format([[Interface\AddOns\ElvUI_WindTools\Media\Textures\MinimapMasks\%d.tga]], fileID)
     local heightPct = fileID / 128
     local newHeight = E.MinimapSize * heightPct
     local diff = E.MinimapSize - newHeight
     local halfDiff = ceil(diff / 2)
 
-    Minimap:SetClampedToScreen(true)
-    Minimap:SetMaskTexture(texturePath)
-    Minimap:Size(E.MinimapSize, E.MinimapSize)
-    Minimap:SetHitRectInsets(0, 0, halfDiff * E.mult, halfDiff * E.mult)
-    Minimap:SetClampRectInsets(0, 0, 0, 0)
-    _G.MinimapMover:SetClampRectInsets(0, 0, halfDiff * E.mult, -halfDiff * E.mult)
-    Minimap:ClearAllPoints()
-    Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT", E.Border, -E.Border + halfDiff)
-    Minimap.backdrop:SetOutside(Minimap, 1, -halfDiff + 1)
-    MinimapBackdrop:SetOutside(Minimap.backdrop)
+    local mmOffset = E.PixelMode and 1 or 3
+    local mmScale = E.db.general.minimap.scale
 
+    -- First, update the size and position of the ElvUI Minimap holder and mover
+    self.effectiveHeight = newHeight
+    self:UpdateMiniMapHolderAndMover()
+
+    -- Update the size and position of the panel
+    if panel:IsShown() then
+        panel:ClearAllPoints()
+        panel:Point("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff * mmScale)
+        panel:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff * mmScale)
+    end
+
+    -- Do not allow the Minimap to be dragged off screen because the canvas cannot go off screen
+    Minimap:SetClampedToScreen(true)
+    Minimap:SetClampRectInsets(0, 0, 0, 0)
+    Minimap:ClearAllPoints()
+    Minimap:Point("TOPRIGHT", holder, -mmOffset / mmScale, -mmOffset / mmScale + halfDiff)
+
+    -- Update mask
+    Minimap:SetMaskTexture(texturePath)
+    Minimap:SetHitRectInsets(0, 0, halfDiff, halfDiff)
+
+    -- Update the size and position of the Minimap
+    Minimap.backdrop:ClearAllPoints()
+    Minimap.backdrop:SetOutside(frame, mmOffset, -halfDiff * mmScale + mmOffset)
+
+    -- Update the size and position of the Minimap location text
+    if Minimap.location then
+        Minimap.location:ClearAllPoints()
+        Minimap.location:Point("TOP", Minimap, 0, -4 - halfDiff * mmScale)
+    end
+
+    -- HybridMinimap support
     if _G.HybridMinimap then
         local mapCanvas = _G.HybridMinimap.MapCanvas
         local rectangleMask = _G.HybridMinimap:CreateMaskTexture()
@@ -80,54 +104,27 @@ function RM:ChangeShape()
         mapCanvas:SetMaskTexture(rectangleMask)
         mapCanvas:SetUseMaskTexture(true)
     end
-
-    if Minimap.location then
-        Minimap.location:ClearAllPoints()
-        Minimap.location:SetPoint("TOP", M.MapHolder, "TOP", 0, -5)
-    end
-
-    if MinimapPanel:IsShown() then
-        MinimapPanel:ClearAllPoints()
-        MinimapPanel:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -E.Border, (E.PixelMode and 0 or -3) + halfDiff)
-        MinimapPanel:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", E.Border, -23 + halfDiff)
-    end
-
-    self:Minimap_Holder_Size()
-    self.effectiveHeight = newHeight
 end
 
-do
-    local mutex
-    function RM:Minimap_Holder_Size()
-        if mutex then
-            return
-        end
+function RM:UpdateMiniMapHolderAndMover()
+    local panel = _G.MinimapPanel
+    local holder = M.MapHolder
+    local mover = _G.MinimapMover
+    local scale = E.db.general.minimap.scale
 
-        mutex = true
+    local mWidth, mHeight = _G.Minimap:GetWidth(), self.effectiveHeight
+    local bWidth, bHeight = E:Scale(E.PixelMode and 2 or 6), E:Scale(E.PixelMode and 2 or 8)
+    local panelSize, joinPanel = (panel:IsShown() and panel:GetHeight()) or E:Scale(E.PixelMode and 1 or -1), E:Scale(1)
+    local HEIGHT, WIDTH = (mHeight * scale) + (panelSize - joinPanel), mWidth * scale
 
-        local MinimapPanel = _G.MinimapPanel
-
-        local fileID = self.db.enable and self.db.heightPercentage and floor(self.db.heightPercentage * 128) or 128
-        local newHeight = E.MinimapSize * fileID / 128
-
-        local borderWidth, borderHeight = E.PixelMode and 2 or 6, E.PixelMode and 2 or 8
-        local panelSize, joinPanel =
-            (MinimapPanel:IsShown() and MinimapPanel:GetHeight()) or (E.PixelMode and 1 or -1),
-            1
-        local holderHeight = newHeight + (panelSize - joinPanel)
-
-        M.MapHolder:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
-        _G.MinimapMover:Size(E.MinimapSize + borderWidth, holderHeight + borderHeight)
-        mutex = false
-    end
+    holder:SetSize(WIDTH + bWidth, HEIGHT + bHeight)
+    mover:SetSize(WIDTH + bWidth, HEIGHT + bHeight)
 end
 
 function RM:SetUpdateHook()
     if not self.initialized and M.Initialized then
         self:SecureHook(M, "SetGetMinimapShape", "ChangeShape")
         self:SecureHook(M, "UpdateSettings", "ChangeShape")
-        self:SecureHook(M, "Initialize", "ChangeShape")
-        self:SecureHook(M.MapHolder, "Size", "Minimap_Holder_Size")
         self.initialized = true
     end
 

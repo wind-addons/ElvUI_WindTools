@@ -9,7 +9,6 @@ local select = select
 local unpack = unpack
 
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
-local scenarioStageBlock
 
 local function SkinMawBuffsContainer(container)
     container:StripTextures()
@@ -48,12 +47,18 @@ local function ScenarioObjectiveTrackerStage_UpdateStageBlock(block)
         S:CreateShadow(block.backdrop)
     end
 
-    hooksecurefunc(block, "UpdateFindGroupButton", function(self)
-        if self.findGroupButton and not self.findGroupButton.__windSkin then
-            S:CreateShadow(self.findGroupButton) -- Need more testing for this button
-            self.findGroupButton.__windSkin = true
-        end
-    end)
+    if block.UpdateFindGroupButton then
+        hooksecurefunc(
+            block,
+            "UpdateFindGroupButton",
+            function(self)
+                if self.findGroupButton and not self.findGroupButton.__windSkin then
+                    S:CreateShadow(self.findGroupButton) -- Need more testing for this button
+                    self.findGroupButton.__windSkin = true
+                end
+            end
+        )
+    end
 end
 
 local function ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
@@ -97,67 +102,80 @@ local function ScenarioObjectiveTrackerChallengeMode_Activate(block)
     block.__windSkin = true
 end
 
-local function ScenarioObjectiveTracker_AddBlock(_, block)
-    if block then
-        -- Stage block
-        if block.Stage and block.WidgetContainer then
-            scenarioStageBlock = block
-            if not block.__windHooked then
-                hooksecurefunc(block, "UpdateStageBlock", ScenarioObjectiveTrackerStage_UpdateStageBlock)
-                block.__windHooked = true
+local function UpdateHooksOfBlock(block)
+    -- Stage block
+    if block.Stage and block.WidgetContainer and not block.__windStageHooked then
+        block.__windStageHooked = true
+        hooksecurefunc(block, "UpdateStageBlock", ScenarioObjectiveTrackerStage_UpdateStageBlock)
+        ScenarioObjectiveTrackerStage_UpdateStageBlock(block)
+    end
+
+    -- Challenge mode block
+    if block.DeathCount and not block.__windChanllengeModeHooked then
+        block.__windChanllengeModeHooked = true
+        hooksecurefunc(block, "Activate", ScenarioObjectiveTrackerChallengeMode_Activate)
+        hooksecurefunc(block, "SetUpAffixes", ScenarioObjectiveTrackerChallengeMode_SetUpAffixes)
+        ScenarioObjectiveTrackerChallengeMode_Activate(block)
+        ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
+    end
+end
+
+local function UpdateBlock(block)
+    if block.__windStageHooked and block.WidgetContainer and block.WidgetContainer.widgetFrames then
+        for _, widgetFrame in pairs(block.WidgetContainer.widgetFrames) do
+            if widgetFrame.Frame then
+                widgetFrame.Frame:SetAlpha(0)
+            end
+
+            local bar = widgetFrame.TimerBar
+            if bar and not bar.__windSkin then
+                bar.__SetStatusBarTexture = bar.SetStatusBarTexture
+                hooksecurefunc(
+                    bar,
+                    "SetStatusBarTexture",
+                    function(frame)
+                        if frame.__SetStatusBarTexture then
+                            frame:__SetStatusBarTexture(E.media.normTex)
+                            frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
+                        end
+                    end
+                )
+                bar:CreateBackdrop("Transparent")
+                bar.__windSkin = true
+            end
+
+            if widgetFrame.CurrencyContainer then
+                for currencyFrame in widgetFrame.currencyPool:EnumerateActive() do
+                    if not currencyFrame.__windSkin then
+                        currencyFrame.Icon:SetTexCoord(unpack(E.TexCoords))
+                        currencyFrame.__windSkin = true
+                    end
+                end
             end
         end
+    end
 
-        -- Challenge mode block
-        if block.DeathCount and not block.__windHooked then
-            hooksecurefunc(block, "Activate", ScenarioObjectiveTrackerChallengeMode_Activate)
-            hooksecurefunc(block, "SetUpAffixes", ScenarioObjectiveTrackerChallengeMode_SetUpAffixes)
-            if block:IsActive() then
-                ScenarioObjectiveTrackerChallengeMode_Activate(block)
-                ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
-            end
-            block.__windHooked = true
+    if block.__windChanllengeModeHooked then
+        if block:IsActive() then
+            ScenarioObjectiveTrackerChallengeMode_Activate(block)
+            ScenarioObjectiveTrackerChallengeMode_SetUpAffixes(block)
         end
     end
 end
 
-local function ScenarioObjectiveTracker_Update(_, block)
-    local contianer = scenarioStageBlock and scenarioStageBlock.WidgetContainer
-    if not contianer or not contianer.widgetFrames then
+local function ScenarioObjectiveTracker_AddBlock(_, block)
+    if not block then
         return
     end
 
-    for _, widgetFrame in pairs(contianer.widgetFrames) do
-        if widgetFrame.Frame then
-            widgetFrame.Frame:SetAlpha(0)
-        end
+    UpdateHooksOfBlock(block)
+    UpdateBlock(block)
+end
 
-        local bar = widgetFrame.TimerBar
-
-        if bar and not bar.__windSkin then
-            bar.__SetStatusBarTexture = bar.SetStatusBarTexture
-            hooksecurefunc(
-                bar,
-                "SetStatusBarTexture",
-                function(frame)
-                    if frame.__SetStatusBarTexture then
-                        frame:__SetStatusBarTexture(E.media.normTex)
-                        frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
-                    end
-                end
-            )
-            bar:CreateBackdrop("Transparent")
-            bar.__windSkin = true
-        end
-
-        if widgetFrame.CurrencyContainer then
-            for currencyFrame in widgetFrame.currencyPool:EnumerateActive() do
-                if not currencyFrame.__windSkin then
-                    currencyFrame.Icon:SetTexCoord(unpack(E.TexCoords))
-                    currencyFrame.__windSkin = true
-                end
-            end
-        end
+local function ScenarioObjectiveTracker_Update(tracker, block)
+    for _, block in pairs(tracker.usedBlocks or {}) do
+        UpdateHooksOfBlock(block)
+        UpdateBlock(block)
     end
 end
 

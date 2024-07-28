@@ -9,11 +9,18 @@ function S:MirrorTimers()
         return
     end
 
-    hooksecurefunc(_G.MirrorTimerMixin, "Setup", function(timer)
-        if timer and timer.StatusBar then
-            self:CreateShadow(timer.StatusBar)
+    hooksecurefunc(
+        _G.MirrorTimerContainer,
+        "SetupTimer",
+        function(container, timer)
+            local bar = container:GetAvailableTimer(timer)
+            if not bar then
+                return
+            end
+
+            self:CreateShadow(bar)
         end
-    end)
+    )
 end
 
 S:AddCallback("MirrorTimers")

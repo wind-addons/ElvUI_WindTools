@@ -111,16 +111,29 @@ end
 function IL:ADDON_LOADED(_, addon)
     if addon == "Blizzard_ScrappingMachineUI" then
         self:UnregisterEvent("ADDON_LOADED")
-        self:HookScrappingMachine()
+        self:ScrappingMachine_Loaded()
     end
 end
 
-function IL:HookScrappingMachine()
-    if _G.ScrappingMachineFrame then
-        for button in pairs(_G.ScrappingMachineFrame.ItemSlots.scrapButtons.activeObjects) do
+function IL:ReskinAllButtonsInScrappingMachine()
+    for button in _G.ScrappingMachineFrame.ItemSlots.scrapButtons:EnumerateActive() do
+        if button and not button.__windItemLevelHooked then
             self:SecureHook(button, "RefreshIcon", "ScrappingMachineButton")
+            button.__windItemLevelHooked = true
         end
     end
+end
+
+function IL:ScrappingMachine_Loaded()
+    if
+        not _G.ScrappingMachineFrame or not _G.ScrappingMachineFrame.ItemSlots or
+            not _G.ScrappingMachineFrame.ItemSlots.scrapButtons
+     then
+        return
+    end
+
+    self:SecureHook(_G.ScrappingMachineFrame.ItemSlots.scrapButtons, "Acquire", "ReskinAllButtonsInScrappingMachine")
+    self:ReskinAllButtonsInScrappingMachine()
 end
 
 function IL:ProfileUpdate()
@@ -131,8 +144,9 @@ function IL:ProfileUpdate()
         if not C_AddOns_IsAddOnLoaded("Blizzard_ScrappingMachineUI") then
             self:RegisterEvent("ADDON_LOADED")
         else
-            self:HookScrappingMachine()
+            self:ScrappingMachine_Loaded()
         end
+
         self.initialized = true
     end
 end

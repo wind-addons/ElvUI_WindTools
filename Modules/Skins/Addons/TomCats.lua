@@ -111,7 +111,7 @@ function S:TomCats()
 
                     if frame.icon.logo then
                         frame.icon.logo:ClearAllPoints()
-                        frame.icon.logo:SetPoint("CENTER", frame, "BOTTOM", 0, -3)
+                        frame.icon.logo:SetPoint("CENTER", frame, "BOTTOM", 5, -3)
                     end
 
                     frame.headerBar:SetAlpha(0)

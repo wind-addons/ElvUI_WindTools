@@ -60,11 +60,14 @@ local C_GossipInfo_GetOptions = C_GossipInfo.GetOptions
 local C_GossipInfo_SelectActiveQuest = C_GossipInfo.SelectActiveQuest
 local C_GossipInfo_SelectAvailableQuest = C_GossipInfo.SelectAvailableQuest
 local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
+local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Minimap_GetNumTrackingTypes = C_Minimap.GetNumTrackingTypes
 local C_Minimap_GetTrackingInfo = C_Minimap.GetTrackingInfo
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
+
+local Enum_GossipOptionRecFlags_QuestLabelPrepend = Enum.GossipOptionRecFlags.QuestLabelPrepend
 
 local choiceQueue = nil
 
@@ -379,7 +382,11 @@ function TI:GOSSIP_SHOW()
         elseif numGossipOptions > 1 then
             local maybeQuestIndexes = {}
             for index, gossipOption in ipairs(gossipOptions) do
-                if gossipOption.name and strfind(gossipOption.name, "^|cFF0000FF") then
+                if
+                    gossipOption.name and
+                        (gossipOption.flags == Enum_GossipOptionRecFlags_QuestLabelPrepend or
+                            strfind(gossipOption.name, "^|cFF0000FF"))
+                 then
                     tinsert(maybeQuestIndexes, index)
                 end
             end
@@ -495,7 +502,7 @@ function TI:QUEST_COMPLETE()
         for index = 1, choices do
             local link = GetQuestItemLink("choice", index)
             if link then
-                local itemSellPrice = select(11, GetItemInfo(link))
+                local itemSellPrice = select(11, C_Item_GetItemInfo(link))
                 itemSellPrice = cashRewards[GetItemInfoFromHyperlink(link)] or itemSellPrice
 
                 if itemSellPrice > bestSellPrice then
@@ -539,7 +546,9 @@ function TI:AttemptAutoComplete(event)
             end
         end
 
-        AutoQuestPopupTracker_RemovePopUp(questID)
+        if _G.QuestObjectiveTracker then
+            _G.QuestObjectiveTracker:RemoveAutoQuestPopUp(questID)
+        end
     end
 end
 

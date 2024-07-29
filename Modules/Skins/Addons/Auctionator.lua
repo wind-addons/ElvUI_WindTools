@@ -432,52 +432,6 @@ local function buyCommodity(frame)
     end
 end
 
-local function groupsCustomiseDuration(frame)
-    for _, child in pairs({frame.Short, frame.Medium, frame.Long, frame.Default}) do
-        if child then
-            S:ESProxy("HandleRadioButton", child)
-        end
-    end
-end
-
-local function groupsCustomise(frame)
-    frame:StripTextures()
-    frame:SetTemplate("Transparent")
-    S:CreateShadow(frame)
-
-    S:ESProxy("HandleCloseButton", frame.CloseButton)
-    S:ESProxy("HandleButton", frame.BackButton)
-    S:ESProxy("HandleButton", frame.NewGroupButton)
-    S:ESProxy("HandleTrimScrollBar", frame.View.ScrollBar)
-    frame.View.ScrollBox:CreateBackdrop("Transparent")
-end
-
-local function groupsCustomiseGroup(frame)
-    for _, child in pairs(
-        {
-            frame.FocusButton,
-            frame.RenameButton,
-            frame.DeleteButton,
-            frame.HideButton,
-            frame.ShiftUpButton,
-            frame.ShiftDownButton
-        }
-    ) do
-        if child then
-            S:ESProxy("HandleButton", child)
-        end
-    end
-
-    if frame.DividerContainer then
-        frame.DividerContainer:StripTextures()
-    end
-
-    if frame.Quantity and frame.Quantity.Quantity then
-        S:ESProxy("HandleEditBox", frame.Quantity.Quantity)
-        frame.Quantity.Quantity:SetTextInsets(0, 0, 0, 0)
-    end
-end
-
 local function tryPostHook(...)
     local frame, method, hookFunc = ...
     if frame and method and _G[frame] and _G[frame][method] then
@@ -504,7 +458,6 @@ function S:Auctionator()
     self:DisableAddOnSkin("Auctionator")
 
     -- widgets
-    tryPostHook("GroupsCustomiseDurationMixin", "OnLoad", groupsCustomiseDuration)
     tryPostHook("AuctionatorBuyIconNameTemplateMixin", "SetItem", buyIconName)
     tryPostHook("AuctionatorGroupsViewGroupMixin", "SetName", viewGroup)
     tryPostHook("AuctionatorGroupsViewItemMixin", "SetItemInfo", viewItem)
@@ -545,8 +498,6 @@ function S:Auctionator()
     tryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
     tryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
     tryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
-    tryPostHook("AuctionatorGroupsCustomiseMixin", "OnLoad", groupsCustomise)
-    tryPostHook("AuctionatorGroupsCustomiseGroupMixin", "OnLoad", groupsCustomiseGroup)
 end
 
 S:AddCallbackForAddon("Auctionator")

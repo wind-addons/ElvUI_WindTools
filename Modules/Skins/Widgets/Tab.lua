@@ -65,8 +65,11 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 
         self:SecureHookScript(tab, "OnEnter", tab.windAnimation.onEnter)
         self:SecureHookScript(tab, "OnLeave", tab.windAnimation.onLeave)
-        self:SecureHook(tab, "Disable", tab.windAnimation.onStatusChange)
-        self:SecureHook(tab, "Enable", tab.windAnimation.onStatusChange)
+
+        if tab.Disable and tab.Enable then
+            self:SecureHook(tab, "Disable", tab.windAnimation.onStatusChange)
+            self:SecureHook(tab, "Enable", tab.windAnimation.onStatusChange)
+        end
 
         -- Avoid the hook is flushed
         self:SecureHook(

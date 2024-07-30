@@ -131,7 +131,7 @@ local function configCheckbox(frame)
 end
 
 local function dropDownInternal(frame)
-    S:ESProxy("HandleDropDownBox", frame)
+    S:ESProxy("HandleDropDownBox", frame, nil, nil, true)
 end
 
 local function keyBindingConfig(frame)

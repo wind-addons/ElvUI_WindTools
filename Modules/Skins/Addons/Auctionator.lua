@@ -131,7 +131,7 @@ local function configCheckbox(frame)
 end
 
 local function dropDownInternal(frame)
-    S:ESProxy("HandleDropDownBox", frame, nil, nil, true)
+    S:ESProxy("HandleDropDownBox", frame, frame:GetWidth(), nil, true)
 end
 
 local function keyBindingConfig(frame)
@@ -181,7 +181,7 @@ local function configMinMax(frame)
 end
 
 local function filterKeySelector(frame)
-    S:ESProxy("HandleDropDownBox", frame)
+    S:ESProxy("HandleDropDownBox", frame, frame:GetWidth(), nil, true)
 end
 
 local function undercutScan(frame)
@@ -308,37 +308,25 @@ local function shoppingItem(frame)
     frame:SetTemplate("Transparent")
     S:CreateShadow(frame)
 
+    local function reskinResetButton(f, anchor, x, y)
+        S:ESProxy("HandleButton", f)
+        f:Size(20, 20)
+        f:ClearAllPoints()
+        f:SetPoint("LEFT", anchor, "RIGHT", x, y)
+    end
+
     S:ESProxy("HandleEditBox", frame.SearchContainer.SearchString)
-    S:ESProxy("HandleButton", frame.SearchContainer.ResetSearchStringButton)
-    frame.SearchContainer.ResetSearchStringButton:SetSize(20, 20)
-    frame.SearchContainer.ResetSearchStringButton:ClearAllPoints()
-    frame.SearchContainer.ResetSearchStringButton:SetPoint("LEFT", frame.SearchContainer.SearchString, "RIGHT", 3, 0)
     S:ESProxy("HandleCheckBox", frame.SearchContainer.IsExact)
 
-    S:ESProxy("HandleButton", frame.FilterKeySelector.ResetButton)
-    frame.FilterKeySelector.ResetButton:SetSize(20, 20)
-    frame.FilterKeySelector.ResetButton:ClearAllPoints()
-    frame.FilterKeySelector.ResetButton:SetPoint("LEFT", frame.FilterKeySelector, "RIGHT", 0, 3)
-
-    S:ESProxy("HandleButton", frame.LevelRange.ResetButton)
-    frame.LevelRange.ResetButton:SetSize(20, 20)
-    frame.LevelRange.ResetButton:ClearAllPoints()
-    frame.LevelRange.ResetButton:SetPoint("LEFT", frame.LevelRange.MaxBox, "RIGHT", 3, 0)
-
-    S:ESProxy("HandleButton", frame.ItemLevelRange.ResetButton)
-    frame.ItemLevelRange.ResetButton:SetSize(20, 20)
-    frame.ItemLevelRange.ResetButton:ClearAllPoints()
-    frame.ItemLevelRange.ResetButton:SetPoint("LEFT", frame.ItemLevelRange.MaxBox, "RIGHT", 3, 0)
-
-    S:ESProxy("HandleButton", frame.PriceRange.ResetButton)
-    frame.PriceRange.ResetButton:SetSize(20, 20)
-    frame.PriceRange.ResetButton:ClearAllPoints()
-    frame.PriceRange.ResetButton:SetPoint("LEFT", frame.PriceRange.MaxBox, "RIGHT", 3, 0)
-
-    S:ESProxy("HandleButton", frame.CraftedLevelRange.ResetButton)
-    frame.CraftedLevelRange.ResetButton:SetSize(20, 20)
-    frame.CraftedLevelRange.ResetButton:ClearAllPoints()
-    frame.CraftedLevelRange.ResetButton:SetPoint("LEFT", frame.CraftedLevelRange.MaxBox, "RIGHT", 3, 0)
+    reskinResetButton(frame.SearchContainer.ResetSearchStringButton, frame.SearchContainer.SearchString, 3, 0)
+    reskinResetButton(frame.FilterKeySelector.ResetButton, frame.FilterKeySelector, 0, 3)
+    reskinResetButton(frame.LevelRange.ResetButton, frame.LevelRange.MaxBox, 3, 0)
+    reskinResetButton(frame.ItemLevelRange.ResetButton, frame.ItemLevelRange.MaxBox, 3, 0)
+    reskinResetButton(frame.PriceRange.ResetButton, frame.PriceRange.MaxBox, 3, 0)
+    reskinResetButton(frame.CraftedLevelRange.ResetButton, frame.CraftedLevelRange.MaxBox, 3, 0)
+    reskinResetButton(frame.QualityContainer.ResetQualityButton, frame.QualityContainer, 200, 5)
+    reskinResetButton(frame.ExpansionContainer.ResetExpansionButton, frame.ExpansionContainer, 200, 5)
+    reskinResetButton(frame.TierContainer.ResetTierButton, frame.TierContainer, 200, 5)
 
     S:ESProxy("HandleButton", frame.Finished)
     S:ESProxy("HandleButton", frame.Cancel)

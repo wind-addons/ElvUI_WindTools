@@ -737,29 +737,31 @@ function S:WeakAurasOptions()
         postHookPrivate(mod, skinChildren)
     end
 
-    postHookPrivate("TextEditor", function(widget)
-        skinChildren(widget)
+    postHookPrivate(
+        "TextEditor",
+        function(widget)
+            skinChildren(widget)
 
-        if _G.WASettingsButton and not _G.WASettingsButton.__windSkin then
-            self:ESProxy("HandleButton", _G.WASettingsButton)
-            _G.WASettingsButton.__windSkin = true
-        end
+            if _G.WASettingsButton then
+                self:ESProxy("HandleButton", _G.WASettingsButton)
+            end
 
-        if _G.WeakAurasAPISearchFrame then
-            self:ESProxy("HandleFrame", _G.WeakAurasAPISearchFrame, true, "Transparent")
-            self:CreateShadow(_G.WeakAurasAPISearchFrame)
+            if _G.WeakAurasAPISearchFrame then
+                self:ESProxy("HandleFrame", _G.WeakAurasAPISearchFrame, true, "Transparent")
+                self:CreateShadow(_G.WeakAurasAPISearchFrame)
 
-            if _G.WeakAurasAPISearchFilterInput then
-                self:ESProxy("HandleEditBox", _G.WeakAurasAPISearchFilterInput)
+                if _G.WeakAurasAPISearchFilterInput then
+                    self:ESProxy("HandleEditBox", _G.WeakAurasAPISearchFilterInput)
+                end
+            end
+
+            if _G.WeakAurasSnippets then
+                self:ESProxy("HandleFrame", _G.WeakAurasSnippets, true, "Transparent")
+                self:CreateShadow(_G.WeakAurasSnippets)
+                skinChildren(_G.WeakAurasSnippets)
             end
         end
-
-        if _G.WeakAurasSnippets then
-            self:ESProxy("HandleFrame", _G.WeakAurasSnippets, true, "Transparent")
-            self:CreateShadow(_G.WeakAurasSnippets)
-            skinChildren(_G.WeakAurasSnippets)
-        end
-    end)
+    )
 end
 
 function S:WeakAuras_CreateTemplateView(Private, frame)

@@ -722,20 +722,44 @@ function S:WeakAurasOptions()
         end
     end
 
-    for _, mod in pairs {"UpdateFrame", "IconPicker", "ImportExport"} do
-        postHookPrivate(
-            mod,
-            function(widget)
-                for _, child in pairs {widget.frame:GetChildren()} do
-                    if child.GetObjectType then
-                        local skip = false
-                        skip = generalEditBoxSkinner(skip, child)
-                        generalButtonSkinner(skip, child)
-                    end
-                end
+    local skinChildren = function(widget)
+        local frame = widget.frame or widget
+        for _, child in pairs {frame:GetChildren()} do
+            if child.GetObjectType then
+                local skip = false
+                skip = generalEditBoxSkinner(skip, child)
+                generalButtonSkinner(skip, child)
             end
-        )
+        end
     end
+
+    for _, mod in pairs {"UpdateFrame", "IconPicker", "ImportExport"} do
+        postHookPrivate(mod, skinChildren)
+    end
+
+    postHookPrivate("TextEditor", function(widget)
+        skinChildren(widget)
+
+        if _G.WASettingsButton and not _G.WASettingsButton.__windSkin then
+            self:ESProxy("HandleButton", _G.WASettingsButton)
+            _G.WASettingsButton.__windSkin = true
+        end
+
+        if _G.WeakAurasAPISearchFrame then
+            self:ESProxy("HandleFrame", _G.WeakAurasAPISearchFrame, true, "Transparent")
+            self:CreateShadow(_G.WeakAurasAPISearchFrame)
+
+            if _G.WeakAurasAPISearchFilterInput then
+                self:ESProxy("HandleEditBox", _G.WeakAurasAPISearchFilterInput)
+            end
+        end
+
+        if _G.WeakAurasSnippets then
+            self:ESProxy("HandleFrame", _G.WeakAurasSnippets, true, "Transparent")
+            self:CreateShadow(_G.WeakAurasSnippets)
+            skinChildren(_G.WeakAurasSnippets)
+        end
+    end)
 end
 
 function S:WeakAuras_CreateTemplateView(Private, frame)

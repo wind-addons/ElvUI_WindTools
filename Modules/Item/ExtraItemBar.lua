@@ -1361,7 +1361,8 @@ local function UpdateQuestItemList()
 end
 
 local forceUsableItems = {
-    [193634] = true -- 茂發種子
+    [193634] = true, -- 茂發種子
+    [206448] = true, --『夢境裂斧』菲拉雷斯
 }
 
 local equipmentList = {}

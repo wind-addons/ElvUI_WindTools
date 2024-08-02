@@ -11,16 +11,16 @@ function S:AngryKeystones()
     end
 
     hooksecurefunc(
-        "Scenario_ChallengeMode_ShowBlock",
-        function()
-            local block = _G.ScenarioChallengeModeBlock
+        ScenarioObjectiveTracker.ChallengeModeBlock,
+        "Activate",
+        function(block)
             if block and block.TimerFrame and not block.TimerFrame.__windSkin then
-                block.TimerFrame.Bar2:SetTexture(E.media.blankTex)
-                block.TimerFrame.Bar2:SetWidth(2)
-                block.TimerFrame.Bar2:SetAlpha(0.618)
-                block.TimerFrame.Bar3:SetTexture(E.media.blankTex)
-                block.TimerFrame.Bar3:SetWidth(2)
-                block.TimerFrame.Bar3:SetAlpha(0.618)
+                for _, bar in pairs {block.TimerFrame.Bar2, block.TimerFrame.Bar3} do
+                    bar:SetTexture(E.media.blankTex)
+                    bar:SetWidth(2)
+                    bar:SetAlpha(0.618)
+                    bar:SetHeight(bar:GetHeight() + 2)
+                end
                 block.TimerFrame.__windSkin = true
             end
         end

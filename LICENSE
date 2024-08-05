@@ -1,7 +1,7 @@
-GNU GENERAL PUBLIC LICENSE
+                    GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
- Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
@@ -645,7 +645,7 @@ the "copyright" line and a pointer to where the full notice is found.
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Also add information on how to contact you by electronic and paper mail.
 
@@ -664,57 +664,11 @@ might be different; for a GUI interface, you would use an "about box".
   You should also get your employer (if you work as a programmer) or school,
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU GPL, see
-<https://www.gnu.org/licenses/>.
+<http://www.gnu.org/licenses/>.
 
   The GNU General Public License does not permit incorporating your program
 into proprietary programs.  If your program is a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
-<https://www.gnu.org/licenses/why-not-lgpl.html>.
-
-
-增补条款 (任何冲突项目以此为准)
-2022 年 11 月 11 日
-
-  1. 对于任何个人用户, 本软件 (ElvUI_WindTools) 可以在软件作者 (fang2hou@GitHub) 授意进行分发的平台上进行免费下载使用.
-  1.1. 软件作者 (fang2hou@GitHub) 授意进行分发的平台列表:
-    1) CurseForge (curseforge.com),
-    2) Wago (wago.io)
-    3) WoWInterface (www.wowinterface.com)
-    4) 178 魔兽插件站 (wowui.178.com)
-  1.2. 如果授权的平台提供收费下载本软件 (ElvUI_WindTools) 的功能时, 请不要下载, 并立即通知软件作者 (fang2hou@GitHub) 下架.
-  1.3. 如果授权的平台在页面上提供了违反当地, 中国大陆地区或日本法律的广告信息 (无关其是否产生营业收入), 请不要下载, 并立即通知软件作者 (fang2hou@GitHub) 下架.
-  1.4. 如果授权的平台在页面上提供了现实金钱交易 (RMT) 的广告信息 (无关其是否产生营业收入), 请不要下载, 并立即通知软件作者 (fang2hou@GitHub) 下架.
-  1. 你不可以在软件作者 (fang2hou@GitHub) 未出具同意许可前将本软件 (ElvUI_WindTools) 透过任意第三方平台的网页 / 客户端软件 / API 下载后分发.
-  2. 你不可以在软件作者 (fang2hou@GitHub) 未出具同意许可前将本软件 (ElvUI_WindTools) 作为其他软件或软件组合的一部分进行分发.
-  3. 你不可以在软件作者 (fang2hou@GitHub) 未出具同意许可前将本软件 (ElvUI_WindTools) 在任何可能或已经产生利润的分发平台上进行软件分发.
-  4. 你有权以自己个人使用为目的对软件 (ElvUI_WindTools) 内代码进行修改, 但是修改后的软件在软件作者 (fang2hou@GitHub) 未出具同意许可前在不得以任何软件名进行再分发.
-  5. 你不可以将本授权生效后的任意版本的软件 (ElvUI_WindTools) 及软件代码 (ElvUI_WindTools 代码) 变更合并或拷贝至旧版本软件之中.
-  6. 在进行个体用户之间代码分发时, 你不得为软件或可用于软件的专属信息设定密码或障碍以求使用者使用额外之手段.
-  7.1. 专属信息包括但不限于含有 ElvUI_WindTools 的 ElvUI (Tukui.org 提供之软件) 配置文件, ElvUI_WindTools 字符串.
-  7.2. 额外之手段包括但不限于进入腾讯 QQ 群, 注册账户, 购买会员, 订阅直播, 点击广告, 付费, 捐款, 游戏内交易.
-  8. 关于软件分发的最终解释权归于本软件作者 (fang2hou@GitHub).
-
-ENGLISH TRANSLATION, BUT NOT OFFICIAL TRANSLATION
-ADDITIONAL TERMS AND CONDITIONS (Any conflicting items are subject to this)
-11 November 2022
-
-  1. For any individual user, this software (ElvUI_WindTools) can be downloaded and executed for free from the platform where the software author (fang2hou@GitHub) has authorized its distribution.
-  1.1. List of platforms authorized for distribution by the author of the software (fang2hou@GitHub):
-    1) CurseForge (curseforge.com),
-    2) Wago (wago.io)
-    3) WoWInterface (www.wowinterface.com)
-    4) 178 魔兽插件站 (wowui.178.com)
-  1.2. If a licensed platform offers the ability to download this software (ElvUI_WindTools) for a fee, please do not download it and notify the author (fang2hou@GitHub) immediately to take it down.
-  1.3. If a licensed platform provides advertising on its pages that violates local, mainland Chinese or Japanese law (regardless of whether it generates revenue), please do not download it and notify the software author (fang2hou@GitHub) immediately to take it down.
-  1.4. If a licensed platform provides Real Money Transactions (RMT) advertisements on its pages (regardless of whether they generate revenue), please do not download them and notify the author (fang2hou@GitHub) immediately to take them down.
-  2. You may not download and distribute the software (ElvUI_WindTools) through any third-party platform webpage/client/API without the consent of the software author (fang2hou@GitHub).
-  3. You may not distribute this software (ElvUI_WindTools) as part of other software or a combination of software without the prior consent of the software author (fang2hou@GitHub).
-  4. You may not distribute the software (ElvUI_WindTools) on any distribution platform that may or has generated a profit without the consent of the software author (fang2hou@GitHub).
-  5. You have the right to modify the code in the software (ElvUI_WindTools) for your own personal use, but the modified software may not be redistributed under any software name without the consent of the software author (fang2hou@GitHub).
-  6. You may not merge or copy any version of the software (ElvUI_WindTools) or software code (ElvUI_WindTools code) from any version of the software (ElvUI_WindTools) after the effective date of this license into an older version of the software.
-  7. When distributing code between individual users, you may not set passwords or barriers for the software or proprietary information that can be used in the software to allow users to use additional means.
-  7.1. Proprietary information includes, but is not limited to, the ElvUI (software provided by Tukui.org) configuration file containing ElvUI_WindTools, the ElvUI_WindTools string.
-  7.2. Additional means include, but are not limited to, accessing Tencent QQ groups, registering accounts, purchasing memberships, subscribing to live streams, clicking on advertisements, paying fees, donations, and in-game transactions.
-  8. The author of this software (fang2hou@GitHub) is the final authority for the distribution of the software.
+<http://www.gnu.org/philosophy/why-not-lgpl.html>.

@@ -1061,7 +1061,7 @@ local bigDig = {
 }
 
 -- Profession Items
--- https://github.com/fang2hou/ElvUI_WindTools/issues/298
+-- https://github.com/wind-addons/ElvUI_WindTools/issues/298
 -- Thanks Tednik@GitHub
 local professionItems = {
     192131, -- 沃卓肯武器鍊

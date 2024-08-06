@@ -12,27 +12,27 @@
 
 </div>
 
-# 📥 Download
+## 📥 Download
 
 [![CurseForge](https://img.shields.io/badge/CurseForge-FF784D?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/wow/addons/elvui-windtools) [![Wago](https://img.shields.io/badge/%F0%9F%90%B5%20Wago%20Addons-212121?style=for-the-badge)](https://addons.wago.io/addons/elvui-windtools)
 [![WowInterface](https://img.shields.io/badge/WowInterface-F0F1EE?style=for-the-badge&logo=data%3Aimage%2Fwebp%3Bbase64%2CUklGRp4CAABXRUJQVlA4TJICAAAvFUAFEE2coSGi%2FwFhoaBtG4Y%2Fy0Lo%2FgVCJm2bCr0mYwTZNvWnHMIJnv7H5m%2BnaWjuDgTJkSQ5khNZ3TPHn3cKnAhQF3rhBQXw41jSXaEGpEaSJEnm%2BVsiyx%2FeXQE5kiRJikftcsiA5ujIj%2F%2BkokaSotpd%2BIF%2FIeDuSnz9%2BrHKvbBzQNTQ%2FPC43DzLxzBsenMdp3kss6PBQ9a398ID4SZeyljsPL8zXxb%2BHd1kB4AzzjGiBanpLz6s2IOdM7IXgMfdWWJM1MK4X%2F6bgVOOBdPS3fnsZWGJeHjjHcD4e7ntDHkxWYz98ueCRzlzQTr6sjwogLE7jABJlGRhadAkwHIaGCRSj%2B8vp5yLlws0LZE3PEQvv4HUmOUl%2Fu38NpdHopzauexDlkQZYEHAfDF2LImIOV5lORdcS4GN5d25yi4DjxIBLNdyezSOS9BC8%2FiYgrMv2Wm4mTcOB5KSR0DceizUnYeFpjCwL3WMqNElQH6OWYZxcxeCjdHYTnfarHG%2F3KPRQ0Nkwx06v7wcoyJND2BhNHS2s7GXLVsc%2FabDYEkh8l6MlIHDWJSg0Qu9ICBR2I69RCI7YmLOZoFRZYINQtkeS5Qp1QCEhj0UyjAtxja1GFvWYmBAwxIAxPBGk0IBCcDOVY4RLFyKEsNop3YQTUdHoEESwlKSZqM6tbDpIzsMjMUCEBsbHQxGBAoNSLOjZHaGCbwgKzYEko2OCDgiDNAbsd4nCyZQPAKQkQVYFExAYTBEGsB4%2BPgzpJ212Y0FJ5jLNOkIJBuEcNHEWOqS%2BPL5qxq97HtZo4bi5ehUJwZg6ETYSSCU2hGC%2FllSEHdsEuwEGAQThwEINgQiQJiXv%2B8NDW4EWDARYNFkARQ2AMEAAIN8&logoColor=white)](https://www.wowinterface.com/downloads/info25687-ElvUI_WindTools.html) [![Github Release](https://img.shields.io/badge/GitHub%20Release-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/fang2hou/ElvUI_WindTools/releases)
 
-# 💝 Donate
+## 💝 Donate
 
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/fang2hou) [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](http://paypal.me/fang2h0u) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/fang2hou) [![GitHub-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/fang2hou)
 [![爱发电](https://img.shields.io/badge/%E7%88%B1%E5%8F%91%E7%94%B5-8362DC?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy4yLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxNjAgMTYwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxNjAgMTYwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BDQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU%2BDQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTQ4LjIsMTAzLjZjLTEuNi0xLTMuNC0xLjUtNS4xLTEuN2MzLjktOS42LDYuNS0yMi4zLTIuMS0zNC44QzEyOCw0Ny45LDEwOS4yLDM4LDg1LjMsMzcuNQ0KCUM3OC41LDM3LjMsNzAuNSwzNy43LDYyLDM4Yy05LjksMC40LTIzLDAuOS0zMS45LDAuMmMxLjgtMSwzLjctMS45LDUuMy0yLjdjNi4zLTMuMSwxMS4yLTUuNCw5LjYtOS43Yy0wLjktMi41LTMuNC0zLjgtNy42LTMuOQ0KCUMyOC41LDIxLjcsOS40LDI2LjksNiwzNS41QzQsNDAuNCwzLjcsNDkuNywyMy4zLDU4YzguMSwzLjQsMzAuOCw3LjYsMzkuNiw4LjVjMi41LDAuMiw0LjQsMC43LDUuOCwxLjNjLTIsMS4zLTQuMSwyLjctNi4yLDQuMQ0KCWMtMy42LTIuMS05LjUtNC41LTEzLjktMS41Yy0xLjcsMS4yLTIuNywyLjktMi43LDQuOGMtMC4xLDIuNCwxLjQsNC44LDMsNi43QzQyLjUsODcuMSwzNy4yLDkyLjEsMzUuNCw5NmMtMi4xLDQuOC0yLjksMTIuNSwxLDIwLjENCgljNC45LDkuNiwxNS44LDE2LjQsMzIuMywyMGMyMS42LDQuNyw0MC4yLDAuNSw1Mi41LTZjNi45LTMuNiwxMS43LTcuOSwxNC4xLTExLjhjMC43LDAuMiwxLjUsMC41LDIuMiwwLjdjMS4xLDAuMywyLjEsMC42LDMuMSwxDQoJYzMuMywxLjEsNi45LDEsOS42LTAuNGMwLDAsMC4xLTAuMSwwLjItMC4xYzIuMS0xLjEsMy42LTIuOSw0LjMtNUMxNTYuMywxMDguNywxNTEuMiwxMDUuNSwxNDguMiwxMDMuNnogTTYxLjMsOTMuOQ0KCWMtMiwwLTMuNSwxLjYtMy41LDMuNWMwLDIsMS42LDMuNiwzLjUsMy42czMuNS0xLjYsMy41LTMuNkM2NC44LDk1LjUsNjMuMiw5My45LDYxLjMsOTMuOXogTTk0LjcsMTA0LjZjLTIsMC0zLjUsMS42LTMuNSwzLjUNCgljMCwyLDEuNiwzLjYsMy41LDMuNnMzLjUtMS42LDMuNS0zLjZDOTguMiwxMDYuMiw5Ni42LDEwNC42LDk0LjcsMTA0LjZ6Ii8%2BDQo8L3N2Zz4NCg%3D%3D)](https://afdian.net/@fang2hou)
 
-# 🌍 Localization
+## 🌍 Localization
 
-## Complete Support
+### Complete Support
 
 简体中文，繁體中文，한국어, ру́сский язы́к, English, Deutsch, français
 
-## Some strings are still in English
+### Some strings are still in English
 
 Español, Português, Italiano
 
-# ❤️ Credits
+## ❤️ Credits
 
 - Siweia (NDui)
 - Loudsoul (TinyInspect, TinyTooltip)
@@ -41,13 +41,13 @@ Español, Português, Italiano
 
 [All credits](CREDITS.md)
 
-# ✨ Features
+## ✨ Features
 
-## Media Files
+### Media Files
 
 3 fonts, 6 textures and 2 ringtones.
 
-## Item
+### Item
 
 1. **Delete Item**: Enter DELETE automatically; Click to confirm; Delete Key support.
 2. **Already Known**: Add a colored overlay to the recipes you have already learned.
@@ -58,14 +58,14 @@ Español, Português, Italiano
 7. **Inspect**: Add an equipment list beside the character panel and inspect frame.
 8. **Extended Merchant Pages**: Extend the merchant frame to show more items.
 
-## Combat
+### Combat
 
 1. **Raid Markers**: Add bar contains mark buttons, ready check, pull counter, and more!
 2. **Combat Alert**: Show an animation when you enter or leave combat.
 3. **Quick Keystone**: Put the keystone from bag automatically.
 4. **Class Helper**: Special features for each class. (e.g. DK: Death Strike Estimator)
 
-## Map
+### Map
 
 1. **Who Clicked?**: Display the name of players who clicked the minimap.
 2. **Rectangle Minimap**: Customize the minimap with diffrent length of width and height.
@@ -75,14 +75,14 @@ Español, Português, Italiano
 6. **Instance Difficulty**: Reskin the instance difficulty in text style.
 7. **Event Tracker**: Track the world events in the world map.
 
-## Quest
+### Quest
 
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.
 2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.
 3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.
 4. **Paragon Reputation**: Show colored reputation bars and rewards after reaching Paragon.
 
-## Social
+### Social
 
 1. **Chat Bar**: Add a bar contains channel buttons, roll, emote; Custom world channel and custom community channel is also supported.
 2. **Chat Link**: Add additional information, icons to the links.
@@ -92,7 +92,7 @@ Español, Português, Italiano
 6. **Friend List**: Add colorful level, faction, area text into friend list.
 7. **Smart Tab**: Use Tab to cycle the chat channel; Save the whisper target cross character.
 
-## Announcement
+### Announcement
 
 1. **Quest**: Detailed quest progress.
 2. **Interrupt**: Send a message after the spell interrupt; Supports pet spells.
@@ -104,7 +104,7 @@ Español, Português, Italiano
 8. **Thanks**: Say thanks for the player who helped you.
 9. **Reset Instance**: Alert teammates after instance resetting.
 
-## Tooltip
+### Tooltip
 
 1. **Icons**: Add the icon of items and spells.
 2. **Objective Progress**: Add the additional progress information of mobs.
@@ -113,13 +113,13 @@ Español, Português, Italiano
 5. **Tier Set**: Add the number of the equipments in the tier set in tooltips.
 6. **Progression**: Add the raid progression, special archivements, and mythic+ scores in the inspect tooltip.
 
-## Unit Frames
+### Unit Frames
 
 1. **Quick Focus**: Set focus to mouseover unit by modifier key + click.
 2. **Absorb**: Customize the texture of ElvUI absorb bar, and add Blizzard style absorb spark to the end of health bar.
 3. **Role Icon**: Change the icon pack of role icons.
 
-## Skins
+### Skins
 
 1. **Vignetting**: Add the shadowed border inner game interface.
 2. **Angry Keystones Skin**: Apply skins for Angry Keystones mythic plus timer.
@@ -145,7 +145,7 @@ Español, Português, Italiano
 22. **Autionator Skin**: Apply skin for Auctionator all frames.
 23. **Postal Skin**: Apply skin for Postal normal buttons and quick attach buttons.
 
-## Misc
+### Misc
 
 1. **CVars Editor**: Simple editor for changing CVars.
 2. **Move Frames**: Move Blizzard frames and ElvUI bags with drag; Supports remember positions.

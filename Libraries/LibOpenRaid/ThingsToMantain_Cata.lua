@@ -607,10 +607,9 @@ elseif (GetBuildInfo():match ("%d") == "2") then
 
 elseif (GetBuildInfo():match ("%d") == "3") then
 	LIB_OPEN_RAID_SPELL_CUSTOM_NAMES = {}
-	
-	elseif (GetBuildInfo():match ("%d") == "4") then
-	LIB_OPEN_RAID_SPELL_CUSTOM_NAMES = {}
 
+elseif (GetBuildInfo():match ("%d") == "4") then
+	LIB_OPEN_RAID_SPELL_CUSTOM_NAMES = {}
 
 else
 	LIB_OPEN_RAID_SPELL_CUSTOM_NAMES = {

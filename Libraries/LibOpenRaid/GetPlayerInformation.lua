@@ -575,7 +575,7 @@ local getSpellListAsHashTableFromSpellBook = function()
                     if (raceId[playerRaceId]) then
                         spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
-                        local bIsPassive = IsPassiveSpell(spellId, spellBookPlayerEnum)
+                        local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
                         if (spellName and not bIsPassive) then
                             completeListOfSpells[spellId] = true
                         end
@@ -585,7 +585,7 @@ local getSpellListAsHashTableFromSpellBook = function()
                     if (raceId == playerRaceId) then
                         spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
-                        local bIsPassive = IsPassiveSpell(spellId, spellBookPlayerEnum)
+                        local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
                         if (spellName and not bIsPassive) then
                             completeListOfSpells[spellId] = true
                         end
@@ -608,7 +608,7 @@ local getSpellListAsHashTableFromSpellBook = function()
                         --print(tabName, tabTexture == specIconTexture, offset, tabEnd,spellType, spellId)
                         spellId = GetOverrideSpell(spellId)
                         local spellName = GetSpellInfo(spellId)
-                        local bIsPassive = IsPassiveSpell(spellId, spellBookPlayerEnum)
+                        local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
                         if LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId] then
                             for _, overrideSpellId in pairs(LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId]) do
                                 completeListOfSpells[overrideSpellId] = true
@@ -629,10 +629,10 @@ local getSpellListAsHashTableFromSpellBook = function()
     for entryOffset = offset, tabEnd - 1 do
         local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
         if (spellId) then
-            if (spellType == "SPELL") then
+            if (spellType == "SPELL" or spellType == 1) then
                 spellId = GetOverrideSpell(spellId)
                 local spellName = GetSpellInfo(spellId)
-                local bIsPassive = IsPassiveSpell(spellId, spellBookPlayerEnum)
+                local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
 
                 if LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId] then
                     for _, overrideSpellId in pairs(LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS[spellId]) do
@@ -666,7 +666,7 @@ local getSpellListAsHashTableFromSpellBook = function()
             local spellName, _, unmaskedSpellId = GetSpellBookItemName(i, spellBookPetEnum)
             if (unmaskedSpellId) then
                 unmaskedSpellId = GetOverrideSpell(unmaskedSpellId)
-                local bIsPassive = IsPassiveSpell(unmaskedSpellId, spellBookPetEnum)
+                local bIsPassive = IsPassiveSpell(i, spellBookPetEnum)
                 if (spellName and not bIsPassive) then
                     completeListOfSpells[unmaskedSpellId] = true
                 end
@@ -1056,3 +1056,84 @@ openRaidLib.specAttribute = {
         [1473] = 1, --Augmentation
     },
 }
+
+
+function openRaidLib.Util.GetPlayerSpellList()
+    local completeListOfSpells = {}
+    local specId, specName, _, specIconTexture = GetSpecializationInfo(GetSpecialization())
+    local locPlayerRace, playerRace, playerRaceId = UnitRace("player")
+    local generalIndex = Enum.SpellBookSkillLineIndex and Enum.SpellBookSkillLineIndex.General or CONST_SPELLBOOK_GENERAL_TABID
+    local tabName, tabTexture, offset, numSpells, isGuild, offspecId = GetSpellTabInfo(generalIndex) --CONST_SPELLBOOK_GENERAL_TABID
+
+    if (not offset) then
+        return completeListOfSpells
+    end
+
+    offset = offset + 1
+
+	--get spells from the Spec spellbook
+    for i = 1, GetNumSpellTabs() do --called "lines" in new v11 api
+        local tabName, tabTexture, offset, numSpells, isGuild, offspecId = GetSpellTabInfo(i)
+        if (tabTexture == specIconTexture) then
+            print("running?")
+            offset = offset + 1
+            local tabEnd = offset + numSpells
+            for entryOffset = offset, tabEnd - 1 do
+                local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
+                if (spellId) then
+                    if (spellType == "SPELL" or spellType == 1) then
+                        --print(tabName, tabTexture == specIconTexture, offset, tabEnd,spellType, spellId)
+                        spellId = GetOverrideSpell(spellId)
+                        local spellName = GetSpellInfo(spellId)
+                        local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
+                        if (spellName and not bIsPassive) then
+                            completeListOfSpells[spellId] = true
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    --get class shared spells from the spell book
+    local tabName, tabTexture, offset, numSpells, isGuild, offspecId = GetSpellTabInfo(CONST_SPELLBOOK_CLASSSPELLS_TABID)
+    offset = offset + 1
+    local tabEnd = offset + numSpells
+    for entryOffset = offset, tabEnd - 1 do
+        local spellType, spellId = GetSpellBookItemInfo(entryOffset, spellBookPlayerEnum)
+        if (spellId) then
+            if (spellType == "SPELL" or spellType == 1) then
+                spellId = GetOverrideSpell(spellId)
+                local spellName = GetSpellInfo(spellId)
+                local bIsPassive = IsPassiveSpell(entryOffset, spellBookPlayerEnum)
+
+                if (spellName and not bIsPassive) then
+                    completeListOfSpells[spellId] = true
+                end
+            end
+        end
+    end
+
+    local getNumPetSpells = function()
+        --'HasPetSpells' contradicts the name and return the amount of pet spells available instead of a boolean
+        return HasPetSpells()
+    end
+
+    --get pet spells from the pet spellbook
+    local numPetSpells = getNumPetSpells()
+    if (numPetSpells) then
+        for i = 1, numPetSpells do
+            local spellName, _, unmaskedSpellId = GetSpellBookItemName(i, spellBookPetEnum)
+            if (unmaskedSpellId) then
+                unmaskedSpellId = GetOverrideSpell(unmaskedSpellId)
+                local bIsPassive = IsPassiveSpell(i, spellBookPetEnum)
+                if (spellName and not bIsPassive) then
+                    completeListOfSpells[unmaskedSpellId] = true
+                end
+            end
+        end
+    end
+
+    --dumpt(completeListOfSpells)
+    return completeListOfSpells
+end

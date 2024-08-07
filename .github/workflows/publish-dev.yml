@@ -1,48 +1,42 @@
-name: publish_development
+name: 🧪 Publish Test Version
 
 on:
   push:
     tags:
-      - "**-alpha-**"
-      - "**-beta-**"
+      - "**alpha**"
+      - "**beta**"
 
 jobs:
   build:
+    name: 📦 Package
     runs-on: ubuntu-latest
-
     steps:
       - name: Pull the latest version
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
       - name: Initialize Python envoriment
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      
       - name: Install Python dependencies
         run: pip install git+https://github.com/SirAnthony/slpp
-      
       - name: Run scripts to generate changelogs
         run: python generate_changelog.py
-
       - name: Auto Packaging
         uses: BigWigsMods/packager@master
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          CF_API_KEY: ${{ secrets.RELEASE_API_TOKEN_CURSEFORGE }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
-
+          WAGO_API_TOKEN: ${{ secrets.RELEASE_API_TOKEN_WAGO }}
       - name: Upload to Github Actions
         uses: actions/upload-artifact@v2
         with:
           name: ElvUI_WindTools
           path: .release/*.zip
-
       - name: Send a message to Discord if meets a failure
         uses: nebularg/actions-discord-webhook@v1
         with:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_GITHUB_ACTIONS }}
           status: ${{ job.status }}
         if: failure()

@@ -40,6 +40,10 @@ W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
 -- Utilities namespace
 W.Utilities = {}
 
+-- Pre-register libs into ElvUI
+E:AddLib("OpenRaid", "LibOpenRaid-1.0")
+E:AddLib("LOP", "LibObjectiveProgress-1.0")
+
 _G.WindTools_OnAddonCompartmentClick = function()
     E:ToggleOptions("WindTools")
 end

@@ -4,7 +4,7 @@ local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
 local LSM = E.Libs.LSM
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
-local openRaidLib = LibStub("LibOpenRaid-1.0", true)
+local openRaidLib = E.Libs.OpenRaid
 
 local _G = _G
 local floor = floor

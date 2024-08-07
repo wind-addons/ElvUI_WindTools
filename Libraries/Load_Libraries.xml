@@ -1,7 +1,8 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
     <Script file="LibObjectiveProgress-1.0\LibObjectiveProgress-1.0.lua"/>
-	<Script file="LibObjectiveProgress-1.0\ProgressWeightData.lua"/>
+    <Script file="LibObjectiveProgress-1.0\ProgressWeightData.lua"/>
     <Include file="TinyLibs\lib.xml"/>
     <Include file="LibOpenRaid\lib.xml"/>
 </Ui>

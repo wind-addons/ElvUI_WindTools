@@ -17,6 +17,7 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
 local C_Map_GetMapArtID = C_Map.GetMapArtID
 local C_Map_GetMapArtLayers = C_Map.GetMapArtLayers
+local C_Map_GetMapInfo = C_Map.GetMapInfo
 
 -- STRUCTURE: (do data mining on WorldMapOverlay and WorldMapOverlayTile tables)
 -- UiMapArtID = {
@@ -440,8 +441,7 @@ local RevealDatabase = {
         ["314:193:280:378"] = "438264, 438265",
         ["326:145:294:330"] = "271045, 438251",
         ["328:250:305:118"] = "438266, 438267",
-        ["330:192:300:239"] = "438252, 438253",
-        ["453:340:0:0"] = "2175173, 2175174, 2175175, 2175176"
+        ["330:192:300:239"] = "438252, 438253"
     },
     [68] = {
         ["166:211:836:148"] = "270387",
@@ -1535,7 +1535,6 @@ local RevealDatabase = {
     },
     [521] = {
         ["278:325:183:95"] = "800842, 800843, 800844, 800845",
-        ["446:429:396:9"] = "800846, 800847, 800848, 800849, 800850, 800851, 800852, 800853, 800854, 800855, 800856, 800857, 800858, 800859, 800860, 800861",
         ["490:290:256:378"] = "800841, 804116, 804117, 804118"
     },
     [533] = {
@@ -2215,7 +2214,7 @@ local RevealDatabase = {
         ["623:1489:1521:906"] = "3805265, 3805275, 3805276, 3805277, 3805278, 3805279, 3805280, 3805281, 3805282, 3805266, 3805267, 3805268, 3805269, 3805270, 3805271, 3805272, 3805273, 3805274"
     },
     [1513] = {
-        ["754:5050:1547:231"] = "3805692, 3805703, 3805712, 3805713, 3805714, 3805715, 3805716, 3805717, 3805718, 3805693, 3805694, 3805695, 3805696, 3805697, 3805698, 3805699, 3805700, 3805701, 3805702, 3805704, 3805705, 3805706, 3805707, 3805708, 3805709, 3805710, 3805711, 0",
+        ["754:5050:1547:231"] = "3805692, 3805703, 3805712, 3805713, 3805714, 3805715, 3805716, 3805717, 3805718, 3805693, 3805694, 3805695, 3805696, 3805697, 3805698, 3805699, 3805700, 3805701, 3805702, 3805704, 3805705, 3805706, 3805707, 3805708, 3805709, 3805710, 3805711",
         ["765:1894:959:406"] = "3805668, 3805679, 3805685, 3805686, 3805687, 3805688, 3805689, 3805690, 3805691, 3805669, 3805670, 3805671, 3805672, 3805673, 3805674, 3805675, 3805676, 3805677, 3805678, 3805680, 3805681, 3805682, 3805683, 3805684",
         ["786:1887:2142:396"] = "3805719, 3805730, 3805742, 3805747, 3805748, 3805749, 3805750, 3805751, 3805752, 3805720, 3805721, 3805722, 3805723, 3805724, 3805725, 3805726, 3805727, 3805728, 3805729, 3805731, 3805732, 3805733, 3805734, 3805735, 3805737, 3805738, 3805739, 3805740, 3805741, 3805743, 3805745, 3805746"
     },
@@ -2267,7 +2266,7 @@ local RevealDatabase = {
     },
     [1528] = {
         ["1005:1040:1728:1510"] = "3817339, 3817350, 3817352, 3817353, 3817354, 3817355, 3817357, 3817358, 3817359, 3817340, 3817341, 3817342, 3817343, 3817344, 3817345, 3817346, 3817347, 3817348, 3817349, 3817351",
-        ["1016:785:814:1775"] = "3817314, 3817322, 3817323, 3817324, 3817325, 3817326, 3817327, 3817328, 0, 3817315, 3817316, 3817317, 3817318, 3817319, 3817320, 3817321",
+        ["1016:785:814:1775"] = "3817314, 3817322, 3817323, 3817324, 3817325, 3817326, 3817327, 3817328, 3817315, 3817316, 3817317, 3817318, 3817319, 3817320, 3817321",
         ["1158:1228:1936:397"] = "3817228, 3817239, 3817246, 3817247, 3817248, 3817249, 3817250, 3817251, 3817252, 3817229, 3817230, 3817231, 3817232, 3817233, 3817234, 3817235, 3817236, 3817237, 3817238, 3817240, 3817241, 3817242, 3817243, 3817244, 3817245",
         ["444:1283:1913:873"] = "3817262, 3817266, 3817267, 3817268, 3817269, 3817270, 3817271, 3817272, 3817273, 3817263, 3817264, 3817265",
         ["696:779:1766:0"] = "3817216, 3817220, 3817221, 3817222, 3817223, 3817224, 3817225, 3817226, 3817227, 3817217, 3817218, 3817219",
@@ -2380,7 +2379,7 @@ local RevealDatabase = {
         ["623:1489:1521:906"] = "3830292, 3830302, 3830303, 3830304, 3830305, 3830306, 3830307, 3830308, 3830309, 3830293, 3830294, 3830295, 3830296, 3830297, 3830298, 3830299, 3830300, 3830301"
     },
     [1579] = {
-        ["754:5050:1547:231"] = "3830574, 3830585, 3830594, 3830595, 3830596, 3830597, 3830598, 3830599, 3830600, 3830575, 3830576, 3830577, 3830578, 3830579, 3830580, 3830581, 3830582, 3830583, 3830584, 3830586, 3830587, 3830588, 3830589, 3830590, 3830591, 3830592, 3830593, 0",
+        ["754:5050:1547:231"] = "3830574, 3830585, 3830594, 3830595, 3830596, 3830597, 3830598, 3830599, 3830600, 3830575, 3830576, 3830577, 3830578, 3830579, 3830580, 3830581, 3830582, 3830583, 3830584, 3830586, 3830587, 3830588, 3830589, 3830590, 3830591, 3830592, 3830593",
         ["765:1894:959:406"] = "3830550, 3830561, 3830567, 3830568, 3830569, 3830570, 3830571, 3830572, 3830573, 3830551, 3830552, 3830553, 3830554, 3830555, 3830556, 3830557, 3830558, 3830559, 3830560, 3830562, 3830563, 3830564, 3830565, 3830566",
         ["786:1887:2142:396"] = "3830601, 3830612, 3830623, 3830627, 3830628, 3830629, 3830630, 3830631, 3830632, 3830602, 3830603, 3830604, 3830605, 3830606, 3830607, 3830608, 3830609, 3830610, 3830611, 3830613, 3830614, 3830615, 3830616, 3830617, 3830618, 3830619, 3830620, 3830621, 3830622, 3830624, 3830625, 3830626"
     },
@@ -2646,10 +2645,10 @@ local RevealDatabase = {
     },
     [1781] = {
         ["1176:1497:1765:21"] = "4914916, 4914969, 4915016, 4915062, 4915069, 4915070, 4915071, 4915073, 4915074, 4914921, 4914926, 4914932, 4914936, 4914941, 4914946, 4914950, 4914955, 4914960, 4914964, 4914973, 4914978, 4914983, 4914989, 4914994, 4914999, 4915004, 4915009, 4915012, 4915014, 4915018",
-        ["1377:1521:128:1011"] = "4915075, 4915086, 4915088, 4915089, 4915090, 4915091, 4915092, 4915093, 4915094, 4915076, 4915077, 4915078, 4915079, 4915080, 4915081, 4915082, 4915083, 4915084, 4915085, 4915087, 0",
+        ["1377:1521:128:1011"] = "4915075, 4915086, 4915088, 4915089, 4915090, 4915091, 4915092, 4915093, 4915094, 4915076, 4915077, 4915078, 4915079, 4915080, 4915081, 4915082, 4915083, 4915084, 4915085, 4915087",
         ["1378:1023:2350:1013"] = "4915095, 4915106, 4915129, 4915131, 4915132, 4915133, 4915134, 4915135, 4915136, 4915096, 4915097, 4915098, 4915099, 4915100, 4915101, 4915102, 4915103, 4915104, 4915105, 4915110, 4915114, 4915118, 4915121, 4915123",
         ["1660:1326:1201:1234"] = "4915287, 4915775, 4915934, 4916210, 4916453, 4916474, 4916499, 4916521, 4916543, 4915288, 4915289, 4915293, 4915513, 4915760, 4915768, 4915769, 4915770, 4915771, 4915772, 4915776, 4915777, 4915778, 4915779, 4915798, 4915819, 4915846, 4915867, 4915888, 4915909, 4915964, 4915988, 4916011, 4916035, 4916057, 4916080, 4916093, 4916142, 4916163, 4916188, 4916233, 4916258, 4916282",
-        ["1811:1399:243:91"] = "4914793, 4914811, 4914831, 4914848, 4914855, 4914856, 4914858, 4914860, 4914862, 4914796, 4914797, 4914799, 4914800, 4914802, 4914803, 4914805, 4914806, 4914807, 4914809, 4914812, 4914815, 4914817, 4914820, 4914822, 4914823, 4914826, 4914827, 4914829, 4914830, 4914832, 4914834, 4914836, 4914837, 4914838, 4914839, 4914840, 4914843, 4914844, 4914846, 4914849, 4914851, 4914853, 0",
+        ["1811:1399:243:91"] = "4914793, 4914811, 4914831, 4914848, 4914855, 4914856, 4914858, 4914860, 4914862, 4914796, 4914797, 4914799, 4914800, 4914802, 4914803, 4914805, 4914806, 4914807, 4914809, 4914812, 4914815, 4914817, 4914820, 4914822, 4914823, 4914826, 4914827, 4914829, 4914830, 4914832, 4914834, 4914836, 4914837, 4914838, 4914839, 4914840, 4914843, 4914844, 4914846, 4914849, 4914851, 4914853",
         ["876:811:2625:450"] = "4914864, 4914887, 4914888, 4914889, 4914892, 4914896, 4914900, 4914905, 4914910, 4914865, 4914868, 4914869, 4914871, 4914873, 4914880, 4914885"
     },
     [1806] = {
@@ -2666,11 +2665,19 @@ local RevealDatabase = {
     }
 }
 
-local overlayTextures = {}
+local worldMapCache = {overlayTextures = {}, tex = {}}
+local battleFieldMapCache = {overlayTextures = {}, tex = {}}
 
-function WM:HandleMap(map, fullUpdate)
-    overlayTextures = {}
-    local mapID = _G.WorldMapFrame.mapID
+-- modified based on Leatrix_Maps
+function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
+    for k, v in pairs(cache.tex) do
+        v:SetVertexColor(1, 1, 1, 1)
+    end
+
+    wipe(cache.tex)
+    wipe(cache.overlayTextures)
+
+    local mapID = mapFrame.mapID
     if not mapID then
         return
     end
@@ -2680,27 +2687,30 @@ function WM:HandleMap(map, fullUpdate)
     end
     local zone = RevealDatabase[artID]
 
-    -- 储存已经探索的地图以在后续操作中忽略
+    -- Store already explored tiles in a table so they can be ignored
     local TileExists = {}
     local exploredMapTextures = C_MapExplorationInfo_GetExploredMapTextures(mapID)
     if exploredMapTextures then
-        for i, tex in ipairs(exploredMapTextures) do
+        for _, tex in pairs(exploredMapTextures) do
             local key = tex.textureWidth .. ":" .. tex.textureHeight .. ":" .. tex.offsetX .. ":" .. tex.offsetY
             TileExists[key] = true
         end
     end
 
-    -- 取得大小
-    map.layerIndex = map:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
+    -- Get the sizes
+    pin.layerIndex = pin:GetMap():GetCanvasContainer():GetCurrentLayerIndex()
     local layers = C_Map_GetMapArtLayers(mapID)
-    local layerInfo = layers and layers[map.layerIndex]
+    local layerInfo = layers and layers[pin.layerIndex]
     if not layerInfo then
         return
     end
     local TILE_SIZE_WIDTH = layerInfo.tileWidth
     local TILE_SIZE_HEIGHT = layerInfo.tileHeight
 
-    -- 如果未被探索，且在数据库中存在材质地址，则进行显示
+    -- Get the map type (needed to make sure only zone maps are tinted)
+    local mapType = C_Map_GetMapInfo(mapID).mapType or 0
+
+    -- Show textures if they are in database and have not been explored
     for key, files in pairs(zone) do
         if not TileExists[key] then
             local width, height, offsetX, offsetY = strsplit(":", key)
@@ -2723,7 +2733,8 @@ function WM:HandleMap(map, fullUpdate)
                     end
                 end
                 for k = 1, numTexturesWide do
-                    local texture = map.overlayTexturePool:Acquire()
+                    local texture = pin.overlayTexturePool:Acquire()
+                    tinsert(cache.tex, texture)
                     if (k < numTexturesWide) then
                         texturePixelWidth = TILE_SIZE_WIDTH
                         textureFileWidth = TILE_SIZE_WIDTH
@@ -2737,14 +2748,14 @@ function WM:HandleMap(map, fullUpdate)
                             textureFileWidth = textureFileWidth * 2
                         end
                     end
-                    texture:Size(texturePixelWidth, texturePixelHeight)
+                    texture:SetSize(texturePixelWidth, texturePixelHeight)
                     texture:SetTexCoord(
                         0,
                         texturePixelWidth / textureFileWidth,
                         0,
                         texturePixelHeight / textureFileHeight
                     )
-                    texture:Point(
+                    texture:SetPoint(
                         "TOPLEFT",
                         offsetX + (TILE_SIZE_WIDTH * (k - 1)),
                         -(offsetY + (TILE_SIZE_HEIGHT * (j - 1)))
@@ -2753,7 +2764,7 @@ function WM:HandleMap(map, fullUpdate)
                     texture:SetDrawLayer("ARTWORK", -1)
                     texture:Show()
                     if fullUpdate then
-                        map.textureLoadGroup:AddTexture(texture)
+                        pin.textureLoadGroup:AddTexture(texture)
                     end
 
                     if WM.db and WM.db.reveal.enable and WM.db.reveal.useColor then
@@ -2765,7 +2776,7 @@ function WM:HandleMap(map, fullUpdate)
                         )
                     end
 
-                    tinsert(overlayTextures, texture)
+                    tinsert(cache.overlayTextures, texture)
                 end
             end
         end
@@ -2779,6 +2790,7 @@ local function TexturePool_ResetVertexColor(pool, texture)
     return TexturePool_HideAndClearAnchors(pool, texture)
 end
 
+-- modified based on Leatrix_Maps
 function WM:Reveal()
     if not self.db.reveal.enable then
         return
@@ -2791,12 +2803,25 @@ function WM:Reveal()
         RevealDatabase[542]["267:257:336:327"] = gsub(RevealDatabase[542]["267:257:336:327"], "1003342", "")
     end
 
-    RevealDatabase[521] = nil -- Throne of Thunder
-    RevealDatabase[1176] = nil -- The Dredge (Darkshore)
-    RevealDatabase[67]["453:340:0:0"] = nil -- Veiled Sea (Darkshore)
-
     for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-        self:SecureHook(pin, "RefreshOverlays", "HandleMap")
+        hooksecurefunc(
+            pin,
+            "RefreshOverlays",
+            function(pin, fullUpdate)
+                WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, _G.WorldMapFrame, worldMapCache)
+            end
+        )
+        pin.overlayTexturePool.resetterFunc = TexturePool_ResetVertexColor
+    end
+
+    for pin in _G.BattlefieldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
+        hooksecurefunc(
+            pin,
+            "RefreshOverlays",
+            function(pin, fullUpdate)
+                WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, _G.BattlefieldMapFrame, battleFieldMapCache)
+            end
+        )
         pin.overlayTexturePool.resetterFunc = TexturePool_ResetVertexColor
     end
 end

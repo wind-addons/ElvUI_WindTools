@@ -8,7 +8,7 @@ local strrep = strrep
 local tostring = tostring
 local type = type
 
--- 设定类别
+-- All categories
 W.options = {
     item = {
         order = 101,

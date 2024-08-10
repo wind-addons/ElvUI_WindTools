@@ -75,9 +75,9 @@ local env = {
         return isBeforeIntervalChange and 60 * 60 or 30 * 60
     end)(),
     radiantEchoesZoneRotation = {
-        [0] = C_Map_GetMapInfo(115).name,
-        [1] = C_Map_GetMapInfo(32).name,
-        [2] = C_Map_GetMapInfo(70).name
+        [0] = C_Map_GetMapInfo(70).name,
+        [1] = C_Map_GetMapInfo(115).name,
+        [2] = C_Map_GetMapInfo(32).name
     }
 }
 
@@ -769,7 +769,7 @@ local eventData = {
             end)(),
             onClick = worldMapIDSetter(
                 function(args)
-                    return ({115, 32, 70})[args:currentMapIndex() + 1]
+                    return ({70, 115, 32})[args:currentMapIndex() + 1]
                 end
             ),
             onClickHelpText = L["Click to show location"]

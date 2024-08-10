@@ -23,6 +23,7 @@ local GetCurrentRegion = GetCurrentRegion
 local GetServerTime = GetServerTime
 local PlaySoundFile = PlaySoundFile
 
+local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
@@ -30,7 +31,10 @@ local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_NamePlate_GetNamePlates = C_NamePlate.GetNamePlates
 
+local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
+
 local eventList = {
+    "RadiantEchoes",
     "CommunityFeast",
     "SiegeOnDragonbaneKeep",
     "ResearchersUnderFire",
@@ -125,6 +129,17 @@ local function getGradientText(text, colorTable)
     )
 end
 
+local function worldMapIDSetter(idOrFunc)
+    return function(...)
+        if not _G.WorldMapFrame or not _G.WorldMapFrame:IsShown() or not _G.WorldMapFrame.SetMapID then
+            return
+        end
+
+        local id = type(idOrFunc) == "function" and idOrFunc(...) or idOrFunc
+        _G.WorldMapFrame:SetMapID(id)
+    end
+end
+
 local functionFactory = {
     loopTimer = {
         init = function(self)
@@ -143,6 +158,15 @@ local functionFactory = {
             self.statusBar.spark:SetBlendMode("ADD")
             self.statusBar.spark:SetPoint("CENTER", self.statusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
             self.statusBar.spark:SetSize(4, 26)
+
+            self:SetScript(
+                "OnMouseDown",
+                function()
+                    if self.args.onClick then
+                        self.args:onClick()
+                    end
+                end
+            )
         end,
         setup = function(self)
             self.icon:SetTexture(self.args.icon)
@@ -203,13 +227,15 @@ local functionFactory = {
                     self.statusBar:SetMinMaxValues(0, self.args.duration)
                     self.statusBar:SetValue(self.timeOver)
                     local tex = self.statusBar:GetStatusBarTexture()
-                    tex:SetGradient(
-                        "HORIZONTAL",
-                        C.CreateColorFromTable(colorPlatte.running[1]),
-                        C.CreateColorFromTable(colorPlatte.running[2])
-                    )
+                    local platte = self.args.runningBarColor or colorPlatte.running
+                    tex:SetGradient("HORIZONTAL", C.CreateColorFromTable(platte[1]), C.CreateColorFromTable(platte[2]))
+                    if self.args.runningTextUpdater then
+                        self.runningTip:SetText(self.args:runningTextUpdater())
+                    end
                     self.runningTip:Show()
-                    E:Flash(self.runningTip, 1, true)
+                    if self.flash then
+                        E:Flash(self.runningTip, 1, true)
+                    end
                 else
                     -- normal tracking timer
                     self.timerText:SetText(secondToTime(self.timeLeft))
@@ -227,7 +253,9 @@ local functionFactory = {
                         )
                     end
 
-                    E:StopFlash(self.runningTip)
+                    if self.flash then
+                        E:StopFlash(self.runningTip)
+                    end
                     self.runningTip:Hide()
                 end
             end,
@@ -281,7 +309,21 @@ local functionFactory = {
                 _G.GameTooltip:SetText(F.GetIconString(self.args.icon, 16, 16) .. " " .. self.args.eventName, 1, 1, 1)
 
                 _G.GameTooltip:AddLine(" ")
-                _G.GameTooltip:AddDoubleLine(L["Location"], self.args.location, 1, 1, 1)
+
+                -- Location, Current Location, Next Location
+                for _, locationContext in ipairs(
+                    {
+                        {L["Location"], self.args.location},
+                        {L["Current Location"], self.args.currentLocation},
+                        {L["Next Location"], self.args.nextLocation}
+                    }
+                ) do
+                    local left, right = unpack(locationContext)
+                    if right then
+                        right = type(right) == "function" and right(self.args) or right
+                        _G.GameTooltip:AddDoubleLine(left, right, 1, 1, 1)
+                    end
+                end
 
                 _G.GameTooltip:AddLine(" ")
                 _G.GameTooltip:AddDoubleLine(L["Interval"], secondToTime(self.args.interval), 1, 1, 1)
@@ -327,6 +369,11 @@ local functionFactory = {
                             1
                         )
                     end
+                end
+
+                if self.args.onClickHelpText then
+                    _G.GameTooltip:AddLine(" ")
+                    _G.GameTooltip:AddLine(LeftButtonIcon .. " " .. self.args.onClickHelpText, 1, 1, 1)
                 end
 
                 _G.GameTooltip:Show()
@@ -635,6 +682,11 @@ local functionFactory = {
                     _G.GameTooltip:AddDoubleLine(L["Bonus Net"], C.StringByTemplate(L["Not Set"], "danger"))
                 end
 
+                if self.args.onClickHelpText then
+                    _G.GameTooltip:AddLine(" ")
+                    _G.GameTooltip:AddLine(LeftButtonIcon .. " " .. self.args.onClickHelpText, 1, 1, 1)
+                end
+
                 _G.GameTooltip:Show()
             end,
             onLeave = function(self)
@@ -681,7 +733,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2024),
+            onClickHelpText = L["Click to show location"]
         }
     },
     SiegeOnDragonbaneKeep = {
@@ -720,7 +774,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2022),
+            onClickHelpText = L["Click to show location"]
         }
     },
     ResearchersUnderFire = {
@@ -760,7 +816,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2133),
+            onClickHelpText = L["Click to show location"]
         }
     },
     TimeRiftThaldraszus = {
@@ -799,7 +857,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2025),
+            onClickHelpText = L["Click to show location"]
         }
     },
     SuperBloom = {
@@ -838,7 +898,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2200),
+            onClickHelpText = L["Click to show location"]
         }
     },
     BigDig = {
@@ -878,7 +940,9 @@ local eventData = {
                 end
 
                 return timestampTable[region]
-            end)()
+            end)(),
+            onClick = worldMapIDSetter(2024),
+            onClickHelpText = L["Click to show location"]
         }
     },
     IskaaranFishingNet = {
@@ -971,7 +1035,9 @@ local eventData = {
                         end
                     end
                 }
-            }
+            },
+            onClick = worldMapIDSetter(2024),
+            onClickHelpText = L["Click to show location"]
         }
     }
 }

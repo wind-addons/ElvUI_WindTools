@@ -2,6 +2,4 @@
 	<Script file="Global.lua"/>
 	<Script file="Profile.lua"/>
 	<Script file="Private.lua"/>
-	<Script file="Fang2houUI\Profile.lua"/>
-	<Script file="Fang2houUI\Private.lua"/>
 </Ui>

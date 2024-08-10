@@ -64,6 +64,20 @@ local env = {
         -- Waking Shores
         [4203] = 1,
         [4317] = 2
+    },
+    radiantEchoesInterval = (function()
+        -- compare to TW region reset time (T_T always the last resion)
+        local isBeforeIntervalChange = GetServerTime() < 1723676384
+        -- 432000 = 5 days, US player if already reset, the interval should be updated to 30 minutes
+        if C_DateAndTime_GetSecondsUntilWeeklyReset() > 5 * 24 * 60 * 60 then
+            isBeforeIntervalChange = false
+        end
+        return isBeforeIntervalChange and 60 * 60 or 30 * 60
+    end)(),
+    radiantEchoesZoneRotation = {
+        [0] = C_Map_GetMapInfo(70).name,
+        [1] = C_Map_GetMapInfo(115).name,
+        [2] = C_Map_GetMapInfo(32).name
     }
 }
 
@@ -91,6 +105,10 @@ local colorPlatte = {
     running = {
         {r = 0.06667, g = 0.60000, b = 0.55686, a = 1},
         {r = 0.21961, g = 0.93725, b = 0.49020, a = 1}
+    },
+    radiantEchoes = {
+        {r = 0.26275, g = 0.79608, b = 1.00000, a = 1},
+        {r = 1.00000, g = 0.96078, b = 0.86275, a = 1}
     }
 }
 
@@ -697,6 +715,66 @@ local functionFactory = {
 }
 
 local eventData = {
+    RadiantEchoes = {
+        dbKey = "radiantEchoes",
+        args = {
+            icon = 3015740,
+            type = "loopTimer",
+            questIDs = {82676, 82689, 78938},
+            -- hasWeeklyReward = true,
+            duration = env.radiantEchoesInterval, -- always on
+            interval = env.radiantEchoesInterval,
+            barColor = colorPlatte.blue,
+            flash = false,
+            runningBarColor = colorPlatte.radiantEchoes,
+            eventName = L["Radiant Echoes"],
+            currentMapIndex = function(args) -- only exist for this event
+                return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3
+            end,
+            currentLocation = function(args)
+                return env.radiantEchoesZoneRotation[args:currentMapIndex()]
+            end,
+            nextLocation = function(args)
+                return env.radiantEchoesZoneRotation[(args:currentMapIndex() + 1) % 3]
+            end,
+            label = L["Echoes"],
+            runningText = L["In Progress"],
+            runningTextUpdater = function(args)
+                return env.radiantEchoesZoneRotation[args:currentMapIndex()]
+            end,
+            filter = function(args)
+                if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
+                    return false
+                end
+                return true
+            end,
+            startTimestamp = (function()
+                -- from https://wago.io/0Fp89-FGP
+                local timestampTable = {
+                    [1] = 1722279640, -- NA
+                    [2] = 1722470440, -- KR
+                    [3] = 1722294040, -- EU
+                    [4] = 1722492040, -- TW
+                    [5] = 1722492040, -- CN
+                    [72] = 1675767600
+                }
+
+                local region = GetCurrentRegion()
+                -- TW is not a real region, so we need to check the client language if player in KR
+                if region == 2 and W.Locale ~= "koKR" then
+                    region = 4
+                end
+
+                return timestampTable[region]
+            end)(),
+            onClick = worldMapIDSetter(
+                function(args)
+                    return ({70, 115, 32})[args:currentMapIndex() + 1]
+                end
+            ),
+            onClickHelpText = L["Click to show location"]
+        }
+    },
     CommunityFeast = {
         dbKey = "communityFeast",
         args = {

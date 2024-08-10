@@ -702,12 +702,22 @@ P.maps = {
             trackerWidth = 240,
             trackerHeight = 30,
             trackerHorizontalSpacing = 10,
-            trackerVerticalSpacing = 2,
+            trackerVerticalSpacing = 2
         },
         font = {
             name = E.db.general.font,
             scale = 1,
             outline = "OUTLINE"
+        },
+        radiantEchoes = {
+            enable = true,
+            desaturate = false,
+            alert = true,
+            sound = true,
+            soundFile = "OnePlus Surprise",
+            second = 600,
+            stopAlertIfCompleted = true,
+            stopAlertIfPlayerNotEnteredDragonlands = true
         },
         communityFeast = {
             enable = true,

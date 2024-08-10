@@ -4,12 +4,15 @@ local WM = W:NewModule("WorldMap", "AceEvent-3.0", "AceHook-3.0")
 local _G = _G
 local ceil = ceil
 local gsub = gsub
+local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local mod = mod
 local pairs = pairs
 local strsplit = strsplit
 local tinsert = tinsert
 local tonumber = tonumber
+local tostring = tostring
+local wipe = wipe
 
 local TexturePool_HideAndClearAnchors = TexturePool_HideAndClearAnchors
 

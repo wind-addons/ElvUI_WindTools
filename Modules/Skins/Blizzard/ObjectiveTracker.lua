@@ -5,6 +5,7 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
+local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 
 local trackers = {

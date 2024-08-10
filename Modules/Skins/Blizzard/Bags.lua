@@ -3,6 +3,8 @@ local S = W.Modules.Skins
 
 local _G = _G
 
+local pairs = pairs
+
 local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
 
 function S:ContainerFrame()

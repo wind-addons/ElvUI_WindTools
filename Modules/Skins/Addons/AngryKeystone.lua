@@ -4,6 +4,7 @@ local S = W.Modules.Skins
 local _G = _G
 
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
 
 function S:AngryKeystones()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.angryKeystones then
@@ -11,7 +12,7 @@ function S:AngryKeystones()
     end
 
     hooksecurefunc(
-        ScenarioObjectiveTracker.ChallengeModeBlock,
+        _G.ScenarioObjectiveTracker.ChallengeModeBlock,
         "Activate",
         function(block)
             if block and block.TimerFrame and not block.TimerFrame.__windSkin then

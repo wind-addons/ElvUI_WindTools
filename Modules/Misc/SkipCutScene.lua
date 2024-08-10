@@ -3,14 +3,17 @@ local M = W.Modules.Misc
 
 local _G = _G
 local format = format
+local hooksecurefunc = hooksecurefunc
 local strmatch = strmatch
 local strsub = strsub
 local time = time
 
 local CinematicFrame_CancelCinematic = CinematicFrame_CancelCinematic
+local EventRegistry = EventRegistry
 local IsModifierKeyDown = IsModifierKeyDown
 
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
+local Enum_CinematicType_GameMovie = Enum.CinematicType.GameMovie
 
 local initialized = false
 local forceSkipMovie = false
@@ -32,7 +35,7 @@ local function setForceSkipMovie(value)
 end
 
 local function trySkipCinematic(numTry)
-    if not CinematicFrame:IsShown() then
+    if not _G.CinematicFrame:IsShown() then
         F.Print(L["Skipped the cutscene."])
         return
     end
@@ -72,7 +75,7 @@ end
 
 function M:MoiveCinematicStarted(movieType, movieID)
     -- /run MovieFrame_PlayMovie(MovieFrame, 993)
-    if not movieType == Enum.CinematicType.GameMovie then
+    if not movieType == Enum_CinematicType_GameMovie then
         return
     end
 
@@ -87,19 +90,19 @@ function M:MoiveCinematicStarted(movieType, movieID)
         E.global.WT.misc.watched.movies[movieID] = true
     else
         setForceSkipMovie(true)
-        MovieFrame_StopMovie(_G.MovieFrame)
+        _G.MovieFrame_StopMovie(_G.MovieFrame)
         F.Print(format("%s |cff71d5ff|Hwtcutscene:%s|h[%s]|h|r", L["Skipped the cutscene."], movieID, L["Replay"]))
     end
 end
 
 function M:AddCutSceneReplayCustomLink()
     local SetHyperlink = _G.ItemRefTooltip.SetHyperlink
-    function ItemRefTooltip:SetHyperlink(data, ...)
+    function _G.ItemRefTooltip:SetHyperlink(data, ...)
         if strsub(data, 1, 10) == "wtcutscene" then
             local movieID = strmatch(data, "wtcutscene:(%d+)")
             if movieID then
                 E.global.WT.misc.watched.movies[movieID] = nil
-                MovieFrame_PlayMovie(MovieFrame, movieID)
+                _G.MovieFrame_PlayMovie(_G.MovieFrame, movieID)
                 return
             end
         end
@@ -108,17 +111,13 @@ function M:AddCutSceneReplayCustomLink()
 end
 
 function M:HookSubtitlesFrame()
-    local MovieFrame = MovieFrame
-    local SubtitlesFrame = SubtitlesFrame
-    local CinematicFrame = CinematicFrame
-
-    if not MovieFrame or not SubtitlesFrame then
+    if not _G.MovieFrame or not _G.SubtitlesFrame then
         return
     end
 
     -- Try to hide SubtitlesFrame when it shows after delay
     hooksecurefunc(
-        SubtitlesFrame,
+        _G.SubtitlesFrame,
         "Show",
         function(frame)
             if not self.forceSkipMovie then
@@ -130,23 +129,23 @@ function M:HookSubtitlesFrame()
     )
 
     -- Fix: SubtitlesFrame not hide when MovieFrame hide
-    if MovieFrame then
+    if _G.MovieFrame then
         hooksecurefunc(
-            MovieFrame,
+            _G.MovieFrame,
             "Hide",
             function()
-                E:Delay(1, SubtitlesFrame.Hide, SubtitlesFrame)
+                E:Delay(1, _G.SubtitlesFrame.Hide, _G.SubtitlesFrame)
             end
         )
     end
 
     -- Fix: SubtitlesFrame not hide when CinematicFrame hide
-    if CinematicFrame then
+    if _G.CinematicFrame then
         hooksecurefunc(
-            CinematicFrame,
+            _G.CinematicFrame,
             "Hide",
             function()
-                E:Delay(1, SubtitlesFrame.Hide, SubtitlesFrame)
+                E:Delay(1, _G.SubtitlesFrame.Hide, _G.SubtitlesFrame)
             end
         )
     end

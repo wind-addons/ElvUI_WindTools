@@ -784,6 +784,7 @@ local eventData = {
             duration = 16 * 60,
             interval = 1.5 * 60 * 60,
             barColor = colorPlatte.blue,
+            flash = true,
             eventName = L["Community Feast"],
             location = C_Map_GetMapInfo(2024).name,
             label = L["Feast"],
@@ -828,6 +829,7 @@ local eventData = {
             label = L["Dragonbane Keep"],
             location = C_Map_GetMapInfo(2022).name,
             barColor = colorPlatte.red,
+            flash = true,
             runningText = L["In Progress"],
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -870,6 +872,7 @@ local eventData = {
             label = L["Researchers"],
             location = C_Map_GetMapInfo(2133).name,
             barColor = colorPlatte.green,
+            flash = true,
             runningText = L["In Progress"],
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -911,6 +914,7 @@ local eventData = {
             label = L["Time Rift"],
             location = C_Map_GetMapInfo(2025).name,
             barColor = colorPlatte.bronze,
+            flash = true,
             runningText = L["In Progress"],
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -952,6 +956,7 @@ local eventData = {
             label = L["Superbloom"],
             location = C_Map_GetMapInfo(2200).name,
             barColor = colorPlatte.green,
+            flash = true,
             runningText = L["In Progress"],
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -993,6 +998,7 @@ local eventData = {
             label = L["Big Dig"],
             location = C_Map_GetMapInfo(2024).name,
             barColor = colorPlatte.purple,
+            flash = true,
             runningText = L["In Progress"],
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -1031,6 +1037,7 @@ local eventData = {
                 return C_QuestLog_IsQuestFlaggedCompleted(70871)
             end,
             barColor = colorPlatte.purple,
+            flash = true,
             eventName = L["Iskaaran Fishing Net"],
             label = L["Fishing Net"],
             events = {

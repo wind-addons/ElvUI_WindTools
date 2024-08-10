@@ -20,6 +20,8 @@ local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
+local MuteSoundFile = MuteSoundFile
+local UnmuteSoundFile = UnmuteSoundFile
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
 local UnitLevel = UnitLevel
@@ -34,6 +36,8 @@ local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMyth
 
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
+local SOUNDKIT_ACHIEVEMENT_MENU_OPEN = SOUNDKIT.ACHIEVEMENT_MENU_OPEN
+local SOUNDKIT_ACHIEVEMENT_MENU_CLOSE = SOUNDKIT.ACHIEVEMENT_MENU_CLOSE
 
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
 
@@ -546,9 +550,22 @@ function T:Progression(tt, unit, guid)
             ClearAchievementComparisonUnit()
 
             if not loadedComparison and select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
+                MuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_OPEN)
+                MuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_CLOSE)
                 _G.AchievementFrame_DisplayComparison(unit)
-                HideUIPanel(_G.AchievementFrame)
                 ClearAchievementComparisonUnit()
+                HideUIPanel(_G.AchievementFrame)
+                E:Delay(
+                    0.5,
+                    function()
+                        if _G.AchievementFrame and _G.AchievementFrame:IsShown() then
+                            HideUIPanel(_G.AchievementFrame)
+                        end
+
+                        UnmuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_OPEN)
+                        UnmuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_CLOSE)
+                    end
+                )
                 loadedComparison = true
             end
 
@@ -566,6 +583,8 @@ function T:Progression(tt, unit, guid)
 end
 
 function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
+    self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
+
     if (compareGUID ~= GUID) then
         return
     end
@@ -582,8 +601,6 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     end
 
     ClearAchievementComparisonUnit()
-
-    self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 
 T:AddInspectInfoCallback(2, "Progression", true)

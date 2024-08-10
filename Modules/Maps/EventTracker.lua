@@ -75,9 +75,9 @@ local env = {
         return isBeforeIntervalChange and 60 * 60 or 30 * 60
     end)(),
     radiantEchoesZoneRotation = {
-        [0] = C_Map_GetMapInfo(70).name,
-        [1] = C_Map_GetMapInfo(115).name,
-        [2] = C_Map_GetMapInfo(32).name
+        C_Map_GetMapInfo(32),
+        C_Map_GetMapInfo(70),
+        C_Map_GetMapInfo(115)
     }
 }
 
@@ -729,18 +729,18 @@ local eventData = {
             runningBarColor = colorPlatte.radiantEchoes,
             eventName = L["Radiant Echoes"],
             currentMapIndex = function(args) -- only exist for this event
-                return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3
+                return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
             end,
             currentLocation = function(args)
-                return env.radiantEchoesZoneRotation[args:currentMapIndex()]
+                return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
             end,
             nextLocation = function(args)
-                return env.radiantEchoesZoneRotation[(args:currentMapIndex() + 1) % 3]
+                return env.radiantEchoesZoneRotation[args:currentMapIndex() % 3 + 1].name
             end,
             label = L["Echoes"],
             runningText = L["In Progress"],
             runningTextUpdater = function(args)
-                return env.radiantEchoesZoneRotation[args:currentMapIndex()]
+                return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
             end,
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then
@@ -749,13 +749,12 @@ local eventData = {
                 return true
             end,
             startTimestamp = (function()
-                -- from https://wago.io/0Fp89-FGP
                 local timestampTable = {
-                    [1] = 1722279640, -- NA
-                    [2] = 1722470440, -- KR
-                    [3] = 1722294040, -- EU
-                    [4] = 1722492040, -- TW
-                    [5] = 1722492040, -- CN
+                    [1] = 1723269640, -- NA
+                    [2] = 1723266040, -- KR
+                    [3] = 1723262440, -- EU
+                    [4] = 1723266040, -- TW
+                    [5] = 1723266040, -- CN
                     [72] = 1675767600
                 }
 
@@ -769,7 +768,7 @@ local eventData = {
             end)(),
             onClick = worldMapIDSetter(
                 function(args)
-                    return ({70, 115, 32})[args:currentMapIndex() + 1]
+                    return env.radiantEchoesZoneRotation[args:currentMapIndex()].mapID
                 end
             ),
             onClickHelpText = L["Click to show location"]

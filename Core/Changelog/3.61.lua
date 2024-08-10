@@ -5,26 +5,31 @@ W.Changelog[361] = {
     IMPORTANT = {
         ["zhCN"] = {
             "最低支持 ElvUI 版本更新至 13.73。",
+            "更新 OpenRaid 到 v135.",
             "一些代码整理优化。",
             "注意：很多模块依旧在修复和优化中，你可以随时通过 Discord 来反馈问题。"
         },
         ["zhTW"] = {
             "最低支援 ElvUI 版本更新至 13.73。",
+            "更新 OpenRaid 到 v135.",
             "一些代碼整理優化。",
             "注意：很多模組依舊在修復和優化中，你可以隨時通過 Discord 來反饋問題。"
         },
         ["enUS"] = {
             "Minimum support for ElvUI version updated to 13.73.",
+            "Updated OpenRaid to v135.",
             "Some code cleaning and optimization.",
             "NOTICE: Many modules are still being fixed and optimized, you can always report issues through Discord."
         },
         ["koKR"] = {
             "ElvUI 버전의 최소 지원이 13.73으로 업데이트되었습니다.",
+            "OpenRaid가 v135로 업데이트되었습니다.",
             "일부 코드 정리 및 최적화.",
             "주의: 많은 모듈이 여전히 수정 및 최적화 중이며 Discord를 통해 문제를 보고할 수 있습니다."
         },
         ["ruRU"] = {
             "Минимальная поддержка версии ElvUI обновлена до 13.73.",
+            "Обновлен OpenRaid до v135.",
             "Некоторая чистка и оптимизация кода.",
             "ВНИМАНИЕ: Многие модули все еще находятся в процессе исправления и оптимизации, вы всегда можете сообщить о проблемах через Discord."
         }

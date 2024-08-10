@@ -9,6 +9,7 @@ function S:Blizzard_AchievementUI()
     end
 
     S:CreateShadow(_G.AchievementFrame)
+    S:CreateBackdropShadow(_G.AchievementFrameComparisonHeader)
 
     for i = 1, 3 do
         self:ReskinTab(_G["AchievementFrameTab" .. i])

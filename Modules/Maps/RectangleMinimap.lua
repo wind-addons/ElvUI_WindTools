@@ -8,6 +8,8 @@ local ceil = ceil
 local floor = floor
 local format = format
 local hooksecurefunc = hooksecurefunc
+local tinsert = tinsert
+local tremove = tremove
 
 local InCombatLockdown = InCombatLockdown
 
@@ -86,7 +88,7 @@ function RM:ChangeShape()
 
     -- Update the size and position of the Minimap
     Minimap.backdrop:ClearAllPoints()
-    Minimap.backdrop:SetOutside(frame, mmOffset, -halfDiff * mmScale + mmOffset)
+    Minimap.backdrop:SetOutside(Minimap, mmOffset, -halfDiff * mmScale + mmOffset)
 
     -- Update the size and position of the Minimap location text
     if Minimap.location then

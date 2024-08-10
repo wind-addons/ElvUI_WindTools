@@ -148,16 +148,6 @@ function S:BlizzardMiscFrames()
         true
     )
 
-    if _G.UIWidgetTemplateTextWithState then
-        hooksecurefunc(
-            _G.UIWidgetTemplateTextWithState,
-            "Setup",
-            function(widget)
-                ES:SkinTextWithStateWidget(widget)
-            end
-        )
-    end
-
     -- Icon Selection Frames (After ElvUI Skin)
     self:SecureHook(
         ES,

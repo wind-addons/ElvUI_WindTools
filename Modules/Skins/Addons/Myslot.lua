@@ -7,6 +7,11 @@ local LibStub = _G.LibStub
 local pairs = pairs
 local floor = floor
 
+-- Because WoW width is float, we need to round it for comparison
+local function isAlmost(a, b)
+    return abs(a - b) < 0.1
+end
+
 function S:Myslot()
     if not E.private.WT.skins.enable or not E.private.WT.skins.addons.myslot then
         return
@@ -25,14 +30,22 @@ function S:Myslot()
         local objType = child:GetObjectType()
         if objType == "Button" then
             self:ESProxy("HandleButton", child)
-        elseif objType == "CheckButton" then
-            self:ESProxy("HandleCheckBox", child)
-            child:Size(23)
+            if isAlmost(child:GetWidth(), 25) and child:GetNumPoints() == 1 then
+                local point, relativeTo, relativePoint, xOfs, yOfs = child:GetPoint(1)
+                -- Import DropDownBox, Export DropDownBox
+                if relativePoint == "RIGHT" then
+                    xOfs = xOfs + 3
+                    child:ClearAllPoints()
+                    child:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs)
+                end
+            end
+        elseif objType == "EditBox" then
+            self:ESProxy("HandleEditBox", child)
         elseif objType == "Frame" then
-            if floor(child:GetWidth() - 600) == 0 and floor(child:GetHeight() - 400) == 0 then
+            if isAlmost(child:GetWidth(), 600) and isAlmost(child:GetHeight(), 455) then
                 child:SetBackdrop(nil)
-                child:CreateBackdrop()
-                child.backdrop:SetInside(child, 2, 4)
+                child:CreateBackdrop("Transparent")
+                child.backdrop:SetInside(child, 2, 2)
                 for _, subChild in pairs {child:GetChildren()} do
                     if subChild:GetObjectType() == "ScrollFrame" then
                         self:ESProxy("HandleScrollBar", subChild.ScrollBar)
@@ -40,7 +53,7 @@ function S:Myslot()
                     end
                 end
             elseif child.initialize and child.Icon then
-                self:ESProxy("HandleDropDownBox", child, 220)
+                self:ESProxy("HandleDropDownBox", child, 220, nil, true)
                 child:ClearAllPoints()
                 child:SetPoint("TOPLEFT", frame, 7, -45)
             end

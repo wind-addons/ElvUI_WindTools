@@ -1177,6 +1177,22 @@ options.reset = {
                             end
                         )
                     end
+                },
+                watchedCutscene = {
+                    order = 9,
+                    type = "execute",
+                    name = L["Watched Cutscene"],
+                    desc = L["Reset the watched cutscene history (which has been used in auto skipping)."],
+                    func = function()
+                        E:StaticPopup_Show(
+                            "WINDTOOLS_RESET_MODULE",
+                            L["Watched Cutscene"],
+                            nil,
+                            function()
+                                E.global.WT.misc.watched.movies = {}
+                            end
+                        )
+                    end
                 }
             }
         },

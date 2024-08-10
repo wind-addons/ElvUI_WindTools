@@ -1977,10 +1977,9 @@ function EB:UpdateBar(id)
     end
 
     if not bar.register then
-        RegisterStateDriver(bar, "visibility", "[petbattle]hide;show")
+        RegisterStateDriver(bar, "visibility", barDB.visibility)
         bar.register = true
     end
-    bar:Show()
 
     -- Toggle shadow
     if barDB.backdrop then

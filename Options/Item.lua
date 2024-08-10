@@ -288,7 +288,14 @@ do -- Add options for bars
                             order = 6,
                             type = "toggle",
                             name = L["Tooltip"]
-                        }
+                        },
+                        visibility = {
+                            order = 7,
+                            type = "input",
+                            name = L["Visibility"],
+                            desc = L["The macro condition for the bar to be shown."],
+                            width = "full",
+                        },
                     }
                 },
                 backdrop = {

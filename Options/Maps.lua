@@ -1156,12 +1156,12 @@ options.eventTracker = {
                     type = "toggle",
                     name = L["Enable"]
                 },
-                -- desaturate = {
-                --     order = 2,
-                --     type = "toggle",
-                --     name = L["Desaturate"],
-                --     desc = L["Desaturate icon if the event is completed in this week."]
-                -- },
+                desaturate = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Desaturate"],
+                    desc = L["Desaturate icon if the event is completed in this week."]
+                },
                 alert = {
                     order = 3,
                     type = "toggle",

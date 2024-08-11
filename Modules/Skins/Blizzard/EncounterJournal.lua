@@ -77,6 +77,22 @@ function S:Blizzard_EncounterJournal()
             )
         end
     end
+
+    -- Monthly Activities
+    local MAF = _G.EncounterJournalMonthlyActivitiesFrame
+    if MAF then
+        if MAF.Divider then
+            MAF.Divider:Hide()
+        end
+        if MAF.DividerVertical then
+            MAF.DividerVertical:Hide()
+        end
+
+        if MAF.FilterList then
+            MAF.FilterList:SetTemplate("Transparent")
+            S:ESProxy("HandleTrimScrollBar", MAF.FilterList.ScrollBar)
+        end
+    end
 end
 
 S:AddCallbackForAddon("Blizzard_EncounterJournal")

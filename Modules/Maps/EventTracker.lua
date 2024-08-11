@@ -256,7 +256,7 @@ local functionFactory = {
                         self.runningTip:SetText(self.args:runningTextUpdater())
                     end
                     self.runningTip:Show()
-                    if self.flash then
+                    if self.args.flash then
                         E:Flash(self.runningTip, 1, true)
                     end
                 else
@@ -276,7 +276,7 @@ local functionFactory = {
                         )
                     end
 
-                    if self.flash then
+                    if self.args.flash then
                         E:StopFlash(self.runningTip)
                     end
                     self.runningTip:Hide()

@@ -83,7 +83,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
     local ElvUIValueColor = E.db.general.valuecolor
 
     if not self.bar[name] then
-        -- 按键本体
+        -- Button
         local button = CreateFrame("Button", nil, self.bar, "SecureActionButtonTemplate, BackdropTemplate")
         button:StripTextures()
         button:SetBackdropBorderColor(0, 0, 0)
@@ -100,7 +100,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         F.SetFontWithDB(button.text, self.db.font)
         button.defaultFontSize = self.db.font.size
 
-        -- 鼠标提示
+        -- Tooltip
         button:SetScript(
             "OnEnter",
             function(self)
@@ -156,7 +156,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         self.bar[name] = button
     end
 
-    -- 块状风格条 设置更新
+    -- Block style
     if self.db.style == "BLOCK" then
         self.bar[name].colorBlock:SetTexture(tex and LSM:Fetch("statusbar", tex) or E.media.normTex)
 
@@ -186,7 +186,7 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
         self.bar[name].backdrop:Hide()
     end
 
-    -- 尺寸和位置更新
+    -- Update size and position
     self.bar[name]:SetSize(CB.db.buttonWidth, CB.db.buttonHeight)
     self.bar[name]:ClearAllPoints()
     self.bar[name]:SetPoint(anchorPoint, CB.bar, anchorPoint, x, y)
@@ -226,12 +226,11 @@ function CB:UpdateBar()
         end
     end
 
-    -- 建立普通频道条
     for _, name in ipairs(normalChannelsIndex) do
         local db = self.db.channels[name]
         local show = db and db.enable
 
-        if show and self.db.autoHide then -- 自动隐藏功能
+        if show and self.db.autoHide then
             if checkFunctions[name] then
                 show = checkFunctions[name]() and true or false
             end
@@ -250,7 +249,6 @@ function CB:UpdateBar()
             self:UpdateButton(name, chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, nil, nil, db.abbr)
             numberOfButtons = numberOfButtons + 1
 
-            -- 调整锚点到下一个按钮的位置上
             if anchor == "LEFT" then
                 offsetX = offsetX + (self.db.buttonWidth + self.db.spacing)
             else
@@ -261,24 +259,21 @@ function CB:UpdateBar()
         end
     end
 
-    -- 建立世界频道条
     if self.db.channels.world.enable then
         local db = self.db.channels.world
-        local name = db.name
 
-        if not name or name == "" then
+        if not db.name or db.name == "" then
             self:Log("warning", L["World channel no found, please setup again."])
             self:DisableButton("WORLD")
         else
             local chatFunc = function(self, mouseButton)
-                local channelId = GetChannelName(name)
+                local channelId = GetChannelName(db.name)
                 if mouseButton == "LeftButton" then
                     local autoJoined = false
-                    -- 自动加入
                     if channelId == 0 and db.autoJoin then
-                        JoinPermanentChannel(name)
-                        ChatFrame_AddChannel(DefaultChatFrame, name)
-                        channelId = GetChannelName(name)
+                        JoinPermanentChannel(db.name)
+                        ChatFrame_AddChannel(DefaultChatFrame, db.name)
+                        channelId = GetChannelName(db.name)
                         autoJoined = true
                     end
                     if channelId == 0 then
@@ -299,10 +294,10 @@ function CB:UpdateBar()
                     end
                 elseif mouseButton == "RightButton" then
                     if channelId == 0 then
-                        JoinPermanentChannel(name)
-                        ChatFrame_AddChannel(DefaultChatFrame, name)
+                        JoinPermanentChannel(db.name)
+                        ChatFrame_AddChannel(DefaultChatFrame, db.name)
                     else
-                        LeaveChannelByName(name)
+                        LeaveChannelByName(db.name)
                     end
                 end
             end

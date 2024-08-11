@@ -80,18 +80,8 @@ function S:Blizzard_EncounterJournal()
 
     -- Monthly Activities
     local MAF = _G.EncounterJournalMonthlyActivitiesFrame
-    if MAF then
-        if MAF.Divider then
-            MAF.Divider:Hide()
-        end
-        if MAF.DividerVertical then
-            MAF.DividerVertical:Hide()
-        end
-
-        if MAF.FilterList then
-            MAF.FilterList:SetTemplate("Transparent")
-            S:ESProxy("HandleTrimScrollBar", MAF.FilterList.ScrollBar)
-        end
+    if MAF and MAF.FilterList then
+        MAF.FilterList:SetTemplate("Transparent")
     end
 end
 

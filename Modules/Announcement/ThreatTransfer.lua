@@ -4,7 +4,8 @@ local A = W:GetModule("Announcement")
 local gsub = gsub
 
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local GetSpellLink = C_Spell.GetSpellLink
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local ThreatTransferList = {
     [34477] = true, -- 誤導
@@ -17,7 +18,7 @@ local function FormatMessage(message, sourceName, destName, spellId)
     sourceName = sourceName:gsub("%-[^|]+", "")
     message = gsub(message, "%%player%%", sourceName)
     message = gsub(message, "%%target%%", destName)
-    message = gsub(message, "%%spell%%", GetSpellLink(spellId))
+    message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellId))
     return message
 end
 

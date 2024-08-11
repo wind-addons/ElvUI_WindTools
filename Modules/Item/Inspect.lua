@@ -34,7 +34,6 @@ local GetRealmName = GetRealmName
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpecializationInfoByID = GetSpecializationInfoByID
-local GetSpellInfo = C_Spell.GetSpellInfo
 local GetTime = GetTime
 local IsCorruptedItem = IsCorruptedItem
 local Item = Item
@@ -57,6 +56,7 @@ local UNIT_NAME_FONT = UNIT_NAME_FONT
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
+local C_Spell_GetSpellInfo = C_Spell.GetSpellInfo
 
 local guids, inspecting = {}, false
 
@@ -234,7 +234,7 @@ local function onExecute(self)
             return true
         end
     elseif (self.dataType == "spell") then
-        local _, _, texture = GetSpellInfo(self.data)
+        local _, _, texture = C_Spell_GetSpellInfo(self.data)
         if (texture) then
             self.icon.texture:SetTexture(texture)
             return true

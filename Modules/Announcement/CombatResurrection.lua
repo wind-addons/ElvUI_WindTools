@@ -3,8 +3,9 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 
-local GetSpellLink = C_Spell.GetSpellLink
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local CombatResurrectionList = {
     [20484] = true, -- 復生
@@ -21,7 +22,7 @@ local function FormatMessage(message, sourceName, destName, spellId)
     sourceName = sourceName:gsub("%-[^|]+", "")
     message = gsub(message, "%%player%%", sourceName)
     message = gsub(message, "%%target%%", destName)
-    message = gsub(message, "%%spell%%", GetSpellLink(spellId))
+    message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellId))
     return message
 end
 

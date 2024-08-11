@@ -4,8 +4,9 @@ local A = W:GetModule("Announcement")
 local gsub = gsub
 local tostring = tostring
 
-local GetSpellLink = C_Spell.GetSpellLink
 local InCombatLockdown = InCombatLockdown
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local BotList = {
     [22700] = true, -- 修理機器人74A型
@@ -113,7 +114,7 @@ local ToyList = {
 -- 格式化自定义字符串
 local function FormatMessage(message, name, id)
     message = gsub(message, "%%player%%", name)
-    message = gsub(message, "%%spell%%", GetSpellLink(id))
+    message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(id))
     return message
 end
 

@@ -8,7 +8,7 @@ local gsub = gsub
 local pairs = pairs
 local tonumber = tonumber
 
-local GetSpellLink = C_Spell.GetSpellLink
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
@@ -449,8 +449,8 @@ options.interrupt = {
                         local message = E.db.WT.announcement.interrupt[info[#info - 1]].text
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
-                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        message = gsub(message, "%%player_spell%%", C_Spell_GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", C_Spell_GetSpellLink(252150))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                     end
                 },
@@ -574,8 +574,8 @@ options.interrupt = {
                         local message = E.db.WT.announcement.interrupt[info[#info - 1]].text
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
-                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        message = gsub(message, "%%player_spell%%", C_Spell_GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", C_Spell_GetSpellLink(252150))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                     end
                 },
@@ -726,8 +726,8 @@ options.dispel = {
                         local message = E.db.WT.announcement.dispel[info[#info - 1]].text
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
-                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        message = gsub(message, "%%player_spell%%", C_Spell_GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", C_Spell_GetSpellLink(252150))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                     end
                 },
@@ -850,8 +850,8 @@ options.dispel = {
                         local message = E.db.WT.announcement.dispel[info[#info - 1]].text
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%player_spell%%", GetSpellLink(31935))
-                        message = gsub(message, "%%target_spell%%", GetSpellLink(252150))
+                        message = gsub(message, "%%player_spell%%", C_Spell_GetSpellLink(31935))
+                        message = gsub(message, "%%target_spell%%", C_Spell_GetSpellLink(252150))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                     end
                 },
@@ -1000,7 +1000,7 @@ options.taunt = {
                                 local message = E.db.WT.announcement.taunt.player.player.successText
                                 message = gsub(message, "%%player%%", E.myname)
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1038,7 +1038,7 @@ options.taunt = {
                             name = function()
                                 local message = E.db.WT.announcement.taunt.player.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1078,7 +1078,7 @@ options.taunt = {
                                 local message = E.db.WT.announcement.taunt.player.player.failedText
                                 message = gsub(message, "%%player%%", E.myname)
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1207,7 +1207,7 @@ options.taunt = {
                                 message = gsub(message, "%%pet%%", L["Niuzao"])
                                 message = gsub(message, "%%pet_role%%", L["Totem"])
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1251,7 +1251,7 @@ options.taunt = {
                                 message = gsub(message, "%%pet%%", L["Niuzao"])
                                 message = gsub(message, "%%pet_role%%", L["Totem"])
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1380,7 +1380,7 @@ options.taunt = {
                                 local message = E.db.WT.announcement.taunt.others.player.successText
                                 message = gsub(message, "%%player%%", E.myname)
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1418,7 +1418,7 @@ options.taunt = {
                             name = function()
                                 local message = E.db.WT.announcement.taunt.others.player.tauntAllText
                                 message = gsub(message, "%%player%%", E.myname)
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1458,7 +1458,7 @@ options.taunt = {
                                 local message = E.db.WT.announcement.taunt.others.player.failedText
                                 message = gsub(message, "%%player%%", E.myname)
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1580,7 +1580,7 @@ options.taunt = {
                                 message = gsub(message, "%%pet%%", L["Niuzao"])
                                 message = gsub(message, "%%pet_role%%", L["Totem"])
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1624,7 +1624,7 @@ options.taunt = {
                                 message = gsub(message, "%%pet%%", L["Niuzao"])
                                 message = gsub(message, "%%pet_role%%", L["Totem"])
                                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
                             end
                         }
@@ -1768,7 +1768,7 @@ options.combatResurrection = {
                 local message = E.db.WT.announcement.combatResurrection.text
                 message = gsub(message, "%%player%%", E.myname)
                 message = gsub(message, "%%target%%", L["Sylvanas"])
-                message = gsub(message, "%%spell%%", GetSpellLink(20484))
+                message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(20484))
                 return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n\n"
             end
         },
@@ -2039,7 +2039,7 @@ do
                         local message = E.db.WT.announcement.utility.spells[categoryOrId].text
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%spell%%", GetSpellLink(exampleSpellId))
+                        message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(exampleSpellId))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
@@ -2408,7 +2408,7 @@ options.thanks = {
                         local message = E.db.WT.announcement.thanks.enhancementText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%spell%%", GetSpellLink(29166))
+                        message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(29166))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }
@@ -2459,7 +2459,7 @@ options.thanks = {
                         local message = E.db.WT.announcement.thanks.resurrectionText
                         message = gsub(message, "%%player%%", E.myname)
                         message = gsub(message, "%%target%%", L["Sylvanas"])
-                        message = gsub(message, "%%spell%%", GetSpellLink(61999))
+                        message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(61999))
                         return "\n" .. ImportantColorString(L["Example"]) .. ": " .. message .. "\n"
                     end
                 }

@@ -5,10 +5,11 @@ local _G = _G
 local gsub = gsub
 local strsplit = strsplit
 
-local GetSpellLink = C_Spell.GetSpellLink
 local IsInInstance = IsInInstance
 local IsPartyLFG = IsPartyLFG
 local UnitGUID = UnitGUID
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
     local config = self.db.interrupt
@@ -30,8 +31,8 @@ function A:Interrupt(sourceGUID, sourceName, destName, spellId, extraSpellId)
         sourceName = gsub(sourceName, "%-[^|]+", "")
         message = gsub(message, "%%player%%", sourceName)
         message = gsub(message, "%%target%%", destName)
-        message = gsub(message, "%%player_spell%%", GetSpellLink(spellId))
-        message = gsub(message, "%%target_spell%%", GetSpellLink(extraSpellId))
+        message = gsub(message, "%%player_spell%%", C_Spell_GetSpellLink(spellId))
+        message = gsub(message, "%%target_spell%%", C_Spell_GetSpellLink(extraSpellId))
         return message
     end
 

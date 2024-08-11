@@ -4,8 +4,9 @@ local A = W:GetModule("Announcement")
 local gsub = gsub
 local strsplit = strsplit
 
-local GetSpellLink = C_Spell.GetSpellLink
 local IsInGroup = IsInGroup
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local tauntSpells = {
     [355] = true, -- 嘲諷（戰士）
@@ -51,7 +52,7 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
         sourceName = sourceName:gsub("%-[^|]+", "")
         message = gsub(message, "%%player%%", petOwner)
         message = gsub(message, "%%target%%", destName)
-        message = gsub(message, "%%spell%%", GetSpellLink(spellId))
+        message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellId))
         message = gsub(message, "%%pet%%", sourceName)
         message = gsub(message, "%%pet_role%%", petRole)
         return message
@@ -62,7 +63,7 @@ function A:Taunt(timestamp, event, sourceGUID, sourceName, destGUID, destName, s
         sourceName = sourceName:gsub("%-[^|]+", "")
         message = gsub(message, "%%player%%", sourceName)
         message = gsub(message, "%%target%%", destName)
-        message = gsub(message, "%%spell%%", GetSpellLink(spellId))
+        message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellId))
         return message
     end
 

@@ -3,8 +3,9 @@ local A = W:GetModule("Announcement")
 
 local gsub = gsub
 
-local GetSpellLink = C_Spell.GetSpellLink
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+
+local C_Spell_GetSpellLink = C_Spell.GetSpellLink
 
 local resurrectionSpells = {
 	[2006] = true, -- 復活術
@@ -41,7 +42,7 @@ function A:Thanks(sourceGUID, sourceName, destGUID, destName, spellId)
 		local sourceNameWithoutServer = gsub(sourceName, "%-[^|]+", "")
 		message = gsub(message, "%%player%%", destName)
 		message = gsub(message, "%%target%%", sourceNameWithoutServer)
-		message = gsub(message, "%%spell%%", GetSpellLink(spellId))
+		message = gsub(message, "%%spell%%", C_Spell_GetSpellLink(spellId))
 		return message
 	end
 

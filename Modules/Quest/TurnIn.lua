@@ -379,23 +379,26 @@ function TI:GOSSIP_SHOW()
             end
         elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numGossipOptions > 1 then
             return C_GossipInfo_SelectOption(firstGossipOptionID)
-        elseif numGossipOptions > 1 then
-            local maybeQuestIndexes = {}
-            for index, gossipOption in ipairs(gossipOptions) do
-                if
-                    gossipOption.name and
-                        (gossipOption.flags == Enum_GossipOptionRecFlags_QuestLabelPrepend or
-                            strfind(gossipOption.name, "^|cFF0000FF"))
-                 then
-                    tinsert(maybeQuestIndexes, index)
-                end
+        end
+    end
+
+    if numGossipOptions > 0 then
+        local maybeQuestIndexes = {}
+        for index, gossipOption in ipairs(gossipOptions) do
+            if
+                gossipOption.name and
+                    (gossipOption.flags == Enum_GossipOptionRecFlags_QuestLabelPrepend or
+                        strfind(gossipOption.name, "^|cFF0000FF"))
+             then
+                tinsert(maybeQuestIndexes, index)
             end
-            if #maybeQuestIndexes == 1 then
-                local index = maybeQuestIndexes[1]
-                local status = gossipOptions[index] and gossipOptions[index].status
-                if status and status == 0 then
-                    return C_GossipInfo_SelectOption(gossipOptions[index].gossipOptionID)
-                end
+        end
+
+        if #maybeQuestIndexes == 1 then
+            local index = maybeQuestIndexes[1]
+            local status = gossipOptions[index] and gossipOptions[index].status
+            if status and status == 0 then
+                return C_GossipInfo_SelectOption(gossipOptions[index].gossipOptionID)
             end
         end
     end

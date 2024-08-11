@@ -37,7 +37,7 @@ options.help = {
             type = "execute",
             name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateAiFaDian, 14), L["Donate"], L["AiFaDian"]),
             func = function()
-                E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://afdian.net/@fang2hou")
+                E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://afdian.com/a/fang2hou")
             end,
             width = 1.2
         },

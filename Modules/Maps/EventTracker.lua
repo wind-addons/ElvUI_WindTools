@@ -1412,6 +1412,15 @@ function ET:Initialize()
             ET:UpdateTrackers()
         end
     )
+
+    self:RegisterEvent(
+        "CVAR_UPDATE",
+        function(_, cvar)
+            if cvar == "miniWorldMap" then
+                E:Delay(0.25, self.UpdateTrackers, self)
+            end
+        end
+    )
 end
 
 function ET:ProfileUpdate()

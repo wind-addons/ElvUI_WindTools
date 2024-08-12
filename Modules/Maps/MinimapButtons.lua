@@ -334,6 +334,14 @@ function MB:SkinButton(frame)
         frame:SetPushedTexture("")
         frame:SetDisabledTexture("")
         frame:GetHighlightTexture():Kill()
+    elseif name == "BtWQuestsMinimapButton" and _G.BtWQuestsMinimapButtonIcon then
+        for _, region in pairs({frame:GetRegions()}) do
+            if region ~= _G.BtWQuestsMinimapButtonIcon then
+                region:SetTexture(nil)
+                region:SetAlpha(0)
+                region:Hide()
+            end
+        end
     elseif tmp ~= 2 then
         frame:SetPushedTexture("")
         frame:SetDisabledTexture("")

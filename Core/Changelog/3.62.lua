@@ -50,7 +50,7 @@ W.Changelog[362] = {
         },
         ["enUS"] = {
             "[Skins] Fixed Myslot skin.",
-            "[Skins] Optimized the skin of the Monthly Activities.",
+            "[Skins] Optimized the skin of the Perks Program.",
             "[Skins] Further attempts to solve the problem of taint of the quest item button skin.",
             "[Event Tracker] Now you can set the desaturate icon after daily completion.",
             "[Switch Button] The switch button will now automatically hide during pet battles.",
@@ -58,7 +58,7 @@ W.Changelog[362] = {
         },
         ["koKR"] = {
             "[스킨] Myslot 스킨이 수정되었습니다.",
-            "[스킨] 월간 활동의 스킨을 최적화했습니다.",
+            "[스킨] 혜택 프로그램의 스킨이 최적화되었습니다.",
             "[스킨] 퀘스트 아이템 버튼 스킨 오염 문제를 해결하기 위한 추가 시도.",
             "[이벤트 추적기] 이제 일일 완료 후 아이콘을 흑백으로 설정할 수 있습니다.",
             "[전환 버튼] 전환 버튼은 이제 애왔 전투 중에 자동으로 숨겨집니다.",
@@ -66,7 +66,7 @@ W.Changelog[362] = {
         },
         ["ruRU"] = {
             "[Скины] Исправлен скин Myslot.",
-            "[Скины] Оптимизирован скин ежемесячных мероприятий.",
+            "[Скины] Оптимизирован скин программы привилегий.",
             "[Скины] Дополнительные попытки решить проблему загрязнения скина кнопки предмета задания.",
             "[Отслеживание событий] Теперь вы можете установить оттенок иконки после ежедневного завершения.",
             "[Кнопка переключения] Кнопка переключения теперь автоматически скрывается во время битвы питомцев.",

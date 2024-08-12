@@ -26,7 +26,7 @@ local function ReskinModules(frame)
     S:ESProxy("HandleButton", frame.CancelButton)
     S:ESProxy("HandleButton", frame.EnableAllButton)
     S:ESProxy("HandleButton", frame.DisableAllButton)
-    S:ESProxy("HandleDropDownBox", frame.CharacterDropDown)
+    S:ESProxy("HandleDropDownBox", frame.CharacterDropDown, nil, nil, true)
 
     frame.OkButton:ClearAllPoints()
     frame.OkButton:SetPoint("RIGHT", frame.CancelButton, "LEFT", -2, 0)

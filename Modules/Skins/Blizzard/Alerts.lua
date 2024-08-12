@@ -69,7 +69,7 @@ function S:SkinCriteriaAlert(frame)
 
     frame:SetWidth(frame:GetWidth() + 10)
 
-    F.SetFontOutline(frame.Unlocked)
+    F.SetFontOutline(frame.Unlocked, nil, "+1")
     F.SetFontOutline(frame.Name, nil, "+3")
 
     if frame.Icon.Texture.b then

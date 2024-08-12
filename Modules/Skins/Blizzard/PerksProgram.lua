@@ -19,13 +19,22 @@ function S:Blizzard_PerksProgram()
 
         self:CreateShadow(products.ProductsScrollBoxContainer)
         self:CreateShadow(products.PerksProgramProductDetailsContainerFrame)
+        self:CreateShadow(products.PerksProgramFilter)
     end
 
     local footer = frame.FooterFrame
     if footer then
-        self:CreateShadow(footer.TogglePlayerPreview)
-        if footer.TogglePlayerPreview.shadow then
-            footer.TogglePlayerPreview.shadow:SetAllPoints()
+
+        for _, button in pairs({
+            footer.TogglePlayerPreview,
+            footer.ToggleMountSpecial,
+        }) do
+            self:CreateShadow(button)
+            if button.shadow then
+                button.shadow:SetAllPoints()
+            end
+
+            F.SetFontOutline(button.Text)
         end
 
         self:CreateBackdropShadow(footer.RotateButtonContainer.RotateLeftButton)

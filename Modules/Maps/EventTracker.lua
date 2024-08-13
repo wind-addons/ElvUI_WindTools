@@ -19,6 +19,7 @@ local tinsert = tinsert
 local math_pow = math.pow
 
 local CreateFrame = CreateFrame
+local EventRegistry = EventRegistry
 local GetCurrentRegion = GetCurrentRegion
 local GetServerTime = GetServerTime
 local PlaySoundFile = PlaySoundFile

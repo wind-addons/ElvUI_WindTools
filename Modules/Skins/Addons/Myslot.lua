@@ -1,11 +1,12 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
-local _G = _G
-local LibStub = _G.LibStub
-
+local abs = abs
 local pairs = pairs
 local floor = floor
+
+local _G = _G
+local LibStub = _G.LibStub
 
 -- Because WoW width is float, we need to round it for comparison
 local function isAlmost(a, b)

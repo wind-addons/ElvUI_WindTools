@@ -2,20 +2,26 @@ local W, F, E, L = unpack((select(2, ...)))
 local M = W.Modules.Misc
 
 local _G = _G
+local BNFeaturesEnabledAndConnected = BNFeaturesEnabledAndConnected
+local ConsoleExec = ConsoleExec
+
+local C_BattleNet = C_BattleNet
+local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_SetCVar = C_CVar.SetCVar
 
 local function FixLanguageFilterSideEffects()
-    local GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
     function C_BattleNet.GetFriendGameAccountInfo(...)
-        local gameAccountInfo = GetFriendGameAccountInfo(...)
+        local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(...)
         if gameAccountInfo then
             gameAccountInfo.isInCurrentRegion = true
         end
         return gameAccountInfo
     end
 
-    local GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
     function C_BattleNet.GetFriendAccountInfo(...)
-        local accountInfo = GetFriendAccountInfo(...)
+        local accountInfo = C_BattleNet_GetFriendAccountInfo(...)
         if accountInfo and accountInfo.gameAccountInfo then
             accountInfo.gameAccountInfo.isInCurrentRegion = true
         end
@@ -33,13 +39,13 @@ function M:AntiOverride()
         return
     end
 
-    if GetCVar("portal") == "CN" then
+    if C_CVar_GetCVar("portal") == "CN" then
         ConsoleExec("portal TW")
         FixLanguageFilterSideEffects()
     end
 
-    SetCVar("profanityFilter", 0)
-    SetCVar("overrideArchive", 0)
+    C_CVar_SetCVar("profanityFilter", 0)
+    C_CVar_SetCVar("overrideArchive", 0)
 end
 
 M:AddCallback("AntiOverride")

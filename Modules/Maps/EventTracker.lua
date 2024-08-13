@@ -1405,22 +1405,9 @@ function ET:Initialize()
         self:RegisterEvent(event, "HandlerEvent")
     end
 
-    hooksecurefunc(
-        _G.WorldMapFrame,
-        "Show",
-        function()
-            ET:UpdateTrackers()
-        end
-    )
-
-    self:RegisterEvent(
-        "CVAR_UPDATE",
-        function(_, cvar)
-            if cvar == "miniWorldMap" then
-                E:Delay(0.25, self.UpdateTrackers, self)
-            end
-        end
-    )
+    EventRegistry:RegisterCallback("WorldMapOnShow", self.UpdateTrackers, self)
+    EventRegistry:RegisterCallback("WorldMapMinimized", E.Delay, E, 0.1, self.UpdateTrackers, self)
+    EventRegistry:RegisterCallback("WorldMapMaximized", E.Delay, E, 0.1, self.UpdateTrackers, self)
 end
 
 function ET:ProfileUpdate()

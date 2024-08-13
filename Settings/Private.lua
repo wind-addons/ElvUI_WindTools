@@ -1,5 +1,7 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
+local GetLocale = GetLocale
+
 local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
 local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
 local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
@@ -133,6 +135,7 @@ V.misc = {
     guildNewsItemLevel = true,
     addCNFilter = false,
     autoToggleChatBubble = false,
+    antiOverride = GetLocale() == "zhCN",
     moveFrames = {
         enable = true,
         elvUIBags = true,

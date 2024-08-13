@@ -146,8 +146,16 @@ options.general = {
             name = L["View SC Group"],
             desc = L["Let you can view the group created by Simplified Chinese players."]
         },
-        autoToggleChatBubble = {
+        antiOverride = {
             order = 13,
+            type = "toggle",
+            name = L["Anti-override"],
+            desc = L["Ublock the profanity filter and disable model override."] ..
+                "\n" ..
+                    C.StringByTemplate(L["It only applies to players who play WoW in Simplified Chinese."], "warning")
+        },
+        autoToggleChatBubble = {
+            order = 14,
             type = "toggle",
             name = L["Auto Toggle Chat Bubble"],
             desc = L["Only show chat bubble in instance."],

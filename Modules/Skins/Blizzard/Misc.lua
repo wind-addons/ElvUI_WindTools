@@ -42,7 +42,10 @@ function S:BlizzardMiscFrames()
     local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
 
     for _, menu in pairs(chatMenus) do
-        self:SecureHookScript(_G[menu], "OnShow", "CreateShadow")
+        local target = _G[menu] and _G[menu].NineSlice
+        if target then
+            self:SecureHookScript(target, "OnShow", "CreateShadow")
+        end
     end
 
     -- Dropdown Menu
@@ -59,24 +62,24 @@ function S:BlizzardMiscFrames()
         F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.actionStatus)
     end
 
-    -- 灵魂医者传送按钮
+    -- Spirit Healer
     self:CreateShadow(_G.GhostFrameContentsFrame)
 
-    -- 跳过剧情
+    -- Cinematic Frame
     self:CreateShadow(_G.CinematicFrameCloseDialog)
 
-    -- 举报玩家
+    -- Report Frame
     local reportFrameShadowContainer = CreateFrame("Frame", nil, _G.ReportFrame)
     reportFrameShadowContainer:SetAllPoints(_G.ReportFrame)
     self:CreateShadow(reportFrameShadowContainer)
 
-    -- 分离物品
+    -- Stack Split Frame
     self:CreateShadow(_G.StackSplitFrame)
 
-    -- 聊天设定
+    -- Chat Config Frame
     self:CreateShadow(_G.ChatConfigFrame)
 
-    -- 颜色选择器
+    -- Color Picker Frame
     self:CreateShadow(_G.ColorPickerFrame)
 
     -- UIWidget

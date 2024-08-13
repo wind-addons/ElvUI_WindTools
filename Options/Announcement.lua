@@ -1970,7 +1970,8 @@ do
         local groupName, groupOrder, exampleSpellId
         local id = tonumber(categoryOrId)
         if id then
-            groupName = GetSpellInfo(id)
+            local spellInfo = C_Spell.GetSpellInfo(id)
+            groupName = spellInfo and spellInfo.name or ""
             exampleSpellId = id
             groupOrder = spellOrder
             spellOrder = spellOrder + 1

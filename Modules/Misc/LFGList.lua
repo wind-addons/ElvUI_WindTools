@@ -31,7 +31,7 @@ local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local LoadAddOn = LoadAddOn
+local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -1721,7 +1721,7 @@ function LL:Initialize()
     end
 
     if not C_AddOns_IsAddOnLoaded("Blizzard_ChallengesUI") then
-        LoadAddOn("Blizzard_ChallengesUI")
+        C_AddOns_LoadAddOn("Blizzard_ChallengesUI")
     end
 
     C_MythicPlus.RequestCurrentAffixes()

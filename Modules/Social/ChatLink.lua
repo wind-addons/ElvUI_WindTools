@@ -16,7 +16,7 @@ local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local GetAchievementInfo = GetAchievementInfo
 local GetItemInfoInstant = GetItemInfoInstant
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
-local GetSpellTexture = GetSpellTexture
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -184,7 +184,7 @@ local function AddSpellInfo(link)
     end
 
     if CL.db.icon then
-        local texture = GetSpellTexture(tonumber(id))
+        local texture = C_Spell_GetSpellTexture(tonumber(id))
         local icon = texture and format(ICON_STRING, texture)
         if icon then
             link = icon .. " |cff71d5ff" .. link .. "|r" -- I dk why the color is needed, but worked!
@@ -202,7 +202,7 @@ local function AddEnchantInfo(link)
     end
 
     if CL.db.icon then
-        local texture = GetSpellTexture(tonumber(id))
+        local texture = C_Spell_GetSpellTexture(tonumber(id))
         local icon = texture and format(ICON_STRING, texture)
         if icon then
             link = icon .. " " .. link

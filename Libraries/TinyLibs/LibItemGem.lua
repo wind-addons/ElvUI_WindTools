@@ -10,7 +10,7 @@ if not lib then return end
 
 function lib:GetItemGemInfo(ItemLink)
     local total, info = 0, {}
-    local stats = GetItemStats(ItemLink)
+    local stats = C_Item.GetItemStats(ItemLink)
     for key, num in pairs(stats) do
         if (string.find(key, "EMPTY_SOCKET_")) then
             for i = 1, num do

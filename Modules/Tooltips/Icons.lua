@@ -11,7 +11,7 @@ local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
 local GetItemIcon = GetItemIcon
-local GetSpellTexture = GetSpellTexture
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
@@ -55,7 +55,7 @@ local iconFunctions = {
         return GetItemIcon(data.id)
     end,
     [Enum_TooltipDataType_Spell] = function(data)
-        return GetSpellTexture(data.id)
+        return C_Spell_GetSpellTexture(data.id)
     end,
     [Enum_TooltipDataType_Toy] = function(data)
         return GetItemIcon(data.id)

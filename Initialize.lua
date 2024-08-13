@@ -11,7 +11,7 @@ local hooksecurefunc = hooksecurefunc
 local next = next
 local print = print
 
-local GetAddOnMetadata = GetAddOnMetadata
+local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
@@ -28,7 +28,7 @@ addon[6] = P.WT
 addon[7] = G.WT
 
 _G["WindTools"] = addon
-W.Version = GetAddOnMetadata(addonName, "Version")
+W.Version = C_AddOns_GetAddOnMetadata(addonName, "Version")
 
 -- Pre-register some WindTools modules
 W.Modules = {}

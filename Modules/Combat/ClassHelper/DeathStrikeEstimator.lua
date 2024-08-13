@@ -15,7 +15,7 @@ local GetTime = GetTime
 local GetVersatilityBonus = GetVersatilityBonus
 local InCombatLockdown = InCombatLockdown
 local IsPlayerSpell = IsPlayerSpell
-local UnitAura = UnitAura
+local C_UnitAuras_GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
@@ -30,7 +30,8 @@ local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 -------------------------------------------------------------------------------
 local function getPlayerAura(spell, filter)
     for i = 1, 255 do
-        local name, _, stacks, _, _, _, _, _, _, spellId = UnitAura("player", i, filter)
+        local auraData = C_UnitAuras_GetAuraDataByIndex("player", i, filter)
+        local name, stacks, spellId = auraData.name, auraData.applications, auraData.spellId
         if not name then
             return
         end

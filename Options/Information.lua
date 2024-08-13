@@ -239,6 +239,11 @@ options.help = {
                     order = 13,
                     type = "description",
                     name = "mattiagraziani-it"
+                },
+                ["ylt"] = {
+                    order = 14,
+                    type = "description",
+                    name = "ylt"
                 }
             }
         },

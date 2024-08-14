@@ -9,6 +9,7 @@ local pairs = pairs
 local tonumber = tonumber
 
 local C_Spell_GetSpellLink = C_Spell.GetSpellLink
+local C_Spell_GetSpellName = C_Spell.GetSpellName
 
 local function ImportantColorString(string)
     return F.CreateColorString(string, {r = 0.204, g = 0.596, b = 0.859})
@@ -1970,8 +1971,7 @@ do
         local groupName, groupOrder, exampleSpellId
         local id = tonumber(categoryOrId)
         if id then
-            local spellInfo = C_Spell.GetSpellInfo(id)
-            groupName = spellInfo and spellInfo.name or ""
+            groupName = C_Spell_GetSpellName(id)
             exampleSpellId = id
             groupOrder = spellOrder
             spellOrder = spellOrder + 1

@@ -25,7 +25,7 @@ local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_Spell_GetSpellInfo = C_Spell.GetSpellInfo
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
 -- 忽略列表
 local IgnoreList = {
@@ -311,7 +311,7 @@ function MB:SkinButton(frame)
     if name == "DBMMinimapButton" then
         frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
     elseif name == "SmartBuff_MiniMapButton" then
-        frame:SetNormalTexture(select(3, C_Spell_GetSpellInfo(12051)))
+        frame:SetNormalTexture(C_Spell_GetSpellTexture(12051))
     elseif name == "ExpansionLandingPageMinimapButton" then
         if self.db.garrison then
             if not frame.isWindMinimapButton then

@@ -375,6 +375,27 @@ local functionFactory = {
                     _G.GameTooltip:AddDoubleLine(L["Status"], C.StringByTemplate(L["Waiting"], "greyLight"), 1, 1, 1)
                 end
 
+                if self.args.questProgress then
+                    _G.GameTooltip:AddLine(" ")
+                    _G.GameTooltip:AddLine(L["Quest Progress"])
+                    for _, data in ipairs(self.args.questProgress) do
+                        if data.questID then
+                            local isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+                            local color = isCompleted and "success" or "danger"
+                            local label = type(data.label) == "function" and data:label() or data.label
+                            if type(label) == "string" then
+                                _G.GameTooltip:AddDoubleLine(
+                                    label,
+                                    C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color),
+                                    1,
+                                    1,
+                                    1
+                                )
+                            end
+                        end
+                    end
+                end
+
                 if self.args.hasWeeklyReward then
                     if self.isCompleted then
                         _G.GameTooltip:AddDoubleLine(
@@ -727,8 +748,40 @@ local eventData = {
             icon = 3015740,
             type = "loopTimer",
             checkAllCompleted = true,
+            questProgress = {
+                {
+                    questID = 78938,
+                    mapID = 32,
+                    label = function()
+                        return format(
+                            L["Daily Quest at %s"],
+                            C.StringByTemplate(env.radiantEchoesZoneRotation[1].name, "info")
+                        )
+                    end
+                },
+                {
+                    questID = 82676,
+                    mapID = 70,
+                    label = function()
+                        return format(
+                            L["Daily Quest at %s"],
+                            C.StringByTemplate(env.radiantEchoesZoneRotation[2].name, "info")
+                        )
+                    end
+                },
+                {
+                    questID = 82689,
+                    mapID = 115,
+                    label = function()
+                        return format(
+                            L["Daily Quest at %s"],
+                            C.StringByTemplate(env.radiantEchoesZoneRotation[3].name, "info")
+                        )
+                    end
+                }
+            },
             questIDs = {82676, 82689, 78938},
-            -- hasWeeklyReward = true,
+            hasWeeklyReward = false,
             duration = env.radiantEchoesInterval, -- always on
             interval = env.radiantEchoesInterval,
             barColor = colorPlatte.blue,
@@ -736,7 +789,11 @@ local eventData = {
             runningBarColor = colorPlatte.radiantEchoes,
             eventName = L["Radiant Echoes"],
             currentMapIndex = function(args) -- only exist for this event
-                return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
+                local index = floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
+                if args.interval == 30 * 60 then
+                    index = index + 1
+                end
+                return index
             end,
             currentLocation = function(args)
                 return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
@@ -747,7 +804,24 @@ local eventData = {
             label = L["Echoes"],
             runningText = L["In Progress"],
             runningTextUpdater = function(args)
-                return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
+                local map = env.radiantEchoesZoneRotation[args:currentMapIndex()]
+                local isCompleted = false
+                for _, data in pairs(args.questProgress) do
+                    if data.mapID == map.mapID then
+                        if C_QuestLog_IsQuestFlaggedCompleted(data.questID) then
+                            isCompleted = true
+                        end
+                        break
+                    end
+                end
+
+                local message = map.name
+                if not isCompleted then
+                    message =
+                        message .. " " .. F.GetTextureString([[Interface\ICONS\UI_Mission_ItemUpgrade]], 14, 14, true)
+                end
+
+                return message
             end,
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then

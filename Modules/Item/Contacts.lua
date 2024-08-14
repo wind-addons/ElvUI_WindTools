@@ -26,6 +26,7 @@ local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInf
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
+local MenuUtil_CreateContextMenu = MenuUtil.CreateContextMenu
 
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
@@ -108,59 +109,44 @@ function CT:ShowContextText(button)
         return
     end
 
-    local menu = {
-        {
-            text = button.name,
-            isTitle = true,
-            notCheckable = true
-        }
-    }
+    MenuUtil_CreateContextMenu(
+        button,
+        function(ownerRegion, rootDescription)
+            rootDescription:CreateTitle(button.name)
 
-    if not button.class then -- My favoirite do not have it
-        tinsert(
-            menu,
-            {
-                text = L["Remove From Favorites"],
-                func = function()
-                    if button.realm then
-                        E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = nil
-                        self:ChangeCategory("FAVORITE")
+            if not button.class then -- My favoirite do not have it
+                rootDescription:CreateButton(
+                    L["Remove From Favorites"],
+                    function()
+                        if button.realm then
+                            E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = nil
+                            self:ChangeCategory("FAVORITE")
+                        end
                     end
-                end,
-                notCheckable = true
-            }
-        )
-    else
-        if button.dType and button.dType == "alt" then
-            tinsert(
-                menu,
-                {
-                    text = L["Remove This Alt"],
-                    func = function()
-                        E.global.WT.item.contacts.alts[button.realm][button.faction][button.name] = nil
-                        self:BuildAltsData()
-                        self:UpdatePage(currentPageIndex)
-                    end,
-                    notCheckable = true
-                }
-            )
+                )
+            else
+                if button.dType and button.dType == "alt" then
+                    rootDescription:CreateButton(
+                        L["Remove This Alt"],
+                        function()
+                            E.global.WT.item.contacts.alts[button.realm][button.faction][button.name] = nil
+                            self:BuildAltsData()
+                            self:UpdatePage(currentPageIndex)
+                        end
+                    )
+                end
+
+                rootDescription:CreateButton(
+                    L["Add To Favorites"],
+                    function()
+                        if button.realm then
+                            E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = true
+                        end
+                    end
+                )
+            end
         end
-
-        tinsert(
-            menu,
-            {
-                text = L["Add To Favorites"],
-                func = function()
-                    if button.realm then
-                        E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = true
-                    end
-                end,
-                notCheckable = true
-            }
-        )
-    end
-
-    E:ComplicatedMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
+    )
 end
 
 function CT:RepositionWithPostal()

@@ -14,7 +14,6 @@ local unpack = unpack
 
 local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame
-local EasyMenu = EasyMenu
 local GameTooltip = _G.GameTooltip
 local GetClassColor = GetClassColor
 local GetGuildRosterInfo = GetGuildRosterInfo
@@ -161,7 +160,7 @@ function CT:ShowContextText(button)
         )
     end
 
-    EasyMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
+    E:ComplicatedMenu(menu, self.contextMenuFrame, "cursor", 0, 0, "MENU")
 end
 
 function CT:RepositionWithPostal()

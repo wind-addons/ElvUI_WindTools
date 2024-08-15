@@ -66,15 +66,6 @@ local env = {
         [4203] = 1,
         [4317] = 2
     },
-    radiantEchoesInterval = (function()
-        -- compare to TW region reset time (T_T always the last resion)
-        local isBeforeIntervalChange = GetServerTime() < 1723676384
-        -- 432000 = 5 days, US player if already reset, the interval should be updated to 30 minutes
-        if C_DateAndTime_GetSecondsUntilWeeklyReset() > 5 * 24 * 60 * 60 then
-            isBeforeIntervalChange = false
-        end
-        return isBeforeIntervalChange and 60 * 60 or 30 * 60
-    end)(),
     radiantEchoesZoneRotation = {
         C_Map_GetMapInfo(32),
         C_Map_GetMapInfo(70),
@@ -782,18 +773,14 @@ local eventData = {
             },
             questIDs = {82676, 82689, 78938},
             hasWeeklyReward = false,
-            duration = env.radiantEchoesInterval, -- always on
-            interval = env.radiantEchoesInterval,
+            duration = 60 * 60, -- always on
+            interval = 60 * 60,
             barColor = colorPlatte.blue,
             flash = false,
             runningBarColor = colorPlatte.radiantEchoes,
             eventName = L["Radiant Echoes"],
-            currentMapIndex = function(args) -- only exist for this event
-                local index = floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
-                if args.interval == 30 * 60 then
-                    index = index + 1
-                end
-                return index
+            currentMapIndex = function(args)
+                return floor((GetServerTime() - args.startTimestamp) / args.interval) % 3 + 1
             end,
             currentLocation = function(args)
                 return env.radiantEchoesZoneRotation[args:currentMapIndex()].name
@@ -815,13 +802,12 @@ local eventData = {
                     end
                 end
 
-                local message = map.name
                 if not isCompleted then
-                    message =
-                        message .. " " .. F.GetTextureString([[Interface\ICONS\UI_Mission_ItemUpgrade]], 14, 14, true)
+                    local iconTex = [[Interface\ICONS\Achievement_Quests_Completed_Daily_08]]
+                    return map.name .. " " .. F.GetTextureString(iconTex, 14, 14, true)
                 end
 
-                return message
+                return map.name
             end,
             filter = function(args)
                 if args.stopAlertIfPlayerNotEnteredDragonlands and not C_QuestLog_IsQuestFlaggedCompleted(67700) then

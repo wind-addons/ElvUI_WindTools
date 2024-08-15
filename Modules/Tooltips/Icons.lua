@@ -10,7 +10,7 @@ local tonumber = tonumber
 local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
-local GetItemIcon = GetItemIcon
+local GetItemIcon = C_Item.GetItemIconByID
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType

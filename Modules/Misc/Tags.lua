@@ -35,6 +35,17 @@ local function GetHealthPercent(unit, formatString)
 	return format(formatString, UnitHealth(unit) / healthMax * 100)
 end
 
+local function GetAbsorbPercent(unit, formatString)
+	local healthMax = UnitHealthMax(unit)
+	if healthMax == 0 then
+		return ""
+	end
+	local absorb = UnitGetTotalAbsorbs(unit) or 0
+	if absorb ~= 0 then
+		return format(formatString, absorb / healthMax * 100)
+	end
+end
+
 function M:Tags()
 	if not E.private.WT.misc.tags then
 		return
@@ -46,6 +57,83 @@ function M:Tags()
 		function(unit)
 			local absorb = UnitGetTotalAbsorbs(unit) or 0
 			return absorb ~= 0 and absorb or ""
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-0",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%d%%")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-1",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%.1f%%")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-2",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%.2f%%")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-3",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%.3f%%")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-nosign-0",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%d")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-nosign-1",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%.1f")
+			end
+		end
+	)
+
+	E:AddTag(
+		"absorbs:percent-nosign-2",
+		"UNIT_ABSORB_AMOUNT_CHANGED",
+		function(unit)
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+			if absorb ~= 0 then
+				return GetAbsorbPercent(unit, "%.2f")
+			end
 		end
 	)
 

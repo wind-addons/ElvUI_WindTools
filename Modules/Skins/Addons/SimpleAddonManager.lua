@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local abs = abs
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
@@ -11,6 +12,23 @@ local function ReskinScrollFrameItems(frame, template)
             if not btn.__windSkin then
                 F.SetFontOutline(btn.Name)
                 S:ESProxy("HandleCheckBox", btn.EnabledButton)
+                local btnCheckTex = btn.EnabledButton.CheckedTexture
+                if btnCheckTex then
+                    btnCheckTex.__windColorOverride = function(r, g, b)
+                        -- Because SAM uses 1, 1, 1 for the check color
+                        if r == 1 and g == 1 and b == 1 then
+                            return "DEFAULT"
+                        end
+
+                        if abs(r - 0.4) < 0.01 and g == 1 and abs(r - 0.4) < 0.01 then
+                            return {
+                                r = 0.75,
+                                g = 0.75,
+                                b = 0.75
+                            }
+                        end
+                    end
+                end
                 if btn.ExpandOrCollapseButton then
                     S:ESProxy("HandleCollapseTexture", btn.ExpandOrCollapseButton)
                 end
@@ -18,6 +36,24 @@ local function ReskinScrollFrameItems(frame, template)
             end
         end
     end
+end
+
+local function ReskinSizer(frame)
+    if not frame then
+        return
+    end
+
+    for _, region in next, {frame:GetRegions()} do
+        local texture = region:IsObjectType("Texture") and region:GetTexture()
+        region:SetTexture(E.Media.Textures.ArrowUp)
+        region:SetTexCoord(0, 1, 0, 1)
+        region:SetRotation(-2.35)
+        region:SetAllPoints()
+    end
+
+    frame:Size(24)
+    frame:Point("BOTTOMRIGHT", 1, -1)
+    frame:SetFrameLevel(200)
 end
 
 local function ReskinModules(frame)
@@ -32,6 +68,7 @@ local function ReskinModules(frame)
     frame.OkButton:SetPoint("RIGHT", frame.CancelButton, "LEFT", -2, 0)
     frame.DisableAllButton:ClearAllPoints()
     frame.DisableAllButton:SetPoint("LEFT", frame.EnableAllButton, "RIGHT", 2, 0)
+    ReskinSizer(frame.Sizer)
 
     -- SearchBox
     S:ESProxy("HandleEditBox", frame.SearchBox)

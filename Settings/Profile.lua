@@ -236,6 +236,13 @@ P.announcement = {
                 raidWarning = false,
                 text = L["%player% used %spell%"]
             },
+            ["290154"] = {
+                -- 塑形師道標
+                enable = true,
+                includePlayer = true,
+                raidWarning = false,
+                text = L["%player% used %spell%"]
+            },
             ["376664"] = {
                 -- 歐胡納鷹棲所
                 enable = true,

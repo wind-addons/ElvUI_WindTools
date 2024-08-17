@@ -247,7 +247,7 @@ local function DynamicUpdateIconTexture(type, targetIcon, data)
         local item = Item:CreateFromItemID(data)
         item:ContinueOnItemLoad(
             function()
-                local qualityColor = item:C_Item_GetItemQualityColor()
+                local qualityColor = item:GetItemQualityColor()
                 targetIcon.bg:SetVertexColor(qualityColor.r, qualityColor.g, qualityColor.b)
                 targetIcon.texture:SetTexture(item:GetItemIcon())
                 targetIcon.itemLink = item:GetItemLink()
@@ -1032,7 +1032,7 @@ function IL:Inspect()
         function(self, itemframe)
             local r, g, b = 0, 0.9, 0.9
             if (itemframe.quality and itemframe.quality > 4) then
-                r, g, b = GetItemQualityColor(itemframe.quality)
+                r, g, b = C_Item_GetItemQualityColor(itemframe.quality)
             elseif (itemframe.name and not itemframe.link) then
                 r, g, b = 0.9, 0.8, 0.4
             elseif (not itemframe.link) then

@@ -10,8 +10,6 @@ local tonumber = tonumber
 local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
-local C_Item_GetItemIconByID = C_Item.GetItemIconByID
-local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
@@ -23,7 +21,9 @@ local UnitIsWildBattlePet = UnitIsWildBattlePet
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 local C_EquipmentSet_GetEquipmentSetInfo = C_EquipmentSet.GetEquipmentSetInfo
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
 
 local Enum_TooltipDataType_Achievement = Enum.TooltipDataType.Achievement

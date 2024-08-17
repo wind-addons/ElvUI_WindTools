@@ -56,13 +56,26 @@ local function ReskinSizer(frame)
     frame:SetFrameLevel(200)
 end
 
+local function SAMDropDownSkin(frame)
+    frame:Width(200)
+    frame:Height(32)
+    frame:StripTextures()
+    frame:CreateBackdrop(template)
+    frame:SetFrameLevel(frame:GetFrameLevel() + 2)
+    frame.backdrop:Point("TOPLEFT", 20, 1)
+    frame.backdrop:Point("BOTTOMRIGHT", frame.Button, "BOTTOMRIGHT", 2, -2)
+    S:ESProxy("HandleNextPrevButton", frame.Button, "down")
+    frame.Text:ClearAllPoints()
+    frame.Text:Point("RIGHT", frame.Button, "LEFT", -2, 0)
+end
+
 local function ReskinModules(frame)
     -- MainFrame
     S:ESProxy("HandleButton", frame.OkButton)
     S:ESProxy("HandleButton", frame.CancelButton)
     S:ESProxy("HandleButton", frame.EnableAllButton)
     S:ESProxy("HandleButton", frame.DisableAllButton)
-    S:ESProxy("HandleDropDownBox", frame.CharacterDropDown, nil, nil, true)
+    SAMDropDownSkin(frame.CharacterDropDown)
 
     frame.OkButton:ClearAllPoints()
     frame.OkButton:SetPoint("RIGHT", frame.CancelButton, "LEFT", -2, 0)

@@ -102,7 +102,9 @@ local ignoreQuestNPC = {
     [154534] = true, -- 芙菈斯
     [160248] = true, -- 文獻管理員費恩
     [162804] = true, -- 維娜里
-    [168430] = true -- 達提莉絲
+    [168430] = true, -- 達提莉絲
+    [107934] = true, -- 暴風城小李
+    [4311] = true -- 霍加爾‧雷斧
 }
 
 local ignoreGossipNPC = {

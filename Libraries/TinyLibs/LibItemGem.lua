@@ -19,7 +19,7 @@ function lib:GetItemGemInfo(ItemLink)
             end
         end
     end
-    local quality = select(3, GetItemInfo(ItemLink))
+    local quality = select(3, C_Item.GetItemInfo(ItemLink))
     if (quality == 6 and total > 0) then
         total = 3
         for i = 1, total-#info do
@@ -28,7 +28,7 @@ function lib:GetItemGemInfo(ItemLink)
     end
     local name, link
     for i = 1, 4 do
-        name, link = GetItemGem(ItemLink, i)
+        name, link = C_Item.GetItemGem(ItemLink, i)
         if (link) then
             if (info[i]) then
                 info[i].name = name

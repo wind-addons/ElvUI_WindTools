@@ -615,7 +615,10 @@ local authorIcons = {
     ["Tabipaladin-水晶之刺"] = windIcon,
     ["Tabievoker-水晶之刺"] = windIcon,
     ["Tabimonk-影之哀伤"] = windIcon,
-    ["Tabideath-影之哀伤"] = windIcon
+    ["Tabideath-影之哀伤"] = windIcon,
+    ["Tabidruid-影之哀伤"] = windIcon,
+    ["游学者-寒冰皇冠"] = windIcon,
+    ["争霸艾泽拉斯-罗宁"] = windIcon
 }
 
 CH:AddPluginIcons(

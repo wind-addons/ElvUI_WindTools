@@ -15,88 +15,88 @@ local UnitGUID = UnitGUID
 local cache = {}
 local locked = {}
 
--- https://www.wowhead.com/guide/raids/amirdrassil-the-dreams-hope/tier-sets
+-- https://www.wowhead.com/guide/raids/nerubar-palace/tier-sets
 -- JavaScript to get tier set ids (used in the specific class tier set page)
 -- var a = ""; document.querySelector(".icon-list > tbody").children.forEach((child) => {const name = child.querySelector("td > a").innerText; const id = child.querySelector("td > a").href.match(/item=([0-9]*)/)[1]; a += `[${id}] = true, -- ${name}\n` }); console.log(a);
 local tierSetsID = {
     -- HUNTER
-    [207216] = true, -- Blazing Dreamstalker's Finest Hunt
-    [207217] = true, -- Blazing Dreamstalker's Shellgreaves
-    [207218] = true, -- Blazing Dreamstalker's Flamewaker Horns
-    [207219] = true, -- Blazing Dreamstalker's Skinners
-    [207221] = true, -- Blazing Dreamstalker's Scaled Hauberk
+    [212023] = true, -- Lightless Scavenger's Tunic
+    [212021] = true, -- Lightless Scavenger's Mitts
+    [212020] = true, -- Lightless Scavenger's Skull
+    [212019] = true, -- Lightless Scavenger's Stalkings
+    [212018] = true, -- Lightless Scavenger's Taxidermy
     -- WARRIOR
-    [207180] = true, -- Molten Vanguard's Shouldervents
-    [207181] = true, -- Molten Vanguard's Steel Tassets
-    [207182] = true, -- Molten Vanguard's Domeplate
-    [207183] = true, -- Molten Vanguard's Crushers
-    [207185] = true, -- Molten Vanguard's Plackart
+    [211987] = true, -- Warsculptor's Furred Plastron
+    [211985] = true, -- Warsculptor's Crushers
+    [211984] = true, -- Warsculptor's Barbute
+    [211983] = true, -- Warsculptor's Cuisses
+    [211982] = true, -- Warsculptor's Horned Spaulders
     -- PALADIN
-    [207189] = true, -- Zealous Pyreknight's Ailettes
-    [207190] = true, -- Zealous Pyreknight's Cuisses
-    [207191] = true, -- Zealous Pyreknight's Barbute
-    [207192] = true, -- Zealous Pyreknight's Jeweled Gauntlets
-    [207194] = true, -- Zealous Pyreknight's Warplate
+    [211996] = true, -- Entombed Seraph's Breastplate
+    [211994] = true, -- Entombed Seraph's Castigation
+    [211993] = true, -- Entombed Seraph's Casque
+    [211992] = true, -- Entombed Seraph's Greaves
+    [211991] = true, -- Entombed Seraph's Plumes
     -- ROGUE
-    [207234] = true, -- Lucid Shadewalker's Bladed Spaulders
-    [207235] = true, -- Lucid Shadewalker's Chausses
-    [207236] = true, -- Lucid Shadewalker's Deathmask
-    [207237] = true, -- Lucid Shadewalker's Clawgrips
-    [207239] = true, -- Lucid Shadewalker's Cuirass
+    [212041] = true, -- K'areshi Phantom's Nexus Wraps
+    [212039] = true, -- K'areshi Phantom's Grips
+    [212038] = true, -- K'areshi Phantom's Emptiness
+    [212037] = true, -- K'areshi Phantom's Leggings
+    [212036] = true, -- K'areshi Phantom's Shoulderpads
     -- PRIEST
-    [207279] = true, -- Shoulderguardians of Lunar Communion
-    [207280] = true, -- Leggings of Lunar Communion
-    [207281] = true, -- Crest of Lunar Communion
-    [207282] = true, -- Touch of Lunar Communion
-    [207284] = true, -- Cassock of Lunar Communion
+    [212084] = true, -- Living Luster's Touch
+    [212083] = true, -- Living Luster's Semblance
+    [212082] = true, -- Living Luster's Trousers
+    [212086] = true, -- Living Luster's Raiment
+    [212081] = true, -- Living Luster's Dominion
     -- DK
-    [207198] = true, -- Skewers of the Risen Nightmare
-    [207199] = true, -- Greaves of the Risen Nightmare
-    [207200] = true, -- Piercing Gaze of the Risen Nightmare
-    [207201] = true, -- Thorns of the Risen Nightmare
-    [207203] = true, -- Casket of the Risen Nightmare
+    [212005] = true, -- Exhumed Centurion's Breastplate
+    [212003] = true, -- Exhumed Centurion's Gauntlets
+    [212002] = true, -- Exhumed Centurion's Galea
+    [212001] = true, -- Exhumed Centurion's Chausses
+    [212000] = true, -- Exhumed Centurion's Spikes
     -- SHAMAN
-    [207207] = true, -- Greatwolf Outcast's Companions
-    [207208] = true, -- Greatwolf Outcast's Fur-Lined Kilt
-    [207209] = true, -- Greatwolf Outcast's Jaws
-    [207210] = true, -- Greatwolf Outcast's Grips
-    [207212] = true, -- Greatwolf Outcast's Harness
+    [212014] = true, -- Vestments of the Forgotten Reservoir
+    [212012] = true, -- Covenant of the Forgotten Reservoir
+    [212011] = true, -- Noetic of the Forgotten Reservoir
+    [212010] = true, -- Sarong of the Forgotten Reservoir
+    [212009] = true, -- Concourse of the Forgotten Reservoir
     -- MAGE
-    [207288] = true, -- Wayward Chronomancer's Metronomes
-    [207289] = true, -- Wayward Chronomancer's Pantaloons
-    [207290] = true, -- Wayward Chronomancer's Chronocap
-    [207291] = true, -- Wayward Chronomancer's Gloves
-    [207293] = true, -- Wayward Chronomancer's Patchwork
+    [212095] = true, -- Runecoat of Violet Rebirth
+    [212093] = true, -- Jeweled Gauntlets of Violet Rebirth
+    [212092] = true, -- Hood of Violet Rebirth
+    [212091] = true, -- Coattails of Violet Rebirth
+    [212090] = true, -- Beacons of Violet Rebirth
     -- WARLOCK
-    [207270] = true, -- Devout Ashdevil's Hatespikes
-    [207271] = true, -- Devout Ashdevil's Tights
-    [207272] = true, -- Devout Ashdevil's Grimhorns
-    [207273] = true, -- Devout Ashdevil's Claws
-    [207275] = true, -- Devout Ashdevil's Razorhide
+    [212075] = true, -- Hexflame Coven's Sleeves
+    [212074] = true, -- Hexflame Coven's All-Seeing Eye
+    [212073] = true, -- Hexflame Coven's Leggings
+    [212077] = true, -- Hexflame Coven's Ritual Harness
+    [212072] = true, -- Hexflame Coven's Altar
     -- MONK
-    [207243] = true, -- Mystic Heron's Hopeful Effigy
-    [207244] = true, -- Mystic Heron's Waders
-    [207245] = true, -- Mystic Heron's Hatsuburi
-    [207246] = true, -- Mystic Heron's Glovebills
-    [207248] = true, -- Mystic Heron's Burdens
+    [212050] = true, -- Gatecrasher's Gi
+    [212048] = true, -- Gatecrasher's Protectors
+    [212047] = true, -- Gatecrasher's Horns
+    [212046] = true, -- Gatecrasher's Kilt
+    [212045] = true, -- Gatecrasher's Enduring Effigy
     -- DRUID
-    [207252] = true, -- Benevolent Embersage's Wisdom
-    [207253] = true, -- Benevolent Embersage's Leggings
-    [207254] = true, -- Benevolent Embersage's Casque
-    [207255] = true, -- Benevolent Embersage's Talons
-    [207257] = true, -- Benevolent Embersage's Robe
+    [212059] = true, -- Hide of the Greatlynx
+    [212057] = true, -- Eviscerators of the Greatlynx
+    [212056] = true, -- Mask of the Greatlynx
+    [212055] = true, -- Leggings of the Greatlynx
+    [212054] = true, -- Maw of the Greatlynx
     -- DH
-    [207261] = true, -- Screaming Torchfiend's Horned Memento
-    [207262] = true, -- Screaming Torchfiend's Blazewraps
-    [207263] = true, -- Screaming Torchfiend's Burning Scowl
-    [207264] = true, -- Screaming Torchfiend's Grasp
-    [207266] = true, -- Screaming Torchfiend's Binding
+    [212068] = true, -- Chestguard of the Hypogeal Nemesis
+    [212066] = true, -- Claws of the Hypogeal Nemesis
+    [212065] = true, -- Impalers of the Hypogeal Nemesis
+    [212064] = true, -- Pantaloons of the Hypogeal Nemesis
+    [212063] = true, -- War-Mantle of the Hypogeal Nemesis
     -- EVOKER
-    [207225] = true, -- Weyrnkeeper's Timeless Sandbrace
-    [207226] = true, -- Weyrnkeeper's Timeless Breeches
-    [207227] = true, -- Weyrnkeeper's Timeless Dracoif
-    [207228] = true, -- Weyrnkeeper's Timeless Clawguards
-    [207230] = true, -- Weyrnkeeper's Timeless Raiment
+    [212032] = true, -- Scales of the Destroyer
+    [212030] = true, -- Rippers of the Destroyer
+    [212029] = true, -- Horns of the Destroyer
+    [212028] = true, -- Legguards of the Destroyer
+    [212027] = true -- Fumaroles of the Destroyer
 }
 
 local formatSets = {

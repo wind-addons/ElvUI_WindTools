@@ -10,7 +10,7 @@ local tonumber = tonumber
 local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
-local GetItemIcon = C_Item.GetItemIconByID
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
@@ -52,13 +52,13 @@ local iconFunctions = {
         return select(10, GetAchievementInfo(tonumber(data.id)))
     end,
     [Enum_TooltipDataType_Item] = function(data)
-        return GetItemIcon(data.id)
+        return C_Item_GetItemIconByID(data.id)
     end,
     [Enum_TooltipDataType_Spell] = function(data)
         return C_Spell_GetSpellTexture(data.id)
     end,
     [Enum_TooltipDataType_Toy] = function(data)
-        return GetItemIcon(data.id)
+        return C_Item_GetItemIconByID(data.id)
     end,
     [Enum_TooltipDataType_Mount] = function(data)
         return select(3, C_MountJournal_GetMountInfoByID(data.id))

@@ -10,8 +10,6 @@ local tonumber = tonumber
 local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo
-local GetItemIcon = GetItemIcon
-local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local UnitBattlePetSpeciesID = UnitBattlePetSpeciesID
 local UnitBattlePetType = UnitBattlePetType
 local UnitFactionGroup = UnitFactionGroup
@@ -23,7 +21,9 @@ local UnitIsWildBattlePet = UnitIsWildBattlePet
 local C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItemByID = C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 local C_EquipmentSet_GetEquipmentSetInfo = C_EquipmentSet.GetEquipmentSetInfo
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
 
 local Enum_TooltipDataType_Achievement = Enum.TooltipDataType.Achievement
@@ -52,13 +52,13 @@ local iconFunctions = {
         return select(10, GetAchievementInfo(tonumber(data.id)))
     end,
     [Enum_TooltipDataType_Item] = function(data)
-        return GetItemIcon(data.id)
+        return C_Item_GetItemIconByID(data.id)
     end,
     [Enum_TooltipDataType_Spell] = function(data)
         return C_Spell_GetSpellTexture(data.id)
     end,
     [Enum_TooltipDataType_Toy] = function(data)
-        return GetItemIcon(data.id)
+        return C_Item_GetItemIconByID(data.id)
     end,
     [Enum_TooltipDataType_Mount] = function(data)
         return select(3, C_MountJournal_GetMountInfoByID(data.id))

@@ -27,15 +27,11 @@ local AbbreviateLargeNumbers = AbbreviateLargeNumbers
 local CreateFrame = CreateFrame
 local GameTooltip = _G.GameTooltip
 local GetInspectSpecialization = GetInspectSpecialization
-local GetItemInfo = GetItemInfo
-local GetItemQualityColor = GetItemQualityColor
-local GetItemQualityColor = GetItemQualityColor
 local GetRealmName = GetRealmName
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetTime = GetTime
-local IsCorruptedItem = IsCorruptedItem
 local Item = Item
 local SetPortraitTexture = SetPortraitTexture
 local Spell = Spell
@@ -55,7 +51,10 @@ local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
 local UNIT_NAME_FONT = UNIT_NAME_FONT
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
+local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
+local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
 local guids, inspecting = {}, false
@@ -223,9 +222,9 @@ end
 --執行圖標更新
 local function onExecute(self)
     if (self.dataType == "item") then
-        local _, itemLink, quality, _, _, _, _, _, _, texture = GetItemInfo(self.data)
+        local _, itemLink, quality, _, _, _, _, _, _, texture = C_Item_GetItemInfo(self.data)
         if (texture) then
-            local r, g, b = GetItemQualityColor(quality or 0)
+            local r, g, b = C_Item_GetItemQualityColor(quality or 0)
             self.icon.bg:SetVertexColor(r, g, b)
             self.icon.texture:SetTexture(texture)
             if (not self.icon.itemLink) then
@@ -248,7 +247,7 @@ local function DynamicUpdateIconTexture(type, targetIcon, data)
         local item = Item:CreateFromItemID(data)
         item:ContinueOnItemLoad(
             function()
-                local qualityColor = item:GetItemQualityColor()
+                local qualityColor = item:C_Item_GetItemQualityColor()
                 targetIcon.bg:SetVertexColor(qualityColor.r, qualityColor.g, qualityColor.b)
                 targetIcon.texture:SetTexture(item:GetItemIcon())
                 targetIcon.itemLink = item:GetItemLink()
@@ -859,7 +858,7 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
             itemframe.levelString:SetText(format(formats, ""))
             itemframe.itemString:SetText("")
         end
-        if (link and IsCorruptedItem(link)) then
+        if (link and C_Item_IsCorruptedItem(link)) then
             itemframe.levelString:SetTextColor(0.5, 0.5, 1)
         else
             itemframe.levelString:SetTextColor(1, 1, 1)

@@ -29,9 +29,6 @@ local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local CreateFromMixins = CreateFromMixins
 local GetGameTime = GetGameTime
-local GetItemCooldown = GetItemCooldown
-local GetItemCount = GetItemCount
-local GetItemIcon = GetItemIcon
 local GetNumGuildMembers = GetNumGuildMembers
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
@@ -68,6 +65,9 @@ local C_CVar_SetCVar = C_CVar.SetCVar
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
+local C_Item_GetItemCooldown = C_Item.GetItemCooldown
+local C_Item_GetItemCount = C_Item.GetItemCount
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
@@ -170,9 +170,9 @@ local function AddDoubleLineForItem(itemID, prefix)
         return
     end
 
-    local texture = GetItemIcon(itemID)
+    local texture = C_Item_GetItemIconByID(itemID)
     local icon = format(IconString .. ":255:255:255|t", texture)
-    local startTime, duration = GetItemCooldown(itemID)
+    local startTime, duration = C_Item_GetItemCooldown(itemID)
     local cooldownTime = startTime + duration - GetTime()
     local canUse = cooldownTime <= 0
     local cooldownTimeString
@@ -183,7 +183,7 @@ local function AddDoubleLineForItem(itemID, prefix)
     end
 
     if itemID == 180817 then
-        local charge = GetItemCount(itemID, nil, true)
+        local charge = C_Item_GetItemCount(itemID, nil, true)
         name = name .. format(" (%d)", charge)
     end
 
@@ -1533,7 +1533,7 @@ function GB:UpdateHearthStoneTable()
                 function()
                     local id = itemEngine:GetItemID()
                     if hearthstonesTable[id] then
-                        if GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
+                        if C_Item_GetItemCount(id) >= 1 or PlayerHasToy(id) and C_ToyBox_IsToyUsable(id) then
                             tinsert(availableHearthstones, id)
                         end
                     end

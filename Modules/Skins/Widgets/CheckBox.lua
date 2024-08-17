@@ -44,7 +44,8 @@ function WS:HandleCheckBox(_, check)
         return
     end
 
-    local db = E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and E.private.WT.skins.widgets.checkBox
+    local db =
+        E.private.WT and E.private.WT.skins and E.private.WT.skins.widgets and E.private.WT.skins.widgets.checkBox
     if not check or not db or not db.enable then
         return
     end
@@ -58,7 +59,20 @@ function WS:HandleCheckBox(_, check)
                 F.SetVertexColorWithDB(tex, db.classColor and W.ClassColor or db.color)
                 tex.SetVertexColor_ = tex.SetVertexColor
                 tex.SetVertexColor = function(tex, ...)
-                    if self.IsUglyYellow(...) then
+                    local isDefaultColor = self.IsUglyYellow(...)
+
+                    -- Let skin use its own logic to colorize the check texture
+                    if tex.__windColorOverride and type(tex.__windColorOverride) == "function" then
+                        local color = tex.__windColorOverride(...)
+                        if type(color) == "table" and color.r and color.g and color.b then
+                            tex:SetVertexColor_(color.r, color.g, color.b, color.a)
+                            return
+                        elseif type(color) == "string" and color == "DEFAULT" then
+                            isDefaultColor = true
+                        end
+                    end
+
+                    if isDefaultColor then
                         local color = db.classColor and W.ClassColor or db.color
                         tex:SetVertexColor_(color.r, color.g, color.b, color.a)
                     else

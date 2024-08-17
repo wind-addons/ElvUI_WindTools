@@ -2040,3 +2040,177 @@ options.spellActivationAlert = {
         }
     }
 }
+
+options.cooldownTextOffset = {
+    order = 10,
+    type = "group",
+    name = L["Cooldown Text Offset"],
+    get = function(info)
+        return E.db.WT.misc.cooldownTextOffset[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc.cooldownTextOffset[info[#info]] = value
+        M:UpdateCooldownTextOffset()
+    end,
+    disabled = function()
+        return not E.db.cooldown.enable
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Customize the ElvUI cooldown text offset."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"]
+        },
+        offsetX = {
+            order = 3,
+            type = "range",
+            name = L["X-Offset"],
+            min = -100,
+            max = 100,
+            step = 1,
+            disabled = function()
+                return not E.db.WT.misc.cooldownTextOffset.enable
+            end
+        },
+        offsetY = {
+            order = 4,
+            type = "range",
+            name = L["Y-Offset"],
+            min = -100,
+            max = 100,
+            step = 1,
+            disabled = function()
+                return not E.db.WT.misc.cooldownTextOffset.enable
+            end
+        }
+    }
+}
+
+local selected, fromHotkey, toHotkey = nil, nil, nil
+
+options.customHotKeyAlias = {
+    order = 11,
+    type = "group",
+    name = L["Custom HotKey Alias"],
+    get = function(info)
+        return E.db.WT.misc.customHotKeyAlias[info[#info]]
+    end,
+    set = function(info, value)
+        E.db.WT.misc.customHotKeyAlias[info[#info]] = value
+        M:UpdateAllHotKeyText()
+    end,
+    disabled = function()
+        return not E.db.WT.misc.customHotKeyAlias.enable
+    end,
+    args = {
+        desc = {
+            order = 1,
+            type = "group",
+            inline = true,
+            name = L["Description"],
+            args = {
+                feature = {
+                    order = 1,
+                    type = "description",
+                    name = L["Custom hotkey alias for keybinding."],
+                    fontSize = "medium"
+                }
+            }
+        },
+        enable = {
+            order = 2,
+            type = "toggle",
+            name = L["Enable"],
+            width = "full",
+            disabled = false
+        },
+        dropdown = {
+            order = 3,
+            type = "select",
+            name = L["Active Aliases"],
+            width = 1.5,
+            values = function()
+                local list = {}
+                for k, v in pairs(E.db.WT.misc.customHotKeyAlias.list) do
+                    list[k] = C.StringByTemplate(v, "primary") .. ": " .. k
+                end
+                return list
+            end,
+            get = function()
+                return selected
+            end,
+            set = function(info, value)
+                selected = value
+            end
+        },
+        remove = {
+            order = 4,
+            type = "execute",
+            name = L["Remove"],
+            desc = L["Remove the selected alias."],
+            func = function()
+                if selected then
+                    E.db.WT.misc.customHotKeyAlias.list[selected] = nil
+                    selected = nil
+                    M:UpdateAllHotKeyText()
+                end
+            end
+        },
+        devide = {
+            order = 5,
+            type = "description",
+            name = " ",
+            width = "full"
+        },
+        hotKey = {
+            order = 6,
+            type = "keybinding",
+            name = L["Hot Key"],
+            desc= L["The hotkey you want to set alias for."],
+            get = function()
+                return fromHotKey
+            end,
+            set = function(_, value)
+                fromHotKey = value
+            end
+        },
+        alias = {
+            order = 7,
+            type = "input",
+            name = L["Alias"],
+            desc = L["The alias you want to set for the hotkey."],
+            get = function()
+                return toHotKey
+            end,
+            set = function(_, value)
+                toHotKey = value
+            end
+        },
+        addOrUpdate = {
+            order = 8,
+            type = "execute",
+            name = L["Add / Update"],
+            func = function()
+                if fromHotKey and toHotKey then
+                    E.db.WT.misc.customHotKeyAlias.list[fromHotKey] = toHotKey
+                    fromHotKey, toHotKey = nil, nil
+                    M:UpdateAllHotKeyText()
+                end
+            end
+        }
+    }
+}

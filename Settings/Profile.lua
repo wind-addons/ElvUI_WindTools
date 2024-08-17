@@ -1144,5 +1144,14 @@ P.misc = {
         acceptResurrect = false,
         acceptCombatResurrect = false,
         confirmSummon = false
+    },
+    cooldownTextOffset = {
+        enable = false,
+        offsetX = 0,
+        offsetY = 0
+    },
+    customHotKeyAlias = {
+        enable = false,
+        list = {}
     }
 }

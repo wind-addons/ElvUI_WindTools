@@ -6,6 +6,8 @@
 	<Script file='AntiOverride.lua'/>
 	<Script file='AutoScreenShot.lua'/>
 	<Script file='AutoToggleChatBubble.lua'/>
+	<Script file='CooldownTextOffset.lua'/>
+	<Script file='CustomHotKeyAlias.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='GuildNewsItemLevel.lua'/>

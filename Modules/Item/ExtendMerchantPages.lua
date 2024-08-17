@@ -7,6 +7,7 @@ local _G = _G
 local unpack = unpack
 
 local CreateFrame = CreateFrame
+
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local BLIZZARD_MERCHANT_ITEMS_PER_PAGE = 10

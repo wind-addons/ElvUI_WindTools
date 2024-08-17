@@ -22,7 +22,6 @@ local GetActiveTitle = GetActiveTitle
 local GetAutoQuestPopUp = GetAutoQuestPopUp
 local GetAvailableQuestInfo = GetAvailableQuestInfo
 local GetInstanceInfo = GetInstanceInfo
-local GetItemInfo = GetItemInfo
 local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
 local GetNumActiveQuests = GetNumActiveQuests
 local GetNumAutoQuestPopUps = GetNumAutoQuestPopUps

@@ -10,9 +10,7 @@ local IsModifiedClick = IsModifiedClick
 local IsFishingLoot = IsFishingLoot
 local LootSlot = LootSlot
 
--- TODO: remove old functions after 10.0.2
-local C_Container_GetContainerNumFreeSlots =
-	C_Container and C_Container.GetContainerNumFreeSlots or GetContainerNumFreeSlots
+local C_Container_GetContainerNumFreeSlots = C_Container.GetContainerNumFreeSlots
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS

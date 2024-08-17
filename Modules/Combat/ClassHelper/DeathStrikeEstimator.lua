@@ -15,13 +15,13 @@ local GetTime = GetTime
 local GetVersatilityBonus = GetVersatilityBonus
 local InCombatLockdown = InCombatLockdown
 local IsPlayerSpell = IsPlayerSpell
-local C_UnitAuras_GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 
 local C_ClassTalents_GetActiveConfigID = C_ClassTalents.GetActiveConfigID
 local C_Traits_GetNodeInfo = C_Traits.GetNodeInfo
+local C_UnitAuras_GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 

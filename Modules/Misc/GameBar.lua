@@ -45,7 +45,6 @@ local ResetCPUUsage = ResetCPUUsage
 local Screenshot = Screenshot
 local ShowUIPanel = ShowUIPanel
 local SpellBookFrame = SpellBookFrame
-local ToggleAchievementFrame = ToggleAchievementFrame
 local ToggleCalendar = ToggleCalendar
 local ToggleCharacter = ToggleCharacter
 local ToggleFriendsFrame = ToggleFriendsFrame

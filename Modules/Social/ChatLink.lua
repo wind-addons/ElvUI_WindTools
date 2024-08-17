@@ -14,15 +14,15 @@ local unpack = unpack
 
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local GetAchievementInfo = GetAchievementInfo
-local GetItemInfoInstant = GetItemInfoInstant
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
-local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local GetTalentInfoByID = GetTalentInfoByID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Soulbinds_GetConduitCollectionData = C_Soulbinds.GetConduitCollectionData
+local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
 local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t"
 
@@ -62,7 +62,7 @@ local tierColor = {
 }
 
 local function AddItemInfo(link)
-    local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(link)
+    local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = C_Item_GetItemInfoInstant(link)
 
     if not itemID then
         return

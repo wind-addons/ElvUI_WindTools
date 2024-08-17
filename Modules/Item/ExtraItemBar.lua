@@ -24,17 +24,17 @@ local GameTooltip = _G.GameTooltip
 local GetBindingKey = GetBindingKey
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemID = GetInventoryItemID
-local GetItemCooldown = GetItemCooldown
-local GetItemCount = GetItemCount
 local GetQuestLogSpecialItemCooldown = GetQuestLogSpecialItemCooldown
 local GetQuestLogSpecialItemInfo = GetQuestLogSpecialItemInfo
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
-local IsItemInRange = IsItemInRange
-local IsUsableItem = IsUsableItem
 local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
 
+local C_Item_GetItemCooldown = C_Item.GetItemCooldown
+local C_Item_GetItemCount = C_Item.GetItemCount
+local C_Item_IsItemInRange = C_Item.IsItemInRange
+local C_Item_IsUsableItem = C_Item.IsUsableItem
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
@@ -1362,7 +1362,7 @@ end
 
 local forceUsableItems = {
     [193634] = true, -- 茂發種子
-    [206448] = true, --『夢境裂斧』菲拉雷斯
+    [206448] = true --『夢境裂斧』菲拉雷斯
 }
 
 local equipmentList = {}
@@ -1370,7 +1370,7 @@ local function UpdateEquipmentList()
     wipe(equipmentList)
     for slotID = 1, 18 do
         local itemID = GetInventoryItemID("player", slotID)
-        if itemID and (IsUsableItem(itemID) or forceUsableItems[itemID]) then
+        if itemID and (C_Item_IsUsableItem(itemID) or forceUsableItems[itemID]) then
             tinsert(equipmentList, slotID)
         end
     end
@@ -1510,7 +1510,7 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 
     if itemData then
         button.itemID = itemData.itemID
-        button.countText = GetItemCount(itemData.itemID, nil, true)
+        button.countText = C_Item_GetItemCount(itemData.itemID, nil, true)
         button.questLogIndex = itemData.questLogIndex
         button:SetBackdropBorderColor(0, 0, 0)
 
@@ -1575,12 +1575,12 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
             if self.questLogIndex and self.questLogIndex > 0 then
                 start, duration, enable = GetQuestLogSpecialItemCooldown(self.questLogIndex)
             else
-                start, duration, enable = GetItemCooldown(self.itemID)
+                start, duration, enable = C_Item_GetItemCooldown(self.itemID)
             end
             CooldownFrame_Set(self.cooldown, start, duration, enable)
             if (duration and duration > 0 and enable and enable == 0) then
                 self.tex:SetVertexColor(0.4, 0.4, 0.4)
-            elseif not InCombatLockdown() and IsItemInRange(self.itemID, "target") == false then
+            elseif not InCombatLockdown() and C_Item_IsItemInRange(self.itemID, "target") == false then
                 self.tex:SetVertexColor(1, 0, 0)
             else
                 self.tex:SetVertexColor(1, 1, 1)
@@ -1713,7 +1713,7 @@ function EB:UpdateBarTextOnCombat(i)
     for k = 1, 12 do
         local button = self.bars[i].buttons[k]
         if button.itemID and button:IsShown() then
-            button.countText = GetItemCount(button.itemID, nil, true)
+            button.countText = C_Item_GetItemCount(button.itemID, nil, true)
             if button.countText and button.countText > 1 then
                 button.count:SetText(button.countText)
             else
@@ -1846,7 +1846,7 @@ function EB:UpdateBar(id)
 
     local function addButtons(list)
         for _, itemID in pairs(list) do
-            local count = GetItemCount(itemID)
+            local count = C_Item_GetItemCount(itemID)
             if count and count > 0 and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
                 self:SetUpButton(bar.buttons[buttonID], {itemID = itemID}, nil, bar.waitGroup)
                 self:UpdateButtonSize(bar.buttons[buttonID], barDB)

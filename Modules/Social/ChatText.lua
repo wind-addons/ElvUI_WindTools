@@ -40,8 +40,6 @@ local GetAchievementLink = GetAchievementLink
 local GetBNPlayerCommunityLink = GetBNPlayerCommunityLink
 local GetBNPlayerLink = GetBNPlayerLink
 local GetChannelName = GetChannelName
-local GetCVar = GetCVar
-local GetCVarBool = GetCVarBool
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GetNumGroupMembers = GetNumGroupMembers
 local GetNumGuildMembers = GetNumGuildMembers
@@ -72,6 +70,8 @@ local C_ChatInfo_IsChannelRegionalForChannelID = C_ChatInfo.IsChannelRegionalFor
 local C_ChatInfo_IsChatLineCensored = C_ChatInfo.IsChatLineCensored
 local C_Club_GetClubInfo = C_Club.GetClubInfo
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
+local C_CVar_GetCVar = C_CVar.GetCVar
+local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
 local C_Texture_GetTitleIconTexture = C_Texture.GetTitleIconTexture
 local C_Timer_After = C_Timer.After
@@ -283,7 +283,7 @@ do --this can save some main file locals
     local z = {}
     specialChatIcons = z
 
-    local portal = GetCVar("portal")
+    local portal = C_CVar_GetCVar("portal")
     if portal == "US" then
         if E.Classic then
             -- Simpy (5099: Myzrael)
@@ -1150,8 +1150,8 @@ function CT:ChatFrame_MessageEventHandler(
                 return true
             elseif
                 frame.excludePrivateMessageList and frame.excludePrivateMessageList[strlower(arg2)] and
-                    ((chatGroup == "WHISPER" and GetCVar("whisperMode") ~= "popout_and_inline") or
-                        (chatGroup == "BN_WHISPER" and GetCVar("whisperMode") ~= "popout_and_inline"))
+                    ((chatGroup == "WHISPER" and C_CVar_GetCVar("whisperMode") ~= "popout_and_inline") or
+                        (chatGroup == "BN_WHISPER" and C_CVar_GetCVar("whisperMode") ~= "popout_and_inline"))
              then
                 return true
             end
@@ -1361,7 +1361,7 @@ function CT:ChatFrame_MessageEventHandler(
                     historyTime
                 )
             end
-            if arg1 == "INVITE" and GetCVarBool("blockChannelInvites") then
+            if arg1 == "INVITE" and C_CVar_GetCVarBool("blockChannelInvites") then
                 frame:AddMessage(
                     _G.CHAT_MSG_BLOCK_CHAT_CHANNEL_INVITE,
                     info.r,

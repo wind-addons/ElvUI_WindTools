@@ -31,13 +31,13 @@ local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
 local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo

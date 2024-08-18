@@ -62,7 +62,7 @@ end
 S:AddCallback("ElvUI_LootRoll")
 
 -- debug note:
--- itemLink = select(2, GetItemInfo(193652))
+-- itemLink = select(2, C_Item.GetItemInfo(193652))
 -- texture, name, count, quality, bop, canNeed, canGreed, canDisenchant = 123, 'test', 1, 1, true, true, true, true
 -- call the function
 -- E:GetModule("Misc"):START_LOOT_ROLL(_, 1, 19)

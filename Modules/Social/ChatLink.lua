@@ -19,6 +19,7 @@ local GetTalentInfoByID = GetTalentInfoByID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Soulbinds_GetConduitCollectionData = C_Soulbinds.GetConduitCollectionData
@@ -165,7 +166,7 @@ local function AddConduitIcon(link)
         local conduitItemID = conduitCollectionData and conduitCollectionData.conduitItemID
 
         if conduitItemID then
-            local texture = select(5, GetItemInfoInstant(conduitItemID))
+            local texture = C_Item_GetItemIconByID(conduitItemID)
             local icon = texture and format(ICON_STRING, texture)
             if icon then
                 link = icon .. " " .. link

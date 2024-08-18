@@ -48,6 +48,7 @@ W.MythicPlusMapData = {
     [405] = {abbr = L["[ABBR] Brackenhide Hollow"], activityID = 303},
     [406] = {abbr = L["[ABBR] Halls of Infusion"], activityID = 304}
 }
+
 W.MythicPlusSeasonAchievementData = {
     [19782] = {abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"]},
     [19783] = {abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"]},

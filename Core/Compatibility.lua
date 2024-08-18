@@ -427,6 +427,20 @@ function W:CheckCompatibility()
         "db.mui.maps.eventTracker.enable"
     )
 
+    CheckMerathilisUI(
+        format("%s-%s", L["Quest"], L["Turn In"]),
+        format("%s-%s", L["Quest"], L["Turn In"],
+        "db.WT.quest.turnIn.enable",
+        "db.mui.quest.turnIn.enable"
+    )
+
+    CheckMerathilisUI(
+        format("%s-%s", L["Quest"], L["Switch Buttons"]),
+        format("%s-%s", L["Quest"], L["Switch Buttons"],
+        "db.WT.quest.switchButtons.enable",
+        "db.mui.quest.switchButtons.enable"
+    )
+
     -- S&L
     CheckShadowAndLight(
         format("%s-%s", L["Skins"], L["Shadow"]),

@@ -31,13 +31,15 @@ local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 local function getPlayerAura(spell, filter)
     for i = 1, 255 do
         local auraData = C_UnitAuras_GetAuraDataByIndex("player", i, filter)
-        local name, stacks, spellId = auraData.name, auraData.applications, auraData.spellId
-        if not name then
-            return
-        end
+        if (auraData) then
+            local name, stacks, spellId = auraData.name, auraData.applications, auraData.spellId
+            if not name then
+                return
+            end
 
-        if spell == spellId then
-            return name, stacks
+            if spell == spellId then
+                return name, stacks
+            end
         end
     end
 end

@@ -1,8 +1,10 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local pairs = pairs
+local tostring = tostring
 
 local GetLocale = GetLocale
+local GetLFGDungeonInfo = GetLFGDungeonInfo
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -21,16 +23,34 @@ W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
 -- Game
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
--- W.MythicPlusMapsShortName = {
---     -- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
---     [353] = L["[ABBR] Siege of Boralus"],
---     [375] = L["[ABBR] Mists of Tirna Scithe"],
---     [376] = L["[ABBR] The Necrotic Wake"],
---     [501] = L["[ABBR] The Stonevault"],
---     [502] = L["[ABBR] City of Threads"],
---     [503] = L["[ABBR] Ara-Kara, City of Echoes"],
---     [505] = L["[ABBR] The Dawnbreaker"],
---     [507] = L["[ABBR] Grim Batol"]
+
+-- Wait for TWW
+-- W.MythicPlusMapData = {
+--     -- https://wago.tools/db2/MapChallengeMode
+--     [353] = {
+--         abbr = L["[ABBR] Siege of Boralus"]
+--     },
+--     [375] = {
+--         abbr = L["[ABBR] Mists of Tirna Scithe"]
+--     },
+--     [376] = {
+--         abbr = L["[ABBR] The Necrotic Wake"]
+--     },
+--     [501] = {
+--         abbr = L["[ABBR] The Stonevault"]
+--     },
+--     [502] = {
+--         abbr = L["[ABBR] City of Threads"]
+--     },
+--     [503] = {
+--         abbr = L["[ABBR] Ara-Kara, City of Echoes"]
+--     },
+--     [505] = {
+--         abbr = L["[ABBR] The Dawnbreaker"]
+--     },
+--     [507] = {
+--         abbr = L["[ABBR] Grim Batol"]
+--     }
 -- }
 
 W.MythicPlusMapData = {

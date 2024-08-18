@@ -95,6 +95,16 @@ function W:UpdateScripts()
         UpdateMessage(L["Event Tracker"] .. " - " .. L["Update Database"], profileVersion)
     end
 
+    if privateVersion < 3.66 then
+        if E.private.WT.tooltips.progression then
+            E.private.WT.tooltips.progression.mythicDungeons = nil
+            E.private.WT.tooltips.progression.raids = nil
+            E.private.WT.tooltips.progression.special = nil
+
+            UpdateMessage(L["Progression"] .. " - " .. L["Update Database"], privateVersion)
+        end
+    end
+
     if not isFirstLine then
         F.PrintGradientLine()
     end

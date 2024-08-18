@@ -429,14 +429,14 @@ function W:CheckCompatibility()
 
     CheckMerathilisUI(
         format("%s-%s", L["Quest"], L["Turn In"]),
-        format("%s-%s", L["Quest"], L["Turn In"],
+        format("%s-%s", L["Quest"], L["Turn In"]),
         "db.WT.quest.turnIn.enable",
         "db.mui.quest.turnIn.enable"
     )
 
     CheckMerathilisUI(
         format("%s-%s", L["Quest"], L["Switch Buttons"]),
-        format("%s-%s", L["Quest"], L["Switch Buttons"],
+        format("%s-%s", L["Quest"], L["Switch Buttons"]),
         "db.WT.quest.switchButtons.enable",
         "db.mui.quest.switchButtons.enable"
     )

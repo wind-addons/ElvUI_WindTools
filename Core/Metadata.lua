@@ -102,11 +102,9 @@ W.RaidData = {
 
 function W:InitializeMetadata()
     for id in pairs(W.MythicPlusMapData) do
-        local name, _, timeLimit, tex, bgTex = C_ChallengeMode_GetMapUIInfo(id)
+        local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(id)
         W.MythicPlusMapData[id].name = name
-        W.MythicPlusMapData[id].timeLimit = timeLimit
         W.MythicPlusMapData[id].tex = tex
-        W.MythicPlusMapData[id].bgTex = bgTex
         W.MythicPlusMapData[id].idString = tostring(id)
     end
 

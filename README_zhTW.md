@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" alt="標題" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.65-538AED.svg?longCache=true&style=for-the-badge)
+![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.66-538AED.svg?longCache=true&style=for-the-badge)
 ![ElvUI 版本](https://img.shields.io/badge/ElvUI-13.74-ff784d.svg?longCache=true&style=for-the-badge)
 
 [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools)
@@ -163,3 +163,5 @@ Español, Português, Italiano
 14. **隐藏製作者**: 隱藏物品浮動提示中的製作者名字
 15. **按鍵在冷卻上方**: 調整層級關係，讓按鍵顯示于 ElvUI 冷卻動畫上方
 16. **公會新聞裝等**: 在公會新聞中顯示每件裝備的物品等級
+17. **自訂按鍵別名**: 自訂按鍵的提示文字
+18. **冷卻文字偏移**: 調整冷卻文字的位置

@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" alt="标题" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.65-538AED.svg?longCache=true&style=for-the-badge)
+![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.66-538AED.svg?longCache=true&style=for-the-badge)
 ![ElvUI 版本](https://img.shields.io/badge/ElvUI-13.74-ff784d.svg?longCache=true&style=for-the-badge)
 
 [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools)
@@ -163,3 +163,5 @@ Español, Português, Italiano
 14. **隐藏制造者**: 隐藏物品鼠标提示中的制造者姓名
 15. **键位在冷却上方**: 调整层级关系，让按键显示于 ElvUI 冷却动画上方
 16. **公会新闻装等**: 在公会新闻中显示每件装备的物品等级
+17. **自定义快捷键别名**: 为快捷键添加自定义别名
+18. **冷却文字偏移**: 调整 ElvUI 冷却文字的位置

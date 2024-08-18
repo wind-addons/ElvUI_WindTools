@@ -27,72 +27,32 @@ W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 -- Wait for TWW
 -- W.MythicPlusMapData = {
 --     -- https://wago.tools/db2/MapChallengeMode
---     [353] = {
---         abbr = L["[ABBR] Siege of Boralus"]
---     },
---     [375] = {
---         abbr = L["[ABBR] Mists of Tirna Scithe"]
---     },
---     [376] = {
---         abbr = L["[ABBR] The Necrotic Wake"]
---     },
---     [501] = {
---         abbr = L["[ABBR] The Stonevault"]
---     },
---     [502] = {
---         abbr = L["[ABBR] City of Threads"]
---     },
---     [503] = {
---         abbr = L["[ABBR] Ara-Kara, City of Echoes"]
---     },
---     [505] = {
---         abbr = L["[ABBR] The Dawnbreaker"]
---     },
---     [507] = {
---         abbr = L["[ABBR] Grim Batol"]
---     }
+--     -- https://wago.tools/db2/GroupFinderActivityGrp
+--     [353] = {abbr = L["[ABBR] Siege of Boralus"], activityID = 146},
+--     [375] = {abbr = L["[ABBR] Mists of Tirna Scithe"], activityID = 262},
+--     [376] = {abbr = L["[ABBR] The Necrotic Wake"], activityID = 265},
+--     [501] = {abbr = L["[ABBR] The Stonevault"], activityID = 328},
+--     [502] = {abbr = L["[ABBR] City of Threads"], activityID = 329},
+--     [503] = {abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323},
+--     [505] = {abbr = L["[ABBR] The Dawnbreaker"], activityID = 326},
+--     [507] = {abbr = L["[ABBR] Grim Batol"], activityID = 56}
 -- }
 
 W.MythicPlusMapData = {
-    [399] = {
-        abbr = L["[ABBR] Ruby Life Pools"]
-    },
-    [400] = {
-        abbr = L["[ABBR] The Nokhud Offensive"]
-    },
-    [401] = {
-        abbr = L["[ABBR] The Azure Vault"]
-    },
-    [402] = {
-        abbr = L["[ABBR] Algeth'ar Academy"]
-    },
-    [403] = {
-        abbr = L["[ABBR] Uldaman: Legacy of Tyr"]
-    },
-    [404] = {
-        abbr = L["[ABBR] Neltharus"]
-    },
-    [405] = {
-        abbr = L["[ABBR] Brackenhide Hollow"]
-    },
-    [406] = {
-        abbr = L["[ABBR] Halls of Infusion"]
-    }
+    [399] = {abbr = L["[ABBR] Ruby Life Pools"], activityID = 306},
+    [400] = {abbr = L["[ABBR] The Nokhud Offensive"], activityID = 308},
+    [401] = {abbr = L["[ABBR] The Azure Vault"], activityID = 307},
+    [402] = {abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302},
+    [403] = {abbr = L["[ABBR] Uldaman: Legacy of Tyr"], activityID = 309},
+    [404] = {abbr = L["[ABBR] Neltharus"], activityID = 305},
+    [405] = {abbr = L["[ABBR] Brackenhide Hollow"], activityID = 303},
+    [406] = {abbr = L["[ABBR] Halls of Infusion"], activityID = 304}
 }
-
 W.MythicPlusSeasonAchievementData = {
-    [19782] = {
-        abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"]
-    },
-    [19783] = {
-        abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"]
-    },
-    [20525] = {
-        abbr = L["[ABBR] The War Within Keystone Master: Season One"]
-    },
-    [20526] = {
-        abbr = L["[ABBR] The War Within Keystone Hero: Season One"]
-    }
+    [19782] = {abbr = L["[ABBR] Dragonflight Keystone Master: Season Four"]},
+    [19783] = {abbr = L["[ABBR] Dragonflight Keystone Hero: Season Four"]},
+    [20525] = {abbr = L["[ABBR] The War Within Keystone Master: Season One"]},
+    [20526] = {abbr = L["[ABBR] The War Within Keystone Hero: Season One"]}
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/the-war-within/

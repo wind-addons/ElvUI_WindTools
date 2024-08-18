@@ -51,8 +51,8 @@ local loadedComparison
 local compareGUID
 local cache = {}
 
-local inspectHistory = {guid = nil, name = nil}
-local lastUpdatedPlayer = nil
+local inspectHistory = {}
+local lastUpdatedPlayer = {guid = nil, name = nil}
 
 local difficulties = {
     {name = L["Raid Finder"], abbr = L["[ABBR] Raid Finder"], color = "ff8000"},

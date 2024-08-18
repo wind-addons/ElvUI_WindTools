@@ -11,6 +11,8 @@ local type = type
 local Item = Item
 local Spell = Spell
 
+local C_Timer_After = C_Timer.After
+
 local cache = {
     item = {},
     spell = {}
@@ -190,4 +192,51 @@ function U.WithItemSlotID(itemSlotID, callback)
     )
 
     return itemInstance
+end
+
+local function onAchievementInfoFetched(achievementID, callback, attempt)
+
+    local attempt = attempt or 1
+    if attempt > 20 then
+        return
+    end
+
+    if not callback then
+        return
+    end
+
+    if type(callback) ~= "function" then
+        return
+    end
+
+    local result = {GetAchievementInfo(achievementID)}
+    if not result or not result[1] or not result[2] or result[2] == "" or not result[10] then
+        C_Timer_After(
+            0.1,
+            function()
+                onAchievementInfoFetched(callback, attempt + 1)
+            end
+        )
+        return
+    end
+
+    callback(result)
+end
+
+function U.WithAchievementID(achievementID, callback)
+    if type(achievementID) ~= "number" then
+        F.Developer.LogDebug("Invalid achievementID: " .. achievementID)
+        return
+    end
+
+    if not callback then
+        callback = function()
+        end
+    end
+
+    if type(callback) ~= "function" then
+        return
+    end
+
+    onAchievementInfoFetched(achievementID, callback)
 end

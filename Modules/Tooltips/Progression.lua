@@ -51,7 +51,7 @@ local loadedComparison
 local compareGUID
 local cache = {}
 
-local inspectHistory = {}
+local inspectHistory = {guid = nil, name = nil}
 local lastUpdatedPlayer = nil
 
 local difficulties = {

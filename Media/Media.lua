@@ -93,7 +93,7 @@ do
 			-- OffsetX
 			SpecialAchievements = 0,
 			Raids = 348,
-			MythicDungeons = 693
+			MythicPlus = 693
 		},
 		languages = {
 			-- OffsetY

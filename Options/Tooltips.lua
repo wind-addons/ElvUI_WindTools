@@ -6,6 +6,7 @@ local LFGPI = W.Utilities.LFGPlayerInfo
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local strsplit = strsplit
 
 local cache = {
     groupInfo = {}
@@ -325,72 +326,92 @@ options.progression = {
                 TEXTURE = L["Texture"]
             }
         },
-        special = {
+        specialAchievement = {
             order = 3,
             type = "group",
             name = L["Special Achievements"],
             inline = true,
             get = function(info)
-                return E.private.WT.tooltips.progression.special[info[#info]]
+                return E.private.WT.tooltips.progression.specialAchievement[tonumber(info[#info])]
             end,
             set = function(info, value)
-                E.private.WT.tooltips.progression.special[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
+                E.private.WT.tooltips.progression.specialAchievement[tonumber(info[#info])] = value
             end,
             disabled = function()
-                return not E.private.WT.tooltips.progression.enable
+                return not (E.private.WT.tooltips.progression.enable and
+                    E.private.WT.tooltips.progression.specialAchievement.enable)
             end,
             args = {
                 enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    get = function(info)
+                        return E.private.WT.tooltips.progression.specialAchievement.enable
+                    end,
+                    set = function(info, value)
+                        E.private.WT.tooltips.progression.specialAchievement.enable = value
+                    end,
+                    disabled = function()
+                        return not E.private.WT.tooltips.progression.enable
+                    end
                 }
             }
         },
-        raids = {
+        raid = {
             order = 4,
             type = "group",
-            name = L["Raids"],
+            name = L["Raid"],
             inline = true,
             get = function(info)
-                return E.private.WT.tooltips.progression.raids[info[#info]]
+                return E.private.WT.tooltips.progression.raid[tonumber(info[#info])]
             end,
             set = function(info, value)
-                E.private.WT.tooltips.progression.raids[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
+                E.private.WT.tooltips.progression.raid[tonumber(info[#info])] = value
             end,
             disabled = function()
-                return not E.private.WT.tooltips.progression.enable
+                return not (E.private.WT.tooltips.progression.enable and E.private.WT.tooltips.progression.raid.enable)
             end,
             args = {
                 enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    get = function(info)
+                        return E.private.WT.tooltips.progression.raid.enable
+                    end,
+                    set = function(info, value)
+                        E.private.WT.tooltips.progression.raid.enable = value
+                    end,
+                    disabled = function()
+                        return not E.private.WT.tooltips.progression.enable
+                    end
                 }
             }
         },
-        mythicDungeons = {
+        mythicPlus = {
             order = 5,
             type = "group",
-            name = L["Mythic Dungeons"],
+            name = L["Mythic Plus"],
             inline = true,
             get = function(info)
-                return E.private.WT.tooltips.progression.mythicDungeons[info[#info]]
+                return E.private.WT.tooltips.progression.mythicPlus[info[#info]]
             end,
             set = function(info, value)
-                E.private.WT.tooltips.progression.mythicDungeons[info[#info]] = value
-                E:StaticPopup_Show("PRIVATE_RL")
+                E.private.WT.tooltips.progression.mythicPlus[info[#info]] = value
             end,
             disabled = function()
-                return not E.private.WT.tooltips.progression.enable
+                return not (E.private.WT.tooltips.progression.enable and
+                    E.private.WT.tooltips.progression.mythicPlus.enable)
             end,
             args = {
                 enable = {
                     order = 1,
                     type = "toggle",
-                    name = L["Enable"]
+                    name = L["Enable"],
+                    disabled = function()
+                        return not E.private.WT.tooltips.progression.enable
+                    end
                 },
                 markHighestScore = {
                     order = 2,
@@ -410,11 +431,10 @@ options.progression = {
                     name = L["Instances"],
                     inline = true,
                     get = function(info)
-                        return E.private.WT.tooltips.progression.mythicDungeons[info[#info]]
+                        return E.private.WT.tooltips.progression.mythicPlus[tonumber(info[#info])]
                     end,
                     set = function(info, value)
-                        E.private.WT.tooltips.progression.mythicDungeons[info[#info]] = value
-                        E:StaticPopup_Show("PRIVATE_RL")
+                        E.private.WT.tooltips.progression.mythicPlus[tonumber(info[#info])] = value
                     end,
                     args = {}
                 }
@@ -424,69 +444,25 @@ options.progression = {
 }
 
 do
-    local raids = {
-        "Vault of the Incarnates",
-        "Aberrus, the Shadowed Crucible",
-        "Amirdrassil, the Dream's Hope"
-    }
-
-    local dungeons = {
-        "Ruby Life Pools",
-        "The Nokhud Offensive",
-        "The Azure Vault",
-        "Algeth'ar Academy",
-        "Uldaman: Legacy of Tyr",
-        "Neltharus",
-        "Brackenhide Hollow",
-        "Halls of Infusion"
-    }
-
-    local special = {
-        "Dragonflight Keystone Master: Season One",
-        "Dragonflight Keystone Hero: Season One",
-        "Dragonflight Keystone Master: Season Two",
-        "Dragonflight Keystone Hero: Season Two",
-        "Dragonflight Keystone Master: Season Three",
-        "Dragonflight Keystone Hero: Season Three",
-        "Dragonflight Keystone Master: Season Four",
-        "Dragonflight Keystone Hero: Season Four"
-    }
-
-    for index, name in ipairs(raids) do
-        options.progression.args.raids.args[name] = {
-            order = index + 1,
-            type = "toggle",
-            name = L[name],
-            width = "full",
-            disabled = function()
-                return not (E.private.WT.tooltips.progression.enable and E.private.WT.tooltips.progression.raids.enable)
-            end
+    for _, config in ipairs(
+        {
+            {target = "specialAchievement", data = W.MythicPlusSeasonAchievementData},
+            {target = "raid", data = W.RaidData},
+            {target = "mythicPlus.args.instances", data = W.MythicPlusMapData}
         }
-    end
+    ) do
+        local target = options.progression.args
+        for _, key in ipairs({strsplit(".", config.target)}) do
+            target = target[key]
+        end
 
-    for index, name in ipairs(dungeons) do
-        options.progression.args.mythicDungeons.args.instances.args[name] = {
-            order = index + 2,
-            type = "toggle",
-            name = L[name],
-            width = "full",
-            disabled = function()
-                return not (E.private.WT.tooltips.progression.enable and
-                    E.private.WT.tooltips.progression.mythicDungeons.enable)
-            end
-        }
-    end
-
-    for index, name in ipairs(special) do
-        options.progression.args.special.args[name] = {
-            order = index + 2,
-            type = "toggle",
-            name = L[name],
-            width = "full",
-            disabled = function()
-                return not (E.private.WT.tooltips.progression.enable and
-                    E.private.WT.tooltips.progression.special.enable)
-            end
-        }
+        for id, data in pairs(config.data) do
+            target.args[data.idString] = {
+                order = id,
+                type = "toggle",
+                name = format("|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.name),
+                width = "full"
+            }
+        end
     end
 end

@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...)))
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
+local Async = W.Utilities.Async
 
 local _G = _G
 local format = format
@@ -9,6 +10,8 @@ local ipairs = ipairs
 local next = next
 local pairs = pairs
 local select = select
+local tinsert = tinsert
+local time = time
 local tonumber = tonumber
 local unpack = unpack
 
@@ -20,10 +23,13 @@ local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
+local InCombatLockdown = InCombatLockdown
 local MuteSoundFile = MuteSoundFile
 local UnmuteSoundFile = UnmuteSoundFile
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
+local UnitName = UnitName
+local UnitGUID = UnitGUID
 local UnitLevel = UnitLevel
 local UnitRace = UnitRace
 
@@ -31,7 +37,6 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
     C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
-local C_CreatureInfo_GetFactionInfo = C_CreatureInfo.GetFactionInfo
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
@@ -45,292 +50,54 @@ local loadedComparison
 local compareGUID
 local cache = {}
 
-local tiers = {
-    "Vault of the Incarnates",
-    "Aberrus, the Shadowed Crucible",
-    "Amirdrassil, the Dream's Hope"
+local inspectHistory = {}
+local lastUpdatedPlayer = nil
+
+local difficulties = {
+    {name = L["Raid Finder"], abbr = L["[ABBR] Raid Finder"], color = "ff8000"},
+    {name = L["Normal"], abbr = L["[ABBR] Normal"], color = "1eff00"},
+    {name = L["Heroic"], abbr = L["[ABBR] Heroic"], color = "0070dd"},
+    {name = L["Mythic"], abbr = L["[ABBR] Mythic"], color = "a335ee"}
 }
+local function AchievementFrameComparison_SetUnit(unit)
+    lastUpdatedPlayer.guid = UnitGUID(unit)
+    lastUpdatedPlayer.name = UnitName(unit)
+end
 
-local levels = {
-    "Mythic",
-    "Heroic",
-    "Normal",
-    "Raid Finder"
-}
+local function OnAchievementShow(frame)
+    -- It maybe closed by other addons, wait for a while to check if it is still open
+    E:Delay(
+        0.2,
+        function()
+            if not frame:IsShown() or InCombatLockdown() then
+                return
+            end
 
-local locales = {
-    ["Raid Finder"] = {
-        short = L["[ABBR] Raid Finder"],
-        full = L["Raid Finder"]
-    },
-    ["Normal"] = {
-        short = L["[ABBR] Normal"],
-        full = L["Normal"]
-    },
-    ["Heroic"] = {
-        short = L["[ABBR] Heroic"],
-        full = L["Heroic"]
-    },
-    ["Mythic"] = {
-        short = L["[ABBR] Mythic"],
-        full = L["Mythic"]
-    },
-    ["Dragonflight Keystone Master: Season One"] = {
-        short = L["[ABBR] Dragonflight Keystone Master: Season One"],
-        full = L["Dragonflight Keystone Master: Season One"]
-    },
-    ["Dragonflight Keystone Hero: Season One"] = {
-        short = L["[ABBR] Dragonflight Keystone Hero: Season One"],
-        full = L["Dragonflight Keystone Hero: Season One"]
-    },
-    ["Dragonflight Keystone Master: Season Two"] = {
-        short = L["[ABBR] Dragonflight Keystone Master: Season Two"],
-        full = L["Dragonflight Keystone Master: Season Two"]
-    },
-    ["Dragonflight Keystone Hero: Season Two"] = {
-        short = L["[ABBR] Dragonflight Keystone Hero: Season Two"],
-        full = L["Dragonflight Keystone Hero: Season Two"]
-    },
-    ["Dragonflight Keystone Master: Season Three"] = {
-        short = L["[ABBR] Dragonflight Keystone Master: Season Three"],
-        full = L["Dragonflight Keystone Master: Season Three"]
-    },
-    ["Dragonflight Keystone Hero: Season Three"] = {
-        short = L["[ABBR] Dragonflight Keystone Hero: Season Three"],
-        full = L["Dragonflight Keystone Hero: Season Three"]
-    },
-    ["Dragonflight Keystone Master: Season Four"] = {
-        short = L["[ABBR] Dragonflight Keystone Master: Season Four"],
-        full = L["Dragonflight Keystone Master: Season Four"]
-    },
-    ["Dragonflight Keystone Hero: Season Four"] = {
-        short = L["[ABBR] Dragonflight Keystone Hero: Season Four"],
-        full = L["Dragonflight Keystone Hero: Season Four"]
-    },
-    ["Vault of the Incarnates"] = {
-        short = L["[ABBR] Vault of the Incarnates"],
-        full = L["Vault of the Incarnates"]
-    },
-    ["Aberrus, the Shadowed Crucible"] = {
-        short = L["[ABBR] Aberrus, the Shadowed Crucible"],
-        full = L["Aberrus, the Shadowed Crucible"]
-    },
-    ["Amirdrassil, the Dream's Hope"] = {
-        short = L["[ABBR] Amirdrassil, the Dream's Hope"],
-        full = L["Amirdrassil, the Dream's Hope"]
-    },
-    ["Ruby Life Pools"] = {
-        short = L["[ABBR] Ruby Life Pools"],
-        full = L["Ruby Life Pools"]
-    },
-    ["The Nokhud Offensive"] = {
-        short = L["[ABBR] The Nokhud Offensive"],
-        full = L["The Nokhud Offensive"]
-    },
-    ["The Azure Vault"] = {
-        short = L["[ABBR] The Azure Vault"],
-        full = L["The Azure Vault"]
-    },
-    ["Algeth'ar Academy"] = {
-        short = L["[ABBR] Algeth'ar Academy"],
-        full = L["Algeth'ar Academy"]
-    },
-    ["Uldaman: Legacy of Tyr"] = {
-        short = L["[ABBR] Uldaman: Legacy of Tyr"],
-        full = L["Uldaman: Legacy of Tyr"]
-    },
-    ["Neltharus"] = {
-        short = L["[ABBR] Neltharus"],
-        full = L["Neltharus"]
-    },
-    ["Brackenhide Hollow"] = {
-        short = L["[ABBR] Brackenhide Hollow"],
-        full = L["Brackenhide Hollow"]
-    },
-    ["Halls of Infusion"] = {
-        short = L["[ABBR] Halls of Infusion"],
-        full = L["Halls of Infusion"]
-    }
-}
+            local headerNameFrame = AchievementFrameComparisonHeaderName
+            local targetName = headerNameFrame and headerNameFrame:GetText()
+            if not targetName then
+                return
+            end
 
--- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/dragonflight/name:(Mythic+Amirdrassil%2C+the+Dream's+Hope)
--- var a=""; document.querySelectorAll("tbody.clickable > tr a.listview-cleartext").forEach((h) => a+=h.href.match(/achievement=([0-9]*)/)[1]+',');console.log(a);
-local raidAchievements = {
-    ["Vault of the Incarnates"] = {
-        ["Mythic"] = {
-            16387,
-            16388,
-            16389,
-            16390,
-            16391,
-            16392,
-            16393,
-            16394
-        },
-        ["Heroic"] = {
-            16379,
-            16380,
-            16381,
-            16382,
-            16383,
-            16384,
-            16385,
-            16386
-        },
-        ["Normal"] = {
-            16371,
-            16372,
-            16373,
-            16374,
-            16375,
-            16376,
-            16377,
-            16378
-        },
-        ["Raid Finder"] = {
-            16359,
-            16361,
-            16362,
-            16366,
-            16367,
-            16368,
-            16369,
-            16370
-        }
-    },
-    ["Aberrus, the Shadowed Crucible"] = {
-        ["Mythic"] = {
-            18219,
-            18220,
-            18221,
-            18222,
-            18223,
-            18224,
-            18225,
-            18226,
-            18227
-        },
-        ["Heroic"] = {
-            18210,
-            18211,
-            18212,
-            18213,
-            18214,
-            18215,
-            18216,
-            18217,
-            18218
-        },
-        ["Normal"] = {
-            18189,
-            18190,
-            18191,
-            18192,
-            18194,
-            18195,
-            18196,
-            18197,
-            18198
-        },
-        ["Raid Finder"] = {
-            18180,
-            18181,
-            18182,
-            18183,
-            18184,
-            18185,
-            18186,
-            18188,
-            18187
-        }
-    },
-    ["Amirdrassil, the Dream's Hope"] = {
-        ["Mythic"] = {
-            19385,
-            19384,
-            19381,
-            19379,
-            19386,
-            19382,
-            19383,
-            19380,
-            19378
-        },
-        ["Heroic"] = {
-            19375,
-            19374,
-            19369,
-            19370,
-            19373,
-            19372,
-            19371,
-            19377,
-            19376
-        },
-        ["Normal"] = {
-            19366,
-            19362,
-            19365,
-            19361,
-            19367,
-            19368,
-            19360,
-            19364,
-            19363
-        },
-        ["Raid Finder"] = {
-            19348,
-            19356,
-            19355,
-            19354,
-            19353,
-            19359,
-            19352,
-            19357,
-            19358
-        }
-    }
-}
+            if targetName == lastUpdatedPlayer.name then
+                local runTime = inspectHistory[lastUpdatedPlayer.guid] or 0
+                if time() - runTime < 5 then
+                    ClearAchievementComparisonUnit()
+                    HideUIPanel(frame)
+                    T:Log("debug", "Close AchievementFrame")
+                end
+            end
+        end
+    )
+end
 
--- https://wago.tools/db2/MapChallengeMode?page=1&sort[Name_lang]=asc
-local mythicKeystoneDungeons = {
-    [399] = "Ruby Life Pools",
-    [400] = "The Nokhud Offensive",
-    [401] = "The Azure Vault",
-    [402] = "Algeth'ar Academy",
-    [403] = "Uldaman: Legacy of Tyr",
-    [404] = "Neltharus",
-    [405] = "Brackenhide Hollow",
-    [406] = "Halls of Infusion"
-}
-
-local specialAchievements = {
-    {16649, "Dragonflight Keystone Master: Season One"},
-    {16650, "Dragonflight Keystone Hero: Season One"},
-    {17844, "Dragonflight Keystone Master: Season Two"},
-    {17845, "Dragonflight Keystone Hero: Season Two"},
-    {19011, "Dragonflight Keystone Master: Season Three"},
-    {19012, "Dragonflight Keystone Hero: Season Three"},
-    {19782, "Dragonflight Keystone Master: Season Four"},
-    {19783, "Dragonflight Keystone Hero: Season Four"}
-}
-
-local function GetLevelColoredString(level, short)
-    local color = "ff8000"
-
-    if level == "Mythic" then
-        color = "a335ee"
-    elseif level == "Heroic" then
-        color = "0070dd"
-    elseif level == "Normal" then
-        color = "1eff00"
-    end
-
-    if short then
-        return "|cff" .. color .. locales[level].short .. "|r"
-    else
-        return "|cff" .. color .. locales[level].full .. "|r"
-    end
+local function SortTableWithID(tbl)
+    sort(
+        tbl,
+        function(a, b)
+            return a[1] < b[1]
+        end
+    )
 end
 
 local function GetBossKillTimes(guid, achievementID)
@@ -338,105 +105,104 @@ local function GetBossKillTimes(guid, achievementID)
     return tonumber(func(achievementID), 10) or 0
 end
 
-local function GetAchievementInfoByID(guid, achievementID)
-    local completed, month, day, year
-    if guid == E.myguid then
-        completed, month, day, year = select(4, GetAchievementInfo(achievementID))
-    else
-        completed, month, day, year = GetAchievementComparisonInfo(achievementID)
+local function UpdateSpecialAchievement(guid, id, completed, month, day, year)
+    local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
+    if completed then
+        completedString = gsub(L["%month%-%day%-%year%"], "%%year%%", 2000 + year)
+        completedString = gsub(completedString, "%%month%%", month)
+        completedString = gsub(completedString, "%%day%%", day)
     end
-    return completed, month, day, year
+    cache[guid].info.special[id] = completedString
 end
 
-local function UpdateProgression(guid, unit, faction)
+local function UpdateProgression(guid, unit)
     local db = E.private.WT.tooltips.progression
 
     cache[guid] = cache[guid] or {}
     cache[guid].info = cache[guid].info or {}
     cache[guid].timer = GetTime()
 
-    -- 成就
-    if db.special.enable then
+    -- Achievements
+    if db.specialAchievement.enable then
         cache[guid].info.special = {}
-        for _, specialAchievement in pairs(specialAchievements) do
-            local achievementID, name = unpack(specialAchievement)
-            if db.special[name] then
-                local completed, month, day, year = GetAchievementInfoByID(guid, achievementID)
-                local completedString = "|cff888888" .. L["Not Completed"] .. "|r"
-                if completed then
-                    completedString = gsub(L["%month%-%day%-%year%"], "%%year%%", 2000 + year)
-                    completedString = gsub(completedString, "%%month%%", month)
-                    completedString = gsub(completedString, "%%day%%", day)
+        for id, achievement in pairs(W.MythicPlusSeasonAchievementData) do
+            if db.specialAchievement[id] then
+                if guid == E.myguid then
+                    Async.WithAchievementID(
+                        id,
+                        function(data)
+                            UpdateSpecialAchievement(guid, id, data[4], data[5], data[6], data[7])
+                        end
+                    )
+                else
+                    inspectHistory[guid] = time()
+                    UpdateSpecialAchievement(guid, id, GetAchievementComparisonInfo(id))
                 end
-                cache[guid].info.special[name] = completedString
             end
         end
     end
 
-    -- 团本
-    if db.raids.enable then
+    -- Raid
+    if db.raid.enable then
         cache[guid].info.raids = {}
-        for _, tier in ipairs(tiers) do
-            if db.raids[tier] then
+        for id in pairs(W.RaidData) do
+            if db.raid[id] then
                 local tempInfo = {}
-                local bosses = raidAchievements[tier]
-                if bosses.separated then
-                    bosses = bosses[faction]
-                end
-
-                for _, level in ipairs(levels) do
+                local bosses = W.RaidData[id].achievements
+                for difficulty = #bosses, 1, -1 do
                     local alreadyKilled = 0
-                    for _, achievementID in pairs(bosses[level]) do
+                    for _, achievementID in pairs(bosses[difficulty]) do
                         if GetBossKillTimes(guid, achievementID) > 0 then
                             alreadyKilled = alreadyKilled + 1
                         end
                     end
 
                     if alreadyKilled > 0 then
-                        tempInfo[level] = format("%d/%d", alreadyKilled, #bosses[level])
-                        if alreadyKilled == #bosses[level] then
-                            break -- 全通本难度后毋须扫描更低难度进度
+                        tempInfo[difficulty] = format("%d/%d", alreadyKilled, #bosses[difficulty])
+                        if alreadyKilled == #bosses[difficulty] then
+                            break -- It is not necessary to check the next level if all bosses are killed
                         end
                     end
                 end
+
                 if next(tempInfo) then
-                    cache[guid].info.raids[tier] = tempInfo
+                    cache[guid].info.raids[id] = tempInfo
                 end
             end
         end
+
+        F.Developer.Print(cache[guid].info.raids)
     end
 
-    -- 传奇地下城
-    if db.mythicDungeons.enable then
-        cache[guid].info.mythicDungeons = {}
+    -- Mythic Plus
+    if db.mythicPlus.enable then
+        cache[guid].info.mythicPlus = {}
         local summary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
         local runs = summary and summary.runs
-        local tempHighestScore, tempHighestScoreDungeon
+        local highestScore, highestScoreDungeon
 
         if runs then
             for _, info in ipairs(runs) do
-                local name =
-                    mythicKeystoneDungeons[info.challengeModeID] or C_ChallengeMode_GetMapUIInfo(info.challengeModeID)
                 local scoreColor =
                     C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(info.mapScore) or HIGHLIGHT_FONT_COLOR
                 local levelColor = info.finishedSuccess and "|cffffffff" or "|cffaaaaaa"
-                cache[guid].info.mythicDungeons[name] =
+                cache[guid].info.mythicPlus[info.challengeModeID] =
                     format(
                     "%s (%s)",
                     scoreColor:WrapTextInColorCode(info.mapScore),
                     levelColor .. info.bestRunLevel .. "|r"
                 )
 
-                if db.mythicDungeons.markHighestScore then
-                    if not tempHighestScore or info.mapScore > tempHighestScore then
-                        tempHighestScore = info.mapScore
-                        tempHighestScoreDungeon = name
+                if db.mythicPlus.markHighestScore then
+                    if not highestScore or info.mapScore > highestScore then
+                        highestScore = info.mapScore
+                        highestScoreDungeon = info.challengeModeID
                     end
                 end
             end
         end
 
-        cache[guid].info.mythicDungeons.highestScoreDungeon = tempHighestScoreDungeon
+        cache[guid].info.mythicPlus.highestScoreDungeon = highestScoreDungeon
     end
 end
 
@@ -447,8 +213,8 @@ local function SetProgressionInfo(tt, guid)
 
     local db = E.private.WT.tooltips.progression
 
-    -- Special Achievements
-    if db.special.enable and cache[guid].info.special and next(cache[guid].info.special) then
+    -- Special Achievement
+    if db.specialAchievement.enable and cache[guid].info.special and next(cache[guid].info.special) then
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
             tt:AddLine(F.GetCustomHeader("SpecialAchievements", 0.618), 0, 0, true)
@@ -456,75 +222,117 @@ local function SetProgressionInfo(tt, guid)
             tt:AddLine(L["Special Achievements"])
         end
 
-        for _, specialAchievement in pairs(specialAchievements) do
-            local _, name = unpack(specialAchievement)
-            if db.special[name] then
-                local left = format("%s:", locales[name].short)
-                local right = cache[guid].info.special[name]
+        local lines = {}
 
-                tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+        for id, data in pairs(W.MythicPlusSeasonAchievementData) do
+            if db.specialAchievement[id] then
+                local left = format("|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.abbr)
+                local right = cache[guid].info.special[id]
+
+                if right then
+                    tinsert(lines, {id, left, right})
+                end
             end
+        end
+
+        SortTableWithID(lines)
+
+        for _, line in ipairs(lines) do
+            tt:AddDoubleLine(line[2], line[3], nil, nil, nil, 1, 1, 1)
         end
     end
 
-    -- Raids
-    if db.raids.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
+    -- Raid
+    if db.raid.enable and cache[guid].info.raids and next(cache[guid].info.raids) then
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
             tt:AddLine(F.GetCustomHeader("Raids", 0.618), 0, 0, true)
         elseif db.header == "TEXT" then
             tt:AddLine(L["Raids"])
         end
-        for _, tier in ipairs(tiers) do
-            if db.raids[tier] then
-                for _, level in ipairs(levels) do
-                    if cache[guid].info.raids[tier] and cache[guid].info.raids[tier][level] then
-                        local left = format("%s %s:", locales[tier].short, GetLevelColoredString(level, false))
-                        local right = GetLevelColoredString(level, true) .. " " .. cache[guid].info.raids[tier][level]
 
-                        tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+        local lines = {}
+        for id, data in pairs(W.RaidData) do
+            if db.raid[id] and cache[guid].info.raids[id] then
+                local group = {}
+                for difficulty = #W.RaidData[id].achievements, 1, -1 do
+                    if cache[guid].info.raids[id] and cache[guid].info.raids[id][difficulty] then
+                        local diff = difficulties[difficulty]
+                        local left =
+                            format(
+                            "|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s |cff%s%s|r",
+                            data.tex,
+                            data.abbr,
+                            diff.color,
+                            diff.name
+                        )
+
+                        local right =
+                            format("|cff%s%s|r", diff.color, diff.abbr) .. " " .. cache[guid].info.raids[id][difficulty]
+                        tinsert(group, {left, right})
                     end
                 end
+
+                tinsert(lines, {id, group})
+            end
+        end
+
+        SortTableWithID(lines)
+
+        for _, line in ipairs(lines) do
+            for _, group in ipairs(line[2]) do
+                tt:AddDoubleLine(group[1], group[2], nil, nil, nil, 1, 1, 1)
             end
         end
     end
 
-    -- Mythic+ scores
-    local displayMythicDungeons = false
-    if db.mythicDungeons.showNoRecord then
-        displayMythicDungeons = true
+    -- Mythic Plus
+    local displayMythicPlus = false
+    if db.mythicPlus.showNoRecord then
+        displayMythicPlus = true
     else
-        for name, _ in pairs(cache[guid].info.mythicDungeons) do
-            if db.mythicDungeons[name] then
-                displayMythicDungeons = true
+        for name, _ in pairs(cache[guid].info.mythicPlus) do
+            if db.mythicPlus[name] then
+                displayMythicPlus = true
                 break
             end
         end
     end
 
-    if db.mythicDungeons.enable and cache[guid].info.mythicDungeons and displayMythicDungeons then
-        local highestScoreDungeon = cache[guid].info.mythicDungeons.highestScoreDungeon
+    if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
+        local highestScoreDungeon = cache[guid].info.mythicPlus.highestScoreDungeon
 
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
-            tt:AddLine(F.GetCustomHeader("MythicDungeons", 0.618), 0, 0, true)
+            tt:AddLine(F.GetCustomHeader("MythicPlus", 0.618), 0, 0, true)
         elseif db.header == "TEXT" then
             tt:AddLine(L["Mythic Dungeons"])
         end
-        for id, name in pairs(mythicKeystoneDungeons) do
-            if db.mythicDungeons[name] then
-                local left = format("%s:", locales[name].short)
-                local right = cache[guid].info.mythicDungeons[name]
-                if not right and db.mythicDungeons.showNoRecord then
+
+        local lines = {}
+
+        for id, data in pairs(W.MythicPlusMapData) do
+            if db.mythicPlus[id] then
+                local left = format("|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.abbr)
+                local right = cache[guid].info.mythicPlus[id]
+
+                if not right and db.mythicPlus.showNoRecord then
                     right = "|cff888888" .. L["No Record"] .. "|r"
                 end
+
                 if right then
                     if highestScoreDungeon and highestScoreDungeon == name then
                         right = starIconString .. right
                     end
-                    tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
+                    tinsert(lines, {id, left, right})
                 end
             end
+        end
+
+        SortTableWithID(lines)
+
+        for _, line in ipairs(lines) do
+            tt:AddDoubleLine(line[2], line[3], nil, nil, nil, 1, 1, 1)
         end
     end
 end
@@ -545,7 +353,7 @@ function T:Progression(tt, unit, guid)
 
     if not cache[guid] or (GetTime() - cache[guid].timer) > 120 then
         if guid == E.myguid then
-            UpdateProgression(guid, unit, E.myfaction)
+            UpdateProgression(guid, unit)
         else
             ClearAchievementComparisonUnit()
 
@@ -556,7 +364,7 @@ function T:Progression(tt, unit, guid)
                 ClearAchievementComparisonUnit()
                 HideUIPanel(_G.AchievementFrame)
                 E:Delay(
-                    0.5,
+                    1,
                     function()
                         if _G.AchievementFrame and _G.AchievementFrame:IsShown() then
                             HideUIPanel(_G.AchievementFrame)
@@ -580,6 +388,10 @@ function T:Progression(tt, unit, guid)
     end
 
     SetProgressionInfo(tt, guid)
+
+    hooksecurefunc("AchievementFrameComparison_SetUnit", AchievementFrameComparison_SetUnit)
+    hooksecurefunc(_G.AchievementFrame, "Show", OnAchievementShow)
+    hooksecurefunc(_G.AchievementFrame, "SetShown", OnAchievementShow)
 end
 
 function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
@@ -593,11 +405,8 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
 
     if UnitExists(unit) then
         local race = select(3, UnitRace(unit))
-        local faction = race and C_CreatureInfo_GetFactionInfo(race).groupTag
-        if faction then
-            UpdateProgression(GUID, unit, faction)
-            _G.GameTooltip:SetUnit(unit)
-        end
+        UpdateProgression(GUID, unit)
+        _G.GameTooltip:SetUnit(unit)
     end
 
     ClearAchievementComparisonUnit()

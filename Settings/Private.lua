@@ -1,11 +1,22 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
+local pairs = pairs
+
 local GetLocale = GetLocale
 
 local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
 local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
 local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
 local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
+
+-- The helper function for progression data.
+local function configTable(t, sourceMetadata)
+    for k in pairs(sourceMetadata) do
+        t[k] = true
+    end
+
+    return t
+end
 
 V.combat = {}
 
@@ -603,36 +614,9 @@ V.tooltips = {
     progression = {
         enable = true,
         header = "TEXTURE",
-        raids = {
-            enable = true,
-            ["Vault of the Incarnates"] = false,
-            ["Aberrus, the Shadowed Crucible"] = true,
-            ["Amirdrassil, the Dream's Hope"] = true
-        },
-        special = {
-            enable = true,
-            ["Dragonflight Keystone Master: Season One"] = false,
-            ["Dragonflight Keystone Hero: Season One"] = false,
-            ["Dragonflight Keystone Master: Season Two"] = false,
-            ["Dragonflight Keystone Hero: Season Two"] = false,
-            ["Dragonflight Keystone Master: Season Three"] = true,
-            ["Dragonflight Keystone Hero: Season Three"] = true,
-            ["Dragonflight Keystone Master: Season Four"] = true,
-            ["Dragonflight Keystone Hero: Season Four"] = true
-        },
-        mythicDungeons = {
-            enable = true,
-            markHighestScore = true,
-            showNoRecord = true,
-            ["Ruby Life Pools"] = true,
-            ["The Nokhud Offensive"] = true,
-            ["The Azure Vault"] = true,
-            ["Algeth'ar Academy"] = true,
-            ["Uldaman: Legacy of Tyr"] = true,
-            ["Neltharus"] = true,
-            ["Brackenhide Hollow"] = true,
-            ["Halls of Infusion"] = true
-        }
+        raid = configTable({enable = true}, W.RaidData),
+        specialAchievement = configTable({enable = true}, W.MythicPlusSeasonAchievementData),
+        mythicPlus = configTable({enable = true, markHighestScore = true, showNoRecord = true}, W.MythicPlusMapData)
     }
 }
 

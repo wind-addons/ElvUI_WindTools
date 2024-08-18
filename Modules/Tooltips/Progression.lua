@@ -347,10 +347,6 @@ function T:Progression(tt, unit, guid)
         return
     end
 
-    if not C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI") then
-        AchievementFrame_LoadUI()
-    end
-
     if not cache[guid] or (GetTime() - cache[guid].timer) > 120 then
         if guid == E.myguid then
             UpdateProgression(guid, unit)
@@ -388,10 +384,6 @@ function T:Progression(tt, unit, guid)
     end
 
     SetProgressionInfo(tt, guid)
-
-    hooksecurefunc("AchievementFrameComparison_SetUnit", AchievementFrameComparison_SetUnit)
-    hooksecurefunc(_G.AchievementFrame, "Show", OnAchievementShow)
-    hooksecurefunc(_G.AchievementFrame, "SetShown", OnAchievementShow)
 end
 
 function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
@@ -412,4 +404,20 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
     ClearAchievementComparisonUnit()
 end
 
+
+function T:InitializeProgression()
+    if not E.private.WT.tooltips.progression.enable then
+        return
+    end
+
+    if not C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI") then
+        AchievementFrame_LoadUI()
+    end
+
+    hooksecurefunc("AchievementFrameComparison_SetUnit", AchievementFrameComparison_SetUnit)
+    hooksecurefunc(_G.AchievementFrame, "Show", OnAchievementShow)
+    hooksecurefunc(_G.AchievementFrame, "SetShown", OnAchievementShow)
+end
+
 T:AddInspectInfoCallback(2, "Progression", true)
+T:AddCallback("InitializeProgression")

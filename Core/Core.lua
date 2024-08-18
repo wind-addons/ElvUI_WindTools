@@ -12,30 +12,19 @@ local tinsert = tinsert
 local tostring = tostring
 local wipe = wipe
 
-local GetLocale = GetLocale
-local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local InCombatLockdown = InCombatLockdown
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 local C_LFGList = C_LFGList
 local C_UI_Reload = C_UI.Reload
 
 local ACCEPT = _G.ACCEPT
 local CANCEL = _G.CANCEL
 
-W.Title = L["WindTools"]
-W.PlainTitle = gsub(W.Title, "|c........([^|]+)|r", "%1")
-W.Locale = GetLocale()
-W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
-W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-W.SupportElvUIVersion = 13.74
-W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
-
 W.RegisteredModules = {}
 W.Changelog = {}
 
-W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
+W:InitializeMetadata()
 
 -- Alerts
 E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {

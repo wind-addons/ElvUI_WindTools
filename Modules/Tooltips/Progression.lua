@@ -172,8 +172,6 @@ local function UpdateProgression(guid, unit)
                 end
             end
         end
-
-        F.Developer.Print(cache[guid].info.raids)
     end
 
     -- Mythic Plus

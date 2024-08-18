@@ -8,6 +8,7 @@ local pairs = pairs
 local select = select
 local type = type
 
+local GetAchievementInfo = GetAchievementInfo
 local Item = Item
 local Spell = Spell
 

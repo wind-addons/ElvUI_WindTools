@@ -4,7 +4,9 @@ local S = W.Modules.Skins
 local _G = _G
 local abs = abs
 local hooksecurefunc = hooksecurefunc
+local next = next
 local pairs = pairs
+
 
 local function ReskinScrollFrameItems(frame, template)
     if template == "SimpleAddonManagerAddonItem" or template == "SimpleAddonManagerCategoryItem" then
@@ -60,7 +62,7 @@ local function SAMDropDownSkin(frame)
     frame:Width(200)
     frame:Height(32)
     frame:StripTextures()
-    frame:CreateBackdrop(template)
+    frame:CreateBackdrop("Transparent")
     frame:SetFrameLevel(frame:GetFrameLevel() + 2)
     frame.backdrop:Point("TOPLEFT", 20, 1)
     frame.backdrop:Point("BOTTOMRIGHT", frame.Button, "BOTTOMRIGHT", 2, -2)

@@ -6,14 +6,15 @@ local Async = W.Utilities.Async
 local _G = _G
 local format = format
 local gsub = gsub
+local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local next = next
 local pairs = pairs
 local select = select
+local sort = sort
 local tinsert = tinsert
 local time = time
 local tonumber = tonumber
-local unpack = unpack
 
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
@@ -74,7 +75,7 @@ local function OnAchievementShow(frame)
                 return
             end
 
-            local headerNameFrame = AchievementFrameComparisonHeaderName
+            local headerNameFrame = _G.AchievementFrameComparisonHeaderName
             local targetName = headerNameFrame and headerNameFrame:GetText()
             if not targetName then
                 return
@@ -322,7 +323,7 @@ local function SetProgressionInfo(tt, guid)
                 end
 
                 if right then
-                    if highestScoreDungeon and highestScoreDungeon == name then
+                    if highestScoreDungeon and highestScoreDungeon == id then
                         right = starIconString .. right
                     end
                     tinsert(lines, {id, left, right})

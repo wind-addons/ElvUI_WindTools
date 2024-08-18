@@ -4,6 +4,8 @@ local S = W.Modules.Skins
 local WS = S.Widgets
 local ES = E.Skins
 
+local type = type
+
 function WS:HandleAce3CheckBox(check)
     if not E.private.skins.checkBoxSkin then
         return

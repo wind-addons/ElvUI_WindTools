@@ -12,6 +12,7 @@ local SA = W:GetModule("SpellActivationAlert")
 local LL = W:GetModule("LFGList")
 
 local format = format
+local pairs = pairs
 local select = select
 local tonumber = tonumber
 local tostring = tostring
@@ -2140,7 +2141,7 @@ options.cooldownTextOffset = {
     }
 }
 
-local selected, fromHotkey, toHotkey = nil, nil, nil
+local selected, fromHotKey, toHotKey = nil, nil, nil
 
 options.customHotKeyAlias = {
     order = 11,

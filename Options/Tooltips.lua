@@ -7,6 +7,7 @@ local format = format
 local ipairs = ipairs
 local pairs = pairs
 local strsplit = strsplit
+local tonumber = tonumber
 
 local cache = {
     groupInfo = {}

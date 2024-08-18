@@ -25,13 +25,13 @@ local GetTime = GetTime
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local MuteSoundFile = MuteSoundFile
-local UnmuteSoundFile = UnmuteSoundFile
 local SetAchievementComparisonUnit = SetAchievementComparisonUnit
 local UnitExists = UnitExists
-local UnitName = UnitName
 local UnitGUID = UnitGUID
 local UnitLevel = UnitLevel
+local UnitName = UnitName
 local UnitRace = UnitRace
+local UnmuteSoundFile = UnmuteSoundFile
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -59,6 +59,7 @@ local difficulties = {
     {name = L["Heroic"], abbr = L["[ABBR] Heroic"], color = "0070dd"},
     {name = L["Mythic"], abbr = L["[ABBR] Mythic"], color = "a335ee"}
 }
+
 local function AchievementFrameComparison_SetUnit(unit)
     lastUpdatedPlayer.guid = UnitGUID(unit)
     lastUpdatedPlayer.name = UnitName(unit)

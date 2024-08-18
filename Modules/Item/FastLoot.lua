@@ -32,7 +32,7 @@ function FL:LOOT_READY()
 				if self:GetFreeSlots() > 0 then
 					LootSlot(i)
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. L["Bags are full"])
+					F.Print(L["Bags are full"])
 				end
 			end
 			tDelay = GetTime()

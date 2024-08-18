@@ -7,6 +7,7 @@ local C = W.Utilities.Color
 local openRaidLib = E.Libs.OpenRaid
 
 local _G = _G
+local bit = bit
 local floor = floor
 local format = format
 local gsub = gsub
@@ -20,6 +21,7 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
+local tAppendAll = tAppendAll
 local unpack = unpack
 local wipe = wipe
 
@@ -40,7 +42,6 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
-local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetAdvancedFilter = C_LFGList.GetAdvancedFilter
 local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
@@ -50,6 +51,21 @@ local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
+local C_LFGList_GetAvailableActivityGroups = C_LFGList.GetAvailableActivityGroups
+local Enum_LFGListFilter = Enum.LFGListFilter
+
+local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
+
+local seasonGroups =
+    C_LFGList_GetAvailableActivityGroups(
+    GROUP_FINDER_CATEGORY_ID_DUNGEONS,
+    bit.bor(Enum_LFGListFilter.CurrentSeason, Enum_LFGListFilter.PvE)
+)
+local expansionGroups =
+    C_LFGList_GetAvailableActivityGroups(
+    GROUP_FINDER_CATEGORY_ID_DUNGEONS,
+    bit.bor(Enum_LFGListFilter.CurrentExpansion, Enum_LFGListFilter.NotCurrentSeason, Enum_LFGListFilter.PvE)
+)
 
 local RoleIconTextures = {
     PHILMOD = {
@@ -84,32 +100,12 @@ local RoleIconTextures = {
     }
 }
 
-local mythicKeystoneDungeons = {
-    [399] = {name = L["[ABBR] Ruby Life Pools"], activityID = 306},
-    [400] = {name = L["[ABBR] The Nokhud Offensive"], activityID = 308},
-    [401] = {name = L["[ABBR] The Azure Vault"], activityID = 307},
-    [402] = {name = L["[ABBR] Algeth'ar Academy"], activityID = 302},
-    [403] = {name = L["[ABBR] Uldaman: Legacy of Tyr"], activityID = 309},
-    [404] = {name = L["[ABBR] Neltharus"], activityID = 305},
-    [405] = {name = L["[ABBR] Brackenhide Hollow"], activityID = 303},
-    [406] = {name = L["[ABBR] Halls of Infusion"], activityID = 304}
-}
+local vaultItemLevel = {0, 509, 509, 512, 512, 515, 515, 519, 519, 522}
 
-local seasonDungeonActivities = {315, 316, 317}
+-- TWW
+-- local vaultItemLevel = {0, 600, 600, 603, 603, 606, 606, 610, 610, 613}
 
-local vaultItemLevel = {
-    0,
-    509,
-    509,
-    512,
-    512,
-    515,
-    515,
-    519,
-    519,
-    522
-}
-
+-- FIXME: TWW
 local affixLoop = {
     {9, 124, 6},
     {10, 134, 7},
@@ -466,19 +462,18 @@ function LL:UpdatePartyKeystoneFrame()
         local unitID = i == 1 and "player" or "party" .. i - 1
         local data = openRaidLib.GetKeystoneInfo(unitID)
         local mapID = data and data.challengeMapID
-        if mapID and mythicKeystoneDungeons[mapID] and mythicKeystoneDungeons[mapID].name then
+        if mapID and W.MythicPlusMapData[mapID] then
             local level = data.level
             local playerClass = UnitClassBase(unitID)
             local playerName = UnitName(unitID)
-            local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
 
             tinsert(
                 cache,
                 {
                     level = level,
-                    name = mythicKeystoneDungeons[mapID].name,
+                    name = W.MythicPlusMapData[mapID].abbr,
                     player = F.CreateClassColorString(playerName, playerClass),
-                    icon = texture
+                    icon = W.MythicPlusMapData[mapID].tex
                 }
             )
         end
@@ -755,7 +750,7 @@ function LL:InitalizeRightPanel()
     end
 
     local mapIDs = {}
-    for key in pairs(mythicKeystoneDungeons) do
+    for key in pairs(W.MythicPlusMapData) do
         tinsert(mapIDs, key)
     end
 
@@ -777,13 +772,12 @@ function LL:InitalizeRightPanel()
         filterButton.tex = filterButton:CreateTexture(nil, "ARTWORK")
         filterButton.tex:SetSize(20, 20)
         filterButton.tex:SetPoint("LEFT", filterButton, "LEFT", 4, 0)
-        local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
-        filterButton.tex:SetTexture(texture)
+        filterButton.tex:SetTexture(W.MythicPlusMapData[mapID].tex)
 
         filterButton.name = filterButton:CreateFontString(nil, "OVERLAY")
         filterButton.name:SetFont(E.media.normFont, 12, "OUTLINE")
         filterButton.name:SetPoint("LEFT", filterButton.tex, "RIGHT", 8, 0)
-        filterButton.name:SetText(mythicKeystoneDungeons[mapID].name)
+        filterButton.name:SetText(W.MythicPlusMapData[mapID].abbr)
 
         addSetActive(filterButton)
 
@@ -1178,14 +1172,13 @@ function LL:InitalizeRightPanel()
             for i = 1, 8 do
                 if btn.cache[i] then
                     local level = btn.cache[i].level
-                    local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(btn.cache[i].mapID)
                     _G.GameTooltip:AddDoubleLine(
                         format(
                             "|c%s%s|r  |T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s",
                             getKeystoneLevelColor(level),
                             level,
-                            tex,
-                            name
+                            W.MythicPlusMapData[btn.cache[i].mapID].tex,
+                            W.MythicPlusMapData[btn.cache[i].mapID].name
                         ),
                         vaultItemLevel[min(level, #vaultItemLevel)],
                         1,
@@ -1591,20 +1584,16 @@ function LL:UpdateAdvancedFilters()
 
     local activities = {}
     local numActiveMaps = 0
-    for mapID, _ in pairs(mythicKeystoneDungeons) do
+    for mapID, data in pairs(W.MythicPlusMapData) do
         if dfDB[mapID] then
-            tinsert(activities, mythicKeystoneDungeons[mapID].activityID)
+            tinsert(activities, data.activityID)
             numActiveMaps = numActiveMaps + 1
         end
     end
 
     if numActiveMaps == 0 then
-        for mapID, _ in pairs(mythicKeystoneDungeons) do
-            tinsert(activities, mythicKeystoneDungeons[mapID].activityID)
-        end
-        for i = 1, #seasonDungeonActivities do
-            tinsert(activities, seasonDungeonActivities[i])
-        end
+        tAppendAll(activities, seasonGroups)
+        tAppendAll(activities, expansionGroups)
     end
 
     advFilters.activities = activities

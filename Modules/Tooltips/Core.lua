@@ -3,21 +3,36 @@ local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
 local _G = _G
+local format = format
 local next = next
 local pairs = pairs
 local select = select
+local strfind = strfind
 local strsplit = strsplit
 local tinsert = tinsert
 local type = type
 local xpcall = xpcall
 
 local CanInspect = CanInspect
-local GameTooltip =GameTooltip
+local GameTooltip = GameTooltip
+local GetCreatureDifficultyColor = GetCreatureDifficultyColor
+local GetGuildInfo = GetGuildInfo
 local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
+local UnitClass = UnitClass
+local UnitEffectiveLevel = UnitEffectiveLevel
+local UnitExists = UnitExists
 local UnitGUID = UnitGUID
+local UnitHasVehicleUI = UnitHasVehicleUI
+local UnitIsPlayer = UnitIsPlayer
+local UnitLevel = UnitLevel
+local UnitRace = UnitRace
+local UnitReaction = UnitReaction
+local UnitSex = UnitSex
+
+local RAID_CLASS_COLORS_PRIEST = RAID_CLASS_COLORS.PRIEST
 
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
@@ -108,40 +123,55 @@ function T:InspectInfo(tt, data, triedTimes)
         return
     end
 
+    triedTimes = triedTimes or 0
+
     local unit = select(2, tt:GetUnit())
+
+    if not unit then
+        local GMF = E:GetMouseFocus()
+        local focusUnit = GMF and GMF.GetAttribute and GMF:GetAttribute("unit")
+        if focusUnit then
+            unit = focusUnit
+        end
+        if not unit or not UnitExists(unit) then
+            return
+        end
+    end
 
     if not unit or not data or not data.guid then
         return
     end
+
+    local inCombatLockdown = InCombatLockdown()
+    local isShiftKeyDown = IsShiftKeyDown()
+    local isPlayerUnit = UnitIsPlayer(unit)
 
     -- Run all registered callbacks (normal)
     for _, func in next, self.normalInspect do
         xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
     end
 
+    -- Item Level
+    local itemLevelAvailable = isPlayerUnit and not inCombatLockdown and ET.db.inspectDataEnable
+
+    if self.profiledb.elvUITweaks.forceItemLevel then
+        if not isShiftKeyDown and itemLevelAvailable and not tt.ItemLevelShown then
+            local _, class = UnitClass(unit)
+            local color = class and E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
+            ET:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
+        end
+    end
+
+    -- Modifier callbacks pre-check
     if not self:CheckModifier() or not CanInspect(unit) then
         return
     end
 
-    -- If ElvUI is inspecting, just wait for 4 seconds
-    triedTimes = triedTimes or 0
-    if triedTimes > 20 then
-        return
-    end
-
-    if not InCombatLockdown() and IsShiftKeyDown() and ET.db.inspectDataEnable then
-        local isElvUITooltipItemLevelInfoAlreadyAdded = false
-        for i = #(data.lines), tt:NumLines() do
-            local leftTip = _G["GameTooltipTextLeft" .. i]
-            local leftTipText = leftTip:GetText()
-            if leftTipText and leftTipText == L["Item Level:"] and leftTip:IsShown() then
-                isElvUITooltipItemLevelInfoAlreadyAdded = true
-                break
-            end
-        end
-
-        if not isElvUITooltipItemLevelInfoAlreadyAdded then
-            return E:Delay(0.2, T.InspectInfo, T, ET, tt, data, triedTimes + 1)
+    -- It ElvUI Item Level is enabled, we need to delay the modifier callbacks
+    if self.db.forceItemLevel or isShiftKeyDown and itemLevelAvailable then
+        if not tt.ItemLevelShown and triedTimes <= 4 then
+            E:Delay(0.33, T.InspectInfo, T, tt, data, triedTimes + 1)
+            return
         end
     end
 
@@ -187,8 +217,87 @@ function ET.GameTooltip_OnTooltipSetUnit(...)
     T:InspectInfo(...)
 end
 
+local genderTable = {_G.UNKNOWN .. " ", _G.MALE .. " ", _G.FEMALE .. " "}
+
+function T:SetUnitText(_, tt, unit, isPlayerUnit)
+    if not tt or (tt.IsForbidden and tt:IsForbidden()) or not isPlayerUnit then
+        return
+    end
+
+    if not self.profiledb.elvUITweaks.specIcon and not self.profiledb.elvUITweaks.raceIcon then -- No need to do anything
+        return
+    end
+
+    local guildName = GetGuildInfo(unit)
+    local levelLine, specLine = ET:GetLevelLine(tt, (guildName and 2) or 1)
+    local level, realLevel = UnitEffectiveLevel(unit), UnitLevel(unit)
+
+    if levelLine then
+        local diffColor = GetCreatureDifficultyColor(level)
+        local race, englishRace = UnitRace(unit)
+        local gender = UnitSex(unit)
+        local _, localizedFaction = E:GetUnitBattlefieldFaction(unit)
+        if localizedFaction and (englishRace == "Pandaren" or englishRace == "Dracthyr") then
+            race = localizedFaction .. " " .. race
+        end
+        local hexColor = E:RGBToHex(diffColor.r, diffColor.g, diffColor.b)
+        local unitGender = ET.db.gender and genderTable[gender]
+        local raceIcon = F.GetRaceAtlasString(englishRace, gender, ET.db.textFontSize, ET.db.textFontSize)
+        if raceIcon and self.profiledb.elvUITweaks.raceIcon then
+            race = raceIcon .. " " .. race
+        end
+
+        local levelText
+        if level < realLevel then
+            levelText =
+                format(
+                "%s%s|r |cffFFFFFF(%s)|r %s%s",
+                hexColor,
+                level > 0 and level or "??",
+                realLevel,
+                unitGender or "",
+                race or ""
+            )
+        else
+            levelText = format("%s%s|r %s%s", hexColor, level > 0 and level or "??", unitGender or "", race or "")
+        end
+
+        local specText = specLine and specLine:GetText()
+        if specText then
+            local localeClass, class, classID = UnitClass(unit)
+            if not localeClass or not class then
+                return
+            end
+
+            local nameColor = E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
+
+            local specIcon
+
+            -- Because inspect need some extra time, we can extract the sepcialization info just from the text
+            if self.profiledb.elvUITweaks.specIcon and classID and W.SpecializationInfo[classID] then
+                for _, spec in next, W.SpecializationInfo[classID] do
+                    if strfind(specText, spec.name) then
+                        specIcon = spec.icon
+                        break
+                    end
+                end
+            end
+
+            if specIcon then
+                local iconString = F.GetIconString(specIcon, ET.db.textFontSize, ET.db.textFontSize + 3, true)
+                specText = iconString .. " " .. specText
+            end
+
+            specLine:SetFormattedText("|c%s%s|r", nameColor.colorStr, specText)
+        end
+
+        levelLine:SetFormattedText(levelText)
+    end
+end
+
 function T:Initialize()
     self.db = E.private.WT.tooltips
+    self.profiledb = E.db.WT.tooltips
     for index, func in next, self.load do
         xpcall(func, F.Developer.ThrowError, self)
         self.load[index] = nil
@@ -198,6 +307,7 @@ function T:Initialize()
         T:RegisterEvent(name, "Event")
     end
 
+    T:SecureHook(ET, "SetUnitText", "SetUnitText")
     T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
     T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
 
@@ -205,6 +315,7 @@ function T:Initialize()
 end
 
 function T:ProfileUpdate()
+    self.profiledb = E.db.WT.tooltips
     for index, func in next, self.updateProfile do
         xpcall(func, F.Developer.ThrowError, self)
         self.updateProfile[index] = nil

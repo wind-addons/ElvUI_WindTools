@@ -40,23 +40,36 @@ options.general = {
         E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
-        modifier = {
+        elvUITweaks = {
             order = 1,
-            type = "select",
-            name = L["Modifier Key"],
-            desc = format(L["The modifier key to show additional information from %s."], W.Title),
-            set = function(info, value)
-                E.private.WT.tooltips[info[#info]] = value
+            type = "group",
+            inline = true,
+            name = L["ElvUI Tooltip Tweaks"],
+            get = function(info)
+                return E.db.WT.tooltips[info[#info - 1]][info[#info]]
             end,
-            values = {
-                NONE = L["None"],
-                SHIFT = L["Shift"],
-                CTRL = L["Ctrl"],
-                ALT = L["Alt"],
-                ALT_SHIFT = format("%s + %s", L["Alt"], L["Shift"]),
-                CTRL_SHIFT = format("%s + %s", L["Ctrl"], L["Shift"]),
-                CTRL_ALT = format("%s + %s", L["Ctrl"], L["Alt"]),
-                CTRL_ALT_SHIFT = format("%s + %s + %s", L["Ctrl"], L["Alt"], L["Shift"])
+            set = function(info, value)
+                E.db.WT.tooltips[info[#info - 1]][info[#info]] = value
+            end,
+            args = {
+                forceItemLevel = {
+                    order = 1,
+                    type = "toggle",
+                    name = L["Force Item Level"],
+                    desc = L["Even you are not pressing the modifier key, the item level will still be shown."]
+                },
+                specIcon = {
+                    order = 2,
+                    type = "toggle",
+                    name = L["Spec Icon"],
+                    desc = L["Show the icon of the specialization."]
+                },
+                raceIcon = {
+                    order = 3,
+                    type = "toggle",
+                    name = L["Race Icon"],
+                    desc = L["Show the icon of the player race."]
+                }
             }
         },
         additionalInformation = {
@@ -65,32 +78,51 @@ options.general = {
             inline = true,
             name = L["Additional Information"],
             args = {
-                icon = {
+                modifier = {
                     order = 1,
+                    type = "select",
+                    name = L["Modifier Key"],
+                    desc = format(L["The modifier key to show additional information from %s."], W.Title),
+                    set = function(info, value)
+                        E.private.WT.tooltips[info[#info]] = value
+                    end,
+                    values = {
+                        NONE = L["None"],
+                        SHIFT = L["Shift"],
+                        CTRL = L["Ctrl"],
+                        ALT = L["Alt"],
+                        ALT_SHIFT = format("%s + %s", L["Alt"], L["Shift"]),
+                        CTRL_SHIFT = format("%s + %s", L["Ctrl"], L["Shift"]),
+                        CTRL_ALT = format("%s + %s", L["Ctrl"], L["Alt"]),
+                        CTRL_ALT_SHIFT = format("%s + %s + %s", L["Ctrl"], L["Alt"], L["Shift"])
+                    }
+                },
+                icon = {
+                    order = 2,
                     type = "toggle",
                     name = L["Add Icon"],
                     desc = L["Show an icon for items and spells."]
                 },
                 factionIcon = {
-                    order = 2,
+                    order = 3,
                     type = "toggle",
                     name = L["Faction Icon"],
                     desc = L["Show a faction icon in the top right of tooltips."]
                 },
                 petIcon = {
-                    order = 3,
+                    order = 4,
                     type = "toggle",
                     name = L["Pet Icon"],
                     desc = L["Add an icon for indicating the type of the pet."]
                 },
                 petId = {
-                    order = 4,
+                    order = 5,
                     type = "toggle",
                     name = L["Pet ID"],
                     desc = L["Show battle pet species ID in tooltips."]
                 },
                 tierSet = {
-                    order = 5,
+                    order = 6,
                     type = "toggle",
                     name = L["Tier Set"],
                     desc = format(
@@ -308,14 +340,28 @@ options.progression = {
         E:StaticPopup_Show("PRIVATE_RL")
     end,
     args = {
-        enable = {
+        notice = {
             order = 1,
+            type = "group",
+            inline = true,
+            name = L["Notice"],
+            args = {
+                notice = {
+                    order = 1,
+                    type = "description",
+                    name = L["This feature also follows the modifier keys setting for additional information."] ..
+                        "\n" .. format(L["You can find the setting in [%s] - [Tooltips] - [General]."], W.Title)
+                }
+            }
+        },
+        enable = {
+            order = 2,
             type = "toggle",
             name = L["Enable"],
             desc = L["Add progression information to tooltips."]
         },
         header = {
-            order = 2,
+            order = 3,
             type = "select",
             name = L["Header Style"],
             set = function(info, value)
@@ -328,7 +374,7 @@ options.progression = {
             }
         },
         specialAchievement = {
-            order = 3,
+            order = 4,
             type = "group",
             name = L["Special Achievements"],
             inline = true,
@@ -360,7 +406,7 @@ options.progression = {
             }
         },
         raid = {
-            order = 4,
+            order = 5,
             type = "group",
             name = L["Raid"],
             inline = true,
@@ -391,7 +437,7 @@ options.progression = {
             }
         },
         mythicPlus = {
-            order = 5,
+            order = 6,
             type = "group",
             name = L["Mythic Plus"],
             inline = true,

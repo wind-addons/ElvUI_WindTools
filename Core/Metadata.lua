@@ -1,11 +1,13 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local pairs = pairs
+local tinsert = tinsert
 local tostring = tostring
 
 local GetLocale = GetLocale
 local GetLFGDungeonInfo = GetLFGDungeonInfo
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
+local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
@@ -101,6 +103,8 @@ W.RaidData = {
     }
 }
 
+W.SpecializationInfo = {}
+
 function W:InitializeMetadata()
     for id in pairs(W.MythicPlusMapData) do
         local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(id)
@@ -124,6 +128,18 @@ function W:InitializeMetadata()
         local result = {GetLFGDungeonInfo(id)}
         W.RaidData[id].name = result[1]
         W.RaidData[id].idString = tostring(id)
+    end
+
+    for classID = 1, 13 do
+        local class = {}
+        for specIndex = 1, 4 do
+            local data = {GetSpecializationInfoForClassID(classID, specIndex)}
+            if #data > 0 then
+                tinsert(class, {specID = data[1], name = data[2], icon = data[4], role = data[5]})
+            end
+        end
+
+        tinsert(W.SpecializationInfo, class)
     end
 
     -- debug: check all achievements

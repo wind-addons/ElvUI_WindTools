@@ -1045,6 +1045,11 @@ P.quest = {
 }
 
 P.tooltips = {
+    elvUITweaks = {
+        forceItemLevel = true,
+        specIcon = true,
+        raceIcon = true,
+    },
     yOffsetOfHealthBar = 0,
     yOffsetOfHealthText = 0,
     groupInfo = {

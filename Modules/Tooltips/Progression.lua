@@ -41,7 +41,7 @@ local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
 
 local loadedComparison
-local compareGUID
+local comparingGUIDs = {}
 local cache = {}
 
 local inspectHistory = {}
@@ -120,7 +120,7 @@ local function UpdateProgression(guid, unit)
     -- Achievements
     if db.specialAchievement.enable then
         cache[guid].info.special = {}
-        for id, achievement in pairs(W.MythicPlusSeasonAchievementData) do
+        for id in pairs(W.MythicPlusSeasonAchievementData) do
             if db.specialAchievement[id] then
                 if guid == E.myguid then
                     Async.WithAchievementID(
@@ -365,7 +365,7 @@ function T:Progression(tt, unit, guid)
                 loadedComparison = true
             end
 
-            compareGUID = guid
+            comparingGUIDs[guid] = true
 
             if SetAchievementComparisonUnit(unit) then
                 T:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
@@ -378,20 +378,23 @@ function T:Progression(tt, unit, guid)
     SetProgressionInfo(tt, guid)
 end
 
-function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
+function T:INSPECT_ACHIEVEMENT_READY(_, guid)
     self:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 
-    if (compareGUID ~= GUID) then
+    if not comparingGUIDs[guid] then
         return
     end
+
+    comparingGUIDs[guid] = nil
 
     local unit = "mouseover"
 
     if UnitExists(unit) then
-        local race = select(3, UnitRace(unit))
-        UpdateProgression(GUID, unit)
+        UpdateProgression(guid, unit)
         _G.GameTooltip:SetUnit(unit)
     end
+
+    comparingGUIDs[guid] = nil
 
     ClearAchievementComparisonUnit()
 end

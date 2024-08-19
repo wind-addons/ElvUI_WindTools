@@ -36,7 +36,6 @@ local UnmuteSoundFile = UnmuteSoundFile
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
@@ -174,12 +173,14 @@ local function UpdateProgression(guid, unit)
         data = T:GetMythicPlusData(unit)
         if data then
             for _, run in pairs(data.runs) do
+                local bestRunLevelText = format("|cff%s%s|r", run.bestRunLevelColor, run.bestRunLevel)
+                if run.upgrades > 0 then
+                    for i = 1, run.upgrades do
+                        bestRunLevelText = "+" .. bestRunLevelText
+                    end
+                end
                 cache[guid].info.mythicPlus[run.challengeModeID] =
-                    format(
-                    "%s (%s)",
-                    run.scoreColor:WrapTextInColorCode(run.mapScore),
-                    format("|cff%s%s|r", run.levelColor, run.bestRunLevel)
-                )
+                    format("%s %s", bestRunLevelText, run.mapScoreColor:WrapTextInColorCode(run.mapScore))
             end
 
             cache[guid].info.mythicPlus.highestScoreDungeonID = data.highestScoreDungeonID
@@ -207,7 +208,12 @@ local function SetProgressionInfo(tt, guid)
 
         for id, data in pairs(W.MythicPlusSeasonAchievementData) do
             if db.specialAchievement[id] then
-                local left = format("|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.abbr)
+                local left =
+                    format(
+                    "%s %s",
+                    F.GetIconString(data.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
+                    data.abbr
+                )
                 local right = cache[guid].info.special[id]
 
                 if right then
@@ -241,8 +247,8 @@ local function SetProgressionInfo(tt, guid)
                         local diff = difficulties[difficulty]
                         local left =
                             format(
-                            "|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s |cff%s%s|r",
-                            data.tex,
+                            "%s %s |cff%s%s|r",
+                            F.GetIconString(data.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
                             data.abbr,
                             diff.color,
                             diff.name
@@ -281,7 +287,7 @@ local function SetProgressionInfo(tt, guid)
     end
 
     if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
-        local highestScoreDungeon = cache[guid].info.mythicPlus.highestScoreDungeonID
+        local highestScoreDungeonID = cache[guid].info.mythicPlus.highestScoreDungeonID
 
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
@@ -294,7 +300,12 @@ local function SetProgressionInfo(tt, guid)
 
         for id, data in pairs(W.MythicPlusMapData) do
             if db.mythicPlus[id] then
-                local left = format("|T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s", data.tex, data.abbr)
+                local left =
+                    format(
+                    "%s %s",
+                    F.GetIconString(data.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
+                    data.abbr
+                )
                 local right = cache[guid].info.mythicPlus[id]
 
                 if not right and db.mythicPlus.showNoRecord then
@@ -302,7 +313,7 @@ local function SetProgressionInfo(tt, guid)
                 end
 
                 if right then
-                    if highestScoreDungeon == id then
+                    if highestScoreDungeonID and highestScoreDungeonID == id then
                         right = starIconString .. right
                     end
                     tinsert(lines, {id, left, right})

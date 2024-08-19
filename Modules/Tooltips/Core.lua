@@ -32,9 +32,11 @@ local UnitRace = UnitRace
 local UnitReaction = UnitReaction
 local UnitSex = UnitSex
 
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local RAID_CLASS_COLORS_PRIEST = RAID_CLASS_COLORS.PRIEST
 
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
     C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 
@@ -91,7 +93,6 @@ function T:GetMythicPlusData(unit)
     end
     local now = time()
     if mythicPlusDataCache[guid] and now - mythicPlusDataCache[guid].updated < 60 then
-        print("GetMythicPlusData", unit, "from cache")
         return mythicPlusDataCache[guid]
     end
 
@@ -106,20 +107,34 @@ function T:GetMythicPlusData(unit)
     if data and data.runs then
         local highestScore, highestScoreDungeonID, highestScoreDungeonIndex
         for i, run in pairs(data.runs) do
+            local metadata = W.MythicPlusMapData[run.challengeModeID]
+
             if not highestScore or run.mapScore > highestScore then
                 highestScore = run.mapScore
                 highestScoreDungeon = run.challengeModeID
                 highestScoreDungeonIndex = i
             end
 
-            run.scoreColor =
+            if metadata and metadata.timers then
+                local sec = run.bestRunDurationMS / 1000
+                local timers = metadata.timers
+                run.upgrades = (sec <= timers[1] and 3) or (sec <= timers[2] and 2) or (run.finishedSuccess and 1) or 0
+            end
+
+            run.mapScoreColor =
                 C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(run.mapScore) or HIGHLIGHT_FONT_COLOR
-            run.levelColor = run.finishedSuccess and "ffffff" or "aaaaaa"
+            run.bestRunLevelColor = run.finishedSuccess and "ffffff" or "aaaaaa"
         end
 
-        data.highestScore = highestScore
-        data.highestScoreDungeonID = highestScoreDungeon
+        if highestScore then
+            data.highestScoreDungeonID = highestScoreDungeon
+            data.highestScoreDungeonIndex = highestScoreDungeonIndex
+        end
     end
+
+    data.currentSeasonScoreColor =
+        (ET.db.dungeonScoreColor and C_ChallengeMode_GetDungeonScoreRarityColor(data.currentSeasonScore)) or
+        HIGHLIGHT_FONT_COLOR
 
     mythicPlusDataCache[guid] = data
     return data
@@ -264,6 +279,66 @@ function ET.GameTooltip_OnTooltipSetUnit(...)
     T:InspectInfo(...)
 end
 
+function T:AddMythicInfo(mod, tt, unit)
+    if not self.profiledb or not self.profiledb.elvUITweaks.betterMythicPlusInfo then
+        return self.hooks[mod].AddMythicInfo(mod, tt, unit)
+    end
+
+    local data = self:GetMythicPlusData(unit)
+    if not data or not data.currentSeasonScore or data.currentSeasonScore <= 0 then
+        return self.hooks[mod].AddMythicInfo(mod, tt, unit)
+    end
+
+    if ET.db.dungeonScore then
+        tt:AddDoubleLine(
+            L["Mythic+ Score:"],
+            data.currentSeasonScore,
+            nil,
+            nil,
+            nil,
+            data.currentSeasonScoreColor.r,
+            data.currentSeasonScoreColor.g,
+            data.currentSeasonScoreColor.b
+        )
+    end
+
+    if ET.db.mythicBestRun then
+        local mapData = data.highestScoreDungeonID and W.MythicPlusMapData[data.highestScoreDungeonID]
+        local run = data.highestScoreDungeonIndex and data.runs and data.runs[data.highestScoreDungeonIndex]
+        if mapData and run then
+            local bestRunLevelText
+            if run.finishedSuccess and run.mapScoreColor then
+                bestRunLevelText = run.mapScoreColor:WrapTextInColorCode(run.bestRunLevel)
+            else
+                bestRunLevelText = format("|cff%s%s|r", run.bestRunLevelColor, run.bestRunLevel)
+            end
+            if bestRunLevelText then
+                for i = 1, run.upgrades do
+                    bestRunLevelText = "+" .. bestRunLevelText
+                end
+
+                local right =
+                    format(
+                    "%s %s | %s",
+                    F.GetIconString(mapData.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
+                    F.CreateColorString(mapData.abbr, E.db.general.valuecolor),
+                    bestRunLevelText
+                )
+                tt:AddDoubleLine(
+                    L["Mythic+ Best Run:"],
+                    right,
+                    nil,
+                    nil,
+                    nil,
+                    HIGHLIGHT_FONT_COLOR.r,
+                    HIGHLIGHT_FONT_COLOR.g,
+                    HIGHLIGHT_FONT_COLOR.b
+                )
+            end
+        end
+    end
+end
+
 local genderTable = {_G.UNKNOWN .. " ", _G.MALE .. " ", _G.FEMALE .. " "}
 
 function T:SetUnitText(_, tt, unit, isPlayerUnit)
@@ -358,6 +433,7 @@ function T:Initialize()
         T:RegisterEvent(name, "Event")
     end
 
+    T:RawHook(ET, "AddMythicInfo")
     T:SecureHook(ET, "SetUnitText", "SetUnitText")
     T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
     T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")

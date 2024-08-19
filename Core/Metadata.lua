@@ -41,14 +41,14 @@ W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 -- }
 
 W.MythicPlusMapData = {
-    [399] = {abbr = L["[ABBR] Ruby Life Pools"], activityID = 306},
-    [400] = {abbr = L["[ABBR] The Nokhud Offensive"], activityID = 308},
-    [401] = {abbr = L["[ABBR] The Azure Vault"], activityID = 307},
-    [402] = {abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302},
-    [403] = {abbr = L["[ABBR] Uldaman: Legacy of Tyr"], activityID = 309},
-    [404] = {abbr = L["[ABBR] Neltharus"], activityID = 305},
-    [405] = {abbr = L["[ABBR] Brackenhide Hollow"], activityID = 303},
-    [406] = {abbr = L["[ABBR] Halls of Infusion"], activityID = 304}
+    [399] = {abbr = L["[ABBR] Ruby Life Pools"], activityID = 306, timers = {1080, 1440, 1800}},
+    [400] = {abbr = L["[ABBR] The Nokhud Offensive"], activityID = 308, timers = {1440, 1920, 2400}},
+    [401] = {abbr = L["[ABBR] The Azure Vault"], activityID = 307, timers = {1350, 1800, 2250}},
+    [402] = {abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302, timers = {1152, 1536, 1920}},
+    [403] = {abbr = L["[ABBR] Uldaman: Legacy of Tyr"], activityID = 309, timers = {1260, 1680, 2100}},
+    [404] = {abbr = L["[ABBR] Neltharus"], activityID = 305, timers = {1188, 1584, 1980}},
+    [405] = {abbr = L["[ABBR] Brackenhide Hollow"], activityID = 303, timers = {1260, 1680, 2100}},
+    [406] = {abbr = L["[ABBR] Halls of Infusion"], activityID = 304, timers = {1260, 1680, 2100}}
 }
 
 W.MythicPlusSeasonAchievementData = {
@@ -107,10 +107,14 @@ W.SpecializationInfo = {}
 
 function W:InitializeMetadata()
     for id in pairs(W.MythicPlusMapData) do
-        local name, _, _, tex = C_ChallengeMode_GetMapUIInfo(id)
+        local name, _, timeLimit, tex = C_ChallengeMode_GetMapUIInfo(id)
         W.MythicPlusMapData[id].name = name
         W.MythicPlusMapData[id].tex = tex
         W.MythicPlusMapData[id].idString = tostring(id)
+        W.MythicPlusMapData[id].timeLimit = timeLimit
+        if W.MythicPlusMapData[id].timers then
+            W.MythicPlusMapData[id].timers[#W.MythicPlusMapData[id].timers] = timeLimit
+        end
     end
 
     for id in pairs(W.MythicPlusSeasonAchievementData) do

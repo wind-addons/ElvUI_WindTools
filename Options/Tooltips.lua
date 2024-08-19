@@ -69,6 +69,12 @@ options.general = {
                     type = "toggle",
                     name = L["Race Icon"],
                     desc = L["Show the icon of the player race."]
+                },
+                betterMythicPlusInfo = {
+                    order = 4,
+                    type = "toggle",
+                    name = L["Better Mythic+ Info"],
+                    desc = L["Enhance ElvUI Mythic Plus info with more details."]
                 }
             }
         },

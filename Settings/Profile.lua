@@ -1049,6 +1049,7 @@ P.tooltips = {
         forceItemLevel = true,
         specIcon = true,
         raceIcon = true,
+        betterMythicPlusInfo = true,
     },
     yOffsetOfHealthBar = 0,
     yOffsetOfHealthText = 0,

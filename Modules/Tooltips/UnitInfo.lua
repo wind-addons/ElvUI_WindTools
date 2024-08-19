@@ -25,7 +25,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
     end
 
     local etdb = self.profiledb and self.profiledb.elvUITweaks
-    if not etdb or etdb.specIcon and not etdb.raceIcon then -- No need to do anything
+    if not etdb or not etdb.specIcon and not etdb.raceIcon then -- No need to do anything
         return
     end
 

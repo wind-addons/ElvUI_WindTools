@@ -1469,6 +1469,8 @@ function ET:Initialize()
     EventRegistry:RegisterCallback("WorldMapOnShow", self.UpdateTrackers, self)
     EventRegistry:RegisterCallback("WorldMapMinimized", E.Delay, E, 0.1, self.UpdateTrackers, self)
     EventRegistry:RegisterCallback("WorldMapMaximized", E.Delay, E, 0.1, self.UpdateTrackers, self)
+    self:SecureHook(_G.QuestMapFrame, "Show", "UpdateTrackers")
+    self:SecureHook(_G.QuestMapFrame, "Hide", "UpdateTrackers")
 end
 
 function ET:ProfileUpdate()

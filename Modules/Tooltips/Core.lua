@@ -40,27 +40,19 @@ local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonSco
 local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
     C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 
-T.load = {} -- 毋须等待插件的函数表
-T.updateProfile = {} -- 配置更新后的函数表
+T.load = {} -- functions that need to be called when module is loaded
+T.updateProfile = {} -- functions that need to be called when profile is updated
 T.modifierInspect = {}
 T.normalInspect = {}
 T.clearInspect = {}
 T.eventCallback = {}
 
---[[
-    注册回调
-    @param {string} name 函数名
-    @param {function} [func=T.name] 回调函数
-]]
+local mythicPlusDataCache = {}
+
 function T:AddCallback(name, func)
     tinsert(self.load, func or self[name])
 end
 
---[[
-    注册更新回调
-    @param {string} name 函数名
-    @param {function} [func=T.name] 回调函数
-]]
 function T:AddCallbackForUpdate(name, func)
     tinsert(self.updateProfile, func or self[name])
 end
@@ -83,8 +75,6 @@ function T:AddInspectInfoCallback(priority, inspectFunction, useModifier, clearF
         self.clearInspect[priority] = clearFunction
     end
 end
-
-local mythicPlusDataCache = {}
 
 function T:GetMythicPlusData(unit)
     local guid = UnitGUID(unit)

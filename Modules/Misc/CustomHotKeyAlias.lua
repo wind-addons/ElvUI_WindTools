@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local M = W.Modules.Misc
 local AB = E.ActionBars
 
+local _G = _G
 local pairs = pairs
 
 local buttons = {}

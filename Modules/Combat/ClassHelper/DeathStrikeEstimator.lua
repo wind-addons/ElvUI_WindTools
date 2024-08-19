@@ -28,10 +28,10 @@ local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
 -------------------------------------------------------------------------------
 -- Functions
 -------------------------------------------------------------------------------
-local function getPlayerAura(spell, filter)
+local function getPlayerAura(spellID, filter)
     for i = 1, 255 do
         local auraData = C_UnitAuras_GetAuraDataByIndex("player", i, filter)
-        if auraData and auraData.spellId == spellId then
+        if auraData and auraData.spellId == spellID then
             return auraData.name, auraData.applications
         end
     end
@@ -256,8 +256,8 @@ function damageDB:calculate()
 
     -- Multiply Auras
     local aura_mult = 1
-    for spellId, param in pairs(helper.env.auras) do
-        local name, stacks = getPlayerAura(spellId, param.isDebuff and "HARMFUL" or "HELPFUL")
+    for spellID, param in pairs(helper.env.auras) do
+        local name, stacks = getPlayerAura(spellID, param.isDebuff and "HARMFUL" or "HELPFUL")
         if name then
             aura_mult = aura_mult * (1 + (param.mod * (param.perStack and stacks or 1)))
         end

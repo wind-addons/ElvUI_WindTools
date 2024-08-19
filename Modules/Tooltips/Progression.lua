@@ -170,7 +170,7 @@ local function UpdateProgression(guid, unit)
     -- Mythic Plus
     if db.mythicPlus.enable then
         cache[guid].info.mythicPlus = {}
-        data = T:GetMythicPlusData(unit)
+        local data = T:GetMythicPlusData(unit)
         if data then
             for _, run in pairs(data.runs) do
                 local bestRunLevelText = format("|cff%s%s|r", run.bestRunLevelColor, run.bestRunLevel)

@@ -2,6 +2,8 @@
 	<!-- Core -->
 	<Script file='Core.lua'/>
 	<!-- Submodule -->
+	<Script file='MythicPlus.lua'/>
+	<Script file='UnitInfo.lua'/>
 	<Script file='GroupInfo.lua'/>
 	<Script file='HealthBar.lua'/>
 	<Script file='Icons.lua'/>

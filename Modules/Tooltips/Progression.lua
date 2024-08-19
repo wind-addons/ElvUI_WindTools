@@ -351,14 +351,13 @@ function T:Progression(tt, unit, guid)
                 ClearAchievementComparisonUnit()
                 HideUIPanel(_G.AchievementFrame)
                 E:Delay(
-                    1,
+                    0.5,
                     function()
+                        UnmuteSoundFile(567511)
+                        UnmuteSoundFile(567509)
                         if _G.AchievementFrame and _G.AchievementFrame:IsShown() then
                             HideUIPanel(_G.AchievementFrame)
                         end
-
-                        UnmuteSoundFile(567511)
-                        UnmuteSoundFile(567509)
                     end
                 )
             end

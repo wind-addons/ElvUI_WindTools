@@ -72,6 +72,119 @@ do
 	end
 end
 
+do
+	local raceAtlasMap = {
+		["Human"] = {
+			["Male"] = "raceicon128-human-male",
+			["Female"] = "raceicon128-human-female"
+		},
+		["Orc"] = {
+			["Male"] = "raceicon128-orc-male",
+			["Female"] = "raceicon128-orc-female"
+		},
+		["Dwarf"] = {
+			["Male"] = "raceicon128-dwarf-male",
+			["Female"] = "raceicon128-dwarf-female"
+		},
+		["NightElf"] = {
+			["Male"] = "raceicon128-nightelf-male",
+			["Female"] = "raceicon128-nightelf-female"
+		},
+		["Scourge"] = {
+			["Male"] = "raceicon128-undead-male",
+			["Female"] = "raceicon128-undead-female"
+		},
+		["Tauren"] = {
+			["Male"] = "raceicon128-tauren-male",
+			["Female"] = "raceicon128-tauren-female"
+		},
+		["Gnome"] = {
+			["Male"] = "raceicon128-gnome-male",
+			["Female"] = "raceicon128-gnome-female"
+		},
+		["Troll"] = {
+			["Male"] = "raceicon128-troll-male",
+			["Female"] = "raceicon128-troll-female"
+		},
+		["Goblin"] = {
+			["Male"] = "raceicon128-goblin-male",
+			["Female"] = "raceicon128-goblin-female"
+		},
+		["BloodElf"] = {
+			["Male"] = "raceicon128-bloodelf-male",
+			["Female"] = "raceicon128-bloodelf-female"
+		},
+		["Draenei"] = {
+			["Male"] = "raceicon128-draenei-male",
+			["Female"] = "raceicon128-draenei-female"
+		},
+		["Worgen"] = {
+			["Male"] = "raceicon128-worgen-male",
+			["Female"] = "raceicon128-worgen-female"
+		},
+		["Pandaren"] = {
+			["Male"] = "raceicon128-pandaren-male",
+			["Female"] = "raceicon128-pandaren-female"
+		},
+		["Nightborne"] = {
+			["Male"] = "raceicon128-nightborne-male",
+			["Female"] = "raceicon128-nightborne-female"
+		},
+		["HighmountainTauren"] = {
+			["Male"] = "raceicon128-highmountain-male",
+			["Female"] = "raceicon128-highmountain-female"
+		},
+		["VoidElf"] = {
+			["Male"] = "raceicon128-voidelf-male",
+			["Female"] = "raceicon128-voidelf-female"
+		},
+		["LightforgedDraenei"] = {
+			["Male"] = "raceicon128-lightforged-male",
+			["Female"] = "raceicon128-lightforged-female"
+		},
+		["ZandalariTroll"] = {
+			["Male"] = "raceicon128-zandalari-male",
+			["Female"] = "raceicon128-zandalari-female"
+		},
+		["KulTiran"] = {
+			["Male"] = "raceicon128-kultiran-male",
+			["Female"] = "raceicon128-kultiran-female"
+		},
+		["DarkIronDwarf"] = {
+			["Male"] = "raceicon128-darkirondwarf-male",
+			["Female"] = "raceicon128-darkirondwarf-female"
+		},
+		["Vulpera"] = {
+			["Male"] = "raceicon128-vulpera-male",
+			["Female"] = "raceicon128-vulpera-female"
+		},
+		["MagharOrc"] = {
+			["Male"] = "raceicon128-magharorc-male",
+			["Female"] = "raceicon128-magharorc-female"
+		},
+		["Mechagnome"] = {
+			["Male"] = "raceicon128-mechagnome-male",
+			["Female"] = "raceicon128-mechagnome-female"
+		},
+		["Dracthyr"] = {
+			["Male"] = "raceicon128-dracthyr-male",
+			["Female"] = "raceicon128-dracthyr-female"
+		},
+		["EarthenDwarf"] = {
+			["Male"] = "raceicon128-earthen-male",
+			["Female"] = "raceicon128-earthen-female"
+		}
+	}
+
+	function F.GetRaceAtlasString(englishRace, gender, height, width)
+		local englishGender = gender == 2 and "Male" or gender == 3 and "Female"
+		if not englishGender or not englishRace or not raceAtlasMap[englishRace] then
+			return
+		end
+		return format("|A:%s:%d:%d|a", raceAtlasMap[englishRace][englishGender], height or 16, width or 16)
+	end
+end
+
 function F.GetCompatibleFont(name)
 	return name .. (W.CompatibleFont and " (en)" or "")
 end

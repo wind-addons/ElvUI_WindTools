@@ -40,7 +40,6 @@ local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
 
-local loadedComparison
 local comparingGUIDs = {}
 local cache = {}
 
@@ -55,6 +54,7 @@ local difficulties = {
 }
 
 local function AchievementFrameComparison_SetUnit(unit)
+    T.comparisonLoaded = true
     lastUpdatedPlayer.guid = UnitGUID(unit)
     lastUpdatedPlayer.name = UnitName(unit)
 end
@@ -79,7 +79,6 @@ local function OnAchievementShow(frame)
                 if time() - runTime < 5 then
                     ClearAchievementComparisonUnit()
                     HideUIPanel(frame)
-                    T:Log("debug", "Close AchievementFrame")
                 end
             end
         end
@@ -345,7 +344,7 @@ function T:Progression(tt, unit, guid)
         else
             ClearAchievementComparisonUnit()
 
-            if not loadedComparison and select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
+            if not self.comparisonLoaded and select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
                 MuteSoundFile(567511)
                 MuteSoundFile(567509)
                 _G.AchievementFrame_DisplayComparison(unit)
@@ -362,7 +361,6 @@ function T:Progression(tt, unit, guid)
                         UnmuteSoundFile(567509)
                     end
                 )
-                loadedComparison = true
             end
 
             comparingGUIDs[guid] = true

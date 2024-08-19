@@ -19,7 +19,6 @@ local tonumber = tonumber
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
 local GetAchievementComparisonInfo = GetAchievementComparisonInfo
-local GetAchievementInfo = GetAchievementInfo
 local GetComparisonStatistic = GetComparisonStatistic
 local GetStatistic = GetStatistic
 local GetTime = GetTime
@@ -31,7 +30,6 @@ local UnitExists = UnitExists
 local UnitGUID = UnitGUID
 local UnitLevel = UnitLevel
 local UnitName = UnitName
-local UnitRace = UnitRace
 local UnmuteSoundFile = UnmuteSoundFile
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded

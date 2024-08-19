@@ -354,8 +354,8 @@ function T:Progression(tt, unit, guid)
             ClearAchievementComparisonUnit()
 
             if not loadedComparison and select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
-                MuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_OPEN)
-                MuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_CLOSE)
+                MuteSoundFile(567511)
+                MuteSoundFile(567509)
                 _G.AchievementFrame_DisplayComparison(unit)
                 ClearAchievementComparisonUnit()
                 HideUIPanel(_G.AchievementFrame)
@@ -366,8 +366,8 @@ function T:Progression(tt, unit, guid)
                             HideUIPanel(_G.AchievementFrame)
                         end
 
-                        UnmuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_OPEN)
-                        UnmuteSoundFile(SOUNDKIT_ACHIEVEMENT_MENU_CLOSE)
+                        UnmuteSoundFile(567511)
+                        UnmuteSoundFile(567509)
                     end
                 )
                 loadedComparison = true

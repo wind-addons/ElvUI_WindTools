@@ -291,7 +291,7 @@ function T:AddMythicInfo(mod, tt, unit)
 
     if ET.db.dungeonScore then
         tt:AddDoubleLine(
-            L["Mythic+ Score:"],
+            L["M+ Score"],
             data.currentSeasonScore,
             nil,
             nil,
@@ -325,7 +325,7 @@ function T:AddMythicInfo(mod, tt, unit)
                     bestRunLevelText
                 )
                 tt:AddDoubleLine(
-                    L["Mythic+ Best Run:"],
+                    L["M+ Best Run"],
                     right,
                     nil,
                     nil,

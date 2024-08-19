@@ -171,32 +171,19 @@ local function UpdateProgression(guid, unit)
     -- Mythic Plus
     if db.mythicPlus.enable then
         cache[guid].info.mythicPlus = {}
-        local summary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
-        local runs = summary and summary.runs
-        local highestScore, highestScoreDungeon
-
-        if runs then
-            for _, info in ipairs(runs) do
-                local scoreColor =
-                    C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(info.mapScore) or HIGHLIGHT_FONT_COLOR
-                local levelColor = info.finishedSuccess and "|cffffffff" or "|cffaaaaaa"
-                cache[guid].info.mythicPlus[info.challengeModeID] =
+        data = T:GetMythicPlusData(unit)
+        if data then
+            for _, run in pairs(data.runs) do
+                cache[guid].info.mythicPlus[run.challengeModeID] =
                     format(
                     "%s (%s)",
-                    scoreColor:WrapTextInColorCode(info.mapScore),
-                    levelColor .. info.bestRunLevel .. "|r"
+                    run.scoreColor:WrapTextInColorCode(run.mapScore),
+                    format("|cff%s%s|r", run.levelColor, run.bestRunLevel)
                 )
-
-                if db.mythicPlus.markHighestScore then
-                    if not highestScore or info.mapScore > highestScore then
-                        highestScore = info.mapScore
-                        highestScoreDungeon = info.challengeModeID
-                    end
-                end
             end
-        end
 
-        cache[guid].info.mythicPlus.highestScoreDungeon = highestScoreDungeon
+            cache[guid].info.mythicPlus.highestScoreDungeonID = data.highestScoreDungeonID
+        end
     end
 end
 
@@ -294,7 +281,7 @@ local function SetProgressionInfo(tt, guid)
     end
 
     if db.mythicPlus.enable and cache[guid].info.mythicPlus and displayMythicPlus then
-        local highestScoreDungeon = cache[guid].info.mythicPlus.highestScoreDungeon
+        local highestScoreDungeon = cache[guid].info.mythicPlus.highestScoreDungeonID
 
         tt:AddLine(" ")
         if db.header == "TEXTURE" then
@@ -315,7 +302,7 @@ local function SetProgressionInfo(tt, guid)
                 end
 
                 if right then
-                    if highestScoreDungeon and highestScoreDungeon == id then
+                    if highestScoreDungeon == id then
                         right = starIconString .. right
                     end
                     tinsert(lines, {id, left, right})
@@ -397,7 +384,6 @@ function T:INSPECT_ACHIEVEMENT_READY(event, GUID)
 
     ClearAchievementComparisonUnit()
 end
-
 
 function T:InitializeProgression()
     if not E.private.WT.tooltips.progression.enable then

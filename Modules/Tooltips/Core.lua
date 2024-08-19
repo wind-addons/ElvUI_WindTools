@@ -34,6 +34,10 @@ local UnitSex = UnitSex
 
 local RAID_CLASS_COLORS_PRIEST = RAID_CLASS_COLORS.PRIEST
 
+local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
+    C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
+
 T.load = {} -- 毋须等待插件的函数表
 T.updateProfile = {} -- 配置更新后的函数表
 T.modifierInspect = {}
@@ -76,6 +80,49 @@ function T:AddInspectInfoCallback(priority, inspectFunction, useModifier, clearF
         end
         self.clearInspect[priority] = clearFunction
     end
+end
+
+local mythicPlusDataCache = {}
+
+function T:GetMythicPlusData(unit)
+    local guid = UnitGUID(unit)
+    if not guid then
+        return
+    end
+    local now = time()
+    if mythicPlusDataCache[guid] and now - mythicPlusDataCache[guid].updated < 60 then
+        print("GetMythicPlusData", unit, "from cache")
+        return mythicPlusDataCache[guid]
+    end
+
+    local data = C_PlayerInfo_GetPlayerMythicPlusRatingSummary(unit)
+    if not data then
+        return
+    end
+    data.updated = now
+
+    local runs = data and data.runs
+
+    if data and data.runs then
+        local highestScore, highestScoreDungeonID, highestScoreDungeonIndex
+        for i, run in pairs(data.runs) do
+            if not highestScore or run.mapScore > highestScore then
+                highestScore = run.mapScore
+                highestScoreDungeon = run.challengeModeID
+                highestScoreDungeonIndex = i
+            end
+
+            run.scoreColor =
+                C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(run.mapScore) or HIGHLIGHT_FONT_COLOR
+            run.levelColor = run.finishedSuccess and "ffffff" or "aaaaaa"
+        end
+
+        data.highestScore = highestScore
+        data.highestScoreDungeonID = highestScoreDungeon
+    end
+
+    mythicPlusDataCache[guid] = data
+    return data
 end
 
 function T:ClearInspectInfo(tt)

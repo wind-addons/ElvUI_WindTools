@@ -35,15 +35,9 @@ local UnitRace = UnitRace
 local UnmuteSoundFile = UnmuteSoundFile
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
-local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
-    C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
-local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
-local SOUNDKIT_ACHIEVEMENT_MENU_OPEN = SOUNDKIT.ACHIEVEMENT_MENU_OPEN
-local SOUNDKIT_ACHIEVEMENT_MENU_CLOSE = SOUNDKIT.ACHIEVEMENT_MENU_CLOSE
 
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
 

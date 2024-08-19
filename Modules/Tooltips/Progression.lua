@@ -13,7 +13,6 @@ local pairs = pairs
 local select = select
 local sort = sort
 local tinsert = tinsert
-local time = time
 local tonumber = tonumber
 
 local AchievementFrame_LoadUI = AchievementFrame_LoadUI
@@ -74,7 +73,7 @@ local function OnAchievementShow(frame)
 
             if targetName == lastUpdatedPlayer.name then
                 local runTime = inspectHistory[lastUpdatedPlayer.guid] or 0
-                if time() - runTime < 5 then
+                if GetTime() - runTime < 1.5 then
                     ClearAchievementComparisonUnit()
                     HideUIPanel(frame)
                 end
@@ -127,7 +126,7 @@ local function UpdateProgression(guid, unit)
                         end
                     )
                 else
-                    inspectHistory[guid] = time()
+                    inspectHistory[guid] = GetTime()
                     UpdateSpecialAchievement(guid, id, GetAchievementComparisonInfo(id))
                 end
             end
@@ -353,9 +352,7 @@ function T:Progression(tt, unit, guid)
                     function()
                         UnmuteSoundFile(567511)
                         UnmuteSoundFile(567509)
-                        if _G.AchievementFrame and _G.AchievementFrame:IsShown() then
-                            HideUIPanel(_G.AchievementFrame)
-                        end
+                        HideUIPanel(_G.AchievementFrame)
                     end
                 )
             end
@@ -394,6 +391,13 @@ function T:INSPECT_ACHIEVEMENT_READY(_, guid)
     ClearAchievementComparisonUnit()
 end
 
+function T:AchievementFrameComparison_UpdateStatusBars(id)
+    if id and id == "summary" then
+        return
+    end
+    self.hooks.AchievementFrameComparison_UpdateStatusBars(id)
+end
+
 function T:InitializeProgression()
     if not E.private.WT.tooltips.progression.enable then
         return
@@ -401,6 +405,9 @@ function T:InitializeProgression()
 
     if not C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI") then
         AchievementFrame_LoadUI()
+        if select(2, C_AddOns_IsAddOnLoaded("Blizzard_AchievementUI")) then
+            self:RawHook("AchievementFrameComparison_UpdateStatusBars", true)
+        end
     end
 
     hooksecurefunc("AchievementFrameComparison_SetUnit", AchievementFrameComparison_SetUnit)

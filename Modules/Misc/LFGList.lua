@@ -45,13 +45,13 @@ local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonSco
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetAdvancedFilter = C_LFGList.GetAdvancedFilter
 local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
+local C_LFGList_GetAvailableActivityGroups = C_LFGList.GetAvailableActivityGroups
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
-local C_LFGList_GetAvailableActivityGroups = C_LFGList.GetAvailableActivityGroups
 local Enum_LFGListFilter = Enum.LFGListFilter
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS

@@ -1,14 +1,10 @@
 local W, F, E, L = unpack((select(2, ...)))
-local ET = E:GetModule("Tooltip")
 local UF = E:GetModule("UnitFrames")
 local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
-local _G = _G
 local format = format
 local ipairs = ipairs
-
-local LibStub = LibStub
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
@@ -26,6 +22,10 @@ end
 function T:AddGroupInfo(tooltip, resultID)
     local config = E.db.WT.tooltips.groupInfo
     if not config or not config.enable then
+        return
+    end
+
+    if config.excludeDungeon and LFGPI:IsIDDungeons(resultID) then
         return
     end
 

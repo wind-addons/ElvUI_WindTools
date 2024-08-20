@@ -11,9 +11,12 @@ local tonumber = tonumber
 local tostring = tostring
 
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
+
+local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 
+local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 -- Initialize
@@ -146,6 +149,12 @@ function U:Update(resultID)
 
         self.cache:AddPlayer(role, class, spec)
     end
+end
+
+function U:IsIDDungeons(resultID)
+    local result = C_LFGList_GetSearchResultInfo(resultID)
+    local activity = C_LFGList_GetActivityInfoTable(result.activityID)
+    return activity and activity.categoryID == GROUP_FINDER_CATEGORY_ID_DUNGEONS
 end
 
 function U:Conduct(template, role, class, spec, amount)

@@ -134,47 +134,6 @@ function W:CheckInstalledVersion()
 end
 
 function W:GameFixing()
-    -- -- fix duplicated party in lfg frame
-    -- -- from: https://wago.io/tWVx_hIx3/4
-    if E.global.WT.core.noDuplicatedParty then
-        if not _G["ShowLFGRemoveDuplicates"] and not C_AddOns_IsAddOnLoaded("LFMPlus") then
-            hooksecurefunc(
-                "LFGListUtil_SortSearchResults",
-                function(results, ...)
-                    if (not _G.LFGListFrame.SearchPanel:IsShown()) then
-                        return
-                    end
-
-                    local applications = {}
-
-                    for _, resultId in ipairs(_G.LFGListFrame.SearchPanel.applications) do
-                        applications[resultId] = true
-                    end
-
-                    local resultCount = #results
-                    local filteredCount = 0
-                    local filtered = {}
-
-                    for _, resultId in ipairs(results) do
-                        if not applications[resultId] then
-                            filteredCount = filteredCount + 1
-                            filtered[filteredCount] = resultId
-                        end
-                    end
-                    if filteredCount < resultCount then
-                        wipe(results)
-
-                        for i = 1, filteredCount do
-                            results[i] = filtered[i]
-                        end
-                    end
-                end
-            )
-
-            _G["ShowLFGRemoveDuplicates"] = true
-        end
-    end
-
     -- fix playstyle string
     -- from Premade Groups Filter & LFMPlus
 

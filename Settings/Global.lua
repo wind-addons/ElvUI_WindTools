@@ -5,8 +5,7 @@ G.core = {
     cvarAlert = false,
     fixPlaystyle = true,
     logLevel = 2,
-    loginMessage = true,
-    noDuplicatedParty = false
+    loginMessage = true
 }
 
 G.item = {

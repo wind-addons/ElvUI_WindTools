@@ -92,22 +92,8 @@ options.gameFix = {
             end,
             width = "full"
         },
-        noDuplicatedParty = {
-            order = 2,
-            type = "toggle",
-            name = L["Fix duplicated party in lfg frame"],
-            desc = L["Fix the bug that you will see duplicated party in lfg frame."],
-            get = function(info)
-                return E.global.WT.core.noDuplicatedParty
-            end,
-            set = function(info, value)
-                E.global.WT.core.noDuplicatedParty = value
-                E:StaticPopup_Show("PRIVATE_RL")
-            end,
-            width = "full"
-        },
         fixPlaystyle = {
-            order = 3,
+            order = 2,
             type = "toggle",
             name = L["Fix PlaystyleString Lua Error"],
             desc = L["Fix the bug that you will see Lua error when you using LFG frame."],

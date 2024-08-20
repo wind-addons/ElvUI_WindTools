@@ -1164,7 +1164,7 @@ P.misc = {
         offsetX = 0,
         offsetY = 0
     },
-    customHotKeyAlias = {
+    keybindAlias = {
         enable = false,
         list = {}
     }

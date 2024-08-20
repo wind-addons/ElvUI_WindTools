@@ -2143,19 +2143,16 @@ options.cooldownTextOffset = {
 
 local selected, fromHotKey, toHotKey = nil, nil, nil
 
-options.customHotKeyAlias = {
+options.keybindAlias = {
     order = 11,
     type = "group",
-    name = L["Custom HotKey Alias"],
+    name = L["Keybind Alias"],
     get = function(info)
-        return E.db.WT.misc.customHotKeyAlias[info[#info]]
+        return E.db.WT.misc.keybindAlias[info[#info]]
     end,
     set = function(info, value)
-        E.db.WT.misc.customHotKeyAlias[info[#info]] = value
-        M:UpdateAllHotKeyText()
-    end,
-    disabled = function()
-        return not E.db.WT.misc.customHotKeyAlias.enable
+        E.db.WT.misc.keybindAlias[info[#info]] = value
+        M:UpdateAllKeybindText()
     end,
     args = {
         desc = {
@@ -2176,8 +2173,7 @@ options.customHotKeyAlias = {
             order = 2,
             type = "toggle",
             name = L["Enable"],
-            width = "full",
-            disabled = false
+            width = "full"
         },
         dropdown = {
             order = 3,
@@ -2186,7 +2182,7 @@ options.customHotKeyAlias = {
             width = 1.5,
             values = function()
                 local list = {}
-                for k, v in pairs(E.db.WT.misc.customHotKeyAlias.list) do
+                for k, v in pairs(E.db.WT.misc.keybindAlias.list) do
                     list[k] = C.StringByTemplate(v, "primary") .. ": " .. k
                 end
                 return list
@@ -2194,8 +2190,11 @@ options.customHotKeyAlias = {
             get = function()
                 return selected
             end,
-            set = function(info, value)
+            set = function(_, value)
                 selected = value
+            end,
+            disabled = function()
+                return not E.db.WT.misc.keybindAlias.enable
             end
         },
         remove = {
@@ -2205,10 +2204,13 @@ options.customHotKeyAlias = {
             desc = L["Remove the selected alias."],
             func = function()
                 if selected then
-                    E.db.WT.misc.customHotKeyAlias.list[selected] = nil
+                    E.db.WT.misc.keybindAlias.list[selected] = nil
                     selected = nil
-                    M:UpdateAllHotKeyText()
+                    M:UpdateAllKeybindText()
                 end
+            end,
+            disabled = function()
+                return not E.db.WT.misc.keybindAlias.enable
             end
         },
         devide = {
@@ -2227,6 +2229,9 @@ options.customHotKeyAlias = {
             end,
             set = function(_, value)
                 fromHotKey = value
+            end,
+            disabled = function()
+                return not E.db.WT.misc.keybindAlias.enable
             end
         },
         alias = {
@@ -2239,6 +2244,9 @@ options.customHotKeyAlias = {
             end,
             set = function(_, value)
                 toHotKey = value
+            end,
+            disabled = function()
+                return not E.db.WT.misc.keybindAlias.enable
             end
         },
         addOrUpdate = {
@@ -2247,10 +2255,13 @@ options.customHotKeyAlias = {
             name = L["Add / Update"],
             func = function()
                 if fromHotKey and toHotKey then
-                    E.db.WT.misc.customHotKeyAlias.list[fromHotKey] = toHotKey
+                    E.db.WT.misc.keybindAlias.list[fromHotKey] = toHotKey
                     fromHotKey, toHotKey = nil, nil
-                    M:UpdateAllHotKeyText()
+                    M:UpdateAllKeybindText()
                 end
+            end,
+            disabled = function()
+                return not E.db.WT.misc.keybindAlias.enable
             end
         }
     }

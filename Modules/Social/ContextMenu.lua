@@ -96,6 +96,7 @@ CM.Features = {
             RAID_PLAYER = true,
             RAID = true,
             FRIEND = true,
+            ENEMY_PLAYER = true,
             BN_FRIEND = true,
             CHAT_ROSTER = true,
             TARGET = true,

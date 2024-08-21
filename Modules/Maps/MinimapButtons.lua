@@ -7,9 +7,9 @@ local _G = _G
 local ceil = ceil
 local floor = floor
 local min = min
+local pcall = pcall
 local pairs = pairs
 local print = print
-local select = select
 local sort = sort
 local strfind = strfind
 local strlen = strlen
@@ -27,7 +27,6 @@ local UnregisterStateDriver = UnregisterStateDriver
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
--- 忽略列表
 local IgnoreList = {
     full = {
         "AsphyxiaUIMinimapHelpButton",
@@ -74,7 +73,6 @@ local TexCoordIgnoreList = {
     ["ZygorGuidesViewerMapIcon"] = true
 }
 
--- 框架名白名单
 local whiteList = {}
 
 local acceptedFrames = {
@@ -85,7 +83,6 @@ local moveButtons = {}
 
 function MB:OnButtonSetShown(button, shown)
     local btnName = button:GetName()
-    local found = false
 
     for i, moveButtonName in pairs(moveButtons) do
         if btnName == moveButtonName then
@@ -399,8 +396,10 @@ function MB:SkinButton(frame)
                         region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
                     end
 
-                    if not TexCoordIgnoreList[name] then
-                        region:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+                    if not TexCoordIgnoreList[name] and region:GetNumMaskTextures() == 0 then
+                        -- even checked the mask textures, some icons still have mask textures???
+                        -- ignore the error for now
+                        pcall(region.SetTexCoord, region, 0.1, 0.9, 0.1, 0.9)
                     end
 
                     region:ClearAllPoints()
@@ -631,19 +630,18 @@ function MB:SkinMinimapButtons()
 end
 
 function MB:UpdateMouseOverConfig()
-    -- 鼠标显隐功能
     if self.db.mouseOver then
         self.bar:SetScript(
             "OnEnter",
-            function(self)
-                E:UIFrameFadeIn(self, (1 - self:GetAlpha()) * 0.382, self:GetAlpha(), 1)
+            function(bar)
+                E:UIFrameFadeIn(bar, (1 - bar:GetAlpha()) * 0.382, bar:GetAlpha(), 1)
             end
         )
 
         self.bar:SetScript(
             "OnLeave",
-            function(self)
-                E:UIFrameFadeOut(self, self:GetAlpha() * 0.382, self:GetAlpha(), 0)
+            function(bar)
+                E:UIFrameFadeOut(bar, bar:GetAlpha() * 0.382, bar:GetAlpha(), 0)
             end
         )
 

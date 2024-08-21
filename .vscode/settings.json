@@ -1,0 +1,6 @@
+{
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  },
+  "Lua.diagnostics.enable": false
+}

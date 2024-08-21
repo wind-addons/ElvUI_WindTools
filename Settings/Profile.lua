@@ -1115,7 +1115,8 @@ P.misc = {
         visibility = "[petbattle] hide; show",
         tooltipsAnchor = "ANCHOR_BOTTOM",
         friends = {
-            showAllFriends = false
+            showAllFriends = false,
+            countSubAccounts = true
         },
         time = {
             localTime = true,

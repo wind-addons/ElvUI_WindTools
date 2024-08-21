@@ -25,7 +25,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
     end
 
     local etdb = self.profiledb and self.profiledb.elvUITweaks
-    if not etdb or not etdb.specIcon and not etdb.raceIcon then -- No need to do anything
+    if not etdb or not etdb.specIcon.enable and not etdb.raceIcon.enable then -- No need to do anything
         return
     end
 
@@ -44,8 +44,9 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
         local hexColor = E:RGBToHex(diffColor.r, diffColor.g, diffColor.b)
         local unitGender = ET.db.gender and genderTable[gender]
 
-        if etdb.raceIcon then
-            local raceIcon = F.GetRaceAtlasString(englishRace, gender, ET.db.textFontSize, ET.db.textFontSize)
+        if etdb.raceIcon.enable then
+            local raceIcon =
+                F.GetRaceAtlasString(englishRace, gender, etdb.raceIcon.iconHeight, etdb.raceIcon.iconWidth)
             if raceIcon then
                 race = raceIcon .. " " .. race
             end
@@ -78,7 +79,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
             local specIcon
 
             -- Because inspect need some extra time, we can extract the sepcialization info just from the text
-            if etdb.specIcon and classID and W.SpecializationInfo[classID] then
+            if etdb.specIcon.enable and classID and W.SpecializationInfo[classID] then
                 for _, spec in ipairs(W.SpecializationInfo[classID]) do
                     if strfind(specText, spec.name) then
                         specIcon = spec.icon
@@ -88,7 +89,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
             end
 
             if specIcon then
-                local iconString = F.GetIconString(specIcon, ET.db.textFontSize, ET.db.textFontSize + 3, true)
+                local iconString = F.GetIconString(specIcon, etdb.specIcon.iconHeight, etdb.specIcon.iconWidth, true)
                 specText = iconString .. " " .. specText
             end
 

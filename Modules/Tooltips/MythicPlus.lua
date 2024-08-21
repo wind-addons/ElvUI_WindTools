@@ -5,7 +5,7 @@ local T = W.Modules.Tooltips
 local format = format
 local strrep = strrep
 local time = time
-local pairs= pairs
+local pairs = pairs
 
 local UnitGUID = UnitGUID
 
@@ -71,7 +71,9 @@ function T:GetMythicPlusData(unit)
 end
 
 function T:AddMythicInfo(mod, tt, unit)
-    if not self.profiledb or not self.profiledb.elvUITweaks.betterMythicPlusInfo then
+    local db = self.profiledb and self.profiledb.elvUITweaks.betterMythicPlusInfo
+
+    if not db or not db.enable then
         return self.hooks[mod].AddMythicInfo(mod, tt, unit)
     end
 
@@ -109,12 +111,12 @@ function T:AddMythicInfo(mod, tt, unit)
                 end
 
                 local right =
-                    format(
-                    "%s %s %s",
-                    F.GetIconString(mapData.tex, ET.db.textFontSize, ET.db.textFontSize + 3, true),
-                    F.CreateColorString(mapData.abbr, E.db.general.valuecolor),
-                    bestRunLevelText
-                )
+                    format("%s %s", F.CreateColorString(mapData.abbr, E.db.general.valuecolor), bestRunLevelText)
+
+                if db.icon then
+                    local iconString = F.GetIconString(mapData.tex, db.iconHeight, db.iconWidth, true)
+                    right = iconString .. " " .. right
+                end
                 tt:AddDoubleLine(
                     L["M+ Best Run"],
                     right,

@@ -1047,9 +1047,22 @@ P.quest = {
 P.tooltips = {
     elvUITweaks = {
         forceItemLevel = true,
-        specIcon = true,
-        raceIcon = true,
-        betterMythicPlusInfo = true
+        raceIcon = {
+            enable = true,
+            iconWidth = 16,
+            iconHeight = 16
+        },
+        specIcon = {
+            enable = true,
+            iconWidth = 16,
+            iconHeight = 14
+        },
+        betterMythicPlusInfo = {
+            enable = true,
+            icon = true,
+            iconWidth = 18,
+            iconHeight = 16
+        }
     },
     yOffsetOfHealthBar = 0,
     yOffsetOfHealthText = 0,

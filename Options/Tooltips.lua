@@ -60,21 +60,117 @@ options.general = {
                 },
                 specIcon = {
                     order = 2,
-                    type = "toggle",
+                    type = "group",
                     name = L["Spec Icon"],
-                    desc = L["Show the icon of the specialization."]
+                    inline = true,
+                    get = function(info)
+                        return E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            desc = L["Show the icon of the specialization."]
+                        },
+                        iconWidth = {
+                            order = 2,
+                            type = "range",
+                            name = L["Icon Width"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        },
+                        iconHeight = {
+                            order = 3,
+                            type = "range",
+                            name = L["Icon Height"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        }
+                    }
                 },
                 raceIcon = {
                     order = 3,
-                    type = "toggle",
+                    type = "group",
                     name = L["Race Icon"],
-                    desc = L["Show the icon of the player race."]
+                    inline = true,
+                    get = function(info)
+                        return E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            desc = L["Show the icon of the player race."]
+                        },
+                        iconWidth = {
+                            order = 2,
+                            type = "range",
+                            name = L["Icon Width"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        },
+                        iconHeight = {
+                            order = 3,
+                            type = "range",
+                            name = L["Icon Height"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        }
+                    }
                 },
                 betterMythicPlusInfo = {
                     order = 4,
-                    type = "toggle",
+                    type = "group",
                     name = L["Better Mythic+ Info"],
-                    desc = L["Enhance ElvUI Mythic Plus info with more details."]
+                    inline = true,
+                    get = function(info)
+                        return E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.WT.tooltips.elvUITweaks[info[#info - 1]][info[#info]] = value
+                    end,
+                    args = {
+                        enable = {
+                            order = 1,
+                            type = "toggle",
+                            name = L["Enable"],
+                            desc = L["Enhance ElvUI Mythic Plus info with more details."]
+                        },
+                        icon = {
+                            order = 2,
+                            type = "toggle",
+                            name = L["Add Icon"],
+                            desc = L["Show an icon for the best dungeon."]
+                        },
+                        iconWidth = {
+                            order = 3,
+                            type = "range",
+                            name = L["Icon Width"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        },
+                        iconHeight = {
+                            order = 4,
+                            type = "range",
+                            name = L["Icon Height"],
+                            min = 1,
+                            max = 50,
+                            step = 1
+                        }
+                    }
                 }
             }
         },

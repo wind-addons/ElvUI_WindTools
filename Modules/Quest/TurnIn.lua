@@ -14,7 +14,6 @@ local tonumber = tonumber
 
 local AcceptQuest = AcceptQuest
 local AcknowledgeAutoAcceptQuest = AcknowledgeAutoAcceptQuest
-local AutoQuestPopupTracker_RemovePopUp = AutoQuestPopupTracker_RemovePopUp
 local CloseQuest = CloseQuest
 local CompleteQuest = CompleteQuest
 local GetActiveQuestID = GetActiveQuestID

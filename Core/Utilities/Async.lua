@@ -5,7 +5,6 @@ local U = W.Utilities.Async
 
 local ipairs = ipairs
 local pairs = pairs
-local select = select
 local type = type
 
 local GetAchievementInfo = GetAchievementInfo

@@ -6,10 +6,10 @@ local securecall = securecall
 
 local AcceptResurrect = AcceptResurrect
 local HideUIPanel = HideUIPanel
-local UnitAffectingCombat = UnitAffectingCombat
-local UnitExists = UnitExists
 local PlayerCanTeleport = PlayerCanTeleport
 local StaticPopup_Hide = StaticPopup_Hide
+local UnitAffectingCombat = UnitAffectingCombat
+local UnitExists = UnitExists
 
 local C_SummonInfo_ConfirmSummon = C_SummonInfo.ConfirmSummon
 

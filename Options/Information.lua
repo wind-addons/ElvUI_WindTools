@@ -152,7 +152,7 @@ options.help = {
         },
         contributors = {
             order = 7,
-            name = L["Contributors (Github.com)"],
+            name = L["Contributors (GitHub.com)"],
             type = "group",
             inline = true,
             args = {

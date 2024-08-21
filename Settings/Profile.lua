@@ -989,12 +989,12 @@ P.social = {
     },
     contextMenu = {
         enable = true,
-        armory = E.global.general.locale ~= "zhCN",
+        sectionTitle = true,
+        armory = W.Locale ~= "zhCN",
         armoryOverride = {},
-        addFriend = true,
         guildInvite = true,
         who = true,
-        reportStats = true
+        reportStats = false
     },
     smartTab = {
         enable = true,
@@ -1049,7 +1049,7 @@ P.tooltips = {
         forceItemLevel = true,
         specIcon = true,
         raceIcon = true,
-        betterMythicPlusInfo = true,
+        betterMythicPlusInfo = true
     },
     yOffsetOfHealthBar = 0,
     yOffsetOfHealthText = 0,

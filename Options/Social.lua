@@ -1028,11 +1028,22 @@ options.contextMenu = {
         enable = {
             order = 1,
             type = "toggle",
-            name = L["Enable"],
+            name = L["Enable"]
+        },
+        sectionTitle = {
+            order = 2,
+            type = "toggle",
+            name = L["Section Title"],
+            desc = L["Add a styled section title to the context menu."]
+        },
+        align = {
+            order = 3,
+            type = "description",
+            name = " ",
             width = "full"
         },
         normalConfig = {
-            order = 2,
+            order = 4,
             type = "group",
             inline = true,
             name = L["General"],
@@ -1040,30 +1051,25 @@ options.contextMenu = {
                 return not E.db.WT.social.contextMenu.enable
             end,
             args = {
-                addFriend = {
+                guildInvite = {
                     order = 1,
                     type = "toggle",
-                    name = L["Add Friends"]
+                    name = L["Guild Invite"]
                 },
-                guildInvite = {
+                who = {
                     order = 2,
                     type = "toggle",
-                    name = L["Guild Invite"]
+                    name = L["Who"]
                 },
                 reportStats = {
                     order = 3,
                     type = "toggle",
                     name = L["Report Stats"]
-                },
-                who = {
-                    order = 4,
-                    type = "toggle",
-                    name = L["Who"]
                 }
             }
         },
         armoryConfig = {
-            order = 3,
+            order = 5,
             type = "group",
             inline = true,
             name = L["Armory"],
@@ -1076,10 +1082,10 @@ options.contextMenu = {
                     type = "toggle",
                     name = L["Enable"],
                     get = function(info)
-                        return E.db.WT.social.contextMenu.armory
+                        return E.db.WT.social.contextMenu[info[#info]]
                     end,
                     set = function(info, value)
-                        E.db.WT.social.contextMenu.armory = value
+                        E.db.WT.social.contextMenu[info[#info]] = value
                         CM:ProfileUpdate()
                     end
                 },

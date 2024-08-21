@@ -5,11 +5,11 @@ local _G = _G
 local UIParentLoadAddOn = UIParentLoadAddOn
 
 function S:Blizzard_EventTrace()
-    if not self:CheckDB("eventLog", "eventTrace") then
-        return
-    end
+	if not self:CheckDB("eventLog", "eventTrace") then
+		return
+	end
 
-    self:CreateBackdropShadow(_G.EventTrace)
+	self:CreateBackdropShadow(_G.EventTrace)
 end
 
-S:AddCallbackForAddon('Blizzard_EventTrace')
+S:AddCallbackForAddon("Blizzard_EventTrace")

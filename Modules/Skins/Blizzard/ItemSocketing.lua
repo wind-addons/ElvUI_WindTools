@@ -4,11 +4,11 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:Blizzard_ItemSocketingUI()
-    if not self:CheckDB("socket", "itemSocketing") then
-        return
-    end
+	if not self:CheckDB("socket", "itemSocketing") then
+		return
+	end
 
-    self:CreateShadow(_G.ItemSocketingFrame)
+	self:CreateShadow(_G.ItemSocketingFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_ItemSocketingUI")

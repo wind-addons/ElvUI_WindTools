@@ -12,40 +12,40 @@ local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_SetCVar = C_CVar.SetCVar
 
 local function FixLanguageFilterSideEffects()
-    function C_BattleNet.GetFriendGameAccountInfo(...)
-        local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(...)
-        if gameAccountInfo then
-            gameAccountInfo.isInCurrentRegion = true
-        end
-        return gameAccountInfo
-    end
+	function C_BattleNet.GetFriendGameAccountInfo(...)
+		local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(...)
+		if gameAccountInfo then
+			gameAccountInfo.isInCurrentRegion = true
+		end
+		return gameAccountInfo
+	end
 
-    function C_BattleNet.GetFriendAccountInfo(...)
-        local accountInfo = C_BattleNet_GetFriendAccountInfo(...)
-        if accountInfo and accountInfo.gameAccountInfo then
-            accountInfo.gameAccountInfo.isInCurrentRegion = true
-        end
-        return accountInfo
-    end
+	function C_BattleNet.GetFriendAccountInfo(...)
+		local accountInfo = C_BattleNet_GetFriendAccountInfo(...)
+		if accountInfo and accountInfo.gameAccountInfo then
+			accountInfo.gameAccountInfo.isInCurrentRegion = true
+		end
+		return accountInfo
+	end
 end
 
 -- from https://www.curseforge.com/wow/addons/fckyou
 function M:AntiOverride()
-    if not E.private.WT.misc.antiOverride then
-        return
-    end
+	if not E.private.WT.misc.antiOverride then
+		return
+	end
 
-    if not BNFeaturesEnabledAndConnected() then
-        return
-    end
+	if not BNFeaturesEnabledAndConnected() then
+		return
+	end
 
-    if C_CVar_GetCVar("portal") == "CN" then
-        ConsoleExec("portal TW")
-        FixLanguageFilterSideEffects()
-    end
+	if C_CVar_GetCVar("portal") == "CN" then
+		ConsoleExec("portal TW")
+		FixLanguageFilterSideEffects()
+	end
 
-    C_CVar_SetCVar("profanityFilter", 0)
-    C_CVar_SetCVar("overrideArchive", 0)
+	C_CVar_SetCVar("profanityFilter", 0)
+	C_CVar_SetCVar("overrideArchive", 0)
 end
 
 M:AddCallback("AntiOverride")

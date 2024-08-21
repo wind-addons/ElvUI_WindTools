@@ -54,450 +54,442 @@ local STAT_VERSATILITY = STAT_VERSATILITY
 local TEXT_MODE_A_STRING_RESULT_CRITICAL = TEXT_MODE_A_STRING_RESULT_CRITICAL
 
 local function getRetailCharacterNamesFromGameAccountInfo(gameAccountInfo)
-    if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == 1 then
-        return gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
-    end
+	if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == 1 then
+		return gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
+	end
 end
 
 local function getRetailCharacterNamesByBNetID(id)
-    local numBNOnlineFriend = select(2, BNGetNumFriends())
-    for i = 1, numBNOnlineFriend do
-        local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
-        if
-            accountInfo and accountInfo.bnetAccountID == id and accountInfo.gameAccountInfo and
-                accountInfo.gameAccountInfo.isOnline
-         then
-            local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
-            local name
-            if numGameAccounts and numGameAccounts > 0 then
-                for j = 1, numGameAccounts do
-                    if name then
-                        break
-                    end
-                    local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
-                    name = gameAccountInfo and getRetailCharacterNamesFromGameAccountInfo(gameAccountInfo)
-                end
-            else
-                name = getRetailCharacterNamesFromGameAccountInfo(accountInfo.gameAccountInfo)
-            end
-            return name
-        end
-    end
+	local numBNOnlineFriend = select(2, BNGetNumFriends())
+	for i = 1, numBNOnlineFriend do
+		local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+		if
+			accountInfo
+			and accountInfo.bnetAccountID == id
+			and accountInfo.gameAccountInfo
+			and accountInfo.gameAccountInfo.isOnline
+		then
+			local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+			local name
+			if numGameAccounts and numGameAccounts > 0 then
+				for j = 1, numGameAccounts do
+					if name then
+						break
+					end
+					local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+					name = gameAccountInfo and getRetailCharacterNamesFromGameAccountInfo(gameAccountInfo)
+				end
+			else
+				name = getRetailCharacterNamesFromGameAccountInfo(accountInfo.gameAccountInfo)
+			end
+			return name
+		end
+	end
 end
 
 CM.Features = {
-    GUILD_INVITE = {
-        order = 1,
-        configKey = "guildInvite",
-        name = L["Guild Invite"],
-        supportTypes = {
-            PARTY = true,
-            PLAYER = true,
-            RAID_PLAYER = true,
-            RAID = true,
-            FRIEND = true,
-            ENEMY_PLAYER = true,
-            BN_FRIEND = true,
-            CHAT_ROSTER = true,
-            TARGET = true,
-            FOCUS = true,
-            COMMUNITIES_WOW_MEMBER = true,
-            RAF_RECRUIT = true
-        },
-        func = function(contextData)
-            if contextData.bnetIDAccount then
-                local numBNOnlineFriend = select(2, BNGetNumFriends())
-                for i = 1, numBNOnlineFriend do
-                    local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
-                    if
-                        accountInfo and accountInfo.bnetAccountID == contextData.bnetIDAccount and
-                            accountInfo.gameAccountInfo and
-                            accountInfo.gameAccountInfo.isOnline
-                     then
-                        local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
-                        if numGameAccounts and numGameAccounts > 0 then
-                            for j = 1, numGameAccounts do
-                                local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
-                                if
-                                    gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" and
-                                        gameAccountInfo.wowProjectID == 1
-                                 then
-                                    GuildInvite(gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName)
-                                end
-                            end
-                        elseif
-                            accountInfo.gameAccountInfo.clientProgram == "WoW" and
-                                accountInfo.gameAccountInfo.wowProjectID == 1
-                         then
-                            GuildInvite(
-                                accountInfo.gameAccountInfo.characterName ..
-                                    "-" .. accountInfo.gameAccountInfo.realmName
-                            )
-                        end
-                        return
-                    end
-                end
-            elseif contextData.chatTarget then
-                GuildInvite(contextData.chatTarget)
-            elseif contextData.name then
-                local playerName = contextData.name
-                if contextData.server and contextData.server ~= E.myrealm then
-                    playerName = playerName .. "-" .. contextData.server
-                end
-                GuildInvite(playerName)
-            else
-                CM:Log("debug", "Cannot get the name.")
-            end
-        end,
-        hidden = function(contextData)
-            if not CanGuildInvite() then
-                return true
-            end
+	GUILD_INVITE = {
+		order = 1,
+		configKey = "guildInvite",
+		name = L["Guild Invite"],
+		supportTypes = {
+			PARTY = true,
+			PLAYER = true,
+			RAID_PLAYER = true,
+			RAID = true,
+			FRIEND = true,
+			ENEMY_PLAYER = true,
+			BN_FRIEND = true,
+			CHAT_ROSTER = true,
+			TARGET = true,
+			FOCUS = true,
+			COMMUNITIES_WOW_MEMBER = true,
+			RAF_RECRUIT = true,
+		},
+		func = function(contextData)
+			if contextData.bnetIDAccount then
+				local numBNOnlineFriend = select(2, BNGetNumFriends())
+				for i = 1, numBNOnlineFriend do
+					local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+					if
+						accountInfo
+						and accountInfo.bnetAccountID == contextData.bnetIDAccount
+						and accountInfo.gameAccountInfo
+						and accountInfo.gameAccountInfo.isOnline
+					then
+						local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+						if numGameAccounts and numGameAccounts > 0 then
+							for j = 1, numGameAccounts do
+								local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+								if
+									gameAccountInfo.clientProgram
+									and gameAccountInfo.clientProgram == "WoW"
+									and gameAccountInfo.wowProjectID == 1
+								then
+									GuildInvite(gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName)
+								end
+							end
+						elseif
+							accountInfo.gameAccountInfo.clientProgram == "WoW"
+							and accountInfo.gameAccountInfo.wowProjectID == 1
+						then
+							GuildInvite(
+								accountInfo.gameAccountInfo.characterName
+									.. "-"
+									.. accountInfo.gameAccountInfo.realmName
+							)
+						end
+						return
+					end
+				end
+			elseif contextData.chatTarget then
+				GuildInvite(contextData.chatTarget)
+			elseif contextData.name then
+				local playerName = contextData.name
+				if contextData.server and contextData.server ~= E.myrealm then
+					playerName = playerName .. "-" .. contextData.server
+				end
+				GuildInvite(playerName)
+			else
+				CM:Log("debug", "Cannot get the name.")
+			end
+		end,
+		hidden = function(contextData)
+			if not CanGuildInvite() then
+				return true
+			end
 
-            if contextData.communityClubID then
-                if tonumber(contextData.communityClubID) == tonumber(C_Club_GetGuildClubId()) then
-                    return true
-                end
-            end
+			if contextData.communityClubID then
+				if tonumber(contextData.communityClubID) == tonumber(C_Club_GetGuildClubId()) then
+					return true
+				end
+			end
 
-            if contextData.which == "BN_FRIEND" then
-                local name = contextData.bnetIDAccount and getRetailCharacterNamesByBNetID(contextData.bnetIDAccount)
-                if not name then
-                    return true
-                end
-            end
+			if contextData.which == "BN_FRIEND" then
+				local name = contextData.bnetIDAccount and getRetailCharacterNamesByBNetID(contextData.bnetIDAccount)
+				if not name then
+					return true
+				end
+			end
 
-            if contextData.unit and contextData.unit == "target" then
-                if not UnitPlayerControlled("target") then
-                    return true
-                end
-            end
+			if contextData.unit and contextData.unit == "target" then
+				if not UnitPlayerControlled("target") then
+					return true
+				end
+			end
 
-            if contextData.unit and contextData.unit == "focus" then
-                if not UnitPlayerControlled("focus") then
-                    return true
-                end
-            end
+			if contextData.unit and contextData.unit == "focus" then
+				if not UnitPlayerControlled("focus") then
+					return true
+				end
+			end
 
-            if contextData.name == E.myname then
-                if not contextData.server or contextData.server == E.myrealm then
-                    return true
-                end
-            end
+			if contextData.name == E.myname then
+				if not contextData.server or contextData.server == E.myrealm then
+					return true
+				end
+			end
 
-            return false
-        end
-    },
-    WHO = {
-        order = 2,
-        configKey = "who",
-        name = _G.WHO,
-        supportTypes = {
-            PARTY = true,
-            PLAYER = true,
-            RAID_PLAYER = true,
-            RAID = true,
-            FRIEND = true,
-            GUILD = true,
-            GUILD_OFFLINE = true,
-            CHAT_ROSTER = true,
-            TARGET = true,
-            ARENAENEMY = true,
-            FOCUS = true,
-            WORLD_STATE_SCORE = true,
-            COMMUNITIES_WOW_MEMBER = true,
-            COMMUNITIES_GUILD_MEMBER = true,
-            RAF_RECRUIT = true
-        },
-        func = function(contextData)
-            if contextData.chatTarget then
-                C_FriendList_SendWho(contextData.chatTarget)
-            elseif contextData.name then
-                local playerName = contextData.name
-                if contextData.server and contextData.server ~= E.myrealm then
-                    playerName = playerName .. "-" .. contextData.server
-                end
-                C_FriendList_SendWho(playerName)
-            else
-                CM:Log("debug", "Cannot get the name.")
-            end
-        end,
-        hidden = function(contextData)
-            if contextData.unit and contextData.unit == "target" then
-                if not UnitPlayerControlled("target") then
-                    return true
-                end
-            end
+			return false
+		end,
+	},
+	WHO = {
+		order = 2,
+		configKey = "who",
+		name = _G.WHO,
+		supportTypes = {
+			PARTY = true,
+			PLAYER = true,
+			RAID_PLAYER = true,
+			RAID = true,
+			FRIEND = true,
+			GUILD = true,
+			GUILD_OFFLINE = true,
+			CHAT_ROSTER = true,
+			TARGET = true,
+			ARENAENEMY = true,
+			FOCUS = true,
+			WORLD_STATE_SCORE = true,
+			COMMUNITIES_WOW_MEMBER = true,
+			COMMUNITIES_GUILD_MEMBER = true,
+			RAF_RECRUIT = true,
+		},
+		func = function(contextData)
+			if contextData.chatTarget then
+				C_FriendList_SendWho(contextData.chatTarget)
+			elseif contextData.name then
+				local playerName = contextData.name
+				if contextData.server and contextData.server ~= E.myrealm then
+					playerName = playerName .. "-" .. contextData.server
+				end
+				C_FriendList_SendWho(playerName)
+			else
+				CM:Log("debug", "Cannot get the name.")
+			end
+		end,
+		hidden = function(contextData)
+			if contextData.unit and contextData.unit == "target" then
+				if not UnitPlayerControlled("target") then
+					return true
+				end
+			end
 
-            if contextData.unit and contextData.unit == "focus" then
-                if not UnitPlayerControlled("focus") then
-                    return true
-                end
-            end
+			if contextData.unit and contextData.unit == "focus" then
+				if not UnitPlayerControlled("focus") then
+					return true
+				end
+			end
 
-            if contextData.name == E.myname then
-                if not contextData.server or contextData.server == E.myrealm then
-                    return true
-                end
-            end
+			if contextData.name == E.myname then
+				if not contextData.server or contextData.server == E.myrealm then
+					return true
+				end
+			end
 
-            return false
-        end
-    },
-    ARMORY = {
-        order = 3,
-        configKey = "armory",
-        name = L["Armory"],
-        supportTypes = {
-            SELF = true,
-            PARTY = true,
-            PLAYER = true,
-            RAID_PLAYER = true,
-            RAID = true,
-            FRIEND = true,
-            GUILD = true,
-            GUILD_OFFLINE = true,
-            CHAT_ROSTER = true,
-            TARGET = true,
-            ARENAENEMY = true,
-            FOCUS = true,
-            WORLD_STATE_SCORE = true,
-            COMMUNITIES_WOW_MEMBER = true,
-            COMMUNITIES_GUILD_MEMBER = true,
-            RAF_RECRUIT = true
-        },
-        func = function(frame)
-            local name = frame.name
-            local server = frame.server or E.myrealm
+			return false
+		end,
+	},
+	ARMORY = {
+		order = 3,
+		configKey = "armory",
+		name = L["Armory"],
+		supportTypes = {
+			SELF = true,
+			PARTY = true,
+			PLAYER = true,
+			RAID_PLAYER = true,
+			RAID = true,
+			FRIEND = true,
+			GUILD = true,
+			GUILD_OFFLINE = true,
+			CHAT_ROSTER = true,
+			TARGET = true,
+			ARENAENEMY = true,
+			FOCUS = true,
+			WORLD_STATE_SCORE = true,
+			COMMUNITIES_WOW_MEMBER = true,
+			COMMUNITIES_GUILD_MEMBER = true,
+			RAF_RECRUIT = true,
+		},
+		func = function(frame)
+			local name = frame.name
+			local server = frame.server or E.myrealm
 
-            if name and server then
-                local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
-                E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
-            else
-                CM:Log("debug", "Cannot get the armory link.")
-            end
-        end,
-        hidden = function(contextData)
-            if contextData.unit and contextData.unit == "target" then
-                if not UnitPlayerControlled("target") then
-                    return true
-                end
-            end
+			if name and server then
+				local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
+				E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
+			else
+				CM:Log("debug", "Cannot get the armory link.")
+			end
+		end,
+		hidden = function(contextData)
+			if contextData.unit and contextData.unit == "target" then
+				if not UnitPlayerControlled("target") then
+					return true
+				end
+			end
 
-            if contextData.unit and contextData.unit == "focus" then
-                if not UnitPlayerControlled("focus") then
-                    return true
-                end
-            end
+			if contextData.unit and contextData.unit == "focus" then
+				if not UnitPlayerControlled("focus") then
+					return true
+				end
+			end
 
-            return false
-        end
-    },
-    REPORT_STATS = {
-        order = 4,
-        configKey = "reportStats",
-        name = L["Report Stats"],
-        supportTypes = {
-            PARTY = true,
-            PLAYER = true,
-            RAID_PLAYER = true,
-            FRIEND = true,
-            BN_FRIEND = true,
-            GUILD = true,
-            CHAT_ROSTER = true,
-            TARGET = true,
-            FOCUS = true,
-            COMMUNITIES_WOW_MEMBER = true,
-            COMMUNITIES_GUILD_MEMBER = true,
-            RAF_RECRUIT = true
-        },
-        func = function(contextData)
-            local name
-            local SendChatMessage = SendChatMessage
+			return false
+		end,
+	},
+	REPORT_STATS = {
+		order = 4,
+		configKey = "reportStats",
+		name = L["Report Stats"],
+		supportTypes = {
+			PARTY = true,
+			PLAYER = true,
+			RAID_PLAYER = true,
+			FRIEND = true,
+			BN_FRIEND = true,
+			GUILD = true,
+			CHAT_ROSTER = true,
+			TARGET = true,
+			FOCUS = true,
+			COMMUNITIES_WOW_MEMBER = true,
+			COMMUNITIES_GUILD_MEMBER = true,
+			RAF_RECRUIT = true,
+		},
+		func = function(contextData)
+			local name
+			local SendChatMessage = SendChatMessage
 
-            if contextData.bnetIDAccount then
-                SendChatMessage = function(message)
-                    BNSendWhisper(contextData.bnetIDAccount, message)
-                end
-                name = "BN"
-            elseif contextData.chatTarget then
-                name = contextData.chatTarget
-            elseif contextData.name then
-                name = contextData.name
-                if contextData.server and contextData.server ~= E.myrealm then
-                    name = name .. "-" .. contextData.server
-                end
-            end
+			if contextData.bnetIDAccount then
+				SendChatMessage = function(message)
+					BNSendWhisper(contextData.bnetIDAccount, message)
+				end
+				name = "BN"
+			elseif contextData.chatTarget then
+				name = contextData.chatTarget
+			elseif contextData.name then
+				name = contextData.name
+				if contextData.server and contextData.server ~= E.myrealm then
+					name = name .. "-" .. contextData.server
+				end
+			end
 
-            if not name then
-                CM:Log("debug", "Cannot get the name.")
-                return
-            end
+			if not name then
+				CM:Log("debug", "Cannot get the name.")
+				return
+			end
 
-            local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
+			local CRITICAL = gsub(TEXT_MODE_A_STRING_RESULT_CRITICAL or STAT_CRITICAL_STRIKE, "[()]", "")
 
-            for i, message in ipairs(
-                {
-                    format(
-                        "(%s) %s: %.1f %s: %s",
-                        select(2, GetSpecializationInfo(GetSpecialization())) .. select(1, UnitClass("player")),
-                        ITEM_LEVEL_ABBR,
-                        select(2, GetAverageItemLevel()),
-                        HP,
-                        AbbreviateNumbers(UnitHealthMax("player"))
-                    ),
-                    format(
-                        " * %s: %.2f%%",
-                        CRITICAL,
-                        max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))
-                    ),
-                    format(" * %s: %.2f%%", STAT_HASTE, GetHaste()),
-                    format(" * %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()),
-                    format(
-                        " * %s: %.2f%%",
-                        STAT_VERSATILITY,
-                        GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) +
-                            GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)
-                    ),
-                    format(" * %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal())
-                }
-            ) do
-                E:Delay(
-                    0.1 + i * 0.2,
-                    function()
-                        SendChatMessage(message, "WHISPER", nil, name)
-                    end
-                )
-            end
-        end,
-        hidden = function(contextData)
-            if contextData.unit and contextData.unit == "target" then
-                if not UnitPlayerControlled("target") then
-                    return true
-                end
-            end
+			for i, message in ipairs({
+				format(
+					"(%s) %s: %.1f %s: %s",
+					select(2, GetSpecializationInfo(GetSpecialization())) .. select(1, UnitClass("player")),
+					ITEM_LEVEL_ABBR,
+					select(2, GetAverageItemLevel()),
+					HP,
+					AbbreviateNumbers(UnitHealthMax("player"))
+				),
+				format(" * %s: %.2f%%", CRITICAL, max(GetRangedCritChance(), GetCritChance(), GetSpellCritChance(2))),
+				format(" * %s: %.2f%%", STAT_HASTE, GetHaste()),
+				format(" * %s: %.2f%%", STAT_MASTERY, GetMasteryEffect()),
+				format(
+					" * %s: %.2f%%",
+					STAT_VERSATILITY,
+					GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE)
+				),
+				format(" * %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal()),
+			}) do
+				E:Delay(0.1 + i * 0.2, function()
+					SendChatMessage(message, "WHISPER", nil, name)
+				end)
+			end
+		end,
+		hidden = function(contextData)
+			if contextData.unit and contextData.unit == "target" then
+				if not UnitPlayerControlled("target") then
+					return true
+				end
+			end
 
-            if contextData.unit and contextData.unit == "focus" then
-                if not UnitPlayerControlled("focus") then
-                    return true
-                end
-            end
+			if contextData.unit and contextData.unit == "focus" then
+				if not UnitPlayerControlled("focus") then
+					return true
+				end
+			end
 
-            if contextData.name == E.myname then
-                if not contextData.server or contextData.server == E.myrealm then
-                    return true
-                end
-            end
+			if contextData.name == E.myname then
+				if not contextData.server or contextData.server == E.myrealm then
+					return true
+				end
+			end
 
-            return false
-        end
-    }
+			return false
+		end,
+	},
 }
 
 CM.TypeToFeatureMap = {}
 for feature, featureConfig in pairs(CM.Features) do
-    for supportType in pairs(featureConfig.supportTypes) do
-        if not CM.TypeToFeatureMap[supportType] then
-            CM.TypeToFeatureMap[supportType] = {}
-        end
-        tinsert(CM.TypeToFeatureMap[supportType], feature)
-    end
+	for supportType in pairs(featureConfig.supportTypes) do
+		if not CM.TypeToFeatureMap[supportType] then
+			CM.TypeToFeatureMap[supportType] = {}
+		end
+		tinsert(CM.TypeToFeatureMap[supportType], feature)
+	end
 end
 
 function CM:GetArmoryBaseURL()
-    local host = "https://worldofwarcraft.com/"
+	local host = "https://worldofwarcraft.com/"
 
-    local language = strlower(W.Locale)
-    local languageURL = format("%s-%s/", strsub(language, 1, 2), strsub(language, 3, 4))
-    host = host .. languageURL .. "character/"
+	local language = strlower(W.Locale)
+	local languageURL = format("%s-%s/", strsub(language, 1, 2), strsub(language, 3, 4))
+	host = host .. languageURL .. "character/"
 
-    local serverLocation = "us"
+	local serverLocation = "us"
 
-    if W.Locale ~= "enUS" then
-        if W.Locale == "zhTW" or W.Locale == "zhTW" then
-            serverLocation = "tw"
-        elseif W.Locale == "koKR" then
-            serverLocation = "kr"
-        else
-            serverLocation = "eu"
-        end
-    end
+	if W.Locale ~= "enUS" then
+		if W.Locale == "zhTW" or W.Locale == "zhTW" then
+			serverLocation = "tw"
+		elseif W.Locale == "koKR" then
+			serverLocation = "kr"
+		else
+			serverLocation = "eu"
+		end
+	end
 
-    if self.db and self.db.armoryOverride[E.myrealm] then
-        serverLocation = self.db.armoryOverride[E.myrealm]
-    end
+	if self.db and self.db.armoryOverride[E.myrealm] then
+		serverLocation = self.db.armoryOverride[E.myrealm]
+	end
 
-    host = host .. serverLocation .. "/"
+	host = host .. serverLocation .. "/"
 
-    return host
+	return host
 end
 
 function CM:GetAvailableButtonTypes(contextData)
-    if not contextData.which or not self.TypeToFeatureMap[contextData.which] then
-        return
-    end
+	if not contextData.which or not self.TypeToFeatureMap[contextData.which] then
+		return
+	end
 
-    local features = {}
-    for _, feature in pairs(self.TypeToFeatureMap[contextData.which]) do
-        features[feature] = true
-    end
+	local features = {}
+	for _, feature in pairs(self.TypeToFeatureMap[contextData.which]) do
+		features[feature] = true
+	end
 
-    local availableButtonTypes = {}
-    for feature in pairs(features) do
-        if self.db[self.Features[feature].configKey] and self.Features[feature].hidden(contextData) ~= true then
-            tinsert(availableButtonTypes, feature)
-        end
-    end
+	local availableButtonTypes = {}
+	for feature in pairs(features) do
+		if self.db[self.Features[feature].configKey] and self.Features[feature].hidden(contextData) ~= true then
+			tinsert(availableButtonTypes, feature)
+		end
+	end
 
-    sort(
-        availableButtonTypes,
-        function(a, b)
-            return self.Features[a].order < self.Features[b].order
-        end
-    )
+	sort(availableButtonTypes, function(a, b)
+		return self.Features[a].order < self.Features[b].order
+	end)
 
-    return availableButtonTypes
+	return availableButtonTypes
 end
 
 function CM:ModifyMenu(_, rootDescription, contextData)
-    if not self.db.enable then
-        return
-    end
+	if not self.db.enable then
+		return
+	end
 
-    local availableButtonTypes = self:GetAvailableButtonTypes(contextData)
+	local availableButtonTypes = self:GetAvailableButtonTypes(contextData)
 
-    if not availableButtonTypes or #availableButtonTypes == 0 then
-        return
-    end
+	if not availableButtonTypes or #availableButtonTypes == 0 then
+		return
+	end
 
-    rootDescription:CreateDivider()
-    if self.db.sectionTitle then
-        rootDescription:CreateTitle(self.sectionName)
-    end
+	rootDescription:CreateDivider()
+	if self.db.sectionTitle then
+		rootDescription:CreateTitle(self.sectionName)
+	end
 
-    for _, feature in ipairs(availableButtonTypes) do
-        local featureConfig = self.Features[feature]
-        rootDescription:CreateButton(featureConfig.name, featureConfig.func, contextData)
-    end
+	for _, feature in ipairs(availableButtonTypes) do
+		local featureConfig = self.Features[feature]
+		rootDescription:CreateButton(featureConfig.name, featureConfig.func, contextData)
+	end
 end
 
 function CM:Initialize()
-    self.db = E.db.WT.social.contextMenu
-    if not self.db.enable or self.initialized then
-        return
-    end
+	self.db = E.db.WT.social.contextMenu
+	if not self.db.enable or self.initialized then
+		return
+	end
 
-    local sectionText = W.PlainTitle
-    if not W.ChineseLocale then
-        sectionText = sectionText .. " "
-    end
-    self.sectionName = F.GetWindStyleText(sectionText .. L["Menu"])
+	local sectionText = W.PlainTitle
+	if not W.ChineseLocale then
+		sectionText = sectionText .. " "
+	end
+	self.sectionName = F.GetWindStyleText(sectionText .. L["Menu"])
 
-    for supportType in pairs(self.TypeToFeatureMap) do
-        Menu_ModifyMenu("MENU_UNIT_" .. supportType, GenerateClosure(self.ModifyMenu, self))
-    end
+	for supportType in pairs(self.TypeToFeatureMap) do
+		Menu_ModifyMenu("MENU_UNIT_" .. supportType, GenerateClosure(self.ModifyMenu, self))
+	end
 
-    self.initialized = true
+	self.initialized = true
 end
 
 CM.ProfileUpdate = CM.Initialize

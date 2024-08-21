@@ -8,16 +8,16 @@ local UIParentLoadAddOn = UIParentLoadAddOn
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 function S:Blizzard_DebugTools()
-    if not self:CheckDB("debug", "debugTools") then
-        return
-    end
+	if not self:CheckDB("debug", "debugTools") then
+		return
+	end
 
-    self:CreateShadow(_G.TableAttributeDisplay)
-    self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
+	self:CreateShadow(_G.TableAttributeDisplay)
+	self:SecureHook(_G.TableInspectorMixin, "OnLoad", "CreateBackdropShadow")
 end
 
-if C_AddOns_IsAddOnLoaded('Blizzard_DebugTools') then
-	S:AddCallback('Blizzard_DebugTools')
+if C_AddOns_IsAddOnLoaded("Blizzard_DebugTools") then
+	S:AddCallback("Blizzard_DebugTools")
 else
-	S:AddCallbackForAddon('Blizzard_DebugTools')
+	S:AddCallbackForAddon("Blizzard_DebugTools")
 end

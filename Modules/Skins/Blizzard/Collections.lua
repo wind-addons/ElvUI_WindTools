@@ -4,17 +4,17 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:Blizzard_Collections()
-    if not self:CheckDB("collections") then
-        return
-    end
+	if not self:CheckDB("collections") then
+		return
+	end
 
-    self:CreateShadow(_G.CollectionsJournal)
-    self:CreateShadow(_G.WardrobeFrame)
-    self:CreateShadow(_G.WardrobeOutfitEditFrame)
+	self:CreateShadow(_G.CollectionsJournal)
+	self:CreateShadow(_G.WardrobeFrame)
+	self:CreateShadow(_G.WardrobeOutfitEditFrame)
 
-    for i = 1, 5 do
-        self:ReskinTab(_G["CollectionsJournalTab" .. i])
-    end
+	for i = 1, 5 do
+		self:ReskinTab(_G["CollectionsJournalTab" .. i])
+	end
 end
 
 S:AddCallbackForAddon("Blizzard_Collections")

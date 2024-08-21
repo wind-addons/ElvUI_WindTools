@@ -5,11 +5,11 @@ local _G = _G
 local pairs = pairs
 
 function S:Blizzard_FlightMap()
-    if not self:CheckDB("taxi", "flightMap") then
-        return
-    end
+	if not self:CheckDB("taxi", "flightMap") then
+		return
+	end
 
-    self:CreateShadow(_G.FlightMapFrame)
+	self:CreateShadow(_G.FlightMapFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_FlightMap")

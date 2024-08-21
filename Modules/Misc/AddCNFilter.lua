@@ -6,19 +6,21 @@ local tinsert = tinsert
 local C_LFGList = C_LFGList
 
 function M:AddCNFilter()
-    if E.private.WT.misc.addCNFilter then
-        local filters =  C_LFGList.GetAvailableLanguageSearchFilter() or {}
+	if E.private.WT.misc.addCNFilter then
+		local filters = C_LFGList.GetAvailableLanguageSearchFilter() or {}
 
-        for i = 1, #filters do
-            if filters[i] == "zhCN" then
-                return
-            end
-        end
+		for i = 1, #filters do
+			if filters[i] == "zhCN" then
+				return
+			end
+		end
 
-        tinsert(filters, "zhCN")
+		tinsert(filters, "zhCN")
 
-        C_LFGList.GetAvailableLanguageSearchFilter = function() return filters end
-    end
+		C_LFGList.GetAvailableLanguageSearchFilter = function()
+			return filters
+		end
+	end
 end
 
 M:AddCallback("AddCNFilter")

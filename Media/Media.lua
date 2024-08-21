@@ -9,7 +9,7 @@ local strupper = strupper
 
 W.Media = {
 	Icons = {},
-	Textures = {}
+	Textures = {},
 }
 
 local MediaPath = "Interface/Addons/ElvUI_WindTools/Media/"
@@ -76,104 +76,104 @@ do
 	local raceAtlasMap = {
 		["Human"] = {
 			["Male"] = "raceicon128-human-male",
-			["Female"] = "raceicon128-human-female"
+			["Female"] = "raceicon128-human-female",
 		},
 		["Orc"] = {
 			["Male"] = "raceicon128-orc-male",
-			["Female"] = "raceicon128-orc-female"
+			["Female"] = "raceicon128-orc-female",
 		},
 		["Dwarf"] = {
 			["Male"] = "raceicon128-dwarf-male",
-			["Female"] = "raceicon128-dwarf-female"
+			["Female"] = "raceicon128-dwarf-female",
 		},
 		["NightElf"] = {
 			["Male"] = "raceicon128-nightelf-male",
-			["Female"] = "raceicon128-nightelf-female"
+			["Female"] = "raceicon128-nightelf-female",
 		},
 		["Scourge"] = {
 			["Male"] = "raceicon128-undead-male",
-			["Female"] = "raceicon128-undead-female"
+			["Female"] = "raceicon128-undead-female",
 		},
 		["Tauren"] = {
 			["Male"] = "raceicon128-tauren-male",
-			["Female"] = "raceicon128-tauren-female"
+			["Female"] = "raceicon128-tauren-female",
 		},
 		["Gnome"] = {
 			["Male"] = "raceicon128-gnome-male",
-			["Female"] = "raceicon128-gnome-female"
+			["Female"] = "raceicon128-gnome-female",
 		},
 		["Troll"] = {
 			["Male"] = "raceicon128-troll-male",
-			["Female"] = "raceicon128-troll-female"
+			["Female"] = "raceicon128-troll-female",
 		},
 		["Goblin"] = {
 			["Male"] = "raceicon128-goblin-male",
-			["Female"] = "raceicon128-goblin-female"
+			["Female"] = "raceicon128-goblin-female",
 		},
 		["BloodElf"] = {
 			["Male"] = "raceicon128-bloodelf-male",
-			["Female"] = "raceicon128-bloodelf-female"
+			["Female"] = "raceicon128-bloodelf-female",
 		},
 		["Draenei"] = {
 			["Male"] = "raceicon128-draenei-male",
-			["Female"] = "raceicon128-draenei-female"
+			["Female"] = "raceicon128-draenei-female",
 		},
 		["Worgen"] = {
 			["Male"] = "raceicon128-worgen-male",
-			["Female"] = "raceicon128-worgen-female"
+			["Female"] = "raceicon128-worgen-female",
 		},
 		["Pandaren"] = {
 			["Male"] = "raceicon128-pandaren-male",
-			["Female"] = "raceicon128-pandaren-female"
+			["Female"] = "raceicon128-pandaren-female",
 		},
 		["Nightborne"] = {
 			["Male"] = "raceicon128-nightborne-male",
-			["Female"] = "raceicon128-nightborne-female"
+			["Female"] = "raceicon128-nightborne-female",
 		},
 		["HighmountainTauren"] = {
 			["Male"] = "raceicon128-highmountain-male",
-			["Female"] = "raceicon128-highmountain-female"
+			["Female"] = "raceicon128-highmountain-female",
 		},
 		["VoidElf"] = {
 			["Male"] = "raceicon128-voidelf-male",
-			["Female"] = "raceicon128-voidelf-female"
+			["Female"] = "raceicon128-voidelf-female",
 		},
 		["LightforgedDraenei"] = {
 			["Male"] = "raceicon128-lightforged-male",
-			["Female"] = "raceicon128-lightforged-female"
+			["Female"] = "raceicon128-lightforged-female",
 		},
 		["ZandalariTroll"] = {
 			["Male"] = "raceicon128-zandalari-male",
-			["Female"] = "raceicon128-zandalari-female"
+			["Female"] = "raceicon128-zandalari-female",
 		},
 		["KulTiran"] = {
 			["Male"] = "raceicon128-kultiran-male",
-			["Female"] = "raceicon128-kultiran-female"
+			["Female"] = "raceicon128-kultiran-female",
 		},
 		["DarkIronDwarf"] = {
 			["Male"] = "raceicon128-darkirondwarf-male",
-			["Female"] = "raceicon128-darkirondwarf-female"
+			["Female"] = "raceicon128-darkirondwarf-female",
 		},
 		["Vulpera"] = {
 			["Male"] = "raceicon128-vulpera-male",
-			["Female"] = "raceicon128-vulpera-female"
+			["Female"] = "raceicon128-vulpera-female",
 		},
 		["MagharOrc"] = {
 			["Male"] = "raceicon128-magharorc-male",
-			["Female"] = "raceicon128-magharorc-female"
+			["Female"] = "raceicon128-magharorc-female",
 		},
 		["Mechagnome"] = {
 			["Male"] = "raceicon128-mechagnome-male",
-			["Female"] = "raceicon128-mechagnome-female"
+			["Female"] = "raceicon128-mechagnome-female",
 		},
 		["Dracthyr"] = {
 			["Male"] = "raceicon128-dracthyr-male",
-			["Female"] = "raceicon128-dracthyr-female"
+			["Female"] = "raceicon128-dracthyr-female",
 		},
 		["EarthenDwarf"] = {
 			["Male"] = "raceicon128-earthen-male",
-			["Female"] = "raceicon128-earthen-female"
-		}
+			["Female"] = "raceicon128-earthen-female",
+		},
 	}
 
 	function F.GetRaceAtlasString(englishRace, gender, height, width)
@@ -206,7 +206,7 @@ do
 			-- OffsetX
 			SpecialAchievements = 0,
 			Raids = 348,
-			MythicPlus = 693
+			MythicPlus = 693,
 		},
 		languages = {
 			-- OffsetY
@@ -214,8 +214,8 @@ do
 			zhTW = 52,
 			koKR = 103,
 			enUS = 155,
-			deDE = 206
-		}
+			deDE = 206,
+		},
 	}
 
 	function F.GetCustomHeader(name, scale)
@@ -253,8 +253,8 @@ do
 			zhTW = 160,
 			koKR = 320,
 			enUS = 480,
-			deDE = 640
-		}
+			deDE = 640,
+		},
 	}
 
 	function F.GetTitleTexCoord()
@@ -263,7 +263,7 @@ do
 			return
 		end
 
-		return {0, 1, offsetY / texTable.texHeight, (offsetY + texTable.titleHeight) / texTable.texHeight}
+		return { 0, 1, offsetY / texTable.texHeight, (offsetY + texTable.titleHeight) / texTable.texHeight }
 	end
 end
 
@@ -278,15 +278,15 @@ do
 		languages = {
 			zhCN = 0,
 			zhTW = 170,
-			enUS = 340
+			enUS = 340,
 		},
 		type = {
-			button = {0, 0},
-			checkBox = {512, 0},
-			tab = {1024, 0},
-			treeGroupButton = {1536, 0},
-			slider = {0, 510}
-		}
+			button = { 0, 0 },
+			checkBox = { 512, 0 },
+			tab = { 1024, 0 },
+			treeGroupButton = { 1536, 0 },
+			slider = { 0, 510 },
+		},
 	}
 
 	function F.GetWidgetTips(widgetType)
@@ -303,7 +303,12 @@ do
 		local xEnd = xStart + texTable.tipWidth
 		local yEnd = yStart + texTable.tipHeight
 
-		return {xStart / texTable.texWidth, xEnd / texTable.texWidth, yStart / texTable.texHeight, yEnd / texTable.texHeight}
+		return {
+			xStart / texTable.texWidth,
+			xEnd / texTable.texWidth,
+			yStart / texTable.texHeight,
+			yEnd / texTable.texHeight,
+		}
 	end
 
 	function F.GetWidgetTipsString(widgetType)
@@ -338,15 +343,15 @@ end
 do
 	function F.GetRoleTexCoord(role)
 		if role == "TANK" then
-			return .32 / 9.03, 2.04 / 9.03, 2.65 / 9.03, 4.3 / 9.03
+			return 0.32 / 9.03, 2.04 / 9.03, 2.65 / 9.03, 4.3 / 9.03
 		elseif role == "DPS" or role == "DAMAGER" then
 			return 2.68 / 9.03, 4.4 / 9.03, 2.65 / 9.03, 4.34 / 9.03
 		elseif role == "HEALER" then
-			return 2.68 / 9.03, 4.4 / 9.03, .28 / 9.03, 1.98 / 9.03
+			return 2.68 / 9.03, 4.4 / 9.03, 0.28 / 9.03, 1.98 / 9.03
 		elseif role == "LEADER" then
-			return .32 / 9.03, 2.04 / 9.03, .28 / 9.03, 1.98 / 9.03
+			return 0.32 / 9.03, 2.04 / 9.03, 0.28 / 9.03, 1.98 / 9.03
 		elseif role == "READY" then
-			return 5.1 / 9.03, 6.76 / 9.03, .28 / 9.03, 1.98 / 9.03
+			return 5.1 / 9.03, 6.76 / 9.03, 0.28 / 9.03, 1.98 / 9.03
 		elseif role == "PENDING" then
 			return 5.1 / 9.03, 6.76 / 9.03, 2.65 / 9.03, 4.34 / 9.03
 		elseif role == "REFUSE" then
@@ -358,7 +363,7 @@ do
 end
 
 function F.GetClassIconStyleList()
-	return {"flat", "flatborder", "flatborder2", "round", "square", "warcraftflat"}
+	return { "flat", "flatborder", "flatborder2", "round", "square", "warcraftflat" }
 end
 
 function F.GetClassIconWithStyle(class, style)
@@ -492,13 +497,23 @@ do
 		LSM:Register("font", "Montserrat (en)", MediaPath .. "Fonts/Montserrat.ttf", region)
 		LSM:Register("font", "Roadway (en)", MediaPath .. "Fonts/Roadway.ttf", region)
 		LSM:Register("font", "Homespun (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Homespun.ttf", region)
-		LSM:Register("font", "ContinuumMedium (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/ContinuumMedium.ttf", region)
+		LSM:Register(
+			"font",
+			"ContinuumMedium (en)",
+			"Interface/Addons/ElvUI/Core/Media/Fonts/ContinuumMedium.ttf",
+			region
+		)
 		LSM:Register("font", "Action Man (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/ActionMan.ttf", region)
 		LSM:Register("font", "Die Die Die (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/DieDieDie.ttf", region)
 		LSM:Register("font", "Expressway (en)", "Interface/Addons/ElvUI/Core/Media/Fonts/Expressway.ttf", region)
 		W.CompatibleFont = true
 	else
-		LSM:Register("font", "Accidental Presidency", MediaPath .. "Fonts/AccidentalPresidency.ttf", LSM.LOCALE_BIT_western)
+		LSM:Register(
+			"font",
+			"Accidental Presidency",
+			MediaPath .. "Fonts/AccidentalPresidency.ttf",
+			LSM.LOCALE_BIT_western
+		)
 		LSM:Register("font", "Montserrat", MediaPath .. "Fonts/Montserrat.ttf", LSM.LOCALE_BIT_western)
 		LSM:Register("font", "Roadway", MediaPath .. "Fonts/Roadway.ttf", LSM.LOCALE_BIT_western)
 		W.CompatibleFont = false

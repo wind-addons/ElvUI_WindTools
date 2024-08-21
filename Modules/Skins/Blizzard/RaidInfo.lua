@@ -4,11 +4,11 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:RaidInfoFrame()
-    if not self:CheckDB("nonraid", "raidInfo") then
-        return
-    end
+	if not self:CheckDB("nonraid", "raidInfo") then
+		return
+	end
 
-    self:CreateShadow(_G.RaidInfoFrame)
+	self:CreateShadow(_G.RaidInfoFrame)
 end
 
 S:AddCallback("RaidInfoFrame")

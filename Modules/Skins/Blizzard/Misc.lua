@@ -11,163 +11,142 @@ local CreateFrame = CreateFrame
 local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
 
 function S:Blizzard_DeathRecap()
-    self:CreateBackdropShadow(_G.DeathRecapFrame)
+	self:CreateBackdropShadow(_G.DeathRecapFrame)
 end
 
 function S:SkinSkipButton(frame)
-    if not frame then
-        return
-    end
+	if not frame then
+		return
+	end
 
-    local dialog = frame.closeDialog or frame.CloseDialog
+	local dialog = frame.closeDialog or frame.CloseDialog
 
-    if dialog then
-        self:CreateShadow(dialog)
-    end
+	if dialog then
+		self:CreateShadow(dialog)
+	end
 end
 
 function S:BlizzardMiscFrames()
-    if not self:CheckDB("misc") then
-        return
-    end
+	if not self:CheckDB("misc") then
+		return
+	end
 
-    self:CreateShadow(_G.GameMenuFrame)
-    self:CreateShadow(_G.AutoCompleteBox)
+	self:CreateShadow(_G.GameMenuFrame)
+	self:CreateShadow(_G.AutoCompleteBox)
 
-    -- Skip Frame
-    self:SecureHook("CinematicFrame_UpdateLettboxForAspectRatio", "SkinSkipButton")
-    self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
+	-- Skip Frame
+	self:SecureHook("CinematicFrame_UpdateLettboxForAspectRatio", "SkinSkipButton")
+	self:SecureHook("MovieFrame_PlayMovie", "SkinSkipButton")
 
-    -- Chat Menus
-    local chatMenus = {"ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu"}
+	-- Chat Menus
+	local chatMenus = { "ChatMenu", "EmoteMenu", "LanguageMenu", "VoiceMacroMenu" }
 
-    for _, menu in pairs(chatMenus) do
-        local target = _G[menu] and _G[menu].NineSlice
-        if target then
-            self:SecureHookScript(target, "OnShow", "CreateShadow")
-        end
-    end
+	for _, menu in pairs(chatMenus) do
+		local target = _G[menu] and _G[menu].NineSlice
+		if target then
+			self:SecureHookScript(target, "OnShow", "CreateShadow")
+		end
+	end
 
-    -- Dropdown Menu
-    for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
-        local f = _G["DropDownList" .. i .. "Backdrop"]
-        self:CreateShadow(f)
+	-- Dropdown Menu
+	for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
+		local f = _G["DropDownList" .. i .. "Backdrop"]
+		self:CreateShadow(f)
 
-        f = _G["DropDownList" .. i .. "MenuBackdrop"]
-        self:CreateShadow(f)
-    end
+		f = _G["DropDownList" .. i .. "MenuBackdrop"]
+		self:CreateShadow(f)
+	end
 
-    -- Action Status
-    if _G.ActionStatus.Text then
-        F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.actionStatus)
-    end
+	-- Action Status
+	if _G.ActionStatus.Text then
+		F.SetFontWithDB(_G.ActionStatus.Text, E.private.WT.skins.actionStatus)
+	end
 
-    -- Spirit Healer
-    self:CreateShadow(_G.GhostFrameContentsFrame)
+	-- Spirit Healer
+	self:CreateShadow(_G.GhostFrameContentsFrame)
 
-    -- Cinematic Frame
-    self:CreateShadow(_G.CinematicFrameCloseDialog)
+	-- Cinematic Frame
+	self:CreateShadow(_G.CinematicFrameCloseDialog)
 
-    -- Report Frame
-    local reportFrameShadowContainer = CreateFrame("Frame", nil, _G.ReportFrame)
-    reportFrameShadowContainer:SetAllPoints(_G.ReportFrame)
-    self:CreateShadow(reportFrameShadowContainer)
+	-- Report Frame
+	local reportFrameShadowContainer = CreateFrame("Frame", nil, _G.ReportFrame)
+	reportFrameShadowContainer:SetAllPoints(_G.ReportFrame)
+	self:CreateShadow(reportFrameShadowContainer)
 
-    -- Stack Split Frame
-    self:CreateShadow(_G.StackSplitFrame)
+	-- Stack Split Frame
+	self:CreateShadow(_G.StackSplitFrame)
 
-    -- Chat Config Frame
-    self:CreateShadow(_G.ChatConfigFrame)
+	-- Chat Config Frame
+	self:CreateShadow(_G.ChatConfigFrame)
 
-    -- Color Picker Frame
-    self:CreateShadow(_G.ColorPickerFrame)
+	-- Color Picker Frame
+	self:CreateShadow(_G.ColorPickerFrame)
 
-    -- UIWidget
-    self:SecureHook(
-        ES,
-        "SkinStatusBarWidget",
-        function(_, widgetFrame)
-            if widgetFrame.Label then
-                F.SetFontOutline(widgetFrame.Label)
-            end
-            if widgetFrame.Bar then
-                self:CreateBackdropShadow(widgetFrame.Bar)
-                if widgetFrame.Bar.Label then
-                    F.SetFontOutline(widgetFrame.Bar.Label)
-                end
-            end
-        end
-    )
+	-- UIWidget
+	self:SecureHook(ES, "SkinStatusBarWidget", function(_, widgetFrame)
+		if widgetFrame.Label then
+			F.SetFontOutline(widgetFrame.Label)
+		end
+		if widgetFrame.Bar then
+			self:CreateBackdropShadow(widgetFrame.Bar)
+			if widgetFrame.Bar.Label then
+				F.SetFontOutline(widgetFrame.Bar.Label)
+			end
+		end
+	end)
 
-    self:SecureHook(
-        _G.UIWidgetTemplateStatusBarMixin,
-        "Setup",
-        function(widget)
-            local forbidden = widget:IsForbidden()
-            local bar = widget.Bar
-            local id = widget.widgetSetID
+	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
+		local forbidden = widget:IsForbidden()
+		local bar = widget.Bar
+		local id = widget.widgetSetID
 
-            if forbidden or id == 283 or not bar or not bar.backdrop then
-                return
-            end
+		if forbidden or id == 283 or not bar or not bar.backdrop then
+			return
+		end
 
-            self:CreateBackdropShadow(bar)
+		self:CreateBackdropShadow(bar)
 
-            if widget.Label then
-                F.SetFontOutline(widget.Label)
-            end
+		if widget.Label then
+			F.SetFontOutline(widget.Label)
+		end
 
-            if bar.Label then
-                F.SetFontOutline(bar.Label)
-            end
+		if bar.Label then
+			F.SetFontOutline(bar.Label)
+		end
 
-            if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
-                bar:SetWidth(234)
-            end
-        end
-    )
+		if widget.isJailersTowerBar and self:CheckDB(nil, "scenario") then
+			bar:SetWidth(234)
+		end
+	end)
 
-    self:SecureHook(
-        _G.UIWidgetTemplateCaptureBarMixin,
-        "Setup",
-        function(widget)
-            local bar = widget.Bar
-            if bar then
-                self:CreateBackdropShadow(bar)
-            end
-        end
-    )
+	self:SecureHook(_G.UIWidgetTemplateCaptureBarMixin, "Setup", function(widget)
+		local bar = widget.Bar
+		if bar then
+			self:CreateBackdropShadow(bar)
+		end
+	end)
 
-    self:RawHook(
-        ES,
-        "SkinTextWithStateWidget",
-        function(_, widgetFrame)
-            local text = widgetFrame.Text
-            if not text then
-                return
-            end
-            F.SetFontOutline(text)
-        end,
-        true
-    )
+	self:RawHook(ES, "SkinTextWithStateWidget", function(_, widgetFrame)
+		local text = widgetFrame.Text
+		if not text then
+			return
+		end
+		F.SetFontOutline(text)
+	end, true)
 
-    -- Icon Selection Frames (After ElvUI Skin)
-    self:SecureHook(
-        ES,
-        "HandleIconSelectionFrame",
-        function(_, frame)
-            self:CreateShadow(frame)
-        end
-    )
+	-- Icon Selection Frames (After ElvUI Skin)
+	self:SecureHook(ES, "HandleIconSelectionFrame", function(_, frame)
+		self:CreateShadow(frame)
+	end)
 
-    -- Battle.net
-    self:CreateShadow(_G.BattleTagInviteFrame)
+	-- Battle.net
+	self:CreateShadow(_G.BattleTagInviteFrame)
 
-    -- BasicMessageDialog
-    local MessageDialog = _G.BasicMessageDialog
-    if MessageDialog then
-        self:CreateShadow(MessageDialog)
-    end
+	-- BasicMessageDialog
+	local MessageDialog = _G.BasicMessageDialog
+	if MessageDialog then
+		self:CreateShadow(MessageDialog)
+	end
 end
 
 S:AddCallback("BlizzardMiscFrames")

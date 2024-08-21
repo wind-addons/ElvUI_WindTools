@@ -45,84 +45,80 @@ E:AddLib("OpenRaid", "LibOpenRaid-1.0")
 E:AddLib("LOP", "LibObjectiveProgress-1.0")
 
 _G.WindTools_OnAddonCompartmentClick = function()
-    E:ToggleOptions("WindTools")
+	E:ToggleOptions("WindTools")
 end
 
 function W:Initialize()
-    -- ElvUI -> WindTools -> WindTools Modules
-    if not self:CheckElvUIVersion() then
-        return
-    end
+	-- ElvUI -> WindTools -> WindTools Modules
+	if not self:CheckElvUIVersion() then
+		return
+	end
 
-    for name, module in self:IterateModules() do
-        addon[2].Developer.InjectLogger(module)
-    end
+	for name, module in self:IterateModules() do
+		addon[2].Developer.InjectLogger(module)
+	end
 
-    hooksecurefunc(
-        W,
-        "NewModule",
-        function(_, name)
-            addon[2].Developer.InjectLogger(name)
-        end
-    )
+	hooksecurefunc(W, "NewModule", function(_, name)
+		addon[2].Developer.InjectLogger(name)
+	end)
 
-    self.initialized = true
+	self.initialized = true
 
-    self:UpdateScripts() -- Database need update first
-    self:InitializeModules()
+	self:UpdateScripts() -- Database need update first
+	self:InitializeModules()
 
-    EP:RegisterPlugin(addonName, W.OptionsCallback)
-    self:SecureHook(E, "UpdateAll", "UpdateModules")
-    self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	EP:RegisterPlugin(addonName, W.OptionsCallback)
+	self:SecureHook(E, "UpdateAll", "UpdateModules")
+	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 do
-    local checked = false
-    function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
-        E:Delay(7, self.CheckInstalledVersion, self)
+	local checked = false
+	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
+		E:Delay(7, self.CheckInstalledVersion, self)
 
-        if isInitialLogin then
-            if E.global.WT.core.loginMessage then
-                local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)
-                print(
-                    format(
-                        icon ..
-                            " " ..
-                                L["%s %s Loaded."] ..
-                                    " " ..
-                                        L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."],
-                        self.Title,
-                        self.Version,
-                        L["QQ Group"],
-                        L["Discord"],
-                        L["GitHub"],
-                        L["NGA.cn"]
-                    )
-                )
-            end
-        end
+		if isInitialLogin then
+			if E.global.WT.core.loginMessage then
+				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)
+				print(
+					format(
+						icon
+							.. " "
+							.. L["%s %s Loaded."]
+							.. " "
+							.. L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."],
+						self.Title,
+						self.Version,
+						L["QQ Group"],
+						L["Discord"],
+						L["GitHub"],
+						L["NGA.cn"]
+					)
+				)
+			end
+		end
 
-        if not (checked or _G.ElvUIInstallFrame) then
-            self:CheckCompatibility()
-            checked = true
-        end
+		if not (checked or _G.ElvUIInstallFrame) then
+			self:CheckCompatibility()
+			checked = true
+		end
 
-        if _G.ElvDB then
-            if isInitialLogin or not _G.ElvDB.WT then
-                _G.ElvDB.WT = {
-                    DisabledAddOns = {}
-                }
-            end
+		if _G.ElvDB then
+			if isInitialLogin or not _G.ElvDB.WT then
+				_G.ElvDB.WT = {
+					DisabledAddOns = {},
+				}
+			end
 
-            if next(_G.ElvDB.WT.DisabledAddOns) then
-                E:Delay(4, self.PrintDebugEnviromentTip)
-            end
-        end
+			if next(_G.ElvDB.WT.DisabledAddOns) then
+				E:Delay(4, self.PrintDebugEnviromentTip)
+			end
+		end
 
-        self:GameFixing()
+		self:GameFixing()
 
-        E:Delay(1, collectgarbage, "collect")
-    end
+		E:Delay(1, collectgarbage, "collect")
+	end
 end
 
 EP:HookInitialize(W, W.Initialize)

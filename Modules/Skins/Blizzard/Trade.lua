@@ -4,11 +4,11 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:TutorialFrame()
-    if not self:CheckDB("trade") then
-        return
-    end
+	if not self:CheckDB("trade") then
+		return
+	end
 
-    self:CreateShadow(_G.TradeFrame)
+	self:CreateShadow(_G.TradeFrame)
 end
 
 S:AddCallback("TutorialFrame")

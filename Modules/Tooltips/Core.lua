@@ -31,197 +31,197 @@ T.clearInspect = {}
 T.eventCallback = {}
 
 function T:AddCallback(name, func)
-    tinsert(self.load, func or self[name])
+	tinsert(self.load, func or self[name])
 end
 
 function T:AddCallbackForUpdate(name, func)
-    tinsert(self.updateProfile, func or self[name])
+	tinsert(self.updateProfile, func or self[name])
 end
 
 function T:AddInspectInfoCallback(priority, inspectFunction, useModifier, clearFunction)
-    if type(inspectFunction) == "string" then
-        inspectFunction = self[inspectFunction]
-    end
+	if type(inspectFunction) == "string" then
+		inspectFunction = self[inspectFunction]
+	end
 
-    if useModifier then
-        self.modifierInspect[priority] = inspectFunction
-    else
-        self.normalInspect[priority] = inspectFunction
-    end
+	if useModifier then
+		self.modifierInspect[priority] = inspectFunction
+	else
+		self.normalInspect[priority] = inspectFunction
+	end
 
-    if clearFunction then
-        if type(clearFunction) == "string" then
-            clearFunction = self[clearFunction]
-        end
-        self.clearInspect[priority] = clearFunction
-    end
+	if clearFunction then
+		if type(clearFunction) == "string" then
+			clearFunction = self[clearFunction]
+		end
+		self.clearInspect[priority] = clearFunction
+	end
 end
 
 function T:ClearInspectInfo(tt)
-    if tt:IsForbidden() then
-        return
-    end
+	if tt:IsForbidden() then
+		return
+	end
 
-    -- Run all registered callbacks (clear)
-    for _, func in next, self.clearInspect do
-        xpcall(func, F.Developer.ThrowError, self, tt)
-    end
+	-- Run all registered callbacks (clear)
+	for _, func in next, self.clearInspect do
+		xpcall(func, F.Developer.ThrowError, self, tt)
+	end
 end
 
 function T:CheckModifier()
-    if not self.db or self.db.modifier == "NONE" then
-        return true
-    end
+	if not self.db or self.db.modifier == "NONE" then
+		return true
+	end
 
-    local modifierStatus = {
-        SHIFT = IsShiftKeyDown(),
-        ALT = IsAltKeyDown(),
-        CTRL = IsControlKeyDown()
-    }
+	local modifierStatus = {
+		SHIFT = IsShiftKeyDown(),
+		ALT = IsAltKeyDown(),
+		CTRL = IsControlKeyDown(),
+	}
 
-    local results = {}
-    for _, modifier in next, {strsplit("_", self.db.modifier)} do
-        tinsert(results, modifierStatus[modifier] or false)
-    end
+	local results = {}
+	for _, modifier in next, { strsplit("_", self.db.modifier) } do
+		tinsert(results, modifierStatus[modifier] or false)
+	end
 
-    for _, v in next, results do
-        if not v then
-            return false
-        end
-    end
+	for _, v in next, results do
+		if not v then
+			return false
+		end
+	end
 
-    return true
+	return true
 end
 
 function T:InspectInfo(tt, data, triedTimes)
-    if tt ~= GameTooltip or (tt.IsForbidden and tt:IsForbidden()) or (ET.db and not ET.db.visibility) then
-        return
-    end
+	if tt ~= GameTooltip or (tt.IsForbidden and tt:IsForbidden()) or (ET.db and not ET.db.visibility) then
+		return
+	end
 
-    if tt.windInspectLoaded then
-        return
-    end
+	if tt.windInspectLoaded then
+		return
+	end
 
-    triedTimes = triedTimes or 0
+	triedTimes = triedTimes or 0
 
-    local unit = select(2, tt:GetUnit())
+	local unit = select(2, tt:GetUnit())
 
-    if not unit then
-        local GMF = E:GetMouseFocus()
-        local focusUnit = GMF and GMF.GetAttribute and GMF:GetAttribute("unit")
-        if focusUnit then
-            unit = focusUnit
-        end
-        if not unit or not UnitExists(unit) then
-            return
-        end
-    end
+	if not unit then
+		local GMF = E:GetMouseFocus()
+		local focusUnit = GMF and GMF.GetAttribute and GMF:GetAttribute("unit")
+		if focusUnit then
+			unit = focusUnit
+		end
+		if not unit or not UnitExists(unit) then
+			return
+		end
+	end
 
-    if not unit or not data or not data.guid then
-        return
-    end
+	if not unit or not data or not data.guid then
+		return
+	end
 
-    local inCombatLockdown = InCombatLockdown()
-    local isShiftKeyDown = IsShiftKeyDown()
-    local isPlayerUnit = UnitIsPlayer(unit)
+	local inCombatLockdown = InCombatLockdown()
+	local isShiftKeyDown = IsShiftKeyDown()
+	local isPlayerUnit = UnitIsPlayer(unit)
 
-    -- Run all registered callbacks (normal)
-    for _, func in next, self.normalInspect do
-        xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
-    end
+	-- Run all registered callbacks (normal)
+	for _, func in next, self.normalInspect do
+		xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
+	end
 
-    -- Item Level
-    local itemLevelAvailable = isPlayerUnit and not inCombatLockdown and ET.db.inspectDataEnable
+	-- Item Level
+	local itemLevelAvailable = isPlayerUnit and not inCombatLockdown and ET.db.inspectDataEnable
 
-    if self.profiledb.elvUITweaks.forceItemLevel then
-        if not isShiftKeyDown and itemLevelAvailable and not tt.ItemLevelShown then
-            local _, class = UnitClass(unit)
-            local color = class and E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
-            ET:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
-        end
-    end
+	if self.profiledb.elvUITweaks.forceItemLevel then
+		if not isShiftKeyDown and itemLevelAvailable and not tt.ItemLevelShown then
+			local _, class = UnitClass(unit)
+			local color = class and E:ClassColor(class) or RAID_CLASS_COLORS_PRIEST
+			ET:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
+		end
+	end
 
-    -- Modifier callbacks pre-check
-    if not self:CheckModifier() or not CanInspect(unit) then
-        return
-    end
+	-- Modifier callbacks pre-check
+	if not self:CheckModifier() or not CanInspect(unit) then
+		return
+	end
 
-    -- It ElvUI Item Level is enabled, we need to delay the modifier callbacks
-    if self.db.forceItemLevel or isShiftKeyDown and itemLevelAvailable then
-        if not tt.ItemLevelShown and triedTimes <= 4 then
-            E:Delay(0.33, T.InspectInfo, T, tt, data, triedTimes + 1)
-            return
-        end
-    end
+	-- It ElvUI Item Level is enabled, we need to delay the modifier callbacks
+	if self.db.forceItemLevel or isShiftKeyDown and itemLevelAvailable then
+		if not tt.ItemLevelShown and triedTimes <= 4 then
+			E:Delay(0.33, T.InspectInfo, T, tt, data, triedTimes + 1)
+			return
+		end
+	end
 
-    -- Run all registered callbacks (modifier)
-    for _, func in next, self.modifierInspect do
-        xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
-    end
+	-- Run all registered callbacks (modifier)
+	for _, func in next, self.modifierInspect do
+		xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
+	end
 
-    tt.windInspectLoaded = true
+	tt.windInspectLoaded = true
 end
 
 function T:ElvUIRemoveTrashLines(_, tt)
-    tt.windInspectLoaded = false
+	tt.windInspectLoaded = false
 end
 
 function T:AddEventCallback(eventName, func)
-    if type(func) == "string" then
-        func = self[func]
-    end
-    if self.eventCallback[eventName] then
-        tinsert(self.eventCallback[eventName], func)
-    else
-        self.eventCallback[eventName] = {func}
-    end
+	if type(func) == "string" then
+		func = self[func]
+	end
+	if self.eventCallback[eventName] then
+		tinsert(self.eventCallback[eventName], func)
+	else
+		self.eventCallback[eventName] = { func }
+	end
 end
 
 function T:Event(event, ...)
-    if self.eventCallback[event] then
-        for _, func in next, self.eventCallback[event] do
-            xpcall(func, F.Developer.ThrowError, self, event, ...)
-        end
-    end
+	if self.eventCallback[event] then
+		for _, func in next, self.eventCallback[event] do
+			xpcall(func, F.Developer.ThrowError, self, event, ...)
+		end
+	end
 end
 
 ET._GameTooltip_OnTooltipSetUnit = ET.GameTooltip_OnTooltipSetUnit
 function ET.GameTooltip_OnTooltipSetUnit(...)
-    ET._GameTooltip_OnTooltipSetUnit(...)
+	ET._GameTooltip_OnTooltipSetUnit(...)
 
-    if not T or not T.initialized then
-        return
-    end
+	if not T or not T.initialized then
+		return
+	end
 
-    T:InspectInfo(...)
+	T:InspectInfo(...)
 end
 
 function T:Initialize()
-    self.db = E.private.WT.tooltips
-    self.profiledb = E.db.WT.tooltips
-    for index, func in next, self.load do
-        xpcall(func, F.Developer.ThrowError, self)
-        self.load[index] = nil
-    end
+	self.db = E.private.WT.tooltips
+	self.profiledb = E.db.WT.tooltips
+	for index, func in next, self.load do
+		xpcall(func, F.Developer.ThrowError, self)
+		self.load[index] = nil
+	end
 
-    for name, _ in pairs(self.eventCallback) do
-        T:RegisterEvent(name, "Event")
-    end
+	for name, _ in pairs(self.eventCallback) do
+		T:RegisterEvent(name, "Event")
+	end
 
-    T:RawHook(ET, "AddMythicInfo")
-    T:SecureHook(ET, "SetUnitText", "SetUnitText")
-    T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
-    T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
+	T:RawHook(ET, "AddMythicInfo")
+	T:SecureHook(ET, "SetUnitText", "SetUnitText")
+	T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
+	T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
 
-    self.initialized = true
+	self.initialized = true
 end
 
 function T:ProfileUpdate()
-    self.profiledb = E.db.WT.tooltips
-    for index, func in next, self.updateProfile do
-        xpcall(func, F.Developer.ThrowError, self)
-        self.updateProfile[index] = nil
-    end
+	self.profiledb = E.db.WT.tooltips
+	for index, func in next, self.updateProfile do
+		xpcall(func, F.Developer.ThrowError, self)
+		self.updateProfile[index] = nil
+	end
 end
 
 W:RegisterModule(T:GetName())

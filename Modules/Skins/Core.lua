@@ -31,21 +31,21 @@ S.enteredLoad = {}
     @return {bool} isEnabledBoth
 ]]
 function S:CheckDB(elvuiKey, windtoolsKey)
-    if elvuiKey then
-        windtoolsKey = windtoolsKey or elvuiKey
-        if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
-            return false
-        end
-        if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
-            return false
-        end
-    else
-        if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
-            return false
-        end
-    end
+	if elvuiKey then
+		windtoolsKey = windtoolsKey or elvuiKey
+		if not (E.private.skins.blizzard.enable and E.private.skins.blizzard[elvuiKey]) then
+			return false
+		end
+		if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+			return false
+		end
+	else
+		if not (E.private.WT.skins.blizzard.enable and E.private.WT.skins.blizzard[windtoolsKey]) then
+			return false
+		end
+	end
 
-    return true
+	return true
 end
 
 --[[
@@ -58,38 +58,38 @@ end
     @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
 ]]
 function S:CreateShadow(frame, size, r, g, b, force)
-    if not force then
-        if not E.private.WT.skins or not E.private.WT.skins.shadow then
-            return
-        end
-    end
+	if not force then
+		if not E.private.WT.skins or not E.private.WT.skins.shadow then
+			return
+		end
+	end
 
-    if not frame or frame.__windShadow or frame.shadow and frame.shadow.__wind then
-        return
-    end
+	if not frame or frame.__windShadow or frame.shadow and frame.shadow.__wind then
+		return
+	end
 
-    if frame:GetObjectType() == "Texture" then
-        frame = frame:GetParent()
-    end
+	if frame:GetObjectType() == "Texture" then
+		frame = frame:GetParent()
+	end
 
-    r = r or E.private.WT.skins.color.r or 0
-    g = g or E.private.WT.skins.color.g or 0
-    b = b or E.private.WT.skins.color.b or 0
+	r = r or E.private.WT.skins.color.r or 0
+	g = g or E.private.WT.skins.color.g or 0
+	b = b or E.private.WT.skins.color.b or 0
 
-    size = size or 4
-    size = size + (E.private.WT.skins.increasedSize or 0)
+	size = size or 4
+	size = size + (E.private.WT.skins.increasedSize or 0)
 
-    local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    shadow:SetFrameStrata(frame:GetFrameStrata())
-    shadow:SetFrameLevel(frame:GetFrameLevel() or 1)
-    shadow:SetOutside(frame, size, size)
-    shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = size + 1})
-    shadow:SetBackdropColor(r, g, b, 0)
-    shadow:SetBackdropBorderColor(r, g, b, 0.618)
-    shadow.__wind = true -- mark the shadow created by WindTools
+	local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+	shadow:SetFrameStrata(frame:GetFrameStrata())
+	shadow:SetFrameLevel(frame:GetFrameLevel() or 1)
+	shadow:SetOutside(frame, size, size)
+	shadow:SetBackdrop({ edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = size + 1 })
+	shadow:SetBackdropColor(r, g, b, 0)
+	shadow:SetBackdropBorderColor(r, g, b, 0.618)
+	shadow.__wind = true -- mark the shadow created by WindTools
 
-    frame.shadow = shadow
-    frame.__windShadow = 1 -- mark the current frame has shadow
+	frame.shadow = shadow
+	frame.__windShadow = 1 -- mark the current frame has shadow
 end
 
 --[[
@@ -98,23 +98,23 @@ end
     @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
 ]]
 function S:CreateLowerShadow(frame, force)
-    if not force then
-        if not E.private.WT.skins or not E.private.WT.skins.shadow then
-            return
-        end
-    end
+	if not force then
+		if not E.private.WT.skins or not E.private.WT.skins.shadow then
+			return
+		end
+	end
 
-    self:CreateShadow(frame)
-    if frame.shadow and frame.SetFrameStrata and frame.SetFrameLevel then
-        local function refreshFrameLevel()
-            local parentFrameLevel = frame:GetFrameLevel()
-            frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
-        end
+	self:CreateShadow(frame)
+	if frame.shadow and frame.SetFrameStrata and frame.SetFrameLevel then
+		local function refreshFrameLevel()
+			local parentFrameLevel = frame:GetFrameLevel()
+			frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
+		end
 
-        -- avoid the shadow level is reset when the frame strata/level is changed
-        hooksecurefunc(frame, "SetFrameStrata", refreshFrameLevel)
-        hooksecurefunc(frame, "SetFrameLevel", refreshFrameLevel)
-    end
+		-- avoid the shadow level is reset when the frame strata/level is changed
+		hooksecurefunc(frame, "SetFrameStrata", refreshFrameLevel)
+		hooksecurefunc(frame, "SetFrameLevel", refreshFrameLevel)
+	end
 end
 
 --[[
@@ -125,97 +125,89 @@ end
     @param {number} [b=gloabl shadow color G] B channel value（0~1）
 ]]
 function S:UpdateShadowColor(shadow, r, g, b)
-    if not shadow or not shadow.__wind then
-        return
-    end
+	if not shadow or not shadow.__wind then
+		return
+	end
 
-    r = r or E.private.WT.skins.color.r or 0
-    g = g or E.private.WT.skins.color.g or 0
-    b = b or E.private.WT.skins.color.b or 0
+	r = r or E.private.WT.skins.color.r or 0
+	g = g or E.private.WT.skins.color.g or 0
+	b = b or E.private.WT.skins.color.b or 0
 
-    shadow:SetBackdropColor(r, g, b, 0)
-    shadow:SetBackdropBorderColor(r, g, b, 0.618)
+	shadow:SetBackdropColor(r, g, b, 0)
+	shadow:SetBackdropBorderColor(r, g, b, 0.618)
 end
 
 do
-    local function colorCallback(shadow, r, g, b)
-        if not r or not g or not b then
-            return
-        end
+	local function colorCallback(shadow, r, g, b)
+		if not r or not g or not b then
+			return
+		end
 
-        if r == E.db.general.bordercolor.r and g == E.db.general.bordercolor.g and b == E.db.general.bordercolor.b then
-            S:UpdateShadowColor(shadow)
-        else
-            S:UpdateShadowColor(shadow, r, g, b)
-        end
-    end
+		if r == E.db.general.bordercolor.r and g == E.db.general.bordercolor.g and b == E.db.general.bordercolor.b then
+			S:UpdateShadowColor(shadow)
+		else
+			S:UpdateShadowColor(shadow, r, g, b)
+		end
+	end
 
-    --[[
+	--[[
         Change the color of shadow with the border color
         @param {frame} shadow !!!!!NOT THE PARENT FRAME
         @param {frame} borderParent, the target backdrop
     ]]
-    function S:BindShadowColorWithBorder(shadow, borderParent)
-        if not shadow or not shadow.__wind or not borderParent or not borderParent.SetBackdropBorderColor then
-            return
-        end
+	function S:BindShadowColorWithBorder(shadow, borderParent)
+		if not shadow or not shadow.__wind or not borderParent or not borderParent.SetBackdropBorderColor then
+			return
+		end
 
-        hooksecurefunc(
-            borderParent,
-            "SetBackdropBorderColor",
-            function(_, ...)
-                colorCallback(shadow, ...)
-            end
-        )
+		hooksecurefunc(borderParent, "SetBackdropBorderColor", function(_, ...)
+			colorCallback(shadow, ...)
+		end)
 
-        colorCallback(shadow, borderParent:GetBackdropBorderColor())
-    end
+		colorCallback(shadow, borderParent:GetBackdropBorderColor())
+	end
 end
 
 do
-    local function createBackdropShadow(frame, defaultTemplate)
-        if not E.private.WT.skins or not E.private.WT.skins.shadow then
-            return
-        end
+	local function createBackdropShadow(frame, defaultTemplate)
+		if not E.private.WT.skins or not E.private.WT.skins.shadow then
+			return
+		end
 
-        if not defaultTemplate then
-            frame.backdrop:SetTemplate("Transparent")
-        end
+		if not defaultTemplate then
+			frame.backdrop:SetTemplate("Transparent")
+		end
 
-        S:CreateShadow(frame.backdrop)
+		S:CreateShadow(frame.backdrop)
 
-        if frame.backdrop.shadow.__wind then
-            frame.__windShadow = frame.backdrop.__windShadow + 1
-        end
-    end
+		if frame.backdrop.shadow.__wind then
+			frame.__windShadow = frame.backdrop.__windShadow + 1
+		end
+	end
 
-    --[[
+	--[[
         Create a shadow for the backdrop of the frame
         @param {frame} frame
         @param {string} template
     ]]
-    function S:CreateBackdropShadow(frame, template)
-        if not frame or frame.__windShadow then
-            return
-        end
+	function S:CreateBackdropShadow(frame, template)
+		if not frame or frame.__windShadow then
+			return
+		end
 
-        if frame.backdrop then
-            createBackdropShadow(frame, template)
-        elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
-            self:SecureHook(
-                frame,
-                "CreateBackdrop",
-                function(...)
-                    if self:IsHooked(frame, "CreateBackdrop") then
-                        self:Unhook(frame, "CreateBackdrop")
-                    end
-                    createBackdropShadow(...)
-                end
-            )
-        end
-    end
+		if frame.backdrop then
+			createBackdropShadow(frame, template)
+		elseif frame.CreateBackdrop and not self:IsHooked(frame, "CreateBackdrop") then
+			self:SecureHook(frame, "CreateBackdrop", function(...)
+				if self:IsHooked(frame, "CreateBackdrop") then
+					self:Unhook(frame, "CreateBackdrop")
+				end
+				createBackdropShadow(...)
+			end)
+		end
+	end
 
-    --[[
+	--[[
     Create shadow of backdrop that created by ElvUI skin function
     The function is automatically repeat several times for waiting ElvUI done
         the modifying/creating of backdrop
@@ -223,21 +215,21 @@ do
     @param {object} frame
     @param {string} [tried=20] time
 ]]
-    function S:TryCreateBackdropShadow(frame, tried)
-        if not frame or frame.__windShadow then
-            return
-        end
+	function S:TryCreateBackdropShadow(frame, tried)
+		if not frame or frame.__windShadow then
+			return
+		end
 
-        tried = tried or 20
+		tried = tried or 20
 
-        if frame.backdrop then
-            createBackdropShadow(frame)
-        else
-            if tried >= 0 then
-                E:Delay(0.1, self.TryCreateBackdropShadow, self, frame, tried - 1)
-            end
-        end
-    end
+		if frame.backdrop then
+			createBackdropShadow(frame)
+		else
+			if tried >= 0 then
+				E:Delay(0.1, self.TryCreateBackdropShadow, self, frame, tried - 1)
+			end
+		end
+	end
 end
 
 --[[
@@ -245,11 +237,11 @@ end
     @param {frame} tab
 ]]
 function S:ReskinTab(tab)
-    if not tab then
-        return
-    end
+	if not tab then
+		return
+	end
 
-    self:CreateBackdropShadow(tab)
+	self:CreateBackdropShadow(tab)
 end
 
 --[[
@@ -257,11 +249,11 @@ end
     @param {object} frame
 ]]
 function S:SetTransparentBackdrop(frame)
-    if frame.backdrop then
-        frame.backdrop:SetTemplate("Transparent")
-    else
-        frame:CreateBackdrop("Transparent")
-    end
+	if frame.backdrop then
+		frame.backdrop:SetTemplate("Transparent")
+	else
+		frame:CreateBackdrop("Transparent")
+	end
 end
 
 --[[
@@ -270,7 +262,7 @@ end
     @param {function} [func=S.name] function
 ]]
 function S:AddCallback(name, func)
-    tinsert(self.nonAddonsToLoad, func or self[name])
+	tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
 --[[
@@ -279,7 +271,7 @@ end
     @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForAceGUIWidget(name, func)
-    self.aceWidgets[name] = func or self[name]
+	self.aceWidgets[name] = func or self[name]
 end
 
 --[[
@@ -288,17 +280,17 @@ end
     @param {function} [func=S.addonName] function
 ]]
 function S:AddCallbackForAddon(addonName, func)
-    local addon = self.addonsToLoad[addonName]
-    if not addon then
-        self.addonsToLoad[addonName] = {}
-        addon = self.addonsToLoad[addonName]
-    end
+	local addon = self.addonsToLoad[addonName]
+	if not addon then
+		self.addonsToLoad[addonName] = {}
+		addon = self.addonsToLoad[addonName]
+	end
 
-    if type(func) == "string" then
-        func = self[func]
-    end
+	if type(func) == "string" then
+		func = self[func]
+	end
 
-    tinsert(addon, func or self[addonName])
+	tinsert(addon, func or self[addonName])
 end
 
 --[[
@@ -307,7 +299,7 @@ end
     @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForEnterWorld(name, func)
-    tinsert(self.enteredLoad, func or self[name])
+	tinsert(self.enteredLoad, func or self[name])
 end
 
 --[[
@@ -315,14 +307,14 @@ end
     @param {string} addonName, the name of addon
 ]]
 function S:PLAYER_ENTERING_WORLD()
-    if not E.initialized or not E.private.WT.skins.enable then
-        return
-    end
+	if not E.initialized or not E.private.WT.skins.enable then
+		return
+	end
 
-    for index, func in next, self.enteredLoad do
-        xpcall(func, F.Developer.ThrowError, self)
-        self.enteredLoad[index] = nil
-    end
+	for index, func in next, self.enteredLoad do
+		xpcall(func, F.Developer.ThrowError, self)
+		self.enteredLoad[index] = nil
+	end
 end
 
 --[[
@@ -331,7 +323,7 @@ end
     @param {function} [func=S.name] function
 ]]
 function S:AddCallbackForUpdate(name, func)
-    tinsert(self.updateProfile, func or self[name])
+	tinsert(self.updateProfile, func or self[name])
 end
 
 --[[
@@ -340,11 +332,11 @@ end
     @param {table} object, the list of callbacks
 ]]
 function S:CallLoadedAddon(addonName, object)
-    for _, func in next, object do
-        xpcall(func, F.Developer.ThrowError, self)
-    end
+	for _, func in next, object do
+		xpcall(func, F.Developer.ThrowError, self)
+	end
 
-    self.addonsToLoad[addonName] = nil
+	self.addonsToLoad[addonName] = nil
 end
 
 --[[
@@ -352,58 +344,58 @@ end
     @param {string} addonName, the name of addon
 ]]
 function S:ADDON_LOADED(_, addonName)
-    if not E.initialized or not E.private.WT.skins.enable then
-        return
-    end
+	if not E.initialized or not E.private.WT.skins.enable then
+		return
+	end
 
-    local object = self.addonsToLoad[addonName]
-    if object then
-        self:CallLoadedAddon(addonName, object)
-    end
+	local object = self.addonsToLoad[addonName]
+	if object then
+		self:CallLoadedAddon(addonName, object)
+	end
 end
 
 function S:ReskinWidgets(AceGUI)
-    for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
-        S:UpdateWidget(AceGUI, name, oldFunc)
-    end
+	for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
+		S:UpdateWidget(AceGUI, name, oldFunc)
+	end
 end
 
 function S:UpdateWidget(lib, name, oldFunc)
-    if self.aceWidgets[name] then
-        lib.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
-        self.aceWidgets[name] = nil
-    end
+	if self.aceWidgets[name] then
+		lib.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
+		self.aceWidgets[name] = nil
+	end
 end
 
 do
-    local alreadyWidgetHooked = false
-    local alreadyDialogSkined = false
-    function S:LibStub_NewLibrary(_, major)
-        if major == "AceGUI-3.0" and not alreadyWidgetHooked then
-            AceGUI = _G.LibStub("AceGUI-3.0")
-            self:ReskinWidgets(AceGUI)
-            self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-            alreadyWidgetHooked = true
-        elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkined then
-            self:AceConfigDialog()
-            alreadyDialogSkined = true
-        end
-    end
+	local alreadyWidgetHooked = false
+	local alreadyDialogSkined = false
+	function S:LibStub_NewLibrary(_, major)
+		if major == "AceGUI-3.0" and not alreadyWidgetHooked then
+			AceGUI = _G.LibStub("AceGUI-3.0")
+			self:ReskinWidgets(AceGUI)
+			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+			alreadyWidgetHooked = true
+		elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkined then
+			self:AceConfigDialog()
+			alreadyDialogSkined = true
+		end
+	end
 
-    function S:HookEarly()
-        local AceGUI = _G.LibStub("AceGUI-3.0")
-        if AceGUI and not alreadyWidgetHooked then
-            self:ReskinWidgets(AceGUI)
-            self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-            alreadyWidgetHooked = true
-        end
+	function S:HookEarly()
+		local AceGUI = _G.LibStub("AceGUI-3.0")
+		if AceGUI and not alreadyWidgetHooked then
+			self:ReskinWidgets(AceGUI)
+			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
+			alreadyWidgetHooked = true
+		end
 
-        local AceConfigDialog = _G.LibStub("AceConfigDialog-3.0")
-        if AceConfigDialog and not alreadyDialogSkined then
-            self:AceConfigDialog()
-            alreadyDialogSkined = true
-        end
-    end
+		local AceConfigDialog = _G.LibStub("AceConfigDialog-3.0")
+		if AceConfigDialog and not alreadyDialogSkined then
+			self:AceConfigDialog()
+			alreadyDialogSkined = true
+		end
+	end
 end
 
 --[[
@@ -411,12 +403,12 @@ end
     @param {frame} frame
 ]]
 function S:DisableAddOnSkin(key)
-    if _G.AddOnSkins then
-        local AS = _G.AddOnSkins[1]
-        if AS and AS.db[key] then
-            AS:SetOption(key, false)
-        end
-    end
+	if _G.AddOnSkins then
+		local AS = _G.AddOnSkins[1]
+		if AS and AS.db[key] then
+			AS:SetOption(key, false)
+		end
+	end
 end
 
 --[[
@@ -424,66 +416,66 @@ end
     @param {frame} frame
 ]]
 function S:CreateShadowModule(frame)
-    if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-        self:CreateShadow(frame)
-    end
+	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
+		self:CreateShadow(frame)
+	end
 end
 
 do
-    local isLoaded
-    local MER
-    local MERS
+	local isLoaded
+	local MER
+	local MERS
 
-    local function IsMerathilisUILoaded()
-        if isLoaded == nil then
-            isLoaded = C_AddOns_IsAddOnLoaded("ElvUI_MerathilisUI")
-        end
+	local function IsMerathilisUILoaded()
+		if isLoaded == nil then
+			isLoaded = C_AddOns_IsAddOnLoaded("ElvUI_MerathilisUI")
+		end
 
-        if isLoaded then
-            MER = _G.ElvUI_MerathilisUI and _G.ElvUI_MerathilisUI[1]
-            MERS = MER and MER:GetModule("MER_Skins")
-        end
+		if isLoaded then
+			MER = _G.ElvUI_MerathilisUI and _G.ElvUI_MerathilisUI[1]
+			MERS = MER and MER:GetModule("MER_Skins")
+		end
 
-        return isLoaded
-    end
+		return isLoaded
+	end
 
-    --[[
+	--[[
         Trying apply MerathilisUI skin if the addon loaded
         @param {frame} frame
     ]]
-    function S:MerathilisUISkin(frame)
-        if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() then
-            if frame.Styling then
-                frame:Styling()
-            end
-        end
-    end
+	function S:MerathilisUISkin(frame)
+		if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() then
+			if frame.Styling then
+				frame:Styling()
+			end
+		end
+	end
 end
 
 do
-    local regions = {
-        "Center",
-        "BottomEdge",
-        "LeftEdge",
-        "RightEdge",
-        "TopEdge",
-        "BottomLeftCorner",
-        "BottomRightCorner",
-        "TopLeftCorner",
-        "TopRightCorner"
-    }
+	local regions = {
+		"Center",
+		"BottomEdge",
+		"LeftEdge",
+		"RightEdge",
+		"TopEdge",
+		"BottomLeftCorner",
+		"BottomRightCorner",
+		"TopLeftCorner",
+		"TopRightCorner",
+	}
 
-    --[[
+	--[[
         Strip edge textures
         @param {frame} frame
     ]]
-    function S:StripEdgeTextures(frame)
-        for _, regionKey in pairs(regions) do
-            if frame[regionKey] then
-                frame[regionKey]:Kill()
-            end
-        end
-    end
+	function S:StripEdgeTextures(frame)
+		for _, regionKey in pairs(regions) do
+			if frame[regionKey] then
+				frame[regionKey]:Kill()
+			end
+		end
+	end
 end
 
 --[[
@@ -497,53 +489,53 @@ end
     @param {number} right offset
 ]]
 function S:Reposition(frame, target, border, top, bottom, left, right)
-    frame:ClearAllPoints()
-    frame:SetPoint("TOPLEFT", target, "TOPLEFT", -left - border, top + border)
-    frame:SetPoint("TOPRIGHT", target, "TOPRIGHT", right + border, top + border)
-    frame:SetPoint("BOTTOMLEFT", target, "BOTTOMLEFT", -left - border, -bottom - border)
-    frame:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT", right + border, -bottom - border)
+	frame:ClearAllPoints()
+	frame:SetPoint("TOPLEFT", target, "TOPLEFT", -left - border, top + border)
+	frame:SetPoint("TOPRIGHT", target, "TOPRIGHT", right + border, top + border)
+	frame:SetPoint("BOTTOMLEFT", target, "BOTTOMLEFT", -left - border, -bottom - border)
+	frame:SetPoint("BOTTOMRIGHT", target, "BOTTOMRIGHT", right + border, -bottom - border)
 end
 
 function S:Initialize()
-    if not E.private.WT.skins.enable then
-        return
-    end
+	if not E.private.WT.skins.enable then
+		return
+	end
 
-    -- normal skin modules
-    for index, func in next, self.nonAddonsToLoad do
-        xpcall(func, F.Developer.ThrowError, self)
-        self.nonAddonsToLoad[index] = nil
-    end
+	-- normal skin modules
+	for index, func in next, self.nonAddonsToLoad do
+		xpcall(func, F.Developer.ThrowError, self)
+		self.nonAddonsToLoad[index] = nil
+	end
 
-    -- skin modules depend on addon loading
-    for addonName, object in pairs(self.addonsToLoad) do
-        local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
-        if isLoaded and isFinished then
-            self:CallLoadedAddon(addonName, object)
-        end
-    end
+	-- skin modules depend on addon loading
+	for addonName, object in pairs(self.addonsToLoad) do
+		local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
+		if isLoaded and isFinished then
+			self:CallLoadedAddon(addonName, object)
+		end
+	end
 
-    self:HookEarly()
-    self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
+	self:HookEarly()
+	self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
 
-    -- remove archment
-    if E.private.WT.skins.removeParchment then
-        E.private.skins.parchmentRemoverEnable = true
-    end
+	-- remove archment
+	if E.private.WT.skins.removeParchment then
+		E.private.skins.parchmentRemoverEnable = true
+	end
 end
 
 function S:ESProxy(funcName, frame, ...)
-    if not frame then
-        F.Developer.ThrowError("ESProxy: frame is nil")
-        return
-    end
+	if not frame then
+		F.Developer.ThrowError("ESProxy: frame is nil")
+		return
+	end
 
-    if not ES[funcName] then
-        F.Developer.ThrowError(format("ESProxy: %s is not exist in ElvUI Skins", funcName))
-        return
-    end
+	if not ES[funcName] then
+		F.Developer.ThrowError(format("ESProxy: %s is not exist in ElvUI Skins", funcName))
+		return
+	end
 
-    ES[funcName](ES, frame, ...)
+	ES[funcName](ES, frame, ...)
 end
 
 S:RegisterEvent("ADDON_LOADED")

@@ -6,11 +6,11 @@ local next = next
 local MAX_SKILLLINE_TABS = MAX_SKILLLINE_TABS
 
 function S:Blizzard_ProfessionsBook()
-    if not self:CheckDB("spellbook", "professionBook") then
-        return
-    end
+	if not self:CheckDB("spellbook", "professionBook") then
+		return
+	end
 
-    self:CreateShadow(_G.ProfessionsBookFrame)
+	self:CreateShadow(_G.ProfessionsBookFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_ProfessionsBook")

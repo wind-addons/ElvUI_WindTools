@@ -18,7 +18,7 @@ local dialogs = {
 	["DELETE_ITEM"] = true,
 	["DELETE_GOOD_ITEM"] = true,
 	["DELETE_QUEST_ITEM"] = true,
-	["DELETE_GOOD_QUEST_ITEM"] = true
+	["DELETE_GOOD_QUEST_ITEM"] = true,
 }
 
 function DI:AddKeySupport(dialog)
@@ -31,7 +31,7 @@ function DI:AddKeySupport(dialog)
 	-- 添加说明
 	if dialog.which ~= "DELETE_ITEM" then
 		local msg = dialog.text:GetText()
-		local msgTable = {strsplit("\n\n", msg)}
+		local msgTable = { strsplit("\n\n", msg) }
 
 		msg = ""
 
@@ -46,21 +46,15 @@ function DI:AddKeySupport(dialog)
 	end
 
 	-- 按键删除
-	targetFrame:SetScript(
-		"OnKeyDown",
-		function(self, key)
-			if key == "DELETE" then
-				dialog.button1:Enable()
-			end
+	targetFrame:SetScript("OnKeyDown", function(self, key)
+		if key == "DELETE" then
+			dialog.button1:Enable()
 		end
-	)
+	end)
 
-	targetFrame:HookScript(
-		"OnHide",
-		function(self)
-			self:SetScript("OnKeyDown", nil)
-		end
-	)
+	targetFrame:HookScript("OnHide", function(self)
+		self:SetScript("OnKeyDown", nil)
+	end)
 end
 
 function DI:ShowFillInButton(dialog)
@@ -85,13 +79,10 @@ function DI:ShowFillInButton(dialog)
 
 	-- 点击后填入 Delete
 	self.fillInButton:SetText("|cffe74c3c" .. L["Click to confirm"] .. "|r")
-	self.fillInButton:SetScript(
-		"OnClick",
-		function(self)
-			yesButton:Enable()
-			self:SetText("|cff2ecc71" .. L["Confirmed"] .. "|r")
-		end
-	)
+	self.fillInButton:SetScript("OnClick", function(self)
+		yesButton:Enable()
+		self:SetText("|cff2ecc71" .. L["Confirmed"] .. "|r")
+	end)
 	self.fillInButton:Show()
 end
 

@@ -5,18 +5,18 @@ local _G = _G
 local pairs = pairs
 
 function S:Blizzard_ClassTalentUI()
-    if not self:CheckDB("talent", "classTalent") then
-        return
-    end
+	if not self:CheckDB("talent", "classTalent") then
+		return
+	end
 
-    self:CreateShadow(_G.ClassTalentFrame)
+	self:CreateShadow(_G.ClassTalentFrame)
 
-    for _, tab in pairs({_G.ClassTalentFrame.TabSystem:GetChildren()}) do
-        self:ReskinTab(tab)
-    end
+	for _, tab in pairs({ _G.ClassTalentFrame.TabSystem:GetChildren() }) do
+		self:ReskinTab(tab)
+	end
 
-    self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
-    self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
 end
 
 S:AddCallbackForAddon("Blizzard_ClassTalentUI")

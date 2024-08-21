@@ -63,4 +63,16 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("Target Range", nil, {"PLAYER_TARGET_CHANGED"}, OnEvent, OnUpdate, nil, nil, nil, L["Target Range"], nil, ValueColorUpdate)
+DT:RegisterDatatext(
+	"Target Range",
+	nil,
+	{ "PLAYER_TARGET_CHANGED" },
+	OnEvent,
+	OnUpdate,
+	nil,
+	nil,
+	nil,
+	L["Target Range"],
+	nil,
+	ValueColorUpdate
+)

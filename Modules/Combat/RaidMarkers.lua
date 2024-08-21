@@ -31,7 +31,7 @@ local TargetToWorld = {
 	[5] = 7,
 	[6] = 1,
 	[7] = 4,
-	[8] = 8
+	[8] = 8,
 }
 
 function RM:UpdateBar()
@@ -165,27 +165,21 @@ function RM:ToggleSettings()
 		RegisterStateDriver(
 			self.bar,
 			"visibility",
-			self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show" or
-				self.db.visibility == "ALWAYS" and "[petbattle] hide; show" or
-				"[group] show; [petbattle] hide; hide"
+			self.db.visibility == "DEFAULT" and "[noexists, nogroup] hide; show"
+				or self.db.visibility == "ALWAYS" and "[petbattle] hide; show"
+				or "[group] show; [petbattle] hide; hide"
 		)
 	end
 
 	-- 鼠标显隐
 	if self.db.mouseOver then
-		self.bar:SetScript(
-			"OnEnter",
-			function(self)
-				self:SetAlpha(1)
-			end
-		)
+		self.bar:SetScript("OnEnter", function(self)
+			self:SetAlpha(1)
+		end)
 
-		self.bar:SetScript(
-			"OnLeave",
-			function(self)
-				self:SetAlpha(0)
-			end
-		)
+		self.bar:SetScript("OnLeave", function(self)
+			self:SetAlpha(0)
+		end)
 
 		self.bar:SetAlpha(0)
 	else
@@ -289,39 +283,33 @@ function RM:CreateButtons()
 
 			button:SetAttribute("type", "click")
 			if not self.db.inverse then
-				button:SetScript(
-					"OnClick",
-					function(self)
-						if _G[format("Is%sKeyDown", RM.modifierString)]() then
-							ClearRaidMarker()
-						else
-							local now = GetTime()
-							if now - lastClear > 1 then -- limiting
-								lastClear = now
-								for i = 8, 0, -1 do
-									E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
-								end
+				button:SetScript("OnClick", function(self)
+					if _G[format("Is%sKeyDown", RM.modifierString)]() then
+						ClearRaidMarker()
+					else
+						local now = GetTime()
+						if now - lastClear > 1 then -- limiting
+							lastClear = now
+							for i = 8, 0, -1 do
+								E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
 							end
 						end
 					end
-				)
+				end)
 			else
-				button:SetScript(
-					"OnClick",
-					function(self)
-						if _G[format("Is%sKeyDown", RM.modifierString)]() then
-							local now = GetTime()
-							if now - lastClear > 1 then -- limiting
-								lastClear = now
-								for i = 8, 0, -1 do
-									E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
-								end
+				button:SetScript("OnClick", function(self)
+					if _G[format("Is%sKeyDown", RM.modifierString)]() then
+						local now = GetTime()
+						if now - lastClear > 1 then -- limiting
+							lastClear = now
+							for i = 8, 0, -1 do
+								E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
 							end
-						else
-							ClearRaidMarker()
 						end
+					else
+						ClearRaidMarker()
 					end
-				)
+				end)
 			end
 		elseif i == 10 then -- 准备确认 & 战斗记录
 			tex:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
@@ -351,8 +339,7 @@ function RM:CreateButtons()
 
 		if i < 9 then
 			if not self.db.inverse then
-				tooltipText =
-					format(
+				tooltipText = format(
 					"%s\n%s\n%s\n%s",
 					L["Left Click to mark the target with this mark."],
 					L["Right Click to clear the mark on the target."],
@@ -360,8 +347,7 @@ function RM:CreateButtons()
 					format(L["%s + Right Click to clear this worldmarker."], RM.modifierString)
 				)
 			else
-				tooltipText =
-					format(
+				tooltipText = format(
 					"%s\n%s\n%s\n%s",
 					L["Left Click to place this worldmarker."],
 					L["Right Click to clear this worldmarker."],
@@ -371,22 +357,21 @@ function RM:CreateButtons()
 			end
 		elseif i == 9 then
 			if not self.db.inverse then
-				tooltipText =
-					format(
+				tooltipText = format(
 					"%s\n%s",
 					L["Click to clear all marks."] .. " (|cff2ecc71" .. L["takes 3s"] .. "|r)",
 					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
 				)
 			else
-				tooltipText =
-					format(
+				tooltipText = format(
 					"%s\n%s",
 					L["Click to remove all worldmarkers."],
 					format(L["%s + Click to clear all marks."], RM.modifierString)
 				)
 			end
 		elseif i == 10 then
-			tooltipText = format("%s\n%s", L["Left Click to ready check."], L["Right click to toggle advanced combat logging."])
+			tooltipText =
+				format("%s\n%s", L["Left Click to ready check."], L["Right click to toggle advanced combat logging."])
 		elseif i == 11 then
 			tooltipText = format("%s\n%s", L["Left Click to start count down."], L["Right click to stop count down."])
 		end
@@ -400,96 +385,82 @@ function RM:CreateButtons()
 
 		button.animGroup = animGroup
 
-		animGroup:SetScript(
-			"OnPlay",
-			function()
-				tex:SetScale(1)
-			end
-		)
+		animGroup:SetScript("OnPlay", function()
+			tex:SetScale(1)
+		end)
 
-		animGroup:SetScript(
-			"OnFinished",
-			function()
-				tex:SetScale(tex.__toScale)
-			end
-		)
+		animGroup:SetScript("OnFinished", function()
+			tex:SetScale(tex.__toScale)
+		end)
 
-		button:SetScript(
-			"OnEnter",
-			function(self)
-				if RM.db.buttonAnimation then
-					local progress = F.Or(animGroup:GetProgress(), 0)
-					local currentScale = F.Or(tex:GetScale(), 1)
-					if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
-						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
-					end
-					animGroup:Stop()
-					tex.__fromScale = currentScale
-					tex.__toScale = RM.db.buttonAnimationScale
-					scaleAnim:SetScaleFrom(currentScale, currentScale)
-					scaleAnim:SetScaleTo(RM.db.buttonAnimationScale, RM.db.buttonAnimationScale)
-					scaleAnim:SetDuration((tex.__toScale - currentScale) / (tex.__toScale - 1) * RM.db.buttonAnimationDuration)
-					animGroup:Play()
+		button:SetScript("OnEnter", function(self)
+			if RM.db.buttonAnimation then
+				local progress = F.Or(animGroup:GetProgress(), 0)
+				local currentScale = F.Or(tex:GetScale(), 1)
+				if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
+					currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
 				end
-
-				local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-				self:SetBackdropBorderColor(.7, .7, 0)
-				if RM.db.tooltip then
-					GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-					GameTooltip:SetText(tooltipTitle .. " " .. icon)
-					GameTooltip:AddLine(tooltipText, 1, 1, 1)
-					GameTooltip:Show()
-				end
+				animGroup:Stop()
+				tex.__fromScale = currentScale
+				tex.__toScale = RM.db.buttonAnimationScale
+				scaleAnim:SetScaleFrom(currentScale, currentScale)
+				scaleAnim:SetScaleTo(RM.db.buttonAnimationScale, RM.db.buttonAnimationScale)
+				scaleAnim:SetDuration(
+					(tex.__toScale - currentScale) / (tex.__toScale - 1) * RM.db.buttonAnimationDuration
+				)
+				animGroup:Play()
 			end
-		)
 
-		button:SetScript(
-			"OnLeave",
-			function(self)
-				if RM.db.buttonAnimation then
-					local progress = F.Or(animGroup:GetProgress(), 0)
-					local currentScale = F.Or(tex:GetScale(), 1)
-					if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
-						currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
-					end
-					animGroup:Stop()
-					tex.__fromScale = currentScale
-					tex.__toScale = 1
-					scaleAnim:SetScaleFrom(currentScale, currentScale)
-					scaleAnim:SetScaleTo(1, 1)
-					scaleAnim:SetDuration(RM.db.buttonAnimationDuration * (currentScale - 1) / (RM.db.buttonAnimationScale - 1))
-					animGroup:Play()
-				end
-
-				self:SetBackdropBorderColor(0, 0, 0)
-				if RM.db.tooltip then
-					GameTooltip:Hide()
-				end
+			local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
+			self:SetBackdropBorderColor(0.7, 0.7, 0)
+			if RM.db.tooltip then
+				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+				GameTooltip:SetText(tooltipTitle .. " " .. icon)
+				GameTooltip:AddLine(tooltipText, 1, 1, 1)
+				GameTooltip:Show()
 			end
-		)
+		end)
+
+		button:SetScript("OnLeave", function(self)
+			if RM.db.buttonAnimation then
+				local progress = F.Or(animGroup:GetProgress(), 0)
+				local currentScale = F.Or(tex:GetScale(), 1)
+				if abs(progress) > 0.002 and tex.__fromScale and tex.__toScale then
+					currentScale = tex.__fromScale + (tex.__toScale - tex.__fromScale) * progress
+				end
+				animGroup:Stop()
+				tex.__fromScale = currentScale
+				tex.__toScale = 1
+				scaleAnim:SetScaleFrom(currentScale, currentScale)
+				scaleAnim:SetScaleTo(1, 1)
+				scaleAnim:SetDuration(
+					RM.db.buttonAnimationDuration * (currentScale - 1) / (RM.db.buttonAnimationScale - 1)
+				)
+				animGroup:Play()
+			end
+
+			self:SetBackdropBorderColor(0, 0, 0)
+			if RM.db.tooltip then
+				GameTooltip:Hide()
+			end
+		end)
 
 		-- 鼠标显隐
-		button:HookScript(
-			"OnEnter",
-			function()
-				if not self.db.mouseOver then
-					return
-				end
-				self.bar:SetAlpha(1)
-				button:SetBackdropBorderColor(.7, .7, 0)
+		button:HookScript("OnEnter", function()
+			if not self.db.mouseOver then
+				return
 			end
-		)
+			self.bar:SetAlpha(1)
+			button:SetBackdropBorderColor(0.7, 0.7, 0)
+		end)
 
-		button:HookScript(
-			"OnLeave",
-			function()
-				if not self.db.mouseOver then
-					return
-				end
-				self.bar:SetAlpha(0)
-				button:SetBackdropBorderColor(0, 0, 0)
+		button:HookScript("OnLeave", function()
+			if not self.db.mouseOver then
+				return
 			end
-		)
+			self.bar:SetAlpha(0)
+			button:SetBackdropBorderColor(0, 0, 0)
+		end)
 
 		self.bar.buttons[i] = button
 	end

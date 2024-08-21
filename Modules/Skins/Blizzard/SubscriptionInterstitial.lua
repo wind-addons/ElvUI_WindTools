@@ -5,11 +5,11 @@ local ES = E.Skins
 local _G = _G
 
 function S:Blizzard_SubscriptionInterstitialUI()
-    if not self:CheckDB("subscriptionInterstitial") then
-        return
-    end
+	if not self:CheckDB("subscriptionInterstitial") then
+		return
+	end
 
-    self:CreateShadow(_G.SubscriptionInterstitialFrame)
+	self:CreateShadow(_G.SubscriptionInterstitialFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_SubscriptionInterstitialUI")

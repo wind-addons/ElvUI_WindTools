@@ -8,31 +8,31 @@ local pairs = pairs
 local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
 
 function S:ContainerFrame()
-    if E.private.bags.enable or not self:CheckDB("bags") then
-        return
-    end
+	if E.private.bags.enable or not self:CheckDB("bags") then
+		return
+	end
 
-    for bagID = 1, NUM_CONTAINER_FRAMES do
-        local container = _G["ContainerFrame" .. bagID]
-        if container and container.template then
-            self:CreateShadow(container)
-        end
-    end
+	for bagID = 1, NUM_CONTAINER_FRAMES do
+		local container = _G["ContainerFrame" .. bagID]
+		if container and container.template then
+			self:CreateShadow(container)
+		end
+	end
 
-    self:CreateShadow(_G.ContainerFrameCombinedBags)
+	self:CreateShadow(_G.ContainerFrameCombinedBags)
 
-    -- Bank
-    self:CreateShadow(_G.BankFrame)
+	-- Bank
+	self:CreateShadow(_G.BankFrame)
 
-    for _, frame in pairs({_G.BankSlotsFrame, _G.ReagentBankFrame, _G.AccountBankPanel}) do
-        if frame and frame.EdgeShadows then
-            frame.EdgeShadows:SetAlpha(0)
-        end
-    end
+	for _, frame in pairs({ _G.BankSlotsFrame, _G.ReagentBankFrame, _G.AccountBankPanel }) do
+		if frame and frame.EdgeShadows then
+			frame.EdgeShadows:SetAlpha(0)
+		end
+	end
 
-    for _, tab in pairs(_G.BankFrame.Tabs) do
-        self:ReskinTab(tab)
-    end
+	for _, tab in pairs(_G.BankFrame.Tabs) do
+		self:ReskinTab(tab)
+	end
 end
 
 S:AddCallback("ContainerFrame")

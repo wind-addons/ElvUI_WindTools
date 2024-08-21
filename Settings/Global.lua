@@ -1,39 +1,39 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 G.core = {
-    compatibilityCheck = true,
-    cvarAlert = false,
-    fixPlaystyle = true,
-    logLevel = 2,
-    loginMessage = true
+	compatibilityCheck = true,
+	cvarAlert = false,
+	fixPlaystyle = true,
+	logLevel = 2,
+	loginMessage = true,
 }
 
 G.item = {
-    contacts = {
-        alts = {},
-        favorites = {},
-        updateAlts = true
-    }
+	contacts = {
+		alts = {},
+		favorites = {},
+		updateAlts = true,
+	},
 }
 
 G.combat = {
-    covenantHelper = {
-        soulbindRules = {
-            characters = {}
-        }
-    }
+	covenantHelper = {
+		soulbindRules = {
+			characters = {},
+		},
+	},
 }
 
 G.misc = {
-    gameBar = {
-        covenantCache = {}
-    },
-    watched = {
-        movies = {}
-    },
-    lfgList = {}
+	gameBar = {
+		covenantCache = {},
+	},
+	watched = {
+		movies = {},
+	},
+	lfgList = {},
 }
 
 G.maps = {
-    eventTracker = {}
+	eventTracker = {},
 }

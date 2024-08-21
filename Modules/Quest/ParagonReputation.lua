@@ -46,7 +46,7 @@ local paragonData = {
 	[48976] = {
 		-- Argussian Reach
 		factionID = 2170,
-		cache = 152922
+		cache = 152922,
 	},
 	[46777] = {
 		-- Armies of Legionfall
@@ -56,9 +56,9 @@ local paragonData = {
 			{
 				-- Orphaned Felbat
 				type = "PET",
-				itemID = 147841
-			}
-		}
+				itemID = 147841,
+			},
+		},
 	},
 	[48977] = {
 		-- Army of the Light
@@ -69,26 +69,26 @@ local paragonData = {
 				-- Avenging Felcrushed
 				type = "MOUNT",
 				itemID = 153044,
-				mountID = 985
+				mountID = 985,
 			},
 			{
 				-- Blessed Felcrushed
 				type = "MOUNT",
 				itemID = 153043,
-				mountID = 984
+				mountID = 984,
 			},
 			{
 				-- Glorious Felcrushed
 				type = "MOUNT",
 				itemID = 153042,
-				mountID = 983
+				mountID = 983,
 			},
 			{
 				-- Holy Lightsphere
 				type = "TOY",
-				itemID = 153182
-			}
-		}
+				itemID = 153182,
+			},
+		},
 	},
 	[46745] = {
 		-- Court of Farondis
@@ -99,9 +99,9 @@ local paragonData = {
 				-- Cloudwing Hippogryph
 				type = "MOUNT",
 				itemID = 147806,
-				mountID = 943
-			}
-		}
+				mountID = 943,
+			},
+		},
 	},
 	[46747] = {
 		-- Dreamweavers
@@ -112,9 +112,9 @@ local paragonData = {
 				-- Wild Dreamrunner
 				type = "MOUNT",
 				itemID = 147804,
-				mountID = 942
-			}
-		}
+				mountID = 942,
+			},
+		},
 	},
 	[46743] = {
 		-- Highmountain Tribes
@@ -125,9 +125,9 @@ local paragonData = {
 				-- Highmountain Elderhorn
 				type = "MOUNT",
 				itemID = 147807,
-				mountID = 941
-			}
-		}
+				mountID = 941,
+			},
+		},
 	},
 	[46748] = {
 		-- The Nightfallen
@@ -138,9 +138,9 @@ local paragonData = {
 				-- Leywoven Flying Carpet
 				type = "MOUNT",
 				itemID = 143764,
-				mountID = 905
-			}
-		}
+				mountID = 905,
+			},
+		},
 	},
 	[46749] = {
 		-- The Wardens
@@ -150,9 +150,9 @@ local paragonData = {
 			{
 				-- Sira's Extra Cloak
 				type = "TOY",
-				itemID = 147843
-			}
-		}
+				itemID = 147843,
+			},
+		},
 	},
 	[46746] = {
 		-- Valarjar
@@ -163,9 +163,9 @@ local paragonData = {
 				-- Valarjar Stormwing
 				type = "MOUNT",
 				itemID = 147805,
-				mountID = 944
-			}
-		}
+				mountID = 944,
+			},
+		},
 	},
 	-- Battle for Azeroth
 	-- Neutral
@@ -177,9 +177,9 @@ local paragonData = {
 			{
 				-- Azerite Firework Launcher
 				type = "TOY",
-				itemID = 166877
-			}
-		}
+				itemID = 166877,
+			},
+		},
 	},
 	[58096] = {
 		-- Rajani
@@ -189,9 +189,9 @@ local paragonData = {
 			{
 				-- Jade Defender
 				type = "PET",
-				itemID = 174479
-			}
-		}
+				itemID = 174479,
+			},
+		},
 	},
 	[55348] = {
 		-- Rustbolt Resistance
@@ -202,21 +202,21 @@ local paragonData = {
 				-- Blueprint: Microbot XD
 				type = "OTHER",
 				itemID = 169171,
-				questID = 55079
+				questID = 55079,
 			},
 			{
 				-- Blueprint: Holographic Digitalization Relay
 				type = "OTHER",
 				itemID = 168906,
-				questID = 56086
+				questID = 56086,
 			},
 			{
 				-- Blueprint: Rustbolt Resistance Insignia
 				type = "OTHER",
 				itemID = 168494,
-				questID = 55073
-			}
-		}
+				questID = 55073,
+			},
+		},
 	},
 	[54451] = {
 		-- Tortollan Seekers
@@ -226,9 +226,9 @@ local paragonData = {
 			{
 				-- Bowl of Glowing Pufferfish
 				type = "TOY",
-				itemID = 166704
-			}
-		}
+				itemID = 166704,
+			},
+		},
 	},
 	[58097] = {
 		-- Uldum Accord
@@ -238,9 +238,9 @@ local paragonData = {
 			{
 				-- Cursed Dune Watcher
 				type = "PET",
-				itemID = 174481
-			}
-		}
+				itemID = 174481,
+			},
+		},
 	},
 	-- Horde
 	[54460] = {
@@ -251,14 +251,14 @@ local paragonData = {
 			{
 				-- For da Blood God!
 				type = "TOY",
-				itemID = 166308
+				itemID = 166308,
 			},
 			{
 				-- Pair of Tiny Bat Wings
 				type = "PET",
-				itemID = 166716
-			}
-		}
+				itemID = 166716,
+			},
+		},
 	},
 	[54455] = {
 		-- The Honorbound
@@ -268,9 +268,9 @@ local paragonData = {
 			{
 				-- Rallying War Banner
 				type = "TOY",
-				itemID = 166879
-			}
-		}
+				itemID = 166879,
+			},
+		},
 	},
 	[53982] = {
 		-- The Unshackled
@@ -281,19 +281,19 @@ local paragonData = {
 				-- Royal Snapdragon
 				type = "MOUNT",
 				itemID = 169198,
-				mountID = 1237
+				mountID = 1237,
 			},
 			{
 				-- Flopping Fish
 				type = "TOY",
-				itemID = 170203
+				itemID = 170203,
 			},
 			{
 				-- Memento of the Deeps
 				type = "TOY",
-				itemID = 170469
-			}
-		}
+				itemID = 170469,
+			},
+		},
 	},
 	[54461] = {
 		-- Voldunai
@@ -303,14 +303,14 @@ local paragonData = {
 			{
 				-- Goldtusk Inn Breakfast Buffet
 				type = "TOY",
-				itemID = 166703
+				itemID = 166703,
 			},
 			{
 				-- Meerah's Jukebox
 				type = "TOY",
-				itemID = 166880
-			}
-		}
+				itemID = 166880,
+			},
+		},
 	},
 	[54462] = {
 		-- Zandalari Empire
@@ -320,9 +320,9 @@ local paragonData = {
 			{
 				-- Warbeast Kraal Dinner Bell
 				type = "TOY",
-				itemID = 166701
-			}
-		}
+				itemID = 166701,
+			},
+		},
 	},
 	-- Alliance
 	[54456] = {
@@ -333,14 +333,14 @@ local paragonData = {
 			{
 				-- Bewitching Tea Set
 				type = "TOY",
-				itemID = 166808
+				itemID = 166808,
 			},
 			{
 				-- Cobalt Raven Hatchling
 				type = "PET",
-				itemID = 166718
-			}
-		}
+				itemID = 166718,
+			},
+		},
 	},
 	[54458] = {
 		-- Proudmoore Admiralty
@@ -350,14 +350,14 @@ local paragonData = {
 			{
 				-- Proudmoore Music Box
 				type = "TOY",
-				itemID = 166702
+				itemID = 166702,
 			},
 			{
 				-- Albatross Feather
 				type = "PET",
-				itemID = 166714
-			}
-		}
+				itemID = 166714,
+			},
+		},
 	},
 	[54457] = {
 		-- Storm's Wake
@@ -367,9 +367,9 @@ local paragonData = {
 			{
 				-- Violet Abyssal Eel
 				type = "PET",
-				itemID = 166719
-			}
-		}
+				itemID = 166719,
+			},
+		},
 	},
 	[54454] = {
 		-- The 7th Legion
@@ -379,9 +379,9 @@ local paragonData = {
 			{
 				-- Rallying War Banner
 				type = "TOY",
-				itemID = 166879
-			}
-		}
+				itemID = 166879,
+			},
+		},
 	},
 	[55976] = {
 		-- Waveblade Ankoan
@@ -392,19 +392,19 @@ local paragonData = {
 				-- Royal Snapdragon
 				type = "MOUNT",
 				itemID = 169198,
-				mountID = 1237
+				mountID = 1237,
 			},
 			{
 				-- Flopping Fish
 				type = "TOY",
-				itemID = 170203
+				itemID = 170203,
 			},
 			{
 				-- Memento of the Deeps
 				type = "TOY",
-				itemID = 170469
-			}
-		}
+				itemID = 170469,
+			},
+		},
 	},
 	-- Shadowlands
 	[61100] = {
@@ -415,9 +415,9 @@ local paragonData = {
 			{
 				-- Stonewing Dredwing Pup
 				type = "PET",
-				itemID = 180601
-			}
-		}
+				itemID = 180601,
+			},
+		},
 	},
 	[64012] = {
 		-- Death's Advance
@@ -428,20 +428,20 @@ local paragonData = {
 				-- Beryl Shardhide
 				type = "MOUNT",
 				itemID = 186644,
-				mountID = 1455
+				mountID = 1455,
 			},
 			{
 				-- Fierce Razorwing
 				type = "MOUNT",
 				itemID = 186649,
-				mountID = 1508
+				mountID = 1508,
 			},
 			{
 				-- Mosscoated Hopper
 				type = "PET",
-				itemID = 186541
-			}
-		}
+				itemID = 186541,
+			},
+		},
 	},
 	[64266] = {
 		-- The Archivist's Codex
@@ -452,14 +452,14 @@ local paragonData = {
 				-- Tamed Mauler
 				type = "MOUNT",
 				itemID = 186641,
-				mountID = 1454
+				mountID = 1454,
 			},
 			{
 				-- Gnashtooth
 				type = "PET",
-				itemID = 186538
-			}
-		}
+				itemID = 186538,
+			},
+		},
 	},
 	[61097] = {
 		-- The Ascended
@@ -469,19 +469,19 @@ local paragonData = {
 			{
 				-- Malfunctioning Goliath Gauntlet
 				type = "TOY",
-				itemID = 184396
+				itemID = 184396,
 			},
 			{
 				-- Mark of Purity
 				type = "TOY",
-				itemID = 184435
+				itemID = 184435,
 			},
 			{
 				-- Larion Cub
 				type = "PET",
-				itemID = 184399
-			}
-		}
+				itemID = 184399,
+			},
+		},
 	},
 	[64867] = {
 		-- The Enlightened
@@ -491,78 +491,78 @@ local paragonData = {
 			{
 				-- Sphere of Enlightened Cogitation
 				type = "TOY",
-				itemID = 190177
+				itemID = 190177,
 			},
 			{
 				-- Schematic: Russet Bufonoid
 				type = "OTHER",
 				itemID = 189471,
-				questID = 65394
+				questID = 65394,
 			},
 			{
 				-- Enlightened Portal Research
 				type = "OTHER",
 				itemID = 190234,
-				questID = 65617
+				questID = 65617,
 			},
 			{
 				-- Ray Soul
 				type = "OTHER",
 				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
 				itemID = 189973,
-				questID = 65506
+				questID = 65506,
 			},
 			{
 				-- Distinguished Blade of Cartel Al
 				type = "COSMETIC",
-				itemID = 190935
+				itemID = 190935,
 			},
 			{
 				-- Edge of the Enlightened
 				type = "COSMETIC",
-				itemID = 190937
+				itemID = 190937,
 			},
 			{
 				-- Standard of the Wandering Brokers
 				type = "COSMETIC",
-				itemID = 190934
+				itemID = 190934,
 			},
 			{
 				-- Walking Staff of the Enlightened Journey
 				type = "COSMETIC",
-				itemID = 190939
+				itemID = 190939,
 			},
 			{
 				-- Cape of the Regal Wanderer
 				type = "COSMETIC",
-				itemID = 190931
+				itemID = 190931,
 			},
 			{
 				-- Dark Shawl of the Enlightened
 				type = "COSMETIC",
-				itemID = 190930
+				itemID = 190930,
 			},
 			{
 				-- Ebony Protocloak
 				type = "COSMETIC",
-				itemID = 190929
+				itemID = 190929,
 			},
 			{
 				-- Majestic Oracle's Drape
 				type = "COSMETIC",
-				itemID = 190933
+				itemID = 190933,
 			},
 			{
 				-- Protohide Drape
 				type = "COSMETIC",
-				itemID = 190932
+				itemID = 190932,
 			},
 			{
 				-- Sandtails Drape
 				type = "COSMETIC",
-				itemID = 190928
-			}
-		}
+				itemID = 190928,
+			},
+		},
 	},
 	[61095] = {
 		-- The Undying Army
@@ -573,19 +573,19 @@ local paragonData = {
 				-- Reins of the Colossal Slaughterclaw
 				type = "MOUNT",
 				itemID = 182081,
-				mountID = 1350
+				mountID = 1350,
 			},
 			{
 				-- Infested Arachnid Casing
 				type = "TOY",
-				itemID = 184495
+				itemID = 184495,
 			},
 			{
 				-- Micromancer's Mystical Cowl
 				type = "PET",
-				itemID = 181269
-			}
-		}
+				itemID = 181269,
+			},
+		},
 	},
 	[61098] = {
 		-- The Wild Hunt
@@ -596,28 +596,28 @@ local paragonData = {
 				-- Amber Ardenmoth
 				type = "MOUNT",
 				itemID = 183800,
-				mountID = 1428
+				mountID = 1428,
 			},
 			{
 				-- Hungry Burrower
 				type = "PET",
-				itemID = 180635
+				itemID = 180635,
 			},
 			{
 				-- Mammoth Soul
 				type = "OTHER",
 				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
 				itemID = 185054,
-				questID = 63610
+				questID = 63610,
 			},
 			{
 				-- Porcupine Soul
 				type = "OTHER",
 				covenant = "|A:sanctumupgrades-nightfae-32x32:14:14:0:-1|a",
 				itemID = 187870,
-				questID = 64989
-			}
-		}
+				questID = 64989,
+			},
+		},
 	},
 	[64267] = {
 		-- Ve'nari
@@ -628,35 +628,35 @@ local paragonData = {
 				-- Soulbound Gloomcharger's Reins
 				type = "MOUNT",
 				itemID = 186657,
-				mountID = 1501
+				mountID = 1501,
 			},
 			{
 				-- Rook
 				type = "PET",
-				itemID = 186552
-			}
-		}
+				itemID = 186552,
+			},
+		},
 	},
 	-- Dragonflight
 	[66156] = {
 		factionID = 2507,
-		cache = 199472
+		cache = 199472,
 	},
 	[66511] = {
 		-- Iskaara Tuskarr
 		factionID = 2511,
-		cache = 199473
+		cache = 199473,
 	},
 	[65606] = {
 		-- Maruuk Centaur
 		factionID = 2503,
-		cache = 199474
+		cache = 199474,
 	},
 	[71023] = {
 		-- Valdrakken Accord
 		factionID = 2510,
-		cache = 199475
-	}
+		cache = 199475,
+	},
 }
 
 local itemTypeLocales = {
@@ -664,7 +664,7 @@ local itemTypeLocales = {
 	["PET"] = L["Pet"],
 	["TOY"] = L["Toy"],
 	["COSMETIC"] = L["Cosmetic"],
-	["OTHER"] = L["Other"]
+	["OTHER"] = L["Other"],
 }
 
 function PR:SetupParagonTooltip(tt)
@@ -699,8 +699,8 @@ do
 		E.ScanTooltip:SetOwner(E.UIParent, "ANCHOR_NONE")
 		E.ScanTooltip:SetHyperlink(link)
 		for index = 3, 5 do
-			local text =
-				_G[E.ScanTooltip:GetName() .. "TextLeft" .. index] and _G[E.ScanTooltip:GetName() .. "TextLeft" .. index]:GetText()
+			local text = _G[E.ScanTooltip:GetName() .. "TextLeft" .. index]
+				and _G[E.ScanTooltip:GetName() .. "TextLeft" .. index]:GetText()
 			if text and strfind(text, "(%d)/(%d)") then
 				return true
 			end
@@ -712,45 +712,43 @@ do
 		local data = rewards[index]
 
 		local item = Item:CreateFromItemID(data.itemID)
-		item:ContinueOnItemLoad(
-			function()
-				local link = item:GetItemLink()
-				local icon = item:GetItemIcon()
-				local name = item:GetItemName()
+		item:ContinueOnItemLoad(function()
+			local link = item:GetItemLink()
+			local icon = item:GetItemIcon()
+			local name = item:GetItemName()
 
-				local collected
-				if data.type == "MOUNT" then
-					collected = select(11, C_MountJournal_GetMountInfoByID(data.mountID))
-				elseif data.type == "PET" and link then
-					collected = IsPetOwned(link)
-				elseif data.type == "TOY" then
-					collected = PlayerHasToy(data.itemID)
-				elseif data.type == "COSMETIC" then
-					collected = C_TransmogCollection_PlayerHasTransmogByItemInfo(data.itemID)
-				elseif data.type == "OTHER" then
-					collected = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
-				end
-
-				local qualityColor = item:GetItemQualityColor()
-				tt:AddLine(
-					format(
-						"|A:common-icon-%s:14:14|a |T%d:0|t %s %s",
-						collected and "checkmark" or "redx",
-						icon,
-						name,
-						data.covenant or "|cffffd000(|r|cffffffff" .. itemTypeLocales[data.type] .. "|r|cffffd000)|r"
-					),
-					qualityColor.r,
-					qualityColor.g,
-					qualityColor.b
-				)
-				if index < #rewards then
-					AddRewardItem(tt, rewards, index + 1)
-				else
-					tt:Show()
-				end
+			local collected
+			if data.type == "MOUNT" then
+				collected = select(11, C_MountJournal_GetMountInfoByID(data.mountID))
+			elseif data.type == "PET" and link then
+				collected = IsPetOwned(link)
+			elseif data.type == "TOY" then
+				collected = PlayerHasToy(data.itemID)
+			elseif data.type == "COSMETIC" then
+				collected = C_TransmogCollection_PlayerHasTransmogByItemInfo(data.itemID)
+			elseif data.type == "OTHER" then
+				collected = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
 			end
-		)
+
+			local qualityColor = item:GetItemQualityColor()
+			tt:AddLine(
+				format(
+					"|A:common-icon-%s:14:14|a |T%d:0|t %s %s",
+					collected and "checkmark" or "redx",
+					icon,
+					name,
+					data.covenant or "|cffffd000(|r|cffffffff" .. itemTypeLocales[data.type] .. "|r|cffffd000)|r"
+				),
+				qualityColor.r,
+				qualityColor.g,
+				qualityColor.b
+			)
+			if index < #rewards then
+				AddRewardItem(tt, rewards, index + 1)
+			else
+				tt:Show()
+			end
+		end)
 	end
 
 	function PR:Tooltip(bar, event)
@@ -764,32 +762,30 @@ do
 
 		if event == "OnEnter" then
 			local cache = Item:CreateFromItemID(paragonData[bar.questID].cache)
-			cache:ContinueOnItemLoad(
-				function()
-					local name = cache:GetItemName()
-					local link = cache:GetItemLink()
-					local icon = cache:GetItemIcon()
-					local qualityColor = cache:GetItemQualityColor()
+			cache:ContinueOnItemLoad(function()
+				local name = cache:GetItemName()
+				local link = cache:GetItemLink()
+				local icon = cache:GetItemIcon()
+				local qualityColor = cache:GetItemQualityColor()
 
-					_G.GameTooltip:SetOwner(bar, "ANCHOR_NONE")
-					_G.GameTooltip:SetPoint("TOPLEFT", bar, "TOPRIGHT", 10, 0)
-					_G.GameTooltip:ClearLines()
-					_G.GameTooltip:AddLine(bar.name)
-					_G.GameTooltip:AddLine(
-						format("|T%d:0|t ", icon) .. name .. bar.count,
-						qualityColor.r,
-						qualityColor.g,
-						qualityColor.b
-					)
-					if not paragonData[bar.questID].rewards then
-						_G.GameTooltip:AddLine(L["None"], 1, 0, 0)
-					else
-						_G.GameTooltip:AddLine(" ")
-						_G.GameTooltip:AddLine(L["Reward"])
-						AddRewardItem(_G.GameTooltip, paragonData[bar.questID].rewards, 1)
-					end
+				_G.GameTooltip:SetOwner(bar, "ANCHOR_NONE")
+				_G.GameTooltip:SetPoint("TOPLEFT", bar, "TOPRIGHT", 10, 0)
+				_G.GameTooltip:ClearLines()
+				_G.GameTooltip:AddLine(bar.name)
+				_G.GameTooltip:AddLine(
+					format("|T%d:0|t ", icon) .. name .. bar.count,
+					qualityColor.r,
+					qualityColor.g,
+					qualityColor.b
+				)
+				if not paragonData[bar.questID].rewards then
+					_G.GameTooltip:AddLine(L["None"], 1, 0, 0)
+				else
+					_G.GameTooltip:AddLine(" ")
+					_G.GameTooltip:AddLine(L["Reward"])
+					AddRewardItem(_G.GameTooltip, paragonData[bar.questID].rewards, 1)
 				end
-			)
+			end)
 		elseif event == "OnLeave" then
 			GameTooltip_SetDefaultAnchor(_G.GameTooltip, E.UIParent)
 			_G.GameTooltip:Hide()
@@ -807,35 +803,23 @@ function PR:ShowToast(name, text)
 	self.toast.title:SetAlpha(0)
 	self.toast.description:SetText(text)
 	self.toast.description:SetAlpha(0)
-	UIFrameFadeIn(self.toast, .5, 0, 1)
-	E:Delay(
-		0.5,
-		function()
-			UIFrameFadeIn(self.toast.title, .5, 0, 1)
+	UIFrameFadeIn(self.toast, 0.5, 0, 1)
+	E:Delay(0.5, function()
+		UIFrameFadeIn(self.toast.title, 0.5, 0, 1)
+	end)
+	E:Delay(0.75, function()
+		UIFrameFadeIn(self.toast.description, 0.5, 0, 1)
+	end)
+	E:Delay(self.db.toast.fade_time, function()
+		UIFrameFadeOut(self.toast, 1, 1, 0)
+	end)
+	E:Delay(self.db.toast.fade_time + 1.25, function()
+		self.toast:Hide()
+		ACTIVE_TOAST = false
+		if #WAITING_TOAST > 0 then
+			self:WaitToast()
 		end
-	)
-	E:Delay(
-		0.75,
-		function()
-			UIFrameFadeIn(self.toast.description, .5, 0, 1)
-		end
-	)
-	E:Delay(
-		self.db.toast.fade_time,
-		function()
-			UIFrameFadeOut(self.toast, 1, 1, 0)
-		end
-	)
-	E:Delay(
-		self.db.toast.fade_time + 1.25,
-		function()
-			self.toast:Hide()
-			ACTIVE_TOAST = false
-			if #WAITING_TOAST > 0 then
-				self:WaitToast()
-			end
-		end
-	)
+	end)
 end
 
 function PR:WaitToast()
@@ -881,7 +865,7 @@ function PR:QUEST_ACCEPTED(event, questID)
 		local name = GetFactionInfoByID(paragonData[questID].factionID)
 		local text = GetQuestLogCompletionText(C_QuestLog_GetLogIndexForQuestID(questID))
 		if ACTIVE_TOAST then
-			WAITING_TOAST[#WAITING_TOAST + 1] = {name, text} --Toast is already active, put this info on the line.
+			WAITING_TOAST[#WAITING_TOAST + 1] = { name, text } --Toast is already active, put this info on the line.
 		else
 			self:ShowToast(name, text)
 		end
@@ -915,18 +899,12 @@ function PR:ChangeReputationBars(factionRow)
 
 	factionRow.Container.Paragon:Hide()
 	if not factionRow.__windHook then
-		factionRow:HookScript(
-			"OnEnter",
-			function()
-				self:Tooltip(factionRow, "OnEnter")
-			end
-		)
-		factionRow:HookScript(
-			"OnLeave",
-			function()
-				self:Tooltip(factionRow, "OnLeave")
-			end
-		)
+		factionRow:HookScript("OnEnter", function()
+			self:Tooltip(factionRow, "OnEnter")
+		end)
+		factionRow:HookScript("OnLeave", function()
+			self:Tooltip(factionRow, "OnLeave")
+		end)
 		factionRow.__windHook = true
 	end
 
@@ -952,12 +930,12 @@ function PR:ChangeReputationBars(factionRow)
 			factionRow.Container.ReputationBar.ParagonOverlay.bar:SetWidth(
 				factionRow.Container.ReputationBar.ParagonOverlay:GetWidth() * over
 			)
-			factionRow.Container.ReputationBar.ParagonOverlay.bar:SetVertexColor(r + .15, g + .15, b + .15)
+			factionRow.Container.ReputationBar.ParagonOverlay.bar:SetVertexColor(r + 0.15, g + 0.15, b + 0.15)
 			factionRow.Container.ReputationBar.ParagonOverlay.edge:SetVertexColor(
-				r + .2,
-				g + .2,
-				b + .2,
-				(over > .05 and .75) or 0
+				r + 0.2,
+				g + 0.2,
+				b + 0.2,
+				(over > 0.05 and 0.75) or 0
 			)
 			value = value + threshold
 		else
@@ -968,11 +946,10 @@ function PR:ChangeReputationBars(factionRow)
 		factionRow.Container.ReputationBar:SetMinMaxValues(0, threshold)
 		factionRow.Container.ReputationBar:SetValue(value)
 		factionRow.Container.ReputationBar:SetStatusBarColor(r, g, b)
-		factionRow.rolloverText =
-			HIGHLIGHT_FONT_COLOR_CODE ..
-			" " ..
-				format(REPUTATION_PROGRESS_FORMAT, BreakUpLargeNumbers(value), BreakUpLargeNumbers(threshold)) ..
-					FONT_COLOR_CODE_CLOSE
+		factionRow.rolloverText = HIGHLIGHT_FONT_COLOR_CODE
+			.. " "
+			.. format(REPUTATION_PROGRESS_FORMAT, BreakUpLargeNumbers(value), BreakUpLargeNumbers(threshold))
+			.. FONT_COLOR_CODE_CLOSE
 
 		local count = floor(currentValue / threshold)
 		if hasRewardPending then

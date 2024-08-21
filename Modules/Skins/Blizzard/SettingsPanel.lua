@@ -6,11 +6,11 @@ local _G = _G
 local pairs = pairs
 
 function S:SettingsPanel()
-    if not self:CheckDB("blizzardOptions", "settingsPanel") then
-        return
-    end
+	if not self:CheckDB("blizzardOptions", "settingsPanel") then
+		return
+	end
 
-    self:CreateBackdropShadow(_G.SettingsPanel)
+	self:CreateBackdropShadow(_G.SettingsPanel)
 end
 
 S:AddCallback("SettingsPanel")

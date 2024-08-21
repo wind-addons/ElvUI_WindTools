@@ -4,34 +4,34 @@ local S = W.Modules.Skins
 local _G = _G
 
 function S:Simulationcraft_SkinMainFrame()
-    if not _G.SimcFrame or _G.SimcFrame.__windSkin then
-        return
-    end
+	if not _G.SimcFrame or _G.SimcFrame.__windSkin then
+		return
+	end
 
-    _G.SimcFrame.__windSkin = true
+	_G.SimcFrame.__windSkin = true
 
-    _G.SimcFrame:SetTemplate("Transparent")
-    self:CreateShadow(_G.SimcFrame)
+	_G.SimcFrame:SetTemplate("Transparent")
+	self:CreateShadow(_G.SimcFrame)
 
-    self:ESProxy("HandleButton", _G.SimcFrameButton)
-    self:ESProxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
+	self:ESProxy("HandleButton", _G.SimcFrameButton)
+	self:ESProxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
 
-    F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
-    F.SetFontOutline(_G.SimcEditBox)
+	F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
+	F.SetFontOutline(_G.SimcEditBox)
 end
 
 function S:Simulationcraft()
-    if not E.private.WT.skins.enable or not E.private.WT.skins.addons.simulationcraft then
-        return
-    end
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.simulationcraft then
+		return
+	end
 
-    self:DisableAddOnSkin("Simulationcraft")
+	self:DisableAddOnSkin("Simulationcraft")
 
-    local addon = _G.LibStub("AceAddon-3.0"):GetAddon("Simulationcraft")
+	local addon = _G.LibStub("AceAddon-3.0"):GetAddon("Simulationcraft")
 
-    if addon then
-        self:SecureHook(addon, "GetMainFrame", "Simulationcraft_SkinMainFrame")
-    end
+	if addon then
+		self:SecureHook(addon, "GetMainFrame", "Simulationcraft_SkinMainFrame")
+	end
 end
 
 S:AddCallbackForAddon("Simulationcraft")

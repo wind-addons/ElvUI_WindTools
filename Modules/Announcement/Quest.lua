@@ -19,7 +19,7 @@ local lastList
 
 local ignoreTagIDs = {
 	[128] = true, -- 特使任務
-	[265] = true -- 隱藏任務
+	[265] = true, -- 隱藏任務
 }
 
 local function GetQuests()
@@ -58,7 +58,7 @@ local function GetQuests()
 					frequency = questInfo.frequency,
 					tag = tagInfo and tagInfo.tagName,
 					worldQuestType = tagInfo and tagInfo.worldQuestType,
-					link = GetQuestLink(questInfo.questID)
+					link = GetQuestLink(questInfo.questID),
 				}
 
 				-- 任务进度 (比如 1/2 杀死熊怪)
@@ -69,7 +69,7 @@ local function GetQuests()
 						quests[questInfo.questID][queryIndex] = {
 							item = itemName,
 							numItems = numItems,
-							numNeeded = numNeeded
+							numNeeded = numNeeded,
 						}
 					end
 				end
@@ -100,15 +100,11 @@ do
 		_G.ERR_QUEST_UNKNOWN_COMPLETE = enable and ERR_QUEST_UNKNOWN_COMPLETE or "    "
 		_G.ERR_QUEST_OBJECTIVE_COMPLETE_S = enable and ERR_QUEST_OBJECTIVE_COMPLETE_S or "    "
 
-		hooksecurefunc(
-			_G.UIErrorsFrame,
-			"AddMessage",
-			function(frame, text)
-				if text == "   " then
-					frame:Clear()
-				end
+		hooksecurefunc(_G.UIErrorsFrame, "AddMessage", function(frame, text)
+			if text == "   " then
+				frame:Clear()
 			end
-		)
+		end)
 	end
 end
 
@@ -143,14 +139,15 @@ function A:Quest()
 
 		if questCache.suggestedGroup > 1 and config.suggestedGroup.enable then -- 多人
 			extraInfo = extraInfo .. "[" .. questCache.suggestedGroup .. "]"
-			extraInfoColored =
-				extraInfoColored .. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
+			extraInfoColored = extraInfoColored
+				.. F.CreateColorString("[" .. questCache.suggestedGroup .. "]", config.suggestedGroup.color)
 		end
 
 		if questCache.level and config.level.enable then -- 等级
 			if not config.level.hideOnMax or questCache.level ~= W.MaxLevelForPlayerExpansion then
 				extraInfo = extraInfo .. "[" .. questCache.level .. "]"
-				extraInfoColored = extraInfoColored .. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
+				extraInfoColored = extraInfoColored
+					.. F.CreateColorString("[" .. questCache.level .. "]", config.level.color)
 			end
 		end
 
@@ -164,25 +161,36 @@ function A:Quest()
 		if questCacheOld then
 			if not questCacheOld.isComplete then -- 之前未完成
 				if questCache.isComplete then
-					mainInfo = questCache.title .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
-					mainInfoColored = questCache.link .. " " .. F.CreateColorString(L["Completed"], {r = 0.5, g = 1, b = 0.5})
+					mainInfo = questCache.title
+						.. " "
+						.. F.CreateColorString(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
+					mainInfoColored = questCache.link
+						.. " "
+						.. F.CreateColorString(L["Completed"], { r = 0.5, g = 1, b = 0.5 })
 					needAnnounce = true
 				elseif #questCacheOld > 0 and #questCache > 0 then -- 循环记录的任务完成条件
 					for queryIndex = 1, #questCache do
 						if
-							questCache[queryIndex] and questCacheOld[queryIndex] and questCache[queryIndex].numItems and
-								questCacheOld[queryIndex].numItems and
-								questCache[queryIndex].numItems > questCacheOld[queryIndex].numItems
-						 then -- 任务有了新的进展
-							local progressColor = F.GetProgressColor(questCache[queryIndex].numItems / questCache[queryIndex].numNeeded)
+							questCache[queryIndex]
+							and questCacheOld[queryIndex]
+							and questCache[queryIndex].numItems
+							and questCacheOld[queryIndex].numItems
+							and questCache[queryIndex].numItems > questCacheOld[queryIndex].numItems
+						then -- 任务有了新的进展
+							local progressColor =
+								F.GetProgressColor(questCache[queryIndex].numItems / questCache[queryIndex].numNeeded)
 
-							local subGoalIsCompleted = questCache[queryIndex].numItems == questCache[queryIndex].numNeeded
+							local subGoalIsCompleted = questCache[queryIndex].numItems
+								== questCache[queryIndex].numNeeded
 
 							if config.includeDetails or subGoalIsCompleted then
-								local progressInfo = questCache[queryIndex].numItems .. "/" .. questCache[queryIndex].numNeeded
+								local progressInfo = questCache[queryIndex].numItems
+									.. "/"
+									.. questCache[queryIndex].numNeeded
 								local progressInfoColored = progressInfo
 								if subGoalIsCompleted then
-									progressInfoColored = progressInfoColored .. format(" |T%s:0|t", W.Media.Icons.complete)
+									progressInfoColored = progressInfoColored
+										.. format(" |T%s:0|t", W.Media.Icons.complete)
 								else
 									isDetailInfo = true
 								end
@@ -191,7 +199,8 @@ function A:Quest()
 								mainInfoColored = questCache.link .. " " .. questCache[queryIndex].item .. " "
 
 								mainInfo = mainInfo .. progressInfo
-								mainInfoColored = mainInfoColored .. F.CreateColorString(progressInfoColored, progressColor)
+								mainInfoColored = mainInfoColored
+									.. F.CreateColorString(progressInfoColored, progressColor)
 								needAnnounce = true
 							end
 						end
@@ -201,9 +210,10 @@ function A:Quest()
 		else -- 新的任务
 			if not questCache.worldQuestType then -- 屏蔽世界任务的接收, 路过不报告
 				mainInfo = questCache.link .. " " .. L["Accepted"]
-				mainInfoColored =
-					questCache.link ..
-					" " .. F.CreateColorString(L["Accepted"], {r = 1, g = 1, b = 1}) .. format(" |T%s:0|t", W.Media.Icons.accept)
+				mainInfoColored = questCache.link
+					.. " "
+					.. F.CreateColorString(L["Accepted"], { r = 1, g = 1, b = 1 })
+					.. format(" |T%s:0|t", W.Media.Icons.accept)
 				needAnnounce = true
 			end
 		end

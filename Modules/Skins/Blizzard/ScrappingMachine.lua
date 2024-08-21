@@ -5,11 +5,11 @@ local _G = _G
 local pairs = pairs
 
 function S:Blizzard_ScrappingMachineUI()
-    if not self:CheckDB("scrapping", "scrappingMachine") then
-        return
-    end
+	if not self:CheckDB("scrapping", "scrappingMachine") then
+		return
+	end
 
-    self:CreateShadow(_G.ScrappingMachineFrame)
+	self:CreateShadow(_G.ScrappingMachineFrame)
 end
 
 S:AddCallbackForAddon("Blizzard_ScrappingMachineUI")

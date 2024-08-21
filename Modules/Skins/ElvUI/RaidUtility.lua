@@ -5,25 +5,25 @@ local _G = _G
 local pairs = pairs
 
 function S:RaidUtility()
-    if not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.raidUtility then
-        return
-    end
+	if not E.private.WT.skins.elvui.enable or not E.private.WT.skins.elvui.raidUtility then
+		return
+	end
 
-    if not E.private.general.raidUtility then
-        return
-    end
+	if not E.private.general.raidUtility then
+		return
+	end
 
-    local frames = {
-        _G.RaidUtilityPanel,
-        _G.RaidUtility_ShowButton,
-        _G.RaidUtility_CloseButton,
-        _G.RaidUtilityRoleIcons,
-        _G.RaidUtilityTargetIcons
-    }
+	local frames = {
+		_G.RaidUtilityPanel,
+		_G.RaidUtility_ShowButton,
+		_G.RaidUtility_CloseButton,
+		_G.RaidUtilityRoleIcons,
+		_G.RaidUtilityTargetIcons,
+	}
 
-    for _, frame in pairs(frames) do
-        self:CreateShadow(frame)
-    end
+	for _, frame in pairs(frames) do
+		self:CreateShadow(frame)
+	end
 end
 
 S:AddCallback("RaidUtility")

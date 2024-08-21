@@ -5,27 +5,27 @@ local _G = _G
 local pairs = pairs
 
 function S:Blizzard_AdventureMap()
-    if not self:CheckDB("adventureMap") then
-        return
-    end
+	if not self:CheckDB("adventureMap") then
+		return
+	end
 
-    local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
-    local childFrame = AdventureMapQuestChoiceDialog.Details.Child
+	local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
+	local childFrame = AdventureMapQuestChoiceDialog.Details.Child
 
-    self:CreateShadow(AdventureMapQuestChoiceDialog)
+	self:CreateShadow(AdventureMapQuestChoiceDialog)
 
-    if AdventureMapQuestChoiceDialog.shadow then
-        AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
-        if AdventureMapQuestChoiceDialog.TopEdge then
-            AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
-        end
-    end
+	if AdventureMapQuestChoiceDialog.shadow then
+		AdventureMapQuestChoiceDialog.shadow:SetFrameStrata("LOW")
+		if AdventureMapQuestChoiceDialog.TopEdge then
+			AdventureMapQuestChoiceDialog.TopEdge:SetParent(AdventureMapQuestChoiceDialog.shadow)
+		end
+	end
 
-    F.SetFontOutline(childFrame.TitleHeader)
-    F.SetFontOutline(childFrame.DescriptionText)
-    F.SetFontOutline(childFrame.ObjectivesHeader)
-    F.SetFontOutline(childFrame.ObjectivesText)
-    F.SetFontOutline(AdventureMapQuestChoiceDialog.RewardsHeader)
+	F.SetFontOutline(childFrame.TitleHeader)
+	F.SetFontOutline(childFrame.DescriptionText)
+	F.SetFontOutline(childFrame.ObjectivesHeader)
+	F.SetFontOutline(childFrame.ObjectivesText)
+	F.SetFontOutline(AdventureMapQuestChoiceDialog.RewardsHeader)
 end
 
 S:AddCallbackForAddon("Blizzard_AdventureMap")

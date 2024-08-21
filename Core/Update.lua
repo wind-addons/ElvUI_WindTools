@@ -105,6 +105,13 @@ function W:UpdateScripts()
         end
     end
 
+    if profileVersion < 3.68 then
+        if E.db.WT.social.contextMenu then
+            E.db.WT.social.contextMenu.reportStats = nil
+            UpdateMessage(L["Social"] .. " - " .. L["Context Menu"] .. ":" .. L["Update Database"], profileVersion)
+        end
+    end
+
     if not isFirstLine then
         F.PrintGradientLine()
     end

@@ -383,7 +383,10 @@ function MB:SkinButton(frame)
 						region:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
 					end
 
-					if not TexCoordIgnoreList[name] and region:GetNumMaskTextures() == 0 then
+					-- idk why some addon removes this function???
+					local numMaskTextures = region.GetNumMaskTextures and region:GetNumMaskTextures() or 0
+
+					if not TexCoordIgnoreList[name] and numMaskTextures == 0 then
 						-- even checked the mask textures, some icons still have mask textures???
 						-- ignore the error for now
 						pcall(region.SetTexCoord, region, 0.1, 0.9, 0.1, 0.9)

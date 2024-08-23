@@ -2468,15 +2468,15 @@ options.widgets = {
 }
 
 local effectsTable = {
-	["linear"] = L["Linear"],
-	["quadratic"] = L["Quadratic"],
-	["cubic"] = L["Cubic"],
-	["quartic"] = L["Quartic"],
-	["quintic"] = L["Quintic"],
-	["sinusoidal"] = L["Sinusoidal"],
-	["exponential"] = L["Exponential"],
-	["circular"] = L["Circular"],
-	["bounce"] = L["Bounce"],
+	["linear"] = L["Linear Ease"],
+	["quadratic"] = L["Quadratic Ease"],
+	["cubic"] = L["Cubic Ease"],
+	["quartic"] = L["Quartic Ease"],
+	["quintic"] = L["Quintic Ease"],
+	["sinusoidal"] = L["Sinusoidal Ease"],
+	["exponential"] = L["Exponential Ease"],
+	["circular"] = L["Circular Ease"],
+	["bounce"] = L["Bounce Ease"],
 }
 
 for _, widget in pairs({ "button", "treeGroupButton", "tab" }) do
@@ -2527,6 +2527,7 @@ for _, widget in pairs({ "button", "treeGroupButton", "tab" }) do
 				order = 4,
 				type = "select",
 				name = L["Fade Ease"],
+				width = 1.2,
 				desc = L["The easing function used for fading the backdrop."]
 					.. "\n"
 					.. L["You can preview the ease type in https://easings.net/"],

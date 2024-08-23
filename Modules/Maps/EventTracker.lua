@@ -1437,7 +1437,7 @@ end
 function ET:Initialize()
 	self.db = E.db.WT.maps.eventTracker
 
-	if not self.db or not self.db.enable then
+	if not self.db or not self.db.enable or self.initialized then
 		return
 	end
 
@@ -1452,6 +1452,8 @@ function ET:Initialize()
 	EventRegistry:RegisterCallback("WorldMapMaximized", E.Delay, E, 0.1, self.UpdateTrackers, self)
 	self:SecureHook(_G.QuestMapFrame, "Show", "UpdateTrackers")
 	self:SecureHook(_G.QuestMapFrame, "Hide", "UpdateTrackers")
+
+	self.initialized = true
 end
 
 function ET:ProfileUpdate()

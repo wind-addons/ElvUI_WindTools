@@ -12,7 +12,9 @@ local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
 -- The helper function for progression data.
 local function configTable(t, sourceMetadata)
 	for k in pairs(sourceMetadata) do
-		t[k] = true
+		if t[k] == nil then
+			t[k] = true
+		end
 	end
 
 	return t
@@ -626,7 +628,7 @@ V.tooltips = {
 	progression = {
 		enable = true,
 		header = "TEXTURE",
-		raid = configTable({ enable = true }, W.RaidData),
+		raid = configTable({ enable = true, [2388] = false, [2403] = false }, W.RaidData),
 		specialAchievement = configTable({ enable = true }, W.MythicPlusSeasonAchievementData),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),
 	},

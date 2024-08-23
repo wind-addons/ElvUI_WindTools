@@ -1728,3 +1728,23 @@ options.eventTracker = {
 		},
 	},
 }
+
+for _, event in pairs({
+	"radiantEchoes",
+	"bigDig",
+	"superBloom",
+	"timeRiftThaldraszus",
+	"researchersUnderFire",
+	"siegeOnDragonbaneKeep",
+	"communityFeast",
+	"iskaaranFishingNet",
+}) do
+	local eventOptions = options.eventTracker.args[event]
+	for arg in pairs(eventOptions.args) do
+		if arg ~= "enable" then
+			eventOptions.args[arg].hidden = function(info)
+				return not E.db.WT.maps.eventTracker[info[#info - 1]].enable
+			end
+		end
+	end
+end

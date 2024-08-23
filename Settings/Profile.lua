@@ -727,7 +727,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		communityFeast = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = false,
@@ -737,7 +737,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		siegeOnDragonbaneKeep = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = false,
@@ -747,7 +747,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		researchersUnderFire = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = false,
@@ -757,7 +757,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		timeRiftThaldraszus = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = false,
@@ -767,7 +767,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		superBloom = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = false,
@@ -777,7 +777,7 @@ P.maps = {
 			stopAlertIfPlayerNotEnteredDragonlands = true,
 		},
 		bigDig = {
-			enable = true,
+			enable = false,
 			desaturate = false,
 			alert = true,
 			sound = true,

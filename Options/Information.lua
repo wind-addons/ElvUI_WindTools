@@ -243,6 +243,16 @@ options.help = {
 						F.CreateClassColorString("Shaype @ " .. "Draenor" .. " (EU)", "DRUID")
 					),
 				},
+				["AngelosNaoumis"] = {
+					order = 15,
+					type = "description",
+					name = "AngelosNaoumis",
+				},
+				["DakJaniels"] = {
+					order = 16,
+					type = "description",
+					name = "DakJaniels",
+				},
 			},
 		},
 		version = {

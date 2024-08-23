@@ -49,28 +49,27 @@ function WS:HandleButton(_, button)
 
 		F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
-		button.windAnimation =
-			self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
-
-		self:SecureHookScript(button, "OnEnter", button.windAnimation.onEnter)
-		self:SecureHookScript(button, "OnLeave", button.windAnimation.onLeave)
+		button.windAnimation = self.Animation(bg, db.backdrop.animation)
+		self.SetAnimationMetadata(button, button.windAnimation)
+		self:SecureHookScript(button, "OnEnter", button.windAnimation.OnEnter)
+		self:SecureHookScript(button, "OnLeave", button.windAnimation.OnLeave)
 
 		if button.Disable then
-			self:SecureHook(button, "Disable", button.windAnimation.onStatusChange)
+			self:SecureHook(button, "Disable", button.windAnimation.OnStatusChange)
 		end
 
 		if button.Enable then
-			self:SecureHook(button, "Enable", button.windAnimation.onStatusChange)
+			self:SecureHook(button, "Enable", button.windAnimation.OnStatusChange)
 		end
 
 		-- Avoid the hook is flushed
 		self:SecureHook(button, "SetScript", function(frame, scriptType)
 			if scriptType == "OnEnter" then
 				self:Unhook(frame, "OnEnter")
-				self:SecureHookScript(frame, "OnEnter", button.windAnimation.onEnter)
+				self:SecureHookScript(frame, "OnEnter", button.windAnimation.OnEnter)
 			elseif scriptType == "OnLeave" then
 				self:Unhook(frame, "OnLeave")
-				self:SecureHookScript(frame, "OnLeave", button.windAnimation.onLeave)
+				self:SecureHookScript(frame, "OnLeave", button.windAnimation.OnLeave)
 			end
 		end)
 

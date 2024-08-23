@@ -57,27 +57,29 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 
 		F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
 
-		tab.windAnimation =
-			self.Animation(bg, db.backdrop.animationType, db.backdrop.animationDuration, db.backdrop.alpha)
-
-		self:SecureHookScript(tab, "OnEnter", tab.windAnimation.onEnter)
-		self:SecureHookScript(tab, "OnLeave", tab.windAnimation.onLeave)
+		tab.windAnimation = self.Animation(bg, db.backdrop.animation)
+		tab.__windAnimationIsTab = true
+		self.SetAnimationMetadata(tab, tab.windAnimation)
+		self:SecureHookScript(tab, "OnEnter", tab.windAnimation.OnEnter)
+		self:SecureHookScript(tab, "OnLeave", tab.windAnimation.OnLeave)
 
 		if tab.Disable and tab.Enable then
-			self:SecureHook(tab, "Disable", tab.windAnimation.onStatusChange)
-			self:SecureHook(tab, "Enable", tab.windAnimation.onStatusChange)
+			self:SecureHook(tab, "Disable", tab.windAnimation.OnStatusChange)
+			self:SecureHook(tab, "Enable", tab.windAnimation.OnStatusChange)
 		end
 
 		-- Avoid the hook is flushed
-		self:SecureHook(tab, "SetScript", function(frame, scriptType)
-			if scriptType == "OnEnter" then
-				self:Unhook(frame, "OnEnter")
-				self:SecureHookScript(frame, "OnEnter", tab.windAnimation.onEnter)
-			elseif scriptType == "OnLeave" then
-				self:Unhook(frame, "OnLeave")
-				self:SecureHookScript(frame, "OnLeave", tab.windAnimation.onLeave)
-			end
-		end)
+		if tab.SetScript then
+			self:SecureHook(tab, "SetScript", function(frame, scriptType)
+				if scriptType == "OnEnter" then
+					self:Unhook(frame, "OnEnter")
+					self:SecureHookScript(frame, "OnEnter", tab.windAnimation.OnEnter)
+				elseif scriptType == "OnLeave" then
+					self:Unhook(frame, "OnLeave")
+					self:SecureHookScript(frame, "OnLeave", tab.windAnimation.OnLeave)
+				end
+			end)
+		end
 	end
 
 	tab.windWidgetSkinned = true
@@ -89,6 +91,9 @@ do
 		if not tab or not tab.backdrop then
 			return ES.Ace3_TabSetSelected_(tab, selected)
 		end
+
+		tab.__windAnimationIsSelected = selected
+		tab.windAnimation.OnStatusChange(tab)
 
 		if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
 			return ES.Ace3_TabSetSelected_(tab, selected)

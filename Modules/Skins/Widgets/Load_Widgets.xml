@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
     <Script file='Core.lua'/>
+    <Script file='Animation.lua'/>
     <!-- Submodule -->
 	<Script file='Button.lua'/>
 	<Script file='CheckBox.lua'/>

@@ -124,6 +124,7 @@ function animationParent.fade.OnLeave(frame)
 	if not frame.__windAnimTex:IsShown() then
 		group:Stop(false)
 		group.anim:CompletelyReset()
+		group.anim:Reset()
 		return
 	end
 

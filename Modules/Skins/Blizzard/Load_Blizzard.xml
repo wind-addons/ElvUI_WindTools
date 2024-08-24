@@ -83,6 +83,7 @@
 	<Script file='Trade.lua'/>
 	<Script file='Trainer.lua'/>
 	<Script file='Tutorial.lua'/>
+	<Script file='UIWidget.lua'/>
 	<Script file='Warboard.lua'/>
 	<Script file='WeeklyRewards.lua'/>
 	<Script file='WorldMap.lua'/>

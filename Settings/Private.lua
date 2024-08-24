@@ -584,6 +584,7 @@ V.skins = {
 		trade = true,
 		trainer = true,
 		tutorial = true,
+		uiWidget = true,
 		warboard = true,
 		weeklyRewards = true,
 		worldMap = true,

@@ -11,8 +11,8 @@
 	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='GuildNewsItemLevel.lua'/>
 	<Script file='HideCrafter.lua'/>
-	<Script file='HotKeyAboveCD.lua'/>
 	<Script file='KeybindAlias.lua'/>
+	<Script file='KeybindTextAbove.lua'/>
 	<Script file='LootPanel.lua'/>
 	<Script file='Math.lua'/>
 	<Script file='MoveSpeed.lua'/>

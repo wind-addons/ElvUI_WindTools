@@ -33,8 +33,9 @@ function S:Blizzard_UIPanels_Game()
 	-- Reputation
 	self:CreateShadow(_G.ReputationDetailFrame)
 
-	-- Currency Transfer Log
+	-- Currency Transfer
 	self:CreateShadow(_G.CurrencyTransferLog)
+	self:CreateShadow(_G.CurrencyTransferMenu)
 end
 
 S:AddCallbackForAddon("Blizzard_UIPanels_Game")

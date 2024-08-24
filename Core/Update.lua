@@ -107,7 +107,30 @@ function W:UpdateScripts()
 	if profileVersion < 3.68 then
 		if E.db.WT.social.contextMenu then
 			E.db.WT.social.contextMenu.reportStats = nil
-			UpdateMessage(L["Social"] .. " - " .. L["Context Menu"] .. ":" .. L["Update Database"], profileVersion)
+			UpdateMessage(L["Social"] .. " - " .. L["Context Menu"] .. ": " .. L["Update Database"], profileVersion)
+		end
+	end
+
+	if privateVersion < 3.69 then
+		if E.private.WT.misc then
+			E.private.WT.misc.keybindTextAbove = E.private.WT.misc.hotKeyAboveCD or false
+			E.private.WT.misc.hotKeyAboveCD = nil
+			UpdateMessage(L["Misc"] .. " - " .. L["Keybind Text Above"] .. ": " .. L["Update Database"], privateVersion)
+		end
+
+		if E.private.WT.skins then
+			for _, widget in pairs({
+				"button",
+				"tab",
+				"treeGroupButton",
+			}) do
+				if E.private.WT.skins.widgets[widget] and E.private.WT.skins.widgets[widget].backdrop then
+					E.private.WT.skins.widgets[widget].backdrop.alpha = nil
+					E.private.WT.skins.widgets[widget].backdrop.animationType = nil
+					E.private.WT.skins.widgets[widget].backdrop.animationDuration = nil
+				end
+			end
+			UpdateMessage(L["Skins"] .. " - " .. L["Widgets"] .. ": " .. L["Update Database"], privateVersion)
 		end
 	end
 

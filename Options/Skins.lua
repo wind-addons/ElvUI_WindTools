@@ -856,6 +856,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Tutorials"],
 		},
+		uiWidget = {
+			order = 10,
+			type = "toggle",
+			name = L["UI Widget"],
+		},
 		warboard = {
 			order = 10,
 			type = "toggle",

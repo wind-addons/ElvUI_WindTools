@@ -2,6 +2,11 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local WS = S.Widgets
 
+local _G = _G
+local pairs = pairs
+local min = min
+local max = max
+
 -- Animation Manager
 local manager = { frame = nil, group = nil }
 

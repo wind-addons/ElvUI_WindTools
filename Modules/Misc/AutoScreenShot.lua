@@ -18,6 +18,7 @@ function M:DelayScreenshot(_, _, _, tried)
 	E:Delay(0.5, function()
 		if alertFrame and alertFrame.IsShown and alertFrame:IsShown() and _G.Screenshot then
 			_G.Screenshot()
+			E:Delay(1, F.Print, L["Screenshot has been automatically taken."])
 		else
 			self:DelayScreenshot(nil, nil, nil, tried + 1)
 		end
@@ -27,7 +28,8 @@ end
 function M:AutoScreenShot()
 	if E.private.WT.misc.autoScreenshot then
 		self:RegisterEvent("ACHIEVEMENT_EARNED", "DelayScreenshot")
-		hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction", function(frame)
+
+		hooksecurefunc(_G.AchievementAlertSystem:GetAlertContainer(), "AddAlertFrame", function(_, frame)
 			E:Delay(
 				1, -- achievement alert frame will be shown after 1 second
 				function()

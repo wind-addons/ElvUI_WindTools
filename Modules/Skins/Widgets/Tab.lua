@@ -92,8 +92,10 @@ do
 			return ES.Ace3_TabSetSelected_(tab, selected)
 		end
 
-		tab.__windAnimationIsSelected = selected
-		tab.windAnimation.OnStatusChange(tab)
+		if tab.windAnimation then
+			tab.__windAnimationIsSelected = selected
+			tab.windAnimation.OnStatusChange(tab)
+		end
 
 		if not E.private.WT.skins.enable or not E.private.WT.skins.widgets.tab.enable then
 			return ES.Ace3_TabSetSelected_(tab, selected)

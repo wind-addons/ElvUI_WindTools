@@ -4,10 +4,8 @@ local M = W.Modules.Misc
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-local GetTime = GetTime
-
 local alertFrame
-local lastScreenshot
+
 function M:DelayScreenshot(_, _, _, tried)
 	if not tried then
 		tried = 0
@@ -19,12 +17,7 @@ function M:DelayScreenshot(_, _, _, tried)
 
 	E:Delay(0.5, function()
 		if alertFrame and alertFrame.IsShown and alertFrame:IsShown() and _G.Screenshot then
-			local time = GetTime()
-			if lastScreenshot and time - lastScreenshot < 1.5 then
-				return
-			end
 			_G.Screenshot()
-			lastScreenshot = time
 			E:Delay(1, F.Print, L["Screenshot has been automatically taken."])
 		else
 			self:DelayScreenshot(nil, nil, nil, tried + 1)

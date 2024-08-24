@@ -25,7 +25,7 @@ function S:LookingForGroupFrames()
 		self:CreateShadow(frame)
 	end
 
-	for i = 1, 3 do
+	for i = 1, 4 do
 		self:ReskinTab(_G["PVEFrameTab" .. i])
 	end
 

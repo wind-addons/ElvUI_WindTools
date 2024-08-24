@@ -36,7 +36,7 @@ function M:AutoScreenShot()
 					local thisFrame = frame
 					alertFrame = frame
 					E:Delay(
-						16, -- wait for 15 seconds
+						14, -- wait for 15 seconds
 						function()
 							if thisFrame == alertFrame then
 								alertFrame = nil

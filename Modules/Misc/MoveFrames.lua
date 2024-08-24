@@ -54,12 +54,6 @@ local BlizzardFrames = {
 	"TradeFrame",
 	"TutorialFrame",
 	"VideoOptionsFrame",
-	["CharacterFrame"] = {
-		"PaperDollFrame",
-		"ReputationFrame",
-		"TokenFrame",
-		"TokenFramePopup",
-	},
 	["DressUpFrame"] = {
 		"DressUpFrame.OutfitDetailsPanel",
 	},
@@ -315,6 +309,15 @@ local BlizzardFramesOnDemand = {
 	},
 	["Blizzard_TrainerUI"] = {
 		"ClassTrainerFrame",
+	},
+	["Blizzard_UIPanels_Game"] = {
+		"CurrencyTransferMenu",
+		["CharacterFrame"] = {
+			"PaperDollFrame",
+			"ReputationFrame",
+			"TokenFrame",
+			"TokenFramePopup",
+		},
 	},
 	["Blizzard_VoidStorageUI"] = {
 		"VoidStorageFrame",

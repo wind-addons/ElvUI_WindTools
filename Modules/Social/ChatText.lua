@@ -674,14 +674,13 @@ local function updateGuildPlayerCache(_, event)
 		return
 	end
 
-	if not IsInGuild() then
-		return
-	end
-
-	for i = 1, GetNumGuildMembers() do
-		local name, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(i)
-		name = Ambiguate(name, "none")
-		guildPlayerCache[name] = className
+	if IsInGuild() then
+		for i = 1, GetNumGuildMembers() do
+			local name, _, _, _, _, _, _, _, _, _, className = GetGuildRosterInfo(i)
+			if name and className then
+				guildPlayerCache[Ambiguate(name, "none")] = className
+			end
+		end
 	end
 end
 

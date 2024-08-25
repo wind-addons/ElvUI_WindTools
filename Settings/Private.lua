@@ -217,7 +217,7 @@ V.misc = {
 
 V.quest = {
 	objectiveTracker = {
-		enable = true,
+		enable = false,
 		noDash = true,
 		colorfulProgress = true,
 		percentage = false,

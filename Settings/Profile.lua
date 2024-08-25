@@ -1009,7 +1009,7 @@ P.social = {
 
 P.quest = {
 	paragonReputation = {
-		enable = true,
+		enable = false,
 		color = { r = 0, g = 0.5, b = 0.9 },
 		text = "PARAGON",
 		toast = {

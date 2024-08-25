@@ -1083,8 +1083,8 @@ options.gameBar = {
 			end,
 			set = function(info, value)
 				E.db.WT.misc.gameBar[info[#info]] = value
+				GB:UpdateMetadata()
 				GB:UpdateButtons()
-				GB:UpdateTimeFormat()
 				GB:UpdateTime()
 			end,
 			args = {
@@ -1140,6 +1140,51 @@ options.gameBar = {
 						},
 					},
 				},
+				animation = {
+					order = 2,
+					type = "group",
+					name = L["Animation"],
+					inline = true,
+					get = function(info)
+						return E.db.WT.misc.gameBar[info[#info - 1]][info[#info]]
+					end,
+					set = function(info, value)
+						E.db.WT.misc.gameBar[info[#info - 1]][info[#info]] = value
+						GB:UpdateMetadata()
+						GB:UpdateButtons()
+						GB:UpdateTime()
+					end,
+					args = {
+						duration = {
+							order = 1,
+							type = "range",
+							name = L["Duration"],
+							desc = L["The duration of the animation in seconds."],
+							min = 0,
+							max = 3,
+							step = 0.01,
+						},
+						ease = {
+							order = 2,
+							type = "select",
+							name = L["Ease"],
+							desc = L["The easing function used for colorize the button."]
+								.. "\n"
+								.. L["You can preview the ease type in https://easings.net/"],
+							values = W.AnimationEaseTable,
+						},
+						easeInvert = {
+							order = 3,
+							type = "toggle",
+							name = L["Invert Ease"],
+							desc = L["When enabled, this option inverts the easing function."]
+								.. " "
+								.. L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"]
+								.. "\n"
+								.. L["Generally, enabling this option makes the value increase faster in the first half of the animation."],
+						},
+					},
+				},
 				normal = {
 					order = 3,
 					type = "group",
@@ -1151,7 +1196,7 @@ options.gameBar = {
 							type = "select",
 							name = L["Mode"],
 							values = {
-								NONE = L["None"],
+								DEFAULT = L["Default"],
 								CLASS = L["Class Color"],
 								VALUE = L["Value Color"],
 								CUSTOM = L["Custom"],
@@ -1173,6 +1218,9 @@ options.gameBar = {
 							set = function(info, r, g, b, a)
 								local db = E.db.WT.misc.gameBar[info[#info]]
 								db.r, db.g, db.b, db.a = r, g, b, a
+								GB:UpdateMetadata()
+								GB:UpdateButtons()
+								GB:UpdateTime()
 							end,
 						},
 					},
@@ -1188,7 +1236,7 @@ options.gameBar = {
 							type = "select",
 							name = L["Mode"],
 							values = {
-								NONE = L["None"],
+								DEFAULT = L["Default"],
 								CLASS = L["Class Color"],
 								VALUE = L["Value Color"],
 								CUSTOM = L["Custom"],
@@ -1210,6 +1258,9 @@ options.gameBar = {
 							set = function(info, r, g, b, a)
 								local db = E.db.WT.misc.gameBar[info[#info]]
 								db.r, db.g, db.b, db.a = r, g, b, a
+								GB:UpdateMetadata()
+								GB:UpdateButtons()
+								GB:UpdateTime()
 							end,
 						},
 					},
@@ -1380,7 +1431,6 @@ options.gameBar = {
 					end,
 					set = function(info, value)
 						E.db.WT.misc.gameBar.time[info[#info - 1]][info[#info]] = value
-						GB:UpdateTimeFormat()
 						GB:UpdateTimeArea()
 					end,
 					args = {

@@ -1,33 +1,43 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[369] = {
-	RELEASE_DATE = "Alpha",
+	RELEASE_DATE = "2024/08/26",
 	IMPORTANT = {
 		["zhCN"] = {
+			"[任务列表] 由于过于频繁的污染，现在该模块默认关闭。如果你能接受任务物品使用相关的错误（你完全可以使用额外物品条来使用任务物品！）可以在设定中重新手动打开它。",
+			"[巅峰声望] 由于模块还在修复中，现在该模块默认关闭。",
 			"联动 ElvUI 进行了性能优化，该改动已经包含在 ElvUI 13.75 版本中，请尽快更新. 感谢 Simpy",
 			"大幅优化了游戏条的动画表现，可提升约 6% 左右的帧数。",
 			"使用 ElvUI 内的 LibAnim 重构了组件动画系统，动画时的帧数提升约 5%。",
 			"[其他] - [键位在冷却上方] 现在升级为 [快捷键文字置顶]，按键文字的层级会被提升到比发光动画更高。",
 		},
 		["zhTW"] = {
+			"[任務列表] 由於過於頻繁的污染，現在該模組默認關閉。如果你能接受任務物品使用相關的錯誤（你完全可以使用額外物品條來使用任務物品！）可以在設定中重新手動打開它。",
+			"[巔峰聲望] 由於模組還在修復中，現在該模組默認關閉。",
 			"聯動 ElvUI 進行了性能優化，該改動已經包含在 ElvUI 13.75 版本中，请盡快更新。 感謝 Simpy",
 			"大幅改善了遊戲條的動畫表現，可提升約 6% 左右的幀數。",
 			"使用 ElvUI 內的 LibAnim 重構了組件動畫系統，動畫時的幀數提升約 5%。",
 			"[其他] - [按鍵在冷卻上方] 現在升級為 [按鍵綁定文字置頂]，按鍵文字的層級會被提升到比發光動畫更高。",
 		},
 		["enUS"] = {
+			"[Objective Tracker] Due to frequent taint, this module is now disabled by default. If you can accept errors related to quest item clicking (you can absolutely use quest item in the extra item bars!), you can manually re-enable it in the settings.",
+			"[Paragon Reputation] Due to the module still being fixed, this module is now disabled by default.",
 			"Performance optimizations have been made in the ElvUI. The change has been included in ElvUI 13.75. Please update. Thank you Simpy",
 			"Large performance improvements have been made to the game bar. The frame rate increase is about 6%.",
 			"The widget animation system has been reworked. The frame rate increase expected is about 5%.",
 			"[Misc] - [HotKey Above CD] is now upgraded to [Keybind Text Above], the layer of the keybind text will be raised higher than the glowing animation.",
 		},
 		["koKR"] = {
+			"[퀘스트 추적기] 빈번한 오염으로 인해 이 모듈은 이제 기본적으로 비활성화되어 있습니다. 퀘스트 아이템 클릭과 관련된 오류를 수용할 수 있다면 (완전히 다른 아이템 바를 사용하여 퀘스트 아이템을 사용할 수 있습니다!), 설정에서 수동으로 다시 활성화할 수 있습니다.",
+			"[최고 명성] 모듈이 아직 수정 중이므로 이제 기본적으로 비활성화되어 있습니다.",
 			"ElvUI에서 성능 최적화가 이루어졌습니다. 이 변경 사항은 ElvUI 13.75에 포함되어 있습니다. 업데이트 해주세요. 감사합니다 Simpy",
 			"게임 바에 대한 성능 개선이 크게 이루어졌습니다. 프레임 속도가 약 6% 증가합니다.",
 			"이동화 실제 시스템 플러그를 재사용해야 합니다. 프레임 속도가 약 5% 증가합니다.",
 			"[기타] - [CD 위에 단축키]가 [키 바인딩 텍스트 위]로 업그레이드되었습니다. 키 바인딩 텍스트의 레이어가 발광 애니메이션보다 높아집니다.",
 		},
 		["ruRU"] = {
+			"[Трекер заданий] Из-за частых загрязнений этот модуль теперь отключен по умолчанию. Если вы можете принять ошибки, связанные с нажатием на предмет задания (вы абсолютно можете использовать предметы задания в дополнительных панелях предметов!), вы можете вручную включить его в настройках.",
+			"[Пиковая репутация] Поскольку модуль все еще находится в процессе исправления, этот модуль теперь отключен по умолчанию.",
 			"В ElvUI была проведена оптимизация производительности. Изменение было включено в ElvUI 13.75. Пожалуйста, обновитесь. Спасибо Simpy",
 			"Были сделаны значительные улучшения производительности панели игры. Увеличение частоты кадров составляет около 6%.",
 			"Система анимации была переработана. Ожидаемое увеличение частоты кадров составляет около 5%.",

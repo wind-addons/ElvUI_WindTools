@@ -7,6 +7,9 @@ manual-changelog:
 ignore:
   - .gitignore
   - .github/*
+  - .styluaignore
+  - stylua.toml
+  - .luacheckrc
   - README.md
   - README_zhCN.md
   - README_zhTW.md

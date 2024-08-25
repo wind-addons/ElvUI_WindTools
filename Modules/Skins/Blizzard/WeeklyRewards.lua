@@ -9,6 +9,10 @@ function S:Blizzard_WeeklyRewards()
 	end
 
 	self:CreateShadow(_G.WeeklyRewardsFrame)
+
+	if _G.WeeklyRewardExpirationWarningDialog then
+		self:CreateShadow(_G.WeeklyRewardExpirationWarningDialog.NineSlice)
+	end
 end
 
 S:AddCallbackForAddon("Blizzard_WeeklyRewards")

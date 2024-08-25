@@ -43,7 +43,7 @@ local function RefreshItemLevel(text, db, location)
 	end)
 end
 
-function IL:FlyoutButton(button)
+function IL:FlyoutButton()
 	local flyout = _G.EquipmentFlyoutFrame
 	local buttons = flyout.buttons
 	local flyoutSettings = flyout.button:GetParent().flyoutSettings

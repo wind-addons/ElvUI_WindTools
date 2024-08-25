@@ -3,9 +3,9 @@ local S = W.Modules.Skins
 local WS = S.Widgets
 
 local _G = _G
-local pairs = pairs
-local min = min
 local max = max
+local min = min
+local pairs = pairs
 
 -- Animation Manager
 local manager = { frame = nil, group = nil }

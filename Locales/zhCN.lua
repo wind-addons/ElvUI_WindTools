@@ -1365,6 +1365,7 @@ L["This feature also follows the modifier keys setting for additional informatio
 L["This feature only works for message that sent by this module."] = "此功能仅适用于此模块发送的信息."
 L["This module contains small features for each classes."] = "这个模块包含了每个职业的小功能."
 L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "这个模块是一个精简版的 TinyInspect, 如果你想要完整的功能, 请自行下载 TinyInspect."
+L["This module may prevent clicking quest items in the objective tracker due to taint."] = "这个模块可能会因为污染导致无法点击任务列表中的任务物品."
 L["This module provides several easy-to-use methods of deleting items."] = "这个模块提供了一些便于使用的删除物品方式."
 L["This module provides the feature that repositions the frames with drag and drop."] = "这个模块提供了通过拖放来重新定位框架的功能."
 L["This module will accelerate the speed of loot."] = "这个模块将会加快拾取的速度."

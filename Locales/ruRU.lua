@@ -1365,6 +1365,7 @@ L["This feature also follows the modifier keys setting for additional informatio
 L["This feature only works for message that sent by this module."] = "Эта функция работает только для сообщений, отправленных этим модулем."
 L["This module contains small features for each classes."] = "Этот модуль содержит небольшие функции для каждого класса."
 L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "Этот модуль является облегченной версией TinyInspect. Установите TinyInspect, если Вы хотите использовать все функции."
+L["This module may prevent clicking quest items in the objective tracker due to taint."] = true
 L["This module provides several easy-to-use methods of deleting items."] = "Этот модуль предоставляет несколько простых в использовании методов удаления предметов."
 L["This module provides the feature that repositions the frames with drag and drop."] = "Этот модуль предоставляет функцию изменения положения фреймов с помощью перетаскивания."
 L["This module will accelerate the speed of loot."] = "Этот модуль позволяет ускорить получение добычи."

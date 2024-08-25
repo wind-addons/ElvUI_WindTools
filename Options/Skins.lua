@@ -2534,7 +2534,7 @@ for _, widget in pairs({ "button", "treeGroupButton", "tab" }) do
 					.. " "
 					.. L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"]
 					.. "\n"
-					.. L["Generally, enabling this option makes the texture appear sooner in the animation."],
+					.. L["Generally, enabling this option makes the value increase faster in the first half of the animation."],
 			},
 		},
 	}

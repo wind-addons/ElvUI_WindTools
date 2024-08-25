@@ -27,28 +27,17 @@ W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 
 -- Wait for TWW
--- W.MythicPlusMapData = {
---     -- https://wago.tools/db2/MapChallengeMode
---     -- https://wago.tools/db2/GroupFinderActivityGrp
---     [353] = {abbr = L["[ABBR] Siege of Boralus"], activityID = 146},
---     [375] = {abbr = L["[ABBR] Mists of Tirna Scithe"], activityID = 262},
---     [376] = {abbr = L["[ABBR] The Necrotic Wake"], activityID = 265},
---     [501] = {abbr = L["[ABBR] The Stonevault"], activityID = 328},
---     [502] = {abbr = L["[ABBR] City of Threads"], activityID = 329},
---     [503] = {abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323},
---     [505] = {abbr = L["[ABBR] The Dawnbreaker"], activityID = 326},
---     [507] = {abbr = L["[ABBR] Grim Batol"], activityID = 56}
--- }
-
 W.MythicPlusMapData = {
-	[399] = { abbr = L["[ABBR] Ruby Life Pools"], activityID = 306, timers = { 1080, 1440, 1800 } },
-	[400] = { abbr = L["[ABBR] The Nokhud Offensive"], activityID = 308, timers = { 1440, 1920, 2400 } },
-	[401] = { abbr = L["[ABBR] The Azure Vault"], activityID = 307, timers = { 1350, 1800, 2250 } },
-	[402] = { abbr = L["[ABBR] Algeth'ar Academy"], activityID = 302, timers = { 1152, 1536, 1920 } },
-	[403] = { abbr = L["[ABBR] Uldaman: Legacy of Tyr"], activityID = 309, timers = { 1260, 1680, 2100 } },
-	[404] = { abbr = L["[ABBR] Neltharus"], activityID = 305, timers = { 1188, 1584, 1980 } },
-	[405] = { abbr = L["[ABBR] Brackenhide Hollow"], activityID = 303, timers = { 1260, 1680, 2100 } },
-	[406] = { abbr = L["[ABBR] Halls of Infusion"], activityID = 304, timers = { 1260, 1680, 2100 } },
+	-- https://wago.tools/db2/MapChallengeMode
+	-- https://wago.tools/db2/GroupFinderActivityGrp
+	[353] = { abbr = L["[ABBR] Siege of Boralus"], activityID = 146 },
+	[375] = { abbr = L["[ABBR] Mists of Tirna Scithe"], activityID = 262 },
+	[376] = { abbr = L["[ABBR] The Necrotic Wake"], activityID = 265 },
+	[501] = { abbr = L["[ABBR] The Stonevault"], activityID = 328 },
+	[502] = { abbr = L["[ABBR] City of Threads"], activityID = 329 },
+	[503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323 },
+	[505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326 },
+	[507] = { abbr = L["[ABBR] Grim Batol"], activityID = 56 },
 }
 
 W.MythicPlusSeasonAchievementData = {

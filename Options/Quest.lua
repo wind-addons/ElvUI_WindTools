@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local C = W.Utilities.Color
 local options = W.options.quest.args
 local LSM = E.Libs.LSM
 local TI = W:GetModule("TurnIn")
@@ -51,14 +52,21 @@ options.objectiveTracker = {
 			order = 1,
 			type = "toggle",
 			name = L["Enable"],
-			width = "full",
 			set = function(info, value)
 				E.private.WT.quest.objectiveTracker[info[#info]] = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 		},
-		progress = {
+		warning = {
 			order = 2,
+			type = "description",
+			name = C.StringByTemplate(
+				L["This module may prevent clicking quest items in the objective tracker due to taint."],
+				"danger"
+			),
+		},
+		progress = {
+			order = 3,
 			type = "group",
 			inline = true,
 			name = L["Progress"],
@@ -94,7 +102,7 @@ options.objectiveTracker = {
 			},
 		},
 		cosmeticBar = {
-			order = 3,
+			order = 4,
 			type = "group",
 			inline = true,
 			name = L["Cosmetic Bar"],
@@ -456,7 +464,7 @@ options.objectiveTracker = {
 			},
 		},
 		header = {
-			order = 4,
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Header"],
@@ -536,7 +544,7 @@ options.objectiveTracker = {
 			},
 		},
 		titleColor = {
-			order = 5,
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["Title Color"],
@@ -595,7 +603,7 @@ options.objectiveTracker = {
 			},
 		},
 		title = {
-			order = 6,
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Title"],
@@ -644,7 +652,7 @@ options.objectiveTracker = {
 			},
 		},
 		info = {
-			order = 7,
+			order = 8,
 			type = "group",
 			inline = true,
 			name = L["Information"],
@@ -693,7 +701,7 @@ options.objectiveTracker = {
 			},
 		},
 		backdrop = {
-			order = 8,
+			order = 9,
 			type = "group",
 			inline = true,
 			name = L["Backdrop"],
@@ -789,7 +797,7 @@ options.objectiveTracker = {
 			},
 		},
 		menuTitle = {
-			order = 9,
+			order = 10,
 			type = "group",
 			inline = true,
 			name = L["Menu Title"] .. " (" .. L["it shows when objective tracker be collapsed."] .. ")",

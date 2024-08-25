@@ -2520,7 +2520,7 @@ for _, widget in pairs({ "button", "treeGroupButton", "tab" }) do
 				order = 4,
 				type = "select",
 				name = L["Ease"],
-				width = 1.2,
+				width = 1.3,
 				desc = L["The easing function used for fading the backdrop."]
 					.. "\n"
 					.. L["You can preview the ease type in https://easings.net/"],

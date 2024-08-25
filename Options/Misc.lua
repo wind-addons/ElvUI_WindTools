@@ -1168,6 +1168,7 @@ options.gameBar = {
 							order = 2,
 							type = "select",
 							name = L["Ease"],
+							width = 1.3,
 							desc = L["The easing function used for colorize the button."]
 								.. "\n"
 								.. L["You can preview the ease type in https://easings.net/"],

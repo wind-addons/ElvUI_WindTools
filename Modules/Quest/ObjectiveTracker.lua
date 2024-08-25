@@ -269,7 +269,6 @@ function OT:ColorfulProgression(text)
 		return
 	end
 
-	local oldHeight = text:GetHeight()
 	local progress = tonumber(current) / tonumber(required)
 
 	if self.db.colorfulProgress then

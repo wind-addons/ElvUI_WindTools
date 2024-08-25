@@ -45,11 +45,13 @@ local function ReskinSizer(frame)
 	end
 
 	for _, region in next, { frame:GetRegions() } do
-		local texture = region:IsObjectType("Texture") and region:GetTexture()
-		region:SetTexture(E.Media.Textures.ArrowUp)
-		region:SetTexCoord(0, 1, 0, 1)
-		region:SetRotation(-2.35)
-		region:SetAllPoints()
+		if region:IsObjectType("Texture") then
+			region:SetTexture(E.Media.Textures.ArrowUp)
+			region:SetTexCoord(0, 1, 0, 1)
+			region:SetRotation(-2.35)
+			region:SetAllPoints()
+			break
+		end
 	end
 
 	frame:Size(24)
@@ -86,6 +88,7 @@ local function ReskinModules(frame)
 
 	-- SearchBox
 	S:ESProxy("HandleEditBox", frame.SearchBox)
+	S:ESProxy("HandleNextPrevButton", frame.ResultOptionsButton, "down")
 
 	-- AddonListFrame
 	S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)

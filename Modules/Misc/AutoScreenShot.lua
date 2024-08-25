@@ -18,6 +18,7 @@ function M:DelayScreenshot(_, _, _, tried)
 	E:Delay(0.5, function()
 		if alertFrame and alertFrame.IsShown and alertFrame:IsShown() and _G.Screenshot then
 			_G.Screenshot()
+			alertFrame = nil
 			E:Delay(1, F.Print, L["Screenshot has been automatically taken."])
 		else
 			self:DelayScreenshot(nil, nil, nil, tried + 1)

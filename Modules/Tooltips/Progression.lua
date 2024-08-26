@@ -161,8 +161,8 @@ local function UpdateProgression(guid, unit)
 		if data then
 			for _, run in pairs(data.runs) do
 				local bestRunLevelText = format("|cff%s%s|r", run.bestRunLevelColor, run.bestRunLevel)
-				if run.upgrades > 0 then
-					for i = 1, run.upgrades do
+				if run.upgrades and run.upgrades > 0 then
+					for _ = 1, run.upgrades do
 						bestRunLevelText = "+" .. bestRunLevelText
 					end
 				end

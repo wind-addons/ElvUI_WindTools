@@ -374,7 +374,9 @@ function TI:GOSSIP_SHOW()
 			local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
 			if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
 				local status = gossipOptions[1] and gossipOptions[1].status
-				if status and status == 0 then
+				local name = gossipOptions[1].name
+				local invalidName = name and strfind(name, "cFF0000FF") and not strfind(name, QUEST_STRING)
+				if status and status == 0 and not invalidName then
 					return C_GossipInfo_SelectOption(firstGossipOptionID)
 				end
 			end

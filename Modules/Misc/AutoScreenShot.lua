@@ -9,7 +9,7 @@ local alertFrame
 
 function M:DelayScreenshot(id, _, _, tried)
 	-- Ambassadors, Diplomacy
-	if id == 7844 or id == 7843 then
+	if id and id == 7844 or id == 7843 then
 		return
 	end
 

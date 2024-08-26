@@ -591,6 +591,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Debug Tools"],
 		},
+		delves = {
+			order = 10,
+			type = "toggle",
+			name = L["Delves"],
+		},
 		dressingRoom = {
 			order = 10,
 			type = "toggle",

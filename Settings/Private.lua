@@ -530,6 +530,7 @@ V.skins = {
 		covenantRenown = true,
 		covenantSanctum = true,
 		debugTools = true,
+		delves = true,
 		dressingRoom = true,
 		editModeManager = true,
 		encounterJournal = true,

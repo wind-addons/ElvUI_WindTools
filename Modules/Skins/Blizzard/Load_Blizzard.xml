@@ -26,6 +26,7 @@
 	<Script file='CovenantPreview.lua'/>
 	<Script file='CovenantSanctum.lua'/>
 	<Script file='DebugTools.lua'/>
+	<Script file='Delves.lua'/>
 	<Script file='DressingRoom.lua'/>
 	<Script file='EditModeManager.lua'/>
 	<Script file='EncounterJournal.lua'/>

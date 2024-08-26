@@ -21,6 +21,16 @@ function S:Blizzard_PlayerSpells()
 			self:ReskinTab(tab)
 		end
 	end
+
+	local TalentsSelect = _G.HeroTalentsSelectionDialog
+	if TalentsSelect then
+		self:CreateShadow(TalentsSelect)
+		TalentsSelect:SetTemplate("Transparent")
+		if TalentsSelect.Center then
+			TalentsSelect.Center:SetAlpha(0.8)
+			TalentsSelect.Center.SetAlpha = E.noop
+		end
+	end
 end
 
 S:AddCallbackForAddon("Blizzard_PlayerSpells")

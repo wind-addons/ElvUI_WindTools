@@ -7,7 +7,12 @@ local hooksecurefunc = hooksecurefunc
 
 local alertFrame
 
-function M:DelayScreenshot(_, _, _, tried)
+function M:DelayScreenshot(id, _, _, tried)
+	-- Ambassadors, Diplomacy
+	if id == 7844 or id == 7843 then
+		return
+	end
+
 	if not tried then
 		tried = 0
 	end

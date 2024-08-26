@@ -4,19 +4,24 @@ W.Changelog[370] = {
 	RELEASE_DATE = "2024/08/27",
 	IMPORTANT = {
 		["zhCN"] = {
-			"LibOpenRaid 更新。"
+			"LibOpenRaid 更新。",
+			"各个模块使用的大秘境数据已经更新到 11.0 第一赛季。"
 		},
 		["zhTW"] = {
-			"LibOpenRaid 更新。"
+			"LibOpenRaid 更新。",
+			"各個模組使用的大秘境數據已經更新到 11.0 第一賽季。"
 		},
 		["enUS"] = {
-			"LibOpenRaid updated."
+			"LibOpenRaid updated.",
+			"Dungeon data used by various modules has been updated to 11.0 Season 1."
 		},
 		["koKR"] = {
-			"LibOpenRaid 업데이트."
+			"LibOpenRaid 업데이트.",
+			"다양한 모듈에서 사용하는 던전 데이터가 11.0 시즌 1로 업데이트되었습니다."
 		},
 		["ruRU"] = {
-			"Обновление LibOpenRaid."
+			"Обновление LibOpenRaid.",
+			"Данные подземелий, используемые различными модулями, обновлены до 11.0 Сезон 1."
 		},
 	},
 	NEW = {

@@ -9,14 +9,12 @@ function S:Blizzard_ExpansionLandingPage()
 		return
 	end
 
-	self:CreateShadow(_G.ExpansionLandingPage)
-
-	-- Remove the background of the scrollable frame
 	local overlay = _G.ExpansionLandingPage.Overlay
 	if overlay then
+		local clean = E.private.skins.parchmentRemoverEnable
 		for _, child in next, { overlay:GetChildren() } do
-			if child.DragonridingPanel and child.ScrollFadeOverlay then
-				child.ScrollFadeOverlay:Hide()
+			if clean then
+				self:CreateShadow(child)
 			end
 		end
 	end

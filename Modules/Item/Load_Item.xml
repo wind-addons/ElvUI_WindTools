@@ -4,6 +4,7 @@
 	<Script file='DeleteItem.lua'/>
 	<Script file='ExtendMerchantPages.lua'/>
 	<Script file='ExtraItemBar.lua'/>
+	<Script file='ExtraItemBar_Data.lua'/>
 	<Script file='FastLoot.lua'/>
 	<Script file='Inspect.lua'/>
 	<Script file='ItemLevel.lua'/>

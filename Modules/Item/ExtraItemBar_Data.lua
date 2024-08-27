@@ -1,6 +1,10 @@
 local W, F, E, L = unpack((select(2, ...)))
 local EB = W:GetModule("ExtraItemsBar")
 
+local pairs = pairs
+local sort = sort
+local tinsert = tinsert
+
 local potions = {
 	general = {
 		5512, -- 治療石

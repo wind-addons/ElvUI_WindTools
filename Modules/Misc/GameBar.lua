@@ -17,6 +17,7 @@ local pairs = pairs
 local select = select
 local strfind = strfind
 local strjoin = strjoin
+local tContains = tContains
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
@@ -1200,12 +1201,7 @@ function GB:UpdateButton(button, buttonType)
 
 	button.notificationTex:Hide()
 	if config.notification then
-		if config.notificationColor then
-			local c = config.notificationColor
-			button.notificationTex:SetVertexColor(c.r, c.g, c.b, c.a)
-		else
-			button.notificationTex:SetVertexColor(self.normalRGB.r, self.normalRGB.g, self.normalRGB.b, 1)
-		end
+		button.notificationTex:SetVertexColor(self.mouseOverRGB.r, self.mouseOverRGB.g, self.mouseOverRGB.b, 1)
 	end
 
 	button:Show()

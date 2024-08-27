@@ -1,4 +1,5 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local C = W.Utilities.Color
 local options = W.options.item.args
 local async = W.Utilities.Async
 local LSM = E.Libs.LSM
@@ -13,30 +14,18 @@ local IS = W:GetModule("Inspect")
 local IL = W:GetModule("ItemLevel")
 local EMP = W:GetModule("ExtendMerchantPages")
 
-local error = error
 local format = format
 local pairs = pairs
-local pcall = pcall
 local print = print
-local select = select
-local strlower = strlower
 local strrep = strrep
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
 
-local C_Item_GetItemIconByID = C_Item.GetItemIconByID
-local C_Item_GetItemNameByID = C_Item.GetItemNameByID
-
-local customListSelected1
-local customListSelected2
-
-local function ImportantColorString(string)
-	return F.CreateColorString(string, { r = 0.204, g = 0.596, b = 0.859 })
-end
+local customListSelected1, customListSelected2
 
 local function desc(code, helpText)
-	return ImportantColorString(code) .. " = " .. helpText
+	return C.StringByTemplate(code, "primary") .. " = " .. helpText
 end
 
 options.extraItemsBar = {
@@ -170,7 +159,7 @@ options.extraItemsBar = {
 					end,
 					values = function()
 						local result = {}
-						for key, value in pairs(E.db.WT.item.extraItemsBar.blackList) do
+						for key in pairs(E.db.WT.item.extraItemsBar.blackList) do
 							async.WithItemID(key, function(item)
 								local name = item:GetItemName() or L["Unknown"]
 								local tex = item:GetItemIcon()
@@ -219,8 +208,75 @@ do -- Add options for bars
 					type = "toggle",
 					name = L["Enable"],
 				},
-				visibility = {
+				groupSetting = {
 					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Button Groups"],
+					args = {
+						include = {
+							order = 15,
+							type = "input",
+							name = L["Button Groups"],
+							desc = format(
+								"%s %s\n" .. strrep("\n%s", 29),
+								L["Set the type and order of button groups."],
+								L["You can separate the groups with a comma."],
+								desc("QUEST", L["Quest Items"]),
+								desc("EQUIP", L["Equipments"]),
+								desc("CUSTOM", L["Custom Items"]),
+								desc("POTION", format("%s (%s)", L["Potions"], L["All Versions"])),
+								desc("POTIONSL", format("%s |cff999999[%s]|r", L["Potions"], L["Shadowlands"])),
+								desc("POTIONDF", format("%s |cff999999[%s]|r", L["Potions"], L["Dragonflight"])),
+								desc("POTIONTWW", format("%s |cffffdd57[%s]|r", L["Potions"], L["The War Within"])),
+								desc("FLASK", format("%s (%s)", L["Flasks"], L["All Versions"])),
+								desc("FLASKSL", format("%s |cff999999[%s]|r", L["Flasks"], L["Shadowlands"])),
+								desc("FLASKDF", format("%s |cff999999[%s]|r", L["Flasks"], L["Dragonflight"])),
+								desc("FLASKTWW", format("%s |cffffdd57[%s]|r", L["Flasks"], L["The War Within"])),
+								desc("RUNE", format("%s (%s)", L["Runes"], L["All Versions"])),
+								desc("RUNEDF", format("%s |cff999999[%s]|r", L["Runes"], L["Dragonflight"])),
+								desc("RUNETWW", format("%s |cffffdd57[%s]|r", L["Runes"], L["The War Within"])),
+								desc("VANTUS", format("%s (%s)", L["Vantus Runes"], L["All Versions"])),
+								desc("VANTUSTWW", format("%s |cffffdd57[%s]|r", L["Vantus Runes"], L["The War Within"])),
+								desc("FOOD", format("%s (%s)", L["Crafted Food"], L["All Versions"])),
+								desc("FOODSL", format("%s |cff999999[%s]|r", L["Crafted Food"], L["Shadowlands"])),
+								desc("FOODDF", format("%s |cff999999[%s]|r", L["Crafted Food"], L["Dragonflight"])),
+								desc("FOODTWW", format("%s |cffffdd57[%s]|r", L["Crafted Food"], L["The War Within"])),
+								desc(
+									"FOODVENDOR",
+									format(
+										"%s (%s) |cffffdd57[%s]|r",
+										L["Food"],
+										L["Sold by vendor"],
+										L["The War Within"]
+									)
+								),
+								desc("MAGEFOOD", format("%s (%s)|r", L["Food"], L["Crafted by mage"])),
+								desc("BANNER", L["Banners"]),
+								desc("UTILITY", L["Utilities"]),
+								desc("OPENABLE", L["Openable Items"]),
+								desc("PROF", format("%s |cffffdd57[%s]|r", L["Profession Items"], L["The War Within"])),
+								desc("SEEDS", L["Dream Seeds"]),
+								desc("BIGDIG", L["Big Dig"]),
+								desc("MOPREMIX", L["MoP Remixed Items"])
+							),
+							width = "full",
+						},
+						reset = {
+							order = 16,
+							type = "execute",
+							name = L["Reset"],
+							desc = L["Reset the button groups of this bar."],
+							func = function()
+								E.db.WT.item.extraItemsBar["bar" .. i].include =
+									P.item.extraItemsBar["bar" .. i].include
+								EB:UpdateBar(i)
+							end,
+						},
+					},
+				},
+				visibility = {
+					order = 3,
 					type = "group",
 					inline = true,
 					name = L["Visibility"],
@@ -293,13 +349,13 @@ do -- Add options for bars
 					},
 				},
 				backdrop = {
-					order = 3,
+					order = 4,
 					type = "toggle",
 					name = L["Bar Backdrop"],
 					desc = L["Show a backdrop of the bar."],
 				},
 				anchor = {
-					order = 4,
+					order = 5,
 					type = "select",
 					name = L["Anchor Point"],
 					desc = L["The first button anchors itself to this point on the bar."],
@@ -311,7 +367,7 @@ do -- Add options for bars
 					},
 				},
 				backdropSpacing = {
-					order = 5,
+					order = 6,
 					type = "range",
 					name = L["Backdrop Spacing"],
 					desc = L["The spacing between the backdrop and the buttons."],
@@ -320,7 +376,7 @@ do -- Add options for bars
 					step = 1,
 				},
 				spacing = {
-					order = 6,
+					order = 7,
 					type = "range",
 					name = L["Button Spacing"],
 					desc = L["The spacing between buttons."],
@@ -329,13 +385,13 @@ do -- Add options for bars
 					step = 1,
 				},
 				betterOption2 = {
-					order = 7,
+					order = 8,
 					type = "description",
 					name = " ",
 					width = "full",
 				},
 				numButtons = {
-					order = 8,
+					order = 9,
 					type = "range",
 					name = L["Buttons"],
 					min = 1,
@@ -343,7 +399,7 @@ do -- Add options for bars
 					step = 1,
 				},
 				buttonWidth = {
-					order = 9,
+					order = 10,
 					type = "range",
 					name = L["Button Width"],
 					desc = L["The width of the buttons."],
@@ -352,7 +408,7 @@ do -- Add options for bars
 					step = 1,
 				},
 				buttonHeight = {
-					order = 10,
+					order = 11,
 					type = "range",
 					name = L["Button Height"],
 					desc = L["The height of the buttons."],
@@ -361,7 +417,7 @@ do -- Add options for bars
 					step = 1,
 				},
 				buttonsPerRow = {
-					order = 11,
+					order = 12,
 					type = "range",
 					name = L["Buttons Per Row"],
 					min = 1,
@@ -369,7 +425,7 @@ do -- Add options for bars
 					step = 1,
 				},
 				qualityTier = {
-					order = 12,
+					order = 13,
 					type = "group",
 					inline = true,
 					name = L["Crafting Quality Tier"],
@@ -408,7 +464,7 @@ do -- Add options for bars
 					},
 				},
 				countFont = {
-					order = 13,
+					order = 14,
 					type = "group",
 					inline = true,
 					name = L["Counter"],
@@ -486,7 +542,7 @@ do -- Add options for bars
 					},
 				},
 				bindFont = {
-					order = 14,
+					order = 15,
 					type = "group",
 					inline = true,
 					name = L["Key Binding"],
@@ -562,43 +618,6 @@ do -- Add options for bars
 							end,
 						},
 					},
-				},
-				include = {
-					order = 15,
-					type = "input",
-					name = L["Button Groups"],
-					desc = format(
-						"%s %s\n" .. strrep("\n%s", 23),
-						L["Set the type and order of button groups."],
-						L["You can separate the groups with a comma."],
-						desc("QUEST", L["Quest Items"]),
-						desc("EQUIP", L["Equipments"]),
-						desc("POTION", L["Potions"]),
-						desc("POTIONSL", format("%s |cffffdd57[%s]|r", L["Potions"], L["Shadowlands"])),
-						desc("POTIONDF", format("%s |cffffdd57[%s]|r", L["Potions"], L["Dragonflight"])),
-						desc("FLASK", L["Flasks"]),
-						desc("FLASKSL", format("%s |cffffdd57[%s]|r", L["Flasks"], L["Shadowlands"])),
-						desc("FLASKDF", format("%s |cffffdd57[%s]|r", L["Flasks"], L["Dragonflight"])),
-						desc("RUNE", L["Runes"]),
-						desc("RUNEDF", format("%s |cffffdd57[%s]|r", L["Runes"], L["Dragonflight"])),
-						desc("FOOD", L["Crafted Food"]),
-						desc("FOODSL", format("%s |cffffdd57[%s]|r", L["Crafted Food"], L["Shadowlands"])),
-						desc("FOODDF", format("%s |cffffdd57[%s]|r", L["Crafted Food"], L["Dragonflight"])),
-						desc(
-							"FOODVENDOR",
-							format("%s (%s) |cffffdd57[%s]|r", L["Food"], L["Sold by vendor"], L["Dragonflight"])
-						),
-						desc("MAGEFOOD", format("%s (%s)|r", L["Food"], L["Crafted by mage"])),
-						desc("BANNER", L["Banners"]),
-						desc("UTILITY", L["Utilities"]),
-						desc("OPENABLE", L["Openable Items"]),
-						desc("PROF", L["Profession Items"]),
-						desc("SEEDS", L["Dream Seeds"]),
-						desc("BIGDIG", L["Big Dig"]),
-						desc("MOPREMIX", L["MoP Remixed Items"]),
-						desc("CUSTOM", L["Custom Items"])
-					),
-					width = "full",
 				},
 			},
 		}

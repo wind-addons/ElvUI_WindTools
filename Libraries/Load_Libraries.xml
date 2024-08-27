@@ -3,6 +3,7 @@
 ..\FrameXML\UI.xsd">
     <Script file="LibObjectiveProgress-1.0\LibObjectiveProgress-1.0.lua"/>
     <Script file="LibObjectiveProgress-1.0\ProgressWeightData.lua"/>
+    <Script file="LibShowUIPanel-1.0\LibShowUIPanel-1.0.lua"/>
     <Include file="TinyLibs\lib.xml"/>
     <Include file="LibOpenRaid\lib.xml"/>
 </Ui>

@@ -262,7 +262,9 @@ local BlizzardFramesOnDemand = {
 		"OrderHallTalentFrame",
 	},
 	["Blizzard_PlayerSpells"] = {
+		"HeroTalentsSelectionDialog",
 		["PlayerSpellsFrame"] = {
+			"PlayerSpellsFrame.TalentsFrame.ButtonsParent",
 			"PlayerSpellsFrame.SpecFrame.DisabledOverlay",
 		},
 	},

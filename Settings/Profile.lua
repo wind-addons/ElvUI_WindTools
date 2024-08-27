@@ -438,7 +438,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "QUEST,BANNER,EQUIP,PROF,MOPREMIX,OPENABLE",
+			include = "QUEST,BANNER,EQUIP,PROF,OPENABLE",
 		},
 		bar2 = {
 			enable = true,
@@ -486,7 +486,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "POTIONDF,FLASKDF,UTILITY",
+			include = "POTIONTWW,FLASKTWW,VANTUSTWW,UTILITY",
 		},
 		bar3 = {
 			enable = true,
@@ -534,7 +534,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "MAGEFOOD,FOODVENDOR,FOODDF,BIGDIG,SEEDS,RUNE,CUSTOM",
+			include = "MAGEFOOD,FOODVENDOR,FOODTWW,RUNETWW,CUSTOM",
 		},
 		bar4 = {
 			enable = false,

@@ -2091,10 +2091,13 @@ function CT:ElvUIChat_AchievementMessageHandler(event, frame, achievementMessage
 	local coloredName = F.CreateClassColorString(displayName, playerInfo.englishClass)
 	local classIcon = self.db.classIcon
 		and F.GetClassIconStringWithStyle(playerInfo.englishClass, self.db.classIconStyle, 16, 16)
-	classIcon = classIcon and classIcon .. " " or ""
 
-	if coloredName and classIcon and cache[achievementID] then
-		local playerName = format("|Hplayer:%s|h%s %s|h", playerInfo.nameWithRealm, classIcon, coloredName)
+	if classIcon then
+		coloredName = classIcon .. " " .. coloredName
+	end
+
+	if coloredName and cache[achievementID] then
+		local playerName = format("|Hplayer:%s|h%s|h", playerInfo.nameWithRealm, coloredName)
 		cache[achievementID][playerName] = true
 		return true
 	end
@@ -2155,7 +2158,7 @@ end
 function CT:BetterSystemMessage()
 	if self.db and self.db.guildMemberStatus and not self.isSystemMessageHandled then
 		local setHyperlink = _G.ItemRefTooltip.SetHyperlink
-		function _G.ItemRefTooltip:SetHyperlink(data, ...)
+		function _G.ItemRefTooltip.SetHyperlink(tt, data, ...)
 			if strsub(data, 1, 8) == "wtinvite" then
 				local player = strmatch(data, "wtinvite:(.+)")
 				if player then
@@ -2163,7 +2166,7 @@ function CT:BetterSystemMessage()
 					return
 				end
 			end
-			setHyperlink(self, data, ...)
+			setHyperlink(tt, data, ...)
 		end
 		self.isSystemMessageHandled = true
 	end

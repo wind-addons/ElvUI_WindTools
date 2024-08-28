@@ -219,7 +219,7 @@ do -- Add options for bars
 							type = "input",
 							name = L["Button Groups"],
 							desc = format(
-								"%s %s\n" .. strrep("\n%s", 29),
+								"%s %s\n" .. strrep("\n%s", 30),
 								L["Set the type and order of button groups."],
 								L["You can separate the groups with a comma."],
 								desc("QUEST", L["Quest Items"]),
@@ -258,7 +258,8 @@ do -- Add options for bars
 								desc("PROF", format("%s |cffffdd57[%s]|r", L["Profession Items"], L["The War Within"])),
 								desc("SEEDS", L["Dream Seeds"]),
 								desc("BIGDIG", L["Big Dig"]),
-								desc("MOPREMIX", L["MoP Remixed Items"])
+								desc("MOPREMIX", L["MoP Remixed Items"]),
+								desc("DELVE", L["Delves"])
 							),
 							width = "full",
 						},

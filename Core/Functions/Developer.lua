@@ -153,11 +153,23 @@ end
     @param table module
     @param number delay
 ]]
-function F.Developer.DelayInitialize(module, delay)
+function F.Developer.DelayInit(module, delay)
+	delay = delay or 2
 	if module.Initialize then
 		module.Initialize_ = module.Initialize
 		module.Initialize = function(self, ...)
 			E:Delay(delay, self.Initialize_, self, ...)
 		end
+	end
+end
+
+--[[
+	Inspect object with https://github.com/brittyazel/DevTool
+	@param any obj
+	@param string name
+]]
+function F.Developer.DT(obj, name)
+	if _G.DevTool and _G.DevTool.AddData then
+		_G.DevTool:AddData(obj, name)
 	end
 end

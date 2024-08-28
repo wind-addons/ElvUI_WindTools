@@ -127,7 +127,7 @@ CM.Features = {
 									and gameAccountInfo.wowProjectID == 1
 								then
 									C_GuildInfo_Invite(
-									gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
+										gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
 									)
 								end
 							end
@@ -402,31 +402,27 @@ for feature, featureConfig in pairs(CM.Features) do
 end
 
 function CM:GetArmoryBaseURL()
-	local host = "https://worldofwarcraft.com/"
-
 	local language = strlower(W.Locale)
-	local languageURL = format("%s-%s/", strsub(language, 1, 2), strsub(language, 3, 4))
-	host = host .. languageURL .. "character/"
+	if language == "zhcn" then
+		language = "zhtw" -- There is no simplified Chinese armory
+	end
 
-	local serverLocation = "us"
-
-	if W.Locale ~= "enUS" then
-		if W.Locale == "zhTW" or W.Locale == "zhTW" then
-			serverLocation = "tw"
-		elseif W.Locale == "koKR" then
-			serverLocation = "kr"
-		else
-			serverLocation = "eu"
+	local region = self.db and self.db.armoryOverride[E.myrealm]
+	if not region then
+		local _region = GetCurrentRegionName()
+		if _region == "CN" or _region == "KR" and W.ChineseLocale then
+			_region = "TW" -- Fix taiwan server region issue
 		end
+
+		region = strlower(_region or "US")
 	end
 
-	if self.db and self.db.armoryOverride[E.myrealm] then
-		serverLocation = self.db.armoryOverride[E.myrealm]
-	end
-
-	host = host .. serverLocation .. "/"
-
-	return host
+	return format(
+		"https://worldofwarcraft.com/%s-%s/character/%s/",
+		strsub(language, 1, 2),
+		strsub(language, 3, 4),
+		region
+	)
 end
 
 function CM:GetAvailableButtonTypes(contextData)

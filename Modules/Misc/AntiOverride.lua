@@ -40,6 +40,7 @@ function M:AntiOverride()
 	end
 
 	if C_CVar_GetCVar("portal") == "CN" then
+		W.RealRegion = "CN"
 		ConsoleExec("portal TW")
 		FixLanguageFilterSideEffects()
 	end

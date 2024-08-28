@@ -4,9 +4,12 @@ local pairs = pairs
 local tinsert = tinsert
 local tostring = tostring
 
-local GetLocale = GetLocale
+local GetCurrentRegionName = GetCurrentRegionName
 local GetLFGDungeonInfo = GetLFGDungeonInfo
+local GetLocale = GetLocale
 local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
+local GetRealmID = GetRealmID
+local GetRealmName = GetRealmName
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -93,6 +96,18 @@ W.RaidData = {
 }
 
 W.SpecializationInfo = {}
+
+W.RealRegion = (function()
+	local region = GetCurrentRegionName()
+	if region == "KR" and W.ChineseLocale then
+		region = "TW" -- Fix taiwan server region issue
+	end
+
+	return region
+end)()
+
+W.CurrentRealmID = GetRealmID()
+W.CurrentRealmName = GetRealmName()
 
 function W:InitializeMetadata()
 	for id in pairs(W.MythicPlusMapData) do

@@ -10,11 +10,10 @@ local mod = mod
 local pairs = pairs
 local strsplit = strsplit
 local tinsert = tinsert
-local tonumber = tonumber
 local tostring = tostring
 local wipe = wipe
 
-local TexturePool_HideAndClearAnchors = TexturePool_HideAndClearAnchors
+local Pool_HideAndClearAnchors = Pool_HideAndClearAnchors
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_MapExplorationInfo_GetExploredMapTextures = C_MapExplorationInfo.GetExploredMapTextures
@@ -2535,11 +2534,10 @@ function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
 	end
 end
 
--- from Leatrix_Maps
-local function TexturePool_ResetVertexColor(pool, texture)
+local function _Pool_HideAndClearAnchors(pool, texture)
 	texture:SetVertexColor(1, 1, 1)
 	texture:SetAlpha(1)
-	return TexturePool_HideAndClearAnchors(pool, texture)
+	return Pool_HideAndClearAnchors(pool, texture)
 end
 
 -- Reveal features are modified based on Leatrix_Maps
@@ -2555,17 +2553,17 @@ function WM:Reveal()
 	end
 
 	for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-		hooksecurefunc(pin, "RefreshOverlays", function(pin, fullUpdate)
-			WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, _G.WorldMapFrame, worldMapCache)
+		hooksecurefunc(pin, "RefreshOverlays", function(_pin, fullUpdate)
+			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, _G.WorldMapFrame, worldMapCache)
 		end)
-		pin.overlayTexturePool.resetterFunc = TexturePool_ResetVertexColor
+		pin.overlayTexturePool.resetterFunc = _Pool_HideAndClearAnchors
 	end
 
 	for pin in _G.BattlefieldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
-		hooksecurefunc(pin, "RefreshOverlays", function(pin, fullUpdate)
-			WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, _G.BattlefieldMapFrame, battleFieldMapCache)
+		hooksecurefunc(pin, "RefreshOverlays", function(_pin, fullUpdate)
+			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, _G.BattlefieldMapFrame, battleFieldMapCache)
 		end)
-		pin.overlayTexturePool.resetterFunc = TexturePool_ResetVertexColor
+		pin.overlayTexturePool.resetterFunc = _Pool_HideAndClearAnchors
 	end
 end
 

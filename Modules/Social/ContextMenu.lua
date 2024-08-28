@@ -407,15 +407,11 @@ function CM:GetArmoryBaseURL()
 		language = "zhtw" -- There is no simplified Chinese armory
 	end
 
-	local region = self.db and self.db.armoryOverride[E.myrealm]
-	if not region then
-		local _region = GetCurrentRegionName()
-		if _region == "CN" or _region == "KR" and W.ChineseLocale then
-			_region = "TW" -- Fix taiwan server region issue
-		end
-
-		region = strlower(_region or "US")
+	local region = self.db and self.db.armoryOverride[E.myrealm] or W.RealRegion
+	if region == "CN" then
+		region = "TW" -- Fix taiwan server region issue
 	end
+	region = strlower(region or "US")
 
 	return format(
 		"https://worldofwarcraft.com/%s-%s/character/%s/",

@@ -320,10 +320,10 @@ CM.Features = {
 		},
 		func = function(contextData)
 			local name
-			local SendChatMessage = SendChatMessage
+			local _SendChatMessage = SendChatMessage
 
 			if contextData.bnetIDAccount then
-				SendChatMessage = function(message)
+				_SendChatMessage = function(message)
 					BNSendWhisper(contextData.bnetIDAccount, message)
 				end
 				name = "BN"
@@ -363,7 +363,7 @@ CM.Features = {
 				format(" * %s:%.2f%%", STAT_LIFESTEAL, GetLifesteal()),
 			}) do
 				E:Delay(0.1 + i * 0.2, function()
-					SendChatMessage(message, "WHISPER", nil, name)
+					_SendChatMessage(message, "WHISPER", nil, name)
 				end)
 			end
 		end,

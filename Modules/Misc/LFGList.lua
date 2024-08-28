@@ -621,19 +621,19 @@ function LL:InitalizeRightPanel()
 	local currAffixIndex = 0
 	local currAffixes = C_MythicPlus_GetCurrentAffixes()
 
-	if currAffixes then
-		for i = 1, #affixLoop do
-			local affixes = affixLoop[i]
-			if
-				affixes[1] == currAffixes[1].id
-				and affixes[2] == currAffixes[2].id
-				and affixes[3] == currAffixes[3].id
-			then
-				currAffixIndex = i
-				break
-			end
-		end
-	end
+	-- if currAffixes then
+	-- 	for i = 1, #affixLoop do
+	-- 		local affixes = affixLoop[i]
+	-- 		if
+	-- 			affixes[1] == currAffixes[1].id
+	-- 			and affixes[2] == currAffixes[2].id
+	-- 			and affixes[3] == currAffixes[3].id
+	-- 		then
+	-- 			currAffixIndex = i
+	-- 			break
+	-- 		end
+	-- 	end
+	-- end
 
 	-- Disable for now, because nobody knows the rotation
 	-- if currAffixIndex and currAffixIndex ~= 0 then
@@ -685,7 +685,10 @@ function LL:InitalizeRightPanel()
 	------------------------------
 	-- Temporarily affixes
 	------------------------------
-	local affixIDs = { currAffixes[1].id, currAffixes[2].id, currAffixes[3].id }
+	local affixIDs = {}
+	for i = 1, #currAffixes do
+		tinsert(affixIDs, currAffixes[i].id)
+	end
 
 	frame.affix = CreateFrame("Frame", nil, frame)
 	frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
@@ -694,7 +697,7 @@ function LL:InitalizeRightPanel()
 
 	local width = frame.affix:GetWidth()
 	local space = (width - 32 * 4) / 4
-	for i = 1, 3 do
+	for i = 1, #affixIDs do
 		local affix = frame.affix:CreateTexture(nil, "ARTWORK")
 		affix:SetSize(32, 32)
 		affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)

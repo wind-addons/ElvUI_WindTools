@@ -30,7 +30,6 @@ local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCritChance = GetSpellCritChance
 local GetVersatilityBonus = GetVersatilityBonus
-local GuildInvite = C_GuildInfo.Invite
 local SendChatMessage = SendChatMessage
 local UnitClass = UnitClass
 local UnitHealthMax = UnitHealthMax
@@ -41,6 +40,7 @@ local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInf
 local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_Club_GetGuildClubId = C_Club.GetGuildClubId
 local C_FriendList_SendWho = C_FriendList.SendWho
+local C_GuildInfo_Invite = C_GuildInfo.Invite
 local Menu_ModifyMenu = Menu.ModifyMenu
 
 local CR_VERSATILITY_DAMAGE_DONE = CR_VERSATILITY_DAMAGE_DONE
@@ -126,14 +126,16 @@ CM.Features = {
 									and gameAccountInfo.clientProgram == "WoW"
 									and gameAccountInfo.wowProjectID == 1
 								then
-									GuildInvite(gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName)
+									C_GuildInfo_Invite(
+									gameAccountInfo.characterName .. "-" .. gameAccountInfo.realmName
+									)
 								end
 							end
 						elseif
 							accountInfo.gameAccountInfo.clientProgram == "WoW"
 							and accountInfo.gameAccountInfo.wowProjectID == 1
 						then
-							GuildInvite(
+							C_GuildInfo_Invite(
 								accountInfo.gameAccountInfo.characterName
 									.. "-"
 									.. accountInfo.gameAccountInfo.realmName
@@ -143,13 +145,13 @@ CM.Features = {
 					end
 				end
 			elseif contextData.chatTarget then
-				GuildInvite(contextData.chatTarget)
+				C_GuildInfo_Invite(contextData.chatTarget)
 			elseif contextData.name then
 				local playerName = contextData.name
 				if contextData.server and contextData.server ~= E.myrealm then
 					playerName = playerName .. "-" .. contextData.server
 				end
-				GuildInvite(playerName)
+				C_GuildInfo_Invite(playerName)
 			else
 				CM:Log("debug", "Cannot get the name.")
 			end

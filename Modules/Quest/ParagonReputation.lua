@@ -19,7 +19,6 @@ local GameTooltip_AddQuestRewardsToTooltip = GameTooltip_AddQuestRewardsToToolti
 local GameTooltip_SetDefaultAnchor = GameTooltip_SetDefaultAnchor
 local GetFactionInfoByID = C_Reputation.GetFactionDataByID
 local GetQuestLogCompletionText = GetQuestLogCompletionText
-local GetSelectedFaction = C_Reputation.GetSelectedFaction
 local Item = Item
 local PlaySound = PlaySound
 local PlayerHasToy = PlayerHasToy
@@ -30,6 +29,7 @@ local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_Reputation_GetFactionParagonInfo = C_Reputation.GetFactionParagonInfo
+local C_Reputation_GetSelectedFaction = C_Reputation.GetSelectedFaction
 local C_Reputation_IsFactionParagon = C_Reputation.IsFactionParagon
 local C_TransmogCollection_PlayerHasTransmogByItemInfo = C_TransmogCollection.PlayerHasTransmogByItemInfo
 
@@ -988,7 +988,7 @@ function PR:ChangeReputationBars(factionRow)
 			end
 			factionRow.rolloverText = nil
 		end
-		if factionRow:GetOrderIndex() == GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
+		if factionRow:GetOrderIndex() == C_Reputation_GetSelectedFaction() and _G.ReputationDetailFrame:IsShown() then
 			if count > 0 then
 				_G.ReputationDetailFactionName:SetText(factionRow.name .. " |cffffffffx" .. count .. "|r")
 			end

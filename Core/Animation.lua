@@ -2,7 +2,6 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 F.Animation = {}
 local A = F.Animation
 
-local getn = getn
 local pairs = pairs
 local type = type
 local unpack = unpack
@@ -159,12 +158,12 @@ function A.AddScale(animationGroup, name, fromScale, toScale)
 		return
 	end
 
-	if not fromScale or type(fromScale) ~= "table" or getn(fromScale) < 2 then
+	if not fromScale or type(fromScale) ~= "table" or #fromScale < 2 then
 		F.Developer.LogDebug("Animation.AddScale: invalid fromScale (x, y)")
 		return
 	end
 
-	if not toScale or type(toScale) ~= "table" or getn(toScale) < 2 then
+	if not toScale or type(toScale) ~= "table" or #toScale < 2 then
 		F.Developer.LogDebug("Animation.AddScale: invalid toScale (x, y)")
 		return
 	end

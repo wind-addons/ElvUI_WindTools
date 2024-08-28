@@ -109,7 +109,7 @@ function CH:Initialize()
 	self.initialized = true
 end
 
-F.Developer.DelayInitialize(CH, 2)
+F.Developer.DelayInit(CH, 2)
 
 function CH:ProfileUpdate()
 	self.db = E.db.WT.combat.classHelper

@@ -2,18 +2,12 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local _G = _G
 local format = format
-local gsub = gsub
-local hooksecurefunc = hooksecurefunc
-local ipairs = ipairs
 local pairs = pairs
 local pcall = pcall
-local strsub = strsub
 local tinsert = tinsert
 local tostring = tostring
-local wipe = wipe
 
 local InCombatLockdown = InCombatLockdown
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 local C_LFGList = C_LFGList
 local C_UI_Reload = C_UI.Reload

@@ -253,6 +253,11 @@ options.help = {
 					type = "description",
 					name = "DakJaniels",
 				},
+				["LvWind"] = {
+					order = 17,
+					type = "description",
+					name = "LvWind",
+				},
 			},
 		},
 		version = {

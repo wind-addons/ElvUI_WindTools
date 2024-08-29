@@ -255,6 +255,7 @@ L["BigWigs"] = true
 L["BigWigs Bars"] = "BigWigs 計時條"
 L["BigWigs Queue Timer"] = "BigWigs 進本計時條"
 L["BigWigs Skin"] = "BigWigs 皮膚"
+L["BigfootWorldChannel"] = "大腳世界頻道"
 L["Binding"] = "綁定"
 L["Black Market"] = "黑市拍賣場"
 L["Blacklist"] = "黑名單"
@@ -1177,6 +1178,7 @@ L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Pri
 L["Shift"] = true
 L["Shift Key"] = "Shift 鍵"
 L["Short"] = "簡短"
+L["Short Channels"] = "頻道縮寫"
 L["Short Header"] = "簡短頂部"
 L["Shorten Description"] = "簡短描述"
 L["Show All Friends"] = "顯示所有好友"
@@ -1534,6 +1536,7 @@ L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] 
 L["You can separate the groups with a comma."] = "你可以使用英文逗號 (,) 來分隔按鍵組."
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "你可以使用 |cff00d1b2/wtdebug off|r 指令來退出偵錯模式."
 L["You must add FULL NAME of the channel, not the abbreviation."] = "你必須添加完整的頻道名稱, 而不是縮寫."
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] = "你必須啟用 ElvUI 聊天 - %s 來使用縮寫功能."
 L["You need enable ElvUI Player Unitframe to use it."] = "你需要啟用 ElvUI 的玩家單位框架才能使用此功能."
 L["You need hold SHIFT to inspect someone."] = "你需要按住 Shift 來觀察其他玩家."
 L["You need to install Details! first."] = "你需要先安裝 Details!"

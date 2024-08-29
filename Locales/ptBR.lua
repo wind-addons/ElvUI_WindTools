@@ -255,6 +255,7 @@ L["BigWigs"] = true
 L["BigWigs Bars"] = true
 L["BigWigs Queue Timer"] = true
 L["BigWigs Skin"] = true
+L["BigfootWorldChannel"] = true
 L["Binding"] = "Ligações"
 L["Black Market"] = true
 L["Blacklist"] = "Lista negra"
@@ -1177,6 +1178,7 @@ L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Pri
 L["Shift"] = true
 L["Shift Key"] = true
 L["Short"] = true
+L["Short Channels"] = true
 L["Short Header"] = true
 L["Shorten Description"] = true
 L["Show All Friends"] = true
@@ -1534,6 +1536,7 @@ L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] 
 L["You can separate the groups with a comma."] = true
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = true
 L["You must add FULL NAME of the channel, not the abbreviation."] = true
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] = true
 L["You need enable ElvUI Player Unitframe to use it."] = true
 L["You need hold SHIFT to inspect someone."] = true
 L["You need to install Details! first."] = true

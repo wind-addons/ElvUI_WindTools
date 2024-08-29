@@ -255,6 +255,7 @@ L["BigWigs"] = true
 L["BigWigs Bars"] = "Полосы BigWigs"
 L["BigWigs Queue Timer"] = "Таймер очереди BigWigs"
 L["BigWigs Skin"] = "Скин BigWigs"
+L["BigfootWorldChannel"] = true
 L["Binding"] = "Назначение"
 L["Black Market"] = "Черный рынок"
 L["Blacklist"] = "Черный список"
@@ -1177,6 +1178,7 @@ L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Pri
 L["Shift"] = true
 L["Shift Key"] = "Клавиша Shift"
 L["Short"] = "Короткий"
+L["Short Channels"] = true
 L["Short Header"] = "Короткий заголовок"
 L["Shorten Description"] = "Сократить описание"
 L["Show All Friends"] = "Показывать всех друзей"
@@ -1534,6 +1536,7 @@ L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] 
 L["You can separate the groups with a comma."] = "Вы можете разделять группы запятой."
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "Вы можете использовать команду |cff00d1b2/wtdebug off|r для выхода из режима отладки."
 L["You must add FULL NAME of the channel, not the abbreviation."] = true
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] = true
 L["You need enable ElvUI Player Unitframe to use it."] = "Вам нужно включить фреймы игрока ElvUI, чтобы использовать это."
 L["You need hold SHIFT to inspect someone."] = "Вам нужно удерживать SHIFT, чтобы осмотреть кого-либо."
 L["You need to install Details! first."] = "Сначала Вам необходимо установить Details!."

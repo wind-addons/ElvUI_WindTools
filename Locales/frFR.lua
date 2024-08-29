@@ -255,6 +255,7 @@ L["BigWigs"] = "BigWigs"
 L["BigWigs Bars"] = true
 L["BigWigs Queue Timer"] = true
 L["BigWigs Skin"] = true
+L["BigfootWorldChannel"] = true
 L["Binding"] = "Raccourcis"
 L["Black Market"] = "Marché noir"
 L["Blacklist"] = "Liste noire"
@@ -1177,6 +1178,7 @@ L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Pri
 L["Shift"] = true
 L["Shift Key"] = "Touche Maj"
 L["Short"] = "Court"
+L["Short Channels"] = true
 L["Short Header"] = "Courte entête"
 L["Shorten Description"] = "Réduire la description"
 L["Show All Friends"] = "Afficher tous les amis"
@@ -1534,6 +1536,7 @@ L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] 
 L["You can separate the groups with a comma."] = "Vous pouvez séparer les groupes par une virgule."
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "Vous pouvez utiliser la commande |cff00d1b2/wtdebug off|r pour quitter le mode débogage."
 L["You must add FULL NAME of the channel, not the abbreviation."] = true
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] = true
 L["You need enable ElvUI Player Unitframe to use it."] = "Vous devez activer le cadre d'unité du joueur d'ElvUI pour l'utiliser."
 L["You need hold SHIFT to inspect someone."] = "Vous devez tenir SHIFT pour inspecter quelqu'un."
 L["You need to install Details! first."] = "Vous devez d'abord installer Details!."

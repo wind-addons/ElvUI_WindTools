@@ -255,6 +255,7 @@ L["BigWigs"] = true
 L["BigWigs Bars"] = true
 L["BigWigs Queue Timer"] = "BigWigs 대기열 타이머"
 L["BigWigs Skin"] = true
+L["BigfootWorldChannel"] = true
 L["Binding"] = "단축키"
 L["Black Market"] = "암시장"
 L["Blacklist"] = "블랙리스트"
@@ -1177,6 +1178,7 @@ L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Pri
 L["Shift"] = true
 L["Shift Key"] = true
 L["Short"] = "짧게"
+L["Short Channels"] = true
 L["Short Header"] = "제목 축약"
 L["Shorten Description"] = true
 L["Show All Friends"] = true
@@ -1534,6 +1536,7 @@ L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] 
 L["You can separate the groups with a comma."] = "쉼표로 그룹을 구분할 수 있습니다."
 L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "|cff00d1b2/wtdebug off|r 명령을 사용하여 디버그 모드를 종료할 수 있습니다."
 L["You must add FULL NAME of the channel, not the abbreviation."] = true
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] = true
 L["You need enable ElvUI Player Unitframe to use it."] = true
 L["You need hold SHIFT to inspect someone."] = "살펴보기는 SHIFT를 누르고 있어야 합니다."
 L["You need to install Details! first."] = true

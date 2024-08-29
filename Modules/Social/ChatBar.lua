@@ -7,7 +7,9 @@ local _G = _G
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local sort = sort
 local strmatch = strmatch
+local tinsert = tinsert
 local tostring = tostring
 
 local C_Club_GetClubInfo = C_Club.GetClubInfo
@@ -67,6 +69,46 @@ local function GetCommuniryChannelByName(text)
 	end
 end
 
+local function GetBestWorldChannelConfig(configTable)
+	local validConfigs = {}
+
+	for _, c in pairs(configTable) do
+		if
+			(c.region == "ALL" or c.region == W.RealRegion)
+			and (c.faction == "ALL" or c.faction == E.myfaction)
+			and (c.realmID == "ALL" or c.realmID == W.CurrentRealmID)
+		then
+			tinsert(validConfigs, c)
+		end
+	end
+
+	sort(validConfigs, function(a, b)
+		if a.region ~= "ALL" and b.region == "ALL" then
+			return true
+		end
+
+		if a.region == "ALL" and b.region ~= "ALL" then
+			return false
+		end
+
+		if a.faciton ~= "ALL" and b.faction == "ALL" then
+			return true
+		end
+
+		if a.faciton == "ALL" and b.faction ~= "ALL" then
+			return false
+		end
+
+		if a.realmID == "ALL" and b.realmID ~= "ALL" then
+			return true
+		end
+
+		return false
+	end)
+
+	return validConfigs[1]
+end
+
 function CB:OnEnterBar()
 	if self.db.mouseOver then
 		E:UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), 1)
@@ -113,10 +155,10 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 			end
 
 			_G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
-			_G.GameTooltip:SetText(tooltip or _G[name] or "")
+			_G.GameTooltip:SetText(button.tooltip or _G[name] or "")
 
 			if tips then
-				for _, tip in ipairs(tips) do
+				for _, tip in ipairs(button.tips) do
 					_G.GameTooltip:AddLine(tip)
 				end
 			end
@@ -145,6 +187,9 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 
 		self.bar[name] = button
 	end
+
+	self.bar[name].tooltip = tooltip
+	self.bar[name].tips = tips
 
 	-- Block style
 	if self.db.style == "BLOCK" then
@@ -251,19 +296,20 @@ function CB:UpdateBar()
 
 	if self.db.channels.world.enable then
 		local db = self.db.channels.world
+		local config = GetBestWorldChannelConfig(db.config)
 
-		if not db.name or db.name == "" then
+		if not config or not config.name or config.name == "" then
 			self:Log("warning", L["World channel no found, please setup again."])
 			self:DisableButton("WORLD")
 		else
 			local chatFunc = function(self, mouseButton)
-				local channelId = GetChannelName(db.name)
+				local channelId = GetChannelName(config.name)
 				if mouseButton == "LeftButton" then
 					local autoJoined = false
-					if channelId == 0 and db.autoJoin then
-						JoinPermanentChannel(db.name)
-						ChatFrame_AddChannel(DefaultChatFrame, db.name)
-						channelId = GetChannelName(db.name)
+					if channelId == 0 and config.autoJoin then
+						JoinPermanentChannel(config.name)
+						ChatFrame_AddChannel(DefaultChatFrame, config.name)
+						channelId = GetChannelName(config.name)
 						autoJoined = true
 					end
 					if channelId == 0 then
@@ -281,17 +327,17 @@ function CB:UpdateBar()
 					end
 				elseif mouseButton == "RightButton" then
 					if channelId == 0 then
-						JoinPermanentChannel(db.name)
-						ChatFrame_AddChannel(DefaultChatFrame, db.name)
+						JoinPermanentChannel(config.name)
+						ChatFrame_AddChannel(DefaultChatFrame, config.name)
 					else
-						LeaveChannelByName(db.name)
+						LeaveChannelByName(config.name)
 					end
 				end
 			end
 
-			self:UpdateButton("WORLD", chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, db.name, {
-				L["Left Click: Change to"] .. " " .. db.name,
-				L["Right Click: Join/Leave"] .. " " .. db.name,
+			self:UpdateButton("WORLD", chatFunc, anchor, offsetX, offsetY, db.color, self.db.tex, config.name, {
+				L["Left Click: Change to"] .. " " .. config.name,
+				L["Right Click: Join/Leave"] .. " " .. config.name,
 			}, db.abbr)
 
 			numberOfButtons = numberOfButtons + 1

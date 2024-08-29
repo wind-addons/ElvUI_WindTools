@@ -901,8 +901,23 @@ P.social = {
 			},
 			world = {
 				enable = false,
-				autoJoin = true,
-				name = "",
+				config = {
+					{
+						region = "TW",
+						faction = "Alliance",
+						realmID = 963,
+						realmName = "暗影之月",
+						name = "組隊頻道",
+						autoJoin = true,
+					},
+					{
+						region = "CN",
+						faction = "ALL",
+						realmID = "ALL",
+						name = "大脚世界频道",
+						autoJoin = true,
+					},
+				},
 				color = { r = 0.2, g = 0.6, b = 0.86, a = 1 },
 				abbr = L["[ABBR] World"],
 			},
@@ -968,6 +983,7 @@ P.social = {
 		useNoteAsName = false,
 		textures = {
 			status = "square",
+			gameIcon = "PATCH",
 		},
 		areaColor = {
 			r = 1,

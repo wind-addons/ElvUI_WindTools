@@ -2122,6 +2122,7 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 	if name then
 		class = guildPlayerCache[name]
 		if not class then
+			self:Log("debug", "force update guild player cache")
 			updateGuildPlayerCache(nil, "FORCE_UPDATE")
 			class = guildPlayerCache[name]
 		end

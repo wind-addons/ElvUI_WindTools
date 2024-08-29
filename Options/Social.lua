@@ -1,9 +1,14 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local C = W.Utilities.Color
 local options = W.options.social.args
 local LSM = E.Libs.LSM
 
+local _G = _G
+local format = format
 local pairs = pairs
 local print = print
+local tremove = tremove
+local wipe = wipe
 
 local FriendsFrame_Update = FriendsFrame_Update
 
@@ -16,6 +21,8 @@ local WE = W:GetModule("Emote")
 local FL = W:GetModule("FriendList")
 local CM = W:GetModule("ContextMenu")
 local ST = W:GetModule("SmartTab")
+
+local worldChannelTemp = {}
 
 options.chatBar = {
 	order = 1,
@@ -302,20 +309,211 @@ options.chatBar = {
 						abbr = {
 							order = 3,
 							type = "input",
+							name = L["Abbreviation"],
 							hidden = function()
 								return not (E.db.WT.social.chatBar.style == "TEXT")
 							end,
-							name = L["Abbreviation"],
 						},
-						name = {
+						newConfig = {
 							order = 4,
-							type = "input",
-							name = L["Channel Name"],
+							type = "group",
+							inline = true,
+							name = L["New Config"],
+							get = function(info)
+								return worldChannelTemp[info[#info]]
+							end,
+							set = function(info, value)
+								worldChannelTemp[info[#info]] = value
+							end,
+							args = {
+								region = {
+									order = 1,
+									type = "select",
+									name = L["Region"],
+									desc = L["You can limit the config only work in the specific region."]
+										.. "\n"
+										.. L["Notice that if you are using some unblock addons in CN, you region are may changed to others."]
+										.. "\n"
+										.. format(L["Current Region: %s"], C.StringByTemplate(W.RealRegion, "warning")),
+									values = {
+										ALL = L["All"],
+										CN = L["China"],
+										TW = L["Taiwan"],
+										KR = L["Korea"],
+										US = L["United States"],
+										EU = L["Europe"],
+									},
+									get = function(info)
+										if worldChannelTemp[info[#info]] == nil then
+											worldChannelTemp[info[#info]] = "ALL"
+										end
+										return worldChannelTemp[info[#info]]
+									end,
+									set = function(info, value)
+										worldChannelTemp[info[#info]] = value
+									end,
+								},
+								onlyCurrentRealm = {
+									order = 2,
+									type = "toggle",
+									name = L["Only Current Realm"],
+									desc = L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."],
+									disabled = function()
+										return worldChannelTemp.region == "ALL"
+									end,
+									get = function(info)
+										if worldChannelTemp.region == "ALL" then
+											return false
+										end
+
+										return worldChannelTemp[info[#info]]
+									end,
+								},
+								faction = {
+									order = 3,
+									type = "select",
+									name = L["Faction"],
+									desc = L["You can limit the config only work in the specific faction."],
+									values = {
+										ALL = L["All"],
+										Horde = _G.FACTION_HORDE,
+										Alliance = _G.FACTION_ALLIANCE,
+									},
+
+									get = function(info)
+										if worldChannelTemp[info[#info]] == nil then
+											worldChannelTemp[info[#info]] = "ALL"
+										end
+										return worldChannelTemp[info[#info]]
+									end,
+								},
+								name = {
+									order = 4,
+									type = "input",
+									name = L["Channel Name"],
+									desc = L["You must add FULL NAME of the channel, not the abbreviation."],
+								},
+								autoJoin = {
+									order = 5,
+									type = "toggle",
+									name = L["Auto Join"],
+									desc = L["Auto join the channel if you are not in it."],
+								},
+								add = {
+									order = 6,
+									type = "execute",
+									name = L["Add / Update"],
+									desc = L["It will override the config which has the same region, faction and realm."],
+									func = function()
+										local region = worldChannelTemp.region
+										local faction = worldChannelTemp.faction
+										local onlyThisRealm = worldChannelTemp.onlyThisRealm
+										local name = worldChannelTemp.name
+										local autoJoin = worldChannelTemp.autoJoin
+
+										if not name or name == "" then
+											F.Print(L["Channel Name is empty."])
+											return
+										end
+
+										local realmID = onlyThisRealm and W.CurrentRealmID or "ALL"
+										local realmName = onlyThisRealm and W.RealmName or nil
+
+										local index
+										for i, channel in pairs(E.db.WT.social.chatBar.channels.world.config) do
+											if
+												channel.region == region
+												and channel.faction == faction
+												and channel.realmID == realmID
+											then
+												index = i
+												break
+											end
+										end
+
+										index = index or (#E.db.WT.social.chatBar.channels.world.config + 1)
+
+										local channel = {
+											region = region,
+											faction = faction,
+											realmID = realmID,
+											realmName = realmName,
+											name = name,
+											autoJoin = autoJoin,
+										}
+
+										E.db.WT.social.chatBar.channels.world.config[index] = channel
+										wipe(worldChannelTemp)
+										CB:UpdateBar()
+									end,
+								},
+							},
 						},
-						autoJoin = {
-							order = 5,
-							type = "toggle",
-							name = L["Auto Join"],
+						removeConfig = {
+							order = 4,
+							type = "group",
+							inline = true,
+							name = L["Remove Config"],
+							args = {
+								configList = {
+									order = 1,
+									type = "select",
+									name = L["Config List"],
+									width = 3,
+									values = function()
+										local v = {}
+										for i, channel in pairs(E.db.WT.social.chatBar.channels.world.config) do
+											local region = channel.region
+											local faction = channel.faction
+											local realmID = channel.realmID
+											local name = channel.name or ""
+											local autoJoin = channel.autoJoin
+
+											if region == "ALL" then
+												realmID = "ALL"
+											end
+
+											local realmName = realmID == "ALL" and L["All Realms"] or channel.realmName
+											local factionName = faction == "ALL" and L["All Factions"] or faction
+
+											if faction == "Alliance" then
+												factionName = _G.FACTION_ALLIANCE
+											elseif faction == "Horde" then
+												factionName = _G.FACTION_HORDE
+											end
+
+											local value =
+												format("%s - %s - %s > %s", region, factionName, realmName, name)
+											if autoJoin then
+												value = format("%s (%s)", value, L["Auto Join"])
+											end
+
+											v[i] = value
+										end
+										return v
+									end,
+									get = function(info)
+										return worldChannelTemp.configListSelected
+									end,
+									set = function(info, value)
+										worldChannelTemp.configListSelected = value
+									end,
+								},
+								remove = {
+									order = 2,
+									type = "execute",
+									name = L["Remove"],
+									desc = L["Remove the selected config."],
+									func = function()
+										local index = worldChannelTemp.configListSelected
+										if index and E.db.WT.social.chatBar.channels.world.config[index] then
+											tremove(E.db.WT.social.chatBar.channels.world.config, index)
+											wipe(worldChannelTemp)
+											CB:UpdateBar()
+										end
+									end,
+								},
+							},
 						},
 					},
 				},
@@ -1298,7 +1496,7 @@ options.friendList = {
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["Enhanced Texture"],
+			name = L["Texture Replacement"],
 			get = function(info)
 				return E.db.WT.social.friendList.textures[info[#info]]
 			end,
@@ -1310,30 +1508,27 @@ options.friendList = {
 				return not E.db.WT.social.friendList.enable
 			end,
 			args = {
-				client = {
-					name = L["Game Icons"],
-					order = 1,
-					type = "select",
-					values = {
-						blizzard = L["Blizzard"],
-						modern = L["Modern"],
-					},
-				},
 				status = {
 					name = L["Status Icon Pack"],
-					order = 2,
+					order = 1,
 					type = "select",
+
 					values = {
 						default = L["Default"],
 						d3 = L["Diablo 3"],
 						square = L["Square"],
 					},
 				},
-				factionIcon = {
-					order = 3,
-					type = "toggle",
-					name = L["Faction Icon"],
-					desc = L["Use faction icon instead of WoW icon."],
+				gameIcon = {
+					name = L["Game Icon Style for WoW"],
+					order = 2,
+					type = "select",
+					width = 1.2,
+					values = {
+						BLIZZARD = L["Default Blizzard Style"],
+						FACTION = L["Use faction icon"],
+						PATCH = L["Use patch icon"],
+					},
 				},
 			},
 		},

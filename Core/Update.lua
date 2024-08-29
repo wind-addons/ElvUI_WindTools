@@ -145,6 +145,9 @@ function W:UpdateScripts()
 
 		if E.db.WT.social.chatBar and E.db.WT.social.chatBar.channels and E.db.WT.social.chatBar.channels.world then
 			E.db.WT.social.chatBar.channels.world.enable = false
+			if W.RealRegion == "CN" or W.RealRegion == "TW" and W.CurrentRealmID == 963 then
+				E.db.WT.social.chatBar.channels.world.enable = true
+			end
 			E.db.WT.social.chatBar.channels.world.autoJoin = nil
 			E.db.WT.social.chatBar.channels.world.name = nil
 

@@ -6,7 +6,6 @@ local strsplit = strsplit
 local strupper = strupper
 
 local BNConnected = BNConnected
-local BNet_GetClientAtlas = BNet_GetClientAtlas
 local FriendsFrame_Update = FriendsFrame_Update
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local TimerunningUtil_AddSmallIcon = TimerunningUtil.AddSmallIcon

@@ -930,7 +930,13 @@ do
 					feature = {
 						order = 1,
 						type = "description",
-						name = L["Modify the chat text style."],
+						name = L["Modify the chat text style."] .. "\n" .. C.StringByTemplate(
+							format(
+							L["You must enable ElvUI Chat - %s to use abbreviation feature."],
+								L["Short Channels"]
+							),
+							"warning"
+						),
 						fontSize = "medium",
 					},
 				},
@@ -1199,7 +1205,11 @@ do
 									selectedRule = value
 								end,
 								values = function()
-									return E.db.WT.social.chatText.customAbbreviation
+									local readableValues = {}
+									for k, v in pairs(E.db.WT.social.chatText.customAbbreviation) do
+										readableValues[k] = format("%s > %s", k, v)
+									end
+									return readableValues
 								end,
 								width = 2,
 							},

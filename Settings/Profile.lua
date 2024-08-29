@@ -1,5 +1,7 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
+local tinsert = tinsert
+
 P.announcement = {
 	enable = true,
 	emoteFormat = ": %s",
@@ -901,23 +903,7 @@ P.social = {
 			},
 			world = {
 				enable = false,
-				config = {
-					{
-						region = "TW",
-						faction = "Alliance",
-						realmID = 963,
-						realmName = "暗影之月",
-						name = "組隊頻道",
-						autoJoin = true,
-					},
-					{
-						region = "CN",
-						faction = "ALL",
-						realmID = "ALL",
-						name = "大脚世界频道",
-						autoJoin = true,
-					},
-				},
+				config = {},
 				color = { r = 0.2, g = 0.6, b = 0.86, a = 1 },
 				abbr = L["[ABBR] World"],
 			},
@@ -1020,6 +1006,35 @@ P.social = {
 		historyLimit = 10,
 	},
 }
+
+if W.ChineseLocale then
+	P.social.chatText.customAbbreviation[L["BigfootWorldChannel"]] = "世"
+	if W.RealRegion == "TW" then
+		P.social.chatText.customAbbreviation["尋求組隊"] = "世"
+		P.social.chatText.customAbbreviation["組隊頻道"] = "世"
+	end
+
+	if W.RealRegion == "CN" or W.RealRegion == "TW" and W.CurrentRealmID == 963 then
+		P.social.chatBar.channels.world.enable = true
+
+		tinsert(P.social.chatBar.channels.world.config, {
+			region = "TW",
+			faction = "Alliance",
+			realmID = 963,
+			realmName = L["Shadowmoon"],
+			name = "組隊頻道",
+			autoJoin = true,
+		})
+
+		tinsert(P.social.chatBar.channels.world.config, {
+			region = "CN",
+			faction = "ALL",
+			realmID = "ALL",
+			name = L["BigfootWorldChannel"],
+			autoJoin = true,
+		})
+	end
+end
 
 P.quest = {
 	paragonReputation = {

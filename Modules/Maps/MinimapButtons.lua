@@ -7,7 +7,6 @@ local _G = _G
 local ceil = ceil
 local floor = floor
 local min = min
-local pcall = pcall
 local pairs = pairs
 local print = print
 local sort = sort
@@ -391,6 +390,8 @@ function MB:SkinButton(frame)
 								for i = 1, numMaskTextures do
 									region:RemoveMaskTexture(region:GetMaskTexture(i))
 								end
+							else
+								region:SetMask("")
 							end
 						elseif region.SetMask then
 							region:SetMask("")

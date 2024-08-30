@@ -10,7 +10,6 @@ local ceil = ceil
 local date = date
 local floor = floor
 local format = format
-local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local pairs = pairs
 local type = type
@@ -24,7 +23,6 @@ local GetCurrentRegion = GetCurrentRegion
 local GetServerTime = GetServerTime
 local PlaySoundFile = PlaySoundFile
 
-local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
@@ -1465,98 +1463,3 @@ function ET:ProfileUpdate()
 end
 
 W:RegisterModule(ET:GetName())
-
-W:AddCommand("EVENT_TRACKER", { "/wtet" }, function(msg)
-	if msg == "forceUpdate" then
-		local map = C_Map_GetBestMapForUnit("player")
-		if not map then
-			return
-		end
-
-		local position = C_Map_GetPlayerMapPosition(map, "player")
-
-		if not position then
-			return
-		end
-
-		local lengthMap = {}
-
-		for i, netPos in ipairs(env.fishingNetPosition) do
-			if map == netPos.map then
-				local length = math_pow(position.x - netPos.x, 2) + math_pow(position.y - netPos.y, 2)
-				lengthMap[i] = length
-			end
-		end
-
-		local min
-		local netIndex = 0
-		for i, length in pairs(lengthMap) do
-			if not min or length < min then
-				min = length
-				netIndex = i
-			end
-		end
-
-		if not min or netIndex <= 0 then
-			return
-		end
-
-		local db = ET:GetPlayerDB("iskaaranFishingNet")
-
-		local namePlates = C_NamePlate_GetNamePlates(true)
-		if #namePlates > 0 then
-			for _, namePlate in ipairs(namePlates) do
-				if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
-					local container = namePlate.UnitFrame.WidgetContainer
-					if container.timerWidgets then
-						for id, widget in pairs(container.timerWidgets) do
-							if env.fishingNetWidgetIDToIndex[id] and env.fishingNetWidgetIDToIndex[id] == netIndex then
-								if widget.Bar and widget.Bar.value then
-									db[netIndex] = {
-										time = GetServerTime() + widget.Bar.value,
-										duration = widget.Bar.range,
-									}
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-
-	if msg == "findNet" then
-		local map = C_Map_GetBestMapForUnit("player")
-		if not map then
-			return
-		end
-
-		local position = C_Map_GetPlayerMapPosition(map, "player")
-
-		if not position then
-			return
-		end
-
-		local namePlates = C_NamePlate_GetNamePlates(true)
-		if #namePlates > 0 then
-			for _, namePlate in ipairs(namePlates) do
-				if namePlate and namePlate.UnitFrame and namePlate.UnitFrame.WidgetContainer then
-					local container = namePlate.UnitFrame.WidgetContainer
-					if container.timerWidgets then
-						for id, widget in pairs(container.timerWidgets) do
-							if widget.Bar and widget.Bar.value then
-								F.Print("------------")
-								F.Print("mapID", map)
-								F.Print("mapName", C_Map_GetMapInfo(map).name)
-								F.Print("position", position.x, position.y)
-								F.Print("widgetID", id)
-								F.Print("timeLeft", widget.Bar.value, secondToTime(widget.Bar.value))
-								F.Print("------------")
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-end)

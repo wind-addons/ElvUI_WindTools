@@ -538,6 +538,15 @@ function S:ESProxy(funcName, frame, ...)
 	ES[funcName](ES, frame, ...)
 end
 
+function S:HighAlphaTransparent(frame)
+	frame._SetBackdropColor = frame.SetBackdropColor
+	frame.SetBackdropColor = function(f, r, g, b, a)
+		frame._SetBackdropColor(f, r, g, b, 0.8)
+	end
+
+	frame:SetTemplate("Transparent")
+end
+
 S:RegisterEvent("ADDON_LOADED")
 S:RegisterEvent("PLAYER_ENTERING_WORLD")
 W:RegisterModule(S:GetName())

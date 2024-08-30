@@ -26,6 +26,15 @@ function S:Blizzard_DelvesCompanionConfiguration()
 		self:CreateShadow(CompanionConfigurationFrame)
 		CompanionConfigurationFrame.CloseButton:ClearAllPoints()
 		CompanionConfigurationFrame.CloseButton:SetPoint("TOPRIGHT", CompanionConfigurationFrame, "TOPRIGHT", -3, -3)
+
+		for _, frame in pairs({
+			CompanionConfigurationFrame.CompanionCombatRoleSlot,
+			CompanionConfigurationFrame.CompanionUtilityTrinketSlot,
+			CompanionConfigurationFrame.CompanionCombatTrinketSlot
+		}) do
+			self:CreateShadow(frame.OptionsList)
+			self:HighAlphaTransparent(frame)
+		end
 	end
 
 	local CompanionAbilityListFrame = _G.DelvesCompanionAbilityListFrame

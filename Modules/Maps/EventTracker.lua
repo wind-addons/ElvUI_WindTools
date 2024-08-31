@@ -103,6 +103,8 @@ local colorPlatte = {
 	},
 }
 
+local forceUIUpdateFlag = false
+
 local function secondToTime(second)
 	local hour = floor(second / 3600)
 	local min = floor((second - hour * 3600) / 60)
@@ -1263,6 +1265,7 @@ function trackers:get(event)
 				functions.ticker.dateUpdater(frame)
 				functions.ticker.alert(frame)
 				if _G.WorldMapFrame:IsShown() and frame:IsShown() then
+				if _G.WorldMapFrame:IsShown() and frame:IsShown() or forceUIUpdateFlag then
 					functions.ticker.uiUpdater(frame)
 				end
 			end)
@@ -1280,8 +1283,8 @@ function trackers:get(event)
 	end
 
 	if data.args.events then
-		for _, event in ipairs(data.args.events) do
-			ET:AddEventHandler(event[1], event[2])
+		for _, e in ipairs(data.args.events) do
+			ET:AddEventHandler(e[1], e[2])
 		end
 	end
 
@@ -1488,6 +1491,15 @@ function ET:Initialize()
 	EventRegistry:RegisterCallback("WorldMapMaximized", E.Delay, E, 0.1, self.UpdateTrackers, self)
 	self:SecureHook(_G.QuestMapFrame, "Show", "UpdateTrackers")
 	self:SecureHook(_G.QuestMapFrame, "Hide", "UpdateTrackers")
+
+	-- Let the UI update when game loaded
+	E:Delay(1, function()
+		forceUIUpdateFlag = true
+	end)
+
+	E:Delay(3, function()
+		forceUIUpdateFlag = false
+	end)
 
 	self.initialized = true
 end

@@ -363,6 +363,10 @@ local VirtualDT = {
 	},
 }
 
+local sharedCache = {
+	friends = {},
+}
+
 local ButtonTypes = {
 	ACHIEVEMENTS = {
 		name = L["Achievements"],
@@ -495,7 +499,14 @@ local ButtonTypes = {
 					return
 				end
 			end
-			button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
+			local now = GetTime()
+			local cache = sharedCache.friends
+			if now - (cache.lastEvent or 0) > 1 then
+				cache.lastEvent = now
+				E:Delay(1, function()
+					button.additionalText:SetFormattedText(button.additionalTextFormat, button.additionalTextFunc())
+				end)
+			end
 		end,
 	},
 	GAMEMENU = {

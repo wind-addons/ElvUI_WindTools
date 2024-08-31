@@ -1,4 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
+local C = W.Utilities.Color
 local ST = W:NewModule("SuperTracker", "AceEvent-3.0", "AceHook-3.0")
 
 local _G = _G
@@ -19,6 +20,7 @@ local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Map_CanSetUserWaypointOnMap = C_Map.CanSetUserWaypointOnMap
 local C_Map_ClearUserWaypoint = C_Map.ClearUserWaypoint
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
+local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_Map_HasUserWaypoint = C_Map.HasUserWaypoint
 local C_Map_SetUserWaypoint = C_Map.SetUserWaypoint
 local C_Navigation_GetDistance = C_Navigation.GetDistance
@@ -138,6 +140,11 @@ function ST.commandHandler(msg, isPreview)
 		["于"] = " ",
 	})
 
+	local mapID = strmatch(msg, "#(%d+)")
+	msg = gsub(msg, "#%d+", "")
+
+	mapID = mapID or _G.WorldMapFrame:IsShown() and _G.WorldMapFrame:GetMapID() or C_Map_GetBestMapForUnit("player")
+
 	local numbers = {}
 	local words = { F.Strings.Split(msg .. " ", " ") }
 
@@ -181,21 +188,29 @@ function ST.commandHandler(msg, isPreview)
 		if numbers[3] then
 			waypointString = waypointString .. ", " .. numbers[3]
 		end
-		return true, waypointString
+
+		local mapData = C_Map_GetMapInfo(mapID) or C_Map_GetMapInfo(C_Map_GetBestMapForUnit("player"))
+		return true, mapData.name .. " (" .. waypointString .. ")"
 	else
-		ST:SetWaypoint(unpack(numbers))
+		ST:SetWaypoint(mapID, unpack(numbers))
 	end
 end
 
-function ST:SetWaypoint(x, y, z)
-	local mapID = C_Map_GetBestMapForUnit("player")
+function ST:SetWaypoint(mapID, x, y, z)
+	mapID = mapID or _G.WorldMapFrame:IsShown() and _G.WorldMapFrame:GetMapID() or C_Map_GetBestMapForUnit("player")
 
 	-- colored waypoint string
-	local waypointString = "|cff209cee(" .. x .. ", " .. y
-	if z then
-		waypointString = waypointString .. ", " .. z
+	local mapData = C_Map_GetMapInfo(mapID)
+	if not mapData then
+		mapID = C_Map_GetBestMapForUnit("player")
+		mapData = C_Map_GetMapInfo(mapID)
 	end
-	waypointString = waypointString .. ")|r"
+	local mapName = mapData.name
+	local location = format("%s, %s", x, y)
+	if z then
+		location = location .. ", " .. z
+	end
+	local waypointString = C.StringByTemplate(format("%s (%s)", mapName, location), "primary")
 
 	-- if not scaled, just do it here
 	if x > 1 and y > 1 then

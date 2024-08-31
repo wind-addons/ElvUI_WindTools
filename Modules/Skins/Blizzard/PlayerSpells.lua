@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local next = next
 
 function S:Blizzard_PlayerSpells()
@@ -25,7 +26,12 @@ function S:Blizzard_PlayerSpells()
 	local TalentsSelect = _G.HeroTalentsSelectionDialog
 	if TalentsSelect then
 		self:CreateShadow(TalentsSelect)
-		self:HighAlphaTransparent(TalentsSelect)
+		hooksecurefunc(TalentsSelect, "ShowDialog", function(frame)
+			if not frame.__windSkin then
+				frame.__windSkin = true
+				self:HighAlphaTransparent(TalentsSelect)
+			end
+		end)
 	end
 end
 

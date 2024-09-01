@@ -9,6 +9,7 @@ local tremove = tremove
 local type = type
 
 local InCombatLockdown = InCombatLockdown
+local RunNextFrame = RunNextFrame
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
@@ -524,6 +525,27 @@ function MF:HandleAddon(_, addon)
 			dialog:ClearAllPoints()
 			dialog:SetAllPoints()
 		end
+	elseif addon == "Blizzard_PlayerSpells" and _G.HeroTalentsSelectionDialog and _G.PlayerSpellsFrame then
+		local function startStopMoving(frame)
+			local backup = frame:IsMovable()
+			frame:SetMovable(true)
+			frame:StartMoving()
+			frame:StopMovingOrSizing()
+			frame:SetMovable(backup)
+		end
+		startStopMoving(_G.HeroTalentsSelectionDialog)
+		_G.PlayerSpellsFrame:HookScript("OnShow", function(frame)
+			startStopMoving(frame)
+			RunNextFrame(function()
+				startStopMoving(frame)
+			end)
+		end)
+		_G.HeroTalentsSelectionDialog:HookScript("OnShow", function(frame)
+			startStopMoving(frame)
+			RunNextFrame(function()
+				startStopMoving(frame)
+			end)
+		end)
 	end
 end
 

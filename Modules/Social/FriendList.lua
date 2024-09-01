@@ -331,6 +331,10 @@ function FL:UpdateFriendButton(button)
 
 		-- area
 		if area then
+			if self.db.hideRealm then
+				server = ""
+			end
+
 			if area and area ~= "" and server and server ~= "" and server ~= E.myrealm then
 				buttonText = F.CreateColorString(area .. " - " .. server, self.db.areaColor)
 			elseif area and area ~= "" then

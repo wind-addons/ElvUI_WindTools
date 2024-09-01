@@ -1000,6 +1000,7 @@ P.social = {
 		useClientColor = true,
 		useClassColor = true,
 		useNoteAsName = false,
+		hideRealm = false,
 		textures = {
 			status = "square",
 			gameIcon = "PATCH",

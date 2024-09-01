@@ -988,10 +988,10 @@ options.eventTracker = {
 	type = "group",
 	name = L["Event Tracker"],
 	get = function(info)
-		return E.db.WT.maps.eventTracker[info[#info]]
+		return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 	end,
 	set = function(info, value)
-		E.db.WT.maps.eventTracker[info[#info]] = value
+		E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
 		ET:ProfileUpdate()
 	end,
 	args = {
@@ -1014,19 +1014,19 @@ options.eventTracker = {
 			type = "toggle",
 			name = L["Enable"],
 			width = "full",
+			get = function(info)
+				return E.db.WT.maps.eventTracker[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.maps.eventTracker[info[#info]] = value
+				ET:ProfileUpdate()
+			end,
 		},
 		style = {
 			order = 3,
 			type = "group",
 			inline = true,
 			name = L["Style"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				backdrop = {
 					order = 1,
@@ -1136,11 +1136,30 @@ options.eventTracker = {
 				},
 			},
 		},
-		theaterTroupe = {
-			order = 5,
+		worldSoul = {
+			order = 10,
 			type = "group",
 			inline = true,
-			name = L["Theater Troupe"],
+			name = L["World Soul"],
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
+		khazAlgarEmissary = {
+			order = 12,
+			type = "group",
+			inline = true,
+			name = L["Khaz Algar Emissary"],
 			get = function(info)
 				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 			end,
@@ -1148,6 +1167,25 @@ options.eventTracker = {
 				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
 				ET:ProfileUpdate()
 			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
+		theaterTroupe = {
+			order = 13,
+			type = "group",
+			inline = true,
+			name = L["Theater Troupe"],
 			args = {
 				enable = {
 					order = 1,
@@ -1203,18 +1241,68 @@ options.eventTracker = {
 				},
 			},
 		},
+		ringingDeeps = {
+			order = 14,
+			type = "group",
+			inline = true,
+			name = L["Ringing Deeps"],
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
+		spreadingTheLight = {
+			order = 15,
+			type = "group",
+			inline = true,
+			name = L["Spreading The Light"],
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
+		underworldOperative = {
+			order = 16,
+			type = "group",
+			inline = true,
+			name = L["Underworld Operative"],
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
 		radiantEchoes = {
-			order = 5,
+			order = 21,
 			type = "group",
 			inline = true,
 			name = L["Radiant Echoes"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1287,17 +1375,10 @@ options.eventTracker = {
 			},
 		},
 		bigDig = {
-			order = 6,
+			order = 22,
 			type = "group",
 			inline = true,
 			name = L["The Big Dig"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1354,17 +1435,10 @@ options.eventTracker = {
 			},
 		},
 		superBloom = {
-			order = 7,
+			order = 23,
 			type = "group",
 			inline = true,
 			name = L["Superbloom"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1421,17 +1495,10 @@ options.eventTracker = {
 			},
 		},
 		timeRiftThaldraszus = {
-			order = 8,
+			order = 24,
 			type = "group",
 			inline = true,
 			name = L["Time Rift Thaldraszus"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1488,17 +1555,10 @@ options.eventTracker = {
 			},
 		},
 		researchersUnderFire = {
-			order = 9,
+			order = 25,
 			type = "group",
 			inline = true,
 			name = L["Researchers Under Fire"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1571,17 +1631,10 @@ options.eventTracker = {
 			},
 		},
 		siegeOnDragonbaneKeep = {
-			order = 10,
+			order = 26,
 			type = "group",
 			inline = true,
 			name = L["Siege On Dragonbane Keep"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1654,17 +1707,10 @@ options.eventTracker = {
 			},
 		},
 		communityFeast = {
-			order = 11,
+			order = 27,
 			type = "group",
 			inline = true,
 			name = L["Community Feast"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1737,17 +1783,10 @@ options.eventTracker = {
 			},
 		},
 		iskaaranFishingNet = {
-			order = 12,
+			order = 28,
 			type = "group",
 			inline = true,
 			name = L["Iskaaran Fishing Net"],
-			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
-			end,
-			set = function(info, value)
-				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
-				ET:ProfileUpdate()
-			end,
 			args = {
 				enable = {
 					order = 1,
@@ -1796,21 +1835,13 @@ options.eventTracker = {
 	},
 }
 
-for _, event in pairs({
-	"radiantEchoes",
-	"bigDig",
-	"superBloom",
-	"timeRiftThaldraszus",
-	"researchersUnderFire",
-	"siegeOnDragonbaneKeep",
-	"communityFeast",
-	"iskaaranFishingNet",
-}) do
-	local eventOptions = options.eventTracker.args[event]
-	for arg in pairs(eventOptions.args) do
-		if arg ~= "enable" then
-			eventOptions.args[arg].hidden = function(info)
-				return not E.db.WT.maps.eventTracker[info[#info - 1]].enable
+for eventName, eventOptions in pairs(options.eventTracker.args) do
+	if eventName ~= "desc" and eventName ~= "enable" and eventName ~= "style" and eventName ~= "font" then
+		for arg in pairs(eventOptions.args) do
+			if arg ~= "enable" then
+				eventOptions.args[arg].hidden = function(info)
+					return not E.db.WT.maps.eventTracker[info[#info - 1]].enable
+				end
 			end
 		end
 	end

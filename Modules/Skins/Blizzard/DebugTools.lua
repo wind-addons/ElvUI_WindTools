@@ -3,8 +3,6 @@ local S = W.Modules.Skins
 
 local _G = _G
 
-local UIParentLoadAddOn = UIParentLoadAddOn
-
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
 function S:Blizzard_DebugTools()

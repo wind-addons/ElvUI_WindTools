@@ -4,10 +4,10 @@ W.Changelog[373] = {
 	RELEASE_DATE = "2024/09/01",
 	IMPORTANT = {
 		["zhCN"] = {
-			"[事件追踪器] 默认关闭巨龙钓鱼周常任务追踪。",
+			"[事件追踪器] 默认关闭巨龙群岛钓鱼周常任务追踪。",
 		},
 		["zhTW"] = {
-			"[事件追蹤器] 預設關閉巨龍島的伊斯卡拉魚網周常任務追蹤。",
+			"[事件追蹤器] 預設關閉巨龍群島的伊斯卡拉魚網周常任務追蹤。",
 		},
 		["enUS"] = {
 			"[Event Tracker] Default disable the weekly quest tracking of Iskaaran Fishing Net in Dragon Isles.",

@@ -177,7 +177,8 @@ local functionFactory = {
 			self.icon:CreateBackdrop("Transparent")
 			self.icon.backdrop:SetOutside(self.icon, 1, 1)
 			self.name = self:CreateFontString(nil, "OVERLAY")
-			self.completed = self:CreateFontString(nil, "OVERLAY")
+			self.completed = self:CreateTexture(nil, "ARTWORK")
+			self.completed:SetTexture(W.Media.Textures.ROLES)
 
 			self:SetScript("OnMouseDown", function()
 				if self.args.onClick then
@@ -197,11 +198,10 @@ local functionFactory = {
 			self.name:SetPoint("LEFT", self, "LEFT", 30, 0)
 			self.name:SetText(self.args.label)
 
-			ET:SetFont(self.completed, 13)
 			self.completed:ClearAllPoints()
+			self.completed:SetSize(16, 16)
 			self.completed:SetPoint("RIGHT", self, "RIGHT", 0, 0)
-			self.completed:SetText(self.args.completedText)
-			self.completed:SetTextColor(C.RGBFromTemplate("greyLight"))
+			self.completed:SetTexCoord(F.GetRoleTexCoord("PENDING"))
 		end,
 		ticker = {
 			interval = 2,
@@ -226,8 +226,9 @@ local functionFactory = {
 
 			uiUpdater = function(self)
 				self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
-				self.completed:SetText(self.isCompleted and self.args.completedText or self.args.notCompletedText)
-				self.completed:SetTextColor(C.RGBFromTemplate(self.isCompleted and "greyLight" or "danger"))
+				local texCoord = self.isCompleted and { F.GetRoleTexCoord("READY") } or { F.GetRoleTexCoord("REFUSE") }
+				self.completed:SetTexCoord(unpack(texCoord))
+				self.completed:SetDesaturated(self.isCompleted)
 			end,
 			alert = E.noop,
 		},
@@ -918,8 +919,6 @@ local eventData = {
 			eventName = L["Professions Weekly"],
 			location = C_Map_GetMapInfo(2339).name,
 			label = L["Professions Weekly"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2339),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -939,8 +938,6 @@ local eventData = {
 			eventName = L["World Soul"],
 			location = C_Map_GetMapInfo(2339).name,
 			label = L["World Soul"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2339),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -958,8 +955,6 @@ local eventData = {
 			eventName = L["Khaz Algar Emissary"],
 			location = C_Map_GetMapInfo(2339).name,
 			label = L["Khaz Algar Emissary"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2339),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -1012,8 +1007,6 @@ local eventData = {
 			eventName = L["Ringing Deeps"],
 			location = C_Map_GetMapInfo(2214).name,
 			label = L["Ringing Deeps"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2214),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -1028,8 +1021,6 @@ local eventData = {
 			eventName = L["Spreading The Light"],
 			location = C_Map_GetMapInfo(2215).name,
 			label = L["Spreading The Light"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2215),
 			onClickHelpText = L["Click to show location"],
 		},
@@ -1044,8 +1035,6 @@ local eventData = {
 			eventName = L["Underworld Operative"],
 			location = C_Map_GetMapInfo(2255).name,
 			label = L["Underworld Operative"],
-			completedText = L["Completed"],
-			notCompletedText = L["Not Completed"],
 			onClick = worldMapIDSetter(2255),
 			onClickHelpText = L["Click to show location"],
 		},

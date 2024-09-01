@@ -30,10 +30,10 @@ function S:Blizzard_DelvesCompanionConfiguration()
 		for _, frame in pairs({
 			CompanionConfigurationFrame.CompanionCombatRoleSlot,
 			CompanionConfigurationFrame.CompanionUtilityTrinketSlot,
-			CompanionConfigurationFrame.CompanionCombatTrinketSlot
+			CompanionConfigurationFrame.CompanionCombatTrinketSlot,
 		}) do
 			self:CreateShadow(frame.OptionsList)
-			self:HighAlphaTransparent(frame)
+			self:HighAlphaTransparent(frame.OptionsList)
 		end
 	end
 

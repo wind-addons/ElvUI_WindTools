@@ -10,6 +10,9 @@ function S:Blizzard_PlayerSpells()
 		return
 	end
 
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutImportDialog)
+	self:CreateBackdropShadow(_G.ClassTalentLoadoutEditDialog)
+
 	self:CreateShadow(_G.PlayerSpellsFrame)
 
 	for _, tab in next, { _G.PlayerSpellsFrame.TabSystem:GetChildren() } do

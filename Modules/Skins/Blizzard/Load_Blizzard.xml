@@ -18,7 +18,6 @@
 	<Script file='Channels.lua'/>
 	<Script file='Character.lua'/>
 	<Script file='ChromieTime.lua'/>
-	<Script file='ClassTalent.lua'/>
 	<Script file='ClickBinding.lua'/>
 	<Script file='Collections.lua'/>
 	<Script file='Communities.lua'/>

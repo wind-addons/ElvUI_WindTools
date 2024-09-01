@@ -551,11 +551,6 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Chromie Time"],
 		},
-		classTalent = {
-			order = 10,
-			type = "toggle",
-			name = L["Class Talent"],
-		},
 		collections = {
 			order = 10,
 			type = "toggle",

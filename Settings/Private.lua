@@ -522,7 +522,6 @@ V.skins = {
 		channels = true,
 		character = true,
 		chromieTime = true,
-		classTalent = true,
 		clickBinding = true,
 		collections = true,
 		communities = true,

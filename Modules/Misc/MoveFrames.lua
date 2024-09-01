@@ -105,11 +105,6 @@ local BlizzardFramesOnDemand = {
 	["Blizzard_BlackMarketUI"] = {
 		"BlackMarketFrame",
 	},
-	["Blizzard_ClassTalentUI"] = {
-		["ClassTalentFrame"] = {
-			"ClassTalentFrame.TalentsTab.ButtonsParent",
-		},
-	},
 	["Blizzard_Calendar"] = {
 		["CalendarFrame"] = {
 			"CalendarCreateEventFrame",

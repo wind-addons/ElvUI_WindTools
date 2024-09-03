@@ -637,6 +637,8 @@ end
 
 for version, data in pairs(W.Changelog) do
 	local versionString = format("%d.%02d", version / 100, mod(version, 100))
+	local changelogVer = tonumber(versionString)
+	local addonVer = tonumber(W.Version)
 	local dateTable = { strsplit("/", data.RELEASE_DATE) }
 	local dateString = data.RELEASE_DATE
 	if #dateTable == 3 then
@@ -739,7 +741,7 @@ for version, data in pairs(W.Changelog) do
 		width = "full",
 		hidden = function()
 			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
-			return dbVer and dbVer >= tonumber(versionString)
+			return dbVer and dbVer >= changelogVer or addonVer < changelogVer
 		end,
 	}
 
@@ -750,7 +752,7 @@ for version, data in pairs(W.Changelog) do
 		width = "full",
 		hidden = function()
 			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
-			return dbVer and dbVer >= tonumber(versionString)
+			return dbVer and dbVer >= changelogVer or addonVer < changelogVer
 		end,
 	}
 
@@ -761,7 +763,7 @@ for version, data in pairs(W.Changelog) do
 		width = "full",
 		hidden = function()
 			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
-			return dbVer and dbVer >= tonumber(versionString)
+			return dbVer and dbVer >= changelogVer or addonVer < changelogVer
 		end,
 		func = function()
 			E.global.WT.changelogRead = versionString

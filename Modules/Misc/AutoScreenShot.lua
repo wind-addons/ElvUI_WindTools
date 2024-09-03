@@ -55,15 +55,17 @@ function M:AutoScreenShot()
 		self:RegisterEvent("ACHIEVEMENT_EARNED", "DelayScreenshot")
 
 		hooksecurefunc(_G.AchievementAlertSystem:GetAlertContainer(), "AddAlertFrame", function(_, frame)
-			alertFrame = frame
-			E:Delay(
-				3, -- wait for 3 seconds
-				function()
-					if frame == alertFrame then
-						alertFrame = nil
+			E:Delay(1, function() -- If the wait time is too short, the animation shine will still be there
+				alertFrame = frame
+				E:Delay(
+					2, -- wait for 3 seconds
+					function()
+						if frame == alertFrame then
+							alertFrame = nil
+						end
 					end
-				end
-			)
+				)
+			end)
 		end)
 	end
 end

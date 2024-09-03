@@ -4,12 +4,12 @@ local _G = _G
 local format = format
 local pairs = pairs
 local pcall = pcall
+local strmatch = strmatch
+local strsub = strsub
 local tinsert = tinsert
-local tostring = tostring
 
 local InCombatLockdown = InCombatLockdown
 
-local C_LFGList = C_LFGList
 local C_UI_Reload = C_UI.Reload
 
 local ACCEPT = _G.ACCEPT
@@ -23,7 +23,7 @@ W:InitializeMetadata()
 -- Alerts
 E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
 	text = format(
-		"%s\n%s",
+		"%s %s",
 		format(L["%s not been loaded since you are using an outdated version of ElvUI."], W.Title),
 		format(L["Please upgrade your ElvUI to %2.2f or newer version!"], W.SupportElvUIVersion)
 	),
@@ -34,7 +34,7 @@ E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
 E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 	text = format(L["Welcome to %s %s!"], W.Title, W.Version),
 	button1 = L["Open Changelog"],
-	button2 = CANCEL,
+	button2 = format("|cffaaaaaa%s|r", L["Next Time"]),
 	OnAccept = function(self)
 		E:ToggleOptions("WindTools,information,changelog")
 	end,
@@ -68,6 +68,24 @@ _G.BINDING_HEADER_WTEXTRABUTTONS = L["Extra Buttons"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLogout:LeftButton"] = L["Logout"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveGroup:LeftButton"] = L["Leave Party"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L["Leave Party if soloing"]
+
+W.LinkOperations = {
+	["changelog"] = E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG.OnAccept,
+}
+
+function W:AddCustomLinkSupport()
+	local ItemRefTooltip_SetHyperlink = _G.ItemRefTooltip.SetHyperlink
+	function _G.ItemRefTooltip.SetHyperlink(tt, data, ...)
+		if strsub(data, 1, 6) == "wtlink" then
+			local pattern = "wtlink:([%w,;%.]+):([%w,;%.]*):"
+			local feature_name, context_string = strmatch(data, pattern)
+			if feature_name and W.LinkOperations[feature_name] then
+				W.LinkOperations[feature_name](context_string)
+			end
+		end
+		ItemRefTooltip_SetHyperlink(tt, data, ...)
+	end
+end
 
 --[[
     WindTools module registration
@@ -109,21 +127,32 @@ end
 -- Check ElvUI version, if not matched, show a popup to user
 function W:CheckElvUIVersion()
 	if W.SupportElvUIVersion > E.version then
-		E:StaticPopup_Show("WINDTOOLS_ELVUI_OUTDATED")
+		if E.global.WT.core.elvUIVersionPopup then
+			E:StaticPopup_Show("WINDTOOLS_ELVUI_OUTDATED")
+		else
+			F.Print(E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED.text)
+		end
 		return false
 	end
 	return true
 end
 
 -- Check install version, show changelog and run update scripts
-function W:CheckInstalledVersion()
-	if InCombatLockdown() then
-		return
-	end
-
-	if self.showChangeLog then
-		E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
-		self.showChangeLog = false
+function W:ChangelogReadAlert()
+	local readVer = E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead) or 0
+	local currentVer = tonumber(W.Version)
+	if readVer < currentVer then
+		if E.global.WT.core.changlogPopup and not InCombatLockdown() then
+			E:StaticPopup_Show("WINDTOOLS_OPEN_CHANGELOG")
+		else
+			F.Print(
+				format(
+					"%s %s",
+					format(L["Welcome to %s %s!"], W.Title, W.Version),
+					format("|cff71d5ff|Hwtlink:changelog::|h[%s]|h|r", L["Open Changelog"])
+				)
+			)
+		end
 	end
 end
 

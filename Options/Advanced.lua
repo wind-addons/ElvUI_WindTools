@@ -33,8 +33,32 @@ options.core = {
 				E.global.WT.core.loginMessage = value
 			end,
 		},
-		compatibilityCheck = {
+		changlogPopup = {
 			order = 2,
+			type = "toggle",
+			name = L["Changelog Popup"],
+			desc = L["Show the changelog popup rather than chat message after every update."],
+			get = function(info)
+				return E.global.WT.core.changlogPopup
+			end,
+			set = function(info, value)
+				E.global.WT.core.changlogPopup = value
+			end,
+		},
+		elvUIVersionPopup = {
+			order = 3,
+			type = "toggle",
+			name = L["ElvUI Version Popup"],
+			desc = L["Show the ElvUI version popup rather than chat message when ElvUI version is outdated."],
+			get = function(info)
+				return E.global.WT.core.elvUIVersionPopup
+			end,
+			set = function(info, value)
+				E.global.WT.core.elvUIVersionPopup = value
+			end,
+		},
+		compatibilityCheck = {
+			order = 4,
 			type = "toggle",
 			name = L["Compatibility Check"],
 			desc = L["Help you to enable/disable the modules for a better experience with other plugins."],
@@ -47,7 +71,7 @@ options.core = {
 			end,
 		},
 		logLevel = {
-			order = 3,
+			order = 5,
 			type = "select",
 			name = L["Log Level"],
 			desc = L["Only display log message that the level is higher than you choose."]
@@ -60,7 +84,6 @@ options.core = {
 			set = function(info, value)
 				E.global.WT.core.logLevel = value
 			end,
-			hidden = function() end,
 			values = {
 				[1] = "1 - |cffff3860[ERROR]|r",
 				[2] = "2 - |cffffdd57[WARNING]|r",

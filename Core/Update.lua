@@ -26,11 +26,6 @@ function W:UpdateScripts()
 	local currentVersion = tonumber(W.Version) -- installed WindTools Version
 	local globalVersion = tonumber(E.global.WT.version or "0") -- version in ElvUI Global
 
-	-- changelog display
-	if globalVersion == 0 or globalVersion ~= currentVersion then
-		self.showChangeLog = true
-	end
-
 	-- from old updater
 	if globalVersion == 0 then
 		globalVersion = tonumber(E.global.WT.Version or "0")

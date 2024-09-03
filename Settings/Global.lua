@@ -2,6 +2,8 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 G.core = {
 	compatibilityCheck = true,
+	changlogPopup = false,
+	elvUIVersionPopup = true,
 	cvarAlert = false,
 	logLevel = 2,
 	loginMessage = true,

@@ -1,12 +1,13 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
-local options = W.options.information.args
-local ACH = E.Libs.ACH
+local C = W.Utilities.Color
 
-local _G = _G
+local options = W.options.information.args
+
 local format = format
 local gsub = gsub
 local ipairs = ipairs
 local pairs = pairs
+local tonumber = tonumber
 local tostring = tostring
 local type = type
 local unpack = unpack
@@ -730,4 +731,40 @@ for version, data in pairs(W.Changelog) do
 			fontSize = "medium",
 		}
 	end
+
+	page.beforeConfirm1 = {
+		order = 9,
+		type = "description",
+		name = " ",
+		width = "full",
+		hidden = function()
+			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
+			return dbVer and dbVer >= tonumber(versionString)
+		end,
+	}
+
+	page.beforeConfirm2 = {
+		order = 10,
+		type = "description",
+		name = " ",
+		width = "full",
+		hidden = function()
+			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
+			return dbVer and dbVer >= tonumber(versionString)
+		end,
+	}
+
+	page.confirm = {
+		order = 11,
+		type = "execute",
+		name = C.StringByTemplate(L["I got it!"], "primary"),
+		width = "full",
+		hidden = function()
+			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)
+			return dbVer and dbVer >= tonumber(versionString)
+		end,
+		func = function()
+			E.global.WT.changelogRead = versionString
+		end,
+	}
 end

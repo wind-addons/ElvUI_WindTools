@@ -75,7 +75,8 @@ end
 do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
-		E:Delay(7, self.CheckInstalledVersion, self)
+		self:AddCustomLinkSupport()
+		E:Delay(7, self.ChangelogReadAlert, self)
 
 		if isInitialLogin then
 			if E.global.WT.core.loginMessage then

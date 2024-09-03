@@ -93,20 +93,6 @@ options.gameFix = {
 			end,
 			width = "full",
 		},
-		fixPlaystyle = {
-			order = 2,
-			type = "toggle",
-			name = L["Fix PlaystyleString Lua Error"],
-			desc = L["Fix the bug that you will see Lua error when you using LFG frame."],
-			get = function(info)
-				return E.global.WT.core.fixPlaystyle
-			end,
-			set = function(info, value)
-				E.global.WT.core.fixPlaystyle = value
-				E:StaticPopup_Show("PRIVATE_RL")
-			end,
-			width = "full",
-		},
 	},
 }
 

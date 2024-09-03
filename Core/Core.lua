@@ -128,39 +128,6 @@ function W:CheckInstalledVersion()
 end
 
 function W:GameFixing()
-	-- fix playstyle string
-	-- from Premade Groups Filter & LFMPlus
-
-	if E.global.WT.core.fixPlaystyle then
-		if C_LFGList.IsPlayerAuthenticatedForLFG(703) then
-			function C_LFGList.GetPlaystyleString(playstyle, activityInfo)
-				if
-					not (
-						activityInfo
-						and playstyle
-						and playstyle ~= 0
-						and C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID).showPlaystyleDropdown
-					)
-				then
-					return nil
-				end
-				local globalStringPrefix
-				if activityInfo.isMythicPlusActivity then
-					globalStringPrefix = "GROUP_FINDER_PVE_PLAYSTYLE"
-				elseif activityInfo.isRatedPvpActivity then
-					globalStringPrefix = "GROUP_FINDER_PVP_PLAYSTYLE"
-				elseif activityInfo.isCurrentRaidActivity then
-					globalStringPrefix = "GROUP_FINDER_PVE_RAID_PLAYSTYLE"
-				elseif activityInfo.isMythicActivity then
-					globalStringPrefix = "GROUP_FINDER_PVE_MYTHICZERO_PLAYSTYLE"
-				end
-				return globalStringPrefix and _G[globalStringPrefix .. tostring(playstyle)] or nil
-			end
-
-			_G.LFGListEntryCreation_SetTitleFromActivityInfo = function(_) end
-		end
-	end
-
 	if E.global.WT.core.cvarAlert then
 		self:RegisterEvent("CVAR_UPDATE", function(_, cvar, value)
 			if cvar == "ActionButtonUseKeyDown" and W.UseKeyDown ~= (value == "1") then

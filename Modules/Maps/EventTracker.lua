@@ -21,6 +21,8 @@ local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
 local GetCurrentRegion = GetCurrentRegion
 local GetServerTime = GetServerTime
+local GetProfessions = GetProfessions
+local GetProfessionInfo = GetProfessionInfo
 local PlaySoundFile = PlaySoundFile
 
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit

@@ -12,7 +12,6 @@ local CinematicFrame_CancelCinematic = CinematicFrame_CancelCinematic
 local EventRegistry = EventRegistry
 local IsModifierKeyDown = IsModifierKeyDown
 
-local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local Enum_CinematicType_GameMovie = Enum.CinematicType.GameMovie
 
 local initialized = false

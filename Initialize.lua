@@ -54,7 +54,7 @@ function W:Initialize()
 		return
 	end
 
-	for name, module in self:IterateModules() do
+	for _, module in self:IterateModules() do
 		addon[2].Developer.InjectLogger(module)
 	end
 

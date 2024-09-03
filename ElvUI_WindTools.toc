@@ -1,6 +1,6 @@
 ## Interface: 110002
 ## Author: fang2hou
-## Version: 3.74
+## Version: 3.75
 ## Title: |cff1784d1ElvUI|r |cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r
 ## Title-zhCN: |cff1784d1ElvUI|r |cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |cff49b8e3工|r|cff42d3dd具|r|cff41d7dd箱|r
 ## Title-zhTW: |cff1784d1ElvUI|r |cff5385edW|r|cff5192ebi|r|cff4e9fe8n|r|cff4bace5d|r |cff49b8e3工|r|cff42d3dd具|r|cff41d7dd箱|r

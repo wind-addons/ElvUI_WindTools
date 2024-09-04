@@ -164,7 +164,6 @@ function W:OptionsCallback()
 	async.WithItemIDTable(E.db.WT.item.extraItemsBar.customList, "value")
 end
 
-
 W.AnimationEaseTable = {
 	["linear"] = L["Linear Ease"],
 	["quadratic"] = L["Quadratic Ease"],

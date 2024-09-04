@@ -75,10 +75,9 @@ end
 do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
-		self:AddCustomLinkSupport()
-		E:Delay(7, self.ChangelogReadAlert, self)
-
 		if isInitialLogin then
+			self:AddCustomLinkSupport()
+			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)
 				print(

@@ -1575,8 +1575,13 @@ do
 		order = 1,
 		type = "select",
 		name = L["Left Button"],
+		width = "full",
 		values = function()
-			return GB:GetHearthStoneTable()
+			local result = {}
+			for id, data in pairs(GB:GetHearthStoneTable()) do
+				result[id] = F.GetIconString(data.icon, 14, 14) .. " " .. data.name
+			end
+			return result
 		end,
 	}
 
@@ -1584,8 +1589,13 @@ do
 		order = 2,
 		type = "select",
 		name = L["Right Button"],
+		width = "full",
 		values = function()
-			return GB:GetHearthStoneTable()
+			local result = {}
+			for id, data in pairs(GB:GetHearthStoneTable()) do
+				result[id] = F.GetIconString(data.icon, 14, 14) .. " " .. data.name
+			end
+			return result
 		end,
 	}
 end

@@ -300,23 +300,23 @@ local function AddDoubleLineForItem(itemID, prefix)
 
 	prefix = prefix and prefix .. " " or ""
 
-	local name = hearthstonesAndToysData[tostring(itemID)]
-	if not name then
+	local data = hearthstonesAndToysData[tostring(itemID)]
+	if not data then
 		return
 	end
 
-	local texture = C_Item_GetItemIconByID(itemID)
-	local icon = format(IconString .. ":255:255:255|t", texture)
+	local icon = format(IconString .. ":255:255:255|t", data.icon)
 	local startTime, duration = C_Item_GetItemCooldown(itemID)
 	local cooldownTime = startTime + duration - GetTime()
 	local canUse = cooldownTime <= 0
 	local cooldownTimeString
 	if not canUse then
-		local min = floor(cooldownTime / 60)
-		local sec = floor(mod(cooldownTime, 60))
-		cooldownTimeString = format("%02d:%02d", min, sec)
+		local m = floor(cooldownTime / 60)
+		local s = floor(mod(cooldownTime, 60))
+		cooldownTimeString = format("%02d:%02d", m, s)
 	end
 
+	local name = data.name
 	if itemID == 180817 then
 		local charge = C_Item_GetItemCount(itemID, nil, true)
 		name = name .. format(" (%d)", charge)
@@ -1519,13 +1519,16 @@ end
 
 function GB:UpdateHomeButton()
 	ButtonTypes.HOME.item = {
-		item1 = hearthstonesAndToysData[self.db.home.left],
-		item2 = hearthstonesAndToysData[self.db.home.right],
+		item1 = hearthstonesAndToysData[self.db.home.left].name,
+		item2 = hearthstonesAndToysData[self.db.home.right].name,
 	}
 end
 
 function GB:UpdateHearthStoneTable()
-	hearthstonesAndToysData = { ["RANDOM"] = L["Random Hearthstone"] }
+	hearthstonesAndToysData = { ["RANDOM"] = {
+		name = L["Random Hearthstone"],
+		icon = 134400,
+	} }
 
 	local hearthstonesTable = {}
 	for i = 1, #hearthstones do
@@ -1581,7 +1584,10 @@ function GB:UpdateHearthStoneTable()
 					end
 				end
 
-				hearthstonesAndToysData[tostring(hearthstoneAndToyIDList[index])] = itemEngine:GetItemName()
+				hearthstonesAndToysData[tostring(hearthstoneAndToyIDList[index])] = {
+					name = itemEngine:GetItemName(),
+					icon = itemEngine:GetItemIcon(),
+				}
 				GetNextHearthStoneInfo()
 			end)
 		else

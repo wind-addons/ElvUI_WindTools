@@ -760,6 +760,7 @@ for version, data in pairs(W.Changelog) do
 		order = 11,
 		type = "execute",
 		name = C.StringByTemplate(L["I got it!"], "primary"),
+		desc = L["Mark as read, the changelog message will be hidden when you login next time."],
 		width = "full",
 		hidden = function()
 			local dbVer = E.global.WT and E.global.WT.changelogRead and tonumber(E.global.WT.changelogRead)

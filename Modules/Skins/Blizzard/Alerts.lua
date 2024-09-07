@@ -191,7 +191,7 @@ function S:SkinWorldQuestCompleteAlert(frame)
 		end
 	end
 
-	F.SetFontOutline(frame.ToastText)
+	F.SetFontOutline(frame.ToastText, nil, "+2")
 	F.SetFontOutline(frame.QuestName, nil, "+2")
 
 	frame.__windSkin = true

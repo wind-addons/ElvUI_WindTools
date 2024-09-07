@@ -1518,9 +1518,12 @@ function GB:HandleRandomHomeButton(button, mouseButton, item)
 end
 
 function GB:UpdateHomeButton()
+	local left = hearthstonesAndToysData[self.db.home.left]
+	local right = hearthstonesAndToysData[self.db.home.right]
+
 	ButtonTypes.HOME.item = {
-		item1 = hearthstonesAndToysData[self.db.home.left].name,
-		item2 = hearthstonesAndToysData[self.db.home.right].name,
+		item1 = left and left.name,
+		item2 = right and right.name,
 	}
 end
 

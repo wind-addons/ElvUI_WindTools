@@ -817,6 +817,7 @@ L["Make sure you select the NPC as your target."] = "NPC를 대상으로 선택�
 L["Make the additional percentage text be colored."] = "추가된 진행률에 색상을 지정합니다."
 L["Maps"] = "지도"
 L["Mark Highest Score"] = "최고 점수 표시"
+L["Mark as read, the changelog message will be hidden when you login next time."] = true
 L["Math Without Kanji"] = true
 L["Max Overflow"] = "최대 치유 흡수 보호막"
 L["Media Files"] = "미디어 파일"

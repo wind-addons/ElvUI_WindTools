@@ -817,6 +817,7 @@ L["Make sure you select the NPC as your target."] = "Убедитесь, что 
 L["Make the additional percentage text be colored."] = "Делает дополнительный процентный текст цветным."
 L["Maps"] = "Карты"
 L["Mark Highest Score"] = "Отметить наивысший результат"
+L["Mark as read, the changelog message will be hidden when you login next time."] = true
 L["Math Without Kanji"] = "Математика без Кандзи"
 L["Max Overflow"] = "Макс. переполнение"
 L["Media Files"] = "Медиа файлы"

@@ -817,6 +817,7 @@ L["Make sure you select the NPC as your target."] = "Asegúrate de seleccionar a
 L["Make the additional percentage text be colored."] = "Hacer que el texto del porcentaje adicional sea de color"
 L["Maps"] = "Mapas"
 L["Mark Highest Score"] = true
+L["Mark as read, the changelog message will be hidden when you login next time."] = true
 L["Math Without Kanji"] = "Matemáticas sin kanji"
 L["Max Overflow"] = true
 L["Media Files"] = "Archivos multimedia"

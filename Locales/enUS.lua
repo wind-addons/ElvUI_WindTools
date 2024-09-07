@@ -817,6 +817,7 @@ L["Make sure you select the NPC as your target."] = true
 L["Make the additional percentage text be colored."] = true
 L["Maps"] = true
 L["Mark Highest Score"] = true
+L["Mark as read, the changelog message will be hidden when you login next time."] = true
 L["Math Without Kanji"] = true
 L["Max Overflow"] = true
 L["Media Files"] = true

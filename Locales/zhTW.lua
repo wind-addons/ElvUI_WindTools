@@ -817,6 +817,7 @@ L["Make sure you select the NPC as your target."] = "請確保你已經選擇了
 L["Make the additional percentage text be colored."] = "使得額外的百分比文字為彩色顯示."
 L["Maps"] = "地圖"
 L["Mark Highest Score"] = "標記最高分數"
+L["Mark as read, the changelog message will be hidden when you login next time."] = "標記為已讀, 下次登入時將不再顯示更新日誌."
 L["Math Without Kanji"] = "無漢字計數"
 L["Max Overflow"] = "最大治療吸收盾"
 L["Media Files"] = "媒體檔案"

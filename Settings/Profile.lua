@@ -1043,31 +1043,25 @@ P.social = {
 
 if W.ChineseLocale then
 	P.social.chatText.customAbbreviation[L["BigfootWorldChannel"]] = "世"
-	if W.RealRegion == "TW" then
-		P.social.chatText.customAbbreviation["尋求組隊"] = "世"
-		P.social.chatText.customAbbreviation["組隊頻道"] = "世"
-	end
+	P.social.chatText.customAbbreviation["尋求組隊"] = "世"
+	P.social.chatText.customAbbreviation["組隊頻道"] = "世"
 
-	if W.RealRegion == "CN" or W.RealRegion == "TW" and W.CurrentRealmID == 963 then
-		P.social.chatBar.channels.world.enable = true
+	tinsert(P.social.chatBar.channels.world.config, {
+		region = "TW",
+		faction = "Alliance",
+		realmID = 963,
+		realmName = L["Shadowmoon"],
+		name = "組隊頻道",
+		autoJoin = true,
+	})
 
-		tinsert(P.social.chatBar.channels.world.config, {
-			region = "TW",
-			faction = "Alliance",
-			realmID = 963,
-			realmName = L["Shadowmoon"],
-			name = "組隊頻道",
-			autoJoin = true,
-		})
-
-		tinsert(P.social.chatBar.channels.world.config, {
-			region = "CN",
-			faction = "ALL",
-			realmID = "ALL",
-			name = L["BigfootWorldChannel"],
-			autoJoin = true,
-		})
-	end
+	tinsert(P.social.chatBar.channels.world.config, {
+		region = "CN",
+		faction = "ALL",
+		realmID = "ALL",
+		name = L["BigfootWorldChannel"],
+		autoJoin = true,
+	})
 end
 
 P.quest = {

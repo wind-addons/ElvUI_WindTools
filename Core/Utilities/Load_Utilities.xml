@@ -2,4 +2,5 @@
 	<Script file='Async.lua'/>
 	<Script file='Color.lua'/>
 	<Script file='LFGPlayerInfo.lua'/>
+	<Script file='Scheduler.lua'/>
 </Ui>

@@ -7,6 +7,7 @@ local pcall = pcall
 local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
+local tonumber = tonumber
 
 local InCombatLockdown = InCombatLockdown
 

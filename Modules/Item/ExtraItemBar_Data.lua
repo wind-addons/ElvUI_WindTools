@@ -1048,6 +1048,9 @@ local openableItems = {
 local professionItems = {
 	-- https://www.wowhead.com/items/miscellaneous/other?filter=166:98:111;11:1:2;0:0:1
 	-- https://www.wowhead.com/items/miscellaneous/other?filter=107;0;increase+your+Khaz+Algar
+	213779, -- 阿爾加琥珀稜石
+	213780, -- 阿爾加琥珀稜石
+	213781, -- 阿爾加琥珀稜石
 	222546, -- 阿爾加鍊金術概論
 	222547, -- 阿爾加裁縫概論
 	222548, -- 阿爾加銘文學概論
@@ -1057,6 +1060,7 @@ local professionItems = {
 	222552, -- 阿爾加草藥學概論
 	222553, -- 阿爾加採礦概論
 	222554, -- 阿爾加鍛造概論
+	222621, -- 阿爾加工程學概論
 	222649, -- 阿爾加剝皮概論
 	224007, -- 剩餘軀殼的用途(如何將它們拆開)
 	224023, -- 草藥防腐技藝

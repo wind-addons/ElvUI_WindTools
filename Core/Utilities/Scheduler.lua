@@ -16,26 +16,15 @@ local U = W.Utilities.TaskScheduler
 local TaskScheduler = {}
 TaskScheduler.__index = TaskScheduler
 
-function TaskScheduler.new()
-	local self = setmetatable({
-		tasks = {},
-		frameMode = false,
-		interval = 1,
-		batchSize = 10,
-		doing = false,
-	}, TaskScheduler)
-	return self
-end
-
-function TaskScheduler.new()
-	return setmetatable({
-		tasks = {},
-		frameMode = false,
-		interval = 1,
-		batchSize = 10,
-		doing = false,
-		count = 0,
-	}, TaskScheduler)
+function TaskScheduler.new(interval, frameMode, batchSize)
+    return setmetatable({
+        tasks = {},
+        frameMode = frameMode or false,
+        interval = interval or 1,
+        batchSize = batchSize or 10,
+        doing = false,
+        count = 0,
+    }, TaskScheduler)
 end
 
 function TaskScheduler:Add(...)

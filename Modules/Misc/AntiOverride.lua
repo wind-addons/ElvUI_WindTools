@@ -1,7 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local M = W.Modules.Misc
 
-local _G = _G
 local BNFeaturesEnabledAndConnected = BNFeaturesEnabledAndConnected
 local ConsoleExec = ConsoleExec
 
@@ -11,22 +10,24 @@ local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 local C_CVar_GetCVar = C_CVar.GetCVar
 local C_CVar_SetCVar = C_CVar.SetCVar
 
-local function FixLanguageFilterSideEffects()
-	function C_BattleNet.GetFriendGameAccountInfo(...)
-		local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(...)
-		if gameAccountInfo then
-			gameAccountInfo.isInCurrentRegion = true
+local function wrapBattleNetFunction(originalFunc)
+	return function(...)
+		local info = originalFunc(...)
+		if info then
+			if info.gameAccountInfo then
+				info.gameAccountInfo.isInCurrentRegion = true
+			else
+				info.isInCurrentRegion = true
+			end
+			print("wrapBattleNetFunction", info)
 		end
-		return gameAccountInfo
+		return info
 	end
+end
 
-	function C_BattleNet.GetFriendAccountInfo(...)
-		local accountInfo = C_BattleNet_GetFriendAccountInfo(...)
-		if accountInfo and accountInfo.gameAccountInfo then
-			accountInfo.gameAccountInfo.isInCurrentRegion = true
-		end
-		return accountInfo
-	end
+local function FixLanguageFilterSideEffects()
+	C_BattleNet.GetFriendGameAccountInfo = wrapBattleNetFunction(C_BattleNet_GetFriendGameAccountInfo)
+	C_BattleNet.GetFriendAccountInfo = wrapBattleNetFunction(C_BattleNet_GetFriendAccountInfo)
 end
 
 -- from https://www.curseforge.com/wow/addons/fckyou

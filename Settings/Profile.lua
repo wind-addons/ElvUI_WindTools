@@ -1045,9 +1045,24 @@ if W.ChineseLocale then
 	tinsert(P.social.chatBar.channels.world.config, {
 		region = "TW",
 		faction = "Alliance",
-		realmID = 963,
-		realmName = L["Shadowmoon"],
+		realmID = "ALL",
 		name = "組隊頻道",
+		autoJoin = true,
+	})
+
+	tinsert(P.social.chatBar.channels.world.config, {
+		region = "TW",
+		faction = "Horde",
+		realmID = "ALL",
+		name = "尋求組隊",
+		autoJoin = true,
+	})
+
+	tinsert(P.social.chatBar.channels.world.config, {
+		region = "TW",
+		faction = "ALL",
+		realmID = "ALL",
+		name = L["BigfootWorldChannel"],
 		autoJoin = true,
 	})
 

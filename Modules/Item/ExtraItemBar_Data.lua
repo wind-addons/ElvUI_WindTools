@@ -1048,9 +1048,9 @@ local openableItems = {
 local professionItems = {
 	-- https://www.wowhead.com/items/miscellaneous/other?filter=166:98:111;11:1:2;0:0:1
 	-- https://www.wowhead.com/items/miscellaneous/other?filter=107;0;increase+your+Khaz+Algar
-	213779, -- 阿爾加琥珀稜石
-	213780, -- 阿爾加琥珀稜石
-	213781, -- 阿爾加琥珀稜石
+	213779, -- 阿爾加琥珀稜石 (1)
+	213780, -- 阿爾加琥珀稜石 (2)
+	213781, -- 阿爾加琥珀稜石 (3)
 	222546, -- 阿爾加鍊金術概論
 	222547, -- 阿爾加裁縫概論
 	222548, -- 阿爾加銘文學概論

@@ -155,7 +155,7 @@ local function updateUI()
 		return
 	end
 
-	if E.myclass ~= "DEATHKNIGHT" or E.myspec ~= 1 then
+	if E.myclass ~= "DEATHKNIGHT" then
 		tex:Hide()
 		return
 	end
@@ -200,7 +200,7 @@ function damageDB:clear()
 end
 
 function damageDB:add(damage)
-	if E.myclass ~= "DEATHKNIGHT" or E.myspec ~= 1 then
+	if E.myclass ~= "DEATHKNIGHT" then
 		return
 	end
 
@@ -223,7 +223,7 @@ function damageDB:update()
 end
 
 function damageDB:calculate()
-	if E.myclass ~= "DEATHKNIGHT" or E.myspec ~= 1 then
+	if E.myclass ~= "DEATHKNIGHT" then
 		return
 	end
 

@@ -1136,25 +1136,6 @@ options.eventTracker = {
 				},
 			},
 		},
-		worldSoul = {
-			order = 10,
-			type = "group",
-			inline = true,
-			name = L["World Soul"],
-			args = {
-				enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-				},
-				desaturate = {
-					order = 2,
-					type = "toggle",
-					name = L["Desaturate"],
-					desc = L["Desaturate icon if the event is completed in this week."],
-				},
-			},
-		},
 		khazAlgarEmissary = {
 			order = 12,
 			type = "group",

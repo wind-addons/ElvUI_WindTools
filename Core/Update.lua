@@ -168,6 +168,14 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 3.76 then
+		if E.db.WT and E.db.WT.maps.eventTracker then
+			if E.db.WT.maps.eventTracker.worldSoul then
+				E.db.WT.maps.eventTracker.worldSoul = nil
+			end
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

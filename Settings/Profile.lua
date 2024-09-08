@@ -722,10 +722,6 @@ P.maps = {
 			enable = true,
 			desaturate = true,
 		},
-		worldSoul = {
-			enable = true,
-			desaturate = true,
-		},
 		khazAlgarEmissary = {
 			enable = true,
 			desaturate = true,

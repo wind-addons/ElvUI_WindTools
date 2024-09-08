@@ -129,9 +129,8 @@ options.general = {
 			type = "toggle",
 			name = L["Keybind Text Above"],
 			desc = format(
-				"%s\n%s %s",
+				"%s\n%s",
 				L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."],
-				E.NewSign,
 				F.CreateColorString(L["Only works with ElvUI action bar and ElvUI cooldowns."], E.db.general.valuecolor)
 			),
 		},
@@ -274,9 +273,8 @@ options.cvars = {
 					order = 1,
 					type = "description",
 					name = format(
-						"%s\n%s |cffff3860%s|r %s",
+						"%s\n|cffff3860%s|r %s",
 						L["A simple editor for CVars."],
-						E.NewSign,
 						format(L["%s never lock the CVars."], W.Title),
 						L["If you found the CVars changed automatically, please check other addons."]
 					),

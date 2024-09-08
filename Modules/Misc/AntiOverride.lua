@@ -19,7 +19,6 @@ local function wrapBattleNetFunction(originalFunc)
 			else
 				info.isInCurrentRegion = true
 			end
-			print("wrapBattleNetFunction", info)
 		end
 		return info
 	end

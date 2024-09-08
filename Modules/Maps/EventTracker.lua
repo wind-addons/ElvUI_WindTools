@@ -37,7 +37,6 @@ local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1
 local eventList = {
 	-- TWW
 	-- "TWWProfessions",
-	"WorldSoul",
 	"KhazAlgarEmissary",
 	"TheaterTroupe",
 	"RingingDeeps",
@@ -925,33 +924,49 @@ local eventData = {
 			onClickHelpText = L["Click to show location"],
 		},
 	},
-	WorldSoul = {
-		dbKey = "worldSoul",
-		args = {
-			icon = 2565092,
-			type = "weekly",
-			questIDs = {
-				82452,
-				82482,
-				82485,
-				82511,
-			},
-			hasWeeklyReward = true,
-			eventName = L["World Soul"],
-			location = C_Map_GetMapInfo(2339).name,
-			label = L["World Soul"],
-			onClick = worldMapIDSetter(2339),
-			onClickHelpText = L["Click to show location"],
-		},
-	},
 	KhazAlgarEmissary = {
 		dbKey = "khazAlgarEmissary",
 		args = {
 			icon = 236681,
 			type = "weekly",
 			questIDs = {
-				83443,
-				83457,
+				82449, -- 世界之魂的呼喚
+				82452, -- 世界之魂：世界任務
+				82453, -- 世界之魂：安可！
+				82482, -- 世界之魂：嗅聞
+				82483, -- 世界之魂：散布光芒
+				82485, -- 世界之魂：燼釀酒莊
+				82486, -- 世界之魂：培育所
+				82487, -- 世界之魂：石庫
+				82488, -- 世界之魂：暗焰裂縫
+				82489, -- 世界之魂：破曉者號
+				82490, -- 世界之魂：聖焰隱修院
+				82491, -- 世界之魂：『回音之城』厄拉卡拉
+				82492, -- 世界之魂：蛛絲城
+				82493, -- 世界之魂：破曉者號
+				82494, -- 世界之魂：『回音之城』厄拉卡拉
+				82495, -- 世界之魂：燼釀酒莊
+				82496, -- 世界之魂：蛛絲城
+				82497, -- 世界之魂：石庫
+				82498, -- 世界之魂：暗焰裂縫
+				82499, -- 世界之魂：聖焰隱修院
+				82500, -- 世界之魂：培育所
+				82501, -- 世界之魂：破曉者號
+				82502, -- 世界之魂：『回音之城』厄拉卡拉
+				82503, -- 世界之魂：燼釀酒莊
+				82504, -- 世界之魂：蛛絲城
+				82505, -- 世界之魂：石庫
+				82506, -- 世界之魂：暗焰裂縫
+				82507, -- 世界之魂：聖焰隱修院
+				82508, -- 世界之魂：培育所
+				82509, -- 世界之魂：奈幽巴宮殿
+				82510, -- 世界之魂：奈幽巴宮殿
+				82511, -- 世界之魂：甦醒機械
+				82512, -- 世界之魂：世界首領
+				82516, -- 世界之魂：締結合約
+				82659, -- 世界之魂：奈幽巴宮殿
+				82678, -- 文庫：第一張圓盤
+				82708, -- 探究：奈幽蟲族威脅
 			},
 			hasWeeklyReward = true,
 			eventName = L["Khaz Algar Emissary"],
@@ -966,7 +981,9 @@ local eventData = {
 		args = {
 			icon = 5788303,
 			type = "loopTimer",
-			questIDs = { 83240 },
+			questIDs = {
+				83240, -- 劇團 
+			},
 			hasWeeklyReward = true,
 			duration = 15 * 60,
 			interval = 60 * 60,
@@ -1004,7 +1021,9 @@ local eventData = {
 		args = {
 			icon = 2120036,
 			type = "weekly",
-			questIDs = { 83333 },
+			questIDs = {
+				83333, -- 應付麻煩
+			},
 			hasWeeklyReward = true,
 			eventName = L["Ringing Deeps"],
 			location = C_Map_GetMapInfo(2214).name,
@@ -1018,7 +1037,9 @@ local eventData = {
 		args = {
 			icon = 5927633,
 			type = "weekly",
-			questIDs = { 76586 },
+			questIDs = {
+				76586, -- 散布光芒
+			},
 			hasWeeklyReward = true,
 			eventName = L["Spreading The Light"],
 			location = C_Map_GetMapInfo(2215).name,
@@ -1032,7 +1053,11 @@ local eventData = {
 		args = {
 			icon = 5309857,
 			type = "weekly",
-			questIDs = { 80670, 80671, 80672 },
+			questIDs = {
+				80670, -- 織絲者之眼
+				80671, -- 將軍之刃
+				80672, -- 輔臣之手
+			},
 			hasWeeklyReward = true,
 			eventName = L["Underworld Operative"],
 			location = C_Map_GetMapInfo(2255).name,

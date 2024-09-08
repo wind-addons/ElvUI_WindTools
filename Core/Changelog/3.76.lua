@@ -68,6 +68,7 @@ W.Changelog[376] = {
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"移除了设定中新内容图标的使用，防止和 ElvUI 新内容功能冲突。",
 			"[游戏条] 整理更新了炉石玩具列表。",
 			"[游戏条] 拓宽了家按钮的设定界面，同时添加了图标便于识别。",
 			"[额外物品条] 更新专业物品列表。",
@@ -79,6 +80,7 @@ W.Changelog[376] = {
 			"[事件追踪器] 优化了主线周常追踪的任务 ID。",
 		},
 		["zhTW"] = {
+			"移除了設定中新玩意圖示的使用，防止和 ElvUI 新玩意功能衝突。",
 			"[游戲條] 整理更新了爐石玩具列表。",
 			"[游戲條] 拓寬了家按鍵的設定介面，同時添加了圖示便於識別。",
 			"[額外物品條] 更新專業物品列表。",
@@ -90,6 +92,7 @@ W.Changelog[376] = {
 			"[事件追蹤器] 優化了主綫周常追蹤的任務 ID。",
 		},
 		["enUS"] = {
+			"Removed the use of the What's New icon in the settings to prevent conflicts with the ElvUI What's New feature.",
 			"[Game Bar] Organized and updated the Hearthstone toy list.",
 			"[Game Bar] Widened the settings interface of the home button, and added an icon for easy identification.",
 			"[Extra Items Bar] Update the professional item list.",
@@ -101,6 +104,7 @@ W.Changelog[376] = {
 			"[Event Tracker] Optimize the quest ID of the meta story line weekly tracking.",
 		},
 		["koKR"] = {
+			"ElvUI의 새로운 기능과 충돌을 방지하기 위해 설정에서 새로운 아이콘 사용을 제거했습니다.",
 			"[게임 바] 하스스톤 장난감 목록을 정리하고 업데이트했습니다.",
 			"[게임 바] 홈 버튼의 설정 인터페이스를 넓히고 쉽게 식별할 수 있는 아이콘을 추가했습니다.",
 			"[추가 아이템 바] 전문가 아이템 목록을 업데이트했습니다.",
@@ -111,6 +115,7 @@ W.Changelog[376] = {
 			"[이벤트 추적기] 잘못된 주간 추적을 제거했습니다.",
 		},
 		["ruRU"] = {
+			'Удалено использование иконки "Что нового" в настройках, чтобы избежать конфликтов с функцией "Что нового" ElvUI.',
 			"[Панель игры] Организован и обновлен список игрушек Хартстоуна.",
 			"[Панель игры] Расширили интерфейс настроек кнопки домой и добавили иконку для удобной идентификации.",
 			"[Дополнительная панель предметов] Обновлен список профессиональных предметов.",

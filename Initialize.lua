@@ -64,7 +64,8 @@ function W:Initialize()
 
 	self.initialized = true
 
-	self:UpdateScripts() -- Database need update first
+	self:AddCustomLinkSupport()
+	self:UpdateScripts()
 	self:InitializeModules()
 
 	EP:RegisterPlugin(addonName, W.OptionsCallback)
@@ -76,7 +77,6 @@ do
 	local checked = false
 	function W:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		if isInitialLogin then
-			self:AddCustomLinkSupport()
 			E:Delay(6, self.ChangelogReadAlert, self)
 			if E.global.WT.core.loginMessage then
 				local icon = addon[2].GetIconString(self.Media.Textures.smallLogo, 14)

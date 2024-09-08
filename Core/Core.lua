@@ -149,7 +149,7 @@ function W:ChangelogReadAlert()
 			F.Print(
 				format(
 					"%s %s",
-					format(L["Welcome to %s %s!"], W.Title, W.Version),
+					format(L["Welcome to version %s!"], W.Utilities.Color.StringByTemplate(W.Version, "primary")),
 					format("|cff71d5ff|Hwtlink:changelog::|h[%s]|h|r", L["Open Changelog"])
 				)
 			)

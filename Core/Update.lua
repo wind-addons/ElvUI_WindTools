@@ -16,13 +16,12 @@ local function UpdateMessage(text, from)
 		F.Print(L["Update"])
 	end
 
-	print(text .. format("(|cff00a8ff%.2f|r -> |cff00a8ff%s|r)...", from, W.Version) .. DONE_ICON)
+	E:Delay(1, function()
+		print(text .. format("(|cff00a8ff%.2f|r -> |cff00a8ff%s|r)...", from, W.Version) .. DONE_ICON)
+	end)
 end
 
-function W:ForPreReleaseUser() end
-
 function W:UpdateScripts()
-	W:ForPreReleaseUser()
 	local currentVersion = tonumber(W.Version) -- installed WindTools Version
 	local globalVersion = tonumber(E.global.WT.version or "0") -- version in ElvUI Global
 
@@ -38,6 +37,8 @@ function W:UpdateScripts()
 	if globalVersion == currentVersion and profileVersion == currentVersion and privateVersion == currentVersion then
 		return
 	end
+
+	print(globalVersion, profileVersion, privateVersion, currentVersion)
 
 	isFirstLine = true
 
@@ -172,6 +173,7 @@ function W:UpdateScripts()
 		if E.db.WT and E.db.WT.maps.eventTracker then
 			if E.db.WT.maps.eventTracker.worldSoul then
 				E.db.WT.maps.eventTracker.worldSoul = nil
+				UpdateMessage(L["Event Tracker"] .. ": " .. L["Update Database"], profileVersion)
 			end
 		end
 	end

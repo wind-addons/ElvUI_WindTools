@@ -584,7 +584,7 @@ P.item = {
 					b = 1,
 				},
 			},
-			include = "FISHING,CUSTOM",
+			include = "CUSTOM",
 		},
 		bar5 = {
 			enable = false,

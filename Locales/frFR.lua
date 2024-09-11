@@ -575,6 +575,7 @@ L["Fill In"] = "Remplir"
 L["Fill by click"] = "Remplir avec un clic"
 L["Filter"] = "Filtre"
 L["Filters"] = "Filtres"
+L["Fishing"] = true
 L["Fishing Net"] = "Filet de pêche"
 L["Fishing Nets"] = "Filets de pêche"
 L["Fix the merchant frame showing when you using Trader Skill Master."] = "Corrige le cadre marchand qui s'affiche lorsque vous utilisez Trader Skill Master."

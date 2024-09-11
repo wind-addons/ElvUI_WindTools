@@ -252,6 +252,8 @@ do -- Add options for bars
 									)
 								),
 								desc("MAGEFOOD", format("%s (%s)|r", L["Food"], L["Crafted by mage"])),
+								desc("FISHING", format("%s (%s)", L["Fishing"], L["All Versions"])),
+								desc("FISHINGTWW", format("%s |cffffdd57[%s]|r", L["Fishing"], L["The War Within"])),
 								desc("BANNER", L["Banners"]),
 								desc("UTILITY", L["Utilities"]),
 								desc("OPENABLE", L["Openable Items"]),

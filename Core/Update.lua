@@ -38,8 +38,6 @@ function W:UpdateScripts()
 		return
 	end
 
-	print(globalVersion, profileVersion, privateVersion, currentVersion)
-
 	isFirstLine = true
 
 	-- Clear the history of move frames.

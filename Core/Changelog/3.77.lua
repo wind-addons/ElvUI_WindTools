@@ -34,13 +34,13 @@ W.Changelog[377] = {
 			"[職業助手] 死亡打擊預測現在可以用在 DK 全部專精中。感謝 AngelosNaoumis",
 		},
 		["enUS"] = {
-			"[Class Helper]  Death Strike prediction can now be used in all DK specializations. Thanks AngelosNaoumis",
+			"[Class Helper] Death Strike prediction can now be used in all DK specializations. Thanks AngelosNaoumis",
 		},
 		["koKR"] = {
 			"[직업 도우미] 죽음의 일격 예측이 이제 모든 DK 전문화에서 사용할 수 있습니다. 감사합니다 AngelosNaoumis",
 		},
 		["ruRU"] = {
-			"[Помощник по классу] Прогнозирование удара смерти теперь можно использовать во всех специализациях DK. Спасибо AngelosNaoumis",
+			"[Классовый помощник] Прогнозирование 'Удара смерти' теперь можно использовать во всех специализациях Рыцаря смерти. Спасибо AngelosNaoumis",
 		},
 	},
 }

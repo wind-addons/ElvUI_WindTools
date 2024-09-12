@@ -575,6 +575,7 @@ L["Fill In"] = "'아이템 파괴' 입력 방식"
 L["Fill by click"] = "클릭해서 입력"
 L["Filter"] = "필터"
 L["Filters"] = true
+L["Fishing"] = true
 L["Fishing Net"] = "낚시 그물"
 L["Fishing Nets"] = "낚시 그물"
 L["Fix the merchant frame showing when you using Trader Skill Master."] = "Trader Skill Master 사용 시 상인 창이 자동으로 출력되는 현상이 수정되었습니다."

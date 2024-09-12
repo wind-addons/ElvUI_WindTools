@@ -575,6 +575,7 @@ L["Fill In"] = true
 L["Fill by click"] = true
 L["Filter"] = true
 L["Filters"] = true
+L["Fishing"] = true
 L["Fishing Net"] = true
 L["Fishing Nets"] = true
 L["Fix the merchant frame showing when you using Trader Skill Master."] = true

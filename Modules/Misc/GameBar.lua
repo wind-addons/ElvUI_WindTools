@@ -956,6 +956,8 @@ function GB:ConstructTimeArea()
 			end
 		elseif mouseButton == "RightButton" then
 			ToggleTimeManager()
+		elseif mouseButton == "MiddleButton" then
+			C_UI_Reload()
 		end
 	end)
 end

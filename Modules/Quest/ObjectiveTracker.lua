@@ -51,7 +51,7 @@ do
 	end
 end
 
-local function SetTextColorHook(text)
+local function SetHeaderTextColorHook(text)
 	if not text.windHooked then
 		text.__WindSetTextColor = text.SetTextColor
 		text.SetTextColor = function(self, r, g, b, a)
@@ -73,6 +73,32 @@ local function SetTextColorHook(text)
 			self:__WindSetTextColor(r, g, b, a)
 		end
 		text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], { a = 1 }))
+		text.windHooked = true
+	end
+end
+
+local function SetInfoTextColorHook(text)
+	if not text.windHooked then
+		text.__WindSetTextColor = text.SetTextColor
+		text.SetTextColor = function(self, r, g, b, a)
+			local rgbTable = { r = r, g = g, b = b, a = a }
+
+			if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["Normal"], rgbTable) then
+				if OT.db and OT.db.enable and OT.db.infoColor and OT.db.infoColor.enable then
+					r = OT.db.infoColor.classColor and W.ClassColor.r or OT.db.infoColor.customColorNormal.r
+					g = OT.db.infoColor.classColor and W.ClassColor.g or OT.db.infoColor.customColorNormal.g
+					b = OT.db.infoColor.classColor and W.ClassColor.b or OT.db.infoColor.customColorNormal.b
+				end
+			elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["NormalHighlight"], rgbTable) then
+				if OT.db and OT.db.enable and OT.db.infoColor and OT.db.infoColor.enable then
+					r = OT.db.infoColor.classColor and W.ClassColor.r or OT.db.infoColor.customColorHighlight.r
+					g = OT.db.infoColor.classColor and W.ClassColor.g or OT.db.infoColor.customColorHighlight.g
+					b = OT.db.infoColor.classColor and W.ClassColor.b or OT.db.infoColor.customColorHighlight.b
+				end
+			end
+			self:__WindSetTextColor(r, g, b, a)
+		end
+		text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Normal"], { a = 1 }))
 		text.windHooked = true
 	end
 end
@@ -177,7 +203,7 @@ function OT:HandleTitleText(text)
 	if height ~= text:GetHeight() then
 		text:SetHeight(height)
 	end
-	SetTextColorHook(text)
+	SetHeaderTextColorHook(text)
 end
 
 function OT:HandleMenuText(text)
@@ -229,6 +255,8 @@ function OT:HandleObjectiveLine(line)
 
 		line.Text:SetText(rawText)
 	end
+
+	SetInfoTextColorHook(line.Text)
 
 	self:ColorfulProgression(line.Text)
 	line:SetHeight(line.Text:GetHeight())

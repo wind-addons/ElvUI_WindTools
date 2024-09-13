@@ -17,14 +17,14 @@ local TaskScheduler = {}
 TaskScheduler.__index = TaskScheduler
 
 function TaskScheduler.new(interval, frameMode, batchSize)
-    return setmetatable({
-        tasks = {},
-        frameMode = frameMode or false,
-        interval = interval or 1,
-        batchSize = batchSize or 10,
-        doing = false,
-        count = 0,
-    }, TaskScheduler)
+	return setmetatable({
+		tasks = {},
+		frameMode = frameMode or false,
+		interval = interval or 1,
+		batchSize = batchSize or 10,
+		doing = false,
+		count = 0,
+	}, TaskScheduler)
 end
 
 function TaskScheduler:Add(...)
@@ -55,7 +55,7 @@ function TaskScheduler:Do()
 		if task then
 			local func = task[1]
 			if type(func) == "function" then
-			    func(select(2, unpack(task)))
+				func(select(2, unpack(task)))
 			end
 		end
 	end

@@ -982,7 +982,7 @@ local eventData = {
 			icon = 5788303,
 			type = "loopTimer",
 			questIDs = {
-				83240, -- 劇團 
+				83240, -- 劇團
 			},
 			hasWeeklyReward = true,
 			duration = 15 * 60,

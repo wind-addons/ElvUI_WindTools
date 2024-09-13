@@ -64,7 +64,6 @@ local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
 local C_Garrison_GetCompleteMissions = C_Garrison.GetCompleteMissions
 local C_Item_GetItemCooldown = C_Item.GetItemCooldown
 local C_Item_GetItemCount = C_Item.GetItemCount
-local C_Item_GetItemIconByID = C_Item.GetItemIconByID
 local C_Timer_NewTicker = C_Timer.NewTicker
 local C_ToyBox_IsToyUsable = C_ToyBox.IsToyUsable
 local C_UI_Reload = C_UI.Reload
@@ -921,6 +920,21 @@ function GB:ConstructTimeArea()
 			self.tooltipTimer = C_Timer_NewTicker(1, function()
 				DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 			end)
+
+			DT.tooltip:AddLine("\n")
+			DT.tooltip:AddDoubleLine(format("%s %s", LeftButtonIcon, L["Left Button"]), L["Calendar"], 1, 1, 1)
+			DT.tooltip:AddDoubleLine(
+				format("%s %s", RightButtonIcon, L["Right Button"]),
+				L["Time Manager"],
+				1,
+				1,
+				1
+			)
+			DT.tooltip:AddDoubleLine(format("%s %s", ScrollButtonIcon, L["Middle Button"]), L["Reload UI"], 1, 1, 1)
+			DT.tooltip:AddDoubleLine(format("Shift + %s", L["Any"]), L["Collect Garbage"], 1, 1, 1)
+			DT.tooltip:AddDoubleLine(format("Ctrl + Shift + %s", L["Any"]), L["Toggle CPU Profiling"], 1, 1, 1)
+
+			DT.tooltip:Show()
 		end
 	end)
 

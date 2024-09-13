@@ -157,7 +157,7 @@ options.help = {
 						"%s: %s | %s",
 						"fang2hou",
 						E.InfoColor .. "houshuu" .. "|r",
-						F.CreateClassColorString("Tabideath @ " .. L["Shadowmoon"] .. "(TW)", "DEATHKNIGHT")
+						F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
 					),
 				},
 				["mcc1"] = {
@@ -352,7 +352,9 @@ do -- 网站
 		"https://www.wowhead.com/",
 		"https://www.townlong-yak.com/",
 		"https://wow.tools/",
+		"https://wago.tools/",
 		"https://wow.gamepedia.com/",
+		"https://warcraft.wiki.gg/",
 	}
 
 	for i, site in pairs(siteList) do

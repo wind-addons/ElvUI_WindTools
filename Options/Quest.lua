@@ -655,7 +655,7 @@ options.objectiveTracker = {
 			order = 8,
 			type = "group",
 			inline = true,
-			name = L["Info Color"],
+			name = L["Information Color"],
 			disabled = function()
 				return not E.private.WT.quest.objectiveTracker.enable
 			end,

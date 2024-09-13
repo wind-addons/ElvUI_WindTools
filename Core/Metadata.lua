@@ -29,7 +29,7 @@ W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
 W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 
--- Wait for TWW
+-- Mythic+
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp

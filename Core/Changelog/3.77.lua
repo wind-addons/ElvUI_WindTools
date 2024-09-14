@@ -21,7 +21,7 @@ W.Changelog[377] = {
 			"[額外物品條] 新增 FISHING, FISHINGTWW 釣魚物品分組。感謝 LvWind",
 		},
 		["enUS"] = {
-			"[objective Tracker] Added the ability to change the color of the information.",
+			"[Objective Tracker] Added the ability to change the color of the information.",
 			"[Game Bar] Now you can quickly reload the interface by clicking the middle time panel with the middle mouse button.",
 			"[Extra Item Bar] Added FISHING, FISHINGTWW fishing item groups. Thanks LvWind",
 		},
@@ -31,7 +31,7 @@ W.Changelog[377] = {
 			"[추가 아이템 바] FISHING, FISHINGTWW 낚시 아이템 그룹 추가. 감사합니다 LvWind",
 		},
 		["ruRU"] = {
-			"[Список заданий] Добавлена возможность изменения цвета информации.",
+			"[Список заданий] Добавлена возможность менять цвет информации.",
 			"[Игровая панель] Теперь вы можете быстро перезагрузить интерфейс, щелкнув средней кнопкой мыши по средней панели времени.",
 			"[Дополнительная панель предметов] Добавлены группы предметов для рыбалки FISHING, FISHINGTWW. Спасибо LvWind",
 		},
@@ -62,7 +62,7 @@ W.Changelog[377] = {
 			"[스킨] 시나리오의 제목 배경 크기를 최적화했습니다.",
 		},
 		["ruRU"] = {
-			"[Инспекция] Синхронизированы последние изменения из TinyInspect.",
+			"[Осмотр] Синхронизированы последние изменения из TinyInspect.",
 			"[Игровая панель] Теперь при наведении на среднюю панель появится подсказка.",
 			"[Классовый помощник] Прогнозирование 'Удара смерти' теперь можно использовать во всех специализациях Рыцаря смерти. Спасибо AngelosNaoumis",
 			"[Скины] Оптимизирован размер фона заголовка в сценарии.",

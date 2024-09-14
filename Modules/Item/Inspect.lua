@@ -4,7 +4,7 @@ local S = W.Modules.Skins
 local MF = W.Modules.MoveFrames
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
-local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000.Wind")
+local LibItemEnchant = LibStub:GetLibrary("LibItemEnchant.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
@@ -48,11 +48,9 @@ local LEVEL = LEVEL
 local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL
-local UNIT_NAME_FONT = UNIT_NAME_FONT
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_Item_GetItemInfo = C_Item.GetItemInfo
-local C_Item_GetItemInventoryTypeByID = C_Item.GetItemInventoryTypeByID
 local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
@@ -79,13 +77,23 @@ local slots = {
 }
 
 local EnchantParts = {
-	[5] = { 1, CHESTSLOT },
-	[8] = { 1, FEETSLOT },
-	[11] = { 1, FINGER0SLOT },
-	[12] = { 1, FINGER1SLOT },
-	[15] = { 1, BACKSLOT },
-	[16] = { 1, MAINHANDSLOT },
-	[17] = { 1, SECONDARYHANDSLOT },
+	{ false, "HEADSLOT" },
+	{ false, "NECKSLOT" },
+	{ false, "SHOULDERSLOT" },
+	false,
+	{ true, "CHESTSLOT" },
+	{ false, "WAISTSLOT" },
+	{ false, "LEGSSLOT" },
+	{ true, "FEETSLOT" },
+	{ false, "WRISTSLOT" },
+	{ false, "HANDSSLOT" },
+	{ true, "FINGER0SLOT" },
+	{ true, "FINGER1SLOT" },
+	{ false, "TRINKET0SLOT" },
+	{ false, "TRINKET1SLOT" },
+	{ true, "BACKSLOT" },
+	{ true, "MAINHANDSLOT" },
+	{ false, "SECONDARYHANDSLOT" },
 }
 
 local function ReInspect(unit)
@@ -136,12 +144,13 @@ local function GetInspectSpec(unit)
 	return specName or ""
 end
 
-local function GetStateValue(unit, state, value, default)
+local function GetStateValue(_, _, value, default)
 	return value or default
 end
 
 -- Gems
 --創建圖標框架
+
 local function CreateIconFrame(frame, index)
 	local icon = CreateFrame("Button", nil, frame)
 	icon.index = index
@@ -269,7 +278,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
 		return 0
 	end
 	local num, info, qty = LibItemGem:GetItemGemInfo(ItemLink)
-	local _, quality, texture, icon, r, g, b
+	local icon
 	for i, v in ipairs(info) do
 		icon = GetIconFrame(frame)
 		if v.link then
@@ -315,24 +324,16 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
 		icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
 		icon:Show()
 		anchorFrame = icon
-	elseif not enchantID and EnchantParts[itemframe.index] then
+	elseif not enchantID and EnchantParts[itemframe.index] and EnchantParts[itemframe.index][1] then
 		if not (qty == 6 and (itemframe.index == 2 or itemframe.index == 16 or itemframe.index == 17)) then
 			num = num + 1
 			icon = GetIconFrame(frame)
-			icon.title = ENCHANTS .. ": " .. EnchantParts[itemframe.index][2]
+			icon.title = ENCHANTS .. ": " .. (_G[EnchantParts[itemframe.index][2]] or EnchantParts[itemframe.index][2])
 			icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
-			icon.texture:SetTexture(
-				"Interface/Cursor/" .. (EnchantParts[itemframe.index][1] == 1 and "Quest" or "QuestRepeatable")
-			)
+			icon.texture:SetTexture("Interface\\Cursor\\Quest") --QuestRepeatable
 			icon:ClearAllPoints()
-			icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+			icon:SetPoint("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
 			icon:Show()
-			if itemframe.index == 17 then
-				local itemType = C_Item_GetItemInventoryTypeByID(ItemLink)
-				if itemType ~= 13 and itemType ~= 17 then
-					icon:Hide()
-				end
-			end
 			anchorFrame = icon
 		end
 	end

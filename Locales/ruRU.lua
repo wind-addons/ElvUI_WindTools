@@ -1424,7 +1424,7 @@ L["To enable the name of friendly player in instances, you can set as following:
 L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = "Чтобы включить эту функцию, Вам нужно сначала включить скин флажка в скинах ElvUI."
 L["To enable this skin, you need download %s from CurseForge"] = "Чтобы включить этот скин, Вам нужно скачать %s с CurseForge"
 L["Toast"] = "Тост"
-L["Toggle CPU Profiling"] = "Включить/выключить Профилирование ЦП"
+L["Toggle CPU Profiling"] = "Включить/выключить профилирование ЦП"
 L["Toggle Contacts"] = "Показать/скрыть контакты"
 L["Toggle minimap buttons bar."] = "Показать/скрыть панель кнопок миникарты."
 L["Toggle raid markers bar."] = "Показать/скрыть панель меток рейда."

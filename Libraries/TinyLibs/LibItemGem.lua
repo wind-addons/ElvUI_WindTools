@@ -3,14 +3,18 @@
 -- 物品寶石庫 Author: M
 -------------------------------------
 
-local MAJOR, MINOR = "LibItemGem.7000", 1
+local MAJOR, MINOR = "LibItemGem.7000", 2
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
+
+local GetItemGem = GetItemGem or C_Item.GetItemGem
+local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
+local GetItemStats = GetItemStats or C_Item.GetItemStats
 
 if not lib then return end
 
 function lib:GetItemGemInfo(ItemLink)
     local total, info = 0, {}
-    local stats = C_Item.GetItemStats(ItemLink)
+    local stats = GetItemStats(ItemLink)
     for key, num in pairs(stats) do
         if (string.find(key, "EMPTY_SOCKET_")) then
             for i = 1, num do
@@ -19,7 +23,7 @@ function lib:GetItemGemInfo(ItemLink)
             end
         end
     end
-    local quality = select(3, C_Item.GetItemInfo(ItemLink))
+    local quality = select(3, GetItemInfo(ItemLink))
     if (quality == 6 and total > 0) then
         total = 3
         for i = 1, total-#info do
@@ -28,7 +32,7 @@ function lib:GetItemGemInfo(ItemLink)
     end
     local name, link
     for i = 1, 4 do
-        name, link = C_Item.GetItemGem(ItemLink, i)
+        name, link = GetItemGem(ItemLink, i)
         if (link) then
             if (info[i]) then
                 info[i].name = name

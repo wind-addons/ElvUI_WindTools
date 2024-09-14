@@ -684,12 +684,12 @@ options.objectiveTracker = {
 					name = L["Normal Color"],
 					hasAlpha = false,
 					get = function(info)
-						local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
-						local default = V.quest.objectiveTracker.titleColor.customColorNormal
+						local db = E.private.WT.quest.objectiveTracker.infoColor.customColorNormal
+						local default = V.quest.objectiveTracker.infoColor.customColorNormal
 						return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b)
-						local db = E.private.WT.quest.objectiveTracker.titleColor.customColorNormal
+						local db = E.private.WT.quest.objectiveTracker.infoColor.customColorNormal
 						db.r, db.g, db.b = r, g, b
 					end,
 				},
@@ -699,12 +699,12 @@ options.objectiveTracker = {
 					name = L["Highlight Color"],
 					hasAlpha = false,
 					get = function(info)
-						local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
-						local default = V.quest.objectiveTracker.titleColor.customColorHighlight
+						local db = E.private.WT.quest.objectiveTracker.infoColor.customColorHighlight
+						local default = V.quest.objectiveTracker.infoColor.customColorHighlight
 						return db.r, db.g, db.b, nil, default.r, default.g, default.b, nil
 					end,
 					set = function(info, r, g, b)
-						local db = E.private.WT.quest.objectiveTracker.titleColor.customColorHighlight
+						local db = E.private.WT.quest.objectiveTracker.infoColor.customColorHighlight
 						db.r, db.g, db.b = r, g, b
 					end,
 				},

@@ -150,7 +150,6 @@ end
 
 -- Gems
 --創建圖標框架
-
 local function CreateIconFrame(frame, index)
 	local icon = CreateFrame("Button", nil, frame)
 	icon.index = index
@@ -332,7 +331,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
 			icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
 			icon.texture:SetTexture("Interface\\Cursor\\Quest") --QuestRepeatable
 			icon:ClearAllPoints()
-			icon:SetPoint("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
+			icon:Point("LEFT", anchorFrame, "RIGHT", num == 1 and 6 or 1, 0)
 			icon:Show()
 			anchorFrame = icon
 		end

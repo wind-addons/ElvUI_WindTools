@@ -38,26 +38,31 @@ W.Changelog[377] = {
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"[观察] 同步最新的 TinyInspect 改动。",
 			"[游戏条] 鼠标移动到中间面板时现在会出现功能提示。",
 			"[职业助手] 灵界打击预测现在可以用在全部专精中。感谢 AngelosNaoumis",
 			"[美化外观] 优化了场景战役中的标题背景大小。",
 		},
 		["zhTW"] = {
+			"[觀察] 同步最新的 TinyInspect 改動。",
 			"[遊戲條] 滑鼠移動到中間面板時現在會出現功能提示。",
 			"[職業助手] 死亡打擊預測現在可以用在 DK 全部專精中。感謝 AngelosNaoumis",
 			"[美化外觀] 優化了場景戰役中的標題背景大小。",
 		},
 		["enUS"] = {
+			"[Inspect] Synchronize the latest code from TinyInspect.",
 			"[Game Bar] Now a tooltip will appear when you hover on the middle panel.",
 			"[Class Helper] Death Strike prediction can now be used in all DK specializations. Thanks AngelosNaoumis",
 			"[Skins] Optimize the size of the title background in the Scenario.",
 		},
 		["koKR"] = {
+			"[인스펙션] TinyInspect의 최신 코드를 동기화했습니다.",
 			"[게임 바] 중간 패널에 마우스를 올리면 툴팁이 나타납니다.",
 			"[직업 도우미] 죽음의 일격 예측이 이제 모든 DK 전문화에서 사용할 수 있습니다. 감사합니다 AngelosNaoumis",
 			"[스킨] 시나리오의 제목 배경 크기를 최적화했습니다.",
 		},
 		["ruRU"] = {
+			"[Инспекция] Синхронизированы последние изменения из TinyInspect.",
 			"[Игровая панель] Теперь при наведении на среднюю панель появится подсказка.",
 			"[Классовый помощник] Прогнозирование 'Удара смерти' теперь можно использовать во всех специализациях Рыцаря смерти. Спасибо AngelosNaoumis",
 			"[Скины] Оптимизирован размер фона заголовка в сценарии.",

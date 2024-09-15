@@ -3,6 +3,7 @@ local S = W.Modules.Skins
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
 
 function S:SkinAlert(alert)
 	if not alert or alert.__windSkin then
@@ -380,6 +381,29 @@ function S:SkinGarrisonBuildingAlert(frame)
 
 	frame.__windSkin = true
 end
+	
+function S:SkinAlertRewardIcons(frame)
+	if frame.RewardFrames then
+		for i = 1, frame.numUsedRewardFrames do
+			local reward = frame.RewardFrames[i]
+			if not reward.__windSkin then
+				for _, region in pairs({ reward:GetRegions() }) do
+					if region:GetObjectType() == "Texture" and region:GetTexture() == 337498 then
+						region:SetTexture("")
+					end
+				end
+
+				reward.texture:SetMask("")
+				reward.texture:SetTexCoord(unpack(E.TexCoords))
+				reward.texture:ClearAllPoints()
+				reward.texture:SetInside(reward, 7, 7)
+				reward.texture:CreateBackdrop()
+				self:CreateBackdropShadow(reward.texture)
+				reward.__windSkin = true
+			end
+		end
+	end
+end
 
 function S:AlertFrames()
 	if not self:CheckDB("alertframes", "alerts") then
@@ -427,6 +451,9 @@ function S:AlertFrames()
 
 	-- Cosmetics
 	self:SecureHook(_G.NewCosmeticAlertFrameSystem, "setUpFunction", "SkinNewItemAlert")
+
+	-- Reward Icons
+	self:SecureHook("StandardRewardAlertFrame_AdjustRewardAnchors", "SkinAlertRewardIcons")
 end
 
 S:AddCallback("AlertFrames")

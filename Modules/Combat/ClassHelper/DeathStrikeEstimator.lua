@@ -250,7 +250,8 @@ function damageDB:calculate()
 	end
 
 	-- improved vampiric blood talent
-	local improv_vamp_info = C_Traits_GetNodeInfo(C_ClassTalents_GetActiveConfigID(), 76140)
+	local configID = C_ClassTalents_GetActiveConfigID()
+	local improv_vamp_info = configID and C_Traits_GetNodeInfo(configID, 76140)
 	local num_improv_vamp = improv_vamp_info and improv_vamp_info.ranksPurchased or 0
 	helper.env.auras[55233].mod = 0.3 + (num_improv_vamp * 0.05)
 

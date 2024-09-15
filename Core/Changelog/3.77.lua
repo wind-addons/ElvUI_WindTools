@@ -53,9 +53,10 @@ W.Changelog[377] = {
 			"[游戏条] 新增一些炉石支持。感谢 LvWind",
 			"[游戏条] 鼠标移动到中间面板时现在会出现功能提示。",
 			"[职业助手] 灵界打击预测现在可以用在全部专精中。感谢 AngelosNaoumis",
+			"[职业助手] 修复一个灵界打击预测可能出错的问题。",
 			"[美化外观] 优化了场景战役中的标题背景大小。",
 			"[美化外观] 美化了通知上方的奖励图标。",
-			"[美化外观] 强制将预组建队伍的过滤按钮大小限制在窗口内。"
+			"[美化外观] 强制将预组建队伍的过滤按钮大小限制在窗口内。",
 		},
 		["zhTW"] = {
 			"[額外物品條] 更新了探究物品分組。感謝 mcc1",
@@ -63,9 +64,10 @@ W.Changelog[377] = {
 			"[遊戲條] 新增一些爐石支援。感謝 LvWind",
 			"[遊戲條] 滑鼠移動到中間面板時現在會出現功能提示。",
 			"[職業助手] 死亡打擊預測現在可以用在 DK 全部專精中。感謝 AngelosNaoumis",
+			"[職業助手] 修復一個死亡打擊預測可能出錯的問題。",
 			"[美化外觀] 優化了場景戰役中的標題背景大小。",
 			"[美化外觀] 美化了通知上方的獎勵圖標。",
-			"[美化外觀] 強制將預組建隊伍的過濾按鈕大小限制在視窗內。"
+			"[美化外觀] 強制將預組建隊伍的過濾按鈕大小限制在視窗內。",
 		},
 		["enUS"] = {
 			"[Extra Item Bar] Update delves item groups. Thanks mcc1",
@@ -73,6 +75,7 @@ W.Changelog[377] = {
 			"[Game Bar] Add some Hearthstone support. Thanks LvWind",
 			"[Game Bar] Now a tooltip will appear when you hover on the middle panel.",
 			"[Class Helper] Death Strike prediction can now be used in all DK specializations. Thanks AngelosNaoumis",
+			"[Class Helper] Fix an issue where Death Strike prediction may go wrong.",
 			"[Skins] Optimize the size of the title background in the Scenario.",
 			"[Skins] Add skin for the reward icon on the top of alerts.",
 			"[Skins] Force the size of filter button in the LFG List to be limited within the window.",
@@ -83,6 +86,7 @@ W.Changelog[377] = {
 			"[게임 바] 일부 하스스톤 지원을 추가했습니다. 감사합니다 LvWind",
 			"[게임 바] 중간 패널에 마우스를 올리면 툴팁이 나타납니다.",
 			"[직업 도우미] 죽음의 일격 예측이 이제 모든 DK 전문화에서 사용할 수 있습니다. 감사합니다 AngelosNaoumis",
+			"[직업 도우미] 죽음의 일격 예측이 잘못될 수 있는 문제를 수정했습니다.",
 			"[스킨] 시나리오의 제목 배경 크기를 최적화했습니다.",
 			"[스킨] 알림 상단의 보상 아이콘에 스킨 추가.",
 			"[스킨] LFG 목록의 필터 버튼 크기를 창 내에서 제한합니다.",
@@ -93,6 +97,7 @@ W.Changelog[377] = {
 			"[Игровая панель] Добавлена поддержка некоторых карт Хартстоуна. Спасибо LvWind",
 			"[Игровая панель] Теперь при наведении на среднюю панель появится подсказка.",
 			"[Классовый помощник] Прогнозирование 'Удара смерти' теперь можно использовать во всех специализациях Рыцаря смерти. Спасибо AngelosNaoumis",
+			"[Классовый помощник] Исправлена проблема, из-за которой прогнозирование 'Удара смерти' могло быть неверным.",
 			"[Скины] Оптимизирован размер фона заголовка в сценарии.",
 			"[Скины] Добавлен скин для иконки награды в верхней части уведомлений.",
 			"[Скины] Принудительно ограничивает размер кнопки фильтра в LFG List в пределах окна.",

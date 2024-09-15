@@ -930,13 +930,7 @@ function GB:ConstructTimeArea()
 
 			DT.tooltip:AddLine("\n")
 			DT.tooltip:AddDoubleLine(format("%s %s", LeftButtonIcon, L["Left Button"]), L["Calendar"], 1, 1, 1)
-			DT.tooltip:AddDoubleLine(
-				format("%s %s", RightButtonIcon, L["Right Button"]),
-				L["Time Manager"],
-				1,
-				1,
-				1
-			)
+			DT.tooltip:AddDoubleLine(format("%s %s", RightButtonIcon, L["Right Button"]), L["Time Manager"], 1, 1, 1)
 			DT.tooltip:AddDoubleLine(format("%s %s", ScrollButtonIcon, L["Middle Button"]), L["Reload UI"], 1, 1, 1)
 			DT.tooltip:AddDoubleLine(format("Shift + %s", L["Any"]), L["Collect Garbage"], 1, 1, 1)
 			DT.tooltip:AddDoubleLine(format("Ctrl + Shift + %s", L["Any"]), L["Toggle CPU Profiling"], 1, 1, 1)

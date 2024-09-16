@@ -12,6 +12,7 @@ function S:Blizzard_Professions()
 
 	self:CreateShadow(_G.ProfessionsFrame)
 	self:CreateShadow(_G.ProfessionsFrame.CraftingPage.CraftingOutputLog)
+	self:CreateShadow(_G.ProfessionsFrame.OrdersPage.OrderView.CraftingOutputLog)
 
 	for _, tab in next, { _G.ProfessionsFrame.TabSystem:GetChildren() } do
 		self:ReskinTab(tab)

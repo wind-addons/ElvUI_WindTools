@@ -1,5 +1,6 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local options = W.options.tooltips.args
+local C = W.Utilities.Color
 local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
@@ -56,7 +57,9 @@ options.general = {
 					order = 1,
 					type = "toggle",
 					name = L["Force Item Level"],
-					desc = L["Even you are not pressing the modifier key, the item level will still be shown."],
+					desc = L["Even you are not pressing the modifier key, the item level will still be shown."]
+						.. "\n"
+						.. C.StringByTemplate(L["It may broken inspect feature sometimes."], "warning"),
 				},
 				specIcon = {
 					order = 2,

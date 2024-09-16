@@ -728,6 +728,7 @@ L["Invert Ease"] = "Обратная плавность"
 L["Invite"] = "Пригласить"
 L["Iskaaran Fishing Net"] = "Искарская рыболовная сеть"
 L["It doesn't mean that the %s Skins will not be applied."] = "Это не означает, что скины %s не будут применены."
+L["It may broken inspect feature sometimes."] = true
 L["It only applies to players who play WoW in Simplified Chinese."] = "Это относится только к игрокам, которые играют в WoW на упрощенном китайском языке."
 L["It only works when you enable the skin (%s)."] = "Это работает только при включении скина (%s)."
 L["It will affect the cry emote sound."] = "Это повлияет на звук эмоции плача."

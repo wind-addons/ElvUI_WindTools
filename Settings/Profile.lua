@@ -1114,7 +1114,7 @@ P.quest = {
 
 P.tooltips = {
 	elvUITweaks = {
-		forceItemLevel = true,
+		forceItemLevel = false,
 		raceIcon = {
 			enable = true,
 			iconWidth = 16,

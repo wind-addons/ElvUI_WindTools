@@ -5,18 +5,23 @@ W.Changelog[377] = {
 	IMPORTANT = {
 		["zhCN"] = {
 			"[鼠标提示] 目标进度功能将使用 MDT API 的小怪进度数据，同时改良了显示样式。",
+			"[鼠标提示] 由于会对观察功能产生影响，因此强制 ElvUI 装等显示功能默认关闭。",
 		},
 		["zhTW"] = {
 			"[浮動提示] 目標進度功能將使用 MDT API 的小怪進度數據，同時改良了顯示樣式。",
+			"[浮動提示] 由於會對觀察功能產生影響，因此強制 ElvUI 裝等顯示功能默認關閉。",
 		},
 		["enUS"] = {
 			"[Tooltip] Objective progress feature will use MDT API for fetching enemy force in Mythic+, and the display style has been improved.",
+			"[Tooltip] Due to the impact on the Inspect feature, the ElvUI item level display feature is now forced off by default.",
 		},
 		["koKR"] = {
 			"[툴팁] 목표 진행률 기능이 MDT API를 사용하여 미틱+의 적 힘을 가져오며, 표시 스타일이 개선되었습니다.",
+			"[툴팁] 검사 기능에 영향을 미치기 때문에 ElvUI 아이템 레벨 표시 기능이 이제 기본적으로 꺼져 있습니다.",
 		},
 		["ruRU"] = {
 			"[Подсказка] Функция прогресса заданий будет использовать API MDT для получения данных о силе противника в M+, а также стиль отображения был улучшен.",
+			"[Подсказка] Из-за влияния на функцию Осмотра функция отображения уровня предметов ElvUI теперь по умолчанию отключена.",
 		},
 	},
 	NEW = {

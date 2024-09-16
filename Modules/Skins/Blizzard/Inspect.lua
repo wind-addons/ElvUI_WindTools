@@ -30,6 +30,9 @@ function S:Blizzard_InspectUI()
 		self:ReskinTab(_G["InspectFrameTab" .. i])
 	end
 
+	self:CreateShadow(_G.InspectPaperDollFrame.ViewButton)
+	self:CreateShadow(_G.InspectPaperDollItemsFrame.InspectTalents)
+
 	-- 去除人物模型背景
 	local InspectModelFrame = _G.InspectModelFrame
 	if InspectModelFrame then

@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[377] = {
-	RELEASE_DATE = "Alpha",
+	RELEASE_DATE = "2024/09/16",
 	IMPORTANT = {
 		["zhCN"] = {
 			"[鼠标提示] 目标进度功能将使用 MDT API 的小怪进度数据，同时改良了显示样式。",
@@ -49,6 +49,7 @@ W.Changelog[377] = {
 	IMPROVEMENT = {
 		["zhCN"] = {
 			"[额外物品条] 更新了地下堡物品分组。感谢 mcc1",
+			"[额外物品条] 修正了某些时候无法自动更新条的问题。",
 			"[观察] 同步最新的 TinyInspect 改动。",
 			"[游戏条] 新增一些炉石支持。感谢 LvWind",
 			"[游戏条] 鼠标移动到中间面板时现在会出现功能提示。",
@@ -60,6 +61,7 @@ W.Changelog[377] = {
 		},
 		["zhTW"] = {
 			"[額外物品條] 更新了探究物品分組。感謝 mcc1",
+			"[額外物品條] 修正了某些時候無法自動更新條的問題。",
 			"[觀察] 同步最新的 TinyInspect 改動。",
 			"[遊戲條] 新增一些爐石支援。感謝 LvWind",
 			"[遊戲條] 滑鼠移動到中間面板時現在會出現功能提示。",
@@ -71,6 +73,7 @@ W.Changelog[377] = {
 		},
 		["enUS"] = {
 			"[Extra Item Bar] Update delves item groups. Thanks mcc1",
+			"[Extra Item Bar] Fix an issue where the bar may not update automatically sometimes.",
 			"[Inspect] Synchronize the latest code from TinyInspect.",
 			"[Game Bar] Add some Hearthstone support. Thanks LvWind",
 			"[Game Bar] Now a tooltip will appear when you hover on the middle panel.",
@@ -82,6 +85,7 @@ W.Changelog[377] = {
 		},
 		["koKR"] = {
 			"[추가 아이템 바] 델브 아이템 그룹을 업데이트했습니다. 감사합니다 mcc1",
+			"[추가 아이템 바] 때때로 바가 자동으로 업데이트되지 않을 수 있는 문제를 수정했습니다.",
 			"[인스펙션] TinyInspect의 최신 코드를 동기화했습니다.",
 			"[게임 바] 일부 하스스톤 지원을 추가했습니다. 감사합니다 LvWind",
 			"[게임 바] 중간 패널에 마우스를 올리면 툴팁이 나타납니다.",
@@ -93,6 +97,7 @@ W.Changelog[377] = {
 		},
 		["ruRU"] = {
 			"[Дополнительная панель предметов] Обновлены группы предметов для подземелий. Спасибо mcc1",
+			"[Дополнительная панель предметов] Исправлена проблема, из-за которой панель иногда не обновлялась автоматически.",
 			"[Осмотр] Синхронизированы последние изменения из TinyInspect.",
 			"[Игровая панель] Добавлена поддержка некоторых карт Хартстоуна. Спасибо LvWind",
 			"[Игровая панель] Теперь при наведении на среднюю панель появится подсказка.",

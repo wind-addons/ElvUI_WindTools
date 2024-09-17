@@ -71,7 +71,7 @@ function T:GetMythicPlusData(unit)
 end
 
 function T:AddMythicInfo(mod, tt, unit)
-	local db = self.profiledb and self.profiledb.elvUITweaks.betterMythicPlusInfo
+	local db = self.profiledb and self.profiledb.elvUITweaks and self.profiledb.elvUITweaks.betterMythicPlusInfo
 
 	if not db or not db.enable then
 		return self.hooks[mod].AddMythicInfo(mod, tt, unit)

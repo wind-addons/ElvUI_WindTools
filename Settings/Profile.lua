@@ -1129,8 +1129,8 @@ P.tooltips = {
 		betterMythicPlusInfo = {
 			enable = true,
 			icon = true,
-			iconWidth = 18,
-			iconHeight = 16,
+			iconWidth = 16,
+			iconHeight = 14,
 		},
 	},
 	yOffsetOfHealthBar = 0,

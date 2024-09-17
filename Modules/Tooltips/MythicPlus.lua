@@ -106,7 +106,7 @@ function T:AddMythicInfo(mod, tt, unit)
 				bestRunLevelText = format("|cff%s%s|r", run.bestRunLevelColor, run.bestRunLevel)
 			end
 			if bestRunLevelText then
-				if run.upgrades > 0 then
+				if run.upgrades and run.upgrades > 0 then
 					bestRunLevelText = strrep("+", run.upgrades) .. bestRunLevelText
 				end
 

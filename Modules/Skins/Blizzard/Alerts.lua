@@ -381,7 +381,7 @@ function S:SkinGarrisonBuildingAlert(frame)
 
 	frame.__windSkin = true
 end
-	
+
 function S:SkinAlertRewardIcons(frame)
 	if frame.RewardFrames then
 		for i = 1, frame.numUsedRewardFrames do

@@ -94,27 +94,24 @@ W.options = {
 	},
 }
 
-local tempString = strrep("Z", 14)
-
 local r1, g1, b1 = HexToRGB("f0772f")
 local r2, g2, b2 = HexToRGB("f34a62")
 local r3, g3, b3 = HexToRGB("bb77ed")
 local r4, g4, b4 = HexToRGB("1cdce8")
-local tempString = E:TextGradient(tempString, r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4)
 
 local color = {}
 
-gsub(tempString, "cff(......)Z", function(self)
+gsub(E:TextGradient(strrep("Z", 14), r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4), "cff(......)Z", function(self)
 	color[#color + 1] = self
 end)
 
--- ElvUI_OptionsUI 回调
+-- ElvUI_OptionsUI Callback
 function W:OptionsCallback()
-	-- 标题
+	-- Title
 	local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-	E.Options.name = E.Options.name .. " + " .. icon .. " " .. W.Title .. " |cff00d1b2" .. W.Version .. "|r"
+	E.Options.name = format("%s + %s %s |cff00d1b2%s|r", E.Options.name, icon, W.Title, W.DisplayVersion)
 
-	-- 设置主界面
+	-- Main Part
 	E.Options.args.WindTools = {
 		type = "group",
 		childGroups = "tree",
@@ -146,7 +143,7 @@ function W:OptionsCallback()
 		},
 	}
 
-	-- 模块设定
+	-- Modules
 	for catagory, info in pairs(W.options) do
 		E.Options.args.WindTools.args[catagory] = {
 			order = info.order,

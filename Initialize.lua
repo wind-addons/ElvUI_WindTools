@@ -28,7 +28,45 @@ addon[6] = P.WT
 addon[7] = G.WT
 
 _G["WindTools"] = addon
-W.Version = C_AddOns_GetAddOnMetadata(addonName, "Version")
+
+local function getVersion()
+	local versionString = C_AddOns_GetAddOnMetadata(addonName, "Version")
+	local xVersionString = C_AddOns_GetAddOnMetadata(addonName, "X-Version")
+	local version, variant, subversion
+
+	-- Git
+	if versionString == "@project-version@" then
+		return xVersionString, "git", nil
+	end
+
+	version, variant = strmatch(versionString, "^(%d+%.%d+)(.*)$")
+
+	if not version then
+		return xVersionString, nil, nil
+	end
+
+	if not variant or variant == "" then
+		return version, nil, nil
+	end
+
+	local variantName, subversionNum = strmatch(variant, "^%-([%w]+)%-?(%d*)$")
+	if variantName and subversionNum then
+		variant = variantName
+		subversion = subversionNum ~= "" and subversionNum or nil
+	end
+
+	return version, variant, subversion
+end
+
+W.Version, W.Variant, W.SubVersion = getVersion()
+
+W.DisplayVersion = W.Version
+if W.Variant then
+	W.DisplayVersion = format("%s-%s", W.DisplayVersion, W.Variant)
+	if W.SubVersion then
+		W.DisplayVersion = format("%s-%s", W.DisplayVersion, W.SubVersion)
+	end
+end
 
 -- Pre-register some WindTools modules
 W.Modules = {}
@@ -68,7 +106,7 @@ function W:Initialize()
 	self:UpdateScripts()
 	self:InitializeModules()
 
-	EP:RegisterPlugin(addonName, W.OptionsCallback)
+	EP:RegisterPlugin(addonName, W.OptionsCallback, false, W.Version)
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end

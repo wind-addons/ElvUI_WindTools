@@ -274,12 +274,12 @@ options.help = {
 				elvui = {
 					order = 1,
 					type = "description",
-					name = "ElvUI: " .. blue(E.version),
+					name = "ElvUI: " .. blue(E.versionString),
 				},
 				windtools = {
 					order = 2,
 					type = "description",
-					name = W.Title .. ": " .. blue(W.Version),
+					name = W.Title .. ": " .. blue(W.DisplayVersion),
 				},
 				build = {
 					order = 3,

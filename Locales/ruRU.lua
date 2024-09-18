@@ -260,6 +260,7 @@ L["Binding"] = "Назначение"
 L["Black Market"] = "Черный рынок"
 L["Blacklist"] = "Черный список"
 L["Blanchard"] = true
+L["Bleeding Hollow"] = true
 L["Blizzard"] = true
 L["Blizzard Absorb Overlay"] = "Наложение поглощения Blizzard"
 L["Blizzard Buttons"] = "Кнопки Blizzard"

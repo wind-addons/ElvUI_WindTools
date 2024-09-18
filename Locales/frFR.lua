@@ -260,6 +260,7 @@ L["Binding"] = "Raccourcis"
 L["Black Market"] = "Marché noir"
 L["Blacklist"] = "Liste noire"
 L["Blanchard"] = "Blanchard"
+L["Bleeding Hollow"] = true
 L["Blizzard"] = "Blizzard"
 L["Blizzard Absorb Overlay"] = "Recouvrement d'absorption Blizzard"
 L["Blizzard Buttons"] = "Boutons Blizzard"

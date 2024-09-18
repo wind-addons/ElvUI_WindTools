@@ -257,7 +257,11 @@ options.help = {
 				["LvWind"] = {
 					order = 17,
 					type = "description",
-					name = "LvWind",
+					name = format(
+						"%s: %s",
+						"LvWind",
+						F.CreateClassColorString("Stellagosa @ " .. L["Bleeding Hollow"] .. " (CN)", "HUNTER")
+					),
 				},
 			},
 		},

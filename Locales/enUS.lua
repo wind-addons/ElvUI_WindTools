@@ -260,6 +260,7 @@ L["Binding"] = true
 L["Black Market"] = true
 L["Blacklist"] = true
 L["Blanchard"] = true
+L["Bleeding Hollow"] = true
 L["Blizzard"] = true
 L["Blizzard Absorb Overlay"] = true
 L["Blizzard Buttons"] = true

@@ -260,6 +260,7 @@ L["Binding"] = "단축키"
 L["Black Market"] = "암시장"
 L["Blacklist"] = "블랙리스트"
 L["Blanchard"] = true
+L["Bleeding Hollow"] = true
 L["Blizzard"] = true
 L["Blizzard Absorb Overlay"] = "블리자드 피해흡수 오버레이"
 L["Blizzard Buttons"] = "블리자드 버튼"

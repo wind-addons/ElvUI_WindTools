@@ -1587,6 +1587,13 @@ function LL.OnUpdateResultListEnclosure(lfg)
 	end
 end
 
+function LL:GROUP_ROSTER_UPDATE(...)
+	self:RequestKeystoneData()
+	self:LFGListEventHandler(...)
+end
+
+LL.GROUP_ROSTER_UPDATE = F.DelvesEventFix(LL.GROUP_ROSTER_UPDATE)
+
 function LL:Initialize()
 	if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
 		self.StopRunning = "PremadeGroupsFilter"
@@ -1618,10 +1625,9 @@ function LL:Initialize()
 	end)
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "RequestKeystoneData")
-	self:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestKeystoneData")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD", "RequestKeystoneData")
 	self:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED", "LFGListEventHandler")
-	self:RegisterEvent("GROUP_ROSTER_UPDATE", "LFGListEventHandler")
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 	openRaidLib.RequestKeystoneDataFromParty()
 	E:Delay(2, self.RequestKeystoneData, self)

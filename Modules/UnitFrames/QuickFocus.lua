@@ -60,7 +60,7 @@ function QF:GROUP_ROSTER_UPDATE()
 		end
 	end
 
-	for group, header in pairs(UF.headers) do
+	for _, header in pairs(UF.headers) do
 		if header.GetChildren and header:GetNumChildren() > 0 then
 			for _, child in pairs({ header:GetChildren() }) do
 				if child.groupName and child.GetChildren and child:GetNumChildren() > 0 then
@@ -75,6 +75,9 @@ function QF:GROUP_ROSTER_UPDATE()
 	end
 end
 
+QF._GROUP_ROSTER_UPDATE = QF.GROUP_ROSTER_UPDATE
+QF.GROUP_ROSTER_UPDATE = F.DelvesEventFix(QF.GROUP_ROSTER_UPDATE)
+
 function QF:WaitUnitframesLoad(triedTimes)
 	triedTimes = triedTimes or 0
 
@@ -84,7 +87,7 @@ function QF:WaitUnitframesLoad(triedTimes)
 	end
 
 	if not UF.unitstoload and not UF.unitgroupstoload and not UF.headerstoload then
-		self:GROUP_ROSTER_UPDATE()
+		self:_GROUP_ROSTER_UPDATE()
 	else
 		E:Delay(0.5, self.WaitUnitframesLoad, self, triedTimes + 1)
 	end

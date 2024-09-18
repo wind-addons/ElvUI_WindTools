@@ -8,6 +8,7 @@ local min = min
 local pairs = pairs
 local pcall = pcall
 local print = print
+local select = select
 local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
@@ -16,7 +17,10 @@ local tremove = tremove
 local type = type
 local unpack = unpack
 
+local GenerateFlatClosure = GenerateFlatClosure
 local GetClassColor = GetClassColor
+local GetInstanceInfo = GetInstanceInfo
+local RunNextFrame = RunNextFrame
 
 --[[
     从数据库设定字体样式
@@ -304,4 +308,31 @@ function F.Or(val, default)
 		return default
 	end
 	return val
+end
+
+function F.DelvesEventFix(original, func)
+	local isWaiting = false
+
+	return function(...)
+		local difficulty = select(3, GetInstanceInfo())
+		if not difficulty or difficulty ~= 208 then
+			return original(...)
+		end
+
+		if isWaiting then
+			return
+		end
+
+		local f = GenerateFlatClosure(original, ...)
+
+		RunNextFrame(function()
+			if not isWaiting then
+				isWaiting = true
+				E:Delay(3, function()
+					f()
+					isWaiting = false
+				end)
+			end
+		end)
+	end
 end

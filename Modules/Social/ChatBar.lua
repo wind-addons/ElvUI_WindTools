@@ -540,6 +540,8 @@ function CB:PLAYER_REGEN_ENABLED()
 	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
+CB.GROUP_ROSTER_UPDATE = F.DelvesEventFix(CB.UpdateBar)
+
 function CB:Initialize()
 	self.db = E.db.WT.social.chatBar
 	if not self.db.enable then
@@ -554,7 +556,7 @@ function CB:Initialize()
 	end, "WindTools,social,chatBar")
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	end
 end
@@ -576,11 +578,11 @@ function CB:ProfileUpdate()
 	self.bar:Show()
 
 	if self.db.autoHide then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 		self:RegisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
 	else
-		self:UnregisterEvent("GROUP_ROSTER_UPDATE", "UpdateBar")
-		self:UnregisterEvent("PLAYER_GUILD_UPDATE", "UpdateBar")
+		self:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		self:UnregisterEvent("PLAYER_GUILD_UPDATE")
 	end
 end
 

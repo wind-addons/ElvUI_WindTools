@@ -2,10 +2,10 @@ local W, F, E, L = unpack((select(2, ...)))
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
+local _G = _G
 local next = next
 local pairs = pairs
 local select = select
-
 local strsplit = strsplit
 local tinsert = tinsert
 local type = type

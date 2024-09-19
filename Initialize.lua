@@ -10,6 +10,7 @@ local format = format
 local hooksecurefunc = hooksecurefunc
 local next = next
 local print = print
+local strmatch = strmatch
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 

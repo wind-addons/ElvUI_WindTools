@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local HexToRGB = W.Utilities.Color.HexToRGB
 local async = W.Utilities.Async
 
+local format = format
 local gsub = gsub
 local pairs = pairs
 local strrep = strrep

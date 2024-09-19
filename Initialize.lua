@@ -10,6 +10,7 @@ local format = format
 local hooksecurefunc = hooksecurefunc
 local next = next
 local print = print
+local strfind = strfind
 local strmatch = strmatch
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
@@ -36,7 +37,7 @@ local function getVersion()
 	local version, variant, subversion
 
 	-- Git
-	if versionString == "@project-version@" then
+	if strfind(versionString, "project%-version") then
 		return xVersionString, "git", nil
 	end
 

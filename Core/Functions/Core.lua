@@ -336,3 +336,19 @@ function F.DelvesEventFix(original, func)
 		end)
 	end
 end
+
+function F.WaitFor(condition, callback, interval, leftTimes)
+	leftTimes = (leftTimes or 10) - 1
+	interval = interval or 0.1
+
+	if condition() then
+		callback()
+		return
+	end
+
+	if leftTimes and leftTimes <= 0 then
+		return
+	end
+
+	E:Delay(interval, F.WaitFor, condition, callback, interval, leftTimes)
+end

@@ -33,14 +33,19 @@ function S:MythicDungeonTools()
 
 	self:SecureHook(_G.MDT, "Async", function(_, _, name)
 		if name == "showInterface" and not skinned then
-			E:Delay(0.1, function()
+			F.WaitFor(function()
+				return _G.MDTFrame and _G.MDTFrame.MaxMinButtonFrame and _G.MDTFrame.closeButton and true or false
+			end, function()
 				S:ESProxy("HandleMaxMinFrame", _G.MDTFrame.MaxMinButtonFrame)
 				S:ESProxy("HandleCloseButton", _G.MDTFrame.closeButton)
-			end)
-			E:Delay(1, function()
+			end, 0.05, 10)
+
+			F.WaitFor(function()
+				return _G.MDT.tooltip and _G.MDT.pullTooltip and true or false
+			end, function()
 				reskinTooltip(_G.MDT.tooltip)
 				reskinTooltip(_G.MDT.pullTooltip)
-			end)
+			end, 0.05, 10)
 
 			skinned = true
 		end

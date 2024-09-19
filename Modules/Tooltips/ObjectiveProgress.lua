@@ -29,7 +29,7 @@ local function addObjectiveProgress(tt, data)
 		return
 	end
 
-	local npcID = select(6, strsplit("-", data.guid))
+	local npcID = data and data.guid and select(6, strsplit("-", data.guid))
 
 	if not npcID or npcID == "" then
 		return

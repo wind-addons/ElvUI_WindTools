@@ -6,9 +6,10 @@ local _G = _G
 local format = format
 local next = next
 local select = select
-local strfind = strfind
 local strsplit = strsplit
 local tonumber = tonumber
+
+local GetInstanceInfo = GetInstanceInfo
 
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local C_QuestLog_GetLogIndexForQuestID = C_QuestLog.GetLogIndexForQuestID
@@ -49,31 +50,21 @@ local function addObjectiveProgress(tt, data)
 		end
 	end
 
-	if _G.MDT and _G.MDT.GetEnemyForces then
-		-- local count, max = ceil(random() * 100), 103 -- test
+	local difficultyID = select(3, GetInstanceInfo())
+	if not difficultyID or difficultyID ~= 8 then
+		return
+	end
+
+	if _G.MDT and _G.MDT.GetEnemyForces and not tt.__windEnemyProgress then
+		tt.__windEnemyProgress = true
 		local count, max = _G.MDT:GetEnemyForces(npcID)
 
 		if count and max and count > 0 and max > 0 then
 			local left = format("%s |cff00d1b2%s|r |cffffffff-|r |cffffdd57%s|r", icon1, count, max)
 			local right = format("%s |cff209cee%s|r|cffffffff%%|r", icon2, F.Round(100 * count / max, accuracy))
 
-			-- If the line already exists, update it
-			if GameTooltip.__windEnemyProgress then
-				for i = 1, tt:NumLines() do
-					local leftTextObj = _G["GameTooltipTextLeft" .. i]
-					local rightTextObj = _G["GameTooltipTextRight" .. i]
-					local leftText = leftTextObj and leftTextObj:GetText()
-					if leftText and rightTextObj and strfind(leftText, "^" .. icon1) then
-						leftTextObj:SetText(left)
-						rightTextObj:SetText(right)
-						return
-					end
-				end
-			end
-
-			GameTooltip:AddDoubleLine(left, right)
-			GameTooltip:Show()
-			GameTooltip.__windEnemyProgress = true
+			tt:AddDoubleLine(left, right)
+			tt:Show()
 		end
 	end
 end

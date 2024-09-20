@@ -8,6 +8,8 @@ local pairs = pairs
 local select = select
 local unpack = unpack
 
+local GetInstanceInfo = GetInstanceInfo
+
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
 
 local function SkinMawBuffsContainer(container)
@@ -124,17 +126,28 @@ local function UpdateBlock(block)
 				widgetFrame.Frame:SetAlpha(0)
 			end
 
-			local bar = widgetFrame.TimerBar
-			if bar and not bar.__windSkin then
-				bar.__SetStatusBarTexture = bar.SetStatusBarTexture
-				hooksecurefunc(bar, "SetStatusBarTexture", function(frame)
+			local bar = widgetFrame.Bar
+			if bar and bar.backdrop and not bar.__windSkinBackdropHighContrast then
+				local r, g, b, a = bar.backdrop:GetBackdropColor()
+				if r + g + b < 0.5 then
+					r, g, b = r + 0.2, g + 0.2, b + 0.2
+					bar.backdrop:SetBackdropColor(r, g, b, a)
+				end
+
+				bar.__windSkinBackdropHighContrast = true
+			end
+
+			local timeBar = widgetFrame.TimerBar
+			if timeBar and not timeBar.__windSkin then
+				timeBar.__SetStatusBarTexture = timeBar.SetStatusBarTexture
+				hooksecurefunc(timeBar, "SetStatusBarTexture", function(frame)
 					if frame.__SetStatusBarTexture then
 						frame:__SetStatusBarTexture(E.media.normTex)
 						frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
 					end
 				end)
-				bar:CreateBackdrop("Transparent")
-				bar.__windSkin = true
+				timeBar:CreateBackdrop("Transparent")
+				timeBar.__windSkin = true
 			end
 
 			if widgetFrame.CurrencyContainer then
@@ -144,6 +157,19 @@ local function UpdateBlock(block)
 						currencyFrame.__windSkin = true
 					end
 				end
+			end
+
+			-- Awakening the Machine
+			local mapID = select(8, GetInstanceInfo())
+			if mapID and mapID == 2710 and not widgetFrame.__windSkinMoved then
+				if widgetFrame.Bar and widgetFrame.Label then
+					widgetFrame.Label:Hide()
+					F.MoveFrameWithOffset(widgetFrame, 15, 0)
+				else
+					F.MoveFrameWithOffset(widgetFrame, 10, 0)
+				end
+
+				widgetFrame.__windSkinMoved = true
 			end
 		end
 	end
@@ -165,7 +191,7 @@ local function ScenarioObjectiveTracker_AddBlock(_, block)
 	UpdateBlock(block)
 end
 
-local function ScenarioObjectiveTracker_Update(tracker, block)
+local function ScenarioObjectiveTracker_Update(tracker)
 	for _, block in pairs(tracker.usedBlocks or {}) do
 		UpdateHooksOfBlock(block)
 		UpdateBlock(block)

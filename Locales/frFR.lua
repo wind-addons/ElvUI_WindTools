@@ -665,6 +665,7 @@ L["Hide the level part if the quest level is the max level of this expansion."] 
 L["Hide the realm name of friends."] = "Cacher le nom de royaume des amis."
 L["Highlight Color"] = "Couleur de surbrillance"
 L["Hold Control + Right Click:"] = "Ctrl enfoncé + Clic droit :"
+L["Holiday Reward Boxes"] = true
 L["Home"] = "Foyer"
 L["Horde"] = "Horde"
 L["Horizontal"] = "Horizontale"

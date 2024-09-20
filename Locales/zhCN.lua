@@ -665,6 +665,7 @@ L["Hide the level part if the quest level is the max level of this expansion."] 
 L["Hide the realm name of friends."] = "隐藏好友的服务器名."
 L["Highlight Color"] = "高亮颜色"
 L["Hold Control + Right Click:"] = "按住 Ctrl 并按鼠标右键:"
+L["Holiday Reward Boxes"] = "节庆奖励箱"
 L["Home"] = "家"
 L["Horde"] = "部落"
 L["Horizontal"] = "水平"

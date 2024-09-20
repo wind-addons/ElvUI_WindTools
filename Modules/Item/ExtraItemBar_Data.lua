@@ -1382,6 +1382,18 @@ local seeds = {
 	208067, -- 沉重的夢境種子
 }
 
+local holidayRewards = {
+	54536, -- 冰寒寶物袋
+	54537, -- 心型盒
+	117392, -- 塞滿戰利品的南瓜
+	117393, -- 桶型寶箱
+	117394, -- 冰寒寶物袋
+	149503, -- 失竊的禮物
+	149574, -- 塞滿戰利品的南瓜
+	147907, -- 心型紙箱
+	216874, -- 塞滿戰利品的籃子
+}
+
 local function createList(base, ...)
 	local list = {}
 	for _, key in pairs({ ... }) do
@@ -1428,4 +1440,5 @@ EB.moduleList = {
 	["BIGDIG"] = bigDig,
 	["MOPREMIX"] = mopRemix,
 	["DELVE"] = delveItem,
+	["HOLIDAY"] = holidayRewards,
 }

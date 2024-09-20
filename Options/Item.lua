@@ -215,7 +215,7 @@ do -- Add options for bars
 					name = L["Button Groups"],
 					args = {
 						include = {
-							order = 15,
+							order = 16,
 							type = "input",
 							name = L["Button Groups"],
 							desc = format(
@@ -261,7 +261,8 @@ do -- Add options for bars
 								desc("SEEDS", L["Dream Seeds"]),
 								desc("BIGDIG", L["Big Dig"]),
 								desc("MOPREMIX", L["MoP Remixed Items"]),
-								desc("DELVE", L["Delves"])
+								desc("DELVE", L["Delves"]),
+								desc("HOLIDAY", L["Holiday Reward Boxes"])
 							),
 							width = "full",
 						},

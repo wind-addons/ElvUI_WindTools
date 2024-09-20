@@ -665,6 +665,7 @@ L["Hide the level part if the quest level is the max level of this expansion."] 
 L["Hide the realm name of friends."] = true
 L["Highlight Color"] = "강조 색상"
 L["Hold Control + Right Click:"] = "Ctrl + 오른쪽 클릭 :"
+L["Holiday Reward Boxes"] = true
 L["Home"] = "귀환"
 L["Horde"] = "호드"
 L["Horizontal"] = "가로"

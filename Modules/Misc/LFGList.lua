@@ -25,6 +25,7 @@ local tAppendAll = tAppendAll
 local unpack = unpack
 local wipe = wipe
 
+local CopyTable = CopyTable
 local CreateFrame = CreateFrame
 local GetNumGroupMembers = GetNumGroupMembers
 local GetSpecialization = GetSpecialization
@@ -50,6 +51,7 @@ local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
 local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
+local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLevelForDifficultyLevel
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 local Enum_LFGListFilter = Enum.LFGListFilter
@@ -98,24 +100,19 @@ local RoleIconTextures = {
 	},
 }
 
-local vaultItemLevel = { 0, 509, 509, 512, 512, 515, 515, 519, 519, 522 }
+local vaultItemLevel = {}
 
--- TWW
--- local vaultItemLevel = {0, 600, 600, 603, 603, 606, 606, 610, 610, 613}
+for i = 1, 10 do
+	local weeklyItemLevel = C_MythicPlus_GetRewardLevelForDifficultyLevel(i)
+	tinsert(vaultItemLevel, weeklyItemLevel)
+end
 
--- FIXME: TWW
 local affixLoop = {
-	{ 9, 124, 6 },
-	{ 10, 134, 7 },
-	{ 9, 136, 123 },
-	{ 10, 135, 6 },
-	{ 9, 3, 8 },
-	{ 10, 124, 11 },
-	{ 9, 135, 7 },
-	{ 10, 136, 8 },
-	{ 9, 134, 11 },
-	{ 10, 3, 123 },
+	{ 148, 9, 152, 10, 147 },
+	{ 148, 10, 152, 9, 147 },
 }
+
+local affixAddedAtLevel = { 2, 4, 7, 10, 12 }
 
 local avaliableSortMode = {
 	"DEFAULT",
@@ -147,28 +144,6 @@ local sortMode = {
 		tooltip = L["Default"],
 	},
 }
-
-local function getKeystoneLevelColor(level)
-	if level < 5 then
-		return "ffffffff"
-	elseif level < 10 then
-		return "ff1eff00"
-	elseif level < 15 then
-		return "ff0070dd"
-	elseif level < 20 then
-		return "ffa335ee"
-	else
-		return "ffff8000"
-	end
-end
-
-local function copyTable(t)
-	local c = {}
-	for k, v in pairs(t) do
-		c[k] = v
-	end
-	return c
-end
 
 function LL:GetPlayerDB(key)
 	local globalDB = E.global.WT.misc.lfgList
@@ -494,13 +469,9 @@ function LL:UpdatePartyKeystoneFrame()
 		if cache[i] then
 			frame.lines[i].right:SetText(cache[i].player)
 			frame.lines[i].left:SetText(
-				format(
-					"|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t |c%s%s (%s)|r",
-					cache[i].icon,
-					getKeystoneLevelColor(cache[i].level),
-					cache[i].name,
-					cache[i].level
-				)
+				F.GetIconString(cache[i].icon, 16, 18, true)
+					.. " "
+					.. C.StringWithKeystoneLevel(format("%s (%s)", cache[i].name, cache[i].level), cache[i].level)
 			)
 		else
 			frame.lines[i].right:SetText("")
@@ -538,7 +509,7 @@ function LL:InitalizeRightPanel()
 	end
 
 	local frame = CreateFrame("Frame", nil, _G.PVEFrame)
-	frame:SetWidth(200)
+	frame:SetWidth(220)
 	frame:SetPoint("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 3, 0)
 	frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 3, 0)
 	frame:SetTemplate("Transparent")
@@ -621,90 +592,80 @@ function LL:InitalizeRightPanel()
 	local currAffixIndex = 0
 	local currAffixes = C_MythicPlus_GetCurrentAffixes()
 
-	-- if currAffixes then
-	-- 	for i = 1, #affixLoop do
-	-- 		local affixes = affixLoop[i]
-	-- 		if
-	-- 			affixes[1] == currAffixes[1].id
-	-- 			and affixes[2] == currAffixes[2].id
-	-- 			and affixes[3] == currAffixes[3].id
-	-- 		then
-	-- 			currAffixIndex = i
-	-- 			break
-	-- 		end
-	-- 	end
-	-- end
+	if currAffixes then
+		for i = 1, #affixLoop do
+			local affixes = affixLoop[i]
+			if affixes[2] == currAffixes[2].id then
+				currAffixIndex = i
+				break
+			end
+		end
+	end
 
-	-- Disable for now, because nobody knows the rotation
-	-- if currAffixIndex and currAffixIndex ~= 0 then
-	--     local nextAffixIndex = (currAffixIndex + 1) % #affixLoop
-	--     if nextAffixIndex == 0 then
-	--         nextAffixIndex = #affixLoop
-	--     end
+	if currAffixIndex and currAffixIndex ~= 0 then
+		local affixes = affixLoop[currAffixIndex]
+		frame.affix = CreateFrame("Frame", nil, frame)
+		frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+		frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+		frame.affix:SetHeight(32)
 
-	--     frame.affix = CreateFrame("Frame", nil, frame)
-	--     frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
-	--     frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-	--     frame.affix:SetHeight(32)
+		local buttonSize = 32
 
-	--     local width = frame.affix:GetWidth()
-	--     local space = (width - 32 * 4) / 4
-	--     for i = 1, 3 do
-	--         local affix = frame.affix:CreateTexture(nil, "ARTWORK")
-	--         affix:SetSize(32, 32)
-	--         affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
-	--         local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
-	--         affix:SetTexture(fileDataID)
-	--         affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	--     end
+		local width = frame.affix:GetWidth()
+		local space = (width - 2 * 2 - buttonSize * #affixes) / (#affixes - 1)
+		for i = 1, #affixes do
+			local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+			affix:CreateBackdrop()
+			affix:SetSize(buttonSize, buttonSize)
+			affix:SetPoint("LEFT", frame.affix, "LEFT", 2 + (i - 1) * (buttonSize + space), 0)
+			local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
+			affix:SetTexture(fileDataID)
+			affix:SetTexCoord(unpack(E.TexCoords))
+		end
 
-	--     frame.affix:SetScript(
-	--         "OnEnter",
-	--         function()
-	--             _G.GameTooltip:SetOwner(frame.affix, "ANCHOR_BOTTOM")
-	--             _G.GameTooltip:ClearLines()
-	--             _G.GameTooltip:AddLine(F.GetWindStyleText(L["Next Affixes"]))
-	--             for i = 1, 3 do
-	--                 local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixLoop[nextAffixIndex][i])
-	--                 _G.GameTooltip:AddLine(" ")
-	--                 _G.GameTooltip:AddLine(format("|T%d:16:18:0:0:64:64:4:60:7:57:255:255:255|t %s", fileDataID, name))
-	--                 _G.GameTooltip:AddLine(description, 1, 1, 1, true)
-	--             end
-	--             _G.GameTooltip:Show()
-	--         end
-	--     )
+		frame.affix:SetScript("OnEnter", function()
+			_G.GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 3, frame:GetHeight())
+			_G.GameTooltip:ClearLines()
+			_G.GameTooltip:AddLine(F.GetWindStyleText(L["Affixes"]))
 
-	--     frame.affix:SetScript(
-	--         "OnLeave",
-	--         function()
-	--             _G.GameTooltip:Hide()
-	--         end
-	--     )
-	-- end
+			for i = 1, #affixes do
+				local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i])
+				local level = affixAddedAtLevel[i] or 0
+				_G.GameTooltip:AddLine(" ")
+				_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
+				_G.GameTooltip:AddLine(description, 1, 1, 1, true)
+			end
+			_G.GameTooltip:Show()
+		end)
+
+		frame.affix:SetScript("OnLeave", function()
+			_G.GameTooltip:Hide()
+		end)
+	end
 
 	------------------------------
 	-- Temporarily affixes
 	------------------------------
-	local affixIDs = {}
-	for i = 1, #currAffixes do
-		tinsert(affixIDs, currAffixes[i].id)
-	end
+	-- local affixIDs = {}
+	-- for i = 1, #currAffixes do
+	-- 	tinsert(affixIDs, currAffixes[i].id)
+	-- end
 
-	frame.affix = CreateFrame("Frame", nil, frame)
-	frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
-	frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-	frame.affix:SetHeight(32)
+	-- frame.affix = CreateFrame("Frame", nil, frame)
+	-- frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+	-- frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+	-- frame.affix:SetHeight(32)
 
-	local width = frame.affix:GetWidth()
-	local space = (width - 32 * 4) / 4
-	for i = 1, #affixIDs do
-		local affix = frame.affix:CreateTexture(nil, "ARTWORK")
-		affix:SetSize(32, 32)
-		affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
-		local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixIDs[i]))
-		affix:SetTexture(fileDataID)
-		affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	end
+	-- local width = frame.affix:GetWidth()
+	-- local space = (width - 32 * 4) / 4
+	-- for i = 1, #affixIDs do
+	-- 	local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+	-- 	affix:SetSize(32, 32)
+	-- 	affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
+	-- 	local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixIDs[i]))
+	-- 	affix:SetTexture(fileDataID)
+	-- 	affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	-- end
 	------------------------------
 
 	local filters = CreateFrame("Frame", nil, frame)
@@ -1091,10 +1052,9 @@ function LL:InitalizeRightPanel()
 				local level = btn.cache[i].level
 				_G.GameTooltip:AddDoubleLine(
 					format(
-						"|c%s%s|r  |T%s:14:16:0:0:64:64:4:60:7:57:255:255:255|t %s",
-						getKeystoneLevelColor(level),
-						level,
-						W.MythicPlusMapData[btn.cache[i].mapID].tex,
+						"%s %s %s",
+						C.StringWithKeystoneLevel(tostring(level), level),
+						F.GetIconString(W.MythicPlusMapData[btn.cache[i].mapID].tex, 14, 16, true),
 						W.MythicPlusMapData[btn.cache[i].mapID].name
 					),
 					vaultItemLevel[min(level, #vaultItemLevel)],
@@ -1145,7 +1105,6 @@ function LL:InitalizeRightPanel()
 		sort(runHistory, comparison)
 
 		for i = 1, #runHistory do
-			local mapID = runHistory[i].mapChallengeModeID
 			tinsert(vaultStatusCache, {
 				mapID = runHistory[i].mapChallengeModeID,
 				level = runHistory[i].level,
@@ -1156,20 +1115,19 @@ function LL:InitalizeRightPanel()
 		local vaultItemString = "|cff666666" .. L["No Mythic+ Runs"] .. "|r"
 
 		if #vaultStatusCache > 0 then
-			vaultItemString =
-				format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[1].level), vaultStatusCache[1].level)
+			vaultItemString = C.StringWithKeystoneLevel(tostring(vaultStatusCache[1].level), vaultStatusCache[1].level)
 		end
 
 		if #vaultStatusCache > 3 then
 			vaultItemString = vaultItemString
 				.. " / "
-				.. format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[4].level), vaultStatusCache[4].level)
+				.. C.StringWithKeystoneLevel(tostring(vaultStatusCache[4].level), vaultStatusCache[4].level)
 		end
 
 		if #vaultStatusCache > 7 then
 			vaultItemString = vaultItemString
 				.. " / "
-				.. format("|c%s%s|r", getKeystoneLevelColor(vaultStatusCache[8].level), vaultStatusCache[8].level)
+				.. C.StringWithKeystoneLevel(tostring(vaultStatusCache[8].level), vaultStatusCache[8].level)
 		end
 
 		vaultStatus.cache = vaultStatusCache
@@ -1495,7 +1453,7 @@ end
 
 function LL.OnUpdateResultListEnclosure(lfg)
 	return function(self)
-		local results = copyTable(self.results)
+		local results = CopyTable(self.results, true)
 		if _G.LFGListFrame.SearchPanel.categoryID ~= 2 then
 			return
 		end

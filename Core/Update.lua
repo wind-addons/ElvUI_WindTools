@@ -176,6 +176,13 @@ function W:UpdateScripts()
 		end
 	end
 
+	if profileVersion < 3.80 then
+		if E.db.WT and E.db.WT.quest.paragonReputation then
+			E.db.WT.quest.paragonReputation = nil
+			UpdateMessage(L["Database cleanup"], profileVersion)
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

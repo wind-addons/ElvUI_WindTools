@@ -503,18 +503,8 @@ options.reset = {
 						end)
 					end,
 				},
-				paragonReputation = {
-					order = 2,
-					type = "execute",
-					name = L["Paragon Reputation"],
-					func = function()
-						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Paragon Reputation"], nil, function()
-							E.db.WT.quest.paragonReputation = P.quest.paragonReputation
-						end)
-					end,
-				},
 				switchButtons = {
-					order = 3,
+					order = 2,
 					type = "execute",
 					name = L["Switch Buttons"],
 					func = function()
@@ -524,7 +514,7 @@ options.reset = {
 					end,
 				},
 				turnIn = {
-					order = 4,
+					order = 3,
 					type = "execute",
 					name = L["Turn In"],
 					func = function()

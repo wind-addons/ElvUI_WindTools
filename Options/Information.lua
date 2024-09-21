@@ -463,9 +463,6 @@ do -- 插件代码
 			"Warbaby (爱不易)",
 			"oyg123 @ NGA.cn",
 		},
-		[L["Paragon Reputation"]] = {
-			"Fail (Paragon Reputation)",
-		},
 		[L["Skins"]] = {
 			"selias2k (iShadow)",
 			"siweia (NDui)",

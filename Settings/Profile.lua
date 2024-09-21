@@ -1077,16 +1077,6 @@ if W.ChineseLocale then
 end
 
 P.quest = {
-	paragonReputation = {
-		enable = false,
-		color = { r = 0, g = 0.5, b = 0.9 },
-		text = "PARAGON",
-		toast = {
-			enable = true,
-			sound = true,
-			fade_time = 5,
-		},
-	},
 	switchButtons = {
 		enable = true,
 		tooltip = true,

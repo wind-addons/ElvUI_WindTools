@@ -1,6 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file='ObjectiveTracker.lua'/>
-	<Script file='ParagonReputation.lua'/>
 	<Script file='SwitchButtons.lua'/>
 	<Script file='TurnIn.lua'/>
 </Ui>

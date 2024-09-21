@@ -80,7 +80,6 @@ Español, Português, Italiano
 1. **Objective Tracker**: Customize the style, size, font of objective tracker.
 2. **Turn In**: Turn in the quest automatically; Open follower recruit frame automatically.
 3. **Switch Buttons**: Add buttons for switching turn in and announcement module status.
-4. **Paragon Reputation**: Show colored reputation bars and rewards after reaching Paragon.
 
 ### Social
 

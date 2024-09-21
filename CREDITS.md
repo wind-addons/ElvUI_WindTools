@@ -75,9 +75,6 @@
   - Warbaby (爱不易)
   - oyg123 @ NGA.cn
 
-- Paragon Reputation
-  - Fail (Paragon Reputation)
-
 - Skins
   - selias2k (iShadow)
   - siweia (NDui)

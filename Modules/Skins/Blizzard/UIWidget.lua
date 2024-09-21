@@ -5,6 +5,7 @@ local ES = E.Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
+local strlower = strlower
 
 local function ReskinText(text)
 	if text then
@@ -55,7 +56,7 @@ local function reskinPartitionFrame(partitionFrame)
 	end
 
 	hooksecurefunc(partitionFrame.Tex, "SetAtlas", function(self, atlas)
-		if atlas == "widgetstatusbar-BorderTick" then
+		if strlower(atlas) == "widgetstatusbar-bordertick" then
 			self:SetTexture(E.media.blankTex)
 			self:SetTexCoord(0, 1, 0, 1)
 			self:SetVertexColor(1, 1, 1)
@@ -70,16 +71,15 @@ local function reskinPartitionFrame(partitionFrame)
 	partitionFrame.__windSkin = true
 end
 
-function S:BlizzardUIWidget()
-	if not self:CheckDB("misc", "uiWidget") then
-		return
-	end
-
-	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", function(widget)
+do
+	local hookedWidget = {}
+	function S:ReskinWidgetPartition(widget)
 		local pool = widget.partitionPool
-		if not pool then
+		if not pool or hookedWidget[widget] then
 			return
 		end
+
+		hookedWidget[widget] = true
 
 		for partitionFrame in pool:EnumerateActive() do
 			reskinPartitionFrame(partitionFrame)
@@ -90,7 +90,18 @@ function S:BlizzardUIWidget()
 				reskinPartitionFrame(partitionFrame)
 			end
 		end)
-	end)
+	end
+end
+
+function S:BlizzardUIWidget()
+	if not self:CheckDB("misc", "uiWidget") then
+		return
+	end
+
+	-- Partitions
+	self:SecureHook(_G.UIWidgetBaseStatusBarTemplateMixin, "InitPartitions", "ReskinWidgetPartition")
+
+	self:SecureHook(_G.UIWidgetTemplateUnitPowerBarMixin, "InitPartitions", "ReskinWidgetPartition")
 
 	self:SecureHook(_G.UIWidgetTemplateStatusBarMixin, "Setup", function(widget, widgetInfo)
 		if widget:IsForbidden() or widget.widgetSetID and widget.widgetSetID == 283 then
@@ -112,6 +123,7 @@ function S:BlizzardUIWidget()
 		if not widget.__windSkin then
 			ReskinBar(widget.Bar)
 		end
+		self:ReskinWidgetPartition(widget)
 	end)
 
 	self:SecureHook(ES, "SkinStatusBarWidget", function(_, widget)

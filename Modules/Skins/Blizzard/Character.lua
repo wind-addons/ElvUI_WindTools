@@ -32,6 +32,9 @@ function S:Blizzard_UIPanels_Game()
 
 	-- Reputation
 	self:CreateShadow(_G.ReputationDetailFrame)
+	self:CreateShadow(_G.ReputationFrame.ReputationDetailFrame)
+	_G.ReputationFrame.ReputationDetailFrame:ClearAllPoints()
+	_G.ReputationFrame.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 3, 0)
 
 	-- Currency Transfer
 	self:CreateShadow(_G.CurrencyTransferLog)

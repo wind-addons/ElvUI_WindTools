@@ -11,7 +11,6 @@ local tonumber = tonumber
 local tostring = tostring
 
 local C_QuestLog_SortQuestWatches = C_QuestLog.SortQuestWatches
-local ReputationFrame_Update = ReputationFrame_Update
 
 local customListSelected
 

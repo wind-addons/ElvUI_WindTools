@@ -21,6 +21,20 @@ local colors = {
 	warning = "ffdd57",
 }
 
+local function keyStoneLevelHex(level)
+	if level < 4 then
+		return "ffffff"
+	elseif level < 7 then
+		return "1eff00"
+	elseif level < 10 then
+		return "0070dd"
+	elseif level < 12 then
+		return "a335ee"
+	else
+		return "ff8000"
+	end
+end
+
 function U.CreateColorFromTable(colorTable)
 	return CreateColor(colorTable.r, colorTable.g, colorTable.b, colorTable.a)
 end
@@ -68,4 +82,8 @@ function U.StringWithRGB(text, r, g, b)
 	end
 
 	return U.StringWithHex(text, U.RGBToHex(r, g, b))
+end
+
+function U.StringWithKeystoneLevel(text, level)
+	return U.StringWithHex(text, keyStoneLevelHex(level))
 end

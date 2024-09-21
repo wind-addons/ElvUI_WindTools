@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 
@@ -31,14 +32,31 @@ function S:Blizzard_UIPanels_Game()
 	end
 
 	-- Reputation
-	self:CreateShadow(_G.ReputationDetailFrame)
 	self:CreateShadow(_G.ReputationFrame.ReputationDetailFrame)
 	_G.ReputationFrame.ReputationDetailFrame:ClearAllPoints()
 	_G.ReputationFrame.ReputationDetailFrame:Point("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 3, 0)
+end
 
-	-- Currency Transfer
+function S:Blizzard_TokenUI()
+	if not self:CheckDB("character") then
+		return
+	end
+
+	local button = _G.TokenFrame.CurrencyTransferLogToggleButton
+	if button then
+		self:ESProxy("HandleButton", button)
+		button:SetNormalTexture(E.Media.Textures.ArrowUp)
+		button:GetNormalTexture():SetRotation(ES.ArrowRotation.right)
+		button:GetNormalTexture():SetInside(button, 3, 3)
+
+		button:SetPushedTexture(E.Media.Textures.ArrowUp)
+		button:GetPushedTexture():SetRotation(ES.ArrowRotation.right)
+		button:GetPushedTexture():SetInside(button, 3, 3)
+	end
+
 	self:CreateShadow(_G.CurrencyTransferLog)
 	self:CreateShadow(_G.CurrencyTransferMenu)
 end
 
 S:AddCallbackForAddon("Blizzard_UIPanels_Game")
+S:AddCallbackForAddon("Blizzard_TokenUI")

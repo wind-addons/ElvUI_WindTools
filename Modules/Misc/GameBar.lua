@@ -1036,6 +1036,13 @@ function GB:UpdateTimeArea()
 		E:StopFlash(panel.colon)
 	end
 
+	panel.text:ClearAllPoints()
+	if self.db.tooltipsAnchor == "ANCHOR_TOP" then
+		panel.text:SetPoint("BOTTOM", self.bar, "TOP", 0, 5)
+	else
+		panel.text:SetPoint("TOP", self.bar, "BOTTOM", 0, -5)
+	end
+
 	if self.db.time.alwaysSystemInfo then
 		DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 		panel.text:SetAlpha(1)

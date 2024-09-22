@@ -211,15 +211,15 @@ function T:Icons()
 	end
 
 	if E.private.WT.tooltips.factionIcon then
-		self:AddInspectInfoCallback(1, "AddFactionIcon", false, "ClearFactionIcon")
+		self:AddInspectInfoCallback(2, "AddFactionIcon", false, "ClearFactionIcon")
 	end
 
 	if E.private.WT.tooltips.petIcon then
-		self:AddInspectInfoCallback(2, "AddPetIcon", false, "ClearPetIcon")
+		self:AddInspectInfoCallback(3, "AddPetIcon", false, "ClearPetIcon")
 	end
 
 	if E.private.WT.tooltips.petId then
-		self:AddInspectInfoCallback(3, "AddPetID", false)
+		self:AddInspectInfoCallback(4, "AddPetID", false)
 	end
 end
 

@@ -238,8 +238,77 @@ options.general = {
 				},
 			},
 		},
-		objectiveProgressInformation = {
+		keystone = {
 			order = 3,
+			type = "group",
+			name = L["Keystone"],
+			inline = true,
+			get = function(info)
+				return E.db.WT.tooltips[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.tooltips[info[#info - 1]][info[#info]] = value
+			end,
+			args = {
+				description = {
+					order = 1,
+					type = "description",
+					width = "full",
+					name = C.StringByTemplate(
+						format(
+							L["The keystone information only available for players who installed Details! or %s."],
+							W.Title
+						),
+						"warning"
+					),
+				},
+				enable = {
+					order = 2,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Show the keystone information in the tooltip."],
+				},
+				useAbbreviation = {
+					order = 3,
+					type = "toggle",
+					name = L["Use Abbreviation"],
+					desc = L["Use abbreviation for the keystone name."],
+				},
+				icon = {
+					order = 4,
+					type = "toggle",
+					name = L["Add Icon"],
+					desc = L["Show an icon for the keystone."],
+					disabled = function()
+						return not E.db.WT.tooltips.keystone.enable
+					end,
+				},
+				iconWidth = {
+					order = 5,
+					type = "range",
+					name = L["Icon Width"],
+					min = 1,
+					max = 50,
+					step = 1,
+					hidden = function()
+						return not E.db.WT.tooltips.keystone.icon
+					end,
+				},
+				iconHeight = {
+					order = 6,
+					type = "range",
+					name = L["Icon Height"],
+					min = 1,
+					max = 50,
+					step = 1,
+					hidden = function()
+						return not E.db.WT.tooltips.keystone.icon
+					end,
+				},
+			},
+		},
+		objectiveProgressInformation = {
+			order = 4,
 			type = "group",
 			inline = true,
 			name = L["Objective Progress"],
@@ -261,7 +330,7 @@ options.general = {
 			},
 		},
 		healthBar = {
-			order = 4,
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Health Bar"],
@@ -293,7 +362,7 @@ options.general = {
 			},
 		},
 		groupInfo = {
-			order = 5,
+			order = 6,
 			type = "group",
 			inline = true,
 			get = function(info)

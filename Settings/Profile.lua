@@ -1125,6 +1125,13 @@ P.tooltips = {
 	},
 	yOffsetOfHealthBar = 0,
 	yOffsetOfHealthText = 0,
+	keystone = {
+		enable = true,
+		useAbbreviation = true,
+		icon = true,
+		iconWidth = 16,
+		iconHeight = 14,
+	},
 	groupInfo = {
 		enable = false,
 		title = true,

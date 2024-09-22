@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[380] = {
-	RELEASE_DATE = "2024/09/22",
+	RELEASE_DATE = "2024/09/23",
 	IMPORTANT = {
 		["zhCN"] = {
 			"更新 LibOpenRaid 到最新版本。",

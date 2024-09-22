@@ -1,11 +1,13 @@
 std = 'lua51'
 max_line_length = false
-exclude_files = {'**Libs/', '**libs/'}
+exclude_files = {'**Libs/', '**libs/', '**Libraries/'}
 ignore = {
     '212', -- Unused argument
 }
 globals = {}
 read_globals = {
+    'ElvUI',
+    'WindTools',
     '101_CutsceneName_Ref',
     '101_CutsceneName_Ref2',
     '10_1_5_TIME_RIFTS_MINIGAME_01_WRONG_ELEMENT',

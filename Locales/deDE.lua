@@ -435,7 +435,7 @@ L["Daily Quest at %s"] = "Tägliche Quest at %s"
 L["Dark Moon"] = "Dunkelmond"
 L["Data Bars"] = "Datenleisten"
 L["Data Panels"] = "Datenfenster"
-L["Database cleanup"] = true
+L["Database cleanup"] = "Datenbank Bereinigung"
 L["Datatexts"] = "Datentexte"
 L["Death Effect"] = "Todeseffekt"
 L["Deathknight"] = "Todesritter"
@@ -663,7 +663,7 @@ L["Hide the level part if the quest level is the max level of this expansion."] 
 L["Hide the realm name of friends."] = "Versteckt die Realnamen von Freunden"
 L["Highlight Color"] = "Hervorhebungsfarbe"
 L["Hold Control + Right Click:"] = "Halte Steuerung + Rechtsklick:"
-L["Holiday Reward Boxes"] = true
+L["Holiday Reward Boxes"] = "Feiertags Truhen"
 L["Home"] = true
 L["Horde"] = true
 L["Horizontal"] = "Horizontal"

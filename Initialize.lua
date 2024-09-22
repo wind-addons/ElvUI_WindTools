@@ -31,9 +31,10 @@ addon[7] = G.WT
 
 _G["WindTools"] = addon
 
+local versionString = C_AddOns_GetAddOnMetadata(addonName, "Version")
+local xVersionString = C_AddOns_GetAddOnMetadata(addonName, "X-Version")
+
 local function getVersion()
-	local versionString = C_AddOns_GetAddOnMetadata(addonName, "Version")
-	local xVersionString = C_AddOns_GetAddOnMetadata(addonName, "X-Version")
 	local version, variant, subversion
 
 	-- Git
@@ -108,7 +109,8 @@ function W:Initialize()
 	self:UpdateScripts()
 	self:InitializeModules()
 
-	EP:RegisterPlugin(addonName, W.OptionsCallback, false, W.Version)
+	-- To avoid the update tips from ElvUI when alpha/beta version is used
+	EP:RegisterPlugin(addonName, W.OptionsCallback, false, xVersionString)
 	self:SecureHook(E, "UpdateAll", "UpdateModules")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end

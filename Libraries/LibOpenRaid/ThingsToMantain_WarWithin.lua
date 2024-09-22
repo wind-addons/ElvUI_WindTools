@@ -473,6 +473,7 @@ do
 			[218164] = {cooldown = 8,	duration = 0,	specs = {269,268},			talent = false,	charges = 1,	class = "MONK",	type = 7}, --Detox (DPS/Tank)
 			[325153] = {cooldown = 60,	duration = 3,	specs = {268},				talent = false,	charges = 1,	class = "MONK",	type = 2}, --Exploding Keg
 			[115078] = {cooldown = 45,	duration = 60,	specs = {268, 269, 270},	talent = false,	charges = 1,	class = "MONK",	type = 8}, --Paralysis
+			[443028] = {cooldown = 90,	duration = 4,	specs = {269, 270},			talent = false,	charges = 1,	class = "MONK",	type = 4}, --Celestial Conduit
 
 
 			--~hunter
@@ -503,6 +504,9 @@ do
 			[272682] = {cooldown = 45,	duration = 4,	specs = {253, 254, 255},	talent = false,	charges = 1,	class = "HUNTER",	type = 7}, --Master's Call
 			[359844] = {cooldown = 120, duration = 20,  specs = {253}, 				talent = true, charges = 1, 	class = "HUNTER", 	type = 1}, -- Call of the Wild
 			[462031] = {cooldown = 60,    duration = 0,    specs = {},    talent = false,    charges = 1,    class = "HUNTER",    type = 8}, --Implosive Trap
+			[213691] = {cooldown = 30,    duration = 0,    specs = {},    talent = false,    charges = 1,    class = "HUNTER",    type = 8}, --Scatter Shot
+			[356719] = {cooldown = 60,    duration = 0,    specs = {},    talent = false,    charges = 1,    class = "HUNTER",    type = 8}, --Chimaeral Sting
+			[407028] = {cooldown = 45,    duration = 0,    specs = {},    talent = false,    charges = 1,    class = "HUNTER",    type = 8}, --Sticky Tar Bomb
 
 			--Boar nil 62305 Master's Call
 			--Boar Tiranaa 54216 Master's Call
@@ -669,6 +673,7 @@ do
 			[213634] = {cooldown = 8,	duration = 0,	specs = {258},				talent = false,	charges = 1,	class = "PRIEST",	type = 7}, --Purify Disease 
 			[108920] = {cooldown = 60,	duration = 20,	specs = {256, 257, 258},	talent = false,	charges = 1,	class = "PRIEST",	type = 8}, --Void Tendrils
 			[451235] = {cooldown = 120,	duration = 15,	specs = {256,258},			talent = false,	charges = 1,	class = "PRIEST",	type = 1}, --Voidwraith
+			[120644] = {cooldown = 60,	duration = 0,	specs = {256, 257, 258},		talent = false,	charges = 1,	class = "PRIEST",	type = 4}, --Halo
 
 			--~rogue
 			-- 259 - Assasination
@@ -994,6 +999,7 @@ do
 			[370564] = 370537, -- Evoker Stasis
 			--[414658] = 45438, -- Ice Block with the talent Ice Cold
 			--[414658] = 45438, -- Ice Block with the talent IceCold
+			[406971] = 372048, -- Oppressing Roar, when talented
 		}
 		LIB_OPEN_RAID_MULTI_OVERRIDE_SPELLS = {
 			[106898] = {106898,77764,77761},

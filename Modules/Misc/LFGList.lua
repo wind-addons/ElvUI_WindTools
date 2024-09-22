@@ -487,10 +487,6 @@ function LL:UpdatePartyKeystoneFrame()
 end
 
 function LL:RequestKeystoneData()
-	if IsInGroup() then
-		openRaidLib.RequestKeystoneDataFromParty()
-	end
-
 	E:Delay(0.5, self.UpdatePartyKeystoneFrame, self)
 	E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end
@@ -1587,7 +1583,6 @@ function LL:Initialize()
 	self:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED", "LFGListEventHandler")
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 
-	openRaidLib.RequestKeystoneDataFromParty()
 	E:Delay(2, self.RequestKeystoneData, self)
 	E:Delay(2, self.UpdatePartyKeystoneFrame, self)
 end

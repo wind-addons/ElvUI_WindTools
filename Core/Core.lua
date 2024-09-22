@@ -1,15 +1,18 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local openRaidLib = E.Libs.OpenRaid
 
 local _G = _G
 local format = format
 local pairs = pairs
 local pcall = pcall
+local select = select
 local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
 local tonumber = tonumber
 
 local InCombatLockdown = InCombatLockdown
+local GetInstanceInfo = GetInstanceInfo
 
 local C_UI_Reload = C_UI.Reload
 
@@ -156,6 +159,25 @@ function W:ChangelogReadAlert()
 		end
 	end
 end
+
+local OpenRaidSupport = W:NewModule("OpenRaidSupport", "AceEvent-3.0")
+function OpenRaidSupport:EventHandler()
+	-- Disable OpenRaid support in Delve
+	local difficulty = select(3, GetInstanceInfo())
+	if difficulty and difficulty == 208 then
+		return
+	end
+
+	if not openRaidLib.RequestKeystoneDataFromRaid() then
+		openRaidLib.RequestKeystoneDataFromParty()
+	end
+end
+
+OpenRaidSupport:RegisterEvent("GROUP_ROSTER_UPDATE", "EventHandler")
+OpenRaidSupport:RegisterEvent("CHALLENGE_MODE_COMPLETED", "EventHandler")
+OpenRaidSupport:RegisterEvent("CHALLENGE_MODE_START", "EventHandler")
+OpenRaidSupport:RegisterEvent("CHALLENGE_MODE_RESET", "EventHandler")
+E:Delay(1, OpenRaidSupport.EventHandler)
 
 function W:GameFixing()
 	if E.global.WT.core.cvarAlert then

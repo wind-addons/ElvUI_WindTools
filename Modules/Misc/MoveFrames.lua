@@ -5,16 +5,15 @@ local B = E:GetModule("Bags")
 local _G = _G
 local pairs = pairs
 local strsplit = strsplit
-local tDeleteItem = tDeleteItem
+local tremove = tremove
 local type = type
 
-local GenerateFlatClosure = GenerateFlatClosure
 local InCombatLockdown = InCombatLockdown
 local RunNextFrame = RunNextFrame
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-local waitFrameList, moveTargets = {}, {}
+local waitFrameList = {}
 
 local BlizzardFrames = {
 	"AddonList",
@@ -340,22 +339,30 @@ local temporarilyMovingFrame = {
 	["BonusRollFrame"] = true,
 }
 
+local function removeBlizzardFrames(name)
+	for i, n in pairs(BlizzardFrames) do
+		if n == name then
+			tremove(BlizzardFrames, i)
+			return
+		end
+	end
+end
+
 function MF:Remember(frame)
-	local moveTarget = moveTargets[frame]
-	if not moveTarget or not self.db.rememberPositions then
+	if not frame.windFrameName or not self.db.rememberPositions then
 		return
 	end
 
-	if temporarilyMovingFrame[moveTarget] then
+	if temporarilyMovingFrame[frame.windFrameName] then
 		return
 	end
 
 	local numPoints = frame:GetNumPoints()
 	if numPoints and numPoints > 0 then
-		self.db.framePositions[moveTarget] = {}
+		self.db.framePositions[frame.windFrameName] = {}
 		for index = 1, numPoints do
 			local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
-			self.db.framePositions[moveTarget][index] = {
+			self.db.framePositions[frame.windFrameName][index] = {
 				anchorPoint = anchorPoint,
 				relativeFrame = relativeFrame,
 				relativePoint = relativePoint,
@@ -366,33 +373,31 @@ function MF:Remember(frame)
 	end
 end
 
-function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY, skip)
-	if InCombatLockdown() or skip or not self.db or self.StopRunning then
+function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
+	if InCombatLockdown() or not self.db or self.StopRunning then
 		return
 	end
 
-	local moveTarget = moveTargets[frame]
-
-	if not moveTarget or not self.db.rememberPositions then
+	if not frame.windFrameName or not self.db.rememberPositions then
 		return
 	end
 
-	if not self.db.framePositions[moveTarget] then
+	if not self.db.framePositions[frame.windFrameName] then
 		return
 	end
 
-	if temporarilyMovingFrame[moveTarget] then
-		self.db.framePositions[moveTarget] = nil
+	if temporarilyMovingFrame[frame.windFrameName] then
+		self.db.framePositions[frame.windFrameName] = nil
 		return
 	end
 
 	if not frame.isChangingPoint then
 		frame.isChangingPoint = true
-		local points = self.db.framePositions[moveTarget]
+		local points = self.db.framePositions[frame.windFrameName]
 
 		frame:ClearAllPoints()
 		for _, point in pairs(points) do
-			frame:SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY, true)
+			frame:__SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
 		end
 
 		frame.isChangingPoint = nil
@@ -445,28 +450,29 @@ function MF:HandleFrame(frameName, mainFrameName)
 	frame.MoveFrame = mainFrame or frame
 
 	-- 鼠标按下
-	frame:HookScript("OnMouseDown", function(f, button)
-		if button == "LeftButton" and f.MoveFrame:IsMovable() then
-			f.MoveFrame:StartMoving()
+	frame:HookScript("OnMouseDown", function(self, button)
+		if button == "LeftButton" and self.MoveFrame:IsMovable() then
+			self.MoveFrame:StartMoving()
 		end
 	end)
 
 	-- 鼠标抬起
-	frame:HookScript("OnMouseUp", function(f, button)
+	frame:HookScript("OnMouseUp", function(self, button)
 		if button == "LeftButton" then
-			f.MoveFrame:StopMovingOrSizing()
-			MF:Remember(f.MoveFrame)
+			self.MoveFrame:StopMovingOrSizing()
+			MF:Remember(self.MoveFrame)
 		end
 	end)
 
 	-- 储存一个名字用于调取存储的位置
-	moveTargets[frame] = frameName
-	if not moveTargets[frame.MoveFrame] then
-		moveTargets[frame.MoveFrame].windFrameName = mainFrameName
+	frame.windFrameName = frameName
+	if not frame.MoveFrame.windFrameName then
+		frame.MoveFrame.windFrameName = mainFrameName
 	end
 
 	-- 注册调整位置的钩子
 	if not self:IsHooked(frame.MoveFrame, "SetPoint") then
+		frame.MoveFrame.__SetPoint = frame.MoveFrame.SetPoint
 		self:SecureHook(frame.MoveFrame, "SetPoint", "Reposition")
 	end
 end
@@ -525,11 +531,15 @@ function MF:HandleAddon(_, addon)
 		startStopMoving(_G.HeroTalentsSelectionDialog)
 		_G.PlayerSpellsFrame:HookScript("OnShow", function(frame)
 			startStopMoving(frame)
-			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
+			RunNextFrame(function()
+				startStopMoving(frame)
+			end)
 		end)
 		_G.HeroTalentsSelectionDialog:HookScript("OnShow", function(frame)
 			startStopMoving(frame)
-			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
+			RunNextFrame(function()
+				startStopMoving(frame)
+			end)
 		end)
 	end
 end
@@ -612,7 +622,7 @@ function MF:Initialize()
 
 	-- Trade Skill Master Speical Handling
 	if C_AddOns_IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
-		tDeleteItem(BlizzardFrames, "MerchantFrame")
+		removeBlizzardFrames("MerchantFrame")
 	end
 
 	-- ElvUI Mail Frame Speical Handling

@@ -348,6 +348,7 @@ end
 local VirtualDTEvent = {
 	Friends = nil,
 	Guild = "GUILD_ROSTER_UPDATE",
+	Time = "UPDATE_INSTANCE_INFO",
 }
 
 local VirtualDT = {
@@ -773,18 +774,6 @@ local ButtonTypes = {
 	},
 }
 
-function GB:ShowAdvancedTimeTooltip(panel)
-	DT.RegisteredDataTexts["Time"].onEnter()
-	DT.RegisteredDataTexts["Time"].onLeave()
-	-- DT.tooltip:ClearLines()
-	-- DT.tooltip:SetText(L["Time"])
-	-- DT.tooltip:AddLine("\n", 1, 1, 1)
-	-- DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Calendar"], 1, 1, 1)
-	-- DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Time Manager"], 1, 1, 1)
-	-- DT.tooltip:AddLine("\n")
-	-- DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"], unpack(E.media.rgbvaluecolor))
-	-- DT.tooltip:Show()
-end
 function GB:OnEnter()
 	if self.db and self.db.mouseOver then
 		E:UIFrameFadeIn(self.bar, self.db.fadeTime, self.bar:GetAlpha(), 1)
@@ -891,6 +880,7 @@ function GB:ConstructTimeArea()
 		GB:UpdateTime()
 	end)
 
+	DT.RegisteredDataTexts["Time"].eventFunc(VirtualDT["Time"], "ELVUI_FORCE_UPDATE")
 	DT.RegisteredDataTexts["System"].onUpdate(self.bar.middlePanel, 10)
 
 	if self.db.time.alwaysSystemInfo then
@@ -917,13 +907,17 @@ function GB:ConstructTimeArea()
 		if IsModifierKeyDown() then
 			DT.RegisteredDataTexts["System"].eventFunc()
 			DT.RegisteredDataTexts["System"].onEnter()
+
 			self.tooltipTimer = C_Timer_NewTicker(1, function()
 				DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 				DT.RegisteredDataTexts["System"].eventFunc()
 				DT.RegisteredDataTexts["System"].onEnter()
 			end)
 		else
-			self:ShowAdvancedTimeTooltip(panel)
+			DT.RegisteredDataTexts["Time"].eventFunc(VirtualDT["Time"], VirtualDTEvent["Time"])
+			DT.RegisteredDataTexts["Time"].onEnter()
+			DT.RegisteredDataTexts["Time"].onLeave()
+
 			self.tooltipTimer = C_Timer_NewTicker(1, function()
 				DT.RegisteredDataTexts["System"].onUpdate(panel, 10)
 			end)

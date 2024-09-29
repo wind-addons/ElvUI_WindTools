@@ -5,11 +5,14 @@ local B = E:GetModule("Bags")
 local _G = _G
 local pairs = pairs
 local strsplit = strsplit
-local tremove = tremove
+local tDeleteItem = tDeleteItem
 local type = type
 
+local GenerateFlatClosure = GenerateFlatClosure
+local GetPoint = _G.UIParent.GetPoint
 local InCombatLockdown = InCombatLockdown
 local RunNextFrame = RunNextFrame
+local SetPoint = _G.UIParent.SetPoint
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
@@ -335,34 +338,44 @@ local BlizzardFramesOnDemand = {
 	},
 }
 
-local temporarilyMovingFrame = {
+local ignorePositionRememberingFrames = {
 	["BonusRollFrame"] = true,
 }
 
-local function removeBlizzardFrames(name)
-	for i, n in pairs(BlizzardFrames) do
-		if n == name then
-			tremove(BlizzardFrames, i)
-			return
+local function getFrame(frameOrName)
+	local frame
+
+	if frameOrName then
+		if frameOrName.GetName then
+			frame = frameOrName
+		else
+			frame = _G
+			local path = { strsplit(".", frameOrName) }
+			for i = 1, #path do
+				frame = frame[path[i]]
+			end
 		end
 	end
+
+	return frame
 end
 
 function MF:Remember(frame)
-	if not frame.windFrameName or not self.db.rememberPositions then
+	if not self.db.rememberPositions or self.StopRunning then
 		return
 	end
 
-	if temporarilyMovingFrame[frame.windFrameName] then
+	local path = frame.__windFramePath
+	if not path or ignorePositionRememberingFrames[path] then
 		return
 	end
 
 	local numPoints = frame:GetNumPoints()
 	if numPoints and numPoints > 0 then
-		self.db.framePositions[frame.windFrameName] = {}
+		self.db.framePositions[path] = {}
 		for index = 1, numPoints do
-			local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
-			self.db.framePositions[frame.windFrameName][index] = {
+			local anchorPoint, relativeFrame, relativePoint, offX, offY = GetPoint(frame, index)
+			self.db.framePositions[path][index] = {
 				anchorPoint = anchorPoint,
 				relativeFrame = relativeFrame,
 				relativePoint = relativePoint,
@@ -374,116 +387,82 @@ function MF:Remember(frame)
 end
 
 function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
-	if InCombatLockdown() or not self.db or self.StopRunning then
+	if InCombatLockdown() or not self.db or not self.db.rememberPositions or self.StopRunning then
 		return
 	end
 
-	if not frame.windFrameName or not self.db.rememberPositions then
+	local path = frame.__windFramePath
+
+	if not path or not self.db.framePositions[path] or #self.db.framePositions[path] == 0 then
 		return
 	end
 
-	if not self.db.framePositions[frame.windFrameName] then
+	if ignorePositionRememberingFrames[path] then
+		self.db.framePositions[path] = nil
 		return
 	end
 
-	if temporarilyMovingFrame[frame.windFrameName] then
-		self.db.framePositions[frame.windFrameName] = nil
-		return
-	end
-
-	if not frame.isChangingPoint then
-		frame.isChangingPoint = true
-		local points = self.db.framePositions[frame.windFrameName]
-
-		frame:ClearAllPoints()
-		for _, point in pairs(points) do
-			frame:__SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
-		end
-
-		frame.isChangingPoint = nil
+	frame:ClearAllPoints()
+	for _, point in pairs(self.db.framePositions[path]) do
+		SetPoint(frame, point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
 	end
 end
 
-function MF:HandleFrame(frameName, mainFrameName)
-	local frame
-	local mainFrame
-
-	if frameName.GetName then
-		frame = frameName
-	else -- 分析带分隔符的子框架
-		frame = _G
-		local path = { strsplit(".", frameName) }
-		for i = 1, #path do
-			frame = frame[path[i]]
-		end
+function MF:Frame_StartMoving(this, button)
+	if button == "LeftButton" and this.MoveFrame:IsMovable() then
+		this.MoveFrame:StartMoving()
 	end
+end
 
-	if mainFrameName then
-		if mainFrameName.GetName then
-			mainFrame = mainFrameName
-		else
-			mainFrame = _G
-			local path = { strsplit(".", mainFrameName) }
-			for i = 1, #path do
-				mainFrame = mainFrame[path[i]]
-			end
-		end
+function MF:Frame_StopMoving(this, button)
+	if button == "LeftButton" then
+		this.MoveFrame:StopMovingOrSizing()
+		MF:Remember(this.MoveFrame)
 	end
+end
 
-	if not frame or frame.MoveFrame then
+function MF:HandleFrame(this, bindingTarget)
+	local thisFrame = getFrame(this)
+	local bindingTargetFrame = getFrame(bindingTarget)
+
+	if not thisFrame or thisFrame.MoveFrame then
 		return
 	end
 
-	-- 战斗中框架受保护的话注册到离开战斗后再处理
-	if InCombatLockdown() and frame:IsProtected() then
+	if InCombatLockdown() and thisFrame:IsProtected() then
 		self:RegisterEvent("PLAYER_REGEN_ENABLED")
 		waitFrameList[#waitFrameList + 1] = {
-			frameName = frameName,
-			mainFrameName = mainFrameName,
+			frameName = this,
+			mainFrameName = bindingTarget,
 		}
 		return
 	end
 
-	frame:SetMovable(true)
-	frame:SetClampedToScreen(true)
-	frame:EnableMouse(true)
-	frame.MoveFrame = mainFrame or frame
+	thisFrame:SetMovable(true)
+	thisFrame:SetClampedToScreen(true)
+	thisFrame:EnableMouse(true)
+	thisFrame.MoveFrame = bindingTargetFrame or thisFrame
 
-	-- 鼠标按下
-	frame:HookScript("OnMouseDown", function(self, button)
-		if button == "LeftButton" and self.MoveFrame:IsMovable() then
-			self.MoveFrame:StartMoving()
-		end
-	end)
-
-	-- 鼠标抬起
-	frame:HookScript("OnMouseUp", function(self, button)
-		if button == "LeftButton" then
-			self.MoveFrame:StopMovingOrSizing()
-			MF:Remember(self.MoveFrame)
-		end
-	end)
-
-	-- 储存一个名字用于调取存储的位置
-	frame.windFrameName = frameName
-	if not frame.MoveFrame.windFrameName then
-		frame.MoveFrame.windFrameName = mainFrameName
+	thisFrame.__windFramePath = this
+	if not thisFrame.MoveFrame.__windFramePath then
+		thisFrame.MoveFrame.__windFramePath = bindingTarget
 	end
 
-	-- 注册调整位置的钩子
-	if not self:IsHooked(frame.MoveFrame, "SetPoint") then
-		frame.MoveFrame.__SetPoint = frame.MoveFrame.SetPoint
-		self:SecureHook(frame.MoveFrame, "SetPoint", "Reposition")
+	self:SecureHookScript(thisFrame, "OnMouseDown", "Frame_StartMoving")
+	self:SecureHookScript(thisFrame, "OnMouseUp", "Frame_StopMoving")
+
+	if not self:IsHooked(thisFrame.MoveFrame, "SetPoint") then
+		self:SecureHook(thisFrame.MoveFrame, "SetPoint", "Reposition")
 	end
 end
 
 function MF:HandleFramesWithTable(table, parent)
-	for _key1, _frame1 in pairs(table) do
-		if type(_key1) == "number" and type(_frame1) == "string" then
-			self:HandleFrame(_frame1, parent)
-		elseif type(_key1) == "string" and type(_frame1) == "table" then
-			self:HandleFrame(_key1, parent)
-			self:HandleFramesWithTable(_frame1, _key1)
+	for key, value in pairs(table) do
+		if type(key) == "number" and type(value) == "string" then
+			self:HandleFrame(value, parent)
+		elseif type(key) == "string" and type(value) == "table" then
+			self:HandleFrame(key, parent)
+			self:HandleFramesWithTable(value, key)
 		end
 	end
 end
@@ -528,18 +507,15 @@ function MF:HandleAddon(_, addon)
 			frame:StopMovingOrSizing()
 			frame:SetMovable(backup)
 		end
+
 		startStopMoving(_G.HeroTalentsSelectionDialog)
 		_G.PlayerSpellsFrame:HookScript("OnShow", function(frame)
 			startStopMoving(frame)
-			RunNextFrame(function()
-				startStopMoving(frame)
-			end)
+			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
 		end)
 		_G.HeroTalentsSelectionDialog:HookScript("OnShow", function(frame)
 			startStopMoving(frame)
-			RunNextFrame(function()
-				startStopMoving(frame)
-			end)
+			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
 		end)
 	end
 end
@@ -556,42 +532,24 @@ function MF:PLAYER_REGEN_ENABLED()
 end
 
 function MF:HandleElvUIBag()
+	if not self.db.elvUIBags then
+		return
+	end
+
 	if InCombatLockdown() then
 		self:RegisterEvent("PLAYER_REGEN_ENABLED")
 		return
 	end
 
-	if self.db.elvUIBags then
-		local f = B:GetContainerFrame()
+	local bag = B:GetContainerFrame()
+	local container = B:GetContainerFrame(true)
 
-		if not f then
-			return
-		end
-
-		if not f.WTMoveFramesHandled then
-			f:SetScript("OnDragStart", function(frame)
-				frame:StartMoving()
-			end)
-			if f.helpButton then
-				f.helpButton:SetScript("OnEnter", function(frame)
-					local GameTooltip = _G.GameTooltip
-					GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
-					GameTooltip:ClearLines()
-					GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
-					GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
-					GameTooltip:Show()
-				end)
-			end
-
-			f.WTMoveFramesHandled = true
-		end
-
-		f = B:GetContainerFrame(true)
-		if not f.WTMoveFramesHandled then
-			f:SetScript("OnDragStart", function(frame)
-				frame:StartMoving()
-			end)
-			f:SetScript("OnEnter", function(frame)
+	if bag and not bag.__windFramePath then
+		bag:SetScript("OnDragStart", function(frame)
+			frame:StartMoving()
+		end)
+		if bag.helpButton then
+			bag.helpButton:SetScript("OnEnter", function(frame)
 				local GameTooltip = _G.GameTooltip
 				GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
 				GameTooltip:ClearLines()
@@ -599,8 +557,25 @@ function MF:HandleElvUIBag()
 				GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
 				GameTooltip:Show()
 			end)
-			f.WTMoveFramesHandled = true
 		end
+
+		bag.__windFramePath = "ElvUI_Bag_Bag"
+	end
+
+	if container and not bag.__windFramePath then
+		container:SetScript("OnDragStart", function(frame)
+			frame:StartMoving()
+		end)
+		container:SetScript("OnEnter", function(frame)
+			local GameTooltip = _G.GameTooltip
+			GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
+			GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
+			GameTooltip:Show()
+		end)
+
+		bag.__windFramePath = "ElvUI_Bag_Container"
 	end
 end
 
@@ -622,7 +597,7 @@ function MF:Initialize()
 
 	-- Trade Skill Master Speical Handling
 	if C_AddOns_IsAddOnLoaded("TradeSkillMaster") and self.db.tradeSkillMasterCompatible then
-		removeBlizzardFrames("MerchantFrame")
+		tDeleteItem(BlizzardFrames, "MerchantFrame")
 	end
 
 	-- ElvUI Mail Frame Speical Handling
@@ -631,20 +606,8 @@ function MF:Initialize()
 		_G.MailFrameInset:SetParent(_G.MailFrame)
 	end
 
-	-- 全局变量中已经存在的窗体
+	-- Setup Blizzard Frames that are always loaded
 	self:HandleFramesWithTable(BlizzardFrames)
-
-	-- 为后续载入插件注册事件
-	self:RegisterEvent("ADDON_LOADED", "HandleAddon")
-
-	-- 检查当前已经载入的插件
-	for addon in pairs(BlizzardFramesOnDemand) do
-		if C_AddOns_IsAddOnLoaded(addon) then
-			self:HandleAddon(nil, addon)
-		end
-	end
-
-	self:HandleElvUIBag()
 
 	if _G.BattlefieldFrame and _G.PVPParentFrame then
 		_G.BattlefieldFrame:SetParent(_G.PVPParentFrame)
@@ -652,17 +615,22 @@ function MF:Initialize()
 		_G.BattlefieldFrame:SetAllPoints()
 	end
 
-	local skipHook = false
-	self:SecureHook(_G.ContainerFrameSettingsManager, "GetBagsShown", function()
-		if skipHook then
-			return
+	-- Setup Blizzard Frames that are loaded on demand
+	self:RegisterEvent("ADDON_LOADED", "HandleAddon")
+	for addon in pairs(BlizzardFramesOnDemand) do
+		if C_AddOns_IsAddOnLoaded(addon) then
+			self:HandleAddon(nil, addon)
 		end
-		skipHook = true
-		local bags = _G.ContainerFrameSettingsManager:GetBagsShown()
-		for _, bag in pairs(bags or {}) do
+	end
+
+	-- ElvUI Bag
+	self:HandleElvUIBag()
+
+	local GetBagsShown = _G.ContainerFrameSettingsManager.GetBagsShown
+	self:SecureHook(_G.ContainerFrameSettingsManager, "GetBagsShown", function()
+		for _, bag in pairs(GetBagsShown(_G.ContainerFrameSettingsManager) or {}) do
 			bag:ClearAllPoints()
 		end
-		skipHook = false
 	end)
 end
 

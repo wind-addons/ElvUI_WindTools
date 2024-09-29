@@ -3,6 +3,10 @@ local T = W.Modules.Tooltips
 local openRaidLib = E.Libs.OpenRaid
 local C = W.Utilities.Color
 
+local format = format
+
+local UnitIsPlayer = UnitIsPlayer
+
 function T:AddKeystone(tt, unit)
 	local db = E.db.WT.tooltips.keystone
 

@@ -12,7 +12,6 @@ local C_Item_IsItemKeystoneByID = C_Item.IsItemKeystoneByID
 local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
 local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 
-local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 local cache = {}

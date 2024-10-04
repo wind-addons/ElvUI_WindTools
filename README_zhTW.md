@@ -1,7 +1,7 @@
 <div align="center">
 <img width="512" alt="標題" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
-![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.81-538AED.svg?longCache=true&style=for-the-badge)
+![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-3.82-538AED.svg?longCache=true&style=for-the-badge)
 ![ElvUI 版本](https://img.shields.io/badge/ElvUI-13.78-ff784d.svg?longCache=true&style=for-the-badge)
 
 [![Discord](https://img.shields.io/discord/747075771213807707?color=7289DA&label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/CMDsBmhvyW) [![GitHub Stars](https://img.shields.io/github/stars/wind-addons/ElvUI_WindTools?style=for-the-badge&label=GitHub%20Stars%20%E2%AD%90&logo=github&color=yellow)](https://github.com/wind-addons/ElvUI_WindTools)
@@ -26,18 +26,18 @@
 
 ### 完整支援
 
-简体中文，繁體中文，한국어, ру́сский язы́к, English, Deutsch, français
+简体中文，繁體中文，한국어，ру́сский язы́к，English，Deutsch，français
 
 ### 完善中
 
-Español, Português, Italiano
+Español，Português，Italiano
 
 ## ❤️ 鳴謝
 
 - Siweia (NDui)
-- Loudsoul (TinyInspect, TinyTooltip)
+- Loudsoul (TinyInspect，TinyTooltip)
 - Merathilis (ElvUI_MerathilisUI)
-- Tox, Nawuko (ElvUI_ToxiUI)
+- Tox，Nawuko (ElvUI_ToxiUI)
 
 [完整鳴謝名单](CREDITS.md)
 

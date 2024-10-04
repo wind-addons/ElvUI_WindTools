@@ -13,6 +13,7 @@ local tinsert = tinsert
 local tostring = tostring
 local wipe = wipe
 
+local EventRegistry = EventRegistry
 local Pool_HideAndClearAnchors = Pool_HideAndClearAnchors
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -2574,6 +2575,9 @@ function WM:Scale()
 
 	_G.WorldMapFrame:SetClampedToScreen(true)
 	_G.WorldMapFrame:SetScale(self.db.scale.size)
+
+	EventRegistry:RegisterCallback("WorldMapMinimized", _G.WorldMapFrame.SetScale, _G.WorldMapFrame, self.db.scale.size)
+	EventRegistry:RegisterCallback("WorldMapMaximized", _G.WorldMapFrame.SetScale, _G.WorldMapFrame, 1)
 end
 
 function WM:Initialize()

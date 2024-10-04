@@ -9,10 +9,8 @@ local tDeleteItem = tDeleteItem
 local type = type
 
 local GenerateFlatClosure = GenerateFlatClosure
-local GetPoint = _G.UIParent.GetPoint
 local InCombatLockdown = InCombatLockdown
 local RunNextFrame = RunNextFrame
-local SetPoint = _G.UIParent.SetPoint
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
@@ -374,7 +372,7 @@ function MF:Remember(frame)
 	if numPoints and numPoints > 0 then
 		self.db.framePositions[path] = {}
 		for index = 1, numPoints do
-			local anchorPoint, relativeFrame, relativePoint, offX, offY = GetPoint(frame, index)
+			local anchorPoint, relativeFrame, relativePoint, offX, offY = frame:GetPoint(index)
 			self.db.framePositions[path][index] = {
 				anchorPoint = anchorPoint,
 				relativeFrame = relativeFrame,
@@ -386,8 +384,8 @@ function MF:Remember(frame)
 	end
 end
 
-function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY)
-	if InCombatLockdown() or not self.db or not self.db.rememberPositions or self.StopRunning then
+function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, offY, skip)
+	if skip or InCombatLockdown() or not self.db or not self.db.rememberPositions or self.StopRunning then
 		return
 	end
 
@@ -404,7 +402,7 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 
 	frame:ClearAllPoints()
 	for _, point in pairs(self.db.framePositions[path]) do
-		SetPoint(frame, point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY)
+		frame:SetPoint(point.anchorPoint, point.relativeFrame, point.relativePoint, point.offX, point.offY, true)
 	end
 end
 

@@ -42,10 +42,10 @@ W.Changelog[382] = {
 			"[추가 아이템 바] 포탈 목록을 업데이트했습니다. 감사합니다 mcc1",
 		},
 		["ruRU"] = {
-			"[World Map] World Map Scale will no longer affect full screen mode.",
-			"[Move Frames] Optimize the stability of frame position updates.",
-			"[Extra Item Bar] Update the feast list. Thanks mcc1",
-			"[Extra Item Bar] Update the portal list. Thanks mcc1",
+			"[Карта мира] Масштаб карты мира больше не влияет на полноэкранный режим.",
+			"[Перемещение фреймов] Оптимизирована стабильность обновлений положения фреймов.",
+			"[Панель дополнительных предметов] Обновлен список пиршеств. Спасибо, mcc1",
+			"[Панель дополнительных элементов] Обновлен список порталов. Спасибо, mcc1",
 		},
 	},
 }

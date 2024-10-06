@@ -38,6 +38,7 @@ local BotList = {
 	[256230] = true, -- 寧神寶典
 	[298926] = true, -- 布靈登7000型
 	[324029] = true, -- 寧心寶典
+	[453942] = true, -- 阿爾加修理機器人11O
 }
 
 local FeastList = {

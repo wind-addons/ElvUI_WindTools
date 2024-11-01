@@ -16,13 +16,21 @@ function S:Blizzard_Calendar()
 	self:CreateShadow(_G.CalendarViewRaidFrame)
 	self:CreateShadow(_G.CalendarViewHolidayFrame)
 	self:CreateShadow(_G.CalendarMassInviteFrame)
-
 	self:CreateShadow(_G.CalendarViewEventFrame)
+	self:CreateShadow(_G.CalendarCreateEventFrame)
 
 	for index in next, CLASS_SORT_ORDER do
 		local button = _G["CalendarClassButton" .. index]
+
 		if button then
-			self:CreateShadow(button)
+			if not button.backdrop then
+				button:CreateBackdrop()
+			end
+			self:CreateBackdropShadow(button)
+		end
+
+		if index == 1 then
+			F.MoveFrameWithOffset(button, 10, -5)
 		end
 	end
 

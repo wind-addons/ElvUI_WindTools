@@ -25,11 +25,11 @@
 
 ### Soporte Completo
 
-简体中文，繁體中文，한국어, ру́сский язы́к, English, Deutsch, français
+简体中文，繁體中文，한국어, ру́сский язы́к, English, Deutsch, français, Español
 
 ### Algunos textos siguen en inglés
 
-Español, Português, Italiano
+Português, Italiano
 
 ## ❤️ Créditos
 

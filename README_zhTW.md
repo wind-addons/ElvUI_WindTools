@@ -26,11 +26,11 @@
 
 ### 完整支援
 
-简体中文，繁體中文，한국어，ру́сский язы́к，English，Deutsch，français
+简体中文，繁體中文，한국어, ру́сский язы́к, English, Deutsch, français, Español
 
 ### 完善中
 
-Español，Português，Italiano
+Português，Italiano
 
 ## ❤️ 鳴謝
 

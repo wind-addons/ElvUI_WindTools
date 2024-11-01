@@ -1845,7 +1845,7 @@ options.lfgList = {
 					order = 1,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Add some additional informaiton into title or description."],
+					desc = L["Add some additional information into title or description."],
 					width = "full",
 				},
 				target = {

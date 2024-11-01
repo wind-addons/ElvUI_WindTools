@@ -38,7 +38,7 @@ W.MythicPlusMapData = {
 	[376] = { abbr = L["[ABBR] The Necrotic Wake"], activityID = 265, timers = { 1116, 1488, 1860 } },
 	[501] = { abbr = L["[ABBR] The Stonevault"], activityID = 328, timers = { 1188, 1584, 1980 } },
 	[502] = { abbr = L["[ABBR] City of Threads"], activityID = 329, timers = { 1260, 1680, 2100 } },
-	[503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1116, 1488, 1860 } },
+	[503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1080, 1440, 1800 } },
 	[505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
 	[507] = { abbr = L["[ABBR] Grim Batol"], activityID = 56, timers = { 1224, 1632, 2040 } },
 }

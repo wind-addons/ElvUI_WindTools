@@ -479,14 +479,17 @@ local function ShowInspectItemStatsFrame(frame, unit)
 	end
 	for k, v in pairs(playerStats) do
 		if not inspectStats[k] and v.r + v.g + v.b > 1.2 then
-			frame.statsFrame["stat" .. index].Label:SetText(k)
-			frame.statsFrame["stat" .. index].Label:SetTextColor(1, 0.82, 0)
-			frame.statsFrame["stat" .. index].Value:SetText("-")
-			frame.statsFrame["stat" .. index].Value:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].PlayerValue:SetText(v.value)
-			frame.statsFrame["stat" .. index].PlayerValue:SetTextColor(v.r, v.g, v.b)
-			frame.statsFrame["stat" .. index].Background:SetShown(index % 2 ~= 0)
-			frame.statsFrame["stat" .. index]:Show()
+			local f = frame.statsFrame["stat" .. index]
+			if f then
+				f.Label:SetText(k)
+				f.Label:SetTextColor(1, 0.82, 0)
+				f.Value:SetText("-")
+				f.Value:SetTextColor(v.r, v.g, v.b)
+				f.PlayerValue:SetText(v.value)
+				f.PlayerValue:SetTextColor(v.r, v.g, v.b)
+				f.Background:SetShown(index % 2 ~= 0)
+				f:Show()
+			end
 			index = index + 1
 		end
 	end

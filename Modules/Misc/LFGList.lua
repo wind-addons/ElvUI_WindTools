@@ -107,11 +107,6 @@ for i = 1, 10 do
 	tinsert(vaultItemLevel, weeklyItemLevel)
 end
 
-local affixLoop = {
-	{ 148, 9, 152, 10, 147 },
-	{ 148, 10, 152, 9, 147 },
-}
-
 local affixAddedAtLevel = { 2, 4, 7, 10, 12 }
 
 local avaliableSortMode = {
@@ -585,84 +580,44 @@ function LL:InitalizeRightPanel()
 		end
 	end)
 
-	local currAffixIndex = 0
-	local currAffixes = C_MythicPlus_GetCurrentAffixes()
+	local affixes = C_MythicPlus_GetCurrentAffixes()
+	frame.affix = CreateFrame("Frame", nil, frame)
+	frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+	frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
+	frame.affix:SetHeight(32)
 
-	if currAffixes then
-		for i = 1, #affixLoop do
-			local affixes = affixLoop[i]
-			if affixes[2] == currAffixes[2].id then
-				currAffixIndex = i
-				break
-			end
-		end
+	local buttonSize = 32
+
+	local width = frame.affix:GetWidth()
+	local space = (width - 2 * 2 - buttonSize * #affixes) / (#affixes - 1)
+	for i = 1, #affixes do
+		local affix = frame.affix:CreateTexture(nil, "ARTWORK")
+		affix:CreateBackdrop()
+		affix:SetSize(buttonSize, buttonSize)
+		affix:SetPoint("LEFT", frame.affix, "LEFT", 2 + (i - 1) * (buttonSize + space), 0)
+		local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixes[i].id))
+		affix:SetTexture(fileDataID)
+		affix:SetTexCoord(unpack(E.TexCoords))
 	end
 
-	if currAffixIndex and currAffixIndex ~= 0 then
-		local affixes = affixLoop[currAffixIndex]
-		frame.affix = CreateFrame("Frame", nil, frame)
-		frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
-		frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-		frame.affix:SetHeight(32)
+	frame.affix:SetScript("OnEnter", function()
+		_G.GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 3, frame:GetHeight())
+		_G.GameTooltip:ClearLines()
+		_G.GameTooltip:AddLine(F.GetWindStyleText(L["Affixes"]))
 
-		local buttonSize = 32
-
-		local width = frame.affix:GetWidth()
-		local space = (width - 2 * 2 - buttonSize * #affixes) / (#affixes - 1)
 		for i = 1, #affixes do
-			local affix = frame.affix:CreateTexture(nil, "ARTWORK")
-			affix:CreateBackdrop()
-			affix:SetSize(buttonSize, buttonSize)
-			affix:SetPoint("LEFT", frame.affix, "LEFT", 2 + (i - 1) * (buttonSize + space), 0)
-			local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixLoop[currAffixIndex][i]))
-			affix:SetTexture(fileDataID)
-			affix:SetTexCoord(unpack(E.TexCoords))
+			local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i].id)
+			local level = affixAddedAtLevel[i] or 0
+			_G.GameTooltip:AddLine(" ")
+			_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
+			_G.GameTooltip:AddLine(description, 1, 1, 1, true)
 		end
+		_G.GameTooltip:Show()
+	end)
 
-		frame.affix:SetScript("OnEnter", function()
-			_G.GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 3, frame:GetHeight())
-			_G.GameTooltip:ClearLines()
-			_G.GameTooltip:AddLine(F.GetWindStyleText(L["Affixes"]))
-
-			for i = 1, #affixes do
-				local name, description, fileDataID = C_ChallengeMode_GetAffixInfo(affixes[i])
-				local level = affixAddedAtLevel[i] or 0
-				_G.GameTooltip:AddLine(" ")
-				_G.GameTooltip:AddLine(format("%s (%d) %s", F.GetIconString(fileDataID, 16, 18, true), level, name))
-				_G.GameTooltip:AddLine(description, 1, 1, 1, true)
-			end
-			_G.GameTooltip:Show()
-		end)
-
-		frame.affix:SetScript("OnLeave", function()
-			_G.GameTooltip:Hide()
-		end)
-	end
-
-	------------------------------
-	-- Temporarily affixes
-	------------------------------
-	-- local affixIDs = {}
-	-- for i = 1, #currAffixes do
-	-- 	tinsert(affixIDs, currAffixes[i].id)
-	-- end
-
-	-- frame.affix = CreateFrame("Frame", nil, frame)
-	-- frame.affix:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
-	-- frame.affix:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
-	-- frame.affix:SetHeight(32)
-
-	-- local width = frame.affix:GetWidth()
-	-- local space = (width - 32 * 4) / 4
-	-- for i = 1, #affixIDs do
-	-- 	local affix = frame.affix:CreateTexture(nil, "ARTWORK")
-	-- 	affix:SetSize(32, 32)
-	-- 	affix:SetPoint("LEFT", frame.affix, "LEFT", (i - 1) * 32 + (i + 1) * space, 0)
-	-- 	local fileDataID = select(3, C_ChallengeMode_GetAffixInfo(affixIDs[i]))
-	-- 	affix:SetTexture(fileDataID)
-	-- 	affix:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	-- end
-	------------------------------
+	frame.affix:SetScript("OnLeave", function()
+		_G.GameTooltip:Hide()
+	end)
 
 	local filters = CreateFrame("Frame", nil, frame)
 	if frame.affix then

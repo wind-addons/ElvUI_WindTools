@@ -4,16 +4,16 @@ W.Changelog[384] = {
 	RELEASE_DATE = "2024/11/07",
 	IMPORTANT = {
 		["zhCN"] = {
-			"ElvUI 最低支持版本更新到 13.80。",
+			"最低支持 ElvUI 版本更新到 13.80。",
 		},
 		["zhTW"] = {
-			"ElvUI 最低支援版本更新到 13.80。",
+			"最低支援 ElvUI 版本更新到 13.80。",
 		},
 		["enUS"] = {
-			"ElvUI minimum supported version updated to 13.80.",
+			"Minimum supported version of ElvUI updated to 13.80.",
 		},
 		["koKR"] = {
-			"ElvUI 최소 지원 버전이 13.80으로 업데이트되었습니다.",
+			"ElvUI의 최소 지원 버전이 13.80으로 업데이트되었습니다.",
 		},
 		["ruRU"] = {
 			"Минимальная поддерживаемая версия ElvUI обновлена до 13.80.",

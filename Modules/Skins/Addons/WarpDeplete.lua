@@ -5,7 +5,7 @@ local _G = _G
 
 local pairs = pairs
 
-function S:WarpDeplete_InitDisplay()
+function S:ReskinWarpDepleteBars()
 	for _, barFrame in pairs(_G.WarpDeplete.bars) do
 		local bar = barFrame.bar
 		if not bar.__windSkin then
@@ -29,9 +29,13 @@ function S:WarpDeplete()
 	end
 
 	if _G.WarpDeplete.bars then
-		self:WarpDeplete_InitDisplay()
+		self:ReskinWarpDepleteBars()
 	else
-		self:SecureHook(_G.WarpDeplete, "InitDisplay", "WarpDeplete_InitDisplay")
+		self:SecureHook(
+			_G.WarpDeplete,
+			_G.WarpDeplete.InitDisplay and "InitDisplay" or "InitRender",
+			"ReskinWarpDepleteBars"
+		)
 	end
 end
 

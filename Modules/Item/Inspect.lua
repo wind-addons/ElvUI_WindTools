@@ -363,7 +363,7 @@ local function ShowInspectItemStatsFrame(frame, unit)
 		S:MerathilisUISkin(statsFrame.backdrop)
 		statsFrame:Size(197, 157)
 		statsFrame:Point("TOPLEFT", frame, "TOPRIGHT", 5, 0)
-		for i = 1, 20 do
+		for i = 1, 30 do
 			statsFrame["stat" .. i] = CreateFrame("FRAME", nil, statsFrame, "CharacterStatFrameTemplate")
 			statsFrame["stat" .. i]:EnableMouse(false)
 			statsFrame["stat" .. i]:SetWidth(197)
@@ -392,7 +392,7 @@ local function ShowInspectItemStatsFrame(frame, unit)
 
 		frame.statsFrame = statsFrame
 	elseif IL.db and IL.db.levelText and IL.db.equipText then
-		for i = 1, 20 do
+		for i = 1, 30 do
 			F.SetFontWithDB(frame.statsFrame["stat" .. i].Label, IL.db.statsText)
 			F.SetFontWithDB(frame.statsFrame["stat" .. i].Value, IL.db.statsText)
 			F.SetFontWithDB(frame.statsFrame["stat" .. i].PlayerValue, IL.db.statsText)

@@ -258,7 +258,7 @@ do -- Add options for bars
 								desc("UTILITY", L["Utilities"]),
 								desc("OPENABLE", L["Openable Items"]),
 								desc("PROF", format("%s |cffffdd57[%s]|r", L["Profession Items"], L["The War Within"])),
-								desc("SEEDS", L["Dream Seeds"]),
+								desc("SEEDS", L["Seeds"]),
 								desc("BIGDIG", L["Big Dig"]),
 								desc("MOPREMIX", L["MoP Remixed Items"]),
 								desc("DELVE", L["Delves"]),

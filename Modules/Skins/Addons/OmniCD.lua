@@ -24,8 +24,12 @@ function S:OmniCD_Party_Icon()
 	end
 
 	local O = _G.OmniCD[1]
-	hooksecurefunc(O.Party, "SetBorder", function(_, icon)
-		self:CreateShadow(icon)
+	hooksecurefunc(O.Party, "AcquireIcon", function(_, barFrame, iconIndex, unitBar)
+		local icon = barFrame.icons[iconIndex]
+		if icon and not icon.__wind then
+			self:CreateShadow(icon)
+			icon.__wind = true
+		end
 	end)
 end
 
@@ -35,14 +39,14 @@ function S:OmniCD_Party_ExtraBars()
 	end
 
 	local O = _G.OmniCD[1]
-	hooksecurefunc(O.Party, "GetStatusBar", function(P, icon)
+	hooksecurefunc(O.Party, "AcquireStatusBar", function(P, icon)
 		if icon.statusBar then
 			if not icon.statusBar.__wind then
 				icon.statusBar.__wind = CreateFrame("Frame", nil, icon.statusBar)
 				icon.statusBar.__wind:SetFrameLevel(icon.statusBar:GetFrameLevel() - 1)
 			end
 
-			local x, y = icon:GetSize()
+			local x = icon:GetSize()
 
 			icon.statusBar.__wind:ClearAllPoints()
 			icon.statusBar.__wind:SetPoint("TOPLEFT", icon.statusBar, "TOPLEFT", -x - 1, 0)

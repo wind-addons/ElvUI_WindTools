@@ -29,18 +29,23 @@ W.Changelog[385] = {
 	IMPROVEMENT = {
 		["zhCN"] = {
 			"[美化皮肤] 更新 OmniCD 美化皮肤。",
+			"[额外物品条] 更新种子 SEEDS 分组。"
 		},
 		["zhTW"] = {
 			"[美化皮膚] 更新 OmniCD 美化皮膚。",
+			"[額外物品條] 更新種子 SEEDS 分組。"
 		},
 		["enUS"] = {
 			"[Skin] Update OmniCD skin.",
+			"[Extra Items Bar] Update SEEDS group."
 		},
 		["koKR"] = {
 			"[스킨] OmniCD 스킨 업데이트.",
+			"[추가 아이템 바] SEEDS 그룹 업데이트."
 		},
 		["ruRU"] = {
 			"[Скин] Обновление скина OmniCD.",
+			"[Дополнительная панель предметов] Обновление группы SEEDS."
 		},
 	},
 }

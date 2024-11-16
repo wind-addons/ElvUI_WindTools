@@ -128,6 +128,20 @@ options.gameFix = {
 				E.global.WT.core.guildNewsUpdateFix = value
 			end,
 			width = "full",
+		},
+			advancedCLEU_Etrace = {
+			order = 3,
+			type = "toggle",
+			name = L["Advanced CLEU Etrace"],
+			desc = L["Enhanced Combat Log Events in /etrace frame."],
+			get = function(info)
+				return E.global.WT.core.advancedCLEU_Etrace
+			end,
+			set = function(info, value)
+				E.global.WT.core.advancedCLEU_Etrace = value
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+			width = "full",
 		}
 	},
 }

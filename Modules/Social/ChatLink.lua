@@ -2,15 +2,12 @@ local W, F, E, L, _, _, G = unpack((select(2, ...)))
 local CL = W:NewModule("ChatLink")
 
 local _G = _G
-local ceil = ceil
 local format = format
 local gsub = gsub
 local pairs = pairs
 local select = select
 local strmatch = strmatch
 local tonumber = tonumber
-local tostring = tostring
-local unpack = unpack
 
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
 local GetAchievementInfo = GetAchievementInfo

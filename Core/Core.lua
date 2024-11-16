@@ -36,7 +36,7 @@ E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
 }
 
 E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
-	text = format(L["Welcome to %s %s!"], W.Title, W.Version),
+	text = format(L["Welcome to %s %s!"], W.Title, W.DisplayVersion),
 	button1 = L["Open Changelog"],
 	button2 = format("|cffaaaaaa%s|r", L["Next Time"]),
 	OnAccept = function(self)

@@ -5,6 +5,7 @@ G.core = {
 	changlogPopup = false,
 	elvUIVersionPopup = true,
 	cvarAlert = false,
+	guildNewsUpdateFix = true,
 	logLevel = 2,
 	loginMessage = true,
 }

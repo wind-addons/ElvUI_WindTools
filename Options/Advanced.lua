@@ -116,6 +116,19 @@ options.gameFix = {
 			end,
 			width = "full",
 		},
+		guildNewsUpdateFix = {
+			order = 2,
+			type = "toggle",
+			name = L["Guild News Update Fix"],
+			desc = L["Fix the issue that the guild news update too frequently."],
+			get = function(info)
+				return E.global.WT.core.guildNewsUpdateFix
+			end,
+			set = function(info, value)
+				E.global.WT.core.guildNewsUpdateFix = value
+			end,
+			width = "full",
+		}
 	},
 }
 

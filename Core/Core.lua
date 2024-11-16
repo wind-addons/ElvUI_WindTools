@@ -187,4 +187,29 @@ function W:GameFixing()
 			end
 		end)
 	end
+
+	if E.global.WT.core.guildNewsUpdateFix then
+		-- https://nga.178.com/read.php?tid=42399961
+		local BLZCommunitiesGuildNewsFrame_OnEvent = CommunitiesGuildNewsFrame_OnEvent
+		local newsRequireUpdate, newsTimer
+		_G.CommunitiesFrameGuildDetailsFrameNews:SetScript("OnEvent", function(frame, event)
+			if event == "GUILD_NEWS_UPDATE" then
+				if newsTimer then
+					newsRequireUpdate = true
+				else
+					BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
+
+					-- After 1 second, if guild news still need to be updated, update again
+					newsTimer = C_Timer.NewTimer(1, function()
+						if newsRequireUpdate then
+							BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
+						end
+						newsTimer = nil
+					end)
+				end
+			else
+				BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
+			end
+		end)
+	end
 end

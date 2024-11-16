@@ -15,7 +15,7 @@ local GetBuybackItemLink = GetBuybackItemLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetGuildBankItemLink = GetGuildBankItemLink
-local GetMerchantItemInfo = GetMerchantItemInfo
+local C_MerchantFrame_GetItemInfo = C_MerchantFrame.GetItemInfo
 local GetMerchantItemLink = GetMerchantItemLink
 local GetMerchantNumItems = GetMerchantNumItems
 local GetNumBuybackItems = GetNumBuybackItems
@@ -115,7 +115,8 @@ function AK:Merchant()
 
 		local itemButton = _G["MerchantItem" .. i .. "ItemButton"]
 		if itemButton and itemButton:IsShown() then
-			local _, _, _, _, numAvailable, isUsable = GetMerchantItemInfo(index)
+		  local info = C_MerchantFrame_GetItemInfo(index)
+			local numAvailable, isUsable = info.numAvailable, info.isUsable
 			if isUsable and IsAlreadyKnown(GetMerchantItemLink(index)) then
 				if self.db.mode == "MONOCHROME" then
 					_G["MerchantItem" .. i .. "ItemButtonIconTexture"]:SetDesaturated(true)

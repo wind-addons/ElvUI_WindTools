@@ -33,6 +33,15 @@ function S:OmniCD_Party_Icon()
 	end)
 end
 
+local function updateBorderVisibility(self)
+	local parent = self:GetParent()
+	if not parent or not parent.__wind then
+		return
+	end
+
+	parent.__wind:SetShown(self:IsShown())
+end
+
 function S:OmniCD_Party_ExtraBars()
 	if not E.private.WT.skins.addons.omniCDStatusBar then
 		return
@@ -44,6 +53,13 @@ function S:OmniCD_Party_ExtraBars()
 			if not icon.statusBar.__wind then
 				icon.statusBar.__wind = CreateFrame("Frame", nil, icon.statusBar)
 				icon.statusBar.__wind:SetFrameLevel(icon.statusBar:GetFrameLevel() - 1)
+
+				-- bind the visibility to the original borders
+				if icon.statusBar.borderTop then
+					hooksecurefunc(icon.statusBar.borderTop, "SetShown", updateBorderVisibility)
+					hooksecurefunc(icon.statusBar.borderTop, "Hide", updateBorderVisibility)
+					hooksecurefunc(icon.statusBar.borderTop, "Show", updateBorderVisibility)
+				end
 			end
 
 			local x = icon:GetSize()

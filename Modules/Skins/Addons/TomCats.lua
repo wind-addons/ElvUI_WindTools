@@ -7,7 +7,7 @@ local _G = _G
 local pairs = pairs
 local unpack = unpack
 
-local GetItemQualityColor = GetItemQualityColor
+local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 
 local atlasToQuality = {
 	["auctionhouse-itemicon-border-gray"] = 0,
@@ -40,7 +40,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
 	local quality = atlas and atlasToQuality[atlas]
 
 	if quality then
-		local r, g, b = GetItemQualityColor(quality)
+		local r, g, b = C_Item_GetItemQualityColor(quality)
 		icon.Icon.backdrop:SetBackdropBorderColor(r, g, b)
 	else
 		icon.Icon.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))

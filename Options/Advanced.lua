@@ -129,20 +129,20 @@ options.gameFix = {
 			end,
 			width = "full",
 		},
-			advancedCLEU_Etrace = {
+		advancedCLEUEventTrace = {
 			order = 3,
 			type = "toggle",
-			name = L["Advanced CLEU Etrace"],
+			name = L["Advanced CLEU Event Trace"],
 			desc = L["Enhanced Combat Log Events in /etrace frame."],
 			get = function(info)
-				return E.global.WT.core.advancedCLEU_Etrace
+				return E.global.WT.core.advancedCLEUEventTrace
 			end,
 			set = function(info, value)
-				E.global.WT.core.advancedCLEU_Etrace = value
+				E.global.WT.core.advancedCLEUEventTrace = value
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 			width = "full",
-		}
+		},
 	},
 }
 

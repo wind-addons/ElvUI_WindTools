@@ -11,9 +11,13 @@ local strsub = strsub
 local tinsert = tinsert
 local tonumber = tonumber
 
-local InCombatLockdown = InCombatLockdown
+local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+local CreateFrame = CreateFrame
+local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local GetInstanceInfo = GetInstanceInfo
+local InCombatLockdown = InCombatLockdown
 
+local C_Timer_NewTimer = C_Timer.NewTimer
 local C_UI_Reload = C_UI.Reload
 
 local ACCEPT = _G.ACCEPT
@@ -190,56 +194,54 @@ function W:GameFixing()
 
 	if E.global.WT.core.guildNewsUpdateFix then
 		-- https://nga.178.com/read.php?tid=42399961
-		local BLZCommunitiesGuildNewsFrame_OnEvent = CommunitiesGuildNewsFrame_OnEvent
 		local newsRequireUpdate, newsTimer
 		_G.CommunitiesFrameGuildDetailsFrameNews:SetScript("OnEvent", function(frame, event)
 			if event == "GUILD_NEWS_UPDATE" then
 				if newsTimer then
 					newsRequireUpdate = true
 				else
-					BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
-
+					_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
 					-- After 1 second, if guild news still need to be updated, update again
-					newsTimer = C_Timer.NewTimer(1, function()
+					newsTimer = C_Timer_NewTimer(1, function()
 						if newsRequireUpdate then
-							BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
+							_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
 						end
 						newsTimer = nil
 					end)
 				end
 			else
-				BLZCommunitiesGuildNewsFrame_OnEvent(frame, event)
+				_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
 			end
 		end)
 	end
 
-	if E.global.WT.core.advancedCLEU_Etrace then
-    local function LogEvent(self, event, ...)
-      if event == 'COMBAT_LOG_EVENT_UNFILTERED' or event == 'COMBAT_LOG_EVENT' then
-        self:LogEvent_Original(event, CombatLogGetCurrentEventInfo())
-      elseif event == 'COMBAT_TEXT_UPDATE' then
-        self:LogEvent_Original(event, (...), GetCurrentCombatTextEventInfo())
-      else
-        self:LogEvent_Original(event, ...)
-      end
-    end
+	if E.global.WT.core.advancedCLEUEventTrace then
+		local function LogEvent(trace, event, ...)
+			if event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "COMBAT_LOG_EVENT" then
+				trace:LogEvent_Original(event, CombatLogGetCurrentEventInfo())
+			elseif event == "COMBAT_TEXT_UPDATE" then
+				trace:LogEvent_Original(event, (...), GetCurrentCombatTextEventInfo())
+			else
+				trace:LogEvent_Original(event, ...)
+			end
+		end
 
-    local function OnEventTraceLoaded()
-      EventTrace.LogEvent_Original = EventTrace.LogEvent
-      EventTrace.LogEvent = LogEvent
-    end
+		local function OnEventTraceLoaded()
+			_G.EventTrace.LogEvent_Original = _G.EventTrace.LogEvent
+			_G.EventTrace.LogEvent = LogEvent
+		end
 
-    if EventTrace then
-      OnEventTraceLoaded()
-    else
-      local frame = CreateFrame('Frame')
-      frame:RegisterEvent('ADDON_LOADED')
-      frame:SetScript('OnEvent', function (self, event, ...)
-        if event == 'ADDON_LOADED' and (...) == 'Blizzard_EventTrace' then
-          OnEventTraceLoaded()
-          self:UnregisterAllEvents()
-        end
-      end)
-    end
-  end
+		if _G.EventTrace then
+			OnEventTraceLoaded()
+		else
+			local frame = CreateFrame("Frame")
+			frame:RegisterEvent("ADDON_LOADED")
+			frame:SetScript("OnEvent", function(f, event, ...)
+				if event == "ADDON_LOADED" and (...) == "Blizzard_EventTrace" then
+					OnEventTraceLoaded()
+					f:UnregisterAllEvents()
+				end
+			end)
+		end
+	end
 end

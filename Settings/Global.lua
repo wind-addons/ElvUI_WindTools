@@ -6,7 +6,7 @@ G.core = {
 	elvUIVersionPopup = true,
 	cvarAlert = false,
 	guildNewsUpdateFix = true,
-	advancedCLEU_Etrace = false,
+	advancedCLEUEventTrace = false,
 	logLevel = 2,
 	loginMessage = true,
 }

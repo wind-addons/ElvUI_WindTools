@@ -294,6 +294,7 @@ L["Button Spacing"] = "버튼 간격"
 L["Button Width"] = "버튼 폭"
 L["Buttons"] = "버튼 수"
 L["Buttons Per Row"] = "한 줄당 버튼 수"
+L["CDKey"] = true
 L["CENTER"] = "중앙"
 L["CTRL+A: Select All"] = "CTRL+A: 모두 선택"
 L["CTRL+C: Copy"] = "CTRL+C: 복사"

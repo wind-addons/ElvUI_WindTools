@@ -294,6 +294,7 @@ L["Button Spacing"] = "Отступ кнопок"
 L["Button Width"] = "Ширина кнопки"
 L["Buttons"] = "Кнопок"
 L["Buttons Per Row"] = "Кнопок в ряду"
+L["CDKey"] = true
 L["CENTER"] = "ЦЕНТР"
 L["CTRL+A: Select All"] = "CTRL+A: Выбрать все"
 L["CTRL+C: Copy"] = "CTRL+C: Копировать"

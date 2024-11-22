@@ -294,6 +294,7 @@ L["Button Spacing"] = "Espaçamento do botão"
 L["Button Width"] = true
 L["Buttons"] = "Botões"
 L["Buttons Per Row"] = "Botões por linha"
+L["CDKey"] = true
 L["CENTER"] = true
 L["CTRL+A: Select All"] = true
 L["CTRL+C: Copy"] = true

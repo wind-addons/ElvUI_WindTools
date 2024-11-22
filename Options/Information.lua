@@ -21,6 +21,29 @@ local function blue(string)
 	return F.CreateColorString(string, { r = 0.204, g = 0.596, b = 0.859 })
 end
 
+local donators = {
+	cdkeys = blue(L["CDKey"] .. ": ") .. tconcat({
+		"DakJaniels",
+	}, ", "),
+	patreon = blue("Ko-fi / Patreon" .. ": ") .. tconcat({
+		"Dlarge",
+		"KK",
+		"paroxp",
+		"Constrained",
+	}, ", "),
+	aifadian = blue(L["AiFaDian"] .. ": ") .. tconcat({
+		"LuckyAres",
+		"喵仙人Meowcactus",
+		L["Anonymous"] .. "_TxbM",
+		"Leon",
+		L["Anonymous"] .. "_Df5K",
+		L["Anonymous"] .. "_tJWM",
+		"不想当人",
+		L["Anonymous"] .. "_sCEm",
+		L["Anonymous"] .. "_m37v",
+	}, ", "),
+}
+
 options.help = {
 	order = 1,
 	type = "group",
@@ -37,23 +60,8 @@ options.help = {
 					type = "description",
 					fontSize = "small",
 					name = tconcat({
-						blue("Ko-fi / Patreon") .. " | " .. tconcat({
-							"Dlarge",
-							"KK",
-							"paroxp",
-							"Constrained",
-						}, ", "),
-						blue(L["AiFaDian"]) .. " | " .. tconcat({
-							"LuckyAres",
-							"喵仙人Meowcactus",
-							L["Anonymous"] .. "_TxbM",
-							"Leon",
-							L["Anonymous"] .. "_Df5K",
-							L["Anonymous"] .. "_tJWM",
-							"不想当人",
-							L["Anonymous"] .. "_sCEm",
-							L["Anonymous"] .. "_m37v",
-						}, ", "),
+						donators.patreon .. "       " .. donators.cdkeys,
+						donators.aifadian,
 					}, "\n"),
 				},
 			},
@@ -71,7 +79,7 @@ options.help = {
 			order = 3,
 			type = "execute",
 			name = format(
-			"%s %s (%s/RMB)",
+				"%s %s (%s/RMB)",
 				F.GetIconString(W.Media.Icons.donateAiFaDian, 14),
 				L["Donate"],
 				L["AiFaDian"]

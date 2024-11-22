@@ -5,6 +5,7 @@ local T = W.Modules.Tooltips
 
 local _G = _G
 local floor = floor
+local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local unpack = unpack

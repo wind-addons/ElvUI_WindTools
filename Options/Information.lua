@@ -12,6 +12,8 @@ local tostring = tostring
 local type = type
 local unpack = unpack
 
+local tconcat = table.concat
+
 local function blue(string)
 	if type(string) ~= "string" then
 		string = tostring(string)
@@ -24,19 +26,56 @@ options.help = {
 	type = "group",
 	name = L["Help"],
 	args = {
-		kofi = {
+		donators = {
 			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Golden Donators"],
+			args = {
+				list = {
+					order = 1,
+					type = "description",
+					fontSize = "small",
+					name = tconcat({
+						blue("Ko-fi / Patreon") .. " | " .. tconcat({
+							"Dlarge",
+							"KK",
+							"paroxp",
+							"Constrained",
+						}, ", "),
+						blue(L["AiFaDian"]) .. " | " .. tconcat({
+							"LuckyAres",
+							"喵仙人Meowcactus",
+							L["Anonymous"] .. "_TxbM",
+							"Leon",
+							L["Anonymous"] .. "_Df5K",
+							L["Anonymous"] .. "_tJWM",
+							"不想当人",
+							L["Anonymous"] .. "_sCEm",
+							L["Anonymous"] .. "_m37v",
+						}, ", "),
+					}, "\n"),
+				},
+			},
+		},
+		patreon = {
+			order = 2,
 			type = "execute",
-			name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateKofi, 14), L["Donate"], L["Ko-fi"]),
+			name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateKofi, 14), L["Donate"], L["Patreon"]),
 			func = function()
-				E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://ko-fi.com/fang2hou")
+				E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://www.patreon.com/fang2hou")
 			end,
 			width = 1.2,
 		},
 		aiFaDian = {
-			order = 2,
+			order = 3,
 			type = "execute",
-			name = format("%s %s (%s)", F.GetIconString(W.Media.Icons.donateAiFaDian, 14), L["Donate"], L["AiFaDian"]),
+			name = format(
+			"%s %s (%s/RMB)",
+				F.GetIconString(W.Media.Icons.donateAiFaDian, 14),
+				L["Donate"],
+				L["AiFaDian"]
+			),
 			func = function()
 				E:StaticPopup_Show("WINDTOOLS_EDITBOX", nil, nil, "https://afdian.com/a/fang2hou")
 			end,
@@ -49,18 +88,8 @@ options.help = {
 			name = " ",
 			width = "full",
 		},
-		debugModeTip = {
-			order = 5,
-			type = "description",
-			fontSize = "medium",
-			name = "|cffe74c3c" .. format(
-				L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
-				"|cff00d1b2/wtdebug on|r"
-			) .. "|r",
-			width = "full",
-		},
 		contact = {
-			order = 6,
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Message From the Author"],
@@ -70,12 +99,8 @@ options.help = {
 					type = "description",
 					fontSize = "medium",
 					name = format(
-						"%s\n\n%s\n\n%s\n\n%s\n\n%s",
+						"%s\n%s\n%s",
 						format(L["Thank you for using %s!"], W.Title),
-						format(
-							L["%s is a plugin for ElvUI that consists of my original plugins and several plugins developed by other players."],
-							W.Title
-						),
 						format(
 							L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."],
 							L["QQ Group"],
@@ -83,10 +108,12 @@ options.help = {
 							L["GitHub"],
 							L["NGA.cn"]
 						),
-						format(L["The localization of %s is community-driven."], W.Title),
 						format(
-							L["If you have an interest in translating %s or improving the quality of translation, I am glad to meet you in Discord."],
-							W.Title
+							"|cffe74c3c%s|r",
+							format(
+								L["Before you submit a bug, please enable debug mode with %s and test it one more time."],
+								"|cff00d1b2/wtdebug on|r"
+							)
 						)
 					),
 				},
@@ -145,7 +172,7 @@ options.help = {
 			},
 		},
 		contributors = {
-			order = 7,
+			order = 6,
 			name = L["Contributors (GitHub.com)"],
 			type = "group",
 			inline = true,
@@ -266,7 +293,7 @@ options.help = {
 			},
 		},
 		version = {
-			order = 8,
+			order = 7,
 			name = L["Version"],
 			type = "group",
 			inline = true,

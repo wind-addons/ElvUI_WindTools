@@ -48,18 +48,23 @@ W.Changelog[387] = {
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"优化了设定中全部有关于字体风格的设定项目。",
 			"[美化皮肤] 优化了 OmniCD 皮肤在旧版本上的稳定性。",
 		},
 		["zhTW"] = {
+			"優化了設定中全部有關於字體風格的設定項目。",
 			"[美化皮膚] 優化了 OmniCD 皮膚在舊版本上的穩定性。",
 		},
 		["enUS"] = {
+			"Optimize all font style settings in the settings.",
 			"[Skin] Optimized the stability of the OmniCD skin on old versions.",
 		},
 		["koKR"] = {
+			"설정에서 모든 글꼴 스타일 설정을 최적화했습니다.",
 			"[스킨] 이전 버전에서 OmniCD 스킨의 안정성을 최적화했습니다.",
 		},
 		["ruRU"] = {
+			"Оптимизированы все настройки стиля шрифта в настройках.",
 			"[Скин] Оптимизирована стабильность скина OmniCD на старых версиях.",
 		},
 	},

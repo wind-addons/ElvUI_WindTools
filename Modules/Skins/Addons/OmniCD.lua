@@ -24,6 +24,11 @@ function S:OmniCD_Party_Icon()
 	end
 
 	local O = _G.OmniCD[1]
+
+	if not O.Party or not O.Party.AcquireIcon then
+		return
+	end
+
 	hooksecurefunc(O.Party, "AcquireIcon", function(_, barFrame, iconIndex, unitBar)
 		local icon = barFrame.icons[iconIndex]
 		if icon and not icon.__wind then
@@ -48,6 +53,11 @@ function S:OmniCD_Party_ExtraBars()
 	end
 
 	local O = _G.OmniCD[1]
+
+	if not O.Party or not O.Party.AcquireStatusBar then
+		return
+	end
+
 	hooksecurefunc(O.Party, "AcquireStatusBar", function(P, icon)
 		if icon.statusBar then
 			if not icon.statusBar.__wind then

@@ -21,9 +21,9 @@
 
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/fang2hou) [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](http://paypal.me/fang2h0u) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/fang2hou) [![Patrocinadores de GitHub](https://img.shields.io/badge/Patrocinar-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/fang2hou)
 
-Bitcoin: bc1p9t25eqml2npadgjzu5ss284sgjnz0ua769uw9y5rf3yx8h3mfusqvg403s
-ETH: 0x0c6d5850e8d6951a4c7585cfe025e0c6975f6509
-SOL: 3V7Cd1r8sB88bJkzruKaVPgRLpWMJpasC4vYYk6rLJZ8
+**BTC**: `bc1p9t25eqml2npadgjzu5ss284sgjnz0ua769uw9y5rf3yx8h3mfusqvg403s`<br>
+**ETH**: `0x0c6d5850e8d6951a4c7585cfe025e0c6975f6509`<br>
+**SOL**: `3V7Cd1r8sB88bJkzruKaVPgRLpWMJpasC4vYYk6rLJZ8`
 
 ## 🌍 Localización
 

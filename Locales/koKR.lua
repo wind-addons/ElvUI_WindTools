@@ -414,6 +414,7 @@ L["Crafting Quality Tier"] = true
 L["Credits"] = "크레딧"
 L["Credits & help."] = true
 L["Crying"] = "울음소리"
+L["Crypto"] = true
 L["Ctrl"] = true
 L["Ctrl Key"] = true
 L["Cubic Ease"] = true

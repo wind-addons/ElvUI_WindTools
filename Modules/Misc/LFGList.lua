@@ -279,7 +279,7 @@ function LL:UpdateEnumerate(Enumerate)
 	end
 
 	local result = C_LFGList_GetSearchResultInfo(button.resultID)
-	local info = C_LFGList_GetActivityInfoTable(result.activityID)
+	local info = C_LFGList_GetActivityInfoTable(result.activityIDs[1])
 
 	if not result then
 		return

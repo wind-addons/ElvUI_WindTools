@@ -153,7 +153,7 @@ end
 
 function U:IsIDDungeons(resultID)
 	local result = C_LFGList_GetSearchResultInfo(resultID)
-	local activity = C_LFGList_GetActivityInfoTable(result.activityID)
+	local activity = C_LFGList_GetActivityInfoTable(result.activityIDs[1])
 	return activity and activity.categoryID == GROUP_FINDER_CATEGORY_ID_DUNGEONS
 end
 

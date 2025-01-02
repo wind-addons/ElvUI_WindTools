@@ -109,7 +109,7 @@ end
 
 local affixAddedAtLevel = { 2, 4, 7, 10, 12 }
 
-local avaliableSortMode = {
+local availableSortMode = {
 	"DEFAULT",
 	"OVERALL_SCORE",
 	"DUNGEON_SCORE",
@@ -494,7 +494,7 @@ function LL:RefreshSearch()
 	_G.LFGListSearchPanel_DoSearch(_G.LFGListFrame.SearchPanel)
 end
 
-function LL:InitalizeRightPanel()
+function LL:InitializeRightPanel()
 	if self.rightPanel then
 		return
 	end
@@ -1176,14 +1176,14 @@ function LL:InitalizeRightPanel()
 
 			if btn.sortBy then
 				local currentModeID
-				for i, mode in ipairs(avaliableSortMode) do
+				for i, mode in ipairs(availableSortMode) do
 					if mode == btn.sortBy then
 						currentModeID = i
 						break
 					end
 				end
 
-				btn.sortBy = currentModeID and avaliableSortMode[currentModeID + 1] or avaliableSortMode[1]
+				btn.sortBy = currentModeID and availableSortMode[currentModeID + 1] or availableSortMode[1]
 			end
 
 			sortByButton.text:SetText(sortMode[btn.sortBy].text)
@@ -1242,7 +1242,7 @@ function LL:UpdateRightPanel()
 	end
 
 	if not self.rightPanel then
-		self:InitalizeRightPanel()
+		self:InitializeRightPanel()
 	end
 
 	if not _G.LFGListFrame.SearchPanel:IsShown() or not _G.LFGListFrame.SearchPanel.categoryID == 2 then
@@ -1313,8 +1313,8 @@ function LL:UpdateRightPanel()
 		self.rightPanel.sortPanel.sortByButton.sortBy = dfDB.sortBy
 		self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[dfDB.sortBy].text)
 	else
-		self.rightPanel.sortPanel.sortByButton.sortBy = avaliableSortMode[1]
-		self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[avaliableSortMode[1]].text)
+		self.rightPanel.sortPanel.sortByButton.sortBy = availableSortMode[1]
+		self.rightPanel.sortPanel.sortByButton.text:SetText(sortMode[availableSortMode[1]].text)
 	end
 
 	self.rightPanel.sortPanel.sortByButton:SetActive(false)
@@ -1467,7 +1467,7 @@ function LL.OnUpdateResultListEnclosure(lfg)
 			end
 		end
 
-		local sortBy = dfDB.sortBy or avaliableSortMode[1]
+		local sortBy = dfDB.sortBy or availableSortMode[1]
 		if sortMode[sortBy].func then
 			sort(waitForSortingResults, function(a, b)
 				if not a or not b then

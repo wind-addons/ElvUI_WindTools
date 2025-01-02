@@ -278,7 +278,10 @@ CM.Features = {
 			local server = frame.server or E.myrealm
 
 			if name and server then
-				local link = CM:GetArmoryBaseURL() .. server .. "/" .. name
+				-- Remove the single quote in the server name
+				-- e.g. Mal'Ganis -> MalGanis
+				local s = gsub(server, "'", "")
+				local link = CM:GetArmoryBaseURL() .. s .. "/" .. name
 				E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, link)
 			else
 				CM:Log("debug", "Cannot get the armory link.")

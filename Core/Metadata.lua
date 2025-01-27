@@ -22,7 +22,7 @@ W.PlainTitle = gsub(W.Title, "|c........([^|]+)|r", "%1")
 -- Environment
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
-W.SupportElvUIVersion = 13.80
+W.SupportElvUIVersion = 13.82
 W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
 
 -- Game

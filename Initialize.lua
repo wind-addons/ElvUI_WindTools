@@ -84,6 +84,7 @@ W.Utilities = {}
 -- Pre-register libs into ElvUI
 E:AddLib("OpenRaid", "LibOpenRaid-1.0")
 E:AddLib("LOP", "LibObjectiveProgress-1.0")
+E:AddLib('RangeCheck', 'LibRangeCheck-3.0')
 
 _G.WindTools_OnAddonCompartmentClick = function()
 	E:ToggleOptions("WindTools")

@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local T = W.Modules.Tooltips
-local LOP = E.Libs.LOP
+local OP = E.Libs.ObjectiveProgress
 
 local _G = _G
 local format = format
@@ -37,7 +37,7 @@ local function addObjectiveProgress(tt, data)
 
 	npcID = tonumber(npcID)
 
-	local weightsTable = LOP:GetNPCWeightByCurrentQuests(npcID)
+	local weightsTable = OP:GetNPCWeightByCurrentQuests(npcID)
 	if weightsTable then
 		for questID, npcWeight in next, weightsTable do
 			local info = C_QuestLog_GetInfo(C_QuestLog_GetLogIndexForQuestID(questID))

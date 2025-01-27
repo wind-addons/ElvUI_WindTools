@@ -105,14 +105,17 @@ function M:Tags()
 		end
 	end)
 
-	-- 距离预测中值 (5)
+	E:AddTag("range", 0.1, function(unit)
+		if UnitIsConnected(unit) and not UnitIsUnit(unit, "player") then
+			local minRange, maxRange = RangeCheck:GetRange(unit, true)
+			return minRange and maxRange and format("%s - %s", minRange, maxRange) or ""
+		end
+	end)
+
 	E:AddTag("range:expectation", 0.1, function(unit)
 		if UnitIsConnected(unit) and not UnitIsUnit(unit, "player") then
 			local minRange, maxRange = RangeCheck:GetRange(unit, true)
-			if minRange and maxRange then
-				return format("%s", floor((minRange + maxRange) / 2))
-			end
-			return ""
+			return minRange and maxRange and format("%s", floor((minRange + maxRange) / 2)) or ""
 		end
 	end)
 

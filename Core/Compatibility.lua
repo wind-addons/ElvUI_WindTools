@@ -88,7 +88,7 @@ function W:ConstructCompatibilityFrame()
 		E.NewSign
 			.. format(L["If you find the %s module conflicts with another addon, alert me via Discord."], W.Title)
 			.. "\n"
-			.. L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."]
+			.. L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."]
 	)
 	bottomDesc:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 10, 10)
 

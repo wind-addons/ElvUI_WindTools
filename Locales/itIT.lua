@@ -1549,7 +1549,7 @@ L["You can customize the global shadow color, disable some skins, set the level 
 L["You can customize the sentence templates, channels, etc."] = true
 L["You can disable this alert in [%s]-[%s]-[%s]"] = true
 L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = true
-L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = true
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = true
 L["You can find the setting in [%s] - [Tooltips] - [General]."] = true
 L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = true
 L["You can limit the config only work in the specific faction."] = true

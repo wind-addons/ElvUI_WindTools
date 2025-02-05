@@ -1549,7 +1549,7 @@ L["You can customize the global shadow color, disable some skins, set the level 
 L["You can customize the sentence templates, channels, etc."] = "문장 템플릿, 채널 등을 설정할 수 있습니다."
 L["You can disable this alert in [%s]-[%s]-[%s]"] = true
 L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = true
-L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = "[WindTools]-[정보]-[도움말] 하단의 옵션을 통해 호환성 검사를 비활성화/활성화할 수 있습니다."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = "[WindTools]-[고급]-[코어] 하단의 옵션을 통해 호환성 검사를 비활성화/활성화할 수 있습니다."
 L["You can find the setting in [%s] - [Tooltips] - [General]."] = true
 L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = true
 L["You can limit the config only work in the specific faction."] = true

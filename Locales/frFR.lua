@@ -1549,7 +1549,7 @@ L["You can customize the global shadow color, disable some skins, set the level 
 L["You can customize the sentence templates, channels, etc."] = "Vous pouvez personnaliser les modèles de phrases, les canaux, etc."
 L["You can disable this alert in [%s]-[%s]-[%s]"] = "Vous pouvez désactiver cette alerte dans [%s]-[%s]-[%s]"
 L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = "Vous pouvez désactiver cette alerte en désactivant le thème de WeakAuras dans Skins - Addons."
-L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = "Vous pouvez désactiver/activer le contrôle de compatibilité via l'option située en bas de [WindTools]-[Information]-[Aide]."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = "Vous pouvez désactiver/activer le contrôle de compatibilité via l'option située en bas de [WindTools]-[Avancé]-[Noyau]."
 L["You can find the setting in [%s] - [Tooltips] - [General]."] = "Vous pouvez trouver le paramètre dans [%s] - [Info-bulles] - [Général]."
 L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = "Vous pouvez limiter la configuration à fonctionner uniquement dans le royaume actuel, sinon elle fonctionnera dans tous les royaumes de la région que vous avez configurée ci-dessus."
 L["You can limit the config only work in the specific faction."] = "Vous pouvez limiter la configuration à fonctionner uniquement dans une faction spécifique."

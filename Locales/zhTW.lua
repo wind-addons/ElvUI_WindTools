@@ -1549,7 +1549,7 @@ L["You can customize the global shadow color, disable some skins, set the level 
 L["You can customize the sentence templates, channels, etc."] = "你可以自訂發送模版, 頻道等."
 L["You can disable this alert in [%s]-[%s]-[%s]"] = "你可以在 [%s]-[%s]-[%s] 中關閉此提醒"
 L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = "你可以在 美化外觀 - 插件 中關閉 WeakAuras 的美化皮膚來關閉此提醒."
-L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Information]-[Help]."] = "你可以通過設定位於 [Wind 工具箱]-[信息]-[幫助] 底部的選項來啟用/停用相容性檢查."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = "你可以通過設定位於 [Wind 工具箱]-[進階]-[核心] 底部的選項來啟用/停用相容性檢查."
 L["You can find the setting in [%s] - [Tooltips] - [General]."] = "你可以在 [%s] - [浮動提示] - [一般] 中找到此設定."
 L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = "你可以限制設定僅在當前伺服器中生效, 否則將在你上面設定的區域中的所有伺服器生效."
 L["You can limit the config only work in the specific faction."] = "你可以限制設定僅在特定陣營中生效."

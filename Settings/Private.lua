@@ -635,7 +635,7 @@ V.tooltips = {
 	progression = {
 		enable = true,
 		header = "TEXTURE",
-		raid = configTable({ enable = true, [2388] = false, [2403] = false }, W.RaidData),
+		raid = configTable({ enable = true }, W.RaidData),
 		specialAchievement = configTable({ enable = true }, W.MythicPlusSeasonAchievementData),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),
 	},

@@ -15,88 +15,88 @@ local UnitGUID = UnitGUID
 local cache = {}
 local locked = {}
 
--- https://www.wowhead.com/guide/raids/nerubar-palace/tier-sets
+-- https://www.wowhead.com/guide/raids/liberation-of-undermine/tier-set-overview
 -- JavaScript to get tier set ids (used in the specific class tier set page)
 -- var a = ""; document.querySelector(".icon-list > tbody").children.forEach((child) => {const name = child.querySelector("td > a").innerText; const id = child.querySelector("td > a").href.match(/item=([0-9]*)/)[1]; a += `[${id}] = true, -- ${name}\n` }); console.log(a);
 local tierSetsID = {
 	-- HUNTER
-	[212023] = true, -- Lightless Scavenger's Tunic
-	[212021] = true, -- Lightless Scavenger's Mitts
-	[212020] = true, -- Lightless Scavenger's Skull
-	[212019] = true, -- Lightless Scavenger's Stalkings
-	[212018] = true, -- Lightless Scavenger's Taxidermy
+	[229274] = true, -- Tireless Collector's Battlegear
+	[229272] = true, -- Tireless Collector's Gauntlets
+	[229271] = true, -- Tireless Collector's Chained Cowl
+	[229270] = true, -- Tireless Collector's Armored Breeches
+	[229269] = true, -- Tireless Collector's Hunted Heads
 	-- WARRIOR
-	[211987] = true, -- Warsculptor's Furred Plastron
-	[211985] = true, -- Warsculptor's Crushers
-	[211984] = true, -- Warsculptor's Barbute
-	[211983] = true, -- Warsculptor's Cuisses
-	[211982] = true, -- Warsculptor's Horned Spaulders
+	[229238] = true, -- Enforcer's Backalley Vestplate
+	[229236] = true, -- Enforcer's Backalley Crushers
+	[229235] = true, -- Enforcer's Backalley Faceshield
+	[229234] = true, -- Enforcer's Backalley Chausses
+	[229233] = true, -- Enforcer's Backalley Shoulderplates
 	-- PALADIN
-	[211996] = true, -- Entombed Seraph's Breastplate
-	[211994] = true, -- Entombed Seraph's Castigation
-	[211993] = true, -- Entombed Seraph's Casque
-	[211992] = true, -- Entombed Seraph's Greaves
-	[211991] = true, -- Entombed Seraph's Plumes
+	[229247] = true, -- Aureate Sentry's Encasement
+	[229245] = true, -- Aureate Sentry's Gauntlets
+	[229244] = true, -- Aureate Sentry's Pledge
+	[229243] = true, -- Aureate Sentry's Legguards
+	[229242] = true, -- Aureate Sentry's Roaring Will
 	-- ROGUE
-	[212041] = true, -- K'areshi Phantom's Nexus Wraps
-	[212039] = true, -- K'areshi Phantom's Grips
-	[212038] = true, -- K'areshi Phantom's Emptiness
-	[212037] = true, -- K'areshi Phantom's Leggings
-	[212036] = true, -- K'areshi Phantom's Shoulderpads
+	[229292] = true, -- Spectral Gambler's Vest
+	[229290] = true, -- Spectral Gambler's Gloves
+	[229289] = true, -- Spectral Gambler's Damned Visage
+	[229288] = true, -- Spectral Gambler's Pantaloons
+	[229287] = true, -- Spectral Gambler's Bladed Mantle
 	-- PRIEST
-	[212084] = true, -- Living Luster's Touch
-	[212083] = true, -- Living Luster's Semblance
-	[212082] = true, -- Living Luster's Trousers
-	[212086] = true, -- Living Luster's Raiment
-	[212081] = true, -- Living Luster's Dominion
+	[229337] = true, -- Confessor's Unshakable Vestment
+	[229335] = true, -- Confessor's Unshakable Mitts
+	[229334] = true, -- Confessor's Unshakable Halo
+	[229333] = true, -- Confessor's Unshakable Leggings
+	[229332] = true, -- Confessor's Unshakable Radiance
 	-- DK
-	[212005] = true, -- Exhumed Centurion's Breastplate
-	[212003] = true, -- Exhumed Centurion's Gauntlets
-	[212002] = true, -- Exhumed Centurion's Galea
-	[212001] = true, -- Exhumed Centurion's Chausses
-	[212000] = true, -- Exhumed Centurion's Spikes
+	[229256] = true, -- Cauldron Champion's Ribcage
+	[229254] = true, -- Cauldron Champion's Fistguards
+	[229253] = true, -- Cauldron Champion's Crown
+	[229252] = true, -- Cauldron Champion's Tattered Cuisses
+	[229251] = true, -- Cauldron Champion's Screamplate
 	-- SHAMAN
-	[212014] = true, -- Vestments of the Forgotten Reservoir
-	[212012] = true, -- Covenant of the Forgotten Reservoir
-	[212011] = true, -- Noetic of the Forgotten Reservoir
-	[212010] = true, -- Sarong of the Forgotten Reservoir
-	[212009] = true, -- Concourse of the Forgotten Reservoir
+	[229265] = true, -- Gale Sovereign's Clouded Hauberk
+	[229263] = true, -- Gale Sovereign's Grasps
+	[229262] = true, -- Gale Sovereign's Charged Hood
+	[229261] = true, -- Gale Sovereign's Pantaloons
+	[229260] = true, -- Gale Sovereign's Zephyrs
 	-- MAGE
-	[212095] = true, -- Runecoat of Violet Rebirth
-	[212093] = true, -- Jeweled Gauntlets of Violet Rebirth
-	[212092] = true, -- Hood of Violet Rebirth
-	[212091] = true, -- Coattails of Violet Rebirth
-	[212090] = true, -- Beacons of Violet Rebirth
+	[229346] = true, -- Aspectral Emissary's Primal Robes
+	[229344] = true, -- Aspectral Emissary's Hardened Grasp
+	[229343] = true, -- Aspectral Emissary's Crystalline Cowl
+	[229342] = true, -- Aspectral Emissary's Trousers
+	[229341] = true, -- Aspectral Emissary's Arcane Vents
 	-- WARLOCK
-	[212075] = true, -- Hexflame Coven's Sleeves
-	[212074] = true, -- Hexflame Coven's All-Seeing Eye
-	[212073] = true, -- Hexflame Coven's Leggings
-	[212077] = true, -- Hexflame Coven's Ritual Harness
-	[212072] = true, -- Hexflame Coven's Altar
+	[229326] = true, -- Spliced Fiendtrader's Demonic Grasp
+	[229325] = true, -- Spliced Fiendtrader's Transcendence
+	[229324] = true, -- Spliced Fiendtrader's Skin Tights
+	[229328] = true, -- Spliced Fiendtrader's Surgical Gown
+	[229323] = true, -- Spliced Fiendtrader's Loyal Servants
 	-- MONK
-	[212050] = true, -- Gatecrasher's Gi
-	[212048] = true, -- Gatecrasher's Protectors
-	[212047] = true, -- Gatecrasher's Horns
-	[212046] = true, -- Gatecrasher's Kilt
-	[212045] = true, -- Gatecrasher's Enduring Effigy
+	[229301] = true, -- Ageless Serpent's Inked Coils
+	[229299] = true, -- Ageless Serpent's Handguards
+	[229298] = true, -- Ageless Serpent's Mane
+	[229297] = true, -- Ageless Serpent's Leggings
+	[229296] = true, -- Ageless Serpent's Shoulderpads
 	-- DRUID
-	[212059] = true, -- Hide of the Greatlynx
-	[212057] = true, -- Eviscerators of the Greatlynx
-	[212056] = true, -- Mask of the Greatlynx
-	[212055] = true, -- Leggings of the Greatlynx
-	[212054] = true, -- Maw of the Greatlynx
+	[229310] = true, -- Robes of Reclaiming Blight
+	[229308] = true, -- Grips of Reclaiming Blight
+	[229307] = true, -- Branches of Reclaiming Blight
+	[229306] = true, -- Moccasins of Reclaiming Blight
+	[229305] = true, -- Jaws of Reclaiming Blight
 	-- DH
-	[212068] = true, -- Chestguard of the Hypogeal Nemesis
-	[212066] = true, -- Claws of the Hypogeal Nemesis
-	[212065] = true, -- Impalers of the Hypogeal Nemesis
-	[212064] = true, -- Pantaloons of the Hypogeal Nemesis
-	[212063] = true, -- War-Mantle of the Hypogeal Nemesis
+	[229319] = true, -- Fel-Dealer's Soul Engine
+	[229317] = true, -- Fel-Dealer's Underhandlers
+	[229316] = true, -- Fel-Dealer's Visor
+	[229315] = true, -- Fel-Dealer's Fur Kilt
+	[229314] = true, -- Fel-Dealer's Recycled Reavers
 	-- EVOKER
-	[212032] = true, -- Scales of the Destroyer
-	[212030] = true, -- Rippers of the Destroyer
-	[212029] = true, -- Horns of the Destroyer
-	[212028] = true, -- Legguards of the Destroyer
-	[212027] = true, -- Fumaroles of the Destroyer
+	[229283] = true, -- Opulent Treasurescale's Tunic
+	[229281] = true, -- Opulent Treasurescale's Gold-Counters
+	[229280] = true, -- Opulent Treasurescale's Crowned Jewel
+	[229279] = true, -- Opulent Treasurescale's Petticoat
+	[229278] = true, -- Opulent Treasurescale's Gleaming Mantle
 }
 
 local formatSets = {

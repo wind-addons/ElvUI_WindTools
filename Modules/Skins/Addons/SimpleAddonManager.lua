@@ -91,7 +91,7 @@ local function ReskinModules(frame)
 	S:ESProxy("HandleNextPrevButton", frame.ResultOptionsButton, "down")
 
 	-- AddonListFrame
-	S:ESProxy("HandleScrollBar", frame.ScrollFrame.ScrollBar)
+	S:ESProxy("HandleScrollBar", frame.AddonListFrame.ScrollFrame.ScrollBar)
 
 	-- CategoryFrame
 	S:ESProxy("HandleButton", frame.CategoryFrame.NewButton)
@@ -111,7 +111,7 @@ local function ReskinModules(frame)
 
 	-- Misc
 	hooksecurefunc("HybridScrollFrame_CreateButtons", ReskinScrollFrameItems)
-	ReskinScrollFrameItems(frame.ScrollFrame, "SimpleAddonManagerAddonItem")
+	ReskinScrollFrameItems(frame.AddonListFrame.ScrollFrame, "SimpleAddonManagerAddonItem")
 	ReskinScrollFrameItems(frame.CategoryFrame.ScrollFrame, "SimpleAddonManagerCategoryItem")
 end
 

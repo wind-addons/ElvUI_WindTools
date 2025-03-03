@@ -1065,10 +1065,8 @@ function CT:ChatFrame_MessageEventHandler(
 		local channelLength = strlen(arg4)
 		local infoType = chatType
 
-		if chatType == "VOICE_TEXT" then -- the code here looks weird but its how blizzard has it ~Simpy
-			local leader = UnitIsGroupLeader(arg2)
-			infoType, chatType = _G.VoiceTranscription_DetermineChatTypeVoiceTranscription_DetermineChatType(leader)
-			info = _G.ChatTypeInfo[infoType]
+		if chatType == "VOICE_TEXT" and not GetCVarBool("speechToText") then
+			return
 		elseif
 			chatType == "COMMUNITIES_CHANNEL"
 			or (
@@ -1644,6 +1642,26 @@ function CT:ChatFrame_MessageEventHandler(
 		end
 
 		return true
+	elseif event == "VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED" then
+		if not frame.isTranscribing and arg2 then -- arg1 is channelID, arg2 is isNowTranscribing
+			local info = _G.ChatTypeInfo.SYSTEM
+			frame:AddMessage(
+				_G.SPEECH_TO_TEXT_STARTED,
+				info.r,
+				info.g,
+				info.b,
+				info.id,
+				nil,
+				nil,
+				nil,
+				nil,
+				nil,
+				isHistory,
+				historyTime
+			)
+		end
+
+		frame.isTranscribing = arg2
 	end
 end
 

@@ -33,14 +33,14 @@ W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp
-	[247] = { abbr = L["[ABBR] The MOTHERLODE!!"], activityID = 140, timers = { 1404, 1872, 2340 } },
+	[247] = { abbr = L["[ABBR] The MOTHERLODE!!"], activityID = 140, timers = { 1188, 1584, 1980 } },
 	[370] = { abbr = L["[ABBR] Operation: Mechagon - Workshop"], activityID = 257, timers = { 1152, 1536, 1920 } },
 	[382] = { abbr = L["[ABBR] Theater of Pain"], activityID = 266, timers = { 1224, 1632, 2040 } },
-	[499] = { abbr = L["[ABBR] Priory of the Sacred Flame"], activityID = 324, timers = { 1080, 1440, 1880 } },
-	[500] = { abbr = L["[ABBR] The Rookery"], activityID = 325, timers = { 1128, 1464, 1860 } },
+	[499] = { abbr = L["[ABBR] Priory of the Sacred Flame"], activityID = 324, timers = { 1116, 1488, 1860 } },
+	[500] = { abbr = L["[ABBR] The Rookery"], activityID = 325, timers = { 1116, 1488, 1860 } },
 	[504] = { abbr = L["[ABBR] Darkflame Cleft"], activityID = 322, timers = { 1188, 1584, 1980 } },
 	[506] = { abbr = L["[ABBR] Cinderbrew Meadery"], activityID = 327, timers = { 1188, 1584, 1980 } },
-	[525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1152, 1536, 1920 } },
+	[525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1188, 1584, 1980 } },
 }
 
 -- Other 11.x dungeons

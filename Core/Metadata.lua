@@ -50,10 +50,10 @@ W.MythicPlusMapData = {
 -- [505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
 
 W.MythicPlusSeasonAchievementData = {
-	[20525] = { abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
-	[20526] = { abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
-	[41533] = { abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
-	[40952] = { abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
+	[20525] = { sortIndex = 1, abbr = L["[ABBR] The War Within Keystone Master: Season One"] },
+	[20526] = { sortIndex = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
+	[41533] = { sortIndex = 3, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
+	[40952] = { sortIndex = 4, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/the-war-within/

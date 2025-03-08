@@ -203,7 +203,7 @@ local function SetProgressionInfo(tt, guid)
 				local right = cache[guid].info.special[id]
 
 				if right then
-					tinsert(lines, { id, left, right })
+					tinsert(lines, { data.sortIndex, left, right })
 				end
 			end
 		end

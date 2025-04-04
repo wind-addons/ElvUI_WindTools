@@ -48,11 +48,11 @@ function CH:UnregisterEvents()
 	self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
-function CH:RegeisterHelper(helper)
+function CH:RegisterHelper(helper)
 	if type(helper) == "string" then
 		helper = self[helper]
 		if not helper then
-			self:Log("debug", "[RegeisterHelper] Invalid helper name: " .. helper)
+			self:Log("debug", "[RegisterHelper] Invalid helper name: " .. helper)
 			return
 		end
 	end

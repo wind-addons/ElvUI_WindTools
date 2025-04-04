@@ -212,8 +212,8 @@ function damageDB:add(damage)
 end
 
 function damageDB:update()
-	local currrentTime = GetTime()
-	while #self.windowTimes > 0 and currrentTime > self.windowTimes[1] + helper.env.windowLength do
+	local currentTime = GetTime()
+	while #self.windowTimes > 0 and currentTime > self.windowTimes[1] + helper.env.windowLength do
 		local damage = self.windowDamage[1]
 		local time = self.windowTimes[1]
 		tremove(self.windowDamage, 1)
@@ -251,9 +251,9 @@ function damageDB:calculate()
 
 	-- improved vampiric blood talent
 	local configID = C_ClassTalents_GetActiveConfigID()
-	local improv_vamp_info = configID and C_Traits_GetNodeInfo(configID, 76140)
-	local num_improv_vamp = improv_vamp_info and improv_vamp_info.ranksPurchased or 0
-	helper.env.auras[55233].mod = 0.3 + (num_improv_vamp * 0.05)
+	local improve_vamp_info = configID and C_Traits_GetNodeInfo(configID, 76140)
+	local num_improve_vamp = improve_vamp_info and improve_vamp_info.ranksPurchased or 0
+	helper.env.auras[55233].mod = 0.3 + (num_improve_vamp * 0.05)
 
 	-- Multiply Auras
 	local aura_mult = 1
@@ -355,4 +355,4 @@ helper.cleuHandlers = {
 	["SPELL_BUILDING_DAMAGE"] = SPELL_DAMAGE,
 }
 
-CH:RegeisterHelper(helper)
+CH:RegisterHelper(helper)

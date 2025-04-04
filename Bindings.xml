@@ -1,4 +1,4 @@
-<Bindings> 
+<Bindings>
   <Binding name="CLICK WTExtraItemsBar1Button1:LeftButton" runOnUp="false" header="WTEXTRAITEMSBAR1" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>
   <Binding name="CLICK WTExtraItemsBar1Button2:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>
   <Binding name="CLICK WTExtraItemsBar1Button3:LeftButton" runOnUp="false" category="BINDING_CATEGORY_ELVUI_WINDTOOLS"/>

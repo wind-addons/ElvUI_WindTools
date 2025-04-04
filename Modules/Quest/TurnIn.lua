@@ -50,6 +50,7 @@ local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitName = UnitName
 local UnitPlayerControlled = UnitPlayerControlled
 
+local C_GossipInfo_GetActiveDelveGossip = C_GossipInfo.GetActiveDelveGossip
 local C_GossipInfo_GetActiveQuests = C_GossipInfo.GetActiveQuests
 local C_GossipInfo_GetAvailableQuests = C_GossipInfo.GetAvailableQuests
 local C_GossipInfo_GetNumActiveQuests = C_GossipInfo.GetNumActiveQuests
@@ -67,6 +68,7 @@ local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
 local Enum_GossipOptionRecFlags_QuestLabelPrepend = Enum.GossipOptionRecFlags.QuestLabelPrepend
 local QUEST_STRING = "cFF0000FF.-" .. TRANSMOG_SOURCE_2
+local DELVE_STRING = "%(" .. DELVE_LABEL .. "%)"
 
 local choiceQueue = nil
 
@@ -348,7 +350,7 @@ function TI:GOSSIP_SHOW()
 		end
 	end
 
-	local gossipOptions = C_GossipInfo_GetOptions()
+	local gossipOptions = C_GossipInfo_GetOptions() or C_GossipInfo_GetActiveDelveGossip()
 	local numGossipOptions = gossipOptions and #gossipOptions
 
 	if not numGossipOptions or numGossipOptions <= 0 then
@@ -373,11 +375,13 @@ function TI:GOSSIP_SHOW()
 
 			local _, instance, _, _, _, _, _, mapID = GetInstanceInfo()
 			if instance ~= "raid" and not ignoreGossipNPC[npcID] and not ignoreInstances[mapID] then
-				local status = gossipOptions[1] and gossipOptions[1].status
-				local name = gossipOptions[1].name
-				local invalidName = name and strfind(name, "cFF0000FF") and not strfind(name, QUEST_STRING)
-				if status and status == 0 and not invalidName then
-					return C_GossipInfo_SelectOption(firstGossipOptionID)
+				local name, status = gossipOptions[1].name, gossipOptions[1].status
+				if name and status and status == 0 then
+					local questNameFound = strfind(name, "cFF0000FF") and strfind(name, QUEST_STRING)
+					local delveNameFound = strfind(name, DELVE_STRING)
+					if questNameFound or delveNameFound then
+						return C_GossipInfo_SelectOption(firstGossipOptionID)
+					end
 				end
 			end
 		elseif self.db and self.db.followerAssignees and followerAssignees[npcID] and numGossipOptions > 1 then

@@ -782,6 +782,9 @@ do
 		--it is not transmitted to other clients
         -- TODO: Update for war within
 		LIB_OPEN_RAID_CROWDCONTROL = {
+			[462031] = {cooldown = 60,	class = "HUNTER"}, --Implosive Trap
+			[116844] = {cooldown = 45,	class = "MONK"}, --Ring of Peace
+			[20549] = {cooldown = 90,	class = ""}, --War Stomp (Tauren)
 			[331866] = {cooldown = 0,	class = "COVENANT|VENTHYR"}, --Agent of Chaos
 			[334693] = {cooldown = 0,	class = "DEAHTKNIGHT"}, --Absolute Zero
 			[221562] = {cooldown = 45,	class = "DEATHKNIGHT"}, --Asphyxiate
@@ -918,6 +921,13 @@ do
 				local id = spellData.shareid
 				LIB_OPEN_RAID_COOLDOWNS_SHARED_ID[id] = LIB_OPEN_RAID_COOLDOWNS_SHARED_ID[id] or {}
 				LIB_OPEN_RAID_COOLDOWNS_SHARED_ID[id][spellID] = spellData.type
+			end
+
+			if (spellData.type == 8) then --crowd control
+				if (not LIB_OPEN_RAID_CROWDCONTROL[spellID]) then
+					local ccTable = {cooldown = spellData.cooldown, class = spellData.class}
+					LIB_OPEN_RAID_CROWDCONTROL[spellID] = ccTable
+				end
 			end
 		end
 

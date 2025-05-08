@@ -904,6 +904,12 @@ do
 	icons = icons .. E:TextureString(W.Media.Icons.lynUIHealer, ":16:16") .. " "
 	icons = icons .. E:TextureString(W.Media.Icons.lynUIDPS, ":16:16")
 	SampleStrings.lynui = icons
+
+	icons = ""
+	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldTank, ":16:16") .. " "
+	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldHealer, ":16:16") .. " "
+	icons = icons .. E:TextureString(W.Media.Icons.elvUIOldDPS, ":16:16")
+	SampleStrings.elvui_old = icons
 end
 
 do
@@ -1100,6 +1106,7 @@ do
 							SUNUI = SampleStrings.sunui,
 							LYNUI = SampleStrings.lynui,
 							BLIZZARD = SampleStrings.blizzard,
+							ELVUI_OLD = SampleStrings.elvui_old,
 							DEFAULT = SampleStrings.elvui,
 						},
 					},

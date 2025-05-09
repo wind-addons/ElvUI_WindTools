@@ -93,6 +93,11 @@ local RoleIconTextures = {
 		HEALER = W.Media.Icons.lynUIHealer,
 		DAMAGER = W.Media.Icons.lynUIDPS,
 	},
+	ELVUI_OLD = {
+		TANK = W.Media.Icons.elvUIOldTank,
+		HEALER = W.Media.Icons.elvUIOldHealer,
+		DAMAGER = W.Media.Icons.elvUIOldDPS,
+	},
 	DEFAULT = {
 		TANK = E.Media.Textures.Tank,
 		HEALER = E.Media.Textures.Healer,

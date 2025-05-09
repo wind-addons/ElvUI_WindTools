@@ -429,6 +429,10 @@ AddMedia("lynUITank", "LynUI/Tank.tga", "Icons")
 AddMedia("lynUIDPS", "LynUI/DPS.tga", "Icons")
 AddMedia("lynUIHealer", "LynUI/Healer.tga", "Icons")
 
+AddMedia("elvUIOldTank", "ElvUI_Old/Tank.tga", "Icons")
+AddMedia("elvUIOldDPS", "ElvUI_Old/DPS.tga", "Icons")
+AddMedia("elvUIOldHealer", "ElvUI_Old/Healer.tga", "Icons")
+
 AddMedia("announcement", "Categories/Announcement.tga", "Icons")
 AddMedia("advanced", "Categories/Advanced.tga", "Icons")
 AddMedia("social", "Categories/Social.tga", "Icons")

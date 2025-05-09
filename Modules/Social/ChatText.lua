@@ -747,6 +747,16 @@ function CT:UpdateRoleIcons()
 		_G.INLINE_TANK_ICON = roleIcons.TANK
 		_G.INLINE_HEALER_ICON = roleIcons.HEALER
 		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
+	elseif pack == "ELVUI_OLD" then
+		roleIcons = {
+			TANK = E:TextureString(W.Media.Icons.elvUIOldTank, sizeString),
+			HEALER = E:TextureString(W.Media.Icons.elvUIOldHealer, sizeString),
+			DAMAGER = E:TextureString(W.Media.Icons.elvUIOldDPS, sizeString),
+		}
+
+		_G.INLINE_TANK_ICON = roleIcons.TANK
+		_G.INLINE_HEALER_ICON = roleIcons.HEALER
+		_G.INLINE_DAMAGER_ICON = roleIcons.DAMAGER
 	elseif pack == "DEFAULT" then
 		roleIcons = {
 			TANK = E:TextureString(CT.cache.elvuiRoleIconsPath.Tank, sizeString .. ":0:0:64:64:2:56:2:56"),

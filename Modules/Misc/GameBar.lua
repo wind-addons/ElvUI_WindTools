@@ -164,6 +164,8 @@ local hearthstoneAndToyIDList = {
 	172924, -- 蟲洞產生器：暗影之境
 	198156, -- 龍洞產生器：巨龍群島
 	221966, -- 蟲洞產生器：卡茲阿爾加
+	--Liberation of Undermine Drop
+	236687, -- 爆裂爐石
 }
 
 local hearthstonesAndToysData

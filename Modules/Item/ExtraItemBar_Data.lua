@@ -682,6 +682,12 @@ local foods = {
 		227334, -- 鼴鼠料理
 		227335, -- 鑽孔蟲血腸布丁
 		227336, -- 蜜糖漿液
+		236633, -- 贫穷泡沫饮料
+		236646, -- 加乐宫特选
+		236647, -- 硬币配卡亚
+		236650, -- 镇痛水
+		236680, -- 蟹肉棒
+		236681, -- 液态黄金
 	},
 	mage = {
 		-- https://www.wowhead.com/beta/items/consumables/food-and-drinks/name:Conjured+Mana

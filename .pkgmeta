@@ -6,7 +6,9 @@ manual-changelog:
 
 ignore:
   - .gitignore
+  - .gitattributes
   - .github/*
+  - .vscode/*
   - .styluaignore
   - stylua.toml
   - .luacheckrc
@@ -16,4 +18,4 @@ ignore:
   - Title.svg
   - screenshot.png
   - generate_changelog.py
-  - Core/Changelog/template.lua
+  - Core/Changelog/_template.lua

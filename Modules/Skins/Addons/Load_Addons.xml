@@ -18,7 +18,6 @@
 	<Script file='SimpleAddonManager.lua'/>
 	<Script file='Simulationcraft.lua'/>
 	<Script file='TinyInspect.lua'/>
-	<Script file='TLDRMissions.lua'/>
 	<Script file='TomCats.lua'/>
 	<Script file='WarpDeplete.lua'/>
 	<Script file='WeakAuras.lua'/>

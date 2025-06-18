@@ -1297,7 +1297,6 @@ L["Switch Buttons"] = "Boutons de changement"
 L["Switch Buttons Bar"] = "Barre du boutons de changement"
 L["Sylvanas"] = "Sylvanas"
 L["THICKOUTLINE"] = "CONTOUREPAIS"
-L["TLDR Missions"] = true
 L["TOP"] = "HAUT"
 L["TOPLEFT"] = "HAUTGAUCHE"
 L["TOPRIGHT"] = "HAUTDROIT"

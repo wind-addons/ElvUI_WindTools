@@ -501,7 +501,6 @@ V.skins = {
 		simpleAddonManager = true,
 		simulationcraft = true,
 		tinyInspect = true,
-		tldrMissions = true,
 		tomCats = true,
 		warpDeplete = true,
 		weakAuras = true,

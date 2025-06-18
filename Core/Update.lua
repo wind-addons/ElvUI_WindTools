@@ -183,6 +183,14 @@ function W:UpdateScripts()
 		end
 	end
 
+	if privateVersion < 3.92 then
+		if E.private.WT and E.private.WT.skins and E.private.WT.skins.addons then
+			E.private.WT.skins.addons.tldrMissions = nil
+
+			UpdateMessage(L["Skins"] .. ": " .. L["Update Database"], privateVersion)
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

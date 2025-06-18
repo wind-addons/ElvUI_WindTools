@@ -1297,7 +1297,6 @@ L["Switch Buttons"] = true
 L["Switch Buttons Bar"] = true
 L["Sylvanas"] = true
 L["THICKOUTLINE"] = true
-L["TLDR Missions"] = true
 L["TOP"] = true
 L["TOPLEFT"] = true
 L["TOPRIGHT"] = true

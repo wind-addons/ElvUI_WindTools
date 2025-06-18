@@ -1297,7 +1297,6 @@ L["Switch Buttons"] = "스위치 버튼"
 L["Switch Buttons Bar"] = "스위치 버튼 바"
 L["Sylvanas"] = "실바나스"
 L["THICKOUTLINE"] = true
-L["TLDR Missions"] = true
 L["TOP"] = "상단"
 L["TOPLEFT"] = "좌상단"
 L["TOPRIGHT"] = "우상단"

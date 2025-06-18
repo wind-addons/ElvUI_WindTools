@@ -1297,7 +1297,6 @@ L["Switch Buttons"] = "Wechsel Tasten"
 L["Switch Buttons Bar"] = "Wechsel Tastenleiste"
 L["Sylvanas"] = true
 L["THICKOUTLINE"] = "DICKERUMRISS"
-L["TLDR Missions"] = true
 L["TOP"] = "OBEN"
 L["TOPLEFT"] = "Oben Links"
 L["TOPRIGHT"] = "Oben Rechts"

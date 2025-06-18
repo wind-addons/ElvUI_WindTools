@@ -8,6 +8,7 @@ W.Changelog[392] = {
 			"最低支持的 ElvUI 版本提升到 13.92。",
 			"更新了一些依赖库。",
 			"一些过期代码清理。",
+			"更新韩语翻译。",
 			"[皮肤] 由于原插件对外部改动的屏蔽，移除 TLDRMissions 皮肤。",
 		},
 		["zhTW"] = {
@@ -15,6 +16,7 @@ W.Changelog[392] = {
 			"最低支援的 ElvUI 版本提升到 13.92。",
 			"更新了一些依賴庫。",
 			"一些過期代碼清理。",
+			"更新韓語翻譯。",
 			"[皮膚] 由於原插件對外部改動的屏蔽，移除 TLDRMissions 皮膚。",
 		},
 		["enUS"] = {
@@ -22,6 +24,7 @@ W.Changelog[392] = {
 			"Minimum supported ElvUI version is now 13.92.",
 			"Update some dependencies.",
 			"Clean up some deprecated code.",
+			"Update Korean translation.",
 			"[Skins] Remove TLDRMissions skin due to the addon blocking external changes.",
 		},
 		["koKR"] = {
@@ -29,6 +32,7 @@ W.Changelog[392] = {
 			"최소 지원 ElvUI 버전이 13.92로 업데이트되었습니다.",
 			"일부 종속성을 업데이트했습니다.",
 			"일부 사용되지 않는 코드를 정리했습니다.",
+			"한국어 번역을 업데이트했습니다.",
 			"[스킨] TLDRMissions 스킨을 외부 변경을 차단하는 애드온으로 인해 제거했습니다.",
 		},
 		["ruRU"] = {
@@ -36,6 +40,7 @@ W.Changelog[392] = {
 			"Минимальная поддерживаемая версия ElvUI теперь 13.92.",
 			"Обновлены некоторые зависимости.",
 			"Очистка устаревшего кода.",
+			"Обновлен перевод на корейский язык.",
 			"[Скин] Удалена TLDRMissions skin из-за блокировки внешних изменений аддоном.",
 		},
 	},

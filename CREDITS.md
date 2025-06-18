@@ -35,6 +35,7 @@
   - 크림슨프릴<주부월드> @ 불타는 군단
   - Sang Jeon @ GitHub
   - Reim @ Discord
+  - 와우하는아저씨 @ Discord
 - русский язык (ruRU)
   - Evgeniy-ONiX @ GitHub
   - dadec666 @ GitHub

@@ -10,6 +10,7 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 
+local GetClassInfo = GetClassInfo
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable

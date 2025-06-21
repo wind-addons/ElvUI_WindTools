@@ -15,7 +15,7 @@ local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 
 local C_LFGList_GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
-local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_LFGList_GetSearchResultPlayerInfo = C_LFGList.GetSearchResultPlayerInfo
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
@@ -131,24 +131,27 @@ function U:Update(resultID)
 	self.cache:Clear()
 
 	for i = 1, result.numMembers do
-		local role, class, _, spec = C_LFGList_GetSearchResultMemberInfo(resultID, i)
+		local memberInfo = C_LFGList_GetSearchResultPlayerInfo(resultID, i)
+		if memberInfo then
+			local role, class, spec = memberInfo.assignedRole, memberInfo.className, memberInfo.specName
 
-		if not role then
-			self:Log("debug", "cache not updated correctly, the role is nil.")
-			return
+			if not role then
+				self:Log("debug", "cache not updated correctly, the role is nil.")
+				return
+			end
+
+			if not class then
+				self:Log("debug", "cache not updated correctly, the class is nil.")
+				return
+			end
+
+			if not spec then
+				self:Log("debug", "cache not updated correctly, the spec is nil.")
+				return
+			end
+
+			self.cache:AddPlayer(role, class, spec)
 		end
-
-		if not class then
-			self:Log("debug", "cache not updated correctly, the class is nil.")
-			return
-		end
-
-		if not spec then
-			self:Log("debug", "cache not updated correctly, the spec is nil.")
-			return
-		end
-
-		self.cache:AddPlayer(role, class, spec)
 	end
 end
 

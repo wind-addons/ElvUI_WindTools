@@ -166,6 +166,8 @@ local hearthstoneAndToyIDList = {
 	221966, -- 蟲洞產生器：卡茲阿爾加
 	--Liberation of Undermine Drop
 	236687, -- 爆裂爐石
+	-- Overcharged Delves (11.1.7)
+	235016,
 }
 
 local hearthstonesAndToysData

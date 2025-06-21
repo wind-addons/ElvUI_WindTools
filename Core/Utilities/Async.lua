@@ -184,7 +184,7 @@ function U.WithItemSlotID(itemSlotID, callback)
 end
 
 local function onAchievementInfoFetched(achievementID, callback, attempt)
-	local attempt = attempt or 1
+	attempt = attempt or 1
 	if attempt > 20 then
 		return
 	end

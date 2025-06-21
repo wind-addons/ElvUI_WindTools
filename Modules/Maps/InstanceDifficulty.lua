@@ -46,6 +46,7 @@ end
 function ID:GetTextForDifficulty(difficulty, useDefault)
 	local db = useDefault and V.maps.instanceDifficulty.difficulty.customStrings or self.db.difficulty.customStrings
 	local text = {
+		-- https://wago.tools/db2/Difficulty?page=2&sort%5BID%5D=asc
 		[-1] = db["PvP"],
 		[1] = db["5-player Normal"],
 		[2] = db["5-player Heroic"],
@@ -94,6 +95,8 @@ function ID:GetTextForDifficulty(difficulty, useDefault)
 		[208] = db["Delves"],
 		[216] = db["Quest"],
 		[220] = db["Story"],
+		[232] = db["Event Scenario"],
+		[236] = db["Lorewalking"],
 	}
 
 	return text[difficulty]

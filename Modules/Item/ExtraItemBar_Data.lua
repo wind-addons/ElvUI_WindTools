@@ -649,6 +649,8 @@ local foods = {
 		223968, -- 綿密炒蛋
 		225592, -- 精心剔骨的肉排
 		225855, -- 美味食屍魚
+		233062, -- 袋装披萨
+		233118, -- 洋际外卖
 	},
 	vendor = {
 		-- https://www.wowhead.com/items/consumables/food-and-drinks/min-level:80/min-req-level:75?filter=92:166;1:11;0:0

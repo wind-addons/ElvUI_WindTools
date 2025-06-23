@@ -133,7 +133,7 @@ function U:Update(resultID)
 	for i = 1, result.numMembers do
 		local memberInfo = C_LFGList_GetSearchResultPlayerInfo(resultID, i)
 		if memberInfo then
-			local role, class, spec = memberInfo.assignedRole, memberInfo.className, memberInfo.specName
+			local role, class, spec = memberInfo.assignedRole, memberInfo.classFilename, memberInfo.specName
 
 			if not role then
 				self:Log("debug", "cache not updated correctly, the role is nil.")

@@ -983,7 +983,7 @@ function GB:UpdateTimeTicker()
 end
 function GB:UpdateTime()
 	local panel = self.bar.middlePanel
-	if not panel or not self.db then
+	if not panel or not self.db or not self.db.time or not self.db.additionalText then
 		return
 	end
 
@@ -1002,18 +1002,14 @@ function GB:UpdateTime()
 
 	local hour, minute
 
-	if self.db.time then
-		if self.db.time.localTime then
-			hour = self.db.time.twentyFour and date("%H") or date("%I")
-			minute = date("%M")
-		else
-			hour, minute = GetGameTime()
-			hour = self.db.time.twentyFour and hour or mod(hour, 12)
-			hour = format("%02d", hour)
-			minute = format("%02d", minute)
-		end
+	if self.db.time.localTime then
+		hour = self.db.time.twentyFour and date("%H") or date("%I")
+		minute = date("%M")
 	else
-		return
+		hour, minute = GetGameTime()
+		hour = self.db.time.twentyFour and hour or mod(hour, 12)
+		hour = format("%02d", hour)
+		minute = format("%02d", minute)
 	end
 
 	panel.colon:SetText(F.CreateColorString(":", self.mouseOverRGB))

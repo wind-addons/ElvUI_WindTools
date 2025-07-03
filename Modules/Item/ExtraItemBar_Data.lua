@@ -1159,6 +1159,7 @@ local openableItems = {
 	242386, -- 博學行者的紀念品箱
 	244466, -- 達格蘭的裂片小包
 	244696, -- 超載箱
+	245589, -- 喚魔者之箱
 }
 
 local professionItems = {

@@ -299,7 +299,7 @@ local function configTab(frame)
 	S:ESProxy("HandleButton", frame.OptionsButton)
 	S:ESProxy("HandleButton", frame.ScanButton)
 
-    S:ESProxy("HandleEditBox", frame.ContributeLink.InputBox)
+	S:ESProxy("HandleEditBox", frame.ContributeLink.InputBox)
 	S:ESProxy("HandleEditBox", frame.DiscordLink.InputBox)
 	S:ESProxy("HandleEditBox", frame.BugReportLink.InputBox)
 end

@@ -424,7 +424,7 @@ do -- 本地化
 			F.CreateClassColorString("크림슨프릴<주부월드> @ " .. L["Burning Legion"] .. "(KR)", "MAGE"),
 			"Sang Jeon @ GitHub",
 			"Reim @ Discord",
-			"와우하는아저씨 @ Discord"
+			"와우하는아저씨 @ Discord",
 		},
 		["français (frFR)"] = {
 			"PodVibe @ CurseForge",

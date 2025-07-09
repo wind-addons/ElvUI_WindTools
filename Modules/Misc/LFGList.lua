@@ -333,7 +333,9 @@ function LL:UpdateEnumerate(Enumerate)
 		local color = score and C_ChallengeMode_GetDungeonScoreRarityColor(score) or { r = 1.0, g = 1.0, b = 1.0 }
 		scoreText = C.StringWithRGB(score, color)
 
-		local bestRun = result.leaderDungeonScoreInfo and result.leaderDungeonScoreInfo[1] and result.leaderDungeonScoreInfo[1].bestRunLevel
+		local bestRun = result.leaderDungeonScoreInfo
+			and result.leaderDungeonScoreInfo[1]
+			and result.leaderDungeonScoreInfo[1].bestRunLevel
 		if bestRun then
 			local template = result.leaderDungeonScoreInfo[1].finishedSuccess and "success" or "greyLight"
 			bestText = C.StringByTemplate("+" .. bestRun, template)

@@ -112,7 +112,7 @@ for i = 1, 10 do
 	tinsert(vaultItemLevel, weeklyItemLevel)
 end
 
-local affixAddedAtLevel = { 2, 4, 7, 10, 12 }
+local affixAddedAtLevel = { 4, 7, 10, 12 }
 
 local availableSortMode = {
 	"DEFAULT",

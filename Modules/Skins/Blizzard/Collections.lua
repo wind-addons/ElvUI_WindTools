@@ -12,7 +12,7 @@ function S:Blizzard_Collections()
 	self:CreateShadow(_G.WardrobeFrame)
 	self:CreateShadow(_G.WardrobeOutfitEditFrame)
 
-	for i = 1, 5 do
+	for i = 1, 6 do
 		self:ReskinTab(_G["CollectionsJournalTab" .. i])
 	end
 end

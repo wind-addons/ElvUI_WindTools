@@ -29,6 +29,7 @@ local WOW_PROJECT_CLASSIC = 2
 local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 local WOW_PROJECT_WRATH_CLASSIC = 11
 local WOW_PROJECT_CATACLYSM_CLASSIC = 14
+local WOW_PROJECT_MISTS_CLASSIC = 19
 
 local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
@@ -149,6 +150,12 @@ local expansionData = {
 		suffix = "Cata",
 		maxLevel = 85,
 		icon = MediaPath .. "GameIcons\\WOW_Cata",
+	},
+	[WOW_PROJECT_MISTS_CLASSIC] = {
+		name = "MoP",
+		suffix = "MoP",
+		maxLevel = 90,
+		icon = MediaPath .. "GameIcons\\WOW_MoP",
 	},
 }
 

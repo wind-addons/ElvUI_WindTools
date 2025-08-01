@@ -48,7 +48,7 @@ local C_LFGList_GetAdvancedFilter = C_LFGList.GetAdvancedFilter
 local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 local C_LFGList_GetAvailableActivityGroups = C_LFGList.GetAvailableActivityGroups
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
-local C_LFGList_GetSearchResultMemberInfo = C_LFGList.GetSearchResultMemberInfo
+local C_LFGList_GetSearchResultPlayerInfo = C_LFGList.GetSearchResultPlayerInfo
 local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLevelForDifficultyLevel
@@ -297,8 +297,11 @@ function LL:UpdateEnumerate(Enumerate)
 	}
 
 	for i = 1, result.numMembers do
-		local role, class, _, spec = C_LFGList_GetSearchResultMemberInfo(button.resultID, i)
-		tinsert(cache[role], { class, spec, i == 1 })
+		local info = C_LFGList_GetSearchResultPlayerInfo(button.resultID, i)
+		if info then
+			local role, class, spec = info.assignedRole, info.classFilename, info.specName
+			tinsert(cache[role], { class, spec, i == 1 })
+		end
 	end
 
 	for i = 5, 1, -1 do -- The index of icon starts from right
@@ -1457,9 +1460,12 @@ function LL.OnUpdateResultListEnclosure(lfg)
 					}
 
 					for i = 1, searchResultInfo.numMembers do
-						local role = C_LFGList_GetSearchResultMemberInfo(resultID, i)
-						if resultRoles[role] then
-							resultRoles[role] = resultRoles[role] + 1
+						local info = C_LFGList_GetSearchResultPlayerInfo(resultID, i)
+						if info then
+							local role = info.assignedRole
+							if resultRoles[role] then
+								resultRoles[role] = resultRoles[role] + 1
+							end
 						end
 					end
 

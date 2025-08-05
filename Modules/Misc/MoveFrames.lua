@@ -407,12 +407,14 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 end
 
 function MF:Frame_StartMoving(this, button)
+    if InCombatLockdown() then return end
 	if button == "LeftButton" and this.MoveFrame:IsMovable() then
 		this.MoveFrame:StartMoving()
 	end
 end
 
 function MF:Frame_StopMoving(this, button)
+    if InCombatLockdown() then return end
 	if button == "LeftButton" then
 		this.MoveFrame:StopMovingOrSizing()
 		MF:Remember(this.MoveFrame)
@@ -499,6 +501,7 @@ function MF:HandleAddon(_, addon)
 		end
 	elseif addon == "Blizzard_PlayerSpells" and _G.HeroTalentsSelectionDialog and _G.PlayerSpellsFrame then
 		local function startStopMoving(frame)
+            if InCombatLockdown() then return end
 			local backup = frame:IsMovable()
 			frame:SetMovable(true)
 			frame:StartMoving()

@@ -10,8 +10,8 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 local StaticPopupDialogs = _G.StaticPopupDialogs
+local StaticPopup_ForEachShownDialog = _G.StaticPopup_ForEachShownDialog
 
-local STATICPOPUP_NUMDIALOGS = STATICPOPUP_NUMDIALOGS
 local DELETE_ITEM_CONFIRM_STRING = DELETE_ITEM_CONFIRM_STRING
 
 local dialogs = {

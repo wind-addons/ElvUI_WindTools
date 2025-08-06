@@ -33,27 +33,25 @@ W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 W.MythicPlusMapData = {
 	-- https://wago.tools/db2/MapChallengeMode
 	-- https://wago.tools/db2/GroupFinderActivityGrp
-	[247] = { abbr = L["[ABBR] The MOTHERLODE!!"], activityID = 140, timers = { 1188, 1584, 1980 } },
-	[370] = { abbr = L["[ABBR] Operation: Mechagon - Workshop"], activityID = 257, timers = { 1118, 1536, 1920 } },
-	[382] = { abbr = L["[ABBR] Theater of Pain"], activityID = 266, timers = { 1224, 1632, 2040 } },
+	[378] = { abbr = L["[ABBR] Halls of Atonement"], activityID = 261, timers = { 1152, 1536, 1920 } },
+	[391] = { abbr = L["[ABBR] Tazavesh: Streets of Wonder"], activityID = 280, timers = { 1404, 1872, 2340 } },
+	[392] = { abbr = L["[ABBR] Tazavesh: So'leah's Gambit"], activityID = 281, timers = { 1080, 1440, 1800 } },
 	[499] = { abbr = L["[ABBR] Priory of the Sacred Flame"], activityID = 324, timers = { 1170, 1560, 1950 } },
-	[500] = { abbr = L["[ABBR] The Rookery"], activityID = 325, timers = { 1044, 1392, 1740 } },
-	[504] = { abbr = L["[ABBR] Darkflame Cleft"], activityID = 322, timers = { 1116, 1488, 1860 } },
-	[506] = { abbr = L["[ABBR] Cinderbrew Meadery"], activityID = 327, timers = { 1188, 1584, 1980 } },
+	[505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
 	[525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1188, 1584, 1980 } },
+	[503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1080, 1440, 1800 } },
+	[542] = { abbr = L["[ABBR] Eco-Dome Al'dani"], activityID = 381, timers = { 1116, 1488, 1800 } },
 }
 
--- The War Within Season 3 Dungeons
--- [378] = { abbr = L["[ABBR] Halls of Atonement"], activityID = 261, timers = { 1152, 1536, 1920 } },
--- [391] = { abbr = L["[ABBR] Tazavesh: Streets of Wonder"], activityID = 280, timers = { 1404, 1872, 2340 } },
--- [392] = { abbr = L["[ABBR] Tazavesh: So'leah's Gambit"], activityID = 281, timers = { 1080, 1440, 1800 } },
+-- Histories (for localization)
+-- [247] = { abbr = L["[ABBR] The MOTHERLODE!!"], activityID = 140, timers = { 1188, 1584, 1980 } },
+-- [370] = { abbr = L["[ABBR] Operation: Mechagon - Workshop"], activityID = 257, timers = { 1118, 1536, 1920 } },
+-- [382] = { abbr = L["[ABBR] Theater of Pain"], activityID = 266, timers = { 1224, 1632, 2040 } },
 -- [499] = { abbr = L["[ABBR] Priory of the Sacred Flame"], activityID = 324, timers = { 1170, 1560, 1950 } },
--- [503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1080, 1440, 1800 } },
--- [505] = { abbr = L["[ABBR] The Dawnbreaker"], activityID = 326, timers = { 1116, 1488, 1860 } },
+-- [500] = { abbr = L["[ABBR] The Rookery"], activityID = 325, timers = { 1044, 1392, 1740 } },
+-- [504] = { abbr = L["[ABBR] Darkflame Cleft"], activityID = 322, timers = { 1116, 1488, 1860 } },
+-- [506] = { abbr = L["[ABBR] Cinderbrew Meadery"], activityID = 327, timers = { 1188, 1584, 1980 } },
 -- [525] = { abbr = L["[ABBR] Operation: Floodgate"], activityID = 371, timers = { 1188, 1584, 1980 } },
--- [542] = { abbr = L["[ABBR] Eco-Dome Al'dani"], activityID = 381, timers = { 1116, 1488, 1860 } },
-
--- Other 11.x dungeons
 -- [501] = { abbr = L["[ABBR] The Stonevault"], activityID = 328, timers = { 1188, 1584, 1980 } },
 -- [502] = { abbr = L["[ABBR] City of Threads"], activityID = 329, timers = { 1260, 1680, 2100 } },
 -- [503] = { abbr = L["[ABBR] Ara-Kara, City of Echoes"], activityID = 323, timers = { 1080, 1440, 1800 } },
@@ -130,6 +128,14 @@ function W:InitializeMetadata()
 		if W.MythicPlusMapData[id].timers then
 			W.MythicPlusMapData[id].timers[#W.MythicPlusMapData[id].timers] = timeLimit
 		end
+
+		-- debug: print mythic+ map data
+		-- print("MythicPlusMapData", id, name, "Tex:", F.GetTextureString(tex, 16, 16, true))
+		-- for i, timer in pairs(W.MythicPlusMapData[id].timers) do
+		-- 	local mm = floor(timer / 60)
+		-- 	local ss = timer % 60
+		-- 	print("  Timer", i, ":", format("%02d:%02d", mm, ss))
+		-- end
 	end
 
 	for id in pairs(W.MythicPlusSeasonAchievementData) do
@@ -159,11 +165,11 @@ function W:InitializeMetadata()
 	end
 
 	-- debug: check all achievements
-	-- for i, data in ipairs(W.RaidData[2805].achievements) do
-	-- 	for j, id in ipairs(data) do
-	-- 		W.Utilities.Async.WithAchievementID(id, function(data)
-	-- 			E:Delay(1.3 * (i - 1) + j * 0.1, print, data[1], data[2])
-	-- 		end)
-	-- 	end
-	-- end
+	for i, data in ipairs(W.RaidData[2805].achievements) do
+		for j, id in ipairs(data) do
+			W.Utilities.Async.WithAchievementID(id, function(data)
+				E:Delay(1.3 * (i - 1) + j * 0.1, print, data[1], data[2])
+			end)
+		end
+	end
 end

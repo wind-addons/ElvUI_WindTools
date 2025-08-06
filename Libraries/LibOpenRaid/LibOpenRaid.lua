@@ -39,6 +39,9 @@ BUGS:
 ---@alias castspellid string
 ---@alias schedulename string
 
+local GetSpecialization = C_SpecializationInfo and C_SpecializationInfo.GetSpecialization or GetSpecialization
+local GetSpecializationInfo = C_SpecializationInfo and C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
+
 LIB_OPEN_RAID_CAN_LOAD = false
 
 local versionString, revision, launchDate, gameVersion = GetBuildInfo()
@@ -56,7 +59,7 @@ end
 
 local major = "LibOpenRaid-1.0"
 
-local CONST_LIB_VERSION = 163
+local CONST_LIB_VERSION = 164
 
 if (LIB_OPEN_RAID_MAX_VERSION) then
     if (CONST_LIB_VERSION <= LIB_OPEN_RAID_MAX_VERSION) then

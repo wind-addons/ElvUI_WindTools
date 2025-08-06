@@ -165,11 +165,11 @@ function W:InitializeMetadata()
 	end
 
 	-- debug: check all achievements
-	for i, data in ipairs(W.RaidData[2805].achievements) do
-		for j, id in ipairs(data) do
-			W.Utilities.Async.WithAchievementID(id, function(data)
-				E:Delay(1.3 * (i - 1) + j * 0.1, print, data[1], data[2])
-			end)
-		end
-	end
+	-- for i, data in ipairs(W.RaidData[2805].achievements) do
+	-- 	for j, id in ipairs(data) do
+	-- 		W.Utilities.Async.WithAchievementID(id, function(data)
+	-- 			E:Delay(1.3 * (i - 1) + j * 0.1, print, data[1], data[2])
+	-- 		end)
+	-- 	end
+	-- end
 end

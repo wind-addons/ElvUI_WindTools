@@ -64,10 +64,14 @@ W.MythicPlusSeasonAchievementData = {
 	[20526] = { sortIndex = 2, abbr = L["[ABBR] The War Within Keystone Hero: Season One"] },
 	[41533] = { sortIndex = 3, abbr = L["[ABBR] The War Within Keystone Master: Season Two"] },
 	[40952] = { sortIndex = 4, abbr = L["[ABBR] The War Within Keystone Hero: Season Two"] },
+	[41973] = { sortIndex = 5, abbr = L["[ABBR] The War Within Keystone Master: Season Three"] },
+	[42171] = { sortIndex = 6, abbr = L["[ABBR] The War Within Keystone Hero: Season Three"] },
+	[42172] = { sortIndex = 7, abbr = L["[ABBR] The War Within Keystone Legend: Season Three"] },
 }
 
 -- https://www.wowhead.com/achievements/character-statistics/dungeons-and-raids/the-war-within/
 -- var a=""; document.querySelectorAll("tbody.clickable > tr a.listview-cleartext").forEach((h) => a+=h.href.match(/achievement=([0-9]*)/)[1]+',');console.log(a);
+-- ID: https://wago.tools/db2/LFGDungeons?filter%5BTypeID%5D=2&filter%5BSubtype%5D=2&page=5
 W.RaidData = {
 	[2645] = {
 		abbr = L["[ABBR] Nerub-ar Palace"],
@@ -81,12 +85,23 @@ W.RaidData = {
 	},
 	[2779] = {
 		abbr = L["[ABBR] Liberation of Undermine"],
-		tex = 6392630,
+		tex = 6422371,
 		achievements = {
 			{ 41299, 41303, 41307, 41311, 41315, 41319, 41323, 41327 },
 			{ 41300, 41304, 41308, 41312, 41316, 41320, 41324, 41328 },
 			{ 41301, 41305, 41309, 41313, 41317, 41321, 41325, 41329 },
 			{ 41302, 41306, 41310, 41314, 41318, 41322, 41326, 41330 },
+		},
+	},
+	[2805] = {
+		abbr = L["[ABBR] Manaforge Omega"],
+		tex = 7049159,
+		achievements = {
+			-- from NDui_Plus
+			{ 41633, 41637, 41641, 41645, 41649, 41653, 41657, 41661 },
+			{ 41634, 41638, 41642, 41646, 41650, 41654, 41658, 41662 },
+			{ 41635, 41639, 41643, 41647, 41651, 41655, 41659, 41663 },
+			{ 41636, 41640, 41644, 41648, 41652, 41656, 41660, 41664 },
 		},
 	},
 }
@@ -144,7 +159,7 @@ function W:InitializeMetadata()
 	end
 
 	-- debug: check all achievements
-	-- for i, data in ipairs(W.RaidData[2779].achievements) do
+	-- for i, data in ipairs(W.RaidData[2805].achievements) do
 	-- 	for j, id in ipairs(data) do
 	-- 		W.Utilities.Async.WithAchievementID(id, function(data)
 	-- 			E:Delay(1.3 * (i - 1) + j * 0.1, print, data[1], data[2])

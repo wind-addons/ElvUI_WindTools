@@ -637,7 +637,10 @@ V.tooltips = {
 		disableInCombat = true,
 		header = "TEXTURE",
 		raid = configTable({ enable = true }, W.RaidData),
-		specialAchievement = configTable({ enable = true }, W.MythicPlusSeasonAchievementData),
+		specialAchievement = configTable(
+			{ enable = true, [20525] = false, [20526] = false },
+			W.MythicPlusSeasonAchievementData
+		),
 		mythicPlus = configTable({ enable = true, markHighestScore = true, showNoRecord = true }, W.MythicPlusMapData),
 	},
 }

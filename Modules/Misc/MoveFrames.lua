@@ -405,7 +405,7 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 end
 
 function MF:Frame_StartMoving(this, button)
-	if InCombatLockdown() then
+	if InCombatLockdown() and this:IsProtected() then
 		return
 	end
 
@@ -415,7 +415,7 @@ function MF:Frame_StartMoving(this, button)
 end
 
 function MF:Frame_StopMoving(this, button)
-	if InCombatLockdown() then
+	if InCombatLockdown() and this:IsProtected() then
 		return
 	end
 

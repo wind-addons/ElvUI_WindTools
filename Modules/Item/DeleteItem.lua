@@ -24,13 +24,13 @@ local dialogs = {
 function DI:AddKeySupport(dialog)
 	local targetFrame = dialog
 
-	if self.db.fillIn == "AUTO" and dialog.editBox then
-		targetFrame = dialog.editBox
+	if self.db.fillIn == "AUTO" and dialog.EditBox then
+		targetFrame = dialog.EditBox
 	end
 
 	-- 添加说明
 	if dialog.which ~= "DELETE_ITEM" then
-		local msg = dialog.text:GetText()
+		local msg = dialog.Text:GetText()
 		local msgTable = { strsplit("\n\n", msg) }
 
 		msg = ""
@@ -42,7 +42,7 @@ function DI:AddKeySupport(dialog)
 		end
 
 		msg = msg .. L["Press the |cffffd200Delete|r key as confirmation."]
-		dialog.text:SetText(msg)
+		dialog.Text:SetText(msg)
 	end
 
 	-- 按键删除
@@ -58,7 +58,7 @@ function DI:AddKeySupport(dialog)
 end
 
 function DI:ShowFillInButton(dialog)
-	local editBoxFrame = dialog.editBox
+	local editBoxFrame = dialog.EditBox
 	local yesButton = dialog.button1
 	if not editBoxFrame or not yesButton then
 		return
@@ -111,7 +111,7 @@ function DI:DELETE_ITEM_CONFIRM()
 				self:ShowFillInButton(dialog)
 				dialog:HookScript("OnHide", DI.HideFillInButton)
 			elseif self.db.fillIn == "AUTO" then
-				dialog.editBox:SetText(DELETE_ITEM_CONFIRM_STRING)
+				dialog.EditBox:SetText(DELETE_ITEM_CONFIRM_STRING)
 			end
 		end
 	end

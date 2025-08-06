@@ -30,8 +30,16 @@ function S:ContainerFrame()
 		end
 	end
 
-	for _, tab in pairs(_G.BankFrame.Tabs) do
-		self:ReskinTab(tab)
+	if _G.BankFrame.TabSystem then
+		local tabSet = _G.BankFrame:GetTabSet()
+		if tabSet then
+			for _, tabID in ipairs(tabSet) do
+				local tabButton = _G.BankFrame:GetTabButton(tabID)
+				if tabButton then
+					self:ReskinTab(tabButton)
+				end
+			end
+		end
 	end
 end
 

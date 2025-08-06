@@ -299,7 +299,7 @@ local function SetProgressionInfo(tt, guid)
 				end
 
 				if right then
-					if highestScoreDungeonID and highestScoreDungeonID == id then
+					if db.mythicPlus.markHighestScore and highestScoreDungeonID and highestScoreDungeonID == id then
 						right = starIconString .. right
 					end
 					tinsert(lines, { id, left, right })

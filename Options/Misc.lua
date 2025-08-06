@@ -150,7 +150,7 @@ options.general = {
 			order = 13,
 			type = "toggle",
 			name = L["Anti-override"],
-			desc = L["Ublock the profanity filter and disable model override."]
+			desc = L["Unblock the profanity filter and disable model override."]
 				.. "\n"
 				.. C.StringByTemplate(L["It only applies to players who play WoW in Simplified Chinese."], "warning"),
 		},

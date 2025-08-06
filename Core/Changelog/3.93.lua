@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[393] = {
-	RELEASE_DATE = "2025-08-06",
+	RELEASE_DATE = "2025-08-07",
 	IMPORTANT = {
 		["zhCN"] = {
 			"支持魔兽世界 11.2.0 版本。感谢 DakJaniels",
@@ -16,46 +16,86 @@ W.Changelog[393] = {
 		["enUS"] = {
 			"Support for WoW 11.2.0. Thanks to DakJaniels",
 			"Minimum supported ElvUI version is now 13.95.",
-			"If you encounter issues with certain windows not opening, try resetting positions via [Move Frames] - [Clear Memory Positions].",
+			"If you encounter issues with certain windows not opening, try resetting positions via [Move Frames] - [Clear History].",
 		},
 		["koKR"] = {
 			"WoW 11.2.0 버전을 지원합니다. DakJaniels에게 감사드립니다",
 			"최소 지원 ElvUI 버전이 13.95로 업데이트되었습니다.",
-			"특정 창이 열리지 않는 문제가 발생하면 [프레임 이동] - [기억된 위치 지우기]를 통해 위치를 재설정해 보세요.",
+			"특정 창이 열리지 않는 문제가 발생하면 [프레임 이동] - [기록 초기화]를 통해 위치를 재설정해 보세요.",
 		},
 		["ruRU"] = {
 			"Поддержка WoW 11.2.0. Спасибо DakJaniels",
 			"Минимальная поддерживаемая версия ElvUI теперь 13.95.",
-			"Если у вас возникли проблемы с открытием некоторых окон, попробуйте сбросить позиции через [Перемещение фреймов] - [Очистить запомненные позиции].",
+			"Если у вас возникли проблемы с открытием некоторых окон, попробуйте сбросить позиции через [Перемещение фреймов] - [Очистить историю].",
 		},
 	},
 	NEW = {
-		["zhCN"] = {},
-		["zhTW"] = {},
-		["enUS"] = {},
-		["koKR"] = {},
-		["ruRU"] = {},
+		["zhCN"] = {
+			"[移动框体] 新增了对 ElvUI 银行的支持。",
+			"[进度] 新增了战斗中停止显示的功能，可以有效防止战斗中误触导致成就节目弹出，默认开启。",
+			"[好友列表] 新增了 MoP 版本的好友游戏状态图标。",
+		},
+		["zhTW"] = {
+			"[移動框架] 新增了對 ElvUI 銀行的支援。",
+			"[進度] 新增了戰鬥中停止顯示的功能，可以有效防止戰鬥中誤觸導致成就節目彈出，預設開啟。",
+			"[好友列表] 新增了 MoP 版本的好友遊戲狀態圖示。",
+		},
+		["enUS"] = {
+			"[Move Frames] Add support for ElvUI Bank.",
+			"[Progression] Add option to stop displaying during combat, effectively preventing accidental achievement popups during combat, enabled by default.",
+			"[Friend List] Add friend game status icons for MoP version.",
+		},
+		["koKR"] = {
+			"[프레임 이동] ElvUI 은행 지원을 추가했습니다.",
+			"[진행도] 전투 중 표시 중지 기능을 추가하여 전투 중 실수로 업적 팝업이 나타나는 것을 효과적으로 방지합니다. 기본적으로 활성화됩니다.",
+			"[친구 목록] MoP 버전용 친구 게임 상태 아이콘을 추가했습니다.",
+		},
+		["ruRU"] = {
+			"[Перемещение фреймов] Добавлена поддержка банка ElvUI.",
+			"[Прогресс] Добавлена функция остановки отображения во время боя, эффективно предотвращающая случайные всплывающие окна достижений во время боя, включена по умолчанию.",
+			"[Список друзей] Добавлены иконки игрового статуса друзей для версии MoP.",
+		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
+			"优化了部分说明和翻译",
 			"[移动框体] 重构了部分移动框体的逻辑，尝试修复战斗中移动可能导致的错误。",
-			"[美化皮肤] 更新了部分皮肤。",
+			"[美化皮肤] 更新了 ElvUI 银行皮肤。",
+			"[美化皮肤] 更新了暴雪银行皮肤。",
+			"[进度] 更新了第三赛季内容。",
+			"[预组队列表] 更新了第三赛季内容。",
 		},
 		["zhTW"] = {
+			"優化了部分說明和翻譯",
 			"[移動框架] 重構了部分移動框架的邏輯，嘗試修復戰鬥中移動可能導致的錯誤。",
-			"[美化皮膚] 更新了部分皮膚。",
+			"[美化皮膚] 更新了 ElvUI 銀行皮膚。",
+			"[美化皮膚] 更新了暴雪銀行皮膚。",
+			"[進度] 更新了第三賽季內容。",
+			"[預組隊伍] 更新了第三賽季內容。",
 		},
 		["enUS"] = {
-			"[Move Frames] Refactored some move frame logic, attempting to fix errors that may occur when moving during combat.",
-			"[Skins] Updated some skins.",
+			"Optimize some descriptions and translations.",
+			"[Move Frames] Refactor some move frame logic, attempting to fix errors that may occur when moving during combat.",
+			"[Skins] Update ElvUI Bank skin.",
+			"[Skins] Update Blizzard Bank skin.",
+			"[Progression] Update Season 3 content.",
+			"[LFG List] Update Season 3 content.",
 		},
 		["koKR"] = {
+			"일부 설명과 번역을 최적화했습니다.",
 			"[프레임 이동] 일부 프레임 이동 로직을 리팩터링하여 전투 중 이동 시 발생할 수 있는 오류를 수정하려고 시도했습니다.",
-			"[스킨] 일부 스킨을 업데이트했습니다.",
+			"[스킨] ElvUI 은행 스킨을 업데이트했습니다.",
+			"[스킨] 블리자드 은행 스킨을 업데이트했습니다.",
+			"[진행도] 시즌 3 콘텐츠를 업데이트했습니다.",
+			"[파티 찾기] 시즌 3 콘텐츠를 업데이트했습니다.",
 		},
 		["ruRU"] = {
+			"Оптимизированы некоторые описания и переводы.",
 			"[Перемещение фреймов] Рефакторинг логики перемещения фреймов, попытка исправить ошибки, которые могут возникнуть при перемещении во время боя.",
-			"[Скины] Обновлены некоторые скины.",
+			"[Скины] Обновлен скин банка ElvUI.",
+			"[Скины] Обновлен скин банка Blizzard.",
+			"[Прогресс] Обновлен контент 3-го сезона.",
+			"[Поиск группы] Обновлен контент 3-го сезона.",
 		},
 	},
 }

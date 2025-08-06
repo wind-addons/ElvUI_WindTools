@@ -94,8 +94,7 @@ function DI.HideFillInButton()
 end
 
 function DI:DELETE_ITEM_CONFIRM()
-	for i = 1, STATICPOPUP_NUMDIALOGS do
-		local dialog = _G["StaticPopup" .. i]
+	StaticPopup_ForEachShownDialog(function(dialog)
 		local type = dialog.which
 		if not dialogs[type] then
 			return
@@ -114,7 +113,7 @@ function DI:DELETE_ITEM_CONFIRM()
 				dialog.EditBox:SetText(DELETE_ITEM_CONFIRM_STRING)
 			end
 		end
-	end
+	end)
 end
 
 function DI:Initialize()

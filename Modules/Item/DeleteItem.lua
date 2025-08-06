@@ -48,7 +48,7 @@ function DI:AddKeySupport(dialog)
 	-- 按键删除
 	targetFrame:SetScript("OnKeyDown", function(self, key)
 		if key == "DELETE" then
-			dialog.button1:Enable()
+			dialog:GetButton1():Enable()
 		end
 	end)
 
@@ -59,7 +59,7 @@ end
 
 function DI:ShowFillInButton(dialog)
 	local editBoxFrame = dialog.EditBox
-	local yesButton = dialog.button1
+	local yesButton = dialog:GetButton1()
 	if not editBoxFrame or not yesButton then
 		return
 	end

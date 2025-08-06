@@ -541,37 +541,22 @@ function MF:HandleAddon(_, addon)
 	end)
 end
 
-function MF:HandleElvUIBag()
+function MF:HandleElvUIBag(frameName)
 	if not self.db.elvUIBags then
 		return
 	end
+	local frame = B[frameName]
 
-	local bag = B:GetContainerFrame()
-	local container = B:GetContainerFrame(true)
-
-	if bag and not bag.__windFramePath then
-		bag:SetScript("OnDragStart", function(frame)
-			frame:StartMoving()
-		end)
-		if bag.helpButton then
-			bag.helpButton:SetScript("OnEnter", function(frame)
-				local GameTooltip = _G.GameTooltip
-				GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
-				GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
-				GameTooltip:Show()
-			end)
-		end
-
-		bag.__windFramePath = "ElvUI_Bag_Bag"
+	if not frame or frame.__windFramePath then
+		return
 	end
 
-	if container and not bag.__windFramePath then
-		container:SetScript("OnDragStart", function(frame)
-			frame:StartMoving()
-		end)
-		container:SetScript("OnEnter", function(frame)
+	frame:SetScript("OnDragStart", function(frame)
+		frame:StartMoving()
+	end)
+
+	if frame.helpButton then
+		frame.helpButton:SetScript("OnEnter", function(frame)
 			local GameTooltip = _G.GameTooltip
 			GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
 			GameTooltip:ClearLines()
@@ -579,9 +564,9 @@ function MF:HandleElvUIBag()
 			GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
 			GameTooltip:Show()
 		end)
-
-		bag.__windFramePath = "ElvUI_Bag_Container"
 	end
+
+	frame.__windFramePath = "ElvUI_" .. frameName
 end
 
 function MF:Initialize()
@@ -628,8 +613,9 @@ function MF:Initialize()
 		end
 	end
 
-	-- ElvUI Bag
-	F.TaskManager:OutOfCombat(self.HandleElvUIBag, self)
+	-- ElvUI Bag & Bank Frames
+	F.TaskManager:OutOfCombat(self.HandleElvUIBag, self, "BagFrame")
+	F.TaskManager:OutOfCombat(self.HandleElvUIBag, self, "BankFrame")
 
 	local GetBagsShown = _G.ContainerFrameSettingsManager.GetBagsShown
 	self:SecureHook(_G.ContainerFrameSettingsManager, "GetBagsShown", function()

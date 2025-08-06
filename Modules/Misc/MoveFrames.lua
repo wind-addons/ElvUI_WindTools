@@ -14,8 +14,6 @@ local RunNextFrame = RunNextFrame
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-local waitFrameList = {}
-
 local BlizzardFrames = {
 	"AddonList",
 	"AudioOptionsFrame",
@@ -391,12 +389,12 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 
 	local path = frame.__windFramePath
 
-	if not path or not self.db.framePositions[path] or #self.db.framePositions[path] == 0 then
+	if ignorePositionRememberingFrames[path] then
+		self.db.framePositions[path] = nil
 		return
 	end
 
-	if ignorePositionRememberingFrames[path] then
-		self.db.framePositions[path] = nil
+	if not path or not self.db.framePositions[path] or #self.db.framePositions[path] == 0 then
 		return
 	end
 
@@ -408,7 +406,7 @@ end
 
 function MF:Frame_StartMoving(this, button)
 	if InCombatLockdown() then
-		return 
+		return
 	end
 
 	if button == "LeftButton" and this.MoveFrame:IsMovable() then
@@ -418,7 +416,7 @@ end
 
 function MF:Frame_StopMoving(this, button)
 	if InCombatLockdown() then
-		return 
+		return
 	end
 
 	if button == "LeftButton" then
@@ -436,11 +434,17 @@ function MF:HandleFrame(this, bindingTarget)
 	end
 
 	if InCombatLockdown() and thisFrame:IsProtected() then
-		self:RegisterEvent("PLAYER_REGEN_ENABLED")
-		waitFrameList[#waitFrameList + 1] = {
-			frameName = this,
-			mainFrameName = bindingTarget,
-		}
+		F.TaskManager:AfterCombat(function()
+			self:HandleFrame(this, bindingTarget)
+			-- Manually trigger a reposition after combat ends
+			-- Some frames may need to run the fix function first, so reposition should be run next frame to avoid issues
+			RunNextFrame(function()
+				local thisFrame = getFrame(this)
+				if thisFrame and thisFrame.MoveFrame then
+					self:Reposition(thisFrame.MoveFrame)
+				end
+			end)
+		end)
 		return
 	end
 
@@ -483,71 +487,62 @@ function MF:HandleAddon(_, addon)
 	self:HandleFramesWithTable(frameTable)
 
 	-- fix from BlizzMove
-	if addon == "Blizzard_Collections" then
-		local checkbox = _G.WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox
-		checkbox.Label:ClearAllPoints()
-		checkbox.Label:SetPoint("LEFT", checkbox, "RIGHT", 2, 1)
-		checkbox.Label:SetPoint("RIGHT", checkbox, "RIGHT", 160, 1)
-	elseif addon == "Blizzard_EncounterJournal" then
-		local replacement = function(rewardFrame)
-			if rewardFrame.data then
-				_G.EncounterJournalTooltip:ClearAllPoints()
+	F.TaskManager:OutOfCombat(function()
+		if addon == "Blizzard_Collections" then
+			local checkbox = _G.WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox
+			checkbox.Label:ClearAllPoints()
+			checkbox.Label:SetPoint("LEFT", checkbox, "RIGHT", 2, 1)
+			checkbox.Label:SetPoint("RIGHT", checkbox, "RIGHT", 160, 1)
+		elseif addon == "Blizzard_EncounterJournal" then
+			local replacement = function(rewardFrame)
+				if rewardFrame.data then
+					_G.EncounterJournalTooltip:ClearAllPoints()
+				end
+				self.hooks.AdventureJournal_Reward_OnEnter(rewardFrame)
 			end
-			self.hooks.AdventureJournal_Reward_OnEnter(rewardFrame)
-		end
-		self:RawHook("AdventureJournal_Reward_OnEnter", replacement, true)
-		self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion1.reward, "OnEnter", replacement)
-		self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion2.reward, "OnEnter", replacement)
-		self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion3.reward, "OnEnter", replacement)
-	elseif addon == "Blizzard_Communities" then
-		local dialog = _G.CommunitiesFrame.NotificationSettingsDialog
-		if dialog then
-			dialog:ClearAllPoints()
-			dialog:SetAllPoints()
-		end
-	elseif addon == "Blizzard_PlayerSpells" and _G.HeroTalentsSelectionDialog and _G.PlayerSpellsFrame then
-		local function startStopMoving(frame)
-			if InCombatLockdown() then
-				return 
+			self:RawHook("AdventureJournal_Reward_OnEnter", replacement, true)
+			self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion1.reward, "OnEnter", replacement)
+			self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion2.reward, "OnEnter", replacement)
+			self:RawHookScript(_G.EncounterJournal.suggestFrame.Suggestion3.reward, "OnEnter", replacement)
+		elseif addon == "Blizzard_Communities" then
+			local dialog = _G.CommunitiesFrame.NotificationSettingsDialog
+			if dialog then
+				dialog:ClearAllPoints()
+				dialog:SetAllPoints()
+			end
+		elseif addon == "Blizzard_PlayerChoice" and _G.PlayerChoiceFrame then
+			_G.PlayerChoiceFrame:HookScript("OnHide", function()
+				if not InCombatLockdown() or not _G.PlayerChoiceFrame:IsProtected() then
+					_G.PlayerChoiceFrame:ClearAllPoints()
+				end
+			end)
+		elseif addon == "Blizzard_PlayerSpells" and _G.HeroTalentsSelectionDialog and _G.PlayerSpellsFrame then
+			local function startStopMoving(frame)
+				if InCombatLockdown() and frame:IsProtected() then
+					return
+				end
+				local backup = frame:IsMovable()
+				frame:SetMovable(true)
+				StartMoving(frame)
+				StopMoving(frame)
+				frame:SetMovable(backup)
 			end
 
-			local backup = frame:IsMovable()
-			frame:SetMovable(true)
-			frame:StartMoving()
-			frame:StopMovingOrSizing()
-			frame:SetMovable(backup)
+			startStopMoving(_G.HeroTalentsSelectionDialog)
+			_G.PlayerSpellsFrame:HookScript("OnShow", function(frame)
+				startStopMoving(frame)
+				RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
+			end)
+			_G.HeroTalentsSelectionDialog:HookScript("OnShow", function(frame)
+				startStopMoving(frame)
+				RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
+			end)
 		end
-
-		startStopMoving(_G.HeroTalentsSelectionDialog)
-		_G.PlayerSpellsFrame:HookScript("OnShow", function(frame)
-			startStopMoving(frame)
-			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
-		end)
-		_G.HeroTalentsSelectionDialog:HookScript("OnShow", function(frame)
-			startStopMoving(frame)
-			RunNextFrame(GenerateFlatClosure(startStopMoving, frame))
-		end)
-	end
-end
-
-function MF:PLAYER_REGEN_ENABLED()
-	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-	self:HandleElvUIBag()
-
-	for _, data in pairs(waitFrameList) do
-		self:HandleFrame(data.frameName, data.mainFrameName)
-	end
-
-	waitFrameList = {}
+	end)
 end
 
 function MF:HandleElvUIBag()
 	if not self.db.elvUIBags then
-		return
-	end
-
-	if InCombatLockdown() then
-		self:RegisterEvent("PLAYER_REGEN_ENABLED")
 		return
 	end
 
@@ -634,7 +629,7 @@ function MF:Initialize()
 	end
 
 	-- ElvUI Bag
-	self:HandleElvUIBag()
+	F.TaskManager:OutOfCombat(self.HandleElvUIBag, self)
 
 	local GetBagsShown = _G.ContainerFrameSettingsManager.GetBagsShown
 	self:SecureHook(_G.ContainerFrameSettingsManager, "GetBagsShown", function()

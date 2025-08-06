@@ -15,88 +15,88 @@ local UnitGUID = UnitGUID
 local cache = {}
 local locked = {}
 
--- https://www.wowhead.com/guide/raids/liberation-of-undermine/tier-set-overview
+-- https://www.wowhead.com/guide/raids/manaforge-omega/tier-set-overview
 -- JavaScript to get tier set ids (used in the specific class tier set page)
--- var a = ""; document.querySelector(".icon-list > tbody").children.forEach((child) => {const name = child.querySelector("td > a").innerText; const id = child.querySelector("td > a").href.match(/item=([0-9]*)/)[1]; a += `[${id}] = true, -- ${name}\n` }); console.log(a);
+-- console.log(Array.from(document.querySelector('.icon-list>tbody').children).reduce((s,c)=>{const a=c.querySelector('td>a');return s+`[${a.href.match(/item=(\d+)/)[1]}] = true, -- ${a.innerText}\n`},''));
 local tierSetsID = {
 	-- HUNTER
-	[229274] = true, -- Tireless Collector's Battlegear
-	[229272] = true, -- Tireless Collector's Gauntlets
-	[229271] = true, -- Tireless Collector's Chained Cowl
-	[229270] = true, -- Tireless Collector's Armored Breeches
-	[229269] = true, -- Tireless Collector's Hunted Heads
+	[237649] = true, -- Midnight Herald's Hauberk
+	[237647] = true, -- Midnight Herald's Gloves
+	[237646] = true, -- Midnight Herald's Cowl
+	[237645] = true, -- Midnight Herald's Petticoat
+	[237644] = true, -- Midnight Herald's Shadowguards
 	-- WARRIOR
-	[229238] = true, -- Enforcer's Backalley Vestplate
-	[229236] = true, -- Enforcer's Backalley Crushers
-	[229235] = true, -- Enforcer's Backalley Faceshield
-	[229234] = true, -- Enforcer's Backalley Chausses
-	[229233] = true, -- Enforcer's Backalley Shoulderplates
+	[237613] = true, -- Living Weapon's Bulwark
+	[237611] = true, -- Living Weapon's Crushers
+	[237610] = true, -- Living Weapon's Faceshield
+	[237609] = true, -- Living Weapon's Legguards
+	[237608] = true, -- Living Weapon's Ramparts
 	-- PALADIN
-	[229247] = true, -- Aureate Sentry's Encasement
-	[229245] = true, -- Aureate Sentry's Gauntlets
-	[229244] = true, -- Aureate Sentry's Pledge
-	[229243] = true, -- Aureate Sentry's Legguards
-	[229242] = true, -- Aureate Sentry's Roaring Will
+	[237622] = true, -- Cuirass of the Lucent Battalion
+	[237620] = true, -- Protectors of the Lucent Battalion
+	[237619] = true, -- Lightmane of the Lucent Battalion
+	[237618] = true, -- Cuisses of the Lucent Battalion
+	[237617] = true, -- Chargers of the Lucent Battalion
 	-- ROGUE
-	[229292] = true, -- Spectral Gambler's Vest
-	[229290] = true, -- Spectral Gambler's Gloves
-	[229289] = true, -- Spectral Gambler's Damned Visage
-	[229288] = true, -- Spectral Gambler's Pantaloons
-	[229287] = true, -- Spectral Gambler's Bladed Mantle
+	[237667] = true, -- Tactical Vest of the Sudden Eclipse
+	[237665] = true, -- Deathgrips of the Sudden Eclipse
+	[237664] = true, -- Hood of the Sudden Eclipse
+	[237663] = true, -- Pants of the Sudden Eclipse
+	[237662] = true, -- Smokemantle of the Sudden Eclipse
 	-- PRIEST
-	[229337] = true, -- Confessor's Unshakable Vestment
-	[229335] = true, -- Confessor's Unshakable Mitts
-	[229334] = true, -- Confessor's Unshakable Halo
-	[229333] = true, -- Confessor's Unshakable Leggings
-	[229332] = true, -- Confessor's Unshakable Radiance
+	[237710] = true, -- Dying Star's Caress
+	[237709] = true, -- Dying Star's Veil
+	[237708] = true, -- Dying Star's Leggings
+	[237712] = true, -- Dying Star's Cassock
+	[237707] = true, -- Dying Star's Pyrelights
 	-- DK
-	[229256] = true, -- Cauldron Champion's Ribcage
-	[229254] = true, -- Cauldron Champion's Fistguards
-	[229253] = true, -- Cauldron Champion's Crown
-	[229252] = true, -- Cauldron Champion's Tattered Cuisses
-	[229251] = true, -- Cauldron Champion's Screamplate
+	[237631] = true, -- Hollow Sentinel's Breastplate
+	[237629] = true, -- Hollow Sentinel's Gauntlets
+	[237628] = true, -- Hollow Sentinel's Stonemask
+	[237627] = true, -- Hollow Sentinel's Stonekilt
+	[237626] = true, -- Hollow Sentinel's Perches
 	-- SHAMAN
-	[229265] = true, -- Gale Sovereign's Clouded Hauberk
-	[229263] = true, -- Gale Sovereign's Grasps
-	[229262] = true, -- Gale Sovereign's Charged Hood
-	[229261] = true, -- Gale Sovereign's Pantaloons
-	[229260] = true, -- Gale Sovereign's Zephyrs
+	[237640] = true, -- Furs of Channeled Fury
+	[237638] = true, -- Claws of Channeled Fury
+	[237637] = true, -- Aspect of Channeled Fury
+	[237636] = true, -- Tassets of Channeled Fury
+	[237635] = true, -- Fangs of Channeled Fury
 	-- MAGE
-	[229346] = true, -- Aspectral Emissary's Primal Robes
-	[229344] = true, -- Aspectral Emissary's Hardened Grasp
-	[229343] = true, -- Aspectral Emissary's Crystalline Cowl
-	[229342] = true, -- Aspectral Emissary's Trousers
-	[229341] = true, -- Aspectral Emissary's Arcane Vents
+	[237721] = true, -- Augur's Ephemeral Habiliments
+	[237719] = true, -- Augur's Ephemeral Mitts
+	[237718] = true, -- Augur's Ephemeral Wide-Brim
+	[237717] = true, -- Augur's Ephemeral Trousers
+	[237716] = true, -- Augur's Ephemeral Orbs of Power
 	-- WARLOCK
-	[229326] = true, -- Spliced Fiendtrader's Demonic Grasp
-	[229325] = true, -- Spliced Fiendtrader's Transcendence
-	[229324] = true, -- Spliced Fiendtrader's Skin Tights
-	[229328] = true, -- Spliced Fiendtrader's Surgical Gown
-	[229323] = true, -- Spliced Fiendtrader's Loyal Servants
+	[237701] = true, -- Inquisitor's Clutches of Madness
+	[237700] = true, -- Inquisitor's Portal to Madness
+	[237699] = true, -- Inquisitor's Leggings of Madness
+	[237703] = true, -- Inquisitor's Robes of Madness
+	[237698] = true, -- Inquisitor's Gaze of Madness
 	-- MONK
-	[229301] = true, -- Ageless Serpent's Inked Coils
-	[229299] = true, -- Ageless Serpent's Handguards
-	[229298] = true, -- Ageless Serpent's Mane
-	[229297] = true, -- Ageless Serpent's Leggings
-	[229296] = true, -- Ageless Serpent's Shoulderpads
+	[237676] = true, -- Gi of Fallen Storms
+	[237674] = true, -- Grasp of Fallen Storms
+	[237673] = true, -- Half-Mask of Fallen Storms
+	[237672] = true, -- Legwraps of Fallen Storms
+	[237671] = true, -- Glyphs of Fallen Storms
 	-- DRUID
-	[229310] = true, -- Robes of Reclaiming Blight
-	[229308] = true, -- Grips of Reclaiming Blight
-	[229307] = true, -- Branches of Reclaiming Blight
-	[229306] = true, -- Moccasins of Reclaiming Blight
-	[229305] = true, -- Jaws of Reclaiming Blight
+	[237685] = true, -- Vest of the Mother Eagle
+	[237683] = true, -- Wings of the Mother Eagle
+	[237682] = true, -- Skymane of the Mother Eagle
+	[237681] = true, -- Breeches of the Mother Eagle
+	[237680] = true, -- Ritual Pauldrons of the Mother Eagle
 	-- DH
-	[229319] = true, -- Fel-Dealer's Soul Engine
-	[229317] = true, -- Fel-Dealer's Underhandlers
-	[229316] = true, -- Fel-Dealer's Visor
-	[229315] = true, -- Fel-Dealer's Fur Kilt
-	[229314] = true, -- Fel-Dealer's Recycled Reavers
+	[237694] = true, -- Charhound's Vicious Bindings
+	[237692] = true, -- Charhound's Vicious Felclaws
+	[237691] = true, -- Charhound's Vicious Scalp
+	[237690] = true, -- Charhound's Vicious Hidecoat
+	[237689] = true, -- Charhound's Vicious Hornguards
 	-- EVOKER
-	[229283] = true, -- Opulent Treasurescale's Tunic
-	[229281] = true, -- Opulent Treasurescale's Gold-Counters
-	[229280] = true, -- Opulent Treasurescale's Crowned Jewel
-	[229279] = true, -- Opulent Treasurescale's Petticoat
-	[229278] = true, -- Opulent Treasurescale's Gleaming Mantle
+	[237658] = true, -- Spellweaver's Immaculate Crestward
+	[237656] = true, -- Spellweaver's Immaculate Scaleguards
+	[237655] = true, -- Spellweaver's Immaculate Focus
+	[237654] = true, -- Spellweaver's Immaculate Runeslacks
+	[237653] = true, -- Spellweaver's Immaculate Pauldrons
 }
 
 local formatSets = {

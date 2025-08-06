@@ -634,6 +634,7 @@ V.tooltips = {
 	objectiveProgressAccuracy = 1,
 	progression = {
 		enable = true,
+		disableInCombat = true,
 		header = "TEXTURE",
 		raid = configTable({ enable = true }, W.RaidData),
 		specialAchievement = configTable({ enable = true }, W.MythicPlusSeasonAchievementData),

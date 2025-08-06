@@ -320,6 +320,10 @@ function T:Progression(tt, unit, guid)
 		return
 	end
 
+	if E.private.WT.tooltips.progression.disableInCombat and InCombatLockdown() then
+		return
+	end
+
 	local level = UnitLevel(unit)
 	if not level or not level == MAX_PLAYER_LEVEL then
 		return

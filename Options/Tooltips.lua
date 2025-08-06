@@ -541,8 +541,14 @@ options.progression = {
 			name = L["Enable"],
 			desc = L["Add progression information to tooltips."],
 		},
-		header = {
+		disableInCombat = {
 			order = 3,
+			type = "toggle",
+			name = L["Disable In Combat"],
+			desc = L["Disable progression information in combat."],
+		},
+		header = {
+			order = 4,
 			type = "select",
 			name = L["Header Style"],
 			set = function(info, value)
@@ -555,7 +561,7 @@ options.progression = {
 			},
 		},
 		specialAchievement = {
-			order = 4,
+			order = 5,
 			type = "group",
 			name = L["Special Achievements"],
 			inline = true,
@@ -589,7 +595,7 @@ options.progression = {
 			},
 		},
 		raid = {
-			order = 5,
+			order = 6,
 			type = "group",
 			name = L["Raid"],
 			inline = true,
@@ -620,7 +626,7 @@ options.progression = {
 			},
 		},
 		mythicPlus = {
-			order = 6,
+			order = 7,
 			type = "group",
 			name = L["Mythic Plus"],
 			inline = true,

@@ -523,8 +523,8 @@ function MF:HandleAddon(_, addon)
 				end
 				local backup = frame:IsMovable()
 				frame:SetMovable(true)
-				StartMoving(frame)
-				StopMoving(frame)
+				frame:StartMoving()
+				frame:StopMovingOrSizing()
 				frame:SetMovable(backup)
 			end
 

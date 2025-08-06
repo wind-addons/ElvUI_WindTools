@@ -19,6 +19,7 @@ local AchievementFrame_LoadUI = AchievementFrame_LoadUI
 local ClearAchievementComparisonUnit = ClearAchievementComparisonUnit
 local GetAchievementComparisonInfo = GetAchievementComparisonInfo
 local GetComparisonStatistic = GetComparisonStatistic
+local GetMaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion
 local GetStatistic = GetStatistic
 local GetTime = GetTime
 local HideUIPanel = HideUIPanel
@@ -33,7 +34,7 @@ local UnmuteSoundFile = UnmuteSoundFile
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
+local MAX_PLAYER_LEVEL = GetMaxLevelForPlayerExpansion()
 
 local starIconString = format("|T%s:0|t ", W.Media.Icons.star)
 

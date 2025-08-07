@@ -130,12 +130,14 @@ function W:InitializeMetadata()
 		end
 
 		-- debug: print mythic+ map data
-		-- print("MythicPlusMapData", id, name, "Tex:", F.GetTextureString(tex, 16, 16, true))
-		-- for i, timer in pairs(W.MythicPlusMapData[id].timers) do
-		-- 	local mm = floor(timer / 60)
-		-- 	local ss = timer % 60
-		-- 	print("  Timer", i, ":", format("%02d:%02d", mm, ss))
-		-- end
+		-- E:Delay(3, function()
+		-- 	print("MythicPlusMapData", id, name, "Tex:", F.GetTextureString(tex, 16, 16, true))
+		-- 	for i, timer in pairs(W.MythicPlusMapData[id].timers) do
+		-- 		local mm = floor(timer / 60)
+		-- 		local ss = timer % 60
+		-- 		print("  Timer", i, ":", format("%02d:%02d", mm, ss))
+		-- 	end
+		-- end)
 	end
 
 	for id in pairs(W.MythicPlusSeasonAchievementData) do

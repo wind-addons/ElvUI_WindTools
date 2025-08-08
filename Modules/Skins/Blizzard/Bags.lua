@@ -45,8 +45,7 @@ local function HookItemButtonPool(self, panel)
 	end)
 end
 
-local function SkinBottomTabSystem(self)
-	local frame = _G.BankFrame
+local function SkinBottomTabSystem(self, frame)
 	if not frame then
 		return
 	end
@@ -129,7 +128,7 @@ function S:ContainerFrame()
 	end
 
 	SkinBankPanelControls(self, bankPanel)
-	SkinBottomTabSystem(self)
+	SkinBottomTabSystem(self, bankFrame)
 	SkinSearchBox(self)
 end
 

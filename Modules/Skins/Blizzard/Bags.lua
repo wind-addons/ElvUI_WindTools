@@ -109,26 +109,11 @@ local function SkinSearchBox(self)
 end
 
 function S:ContainerFrame()
+	if E.private.bags.enable or not self:CheckDB("bags") then
+		return
+	end
 	local bankFrame = _G.BankFrame
 	local bankPanel = _G.BankPanel
-
-	if E.private.bags.enable then
-		if bankFrame then
-			bankFrame:SetAlpha(0)
-			bankFrame:Hide()
-		end
-
-		if bankPanel then
-			bankPanel:SetAlpha(0)
-			bankPanel:Hide()
-		end
-
-		return
-	end
-
-	if not self:CheckDB("bags") then
-		return
-	end
 
 	if bankFrame and not bankFrame.__windSkin then
 		self:CreateShadow(bankFrame)

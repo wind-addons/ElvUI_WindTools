@@ -761,6 +761,7 @@ L["Item Socketing"] = true
 L["Item Upgrade"] = true
 L["Jewelcrafting"] = true
 L["Just for Chinese and Korean players"] = true
+L["Keep Size Ratio"] = true
 L["Key Binding"] = true
 L["Key Timers"] = true
 L["Keybind Alias"] = true

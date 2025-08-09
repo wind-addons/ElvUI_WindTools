@@ -761,6 +761,7 @@ L["Item Socketing"] = "Inserción de Objeto"
 L["Item Upgrade"] = "Mejora de Objeto"
 L["Jewelcrafting"] = "Joyería"
 L["Just for Chinese and Korean players"] = "Sólo para jugadores chinos y coreanos"
+L["Keep Size Ratio"] = true
 L["Key Binding"] = "Atajo de teclas"
 L["Key Timers"] = "Temporizadores de llaves"
 L["Keybind Alias"] = "Alias de atajo de tecla"

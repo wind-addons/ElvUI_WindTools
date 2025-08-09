@@ -59,7 +59,7 @@ do
 			inspectFrameHolder:Hide()
 		end)
 
-		if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
+		if MF:IsRunning() then
 			MF:HandleFrame(inspectFrameHolder, parent.MoveFrame or parent)
 			frame.MoveFrame = inspectFrameHolder.MoveFrame
 		end

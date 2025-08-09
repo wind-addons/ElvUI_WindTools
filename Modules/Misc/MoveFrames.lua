@@ -389,7 +389,7 @@ function MF:Reposition(frame, anchorPoint, relativeFrame, relativePoint, offX, o
 
 	local path = frame.__windFramePath
 
-	if ignorePositionRememberingFrames[path] then
+	if path == "" or ignorePositionRememberingFrames[path] then
 		self.db.framePositions[path] = nil
 		return
 	end
@@ -567,6 +567,22 @@ function MF:HandleElvUIBag(frameName)
 	end
 
 	frame.__windFramePath = "ElvUI_" .. frameName
+end
+
+function MF:IsRunning()
+	return E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning
+end
+
+function MF:InternalHandle(frame, bindingTarget, remember)
+	if not self:IsRunning() then
+		return
+	end
+
+	self:HandleFrame(frame, bindingTarget)
+
+	if remember == false then
+		frame.__windFramePath = ""
+	end
 end
 
 function MF:Initialize()

@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
+local MF = W.Modules.MoveFrames
 local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
 local LSM = E.Libs.LSM
 local LFGPI = W.Utilities.LFGPlayerInfo
@@ -515,10 +516,7 @@ function LL:InitializeRightPanel()
 	frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 3, 0)
 	frame:SetTemplate("Transparent")
 	S:CreateShadowModule(frame)
-	if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
-		local MF = W.Modules.MoveFrames
-		MF:HandleFrame(frame, "PVEFrame")
-	end
+	MF:InternalHandle(frame, "PVEFrame")
 
 	hooksecurefunc(frame, "Show", function(f)
 		if _G.RaiderIO_ProfileTooltipAnchor then

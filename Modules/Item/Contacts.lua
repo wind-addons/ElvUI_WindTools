@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W.Modules.Skins
 local ES = E.Skins
+local MF = W.Modules.MoveFrames
 
 local _G = _G
 local floor = floor
@@ -151,12 +152,7 @@ function CT:ConstructFrame()
 
 	S:CreateShadowModule(frame.backdrop)
 	S:MerathilisUISkin(frame.backdrop)
-
-	-- Register move frames
-	if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
-		local MF = W.Modules.MoveFrames
-		MF:HandleFrame("WTContacts", "MailFrame")
-	end
+	MF:InternalHandle(frame, "MailFrame")
 
 	self.frame = frame
 

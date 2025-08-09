@@ -358,6 +358,8 @@ function F.MoveFrameWithOffset(frame, x, y)
 		return
 	end
 
+	local setPoint = frame.__SetPoint or frame.SetPoint
+
 	local pointsData = {}
 
 	for i = 1, frame:GetNumPoints() do
@@ -369,6 +371,6 @@ function F.MoveFrameWithOffset(frame, x, y)
 
 	for _, data in pairs(pointsData) do
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(data)
-		frame:SetPoint(point, relativeTo, relativePoint, xOfs + x, yOfs + y)
+		setPoint(frame, point, relativeTo, relativePoint, xOfs + x, yOfs + y)
 	end
 end

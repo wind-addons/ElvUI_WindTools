@@ -22,4 +22,5 @@
 	<Script file='WarpDeplete.lua'/>
 	<Script file='WeakAuras.lua'/>
 	<Script file='WeakAurasOptions.lua'/>
+	<Script file='WorldQuestTab.lua'/>
 </Ui>

@@ -56,8 +56,7 @@ function S:WorldMapFrame()
 		end
 
 		if i > 1 then
-			tab:ClearAllPoints()
-			tab:SetPoint("TOP", tabs[i - 1], "BOTTOM", 0, -5)
+			F.MoveFrameWithOffset(tab, 0, -2)
 		end
 	end
 

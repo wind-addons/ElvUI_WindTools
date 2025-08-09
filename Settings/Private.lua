@@ -506,6 +506,7 @@ V.skins = {
 		warpDeplete = true,
 		weakAuras = true,
 		weakAurasOptions = true,
+		worldQuestTab = true,
 	},
 	blizzard = {
 		enable = true,

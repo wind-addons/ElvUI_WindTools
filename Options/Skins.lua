@@ -1297,6 +1297,12 @@ options.addons = {
 			name = L["WeakAuras Options"],
 			addonName = "WeakAuras",
 		},
+		worldQuestTab = {
+			order = 10,
+			type = "toggle",
+			name = L["World Quest Tab"],
+			addonName = "WorldQuestTab",
+		},
 	},
 }
 

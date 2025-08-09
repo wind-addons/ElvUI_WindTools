@@ -12,17 +12,17 @@ function S:WorldMapFrame()
 
 	self:CreateBackdropShadow(_G.WorldMapFrame)
 
-	local QuestScrollFrame = _G.QuestScrollFrame
-	if QuestScrollFrame.Background then
-		QuestScrollFrame.Background:Kill()
-	end
-	if QuestScrollFrame.DetailFrame and QuestScrollFrame.DetailFrame.backdrop then
-		QuestScrollFrame.DetailFrame.backdrop:SetTemplate("Transparent")
+	local QuestMapFrame = _G.QuestMapFrame
+
+	if QuestMapFrame.QuestsFrame and QuestMapFrame.QuestsFrame.ScrollFrame then
+		local QuestScrollFrame = QuestMapFrame.QuestsFrame.ScrollFrame
+		if QuestScrollFrame.Background then
+			QuestScrollFrame.Background:Kill()
+		end
 	end
 
-	local QuestMapFrame = _G.QuestMapFrame
-	if QuestMapFrame.DetailsFrame then
-		local DetailsFrame = QuestMapFrame.DetailsFrame
+	if QuestMapFrame.QuestsFrame and QuestMapFrame.QuestsFrame.DetailsFrame then
+		local DetailsFrame = QuestMapFrame.QuestsFrame.DetailsFrame
 		local RewardsFrameContainer = DetailsFrame.RewardsFrameContainer
 		if DetailsFrame.backdrop then
 			DetailsFrame.backdrop:SetTemplate("Transparent")

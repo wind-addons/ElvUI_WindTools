@@ -1259,4 +1259,9 @@ P.misc = {
 		enable = false,
 		list = {},
 	},
+	exitPhaseDiving = {
+		enable = true,
+		width = 81,
+		height = 50,
+	},
 }

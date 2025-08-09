@@ -2320,3 +2320,61 @@ options.keybindAlias = {
 		},
 	},
 }
+
+options.exitPhaseDiving = {
+	order = 12,
+	type = "group",
+	name = L["Exit Phase Diving"],
+	get = function(info)
+		return E.db.WT.misc.exitPhaseDiving[info[#info]]
+	end,
+	set = function(info, value)
+		E.db.WT.misc.exitPhaseDiving[info[#info]] = value
+		M:UpdateExitPhaseDivingButton()
+	end,
+	args = {
+		desc = {
+			order = 1,
+			type = "group",
+			inline = true,
+			name = L["Description"],
+			args = {
+				feature = {
+					order = 1,
+					type = "description",
+					name = L["Add a button to exit phase diving."]
+						.. "\n"
+						.. L["You can use ElvUI Mover to reposition it."],
+					fontSize = "medium",
+				},
+			},
+		},
+		enable = {
+			order = 2,
+			type = "toggle",
+			name = L["Enable"],
+		},
+		width = {
+			order = 3,
+			type = "range",
+			name = L["Width"],
+			min = 5,
+			max = 1000,
+			step = 1,
+			disabled = function()
+				return not E.db.WT.misc.exitPhaseDiving.enable
+			end,
+		},
+		height = {
+			order = 4,
+			type = "range",
+			name = L["Height"],
+			min = 5,
+			max = 1000,
+			step = 1,
+			disabled = function()
+				return not E.db.WT.misc.exitPhaseDiving.enable
+			end,
+		},
+	},
+}

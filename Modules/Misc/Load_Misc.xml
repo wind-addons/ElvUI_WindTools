@@ -8,6 +8,7 @@
 	<Script file='AutoToggleChatBubble.lua'/>
 	<Script file='CooldownTextOffset.lua'/>
 	<Script file='DisableTalkingHead.lua'/>
+	<Script file='ExitPhaseDiving.lua'/>
 	<Script file='ExtraBindingButtons.lua'/>
 	<Script file='GuildNewsItemLevel.lua'/>
 	<Script file='HideCrafter.lua'/>

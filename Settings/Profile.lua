@@ -971,7 +971,9 @@ P.social = {
 		icon = true,
 		armorCategory = true,
 		weaponCategory = true,
-		compatibile = true,
+		iconWidth = 18,
+		iconHeight = 16,
+		keepRatio = true,
 	},
 	chatText = {
 		enable = true,

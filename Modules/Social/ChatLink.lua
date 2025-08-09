@@ -22,8 +22,6 @@ local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Soulbinds_GetConduitCollectionData = C_Soulbinds.GetConduitCollectionData
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
-local ICON_STRING = "|T%s:16:18:0:0:64:64:4:60:7:57:255:255:255|t"
-
 local SearchArmorType = {
 	INVTYPE_HEAD = true,
 	INVTYPE_SHOULDER = true,
@@ -124,7 +122,7 @@ local function AddItemInfo(link)
 	end
 
 	if CL.db.icon then
-		link = format(ICON_STRING, icon) .. " " .. link
+		link = F.GetIconString(icon, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio) .. " " .. link
 	end
 
 	return link
@@ -138,7 +136,7 @@ local function AddKeystoneIcon(link)
 
 	if CL.db.icon then
 		local texture = select(4, C_ChallengeMode_GetMapUIInfo(tonumber(mapID)))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end
@@ -159,7 +157,7 @@ local function AddConduitIcon(link)
 
 		if conduitItemID then
 			local texture = C_Item_GetItemIconByID(conduitItemID)
-			local icon = texture and format(ICON_STRING, texture)
+			local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 			if icon then
 				link = icon .. " " .. link
 			end
@@ -178,7 +176,7 @@ local function AddSpellInfo(link)
 
 	if CL.db.icon then
 		local texture = C_Spell_GetSpellTexture(tonumber(id))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " |cff71d5ff" .. link .. "|r" -- I dk why the color is needed, but worked!
 		end
@@ -196,7 +194,7 @@ local function AddEnchantInfo(link)
 
 	if CL.db.icon then
 		local texture = C_Spell_GetSpellTexture(tonumber(id))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end
@@ -214,7 +212,7 @@ local function AddPvPTalentInfo(link)
 
 	if CL.db.icon then
 		local texture = select(3, GetPvpTalentInfoByID(tonumber(id)))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end
@@ -232,7 +230,7 @@ local function AddTalentInfo(link)
 
 	if CL.db.icon then
 		local texture = select(3, GetTalentInfoByID(tonumber(id)))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end
@@ -250,7 +248,7 @@ local function AddAchievementInfo(link)
 
 	if CL.db.icon then
 		local texture = select(10, GetAchievementInfo(tonumber(id)))
-		local icon = texture and format(ICON_STRING, texture)
+		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end
@@ -268,7 +266,7 @@ local function AddCurrencyInfo(link)
 
 	if CL.db.icon then
 		local info = C_CurrencyInfo_GetCurrencyInfo(id)
-		local icon = info and info.iconFileID and format(ICON_STRING, info.iconFileID)
+		local icon = info and info.iconFileID and F.GetIconString(info.iconFileID, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end

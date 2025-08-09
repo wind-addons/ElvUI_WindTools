@@ -858,6 +858,44 @@ options.chatLink = {
 				},
 			},
 		},
+		icon = {
+			order = 3,
+			type = "group",
+			inline = true,
+			name = L["Icon"],
+			disabled = function()
+				return not E.db.WT.social.chatLink.icon
+			end,
+			get = function(info)
+				return E.db.WT.social.chatLink[info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.social.chatLink[info[#info]] = value
+			end,
+			args = {
+				iconHeight = {
+					order = 1,
+					type = "range",
+					name = L["Icon Height"],
+					min = 10,
+					max = 100,
+					step = 1,
+				},
+				iconWidth = {
+					order = 2,
+					type = "range",
+					name = L["Icon Width"],
+					min = 10,
+					max = 100,
+					step = 1,
+				},
+				keepRatio = {
+					order = 3,
+					type = "toggle",
+					name = L["Keep Size Ratio"],
+				},
+			},
+		},
 	},
 }
 

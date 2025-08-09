@@ -38,16 +38,6 @@ function S:Blizzard_DelvesCompanionConfiguration()
 	if CompanionAbilityListFrame then
 		self:CreateShadow(CompanionAbilityListFrame)
 	end
-
-	hooksecurefunc(CompanionAbilityListFrame, "UpdatePaginatedButtonDisplay", function(frame)
-		for _, button in pairs(frame.buttons) do
-			if button and button.Icon and not button.Icon.__windSkin then
-				button.Icon:SetTexCoord(unpack(E.TexCoords))
-				button.Icon:CreateBackdrop()
-				button.Icon.__windSkin = true
-			end
-		end
-	end)
 end
 
 S:AddCallbackForAddon("Blizzard_DelvesDifficultyPicker")

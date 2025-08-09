@@ -21,15 +21,21 @@ function S:WorldMapFrame()
 
 	local QuestMapFrame = _G.QuestMapFrame
 	if QuestMapFrame.DetailsFrame then
-		if QuestMapFrame.DetailsFrame.backdrop then
-			QuestMapFrame.DetailsFrame.backdrop:SetTemplate("Transparent")
+		local DetailsFrame = QuestMapFrame.DetailsFrame
+		local RewardsFrameContainer = DetailsFrame.RewardsFrameContainer
+		if DetailsFrame.backdrop then
+			DetailsFrame.backdrop:SetTemplate("Transparent")
 		end
-		local RewardsFrameContainer = QuestMapFrame.DetailsFrame.RewardsFrameContainer
 		if RewardsFrameContainer and RewardsFrameContainer.RewardsFrame then
-			if RewardsFrameContainer.RewardsFrame.backdrop then
-				RewardsFrameContainer.RewardsFrame.backdrop:SetTemplate("Transparent")
+			local RewardsFrame = RewardsFrameContainer.RewardsFrame
+			if RewardsFrame.backdrop then
+				RewardsFrame.backdrop:SetTemplate("Transparent")
 			else
-				RewardsFrameContainer.RewardsFrame:CreateBackdrop("Transparent")
+				RewardsFrame:CreateBackdrop("Transparent")
+				S:Reposition(RewardsFrame.backdrop, RewardsFrame, 0, -12, 0, 0, 3)
+
+				DetailsFrame.backdrop:Point("TOPLEFT", 0, 5)
+				DetailsFrame.backdrop:Point("BOTTOMRIGHT", RewardsFrame.backdrop, "TOPRIGHT", -3, 5)
 			end
 		end
 	end

@@ -108,6 +108,7 @@ do --this can save some main file locals
 		local a, b, c = 0, false, {ElvRed, ElvOrange, ElvYellow, ElvGreen, ElvBlue, ElvPurple, ElvPink}
 		(a = a - (b and 1 or -1) if (b and a == 1 or a == 0) or a == #c then b = not b end return c[a])
 	]]
+
 	local itsElv, itsMis, itsSimpy, itsMel, itsThradex, itsPooc
 	do --Simpy Chaos: super cute text coloring function that ignores hyperlinks and keywords
 		local e, f, g = { "||", "|Helvmoji:.-|h.-|h", "|[Cc].-|[Rr]", "|[TA].-|[ta]", "|H.-|h.-|h" }, {}, {}
@@ -291,26 +292,26 @@ do --this can save some main file locals
 		if E.Classic then
 			-- Simpy (5099: Myzrael)
 			z["Player-5099-01947A77"] = itsSimpy -- Warlock: Simpy
-		elseif E.Cata then
+		elseif E.Mists then
 			-- Simpy (4373: Myzrael)
-			z["Player-4373-011657A7"] = itsSimpy -- Paladin:		Cutepally
-			z["Player-4373-032FFEE2"] = itsSimpy -- Shaman:		Kalline
+			z["Player-4373-011657A7"] = itsSimpy -- Paladin:	Cutepally
+			z["Player-4373-032FFEE2"] = itsSimpy -- Shaman:	Kalline
+			z["Player-4373-040E5AA9"] = itsSimpy -- Druid:	Puttietat
+			z["Player-4373-03E24528"] = itsSimpy -- Hunter:	Arieva
 			z["Player-4373-03351BC7"] = itsSimpy -- [Horde] DK:	Imsojelly
+			z["Player-4373-04115928"] = itsSimpy -- [Horde] Shaman:	Yumi
 			-- Repooc
 			z["Repooc-Atiesh"] = itsPooc -- [Alliance] Paladin
 		elseif E.Retail then
 			-- Elv
-			z["Elv-Spirestone"] = itsElv
-			z["Elvz-Spirestone"] = itsElv
-			z["Fleshlite-Spirestone"] = itsElv
-			z["Elvidan-Spirestone"] = itsElv
-			z["Elvilas-Spirestone"] = itsElv
-			z["Fraku-Spirestone"] = itsElv
-			z["Jarvix-Spirestone"] = itsElv
-			z["Watermelon-Spirestone"] = itsElv
-			z["Zinxbe-Spirestone"] = itsElv
-			z["Whorlock-Spirestone"] = itsElv
+			z["Player-127-0AB2F946"] = itsElv -- Paladin
+			z["Player-5-0E83B943"] = itsElv -- Druid
+			z["Player-5-0E8393EF"] = itsElv -- Monk
+			z["Player-3675-0A85E395"] = itsElv -- Warrior
+			z["Player-5-0E8301B7"] = itsElv -- Mage
+			z["Player-5-0E885971"] = itsElv -- Shaman
 			-- Repooc
+			z["Dapooc-Spirestone"] = itsPooc -- [Alliance] Druid
 			z["Sifpooc-Stormrage"] = itsPooc -- [Alliance] DH
 			z["Fragmented-Stormrage"] = itsPooc -- [Alliance] Warlock
 			z["Sifupooc-Stormrage"] = itsPooc -- [Alliance] Monk
@@ -382,15 +383,29 @@ do --this can save some main file locals
 			z["Alysneaks-Cenarius"] = itsMel -- [Horde] Rogue
 			z["Alytotes-Cenarius"] = itsMel -- [Horde] Shaman
 			-- Thradex (Simpys Buddy)
-			z["Foam-Area52"] = itsThradex -- Horde
-			z["Gur-Area52"] = itsThradex -- Horde
-			z["Archmage-Area52"] = itsThradex -- Horde
-			z["Counselor-Area52"] = itsThradex -- Horde
-			z["Psychiatrist-Area52"] = itsThradex -- Horde
-			z["Monk-CenarionCircle"] = itsThradex
-			z["Thradex-Stormrage"] = itsThradex
-			z["Wrecked-Stormrage"] = itsThradex
-			z["Tb-Stormrage"] = itsThradex
+			z["Player-3676-0982798A"] = itsThradex -- Foam-Area52
+			z["Player-3676-0E6FC676"] = itsThradex -- Gur-Area52
+			z["Player-3676-0D834080"] = itsThradex -- Counselor-Area52
+			z["Player-3676-0E77A90A"] = itsThradex -- Archmage-Area52
+			z["Player-3676-0EA34C00"] = itsThradex -- Benito-Area52
+			z["Player-3676-0E0547CE"] = itsThradex -- Ahmir-Area52
+			z["Player-3676-0AFA7773"] = itsThradex -- Lifelink-Area52
+			z["Player-3676-0D829A31"] = itsThradex -- Psychiatrist-Area52
+			z["Player-3676-0A5800F2"] = itsThradex -- Italian-Area52
+			z["Player-125-0AA52CD1"] = itsThradex -- Monk-CenarionCircle
+			z["Player-3675-0AB731AC"] = itsThradex -- Jonesy-MoonGuard
+			z["Player-3675-0AD64DD0"] = itsThradex -- PuertoRican-MoonGuard
+			z["Player-3675-0AD64EA1"] = itsThradex -- Rainao-MoonGuard
+			z["Player-60-0A5E33DE"] = itsThradex -- Tb-Stormrage
+			z["Player-60-0A58F3D2"] = itsThradex -- Thradex-Stormrage
+			z["Player-60-0A4E0A3E"] = itsThradex -- Wrecked-Stormrage
+			z["Player-60-0F65AEC4"] = itsThradex -- Puertorican-Stormrage
+			z["Player-60-0AADFA03"] = itsThradex -- Quickscoper-Stormrage
+			z["Player-1168-0AE46826"] = itsThradex -- Daddy-Cairne
+			z["Player-115-0883DF8B"] = itsThradex -- Daddy-EchoIsles
+			z["Player-53-0D463E51"] = itsThradex -- Badbunny-Wildhammer
+			z["Player-113-0A9F78FF"] = itsThradex -- Vanessa-Darrowmere
+			z["Player-127-0AD64E79"] = itsThradex -- Christopher-Firetree
 			-- Affinity
 			z["Affinichi-Illidan"] = Bathrobe
 			z["Affinitii-Illidan"] = Bathrobe
@@ -424,15 +439,20 @@ do --this can save some main file locals
 		end
 	elseif portal == "EU" then
 		if E.Classic then
-			-- Luckyone Seasonal (5826: Lone Wolf EU, 5827: Living Flame EU)
-			z["Player-5826-0202765F"] = ElvGreen -- [Alliance] Hunter
-			z["Player-5826-020F7F10"] = ElvGreen -- [Alliance] Paladin
-			z["Player-5826-02172E79"] = ElvGreen -- [Alliance] Warlock
-			z["Player-5826-0234253E"] = ElvGreen -- [Alliance] Mage
-			z["Player-5826-02342508"] = ElvGreen -- [Alliance] Priest
-			z["Player-5826-023424EF"] = ElvGreen -- [Alliance] Druid
-			z["Player-5826-02342520"] = ElvGreen -- [Alliance] Rogue
-			z["Player-5826-02342556"] = ElvGreen -- [Alliance] Warrior
+			-- Luckyone Anniversary (6112: Spineshatter EU)
+			z["Player-6112-028A3A6D"] = ElvGreen -- [Horde] Hunter
+			z["Player-6112-02A2F754"] = ElvGreen -- [Horde] Priest
+			z["Player-6112-02A39E0E"] = ElvGreen -- [Horde] Warlock
+			z["Player-6112-02BBE8AB"] = ElvGreen -- [Horde] Hunter 2
+			-- Luckyone Seasonal (5827: Living Flame EU)
+			z["Player-5827-0273D732"] = ElvGreen -- [Alliance] Hunter
+			z["Player-5827-0273D63E"] = ElvGreen -- [Alliance] Paladin
+			z["Player-5827-0273D63D"] = ElvGreen -- [Alliance] Warlock
+			z["Player-5827-0273D649"] = ElvGreen -- [Alliance] Mage
+			z["Player-5827-0273D661"] = ElvGreen -- [Alliance] Priest
+			z["Player-5827-0273D65D"] = ElvGreen -- [Alliance] Druid
+			z["Player-5827-0273D63F"] = ElvGreen -- [Alliance] Rogue
+			z["Player-5827-0273D638"] = ElvGreen -- [Alliance] Warrior
 			z["Player-5827-02331C4B"] = ElvGreen -- [Horde] Shaman
 			-- Luckyone Hardcore (5261: Nek'Rosh)
 			z["Player-5261-01ADAC25"] = ElvGreen -- [Horde] Rogue
@@ -442,7 +462,7 @@ do --this can save some main file locals
 			-- Luckyone Classic Era (5233: Firemaw)
 			z["Player-5233-01D22A72"] = ElvGreen -- [Horde] Hunter: Unluckyone
 			z["Player-5233-01D27011"] = ElvGreen -- [Horde] Druid: Luckydruid
-		elseif E.Cata then
+		elseif E.Mists then
 			-- Luckyone (4467: Firemaw, 4440: Everlook, 4476: Gehennas)
 			z["Player-4467-04540395"] = ElvGreen -- [Alliance] Druid
 			z["Player-4467-04542B4A"] = ElvGreen -- [Alliance] Priest
@@ -456,7 +476,11 @@ do --this can save some main file locals
 			z["Player-4467-04571A98"] = ElvGreen -- [Alliance] Warrior
 			z["Player-4440-03AD654A"] = ElvGreen -- [Alliance] Rogue
 			z["Player-4440-03ADE2DF"] = ElvGreen -- [Alliance] Shaman
+			z["Player-4467-0613ECA1"] = ElvGreen -- [Alliance] Monk
 			z["Player-4476-03BF41C9"] = ElvGreen -- [Horde] Hunter
+			z["Player-4476-049F4831"] = ElvGreen -- [Horde] DK
+			z["Player-4476-05C7B834"] = ElvGreen -- [Horde] Mage
+			z["Player-4476-05CAB05D"] = ElvGreen -- [Horde] Monk
 		elseif E.Retail then
 			-- Blazeflack
 			z["Blazii-Silvermoon"] = ElvBlue -- Priest
@@ -481,11 +505,11 @@ do --this can save some main file locals
 			-- Luckyone (1598: LaughingSkull)
 			z["Player-1598-0F5E4639"] = ElvGreen -- [Alliance] Druid: Luckyone
 			z["Player-1598-0F3E51B0"] = ElvGreen -- [Alliance] Druid: Luckydruid
+			z["Player-1598-0FB03F89"] = ElvGreen -- [Alliance] Monk
 			z["Player-1598-0F46FF5A"] = ElvGreen -- [Horde] Evoker
 			z["Player-1598-0F92E2B9"] = ElvGreen -- [Horde] Evoker 2
 			z["Player-1598-0BFF3341"] = ElvGreen -- [Horde] DH
 			z["Player-1598-0BD22704"] = ElvGreen -- [Horde] Priest
-			z["Player-1598-0BEFA545"] = ElvGreen -- [Horde] Monk
 			z["Player-1598-0E1A06DE"] = ElvGreen -- [Horde] Rogue
 			z["Player-1598-0BF2E377"] = ElvGreen -- [Horde] Hunter
 			z["Player-1598-0BF18248"] = ElvGreen -- [Horde] DK
@@ -498,6 +522,11 @@ do --this can save some main file locals
 			-- Sneaky Darth
 			z["Player-1925-05F494A6"] = ElvPurple
 			z["Player-1925-05F495A1"] = ElvPurple
+			-- AcidWeb
+			z["Player-3713-08235A93"] = Gem
+			z["Player-3713-0819EA18"] = Gem
+			z["Player-3713-08FC8520"] = Gem
+			z["Player-3713-0AD1682D"] = Gem
 		end
 	end
 end
@@ -1075,7 +1104,7 @@ function CT:ChatFrame_MessageEventHandler(
 		local channelLength = strlen(arg4)
 		local infoType = chatType
 
-		if chatType == "VOICE_TEXT" and not GetCVarBool("speechToText") then
+		if chatType == "VOICE_TEXT" and not C_CVar_GetCVarBool("speechToText") then
 			return
 		elseif
 			chatType == "COMMUNITIES_CHANNEL"
@@ -1421,9 +1450,8 @@ function CT:ChatFrame_MessageEventHandler(
 				message = format(globalstring, arg2)
 			elseif arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" then
 				local accountInfo = C_BattleNet_GetAccountInfoByID(arg13)
-				local gameInfo = accountInfo.gameAccountInfo
-
-				if gameInfo.clientProgram and gameInfo.clientProgram ~= "" then
+				local gameInfo = accountInfo and accountInfo.gameAccountInfo
+				if gameInfo and gameInfo.clientProgram and gameInfo.clientProgram ~= "" then
 					C_Texture_GetTitleIconTexture(
 						gameInfo.clientProgram,
 						TitleIconVersion_Small,

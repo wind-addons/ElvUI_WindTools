@@ -1,6 +1,8 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
+local MF = W.Modules.MoveFrames
+
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
@@ -130,8 +132,8 @@ local function configCheckbox(frame)
 	S:ESProxy("HandleCheckBox", frame.CheckBox)
 end
 
-local function dropDownInternal(frame)
-	S:ESProxy("HandleDropDownBox", frame, frame:GetWidth(), nil, true)
+local function dropDown(frame)
+	S:ESProxy("HandleDropDownBox", frame.DropDown, 150)
 end
 
 local function keyBindingConfig(frame)
@@ -181,7 +183,7 @@ local function configMinMax(frame)
 end
 
 local function filterKeySelector(frame)
-	S:ESProxy("HandleDropDownBox", frame, frame:GetWidth(), nil, true)
+	S:ESProxy("HandleDropDownBox", frame.DropDown, frame:GetWidth())
 end
 
 local function undercutScan(frame)
@@ -309,6 +311,8 @@ local function shoppingItem(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
+	MF:InternalHandle(frame, nil, false)
+
 	local function reskinResetButton(f, anchor, x, y)
 		S:ESProxy("HandleButton", f)
 		f:Size(20, 20)
@@ -332,6 +336,8 @@ local function shoppingItem(frame)
 	S:ESProxy("HandleButton", frame.Finished)
 	S:ESProxy("HandleButton", frame.Cancel)
 	S:ESProxy("HandleButton", frame.ResetAllButton)
+
+	S:ESProxy("HandleCloseButton", frame.CloseButton)
 end
 
 local function exportTextFrame(frame)
@@ -435,6 +441,49 @@ local function tryPostHook(...)
 	end
 end
 
+local function reskinDialog(frame)
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
+	S:CreateShadow(frame)
+
+	if frame.editBox then
+		S:ESProxy("HandleEditBox", frame.editBox)
+		frame.editBox:SetTextInsets(0, 0, 0, 0)
+	end
+	if frame.acceptButton then
+		S:ESProxy("HandleButton", frame.acceptButton)
+	end
+	if frame.cancelButton then
+		S:ESProxy("HandleButton", frame.cancelButton)
+	end
+
+	MF:InternalHandle(frame, nil, false)
+end
+
+local function reskinDialogs()
+	for _, dialogFunc in ipairs({
+		"ShowEditBox",
+		"ShowConfirm",
+		"ShowConfirmAlt",
+		"ShowMoney",
+	}) do
+		if _G.Auctionator.Dialogs[dialogFunc] then
+			local original = _G.Auctionator.Dialogs[dialogFunc]
+			_G.Auctionator.Dialogs[dialogFunc] = function(...)
+				local result = original(...)
+				for _, name in pairs(_G.UISpecialFrames) do
+					local frame = name and _G[name]
+					if frame and not frame.__windSkin and strfind(name, "^AuctionatorDialog") then
+						reskinDialog(frame)
+						frame.__windSkin = true
+					end
+				end
+				return result
+			end
+		end
+	end
+end
+
 function S:Auctionator()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.auctionator then
 		return
@@ -452,8 +501,8 @@ function S:Auctionator()
 	tryPostHook("AuctionatorConfigMoneyInputMixin", "OnLoad", configMoneyInput)
 	tryPostHook("AuctionatorConfigNumericInputMixin", "OnLoad", configNumericInput)
 	tryPostHook("AuctionatorConfigRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
-	-- tryPostHook("AuctionatorDropDownInternalMixin", "Initialize", dropDownInternal)
-	-- tryPostHook("AuctionatorFilterKeySelectorMixin", "OnLoad", filterKeySelector)
+	tryPostHook("AuctionatorDropDownMixin", "OnLoad", dropDown)
+	tryPostHook("AuctionatorFilterKeySelectorMixin", "OnLoad", filterKeySelector)
 	tryPostHook("AuctionatorKeyBindingConfigMixin", "OnLoad", keyBindingConfig)
 	tryPostHook("AuctionatorResultsListingMixin", "OnShow", resultsListing)
 	tryPostHook("AuctionatorSaleItemMixin", "OnLoad", saleItem)
@@ -483,6 +532,9 @@ function S:Auctionator()
 	tryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
 	tryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
 	tryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
+
+	-- Dialog
+	reskinDialogs()
 end
 
 S:AddCallbackForAddon("Auctionator")

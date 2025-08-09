@@ -95,7 +95,7 @@ function S:WeakAurasMultiLineEditBox(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		self:ESProxy("HandleButton", widget.button)
 
@@ -127,7 +127,7 @@ function S:WeakAurasMultiLineEditBox(Constructor)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 function S:WeakAurasDisplayButton(Constructor)
@@ -135,7 +135,7 @@ function S:WeakAurasDisplayButton(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		if widget.background then
 			self:ESProxy("HandleButton", widget.frame, nil, nil, nil, true, "Transparent")
@@ -270,7 +270,7 @@ function S:WeakAurasDisplayButton(Constructor)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 S.WeakAurasNewButton = S.WeakAurasDisplayButton
@@ -280,7 +280,7 @@ function S:WeakAurasLoadedHeaderButton(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 
 		if widget.expand then
@@ -337,7 +337,7 @@ function S:WeakAurasLoadedHeaderButton(Constructor)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 do
@@ -403,7 +403,7 @@ function S:WeakAurasIconButton(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		widget.frame:CreateBackdrop()
 		widget.frame.backdrop.Center:StripTextures()
@@ -431,7 +431,7 @@ function S:WeakAurasIconButton(Constructor)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 function S:WeakAuras_ShowOptions()

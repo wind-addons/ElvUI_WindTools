@@ -8,13 +8,13 @@ function S:Ace3_Frame(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		S:CreateShadow(widget.frame)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 function S:Ace3_DropdownPullout(Constructor)
@@ -22,7 +22,7 @@ function S:Ace3_DropdownPullout(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		if E.private.WT.skins.addons.ace3DropdownBackdrop then
 			widget.frame:SetTemplate("Transparent")
@@ -31,7 +31,7 @@ function S:Ace3_DropdownPullout(Constructor)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 function S:Ace3_Window(Constructor)
@@ -39,13 +39,13 @@ function S:Ace3_Window(Constructor)
 		return Constructor
 	end
 
-	local function SkinedConstructor()
+	local function SkinnedConstructor()
 		local widget = Constructor()
 		S:CreateShadow(widget.frame)
 		return widget
 	end
 
-	return SkinedConstructor
+	return SkinnedConstructor
 end
 
 function S:AceConfigDialog()

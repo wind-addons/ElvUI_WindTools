@@ -2,6 +2,10 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local ES = E.Skins
 
+local _G = _G
+local next = next
+local hooksecurefunc = hooksecurefunc
+
 local function PositionTabIcons(icon, _, anchor)
 	if anchor then
 		icon:SetPoint("CENTER")

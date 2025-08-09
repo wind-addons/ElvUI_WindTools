@@ -3,6 +3,9 @@ local async = W.Utilities.Async
 local M = W.Modules.Misc
 local S = W.Modules.Skins
 
+local _G = _G
+local select = select
+
 local CreateFrame = CreateFrame
 local AuraUtil_FindAura = AuraUtil.FindAura
 

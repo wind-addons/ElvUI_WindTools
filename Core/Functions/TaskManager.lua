@@ -10,7 +10,6 @@ local xpcall = xpcall
 
 local InCombatLockdown = InCombatLockdown
 
-
 F.TaskManager = {
 	Types = {
 		AfterCombat = 1,
@@ -34,7 +33,7 @@ end
 function module:PLAYER_REGEN_ENABLED()
 	if #F.TaskManager.Queue.AfterCombat > 0 then
 		for i = 1, #F.TaskManager.Queue.AfterCombat do
-            F.Developer.LogDebug("Running queued task after combat")
+			F.Developer.LogDebug("Running queued task after combat")
 			runTask(unpack(F.TaskManager.Queue.AfterCombat[i]))
 		end
 		wipe(F.TaskManager.Queue.AfterCombat)
@@ -46,11 +45,11 @@ end
 ---@param ... any optional arguments to pass to the callback
 function F.TaskManager:AfterCombat(callback, ...)
 	if type(callback) ~= "function" then
-        F.Developer.LogDebug("Invalid callback type, expected function")
+		F.Developer.LogDebug("Invalid callback type, expected function")
 		return
 	end
 
-    F.Developer.LogDebug("Queueing task for after combat")
+	F.Developer.LogDebug("Queueing task for after combat")
 	tinsert(self.Queue.AfterCombat, { callback, { ... } })
 end
 
@@ -60,7 +59,7 @@ end
 ---@param ... any optional arguments to pass to the callback
 function F.TaskManager:OutOfCombat(callback, ...)
 	if type(callback) ~= "function" then
-        F.Developer.LogDebug("Invalid callback type, expected function")
+		F.Developer.LogDebug("Invalid callback type, expected function")
 		return
 	end
 

@@ -66,6 +66,36 @@ local function reskinQuestButton(frame)
 	frame.Highlight.windTex = tex
 end
 
+local function reskinQuestContainer(container)
+	S:ESProxy("HandleDropDownBox", container.SortDropdown)
+	S:ESProxy("HandleButton", container.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+
+	S:ESProxy("HandleTrimScrollBar", container.ScrollBar)
+
+	hooksecurefunc(container.QuestScrollBox, "Update", function(scrollBox)
+		scrollBox:ForEachFrame(reskinQuestButton)
+	end)
+
+	container:CreateBackdrop("Transparent")
+	container.Background:Hide()
+	container.BorderFrame:Hide()
+	container.FilterBar:StripTextures()
+end
+
+local function reskinWhatsNew(container)
+	container.BorderFrame:Hide()
+	container.Background:Hide()
+	container:CreateBackdrop("Transparent")
+	container.backdrop:SetOutside(container.Background)
+
+	S:ESProxy("HandleCloseButton", container.CloseButton)
+	container.CloseButton:Size(20, 20)
+	S:ESProxy("HandleTrimScrollBar", container.ScrollBar)
+end
+
+local function reskinSetting(container)
+end
+
 function S:WorldQuestTab()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
 		return
@@ -80,35 +110,15 @@ function S:WorldQuestTab()
 	end
 
 	if _G.WQT_ListContainer then
-		local container = _G.WQT_ListContainer
-		self:ESProxy("HandleDropDownBox", container.SortDropdown)
-		self:ESProxy(
-			"HandleButton",
-			container.FilterDropdown,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			nil,
-			true,
-			"right"
-		)
+		reskinQuestContainer(_G.WQT_ListContainer)
+	end
 
-		S:ESProxy("HandleTrimScrollBar", container.ScrollBar)
+	if _G.WQT_WhatsNewFrame then
+		reskinWhatsNew(_G.WQT_WhatsNewFrame)
+	end
 
-		hooksecurefunc(container.QuestScrollBox, "Update", function(scrollBox)
-			scrollBox:ForEachFrame(reskinQuestButton)
-		end)
-
-		container:CreateBackdrop("Transparent")
-		container.Background:Hide()
-		container.BorderFrame:Hide()
-		container.FilterBar:StripTextures()
+	if _G.WQT_SettingsFrame then
+		reskinSetting(_G.WQT_SettingsContainer)
 	end
 end
 

@@ -4,3 +4,5 @@
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+check.txt

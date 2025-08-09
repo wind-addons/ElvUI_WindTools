@@ -68,6 +68,7 @@ local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
 local Enum_GossipOptionRecFlags_QuestLabelPrepend = Enum.GossipOptionRecFlags.QuestLabelPrepend
 local QUEST_STRING = "cFF0000FF.-" .. TRANSMOG_SOURCE_2
+local SKIP_STRING = "^.+|cFFFF0000<.+>|r"
 local DELVE_STRING = "%(" .. DELVE_LABEL .. "%)"
 
 local choiceQueue = nil
@@ -339,6 +340,14 @@ function TI:GOSSIP_SHOW()
 		end
 	end
 
+	local gossipOptions = C_GossipInfo_GetOptions() or C_GossipInfo_GetActiveDelveGossip()
+	local numGossipOptions = gossipOptions and #gossipOptions
+	for index, gossipOption in ipairs(gossipOptions) do
+		if strfind(gossipOption.name, SKIP_STRING) then
+			return
+		end
+	end
+
 	local numAvailableQuests = C_GossipInfo_GetNumAvailableQuests()
 	if numAvailableQuests > 0 then
 		for _, gossipQuestUIInfo in ipairs(C_GossipInfo_GetAvailableQuests()) do
@@ -349,9 +358,6 @@ function TI:GOSSIP_SHOW()
 			end
 		end
 	end
-
-	local gossipOptions = C_GossipInfo_GetOptions() or C_GossipInfo_GetActiveDelveGossip()
-	local numGossipOptions = gossipOptions and #gossipOptions
 
 	if not numGossipOptions or numGossipOptions <= 0 then
 		return

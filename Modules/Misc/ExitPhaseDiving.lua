@@ -61,7 +61,7 @@ local function createButton()
 	button.Icon = button:CreateTexture(nil, "ARTWORK")
 	button.Icon:SetInside()
 	button.Icon:EnableMouse(false)
-	button.Icon:SetTexture(135752)
+	button.Icon:SetTexture(4913234)
 
 	button.Highlight = button:CreateTexture(nil, "HIGHLIGHT")
 	button.Highlight:SetInside()

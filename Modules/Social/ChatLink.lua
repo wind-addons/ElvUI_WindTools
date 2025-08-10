@@ -266,7 +266,9 @@ local function AddCurrencyInfo(link)
 
 	if CL.db.icon then
 		local info = C_CurrencyInfo_GetCurrencyInfo(id)
-		local icon = info and info.iconFileID and F.GetIconString(info.iconFileID, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
+		local icon = info
+			and info.iconFileID
+			and F.GetIconString(info.iconFileID, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
 			link = icon .. " " .. link
 		end

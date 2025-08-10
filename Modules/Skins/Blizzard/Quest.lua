@@ -114,6 +114,7 @@ local function StyleRewardButton(rewardButton)
 	if rewardButton.Icon then
 		rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
 		S:CreateBackdropShadow(rewardButton.Icon)
+		S:BindShadowColorWithBorder(rewardButton.Icon.backdrop.shadow, rewardButton.Icon.backdrop)
 	end
 
 	-- Create transparent backdrop for the reward button
@@ -201,6 +202,10 @@ end
 	@param fontObject - The font object to configure
 --]]
 local function ConfigureYellowHeaderFont(fontObject)
+	if not E.private.skins.parchmentRemoverEnable then
+		return
+	end
+
 	if not fontObject then
 		return
 	end
@@ -229,6 +234,10 @@ end
 	@param fontObject - The font object to configure
 --]]
 local function ConfigureWhiteContentFont(fontObject)
+	if not E.private.skins.parchmentRemoverEnable then
+		return
+	end
+
 	if not fontObject then
 		return
 	end
@@ -247,14 +256,16 @@ function S.QuestInfo_Display()
 	-- Apply styling to quest objective text elements
 	for _, objectiveText in pairs(_G.QuestInfoObjectivesFrame.Objectives) do
 		if objectiveText and not objectiveText.wtStyled then
-			F.SetFontOutline(objectiveText)
+			if E.private.skins.parchmentRemoverEnable then
+				F.SetFontOutline(objectiveText)
 
-			-- Hook text color changes to maintain our styling
-			if not objectiveText.colorHooked then
-				hooksecurefunc(objectiveText, "SetTextColor", ReplaceQuestTextColor)
-				local currentRed, currentGreen, currentBlue = objectiveText:GetTextColor()
-				objectiveText:SetTextColor(currentRed, currentGreen, currentBlue)
-				objectiveText.colorHooked = true
+				-- Hook text color changes to maintain our styling
+				if not objectiveText.colorHooked then
+					hooksecurefunc(objectiveText, "SetTextColor", ReplaceQuestTextColor)
+					local currentRed, currentGreen, currentBlue = objectiveText:GetTextColor()
+					objectiveText:SetTextColor(currentRed, currentGreen, currentBlue)
+					objectiveText.colorHooked = true
+				end
 			end
 			objectiveText.wtStyled = true
 		end
@@ -291,6 +302,7 @@ function S.QuestInfo_Display()
 						if spellReward.Icon then
 							spellReward.Icon:SetTexCoord(unpack(E.TexCoords))
 							S:CreateBackdropShadow(spellReward.Icon)
+							S:BindShadowColorWithBorder(spellReward.Icon.backdrop.shadow, spellReward.Icon.backdrop)
 						end
 						spellReward.wtStyled = true
 					end
@@ -303,6 +315,10 @@ function S.QuestInfo_Display()
 					if reputationReward.Icon then
 						reputationReward.Icon:SetTexCoord(unpack(E.TexCoords))
 						S:CreateBackdropShadow(reputationReward.Icon)
+						S:BindShadowColorWithBorder(
+							reputationReward.Icon.backdrop.shadow,
+							reputationReward.Icon.backdrop
+						)
 					end
 					reputationReward.wtStyled = true
 				end

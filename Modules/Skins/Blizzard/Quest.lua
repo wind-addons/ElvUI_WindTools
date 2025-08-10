@@ -5,20 +5,23 @@ local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
 
+local fontStyled = false
 function S.QuestInfo_Display()
-	F.SetFontOutline(_G.QuestInfoTitleHeader)
-	F.SetFontOutline(_G.QuestInfoDescriptionHeader)
-	F.SetFontOutline(_G.QuestInfoObjectivesHeader)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.Header)
-	F.SetFontOutline(_G.QuestInfoDescriptionText)
-	F.SetFontOutline(_G.QuestInfoObjectivesText)
-	F.SetFontOutline(_G.QuestInfoGroupSize)
-	F.SetFontOutline(_G.QuestInfoRewardText)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.Label)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.ItemChooseText)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.ItemReceiveText)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.PlayerTitleText)
-	F.SetFontOutline(_G.QuestInfoRewardsFrame.XPFrame.ReceiveText)
+	if not fontStyled then
+		F.SetFontOutline(_G.QuestInfoTitleHeader)
+		F.SetFontOutline(_G.QuestInfoDescriptionHeader)
+		F.SetFontOutline(_G.QuestInfoObjectivesHeader)
+		F.SetFontOutline(_G.QuestInfoDescriptionText)
+		F.SetFontOutline(_G.QuestInfoObjectivesText)
+		F.SetFontOutline(_G.QuestInfoGroupSize)
+		F.SetFontOutline(_G.QuestInfoRewardText)
+		F.SetFontOutline(_G.QuestInfoRewardsFrame.Header)
+		F.SetFontOutline(_G.QuestInfoRewardsFrame.ItemChooseText)
+		F.SetFontOutline(_G.QuestInfoRewardsFrame.ItemReceiveText)
+		F.SetFontOutline(_G.QuestInfoRewardsFrame.PlayerTitleText)
+		F.SetFontOutline(_G.QuestInfoRewardsFrame.XPFrame.ReceiveText)
+		fontStyled = true
+	end
 
 	for _, objText in pairs(_G.QuestInfoObjectivesFrame.Objectives) do
 		if objText then

@@ -12,7 +12,7 @@ local function handleItemButton(item)
 
 	if item then
 		item:SetTemplate()
-		item:SetHeight(40)
+		item:SetHeight(41)
 		item:OffsetFrameLevel(2)
 	end
 

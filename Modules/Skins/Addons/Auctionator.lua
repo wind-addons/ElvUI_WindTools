@@ -427,20 +427,6 @@ local function buyCommodity(frame)
 	end
 end
 
-local function tryPostHook(...)
-	local frame, method, hookFunc = ...
-	if frame and method and _G[frame] and _G[frame][method] then
-		hooksecurefunc(_G[frame], method, function(frame, ...)
-			if not frame.__windSkin then
-				hookFunc(frame, ...)
-				frame.__windSkin = true
-			end
-		end)
-	else
-		S:Log("debug", "Failed to hook: " .. tostring(frame) .. " " .. tostring(method))
-	end
-end
-
 local function reskinDialog(frame)
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
@@ -492,46 +478,46 @@ function S:Auctionator()
 	self:DisableAddOnSkin("Auctionator")
 
 	-- widgets
-	tryPostHook("AuctionatorBuyIconNameTemplateMixin", "SetItem", buyIconName)
-	tryPostHook("AuctionatorGroupsViewGroupMixin", "SetName", viewGroup)
-	tryPostHook("AuctionatorGroupsViewItemMixin", "SetItemInfo", viewItem)
-	tryPostHook("AuctionatorConfigCheckboxMixin", "OnLoad", configCheckbox)
-	tryPostHook("AuctionatorConfigHorizontalRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
-	tryPostHook("AuctionatorConfigMinMaxMixin", "OnLoad", configMinMax)
-	tryPostHook("AuctionatorConfigMoneyInputMixin", "OnLoad", configMoneyInput)
-	tryPostHook("AuctionatorConfigNumericInputMixin", "OnLoad", configNumericInput)
-	tryPostHook("AuctionatorConfigRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
-	tryPostHook("AuctionatorDropDownMixin", "OnLoad", dropDown)
-	tryPostHook("AuctionatorFilterKeySelectorMixin", "OnLoad", filterKeySelector)
-	tryPostHook("AuctionatorKeyBindingConfigMixin", "OnLoad", keyBindingConfig)
-	tryPostHook("AuctionatorResultsListingMixin", "OnShow", resultsListing)
-	tryPostHook("AuctionatorSaleItemMixin", "OnLoad", saleItem)
-	tryPostHook("AuctionatorShoppingTabFrameMixin", "OnLoad", shoppingTabFrame)
-	tryPostHook("AuctionatorShoppingTabSearchOptionsMixin", "OnLoad", shoppingTabSearchOptions)
-	tryPostHook("AuctionatorShoppingTabListsContainerMixin", "OnLoad", shoppingTabContainer)
-	tryPostHook("AuctionatorShoppingTabRecentsContainerMixin", "OnLoad", shoppingTabContainer)
-	tryPostHook("AuctionatorShoppingTabContainerTabsMixin", "OnLoad", shoppingTabContainerTabs)
-	tryPostHook("AuctionatorBagUseMixin", "OnLoad", bagUse)
-	tryPostHook("AuctionatorSellingTabPricesContainerMixin", "OnLoad", sellingTabPricesContainer)
-	tryPostHook("AuctionatorTabContainerMixin", "OnLoad", bottomTabButtons)
-	tryPostHook("AuctionatorUndercutScanMixin", "OnLoad", undercutScan)
+	S:TryPostHook("AuctionatorBuyIconNameTemplateMixin", "SetItem", buyIconName)
+	S:TryPostHook("AuctionatorGroupsViewGroupMixin", "SetName", viewGroup)
+	S:TryPostHook("AuctionatorGroupsViewItemMixin", "SetItemInfo", viewItem)
+	S:TryPostHook("AuctionatorConfigCheckboxMixin", "OnLoad", configCheckbox)
+	S:TryPostHook("AuctionatorConfigHorizontalRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
+	S:TryPostHook("AuctionatorConfigMinMaxMixin", "OnLoad", configMinMax)
+	S:TryPostHook("AuctionatorConfigMoneyInputMixin", "OnLoad", configMoneyInput)
+	S:TryPostHook("AuctionatorConfigNumericInputMixin", "OnLoad", configNumericInput)
+	S:TryPostHook("AuctionatorConfigRadioButtonGroupMixin", "SetupRadioButtons", configRadioButtonGroup)
+	S:TryPostHook("AuctionatorDropDownMixin", "OnLoad", dropDown)
+	S:TryPostHook("AuctionatorFilterKeySelectorMixin", "OnLoad", filterKeySelector)
+	S:TryPostHook("AuctionatorKeyBindingConfigMixin", "OnLoad", keyBindingConfig)
+	S:TryPostHook("AuctionatorResultsListingMixin", "OnShow", resultsListing)
+	S:TryPostHook("AuctionatorSaleItemMixin", "OnLoad", saleItem)
+	S:TryPostHook("AuctionatorShoppingTabFrameMixin", "OnLoad", shoppingTabFrame)
+	S:TryPostHook("AuctionatorShoppingTabSearchOptionsMixin", "OnLoad", shoppingTabSearchOptions)
+	S:TryPostHook("AuctionatorShoppingTabListsContainerMixin", "OnLoad", shoppingTabContainer)
+	S:TryPostHook("AuctionatorShoppingTabRecentsContainerMixin", "OnLoad", shoppingTabContainer)
+	S:TryPostHook("AuctionatorShoppingTabContainerTabsMixin", "OnLoad", shoppingTabContainerTabs)
+	S:TryPostHook("AuctionatorBagUseMixin", "OnLoad", bagUse)
+	S:TryPostHook("AuctionatorSellingTabPricesContainerMixin", "OnLoad", sellingTabPricesContainer)
+	S:TryPostHook("AuctionatorTabContainerMixin", "OnLoad", bottomTabButtons)
+	S:TryPostHook("AuctionatorUndercutScanMixin", "OnLoad", undercutScan)
 
 	-- tab frames
-	tryPostHook("AuctionatorCancellingFrameMixin", "OnLoad", cancellingFrame)
-	tryPostHook("AuctionatorConfigTabMixin", "OnLoad", configTab)
-	tryPostHook("AuctionatorSellingTabMixin", "OnLoad", sellingTab)
+	S:TryPostHook("AuctionatorCancellingFrameMixin", "OnLoad", cancellingFrame)
+	S:TryPostHook("AuctionatorConfigTabMixin", "OnLoad", configTab)
+	S:TryPostHook("AuctionatorSellingTabMixin", "OnLoad", sellingTab)
 
 	-- frames
-	tryPostHook("AuctionatorConfigSellingFrameMixin", "OnLoad", configSellingFrame)
-	tryPostHook("AuctionatorExportTextFrameMixin", "OnLoad", exportTextFrame)
-	tryPostHook("AuctionatorListExportFrameMixin", "OnLoad", listExportFrame)
-	tryPostHook("AuctionatorListImportFrameMixin", "OnLoad", listImportFrame)
-	tryPostHook("AuctionatorItemHistoryFrameMixin", "Init", itemHistoryFrame)
-	tryPostHook("AuctionatorCraftingInfoObjectiveTrackerFrameMixin", "OnLoad", craftingInfoObjectiveTrackerFrame)
-	tryPostHook("AuctionatorCraftingInfoProfessionsFrameMixin", "OnLoad", craftingInfoProfessionsFrame)
-	tryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
-	tryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
-	tryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
+	S:TryPostHook("AuctionatorConfigSellingFrameMixin", "OnLoad", configSellingFrame)
+	S:TryPostHook("AuctionatorExportTextFrameMixin", "OnLoad", exportTextFrame)
+	S:TryPostHook("AuctionatorListExportFrameMixin", "OnLoad", listExportFrame)
+	S:TryPostHook("AuctionatorListImportFrameMixin", "OnLoad", listImportFrame)
+	S:TryPostHook("AuctionatorItemHistoryFrameMixin", "Init", itemHistoryFrame)
+	S:TryPostHook("AuctionatorCraftingInfoObjectiveTrackerFrameMixin", "OnLoad", craftingInfoObjectiveTrackerFrame)
+	S:TryPostHook("AuctionatorCraftingInfoProfessionsFrameMixin", "OnLoad", craftingInfoProfessionsFrame)
+	S:TryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
+	S:TryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
+	S:TryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
 
 	-- Dialog
 	reskinDialogs()

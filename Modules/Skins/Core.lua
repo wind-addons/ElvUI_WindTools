@@ -368,17 +368,16 @@ function S:UpdateWidget(lib, name, oldFunc)
 end
 
 do
-	local alreadyWidgetHooked = false
-	local alreadyDialogSkined = false
+	local alreadyWidgetHooked, alreadyDialogSkinned = false, false
 	function S:LibStub_NewLibrary(_, major)
 		if major == "AceGUI-3.0" and not alreadyWidgetHooked then
 			AceGUI = _G.LibStub("AceGUI-3.0")
 			self:ReskinWidgets(AceGUI)
 			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
 			alreadyWidgetHooked = true
-		elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkined then
+		elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkinned then
 			self:AceConfigDialog()
-			alreadyDialogSkined = true
+			alreadyDialogSkinned = true
 		end
 	end
 
@@ -391,9 +390,9 @@ do
 		end
 
 		local AceConfigDialog = _G.LibStub("AceConfigDialog-3.0")
-		if AceConfigDialog and not alreadyDialogSkined then
+		if AceConfigDialog and not alreadyDialogSkinned then
 			self:AceConfigDialog()
-			alreadyDialogSkined = true
+			alreadyDialogSkinned = true
 		end
 	end
 end
@@ -545,6 +544,20 @@ function S:HighAlphaTransparent(frame)
 	end
 
 	frame:SetTemplate("Transparent")
+end
+
+function S:TryPostHook(...)
+	local frame, method, hookFunc = ...
+	if frame and method and _G[frame] and _G[frame][method] then
+		hooksecurefunc(_G[frame], method, function(frame, ...)
+			if not frame.__windSkin then
+				hookFunc(frame, ...)
+				frame.__windSkin = true
+			end
+		end)
+	else
+		self:Log("debug", "Failed to hook: " .. tostring(frame) .. " " .. tostring(method))
+	end
 end
 
 S:RegisterEvent("ADDON_LOADED")

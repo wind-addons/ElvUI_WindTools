@@ -75,12 +75,6 @@ function W:UpdateScripts()
 		UpdateMessage(L["Automation"] .. " - " .. L["Update Database"], profileVersion)
 	end
 
-	if privateVersion < 3.02 then
-		E.private.WT.misc.moveFrames.rememberPositions = false
-		E.private.WT.misc.moveFrames.framePositions = {}
-		UpdateMessage(L["Move Frames"] .. " - " .. L["Clear History"], globalVersion)
-	end
-
 	if profileVersion < 3.56 then
 		E.db.WT.maps.eventTracker.spacing = nil
 		E.db.WT.maps.eventTracker.height = nil
@@ -188,6 +182,15 @@ function W:UpdateScripts()
 			E.private.WT.skins.addons.tldrMissions = nil
 
 			UpdateMessage(L["Skins"] .. ": " .. L["Update Database"], privateVersion)
+		end
+	end
+
+	if privateVersion < 3.94 then
+		if E.private.WT and E.private.WT.misc and E.private.WT.misc.moveFrames then
+			E.private.WT.misc.moveFrames.rememberPositions = false
+			E.private.WT.misc.moveFrames.framePositions = {}
+
+			UpdateMessage(L["Move Frames"] .. ": " .. L["Clear History"], privateVersion)
 		end
 	end
 

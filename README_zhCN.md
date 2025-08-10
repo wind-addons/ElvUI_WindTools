@@ -147,7 +147,7 @@ Português，Italiano
 21. **OmniCD 美化**: 为 OmniCD 的设定，图标，状态条添加美化
 22. **Auctionator 美化**: 为 Auctionator 的全部框体添加美化
 23. **Postal 美化**: 为 Postal 的常规按钮和快速附加按钮添加美化
-24. **世界任务列表美化**: 为世界任务列表的标签页和设置界面添加美化
+24. **World Quest Tab 美化**: 为 World Quest Tab 的标签页和设置界面添加美化
 
 ### 其他
 

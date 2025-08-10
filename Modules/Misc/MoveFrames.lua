@@ -263,6 +263,9 @@ local BlizzardFramesOnDemand = {
 			"PlayerSpellsFrame.SpecFrame.DisabledOverlay",
 		},
 	},
+	["Blizzard_PlayerChoice"] = {
+		"PlayerChoiceFrame",
+	},
 	["Blizzard_Professions"] = {
 		["ProfessionsFrame"] = {
 			"ProfessionsFrame.CraftingPage.CraftingOutputLog",

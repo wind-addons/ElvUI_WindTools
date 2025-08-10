@@ -2,7 +2,7 @@
 -- https://github.com/wind-addons/WindToolsScripts/tree/master/MergeLocales
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "zhTW")
 
-L["!! No talking about specific UI sets !!"] = "!! 請勿討論 UI整合包 !!"
+L["!! No talking about specific UI sets !!"] = "!! 請勿討論 UI 整合包 !!"
 L["!keys Command"] = "!keys 指令"
 L["%month%-%day%-%year%"] = "%year%年%month%月%day%日"
 L["%player% cast %spell% -> %target%"] = "%player%使用了%spell% -> %target%"
@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = "製作品質等級"
 L["Credits"] = "嗚謝"
 L["Credits & help."] = "鳴謝及幫助."
 L["Crying"] = "哭泣"
-L["Crypto"] = "加密貨幣"
 L["Ctrl"] = true
 L["Ctrl Key"] = "Ctrl 鍵"
 L["Cubic Ease"] = "三次緩動 (Cubic)"

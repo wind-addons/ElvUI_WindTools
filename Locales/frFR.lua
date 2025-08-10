@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = "Niveau de qualité de fabrication"
 L["Credits"] = "Crédits"
 L["Credits & help."] = "Crédits et aide."
 L["Crying"] = "Pleurer"
-L["Crypto"] = true
 L["Ctrl"] = true
 L["Ctrl Key"] = "Touche Ctrl"
 L["Cubic Ease"] = true

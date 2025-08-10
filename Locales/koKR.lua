@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = "제작 품질 등급"
 L["Credits"] = "크레딧"
 L["Credits & help."] = true
 L["Crying"] = "울음소리"
-L["Crypto"] = true
 L["Ctrl"] = true
 L["Ctrl Key"] = "Ctrl 키"
 L["Cubic Ease"] = "3차 이징"

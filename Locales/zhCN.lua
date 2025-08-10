@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = "制作品质等级"
 L["Credits"] = "呜谢"
 L["Credits & help."] = "鸣谢及帮助."
 L["Crying"] = "哭泣"
-L["Crypto"] = "加密货币"
 L["Ctrl"] = true
 L["Ctrl Key"] = "Ctrl 键"
 L["Cubic Ease"] = "三次缓动 (Cubic)"

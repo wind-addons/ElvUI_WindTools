@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = true
 L["Credits"] = true
 L["Credits & help."] = true
 L["Crying"] = true
-L["Crypto"] = true
 L["Ctrl"] = true
 L["Ctrl Key"] = true
 L["Cubic Ease"] = true

@@ -418,7 +418,6 @@ L["Crafting Quality Tier"] = "Уровень качества изготовле
 L["Credits"] = "Благодарности"
 L["Credits & help."] = "Благодарности и помощь."
 L["Crying"] = "Плач"
-L["Crypto"] = "Криптовалюта"
 L["Ctrl"] = true
 L["Ctrl Key"] = "Клавиша Ctrl"
 L["Cubic Ease"] = "Кубическая плавность"

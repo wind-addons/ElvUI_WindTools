@@ -22,9 +22,6 @@ local function blue(string)
 end
 
 local donators = {
-	crypto = blue(L["Crypto"] .. ": ") .. tconcat({
-		"OpenSSH.SOL (https://openssh.app)",
-	}, ", "),
 	cdkeys = blue(L["CDKey"] .. ": ") .. tconcat({
 		"DakJaniels",
 	}, ", "),
@@ -63,8 +60,7 @@ options.help = {
 					type = "description",
 					fontSize = "small",
 					name = tconcat({
-						donators.crypto .. "       " .. donators.cdkeys,
-						donators.patreon,
+						donators.patreon .. "       " .. donators.cdkeys,
 						donators.aifadian,
 					}, "\n"),
 				},

@@ -11,18 +11,18 @@ E.PopupDialogs.WINDTOOLS_EDITBOX = {
 	button1 = _G.OKAY,
 	hasEditBox = 1,
 	OnShow = function(self, data)
-		self.editBox:SetAutoFocus(false)
-		self.editBox.width = self.editBox:GetWidth()
-		self.editBox:Width(280)
-		self.editBox:AddHistoryLine("text")
-		self.editBox.temptxt = data
-		self.editBox:SetText(data)
-		self.editBox:HighlightText()
-		self.editBox:SetJustifyH("CENTER")
+		self.EditBox:SetAutoFocus(false)
+		self.EditBox.width = self.EditBox:GetWidth()
+		self.EditBox:Width(280)
+		self.EditBox:AddHistoryLine("text")
+		self.EditBox.temptxt = data
+		self.EditBox:SetText(data)
+		self.EditBox:HighlightText()
+		self.EditBox:SetJustifyH("CENTER")
 	end,
 	OnHide = function(self)
-		self.editBox:Width(self.editBox.width or 50)
-		self.editBox.width = nil
+		self.EditBox:Width(self.EditBox.width or 50)
+		self.EditBox.width = nil
 		self.temptxt = nil
 	end,
 	EditBoxOnEnterPressed = function(self)

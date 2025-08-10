@@ -33,10 +33,14 @@ function S:WorldMapFrame()
 				RewardsFrame.backdrop:SetTemplate("Transparent")
 			else
 				RewardsFrame:CreateBackdrop("Transparent")
-				S:Reposition(RewardsFrame.backdrop, RewardsFrame, 0, -12, 0, 0, 3)
+				if RewardsFrame.backdrop then
+					S:Reposition(RewardsFrame.backdrop, RewardsFrame, 0, -12, 0, 0, 3)
 
-				DetailsFrame.backdrop:Point("TOPLEFT", 0, 5)
-				DetailsFrame.backdrop:Point("BOTTOMRIGHT", RewardsFrame.backdrop, "TOPRIGHT", -3, 5)
+					if DetailsFrame.backdrop then
+						DetailsFrame.backdrop:Point("TOPLEFT", 0, 5)
+						DetailsFrame.backdrop:Point("BOTTOMRIGHT", RewardsFrame.backdrop, "TOPRIGHT", -3, 5)
+					end
+				end
 			end
 		end
 	end

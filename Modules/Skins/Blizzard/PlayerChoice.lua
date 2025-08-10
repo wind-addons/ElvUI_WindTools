@@ -1,25 +1,89 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
+local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
-local function SetupOptions(frame)
-	if frame.__windSkin then
+local function handleItemButton(item)
+	if not item then
 		return
 	end
 
-	S:CreateShadow(frame)
-
-	if frame.shadow then
-		frame.shadow:SetShown(frame.template and frame.template == "Transparent")
-
-		hooksecurefunc(frame, "SetTemplate", function(_, template)
-			frame.shadow:SetShown(template and template == "Transparent")
-		end)
+	if item then
+		item:SetTemplate()
+		item:SetHeight(40)
+		item:OffsetFrameLevel(2)
 	end
 
-	frame.__windSkin = true
+	if item.Icon then
+		item.Icon:Size(E.PixelMode and 35 or 32)
+		item.Icon:SetDrawLayer("ARTWORK")
+		item.Icon:Point("TOPLEFT", E.PixelMode and 2 or 4, -(E.PixelMode and 2 or 4))
+		ES:HandleIcon(item.Icon)
+	end
+
+	if item.IconBorder then
+		ES:HandleIconBorder(item.IconBorder)
+	end
+
+	if item.Count then
+		item.Count:SetDrawLayer("OVERLAY")
+		item.Count:ClearAllPoints()
+		item.Count:SetPoint("BOTTOMRIGHT", item.Icon, "BOTTOMRIGHT", 0, 0)
+	end
+
+	if item.NameFrame then
+		item.NameFrame:SetAlpha(0)
+		item.NameFrame:Hide()
+	end
+
+	if item.IconOverlay then
+		item.IconOverlay:SetAlpha(0)
+	end
+
+	if item.Name then
+		item.Name:FontTemplate()
+	end
+
+	if item.CircleBackground then
+		item.CircleBackground:SetAlpha(0)
+		item.CircleBackgroundGlow:SetAlpha(0)
+	end
+
+	for _, Region in next, { item:GetRegions() } do
+		if Region:IsObjectType("Texture") and Region:GetTexture() == [[Interface\Spellbook\Spellbook-Parts]] then
+			Region:SetTexture(E.ClearTexture)
+		end
+	end
+end
+
+local function SetupOptions(frame)
+	if not frame.__windSkin then
+		S:CreateShadow(frame)
+
+		if frame.shadow then
+			frame.shadow:SetShown(frame.template and frame.template == "Transparent")
+			hooksecurefunc(frame, "SetTemplate", function(_, template)
+				frame.shadow:SetShown(template and template == "Transparent")
+			end)
+		end
+	end
+
+	if frame.optionFrameTemplate and frame.optionPools then
+		for option in frame.optionPools:EnumerateActiveByTemplate(frame.optionFrameTemplate) do
+			if option.WidgetContainer then
+				for _, widget in pairs(option.WidgetContainer.widgetFrames) do
+					if widget.Text then
+						F.SetFontOutline(widget.Text)
+					end
+					if widget.Item then
+						handleItemButton(widget.Item)
+					end
+				end
+			end
+		end
+	end
 end
 
 function S:Blizzard_PlayerChoice()

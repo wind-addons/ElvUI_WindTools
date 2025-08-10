@@ -16,9 +16,6 @@ end
 
 -- Copy from ElvUI WorldMap skin
 local function reskinTab(tab)
-	if not tab then
-		return
-	end
 	tab:CreateBackdrop()
 	tab:Size(30, 40)
 
@@ -114,17 +111,10 @@ local function settingsCategory(frame)
 end
 
 local function settingsCheckbox(frame)
-	if not frame or not frame.CheckBox then
-		return
-	end
 	S:ESProxy("HandleCheckBox", frame.CheckBox)
 end
 
 local function settingsSlider(frame)
-	if not frame or not frame.SliderWithSteppers or not frame.TextBox then
-		return
-	end
-
 	S:ESProxy("HandleStepSlider", frame.SliderWithSteppers)
 	S:ESProxy("HandleNextPrevButton", frame.SliderWithSteppers.Back, "left")
 	S:ESProxy("HandleNextPrevButton", frame.SliderWithSteppers.Forward, "right")
@@ -132,40 +122,23 @@ local function settingsSlider(frame)
 end
 
 local function settingsColor(frame)
-	if not frame or not frame.Picker or not frame.ResetButton then
-		return
-	end
-
 	S:ESProxy("HandleButton", frame.Picker)
 	S:ESProxy("HandleButton", frame.ResetButton)
 end
 
 local function settingsDropDown(frame)
-	if not frame or not frame.Dropdown then
-		return
-	end
 	S:ESProxy("HandleDropDownBox", frame.Dropdown, frame:GetWidth())
 end
 
 local function settingsButton(frame)
-	if not frame or not frame.Button then
-		return
-	end
 	S:ESProxy("HandleButton", frame.Button)
 end
 
 local function settingsTextInput(frame)
-	if not frame or not frame.TextBox then
-		return
-	end
 	S:ESProxy("HandleEditBox", frame.TextBox)
 end
 
 local function listButton(button)
-	if not button or button.__windSkin then
-		return
-	end
-
 	button.Bg:SetTexture(E.media.blankTex)
 	button.Bg:SetVertexColor(1, 1, 1, 0.1)
 
@@ -207,13 +180,25 @@ S:AddCallbackForAddon("WorldQuestTab")
 
 local isLoaded, isFinished = C_AddOns_IsAddOnLoaded("WorldQuestTab")
 if isLoaded and isFinished then
-	S:TryPostHook("WQT_SettingsCategoryMixin", "Init", settingsCategory)
-	S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", settingsCheckbox)
-	S:TryPostHook("WQT_SettingsSliderMixin", "Init", settingsSlider)
-	S:TryPostHook("WQT_SettingsColorMixin", "Init", settingsColor)
-	S:TryPostHook("WQT_SettingsDropDownMixin", "Init", settingsDropDown)
-	S:TryPostHook("WQT_SettingsButtonMixin", "Init", settingsButton)
-	S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", settingsButton)
-	S:TryPostHook("WQT_SettingsTextInputMixin", "Init", settingsTextInput)
-	S:TryPostHook("WQT_ListButtonMixin", "Update", listButton)
+	local function wrap(func)
+		return function(...)
+			local args = { ... }
+			F.TaskManager:AfterLogin(function()
+				if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
+					return
+				end
+				func(unpack(args))
+			end)
+		end
+	end
+
+	S:TryPostHook("WQT_SettingsCategoryMixin", "Init", wrap(settingsCategory))
+	S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", wrap(settingsCheckbox))
+	S:TryPostHook("WQT_SettingsSliderMixin", "Init", wrap(settingsSlider))
+	S:TryPostHook("WQT_SettingsColorMixin", "Init", wrap(settingsColor))
+	S:TryPostHook("WQT_SettingsDropDownMixin", "Init", wrap(settingsDropDown))
+	S:TryPostHook("WQT_SettingsButtonMixin", "Init", wrap(settingsButton))
+	S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", wrap(settingsButton))
+	S:TryPostHook("WQT_SettingsTextInputMixin", "Init", wrap(settingsTextInput))
+	S:TryPostHook("WQT_ListButtonMixin", "Update", wrap(listButton))
 end

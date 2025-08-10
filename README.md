@@ -147,6 +147,7 @@ Português, Italiano
 21. **OmniCD Skin**: Apply skin for OmniCD Config GUI, icons, and status bars.
 22. **Autionator Skin**: Apply skin for Auctionator all frames.
 23. **Postal Skin**: Apply skin for Postal normal buttons and quick attach buttons.
+24. **World Quest Tab Skin**: Apply skin for World Quest Tab tabs and settings.
 
 ### Misc
 
@@ -168,3 +169,4 @@ Português, Italiano
 16. **Guild News Item Level**: Show item level of each item in guild news.
 17. **Custom Hotkey Alias**: Custom hotkey alias for keybinding.
 18. **Cooldown Text Offset**: Customize the ElvUI cooldown text offset.
+19. **Exit Phase Diving**: Allow players to exit the diving phase with one-click.

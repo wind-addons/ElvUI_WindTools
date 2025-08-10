@@ -147,6 +147,7 @@ Português，Italiano
 21. **OmniCC 美化**: 為 OmniCC 的設定，圖示，狀態條添加美化
 22. **Auctionator 美化**: 為 Auctionator 的全部框架添加美化
 23. **Postal 美化**: 為 Postal 的常規按鍵及快速附加按鍵添加美化
+24. **World Quest Tab 美化**: 為 World Quest Tab 標籤頁和設置添加美化
 
 ### 其他
 
@@ -168,3 +169,4 @@ Português，Italiano
 16. **公會新聞裝等**: 在公會新聞中顯示每件裝備的物品等級
 17. **自訂按鍵別名**: 自訂按鍵的提示文字
 18. **冷卻文字偏移**: 調整冷卻文字的位置
+19. **退出相位深潛**: 允許玩家一鍵退出相位深潛

@@ -264,10 +264,15 @@ function W:CheckCompatibility()
 		format("%s-%s", L["Tooltip"], L["Add Icon"]),
 		format("%s-%s", L["Tooltip"], L["Tooltip Icons"]),
 		"private.WT.tooltips.icon",
-		"db.mui.tooltip.tooltipIcon"
+		"db.mui.tooltip.icon"
 	)
 
-	CheckMerathilisUI(L["Group Info"], L["LFG Info"], "db.WT.tooltips.groupInfo.enable", "db.mui.misc.lfgInfo.enable")
+	CheckMerathilisUI(
+		L["Group Info"],
+		L["LFG Info"],
+		"db.WT.tooltips.groupInfo.enable",
+		"db.mui.tooltip.groupInfo.enable"
+	)
 
 	CheckMerathilisUI(
 		L["Role Icon"],
@@ -319,7 +324,7 @@ function W:CheckCompatibility()
 		format("%s-%s", L["Chat Text"], L["Remove Brackets"]),
 		L["Hide Player Brackets"],
 		"db.WT.social.chatText.removeBrackets",
-		"db.mui.chat.hidePlayerBrackets"
+		"db.mui.chat.chatText.removeBrackets"
 	)
 
 	CheckMerathilisUI(
@@ -333,7 +338,7 @@ function W:CheckCompatibility()
 		L["Instance Difficulty"],
 		L["Raid Difficulty"],
 		"private.WT.maps.instanceDifficulty.enable",
-		"db.mui.maps.minimap.instanceDifficulty.enable"
+		"db.mui.maps.instanceDifficulty.enable"
 	)
 
 	CheckMerathilisUI(
@@ -354,7 +359,7 @@ function W:CheckCompatibility()
 		L["Objective Tracker"],
 		L["Objective Tracker"],
 		"private.WT.quest.objectiveTracker.enable",
-		"db.mui.blizzard.objectiveTracker.enable"
+		"private.mui.quest.objectiveTracker.enable"
 	)
 
 	CheckMerathilisUI(
@@ -420,6 +425,13 @@ function W:CheckCompatibility()
 		format("%s-%s", L["Quest"], L["Switch Buttons"]),
 		"db.WT.quest.switchButtons.enable",
 		"db.mui.quest.switchButtons.enable"
+	)
+
+	CheckMerathilisUI(
+		L["Exit Phase Diving"],
+		L["Exit Phase Diving"],
+		"db.WT.misc.exitPhaseDiving.enable",
+		"db.mui.misc.exitPhaseDiving.enable"
 	)
 
 	-- S&L

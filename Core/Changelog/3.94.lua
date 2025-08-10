@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[394] = {
-	RELEASE_DATE = "2025/08/09",
+	RELEASE_DATE = "2025/08/10",
 	IMPORTANT = {
 		["zhCN"] = {
 			"[移动框体] 本次版本更新会自动重置已经记录的位置, 依旧可以手动开启. 但请配置分享者勿开此项进行分享, 这可能会导致框架错位飞出屏幕.",

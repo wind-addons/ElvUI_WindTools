@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local ES = E.Skins
+local MF = W.Modules.MoveFrames
 
 local _G = _G
 local next = next
@@ -73,6 +74,27 @@ end
 
 local function reskinSettings(container)
 	reskinContainer(container)
+end
+
+local function reskinFlightMapContainer(frame)
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
+	S:CreateShadow(frame)
+
+	frame.__SetPoint = frame.SetPoint
+	hooksecurefunc(frame, "SetPoint", function(self)
+		F.MoveFrameWithOffset(self, 15, 0)
+	end)
+
+	hooksecurefunc(frame, "SetParent", function(self, parent)
+		MF:InternalHandle(self, parent)
+	end)
+
+	if _G.WQT_FlightMapContainerButton then
+		S:ESProxy("HandleButton", _G.WQT_FlightMapContainerButton)
+		_G.WQT_FlightMapContainerButton:SetTemplate("Transparent")
+		S:CreateShadow(_G.WQT_FlightMapContainerButton)
+	end
 end
 
 local function settingsCategory(frame)
@@ -173,6 +195,10 @@ function S:WorldQuestTab()
 
 	if _G.WQT_SettingsFrame then
 		reskinSettings(_G.WQT_SettingsFrame)
+	end
+
+	if _G.WQT_FlightMapContainer then
+		reskinFlightMapContainer(_G.WQT_FlightMapContainer)
 	end
 end
 

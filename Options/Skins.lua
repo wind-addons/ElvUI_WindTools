@@ -111,6 +111,11 @@ options.general = {
 					order = 2,
 					type = "toggle",
 					name = L["Parchment Remover"],
+					set = function(info, value)
+						E.private.WT.skins.removeParchment = value
+						E.private.skins.parchmentRemoverEnable = E.private.WT.skins.removeParchment
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
 				},
 			},
 		},

@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[395] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/08/11",
 	IMPORTANT = {
 		["zhCN"] = {
 			"移除了离开单人队伍的按键绑定.",

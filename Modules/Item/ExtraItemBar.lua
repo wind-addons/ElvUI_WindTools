@@ -65,6 +65,7 @@ local forceUsableItems = {
 local countThreshold = {
 	[245653] = 100, -- 寶庫鑰匙裂片
 }
+
 local equipmentList = {}
 local function UpdateEquipmentList()
 	wipe(equipmentList)
@@ -497,6 +498,7 @@ function EB:UpdateBar(id)
 		for _, itemID in pairs(list) do
 			local count = C_Item_GetItemCount(itemID)
 			local countIsValid = count and count > 0 and (not countThreshold[itemID] or count >= countThreshold[itemID])
+			if countIsValid and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
 				self:SetUpButton(bar.buttons[buttonID], { itemID = itemID }, nil, bar.waitGroup)
 				self:UpdateButtonSize(bar.buttons[buttonID], barDB)
 				buttonID = buttonID + 1

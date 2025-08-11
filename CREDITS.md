@@ -36,6 +36,7 @@
   - Sang Jeon @ GitHub
   - Reim @ Discord
   - 와우하는아저씨 @ Discord
+  - BlueSea-jun @ GitHub
 - русский язык (ruRU)
   - Evgeniy-ONiX @ GitHub
   - dadec666 @ GitHub

@@ -421,6 +421,7 @@ do -- 本地化
 			"Sang Jeon @ GitHub",
 			"Reim @ Discord",
 			"와우하는아저씨 @ Discord",
+			"BlueSea-jun @ GitHub",
 		},
 		["français (frFR)"] = {
 			"PodVibe @ CurseForge",

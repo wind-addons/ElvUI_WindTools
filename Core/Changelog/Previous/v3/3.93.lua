@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[393] = {
-	RELEASE_DATE = "2025-08-07",
+	RELEASE_DATE = "2025/08/07",
 	IMPORTANT = {
 		["zhCN"] = {
 			"支持魔兽世界 11.2.0 版本。感谢 DakJaniels",

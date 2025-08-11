@@ -28,6 +28,8 @@ function WS:HandleTreeGroup(widget)
 		widget.CreateButton = function(...)
 			local button = widget.CreateButton_(...)
 
+			button:SetPushedTextOffset(0, 0)
+
 			if db.text.enable then
 				local text = button.text
 					or button.Text
@@ -38,7 +40,7 @@ function WS:HandleTreeGroup(widget)
 					text.SetPoint_ = text.SetPoint
 					text.SetPoint = function(text, point, arg1, arg2, arg3, arg4)
 						if point == "LEFT" and type(arg2) == "number" and abs(arg2 - 2) < 0.1 then
-							arg2 = 0
+							arg2 = -1
 						end
 
 						text.SetPoint_(text, point, arg1, arg2, arg3, arg4)

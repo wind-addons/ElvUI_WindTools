@@ -107,6 +107,10 @@ local hearthstones = {
 	209035, -- 烈焰爐石
 	212337, -- 爐石之石
 	228940, -- 凶霸絲線爐石
+	235016, -- 再部署模組
+	236687, -- 爆炸爐石
+	245970, -- 郵務主管的瞬移爐石
+	246565, -- 宇宙爐石
 }
 
 local hearthstoneAndToyIDList = {
@@ -1555,6 +1559,18 @@ function GB:UpdateHearthStoneTable()
 	for i = 1, #hearthstones do
 		local itemID = hearthstones[i]
 		hearthstonesTable[itemID] = true
+	end
+
+	local covenantHearthstones = {
+		[1] = 184353, -- 琪瑞安爐石
+		[2] = 183716, -- 汎希爾罪孽石
+		[3] = 180290, -- 暗夜妖精的爐石
+		[4] = 182773, -- 死靈領主爐石
+	}
+
+	for i = 1, 4 do
+		local toyID = covenantHearthstones[i]
+		hearthstonesTable[toyID] = false
 	end
 
 	local raceHeartstones = {

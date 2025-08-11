@@ -34,13 +34,17 @@ local donators = {
 	aifadian = blue(L["AiFaDian"] .. ": ") .. tconcat({
 		"LuckyAres",
 		"喵仙人Meowcactus",
-		L["Anonymous"] .. "_TxbM",
+		"Fakewings",
+		"向宁",
 		"Leon",
+		"不想当人",
+		L["Anonymous"] .. "_TxbM",
 		L["Anonymous"] .. "_Df5K",
 		L["Anonymous"] .. "_tJWM",
-		"不想当人",
 		L["Anonymous"] .. "_sCEm",
 		L["Anonymous"] .. "_m37v",
+		L["Anonymous"] .. "_thgF",
+		L["Anonymous"] .. "_aqjx",
 	}, ", "),
 }
 

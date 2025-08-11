@@ -7,7 +7,12 @@ local _G = _G
 local next = next
 local hooksecurefunc = hooksecurefunc
 
+local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+
+local function isUnofficialVersion()
+	return C_AddOns_GetAddOnMetadata("WorldQuestTab", "IconAtlas") ~= "Worldquest-icon"
+end
 
 local function PositionTabIcons(icon, _, anchor)
 	if anchor then
@@ -173,7 +178,7 @@ local function listButton(button)
 end
 
 function S:WorldQuestTab()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab or isUnofficialVersion() then
 		return
 	end
 
@@ -204,27 +209,33 @@ end
 
 S:AddCallbackForAddon("WorldQuestTab")
 
-local isLoaded, isFinished = C_AddOns_IsAddOnLoaded("WorldQuestTab")
-if isLoaded and isFinished then
-	local function wrap(func)
-		return function(...)
-			local args = { ... }
-			F.TaskManager:AfterLogin(function()
-				if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
-					return
-				end
-				func(unpack(args))
-			end)
+if isUnofficialVersion() then
+	F.TaskManager:AfterLogin(function()
+		E.private.WT.skins.addons.worldQuestTab = false
+	end)
+else
+	local isLoaded, isFinished = C_AddOns_IsAddOnLoaded("WorldQuestTab")
+	if isLoaded and isFinished then
+		local function wrap(func)
+			return function(...)
+				local args = { ... }
+				F.TaskManager:AfterLogin(function()
+					if not E.private.WT.skins.enable or not E.private.WT.skins.addons.worldQuestTab then
+						return
+					end
+					func(unpack(args))
+				end)
+			end
 		end
-	end
 
-	S:TryPostHook("WQT_SettingsCategoryMixin", "Init", wrap(settingsCategory))
-	S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", wrap(settingsCheckbox))
-	S:TryPostHook("WQT_SettingsSliderMixin", "Init", wrap(settingsSlider))
-	S:TryPostHook("WQT_SettingsColorMixin", "Init", wrap(settingsColor))
-	S:TryPostHook("WQT_SettingsDropDownMixin", "Init", wrap(settingsDropDown))
-	S:TryPostHook("WQT_SettingsButtonMixin", "Init", wrap(settingsButton))
-	S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", wrap(settingsButton))
-	S:TryPostHook("WQT_SettingsTextInputMixin", "Init", wrap(settingsTextInput))
-	S:TryPostHook("WQT_ListButtonMixin", "Update", wrap(listButton))
+		S:TryPostHook("WQT_SettingsCategoryMixin", "Init", wrap(settingsCategory))
+		S:TryPostHook("WQT_SettingsCheckboxMixin", "Init", wrap(settingsCheckbox))
+		S:TryPostHook("WQT_SettingsSliderMixin", "Init", wrap(settingsSlider))
+		S:TryPostHook("WQT_SettingsColorMixin", "Init", wrap(settingsColor))
+		S:TryPostHook("WQT_SettingsDropDownMixin", "Init", wrap(settingsDropDown))
+		S:TryPostHook("WQT_SettingsButtonMixin", "Init", wrap(settingsButton))
+		S:TryPostHook("WQT_SettingsConfirmButtonMixin", "Init", wrap(settingsButton))
+		S:TryPostHook("WQT_SettingsTextInputMixin", "Init", wrap(settingsTextInput))
+		S:TryPostHook("WQT_ListButtonMixin", "Update", wrap(listButton))
+	end
 end

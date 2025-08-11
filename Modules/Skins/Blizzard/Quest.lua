@@ -113,8 +113,10 @@ local function StyleRewardButton(rewardButton)
 	-- Style the reward icon with proper texture coordinates and backdrop
 	if rewardButton.Icon then
 		rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
-		S:CreateBackdropShadow(rewardButton.Icon)
-		S:BindShadowColorWithBorder(rewardButton.Icon.backdrop.shadow, rewardButton.Icon.backdrop)
+		if rewardButton.Icon.backdrop then
+			S:CreateBackdropShadow(rewardButton.Icon)
+			S:BindShadowColorWithBorder(rewardButton.Icon.backdrop.shadow, rewardButton.Icon.backdrop)
+		end
 	end
 
 	-- Create transparent backdrop for the reward button
@@ -301,8 +303,10 @@ function S.QuestInfo_Display()
 					if not spellReward.wtStyled then
 						if spellReward.Icon then
 							spellReward.Icon:SetTexCoord(unpack(E.TexCoords))
-							S:CreateBackdropShadow(spellReward.Icon)
-							S:BindShadowColorWithBorder(spellReward.Icon.backdrop.shadow, spellReward.Icon.backdrop)
+							if spellReward.Icon.backdrop then
+								S:CreateBackdropShadow(spellReward.Icon)
+								S:BindShadowColorWithBorder(spellReward.Icon.backdrop.shadow, spellReward.Icon.backdrop)
+							end
 						end
 						spellReward.wtStyled = true
 					end
@@ -314,11 +318,13 @@ function S.QuestInfo_Display()
 				if not reputationReward.wtStyled then
 					if reputationReward.Icon then
 						reputationReward.Icon:SetTexCoord(unpack(E.TexCoords))
-						S:CreateBackdropShadow(reputationReward.Icon)
-						S:BindShadowColorWithBorder(
-							reputationReward.Icon.backdrop.shadow,
-							reputationReward.Icon.backdrop
-						)
+						if reputationReward.Icon.backdrop then
+							S:CreateBackdropShadow(reputationReward.Icon)
+							S:BindShadowColorWithBorder(
+								reputationReward.Icon.backdrop.shadow,
+								reputationReward.Icon.backdrop
+							)
+						end
 					end
 					reputationReward.wtStyled = true
 				end

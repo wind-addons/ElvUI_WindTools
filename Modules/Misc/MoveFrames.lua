@@ -339,6 +339,7 @@ local BlizzardFramesOnDemand = {
 
 local ignorePositionRememberingFrames = {
 	["BonusRollFrame"] = true,
+	["PlayerChoiceFrame"] = true,
 }
 
 local function getFrame(frameOrName)
@@ -365,7 +366,7 @@ function MF:Remember(frame)
 	end
 
 	local path = frame.__windFramePath
-	if not path or ignorePositionRememberingFrames[path] then
+	if not path or path == "" or ignorePositionRememberingFrames[path] then
 		return
 	end
 

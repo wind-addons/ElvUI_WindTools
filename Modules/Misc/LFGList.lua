@@ -29,8 +29,6 @@ local wipe = wipe
 local CopyTable = CopyTable
 local CreateFrame = CreateFrame
 local GetNumGroupMembers = GetNumGroupMembers
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
@@ -55,6 +53,8 @@ local C_MythicPlus = C_MythicPlus
 local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLevelForDifficultyLevel
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
+local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
+local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
 local Enum_LFGListFilter = Enum.LFGListFilter
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
@@ -1361,8 +1361,8 @@ function LL:GetPartyRoles()
 			end
 		end
 	else
-		local specIndex = GetSpecialization()
-		local role = specIndex and select(5, GetSpecializationInfo(specIndex))
+		local specIndex = C_SpecializationInfo_GetSpecialization()
+		local role = specIndex and select(5, C_SpecializationInfo_GetSpecializationInfo(specIndex))
 		if partyMember[role] then
 			partyMember[role] = partyMember[role] + 1
 		end

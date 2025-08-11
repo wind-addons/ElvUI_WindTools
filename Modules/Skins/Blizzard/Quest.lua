@@ -2,6 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local abs = abs
 local pairs = pairs
 local select = select
 local strmatch = strmatch
@@ -15,6 +16,10 @@ local GetQuestID = GetQuestID
 
 local GetNextWaypointText = C_QuestLog.GetNextWaypointText
 local GetSelectedQuest = C_QuestLog.GetSelectedQuest
+
+local function isAlmost(a, b)
+	return abs(a - b) < 0.01
+end
 
 --[[
 	Quest Frame Skinning Helper Functions
@@ -55,7 +60,7 @@ local function ApplyObjectiveTextColoring()
 		numVisibleObjectives = numVisibleObjectives + 1
 		local objectiveFrame = _G["QuestInfoObjective" .. numVisibleObjectives]
 		if objectiveFrame then
-			objectiveFrame:SetTextColor(0.4, 1, 1) -- Cyan for waypoints
+			objectiveFrame:SetTextColor(0, 0.82, 0.82) -- Cyan for waypoints
 		end
 	end
 
@@ -88,8 +93,10 @@ end
 	@param textObject - The text object to modify
 	@param redValue - The red component of the current color
 --]]
-local function ReplaceQuestTextColor(textObject, redValue)
-	if redValue == 0 or redValue == DEFAULT_COLOR[1] then
+local function ReplaceQuestTextColor(textObject, redValue, greenValue, blueValue)
+	if redValue == 0 and isAlmost(greenValue, 0.82) and isAlmost(blueValue, 0.82) then
+		return
+	elseif redValue == 0 or redValue == DEFAULT_COLOR[1] then
 		textObject:SetTextColor(1, 1, 1) -- White for better readability
 	elseif redValue == COMPLETED_COLOR then
 		textObject:SetTextColor(0.7, 0.7, 0.7) -- Muted for completed objectives

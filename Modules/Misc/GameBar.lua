@@ -142,6 +142,10 @@ local hearthstoneAndToyIDList = {
 	210455, -- 德萊尼全像寶石
 	212337, -- 爐石之石
 	228940, -- 凶霸絲線爐石
+	235016, -- 再部署模組
+	236687, -- 爆炸爐石
+	245970, -- 郵務主管的瞬移爐石
+	246565, -- 宇宙爐石
 	-- Patch Items
 	110560, -- 要塞爐石
 	140192, -- 達拉然爐石
@@ -164,10 +168,6 @@ local hearthstoneAndToyIDList = {
 	172924, -- 蟲洞產生器：暗影之境
 	198156, -- 龍洞產生器：巨龍群島
 	221966, -- 蟲洞產生器：卡茲阿爾加
-	--Liberation of Undermine Drop
-	236687, -- 爆裂爐石
-	-- Overcharged Delves (11.1.7)
-	235016,
 }
 
 local hearthstonesAndToysData
@@ -1555,25 +1555,6 @@ function GB:UpdateHearthStoneTable()
 	for i = 1, #hearthstones do
 		local itemID = hearthstones[i]
 		hearthstonesTable[itemID] = true
-	end
-
-	local covenantHearthstones = {
-		[1] = 184353, -- 琪瑞安族爐石
-		[2] = 183716, -- 汎希爾罪孽石
-		[3] = 180290, -- 暗夜妖精的爐石
-		[4] = 182773, -- 死靈領主爐石
-	}
-
-	for i = 1, 4 do
-		local level = self.covenantCache[E.myrealm]
-			and self.covenantCache[E.myrealm][E.myname]
-			and self.covenantCache[E.myrealm][E.myname][tostring(i)]
-		local toyID = covenantHearthstones[i]
-		local hasToy = PlayerHasToy(toyID) and C_ToyBox_IsToyUsable(toyID)
-
-		-- here we don't check the current active covenant.
-		-- because `/castrandom` cannot the current active covenant hearthstone.
-		hearthstonesTable[toyID] = (hasToy and level and level == 80) and true or false
 	end
 
 	local raceHeartstones = {

@@ -57,7 +57,7 @@ local function createButton()
 	button:SetAttribute("type*", "macro")
 	button:SetAttribute("macrotext1", "/cancelaura 1214374\n/run _G.GameTooltip:Hide()")
 	button:RegisterForClicks(W.UseKeyDown and "AnyDown" or "AnyUp")
-	button:SetPoint("CENTER", 200, -100)
+	button:SetPoint("TOP", 0, -90)
 
 	button:StripTextures()
 	button:CreateBackdrop("Transparent")
@@ -77,7 +77,7 @@ local function createButton()
 	button:SetScript("OnEnter", function()
 		if hasBuff(1214374) then
 			button.Highlight:Show()
-			_G.GameTooltip:SetOwner(button, "ANCHOR_TOP", 0, 5)
+			_G.GameTooltip:SetOwner(button, "ANCHOR_BOTTOM", 0, -5)
 			_G.GameTooltip:SetText(tooltipTitle, 1, 1, 1)
 			_G.GameTooltip:Show()
 		end

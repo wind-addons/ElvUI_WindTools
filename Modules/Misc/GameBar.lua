@@ -448,7 +448,7 @@ local ButtonTypes = {
 		icon = W.Media.Icons.barCollections,
 		macro = {
 			LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab1",
-			RightButton = "/run CollectionsJournal_LoadUI()\n/click MountJournalSummonRandomFavoriteButton",
+			RightButton = "/run C_MountJournal.SummonByID(0)",
 		},
 		tooltips = {
 			L["Collections"],
@@ -644,7 +644,7 @@ local ButtonTypes = {
 		icon = W.Media.Icons.barPetJournal,
 		macro = {
 			LeftButton = "/click CollectionsJournalCloseButton\n/click CollectionsMicroButton\n/click CollectionsJournalTab2",
-			RightButton = "/run CollectionsJournal_LoadUI()\n/click PetJournalSummonRandomFavoritePetButton",
+			RightButton = "/run C_PetJournal.SummonRandomPet(C_PetJournal.HasFavoritePets());",
 		},
 		tooltips = {
 			L["Pet Journal"],

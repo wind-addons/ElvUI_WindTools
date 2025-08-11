@@ -211,10 +211,6 @@ end
 	@param fontObject - The font object to configure
 --]]
 local function ConfigureYellowHeaderFont(fontObject)
-	if not E.private.skins.parchmentRemoverEnable then
-		return
-	end
-
 	if not fontObject then
 		return
 	end
@@ -243,10 +239,6 @@ end
 	@param fontObject - The font object to configure
 --]]
 local function ConfigureWhiteContentFont(fontObject)
-	if not E.private.skins.parchmentRemoverEnable then
-		return
-	end
-
 	if not fontObject then
 		return
 	end
@@ -360,9 +352,6 @@ function S:BlizzardQuestFrames()
 	-- Hook the main quest info display function for dynamic updates
 	hooksecurefunc("QuestInfo_Display", self.QuestInfo_Display)
 
-	-- Hook quest map frame for objective text coloring
-	hooksecurefunc("QuestMapFrame_ShowQuestDetails", ApplyObjectiveTextColoring)
-
 	-- Remove default item highlight for cleaner appearance
 	if _G.QuestInfoItemHighlight then
 		_G.QuestInfoItemHighlight:Kill()
@@ -445,6 +434,18 @@ function S:BlizzardQuestFrames()
 		end
 	end
 
+	-- Apply font outlines to model-related text elements
+	F.SetFontOutline(_G.QuestNPCModelText)
+	F.SetFontOutline(_G.QuestNPCModelNameText)
+
+	-- Only Modify the text colors if parchment is disabled
+	if not E.private.skins.parchmentRemoverEnable then
+		return
+	end
+
+	-- Hook quest map frame for objective text coloring
+	hooksecurefunc("QuestMapFrame_ShowQuestDetails", ApplyObjectiveTextColoring)
+
 	-- Configure money requirement text color handling
 	if _G.QuestInfoRequiredMoneyText then
 		hooksecurefunc(_G.QuestInfoRequiredMoneyText, "SetTextColor", function(textFrame, redValue)
@@ -491,10 +492,6 @@ function S:BlizzardQuestFrames()
 			ConfigureWhiteContentFont(contentFont)
 		end
 	end
-
-	-- Apply font outlines to model-related text elements
-	F.SetFontOutline(_G.QuestNPCModelText)
-	F.SetFontOutline(_G.QuestNPCModelNameText)
 
 	-- Configure spell objective learn label text color handling
 	if _G.QuestInfoSpellObjectiveLearnLabel then

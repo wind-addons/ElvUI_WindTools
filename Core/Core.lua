@@ -75,7 +75,7 @@ _G.BINDING_CATEGORY_ELVUI_WINDTOOLS_EXTRA = W.Title .. " - " .. L["Extra"]
 _G.BINDING_HEADER_WTEXTRABUTTONS = L["Extra Buttons"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLogout:LeftButton"] = L["Logout"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveGroup:LeftButton"] = L["Leave Party"]
-_G["BINDING_NAME_CLICK WTExtraBindingButtonLeavePartyIfSoloing:LeftButton"] = L["Leave Party if soloing"]
+_G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveDelve:LeftButton"] = L["Leave Delve"]
 
 W.LinkOperations = {
 	["changelog"] = E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG.OnAccept,

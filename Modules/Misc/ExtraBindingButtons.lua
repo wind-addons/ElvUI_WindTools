@@ -28,11 +28,8 @@ function M:ExtraBindingButtons()
 	self.ExtraBindingButtons.LeaveParty = createInvisibleButton("WTExtraBindingButtonLeaveGroup", "onclick", function()
 		C_PartyInfo_LeaveParty()
 	end)
-	self.ExtraBindingButtons.LeavePartyIfSoloing = createInvisibleButton(
-		"WTExtraBindingButtonLeavePartyIfSoloing",
-		"macro",
-		"/inv 1\n/pr 1\n/script C_PartyInfo.LeaveParty()"
-	)
+	self.ExtraBindingButtons.LeaveDelve =
+		createInvisibleButton("WTExtraBindingButtonLeaveDelve", "macro", "/run C_PartyInfo.DelveTeleportOut()")
 end
 
 M:AddCallback("ExtraBindingButtons")

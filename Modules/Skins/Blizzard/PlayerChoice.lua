@@ -72,7 +72,7 @@ local function SetupOptions(frame)
 
 	if frame.optionFrameTemplate and frame.optionPools then
 		for option in frame.optionPools:EnumerateActiveByTemplate(frame.optionFrameTemplate) do
-			if option.WidgetContainer then
+			if option.WidgetContainer and option.WidgetContainer.widgetFrames then
 				for _, widget in pairs(option.WidgetContainer.widgetFrames) do
 					if widget.Text then
 						F.SetFontOutline(widget.Text)

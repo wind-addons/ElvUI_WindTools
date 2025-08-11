@@ -17,6 +17,24 @@ function S:Blizzard_Professions()
 	for _, tab in next, { _G.ProfessionsFrame.TabSystem:GetChildren() } do
 		self:ReskinTab(tab)
 	end
+
+	local function reskinChild(child)
+		if child.NineSlice and child.NineSlice.template == "Transparent" then
+			self:CreateShadow(child.NineSlice)
+		end
+	end
+
+	hooksecurefunc("ToggleProfessionsItemFlyout", function()
+		local SchematicForm = _G.ProfessionsFrame.CraftingPage and _G.ProfessionsFrame.CraftingPage.SchematicForm
+		if SchematicForm then
+			for _, child in next, { SchematicForm:GetChildren() } do
+				if child.InitializeContents then
+					E:Delay(0.05, reskinChild, child)
+					hooksecurefunc(child, "InitializeContents", reskinChild)
+				end
+			end
+		end
+	end)
 end
 
 S:AddCallbackForAddon("Blizzard_Professions")

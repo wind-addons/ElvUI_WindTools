@@ -8,6 +8,7 @@ local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
 local next = next
 local pairs = pairs
+local strfind = strfind
 local tostring = tostring
 local unpack = unpack
 

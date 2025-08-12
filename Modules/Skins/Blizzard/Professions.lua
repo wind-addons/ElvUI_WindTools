@@ -2,7 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
-
+local hooksecurefunc = hooksecurefunc
 local next = next
 
 function S:Blizzard_Professions()

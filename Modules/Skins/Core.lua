@@ -9,6 +9,7 @@ local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
 local tinsert = tinsert
+local tostring = tostring
 local type = type
 local xpcall = xpcall
 

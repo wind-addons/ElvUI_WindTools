@@ -4,6 +4,8 @@ local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local next = next
+local pairs = pairs
 
 local function handleItemButton(item)
 	if not item then

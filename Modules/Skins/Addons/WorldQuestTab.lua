@@ -6,6 +6,9 @@ local MF = W.Modules.MoveFrames
 local _G = _G
 local next = next
 local hooksecurefunc = hooksecurefunc
+local unpack = unpack
+
+local CreateFrame = CreateFrame
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded

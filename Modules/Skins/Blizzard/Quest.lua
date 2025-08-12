@@ -14,8 +14,9 @@ local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
 local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
 local GetQuestID = GetQuestID
 
-local GetNextWaypointText = C_QuestLog.GetNextWaypointText
-local GetSelectedQuest = C_QuestLog.GetSelectedQuest
+local C_QuestInfoSystem_GetQuestRewardSpells = C_QuestInfoSystem.GetQuestRewardSpells
+local C_QuestLog_GetNextWaypointText = C_QuestLog.GetNextWaypointText
+local C_QuestLog_GetSelectedQuest = C_QuestLog.GetSelectedQuest
 
 local function isAlmost(a, b)
 	return abs(a - b) < 0.01
@@ -36,7 +37,7 @@ local COMPLETED_COLOR = QUEST_OBJECTIVE_COMPLETED_FONT_COLOR:GetRGB()
 --]]
 local function GetCurrentQuestID()
 	if _G.QuestInfoFrame.questLog then
-		return GetSelectedQuest()
+		return C_QuestLog_GetSelectedQuest()
 	else
 		return GetQuestID()
 	end
@@ -55,7 +56,7 @@ local function ApplyObjectiveTextColoring()
 	local numVisibleObjectives = 0
 
 	-- Handle waypoint objectives with cyan coloring
-	local waypointText = GetNextWaypointText(questID)
+	local waypointText = C_QuestLog_GetNextWaypointText(questID)
 	if waypointText then
 		numVisibleObjectives = numVisibleObjectives + 1
 		local objectiveFrame = _G["QuestInfoObjective" .. numVisibleObjectives]
@@ -276,10 +277,10 @@ function S.QuestInfo_Display()
 	local questRewardsFrame = _G.QuestInfoFrame.rewardsFrame
 	if questRewardsFrame then
 		local isQuestLogContext = _G.QuestInfoFrame.questLog ~= nil
-		local currentQuestID = isQuestLogContext and GetSelectedQuest() or GetQuestID()
+		local currentQuestID = isQuestLogContext and C_QuestLog_GetSelectedQuest() or GetQuestID()
 
 		if currentQuestID then
-			local availableSpellRewards = C_QuestInfoSystem.GetQuestRewardSpells(currentQuestID) or {}
+			local availableSpellRewards = C_QuestInfoSystem_GetQuestRewardSpells(currentQuestID) or {}
 
 			-- Process spell-related rewards if they exist
 			if #availableSpellRewards > 0 then

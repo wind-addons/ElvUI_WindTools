@@ -117,6 +117,19 @@ options.general = {
 						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 				},
+				imeTransparentBackdrop = {
+					order = 3,
+					type = "toggle",
+					name = L["IME Transparent Backdrop"],
+					desc = L["Enable a transparent backdrop for the IME candidate frame."],
+					get = function(info)
+						return E.private.WT.skins.ime.transparentBackdrop
+					end,
+					set = function(info, value)
+						E.private.WT.skins.ime.transparentBackdrop = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
 			},
 		},
 		shadow = {

@@ -350,6 +350,7 @@ V.skins = {
 			size = E.db.general.fontSize,
 			style = "OUTLINE",
 		},
+		transparentBackdrop = false,
 	},
 	actionStatus = {
 		name = E.db.general.font,

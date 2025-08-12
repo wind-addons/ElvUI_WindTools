@@ -22,6 +22,17 @@ function S:InputMethodEditor()
 				langIcon:Size(32, 22)
 				langIcon:ClearAllPoints()
 				langIcon:Point("TOPLEFT", editBox, "TOPRIGHT", 7, 0)
+
+				self:SecureHook(editBox, "Show", function()
+					for _, region in pairs({ langIcon:GetRegions() }) do
+						if region:GetObjectType() == "FontString" then
+							F.SetFontOutline(region)
+							region:ClearAllPoints()
+							region:SetPoint("CENTER", langIcon, "CENTER", 0, 0)
+							self:Unhook(editBox, "Show")
+						end
+					end
+				end)
 			end
 		end
 	end

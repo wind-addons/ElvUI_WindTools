@@ -8,6 +8,10 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 
+local function createShadow(frame)
+	S:CreateBackdropShadow(frame)
+end
+
 function S:Blizzard_DeathRecap()
 	self:CreateBackdropShadow(_G.DeathRecapFrame)
 end
@@ -102,5 +106,16 @@ function S:BlizzardMiscFrames()
 	end
 end
 
+function S:SkinMenu(_, manager, _, menuDescription)
+	local menu = manager:GetOpenMenu()
+	if not menu then
+		return
+	end
+
+	self:CreateBackdropShadow(menu)
+	menuDescription:AddMenuAcquiredCallback(createShadow)
+end
+
+S:SecureHook(ES, "SkinMenu")
 S:AddCallback("BlizzardMiscFrames")
 S:AddCallbackForAddon("Blizzard_DeathRecap")

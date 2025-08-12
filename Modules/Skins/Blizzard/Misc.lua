@@ -8,8 +8,6 @@ local pairs = pairs
 
 local CreateFrame = CreateFrame
 
-local UIDROPDOWNMENU_MAXLEVELS = UIDROPDOWNMENU_MAXLEVELS
-
 function S:Blizzard_DeathRecap()
 	self:CreateBackdropShadow(_G.DeathRecapFrame)
 end
@@ -49,13 +47,14 @@ function S:BlizzardMiscFrames()
 	end
 
 	-- Dropdown Menu
-	for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
-		local f = _G["DropDownList" .. i .. "Backdrop"]
-		self:CreateShadow(f)
+	self:SecureHook(ES, "DropDownMenu_SkinMenu", function(_, prefix, name)
+		local backdrop = prefix and _G[name]
+		if not backdrop or not backdrop.template then
+			return
+		end
 
-		f = _G["DropDownList" .. i .. "MenuBackdrop"]
-		self:CreateShadow(f)
-	end
+		self:CreateShadow(backdrop)
+	end)
 
 	-- Action Status
 	if _G.ActionStatus.Text then

@@ -8,8 +8,8 @@ function S:ElvUI_StaticPopup()
 		return
 	end
 
-	for i = 1, 3 do
-		self:CreateShadow(_G["ElvUI_StaticPopup" .. i])
+	for _, popup in pairs(E.StaticPopupFrames) do
+		self:CreateShadow(popup)
 	end
 end
 

@@ -8,9 +8,8 @@ function S:StaticPopup()
 		return
 	end
 
-	for i = 1, 4 do
-		local f = _G["StaticPopup" .. i]
-		self:CreateShadow(f)
+	for i = 1, E.MAX_STATIC_POPUPS do
+		self:CreateShadow(_G["StaticPopup" .. i])
 	end
 end
 

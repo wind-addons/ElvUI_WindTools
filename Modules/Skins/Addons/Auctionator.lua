@@ -12,7 +12,7 @@ local strfind = strfind
 local tostring = tostring
 local unpack = unpack
 
--- modified from ElvUI Auction House Skin
+-- Modified from ElvUI Auction House Skin
 local function HandleListIcon(frame)
 	if not frame.tableBuilder then
 		return
@@ -39,7 +39,7 @@ local function HandleListIcon(frame)
 	end
 end
 
--- modified from ElvUI Auction House Skin
+-- Modified from ElvUI Auction House Skin
 local function HandleHeaders(frame)
 	local maxHeaders = frame.HeaderContainer:GetNumChildren()
 	for i, header in next, { frame.HeaderContainer:GetChildren() } do

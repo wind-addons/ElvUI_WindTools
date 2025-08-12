@@ -1143,12 +1143,6 @@ options.addons = {
 			name = L["Ace3 Dropdown Backdrop"],
 			width = 1.5,
 		},
-		adiBags = {
-			order = 10,
-			type = "toggle",
-			name = L["AdiBags"],
-			addonName = "AdiBags",
-		},
 		angryKeystones = {
 			order = 10,
 			type = "toggle",
@@ -1362,31 +1356,9 @@ end
 
 for _, option in pairs(options.addons.args) do
 	if option.addonName then
-		if option.addonName == "AdiBags" then
-			local isAdiBagsLoaded = C_AddOns_IsAddOnLoaded("AdiBags")
-			local isSkinLoaded = C_AddOns_IsAddOnLoaded("AdiBagsElvUISkin")
-			if isAdiBagsLoaded and not isSkinLoaded then
-				local message = C.StringByTemplate(
-					format(L["To enable this skin, you need download %s from CurseForge"], '"AdiBags ElvUI Skin"'),
-					"danger"
-				)
-				option.name = option.name .. " " .. message
-				option.get = function()
-					return false
-				end
-				option.disabled = true
-				option.width = "full"
-				option.order = 11
-			else
-				option.get = GenerateAddOnSkinsGetFunction(option.addonName)
-				option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
-				option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
-			end
-		else
-			option.get = GenerateAddOnSkinsGetFunction(option.addonName)
-			option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
-			option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
-		end
+		option.get = GenerateAddOnSkinsGetFunction(option.addonName)
+		option.set = GenerateAddOnSkinsSetFunction(option.addonskinsKey)
+		option.disabled = GenerateAddOnSkinsDisabledFunction(option.addonName)
 
 		option.addonName = nil
 		option.addonskinsKey = nil

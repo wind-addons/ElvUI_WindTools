@@ -11,8 +11,6 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 
-local C_Timer_NewTicker = C_Timer.NewTicker
-
 local pool = {
 	spark = {},
 	backdrops = {},

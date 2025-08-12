@@ -481,7 +481,6 @@ V.skins = {
 	addons = {
 		ace3 = true,
 		ace3DropdownBackdrop = true,
-		adiBags = true,
 		angryKeystones = true,
 		auctionator = true,
 		bigWigs = true,

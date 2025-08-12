@@ -410,7 +410,6 @@ function EB:CreateBar(id)
 	bar.id = id
 	bar:ClearAllPoints()
 	bar:SetParent(anchor)
-	bar.anchor = anchor
 	bar:SetPoint("CENTER", anchor, "CENTER", 0, 0)
 	bar:SetSize(200, 40)
 	bar:CreateBackdrop("Transparent")
@@ -550,7 +549,7 @@ function EB:UpdateBar(id)
 	local newMoverHeight = 2 * barDB.backdropSpacing
 		+ numMoverRows * barDB.buttonHeight
 		+ (numMoverRows - 1) * barDB.spacing
-	bar.anchor:SetSize(newMoverWidth, newMoverHeight)
+	bar:GetParent():SetSize(newMoverWidth, newMoverHeight)
 
 	bar:ClearAllPoints()
 	bar:SetPoint(barDB.anchor)
@@ -663,16 +662,17 @@ function EB:UpdateBar(id)
 
 			if barDB.globalFade then
 				bar:SetAlpha(1)
-				bar.anchor:SetParent(AB.fadeParent)
 			else
-				if barDB.mouseOver then
-					bar:SetAlpha(barDB.alphaMin)
-				else
-					bar:SetAlpha(barDB.alphaMax)
-				end
-
-				bar.anchor:SetParent(E.UIParent)
+				bar:SetAlpha(barDB.mouseOver and barDB.alphaMin or barDB.alphaMax)
 			end
+
+			local anchor = bar:GetParent()
+			local alphaParent = barDB.globalFade and AB.fadeParent or E.UIParent
+
+			if anchor and anchor:GetParent() ~= alphaParent then
+				F.TaskManager:OutOfCombat(anchor.SetParent, anchor, alphaParent)
+			end
+
 			bar.waitGroup = nil
 		end
 	end)

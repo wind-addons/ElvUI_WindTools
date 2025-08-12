@@ -21,7 +21,7 @@ local trackers = {
 	_G.WorldQuestObjectiveTracker,
 }
 
-function S:ReskinOjectiveTrackerHeader(header)
+function S:ReskinObjectiveTrackerHeader(header)
 	if not header or not header.Text then
 		return
 	end
@@ -105,10 +105,10 @@ function S:Blizzard_ObjectiveTracker()
 	self.questItemButtons = {}
 
 	local MainHeader = _G.ObjectiveTrackerFrame.Header
-	self:ReskinOjectiveTrackerHeader(MainHeader)
+	self:ReskinObjectiveTrackerHeader(MainHeader)
 
 	for _, tracker in pairs(trackers) do
-		self:ReskinOjectiveTrackerHeader(tracker.Header)
+		self:ReskinObjectiveTrackerHeader(tracker.Header)
 
 		for _, block in pairs(tracker.usedBlocks or {}) do
 			self:ReskinObjectiveTrackerBlock(tracker, block)

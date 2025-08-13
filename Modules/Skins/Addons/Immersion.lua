@@ -86,7 +86,7 @@ do -- If there is no speech progress text in first time, the skin will not be ap
 		end
 		local talkBox = _G.ImmersionFrame and _G.ImmersionFrame.TalkBox
 		if talkBox and talkBox.TextFrame and talkBox.TextFrame.SpeechProgress then
-			F.SetFontOutline(talkBox.TextFrame.SpeechProgress, "Montserrat" .. (W.CompatibleFont and " (en)" or ""), 13)
+			F.SetFontOutline(talkBox.TextFrame.SpeechProgress, F.GetCompatibleFont("Montserrat"), 13)
 			reskin = true
 		end
 	end

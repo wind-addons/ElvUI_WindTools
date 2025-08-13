@@ -359,7 +359,7 @@ function CT:ConstructPageController()
 
 	local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)
-	F.SetFontOutline(pageIndicater, "Montserrat" .. (W.CompatibleFont and " (en)" or ""))
+	F.SetFontOutline(pageIndicater, F.GetCompatibleFont("Montserrat"))
 	slider.pageIndicater = pageIndicater
 
 	-- Mouse wheel control

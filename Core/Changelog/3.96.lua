@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[396] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/08/14",
 	IMPORTANT = {
 		["zhCN"] = {
 			"[美化皮肤] 移除了 AdiBags 皮肤.",

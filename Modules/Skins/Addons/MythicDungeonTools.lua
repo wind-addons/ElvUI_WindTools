@@ -149,23 +149,14 @@ function S:MDTPullButton(Constructor)
 		widget.pullNumber:ClearAllPoints()
 		widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, -1)
 
-		widget.pullNumberSelected = widget.frame:CreateFontString(nil, "OVERLAY")
-		widget.pullNumberSelected:FontTemplate(nil, 18, "OUTLINE")
-		widget.pullNumberSelected:SetPoint("CENTER", widget.pullNumber, "CENTER", 1, -3)
-		widget.pullNumberSelected:SetTextColor(1, 1, 1, 1)
-		widget.pullNumberSelected:SetText("__")
-		widget.pullNumberSelected:SetJustifyH("CENTER")
-
 		hooksecurefunc(widget.frame.pickedGlow, "Show", function()
-			widget.pullNumber:FontTemplate(nil, 18, "OUTLINE")
+			F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 22)
 			widget.pullNumber:SetTextColor(1, 1, 1, 1)
-			widget.pullNumberSelected:Show()
 		end)
 
 		hooksecurefunc(widget.frame.pickedGlow, "Hide", function()
-			widget.pullNumber:FontTemplate(nil, 14, "OUTLINE")
+			F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 16)
 			widget.pullNumber:SetTextColor(1, 0.93, 0.76, 0.8)
-			widget.pullNumberSelected:Hide()
 		end)
 
 		return widget

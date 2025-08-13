@@ -119,6 +119,7 @@ options.general = {
 				},
 				imeTransparentBackdrop = {
 					order = 3,
+					width = 2,
 					type = "toggle",
 					name = L["IME Transparent Backdrop"],
 					desc = L["Enable a transparent backdrop for the IME candidate frame."],

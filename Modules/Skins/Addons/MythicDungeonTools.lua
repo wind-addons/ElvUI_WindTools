@@ -123,7 +123,7 @@ local function reskinButtonTexture(texture, alphaTimes)
 		return
 	end
 
-	texture:SetTexCoord(unpack(E.TexCoords))
+	texture:SetTexCoord(0, 1, 0, 1)
 	texture:SetInside()
 
 	texture:SetTexture(E.media.blankTex)
@@ -174,5 +174,37 @@ function S:MDTPullButton(Constructor)
 	return SkinnedConstructor
 end
 
+function S:MDTNewPullButton(Constructor)
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
+		return Constructor
+	end
+
+	local function SkinnedConstructor()
+		local widget = Constructor()
+		widget.frame:StripTextures()
+		reskinButtonTexture(widget.background, 0.2)
+		widget.background:SetVertexColor(1, 1, 1, 0.4)
+
+		widget.windHighlight = widget.frame:CreateTexture(nil, "OVERLAY")
+		widget.windHighlight:SetTexture(E.media.blankTex)
+		widget.windHighlight:SetVertexColor(1, 1, 1, 0.2)
+		widget.windHighlight:SetAllPoints()
+		widget.windHighlight:Hide()
+
+		widget.frame:HookScript("OnEnter", function()
+			widget.windHighlight:Show()
+		end)
+
+		widget.frame:HookScript("OnLeave", function()
+			widget.windHighlight:Hide()
+		end)
+
+		return widget
+	end
+
+	return SkinnedConstructor
+end
+
 S:AddCallbackForAddon("MythicDungeonTools")
 S:AddCallbackForAceGUIWidget("MDTPullButton")
+S:AddCallbackForAceGUIWidget("MDTNewPullButton")

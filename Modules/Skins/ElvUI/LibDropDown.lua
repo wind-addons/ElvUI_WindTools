@@ -5,6 +5,9 @@ local S = W.Modules.Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
+local LibStub = LibStub
+local RunNextFrame = RunNextFrame
+
 local function HandleBackdrop(frame)
 	local dropdown = (frame and frame.NineSlice) or frame
 	if dropdown and not dropdown.template then

@@ -71,7 +71,7 @@ function S:ElvUI_UnitFrames_PostUpdateAura(uf, _, button)
 
 	if not button.__windSkin then
 		self:CreateLowerShadow(button)
-		self:BindShadowColorWithBorder(button.shadow, button)
+		self:BindShadowColorWithBorder(button)
 		button.__windSkin = true
 	end
 end

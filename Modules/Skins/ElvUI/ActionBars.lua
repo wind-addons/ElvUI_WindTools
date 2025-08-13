@@ -13,7 +13,7 @@ function S:ElvUI_ActionBar_SkinButton(button, useBackdrop)
 
 	if not button.__windSkin then
 		if button.shadow and button.shadow.__wind then
-			self:BindShadowColorWithBorder(button.shadow, button)
+			self:BindShadowColorWithBorder(button)
 		end
 
 		button.__windSkin = true

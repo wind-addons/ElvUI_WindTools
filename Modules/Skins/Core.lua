@@ -151,12 +151,10 @@ do
 		end
 	end
 
-	--[[
-        Change the color of shadow with the border color
-        @param {frame} shadow !!!!!NOT THE PARENT FRAME
-        @param {frame} borderParent, the target backdrop
-    ]]
-	function S:BindShadowColorWithBorder(shadow, borderParent)
+	function S:BindShadowColorWithBorder(frame, borderParent)
+		local shadow = frame and frame.shadow
+		local borderParent = borderParent or frame
+
 		if not shadow or not shadow.__wind or not borderParent or not borderParent.SetBackdropBorderColor then
 			return
 		end

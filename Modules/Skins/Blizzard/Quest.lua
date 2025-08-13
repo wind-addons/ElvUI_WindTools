@@ -123,7 +123,7 @@ local function StyleRewardButton(rewardButton)
 		rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
 		if rewardButton.Icon.backdrop then
 			S:CreateBackdropShadow(rewardButton.Icon)
-			S:BindShadowColorWithBorder(rewardButton.Icon.backdrop.shadow, rewardButton.Icon.backdrop)
+			S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
 		end
 	end
 
@@ -305,7 +305,7 @@ function S.QuestInfo_Display()
 							spellReward.Icon:SetTexCoord(unpack(E.TexCoords))
 							if spellReward.Icon.backdrop then
 								S:CreateBackdropShadow(spellReward.Icon)
-								S:BindShadowColorWithBorder(spellReward.Icon.backdrop.shadow, spellReward.Icon.backdrop)
+								S:BindShadowColorWithBorder(spellReward.Icon.backdrop)
 							end
 						end
 						spellReward.wtStyled = true
@@ -320,10 +320,7 @@ function S.QuestInfo_Display()
 						reputationReward.Icon:SetTexCoord(unpack(E.TexCoords))
 						if reputationReward.Icon.backdrop then
 							S:CreateBackdropShadow(reputationReward.Icon)
-							S:BindShadowColorWithBorder(
-								reputationReward.Icon.backdrop.shadow,
-								reputationReward.Icon.backdrop
-							)
+							S:BindShadowColorWithBorder(reputationReward.Icon.backdrop)
 						end
 					end
 					reputationReward.wtStyled = true

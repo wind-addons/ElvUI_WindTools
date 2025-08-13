@@ -170,7 +170,7 @@ function EB:CreateButton(name, barDB)
 	button:StyleButton()
 
 	S:CreateShadowModule(button)
-	S:BindShadowColorWithBorder(button.shadow, button)
+	S:BindShadowColorWithBorder(button)
 
 	return button
 end

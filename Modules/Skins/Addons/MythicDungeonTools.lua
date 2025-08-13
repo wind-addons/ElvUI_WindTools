@@ -54,6 +54,10 @@ local function reskinDungeonButton(MDT)
 				S:CreateShadow(button)
 			end
 
+			if W.ChineseLocale then
+				F.SetFontOutline(button.shortText, nil, "+3")
+			end
+
 			local BUTTON_SIZE = 40
 
 			button:ClearAllPoints()

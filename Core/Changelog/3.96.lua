@@ -4,18 +4,28 @@ W.Changelog[396] = {
 	RELEASE_DATE = "2025/08/14",
 	IMPORTANT = {
 		["zhCN"] = {
+			"最低支持的 ElvUI 版本提升到 13.97.",
+			"调整了部分文本翻译.",
 			"[美化皮肤] 移除了 AdiBags 皮肤.",
 		},
 		["zhTW"] = {
+			"最低支援的 ElvUI 版本提升到 13.97.",
+			"調整了部分文本翻譯.",
 			"[美化外觀] 移除了 AdiBags 皮膚.",
 		},
 		["enUS"] = {
+			"Minimum supported ElvUI version is now 13.97.",
+			"Adjusted some text translations.",
 			"[Skins] Remove AdiBags skin.",
 		},
 		["koKR"] = {
+			"최소 지원 ElvUI 버전이 13.97로 업데이트되었습니다.",
+			"일부 텍스트 번역이 조정되었습니다.",
 			"[스킨] AdiBags 스킨을 제거했습니다.",
 		},
 		["ruRU"] = {
+			"Минимальная поддерживаемая версия ElvUI теперь 13.97.",
+			"Отрегулированы некоторые текстовые переводы.",
 			"[Скины] Удален скин AdiBags.",
 		},
 	},

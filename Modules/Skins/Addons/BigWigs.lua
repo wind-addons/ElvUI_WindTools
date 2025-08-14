@@ -1,10 +1,13 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local C = W.Utilities.Color
+local OF = W.Utilities.ObjectFinder
 
 local _G = _G
 local format = format
+local next = next
 local pairs = pairs
+local pcall = pcall
 local tinsert = tinsert
 local tremove = tremove
 local unpack = unpack
@@ -330,5 +333,51 @@ function S:BigWigs_QueueTimer()
 	end
 end
 
+function S:BigWigs_Keystone()
+	local L = _G.BigWigsAPI and _G.BigWigsAPI:GetLocale("BigWigs")
+	local titleText = L and L.keystoneTitle
+
+	local finder = OF:New()
+	finder:Find("Frame", function(frame)
+		-- Because the function is run on any type objects, need to ensure the safety
+		local text = frame and frame.TitleContainer and frame.TitleContainer.TitleText
+		if text and text.GetText then
+			local success, result = pcall(text.GetText, text)
+			if success and result == titleText then
+				return true
+			end
+		end
+		return false
+	end, function(frame)
+		for _, child in next, { frame:GetChildren() } do
+			if child.ScrollBar then
+				self:ESProxy("HandleTrimScrollBar", child.ScrollBar)
+			end
+		end
+
+		frame.NineSlice:StripTextures()
+		frame.PortraitContainer:Hide()
+		frame.TopTileStreaks:Hide()
+		frame.Bg:Hide()
+		frame:SetTemplate("Transparent")
+		self:CreateShadow(frame)
+		self:ESProxy("HandleCloseButton", frame.CloseButton)
+
+		for _, tab in next, frame.Tabs do
+			self:ESProxy("HandleTab", tab)
+			self:ReskinTab(tab)
+			tab:SetHeight(32)
+
+			if tab:GetPoint(1) == "BOTTOMLEFT" then
+				tab:ClearAllPoints()
+				tab:SetPoint("BOTTOMLEFT", 10, -31)
+			end
+		end
+	end)
+
+	finder:Start()
+end
+
 S:AddCallbackForAddon("BigWigs_Plugins")
 S:AddCallbackForEnterWorld("BigWigs_QueueTimer")
+S:AddCallbackForEnterWorld("BigWigs_Keystone")

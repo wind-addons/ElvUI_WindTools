@@ -70,24 +70,27 @@ local FeastList = {
 	[307157] = true, -- 永恆大鍋
 	[308458] = true, -- 意外可口盛宴
 	[308462] = true, -- 暴食享樂盛宴
-	[359336] = true, -- 石頭湯之壺
 	[382423] = true, -- 雨莎的澎湃燉肉
 	[382427] = true, -- 卡魯耶克的豪華盛宴
-	[383063] = true, -- 龍族佳餚大餐
-	[432877] = true, -- 阿爾加精煉藥劑大鍋
-	[432878] = true, -- 准备阿加合剂大锅
-	[432879] = true, -- 准备阿加合剂大锅
-	[433292] = true, -- 阿爾加藥水大鍋
-	[433293] = true, -- 准备阿加药水大锅
-	[433294] = true, -- 准备阿加药水大锅
+	[383063] = true, -- 製作加料龍族佳餚大餐
 	[455960] = true, -- 大雜燴
-	[457283] = true, -- 降圣白昼盛宴
-	[457285] = true, -- 午夜化妝舞會盛宴,神聖日盛宴
+	[457283] = true, -- 神聖日盛宴
+	[457285] = true, -- 午夜化妝舞會盛宴
 	[457302] = true, -- 特級壽司
-	[457487] = true, -- 丰盛的全味炖煮
-	[462211] = true, -- 丰盛的特色寿司
+	[457487] = true, -- 澎湃大雜燴
+	[462211] = true, -- 澎湃特級壽司
 	[462212] = true, -- 澎湃神聖日盛宴
 	[462213] = true, -- 澎湃午夜化妝舞會盛宴
+}
+
+local FeastList_SPELLCAST_SUCCEEDED = {
+	[359336] = true, -- 準備石頭湯之壺
+	[432877] = true, -- 準備阿爾加精煉藥劑大鍋
+	[432878] = true, -- 準備阿爾加精煉藥劑大鍋
+	[432879] = true, -- 準備阿爾加精煉藥劑大鍋
+	[433292] = true, -- 準備阿爾加藥水大鍋
+	[433293] = true, -- 準備阿爾加藥水大鍋
+	[433294] = true, -- 準備阿爾加藥水大鍋
 }
 
 local PortalList = {
@@ -225,5 +228,8 @@ function A:Utility(event, sourceName, spellId)
 		if TryAnnounce(spellId, sourceName, 290154) then
 			return
 		end -- 塑形師道標
+		if TryAnnounce(spellId, sourceName, nil, FeastList_SPELLCAST_SUCCEEDED, "feasts") then
+			return
+		end -- Since TWW, some feasts event has been changed
 	end
 end

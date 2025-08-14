@@ -150,6 +150,7 @@ V.misc = {
 	addCNFilter = false,
 	autoToggleChatBubble = false,
 	antiOverride = GetLocale() == "zhCN",
+	reshiiWrapsUpgrade = true,
 	moveFrames = {
 		enable = true,
 		elvUIBags = true,

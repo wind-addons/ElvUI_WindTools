@@ -19,6 +19,7 @@
 	<Script file='MoveSpeed.lua'/>
 	<Script file='Mute.lua'/>
 	<Script file='PauseToSlash.lua'/>
+	<Script file='ReshiiWrapsUpgrade.lua'/>
 	<Script file='SkipCutScene.lua'/>
 	<Script file='Tags.lua'/>
 	<!-- Others -->

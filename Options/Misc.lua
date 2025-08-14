@@ -161,6 +161,12 @@ options.general = {
 			desc = L["Only show chat bubble in instance."],
 			width = 1.5,
 		},
+		reshiiWrapsUpgrade = {
+			order = 15,
+			type = "toggle",
+			name = L["Reshii Wraps Upgrade"],
+			desc = L["Middle click the character back slot to open the Reshii Wraps upgrade menu."],
+		},
 	},
 }
 

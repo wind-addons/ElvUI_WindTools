@@ -43,7 +43,7 @@ W.Changelog[397] = {
 		},
 		["zhTW"] = {
 			"[通告] 修正了新版大鍋通告失效的問題.",
-			"[美化外觀] BigWigs 外觀現在支持全新的鑰石介面.",
+			"[美化外觀] BigWigs 外觀現在支援全新的鑰石介面.",
 		},
 		["enUS"] = {
 			"[Announcement] Fix the issue with the new cauldrons announce not working.",

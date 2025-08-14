@@ -454,7 +454,7 @@ local function reskinDialogs()
 		"ShowConfirmAlt",
 		"ShowMoney",
 	}) do
-		if _G.Auctionator.Dialogs[dialogFunc] then
+		if _G.Auctionator.Dialogs and _G.Auctionator.Dialogs[dialogFunc] then
 			local original = _G.Auctionator.Dialogs[dialogFunc]
 			_G.Auctionator.Dialogs[dialogFunc] = function(...)
 				local result = original(...)

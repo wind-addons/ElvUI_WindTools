@@ -334,6 +334,10 @@ function S:BigWigs_QueueTimer()
 end
 
 function S:BigWigs_Keystone()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.bigWigs then
+		return
+	end
+
 	local L = _G.BigWigsAPI and _G.BigWigsAPI:GetLocale("BigWigs")
 	local titleText = L and L.keystoneTitle
 

@@ -13,8 +13,6 @@ local tostring = tostring
 local type = type
 local xpcall = xpcall
 
-local AceGUI
-
 local CreateFrame = CreateFrame
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -370,7 +368,7 @@ do
 	local alreadyWidgetHooked, alreadyDialogSkinned = false, false
 	function S:LibStub_NewLibrary(_, major)
 		if major == "AceGUI-3.0" and not alreadyWidgetHooked then
-			AceGUI = _G.LibStub("AceGUI-3.0")
+			local AceGUI = _G.LibStub("AceGUI-3.0")
 			self:ReskinWidgets(AceGUI)
 			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
 			alreadyWidgetHooked = true
@@ -548,10 +546,10 @@ end
 function S:TryPostHook(...)
 	local frame, method, hookFunc = ...
 	if frame and method and _G[frame] and _G[frame][method] then
-		hooksecurefunc(_G[frame], method, function(frame, ...)
-			if not frame.__windSkin then
-				hookFunc(frame, ...)
-				frame.__windSkin = true
+		hooksecurefunc(_G[frame], method, function(f, ...)
+			if not f.__windSkin then
+				hookFunc(f, ...)
+				f.__windSkin = true
 			end
 		end)
 	else

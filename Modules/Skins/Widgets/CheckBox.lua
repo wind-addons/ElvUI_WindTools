@@ -56,13 +56,13 @@ function WS:HandleCheckBox(_, check)
 
 	if not check.windWidgetSkinned then
 		if check.GetCheckedTexture then
-			local tex = check:GetCheckedTexture()
-			if tex then
-				tex:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
-				tex.SetTexture = E.noop
-				F.SetVertexColorWithDB(tex, db.classColor and W.ClassColor or db.color)
-				tex.SetVertexColor_ = tex.SetVertexColor
-				tex.SetVertexColor = function(tex, ...)
+			local texture = check:GetCheckedTexture()
+			if texture then
+				texture:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
+				texture.SetTexture = E.noop
+				F.SetVertexColorWithDB(texture, db.classColor and W.ClassColor or db.color)
+				texture.SetVertexColor_ = texture.SetVertexColor
+				texture.SetVertexColor = function(tex, ...)
 					local isDefaultColor = self.IsUglyYellow(...)
 
 					-- Let skin use its own logic to colorize the check texture
@@ -87,10 +87,10 @@ function WS:HandleCheckBox(_, check)
 		end
 
 		if check.GetDisabledTexture then
-			local tex = check:GetDisabledTexture()
-			if tex then
-				tex.SetTexture_ = tex.SetTexture
-				tex.SetTexture = function(tex, texPath)
+			local texture = check:GetDisabledTexture()
+			if texture then
+				texture.SetTexture_ = texture.SetTexture
+				texture.SetTexture = function(tex, texPath)
 					if not texPath then
 						return
 					end

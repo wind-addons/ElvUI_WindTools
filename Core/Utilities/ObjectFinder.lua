@@ -19,17 +19,17 @@ ObjectFinder.__index = ObjectFinder
 --- @param parent UIObject? Parent object to search within (defaults to UIParent)
 --- @return table New ObjectFinder instance
 function ObjectFinder:New(parent)
-	local self = setmetatable({}, ObjectFinder)
+	local o = setmetatable({}, ObjectFinder)
 
 	-- Initialize properties with proper defaults
-	self.parent = parent or _G.UIParent
-	self.requests = {}
-	self.found = {}
-	self.objectsPerFrame = 8
-	self.isRunning = false
-	self.coroutine = nil
+	o.parent = parent or _G.UIParent
+	o.requests = {}
+	o.found = {}
+	o.objectsPerFrame = 8
+	o.isRunning = false
+	o.coroutine = nil
 
-	return self
+	return o
 end
 
 --- Add a search request to the queue

@@ -56,7 +56,7 @@ function F.Profiles.GetOutputString(profile, private)
 
 	local privateData = {}
 	if private then
-		local privateData = E:CopyTable(privateData, E.private.WT, generatedKeys.private)
+		privateData = E:CopyTable(privateData, E.private.WT, generatedKeys.private)
 		privateData = E:RemoveTableDuplicates(privateData, V)
 	end
 

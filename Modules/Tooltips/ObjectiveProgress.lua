@@ -70,11 +70,11 @@ local function addObjectiveProgress(tt, data)
 end
 
 function T:ObjectiveProgress()
-	if not E.private.WT.tooltips.objectiveProgress then
+	if not E.private.WT.tooltips.objectiveProgress.enable then
 		return
 	end
 
-	accuracy = E.private.WT.tooltips.objectiveProgressAccuracy
+	accuracy = E.private.WT.tooltips.objectiveProgress.accuracy
 
 	TooltipDataProcessor_AddTooltipPostCall(Enum_TooltipDataType_Unit, addObjectiveProgress)
 

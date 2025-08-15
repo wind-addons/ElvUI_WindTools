@@ -4,6 +4,7 @@ local format = format
 local pairs = pairs
 local print = print
 local tonumber = tonumber
+local type = type
 
 local isFirstLine = true
 
@@ -195,13 +196,28 @@ function W:UpdateScripts()
 	end
 
 	if privateVersion < 3.97 or profileVersion < 3.97 then
-		if E.private.WT and E.private.WT.tooltips and E.private.WT.tooltips.icon ~= nil then
-			E.private.WT.tooltips.titleIcon.enable = E.private.WT.tooltips.icon
-			E.private.WT.tooltips.icon = nil
+		if E.private.WT and E.private.WT.tooltips then
+			local db = E.private.WT.tooltips
+
+			if db.icon ~= nil then
+				db.titleIcon.enable = db.icon
+				db.icon = nil
+			end
+
+			if type(db.objectiveProgress) ~= "table" then
+				local saved = db.objectiveProgress
+				db.objectiveProgress = {}
+
+				E:CopyTable(db.objectiveProgress, V.tooltips.objectiveProgress)
+				if type(saved) == "boolean" then
+					db.objectiveProgress.enable = saved
+				end
+			end
 		end
 
 		if E.db.WT and E.db.WT.tooltips then
 			local db = E.db.WT.tooltips
+
 			if db.yOffsetOfHealthBar ~= nil and db.elvUITweaks and db.elvUITweaks.healthBar then
 				db.elvUITweaks.healthBar.barYOffset = db.yOffsetOfHealthBar
 				db.yOffsetOfHealthBar = nil
@@ -217,6 +233,7 @@ function W:UpdateScripts()
 					db.elvUITweaks.raceIcon.width = db.elvUITweaks.raceIcon.iconWidth
 					db.elvUITweaks.raceIcon.iconWidth = nil
 				end
+
 				if db.elvUITweaks.raceIcon.iconHeight ~= nil then
 					db.elvUITweaks.raceIcon.height = db.elvUITweaks.raceIcon.iconHeight
 					db.elvUITweaks.raceIcon.iconHeight = nil
@@ -228,6 +245,7 @@ function W:UpdateScripts()
 					db.elvUITweaks.specIcon.width = db.elvUITweaks.specIcon.iconWidth
 					db.elvUITweaks.specIcon.iconWidth = nil
 				end
+
 				if db.elvUITweaks.specIcon.iconHeight ~= nil then
 					db.elvUITweaks.specIcon.height = db.elvUITweaks.specIcon.iconHeight
 					db.elvUITweaks.specIcon.iconHeight = nil
@@ -242,7 +260,9 @@ function W:UpdateScripts()
 						db.elvUITweaks.betterMythicPlusInfo.icon,
 						P.tooltips.elvUITweaks.betterMythicPlusInfo.icon
 					)
-					db.elvUITweaks.betterMythicPlusInfo.icon.enable = saved
+					if type(saved) == "boolean" then
+						db.elvUITweaks.betterMythicPlusInfo.icon.enable = saved
+					end
 				end
 
 				if db.elvUITweaks.betterMythicPlusInfo.iconWidth ~= nil then
@@ -261,7 +281,9 @@ function W:UpdateScripts()
 					local saved = db.keystone.icon
 					db.keystone.icon = {}
 					E:CopyTable(db.keystone.icon, P.tooltips.keystone.icon)
-					db.keystone.icon.enable = saved
+					if type(saved) == "boolean" then
+						db.keystone.icon.enable = saved
+					end
 				end
 
 				if db.keystone.iconWidth ~= nil then

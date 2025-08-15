@@ -642,28 +642,62 @@ options.reset = {
 					name = L["General"],
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["General"], nil, function()
-							E.private.WT.tooltips.icon = V.tooltips.icon
+							E.private.WT.tooltips.modifier = V.tooltips.modifier
+							E.private.WT.tooltips.titleIcon = V.tooltips.titleIcon
 							E.private.WT.tooltips.factionIcon = V.tooltips.factionIcon
 							E.private.WT.tooltips.petIcon = V.tooltips.petIcon
 							E.private.WT.tooltips.petId = V.tooltips.petId
 							E.private.WT.tooltips.tierSet = V.tooltips.tierSet
-							E.private.WT.tooltips.covenant = V.tooltips.covenant
-							E.private.WT.tooltips.dominationRank = V.tooltips.dominationRank
-							E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
-							E.private.WT.tooltips.objectiveProgressAccuracy = V.tooltips.objectiveProgressAccuracy
-							E.db.WT.tooltips.yOffsetOfHealthBar = P.tooltips.yOffsetOfHealthBar
-							E.db.WT.tooltips.yOffsetOfHealthText = P.tooltips.yOffsetOfHealthText
-							E.db.WT.tooltips.groupInfo = P.tooltips.groupInfo
+						end)
+					end,
+				},
+				elvUITweaks = {
+					order = 2,
+					type = "execute",
+					name = L["ElvUI Tooltip Tweaks"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["ElvUI Tooltip Tweaks"], nil, function()
+							E.db.WT.tooltips.elvUITweaks = P.tooltips.elvUITweaks
 						end)
 					end,
 				},
 				progression = {
-					order = 2,
+					order = 3,
 					type = "execute",
 					name = L["Progression"],
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Progression"], nil, function()
 							E.private.WT.tooltips.progression = V.tooltips.progression
+						end)
+					end,
+				},
+				keystone = {
+					order = 4,
+					type = "execute",
+					name = L["Keystone"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Keystone"], nil, function()
+							E.db.WT.tooltips.keystone = P.tooltips.keystone
+						end)
+					end,
+				},
+				groupInfo = {
+					order = 5,
+					type = "execute",
+					name = L["Group Info"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Group Info"], nil, function()
+							E.db.WT.tooltips.groupInfo = P.tooltips.groupInfo
+						end)
+					end,
+				},
+				objectiveProgress = {
+					order = 6,
+					type = "execute",
+					name = L["Objective Progress"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Objective Progress"], nil, function()
+							E.private.WT.tooltips.objectiveProgress = V.tooltips.objectiveProgress
 						end)
 					end,
 				},
@@ -818,6 +852,7 @@ options.reset = {
 							E.db.WT.misc.disableTalkingHead = P.misc.disableTalkingHead
 							E.db.WT.misc.hideCrafter = P.misc.hideCrafter
 							E.db.WT.misc.noLootPanel = P.misc.noLootPanel
+							E.db.WT.misc.reshiiWrapsUpgrade = P.misc.reshiiWrapsUpgrade
 						end)
 					end,
 				},
@@ -899,6 +934,16 @@ options.reset = {
 					func = function()
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Watched Cutscene"], nil, function()
 							E.global.WT.misc.watched.movies = {}
+						end)
+					end,
+				},
+				exitPhaseDiving = {
+					order = 10,
+					type = "execute",
+					name = L["Exit Phase Diving"],
+					func = function()
+						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Exit Phase Diving"], nil, function()
+							E.db.WT.misc.exitPhaseDiving = P.misc.exitPhaseDiving
 						end)
 					end,
 				},

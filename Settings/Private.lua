@@ -637,8 +637,10 @@ V.tooltips = {
 	petIcon = true,
 	petId = true,
 	tierSet = true,
-	objectiveProgress = true,
-	objectiveProgressAccuracy = 1,
+	objectiveProgress = {
+		enable = true,
+		accuracy = 1,
+	},
 	progression = {
 		enable = true,
 		disableInCombat = true,

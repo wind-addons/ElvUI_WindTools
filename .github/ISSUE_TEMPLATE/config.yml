@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 🙋‍♂️ Ask a question
-    url: https://discord.gg/CMDsBmhvyW
-    about: Feel free to ask any questions on our Discord server.
   - name: 🙋‍♂️ 咨询问题
     url: https://discord.gg/CMDsBmhvyW
     about: 如果您有任何问题，请随时在我们的 Discord 服务器上询问。
+  - name: 🙋‍♂️ Ask a question
+    url: https://discord.gg/CMDsBmhvyW
+    about: Feel free to ask any questions on our Discord server.

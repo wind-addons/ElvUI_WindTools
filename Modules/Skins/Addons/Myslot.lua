@@ -30,7 +30,7 @@ function S:Myslot()
 	for _, child in pairs({ frame:GetChildren() }) do
 		local objType = child:GetObjectType()
 		if objType == "Button" then
-			self:ESProxy("HandleButton", child)
+			self:Proxy("HandleButton", child)
 			if isAlmost(child:GetWidth(), 25) and child:GetNumPoints() == 1 then
 				local point, relativeTo, relativePoint, xOfs, yOfs = child:GetPoint(1)
 				-- Import DropDownBox, Export DropDownBox
@@ -41,7 +41,7 @@ function S:Myslot()
 				end
 			end
 		elseif objType == "EditBox" then
-			self:ESProxy("HandleEditBox", child)
+			self:Proxy("HandleEditBox", child)
 		elseif objType == "Frame" then
 			if isAlmost(child:GetWidth(), 600) and isAlmost(child:GetHeight(), 455) then
 				child:SetBackdrop(nil)
@@ -49,12 +49,12 @@ function S:Myslot()
 				child.backdrop:SetInside(child, 2, 2)
 				for _, subChild in pairs({ child:GetChildren() }) do
 					if subChild:GetObjectType() == "ScrollFrame" then
-						self:ESProxy("HandleScrollBar", subChild.ScrollBar)
+						self:Proxy("HandleScrollBar", subChild.ScrollBar)
 						break
 					end
 				end
 			elseif child.initialize and child.Icon then
-				self:ESProxy("HandleDropDownBox", child, 220, nil, true)
+				self:Proxy("HandleDropDownBox", child, 220, nil, true)
 				child:ClearAllPoints()
 				child:SetPoint("TOPLEFT", frame, 7, -45)
 			end

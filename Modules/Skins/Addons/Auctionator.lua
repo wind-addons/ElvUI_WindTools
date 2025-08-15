@@ -25,7 +25,7 @@ local function HandleListIcon(frame)
 				local cell = row.cells and row.cells[j]
 				if cell and cell.Icon then
 					if not cell.__windSkin then
-						S:ESProxy("HandleIcon", cell.Icon)
+						S:Proxy("HandleIcon", cell.Icon)
 
 						if cell.IconBorder then
 							cell.IconBorder:Kill()
@@ -62,7 +62,7 @@ local function HandleHeaders(frame)
 end
 
 local function HandleTab(tab)
-	S:ESProxy("HandleTab", tab)
+	S:Proxy("HandleTab", tab)
 	tab.Text:ClearAllPoints()
 	tab.Text:SetPoint("CENTER", tab, "CENTER", 0, 0)
 	tab.Text.__SetPoint = tab.Text.SetPoint
@@ -70,14 +70,14 @@ local function HandleTab(tab)
 end
 
 local function buyIconName(frame)
-	S:ESProxy("HandleIcon", frame.Icon, true)
-	S:ESProxy("HandleIconBorder", frame.QualityBorder, frame.Icon.backdrop)
+	S:Proxy("HandleIcon", frame.Icon, true)
+	S:Proxy("HandleIconBorder", frame.QualityBorder, frame.Icon.backdrop)
 end
 
 local function viewGroup(frame)
 	if frame.GroupTitle then
 		frame.GroupTitle:StripTextures()
-		S:ESProxy("HandleButton", frame.GroupTitle)
+		S:Proxy("HandleButton", frame.GroupTitle)
 	end
 end
 
@@ -119,48 +119,48 @@ local function viewItem(frame)
 	frame:GetPushedTexture():SetTexture(E.Media.Textures.White8x8)
 	frame:GetPushedTexture():SetVertexColor(1, 1, 0, 0.3)
 
-	S:ESProxy("HandleIcon", frame.Icon, true)
-	S:ESProxy("HandleIconBorder", frame.IconBorder, frame.Icon.backdrop)
+	S:Proxy("HandleIcon", frame.Icon, true)
+	S:Proxy("HandleIconBorder", frame.IconBorder, frame.Icon.backdrop)
 end
 
 local function configRadioButtonGroup(frame)
 	for _, child in pairs(frame.radioButtons) do
-		S:ESProxy("HandleRadioButton", child.RadioButton)
+		S:Proxy("HandleRadioButton", child.RadioButton)
 	end
 end
 
 local function configCheckbox(frame)
-	S:ESProxy("HandleCheckBox", frame.CheckBox)
+	S:Proxy("HandleCheckBox", frame.CheckBox)
 end
 
 local function dropDown(frame)
-	S:ESProxy("HandleDropDownBox", frame.DropDown, 150)
+	S:Proxy("HandleDropDownBox", frame.DropDown, 150)
 end
 
 local function keyBindingConfig(frame)
-	S:ESProxy("HandleButton", frame.Button)
+	S:Proxy("HandleButton", frame.Button)
 end
 
 local function bagUse(frame)
 	frame.View:CreateBackdrop("Transparent")
-	S:ESProxy("HandleTrimScrollBar", frame.View.ScrollBar)
+	S:Proxy("HandleTrimScrollBar", frame.View.ScrollBar)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child ~= frame.View then
-			S:ESProxy("HandleButton", child)
+			S:Proxy("HandleButton", child)
 		end
 	end
 end
 
 local function configNumericInput(frame)
-	S:ESProxy("HandleEditBox", frame.InputBox)
+	S:Proxy("HandleEditBox", frame.InputBox)
 	frame.InputBox:SetTextInsets(0, 0, 0, 0)
 end
 
 local function configMoneyInput(frame)
-	S:ESProxy("HandleEditBox", frame.MoneyInput.CopperBox)
-	S:ESProxy("HandleEditBox", frame.MoneyInput.GoldBox)
-	S:ESProxy("HandleEditBox", frame.MoneyInput.SilverBox)
+	S:Proxy("HandleEditBox", frame.MoneyInput.CopperBox)
+	S:Proxy("HandleEditBox", frame.MoneyInput.GoldBox)
+	S:Proxy("HandleEditBox", frame.MoneyInput.SilverBox)
 
 	frame.MoneyInput.CopperBox:SetTextInsets(3, 0, 0, 0)
 	frame.MoneyInput.GoldBox:SetTextInsets(3, 0, 0, 0)
@@ -179,18 +179,18 @@ local function configMoneyInput(frame)
 end
 
 local function configMinMax(frame)
-	S:ESProxy("HandleEditBox", frame.MinBox)
-	S:ESProxy("HandleEditBox", frame.MaxBox)
+	S:Proxy("HandleEditBox", frame.MinBox)
+	S:Proxy("HandleEditBox", frame.MaxBox)
 end
 
 local function filterKeySelector(frame)
-	S:ESProxy("HandleDropDownBox", frame.DropDown, frame:GetWidth())
+	S:Proxy("HandleDropDownBox", frame.DropDown, frame:GetWidth())
 end
 
 local function undercutScan(frame)
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("Button") then
-			S:ESProxy("HandleButton", child)
+			S:Proxy("HandleButton", child)
 		end
 	end
 end
@@ -198,18 +198,18 @@ end
 local function saleItem(frame)
 	frame.Icon:StripTextures()
 
-	S:ESProxy("HandleIcon", frame.Icon.Icon, true)
-	S:ESProxy("HandleIconBorder", frame.Icon.IconBorder, frame.Icon.Icon.backdrop)
+	S:Proxy("HandleIcon", frame.Icon.Icon, true)
+	S:Proxy("HandleIconBorder", frame.Icon.IconBorder, frame.Icon.Icon.backdrop)
 
-	S:ESProxy("HandleButton", frame.MaxButton)
+	S:Proxy("HandleButton", frame.MaxButton)
 	frame.MaxButton:ClearAllPoints()
 	frame.MaxButton:SetPoint("TOPLEFT", frame.Quantity, "TOPRIGHT", 0, 0)
-	S:ESProxy("HandleButton", frame.PostButton)
-	S:ESProxy("HandleButton", frame.SkipButton)
+	S:Proxy("HandleButton", frame.PostButton)
+	S:Proxy("HandleButton", frame.SkipButton)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("Button") and child.Icon then
-			S:ESProxy("HandleButton", child)
+			S:Proxy("HandleButton", child)
 		end
 	end
 end
@@ -220,7 +220,7 @@ local function bottomTabButtons(frame)
 		local tabButton = _G[tabButtonFrameName]
 
 		if tabButton and not tabButton.__windSkin then
-			S:ESProxy("HandleTab", tabButton, nil, "Transparent")
+			S:Proxy("HandleTab", tabButton, nil, "Transparent")
 			S:ReskinTab(tabButton)
 			tabButton.Text:SetWidth(tabButton:GetWidth())
 			if details.tabOrder > 1 then
@@ -243,33 +243,33 @@ end
 
 local function resultsListing(frame)
 	frame.ScrollArea:SetTemplate("Transparent")
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollArea.ScrollBar)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollArea.ScrollBar)
 
 	HandleHeaders(frame)
 	hooksecurefunc(frame, "UpdateTable", HandleHeaders)
 end
 
 local function shoppingTabFrame(frame)
-	S:ESProxy("HandleButton", frame.NewListButton)
-	S:ESProxy("HandleButton", frame.ImportButton)
-	S:ESProxy("HandleButton", frame.ExportButton)
-	S:ESProxy("HandleButton", frame.ExportCSV)
+	S:Proxy("HandleButton", frame.NewListButton)
+	S:Proxy("HandleButton", frame.ImportButton)
+	S:Proxy("HandleButton", frame.ExportButton)
+	S:Proxy("HandleButton", frame.ExportCSV)
 
 	frame.ShoppingResultsInset:StripTextures()
 end
 
 local function shoppingTabSearchOptions(frame)
-	S:ESProxy("HandleEditBox", frame.SearchString)
-	S:ESProxy("HandleButton", frame.ResetSearchStringButton)
-	S:ESProxy("HandleButton", frame.SearchButton)
-	S:ESProxy("HandleButton", frame.MoreButton)
-	S:ESProxy("HandleButton", frame.AddToListButton)
+	S:Proxy("HandleEditBox", frame.SearchString)
+	S:Proxy("HandleButton", frame.ResetSearchStringButton)
+	S:Proxy("HandleButton", frame.SearchButton)
+	S:Proxy("HandleButton", frame.MoreButton)
+	S:Proxy("HandleButton", frame.AddToListButton)
 end
 
 local function shoppingTabContainer(frame)
 	frame.Inset:StripTextures()
 	frame.Inset:SetTemplate("Transparent")
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function shoppingTabContainerTabs(frame)
@@ -283,11 +283,11 @@ local function sellingTab(frame)
 end
 
 local function cancellingFrame(frame)
-	S:ESProxy("HandleEditBox", frame.SearchFilter)
+	S:Proxy("HandleEditBox", frame.SearchFilter)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("Button") and child.Icon then
-			S:ESProxy("HandleButton", child)
+			S:Proxy("HandleButton", child)
 		end
 	end
 
@@ -299,12 +299,12 @@ local function configTab(frame)
 	frame.Bg:SetTexture(nil)
 	frame.NineSlice:SetTemplate("Transparent")
 
-	S:ESProxy("HandleButton", frame.OptionsButton)
-	S:ESProxy("HandleButton", frame.ScanButton)
+	S:Proxy("HandleButton", frame.OptionsButton)
+	S:Proxy("HandleButton", frame.ScanButton)
 
-	S:ESProxy("HandleEditBox", frame.ContributeLink.InputBox)
-	S:ESProxy("HandleEditBox", frame.DiscordLink.InputBox)
-	S:ESProxy("HandleEditBox", frame.BugReportLink.InputBox)
+	S:Proxy("HandleEditBox", frame.ContributeLink.InputBox)
+	S:Proxy("HandleEditBox", frame.DiscordLink.InputBox)
+	S:Proxy("HandleEditBox", frame.BugReportLink.InputBox)
 end
 
 local function shoppingItem(frame)
@@ -315,14 +315,14 @@ local function shoppingItem(frame)
 	MF:InternalHandle(frame, nil, false)
 
 	local function reskinResetButton(f, anchor, x, y)
-		S:ESProxy("HandleButton", f)
+		S:Proxy("HandleButton", f)
 		f:Size(20, 20)
 		f:ClearAllPoints()
 		f:SetPoint("LEFT", anchor, "RIGHT", x, y)
 	end
 
-	S:ESProxy("HandleEditBox", frame.SearchContainer.SearchString)
-	S:ESProxy("HandleCheckBox", frame.SearchContainer.IsExact)
+	S:Proxy("HandleEditBox", frame.SearchContainer.SearchString)
+	S:Proxy("HandleCheckBox", frame.SearchContainer.IsExact)
 
 	reskinResetButton(frame.SearchContainer.ResetSearchStringButton, frame.SearchContainer.SearchString, 3, 0)
 	reskinResetButton(frame.FilterKeySelector.ResetButton, frame.FilterKeySelector, 0, 3)
@@ -334,11 +334,11 @@ local function shoppingItem(frame)
 	reskinResetButton(frame.ExpansionContainer.ResetExpansionButton, frame.ExpansionContainer, 200, 5)
 	reskinResetButton(frame.TierContainer.ResetTierButton, frame.TierContainer, 200, 5)
 
-	S:ESProxy("HandleButton", frame.Finished)
-	S:ESProxy("HandleButton", frame.Cancel)
-	S:ESProxy("HandleButton", frame.ResetAllButton)
+	S:Proxy("HandleButton", frame.Finished)
+	S:Proxy("HandleButton", frame.Cancel)
+	S:Proxy("HandleButton", frame.ResetAllButton)
 
-	S:ESProxy("HandleCloseButton", frame.CloseButton)
+	S:Proxy("HandleCloseButton", frame.CloseButton)
 end
 
 local function exportTextFrame(frame)
@@ -346,8 +346,8 @@ local function exportTextFrame(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	S:ESProxy("HandleButton", frame.Close)
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleButton", frame.Close)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function listExportFrame(frame)
@@ -355,11 +355,11 @@ local function listExportFrame(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	S:ESProxy("HandleButton", frame.SelectAll)
-	S:ESProxy("HandleButton", frame.UnselectAll)
-	S:ESProxy("HandleButton", frame.Export)
-	S:ESProxy("HandleCloseButton", frame.CloseDialog)
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleButton", frame.SelectAll)
+	S:Proxy("HandleButton", frame.UnselectAll)
+	S:Proxy("HandleButton", frame.Export)
+	S:Proxy("HandleCloseButton", frame.CloseDialog)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function listImportFrame(frame)
@@ -367,9 +367,9 @@ local function listImportFrame(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	S:ESProxy("HandleButton", frame.Import)
-	S:ESProxy("HandleCloseButton", frame.CloseDialog)
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleButton", frame.Import)
+	S:Proxy("HandleCloseButton", frame.CloseDialog)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 end
 
 local function splashFrame(frame)
@@ -377,9 +377,9 @@ local function splashFrame(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	S:ESProxy("HandleCloseButton", frame.Close)
-	S:ESProxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
-	S:ESProxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:Proxy("HandleCloseButton", frame.Close)
+	S:Proxy("HandleCheckBox", frame.HideCheckbox.CheckBox)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
 
 	if E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning then
 		W.Modules.MoveFrames:HandleFrame(frame)
@@ -391,24 +391,24 @@ local function itemHistoryFrame(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	S:ESProxy("HandleButton", frame.Close)
-	S:ESProxy("HandleButton", frame.Dock)
+	S:Proxy("HandleButton", frame.Close)
+	S:Proxy("HandleButton", frame.Dock)
 end
 
 local function configSellingFrame(frame)
-	S:ESProxy("HandleButton", frame.UnhideAll)
+	S:Proxy("HandleButton", frame.UnhideAll)
 end
 
 local function craftingInfoObjectiveTrackerFrame(frame)
-	S:ESProxy("HandleButton", frame.SearchButton)
+	S:Proxy("HandleButton", frame.SearchButton)
 end
 
 local function craftingInfoProfessionsFrame(frame)
-	S:ESProxy("HandleButton", frame.SearchButton)
+	S:Proxy("HandleButton", frame.SearchButton)
 end
 
 local function buyCommodity(frame)
-	S:ESProxy("HandleButton", frame.BackButton)
+	S:Proxy("HandleButton", frame.BackButton)
 	frame:StripTextures()
 
 	local container = frame.DetailsContainer
@@ -416,13 +416,13 @@ local function buyCommodity(frame)
 		return
 	end
 
-	S:ESProxy("HandleButton", container.BuyButton)
-	S:ESProxy("HandleEditBox", container.Quantity)
+	S:Proxy("HandleButton", container.BuyButton)
+	S:Proxy("HandleEditBox", container.Quantity)
 	container.Quantity:SetTextInsets(0, 0, 0, 0)
 
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("Button") and child.iconAtlas and child.iconAtlas == "UI-RefreshButton" then
-			S:ESProxy("HandleButton", child)
+			S:Proxy("HandleButton", child)
 			break
 		end
 	end
@@ -434,13 +434,13 @@ local function reskinDialog(frame)
 	S:CreateShadow(frame)
 
 	if frame.editBox then
-		S:ESProxy("HandleEditBox", frame.editBox)
+		S:Proxy("HandleEditBox", frame.editBox)
 		frame.editBox:SetTextInsets(0, 0, 0, 0)
 	end
 
 	for _, buttonName in pairs({ "acceptButton", "cancelButton", "AcceptButton", "CancelButton" }) do
 		if frame[buttonName] then
-			S:ESProxy("HandleButton", frame[buttonName])
+			S:Proxy("HandleButton", frame[buttonName])
 		end
 	end
 

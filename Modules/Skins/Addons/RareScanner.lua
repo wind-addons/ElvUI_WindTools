@@ -23,17 +23,17 @@ function S:RareScanner()
 	scannerButton:SetScript("OnEnter", nil)
 	scannerButton:SetScript("OnLeave", nil)
 
-	self:ESProxy("HandleButton", scannerButton)
+	self:Proxy("HandleButton", scannerButton)
 
 	if scannerButton.CloseButton then
-		self:ESProxy("HandleCloseButton", scannerButton.CloseButton)
+		self:Proxy("HandleCloseButton", scannerButton.CloseButton)
 		scannerButton.CloseButton:ClearAllPoints()
 		scannerButton.CloseButton:SetSize(20, 20)
 		scannerButton.CloseButton:SetPoint("TOPRIGHT", -3, -3)
 	end
 
 	if scannerButton.FilterEntityButton then
-		self:ESProxy("HandleButton", scannerButton.FilterEntityButton)
+		self:Proxy("HandleButton", scannerButton.FilterEntityButton)
 		scannerButton.FilterEntityButton:SetNormalTexture(W.Media.Icons.buttonMinus, true)
 		scannerButton.FilterEntityButton:SetPushedTexture(W.Media.Icons.buttonMinus, true)
 		scannerButton.FilterEntityButton:ClearAllPoints()
@@ -42,7 +42,7 @@ function S:RareScanner()
 	end
 
 	if scannerButton.UnfilterEnabledButton then
-		self:ESProxy("HandleButton", scannerButton.UnfilterEnabledButton)
+		self:Proxy("HandleButton", scannerButton.UnfilterEnabledButton)
 		scannerButton.UnfilterEnabledButton:SetNormalTexture([[Interface\WorldMap\Skull_64]], true)
 		scannerButton.UnfilterEnabledButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 0.5)
 		scannerButton.UnfilterEnabledButton:SetPushedTexture([[Interface\WorldMap\Skull_64]], true)

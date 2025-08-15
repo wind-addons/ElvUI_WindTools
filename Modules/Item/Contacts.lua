@@ -302,7 +302,7 @@ function CT:ConstructNameButtons()
 			GameTooltip:Hide()
 		end)
 
-		S:ESProxy("HandleButton", button)
+		S:Proxy("HandleButton", button)
 
 		button:Hide()
 		self.frame.nameButtons[i] = button
@@ -355,7 +355,7 @@ function CT:ConstructPageController()
 		end
 	end)
 
-	S:ESProxy("HandleSliderFrame", slider)
+	S:Proxy("HandleSliderFrame", slider)
 
 	local pageIndicater = slider:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	pageIndicater:Point("BOTTOM", slider, "TOP", 0, 6)

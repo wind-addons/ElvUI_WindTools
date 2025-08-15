@@ -68,7 +68,7 @@ function DI:ShowFillInButton(dialog)
 	if not self.fillInButton then
 		local button = CreateFrame("Button", "MyButton", E.UIParent, "UIPanelButtonTemplate")
 		button:SetFrameStrata("TOOLTIP")
-		S:ESProxy("HandleButton", button)
+		S:Proxy("HandleButton", button)
 		self.fillInButton = button
 	end
 

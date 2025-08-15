@@ -13,8 +13,8 @@ function S:Simulationcraft_SkinMainFrame()
 	_G.SimcFrame:SetTemplate("Transparent")
 	self:CreateShadow(_G.SimcFrame)
 
-	self:ESProxy("HandleButton", _G.SimcFrameButton)
-	self:ESProxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
+	self:Proxy("HandleButton", _G.SimcFrameButton)
+	self:Proxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
 
 	F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
 	F.SetFontOutline(_G.SimcEditBox)

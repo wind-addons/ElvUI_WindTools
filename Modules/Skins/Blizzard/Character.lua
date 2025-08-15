@@ -44,7 +44,7 @@ function S:Blizzard_TokenUI()
 
 	-- local button = _G.TokenFrame.CurrencyTransferLogToggleButton
 	-- if button then
-	-- 	self:ESProxy("HandleButton", button)
+	-- 	self:Proxy("HandleButton", button)
 	-- 	button:SetNormalTexture(E.Media.Textures.ArrowUp)
 	-- 	button:GetNormalTexture():SetRotation(ES.ArrowRotation.right)
 	-- 	button:GetNormalTexture():SetInside(button, 3, 3)

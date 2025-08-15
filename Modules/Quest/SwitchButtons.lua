@@ -14,7 +14,7 @@ function SB:CreateButton(text, tooltipText)
 		return
 	end
 	local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
-	S:ESProxy("HandleCheckBox", button)
+	S:Proxy("HandleCheckBox", button)
 	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 		S:CreateBackdropShadow(button)
 	end

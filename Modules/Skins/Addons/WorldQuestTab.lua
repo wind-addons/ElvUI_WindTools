@@ -63,13 +63,13 @@ local function reskinContainer(container)
 	container.Background:Hide()
 	container:CreateBackdrop("Transparent")
 	container.backdrop:SetOutside(container.Background)
-	S:ESProxy("HandleTrimScrollBar", container.ScrollBar)
+	S:Proxy("HandleTrimScrollBar", container.ScrollBar)
 end
 
 local function reskinQuestContainer(container)
 	reskinContainer(container)
-	S:ESProxy("HandleDropDownBox", container.SortDropdown)
-	S:ESProxy("HandleButton", container.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
+	S:Proxy("HandleDropDownBox", container.SortDropdown)
+	S:Proxy("HandleButton", container.FilterDropdown, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
 	container.FilterBar:StripTextures()
 end
 
@@ -77,7 +77,7 @@ local function reskinWhatsNew(container)
 	reskinContainer(container)
 
 	container.CloseButton:Size(20, 20)
-	S:ESProxy("HandleCloseButton", container.CloseButton)
+	S:Proxy("HandleCloseButton", container.CloseButton)
 end
 
 local function reskinSettings(container)
@@ -99,7 +99,7 @@ local function reskinFlightMapContainer(frame)
 	end)
 
 	if _G.WQT_FlightMapContainerButton then
-		S:ESProxy("HandleButton", _G.WQT_FlightMapContainerButton)
+		S:Proxy("HandleButton", _G.WQT_FlightMapContainerButton)
 		_G.WQT_FlightMapContainerButton:SetTemplate("Transparent")
 		S:CreateShadow(_G.WQT_FlightMapContainerButton)
 	end
@@ -107,7 +107,7 @@ end
 
 local function settingsCategory(frame)
 	if frame.ExpandIcon then
-		S:ESProxy("HandleButton", frame, true, nil, nil, true)
+		S:Proxy("HandleButton", frame, true, nil, nil, true)
 		local container = CreateFrame("Frame", nil, frame:GetParent())
 		frame.Highlight:SetAlpha(0)
 		frame.backdrop:SetInside(frame, 10, 5)
@@ -141,31 +141,31 @@ local function settingsCategory(frame)
 end
 
 local function settingsCheckbox(frame)
-	S:ESProxy("HandleCheckBox", frame.CheckBox)
+	S:Proxy("HandleCheckBox", frame.CheckBox)
 end
 
 local function settingsSlider(frame)
-	S:ESProxy("HandleStepSlider", frame.SliderWithSteppers)
-	S:ESProxy("HandleNextPrevButton", frame.SliderWithSteppers.Back, "left")
-	S:ESProxy("HandleNextPrevButton", frame.SliderWithSteppers.Forward, "right")
-	S:ESProxy("HandleEditBox", frame.TextBox)
+	S:Proxy("HandleStepSlider", frame.SliderWithSteppers)
+	S:Proxy("HandleNextPrevButton", frame.SliderWithSteppers.Back, "left")
+	S:Proxy("HandleNextPrevButton", frame.SliderWithSteppers.Forward, "right")
+	S:Proxy("HandleEditBox", frame.TextBox)
 end
 
 local function settingsColor(frame)
-	S:ESProxy("HandleButton", frame.Picker)
-	S:ESProxy("HandleButton", frame.ResetButton)
+	S:Proxy("HandleButton", frame.Picker)
+	S:Proxy("HandleButton", frame.ResetButton)
 end
 
 local function settingsDropDown(frame)
-	S:ESProxy("HandleDropDownBox", frame.Dropdown, frame:GetWidth())
+	S:Proxy("HandleDropDownBox", frame.Dropdown, frame:GetWidth())
 end
 
 local function settingsButton(frame)
-	S:ESProxy("HandleButton", frame.Button)
+	S:Proxy("HandleButton", frame.Button)
 end
 
 local function settingsTextInput(frame)
-	S:ESProxy("HandleEditBox", frame.TextBox)
+	S:Proxy("HandleEditBox", frame.TextBox)
 end
 
 local function listButton(button)

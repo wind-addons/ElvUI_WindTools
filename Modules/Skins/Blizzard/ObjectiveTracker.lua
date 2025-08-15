@@ -43,7 +43,7 @@ function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
 		frame:GetNormalTexture():SetAlpha(0)
 		frame:GetPushedTexture():SetAlpha(0)
 		frame:GetHighlightTexture():SetAlpha(0)
-		self:ESProxy("HandleButton", frame, nil, nil, nil, true)
+		self:Proxy("HandleButton", frame, nil, nil, nil, true)
 		frame.backdrop:SetInside(frame, 4, 4)
 		self:CreateBackdropShadow(frame)
 		frame.__windSkin = true

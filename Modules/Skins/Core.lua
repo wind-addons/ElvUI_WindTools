@@ -522,7 +522,7 @@ function S:Initialize()
 	end
 end
 
-function S:ESProxy(funcName, frame, ...)
+function S:Proxy(funcName, frame, ...)
 	if not frame then
 		F.Developer.ThrowError("ESProxy: frame is nil")
 		return

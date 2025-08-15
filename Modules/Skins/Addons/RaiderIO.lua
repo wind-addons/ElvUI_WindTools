@@ -36,7 +36,7 @@ function S:RaiderIO_DelayedSkinning()
 		_G.RaiderIO_SearchFrame:StripTextures()
 		_G.RaiderIO_SearchFrame:SetTemplate("Transparent")
 		self:CreateShadow(_G.RaiderIO_SearchFrame)
-		self:ESProxy("HandleCloseButton", _G.RaiderIO_SearchFrame.close)
+		self:Proxy("HandleCloseButton", _G.RaiderIO_SearchFrame.close)
 
 		for _, child in pairs({ _G.RaiderIO_SearchFrame:GetChildren() }) do
 			local numRegions = child:GetNumRegions()
@@ -45,7 +45,7 @@ function S:RaiderIO_DelayedSkinning()
 					if not child.IsSkinned then
 						child:DisableDrawLayer("BACKGROUND")
 						child:DisableDrawLayer("BORDER")
-						self:ESProxy("HandleEditBox", child)
+						self:Proxy("HandleEditBox", child)
 						child:SetTextInsets(2, 2, 2, 2)
 						child:SetHeight(30)
 
@@ -91,14 +91,14 @@ function S:RaiderIO_DelayedSkinning()
 		configFrame:SetTemplate("Transparent")
 		self:CreateShadow(configFrame)
 
-		self:ESProxy("HandleScrollBar", configFrame.scrollbar)
+		self:Proxy("HandleScrollBar", configFrame.scrollbar)
 
 		for _, frame in pairs({ configFrame.buttonFrame:GetChildren() }) do
 			if frame:IsObjectType("Button") then
 				frame:SetScript("OnEnter", nil)
 				frame:SetScript("OnLeave", nil)
 				F.SetFontOutline(frame.text)
-				self:ESProxy("HandleButton", frame)
+				self:Proxy("HandleButton", frame)
 				frame.Center:Show()
 			end
 		end
@@ -107,7 +107,7 @@ function S:RaiderIO_DelayedSkinning()
 			for _, line in pairs({ configFrame.scrollframe.content:GetChildren() }) do
 				for _, child in pairs({ line:GetChildren() }) do
 					if child:IsObjectType("CheckButton") then
-						self:ESProxy("HandleCheckBox", child)
+						self:Proxy("HandleCheckBox", child)
 					end
 				end
 			end
@@ -126,7 +126,7 @@ function S:RaiderIO_GuildWeeklyFrame()
 			F.SetFontOutline(frame.SubTitle)
 			frame.SubTitle:SetShadowColor(0, 0, 0, 0)
 			frame.SwitchGuildBest:SetSize(18, 18)
-			self:ESProxy("HandleCheckBox", frame.SwitchGuildBest)
+			self:Proxy("HandleCheckBox", frame.SwitchGuildBest)
 		end
 	end)
 end
@@ -143,7 +143,7 @@ function S:RaiderIO()
 	if _G.RaiderIO_SettingsPanel then
 		for _, child in pairs({ _G.RaiderIO_SettingsPanel:GetChildren() }) do
 			if child:GetObjectType("Button") then
-				self:ESProxy("HandleButton", child)
+				self:Proxy("HandleButton", child)
 			end
 		end
 	end

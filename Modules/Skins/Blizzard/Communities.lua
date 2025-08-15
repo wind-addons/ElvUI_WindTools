@@ -81,7 +81,7 @@ function S:Blizzard_Communities()
 	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(button)
 		for _, child in next, { button.ScrollTarget:GetChildren() } do
 			if not child.IsSkinned then
-				self:ESProxy("HandleIcon", child.Icon, true)
+				self:Proxy("HandleIcon", child.Icon, true)
 				child:StripTextures()
 				child:CreateBackdrop("Transparent")
 				child.backdrop:ClearAllPoints()

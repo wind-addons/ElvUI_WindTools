@@ -31,7 +31,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
 			icon.Icon:RemoveMaskTexture(icon.Icon:GetMaskTexture(i))
 		end
 
-		self:ESProxy("HandleIcon", icon.Icon, true)
+		self:Proxy("HandleIcon", icon.Icon, true)
 		icon.IconBorder:SetAlpha(0)
 		icon.__windSkin = true
 	end

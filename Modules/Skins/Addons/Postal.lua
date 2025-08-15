@@ -62,12 +62,12 @@ local function postalSelect()
 		return false
 	end
 
-	S:ESProxy("HandleButton", _G.PostalSelectOpenButton)
-	S:ESProxy("HandleButton", _G.PostalSelectReturnButton)
+	S:Proxy("HandleButton", _G.PostalSelectOpenButton)
+	S:Proxy("HandleButton", _G.PostalSelectReturnButton)
 
 	for i = 1, 7 do
 		local checkBox = _G["PostalInboxCB" .. i]
-		S:ESProxy("HandleCheckBox", checkBox)
+		S:Proxy("HandleCheckBox", checkBox)
 	end
 
 	return true
@@ -78,9 +78,9 @@ local function postalOpenAll()
 		return false
 	end
 
-	S:ESProxy("HandleButton", _G.PostalOpenAllButton)
+	S:Proxy("HandleButton", _G.PostalOpenAllButton)
 	if not _G.Postal_OpenAllMenuButton.__windSkin then
-		S:ESProxy("HandleButton", _G.Postal_OpenAllMenuButton)
+		S:Proxy("HandleButton", _G.Postal_OpenAllMenuButton)
 		reskinArrowButton(_G.Postal_OpenAllMenuButton)
 		local height = _G.PostalOpenAllButton:GetHeight()
 		_G.Postal_OpenAllMenuButton:SetSize(height, height)
@@ -98,7 +98,7 @@ local function postalBlackBook()
 		return false
 	end
 	if not _G.Postal_BlackBookButton.__windSkin then
-		S:ESProxy("HandleButton", _G.Postal_BlackBookButton)
+		S:Proxy("HandleButton", _G.Postal_BlackBookButton)
 
 		reskinArrowButton(_G.Postal_BlackBookButton)
 		_G.Postal_BlackBookButton:SetSize(18, 18)
@@ -145,7 +145,7 @@ local function postalForward()
 		return false
 	end
 
-	S:ESProxy("HandleButton", _G.OpenMailForwardButton)
+	S:Proxy("HandleButton", _G.OpenMailForwardButton)
 	return true
 end
 

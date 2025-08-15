@@ -32,7 +32,7 @@ local function createButton(parent, text, width, height, onClick)
 		frame:SetScript("OnClick", onClick)
 	end
 
-	S:ESProxy("HandleButton", frame)
+	S:Proxy("HandleButton", frame)
 
 	return frame
 end
@@ -52,7 +52,7 @@ local function createCloseButton(parent, size, onClick)
 		end)
 	end
 
-	S:ESProxy("HandleCloseButton", frame)
+	S:Proxy("HandleCloseButton", frame)
 
 	return frame
 end
@@ -117,7 +117,7 @@ local function createInput(parent, width, height, onEnterPressed)
 		self:ClearFocus()
 	end)
 
-	S:ESProxy("HandleEditBox", frame)
+	S:Proxy("HandleEditBox", frame)
 
 	return frame
 end

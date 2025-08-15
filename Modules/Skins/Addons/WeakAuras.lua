@@ -15,7 +15,7 @@ function S:WeakAuras_PrintProfile()
 	local frame = _G.WADebugEditBox.Background
 
 	if frame and not frame.__windSkin then
-		self:ESProxy("HandleScrollBar", _G.WADebugEditBoxScrollFrameScrollBar)
+		self:Proxy("HandleScrollBar", _G.WADebugEditBoxScrollFrameScrollBar)
 
 		frame:StripTextures()
 		frame:SetTemplate("Transparent")
@@ -27,7 +27,7 @@ function S:WeakAuras_PrintProfile()
 				local subChild = child:GetChildren()
 				subChild:ClearAllPoints()
 				subChild:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
-				self:ESProxy("HandleCloseButton", subChild)
+				self:Proxy("HandleCloseButton", subChild)
 			end
 		end
 
@@ -38,7 +38,7 @@ end
 function S:ProfilingWindow_UpdateButtons(frame)
 	-- 下方 4 个按钮
 	for _, button in pairs({ frame.statsFrame:GetChildren() }) do
-		self:ESProxy("HandleButton", button)
+		self:Proxy("HandleButton", button)
 	end
 
 	-- 顶部 2 个按钮
@@ -80,7 +80,7 @@ function S:ProfilingWindow_UpdateButtons(frame)
 				button:SetHitRectInsets(6, 6, 7, 7)
 				button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
 			else
-				self:ESProxy("HandleCloseButton", button)
+				self:Proxy("HandleCloseButton", button)
 				button:ClearAllPoints()
 				button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 1)
 			end

@@ -12,7 +12,7 @@ local function ReskinScrollFrameItems(frame, template)
 		for _, btn in pairs(frame.buttons) do
 			if not btn.__windSkin then
 				F.SetFontOutline(btn.Name)
-				S:ESProxy("HandleCheckBox", btn.EnabledButton)
+				S:Proxy("HandleCheckBox", btn.EnabledButton)
 				local btnCheckTex = btn.EnabledButton.CheckedTexture
 				if btnCheckTex then
 					btnCheckTex.__windColorOverride = function(r, g, b)
@@ -31,7 +31,7 @@ local function ReskinScrollFrameItems(frame, template)
 					end
 				end
 				if btn.ExpandOrCollapseButton then
-					S:ESProxy("HandleCollapseTexture", btn.ExpandOrCollapseButton)
+					S:Proxy("HandleCollapseTexture", btn.ExpandOrCollapseButton)
 				end
 				btn.__windSkin = true
 			end
@@ -67,17 +67,17 @@ local function SAMDropDownSkin(frame)
 	frame:SetFrameLevel(frame:GetFrameLevel() + 2)
 	frame.backdrop:Point("TOPLEFT", 20, 1)
 	frame.backdrop:Point("BOTTOMRIGHT", frame.Button, "BOTTOMRIGHT", 2, -2)
-	S:ESProxy("HandleNextPrevButton", frame.Button, "down")
+	S:Proxy("HandleNextPrevButton", frame.Button, "down")
 	frame.Text:ClearAllPoints()
 	frame.Text:Point("RIGHT", frame.Button, "LEFT", -2, 0)
 end
 
 local function ReskinModules(frame)
 	-- MainFrame
-	S:ESProxy("HandleButton", frame.OkButton)
-	S:ESProxy("HandleButton", frame.CancelButton)
-	S:ESProxy("HandleButton", frame.EnableAllButton)
-	S:ESProxy("HandleButton", frame.DisableAllButton)
+	S:Proxy("HandleButton", frame.OkButton)
+	S:Proxy("HandleButton", frame.CancelButton)
+	S:Proxy("HandleButton", frame.EnableAllButton)
+	S:Proxy("HandleButton", frame.DisableAllButton)
 	SAMDropDownSkin(frame.CharacterDropDown)
 
 	frame.OkButton:ClearAllPoints()
@@ -87,18 +87,18 @@ local function ReskinModules(frame)
 	ReskinSizer(frame.Sizer)
 
 	-- SearchBox
-	S:ESProxy("HandleEditBox", frame.SearchBox)
-	S:ESProxy("HandleNextPrevButton", frame.ResultOptionsButton, "down")
+	S:Proxy("HandleEditBox", frame.SearchBox)
+	S:Proxy("HandleNextPrevButton", frame.ResultOptionsButton, "down")
 
 	-- AddonListFrame
-	S:ESProxy("HandleScrollBar", frame.AddonListFrame.ScrollFrame.ScrollBar)
+	S:Proxy("HandleScrollBar", frame.AddonListFrame.ScrollFrame.ScrollBar)
 
 	-- CategoryFrame
-	S:ESProxy("HandleButton", frame.CategoryFrame.NewButton)
-	S:ESProxy("HandleButton", frame.CategoryFrame.SelectAllButton)
-	S:ESProxy("HandleButton", frame.CategoryFrame.ClearSelectionButton)
-	S:ESProxy("HandleButton", frame.CategoryButton)
-	S:ESProxy("HandleScrollBar", frame.CategoryFrame.ScrollFrame.ScrollBar)
+	S:Proxy("HandleButton", frame.CategoryFrame.NewButton)
+	S:Proxy("HandleButton", frame.CategoryFrame.SelectAllButton)
+	S:Proxy("HandleButton", frame.CategoryFrame.ClearSelectionButton)
+	S:Proxy("HandleButton", frame.CategoryButton)
+	S:Proxy("HandleScrollBar", frame.CategoryFrame.ScrollFrame.ScrollBar)
 
 	frame.CategoryFrame.NewButton:ClearAllPoints()
 	frame.CategoryFrame.NewButton:SetHeight(20)
@@ -106,8 +106,8 @@ local function ReskinModules(frame)
 	frame.CategoryFrame.NewButton:SetPoint("BOTTOMRIGHT", frame.CategoryFrame.ClearSelectionButton, "TOPRIGHT", 0, 2)
 
 	-- Profile
-	S:ESProxy("HandleButton", frame.SetsButton)
-	S:ESProxy("HandleButton", frame.ConfigButton)
+	S:Proxy("HandleButton", frame.SetsButton)
+	S:Proxy("HandleButton", frame.ConfigButton)
 
 	-- Misc
 	hooksecurefunc("HybridScrollFrame_CreateButtons", ReskinScrollFrameItems)
@@ -129,7 +129,7 @@ function S:SimpleAddonManager()
 	_G.SimpleAddonManager:StripTextures(true)
 	_G.SimpleAddonManager:SetTemplate("Transparent")
 	self:CreateShadow(_G.SimpleAddonManager)
-	self:ESProxy("HandleCloseButton", _G.SimpleAddonManager.CloseButton)
+	self:Proxy("HandleCloseButton", _G.SimpleAddonManager.CloseButton)
 
 	local edd = _G.LibStub("ElioteDropDownMenu-1.0", true)
 	if edd then

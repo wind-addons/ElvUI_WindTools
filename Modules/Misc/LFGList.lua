@@ -382,7 +382,7 @@ function LL:InitializePartyKeystoneFrame()
 	F.SetFontOutline(frame.button.Text, nil, "-2")
 	frame.button:SetText(L["More"])
 	frame.button:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
-	S:ESProxy("HandleButton", frame.button)
+	S:Proxy("HandleButton", frame.button)
 	frame.button:SetScript("OnClick", function()
 		if _G.SlashCmdList["KEYSTONE"] then
 			_G.SlashCmdList["KEYSTONE"]("")
@@ -733,7 +733,7 @@ function LL:InitializeRightPanel()
 		LL:RefreshSearch()
 	end)
 
-	S:ESProxy("HandleEditBox", leaderScore.editBox)
+	S:Proxy("HandleEditBox", leaderScore.editBox)
 
 	addSetActive(leaderScore)
 
@@ -796,7 +796,7 @@ function LL:InitializeRightPanel()
 		LL:RefreshSearch()
 	end)
 
-	S:ESProxy("HandleEditBox", leaderDungeonScore.editBox)
+	S:Proxy("HandleEditBox", leaderDungeonScore.editBox)
 
 	addSetActive(leaderDungeonScore)
 

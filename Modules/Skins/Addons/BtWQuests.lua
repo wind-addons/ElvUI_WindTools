@@ -4,7 +4,7 @@ local TT = E:GetModule("Tooltip")
 
 -- Modified from NDui_Plus
 local function HandleNavButton(btn, strip, ...)
-	S:ESProxy("HandleButton", btn, strip, ...)
+	S:Proxy("HandleButton", btn, strip, ...)
 
 	local str = btn:GetFontString()
 	if str then
@@ -106,11 +106,11 @@ local function StyleSearchButton(button)
 		return
 	end
 
-	S:ESProxy("HandleFrame", button, true)
+	S:Proxy("HandleFrame", button, true)
 	S:CreateShadow(button)
 	local icon = button.icon or button.Icon
 	if icon then
-		S:ESProxy("HandleIcon", icon)
+		S:Proxy("HandleIcon", icon)
 	end
 
 	button:SetHighlightTexture(E.media.normTex)
@@ -128,10 +128,10 @@ function S:BtWQuests()
 		return
 	end
 
-	self:ESProxy("HandlePortraitFrame", frame)
+	self:Proxy("HandlePortraitFrame", frame)
 	self:CreateShadow(frame)
-	self:ESProxy("HandleEditBox", frame.SearchBox)
-	self:ESProxy("HandleDropDownBox", frame.ExpansionDropDown)
+	self:Proxy("HandleEditBox", frame.SearchBox)
+	self:Proxy("HandleDropDownBox", frame.ExpansionDropDown)
 	TT:SetStyle(_G.BtWQuestsTooltip)
 	TT:SetStyle(frame.Tooltip)
 	HandledDropDown(_G.BtWQuestsOptionsMenu)
@@ -176,8 +176,8 @@ function S:BtWQuests()
 		self:CreateBackdropShadow(SearchResults)
 		SearchResults.backdrop:SetPoint("TOPLEFT", -10, 0)
 		SearchResults.backdrop:SetPoint("BOTTOMRIGHT", 5, 0)
-		S:ESProxy("HandleCloseButton", SearchResults.CloseButton)
-		S:ESProxy("HandleScrollBar", SearchResults.scrollFrame and SearchResults.scrollFrame.scrollBar)
+		S:Proxy("HandleCloseButton", SearchResults.CloseButton)
+		S:Proxy("HandleScrollBar", SearchResults.scrollFrame and SearchResults.scrollFrame.scrollBar)
 
 		if SearchResults.UpdateSearch then
 			hooksecurefunc(SearchResults, "UpdateSearch", ReskinSearchResults)
@@ -197,21 +197,21 @@ function S:BtWQuests()
 		frame.CharacterDropDown.backdrop:ClearAllPoints()
 		frame.CharacterDropDown.backdrop:Point("TOPLEFT", 15, 0)
 		frame.CharacterDropDown.backdrop:Point("BOTTOMRIGHT", 15, 10)
-		self:ESProxy("HandleNextPrevButton", frame.CharacterDropDown.Button, "down")
+		self:Proxy("HandleNextPrevButton", frame.CharacterDropDown.Button, "down")
 	end
 
 	if frame.NavBack and frame.NavForward and frame.NavHere then
-		self:ESProxy("HandleNextPrevButton", frame.NavBack)
+		self:Proxy("HandleNextPrevButton", frame.NavBack)
 		frame.NavBack:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavBack:ClearAllPoints()
 		frame.NavBack:SetPoint("TOPLEFT", 5, -4)
 
-		self:ESProxy("HandleNextPrevButton", frame.NavForward)
+		self:Proxy("HandleNextPrevButton", frame.NavForward)
 		frame.NavForward:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavForward:ClearAllPoints()
 		frame.NavForward:SetPoint("LEFT", frame.NavBack, "RIGHT", 2, 0)
 
-		self:ESProxy("HandleNextPrevButton", frame.NavHere, "down", nil, true)
+		self:Proxy("HandleNextPrevButton", frame.NavHere, "down", nil, true)
 		frame.NavHere:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavHere:ClearAllPoints()
 		frame.NavHere:SetPoint("LEFT", frame.NavForward, "RIGHT", 2, 0)
@@ -224,7 +224,7 @@ function S:BtWQuests()
 			expansion.backdrop:SetPoint("TOPLEFT", 4, -4)
 			expansion.backdrop:SetPoint("BOTTOMRIGHT", -4, 5)
 			expansion.Base:SetTexture("")
-			self:ESProxy("HandleCheckBox", expansion.AutoLoad)
+			self:Proxy("HandleCheckBox", expansion.AutoLoad)
 			HandleButton(expansion.ViewAll)
 			HandleButton(expansion.Load)
 		end
@@ -232,12 +232,12 @@ function S:BtWQuests()
 
 	local Category = frame.Category
 	if Category then
-		self:ESProxy("HandleScrollBar", Category.Scroll and Category.Scroll.ScrollBar)
+		self:Proxy("HandleScrollBar", Category.Scroll and Category.Scroll.ScrollBar)
 	end
 
 	local Chain = frame.Chain
 	if Chain then
-		self:ESProxy("HandleScrollBar", Chain.Scroll and Chain.Scroll.ScrollBar)
+		self:Proxy("HandleScrollBar", Chain.Scroll and Chain.Scroll.ScrollBar)
 		TT:SetStyle(Chain.Tooltip)
 	end
 

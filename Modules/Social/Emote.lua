@@ -129,7 +129,7 @@ function CE:CreateInterface()
 	frame:CreateBackdrop("Transparent")
 	S:CreateShadowModule(frame.backdrop)
 	S:MerathilisUISkin(frame.backdrop)
-	S:ESProxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
+	S:Proxy("HandleCloseButton", _G.WTCustomEmoteFrameClose)
 
 	-- 定位
 	frame:SetWidth(column * (width + space) + 24)

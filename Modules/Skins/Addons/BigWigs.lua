@@ -355,7 +355,7 @@ function S:BigWigs_Keystone()
 	end, function(frame)
 		for _, child in next, { frame:GetChildren() } do
 			if child.ScrollBar then
-				self:ESProxy("HandleTrimScrollBar", child.ScrollBar)
+				self:Proxy("HandleTrimScrollBar", child.ScrollBar)
 			end
 		end
 
@@ -365,10 +365,10 @@ function S:BigWigs_Keystone()
 		frame.Bg:Hide()
 		frame:SetTemplate("Transparent")
 		self:CreateShadow(frame)
-		self:ESProxy("HandleCloseButton", frame.CloseButton)
+		self:Proxy("HandleCloseButton", frame.CloseButton)
 
 		for _, tab in next, frame.Tabs do
-			self:ESProxy("HandleTab", tab)
+			self:Proxy("HandleTab", tab)
 			self:ReskinTab(tab)
 			tab:SetHeight(32)
 

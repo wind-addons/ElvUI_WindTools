@@ -719,7 +719,7 @@ local function GetInspectItemListFrame(parent)
 
 		frame.closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton, BackdropTemplate")
 		frame.closeButton:Point("TOPRIGHT", frame.backdrop, "TOPRIGHT", 5, 5)
-		S:ESProxy("HandleCloseButton", frame.closeButton)
+		S:Proxy("HandleCloseButton", frame.closeButton)
 		frame.closeButton:SetScript("OnClick", function(self)
 			self:GetParent():Hide()
 		end)

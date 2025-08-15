@@ -49,7 +49,7 @@ function EMP:SkinButton(i)
 	money:Point("BOTTOMLEFT", button, "BOTTOMRIGHT", 3, 0)
 
 	S:HandleMerchantItem(i)
-	S:ESProxy("HandleIconBorder", button.IconBorder)
+	S:Proxy("HandleIconBorder", button.IconBorder)
 end
 
 function EMP:UpdateMerchantPositions()

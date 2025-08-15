@@ -11,7 +11,7 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 
 	if _G.BugSackFontSize then
 		local dropdown = _G.BugSackFontSize
-		self:ESProxy("HandleDropDownBox", dropdown, nil, nil, true)
+		self:Proxy("HandleDropDownBox", dropdown, nil, nil, true)
 
 		local point, relativeTo, relativePoint, xOffset, yOffset = dropdown:GetPoint(1)
 		dropdown:ClearAllPoints()
@@ -22,7 +22,7 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 
 	if _G.BugSackSoundDropdown then
 		local dropdown = _G.BugSackSoundDropdown
-		self:ESProxy("HandleDropDownBox", dropdown, nil, nil, true)
+		self:Proxy("HandleDropDownBox", dropdown, nil, nil, true)
 
 		local point, relativeTo, relativePoint = dropdown:GetPoint(1)
 		dropdown:ClearAllPoints()
@@ -37,9 +37,9 @@ function S:BugSack_InterfaceOptionOnShow(frame)
 		else
 			local objectType = child:GetObjectType()
 			if objectType == "Button" then
-				self:ESProxy("HandleButton", child)
+				self:Proxy("HandleButton", child)
 			elseif objectType == "CheckButton" then
-				self:ESProxy("HandleCheckBox", child)
+				self:Proxy("HandleCheckBox", child)
 
 				-- fix master channel checkbox position
 				local point, relativeTo, relativePoint = child:GetPoint(1)
@@ -74,11 +74,11 @@ function S:BugSack_OpenSack()
 				F.SetFontOutline(text)
 			end
 		elseif numRegions == 4 then
-			self:ESProxy("HandleCloseButton", child)
+			self:Proxy("HandleCloseButton", child)
 		end
 	end
 
-	self:ESProxy("HandleScrollBar", _G.BugSackScrollScrollBar)
+	self:Proxy("HandleScrollBar", _G.BugSackScrollScrollBar)
 
 	for _, region in pairs({ _G.BugSackScrollText:GetRegions() }) do
 		if region and region:GetObjectType() == "FontString" then
@@ -93,9 +93,9 @@ function S:BugSack_OpenSack()
 		_G.BugSackSendButton:SetPoint("LEFT", _G.BugSackPrevButton, "RIGHT", 4, 0)
 		_G.BugSackSendButton:SetPoint("RIGHT", _G.BugSackNextButton, "LEFT", -4, 0)
 
-		self:ESProxy("HandleButton", _G.BugSackNextButton)
-		self:ESProxy("HandleButton", _G.BugSackPrevButton)
-		self:ESProxy("HandleButton", _G.BugSackSendButton)
+		self:Proxy("HandleButton", _G.BugSackNextButton)
+		self:Proxy("HandleButton", _G.BugSackPrevButton)
+		self:Proxy("HandleButton", _G.BugSackSendButton)
 	end
 
 	local tabs = {
@@ -105,7 +105,7 @@ function S:BugSack_OpenSack()
 	}
 
 	for _, tab in pairs(tabs) do
-		self:ESProxy("HandleTab", tab)
+		self:Proxy("HandleTab", tab)
 		self:CreateBackdropShadow(tab)
 
 		local point, relativeTo, relativePoint, xOffset, yOffset = tab:GetPoint(1)

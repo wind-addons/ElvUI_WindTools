@@ -1,2 +1,6 @@
+line_endings = "Windows"
+syntax = "Lua51"
+
+
 [sort_requires]
 enabled = true

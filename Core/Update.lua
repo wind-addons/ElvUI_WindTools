@@ -298,7 +298,7 @@ function W:UpdateScripts()
 			end
 		end
 
-		UpdateMessage(L["Tooltips"] .. ": " .. L["Clear History"], privateVersion)
+		UpdateMessage(L["Tooltips"] .. ": " .. L["Update Database"], privateVersion)
 	end
 
 	if not isFirstLine then

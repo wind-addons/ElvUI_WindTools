@@ -151,10 +151,7 @@ do
 
 	function S:BindShadowColorWithBorder(frame, borderParent)
 		local shadow = frame and frame.shadow
-		borderParent = borderParent or frame:GetParent()
-		if borderParent == nil then
-			return
-		end
+		borderParent = borderParent or frame
 
 		if not shadow or not shadow.__wind or not borderParent or not borderParent.SetBackdropBorderColor then
 			return

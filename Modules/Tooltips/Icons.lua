@@ -3,6 +3,7 @@ local T = W.Modules.Tooltips
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
 local select = select
 local strfind = strfind
 local tinsert = tinsert

@@ -2,6 +2,11 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 local TT = E:GetModule("Tooltip")
 
+local _G = _G
+local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local pairs = pairs
+
 -- Modified from NDui_Plus
 local function HandleNavButton(btn, strip, ...)
 	S:Proxy("HandleButton", btn, strip, ...)

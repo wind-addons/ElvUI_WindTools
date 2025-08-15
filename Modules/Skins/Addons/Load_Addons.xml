@@ -3,6 +3,7 @@
 	<Script file='Auctionator.lua'/>
 	<Script file='AngryKeystone.lua'/>
 	<Script file='BigWigs.lua'/>
+	<Script file='BtWQuests.lua'/>
 	<Script file='BugSack.lua'/>
 	<Script file='Hekili.lua'/>
 	<Script file='Immersion.lua'/>

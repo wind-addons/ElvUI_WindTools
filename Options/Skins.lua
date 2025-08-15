@@ -1316,6 +1316,12 @@ options.addons = {
 			name = L["World Quest Tab"],
 			addonName = "WorldQuestTab",
 		},
+		btWQuests = {
+			order = 10,
+			type = "toggle",
+			name = L["BtWQuests"],
+			addonName = "BtWQuests",
+		},
 	},
 }
 

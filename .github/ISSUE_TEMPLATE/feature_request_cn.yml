@@ -1,0 +1,30 @@
+name: 功能请求
+description: 建议新功能
+title: "feature: "
+labels: ["💡 Feature Request"]
+type: feature
+body:
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 你的功能请求是否与某个问题相关？请描述一下。
+      description: 清楚简洁地描述问题所在。例如：我总是因为 [...] 而感到困扰
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 描述你希望的解决方案
+      description: 清楚简洁地描述你希望实现的功能。
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 描述你考虑过的替代方案，插件或是 WeakAuras
+      description: 清楚简洁地描述你考虑过的任何替代解决方案或功能。
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: 附加信息
+      description: 在此添加关于功能请求的任何其他信息或截图。

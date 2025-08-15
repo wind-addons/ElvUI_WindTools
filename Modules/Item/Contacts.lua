@@ -101,7 +101,7 @@ function CT:ShowContextText(button)
 	MenuUtil_CreateContextMenu(button, function(ownerRegion, rootDescription)
 		rootDescription:CreateTitle(button.name)
 
-		if not button.class then -- My favoirite do not have it
+		if not button.class then -- My favorite do not have it
 			rootDescription:CreateButton(L["Remove From Favorites"], function()
 				if button.realm then
 					E.global.WT.item.contacts.favorites[button.name .. "-" .. button.realm] = nil
@@ -193,8 +193,8 @@ function CT:ConstructButtons()
 	local toggleButton = CreateFrame("Button", "WTContactsToggleButton", _G.SendMailFrame, "SecureActionButtonTemplate")
 	toggleButton:Size(24)
 	SetButtonTexture(toggleButton, W.Media.Icons.list)
-	SetButtonTooltip(toggleButton, L["Toggle Contacts"])
-	toggleButton:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", -24, 38)
+	SetButtonTooltip(toggleButton, F.GetWindStyleText(L["Toggle Contacts"]))
+	toggleButton:Point("BOTTOMRIGHT", _G.MailFrame, "BOTTOMRIGHT", -16, 34)
 	toggleButton:RegisterForClicks("AnyUp")
 
 	toggleButton:SetScript("OnClick", function()

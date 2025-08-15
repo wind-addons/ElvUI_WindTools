@@ -1,0 +1,52 @@
+name: Bug Report
+description: File a bug/issue
+title: "bug: "
+labels: ["🐛 Bug"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Do you get ready for these information?
+      description: Make sure you checked all of the below before submitting an issue
+      options:
+        - label: I have updated `ElvUI` to the latest version before submitting this issue
+          required: true
+        - label: I have updated `ElvUI_WindTools` to the latest version before submitting this issue
+          required: true
+        - label: I have tested the issue with `/wtdebug on` before
+          required: true
+  - type: input
+    attributes:
+      label: "ElvUI Version"
+      description: You can find the version in the [ElvUI Option] - [WindTools] - [Information]
+      placeholder: "13.97"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "ElvUI_WindTools Version"
+      description: You can find the version in the [ElvUI Option] - [WindTools] - [Information]
+      placeholder: "3.96"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is. Please include any related errors you see in BugSack.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: true

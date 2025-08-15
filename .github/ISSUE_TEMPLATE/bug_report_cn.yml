@@ -1,0 +1,53 @@
+name: Bug 反馈
+description: 反馈 ElvUI_WindTools 中的错误。
+title: "bug: "
+labels: ["🐛 Bug"]
+issue_type: bug
+body:
+  - type: checkboxes
+    attributes:
+      label: 提交前请检查以下项目
+      description: 在提交问题前请确保已检查以下所有项目
+      options:
+        - label: 我已在提交此问题前将 `ElvUI` 更新至最新版本
+          required: true
+        - label: 我已在提交此问题前将 `ElvUI_WindTools` 更新至最新版本
+          required: true
+        - label: 我已在此前使用 `/wtdebug on` 测试过该问题
+          required: true
+  - type: input
+    attributes:
+      label: "ElvUI 版本"
+      description: 你可以在 [ElvUI 选项] - [Wind 工具箱] - [信息] 中找到版本号
+      placeholder: "13.97"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "ElvUI_WindTools 版本"
+      description: 你可以在 [ElvUI 选项] - [Wind 工具箱] - [信息] 中找到版本号
+      placeholder: "3.96"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 描述错误
+      description: 清楚简洁地描述遇到的错误。请包含在 BugSack 中看到的任何相关错误信息。
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 复现步骤
+      description: 复现该错误的步骤。
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 预期行为
+      description: 简洁描述你期望发生的行为。
+    validations:
+      required: true

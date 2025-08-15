@@ -1,11 +1,12 @@
 name: Bug Report
-description: File a bug/issue
+description: Report a bug in ElvUI_WindTools.
 title: "bug: "
 labels: ["🐛 Bug"]
+issue_type: bug
 body:
   - type: checkboxes
     attributes:
-      label: Do you get ready for these information?
+      label: Did you check these before submitting?
       description: Make sure you checked all of the below before submitting an issue
       options:
         - label: I have updated `ElvUI` to the latest version before submitting this issue

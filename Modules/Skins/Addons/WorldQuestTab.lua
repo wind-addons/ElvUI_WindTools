@@ -185,6 +185,8 @@ function S:WorldQuestTab()
 		return
 	end
 
+	self:DisableAddOnSkin("WorldQuestTab")
+
 	if _G.WQT_QuestMapTab then
 		reskinTab(_G.WQT_QuestMapTab)
 		_G.WQT_QuestMapTab.__SetPoint = _G.WQT_QuestMapTab.SetPoint

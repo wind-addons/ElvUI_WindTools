@@ -15,6 +15,8 @@ function S:RareScanner()
 		return
 	end
 
+	self:DisableAddOnSkin("RareScanner")
+
 	local scannerButton = _G["RARESCANNER_BUTTON"]
 	if not scannerButton or not scannerButton.ModelView then
 		return

@@ -159,7 +159,7 @@ function S:TinyInspect()
 		return
 	end
 
-	S:DisableAddOnSkin("TinyInspect")
+	self:DisableAddOnSkin("TinyInspect")
 
 	if _G.ShowInspectItemListFrame then
 		self:SecureHook("ShowInspectItemListFrame", "TinyInspect_SkinListPanel")

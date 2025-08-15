@@ -128,6 +128,8 @@ function S:BtWQuests()
 		return
 	end
 
+	self:DisableAddOnSkin("BtWQuests")
+
 	local frame = _G.BtWQuestsFrame
 	if not frame then
 		return
@@ -179,8 +181,8 @@ function S:BtWQuests()
 		SearchResults:StripTextures()
 		SearchResults:CreateBackdrop("Transparent")
 		self:CreateBackdropShadow(SearchResults)
-		SearchResults.backdrop:SetPoint("TOPLEFT", -10, 0)
-		SearchResults.backdrop:SetPoint("BOTTOMRIGHT", 5, 0)
+		SearchResults.backdrop:Point("TOPLEFT", -10, 0)
+		SearchResults.backdrop:Point("BOTTOMRIGHT", 5, 0)
 		S:Proxy("HandleCloseButton", SearchResults.CloseButton)
 		S:Proxy("HandleScrollBar", SearchResults.scrollFrame and SearchResults.scrollFrame.scrollBar)
 
@@ -191,13 +193,16 @@ function S:BtWQuests()
 
 	if frame.CloseButton and frame.OptionsButton and frame.CharacterDropDown then
 		frame.OptionsButton:StripTextures()
-		frame.OptionsButton:SetSize(20, 20)
+		frame.OptionsButton:SetNormalTexture(W.Media.Icons.barGameMenu)
+		frame.OptionsButton:SetHighlightTexture(W.Media.Icons.barGameMenu)
+		frame.OptionsButton:SetPushedTexture(W.Media.Icons.barGameMenu)
+		frame.OptionsButton:SetSize(16, 16)
 		frame.OptionsButton:SetHitRectInsets(0, 0, 0, 0)
 		frame.OptionsButton:ClearAllPoints()
-		frame.OptionsButton:SetPoint("RIGHT", frame.CloseButton, "LEFT", -4, 0)
+		frame.OptionsButton:Point("RIGHT", frame.CloseButton, "LEFT", -1, 1)
 
 		frame.CharacterDropDown:ClearAllPoints()
-		frame.CharacterDropDown:SetPoint("RIGHT", frame.OptionsButton, "LEFT", -14, -4)
+		frame.CharacterDropDown:Point("RIGHT", frame.OptionsButton, "LEFT", -16, -5)
 		frame.CharacterDropDown:CreateBackdrop()
 		frame.CharacterDropDown.backdrop:ClearAllPoints()
 		frame.CharacterDropDown.backdrop:Point("TOPLEFT", 15, 0)
@@ -209,25 +214,25 @@ function S:BtWQuests()
 		self:Proxy("HandleNextPrevButton", frame.NavBack)
 		frame.NavBack:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavBack:ClearAllPoints()
-		frame.NavBack:SetPoint("TOPLEFT", 5, -4)
+		frame.NavBack:Point("TOPLEFT", 5, -4)
 
 		self:Proxy("HandleNextPrevButton", frame.NavForward)
 		frame.NavForward:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavForward:ClearAllPoints()
-		frame.NavForward:SetPoint("LEFT", frame.NavBack, "RIGHT", 2, 0)
+		frame.NavForward:Point("LEFT", frame.NavBack, "RIGHT", 2, 0)
 
 		self:Proxy("HandleNextPrevButton", frame.NavHere, "down", nil, true)
 		frame.NavHere:SetHitRectInsets(0, 0, 0, 0)
 		frame.NavHere:ClearAllPoints()
-		frame.NavHere:SetPoint("LEFT", frame.NavForward, "RIGHT", 2, 0)
+		frame.NavHere:Point("LEFT", frame.NavForward, "RIGHT", 2, 0)
 	end
 
 	local ExpansionList = frame.ExpansionList
 	if ExpansionList then
 		for _, expansion in ipairs(ExpansionList.Expansions) do
 			expansion:CreateBackdrop("Transparent")
-			expansion.backdrop:SetPoint("TOPLEFT", 4, -4)
-			expansion.backdrop:SetPoint("BOTTOMRIGHT", -4, 5)
+			expansion.backdrop:Point("TOPLEFT", 4, -4)
+			expansion.backdrop:Point("BOTTOMRIGHT", -4, 5)
 			expansion.Base:SetTexture("")
 			self:Proxy("HandleCheckBox", expansion.AutoLoad)
 			HandleButton(expansion.ViewAll)

@@ -2,7 +2,7 @@ name: Bug Report
 description: Report a bug in ElvUI_WindTools.
 title: "bug: "
 labels: ["🐛 Bug"]
-issue_type: bug
+type: bug
 body:
   - type: checkboxes
     attributes:

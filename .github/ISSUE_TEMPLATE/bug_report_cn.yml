@@ -2,7 +2,7 @@ name: Bug 反馈
 description: 反馈 ElvUI_WindTools 中的错误。
 title: "bug: "
 labels: ["🐛 Bug"]
-issue_type: bug
+type: bug
 body:
   - type: checkboxes
     attributes:

@@ -969,10 +969,10 @@ P.social = {
 		translateItem = true,
 		level = true,
 		icon = true,
-		armorCategory = true,
-		weaponCategory = true,
 		iconWidth = 18,
 		iconHeight = 16,
+		armorCategory = true,
+		weaponCategory = true,
 		keepRatio = true,
 	},
 	chatText = {
@@ -1114,34 +1114,40 @@ P.quest = {
 P.tooltips = {
 	elvUITweaks = {
 		forceItemLevel = false,
+		healthBar = {
+			barYOffset = 0,
+			textYOffset = 0,
+		},
 		raceIcon = {
 			enable = true,
-			iconWidth = 16,
-			iconHeight = 16,
+			width = 16,
+			height = 16,
 		},
 		specIcon = {
 			enable = true,
-			iconWidth = 16,
-			iconHeight = 14,
+			width = 16,
+			height = 14,
 		},
 		betterMythicPlusInfo = {
 			enable = true,
-			icon = true,
-			iconWidth = 16,
-			iconHeight = 14,
+			icon = {
+				enable = true,
+				width = 16,
+				height = 14,
+			},
 		},
 	},
-	yOffsetOfHealthBar = 0,
-	yOffsetOfHealthText = 0,
 	keystone = {
 		enable = true,
 		useAbbreviation = true,
-		icon = true,
-		iconWidth = 16,
-		iconHeight = 14,
+		icon = {
+			enable = true,
+			width = 16,
+			height = 14,
+		},
 	},
 	groupInfo = {
-		enable = false,
+		enable = true,
 		title = true,
 		excludeDungeon = true,
 		mode = "NORMAL",

@@ -45,8 +45,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
 		local unitGender = ET.db.gender and genderTable[gender]
 
 		if etdb.raceIcon.enable then
-			local raceIcon =
-				F.GetRaceAtlasString(englishRace, gender, etdb.raceIcon.iconHeight, etdb.raceIcon.iconWidth)
+			local raceIcon = F.GetRaceAtlasString(englishRace, gender, etdb.raceIcon.height, etdb.raceIcon.width)
 			if raceIcon then
 				race = raceIcon .. " " .. race
 			end
@@ -88,7 +87,7 @@ function T:SetUnitText(_, tt, unit, isPlayerUnit)
 			end
 
 			if specIcon then
-				local iconString = F.GetIconString(specIcon, etdb.specIcon.iconHeight, etdb.specIcon.iconWidth, true)
+				local iconString = F.GetIconString(specIcon, etdb.specIcon.height, etdb.specIcon.width, true)
 				specText = iconString .. " " .. specText
 			end
 

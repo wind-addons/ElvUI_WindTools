@@ -3,10 +3,10 @@ local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
 function T:ChangeHealthBarPosition(_, tt)
-	local barOffset = E.db.WT.tooltips.yOffsetOfHealthBar
-	local textOffset = E.db.WT.tooltips.yOffsetOfHealthText
+	local barYOffset = E.db.WT.tooltips.elvUITweaks.healthBar.barYOffset
+	local textYOffset = E.db.WT.tooltips.elvUITweaks.healthBar.textYOffset
 
-	if barOffset == 0 and textOffset == 0 then
+	if barYOffset == 0 and textYOffset == 0 then
 		return
 	end
 
@@ -26,16 +26,16 @@ function T:ChangeHealthBarPosition(_, tt)
 		if ET.db.healthBar.statusPosition == "BOTTOM" then
 			if not tt.StatusBar.anchoredToTop then
 				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:SetPoint("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -(E.Spacing * 3) + barOffset)
-				tt.StatusBar:SetPoint("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -(E.Spacing * 3) + barOffset)
-				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textOffset)
+				tt.StatusBar:SetPoint("TOPLEFT", tt, "BOTTOMLEFT", E.Border, -(E.Spacing * 3) + barYOffset)
+				tt.StatusBar:SetPoint("TOPRIGHT", tt, "BOTTOMRIGHT", -E.Border, -(E.Spacing * 3) + barYOffset)
+				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textYOffset)
 			end
 		else
 			if tt.StatusBar.anchoredToTop then
 				tt.StatusBar:ClearAllPoints()
-				tt.StatusBar:SetPoint("BOTTOMLEFT", tt, "TOPLEFT", E.Border, (E.Spacing * 3) + barOffset)
-				tt.StatusBar:SetPoint("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, (E.Spacing * 3) + barOffset)
-				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textOffset)
+				tt.StatusBar:SetPoint("BOTTOMLEFT", tt, "TOPLEFT", E.Border, (E.Spacing * 3) + barYOffset)
+				tt.StatusBar:SetPoint("BOTTOMRIGHT", tt, "TOPRIGHT", -E.Border, (E.Spacing * 3) + barYOffset)
+				tt.StatusBar.text:SetPoint("CENTER", tt.StatusBar, 0, textYOffset)
 			end
 		end
 	end

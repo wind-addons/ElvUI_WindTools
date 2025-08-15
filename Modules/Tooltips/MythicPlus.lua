@@ -113,8 +113,8 @@ function T:AddMythicInfo(mod, tt, unit)
 				local right =
 					format("%s %s", F.CreateColorString(mapData.abbr, E.db.general.valuecolor), bestRunLevelText)
 
-				if db.icon then
-					local iconString = F.GetIconString(mapData.tex, db.iconHeight, db.iconWidth, true)
+				if db.icon.enable then
+					local iconString = F.GetIconString(mapData.tex, db.icon.height, db.icon.width, true)
 					right = iconString .. " " .. right
 				end
 				tt:AddDoubleLine(

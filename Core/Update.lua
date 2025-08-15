@@ -194,6 +194,91 @@ function W:UpdateScripts()
 		end
 	end
 
+	if privateVersion < 3.97 or profileVersion < 3.97 then
+		if E.private.WT and E.private.WT.tooltips and E.private.WT.tooltips.icon ~= nil then
+			E.private.WT.tooltips.titleIcon.enable = E.private.WT.tooltips.icon
+			E.private.WT.tooltips.icon = nil
+		end
+
+		if E.db.WT and E.db.WT.tooltips then
+			local db = E.db.WT.tooltips
+			if db.yOffsetOfHealthBar ~= nil and db.elvUITweaks and db.elvUITweaks.healthBar then
+				db.elvUITweaks.healthBar.barYOffset = db.yOffsetOfHealthBar
+				db.yOffsetOfHealthBar = nil
+			end
+
+			if db.yOffsetOfHealthText ~= nil and db.elvUITweaks and db.elvUITweaks.healthBar then
+				db.elvUITweaks.healthBar.textYOffset = db.yOffsetOfHealthText
+				db.yOffsetOfHealthText = nil
+			end
+
+			if db.elvUITweaks and db.elvUITweaks.raceIcon then
+				if db.elvUITweaks.raceIcon.iconWidth ~= nil then
+					db.elvUITweaks.raceIcon.width = db.elvUITweaks.raceIcon.iconWidth
+					db.elvUITweaks.raceIcon.iconWidth = nil
+				end
+				if db.elvUITweaks.raceIcon.iconHeight ~= nil then
+					db.elvUITweaks.raceIcon.height = db.elvUITweaks.raceIcon.iconHeight
+					db.elvUITweaks.raceIcon.iconHeight = nil
+				end
+			end
+
+			if db.elvUITweaks and db.elvUITweaks.specIcon then
+				if db.elvUITweaks.specIcon.iconWidth ~= nil then
+					db.elvUITweaks.specIcon.width = db.elvUITweaks.specIcon.iconWidth
+					db.elvUITweaks.specIcon.iconWidth = nil
+				end
+				if db.elvUITweaks.specIcon.iconHeight ~= nil then
+					db.elvUITweaks.specIcon.height = db.elvUITweaks.specIcon.iconHeight
+					db.elvUITweaks.specIcon.iconHeight = nil
+				end
+			end
+
+			if db.elvUITweaks and db.elvUITweaks.betterMythicPlusInfo then
+				if type(db.elvUITweaks.betterMythicPlusInfo.icon) ~= "table" then
+					local saved = db.elvUITweaks.betterMythicPlusInfo.icon
+					db.elvUITweaks.betterMythicPlusInfo.icon = {}
+					E:CopyTable(
+						db.elvUITweaks.betterMythicPlusInfo.icon,
+						P.tooltips.elvUITweaks.betterMythicPlusInfo.icon
+					)
+					db.elvUITweaks.betterMythicPlusInfo.icon.enable = saved
+				end
+
+				if db.elvUITweaks.betterMythicPlusInfo.iconWidth ~= nil then
+					db.elvUITweaks.betterMythicPlusInfo.icon.width = db.elvUITweaks.betterMythicPlusInfo.iconWidth
+					db.elvUITweaks.betterMythicPlusInfo.iconWidth = nil
+				end
+
+				if db.elvUITweaks.betterMythicPlusInfo.iconHeight ~= nil then
+					db.elvUITweaks.betterMythicPlusInfo.icon.height = db.elvUITweaks.betterMythicPlusInfo.iconHeight
+					db.elvUITweaks.betterMythicPlusInfo.iconHeight = nil
+				end
+			end
+
+			if db.keystone then
+				if type(db.keystone.icon) ~= "table" then
+					local saved = db.keystone.icon
+					db.keystone.icon = {}
+					E:CopyTable(db.keystone.icon, P.tooltips.keystone.icon)
+					db.keystone.icon.enable = saved
+				end
+
+				if db.keystone.iconWidth ~= nil then
+					db.keystone.icon.width = db.keystone.iconWidth
+					db.keystone.iconWidth = nil
+				end
+
+				if db.keystone.iconHeight ~= nil then
+					db.keystone.icon.height = db.keystone.iconHeight
+					db.keystone.iconHeight = nil
+				end
+			end
+		end
+
+		UpdateMessage(L["Tooltips"] .. ": " .. L["Clear History"], privateVersion)
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

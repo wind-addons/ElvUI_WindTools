@@ -29,8 +29,8 @@ function T:AddKeystone(tt, unit)
 				info.level
 			)
 
-			if db.icon and db.iconHeight and db.iconWidth then
-				right = F.GetIconString(data.tex, db.iconHeight, db.iconWidth, true) .. " " .. right
+			if db.icon.enable then
+				right = F.GetIconString(data.tex, db.icon.height, db.icon.width, true) .. " " .. right
 			end
 
 			tt:AddDoubleLine(L["Keystone"], right)

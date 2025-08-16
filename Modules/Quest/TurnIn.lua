@@ -258,7 +258,7 @@ local function IsTrackingHidden()
 	end
 end
 
-function IsQuestRepeatable(questID)
+local function IsQuestRepeatable(questID)
 	if C_QuestLog_IsWorldQuest(questID) then
 		return true
 	end

@@ -15,13 +15,15 @@ local IL = W:GetModule("ItemLevel")
 local EMP = W:GetModule("ExtendMerchantPages")
 
 local format = format
+local ipairs = ipairs
 local pairs = pairs
 local print = print
 local strrep = strrep
+local tconcat = table.concat
 local tinsert = tinsert
 local tonumber = tonumber
 local tremove = tremove
-local tconcat = table.concat
+local unpack = unpack
 
 local customListSelected1, customListSelected2
 

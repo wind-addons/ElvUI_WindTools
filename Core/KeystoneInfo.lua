@@ -3,8 +3,15 @@ local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0")
 local OR = E.Libs.OpenRaid
 local KS = E.Libs.Keystone
 
+local select = select
+
+local Ambiguate = Ambiguate
+local GetInstanceInfo = GetInstanceInfo
+local UnitIsPlayer = UnitIsPlayer
+local UnitName = UnitName
+
 KI.LibKeystoneInfo = {}
-function KI.EventHandler()
+function KI.RequestData()
 	-- Disable in Delve
 	local difficulty = select(3, GetInstanceInfo())
 	if difficulty and difficulty == 208 then
@@ -39,11 +46,11 @@ function KI:UnitData(unit)
 		data = sender and self.LibKeystoneInfo[sender]
 	end
 
-    return data
+	return data
 end
 
-KI:RegisterEvent("GROUP_ROSTER_UPDATE", "EventHandler")
-KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "EventHandler")
-KI:RegisterEvent("CHALLENGE_MODE_START", "EventHandler")
-KI:RegisterEvent("CHALLENGE_MODE_RESET", "EventHandler")
-F.TaskManager:AfterLogin(KI.EventHandler)
+KI:RegisterEvent("GROUP_ROSTER_UPDATE", "RequestData")
+KI:RegisterEvent("CHALLENGE_MODE_COMPLETED", "RequestData")
+KI:RegisterEvent("CHALLENGE_MODE_START", "RequestData")
+KI:RegisterEvent("CHALLENGE_MODE_RESET", "RequestData")
+F.TaskManager:AfterLogin(KI.RequestData)

@@ -4,7 +4,6 @@ local _G = _G
 local format = format
 local pairs = pairs
 local pcall = pcall
-local select = select
 local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
@@ -13,7 +12,6 @@ local tonumber = tonumber
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local CreateFrame = CreateFrame
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
-local GetInstanceInfo = GetInstanceInfo
 local InCombatLockdown = InCombatLockdown
 
 local C_Timer_NewTimer = C_Timer.NewTimer

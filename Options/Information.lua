@@ -376,6 +376,7 @@ options.credits = {
 do -- 特别感谢
 	local nameList = {
 		"|cffa2c446Siweia|r (|cff68a2daN|r|cffd25348D|rui)",
+		"Witness (NDui_Plus)",
 		"Loudsoul (|cffea5d5bTiny|rInspect, |cffea5d5bTiny|rTooltip)",
 		"|cffff7d0aMerathilis|r (ElvUI_Merathilis|cffff7d0aUI|r)",
 		"|cff00e4f5Toxi|r & |cffb5ffebNawuko|r (ElvUI_|cffffffffToxi|r|cff00e4f5UI|r)",

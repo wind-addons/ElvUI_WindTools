@@ -39,6 +39,7 @@ Português，Italiano
 ## ❤️ 鸣谢
 
 - Siweia (NDui)
+- Witness (NDui_Plus)
 - Loudsoul (TinyInspect，TinyTooltip)
 - Merathilis (ElvUI_MerathilisUI)
 - Tox，Nawuko (ElvUI_ToxiUI)

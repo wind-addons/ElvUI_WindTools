@@ -38,22 +38,33 @@ W.Changelog[397] = {
 		["zhCN"] = {
 			"[其他] 新增鼠标中键点击披风打开升级菜单功能.",
 			"[美化皮肤] 新增 BtWQuests 皮肤.",
+			"[额外物品条] 额外物品条新增了 SLOT 分组, 可自定义特定的装备栏位.",
+
+			"[交接] 新增了仅重复任务功能, 可以在交接任务时跳过处理非周长日常任务.",
 		},
 		["zhTW"] = {
 			"[其他] 新增滑鼠中鍵點擊披風打開升級選單功能.",
 			"[美化外觀] 新增 BtWQuests 外觀.",
+			"[額外物品條] 額外物品條新增了 SLOT 分組, 可自定義特定的裝備欄位.",
+			"[交接] 新增了僅重複任務功能, 可以在交接任務時跳過處理非週長日常任務.",
 		},
 		["enUS"] = {
-			"[Misc] Added a new feature to open upgrade menu on middle mouse button click on back slot.",
-			"[Skins] Added BtWQuests skin.",
+			"[Misc] Add a new feature to open upgrade menu on middle mouse button click on back slot.",
+			"[Skins] Add BtWQuests skin.",
+			"[Extra Item Bars] Add new SLOT group, to allow customization of specific equipment slots.",
+			"[Turn In] Add a new option 'only repeatable', allowing skipping of non-weekly/daily quests during turn-ins.",
 		},
 		["koKR"] = {
 			"[기타] 망토에 마우스 중간 버튼 클릭 시 업그레이드 메뉴 열기 기능 추가.",
 			"[스킨] BtWQuests 스킨 추가.",
+			"[추가 아이템 바] 새로운 SLOT 그룹 추가, 특정 장비 슬롯의 사용자 지정을 허용합니다.",
+			"[교환] 새로운 '오직 반복 가능' 옵션 추가, 교환 중 비주간/일일 퀘스트를 건너뛸 수 있습니다.",
 		},
 		["ruRU"] = {
 			"[Другое] Добавлена функция открытия меню улучшения при нажатии средней кнопки мыши на плаще.",
 			"[Скины] Добавлен скин BtWQuests.",
+			"[Дополнительные элементы интерфейса] Добавлена новая группа SLOT, позволяющая настраивать конкретные слоты оборудования.",
+			"[Передача] Добавлена новая опция 'только повторяемые', позволяющая пропускать нерегулярные/ежедневные квесты во время передачи.",
 		},
 	},
 	IMPROVEMENT = {
@@ -63,6 +74,7 @@ W.Changelog[397] = {
 			"[美化皮肤] 优化 RareScanner 鼠标提示外观.",
 			"[鼠标提示] 标题图标支持自定义大小了.",
 			"[鼠标提示] 标题图标功能支持宏.",
+			"[交接] 更新忽略 NPC 列表.",
 		},
 		["zhTW"] = {
 			"[通告] 修正了新版大鍋通告失效的問題.",
@@ -70,6 +82,7 @@ W.Changelog[397] = {
 			"[美化外觀] 優化 RareScanner 滑鼠提示外觀.",
 			"[滑鼠提示] 標題圖示支援自訂大小了.",
 			"[滑鼠提示] 標題圖示功能支援巨集.",
+			"[交接] 更新忽略 NPC 列表.",
 		},
 		["enUS"] = {
 			"[Announcement] Fix the issue with the new cauldrons announce not working.",
@@ -77,6 +90,7 @@ W.Changelog[397] = {
 			"[Skins] Optimize RareScanner tooltip appearance.",
 			"[Tooltips] Title icons now support custom sizes.",
 			"[Tooltips] Title icons now support macros.",
+			"[Turn In] Update ignored NPC list.",
 		},
 		["koKR"] = {
 			"[알림] 새로운 대형 냄비 알림이 작동하지 않는 문제 수정.",
@@ -84,6 +98,7 @@ W.Changelog[397] = {
 			"[스킨] RareScanner 툴팁 외관 최적화.",
 			"[툴팁] 제목 아이콘이 이제 사용자 정의 크기를 지원합니다.",
 			"[툴팁] 제목 아이콘이 이제 매크로를 지원합니다.",
+			"[교환] 업데이트된 무시 NPC 목록.",
 		},
 		["ruRU"] = {
 			"[Объявления] Исправлена проблема с неработающим новым уведомлением о большом горшке.",
@@ -91,6 +106,7 @@ W.Changelog[397] = {
 			"[Скины] Оптимизирован внешний вид подсказки RareScanner.",
 			"[Подсказки] Заголовочные значки теперь поддерживают пользовательские размеры.",
 			"[Подсказки] Заголовочные значки теперь поддерживают макросы.",
+			"[Передача] Обновлен список игнорируемых NPC.",
 		},
 	},
 }

@@ -1024,6 +1024,15 @@ options.turnIn = {
 				NONE = L["None"],
 			},
 		},
+		onlyRepeatable = {
+			order = 4,
+			type = "toggle",
+			name = L["Only Repeatable"],
+			desc = L["Only accept and complete repeatable quests."],
+			disabled = function()
+				return not E.db.WT.quest.turnIn.enable
+			end,
+		},
 		reward = {
 			order = 5,
 			type = "group",

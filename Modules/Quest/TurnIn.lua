@@ -62,11 +62,16 @@ local C_GossipInfo_SelectOption = C_GossipInfo.SelectOption
 local C_Item_GetItemInfo = C_Item.GetItemInfo
 local C_Minimap_GetNumTrackingTypes = C_Minimap.GetNumTrackingTypes
 local C_Minimap_GetTrackingInfo = C_Minimap.GetTrackingInfo
+local C_QuestInfoSystem_GetQuestClassification = C_QuestInfoSystem.GetQuestClassification
 local C_QuestLog_GetQuestTagInfo = C_QuestLog.GetQuestTagInfo
 local C_QuestLog_IsQuestTrivial = C_QuestLog.IsQuestTrivial
+local C_QuestLog_IsRepeatableQuest = C_QuestLog.IsRepeatableQuest
 local C_QuestLog_IsWorldQuest = C_QuestLog.IsWorldQuest
 
 local Enum_GossipOptionRecFlags_QuestLabelPrepend = Enum.GossipOptionRecFlags.QuestLabelPrepend
+local Enum_QuestClassification_Calling = Enum.QuestClassification.Calling
+local Enum_QuestClassification_Recurring = Enum.QuestClassification.Recurring
+
 local QUEST_STRING = "cFF0000FF.-" .. TRANSMOG_SOURCE_2
 local SKIP_STRING = "^.+|cFFFF0000<.+>|r"
 local DELVE_STRING = "%(" .. DELVE_LABEL .. "%)"
@@ -74,6 +79,7 @@ local DELVE_STRING = "%(" .. DELVE_LABEL .. "%)"
 local choiceQueue = nil
 
 local ignoreQuestNPC = {
+	[4311] = true, -- 霍加爾‧雷斧
 	[14847] = true, -- 薩杜斯‧帕里歐教授
 	[43929] = true, -- 布靈登4000型
 	[45400] = true, -- 菲歐娜的馬車
@@ -86,6 +92,7 @@ local ignoreQuestNPC = {
 	[101880] = true, -- 塔克塔克
 	[103792] = true, -- 格利夫塔
 	[105387] = true, -- 安德斯
+	[107934] = true, -- 招募員小李
 	[108868] = true, -- 塔陸亞
 	[111243] = true, -- 大法師朗達拉克
 	[114719] = true, -- 商人愷倫
@@ -105,8 +112,7 @@ local ignoreQuestNPC = {
 	[160248] = true, -- 文獻管理員費恩
 	[162804] = true, -- 維娜里
 	[168430] = true, -- 達提莉絲
-	[107934] = true, -- 暴風城小李
-	[4311] = true, -- 霍加爾‧雷斧
+	[223875] = true, -- 法林‧洛薩
 }
 
 local ignoreGossipNPC = {
@@ -250,6 +256,19 @@ local function IsTrackingHidden()
 			return active
 		end
 	end
+end
+
+function IsQuestRepeatable(questID)
+	if C_QuestLog_IsWorldQuest(questID) then
+		return true
+	end
+
+	if C_QuestLog_IsRepeatableQuest(questID) then
+		return true
+	end
+
+	local classification = C_QuestInfoSystem_GetQuestClassification(questID)
+	return classification == Enum_QuestClassification_Recurring or classification == Enum_QuestClassification_Calling
 end
 
 function TI:GetNPCID(unit)
@@ -440,11 +459,20 @@ function TI:QUEST_DETAIL()
 		return
 	end
 
-	if QuestIsFromAreaTrigger() then
-		AcceptQuest()
-	elseif QuestGetAutoAccept() then
-		AcknowledgeAutoAcceptQuest()
-	elseif not C_QuestLog_IsQuestTrivial(GetQuestID()) or IsTrackingHidden() then
+	local questID = GetQuestID()
+	if
+		QuestIsFromAreaTrigger()
+		or QuestGetAutoAccept()
+		or IsTrackingHidden()
+		or not C_QuestLog_IsQuestTrivial(questID)
+		or IsTrackingHidden()
+	then
+		if self.db.onlyRepeatable then
+			if questID and not IsQuestRepeatable(questID) then
+				return
+			end
+		end
+
 		AcceptQuest()
 	end
 end
@@ -452,6 +480,13 @@ end
 function TI:QUEST_ACCEPT_CONFIRM()
 	if self:IsPaused("ACCEPT") then
 		return
+	end
+
+	if self.db.onlyRepeatable then
+		local questID = GetQuestID()
+		if questID and not IsQuestRepeatable(questID) then
+			return
+		end
 	end
 
 	AcceptQuest()
@@ -478,7 +513,13 @@ function TI:QUEST_PROGRESS()
 		return
 	end
 
-	local tagInfo = C_QuestLog_GetQuestTagInfo(GetQuestID())
+	local questID = GetQuestID()
+
+	if self.db.onlyRepeatable and not IsQuestRepeatable(questID) then
+		return
+	end
+
+	local tagInfo = C_QuestLog_GetQuestTagInfo(questID)
 	if tagInfo and (tagInfo.tagID == 153 or tagInfo.worldQuestType) or self:IsIgnoredNPC() then
 		return
 	end

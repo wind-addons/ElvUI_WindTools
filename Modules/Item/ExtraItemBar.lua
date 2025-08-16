@@ -39,7 +39,6 @@ local C_Timer_NewTicker = C_Timer.NewTicker
 local C_TradeSkillUI_GetItemCraftedQualityByItemInfo = C_TradeSkillUI.GetItemCraftedQualityByItemInfo
 local C_TradeSkillUI_GetItemReagentQualityByItemInfo = C_TradeSkillUI.GetItemReagentQualityByItemInfo
 
--- 更新任务物品列表
 local questItemList = {}
 local function UpdateQuestItemList()
 	wipe(questItemList)
@@ -75,6 +74,33 @@ local function UpdateEquipmentList()
 			tinsert(equipmentList, slotID)
 		end
 	end
+end
+
+local function ParseSlotFilter(slotStr)
+	if not slotStr or slotStr == "" then
+		return nil
+	end
+
+	local allowedSlots = {}
+
+	if strmatch(slotStr, "^(%d+)-(%d+)$") then
+		local startSlot, endSlot = strmatch(slotStr, "^(%d+)-(%d+)$")
+		startSlot, endSlot = tonumber(startSlot), tonumber(endSlot)
+		if startSlot and endSlot and startSlot <= endSlot then
+			for slotID = startSlot, endSlot do
+				if slotID >= 1 and slotID <= 18 then
+					allowedSlots[slotID] = true
+				end
+			end
+		end
+	elseif strmatch(slotStr, "^%d+$") then
+		local slotID = tonumber(slotStr)
+		if slotID and slotID >= 1 and slotID <= 18 then
+			allowedSlots[slotID] = true
+		end
+	end
+
+	return allowedSlots
 end
 
 local UpdateAfterCombat = {
@@ -221,16 +247,15 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 		end)
 	end
 
-	-- 更新堆叠数
+	-- Count
 	if button.countText and button.countText > 1 then
 		button.count:SetText(button.countText)
 	else
 		button.count:SetText()
 	end
 
-	-- 更新 OnUpdate 函数
+	-- OnUpdate
 	local OnUpdateFunction
-
 	if button.itemID then
 		OnUpdateFunction = function(self)
 			local start, duration, enable
@@ -254,10 +279,9 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 			CooldownFrame_Set(self.cooldown, start, duration, enable)
 		end
 	end
-
 	button:SetScript("OnUpdate", OnUpdateFunction)
 
-	-- 浮动提示
+	-- Tooltips
 	button:SetScript("OnEnter", function(self)
 		local bar = self:GetParent()
 		local barDB = EB.db["bar" .. bar.id]
@@ -317,7 +341,7 @@ function EB:SetUpButton(button, itemData, slotID, waitGroup)
 		GameTooltip:Hide()
 	end)
 
-	-- 更新按钮功能
+	-- Attributes
 	if not InCombatLockdown() then
 		button:EnableMouse(true)
 		button:Show()
@@ -386,7 +410,6 @@ function EB:CreateBar(id)
 
 	local barDB = self.db["bar" .. id]
 
-	-- 建立条移动锚点
 	local anchor = CreateFrame("Frame", "WTExtraItemsBar" .. id .. "Anchor", E.UIParent)
 	anchor:SetClampedToScreen(true)
 	anchor:SetPoint("BOTTOMLEFT", _G.RightChatPanel or _G.LeftChatPanel, "TOPLEFT", 0, (id - 1) * 45)
@@ -405,7 +428,7 @@ function EB:CreateBar(id)
 		"WindTools,item,extraItemBar"
 	)
 
-	-- 建立条
+	-- Bar
 	local bar = CreateFrame("Frame", "WTExtraItemsBar" .. id, E.UIParent, "SecureHandlerStateTemplate")
 	bar.id = id
 	bar:ClearAllPoints()
@@ -415,7 +438,7 @@ function EB:CreateBar(id)
 	bar:CreateBackdrop("Transparent")
 	bar:SetFrameStrata("LOW")
 
-	-- 建立按钮
+	-- Buttons
 	bar.buttons = {}
 	for i = 1, 12 do
 		bar.buttons[i] = self:CreateButton(bar:GetName() .. "Button" .. i, barDB)
@@ -510,7 +533,7 @@ function EB:UpdateBar(id)
 		if buttonID <= barDB.numButtons then
 			if self.moduleList[module] then
 				addButtons(self.moduleList[module])
-			elseif module == "QUEST" then -- 更新任务物品
+			elseif module == "QUEST" then -- Quest Items
 				for _, data in pairs(questItemList) do
 					if not self.db.blackList[data.itemID] then
 						self:SetUpButton(bar.buttons[buttonID], data, nil, bar.waitGroup)
@@ -518,7 +541,7 @@ function EB:UpdateBar(id)
 						buttonID = buttonID + 1
 					end
 				end
-			elseif module == "EQUIP" then -- 更新装备物品
+			elseif module == "EQUIP" then -- Equipments
 				for _, slotID in pairs(equipmentList) do
 					local itemID = GetInventoryItemID("player", slotID)
 					if itemID and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
@@ -527,7 +550,23 @@ function EB:UpdateBar(id)
 						buttonID = buttonID + 1
 					end
 				end
-			elseif module == "CUSTOM" then -- 更新自定义列表
+			elseif strmatch(module, "^SLOT:") then -- Equipments filtered by slot ID
+				local slotFilter = strmatch(module, "^SLOT:(.+)$")
+				local allowedSlots = ParseSlotFilter(slotFilter)
+
+				if allowedSlots then
+					for _, slotID in pairs(equipmentList) do
+						if allowedSlots[slotID] then
+							local itemID = GetInventoryItemID("player", slotID)
+							if itemID and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
+								self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
+								self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+								buttonID = buttonID + 1
+							end
+						end
+					end
+				end
+			elseif module == "CUSTOM" then -- Custom Items
 				addButtons(self.db.customList)
 			end
 		end
@@ -571,7 +610,7 @@ function EB:UpdateBar(id)
 	end
 
 	for i = 1, buttonID - 1 do
-		-- 重新定位图标
+		-- Reposition icons
 		local anchor = barDB.anchor
 		local button = bar.buttons[i]
 
@@ -603,7 +642,6 @@ function EB:UpdateBar(id)
 			end
 		end
 
-		-- 调整文字风格
 		F.SetFontWithDB(button.qualityTier, {
 			size = barDB.qualityTier.size,
 			name = E.db.general.font,

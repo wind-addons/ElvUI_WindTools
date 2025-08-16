@@ -15,9 +15,7 @@ function SB:CreateButton(text, tooltipText)
 	end
 	local button = CreateFrame("CheckButton", nil, self.bar, "UICheckButtonTemplate")
 	S:Proxy("HandleCheckBox", button)
-	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
-		S:CreateBackdropShadow(button)
-	end
+	S:CreateShadowModule(button.backdrop)
 	button.originalText = text
 	button.text = button:CreateFontString()
 	F.SetFontWithDB(button.text, self.db.font)

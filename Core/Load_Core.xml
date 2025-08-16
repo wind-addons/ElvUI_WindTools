@@ -7,5 +7,6 @@
 	<Script file='Compatibility.lua'/>
 	<Script file='Options.lua'/>
 	<Script file='Update.lua'/>
+	<Script file='KeystoneInfo.lua'/>
 	<Include file='Changelog\Load_Changelog.xml'/>
 </Ui>

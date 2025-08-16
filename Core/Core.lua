@@ -1,6 +1,4 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
-local OR = E.Libs.OpenRaid
-local KS = E.Libs.Keystone
 
 local _G = _G
 local format = format
@@ -164,36 +162,6 @@ function W:ChangelogReadAlert()
 		end
 	end
 end
-
-local KeystoneInfoManager = W:NewModule("KeystoneInfoManager", "AceEvent-3.0")
-
-KeystoneInfoManager.LibKeystoneInfo = {}
-function KeystoneInfoManager.EventHandler()
-	-- Disable in Delve
-	local difficulty = select(3, GetInstanceInfo())
-	if difficulty and difficulty == 208 then
-		return
-	end
-
-	if not OR.RequestKeystoneDataFromRaid() then
-		KS.Request("PARTY")
-		OR.RequestKeystoneDataFromParty()
-	end
-end
-
-KS.Register(KeystoneInfoManager, function(keyLevel, keyChallengeMapID, playerRating, sender)
-	KeystoneInfoManager.LibKeystoneInfo[sender] = {
-		level = keyLevel,
-		challengeMapID = keyChallengeMapID,
-		rating = playerRating,
-	}
-end)
-
-KeystoneInfoManager:RegisterEvent("GROUP_ROSTER_UPDATE", "EventHandler")
-KeystoneInfoManager:RegisterEvent("CHALLENGE_MODE_COMPLETED", "EventHandler")
-KeystoneInfoManager:RegisterEvent("CHALLENGE_MODE_START", "EventHandler")
-KeystoneInfoManager:RegisterEvent("CHALLENGE_MODE_RESET", "EventHandler")
-F.TaskManager:AfterLogin(KeystoneInfoManager.EventHandler)
 
 function W:GameFixing()
 	if E.global.WT.core.cvarAlert then

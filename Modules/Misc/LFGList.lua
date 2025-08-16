@@ -1,12 +1,11 @@
 local W, F, E, L = unpack((select(2, ...)))
-local KM = W:GetModule("KeystoneInfoManager")
+local KI = W:GetModule("KeystoneInfo")
 local S = W.Modules.Skins
 local MF = W.Modules.MoveFrames
 local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
 local LSM = E.Libs.LSM
-local OR = E.Libs.OpenRaid
 
 local _G = _G
 local bit = bit
@@ -437,26 +436,16 @@ function LL:UpdatePartyKeystoneFrame()
 
 	for i = 1, 5 do
 		local unit = i == 1 and "player" or "party" .. i - 1
-		local data = OR.GetKeystoneInfo(unit)
-
-		-- If Details! library no returns data, try to get it from Bigwigs library
-		if not data and KM.LibKeystoneInfo then
-			local name = UnitName(unit)
-			local sender = name and Ambiguate(name, "none")
-			data = sender and KM.LibKeystoneInfo[sender]
-		end
-
+		local data = KI:UnitData(unit)
 		local mapID = data and data.challengeMapID
 		if mapID and W.MythicPlusMapData[mapID] then
-			local level = data.level
-			local playerClass = UnitClassBase(unit)
-			local playerName = UnitName(unit)
+			local mapData = W.MythicPlusMapData[mapID]
 
 			tinsert(cache, {
-				level = level,
-				name = W.MythicPlusMapData[mapID].abbr,
-				player = F.CreateClassColorString(playerName, playerClass),
-				icon = W.MythicPlusMapData[mapID].tex,
+				level = data.level,
+				name = mapData.abbr,
+				player = F.CreateClassColorString(UnitName(unit), UnitClassBase(unit)),
+				icon = mapData.tex,
 			})
 		end
 	end

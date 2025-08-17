@@ -1,14 +1,9 @@
 local W, F, E, L = unpack((select(2, ...)))
 local T = W.Modules.Tooltips
 local KI = W:GetModule("KeystoneInfo")
-local OR = E.Libs.OpenRaid
 local C = W.Utilities.Color
 
 local format = format
-
-local Ambiguate = Ambiguate
-local UnitIsPlayer = UnitIsPlayer
-local UnitName = UnitName
 
 function T:AddKeystone(tt, unit)
 	local db = E.db.WT.tooltips.keystone

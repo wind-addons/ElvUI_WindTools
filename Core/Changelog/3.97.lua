@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...)))
 
 W.Changelog[397] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/08/18",
 	IMPORTANT = {
 		["zhCN"] = {
 			"更新一些库文件.",

@@ -60,11 +60,6 @@ local forceUsableItems = {
 	[206448] = true, --『夢境裂斧』菲拉雷斯
 }
 
--- If the item is lower than the threshold, it will be considered not shown
-local countThreshold = {
-	[245653] = 100, -- 寶庫鑰匙裂片
-}
-
 local equipmentList = {}
 local function UpdateEquipmentList()
 	wipe(equipmentList)
@@ -485,6 +480,28 @@ function EB:CreateBar(id)
 	self.bars[id] = bar
 end
 
+function EB:ValidateItem(itemID)
+	if not itemID then
+		return false
+	end
+
+	if self.db.blackList[itemID] then
+		return false
+	end
+
+	if self.StateCheckList[itemID] and not self:GetState(self.StateCheckList[itemID]) then
+		return false
+	end
+
+	local count = C_Item_GetItemCount(itemID)
+	local countThreshold = self.CountThreshold[itemID] or 1
+	if not count or count < countThreshold then
+		return false
+	end
+
+	return true
+end
+
 function EB:UpdateBar(id)
 	if not self.db or not self.db["bar" .. id] then
 		return
@@ -517,57 +534,53 @@ function EB:UpdateBar(id)
 
 	local buttonID = 1
 
-	local function addButtons(list)
+	local function addNormalButton(itemID)
+		if self:ValidateItem(itemID) and buttonID <= barDB.numButtons then
+			self:SetUpButton(bar.buttons[buttonID], { itemID = itemID }, nil, bar.waitGroup)
+			self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+			buttonID = buttonID + 1
+		end
+	end
+
+	local function addSlotButton(slotID)
+		local itemID = GetInventoryItemID("player", slotID)
+		if self:ValidateItem(itemID) and buttonID <= barDB.numButtons then
+			self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
+			self:UpdateButtonSize(bar.buttons[buttonID], barDB)
+			buttonID = buttonID + 1
+		end
+	end
+
+	local function addNormalButtons(list)
 		for _, itemID in pairs(list) do
-			local count = C_Item_GetItemCount(itemID)
-			local countIsValid = count and count > 0 and (not countThreshold[itemID] or count >= countThreshold[itemID])
-			if countIsValid and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-				self:SetUpButton(bar.buttons[buttonID], { itemID = itemID }, nil, bar.waitGroup)
-				self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-				buttonID = buttonID + 1
-			end
+			addNormalButton(itemID)
 		end
 	end
 
 	for _, module in ipairs({ strsplit("[, ]", barDB.include) }) do
 		if buttonID <= barDB.numButtons then
 			if self.moduleList[module] then
-				addButtons(self.moduleList[module])
+				addNormalButtons(self.moduleList[module])
 			elseif module == "QUEST" then -- Quest Items
 				for _, data in pairs(questItemList) do
-					if not self.db.blackList[data.itemID] then
-						self:SetUpButton(bar.buttons[buttonID], data, nil, bar.waitGroup)
-						self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-						buttonID = buttonID + 1
-					end
+					addNormalButton(data.itemID)
 				end
 			elseif module == "EQUIP" then -- Equipments
 				for _, slotID in pairs(equipmentList) do
-					local itemID = GetInventoryItemID("player", slotID)
-					if itemID and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-						self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
-						self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-						buttonID = buttonID + 1
-					end
+					addSlotButton(slotID)
 				end
 			elseif strmatch(module, "^SLOT:") then -- Equipments filtered by slot ID
 				local slotFilter = strmatch(module, "^SLOT:(.+)$")
 				local allowedSlots = ParseSlotFilter(slotFilter)
-
 				if allowedSlots then
 					for _, slotID in pairs(equipmentList) do
 						if allowedSlots[slotID] then
-							local itemID = GetInventoryItemID("player", slotID)
-							if itemID and not self.db.blackList[itemID] and buttonID <= barDB.numButtons then
-								self:SetUpButton(bar.buttons[buttonID], nil, slotID, bar.waitGroup)
-								self:UpdateButtonSize(bar.buttons[buttonID], barDB)
-								buttonID = buttonID + 1
-							end
+							addSlotButton(slotID)
 						end
 					end
 				end
 			elseif module == "CUSTOM" then -- Custom Items
-				addButtons(self.db.customList)
+				addNormalButtons(self.db.customList)
 			end
 		end
 	end
@@ -717,6 +730,7 @@ function EB:UpdateBar(id)
 end
 
 function EB:UpdateBars()
+	self:UpdateState(EB.STATE.IN_DELVE)
 	for i = 1, 5 do
 		self:UpdateBar(i)
 	end
@@ -739,6 +753,11 @@ end
 
 function EB:UpdateQuestItem()
 	UpdateQuestItemList()
+	self:UpdateBars()
+end
+
+function EB:UpdateEquipmentItem()
+	UpdateEquipmentList()
 	self:UpdateBars()
 end
 
@@ -796,18 +815,19 @@ function EB:Initialize()
 	self:UpdateBars()
 	self:UpdateBinding()
 
-	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
-	self:RegisterEvent("ITEM_LOCKED")
 	self:RegisterEvent("BAG_UPDATE_DELAYED", "UpdateBars")
+	self:RegisterEvent("ITEM_LOCKED")
+	self:RegisterEvent("PLAYER_ALIVE", "UpdateBars")
+	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", "UpdateEquipmentItem")
+	self:RegisterEvent("PLAYER_UNGHOST", "UpdateBars")
+	self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
+	self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
+	self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
+	self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "UpdateQuestItem")
+	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
+	self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 	self:RegisterEvent("ZONE_CHANGED", "UpdateBars")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateBars")
-	self:RegisterEvent("PLAYER_ALIVE", "UpdateBars")
-	self:RegisterEvent("PLAYER_UNGHOST", "UpdateBars")
-	self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "UpdateQuestItem")
-	self:RegisterEvent("QUEST_LOG_UPDATE", "UpdateQuestItem")
-	self:RegisterEvent("QUEST_ACCEPTED", "UpdateQuestItem")
-	self:RegisterEvent("QUEST_TURNED_IN", "UpdateQuestItem")
-	self:RegisterEvent("UPDATE_BINDINGS", "UpdateBinding")
 
 	self.initialized = true
 end
@@ -819,17 +839,18 @@ function EB:ProfileUpdate()
 		UpdateQuestItemList()
 		UpdateEquipmentList()
 	elseif self.initialized then
-		self:UnregisterEvent("UNIT_INVENTORY_CHANGED")
 		self:UnregisterEvent("BAG_UPDATE_DELAYED")
+		self:UnregisterEvent("PLAYER_ALIVE")
+		self:UnregisterEvent("PLAYER_EQUIPMENT_CHANGED")
+		self:UnregisterEvent("PLAYER_UNGHOST")
+		self:UnregisterEvent("QUEST_ACCEPTED")
+		self:UnregisterEvent("QUEST_LOG_UPDATE")
+		self:UnregisterEvent("QUEST_TURNED_IN")
+		self:UnregisterEvent("QUEST_WATCH_LIST_CHANGED")
+		self:UnregisterEvent("UNIT_INVENTORY_CHANGED")
+		self:UnregisterEvent("UPDATE_BINDINGS")
 		self:UnregisterEvent("ZONE_CHANGED")
 		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-		self:UnregisterEvent("PLAYER_ALIVE")
-		self:UnregisterEvent("PLAYER_UNGHOST")
-		self:UnregisterEvent("QUEST_WATCH_LIST_CHANGED")
-		self:UnregisterEvent("QUEST_LOG_UPDATE")
-		self:UnregisterEvent("QUEST_ACCEPTED")
-		self:UnregisterEvent("QUEST_TURNED_IN")
-		self:UnregisterEvent("UPDATE_BINDINGS")
 	end
 
 	self:UpdateBars()

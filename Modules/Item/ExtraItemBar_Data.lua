@@ -2,8 +2,54 @@ local W, F, E, L = unpack((select(2, ...)))
 local EB = W:GetModule("ExtraItemsBar")
 
 local pairs = pairs
+local select = select
 local sort = sort
 local tinsert = tinsert
+
+local GetInstanceInfo = GetInstanceInfo
+
+EB.STATE = {
+	IN_DELVE = 1,
+}
+
+EB.StateCache = {}
+EB.StateFetcher = {
+	[EB.STATE.IN_DELVE] = function()
+		local difficulty = select(3, GetInstanceInfo())
+		if difficulty and difficulty == 208 then
+			return true
+		end
+		return false
+	end,
+}
+
+function EB:UpdateState(state)
+	local fetcher = EB.StateFetcher[state]
+	EB.StateCache[state] = fetcher and fetcher()
+end
+
+function EB:GetState(state)
+	local result = EB.StateCache[state]
+	if result == nil then
+		result = true -- default to true if not cached
+	end
+	return result
+end
+
+EB.StateCheckList = {
+	-- Items that cannot be use outside delve
+	[233205] = EB.STATE.IN_DELVE, -- 活力果汁
+	[233792] = EB.STATE.IN_DELVE, -- 探究者偽裝
+	[248017] = EB.STATE.IN_DELVE, -- 尖嘯石英
+	[248755] = EB.STATE.IN_DELVE, -- 罐裝星辰
+	[248764] = EB.STATE.IN_DELVE, -- 手工閃現陷阱
+	[248954] = EB.STATE.IN_DELVE, -- 虛空扭曲幼苗
+}
+
+-- If the item is lower than the threshold, it will be considered not shown
+EB.CountThreshold = {
+	[245653] = 100, -- 寶庫鑰匙裂片
+}
 
 local potions = {
 	general = {

@@ -149,6 +149,7 @@ Português，Italiano
 22. **Auctionator 美化**: 为 Auctionator 的全部框体添加美化
 23. **Postal 美化**: 为 Postal 的常规按钮和快速附加按钮添加美化
 24. **World Quest Tab 美化**: 为 World Quest Tab 的标签页和设置界面添加美化
+25. **BtWQuests 美化**: 为 BtWQuests 添加美化
 
 ### 其他
 
@@ -171,3 +172,4 @@ Português，Italiano
 17. **自定义快捷键别名**: 为快捷键添加自定义别名
 18. **冷却文字偏移**: 调整 ElvUI 冷却文字的位置
 19. **退出相位潜行**: 允许玩家一键退出相位潜行
+20. **雷什裹布升级**: 鼠标中键点击雷什裹布打开升级菜单

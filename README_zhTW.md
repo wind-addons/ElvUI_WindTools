@@ -149,6 +149,7 @@ Português，Italiano
 22. **Auctionator 美化**: 為 Auctionator 的全部框架添加美化
 23. **Postal 美化**: 為 Postal 的常規按鍵及快速附加按鍵添加美化
 24. **World Quest Tab 美化**: 為 World Quest Tab 標籤頁和設置添加美化
+25. **BtWQuests 美化**: 為 BtWQuests 添加美化
 
 ### 其他
 
@@ -171,3 +172,4 @@ Português，Italiano
 17. **自訂按鍵別名**: 自訂按鍵的提示文字
 18. **冷卻文字偏移**: 調整冷卻文字的位置
 19. **退出相位深潛**: 允許玩家一鍵退出相位深潛
+20. **瑞西纏帶升級**: 滑鼠中鍵點擊瑞西纏帶打開升級選單

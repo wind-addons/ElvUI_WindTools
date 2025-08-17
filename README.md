@@ -149,6 +149,7 @@ Português, Italiano
 22. **Autionator Skin**: Apply skin for Auctionator all frames.
 23. **Postal Skin**: Apply skin for Postal normal buttons and quick attach buttons.
 24. **World Quest Tab Skin**: Apply skin for World Quest Tab tabs and settings.
+25. **BtWQuests Skin**: Apply skin for BtWQuests.
 
 ### Misc
 
@@ -171,3 +172,4 @@ Português, Italiano
 17. **Custom Hotkey Alias**: Custom hotkey alias for keybinding.
 18. **Cooldown Text Offset**: Customize the ElvUI cooldown text offset.
 19. **Exit Phase Diving**: Allow players to exit the diving phase with one-click.
+20. **Reshii Wraps Upgrade**: Middle click the Reshii Wraps to open upgrade menu.

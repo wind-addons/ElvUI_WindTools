@@ -148,6 +148,7 @@ Português, Italiano
 22. **Aspecto de Auctionator**: Aplica aspecto para todos los marcos de Auctionator.
 23. **Aspecto de Postal**: Aplica aspecto para botones normales de Postal y botones de adjunto rápido.
 24. **Aspecto de World Quest Tab**: Aplica aspecto para las pestañas y configuraciones de World Quest Tab.
+25. **Aspecto de BtWQuests**: Aplica aspecto para BtWQuests.
 
 ### Miscelánea
 
@@ -170,3 +171,4 @@ Português, Italiano
 17. **Alias de Tecla Rápida Personalizado**: Alias personalizado de tecla rápida para asignación de teclas.
 18. **Desplazamiento de Texto de Reutilización**: Personaliza el desplazamiento del texto de tiempo de reutilización de ElvUI.
 19. **Salir de Buceo de Fase**: Permite a los jugadores salir del buceo de fase con un clic.
+20. **Mejora de Mantón reshii**: Clic con el botón central en el Mantón reshii para abrir el menú de mejora.

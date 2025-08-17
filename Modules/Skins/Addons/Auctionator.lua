@@ -39,6 +39,24 @@ local function HandleListIcon(frame)
 	end
 end
 
+local function reskinDialog(frame)
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
+	S:CreateShadow(frame)
+
+	if frame.editBox then
+		S:Proxy("HandleEditBox", frame.editBox)
+		frame.editBox:SetTextInsets(0, 0, 0, 0)
+	end
+
+	for _, buttonName in pairs({ "acceptButton", "cancelButton", "AcceptButton", "CancelButton", "Buy", "Cancel" }) do
+		local button = frame[buttonName]
+		if button and button:IsObjectType("Button") then
+			S:Proxy("HandleButton", button)
+		end
+	end
+end
+
 -- Modified from ElvUI Auction House Skin
 local function HandleHeaders(frame)
 	local maxHeaders = frame.HeaderContainer:GetNumChildren()
@@ -407,9 +425,20 @@ local function craftingInfoProfessionsFrame(frame)
 	S:Proxy("HandleButton", frame.SearchButton)
 end
 
-local function buyCommodity(frame)
+local function buyItem(frame)
 	S:Proxy("HandleButton", frame.BackButton)
 	frame:StripTextures()
+
+	if frame.BuyDialog then
+		reskinDialog(frame.BuyDialog)
+	end
+
+	for _, child in pairs({ frame:GetChildren() }) do
+		if child:IsObjectType("Button") and child.iconAtlas and child.iconAtlas == "UI-RefreshButton" then
+			S:Proxy("HandleButton", child)
+			break
+		end
+	end
 
 	local container = frame.DetailsContainer
 	if not container then
@@ -419,32 +448,6 @@ local function buyCommodity(frame)
 	S:Proxy("HandleButton", container.BuyButton)
 	S:Proxy("HandleEditBox", container.Quantity)
 	container.Quantity:SetTextInsets(0, 0, 0, 0)
-
-	for _, child in pairs({ frame:GetChildren() }) do
-		if child:IsObjectType("Button") and child.iconAtlas and child.iconAtlas == "UI-RefreshButton" then
-			S:Proxy("HandleButton", child)
-			break
-		end
-	end
-end
-
-local function reskinDialog(frame)
-	frame:StripTextures()
-	frame:SetTemplate("Transparent")
-	S:CreateShadow(frame)
-
-	if frame.editBox then
-		S:Proxy("HandleEditBox", frame.editBox)
-		frame.editBox:SetTextInsets(0, 0, 0, 0)
-	end
-
-	for _, buttonName in pairs({ "acceptButton", "cancelButton", "AcceptButton", "CancelButton" }) do
-		if frame[buttonName] then
-			S:Proxy("HandleButton", frame[buttonName])
-		end
-	end
-
-	MF:InternalHandle(frame, nil, false)
 end
 
 local function reskinDialogs()
@@ -518,7 +521,8 @@ function S:Auctionator()
 	S:TryPostHook("AuctionatorCraftingInfoProfessionsFrameMixin", "OnLoad", craftingInfoProfessionsFrame)
 	S:TryPostHook("AuctionatorShoppingItemMixin", "OnLoad", shoppingItem)
 	S:TryPostHook("AuctionatorSplashScreenMixin", "OnLoad", splashFrame)
-	S:TryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyCommodity)
+	S:TryPostHook("AuctionatorBuyCommodityFrameTemplateMixin", "OnLoad", buyItem)
+	S:TryPostHook("AuctionatorBuyItemFrameTemplateMixin", "OnLoad", buyItem)
 	S:TryPostHook("AuctionatorBuyCommodityFinalConfirmationDialogMixin", "SetDetails", reskinDialog)
 
 	-- Dialog

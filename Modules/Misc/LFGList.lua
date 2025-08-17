@@ -361,6 +361,12 @@ function LL:UpdateRoleCount(RoleCount)
 	end
 end
 
+-- Used for Details! command check
+local FakeChatEditBox = {}
+function FakeChatEditBox:GetText()
+	return "/keystone"
+end
+
 function LL:InitializePartyKeystoneFrame()
 	local frame = CreateFrame("Frame", "WTPartyKeystoneFrame", _G.ChallengesFrame)
 	frame:SetSize(200, 150)
@@ -383,9 +389,10 @@ function LL:InitializePartyKeystoneFrame()
 	frame.button:SetText(L["More"])
 	frame.button:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -8)
 	S:Proxy("HandleButton", frame.button)
+
 	frame.button:SetScript("OnClick", function()
 		if _G.SlashCmdList["KEYSTONE"] then
-			_G.SlashCmdList["KEYSTONE"]("")
+			_G.SlashCmdList["KEYSTONE"]("", FakeChatEditBox)
 		else
 			F.Print(L["You need to install Details! first."])
 		end

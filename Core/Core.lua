@@ -14,7 +14,6 @@ local CreateFrame = CreateFrame
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local InCombatLockdown = InCombatLockdown
 
-local C_Timer_NewTimer = C_Timer.NewTimer
 local C_UI_Reload = C_UI.Reload
 
 local ACCEPT = _G.ACCEPT
@@ -166,29 +165,6 @@ function W:GameFixing()
 		self:RegisterEvent("CVAR_UPDATE", function(_, cvar, value)
 			if cvar == "ActionButtonUseKeyDown" and W.UseKeyDown ~= (value == "1") then
 				E:StaticPopup_Show("WINDTOOLS_BUTTON_FIX_RELOAD")
-			end
-		end)
-	end
-
-	if E.global.WT.core.guildNewsUpdateFix then
-		-- https://nga.178.com/read.php?tid=42399961
-		local newsRequireUpdate, newsTimer
-		_G.CommunitiesFrameGuildDetailsFrameNews:SetScript("OnEvent", function(frame, event)
-			if event == "GUILD_NEWS_UPDATE" then
-				if newsTimer then
-					newsRequireUpdate = true
-				else
-					_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
-					-- After 1 second, if guild news still need to be updated, update again
-					newsTimer = C_Timer_NewTimer(1, function()
-						if newsRequireUpdate then
-							_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
-						end
-						newsTimer = nil
-					end)
-				end
-			else
-				_G.CommunitiesGuildNewsFrame_OnEvent(frame, event)
 			end
 		end)
 	end

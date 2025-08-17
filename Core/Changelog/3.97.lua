@@ -95,6 +95,8 @@ W.Changelog[397] = {
 			"[浮動提示] 鑰石資訊現在會同時透過 LibKeystone(BigWigs) 向隊友取得.",
 			"[交接] 更新忽略 NPC 列表.",
 			"[額外物品條] 部分探究物品不會在室外顯示.",
+			"[預組列表] 修正了無法打開 Details! 隊伍鑰石列表的問題.",
+			"[預組列表] 隊伍鑰石資訊現在會同時透過 LibKeystone(BigWigs) 向隊友取得.",
 		},
 		["enUS"] = {
 			"[Announcement] Fix the issue with the new cauldrons announce not working.",
@@ -106,7 +108,8 @@ W.Changelog[397] = {
 			"[Tooltips] Keystone information can now be retrieved from teammates through LibKeystone(BigWigs).",
 			"[Turn In] Update ignored NPC list.",
 			"[Extra Items Bar] Some delve items will not be displayed outdoors.",
-			"[Tooltips] Keystone information can now be retrieved from teammates through LibKeystone(BigWigs).",
+			"[LFG List] Fix the issue with opening Details! keystone list.",
+			"[LFG List] Party keystone information can now be retrieved from teammates through LibKeystone(BigWigs).",
 		},
 		["koKR"] = {
 			"[알림] 새로운 대형 냄비 알림이 작동하지 않는 문제 수정.",
@@ -118,7 +121,8 @@ W.Changelog[397] = {
 			"[툴팁] 키스톤 정보가 이제 LibKeystone(BigWigs)를 통해 팀원에게 전달됩니다.",
 			"[교환] 업데이트된 무시 NPC 목록.",
 			"[아이템 바] 일부 탐사 아이템이 실외에 표시되지 않습니다.",
-			"[툴팁] 키스톤 정보가 이제 LibKeystone(BigWigs)를 통해 팀원에게 전달됩니다.",
+			"[예비 그룹 목록] 수정된 Details! 팀 키스톤 목록을 열 수 없는 문제.",
+			"[예비 그룹 목록] 파티 키스톤 정보가 이제 LibKeystone(BigWigs)를 통해 팀원에게 전달됩니다.",
 		},
 		["ruRU"] = {
 			"[Объявления] Исправлена проблема с неработающим новым уведомлением о новых котлах.",
@@ -130,7 +134,8 @@ W.Changelog[397] = {
 			"[Подсказки] Информация о ключах теперь может быть получена от товарищей по команде через LibKeystone(BigWigs).",
 			"[Передача] Обновлен список игнорируемых NPC.",
 			"[Панель дополнительных предметов] Некоторые предметы вылазок не будут отображаться на открытом воздухе.",
-			"[Подсказки] Информация о ключах теперь может быть получена от товарищей по команде через LibKeystone(BigWigs).",
+			"[Предварительный список] Исправлена проблема с открытием списка ключей группы Details!.",
+			"[Предварительный список] Информация о ключах группы теперь может быть получена от товарищей по команде через LibKeystone(BigWigs).",
 		},
 	},
 }

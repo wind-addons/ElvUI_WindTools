@@ -32,6 +32,13 @@ local function HandleButton(self)
 	highlight:SetVertexColor(1, 1, 1, 0.25)
 	highlight:SetInside(self.backdrop)
 
+	if self.ActiveTexture then
+		self.ActiveTexture:Kill()
+		S:CreateShadow(self.backdrop, 4, 1, 0.717, 0.058, true)
+		self.ActiveTexture = self.backdrop.shadow
+		self.ActiveTexture:Hide()
+	end
+
 	local Active = self.Acive or self.Active
 	if Active then
 		Active:SetTexture("")

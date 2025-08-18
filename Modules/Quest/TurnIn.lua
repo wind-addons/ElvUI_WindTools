@@ -514,7 +514,6 @@ function TI:QUEST_PROGRESS()
 	end
 
 	local questID = GetQuestID()
-
 	if self.db.onlyRepeatable and not IsQuestRepeatable(questID) then
 		return
 	end
@@ -550,6 +549,13 @@ function TI:QUEST_COMPLETE()
 
 	if self:IsIgnoredNPC() then
 		return
+	end
+
+	if self.db.onlyRepeatable then
+		local questID = GetQuestID()
+		if questID and not IsQuestRepeatable(questID) then
+			return
+		end
 	end
 
 	local choices = GetNumQuestChoices()

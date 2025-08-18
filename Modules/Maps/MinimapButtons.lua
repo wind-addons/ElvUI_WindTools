@@ -21,7 +21,6 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
-local RunNextFrame = RunNextFrame
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -123,55 +122,58 @@ function MB:HandleLibDBIconButton(button, name)
 	return button:IsShown()
 end
 
-local HandleExpansionButton = EM.HandleExpansionButton
-function EM:HandleExpansionButton()
-	HandleExpansionButton()
+do
+	local modified = false
+	function MB:UpdateExpansionLandingPageMinimapIcon(icon)
+		icon = icon or _G.ExpansionLandingPageMinimapButton
 
-	-- Run this post hook lazily and safely
-	F.WaitFor(function()
-		return MB ~= nil and MB.db ~= nil
-	end, function()
-		if not MB.db.garrison then
+		if not icon then
 			return
 		end
+		icon:SetIgnoreParentScale(true)
+		icon:SetScale(E.uiscale)
 
-		F.TaskManager:OutOfCombat(function()
-			local button = _G.ExpansionLandingPageMinimapButton or _G.GarrisonLandingPageMinimapButton
-			if not button then
-				return
-			end
+		local box = _G.GarrisonLandingPageTutorialBox
+		if box then
+			box:SetScale(E.uiscale)
+			box:SetClampedToScreen(true)
+		end
 
-			EM:SetIconParent(button)
-			button.SetParent_ = button.SetParent
-			button.SetParent = E.noop
-			EM:SetScale(button, 1)
+		if not modified then
+			icon.AlertText:Hide()
+			icon.AlertText:SetAlpha(0)
+			icon.AlertText.Show = E.noop
+			icon.AlertText.Hide = E.noop
 
-			local box = _G.GarrisonLandingPageTutorialBox
-			if box then
-				box:SetScale(1)
-				box:SetClampedToScreen(true)
-			end
+			icon.AlertBG:SetAlpha(0)
+			icon.AlertBG:Hide()
+			icon.AlertBG.Show = E.noop
+			icon.AlertBG.Hide = E.noop
 
-			button:SetHitRectInsets(0, 0, 0, 0)
-			if button.AlertText then
-				button.AlertText:Kill()
-				button.AlertText.SetText = function(_, text)
-					if text then
-						local event = F.CreateColorString(button.title or L["Garrison"], E.db.general.valuecolor)
-						F.Print(event .. " " .. text)
-					end
+			icon.AlertText.SetText = function(_, text)
+				if text then
+					print(F.CreateColorString(icon.title or L["Garrison"], E.db.general.valuecolor) .. ": " .. text)
 				end
 			end
 
-			if button.AlertBG then
-				button.AlertBG:Kill()
-			end
+			modified = true
+		end
 
-			RunNextFrame(function()
-				F.TaskManager:OutOfCombat(MB.UpdateLayout, MB)
-			end)
-		end)
-	end, 0.1, 100)
+		self:UpdateLayout()
+	end
+end
+
+do
+	local originalFunction = EM.HandleExpansionButton
+	function EM:HandleExpansionButton()
+		local icon = _G.ExpansionLandingPageMinimapButton
+
+		if not icon or not icon.isWindMinimapButton or InCombatLockdown() then
+			return originalFunction(self)
+		else
+			return MB:UpdateExpansionLandingPageMinimapIcon(icon)
+		end
+	end
 end
 
 function MB:SetButtonMouseOver(button, frame, rawhook)
@@ -301,6 +303,13 @@ function MB:SkinButton(frame)
 		frame:SetNormalTexture("Interface\\Icons\\INV_Helmet_87")
 	elseif name == "SmartBuff_MiniMapButton" then
 		frame:SetNormalTexture(C_Spell_GetSpellTexture(12051))
+	elseif name == "ExpansionLandingPageMinimapButton" then
+		if self.db.garrison then
+			if not frame.isWindMinimapButton then
+				frame.isWindMinimapButton = true
+				self:UpdateExpansionLandingPageMinimapIcon(_G.ExpansionLandingPageMinimapButton)
+			end
+		end
 	elseif name == "GRM_MinimapButton" then
 		frame.GRM_MinimapButtonBorder:Hide()
 		frame:SetPushedTexture("")

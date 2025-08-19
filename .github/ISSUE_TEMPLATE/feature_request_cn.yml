@@ -6,19 +6,19 @@ type: feature
 body:
   - type: textarea
     validations:
-      required: true
+      required: false
     attributes:
       label: 你的功能请求是否与某个问题相关？请描述一下。
       description: 清楚简洁地描述问题所在。例如：我总是因为 [...] 而感到困扰
   - type: textarea
     validations:
-      required: true
+      required: false
     attributes:
       label: 描述你希望的解决方案
       description: 清楚简洁地描述你希望实现的功能。
   - type: textarea
     validations:
-      required: true
+      required: false
     attributes:
       label: 描述你考虑过的替代方案，插件或是 WeakAuras
       description: 清楚简洁地描述你考虑过的任何替代解决方案或功能。

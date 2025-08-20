@@ -19,66 +19,91 @@ function S:OmniCD_ConfigGUI()
 end
 
 function S:OmniCD_Party_Icon()
-	if not E.private.WT.skins.addons.omniCDIcon then
+	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
+	if not P or not P.CreateStatusBarFramePool then
 		return
 	end
 
-	local O = _G.OmniCD[1]
-
-	if not O.Party or not O.Party.AcquireIcon then
-		return
-	end
-
-	hooksecurefunc(O.Party, "AcquireIcon", function(_, barFrame, iconIndex, unitBar)
-		local icon = barFrame.icons[iconIndex]
-		if icon and not icon.__wind then
-			self:CreateShadow(icon)
-			icon.__wind = true
+	hooksecurefunc(P, "CreateIconFramePool", function()
+		if not P.IconPool then
+			return
 		end
+		hooksecurefunc(P.IconPool, "Acquire", function(pool)
+			for icon in pool:EnumerateActive() do
+				if not icon.__wind then
+					self:CreateShadow(icon)
+					icon.__wind = true
+				end
+			end
+		end)
 	end)
 end
 
-local function updateBorderVisibility(self)
-	local parent = self:GetParent()
-	if not parent or not parent.__wind then
+function S:OmniCD_Party_StatusBar()
+	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
+	if not P or not P.CreateStatusBarFramePool then
 		return
 	end
 
-	parent.__wind:SetShown(self:IsShown())
-end
+	local function updateBorderVisibility(borderTex)
+		local parent = borderTex:GetParent()
+		if not parent or not parent.shadow then
+			return
+		end
 
-function S:OmniCD_Party_ExtraBars()
-	if not E.private.WT.skins.addons.omniCDStatusBar then
-		return
+		parent.shadow:SetShown(borderTex:IsShown())
 	end
 
-	local O = _G.OmniCD[1]
+	hooksecurefunc(P, "CreateStatusBarFramePool", function()
+		if not P.StatusBarPool then
+			return
+		end
 
-	if not O.Party or not O.Party.AcquireStatusBar then
-		return
-	end
+		hooksecurefunc(P.StatusBarPool, "Acquire", function(pool)
+			for bar in pool:EnumerateActive() do
+				if not bar.__wind then
+					self:CreateLowerShadow(bar)
 
-	hooksecurefunc(O.Party, "AcquireStatusBar", function(P, icon)
-		if icon.statusBar then
-			if not icon.statusBar.__wind then
-				icon.statusBar.__wind = CreateFrame("Frame", nil, icon.statusBar)
-				icon.statusBar.__wind:SetFrameLevel(icon.statusBar:GetFrameLevel() - 1)
-
-				-- bind the visibility to the original borders
-				if icon.statusBar.borderTop then
-					hooksecurefunc(icon.statusBar.borderTop, "SetShown", updateBorderVisibility)
-					hooksecurefunc(icon.statusBar.borderTop, "Hide", updateBorderVisibility)
-					hooksecurefunc(icon.statusBar.borderTop, "Show", updateBorderVisibility)
+					-- bind the visibility to the original borders
+					if bar.borderTop then
+						hooksecurefunc(bar.borderTop, "SetShown", updateBorderVisibility)
+						hooksecurefunc(bar.borderTop, "Hide", updateBorderVisibility)
+						hooksecurefunc(bar.borderTop, "Show", updateBorderVisibility)
+					end
+					bar.__wind = true
 				end
 			end
+		end)
+	end)
+end
 
-			local x = icon:GetSize()
+function S:OmniCD_Party_ExtraBar()
+	local P = _G.OmniCD[1] and _G.OmniCD[1].Party
+	if not P or not P.CreateStatusBarFramePool then
+		return
+	end
 
-			icon.statusBar.__wind:ClearAllPoints()
-			icon.statusBar.__wind:SetPoint("TOPLEFT", icon.statusBar, "TOPLEFT", -x - 1, 0)
-			icon.statusBar.__wind:SetPoint("BOTTOMRIGHT", icon.statusBar, "BOTTOMRIGHT", 0, 0)
-			self:CreateShadow(icon.statusBar.__wind)
+	hooksecurefunc(P, "CreateExBarFramePool", function()
+		if not P.ExBarPool then
+			return
 		end
+
+		hooksecurefunc(P.ExBarPool, "Acquire", function(pool)
+			for bar in pool:EnumerateActive() do
+				if not bar.__wind then
+					bar.anchor:StripTextures()
+					bar.anchor:SetTemplate("Transparent")
+					self:CreateShadow(bar.anchor)
+					bar.anchor:SetHeight(bar.anchor:GetHeight() + 8)
+					bar.anchor.__SetPoint = bar.anchor.SetPoint
+					hooksecurefunc(bar.anchor, "SetPoint", function()
+						F.MoveFrameWithOffset(bar.anchor, 0, 3)
+					end)
+
+					bar.__wind = true
+				end
+			end
+		end)
 	end)
 end
 
@@ -88,8 +113,18 @@ function S:OmniCD()
 	end
 
 	self:OmniCD_ConfigGUI()
-	self:OmniCD_Party_Icon()
-	self:OmniCD_Party_ExtraBars()
+
+	if E.private.WT.skins.addons.omniCDIcon then
+		self:OmniCD_Party_Icon()
+	end
+
+	if E.private.WT.skins.addons.omniCDStatusBar then
+		self:OmniCD_Party_StatusBar()
+	end
+
+	if E.private.WT.skins.addons.omniCDExtraBar then
+		self:OmniCD_Party_ExtraBar()
+	end
 end
 
 S:AddCallbackForAddon("OmniCD")

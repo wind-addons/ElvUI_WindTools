@@ -495,6 +495,7 @@ V.skins = {
 		omniCD = true,
 		omniCDIcon = true,
 		omniCDStatusBar = true,
+		omniCDExtraBar = true,
 		postal = true,
 		premadeGroupsFilter = true,
 		raiderIO = true,

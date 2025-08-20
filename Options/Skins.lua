@@ -1239,6 +1239,16 @@ options.addons = {
 			end,
 			addonName = "OmniCD",
 		},
+		omniCDExtraBar = {
+			order = 10,
+			type = "toggle",
+			name = L["OmniCD Extra Bar"],
+			desc = L["Add a shadowed background to the group title and adjust its position slightly upward."],
+			hidden = function()
+				return not E.private.WT.skins.addons.omniCD
+			end,
+			addonName = "OmniCD",
+		},
 		postal = {
 			order = 10,
 			type = "toggle",

@@ -35,22 +35,27 @@ W.Changelog[398] = {
 		["zhCN"] = {
 			"[美化皮肤] 优化 OmniCD 外观.",
 			"[美化皮肤] 优化 BtWQuests 外观.",
+			"[小地图按钮] 修正了资料片按钮点击区域过小的问题."
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化 OmniCD 外觀.",
 			"[美化外觀] 優化 BtWQuests 外觀.",
+			"[小地圖按鍵] 修正了資料片按鍵點擊區域過小的問題."
 		},
 		["enUS"] = {
 			"[Skins] Optimize OmniCD skin.",
 			"[Skins] Optimize BtWQuests skin.",
+			"[Minimap Buttons] Fix the issue with the small click area of the expansion button."
 		},
 		["koKR"] = {
 			"[스킨] OmniCD 외관 최적화.",
 			"[스킨] BtWQuests 외관 최적화.",
+			"[미니맵 버튼] 확장 버튼 클릭 영역이 너무 작았던 문제 수정."
 		},
 		["ruRU"] = {
 			"[Скины] Оптимизирован внешний вид OmniCD.",
 			"[Скины] Оптимизирован внешний вид BtWQuests.",
+			"[Кнопки мини-карты] Исправлена проблема с маленькой областью клика кнопки расширения."
 		},
 	},
 }

@@ -733,6 +733,15 @@ P.maps = {
 			enable = true,
 			desaturate = true,
 		},
+		nightFall = {
+			enable = true,
+			desaturate = true,
+			alert = true,
+			sound = true,
+			soundFile = "OnePlus Surprise",
+			second = 600,
+			stopAlertIfCompleted = true,
+		},
 		theaterTroupe = {
 			enable = true,
 			desaturate = true,

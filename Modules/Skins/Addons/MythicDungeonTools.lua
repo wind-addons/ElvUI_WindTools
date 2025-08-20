@@ -58,6 +58,7 @@ local function reskinDungeonButton(MDT)
 				S:CreateShadow(button)
 			end
 
+			F.MoveFrameWithOffset(button.shortText, 0, 2)
 			if W.ChineseLocale then
 				F.SetFontOutline(button.shortText, nil, "+3")
 			end
@@ -215,7 +216,7 @@ function S:MDTPullButton(Constructor)
 		reskinButtonTexture(widget.background, 0.3)
 
 		widget.pullNumber:ClearAllPoints()
-		widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, -1)
+		widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, 1)
 
 		hooksecurefunc(widget.frame.pickedGlow, "Show", function()
 			F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 22)

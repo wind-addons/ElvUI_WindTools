@@ -3,6 +3,7 @@ local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
 local _G = _G
+local assert = assert
 local next = next
 local pairs = pairs
 local select = select
@@ -38,22 +39,27 @@ function T:AddCallbackForUpdate(name, func)
 	tinsert(self.updateProfile, func or self[name])
 end
 
-function T:AddInspectInfoCallback(priority, inspectFunction, useModifier, clearFunction)
-	if type(inspectFunction) == "string" then
-		inspectFunction = self[inspectFunction]
+function T:AddInspectInfoCallback(priority, inspectFunc, useModifier, clearFunc)
+	if type(inspectFunc) == "string" then
+		inspectFunc = self[inspectFunc]
 	end
+
+	assert(type(inspectFunc) == "function", "Invalid inspect function")
 
 	if useModifier then
-		self.modifierInspect[priority] = inspectFunction
+		self.modifierInspect[priority] = inspectFunc
 	else
-		self.normalInspect[priority] = inspectFunction
+		self.normalInspect[priority] = inspectFunc
 	end
 
-	if clearFunction then
-		if type(clearFunction) == "string" then
-			clearFunction = self[clearFunction]
+	if clearFunc then
+		if type(clearFunc) == "string" then
+			clearFunc = self[clearFunc]
 		end
-		self.clearInspect[priority] = clearFunction
+
+		assert(type(clearFunc) == "function", "Invalid clear function")
+
+		self.clearInspect[priority] = clearFunc
 	end
 end
 
@@ -121,15 +127,16 @@ function T:InspectInfo(tt, data, triedTimes)
 		return
 	end
 
-	local inCombatLockdown = InCombatLockdown()
-	local isShiftKeyDown = IsShiftKeyDown()
-	local isPlayerUnit = UnitIsPlayer(unit)
-	local isInspecting = _G.InspectPaperDollFrame and _G.InspectPaperDollFrame:IsShown()
-
 	-- Run all registered callbacks (normal)
 	for _, func in next, self.normalInspect do
 		xpcall(func, F.Developer.ThrowError, self, tt, unit, data.guid)
 	end
+
+	-- General
+	local inCombatLockdown = InCombatLockdown()
+	local isShiftKeyDown = IsShiftKeyDown()
+	local isPlayerUnit = UnitIsPlayer(unit)
+	local isInspecting = _G.InspectPaperDollFrame and _G.InspectPaperDollFrame:IsShown()
 
 	-- Item Level
 	local itemLevelAvailable = isPlayerUnit and not inCombatLockdown and ET.db.inspectDataEnable
@@ -164,6 +171,10 @@ function T:InspectInfo(tt, data, triedTimes)
 end
 
 function T:ElvUIRemoveTrashLines(_, tt)
+	if tt:IsForbidden() then
+		return
+	end
+
 	tt.windInspectLoaded = false
 end
 

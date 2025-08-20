@@ -733,6 +733,10 @@ P.maps = {
 			enable = true,
 			desaturate = true,
 		},
+		ecologicalSuccession = {
+			enable = true,
+			desaturate = true,
+		},
 		nightFall = {
 			enable = true,
 			desaturate = true,

@@ -1162,6 +1162,32 @@ options.eventTracker = {
 				},
 			},
 		},
+		ecologicalSuccession = {
+			order = 12,
+			type = "group",
+			inline = true,
+			name = L["Ecological Succession"],
+			get = function(info)
+				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+			end,
+			set = function(info, value)
+				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
+				ET:ProfileUpdate()
+			end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				desaturate = {
+					order = 2,
+					type = "toggle",
+					name = L["Desaturate"],
+					desc = L["Desaturate icon if the event is completed in this week."],
+				},
+			},
+		},
 		nightFall = {
 			order = 13,
 			type = "group",
@@ -1189,7 +1215,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.mui.maps.eventTracker[info[#info - 1]].alert
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1199,8 +1225,8 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.mui.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.mui.maps.eventTracker[info[#info - 1]].sound
+						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
 					end,
 					values = LSM:HashTable("sound"),
 				},

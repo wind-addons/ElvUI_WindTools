@@ -343,8 +343,8 @@ V.skins = {
 	uiErrors = {
 		normalTextClassColor = false,
 		normalTextColor = { r = 0.976, g = 0.980, b = 0.984 },
-		redTextColor = { r = 1.000, g = 0.125, b = 0.337, a = 1 },
-		yellowTextColor = { r = 0.992, g = 0.780, b = 0.000, a = 1 },
+		redTextColor = { r = 1.000, g = 0.388, b = 0.494 },
+		yellowTextColor = { r = 1.000, g = 0.875, b = 0.125 },
 	},
 	ime = {
 		label = {

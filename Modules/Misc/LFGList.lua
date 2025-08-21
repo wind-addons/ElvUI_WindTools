@@ -1229,6 +1229,96 @@ function LL:InitializeRightPanel()
 
 	sortPanel.sortByButton = sortByButton
 	frame.sortPanel = sortPanel
+
+	-- Quick Access Panel
+	local quickAccessPanel = CreateFrame("Frame", nil, frame)
+	if frame.affix then
+		quickAccessPanel:SetPoint("TOPLEFT", frame.affix, "BOTTOMLEFT", 0, -20)
+		quickAccessPanel:SetPoint("TOPRIGHT", frame.affix, "BOTTOMRIGHT", 0, -20)
+	else
+		quickAccessPanel:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -20)
+		quickAccessPanel:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -20)
+	end
+	quickAccessPanel:SetHeight(32 + 8 + 4 * 32 + 3 * 6) -- title + spacing + 4 buttons + gaps
+
+	-- Quick Access Title
+	local quickAccessTitle = quickAccessPanel:CreateFontString(nil, "OVERLAY")
+	F.SetFontOutline(quickAccessTitle, nil, 16)
+	quickAccessTitle:SetPoint("TOP", quickAccessPanel, "TOP", 0, 0)
+	quickAccessTitle:SetText(F.GetWindStyleText(L["Quick Access"]))
+
+	local quickAccessButtons = {}
+	local buttonData = {
+		{ text = L["Mythic+"], categoryID = 2, filters = 0 },
+		{ text = L["Raids"], categoryID = 3, filters = 1 },
+		{ text = L["Delves"], categoryID = 121, filters = 0 },
+		{ text = L["Quest"], categoryID = 1, filters = 0 },
+		{ text = L["Custom"], categoryID = 6, filters = 0 },
+	}
+
+	for i, data in ipairs(buttonData) do
+		local button = CreateFrame("Frame", nil, quickAccessPanel)
+		button:SetSize(quickAccessPanel:GetWidth(), i == 1 and 64 or 32)
+		if i == 1 then
+			button:SetPoint("TOP", quickAccessTitle, "BOTTOM", 0, -20)
+		else
+			button:SetPoint("TOP", quickAccessButtons[i - 1], "BOTTOM", 0, -8)
+		end
+		button:SetTemplate()
+
+		addSetActive(button)
+
+		button.text = button:CreateFontString(nil, "OVERLAY")
+		button.text:SetFont(E.media.normFont, 12, "OUTLINE")
+		button.text:SetPoint("CENTER", button, "CENTER", 0, 0)
+		button.text:SetText(data.text)
+
+		button.categoryID = data.categoryID
+
+		button:SetScript("OnEnter", function(btn)
+			btn:SetActive(true)
+		end)
+
+		button:SetScript("OnLeave", function(btn)
+			btn:SetActive(false)
+		end)
+
+		button:SetScript("OnMouseDown", function(btn, mouseButton)
+			if mouseButton ~= "LeftButton" then
+				return
+			end
+
+			if _G.PVEFrame.activeTabIndex ~= 1 then
+				PVEFrame_ShowFrame("GroupFinderFrame")
+			end
+
+			if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
+				local PremadeGroupButton = PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
+					or _G.GroupFinderFrame.groupButton3
+				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
+			end
+
+			local selection = LFGListFrame.CategorySelection
+			if not selection then
+				return
+			end
+			for _, button in ipairs(selection.CategoryButtons) do
+				if button.categoryID == data.categoryID and button.filters == data.filters then
+					LFGListCategorySelectionButton_OnClick(button)
+					LFGListCategorySelection_StartFindGroup(selection)
+					return
+				end
+			end
+		end)
+
+		button:SetActive(false)
+		quickAccessButtons[i] = button
+	end
+
+	quickAccessPanel.title = quickAccessTitle
+	quickAccessPanel.buttons = quickAccessButtons
+	frame.quickAccessPanel = quickAccessPanel
+
 	self.rightPanel = frame
 end
 
@@ -1240,14 +1330,7 @@ function LL:UpdateRightPanel()
 		return
 	end
 
-	if
-		not (
-			_G.PVEFrame:IsVisible()
-			and _G.LFGListFrame.activePanel == _G.LFGListFrame.SearchPanel
-			and _G.LFGListFrame.SearchPanel:IsVisible()
-			and _G.LFGListFrame.SearchPanel.categoryID == 2
-		)
-	then
+	if not _G.PVEFrame:IsVisible() then
 		if self.rightPanel then
 			self.rightPanel:Hide()
 		end
@@ -1258,52 +1341,27 @@ function LL:UpdateRightPanel()
 		self:InitializeRightPanel()
 	end
 
-	if not _G.LFGListFrame.SearchPanel:IsShown() or not _G.LFGListFrame.SearchPanel.categoryID == 2 then
-		self.rightPanel:Hide()
-	end
+	local isDungeonMode = _G.PVEFrame.activeTabIndex == 1
+		and _G.GroupFinderFrame.selection == _G.LFGListPVEStub
+		and _G.LFGListFrame.SearchPanel:IsShown()
+		and _G.LFGListFrame.SearchPanel.categoryID == 2
+
+	self.rightPanel.filters:SetShown(isDungeonMode)
+	self.rightPanel.sortPanel:SetShown(isDungeonMode)
+	self.rightPanel.quickAccessPanel:SetShown(not isDungeonMode)
 
 	local dfDB = self:GetPlayerDB("dungeonFilter")
 	for mapID, btn in pairs(self.rightPanel.filters.buttons) do
-		if dfDB[mapID] then
-			btn:SetActive(true)
-		else
-			btn:SetActive(false)
-		end
+		btn:SetActive(dfDB[mapID])
 	end
 
-	if dfDB.leaderScoreEnable then
-		self.rightPanel.filters.leaderScore:SetActive(true)
-	else
-		self.rightPanel.filters.leaderScore:SetActive(false)
-	end
-
+	self.rightPanel.filters.leaderScore:SetActive(dfDB.leaderScoreEnable)
 	self.rightPanel.filters.leaderScore.editBox:SetText(dfDB.leaderScore or 0)
-
-	if dfDB.leaderDungeonScoreEnable then
-		self.rightPanel.filters.leaderDungeonScore:SetActive(true)
-	else
-		self.rightPanel.filters.leaderDungeonScore:SetActive(false)
-	end
-
+	self.rightPanel.filters.leaderDungeonScore:SetActive(dfDB.leaderDungeonScoreEnable)
 	self.rightPanel.filters.leaderDungeonScore.editBox:SetText(dfDB.leaderDungeonScore or 0)
-
-	if dfDB.roleAvailableEnable then
-		self.rightPanel.filters.roleAvailable:SetActive(true)
-	else
-		self.rightPanel.filters.roleAvailable:SetActive(false)
-	end
-
-	if dfDB.needTankEnable then
-		self.rightPanel.filters.needTank:SetActive(true)
-	else
-		self.rightPanel.filters.needTank:SetActive(false)
-	end
-
-	if dfDB.needHealerEnable then
-		self.rightPanel.filters.needHealer:SetActive(true)
-	else
-		self.rightPanel.filters.needHealer:SetActive(false)
-	end
+	self.rightPanel.filters.roleAvailable:SetActive(dfDB.roleAvailableEnable)
+	self.rightPanel.filters.needTank:SetActive(dfDB.needTankEnable)
+	self.rightPanel.filters.needHealer:SetActive(dfDB.needHealerEnable)
 
 	self.rightPanel.vaultStatus.update()
 	self.rightPanel.vaultStatus:SetActive(false)
@@ -1312,14 +1370,8 @@ function LL:UpdateRightPanel()
 		dfDB.sortDescending = true
 	end
 
-	if dfDB.sortDescending then
-		self.rightPanel.sortPanel.sortModeButton.descending = true
-		self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(0)
-	else
-		self.rightPanel.sortPanel.sortModeButton.descending = false
-		self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(3.14)
-	end
-
+	self.rightPanel.sortPanel.sortModeButton.descending = not not dfDB.sortDescending
+	self.rightPanel.sortPanel.sortModeButton.tex:SetRotation(dfDB.sortDescending and 0 or 3.14)
 	self.rightPanel.sortPanel.sortModeButton:SetActive(false)
 
 	if dfDB.sortBy then
@@ -1542,8 +1594,13 @@ function LL:Initialize()
 		self:SecureHook("LFGListGroupDataDisplayRoleCount_Update", "UpdateRoleCount")
 	end
 
-	self:SecureHook(_G.PVEFrame, "Show", "RequestKeystoneData")
+	self:SecureHook(_G.PVEFrame, "Show", function()
+		self:RequestKeystoneData()
+		self:UpdateRightPanel()
+	end)
 	self:SecureHook("LFGListFrame_SetActivePanel", "UpdateRightPanel")
+	self:SecureHook("GroupFinderFrame_ShowGroupFrame", "UpdateRightPanel")
+	self:SecureHook("PVEFrame_ShowFrame", "UpdateRightPanel")
 	hooksecurefunc("LFGListSearchPanel_UpdateResultList", LL.OnUpdateResultListEnclosure(self))
 	self:SecureHook("LFGListSearchPanel_DoSearch", function()
 		LL.lastRefreshTimestamp = GetTime()

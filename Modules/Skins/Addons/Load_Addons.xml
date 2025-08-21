@@ -15,6 +15,7 @@
 	<Script file='PremadeGroupFilter.lua'/>
 	<Script file='RaiderIO.lua'/>
 	<Script file='RareScanner.lua'/>
+	<Script file='SilverDragon.lua'/>
 	<Script file='SimpleAddonManager.lua'/>
 	<Script file='Simulationcraft.lua'/>
 	<Script file='TinyInspect.lua'/>

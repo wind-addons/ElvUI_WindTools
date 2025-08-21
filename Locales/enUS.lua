@@ -486,8 +486,10 @@ L["Disable debug mode"] = true
 L["Disable progression information in combat."] = true
 L["Disable safe filters"] = true
 L["Disable some annoying sound effects."] = true
-L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"] = true
-L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] = true
+L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"] =
+	true
+L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] =
+	true
 L["Disable the health bar of nameplate."] = true
 L["Disabled"] = "|cffff0000Disabled|r"
 L["Discord"] = true
@@ -700,7 +702,8 @@ L["IME Transparent Backdrop"] = true
 L["Icon"] = true
 L["Icon Height"] = true
 L["Icon Width"] = true
-L["If the game language is different from the primary language in this server, you need to specify which area you play on."] = true
+L["If the game language is different from the primary language in this server, you need to specify which area you play on."] =
+	true
 L["If the quest is suggested with multi-players, add the number of players to the message."] = true
 L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = true
 L["If you add the NPC into the list, all automation will do not work for it."] = true
@@ -1211,7 +1214,8 @@ L["Shadow & Light"] = "|cff9482c9Shadow & Light|r"
 L["Shadow Color"] = true
 L["Shadowmoon"] = true
 L["Shaman"] = true
-L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] = true
+L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] =
+	true
 L["Shift"] = true
 L["Shift Key"] = true
 L["Short"] = true
@@ -1250,6 +1254,7 @@ L["Show the tooltip when you mouse over the button."] = true
 L["Side Button 4"] = true
 L["Side Button 5"] = true
 L["Siege On Dragonbane Keep"] = true
+L["SilverDragon"] = "SilverDragon"
 L["Simple Addon Manager"] = true
 L["Simulationcraft"] = true
 L["Sinusoidal Ease"] = true
@@ -1271,7 +1276,8 @@ L["Smart Tab"] = true
 L["Smart Waypoint"] = true
 L["Smooth"] = true
 L["Smooth the bar animation with ElvUI."] = true
-L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."] = true
+L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."] =
+	true
 L["Social"] = true
 L["Sold by vendor"] = true
 L["Solo"] = true
@@ -1415,7 +1421,8 @@ L["The type of animation activated when a button is hovered."] = true
 L["The width of the buttons."] = true
 L["The width of the tracker."] = true
 L["Theater Troupe"] = true
-L["There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."] = true
+L["There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."] =
+	true
 L["There is no more whisper targets"] = true
 L["These skins will affect all widgets handled by ElvUI Skins."] = true
 L["Thick"] = true
@@ -1431,9 +1438,11 @@ L["This module provides the feature that repositions the frames with drag and dr
 L["This module will accelerate the speed of loot."] = true
 L["This module will add an equipment list beside the character panel and inspect frame."] = true
 L["This module will change the channel when Tab has been pressed."] = true
-L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = true
+L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] =
+	true
 L["This module will help you to reveal and resize maps."] = true
-L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = true
+L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] =
+	true
 L["This the QQ group for Wind Addons users."] = true
 L["Threat Transfer"] = true
 L["Ticket Status"] = true
@@ -1492,7 +1501,8 @@ L["Unknown"] = true
 L["Update"] = true
 L["Update Alts"] = true
 L["Update Database"] = true
-L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = true
+L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] =
+	true
 L["Update the alt list when you log in."] = true
 L["Usage"] = true
 L["Use %s Skins"] = true
@@ -1549,7 +1559,8 @@ L["Weekly Rewards"] = true
 L["Welcome to %s %s!"] = true
 L["Welcome to version %s!"] = true
 L["When enabled, this option inverts the easing function."] = true
-L["When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa."] = true
+L["When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa."] =
+	true
 L["Whisper"] = true
 L["Whisper Cycle"] = true
 L["Who"] = true
@@ -1558,8 +1569,10 @@ L["Widgets"] = true
 L["Width"] = true
 L["Width Mode"] = true
 L["WindSkins is all in control, enjoy your own ElvUI interface!"] = true
-L["WindTools"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r"
-L["WindTools Modules"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r Modules"
+L["WindTools"] =
+	"|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r"
+L["WindTools Modules"] =
+	"|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r Modules"
 L["WindTools provides a new shadow style for original ElvUI."] = true
 L["WindTools saves all data in ElvUI Profile and Private database."] = true
 L["WoW Build"] = true
@@ -1578,7 +1591,8 @@ L["You can disable this alert in [%s]-[%s]-[%s]"] = true
 L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = true
 L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = true
 L["You can find the setting in [%s] - [Tooltips] - [General]."] = true
-L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = true
+L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] =
+	true
 L["You can limit the config only work in the specific faction."] = true
 L["You can limit the config only work in the specific region."] = true
 L["You can paste any text contains coordinates here, and press ENTER to set the waypoint in map."] = true

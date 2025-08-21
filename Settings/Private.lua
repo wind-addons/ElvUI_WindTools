@@ -507,6 +507,7 @@ V.skins = {
 		raiderIO = true,
 		rareScanner = true,
 		rematch = true,
+		silverDragon = true,
 		simpleAddonManager = true,
 		simulationcraft = true,
 		tinyInspect = true,

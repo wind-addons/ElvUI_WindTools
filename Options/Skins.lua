@@ -1369,6 +1369,12 @@ options.addons = {
 			name = L["RareScanner"],
 			addonName = "RareScanner",
 		},
+		silverDragon = {
+			order = 10,
+			type = "toggle",
+			name = L["SilverDragon"],
+			addonName = "SilverDragon",
+		},
 		simpleAddonManager = {
 			order = 10,
 			type = "toggle",

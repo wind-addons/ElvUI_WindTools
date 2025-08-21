@@ -6,52 +6,67 @@ L["!! No talking about specific UI sets !!"] = true
 L["!keys Command"] = true
 L["%month%-%day%-%year%"] = "%year%년 %month%월 %day%일"
 L["%player% cast %spell% -> %target%"] = "%player% 시전 %spell% -> %target%"
-L["%player% cast %spell%, today's special is Anchovy Pie!"] = "%player%님이 %spell% 시전 중! 물빵 가져 가세요!!"
+L["%player% cast %spell%, today's special is Anchovy Pie!"] =
+	"%player%님이 %spell% 시전 중! 물빵 가져 가세요!!"
 L["%player% dispelled %target%'s %target_spell%!"] = "%player%가 %target%의 %target_spell%을 해제했습니다!"
 L["%player% failed on taunting %target%!"] = "%player% -> %target% 도발 실패!"
 L["%player% has earned the achievement %achievement%!"] = true
 L["%player% interrupted %target%'s %target_spell%!"] = "%player%님이 %target%의 %target_spell% 차단!"
 L["%player% is casting %spell%, please assist!"] = "%player%님이 %spell% 시전 중입니다. 도와 주세요!"
-L["%player% is handing out cookies, go and get one!"] = "%player%님이 생석을 나눠 주고 있습니다. 하나 가져 가세요!"
+L["%player% is handing out cookies, go and get one!"] =
+	"%player%님이 생석을 나눠 주고 있습니다. 하나 가져 가세요!"
 L["%player% opened %spell%!"] = "%player%님이 %spell% 오픈! "
 L["%player% puts %spell%"] = "%player%님이 %spell% 꺼냄"
 L["%player% taunted %target% successfully!"] = "%player% -> %target% 도발 성공!"
 L["%player% taunted all enemies!"] = "%player% -> %target% 전체 도발 !"
 L["%player% used %spell%"] = "%player%님이 %spell% 사용합니다."
-L["%player%'s %pet_role% %pet% failed on taunting %target%!"] = "%player%의 %pet_role% %pet% -> %target% 도발 실패!"
-L["%player%'s %pet_role% %pet% taunted %target% successfully!"] = "%player%의 %pet_role% %pet% -> %target% 도발 성공!"
+L["%player%'s %pet_role% %pet% failed on taunting %target%!"] =
+	"%player%의 %pet_role% %pet% -> %target% 도발 실패!"
+L["%player%'s %pet_role% %pet% taunted %target% successfully!"] =
+	"%player%의 %pet_role% %pet% -> %target% 도발 성공!"
 L["%players% (%bnet%) has come online."] = "%players% (%bnet%) - 게임에 접속했습니다."
 L["%players% (%bnet%) has gone offline."] = "%players% (%bnet%) - 게임을 종료하였습니다."
 L["%players% have earned the achievement %achievement%!"] = "%players% - %achievement% 업적을 달성 했습니다.!"
 L["%s %s Loaded."] = "%s %s 로드되었습니다."
 L["%s + Click to clear all marks."] = "%s + 클릭으로 모든 징표를 제거합니다."
 L["%s + Click to remove all worldmarkers."] = "%s + 클릭으로 모든 빛기둥 징표를 제거합니다."
-L["%s + Left Click to mark the target with this mark."] = "%s + 왼쪽 클릭으로 이 징표를 대상에 표시합니다."
+L["%s + Left Click to mark the target with this mark."] =
+	"%s + 왼쪽 클릭으로 이 징표를 대상에 표시합니다."
 L["%s + Left Click to place this worldmarker."] = "%s + 왼쪽 클릭하여 이 빛기둥 징표를 배치합니다."
-L["%s + Right Click to clear the mark on the target."] = "%s + 오른쪽 클릭으로 이 징표를 대상에서 제거합니다."
-L["%s + Right Click to clear this worldmarker."] = "%s + 오른쪽 클릭으로 이 빛기둥 징표를 제거합니다."
+L["%s + Right Click to clear the mark on the target."] =
+	"%s + 오른쪽 클릭으로 이 징표를 대상에서 제거합니다."
+L["%s + Right Click to clear this worldmarker."] =
+	"%s + 오른쪽 클릭으로 이 빛기둥 징표를 제거합니다."
 L["%s can be collected"] = "%s를 획득할 수 있습니다."
-L["%s detected, %s will be disabled automatically."] = "%s 를 사용 중임을 감지했습니다. %s 는 자동으로 비활성화됩니다."
+L["%s detected, %s will be disabled automatically."] =
+	"%s 를 사용 중임을 감지했습니다. %s 는 자동으로 비활성화됩니다."
 L["%s detects CVar %s has been changed."] = true
 L["%s has been added to the ignore list."] = "%s NPC는 무시 목록에 추가되었습니다."
 L["%s has been reset"] = "%s 설정이 리셋되었습니다."
 L["%s is not loaded."] = "%s 가 로드되지 않았습니다."
-L["%s may cause some frames to get messed, but you can use %s button to reset frames."] = "%s으로 인해 일부 프레임의 배경이 혼동될 수 있지만 %s 버튼을 눌러 프레임을 재설정 할 수 있습니다."
+L["%s may cause some frames to get messed, but you can use %s button to reset frames."] =
+	"%s으로 인해 일부 프레임의 배경이 혼동될 수 있지만 %s 버튼을 눌러 프레임을 재설정 할 수 있습니다."
 L["%s never lock the CVars."] = "%s은(는) CVar를 잠그지 않습니다."
-L["%s not been loaded since you are using an outdated version of ElvUI."] = "오래된 버전의 ElvUI를 사용 중이므로 %s이(가) 로드되지 않습니다."
+L["%s not been loaded since you are using an outdated version of ElvUI."] =
+	"오래된 버전의 ElvUI를 사용 중이므로 %s이(가) 로드되지 않습니다."
 L["%s style absorb color"] = "%s 스타일의 피해흡수 바 색상"
 L["%s will be started in %s!"] = "%s이 %s 후에 시작됩니다!"
 L["%target%, thank you for %spell%. :)"] = "%target%님, %spell% 사용 감사합니다. :)"
 L["%target%, thank you for using %spell% to revive me. :)"] = "%target%님 부활 감사합니다!"
-L["'Absolute' mode means the height of the bar is fixed."] = "'부동' 모드는 바의 높이가 고정되어 있음을 의미합니다."
-L["'Absolute' mode means the width of the bar is fixed."] = "'부동' 모드는 바의 너비가 고정되어 있음을 의미합니다."
-L["'Dynamic' mode will also add the height of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 높이를 추가합니다."
-L["'Dynamic' mode will also add the width of header text."] = "'유동' 모드는 자동으로 상단 텍스트의 너비를 추가합니다."
+L["'Absolute' mode means the height of the bar is fixed."] =
+	"'부동' 모드는 바의 높이가 고정되어 있음을 의미합니다."
+L["'Absolute' mode means the width of the bar is fixed."] =
+	"'부동' 모드는 바의 너비가 고정되어 있음을 의미합니다."
+L["'Dynamic' mode will also add the height of header text."] =
+	"'유동' 모드는 자동으로 상단 텍스트의 높이를 추가합니다."
+L["'Dynamic' mode will also add the width of header text."] =
+	"'유동' 모드는 자동으로 상단 텍스트의 너비를 추가합니다."
 L["(e.g., 'in-quadratic' becomes 'out-quadratic' and vice versa)"] = true
 L["1. Customize the font of Objective Tracker."] = "1. 퀘스트 추적기의 글꼴을 설정합니다."
 L["2. Add colorful progress text to the quest."] = "2. 퀘스트 진행도에 따른 색상을 추가합니다."
 L["24 Hours"] = "24시간으로 표시"
-L["A simple editor for CVars."] = "CVars(Console variables) 중 몇 가지의 설정을 수정합니다.\nCVars에 대해 자세히 알고 싶으신 경우 wow.gamepedia.com/Console_variables를 방문해 보세요!"
+L["A simple editor for CVars."] =
+	"CVars(Console variables) 중 몇 가지의 설정을 수정합니다.\nCVars에 대해 자세히 알고 싶으신 경우 wow.gamepedia.com/Console_variables를 방문해 보세요!"
 L["AFK"] = "자리 비움"
 L["AFK Mode"] = "자리 비움 모드"
 L["Abbreviation"] = "줄임말"
@@ -60,9 +75,12 @@ L["Absolute"] = "부동"
 L["Absorb"] = "피해흡수"
 L["Accept Combat Resurrect"] = "전투부활 수락"
 L["Accept Resurrect"] = "부활 수락"
-L["Accept resurrect from other player automatically when you in combat."] = "전투중 다른 플레이어의 부활을 자동으로 수락합니다."
-L["Accept resurrect from other player automatically when you not in combat."] = "전투 중이 아닐 때 다른 플레이어의 부활을 자동으로 수락합니다."
-L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."] = "다크문 유랑단 비술사의 순간 이동을 자동으로 수락합니다."
+L["Accept resurrect from other player automatically when you in combat."] =
+	"전투중 다른 플레이어의 부활을 자동으로 수락합니다."
+L["Accept resurrect from other player automatically when you not in combat."] =
+	"전투 중이 아닐 때 다른 플레이어의 부활을 자동으로 수락합니다."
+L["Accept the teleportation from Darkmoon Faire Mystic Mage automatically."] =
+	"다크문 유랑단 비술사의 순간 이동을 자동으로 수락합니다."
 L["Accepted"] = "수락"
 L["Accuracy"] = "정확성"
 L["Ace3"] = true
@@ -81,54 +99,73 @@ L["Add Server Name"] = "서버명 추가"
 L["Add Target"] = "대상 추가"
 L["Add Title"] = "제목 추가"
 L["Add To Favorites"] = "즐겨찾기에 추가"
-L["Add a bar on unitframe to show the estimated heal of Death Strike."] = "죽음의일격의 예상 회복량을 보여주는 막대를 유닛프레임에 추가합니다."
-L["Add a bar that contains buttons to enable/disable modules quickly."] = "모듈의 활성/비활성을 빠르게 전환할 수 있는 스위치 버튼 바를 추가합니다."
-L["Add a bar to contain quest items and usable equipment."] = "퀘스트 아이템과 사용 가능한 장비를 포함하는 바를 추가합니다."
+L["Add a bar on unitframe to show the estimated heal of Death Strike."] =
+	"죽음의일격의 예상 회복량을 보여주는 막대를 유닛프레임에 추가합니다."
+L["Add a bar that contains buttons to enable/disable modules quickly."] =
+	"모듈의 활성/비활성을 빠르게 전환할 수 있는 스위치 버튼 바를 추가합니다."
+L["Add a bar to contain quest items and usable equipment."] =
+	"퀘스트 아이템과 사용 가능한 장비를 포함하는 바를 추가합니다."
 L["Add a button to exit phase diving."] = true
 L["Add a chat bar for switching channel."] = "채널 전환을 위한 채팅 바를 추가합니다."
 L["Add a contact frame beside the mail frame."] = "우편 발송시 연락처 창을 추가합니다."
 L["Add a frame to Inspect Frame."] = "살펴보기 창에 추가합니다."
 L["Add a frame to your character panel."] = "자신의 캐릭터 창에 추가합니다."
 L["Add a game bar for improving QoL."] = "편리한 게임 바를 추가합니다."
-L["Add a glow in the end of health bars to indicate the over absorb."] = "초과 피해흡수를 나타내기 위해 체력 표시줄 끝에 빛을 추가합니다"
+L["Add a glow in the end of health bars to indicate the over absorb."] =
+	"초과 피해흡수를 나타내기 위해 체력 표시줄 끝에 빛을 추가합니다"
 L["Add a input box to the world map."] = "세계 지도에 입력창을 추가합니다."
 L["Add a line in class color."] = "역할 아이콘 하단에 클래스 색상의 라인을 추가합니다."
 L["Add a lot of QoL features to WoW."] = "WoW에 유용한 기능을 추가하세요!."
 L["Add a shadowed background to the group title and adjust its position slightly upward."] = true
-L["Add a small icon to indicate the highest score."] = "가장 높은 점수를 나타내는 아이콘을 추가합니다."
-L["Add a styled section title to the context menu."] = "메뉴에 상황에 맞는 스타일이 적용된 제목 섹션을 추가합니다."
+L["Add a small icon to indicate the highest score."] =
+	"가장 높은 점수를 나타내는 아이콘을 추가합니다."
+L["Add a styled section title to the context menu."] =
+	"메뉴에 상황에 맞는 스타일이 적용된 제목 섹션을 추가합니다."
 L["Add additional information to the friend frame."] = "친구 목록에 추가 정보를 표시합니다."
 L["Add an additional frame to filter the groups."] = "그룹을 필터링할 프레임을 추가합니다."
-L["Add an additional frame to show party members' keystone."] = "파티원의 쐐기돌을 보여주는 프레임을 추가합니다."
+L["Add an additional frame to show party members' keystone."] =
+	"파티원의 쐐기돌을 보여주는 프레임을 추가합니다."
 L["Add an additional overlay to the absorb bar."] = "피해흡수 바에 오버레이를 추가합니다"
-L["Add an extra bar to collect minimap buttons."] = "미니맵 버튼을 통합하여 표시하기 위해 버튼 바를 추가합니다."
-L["Add an extra bar to let you set raid markers efficiently."] = "징표를 효율적으로 사용할 수 있도록 징표 바를 추가합니다."
-L["Add an extra item level text to some equipment buttons."] = "일부 장비 버튼에 아이템 레벨 텍스트를 추가합니다."
-L["Add an icon for indicating the type of the pet."] = "펫 프레임에 펫의 종류를 나타내는 아이콘을 추가합니다."
+L["Add an extra bar to collect minimap buttons."] =
+	"미니맵 버튼을 통합하여 표시하기 위해 버튼 바를 추가합니다."
+L["Add an extra bar to let you set raid markers efficiently."] =
+	"징표를 효율적으로 사용할 수 있도록 징표 바를 추가합니다."
+L["Add an extra item level text to some equipment buttons."] =
+	"일부 장비 버튼에 아이템 레벨 텍스트를 추가합니다."
+L["Add an icon for indicating the type of the pet."] =
+	"펫 프레임에 펫의 종류를 나타내는 아이콘을 추가합니다."
 L["Add an icon to the title of items, spells, achievements, and more."] = true
 L["Add an indicator for the leader."] = "리더에 대한 표시를 추가"
-L["Add an indicator icon to buttons."] = "읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다."
+L["Add an indicator icon to buttons."] =
+	"읽지 않은 길드 메시지가 있는 경우 길드 버튼 위에 알림 아이콘을 표시합니다."
 L["Add an invite link to the guild member online message."] = "길드원 온라인 메세지에 초대 링크를 추가"
 L["Add calendar button to the bar."] = "바에 달력 버튼을 추가합니다."
 L["Add expansion landing page (ex. garrison) to the bar."] = true
-L["Add extra information on the link, so that you can get basic information but do not need to click."] = "추가 정보를 선택하면 채팅 링크를 클릭하지 않고도 기본 정보를 확인할 수 있습니다."
+L["Add extra information on the link, so that you can get basic information but do not need to click."] =
+	"추가 정보를 선택하면 채팅 링크를 클릭하지 않고도 기본 정보를 확인할 수 있습니다."
 L["Add features to pop-up menu without taint."] = "오른쪽 클릭 메뉴에 기능을 추가합니다."
-L["Add more details of objective progress information into tooltips."] = "툴팁에 더 자세한 목표 진행 상황 정보를 추가합니다."
+L["Add more details of objective progress information into tooltips."] =
+	"툴팁에 더 자세한 목표 진행 상황 정보를 추가합니다."
 L["Add more features to ElvUI UnitFrames."] = "ElvUI 유닛프레임에 더 많은 기능을 추가합니다."
-L["Add more oUF tags. You can use them on UnitFrames configuration."] = "oUF 태그를 추가합니다. 유닛프레임 구성에서 사용할 수 있습니다."
-L["Add or update the rule with custom abbreviation."] = "사용자 지정 줄임말로 규칙을 추가하거나 업데이트합니다."
+L["Add more oUF tags. You can use them on UnitFrames configuration."] =
+	"oUF 태그를 추가합니다. 유닛프레임 구성에서 사용할 수 있습니다."
+L["Add or update the rule with custom abbreviation."] =
+	"사용자 지정 줄임말로 규칙을 추가하거나 업데이트합니다."
 L["Add percentage text after quest text."] = "퀘스트에 추가로 진행률을 표시합니다."
 L["Add progression information to tooltips."] = "툴팁에 진행 정보를 추가합니다."
-L["Add skins for all modules inside %s with %s functions."] = "%s의 모든 모듈에 대한 %s 스킨을 추가합니다."
+L["Add skins for all modules inside %s with %s functions."] =
+	"%s의 모든 모듈에 대한 %s 스킨을 추가합니다."
 L["Add some additional information into title or description."] = "제목이나 설명에 정보를 추가합니다."
 L["Add some additional information to your tooltips."] = "툴팁에 몇 가지 정보를 추가합니다."
 L["Add some features on Trade Frame."] = "거래창에 몇 가지 기능을 추가합니다."
 L["Add some useful features for maps."] = "지도에 유용한 기능을 추가합니다."
 L["Add statistics information for comparison."] = "비교할 통계 정보를 추가합니다."
-L["Add the Blizzard over absorb glow and overlay to ElvUI unit frames."] = "ElvUI 유닛 프레임에 블리자드 스타일의 초과 피해흡수 효과 및 오버레이를 추가합니다."
+L["Add the Blizzard over absorb glow and overlay to ElvUI unit frames."] =
+	"ElvUI 유닛 프레임에 블리자드 스타일의 초과 피해흡수 효과 및 오버레이를 추가합니다."
 L["Add the prefix if the quest is a daily quest."] = "일일 퀘스트인 경우 접두사를 추가합니다."
 L["Add the prefix if the quest is a weekly quest."] = "주간 퀘스트인 경우 접두사를 추가합니다."
-L["Add trackers for world events in the bottom of world map."] = "월드맵 하단에 이벤트 시간 알림바를 표시합니다."
+L["Add trackers for world events in the bottom of world map."] =
+	"월드맵 하단에 이벤트 시간 알림바를 표시합니다."
 L["AddOn Manager"] = "애드온 관리자"
 L["Additional Backdrop"] = "배경 추가"
 L["Additional Information"] = "추가 정보"
@@ -141,23 +178,28 @@ L["Advanced Combat Logging"] = "고급 전투 기록"
 L["Advanced settings."] = true
 L["Adventure Map"] = "세계 지도"
 L["Affixes"] = "어픽스"
-L["After you stop debuging, %s will reenable the addons automatically."] = "디버깅을 중지하면 %s이(가) 애드온을 자동으로 다시 활성화합니다."
+L["After you stop debuging, %s will reenable the addons automatically."] =
+	"디버깅을 중지하면 %s이(가) 애드온을 자동으로 다시 활성화합니다."
 L["AiFaDian"] = true
 L["Alert"] = "알림"
 L["Alert Frames"] = "알림 프레임"
 L["Alert Second"] = "알림 시간"
 L["Alert Sound"] = "알림 소리"
 L["Alert Timeout"] = "알림 시간 초과"
-L["Alert teammates that the threat transfer spell being used."] = "팀원에게 위협 수준을 이전하는 기술 사용을 알립니다."
-L["Alert will be disabled after the set value (hours)."] = "설정된 값(시간)이 지나면 알림이 비활성화 됩니다."
-L["Alert will be triggered when the remaining time is less than the set value."] = "남은 시간이 설정된 값보다 적을 경우 경고가 발생합니다."
+L["Alert teammates that the threat transfer spell being used."] =
+	"팀원에게 위협 수준을 이전하는 기술 사용을 알립니다."
+L["Alert will be disabled after the set value (hours)."] =
+	"설정된 값(시간)이 지나면 알림이 비활성화 됩니다."
+L["Alert will be triggered when the remaining time is less than the set value."] =
+	"남은 시간이 설정된 값보다 적을 경우 경고가 발생합니다."
 L["Alias"] = "별칭"
 L["All"] = "전체"
 L["All Factions"] = "모든 진영"
 L["All Realms"] = "모든 서버"
 L["All nets can be collected"] = "모든 그물 수집 가능"
 L["Alliance"] = "얼라이언스"
-L["Allow you to use Delete Key for confirming deleting."] = "아이템 파괴 확인을 위해 Delete 키를 사용합니다."
+L["Allow you to use Delete Key for confirming deleting."] =
+	"아이템 파괴 확인을 위해 Delete 키를 사용합니다."
 L["Almost full"] = "거의 가득 찼습니다."
 L["Alpha"] = "투명도"
 L["Alpha Max"] = "최대 알파 값"
@@ -179,11 +221,14 @@ L["Animation"] = "애니메이션"
 L["Animation Duration"] = "애니메이션 지속 시간"
 L["Animation Effect"] = "애미메이션 효과"
 L["Animation Size"] = "애니메이션 크기"
-L["Announce every time the progress has been changed."] = "진행 상황이 변경될 때마다 알림을 표시합니다."
+L["Announce every time the progress has been changed."] =
+	"진행 상황이 변경될 때마다 알림을 표시합니다."
 L["Announce your mythic keystone."] = "보유중인 쐐기돌을 표시합니다."
-L["Announce your quest progress to other players."] = "다른 플레이어에게 퀘스트 진행 상황을 알립니다."
+L["Announce your quest progress to other players."] =
+	"다른 플레이어에게 퀘스트 진행 상황을 알립니다."
 L["Announcement"] = "알림"
-L["Announcement module is a tool to help you send messages."] = "알림 모듈은 자신과 주변의 상황을 알리는데 도움이 되는 도구입니다."
+L["Announcement module is a tool to help you send messages."] =
+	"알림 모듈은 자신과 주변의 상황을 알리는데 도움이 되는 도구입니다."
 L["Anonymous"] = true
 L["Anti-override"] = true
 L["Any"] = "무엇이든"
@@ -216,17 +261,22 @@ L["Auto Toggle Chat Bubble"] = "말풍선 자동 전환"
 L["Auto Track Waypoint"] = "지도 핀 자동 추적"
 L["Auto accept and turn in quests."] = "자동 수락 및 퀘스트 완료."
 L["Auto join the channel if you are not in it."] = "참여하지 않는 채널에는 자동으로 참여합니다."
-L["Auto track the waypoint after setting."] = "지도 핀을 배치하면 즉시 추적하여 화면에 표시합니다."
+L["Auto track the waypoint after setting."] =
+	"지도 핀을 배치하면 즉시 추적하여 화면에 표시합니다."
 L["Auto-detect"] = "자동 감지"
 L["AutoButtons"] = "아이템 바"
 L["Automate your game life."] = "게임 라이프을 자동화 합니다."
 L["Automatic filters behaviour"] = "자동 필터 동작"
 L["Automatically close bag if player enters combat."] = "전투가 시작되면 자동으로 가방을 닫습니다."
-L["Automatically close world map if player enters combat."] = "전투가 시작되면 자동으로 월드맵을 닫습니다."
+L["Automatically close world map if player enters combat."] =
+	"전투가 시작되면 자동으로 월드맵을 닫습니다."
 L["Automatically join the dungeon when clicking on the LFG row, without asking for role confirmation."] = true
-L["Automatically refresh the list after you changing the filter."] = "필터를 변경하면 목록을 자동으로 새로 고침합니다."
-L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] = "자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100%)."
-L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] = "자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100)."
+L["Automatically refresh the list after you changing the filter."] =
+	"필터를 변경하면 목록을 자동으로 새로 고침합니다."
+L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100%)"] =
+	"자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100%)."
+L["Automatically select the best format of power (e.g. Rogue is 120, Mage is 100)"] =
+	"자동으로 최적의 자원 형식을 선택합니다 (예 : 도적은 120, 마법사는 100)."
 L["Automation"] = "자동화"
 L["Azerite"] = "아제라이트"
 L["Azerite Essence"] = "아제라이트 정수"
@@ -250,8 +300,10 @@ L["Barber Shop"] = "미용실"
 L["Battle.net Tag"] = "베틀넷 태그"
 L["Battleground"] = "전장"
 L["Because of %s, this module will not be loaded."] = "%s 때문에 이 모듈을 로드하지 못하였습니다."
-L["Before you submit a bug, please enable debug mode with %s and test it one more time."] = "버그를 제출하기 전에 %s을(를) 사용하여 디버그 모드를 활성화하고 한 번 더 테스트하십시오."
-L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] = "레이드 주문 외에도 친근한 플레이어가 될 수 있도록 다양한 기능을 제공합니다."
+L["Before you submit a bug, please enable debug mode with %s and test it one more time."] =
+	"버그를 제출하기 전에 %s을(를) 사용하여 디버그 모드를 활성화하고 한 번 더 테스트하십시오."
+L["Besides the raid spells, it also provides numerous features to help you be a friendly player."] =
+	"레이드 주문 외에도 친근한 플레이어가 될 수 있도록 다양한 기능을 제공합니다."
 L["Better Mythic+ Info"] = "더 나은 쐐기 정보"
 L["Big Dig"] = "대규모 발굴"
 L["BigWigs"] = "BigWigs"
@@ -310,9 +362,12 @@ L["Can be collected"] = "수집 가능"
 L["Can be set"] = "설정 가능"
 L["Can not set waypoint on this map."] = "이 지도에서는 웨이포인트를 설정할 수 없습니다."
 L["Candidate"] = true
-L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] = "%s 리셋 실패! (인던 진입 중인 파티원이 있습니다.)"
-L["Cannot reset %s (There are players offline in your party.)"] = "%s 리셋 실패! (오프라인 파티원이 있습니다.)"
-L["Cannot reset %s (There are players still inside the instance.)"] = "%s 리셋 실패! (인던에 남아 있는 파티원이 있습니다.)"
+L["Cannot reset %s (There are players in your party attempting to zone into an instance.)"] =
+	"%s 리셋 실패! (인던 진입 중인 파티원이 있습니다.)"
+L["Cannot reset %s (There are players offline in your party.)"] =
+	"%s 리셋 실패! (오프라인 파티원이 있습니다.)"
+L["Cannot reset %s (There are players still inside the instance.)"] =
+	"%s 리셋 실패! (인던에 남아 있는 파티원이 있습니다.)"
 L["Cast Bar"] = "시전 바"
 L["Center"] = "중앙"
 L["Challenges"] = true
@@ -320,16 +375,19 @@ L["Change role icons."] = "역할 아이콘 변경"
 L["Change the alpha of vignetting."] = "비네팅 효과의 알파 값을 변경합니다."
 L["Change the color of quest titles."] = "퀘스트 제목의 색상을 변경합니다."
 L["Change the color of the absorb bar."] = "보호막 바의 색상을 변경합니다."
-L["Change the color of the name to the in-playing game style."] = "이름 색상을 플레이 중인 게임 스타일로 변경합니다."
+L["Change the color of the name to the in-playing game style."] =
+	"이름 색상을 플레이 중인 게임 스타일로 변경합니다."
 L["Change the icons that indicate the role."] = "역할을 나타내는 아이콘을 변경합니다."
 L["Change the postion of the health bar."] = "체력 표시줄의 위치를 변경합니다."
 L["Change the postion of the health text."] = "체력 수치의 위치를 변경합니다."
 L["Change the role icon of unitframes."] = "유닛프레임의 역할 아이콘을 변경합니다."
 L["Change the shape of ElvUI minimap."] = "ElvUI 미니맵의 비율을 변경합니다."
-L["Change this only if you know what you are doing"] = "무엇을 하고 있는지 아는 경우에만 이것을 변경하세요"
+L["Change this only if you know what you are doing"] =
+	"무엇을 하고 있는지 아는 경우에만 이것을 변경하세요"
 L["Changelog"] = "변경 사항"
 L["Changelog Popup"] = "변경 사항 팝업"
-L["Changes the rate at which your mouse pointer moves based on the speed you are moving the mouse."] = "마우스 이동 속도에 따라 카메라 시점 변환 속도 비율을 조정합니다."
+L["Changes the rate at which your mouse pointer moves based on the speed you are moving the mouse."] =
+	"마우스 이동 속도에 따라 카메라 시점 변환 속도 비율을 조정합니다."
 L["Channel"] = "채널"
 L["Channel Abbreviation"] = "채널 줄임명"
 L["Channel Name"] = "채널명"
@@ -345,7 +403,8 @@ L["Chat Link"] = "채팅 링크"
 L["Chat Panels"] = "채팅 패널"
 L["Chat Text"] = "채팅 문자"
 L["Chat Voice Panel"] = "채팅 보이스 패널"
-L["Chat with NPCs smartly. It will automatically select the best option for you."] = "스마트 채팅: 자동으로 가장 적합한 옵션을 선택합니다."
+L["Chat with NPCs smartly. It will automatically select the best option for you."] =
+	"스마트 채팅: 자동으로 가장 적합한 옵션을 선택합니다."
 L["Check Box"] = "체크 박스"
 L["Check the setting of ElvUI Private database in ElvUI Options -> Profiles -> Private (tab)."] = true
 L["Checked"] = "체크됨"
@@ -369,7 +428,8 @@ L["Click to confirm"] = "승인하려면 클릭하세요."
 L["Click to open the weekly rewards frame."] = "금고 보상 보기"
 L["Click to remove all worldmarkers."] = "모든 빛기둥 징표를 제거하려면 클릭하십시오."
 L["Click to show location"] = "위치를 보려면 클릭하세요."
-L["Club channel %s no found, please use the full name of the channel."] = "%s 채널을 찾을 수 없습니다. 채널의 전체 이름을 사용하십시오."
+L["Club channel %s no found, please use the full name of the channel."] =
+	"%s 채널을 찾을 수 없습니다. 채널의 전체 이름을 사용하십시오."
 L["Club channel no found, please setup again."] = "채널을 찾을 수 없습니다. 다시 설정하십시오."
 L["Codes"] = "암호"
 L["Collect Garbage"] = "리소스 정리"
@@ -391,7 +451,8 @@ L["Community Feast"] = "공동체 잔치"
 L["Compact"] = "컴팩트"
 L["Compatibility Check"] = "호환성 확인"
 L["Complete"] = "완료"
-L["Complete the quest with the most valuable reward."] = "최대 보상을 자동으로 선택하고 퀘스트를 완료합니다."
+L["Complete the quest with the most valuable reward."] =
+	"최대 보상을 자동으로 선택하고 퀘스트를 완료합니다."
 L["Completed"] = "완료"
 L["Config List"] = "구성 목록"
 L["Confirm Summon"] = "소환 수락"
@@ -407,7 +468,8 @@ L["Cosmetic Bar"] = "장식띠"
 L["Count Down"] = "카운트 다운"
 L["Count Down Time"] = "카운트 다운 시간"
 L["Count Sub Accounts"] = "하위 계정 수 확인"
-L["Count active WoW sub accounts rather than Battle.net Accounts."] = "Battle.net 계정이 아닌 활성화된 WoW 하위 계정을 확인합니다."
+L["Count active WoW sub accounts rather than Battle.net Accounts."] =
+	"Battle.net 계정이 아닌 활성화된 WoW 하위 계정을 확인합니다."
 L["Count down time in seconds."] = "카운트 다운을 진행할 시간(초)를 설정합니다."
 L["Counter"] = "개수 글씨 설정"
 L["Covenant Preview"] = "성약단 공물 보기"
@@ -430,7 +492,8 @@ L["Custom Items"] = "사용자 지정 아이템"
 L["Custom String"] = "맞춤 문자열"
 L["Custom Strings"] = "사용자 정의 문자열"
 L["Custom Texture"] = "사용자 지정 텍스처"
-L["Custom color can be used by adding the following code"] = "다음 코드를 추가하면 사용자 정의 색상을 적용 할 수 있습니다."
+L["Custom color can be used by adding the following code"] =
+	"다음 코드를 추가하면 사용자 정의 색상을 적용 할 수 있습니다."
 L["Custom hotkey alias for keybinding."] = true
 L["Customize the ElvUI cooldown text offset."] = "ElvUI 재사용시간 문자의 위치를 사용자 지정합니다"
 L["DND"] = "다른 용무 중."
@@ -467,7 +530,8 @@ L["Delves"] = "구렁"
 L["Demon Fall Canyon"] = true
 L["Demonhunter"] = "악마사냥꾼"
 L["Desaturate"] = "흑백"
-L["Desaturate icon if the event is completed in this week."] = "이번주 이벤트가 완료되었다면 흑백 아이콘으로 표시"
+L["Desaturate icon if the event is completed in this week."] =
+	"이번주 이벤트가 완료되었다면 흑백 아이콘으로 표시"
 L["Descending"] = "내림차순"
 L["Description"] = "설명"
 L["Diablo 3"] = "디아블로 III"
@@ -476,33 +540,42 @@ L["Disable"] = "비활성"
 L["Disable All"] = "모두 비활성"
 L["Disable Blizzard"] = "블리자드 비활성"
 L["Disable Blizzard Talking Head."] = "Blizzard Talking Head 비활성"
-L["Disable Blizzard loot info which auto showing after combat overed."] = "전투 후 자동으로 표시되는 Blizzard 전리품 정보를 비활성화합니다."
+L["Disable Blizzard loot info which auto showing after combat overed."] =
+	"전투 후 자동으로 표시되는 Blizzard 전리품 정보를 비활성화합니다."
 L["Disable Blizzard quest progress message."] = "블리자드 퀘스트 진행 메시지를 비활성화합니다."
 L["Disable In Combat"] = "전투 중 비활성화"
 L["Disable Talking Head"] = "Talking Head 비활성"
-L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."] = "ElvUI Core, ElvUI %s 및 BugSack을 제외한 다른 모든 애드온을 비활성화합니다."
+L["Disable all other addons except ElvUI Core, ElvUI %s and BugSack."] =
+	"ElvUI Core, ElvUI %s 및 BugSack을 제외한 다른 모든 애드온을 비활성화합니다."
 L["Disable announcement in open world."] = "오픈 월드에서 알림을 비활성화합니다."
 L["Disable debug mode"] = "디버그 모드 비활성화"
 L["Disable progression information in combat."] = "전투 중 진행 정보 비활성화"
 L["Disable safe filters"] = "안전 필터 비활성화"
 L["Disable some annoying sound effects."] = "성가신 음향 효과를 비활성화합니다."
-L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"] = "'탱커 있음','힐러 있음' 및 '역활 사용 가능' 플래그가 있는 일관되지 않은 필터를 방지하는 동작을 비활성화 합니다."
-L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] = "LFG 목록에서 기본 직업 색상 배경 원을 비활성화 하고 환경 설정에서 스킨 처리된 아이콘만 남겨 둡니다."
+L["Disable the default behaviour that prevents inconsistent filters with flags 'Has Tank', 'Has Healer' and 'Role Available'"] =
+	"'탱커 있음','힐러 있음' 및 '역활 사용 가능' 플래그가 있는 일관되지 않은 필터를 방지하는 동작을 비활성화 합니다."
+L["Disable the default class-colored background circle in LFG Lists, leaving only the skinned icons from preferences"] =
+	"LFG 목록에서 기본 직업 색상 배경 원을 비활성화 하고 환경 설정에서 스킨 처리된 아이콘만 남겨 둡니다."
 L["Disable the health bar of nameplate."] = "네임플레이트의 체력바를 비활성화합니다."
 L["Disabled"] = "|cffff0000비활성화|r"
 L["Discord"] = true
 L["Dispel"] = "해제"
 L["Dispelled spell link"] = "해제된 주문 링크"
 L["Display"] = "표시"
-L["Display a text when you enter or leave combat."] = "전투가 시작되거나 종료될 때 문자를 표시합니다."
+L["Display a text when you enter or leave combat."] =
+	"전투가 시작되거나 종료될 때 문자를 표시합니다."
 L["Display an additional title."] = "파티 정보 제목을 추가하여 표시합니다."
-L["Display an animation when you enter or leave combat."] = "전투가 시작되거나 종료될 때 애니메이션을 표시합니다."
-L["Display character equipments list when you inspect someone."] = "누군가를 살펴볼 때 캐릭터의 장비 목록을 표시합니다."
+L["Display an animation when you enter or leave combat."] =
+	"전투가 시작되거나 종료될 때 애니메이션을 표시합니다."
+L["Display character equipments list when you inspect someone."] =
+	"누군가를 살펴볼 때 캐릭터의 장비 목록을 표시합니다."
 L["Display the level of the item on the item link."] = "아이템 링크에 아이템 레벨을 표시 합니다."
-L["Display the name of the player who clicked the minimap."] = "미니맵을 클릭한 플레이어의 이름을 표시합니다."
+L["Display the name of the player who clicked the minimap."] =
+	"미니맵을 클릭한 플레이어의 이름을 표시합니다."
 L["Distance"] = "거리"
 L["Distance Text"] = "거리 문자 설정"
-L["Don't forget to set you favorite bar texture in BigWigs option!"] = "BigWigs 옵션에서 바 설정하는 것을 잊지 마세요"
+L["Don't forget to set you favorite bar texture in BigWigs option!"] =
+	"BigWigs 옵션에서 바 설정하는 것을 잊지 마세요"
 L["Donate"] = "기부"
 L["Drag"] = "끌기"
 L["Dragon"] = "용"
@@ -531,17 +604,25 @@ L["Enable"] = "활성"
 L["Enable All"] = "모두 활성"
 L["Enable a transparent backdrop for the IME candidate frame."] = true
 L["Enable debug mode"] = "디버그 모드 활성화"
-L["Enable the replacing of ElvUI absorb bar textures."] = "ElvUI 피해흡수 바 텍스처 교체를 활성화합니다."
-L["Enable this filter will only show the group that fits you or your group members to join."] = "이 필터를 활성화하면 참여 가능한 파티만 표시됩니다"
-L["Enable this filter will only show the group that have the healer already in party."] = "이 필터를 활성화하면 힐러가 있는 파티만 표시됩니다"
-L["Enable this filter will only show the group that have the tank already in party."] = "이 필터를 활성화하면 탱커가 있는 파티만 표시됩니다"
-L["Enable to use the command to set the waypoint."] = "명령을 사용하여 웨이포인트를 설정하는 기능을 활성화합니다."
+L["Enable the replacing of ElvUI absorb bar textures."] =
+	"ElvUI 피해흡수 바 텍스처 교체를 활성화합니다."
+L["Enable this filter will only show the group that fits you or your group members to join."] =
+	"이 필터를 활성화하면 참여 가능한 파티만 표시됩니다"
+L["Enable this filter will only show the group that have the healer already in party."] =
+	"이 필터를 활성화하면 힐러가 있는 파티만 표시됩니다"
+L["Enable this filter will only show the group that have the tank already in party."] =
+	"이 필터를 활성화하면 탱커가 있는 파티만 표시됩니다"
+L["Enable to use the command to set the waypoint."] =
+	"명령을 사용하여 웨이포인트를 설정하는 기능을 활성화합니다."
 L["Enable/Disable the spell activation alert frame."] = "주문 경고 프레임을 표시/숨김처리 합니다."
 L["Enabled"] = "|cff00ff00사용|r"
 L["Encounter Journal"] = "모험 안내서"
-L["Enhance ElvUI Mythic Plus info with more details."] = "ElvUI 쐐기 정보를 더 자세한 내용으로 강화했습니다."
-L["Enhance the message when a guild member comes online or goes offline."] = "길드원이 온/오프라인 될때 메세지를 강화 합니다."
-L["Enhanced Combat Log Events in /etrace frame."] = "/etrace 프레임에서 향상된 전투 로그 이벤트가 제공됩니다."
+L["Enhance ElvUI Mythic Plus info with more details."] =
+	"ElvUI 쐐기 정보를 더 자세한 내용으로 강화했습니다."
+L["Enhance the message when a guild member comes online or goes offline."] =
+	"길드원이 온/오프라인 될때 메세지를 강화 합니다."
+L["Enhanced Combat Log Events in /etrace frame."] =
+	"/etrace 프레임에서 향상된 전투 로그 이벤트가 제공됩니다."
 L["Enhanced Shadow"] = "향상된 그림자"
 L["Enhancement"] = "강화"
 L["Enhancements"] = "향상된 기능"
@@ -552,7 +633,8 @@ L["Equipment Slots (Range)"] = true
 L["Equipment Slots (Single)"] = true
 L["Equipments"] = "장비"
 L["Europe"] = "유럽"
-L["Even you are not pressing the modifier key, the item level will still be shown."] = "수정 키를 누르지 않더라도 아이템 레벨은 계속 표시 됩니다."
+L["Even you are not pressing the modifier key, the item level will still be shown."] =
+	"수정 키를 누르지 않더라도 아이템 레벨은 계속 표시 됩니다."
 L["Event Trace"] = "이벤트 추적"
 L["Event Tracker"] = "이벤트 추적"
 L["Evoker"] = "기원사"
@@ -567,10 +649,13 @@ L["Export All"] = "모두 내보내기"
 L["Export Private"] = "Private 내보내기"
 L["Export Profile"] = "Profile 내보내기"
 L["Export all setting of %s."] = "%s의 모든 설정을 내보냅니다."
-L["Export the setting of %s that stored in ElvUI Private database."] = "ElvUI 개인(Private) 데이터베이스에 저장된 %s의 설정을 내보냅니다."
-L["Export the setting of %s that stored in ElvUI Profile database."] = "ElvUI 프로필(Profile) 데이터베이스에 저장된 %s의 설정을 내보냅니다."
+L["Export the setting of %s that stored in ElvUI Private database."] =
+	"ElvUI 개인(Private) 데이터베이스에 저장된 %s의 설정을 내보냅니다."
+L["Export the setting of %s that stored in ElvUI Profile database."] =
+	"ElvUI 프로필(Profile) 데이터베이스에 저장된 %s의 설정을 내보냅니다."
 L["Extend Merchant Pages"] = "상인 목록 확장"
-L["Extends the merchant page to show more items."] = "상인 판매 목록이 확장되어 더 많은 상품이 표시됩니다."
+L["Extends the merchant page to show more items."] =
+	"상인 판매 목록이 확장되어 더 많은 상품이 표시됩니다."
 L["Extra"] = "추가"
 L["Extra Buttons"] = "추가 버튼"
 L["Extra Items Bar"] = "아이템 바"
@@ -592,7 +677,8 @@ L["Filters"] = "필터 설정"
 L["Fishing"] = "낚시"
 L["Fishing Net"] = "낚시 그물"
 L["Fishing Nets"] = "낚시 그물"
-L["Fix the merchant frame showing when you using Trader Skill Master."] = "Trader Skill Master 사용 시 상인 창이 자동으로 출력되는 현상이 수정되었습니다."
+L["Fix the merchant frame showing when you using Trader Skill Master."] =
+	"Trader Skill Master 사용 시 상인 창이 자동으로 출력되는 현상이 수정되었습니다."
 L["Flash"] = "깜박임"
 L["Flasks"] = "영약"
 L["Flight Map"] = "비행 지도"
@@ -607,9 +693,11 @@ L["Font"] = "글꼴"
 L["Font Setting"] = "글꼴 설정"
 L["Food"] = "음식"
 L["Force Item Level"] = true
-L["Force to announce if the spell which is cast by you."] = "당신이 시전한 주문일 경우 강제로 알립니다."
+L["Force to announce if the spell which is cast by you."] =
+	"당신이 시전한 주문일 경우 강제로 알립니다."
 L["Force to announce if the target is you."] = "당신이 대상일 경우 강제로 알립니다."
-L["Force to track the target even if it over 1000 yds."] = "1,000미터 이상 떨어진 거리의 지도 핀도 강제로 화면에 표시합니다."
+L["Force to track the target even if it over 1000 yds."] =
+	"1,000미터 이상 떨어진 거리의 지도 핀도 강제로 화면에 표시합니다."
 L["Friend List"] = "친구 목록"
 L["Friendly Player Name"] = "아군 플레이어 이름"
 L["Friends"] = "친구"
@@ -621,7 +709,8 @@ L["Game Menu"] = "게임 메뉴"
 L["Garrison"] = "주둔지"
 L["General"] = "일반"
 L["General Modifier Key"] = true
-L["Generally, enabling this option makes the value increase faster in the first half of the animation."] = "일반적으로 이 옵션을 활성화하면 애니메이션의 전반부 값이 더 빨리 증가합니다."
+L["Generally, enabling this option makes the value increase faster in the first half of the animation."] =
+	"일반적으로 이 옵션을 활성화하면 애니메이션의 전반부 값이 더 빨리 증가합니다."
 L["Generic Trait"] = "일반 특성"
 L["Get Best Reward"] = "최고 보상 획득"
 L["GitHub"] = true
@@ -660,9 +749,12 @@ L["Height Percentage"] = "높이 비율"
 L["Hekili"] = true
 L["Help"] = "도움말"
 L["Help Frame"] = "도움말 프레임"
-L["Help you to enable/disable the modules for a better experience with other plugins."] = "다른 플러그인에 대한 더 나은 경험을 위해 모듈을 활성화 / 비활성화하도록 도와줍니다."
-L["Here are some buttons for helping you change the setting of all absorb bars by one-click."] = "다음은 한 번의 클릭으로 모든 피해흡수 바의 설정을 변경할 수 있는 버튼입니다."
-L["Here are some example presets, just try them!"] = "다음은 몇 가지 사전 설정 예시입니다. 시도해 보세요!"
+L["Help you to enable/disable the modules for a better experience with other plugins."] =
+	"다른 플러그인에 대한 더 나은 경험을 위해 모듈을 활성화 / 비활성화하도록 도와줍니다."
+L["Here are some buttons for helping you change the setting of all absorb bars by one-click."] =
+	"다음은 한 번의 클릭으로 모든 피해흡수 바의 설정을 변경할 수 있는 버튼입니다."
+L["Here are some example presets, just try them!"] =
+	"다음은 몇 가지 사전 설정 예시입니다. 시도해 보세요!"
 L["Heroic"] = "영웅"
 L["Hide Blizzard Indicator"] = "블리자드 난이도 표시 숨김"
 L["Hide Crafter"] = "제작자 숨김"
@@ -674,7 +766,8 @@ L["Hide With Objective Tracker"] = "퀘스트 추적기와 함께 숨기기"
 L["Hide channels that do not exist."] = "존재하지 않는 채널을 자동으로 숨깁니다."
 L["Hide crafter name in the item tooltip."] = "아이템 툴팁에서 제작자의 이름을 숨깁니다."
 L["Hide default class circles"] = true
-L["Hide the level part if the quest level is the max level of this expansion."] = "퀘스트 레벨이 현재 확장팩의 최대 레벨이면 레벨 부분을 숨깁니다."
+L["Hide the level part if the quest level is the max level of this expansion."] =
+	"퀘스트 레벨이 현재 확장팩의 최대 레벨이면 레벨 부분을 숨깁니다."
 L["Hide the realm name of friends."] = "친구의 서버 이름을 숨깁니다."
 L["Highlight Color"] = "강조 색상"
 L["Hold Control + Right Click:"] = "Ctrl + 오른쪽 클릭 :"
@@ -700,16 +793,26 @@ L["IME Transparent Backdrop"] = true
 L["Icon"] = "아이콘"
 L["Icon Height"] = "아이콘 높이"
 L["Icon Width"] = "아이콘 넓이"
-L["If the game language is different from the primary language in this server, you need to specify which area you play on."] = "게임 언어가 이 서버의 기본 언어와 다른 경우, 플레이할 지역을 정해야 합니다."
-L["If the quest is suggested with multi-players, add the number of players to the message."] = "여러 플레이어와 함께 퀘스트를 수행할 경우 메시지에 플레이어 수를 추가합니다."
-L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] = "보상 목록에 여러 아이템이 있는 경우 판매가가 가장 높은 보상을 선택합니다."
-L["If you add the NPC into the list, all automation will do not work for it."] = "NPC를 제외 목록에 추가하면 모든 자동화가 작동하지 않습니다."
-L["If you already have a healer in your group and you use the 'Role Available' filter, it won't find any match."] = "그룹에 이미 힐러가 있는 경우 '참여 가능한 파티' 필터를 사용하면 일치하는 역할을 찾을 수 없습니다."
-L["If you already have a tank in your group and you use the 'Role Available' filter, it won't find any match."] = "그룹에 이미 탱커가 있는 경우 '참여 가능한 파티' 필터를 사용하면 일치하는 역할을 찾을 수 없습니다."
-L["If you find the %s module conflicts with another addon, alert me via Discord."] = "%s 모듈이 다른 애드온과 충돌하는 것을 발견하면 Discord를 통해 알려주세요."
-L["If you found the CVars changed automatically, please check other addons."] = "CVar가 자동으로 변경되는 것을 발견하면 다른 애드온을 확인하십시오."
-L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] = "권한이 있는 경우 공격대 채널(/r)이 아닌 공격대 경보 채널(/rw)에 메시지가 표시됩니다."
-L["If you want to use WeakAuras skin, please install |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)."] = "WeakAuras 스킨을 사용하려면 |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)을 설치하세요."
+L["If the game language is different from the primary language in this server, you need to specify which area you play on."] =
+	"게임 언어가 이 서버의 기본 언어와 다른 경우, 플레이할 지역을 정해야 합니다."
+L["If the quest is suggested with multi-players, add the number of players to the message."] =
+	"여러 플레이어와 함께 퀘스트를 수행할 경우 메시지에 플레이어 수를 추가합니다."
+L["If there are multiple items in the reward list, it will select the reward with the highest sell price."] =
+	"보상 목록에 여러 아이템이 있는 경우 판매가가 가장 높은 보상을 선택합니다."
+L["If you add the NPC into the list, all automation will do not work for it."] =
+	"NPC를 제외 목록에 추가하면 모든 자동화가 작동하지 않습니다."
+L["If you already have a healer in your group and you use the 'Role Available' filter, it won't find any match."] =
+	"그룹에 이미 힐러가 있는 경우 '참여 가능한 파티' 필터를 사용하면 일치하는 역할을 찾을 수 없습니다."
+L["If you already have a tank in your group and you use the 'Role Available' filter, it won't find any match."] =
+	"그룹에 이미 탱커가 있는 경우 '참여 가능한 파티' 필터를 사용하면 일치하는 역할을 찾을 수 없습니다."
+L["If you find the %s module conflicts with another addon, alert me via Discord."] =
+	"%s 모듈이 다른 애드온과 충돌하는 것을 발견하면 Discord를 통해 알려주세요."
+L["If you found the CVars changed automatically, please check other addons."] =
+	"CVar가 자동으로 변경되는 것을 발견하면 다른 애드온을 확인하십시오."
+L["If you have privilege, it would the message to raid warning(/rw) rather than raid(/r)."] =
+	"권한이 있는 경우 공격대 채널(/r)이 아닌 공격대 경보 채널(/rw)에 메시지가 표시됩니다."
+L["If you want to use WeakAuras skin, please install |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)."] =
+	"WeakAuras 스킨을 사용하려면 |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)을 설치하세요."
 L["Ignore List"] = "제외 목록"
 L["Ignored NPCs"] = "제외된 NPC"
 L["Immersion"] = true
@@ -742,16 +845,23 @@ L["Inverse Mode"] = "반대 모드"
 L["Invert Ease"] = "이지 반전"
 L["Invite"] = "초대"
 L["Iskaaran Fishing Net"] = "이스카라 낚시 그물"
-L["It doesn't mean that the %s Skins will not be applied."] = "%s 스킨이 적용되지 않는다는 의미는 아닙니다."
+L["It doesn't mean that the %s Skins will not be applied."] =
+	"%s 스킨이 적용되지 않는다는 의미는 아닙니다."
 L["It may broken inspect feature sometimes."] = "때로는 검사 기능이 작동하지 않을 수도 있습니다."
-L["It only applies to players who play WoW in Simplified Chinese."] = "이 기능은 중국어 간체로 WoW를 플레이하는 유저에게만 적용됩니다."
+L["It only applies to players who play WoW in Simplified Chinese."] =
+	"이 기능은 중국어 간체로 WoW를 플레이하는 유저에게만 적용됩니다."
 L["It only works when you enable the skin (%s)."] = "스킨(%s)을 활성화한 경우에만 작동합니다."
 L["It will affect the cry emote sound."] = "이것은 우는 감정표현에도 영향을 미칩니다."
-L["It will alert you to reload UI when you change the CVar %s."] = "CVar %s를 변경하면 UI를 리로드 하라면 경고가 표시 됩니다."
-L["It will also affect the crying sound of all female Blood Elves."] = "또한 모든 여성 블러드 엘프의 울음 소리에도 영향을 미칩니다."
-L["It will cause some buttons not to work properly before UI reloading."] = "UI가 다시 로드되기 전에는 일부 버튼이 제대로 작동하지 않을 수 있습니다."
-L["It will check the role of current party members if you are in a group."] = "그룹에 속해 있다면 현재 파티 멤버들의 역할을 확인할 수 있습니다."
-L["It will fix the problem if your cursor has abnormal movement."] = "커서의 움직임이 비정상적인 경우 이 옵션이 문제를 해결할 수 있습니다."
+L["It will alert you to reload UI when you change the CVar %s."] =
+	"CVar %s를 변경하면 UI를 리로드 하라면 경고가 표시 됩니다."
+L["It will also affect the crying sound of all female Blood Elves."] =
+	"또한 모든 여성 블러드 엘프의 울음 소리에도 영향을 미칩니다."
+L["It will cause some buttons not to work properly before UI reloading."] =
+	"UI가 다시 로드되기 전에는 일부 버튼이 제대로 작동하지 않을 수 있습니다."
+L["It will check the role of current party members if you are in a group."] =
+	"그룹에 속해 있다면 현재 파티 멤버들의 역할을 확인할 수 있습니다."
+L["It will fix the problem if your cursor has abnormal movement."] =
+	"커서의 움직임이 비정상적인 경우 이 옵션이 문제를 해결할 수 있습니다."
 L["It will not show the group info for dungeons."] = "던전의 파티 정보는 표시되지 않습니다."
 L["It will override the config which has the same region, faction and realm."] = true
 L["It will override your %s setting."] = "%s의 설정을 덮어씁니다."
@@ -763,7 +873,8 @@ L["Item Name"] = "아이템 이름"
 L["Item Socketing"] = "아이템 소켓"
 L["Item Upgrade"] = "아이템 강화 창"
 L["Jewelcrafting"] = "보석세공"
-L["Just for Chinese and Korean players"] = "한국 및 중국 전용 (채팅에 '、' 입력 시 자동으로 '/'로 변경합니다.)"
+L["Just for Chinese and Korean players"] =
+	"한국 및 중국 전용 (채팅에 '、' 입력 시 자동으로 '/'로 변경합니다.)"
 L["Keep Size Ratio"] = "크기 비율 유지"
 L["Key Binding"] = "단축키 글씨 설정"
 L["Key Timers"] = "쐐기돌 타이머"
@@ -797,7 +908,8 @@ L["Left Click: Change to"] = "왼쪽 클릭: 변경 "
 L["Left Click: Toggle"] = "왼쪽 클릭: 토글"
 L["Left Color"] = "왼쪽 색상"
 L["Left Panel"] = "왼쪽 패널"
-L["Let you can view the group created by Simplified Chinese players."] = "중국어 간체 플레이어가 만든 그룹을 볼 수 있습니다."
+L["Let you can view the group created by Simplified Chinese players."] =
+	"중국어 간체 플레이어가 만든 그룹을 볼 수 있습니다."
 L["Let your teammates know the progress of quests."] = "팀원에게 퀘스트 진행 상황을 알립니다."
 L["Level"] = "레벨"
 L["Lights Hope"] = true
@@ -829,14 +941,16 @@ L["Mail Frame"] = "우편함"
 L["Major Factions"] = "주요 세력"
 L["Make adventure life easier."] = "모험 생활을 더 쉽게 만드십시오."
 L["Make combat more interesting."] = "전투를 더 재미있게 만드십시오."
-L["Make quest acceptance and completion automatically."] = "퀘스트 수락 및 완료가 자동으로 이루어집니다."
+L["Make quest acceptance and completion automatically."] =
+	"퀘스트 수락 및 완료가 자동으로 이루어집니다."
 L["Make shadow thicker."] = "그림자의 두께를 조절합니다."
 L["Make some enhancements on chat and friend frames."] = "채팅 및 친구 프레임을 개선합니다."
 L["Make sure you select the NPC as your target."] = "NPC를 대상으로 선택했는지 확인하십시오."
 L["Make the additional percentage text be colored."] = "추가된 진행률에 색상을 지정합니다."
 L["Maps"] = "지도"
 L["Mark Highest Score"] = "최고 점수 표시"
-L["Mark as read, the changelog message will be hidden when you login next time."] = "읽음으로 표시하면 다움에 로그인할 때 변경 로그 메세지가 숨겨집니다."
+L["Mark as read, the changelog message will be hidden when you login next time."] =
+	"읽음으로 표시하면 다움에 로그인할 때 변경 로그 메세지가 숨겨집니다."
 L["Math Without Kanji"] = true
 L["Max Overflow"] = "최대 치유 흡수 보호막"
 L["Media Files"] = "미디어 파일"
@@ -868,7 +982,8 @@ L["Mode"] = "모드"
 L["Modifier Key"] = "기능키 설정"
 L["Modify the chat text style."] = "채팅 문자 스타일을 수정합니다."
 L["Modify the style of abbreviation of channels."] = "채널의 줄임말 스타일을 수정합니다."
-L["Modify the texture of status and make name colorful."] = "상태 텍스처를 변경하고 이름에 색상을 적용합니다."
+L["Modify the texture of status and make name colorful."] =
+	"상태 텍스처를 변경하고 이름에 색상을 적용합니다."
 L["Modify the texture of the absorb bar."] = "피해흡수 바의 텍스처를 수정합니다."
 L["Module"] = "모듈"
 L["Modules"] = "모듈"
@@ -924,7 +1039,8 @@ L["No Mythic+ Runs"] = "주간 쐐기 0회"
 L["No Nets Set"] = "설정된 그물이 없습니다"
 L["No Record"] = "기록 없음"
 L["No Unit"] = true
-L["No automatic removal of filters, might cause empty results if you already have the roles in your party."] = "필터가 자동으로 제거 되지 않아, 파티에 이미 역활이 있는 경우 비어 있는 결과가 발생할 수 있습니다."
+L["No automatic removal of filters, might cause empty results if you already have the roles in your party."] =
+	"필터가 자동으로 제거 되지 않아, 파티에 이미 역활이 있는 경우 비어 있는 결과가 발생할 수 있습니다."
 L["No weekly runs found."] = "이번주 쐐기 진행 정보 없음"
 L["None"] = "없음"
 L["Normal"] = "일반"
@@ -968,20 +1084,25 @@ L["Only Watched"] = "본 것만"
 L["Only You"] = "자신의 시전만 알림"
 L["Only accept and complete repeatable quests."] = true
 L["Only announce when the target is not a tank."] = "대상이 탱커가 아닐 때만 알립니다."
-L["Only display log message that the level is higher than you choose."] = "선택한 수준 이상의 로그 메시지만 표시합니다."
+L["Only display log message that the level is higher than you choose."] =
+	"선택한 수준 이상의 로그 메시지만 표시합니다."
 L["Only send messages after you cast combat resurrection."] = "자신이 시전한 전투 부활만 알립니다."
 L["Only show chat bar when you mouse over it."] = "마우스 오버 시에만 채팅 바를 표시합니다."
 L["Only show chat bubble in instance."] = "인스턴스에서만 말풍선을 표시 합니다."
-L["Only show minimap buttons bar when you mouse over it."] = "미니맵 버튼 바 위에 마우스를 올려 놓을 때만 표시됩니다."
+L["Only show minimap buttons bar when you mouse over it."] =
+	"미니맵 버튼 바 위에 마우스를 올려 놓을 때만 표시됩니다."
 L["Only show raid markers bar when you mouse over it."] = "마우스 오버 시에만 징표 바를 표시합니다."
 L["Only show the bar when you mouse over it."] = "마우스 오버 시에만 바를 표시합니다."
-L["Only skip watched cut scene. (some cut scenes can't be skipped)"] = "시청한 컷신만 건너뜁니다. (일부 컷신은 건너 뛸 수 없습니다)"
-L["Only works with ElvUI action bar and ElvUI cooldowns."] = "이 기능은 ElvUI 작업 표시줄과 ElvUI 쿨다운 타이머가 모두 켜져 있는 경우에만 작동합니다."
+L["Only skip watched cut scene. (some cut scenes can't be skipped)"] =
+	"시청한 컷신만 건너뜁니다. (일부 컷신은 건너 뛸 수 없습니다)"
+L["Only works with ElvUI action bar and ElvUI cooldowns."] =
+	"이 기능은 ElvUI 작업 표시줄과 ElvUI 쿨다운 타이머가 모두 켜져 있는 경우에만 작동합니다."
 L["Opacity"] = "투명도"
 L["Open BigWigs Options UI with /bw > Bars > Style."] = true
 L["Open Changelog"] = "변경 사항 확인"
 L["Open Upgrade Menu"] = true
-L["Open the project page and download more resources."] = "프로젝트 페이지에서 더 많은 리소스를 다운로드하세요."
+L["Open the project page and download more resources."] =
+	"프로젝트 페이지에서 더 많은 리소스를 다운로드하세요."
 L["Open the window of follower recruit automatically."] = "지원 병력 모집 창을 자동으로 엽니다."
 L["Openable Items"] = "열 수 있는 아이템"
 L["Options"] = "옵션"
@@ -991,7 +1112,8 @@ L["Original Text"] = true
 L["Other Players"] = "다른 플레이어"
 L["Other Players' Pet"] = "다른 플레이어 펫"
 L["Others"] = "기타"
-L["Otherwise, it will filter with your current specialization."] = "그렇지 않으면 현재 전문화에 따라 필터링됩니다"
+L["Otherwise, it will filter with your current specialization."] =
+	"그렇지 않으면 현재 전문화에 따라 필터링됩니다"
 L["Outline"] = "외곽선"
 L["Overall Score"] = "점수 총합"
 L["Overflow"] = "초과 표시"
@@ -1025,12 +1147,16 @@ L["Player"] = "플레이어"
 L["Player Choice"] = "플레이어 선택"
 L["Player Spells"] = "플레이어 주문"
 L["Player(Only you)"] = "플레이어(자신)"
-L["Please click the button below to read reference."] = "참고 문헌을 읽으려면 아래 버튼을 클릭해 주세요."
-L["Please enable Emote module in WindTools Social category."] = "WindTools 소셜 카테고리에서 이모티콘 모듈을 활성화하십시오."
+L["Please click the button below to read reference."] =
+	"참고 문헌을 읽으려면 아래 버튼을 클릭해 주세요."
+L["Please enable Emote module in WindTools Social category."] =
+	"WindTools 소셜 카테고리에서 이모티콘 모듈을 활성화하십시오."
 L["Please set the channel and abbreviation first."] = "먼저 채널과 줄임말을 설정하세요."
 L["Please set the name and realm first."] = "먼저 이름과 서버를 설정하세요."
-L["Please upgrade your ElvUI to %2.2f or newer version!"] = "ElvUI를 %2.2f 또는 최신 버전으로 업그레이드하십시오!"
-L["Please use Blizzard Communities UI add the channel to your main chat frame first."] = "블리자드 커뮤니티 UI를 사용하여 먼저 메인 채팅 프레임에 채널을 추가하세요."
+L["Please upgrade your ElvUI to %2.2f or newer version!"] =
+	"ElvUI를 %2.2f 또는 최신 버전으로 업그레이드하십시오!"
+L["Please use Blizzard Communities UI add the channel to your main chat frame first."] =
+	"블리자드 커뮤니티 UI를 사용하여 먼저 메인 채팅 프레임에 채널을 추가하세요."
 L["Portals"] = "포털"
 L["Position"] = "위치"
 L["Postal"] = true
@@ -1055,7 +1181,8 @@ L["Profiles"] = "프로필"
 L["Progress"] = "진행 상황"
 L["Progression"] = "진행 상태"
 L["Put the keystone from bag automatically."] = "쐐기돌을 자동으로 삽입합니다."
-L["Puts a overlay on already known learnable items on vendors and AH."] = "상점 및 경매장에서 이미 알고 있는 학습 가능한 항목을 표시합니다."
+L["Puts a overlay on already known learnable items on vendors and AH."] =
+	"상점 및 경매장에서 이미 알고 있는 학습 가능한 항목을 표시합니다."
 L["QQ Group"] = true
 L["QoLs for LFG list."] = true
 L["Quadratic Ease"] = "2차 이징"
@@ -1101,7 +1228,8 @@ L["Realm"] = "서버명"
 L["Recommended"] = "추천"
 L["Rectangle Minimap"] = "미니맵 비율 조정"
 L["Red"] = true
-L["Reenable the addons that disabled by debug mode."] = "디버그 모드에서 비활성화된 애드온을 다시 활성화합니다."
+L["Reenable the addons that disabled by debug mode."] =
+	"디버그 모드에서 비활성화된 애드온을 다시 활성화합니다."
 L["Reference"] = "참조"
 L["Region"] = "지역"
 L["Released"] = true
@@ -1119,8 +1247,10 @@ L["Remove the selected alias."] = "선택한 별칭을 제거"
 L["Remove the selected config."] = "선택한 구성을 제거"
 L["Remove the unit in distance text."] = "거리 문자에서 단위를 제거합니다."
 L["Remove useless part from description."] = "설명에서 쓸모없는 부분을 제거"
-L["Render the item level text with the setting in ElvUI bags."] = "ElvUI 가방의 설정으로 아이템 레벨 텍스트를 생성합니다."
-L["Replace the Real ID or the character name of friends with your notes."] = "친구의 실명이나 캐릭터 이름을 메모로 대체합니다."
+L["Render the item level text with the setting in ElvUI bags."] =
+	"ElvUI 가방의 설정으로 아이템 레벨 텍스트를 생성합니다."
+L["Replace the Real ID or the character name of friends with your notes."] =
+	"친구의 실명이나 캐릭터 이름을 메모로 대체합니다."
 L["Replace the default color used for error messages."] = true
 L["Replace the default color used for messages with class color."] = true
 L["Replace the default color used for messages."] = true
@@ -1135,24 +1265,28 @@ L["Reset Instance"] = "인스턴스 초기화"
 L["Reset Position"] = "위치 리셋"
 L["Reset all %s modules."] = "모든 %s 모듈을 리셋합니다."
 L["Reset the button groups of this bar."] = "이 바의 버튼 그룹을 재설정 합니다."
-L["Reset the watched cutscene history (which has been used in auto skipping)."] = "자동 건너뛰기에 사용된 시청한 컷신 기록을 재설정합니다."
+L["Reset the watched cutscene history (which has been used in auto skipping)."] =
+	"자동 건너뛰기에 사용된 시청한 컷신 기록을 재설정합니다."
 L["Reshii Wraps Upgrade"] = true
 L["Resize world map."] = "월드맵 크기 조정"
 L["Reskin Icon"] = "아이콘 변경"
-L["Reskin the instance difficulty in text style."] = "미니맵의 인스턴스 난이도를 문자 형식으로 변경합니다."
+L["Reskin the instance difficulty in text style."] =
+	"미니맵의 인스턴스 난이도를 문자 형식으로 변경합니다."
 L["Resurrection"] = "부활"
 L["Reveal"] = "드러냄"
 L["Reverse the direction of adding buttons."] = "버튼 추가 방향을 반대로 합니다."
 L["Reward"] = "보상"
 L["Right"] = "오른쪽"
 L["Right Button"] = "오른쪽 버튼"
-L["Right Click to clear the mark on the target."] = "대상의 징표를 지우려면 마우스 오른쪽 버튼을 클릭하십시오."
+L["Right Click to clear the mark on the target."] =
+	"대상의 징표를 지우려면 마우스 오른쪽 버튼을 클릭하십시오."
 L["Right Click to clear this worldmarker."] = "오른쪽 클릭으로 이 빛기둥 징표를 제거합니다."
 L["Right Click: Join/Leave"] = "오른쪽 클릭: 참가/이탈"
 L["Right Color"] = "오른쪽 색상"
 L["Right Panel"] = "오른쪽 패널"
 L["Right click to stop count down."] = "오른쪽 클릭으로 카운트 다운 중지"
-L["Right click to toggle advanced combat logging."] = "고급 전투 기록을 시작하려면 마우스 오른쪽 버튼을 클릭하십시오."
+L["Right click to toggle advanced combat logging."] =
+	"고급 전투 기록을 시작하려면 마우스 오른쪽 버튼을 클릭하십시오."
 L["Ringing Deeps"] = "울리는 심연"
 L["Rogue"] = "도적"
 L["Role Available"] = "참여 가능한 파티"
@@ -1176,7 +1310,8 @@ L["Scenario"] = "시나리오"
 L["Scrapping Machine"] = "분해 기계"
 L["Screenshot"] = "스크린샷"
 L["Screenshot after 2 secs"] = "2초 후 스크린샷 촬영"
-L["Screenshot after you earned an achievement automatically."] = "업적 달성 시 자동으로 스크린샷을 촬영합니다."
+L["Screenshot after you earned an achievement automatically."] =
+	"업적 달성 시 자동으로 스크린샷을 촬영합니다."
 L["Screenshot has been automatically taken."] = "스크린샷이 자동으로 찍혔습니다."
 L["Screenshot immediately"] = "즉시 스크린샷 촬영"
 L["Section Title"] = "섹션 제목"
@@ -1193,25 +1328,32 @@ L["Send messages after taunt succeeded or failed."] = "도발 성공 또는 실�
 L["Send messages after the spell has been dispelled."] = "주문이 해제된 후 메시지를 보냅니다."
 L["Send messages after the spell has been interrupted."] = "주문 차단 시 주변에 알립니다."
 L["Send something to game automatically."] = "여러 상황을 자동으로 알려줍니다."
-L["Send the keystone to party or guild chat when someone use !keys command."] = "누군가 !keys 명령어를 사용하면 파티나 길드 채팅에 쐐기돌 정보를 보냅니다."
-L["Send the use of portals, ritual of summoning, feasts, etc."] = "포털, 소환, 연회, 우편, 수리 등 유용한 도구를 자신 또는 팀원이 사용할 때 알립니다."
+L["Send the keystone to party or guild chat when someone use !keys command."] =
+	"누군가 !keys 명령어를 사용하면 파티나 길드 채팅에 쐐기돌 정보를 보냅니다."
+L["Send the use of portals, ritual of summoning, feasts, etc."] =
+	"포털, 소환, 연회, 우편, 수리 등 유용한 도구를 자신 또는 팀원이 사용할 때 알립니다."
 L["Server List"] = "서버 목록"
 L["Set %s to %s"] = "%s을 %s(으)로 설정"
 L["Set All Absorb Style to %s"] = "모든 피해흡수 스타일을 %s(으)로 설정"
 L["Set Area"] = "지역 설정"
-L["Set the modifier key for placing world markers."] = "빛기둥 징표를 배치하기 위한 기능키를 설정합니다."
-L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] = "주문 활성화 알림 프레임의 불투명도를 설정합니다. (블리자드 CVar)"
-L["Set the scale of the spell activation alert frame."] = "주문 활성화 알림 프레임의 크기를 설정합니다."
+L["Set the modifier key for placing world markers."] =
+	"빛기둥 징표를 배치하기 위한 기능키를 설정합니다."
+L["Set the opacity of the spell activation alert frame. (Blizzard CVar)"] =
+	"주문 활성화 알림 프레임의 불투명도를 설정합니다. (블리자드 CVar)"
+L["Set the scale of the spell activation alert frame."] =
+	"주문 활성화 알림 프레임의 크기를 설정합니다."
 L["Set the type and order of button groups."] = "버튼 그룹의 유형과 순서를 설정하십시오."
 L["Set to 0 to disable."] = "0으로 설정"
-L["Set to 2 if you do not understand the meaning of log level."] = "로그 레벨의 의미를 잘 모를 경우 2로 설정하세요."
+L["Set to 2 if you do not understand the meaning of log level."] =
+	"로그 레벨의 의미를 잘 모를 경우 2로 설정하세요."
 L["Setting Panel"] = "설정"
 L["Shadow"] = "그림자"
 L["Shadow & Light"] = "|cff9482c9Shadow & Light|r"
 L["Shadow Color"] = "그림자 색상"
 L["Shadowmoon"] = "어둠달"
 L["Shaman"] = "주술사"
-L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] = "ElvUI 프로필을 공유하는 것은 요즘 흔한 일이지만, 실제로는 일반, 스킨등의 구성을 저장하기 위한 ElvUI 개인 데이터베이스도 존재합니다."
+L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."] =
+	"ElvUI 프로필을 공유하는 것은 요즘 흔한 일이지만, 실제로는 일반, 스킨등의 구성을 저장하기 위한 ElvUI 개인 데이터베이스도 존재합니다."
 L["Shift"] = true
 L["Shift Key"] = "Shift 키"
 L["Short"] = "짧게"
@@ -1225,21 +1367,28 @@ L["Show Pet Journal"] = "애완동물 도감 보기"
 L["Show a alert when you enter or leave combat."] = "전투를 시작하거나 종료할 때 경고를 표시합니다."
 L["Show a backdrop of the bar."] = "바의 배경을 표시합니다."
 L["Show a backdrop of the trackers."] = "추적기의 배경을 표시합니다."
-L["Show a faction icon in the top right of tooltips."] = "툴팁 오른쪽 상단에 진영 아이콘을 표시합니다."
-L["Show a message when a Battle.net friend's WoW character comes online."] = "Battle.net 친구의 WoW 캐릭터가 온라인에 접속하면 메시지를 표시합니다."
-L["Show a message when a Battle.net friend's WoW character goes offline."] = "Battle.net 친구의 WoW 캐릭터가 접속을 종료하면 메시지를 표시합니다."
-L["Show all friends rather than only friends who are currently playing WoW."] = "현재 WoW를 플레이하고 있는 친구만이 아니라 모든 친구를 표시합니다."
+L["Show a faction icon in the top right of tooltips."] =
+	"툴팁 오른쪽 상단에 진영 아이콘을 표시합니다."
+L["Show a message when a Battle.net friend's WoW character comes online."] =
+	"Battle.net 친구의 WoW 캐릭터가 온라인에 접속하면 메시지를 표시합니다."
+L["Show a message when a Battle.net friend's WoW character goes offline."] =
+	"Battle.net 친구의 WoW 캐릭터가 접속을 종료하면 메시지를 표시합니다."
+L["Show all friends rather than only friends who are currently playing WoW."] =
+	"현재 WoW를 플레이하고 있는 친구만이 아니라 모든 친구를 표시합니다."
 L["Show an icon for the best dungeon."] = "최고의 던전에 대한 아이콘을 표시합니다."
 L["Show an icon for the keystone."] = "쐐기돌에 대한 아이콘을 표시합니다."
 L["Show battle pet species ID in tooltips."] = "툴팁에 전투 애완 동물 ID를 표시합니다."
 L["Show friendly players' names in the game world."] = "게임 내 아군 플레이어의 이름을 표시합니다."
 L["Show item level of each item in guild news."] = "길드 새 소식에서 각 아이템의 레벨을 보여줍니다."
-L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."] = "액션 버튼의 ElvUI 쿨다운 및 빛 효과 위에 키 바인딩을 표시합니다."
+L["Show keybinds above the ElvUI cooldown and glow effect on the action buttons."] =
+	"액션 버튼의 ElvUI 쿨다운 및 빛 효과 위에 키 바인딩을 표시합니다."
 L["Show move speed in character panel."] = "캐릭터 창에 이동 속도를 표시합니다."
 L["Show spark on the bar."] = "바에 불꽃 표시"
 L["Show the ElvUI version popup rather than chat message when ElvUI version is outdated."] = true
-L["Show the bar only when the mouse is hovered over the area."] = "마우스 오버 시에만 게임 바를 표시합니다."
-L["Show the changelog popup rather than chat message after every update."] = "ElvUI 버전이 오래된 경우 채팅 메시지 대신 ElvUI 버전 팝업을 표시합니다."
+L["Show the bar only when the mouse is hovered over the area."] =
+	"마우스 오버 시에만 게임 바를 표시합니다."
+L["Show the changelog popup rather than chat message after every update."] =
+	"ElvUI 버전이 오래된 경우 채팅 메시지 대신 ElvUI 버전 팝업을 표시합니다."
 L["Show the class icon before the player name."] = "플레이어 이름 앞에 직업 아이콘을 표시합니다."
 L["Show the faction icon before the player name."] = "플레이어 이름 앞에 진영 아이콘을 표시합니다."
 L["Show the icon of the player race."] = "플레이어 종족의 아이콘을 표시합니다."
@@ -1250,6 +1399,7 @@ L["Show the tooltip when you mouse over the button."] = "버튼 위에 마우스
 L["Side Button 4"] = "측면 버튼 4"
 L["Side Button 5"] = "측면 버튼 5"
 L["Siege On Dragonbane Keep"] = "성채 공성전"
+L["SilverDragon"] = true
 L["Simple Addon Manager"] = "간단한 애드온 관리자"
 L["Simulationcraft"] = true
 L["Sinusoidal Ease"] = "사인 이징"
@@ -1257,10 +1407,12 @@ L["Sites"] = "사이트"
 L["Situations"] = "상황"
 L["Size"] = "크기"
 L["Skins"] = "스킨"
-L["Skins only work if you installed and loaded the addon."] = "스킨은 해당 애드온을 설치한 경우에만 작동합니다."
+L["Skins only work if you installed and loaded the addon."] =
+	"스킨은 해당 애드온을 설치한 경우에만 작동합니다."
 L["Skip Confirmation"] = "건너뛰기 확인"
 L["Skip Cut Scene"] = "컷신 건너뛰기"
-L["Skip signup confirmation during automatic join on listing click"] = "리스트 클릭 시 자동 가입중 가입 확인 건너뛰기"
+L["Skip signup confirmation during automatic join on listing click"] =
+	"리스트 클릭 시 자동 가입중 가입 확인 건너뛰기"
 L["Skipped the cutscene."] = "컷신을 건너뛰었습니다."
 L["Slider"] = "슬라이더"
 L["Slot"] = "장비 위치"
@@ -1271,7 +1423,8 @@ L["Smart Tab"] = "스마트 탭"
 L["Smart Waypoint"] = "스마트 웨이포인트"
 L["Smooth"] = "부드러운"
 L["Smooth the bar animation with ElvUI."] = "ElvUI를 사용하여 바 애니메이션을 부드럽게 만듭니다."
-L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."] = true
+L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."] =
+	true
 L["Social"] = "소셜"
 L["Sold by vendor"] = "상인 판매"
 L["Solo"] = "솔플"
@@ -1302,7 +1455,8 @@ L["Status Icon Pack"] = "상태 아이콘 팩"
 L["Status Report"] = "상태 보고서"
 L["Stay"] = true
 L["Stop Alert if Completed"] = "완료되면 알림 중지"
-L["Stop alert when the event is completed in this week."] = "이번주에 이벤트가 완료되면 알림을 중지합니다."
+L["Stop alert when the event is completed in this week."] =
+	"이번주에 이벤트가 완료되면 알림을 중지합니다."
 L["Stop alert when the player has not entered Dragonlands yet."] = true
 L["Stopwatch"] = "초시계"
 L["String"] = "문자열"
@@ -1315,7 +1469,8 @@ L["Super Tracker"] = "슈퍼 트래커"
 L["Superbloom"] = "만개화"
 L["Superbloom Emerald Dream"] = "만개화 에메랄드의 꿈"
 L["Support TomTom-style /way command without TomTom."] = "TomTom 없이 TomTom 스타일 /way 명령 지원"
-L["Swap the functionality of normal click and click with modifier keys."] = "일반 클릭과 기능키와 함께 클릭할 때의 기능을 전환합니다."
+L["Swap the functionality of normal click and click with modifier keys."] =
+	"일반 클릭과 기능키와 함께 클릭할 때의 기능을 전환합니다."
 L["Switch Buttons"] = "스위치 버튼"
 L["Switch Buttons Bar"] = "스위치 버튼 바"
 L["Sylvanas"] = "실바나스"
@@ -1355,7 +1510,8 @@ L["Thanks all!"] = "모두 감사합니다!"
 L["The Big Dig"] = "대규모 발굴"
 L["The Great Vault"] = "위대한 금고"
 L["The Y-Offset of the backdrop."] = "배경의 Y 오프셋 입니다."
-L["The absorb style %s and %s is highly recommended with %s tweaks."] = "피해흡수 스타일을 %s 및 %s로 설정하여 %s의 수정과 함께 표시하는 것을 강력히 추천합니다."
+L["The absorb style %s and %s is highly recommended with %s tweaks."] =
+	"피해흡수 스타일을 %s 및 %s로 설정하여 %s의 수정과 함께 표시하는 것을 강력히 추천합니다."
 L["The addon message prefix registration is failed."] = "애드온 메시지 접두사 등록에 실패했습니다."
 L["The alias you want to set for the hotkey."] = "단축키에 설정할 별칭 입니다."
 L["The amount of absorbs without math unit"] = "단위를 제외한 피해흡수 표시"
@@ -1371,25 +1527,33 @@ L["The command to set a waypoint."] = "웨이포인트를 설정하는 명령입
 L["The coordinates contain illegal number."] = "좌표에 잘못된 숫자가 있습니다."
 L["The duration of the animation in seconds."] = "애니메이션 지속 시간(초)"
 L["The duration of the button animation in seconds."] = "버튼 애니메이션 지속 시간(초)."
-L["The easing function used for colorize the button."] = "버튼에 색상을 입히는데 사용되는 완화 함수입니다."
-L["The easing function used for fading the backdrop."] = "배경을 페이드 아웃하는 데 사용되는 완화 함수입니다."
-L["The first button anchors itself to this point on the bar."] = "첫 번째 버튼이 이 위치에서 시작됩니다."
+L["The easing function used for colorize the button."] =
+	"버튼에 색상을 입히는데 사용되는 완화 함수입니다."
+L["The easing function used for fading the backdrop."] =
+	"배경을 페이드 아웃하는 데 사용되는 완화 함수입니다."
+L["The first button anchors itself to this point on the bar."] =
+	"첫 번째 버튼이 이 위치에서 시작됩니다."
 L["The height of the buttons."] = "버튼 높이입니다."
 L["The height of the tracker."] = "추적기의 높이"
 L["The hotkey you want to set alias for."] = "별칭을 설정하려는 단축키"
 L["The interval of updating."] = "업데이트 간격입니다."
 L["The item ID is invalid."] = "아이템 ID가 잘못되었습니다."
-L["The keystone information only available for players who installed Details! or %s."] = "쐐기돌 정보는 Details! 또는 %s를 설치한 플레이어에게만 제공됩니다."
+L["The keystone information only available for players who installed Details! or %s."] =
+	"쐐기돌 정보는 Details! 또는 %s를 설치한 플레이어에게만 제공됩니다."
 L["The level of the quest."] = "퀘스트 레벨입니다."
 L["The macro condition for the bar to be shown."] = "바가 표시되기 위한 매크로 조건 입니다."
 L["The maximum alpha of the animation."] = "애니매이션의 최대 알파"
-L["The message will be shown in chat when you first login."] = "이 메세지는 처음 로그인할 때 채팅에 표시됩니다."
-L["The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."] = "해당 메시지는 Blizzard 서비스 알림 채널이 켜진 상태에서만 채팅 프레임(또는 채팅 탭)에 표시됩니다."
+L["The message will be shown in chat when you first login."] =
+	"이 메세지는 처음 로그인할 때 채팅에 표시됩니다."
+L["The message will only be shown in the chat frame (or chat tab) with Blizzard service alert channel on."] =
+	"해당 메시지는 Blizzard 서비스 알림 채널이 켜진 상태에서만 채팅 프레임(또는 채팅 탭)에 표시됩니다."
 L["The middle top errors / messages frame (also used for quest progress text)."] = true
-L["The modifier key to show additional information from %s."] = "%s의 추가 정보를 표시하는 수정 키입니다."
+L["The modifier key to show additional information from %s."] =
+	"%s의 추가 정보를 표시하는 수정 키입니다."
 L["The name of the player"] = "플레이어 이름"
 L["The number of pages shown in the merchant frame."] = "상인 판매창에 표시되는 페이지 수입니다."
-L["The options below are only for BigWigs %s bar style."] = "아래 옵션은 BigWigs %s 막대 스타일에만 해당됩니다."
+L["The options below are only for BigWigs %s bar style."] =
+	"아래 옵션은 BigWigs %s 막대 스타일에만 해당됩니다."
 L["The overall mythic+ score of the leader."] = "파티장의 레이더 점수"
 L["The percentage of absorbs"] = "흡수율 퍼센트"
 L["The percentage of absorbs without percent sign"] = "퍼센트 기호 없이 흡수율 표시"
@@ -1398,7 +1562,8 @@ L["The percentage of current power without percent sign"] = "현재 자원의 �
 L["The percentage of health without percent sign and status"] = "체력의 백분율 (퍼센트 기호 제거)"
 L["The recruited dungeon mythic+ score of the leader."] = "파티장의 던전 점수"
 L["The scale of the button animation."] = "버튼 애니메이션의 크기 조정"
-L["The selected texture will override the ElvUI default absorb bar texture."] = "선택한 텍스쳐는 ElvUI 기본 피해흡수 바 텍스처를 무시합니다."
+L["The selected texture will override the ElvUI default absorb bar texture."] =
+	"선택한 텍스쳐는 ElvUI 기본 피해흡수 바 텍스처를 무시합니다."
 L["The size of the buttons."] = "버튼 크기입니다."
 L["The spacing between buttons."] = "버튼 사이의 간격입니다."
 L["The spacing between the backdrop and the buttons."] = "배경과 버튼 사이의 간격입니다."
@@ -1407,33 +1572,51 @@ L["The spacing between the tracker and the world map."] = "추적기와 세계 �
 L["The spacing between trackers."] = "추적기 사이의 간격"
 L["The speed of the alert."] = "경고 속도"
 L["The spell link"] = "주문 링크"
-L["The system information will be always shown rather than showing only being hovered."] = "시계에 마우스를 올리지 않아도 항상 시스템 정보를 표시합니다."
+L["The system information will be always shown rather than showing only being hovered."] =
+	"시계에 마우스를 올리지 않아도 항상 시스템 정보를 표시합니다."
 L["The text template used in emote channel."] = "이모티콘 채널에 사용된 문자 템플릿 입니다."
-L["The time delay between every loot operations. (Default is 0.3)"] = "전리품 획득 지연 시간. (기본값은 0.3)"
-L["The time of animation. Set 0 to disable animation."] = "애니메이션 시간. 애니메이션을 비활성화하려면 0을 설정하십시오."
-L["The type of animation activated when a button is hovered."] = "버튼을 가리키면 활성화되는 애니메이션 유형입니다."
+L["The time delay between every loot operations. (Default is 0.3)"] =
+	"전리품 획득 지연 시간. (기본값은 0.3)"
+L["The time of animation. Set 0 to disable animation."] =
+	"애니메이션 시간. 애니메이션을 비활성화하려면 0을 설정하십시오."
+L["The type of animation activated when a button is hovered."] =
+	"버튼을 가리키면 활성화되는 애니메이션 유형입니다."
 L["The width of the buttons."] = "버튼 너비입니다."
 L["The width of the tracker."] = "추적기의 너비입니다."
 L["Theater Troupe"] = "극장 공연단"
-L["There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."] = "다른 애드온 또는 ElvUI 플러그인의 많은 모듈이 있지만 그중 일부는 거의 동일한 기능입니다."
+L["There are many modules from different addons or ElvUI plugins, but several of them are almost the same functionality."] =
+	"다른 애드온 또는 ElvUI 플러그인의 많은 모듈이 있지만 그중 일부는 거의 동일한 기능입니다."
 L["There is no more whisper targets"] = "귓속말 대상이 없습니다."
-L["These skins will affect all widgets handled by ElvUI Skins."] = "이 스킨은 ElvUI 스킨이 처리하는 모든 구성 요소에 영향을 미칩니다."
+L["These skins will affect all widgets handled by ElvUI Skins."] =
+	"이 스킨은 ElvUI 스킨이 처리하는 모든 구성 요소에 영향을 미칩니다."
 L["Thick"] = true
 L["This cutscene cannot be skipped."] = "이 컷신은 건너 뛸 수 없습니다."
-L["This feature also follows the modifier keys setting for additional information."] = "이 기능은 추가 정보를 위한 수정 키 설정을 따릅니다."
-L["This feature only works for message that sent by this module."] = "이 기능은 이 모듈에서 보낸 메세지에만 작동 합니다."
+L["This feature also follows the modifier keys setting for additional information."] =
+	"이 기능은 추가 정보를 위한 수정 키 설정을 따릅니다."
+L["This feature only works for message that sent by this module."] =
+	"이 기능은 이 모듈에서 보낸 메세지에만 작동 합니다."
 L["This is a test message"] = true
-L["This module contains small features for each classes."] = "이 모듈에는 각 직업에 대한 작은 기능이 포함되어 있습니다."
-L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] = "이 모듈은 TinyInspect의 라이트 버전입니다. 전체 기능을 사용하려면 TinyInspect를 설치하십시오."
-L["This module may prevent clicking quest items in the objective tracker due to taint."] = "이 모듈은 오염으로 인해 목표 추적기에서 퀘스트 항목을 클릭하지 못하게 할 수 있습니다."
-L["This module provides several easy-to-use methods of deleting items."] = "이 모듈은 아이템 파괴시 '아이템 파괴' 입력을 도와주는 기능입니다."
-L["This module provides the feature that repositions the frames with drag and drop."] = "이 모듈은 드래그 앤 드롭으로 프레임의 위치를 변경하는 기능을 제공합니다."
+L["This module contains small features for each classes."] =
+	"이 모듈에는 각 직업에 대한 작은 기능이 포함되어 있습니다."
+L["This module is a lite version of TinyInspect. Installing TinyInspect if you want to have full features."] =
+	"이 모듈은 TinyInspect의 라이트 버전입니다. 전체 기능을 사용하려면 TinyInspect를 설치하십시오."
+L["This module may prevent clicking quest items in the objective tracker due to taint."] =
+	"이 모듈은 오염으로 인해 목표 추적기에서 퀘스트 항목을 클릭하지 못하게 할 수 있습니다."
+L["This module provides several easy-to-use methods of deleting items."] =
+	"이 모듈은 아이템 파괴시 '아이템 파괴' 입력을 도와주는 기능입니다."
+L["This module provides the feature that repositions the frames with drag and drop."] =
+	"이 모듈은 드래그 앤 드롭으로 프레임의 위치를 변경하는 기능을 제공합니다."
 L["This module will accelerate the speed of loot."] = "이 모듈은 전리품의 획득 속도를 증가시킵니다."
-L["This module will add an equipment list beside the character panel and inspect frame."] = "이 모듈은 캐릭터 창 옆에 장비 목록을 추가합니다."
-L["This module will change the channel when Tab has been pressed."] = "이 모듈은 Tab을 눌렀을 때 채널을 변경합니다."
-L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] = "이 모듈은 전투가 시작되거나 종료될 때 알림창을 표시합니다.\n애니메이션과 텍스트 효과를 설정할 수 있습니다."
-L["This module will help you to reveal and resize maps."] = "이 모듈은 지도를 표시하고 크기를 조정합니다."
-L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] = "이 모듈은 귓속말을 기록합니다.\n최근 대상 목록을 만들기 위해 만료 시간을 설정할 수 있습니다."
+L["This module will add an equipment list beside the character panel and inspect frame."] =
+	"이 모듈은 캐릭터 창 옆에 장비 목록을 추가합니다."
+L["This module will change the channel when Tab has been pressed."] =
+	"이 모듈은 Tab을 눌렀을 때 채널을 변경합니다."
+L["This module will display a alert frame when entering and leaving combat.\nYou can customize animations and text effects."] =
+	"이 모듈은 전투가 시작되거나 종료될 때 알림창을 표시합니다.\n애니메이션과 텍스트 효과를 설정할 수 있습니다."
+L["This module will help you to reveal and resize maps."] =
+	"이 모듈은 지도를 표시하고 크기를 조정합니다."
+L["This module will record whispers for switching.\n You can set the expiration time here for making a shortlist of recent targets."] =
+	"이 모듈은 귓속말을 기록합니다.\n최근 대상 목록을 만들기 위해 만료 시간을 설정할 수 있습니다."
 L["This the QQ group for Wind Addons users."] = true
 L["Threat Transfer"] = "위협 이전"
 L["Ticket Status"] = "GM 대기표 상태"
@@ -1444,14 +1627,17 @@ L["Time Area Width"] = "시간 영역 너비"
 L["Time Manager"] = "시계"
 L["Time Rift"] = "시간의 균열"
 L["Time Rift Thaldraszus"] = "시간의 균열"
-L["Time interval between sending same messages measured in seconds."] = "동일한 메시지를 보내는 시간 간격(초)입니다."
+L["Time interval between sending same messages measured in seconds."] =
+	"동일한 메시지를 보내는 시간 간격(초)입니다."
 L["TinyInspect"] = true
 L["Tips"] = "팁"
 L["Title"] = "제목"
 L["Title Color"] = "제목 색상"
 L["Title Icon"] = true
-L["To enable the name of friendly player in instances, you can set as following:"] = "던전에 있는 아군 플레이어의 이름을 표시하고 싶다면 다음과 같이 설정할 수 있습니다 :"
-L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] = "이 기능을 활성화하려면 먼저 ElvUI 스킨에서 체크박스 스킨을 활성화해야 합니다."
+L["To enable the name of friendly player in instances, you can set as following:"] =
+	"던전에 있는 아군 플레이어의 이름을 표시하고 싶다면 다음과 같이 설정할 수 있습니다 :"
+L["To enable this feature, you need to enable the check box skin in ElvUI Skins first."] =
+	"이 기능을 활성화하려면 먼저 ElvUI 스킨에서 체크박스 스킨을 활성화해야 합니다."
 L["Toggle CPU Profiling"] = "CPU 프로파일링 토글"
 L["Toggle Contacts"] = "연락처 토글"
 L["Toggle minimap buttons bar."] = "미니맵 버튼 바 토글"
@@ -1472,7 +1658,8 @@ L["Toys"] = "장난감"
 L["Trade"] = "거래 창"
 L["Trainer"] = true
 L["Translate Item"] = "아이템명 변역"
-L["Translate the name in item links into your language."] = "링크된 아이템명을 플레이어의 언어로 번역합니다."
+L["Translate the name in item links into your language."] =
+	"링크된 아이템명을 플레이어의 언어로 번역합니다."
 L["Transparent"] = "반투명화"
 L["Tree Group Button"] = "계층 그룹 버튼"
 L["Turn In"] = "자동 수락"
@@ -1481,8 +1668,10 @@ L["Type"] = "유형"
 L["UI Errors"] = true
 L["UI Errors Frame"] = true
 L["UI Widget"] = "UI 위젯"
-L["Unblock the profanity filter and disable model override."] = "욕설 필터를 해제하고 모델 재정의를 비활성화하세요"
-L["Uncheck this box, it will not send message if you cast the spell."] = "자신을 포함한 모든 팀원의 주문 사용을 알립니다.\n이 선택을 취소하면 자신을 포함한 모든 팀원의 주문 사용을 알리지 않습니다."
+L["Unblock the profanity filter and disable model override."] =
+	"욕설 필터를 해제하고 모델 재정의를 비활성화하세요"
+L["Uncheck this box, it will not send message if you cast the spell."] =
+	"자신을 포함한 모든 팀원의 주문 사용을 알립니다.\n이 선택을 취소하면 자신을 포함한 모든 팀원의 주문 사용을 알리지 않습니다."
 L["Unchecked"] = "선택 해제됨"
 L["Underline"] = "밑줄"
 L["Underworld Operative"] = "지하의 첩보원"
@@ -1492,7 +1681,8 @@ L["Unknown"] = "알수없음"
 L["Update"] = "업데이트"
 L["Update Alts"] = "부캐 업데이트"
 L["Update Database"] = "데이터베이스 업데이트"
-L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] = "메모리 사용을 줄이기 위해 추가 문자를 1초가 아닌 10초마다 갱신합니다."
+L["Update the additional text every 10 seconds rather than every 1 second such that the used memory will be lower."] =
+	"메모리 사용을 줄이기 위해 추가 문자를 1초가 아닌 10초마다 갱신합니다."
 L["Update the alt list when you log in."] = "로그인 할때 부캐 리스트 업데이트"
 L["Usage"] = "사용법"
 L["Use %s Skins"] = "%s 스킨 사용"
@@ -1510,12 +1700,15 @@ L["Use Note As Name"] = "이름 대신 메모 사용"
 L["Use Spark Texture"] = "스파크 텍스쳐 사용"
 L["Use a icon rather than text"] = "문자 대신 아이콘 사용"
 L["Use abbreviation for the keystone name."] = "쐐기돌 이름에는 약어를 사용하세요"
-L["Use alphabet rather than kanji (Only for Chinese players)"] = "한자 대신 알파벳 사용 (중국 플레이어만 해당)"
+L["Use alphabet rather than kanji (Only for Chinese players)"] =
+	"한자 대신 알파벳 사용 (중국 플레이어만 해당)"
 L["Use default text"] = "기본 문자 사용"
 L["Use faction icon"] = "세력 아이콘 사용"
-L["Use numerical quality tier rather the icon on the item link."] = "아이템 링크의 아이콘 대신 숫자로 표현된 품질 등급을 사용"
+L["Use numerical quality tier rather the icon on the item link."] =
+	"아이템 링크의 아이콘 대신 숫자로 표현된 품질 등급을 사용"
 L["Use patch icon"] = "패치 아이콘 사용"
-L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."] = "제목을 축약하여 표시합니다. 예 : 저주받은 자의 탑 토르가스트 -> 토르가스트."
+L["Use short name instead. e.g. Torghast, Tower of the Damned to Torghast."] =
+	"제목을 축약하여 표시합니다. 예 : 저주받은 자의 탑 토르가스트 -> 토르가스트."
 L["Use the texture from Blizzard Raid Frames."] = "블리자드 공격대 프레임의 텍스처를 사용합니다."
 L["Utilities"] = "유틸리티"
 L["Utility"] = "유틸리티"
@@ -1548,8 +1741,10 @@ L["Weekly Reward"] = "주간 보상"
 L["Weekly Rewards"] = "주간 보상(위대한 금고)"
 L["Welcome to %s %s!"] = "%s %s에 오신 것을 환영합니다!"
 L["Welcome to version %s!"] = "%s 버전에 오신 것을 환영합니다!"
-L["When enabled, this option inverts the easing function."] = "이 옵션을 활성화하면 완화 기능이 반전 됩니다."
-L["When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa."] = "'탱커 있음' / '힐러 있음'을 선택하면 '사용 가능한 역할' 필터가 자동으로 비활성화되고 그 반대의 경우도 마찬가지입니다."
+L["When enabled, this option inverts the easing function."] =
+	"이 옵션을 활성화하면 완화 기능이 반전 됩니다."
+L["When selecting 'Has Tank' / 'Has Healer', the 'Role Available' filter is disabled automatically and vice-versa."] =
+	"'탱커 있음' / '힐러 있음'을 선택하면 '사용 가능한 역할' 필터가 자동으로 비활성화되고 그 반대의 경우도 마찬가지입니다."
 L["Whisper"] = "귓속말"
 L["Whisper Cycle"] = "귓속말 주기"
 L["Who"] = "/누구 실행"
@@ -1557,42 +1752,66 @@ L["Who Clicked Minimap"] = "미니맵을 클릭한 사람"
 L["Widgets"] = "위젯"
 L["Width"] = "가로 길이"
 L["Width Mode"] = "너비 모드"
-L["WindSkins is all in control, enjoy your own ElvUI interface!"] = "WindSkins이 모두 관리합니다. 자신만의 ElvUI 인터페이스를 즐기십시오!"
-L["WindTools"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r"
-L["WindTools Modules"] = "|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r Modules"
-L["WindTools provides a new shadow style for original ElvUI."] = "WindTools는 ElvUI에 새로운 그림자 스타일을 제공합니다."
-L["WindTools saves all data in ElvUI Profile and Private database."] = "WindTools는 ElvUI 프로필 및 개인 데이터베이스에 모든 데이터를 저장합니다."
+L["WindSkins is all in control, enjoy your own ElvUI interface!"] =
+	"WindSkins이 모두 관리합니다. 자신만의 ElvUI 인터페이스를 즐기십시오!"
+L["WindTools"] =
+	"|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r"
+L["WindTools Modules"] =
+	"|cff5385edW|r|cff5094eai|r|cff4da4e7n|r|cff4ab4e4d|r|cff47c0e1T|r|cff44cbdfo|r|cff41d7ddo|r|cff41d7ddl|r|cff41d7dds|r Modules"
+L["WindTools provides a new shadow style for original ElvUI."] =
+	"WindTools는 ElvUI에 새로운 그림자 스타일을 제공합니다."
+L["WindTools saves all data in ElvUI Profile and Private database."] =
+	"WindTools는 ElvUI 프로필 및 개인 데이터베이스에 모든 데이터를 저장합니다."
 L["WoW Build"] = true
 L["World"] = "월드"
 L["World Map"] = "월드맵"
 L["World Quest Tab"] = true
-L["World channel no found, please setup again."] = "월드 채널을 찾을 수 없습니다. 다시 설정하십시오."
+L["World channel no found, please setup again."] =
+	"월드 채널을 찾을 수 없습니다. 다시 설정하십시오."
 L["X-Offset"] = "X 좌표"
 L["Y-Offset"] = "Y 좌표"
 L["Yell"] = "외치기"
 L["Yellow"] = true
-L["You are using Official WeakAuras, the skin of WeakAuras will not be loaded due to the limitation."] = "공식 WeakAuras를 사용하고 계시면 WeakAuras의 스킨이 제한으로 인해 로드되지 않습니다."
-L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."] = "전역 그림자 색상을 사용자 정의하고, 일부 스킨을 비활성화하고, 비네팅 수준을 설정할 수 있습니다."
-L["You can customize the sentence templates, channels, etc."] = "문장 템플릿, 채널 등을 설정할 수 있습니다."
-L["You can disable this alert in [%s]-[%s]-[%s]"] = "[%s]-[%s]-[%s]에서 이 알림을 비활성화할 수 있습니다."
-L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] = "Skins - Addons에서 WeakAuras Skin을 비활성화하면 이 알림을 비활성화할 수 있습니다."
-L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] = "[WindTools]-[고급]-[코어] 하단의 옵션을 통해 호환성 검사를 비활성화/활성화할 수 있습니다."
-L["You can find the setting in [%s] - [Tooltips] - [General]."] = "[%s] - [도구 설명] - [일반]에서 설정을 찾을 수 있습니다."
-L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] = "구성을 현재 영역에서만 작동하도록 제한할 수 있으며, 그렇지 않으면 위에서 구성한 지역의 모든 영역에서 작동합니다."
-L["You can limit the config only work in the specific faction."] = "특정 특성에서만 작동하도록 구성을 제한할 수 있습니다."
-L["You can limit the config only work in the specific region."] = "특정 지역에서만 작동하도록 구성을 제한할 수 있습니다."
-L["You can paste any text contains coordinates here, and press ENTER to set the waypoint in map."] = "여기에 좌표가 포함된 텍스트를 붙여넣은 다음 Enter 키를 눌러 웨이포인트를 설정할 수 있습니다."
-L["You can preview the ease type in https://easings.net/"] = "https://easings.net/에서 완화 유형을 미리 볼 수 있습니다."
-L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] = "%s, %s, %s 및 %s의 스레드를 통해 제안이나 버그 리포트를 보낼 수 있습니다."
+L["You are using Official WeakAuras, the skin of WeakAuras will not be loaded due to the limitation."] =
+	"공식 WeakAuras를 사용하고 계시면 WeakAuras의 스킨이 제한으로 인해 로드되지 않습니다."
+L["You can customize the global shadow color, disable some skins, set the level of vignetting, etc."] =
+	"전역 그림자 색상을 사용자 정의하고, 일부 스킨을 비활성화하고, 비네팅 수준을 설정할 수 있습니다."
+L["You can customize the sentence templates, channels, etc."] =
+	"문장 템플릿, 채널 등을 설정할 수 있습니다."
+L["You can disable this alert in [%s]-[%s]-[%s]"] =
+	"[%s]-[%s]-[%s]에서 이 알림을 비활성화할 수 있습니다."
+L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."] =
+	"Skins - Addons에서 WeakAuras Skin을 비활성화하면 이 알림을 비활성화할 수 있습니다."
+L["You can disable/enable compatibility check via the option in the bottom of [WindTools]-[Advanced]-[Core]."] =
+	"[WindTools]-[고급]-[코어] 하단의 옵션을 통해 호환성 검사를 비활성화/활성화할 수 있습니다."
+L["You can find the setting in [%s] - [Tooltips] - [General]."] =
+	"[%s] - [도구 설명] - [일반]에서 설정을 찾을 수 있습니다."
+L["You can limit the config only work in the current realm, otherwise it will work in all realms in the region you configurated above."] =
+	"구성을 현재 영역에서만 작동하도록 제한할 수 있으며, 그렇지 않으면 위에서 구성한 지역의 모든 영역에서 작동합니다."
+L["You can limit the config only work in the specific faction."] =
+	"특정 특성에서만 작동하도록 구성을 제한할 수 있습니다."
+L["You can limit the config only work in the specific region."] =
+	"특정 지역에서만 작동하도록 구성을 제한할 수 있습니다."
+L["You can paste any text contains coordinates here, and press ENTER to set the waypoint in map."] =
+	"여기에 좌표가 포함된 텍스트를 붙여넣은 다음 Enter 키를 눌러 웨이포인트를 설정할 수 있습니다."
+L["You can preview the ease type in https://easings.net/"] =
+	"https://easings.net/에서 완화 유형을 미리 볼 수 있습니다."
+L["You can send your suggestions or bugs via %s, %s, %s and the thread in %s."] =
+	"%s, %s, %s 및 %s의 스레드를 통해 제안이나 버그 리포트를 보낼 수 있습니다."
 L["You can separate the groups with a comma."] = "쉼표로 그룹을 구분할 수 있습니다."
 L["You can use ElvUI Mover to reposition it."] = true
-L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] = "|cff00d1b2/wtdebug off|r 명령을 사용하여 디버그 모드를 종료할 수 있습니다."
-L["You must add FULL NAME of the channel, not the abbreviation."] = "채널의 약어가 아닌 전체 이름을 추가해야 합니다."
-L["You must enable ElvUI Chat - %s to use abbreviation feature."] = "약어 기능을 사용하려면 ElvUI Chat - %s을 활성화해야 합니다."
-L["You need enable ElvUI Player Unitframe to use it."] = "사용하려면 ElvUI 플레이어 유닛 프레임을 활성화해야 합니다."
+L["You can use |cff00d1b2/wtdebug off|r command to exit debug mode."] =
+	"|cff00d1b2/wtdebug off|r 명령을 사용하여 디버그 모드를 종료할 수 있습니다."
+L["You must add FULL NAME of the channel, not the abbreviation."] =
+	"채널의 약어가 아닌 전체 이름을 추가해야 합니다."
+L["You must enable ElvUI Chat - %s to use abbreviation feature."] =
+	"약어 기능을 사용하려면 ElvUI Chat - %s을 활성화해야 합니다."
+L["You need enable ElvUI Player Unitframe to use it."] =
+	"사용하려면 ElvUI 플레이어 유닛 프레임을 활성화해야 합니다."
 L["You need hold SHIFT to inspect someone."] = "살펴보기는 SHIFT를 누르고 있어야 합니다."
 L["You need to install Details! first."] = "먼저 Details!를 설치해야 합니다."
-L["You need to manually set the bar style to %s in BigWigs first."] = "먼저 BigWigs에서 막대 스타일을 수동으로 %s로 설정해야 합니다."
+L["You need to manually set the bar style to %s in BigWigs first."] =
+	"먼저 BigWigs에서 막대 스타일을 수동으로 %s로 설정해야 합니다."
 L["Your Pet"] = "자신의 펫"
 L["Your name"] = "당신의 이름"
 L["Your spell link"] = "당신의 주문 링크"
@@ -1681,7 +1900,8 @@ L["[ABBR] World Boss"] = "WB"
 L["[ABBR] Wrist"] = "손목"
 L["[ABBR] Yell"] = "Y"
 L["and whole ElvUI team."] = true
-L["e.g. chat bubble texture with shadow (also in instance)"] = "예: 그림자가 있는 말풍선(던전에서도 작동)"
+L["e.g. chat bubble texture with shadow (also in instance)"] =
+	"예: 그림자가 있는 말풍선(던전에서도 작동)"
 L["illegal"] = "허용되지 않음"
 L["invalid"] = "무효"
 L["it shows when objective tracker be collapsed."] = "목표 추적기가 축소되면 표시됩니다."

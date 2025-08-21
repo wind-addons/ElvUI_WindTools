@@ -340,6 +340,12 @@ V.skins = {
 		g = 0,
 		b = 0,
 	},
+	uiErrors = {
+		normalTextClassColor = false,
+		normalTextColor = { r = 0.976, g = 0.980, b = 0.984 },
+		redTextColor = { r = 1.000, g = 0.125, b = 0.337, a = 1 },
+		yellowTextColor = { r = 0.992, g = 0.780, b = 0.000, a = 1 },
+	},
 	ime = {
 		label = {
 			name = F.GetCompatibleFont("Montserrat"),
@@ -594,6 +600,7 @@ V.skins = {
 		trade = true,
 		trainer = true,
 		tutorial = true,
+		uiErrors = true,
 		uiWidget = true,
 		warboard = true,
 		weeklyRewards = true,

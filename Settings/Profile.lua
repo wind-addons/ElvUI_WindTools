@@ -86,24 +86,24 @@ P.announcement = {
 		},
 		tag = {
 			enable = true,
-			color = { r = 0.490, g = 0.373, b = 1.000 },
+			color = { r = 0.992, g = 0.780, b = 0.000 },
 		},
 		suggestedGroup = {
 			enable = true,
-			color = { r = 1.000, g = 0.220, b = 0.220 },
+			color = { r = 1.000, g = 0.125, b = 0.337 },
 		},
 		level = {
 			enable = true,
-			color = { r = 0.773, g = 0.424, b = 0.941 },
+			color = { r = 0.000, g = 0.831, b = 0.573 },
 			hideOnMax = true,
 		},
 		daily = {
 			enable = true,
-			color = { r = 1.000, g = 0.980, b = 0.396 },
+			color = { r = 0.557, g = 0.773, b = 1.000 },
 		},
 		weekly = {
 			enable = true,
-			color = { r = 0.196, g = 1.000, b = 0.494 },
+			color = { r = 0.000, g = 0.651, b = 0.957 },
 		},
 	},
 	resetInstance = {

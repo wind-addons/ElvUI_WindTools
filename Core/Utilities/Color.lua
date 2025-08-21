@@ -3,6 +3,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 W.Utilities.Color = {}
 local U = W.Utilities.Color
 
+local abs = abs
 local format = format
 local strsub = strsub
 local tonumber = tonumber
@@ -10,6 +11,17 @@ local tostring = tostring
 local type = type
 
 local CreateColor = CreateColor
+local function isAlmost(a, b)
+	if a == nil and b ~= nil or a ~= nil and b == nil then
+		return false
+	end
+
+	if a == nil and b == nil then
+		return true
+	end
+
+	return abs(a - b) < 0.1
+end
 
 local colors = {
 	greyLight = "b5b5b5",
@@ -51,11 +63,14 @@ function U.ExtractColorFromTable(colorTable, override)
 	return r, g, b, a
 end
 
-function U.IsRGBEqual(color1, color2)
-	return color1.r == color2.r and color1.g == color2.g and color1.b == color2.b
+function U.IsRGBEqual(c1, c2)
+	return isAlmost(c1.r, c2.r) and isAlmost(c1.g, c2.g) and isAlmost(c1.b, c2.b)
 end
 
 function U.HexToRGB(hex)
+	if strsub(hex, 1, 1) == "#" then
+		hex = strsub(hex, 2)
+	end
 	local rhex, ghex, bhex = strsub(hex, 1, 2), strsub(hex, 3, 4), strsub(hex, 5, 6)
 	return tonumber(rhex, 16) / 255, tonumber(ghex, 16) / 255, tonumber(bhex, 16) / 255
 end

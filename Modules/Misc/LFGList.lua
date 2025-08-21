@@ -18,11 +18,11 @@ local min = min
 local pairs = pairs
 local select = select
 local sort = sort
+local tAppendAll = tAppendAll
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local tremove = tremove
-local tAppendAll = tAppendAll
 local unpack = unpack
 local wipe = wipe
 
@@ -30,9 +30,13 @@ local CopyTable = CopyTable
 local CreateFrame = CreateFrame
 local GetNumGroupMembers = GetNumGroupMembers
 local GetTime = GetTime
+local GroupFinderFrameGroupButton_OnClick = GroupFinderFrameGroupButton_OnClick
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
+local LFGListCategorySelectionButton_OnClick = LFGListCategorySelectionButton_OnClick
+local LFGListCategorySelection_StartFindGroup = LFGListCategorySelection_StartFindGroup
+local PVEFrame_ShowFrame = PVEFrame_ShowFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -50,8 +54,8 @@ local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_GetSearchResultPlayerInfo = C_LFGList.GetSearchResultPlayerInfo
 local C_LFGList_SaveAdvancedFilter = C_LFGList.SaveAdvancedFilter
 local C_MythicPlus = C_MythicPlus
-local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLevelForDifficultyLevel
 local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
+local C_MythicPlus_GetRewardLevelForDifficultyLevel = C_MythicPlus.GetRewardLevelForDifficultyLevel
 local C_MythicPlus_GetRunHistory = C_MythicPlus.GetRunHistory
 local C_SpecializationInfo_GetSpecialization = C_SpecializationInfo.GetSpecialization
 local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo
@@ -1293,12 +1297,12 @@ function LL:InitializeRightPanel()
 			end
 
 			if not _G.LFGListFrame.SearchPanel:IsShown() or _G.GroupFinderFrame.selection ~= _G.LFGListPVEStub then
-				local PremadeGroupButton = PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
+				local PremadeGroupButton = _G.PVEFrame:ScenariosEnabled() and _G.GroupFinderFrame.groupButton4
 					or _G.GroupFinderFrame.groupButton3
 				GroupFinderFrameGroupButton_OnClick(PremadeGroupButton)
 			end
 
-			local selection = LFGListFrame.CategorySelection
+			local selection = _G.LFGListFrame.CategorySelection
 			if not selection then
 				return
 			end

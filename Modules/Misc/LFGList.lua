@@ -520,9 +520,9 @@ function LL:InitializeRightPanel()
 	end
 
 	local frame = CreateFrame("Frame", nil, _G.PVEFrame)
-	frame:SetWidth(220)
-	frame:SetPoint("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 3, 0)
-	frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 3, 0)
+	frame:SetWidth(W.ChineseLocale and 190 or 220)
+	frame:SetPoint("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
+	frame:SetPoint("BOTTOMLEFT", _G.PVEFrame, "BOTTOMRIGHT", 4, 0)
 	frame:SetTemplate("Transparent")
 	S:CreateShadowModule(frame)
 	MF:InternalHandle(frame, "PVEFrame")

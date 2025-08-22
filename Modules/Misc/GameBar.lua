@@ -1463,8 +1463,8 @@ function GB:UpdateMetadata()
 	end
 
 	self.animationDuration = self.db.animation.duration
-	self.animationInEase = "in-" .. self.db.animation.ease
-	self.animationOutEase = "out-" .. self.db.animation.ease
+	self.animationInEase = self.db.animation.ease == "linear" and "linear" or "in-" .. self.db.animation.ease
+	self.animationOutEase = self.db.animation.ease == "linear" and "linear" or "out-" .. self.db.animation.ease
 	if self.db.animation.easeInvert then
 		self.animationInEase, self.animationOutEase = self.animationOutEase, self.animationInEase
 	end

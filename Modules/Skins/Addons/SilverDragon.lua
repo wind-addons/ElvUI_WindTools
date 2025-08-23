@@ -2,7 +2,9 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
+local next = next
 local select = select
 local type = type
 local unpack = unpack
@@ -292,6 +294,55 @@ function S:StyleSilverDragonHistoryWindow(frame)
 		return
 	end
 
+	if frame.collapseButton then
+		frame.collapseButton:Size(20, 20)
+		frame.collapseButton:StripTextures()
+
+		frame.collapseButton.SetNormalAtlas = E.noop
+		frame.collapseButton.SetPushedAtlas = E.noop
+		frame.collapseButton.SetDisabledAtlas = E.noop
+		frame.collapseButton.SetHighlightAtlas = E.noop
+
+		self:Proxy("HandleButton", frame.collapseButton)
+		local normalTex = frame.collapseButton:GetNormalTexture()
+		local pushedTex = frame.collapseButton:GetPushedTexture()
+		local disabledTex = frame.collapseButton:GetDisabledTexture()
+		disabledTex:SetVertexColor(0.5, 0.5, 0.5)
+
+		for _, tex in next, { normalTex, pushedTex, disabledTex } do
+			tex:ClearAllPoints()
+			tex:SetPoint("CENTER")
+			tex:Size(12, 12)
+		end
+
+		hooksecurefunc(frame.collapseButton, "SetButtonMode", function(button, mode)
+			for _, tex in next, { normalTex, pushedTex, disabledTex } do
+				tex:SetTexture(mode == "Plus" and W.Media.Icons.buttonPlus or W.Media.Icons.buttonMinus)
+			end
+		end)
+	end
+
+	if frame.clearButton then
+		frame.clearButton:Size(20, 20)
+		frame.clearButton:StripTextures()
+
+		self:Proxy("HandleButton", frame.clearButton)
+
+		local normalTex = frame.clearButton:GetNormalTexture()
+		local highlightTex = frame.clearButton:GetHighlightTexture()
+		local pushedTex = frame.clearButton:GetPushedTexture()
+		local disabledTex = frame.clearButton:GetDisabledTexture()
+
+		disabledTex:SetVertexColor(0.5, 0.5, 0.5)
+
+		for _, tex in next, { normalTex, highlightTex, pushedTex, disabledTex } do
+			tex:SetTexture(W.Media.Icons.buttonDelete)
+			tex:ClearAllPoints()
+			tex:SetPoint("CENTER")
+			tex:Size(14, 14)
+		end
+	end
+
 	-- Style main frame
 	self:StyleSilverDragonFrame(frame, true)
 
@@ -313,7 +364,19 @@ function S:StyleSilverDragonHistoryWindow(frame)
 
 	-- Style resize button
 	if frame.resize then
-		self:Proxy("HandleButton", frame.resize)
+		local normalTex = frame.resize:GetNormalTexture()
+		local highlightTex = frame.resize:GetHighlightTexture()
+		local pushedTex = frame.resize:GetPushedTexture()
+
+		for _, tex in next, { normalTex, highlightTex, pushedTex } do
+			tex:SetTexture(E.Media.Textures.ArrowUp)
+			tex:SetTexCoord(0, 1, 0, 1)
+			tex:SetRotation(-2.35)
+		end
+
+		normalTex:SetVertexColor(0.5, 0.5, 0.5)
+		pushedTex:SetVertexColor(E.media.rgbvaluecolor.r, E.media.rgbvaluecolor.g, E.media.rgbvaluecolor.b)
+		frame.resize:SetFrameLevel(200)
 	end
 
 	-- Style container and setup line hooks

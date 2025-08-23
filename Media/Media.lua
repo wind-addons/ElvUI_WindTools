@@ -488,6 +488,7 @@ AddMedia("buttonUnlock", "Button/Unlock.tga", "Icons")
 AddMedia("buttonMinus", "Button/Minus.tga", "Icons")
 AddMedia("buttonPlus", "Button/Plus.tga", "Icons")
 AddMedia("buttonForward", "Button/Forward.tga", "Icons")
+AddMedia("buttonDelete", "Button/Delete.png", "Icons")
 
 AddMedia("inspectGemBG", "InspectGemBG.blp", "Textures")
 AddMedia("exchange", "Exchange.tga", "Textures")

@@ -25,23 +25,36 @@ local function StyleSilverDragonText(fontString, size, color)
 	fontString:SetShadowColor(0, 0, 0, 0.8)
 end
 
-local function StyleSilverDragonLootWindow(lootWindow)
-	if not lootWindow or lootWindow.__windToolsStyled then
+local function StyleSilverDragonLootWindow(frame)
+	if not frame or frame.__windToolsStyled then
 		return
 	end
 
-	S:Proxy("HandleFrame", lootWindow)
-	S:CreateShadow(lootWindow)
+	S:Proxy("HandleFrame", frame)
+	S:CreateShadow(frame)
 
-	if lootWindow.title then
-		StyleSilverDragonText(lootWindow.title, E.db.general.fontSize)
+	if frame.title then
+		StyleSilverDragonText(frame.title, E.db.general.fontSize)
 	end
 
-	if lootWindow.close then
-		S:Proxy("HandleCloseButton", lootWindow.close)
-		lootWindow.close:SetSize(18, 18)
-		lootWindow.close:ClearAllPoints()
-		lootWindow.close:SetPoint("TOPRIGHT", lootWindow, "TOPRIGHT", -4, -4)
+	if frame.close then
+		S:Proxy("HandleCloseButton", frame.close)
+		frame.close:SetSize(18, 18)
+		frame.close:ClearAllPoints()
+		frame.close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -4, -4)
+	end
+
+	if frame.buttons then
+		for _, button in pairs(frame.buttons) do
+			if not button.IsStyled then
+				S:Proxy("HandleIcon", button.icon, true)
+				S:Proxy("HandleIconBorder", button.IconBorder, button.icon.backdrop)
+				button:GetNormalTexture():Hide()
+				button:GetHighlightTexture():SetTexture(E.media.blankTex)
+				button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.25)
+				button.IsStyled = true
+			end
+		end
 	end
 end
 

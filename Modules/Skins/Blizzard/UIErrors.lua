@@ -32,8 +32,7 @@ function S:UIErrors()
 		if r == nil or g == nil or b == nil then
 			local db = E.private.WT.skins.uiErrors
 			if db.normalTextClassColor then
-				local class = select(2, UnitClass("player"))
-				r, g, b = GetClassColor(class)
+				r, g, b = GetClassColor(E.myclass)
 				a = 1
 			else
 				r, g, b, a = db.normalTextColor.r, db.normalTextColor.g, db.normalTextColor.b, db.normalTextColor.a

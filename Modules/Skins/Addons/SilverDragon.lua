@@ -49,6 +49,7 @@ local function StyleSilverDragonLootWindow(frame)
 			if not button.IsStyled then
 				S:Proxy("HandleIcon", button.icon, true)
 				S:Proxy("HandleIconBorder", button.IconBorder, button.icon.backdrop)
+				button.icon.backdrop:OffsetFrameLevel(nil, button)
 				button:GetNormalTexture():Hide()
 				button:GetHighlightTexture():SetTexture(E.media.blankTex)
 				button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.25)

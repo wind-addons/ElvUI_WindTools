@@ -1400,6 +1400,12 @@ options.addons = {
 			addonName = "Simulationcraft",
 			addonskinsKey = "Simulationcraft",
 		},
+		talentLoadoutsEx = {
+			order = 10,
+			type = "toggle",
+			name = L["Talent Loadouts Ex"],
+			addonName = "TalentLoadoutsEx",
+		},
 		tinyInspect = {
 			order = 10,
 			type = "toggle",

@@ -510,6 +510,7 @@ V.skins = {
 		silverDragon = true,
 		simpleAddonManager = true,
 		simulationcraft = true,
+		talentLoadoutsEx = true,
 		tinyInspect = true,
 		tomCats = true,
 		warpDeplete = true,

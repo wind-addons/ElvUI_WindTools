@@ -16,6 +16,7 @@ W.Changelog[398] = {
 			"[预组队列表] 右侧面板新增了快速跳转的按钮.",
 			"[美化皮肤] 新增了 UI 错误框架的字体颜色替换功能.",
 			"[美化皮肤] 新增了 SilverDragon 美化外观. 感谢 Dack",
+			"[美化皮肤] 新增了 Talent Loadouts Ex 美化外观.",
 		},
 		["zhTW"] = {
 			"[事件追蹤器] 新增了夜幕激戰事件.",
@@ -23,6 +24,7 @@ W.Changelog[398] = {
 			"[預組隊列表] 右側面板新增了快速跳轉的按鈕.",
 			"[美化皮膚] 新增了 UI 錯誤框架的字體顏色替換功能.",
 			"[美化皮膚] 新增了 SilverDragon 美化外觀. 感謝 Dack",
+			"[美化皮膚] 新增了 Talent Loadouts Ex 美化外觀.",
 		},
 		["enUS"] = {
 			"[Event Tracker] Add the Nightfall event.",
@@ -30,6 +32,7 @@ W.Changelog[398] = {
 			"[LFG List] Add a quick access button to the right panel.",
 			"[Skins] Add a font color replacement feature for the UI Errors frame.",
 			"[Skins] Add SilverDragon skin. Thanks Dack.",
+			"[Skins] Add Talent Loadouts Ex skin.",
 		},
 		["koKR"] = {
 			"[이벤트 추적] 새로운 야경 전투 이벤트 추가.",
@@ -37,6 +40,7 @@ W.Changelog[398] = {
 			"[LFG 목록] 오른쪽 패널에 빠른 액세스 버튼 추가.",
 			"[스킨] UI 오류 프레임의 글꼴 색상 교체 기능 추가.",
 			"[스킨] SilverDragon 외관 추가. Dack에게 감사드립니다.",
+			"[스킨] Talent Loadouts Ex 외관 추가.",
 		},
 		["ruRU"] = {
 			"[Отслеживание событий] Добавлено событие 'Сумерки'.",
@@ -44,6 +48,7 @@ W.Changelog[398] = {
 			"[Список LFG] Добавлена кнопка быстрого доступа на правой панели.",
 			"[Скины] Добавлена функция замены цвета шрифта для фрейма ошибок интерфейса.",
 			"[Скины] Добавлен скин для SilverDragon. Спасибо Dack.",
+			"[Скины] Добавлен скин для Talent Loadouts Ex.",
 		},
 	},
 	IMPROVEMENT = {

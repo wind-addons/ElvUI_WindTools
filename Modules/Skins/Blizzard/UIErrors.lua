@@ -3,6 +3,7 @@ local S = W.Modules.Skins
 local C = W.Utilities.Color
 
 local _G = _G
+local pairs = pairs
 local select = select
 
 local UnitClass = UnitClass

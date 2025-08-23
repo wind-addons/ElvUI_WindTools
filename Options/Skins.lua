@@ -4,11 +4,15 @@ local LSM = E.Libs.LSM
 local S = W.Modules.Skins
 local C = W.Utilities.Color
 
+local _G = _G
 local format = format
 local pairs = pairs
 local type = type
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+
+local RED_FONT_COLOR = RED_FONT_COLOR
+local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
 
 options.desc = {
 	order = 1,
@@ -305,6 +309,14 @@ options.general = {
 					name = L["Test"],
 					func = function()
 						_G.UIErrorsFrame:AddMessage(format("[%s] %s", L["WindTools"], L["This is a test message"]))
+						_G.UIErrorsFrame:AddMessage(
+							format("[%s] %s (%s)", L["WindTools"], L["This is a test message"], L["Red"]),
+							RED_FONT_COLOR:GetRGBA()
+						)
+						_G.UIErrorsFrame:AddMessage(
+							format("[%s] %s (%s)", L["WindTools"], L["This is a test message"], L["Yellow"]),
+							YELLOW_FONT_COLOR:GetRGBA()
+						)
 					end,
 				},
 			},

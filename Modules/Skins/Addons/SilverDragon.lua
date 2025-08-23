@@ -2,7 +2,14 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local ipairs = ipairs
+local select = select
+local type = type
+local unpack = unpack
 
+local UnitClass = UnitClass
+
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 function S:SilverDragon()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.silverDragon then
 		return
@@ -10,7 +17,7 @@ function S:SilverDragon()
 
 	self:DisableAddOnSkin("SilverDragon")
 
-	local SilverDragon = LibStub("AceAddon-3.0"):GetAddon("SilverDragon")
+	local SilverDragon = _G.LibStub("AceAddon-3.0"):GetAddon("SilverDragon")
 	if not SilverDragon then
 		return
 	end
@@ -122,7 +129,7 @@ function S:StyleSilverDragonPopupElements(popup)
 		end
 		popup.lootIcon.texture:SetAtlas("VignetteLoot")
 		popup.lootIcon:HookScript("OnClick", function()
-			C_Timer.After(0.1, function()
+			E:Delay(0.1, function()
 				if popup.lootIcon.window then
 					S:StyleSilverDragonLootWindow(popup.lootIcon.window)
 				end
@@ -344,7 +351,7 @@ function S:HookSilverDragonHistoryLines(frame)
 	local originalRebuild = scrollBox.Rebuild
 	scrollBox.Rebuild = function(box, ...)
 		local result = originalRebuild(box, ...)
-		C_Timer.After(0.01, function()
+		E:Delay(0.01, function()
 			S:StyleVisibleHistoryLines(scrollBox)
 		end)
 		return result

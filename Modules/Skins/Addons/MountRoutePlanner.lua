@@ -2,6 +2,10 @@ local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
 
 local _G = _G
+local abs = abs
+local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local unpack = unpack
 
 local TEX_PREFIX = "Interface\\AddOns\\MountRoutePlanner\\Assets\\"
 

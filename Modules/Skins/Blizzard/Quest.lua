@@ -113,27 +113,24 @@ local function StyleRewardButton(rewardButton)
 		return
 	end
 
-	-- Hide decorative name frame border while preserving content
 	if rewardButton.NameFrame then
 		rewardButton.NameFrame:Hide()
 	end
 
-	-- Style the reward icon with proper texture coordinates and backdrop
-	if rewardButton.Icon then
-		rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
-		if rewardButton.Icon.backdrop then
-			S:CreateBackdropShadow(rewardButton.Icon)
-			S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
-		end
+	if not rewardButton.Icon then
+		return
 	end
 
-	-- Create transparent backdrop for the reward button
+	rewardButton.Icon:CreateBackdrop("Transparent")
+	rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
+	S:CreateBackdropShadow(rewardButton.Icon)
+	S:BindShadowColorWithBorder(rewardButton.Icon.backdrop)
+
 	rewardButton:CreateBackdrop("Transparent")
-	if rewardButton.Icon and rewardButton.Icon.backdrop then
-		rewardButton.backdrop:SetPoint("TOPLEFT", rewardButton.Icon.backdrop, "TOPRIGHT", 2, 0)
-		rewardButton.backdrop:SetPoint("BOTTOMRIGHT", rewardButton.Icon.backdrop, 100, 0)
-	end
-	rewardButton.textBG = rewardButton.backdrop
+	S:CreateBackdropShadow(rewardButton)
+	rewardButton.backdrop:ClearAllPoints()
+	rewardButton.backdrop:Point("TOPRIGHT", rewardButton, "TOPRIGHT", -4, 0)
+	rewardButton.backdrop:Point("BOTTOMLEFT", rewardButton.Icon.backdrop, "BOTTOMRIGHT", 2, 0)
 end
 
 --[[
@@ -151,9 +148,9 @@ local function StyleRewardButtonWithSize(rewardButton, isMapQuestInfo)
 	-- Apply size-specific adjustments based on context
 	if rewardButton.Icon then
 		if isMapQuestInfo then
-			rewardButton.Icon:SetSize(29, 29) -- Smaller size for map quest info
+			rewardButton.Icon:Size(29, 29) -- Smaller size for map quest info
 		else
-			rewardButton.Icon:SetSize(34, 34) -- Standard size for regular quest info
+			rewardButton.Icon:Size(34, 34) -- Standard size for regular quest info
 		end
 	end
 end
@@ -180,7 +177,7 @@ local function StyleSpellObjectiveButton(spellButton)
 
 	-- Style the spell icon
 	if spellIcon then
-		spellIcon:SetPoint("TOPLEFT", 3, -2)
+		spellIcon:Point("TOPLEFT", 3, -2)
 		spellIcon:SetDrawLayer("ARTWORK")
 		spellIcon:SetTexCoord(unpack(E.TexCoords))
 		S:CreateBackdropShadow(spellIcon)
@@ -188,8 +185,8 @@ local function StyleSpellObjectiveButton(spellButton)
 
 	-- Create background frame for the spell button
 	local backgroundFrame = CreateFrame("Frame", nil, spellButton)
-	backgroundFrame:SetPoint("TOPLEFT", 2, -1)
-	backgroundFrame:SetPoint("BOTTOMRIGHT", 0, 14)
+	backgroundFrame:Point("TOPLEFT", 2, -1)
+	backgroundFrame:Point("BOTTOMRIGHT", 0, 14)
 	backgroundFrame:SetFrameLevel(0)
 	backgroundFrame:CreateBackdrop("Transparent")
 end
@@ -254,10 +251,10 @@ end
 	Main quest info display function that handles dynamic styling
 	Called whenever quest information is displayed or updated
 --]]
-function S.QuestInfo_Display()
+local function QuestInfo_Display()
 	-- Apply styling to quest objective text elements
 	for _, objectiveText in pairs(_G.QuestInfoObjectivesFrame.Objectives) do
-		if objectiveText and not objectiveText.wtStyled then
+		if objectiveText and not objectiveText.__windSkin then
 			if E.private.skins.parchmentRemoverEnable then
 				F.SetFontOutline(objectiveText)
 
@@ -269,7 +266,7 @@ function S.QuestInfo_Display()
 					objectiveText.colorHooked = true
 				end
 			end
-			objectiveText.wtStyled = true
+			objectiveText.__windSkin = true
 		end
 	end
 
@@ -298,32 +295,29 @@ function S.QuestInfo_Display()
 					end
 				end
 
-				-- Apply minimal styling to spell rewards to preserve functionality
 				for spellReward in questRewardsFrame.spellRewardPool:EnumerateActive() do
-					if not spellReward.wtStyled then
+					if not spellReward.__windSkin then
 						if spellReward.Icon then
+							spellReward.Icon:CreateBackdrop()
 							spellReward.Icon:SetTexCoord(unpack(E.TexCoords))
-							if spellReward.Icon.backdrop then
-								S:CreateBackdropShadow(spellReward.Icon)
-								S:BindShadowColorWithBorder(spellReward.Icon.backdrop)
-							end
+							S:CreateBackdropShadow(spellReward.Icon)
+							S:BindShadowColorWithBorder(spellReward.Icon.backdrop)
 						end
-						spellReward.wtStyled = true
+						spellReward.__windSkin = true
 					end
 				end
 			end
 
 			-- Apply minimal styling to reputation rewards while preserving icons
 			for reputationReward in questRewardsFrame.reputationRewardPool:EnumerateActive() do
-				if not reputationReward.wtStyled then
+				if not reputationReward.__windSkin then
 					if reputationReward.Icon then
+						reputationReward.Icon:CreateBackdrop()
 						reputationReward.Icon:SetTexCoord(unpack(E.TexCoords))
-						if reputationReward.Icon.backdrop then
-							S:CreateBackdropShadow(reputationReward.Icon)
-							S:BindShadowColorWithBorder(reputationReward.Icon.backdrop)
-						end
+						S:CreateBackdropShadow(reputationReward.Icon)
+						S:BindShadowColorWithBorder(reputationReward.Icon.backdrop)
 					end
-					reputationReward.wtStyled = true
+					reputationReward.__windSkin = true
 				end
 			end
 		end
@@ -348,7 +342,7 @@ function S:BlizzardQuestFrames()
 	self:CreateShadow(_G.QuestNPCModelTextFrame)
 
 	-- Hook the main quest info display function for dynamic updates
-	hooksecurefunc("QuestInfo_Display", self.QuestInfo_Display)
+	hooksecurefunc("QuestInfo_Display", QuestInfo_Display)
 
 	-- Remove default item highlight for cleaner appearance
 	if _G.QuestInfoItemHighlight then
@@ -427,8 +421,8 @@ function S:BlizzardQuestFrames()
 		-- Create backdrop for the title frame
 		titleRewardFrame:CreateBackdrop("Transparent")
 		if titleIcon then
-			titleRewardFrame.backdrop:SetPoint("TOPLEFT", titleIcon, "TOPRIGHT", 0, 2)
-			titleRewardFrame.backdrop:SetPoint("BOTTOMRIGHT", titleIcon, "BOTTOMRIGHT", 220, -1)
+			titleRewardFrame.backdrop:Point("TOPLEFT", titleIcon, "TOPRIGHT", 0, 2)
+			titleRewardFrame.backdrop:Point("BOTTOMRIGHT", titleIcon, "BOTTOMRIGHT", 220, -1)
 		end
 	end
 

@@ -30,8 +30,8 @@ function S:RareScanner()
 	if scannerButton.CloseButton then
 		self:Proxy("HandleCloseButton", scannerButton.CloseButton)
 		scannerButton.CloseButton:ClearAllPoints()
-		scannerButton.CloseButton:SetSize(20, 20)
-		scannerButton.CloseButton:SetPoint("TOPRIGHT", -3, -3)
+		scannerButton.CloseButton:Size(20, 20)
+		scannerButton.CloseButton:Point("TOPRIGHT", -3, -3)
 	end
 
 	if scannerButton.FilterEntityButton then
@@ -39,8 +39,8 @@ function S:RareScanner()
 		scannerButton.FilterEntityButton:SetNormalTexture(W.Media.Icons.buttonMinus, true)
 		scannerButton.FilterEntityButton:SetPushedTexture(W.Media.Icons.buttonMinus, true)
 		scannerButton.FilterEntityButton:ClearAllPoints()
-		scannerButton.FilterEntityButton:SetSize(16, 16)
-		scannerButton.FilterEntityButton:SetPoint("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
+		scannerButton.FilterEntityButton:Size(16, 16)
+		scannerButton.FilterEntityButton:Point("TOPLEFT", scannerButton, "TOPLEFT", 5, -5)
 	end
 
 	if scannerButton.UnfilterEnabledButton then
@@ -101,7 +101,7 @@ function S:RareScanner()
 					end
 
 					local size = button.Icon:GetWidth() - 2
-					button.Icon:SetSize(size, size)
+					button.Icon:Size(size, size)
 
 					button:CreateBackdrop()
 					button.backdrop:SetOutside(button.Icon)
@@ -126,18 +126,18 @@ function S:RareScanner()
 			child.EditBox:SetAllPoints(child)
 
 			local w, h = child:GetSize()
-			child:SetSize(w, floor(h * 0.62))
+			child:Size(w, floor(h * 0.62))
 
 			child:ClearAllPoints()
 			local ST = W:GetModule("SuperTracker")
 			if ST.db and ST.db.enable and ST.db.waypointParse.enable and ST.WorldMapInput then
 				child.EditBox:SetTemplate()
 				child.EditBox:SetHeight(ST.WorldMapInput:GetHeight())
-				child:SetPoint("LEFT", ST.WorldMapInput, "RIGHT", 12, 0)
+				child:Point("LEFT", ST.WorldMapInput, "RIGHT", 12, 0)
 				local placeholder = child.EditBox:CreateFontString(nil, "ARTWORK")
 				placeholder:FontTemplate(nil, nil, "OUTLINE")
 				placeholder:SetText("|cff666666RareScanner|r")
-				placeholder:SetPoint("CENTER", child, "CENTER", 0, 0)
+				placeholder:Point("CENTER", child, "CENTER", 0, 0)
 
 				child.EditBox:HookScript("OnEditFocusGained", function()
 					placeholder:Hide()
@@ -154,7 +154,7 @@ function S:RareScanner()
 			else
 				child.EditBox:SetTemplate("Transparent")
 				self:CreateShadow(child.EditBox)
-				child:SetPoint("TOP", _G.WorldMapFrame.ScrollContainer, "TOP", 0, -5)
+				child:Point("TOP", _G.WorldMapFrame.ScrollContainer, "TOP", 0, -5)
 			end
 			break
 		end

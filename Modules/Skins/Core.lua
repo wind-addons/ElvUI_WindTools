@@ -22,13 +22,27 @@ S.nonAddonsToLoad = {}
 S.updateProfile = {}
 S.aceWidgets = {}
 S.enteredLoad = {}
+S.texturePathFetcher = E.UIParent:CreateTexture(nil, "ARTWORK")
+S.texturePathFetcher:Hide()
 
---[[
-    Check the skin is enabled or not
-    @param {string} ElvUI Skins key
-    @param {string} WindTools Skins Key
-    @return {bool} isEnabledBoth
-]]
+---Check if the texture path is equal to the given path
+---@param texture TextureBase
+---@param path string
+---@return boolean
+function S:IsTexturePathEqual(texture, path)
+	local got = texture and texture.GetTextureFilePath and texture:GetTextureFilePath()
+	if not got then
+		return false
+	end
+
+	self.texturePathFetcher:SetTexture(path)
+	return got == self.texturePathFetcher:GetTextureFilePath()
+end
+
+---Check the skin config of both ElvUI and WindTools DB
+---@param elvuiKey string
+---@param windtoolsKey string
+---@return boolean
 function S:CheckDB(elvuiKey, windtoolsKey)
 	if elvuiKey then
 		windtoolsKey = windtoolsKey or elvuiKey

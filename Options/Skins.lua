@@ -1308,6 +1308,12 @@ options.addons = {
 			addonName = "Immersion",
 			addonskinsKey = "Immersion",
 		},
+		mountRoutePlanner = {
+			order = 10,
+			type = "toggle",
+			name = L["Mount Route Planner"],
+			addonName = "MountRoutePlanner",
+		},
 		myslot = {
 			order = 10,
 			type = "toggle",

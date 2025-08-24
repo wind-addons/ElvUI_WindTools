@@ -3,8 +3,7 @@ local S = W.Modules.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
-local ipairs = ipairs
-local next = next
+local pairs = pairs
 local select = select
 local type = type
 local unpack = unpack
@@ -26,7 +25,7 @@ local function StyleSilverDragonText(fontString, size, color)
 end
 
 local function StyleSilverDragonLootWindow(frame)
-	if not frame or frame.__windToolsStyled then
+	if not frame or frame.__windSkin then
 		return
 	end
 
@@ -39,9 +38,9 @@ local function StyleSilverDragonLootWindow(frame)
 
 	if frame.close then
 		S:Proxy("HandleCloseButton", frame.close)
-		frame.close:SetSize(18, 18)
+		frame.close:Size(18, 18)
 		frame.close:ClearAllPoints()
-		frame.close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -4, -4)
+		frame.close:Point("TOPRIGHT", frame, "TOPRIGHT", -4, -4)
 	end
 
 	if frame.buttons then
@@ -50,7 +49,8 @@ local function StyleSilverDragonLootWindow(frame)
 				S:Proxy("HandleIcon", button.icon, true)
 				S:Proxy("HandleIconBorder", button.IconBorder, button.icon.backdrop)
 				button.icon.backdrop:OffsetFrameLevel(nil, button)
-				button:GetNormalTexture():Hide()
+				button:GetNormalTexture():SetAlpha(0)
+				button:GetPushedTexture():SetAlpha(0)
 				button:GetHighlightTexture():SetTexture(E.media.blankTex)
 				button:GetHighlightTexture():SetVertexColor(1, 1, 1, 0.25)
 				button.IsStyled = true
@@ -73,8 +73,8 @@ local function StyleSilverDragonPopup(popup, module)
 		S:Proxy("HandleCloseButton", popup.close)
 		popup.close:ClearAllPoints()
 		popup.close:SetFrameLevel(popup:GetFrameLevel() + 2)
-		popup.close:SetPoint("TOPRIGHT", popup, "TOPRIGHT", -3, -3)
-		popup.close:SetSize(18, 18)
+		popup.close:Point("TOPRIGHT", popup, "TOPRIGHT", -3, -3)
+		popup.close:Size(18, 18)
 		if popup.close.backdrop then
 			S:CreateShadow(popup.close.backdrop)
 		end
@@ -82,9 +82,6 @@ local function StyleSilverDragonPopup(popup, module)
 
 	if popup.lootIcon then
 		S:Proxy("HandleButton", popup.lootIcon)
-		if popup.lootIcon.backdrop then
-			popup.lootIcon.backdrop:SetOutside(popup.lootIcon.texture)
-		end
 		popup.lootIcon.texture:SetAtlas("VignetteLoot")
 		popup.lootIcon:HookScript("OnClick", function()
 			RunNextFrame(function()
@@ -107,16 +104,16 @@ local function StyleSilverDragonPopup(popup, module)
 		popup.glow:SetAllPoints()
 	end
 	if popup.shine then
-		popup.shine:SetPoint("TOPLEFT", 0, 0)
-		popup.shine:SetPoint("BOTTOMLEFT", 0, 0)
+		popup.shine:Point("TOPLEFT", 0, 0)
+		popup.shine:Point("BOTTOMLEFT", 0, 0)
 		popup.shine:SetWidth(32)
 	end
 	if popup.dead then
-		popup.dead:SetAtlas([[XMarksTheSpot]])
+		popup.dead:SetAtlas("XMarksTheSpot")
 		popup.dead:SetAlpha(0)
 	end
 	if popup.raidIcon then
-		popup.raidIcon:SetSize(20, 20)
+		popup.raidIcon:Size(20, 20)
 		popup.raidIcon:SetTexture([[Interface\TargetingFrame\UI-RaidTargetingIcons]])
 	end
 
@@ -131,86 +128,23 @@ local function StyleSilverDragonPopup(popup, module)
 end
 
 local function StyleSilverDragonHistoryLine(line)
-	if not line or line.__windToolsStyled then
+	if not line or line.__windSkin then
 		return
 	end
 
-	-- Style line as button
 	S:Proxy("HandleButton", line)
 
-	-- Style icon
-	if line.icon then
-		line.icon:SetTexCoord(unpack(E.TexCoords))
-		if not line.iconBackdrop then
-			line.iconBackdrop = line:CreateTexture(nil, "BACKGROUND")
-			line.iconBackdrop:SetTexture(E.media.blankTex)
-			line.iconBackdrop:SetVertexColor(0, 0, 0, 0.6)
-			line.iconBackdrop:SetPoint("TOPLEFT", line.icon, "TOPLEFT", -1, 1)
-			line.iconBackdrop:SetPoint("BOTTOMRIGHT", line.icon, "BOTTOMRIGHT", 1, -1)
-		end
-	end
+	line.icon:SetTexCoord(unpack(E.TexCoords))
+	line.title:SetJustifyH("LEFT")
+	StyleSilverDragonText(line.title, E.db.general.fontSize - 1)
+	StyleSilverDragonText(line.time, E.db.general.fontSize - 2, { 0.8, 0.8, 0.8, 1 })
+	StyleSilverDragonText(line.source, E.db.general.fontSize - 3, { 0.6, 0.6, 0.6, 1 })
 
-	-- Style text elements
-	if line.title then
-		StyleSilverDragonText(line.title, E.db.general.fontSize - 1)
-		line.title:SetJustifyH("LEFT")
-	end
-	if line.time then
-		StyleSilverDragonText(line.time, E.db.general.fontSize - 2, { 0.8, 0.8, 0.8, 1 })
-	end
-	if line.source then
-		StyleSilverDragonText(line.source, E.db.general.fontSize - 3, { 0.6, 0.6, 0.6, 1 })
-	end
-
-	-- Add hover effects
-	line:HookScript("OnEnter", function(frame)
-		if frame.backdrop then
-			frame.backdrop:SetBackdropColor(0.2, 0.2, 0.2, 0.8)
-		end
-	end)
-	line:HookScript("OnLeave", function(frame)
-		if frame.backdrop then
-			frame.backdrop:SetBackdropColor(0, 0, 0, 0.6)
-		end
-	end)
-
-	line.__windToolsStyled = true
-end
-
-local function StyleSilverDragonVisibleHistoryLines(scrollBox)
-	if not scrollBox then
-		return
-	end
-
-	local frames = scrollBox:GetFrames()
-	if frames then
-		for _, line in ipairs(frames) do
-			if line and not line.__windToolsStyled then
-				StyleSilverDragonHistoryLine(line)
-			end
-		end
-	end
-end
-
-local function HookSilverDragonHistoryLines(frame)
-	local scrollBox = frame.container.scrollBox
-	if not scrollBox or not scrollBox.Rebuild then
-		return
-	end
-
-	-- Hook the rebuild function to style lines
-	local originalRebuild = scrollBox.Rebuild
-	scrollBox.Rebuild = function(box, ...)
-		local result = originalRebuild(box, ...)
-		RunNextFrame(function()
-			StyleSilverDragonVisibleHistoryLines(scrollBox)
-		end)
-		return result
-	end
+	line.__windSkin = true
 end
 
 local function StyleSilverDragonHistoryWindow(frame)
-	if not frame or frame.__windToolsStyled then
+	if not frame or frame.__windSkin then
 		return
 	end
 
@@ -229,14 +163,16 @@ local function StyleSilverDragonHistoryWindow(frame)
 		local disabledTex = frame.collapseButton:GetDisabledTexture()
 		disabledTex:SetVertexColor(0.5, 0.5, 0.5)
 
-		for _, tex in next, { normalTex, pushedTex, disabledTex } do
+		local texes = { normalTex, pushedTex, disabledTex }
+
+		for _, tex in pairs(texes) do
 			tex:ClearAllPoints()
-			tex:SetPoint("CENTER")
+			tex:Point("CENTER")
 			tex:Size(12, 12)
 		end
 
 		hooksecurefunc(frame.collapseButton, "SetButtonMode", function(button, mode)
-			for _, tex in next, { normalTex, pushedTex, disabledTex } do
+			for _, tex in pairs(texes) do
 				tex:SetTexture(mode == "Plus" and W.Media.Icons.buttonPlus or W.Media.Icons.buttonMinus)
 			end
 		end)
@@ -253,10 +189,10 @@ local function StyleSilverDragonHistoryWindow(frame)
 		local disabledTex = frame.clearButton:GetDisabledTexture()
 		disabledTex:SetVertexColor(0.5, 0.5, 0.5)
 
-		for _, tex in next, { normalTex, highlightTex, pushedTex, disabledTex } do
+		for _, tex in pairs({ normalTex, highlightTex, pushedTex, disabledTex }) do
 			tex:SetTexture(W.Media.Icons.buttonDelete)
 			tex:ClearAllPoints()
-			tex:SetPoint("CENTER")
+			tex:Point("CENTER")
 			tex:Size(14, 14)
 		end
 	end
@@ -266,9 +202,7 @@ local function StyleSilverDragonHistoryWindow(frame)
 	S:CreateShadow(frame)
 
 	-- Style title
-	if frame.title then
-		StyleSilverDragonText(frame.title, E.db.general.fontSize)
-	end
+	StyleSilverDragonText(frame.title, E.db.general.fontSize)
 
 	-- Fix dragon textures
 	for i = 1, frame:GetNumRegions() do
@@ -287,7 +221,7 @@ local function StyleSilverDragonHistoryWindow(frame)
 		local highlightTex = frame.resize:GetHighlightTexture()
 		local pushedTex = frame.resize:GetPushedTexture()
 
-		for _, tex in next, { normalTex, highlightTex, pushedTex } do
+		for _, tex in pairs({ normalTex, highlightTex, pushedTex }) do
 			tex:SetTexture(E.Media.Textures.ArrowUp)
 			tex:SetTexCoord(0, 1, 0, 1)
 			tex:SetRotation(-2.35)
@@ -301,36 +235,27 @@ local function StyleSilverDragonHistoryWindow(frame)
 	-- Style container and setup line hooks
 	if frame.container then
 		local container = frame.container
-		if not container.__windToolsStyled then
-			if container.scrollBox then
-				S:Proxy("HandleFrame", container.scrollBox)
-			end
-			if container.scrollBar then
-				S:Proxy("HandleScrollBar", container.scrollBar)
-			end
-
-			container.__windToolsStyled = true
-		end
-
-		if container.scrollView then
-			HookSilverDragonHistoryLines(frame)
-		end
+		S:Proxy("HandleTrimScrollBar", container.scrollBar)
+		container.scrollBox:ForEachFrame(StyleSilverDragonHistoryLine)
+		hooksecurefunc(container.scrollBox, "Update", function(box)
+			box:ForEachFrame(StyleSilverDragonHistoryLine)
+		end)
 	end
 end
 
 local function LayoutSilverDragonCompact(popup)
-	popup:SetSize(240, 50)
+	popup:Size(240, 50)
 	popup.model:Hide()
 
-	popup.title:SetPoint("TOPLEFT", popup, "TOPLEFT", 8, -8)
-	popup.title:SetPoint("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
-	popup.status:SetPoint("BOTTOM", 0, 8)
+	popup.title:Point("TOPLEFT", popup, "TOPLEFT", 8, -8)
+	popup.title:Point("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
+	popup.status:Point("BOTTOM", 0, 8)
 	popup.status:SetJustifyH("CENTER")
-	popup.source:SetPoint("BOTTOMRIGHT", -8, 4)
+	popup.source:Point("BOTTOMRIGHT", -8, 4)
 
-	popup.raidIcon:SetPoint("BOTTOM", popup.title, "TOP", 0, 2)
-	popup.lootIcon:SetPoint("BOTTOMLEFT", 4, 4)
-	popup.lootIcon:SetSize(20, 20)
+	popup.raidIcon:Point("BOTTOM", popup.title, "TOP", 0, 2)
+	popup.lootIcon:Point("BOTTOMLEFT", 4, 4)
+	popup.lootIcon:Size(20, 20)
 
 	popup.dead:SetAllPoints(popup)
 	popup.shine.animIn.translate:SetOffset(180, 0)
@@ -357,41 +282,41 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 	popup.source:ClearAllPoints()
 
 	if module.db.profile.model then
-		popup:SetSize(276, 80)
+		popup:Size(276, 80)
 		popup.model:Show()
 
 		popup.modelbg:SetTexture([[Interface\FrameGeneral\UI-Background-Marble]])
 		popup.modelbg:SetVertexColor(0.2, 0.2, 0.2, 0.8)
-		popup.modelbg:SetPoint("TOPLEFT", 2, -2)
-		popup.modelbg:SetPoint("BOTTOMLEFT", 2, 2)
+		popup.modelbg:Point("TOPLEFT", 2, -2)
+		popup.modelbg:Point("BOTTOMLEFT", 2, 2)
 		popup.modelbg:SetWidth(popup:GetHeight() - 4)
 		module:SizeModel(popup, 0, 0)
 
-		popup.title:SetPoint("TOPLEFT", popup.modelbg, "TOPRIGHT", 8, -8)
-		popup.title:SetPoint("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
-		popup.status:SetPoint("TOPLEFT", popup.title, "BOTTOMLEFT", 0, -4)
-		popup.status:SetPoint("TOPRIGHT", popup.title, "BOTTOMRIGHT", 0, -4)
-		popup.source:SetPoint("BOTTOMRIGHT", -8, 4)
+		popup.title:Point("TOPLEFT", popup.modelbg, "TOPRIGHT", 8, -8)
+		popup.title:Point("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
+		popup.status:Point("TOPLEFT", popup.title, "BOTTOMLEFT", 0, -4)
+		popup.status:Point("TOPRIGHT", popup.title, "BOTTOMRIGHT", 0, -4)
+		popup.source:Point("BOTTOMRIGHT", -8, 4)
 
-		popup.raidIcon:SetPoint("BOTTOM", popup.modelbg, "TOP", 0, 2)
-		popup.lootIcon:SetPoint("BOTTOMLEFT", popup.modelbg, "BOTTOMLEFT", -2, -2)
-		popup.lootIcon:SetSize(24, 24)
+		popup.raidIcon:Point("BOTTOM", popup.modelbg, "TOP", 0, 2)
+		popup.lootIcon:Point("BOTTOMLEFT", popup.modelbg, "BOTTOMLEFT", -2, -2)
+		popup.lootIcon:Size(24, 24)
 
 		popup.dead:SetAllPoints(popup.modelbg)
 		popup.shine.animIn.translate:SetOffset(240, 0)
 	else
-		popup:SetSize(240, 50)
+		popup:Size(240, 50)
 		popup.model:Hide()
 
-		popup.title:SetPoint("TOPLEFT", popup, "TOPLEFT", 8, -8)
-		popup.title:SetPoint("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
-		popup.status:SetPoint("BOTTOM", 0, 8)
+		popup.title:Point("TOPLEFT", popup, "TOPLEFT", 8, -8)
+		popup.title:Point("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
+		popup.status:Point("BOTTOM", 0, 8)
 		popup.status:SetJustifyH("CENTER")
-		popup.source:SetPoint("BOTTOMRIGHT", -8, 4)
+		popup.source:Point("BOTTOMRIGHT", -8, 4)
 
-		popup.raidIcon:SetPoint("BOTTOM", popup.title, "TOP", 0, 2)
-		popup.lootIcon:SetPoint("BOTTOMLEFT", 4, 4)
-		popup.lootIcon:SetSize(20, 20)
+		popup.raidIcon:Point("BOTTOM", popup.title, "TOP", 0, 2)
+		popup.lootIcon:Point("BOTTOMLEFT", 4, 4)
+		popup.lootIcon:Size(20, 20)
 
 		popup.dead:SetAllPoints(popup)
 		popup.shine.animIn.translate:SetOffset(180, 0)
@@ -405,14 +330,14 @@ local function ConfigureSilverDragonPopup(popup, config, module)
 end
 
 local function SetupSilverDragonOverlay(silverDragon)
-	local overlayModule = silverDragon:GetModule("Overlay", true)
-	if not overlayModule or not overlayModule.ShowTooltip then
+	local module = silverDragon:GetModule("Overlay", true)
+	if not module or not module.ShowTooltip then
 		return
 	end
 
 	-- Hook overlay tooltip to style loot windows
-	local originalShowTooltip = overlayModule.ShowTooltip
-	overlayModule.ShowTooltip = function(module, pin)
+	local originalShowTooltip = module.ShowTooltip
+	module.ShowTooltip = function(module, pin)
 		local result = originalShowTooltip(module, pin)
 		if module.lootwindow then
 			StyleSilverDragonLootWindow(module.lootwindow)
@@ -421,7 +346,12 @@ local function SetupSilverDragonOverlay(silverDragon)
 	end
 end
 
-local function SetupSilverDragonPopups(module)
+local function SetupSilverDragonPopups(silverDragon)
+	local module = silverDragon:GetModule("ClickTarget", true)
+	if not module then
+		return
+	end
+
 	-- Register the WindTools look
 	function module.Looks:WindTools(popup, config)
 		StyleSilverDragonPopup(popup, module)
@@ -449,20 +379,20 @@ local function SetupSilverDragonPopups(module)
 end
 
 local function SetupSilverDragonHistory(silverDragon)
-	local historyModule = silverDragon:GetModule("History", true)
-	if not historyModule then
+	local module = silverDragon:GetModule("History", true)
+	if not module then
 		return
 	end
 
 	-- Style existing window if it exists
-	if historyModule.window then
-		StyleSilverDragonHistoryWindow(historyModule.window)
+	if module.window then
+		StyleSilverDragonHistoryWindow(module.window)
 	end
 
 	-- Hook window creation for future styling
-	if historyModule.ShowWindow then
-		local originalShowWindow = historyModule.ShowWindow
-		historyModule.ShowWindow = function(module, ...)
+	if module.ShowWindow then
+		local originalShowWindow = module.ShowWindow
+		module.ShowWindow = function(module, ...)
 			local result = originalShowWindow(module, ...)
 			if module.window then
 				StyleSilverDragonHistoryWindow(module.window)
@@ -484,13 +414,7 @@ function S:SilverDragon()
 		return
 	end
 
-	-- Setup popup styling
-	local clickModule = SilverDragon:GetModule("ClickTarget", true)
-	if clickModule then
-		SetupSilverDragonPopups(clickModule)
-	end
-
-	-- Setup other UI elements
+	SetupSilverDragonPopups(SilverDragon)
 	SetupSilverDragonHistory(SilverDragon)
 	SetupSilverDragonOverlay(SilverDragon)
 end

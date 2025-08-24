@@ -324,7 +324,7 @@ function MB:SkinButton(frame)
 				region:Hide()
 			end
 		end
-	elseif _G.JST_MinimapButton and _G.JST_MinimapButton == frame then
+	elseif name == "JST_MinimapButton" then
 		frame.anim:Stop()
 		frame.anim.Play = E.noop
 		frame.bg:Kill()
@@ -334,6 +334,12 @@ function MB:SkinButton(frame)
 		frame.icon2:Kill()
 		frame.timer:SetScript("OnUpdate", nil)
 		frame.timer.SetScript = E.noop
+	elseif name == "MRPMinimapButton" then
+		for _, region in pairs({ frame:GetRegions() }) do
+			if region:GetTexture() > 0 then
+				region:Hide()
+			end
+		end
 	elseif tmp ~= 2 then
 		frame:SetPushedTexture("")
 		frame:SetDisabledTexture("")

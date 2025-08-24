@@ -149,6 +149,9 @@ Português, Italiano
 23. **Aspecto de Postal**: Aplica aspecto para botones normales de Postal y botones de adjunto rápido.
 24. **Aspecto de World Quest Tab**: Aplica aspecto para las pestañas y configuraciones de World Quest Tab.
 25. **Aspecto de BtWQuests**: Aplica aspecto para BtWQuests.
+26. **Aspecto de Talent Loadouts Ex**: Aplica aspecto para Talent Loadouts Ex.
+27. **Aspecto de SilverDragon**: Aplica aspecto para SilverDragon.
+28. **Aspecto de Mount Route Planner**: Aplica aspecto para Mount Route Planner.
 
 ### Miscelánea
 

@@ -150,6 +150,9 @@ Português, Italiano
 23. **Postal Skin**: Apply skin for Postal normal buttons and quick attach buttons.
 24. **World Quest Tab Skin**: Apply skin for World Quest Tab tabs and settings.
 25. **BtWQuests Skin**: Apply skin for BtWQuests.
+26. **Talent Loadouts Ex Skin**: Apply skin for Talent Loadouts Ex.
+27. **SilverDragon Skin**: Apply skin for SilverDragon.
+28. **Mount Route Planner Skin**: Apply skin for Mount Route Planner.
 
 ### Misc
 

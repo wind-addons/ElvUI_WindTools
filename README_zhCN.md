@@ -150,6 +150,9 @@ Português，Italiano
 23. **Postal 美化**: 为 Postal 的常规按钮和快速附加按钮添加美化
 24. **World Quest Tab 美化**: 为 World Quest Tab 的标签页和设置界面添加美化
 25. **BtWQuests 美化**: 为 BtWQuests 添加美化
+26. **Talent Loadouts Ex 美化**: 为 Talent Loadouts Ex 添加美化
+27. **SilverDragon 美化**: 为 SilverDragon 添加美化
+28. **Mount Route Planner 美化**: 为 Mount Route Planner 添加美化
 
 ### 其他
 

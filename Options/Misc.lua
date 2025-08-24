@@ -2350,7 +2350,11 @@ options.exitPhaseDiving = {
 					type = "description",
 					name = L["Add a button to exit phase diving."]
 						.. "\n"
-						.. L["You can use ElvUI Mover to reposition it."],
+						.. L["You can use ElvUI Mover to reposition it."]
+						.. C.StringByTemplate(
+							L["Due to Blizzard restrictions, the button area cannot be clicked through even when the button is hidden."],
+							"warning"
+						),
 					fontSize = "medium",
 				},
 			},

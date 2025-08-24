@@ -143,7 +143,7 @@ local function StyleSilverDragonHistoryLine(line)
 	line.__windSkin = true
 end
 
-local function StyleSilverDragonHistoryWindow(frame)
+local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 	if not frame or frame.__windSkin then
 		return
 	end
@@ -176,6 +176,8 @@ local function StyleSilverDragonHistoryWindow(frame)
 				tex:SetTexture(mode == "Plus" and W.Media.Icons.buttonPlus or W.Media.Icons.buttonMinus)
 			end
 		end)
+
+		frame.collapseButton:SetButtonMode(collapseButtonStatus and "Plus" or "Minus")
 	end
 
 	if frame.clearButton then
@@ -384,22 +386,15 @@ local function SetupSilverDragonHistory(silverDragon)
 		return
 	end
 
-	-- Style existing window if it exists
 	if module.window then
-		StyleSilverDragonHistoryWindow(module.window)
+		StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
 	end
 
-	-- Hook window creation for future styling
-	if module.ShowWindow then
-		local originalShowWindow = module.ShowWindow
-		module.ShowWindow = function(module, ...)
-			local result = originalShowWindow(module, ...)
-			if module.window then
-				StyleSilverDragonHistoryWindow(module.window)
-			end
-			return result
+	hooksecurefunc(module, "ShowWindow", function(module)
+		if module.window then
+			StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
 		end
-	end
+	end)
 end
 
 function S:SilverDragon()

@@ -390,11 +390,13 @@ local function SetupSilverDragonHistory(silverDragon)
 		StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
 	end
 
-	hooksecurefunc(module, "ShowWindow", function(module)
-		if module.window then
-			StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
-		end
-	end)
+	if module.ShowWindow then
+		hooksecurefunc(module, "ShowWindow", function(module)
+			if module.window then
+				StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
+			end
+		end)
+	end
 end
 
 function S:SilverDragon()

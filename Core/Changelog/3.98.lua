@@ -25,6 +25,7 @@ W.Changelog[398] = {
 			"[美化皮膚] 新增了 UI 錯誤框架的字體顏色替換功能.",
 			"[美化皮膚] 新增了 SilverDragon 美化外觀. 感謝 Dack",
 			"[美化皮膚] 新增了 Talent Loadouts Ex 美化外觀.",
+			"[美化皮膚] 新增了 Mount Route Planner 美化外觀.",
 		},
 		["enUS"] = {
 			"[Event Tracker] Add the Nightfall event.",
@@ -33,6 +34,7 @@ W.Changelog[398] = {
 			"[Skins] Add a font color replacement feature for the UI Errors frame.",
 			"[Skins] Add SilverDragon skin. Thanks Dack.",
 			"[Skins] Add Talent Loadouts Ex skin.",
+			"[Skins] Add Mount Route Planner skin.",
 		},
 		["koKR"] = {
 			"[이벤트 추적] 새로운 야경 전투 이벤트 추가.",
@@ -41,6 +43,7 @@ W.Changelog[398] = {
 			"[스킨] UI 오류 프레임의 글꼴 색상 교체 기능 추가.",
 			"[스킨] SilverDragon 외관 추가. Dack에게 감사드립니다.",
 			"[스킨] Talent Loadouts Ex 외관 추가.",
+			"[스킨] Mount Route Planner 외관 추가.",
 		},
 		["ruRU"] = {
 			"[Отслеживание событий] Добавлено событие 'Сумерки'.",
@@ -49,33 +52,49 @@ W.Changelog[398] = {
 			"[Скины] Добавлена функция замены цвета шрифта для фрейма ошибок интерфейса.",
 			"[Скины] Добавлен скин для SilverDragon. Спасибо Dack.",
 			"[Скины] Добавлен скин для Talent Loadouts Ex.",
+			"[Скины] Добавлен скин для Mount Route Planner.",
 		},
 	},
 	IMPROVEMENT = {
 		["zhCN"] = {
 			"[美化皮肤] 优化 OmniCD 外观.",
 			"[美化皮肤] 优化 BtWQuests 外观.",
+			"[美化皮肤] 优化试衣间外观.",
 			"[小地图按钮] 修正了资料片按钮点击区域过小的问题.",
+			"[小地图按钮] 优化了静思助手的按钮处理逻辑.",
+			"[小地图按钮] 优化了 Mount Route Planner 的按钮处理逻辑.",
 		},
 		["zhTW"] = {
 			"[美化外觀] 優化 OmniCD 外觀.",
 			"[美化外觀] 優化 BtWQuests 外觀.",
+			"[美化外觀] 優化試衣間外觀.",
 			"[小地圖按鍵] 修正了資料片按鍵點擊區域過小的問題.",
+			"[小地圖按鍵] 優化了靜思助手的按鍵處理邏輯.",
+			"[小地圖按鍵] 優化了 Mount Route Planner 的按鍵處理邏輯.",
 		},
 		["enUS"] = {
 			"[Skins] Optimize OmniCD skin.",
 			"[Skins] Optimize BtWQuests skin.",
+			"[Skins] Optimize Dressing Room skin.",
 			"[Minimap Buttons] Fix the issue with the small click area of the expansion button.",
+			"[Minimap Buttons] Optimize the button handling logic of Jingsi Tools.",
+			"[Minimap Buttons] Optimize the button handling logic of Mount Route Planner.",
 		},
 		["koKR"] = {
 			"[스킨] OmniCD 외관 최적화.",
 			"[스킨] BtWQuests 외관 최적화.",
+			"[스킨] 드레싱룸 외관 최적화.",
 			"[미니맵 버튼] 확장 버튼 클릭 영역이 너무 작았던 문제 수정.",
+			"[미니맵 버튼] 정수 도구의 버튼 처리 논리 최적화.",
+			"[미니맵 버튼] Mount Route Planner의 버튼 처리 논리 최적화.",
 		},
 		["ruRU"] = {
 			"[Скины] Оптимизирован внешний вид OmniCD.",
 			"[Скины] Оптимизирован внешний вид BtWQuests.",
+			"[Скины] Оптимизирован внешний вид примерочной.",
 			"[Кнопки миникарты] Исправлена проблема с маленькой областью нажатия кнопки расширения.",
+			"[Кнопки миникарты] Оптимизирована логика обработки кнопок Jingsi Tools.",
+			"[Кнопки миникарты] Оптимизирована логика обработки кнопок Mount Route Planner.",
 		},
 	},
 }

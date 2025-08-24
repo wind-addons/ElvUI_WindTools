@@ -17,6 +17,7 @@ W.Changelog[398] = {
 			"[美化皮肤] 新增了 UI 错误框架的字体颜色替换功能.",
 			"[美化皮肤] 新增了 SilverDragon 美化外观. 感谢 Dack",
 			"[美化皮肤] 新增了 Talent Loadouts Ex 美化外观.",
+			"[美化皮肤] 新增了 Mount Route Planner 美化外观.",
 		},
 		["zhTW"] = {
 			"[事件追蹤器] 新增了夜幕激戰事件.",

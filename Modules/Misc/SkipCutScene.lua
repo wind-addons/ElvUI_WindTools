@@ -62,6 +62,10 @@ local function Subtitles_OnMovieCinematicPlay_Callback()
 		return
 	end
 
+	if E.private.WT.misc.onlyStopWatched then
+		return
+	end
+
 	if time() - cinematicStartTime < 4 and time() - lastTryCinematicSkipTime > 3 then
 		cinematicStartTime = 0
 		lastTryCinematicSkipTime = time()
@@ -71,19 +75,19 @@ end
 
 function M:MoiveCinematicStarted(movieType, movieID)
 	-- /run MovieFrame_PlayMovie(MovieFrame, 993)
-	if not movieType == Enum_CinematicType_GameMovie then
+	if not E.private.WT or movieType ~= Enum_CinematicType_GameMovie then
 		return
 	end
 
-	if not E.private.WT or not E.private.WT.misc.skipCutScene then
+	local skip = not E.private.WT.misc.onlyStopWatched or E.global.WT.misc.watched.movies[movieID]
+	E.global.WT.misc.watched.movies[movieID] = true
+
+	if not E.private.WT.misc.skipCutScene then
 		return
 	end
 
-	local needWatch = E.private.WT.misc.onlyStopWatched and not E.global.WT.misc.watched.movies[movieID]
-
-	if IsModifierKeyDown() or needWatch then
+	if IsModifierKeyDown() or not skip then
 		setForceSkipMovie(false)
-		E.global.WT.misc.watched.movies[movieID] = true
 	else
 		setForceSkipMovie(true)
 		_G.MovieFrame_StopMovie(_G.MovieFrame)

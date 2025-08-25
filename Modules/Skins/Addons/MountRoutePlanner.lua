@@ -118,7 +118,7 @@ function S:MountRoutePlanner()
 	frame.progressBar:SetVertexColor(W.Utilities.Color.RGBFromTemplate("success"))
 	frame.progressBarBG:Kill()
 	frame.progressBar:CreateBackdrop()
-	frame.progressBar.backdrop:SetAllPoints(frame.progressBarBG)
+	frame.progressBar.backdrop:SetOutside(frame.progressBarBG)
 
 	for _, region in pairs({ frame:GetRegions() }) do
 		if region.GetObjectType and region:GetObjectType() == "FontString" then

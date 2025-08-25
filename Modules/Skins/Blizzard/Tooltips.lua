@@ -40,7 +40,6 @@ function S:TooltipFrames()
 		_G.AceConfigDialogTooltip,
 		_G.AceGUITooltip,
 		_G.BattlePetTooltip,
-		_G.BattlePetTooltip,
 		_G.DataTextTooltip,
 		_G.ElvUIConfigTooltip,
 		_G.ElvUISpellBookTooltip,

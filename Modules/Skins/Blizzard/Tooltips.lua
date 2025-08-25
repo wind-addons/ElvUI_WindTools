@@ -184,15 +184,15 @@ local function styleIconString(text)
 	end)
 end
 
-local function styleIconsInLine(line, text, skip)
-	if not line or skip then
+local function styleIconsInLine(line, text)
+	if not line then
 		return
 	end
 
 	text = text or line:GetText()
 	local styledText = styleIconString(text)
 	if styledText and styledText ~= text then
-		line:SetText(styledText, true)
+		(line.__SetText or line.SetText)(line, styledText)
 	end
 end
 
@@ -218,6 +218,7 @@ local function StyleTooltipWidgetContainer(tt)
 
 	for frame in tt.widgetContainer.widgetPools:EnumerateActive() do
 		if frame.Text and not frame.Text.__windSkin then
+			frame.Text.__SetText = frame.Text.SetText
 			hooksecurefunc(frame.Text, "SetText", styleIconsInLine)
 			F.SetFontOutline(frame.Text)
 			frame.Text:SetText(frame.Text:GetText())

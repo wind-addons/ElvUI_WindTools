@@ -46,7 +46,6 @@ function S:TooltipFrames()
 		_G.ElvUISpellBookTooltip,
 		_G.EmbeddedItemTooltip,
 		_G.FloatingBattlePetTooltip,
-		_G.FloatingBattlePetTooltip,
 		_G.FloatingPetBattleAbilityTooltip,
 		_G.FriendsTooltip,
 		_G.GameSmallHeaderTooltip,

@@ -97,12 +97,12 @@ local function styleIconString(text)
 			local thirdColon = strfind(restAfterWidth, ":")
 
 			if not thirdColon then
-				local heightNum = tonumber(height)
+				local heightValue = tonumber(height)
 				local widthNum = tonumber(restAfterWidth)
 				if
-					heightNum
+					heightValue
 					and widthNum
-					and height == tostring(heightNum)
+					and height == tostring(heightValue)
 					and restAfterWidth == tostring(widthNum)
 				then
 					return cacheTextureString(
@@ -140,7 +140,7 @@ local function styleIconString(text)
 		end
 
 		-- Extract texture parameters with defaults
-		local path = parts[1] or iconData
+		local texturePath = parts[1] or iconData
 		local height = parts[2] or "0"
 		local width = parts[3] or ""
 		local offsetX = parts[4] or "0"
@@ -163,7 +163,7 @@ local function styleIconString(text)
 
 		local result = format(
 			"|T%s:%s:%s:%s:%s:%d:%d:%.0f:%.0f:%.0f:%.0f",
-			path,
+			texturePath,
 			height,
 			width,
 			offsetX,

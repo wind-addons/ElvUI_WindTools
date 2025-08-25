@@ -5,26 +5,24 @@ local TT = E:GetModule("Tooltip")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
--- From MerathilisUI
-function S:LibQTip()
-	-- Handle RareScanner's custom LibQTip-1.0RS tooltips
-	local LQTRS = _G.LibStub("LibQTip-1.0RS", true)
-	if LQTRS then
-		hooksecurefunc(LQTRS, "Acquire", function()
-			for _, tooltip in LQTRS:IterateTooltips() do
-				TT:SetStyle(tooltip)
-			end
-		end)
-	end
+-- Modified from MerathilisUI
 
-	-- Handle LibQTip-1.0 tooltips
+local function reskinLib(self)
+	for _, tooltip in self:IterateTooltips() do
+		TT:SetStyle(tooltip)
+	end
+end
+
+function S:LibQTip()
 	local LQT = _G.LibStub("LibQTip-1.0", true)
 	if LQT then
-		hooksecurefunc(LQT, "Acquire", function()
-			for _, tooltip in LQT:IterateTooltips() do
-				TT:SetStyle(tooltip)
-			end
-		end)
+		hooksecurefunc(LQT, "Acquire", reskinLib)
+	end
+
+	-- RareScanner's modified version
+	local LQTRS = _G.LibStub("LibQTip-1.0RS", true)
+	if LQTRS then
+		hooksecurefunc(LQTRS, "Acquire", reskinLib)
 	end
 end
 

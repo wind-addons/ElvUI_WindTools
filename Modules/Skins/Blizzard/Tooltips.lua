@@ -10,6 +10,10 @@ local strfind = strfind
 
 function S:TT_SetStyle(_, tt)
 	if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then
+		if tt.NineSlice then
+			self:CreateShadow(tt.NineSlice)
+		end
+
 		if tt.widgetContainer then
 			if tt.TopOverlay then
 				tt.TopOverlay:StripTextures()
@@ -22,17 +26,6 @@ function S:TT_SetStyle(_, tt)
 			end
 			tt:SetTemplate("Transparent")
 		end
-		self:CreateShadow(tt)
-	end
-end
-
-function S:TT_GameTooltip_SetDefaultAnchor(_, tt)
-	if tt.StatusBar then
-		self:CreateShadow(tt.StatusBar)
-	end
-
-	if _G.GameTooltipStatusBar then
-		self:CreateShadow(_G.GameTooltipStatusBar, 6)
 	end
 end
 
@@ -41,14 +34,20 @@ function S:TooltipFrames()
 		return
 	end
 
-	local styleTT = {
+	local tooltips = {
+		E.ConfigTooltip,
+		E.SpellBookTooltip,
 		_G.AceConfigDialogTooltip,
 		_G.AceGUITooltip,
+		_G.BattlePetTooltip,
 		_G.BattlePetTooltip,
 		_G.DataTextTooltip,
 		_G.ElvUIConfigTooltip,
 		_G.ElvUISpellBookTooltip,
 		_G.EmbeddedItemTooltip,
+		_G.FloatingBattlePetTooltip,
+		_G.FloatingBattlePetTooltip,
+		_G.FloatingPetBattleAbilityTooltip,
 		_G.FriendsTooltip,
 		_G.GameSmallHeaderTooltip,
 		_G.GameTooltip,
@@ -56,8 +55,10 @@ function S:TooltipFrames()
 		_G.ItemRefShoppingTooltip2,
 		_G.ItemRefTooltip,
 		_G.LibDBIconTooltip,
-		_G.QuestScrollFrame and _G.QuestScrollFrame.CampaignTooltip,
-		_G.QuestScrollFrame and _G.QuestScrollFrame.StoryTooltip,
+		_G.PetBattlePrimaryAbilityTooltip,
+		_G.PetBattlePrimaryUnitTooltip,
+		_G.QuestScrollFrame.CampaignTooltip,
+		_G.QuestScrollFrame.StoryTooltip,
 		_G.QuickKeybindTooltip,
 		_G.ReputationParagonTooltip,
 		_G.SettingsTooltip,
@@ -66,16 +67,20 @@ function S:TooltipFrames()
 		_G.WarCampaignTooltip,
 	}
 
-	for _, tt in pairs(styleTT) do
+	for _, tt in pairs(tooltips) do
 		if tt and tt ~= E.ScanTooltip and not tt.IsEmbedded and not tt:IsForbidden() then
-			self:CreateShadow(tt)
+			self:CreateShadow(tt.NineSlice)
 		end
 	end
 
-	self:CreateShadow(_G.FloatingBattlePetTooltip)
+	self:CreateBackdropShadow(_G.GameTooltipStatusBar)
 
 	self:SecureHook(TT, "SetStyle", "TT_SetStyle")
-	self:SecureHook(TT, "GameTooltip_SetDefaultAnchor", "TT_GameTooltip_SetDefaultAnchor")
+	self:SecureHook(TT, "GameTooltip_SetDefaultAnchor", function(_, tt)
+		if tt.StatusBar and tt.StatusBar.backdrop then
+			self:CreateBackdropShadow(tt.StatusBar)
+		end
+	end)
 	self:SecureHook(_G.QueueStatusFrame, "Update", "CreateShadow")
 	self:SecureHook(_G.GameTooltip, "Show", "StyleTooltipsIcons")
 end

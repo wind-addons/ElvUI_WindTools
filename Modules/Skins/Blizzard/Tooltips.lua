@@ -9,14 +9,11 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local strfind = strfind
 local strsub = strsub
-local tContains = tContains
 local tonumber = tonumber
 local tostring = tostring
+local wipe = wipe
 
 local C_Timer_NewTicker = C_Timer.NewTicker
-
-local Enum_TooltipDataLineType_None = Enum.TooltipDataLineType.None
-local TooltipDataProcessor_AddLinePreCall = TooltipDataProcessor.AddLinePreCall
 
 local DEFAULT_SIZE = 64
 local CROP_MARGIN = 5

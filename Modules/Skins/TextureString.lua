@@ -22,9 +22,9 @@ local DEFAULT_TOP = CROP_MARGIN
 local DEFAULT_BOTTOM = DEFAULT_SIZE - CROP_MARGIN
 
 local textureStringHistories = {}
-local CACHE_TIMEOUT = 30
+local CACHE_TIMEOUT = 300
 
-C_Timer_NewTicker(10, function()
+C_Timer_NewTicker(60, function()
 	local currentTime = time()
 	for key, data in pairs(textureStringHistories) do
 		if type(data) == "table" and data.timestamp and (currentTime - data.timestamp) > CACHE_TIMEOUT then

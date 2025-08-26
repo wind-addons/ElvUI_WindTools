@@ -1,8 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- Core -->
 	<Script file='Core.lua'/>
-	<!-- Submodule -->
+	<Script file='TextureString.lua'/>
 	<Script file='Vignetting.lua'/>
+	<!-- Submodule -->
 	<Include file='Widgets\Load_Widgets.xml'/>
 	<Include file='Blizzard\Load_Blizzard.xml'/>
 	<Include file='ElvUI\Load_ElvUI.xml'/>

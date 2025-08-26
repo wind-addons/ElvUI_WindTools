@@ -5,24 +5,28 @@ local TT = E:GetModule("Tooltip")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 
--- Modified from MerathilisUI
-
-local function reskinLib(self)
-	for _, tooltip in self:IterateTooltips() do
-		TT:SetStyle(tooltip)
+local function reskinLib(lib)
+	for _, tt in lib:IterateTooltips() do
+		TT:SetStyle(tt)
+		if tt.SetCell and not S:IsHooked(tt, "SetCell") then
+			S:RawHook(tt, "SetCell", function(tt, lineNum, colNum, value, ...)
+				if type(value) == "string" then
+					value = S:StyleTextureString(value)
+				end
+				S.hooks[tt].SetCell(tt, lineNum, colNum, value, ...)
+			end)
+		end
 	end
 end
 
 function S:LibQTip()
-	local LQT = _G.LibStub("LibQTip-1.0", true)
-	if LQT then
-		hooksecurefunc(LQT, "Acquire", reskinLib)
-	end
+	local libNames = { "LibQTip-1.0", "LibQTip-1.0RS" }
 
-	-- RareScanner's modified version
-	local LQTRS = _G.LibStub("LibQTip-1.0RS", true)
-	if LQTRS then
-		hooksecurefunc(LQTRS, "Acquire", reskinLib)
+	for _, libName in ipairs(libNames) do
+		local lib = _G.LibStub(libName, true)
+		if lib then
+			hooksecurefunc(lib, "Acquire", reskinLib)
+		end
 	end
 end
 

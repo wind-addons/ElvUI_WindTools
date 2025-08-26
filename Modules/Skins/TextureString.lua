@@ -3,8 +3,10 @@ local S = W.Modules.Skins
 
 local format = format
 local gsub = gsub
+local pairs = pairs
 local strfind = strfind
 local strsub = strsub
+local time = time
 local tonumber = tonumber
 local tostring = tostring
 local wipe = wipe
@@ -20,11 +22,31 @@ local DEFAULT_TOP = CROP_MARGIN
 local DEFAULT_BOTTOM = DEFAULT_SIZE - CROP_MARGIN
 
 local textureStringHistories = {}
+local CACHE_TIMEOUT = 30
+
+C_Timer_NewTicker(10, function()
+	local currentTime = time()
+	for key, data in pairs(textureStringHistories) do
+		if type(data) == "table" and data.timestamp and (currentTime - data.timestamp) > CACHE_TIMEOUT then
+			textureStringHistories[key] = nil
+		end
+	end
+end)
 
 local function cacheTextureString(iconData, formattedString)
-	textureStringHistories[iconData] = formattedString
-	textureStringHistories[formattedString] = formattedString
-	return formattedString
+	local currentTime = time()
+	local result = format("|T%s|t", formattedString)
+	local cacheData = {
+		value = result,
+		timestamp = currentTime,
+	}
+
+	textureStringHistories[iconData] = cacheData
+	if iconData ~= formattedString then
+		textureStringHistories[formattedString] = cacheData
+	end
+
+	return result
 end
 
 function S:StyleTextureString(text)
@@ -33,8 +55,9 @@ function S:StyleTextureString(text)
 	end
 
 	return gsub(text, "|T([^|]+)|t", function(iconData)
-		if textureStringHistories[iconData] then
-			return textureStringHistories[iconData]
+		local cachedData = textureStringHistories[iconData]
+		if cachedData and cachedData.value then
+			return cachedData.value
 		end
 
 		-- Skip if the id is not valid or the icon may come from other addons
@@ -42,7 +65,7 @@ function S:StyleTextureString(text)
 		local path = colonPos and strsub(iconData, 1, colonPos - 1) or iconData
 
 		if strfind(path, "Addons") or (tonumber(path) and tonumber(path) <= 0) then
-			return cacheTextureString(iconData, format("|T%s|t", iconData))
+			return cacheTextureString(iconData, iconData)
 		end
 
 		-- Use the simplest logics for most cases
@@ -51,7 +74,7 @@ function S:StyleTextureString(text)
 			return cacheTextureString(
 				iconData,
 				format(
-					"|T%s:16:16:0:0:%d:%d:%d:%d:%d:%d|t",
+					"%s:16:16:0:0:%d:%d:%d:%d:%d:%d",
 					iconData,
 					DEFAULT_SIZE,
 					DEFAULT_SIZE,
@@ -71,7 +94,7 @@ function S:StyleTextureString(text)
 			return cacheTextureString(
 				iconData,
 				format(
-					"|T%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d|t",
+					"%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
 					path,
 					remaining,
 					remaining,
@@ -104,7 +127,7 @@ function S:StyleTextureString(text)
 					return cacheTextureString(
 						iconData,
 						format(
-							"|T%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d|t",
+							"%s:%s:%s:0:0:%d:%d:%d:%d:%d:%d",
 							path,
 							height,
 							restAfterWidth,
@@ -158,7 +181,7 @@ function S:StyleTextureString(text)
 		local afterBottom = alreadyCropped and bottom or texHeight * (1 - MARGIN_RATIO)
 
 		local result = format(
-			"|T%s:%s:%s:%s:%s:%d:%d:%.0f:%.0f:%.0f:%.0f",
+			"%s:%s:%s:%s:%s:%d:%d:%.0f:%.0f:%.0f:%.0f",
 			texturePath,
 			height,
 			width,
@@ -176,10 +199,6 @@ function S:StyleTextureString(text)
 			result = result .. format(":%s:%s:%s", r, g, b)
 		end
 
-		return cacheTextureString(iconData, result .. "|t")
+		return cacheTextureString(iconData, result)
 	end)
 end
-
-C_Timer_NewTicker(60, function()
-	wipe(textureStringHistories)
-end)

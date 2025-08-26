@@ -196,17 +196,6 @@ local function styleIconsInLine(line, text)
 	end
 end
 
-local function StyleIconsInTooltip(tt)
-	if tt:IsForbidden() or not tt.NumLines or not E.db.general.cropIcon then
-		return
-	end
-
-	for i = 2, tt:NumLines() do
-		styleIconsInLine(_G[tt:GetName() .. "TextLeft" .. i])
-		styleIconsInLine(_G[tt:GetName() .. "TextRight" .. i])
-	end
-end
-
 local function StyleTooltipWidgetContainer(tt)
 	if not tt or (tt == E.ScanTooltip or tt.IsEmbedded or not tt.NineSlice) or tt:IsForbidden() then
 		return
@@ -217,13 +206,26 @@ local function StyleTooltipWidgetContainer(tt)
 	end
 
 	for frame in tt.widgetContainer.widgetPools:EnumerateActive() do
-		if frame.Text and not frame.Text.__windSkin then
-			frame.Text.__SetText = frame.Text.SetText
-			hooksecurefunc(frame.Text, "SetText", styleIconsInLine)
-			F.SetFontOutline(frame.Text)
-			frame.Text:SetText(frame.Text:GetText())
-			frame.Text.__windSkin = true
+		if not frame.__windSkin then
+			if frame.Text then
+				frame.Text.__SetText = frame.Text.SetText
+				hooksecurefunc(frame.Text, "SetText", styleIconsInLine)
+				F.SetFontOutline(frame.Text)
+				frame.Text:SetText(frame.Text:GetText())
+			end
+			frame.__windSkin = true
 		end
+	end
+end
+
+function S:StyleIconsInTooltip(tt)
+	if tt:IsForbidden() or not tt.NumLines or not E.db.general.cropIcon then
+		return
+	end
+
+	for i = 2, tt:NumLines() do
+		styleIconsInLine(_G[tt:GetName() .. "TextLeft" .. i])
+		styleIconsInLine(_G[tt:GetName() .. "TextRight" .. i])
 	end
 end
 
@@ -242,10 +244,9 @@ function S:ReskinTooltip(tt)
 		tt.BottomOverlay:StripTextures()
 	end
 
-	StyleTooltipWidgetContainer(tt)
-
-	if tt.Show then
-		hooksecurefunc(tt, "Show", StyleIconsInTooltip)
+	if not self:IsHooked(tt, "Show") then
+		StyleTooltipWidgetContainer(tt)
+		self:SecureHook(tt, "Show", "StyleIconsInTooltip")
 	end
 end
 
@@ -258,7 +259,7 @@ function S:TooltipFrames()
 		wipe(textureStringHistories)
 	end)
 
-	-- Blizzard Tooltips
+	-- Tooltip list from ElvUI
 	local tooltips = {
 		_G.ItemRefTooltip,
 		_G.ItemRefShoppingTooltip1,

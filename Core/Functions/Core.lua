@@ -3,6 +3,7 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local abs = abs
+local coroutine = coroutine
 local format = format
 local min = min
 local pairs = pairs
@@ -310,47 +311,83 @@ function F.Or(val, default)
 	return val
 end
 
-function F.DelvesEventFix(original, func)
-	local isWaiting = false
+local throttleStates = {}
 
-	return function(...)
-		local difficulty = select(3, GetInstanceInfo())
-		if not difficulty or difficulty ~= 208 then
-			return original(...)
-		end
+function F.Throttle(duration, key, func, ...)
+	if type(duration) ~= "number" or duration <= 0 then
+		F.Developer.ThrowError("Invalid duration for F.Throttle: must be a positive number")
+	end
 
-		if isWaiting then
+	if type(func) ~= "function" then
+		F.Developer.ThrowError("Invalid function for F.Throttle: third argument must be a function")
+	end
+
+	local finalKey = key ~= nil and key or func
+	local state = throttleStates[finalKey]
+
+	if not state then
+		state = {
+			isThrottling = false,
+			timer = nil,
+			lastArgs = { ... },
+		}
+		throttleStates[finalKey] = state
+	else
+		state.lastArgs = { ... }
+
+		if state.isThrottling then
 			return
 		end
-
-		local f = GenerateFlatClosure(original, ...)
-
-		RunNextFrame(function()
-			if not isWaiting then
-				isWaiting = true
-				E:Delay(3, function()
-					f()
-					isWaiting = false
-				end)
-			end
-		end)
 	end
+
+	state.isThrottling = true
+
+	if state.timer then
+		state.timer:Cancel()
+		state.timer = nil
+	end
+
+	state.timer = E:Delay(duration, function()
+		func(unpack(state.lastArgs))
+		state.isThrottling = false
+		state.timer = nil
+	end)
 end
 
-function F.WaitFor(condition, callback, interval, leftTimes)
-	leftTimes = (leftTimes or 10) - 1
+function F.WaitFor(condition, callback, interval, maxTimes)
 	interval = interval or 0.1
+	maxTimes = maxTimes or 10
 
-	if condition() then
-		callback()
-		return
+	local co = coroutine.create(function()
+		local leftTimes = maxTimes
+
+		while leftTimes > 0 do
+			if condition() then
+				callback()
+				return
+			end
+
+			leftTimes = leftTimes - 1
+			if leftTimes <= 0 then
+				break
+			end
+
+			coroutine.yield(interval)
+		end
+	end)
+
+	local function resumeCoroutine()
+		local success, delay = coroutine.resume(co)
+		if not success then
+			F.Developer.ThrowError("WaitFor coroutine error:", tostring(delay))
+			return
+		end
+		if coroutine.status(co) ~= "dead" then
+			E:Delay(delay, resumeCoroutine)
+		end
 	end
 
-	if leftTimes and leftTimes <= 0 then
-		return
-	end
-
-	E:Delay(interval, F.WaitFor, condition, callback, interval, leftTimes)
+	resumeCoroutine()
 end
 
 function F.MoveFrameWithOffset(frame, x, y)

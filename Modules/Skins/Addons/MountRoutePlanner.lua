@@ -32,21 +32,6 @@ local function reskinTextButton(button)
 	end
 end
 
-local function reskinIconButton(button, icon, size)
-	button:StripTextures()
-	button.Icon = button:CreateTexture(nil, "ARTWORK")
-	button.Icon:SetTexture(icon)
-	button.Icon:Size(size, size)
-	button.Icon:Point("CENTER")
-
-	button:HookScript("OnEnter", function(self)
-		self.Icon:SetVertexColor(E.media.rgbvaluecolor.r, E.media.rgbvaluecolor.g, E.media.rgbvaluecolor.b)
-	end)
-	button:HookScript("OnLeave", function(self)
-		self.Icon:SetVertexColor(1, 1, 1)
-	end)
-end
-
 local function closeButton(button)
 	if not S:IsTexturePathEqual(button:GetNormalTexture(), TEX_PREFIX .. "Frame_Close.tga") then
 		return false
@@ -60,7 +45,7 @@ local function settingButton(button)
 		return false
 	end
 
-	reskinIconButton(button, W.Media.Icons.buttonSetting, 14)
+	S:ReskinIconButton(button, W.Media.Icons.buttonSetting, 14)
 end
 
 local function resetButton(button)
@@ -68,7 +53,7 @@ local function resetButton(button)
 		return false
 	end
 
-	reskinIconButton(button, W.Media.Icons.buttonGoStart, 18)
+	S:ReskinIconButton(button, W.Media.Icons.buttonGoStart, 18)
 end
 
 local function discordButton(button)
@@ -76,7 +61,7 @@ local function discordButton(button)
 		return false
 	end
 
-	reskinIconButton(button, W.Media.Icons.buttonDiscord, 15)
+	S:ReskinIconButton(button, W.Media.Icons.buttonDiscord, 15)
 end
 
 local function mountButton(button)

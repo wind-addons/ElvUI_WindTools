@@ -85,7 +85,7 @@ function U.WithSpellID(spellID, callback)
 	return spellInstance
 end
 
-function U.WithItemIDTable(itemIDTable, tType, callback)
+function U.WithItemIDTable(itemIDTable, tType, callback, tableCallback)
 	if type(itemIDTable) ~= "table" then
 		return
 	end
@@ -98,30 +98,79 @@ function U.WithItemIDTable(itemIDTable, tType, callback)
 		return
 	end
 
+	if not tableCallback then
+		tableCallback = function(...) end
+	end
+
+	if type(tableCallback) ~= "function" then
+		return
+	end
+
 	if type(tType) ~= "string" then
 		tType = "value"
 	end
 
+	local totalItems = 0
+	local completedItems = 0
+	local results = {}
+
+	-- Count total items first
+	if tType == "list" then
+		totalItems = #itemIDTable
+	elseif tType == "value" then
+		for _ in pairs(itemIDTable) do
+			totalItems = totalItems + 1
+		end
+	elseif tType == "key" then
+		for _, value in pairs(itemIDTable) do
+			if value then
+				totalItems = totalItems + 1
+			end
+		end
+	end
+
+	local function onItemComplete(itemID, itemInstance)
+		completedItems = completedItems + 1
+		results[itemID] = itemInstance
+
+		-- Call individual callback
+		callback(itemInstance)
+
+		-- Check if all items are complete
+		if completedItems >= totalItems then
+			tableCallback(results, itemIDTable)
+		end
+	end
+
 	if tType == "list" then
 		for _, itemID in ipairs(itemIDTable) do
-			U.WithItemID(itemID, callback)
+			U.WithItemID(itemID, function(itemInstance)
+				onItemComplete(itemID, itemInstance)
+			end)
 		end
-	end
-
-	if tType == "value" then
+	elseif tType == "value" then
 		for _, itemID in pairs(itemIDTable) do
-			U.WithItemID(itemID, callback)
+			U.WithItemID(itemID, function(itemInstance)
+				onItemComplete(itemID, itemInstance)
+			end)
+		end
+	elseif tType == "key" then
+		for itemID, value in pairs(itemIDTable) do
+			if value then
+				U.WithItemID(itemID, function(itemInstance)
+					onItemComplete(itemID, itemInstance)
+				end)
+			end
 		end
 	end
 
-	if tType == "key" then
-		for itemID, _ in pairs(itemIDTable) do
-			U.WithItemID(itemID, callback)
-		end
+	-- Handle empty table case
+	if totalItems == 0 then
+		tableCallback({}, itemIDTable)
 	end
 end
 
-function U.WithSpellIDTable(spellIDTable, tType, callback)
+function U.WithSpellIDTable(spellIDTable, tType, callback, tableCallback)
 	if type(spellIDTable) ~= "table" then
 		return
 	end
@@ -134,26 +183,75 @@ function U.WithSpellIDTable(spellIDTable, tType, callback)
 		return
 	end
 
+	if not tableCallback then
+		tableCallback = function(...) end
+	end
+
+	if type(tableCallback) ~= "function" then
+		return
+	end
+
 	if type(tType) ~= "string" then
 		tType = "value"
 	end
 
+	local totalItems = 0
+	local completedItems = 0
+	local results = {}
+
+	-- Count total items first
+	if tType == "list" then
+		totalItems = #spellIDTable
+	elseif tType == "value" then
+		for _ in pairs(spellIDTable) do
+			totalItems = totalItems + 1
+		end
+	elseif tType == "key" then
+		for spellID, value in pairs(spellIDTable) do
+			if value then
+				totalItems = totalItems + 1
+			end
+		end
+	end
+
+	local function onSpellComplete(spellID, spellInstance)
+		completedItems = completedItems + 1
+		results[spellID] = spellInstance
+
+		-- Call individual callback
+		callback(spellInstance)
+
+		-- Check if all spells are complete
+		if completedItems >= totalItems then
+			tableCallback(results, spellIDTable)
+		end
+	end
+
 	if tType == "list" then
 		for _, spellID in ipairs(spellIDTable) do
-			U.WithSpellID(spellID, callback)
+			U.WithSpellID(spellID, function(spellInstance)
+				onSpellComplete(spellID, spellInstance)
+			end)
 		end
-	end
-
-	if tType == "value" then
+	elseif tType == "value" then
 		for _, spellID in pairs(spellIDTable) do
-			U.WithSpellID(spellID, callback)
+			U.WithSpellID(spellID, function(spellInstance)
+				onSpellComplete(spellID, spellInstance)
+			end)
+		end
+	elseif tType == "key" then
+		for spellID, value in pairs(spellIDTable) do
+			if value then
+				U.WithSpellID(spellID, function(spellInstance)
+					onSpellComplete(spellID, spellInstance)
+				end)
+			end
 		end
 	end
 
-	if tType == "key" then
-		for spellID, _ in pairs(spellIDTable) do
-			U.WithSpellID(spellID, callback)
-		end
+	-- Handle empty table case
+	if totalItems == 0 then
+		tableCallback({}, spellIDTable)
 	end
 end
 

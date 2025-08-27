@@ -571,6 +571,25 @@ function S:TryPostHook(...)
 	end
 end
 
+function S:ReskinIconButton(button, icon, size, rotate)
+	button:StripTextures()
+	button.Icon = button:CreateTexture(nil, "ARTWORK")
+	button.Icon:SetTexture(icon)
+	button.Icon:Size(size, size)
+	button.Icon:Point("CENTER")
+	if rotate then
+		button.Icon:SetRotation(rotate)
+	end
+
+	button:HookScript("OnEnter", function(self)
+		self.Icon:SetVertexColor(E.media.rgbvaluecolor.r, E.media.rgbvaluecolor.g, E.media.rgbvaluecolor.b)
+	end)
+
+	button:HookScript("OnLeave", function(self)
+		self.Icon:SetVertexColor(1, 1, 1)
+	end)
+end
+
 S:RegisterEvent("ADDON_LOADED")
 S:RegisterEvent("PLAYER_ENTERING_WORLD")
 W:RegisterModule(S:GetName())

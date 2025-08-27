@@ -26,4 +26,5 @@
 	<Script file='WeakAuras.lua'/>
 	<Script file='WeakAurasOptions.lua'/>
 	<Script file='WorldQuestTab.lua'/>
+	<Script file='WhisperPop.lua'/>
 </Ui>

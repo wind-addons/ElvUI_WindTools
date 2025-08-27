@@ -519,6 +519,7 @@ V.skins = {
 		weakAurasOptions = true,
 		worldQuestTab = true,
 		btWQuests = true,
+		whisperPop = true,
 	},
 	blizzard = {
 		enable = true,

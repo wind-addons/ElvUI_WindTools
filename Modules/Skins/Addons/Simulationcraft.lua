@@ -14,10 +14,13 @@ function S:Simulationcraft_SkinMainFrame()
 	self:CreateShadow(_G.SimcFrame)
 
 	self:Proxy("HandleButton", _G.SimcFrameButton)
+	self:Proxy("HandleCheckBox", _G.SimcFrame.CheckButton)
 	self:Proxy("HandleScrollBar", _G.SimcScrollFrameScrollBar)
 
 	F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
 	F.SetFontOutline(_G.SimcEditBox)
+	F.SetFontOutline(_G.SimcFrame.CheckButton.Text)
+	F.MoveFrameWithOffset(_G.SimcFrame.CheckButton.Text, 0, -3)
 end
 
 function S:Simulationcraft()

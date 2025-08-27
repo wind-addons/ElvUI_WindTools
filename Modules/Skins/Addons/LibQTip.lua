@@ -3,6 +3,10 @@ local S = W.Modules.Skins
 local TT = E:GetModule("Tooltip")
 
 local _G = _G
+local type = type
+local select = select
+local pairs = pairs
+local LibStub = _G.LibStub
 
 function S:ReskinLibQTip(lib)
 	for _, tt in lib:IterateTooltips() do
@@ -28,8 +32,8 @@ function S:ReskinLibQTip(lib)
 end
 
 function S:LibQTip()
-	for _, libName in ipairs({ "LibQTip-1.0", "LibQTip-1.0RS" }) do
-		local lib = _G.LibStub(libName, true)
+	for _, libName in pairs({ "LibQTip-1.0", "LibQTip-1.0RS" }) do
+		local lib = LibStub(libName, true)
 		if lib and lib.Acquire then
 			self:SecureHook(lib, "Acquire", "ReskinLibQTip")
 		end

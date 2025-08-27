@@ -160,6 +160,22 @@ function W:ChangelogReadAlert()
 	end
 end
 
+function W:EventTraceLogEvent(trace, event, ...)
+	if event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "COMBAT_LOG_EVENT" then
+		self.hooks[_G.EventTrace].LogEvent(trace, event, CombatLogGetCurrentEventInfo())
+	elseif event == "COMBAT_TEXT_UPDATE" then
+		self.hooks[_G.EventTrace].LogEvent(trace, event, (...), GetCurrentCombatTextEventInfo())
+	else
+		self.hooks[_G.EventTrace].LogEvent(trace, event, ...)
+	end
+end
+
+function W:TryReplaceEventTraceLogEvent()
+	if _G.EventTrace and _G.EventTrace.LogEvent and not self:IsHooked(_G.EventTrace, "LogEvent") then
+		W:RawHook(_G.EventTrace, "LogEvent", "EventTraceLogEvent", true)
+	end
+end
+
 function W:GameFixing()
 	if E.global.WT.core.cvarAlert then
 		self:RegisterEvent("CVAR_UPDATE", function(_, cvar, value)
@@ -170,32 +186,22 @@ function W:GameFixing()
 	end
 
 	if E.global.WT.core.advancedCLEUEventTrace then
-		local function LogEvent(trace, event, ...)
-			if event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "COMBAT_LOG_EVENT" then
-				trace:LogEvent_Original(event, CombatLogGetCurrentEventInfo())
-			elseif event == "COMBAT_TEXT_UPDATE" then
-				trace:LogEvent_Original(event, (...), GetCurrentCombatTextEventInfo())
-			else
-				trace:LogEvent_Original(event, ...)
-			end
-		end
-
-		local function OnEventTraceLoaded()
-			_G.EventTrace.LogEvent_Original = _G.EventTrace.LogEvent
-			_G.EventTrace.LogEvent = LogEvent
-		end
-
 		if _G.EventTrace then
-			OnEventTraceLoaded()
+			self:TryReplaceEventTraceLogEvent()
 		else
-			local frame = CreateFrame("Frame")
-			frame:RegisterEvent("ADDON_LOADED")
-			frame:SetScript("OnEvent", function(f, event, ...)
-				if event == "ADDON_LOADED" and (...) == "Blizzard_EventTrace" then
-					OnEventTraceLoaded()
-					f:UnregisterAllEvents()
-				end
-			end)
+			self:RegisterEvent("ADDON_LOADED")
 		end
+	end
+end
+
+function W:ADDON_LOADED(event, addOnName)
+	if addOnName ~= "Blizzard_EventTrace" then
+		return
+	end
+
+	self:UnregisterEvent("ADDON_LOADED")
+
+	if E.global.WT.core.advancedCLEUEventTrace then
+		self:TryReplaceEventTraceLogEvent()
 	end
 end

@@ -75,9 +75,6 @@ function QF:GROUP_ROSTER_UPDATE()
 	end
 end
 
-QF._GROUP_ROSTER_UPDATE = QF.GROUP_ROSTER_UPDATE
-QF.GROUP_ROSTER_UPDATE = F.DelvesEventFix(QF.GROUP_ROSTER_UPDATE)
-
 function QF:WaitUnitframesLoad(triedTimes)
 	triedTimes = triedTimes or 0
 
@@ -87,7 +84,7 @@ function QF:WaitUnitframesLoad(triedTimes)
 	end
 
 	if not UF.unitstoload and not UF.unitgroupstoload and not UF.headerstoload then
-		self:_GROUP_ROSTER_UPDATE()
+		self:GROUP_ROSTER_UPDATE()
 	else
 		E:Delay(0.5, self.WaitUnitframesLoad, self, triedTimes + 1)
 	end

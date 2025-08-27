@@ -131,7 +131,7 @@ function EM:HandleExpansionButton()
 	F.WaitFor(function()
 		return MB ~= nil and MB.db ~= nil
 	end, function()
-		if not MB.db.garrison then
+		if not MB.db.expansionLandingPage then
 			return
 		end
 
@@ -142,7 +142,6 @@ function EM:HandleExpansionButton()
 			end
 
 			EM:SetIconParent(button)
-			button.SetParent_ = button.SetParent
 			button.SetParent = E.noop
 			EM:SetScale(button, 1)
 

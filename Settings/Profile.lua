@@ -1223,6 +1223,7 @@ P.misc = {
 			flash = true,
 			interval = 10,
 			alwaysSystemInfo = false,
+			avoidReloadInCombat = true,
 			font = {
 				name = F.GetCompatibleFont("Montserrat"),
 				size = 25,

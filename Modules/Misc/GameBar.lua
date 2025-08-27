@@ -975,7 +975,9 @@ function GB:ConstructTimeArea()
 		elseif mouseButton == "RightButton" then
 			ToggleTimeManager()
 		elseif mouseButton == "MiddleButton" then
-			C_UI_Reload()
+			if not InCombatLockdown() or not self.db.time.avoidReloadInCombat then
+				C_UI_Reload()
+			end
 		end
 	end)
 end

@@ -1407,6 +1407,12 @@ options.gameBar = {
 					type = "toggle",
 					name = L["Flash"],
 				},
+				avoidReloadInCombat = {
+					order = 4,
+					type = "toggle",
+					name = L["Avoid Reload in Combat"],
+					desc = L["Disable the middle click UI reloading in combat."],
+				},
 				alwaysSystemInfo = {
 					order = 5,
 					type = "toggle",

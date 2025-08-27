@@ -1455,6 +1455,13 @@ options.addons = {
 			name = L["BtWQuests"],
 			addonName = "BtWQuests",
 		},
+		whisperPop = {
+			order = 10,
+			type = "toggle",
+			name = L["WhisperPop"],
+			addonName = "WhisperPop",
+			addonskinsKey = "WhisperPop",
+		},
 	},
 }
 

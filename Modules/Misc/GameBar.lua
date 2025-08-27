@@ -1600,8 +1600,6 @@ function GB:UpdateHearthStoneTable()
 		if self.initialized then
 			self:UpdateButtons()
 		end
-		dump(availableHearthstones)
-		dump(hearthstonesAndToysData)
 	end)
 end
 

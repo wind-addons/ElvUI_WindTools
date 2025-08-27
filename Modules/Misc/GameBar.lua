@@ -436,7 +436,7 @@ local ButtonTypes = {
 				if not InCombatLockdown() then
 					ToggleCharacter("PaperDollFrame")
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -478,7 +478,7 @@ local ButtonTypes = {
 				if not InCombatLockdown() then
 					ToggleFriendsFrame(1)
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -554,7 +554,7 @@ local ButtonTypes = {
 						HideUIPanel(_G.GameMenuFrame)
 					end
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -662,7 +662,7 @@ local ButtonTypes = {
 				if not InCombatLockdown() then
 					_G.ToggleProfessionsBook()
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -699,7 +699,7 @@ local ButtonTypes = {
 				if not InCombatLockdown() then
 					_G.PlayerSpellsUtil.ToggleSpellBookFrame()
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -715,7 +715,7 @@ local ButtonTypes = {
 				if not InCombatLockdown() then
 					_G.PlayerSpellsUtil.ToggleClassTalentFrame()
 				else
-					_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+					_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 				end
 			end,
 		},
@@ -970,7 +970,7 @@ function GB:ConstructTimeArea()
 			if not InCombatLockdown() then
 				ToggleCalendar()
 			else
-				_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+				_G.UIErrorsFrame:AddMessage(_G.ERR_NOT_IN_COMBAT, RED_FONT_COLOR:GetRGBA())
 			end
 		elseif mouseButton == "RightButton" then
 			ToggleTimeManager()

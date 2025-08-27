@@ -540,8 +540,6 @@ function CB:PLAYER_REGEN_ENABLED()
 	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
-CB.GROUP_ROSTER_UPDATE = F.DelvesEventFix(CB.UpdateBar)
-
 function CB:Initialize()
 	self.db = E.db.WT.social.chatBar
 	if not self.db.enable then

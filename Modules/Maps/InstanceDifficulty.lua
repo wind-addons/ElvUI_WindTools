@@ -152,8 +152,6 @@ function ID:ADDON_LOADED(_, addon)
 	end
 end
 
-ID.GROUP_ROSTER_UPDATE = F.DelvesEventFix(ID.UpdateFrame)
-
 function ID:Initialize()
 	self.db = E.private.WT.maps.instanceDifficulty
 

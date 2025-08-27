@@ -1573,8 +1573,6 @@ function LL:GROUP_ROSTER_UPDATE(...)
 	self:LFGListEventHandler(...)
 end
 
-LL.GROUP_ROSTER_UPDATE = F.DelvesEventFix(LL.GROUP_ROSTER_UPDATE)
-
 function LL:Initialize()
 	if C_AddOns_IsAddOnLoaded("PremadeGroupsFilter") then
 		self.StopRunning = "PremadeGroupsFilter"

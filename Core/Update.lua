@@ -301,6 +301,12 @@ function W:UpdateScripts()
 		UpdateMessage(L["Tooltips"] .. ": " .. L["Update Database"], privateVersion)
 	end
 
+	if privateVersion < 3.99 then
+		if E.global.WT then
+			E.global.WT.misc.gameBar.covenantCache = nil
+		end
+	end
+
 	if not isFirstLine then
 		F.PrintGradientLine()
 	end

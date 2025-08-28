@@ -2019,8 +2019,21 @@ options.lfgList = {
 						},
 					},
 				},
-				filtersBehaviour = {
+				adjustFontSize = {
 					order = 4,
+					type = "range",
+					name = L["Font Size Adjustment"],
+					desc = L["Adjust the font size of the right panel."],
+					min = -10,
+					max = 20,
+					step = 1,
+					set = function(info, value)
+						E.private.WT.misc.lfgList.rightPanel[info[#info]] = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				filtersBehaviour = {
+					order = 5,
 					type = "group",
 					inline = true,
 					name = L["Filters"],

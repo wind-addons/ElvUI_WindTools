@@ -213,6 +213,9 @@ V.misc = {
 		rightPanel = {
 			enable = true,
 			autoRefresh = true,
+			autoJoin = false,
+			skipConfirmation = false,
+			adjustFontSize = W.ChineseLocale and 1 or 0,
 		},
 	},
 }

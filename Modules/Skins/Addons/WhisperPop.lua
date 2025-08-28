@@ -2,10 +2,14 @@ local W, F, E, L = unpack(select(2, ...))
 local S = W.Modules.Skins
 
 local _G = _G
+local unpack = unpack
+local pairs = pairs
+
 local LibStub = _G.LibStub
 
 local function notifyButton(button)
 	button:CreateBackdrop()
+	S:CreateBackdropShadow(button)
 	button:SetScript("OnMouseDown", nil)
 	button:SetScript("OnMouseUp", nil)
 
@@ -49,7 +53,8 @@ local function optionFrame(frame)
 	for _, child in pairs({ frame:GetChildren() }) do
 		if child:IsObjectType("CheckButton") then
 			S:Proxy("HandleCheckBox", child)
-			child:Size(22)
+			child:Size(24)
+			F.MoveFrameWithOffset(child, 0, -3)
 		elseif child:IsObjectType("Button") then
 			if child.dropdown then
 				child.Button = child.toggleButton

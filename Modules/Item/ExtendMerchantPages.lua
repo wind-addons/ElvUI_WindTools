@@ -159,13 +159,17 @@ function EMP:Initialize()
 	_G.MerchantBuyBackItem:ClearAllPoints()
 	_G.MerchantBuyBackItem:SetPoint("TOPLEFT", _G.MerchantItem10, "BOTTOMLEFT", 30, -53)
 
+	-- Position page navigation buttons relative to the extended frame width
+	local frameWidth = 30 + self.db.numberOfPages * 330
+	local buttonOffset = 25 + ((self.db.numberOfPages - 1) * 165) -- Center the buttons in the extended frame
+
 	_G.MerchantPrevPageButton:ClearAllPoints()
-	_G.MerchantPrevPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMLEFT", 25, 93)
+	_G.MerchantPrevPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMLEFT", buttonOffset, 93)
 	F.SetFontOutline(_G.MerchantPageText)
 	_G.MerchantPageText:ClearAllPoints()
 	_G.MerchantPageText:SetPoint("BOTTOM", _G.MerchantFrame, "BOTTOM", 0, 86)
 	_G.MerchantNextPageButton:ClearAllPoints()
-	_G.MerchantNextPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMRIGHT", -25, 93)
+	_G.MerchantNextPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMRIGHT", -buttonOffset, 93)
 
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo", "MerchantFrame_UpdateMerchantInfo")
 	self:SecureHook("MerchantFrame_UpdateBuybackInfo", "MerchantFrame_UpdateBuybackInfo")

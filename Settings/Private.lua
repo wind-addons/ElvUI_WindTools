@@ -503,6 +503,7 @@ V.skins = {
 		omniCDIcon = true,
 		omniCDStatusBar = true,
 		omniCDExtraBar = true,
+		paragonReputation = true,
 		postal = true,
 		premadeGroupsFilter = true,
 		raiderIO = true,

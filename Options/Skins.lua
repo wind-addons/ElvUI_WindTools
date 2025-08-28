@@ -1360,6 +1360,12 @@ options.addons = {
 			end,
 			addonName = "OmniCD",
 		},
+		paragonReputation = {
+			order = 10,
+			type = "toggle",
+			name = L["Paragon Reputation"],
+			addonName = "ParagonReputation",
+		},
 		postal = {
 			order = 10,
 			type = "toggle",

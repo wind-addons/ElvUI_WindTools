@@ -14,9 +14,13 @@ local type = type
 local xpcall = xpcall
 
 local CreateFrame = CreateFrame
+local GenerateClosure = GenerateClosure
+local Settings = Settings
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
+S.settingFrames = {}
+S.waitSettingFrames = {}
 S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 S.updateProfile = {}
@@ -24,6 +28,19 @@ S.aceWidgets = {}
 S.enteredLoad = {}
 S.texturePathFetcher = E.UIParent:CreateTexture(nil, "ARTWORK")
 S.texturePathFetcher:Hide()
+
+local RegisterCanvasLayoutCategory = Settings.RegisterCanvasLayoutCategory
+Settings.RegisterCanvasLayoutCategory = function(frame, name)
+	if frame and name then
+		S.settingFrames[name] = frame
+		if S.waitSettingFrames[name] then
+			S.waitSettingFrames[name](frame)
+			S.waitSettingFrames[name] = nil
+		end
+	end
+
+	return RegisterCanvasLayoutCategory(frame, name)
+end
 
 ---Check if the texture path is equal to the given path
 ---@param texture TextureBase
@@ -568,6 +585,24 @@ function S:TryPostHook(...)
 		end)
 	else
 		self:Log("debug", "Failed to hook: " .. tostring(frame) .. " " .. tostring(method))
+	end
+end
+
+function S:ReskinSettingFrame(name, func)
+	if type(func) == "string" and S[func] then
+		func = GenerateClosure(S[func], S)
+	end
+
+	if not func then
+		F.Developer.ThrowError("ReskinSettingFrame: func is nil")
+		return
+	end
+
+	local frame = self.settingFrames[name]
+	if frame then
+		func(frame)
+	else
+		self.waitSettingFrames[name] = func
 	end
 end
 

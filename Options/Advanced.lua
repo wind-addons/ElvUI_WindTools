@@ -142,7 +142,6 @@ options.developer = {
 			order = 2,
 			type = "group",
 			name = L["Table Attribute Display"],
-			desc = L["Modify the debug tool that displays table attributes."],
 			inline = true,
 			get = function(info)
 				return E.global.WT.developer.tableAttributeDisplay[info[#info]]
@@ -152,13 +151,18 @@ options.developer = {
 				E:StaticPopup_Show("PRIVATE_RL")
 			end,
 			args = {
+				desc = {
+					order = 1,
+					type = "description",
+					name = L["Modify the debug tool that displays table attributes."],
+				},
 				enable = {
-					order = 0,
+					order = 2,
 					type = "toggle",
 					name = L["Enable"],
 				},
 				width = {
-					order = 1,
+					order = 3,
 					type = "range",
 					name = L["Width"],
 					min = 0,
@@ -166,7 +170,7 @@ options.developer = {
 					step = 10,
 				},
 				height = {
-					order = 2,
+					order = 4,
 					type = "range",
 					name = L["Height"],
 					min = 0,

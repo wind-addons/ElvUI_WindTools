@@ -12,16 +12,17 @@ function S:ReskinSecureTabs(lib, panel)
 		for _, tab in pairs(lib.tabs[panel]) do
 			if not tab.__wind then
 				self:Proxy("HandleTab", tab)
+				self:ReskinTab(tab)
 			end
 		end
 	end
 
 	if lib.covers[panel] then
-		for _, cover in pairs(lib.covers[panel]) do
-			if not cover.__wind then
-				self:Proxy("HandleTab", cover)
-			end
-		end
+		-- for _, cover in pairs(lib.covers[panel]) do
+		-- 	if not cover.__wind then
+		-- 		-- self:Proxy("HandleTab", cover)
+		-- 	end
+		-- end
 	end
 end
 

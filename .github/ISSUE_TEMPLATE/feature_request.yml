@@ -9,7 +9,7 @@ body:
       label: Did you check these before submitting?
       description: Make sure you checked all of the below before submitting an feature request
       options:
-        - label: This feature is NOT a skin for other addons.
+        - label: If the feature request is a addon skin, the addon must be widely used and support Chinese.
           required: true
         - label: This feature is NOT a duplicate of an existing feature request.
           required: true

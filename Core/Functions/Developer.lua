@@ -72,7 +72,7 @@ end
     @param ...string Message
 ]]
 function F.Developer.LogWarning(...)
-	if E.global.WT.core.logLevel < 2 then
+	if E.global.WT.developer.logLevel < 2 then
 		return
 	end
 
@@ -85,7 +85,7 @@ end
     @param ...string Message
 ]]
 function F.Developer.LogInfo(...)
-	if E.global.WT.core.logLevel < 3 then
+	if E.global.WT.developer.logLevel < 3 then
 		return
 	end
 
@@ -98,7 +98,7 @@ end
     @param ...string Message
 ]]
 function F.Developer.LogDebug(...)
-	if E.global.WT.core.logLevel < 4 then
+	if E.global.WT.developer.logLevel < 4 then
 		return
 	end
 

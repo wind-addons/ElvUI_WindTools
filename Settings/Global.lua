@@ -10,6 +10,15 @@ G.core = {
 	loginMessage = true,
 }
 
+G.developer = {
+	logLevel = 2,
+	tableAttributeDisplay = {
+		enable = false,
+		width = 1000,
+		height = 600,
+	},
+}
+
 G.item = {
 	contacts = {
 		alts = {},

@@ -13,7 +13,11 @@ function S:Blizzard_Collections()
 	self:CreateShadow(_G.WardrobeOutfitEditFrame)
 
 	for i = 1, 6 do
-		self:ReskinTab(_G["CollectionsJournalTab" .. i])
+		local tab = _G["CollectionsJournalTab" .. i]
+		if tab then
+			tab:SetPushedTextOffset(0, 0)
+			self:ReskinTab(tab)
+		end
 	end
 end
 

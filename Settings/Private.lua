@@ -490,8 +490,6 @@ V.skins = {
 		},
 	},
 	addons = {
-		ace3 = true,
-		ace3DropdownBackdrop = true,
 		angryKeystones = true,
 		auctionator = true,
 		bigWigs = true,
@@ -499,6 +497,7 @@ V.skins = {
 		bugSack = true,
 		hekili = true,
 		immersion = true,
+		manuscriptsJournal = true,
 		mountRoutePlanner = true,
 		myslot = true,
 		mythicDungeonTools = true,
@@ -524,6 +523,11 @@ V.skins = {
 		worldQuestTab = true,
 		btWQuests = true,
 		whisperPop = true,
+	},
+	libraries = {
+		ace3 = true,
+		ace3DropdownBackdrop = true,
+		libQTip = true,
 	},
 	blizzard = {
 		enable = true,

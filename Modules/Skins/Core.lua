@@ -15,6 +15,7 @@ local xpcall = xpcall
 
 local CreateFrame = CreateFrame
 local GenerateClosure = GenerateClosure
+local RunNextFrame = RunNextFrame
 local Settings = Settings
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -23,6 +24,8 @@ S.settingFrames = {}
 S.waitSettingFrames = {}
 S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
+S.libraryHandlers = {}
+S.libraryHandledMinors = {}
 S.updateProfile = {}
 S.aceWidgets = {}
 S.enteredLoad = {}
@@ -78,15 +81,6 @@ function S:CheckDB(elvuiKey, windtoolsKey)
 	return true
 end
 
---[[
-    Create shadow for frame
-    @param {object} frame
-    @param {number} size
-    @param {number} [r=gloabl shadow color R] R channel value（0~1）
-    @param {number} [g=gloabl shadow color G] G channel value（0~1）
-    @param {number} [b=gloabl shadow color G] B channel value（0~1）
-    @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
-]]
 function S:CreateShadow(frame, size, r, g, b, force)
 	if not force then
 		if not E.private.WT.skins or not E.private.WT.skins.shadow then
@@ -122,11 +116,6 @@ function S:CreateShadow(frame, size, r, g, b, force)
 	frame.__windShadow = 1 -- mark the current frame has shadow
 end
 
---[[
-    Create a shadow that the frame level is lower than the parent frame
-    @param {frame} frame
-    @param {boolean} force, add shadow even if user disabled shadow in WindTools Skins
-]]
 function S:CreateLowerShadow(frame, force)
 	if not force then
 		if not E.private.WT.skins or not E.private.WT.skins.shadow then
@@ -147,13 +136,6 @@ function S:CreateLowerShadow(frame, force)
 	end
 end
 
---[[
-    Update shadow that created by WindTools
-    @param {frame} shadow !!!!!NOT THE PARENT FRAME
-    @param {number} [r=gloabl shadow color R] R channel value（0~1）
-    @param {number} [g=gloabl shadow color G] G channel value（0~1）
-    @param {number} [b=gloabl shadow color G] B channel value（0~1）
-]]
 function S:UpdateShadowColor(shadow, r, g, b)
 	if not shadow or not shadow.__wind then
 		return
@@ -260,10 +242,6 @@ do
 	end
 end
 
---[[
-    Reskin tab
-    @param {frame} tab
-]]
 function S:ReskinTab(tab)
 	if not tab then
 		return
@@ -272,10 +250,14 @@ function S:ReskinTab(tab)
 	self:CreateBackdropShadow(tab)
 end
 
---[[
-    Smart set template to transparent
-    @param {object} frame
-]]
+function S:HandleAceGUIWidget(lib, name, constructor)
+	local handler = self.aceWidgets[name]
+	if handler then
+		lib.WidgetRegistry[name] = handler(self, constructor)
+		self.aceWidgets[name] = nil
+	end
+end
+
 function S:SetTransparentBackdrop(frame)
 	if frame.backdrop then
 		frame.backdrop:SetTemplate("Transparent")
@@ -284,29 +266,14 @@ function S:SetTransparentBackdrop(frame)
 	end
 end
 
---[[
-    Register a normal callback
-    @param {string} name
-    @param {function} [func=S.name] function
-]]
 function S:AddCallback(name, func)
 	tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
---[[
-    Register AceGUI Widget callback
-    @param {string} name
-    @param {function} [func=S.name] function
-]]
 function S:AddCallbackForAceGUIWidget(name, func)
 	self.aceWidgets[name] = func or self[name]
 end
 
---[[
-    Register addon callback
-    @param {string} addonName
-    @param {function} [func=S.addonName] function
-]]
 function S:AddCallbackForAddon(addonName, func)
 	local addon = self.addonsToLoad[addonName]
 	if not addon then
@@ -321,19 +288,24 @@ function S:AddCallbackForAddon(addonName, func)
 	tinsert(addon, func or self[addonName])
 end
 
---[[
-    Register a callback when game loading is finished
-    @param {string} name
-    @param {function} [func=S.name] function
-]]
+function S:AddCallbackForLibrary(name, func)
+	local lib = self.libraryHandlers[name]
+	if not lib then
+		self.libraryHandlers[name] = {}
+		lib = self.libraryHandlers[name]
+	end
+
+	if type(func) == "string" then
+		func = self[func]
+	end
+
+	tinsert(lib, func or self[name])
+end
+
 function S:AddCallbackForEnterWorld(name, func)
 	tinsert(self.enteredLoad, func or self[name])
 end
 
---[[
-    Load registered callbacks when game loading is finished
-    @param {string} addonName, the name of addon
-]]
 function S:PLAYER_ENTERING_WORLD()
 	if not E.initialized or not E.private.WT.skins.enable then
 		return
@@ -345,20 +317,11 @@ function S:PLAYER_ENTERING_WORLD()
 	end
 end
 
---[[
-    Register a callback for updateing
-    @param {string} name
-    @param {function} [func=S.name] function
-]]
+
 function S:AddCallbackForUpdate(name, func)
 	tinsert(self.updateProfile, func or self[name])
 end
 
---[[
-    Callback loaded registered addon skins
-    @param {string} addonName, the name of addon
-    @param {table} object, the list of callbacks
-]]
 function S:CallLoadedAddon(addonName, object)
 	for _, func in next, object do
 		xpcall(func, F.Developer.ThrowError, self)
@@ -367,10 +330,6 @@ function S:CallLoadedAddon(addonName, object)
 	self.addonsToLoad[addonName] = nil
 end
 
---[[
-    Callback skins when addon loaded
-    @param {string} addonName, the name of addon
-]]
 function S:ADDON_LOADED(_, addonName)
 	if not E.initialized or not E.private.WT.skins.enable then
 		return
@@ -382,53 +341,32 @@ function S:ADDON_LOADED(_, addonName)
 	end
 end
 
-function S:ReskinWidgets(AceGUI)
-	for name, oldFunc in pairs(AceGUI.WidgetRegistry) do
-		S:UpdateWidget(AceGUI, name, oldFunc)
+function S:LibStub_NewLibrary(_, major, minor)
+	if not self.libraryHandlers[major] then
+		return
 	end
+
+	minor = minor and tonumber(strmatch(minor, "%d+"))
+	local handledMinor = self.libraryHandledMinors[major]
+	if not minor or handledMinor and handledMinor >= minor then
+		return
+	end
+
+	self.libraryHandledMinors[major] = minor
+
+	RunNextFrame(function()
+		local lib, latestMinor = LibStub(major, true)
+		if not lib or not latestMinor or latestMinor ~= minor then
+			return
+		end
+		for _, func in next, self.libraryHandlers[major] do
+			if xpcall(func, F.Developer.ThrowError, self, lib) then
+				E:Delay(1, print, "Loaded " .. major .. " " .. minor)
+			end
+		end
+	end)
 end
 
-function S:UpdateWidget(lib, name, oldFunc)
-	if self.aceWidgets[name] then
-		lib.WidgetRegistry[name] = self.aceWidgets[name](self, oldFunc)
-		self.aceWidgets[name] = nil
-	end
-end
-
-do
-	local alreadyWidgetHooked, alreadyDialogSkinned = false, false
-	function S:LibStub_NewLibrary(_, major)
-		if major == "AceGUI-3.0" and not alreadyWidgetHooked then
-			local AceGUI = _G.LibStub("AceGUI-3.0")
-			self:ReskinWidgets(AceGUI)
-			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-			alreadyWidgetHooked = true
-		elseif major == "AceConfigDialog-3.0" and not alreadyDialogSkinned then
-			self:AceConfigDialog()
-			alreadyDialogSkinned = true
-		end
-	end
-
-	function S:HookEarly()
-		local AceGUI = _G.LibStub("AceGUI-3.0")
-		if AceGUI and not alreadyWidgetHooked then
-			self:ReskinWidgets(AceGUI)
-			self:SecureHook(AceGUI, "RegisterWidgetType", "UpdateWidget")
-			alreadyWidgetHooked = true
-		end
-
-		local AceConfigDialog = _G.LibStub("AceConfigDialog-3.0")
-		if AceConfigDialog and not alreadyDialogSkinned then
-			self:AceConfigDialog()
-			alreadyDialogSkinned = true
-		end
-	end
-end
-
---[[
-    Disable ugly AddOnSkin option for the specific addon
-    @param {frame} frame
-]]
 function S:DisableAddOnSkin(key)
 	if _G.AddOnSkins then
 		local AS = _G.AddOnSkins[1]
@@ -438,10 +376,6 @@ function S:DisableAddOnSkin(key)
 	end
 end
 
---[[
-    Add shadow WindTools modules
-    @param {frame} frame
-]]
 function S:CreateShadowModule(frame)
 	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 		self:CreateShadow(frame)
@@ -528,13 +462,13 @@ function S:Initialize()
 		return
 	end
 
-	-- normal skin modules
+	-- Run Blizzard skins
 	for index, func in next, self.nonAddonsToLoad do
 		xpcall(func, F.Developer.ThrowError, self)
 		self.nonAddonsToLoad[index] = nil
 	end
 
-	-- skin modules depend on addon loading
+	-- Run addon skins, including some lazy-loading Blizzard skins
 	for addonName, object in pairs(self.addonsToLoad) do
 		local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
 		if isLoaded and isFinished then
@@ -542,10 +476,19 @@ function S:Initialize()
 		end
 	end
 
-	self:HookEarly()
+	-- Run library skins
 	self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
+	for libName in pairs(_G.LibStub.libs) do
+		local lib, minor = _G.LibStub(libName, true)
+		if lib and self.libraryHandlers[libName] then
+			self.libraryHandledMinors[libName] = minor
+			for _, func in next, self.libraryHandlers[libName] do
+				xpcall(func, F.Developer.ThrowError, self, lib)
+			end
+		end
+	end
 
-	-- remove archment
+	-- Remove parchment
 	if E.private.WT.skins.removeParchment then
 		E.private.skins.parchmentRemoverEnable = true
 	end

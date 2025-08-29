@@ -31,13 +31,11 @@ function S:ReskinLibQTip(lib)
 	end
 end
 
-function S:LibQTip()
-	for _, libName in pairs({ "LibQTip-1.0", "LibQTip-1.0RS" }) do
-		local lib = LibStub(libName, true)
-		if lib and lib.Acquire then
-			self:SecureHook(lib, "Acquire", "ReskinLibQTip")
-		end
+function S:LibQTip(lib)
+	if lib.Acquire then
+		self:SecureHook(lib, "Acquire", "ReskinLibQTip")
 	end
 end
 
-S:AddCallback("LibQTip")
+S:AddCallbackForLibrary("LibQTip-1.0", "LibQTip")
+S:AddCallbackForLibrary("LibQTip-1.0RS", "LibQTip")

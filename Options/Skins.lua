@@ -1250,18 +1250,6 @@ options.addons = {
 			name = " ",
 			width = "full",
 		},
-		ace3 = {
-			order = 10,
-			type = "toggle",
-			name = L["Ace3"],
-			width = 1.5,
-		},
-		ace3DropdownBackdrop = {
-			order = 10,
-			type = "toggle",
-			name = L["Ace3 Dropdown Backdrop"],
-			width = 1.5,
-		},
 		angryKeystones = {
 			order = 10,
 			type = "toggle",
@@ -1533,8 +1521,72 @@ for _, option in pairs(options.addons.args) do
 	end
 end
 
-options.widgets = {
+options.libraries = {
 	order = 7,
+	type = "group",
+	name = L["Libraries"],
+	get = function(info)
+		return E.private.WT.skins.libraries[info[#info]]
+	end,
+	set = function(info, value)
+		E.private.WT.skins.libraries[info[#info]] = value
+		E:StaticPopup_Show("PRIVATE_RL")
+	end,
+	disabled = function()
+		return not E.private.WT.skins.enable
+	end,
+	args = {
+		enableAll = {
+			order = 1,
+			type = "execute",
+			name = L["Enable All"],
+			func = function()
+				for key in pairs(V.skins.libraries) do
+					E.private.WT.skins.libraries[key] = true
+				end
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		disableAll = {
+			order = 2,
+			type = "execute",
+			name = L["Disable All"],
+			func = function()
+				for key in pairs(V.skins.libraries) do
+					E.private.WT.skins.libraries[key] = false
+				end
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
+		},
+		betterOption = {
+			order = 9,
+			type = "description",
+			name = " ",
+			width = "full",
+		},
+		ace3 = {
+			order = 10,
+			type = "toggle",
+			name = L["Ace3"],
+			width = 1.5,
+		},
+		ace3DropdownBackdrop = {
+			order = 10,
+			type = "toggle",
+			name = L["Ace3 Dropdown Backdrop"],
+			width = 1.5,
+		},
+		libQTip = {
+			order = 10,
+			type = "toggle",
+			name = L["LibQTip"],
+			width = 1.5,
+		},
+	},
+}
+
+options.widgets = {
+	order = 8,
 	type = "group",
 	name = L["Widgets"],
 	disabled = function()
@@ -2684,7 +2736,7 @@ for _, widget in pairs({ "button", "treeGroupButton", "tab" }) do
 end
 
 options.bigWigsSkin = {
-	order = 8,
+	order = 9,
 	type = "group",
 	name = L["BigWigs Skin"],
 	disabled = function()

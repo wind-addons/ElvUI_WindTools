@@ -54,7 +54,7 @@ W.Changelog[399] = {
 			"[扩展商人界面] 优化了购回按钮的位置.",
 			"[游戏条] 优化了一些错误提示, 使其更加贴合系统错误的风格.",
 			"[游戏条] 新增一个选项, 可以防止在战斗中误触导致界面重载.",
-			"[游戏条] 重构了随机炉石功能，现在支持盟约炉石的使用, 同时点击按钮后立即更换下一个炉石.",
+			"[游戏条] 重构了随机炉石功能，现在支持盟约炉石的使用, 同时点击按钮后立即更换下一个不同的炉石.",
 			"[预组队列表] 右侧面板新增了字体大小调整的功能.",
 		},
 		["zhTW"] = {
@@ -74,7 +74,7 @@ W.Changelog[399] = {
 			"[Extend Merchant Pages] Optimize the position of buyback button.",
 			"[Game Bar] Optimize some error messages to better match the style of system errors.",
 			"[Game Bar] Add an option to prevent accidental triggering of UI reload during combat.",
-			"[Game Bar] Refactor the random hearthstone feature, now supports covenant hearthstones and immediately switches to the next hearthstone after clicking the button.",
+			"[Game Bar] Refactor the random hearthstone feature, now supports covenant hearthstones and immediately switches to the next different hearthstone after clicking the button.",
 			"[LFG List] Add font size adjustment feature to the right panel.",
 		},
 		["koKR"] = {
@@ -84,7 +84,7 @@ W.Changelog[399] = {
 			"[상인 목록 확장] 되사기 버튼의 위치를 최적화했습니다.",
 			"[게임 바] 일부 오류 메시지를 최적화하여 시스템 오류 스타일에 더 잘 맞도록 했습니다.",
 			"[게임 바] 전투 중 실수로 UI 재로드를 트리거하는 것을 방지하는 옵션을 추가했습니다.",
-			"[게임 바] 랜덤 귀환석 기능을 재구성하여 이제 성약 귀환석을 지원하고 버튼을 클릭한 후 즉시 다음 귀환석으로 전환됩니다.",
+			"[게임 바] 랜덤 귀환석 기능을 재구성하여 이제 성약 귀환석을 지원하고 버튼을 클릭한 후 즉시 다음 다른 귀환석으로 전환됩니다.",
 			"[LFG 목록] 오른쪽 패널에 글꼴 크기 조정 기능을 추가했습니다.",
 		},
 		["ruRU"] = {
@@ -94,7 +94,7 @@ W.Changelog[399] = {
 			"[Расширить страницы продавца] Оптимизировано положение кнопки выкупа.",
 			"[Игровая панель] Оптимизированы некоторые сообщения об ошибках, чтобы лучше соответствовать стилю системных ошибок.",
 			"[Игровая панель] Добавлена опция для предотвращения случайного запуска перезагрузки UI во время боя.",
-			"[Игровая панель] Переработана функция случайного камня возвращения, теперь поддерживает камни ковенантов и сразу переключается на следующий камень после нажатия кнопки.",
+			"[Игровая панель] Переработана функция случайного камня возвращения, теперь поддерживает камни ковенантов и сразу переключается на следующий другой камень после нажатия кнопки.",
 			"[LFG список] Добавлена функция изменения размера шрифта для правой панели.",
 		},
 	},

@@ -28,22 +28,27 @@ W.Changelog[399] = {
 		["zhCN"] = {
 			"[美化皮肤] 新增了 WhisperPop 美化外观. 感谢 DaguDuiyuan",
 			"[美化皮肤] 新增了 Paragon Reputation 美化外观.",
+			"[美化皮肤] 新增了 Manuscripts Journal 美化外观.",
 		},
 		["zhTW"] = {
 			"[美化皮膚] 新增了 WhisperPop 美化外觀. 感謝 DaguDuiyuan",
 			"[美化皮膚] 新增了 Paragon Reputation 美化外觀.",
+			"[美化皮膚] 新增了 Manuscripts Journal 美化外觀.",
 		},
 		["enUS"] = {
 			"[Skins] Add WhisperPop skin. Thanks DaguDuiyuan.",
 			"[Skins] Add Paragon Reputation skin.",
+			"[Skins] Add Manuscripts Journal skin.",
 		},
 		["koKR"] = {
 			"[스킨] WhisperPop 외관 추가. DaguDuiyuan에게 감사드립니다.",
 			"[스킨] Paragon Reputation 외관 추가.",
+			"[스킨] Manuscripts Journal 외관 추가.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин для WhisperPop. Спасибо DaguDuiyuan.",
 			"[Скины] Добавлен скин для Paragon Reputation.",
+			"[Скины] Добавлен скин для Manuscripts Journal.",
 		},
 	},
 	IMPROVEMENT = {

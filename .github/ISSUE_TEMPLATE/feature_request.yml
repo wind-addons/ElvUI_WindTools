@@ -4,6 +4,15 @@ title: "feature: "
 labels: ["💡 Feature Request"]
 type: feature
 body:
+  - type: checkboxes
+    attributes:
+      label: Did you check these before submitting?
+      description: Make sure you checked all of the below before submitting an feature request
+      options:
+        - label: This feature is NOT a skin for other addons.
+          required: true
+        - label: This feature is NOT a duplicate of an existing feature request.
+          required: true
   - type: textarea
     validations:
       required: false

@@ -4,6 +4,15 @@ title: "feature: "
 labels: ["💡 Feature Request"]
 type: feature
 body:
+  - type: checkboxes
+    attributes:
+      label: 提交前请检查以下项目
+      description: 确保在提交功能请求之前检查以下所有内容
+      options:
+        - label: 此功能不是其他插件的皮肤
+          required: true
+        - label: 此功能不和现在已经存在的其他功能请求重复
+          required: true
   - type: textarea
     validations:
       required: false

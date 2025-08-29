@@ -1585,6 +1585,11 @@ options.libraries = {
 			type = "toggle",
 			name = L["LibQTip"],
 		},
+		secureTabs = {
+			order = 10,
+			type = "toggle",
+			name = L["SecureTabs"],
+		},
 	},
 }
 

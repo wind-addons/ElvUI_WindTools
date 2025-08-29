@@ -15,8 +15,6 @@ function S:AceConfigDialog(lib)
 	self:CreateShadow(lib.popup)
 end
 
-
-
 function S:Ace3_Frame(Constructor)
 	if not (E.private.WT.skins.enable and E.private.WT.skins.libraries.ace3 and E.private.WT.skins.shadow) then
 		return Constructor

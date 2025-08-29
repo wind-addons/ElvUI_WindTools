@@ -528,6 +528,7 @@ V.skins = {
 		ace3 = true,
 		ace3Dropdown = true,
 		libQTip = true,
+		secureTabs = true,
 	},
 	blizzard = {
 		enable = true,

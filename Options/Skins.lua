@@ -1296,6 +1296,12 @@ options.addons = {
 			addonName = "Immersion",
 			addonskinsKey = "Immersion",
 		},
+		manuscriptsJournal = {
+			order = 10,
+			type = "toggle",
+			name = L["Manuscripts Journal"],
+			addonName = "ManuscriptsJournal",
+		},
 		mountRoutePlanner = {
 			order = 10,
 			type = "toggle",
@@ -1568,19 +1574,16 @@ options.libraries = {
 			order = 10,
 			type = "toggle",
 			name = L["Ace3"],
-			width = 1.5,
 		},
-		ace3DropdownBackdrop = {
+		ace3Dropdown = {
 			order = 10,
 			type = "toggle",
-			name = L["Ace3 Dropdown Backdrop"],
-			width = 1.5,
+			name = L["Ace3 Dropdown"],
 		},
 		libQTip = {
 			order = 10,
 			type = "toggle",
 			name = L["LibQTip"],
-			width = 1.5,
 		},
 	},
 }

@@ -526,7 +526,7 @@ V.skins = {
 	},
 	libraries = {
 		ace3 = true,
-		ace3DropdownBackdrop = true,
+		ace3Dropdown = true,
 		libQTip = true,
 	},
 	blizzard = {

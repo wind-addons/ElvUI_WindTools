@@ -271,7 +271,11 @@ function S:AddCallback(name, func)
 end
 
 function S:AddCallbackForAceGUIWidget(name, func)
-	self.aceWidgets[name] = func or self[name]
+	if type(func) == "string" then
+		func = self[func]
+	end
+
+	self.aceWidgets[name] = func
 end
 
 function S:AddCallbackForAddon(addonName, func)
@@ -316,7 +320,6 @@ function S:PLAYER_ENTERING_WORLD()
 		self.enteredLoad[index] = nil
 	end
 end
-
 
 function S:AddCallbackForUpdate(name, func)
 	tinsert(self.updateProfile, func or self[name])

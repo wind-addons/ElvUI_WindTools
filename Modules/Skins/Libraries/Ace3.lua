@@ -38,7 +38,7 @@ function S:Ace3_DropdownPullout(Constructor)
 
 	local function SkinnedConstructor()
 		local widget = Constructor()
-		if E.private.WT.skins.libraries.ace3DropdownBackdrop then
+		if E.private.WT.skins.libraries.ace3Dropdown then
 			widget.frame:SetTemplate("Transparent")
 		end
 		self:CreateShadow(widget.frame)
@@ -64,6 +64,6 @@ end
 
 S:AddCallbackForLibrary("AceGUI-3.0", "AceGUI")
 S:AddCallbackForLibrary("AceConfigDialog-3.0", "AceConfigDialog")
-S:AddCallbackForAceGUIWidget("Frame", S.Ace3_Frame)
-S:AddCallbackForAceGUIWidget("Dropdown-Pullout", S.Ace3_DropdownPullout)
-S:AddCallbackForAceGUIWidget("Window", S.Ace3_Window)
+S:AddCallbackForAceGUIWidget("Frame", "Ace3_Frame")
+S:AddCallbackForAceGUIWidget("Dropdown-Pullout", "Ace3_DropdownPullout")
+S:AddCallbackForAceGUIWidget("Window", "Ace3_Window")

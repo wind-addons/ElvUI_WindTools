@@ -9,7 +9,7 @@ local format = format
 local pairs = pairs
 local type = type
 
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local C_AddOns_DoesAddOnExist = C_AddOns.DoesAddOnExist
 
 local RED_FONT_COLOR = RED_FONT_COLOR
 local YELLOW_FONT_COLOR = YELLOW_FONT_COLOR
@@ -94,7 +94,7 @@ options.general = {
 				format(L["It doesn't mean that the %s Skins will not be applied."], W.Title)
 			),
 			hidden = function()
-				return not C_AddOns_IsAddOnLoaded("ElvUI_MerathilisUI")
+				return not C_AddOns_DoesAddOnExist("ElvUI_MerathilisUI")
 			end,
 		},
 		general = {
@@ -1468,13 +1468,13 @@ options.addons = {
 local function GenerateAddOnSkinsGetFunction(name)
 	if type(name) == "string" then
 		return function(info)
-			return C_AddOns_IsAddOnLoaded(name) and E.private.WT.skins.addons[info[#info]]
+			return C_AddOns_DoesAddOnExist(name) and E.private.WT.skins.addons[info[#info]]
 		end
 	elseif type(name) == "table" then
 		return function(info)
 			local isValid = false
 			for _, addon in pairs(name) do
-				isValid = isValid or C_AddOns_IsAddOnLoaded(addon)
+				isValid = isValid or C_AddOns_DoesAddOnExist(addon)
 			end
 			return isValid and E.private.WT.skins.addons[info[#info]]
 		end
@@ -1501,13 +1501,13 @@ end
 local function GenerateAddOnSkinsDisabledFunction(name)
 	if type(name) == "string" then
 		return function(info)
-			return not C_AddOns_IsAddOnLoaded(name) or not E.private.WT.skins.enable
+			return not C_AddOns_DoesAddOnExist(name) or not E.private.WT.skins.enable
 		end
 	elseif type(name) == "table" then
 		return function(info)
 			local isValid = false
 			for _, addon in pairs(name) do
-				isValid = isValid or C_AddOns_IsAddOnLoaded(addon)
+				isValid = isValid or C_AddOns_DoesAddOnExist(addon)
 			end
 			return not isValid or not E.private.WT.skins.enable
 		end
@@ -2748,14 +2748,14 @@ options.bigWigsSkin = {
 	type = "group",
 	name = L["BigWigs Skin"],
 	disabled = function()
-		return not E.private.WT.skins.enable or not C_AddOns_IsAddOnLoaded("BigWigs")
+		return not E.private.WT.skins.enable or not C_AddOns_DoesAddOnExist("BigWigs")
 	end,
 	args = {
 		alert = {
 			order = 1,
 			type = "description",
 			name = function()
-				if not C_AddOns_IsAddOnLoaded("BigWigs") then
+				if not C_AddOns_DoesAddOnExist("BigWigs") then
 					return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "danger")
 				end
 

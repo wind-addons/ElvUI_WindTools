@@ -7,42 +7,46 @@ local select = select
 local pairs = pairs
 local tInsertUnique = tInsertUnique
 
-function S:ReskinSecureTabs(lib, panel)
+local function reskinTab(lib, panel)
 	if lib.tabs[panel] then
 		for _, tab in pairs(lib.tabs[panel]) do
 			if not tab.__wind then
-				self:Proxy("HandleTab", tab)
-				self:ReskinTab(tab)
+				S:Proxy("HandleTab", tab)
+				S:ReskinTab(tab)
+				tab:Hide()
+				tab:Show() -- Fix the text ... issue
+				tab.__wind = true
 			end
 		end
 	end
+end
 
-	if lib.covers[panel] then
-		-- for _, cover in pairs(lib.covers[panel]) do
-		-- 	if not cover.__wind then
-		-- 		-- self:Proxy("HandleTab", cover)
-		-- 	end
-		-- end
+local function reskinCoverTab(lib, panel)
+	local cover = lib.covers[panel]
+	if cover and not cover.__wind then
+		S:Proxy("HandleTab", cover)
+		cover.backdrop.Center:SetAlpha(0)
+		cover:SetPushedTextOffset(0, 0)
+		cover.__wind = true
 	end
 end
 
 function S:SecureTabs(lib)
 	if lib.Add and lib.Update then
-		E:Delay(2, print, 1)
-		self:SecureHook(lib, "Add", "ReskinSecureTabs")
-		self:SecureHook(lib, "Update", "ReskinSecureTabs")
+		self:SecureHook(lib, "Add", reskinTab)
+		self:SecureHook(lib, "Update", reskinCoverTab)
 	end
 
-	local existingPanel = {}
-	for panel in pairs(lib.tabs) do
-		tInsertUnique(existingPanel, panel)
-	end
-	for panel in pairs(lib.covers) do
-		tInsertUnique(existingPanel, panel)
+	if lib.tabs then
+		for panel in pairs(lib.tabs) do
+			reskinTab(lib, panel)
+		end
 	end
 
-	for _, panel in pairs(existingPanel) do
-		self:ReskinSecureTabs(lib, panel)
+	if lib.covers then
+		for panel in pairs(lib.covers) do
+			reskinCoverTab(lib, panel)
+		end
 	end
 end
 

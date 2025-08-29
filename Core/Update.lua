@@ -302,8 +302,17 @@ function W:UpdateScripts()
 	end
 
 	if privateVersion < 3.99 then
-		if E.global.WT then
+		if E.global.WT and E.global.WT.misc and E.global.WT.misc.gameBar and E.global.WT.misc.gameBar.covenantCache then
 			E.global.WT.misc.gameBar.covenantCache = nil
+			UpdateMessage(L["Database cleanup"], privateVersion)
+		end
+	end
+
+	if globalVersion < 3.99 then
+		if E.global.WT.core and E.global.WT.core.logLevel then
+			E.global.WT.developer.logLevel = E.global.WT.core.logLevel
+			E.global.WT.core.logLevel = nil
+			UpdateMessage(L["Advanced"] .. ": " .. L["Developer"], globalVersion)
 		end
 	end
 

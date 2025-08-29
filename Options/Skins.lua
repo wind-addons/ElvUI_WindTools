@@ -1275,6 +1275,12 @@ options.addons = {
 			name = L["BigWigs Queue Timer"],
 			addonName = "BigWigs",
 		},
+		btWQuests = {
+			order = 10,
+			type = "toggle",
+			name = L["BtWQuests"],
+			addonName = "BtWQuests",
+		},
 		bugSack = {
 			order = 10,
 			type = "toggle",
@@ -1326,6 +1332,16 @@ options.addons = {
 			name = L["OmniCD"],
 			addonName = "OmniCD",
 		},
+		omniCDExtraBar = {
+			order = 10,
+			type = "toggle",
+			name = L["OmniCD Extra Bar"],
+			desc = L["Add a shadowed background to the group title and adjust its position slightly upward."],
+			hidden = function()
+				return not E.private.WT.skins.addons.omniCD
+			end,
+			addonName = "OmniCD",
+		},
 		omniCDIcon = {
 			order = 10,
 			type = "toggle",
@@ -1339,16 +1355,6 @@ options.addons = {
 			order = 10,
 			type = "toggle",
 			name = L["OmniCD Status Bar"],
-			hidden = function()
-				return not E.private.WT.skins.addons.omniCD
-			end,
-			addonName = "OmniCD",
-		},
-		omniCDExtraBar = {
-			order = 10,
-			type = "toggle",
-			name = L["OmniCD Extra Bar"],
-			desc = L["Add a shadowed background to the group title and adjust its position slightly upward."],
 			hidden = function()
 				return not E.private.WT.skins.addons.omniCD
 			end,
@@ -1386,6 +1392,13 @@ options.addons = {
 			type = "toggle",
 			name = L["RareScanner"],
 			addonName = "RareScanner",
+		},
+		rematch = {
+			order = 10,
+			type = "toggle",
+			name = L["Rematch"],
+			addonName = "Rematch",
+			addonskinsKey = "Rematch",
 		},
 		silverDragon = {
 			order = 10,
@@ -1443,24 +1456,18 @@ options.addons = {
 			name = L["WeakAuras Options"],
 			addonName = "WeakAuras",
 		},
-		worldQuestTab = {
-			order = 10,
-			type = "toggle",
-			name = L["World Quest Tab"],
-			addonName = "WorldQuestTab",
-		},
-		btWQuests = {
-			order = 10,
-			type = "toggle",
-			name = L["BtWQuests"],
-			addonName = "BtWQuests",
-		},
 		whisperPop = {
 			order = 10,
 			type = "toggle",
 			name = L["WhisperPop"],
 			addonName = "WhisperPop",
 			addonskinsKey = "WhisperPop",
+		},
+		worldQuestTab = {
+			order = 10,
+			type = "toggle",
+			name = L["World Quest Tab"],
+			addonName = "WorldQuestTab",
 		},
 	},
 }

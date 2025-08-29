@@ -173,6 +173,10 @@ function S:MythicDungeonTools()
 	end)
 
 	self:SecureHook(_G.MDT, "UpdateEnemyInfoFrame", function(MDT)
+		if not MDT.enemyInfoFrame then
+			return
+		end
+
 		local container = MDT.enemyInfoFrame.characteristicsContainer
 		if container and not container.__windSkin then
 			hooksecurefunc(container, "AddChild", reskinContainerIcon)

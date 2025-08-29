@@ -12,6 +12,8 @@ local tinsert = tinsert
 local tostring = tostring
 local type = type
 local xpcall = xpcall
+local tonumber = tonumber
+local strmatch = strmatch
 
 local CreateFrame = CreateFrame
 local GenerateClosure = GenerateClosure
@@ -327,7 +329,9 @@ end
 
 function S:CallLoadedAddon(addonName, object)
 	for _, func in next, object do
-		xpcall(func, F.Developer.ThrowError, self)
+		if not xpcall(func, F.Developer.ThrowError, self) then
+			self:Log("debug", format("Failed to run addon %s", addonName))
+		end
 	end
 
 	self.addonsToLoad[addonName] = nil
@@ -358,13 +362,13 @@ function S:LibStub_NewLibrary(_, major, minor)
 	self.libraryHandledMinors[major] = minor
 
 	RunNextFrame(function()
-		local lib, latestMinor = LibStub(major, true)
+		local lib, latestMinor = _G.LibStub(major, true)
 		if not lib or not latestMinor or latestMinor ~= minor then
 			return
 		end
 		for _, func in next, self.libraryHandlers[major] do
-			if xpcall(func, F.Developer.ThrowError, self, lib) then
-				E:Delay(1, print, "Loaded " .. major .. " " .. minor)
+			if not xpcall(func, F.Developer.ThrowError, self, lib) then
+				self:Log("debug", format("Failed to skin library %s", major, minor))
 			end
 		end
 	end)
@@ -467,7 +471,9 @@ function S:Initialize()
 
 	-- Run Blizzard skins
 	for index, func in next, self.nonAddonsToLoad do
-		xpcall(func, F.Developer.ThrowError, self)
+		if not xpcall(func, F.Developer.ThrowError, self) then
+			self:Log("debug", "Failed to run skin function")
+		end
 		self.nonAddonsToLoad[index] = nil
 	end
 
@@ -486,7 +492,9 @@ function S:Initialize()
 		if lib and self.libraryHandlers[libName] then
 			self.libraryHandledMinors[libName] = minor
 			for _, func in next, self.libraryHandlers[libName] do
-				xpcall(func, F.Developer.ThrowError, self, lib)
+				if not xpcall(func, F.Developer.ThrowError, self, lib) then
+					self:Log("debug", format("Failed to skin library %s", libName, minor))
+				end
 			end
 		end
 	end

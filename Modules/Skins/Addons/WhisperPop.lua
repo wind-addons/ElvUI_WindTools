@@ -4,8 +4,7 @@ local S = W.Modules.Skins
 local _G = _G
 local unpack = unpack
 local pairs = pairs
-
-local LibStub = _G.LibStub
+local hooksecurefunc = hooksecurefunc
 
 local function notifyButton(button)
 	button:CreateBackdrop()

@@ -1,4 +1,4 @@
-local W = unpack((select(2, ...)))
+local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[355] = {
 	RELEASE_DATE = "2024/05/07",

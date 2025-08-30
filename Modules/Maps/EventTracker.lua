@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
-local S = W.Modules.Skins
+local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames
 local C = W.Utilities.Color
 local LSM = E.Libs.LSM

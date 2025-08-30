@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
-local S = W.Modules.Skins
-local ES = E.Skins
+local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames
 
 local _G = _G
@@ -19,7 +18,7 @@ end
 
 local function PositionTabIcons(icon, _, anchor)
 	if anchor then
-		icon:SetPoint("CENTER")
+		icon:Point("CENTER")
 	end
 end
 
@@ -30,8 +29,7 @@ local function reskinTab(tab)
 
 	if tab.Icon then
 		tab.Icon:ClearAllPoints()
-		tab.Icon:SetPoint("CENTER")
-
+		tab.Icon:Point("CENTER")
 		hooksecurefunc(tab.Icon, "SetPoint", PositionTabIcons)
 	end
 
@@ -132,8 +130,8 @@ local function settingsCategory(frame)
 		frame.windSelectedTexture:Hide()
 
 		frame.BGRight:Hide()
-		frame.backdrop:SetPoint("TOPLEFT", frame.BGLeft)
-		frame.backdrop:SetPoint("BOTTOMRIGHT", frame.BGRight)
+		frame.backdrop:Point("TOPLEFT", frame.BGLeft)
+		frame.backdrop:Point("BOTTOMRIGHT", frame.BGRight)
 		hooksecurefunc(frame, "SetExpanded", function(self, expanded)
 			self.windSelectedTexture:SetShown(expanded)
 		end)

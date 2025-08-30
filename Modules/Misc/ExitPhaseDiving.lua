@@ -1,7 +1,7 @@
 local W, F, E, L = unpack((select(2, ...)))
 local async = W.Utilities.Async
 local M = W.Modules.Misc
-local S = W.Modules.Skins
+local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local select = select

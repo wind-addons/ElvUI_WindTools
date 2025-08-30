@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
-local S = W.Modules.Skins
+local S = W.Modules.Skins ---@type Skins
 local WS = S.Widgets
 local ES = E.Skins
 

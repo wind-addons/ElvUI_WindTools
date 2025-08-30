@@ -1,6 +1,6 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
 local MF = W.Modules.MoveFrames
-local S = W.Modules.Skins
+local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
 
 local _G = _G

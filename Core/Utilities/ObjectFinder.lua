@@ -16,9 +16,10 @@ local ObjectFinder = {} ---@class ObjectFinder
 ObjectFinder.__index = ObjectFinder
 
 --- Create a new ObjectFinder instance
---- @param parent UIObject? Parent object to search within (defaults to UIParent)
+--- @param parent Frame? |  Parent object to search within (defaults to UIParent)
 --- @return table New ObjectFinder instance
 function ObjectFinder:New(parent)
+	---@class ObjectFinder
 	local o = setmetatable({}, ObjectFinder)
 
 	-- Initialize properties with proper defaults

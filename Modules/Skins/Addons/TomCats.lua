@@ -27,7 +27,7 @@ function S:TomCats_HandleTomCatsIcon(icon)
 
 	if not icon.__windSkin then
 		local maskNum = icon.Icon:GetNumMaskTextures()
-		for i = maskNum, 1 do
+		for i = 1, maskNum do
 			icon.Icon:RemoveMaskTexture(icon.Icon:GetMaskTexture(i))
 		end
 

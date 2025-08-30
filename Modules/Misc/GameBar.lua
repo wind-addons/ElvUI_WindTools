@@ -18,13 +18,11 @@ local pairs = pairs
 local random = random
 local select = select
 local strfind = strfind
-local strjoin = strjoin
 local tContains = tContains
 local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local type = type
-local unpack = unpack
 
 local BNGetNumFriends = BNGetNumFriends
 local CloseAllWindows = CloseAllWindows
@@ -493,7 +491,7 @@ local ButtonTypes = {
 					numBNOnline = numBNOnline + 1
 					if numGameAccounts and numGameAccounts > 0 then
 						for j = 1, numGameAccounts do
-							local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+							local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j) --[[@as BNetGameAccountInfo]]
 							if gameAccountInfo.clientProgram and gameAccountInfo.clientProgram == "WoW" then
 								numWoWOnline = numWoWOnline + 1
 							end
@@ -631,10 +629,7 @@ local ButtonTypes = {
 		additionalText = function()
 			local numMissions = #C_Garrison_GetCompleteMissions(FollowerType_9_0)
 				+ #C_Garrison_GetCompleteMissions(FollowerType_8_0)
-			if numMissions == 0 then
-				numMissions = ""
-			end
-			return numMissions
+			return tostring(numMissions == 0 and "" or numMissions)
 		end,
 		tooltips = "Missions",
 	},
@@ -740,8 +735,8 @@ local ButtonTypes = {
 		click = {
 			LeftButton = function()
 				local vol = C_CVar_GetCVar("Sound_MasterVolume")
-				vol = vol and tonumber(vol) or 0
-				C_CVar_SetCVar("Sound_MasterVolume", min(vol + 0.1, 1))
+				local volNum = vol and tonumber(vol) or 0
+				C_CVar_SetCVar("Sound_MasterVolume", min(volNum + 0.1, 1))
 			end,
 			MiddleButton = function()
 				local enabled = tonumber(C_CVar_GetCVar("Sound_EnableAllSound")) == 1
@@ -749,15 +744,15 @@ local ButtonTypes = {
 			end,
 			RightButton = function()
 				local vol = C_CVar_GetCVar("Sound_MasterVolume")
-				vol = vol and tonumber(vol) or 0
-				C_CVar_SetCVar("Sound_MasterVolume", max(vol - 0.1, 0))
+				local volNum = vol and tonumber(vol) or 0
+				C_CVar_SetCVar("Sound_MasterVolume", max(volNum - 0.1, 0))
 			end,
 		},
 		tooltips = function(button)
 			local vol = C_CVar_GetCVar("Sound_MasterVolume")
-			vol = vol and tonumber(vol) or 0
+			local volNum = vol and tonumber(vol) or 0
 			DT.tooltip:ClearLines()
-			DT.tooltip:SetText(L["Volume"] .. format(": %d%%", vol * 100))
+			DT.tooltip:SetText(L["Volume"] .. format(": %d%%", volNum * 100))
 			DT.tooltip:AddLine("\n")
 			DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Increase the volume"] .. " (+10%)", 1, 1, 1)
 			DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Decrease the volume"] .. " (-10%)", 1, 1, 1)
@@ -766,9 +761,9 @@ local ButtonTypes = {
 
 			button.tooltipsUpdateTimer = C_Timer_NewTicker(0.3, function()
 				local _vol = C_CVar_GetCVar("Sound_MasterVolume")
-				_vol = _vol and tonumber(_vol) or 0
+				local _volNum = _vol and tonumber(_vol) or 0
 				DT.tooltip:ClearLines()
-				DT.tooltip:SetText(L["Volume"] .. format(": %d%%", _vol * 100))
+				DT.tooltip:SetText(L["Volume"] .. format(": %d%%", _volNum * 100))
 				DT.tooltip:AddLine("\n")
 				DT.tooltip:AddLine(LeftButtonIcon .. " " .. L["Increase the volume"] .. " (+10%)", 1, 1, 1)
 				DT.tooltip:AddLine(RightButtonIcon .. " " .. L["Decrease the volume"] .. " (-10%)", 1, 1, 1)

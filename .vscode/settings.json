@@ -28,7 +28,7 @@
     "Libraries/LibOpenRaid/**",
     "Libraries/LibRangeCheck-3.0/**",
     "Libraries/TinyLibs/**",
-    "wow-api"
+    "extensions/**",
   ],
   "Lua.diagnostics.globals": [
     "ITEM_LEVEL",

@@ -318,11 +318,14 @@ function TI:QUEST_GREETING()
 		for index = 1, active do
 			local _, isComplete = GetActiveTitle(index)
 			local questID = GetActiveQuestID(index)
-			local isWorldQuest = C_QuestLog_IsWorldQuest(questID)
-			local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
-			if isComplete and not isWorldQuest and not skipRepeatable then
-				if not self:IsPaused("COMPLETE") then
-					SelectActiveQuest(index)
+			if questID then
+				local isWorldQuest = C_QuestLog_IsWorldQuest(questID)
+				local skipRepeatable = self.db.onlyRepeatable and not IsQuestRepeatable(questID)
+				if isComplete and not isWorldQuest and not skipRepeatable then
+					if not self:IsPaused("COMPLETE") then
+						---@diagnostic disable-next-line: redundant-parameter -- The API doc is wrong
+						SelectActiveQuest(index)
+					end
 				end
 			end
 		end

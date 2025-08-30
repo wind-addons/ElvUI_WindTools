@@ -13,6 +13,7 @@ local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local InCombatLockdown = InCombatLockdown
 
+local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
 local C_UI_Reload = C_UI.Reload
 
 ---@diagnostic disable-next-line: undefined-field
@@ -74,6 +75,11 @@ _G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveDelve:LeftButton"] = L["Leave De
 
 W.LinkOperations = {
 	["changelog"] = E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG.OnAccept,
+	["invite"] = function(name)
+		if name then
+			C_PartyInfo_InviteUnit(name)
+		end
+	end,
 }
 
 function W:ItemRefTooltip_SetHyperlink(_, data)

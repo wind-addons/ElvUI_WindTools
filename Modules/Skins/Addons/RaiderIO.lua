@@ -64,7 +64,7 @@ function S:RaiderIO_DelayedSkinning()
 					if numChildren then
 						if numChildren == 1 then
 							frame.titleFrame = child
-							local title = child:GetChildren(1)
+							local title = child:GetChildren()
 							local titleText = title and title.text and title.text:GetText()
 							if titleText and strfind(titleText, "Raider.IO") then
 								configFrame = frame

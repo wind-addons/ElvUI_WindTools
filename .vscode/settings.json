@@ -88,8 +88,10 @@
     ".vscode",
     "Locales/**",
     "Libraries/**",
-    "!Modules/Skins/Libraries/**"
+    "!Modules/Skins/Libraries/**",
+    "ChatText.lua"
   ],
+  "cSpell.diagnosticLevel": "Hint",
   "linter.linters": {
     "luacheck": {
       "capabilities": [],

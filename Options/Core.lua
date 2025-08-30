@@ -102,6 +102,7 @@ local r4, g4, b4 = HexToRGB("1cdce8")
 
 local color = {}
 
+---@diagnostic disable-next-line: discard-returns
 gsub(E:TextGradient(strrep("Z", 14), r1, g1, b1, r2, g2, b2, r3, g3, b3, r4, g4, b4), "cff(......)Z", function(self)
 	color[#color + 1] = self
 end)
@@ -145,8 +146,8 @@ function W:OptionsCallback()
 	}
 
 	-- Modules
-	for catagory, info in pairs(W.options) do
-		E.Options.args.WindTools.args[catagory] = {
+	for category, info in pairs(W.options) do
+		E.Options.args.WindTools.args[category] = {
 			order = info.order,
 			type = "group",
 			childGroups = "tab",

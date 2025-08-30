@@ -1539,7 +1539,7 @@ local eventData = {
 							return
 						end
 
-						local db = ET:GetPlayerDB("iskaaranFishingNet")
+						local db = ET:GetPlayerDB("iskaaranFishingNet") --[[@as table]]
 
 						if spellID == 377887 then -- Get Fish
 							if db[netIndex] then
@@ -1636,11 +1636,11 @@ function trackers:get(event)
 
 		if functions.tooltip then
 			frame:SetScript("OnEnter", function()
-				functions.tooltip.onEnter(frame, data.args)
+				functions.tooltip.onEnter(frame)
 			end)
 
 			frame:SetScript("OnLeave", function()
-				functions.tooltip.onLeave(frame, data.args)
+				functions.tooltip.onLeave(frame)
 			end)
 		end
 	end
@@ -1675,6 +1675,7 @@ ET.eventHandlers = {
 function ET:HandlerEvent(event, ...)
 	if self.eventHandlers[event] then
 		for _, handler in ipairs(self.eventHandlers[event]) do
+			---@diagnostic disable-next-line: redundant-parameter -- Prepared for future events
 			handler(...)
 		end
 	end

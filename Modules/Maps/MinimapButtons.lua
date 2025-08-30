@@ -123,9 +123,8 @@ function MB:HandleLibDBIconButton(button, name)
 	return button:IsShown()
 end
 
-local HandleExpansionButton = EM.HandleExpansionButton
-function EM:HandleExpansionButton()
-	HandleExpansionButton()
+function MB:HandleExpansionButton(...)
+	self.hooks[EM].HandleExpansionButton(...)
 
 	-- Run this post hook lazily and safely
 	F.WaitFor(function()
@@ -722,4 +721,5 @@ function MB:Initialize()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
+MB:RawHook(EM, "HandleExpansionButton")
 W:RegisterModule(MB:GetName())

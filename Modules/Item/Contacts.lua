@@ -33,7 +33,17 @@ local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 local currentPageIndex
-local data
+
+---@class ContactData
+---@field name string? The name of the contact (character name)
+---@field realm string? The realm of the contact
+---@field class string? The class of the contact (non-localized class name)
+---@field faction string? The faction of the contact ("Horde" or "Alliance")
+---@field dType string The type of the contact ("alt", "friend", "bnfriend", "guild", "favorite")
+---@field BNName string? Battle.net account name (only for Battle.net friends)
+---@field memberIndex number? Guild roster index (only for guild members)
+
+local data ---@type table<ContactData>
 
 local function GetNonLocalizedClass(className)
 	for class, localizedName in pairs(LOCALIZED_CLASS_NAMES_MALE) do
@@ -551,7 +561,7 @@ function CT:BuildFriendsData()
 			local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
 			if numGameAccounts and numGameAccounts > 0 then
 				for j = 1, numGameAccounts do
-					local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j)
+					local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, j) --[[@as BNetGameAccountInfo]]
 					if
 						gameAccountInfo.clientProgram
 						and gameAccountInfo.clientProgram == "WoW"

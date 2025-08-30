@@ -149,14 +149,14 @@ end
 ---Split string by delimiter
 ---@param subject string? The string to split
 ---@param delimiter string The delimiter to split by
----@return table<integer, string> results Array of split strings
+---@return string? ... parts The parts after splitting
 function F.Strings.Split(subject, delimiter)
 	if not subject or subject == "" then
-		return {}
+		return
 	end
 
 	local length = strlen(delimiter)
-	local results = {}
+	local results = {} ---@type string[]
 
 	local i = 0
 	local j = 0

@@ -634,6 +634,11 @@ options.blizzard = {
 			type = "toggle",
 			name = L["Barber Shop"],
 		},
+		battlefieldMap = {
+			order = 10,
+			type = "toggle",
+			name = L["Battlefield Map"],
+		},
 		binding = {
 			order = 10,
 			type = "toggle",

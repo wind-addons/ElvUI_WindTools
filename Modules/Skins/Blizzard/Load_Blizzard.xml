@@ -11,6 +11,7 @@
 	<Script file='AzeriteRespec.lua'/>
 	<Script file='Bags.lua'/>
 	<Script file='Barbershop.lua'/>
+	<Script file='BattlefieldMap.lua'/>
 	<Script file='Binding.lua'/>
 	<Script file='BlackMarket.lua'/>
 	<Script file='Calendar.lua'/>

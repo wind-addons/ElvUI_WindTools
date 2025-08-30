@@ -544,6 +544,7 @@ V.skins = {
 		azeriteRespec = true,
 		bags = true,
 		barberShop = true,
+		battlefieldMap = true,
 		binding = true,
 		blackMarket = true,
 		calendar = true,

@@ -15,7 +15,7 @@ F.Strings = {}
 ---Get the number of bytes for a UTF-8 character at given position
 ---@param s string The input string
 ---@param i number? The position to check (default: 1)
----@return number bytes Number of bytes for the character
+---@return number? bytes Number of bytes for the character
 function F.Strings.CharBytes(s, i)
 	-- argument defaults
 	i = i or 1
@@ -122,11 +122,13 @@ function F.Strings.Replace(s, mapping)
 		F--[[@as Functions]].Developer.ThrowError(
 			"bad argument #1 to 'F.Replace' (string expected, got " .. type(s) .. ")"
 		)
+		return ""
 	end
 	if type(mapping) ~= "table" then
 		F--[[@as Functions]].Developer.ThrowError(
 			"bad argument #2 to 'F.Replace' (table expected, got " .. type(mapping) .. ")"
 		)
+		return s
 	end
 
 	local pos = 1
@@ -136,6 +138,10 @@ function F.Strings.Replace(s, mapping)
 
 	while pos <= bytes do
 		charbytes = F.Strings.CharBytes(s, pos)
+		if not charbytes then
+			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			return s
+		end
 		local c = strsub(s, pos, pos + charbytes - 1)
 
 		newstr = newstr .. (mapping[c] or c)

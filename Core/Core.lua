@@ -159,7 +159,9 @@ function W:InitializeModules()
 	for _, moduleName in pairs(W.RegisteredModules) do
 		local module = self:GetModule(moduleName)
 		if module.Initialize then
-			pcall(module.Initialize, module)
+			if not xpcall(module.Initialize, F--[[@as Functions]].Developer.LogDebug, module) then
+				F--[[@as Functions]].Developer.LogDebug("Failed to initialize module: " .. moduleName)
+			end
 		end
 	end
 end

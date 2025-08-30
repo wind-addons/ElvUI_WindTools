@@ -32,7 +32,6 @@ local MenuUtil_CreateContextMenu = MenuUtil.CreateContextMenu
 local LOCALIZED_CLASS_NAMES_FEMALE = LOCALIZED_CLASS_NAMES_FEMALE
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
-local guildClubID
 local currentPageIndex
 local data
 

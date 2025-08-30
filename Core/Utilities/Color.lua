@@ -120,9 +120,9 @@ end
 
 ---Create colored string with RGB values
 ---@param text any The text to colorize (will be converted to string)
----@param r number Red component (0-1)
----@param g number Green component (0-1)
----@param b number Blue component (0-1)
+---@param r number|table Red component (0-1)
+---@param g number? Green component (0-1)
+---@param b number? Blue component (0-1)
 ---@return string coloredText The colored string
 function W.Utilities.Color.StringWithRGB(text, r, g, b)
 	if type(text) ~= "string" then

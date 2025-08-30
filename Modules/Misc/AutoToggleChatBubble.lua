@@ -1,19 +1,13 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local M = W.Modules.Misc
 
-local tinsert = tinsert
-
 local CreateFrame = CreateFrame
 local IsInInstance = IsInInstance
 
 local C_CVar_SetCVar = C_CVar.SetCVar
 
 local function toggleChatBubbles()
-	if IsInInstance() then
-		C_CVar_SetCVar("chatBubbles", 1)
-	else
-		C_CVar_SetCVar("chatBubbles", 0)
-	end
+	C_CVar_SetCVar("chatBubbles", IsInInstance() and 1 or 0)
 end
 
 function M:AutoToggleChatBubble()

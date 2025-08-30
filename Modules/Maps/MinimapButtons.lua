@@ -8,7 +8,6 @@ local ceil = ceil
 local floor = floor
 local min = min
 local pairs = pairs
-local print = print
 local sort = sort
 local strfind = strfind
 local strlen = strlen

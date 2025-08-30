@@ -22,7 +22,7 @@ local Settings = Settings
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
----@type table<string, Frame> Table to store setting frames by name
+---@type table<string, any> Table to store setting frames by name
 S.settingFrames = {}
 ---@type table<string, function> Table to store waiting setting frame callbacks
 S.waitSettingFrames = {}
@@ -96,7 +96,7 @@ function S:CheckDB(elvuiKey, windtoolsKey)
 end
 
 ---Create a shadow for the specified frame
----@param frame Frame The frame to apply shadow to
+---@param frame any The frame to apply shadow to
 ---@param size number? The shadow size (default: 4)
 ---@param r number? Red color component (default: from config)
 ---@param g number? Green color component (default: from config)
@@ -143,7 +143,7 @@ function S:CreateShadow(frame, size, r, g, b, force)
 end
 
 ---Create a lower shadow for the specified frame
----@param frame Frame The frame to apply lower shadow to
+---@param frame any The frame to apply lower shadow to
 ---@param force boolean? Force creation even if shadow is disabled
 function S:CreateLowerShadow(frame, force)
 	if not force then
@@ -168,7 +168,7 @@ function S:CreateLowerShadow(frame, force)
 end
 
 ---Update shadow color
----@param shadow Frame? The shadow frame to update
+---@param shadow any? The shadow frame to update
 ---@param r number? Red color component (default: from config)
 ---@param g number? Green color component (default: from config)
 ---@param b number? Blue color component (default: from config)
@@ -187,7 +187,7 @@ end
 
 do
 	---Callback function for shadow color updates
-	---@param shadow Frame The shadow frame
+	---@param shadow any The shadow frame
 	---@param r number? Red color component
 	---@param g number? Green color component
 	---@param b number? Blue color component
@@ -204,8 +204,8 @@ do
 	end
 
 	---Bind shadow color with border color changes
-	---@param frame Frame The frame that has shadow
-	---@param borderParent Frame? The frame that has border (defaults to frame)
+	---@param frame any The frame that has shadow
+	---@param borderParent any? The frame that has border (defaults to frame)
 	function S:BindShadowColorWithBorder(frame, borderParent)
 		local shadow = frame and frame.shadow
 		borderParent = borderParent or frame
@@ -225,7 +225,7 @@ end
 
 do
 	---Create backdrop shadow for frames
-	---@param frame Frame The target frame
+	---@param frame any The target frame
 	---@param defaultTemplate boolean? Whether to use default template
 	local function createBackdropShadow(frame, defaultTemplate)
 		if not E.private.WT.skins or not E.private.WT.skins.shadow then
@@ -244,7 +244,7 @@ do
 	end
 
 	---Creates a backdrop shadow for the specified frame
-	---@param frame Frame The target frame
+	---@param frame any The target frame
 	---@param useDefaultTemplate boolean? Whether to use the default template
 	function S:CreateBackdropShadow(frame, useDefaultTemplate)
 		if not frame or frame.__windShadow then
@@ -268,7 +268,7 @@ do
 	---The function automatically repeats several times for waiting ElvUI done
 	---the modifying/creating of backdrop
 	---!!! It only checks for 2 seconds (20 times in total)
-	---@param frame Frame The target frame
+	---@param frame any The target frame
 	---@param tried number? Number of attempts remaining (default: 20)
 	function S:TryCreateBackdropShadow(frame, tried)
 		if not frame or frame.__windShadow then
@@ -288,7 +288,7 @@ do
 end
 
 ---Reskin a tab element
----@param tab Frame? The tab frame to reskin
+---@param tab any? The tab frame to reskin
 function S:ReskinTab(tab)
 	if not tab then
 		return
@@ -310,7 +310,7 @@ function S:HandleAceGUIWidget(lib, name, constructor)
 end
 
 ---Set transparent backdrop for a frame
----@param frame Frame The frame to apply transparent backdrop to
+---@param frame any The frame to apply transparent backdrop to
 function S:SetTransparentBackdrop(frame)
 	if frame.backdrop then
 		frame.backdrop:SetTemplate("Transparent")
@@ -467,7 +467,7 @@ function S:DisableAddOnSkin(key)
 end
 
 ---Create shadow for WindTools modules
----@param frame Frame The frame to apply shadow to
+---@param frame any The frame to apply shadow to
 function S:CreateShadowModule(frame)
 	if E.private.WT.skins.enable and E.private.WT.skins.windtools and E.private.WT.skins.shadow then
 		self:CreateShadow(frame)
@@ -487,7 +487,7 @@ do
 	end
 
 	---Apply MerathilisUI skin if the addon is loaded
-	---@param frame Frame The frame to apply MerathilisUI skin to
+	---@param frame any The frame to apply MerathilisUI skin to
 	function S:MerathilisUISkin(frame)
 		if E.private.WT.skins.merathilisUISkin and IsMerathilisUILoaded() then
 			if frame.Styling then
@@ -511,7 +511,7 @@ do
 	}
 
 	---Strip edge textures from a frame
-	---@param frame Frame The frame to strip edge textures from
+	---@param frame any The frame to strip edge textures from
 	function S:StripEdgeTextures(frame)
 		for _, regionKey in pairs(regions) do
 			if frame[regionKey] then
@@ -522,8 +522,8 @@ do
 end
 
 ---Reposition frame with parameters
----@param frame Frame The frame to reposition
----@param target Frame The frame relative to
+---@param frame any The frame to reposition
+---@param target any The frame relative to
 ---@param border number Border size
 ---@param top number Top offset
 ---@param bottom number Bottom offset
@@ -556,7 +556,7 @@ function S:Proxy(funcName, frame, ...)
 end
 
 ---Set high alpha transparent backdrop
----@param frame Frame The frame to apply high alpha transparent backdrop to
+---@param frame any The frame to apply high alpha transparent backdrop to
 function S:HighAlphaTransparent(frame)
 	frame._SetBackdropColor = frame.SetBackdropColor
 	frame.SetBackdropColor = function(f, r, g, b, a)
@@ -607,7 +607,7 @@ function S:ReskinSettingFrame(name, func)
 end
 
 ---Reskin icon button with hover effects
----@param button Frame The button to reskin
+---@param button any The button to reskin
 ---@param icon string The icon texture path
 ---@param size number The icon size
 ---@param rotate number? The icon rotation (optional)

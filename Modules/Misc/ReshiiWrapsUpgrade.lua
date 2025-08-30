@@ -9,9 +9,6 @@ local GetInventoryItemID = GetInventoryItemID
 local InCombatLockdown = InCombatLockdown
 local ShowUIPanel = ShowUIPanel
 
-local C_Item_GetItemID = C_Item.GetItemID
-local C_Traits_GetConfigIDByTreeID = C_Traits.GetConfigIDByTreeID
-local C_Traits_GetTreeCurrencyInfo = C_Traits.GetTreeCurrencyInfo
 local Enum_TooltipDataType_Item = Enum.TooltipDataType.Item
 local TooltipDataProcessor_AddTooltipPostCall = TooltipDataProcessor.AddTooltipPostCall
 

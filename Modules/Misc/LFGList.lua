@@ -154,7 +154,7 @@ function LL:GetPlayerDB(key)
 	local globalDB = E.global.WT.misc.lfgList
 
 	if not globalDB then
-		return
+		return {}
 	end
 
 	if not globalDB[E.myrealm] then
@@ -169,7 +169,7 @@ function LL:GetPlayerDB(key)
 		globalDB[E.myrealm][E.myname][key] = {}
 	end
 
-	return globalDB[E.myrealm][E.myname][key]
+	return globalDB[E.myrealm][E.myname][key] --[[@as table]]
 end
 
 function LL:UpdateAdditionalText(button, score, best)
@@ -1360,9 +1360,9 @@ function LL:UpdateRightPanel()
 	end
 
 	self.rightPanel.filters.leaderScore:SetActive(dfDB.leaderScoreEnable)
-	self.rightPanel.filters.leaderScore.editBox:SetText(dfDB.leaderScore or 0)
+	self.rightPanel.filters.leaderScore.editBox:SetText(tostring(dfDB.leaderScore or 0))
 	self.rightPanel.filters.leaderDungeonScore:SetActive(dfDB.leaderDungeonScoreEnable)
-	self.rightPanel.filters.leaderDungeonScore.editBox:SetText(dfDB.leaderDungeonScore or 0)
+	self.rightPanel.filters.leaderDungeonScore.editBox:SetText(tostring(dfDB.leaderDungeonScore or 0))
 	self.rightPanel.filters.roleAvailable:SetActive(dfDB.roleAvailableEnable)
 	self.rightPanel.filters.needTank:SetActive(dfDB.needTankEnable)
 	self.rightPanel.filters.needHealer:SetActive(dfDB.needHealerEnable)

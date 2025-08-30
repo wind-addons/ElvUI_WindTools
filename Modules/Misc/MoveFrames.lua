@@ -579,7 +579,7 @@ end
 
 ---Handle the internal frame movement
 ---@param frame Frame The frame to move
----@param bindTo Frame? The frame to bind to, if not provided, it will bind to the same frame
+---@param bindTo Frame|string? The frame to bind to, if not provided, it will bind to the same frame
 ---@param remember boolean? Whether to remember the frame position
 function MF:InternalHandle(frame, bindTo, remember)
 	if not self:IsRunning() then

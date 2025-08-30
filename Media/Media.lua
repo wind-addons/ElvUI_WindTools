@@ -30,7 +30,7 @@ do
 	local defaultSize = 14
 
 	---Generate icon string with proper formatting and aspect ratio handling
-	---@param icon string The icon texture path
+	---@param icon string|number The icon texture path
 	---@param height number|nil Icon height in pixels
 	---@param width number|nil Icon width in pixels
 	---@param aspectRatio boolean|nil Whether to maintain aspect ratio

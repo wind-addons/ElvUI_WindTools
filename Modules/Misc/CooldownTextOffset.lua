@@ -1,5 +1,5 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
-local M = W.Modules.Misc
+local M = W.Modules.Misc ---@class Misc
 
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs

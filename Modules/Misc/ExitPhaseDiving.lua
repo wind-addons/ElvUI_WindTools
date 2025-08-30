@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local async = W.Utilities.Async
-local M = W.Modules.Misc
+local M = W.Modules.Misc ---@class Misc
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G

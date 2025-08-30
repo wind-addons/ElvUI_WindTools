@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
-local M = W.Modules.Misc
+local M = W.Modules.Misc ---@class Misc
 
 local tinsert = tinsert
 
@@ -17,6 +17,7 @@ function M:AddCNFilter()
 
 		tinsert(filters, "zhCN")
 
+		---@diagnostic disable-next-line: duplicate-set-field
 		C_LFGList.GetAvailableLanguageSearchFilter = function()
 			return filters
 		end

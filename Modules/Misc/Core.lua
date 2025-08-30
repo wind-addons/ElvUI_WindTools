@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
-local M = W.Modules.Misc
+local M = W.Modules.Misc ---@class Misc
 
 local _G = _G
 local next = next
@@ -10,24 +10,23 @@ local xpcall = xpcall
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
-M.addonsToLoad = {} -- 等待插件载入后执行的函数表
-M.nonAddonsToLoad = {} -- 毋须等待插件的函数表
-M.updateProfile = {} -- 配置更新后的函数表
+---@type table<string, function[]> Table of functions to execute after addon loading
+M.addonsToLoad = {}
+---@type function[] Table of functions that don't need to wait for addons
+M.nonAddonsToLoad = {}
+---@type function[] Table of functions to execute after profile update
+M.updateProfile = {}
 
---[[
-    注册回调
-    @param {string} name 函数名
-    @param {function} [func=M.name] 回调函数
-]]
+--- Register a callback function
+---@param name string Function name
+---@param func function|string? Callback function (defaults to M[name] if not provided)
 function M:AddCallback(name, func)
 	tinsert(self.nonAddonsToLoad, func or self[name])
 end
 
---[[
-    注册插件回调
-    @param {string} addonName 插件名
-    @param {function} [func=M.addonName] 插件回调函数
-]]
+--- Register an addon callback function
+---@param addonName string Addon name
+---@param func? function|string Addon callback function (defaults to M[addonName] if not provided)
 function M:AddCallbackForAddon(addonName, func)
 	if func and type(func) == "string" then
 		func = self[func]
@@ -42,40 +41,27 @@ function M:AddCallbackForAddon(addonName, func)
 	tinsert(addon, func or self[addonName])
 end
 
---[[
-    注册更新回调
-    @param {string} name 函数名
-    @param {function} [func=S.name] 回调函数
-]]
+--- Register an update callback function
+---@param name string Function name
+---@param func function|string? Callback function (defaults to self[name] if not provided)
 function M:AddCallbackForUpdate(name, func)
 	tinsert(self.updateProfile, func or self[name])
 end
 
---[[
-    游戏系统输出错误
-    @param {string} err 错误
-]]
-local function errorhandler(err)
-	return _G.geterrorhandler()(err)
-end
-
---[[
-    回调注册的插件函数
-    @param {string} addonName 插件名
-    @param {object} object 回调的函数
-]]
+--- Call registered addon functions
+---@param addonName string Addon name
+---@param object function[] Array of callback functions
 function M:CallLoadedAddon(addonName, object)
 	for _, func in next, object do
-		xpcall(func, errorhandler, self)
+		xpcall(func, F.Developer.LogDebug, self)
 	end
 
 	self.addonsToLoad[addonName] = nil
 end
 
---[[
-    根据插件载入事件唤起回调
-    @param {string} addonName 插件名
-]]
+--- Trigger callbacks based on addon loading events
+---@param _ any Unused parameter
+---@param addonName string Addon name
 function M:ADDON_LOADED(_, addonName)
 	if not E.initialized then
 		return
@@ -89,7 +75,7 @@ end
 
 function M:Initialize()
 	for index, func in next, self.nonAddonsToLoad do
-		xpcall(func, errorhandler, self)
+		xpcall(func, F.Developer.LogDebug, self)
 		self.nonAddonsToLoad[index] = nil
 	end
 
@@ -103,7 +89,7 @@ end
 
 function M:ProfileUpdate()
 	for index, func in next, self.updateProfile do
-		xpcall(func, errorhandler, self)
+		xpcall(func, F.Developer.LogDebug, self)
 		self.updateProfile[index] = nil
 	end
 end

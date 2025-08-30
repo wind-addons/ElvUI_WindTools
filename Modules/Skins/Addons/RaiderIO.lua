@@ -1,5 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins
+local TT = E:GetModule("Tooltip")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -12,24 +13,14 @@ function S:RaiderIO_DelayedSkinning()
 	if skinned then
 		return
 	end
+
 	skinned = true
 	if _G.RaiderIO_ProfileTooltip then
-		_G.RaiderIO_ProfileTooltip:StripTextures()
-		_G.RaiderIO_ProfileTooltip.NineSlice:Kill()
-		_G.RaiderIO_ProfileTooltip:SetTemplate("Transparent")
-		local point, relativeTo, relativePoint, xOffset, yOffset = _G.RaiderIO_ProfileTooltip:GetPoint()
-		if xOffset and yOffset and xOffset == 0 and yOffset == 0 then
-			_G.RaiderIO_ProfileTooltip.__SetPoint = _G.RaiderIO_ProfileTooltip.SetPoint
-			hooksecurefunc(
-				_G.RaiderIO_ProfileTooltip,
-				"SetPoint",
-				function(self, point, relativeTo, relativePoint, xOffset, yOffset)
-					if xOffset and yOffset and xOffset == 0 and yOffset == 0 then
-						self:__SetPoint(point, relativeTo, relativePoint, 4, 0)
-					end
-				end
-			)
-		end
+		TT:SetStyle(_G.RaiderIO_ProfileTooltip)
+		_G.RaiderIO_ProfileTooltip.__SetPoint = _G.RaiderIO_ProfileTooltip.SetPoint
+		hooksecurefunc(_G.RaiderIO_ProfileTooltip, "SetPoint", function()
+			F.MoveFrameWithOffset(_G.RaiderIO_ProfileTooltip, 4, 0)
+		end)
 	end
 
 	if _G.RaiderIO_SearchFrame then

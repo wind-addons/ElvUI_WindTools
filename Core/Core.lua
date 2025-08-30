@@ -90,7 +90,6 @@ W.LinkOperations = {
 	end,
 }
 
-
 ---Registers a link operation function for a specific feature.
 ---
 ---**WindTools Link Operations**
@@ -159,9 +158,7 @@ function W:InitializeModules()
 	for _, moduleName in pairs(W.RegisteredModules) do
 		local module = self:GetModule(moduleName)
 		if module.Initialize then
-			if not xpcall(module.Initialize, F--[[@as Functions]].Developer.LogDebug, module) then
-				F--[[@as Functions]].Developer.LogDebug("Failed to initialize module: " .. moduleName)
-			end
+			xpcall(module.Initialize, F--[[@as Functions]].Developer.LogDebug, module)
 		end
 	end
 end

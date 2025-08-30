@@ -819,7 +819,7 @@ function CT:UpdateRoleIcons()
 	end
 end
 
-function CT:ShortChannel()
+function CT.ShortChannel(channelLink)
 	local noBracketsString
 	local abbr
 
@@ -829,16 +829,16 @@ function CT:ShortChannel()
 		end
 
 		if CT.db.abbreviation == "SHORT" then
-			abbr = abbrStrings[strupper(self)]
+			abbr = abbrStrings[strupper(channelLink)]
 		elseif CT.db.abbreviation == "NONE" then
 			return ""
 		else
-			abbr = elvuiAbbrStrings[strupper(self)]
+			abbr = elvuiAbbrStrings[strupper(channelLink)]
 		end
 	end
 
 	if not abbr and CT.db.abbreviation == "SHORT" then
-		local name = select(2, GetChannelName(gsub(self, "channel:", "")))
+		local name = select(2, GetChannelName(gsub(channelLink, "channel:", "")))
 
 		if name then
 			local communityID = strmatch(name, "Community:(%d+):")
@@ -867,9 +867,9 @@ function CT:ShortChannel()
 		end
 	end
 
-	abbr = abbr or gsub(self, "channel:", "")
+	abbr = abbr or gsub(channelLink, "channel:", "")
 
-	return format(noBracketsString or "|Hchannel:%s|h[%s]|h", self, abbr)
+	return format(noBracketsString or "|Hchannel:%s|h[%s]|h", channelLink, abbr)
 end
 
 function CT:HandleShortChannels(msg, hide)
@@ -2198,8 +2198,11 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 			if link then
 				resultText = format(onlineMessageTemplate, link, classIcon, coloredName)
 				if CT.db.guildMemberStatusInviteLink then
-					local windInviteLink =
-						format("|Hwtlink:invite:%s|h%s|h", link, C.StringByTemplate(format("[%s]", L["Invite"]), "info"))
+					local windInviteLink = format(
+						"|Hwtlink:invite:%s|h%s|h",
+						link,
+						C.StringByTemplate(format("[%s]", L["Invite"]), "info")
+					)
 					resultText = resultText .. " " .. windInviteLink
 				end
 				frame:AddMessage(resultText, C.RGBFromTemplate("success"))
@@ -2409,7 +2412,6 @@ function CT:Initialize()
 	self:UpdateRoleIcons()
 	self:ToggleReplacement()
 	self:CheckLFGRoles()
-	self:BetterSystemMessage()
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("BN_FRIEND_INFO_CHANGED")

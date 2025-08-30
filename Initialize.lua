@@ -15,6 +15,7 @@ local strmatch = strmatch
 
 local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
+---@class WindTools : AceAddon, AceConsole-3.0, AceEvent-3.0, AceTimer-3.0, AceHook-3.0
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
 V.WT = {} -- profile database defaults
@@ -22,7 +23,8 @@ P.WT = {} -- private database defaults
 G.WT = {} -- global database defaults
 
 addon[1] = W
-addon[2] = {} -- Functions
+---@diagnostic disable-next-line: missing-fields
+addon[2] = {} --[[@as Functions]]
 addon[3] = E
 addon[4] = L
 addon[5] = V.WT
@@ -72,11 +74,16 @@ if W.Variant then
 end
 
 -- Pre-register some WindTools modules
-W.Modules = {}
-W.Modules.Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0")
-W.Modules.Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0")
-W.Modules.Tooltips = W:NewModule("Tooltips", "AceHook-3.0", "AceEvent-3.0")
-W.Modules.MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0")
+W.Modules = {
+	---@class Misc : AceModule, AceHook-3.0, AceEvent-3.0
+	Misc = W:NewModule("Misc", "AceHook-3.0", "AceEvent-3.0"),
+	---@class Skins : AceModule, AceHook-3.0, AceEvent-3.0, AceTimer-3.0
+	Skins = W:NewModule("Skins", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0"),
+	---@class Tooltips : AceModule, AceHook-3.0, AceEvent-3.0
+	Tooltips = W:NewModule("Tooltips", "AceHook-3.0", "AceEvent-3.0"),
+	---@class MoveFrames : AceModule, AceHook-3.0, AceEvent-3.0
+	MoveFrames = W:NewModule("MoveFrames", "AceEvent-3.0", "AceHook-3.0"),
+}
 
 -- Utilities namespace
 W.Utilities = {}

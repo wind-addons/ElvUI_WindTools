@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
 local C = W.Utilities.Color
 local async = W.Utilities.Async
 local options = W.options.misc.args
@@ -956,7 +956,7 @@ do
 
 		local subIndex = 1
 		for key, data in pairs(catTable) do
-			if not F.In(key, { "name", "order" }) then
+			if key ~= "name" and key ~= "order" then
 				options.tags.args[cat].args[key] = {
 					order = data.order or subIndex,
 					type = data.type or "input",

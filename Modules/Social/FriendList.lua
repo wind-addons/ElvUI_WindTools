@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local FL = W:NewModule("FriendList", "AceHook-3.0")
 
 local pairs = pairs

@@ -1,4 +1,8 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@type WindTools
+local F ---@class Functions
+local E ---@type table
+W, F, E = unpack((select(2, ...)))
+
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
@@ -9,6 +13,13 @@ local CreateFrame = CreateFrame
 
 F.Widgets = {}
 
+---Create a styled button
+---@param parent Frame The parent frame
+---@param text string? Button text (optional)
+---@param width number? Button width (default: 100)
+---@param height number? Button height (default: 22)
+---@param onClick function? Click handler function (optional)
+---@return Button button The created button
 local function createButton(parent, text, width, height, onClick)
 	local frame = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
 
@@ -37,6 +48,11 @@ local function createButton(parent, text, width, height, onClick)
 	return frame
 end
 
+---Create a styled close button
+---@param parent Frame The parent frame
+---@param size number? Button size (width and height)
+---@param onClick function? Click handler function (optional)
+---@return Button closeButton The created close button
 local function createCloseButton(parent, size, onClick)
 	local frame = CreateFrame("Button", nil, parent, "UIPanelCloseButton, BackdropTemplate")
 
@@ -48,6 +64,7 @@ local function createCloseButton(parent, size, onClick)
 		frame:SetScript("OnClick", onClick)
 	else
 		frame:SetScript("OnClick", function()
+			---Default close button behavior - hide parent
 			parent:Hide()
 		end)
 	end
@@ -57,6 +74,15 @@ local function createCloseButton(parent, size, onClick)
 	return frame
 end
 
+---Create a texture-based button with hover effects
+---@param parent Frame The parent frame
+---@param texture string|number The texture path or ID
+---@param normalColor table? Normal state color {r,g,b,a} (default: {1,1,1,1})
+---@param hoverColor table? Hover state color (default: ElvUI highlight color)
+---@param width number Button width
+---@param height number Button height
+---@param onClick function? Click handler function (optional)
+---@return Button textureButton The created texture button
 local function createTextureButton(parent, texture, normalColor, hoverColor, width, height, onClick)
 	if not normalColor then
 		normalColor = { 1, 1, 1, 1 }
@@ -86,11 +112,13 @@ local function createTextureButton(parent, texture, normalColor, hoverColor, wid
 	frame.hoverTex:SetAlpha(0)
 
 	frame:SetScript("OnEnter", function(self)
+		---Fade in hover texture on mouse enter
 		local alpha = self.hoverTex:GetAlpha()
 		E:UIFrameFadeIn(self.hoverTex, 0.4 * (1 - alpha), alpha, 1)
 	end)
 
 	frame:SetScript("OnLeave", function(self)
+		---Fade out hover texture on mouse leave
 		local alpha = self.hoverTex:GetAlpha()
 		E:UIFrameFadeIn(self.hoverTex, 0.4 * alpha, alpha, 0)
 	end)
@@ -100,6 +128,12 @@ local function createTextureButton(parent, texture, normalColor, hoverColor, wid
 	return frame
 end
 
+---Create a styled input field
+---@param parent Frame The parent frame
+---@param width number? Input width (default: 200)
+---@param height number? Input height (default: 20)
+---@param onEnterPressed function? Enter key handler function (optional)
+---@return EditBox input The created input field
 local function createInput(parent, width, height, onEnterPressed)
 	local frame = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
 
@@ -114,6 +148,7 @@ local function createInput(parent, width, height, onEnterPressed)
 	frame:SetScript("OnEnterPressed", onEnterPressed)
 
 	frame:SetScript("OnEscapePressed", function(self)
+		---Clear focus on Escape key press
 		self:ClearFocus()
 	end)
 
@@ -122,6 +157,10 @@ local function createInput(parent, width, height, onEnterPressed)
 	return frame
 end
 
+---Create a new widget of specified type
+---@param widgetType string Type of widget to create ("Button", "CloseButton", "TextureButton", "Input")
+---@param ... any Arguments to pass to the widget constructor
+---@return Frame? widget The created widget or nil if type is invalid
 function F.Widgets.New(widgetType, ...)
 	if not widgetType then
 		return
@@ -138,6 +177,12 @@ function F.Widgets.New(widgetType, ...)
 	end
 end
 
+---Add tooltip to a frame
+---@param frame Frame The frame to add tooltip to
+---@param text string|function The tooltip text or function that returns text
+---@param anchor string? Tooltip anchor point (default: "ANCHOR_RIGHT")
+---@param x number? X offset (default: 0)
+---@param y number? Y offset (default: 0)
 function F.Widgets.AddTooltip(frame, text, anchor, x, y)
 	anchor = anchor or "ANCHOR_RIGHT"
 	x = x or 0
@@ -148,7 +193,7 @@ function F.Widgets.AddTooltip(frame, text, anchor, x, y)
 			_G.GameTooltip:SetText(text)
 		end)
 
-		frame:HookScript("OnLeave", function(self)
+		frame:HookScript("OnLeave", function()
 			_G.GameTooltip:Hide()
 		end)
 	end

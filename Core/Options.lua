@@ -1,4 +1,8 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+local E, L ---@type table, table
+W, F, E, L = unpack((select(2, ...)))
+
 local tinsert = tinsert
 local tconcat = table.concat
 

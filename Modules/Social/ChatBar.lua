@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local CB = W:NewModule("ChatBar", "AceHook-3.0", "AceEvent-3.0")
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM

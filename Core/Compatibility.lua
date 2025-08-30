@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
 local MF = W.Modules.MoveFrames ---@type MoveFrames
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
@@ -35,8 +35,10 @@ function W:ConstructCompatibilityFrame()
 	MF:InternalHandle(frame)
 
 	local close = F.Widgets.New("CloseButton", frame)
-	close:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT")
-	close:SetFrameLevel(frame:GetFrameLevel() + 1)
+	if close then
+		close:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT")
+		close:SetFrameLevel(frame:GetFrameLevel() + 1)
+	end
 
 	local title = frame:CreateFontString(nil, "ARTWORK")
 	title:FontTemplate()

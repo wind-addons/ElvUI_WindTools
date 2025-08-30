@@ -1,4 +1,8 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+local E ---@type table
+W, F, E = unpack((select(2, ...)))
+
 local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0")
 local OR = E.Libs.OpenRaid
 local KS = E.Libs.Keystone

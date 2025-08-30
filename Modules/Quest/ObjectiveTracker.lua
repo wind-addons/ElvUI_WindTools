@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
 local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins

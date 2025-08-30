@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local T = W.Modules.Tooltips
 
 local _G = _G
@@ -6,7 +6,8 @@ local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 local select = select
 local strfind = strfind
-local tinsert = tinsert
+local tContains = tContains
+local tInsertUnique = tInsertUnique
 local tonumber = tonumber
 local unpack = unpack
 
@@ -141,7 +142,7 @@ end
 
 local function handle(type)
 	TooltipDataProcessor_AddTooltipPostCall(type, function(tt, data)
-		if not data or not data.id or not data.lines or not tt.GetName or not F.In(tt:GetName(), tooltips) then
+		if not data or not data.id or not data.lines or not tt.GetName or not tContains(tooltips, tt:GetName()) then
 			return
 		end
 
@@ -235,9 +236,7 @@ function T:Icons()
 end
 
 function T:AddIconTooltip(name)
-	if not F.In(name, tooltips) then
-		tinsert(tooltips, name)
-	end
+	tInsertUnique(tooltips, name)
 end
 
 T:AddCallback("Icons")

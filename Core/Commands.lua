@@ -1,4 +1,7 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+local E, L ---@type table, table
+W, F, E, L = unpack((select(2, ...)))
 
 local _G = _G
 
@@ -19,6 +22,10 @@ local C_AddOns_GetAddOnInfo = C_AddOns.GetAddOnInfo
 local C_CVar_SetCVar = C_CVar.SetCVar
 local C_UI_Reload = C_UI.Reload
 
+---Registers a new command with the WindTools addon system
+---@param name string The name/identifier for the command
+---@param keys string|table The command key(s) or aliases that will trigger this command
+---@param func function The callback function to execute when the command is invoked
 function W:AddCommand(name, keys, func)
 	if not _G.SlashCmdList["WINDTOOLS_" .. name] then
 		_G.SlashCmdList["WINDTOOLS_" .. name] = func

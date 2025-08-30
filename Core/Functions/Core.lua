@@ -1,4 +1,7 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@type WindTools
+local F ---@class Functions
+local E ---@type table
+W, F, E = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
 
 local _G = _G
@@ -9,7 +12,6 @@ local min = min
 local pairs = pairs
 local pcall = pcall
 local print = print
-local select = select
 local strfind = strfind
 local strmatch = strmatch
 local tonumber = tonumber
@@ -18,24 +20,19 @@ local tremove = tremove
 local type = type
 local unpack = unpack
 
-local GenerateFlatClosure = GenerateFlatClosure
 local GetClassColor = GetClassColor
-local GetInstanceInfo = GetInstanceInfo
-local RunNextFrame = RunNextFrame
 
---[[
-    从数据库设定字体样式
-    @param {object} text FontString 型对象
-    @param {table} db 字体样式数据库
-]]
+---Set font style from database settings
+---@param text FontString The FontString object to modify
+---@param db table Font style database containing name, size, and style
 function F.SetFontWithDB(text, db)
 	if not text or not text.GetFont then
-		F.Developer.LogDebug("Functions.SetFontWithDB: text not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontWithDB: text not found")
 		return
 	end
 
 	if not db or type(db) ~= "table" then
-		F.Developer.LogDebug("Functions.SetFontWithDB: db not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontWithDB: db not found")
 		return
 	end
 
@@ -44,33 +41,29 @@ function F.SetFontWithDB(text, db)
 	text:FontTemplate(db.name and LSM:Fetch("font", db.name) or fontName, db.size or fontHeight, db.style or "NONE")
 end
 
---[[
-    从数据库设定字体颜色
-    @param {object} text FontString 型对象
-    @param {table} db 字体颜色数据库
-]]
+---Set font color from database settings
+---@param text FontString The FontString object to modify
+---@param db table Font color database containing r, g, b, a values
 function F.SetFontColorWithDB(text, db)
 	if not text or not text.GetFont then
-		F.Developer.LogDebug("Functions.SetFontColorWithDB: text not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontColorWithDB: text not found")
 		return
 	end
 	if not db or type(db) ~= "table" then
-		F.Developer.LogDebug("Functions.SetFontColorWithDB: db not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontColorWithDB: db not found")
 		return
 	end
 
 	text:SetTextColor(db.r, db.g, db.b, db.a)
 end
 
---[[
-    更换字体描边为轮廓
-    @param {object} text FontString 型对象
-    @param {string} [font] 字型路径
-    @param {number|string} [size] 字体尺寸或是尺寸变化量字符串
-]]
+---Change font outline style to OUTLINE and remove shadow
+---@param text FontString The FontString object to modify
+---@param font string? Font path or name (optional)
+---@param size number|string? Font size or size change amount as string (optional)
 function F.SetFontOutline(text, font, size)
 	if not text or not text.GetFont then
-		F.Developer.LogDebug("Functions.SetFontOutline: text not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontOutline: text not found")
 		return
 	end
 	local fontName, fontHeight = text:GetFont()
@@ -88,19 +81,18 @@ function F.SetFontOutline(text, font, size)
 	text.SetShadowColor = E.noop
 end
 
---[[
-    从数据库创建彩色字符串
-    @param {string} text 文字
-    @param {table} db 字体颜色数据库
-]]
+---Create colored string from database settings
+---@param text string The text to colorize
+---@param db table Color database containing r, g, b values
+---@return string? coloredText The colored string or nil if parameters are invalid
 function F.CreateColorString(text, db)
 	if not text or not type(text) == "string" then
-		F.Developer.LogDebug("Functions.CreateColorString: text not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.CreateColorString: text not found")
 		return
 	end
 
 	if not db or type(db) ~= "table" then
-		F.Developer.LogDebug("Functions.CreateColorString: db not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.CreateColorString: db not found")
 		return
 	end
 
@@ -109,18 +101,17 @@ function F.CreateColorString(text, db)
 	return hex .. text .. "|r"
 end
 
---[[
-    创建职业色字符串
-    @param {string} text 文字
-    @param {string} englishClass 职业名
-]]
+---Create class colored string
+---@param text string The text to colorize
+---@param englishClass string The English class name
+---@return string? coloredText The class colored string or nil if parameters are invalid
 function F.CreateClassColorString(text, englishClass)
 	if not text or not type(text) == "string" then
-		F.Developer.LogDebug("Functions.CreateClassColorString: text not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.CreateClassColorString: text not found")
 		return
 	end
 	if not englishClass or type(englishClass) ~= "string" then
-		F.Developer.LogDebug("Functions.CreateClassColorString: class not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.CreateClassColorString: class not found")
 		return
 	end
 
@@ -134,24 +125,23 @@ function F.CreateClassColorString(text, englishClass)
 	return hex .. text .. "|r"
 end
 
---[[
-    更换窗体内部字体描边为轮廓
-    @param {object} frame 窗体
-    @param {string} [font] 字型路径
-    @param {number|string} [size] 字体尺寸或是尺寸变化量字符串
-]]
+---Set font outline for all FontString regions in a frame
+---@param frame Frame The frame containing FontString regions
+---@param font string? Font path or name (optional)
+---@param size number|string? Font size or size change amount as string (optional)
 function F.SetFrameFontOutline(frame, font, size)
 	if not frame or not frame.GetRegions then
-		F.Developer.LogDebug("Functions.SetFrameFontOutline: frame not found")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetFrameFontOutline: frame not found")
 		return
 	end
 	for _, region in pairs({ frame:GetRegions() }) do
 		if region:IsObjectType("FontString") then
-			F.SetFontOutline(region, font, size)
+			F.SetFontOutline(region --[[@as FontString]], font, size)
 		end
 	end
 end
 
+---Print a gradient colored line separator
 function F.PrintGradientLine()
 	local HexToRGB = W.Utilities.Color.HexToRGB
 	local r1, g1, b1 = HexToRGB("f0772f")
@@ -164,10 +154,8 @@ function F.PrintGradientLine()
 	print(gradientLine)
 end
 
---[[
-    打印信息
-    @param {string} text 文本
-]]
+---Print message with WindTools title prefix
+---@param text string? The text to print
 function F.Print(text)
 	if not text then
 		return
@@ -177,10 +165,8 @@ function F.Print(text)
 	print(message)
 end
 
---[[
-    延迟去除全部模块函数钩子
-    @param {table/string} module Ace3 模块或自定义字符串
-]]
+---Delay unhook all hooks from a module
+---@param module table|string Ace3 module object or module name string
 function F.DelayUnhookAll(module)
 	if type(module) == "string" then
 		module = W:GetModule(module)
@@ -190,17 +176,26 @@ function F.DelayUnhookAll(module)
 		if module.UnhookAll then
 			E:Delay(1, module.UnhookAll, module)
 		else
-			F.Developer.LogDebug("Functions.DelayUnhookAll: AceHook class not found!")
+			F--[[@as Functions]].Developer.LogDebug("Functions.DelayUnhookAll: AceHook class not found!")
 		end
 	else
-		F.Developer.LogDebug("Functions.DelayUnhookAll: Module not found!")
+		F--[[@as Functions]].Developer.LogDebug("Functions.DelayUnhookAll: Module not found!")
 	end
 end
 
+---Round a number to specified decimal places
+---@param number number The number to round
+---@param decimals number Number of decimal places
+---@return string roundedNumber The rounded number as string
 function F.Round(number, decimals)
 	return format(format("%%.%df", decimals), number)
 end
 
+---Set callback with retry mechanism
+---@param callback function The callback function to execute with results
+---@param target function The target function to call
+---@param times number? Current retry count (internal use)
+---@param ... any Arguments to pass to target function
 function F.SetCallback(callback, target, times, ...)
 	times = times or 0
 	if times >= 10 then
@@ -221,7 +216,11 @@ function F.SetCallback(callback, target, times, ...)
 end
 
 do
+	---@type string Pattern to extract item level from tooltip text
 	local pattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
+	---Get real item level from item link by scanning tooltip
+	---@param link string The item link
+	---@return string? itemLevel The item level or nil if not found
 	function F.GetRealItemLevelByLink(link)
 		E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
 		E.ScanTooltip:ClearLines()
@@ -241,6 +240,8 @@ do
 end
 
 do
+	---Color configuration for progress bar
+	---@type table
 	local color = {
 		start = {
 			r = 1.000,
@@ -254,6 +255,9 @@ do
 		},
 	}
 
+	---Get color based on progress value (0.0 to 1.0)
+	---@param progress number Progress value between 0 and 1
+	---@return table color Color table with r, g, b values
 	function F.GetProgressColor(progress)
 		local r = (color.complete.r - color.start.r) * progress + color.start.r
 		local g = (color.complete.g - color.start.g) * progress + color.start.g
@@ -269,41 +273,40 @@ do
 	end
 end
 
+---Set vertex color for texture from database settings
+---@param tex Texture The texture object to modify
+---@param db table Color database containing r, g, b, a values
 function F.SetVertexColorWithDB(tex, db)
 	if not tex or not tex.GetVertexColor then
-		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
 		return
 	end
 	if not db or type(db) ~= "table" then
-		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
+		F--[[@as Functions]].Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
 		return
 	end
 
 	tex:SetVertexColor(db.r, db.g, db.b, db.a)
 end
 
+---Create WindTools styled gradient text
+---@param text string The text to apply gradient to
+---@return string gradientText The gradient styled text
 function F.GetWindStyleText(text)
 	return E:TextGradient(text, 0.32941, 0.52157, 0.93333, 0.29020, 0.70980, 0.89412, 0.25882, 0.84314, 0.86667)
 end
 
-function F.In(val, tbl)
-	if not val or not tbl or type(tbl) ~= "table" then
-		return false
-	end
-
-	for _, v in pairs(tbl) do
-		if v == val then
-			return true
-		end
-	end
-
-	return false
-end
-
+---Check if value is NaN (Not a Number)
+---@param val any The value to check
+---@return boolean isNaN True if value is NaN
 function F.IsNaN(val)
 	return tostring(val) == tostring(0 / 0)
 end
 
+---Return value or default if value is nil or NaN
+---@param val any The value to check
+---@param default any The default value to return if val is invalid
+---@return any result The original value or default
 function F.Or(val, default)
 	if not val or F.IsNaN(val) then
 		return default
@@ -311,15 +314,21 @@ function F.Or(val, default)
 	return val
 end
 
+---@type table<any, table> Throttle states storage
 local throttleStates = {}
 
+---Throttle function execution to prevent excessive calls
+---@param duration number Duration in seconds to throttle
+---@param key any? Unique key for throttling (optional, defaults to function)
+---@param func function The function to throttle
+---@param ... any Arguments to pass to the function
 function F.Throttle(duration, key, func, ...)
 	if type(duration) ~= "number" or duration <= 0 then
-		F.Developer.ThrowError("Invalid duration for F.Throttle: must be a positive number")
+		F--[[@as Functions]].Developer.ThrowError("Invalid duration for F.Throttle: must be a positive number")
 	end
 
 	if type(func) ~= "function" then
-		F.Developer.ThrowError("Invalid function for F.Throttle: third argument must be a function")
+		F--[[@as Functions]].Developer.ThrowError("Invalid function for F.Throttle: third argument must be a function")
 	end
 
 	local finalKey = key ~= nil and key or func
@@ -354,6 +363,11 @@ function F.Throttle(duration, key, func, ...)
 	end)
 end
 
+---Wait for condition to be true, then execute callback
+---@param condition function Function that returns boolean when condition is met
+---@param callback function Function to execute when condition is true
+---@param interval number? Check interval in seconds (default: 0.1)
+---@param maxTimes number? Maximum number of checks (default: 10)
 function F.WaitFor(condition, callback, interval, maxTimes)
 	interval = interval or 0.1
 	maxTimes = maxTimes or 10
@@ -379,7 +393,7 @@ function F.WaitFor(condition, callback, interval, maxTimes)
 	local function resumeCoroutine()
 		local success, delay = coroutine.resume(co)
 		if not success then
-			F.Developer.ThrowError("WaitFor coroutine error:", tostring(delay))
+			F--[[@as Functions]].Developer.ThrowError("WaitFor coroutine error:", tostring(delay))
 			return
 		end
 		if coroutine.status(co) ~= "dead" then
@@ -390,6 +404,10 @@ function F.WaitFor(condition, callback, interval, maxTimes)
 	resumeCoroutine()
 end
 
+---Move frame by offset while preserving all anchor points
+---@param frame Frame The frame to move
+---@param x number X offset to apply
+---@param y number Y offset to apply
 function F.MoveFrameWithOffset(frame, x, y)
 	if not frame or not frame.ClearAllPoints then
 		return
@@ -397,6 +415,7 @@ function F.MoveFrameWithOffset(frame, x, y)
 
 	local setPoint = frame.__SetPoint or frame.SetPoint
 
+	---@type table[] Store all current anchor points
 	local pointsData = {}
 
 	for i = 1, frame:GetNumPoints() do
@@ -410,4 +429,20 @@ function F.MoveFrameWithOffset(frame, x, y)
 		local point, relativeTo, relativePoint, xOfs, yOfs = unpack(data)
 		setPoint(frame, point, relativeTo, relativePoint, xOfs + x, yOfs + y)
 	end
+end
+
+---Check if two numbers are approximately equal
+---@param a number? First number
+---@param b number? Second number
+---@return boolean equal True if numbers are approximately equal
+function F.IsAlmost(a, b)
+	if a == nil and b ~= nil or a ~= nil and b == nil then
+		return false
+	end
+
+	if a == nil and b == nil then
+		return true
+	end
+
+	return abs(a - b) < 0.1
 end

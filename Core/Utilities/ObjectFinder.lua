@@ -1,4 +1,6 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+W, F = unpack((select(2, ...)))
 
 local _G = _G
 local coroutine = coroutine
@@ -12,14 +14,23 @@ local type = type
 
 local RunNextFrame = RunNextFrame
 
+---@class ObjectFinder
+---Asynchronous UI object finder utility for efficiently searching through UI hierarchies.
+---Uses coroutines to process objects over multiple frames to prevent UI freezing.
 local ObjectFinder = {} ---@class ObjectFinder
 ObjectFinder.__index = ObjectFinder
 
---- Create a new ObjectFinder instance
---- @param parent Frame? |  Parent object to search within (defaults to UIParent)
---- @return table New ObjectFinder instance
+---Create a new ObjectFinder instance
+---@param parent Frame|nil Parent object to search within (defaults to UIParent)
+---@return ObjectFinder instance New ObjectFinder instance
 function ObjectFinder:New(parent)
 	---@class ObjectFinder
+	---@field parent Frame Parent frame to search within
+	---@field requests table[] Array of search requests
+	---@field found table<number, Frame> Map of found objects by request index
+	---@field objectsPerFrame number Maximum objects to process per frame
+	---@field isRunning boolean Whether search is currently active
+	---@field coroutine thread|nil Active coroutine for processing
 	local o = setmetatable({}, ObjectFinder)
 
 	-- Initialize properties with proper defaults
@@ -33,10 +44,10 @@ function ObjectFinder:New(parent)
 	return o
 end
 
---- Add a search request to the queue
---- @param objectType string Type of UI object to find (e.g., "Frame", "Texture", "Button")
---- @param match function(UIObject): boolean Callback to check if object matches criteria
---- @param callback function(UIObject): void Callback to execute when match is found
+---Add a search request to the queue
+---@param objectType string Type of UI object to find (e.g., "Frame", "Texture", "Button")
+---@param match fun(obj: Frame): boolean Callback to check if object matches criteria
+---@param callback fun(obj: Frame) Callback to execute when match is found
 function ObjectFinder:Find(objectType, match, callback)
 	-- Prevent duplicate requests using reference comparison
 	for _, existingRequest in ipairs(self.requests) do
@@ -56,16 +67,17 @@ function ObjectFinder:Find(objectType, match, callback)
 	})
 end
 
---- Set maximum number of objects to process per frame
---- @param value number Positive integer specifying objects per frame
+---Set maximum number of objects to process per frame
+---@param value number Positive integer specifying objects per frame
 function ObjectFinder:SetObjectsPerFrame(value)
 	if type(value) == "number" and value > 0 then
 		self.objectsPerFrame = math.floor(value)
 	end
 end
 
---- Internal coroutine resumption handler
---- @param self ObjectFinder instance
+---Internal coroutine resumption handler
+---Manages frame-by-frame processing to prevent UI blocking
+---@param self ObjectFinder The ObjectFinder instance
 local function processNextFrame(self)
 	if not self.isRunning or not self.coroutine then
 		return
@@ -75,7 +87,7 @@ local function processNextFrame(self)
 	if not success then
 		self.isRunning = false
 		self.coroutine = nil
-		F.Developer.ThrowError(errorMessage)
+		F--[[@as Functions]].Developer.ThrowError(errorMessage)
 		return
 	end
 
@@ -89,7 +101,8 @@ local function processNextFrame(self)
 	end
 end
 
---- Start processing queued search requests
+---Start processing queued search requests
+---Creates a coroutine to search through UI objects over multiple frames
 function ObjectFinder:Start()
 	if self.isRunning then
 		return
@@ -124,7 +137,7 @@ function ObjectFinder:Start()
 								self.found[requestIndex] = obj
 								if request.callback then
 									RunNextFrame(function()
-										xpcall(request.callback, F.Developer.ThrowError, obj)
+										xpcall(request.callback, F--[[@as Functions]].Developer.ThrowError, obj)
 									end)
 								end
 							end
@@ -143,7 +156,8 @@ function ObjectFinder:Start()
 	processNextFrame(self)
 end
 
---- Immediately stop active search and clear state
+---Immediately stop active search and clear state
+---Terminates the search coroutine and resets the running state
 function ObjectFinder:Stop()
 	self.isRunning = false
 	self.coroutine = nil -- Break execution chain

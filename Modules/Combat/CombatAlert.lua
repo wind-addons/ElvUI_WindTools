@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local C = W:NewModule("CombatAlert", "AceEvent-3.0")
 local A = F.Animation
 

@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
 local options = W.options.announcement.args
 local A = W:GetModule("Announcement")
 local SB = W:GetModule("SwitchButtons")

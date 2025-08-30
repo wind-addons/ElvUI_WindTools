@@ -1,4 +1,7 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@class Functions
+local E ---@type table
+W, F, E = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
 
 local _G = _G
@@ -6,28 +9,32 @@ local ceil = ceil
 local format = format
 local strlower = strlower
 local strupper = strupper
+local tContains = tContains
 
+---@class Media
+---Media management system for WindTools addon.
+---Handles icons, textures, fonts, sounds and provides utility functions for media rendering.
 W.Media = {
 	Icons = {},
 	Textures = {},
 }
 
-local MediaPath = "Interface/Addons/ElvUI_WindTools/Media/"
+local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\"
 
---[[
-    获取图标字符串
-    @param {string} icon 图标路径
-    @param {number} size 图标大小
-    @returns {string} 图标字符串
-]]
 do
 	local cuttedIconTemplate = "|T%s:%d:%d:0:0:64:64:5:59:5:59|t"
 	local cuttedIconAspectRatioTemplate = "|T%s:%d:%d:0:0:64:64:%d:%d:%d:%d|t"
 	local textureTemplate = "|T%s:%d:%d|t"
 	local aspectRatioTemplate = "|T%s:0:aspectRatio|t"
 	local textureWithTexCoordTemplate = "|T%s:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d|t"
-	local s = 14
+	local defaultSize = 14
 
+	---Generate icon string with proper formatting and aspect ratio handling
+	---@param icon string The icon texture path
+	---@param height number|nil Icon height in pixels
+	---@param width number|nil Icon width in pixels
+	---@param aspectRatio boolean|nil Whether to maintain aspect ratio
+	---@return string iconString The formatted icon string for display
 	function F.GetIconString(icon, height, width, aspectRatio)
 		if aspectRatio and height and height > 0 and width and width > 0 then
 			local proportionality = height / width
@@ -40,18 +47,30 @@ do
 		end
 
 		width = width or height
-		return format(cuttedIconTemplate, icon, height or s, width or s)
+		return format(cuttedIconTemplate, icon, height or defaultSize, width or defaultSize)
 	end
 
+	---Generate texture string for UI display
+	---@param texture string The texture path
+	---@param height number|nil Texture height in pixels
+	---@param width number|nil Texture width in pixels
+	---@param aspectRatio boolean|nil Whether to preserve aspect ratio
+	---@return string textureString The formatted texture string
 	function F.GetTextureString(texture, height, width, aspectRatio)
 		if aspectRatio then
 			return format(aspectRatioTemplate, texture)
 		else
 			width = width or height
-			return format(textureTemplate, texture, height or s, width or s)
+			return format(textureTemplate, texture, height or defaultSize, width or defaultSize)
 		end
 	end
 
+	---Generate texture string with custom texture coordinates
+	---@param texture string The texture path
+	---@param width number|table|nil Texture width (defaults to size if not provided)
+	---@param size table Table with x and y dimensions of the texture atlas
+	---@param texCoord number[] Array of texture coordinates [left, right, top, bottom]
+	---@return string textureString The formatted texture string with coordinates
 	function F.GetTextureStringFromTexCoord(texture, width, size, texCoord)
 		width = width or size
 
@@ -72,7 +91,11 @@ do
 	end
 end
 
+---Race atlas string generation utilities
+---Provides race icon atlas mappings for all available WoW races
 do
+	---Mapping of race names to atlas strings by gender
+	---@type table<string, table<string, string>>
 	local raceAtlasMap = {
 		["Human"] = {
 			["Male"] = "raceicon128-human-male",
@@ -176,6 +199,12 @@ do
 		},
 	}
 
+	---Generate race atlas string for UI display
+	---@param englishRace string The English race name (e.g., "Human", "Orc")
+	---@param gender number Gender code (2 = Male, 3 = Female)
+	---@param height number|nil Atlas height in pixels (default: 16)
+	---@param width number|nil Atlas width in pixels (default: 16)
+	---@return string|nil atlasString The formatted atlas string, or nil if invalid parameters
 	function F.GetRaceAtlasString(englishRace, gender, height, width)
 		local englishGender = gender == 2 and "Male" or gender == 3 and "Female"
 		if not englishGender or not englishRace or not raceAtlasMap[englishRace] then
@@ -185,31 +214,41 @@ do
 	end
 end
 
+---Get compatible font name with language suffix if needed
+---@param name string The base font name
+---@return string compatibleName Font name with optional " (en)" suffix for compatibility
 function F.GetCompatibleFont(name)
 	return name .. (W.CompatibleFont and " (en)" or "")
 end
 
+---Add media file to WindTools media registry
+---@param name string The media identifier name
+---@param file string The file path relative to media type folder
+---@param type string The media type ("Icons" or "Textures")
 local function AddMedia(name, file, type)
 	W.Media[type][name] = MediaPath .. type .. "/" .. file
 end
 
+---Custom header texture system
+---Provides localized header graphics for different UI sections
 do
 	AddMedia("customHeaders", "CustomHeaders.tga", "Textures")
 
-	-- Custom Header
+	---Texture configuration for custom headers
+	---@type table
 	local texTable = {
 		texWidth = 2048,
 		texHeight = 256,
 		headerWidth = 340,
 		headerHeight = 40,
 		type = {
-			-- OffsetX
+			-- OffsetX coordinates for different header types
 			SpecialAchievements = 0,
 			Raids = 348,
 			MythicPlus = 693,
 		},
 		languages = {
-			-- OffsetY
+			-- OffsetY coordinates for different languages
 			zhCN = 0,
 			zhTW = 52,
 			koKR = 103,
@@ -218,6 +257,10 @@ do
 		},
 	}
 
+	---Get custom header texture string for specified type and scale
+	---@param name string The header type name ("SpecialAchievements", "Raids", "MythicPlus")
+	---@param scale number|nil Scale factor for the header (default: 1)
+	---@return string|nil headerString The formatted header texture string, or nil if invalid
 	function F.GetCustomHeader(name, scale)
 		local offsetX = texTable.type[name]
 		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
@@ -241,14 +284,18 @@ do
 	end
 end
 
+---WindTools title texture system
+---Provides localized title graphics
 do
 	AddMedia("title", "WindToolsTitle.tga", "Textures")
 
+	---Texture configuration for WindTools title
+	---@type table
 	local texTable = {
 		texHeight = 1024,
 		titleHeight = 150,
 		languages = {
-			-- OffsetY
+			-- OffsetY coordinates for different languages
 			zhCN = 0,
 			zhTW = 160,
 			koKR = 320,
@@ -257,6 +304,8 @@ do
 		},
 	}
 
+	---Get texture coordinates for WindTools title based on current locale
+	---@return number[]|nil texCoords Array of texture coordinates [left, right, top, bottom], or nil if invalid
 	function F.GetTitleTexCoord()
 		local offsetY = texTable.languages[E.global.general.locale] or texTable.languages["enUS"]
 		if not offsetY then
@@ -267,9 +316,13 @@ do
 	end
 end
 
+---Widget tips texture system
+---Provides localized tooltip graphics for UI widgets
 do
 	AddMedia("widgetsTips", "WidgetsTips.tga", "Textures")
 
+	---Texture configuration for widget tips
+	---@type table
 	local texTable = {
 		texWidth = 2048,
 		texHeight = 1024,
@@ -289,6 +342,9 @@ do
 		},
 	}
 
+	---Get texture coordinates for widget tips
+	---@param widgetType string The widget type ("button", "checkBox", "tab", "treeGroupButton", "slider")
+	---@return number[]|nil texCoords Array of normalized texture coordinates [left, right, top, bottom], or nil if invalid
 	function F.GetWidgetTips(widgetType)
 		if not texTable.type[widgetType] then
 			return
@@ -311,6 +367,9 @@ do
 		}
 	end
 
+	---Get widget tips as formatted texture string for display
+	---@param widgetType string The widget type ("button", "checkBox", "tab", "treeGroupButton", "slider")
+	---@return string|nil tipsString The formatted texture string at 0.4 scale, or nil if invalid
 	function F.GetWidgetTipsString(widgetType)
 		if not texTable.type[widgetType] then
 			return
@@ -340,7 +399,15 @@ do
 	end
 end
 
+---Role icon texture coordinates system
+---Provides texture coordinates for LFG role icons
 do
+	---Get texture coordinates for role icons
+	---@param role string The role name ("TANK", "DPS", "DAMAGER", "HEALER", "LEADER", "READY", "PENDING", "REFUSE")
+	---@return number? left Left texture coordinate
+	---@return number? right Right texture coordinate
+	---@return number? top Top texture coordinate
+	---@return number? bottom Bottom texture coordinate
 	function F.GetRoleTexCoord(role)
 		if role == "TANK" then
 			return 0.32 / 9.03, 2.04 / 9.03, 2.65 / 9.03, 4.3 / 9.03
@@ -357,27 +424,40 @@ do
 		elseif role == "REFUSE" then
 			return 2.68 / 9.03, 4.4 / 9.03, 5.02 / 9.03, 6.7 / 9.03
 		end
+		return nil, nil, nil, nil
 	end
 
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")
 end
 
+---Get list of available class icon styles
+---@return string[] styles Array of available style names
 function F.GetClassIconStyleList()
 	return { "flat", "flatborder", "flatborder2", "round", "square", "warcraftflat" }
 end
 
+---Get class icon texture path with specified style
+---@param class string The class name (case insensitive)
+---@param style string The icon style from GetClassIconStyleList()
+---@return string|nil iconPath The full texture path, or nil if invalid parameters
 function F.GetClassIconWithStyle(class, style)
-	if not class or not F.In(strupper(class), _G.CLASS_SORT_ORDER) then
+	if not class or not tContains(_G.CLASS_SORT_ORDER, strupper(class)) then
 		return
 	end
 
-	if not style or not F.In(style, F.GetClassIconStyleList()) then
+	if not style or not tContains(F.GetClassIconStyleList(), style) then
 		return
 	end
 
 	return MediaPath .. "Icons/ClassIcon/" .. strlower(class) .. "_" .. style .. ".tga"
 end
 
+---Generate class icon string with specified style and dimensions
+---@param class string The class name (case insensitive)
+---@param style string The icon style from GetClassIconStyleList()
+---@param width number|nil Icon width in pixels
+---@param height number|nil Icon height in pixels (defaults to width if not specified)
+---@return string|nil iconString The formatted icon string, or nil if invalid parameters
 function F.GetClassIconStringWithStyle(class, style, width, height)
 	local path = F.GetClassIconWithStyle(class, style)
 	if not path then
@@ -395,6 +475,8 @@ function F.GetClassIconStringWithStyle(class, style, width, height)
 	return format("|T%s:%d:%d:0:0:64:64:0:64:0:64|t", path, height, width)
 end
 
+---Media file registrations
+---Register common textures and icons for WindTools
 AddMedia("vignetting", "Vignetting.tga", "Textures")
 AddMedia("sword", "Sword.tga", "Textures")
 AddMedia("shield", "Shield.tga", "Textures")

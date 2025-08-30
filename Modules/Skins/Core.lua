@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions
+local W, F, E = unpack((select(2, ...))) ---@type WindTools, Functions, table
 local LSM = E.Libs.LSM
 local S = W.Modules.Skins ---@class Skins
 local ES = E.Skins

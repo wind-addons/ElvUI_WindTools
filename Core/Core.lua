@@ -1,4 +1,7 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+local E ---@type table, table, table, table
+W, F, E = unpack((select(2, ...)))
 
 local _G = _G
 local format = format
@@ -87,6 +90,27 @@ W.LinkOperations = {
 	end,
 }
 
+
+---Registers a link operation function for a specific feature.
+---
+---**WindTools Link Operations**
+---1. Print `|Hwtlink:feature:arg1:arg2:arg3:...` in the chat
+---2. Click the link, it will trigger the corresponding function with the provided arguments
+---```
+---local func = W.LinkOperations[feature]
+---func(arg1, arg2, arg3, ...)
+---```
+---
+---@param feature string|nil The name/identifier of the feature registering the operation
+---@param func function|nil The function to be called when the link operation is triggered
+function W:RegisterLinkOperation(feature, func)
+	if not feature or not func then
+		return
+	end
+
+	W.LinkOperations[feature] = func
+end
+
 function W:ItemRefTooltip_SetHyperlink(_, data)
 	if strsub(data, 1, 6) ~= "wtlink" then
 		return
@@ -116,10 +140,8 @@ function W:AddCustomLinkSupport()
 	end
 end
 
---[[
-    WindTools module registration
-    @param {string} name The name of module
-]]
+---Register a new module
+---@param name string The name of the module
 function W:RegisterModule(name)
 	if not name then
 		F.Developer.ThrowError("The name of module is required!")

@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
 F.Animation = {}
 local A = F.Animation
 
@@ -19,6 +19,7 @@ local CreateFrame = CreateFrame
     @param {isMirror} [boolean] 使材质沿 y 轴翻折
     @returns object 创建的窗体
 ]]
+---@deprecated Just use LibAnim
 function A.CreateAnimationFrame(name, parent, strata, level, hidden, texture, isMirror)
 	parent = parent or E.UIParent
 
@@ -59,6 +60,7 @@ end
     @param {string} [name] 动画组名
     @returns object 生成的动画组
 ]]
+---@deprecated Just use LibAnim
 function A.CreateAnimationGroup(frame, name)
 	if not frame then
 		F.Developer.LogDebug("Animation.CreateAnimationGroup: frame not found")
@@ -78,6 +80,7 @@ end
     @param {object} animationGroup 从属动画组
     @param {string} name 动画索引名
 ]]
+---@deprecated Just use LibAnim
 function A.AddTranslation(animationGroup, name)
 	if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
 		return
@@ -97,6 +100,7 @@ end
     @param {object} animationGroup 从属动画组
     @param {string} name 动画索引名
 ]]
+---@deprecated Just use LibAnim
 function A.AddFadeIn(animationGroup, name)
 	if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
 		F.Developer.LogDebug("Animation.AddFadeIn: animation group not found")
@@ -121,6 +125,7 @@ end
     @param {object} animationGroup 从属动画组
     @param {string} name 动画索引名
 ]]
+---@deprecated Just use LibAnim
 function A.AddFadeOut(animationGroup, name)
 	if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
 		F.Developer.LogDebug("Animation.AddFadeOut: animation group not found")
@@ -147,6 +152,7 @@ end
     @param {number[2]} fromScale 原尺寸 x, y
     @param {number[2]} toScale 动画后尺寸 x, y
 ]]
+---@deprecated Just use LibAnim
 function A.AddScale(animationGroup, name, fromScale, toScale)
 	if not (animationGroup and animationGroup:IsObjectType("AnimationGroup")) then
 		F.Developer.LogDebug("Animation.AddScale: animation group not found")
@@ -180,6 +186,7 @@ end
     @param {object} frame 动画窗体
     @param {object} animationGroup 动画组
 ]]
+---@deprecated Just use LibAnim
 function A.PlayAnimationOnShow(frame, animationGroup)
 	if not animationGroup or type(animationGroup) == "string" then
 		animationGroup = frame[animationGroup]
@@ -201,6 +208,7 @@ end
     @param {object} animationGroup 动画组
     @param {function} [callback] 结束时的回调
 ]]
+---@deprecated Just use LibAnim
 function A.CloseAnimationOnHide(frame, animationGroup, callback)
 	if not animationGroup or type(animationGroup) == "string" then
 		animationGroup = frame[animationGroup]
@@ -224,6 +232,7 @@ end
     @param {object} animationGroup 动画组
     @param {number} speed 相较于原速度的倍数
 ]]
+---@deprecated Just use LibAnim
 function A.SpeedAnimationGroup(animationGroup, speed)
 	if not speed or type(speed) ~= "number" then
 		F.Developer.LogDebug("Animation.SpeedAnimationGroup: speed not found")

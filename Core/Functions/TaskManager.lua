@@ -1,4 +1,6 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@type WindTools
+local F ---@class Functions
+W, F = unpack((select(2, ...)))
 
 local module = W:NewModule("TaskManager", "AceEvent-3.0")
 
@@ -11,29 +13,40 @@ local xpcall = xpcall
 local InCombatLockdown = InCombatLockdown
 local hasEnteredWorld = false
 
+---@class Task
+---@field callback function The function to call
+---@field args table The arguments to pass to the function
+
+---@class TaskManager Task queue management system
+---@field Types table Task type constants
+---@field Queue table Task queues organized by type
 F.TaskManager = {
 	Types = {
 		AfterCombat = 1,
 		AfterLogin = 2,
 	},
 	Queue = {
-		-- { callback, args }
 		AfterCombat = {},
 		AfterLogin = {},
 	},
 }
 
+---Initialize the TaskManager module
 function module:OnInitialize()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
+---Run a single task with error handling
+---@param callback function The callback function to execute
+---@param args table? Arguments to pass to the callback
 local function runTask(callback, args)
 	if callback and type(callback) == "function" then
 		xpcall(callback, F.Developer.ThrowError, unpack(args or {}))
 	end
 end
 
+---Event handler for leaving combat - runs queued after-combat tasks
 function module:PLAYER_REGEN_ENABLED()
 	if #F.TaskManager.Queue.AfterCombat > 0 then
 		for i = 1, #F.TaskManager.Queue.AfterCombat do
@@ -43,6 +56,7 @@ function module:PLAYER_REGEN_ENABLED()
 	end
 end
 
+---Event handler for entering world - runs queued after-login tasks
 function module:PLAYER_ENTERING_WORLD()
 	hasEnteredWorld = true
 

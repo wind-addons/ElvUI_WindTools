@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
 local CH = W:NewModule("ClassHelper", "AceEvent-3.0", "AceHook-3.0")
 
 local pairs = pairs
@@ -108,8 +108,6 @@ function CH:Initialize()
 
 	self.initialized = true
 end
-
-F.Developer.DelayInit(CH, 2)
 
 function CH:ProfileUpdate()
 	self.db = E.db.WT.combat.classHelper

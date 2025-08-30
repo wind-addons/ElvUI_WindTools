@@ -1,4 +1,7 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W ---@class WindTools
+local F ---@type Functions
+local E, L, V, P, G ---@type table, table, table, table, table
+W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local format = format
 local pairs = pairs

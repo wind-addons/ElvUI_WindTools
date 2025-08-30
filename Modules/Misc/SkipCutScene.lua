@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...)))
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
 local M = W.Modules.Misc
 
 local _G = _G
@@ -94,13 +94,13 @@ function M:MovieCinematicStarted(movieType, movieID)
 end
 
 function M:AddCutSceneReplayCustomLink()
-	W.LinkOperations.cutscene = function(movieID, ...)
+	W:RegisterLinkOperation("cutscene", function(movieID, ...)
 		if not movieID then
 			return
 		end
 		E.global.WT.misc.watched.movies[movieID] = nil
 		_G.MovieFrame_PlayMovie(_G.MovieFrame, movieID)
-	end
+	end)
 end
 
 function M:HookSubtitlesFrame()

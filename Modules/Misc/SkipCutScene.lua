@@ -4,8 +4,6 @@ local M = W.Modules.Misc
 local _G = _G
 local format = format
 local hooksecurefunc = hooksecurefunc
-local strmatch = strmatch
-local strsub = strsub
 local time = time
 
 local CinematicFrame_CancelCinematic = CinematicFrame_CancelCinematic
@@ -73,7 +71,7 @@ local function Subtitles_OnMovieCinematicPlay_Callback()
 	end
 end
 
-function M:MoiveCinematicStarted(movieType, movieID)
+function M:MovieCinematicStarted(movieType, movieID)
 	-- /run MovieFrame_PlayMovie(MovieFrame, 993)
 	if not E.private.WT or movieType ~= Enum_CinematicType_GameMovie then
 		return
@@ -91,22 +89,17 @@ function M:MoiveCinematicStarted(movieType, movieID)
 	else
 		setForceSkipMovie(true)
 		_G.MovieFrame_StopMovie(_G.MovieFrame)
-		F.Print(format("%s |cff71d5ff|Hwtcutscene:%s|h[%s]|h|r", L["Skipped the cutscene."], movieID, L["Replay"]))
+		F.Print(format("%s |cff71d5ff|Hwtlink:cutscene:%s|h[%s]|h|r", L["Skipped the cutscene."], movieID, L["Replay"]))
 	end
 end
 
 function M:AddCutSceneReplayCustomLink()
-	local SetHyperlink = _G.ItemRefTooltip.SetHyperlink
-	function _G.ItemRefTooltip:SetHyperlink(data, ...)
-		if strsub(data, 1, 10) == "wtcutscene" then
-			local movieID = strmatch(data, "wtcutscene:(%d+)")
-			if movieID then
-				E.global.WT.misc.watched.movies[movieID] = nil
-				_G.MovieFrame_PlayMovie(_G.MovieFrame, movieID)
-				return
-			end
+	W.LinkOperations.cutscene = function(movieID, ...)
+		if not movieID then
+			return
 		end
-		SetHyperlink(self, data, ...)
+		E.global.WT.misc.watched.movies[movieID] = nil
+		_G.MovieFrame_PlayMovie(_G.MovieFrame, movieID)
 	end
 end
 
@@ -117,7 +110,7 @@ function M:HookSubtitlesFrame()
 
 	-- Try to hide SubtitlesFrame when it shows after delay
 	hooksecurefunc(_G.SubtitlesFrame, "Show", function(frame)
-		if not self.forceSkipMovie then
+		if not forceSkipMovie then
 			return
 		end
 
@@ -145,7 +138,7 @@ function M:SkipCutScene()
 	end
 
 	self:AddCutSceneReplayCustomLink()
-	self:SecureHook("CinematicStarted", "MoiveCinematicStarted") -- Movie
+	self:SecureHook("CinematicStarted", "MovieCinematicStarted") -- Movie
 	EventRegistry:RegisterCallback("CinematicFrame.CinematicStarting", CinematicFrame_CinematicStarting_Callback) -- Cinematic
 	EventRegistry:RegisterCallback("Subtitles.OnMovieCinematicPlay", Subtitles_OnMovieCinematicPlay_Callback) -- Subtitles
 

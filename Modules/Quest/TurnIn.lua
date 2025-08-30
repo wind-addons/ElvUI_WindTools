@@ -342,6 +342,7 @@ function TI:QUEST_GREETING()
 				and not skipRepeatable
 				and not self:IsPaused("ACCEPT")
 			then
+				---@diagnostic disable-next-line: redundant-parameter -- The API doc is wrong
 				SelectAvailableQuest(index)
 			end
 		end
@@ -398,7 +399,7 @@ function TI:GOSSIP_SHOW()
 		return
 	end
 
-	local firstGossipOptionID = gossipOptions[1].gossipOptionID
+	local firstGossipOptionID = gossipOptions[1].gossipOptionID --[[@as number]]
 
 	if not (self.db and self.db.smartChat) then
 		return
@@ -579,7 +580,7 @@ function TI:QUEST_COMPLETE()
 	if choices <= 1 then
 		GetQuestReward(1)
 	elseif choices > 1 and self.db and self.db.selectReward then
-		local bestSellPrice, bestIndex = 0
+		local bestSellPrice, bestIndex = 0, nil
 
 		for index = 1, choices do
 			local link = GetQuestItemLink("choice", index)

@@ -2,6 +2,7 @@ local W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local _G = _G
 local format = format
+local gmatch = gmatch
 local pairs = pairs
 local pcall = pcall
 local strmatch = strmatch
@@ -73,6 +74,10 @@ _G["BINDING_NAME_CLICK WTExtraBindingButtonLogout:LeftButton"] = L["Logout"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveGroup:LeftButton"] = L["Leave Party"]
 _G["BINDING_NAME_CLICK WTExtraBindingButtonLeaveDelve:LeftButton"] = L["Leave Delve"]
 
+-- WindTools Link Operations
+-- 1. Print "|Hwtlink:feature:arg1:arg2:arg3:..." in the chat
+-- 2. Click the link, it will trigger the corresponding function with the provided arguments
+-- => W.LinkOperations[feature](arg1, arg2, arg3, ...)
 W.LinkOperations = {
 	["changelog"] = E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG.OnAccept,
 	["invite"] = function(name)
@@ -87,11 +92,21 @@ function W:ItemRefTooltip_SetHyperlink(_, data)
 		return
 	end
 
-	local pattern = "wtlink:([%w,;%.]+):([%w,;%.]*):"
+	local feature, argsString = strmatch(data, "^wtlink:([^:]+)(.*)$")
+	if not feature then
+		return
+	end
 
-	local feature, ctx = strmatch(data, pattern)
+	local args = {}
+	if argsString and argsString ~= "" then
+		argsString = strsub(argsString, 2)
+		for arg in gmatch(argsString, "[^:]+") do
+			table.insert(args, arg)
+		end
+	end
+
 	if feature and W.LinkOperations[feature] then
-		W.LinkOperations[feature](ctx)
+		W.LinkOperations[feature](unpack(args))
 	end
 end
 

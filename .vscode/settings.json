@@ -27,7 +27,8 @@
     "Libraries/LibObjectiveProgress-1.0/**",
     "Libraries/LibOpenRaid/**",
     "Libraries/LibRangeCheck-3.0/**",
-    "Libraries/TinyLibs/**"
+    "Libraries/TinyLibs/**",
+    "wow-api"
   ],
   "Lua.diagnostics.globals": [
     "ITEM_LEVEL",
@@ -101,12 +102,20 @@
         "plain",
         "--codes",
         "--ranges",
-        ["$config", "--config", "$config"],
+        [
+          "$config",
+          "--config",
+          "$config"
+        ],
         "-"
       ],
-      "configFiles": [".luacheckrc"],
+      "configFiles": [
+        ".luacheckrc"
+      ],
       "enabled": true,
-      "languages": ["lua"],
+      "languages": [
+        "lua"
+      ],
       "name": "luacheck",
       "url": "https://luacheck.readthedocs.io/en/stable/"
     }

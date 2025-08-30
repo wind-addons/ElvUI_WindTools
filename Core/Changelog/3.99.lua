@@ -4,53 +4,68 @@ W.Changelog[399] = {
 	RELEASE_DATE = "TBD",
 	IMPORTANT = {
 		["zhCN"] = {
+			"大量的过期代码整理.",
 			"优化了一些内部函数的性能.",
 			"重构了对第三方函数库美化的核心逻辑.",
 			"由于暴雪已经修复相关Bug, 移除对地下堡部分事件的节流处理.",
+			"优化了韩语翻译文本. 感谢 Crazyyoungs",
 		},
 		["zhTW"] = {
+			"大量的過期代碼整理.",
 			"優化了一些內部函式的性能.",
 			"重構了對第三方函式庫美化的核心邏輯.",
 			"由於暴雪已經修復相關Bug, 移除對地下堡部分事件的節流處理.",
+			"優化了韓文翻譯文本. 感謝 Crazyyoungs",
 		},
 		["enUS"] = {
+			"Massive cleanup of deprecated code.",
 			"Optimize the performance of some internal functions.",
 			"Refactor the core logic for third-party library skinning.",
 			"Remove throttling for some Delves events since Blizzard has fixed the related bugs.",
+			"Optimize Korean translation text. Thanks Crazyyoungs.",
 		},
 		["koKR"] = {
+			"대량의 사용되지 않는 코드를 정리했습니다.",
 			"일부 내부 함수의 성능을 최적화했습니다.",
 			"서드파티 라이브러리 외관의 핵심 로직을 리팩터링했습니다.",
 			"블리자드에서 관련 버그를 수정했으므로 지하 던전 일부 이벤트의 제한 처리를 제거했습니다.",
+			"한국어 번역 텍스트를 최적화했습니다. Crazyyoungs에게 감사드립니다.",
 		},
 		["ruRU"] = {
+			"Массовая очистка устаревшего кода.",
 			"Оптимизирована производительность некоторых внутренних функций.",
 			"Рефакторинг основной логики для стилизации сторонних библиотек.",
 			"Удалено ограничение для некоторых событий подземелий, поскольку Blizzard исправила связанные ошибки.",
+			"Оптимизирован текст перевода на корейский. Спасибо Crazyyoungs.",
 		},
 	},
 	NEW = {
 		["zhCN"] = {
+			"[美化皮肤] 新增了暴雪区域地图的美化外观.",
 			"[美化皮肤] 新增了 WhisperPop 美化外观. 感谢 DaguDuiyuan",
 			"[美化皮肤] 新增了 Paragon Reputation 美化外观.",
 			"[美化皮肤] 新增了 Manuscripts Journal 美化外观.",
 		},
 		["zhTW"] = {
+			"[美化皮膚] 新增了暴雪區域地圖的美化外觀.",
 			"[美化皮膚] 新增了 WhisperPop 美化外觀. 感謝 DaguDuiyuan",
 			"[美化皮膚] 新增了 Paragon Reputation 美化外觀.",
 			"[美化皮膚] 新增了 Manuscripts Journal 美化外觀.",
 		},
 		["enUS"] = {
+			"[Skins] Add Blizzard Battlefield Map skin.",
 			"[Skins] Add WhisperPop skin. Thanks DaguDuiyuan.",
 			"[Skins] Add Paragon Reputation skin.",
 			"[Skins] Add Manuscripts Journal skin.",
 		},
 		["koKR"] = {
+			"[스킨] 블리자드 전장 지도 외관 추가.",
 			"[스킨] WhisperPop 외관 추가. DaguDuiyuan에게 감사드립니다.",
 			"[스킨] Paragon Reputation 외관 추가.",
 			"[스킨] Manuscripts Journal 외관 추가.",
 		},
 		["ruRU"] = {
+			"[Скины] Добавлен скин для Blizzard Battlefield Map.",
 			"[Скины] Добавлен скин для WhisperPop. Спасибо DaguDuiyuan.",
 			"[Скины] Добавлен скин для Paragon Reputation.",
 			"[Скины] Добавлен скин для Manuscripts Journal.",
@@ -69,6 +84,7 @@ W.Changelog[399] = {
 			"[游戏条] 时间部分新增一个选项, 可以防止在战斗中误触导致界面重载.",
 			"[游戏条] 重构了随机炉石功能，现在支持盟约炉石的使用, 同时点击按钮后立即更换下一个不同的炉石.",
 			"[预组队列表] 右侧面板新增了字体大小调整的功能.",
+			"[世界地图] 修复了区域地图的去除迷雾功能.",
 		},
 		["zhTW"] = {
 			"修復了啟用進階戰鬥事件追蹤時可能出現的錯誤.",
@@ -82,6 +98,7 @@ W.Changelog[399] = {
 			"[遊戲條] 時間部分新增一個選項, 可以防止在戰鬥中誤觸導致介面重載.",
 			"[遊戲條] 重構了隨機爐石功能，現在支援誓盟爐石的使用, 同時點擊按鈕後立即更換下一個不同的爐石.",
 			"[預組隊列表] 右側面板新增了字型大小調整的功能.",
+			"[世界地圖] 修復了區域地圖的去除迷霧功能.",
 		},
 		["enUS"] = {
 			"Fix errors that could occur when advanced combat event tracking was enabled.",
@@ -95,6 +112,7 @@ W.Changelog[399] = {
 			"[Game Bar] Add an option in the time section to prevent accidental triggering of UI reload during combat.",
 			"[Game Bar] Refactor the random hearthstone feature, now supports covenant hearthstones and immediately switches to the next different hearthstone after clicking the button.",
 			"[LFG List] Add font size adjustment feature to the right panel.",
+			"[World Map] Fix the reveal feature for the battlefield map.",
 		},
 		["koKR"] = {
 			"고급 전투 이벤트 추적이 활성화되었을 때 발생할 수 있는 오류를 수정했습니다.",
@@ -108,6 +126,7 @@ W.Changelog[399] = {
 			"[게임 바] 시간 섹션에 전투 중 실수로 UI 재로드를 트리거하는 것을 방지하는 옵션을 추가했습니다.",
 			"[게임 바] 랜덤 귀환석 기능을 재구성하여 이제 성약 귀환석을 지원하고 버튼을 클릭한 후 즉시 다음 다른 귀환석으로 전환됩니다.",
 			"[LFG 목록] 오른쪽 패널에 글꼴 크기 조정 기능을 추가했습니다.",
+			"[세계 지도] 지역 지도에서 안개 제거 기능을 수정했습니다.",
 		},
 		["ruRU"] = {
 			"Исправлены ошибки, которые могли возникнуть при включенном расширенном отслеживании боевых событий.",
@@ -121,6 +140,7 @@ W.Changelog[399] = {
 			"[Игровая панель] Добавлена опция в секции времени для предотвращения случайного запуска перезагрузки UI во время боя.",
 			"[Игровая панель] Переработана функция случайного камня возвращения, теперь поддерживает камни ковенантов и сразу переключается на следующий другой камень после нажатия кнопки.",
 			"[LFG список] Добавлена функция изменения размера шрифта для правой панели.",
+			"[Мировая карта] Исправлена функция раскрытия для карты поля боя.",
 		},
 	},
 }

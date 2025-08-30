@@ -10,14 +10,13 @@ local tinsert = tinsert
 local tonumber = tonumber
 
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
-local CreateFrame = CreateFrame
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local InCombatLockdown = InCombatLockdown
 
 local C_UI_Reload = C_UI.Reload
 
-local ACCEPT = _G.ACCEPT
-local CANCEL = _G.CANCEL
+---@diagnostic disable-next-line: undefined-field
+local ACCEPT, CANCEL = _G.ACCEPT, _G.CANCEL
 
 W.RegisteredModules = {}
 W.Changelog = {}
@@ -77,17 +76,22 @@ W.LinkOperations = {
 	["changelog"] = E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG.OnAccept,
 }
 
+function W:ItemRefTooltip_SetHyperlink(_, data)
+	if strsub(data, 1, 6) ~= "wtlink" then
+		return
+	end
+
+	local pattern = "wtlink:([%w,;%.]+):([%w,;%.]*):"
+
+	local feature, ctx = strmatch(data, pattern)
+	if feature and W.LinkOperations[feature] then
+		W.LinkOperations[feature](ctx)
+	end
+end
+
 function W:AddCustomLinkSupport()
-	local ItemRefTooltip_SetHyperlink = _G.ItemRefTooltip.SetHyperlink
-	function _G.ItemRefTooltip.SetHyperlink(tt, data, ...)
-		if strsub(data, 1, 6) == "wtlink" then
-			local pattern = "wtlink:([%w,;%.]+):([%w,;%.]*):"
-			local feature_name, context_string = strmatch(data, pattern)
-			if feature_name and W.LinkOperations[feature_name] then
-				W.LinkOperations[feature_name](context_string)
-			end
-		end
-		ItemRefTooltip_SetHyperlink(tt, data, ...)
+	if not W:IsHooked(_G.ItemRefTooltip, "SetHyperlink") then
+		W:Hook(_G.ItemRefTooltip, "SetHyperlink", "ItemRefTooltip_SetHyperlink", true)
 	end
 end
 

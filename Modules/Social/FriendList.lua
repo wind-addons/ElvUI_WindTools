@@ -35,8 +35,7 @@ local MediaPath = "Interface\\Addons\\ElvUI_WindTools\\Media\\FriendList\\"
 
 local cache = {}
 
--- Manully code the atlas "battlenetclienticon"
--- note: Destiny 2 is not included
+-- Manually code the atlas "battlenetclienticon"
 local projectCodes = {
 	["ANBS"] = "Diablo Immortal",
 	["Hero"] = "Heroes of the Storm",

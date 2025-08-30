@@ -56,7 +56,7 @@ local checkFunctions = {
 	end,
 }
 
-local function GetCommuniryChannelByName(text)
+local function GetCommunityChannelByName(text)
 	local channelList = { GetChannelList() }
 	for k, v in pairs(channelList) do
 		local clubId = strmatch(tostring(v), "Community:(.-):")
@@ -365,7 +365,7 @@ function CB:UpdateBar()
 				if mouseButton ~= "LeftButton" then
 					return
 				end
-				local clubChannelId = GetCommuniryChannelByName(name)
+				local clubChannelId = GetCommunityChannelByName(name)
 				if not clubChannelId then
 					self:Log(
 						"warning",

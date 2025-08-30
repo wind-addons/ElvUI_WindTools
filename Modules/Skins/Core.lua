@@ -539,7 +539,7 @@ end
 
 ---Proxy function to call ElvUI Skins functions
 ---@param funcName string The function name in ElvUI Skins
----@param frame Frame The frame to pass to the function
+---@param frame any The frame to pass to the function
 ---@param ... any Additional arguments to pass
 function S:Proxy(funcName, frame, ...)
 	if not frame then

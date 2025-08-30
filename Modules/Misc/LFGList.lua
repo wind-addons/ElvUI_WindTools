@@ -1,7 +1,7 @@
 local W, F, E, L = unpack((select(2, ...)))
 local KI = W:GetModule("KeystoneInfo")
 local S = W.Modules.Skins ---@type Skins
-local MF = W.Modules.MoveFrames
+local MF = W.Modules.MoveFrames ---@type MoveFrames
 local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color

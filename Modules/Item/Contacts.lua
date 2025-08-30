@@ -2,7 +2,7 @@ local W, F, E, L = unpack((select(2, ...)))
 local CT = W:NewModule("Contacts", "AceHook-3.0")
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
-local MF = W.Modules.MoveFrames
+local MF = W.Modules.MoveFrames ---@type MoveFrames
 
 local _G = _G
 local floor = floor

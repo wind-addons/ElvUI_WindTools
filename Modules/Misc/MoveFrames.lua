@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...)))
-local MF = W.Modules.MoveFrames
+local MF = W.Modules.MoveFrames ---@class MoveFrames
 local B = E:GetModule("Bags")
 
 local _G = _G
@@ -429,9 +429,9 @@ function MF:Frame_StopMoving(this, button)
 	end
 end
 
-function MF:HandleFrame(this, bindingTarget)
+function MF:HandleFrame(this, bindTo)
 	local thisFrame = getFrame(this)
-	local bindingTargetFrame = getFrame(bindingTarget)
+	local bindingTargetFrame = getFrame(bindTo)
 
 	if not thisFrame or thisFrame.MoveFrame then
 		return
@@ -439,7 +439,7 @@ function MF:HandleFrame(this, bindingTarget)
 
 	if InCombatLockdown() and thisFrame:IsProtected() then
 		F.TaskManager:AfterCombat(function()
-			self:HandleFrame(this, bindingTarget)
+			self:HandleFrame(this, bindTo)
 			-- Manually trigger a reposition after combat ends
 			-- Some frames may need to run the fix function first, so reposition should be run next frame to avoid issues
 			RunNextFrame(function()
@@ -459,7 +459,7 @@ function MF:HandleFrame(this, bindingTarget)
 
 	thisFrame.__windFramePath = this
 	if not thisFrame.MoveFrame.__windFramePath then
-		thisFrame.MoveFrame.__windFramePath = bindingTarget
+		thisFrame.MoveFrame.__windFramePath = bindTo
 	end
 
 	self:SecureHookScript(thisFrame, "OnMouseDown", "Frame_StartMoving")
@@ -577,12 +577,16 @@ function MF:IsRunning()
 	return E.private.WT.misc.moveFrames.enable and not W.Modules.MoveFrames.StopRunning
 end
 
-function MF:InternalHandle(frame, bindingTarget, remember)
+---Handle the internal frame movement
+---@param frame Frame The frame to move
+---@param bindTo Frame? The frame to bind to, if not provided, it will bind to the same frame
+---@param remember boolean? Whether to remember the frame position
+function MF:InternalHandle(frame, bindTo, remember)
 	if not self:IsRunning() then
 		return
 	end
 
-	self:HandleFrame(frame, bindingTarget)
+	self:HandleFrame(frame, bindTo)
 
 	if remember == false then
 		frame.__windFramePath = ""

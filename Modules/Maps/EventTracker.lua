@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...)))
 local S = W.Modules.Skins ---@type Skins
-local MF = W.Modules.MoveFrames
+local MF = W.Modules.MoveFrames ---@type MoveFrames
 local C = W.Utilities.Color
 local LSM = E.Libs.LSM
 local ET = W:NewModule("EventTracker", "AceEvent-3.0", "AceHook-3.0")

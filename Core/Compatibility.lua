@@ -1,5 +1,5 @@
 local W, F, E, L, V, P, G = unpack((select(2, ...)))
-local MF = W.Modules.MoveFrames
+local MF = W.Modules.MoveFrames ---@type MoveFrames
 local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
 
@@ -32,10 +32,7 @@ function W:ConstructCompatibilityFrame()
 
 	frame:SetFrameStrata("TOOLTIP")
 	frame:SetFrameLevel(9000)
-
-	if MF and MF.db and MF.db.enable then
-		MF:HandleFrame(frame)
-	end
+	MF:InternalHandle(frame)
 
 	local close = F.Widgets.New("CloseButton", frame)
 	close:SetPoint("TOPRIGHT", frame.backdrop, "TOPRIGHT")
@@ -222,14 +219,14 @@ local function GetCheckCompatibilityFunction(targetAddonName, targetAddonLocales
 				module1 = myModuleName,
 				plugin1 = W.Title,
 				func1 = function()
-					myTable[myKey] = true
-					targetTable[targetKey] = false
+					---@diagnostic disable-next-line: need-check-nil
+					myTable[myKey], targetTable[targetKey] = true, false
 				end,
 				module2 = targetAddonModuleName,
 				plugin2 = targetAddonLocales,
 				func2 = function()
-					myTable[myKey] = false
-					targetTable[targetKey] = true
+					---@diagnostic disable-next-line: need-check-nil
+					myTable[myKey], targetTable[targetKey] = false, true
 				end,
 			})
 		end

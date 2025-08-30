@@ -104,6 +104,9 @@ function S:BlizzardMiscFrames()
 	if MessageDialog then
 		self:CreateShadow(MessageDialog)
 	end
+
+	-- Opacity Frame
+	self:CreateShadow(_G.OpacityFrame)
 end
 
 function S:SkinMenu(_, manager, _, menuDescription)

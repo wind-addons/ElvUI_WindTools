@@ -193,9 +193,8 @@ options.help = {
 					order = 1,
 					type = "description",
 					name = format(
-						"%s: %s | %s",
+						"%s | %s",
 						"fang2hou",
-						E.InfoColor .. "houshuu" .. "|r",
 						F.CreateClassColorString("Tabimonk @ " .. L["Shadowmoon"] .. "(TW)", "MONK")
 					),
 				},
@@ -208,13 +207,18 @@ options.help = {
 						F.CreateClassColorString("青楓殘月 @ " .. L["Lights Hope"] .. " (TW)", "MAGE")
 					),
 				},
-				["someblu"] = {
+				["DakJaniels"] = {
 					order = 3,
+					type = "description",
+					name = "DakJaniels",
+				},
+				["someblu"] = {
+					order = 4,
 					type = "description",
 					name = "someblu",
 				},
 				["keludechu"] = {
-					order = 4,
+					order = 5,
 					type = "description",
 					name = format(
 						"%s: %s | %s",
@@ -224,12 +228,12 @@ options.help = {
 					),
 				},
 				["LiangYuxuan"] = {
-					order = 5,
+					order = 6,
 					type = "description",
 					name = "LiangYuxuan",
 				},
 				["asdf12303116"] = {
-					order = 6,
+					order = 7,
 					type = "description",
 					name = format(
 						"%s: %s | %s",
@@ -239,42 +243,42 @@ options.help = {
 					),
 				},
 				["KurtzPT"] = {
-					order = 7,
+					order = 8,
 					type = "description",
 					name = "KurtzPT",
 				},
 				["404Polaris"] = {
-					order = 8,
+					order = 9,
 					type = "description",
 					name = "404Polaris",
 				},
 				["fubaWoW"] = {
-					order = 9,
+					order = 10,
 					type = "description",
 					name = "fubaWoW",
 				},
 				["ryanfys"] = {
-					order = 10,
+					order = 11,
 					type = "description",
 					name = format("%s: %s", "ryanfys", "阿尔托利亜 @ " .. L["Demon Fall Canyon"] .. " (CN)"),
 				},
 				["MouJiaoZi"] = {
-					order = 11,
+					order = 12,
 					type = "description",
 					name = format("%s: %s", "MouJiaoZi", E.InfoColor .. "某餃子" .. "|r"),
 				},
 				["Jaenichen"] = {
-					order = 12,
+					order = 13,
 					type = "description",
 					name = format("%s: %s", "Jaenichen", E.InfoColor .. "beejayjayn" .. "|r"),
 				},
 				["mattiagraziani-it"] = {
-					order = 13,
+					order = 14,
 					type = "description",
 					name = "mattiagraziani-it",
 				},
 				["ylt"] = {
-					order = 14,
+					order = 15,
 					type = "description",
 					name = format(
 						"%s: %s | %s",
@@ -284,14 +288,9 @@ options.help = {
 					),
 				},
 				["AngelosNaoumis"] = {
-					order = 15,
-					type = "description",
-					name = "AngelosNaoumis",
-				},
-				["DakJaniels"] = {
 					order = 16,
 					type = "description",
-					name = "DakJaniels",
+					name = "AngelosNaoumis",
 				},
 				["LvWind"] = {
 					order = 17,
@@ -301,6 +300,11 @@ options.help = {
 						"LvWind",
 						F.CreateClassColorString("Stellagosa @ " .. L["Bleeding Hollow"] .. " (CN)", "HUNTER")
 					),
+				},
+				["DaguDuiyuan"] = {
+					order = 18,
+					type = "description",
+					name = "DaguDuiyuan",
 				},
 			},
 		},

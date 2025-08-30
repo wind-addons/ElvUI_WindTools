@@ -71,7 +71,8 @@ local function IsAlreadyKnown(link, index)
 		end
 
 		if itemClassID == Enum_ItemClass_Battlepet and index then
-			local data = C_TooltipInfo_GetGuildBankItem(GetCurrentGuildBankTab(), index)
+			local tab = GetCurrentGuildBankTab() --[[@as number]]
+			local data = C_TooltipInfo_GetGuildBankItem(tab, index)
 			if data then
 				return data.battlePetSpeciesID and isPetCollected(data.battlePetSpeciesID)
 			end
@@ -170,7 +171,7 @@ function AK:GuildBank(frame)
 		return
 	end
 
-	local tab = GetCurrentGuildBankTab()
+	local tab = GetCurrentGuildBankTab() --[[@as number]]
 	for i = 1, MAX_GUILDBANK_SLOTS_PER_TAB do
 		local index = mod(i, NUM_SLOTS_PER_GUILDBANK_GROUP)
 		if index == 0 then
@@ -258,7 +259,7 @@ end
 
 function AK:Initialize()
 	if C_AddOns_IsAddOnLoaded("AlreadyKnown") then
-		self.StopRunning = "AlreadyKnonwn"
+		self.StopRunning = "AlreadyKnown"
 		return
 	end
 
@@ -275,7 +276,7 @@ end
 
 function AK:ToggleSetting()
 	if C_AddOns_IsAddOnLoaded("AlreadyKnown") then
-		self.StopRunning = "AlreadyKnonwn"
+		self.StopRunning = "AlreadyKnown"
 		return
 	end
 

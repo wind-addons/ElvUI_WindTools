@@ -2,7 +2,6 @@
   "[lua]": {
     "editor.defaultFormatter": "JohnnyMorganz.stylua"
   },
-  "Lua.diagnostics.enable": false,
   "Lua.runtime.version": "Lua 5.1",
   "Lua.runtime.builtin": {
     "basic": "disable",
@@ -16,6 +15,110 @@
     "utf8": "disable"
   },
   "Lua.workspace.library": [
-    "~\\.vscode\\extensions\\ketho.wow-api-0.20.8\\Annotations\\Core"
+    "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\Core",
+    "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\FrameXML"
+  ],
+  "Lua.diagnostics.enable": true,
+  "Lua.workspace.preloadFileSize": 5000,
+  "Lua.workspace.ignoreDir": [
+    ".vscode",
+    ".git/**",
+    "Libraries/LibKeystone/**",
+    "Libraries/LibObjectiveProgress-1.0/**",
+    "Libraries/LibOpenRaid/**",
+    "Libraries/LibRangeCheck-3.0/**",
+    "Libraries/TinyLibs/**"
+  ],
+  "Lua.diagnostics.globals": [
+    "ITEM_LEVEL",
+    "LE_PARTY_CATEGORY_HOME",
+    "LE_PARTY_CATEGORY_INSTANCE",
+    "ERR_QUEST_ADD_ITEM_SII",
+    "ERR_QUEST_ADD_FOUND_SII",
+    "ERR_QUEST_ADD_KILL_SII",
+    "ERR_QUEST_UNKNOWN_COMPLETE",
+    "ERR_QUEST_OBJECTIVE_COMPLETE_S",
+    "SetItemButtonDesaturated",
+    "SetItemButtonTextureVertexColor",
+    "COLLECTED",
+    "ITEM_SPELL_KNOWN",
+    "DELETE_ITEM_CONFIRM_STRING",
+    "ENCHANTS",
+    "HEALTH",
+    "LEVEL",
+    "STAT_AVERAGE_ITEM_LEVEL",
+    "HEADSLOT",
+    "NECKSLOT",
+    "SHOULDERSLOT",
+    "CHESTSLOT",
+    "WAISTSLOT",
+    "LEGSSLOT",
+    "FEETSLOT",
+    "WRISTSLOT",
+    "HANDSSLOT",
+    "FINGER0SLOT",
+    "FINGER1SLOT",
+    "TRINKET0SLOT",
+    "TRINKET1SLOT",
+    "BACKSLOT",
+    "MAINHANDSLOT",
+    "SECONDARYHANDSLOT",
+    "TRANSMOG_SOURCE_2",
+    "DELVE_LABEL",
+    "HP",
+    "ITEM_LEVEL_ABBR",
+    "STAT_CRITICAL_STRIKE",
+    "STAT_HASTE",
+    "STAT_LIFESTEAL",
+    "STAT_MASTERY",
+    "STAT_VERSATILITY",
+    "TEXT_MODE_A_STRING_RESULT_CRITICAL",
+    "BNET_FRIEND_TOOLTIP_WOW_CLASSIC",
+    "SHIRTSLOT",
+    "FINGER0SLOT_UNIQUE",
+    "FINGER1SLOT_UNIQUE",
+    "TRINKET0SLOT_UNIQUE",
+    "TRINKET1SLOT_UNIQUE",
+    "RANGEDSLOT",
+    "TABARDSLOT",
+    "ElvUI"
+  ],
+  "cSpell.ignorePaths": [
+    ".git/**",
+    ".vscode",
+    "Locales/**",
+    "Libraries/**",
+    "!Modules/Skins/Libraries/**"
+  ],
+  "linter.linters": {
+    "luacheck": {
+      "capabilities": [],
+      "command": [
+        "luacheck",
+        "--formatter",
+        "plain",
+        "--codes",
+        "--ranges",
+        ["$config", "--config", "$config"],
+        "-"
+      ],
+      "configFiles": [".luacheckrc"],
+      "enabled": true,
+      "languages": ["lua"],
+      "name": "luacheck",
+      "url": "https://luacheck.readthedocs.io/en/stable/"
+    }
+  },
+  "Lua.diagnostics.disable": [
+    "inject-field",
+    "undefined-field"
+  ],
+  "Lua.diagnostics.disableScheme": [
+    "git",
+    "LibKeystone",
+    "LibObjectiveProgress-1.0",
+    "LibOpenRaid",
+    "LibRangeCheck-3.0",
+    "TinyLibs"
   ]
 }

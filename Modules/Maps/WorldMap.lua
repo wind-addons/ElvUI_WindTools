@@ -2776,7 +2776,7 @@ local battleFieldMapCache = { overlayTextures = {}, RemoveAllData = resetCache }
 -- Interface\AddOns\Blizzard_SharedMapDataProviders\MapExplorationDataProvider.lua
 -- MapExplorationPinMixin:RefreshOverlays(fullUpdate)
 -- Some tricky code from Leatrix_Maps
-function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
+function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, cache)
 	local wasWaitingForLoad = pin.isWaitingForLoad
 	cache:RemoveAllData()
 	if fullUpdate or wasWaitingForLoad then
@@ -2802,10 +2802,6 @@ function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
 	if exploredMapTextures then
 		for _, info in pairs(exploredMapTextures) do
 			local key = info.textureWidth .. ":" .. info.textureHeight .. ":" .. info.offsetX .. ":" .. info.offsetY
-			local files = {}
-			for _, fileDataID in ipairs(info.fileDataIDs) do
-				files[tostring(fileDataID)] = true
-			end
 			db[key] = nil
 		end
 	end
@@ -2824,6 +2820,15 @@ function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
 
 	for key, files in pairs(db) do
 		local textureWidth, textureHeight, offsetX, offsetY = strsplit(":", key)
+		local textureWidth = tonumber(textureWidth)
+		local textureHeight = tonumber(textureHeight)
+		local offsetX = tonumber(offsetX)
+		local offsetY = tonumber(offsetY)
+
+		if not (textureWidth and textureHeight and offsetX and offsetY) then
+			return
+		end
+
 		local fileDataIDs = { strsplit(",", files) }
 		local numTexturesWide = ceil(textureWidth / TILE_SIZE_WIDTH)
 		local numTexturesTall = ceil(textureHeight / TILE_SIZE_HEIGHT)
@@ -2888,7 +2893,7 @@ function WM:MapExplorationPin_RefreshOverlays(pin, fullUpdate, mapFrame, cache)
 	end
 end
 
-local function _Pool_HideAndClearAnchors(pool, texture)
+local function overlayTexturePoolResetter(pool, texture)
 	texture:SetVertexColor(1, 1, 1)
 	texture:SetAlpha(1)
 	return Pool_HideAndClearAnchors(pool, texture)
@@ -2908,16 +2913,24 @@ function WM:Reveal()
 
 	for pin in _G.WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
 		hooksecurefunc(pin, "RefreshOverlays", function(_pin, fullUpdate)
-			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, _G.WorldMapFrame, worldMapCache)
+			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, worldMapCache)
 		end)
-		pin.overlayTexturePool.resetterFunc = _Pool_HideAndClearAnchors
+		pin.overlayTexturePool.resetterFunc = overlayTexturePoolResetter
 	end
 
+	if C_AddOns_IsAddOnLoaded("Blizzard_BattlefieldMap") then
+		self:RevealBattleFieldMap()
+	else
+		self:RegisterEvent("ADDON_LOADED")
+	end
+end
+
+function WM:RevealBattleFieldMap()
 	for pin in _G.BattlefieldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate") do
 		hooksecurefunc(pin, "RefreshOverlays", function(_pin, fullUpdate)
-			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, _G.BattlefieldMapFrame, battleFieldMapCache)
+			WM:MapExplorationPin_RefreshOverlays(_pin, fullUpdate, battleFieldMapCache)
 		end)
-		pin.overlayTexturePool.resetterFunc = _Pool_HideAndClearAnchors
+		pin.overlayTexturePool.resetterFunc = overlayTexturePoolResetter
 	end
 end
 
@@ -2931,6 +2944,13 @@ function WM:Scale()
 
 	EventRegistry:RegisterCallback("WorldMapMinimized", _G.WorldMapFrame.SetScale, _G.WorldMapFrame, self.db.scale.size)
 	EventRegistry:RegisterCallback("WorldMapMaximized", _G.WorldMapFrame.SetScale, _G.WorldMapFrame, 1)
+end
+
+function WM:ADDON_LOADED(event, addonName)
+	if addonName == "Blizzard_BattlefieldMap" then
+		self:UnregisterEvent(event)
+		self:RevealBattleFieldMap()
+	end
 end
 
 function WM:Initialize()

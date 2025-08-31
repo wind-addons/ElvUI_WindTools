@@ -160,7 +160,6 @@ function EMP:Initialize()
 	_G.MerchantBuyBackItem:SetPoint("TOPLEFT", _G.MerchantItem10, "BOTTOMLEFT", 30, -53)
 
 	-- Position page navigation buttons relative to the extended frame width
-	local frameWidth = 30 + self.db.numberOfPages * 330
 	local buttonOffset = 25 + ((self.db.numberOfPages - 1) * 165) -- Center the buttons in the extended frame
 
 	_G.MerchantPrevPageButton:ClearAllPoints()

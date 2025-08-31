@@ -20,6 +20,8 @@
   ],
   "Lua.workspace.ignoreDir": [
     ".vscode",
+    "Core/Changelog/*",
+    "Locales/*",
     "Libraries/LibKeystone/*",
     "Libraries/LibObjectiveProgress-1.0/*",
     "Libraries/LibOpenRaid/*",
@@ -100,4 +102,5 @@
   ],
   "cSpell.diagnosticLevel": "Hint",
   "Lua.format.enable": false,
+  "Lua.workspace.preloadFileSize": 5000,
 }

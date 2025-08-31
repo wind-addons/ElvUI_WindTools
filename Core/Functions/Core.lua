@@ -444,5 +444,5 @@ function F.IsAlmost(a, b)
 		return true
 	end
 
-	return abs(a - b) < 0.1
+	return abs(a - b) < 0.01
 end

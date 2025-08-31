@@ -5,6 +5,9 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
+local unpack = unpack
+
+local CreateFrame = CreateFrame
 
 local function handleItemButton(item)
 	if not item then

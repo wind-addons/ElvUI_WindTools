@@ -1,6 +1,7 @@
 ---@diagnostic disable: undefined-field
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
+local MF = W.Modules.MoveFrames
 local ES = E:GetModule("Skins")
 local TT = E:GetModule("Tooltip")
 
@@ -749,7 +750,7 @@ local function reskinPetsPanel(frame)
 	frame.Top.TypeBar.Level25Button.Text = frame.Top.TypeBar.Level25Button.backdrop:CreateFontString(nil, "OVERLAY")
 	frame.Top.TypeBar.Level25Button.Text:FontTemplate(nil, 10)
 	frame.Top.TypeBar.Level25Button.Text:SetText("25")
-	frame.Top.TypeBar.Level25Button.Text:Point("CENTER", 1, -1)
+	frame.Top.TypeBar.Level25Button.Text:Point("CENTER")
 
 	local newHighlight = frame.Top.TypeBar.backdrop:CreateTexture(nil, "OVERLAY")
 	newHighlight:SetAllPoints(frame.Top.TypeBar.Level25Button)
@@ -808,10 +809,19 @@ function S:Rematch()
 		return
 	end
 
-	local frame = _G.Rematch and _G.Rematch.frame
+	local frame = _G.Rematch and _G.Rematch.frame --[[@as BackdropTemplate]]
 	if not frame then
 		return
 	end
+
+	self:SecureHook(frame, "Show", function()
+		self:Unhook(frame, "Show")
+		MF:InternalHandle(frame, "CollectionsJournal")
+		MF:InternalHandle(frame.ToolBar, "CollectionsJournal")
+		self:SecureHook(frame, "Show", function()
+			frame:EnableMouse(true)
+		end)
+	end)
 
 	frame.__SetPoint = frame.SetPoint
 	hooksecurefunc(frame, "SetPoint", function()

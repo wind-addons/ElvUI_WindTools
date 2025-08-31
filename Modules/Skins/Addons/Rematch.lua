@@ -737,7 +737,7 @@ local function reskinPetsPanel(frame)
 
 	-- Top Type Bar
 	frame.Top.TypeBar:CreateBackdrop("Transparent")
-	S:Reposition(frame.Top.TypeBar.backdrop, frame.Top.TypeBar, 2, -24, -3, 0, 0)
+	S:Reposition(frame.Top.TypeBar.backdrop, frame.Top.TypeBar, 2, -25, -4, -4, -4)
 	frame.Top.TypeBar.Level25Button:StripTextures()
 	frame.Top.TypeBar.Level25Button:CreateBackdrop()
 	frame.Top.TypeBar.Level25Button:HookScript("OnEnter", function()

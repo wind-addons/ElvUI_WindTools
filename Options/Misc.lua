@@ -677,13 +677,13 @@ do
 	for name, data in pairs(itemList) do
 		async.WithItemID(data.id, function(item)
 			local icon = item:GetItemIcon()
-			local name = item:GetItemName()
+			local itemName = item:GetItemName()
 			local color = item:GetItemQualityColor()
 
 			local iconString = F.GetIconString(icon)
-			local nameString = F.CreateColorString(name, color)
+			local nameString = F.CreateColorString(itemName, color)
 
-			options.mute.args.other.args[name] = {
+			options.mute.args.other.args[itemName] = {
 				order = data.id,
 				type = "toggle",
 				name = iconString .. " " .. nameString,

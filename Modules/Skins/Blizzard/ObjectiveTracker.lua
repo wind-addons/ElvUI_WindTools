@@ -2,11 +2,8 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
+local tContains = tContains
 local pairs = pairs
-
-local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
 
 local trackers = {
 	_G.ScenarioObjectiveTracker,
@@ -33,6 +30,32 @@ function S:ReskinObjectiveTrackerHeader(header)
 	F.SetFontOutline(header.Text)
 end
 
+-- Copied from ElvUI ObjectiveTracker skin
+local function ReskinQuestIcon(button)
+	if not button then
+		return
+	end
+
+	if not button.IsSkinned then
+		button:SetSize(24, 24)
+		button:SetNormalTexture(E.ClearTexture)
+		button:SetPushedTexture(E.ClearTexture)
+		button:GetHighlightTexture():SetColorTexture(1, 1, 1, 0.25)
+
+		local icon = button.icon or button.Icon
+		if icon then
+			S:Proxy("HandleIcon", icon, true)
+			icon:SetInside()
+		end
+
+		button.IsSkinned = true
+	end
+
+	if button.backdrop then
+		button.backdrop:SetFrameLevel(0)
+	end
+end
+
 function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
 	local frame = block.rightEdgeFrame
 	if not frame then
@@ -48,18 +71,19 @@ function S:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
 		self:CreateBackdropShadow(frame)
 		frame.__windSkin = true
 	end
+
+	if frame.template == "QuestObjectiveItemButtonTemplate" and not frame.__windSkin then
+		ReskinQuestIcon(frame)
+		self:CreateShadow(frame)
+		frame.__windSkin = true
+	end
 end
 
 function S:ReskinObjectiveTrackerBlock(_, block)
-	for _, button in pairs({ block.ItemButton, block.itemButton }) do
-		self:CreateShadow(button)
-	end
-
 	self:ReskinObjectiveTrackerBlockRightEdgeButton(_, block)
 
-	if block.AddRightEdgeFrame and not block.__windRightEdgeHooked then
+	if block.AddRightEdgeFrame and not self:IsHooked(block, "AddRightEdgeFrame") then
 		self:SecureHook(block, "AddRightEdgeFrame", "ReskinObjectiveTrackerBlockRightEdgeButton")
-		block.__windRightEdgeHooked = true
 	end
 end
 

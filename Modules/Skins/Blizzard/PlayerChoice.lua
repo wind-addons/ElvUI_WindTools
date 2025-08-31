@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
-local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -14,25 +13,27 @@ local function handleItemButton(item)
 
 	if item then
 		item:SetTemplate()
-		item:SetHeight(41)
 		item:OffsetFrameLevel(2)
 	end
 
 	if item.Icon then
-		item.Icon:Size(E.PixelMode and 35 or 32)
+		item.IconContainer = CreateFrame("Frame", nil, item)
+		item.IconContainer:Size(E.PixelMode and 32 or 29)
+		item.IconContainer:Point("TOPLEFT", E.PixelMode and 2 or 4, -(E.PixelMode and 2 or 4))
 		item.Icon:SetDrawLayer("ARTWORK")
-		item.Icon:Point("TOPLEFT", E.PixelMode and 2 or 4, -(E.PixelMode and 2 or 4))
-		ES:HandleIcon(item.Icon)
-	end
-
-	if item.IconBorder then
-		ES:HandleIconBorder(item.IconBorder)
+		item.Icon:SetParent(item.IconContainer)
+		item.Icon:SetInside(item.IconContainer)
+		item.Icon:SetTexCoord(unpack(E.TexCoords))
+		item.IconContainer:SetTemplate()
+		if item.IconBorder then
+			S:Proxy("HandleIconBorder", item.IconBorder, item.IconContainer)
+		end
 	end
 
 	if item.Count then
 		item.Count:SetDrawLayer("OVERLAY")
 		item.Count:ClearAllPoints()
-		item.Count:SetPoint("BOTTOMRIGHT", item.Icon, "BOTTOMRIGHT", 0, 0)
+		item.Count:Point("BOTTOMRIGHT", item.Icon, "BOTTOMRIGHT", 0, 0)
 	end
 
 	if item.NameFrame then
@@ -53,9 +54,9 @@ local function handleItemButton(item)
 		item.CircleBackgroundGlow:SetAlpha(0)
 	end
 
-	for _, Region in next, { item:GetRegions() } do
-		if Region:IsObjectType("Texture") and Region:GetTexture() == [[Interface\Spellbook\Spellbook-Parts]] then
-			Region:SetTexture(E.ClearTexture)
+	for _, region in next, { item:GetRegions() } do
+		if region:IsObjectType("Texture") and region:GetTexture() == [[Interface\Spellbook\Spellbook-Parts]] then
+			region:SetTexture(E.ClearTexture)
 		end
 	end
 end

@@ -405,7 +405,7 @@ function F.WaitFor(condition, callback, interval, maxTimes)
 end
 
 ---Move frame by offset while preserving all anchor points
----@param frame Frame The frame to move
+---@param frame any The frame to move
 ---@param x number X offset to apply
 ---@param y number Y offset to apply
 function F.MoveFrameWithOffset(frame, x, y)

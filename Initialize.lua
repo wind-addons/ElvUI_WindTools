@@ -22,6 +22,7 @@ local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTim
 ---@field db ElvUIProfileDB
 ---@field private ElvUIPrivateDB
 ---@field global ElvUIGlobalDB
+---@field TexCoords number[]
 
 ---@class ElvUIProfileDB
 ---@field WT ProfileDB

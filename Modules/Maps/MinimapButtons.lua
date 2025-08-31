@@ -82,18 +82,28 @@ local acceptedFrames = {
 
 local handledButtons = {}
 
-local function SetPoint(frame, ...)
-	if frame.__SetPoint then
-		return frame.__SetPoint(frame, ...)
+---@param frame any The frame to proxy the method for
+---@param methodKey any The name of the method to proxy
+function MB:InternalizeMethod(frame, methodKey)
+	local internalMethodKey = "__" .. methodKey
+	if frame[internalMethodKey] or not frame[methodKey] then
+		return
 	end
-	return frame:Point(...)
+
+	frame[internalMethodKey] = frame[methodKey]
+	frame[methodKey] = E.noop
 end
 
-local function Resize(frame, width, height)
-	if frame.__SetSize then
-		return frame.__SetSize(frame, width, height)
+---@param methodKey string The name of the method to proxy
+---@param frame any The frame to proxy the method for
+---@param ... any The arguments to pass to the proxied method
+function MB:Call(methodKey, frame, ...)
+	local internalMethodKey = "__" .. methodKey
+	if frame[internalMethodKey] then
+		return frame[internalMethodKey](frame, ...)
 	end
-	return frame:Size(width, height)
+
+	return frame[methodKey](frame, ...)
 end
 
 local function isValidName(name)
@@ -196,20 +206,19 @@ function MB:HandleExpansionButton(...)
 				return
 			end
 
-			MB:SkinButton(button)
+			self:SkinButton(button)
 
-			-- Recover the button state and only allow the module to access some attributes
 			EM:SetIconParent(button)
-			button.SetParent = E.noop
-
 			EM:SetScale(button, 1)
-			button.SetScale = E.noop
 
-			button.__SetPoint = button.SetPoint
-			button.SetPoint = E.noop
-
-			button.__SetSize = button.SetSize
-			button.SetSize = E.noop
+			self:InternalizeMethod(button, "ClearAllPoints")
+			self:InternalizeMethod(button, "SetPoint")
+			self:InternalizeMethod(button, "SetParent")
+			self:InternalizeMethod(button, "SetSize")
+			self:InternalizeMethod(button, "SetScale")
+			self:InternalizeMethod(button, "SetFrameStrata")
+			self:InternalizeMethod(button, "SetFrameLevel")
+			self:InternalizeMethod(button, "SetMovable")
 
 			local box = _G.GarrisonLandingPageTutorialBox
 			if box then
@@ -497,7 +506,7 @@ function MB:SkinButton(button)
 		if _G["TomCats-MinimapButtonIcon"] then
 			_G["TomCats-MinimapButtonIcon"]:ClearAllPoints()
 			_G["TomCats-MinimapButtonIcon"]:SetInside(button.backdrop)
-			_G["TomCats-MinimapButtonIcon"].SetPoint = E.noop
+			self:InternalizeMethod(_G["TomCats-MinimapButtonIcon"], "SetPoint")
 			_G["TomCats-MinimapButtonIcon"]:SetTexCoord(0, 0.65, 0, 0.65)
 		end
 	end
@@ -540,22 +549,23 @@ function MB:UpdateLayout()
 
 	for i, moveButton in pairs(handledButtons) do
 		local frame = _G[moveButton]
+		self:Call("ClearAllPoints", frame)
 
 		if self.db.orientation == "NOANCHOR" then
 			local original = frame.original
-			frame:SetParent(original.Parent)
+			self:Call("SetParent", frame, original.Parent)
 			if original.DragStart then
-				frame:SetScript("OnDragStart", original.DragStart)
+				self:Call("SetScript", frame, "OnDragStart", original.DragStart)
 			end
 			if original.DragEnd then
-				frame:SetScript("OnDragStop", original.DragEnd)
+				self:Call("SetScript", frame, "OnDragStop", original.DragEnd)
 			end
 
-			frame:ClearAllPoints()
-			Resize(frame, original.Width, original.Height)
+			self:Call("SetSize", frame, original.Width, original.Height)
 
 			if original.Point ~= nil then
-				SetPoint(
+				self:Call(
+					"SetPoint",
 					frame,
 					original.Point,
 					original.relativeTo,
@@ -564,12 +574,13 @@ function MB:UpdateLayout()
 					original.yOfs
 				)
 			else
-				SetPoint(frame, "CENTER", _G.Minimap, "CENTER", -80, -34)
+				self:Call("SetPoint", frame, "CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
-			frame:SetFrameStrata(original.FrameStrata)
-			frame:SetFrameLevel(original.FrameLevel)
-			frame:SetScale(original.Scale)
-			frame:SetMovable(true)
+
+			self:Call("SetFrameStrata", frame, original.FrameStrata)
+			self:Call("SetFrameLevel", frame, original.FrameLevel)
+			self:Call("SetMovable", frame, true)
+			self:Call("SetScale", frame, original.Scale)
 		else
 			buttonX = i % buttonsPerRow
 			buttonY = floor(i / buttonsPerRow) + 1
@@ -579,15 +590,13 @@ function MB:UpdateLayout()
 				buttonY = buttonY - 1
 			end
 
-			frame:SetParent(self.bar)
-			frame:SetMovable(false)
-			frame:SetScript("OnDragStart", nil)
-			frame:SetScript("OnDragStop", nil)
+			self:Call("SetParent", frame, self.bar)
+			self:Call("SetFrameStrata", frame, "LOW")
+			self:Call("SetFrameLevel", frame, 20)
+			self:Call("SetMovable", frame, false)
+			self:Call("SetScript", frame, "OnDragStart", nil)
+			self:Call("SetScript", frame, "OnDragStop", nil)
 
-			frame:ClearAllPoints()
-			frame:SetFrameStrata("LOW")
-			frame:SetFrameLevel(20)
-			Resize(frame, buttonSize, buttonSize)
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
 
@@ -609,8 +618,8 @@ function MB:UpdateLayout()
 				end
 			end
 
-			frame:ClearAllPoints()
-			SetPoint(frame, anchor, self.bar, anchor, offsetX, offsetY)
+			self:Call("SetSize", frame, buttonSize, buttonSize)
+			self:Call("SetPoint", frame, anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
 		if
@@ -619,11 +628,7 @@ function MB:UpdateLayout()
 			and E.private.WT.skins.shadow
 			and frame.backdrop.shadow
 		then
-			if not self.db.backdrop then
-				frame.backdrop.shadow:Show()
-			else
-				frame.backdrop.shadow:Hide()
-			end
+			frame.backdrop.shadow:SetShown(not self.db.backdrop)
 		end
 	end
 

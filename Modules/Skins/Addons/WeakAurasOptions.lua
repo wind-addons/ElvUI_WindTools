@@ -649,27 +649,31 @@ function S:WeakAurasOptions()
 
 	self:SecureHook(_G.WeakAuras, "ShowOptions", "WeakAuras_ShowOptions")
 
+	---@param skip boolean The skip flag
+	---@param element any The element to skin
+	---@return boolean hasBeenSkinned The result of the skinning operation
 	local generalEditBoxSkinner = function(skip, element)
-		if skip then
-			return
-		end
-		if element and element.GetObjectType and element:GetObjectType() == "EditBox" then
+		if not skip and element and element.GetObjectType and element:GetObjectType() == "EditBox" then
 			element.Left:Kill()
 			element.Middle:Kill()
 			element.Right:Kill()
 			element:CreateBackdrop()
 			return true
 		end
+
+		return false
 	end
 
+	---@param skip boolean The skip flag
+	---@param element any The element to skin
+	---@return boolean hasBeenSkinned The result of the skinning operation
 	local generalButtonSkinner = function(skip, element)
-		if skip then
-			return
-		end
-		if element and element.GetObjectType and element:GetObjectType() == "Button" then
+		if not skip and element and element.GetObjectType and element:GetObjectType() == "Button" then
 			self:Proxy("HandleButton", element)
 			return true
 		end
+
+		return false
 	end
 
 	local skinChildren = function(widget)

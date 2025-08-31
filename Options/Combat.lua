@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
 local C = W:GetModule("CombatAlert")
 local RM = W:GetModule("RaidMarkers")
@@ -7,7 +7,6 @@ local CH = W:GetModule("ClassHelper")
 
 local format = format
 local select = select
-local unpack = unpack
 
 local UnitClass = UnitClass
 

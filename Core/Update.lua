@@ -1,6 +1,5 @@
 local W ---@class WindTools
-local F ---@type Functions
-local E, L, V, P, G ---@type table, table, table, table, table
+local F, E, L, V, P, G ---@type Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local format = format

@@ -1,4 +1,6 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
+local P ---@class ProfileDB
+local W, F, E, L, V, G ---@type WindTools, Functions, ElvUI, table, PrivateDB, GlobalDB
+W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local tinsert = tinsert
 

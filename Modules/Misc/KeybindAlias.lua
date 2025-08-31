@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 local M = W.Modules.Misc ---@class Misc
 local AB = E.ActionBars
 

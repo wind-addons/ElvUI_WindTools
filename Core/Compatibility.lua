@@ -1,6 +1,6 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
-local MF = W.Modules.MoveFrames ---@type MoveFrames
-local S = W.Modules.Skins ---@type Skins
+local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
+local MF = W.Modules.MoveFrames
+local S = W.Modules.Skins
 local ES = E.Skins
 
 local _G = _G

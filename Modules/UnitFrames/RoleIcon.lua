@@ -1,4 +1,4 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local UF = E:GetModule("UnitFrames")
 local RI = W:NewModule("RoleIcon")
 

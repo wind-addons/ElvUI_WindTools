@@ -1,7 +1,6 @@
 local W ---@class WindTools
-local F ---@type Functions
-local E, L, V, P, G ---@type table, table, table, table, table
-W, F, E, L, V, P, G = unpack((select(2, ...)))
+local F, E, L ---@type Functions, ElvUI, table
+W, F, E, L = unpack((select(2, ...)))
 
 local _G = _G
 local format = format

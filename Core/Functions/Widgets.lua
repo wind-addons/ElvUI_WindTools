@@ -1,9 +1,8 @@
-local W ---@type WindTools
 local F ---@class Functions
-local E ---@type table
+local W, E ---@type WindTools, ElvUI
 W, F, E = unpack((select(2, ...)))
 
-local S = W.Modules.Skins ---@type Skins
+local S = W.Modules.Skins ---@class Skins
 
 local _G = _G
 local type = type

@@ -1,6 +1,6 @@
 local W ---@class WindTools
 local F ---@type Functions
-local E ---@type table
+local E ---@type ElvUI
 W, F, E = unpack((select(2, ...)))
 
 local min = min

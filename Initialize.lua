@@ -18,13 +18,26 @@ local C_AddOns_GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 ---@class WindTools : AceAddon, AceConsole-3.0, AceEvent-3.0, AceTimer-3.0, AceHook-3.0
 local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 
-V.WT = {} -- profile database defaults
-P.WT = {} -- private database defaults
-G.WT = {} -- global database defaults
+---@class ElvUI
+---@field db ElvUIProfileDB
+---@field private ElvUIPrivateDB
+---@field global ElvUIGlobalDB
+
+---@class ElvUIProfileDB
+---@field WT ProfileDB
+
+---@class ElvUIPrivateDB
+---@field WT PrivateDB
+
+---@class ElvUIGlobalDB
+---@field WT GlobalDB
+
+V.WT = {} ---@class ProfileDB
+P.WT = {} ---@class PrivateDB
+G.WT = {} ---@class GlobalDB
 
 addon[1] = W
----@diagnostic disable-next-line: missing-fields
-addon[2] = {} --[[@as Functions]]
+addon[2] = {} ---@class Functions
 addon[3] = E
 addon[4] = L
 addon[5] = V.WT

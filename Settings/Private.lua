@@ -1,7 +1,8 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, table, table, table, table, table
+local V ---@class PrivateDB
+local W, F, E, L, P, G ---@type WindTools, Functions, ElvUI, table, ProfileDB, GlobalDB
+W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local pairs = pairs
-
 local GetLocale = GetLocale
 
 local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])

@@ -1,6 +1,5 @@
-local W ---@type WindTools
 local F ---@class Functions
-local E, V, P ---@type table, table, table
+local W, E, V, P ---@type WindTools, ElvUI, ProfileDB, PrivateDB
 W, F, E, V, P = unpack((select(2, ...)))
 local D = E:GetModule("Distributor")
 local LibDeflate = E.Libs.Deflate
@@ -44,7 +43,7 @@ function F.Profiles.ExactString(dataString)
 	local decompressed = LibDeflate:DecompressDeflate(decodedData)
 
 	if not decompressed then
-		F.Print("Error decompressing data.")
+		F--[[@as Functions]].Print("Error decompressing data.")
 		return
 	end
 
@@ -52,7 +51,7 @@ function F.Profiles.ExactString(dataString)
 	local success, data = D:Deserialize(decompressed)
 
 	if not success then
-		F.Print("Error deserializing:", data)
+		F--[[@as Functions]].Print("Error deserializing: " .. data)
 		return
 	end
 
@@ -86,7 +85,7 @@ end
 function F.Profiles.ImportByString(importString)
 	local profileString, privateString = E:SplitString(importString, "{}")
 	if not profileString or not privateString then
-		F.Print("Error importing profile. String is invalid or corrupted!")
+		F--[[@as Functions]].Print("Error importing profile. String is invalid or corrupted!")
 	end
 
 	local profileData = F.Profiles.ExactString(profileString)

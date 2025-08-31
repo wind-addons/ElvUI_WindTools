@@ -1,6 +1,5 @@
 local W ---@class WindTools
-local F ---@type Functions
-local E ---@type table
+local F, E ---@type Functions, ElvUI
 W, F, E = unpack((select(2, ...)))
 
 local KI = W:NewModule("KeystoneInfo", "AceEvent-3.0")

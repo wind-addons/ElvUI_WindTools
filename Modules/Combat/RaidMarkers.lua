@@ -121,7 +121,6 @@ function RM:UpdateButtons()
 
 		-- 宏按键绑定
 		if button.isMarkButton then
-			local button = self.bar.buttons[i]
 			button:SetAttribute("shift-type*", nil)
 			button:SetAttribute("alt-type*", nil)
 			button:SetAttribute("ctrl-type*", nil)
@@ -130,14 +129,14 @@ function RM:UpdateButtons()
 
 			if not self.db.inverse then
 				button:SetAttribute("macrotext1", format("/tm %d", i))
-				button:SetAttribute("macrotext2", "/tm 9")
+				button:SetAttribute("macrotext2", "/tm 0")
 				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/wm %d", TargetToWorld[i]))
 				button:SetAttribute(format("%s-macrotext2", self.db.modifier), format("/cwm %d", TargetToWorld[i]))
 			else
 				button:SetAttribute("macrotext1", format("/wm %d", TargetToWorld[i]))
 				button:SetAttribute("macrotext2", format("/cwm %d", TargetToWorld[i]))
 				button:SetAttribute(format("%s-macrotext1", self.db.modifier), format("/tm %d", i))
-				button:SetAttribute(format("%s-macrotext2", self.db.modifier), "/tm 9")
+				button:SetAttribute(format("%s-macrotext2", self.db.modifier), "/tm 0")
 			end
 		end
 	end
@@ -173,12 +172,12 @@ function RM:ToggleSettings()
 
 	-- 鼠标显隐
 	if self.db.mouseOver then
-		self.bar:SetScript("OnEnter", function(self)
-			self:SetAlpha(1)
+		self.bar:SetScript("OnEnter", function(bar)
+			bar:SetAlpha(1)
 		end)
 
-		self.bar:SetScript("OnLeave", function(self)
-			self:SetAlpha(0)
+		self.bar:SetScript("OnLeave", function(bar)
+			bar:SetAlpha(0)
 		end)
 
 		self.bar:SetAlpha(0)
@@ -275,35 +274,33 @@ function RM:CreateButtons()
 			button:SetAttribute("type*", "macro")
 			button:SetAttribute(format("%s-type*", self.db.modifier), "macro")
 
-			self:UpdateCountDownButton()
-
 			button.isMarkButton = true
 		elseif i == 9 then -- 清除按钮
 			tex:SetTexture("Interface\\BUTTONS\\UI-GroupLoot-Pass-Up")
 
 			button:SetAttribute("type", "click")
 			if not self.db.inverse then
-				button:SetScript("OnClick", function(self)
+				button:SetScript("OnClick", function(btn)
 					if _G[format("Is%sKeyDown", RM.modifierString)]() then
 						ClearRaidMarker()
 					else
 						local now = GetTime()
 						if now - lastClear > 1 then -- limiting
 							lastClear = now
-							for i = 8, 0, -1 do
-								E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
+							for j = 8, 0, -1 do
+								E:Delay((8 - j) * 0.34, SetRaidTarget, "player", j)
 							end
 						end
 					end
 				end)
 			else
-				button:SetScript("OnClick", function(self)
+				button:SetScript("OnClick", function(btn)
 					if _G[format("Is%sKeyDown", RM.modifierString)]() then
 						local now = GetTime()
 						if now - lastClear > 1 then -- limiting
 							lastClear = now
-							for i = 8, 0, -1 do
-								E:Delay((8 - i) * 0.34, SetRaidTarget, "player", i)
+							for j = 8, 0, -1 do
+								E:Delay((8 - j) * 0.34, SetRaidTarget, "player", j)
 							end
 						end
 					else
@@ -321,13 +318,13 @@ function RM:CreateButtons()
 			tex:SetTexCoord(0.25, 0.8, 0.2, 0.75)
 			button:SetAttribute("type*", "macro")
 			if C_AddOns_IsAddOnLoaded("BigWigs") then
-				button:SetAttribute("macrotext1", "/pull " .. RM.db.countDownTime)
+				button:SetAttribute("macrotext1", "/pull " .. self.db.countDownTime)
 				button:SetAttribute("macrotext2", "/pull 0")
 			elseif C_AddOns_IsAddOnLoaded("DBM-Core") then
-				button:SetAttribute("macrotext1", "/dbm pull " .. RM.db.countDownTime)
+				button:SetAttribute("macrotext1", "/dbm pull " .. self.db.countDownTime)
 				button:SetAttribute("macrotext2", "/dbm pull 0")
 			else
-				button:SetAttribute("macrotext1", _G.SLASH_COUNTDOWN1 .. " " .. RM.db.countDownTime)
+				button:SetAttribute("macrotext1", _G.SLASH_COUNTDOWN1 .. " " .. self.db.countDownTime)
 				button:SetAttribute("macrotext2", _G.SLASH_COUNTDOWN1 .. " " .. -1)
 			end
 		end
@@ -393,7 +390,7 @@ function RM:CreateButtons()
 			tex:SetScale(tex.__toScale)
 		end)
 
-		button:SetScript("OnEnter", function(self)
+		button:SetScript("OnEnter", function(btn)
 			if RM.db.buttonAnimation then
 				local progress = F.Or(animGroup:GetProgress(), 0)
 				local currentScale = F.Or(tex:GetScale(), 1)
@@ -412,16 +409,16 @@ function RM:CreateButtons()
 			end
 
 			local icon = F.GetIconString(W.Media.Textures.smallLogo, 14)
-			self:SetBackdropBorderColor(0.7, 0.7, 0)
+			btn:SetBackdropBorderColor(0.7, 0.7, 0)
 			if RM.db.tooltip then
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+				GameTooltip:SetOwner(btn, "ANCHOR_BOTTOM")
 				GameTooltip:SetText(tooltipTitle .. " " .. icon)
 				GameTooltip:AddLine(tooltipText, 1, 1, 1)
 				GameTooltip:Show()
 			end
 		end)
 
-		button:SetScript("OnLeave", function(self)
+		button:SetScript("OnLeave", function(btn)
 			if RM.db.buttonAnimation then
 				local progress = F.Or(animGroup:GetProgress(), 0)
 				local currentScale = F.Or(tex:GetScale(), 1)
@@ -439,7 +436,7 @@ function RM:CreateButtons()
 				animGroup:Play()
 			end
 
-			self:SetBackdropBorderColor(0, 0, 0)
+			btn:SetBackdropBorderColor(0, 0, 0)
 			if RM.db.tooltip then
 				GameTooltip:Hide()
 			end

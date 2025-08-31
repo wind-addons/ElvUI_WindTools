@@ -2,7 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local C_PetBattles_GetNumAuras = C_PetBattles.GetNumAuras
 
 function S:PetBattle()
 	if not self:CheckDB("petbattleui", "petBattle") then

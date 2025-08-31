@@ -2,8 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 local UF = E:GetModule("UnitFrames")
 
-local _G = _G
-
 local function reskinClassBar(_, frame)
 	local classBar = frame[frame.ClassBar]
 	if classBar then

@@ -19,17 +19,6 @@
     "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\FrameXML"
   ],
   "Lua.diagnostics.enable": true,
-  "Lua.workspace.preloadFileSize": 5000,
-  "Lua.workspace.ignoreDir": [
-    ".vscode",
-    ".git/**",
-    "Libraries/LibKeystone/**",
-    "Libraries/LibObjectiveProgress-1.0/**",
-    "Libraries/LibOpenRaid/**",
-    "Libraries/LibRangeCheck-3.0/**",
-    "Libraries/TinyLibs/**",
-    "extensions/**",
-  ],
   "Lua.diagnostics.globals": [
     "ITEM_LEVEL",
     "LE_PARTY_CATEGORY_HOME",
@@ -84,6 +73,19 @@
     "TABARDSLOT",
     "ElvUI"
   ],
+  "Lua.diagnostics.disable": [
+    "inject-field",
+    "undefined-field"
+  ],
+  "Lua.diagnostics.disableScheme": [
+    "git",
+    "LibKeystone",
+    "LibObjectiveProgress-1.0",
+    "LibOpenRaid",
+    "LibRangeCheck-3.0",
+    "TinyLibs"
+  ],
+  "Lua.diagnostics.ignoredFiles": "Disable",
   "cSpell.ignorePaths": [
     ".git/**",
     ".vscode",
@@ -120,16 +122,5 @@
       "url": "https://luacheck.readthedocs.io/en/stable/"
     }
   },
-  "Lua.diagnostics.disable": [
-    "inject-field",
-    "undefined-field"
-  ],
-  "Lua.diagnostics.disableScheme": [
-    "git",
-    "LibKeystone",
-    "LibObjectiveProgress-1.0",
-    "LibOpenRaid",
-    "LibRangeCheck-3.0",
-    "TinyLibs"
-  ]
+  "Lua.format.enable": false,
 }

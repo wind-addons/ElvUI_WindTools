@@ -2,7 +2,6 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_BattlefieldMap()
 	if not self:CheckDB("bgmap", "battlefieldMap") then

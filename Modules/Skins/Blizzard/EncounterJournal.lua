@@ -5,9 +5,6 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 local pairs = pairs
-local select = select
-local tinsert = tinsert
-local unpack = unpack
 
 function S:Blizzard_EncounterJournal()
 	if not self:CheckDB("encounterjournal", "encounterJournal") then

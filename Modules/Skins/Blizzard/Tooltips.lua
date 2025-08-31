@@ -3,12 +3,8 @@ local TT = E:GetModule("Tooltip")
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local format = format
-local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local pairs = pairs
-local strfind = strfind
-local strsub = strsub
 
 local function styleIconsInLine(line, text)
 	if not line then

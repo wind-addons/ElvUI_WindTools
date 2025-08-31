@@ -1,12 +1,9 @@
-local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, table, table
-local S = W.Modules.Skins
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local S = W.Modules.Skins ---@type Skins
 local TT = E:GetModule("Tooltip")
 
-local _G = _G
 local type = type
 local select = select
-local pairs = pairs
-local LibStub = _G.LibStub
 
 function S:ReskinLibQTip(lib)
 	for _, tt in lib:IterateTooltips() do
@@ -20,12 +17,12 @@ function S:ReskinLibQTip(lib)
 					local styledValue = self:StyleTextureString(value)
 					if styledValue ~= value then
 						-- Replace the value in the argument list
-						return self.hooks[tooltip].SetCell(tooltip, lineNum, colNum, styledValue, select(4, ...))
+						return self.hooks[tt].SetCell(tooltip, lineNum, colNum, styledValue, select(4, ...))
 					end
 				end
 
 				-- Call original with all original parameters
-				return self.hooks[tooltip].SetCell(tooltip, ...)
+				return self.hooks[tt].SetCell(tooltip, ...)
 			end)
 		end
 	end

@@ -1,6 +1,6 @@
-# macOS cache
 .DS_Store
 
+.kiro/*
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json

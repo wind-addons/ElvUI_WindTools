@@ -5,7 +5,6 @@ local C = W.Utilities.Color
 local _G = _G
 local pairs = pairs
 
-local UnitClass = UnitClass
 local GetClassColor = GetClassColor
 
 local RED_FONT_COLOR = RED_FONT_COLOR

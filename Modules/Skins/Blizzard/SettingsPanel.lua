@@ -3,8 +3,6 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 
-local pairs = pairs
-
 function S:SettingsPanel()
 	if not self:CheckDB("blizzardOptions", "settingsPanel") then
 		return

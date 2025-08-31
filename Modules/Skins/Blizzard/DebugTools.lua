@@ -5,8 +5,6 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
 
-local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-
 function S:Blizzard_DebugTools()
 	if not self:CheckDB("debug", "debugTools") then
 		return

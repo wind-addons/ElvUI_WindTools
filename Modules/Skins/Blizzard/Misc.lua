@@ -3,7 +3,6 @@ local S = W.Modules.Skins ---@type Skins
 local ES = E.Skins
 
 local _G = _G
-local hooksecurefunc = hooksecurefunc
 local pairs = pairs
 
 local CreateFrame = CreateFrame

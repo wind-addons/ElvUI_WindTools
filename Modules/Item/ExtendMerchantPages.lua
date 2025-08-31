@@ -4,6 +4,7 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local floor = math.floor
+local pairs = pairs
 local unpack = unpack
 
 local CreateFrame = CreateFrame
@@ -68,9 +69,9 @@ function EMP:MerchantFrame_UpdateMerchantInfo()
 
 		if (i % BLIZZARD_MERCHANT_ITEMS_PER_PAGE) == 1 then
 			if i == 1 then
-				button:SetPoint("TOPLEFT", _G.MerchantFrame, "TOPLEFT", 11, -69)
+				button:Point("TOPLEFT", _G.MerchantFrame, "TOPLEFT", 11, -69)
 			else
-				button:SetPoint(
+				button:Point(
 					"TOPLEFT",
 					_G["MerchantItem" .. (i - (BLIZZARD_MERCHANT_ITEMS_PER_PAGE - 1))],
 					"TOPRIGHT",
@@ -80,9 +81,9 @@ function EMP:MerchantFrame_UpdateMerchantInfo()
 			end
 		else
 			if (i % 2) == 1 then
-				button:SetPoint("TOPLEFT", _G["MerchantItem" .. (i - 2)], "BOTTOMLEFT", 0, -8)
+				button:Point("TOPLEFT", _G["MerchantItem" .. (i - 2)], "BOTTOMLEFT", 0, -8)
 			else
-				button:SetPoint("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
+				button:Point("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
 			end
 		end
 	end
@@ -110,16 +111,16 @@ function EMP:MerchantFrame_UpdateBuybackInfo()
 			if row == 0 then
 				-- First row of buyback items
 				if col == 0 then
-					button:SetPoint("TOPLEFT", _G.MerchantItem1, "TOPLEFT", 0, -60)
+					button:Point("TOPLEFT", _G.MerchantItem1, "TOPLEFT", 0, -60)
 				else
-					button:SetPoint("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
+					button:Point("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
 				end
 			else
 				-- Subsequent rows
 				if col == 0 then
-					button:SetPoint("TOPLEFT", _G["MerchantItem" .. (i - 3)], "BOTTOMLEFT", 0, -15)
+					button:Point("TOPLEFT", _G["MerchantItem" .. (i - 3)], "BOTTOMLEFT", 0, -15)
 				else
-					button:SetPoint("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
+					button:Point("TOPLEFT", _G["MerchantItem" .. (i - 1)], "TOPRIGHT", 12, 0)
 				end
 			end
 			button:Show()
@@ -130,9 +131,15 @@ function EMP:MerchantFrame_UpdateBuybackInfo()
 end
 
 function EMP:Initialize()
-	if C_AddOns_IsAddOnLoaded("ExtVendor") then
-		self.StopRunning = "ExtVendor"
-		return
+	for _, addon in pairs({
+		"ExtVendor",
+		"Krowi_ExtendedVendorUI",
+		"CompactVendor",
+	}) do
+		if C_AddOns_IsAddOnLoaded(addon) then
+			self.StopRunning = addon
+			return
+		end
 	end
 
 	if not E.private.WT.item.extendMerchantPages.enable then
@@ -142,7 +149,7 @@ function EMP:Initialize()
 	self.db = E.private.WT.item.extendMerchantPages
 
 	_G.MERCHANT_ITEMS_PER_PAGE = self.db.numberOfPages * BLIZZARD_MERCHANT_ITEMS_PER_PAGE
-	_G.MerchantFrame:SetWidth(30 + self.db.numberOfPages * 330)
+	_G.MerchantFrame:Width(30 + self.db.numberOfPages * 330)
 
 	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
 		if not _G["MerchantItem" .. i] then
@@ -157,18 +164,18 @@ function EMP:Initialize()
 	end
 
 	_G.MerchantBuyBackItem:ClearAllPoints()
-	_G.MerchantBuyBackItem:SetPoint("TOPLEFT", _G.MerchantItem10, "BOTTOMLEFT", 30, -53)
+	_G.MerchantBuyBackItem:Point("TOPLEFT", _G.MerchantItem10, "BOTTOMLEFT", 30, -53)
 
 	-- Position page navigation buttons relative to the extended frame width
 	local buttonOffset = 25 + ((self.db.numberOfPages - 1) * 165) -- Center the buttons in the extended frame
 
 	_G.MerchantPrevPageButton:ClearAllPoints()
-	_G.MerchantPrevPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMLEFT", buttonOffset, 93)
+	_G.MerchantPrevPageButton:Point("CENTER", _G.MerchantFrame, "BOTTOMLEFT", buttonOffset, 93)
 	F.SetFontOutline(_G.MerchantPageText)
 	_G.MerchantPageText:ClearAllPoints()
-	_G.MerchantPageText:SetPoint("BOTTOM", _G.MerchantFrame, "BOTTOM", 0, 86)
+	_G.MerchantPageText:Point("BOTTOM", _G.MerchantFrame, "BOTTOM", 0, 86)
 	_G.MerchantNextPageButton:ClearAllPoints()
-	_G.MerchantNextPageButton:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMRIGHT", -buttonOffset, 93)
+	_G.MerchantNextPageButton:Point("CENTER", _G.MerchantFrame, "BOTTOMRIGHT", -buttonOffset, 93)
 
 	self:SecureHook("MerchantFrame_UpdateMerchantInfo", "MerchantFrame_UpdateMerchantInfo")
 	self:SecureHook("MerchantFrame_UpdateBuybackInfo", "MerchantFrame_UpdateBuybackInfo")

@@ -1,8 +1,8 @@
-local W, F, E, L = unpack((select(2, ...)))
-local S = W.Modules.Skins
+---@diagnostic disable: undefined-field
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local S = W.Modules.Skins ---@type Skins
 local ES = E:GetModule("Skins")
-local MF = W:GetModule("MoveFrames")
-local Rematch = Rematch
+local TT = E:GetModule("Tooltip")
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -200,18 +200,6 @@ local function ReskinCard(card) -- modified from NDui
 	end
 end
 
-local function ReskinInset(frame)
-	if not frame or frame.__windSkin then
-		return
-	end
-
-	frame:StripTextures()
-	frame:CreateBackdrop()
-	frame.backdrop:SetInside(frame, 2, 2)
-	frame.backdrop.Center:SetVertexColor(1, 1, 1, 0.3)
-	frame.__windSkin = true
-end
-
 local function ReskinTooltip(tooltip)
 	if not tooltip then
 		return
@@ -220,19 +208,8 @@ local function ReskinTooltip(tooltip)
 	tooltip:StripTextures()
 	tooltip:CreateBackdrop("Transparent")
 	S:CreateBackdropShadow(tooltip)
-end
 
-local function reskinPetList(list)
-	list:ForEachFrame(function(button)
-		if not button.__windSkin then
-			if button.Back then
-				button.Back:SetAlpha(0)
-			end
-
-			S:Proxy("HandleIcon", button.Icon)
-			button.__windSkin = true
-		end
-	end)
+	TT:SetStyle(tooltip)
 end
 
 local function ReskinOptions(list)
@@ -299,108 +276,6 @@ local function ReskinFlyout(frame)
 		end
 	end)
 	frame.__windSkin = true
-end
-
-function S:Rematch_LeftTop()
-	for _, region in pairs({ _G.RematchPetPanel.Top:GetRegions() }) do
-		region:Hide()
-	end
-
-	if _G.RematchPetPanel.Top.SearchBox then
-		local searchBox = _G.RematchPetPanel.Top.SearchBox
-		ReskinEditBox(searchBox)
-		searchBox:ClearAllPoints()
-		searchBox:Point("TOPLEFT", _G.RematchPetPanel.Top.Toggle, "TOPRIGHT", 2, 0)
-		searchBox:Point("BOTTOMRIGHT", _G.RematchPetPanel.Top.Filter, "BOTTOMLEFT", -2, 0)
-	end
-
-	ReskinButton(_G.RematchPetPanel.Top.Toggle)
-	_G.RematchPetPanel.Top.Toggle:StripTextures()
-
-	_G.RematchPetPanel.Top.Toggle.Texture = _G.RematchPetPanel.Top.Toggle:CreateTexture(nil, "OVERLAY")
-	_G.RematchPetPanel.Top.Toggle.Texture:Point("CENTER")
-	_G.RematchPetPanel.Top.Toggle.Texture:SetTexture(E.Media.Textures.ArrowUp)
-	_G.RematchPetPanel.Top.Toggle.Texture:Size(14, 14)
-
-	self:SecureHook(_G.Rematch, "SetTopToggleButton", function()
-		if _G.RematchPetPanel.Top.Toggle.up then
-			_G.RematchPetPanel.Top.Toggle.Texture:SetRotation(ES.ArrowRotation["up"])
-		else
-			_G.RematchPetPanel.Top.Toggle.Texture:SetRotation(ES.ArrowRotation["down"])
-		end
-	end)
-
-	_G.RematchPetPanel.Top.Toggle:HookScript("OnEnter", function(self)
-		if self.Texture then
-			self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
-		end
-	end)
-
-	_G.RematchPetPanel.Top.Toggle:HookScript("OnLeave", function(self)
-		if self.Texture then
-			self.Texture:SetVertexColor(1, 1, 1)
-		end
-	end)
-
-	_G.RematchPetPanel.Top.Toggle:HookScript("OnClick", function(self)
-		self:SetNormalTexture("")
-		self:SetPushedTexture("")
-		if self.up then
-			self.Texture:SetRotation(ES.ArrowRotation.up)
-		else
-			self.Texture:SetRotation(ES.ArrowRotation.down)
-		end
-	end)
-
-	ReskinFilterButton(_G.RematchPetPanel.Top.Filter)
-
-	local typeBar = _G.RematchPetPanel.Top.TypeBar
-	if typeBar then -- Modified from NDui
-		typeBar:SetBackdrop(nil)
-		typeBar:CreateBackdrop()
-		for i = 1, 10 do
-			reskinIconButton(_G.RematchPetPanel.Top.TypeBar.Buttons[i])
-		end
-
-		for i = 1, 4 do
-			local tab = _G.RematchPetPanel.Top.TypeBar.Tabs[i]
-			if tab then
-				tab:StripTextures()
-				tab:CreateBackdrop("Transparent")
-				tab.backdrop:SetInside(tab, 2, 2)
-				if tab.HasStuff then
-					tab.HasStuff:SetTexture(E.media.blankTex)
-					tab.HasStuff:SetVertexColor(0, 0, 1, 0.2)
-					tab.HasStuff:SetInside(tab, 3, 3)
-				end
-				if tab.Selected then
-					tab.Selected:StripTextures()
-					tab.Selected.windSelected = tab.Selected:CreateTexture(nil)
-					tab.Selected.windSelected:SetTexture(E.media.blankTex)
-					tab.Selected.windSelected:SetVertexColor(1, 1, 1, 0.2)
-					tab.Selected.windSelected:SetInside(tab.Selected, 3, 3)
-				end
-			end
-		end
-
-		local results = _G.RematchPetPanel.Results
-
-		local qualityBar = typeBar.QualityBar
-		if qualityBar then
-			local buttons = { "HealthButton", "PowerButton", "SpeedButton", "Level25Button", "RareButton" }
-			for _, name in pairs(buttons) do
-				local button = qualityBar[name]
-				if button then
-					reskinIconButton(button)
-				end
-			end
-		end
-	end
-
-	local results = _G.RematchPetPanel.Results
-	if results then
-		results:StripTextures()
-	end
 end
 
 function S:Rematch_LeftBottom()
@@ -752,29 +627,36 @@ function S:Rematch_SkinLoad()
 	end
 
 	-- Tooltip
-	ReskinTooltip(_G.RematchTooltip)
-	ReskinTooltip(_G.RematchTableTooltip)
-	ReskinTooltip(_G.FloatingPetBattleAbilityTooltip)
-	for i = 1, 3 do
-		local menu = _G.Rematch:GetMenuFrame(i, _G.UIParent)
-		menu:StripTextures()
-		menu:CreateBackdrop("Transparent")
-		S:CreateBackdropShadow(menu)
-		menu.Title:StripTextures()
-		menu.Title:CreateBackdrop()
-		menu.Title.backdrop:SetBackdropColor(1, 0.8, 0, 0.25)
-	end
-
-	-- Compatible with Move Frames module
-	if MF and MF.db and MF.db.moveBlizzardFrames then
-		if not _G.CollectionsJournal then
-			CollectionsJournal_LoadUI()
-		end
-		MF:HandleFrame(_G.RematchJournal, _G.CollectionsJournal)
-		MF:HandleFrame(_G.RematchToolbar, _G.CollectionsJournal)
-	end
 
 	_G.RematchJournal.skinLoaded = true
+end
+
+local function reskinScroll(frame)
+	frame:StripTextures()
+	S:Proxy("HandleFrame", frame)
+	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+	S:ReskinIconButton(frame.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 21, 1.571)
+	F.Move(frame.ScrollToTopButton, -1, -1)
+	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
+end
+
+local function reskinPetList(list)
+	list:ForEachFrame(function(button)
+		if button.__windSkin then
+			return
+		end
+
+		if button.Back then
+			button.Back:SetAlpha(0)
+		end
+
+		-- local highlightTexture = button:GetHighlightTexture()
+		-- highlightTexture:SetTexture(E.media.blankTex)
+		-- highlightTexture:SetVertexColor(1, 1, 1, 0.25)
+
+		S:Proxy("HandleIcon", button.Icon)
+		button.__windSkin = true
+	end)
 end
 
 local function reskinMainFrame(frame)
@@ -832,19 +714,12 @@ local function reskinToolBar(frame)
 	reskinIconButton(frame.SummonPetButton)
 end
 
-local function reskinScroll(frame)
-	frame:StripTextures()
-	S:Proxy("HandleFrame", frame)
-	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
-	S:ReskinIconButton(frame.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 20, 1.571)
-	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 20, -1.571)
-end
-
 local function reskinPetsPanel(frame)
 	if not frame then
 		return
 	end
 
+	-- Top Filter
 	frame.Top:StripTextures()
 	frame.Top:CreateBackdrop()
 	S:Reposition(frame.Top.backdrop, frame.Top, 0, 0, 1, 0, 0)
@@ -860,6 +735,60 @@ local function reskinPetsPanel(frame)
 	frame.Top.FilterButton:StripTextures()
 	S:Proxy("HandleButton", frame.Top.FilterButton, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
 
+	-- Top Type Bar
+	frame.Top.TypeBar:CreateBackdrop("Transparent")
+	S:Reposition(frame.Top.TypeBar.backdrop, frame.Top.TypeBar, 2, -24, -3, 0, 0)
+	frame.Top.TypeBar.Level25Button:StripTextures()
+	frame.Top.TypeBar.Level25Button:CreateBackdrop()
+	frame.Top.TypeBar.Level25Button:HookScript("OnEnter", function()
+		frame.Top.TypeBar.Level25Button.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+	end)
+	frame.Top.TypeBar.Level25Button:HookScript("OnLeave", function()
+		frame.Top.TypeBar.Level25Button.backdrop:SetBackdropBorderColor(0, 0, 0)
+	end)
+	frame.Top.TypeBar.Level25Button.Text = frame.Top.TypeBar.Level25Button.backdrop:CreateFontString(nil, "OVERLAY")
+	frame.Top.TypeBar.Level25Button.Text:FontTemplate(nil, 10)
+	frame.Top.TypeBar.Level25Button.Text:SetText("25")
+	frame.Top.TypeBar.Level25Button.Text:Point("CENTER", 1, -1)
+
+	local newHighlight = frame.Top.TypeBar.backdrop:CreateTexture(nil, "OVERLAY")
+	newHighlight:SetAllPoints(frame.Top.TypeBar.Level25Button)
+	newHighlight:SetTexture(E.media.blankTex)
+	newHighlight:SetVertexColor(1, 0.875, 0.125, 0.3)
+	newHighlight:SetShown(frame.Top.TypeBar.Level25Highlight:IsShown())
+	frame.Top.TypeBar.Level25Highlight:Kill()
+	frame.Top.TypeBar.Level25Highlight = newHighlight
+
+	frame.Top.TypeBar.TabbedBorder:SetAlpha(0)
+
+	if frame.Top.TypeBar.Buttons then
+		for i = 1, #frame.Top.TypeBar.Buttons do
+			reskinIconButton(frame.Top.TypeBar.Buttons[i])
+		end
+	end
+
+	if frame.Top.TypeBar.Selecteds then
+		for i = 1, #frame.Top.TypeBar.Selecteds do
+			local texture = frame.Top.TypeBar.Selecteds[i]
+			texture:SetTexture(E.media.blankTex)
+			texture.__SetVertexColor = texture.SetVertexColor
+			texture.SetVertexColor = function(t, r, g, b, a)
+				texture.__SetVertexColor(t, r, g, b, (a or 0.4) / 3)
+			end
+		end
+	end
+
+	if frame.Top.TypeBar.Tabs then
+		for i = 1, #frame.Top.TypeBar.Tabs do
+			local tab = frame.Top.TypeBar.Tabs[i]
+			S:Proxy("HandleTab", tab)
+			tab.Text.__SetPoint = tab.Text.SetPoint
+			hooksecurefunc(tab.Text, "SetPoint", function(t)
+				F.Move(t, 0, 2)
+			end)
+		end
+	end
+
 	frame.ResultsBar:StripTextures()
 	frame.ResultsBar:CreateBackdrop("Transparent")
 	frame.ResultsBar.backdrop:SetInside(frame.ResultsBar)
@@ -867,6 +796,11 @@ local function reskinPetsPanel(frame)
 	reskinScroll(frame.List)
 
 	hooksecurefunc(frame.List.ScrollBox, "Update", reskinPetList)
+end
+
+local function reskinTooltips()
+	TT:SetStyle(_G.RematchTooltip)
+	TT:SetStyle(_G.FloatingPetBattleAbilityTooltip)
 end
 
 function S:Rematch()
@@ -881,10 +815,11 @@ function S:Rematch()
 
 	frame.__SetPoint = frame.SetPoint
 	hooksecurefunc(frame, "SetPoint", function()
-		F.MoveFrameWithOffset(frame, 1, 0)
+		F.Move(frame, 1, 0)
 	end)
-	F.MoveFrameWithOffset(frame, 1, 0)
+	F.Move(frame, 1, 0)
 
+	reskinTooltips()
 	reskinMainFrame(frame)
 	reskinTitleBar(frame.TitleBar)
 	reskinToolBar(frame.ToolBar)

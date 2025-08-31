@@ -201,12 +201,12 @@ function MB:HandleExpansionButton(...)
 		end
 
 		F.TaskManager:OutOfCombat(function()
-			local button = _G.ExpansionLandingPageMinimapButton or _G.GarrisonLandingPageMinimapButton
+			local button = _G.ExpansionLandingPageMinimapButton
 			if not button then
 				return
 			end
 
-			self:SkinButton(button)
+			self:SkinButton(button, true)
 
 			EM:SetIconParent(button)
 			EM:SetScale(button, 1)
@@ -294,8 +294,13 @@ function MB:SetButtonMouseOver(button, frame, rawhook)
 	end
 end
 
-function MB:SkinButton(button)
-	if button == nil or button:GetName() == nil or not button:IsVisible() or button.isSkinned then
+function MB:SkinButton(button, force)
+	if button == nil then
+		return
+	end
+
+	local name = button:GetDebugName()
+	if not force and (name == nil or not button:IsVisible() or button.isSkinned) then
 		return
 	end
 
@@ -315,9 +320,7 @@ function MB:SkinButton(button)
 		return
 	end
 
-	local name = button:GetDebugName()
 	local valid = false
-
 	for i = 1, #whiteList do
 		if strsub(name, 1, strlen(whiteList[i])) == whiteList[i] then
 			valid = true

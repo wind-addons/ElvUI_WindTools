@@ -20,7 +20,7 @@ function S:Simulationcraft_SkinMainFrame()
 	F.SetFontOutline(_G.SimcFrameButton:GetNormalFontObject())
 	F.SetFontOutline(_G.SimcEditBox)
 	F.SetFontOutline(_G.SimcFrame.CheckButton.Text)
-	F.MoveFrameWithOffset(_G.SimcFrame.CheckButton.Text, 0, -3)
+	F.Move(_G.SimcFrame.CheckButton.Text, 0, -3)
 end
 
 function S:Simulationcraft()

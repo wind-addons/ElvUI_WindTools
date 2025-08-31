@@ -49,7 +49,7 @@ local function messageView(frame)
 
 	frame.__SetPoint = frame.SetPoint
 	hooksecurefunc(frame, "SetPoint", function(self, ...)
-		F.MoveFrameWithOffset(self, -6, 0)
+		F.Move(self, -6, 0)
 	end)
 end
 
@@ -58,7 +58,7 @@ local function optionFrame(frame)
 		if child:IsObjectType("CheckButton") then
 			S:Proxy("HandleCheckBox", child)
 			child:Size(24)
-			F.MoveFrameWithOffset(child, 0, -3)
+			F.Move(child, 0, -3)
 		elseif child:IsObjectType("Button") then
 			if child.dropdown then
 				child.Button = child.toggleButton

@@ -538,21 +538,21 @@ function S:Reposition(frame, target, border, top, bottom, left, right)
 end
 
 ---Proxy function to call ElvUI Skins functions
----@param funcName string The function name in ElvUI Skins
+---@param method string The function name in ElvUI Skins
 ---@param frame any The frame to pass to the function
 ---@param ... any Additional arguments to pass
-function S:Proxy(funcName, frame, ...)
+function S:Proxy(method, frame, ...)
 	if not frame then
-		F.Developer.ThrowError("Failed to proxy function: frame is nil, funcName:", funcName)
+		F.Developer.ThrowError("Failed to proxy function: frame is nil, funcName:", method)
 		return
 	end
 
-	if not ES[funcName] then
-		F.Developer.ThrowError(format("Proxy: %s is not exist in ElvUI Skins", funcName))
+	if not ES[method] then
+		F.Developer.ThrowError(format("Proxy: %s is not exist in ElvUI Skins", method))
 		return
 	end
 
-	ES[funcName](ES, frame, ...)
+	ES[method](ES, frame, ...)
 end
 
 ---Set high alpha transparent backdrop

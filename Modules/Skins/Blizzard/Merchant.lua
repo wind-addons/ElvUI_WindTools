@@ -36,7 +36,7 @@ function S:MerchantFrame()
 
 	for _, region in pairs({ _G.MerchantMoneyFrame.GoldButton:GetRegions() }) do
 		if region:GetObjectType() == "Texture" then
-			F.MoveFrameWithOffset(region, 0, 4)
+			F.Move(region, 0, 4)
 		end
 	end
 
@@ -46,7 +46,7 @@ function S:MerchantFrame()
 			if token and not token.__wind then
 				token:Width(token:GetWidth() + 2)
 				F.SetFontOutline(token.Count)
-				F.MoveFrameWithOffset(token.Count, -2, 0)
+				F.Move(token.Count, -2, 0)
 				token.Icon:SetTexCoord(unpack(E.TexCoords))
 				token.__wind = true
 			end

@@ -21,27 +21,27 @@ local function reskinSetting(frame)
 	for i = 1, 5 do
 		S:Proxy("HandleCheckBox", frame["color" .. i])
 		frame["color" .. i]:Size(24)
-		F.MoveFrameWithOffset(frame["color" .. i], 0, -10)
-		F.MoveFrameWithOffset(frame["color" .. i].Text, 0, -2)
+		F.Move(frame["color" .. i], 0, -10)
+		F.Move(frame["color" .. i].Text, 0, -2)
 
 		S:Proxy("HandleCheckBox", frame["text" .. i])
 		frame["text" .. i]:Size(24)
-		F.MoveFrameWithOffset(frame["text" .. i], 0, -10)
-		F.MoveFrameWithOffset(frame["text" .. i].Text, 0, -2)
+		F.Move(frame["text" .. i], 0, -10)
+		F.Move(frame["text" .. i].Text, 0, -2)
 	end
 
-	F.MoveFrameWithOffset(frame.label3, 0, -50)
+	F.Move(frame.label3, 0, -50)
 
 	S:Proxy("HandleCheckBox", frame.toast)
 	frame.toast:Size(28)
 
-	F.MoveFrameWithOffset(frame.description2, 0, -3)
+	F.Move(frame.description2, 0, -3)
 
 	S:Proxy("HandleSliderFrame", frame.fade2)
 
 	S:Proxy("HandleCheckBox", frame.sound)
 	frame.sound:Size(24)
-	F.MoveFrameWithOffset(frame.sound, 0, -10)
+	F.Move(frame.sound, 0, -10)
 
 	S:Proxy("HandleButton", frame.toggle)
 	S:Proxy("HandleButton", frame.reset)

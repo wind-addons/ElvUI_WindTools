@@ -61,7 +61,7 @@ function S:WorldMapFrame()
 		end
 
 		if i > 1 then
-			F.MoveFrameWithOffset(tab, 0, -2)
+			F.Move(tab, 0, -2)
 		end
 	end
 

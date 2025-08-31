@@ -119,7 +119,7 @@ local function reskinJournal(frame)
 		filter:StripTextures()
 		filter:Size(85, 20)
 		S:Proxy("HandleButton", filter, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, "right")
-		F.MoveFrameWithOffset(filter, 0, -1)
+		F.Move(filter, 0, -1)
 		S:Proxy("HandleCloseButton", filter.ResetButton)
 	end
 

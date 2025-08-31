@@ -164,9 +164,9 @@ local function UpdateBlock(block)
 			if mapID and mapID == 2710 and not widgetFrame.__windSkinMoved then
 				if widgetFrame.Bar and widgetFrame.Label then
 					widgetFrame.Label:Hide()
-					F.MoveFrameWithOffset(widgetFrame, 15, 0)
+					F.Move(widgetFrame, 15, 0)
 				else
-					F.MoveFrameWithOffset(widgetFrame, 10, 0)
+					F.Move(widgetFrame, 10, 0)
 				end
 
 				widgetFrame.__windSkinMoved = true

@@ -63,9 +63,9 @@ local function StyleSilverDragonLootWindow(frame)
 	end
 
 	frame.__SetPoint = frame.SetPoint
-	F.MoveFrameWithOffset(frame, 0, -3)
+	F.Move(frame, 0, -3)
 	hooksecurefunc(frame, "SetPoint", function()
-		F.MoveFrameWithOffset(frame, 0, -3)
+		F.Move(frame, 0, -3)
 	end)
 
 	frame.__windSkin = true

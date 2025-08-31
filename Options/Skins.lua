@@ -1401,7 +1401,7 @@ options.addons = {
 		rematch = {
 			order = 10,
 			type = "toggle",
-			name = L["Rematch"],
+			name = L["Rematch"] .. " |cffff3860(" .. L["WIP"] .. ")|r",
 			addonName = "Rematch",
 			addonskinsKey = "Rematch",
 		},

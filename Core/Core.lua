@@ -1,7 +1,7 @@
 local W ---@class WindTools
 local F ---@type Functions
-local E ---@type table, table, table, table
-W, F, E = unpack((select(2, ...)))
+local E, L, V, P, G ---@type table, table, table, table, table
+W, F, E, L, V, P, G = unpack((select(2, ...)))
 
 local _G = _G
 local format = format
@@ -12,6 +12,8 @@ local strmatch = strmatch
 local strsub = strsub
 local tinsert = tinsert
 local tonumber = tonumber
+local unpack = unpack
+local xpcall = xpcall
 
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
@@ -124,7 +126,7 @@ function W:ItemRefTooltip_SetHyperlink(_, data)
 	if argsString and argsString ~= "" then
 		argsString = strsub(argsString, 2)
 		for arg in gmatch(argsString, "[^:]+") do
-			table.insert(args, arg)
+			tinsert(args, arg)
 		end
 	end
 

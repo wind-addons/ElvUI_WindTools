@@ -5,12 +5,11 @@ local _G = _G
 local ceil = ceil
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
-local ipairs = ipairs
 local mod = mod
 local pairs = pairs
 local strsplit = strsplit
 local tinsert = tinsert
-local tostring = tostring
+local tonumber = tonumber
 local wipe = wipe
 
 local EventRegistry = EventRegistry

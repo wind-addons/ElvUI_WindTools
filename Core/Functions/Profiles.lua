@@ -1,7 +1,7 @@
 local W ---@type WindTools
 local F ---@class Functions
-local E, V, P, G ---@type table, table, table, table
-W, F, E, L, V, P, G = unpack((select(2, ...)))
+local E, V, P ---@type table, table, table
+W, F, E, V, P = unpack((select(2, ...)))
 local D = E:GetModule("Distributor")
 local LibDeflate = E.Libs.Deflate
 

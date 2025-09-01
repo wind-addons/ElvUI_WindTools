@@ -450,3 +450,27 @@ function F.IsAlmost(a, b, allowance)
 
 	return abs(a - b) < 0.025
 end
+
+---@param frame any The frame to proxy the method for
+---@param methodKey any The name of the method to proxy
+function F.InternalizeMethod(frame, methodKey)
+	local internalMethodKey = "__" .. methodKey
+	if frame[internalMethodKey] or not frame[methodKey] then
+		return
+	end
+
+	frame[internalMethodKey] = frame[methodKey]
+	frame[methodKey] = E.noop
+end
+
+---@param methodKey string The name of the method to proxy
+---@param frame any The frame to proxy the method for
+---@param ... any The arguments to pass to the proxied method
+function F.CallMethod(methodKey, frame, ...)
+	local internalMethodKey = "__" .. methodKey
+	if frame[internalMethodKey] then
+		return frame[internalMethodKey](frame, ...)
+	end
+
+	return frame[methodKey](frame, ...)
+end

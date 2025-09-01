@@ -82,30 +82,6 @@ local acceptedFrames = {
 
 local handledButtons = {}
 
----@param frame any The frame to proxy the method for
----@param methodKey any The name of the method to proxy
-function MB:InternalizeMethod(frame, methodKey)
-	local internalMethodKey = "__" .. methodKey
-	if frame[internalMethodKey] or not frame[methodKey] then
-		return
-	end
-
-	frame[internalMethodKey] = frame[methodKey]
-	frame[methodKey] = E.noop
-end
-
----@param methodKey string The name of the method to proxy
----@param frame any The frame to proxy the method for
----@param ... any The arguments to pass to the proxied method
-function MB:Call(methodKey, frame, ...)
-	local internalMethodKey = "__" .. methodKey
-	if frame[internalMethodKey] then
-		return frame[internalMethodKey](frame, ...)
-	end
-
-	return frame[methodKey](frame, ...)
-end
-
 local function isValidName(name)
 	for _, ignoreName in pairs(IgnoreList.full) do
 		if name == ignoreName then
@@ -211,14 +187,14 @@ function MB:HandleExpansionButton(...)
 			EM:SetIconParent(button)
 			EM:SetScale(button, 1)
 
-			self:InternalizeMethod(button, "ClearAllPoints")
-			self:InternalizeMethod(button, "SetPoint")
-			self:InternalizeMethod(button, "SetParent")
-			self:InternalizeMethod(button, "SetSize")
-			self:InternalizeMethod(button, "SetScale")
-			self:InternalizeMethod(button, "SetFrameStrata")
-			self:InternalizeMethod(button, "SetFrameLevel")
-			self:InternalizeMethod(button, "SetMovable")
+			F.InternalizeMethod(button, "ClearAllPoints")
+			F.InternalizeMethod(button, "SetPoint")
+			F.InternalizeMethod(button, "SetParent")
+			F.InternalizeMethod(button, "SetSize")
+			F.InternalizeMethod(button, "SetScale")
+			F.InternalizeMethod(button, "SetFrameStrata")
+			F.InternalizeMethod(button, "SetFrameLevel")
+			F.InternalizeMethod(button, "SetMovable")
 
 			local box = _G.GarrisonLandingPageTutorialBox
 			if box then
@@ -509,7 +485,7 @@ function MB:SkinButton(button, force)
 		if _G["TomCats-MinimapButtonIcon"] then
 			_G["TomCats-MinimapButtonIcon"]:ClearAllPoints()
 			_G["TomCats-MinimapButtonIcon"]:SetInside(button.backdrop)
-			self:InternalizeMethod(_G["TomCats-MinimapButtonIcon"], "SetPoint")
+			F.InternalizeMethod(_G["TomCats-MinimapButtonIcon"], "SetPoint")
 			_G["TomCats-MinimapButtonIcon"]:SetTexCoord(0, 0.65, 0, 0.65)
 		end
 	end
@@ -552,22 +528,22 @@ function MB:UpdateLayout()
 
 	for i, moveButton in pairs(handledButtons) do
 		local frame = _G[moveButton]
-		self:Call("ClearAllPoints", frame)
+		F.CallMethod("ClearAllPoints", frame)
 
 		if self.db.orientation == "NOANCHOR" then
 			local original = frame.original
-			self:Call("SetParent", frame, original.Parent)
+			F.CallMethod("SetParent", frame, original.Parent)
 			if original.DragStart then
-				self:Call("SetScript", frame, "OnDragStart", original.DragStart)
+				F.CallMethod("SetScript", frame, "OnDragStart", original.DragStart)
 			end
 			if original.DragEnd then
-				self:Call("SetScript", frame, "OnDragStop", original.DragEnd)
+				F.CallMethod("SetScript", frame, "OnDragStop", original.DragEnd)
 			end
 
-			self:Call("SetSize", frame, original.Width, original.Height)
+			F.CallMethod("SetSize", frame, original.Width, original.Height)
 
 			if original.Point ~= nil then
-				self:Call(
+				F.CallMethod(
 					"SetPoint",
 					frame,
 					original.Point,
@@ -577,13 +553,13 @@ function MB:UpdateLayout()
 					original.yOfs
 				)
 			else
-				self:Call("SetPoint", frame, "CENTER", _G.Minimap, "CENTER", -80, -34)
+				F.CallMethod("SetPoint", frame, "CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
 
-			self:Call("SetFrameStrata", frame, original.FrameStrata)
-			self:Call("SetFrameLevel", frame, original.FrameLevel)
-			self:Call("SetMovable", frame, true)
-			self:Call("SetScale", frame, original.Scale)
+			F.CallMethod("SetFrameStrata", frame, original.FrameStrata)
+			F.CallMethod("SetFrameLevel", frame, original.FrameLevel)
+			F.CallMethod("SetMovable", frame, true)
+			F.CallMethod("SetScale", frame, original.Scale)
 		else
 			buttonX = i % buttonsPerRow
 			buttonY = floor(i / buttonsPerRow) + 1
@@ -593,12 +569,12 @@ function MB:UpdateLayout()
 				buttonY = buttonY - 1
 			end
 
-			self:Call("SetParent", frame, self.bar)
-			self:Call("SetFrameStrata", frame, "LOW")
-			self:Call("SetFrameLevel", frame, 20)
-			self:Call("SetMovable", frame, false)
-			self:Call("SetScript", frame, "OnDragStart", nil)
-			self:Call("SetScript", frame, "OnDragStop", nil)
+			F.CallMethod("SetParent", frame, self.bar)
+			F.CallMethod("SetFrameStrata", frame, "LOW")
+			F.CallMethod("SetFrameLevel", frame, 20)
+			F.CallMethod("SetMovable", frame, false)
+			F.CallMethod("SetScript", frame, "OnDragStart", nil)
+			F.CallMethod("SetScript", frame, "OnDragStop", nil)
 
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
@@ -621,8 +597,8 @@ function MB:UpdateLayout()
 				end
 			end
 
-			self:Call("SetSize", frame, buttonSize, buttonSize)
-			self:Call("SetPoint", frame, anchor, self.bar, anchor, offsetX, offsetY)
+			F.CallMethod("SetSize", frame, buttonSize, buttonSize)
+			F.CallMethod("SetPoint", frame, anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
 		if

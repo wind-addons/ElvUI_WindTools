@@ -18,7 +18,7 @@ local WeakAuras = _G.WeakAuras
 ---@param frame Frame The frame to apply backdrop and shadow to
 ---@param useDefaultTemplate boolean? Whether to use default template
 local function CreateBackdropAndShadow(frame, useDefaultTemplate)
-	if not frame then
+	if not frame or frame.__windBackdrop then
 		return
 	end
 
@@ -32,12 +32,7 @@ local function CreateBackdropAndShadow(frame, useDefaultTemplate)
 	end
 
 	frame.backdrop.Center:StripTextures()
-	frame.backdrop:SetFrameLevel(0)
-
-	-- Keep backdrop at frame level 0 when frame strata changes
-	hooksecurefunc(frame, "SetFrameStrata", function()
-		frame.backdrop:SetFrameLevel(0)
-	end)
+	frame.__windBackdrop = true
 end
 
 ---Apply ElvUI texture coordinates to an icon

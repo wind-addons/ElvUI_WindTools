@@ -29,7 +29,7 @@ function WS:HandleAce3CheckBox(check)
 	end
 
 	if self.IsUglyYellow(check:GetVertexColor()) then
-		F.SetVertexColorWithDB(check, db.classColor and W.ClassColor or db.color)
+		F.SetVertexColorWithDB(check, db.classColor and E.myClassColor or db.color)
 	end
 end
 
@@ -60,7 +60,7 @@ function WS:HandleCheckBox(_, check)
 			if texture then
 				texture:SetTexture(LSM:Fetch("statusbar", db.texture) or E.media.normTex)
 				texture.SetTexture = E.noop
-				F.SetVertexColorWithDB(texture, db.classColor and W.ClassColor or db.color)
+				F.SetVertexColorWithDB(texture, db.classColor and E.myClassColor or db.color)
 				texture.SetVertexColor_ = texture.SetVertexColor
 				texture.SetVertexColor = function(tex, ...)
 					local isDefaultColor = self.IsUglyYellow(...)
@@ -77,7 +77,7 @@ function WS:HandleCheckBox(_, check)
 					end
 
 					if isDefaultColor then
-						local color = db.classColor and W.ClassColor or db.color
+						local color = db.classColor and E.myClassColor or db.color
 						tex:SetVertexColor_(color.r, color.g, color.b, color.a)
 					else
 						tex:SetVertexColor_(...)

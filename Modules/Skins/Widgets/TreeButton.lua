@@ -69,7 +69,7 @@ function WS:HandleTreeGroup(widget)
 					bg:SetDrawLayer(layer, subLayer)
 				end
 
-				F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
+				F.SetVertexColorWithDB(bg, db.backdrop.classColor and E.myClassColor or db.backdrop.color)
 
 				button.windAnimation = self.Animation(bg, db.backdrop.animation)
 				self.SetAnimationMetadata(button, button.windAnimation)
@@ -93,8 +93,8 @@ function WS:HandleTreeGroup(widget)
 			if db.selected.enable then
 				button:CreateBackdrop()
 				button.backdrop:SetInside(button, 2, 0)
-				local borderColor = db.selected.borderClassColor and W.ClassColor or db.selected.borderColor
-				local backdropColor = db.selected.backdropClassColor and W.ClassColor or db.selected.backdropColor
+				local borderColor = db.selected.borderClassColor and E.myClassColor or db.selected.borderColor
+				local backdropColor = db.selected.backdropClassColor and E.myClassColor or db.selected.backdropColor
 				button.backdrop.Center:SetTexture(LSM:Fetch("statusbar", db.selected.texture) or E.media.glossTex)
 				button.backdrop:SetBackdropBorderColor(
 					borderColor.r,
@@ -119,7 +119,7 @@ function WS:HandleTreeGroup(widget)
 					end
 
 					if frame.windWidgetText then
-						local color = db.text.selectedClassColor and W.ClassColor or db.text.selectedColor
+						local color = db.text.selectedClassColor and E.myClassColor or db.text.selectedColor
 						frame.windWidgetText:SetTextColor(color.r, color.g, color.b)
 					end
 				end
@@ -130,7 +130,7 @@ function WS:HandleTreeGroup(widget)
 					end
 
 					if frame.windWidgetText then
-						local color = db.text.normalClassColor and W.ClassColor or db.text.normalColor
+						local color = db.text.normalClassColor and E.myClassColor or db.text.normalColor
 						frame.windWidgetText:SetTextColor(color.r, color.g, color.b)
 					end
 				end

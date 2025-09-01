@@ -4,7 +4,6 @@ local S = W.Modules.Skins ---@type Skins
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local format = format
-local print = print
 local unpack = unpack
 
 local WeakAuras = _G.WeakAuras
@@ -17,10 +16,7 @@ local function CreateBackdropAndShadow(frame, useDefaultTemplate)
 		return
 	end
 
-	frame:CreateBackdrop()
-	if useDefaultTemplate ~= false then
-		frame.backdrop:SetTemplate("Transparent")
-	end
+	frame:CreateBackdrop(not useDefaultTemplate and "Transparent")
 
 	if E.private.WT.skins.weakAurasShadow then
 		S:CreateBackdropShadow(frame, true)
@@ -38,7 +34,7 @@ local function ApplyElvUITexCoords(icon)
 	end
 
 	icon:SetTexCoord(unpack(E.TexCoords))
-	icon.SetTexCoord = E.noop
+	F.InternalizeMethod(icon, "SetTexCoord")
 end
 
 ---Handle complex texture coordinate calculations for icons
@@ -48,7 +44,7 @@ local function HandleComplexTexCoords(icon)
 		return
 	end
 
-	icon.SetTexCoordOld = icon.SetTexCoord
+	icon.__SetTexCoord = icon.SetTexCoord
 	icon.SetTexCoord = function(self, ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 		local cLeft, cRight, cTop, cDown
 		if URx and URy and LRx and LRy then
@@ -57,18 +53,17 @@ local function HandleComplexTexCoords(icon)
 			cLeft, cRight, cTop, cDown = ULx, ULy, LLx, LLy
 		end
 
-		local left, right, top, down = unpack(E.TexCoords)
 		if cLeft == 0 or cRight == 0 or cTop == 0 or cDown == 0 then
 			local width, height = cRight - cLeft, cDown - cTop
 			if width == height then
-				self:SetTexCoordOld(left, right, top, down)
-			elseif width > height then
-				self:SetTexCoordOld(left, right, top + cTop * (right - left), top + cDown * (right - left))
+				-- For square textures, use standard ElvUI coordinates
+				self:__SetTexCoord(unpack(E.TexCoords))
 			else
-				self:SetTexCoordOld(left + cLeft * (down - top), left + cRight * (down - top), top, down)
+				-- Use ElvUI's CropRatio for aspect ratio adjustment
+				self:__SetTexCoord(E:CropRatio(width, height))
 			end
 		else
-			self:SetTexCoordOld(cLeft, cRight, cTop, cDown)
+			self:__SetTexCoord(cLeft, cRight, cTop, cDown)
 		end
 	end
 
@@ -125,7 +120,6 @@ local function SkinAurabarRegion(frame)
 		ApplyElvUITexCoords(frame.icon)
 	end
 
-	-- Handle icon frame
 	if frame.iconFrame then
 		frame.iconFrame:SetAllPoints(frame.icon)
 		frame.iconFrame:CreateBackdrop()
@@ -158,7 +152,22 @@ local function SkinWeakAuras(frame, regionType)
 	end
 end
 
-local function SetupRegionHooks()
+function S:WeakAuras()
+	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAuras then
+		return
+	end
+
+	if not WeakAuras or not WeakAuras.Private then
+		local alertMessage = format(
+			"%s %s %s",
+			L["You are using Official WeakAuras, the skin of WeakAuras will not be loaded due to the limitation."],
+			L["If you want to use WeakAuras skin, please install |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)."],
+			L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."]
+		)
+		E:Delay(10, F.Print, alertMessage)
+		return
+	end
+
 	if WeakAuras.Private.SetTextureOrAtlas then
 		hooksecurefunc(WeakAuras.Private, "SetTextureOrAtlas", function(icon)
 			local parent = icon:GetParent()
@@ -168,26 +177,6 @@ local function SetupRegionHooks()
 			end
 		end)
 	end
-end
-
-function S:WeakAuras()
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAuras then
-		return
-	end
-
-	if not WeakAuras or not WeakAuras.Private then
-		local alertMessage = format(
-			"%s: %s %s %s",
-			W.Title,
-			L["You are using Official WeakAuras, the skin of WeakAuras will not be loaded due to the limitation."],
-			L["If you want to use WeakAuras skin, please install |cffff0000WeakAurasPatched|r (https://wow-ui.net/wap)."],
-			L["You can disable this alert via disabling WeakAuras Skin in Skins - Addons."]
-		)
-		E:Delay(10, print, alertMessage)
-		return
-	end
-
-	SetupRegionHooks()
 end
 
 S:AddCallbackForAddon("WeakAuras")

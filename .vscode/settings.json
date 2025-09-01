@@ -18,6 +18,7 @@
     "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\Core",
     "~\\.vscode\\extensions\\ketho.wow-api-0.21.0\\Annotations\\FrameXML"
   ],
+  "wowAPI.luals.frameXML": true,
   "Lua.workspace.ignoreDir": [
     ".vscode",
     "Core/Changelog/*",

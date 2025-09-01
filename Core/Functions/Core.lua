@@ -434,8 +434,10 @@ end
 ---Check if two numbers are approximately equal
 ---@param a number? First number
 ---@param b number? Second number
+---@param allowance number? Allowed difference (default: 0.025)
 ---@return boolean equal True if numbers are approximately equal
-function F.IsAlmost(a, b)
+function F.IsAlmost(a, b, allowance)
+	allowance = allowance or 0.025
 	if a == nil and b ~= nil or a ~= nil and b == nil then
 		return false
 	end

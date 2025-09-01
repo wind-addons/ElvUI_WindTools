@@ -56,21 +56,21 @@ function S:ProfilingWindow_UpdateButtons(frame)
 				button.Texture:SetTexture(E.Media.Textures.ArrowUp)
 				button.Texture:SetSize(14, 14)
 
-				button:HookScript("OnEnter", function(self)
-					if self.Texture then
-						self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+				button:HookScript("OnEnter", function(btn)
+					if btn.Texture then
+						btn.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
 					end
 				end)
 
-				button:HookScript("OnLeave", function(self)
-					if self.Texture then
-						self.Texture:SetVertexColor(1, 1, 1)
+				button:HookScript("OnLeave", function(btn)
+					if btn.Texture then
+						btn.Texture:SetVertexColor(1, 1, 1)
 					end
 				end)
 
-				button:HookScript("OnClick", function(self)
-					self.Texture:Show("")
-					if self:GetParent():GetParent().minimized then
+				button:HookScript("OnClick", function(btn)
+					btn.Texture:Show("")
+					if btn:GetParent():GetParent().minimized then
 						button.Texture:SetRotation(ES.ArrowRotation["down"])
 					else
 						button.Texture:SetRotation(ES.ArrowRotation["up"])

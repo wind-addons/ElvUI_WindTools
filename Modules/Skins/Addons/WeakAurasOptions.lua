@@ -203,15 +203,15 @@ function S:WeakAurasDisplayButton(Constructor)
 			expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
 			expandButton.Texture:SetVertexColor(0.5, 0.5, 0.5)
 			expandButton.Texture:SetPoint("CENTER")
-			expandButton:HookScript("OnEnter", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(1, 1, 1)
+			expandButton:HookScript("OnEnter", function(expandBtn)
+				if not expandBtn.disabled and expandBtn.backdrop then
+					expandBtn.backdrop:SetBackdropBorderColor(1, 1, 1)
 				end
 			end)
 
-			expandButton:HookScript("OnLeave", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+			expandButton:HookScript("OnLeave", function(expandBtn)
+				if not expandBtn.disabled and expandBtn.backdrop then
+					expandBtn.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
 				end
 			end)
 
@@ -254,15 +254,15 @@ function S:WeakAurasDisplayButton(Constructor)
 			groupButton.Texture:SetSize(9, 9)
 			groupButton.Texture:SetTexture(W.Media.Icons.buttonForward)
 			groupButton.Texture:SetPoint("CENTER")
-			groupButton:HookScript("OnEnter", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(1, 1, 1)
+			groupButton:HookScript("OnEnter", function(groupBtn)
+				if not groupBtn.disabled and groupBtn.backdrop then
+					groupBtn.backdrop:SetBackdropBorderColor(1, 1, 1)
 				end
 			end)
 
-			groupButton:HookScript("OnLeave", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+			groupButton:HookScript("OnLeave", function(groupBtn)
+				if not groupBtn.disabled and groupBtn.backdrop then
+					groupBtn.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
 				end
 			end)
 		end
@@ -300,15 +300,15 @@ function S:WeakAurasLoadedHeaderButton(Constructor)
 			expandButton.Texture:SetTexture(W.Media.Icons.buttonPlus)
 			expandButton.Texture:SetVertexColor(0.5, 0.5, 0.5)
 			expandButton.Texture:SetPoint("CENTER")
-			expandButton:HookScript("OnEnter", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(1, 1, 1)
+			expandButton:HookScript("OnEnter", function(headerBtn)
+				if not headerBtn.disabled and headerBtn.backdrop then
+					headerBtn.backdrop:SetBackdropBorderColor(1, 1, 1)
 				end
 			end)
 
-			expandButton:HookScript("OnLeave", function(self)
-				if not self.disabled and self.backdrop then
-					self.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+			expandButton:HookScript("OnLeave", function(headerBtn)
+				if not headerBtn.disabled and headerBtn.backdrop then
+					headerBtn.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
 				end
 			end)
 
@@ -380,15 +380,15 @@ do
 						button.Texture:SetSize(16, 16)
 						button.Texture:SetRotation(ES.ArrowRotation[AnchorDict[anchor]])
 
-						button:HookScript("OnEnter", function(self)
-							if self.Texture then
-								self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+						button:HookScript("OnEnter", function(moverBtn)
+							if moverBtn.Texture then
+								moverBtn.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
 							end
 						end)
 
-						button:HookScript("OnLeave", function(self)
-							if self.Texture then
-								self.Texture:SetVertexColor(1, 1, 1)
+						button:HookScript("OnLeave", function(moverBtn)
+							if moverBtn.Texture then
+								moverBtn.Texture:SetVertexColor(1, 1, 1)
 							end
 						end)
 					end
@@ -416,15 +416,15 @@ function S:WeakAurasIconButton(Constructor)
 			highlightTexture:StripTextures()
 		end
 
-		widget.frame:HookScript("OnEnter", function(self)
-			if self.backdrop then
-				self.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+		widget.frame:HookScript("OnEnter", function(iconFrame)
+			if iconFrame.backdrop then
+				iconFrame.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
 			end
 		end)
 
-		widget.frame:HookScript("OnLeave", function(self)
-			if self.backdrop then
-				self.backdrop:SetBackdropBorderColor(0, 0, 0)
+		widget.frame:HookScript("OnLeave", function(iconFrame)
+			if iconFrame.backdrop then
+				iconFrame.backdrop:SetBackdropBorderColor(0, 0, 0)
 			end
 		end)
 
@@ -523,20 +523,20 @@ function S:WeakAuras_ShowOptions()
 					button.Texture:SetTexture(E.Media.Textures.ArrowUp)
 					button.Texture:SetSize(14, 14)
 
-					button:HookScript("OnEnter", function(self)
-						if self.Texture then
-							self.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
+					button:HookScript("OnEnter", function(optionsBtn)
+						if optionsBtn.Texture then
+							optionsBtn.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
 						end
 					end)
 
-					button:HookScript("OnLeave", function(self)
-						if self.Texture then
-							self.Texture:SetVertexColor(1, 1, 1)
+					button:HookScript("OnLeave", function(optionsBtn)
+						if optionsBtn.Texture then
+							optionsBtn.Texture:SetVertexColor(1, 1, 1)
 						end
 					end)
 
-					button:HookScript("OnClick", function(self)
-						if self:GetParent():GetParent().minimized then
+					button:HookScript("OnClick", function(optionsBtn)
+						if optionsBtn:GetParent():GetParent().minimized then
 							button.Texture:SetRotation(ES.ArrowRotation["down"])
 						else
 							button.Texture:SetRotation(ES.ArrowRotation["up"])
@@ -589,8 +589,8 @@ function S:WeakAuras_ShowOptions()
 				if child:GetNumPoints() == 2 then
 					local point, relativeFrame, relativePoint = child:GetPoint(1)
 					if point == "RIGHT" and relativeFrame == frame.filterInput and relativePoint == "RIGHT" then
-						local point, relativeFrame, relativePoint = child:GetPoint(2)
-						if point == "BOTTOM" and relativeFrame == frame and relativePoint == "TOP" then
+						local point2, relativeFrame2, relativePoint2 = child:GetPoint(2)
+						if point2 == "BOTTOM" and relativeFrame2 == frame and relativePoint2 == "TOP" then
 							importButton = child
 						end
 					end
@@ -716,9 +716,9 @@ function S:WeakAurasOptions()
 end
 
 function S:WeakAuras_CreateTemplateView(Private, frame)
-	local frame = self.hooks[_G.WeakAuras].CreateTemplateView(Private, frame)
-	HandleAllChildButtons(frame)
-	return frame
+	local templateFrame = self.hooks[_G.WeakAuras].CreateTemplateView(Private, frame)
+	HandleAllChildButtons(templateFrame)
+	return templateFrame
 end
 
 function S:WeakAurasTemplatesLoadTimerBody()

@@ -654,7 +654,7 @@ function S:Initialize()
 	end
 
 	-- Run library skins
-	self:SecureHook(_G.LibStub, "NewLibrary", "LibStub_NewLibrary")
+	self:SecureHook(_G.LibStub--[[@as table]], "NewLibrary", "LibStub_NewLibrary")
 	for libName in pairs(_G.LibStub.libs) do
 		local lib, minor = _G.LibStub(libName, true)
 		if lib and self.libraryHandlers[libName] then

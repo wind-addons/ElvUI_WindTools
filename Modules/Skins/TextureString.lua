@@ -177,7 +177,7 @@ function S:StyleTextureString(text)
 		-- Check if already cropped and not showing the full texture
 		local alreadyCropped = left and right and top and bottom
 		local showingFullTexture = alreadyCropped
-			and (left == 0 and right == texWidth and top == 0 and bottom == texHeight)
+			and (left == 0 and right == texWidth and top == 0 and bottom == texHeight and texWidth == texHeight)
 		local shouldApplyCropping = not alreadyCropped or showingFullTexture
 
 		local afterLeft = shouldApplyCropping and (texWidth * MARGIN_RATIO) or left

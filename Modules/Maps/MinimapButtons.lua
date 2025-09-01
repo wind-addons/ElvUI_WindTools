@@ -176,51 +176,47 @@ function MB:HandleExpansionButton(...)
 			return
 		end
 
-		F.TaskManager:OutOfCombat(function()
-			local button = _G.ExpansionLandingPageMinimapButton
-			if not button then
-				return
-			end
+		local button = _G.ExpansionLandingPageMinimapButton
+		if not button then
+			return
+		end
 
-			self:SkinButton(button, true)
+		self:SkinButton(button, true)
 
-			EM:SetIconParent(button)
-			EM:SetScale(button, 1)
+		EM:SetIconParent(button)
+		EM:SetScale(button, 1)
 
-			F.InternalizeMethod(button, "ClearAllPoints")
-			F.InternalizeMethod(button, "SetPoint")
-			F.InternalizeMethod(button, "SetParent")
-			F.InternalizeMethod(button, "SetSize")
-			F.InternalizeMethod(button, "SetScale")
-			F.InternalizeMethod(button, "SetFrameStrata")
-			F.InternalizeMethod(button, "SetFrameLevel")
-			F.InternalizeMethod(button, "SetMovable")
+		F.InternalizeMethod(button, "ClearAllPoints")
+		F.InternalizeMethod(button, "SetPoint")
+		F.InternalizeMethod(button, "SetParent")
+		F.InternalizeMethod(button, "SetSize")
+		F.InternalizeMethod(button, "SetScale")
+		F.InternalizeMethod(button, "SetFrameStrata")
+		F.InternalizeMethod(button, "SetFrameLevel")
+		F.InternalizeMethod(button, "SetMovable")
 
-			local box = _G.GarrisonLandingPageTutorialBox
-			if box then
-				box:SetScale(1)
-				box:SetClampedToScreen(true)
-			end
+		local box = _G.GarrisonLandingPageTutorialBox
+		if box then
+			box:SetScale(1)
+			box:SetClampedToScreen(true)
+		end
 
-			button:SetHitRectInsets(0, 0, 0, 0)
-			if button.AlertText then
-				button.AlertText:Kill()
-				button.AlertText.SetText = function(_, text)
-					if text then
-						local event = F.CreateColorString(button.title or L["Garrison"], E.db.general.valuecolor)
-						F.Print(event .. " " .. text)
-					end
+		button:SetHitRectInsets(0, 0, 0, 0)
+		if button.AlertText then
+			button.AlertText:Kill()
+			button.AlertText.SetText = function(_, text)
+				if text then
+					local event = F.CreateColorString(button.title or L["Garrison"], E.db.general.valuecolor)
+					F.Print(event .. " " .. text)
 				end
 			end
+		end
 
-			if button.AlertBG then
-				button.AlertBG:Kill()
-			end
+		if button.AlertBG then
+			button.AlertBG:Kill()
+		end
 
-			RunNextFrame(function()
-				F.TaskManager:OutOfCombat(MB.UpdateLayout, MB)
-			end)
-		end)
+		F.TaskManager:OutOfCombat(MB.UpdateLayout, MB)
 	end, 0.1, 100)
 end
 

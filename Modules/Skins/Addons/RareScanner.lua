@@ -76,7 +76,7 @@ function S:RareScanner()
 
 	if scannerButton.LootBar then
 		if scannerButton.LootBar.LootBarToolTip then
-			hooksecurefunc(scannerButton.LootBar.LootBarToolTip, "Show", function(self)
+			hooksecurefunc(scannerButton.LootBar.LootBarToolTip, "Show", function(tooltip)
 				TT:SetStyle(_G.LootBarToolTip)
 
 				if scannerButton.LootBar.LootBarToolTipComp1 and scannerButton.LootBar.LootBarToolTipComp1.Show then

@@ -163,10 +163,10 @@ function S:BtWQuests()
 		navBar.backdrop:Point("TOPLEFT", -2, 0)
 		navBar.backdrop:Point("BOTTOMRIGHT")
 		HandleNavButton(navBar.home, true)
-		navBar:HookScript("OnShow", function(self)
-			if not self.__windSkin then
-				HandledDropDown(self.dropDown)
-				self.__windSkin = true
+		navBar:HookScript("OnShow", function(nav)
+			if not nav.__windSkin then
+				HandledDropDown(nav.dropDown)
+				nav.__windSkin = true
 			end
 		end)
 	end

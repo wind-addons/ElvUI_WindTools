@@ -318,8 +318,8 @@ function S:BigWigs_QueueTimer()
 				frame:ClearAllPoints()
 				frame:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 1, -5)
 				frame:SetPoint("TOPRIGHT", parent, "BOTTOMRIGHT", -1, -5)
-				frame.text.SetFormattedText = function(self, _, time)
-					self:SetText(format("%d", time))
+				frame.text.SetFormattedText = function(textFrame, _, time)
+					textFrame:SetText(format("%d", time))
 				end
 				F.SetFontWithDB(frame.text, db.countDown)
 				frame.text:ClearAllPoints()
@@ -338,8 +338,8 @@ function S:BigWigs_Keystone()
 		return
 	end
 
-	local L = _G.BigWigsAPI and _G.BigWigsAPI:GetLocale("BigWigs")
-	local titleText = L and L.keystoneTitle
+	local BigWigsL = _G.BigWigsAPI and _G.BigWigsAPI:GetLocale("BigWigs")
+	local titleText = BigWigsL and BigWigsL.keystoneTitle
 
 	local finder = OF:New()
 	finder:Find("Frame", function(frame)

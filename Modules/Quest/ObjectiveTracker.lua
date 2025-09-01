@@ -310,7 +310,8 @@ end
 function OT:HandleLine(line, _)
 	if self.db.noDash then
 		if line.Dash then
-			line.Dash:SetAlpha(0)
+			line.Dash:Hide()
+			line.Dash:SetText(nil)
 		end
 
 		local raw = line.Text:GetText()

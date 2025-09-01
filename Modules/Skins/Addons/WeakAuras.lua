@@ -1,6 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local S = W.Modules.Skins ---@type Skins
-local ES = E.Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
@@ -11,90 +10,249 @@ local unpack = unpack
 
 local WeakAuras = _G.WeakAuras
 
-function S:WeakAuras_PrintProfile()
-	local frame = _G.WADebugEditBox.Background
+-- Utility functions for common skinning operations
+local function StripBlizzardElements(frame)
+	frame:StripTextures(true)
 
-	if frame and not frame.__windSkin then
-		self:Proxy("HandleScrollBar", _G.WADebugEditBoxScrollFrameScrollBar)
+	local elements = { "PortraitContainer", "portrait", "NineSlice", "Bg" }
+	for _, element in pairs(elements) do
+		if frame[element] then
+			frame[element]:Hide()
+			frame[element]:SetAlpha(0)
+		end
+	end
 
-		frame:StripTextures()
-		frame:SetTemplate("Transparent")
-		self:CreateShadow(frame)
+	-- Remove remaining background textures
+	for i = 1, frame:GetNumRegions() do
+		local region = select(i, frame:GetRegions())
+		if region and region:GetObjectType() == "Texture" then
+			local texture = region:GetTexture()
+			if
+				texture
+				and type(texture) == "string"
+				and (texture:find("UI-Frame") or texture:find("_Border") or texture:find("Portrait"))
+			then
+				region:Hide()
+				region:SetAlpha(0)
+			end
+		end
+	end
+end
 
-		for _, child in pairs({ frame:GetChildren() }) do
-			if child:GetNumRegions() == 3 then
-				child:StripTextures()
-				local subChild = child:GetChildren()
+local function SkinTitleElements(frame)
+	if frame.TitleContainer then
+		frame.TitleContainer:StripTextures(true)
+		if frame.TitleContainer.TitleText then
+			F.SetFontOutline(frame.TitleContainer.TitleText)
+		end
+	end
+
+	if frame.TitleBar then
+		frame.TitleBar:StripTextures(true)
+		frame.TitleBar:SetTemplate("Transparent")
+	end
+
+	local titleElements = { "TitleText", "Title" }
+	for _, element in pairs(titleElements) do
+		if frame[element] then
+			F.SetFontOutline(frame[element])
+		end
+	end
+end
+
+local function SkinScrollElements(frame, self)
+	if frame.ScrollBox then
+		frame.ScrollBox:StripTextures()
+		frame.ScrollBox:SetTemplate("Transparent")
+
+		if frame.ScrollBox.ScrollBar then
+			self:Proxy("HandleScrollBar", frame.ScrollBox.ScrollBar)
+		end
+
+		-- Handle scroll child content
+		if frame.ScrollBox.ScrollChild and frame.ScrollBox.ScrollChild.messageFrame then
+			frame.ScrollBox.ScrollChild.messageFrame:StripTextures()
+			frame.ScrollBox.ScrollChild.messageFrame:SetTemplate("Transparent")
+		end
+
+		if frame.ScrollBox.messageFrame then
+			frame.ScrollBox.messageFrame:StripTextures()
+			frame.ScrollBox.messageFrame:SetTemplate("Transparent")
+		end
+	end
+
+	if frame.ScrollBar then
+		self:Proxy("HandleTrimScrollBar", frame.ScrollBar)
+	end
+end
+
+-- Core skinning functions
+local function SkinDebugEditBox(self)
+	local debugEditBox = _G.WADebugEditBox
+	if not debugEditBox or not debugEditBox.Background or debugEditBox.Background.__windSkin then
+		return
+	end
+
+	local frame = debugEditBox.Background
+
+	-- Handle scroll bar
+	local scrollBar = _G.WADebugEditBoxScrollFrameScrollBar
+	if scrollBar then
+		self:Proxy("HandleScrollBar", scrollBar)
+	end
+
+	frame:StripTextures()
+	frame:SetTemplate("Transparent")
+	self:CreateShadow(frame)
+
+	-- Handle close button
+	for _, child in pairs({ frame:GetChildren() }) do
+		if child:GetNumRegions() == 3 then
+			child:StripTextures()
+			local subChild = child:GetChildren()
+			if subChild then
 				subChild:ClearAllPoints()
 				subChild:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 3, 7)
 				self:Proxy("HandleCloseButton", subChild)
 			end
 		end
-
-		frame.__windSkin = true
 	end
+
+	frame.__windSkin = true
 end
 
-function S:ProfilingWindow_UpdateButtons(frame)
-	-- 下方 4 个按钮
-	for _, button in pairs({ frame.statsFrame:GetChildren() }) do
-		self:Proxy("HandleButton", button)
+local function SkinProfilingFrame(self, frame)
+	if not frame or frame.__windSkin then
+		return
 	end
 
-	-- 顶部 2 个按钮
-	for _, button in pairs({ frame.titleFrame:GetChildren() }) do
-		if not button.__windSkin and button.GetNormalTexture then
-			local normalTextureID = button:GetNormalTexture():GetTexture()
-			if normalTextureID == 252125 then
-				button:StripTextures()
-				button.SetNormalTexture = E.noop
-				button.SetPushedTexture = E.noop
-				button.SetHighlightTexture = E.noop
+	StripBlizzardElements(frame)
+	frame:SetTemplate("Transparent")
+	self:CreateShadow(frame)
 
-				button.Texture = button:CreateTexture(nil, "OVERLAY")
-				button.Texture:SetPoint("CENTER")
-				button.Texture:SetTexture(E.Media.Textures.ArrowUp)
-				button.Texture:SetSize(14, 14)
+	SkinTitleElements(frame)
 
-				button:HookScript("OnEnter", function(btn)
-					if btn.Texture then
-						btn.Texture:SetVertexColor(unpack(E.media.rgbvaluecolor))
-					end
-				end)
+	-- Handle close button
+	if frame.CloseButton then
+		self:Proxy("HandleCloseButton", frame.CloseButton)
+	end
 
-				button:HookScript("OnLeave", function(btn)
-					if btn.Texture then
-						btn.Texture:SetVertexColor(1, 1, 1)
-					end
-				end)
+	-- Handle buttons frame
+	if frame.buttons then
+		local buttonHandlers = {
+			report = "HandleButton",
+			stop = "HandleButton",
+			start = "HandleButton",
+			modeDropDown = "HandleDropDownBox",
+			startDropDown = "HandleDropDownBox",
+		}
 
-				button:HookScript("OnClick", function(btn)
-					btn.Texture:Show("")
-					if btn:GetParent():GetParent().minimized then
-						button.Texture:SetRotation(ES.ArrowRotation["down"])
-					else
-						button.Texture:SetRotation(ES.ArrowRotation["up"])
-					end
-				end)
+		for button, handler in pairs(buttonHandlers) do
+			if frame.buttons[button] then
+				self:Proxy(handler, frame.buttons[button])
+			end
+		end
+	end
 
-				button:SetHitRectInsets(6, 6, 7, 7)
-				button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", -19, 3)
-			else
-				self:Proxy("HandleCloseButton", button)
-				button:ClearAllPoints()
-				button:SetPoint("TOPRIGHT", frame.titleFrame, "TOPRIGHT", 3, 1)
+	-- Handle resize button
+	if frame.ResizeButton then
+		self:Proxy("HandleNextPrevButton", frame.ResizeButton)
+	end
+
+	-- Handle column display
+	if frame.ColumnDisplay then
+		frame.ColumnDisplay:StripTextures()
+		frame.ColumnDisplay:SetTemplate("Transparent")
+	end
+
+	SkinScrollElements(frame, self)
+
+	-- Style stats text
+	if frame.stats then
+		F.SetFontOutline(frame.stats)
+	end
+
+	frame.__windSkin = true
+end
+
+local function SkinProfilingReport(self, frame)
+	if not frame or frame.__windSkinReport then
+		return
+	end
+
+	StripBlizzardElements(frame)
+	frame:SetTemplate("Transparent")
+	self:CreateShadow(frame)
+
+	SkinTitleElements(frame)
+
+	-- Handle close button
+	if frame.CloseButton then
+		self:Proxy("HandleCloseButton", frame.CloseButton)
+	end
+
+	SkinScrollElements(frame, self)
+
+	frame.__windSkinReport = true
+end
+
+local function SkinProfilingLine(self, frame)
+	if not frame or frame.__windProfilingLine then
+		return
+	end
+
+	-- Style progress bar
+	if frame.progressBar then
+		frame.progressBar:StripTextures()
+		frame.progressBar:CreateBackdrop()
+		frame.progressBar:SetStatusBarTexture(E.media.normTex)
+
+		if frame.progressBar.name then
+			F.SetFontOutline(frame.progressBar.name)
+		end
+	end
+
+	-- Style text elements
+	local textElements = { "time", "spike" }
+	for _, element in pairs(textElements) do
+		if frame[element] then
+			F.SetFontOutline(frame[element])
+		end
+	end
+
+	frame.__windProfilingLine = true
+end
+
+local function SkinColumnHeaders(self, columnHeaders)
+	if not columnHeaders then
+		return
+	end
+
+	for header in columnHeaders:EnumerateActive() do
+		if header and not header.__windSkin then
+			header:StripTextures()
+			header:SetTemplate("Transparent")
+
+			if header.Text then
+				F.SetFontOutline(header.Text)
 			end
 
-			button.__windSkin = true
+			header.__windSkin = true
 		end
 	end
 end
 
-local function Skin_WeakAuras(f, fType)
-	if fType == "icon" then
-		if not f.__windSkin then
-			f.icon.SetTexCoordOld = f.icon.SetTexCoord
-			f.icon.SetTexCoord = function(self, ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+-- WeakAuras region skinning
+local function SkinWeakAurasRegion(frame, regionType)
+	if not frame or frame.__windSkin then
+		return
+	end
+
+	if regionType == "icon" then
+		-- Custom texture coordinate handling for icons
+		if frame.icon then
+			frame.icon.SetTexCoordOld = frame.icon.SetTexCoord
+			frame.icon.SetTexCoord = function(self, ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 				local cLeft, cRight, cTop, cDown
 				if URx and URy and LRx and LRy then
 					cLeft, cRight, cTop, cDown = ULx, LRx, ULy, LRy
@@ -116,60 +274,117 @@ local function Skin_WeakAuras(f, fType)
 					self:SetTexCoordOld(cLeft, cRight, cTop, cDown)
 				end
 			end
-			f.icon:SetTexCoord(f.icon:GetTexCoord())
-			f:CreateBackdrop()
-			if E.private.WT.skins.weakAurasShadow then
-				S:CreateBackdropShadow(f, true)
-			end
-			f.backdrop.Center:StripTextures()
-			f.backdrop:SetFrameLevel(0)
-			hooksecurefunc(f, "SetFrameStrata", function()
-				f.backdrop:SetFrameLevel(0)
-			end)
-			f.backdrop.icon = f.icon
-			f.backdrop:HookScript("OnUpdate", function(self)
+			frame.icon:SetTexCoord(frame.icon:GetTexCoord())
+		end
+
+		frame:CreateBackdrop()
+		if E.private.WT.skins.weakAurasShadow then
+			S:CreateBackdropShadow(frame, true)
+		end
+		frame.backdrop.Center:StripTextures()
+		frame.backdrop:SetFrameLevel(0)
+
+		-- Sync backdrop alpha with icon
+		if frame.icon then
+			frame.backdrop.icon = frame.icon
+			frame.backdrop:HookScript("OnUpdate", function(self)
 				self:SetAlpha(self.icon:GetAlpha())
 				if self.shadow then
 					self.shadow:SetAlpha(self.icon:GetAlpha())
 				end
 			end)
-
-			f.__windSkin = true
 		end
-	elseif fType == "aurabar" then
-		if not f.__windSkin then
-			f:CreateBackdrop()
-			f.backdrop.Center:StripTextures()
-			f.backdrop:SetFrameLevel(0)
-			hooksecurefunc(f, "SetFrameStrata", function()
-				f.backdrop:SetFrameLevel(0)
-			end)
-			if E.private.WT.skins.weakAurasShadow then
-				S:CreateBackdropShadow(f, true)
-			end
-			f.icon:SetTexCoord(unpack(E.TexCoords))
-			f.icon.SetTexCoord = E.noop
-			f.iconFrame:SetAllPoints(f.icon)
-			f.iconFrame:CreateBackdrop()
-			hooksecurefunc(f.icon, "Hide", function()
-				f.iconFrame.backdrop:SetShown(false)
-			end)
 
-			hooksecurefunc(f.icon, "Show", function()
-				f.iconFrame.backdrop:SetShown(true)
-			end)
+		hooksecurefunc(frame, "SetFrameStrata", function()
+			frame.backdrop:SetFrameLevel(0)
+		end)
+	elseif regionType == "aurabar" then
+		frame:CreateBackdrop()
+		frame.backdrop.Center:StripTextures()
+		frame.backdrop:SetFrameLevel(0)
 
-			f.__windSkin = true
+		if E.private.WT.skins.weakAurasShadow then
+			S:CreateBackdropShadow(frame, true)
 		end
+
+		if frame.icon then
+			frame.icon:SetTexCoord(unpack(E.TexCoords))
+			frame.icon.SetTexCoord = E.noop
+		end
+
+		if frame.iconFrame then
+			frame.iconFrame:SetAllPoints(frame.icon)
+			frame.iconFrame:CreateBackdrop()
+
+			hooksecurefunc(frame.icon, "Hide", function()
+				frame.iconFrame.backdrop:SetShown(false)
+			end)
+
+			hooksecurefunc(frame.icon, "Show", function()
+				frame.iconFrame.backdrop:SetShown(true)
+			end)
+		end
+
+		hooksecurefunc(frame, "SetFrameStrata", function()
+			frame.backdrop:SetFrameLevel(0)
+		end)
 	end
+
+	frame.__windSkin = true
 end
 
+-- Hook management
+local function SetupProfilingHooks(self)
+	local function SkinProfilingFrames()
+		local profilingFrame = _G.WeakAurasProfilingFrame
+		if profilingFrame and not profilingFrame.__windSkin then
+			SkinProfilingFrame(self, profilingFrame)
+
+			-- Handle column headers
+			if profilingFrame.ColumnDisplay and profilingFrame.ColumnDisplay.columnHeaders then
+				SkinColumnHeaders(self, profilingFrame.ColumnDisplay.columnHeaders)
+			end
+
+			-- Hook scroll box updates for profiling lines
+			if profilingFrame.ScrollBox and profilingFrame.ScrollBox.SetDataProvider then
+				hooksecurefunc(profilingFrame.ScrollBox, "Update", function()
+					for _, elementFrame in pairs({ profilingFrame.ScrollBox:GetFrames() }) do
+						if elementFrame and not elementFrame.__windProfilingLine then
+							SkinProfilingLine(self, elementFrame)
+						end
+					end
+				end)
+			end
+		end
+
+		local reportFrame = _G.WeakAurasProfilingReport
+		if reportFrame and not reportFrame.__windSkinReport then
+			SkinProfilingReport(self, reportFrame)
+		end
+	end
+
+	-- Hook various entry points
+	if WeakAuras.ShowProfilingWindow then
+		self:SecureHook(WeakAuras, "ShowProfilingWindow", SkinProfilingFrames)
+	end
+
+	if WeakAuras.PrintProfile then
+		self:SecureHook(WeakAuras, "PrintProfile", function()
+			SkinDebugEditBox(self)
+		end)
+	end
+
+	-- Initial skin attempt
+	SkinProfilingFrames()
+end
+
+-- Main initialization function
 function S:WeakAuras()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.weakAuras then
 		return
 	end
 
-	-- Only works for WeakAurasPatched
+	-- Check for WeakAurasPatched
 	if not WeakAuras or not WeakAuras.Private then
 		local alertMessage = format(
 			"%s: %s %s %s",
@@ -182,33 +397,24 @@ function S:WeakAuras()
 		return
 	end
 
-	-- Handle the options region type registration
+	-- Hook region options registration
 	if WeakAuras.Private.RegisterRegionOptions then
 		self:RawHook(WeakAuras.Private, "RegisterRegionOptions", "WeakAuras_RegisterRegionOptions")
 	end
 
-	-- from 雨夜独行客@NGA
+	-- Hook texture/atlas setting for region skinning
 	if WeakAuras.Private.SetTextureOrAtlas then
 		hooksecurefunc(WeakAuras.Private, "SetTextureOrAtlas", function(icon)
 			local parent = icon:GetParent()
 			local region = parent.regionType and parent or parent:GetParent()
 			if region and region.regionType then
-				Skin_WeakAuras(region, region.regionType)
+				SkinWeakAurasRegion(region, region.regionType)
 			end
 		end)
 	end
 
-	-- Real Time Profiling Window
-	local profilingWindow = WeakAuras.RealTimeProfilingWindow
-	if profilingWindow then
-		self:CreateShadow(profilingWindow)
-		if profilingWindow.UpdateButtons then
-			self:SecureHook(profilingWindow, "UpdateButtons", "ProfilingWindow_UpdateButtons")
-		end
-		if WeakAuras.PrintProfile then
-			self:SecureHook(WeakAuras, "PrintProfile", "WeakAuras_PrintProfile")
-		end
-	end
+	-- Setup profiling window hooks
+	SetupProfilingHooks(self)
 end
 
 S:AddCallbackForAddon("WeakAuras")

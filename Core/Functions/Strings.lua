@@ -159,7 +159,7 @@ function F.Strings.Split(subject, delimiter)
 	local results = {} ---@type string[]
 
 	local i = 0
-	local j = 0
+	local j = 0 ---@type number?
 
 	while true do
 		j = strfind(subject, delimiter, i + length)

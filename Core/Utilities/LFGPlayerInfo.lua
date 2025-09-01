@@ -23,6 +23,8 @@ local C_LFGList_GetSearchResultPlayerInfo = C_LFGList.GetSearchResultPlayerInfo
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
+---@cast F Functions
+
 ---@class LFGPlayerInfo
 ---Utility class for parsing and processing LFG (Looking For Group) player information.
 ---Provides functionality to extract role, class, and specialization data from group finder results.

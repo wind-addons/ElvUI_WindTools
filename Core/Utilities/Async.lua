@@ -2,9 +2,6 @@ local W ---@class WindTools
 local F ---@type Functions
 W, F = unpack((select(2, ...)))
 
----@class AsyncUtility Asynchronous operation utilities
-W.Utilities.Async = {}
-
 local ipairs = ipairs
 local pairs = pairs
 local type = type
@@ -12,6 +9,11 @@ local type = type
 local GetAchievementInfo = GetAchievementInfo
 local Item = Item
 local Spell = Spell
+
+---@cast F Functions
+
+---@class AsyncUtility Asynchronous operation utilities
+W.Utilities.Async = {}
 
 local C_Timer_After = C_Timer.After
 

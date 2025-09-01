@@ -8,6 +8,8 @@ local format = format
 local next = next
 local type = type
 
+---@cast F Functions
+
 F.Profiles = {}
 
 ---@type table Generated keys configuration for profile data
@@ -43,7 +45,7 @@ function F.Profiles.ExactString(dataString)
 	local decompressed = LibDeflate:DecompressDeflate(decodedData)
 
 	if not decompressed then
-		F--[[@as Functions]].Print("Error decompressing data.")
+		F.Print("Error decompressing data.")
 		return
 	end
 
@@ -51,7 +53,7 @@ function F.Profiles.ExactString(dataString)
 	local success, data = D:Deserialize(decompressed)
 
 	if not success then
-		F--[[@as Functions]].Print("Error deserializing: " .. data)
+		F.Print("Error deserializing: " .. data)
 		return
 	end
 
@@ -85,7 +87,7 @@ end
 function F.Profiles.ImportByString(importString)
 	local profileString, privateString = E:SplitString(importString, "{}")
 	if not profileString or not privateString then
-		F--[[@as Functions]].Print("Error importing profile. String is invalid or corrupted!")
+		F.Print("Error importing profile. String is invalid or corrupted!")
 	end
 
 	local profileData = F.Profiles.ExactString(profileString)

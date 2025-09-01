@@ -14,6 +14,8 @@ local strrep = strrep
 local tostring = tostring
 local type = type
 
+---@cast F Functions
+
 F.Developer = {}
 
 ---Pretty print any object with table structure visualization

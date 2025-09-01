@@ -24,6 +24,8 @@ local C_UI_Reload = C_UI.Reload
 ---@diagnostic disable-next-line: undefined-field
 local ACCEPT, CANCEL = _G.ACCEPT, _G.CANCEL
 
+---@cast F Functions
+
 W.RegisteredModules = {}
 W.Changelog = {}
 
@@ -159,7 +161,7 @@ function W:InitializeModules()
 	for _, moduleName in pairs(W.RegisteredModules) do
 		local module = self:GetModule(moduleName)
 		if module.Initialize then
-			xpcall(module.Initialize, F--[[@as Functions]].Developer.LogDebug, module)
+			xpcall(module.Initialize, F.Developer.LogDebug, module)
 		end
 	end
 end

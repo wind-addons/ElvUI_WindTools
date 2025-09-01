@@ -13,6 +13,8 @@ local xpcall = xpcall
 local InCombatLockdown = InCombatLockdown
 local hasEnteredWorld = false
 
+---@cast F Functions
+
 ---@class Task
 ---@field callback function The function to call
 ---@field args table The arguments to pass to the function

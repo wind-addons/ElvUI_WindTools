@@ -2,16 +2,19 @@ local W ---@class WindTools
 local F ---@type Functions
 W, F = unpack((select(2, ...)))
 
----@class ColorUtility Color manipulation and conversion utilities
-W.Utilities.Color = {}
-
 local format = format
+local math = math
 local strsub = strsub
 local tonumber = tonumber
 local tostring = tostring
 local type = type
 
 local CreateColor = CreateColor
+
+---@cast F Functions
+
+---@class ColorUtility Color manipulation and conversion utilities
+W.Utilities.Color = {}
 
 ---@type table<string, string> Predefined color hex values
 local colors = {
@@ -23,6 +26,15 @@ local colors = {
 	danger = "ff3860",
 	warning = "ffdd57",
 }
+
+--- Clamps a value between 0 and 1 (inclusive).
+--- This function ensures that any input value is constrained to the valid range
+--- for color components or other normalized values.
+--- @param value number The input value to be clamped
+--- @return number The clamped value, guaranteed to be between 0 and 1
+local function clamp(value)
+	return math.max(0, math.min(1, value))
+end
 
 ---Get hex color for keystone level
 ---@param level number The keystone level
@@ -120,18 +132,34 @@ end
 
 ---Create colored string with RGB values
 ---@param text any The text to colorize (will be converted to string)
----@param r number|table Red component (0-1)
----@param g number? Green component (0-1)
----@param b number? Blue component (0-1)
+---@param r number|table Red component (0-1) or color table with r,g,b fields
+---@param g number? Green component (0-1, required if r is number)
+---@param b number? Blue component (0-1, required if r is number)
 ---@return string coloredText The colored string
 function W.Utilities.Color.StringWithRGB(text, r, g, b)
+	if text == nil then
+		F.Developer.LogDebug("Text parameter cannot be nil")
+		return ""
+	end
 	if type(text) ~= "string" then
 		text = tostring(text)
 	end
 
 	if type(r) == "table" then
-		r, g, b = r.r, r.g, r.b
+		if type(r.r) ~= "number" or type(r.g) ~= "number" or type(r.b) ~= "number" then
+			F.Developer.LogDebug("Color table must contain r, g, b numeric values")
+		end
+		g = r.g
+		b = r.b
+		r = r.r
+	else
+		if type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then
+			F.Developer.LogDebug("RGB values must be numbers when not using a color table")
+		end
 	end
+
+	---@diagnostic disable-next-line: param-type-mismatch -- The above logic already ensures types are correct
+	r, g, b = clamp(r), clamp(g), clamp(b)
 
 	return W.Utilities.Color.StringWithHex(text, W.Utilities.Color.RGBToHex(r, g, b))
 end

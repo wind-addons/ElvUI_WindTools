@@ -14,6 +14,8 @@ local type = type
 
 local RunNextFrame = RunNextFrame
 
+---@cast F Functions
+
 ---@class ObjectFinder
 ---Asynchronous UI object finder utility for efficiently searching through UI hierarchies.
 ---Uses coroutines to process objects over multiple frames to prevent UI freezing.
@@ -87,7 +89,7 @@ local function processNextFrame(self)
 	if not success then
 		self.isRunning = false
 		self.coroutine = nil
-		F--[[@as Functions]].Developer.ThrowError(errorMessage)
+		F.Developer.ThrowError(errorMessage)
 		return
 	end
 
@@ -137,7 +139,7 @@ function ObjectFinder:Start()
 								self.found[requestIndex] = obj
 								if request.callback then
 									RunNextFrame(function()
-										xpcall(request.callback, F--[[@as Functions]].Developer.ThrowError, obj)
+										xpcall(request.callback, F.Developer.ThrowError, obj)
 									end)
 								end
 							end

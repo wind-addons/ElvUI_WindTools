@@ -13,6 +13,8 @@ local unpack = unpack
 
 local RunNextFrame = RunNextFrame
 
+---@cast F Functions
+
 ---@class TaskSchedulerUtility Utility namespace for task scheduler
 W.Utilities.TaskScheduler = {}
 

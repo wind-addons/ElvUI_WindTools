@@ -22,17 +22,19 @@ local unpack = unpack
 
 local GetClassColor = GetClassColor
 
+---@cast F Functions
+
 ---Set font style from database settings
 ---@param text FontString The FontString object to modify
 ---@param db table Font style database containing name, size, and style
 function F.SetFontWithDB(text, db)
 	if not text or not text.GetFont then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontWithDB: text not found")
+		F.Developer.LogDebug("Functions.SetFontWithDB: text not found")
 		return
 	end
 
 	if not db or type(db) ~= "table" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontWithDB: db not found")
+		F.Developer.LogDebug("Functions.SetFontWithDB: db not found")
 		return
 	end
 
@@ -46,11 +48,11 @@ end
 ---@param db table Font color database containing r, g, b, a values
 function F.SetFontColorWithDB(text, db)
 	if not text or not text.GetFont then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontColorWithDB: text not found")
+		F.Developer.LogDebug("Functions.SetFontColorWithDB: text not found")
 		return
 	end
 	if not db or type(db) ~= "table" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontColorWithDB: db not found")
+		F.Developer.LogDebug("Functions.SetFontColorWithDB: db not found")
 		return
 	end
 
@@ -63,7 +65,7 @@ end
 ---@param size number|string? Font size or size change amount as string (optional)
 function F.SetFontOutline(text, font, size)
 	if not text or not text.GetFont then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFontOutline: text not found")
+		F.Developer.LogDebug("Functions.SetFontOutline: text not found")
 		return
 	end
 	local fontName, fontHeight = text:GetFont()
@@ -87,12 +89,12 @@ end
 ---@return string? coloredText The colored string or nil if parameters are invalid
 function F.CreateColorString(text, db)
 	if not text or not type(text) == "string" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.CreateColorString: text not found")
+		F.Developer.LogDebug("Functions.CreateColorString: text not found")
 		return
 	end
 
 	if not db or type(db) ~= "table" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.CreateColorString: db not found")
+		F.Developer.LogDebug("Functions.CreateColorString: db not found")
 		return
 	end
 
@@ -107,11 +109,11 @@ end
 ---@return string? coloredText The class colored string or nil if parameters are invalid
 function F.CreateClassColorString(text, englishClass)
 	if not text or not type(text) == "string" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.CreateClassColorString: text not found")
+		F.Developer.LogDebug("Functions.CreateClassColorString: text not found")
 		return
 	end
 	if not englishClass or type(englishClass) ~= "string" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.CreateClassColorString: class not found")
+		F.Developer.LogDebug("Functions.CreateClassColorString: class not found")
 		return
 	end
 
@@ -131,7 +133,7 @@ end
 ---@param size number|string? Font size or size change amount as string (optional)
 function F.SetFrameFontOutline(frame, font, size)
 	if not frame or not frame.GetRegions then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetFrameFontOutline: frame not found")
+		F.Developer.LogDebug("Functions.SetFrameFontOutline: frame not found")
 		return
 	end
 	for _, region in pairs({ frame:GetRegions() }) do
@@ -176,10 +178,10 @@ function F.DelayUnhookAll(module)
 		if module.UnhookAll then
 			E:Delay(1, module.UnhookAll, module)
 		else
-			F--[[@as Functions]].Developer.LogDebug("Functions.DelayUnhookAll: AceHook class not found!")
+			F.Developer.LogDebug("Functions.DelayUnhookAll: AceHook class not found!")
 		end
 	else
-		F--[[@as Functions]].Developer.LogDebug("Functions.DelayUnhookAll: Module not found!")
+		F.Developer.LogDebug("Functions.DelayUnhookAll: Module not found!")
 	end
 end
 
@@ -278,11 +280,11 @@ end
 ---@param db table Color database containing r, g, b, a values
 function F.SetVertexColorWithDB(tex, db)
 	if not tex or not tex.GetVertexColor then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
+		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
 		return
 	end
 	if not db or type(db) ~= "table" then
-		F--[[@as Functions]].Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
+		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
 		return
 	end
 
@@ -324,11 +326,11 @@ local throttleStates = {}
 ---@param ... any Arguments to pass to the function
 function F.Throttle(duration, key, func, ...)
 	if type(duration) ~= "number" or duration <= 0 then
-		F--[[@as Functions]].Developer.ThrowError("Invalid duration for F.Throttle: must be a positive number")
+		F.Developer.ThrowError("Invalid duration for F.Throttle: must be a positive number")
 	end
 
 	if type(func) ~= "function" then
-		F--[[@as Functions]].Developer.ThrowError("Invalid function for F.Throttle: third argument must be a function")
+		F.Developer.ThrowError("Invalid function for F.Throttle: third argument must be a function")
 	end
 
 	local finalKey = key ~= nil and key or func
@@ -393,7 +395,7 @@ function F.WaitFor(condition, callback, interval, maxTimes)
 	local function resumeCoroutine()
 		local success, delay = coroutine.resume(co)
 		if not success then
-			F--[[@as Functions]].Developer.ThrowError("WaitFor coroutine error:", tostring(delay))
+			F.Developer.ThrowError("WaitFor coroutine error:", tostring(delay))
 			return
 		end
 		if coroutine.status(co) ~= "dead" then

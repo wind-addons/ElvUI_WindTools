@@ -10,6 +10,8 @@ local unpack = unpack
 
 local CreateFrame = CreateFrame
 
+---@cast F Functions
+
 F.Widgets = {}
 
 ---Create a styled button

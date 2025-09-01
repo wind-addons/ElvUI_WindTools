@@ -10,6 +10,8 @@ local tinsert = tinsert
 local type = type
 local unpack = unpack
 
+---@cast F Functions
+
 F.Strings = {}
 
 ---Get the number of bytes for a UTF-8 character at given position
@@ -22,14 +24,10 @@ function F.Strings.CharBytes(s, i)
 
 	-- argument checking
 	if type(s) ~= "string" then
-		F--[[@as Functions]].Developer.ThrowError(
-			"bad argument #1 to 'F.Strings.CharBytes' (string expected, got " .. type(s) .. ")"
-		)
+		F.Developer.ThrowError("bad argument #1 to 'F.Strings.CharBytes' (string expected, got " .. type(s) .. ")")
 	end
 	if type(i) ~= "number" then
-		F--[[@as Functions]].Developer.ThrowError(
-			"bad argument #2 to 'F.Strings.CharBytes' (number expected, got " .. type(i) .. ")"
-		)
+		F.Developer.ThrowError("bad argument #2 to 'F.Strings.CharBytes' (number expected, got " .. type(i) .. ")")
 	end
 
 	local c = strbyte(s, i)
@@ -44,12 +42,12 @@ function F.Strings.CharBytes(s, i)
 		local c2 = strbyte(s, i + 1)
 
 		if not c2 then
-			F--[[@as Functions]].Developer.ThrowError("UTF-8 string terminated early")
+			F.Developer.ThrowError("UTF-8 string terminated early")
 		end
 
 		-- validate byte 2
 		if c2 < 128 or c2 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		return 2
@@ -59,21 +57,21 @@ function F.Strings.CharBytes(s, i)
 		local c3 = strbyte(s, i + 2)
 
 		if not c2 or not c3 then
-			F--[[@as Functions]].Developer.ThrowError("UTF-8 string terminated early")
+			F.Developer.ThrowError("UTF-8 string terminated early")
 		end
 
 		-- validate byte 2
 		if c == 224 and (c2 < 160 or c2 > 191) then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		elseif c == 237 and (c2 < 128 or c2 > 159) then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		elseif c2 < 128 or c2 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		-- validate byte 3
 		if c3 < 128 or c3 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		return 3
@@ -84,31 +82,31 @@ function F.Strings.CharBytes(s, i)
 		local c4 = strbyte(s, i + 3)
 
 		if not c2 or not c3 or not c4 then
-			F--[[@as Functions]].Developer.ThrowError("UTF-8 string terminated early")
+			F.Developer.ThrowError("UTF-8 string terminated early")
 		end
 
 		-- validate byte 2
 		if c == 240 and (c2 < 144 or c2 > 191) then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		elseif c == 244 and (c2 < 128 or c2 > 143) then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		elseif c2 < 128 or c2 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		-- validate byte 3
 		if c3 < 128 or c3 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		-- validate byte 4
 		if c4 < 128 or c4 > 191 then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 		end
 
 		return 4
 	else
-		F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+		F.Developer.ThrowError("Invalid UTF-8 character")
 	end
 end
 
@@ -119,15 +117,11 @@ end
 function F.Strings.Replace(s, mapping)
 	-- argument checking
 	if type(s) ~= "string" then
-		F--[[@as Functions]].Developer.ThrowError(
-			"bad argument #1 to 'F.Replace' (string expected, got " .. type(s) .. ")"
-		)
+		F.Developer.ThrowError("bad argument #1 to 'F.Replace' (string expected, got " .. type(s) .. ")")
 		return ""
 	end
 	if type(mapping) ~= "table" then
-		F--[[@as Functions]].Developer.ThrowError(
-			"bad argument #2 to 'F.Replace' (table expected, got " .. type(mapping) .. ")"
-		)
+		F.Developer.ThrowError("bad argument #2 to 'F.Replace' (table expected, got " .. type(mapping) .. ")")
 		return s
 	end
 
@@ -139,7 +133,7 @@ function F.Strings.Replace(s, mapping)
 	while pos <= bytes do
 		charbytes = F.Strings.CharBytes(s, pos)
 		if not charbytes then
-			F--[[@as Functions]].Developer.ThrowError("Invalid UTF-8 character")
+			F.Developer.ThrowError("Invalid UTF-8 character")
 			return s
 		end
 		local c = strsub(s, pos, pos + charbytes - 1)

@@ -275,6 +275,7 @@ end
 ---@param frame ObjectiveTrackerBlockTemplate|{Text: FontString}
 function OT:HandleBlockHeader(frame)
 	local text = frame.HeaderText or frame.Text
+
 	F.SetFontWithDB(text, self.db.title)
 	text:Height(text:GetStringHeight() + 2)
 
@@ -339,7 +340,7 @@ end
 ---@param tracker ScenarioObjectiveTracker
 ---@param numCriteria number
 function OT:ScenarioObjectiveTracker_UpdateCriteria(tracker, numCriteria)
-	if not self.db or not self.db.noDash then
+	if not self.db.noDash then
 		return
 	end
 
@@ -371,8 +372,13 @@ end
 
 ---Handles the addition of a new objective tracker block by setting up hooks and processing its elements
 ---@param _ ObjectiveTrackerModuleTemplate? The objective tracker module (unused)
----@param block ObjectiveTrackerBlockTemplate The objective tracker block that was added
+---@param block any The objective tracker block that was added
 function OT:ObjectiveTrackerModule_AddBlock(_, block)
+	if not block or not block.AddObjective then
+		-- ScenarioObjectiveTrackerStageMixin has some custom behavior
+		return
+	end
+
 	if not self:IsHooked(block, "AddObjective") then
 		self:SecureHook(block, "AddObjective", "ObjectiveTrackerBlock_AddObjective")
 	end
@@ -397,8 +403,8 @@ function OT:Initialize()
 			self:ObjectiveTrackerModule_AddBlock(nil, block)
 		end)
 	end
-
 	self:SecureHook(_G.ScenarioObjectiveTracker, "UpdateCriteria", "ScenarioObjectiveTracker_UpdateCriteria")
+
 	self:HandleContainerHeader(_G.ObjectiveTrackerFrame.Header)
 	self:UpdateBackdrop()
 	self:SortQuestWatches()

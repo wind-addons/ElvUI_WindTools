@@ -607,7 +607,7 @@ function S:ReskinSettingFrame(name, func)
 end
 
 ---Reskin icon button with hover effects
----@param button any The button to reskin
+---@param button Button The button to reskin
 ---@param icon string The icon texture path
 ---@param size number The icon size
 ---@param rotate number? The icon rotation (optional)
@@ -621,14 +621,14 @@ function S:ReskinIconButton(button, icon, size, rotate)
 		button.Icon:SetRotation(rotate)
 	end
 
-	button:HookScript("OnEnter", function(self)
+	button:HookScript("OnEnter", function(btn)
 		---Change icon color on mouse enter
-		self.Icon:SetVertexColor(E.media.rgbvaluecolor.r, E.media.rgbvaluecolor.g, E.media.rgbvaluecolor.b)
+		btn.Icon:SetVertexColor(E.media.rgbvaluecolor.r, E.media.rgbvaluecolor.g, E.media.rgbvaluecolor.b)
 	end)
 
-	button:HookScript("OnLeave", function(self)
+	button:HookScript("OnLeave", function(btn)
 		---Reset icon color on mouse leave
-		self.Icon:SetVertexColor(1, 1, 1)
+		btn.Icon:SetVertexColor(1, 1, 1)
 	end)
 end
 

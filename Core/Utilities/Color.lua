@@ -77,7 +77,7 @@ end
 ---@param c2 table Second color table
 ---@return boolean equal True if colors are approximately equal
 function W.Utilities.Color.IsRGBEqual(c1, c2)
-	return F.IsAlmost(c1.r, c2.r) and F.IsAlmost(c1.g, c2.g) and F.IsAlmost(c1.b, c2.b)
+	return F.IsAlmost(c1.r, c2.r, 0.005) and F.IsAlmost(c1.g, c2.g, 0.005) and F.IsAlmost(c1.b, c2.b, 0.005)
 end
 
 ---Convert hex color to RGB values

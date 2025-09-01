@@ -1375,6 +1375,12 @@ function GB:UpdateLayout()
 	self.bar:SetSize(areaWidth, areaHeight)
 end
 
+function GB:NEW_TOY_ADDED(_, toyID)
+	if toyID and tContains(hearthstoneAndToyIDList, toyID) then
+		self:UpdateHearthStoneTable()
+	end
+end
+
 function GB:PLAYER_REGEN_ENABLED()
 	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	self:ProfileUpdate()
@@ -1418,12 +1424,9 @@ function GB:Initialize()
 	self:UpdateButtons()
 	self:UpdateLayout()
 	self:UpdateBar()
+	self:RegisterEvent("NEW_TOY_ADDED")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:RegisterEvent("COVENANT_CHOSEN", function()
-		self:UpdateHearthStoneTable()
-		self:UpdateBar()
-	end)
-
+	self:RegisterEvent("COVENANT_CHOSEN", "UpdateHearthStoneTable")
 	self:SecureHook(_G.GuildMicroButton, "UpdateNotificationIcon", "UpdateGuildButton")
 	self.initialized = true
 end

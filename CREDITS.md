@@ -146,7 +146,7 @@
 - Ferous Media (Ferous)
   - Media/Texture/Vignetting.tga
 
-- Icon made by Freepik from www.flaticon.com
+- Icon made by Freepik from [www.flaticon.com](https://www.flaticon.com)
   - Media/Texture/Shield.tga
   - Media/Texture/Sword.tga
 
@@ -162,10 +162,10 @@
 - LynUI, ElvUI Shadow & Light
   - Media/Icons/LynUI
 
-- Sukiki情绪化 @ www.iconfont.cn
+- Sukiki情绪化 @ [www.iconfont.cn](https://www.iconfont.cn)
   - Media/Icons/Rest.tga
 
-- LieutenantG @ www.iconfont.cn
+- LieutenantG @ [www.iconfont.cn](https://www.iconfont.cn)
   - Media/Icons/Button/Minus.tga
   - Media/Icons/Button/Plus.tga
   - Media/Icons/Button/Forward.tga

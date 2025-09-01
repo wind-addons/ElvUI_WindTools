@@ -1,5 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
-local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0")
+local OT = W:NewModule("ObjectiveTracker", "AceHook-3.0", "AceEvent-3.0") ---@class ObjectiveTracker : AceModule, AceHook-3.0, AceEvent-3.0
 local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
 local LSM = E.Libs.LSM
@@ -16,6 +16,7 @@ local tonumber = tonumber
 local CreateFrame = CreateFrame
 local C_QuestLog_SortQuestWatches = C_QuestLog.SortQuestWatches
 
+---@type ObjectiveTrackerModuleTemplate[]
 local trackers = {
 	_G.ScenarioObjectiveTracker,
 	_G.UIWidgetObjectiveTracker,
@@ -30,77 +31,69 @@ local trackers = {
 }
 
 do
-	local replaceRule = {}
+	local replaceRules = {}
 
 	function OT:ShortTitle(title)
-		if not title then
-			return
+		if title and #replaceRules > 0 then
+			local key = F.Strings.Replace(title, {
+				["\239\188\140"] = ", ",
+				["\239\188\141"] = ".",
+			})
+
+			return replaceRules[key] or title
 		end
 
-		title = F.Strings.Replace(title, {
-			["\239\188\140"] = ", ",
-			["\239\188\141"] = ".",
-		})
-
-		for longName, shortName in pairs(replaceRule) do
-			if longName == title then
-				return shortName
-			end
-		end
 		return title
 	end
 end
 
-local function SetHeaderTextColorHook(text)
-	if not text.windHooked then
-		text.__WindSetTextColor = text.SetTextColor
-		text.SetTextColor = function(self, r, g, b, a)
-			local rgbTable = { r = r, g = g, b = b, a = a }
+---@class RGB
+---@field r number
+---@field g number
+---@field b number
 
-			if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["Header"], rgbTable) then
-				if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
-					r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorNormal.r
-					g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorNormal.g
-					b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorNormal.b
-				end
-			elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["HeaderHighlight"], rgbTable) then
-				if OT.db and OT.db.enable and OT.db.titleColor and OT.db.titleColor.enable then
-					r = OT.db.titleColor.classColor and W.ClassColor.r or OT.db.titleColor.customColorHighlight.r
-					g = OT.db.titleColor.classColor and W.ClassColor.g or OT.db.titleColor.customColorHighlight.g
-					b = OT.db.titleColor.classColor and W.ClassColor.b or OT.db.titleColor.customColorHighlight.b
-				end
-			end
-			self:__WindSetTextColor(r, g, b, a)
-		end
-		text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], { a = 1 }))
-		text.windHooked = true
+---@class RGBA : RGB
+---@field a number
+
+---Override the Blizzard text color used in objective tracker
+---@param rgba RGBA The RGBA color table
+---@param config {classColor: boolean, customColorNormal: RGB, customColorHighlight: RGB} The configuration table
+---@param normal string The key of normal color in OBJECTIVE_TRACKER_COLOR
+---@param highlight string The key of highlight color in OBJECTIVE_TRACKER_COLOR
+---@return RGBA newRGBA The overridden RGBA color table
+local function OverrideColor(rgba, config, normal, highlight)
+	local targetColor ---@type RGB?
+	if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR[normal], rgba) then
+		targetColor = config.classColor and E.myClassColor or config.customColorNormal
+	elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR[highlight], rgba) then
+		targetColor = config.classColor and E.myClassColor or config.customColorHighlight
 	end
+
+	if targetColor then
+		rgba.r, rgba.g, rgba.b = targetColor.r, targetColor.g, targetColor.b
+	end
+
+	return rgba
 end
 
-local function SetInfoTextColorHook(text)
-	if not text.windHooked then
-		text.__WindSetTextColor = text.SetTextColor
-		text.SetTextColor = function(self, r, g, b, a)
-			local rgbTable = { r = r, g = g, b = b, a = a }
-
-			if C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["Normal"], rgbTable) then
-				if OT.db and OT.db.enable and OT.db.infoColor and OT.db.infoColor.enable then
-					r = OT.db.infoColor.classColor and W.ClassColor.r or OT.db.infoColor.customColorNormal.r
-					g = OT.db.infoColor.classColor and W.ClassColor.g or OT.db.infoColor.customColorNormal.g
-					b = OT.db.infoColor.classColor and W.ClassColor.b or OT.db.infoColor.customColorNormal.b
-				end
-			elseif C.IsRGBEqual(_G.OBJECTIVE_TRACKER_COLOR["NormalHighlight"], rgbTable) then
-				if OT.db and OT.db.enable and OT.db.infoColor and OT.db.infoColor.enable then
-					r = OT.db.infoColor.classColor and W.ClassColor.r or OT.db.infoColor.customColorHighlight.r
-					g = OT.db.infoColor.classColor and W.ClassColor.g or OT.db.infoColor.customColorHighlight.g
-					b = OT.db.infoColor.classColor and W.ClassColor.b or OT.db.infoColor.customColorHighlight.b
-				end
-			end
-			self:__WindSetTextColor(r, g, b, a)
-		end
-		text:SetTextColor(C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Normal"], { a = 1 }))
-		text.windHooked = true
+function OT:TitleText_SetTextColor(text, r, g, b, a)
+	if not self.db or not self.db.enable or not self.db.titleColor then
+		return self.hooks[text].SetTextColor(text, r, g, b, a)
 	end
+
+	local rgba = { r = r, g = g, b = b, a = a }
+	rgba = OverrideColor(rgba, self.db.titleColor, "Header", "HeaderHighlight")
+	self.hooks[text].SetTextColor(text, rgba.r, rgba.g, rgba.b, rgba.a)
+end
+
+function OT:InfoText_SetTextColor(text, r, g, b, a)
+	if not self.db or not self.db.enable or not self.db.infoColor then
+		return self.hooks[text].SetTextColor(text, r, g, b, a)
+	end
+
+	local rgba = { r = r, g = g, b = b, a = a }
+	rgba = OverrideColor(rgba, self.db.infoColor, "Normal", "NormalHighlight")
+	self.hooks[text].SetTextColor(text, rgba.r, rgba.g, rgba.b, rgba.a)
 end
 
 function OT:CosmeticBar(header)
@@ -143,7 +136,7 @@ function OT:CosmeticBar(header)
 
 	-- Color
 	if self.db.cosmeticBar.color.mode == "CLASS" then
-		bar:SetVertexColor(C.ExtractColorFromTable(W.ClassColor))
+		bar:SetVertexColor(C.ExtractColorFromTable(E.myClassColor))
 	elseif self.db.cosmeticBar.color.mode == "NORMAL" then
 		bar:SetVertexColor(C.ExtractColorFromTable(self.db.cosmeticBar.color.normalColor))
 	elseif self.db.cosmeticBar.color.mode == "GRADIENT" then
@@ -171,41 +164,50 @@ function OT:CosmeticBar(header)
 		height = height + header.Text:GetStringHeight()
 	end
 
-	bar:SetSize(max(width, 1), max(height, 1))
+	bar:Size(max(width, 1), max(height, 1))
 
 	bar:Show()
 end
 
+---@param tracker ObjectiveTrackerModuleTemplate
 function OT:ObjectiveTrackerModule_Update(tracker)
-	if tracker and tracker.Header and tracker.Header.Text then
-		self:CosmeticBar(tracker.Header)
-		F.SetFontWithDB(tracker.Header.Text, self.db.header)
-		if not tracker.Header.Text.__windUnbind then
-			tracker.Header.Text.__windUnbind = true
-			tracker.Header.Text:SetFontObject(nil)
-			tracker.Header.Text.SetFontObject = E.noop
-		end
-
-		local r = self.db.header.classColor and W.ClassColor.r or self.db.header.color.r
-		local g = self.db.header.classColor and W.ClassColor.g or self.db.header.color.g
-		local b = self.db.header.classColor and W.ClassColor.b or self.db.header.color.b
-
-		tracker.Header.Text:SetTextColor(r, g, b)
-		if self.db.header.shortHeader then
-			tracker.Header.Text:SetText(self:ShortTitle(tracker.Header.Text:GetText()))
-		end
+	if not tracker or not tracker.Header or not tracker.Header.Text then
+		return
 	end
+
+	self:CosmeticBar(tracker.Header)
+	local text = tracker.Header.Text
+	F.SetFontWithDB(text, self.db.header)
+	if not text.__SetFontObject then
+		text.__SetFontObject = text.SetFontObject
+		text:SetFontObject(nil)
+		text.SetFontObject = E.noop
+	end
+
+	if self.db.header.shortHeader then
+		text:SetText(self:ShortTitle(text:GetText()))
+	end
+
+	local color = self.db.header.classColor and E.myClassColor or self.db.header.color
+	text:SetTextColor(color.r, color.g, color.b)
 end
 
+---@param text ObjectiveTrackerModuleHeaderTemplate_Text
 function OT:HandleTitleText(text)
 	F.SetFontWithDB(text, self.db.title)
+
 	local height = text:GetStringHeight() + 2
 	if height ~= text:GetHeight() then
-		text:SetHeight(height)
+		text:Height(height)
 	end
-	SetHeaderTextColorHook(text)
+
+	if not self:IsHooked(text, "SetTextColor") then
+		self:RawHook(text, "SetTextColor", "TitleText_SetTextColor", true)
+		self:TitleText_SetTextColor(text, C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Header"], { a = 1 }))
+	end
 end
 
+---@param text ObjectiveTrackerContainerHeaderTemplate_Text
 function OT:HandleMenuText(text)
 	if not self.db.menuTitle.enable then
 		return
@@ -216,7 +218,7 @@ function OT:HandleMenuText(text)
 	if not text.windHooked then
 		text.windHooked = true
 		if self.db.menuTitle.classColor then
-			text:SetTextColor(C.ExtractColorFromTable(W.ClassColor))
+			text:SetTextColor(C.ExtractColorFromTable(E.myClassColor))
 		else
 			text:SetTextColor(C.ExtractColorFromTable(self.db.menuTitle.color))
 		end
@@ -256,10 +258,13 @@ function OT:HandleObjectiveLine(line)
 		line.Text:SetText(rawText)
 	end
 
-	SetInfoTextColorHook(line.Text)
+	if not self:IsHooked(line.Text, "SetTextColor") then
+		self:RawHook(line.Text, "SetTextColor", "InfoText_SetTextColor", true)
+		self:InfoText_SetTextColor(line.Text, C.ExtractColorFromTable(_G.OBJECTIVE_TRACKER_COLOR["Normal"], { a = 1 }))
+	end
 
 	self:ColorfulProgression(line.Text)
-	line:SetHeight(line.Text:GetHeight())
+	line:Height(line.Text:GetHeight())
 end
 
 function OT:ObjectiveTrackerBlock_AddObjective(block)

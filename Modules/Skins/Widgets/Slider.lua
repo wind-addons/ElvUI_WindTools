@@ -27,7 +27,7 @@ function WS:HandleSliderFrame(_, slider)
 		slider.windWidgetSkinned = true
 	end
 
-	F.SetVertexColorWithDB(slider:GetThumbTexture(), db.classColor and W.ClassColor or db.color)
+	F.SetVertexColorWithDB(slider:GetThumbTexture(), db.classColor and E.myClassColor or db.color)
 end
 
 WS:SecureHook(ES, "HandleSliderFrame")

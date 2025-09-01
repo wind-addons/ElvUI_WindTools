@@ -55,7 +55,7 @@ function WS:HandleTab(_, tab, noBackdrop, template)
 			bg:SetDrawLayer(layer, subLayer)
 		end
 
-		F.SetVertexColorWithDB(bg, db.backdrop.classColor and W.ClassColor or db.backdrop.color)
+		F.SetVertexColorWithDB(bg, db.backdrop.classColor and E.myClassColor or db.backdrop.color)
 
 		tab.windAnimation = self.Animation(bg, db.backdrop.animation)
 		tab.__windAnimationIsTab = true
@@ -106,9 +106,9 @@ do
 		if db.text.enable and tab.windWidgetText then
 			local color
 			if selected then
-				color = db.text.selectedClassColor and W.ClassColor or db.text.selectedColor
+				color = db.text.selectedClassColor and E.myClassColor or db.text.selectedColor
 			else
-				color = db.text.normalClassColor and W.ClassColor or db.text.normalColor
+				color = db.text.normalClassColor and E.myClassColor or db.text.normalColor
 			end
 			tab.windWidgetText:SetTextColor(color.r, color.g, color.b)
 		end
@@ -117,8 +117,8 @@ do
 			return ES.Ace3_TabSetSelected_(tab, selected)
 		end
 
-		local borderColor = db.selected.borderClassColor and W.ClassColor or db.selected.borderColor
-		local backdropColor = db.selected.backdropClassColor and W.ClassColor or db.selected.backdropColor
+		local borderColor = db.selected.borderClassColor and E.myClassColor or db.selected.borderColor
+		local backdropColor = db.selected.backdropClassColor and E.myClassColor or db.selected.backdropColor
 		if selected then
 			tab.backdrop.Center:SetTexture(LSM:Fetch("statusbar", db.selected.texture) or E.media.glossTex)
 			tab.backdrop:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, db.selected.borderAlpha)

@@ -25,12 +25,12 @@ W.PlainTitle = gsub(W.Title, "|c........([^|]+)|r", "%1")
 -- Environment
 W.Locale = GetLocale()
 W.ChineseLocale = strsub(W.Locale, 0, 2) == "zh"
+W.AsianLocale = W.ChineseLocale or W.Locale == "koKR"
 W.SupportElvUIVersion = 13.97
 W.UseKeyDown = C_CVar_GetCVarBool("ActionButtonUseKeyDown")
 
 -- Game
 W.MaxLevelForPlayerExpansion = GetMaxLevelForPlayerExpansion()
-W.ClassColor = _G.RAID_CLASS_COLORS[E.myclass]
 
 -- Mythic+
 W.MythicPlusMapData = {

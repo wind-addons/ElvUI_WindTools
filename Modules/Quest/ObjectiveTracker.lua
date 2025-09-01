@@ -14,6 +14,7 @@ local strmatch = strmatch
 local tonumber = tonumber
 
 local CreateFrame = CreateFrame
+local GetKeysArray = GetKeysArray
 local C_QuestLog_SortQuestWatches = C_QuestLog.SortQuestWatches
 
 ---@type ObjectiveTrackerModuleTemplate[]
@@ -31,19 +32,25 @@ local trackers = {
 }
 
 do
+	---@type table<string, string>
 	local replaceRules = {}
+	local numReplaceRules = #GetKeysArray(replaceRules)
 
-	function OT:ShortTitle(title)
-		if title and #replaceRules > 0 then
-			local key = F.Strings.Replace(title, {
-				["\239\188\140"] = ", ",
-				["\239\188\141"] = ".",
-			})
-
-			return replaceRules[key] or title
+	---Shorten the header text based on the rules defined in `replaceRules`
+	---@param headerText ObjectiveTrackerModuleHeaderTemplate_Text
+	function OT:ShortHeader(headerText)
+		if numReplaceRules == 0 or not self.db or not self.db.header or not self.db.header.shortHeader then
+			return
 		end
 
-		return title
+		local key = F.Strings.Replace(headerText:GetText(), {
+			["\239\188\140"] = ", ",
+			["\239\188\141"] = ".",
+		})
+
+		if replaceRules[key] then
+			headerText:SetText(replaceRules[key])
+		end
 	end
 end
 
@@ -176,20 +183,18 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 	end
 
 	self:CosmeticBar(tracker.Header)
-	local text = tracker.Header.Text
-	F.SetFontWithDB(text, self.db.header)
-	if not text.__SetFontObject then
-		text.__SetFontObject = text.SetFontObject
-		text:SetFontObject(nil)
-		text.SetFontObject = E.noop
+	local headerText = tracker.Header.Text
+	F.SetFontWithDB(headerText, self.db.header)
+	if not headerText.__SetFontObject then
+		headerText.__SetFontObject = headerText.SetFontObject
+		headerText:SetFontObject(nil)
+		headerText.SetFontObject = E.noop
 	end
 
-	if self.db.header.shortHeader then
-		text:SetText(self:ShortTitle(text:GetText()))
-	end
+	self:ShortHeader(headerText)
 
 	local color = self.db.header.classColor and E.myClassColor or self.db.header.color
-	text:SetTextColor(color.r, color.g, color.b)
+	headerText:SetTextColor(color.r, color.g, color.b)
 end
 
 ---@param text ObjectiveTrackerModuleHeaderTemplate_Text

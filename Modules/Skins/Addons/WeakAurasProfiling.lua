@@ -9,13 +9,13 @@ local pairs = pairs
 ---Skin a profiling line frame
 ---@param frame Frame The profiling line frame to skin
 local function SkinProfilingLine(frame)
-	if not frame then
+	if not frame or frame.__windSkin then
 		return
 	end
 
 	if frame.progressBar then
 		frame.progressBar:SetStatusBarTexture(E.media.normTex)
-		F.SetFontOutline(frame.progressBar.name)
+		F.SetFontOutline(frame.progressBar.name, W.AsianLocale and E.db.general.font or nil)
 	end
 
 	if frame.time then
@@ -25,6 +25,8 @@ local function SkinProfilingLine(frame)
 	if frame.spike then
 		F.SetFontOutline(frame.spike)
 	end
+
+	frame.__windSkin = true
 end
 
 ---Skin the main profiling frame
@@ -71,15 +73,12 @@ local function SkinProfilingFrame(frame)
 		end
 	end
 
-	frame.ScrollBox:StripTextures()
-	frame.ScrollBox:SetTemplate("Transparent")
 	S:Proxy("HandleTrimScrollBar", frame.ScrollBar)
-
-	hooksecurefunc(frame.ScrollBox, "Update", function()
-		for _, elementFrame in pairs({ frame.ScrollBox:GetFrames() }) do
-			print(1)
-			SkinProfilingLine(elementFrame)
-		end
+	local scrollBox = frame.ScrollBox ---@type WowScrollBoxList
+	scrollBox:StripTextures()
+	scrollBox:SetTemplate("Transparent")
+	hooksecurefunc(scrollBox, "Update", function()
+		scrollBox:ForEachFrame(SkinProfilingLine)
 	end)
 
 	if frame.stats then

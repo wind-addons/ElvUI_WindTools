@@ -26,6 +26,7 @@ local W = AceAddon:NewAddon(addonName, "AceConsole-3.0", "AceEvent-3.0", "AceTim
 
 ---@class ElvUIProfileDB
 ---@field WT ProfileDB
+---@field general {font: string}
 
 ---@class ElvUIPrivateDB
 ---@field WT PrivateDB

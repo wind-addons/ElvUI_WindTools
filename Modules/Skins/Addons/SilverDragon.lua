@@ -258,24 +258,6 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 	end
 end
 
-local function LayoutSilverDragonCompact(popup)
-	popup:Size(240, 50)
-	popup.model:Hide()
-
-	popup.title:Point("TOPLEFT", popup, "TOPLEFT", 8, -8)
-	popup.title:Point("TOPRIGHT", popup, "TOPRIGHT", -25, -8)
-	popup.status:Point("BOTTOM", 0, 8)
-	popup.status:SetJustifyH("CENTER")
-	popup.source:Point("BOTTOMRIGHT", -8, 4)
-
-	popup.raidIcon:Point("BOTTOM", popup.title, "TOP", 0, 2)
-	popup.lootIcon:Point("BOTTOMLEFT", 4, 4)
-	popup.lootIcon:Size(20, 20)
-
-	popup.dead:SetAllPoints(popup)
-	popup.shine.animIn.translate:SetOffset(180, 0)
-end
-
 local function ConfigureSilverDragonPopup(popup, config, module)
 	-- Set background color
 	local r, g, b, a = unpack(config.background)
@@ -350,11 +332,11 @@ local function SetupSilverDragonOverlay(silverDragon)
 		return
 	end
 
-	hooksecurefunc(module, "ShowTooltip", function(module)
+	hooksecurefunc(module, "ShowTooltip", function(overlayModule)
 		F.WaitFor(function()
-			return module.lootwindow and true or false
+			return overlayModule.lootwindow and true or false
 		end, function()
-			StyleSilverDragonLootWindow(module.lootwindow)
+			StyleSilverDragonLootWindow(overlayModule.lootwindow)
 		end)
 	end)
 
@@ -411,9 +393,9 @@ local function SetupSilverDragonHistory(silverDragon)
 	end
 
 	if module.ShowWindow then
-		hooksecurefunc(module, "ShowWindow", function(module)
-			if module.window then
-				StyleSilverDragonHistoryWindow(module.window, module.db.collapsed)
+		hooksecurefunc(module, "ShowWindow", function(historyModule)
+			if historyModule.window then
+				StyleSilverDragonHistoryWindow(historyModule.window, historyModule.db.collapsed)
 			end
 		end)
 	end

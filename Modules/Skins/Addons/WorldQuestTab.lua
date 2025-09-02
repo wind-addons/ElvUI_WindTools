@@ -16,21 +16,15 @@ local function isUnofficialVersion()
 	return C_AddOns_GetAddOnMetadata("WorldQuestTab", "IconAtlas") ~= "Worldquest-icon"
 end
 
-local function PositionTabIcons(icon, _, anchor)
-	if anchor then
-		icon:Point("CENTER")
-	end
-end
-
--- Copy from ElvUI WorldMap skin
+-- Modified from ElvUI WorldMap skin
 local function reskinTab(tab)
 	tab:CreateBackdrop()
 	tab:Size(30, 40)
 
 	if tab.Icon then
 		tab.Icon:ClearAllPoints()
-		tab.Icon:Point("CENTER")
-		hooksecurefunc(tab.Icon, "SetPoint", PositionTabIcons)
+		F.InternalizeMethod(tab.Icon, "SetPoint")
+		F.CallMethod("SetPoint", tab.Icon, "CENTER")
 	end
 
 	if tab.Background then
@@ -185,11 +179,12 @@ function S:WorldQuestTab()
 
 	self:DisableAddOnSkin("WorldQuestTab")
 
-	if _G.WQT_QuestMapTab then
-		reskinTab(_G.WQT_QuestMapTab)
-		_G.WQT_QuestMapTab.__SetPoint = _G.WQT_QuestMapTab.SetPoint
-		hooksecurefunc(_G.WQT_QuestMapTab, "SetPoint", function()
-			F.Move(_G.WQT_QuestMapTab, 0, -2)
+	local tab = _G.WQT_QuestMapTab
+	if tab then
+		reskinTab(tab)
+		tab.__SetPoint = tab.SetPoint
+		hooksecurefunc(tab, "SetPoint", function()
+			F.Move(tab, 0, -2)
 		end)
 	end
 

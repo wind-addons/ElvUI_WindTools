@@ -279,6 +279,25 @@ local function ReskinFlyout(frame)
 	frame.__windSkin = true
 end
 
+local function reskinPetList(list)
+	list:ForEachFrame(function(button)
+		if button.__windSkin then
+			return
+		end
+
+		if button.Back then
+			button.Back:SetAlpha(0)
+		end
+
+		-- local highlightTexture = button:GetHighlightTexture()
+		-- highlightTexture:SetTexture(E.media.blankTex)
+		-- highlightTexture:SetVertexColor(1, 1, 1, 0.25)
+
+		S:Proxy("HandleIcon", button.Icon)
+		button.__windSkin = true
+	end)
+end
+
 function S:Rematch_LeftBottom()
 	if not _G.RematchPetPanel.List then
 		return
@@ -639,25 +658,6 @@ local function reskinScroll(frame)
 	S:ReskinIconButton(frame.ScrollToTopButton, W.Media.Icons.buttonGoEnd, 21, 1.571)
 	F.Move(frame.ScrollToTopButton, -1, -1)
 	S:ReskinIconButton(frame.ScrollToBottomButton, W.Media.Icons.buttonGoEnd, 21, -1.571)
-end
-
-local function reskinPetList(list)
-	list:ForEachFrame(function(button)
-		if button.__windSkin then
-			return
-		end
-
-		if button.Back then
-			button.Back:SetAlpha(0)
-		end
-
-		-- local highlightTexture = button:GetHighlightTexture()
-		-- highlightTexture:SetTexture(E.media.blankTex)
-		-- highlightTexture:SetVertexColor(1, 1, 1, 0.25)
-
-		S:Proxy("HandleIcon", button.Icon)
-		button.__windSkin = true
-	end)
 end
 
 local function reskinMainFrame(frame)

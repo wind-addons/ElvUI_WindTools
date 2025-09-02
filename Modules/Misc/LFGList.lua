@@ -37,12 +37,12 @@ local IsShiftKeyDown = IsShiftKeyDown
 local LFGListCategorySelectionButton_OnClick = LFGListCategorySelectionButton_OnClick
 local LFGListCategorySelection_StartFindGroup = LFGListCategorySelection_StartFindGroup
 local PVEFrame_ShowFrame = PVEFrame_ShowFrame
-local RunNextFrame = RunNextFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
 local WeeklyRewards_ShowUI = WeeklyRewards_ShowUI
 
+local C_Timer_After = C_Timer.After
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local C_AddOns_LoadAddOn = C_AddOns.LoadAddOn
 local C_ChallengeMode_GetAffixInfo = C_ChallengeMode.GetAffixInfo
@@ -303,9 +303,9 @@ function LL:UpdateEnumerate(Enumerate)
 	}
 
 	for i = 1, result.numMembers do
-		local info = C_LFGList_GetSearchResultPlayerInfo(button.resultID, i)
-		if info then
-			local role, class, spec = info.assignedRole, info.classFilename, info.specName
+		local playerInfo = C_LFGList_GetSearchResultPlayerInfo(button.resultID, i)
+		if playerInfo then
+			local role, class, spec = playerInfo.assignedRole, playerInfo.classFilename, playerInfo.specName
 			tinsert(cache[role], { class, spec, i == 1 })
 		end
 	end
@@ -570,26 +570,38 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	self:SecureHook("LFGListSearchEntry_Update", function(list)
-		if self:IsHooked(list, "OnClick") then
+	local function HandleAutoJoin(module, resultID, button)
+		if not module.db.rightPanel.autoJoin then
 			return
 		end
 
-		self:HookScript(list, "OnClick", function(frame, button)
-			if not button ~= "LeftButton" or not self.db.rightPanel.autoJoin then
-				return
-			end
+		if button == "RightButton" then
+			return
+		end
 
-			RunNextFrame(function()
-				local panel = _G.LFGListFrame.SearchPanel
-				if _G.LFGListSearchPanelUtil_CanSelectResult(frame.resultID) and panel.SignUpButton:IsEnabled() then
-					if panel.selectedResult ~= frame.resultID then
-						_G.LFGListSearchPanel_SelectResult(panel, frame.resultID)
-					end
-					_G.LFGListSearchPanel_SignUp(panel)
-				end
-			end)
+		local panel = _G.LFGListFrame.SearchPanel
+		if _G.LFGListSearchPanelUtil_CanSelectResult(resultID) and panel.SignUpButton:IsEnabled() then
+			if panel.selectedResult ~= resultID then
+				_G.LFGListSearchPanel_SelectResult(panel, resultID)
+			end
+			_G.LFGListSearchPanel_SignUp(panel)
+		end
+	end
+
+	hooksecurefunc("LFGListSearchEntry_Update", function(entry)
+		if entry.autoJoinHandled then
+			return
+		end
+
+		entry:HookScript("OnClick", function(f, button)
+			if button == "LeftButton" then
+				C_Timer_After(0.01, function()
+					HandleAutoJoin(LL, f.resultID, button)
+				end)
+			end
 		end)
+
+		entry.autoJoinHandled = true
 	end)
 
 	_G.LFGListApplicationDialog:HookScript("OnShow", function(s)
@@ -1311,9 +1323,9 @@ function LL:InitializeRightPanel()
 			if not selection then
 				return
 			end
-			for _, button in ipairs(selection.CategoryButtons) do
-				if button.categoryID == data.categoryID and button.filters == data.filters then
-					LFGListCategorySelectionButton_OnClick(button)
+			for _, categoryButton in ipairs(selection.CategoryButtons) do
+				if categoryButton.categoryID == data.categoryID and categoryButton.filters == data.filters then
+					LFGListCategorySelectionButton_OnClick(categoryButton)
 					LFGListCategorySelection_StartFindGroup(selection)
 					return
 				end

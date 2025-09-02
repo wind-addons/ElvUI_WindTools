@@ -569,22 +569,38 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	hooksecurefunc("LFGListSearchEntry_OnClick", function(s, button)
+	local function HandleAutoJoin(self, resultID, button)
 		if not self.db.rightPanel.autoJoin then
 			return
 		end
 
+		if button == "RightButton" then
+			return
+		end
+
 		local panel = _G.LFGListFrame.SearchPanel
-		if
-			button ~= "RightButton"
-			and _G.LFGListSearchPanelUtil_CanSelectResult(s.resultID)
-			and panel.SignUpButton:IsEnabled()
-		then
-			if panel.selectedResult ~= s.resultID then
-				_G.LFGListSearchPanel_SelectResult(panel, s.resultID)
+		if _G.LFGListSearchPanelUtil_CanSelectResult(resultID) and panel.SignUpButton:IsEnabled() then
+			if panel.selectedResult ~= resultID then
+				_G.LFGListSearchPanel_SelectResult(panel, resultID)
 			end
 			_G.LFGListSearchPanel_SignUp(panel)
 		end
+	end
+
+	hooksecurefunc("LFGListSearchEntry_Update", function(self)
+		if self.autoJoinHandled then
+			return
+		end
+
+		self:HookScript("OnClick", function(frame, button)
+			if button == "LeftButton" then
+				C_Timer.After(0.01, function()
+					HandleAutoJoin(LL, frame.resultID, button)
+				end)
+			end
+		end)
+
+		self.autoJoinHandled = true
 	end)
 
 	_G.LFGListApplicationDialog:HookScript("OnShow", function(s)

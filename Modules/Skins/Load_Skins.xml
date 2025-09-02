@@ -9,4 +9,6 @@
 	<Include file='Blizzard\Load_Blizzard.xml'/>
 	<Include file='ElvUI\Load_ElvUI.xml'/>
 	<Include file='Addons\Load_Addons.xml'/>
+	<!-- Post Callbacks -->
+	<Script file='Library.lua'/>
 </Ui>

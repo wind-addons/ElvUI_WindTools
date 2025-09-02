@@ -36,8 +36,10 @@ S.libraryHandlers = {}
 S.libraryHandledMinors = {}
 ---@type function[] Table to store profile update callbacks
 S.updateProfile = {}
----@type table<string, function> Table to store AceGUI widget callbacks
-S.aceWidgets = {}
+---@type table<string, {checker: function, handler: function, constructor: function?}> Table to store AceGUI widget callbacks
+S.aceWidgetConfigs = {}
+---@type table<string, Frame[]> Table to store AceGUI widget that need to be waiting for db loading
+S.aceWidgetWaitingList = {}
 ---@type function[] Table to store enter world callbacks
 S.enteredLoad = {}
 ---@type Texture Texture object for path fetching
@@ -143,19 +145,22 @@ function S:CreateShadow(frame, size, r, g, b, force)
 end
 
 ---Create a lower shadow for the specified frame
----@param frame any The frame to apply lower shadow to
+---@param frame any The frame to apply shadow to
+---@param size number? The shadow size (default: 4)
+---@param r number? Red color component (default: from config)
+---@param g number? Green color component (default: from config)
+---@param b number? Blue color component (default: from config)
 ---@param force boolean? Force creation even if shadow is disabled
-function S:CreateLowerShadow(frame, force)
+function S:CreateLowerShadow(frame, size, r, g, b, force)
 	if not force then
 		if not E.private.WT.skins or not E.private.WT.skins.shadow then
 			return
 		end
 	end
 
-	self:CreateShadow(frame)
+	self:CreateShadow(frame, size, r, g, b, force)
 	if frame.shadow and frame.SetFrameStrata and frame.SetFrameLevel then
 		---Refresh frame level to keep shadow below the main frame
-		---@local
 		local function refreshFrameLevel()
 			local parentFrameLevel = frame:GetFrameLevel()
 			frame.shadow:SetFrameLevel(parentFrameLevel > 0 and parentFrameLevel - 1 or 0)
@@ -302,11 +307,57 @@ end
 ---@param name string The widget name
 ---@param constructor function The widget constructor
 function S:HandleAceGUIWidget(lib, name, constructor)
-	local handler = self.aceWidgets[name]
-	if handler then
-		lib.WidgetRegistry[name] = handler(self, constructor)
-		self.aceWidgets[name] = nil
+	local config = self.aceWidgetConfigs[name]
+	if not config then
+		return
 	end
+
+	config.constructor = constructor
+
+	if self.db then
+		if self.db.enable and config.checker(self.db) then
+			config.constructor = constructor
+			lib.WidgetRegistry[name] = function()
+				local widget = config.constructor()
+				config.handler(widget)
+				return widget
+			end
+		end
+		return
+	end
+
+	if not self.aceWidgetWaitingList[name] then
+		self.aceWidgetWaitingList[name] = {}
+		lib.WidgetRegistry[name] = function()
+			local widget = config.constructor()
+			tinsert(self.aceWidgetWaitingList[name], widget)
+			return widget
+		end
+	end
+end
+
+function S:ProcessWaitingAceGUIWidgets()
+	local lib = LibStub:GetLibrary("AceGUI-3.0", true)
+	assert(lib, "ProcessWaitingAceWidgets: AceGUI-3.0 not found")
+
+	for name, widgets in pairs(self.aceWidgetWaitingList) do
+		local config = self.aceWidgetConfigs[name]
+		if self.db.enable and config.checker(self.db) then
+			lib.WidgetRegistry[name] = function()
+				local widget = config.constructor()
+				config.handler(widget)
+				return widget
+			end
+
+			for _, widget in ipairs(widgets) do
+				config.handler(widget)
+			end
+		else
+			lib.WidgetRegistry[name] = config.constructor
+		end
+	end
+
+	self.aceWidgetWaitingList = nil
 end
 
 ---Set transparent backdrop for a frame
@@ -328,13 +379,19 @@ end
 
 ---Add a callback function for AceGUI widget styling
 ---@param name string The widget name
----@param func function|string? The callback function or method name
-function S:AddCallbackForAceGUIWidget(name, func)
-	if type(func) == "string" then
-		func = self[func]
+---@param handler function|string? The callback function or method name
+---@param checker function The checker for enabling the skin or not
+function S:AddCallbackForAceGUIWidget(name, handler, checker)
+	if type(handler) == "string" then
+		handler = GenerateClosure(self[handler], self)
 	end
 
-	self.aceWidgets[name] = func
+	assert(type(handler) == "function", "AddCallbackForAceGUIWidget: handler must be a function or method name")
+
+	self.aceWidgetConfigs[name] = {
+		checker = checker,
+		handler = handler,
+	}
 end
 
 ---Add a callback function for when a specific addon is loaded
@@ -633,7 +690,10 @@ function S:ReskinIconButton(button, icon, size, rotate)
 end
 
 function S:Initialize()
-	if not E.private.WT.skins.enable then
+	self.db = E.private.WT.skins
+	self:ProcessWaitingAceGUIWidgets()
+
+	if not self.db.enable then
 		return
 	end
 
@@ -650,20 +710,6 @@ function S:Initialize()
 		local isLoaded, isFinished = C_AddOns_IsAddOnLoaded(addonName)
 		if isLoaded and isFinished then
 			self:CallLoadedAddon(addonName, object)
-		end
-	end
-
-	-- Run library skins
-	self:SecureHook(_G.LibStub--[[@as table]], "NewLibrary", "LibStub_NewLibrary")
-	for libName in pairs(_G.LibStub.libs) do
-		local lib, minor = _G.LibStub(libName, true)
-		if lib and self.libraryHandlers[libName] then
-			self.libraryHandledMinors[libName] = minor
-			for _, func in next, self.libraryHandlers[libName] do
-				if not xpcall(func, F.Developer.ThrowError, self, lib) then
-					self:Log("debug", format("Failed to skin library %s", libName, minor))
-				end
-			end
 		end
 	end
 

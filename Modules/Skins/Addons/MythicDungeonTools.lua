@@ -207,78 +207,49 @@ function S:MythicDungeonTools()
 	self:SecureHook(_G.MDT, "SkinProgressBar", reskinProgressBar)
 end
 
-function S:MDTPullButton(Constructor)
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
-		return Constructor
-	end
+function S:Ace_MDTPullButton(widget)
+	F.Developer.DevTool(widget, "Pull Button")
+	reskinButtonTexture(widget.frame.pickedGlow, 0.5)
+	reskinButtonTexture(widget.frame.highlight, 0.2)
+	reskinButtonTexture(widget.background, 0.3)
 
-	local function SkinnedConstructor()
-		local widget = Constructor()
+	widget.pullNumber:ClearAllPoints()
+	widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, 1)
 
-		reskinButtonTexture(widget.frame.pickedGlow, 0.5)
-		reskinButtonTexture(widget.frame.highlight, 0.2)
-		reskinButtonTexture(widget.background, 0.3)
+	hooksecurefunc(widget.frame.pickedGlow, "Show", function()
+		F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 22)
+		widget.pullNumber:SetTextColor(1, 1, 1, 1)
+	end)
 
-		widget.pullNumber:ClearAllPoints()
-		widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, 1)
-
-		hooksecurefunc(widget.frame.pickedGlow, "Show", function()
-			F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 22)
-			widget.pullNumber:SetTextColor(1, 1, 1, 1)
-		end)
-
-		hooksecurefunc(widget.frame.pickedGlow, "Hide", function()
-			F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 16)
-			widget.pullNumber:SetTextColor(1, 0.93, 0.76, 0.8)
-		end)
-
-		return widget
-	end
-
-	return SkinnedConstructor
+	hooksecurefunc(widget.frame.pickedGlow, "Hide", function()
+		F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 16)
+		widget.pullNumber:SetTextColor(1, 0.93, 0.76, 0.8)
+	end)
 end
 
-function S:MDTNewPullButton(Constructor)
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
-		return Constructor
-	end
-
-	local function SkinnedConstructor()
-		local widget = Constructor()
-		widget.frame:StripTextures()
-		reskinButtonTexture(widget.background, 0.2)
-		widget.background:SetVertexColor(1, 1, 1, 0.4)
-		reskinButtonTexture(widget.frame.highlight, 0.2)
-
-		return widget
-	end
-
-	return SkinnedConstructor
+function S:Ace_MDTNewPullButton(widget)
+	widget.frame:StripTextures()
+	reskinButtonTexture(widget.background, 0.2)
+	widget.background:SetVertexColor(1, 1, 1, 0.4)
+	reskinButtonTexture(widget.frame.highlight, 0.2)
 end
 
-function S:MDTSpellButton(Constructor)
-	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.mythicDungeonTools then
-		return Constructor
-	end
+function S:Ace_MDTSpellButton(widget)
+	S:Proxy("HandleIcon", widget.icon)
+	local width, height = widget.icon:GetSize()
+	widget.icon:Size(width - 2, height - 2)
+	F.Move(widget.icon, -3, 0)
 
-	local function SkinnedConstructor()
-		local widget = Constructor()
-		S:Proxy("HandleIcon", widget.icon)
-		local iconWidth, iconHeight = widget.icon:GetSize()
-		widget.icon:SetSize(iconWidth - 2, iconHeight - 2)
-		F.Move(widget.icon, -3, 0)
+	widget.frame.background:SetAlpha(0)
+	reskinButtonTexture(widget.frame.highlight, 0.2)
+	widget.frame:SetTemplate()
+end
 
-		widget.frame.background:SetAlpha(0)
-		reskinButtonTexture(widget.frame.highlight, 0.2)
-		widget.frame:SetTemplate()
-
-		return widget
-	end
-
-	return SkinnedConstructor
+local function dbChecker(db)
+	return db.addons.mythicDungeonTools
 end
 
 S:AddCallbackForAddon("MythicDungeonTools")
-S:AddCallbackForAceGUIWidget("MDTPullButton")
-S:AddCallbackForAceGUIWidget("MDTNewPullButton")
-S:AddCallbackForAceGUIWidget("MDTSpellButton")
+S:AddCallbackForAceGUIWidget("MDTPullButton", "Ace_MDTPullButton", dbChecker)
+S:AddCallbackForAceGUIWidget("MDTNewPullButton", "Ace_MDTNewPullButton", dbChecker)
+S:AddCallbackForAceGUIWidget("MDTSpellButton", "Ace_MDTSpellButton", dbChecker)

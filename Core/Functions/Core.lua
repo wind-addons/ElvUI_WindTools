@@ -283,6 +283,7 @@ function F.SetVertexColorWithDB(tex, db)
 		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture to handling")
 		return
 	end
+
 	if not db or type(db) ~= "table" then
 		F.Developer.LogDebug("Functions.SetVertexColorWithDB: No texture color database")
 		return

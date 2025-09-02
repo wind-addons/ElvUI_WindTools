@@ -2,7 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local KI = W:GetModule("KeystoneInfo")
 local S = W.Modules.Skins ---@type Skins
 local MF = W.Modules.MoveFrames ---@type MoveFrames
-local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0")
+local LL = W:NewModule("LFGList", "AceHook-3.0", "AceEvent-3.0") ---@class LFGList : AceModule, AceHook-3.0, AceEvent-3.0
 local LFGPI = W.Utilities.LFGPlayerInfo
 local C = W.Utilities.Color
 local LSM = E.Libs.LSM
@@ -37,6 +37,7 @@ local IsShiftKeyDown = IsShiftKeyDown
 local LFGListCategorySelectionButton_OnClick = LFGListCategorySelectionButton_OnClick
 local LFGListCategorySelection_StartFindGroup = LFGListCategorySelection_StartFindGroup
 local PVEFrame_ShowFrame = PVEFrame_ShowFrame
+local RunNextFrame = RunNextFrame
 local UnitClassBase = UnitClassBase
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitName = UnitName
@@ -569,38 +570,26 @@ function LL:InitializeRightPanel()
 		end
 	end)
 
-	local function HandleAutoJoin(self, resultID, button)
-		if not self.db.rightPanel.autoJoin then
+	self:SecureHook("LFGListSearchEntry_Update", function(list)
+		if self:IsHooked(list, "OnClick") then
 			return
 		end
 
-		if button == "RightButton" then
-			return
-		end
-
-		local panel = _G.LFGListFrame.SearchPanel
-		if _G.LFGListSearchPanelUtil_CanSelectResult(resultID) and panel.SignUpButton:IsEnabled() then
-			if panel.selectedResult ~= resultID then
-				_G.LFGListSearchPanel_SelectResult(panel, resultID)
+		self:HookScript(list, "OnClick", function(frame, button)
+			if not button ~= "LeftButton" or not self.db.rightPanel.autoJoin then
+				return
 			end
-			_G.LFGListSearchPanel_SignUp(panel)
-		end
-	end
 
-	hooksecurefunc("LFGListSearchEntry_Update", function(self)
-		if self.autoJoinHandled then
-			return
-		end
-
-		self:HookScript("OnClick", function(frame, button)
-			if button == "LeftButton" then
-				C_Timer.After(0.01, function()
-					HandleAutoJoin(LL, frame.resultID, button)
-				end)
-			end
+			RunNextFrame(function()
+				local panel = _G.LFGListFrame.SearchPanel
+				if _G.LFGListSearchPanelUtil_CanSelectResult(frame.resultID) and panel.SignUpButton:IsEnabled() then
+					if panel.selectedResult ~= frame.resultID then
+						_G.LFGListSearchPanel_SelectResult(panel, frame.resultID)
+					end
+					_G.LFGListSearchPanel_SignUp(panel)
+				end
+			end)
 		end)
-
-		self.autoJoinHandled = true
 	end)
 
 	_G.LFGListApplicationDialog:HookScript("OnShow", function(s)

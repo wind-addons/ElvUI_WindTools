@@ -96,6 +96,7 @@ function WS:HandleTreeGroup(widget)
 				local borderColor = db.selected.borderClassColor and E.myClassColor or db.selected.borderColor
 				local backdropColor = db.selected.backdropClassColor and E.myClassColor or db.selected.backdropColor
 				button.backdrop.Center:SetTexture(LSM:Fetch("statusbar", db.selected.texture) or E.media.glossTex)
+				button.backdrop.Center:SetAlpha(1)
 				button.backdrop:SetBackdropBorderColor(
 					borderColor.r,
 					borderColor.g,

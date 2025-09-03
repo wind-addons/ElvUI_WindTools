@@ -1,6 +1,5 @@
-#
-
-![Title](https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg)
+<div align="center">
+<img width="512" alt="Title" src="https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/logo.svg"/><br><br>
 
 ![Version](https://img.shields.io/badge/Version-3.98-538AED.svg?longCache=true&style=for-the-badge)
 ![ElvUI version](https://img.shields.io/badge/ElvUI-13.97-ff784d.svg?longCache=true&style=for-the-badge)
@@ -10,6 +9,8 @@
 [简体中文 (zhCN)](README_zhCN.md) | [繁體中文 (zhTW)](README_zhTW.md) | English (enUS) | [Español (esES/esMX)](README_esES.md)
 
 ![Screenshot](https://raw.githubusercontent.com/wind-addons/resources/main/dist/addons/elvui-windtools/screenshot.png)
+
+</div>
 
 ## 📥 Download
 

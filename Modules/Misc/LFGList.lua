@@ -515,6 +515,28 @@ function LL:RefreshSearch()
 	_G.LFGListSearchPanel_DoSearch(_G.LFGListFrame.SearchPanel)
 end
 
+function LL:RepositionRaiderIOProfileTooltip(frame)
+	local anchor = _G.RaiderIO_ProfileTooltipAnchor
+	if not anchor then
+		return
+	end
+
+	if not self:IsHooked(anchor, "SetPoint") then
+		self:RawHook(anchor, "SetPoint", function(_, arg1, arg2, arg3, arg4, arg5)
+			if arg2 and (arg2 == _G.PVEFrame or arg2 == frame) then
+				arg2 = frame:IsShown() and frame or _G.PVEFrame
+			end
+			self.hooks[anchor]["SetPoint"](anchor, arg1, arg2, arg3, arg4, arg5)
+		end, true)
+	end
+
+	local point = { anchor:GetPoint(1) }
+	if #point > 0 then
+		anchor:ClearAllPoints()
+		anchor:Point(unpack(point))
+	end
+end
+
 function LL:InitializeRightPanel()
 	if self.rightPanel then
 		return
@@ -528,47 +550,8 @@ function LL:InitializeRightPanel()
 	S:CreateShadowModule(frame)
 	MF:InternalHandle(frame, "PVEFrame")
 
-	hooksecurefunc(frame, "Show", function(f)
-		if _G.RaiderIO_ProfileTooltipAnchor then
-			local point = { _G.RaiderIO_ProfileTooltipAnchor:GetPoint(1) }
-
-			if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
-				_G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
-				_G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(_, arg1, arg2, arg3, arg4, arg5)
-					if arg2 and (arg2 == _G.PVEFrame or arg2 == f) then
-						arg2 = f:IsShown() and f or _G.PVEFrame
-					end
-					_G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg2, arg3, arg4, arg5)
-				end
-			end
-
-			if #point > 0 then
-				_G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
-				_G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
-			end
-		end
-	end)
-
-	hooksecurefunc(frame, "Hide", function(f)
-		if _G.RaiderIO_ProfileTooltipAnchor then
-			local point = { _G.RaiderIO_ProfileTooltipAnchor:GetPoint(1) }
-
-			if not _G.RaiderIO_ProfileTooltipAnchor.__SetPoint then
-				_G.RaiderIO_ProfileTooltipAnchor.__SetPoint = _G.RaiderIO_ProfileTooltipAnchor.SetPoint
-				_G.RaiderIO_ProfileTooltipAnchor.SetPoint = function(_, arg1, arg2, arg3, arg4, arg5)
-					if arg2 and (arg2 == _G.PVEFrame or arg2 == f) then
-						arg2 = f:IsShown() and f or _G.PVEFrame
-					end
-					_G.RaiderIO_ProfileTooltipAnchor:__SetPoint(arg1, arg2, arg3, arg4, arg5)
-				end
-			end
-
-			if #point > 0 then
-				_G.RaiderIO_ProfileTooltipAnchor:ClearAllPoints()
-				_G.RaiderIO_ProfileTooltipAnchor:SetPoint(unpack(point))
-			end
-		end
-	end)
+	self:SecureHook(frame, "Show", "RepositionRaiderIOProfileTooltip")
+	self:SecureHook(frame, "Hide", "RepositionRaiderIOProfileTooltip")
 
 	local function HandleAutoJoin(module, resultID, button)
 		if not module.db.rightPanel.autoJoin then

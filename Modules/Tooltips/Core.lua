@@ -1,6 +1,6 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local ET = E:GetModule("Tooltip")
-local T = W.Modules.Tooltips
+local T = W.Modules.Tooltips ---@class Tooltips
 
 local _G = _G
 local assert = assert
@@ -197,16 +197,13 @@ function T:Event(event, ...)
 	end
 end
 
-ET._GameTooltip_OnTooltipSetUnit = ET.GameTooltip_OnTooltipSetUnit
-function ET.GameTooltip_OnTooltipSetUnit(...)
-	ET._GameTooltip_OnTooltipSetUnit(...)
-
+T:SecureHook(ET, "GameTooltip_OnTooltipSetUnit", function(...)
 	if not T or not T.initialized then
 		return
 	end
 
 	T:InspectInfo(...)
-end
+end)
 
 function T:Initialize()
 	self.db = E.private.WT.tooltips

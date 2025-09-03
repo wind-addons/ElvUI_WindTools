@@ -1537,6 +1537,9 @@ options.libraries = {
 			order = 10,
 			type = "toggle",
 			name = L["Ace3 Dropdown"],
+			disabled = function()
+				return not E.private.WT.skins.libraries.ace3
+			end,
 		},
 		libQTip = {
 			order = 10,

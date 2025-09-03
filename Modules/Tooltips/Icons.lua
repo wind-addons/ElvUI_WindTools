@@ -9,6 +9,7 @@ local strfind = strfind
 local tContains = tContains
 local tInsertUnique = tInsertUnique
 local tonumber = tonumber
+local tostring = tostring
 local unpack = unpack
 
 local GetAchievementInfo = GetAchievementInfo

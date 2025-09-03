@@ -4,16 +4,18 @@ local S = W.Modules.Skins ---@class Skins
 local ES = E.Skins
 
 local _G = _G
+local assert = assert
 local format = format
 local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
 local next = next
 local pairs = pairs
+local strmatch = strmatch
 local tinsert = tinsert
+local tonumber = tonumber
 local tostring = tostring
 local type = type
 local xpcall = xpcall
-local tonumber = tonumber
-local strmatch = strmatch
 
 local CreateFrame = CreateFrame
 local GenerateClosure = GenerateClosure
@@ -337,7 +339,7 @@ function S:HandleAceGUIWidget(lib, name, constructor)
 end
 
 function S:ProcessWaitingAceGUIWidgets()
-	local lib = LibStub:GetLibrary("AceGUI-3.0", true)
+	local lib = _G.LibStub:GetLibrary("AceGUI-3.0", true)
 	assert(lib, "ProcessWaitingAceWidgets: AceGUI-3.0 not found")
 
 	for name, widgets in pairs(self.aceWidgetWaitingList) do

@@ -4,6 +4,7 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local pairs = pairs
+local hooksecurefunc = hooksecurefunc
 
 function S:ElvUI_SkinLootRollFrame(frame)
 	if not frame or frame:IsForbidden() or frame.__windSkin then

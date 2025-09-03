@@ -637,14 +637,20 @@ options.groupInfo = {
 			name = L["Exclude Dungeons"],
 			desc = L["It will not show the group info for dungeons."],
 		},
-		title = {
+		hideBlizzard = {
 			order = 3,
+			type = "toggle",
+			name = L["Hide Blizzard Tooltips"],
+			desc = L["Hide the default Blizzard group information."],
+		},
+		title = {
+			order = 4,
 			type = "toggle",
 			name = L["Add Title"],
 			desc = L["Display an additional title."],
 		},
 		mode = {
-			order = 4,
+			order = 5,
 			name = L["Mode"],
 			type = "select",
 			values = {
@@ -653,7 +659,7 @@ options.groupInfo = {
 			},
 		},
 		classIconStyle = {
-			order = 5,
+			order = 6,
 			name = L["Class Icon Style"],
 			type = "select",
 			values = function()
@@ -671,13 +677,13 @@ options.groupInfo = {
 			end,
 		},
 		betterAlign1 = {
-			order = 6,
+			order = 7,
 			type = "description",
 			name = "",
 			width = "full",
 		},
 		template = {
-			order = 7,
+			order = 8,
 			type = "input",
 			name = L["Template"],
 			desc = L["Please click the button below to read reference."],
@@ -690,7 +696,7 @@ options.groupInfo = {
 			end,
 		},
 		resourcePage = {
-			order = 8,
+			order = 9,
 			type = "execute",
 			name = F.GetWindStyleText(L["Reference"]),
 			desc = format(
@@ -720,7 +726,7 @@ options.groupInfo = {
 			end,
 		},
 		useDefaultTemplate = {
-			order = 9,
+			order = 10,
 			type = "execute",
 			name = L["Default"],
 			func = function(info)
@@ -729,7 +735,7 @@ options.groupInfo = {
 			end,
 		},
 		applyButton = {
-			order = 10,
+			order = 11,
 			type = "execute",
 			name = L["Apply"],
 			disabled = function()
@@ -740,13 +746,13 @@ options.groupInfo = {
 			end,
 		},
 		betterAlign2 = {
-			order = 11,
+			order = 12,
 			type = "description",
 			name = "",
 			width = "full",
 		},
 		previewText = {
-			order = 12,
+			order = 13,
 			type = "description",
 			name = function(info)
 				LFGPI:SetClassIconStyle(E.db.WT.tooltips[info[#info - 1]].classIconStyle)

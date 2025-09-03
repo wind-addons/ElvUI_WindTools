@@ -671,6 +671,7 @@ L["Help you to enable/disable the modules for a better experience with other plu
 L["Here are some buttons for helping you change the setting of all absorb bars by one-click."] = true
 L["Here are some example presets, just try them!"] = true
 L["Heroic"] = true
+L["Hide Blizzard"] = true
 L["Hide Blizzard Indicator"] = true
 L["Hide Crafter"] = true
 L["Hide If The Bar Outside"] = true
@@ -681,6 +682,7 @@ L["Hide With Objective Tracker"] = true
 L["Hide channels that do not exist."] = true
 L["Hide crafter name in the item tooltip."] = true
 L["Hide default class circles"] = true
+L["Hide the default Blizzard group information."] = true
 L["Hide the level part if the quest level is the max level of this expansion."] = true
 L["Hide the realm name of friends."] = true
 L["Highlight Color"] = true

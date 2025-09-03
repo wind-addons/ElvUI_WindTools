@@ -640,7 +640,7 @@ options.groupInfo = {
 		hideBlizzard = {
 			order = 3,
 			type = "toggle",
-			name = L["Hide Blizzard Tooltips"],
+			name = L["Hide Blizzard"],
 			desc = L["Hide the default Blizzard group information."],
 		},
 		title = {

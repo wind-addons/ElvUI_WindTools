@@ -671,6 +671,7 @@ L["Help you to enable/disable the modules for a better experience with other plu
 L["Here are some buttons for helping you change the setting of all absorb bars by one-click."] = "Здесь несколько кнопок, которые помогут Вам изменить настройки всех полос поглощения одним щелчком мыши."
 L["Here are some example presets, just try them!"] = "Вот несколько примеров пресетов, просто попробуйте их!"
 L["Heroic"] = "Героический"
+L["Hide Blizzard"] = "Скрыть Blizzard"
 L["Hide Blizzard Indicator"] = "Скрыть индикатор Blizzard"
 L["Hide Crafter"] = "Скрыть изготовителя"
 L["Hide If The Bar Outside"] = "Скрыть, если полоса снаружи"
@@ -681,6 +682,7 @@ L["Hide With Objective Tracker"] = "Скрыть с помощью Objective Tra
 L["Hide channels that do not exist."] = "Скрыть не существующие каналы"
 L["Hide crafter name in the item tooltip."] = "Скрыть имя создателя во всплывающей подсказке к предмету."
 L["Hide default class circles"] = "Скрыть кружки классов по умолчанию"
+L["Hide the default Blizzard group information."] = true
 L["Hide the level part if the quest level is the max level of this expansion."] = "Скрывает уровень, если уровень задания является максимальным уровнем этого дополнения."
 L["Hide the realm name of friends."] = "Скрыть имена друзей в игровом мире."
 L["Highlight Color"] = "Цвет выделения"

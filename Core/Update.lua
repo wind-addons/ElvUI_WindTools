@@ -305,7 +305,7 @@ function W:UpdateScripts()
 
 	if privateVersion < 3.99 then
 		if E.private.WT and E.private.WT.skins and E.private.WT.skins.rollResult then
-			E.global.WT.skins.rollResult = E.private.WT.skins.rollResult
+			E.private.WT.skins.rollResult = nil
 			UpdateMessage(L["Skins"] .. ": " .. L["Database cleanup"], privateVersion)
 		end
 	end

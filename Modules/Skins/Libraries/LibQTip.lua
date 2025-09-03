@@ -5,26 +5,41 @@ local TT = E:GetModule("Tooltip")
 local type = type
 local select = select
 
+function S:LibQTip_SetCell(tooltip, ...)
+	local setCell = self.hooks[tooltip] and self.hooks[tooltip].SetCell
+	if not setCell then
+		return
+	end
+
+	local lineNum, colNum, value = select(1, ...)
+
+	-- Only style if we have valid parameters and string value
+	if type(lineNum) == "number" and type(colNum) == "number" and type(value) == "string" then
+		local styledValue = self:StyleTextureString(value)
+		if styledValue ~= value then
+			-- Replace the value in the argument list
+			return setCell(tooltip, lineNum, colNum, styledValue, select(4, ...))
+		end
+	end
+
+	-- Fall back to original method
+	return setCell(tooltip, ...)
+end
+
 function S:ReskinLibQTip(lib)
 	for _, tt in lib:IterateTooltips() do
-		TT:SetStyle(tt)
-		if tt.SetCell and not self:IsHooked(tt, "SetCell") then
-			self:RawHook(tt, "SetCell", function(tooltip, ...)
-				local lineNum, colNum, value = select(1, ...)
+		F.WaitFor(function()
+			return E.private.WT and E.private.WT.skins and E.private.WT.skins.libraries
+		end, function()
+			if not E.private.WT.skins.libraries.libQTip then
+				return
+			end
 
-				-- Only style if we have valid parameters and string value
-				if type(lineNum) == "number" and type(colNum) == "number" and type(value) == "string" then
-					local styledValue = self:StyleTextureString(value)
-					if styledValue ~= value then
-						-- Replace the value in the argument list
-						return self.hooks[tt].SetCell(tooltip, lineNum, colNum, styledValue, select(4, ...))
-					end
-				end
-
-				-- Call original with all original parameters
-				return self.hooks[tt].SetCell(tooltip, ...)
-			end)
-		end
+			TT:SetStyle(tt)
+			if tt.SetCell and not self:IsHooked(tt, "SetCell") then
+				self:RawHook(tt, "SetCell", "LibQTip_SetCell")
+			end
+		end)
 	end
 end
 

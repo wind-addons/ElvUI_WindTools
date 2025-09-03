@@ -6,25 +6,41 @@ local pairs = pairs
 local function reskinTab(lib, panel)
 	if lib.tabs[panel] then
 		for _, tab in pairs(lib.tabs[panel]) do
-			if not tab.__wind then
-				S:Proxy("HandleTab", tab)
-				S:ReskinTab(tab)
-				tab:Hide()
-				tab:Show() -- Fix the text ... issue
-				tab.__wind = true
-			end
+			F.WaitFor(function()
+				return E.private.WT and E.private.WT.skins and E.private.WT.skins.libraries
+			end, function()
+				if not E.private.WT.skins.libraries.secureTabs then
+					return
+				end
+
+				if not tab.__windSkin then
+					S:Proxy("HandleTab", tab)
+					S:ReskinTab(tab)
+					tab:Hide()
+					tab:Show() -- Fix the text ... issue
+					tab.__windSkin = true
+				end
+			end)
 		end
 	end
 end
 
 local function reskinCoverTab(lib, panel)
 	local cover = lib.covers[panel]
-	if cover and not cover.__wind then
-		S:Proxy("HandleTab", cover)
-		cover.backdrop.Center:SetAlpha(0)
-		cover:SetPushedTextOffset(0, 0)
-		cover.__wind = true
-	end
+	F.WaitFor(function()
+		return E.private.WT and E.private.WT.skins and E.private.WT.skins.libraries
+	end, function()
+		if not E.private.WT.skins.libraries.secureTabs then
+			return
+		end
+
+		if cover and not cover.__windSkin then
+			S:Proxy("HandleTab", cover)
+			cover.backdrop.Center:SetAlpha(0)
+			cover:SetPushedTextOffset(0, 0)
+			cover.__windSkin = true
+		end
+	end)
 end
 
 function S:SecureTabs(lib)

@@ -454,20 +454,23 @@ end
 
 ---@param frame any The frame to proxy the method for
 ---@param methodKey any The name of the method to proxy
-function F.InternalizeMethod(frame, methodKey)
+---@param override boolean? Whether to override the original method with noop
+function F.InternalizeMethod(frame, methodKey, override)
 	local internalMethodKey = "__" .. methodKey
 	if frame[internalMethodKey] or not frame[methodKey] then
 		return
 	end
 
 	frame[internalMethodKey] = frame[methodKey]
-	frame[methodKey] = E.noop
+	if override then
+		frame[methodKey] = E.noop
+	end
 end
 
----@param methodKey string The name of the method to proxy
 ---@param frame any The frame to proxy the method for
+---@param methodKey string The name of the method to proxy
 ---@param ... any The arguments to pass to the proxied method
-function F.CallMethod(methodKey, frame, ...)
+function F.CallMethod(frame, methodKey, ...)
 	local internalMethodKey = "__" .. methodKey
 	if frame[internalMethodKey] then
 		return frame[internalMethodKey](frame, ...)

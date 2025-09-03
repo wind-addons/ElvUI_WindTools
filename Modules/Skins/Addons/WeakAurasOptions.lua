@@ -90,7 +90,7 @@ local function ApplyTextureCoords(tex, force)
 	tex.windTexCoords = true
 end
 
-function S:Ace_WeakAurasMultiLineEditBox(widget)
+function S:Ace3_WeakAurasMultiLineEditBox(widget)
 	self:Proxy("HandleButton", widget.button)
 
 	widget.scrollBG:SetAlpha(0)
@@ -120,7 +120,7 @@ function S:Ace_WeakAurasMultiLineEditBox(widget)
 	end)
 end
 
-function S:Ace_WeakAurasDisplayButton(widget)
+function S:Ace3_WeakAurasDisplayButton(widget)
 	if widget.background then
 		self:Proxy("HandleButton", widget.frame, nil, nil, nil, true, "Transparent")
 		widget.frame.background:SetAlpha(0)
@@ -252,7 +252,7 @@ function S:Ace_WeakAurasDisplayButton(widget)
 	end
 end
 
-function S:Ace_WeakAurasLoadedHeaderButton(widget)
+function S:Ace3_WeakAurasLoadedHeaderButton(widget)
 	if not widget.expand then
 		return
 	end
@@ -363,7 +363,7 @@ do
 	end
 end
 
-function S:Ace_WeakAurasIconButton(widget)
+function S:Ace3_WeakAurasIconButton(widget)
 	widget.frame:CreateBackdrop()
 	widget.frame.backdrop.Center:StripTextures()
 	ApplyTextureCoords(widget.texture)
@@ -703,8 +703,8 @@ end
 
 S:AddCallbackForAddon("WeakAurasOptions")
 S:AddCallbackForAddon("WeakAurasTemplates")
-S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox", "Ace_WeakAurasMultiLineEditBox", dbChecker)
-S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton", "Ace_WeakAurasDisplayButton", dbChecker)
-S:AddCallbackForAceGUIWidget("WeakAurasIconButton", "Ace_WeakAurasIconButton", dbChecker)
-S:AddCallbackForAceGUIWidget("WeakAurasNewButton", "Ace_WeakAurasDisplayButton", dbChecker)
-S:AddCallbackForAceGUIWidget("WeakAurasLoadedHeaderButton", "Ace_WeakAurasLoadedHeaderButton", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAurasMultiLineEditBox", "Ace3_WeakAurasMultiLineEditBox", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAurasDisplayButton", "Ace3_WeakAurasDisplayButton", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAurasIconButton", "Ace3_WeakAurasIconButton", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAurasNewButton", "Ace3_WeakAurasDisplayButton", dbChecker)
+S:AddCallbackForAceGUIWidget("WeakAurasLoadedHeaderButton", "Ace3_WeakAurasLoadedHeaderButton", dbChecker)

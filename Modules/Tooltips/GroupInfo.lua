@@ -8,6 +8,8 @@ local ipairs = ipairs
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 
+local ROLE_ICON_PATTERN = "^|A:groupfinder%-icon%-role%-micro"
+
 local function GetIconString(role, mode)
 	local template
 	if mode == "NORMAL" then
@@ -17,6 +19,66 @@ local function GetIconString(role, mode)
 	end
 
 	return format(template, UF.RoleIconTextures[role])
+end
+
+-- Clean empty or whitespace-only text from tooltip line
+---@param line FontString The tooltip line to check
+local function clearEmptyTooltipLine(line)
+	if line then
+		local raw = line:GetText()
+		if raw and gsub(raw, "%s+$", "") == "" then
+			line:SetText("")
+		end
+	end
+end
+
+-- Cleanup all Blizzard Group Info
+---@param tooltip GameTooltip The tooltip to clean up
+local function cleanupBlizzardGroupInfo(tooltip)
+	local delistedFound = false
+	local titleFound = false
+
+	for i = 5, tooltip:NumLines() do
+		local line = _G["GameTooltipTextLeft" .. i] ---@type FontString?
+		local raw = line and line:GetText()
+		---@cast line FontString
+		if raw then
+			if raw == _G.MEMBERS_COLON then
+				line:SetText("")
+				clearEmptyTooltipLine(_G["GameTooltipTextLeft" .. (i - 1)])
+				clearEmptyTooltipLine(_G["GameTooltipTextLeft" .. (i - 2)])
+				titleFound = true
+			elseif raw == _G.LFG_LIST_ENTRY_DELISTED then
+				delistedFound = true
+			elseif titleFound then
+				if strfind(raw, ROLE_ICON_PATTERN) then
+					line:SetText("")
+				else
+					clearEmptyTooltipLine(line)
+				end
+			end
+		end
+	end
+
+	return delistedFound
+end
+
+-- Helper function to add role information with proper spacing
+local function addRoleInformation(tooltip, data, config)
+	for _, role in ipairs(LFGPI:GetRoleOrder()) do
+		local roleData = data[role]
+		if #roleData > 0 then
+			if config.mode == "NORMAL" then
+				tooltip:AddLine(" ")
+				tooltip:AddLine(GetIconString(role, "NORMAL") .. " " .. LFGPI.GetColoredRoleName(role))
+			end
+
+			for _, line in ipairs(roleData) do
+				local icon = config.mode == "COMPACT" and GetIconString(role, "COMPACT") or ""
+				tooltip:AddLine(icon .. " " .. line)
+			end
+		end
+	end
 end
 
 function T:AddGroupInfo(tooltip, resultID)
@@ -29,48 +91,27 @@ function T:AddGroupInfo(tooltip, resultID)
 		return
 	end
 
-	if config.hideBlizzard then
-		local titleFound = false
-		for i = 5, tooltip:NumLines() do
-			local text = _G["GameTooltipTextLeft" .. i]
-			local raw = text and text:GetText()
-
-			if raw == _G.MEMBERS_COLON then
-				text:SetText("")
-				titleFound = true
-			elseif titleFound and raw and strfind(raw, "^|A:groupfinder%-icon%-role%-micro") then
-				text:SetText("")
-			end
-		end
-	end
-
 	LFGPI:SetClassIconStyle(config.classIconStyle)
 	LFGPI:Update(resultID)
 
-	-- split line
-	if config.title then
+	local foundDelisted = false
+	if config.hideBlizzard then
+		foundDelisted = cleanupBlizzardGroupInfo(tooltip)
+	else
 		tooltip:AddLine(" ")
+	end
+
+	if config.title then
+		if foundDelisted then
+			-- If the line already exists (we need to add a separator)
+			tooltip:AddLine(" ")
+		end
 		tooltip:AddLine(W.Title .. " " .. L["Party Info"])
 	end
 
-	-- compact Mode
-	if config.mode == "COMPACT" then
-		tooltip:AddLine(" ")
-	end
-
-	-- add info
 	local data = LFGPI:GetPartyInfo(config.template)
-
-	for order, role in ipairs(LFGPI:GetRoleOrder()) do
-		if #data[role] > 0 and config.mode == "NORMAL" then
-			tooltip:AddLine(" ")
-			tooltip:AddLine(GetIconString(role, "NORMAL") .. " " .. LFGPI.GetColoredRoleName(role))
-		end
-
-		for _, line in ipairs(data[role]) do
-			local icon = config.mode == "COMPACT" and GetIconString(role, "COMPACT") or ""
-			tooltip:AddLine(icon .. " " .. line)
-		end
+	if data then
+		addRoleInformation(tooltip, data, config)
 	end
 
 	tooltip:Show()

@@ -774,7 +774,7 @@ local function reskinPetsPanel(frame)
 			texture:SetTexture(E.media.blankTex)
 			F.InternalizeMethod(texture, "SetVertexColor")
 			texture.SetVertexColor = function(t, r, g, b, a)
-				F.CallMethod(texture, "SetVertexColor", t, r, g, b, (a or 0.4) / 3)
+				F.CallMethod(t, "SetVertexColor", r, g, b, (a or 0.4) / 3)
 			end
 		end
 	end

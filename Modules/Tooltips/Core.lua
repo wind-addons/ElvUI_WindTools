@@ -214,13 +214,13 @@ function T:Initialize()
 	end
 
 	for name, _ in pairs(self.eventCallback) do
-		T:RegisterEvent(name, "Event")
+		self:RegisterEvent(name, "Event")
 	end
 
-	T:RawHook(ET, "AddMythicInfo")
-	T:SecureHook(ET, "SetUnitText", "SetUnitText")
-	T:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
-	T:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
+	self:RawHook(ET, "AddMythicInfo")
+	self:SecureHook(ET, "SetUnitText", "SetUnitText")
+	self:SecureHook(ET, "RemoveTrashLines", "ElvUIRemoveTrashLines")
+	self:SecureHookScript(GameTooltip, "OnTooltipCleared", "ClearInspectInfo")
 
 	self.initialized = true
 end

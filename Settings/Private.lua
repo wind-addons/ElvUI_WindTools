@@ -305,11 +305,6 @@ V.skins = {
 	shadow = true,
 	weakAurasShadow = true,
 	increasedSize = 0,
-	rollResult = {
-		name = F.GetCompatibleFont("Accidental Presidency"),
-		size = 13,
-		style = "OUTLINE",
-	},
 	bigWigsSkin = {
 		queueTimer = {
 			smooth = true,

@@ -807,7 +807,6 @@ options.reset = {
 						E:StaticPopup_Show("WINDTOOLS_RESET_MODULE", L["Font"], nil, function()
 							E.private.WT.skins.ime = V.skins.ime
 							E.private.WT.skins.errorMessage = V.skins.errorMessage
-							E.private.WT.skins.rollResult = V.skins.rollResult
 						end)
 					end,
 				},

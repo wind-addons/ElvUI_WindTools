@@ -66,7 +66,7 @@ local function reskinDungeonButton(MDT)
 			local BUTTON_SIZE = 40
 
 			button:ClearAllPoints()
-			button:SetPoint("TOPLEFT", MDT.main_frame, "TOPLEFT", (idx - 1) * (BUTTON_SIZE + 2) + 2, -2)
+			button:Point("TOPLEFT", MDT.main_frame, "TOPLEFT", (idx - 1) * (BUTTON_SIZE + 2) + 2, -2)
 		end
 	end
 end
@@ -90,7 +90,7 @@ local function reskinButtonTexture(texture, alphaTimes)
 	texture:SetTexCoord(0, 1, 0, 1)
 	texture:SetInside()
 
-	texture:SetTexture(E.media.blankTex)
+	texture:SetTexture(E.media.normTex)
 	texture.SetVertexColor_ = texture.SetVertexColor
 	hooksecurefunc(texture, "SetVertexColor", function(self, r, g, b, a)
 		self:SetVertexColor_(r, g, b, a * alphaTimes)
@@ -208,13 +208,12 @@ function S:MythicDungeonTools()
 end
 
 function S:Ace_MDTPullButton(widget)
-	F.Developer.DevTool(widget, "Pull Button")
 	reskinButtonTexture(widget.frame.pickedGlow, 0.5)
 	reskinButtonTexture(widget.frame.highlight, 0.2)
 	reskinButtonTexture(widget.background, 0.3)
 
 	widget.pullNumber:ClearAllPoints()
-	widget.pullNumber:SetPoint("CENTER", widget.frame, "LEFT", 12, 1)
+	widget.pullNumber:Point("CENTER", widget.frame, "LEFT", 12, 1)
 
 	hooksecurefunc(widget.frame.pickedGlow, "Show", function()
 		F.SetFontOutline(widget.pullNumber, F.GetCompatibleFont("Accidental Presidency"), 22)

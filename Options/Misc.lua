@@ -11,6 +11,8 @@ local AM = W:GetModule("Automation")
 local SA = W:GetModule("SpellActivationAlert")
 local LL = W:GetModule("LFGList")
 
+---@cast SA SpellActivationAlert
+
 local format = format
 local pairs = pairs
 local select = select

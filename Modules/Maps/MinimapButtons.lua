@@ -186,14 +186,14 @@ function MB:HandleExpansionButton(...)
 		EM:SetIconParent(button)
 		EM:SetScale(button, 1)
 
-		F.InternalizeMethod(button, "ClearAllPoints")
-		F.InternalizeMethod(button, "SetPoint")
-		F.InternalizeMethod(button, "SetParent")
-		F.InternalizeMethod(button, "SetSize")
-		F.InternalizeMethod(button, "SetScale")
-		F.InternalizeMethod(button, "SetFrameStrata")
-		F.InternalizeMethod(button, "SetFrameLevel")
-		F.InternalizeMethod(button, "SetMovable")
+		F.InternalizeMethod(button, "ClearAllPoints", true)
+		F.InternalizeMethod(button, "SetPoint", true)
+		F.InternalizeMethod(button, "SetParent", true)
+		F.InternalizeMethod(button, "SetSize", true)
+		F.InternalizeMethod(button, "SetScale", true)
+		F.InternalizeMethod(button, "SetFrameStrata", true)
+		F.InternalizeMethod(button, "SetFrameLevel", true)
+		F.InternalizeMethod(button, "SetMovable", true)
 
 		local box = _G.GarrisonLandingPageTutorialBox
 		if box then
@@ -481,7 +481,7 @@ function MB:SkinButton(button, force)
 		if _G["TomCats-MinimapButtonIcon"] then
 			_G["TomCats-MinimapButtonIcon"]:ClearAllPoints()
 			_G["TomCats-MinimapButtonIcon"]:SetInside(button.backdrop)
-			F.InternalizeMethod(_G["TomCats-MinimapButtonIcon"], "SetPoint")
+			F.InternalizeMethod(_G["TomCats-MinimapButtonIcon"], "SetPoint", true)
 			_G["TomCats-MinimapButtonIcon"]:SetTexCoord(0, 0.65, 0, 0.65)
 		end
 	end
@@ -524,22 +524,23 @@ function MB:UpdateLayout()
 
 	for i, moveButton in pairs(handledButtons) do
 		local frame = _G[moveButton]
-		F.CallMethod("ClearAllPoints", frame)
+		F.CallMethod(frame, "ClearAllPoints")
 
 		if self.db.orientation == "NOANCHOR" then
 			local original = frame.original
-			F.CallMethod("SetParent", frame, original.Parent)
+			F.CallMethod(frame, "SetParent", original.Parent)
 			if original.DragStart then
-				F.CallMethod("SetScript", frame, "OnDragStart", original.DragStart)
+				F.CallMethod(frame, "SetScript", "OnDragStart", original.DragStart)
 			end
 			if original.DragEnd then
-				F.CallMethod("SetScript", frame, "OnDragStop", original.DragEnd)
+				F.CallMethod(frame, "SetScript", "OnDragStop", original.DragEnd)
 			end
 
-			F.CallMethod("SetSize", frame, original.Width, original.Height)
+			F.CallMethod(frame, "SetSize", original.Width, original.Height)
 
 			if original.Point ~= nil then
 				F.CallMethod(
+					frame,
 					"SetPoint",
 					frame,
 					original.Point,
@@ -549,13 +550,13 @@ function MB:UpdateLayout()
 					original.yOfs
 				)
 			else
-				F.CallMethod("SetPoint", frame, "CENTER", _G.Minimap, "CENTER", -80, -34)
+				F.CallMethod(frame, "SetPoint", "CENTER", _G.Minimap, "CENTER", -80, -34)
 			end
 
-			F.CallMethod("SetFrameStrata", frame, original.FrameStrata)
-			F.CallMethod("SetFrameLevel", frame, original.FrameLevel)
-			F.CallMethod("SetMovable", frame, true)
-			F.CallMethod("SetScale", frame, original.Scale)
+			F.CallMethod(frame, "SetFrameStrata", original.FrameStrata)
+			F.CallMethod(frame, "SetFrameLevel", original.FrameLevel)
+			F.CallMethod(frame, "SetMovable", true)
+			F.CallMethod(frame, "SetScale", original.Scale)
 		else
 			buttonX = i % buttonsPerRow
 			buttonY = floor(i / buttonsPerRow) + 1
@@ -565,12 +566,12 @@ function MB:UpdateLayout()
 				buttonY = buttonY - 1
 			end
 
-			F.CallMethod("SetParent", frame, self.bar)
-			F.CallMethod("SetFrameStrata", frame, "LOW")
-			F.CallMethod("SetFrameLevel", frame, 20)
-			F.CallMethod("SetMovable", frame, false)
-			F.CallMethod("SetScript", frame, "OnDragStart", nil)
-			F.CallMethod("SetScript", frame, "OnDragStop", nil)
+			F.CallMethod(frame, "SetParent", self.bar)
+			F.CallMethod(frame, "SetFrameStrata", "LOW")
+			F.CallMethod(frame, "SetFrameLevel", 20)
+			F.CallMethod(frame, "SetMovable", false)
+			F.CallMethod(frame, "SetScript", "OnDragStart", nil)
+			F.CallMethod(frame, "SetScript", "OnDragStop", nil)
 
 			offsetX = backdropSpacing + (buttonX - 1) * (buttonSize + spacing)
 			offsetY = backdropSpacing + (buttonY - 1) * (buttonSize + spacing)
@@ -593,8 +594,8 @@ function MB:UpdateLayout()
 				end
 			end
 
-			F.CallMethod("SetSize", frame, buttonSize, buttonSize)
-			F.CallMethod("SetPoint", frame, anchor, self.bar, anchor, offsetX, offsetY)
+			F.CallMethod(frame, "SetSize", buttonSize, buttonSize)
+			F.CallMethod(frame, "SetPoint", anchor, self.bar, anchor, offsetX, offsetY)
 		end
 
 		if

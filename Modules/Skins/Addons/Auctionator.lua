@@ -81,9 +81,8 @@ end
 local function HandleTab(tab)
 	S:Proxy("HandleTab", tab)
 	tab.Text:ClearAllPoints()
-	tab.Text:SetPoint("CENTER", tab, "CENTER", 0, 0)
-	tab.Text.__SetPoint = tab.Text.SetPoint
-	tab.Text.SetPoint = E.noop
+	F.InternalizeMethod(tab.Text, "SetPoint", true)
+	F.CallMethod(tab.Text, "SetPoint", "CENTER", tab, "CENTER", 0, 0)
 end
 
 local function buyIconName(frame)

@@ -14,7 +14,7 @@ local function styleIconsInLine(line, text)
 	text = text or line:GetText()
 	local styledText = S:StyleTextureString(text)
 	if styledText and styledText ~= text then
-		(line.__SetText or line.SetText)(line, styledText)
+		F.CallMethod(line, "SetText", styledText)
 	end
 end
 
@@ -30,7 +30,7 @@ local function StyleTooltipWidgetContainer(tt)
 	for frame in tt.widgetContainer.widgetPools:EnumerateActive() do
 		if not frame.__windSkin then
 			if frame.Text then
-				frame.Text.__SetText = frame.Text.SetText
+				F.InternalizeMethod(frame.Text, "SetText")
 				hooksecurefunc(frame.Text, "SetText", styleIconsInLine)
 				F.SetFontOutline(frame.Text)
 				frame.Text:SetText(frame.Text:GetText())

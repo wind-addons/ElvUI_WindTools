@@ -33,8 +33,8 @@ local function ApplyElvUITexCoords(icon)
 		return
 	end
 
-	icon:SetTexCoord(unpack(E.TexCoords))
 	F.InternalizeMethod(icon, "SetTexCoord")
+	F.CallMethod(icon, "SetTexCoord", unpack(E.TexCoords))
 end
 
 ---Handle complex texture coordinate calculations for icons

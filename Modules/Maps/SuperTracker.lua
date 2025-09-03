@@ -62,8 +62,7 @@ function ST:HookPin()
 end
 
 function ST:HookDistanceText()
-	_G.SuperTrackedFrame.DistanceText.__WindSetText = _G.SuperTrackedFrame.DistanceText.SetText
-
+	F.InternalizeMethod(_G.SuperTrackedFrame.DistanceText, "SetText")
 	self:SecureHook(_G.SuperTrackedFrame.DistanceText, "SetText", function(frame, text)
 		if not self or not self.db or not text then
 			return
@@ -82,7 +81,7 @@ function ST:HookDistanceText()
 			text = after
 		end
 
-		frame:__WindSetText(text)
+		F.CallMethod(frame, "SetText", text)
 	end)
 end
 

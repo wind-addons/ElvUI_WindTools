@@ -62,7 +62,7 @@ local function StyleSilverDragonLootWindow(frame)
 		frame.close:Point("TOPRIGHT", frame, "TOPRIGHT", -4, -4)
 	end
 
-	frame.__SetPoint = frame.SetPoint
+	F.InternalizeMethod(frame, "SetPoint")
 	F.Move(frame, 0, -3)
 	hooksecurefunc(frame, "SetPoint", function()
 		F.Move(frame, 0, -3)

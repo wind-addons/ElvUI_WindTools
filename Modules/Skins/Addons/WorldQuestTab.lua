@@ -22,9 +22,10 @@ local function reskinTab(tab)
 	tab:Size(30, 40)
 
 	if tab.Icon then
-		tab.Icon:ClearAllPoints()
-		F.InternalizeMethod(tab.Icon, "SetPoint")
-		F.CallMethod("SetPoint", tab.Icon, "CENTER")
+		F.InternalizeMethod(tab.Icon, "SetPoint", true)
+		F.InternalizeMethod(tab.Icon, "ClearAllPoints", true)
+		F.CallMethod(tab.Icon, "ClearAllPoints")
+		F.CallMethod(tab.Icon, "SetPoint", "CENTER")
 	end
 
 	if tab.Background then
@@ -81,7 +82,7 @@ local function reskinFlightMapContainer(frame)
 	frame:SetTemplate("Transparent")
 	S:CreateShadow(frame)
 
-	frame.__SetPoint = frame.SetPoint
+	F.InternalizeMethod(frame, "SetPoint")
 	hooksecurefunc(frame, "SetPoint", function(self)
 		F.Move(self, 15, 0)
 	end)
@@ -182,7 +183,7 @@ function S:WorldQuestTab()
 	local tab = _G.WQT_QuestMapTab
 	if tab then
 		reskinTab(tab)
-		tab.__SetPoint = tab.SetPoint
+		F.InternalizeMethod(tab, "SetPoint")
 		hooksecurefunc(tab, "SetPoint", function()
 			F.Move(tab, 0, -2)
 		end)

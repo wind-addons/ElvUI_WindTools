@@ -95,7 +95,7 @@ function S:OmniCD_Party_ExtraBar()
 					bar.anchor:SetTemplate("Transparent")
 					self:CreateShadow(bar.anchor)
 					bar.anchor:SetHeight(bar.anchor:GetHeight() + 8)
-					bar.anchor.__SetPoint = bar.anchor.SetPoint
+					F.InternalizeMethod(bar.anchor, "SetPoint")
 					hooksecurefunc(bar.anchor, "SetPoint", function()
 						F.Move(bar.anchor, 0, bar.db and bar.db.growUpward and -11 or 3)
 					end)

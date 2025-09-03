@@ -299,8 +299,8 @@ function OT:HandleContainerHeader(frame)
 
 	if not frame.Text.__SetTextColor then
 		local color = self.db.menuTitle.classColor and E.myClassColor or self.db.menuTitle.color
-		frame.Text:SetTextColor(C.ExtractColorFromTable(color))
-		F.InternalizeMethod(frame.Text, "SetTextColor")
+		F.InternalizeMethod(frame.Text, "SetTextColor", true)
+		F.CallMethod(frame.Text, "SetTextColor", C.ExtractColorFromTable(color))
 	end
 end
 
@@ -361,8 +361,8 @@ function OT:ObjectiveTrackerModule_Update(tracker)
 	F.SetFontWithDB(headerText, self.db.header)
 
 	if not headerText.__SetFontObject then
-		headerText:SetFontObject(nil)
-		F.InternalizeMethod(headerText, "SetFontObject")
+		F.InternalizeMethod(headerText, "SetFontObject", true)
+		F.CallMethod(headerText, "SetFontObject", nil)
 	end
 
 	self:ShortHeader(headerText)

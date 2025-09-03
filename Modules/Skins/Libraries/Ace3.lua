@@ -11,7 +11,14 @@ function S:AceGUI(lib)
 end
 
 function S:AceConfigDialog(lib)
-	self:CreateShadow(lib.popup)
+	F.WaitFor(function()
+		return E.private.WT and E.private.WT.skins and E.private.WT.skins.libraries
+	end, function()
+		if E.private.WT.skins and E.private.WT.skins.libraries.ace3 then
+			self:CreateShadow(lib.popup)
+			E:GetModule("Tooltip"):SetStyle(lib.tooltip)
+		end
+	end)
 end
 
 function S:Ace3_Frame(widget)
@@ -27,6 +34,7 @@ end
 
 S:AddCallbackForLibrary("AceGUI-3.0", "AceGUI")
 S:AddCallbackForLibrary("AceConfigDialog-3.0", "AceConfigDialog")
+S:AddCallbackForLibrary("AceConfigDialog-3.0-ElvUI", "AceConfigDialog")
 S:AddCallbackForAceGUIWidget("Frame", "Ace3_Frame", function(db)
 	return db.libraries.ace3 and db.shadow
 end)

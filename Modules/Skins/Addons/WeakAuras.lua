@@ -44,7 +44,7 @@ local function HandleComplexTexCoords(icon)
 		return
 	end
 
-	icon.__SetTexCoord = icon.SetTexCoord
+	F.InternalizeMethod(icon, "SetTexCoord")
 	icon.SetTexCoord = function(self, ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 		local cLeft, cRight, cTop, cDown
 		if URx and URy and LRx and LRy then
@@ -56,14 +56,12 @@ local function HandleComplexTexCoords(icon)
 		if cLeft == 0 or cRight == 0 or cTop == 0 or cDown == 0 then
 			local width, height = cRight - cLeft, cDown - cTop
 			if width == height then
-				-- For square textures, use standard ElvUI coordinates
-				self:__SetTexCoord(unpack(E.TexCoords))
+				F.CallMethod(self, "SetTexCoord", unpack(E.TexCoords))
 			else
-				-- Use ElvUI's CropRatio for aspect ratio adjustment
-				self:__SetTexCoord(E:CropRatio(width, height))
+				F.CallMethod(self, "SetTexCoord", E:CropRatio(width, height))
 			end
 		else
-			self:__SetTexCoord(cLeft, cRight, cTop, cDown)
+			F.CallMethod(self, "SetTexCoord", cLeft, cRight, cTop, cDown)
 		end
 	end
 

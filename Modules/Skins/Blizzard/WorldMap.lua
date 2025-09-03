@@ -65,11 +65,11 @@ function S:WorldMapFrame()
 		end
 	end
 
-	if QuestMapFrame.QuestsTab then
-		QuestMapFrame.QuestsTab:ClearAllPoints()
-		QuestMapFrame.QuestsTab.__SetPoint = QuestMapFrame.QuestsTab.SetPoint
-		QuestMapFrame.QuestsTab.SetPoint = E.noop
-		QuestMapFrame.QuestsTab:__SetPoint("TOPLEFT", QuestMapFrame, "TOPRIGHT", 13, -30)
+	local questsTab = QuestMapFrame.QuestsTab
+	if questsTab then
+		questsTab:ClearAllPoints()
+		F.InternalizeMethod(questsTab, "SetPoint", true)
+		F.CallMethod(questsTab, "SetPoint", "TOPLEFT", QuestMapFrame, "TOPRIGHT", 13, -30)
 	end
 end
 

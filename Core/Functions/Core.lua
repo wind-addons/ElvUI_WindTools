@@ -452,9 +452,13 @@ function F.IsAlmost(a, b, allowance)
 	return abs(a - b) < 0.025
 end
 
----@param frame any The frame to proxy the method for
----@param methodKey any The name of the method to proxy
----@param override boolean? Whether to override the original method with noop
+---Internalizes a method by creating a backup copy with a double underscore prefix.
+---This function is commonly used to preserve original method implementations before
+---overriding them with custom behavior. The original method is stored as "__methodName"
+---and can optionally be replaced with a no-operation function.
+---@param frame any The frame object that contains the method to be internalized
+---@param methodKey any The name of the method to create an internal backup for
+---@param override boolean? If true, replaces the original method with E.noop function
 function F.InternalizeMethod(frame, methodKey, override)
 	local internalMethodKey = "__" .. methodKey
 	if frame[internalMethodKey] or not frame[methodKey] then
@@ -467,9 +471,21 @@ function F.InternalizeMethod(frame, methodKey, override)
 	end
 end
 
----@param frame any The frame to proxy the method for
----@param methodKey string The name of the method to proxy
----@param ... any The arguments to pass to the proxied method
+--- Checks if a method has been internalized on a frame object
+--- @param frame table|nil The frame object to check for the internalized method
+--- @param methodKey string The name of the method to check for internalization
+--- @return boolean True if the frame has an internalized version of the method, false otherwise
+function F.IsMethodInternalized(frame, methodKey)
+	local internalMethodKey = "__" .. methodKey
+	return frame and frame[internalMethodKey] ~= nil or false
+end
+
+---Safely calls a method on a frame object, with fallback support for internal method variants.
+---This function first attempts to call an internal version of the method (prefixed with "__"),
+---and if that doesn't exist, falls back to calling the standard method name.
+---@param frame any The frame object that contains the method to be called
+---@param methodKey string The name of the method to call (without any prefixes)
+---@param ... any Variable arguments that will be passed to the called method
 function F.CallMethod(frame, methodKey, ...)
 	local internalMethodKey = "__" .. methodKey
 	if frame[internalMethodKey] then

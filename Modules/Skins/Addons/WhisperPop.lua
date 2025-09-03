@@ -47,7 +47,7 @@ local function messageView(frame)
 	S:Proxy("HandleNextPrevButton", _G.WhisperPopScrollingMessageFrameButtonDown, "down", nil, true)
 	S:ReskinIconButton(_G.WhisperPopScrollingMessageFrameButtonEnd, W.Media.Icons.buttonGoEnd, 22, -1.571)
 
-	frame.__SetPoint = frame.SetPoint
+	F.InternalizeMethod(frame, "SetPoint")
 	hooksecurefunc(frame, "SetPoint", function(self, ...)
 		F.Move(self, -6, 0)
 	end)

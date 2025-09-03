@@ -139,12 +139,10 @@ local function UpdateBlock(block)
 
 			local timeBar = widgetFrame.TimerBar
 			if timeBar and not timeBar.__windSkin then
-				timeBar.__SetStatusBarTexture = timeBar.SetStatusBarTexture
+				F.InternalizeMethod(timeBar, "SetStatusBarTexture", true)
 				hooksecurefunc(timeBar, "SetStatusBarTexture", function(frame)
-					if frame.__SetStatusBarTexture then
-						frame:__SetStatusBarTexture(E.media.normTex)
-						frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
-					end
+					F.CallMethod(frame, "SetStatusBarTexture", E.media.normTex)
+					frame:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
 				end)
 				timeBar:CreateBackdrop("Transparent")
 				timeBar.__windSkin = true

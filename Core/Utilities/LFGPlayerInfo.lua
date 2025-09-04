@@ -370,7 +370,7 @@ end
 ---Get formatted party information using the provided template
 ---Processes cached player data and renders it using the template system
 ---@param template string|nil The template string for formatting player info
----@return table<string, string[]>|nil dataTable Table organized by role containing formatted strings, nil if template is invalid
+---@return table<string, string[]> dataTable Table organized by role containing formatted strings, nil if template is invalid
 function W.Utilities.LFGPlayerInfo:GetPartyInfo(template)
 	if not template then
 		self:Log("warning", "template is nil.")

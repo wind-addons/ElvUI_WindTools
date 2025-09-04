@@ -123,36 +123,39 @@ Português，Italiano
 2. **吸收**: 自定义 ElvUI 单位框体的吸收条材质，添加暴雪风格的火花效果到生命条末尾
 3. **职责图标**: 自定义单位框体上的职责图标组
 
-### 美化外观
+### 皮肤
 
 1. **屏幕暗角**: 让游戏更加有电影的感觉
-2. **Angry Keystones 美化**: 美化 Angry Keystones 的史诗钥石地下城计时条
-3. **暴雪框体美化**: 在 ElvUI 美化皮肤之上，进行框体和文字的美化
-4. **ElvUI 框体美化**: 为 ElvUI 模块添加美化
-5. **WindTools 框体美化**: 为 WindTools 模块添加美化
-6. **Ace3 美化**: 为 Ace3-GUI 的部分库组件添加美化
-7. **Bigwigs 美化**: 为 Bigwigs 的条和设定界面添加美化
-8. **BugSack 美化**: 为 BugSack 的错误提示窗口添加美化
-9. **Hekili 美化**: 为 Hekili 的图标和设定界面添加美化
-10. **Immersion 美化**: 为 Immersion 对话窗口，按钮提供全方位的美化
-11. **网易集合石美化**: 为网易的集合石插件添加美化
-12. **Myslot 美化**: 为 Myslot 的主要窗口添加美化
-13. **Mythic Dungeon Tools 美化**: 为 Mythic Dungeon Tools 的主要窗口添加美化
-14. **Premade Groups Filter 美化**: 为 Premade Groups Filter 的主要窗口添加美化
-15. **TinyInspect 美化**: 为 TinyInspect 的观察窗口添加美化
-16. **TomCat's Tour 美化**: 为 TomCat's Tour 的鼠标提示和标题添加美化
-17. **WarpDeplete 美化**: 为 WarpDeplete 的条添加美化
-18. **WeakAurasPatched 美化**: 为 WeakAurasPatched 的图标，光环条，设定界面添加美化
-19. **Simulationcraft 美化**: 为 Simulationcraft 添加美化
-20. **RaiderIO 美化**: 为 RaiderIO 添加美化
-21. **OmniCD 美化**: 为 OmniCD 的设定，图标，状态条添加美化
-22. **Auctionator 美化**: 为 Auctionator 的全部框体添加美化
-23. **Postal 美化**: 为 Postal 的常规按钮和快速附加按钮添加美化
-24. **World Quest Tab 美化**: 为 World Quest Tab 的标签页和设置界面添加美化
-25. **BtWQuests 美化**: 为 BtWQuests 添加美化
-26. **Talent Loadouts Ex 美化**: 为 Talent Loadouts Ex 添加美化
-27. **SilverDragon 美化**: 为 SilverDragon 添加美化
-28. **Mount Route Planner 美化**: 为 Mount Route Planner 添加美化
+2. **Angry Keystones 皮肤**: 为 Angry Keystones 的史诗钥石地下城计时条应用皮肤
+3. **暴雪框体皮肤**: 在 ElvUI 皮肤之上，为暴雪框体添加额外皮肤
+4. **ElvUI 框体皮肤**: 为 ElvUI 模块重新应用皮肤
+5. **WindTools 皮肤**: 为 WindTools 模块重新应用皮肤
+6. **Ace3 皮肤**: 为 Ace3-GUI 的部分库组件应用 ElvUI 皮肤
+7. **Bigwigs 皮肤**: 为 Bigwigs 应用 ElvUI 皮肤
+8. **BugSack 皮肤**: 为 BugSack 应用 ElvUI 皮肤
+9. **Hekili 皮肤**: 为 Hekili 应用 ElvUI 皮肤
+10. **Immersion 皮肤**: 为 Immersion 应用 ElvUI 皮肤
+11. **网易集合石皮肤**: 为网易的集合石插件应用 ElvUI 皮肤
+12. **Myslot 皮肤**: 为 Myslot 应用 ElvUI 皮肤
+13. **Mythic Dungeon Tools 皮肤**: 为 Mythic Dungeon Tools 应用 ElvUI 皮肤
+14. **Premade Groups Filter 皮肤**: 为 Premade Groups Filter 应用 ElvUI 皮肤
+15. **TinyInspect 皮肤**: 为 TinyInspect 应用 ElvUI 皮肤
+16. **TomCat's Tour 皮肤**: 为 TomCat's Tour 的鼠标提示和标题重新应用皮肤
+17. **WarpDeplete 皮肤**: 为 WarpDeplete 的条重新应用皮肤
+18. **WeakAurasPatched 皮肤**: 为 WeakAurasPatched 和 WeakAurasPatched 选项应用 ElvUI 皮肤
+19. **Simulationcraft 皮肤**: 为 Simulationcraft 应用 ElvUI 皮肤
+20. **RaiderIO 皮肤**: 为 RaiderIO 应用 ElvUI 皮肤
+21. **OmniCD 皮肤**: 为 OmniCD 的设定界面、图标和状态条应用 ElvUI 皮肤
+22. **Auctionator 皮肤**: 为 Auctionator 的全部框体应用 ElvUI 皮肤
+23. **Postal 皮肤**: 为 Postal 的常规按钮和快速附加按钮应用 ElvUI 皮肤
+24. **World Quest Tab 皮肤**: 为 World Quest Tab 的标签页和设置界面应用 ElvUI 皮肤
+25. **BtWQuests 皮肤**: 为 BtWQuests 应用 ElvUI 皮肤
+26. **Talent Loadouts Ex 皮肤**: 为 Talent Loadouts Ex 应用 ElvUI 皮肤
+27. **SilverDragon 皮肤**: 为 SilverDragon 应用 ElvUI 皮肤
+28. **Mount Route Planner 皮肤**: 为 Mount Route Planner 应用 ElvUI 皮肤
+29. **WhisperPop 皮肤**: 为 WhisperPop 应用 ElvUI 皮肤
+30. **Paragon Reputation 皮肤**: 为 Paragon Reputation 应用 ElvUI 皮肤
+31. **Manuscripts Journal 皮肤**: 为 Manuscripts Journal 应用 ElvUI 皮肤
 
 ### 其他
 

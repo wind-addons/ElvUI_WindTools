@@ -152,6 +152,9 @@ Português, Italiano
 26. **Aspecto de Talent Loadouts Ex**: Aplica aspecto para Talent Loadouts Ex.
 27. **Aspecto de SilverDragon**: Aplica aspecto para SilverDragon.
 28. **Aspecto de Mount Route Planner**: Aplica aspecto para Mount Route Planner.
+29. **Aspecto de WhisperPop**: Aplica aspecto para WhisperPop.
+30. **Aspecto de Paragon Reputation**: Aplica aspecto para Paragon Reputation.
+31. **Aspecto de Manuscripts Journal**: Aplica aspecto para Manuscripts Journal.
 
 ### Miscelánea
 

@@ -132,29 +132,32 @@ Português, Italiano
 3. **Blizzard Frame Skins**: Additional skins for Blizzard frames.
 4. **ElvUI Frame Skins**: Reskin ElvUI modules.
 5. **WindTools Skins**: Reskin WindTools modules.
-6. **Ace3 Skins**: Apply skin for Ace3-GUI widgets.
-7. **Bigwigs Skin**: Apply skin for Bigwigs.
-8. **BugSack Skin**: Apply skin for BugSack.
-9. **Hekili Skin**: Apply skin for Hekili.
-10. **Immersion Skin**: Apply skin for Immersion.
-11. **NetEase Meeting Stone Skin**: Apply skin for NetEase Meeting Stone.
-12. **Myslot Skin**: Apply skin for Myslot.
-13. **Mythic Dungeon Tools Skin**: Apply skin for Mythic Dungeon Tools.
-14. **Premade Groups Filter Skin**: Apply skin for Premade Groups Filter.
-15. **TinyInspect Skin**: Apply skin for TinyInspect.
+6. **Ace3 Skins**: Apply ElvUI skin for Ace3-GUI widgets.
+7. **Bigwigs Skin**: Apply ElvUI skin for Bigwigs.
+8. **BugSack Skin**: Apply ElvUI skin for BugSack.
+9. **Hekili Skin**: Apply ElvUI skin for Hekili.
+10. **Immersion Skin**: Apply ElvUI skin for Immersion.
+11. **NetEase Meeting Stone Skin**: Apply ElvUI skin for NetEase Meeting Stone.
+12. **Myslot Skin**: Apply ElvUI skin for Myslot.
+13. **Mythic Dungeon Tools Skin**: Apply ElvUI skin for Mythic Dungeon Tools.
+14. **Premade Groups Filter Skin**: Apply ElvUI skin for Premade Groups Filter.
+15. **TinyInspect Skin**: Apply ElvUI skin for TinyInspect.
 16. **TomCat's Tour Skin**: Reskin the tooltip and header of TomCat's Tour.
 17. **WarpDeplete Skin**: Reskin the bars in WarpDeplete.
-18. **WeakAurasPatched Skin**: Apply skins for WeakAurasPatched, WeakAurasPatched option.
-19. **Simulationcraft Skin**: Apply skin for Simulationcraft.
-20. **RadierIO Skin**: Apply skin for RadierIO.
-21. **OmniCD Skin**: Apply skin for OmniCD Config GUI, icons, and status bars.
-22. **Autionator Skin**: Apply skin for Auctionator all frames.
-23. **Postal Skin**: Apply skin for Postal normal buttons and quick attach buttons.
-24. **World Quest Tab Skin**: Apply skin for World Quest Tab tabs and settings.
-25. **BtWQuests Skin**: Apply skin for BtWQuests.
-26. **Talent Loadouts Ex Skin**: Apply skin for Talent Loadouts Ex.
-27. **SilverDragon Skin**: Apply skin for SilverDragon.
-28. **Mount Route Planner Skin**: Apply skin for Mount Route Planner.
+18. **WeakAurasPatched Skin**: Apply ElvUI skins for WeakAurasPatched, WeakAurasPatched option.
+19. **Simulationcraft Skin**: Apply ElvUI skin for Simulationcraft.
+20. **RadierIO Skin**: Apply ElvUI skin for RadierIO.
+21. **OmniCD Skin**: Apply ElvUI skin for OmniCD Config GUI, icons, and status bars.
+22. **Autionator Skin**: Apply ElvUI skin for Auctionator all frames.
+23. **Postal Skin**: Apply ElvUI skin for Postal normal buttons and quick attach buttons.
+24. **World Quest Tab Skin**: Apply ElvUI skin for World Quest Tab tabs and settings.
+25. **BtWQuests Skin**: Apply ElvUI skin for BtWQuests.
+26. **Talent Loadouts Ex Skin**: Apply ElvUI skin for Talent Loadouts Ex.
+27. **SilverDragon Skin**: Apply ElvUI skin for SilverDragon.
+28. **Mount Route Planner Skin**: Apply ElvUI skin for Mount Route Planner.
+29. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
+30. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
+31. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
 
 ### Misc
 

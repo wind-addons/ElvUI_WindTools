@@ -123,36 +123,39 @@ Português，Italiano
 2. **吸收**: 自訂 ElvUI 單位框架的吸收條材質，添加暴雪風格的火花效果到生命條的末尾
 3. **職責圖標**: 自訂單位框架上的定位圖標組
 
-### 美化外觀
+### 皮膚
 
 1. **屏幕暗角**: 讓遊戲更加有電影的感覺
-2. **Angry Keystones 美化**: 美化 Angry Keystones 的傳奇鑰石地城的計時條
-3. **暴雪框架美化**: 在 ElvUI 美化皮膚之上，進行框架和文字的美化
-4. **ElvUI 框架美化**: 為 ElvUI 模組添加美化
-5. **WindTools 框架美化**: 為 WindTools 模組添加美化
-6. **Ace3 美化**: 為 Ace3-GUI 的部分庫組件添加美化
-7. **Bigwigs 美化**: 為 Bigwigs 的條和設定界面添加美化
-8. **BugSack 美化**: 為 BugSack 的錯誤提示窗口添加美化
-9. **Hekili 美化**: 為 Hekili 的圖標和設定界面添加美化
-10. **Immersion 美化**: 為 Immersion 對話窗口，按鍵提供全方位的美化
-11. **網易集合石美化**: 為網易的集合石添加美化
-12. **Myslot 美化**: 為 Myslot 的主要窗口添加美化
-13. **Mythic Dungeon Tools 美化**: 為 Mythic Dungeon Tools 的主要窗口添加美化
-14. **Premade Groups Filter 美化**: 為 Premade Groups Filter 的主要窗口添加美化
-15. **TinyInspect 美化**: 為 TinyInspect 的觀察窗口添加美化
-16. **TomCat's Tour 美化**: 為 TomCat's Tour 的浮動提示和標題添加美化
-17. **WarpDeplete 美化**: 為 WarpDeplete 的條添加美化
-18. **WeakAurasPatched 美化**: 為 WeakAurasPatched 的圖標，光環條，設定界面添加美化
-19. **Simulationcraft 美化**: 為 Simulationcraft 添加美化
-20. **RaiderIO 美化**: 為 RaiderIO 添加美化
-21. **OmniCC 美化**: 為 OmniCC 的設定，圖示，狀態條添加美化
-22. **Auctionator 美化**: 為 Auctionator 的全部框架添加美化
-23. **Postal 美化**: 為 Postal 的常規按鍵及快速附加按鍵添加美化
-24. **World Quest Tab 美化**: 為 World Quest Tab 標籤頁和設置添加美化
-25. **BtWQuests 美化**: 為 BtWQuests 添加美化
-26. **Talent Loadouts Ex 美化**: 為 Talent Loadouts Ex 添加美化
-27. **SilverDragon 美化**: 為 SilverDragon 添加美化
-28. **Mount Route Planner 美化**: 為 Mount Route Planner 添加美化
+2. **Angry Keystones 皮膚**: 為 Angry Keystones 的傳奇鑰石地城計時條應用皮膚
+3. **暴雪框架皮膚**: 在 ElvUI 皮膚之上，為暴雪框架添加額外皮膚
+4. **ElvUI 框架皮膚**: 為 ElvUI 模組重新應用皮膚
+5. **WindTools 皮膚**: 為 WindTools 模組重新應用皮膚
+6. **Ace3 皮膚**: 為 Ace3-GUI 的部分庫組件應用 ElvUI 皮膚
+7. **Bigwigs 皮膚**: 為 Bigwigs 應用 ElvUI 皮膚
+8. **BugSack 皮膚**: 為 BugSack 應用 ElvUI 皮膚
+9. **Hekili 皮膚**: 為 Hekili 應用 ElvUI 皮膚
+10. **Immersion 皮膚**: 為 Immersion 應用 ElvUI 皮膚
+11. **網易集合石皮膚**: 為網易的集合石應用 ElvUI 皮膚
+12. **Myslot 皮膚**: 為 Myslot 應用 ElvUI 皮膚
+13. **Mythic Dungeon Tools 皮膚**: 為 Mythic Dungeon Tools 應用 ElvUI 皮膚
+14. **Premade Groups Filter 皮膚**: 為 Premade Groups Filter 應用 ElvUI 皮膚
+15. **TinyInspect 皮膚**: 為 TinyInspect 應用 ElvUI 皮膚
+16. **TomCat's Tour 皮膚**: 為 TomCat's Tour 的浮動提示和標題重新應用皮膚
+17. **WarpDeplete 皮膚**: 為 WarpDeplete 的條重新應用皮膚
+18. **WeakAurasPatched 皮膚**: 為 WeakAurasPatched 和 WeakAurasPatched 選項應用 ElvUI 皮膚
+19. **Simulationcraft 皮膚**: 為 Simulationcraft 應用 ElvUI 皮膚
+20. **RaiderIO 皮膚**: 為 RaiderIO 應用 ElvUI 皮膚
+21. **OmniCD 皮膚**: 為 OmniCD 的設定界面、圖示和狀態條應用 ElvUI 皮膚
+22. **Auctionator 皮膚**: 為 Auctionator 的全部框架應用 ElvUI 皮膚
+23. **Postal 皮膚**: 為 Postal 的常規按鍵及快速附加按鍵應用 ElvUI 皮膚
+24. **World Quest Tab 皮膚**: 為 World Quest Tab 標籤頁和設置應用 ElvUI 皮膚
+25. **BtWQuests 皮膚**: 為 BtWQuests 應用 ElvUI 皮膚
+26. **Talent Loadouts Ex 皮膚**: 為 Talent Loadouts Ex 應用 ElvUI 皮膚
+27. **SilverDragon 皮膚**: 為 SilverDragon 應用 ElvUI 皮膚
+28. **Mount Route Planner 皮膚**: 為 Mount Route Planner 應用 ElvUI 皮膚
+29. **WhisperPop 皮膚**: 為 WhisperPop 應用 ElvUI 皮膚
+30. **Paragon Reputation 皮膚**: 為 Paragon Reputation 應用 ElvUI 皮膚
+31. **Manuscripts Journal 皮膚**: 為 Manuscripts Journal 應用 ElvUI 皮膚
 
 ### 其他
 

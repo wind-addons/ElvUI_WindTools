@@ -37,16 +37,22 @@ end
 
 F.Developer.InjectLogger(W.Utilities.LFGPlayerInfo)
 
+local classIconStyle = "flat" ---@type ClassIconStyle
+
+---Set the class icon style for rendering
+---@param style ClassIconStyle The desired class icon styles
+function W.Utilities.LFGPlayerInfo:SetClassIconStyle(style)
+	if style then
+		classIconStyle = style
+	end
+end
+
 ---Role priority order for display and processing
----@type string[]
-local roleOrder = {
-	[1] = "TANK",
-	[2] = "HEALER",
-	[3] = "DAMAGER",
-}
+---@type ("TANK" | "HEALER" | "DAMAGER")[]
+local roleOrder = { "TANK", "HEALER", "DAMAGER" }
 
 ---Get the role order array
----@return string[] roleOrder Array of role names in priority order
+---@return ("TANK" | "HEALER" | "DAMAGER")[] roleOrder Array of role names in priority order
 function W.Utilities.LFGPlayerInfo.GetRoleOrder()
 	return roleOrder
 end
@@ -66,27 +72,23 @@ function W.Utilities.LFGPlayerInfo.GetColoredRoleName(role)
 	return coloredRoleName[role]
 end
 
----Class icon style setting
----@type string
-local classIconStyle = "flat"
-
 ---Mapping from class file names to class IDs
----@type table<string, number>
-local classFileToID = {} -- { ["WARRIOR"] = 1 }
+---@type table<ClassFile, integer>
+local classFileToID = {}
 
 ---Mapping from localized specialization names to specialization IDs by class
----@type table<string, table<string, number>>
-local localizedSpecNameToID = {} -- { ["Protection"] = 73 }
+---@type table<ClassFile, table<string, integer>>
+local localizedSpecNameToID = {}
 
 ---Mapping from localized specialization names to icon paths by class
----@type table<string, table<string, any>>
-local localizedSpecNameToIcon = {} -- { ["Protection"] = "Interface\\Icons\\ability_warrior_defensivestance" }
+---@type table<ClassFile, table<string, integer>>
+local localizedSpecNameToIcon = {}
 
 ---Initialize class and specialization data mappings
 ---Scans all available classes and their specializations to build lookup tables
 for classID = 1, 13 do
 	-- Scan all specs and specilizations, 13 is Evoker
-	local classFile = select(2, GetClassInfo(classID)) -- "WARRIOR"
+	local classFile = select(2, GetClassInfo(classID)) ---@type ClassFile|nil
 
 	if classFile then
 		classFileToID[classFile] = classID
@@ -100,11 +102,10 @@ for classID = 1, 13 do
 		end
 
 		for specIndex = 1, 4 do
-			-- Druid has the max amount of specs, which is 4
-			local specId, localizedSpecName, _, icon = GetSpecializationInfoForClassID(classID, specIndex)
-			if specId and localizedSpecName and icon then
-				localizedSpecNameToID[classFile][localizedSpecName] = specId
-				localizedSpecNameToIcon[classFile][localizedSpecName] = icon
+			local id, name, _, icon = GetSpecializationInfoForClassID(classID, specIndex)
+			if id and name and icon then
+				localizedSpecNameToID[classFile][name] = id
+				localizedSpecNameToIcon[classFile][name] = icon
 			end
 		end
 	end
@@ -118,18 +119,21 @@ function W.Utilities.LFGPlayerInfo.GetIconTextureWithClassAndSpecName(class, spe
 	return localizedSpecNameToIcon[class] and localizedSpecNameToIcon[class][spec]
 end
 
----@class LFGPlayerCache
----Cache system for storing player information organized by role
-W.Utilities.LFGPlayerInfo.cache = {}
+---@class CompositionRoleCache
+---@field totalAmount number Total number of players in this role
+---@field playerList table<ClassFile, table<string, number>> Nested table of players organized by class and specializations
+
+---@class CompositionRoleCacheManager
+---@field TANK CompositionRoleCache Cache for tank role
+---@field HEALER CompositionRoleCache Cache for healer role
+---@field DAMAGER CompositionRoleCache Cache for damage dealer role
+W.Utilities.LFGPlayerInfo.Composition = {}
 
 ---Clear the cache and initialize role structures
 ---Resets all role data to empty state with zero counts
-function W.Utilities.LFGPlayerInfo.cache:Clear()
+function W.Utilities.LFGPlayerInfo.Composition:Clear()
 	for _, role in ipairs(roleOrder) do
-		self[role] = {
-			totalAmount = 0,
-			playerList = {},
-		}
+		self[role] = { totalAmount = 0, playerList = {} }
 	end
 end
 
@@ -137,7 +141,7 @@ end
 ---@param role string The player's role ("TANK", "HEALER", "DAMAGER")
 ---@param class string The player's class file name (e.g., "WARRIOR")
 ---@param spec string The player's specialization name
-function W.Utilities.LFGPlayerInfo.cache:AddPlayer(role, class, spec)
+function W.Utilities.LFGPlayerInfo.Composition:AddPlayer(role, class, spec)
 	if not self[role] then
 		W.Utilities.LFGPlayerInfo:Log(
 			"warning",
@@ -171,7 +175,7 @@ function W.Utilities.LFGPlayerInfo:Update(resultID)
 		self:Log("debug", "cache not updated correctly, the number of result.numMembers is nil or 0.")
 	end
 
-	self.cache:Clear()
+	self.Composition:Clear()
 
 	for i = 1, result.numMembers do
 		local memberInfo = C_LFGList_GetSearchResultPlayerInfo(resultID, i)
@@ -193,7 +197,7 @@ function W.Utilities.LFGPlayerInfo:Update(resultID)
 				return
 			end
 
-			self.cache:AddPlayer(role, class, spec)
+			self.Composition:AddPlayer(role, class, spec)
 		end
 	end
 end
@@ -378,7 +382,7 @@ function W.Utilities.LFGPlayerInfo:GetPartyInfo(template)
 	for _, role in ipairs(roleOrder) do
 		dataTable[role] = {}
 
-		local members = self.cache[role]
+		local members = self.Composition[role]
 
 		for class, numberOfPlayersSortBySpec in pairs(members.playerList) do
 			for spec, numberOfPlayers in pairs(numberOfPlayersSortBySpec) do
@@ -389,12 +393,4 @@ function W.Utilities.LFGPlayerInfo:GetPartyInfo(template)
 	end
 
 	return dataTable
-end
-
----Set the class icon style for rendering
----@param style string|nil The icon style to use (e.g., "flat", "glossy")
-function W.Utilities.LFGPlayerInfo:SetClassIconStyle(style)
-	if style then
-		classIconStyle = style
-	end
 end

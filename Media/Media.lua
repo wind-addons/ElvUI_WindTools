@@ -430,22 +430,28 @@ do
 	AddMedia("ROLES", "UI-LFG-ICON-ROLES.blp", "Textures")
 end
 
+---@alias ClassIconStyle
+---| "flat"          # Flat style without border
+---| "flatborder"    # Flat style with thin border
+---| "flatborder2"   # Flat style with thicker border
+---| "round"         # Circular style
+---| "square"        # Square style with rounded corners
+---| "warcraftflat"  # Warcraft-themed flat style
+
+local availableClassIconStyles = { "flat", "flatborder", "flatborder2", "round", "square", "warcraftflat" }
+
 ---Get list of available class icon styles
----@return string[] styles Array of available style names
+---@return ClassIconStyle[] styles Array of available style names
 function F.GetClassIconStyleList()
-	return { "flat", "flatborder", "flatborder2", "round", "square", "warcraftflat" }
+	return availableClassIconStyles
 end
 
 ---Get class icon texture path with specified style
 ---@param class string The class name (case insensitive)
----@param style string The icon style from GetClassIconStyleList()
+---@param style ClassIconStyle The icon style from GetClassIconStyleList()
 ---@return string|nil iconPath The full texture path, or nil if invalid parameters
 function F.GetClassIconWithStyle(class, style)
 	if not class or not tContains(_G.CLASS_SORT_ORDER, strupper(class)) then
-		return
-	end
-
-	if not style or not tContains(F.GetClassIconStyleList(), style) then
 		return
 	end
 
@@ -454,7 +460,7 @@ end
 
 ---Generate class icon string with specified style and dimensions
 ---@param class string The class name (case insensitive)
----@param style string The icon style from GetClassIconStyleList()
+---@param style ClassIconStyle The icon style from GetClassIconStyleList()
 ---@param width number|nil Icon width in pixels
 ---@param height number|nil Icon height in pixels (defaults to width if not specified)
 ---@return string|nil iconString The formatted icon string, or nil if invalid parameters

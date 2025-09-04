@@ -105,23 +105,20 @@ end
 
 ---Create class colored string
 ---@param text string The text to colorize
----@param englishClass string The English class name
+---@param classFile ClassFile? The English class name (e.g., "WARRIOR", "MAGE")
 ---@return string? coloredText The class colored string or nil if parameters are invalid
-function F.CreateClassColorString(text, englishClass)
+function F.CreateClassColorString(text, classFile)
 	if not text or not type(text) == "string" then
 		F.Developer.LogDebug("Functions.CreateClassColorString: text not found")
 		return
 	end
-	if not englishClass or type(englishClass) ~= "string" then
+
+	if not classFile or type(classFile) ~= "string" then
 		F.Developer.LogDebug("Functions.CreateClassColorString: class not found")
 		return
 	end
 
-	if englishClass == "" then
-		return text
-	end
-
-	local r, g, b = GetClassColor(englishClass)
+	local r, g, b = GetClassColor(classFile)
 	local hex = r and g and b and E:RGBToHex(r, g, b) or "|cffffffff"
 
 	return hex .. text .. "|r"

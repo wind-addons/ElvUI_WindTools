@@ -1164,9 +1164,9 @@ P.tooltips = {
 	},
 	groupInfo = {
 		enable = true,
-		title = true,
-		excludeDungeon = true,
+		excludeDungeon = false,
 		hideBlizzard = true,
+		title = false,
 		mode = "NORMAL",
 		classIconStyle = "flat",
 		template = "{{classIcon:18}} {{specIcon:14,18}} {{classColorStart}}{{className}} ({{specName}}){{classColorEnd}}{{amountStart}} x {{amount}}{{amountEnd}}",

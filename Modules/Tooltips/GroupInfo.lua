@@ -109,10 +109,7 @@ function T:AddGroupInfo(tooltip, resultID)
 		tooltip:AddLine(W.Title .. " " .. L["Party Info"])
 	end
 
-	local data = LFGPI:GetPartyInfo(config.template)
-	if data then
-		addRoleInformation(tooltip, data, config)
-	end
+	addRoleInformation(tooltip, LFGPI:GetPartyInfo(config.template), config)
 
 	tooltip:Show()
 end

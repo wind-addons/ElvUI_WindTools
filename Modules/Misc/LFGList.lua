@@ -296,17 +296,13 @@ function LL:UpdateEnumerate(Enumerate)
 		return
 	end
 
-	local cache = {
-		TANK = {},
-		HEALER = {},
-		DAMAGER = {},
-	}
+	local cache = { TANK = {}, HEALER = {}, DAMAGER = {} }
 
 	for i = 1, result.numMembers do
 		local playerInfo = C_LFGList_GetSearchResultPlayerInfo(button.resultID, i)
 		if playerInfo then
-			local role, class, spec = playerInfo.assignedRole, playerInfo.classFilename, playerInfo.specName
-			tinsert(cache[role], { class, spec, i == 1 })
+			local role, class, spec, isLeader = playerInfo.assignedRole, playerInfo.classFilename, playerInfo.specName, playerInfo.isLeader
+			tinsert(cache[role], { class, spec, isLeader })
 		end
 	end
 

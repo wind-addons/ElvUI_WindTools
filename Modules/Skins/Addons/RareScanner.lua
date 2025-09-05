@@ -1,4 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local C = W.Utilities.Color
 local S = W.Modules.Skins ---@type Skins
 local TT = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips

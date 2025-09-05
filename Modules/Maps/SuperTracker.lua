@@ -209,7 +209,7 @@ function ST:SetWaypoint(mapID, x, y, z)
 	if z then
 		location = location .. ", " .. z
 	end
-	local waypointString = C.StringByTemplate(format("%s (%s)", mapName, location), "primary")
+	local waypointString = C.StringByTemplate(format("%s (%s)", mapName, location), "teal-400")
 
 	-- if not scaled, just do it here
 	if x > 1 and y > 1 then
@@ -267,7 +267,7 @@ function ST:WaypointParse()
 	-- Placeholder
 	local placeholder = editBox:CreateFontString(nil, "ARTWORK")
 	placeholder:FontTemplate(nil, nil, "OUTLINE")
-	placeholder:SetText("|cff666666" .. L["Go to ..."] .. "|r")
+	placeholder:SetText(C.StringByTemplate(L["Go to ..."], "gray-300"))
 	placeholder:SetPoint("CENTER", editBox, "CENTER", 0, 0)
 
 	editBox:HookScript("OnEditFocusGained", function()
@@ -297,7 +297,7 @@ function ST:WaypointParse()
 		end
 
 		local success, preview = self.commandHandler(inputText, true)
-		statusText:SetText("|cff" .. (success and "00d1b2" or "999999") .. preview .. "|r")
+		statusText:SetText(C.StringByTemplate(preview, success and "green-400" or "rose-500"))
 	end)
 
 	F.Widgets.AddTooltip(

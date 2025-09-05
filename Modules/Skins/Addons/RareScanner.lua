@@ -136,7 +136,7 @@ function S:RareScanner()
 				child:Point("LEFT", ST.WorldMapInput, "RIGHT", 12, 0)
 				local placeholder = child.EditBox:CreateFontString(nil, "ARTWORK")
 				placeholder:FontTemplate(nil, nil, "OUTLINE")
-				placeholder:SetText("|cff666666RareScanner|r")
+				placeholder:SetText(C.StringByTemplate(L["RareScanner"], "gray-300"))
 				placeholder:Point("CENTER", child, "CENTER", 0, 0)
 
 				child.EditBox:HookScript("OnEditFocusGained", function()

@@ -2740,7 +2740,7 @@ options.general = {
 			name = L["Emote Format"],
 			desc = L["The text template used in emote channel."]
 				.. "\n"
-				.. format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "info")),
+				.. format(L["Default is %s."], W.Utilities.Color.StringByTemplate(": %s", "blue-500")),
 			width = 2,
 		},
 		betterAlign = {

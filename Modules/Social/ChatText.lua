@@ -877,8 +877,8 @@ function CT:HandleShortChannels(msg, hide)
 	msg = gsub(msg, "^(.-|h) " .. L["whispers"], "%1")
 	msg = gsub(msg, "^(.-|h) " .. L["says"], "%1")
 	msg = gsub(msg, "^(.-|h) " .. L["yells"], "%1")
-	msg = gsub(msg, "<" .. _G.AFK .. ">", "[|cffFF0000" .. L["AFK"] .. "|r] ")
-	msg = gsub(msg, "<" .. _G.DND .. ">", "[|cffE7E716" .. L["DND"] .. "|r] ")
+	msg = gsub(msg, "<" .. _G.AFK .. ">", format("[%s]", C.StringByTemplate(L["AFK"], "rose-500")))
+	msg = gsub(msg, "<" .. _G.DND .. ">", format("[%s]", C.StringByTemplate(L["DND"], "yellow-400")))
 
 	local raidWarningString = ""
 	if CT.db and CT.db.abbreviation == "SHORT" and W.ChineseLocale then
@@ -2200,14 +2200,14 @@ function CT:ElvUIChat_GuildMemberStatusMessageHandler(frame, msg)
 					local windInviteLink = format(
 						"|Hwtlink:invite:%s|h%s|h",
 						link,
-						C.StringByTemplate(format("[%s]", L["Invite"]), "info")
+						C.StringByTemplate(format("[%s]", L["Invite"]), "sky-500")
 					)
 					resultText = resultText .. " " .. windInviteLink
 				end
-				frame:AddMessage(resultText, C.RGBFromTemplate("success"))
+				frame:AddMessage(resultText, C.ExtractRGBFromTemplate("green-400"))
 			else
 				resultText = format(offlineMessageTemplate, classIcon, coloredName)
-				frame:AddMessage(resultText, C.RGBFromTemplate("danger"))
+				frame:AddMessage(resultText, C.ExtractRGBFromTemplate("rose-500"))
 			end
 
 			return true
@@ -2389,7 +2389,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 		sendMessage(
 			bnetFriendOnlineMessageTemplate,
 			strjoin(", ", unpack(onlineCharacters)),
-			C.RGBFromTemplate("success")
+			C.ExtractRGBFromTemplate("green-400")
 		)
 	end
 
@@ -2397,7 +2397,7 @@ function CT:BN_FRIEND_INFO_CHANGED(_, friendIndex, appTexture, noRetry)
 		sendMessage(
 			bnetFriendOfflineMessageTemplate,
 			strjoin(", ", unpack(offlineCharacters)),
-			C.RGBFromTemplate("danger")
+			C.ExtractRGBFromTemplate("rose-500")
 		)
 	end
 end

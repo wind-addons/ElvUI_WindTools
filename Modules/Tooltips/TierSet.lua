@@ -1,4 +1,5 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local C = W.Utilities.Color
 local ET = E:GetModule("Tooltip")
 local T = W.Modules.Tooltips
 
@@ -100,11 +101,11 @@ local tierSetsID = {
 }
 
 local formatSets = {
-	[1] = " |cff14b200(1/4)", -- green
-	[2] = " |cff0091f2(2/4)", -- blue
-	[3] = " |cff0091f2(3/4)", -- blue
-	[4] = " |cffc745f9(4/4)", -- purple
-	[5] = " |cffc745f9(5/5)", -- purple
+	[1] = C.StringByTemplate(" (1/4)", "emerald-400"),
+	[2] = C.StringByTemplate(" (2/4)", "blue-500"),
+	[3] = C.StringByTemplate(" (3/4)", "blue-500"),
+	[4] = C.StringByTemplate(" (4/4)", "fuchsia-500"),
+	[5] = C.StringByTemplate(" (5/5)", "fuchsia-500"),
 }
 
 local function ResetCache(_, _, guid)
@@ -136,7 +137,7 @@ function T:ElvUIScanTooltipSetInventoryItem(tt, unit, slot)
 	end
 end
 
-function T:TierSet(tt, unit, guid)
+function T:TierSet(tt, _, guid)
 	-- ElvUI do not scan player itself
 	if guid == E.myguid then
 		ResetCache(nil, nil, guid)

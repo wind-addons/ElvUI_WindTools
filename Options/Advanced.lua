@@ -4,17 +4,8 @@ local C = W.Utilities.Color
 
 local _G = _G
 local format = format
-local tostring = tostring
-local type = type
 
 local C_UI_Reload = C_UI.Reload
-
-local function blue(string)
-	if type(string) ~= "string" then
-		string = tostring(string)
-	end
-	return F.CreateColorString(string, { r = 0.204, g = 0.596, b = 0.859 })
-end
 
 options.core = {
 	order = 1,
@@ -122,9 +113,8 @@ options.developer = {
 			type = "select",
 			name = L["Log Level"],
 			desc = L["Only display log message that the level is higher than you choose."]
-				.. "\n|cffff3860"
-				.. L["Set to 2 if you do not understand the meaning of log level."]
-				.. "|r",
+				.. "\n"
+				.. C.StringByTemplate(L["Set to 2 if you do not understand the meaning of log level."], "rose-500"),
 			get = function(info)
 				return E.global.WT.developer.logLevel
 			end,
@@ -132,10 +122,10 @@ options.developer = {
 				E.global.WT.developer.logLevel = value
 			end,
 			values = {
-				[1] = "1 - |cffff3860[ERROR]|r",
-				[2] = "2 - |cffffdd57[WARNING]|r",
-				[3] = "3 - |cff209cee[INFO]|r",
-				[4] = "4 - |cff00d1b2[DEBUG]|r",
+				[1] = "1 - |cffff2457[ERROR]|r",
+				[2] = "2 - |cfffdc600[WARNING]|r",
+				[3] = "3 - |cff00a4f3[INFO]|r",
+				[4] = "4 - |cff00d3bc[DEBUG]|r",
 			},
 		},
 		tableAttributeDisplay = {
@@ -231,7 +221,7 @@ options.reset = {
 			order = 1,
 			type = "group",
 			inline = true,
-			name = blue(L["Announcement"]),
+			name = C.StringByTemplate(L["Announcement"], "blue-500"),
 			args = {
 				combatResurrection = {
 					order = 1,
@@ -329,7 +319,7 @@ options.reset = {
 			order = 2,
 			type = "group",
 			inline = true,
-			name = blue(L["Combat"]),
+			name = C.StringByTemplate(L["Combat"], "blue-500"),
 			args = {
 				combatAlert = {
 					order = 1,
@@ -377,7 +367,7 @@ options.reset = {
 			order = 3,
 			type = "group",
 			inline = true,
-			name = blue(L["Item"]),
+			name = C.StringByTemplate(L["Item"], "blue-500"),
 			args = {
 				extraItemsBar = {
 					order = 1,
@@ -476,7 +466,7 @@ options.reset = {
 			order = 4,
 			type = "group",
 			inline = true,
-			name = blue(L["Maps"]),
+			name = C.StringByTemplate(L["Maps"], "blue-500"),
 			args = {
 				superTracker = {
 					order = 1,
@@ -554,7 +544,7 @@ options.reset = {
 			order = 5,
 			type = "group",
 			inline = true,
-			name = blue(L["Quest"]),
+			name = C.StringByTemplate(L["Quest"], "blue-500"),
 			args = {
 				objectiveTracker = {
 					order = 1,
@@ -592,7 +582,7 @@ options.reset = {
 			order = 6,
 			type = "group",
 			inline = true,
-			name = blue(L["Social"]),
+			name = C.StringByTemplate(L["Social"], "blue-500"),
 			args = {
 				chatBar = {
 					order = 1,
@@ -670,7 +660,7 @@ options.reset = {
 			order = 7,
 			type = "group",
 			inline = true,
-			name = blue(L["Tooltips"]),
+			name = C.StringByTemplate(L["Tooltips"], "blue-500"),
 			args = {
 				general = {
 					order = 1,
@@ -743,7 +733,7 @@ options.reset = {
 			order = 8,
 			type = "group",
 			inline = true,
-			name = blue(L["UnitFrames"]),
+			name = C.StringByTemplate(L["Unit Frames"], "blue-500"),
 			args = {
 				quickFocus = {
 					order = 1,
@@ -781,7 +771,7 @@ options.reset = {
 			order = 9,
 			type = "group",
 			inline = true,
-			name = blue(L["Skins"]),
+			name = C.StringByTemplate(L["Skins"], "blue-500"),
 			args = {
 				general = {
 					order = 1,
@@ -866,7 +856,7 @@ options.reset = {
 			order = 10,
 			type = "group",
 			inline = true,
-			name = blue(L["Misc"]),
+			name = C.StringByTemplate(L["Misc"], "blue-500"),
 			args = {
 				general = {
 					order = 1,
@@ -1102,7 +1092,7 @@ do
 						type = "description",
 						name = format(
 							"%s\n%s\n%s\n%s\n%s",
-							C.StringByTemplate(L["I want to sync setting of WindTools!"], "info"),
+							C.StringByTemplate(L["I want to sync setting of WindTools!"], "blue-500"),
 							L["WindTools saves all data in ElvUI Profile and Private database."],
 							L["So if you set ElvUI Profile and Private these |cffff0000TWO|r databases to the same across multiple character, the setting of WindTools will be synced."],
 							L["Sharing ElvUI Profile is a very common thing nowadays, but actually ElvUI Private database is also exist for saving configuration of General, Skins, etc."],

@@ -2,13 +2,17 @@ local V ---@class PrivateDB
 local W, F, E, L, P, G ---@type WindTools, Functions, ElvUI, table, ProfileDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
 
+---@cast W WindTools
+
+local C = W.Utilities.Color
+
 local pairs = pairs
 local GetLocale = GetLocale
 
-local norm = format("|cff1eff00%s|r", L["[ABBR] Normal"])
-local hero = format("|cff0070dd%s|r", L["[ABBR] Heroic"])
-local myth = format("|cffa335ee%s|r", L["[ABBR] Mythic"])
-local lfr = format("|cffff8000%s|r", L["[ABBR] Looking for raid"])
+local norm = C.StringByTemplate(L["[ABBR] Normal"], "green-500")
+local hero = C.StringByTemplate(L["[ABBR] Heroic"], "blue-500")
+local myth = C.StringByTemplate(L["[ABBR] Mythic"], "purple-500")
+local lfr = C.StringByTemplate(L["[ABBR] Looking for raid"], "orange-500")
 
 -- The helper function for progression data.
 local function configTable(t, sourceMetadata)
@@ -341,9 +345,9 @@ V.skins = {
 	},
 	uiErrors = {
 		normalTextClassColor = false,
-		normalTextColor = { r = 0.976, g = 0.980, b = 0.984 },
-		redTextColor = { r = 1.000, g = 0.388, b = 0.494 },
-		yellowTextColor = { r = 1.000, g = 0.875, b = 0.125 },
+		normalTextColor = C.GetRGBFromTemplate("neutral-50"),
+		redTextColor = C.GetRGBFromTemplate("red-500"),
+		yellowTextColor = C.GetRGBFromTemplate("yellow-300"),
 	},
 	ime = {
 		label = {

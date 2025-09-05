@@ -1,4 +1,4 @@
-local W, F, E, L, V, P, G = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 F.Animation = {}
 local A = F.Animation
 

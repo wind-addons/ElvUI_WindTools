@@ -3,6 +3,10 @@ local F ---@class Functions
 local E ---@type ElvUI
 W, F, E = unpack((select(2, ...)))
 
+---@cast W WindTools
+---@cast F Functions
+local C = W.Utilities.Color
+
 local _G = _G
 local format = format
 local pairs = pairs
@@ -13,8 +17,6 @@ local strlower = strlower
 local strrep = strrep
 local tostring = tostring
 local type = type
-
----@cast F Functions
 
 F.Developer = {}
 
@@ -69,7 +71,7 @@ end
 ---@param ... string Error message parts
 function F.Developer.ThrowError(...)
 	local message = strjoin(" ", ...)
-	_G.geterrorhandler()(format("%s |cffff3860[ERROR]|r\n%s", W.Title, message))
+	_G.geterrorhandler()(format("%s |cffff2457[ERROR]|r\n%s", W.Title, message))
 end
 
 ---Custom logger for warning messages
@@ -80,7 +82,7 @@ function F.Developer.LogWarning(...)
 	end
 
 	local message = strjoin(" ", ...)
-	print(format("%s |cffffdd57[WARNING]|r %s", W.Title, message))
+	print(format("%s |cfffdc600[WARNING]|r %s", W.Title, message))
 end
 
 ---Custom logger for info messages
@@ -91,7 +93,7 @@ function F.Developer.LogInfo(...)
 	end
 
 	local message = strjoin(" ", ...)
-	print(format("%s |cff209cee[INFO]|r %s", W.Title, message))
+	print(format("%s |cff00a4f3[INFO]|r %s", W.Title, message))
 end
 
 ---Custom logger for debug messages
@@ -102,7 +104,7 @@ function F.Developer.LogDebug(...)
 	end
 
 	local message = strjoin(" ", ...)
-	print(format("%s |cff00d1b2[DEBUG]|r %s", W.Title, message))
+	print(format("%s |cff00d3bc[DEBUG]|r %s", W.Title, message))
 end
 
 ---Inject logger methods into a module
@@ -131,7 +133,7 @@ function F.Developer.InjectLogger(module)
 
 			level = strlower(level)
 
-			local richMessage = format("|cfff6781d[%s]|r %s", self:GetName(), message)
+			local richMessage = format("%s %s", C.StringByTemplate(self.name, "amber-500"), message)
 			if level == "info" then
 				F.Developer.LogInfo(richMessage)
 			elseif level == "warning" then

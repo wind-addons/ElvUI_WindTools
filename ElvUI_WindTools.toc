@@ -26,7 +26,7 @@ Initialize.lua
 Locales\Load_Locales.xml
 Media\Load_Media.xml
 Core\Metadata.lua
-Settings\Load_Settings.xml
 Core\Load_Core.xml
+Settings\Load_Settings.xml
 Modules\Load_Modules.xml
 Options\Load_Options.xml

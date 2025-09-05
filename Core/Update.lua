@@ -1,6 +1,7 @@
 local W ---@class WindTools
 local F, E, L, V, P, G ---@type Functions, ElvUI, table, PrivateDB, ProfileDB, GlobalDB
 W, F, E, L, V, P, G = unpack((select(2, ...)))
+local C = W.Utilities.Color ---@type ColorUtility
 
 local format = format
 local pairs = pairs
@@ -22,7 +23,9 @@ local function UpdateMessage(text, from)
 	end
 
 	E:Delay(1, function()
-		print(text .. format("(|cff00a8ff%.2f|r -> |cff00a8ff%s|r)...", from, W.Version) .. DONE_ICON)
+		print(text .. format("(%.2f -> %s)...",
+		C.StringByTemplate(from, "neutral-300"),
+		C.StringByTemplate(W.Version, "emerald-400")) .. DONE_ICON)
 	end)
 end
 

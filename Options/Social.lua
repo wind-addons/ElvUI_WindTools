@@ -334,7 +334,10 @@ options.chatBar = {
 										.. "\n"
 										.. L["Notice that if you are using some unblock addons in CN, you region are may changed to others."]
 										.. "\n"
-										.. format(L["Current Region: %s"], C.StringByTemplate(W.RealRegion, "warning")),
+										.. format(
+											L["Current Region: %s"],
+											C.StringByTemplate(W.RealRegion, "yellow-400")
+										),
 									values = {
 										ALL = L["All"],
 										CN = L["China"],
@@ -979,7 +982,7 @@ do
 								L["You must enable ElvUI Chat - %s to use abbreviation feature."],
 								L["Short Channels"]
 							),
-							"warning"
+							"yellow-400"
 						),
 						fontSize = "medium",
 					},

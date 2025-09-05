@@ -154,7 +154,7 @@ options.general = {
 			name = L["Anti-override"],
 			desc = L["Unblock the profanity filter and disable model override."]
 				.. "\n"
-				.. C.StringByTemplate(L["It only applies to players who play WoW in Simplified Chinese."], "warning"),
+				.. C.StringByTemplate(L["It only applies to players who play WoW in Simplified Chinese."], "yellow-400"),
 		},
 		autoToggleChatBubble = {
 			order = 14,
@@ -1893,11 +1893,11 @@ options.lfgList = {
 					desc = function()
 						return format(
 							"%s = %s\n%s = %s\n%s = %s",
-							C.StringByTemplate("{{score}}", "primary"),
+							C.StringByTemplate("{{score}}", "teal-400"),
 							L["Leader Score"],
-							C.StringByTemplate("{{best}}", "primary"),
+							C.StringByTemplate("{{best}}", "teal-400"),
 							L["Leader Best Run"],
-							C.StringByTemplate("{{text}}", "primary"),
+							C.StringByTemplate("{{text}}", "teal-400"),
 							L["Original Text"]
 						)
 					end,
@@ -2264,7 +2264,7 @@ options.keybindAlias = {
 			values = function()
 				local list = {}
 				for k, v in pairs(E.db.WT.misc.keybindAlias.list) do
-					list[k] = C.StringByTemplate(v, "primary") .. ": " .. k
+					list[k] = C.StringByTemplate(v, "teal-400") .. ": " .. k
 				end
 				return list
 			end,
@@ -2374,7 +2374,7 @@ options.exitPhaseDiving = {
 						.. L["You can use ElvUI Mover to reposition it."]
 						.. C.StringByTemplate(
 							L["Due to Blizzard restrictions, the button area cannot be clicked through even when the button is hidden."],
-							"warning"
+							"yellow-400"
 						),
 					fontSize = "medium",
 				},

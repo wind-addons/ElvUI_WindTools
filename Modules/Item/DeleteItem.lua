@@ -1,9 +1,9 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local DI = W:NewModule("DeleteItem", "AceEvent-3.0")
 local S = W.Modules.Skins ---@type Skins
+local C = W.Utilities.Color
 
 local _G = _G
-
 local strmatch = strmatch
 local strsplit = strsplit
 local pairs = pairs
@@ -78,7 +78,7 @@ function DI:ShowFillInButton(dialog)
 	self.fillInButton:SetPoint("BOTTOMRIGHT", editBoxFrame, "BOTTOMRIGHT", 2, 4)
 
 	-- 点击后填入 Delete
-	self.fillInButton:SetText("|cffe74c3c" .. L["Click to confirm"] .. "|r")
+	self.fillInButton:SetText(C.StringByTemplate(L["Click to confirm"], "rose-500"))
 	self.fillInButton:SetScript("OnClick", function(self)
 		yesButton:Enable()
 		self:SetText("|cff2ecc71" .. L["Confirmed"] .. "|r")

@@ -319,7 +319,7 @@ options.elvUITweaks = {
 					name = L["Force Item Level"],
 					desc = L["Even you are not pressing the modifier key, the item level will still be shown."]
 						.. "\n"
-						.. C.StringByTemplate(L["It may broken inspect feature sometimes."], "warning"),
+						.. C.StringByTemplate(L["It may broken inspect feature sometimes."], "yellow-400"),
 					get = function(info)
 						return E.db.WT.tooltips.elvUITweaks.forceItemLevel
 					end,
@@ -544,7 +544,7 @@ options.keystone = {
 			width = "full",
 			name = C.StringByTemplate(
 				format(L["The keystone information only available for players who installed Details! or %s."], W.Title),
-				"warning"
+				"yellow-400"
 			),
 		},
 		enable = {

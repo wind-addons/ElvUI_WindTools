@@ -251,12 +251,12 @@ ET.EventData = {
 
 					if questName then
 						if status == "inProgress" then
-							rightText = format("%s - %s", questName, C.StringByTemplate(L["In Progress"], "warning"))
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["In Progress"], "yellow-400"))
 						elseif status == "completed" then
-							rightText = format("%s - %s", questName, C.StringByTemplate(L["Completed"], "success"))
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["Completed"], "green-500"))
 						end
 					else
-						rightText = C.StringByTemplate(L["Not Accepted"], "danger")
+						rightText = C.StringByTemplate(L["Not Accepted"], "rose-500")
 					end
 
 					tinsert(progress, { label = storylineName, rightText = rightText })
@@ -431,7 +431,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[1].name, "info")
+							C.StringByTemplate(env.radiantEchoesZoneRotation[1].name, "sky-400")
 						)
 					end,
 				},
@@ -441,7 +441,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[2].name, "info")
+							C.StringByTemplate(env.radiantEchoesZoneRotation[2].name, "sky-400")
 						)
 					end,
 				},
@@ -451,7 +451,7 @@ ET.EventData = {
 					label = function()
 						return format(
 							L["Daily Quest at %s"],
-							C.StringByTemplate(env.radiantEchoesZoneRotation[3].name, "info")
+							C.StringByTemplate(env.radiantEchoesZoneRotation[3].name, "sky-400")
 						)
 					end,
 				},

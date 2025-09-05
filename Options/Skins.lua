@@ -1125,7 +1125,7 @@ options.elvui = {
 		unitFrames = {
 			order = 10,
 			type = "toggle",
-			name = L["UnitFrames"],
+			name = L["Unit Frames"],
 		},
 	},
 }
@@ -2717,7 +2717,7 @@ options.bigWigsSkin = {
 			type = "description",
 			name = function()
 				if not C_AddOns_DoesAddOnExist("BigWigs") then
-					return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "danger")
+					return C.StringByTemplate(format(L["%s is not loaded."], L["BigWigs"]), "rose-500")
 				end
 
 				local warning = C.StringByTemplate(
@@ -2726,14 +2726,14 @@ options.bigWigsSkin = {
 						format(L["The options below are only for BigWigs %s bar style."], W.Title),
 						format(L["You need to manually set the bar style to %s in BigWigs first."], W.Title)
 					),
-					"warning"
+					"yellow-400"
 				)
 
 				local tips = format(
 					"%s\n%s\n%s\n\n",
 					L["How to change BigWigs bar style:"],
 					L["Open BigWigs Options UI with /bw > Bars > Style."],
-					C.StringByTemplate(L["Don't forget to set you favorite bar texture in BigWigs option!"], "danger")
+					C.StringByTemplate(L["Don't forget to set you favorite bar texture in BigWigs option!"], "rose-500")
 				)
 
 				return warning .. tips

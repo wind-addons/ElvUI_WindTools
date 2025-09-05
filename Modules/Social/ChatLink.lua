@@ -1,5 +1,6 @@
-local W, F, E, L, _, _, G = unpack((select(2, ...)))
-local CL = W:NewModule("ChatLink")
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local C = W.Utilities.Color
+local CL = W:NewModule("ChatLink") ---@class ChatLink : AceModule
 
 local _G = _G
 local format = format
@@ -178,7 +179,7 @@ local function AddSpellInfo(link)
 		local texture = C_Spell_GetSpellTexture(tonumber(id))
 		local icon = texture and F.GetIconString(texture, CL.db.iconHeight, CL.db.iconWidth, CL.db.keepRatio)
 		if icon then
-			link = icon .. " |cff71d5ff" .. link .. "|r" -- I dk why the color is needed, but worked!
+			link = icon .. C.StringByTemplate(link, "sky-400")
 		end
 	end
 

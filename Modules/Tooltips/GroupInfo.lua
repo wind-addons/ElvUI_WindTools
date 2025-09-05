@@ -3,6 +3,8 @@ local UF = E:GetModule("UnitFrames")
 local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
+local C = W.Utilities.Color
+
 local _G = _G
 local format = format
 local gsub = gsub
@@ -122,8 +124,8 @@ function T:GroupInfo()
 		F.Print(
 			format(
 				L["%s detected, %s will be disabled automatically."],
-				"|cffff3860" .. L["Premade Groups Filter"] .. "|r",
-				"|cff00a8ff" .. L["Tooltips"] .. " - " .. L["Group Info"] .. "|r"
+				C.StringByTemplate(L["Premade Groups Filter"], "yellow-400"),
+				C.StringByTemplate(L["Tooltips"] .. " - " .. L["Group Info"], "sky-400")
 			)
 		)
 		E.db.WT.tooltips.groupInfo.enable = false

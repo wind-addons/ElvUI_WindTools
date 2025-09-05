@@ -100,7 +100,7 @@ function S:MountRoutePlanner()
 	self:CreateShadow(frame)
 
 	frame.progressBar:SetTexture(E.media.normTex)
-	frame.progressBar:SetVertexColor(W.Utilities.Color.RGBFromTemplate("success"))
+	frame.progressBar:SetVertexColor(W.Utilities.Color.ExtractRGBFromTemplate("green-500"))
 	frame.progressBarBG:Kill()
 	frame.progressBar:CreateBackdrop()
 	frame.progressBar.backdrop:SetOutside(frame.progressBarBG)

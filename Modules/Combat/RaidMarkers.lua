@@ -1,6 +1,7 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local RM = W:NewModule("RaidMarkers", "AceEvent-3.0")
 local S = W.Modules.Skins ---@type Skins
+local C = W.Utilities.Color
 
 local _G = _G
 local GameTooltip = _G.GameTooltip
@@ -354,7 +355,7 @@ function RM:CreateButtons()
 			if not self.db.inverse then
 				tooltipText = format(
 					"%s\n%s",
-					L["Click to clear all marks."] .. " (|cff2ecc71" .. L["takes 3s"] .. "|r)",
+					L["Click to clear all marks."] .. " " .. C.StringByTemplate(L["takes 3s"], "teal-400"),
 					format(L["%s + Click to remove all worldmarkers."], RM.modifierString)
 				)
 			else

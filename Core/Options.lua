@@ -3,6 +3,8 @@ local F ---@type Functions
 local E, L ---@type table, table
 W, F, E, L = unpack((select(2, ...)))
 
+local C = W.Utilities.Color ---@type ColorUtility
+
 local tinsert = tinsert
 local tconcat = table.concat
 
@@ -48,29 +50,16 @@ E.PopupDialogs.WINDTOOLS_EDITBOX = {
 	hideOnEscape = 1,
 }
 
-local function green(str)
-	return "|cff00d1b2" .. str .. "|r"
-end
-
-local function red(str)
-	return "|cffff3860" .. str .. "|r"
-end
-
-local function grey(str)
-	return "|cffbbbbbb" .. str .. "|r"
-end
-
 local qqGroupNumbers = tconcat({
-	format("%s (%d): %s (%s)", L["QQ Group"], 1, "336069019", grey(L["Almost full"])),
-	format("%s (%d): %s (%s)", L["QQ Group"], 2, "948518444", grey(L["Almost full"])),
-	format("%s (%d): %s (%s)", L["QQ Group"], 3, "687772809", green(L["Recommended"])),
+	format("%s (%d): %s (%s)", L["QQ Group"], 1, "336069019", C.StringByTemplate(L["Almost full"], "rose-500")),
+	format("%s (%d): %s (%s)", L["QQ Group"], 2, "948518444", C.StringByTemplate(L["Almost full"], "rose-500")),
+	format("%s (%d): %s (%s)", L["QQ Group"], 3, "687772809", C.StringByTemplate(L["Recommended"], "green-500")),
 }, "\n")
 
 local qqGroupDescription = tconcat({
 	L["This the QQ group for Wind Addons users."],
-	red(L["!! No talking about specific UI sets !!"]),
-	"",
-	L["Click [%s] to show the QQ groups."]:format(green(L["I got it!"])),
+	C.StringByTemplate(L["!! No talking about specific UI sets !!"], "rose-500"),
+	format(L["Click [%s] to show the QQ groups."], C.StringByTemplate(L["I got it!"], "green-500")),
 }, "\n")
 
 E.PopupDialogs.WINDTOOLS_QQ_GROUP_DIALOG = {

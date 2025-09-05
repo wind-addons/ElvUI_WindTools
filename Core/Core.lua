@@ -1,6 +1,7 @@
 local W ---@class WindTools
 local F, E, L ---@type Functions, ElvUI, table
 W, F, E, L = unpack((select(2, ...)))
+local C = W.Utilities.Color ---@type ColorUtility
 
 local _G = _G
 local format = format
@@ -45,7 +46,7 @@ E.PopupDialogs.WINDTOOLS_ELVUI_OUTDATED = {
 E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 	text = format(L["Welcome to %s %s!"], W.Title, W.DisplayVersion),
 	button1 = L["Open Changelog"],
-	button2 = format("|cffaaaaaa%s|r", L["Next Time"]),
+	button2 = C.StringByTemplate(L["Next Time"], "gray-300"),
 	OnAccept = function(self)
 		E:ToggleOptions("WindTools,information,changelog")
 	end,
@@ -54,10 +55,13 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 
 E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
 	text = format(
-		"%s\n%s\n\n|cffaaaaaa%s|r",
-		format(L["%s detects CVar %s has been changed."], W.Title, "|cff209ceeActionButtonUseKeyDown|r"),
+		"%s\n%s\n\n%s",
+		format(L["%s detects CVar %s has been changed."], W.Title, C.StringByTemplate("ActionButtonUseKeyDown", "blue-400")),
 		L["It will cause some buttons not to work properly before UI reloading."],
-		format(L["You can disable this alert in [%s]-[%s]-[%s]"], W.Title, L["Advanced"], L["Game Fix"])
+		C.StringByTemplate(
+			format(L["You can disable this alert in [%s]-[%s]-[%s]"], W.Title, L["Advanced"], L["Game Fix"]),
+			"neutral-300"
+		)
 	),
 	button1 = L["Reload UI"],
 	button2 = CANCEL,
@@ -201,8 +205,8 @@ function W:ChangelogReadAlert()
 			F.Print(
 				format(
 					"%s %s",
-					format(L["Welcome to version %s!"], W.Utilities.Color.StringByTemplate(W.Version, "primary")),
-					format("|cff71d5ff|Hwtlink:changelog::|h[%s]|h|r", L["Open Changelog"])
+					format(L["Welcome to version %s!"], C.StringByTemplate(W.Version, "teal-400")),
+					C.StringByTemplate(format("|Hwtlink:changelog::|h[%s]|h", L["Open Changelog"]), "sky-400")
 				)
 			)
 		end

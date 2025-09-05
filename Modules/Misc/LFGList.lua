@@ -344,7 +344,7 @@ function LL:UpdateEnumerate(Enumerate)
 			and result.leaderDungeonScoreInfo[1]
 			and result.leaderDungeonScoreInfo[1].bestRunLevel
 		if bestRun then
-			local template = result.leaderDungeonScoreInfo[1].finishedSuccess and "success" or "greyLight"
+			local template = result.leaderDungeonScoreInfo[1].finishedSuccess and "green-400" or "gray-400"
 			bestText = C.StringByTemplate("+" .. bestRun, template)
 		end
 
@@ -1130,7 +1130,7 @@ function LL:InitializeRightPanel()
 			})
 		end
 
-		local vaultItemString = "|cff666666" .. L["No Mythic+ Runs"] .. "|r"
+		local vaultItemString = C.StringByTemplate(L["No Mythic+ Runs"], "gray-400")
 
 		if #vaultStatusCache > 0 then
 			vaultItemString = C.StringWithKeystoneLevel(tostring(vaultStatusCache[1].level), vaultStatusCache[1].level)

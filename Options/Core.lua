@@ -60,7 +60,7 @@ W.options = {
 	},
 	unitFrames = {
 		order = 108,
-		name = L["UnitFrames"],
+		name = L["Unit Frames"],
 		desc = L["Add more features to ElvUI UnitFrames."],
 		icon = W.Media.Icons.unitFrames,
 		args = {},

@@ -1,8 +1,8 @@
 local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
+local C = W.Utilities.Color
 local M = W.Modules.Misc ---@class Misc
 
 local _G = _G
-local format = format
 local gsub = gsub
 local hooksecurefunc = hooksecurefunc
 local strmatch = strmatch
@@ -27,7 +27,7 @@ local function ModifyGuildNews(button, _, text, name, link, ...)
 	end
 
 	if cache[link] then
-		local coloredItemLevel = format("|cfff1c40f%s|r", cache[link])
+		local coloredItemLevel = C.StringByTemplate(cache[link], "yellow-400")
 		link = gsub(link, "|h%[(.-)%]|h", "|h[" .. coloredItemLevel .. ":%1]|h")
 		button.text:SetFormattedText(text, name, link, ...)
 	end

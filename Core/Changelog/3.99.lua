@@ -47,6 +47,7 @@ W.Changelog[399] = {
 			"[美化皮肤] 新增了 Manuscripts Journal 美化外观.",
 			"[预组队列表] 在队伍钥匙界面 (默认在预组队界面的底部第三个标签页内) 新增了一个按钮, 可以一键将当前队伍的钥石信息发送到队伍频道.",
 			"[鼠标提示] 新增一个选项, 可以在使用工具箱内团队信息时自动清理暴雪默认的团队信息, 默认开启.",
+			"[事件追踪器] 对周常部分进行了重新修复和设计更新, 现在能够对地心之战不同种类的周常任务进行追踪了.",
 		},
 		["zhTW"] = {
 			"[美化皮膚] 新增了暴雪區域地圖的美化外觀.",
@@ -55,6 +56,7 @@ W.Changelog[399] = {
 			"[美化皮膚] 新增了 Manuscripts Journal 美化外觀.",
 			"[預組隊列表] 在隊伍鑰匙介面 (預設在預組介面的底部第三個標籤頁內) 新增了一個按鈕, 可以一鍵將當前隊伍的鑰石資訊發送到隊伍頻道.",
 			"[滑鼠提示] 新增一個選項, 可以在使用工具箱內團隊資訊時自動清理暴雪預設的團隊資訊, 預設開啟.",
+			"[事件追蹤器] 對週常部分進行了重新修復和設計更新, 現在能夠對地心之戰不同種類的週常任務進行追蹤了.",
 		},
 		["enUS"] = {
 			"[Skins] Add Blizzard Battlefield Map skin.",
@@ -63,6 +65,7 @@ W.Changelog[399] = {
 			"[Skins] Add Manuscripts Journal skin.",
 			"[LFG List] Add a button in the group keystone interface (by default in the third tab at the bottom of the LFG List) that allows you to send the current group's keystone information to the party chat with one click.",
 			"[Tooltip] Add an option to automatically clean up Blizzard's default group info when using the Group Info feature in the toolbox, enabled by default.",
+			"[Event Tracker] Redesign and fix the weekly tracker, now able to track different types of weekly quests in TWW.",
 		},
 		["koKR"] = {
 			"[스킨] 블리자드 전장 지도 외관 추가.",
@@ -71,6 +74,7 @@ W.Changelog[399] = {
 			"[스킨] Manuscripts Journal 외관 추가.",
 			"[LFG 목록] 그룹 열쇠 인터페이스(기본적으로 LFG 목록 하단의 세 번째 탭)에 버튼을 추가하여 현재 그룹의 열쇠 정보를 파티 채팅으로 한 번에 보낼 수 있습니다.",
 			"[툴팁] 도구 상자의 그룹 정보 기능을 사용할 때 블리자드의 기본 그룹 정보를 자동으로 정리하는 옵션을 추가했습니다. 기본적으로 활성화되어 있습니다.",
+			"[이벤트 추적기] 주간 추적기를 재설계하고 수정하여 이제 TWW의 다양한 유형의 주간 퀘스트를 추적할 수 있습니다.",
 		},
 		["ruRU"] = {
 			"[Скины] Добавлен скин для карты поля боя Blizzard.",
@@ -79,6 +83,7 @@ W.Changelog[399] = {
 			"[Скины] Добавлен скин для Manuscripts Journal.",
 			"[LFG список] Добавлена кнопка в интерфейс ключа группы (по умолчанию на третьей вкладке внизу списка LFG), которая позволяет отправить информацию о ключах текущей группы в групповой чат одним щелчком.",
 			"[Подсказка] Добавлена опция для автоматической очистки информации о группе Blizzard по умолчанию при использовании функции 'Информация о группе' на панели инструментов, Эта функция включена по умолчанию.",
+			"[Трекер событий] Переработан и исправлен еженедельный трекер, теперь можно отслеживать различные типы еженедельных заданий в TWW.",
 		},
 	},
 	IMPROVEMENT = {

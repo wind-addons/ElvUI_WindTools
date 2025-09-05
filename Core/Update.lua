@@ -8,6 +8,8 @@ local print = print
 local tonumber = tonumber
 local type = type
 
+---@cast E ElvUI
+
 local isFirstLine = true
 
 local DONE_ICON = format(" |T%s:0|t", W.Media.Icons.accept)
@@ -301,6 +303,13 @@ function W:UpdateScripts()
 		end
 
 		UpdateMessage(L["Tooltips"] .. ": " .. L["Update Database"], privateVersion)
+	end
+
+	if profileVersion < 3.99 then
+		if E.db.WT and E.db.WT.maps and E.db.WT.maps.eventTracker and E.db.WT.maps.eventTracker.khazAlgarEmissary then
+			E.db.WT.maps.eventTracker.khazAlgarEmissary = nil
+			UpdateMessage(L["Event Tracker"] .. ": " .. L["Database cleanup"], profileVersion)
+		end
 	end
 
 	if privateVersion < 3.99 then

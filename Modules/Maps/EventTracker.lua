@@ -11,10 +11,11 @@ local date = date
 local floor = floor
 local format = format
 local ipairs = ipairs
+local next = next
 local pairs = pairs
+local tinsert = tinsert
 local type = type
 local unpack = unpack
-local tinsert = tinsert
 
 local CreateFrame = CreateFrame
 local EventRegistry = EventRegistry
@@ -22,7 +23,6 @@ local GetServerTime = GetServerTime
 local PlaySoundFile = PlaySoundFile
 
 local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
-local C_TaskQuest_GetQuestsOnMap = C_TaskQuest.GetQuestsOnMap
 local C_Timer_NewTicker = C_Timer.NewTicker
 
 local LeftButtonIcon = "|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t"
@@ -98,24 +98,52 @@ local functionFactory = {
 		ticker = {
 			interval = 2,
 			dateUpdater = function(self)
-				local completed = 0
-				if self.args.questIDs then
-					local questIDs = type(self.args.questIDs) == "function" and self.args:questIDs()
-						or self.args.questIDs
-					-- lower than 0 means all quests need to be completed
-					if self.args.checkAllCompleted then
-						completed = 1 - #questIDs
-					end
+				if not self.args.questIDs then
+					return
+				end
 
-					for _, questID in pairs(questIDs) do
-						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
-							completed = completed + 1
+				local questIDs = type(self.args.questIDs) == "function" and self.args:questIDs() or self.args.questIDs
+
+				if not questIDs or type(questIDs) ~= "table" then
+					return
+				end
+
+				if type(questIDs) == "table" and type(next(questIDs)) ~= "number" then
+					local completedStorylines, totalStorylines = 0, 0
+
+					for _, storylineQuests in pairs(questIDs) do
+						totalStorylines = totalStorylines + 1
+						local storylineCompleted = false
+
+						for _, questID in pairs(storylineQuests) do
+							if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+								storylineCompleted = true
+								break
+							end
+						end
+
+						if storylineCompleted then
+							completedStorylines = completedStorylines + 1
 						end
 					end
+
+					self.isCompleted = (completedStorylines == totalStorylines)
+					return
 				end
+
+				local completed = 0
+				if self.args.checkAllCompleted then
+					completed = 1 - #questIDs
+				end
+
+				for _, questID in pairs(questIDs) do
+					if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+						completed = completed + 1
+					end
+				end
+
 				self.isCompleted = (completed > 0)
 			end,
-
 			uiUpdater = function(self)
 				self.icon:SetDesaturated(self.args.desaturate and self.isCompleted)
 				local texCoord = self.isCompleted and { F.GetRoleTexCoord("READY") } or { F.GetRoleTexCoord("REFUSE") }
@@ -154,19 +182,14 @@ local functionFactory = {
 					_G.GameTooltip:AddLine(" ")
 					_G.GameTooltip:AddLine(L["Quest Progress"])
 					for _, data in ipairs(questProgress) do
-						if data.questID then
-							local isCompleted = C_QuestLog_IsQuestFlaggedCompleted(data.questID)
-							local color = isCompleted and "success" or "danger"
-							local label = type(data.label) == "function" and data:label() or data.label
-							if type(label) == "string" then
-								_G.GameTooltip:AddDoubleLine(
-									label,
-									C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color),
-									1,
-									1,
-									1
-								)
-							end
+						local isCompleted = data.isCompleted
+							or data.questID and C_QuestLog_IsQuestFlaggedCompleted(data.questID)
+						local color = isCompleted and "success" or "danger"
+						local textL = type(data.label) == "function" and data:label() or data.label
+						local textR = data.rightText
+							or C.StringByTemplate(isCompleted and L["Completed"] or L["Not Completed"], color)
+						if type(textL) == "string" then
+							_G.GameTooltip:AddDoubleLine(textL, textR, 1, 1, 1)
 						end
 					end
 				end

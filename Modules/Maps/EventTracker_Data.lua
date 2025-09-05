@@ -2,6 +2,8 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local C = W.Utilities.Color
 local ET = W:GetModule("EventTracker") ---@class EventTracker
 
+local _G = _G
+local type = type
 local floor = floor
 local format = format
 local ipairs = ipairs
@@ -17,8 +19,10 @@ local GetProfessionInfo = GetProfessionInfo
 local C_Map_GetBestMapForUnit = C_Map.GetBestMapForUnit
 local C_Map_GetMapInfo = C_Map.GetMapInfo
 local C_Map_GetPlayerMapPosition = C_Map.GetPlayerMapPosition
-local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local C_NamePlate_GetNamePlates = C_NamePlate.GetNamePlates
+local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
+local C_QuestLog_IsOnQuest = C_QuestLog.IsOnQuest
+local C_QuestLog_IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 
 local function worldMapIDSetter(idOrFunc)
 	return function(...)
@@ -182,46 +186,84 @@ ET.EventData = {
 			icon = 236681,
 			type = "weekly",
 			questIDs = {
-				82449, -- 世界之魂的呼喚
-				82452, -- 世界之魂：世界任務
-				82453, -- 世界之魂：安可！
-				82482, -- 世界之魂：嗅聞
-				82483, -- 世界之魂：散布光芒
-				82485, -- 世界之魂：燼釀酒莊
-				82486, -- 世界之魂：培育所
-				82487, -- 世界之魂：石庫
-				82488, -- 世界之魂：暗焰裂縫
-				82489, -- 世界之魂：破曉者號
-				82490, -- 世界之魂：聖焰隱修院
-				82491, -- 世界之魂：『回音之城』厄拉卡拉
-				82492, -- 世界之魂：蛛絲城
-				82493, -- 世界之魂：破曉者號
-				82494, -- 世界之魂：『回音之城』厄拉卡拉
-				82495, -- 世界之魂：燼釀酒莊
-				82496, -- 世界之魂：蛛絲城
-				82497, -- 世界之魂：石庫
-				82498, -- 世界之魂：暗焰裂縫
-				82499, -- 世界之魂：聖焰隱修院
-				82500, -- 世界之魂：培育所
-				82501, -- 世界之魂：破曉者號
-				82502, -- 世界之魂：『回音之城』厄拉卡拉
-				82503, -- 世界之魂：燼釀酒莊
-				82504, -- 世界之魂：蛛絲城
-				82505, -- 世界之魂：石庫
-				82506, -- 世界之魂：暗焰裂縫
-				82507, -- 世界之魂：聖焰隱修院
-				82508, -- 世界之魂：培育所
-				82509, -- 世界之魂：奈幽巴宮殿
-				82510, -- 世界之魂：奈幽巴宮殿
-				82511, -- 世界之魂：甦醒機械
-				82512, -- 世界之魂：世界首領
-				82516, -- 世界之魂：締結合約
-				82659, -- 世界之魂：奈幽巴宮殿
-				82678, -- 文庫：第一張圓盤
-				82679, -- 文庫：尋覓歷史
-				82708, -- 探究：奈幽蟲族威脅
+				[L["Delves Weekly"]] = {
+					82706, -- 探究：世界性研究
+					82708, -- 豐碩探究
+					82709, -- 豐碩探究
+					82710, -- 豐碩探究
+					82711, -- 豐碩探究
+					82712, -- 豐碩探究
+					82746, -- 豐碩探究
+				},
+				[L["Archives Weekly"]] = {
+					82678, -- 文庫：第一張圓盤
+					82679, -- 文庫：尋覓歷史
+				},
+				[L["Weekend Event"]] = {
+					83345, -- 戰鬥的呼喚
+					83347, -- 征戰使節
+					83357, -- 箇中翹楚
+					83358, -- 競技場的呼喚
+					83359, -- 穿越時光的破碎之路
+					83360, -- 穿越時光的魔化之路
+					83362, -- 穿越時光的隱蔽之路
+					83363, -- 穿越時光的燃燒之路
+					83364, -- 穿越時光的破碎之路
+					83365, -- 穿越時光的冰封之路
+					83366, -- 世界任務正等著你
+					84776, -- 來探究吧
+				},
+				[L["Dungeon Weekly"]] = {
+					-- https://www.wowhead.com/npc=226623/biergoth
+					83432, -- 培育所
+					83436, -- 燼釀酒莊
+					83443, -- 暗焰裂縫
+					83457, -- 石庫
+					83458, -- 聖焰隱修院
+					83459, -- 破曉者號
+					83465, -- 『回音之城』厄拉卡拉
+					83469, -- 蛛絲城
+					86203, -- 水閘行動
+				},
 			},
-			hasWeeklyReward = true,
+			questProgress = function(args)
+				local questIDs = type(args.questIDs) == "function" and args:questIDs() or args.questIDs
+				local progress = {}
+
+				for storylineName, storylineQuests in pairs(questIDs) do
+					local weeklyQuestID, status
+					for _, questID in pairs(storylineQuests) do
+						if C_QuestLog_IsQuestFlaggedCompleted(questID) then
+							weeklyQuestID = questID
+							status = "completed"
+							break
+						end
+
+						if C_QuestLog_IsOnQuest(questID) then
+							weeklyQuestID = questID
+							status = "inProgress"
+							break
+						end
+					end
+
+					local rightText = ""
+					local questName = weeklyQuestID and C_QuestLog_GetTitleForQuestID(weeklyQuestID)
+
+					if questName then
+						if status == "inProgress" then
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["In Progress"], "warning"))
+						elseif status == "completed" then
+							rightText = format("%s - %s", questName, C.StringByTemplate(L["Completed"], "success"))
+						end
+					else
+						rightText = C.StringByTemplate(L["Not Accepted"], "danger")
+					end
+
+					tinsert(progress, { label = storylineName, rightText = rightText })
+				end
+
+				return progress
+			end,
 			eventName = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
 			location = C_Map_GetMapInfo(2339).name,
 			label = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),

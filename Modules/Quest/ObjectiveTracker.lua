@@ -34,14 +34,6 @@ local trackers = {
 local replaceRules = {}
 local numReplaceRules = #GetKeysArray(replaceRules)
 
----@class RGB
----@field r number
----@field g number
----@field b number
-
----@class RGBA : RGB
----@field a number
-
 ---Override the Blizzard text color used in objective tracker
 ---@param rgba RGBA The RGBA color table
 ---@param config {classColor: boolean, customColorNormal: RGB, customColorHighlight: RGB} The configuration table

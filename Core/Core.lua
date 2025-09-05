@@ -254,3 +254,13 @@ function W:ADDON_LOADED(event, addOnName)
 		self:TryReplaceEventTraceLogEvent()
 	end
 end
+
+--- Type Definitions
+
+---@class RGB
+---@field r number
+---@field g number
+---@field b number
+
+---@class RGBA : RGB
+---@field a number

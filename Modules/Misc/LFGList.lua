@@ -63,6 +63,7 @@ local C_SpecializationInfo_GetSpecializationInfo = C_SpecializationInfo.GetSpeci
 local Enum_LFGListFilter = Enum.LFGListFilter
 
 local GROUP_FINDER_CATEGORY_ID_DUNGEONS = GROUP_FINDER_CATEGORY_ID_DUNGEONS
+local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 
 local seasonGroups = C_LFGList_GetAvailableActivityGroups(
 	GROUP_FINDER_CATEGORY_ID_DUNGEONS,
@@ -301,7 +302,8 @@ function LL:UpdateEnumerate(Enumerate)
 	for i = 1, result.numMembers do
 		local playerInfo = C_LFGList_GetSearchResultPlayerInfo(button.resultID, i)
 		if playerInfo then
-			local role, class, spec, isLeader = playerInfo.assignedRole, playerInfo.classFilename, playerInfo.specName, playerInfo.isLeader
+			local role, class, spec, isLeader =
+				playerInfo.assignedRole, playerInfo.classFilename, playerInfo.specName, playerInfo.isLeader
 			tinsert(cache[role], { class, spec, isLeader })
 		end
 	end

@@ -3,8 +3,11 @@ local UF = E:GetModule("UnitFrames")
 local T = W.Modules.Tooltips
 local LFGPI = W.Utilities.LFGPlayerInfo
 
+local _G = _G
 local format = format
+local gsub = gsub
 local ipairs = ipairs
+local strfind = strfind
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 

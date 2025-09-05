@@ -56,7 +56,11 @@ E.PopupDialogs.WINDTOOLS_OPEN_CHANGELOG = {
 E.PopupDialogs.WINDTOOLS_BUTTON_FIX_RELOAD = {
 	text = format(
 		"%s\n%s\n\n%s",
-		format(L["%s detects CVar %s has been changed."], W.Title, C.StringByTemplate("ActionButtonUseKeyDown", "blue-400")),
+		format(
+			L["%s detects CVar %s has been changed."],
+			W.Title,
+			C.StringByTemplate("ActionButtonUseKeyDown", "blue-400")
+		),
 		L["It will cause some buttons not to work properly before UI reloading."],
 		C.StringByTemplate(
 			format(L["You can disable this alert in [%s]-[%s]-[%s]"], W.Title, L["Advanced"], L["Game Fix"]),

@@ -23,9 +23,15 @@ local function UpdateMessage(text, from)
 	end
 
 	E:Delay(1, function()
-		print(text .. format("(%.2f -> %s)...",
-		C.StringByTemplate(from, "neutral-300"),
-		C.StringByTemplate(W.Version, "emerald-400")) .. DONE_ICON)
+		print(
+			text
+				.. format(
+					"(%.2f -> %s)...",
+					C.StringByTemplate(from, "neutral-300"),
+					C.StringByTemplate(W.Version, "emerald-400")
+				)
+				.. DONE_ICON
+		)
 	end)
 end
 

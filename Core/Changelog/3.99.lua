@@ -9,6 +9,7 @@ W.Changelog[399] = {
 			"重构了对第三方函数库美化的核心逻辑.",
 			"由于暴雪已经修复相关 Bug, 移除对地下堡部分事件的节流处理.",
 			"优化了韩语翻译文本. 感谢 Crazyyoungs",
+			"优化各处的颜色显示, 统一插件内使用的颜色模板.",
 		},
 		["zhTW"] = {
 			"大量的過期代碼整理.",
@@ -16,6 +17,7 @@ W.Changelog[399] = {
 			"重構了對第三方函式庫美化的核心邏輯.",
 			"由於暴雪已經修復相關 Bug, 移除對探究部分事件的節流處理.",
 			"優化了韓文翻譯文本. 感謝 Crazyyoungs",
+			"優化各處的顏色顯示, 統一插件內使用的顏色模板.",
 		},
 		["enUS"] = {
 			"Massive cleanup of deprecated code.",
@@ -23,6 +25,7 @@ W.Changelog[399] = {
 			"Refactor the core logic for third-party library skinning.",
 			"Remove throttling for some Delves events since Blizzard has fixed the related bugs.",
 			"Optimize Korean translation text. Thanks Crazyyoungs.",
+			"Optimize color display in various places and unify the color templates used in the addon.",
 		},
 		["koKR"] = {
 			"대량의 사용되지 않는 코드를 정리했습니다.",
@@ -30,6 +33,7 @@ W.Changelog[399] = {
 			"서드파티 라이브러리 외관의 핵심 로직을 리팩터링했습니다.",
 			"블리자드에서 관련 버그를 수정했으므로 지하 던전 일부 이벤트의 제한 처리를 제거했습니다.",
 			"한국어 번역 텍스트를 최적화했습니다. Crazyyoungs에게 감사드립니다.",
+			"여러 위치의 색상 표시를 최적화하고 애드온에서 사용하는 색상 템플릿을 통합했습니다.",
 		},
 		["ruRU"] = {
 			"Массовая очистка устаревшего кода.",
@@ -37,6 +41,7 @@ W.Changelog[399] = {
 			"Рефакторинг основной логики для стилизации сторонних библиотек.",
 			"Удалено ограничение для некоторых событий подземелий, поскольку Blizzard исправила связанные ошибки.",
 			"Оптимизирован текст перевода на корейский. Спасибо Crazyyoungs.",
+			"Оптимизировано отображение цветов в различных местах и унифицированы шаблоны цветов, используемые в аддоне.",
 		},
 	},
 	NEW = {

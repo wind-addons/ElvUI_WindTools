@@ -727,11 +727,11 @@ P.maps = {
 			scale = 1,
 			outline = "OUTLINE",
 		},
-		twwProfessions = {
+		professionsWeeklyTWW = {
 			enable = true,
 			desaturate = true,
 		},
-		khazAlgarEmissary = {
+		weeklyTWW = {
 			enable = true,
 			desaturate = true,
 		},

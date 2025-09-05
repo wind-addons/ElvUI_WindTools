@@ -1566,6 +1566,7 @@ L["WeakAuras Options"] = true
 L["WeakAuras Shadow"] = true
 L["Weapon Category"] = true
 L["Weekly"] = true
+L["Weekly Quest"] = true
 L["Weekly Reward"] = true
 L["Weekly Rewards"] = true
 L["Welcome to %s %s!"] = true

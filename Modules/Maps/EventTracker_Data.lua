@@ -222,7 +222,7 @@ ET.EventData = {
 				82708, -- 探究：奈幽蟲族威脅
 			},
 			hasWeeklyReward = true,
-			eventName = format("%s (%s)", L["Weekly Quest"], L["The War Within"]),
+			eventName = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
 			location = C_Map_GetMapInfo(2339).name,
 			label = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
 			onClick = worldMapIDSetter(2339),

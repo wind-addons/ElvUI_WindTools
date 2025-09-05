@@ -1566,6 +1566,7 @@ L["WeakAuras Options"] = "Opciones WeakAuras"
 L["WeakAuras Shadow"] = "Sombras WeakAuras"
 L["Weapon Category"] = "Categoria de Arma"
 L["Weekly"] = "Semanal"
+L["Weekly Quest"] = true
 L["Weekly Reward"] = "Recompensa Semanal"
 L["Weekly Rewards"] = "Recompensas Semanales"
 L["Welcome to %s %s!"] = "Bienvenido a %s %s!"

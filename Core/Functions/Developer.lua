@@ -5,7 +5,6 @@ W, F, E = unpack((select(2, ...)))
 
 ---@cast W WindTools
 ---@cast F Functions
-local C = W.Utilities.Color
 
 local _G = _G
 local format = format
@@ -133,7 +132,7 @@ function F.Developer.InjectLogger(module)
 
 			level = strlower(level)
 
-			local richMessage = format("%s %s", C.StringByTemplate(self.name, "amber-500"), message)
+			local richMessage = format("%s %s", W.Utilities.Color.StringByTemplate(self.name, "amber-500"), message)
 			if level == "info" then
 				F.Developer.LogInfo(richMessage)
 			elseif level == "warning" then

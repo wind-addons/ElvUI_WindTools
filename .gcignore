@@ -1,0 +1,27 @@
+# WoW Global Check - Ignore Patterns
+# Ignore common library directories
+Libraries/
+Libs/
+lib/
+
+# Ignore common addon directories
+locales/
+Locales/
+
+# Ignore test files
+*_test.lua
+*Test.lua
+test_*.lua
+
+# Ignore backup and temporary files
+*.backup
+*.tmp
+*.bak
+*~
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.sublime-*
+.kiro/
+.claude/

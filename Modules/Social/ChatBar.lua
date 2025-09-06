@@ -143,18 +143,18 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 		button.defaultFontSize = self.db.font.size
 
 		-- Tooltip
-		button:SetScript("OnEnter", function(self)
+		button:SetScript("OnEnter", function(btn)
 			if CB.db.style == "BLOCK" then
-				if self.backdrop.shadow then
-					self.backdrop.shadow:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
-					self.backdrop.shadow:Show()
+				if btn.backdrop.shadow then
+					btn.backdrop.shadow:SetBackdropBorderColor(ElvUIValueColor.r, ElvUIValueColor.g, ElvUIValueColor.b)
+					btn.backdrop.shadow:Show()
 				end
 			else
-				local fontName, _, fontFlags = self.text:GetFont()
-				self.text:FontTemplate(fontName, self.defaultFontSize + 4, fontFlags)
+				local fontName, _, fontFlags = btn.text:GetFont()
+				btn.text:FontTemplate(fontName, btn.defaultFontSize + 4, fontFlags)
 			end
 
-			_G.GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 7)
+			_G.GameTooltip:SetOwner(btn, "ANCHOR_TOP", 0, 7)
 			_G.GameTooltip:SetText(button.tooltip or _G[name] or "")
 
 			if tips then
@@ -166,19 +166,19 @@ function CB:UpdateButton(name, func, anchorPoint, x, y, color, tex, tooltip, tip
 			_G.GameTooltip:Show()
 		end)
 
-		button:SetScript("OnLeave", function(self)
+		button:SetScript("OnLeave", function(btn)
 			_G.GameTooltip:Hide()
 			if CB.db.style == "BLOCK" then
-				self.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
+				btn.backdrop.shadow:SetBackdropBorderColor(0, 0, 0)
 
 				if not CB.db.blockShadow then
-					if self.backdrop.shadow then
-						self.backdrop.shadow:Hide()
+					if btn.backdrop.shadow then
+						btn.backdrop.shadow:Hide()
 					end
 				end
 			else
-				local fontName, _, fontFlags = self.text:GetFont()
-				self.text:FontTemplate(fontName, self.defaultFontSize, fontFlags)
+				local fontName, _, fontFlags = btn.text:GetFont()
+				btn.text:FontTemplate(fontName, btn.defaultFontSize, fontFlags)
 			end
 		end)
 
@@ -272,7 +272,7 @@ function CB:UpdateBar()
 		end
 
 		if show then
-			local chatFunc = function(self, mouseButton)
+			local chatFunc = function(btn, mouseButton)
 				if mouseButton ~= "LeftButton" or not db.cmd then
 					return
 				end
@@ -302,7 +302,7 @@ function CB:UpdateBar()
 			self:Log("warning", L["World channel no found, please setup again."])
 			self:DisableButton("WORLD")
 		else
-			local chatFunc = function(self, mouseButton)
+			local chatFunc = function(btn, mouseButton)
 				local channelId = GetChannelName(config.name)
 				if mouseButton == "LeftButton" then
 					local autoJoined = false
@@ -397,7 +397,7 @@ function CB:UpdateBar()
 	if self.db.channels.emote.enable and E.db.WT.social.emote.enable then
 		local db = self.db.channels.emote
 
-		local chatFunc = function(self, mouseButton)
+		local chatFunc = function(btn, mouseButton)
 			if mouseButton == "LeftButton" then
 				if _G.WTCustomEmoteFrame then
 					if _G.WTCustomEmoteFrame:IsShown() then
@@ -406,7 +406,7 @@ function CB:UpdateBar()
 						_G.WTCustomEmoteFrame:Show()
 					end
 				else
-					self:Log("warning", L["Please enable Emote module in WindTools Social category."])
+					CB:Log("warning", L["Please enable Emote module in WindTools Social category."])
 				end
 			end
 		end
@@ -443,7 +443,7 @@ function CB:UpdateBar()
 	if self.db.channels.roll.enable then
 		local db = self.db.channels.roll
 
-		local chatFunc = function(self, mouseButton)
+		local chatFunc = function(btn, mouseButton)
 			if mouseButton == "LeftButton" then
 				RandomRoll(1, 100)
 			end

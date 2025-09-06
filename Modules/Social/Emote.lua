@@ -1,4 +1,4 @@
-local W, F, E, L, _, _, G = unpack((select(2, ...)))
+local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI, table
 local CE = W:NewModule("Emote", "AceHook-3.0", "AceTimer-3.0")
 local S = W.Modules.Skins ---@type Skins
 
@@ -118,7 +118,6 @@ local function EmoteFilter(self, event, msg, ...)
 end
 
 function CE:CreateInterface()
-	local button
 	local width, height, column, space = 20, 20, 10, 6
 	local index = 0
 	-- 创建 ElvUI 风格框体
@@ -142,26 +141,26 @@ function CE:CreateInterface()
 	frame:EnableMouse(true)
 	frame:RegisterForDrag("LeftButton")
 
-	frame:SetScript("OnMouseDown", function(self, button)
-		if button == "LeftButton" and not self.isMoving then
-			self:StartMoving()
-			self.isMoving = true
+	frame:SetScript("OnMouseDown", function(scriptFrame, mouseButton)
+		if mouseButton == "LeftButton" and not scriptFrame.isMoving then
+			scriptFrame:StartMoving()
+			scriptFrame.isMoving = true
 		end
 	end)
-	frame:SetScript("OnMouseUp", function(self, button)
-		if button == "LeftButton" and self.isMoving then
-			self:StopMovingOrSizing()
-			self.isMoving = false
-		elseif button == "RightButton" and not self.isMoving then
+	frame:SetScript("OnMouseUp", function(scriptFrame, mouseButton)
+		if mouseButton == "LeftButton" and scriptFrame.isMoving then
+			scriptFrame:StopMovingOrSizing()
+			scriptFrame.isMoving = false
+		elseif mouseButton == "RightButton" and not scriptFrame.isMoving then
 			-- 右键复原
-			self:ClearAllPoints()
-			self:SetPoint("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
+			scriptFrame:ClearAllPoints()
+			scriptFrame:SetPoint("TOPLEFT", _G.WTCustomEmoteFrameMover, "TOPLEFT", 0, 0)
 		end
 	end)
-	frame:SetScript("OnHide", function(self)
-		if self.isMoving then
-			self:StopMovingOrSizing()
-			self.isMoving = false
+	frame:SetScript("OnHide", function(scriptFrame)
+		if scriptFrame.isMoving then
+			scriptFrame:StopMovingOrSizing()
+			scriptFrame.isMoving = false
 		end
 	end)
 
@@ -186,8 +185,8 @@ function CE:CreateInterface()
 	end)
 
 	-- 建立表情
-	for _, v in ipairs(emotes) do
-		button = CreateFrame("Button", nil, frame)
+	for _, v in pairs(emotes) do
+		local button = CreateFrame("Button", nil, frame)
 		button.emote = "{" .. (v[E.global.general.locale] or v.key) .. "}"
 		button:SetSize(width, height)
 		if v.texture then
@@ -232,6 +231,7 @@ end
 function CE:ParseChatBubbles()
 	for _, frame in pairs(C_ChatBubbles_GetAllChatBubbles()) do
 		local holder = frame:GetChildren()
+        ---@cast holder ChatBubbleTemplate
 		if holder and not holder:IsForbidden() then
 			local str = holder and holder.String
 			if str then

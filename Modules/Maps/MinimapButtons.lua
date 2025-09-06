@@ -21,7 +21,6 @@ local unpack = unpack
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
-local RunNextFrame = RunNextFrame
 local UnregisterStateDriver = UnregisterStateDriver
 
 local C_AddOns_IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -143,8 +142,8 @@ function MB:HandleLibDBIconButton(button, name)
 
 	self:SecureHook(button, "SetShown", "OnButtonSetShown")
 
-	if button.icon and not self:IsHooked(button.icon, "SetTexCoord") then
-		self:SecureHook(button.icon, "SetTexCoord", function(_, ...)
+	if button.icon and button.icon.SetTexCoord and not self:IsHooked(button.icon, "SetTexCoord") then
+		self:RawHook(button.icon, "SetTexCoord", function(icon, ...)
 			local arg1, arg2, arg3, arg4 = ...
 			if
 				F.IsAlmost(arg1, 0.05)
@@ -152,13 +151,15 @@ function MB:HandleLibDBIconButton(button, name)
 				and F.IsAlmost(arg3, 0.05)
 				and F.IsAlmost(arg4, 0.95)
 			then
-				button.icon:SetTexCoord(unpack(E.TexCoords))
+				return self.hooks[icon].SetTexCoord(icon, unpack(E.TexCoords))
 			end
 
 			if F.IsAlmost(arg1, 0) and F.IsAlmost(arg2, 1) and F.IsAlmost(arg3, 0) and F.IsAlmost(arg4, 1) then
-				button.icon:SetTexCoord(unpack(E.TexCoords))
+				return self.hooks[icon].SetTexCoord(icon, unpack(E.TexCoords))
 			end
-		end)
+
+			return self.hooks[icon].SetTexCoord(icon, ...)
+		end, true)
 	end
 
 	return button:IsShown()

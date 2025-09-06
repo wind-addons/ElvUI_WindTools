@@ -5,12 +5,12 @@ local _G = _G
 
 local max = max
 local select = select
-local time = time
 
 local UnitClass = UnitClass
 local UnitName = UnitName
 local InCombatLockdown = InCombatLockdown
 
+local time = time()
 local hideTimes = 0
 function WC:TryFadeOut()
 	-- 保证最后一个点击可维持完整时间
@@ -30,7 +30,6 @@ do
 			return
 		end
 
-		local time = time()
 		if temp then
 			if temp.unit == unit and temp.x == x and temp.y == y then
 				if time < 3 + temp.time then

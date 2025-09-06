@@ -160,6 +160,7 @@ function MB:HandleLibDBIconButton(button, name)
 
 			return self.hooks[icon].SetTexCoord(icon, ...)
 		end, true)
+		button.icon:SetTexCoord(unpack(E.TexCoords))
 	end
 
 	return button:IsShown()

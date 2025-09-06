@@ -15,6 +15,8 @@ local isFirstLine = true
 
 local DONE_ICON = format(" |T%s:0|t", W.Media.Icons.accept)
 
+---@param text string
+---@param from number
 local function UpdateMessage(text, from)
 	if isFirstLine then
 		isFirstLine = false
@@ -22,31 +24,27 @@ local function UpdateMessage(text, from)
 		F.Print(L["Update"])
 	end
 
-	E:Delay(1, function()
-		print(
-			text
-				.. format(
-					"(%.2f -> %s)...",
-					C.StringByTemplate(from, "neutral-300"),
-					C.StringByTemplate(W.Version, "emerald-400")
-				)
-				.. DONE_ICON
-		)
-	end)
+	local versionText = format(
+		"(%s -> %s)...",
+		C.StringByTemplate(format("%.2f", from), "neutral-300"),
+		C.StringByTemplate(W.Version, "emerald-400")
+	)
+
+	E:Delay(1, print, text, versionText, DONE_ICON)
 end
 
 function W:UpdateScripts()
-	local currentVersion = tonumber(W.Version) -- installed WindTools Version
-	local globalVersion = tonumber(E.global.WT.version or "0") -- version in ElvUI Global
+	local currentVersion = tonumber(W.Version) or 0 -- installed WindTools Version
+	local globalVersion = tonumber(E.global.WT.version) or 0 -- version in ElvUI Global
 
 	-- from old updater
 	if globalVersion == 0 then
-		globalVersion = tonumber(E.global.WT.Version or "0")
+		globalVersion = tonumber(E.global.WT.Version) or 0
 		E.global.WT.Version = nil
 	end
 
-	local profileVersion = tonumber(E.db.WT.version or globalVersion) -- Version in ElvUI Profile
-	local privateVersion = tonumber(E.private.WT.version or globalVersion) -- Version in ElvUI Private
+	local profileVersion = tonumber(E.db.WT.version) or globalVersion -- Version in ElvUI Profile
+	local privateVersion = tonumber(E.private.WT.version) or globalVersion -- Version in ElvUI Private
 
 	if globalVersion == currentVersion and profileVersion == currentVersion and privateVersion == currentVersion then
 		return

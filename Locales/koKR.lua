@@ -901,6 +901,7 @@ L["Move (L\124\124R) Reset"] = "Move (L\124\124R) Reset"
 L["Move ElvUI Bags"] = "ElvUI 가방 이동"
 L["Move Frames"] = "프레임 이동"
 L["Move Speed"] = "이동 속도"
+L["Multi Language"] = true
 L["Mute"] = "음소거"
 L["Mute crying sounds of all races."] = "모든 종족의 울음소리를 제거 합니다."
 L["Mute the sound of dragons."] = "용의 소리를 음소거 합니다."

@@ -901,6 +901,7 @@ L["Move (L\124\124R) Reset"] = true
 L["Move ElvUI Bags"] = true
 L["Move Frames"] = true
 L["Move Speed"] = true
+L["Multi Language"] = true
 L["Mute"] = true
 L["Mute crying sounds of all races."] = true
 L["Mute the sound of dragons."] = true

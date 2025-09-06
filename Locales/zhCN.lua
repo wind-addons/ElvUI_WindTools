@@ -901,6 +901,7 @@ L["Move (L\124\124R) Reset"] = "移动 (左\124\124右) 重置"
 L["Move ElvUI Bags"] = "移动 ElvUI 背包"
 L["Move Frames"] = "移动框体"
 L["Move Speed"] = "移动速度"
+L["Multi Language"] = true
 L["Mute"] = "静音"
 L["Mute crying sounds of all races."] = "静音全部种族的哭声."
 L["Mute the sound of dragons."] = "静音巨龙的声音."

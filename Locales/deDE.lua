@@ -901,6 +901,7 @@ L["Move (L\124\124R) Reset"] = "Bewege (L\124\124R) Reset"
 L["Move ElvUI Bags"] = "ElvUI Taschen verschieben"
 L["Move Frames"] = "Fenster verschieben"
 L["Move Speed"] = "Bewegungsgeschwindigkeit"
+L["Multi Language"] = true
 L["Mute"] = "Lautlos"
 L["Mute crying sounds of all races."] = "Weinende Geräusche aller Rassen stummschalten."
 L["Mute the sound of dragons."] = "Drachengeräusche stumm schalten."

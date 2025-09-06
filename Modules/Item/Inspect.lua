@@ -55,7 +55,7 @@ local C_Item_GetItemQualityColor = C_Item.GetItemQualityColor
 local C_Item_IsCorruptedItem = C_Item.IsCorruptedItem
 local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 
-local guids, inspecting = {}, false
+local guids = {}
 
 local slots = {
 	{ index = 1, name = HEADSLOT },
@@ -862,8 +862,37 @@ local function ShowInspectItemListFrame(unit, parent, ilevel, maxLevel)
 end
 
 function IL:Inspect()
+	---@type nil|false|{
+	--- class: string,
+	--- expired: integer,
+	--- guid: WOWGUID,
+	--- hp: number,
+	--- ilevel: integer,
+	--- level: number,
+	--- name: string,
+	--- realm: string,
+	--- spec: string|nil,
+	--- timer: integer,
+	--- unit: UnitToken,
+	--- weaponLevel: number|nil,
+	--- isArtifact: boolean|nil,
+	--- maxLevel: number|nil,
+	---}
+	local inspecting -- inspecting can be false or table
+
+	local function clearCurrentInspection()
+		if inspecting then
+			if type(inspecting) == "table" then
+				LibSchedule:RemoveTask(inspecting.guid)
+				inspecting = nil
+			else
+				inspecting = false
+			end
+		end
+	end
+
 	hooksecurefunc("ClearInspectPlayer", function()
-		inspecting = false
+		clearCurrentInspection()
 	end)
 
 	-- @trigger UNIT_INSPECT_STARTED
@@ -899,42 +928,39 @@ function IL:Inspect()
 	end)
 
 	-- @trigger UNIT_INSPECT_READY
-	LibEvent:attachEvent("INSPECT_READY", function(this, guid)
+	LibEvent:attachEvent("INSPECT_READY", function(_, guid)
 		if not guids[guid] then
 			return
 		end
+
 		LibSchedule:AddTask({
 			identity = guid,
 			timer = 0.5,
 			elasped = 0.8,
 			expired = GetTime() + 4,
-			data = guids[guid],
-			onTimeout = function(self)
-				inspecting = false
+			data = inspecting,
+			onTimeout = function(task)
+				clearCurrentInspection()
 			end,
-			onExecute = function(self)
-				local count, ilevel, _, weaponLevel, isArtifact, maxLevel = LibItemInfo:GetUnitItemLevel(self.data.unit)
+			onExecute = function(task)
+				local count, ilevel, _, weaponLevel, isArtifact, maxLevel =
+					LibItemInfo:GetUnitItemLevel(inspecting.unit)
 				if ilevel <= 0 then
 					return true
 				end
 				if count == 0 and ilevel > 0 then
-					--if (UnitIsVisible(self.data.unit) or self.data.ilevel == ilevel) then
-					self.data.timer = time()
-					self.data.name = UnitName(self.data.unit)
-					self.data.class = select(2, UnitClass(self.data.unit))
-					self.data.ilevel = ilevel
-					self.data.maxLevel = maxLevel
-					self.data.spec = GetInspectSpec(self.data.unit)
-					self.data.hp = UnitHealthMax(self.data.unit)
-					self.data.weaponLevel = weaponLevel
-					self.data.isArtifact = isArtifact
-					LibEvent:trigger("UNIT_INSPECT_READY", self.data)
+					inspecting.timer = time()
+					inspecting.name = UnitName(inspecting.unit)
+					inspecting.class = select(2, UnitClass(inspecting.unit))
+					inspecting.ilevel = ilevel
+					inspecting.maxLevel = maxLevel
+					inspecting.spec = GetInspectSpec(inspecting.unit)
+					inspecting.hp = UnitHealthMax(inspecting.unit)
+					inspecting.weaponLevel = weaponLevel
+					inspecting.isArtifact = isArtifact
+					LibEvent:trigger("UNIT_INSPECT_READY", inspecting)
 					inspecting = false
 					return true
-					--else
-					--    self.data.ilevel = ilevel
-					--    self.data.maxLevel = maxLevel
-					--end
 				end
 			end,
 		})
@@ -959,7 +985,7 @@ function IL:Inspect()
 	end)
 
 	--高亮橙裝和武器
-	LibEvent:attachTrigger("INSPECT_ITEMFRAME_UPDATED", function(self, itemframe)
+	LibEvent:attachTrigger("INSPECT_ITEMFRAME_UPDATED", function(_, itemframe)
 		local r, g, b = 0, 0.9, 0.9
 		if itemframe.quality and itemframe.quality > 4 then
 			r, g, b = C_Item_GetItemQualityColor(itemframe.quality)

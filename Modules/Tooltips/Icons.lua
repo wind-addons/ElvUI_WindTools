@@ -46,6 +46,7 @@ local tooltips = {
 	"ShoppingTooltip2",
 	"ItemRefShoppingTooltip1",
 	"ItemRefShoppingTooltip2",
+	"ElvUI_SpellBookTooltip",
 }
 
 local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX

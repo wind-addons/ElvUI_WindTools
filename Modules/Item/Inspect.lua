@@ -344,7 +344,7 @@ local function ShowInspectItemStatsFrame(frame, unit)
 	if not frame.expandButton then
 		local expandButton = CreateFrame("Button", nil, frame)
 		expandButton:Size(12, 12)
-		expandButton:Point("TOPRIGHT", -5, -5)
+		expandButton:Point("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
 		expandButton:SetNormalTexture("Interface\\Cursor\\Item")
 		expandButton:GetNormalTexture():SetTexCoord(12 / 32, 0, 0, 12 / 32)
 		expandButton:SetScript("OnClick", function(self)

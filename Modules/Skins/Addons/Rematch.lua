@@ -489,7 +489,7 @@ function S:Rematch_Dialog() -- Modified from NDui
 
 	-- Collection
 	local collection = dialog.CollectionReport
-	hooksecurefunc(Rematch, "ShowCollectionReport", function()
+	hooksecurefunc(_G.Rematch, "ShowCollectionReport", function()
 		for i = 1, 4 do
 			local bar = collection.RarityBar[i]
 			bar:SetTexture(E.media.normTex)

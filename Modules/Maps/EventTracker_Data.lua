@@ -186,7 +186,7 @@ ET.EventData = {
 			icon = 236681,
 			type = "weekly",
 			questIDs = {
-				[L["Delves Weekly"]] = {
+				[F.GetIconString(6025441, 14, 16, true) .. " " .. L["Delves Weekly"]] = {
 					82706, -- 探究：世界性研究
 					82708, -- 豐碩探究
 					82709, -- 豐碩探究
@@ -195,11 +195,11 @@ ET.EventData = {
 					82712, -- 豐碩探究
 					82746, -- 豐碩探究
 				},
-				[L["Archives Weekly"]] = {
+				[F.GetIconString(1411833, 14, 16, true) .. " " .. L["Archives Weekly"]] = {
 					82678, -- 文庫：第一張圓盤
 					82679, -- 文庫：尋覓歷史
 				},
-				[L["Weekend Event"]] = {
+				[F.GetIconString(134015, 14, 16, true) .. " " .. L["Weekend Event"]] = {
 					83345, -- 戰鬥的呼喚
 					83347, -- 征戰使節
 					83357, -- 箇中翹楚
@@ -213,7 +213,7 @@ ET.EventData = {
 					83366, -- 世界任務正等著你
 					84776, -- 來探究吧
 				},
-				[L["Dungeon Weekly"]] = {
+				[F.GetIconString(5554512, 14, 16, true) .. " " .. L["Dungeon Weekly"]] = {
 					-- https://www.wowhead.com/npc=226623/biergoth
 					83432, -- 培育所
 					83436, -- 燼釀酒莊
@@ -293,8 +293,7 @@ ET.EventData = {
 			icon = 6694198,
 			type = "loopTimer",
 			questIDs = {
-				91173,
-				89295,
+				91173, -- 聖焰不滅
 			},
 			hasWeeklyReward = true,
 			duration = 15 * 60,
@@ -308,12 +307,12 @@ ET.EventData = {
 			runningText = L["Running"],
 			startTimestamp = (function()
 				local timestampTable = {
-					[1] = 1724976005, -- NA
-					[2] = 1724976005, -- KR
-					[3] = 1724976005, -- EU
-					[4] = 1724976005, -- TW
-					[5] = 1724976005, -- CN
-					[72] = 1724976000,
+					[1] = 1757134800, -- NA
+					[2] = 1757134800, -- KR
+					[3] = 1757134800, -- EU
+					[4] = 1757134800, -- TW
+					[5] = 1757134800, -- CN
+					[72] = 1757134800, -- PTR
 				}
 
 				local region = GetCurrentRegion()
@@ -348,12 +347,12 @@ ET.EventData = {
 			runningText = L["Performing"],
 			startTimestamp = (function()
 				local timestampTable = {
-					[1] = 1724976005, -- NA
-					[2] = 1724976005, -- KR
-					[3] = 1724976005, -- EU
-					[4] = 1724976005, -- TW
-					[5] = 1724976005, -- CN
-					[72] = 1724976000,
+					[1] = 1757134800, -- NA
+					[2] = 1757134800, -- KR
+					[3] = 1757134800, -- EU
+					[4] = 1757134800, -- TW
+					[5] = 1757134800, -- CN
+					[72] = 1757134800, -- PTR
 				}
 
 				local region = GetCurrentRegion()

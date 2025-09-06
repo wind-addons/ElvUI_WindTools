@@ -39,6 +39,7 @@ end
 
 -- Cleanup all Blizzard Group Info
 ---@param tooltip GameTooltip The tooltip to clean up
+---@return boolean delistedFound
 local function cleanupBlizzardGroupInfo(tooltip)
 	local delistedFound = false
 	local titleFound = false

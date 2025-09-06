@@ -238,6 +238,7 @@ end
 ---@param g number Green component
 ---@param b number Blue component
 ---@param a number Alpha component
+---@return nil
 function OT:BlockHeaderText_SetTextColor(text, r, g, b, a)
 	if not self.db or not self.db.enable or not self.db.titleColor then
 		return self.hooks[text].SetTextColor(text, r, g, b, a)
@@ -254,6 +255,7 @@ end
 ---@param g number Green component
 ---@param b number Blue component
 ---@param a number Alpha component
+---@return nil
 function OT:LineText_SetTextColor(text, r, g, b, a)
 	if not self.db or not self.db.enable or not self.db.infoColor then
 		return self.hooks[text].SetTextColor(text, r, g, b, a)

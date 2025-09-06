@@ -11,7 +11,7 @@ function S:Myslot()
 		return
 	end
 
-	local frame = LibStub("Myslot-5.0").MainFrame
+	local frame = LibStub("Myslot-5.0").MainFrame ---@type Frame
 	if not frame then
 		return
 	end

@@ -383,18 +383,18 @@ function FL:UpdateFriendButton(button)
 
 	-- font style hack
 	if not cache.name then
-		local name, size, style = button.name:GetFont()
+		local fontName, size, style = button.name:GetFont()
 		cache.name = {
-			name = name,
+			name = fontName,
 			size = size,
 			style = style,
 		}
 	end
 
 	if not cache.info then
-		local name, size, style = button.info:GetFont()
+		local fontName, size, style = button.info:GetFont()
 		cache.info = {
-			name = name,
+			name = fontName,
 			size = size,
 			style = style,
 		}

@@ -1,7 +1,7 @@
 local W = unpack((select(2, ...))) ---@type WindTools
 
 W.Changelog[399] = {
-	RELEASE_DATE = "TBD",
+	RELEASE_DATE = "2025/09/06",
 	IMPORTANT = {
 		["zhCN"] = {
 			"大量的过期代码整理.",
@@ -105,6 +105,7 @@ W.Changelog[399] = {
 			"[美化皮肤] 优化商人界面中的图示美化.",
 			"[美化皮肤] 优化盟约名望界面中的按钮美化.",
 			"[美化皮肤] 优化任务线玩家选择界面外观.",
+			"[美化皮肤] 优化 LibQTip 库中的鼠标提示组件外观.",
 			"[美化皮肤] 优化 WeakAuras 性能分析界面外观.",
 			"[美化皮肤] 优化 Simulationcraft 外观.",
 			"[美化皮肤] 优化 Mythic Dungeon Tools 拉怪波次按钮外观.",
@@ -136,6 +137,7 @@ W.Changelog[399] = {
 			"[美化外觀] 優化商人介面中的圖示美化.",
 			"[美化外觀] 優化誓盟名望介面中的按鈕美化.",
 			"[美化外觀] 優化任務線玩家選擇介面外觀.",
+			"[美化外觀] 優化 LibQTip 函式庫中的滑鼠提示組件外觀.",
 			"[美化外觀] 優化 WeakAuras 性能分析介面外觀.",
 			"[美化外觀] 優化 Simulationcraft 外觀.",
 			"[美化外觀] 優化 Mythic Dungeon Tools 拉怪波次按鍵外觀.",
@@ -167,6 +169,7 @@ W.Changelog[399] = {
 			"[Skins] Optimize icon skinning in merchant frame.",
 			"[Skins] Optimize button skinning in covenant renown frame.",
 			"[Skins] Optimize player choice frame skin.",
+			"[Skins] Optimize the skin of tooltip components in the LibQTip library.",
 			"[Skins] Optimize WeakAuras Profiler skin.",
 			"[Skins] Optimize Simulationcraft skin.",
 			"[Skins] Optimize Mythic Dungeon Tools pull button skin.",
@@ -198,6 +201,7 @@ W.Changelog[399] = {
 			"[스킨] 상인 인터페이스의 아이콘 스킨을 최적화했습니다.",
 			"[스킨] 성약 명성 인터페이스의 버튼 스킨을 최적화했습니다.",
 			"[스킨] 퀘스트 선택 인터페이스의 아이콘 스킨을 최적화했습니다.",
+			"[스킨] LibQTip 라이브러리의 툴팁 구성 요소 스킨을 최적화했습니다.",
 			"[스킨] WeakAuras 성능 분석 인터페이스 외관을 최적화했습니다.",
 			"[스킨] Simulationcraft 외관을 최적화했습니다.",
 			"[스킨] Mythic Dungeon Tools 라인업 버튼 외관을 최적화했습니다.",
@@ -229,6 +233,7 @@ W.Changelog[399] = {
 			"[Скины] Оптимизирован скин иконок в интерфейсе торговца.",
 			"[Скины] Оптимизирован скин кнопок в интерфейсе репутации ковенантов.",
 			"[Скины] Оптимизирован скин иконок в интерфейсе выбора игрока.",
+			"[Скины] Оптимизирован скин компонентов подсказок в библиотеке LibQTip.",
 			"[Скины] Оптимизирован внешний вид анализатора производительности WeakAuras.",
 			"[Скины] Оптимизирован внешний вид Simulationcraft.",
 			"[Скины] Оптимизирован внешний вид Mythic Dungeon Tools.",

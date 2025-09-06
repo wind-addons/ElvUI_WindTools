@@ -5,18 +5,16 @@ manual-changelog:
   markup-type: markdown
 
 ignore:
-  - .gitignore
+  - .gcignore
   - .gitattributes
   - .github/*
-  - .vscode/*
-  - .styluaignore
-  - stylua.toml
+  - .gitignore
   - .luacheckrc
-  - README.md
-  - README_zhCN.md
-  - README_zhTW.md
-  - README_esES.md
-  - Title.svg
-  - screenshot.png
-  - generate_changelog.py
+  - .styluaignore
+  - .vscode/*
   - Core/Changelog/_template.lua
+  - README*.md
+  - Title.svg
+  - generate_changelog.py
+  - screenshot.png
+  - stylua.toml

@@ -443,9 +443,9 @@ function MF:HandleFrame(this, bindTo)
 			-- Manually trigger a reposition after combat ends
 			-- Some frames may need to run the fix function first, so reposition should be run next frame to avoid issues
 			RunNextFrame(function()
-				local thisFrame = getFrame(this)
-				if thisFrame and thisFrame.MoveFrame then
-					self:Reposition(thisFrame.MoveFrame)
+				local repositionFrame = getFrame(this)
+				if repositionFrame and repositionFrame.MoveFrame then
+					self:Reposition(repositionFrame.MoveFrame)
 				end
 			end)
 		end)
@@ -555,14 +555,14 @@ function MF:HandleElvUIBag(frameName)
 		return
 	end
 
-	frame:SetScript("OnDragStart", function(frame)
-		frame:StartMoving()
+	frame:SetScript("OnDragStart", function(dragFrame)
+		dragFrame:StartMoving()
 	end)
 
 	if frame.helpButton then
-		frame.helpButton:SetScript("OnEnter", function(frame)
+		frame.helpButton:SetScript("OnEnter", function(helpButton)
 			local GameTooltip = _G.GameTooltip
-			GameTooltip:SetOwner(frame, "ANCHOR_TOPLEFT", 0, 4)
+			GameTooltip:SetOwner(helpButton, "ANCHOR_TOPLEFT", 0, 4)
 			GameTooltip:ClearLines()
 			GameTooltip:AddDoubleLine(L["Drag"] .. ":", L["Temporary Move"], 1, 1, 1)
 			GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)

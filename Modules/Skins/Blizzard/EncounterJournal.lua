@@ -3,8 +3,23 @@ local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
 local hooksecurefunc = hooksecurefunc
-local next = next
 local pairs = pairs
+
+---@param tab Frame
+---@param point FramePoint
+---@param relativeTo Region|string
+---@param relativePoint string
+---@param x? number
+---@param y? number
+local function createPositionHook(tab, point, relativeTo, relativePoint, x, y)
+	tab:ClearAllPoints()
+	tab:SetPoint(point, relativeTo, relativePoint, x, y)
+	---@param frame Frame
+	hooksecurefunc(tab, "Point", function(frame)
+		frame:ClearAllPoints()
+		frame:SetPoint(point, relativeTo, relativePoint, x, y)
+	end)
+end
 
 function S:Blizzard_EncounterJournal()
 	if not self:CheckDB("encounterjournal", "encounterJournal") then
@@ -26,36 +41,20 @@ function S:Blizzard_EncounterJournal()
 		self:ReskinTab(tab)
 	end
 
-	for _, name in next, { "overviewTab", "modelTab", "bossTab", "lootTab" } do
-		local info = _G.EncounterJournal.encounter.info
-		local tab = info[name]
-		self:CreateBackdropShadow(tab)
+	-- Encounter info tabs
+	local info = _G.EncounterJournal.encounter.info
+	local tabPositions = {
+		overviewTab = { "TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55 },
+		lootTab = { "TOPLEFT", info.overviewTab, "BOTTOMLEFT", 0, -4 },
+		bossTab = { "TOPLEFT", info.lootTab, "BOTTOMLEFT", 0, -4 },
+		modelTab = { "TOPLEFT", info.bossTab, "BOTTOMLEFT", 0, -4 },
+	}
 
-		tab:ClearAllPoints()
-		if name == "overviewTab" then
-			tab:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
-			hooksecurefunc(tab, "Point", function(self)
-				self:ClearAllPoints()
-				self:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 13, -55)
-			end)
-		elseif name == "lootTab" then
-			tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
-			hooksecurefunc(tab, "Point", function(self)
-				self:ClearAllPoints()
-				tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.overviewTab, "BOTTOMLEFT", 0, -4)
-			end)
-		elseif name == "bossTab" then
-			tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
-			hooksecurefunc(tab, "Point", function(self)
-				self:ClearAllPoints()
-				tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.lootTab, "BOTTOMLEFT", 0, -4)
-			end)
-		elseif name == "modelTab" then
-			tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
-			hooksecurefunc(tab, "Point", function(self)
-				self:ClearAllPoints()
-				tab:SetPoint("TOPLEFT", _G.EncounterJournal.encounter.info.bossTab, "BOTTOMLEFT", 0, -4)
-			end)
+	for tabName, position in pairs(tabPositions) do
+		local tab = info[tabName]
+		if tab then
+			self:CreateBackdropShadow(tab)
+			createPositionHook(tab, position[1], position[2], position[3], position[4], position[5])
 		end
 	end
 

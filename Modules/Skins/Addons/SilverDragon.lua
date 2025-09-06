@@ -258,6 +258,14 @@ local function StyleSilverDragonHistoryWindow(frame, collapseButtonStatus)
 	end
 end
 
+local function StyleWorldNavFrame()
+	for _, child in pairs({ _G.WorldMapFrame.navBar:GetChildren() }) do
+		if child and child.options and child.texture then
+			S:Proxy("HandleIcon", child.texture, true)
+		end
+	end
+end
+
 local function ConfigureSilverDragonPopup(popup, config, module)
 	-- Set background color
 	local r, g, b, a = unpack(config.background)
@@ -416,6 +424,7 @@ function S:SilverDragon()
 	SetupSilverDragonPopups(SilverDragon)
 	SetupSilverDragonHistory(SilverDragon)
 	SetupSilverDragonOverlay(SilverDragon)
+	StyleWorldNavFrame()
 end
 
 S:AddCallbackForAddon("SilverDragon")

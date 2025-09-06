@@ -602,13 +602,7 @@ end
 ---@param ... any Additional arguments to pass
 function S:Proxy(method, frame, ...)
 	if not frame then
-		F.Developer.ThrowError(
-			"Failed to proxy function: frame is nil.",
-			"\n funcName:",
-			method,
-			"\n frame:",
-			frame.GetDebugName and frame:GetDebugName() or tostring(frame)
-		)
+		F.Developer.ThrowError("Failed to proxy function: frame is nil.", "\n funcName:", method)
 		return
 	end
 

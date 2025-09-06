@@ -24,8 +24,8 @@ function S:Blizzard_DebugTools()
 	_G.TableAttributeDisplay.TitleButton:Size(360 + diffWidth, 400 + diffHeight)
 	_G.TableAttributeDisplay.TitleButton.Text:Size(360 + diffWidth, 400 + diffHeight)
 	_G.TableAttributeDisplay.LinesScrollFrame:Size(430 + diffWidth, 300 + diffHeight)
-	hooksecurefunc(_G.TableAttributeDisplay.dataProviders[2], "RefreshData", function(self)
-		local scrollFrame = self.LinesScrollFrame or _G.TableAttributeDisplay.LinesScrollFrame
+	hooksecurefunc(_G.TableAttributeDisplay.dataProviders[2], "RefreshData", function(dataProvider)
+		local scrollFrame = dataProvider.LinesScrollFrame or _G.TableAttributeDisplay.LinesScrollFrame
 		if not scrollFrame then
 			return
 		end

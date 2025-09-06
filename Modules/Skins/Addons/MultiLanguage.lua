@@ -2,8 +2,9 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local unpack = unpack
 local hooksecurefunc = hooksecurefunc
+local pairs = pairs
+local unpack = unpack
 
 local TT = E:GetModule("Tooltip")
 

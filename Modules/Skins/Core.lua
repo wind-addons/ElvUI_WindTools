@@ -15,6 +15,7 @@ local tinsert = tinsert
 local tonumber = tonumber
 local tostring = tostring
 local type = type
+local unpack = unpack
 local xpcall = xpcall
 
 local CreateFrame = CreateFrame

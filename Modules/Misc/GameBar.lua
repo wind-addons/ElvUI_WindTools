@@ -68,6 +68,7 @@ local C_UI_Reload = C_UI.Reload
 
 local FollowerType_8_0 = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower
 local FollowerType_9_0 = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower
+local Enum_CovenantType = Enum.CovenantType
 
 local NUM_PANEL_BUTTONS = 7
 local IconString = "|T%s:16:18:0:0:64:64:4:60:7:57"
@@ -1398,7 +1399,6 @@ end
 
 function GB:Initialize()
 	self.db = E.db.WT.misc.gameBar
-	self.covenantCache = E.global.WT.misc.gameBar.covenantCache
 
 	if not self.db or not self.db.enable then
 		return
@@ -1565,10 +1565,10 @@ function GB:UpdateHearthStoneTable()
 	end
 
 	local covenantHearthstones = {
-		[184353] = { covenantID = 1, achievementCriteriaNum = 1 }, -- 琪瑞安爐石
-		[183716] = { covenantID = 2, achievementCriteriaNum = 4 }, -- 汎希爾罪孽石
-		[180290] = { covenantID = 3, achievementCriteriaNum = 3 }, -- 暗夜妖精的爐石
-		[182773] = { covenantID = 4, achievementCriteriaNum = 2 }, -- 死靈領主爐石
+		[184353] = { covenantID = Enum_CovenantType.Kyrian, achievementCriteriaNum = 1 },
+		[183716] = { covenantID = Enum_CovenantType.Venthyr, achievementCriteriaNum = 4 },
+		[180290] = { covenantID = Enum_CovenantType.NightFae, achievementCriteriaNum = 3 },
+		[182773] = { covenantID = Enum_CovenantType.Necrolord, achievementCriteriaNum = 2 },
 	}
 
 	local activeCovenantID = C_Covenants_GetActiveCovenantID()

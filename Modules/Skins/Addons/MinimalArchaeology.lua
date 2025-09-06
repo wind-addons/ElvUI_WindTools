@@ -2,7 +2,7 @@ local W, F, E, L = unpack((select(2, ...))) ---@type WindTools, Functions, ElvUI
 local S = W.Modules.Skins ---@type Skins
 
 local _G = _G
-local ARCHAEOLOGY_NUM_RACES = _G.ARCHAEOLOGY_NUM_RACES
+local GetNumArchaeologyRaces = _G.GetNumArchaeologyRaces
 
 function S:MinimalArchaeology()
 	if not E.private.WT.skins.enable or not E.private.WT.skins.addons.minimalArchaeology then
@@ -82,7 +82,7 @@ function S:MinimalArchaeology()
 		S:CreateShadow(MinArchHistStats)
 	end
 
-	for i = 1, ARCHAEOLOGY_NUM_RACES do
+	for i = 1, GetNumArchaeologyRaces() do
 		local artifactBar = _G["MinArchMainArtifactBar" .. i]
 		if artifactBar then
 			S:Proxy("HandleStatusBar", artifactBar, { 1.0, 0.4, 0 })

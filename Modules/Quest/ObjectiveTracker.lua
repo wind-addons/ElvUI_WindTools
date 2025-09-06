@@ -310,6 +310,10 @@ function OT:HandleLine(line, _)
 			line.Dash:SetText(nil)
 		end
 
+		if line.Icon then
+			line.Icon:Hide()
+		end
+
 		local raw = line.Text:GetText()
 		if raw and raw ~= "" and strfind(raw, "^%- ") then
 			line.Text:SetText(gsub(raw, "^%- ", ""))

@@ -303,7 +303,13 @@ end
 ---@return number g Green component (0-1)
 ---@return number b Blue component (0-1)
 function W.Utilities.Color.ExtractRGBFromTemplate(template)
-	return W.Utilities.Color.HexToRGB(colors[template])
+	local color = colors[template]
+	if not color then
+		F.Developer.LogDebug("Color template not found: " .. tostring(template))
+		return 1, 1, 1
+	end
+
+	return W.Utilities.Color.HexToRGB(color)
 end
 
 ---Get RGBA values from predefined color template
@@ -391,7 +397,13 @@ end
 ---@param template string The color template name
 ---@return string coloredText The colored string
 function W.Utilities.Color.StringByTemplate(text, template)
-	return W.Utilities.Color.StringWithHex(text, colors[template])
+	local color = colors[template]
+	if not color then
+		F.Developer.LogDebug("Color template not found: " .. tostring(template))
+		return text
+	end
+
+	return W.Utilities.Color.StringWithHex(text, color)
 end
 
 ---Create colored string with RGB values

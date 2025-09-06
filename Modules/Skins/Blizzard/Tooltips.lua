@@ -61,6 +61,8 @@ function S:StyleIconsInTooltip(tt)
 					texture:SetTexCoord(unpack(E.TexCoords))
 				end
 			end
+		else
+			break
 		end
 	end
 end

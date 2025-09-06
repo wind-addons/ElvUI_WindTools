@@ -715,7 +715,7 @@ function S:TryCropTexture(tex)
 	end
 
 	local left, top, _, bottom, right = tex:GetTexCoord()
-	if F.IsAlmost(left, 0) and F.IsAlmost(top, 0) and F.IsAlmost(right, 1) and F.IsAlmost(bottom, 1) then
+	if F.IsAlmost({ left, top, right, bottom }, { 0, 0, 1, 1 }) then
 		tex:SetTexCoord(unpack(E.TexCoords))
 	end
 end

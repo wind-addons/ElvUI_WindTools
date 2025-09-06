@@ -145,16 +145,11 @@ function MB:HandleLibDBIconButton(button, name)
 	if button.icon and button.icon.SetTexCoord and not self:IsHooked(button.icon, "SetTexCoord") then
 		self:RawHook(button.icon, "SetTexCoord", function(icon, ...)
 			local arg1, arg2, arg3, arg4 = ...
-			if
-				F.IsAlmost(arg1, 0.05)
-				and F.IsAlmost(arg2, 0.95)
-				and F.IsAlmost(arg3, 0.05)
-				and F.IsAlmost(arg4, 0.95)
-			then
+			if F.IsAlmost({ arg1, arg2, arg3, arg4 }, { 0.05, 0.95, 0.05, 0.95 }, 0.002) then
 				return self.hooks[icon].SetTexCoord(icon, unpack(E.TexCoords))
 			end
 
-			if F.IsAlmost(arg1, 0) and F.IsAlmost(arg2, 1) and F.IsAlmost(arg3, 0) and F.IsAlmost(arg4, 1) then
+			if F.IsAlmost({ arg1, arg2, arg3, arg4 }, { 0, 1, 0, 1 }, 0.002) then
 				return self.hooks[icon].SetTexCoord(icon, unpack(E.TexCoords))
 			end
 

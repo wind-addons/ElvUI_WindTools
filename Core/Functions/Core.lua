@@ -432,21 +432,37 @@ function F.Move(frame, x, y)
 end
 
 ---Check if two numbers are approximately equal
----@param a number? First number
----@param b number? Second number
+---@param a? number|number[] First number or array of numbers
+---@param b? number|number[] Second number or array of numbers
 ---@param allowance number? Allowed difference (default: 0.025)
 ---@return boolean equal True if numbers are approximately equal
 function F.IsAlmost(a, b, allowance)
-	allowance = allowance or 0.025
-	if a == nil and b ~= nil or a ~= nil and b == nil then
-		return false
-	end
-
-	if a == nil and b == nil then
+	if a == b then
 		return true
 	end
 
-	return abs(a - b) < 0.025
+	if a == nil or b == nil then
+		return false
+	end
+
+	allowance = allowance or 0.025
+
+	if type(a) == "table" and type(b) == "table" then
+		local len = #a
+		if len ~= #b then
+			return false
+		end
+
+		for i = 1, len do
+			if not F.IsAlmost(a[i], b[i], allowance) then
+				return false
+			end
+		end
+
+		return true
+	end
+
+	return abs(a - b) < allowance
 end
 
 ---Internalizes a method by creating a backup copy with a double underscore prefix.

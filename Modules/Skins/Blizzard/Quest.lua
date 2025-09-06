@@ -90,7 +90,7 @@ end
 	@param redValue - The red component of the current color
 --]]
 local function ReplaceQuestTextColor(textObject, redValue, greenValue, blueValue)
-	if redValue == 0 and F.IsAlmost(greenValue, 0.82) and F.IsAlmost(blueValue, 0.82) then
+	if F.IsAlmost({ redValue, greenValue, blueValue }, { 0, 0.82, 0.82 }, 0.002) then
 		return
 	elseif redValue == 0 or redValue == DEFAULT_COLOR[1] then
 		textObject:SetTextColor(1, 1, 1) -- White for better readability

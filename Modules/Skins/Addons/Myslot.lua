@@ -36,7 +36,7 @@ function S:Myslot()
 		elseif objType == "EditBox" then
 			self:Proxy("HandleEditBox", child)
 		elseif objType == "Frame" then
-			if F.IsAlmost(child:GetWidth(), 600) and F.IsAlmost(child:GetHeight(), 455) then
+			if F.IsAlmost({ child:GetWidth(), child:GetHeight() }, { 600, 455 }) then
 				child:SetBackdrop(nil)
 				child:CreateBackdrop("Transparent")
 				child.backdrop:SetInside(child, 2, 2)

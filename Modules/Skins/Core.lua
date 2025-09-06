@@ -602,12 +602,22 @@ end
 ---@param ... any Additional arguments to pass
 function S:Proxy(method, frame, ...)
 	if not frame then
-		F.Developer.ThrowError("Failed to proxy function: frame is nil, funcName:", method)
+		F.Developer.ThrowError(
+			"Failed to proxy function: frame is nil.",
+			"\n funcName:",
+			method,
+			"\n frame:",
+			frame.GetDebugName and frame:GetDebugName() or tostring(frame)
+		)
 		return
 	end
 
 	if not ES[method] then
-		F.Developer.ThrowError(format("Proxy: %s is not exist in ElvUI Skins", method))
+		F.Developer.ThrowError(
+			format("Proxy: %s is not exist in ElvUI Skins", method),
+			"\n frame:",
+			frame.GetDebugName and frame:GetDebugName() or tostring(frame)
+		)
 		return
 	end
 

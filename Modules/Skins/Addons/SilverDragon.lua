@@ -23,7 +23,7 @@ local function StyleSilverDragonText(fontString, size, color)
 	fontString:SetShadowColor(0, 0, 0, 0.8)
 end
 
-local function StyleSilverDragonLootWindow(frame)
+local function StyleSilverDragonLootWindow(_, frame)
 	if not frame then
 		return
 	end
@@ -96,13 +96,6 @@ local function StyleSilverDragonPopup(popup, module)
 	if popup.lootIcon then
 		S:Proxy("HandleButton", popup.lootIcon)
 		popup.lootIcon.texture:SetAtlas("VignetteLoot")
-		popup.lootIcon:HookScript("OnClick", function()
-			F.WaitFor(function()
-				return popup.lootIcon and popup.lootIcon.window and true or false
-			end, function()
-				StyleSilverDragonLootWindow(popup.lootIcon.window)
-			end)
-		end)
 	end
 
 	StyleSilverDragonText(popup.title, E.db.general.fontSize + 2)
@@ -340,14 +333,6 @@ local function SetupSilverDragonOverlay(silverDragon)
 		return
 	end
 
-	hooksecurefunc(module, "ShowTooltip", function(overlayModule)
-		F.WaitFor(function()
-			return overlayModule.lootwindow and true or false
-		end, function()
-			StyleSilverDragonLootWindow(overlayModule.lootwindow)
-		end)
-	end)
-
 	if module.tooltip then
 		TT:SetStyle(module.tooltip)
 		if module.tooltip.shoppingTooltips then
@@ -421,6 +406,7 @@ function S:SilverDragon()
 		return
 	end
 
+	SilverDragon:RegisterCallback("LootWindowOpened", StyleSilverDragonLootWindow)
 	SetupSilverDragonPopups(SilverDragon)
 	SetupSilverDragonHistory(SilverDragon)
 	SetupSilverDragonOverlay(SilverDragon)

@@ -850,6 +850,7 @@ L["Make some enhancements on chat and friend frames."] = true
 L["Make sure you select the NPC as your target."] = true
 L["Make the additional percentage text be colored."] = true
 L["Manuscripts Journal"] = true
+L["Minimal Archaeology"] = true
 L["Maps"] = true
 L["Mark Highest Score"] = true
 L["Mark as read, the changelog message will be hidden when you login next time."] = true

@@ -983,12 +983,17 @@ do
 	end
 end
 
+local function getEventTrackerData(info, field)
+	local eventData = E.db.WT.maps.eventTracker[info[#info - 1]]
+	return eventData and eventData[field or info[#info]]
+end
+
 options.eventTracker = {
 	order = 7,
 	type = "group",
 	name = L["Event Tracker"],
 	get = function(info)
-		return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+		return getEventTrackerData(info)
 	end,
 	set = function(info, value)
 		E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
@@ -1142,7 +1147,7 @@ options.eventTracker = {
 			inline = true,
 			name = L["Khaz Algar Emissary"],
 			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+				return getEventTrackerData(info)
 			end,
 			set = function(info, value)
 				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
@@ -1168,7 +1173,7 @@ options.eventTracker = {
 			inline = true,
 			name = L["Ecological Succession"],
 			get = function(info)
-				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
+				return getEventTrackerData(info)
 			end,
 			set = function(info, value)
 				E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]] = value
@@ -1215,7 +1220,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1225,8 +1230,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1275,7 +1279,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1285,8 +1289,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1392,7 +1395,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1402,8 +1405,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1416,7 +1418,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfCompleted = {
@@ -1426,7 +1428,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the event is completed in this week."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1436,7 +1438,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1462,7 +1464,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1472,8 +1474,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1486,7 +1487,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1496,7 +1497,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1522,7 +1523,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1532,8 +1533,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1546,7 +1546,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1556,7 +1556,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1582,7 +1582,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1592,8 +1592,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1606,7 +1605,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1616,7 +1615,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1648,7 +1647,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1658,8 +1657,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1672,7 +1670,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfCompleted = {
@@ -1682,7 +1680,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the event is completed in this week."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1692,7 +1690,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1724,7 +1722,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1734,8 +1732,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1748,7 +1745,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfCompleted = {
@@ -1758,7 +1755,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the event is completed in this week."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1768,7 +1765,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1800,7 +1797,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1810,8 +1807,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1824,7 +1820,7 @@ options.eventTracker = {
 					max = 3600,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfCompleted = {
@@ -1834,7 +1830,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the event is completed in this week."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 				stopAlertIfPlayerNotEnteredDragonlands = {
@@ -1844,7 +1840,7 @@ options.eventTracker = {
 					desc = L["Stop alert when the player has not entered Dragonlands yet."],
 					width = 1.5,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1870,7 +1866,7 @@ options.eventTracker = {
 					type = "toggle",
 					name = L["Alert Sound"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 					desc = L["Play sound when the alert is triggered."],
 				},
@@ -1880,8 +1876,7 @@ options.eventTracker = {
 					dialogControl = "LSM30_Sound",
 					name = L["Sound File"],
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
-							or not E.db.WT.maps.eventTracker[info[#info - 1]].sound
+						return not getEventTrackerData(info, "alert") or not getEventTrackerData(info, "sound")
 					end,
 					values = LSM:HashTable("sound"),
 				},
@@ -1894,7 +1889,7 @@ options.eventTracker = {
 					max = 144,
 					step = 1,
 					hidden = function(info)
-						return not E.db.WT.maps.eventTracker[info[#info - 1]].alert
+						return not getEventTrackerData(info, "alert")
 					end,
 				},
 			},
@@ -1907,7 +1902,7 @@ for eventName, eventOptions in pairs(options.eventTracker.args) do
 		for arg in pairs(eventOptions.args) do
 			if arg ~= "enable" then
 				eventOptions.args[arg].hidden = function(info)
-					return not E.db.WT.maps.eventTracker[info[#info - 1]].enable
+					return not getEventTrackerData(info, "enable")
 				end
 			end
 		end

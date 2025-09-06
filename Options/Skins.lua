@@ -1259,13 +1259,6 @@ options.addons = {
 			name = L["Manuscripts Journal"],
 			addonName = "ManuscriptsJournal",
 		},
-		minimalArchaeology = {
-			order = 10,
-			type = "toggle",
-			name = L["Minimal Archaeology"],
-			addonName = "MinimalArchaeology",
-			addonskinsKey = "MinimalArchaeology",
-		},
 		mountRoutePlanner = {
 			order = 10,
 			type = "toggle",

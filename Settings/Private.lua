@@ -499,7 +499,6 @@ V.skins = {
 		hekili = true,
 		immersion = true,
 		manuscriptsJournal = true,
-		minimalArchaeology = true,
 		mountRoutePlanner = true,
 		multiLanguage = true,
 		myslot = true,

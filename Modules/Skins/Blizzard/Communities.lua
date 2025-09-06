@@ -40,25 +40,16 @@ function S:Blizzard_Communities()
 	self:CreateShadow(CommunitiesFrame.GuildInfoTab)
 	self:CreateShadow(CommunitiesFrame.GuildMemberDetailFrame)
 	self:CreateShadow(CommunitiesFrame.ClubFinderInvitationFrame)
-
+	self:CreateShadow(CommunitiesFrame.RecruitmentDialog)
 	self:CreateShadow(_G.CommunitiesGuildLogFrame)
 	self:CreateShadow(_G.CommunitiesSettingsDialog)
 
-	local ClubFinderCommunityAndGuildFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
-	if ClubFinderCommunityAndGuildFinderFrame then
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab)
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab)
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame)
+	local ClubFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
+	if ClubFinderFrame then
+		self:CreateShadow(ClubFinderFrame.ClubFinderPendingTab)
+		self:CreateShadow(ClubFinderFrame.ClubFinderSearchTab)
+		self:CreateShadow(ClubFinderFrame.RequestToJoinFrame)
 	end
-
-	local ClubFinderCommunityAndGuildFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
-	if ClubFinderCommunityAndGuildFinderFrame then
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab)
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab)
-		self:CreateShadow(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame)
-	end
-
-	self:CreateShadow(_G.CommunitiesFrame.RecruitmentDialog)
 
 	hooksecurefunc(CommunitiesFrame.MemberList, "RefreshListDisplay", function(memberList)
 		local target = memberList.ScrollBox:GetScrollTarget()
@@ -78,8 +69,8 @@ function S:Blizzard_Communities()
 	self:CreateShadow(BossModel)
 	self:CreateShadow(BossModel.TextFrame)
 
-	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(button)
-		for _, child in next, { button.ScrollTarget:GetChildren() } do
+	hooksecurefunc(CommunitiesFrame.GuildBenefitsFrame.Rewards.ScrollBox, "Update", function(scrollBox)
+		for _, child in next, { scrollBox.ScrollTarget:GetChildren() } do
 			if not child.IsSkinned then
 				self:Proxy("HandleIcon", child.Icon, true)
 				child:StripTextures()

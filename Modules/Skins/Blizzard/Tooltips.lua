@@ -49,6 +49,20 @@ function S:StyleIconsInTooltip(tt)
 		styleIconsInLine(_G[tt:GetName() .. "TextLeft" .. i])
 		styleIconsInLine(_G[tt:GetName() .. "TextRight" .. i])
 	end
+
+	for i = 1, 30 do
+		local texture = _G[tt:GetName() .. "Texture" .. i] ---@type Texture?
+		if texture and texture:IsShown() then
+			local textureID = texture:GetTexture()
+			if type(textureID) == "number" and textureID > 0 then -- Make sure it is a in-game texture
+				local left, top, _, bottom, right = texture:GetTexCoord()
+				if F.IsAlmost(left, 0) and F.IsAlmost(top, 0) and F.IsAlmost(right, 1) and F.IsAlmost(bottom, 1) then
+					-- Only crop if the texture is not cropped already, and avoid atlas textures
+					texture:SetTexCoord(unpack(E.TexCoords))
+				end
+			end
+		end
+	end
 end
 
 function S:ReskinTooltip(tt)

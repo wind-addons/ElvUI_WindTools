@@ -8,7 +8,6 @@ G.core = {
 	elvUIVersionPopup = true,
 	cvarAlert = false,
 	advancedCLEUEventTrace = false,
-	logLevel = 2,
 	loginMessage = true,
 }
 
@@ -38,9 +37,6 @@ G.combat = {
 }
 
 G.misc = {
-	gameBar = {
-		covenantCache = {},
-	},
 	watched = {
 		movies = {},
 	},

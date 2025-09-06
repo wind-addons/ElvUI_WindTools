@@ -1136,11 +1136,11 @@ options.eventTracker = {
 				},
 			},
 		},
-		khazAlgarEmissary = {
+		weeklyTWW = {
 			order = 12,
 			type = "group",
 			inline = true,
-			name = L["Khaz Algar Emissary"],
+			name = format("%s (%s)", L["Weekly Quest"], L["[ABBR] The War Within"]),
 			get = function(info)
 				return E.db.WT.maps.eventTracker[info[#info - 1]][info[#info]]
 			end,

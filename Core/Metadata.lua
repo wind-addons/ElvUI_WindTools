@@ -18,6 +18,8 @@ local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_CVar_GetCVarBool = C_CVar.GetCVarBool
 
+E.myClassColor = E.myClassColor or E:ClassColor(E.myclass, true)
+
 -- WindTools
 W.Title = L["WindTools"]
 W.PlainTitle = gsub(W.Title, "|c........([^|]+)|r", "%1")

@@ -1265,6 +1265,12 @@ options.addons = {
 			name = L["Mount Route Planner"],
 			addonName = "MountRoutePlanner",
 		},
+		multiLanguage = {
+			order = 10,
+			type = "toggle",
+			name = L["Multi Language"],
+			addonName = "MultiLanguage",
+		},
 		myslot = {
 			order = 10,
 			type = "toggle",

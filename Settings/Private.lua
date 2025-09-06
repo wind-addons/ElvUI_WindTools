@@ -500,6 +500,7 @@ V.skins = {
 		immersion = true,
 		manuscriptsJournal = true,
 		mountRoutePlanner = true,
+		multiLanguage = true,
 		myslot = true,
 		mythicDungeonTools = true,
 		omniCD = true,

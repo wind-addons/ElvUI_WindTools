@@ -156,6 +156,7 @@ Português，Italiano
 29. **WhisperPop 皮膚**: 為 WhisperPop 應用 ElvUI 皮膚
 30. **Paragon Reputation 皮膚**: 為 Paragon Reputation 應用 ElvUI 皮膚
 31. **Manuscripts Journal 皮膚**: 為 Manuscripts Journal 應用 ElvUI 皮膚
+32. **MultiLanguage 皮膚**: 為 MultiLanguage 應用 ElvUI 皮膚
 
 ### 其他
 

@@ -155,6 +155,7 @@ Português, Italiano
 29. **Aspecto de WhisperPop**: Aplica aspecto para WhisperPop.
 30. **Aspecto de Paragon Reputation**: Aplica aspecto para Paragon Reputation.
 31. **Aspecto de Manuscripts Journal**: Aplica aspecto para Manuscripts Journal.
+32. **Aspecto de MultiLanguage **: Aplica aspecto para MultiLanguage .
 
 ### Miscelánea
 

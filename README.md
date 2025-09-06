@@ -158,6 +158,7 @@ Português, Italiano
 29. **WhisperPop Skin**: Apply ElvUI skin for WhisperPop.
 30. **Paragon Reputation Skin**: Apply ElvUI skin for Paragon Reputation.
 31. **Manuscripts Journal Skin**: Apply ElvUI skin for Manuscripts Journal.
+32. **MultiLanguage Skin**: Apply ElvUI skin for MultiLanguage.
 
 ### Misc
 

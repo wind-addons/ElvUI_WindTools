@@ -156,6 +156,7 @@ Português，Italiano
 29. **WhisperPop 皮肤**: 为 WhisperPop 应用 ElvUI 皮肤
 30. **Paragon Reputation 皮肤**: 为 Paragon Reputation 应用 ElvUI 皮肤
 31. **Manuscripts Journal 皮肤**: 为 Manuscripts Journal 应用 ElvUI 皮肤
+32. **MultiLanguage 皮肤**: 为 MultiLanguage 应用 ElvUI 皮肤
 
 ### 其他
 
